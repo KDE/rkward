@@ -1,31 +1,31 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the rkward package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2023-12-25 18:25+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Kisaragi Hiu"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "mail@kisaragi-hiu.com"
 
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
@@ -37,12 +37,12 @@ msgstr ""
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
 msgid "Cannot edit '%1'"
-msgstr ""
+msgstr "無法編輯 '%1'"
 
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
 msgid "Loading Workspace..."
-msgstr ""
+msgstr "正在載入工作區..."
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -54,7 +54,7 @@ msgstr ""
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
 msgid "Error loading workspace"
-msgstr ""
+msgstr "載入工作區時發生錯誤"
 
 #: rkward/agents/rkprintagent.cpp:82
 #, kde-format
@@ -110,7 +110,7 @@ msgstr ""
 #: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:880
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
-msgstr ""
+msgstr "R 工作區檔案 [%1](%1);;所有檔案 [*](*)"
 
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
@@ -123,12 +123,12 @@ msgstr ""
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
 msgid "Saving workspace"
-msgstr ""
+msgstr "正在儲存工作區"
 
 #: rkward/agents/rksaveagent.cpp:90
 #, kde-format
 msgid "Save failed"
-msgstr ""
+msgstr "儲存失敗"
 
 #: rkward/agents/rksaveagent.cpp:90
 #, kde-format
@@ -142,7 +142,7 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
-msgstr ""
+msgstr "完成"
 
 #: rkward/agents/showedittextfileagent.cpp:82
 #, kde-format
@@ -201,7 +201,7 @@ msgstr ""
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
 msgid "Restore object?"
-msgstr ""
+msgstr "回復物件？"
 
 #: rkward/core/rkmodificationtracker.cpp:75
 #, kde-format
@@ -215,7 +215,7 @@ msgstr ""
 #: rkward/core/rkmodificationtracker.cpp:80
 #, kde-format
 msgid "Remove object?"
-msgstr ""
+msgstr "移除物件？"
 
 #: rkward/core/rkmodificationtracker.cpp:80
 #, kde-format
@@ -232,7 +232,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulekateplugins.cpp:41
 #, kde-format
 msgid "Name"
-msgstr ""
+msgstr "名稱"
 
 #: rkward/core/rkmodificationtracker.cpp:352
 #: rkward/dataeditor/rkvareditmodel.cpp:680
@@ -404,7 +404,7 @@ msgstr ""
 #: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
 #, kde-format
 msgid "&Edit"
-msgstr ""
+msgstr "編輯(&E)"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
 #: rkward/dataeditor/rkvareditmodel.cpp:550
@@ -425,7 +425,7 @@ msgstr ""
 #: rkward/dataeditor/rkvareditmodel.cpp:361
 #, kde-format
 msgid "#New Variable#"
-msgstr ""
+msgstr "#新變數#"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:362
 #, kde-format
@@ -435,7 +435,7 @@ msgstr ""
 #: rkward/dataeditor/rkvareditmodel.cpp:367
 #, kde-format
 msgid "This column contains one or more invalid fields"
-msgstr ""
+msgstr "這一行包含一個或多個無效的欄位"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
@@ -485,31 +485,31 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:104
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
-msgstr ""
+msgstr "貼上剪貼簿內容到目前位置"
 
 #: rkward/dataeditor/twintable.cpp:107
 #, kde-format
 msgid "Paste inside table"
-msgstr ""
+msgstr "在表格內貼上"
 
 #: rkward/dataeditor/twintable.cpp:109
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
-msgstr ""
+msgstr "將剪貼簿內容貼上至目前位置，但不超過表格的範圍"
 
 #: rkward/dataeditor/twintable.cpp:112
 #, kde-format
 msgid "Paste inside selection"
-msgstr ""
+msgstr "在選取範圍內貼上"
 
 #: rkward/dataeditor/twintable.cpp:114
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
-msgstr ""
+msgstr "將剪貼簿內容貼上至目前位置，但不超過目前的選取範圍"
 
 #: rkward/dataeditor/twintable.cpp:131
 #, kde-format
@@ -519,24 +519,24 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:134 rkward/dataeditor/twintable.cpp:147
 #, kde-format
 msgid "Enable editing"
-msgstr ""
+msgstr "啟用編輯"
 
 #: rkward/dataeditor/twintable.cpp:139
 #, kde-format
 msgctxt "verb: switch to read-only state. Make this short."
 msgid "Lock"
-msgstr ""
+msgstr "鎖定"
 
 #: rkward/dataeditor/twintable.cpp:142
 #, kde-format
 msgid "Disable editing (to prevent accidental modification of data)"
-msgstr ""
+msgstr "停用編輯（來避免不小心變更資料）"
 
 #: rkward/dataeditor/twintable.cpp:144
 #, kde-format
 msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
-msgstr ""
+msgstr "解鎖"
 
 #: rkward/dataeditor/twintable.cpp:208
 #, kde-format
@@ -555,7 +555,7 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:217
 #, kde-format
 msgid "%1 [read-only]"
-msgstr ""
+msgstr "%1 [唯讀]"
 
 #: rkward/dataeditor/twintable.cpp:262
 #, kde-format
@@ -565,7 +565,7 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:265
 #, kde-format
 msgid "Delete this variable"
-msgstr ""
+msgstr "刪除這個變數"
 
 #: rkward/dataeditor/twintable.cpp:276
 #, kde-format
@@ -575,12 +575,12 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:285
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
-msgstr ""
+msgstr "刪除已標記的列 (%1-%2)"
 
 #: rkward/dataeditor/twintable.cpp:291
 #, kde-format
 msgid "Delete this row (%1)"
-msgstr ""
+msgstr "刪除此列 (%1)"
 
 #: rkward/dataeditor/twintable.cpp:413
 #, kde-format
@@ -590,7 +590,7 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
 msgid "Reporting bugs in RKWard"
-msgstr ""
+msgstr "回報 RKWard 的問題"
 
 #: rkward/dialogs/rkerrordialog.cpp:45
 #, kde-format
@@ -618,7 +618,7 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:58
 #, kde-format
 msgid "Report issue"
-msgstr ""
+msgstr "回報問題"
 
 #: rkward/dialogs/rkerrordialog.cpp:73
 #, kde-format
@@ -636,12 +636,12 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:80
 #, kde-format
 msgid "Proceed"
-msgstr ""
+msgstr "繼續"
 
 #: rkward/dialogs/rkerrordialog.cpp:103
 #, kde-format
 msgid "Show Details"
-msgstr ""
+msgstr "顯示詳情"
 
 #: rkward/dialogs/rkerrordialog.cpp:105
 #, kde-format
@@ -731,6 +731,8 @@ msgid ""
 "In case the backend has died or hung up, you may want to press 'Cancel' to "
 "skip this step."
 msgstr ""
+"請稍候，正在取得關於您的系統設定的資訊。\n"
+"如果後端掛了或是沒有回應，您可能會希望點擊「取消」來跳過這個步驟。"
 
 #: rkward/dialogs/rkerrordialog.cpp:146
 #, kde-format
@@ -765,7 +767,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:76
 #, kde-format
 msgid "Select format"
-msgstr ""
+msgstr "選擇格式"
 
 #: rkward/dialogs/rkimportdialog.cpp:80
 #, kde-format
@@ -864,7 +866,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:95
 #, kde-format
 msgid "Discard changes?"
-msgstr ""
+msgstr "捨棄變更？"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:169
 #: rkward/dialogs/rkloadlibsdialog.cpp:176
@@ -957,7 +959,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:253
 #, kde-format
 msgid "Install to %1"
-msgstr ""
+msgstr "安裝到 %1"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:252
 #, kde-format
@@ -970,7 +972,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:253
 #, kde-format
 msgid "Become root"
-msgstr ""
+msgstr "變成 root"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:271
 #, kde-format
@@ -980,7 +982,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:271
 #, kde-format
 msgid "Installing packages"
-msgstr ""
+msgstr "安裝套件包中"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:292
 #, kde-format
@@ -992,12 +994,12 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:292
 #, kde-format
 msgid "kdesu not found"
-msgstr ""
+msgstr "找不到 kdesu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:350
 #, kde-format
 msgid "Installed packages"
-msgstr ""
+msgstr "已安裝套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:352
 #: rkward/dialogs/rkloadlibsdialog.cpp:939
@@ -1006,34 +1008,34 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:325
 #, kde-format
 msgid "Title"
-msgstr ""
+msgstr "標題"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:352
 #: rkward/dialogs/rkloadlibsdialog.cpp:940
 #, kde-format
 msgid "Version"
-msgstr ""
+msgstr "版本"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:352
 #: rkward/dialogs/rkloadlibsdialog.cpp:941
 #, kde-format
 msgid "Location"
-msgstr ""
+msgstr "位置"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:357
 #, kde-format
 msgid "Load"
-msgstr ""
+msgstr "載入"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:359
 #, kde-format
 msgid "Unload"
-msgstr ""
+msgstr "取消載入"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:366
 #, kde-format
 msgid "Loaded packages"
-msgstr ""
+msgstr "已載入套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:503
 #, kde-format
@@ -1045,7 +1047,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:582
 #, kde-format
 msgid "Select all updates"
-msgstr ""
+msgstr "選取所有更新"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:644
 #, kde-format
@@ -1120,7 +1122,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:771
 #, kde-format
 msgid "Package not available"
-msgstr ""
+msgstr "套件包不可用"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:876
 #, kde-format
@@ -1136,7 +1138,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:526
 #, kde-format
 msgid "Status"
-msgstr ""
+msgstr "狀態"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:944
 #, kde-format
@@ -1213,13 +1215,13 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:1008
 #, kde-format
 msgid "Install"
-msgstr ""
+msgstr "安裝"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1011
 #: rkward/misc/multistringselector.cpp:107
 #, kde-format
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1196
 #, kde-format
@@ -1251,7 +1253,6 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist, the most recent one of which dates "
 "from <i>%2</i>.</p>"
 msgstr[0] ""
-msgstr[1] ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:40
 #, kde-format
@@ -1283,7 +1284,7 @@ msgstr ""
 #: rkward/dialogs/rkrecoverdialog.cpp:48 rkward/windows/robjectbrowser.cpp:125
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "刪除"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:49
 #, kde-format
@@ -1299,7 +1300,6 @@ msgid_plural ""
 "You are about to delete %1 recovery files (the most recent one is %2). There "
 "will be no way to bring them back. Really delete them?"
 msgstr[0] ""
-msgstr[1] ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:61
 #, kde-format
@@ -1321,12 +1321,12 @@ msgstr ""
 #: rkward/dialogs/rksavemodifieddialog.cpp:77
 #, kde-format
 msgid "R Workspace (Data and Functions)"
-msgstr ""
+msgstr "R 工作區（資料和函式）"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:80
 #, kde-format
 msgid "[Not saved]"
-msgstr ""
+msgstr "[未儲存]"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:88
 #, kde-format
@@ -1347,12 +1347,12 @@ msgstr ""
 #: rkward/dialogs/rksavemodifieddialog.cpp:116
 #, kde-format
 msgid "Discard all"
-msgstr ""
+msgstr "捨棄全部"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:117
 #, kde-format
 msgid "Do not close"
-msgstr ""
+msgstr "不要關閉"
 
 #: rkward/dialogs/rkselectlistdialog.cpp:39
 #, kde-format
@@ -1506,7 +1506,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
 msgid "Restore defaults"
-msgstr ""
+msgstr "回復預設值"
 
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
@@ -1832,7 +1832,7 @@ msgstr ""
 #: rkward/main.cpp:274
 #, kde-format
 msgid "Marco Martin"
-msgstr ""
+msgstr "Marco Martin"
 
 #: rkward/main.cpp:274
 #, kde-format
@@ -1842,7 +1842,7 @@ msgstr ""
 #: rkward/main.cpp:275
 #, kde-format
 msgid "Daniele Medri"
-msgstr ""
+msgstr "Daniele Medri"
 
 #: rkward/main.cpp:275
 #, kde-format
@@ -2038,7 +2038,7 @@ msgstr ""
 #: rkward/misc/editformatdialog.cpp:37
 #, kde-format
 msgid "Default"
-msgstr ""
+msgstr "預設"
 
 #: rkward/misc/editformatdialog.cpp:39
 #, kde-format
@@ -2058,7 +2058,7 @@ msgstr ""
 #: rkward/misc/editformatdialog.cpp:49
 #, kde-format
 msgid "Default setting"
-msgstr ""
+msgstr "預設設定"
 
 #: rkward/misc/editformatdialog.cpp:51
 #, kde-format
@@ -2096,7 +2096,7 @@ msgstr ""
 #: rkward/misc/multistringselector.cpp:103
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "新增"
 
 #: rkward/misc/multistringselector.cpp:113
 #, kde-format
@@ -2111,7 +2111,7 @@ msgstr ""
 #: rkward/misc/rkaccordiontable.cpp:85
 #, kde-format
 msgid "Click to add new row"
-msgstr ""
+msgstr "按一下以新增列"
 
 #: rkward/misc/rkaccordiontable.cpp:441
 #, kde-format
@@ -2128,7 +2128,7 @@ msgstr ""
 #: rkward/misc/rkdynamicsearchline.cpp:24
 #, kde-format
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
 #: rkward/misc/rkdynamicsearchline.cpp:46
 #, kde-format
@@ -2143,17 +2143,17 @@ msgstr ""
 #: rkward/misc/rkfindbar.cpp:58
 #, kde-format
 msgid "Search backwards (previous occurrence of search term)"
-msgstr ""
+msgstr "向後搜尋（搜尋語詞上一次出現）"
 
 #: rkward/misc/rkfindbar.cpp:64
 #, kde-format
 msgid "Search forward (next occurrence of search term)"
-msgstr ""
+msgstr "向前搜尋（搜尋語詞上一次出現）"
 
 #: rkward/misc/rkfindbar.cpp:94
 #, kde-format
 msgid "Match case"
-msgstr ""
+msgstr "符合大小寫"
 
 #: rkward/misc/rkfindbar.cpp:96 rkward/windows/rkhtmlwindow.cpp:1040
 #, kde-format
@@ -2168,12 +2168,12 @@ msgstr ""
 #: rkward/misc/rkobjectlistview.cpp:51
 #, kde-format
 msgid "Other Environments"
-msgstr ""
+msgstr "其他環境"
 
 #: rkward/misc/rkobjectlistview.cpp:53
 #, kde-format
 msgid "My Workspace"
-msgstr ""
+msgstr "我的工作區"
 
 #: rkward/misc/rkobjectlistview.cpp:54
 #, kde-format
@@ -2183,7 +2183,7 @@ msgstr ""
 #: rkward/misc/rkobjectlistview.cpp:210 rkward/misc/rkobjectlistview.cpp:306
 #, kde-format
 msgid "Show Hidden Objects"
-msgstr ""
+msgstr "顯示隱藏物件"
 
 #: rkward/misc/rkobjectlistview.cpp:261
 #, kde-format
@@ -2214,17 +2214,17 @@ msgstr ""
 #: rkward/misc/rkobjectlistview.cpp:293
 #, kde-format
 msgid "Show all objects"
-msgstr ""
+msgstr "顯示所有物件"
 
 #: rkward/misc/rkobjectlistview.cpp:294
 #, kde-format
 msgid "Show functions, only"
-msgstr ""
+msgstr "只顯示函式"
 
 #: rkward/misc/rkobjectlistview.cpp:295
 #, kde-format
 msgid "Show objects excluding functions"
-msgstr ""
+msgstr "顯示除了函式以外的物件"
 
 #: rkward/misc/rkobjectlistview.cpp:296
 #, kde-format
@@ -2247,12 +2247,12 @@ msgstr ""
 #: rkward/misc/rkobjectlistview.cpp:316
 #, kde-format
 msgid "Discards the current object search filters"
-msgstr ""
+msgstr "會捨棄目前的物件搜尋過濾器"
 
 #: rkward/misc/rkobjectlistview.cpp:478
 #, kde-format
 msgid "Show Fields"
-msgstr ""
+msgstr "顯示欄位"
 
 #: rkward/misc/rkoutputdirectory.cpp:135
 #, kde-format
@@ -2267,12 +2267,12 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:137
 #, kde-format
 msgid "All Files [*](*)"
-msgstr ""
+msgstr "所有檔案 [*](*)"
 
 #: rkward/misc/rkoutputdirectory.cpp:142
 #, kde-format
 msgid "File selection canceled"
-msgstr ""
+msgstr "已取消檔案選取"
 
 #: rkward/misc/rkoutputdirectory.cpp:151
 #, kde-format
@@ -2363,7 +2363,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:327
 #, kde-format
 msgid "[Unnamed]"
-msgstr ""
+msgstr "[未命名]"
 
 #: rkward/misc/rkoutputdirectory.cpp:335
 #, kde-format
@@ -2380,7 +2380,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:338
 #, kde-format
 msgid "Discard unsaved changes?"
-msgstr ""
+msgstr "捨棄未儲存的變更？"
 
 #: rkward/misc/rkoutputdirectory.cpp:428
 #, kde-format
@@ -2427,7 +2427,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:185
 #, kde-format
 msgid "Output"
-msgstr ""
+msgstr "輸出"
 
 #: rkward/misc/rkprogresscontrol.cpp:259
 #, kde-format
@@ -2449,7 +2449,7 @@ msgstr ""
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: rkward/misc/rkprogresscontrol.cpp:482
 #, kde-format
@@ -2459,14 +2459,14 @@ msgstr ""
 #: rkward/misc/rkprogresscontrol.cpp:482
 #, kde-format
 msgid "<b>Done</b>"
-msgstr ""
+msgstr "<b>完成</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:485
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
-msgstr ""
+msgstr "關閉"
 
 #: rkward/misc/rkprogresscontrol.cpp:533 rkward/windows/rkwindowcatcher.cpp:383
 #, kde-format
@@ -2481,12 +2481,12 @@ msgstr ""
 #: rkward/misc/rkprogresscontrol.cpp:533
 #, kde-format
 msgid "Cancel operation"
-msgstr ""
+msgstr "取消操作"
 
 #: rkward/misc/rkprogresscontrol.cpp:533
 #, kde-format
 msgid "Cancel && Close"
-msgstr ""
+msgstr "取消並關閉"
 
 #: rkward/misc/rkprogresscontrol.cpp:545
 #, kde-format
@@ -2496,7 +2496,7 @@ msgstr ""
 #: rkward/misc/rksaveobjectchooser.cpp:44
 #, kde-format
 msgid "Change"
-msgstr ""
+msgstr "變更"
 
 #: rkward/misc/rksaveobjectchooser.cpp:54
 #, kde-format
@@ -2521,17 +2521,17 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr ""
+msgstr "特殊貼上..."
 
 #: rkward/misc/rkspecialactions.cpp:64
 #, kde-format
 msgid "Paste Special..."
-msgstr ""
+msgstr "特殊貼上..."
 
 #: rkward/misc/rkspecialactions.cpp:81
 #, kde-format
 msgid "Paste Mode"
-msgstr ""
+msgstr "貼上模式"
 
 #: rkward/misc/rkspecialactions.cpp:84
 #, kde-format
@@ -2556,12 +2556,12 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:106
 #, kde-format
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: rkward/misc/rkspecialactions.cpp:110
 #, kde-format
 msgid "Comma"
-msgstr ""
+msgstr "逗號"
 
 #: rkward/misc/rkspecialactions.cpp:114
 #, kde-format
@@ -2576,7 +2576,7 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:121
 #, kde-format
 msgid "Other:"
-msgstr ""
+msgstr "其他："
 
 #: rkward/misc/rkspecialactions.cpp:134
 #, kde-format
@@ -2591,7 +2591,7 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:140
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "自動"
 
 #: rkward/misc/rkspecialactions.cpp:144
 #, kde-format
@@ -2653,7 +2653,7 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:309
 #, kde-format
 msgid "Paste failed"
-msgstr ""
+msgstr "貼上失敗"
 
 #: rkward/misc/rkstandardactions.cpp:27
 #, kde-format
@@ -2663,19 +2663,19 @@ msgstr ""
 #: rkward/misc/rkstandardactions.cpp:46
 #, kde-format
 msgid "Run line / selection"
-msgstr ""
+msgstr "執行本行或選取範圍"
 
 #: rkward/misc/rkstandardactions.cpp:47
 #, kde-format
 msgid ""
 "Runs the current selection (if any) or the current line (if there is no "
 "selection)"
-msgstr ""
+msgstr "執行目前選取範圍（如果有選取的話）或是目前的行（如果沒有選取的話）"
 
 #: rkward/misc/rkstandardactions.cpp:50
 #, kde-format
 msgid "Run selection"
-msgstr ""
+msgstr "執行選取範圍"
 
 #: rkward/misc/rkstandardactions.cpp:62
 #, kde-format
@@ -2685,7 +2685,7 @@ msgstr ""
 #: rkward/misc/rkstandardactions.cpp:75
 #, kde-format
 msgid "&Function reference"
-msgstr ""
+msgstr "函式參考(&F)"
 
 #: rkward/misc/rkstandardactions.cpp:131
 #, kde-format
@@ -2695,7 +2695,7 @@ msgstr ""
 #: rkward/misc/rkstandardactions.cpp:165
 #, kde-format
 msgid "Search online"
-msgstr ""
+msgstr "線上搜尋"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:202
 #, kde-format
@@ -2710,7 +2710,7 @@ msgstr ""
 #: rkward/misc/rkxmlguipreviewarea.cpp:261
 #, kde-format
 msgid "Preview disabled"
-msgstr ""
+msgstr "預覽已停用"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:263
 #, kde-format
@@ -2782,12 +2782,12 @@ msgstr ""
 #: rkward/plugin/rkcheckbox.cpp:64
 #, kde-format
 msgid "yes"
-msgstr ""
+msgstr "是"
 
 #: rkward/plugin/rkcheckbox.cpp:64
 #, kde-format
 msgid "no"
-msgstr ""
+msgstr "否"
 
 #: rkward/plugin/rkcomponentmap.cpp:266 rkward/plugin/rkcomponentmap.cpp:646
 #, kde-format
@@ -2826,6 +2826,8 @@ msgid ""
 "\n"
 "The plugin has crashed."
 msgstr ""
+"\n"
+"外掛程式已崩潰。"
 
 #: rkward/plugin/rkcomponentmap.cpp:508
 #, kde-format
@@ -2914,7 +2916,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmeta.cpp:84
 #, kde-format
 msgid "Authors:"
-msgstr ""
+msgstr "作者群："
 
 #: rkward/plugin/rkcomponentmeta.cpp:90
 #, kde-format
@@ -2987,7 +2989,7 @@ msgstr ""
 #: rkward/plugin/rkformula.cpp:67
 #, kde-format
 msgid "Custom Model:"
-msgstr ""
+msgstr "自訂模型："
 
 #: rkward/plugin/rkformula.cpp:93
 #, kde-format
@@ -3082,7 +3084,7 @@ msgstr ""
 #: rkward/plugin/rkpluginbrowser.cpp:47
 #, kde-format
 msgid "Select"
-msgstr ""
+msgstr "選取"
 
 #: rkward/plugin/rkpluginbrowser.cpp:123
 #, kde-format
@@ -3134,7 +3136,7 @@ msgstr ""
 #: rkward/plugin/rkpluginsaveobject.cpp:29
 #, kde-format
 msgid "Save to:"
-msgstr ""
+msgstr "儲存到："
 
 #: rkward/plugin/rkpluginsaveobject.cpp:30
 #, kde-format
@@ -3150,7 +3152,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:397
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "預覽"
 
 #: rkward/plugin/rkstandardcomponent.cpp:89
 #, kde-format
@@ -3167,19 +3169,19 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponent.cpp:675
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "選項"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:146
 #: rkward/plugin/rkstandardcomponentgui.cpp:215
 #, kde-format
 msgid "Code Preview"
-msgstr ""
+msgstr "程式碼預覽"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:184
 #: rkward/plugin/rkstandardcomponentgui.cpp:605
 #, kde-format
 msgid "Submit"
-msgstr ""
+msgstr "提交"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:192
 #, kde-format
@@ -3200,7 +3202,7 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponentgui.cpp:323
 #, kde-format
 msgid "Run again"
-msgstr ""
+msgstr "再次執行"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:448
 #, kde-format
@@ -3236,17 +3238,17 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponentgui.cpp:613
 #, kde-format
 msgid "Use Dialog"
-msgstr ""
+msgstr "使用對話框"
 
 #: rkward/plugin/rkvarselector.cpp:48
 #, kde-format
 msgid "Select Variable(s)"
-msgstr ""
+msgstr "選取變數"
 
 #: rkward/plugin/rkvarselector.cpp:62
 #, kde-format
 msgid "Show all environments"
-msgstr ""
+msgstr "顯示所有環境"
 
 #: rkward/plugin/rkvarselector.cpp:64
 #, kde-format
@@ -3259,7 +3261,7 @@ msgstr ""
 #: rkward/plugin/rkvarselector.cpp:71
 #, kde-format
 msgid "Show filter options"
-msgstr ""
+msgstr "顯示過濾選項"
 
 #: rkward/plugin/rkvarselector.cpp:127
 #, kde-format
@@ -3286,12 +3288,12 @@ msgstr ""
 #: rkward/rbackend/rcommandstack.cpp:268
 #, kde-format
 msgid "Running"
-msgstr ""
+msgstr "執行中"
 
 #: rkward/rbackend/rcommandstack.cpp:271
 #, kde-format
 msgid "Canceled"
-msgstr ""
+msgstr "已取消"
 
 #: rkward/rbackend/rcommandstack.cpp:280
 #, kde-format
@@ -3301,7 +3303,7 @@ msgstr ""
 #: rkward/rbackend/rcommandstack.cpp:282
 #, kde-format
 msgid "Closed"
-msgstr ""
+msgstr "已關閉"
 
 #: rkward/rbackend/rcommandstack.cpp:283
 #, kde-format
@@ -3322,19 +3324,19 @@ msgstr ""
 #: rkward/settings/rksettingsmodulekateplugins.cpp:41
 #, kde-format
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:109
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
-msgstr ""
+msgstr "找不到後端執行檔。這很可能是您的安裝的問題。"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:169
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
-msgstr ""
+msgstr "無法啟動後端執行檔。錯誤訊息是：%1"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:222
 #, kde-format
@@ -3355,12 +3357,12 @@ msgstr ""
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
-msgstr ""
+msgstr "無法啟動後端行程。請檢查您的安裝。"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:260
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
-msgstr ""
+msgstr "後端行程啟動時失敗，結束碼為 %1，訊息：'%2'。"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:261
 #, kde-format
@@ -3382,7 +3384,7 @@ msgstr ""
 #: rkward/rbackend/rkrbackend.cpp:763
 #, kde-format
 msgid "Message from the R backend"
-msgstr ""
+msgstr "來自 R 後端的訊息"
 
 #: rkward/rbackend/rkrbackend.cpp:771
 #, kde-format
@@ -3428,7 +3430,7 @@ msgstr ""
 #: rkward/rbackend/rkrbackend.cpp:1793
 #, kde-format
 msgid "Ok"
-msgstr ""
+msgstr "確定"
 
 #: rkward/rbackend/rkrinterface.cpp:86
 #, kde-format
@@ -3457,7 +3459,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:594
 #, kde-format
 msgid "Quitting was canceled"
-msgstr ""
+msgstr "離開已取消"
 
 #: rkward/rbackend/rkrinterface.cpp:596
 #, kde-format
@@ -3520,7 +3522,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:892
 #, kde-format
 msgid "R backend requests information"
-msgstr ""
+msgstr "R 後端要求資訊"
 
 #: rkward/rbackend/rkrinterface.cpp:911
 #, kde-format
@@ -3536,7 +3538,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:912
 #, kde-format
 msgid "R engine has died"
-msgstr ""
+msgstr "R 引擎掛了"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:206
 #, kde-format
@@ -3547,13 +3549,13 @@ msgstr ""
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
-msgstr ""
+msgstr "%1 (作用中)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:592
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
-msgstr ""
+msgstr "%1 (非作用中)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:618
 #, kde-format
@@ -3605,12 +3607,12 @@ msgstr ""
 #: rkward/rkconsole.cpp:132 rkward/windows/rkcommandeditorwindow.cpp:408
 #, kde-format
 msgid "R Console"
-msgstr ""
+msgstr "R 主控台"
 
 #: rkward/rkconsole.cpp:140
 #, kde-format
 msgid "Scrollbar minimap"
-msgstr ""
+msgstr "捲動軸小地圖"
 
 #: rkward/rkconsole.cpp:142
 #, kde-format
@@ -3635,7 +3637,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "Select filename to save command history"
-msgstr ""
+msgstr "選擇儲存命令歷史用的檔案名稱"
 
 #: rkward/rkconsole.cpp:742
 #, kde-format
@@ -3645,7 +3647,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Interrupt running command"
-msgstr ""
+msgstr "中斷執行中命令"
 
 #: rkward/rkconsole.cpp:874
 #, kde-format
@@ -3704,7 +3706,7 @@ msgstr ""
 #: rkward/windows/rkstandardactions.rc:12
 #, kde-format
 msgid "&File"
-msgstr ""
+msgstr "檔案(&F)"
 
 #. i18n: ectx: Menu (view)
 #: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
@@ -3713,7 +3715,7 @@ msgstr ""
 #: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
 #, kde-format
 msgid "&View"
-msgstr ""
+msgstr "檢視(&V)"
 
 #. i18n: ectx: Menu (run)
 #: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
@@ -3723,7 +3725,7 @@ msgstr ""
 #: rkward/windows/rkstandardactions.rc:18
 #, kde-format
 msgid "&Run"
-msgstr ""
+msgstr "執行(&R)"
 
 #: rkward/rkward.cpp:303
 #, kde-format
@@ -3748,7 +3750,7 @@ msgstr ""
 #: rkward/rkward.cpp:316
 #, kde-format
 msgid "Setting up plugins..."
-msgstr ""
+msgstr "正在設定外掛程式..."
 
 #: rkward/rkward.cpp:350
 #, kde-format
@@ -3802,7 +3804,7 @@ msgstr ""
 #: rkward/rkward.cpp:432 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
 #, kde-format
 msgid "Workspace"
-msgstr ""
+msgstr "工作區"
 
 #: rkward/rkward.cpp:441
 #, kde-format
@@ -3822,7 +3824,7 @@ msgstr ""
 #: rkward/rkward.cpp:462
 #, kde-format
 msgid "Debugger Console"
-msgstr ""
+msgstr "除錯器主控台"
 
 #: rkward/rkward.cpp:466
 #, kde-format
@@ -3857,22 +3859,22 @@ msgstr ""
 #: rkward/rkward.cpp:494
 #, kde-format
 msgid "Open R Script File..."
-msgstr ""
+msgstr "開啟 R 文稿檔案..."
 
 #: rkward/rkward.cpp:498
 #, kde-format
 msgid "Open RKWard Output File..."
-msgstr ""
+msgstr "開啟 RKWard 輸出檔案..."
 
 #: rkward/rkward.cpp:502
 #, kde-format
 msgid "Open any File..."
-msgstr ""
+msgstr "開啟任何檔案..."
 
 #: rkward/rkward.cpp:507
 #, kde-format
 msgid "Open Recent R Script File"
-msgstr ""
+msgstr "開啟最近的 R 文稿檔案"
 
 #: rkward/rkward.cpp:511
 #, kde-format
@@ -3888,7 +3890,7 @@ msgstr ""
 #: rkward/rkward.cpp:516
 #, kde-format
 msgid "Open Workspace..."
-msgstr ""
+msgstr "開啟工作區..."
 
 #: rkward/rkward.cpp:518
 #, kde-format
@@ -3898,7 +3900,7 @@ msgstr ""
 #: rkward/rkward.cpp:523
 #, kde-format
 msgid "Open Recent Workspace"
-msgstr ""
+msgstr "開啟最近的工作區"
 
 #: rkward/rkward.cpp:524
 #, kde-format
@@ -3908,7 +3910,7 @@ msgstr ""
 #: rkward/rkward.cpp:527
 #, kde-format
 msgid "Save Workspace"
-msgstr ""
+msgstr "儲存工作區"
 
 #: rkward/rkward.cpp:529
 #, kde-format
@@ -3918,7 +3920,7 @@ msgstr ""
 #: rkward/rkward.cpp:533
 #, kde-format
 msgid "Save Workspace As"
-msgstr ""
+msgstr "另存工作區為"
 
 #: rkward/rkward.cpp:534
 #, kde-format
@@ -3928,7 +3930,7 @@ msgstr ""
 #: rkward/rkward.cpp:537
 #, kde-format
 msgid "Quits the application"
-msgstr ""
+msgstr "離開應用程式"
 
 #: rkward/rkward.cpp:540
 #, kde-format
@@ -3948,17 +3950,17 @@ msgstr ""
 #: rkward/rkward.cpp:561
 #, kde-format
 msgid "Close All Data"
-msgstr ""
+msgstr "關閉全部資料"
 
 #: rkward/rkward.cpp:562
 #, kde-format
 msgid "Closes all open data editors"
-msgstr ""
+msgstr "會關閉所有開啟的資料編輯器"
 
 #: rkward/rkward.cpp:567
 #, kde-format
 msgid "Close All"
-msgstr ""
+msgstr "全部關閉"
 
 #: rkward/rkward.cpp:571 rkward/windows/rktoolwindowbar.cpp:299
 #: rkward/windows/rkworkplaceview.cpp:96
@@ -3969,7 +3971,7 @@ msgstr ""
 #: rkward/rkward.cpp:575
 #, kde-format
 msgid "Check installation"
-msgstr ""
+msgstr "檢查安裝"
 
 #: rkward/rkward.cpp:579
 #, kde-format
@@ -3979,22 +3981,22 @@ msgstr ""
 #: rkward/rkward.cpp:586
 #, kde-format
 msgid "Open..."
-msgstr ""
+msgstr "開啟..."
 
 #: rkward/rkward.cpp:600
 #, kde-format
 msgid "Create..."
-msgstr ""
+msgstr "建立..."
 
 #: rkward/rkward.cpp:607
 #, kde-format
 msgid "Save..."
-msgstr ""
+msgstr "儲存..."
 
 #: rkward/rkward.cpp:629
 #, kde-format
 msgid "Restart R Backend"
-msgstr ""
+msgstr "重新啟動 R 後端"
 
 #: rkward/rkward.cpp:631
 #, kde-format
@@ -4008,7 +4010,7 @@ msgstr ""
 #: rkward/rkward.cpp:632
 #, kde-format
 msgid "Restart R backend"
-msgstr ""
+msgstr "重新啟動 R 後端"
 
 #: rkward/rkward.cpp:636
 #, kde-format
@@ -4031,12 +4033,12 @@ msgstr ""
 #: rkward/rkward.cpp:637
 #, kde-format
 msgid "Check again"
-msgstr ""
+msgstr "再次檢查"
 
 #: rkward/rkward.cpp:637
 #, kde-format
 msgid "Cancel restarting"
-msgstr ""
+msgstr "取消重新啟動"
 
 #: rkward/rkward.cpp:775
 #, kde-format
@@ -4046,7 +4048,7 @@ msgstr ""
 #: rkward/rkward.cpp:793 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
 msgid "Configure R backend"
-msgstr ""
+msgstr "設定 R 後端"
 
 #: rkward/rkward.cpp:847
 #, kde-format
@@ -4066,12 +4068,12 @@ msgstr ""
 #: rkward/rkward.cpp:877
 #, kde-format
 msgid "Opening workspace..."
-msgstr ""
+msgstr "正在開啟工作區..."
 
 #: rkward/rkward.cpp:880
 #, kde-format
 msgid "Select workspace to open..."
-msgstr ""
+msgstr "選擇要開啟的工作區..."
 
 #: rkward/rkward.cpp:960
 #, kde-format
@@ -4096,7 +4098,7 @@ msgstr ""
 #: rkward/rkward.cpp:997
 #, kde-format
 msgid "Open"
-msgstr ""
+msgstr "開啟"
 
 #: rkward/rkward.cpp:1001
 #, kde-format
@@ -4111,12 +4113,12 @@ msgstr ""
 #: rkward/rkward.cpp:1003
 #, kde-format
 msgid "Open as text / script file"
-msgstr ""
+msgstr "作為文字/文稿檔案開啟"
 
 #: rkward/rkward.cpp:1003
 #, kde-format
 msgid "Open as text file and force R highlighting"
-msgstr ""
+msgstr "作為文字檔案開啟，強制使用 R 語法突顯"
 
 #: rkward/rkward.cpp:1040
 #, kde-format
@@ -4131,48 +4133,48 @@ msgstr ""
 #: rkward/rkward.cpp:1049
 #, kde-format
 msgid "Open script file(s)"
-msgstr ""
+msgstr "開啟文稿檔案"
 
 #: rkward/rkward.cpp:1063
 #, kde-format
 msgid "[Unnamed Workspace]"
-msgstr ""
+msgstr "[未命名工作區]"
 
 #. i18n: ectx: Menu (new_data)
 #: rkward/rkwardui.rc:13
 #, kde-format
 msgid "&New"
-msgstr ""
+msgstr "新增(&N)"
 
 #. i18n: ectx: Menu (open_specific)
 #: rkward/rkwardui.rc:19
 #, kde-format
 msgid "&Open by Type"
-msgstr ""
+msgstr "依類型開啟(&O)"
 
 #. i18n: ectx: Menu (import)
 #: rkward/rkwardui.rc:25
 #, kde-format
 msgid "&Import"
-msgstr ""
+msgstr "匯入(&I)"
 
 #. i18n: ectx: Menu (export)
 #: rkward/rkwardui.rc:30
 #, kde-format
 msgid "&Export"
-msgstr ""
+msgstr "匯出(&E)"
 
 #. i18n: ectx: Menu (workspace)
 #: rkward/rkwardui.rc:36
 #, kde-format
 msgid "&Workspace"
-msgstr ""
+msgstr "工作區(&W)"
 
 #. i18n: ectx: Menu (window)
 #: rkward/rkwardui.rc:75
 #, kde-format
 msgid "&Windows"
-msgstr ""
+msgstr "視窗(&W)"
 
 #. i18n: ectx: Menu (window_activate)
 #: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
@@ -4189,7 +4191,7 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.rc:26
 #, kde-format
 msgid "&Settings"
-msgstr ""
+msgstr "設定(&S)"
 
 #. i18n: ectx: Menu (help)
 #: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
@@ -4197,7 +4199,7 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.rc:33
 #, kde-format
 msgid "&Help"
-msgstr ""
+msgstr "說明(&H)"
 
 #: rkward/robjectviewer.cpp:49
 #, kde-format
@@ -4245,6 +4247,8 @@ msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
 msgstr ""
+"QtScript 後端回報了錯誤：\n"
+"%1"
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:139
 #, kde-format
@@ -4292,12 +4296,12 @@ msgstr ""
 #: rkward/scriptbackends/scriptbackend.cpp:83
 #, kde-format
 msgid "## Prepare\n"
-msgstr ""
+msgstr "## 預備\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:86
 #, kde-format
 msgid "## Compute\n"
-msgstr ""
+msgstr "## 運算\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:89
 #, kde-format
@@ -4307,7 +4311,7 @@ msgstr ""
 #: rkward/settings/rksettings.cpp:93
 #, kde-format
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: rkward/settings/rksettings.cpp:157
 #, kde-format
@@ -4332,12 +4336,12 @@ msgstr ""
 #: rkward/settings/rksettings.cpp:162
 #, kde-format
 msgid "Add-ons"
-msgstr ""
+msgstr "附加元件"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:44
 #, kde-format
 msgid "Code Completion / Code Hints"
-msgstr ""
+msgstr "程式碼自動補完 / 程式碼提示"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
@@ -4362,7 +4366,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
 msgid "Auto word completion"
-msgstr ""
+msgstr "自動文字補完"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
@@ -4401,7 +4405,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:71
 #, kde-format
 msgid "Tab key invokes code completion"
-msgstr ""
+msgstr "Tab 鍵會觸發程式碼補完"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
 #, kde-format
@@ -4503,12 +4507,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:127
 #, kde-format
 msgid "Autosaves"
-msgstr ""
+msgstr "自動儲存"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:133
 #, kde-format
 msgid "Autosave interval (minutes)"
-msgstr ""
+msgstr "自動儲存間隔（分）"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:135
 #, kde-format
@@ -4564,7 +4568,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
 msgid "Do not add"
-msgstr ""
+msgstr "不要加入"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
@@ -4584,7 +4588,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:134
 #, kde-format
 msgid "Console"
-msgstr ""
+msgstr "主控台"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:33
 #, kde-format
@@ -4597,12 +4601,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduledebug.cpp:37
 #, kde-format
 msgid "Debug level"
-msgstr ""
+msgstr "除錯等級"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:47
 #, kde-format
 msgid "Debug flags"
-msgstr ""
+msgstr "除錯旗標"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:73
 #, kde-format
@@ -4617,7 +4621,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduledebug.cpp:100
 #, kde-format
 msgid "Debug"
-msgstr ""
+msgstr "除錯"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:61
 #, kde-format
@@ -4629,18 +4633,18 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:67
 #, kde-format
 msgid "Startup behavior"
-msgstr ""
+msgstr "啟動時的行為"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:69
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
-msgstr ""
+msgstr "從起始目錄載入 .RData 檔案，如果有的話（R 選項 '--restore'）"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
 msgid "Show RKWard Help on Startup"
-msgstr ""
+msgstr "啟動時顯示 RKWard 說明"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:72
 #: rkward/settings/rksettingsmodulegeneral.cpp:78
@@ -4651,7 +4655,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
 msgid "Do not change current directory on startup"
-msgstr ""
+msgstr "不要在啟動時變更目前目錄"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
@@ -4716,7 +4720,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Do not save/restore workplace layout"
-msgstr ""
+msgstr "不要儲存/復原工作區佈局"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:118
 #, kde-format
@@ -4738,7 +4742,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
 msgid "Click to focus"
-msgstr ""
+msgstr "按一下取得焦點"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
@@ -4753,7 +4757,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:50
 #, kde-format
 msgid "Default graphics device"
-msgstr ""
+msgstr "預設圖形裝置"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:53
 #, kde-format
@@ -4768,7 +4772,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:59
 #, kde-format
 msgid "Other device:"
-msgstr ""
+msgstr "其他裝置："
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:68
 #, kde-format
@@ -4829,12 +4833,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:107
 #, kde-format
 msgid "Default width (inches):"
-msgstr ""
+msgstr "預設寬度（英吋）："
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:110
 #, kde-format
 msgid "Default height (inches)"
-msgstr ""
+msgstr "預設高度（英吋）"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:114
 #, kde-format
@@ -4885,7 +4889,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:72
 #, kde-format
 msgid "Add exclusion"
-msgstr ""
+msgstr "新增排除"
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:72
 #, kde-format
@@ -4925,12 +4929,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:121
 #, kde-format
 msgid "show window on new output"
-msgstr ""
+msgstr "有新輸出時顯示視窗"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:123
 #, kde-format
 msgid "raise window on new output"
-msgstr ""
+msgstr "有新輸出時抬升視窗"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:130
 #, kde-format
@@ -4947,7 +4951,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:132
 #, kde-format
 msgid "Select CSS file"
-msgstr ""
+msgstr "選擇 CSS 檔案"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:134
 #, kde-format
@@ -4976,7 +4980,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:144
 #, kde-format
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:145
 #, kde-format
@@ -4996,7 +5000,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:158
 #, kde-format
 msgid "Width:"
-msgstr ""
+msgstr "寬度："
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:161
 #, kde-format
@@ -5041,7 +5045,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1257
 #, kde-format
 msgid "Dependencies"
-msgstr ""
+msgstr "相依性"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:494
 #, kde-format
@@ -5061,7 +5065,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:523
 #, kde-format
 msgid "Active"
-msgstr ""
+msgstr "作用中"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:524
 #, kde-format
@@ -5071,7 +5075,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:552
 #, kde-format
 msgid "Select .pluginmap-file"
-msgstr ""
+msgstr "選擇 .pluginmap 檔案"
 
 #: rkward/settings/rksettingsmoduler.cpp:68
 #, kde-format
@@ -5083,7 +5087,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:75
 #, kde-format
 msgid "Display warnings"
-msgstr ""
+msgstr "顯示警告"
 
 #: rkward/settings/rksettingsmoduler.cpp:77
 #, kde-format
@@ -5195,12 +5199,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:173
 #, kde-format
 msgid "R-Backend"
-msgstr ""
+msgstr "R 後端"
 
 #: rkward/settings/rksettingsmoduler.cpp:208
 #, kde-format
 msgid "Add System Path Directory"
-msgstr ""
+msgstr "新增系統路徑目錄"
 
 #: rkward/settings/rksettingsmoduler.cpp:210
 #, kde-format
@@ -5213,7 +5217,7 @@ msgstr ""
 #, kde-format
 msgctxt "Add directory to list"
 msgid "Add"
-msgstr ""
+msgstr "新增"
 
 #: rkward/settings/rksettingsmoduler.cpp:320
 #, kde-format
@@ -5223,7 +5227,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:327
 #, kde-format
 msgid "Select mirror"
-msgstr ""
+msgstr "選擇鏡像"
 
 #: rkward/settings/rksettingsmoduler.cpp:331
 #, kde-format
@@ -5282,7 +5286,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:415
 #, kde-format
 msgid "Add R Library Directory"
-msgstr ""
+msgstr "新增 R 函式庫目錄"
 
 #: rkward/settings/rksettingsmoduler.cpp:417
 #, kde-format
@@ -5298,7 +5302,7 @@ msgstr ""
 #, kde-format
 msgctxt "Add file to list"
 msgid "Add"
-msgstr ""
+msgstr "新增"
 
 #: rkward/settings/rksettingsmoduler.cpp:440
 #, kde-format
@@ -5318,7 +5322,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:456
 #, kde-format
 msgid "Select CRAN mirror"
-msgstr ""
+msgstr "選擇 CRAN 鏡像"
 
 #: rkward/settings/rksettingsmoduler.cpp:583
 #, kde-format
@@ -5341,7 +5345,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
-msgstr ""
+msgstr "重新命名"
 
 #: rkward/settings/rksettingsmoduler.cpp:588
 #, kde-format
@@ -5355,7 +5359,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: rkward/settings/rksettingsmoduler.cpp:596
 #, kde-format
@@ -5395,12 +5399,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulewatch.cpp:127
 #, kde-format
 msgid "show errors"
-msgstr ""
+msgstr "顯示錯誤"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:129
 #, kde-format
 msgid "show/raise window"
-msgstr ""
+msgstr "顯示/抬升視窗"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
@@ -5445,14 +5449,14 @@ msgstr ""
 #: rkward/windows/rkcatchedx11windowpart.rc:9
 #, kde-format
 msgid "&Device"
-msgstr ""
+msgstr "裝置(&D)"
 
 #. i18n: ectx: Menu (history)
 #: rkward/windows/detachedwindowcontainer.rc:32
 #: rkward/windows/rkcatchedx11windowpart.rc:19
 #, kde-format
 msgid "&History"
-msgstr ""
+msgstr "歷史(&H)"
 
 #. i18n: ectx: Menu (window)
 #: rkward/windows/detachedwindowcontainer.rc:43
@@ -5460,19 +5464,19 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.rc:10
 #, kde-format
 msgid "&Window"
-msgstr ""
+msgstr "視窗(&W)"
 
 #: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
-msgstr ""
+msgstr "在目前文稿中"
 
 #: rkward/windows/katepluginintegration.cpp:608
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
-msgstr ""
+msgstr "在所有已開啟文稿中"
 
 #: rkward/windows/rcontrolwindow.cpp:45 rkward/windows/rcontrolwindow.cpp:131
 #, kde-format
@@ -5482,7 +5486,7 @@ msgstr ""
 #: rkward/windows/rcontrolwindow.cpp:50
 #, kde-format
 msgid "Cancel selected commands"
-msgstr ""
+msgstr "取消選取的命令"
 
 #: rkward/windows/rcontrolwindow.cpp:122
 #, kde-format
@@ -5576,17 +5580,17 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
 msgid "Run block"
-msgstr ""
+msgstr "執行區塊"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:384
 #, kde-format
 msgid "Mark selection as block"
-msgstr ""
+msgstr "將選取範圍標記為區塊"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:387
 #, kde-format
 msgid "Unmark block"
-msgstr ""
+msgstr "取消標記區塊"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:392
 #, kde-format
@@ -5606,7 +5610,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:405
 #, kde-format
 msgid "R Markdown"
-msgstr ""
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:406
 #, kde-format
@@ -5621,7 +5625,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:410
 #, kde-format
 msgid "Disable preview"
-msgstr ""
+msgstr "停用預覽"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -5667,18 +5671,18 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:432
 #, kde-format
 msgid "Save Script..."
-msgstr ""
+msgstr "儲存文稿..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:434
 #, kde-format
 msgid "Save Script As..."
-msgstr ""
+msgstr "儲存文稿為..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:514
 #: rkward/windows/rkcommandeditorwindow.cpp:780
 #, kde-format
 msgid " [modified]"
-msgstr ""
+msgstr " [已修改]"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:521
 #, kde-format
@@ -5728,7 +5732,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid "Pandoc is not installed"
-msgstr ""
+msgstr "未安裝 Pandoc"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:914
 #, kde-format
@@ -5759,12 +5763,12 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
 msgid "%1 (Active)"
-msgstr ""
+msgstr "%1 (作用中)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1077
 #, kde-format
 msgid "%1 (Unused)"
-msgstr ""
+msgstr "%1 (未使用)"
 
 #. i18n: ectx: Menu (tools)
 #: rkward/windows/rkcommandeditorwindowpart.rc:11
@@ -5872,22 +5876,22 @@ msgstr ""
 #: rkward/windows/rkdebugmessagewindow.cpp:71
 #, kde-format
 msgid "About this window"
-msgstr ""
+msgstr "關於這個視窗"
 
 #: rkward/windows/rkfilebrowser.cpp:122
 #, kde-format
 msgid "Working directory"
-msgstr ""
+msgstr "工作目錄"
 
 #: rkward/windows/rkfilebrowser.cpp:140 rkward/windows/robjectbrowser.cpp:119
 #, kde-format
 msgid "Rename"
-msgstr ""
+msgstr "重新命名"
 
 #: rkward/windows/rkfilebrowser.cpp:169
 #, kde-format
 msgid "Rename..."
-msgstr ""
+msgstr "重新命名..."
 
 #: rkward/windows/rkfilebrowser.cpp:169
 #, kde-format
@@ -5922,12 +5926,12 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:86
 #, kde-format
 msgid "Package:"
-msgstr ""
+msgstr "套件包："
 
 #: rkward/windows/rkhelpsearchwindow.cpp:99
 #, kde-format
 msgid "Case sensitive"
-msgstr ""
+msgstr "區分大小寫"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:101
 #, kde-format
@@ -5985,28 +5989,28 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:389
 #, kde-format
 msgid "Save as"
-msgstr ""
+msgstr "另存新檔"
 
 #: rkward/windows/rkhtmlwindow.cpp:828
 #: rkward/windows/rktoplevelwindowgui.cpp:257
 #, kde-format
 msgid "[Active]"
-msgstr ""
+msgstr "[作用中]"
 
 #: rkward/windows/rkhtmlwindow.cpp:839
 #, kde-format
 msgid "Output %1"
-msgstr ""
+msgstr "輸出 %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:894
 #, kde-format
 msgid "Output Window"
-msgstr ""
+msgstr "輸出視窗"
 
 #: rkward/windows/rkhtmlwindow.cpp:896
 #, kde-format
 msgid "&Refresh Output"
-msgstr ""
+msgstr "重新整理輸出(&R)"
 
 #: rkward/windows/rkhtmlwindow.cpp:924
 #, kde-format
@@ -6025,7 +6029,7 @@ msgstr ""
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
 "files used in the output. It will not be possible to restore it."
-msgstr ""
+msgstr "您確定要清除輸出嗎？這也會移除輸出所使用的所有影像檔。將會無法回復它。"
 
 #: rkward/windows/rkhtmlwindow.cpp:943
 #, kde-format
@@ -6040,17 +6044,17 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:990
 #, kde-format
 msgid "Zoom In"
-msgstr ""
+msgstr "放大"
 
 #: rkward/windows/rkhtmlwindow.cpp:992
 #, kde-format
 msgid "Zoom Out"
-msgstr ""
+msgstr "縮小"
 
 #: rkward/windows/rkhtmlwindow.cpp:996
 #, kde-format
 msgid "Default &Encoding"
-msgstr ""
+msgstr "預設編碼(&E)"
 
 #: rkward/windows/rkhtmlwindow.cpp:997
 #, kde-format
@@ -6067,22 +6071,22 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1020
 #, kde-format
 msgid "Save Output"
-msgstr ""
+msgstr "儲存輸出"
 
 #: rkward/windows/rkhtmlwindow.cpp:1022
 #, kde-format
 msgid "Save Output As"
-msgstr ""
+msgstr "儲存輸出為"
 
 #: rkward/windows/rkhtmlwindow.cpp:1025
 #, kde-format
 msgid "&Clear Output"
-msgstr ""
+msgstr "清除輸出(&C)"
 
 #: rkward/windows/rkhtmlwindow.cpp:1031
 #, kde-format
 msgid "&Revert to last saved state"
-msgstr ""
+msgstr "回復到上次儲存的狀態(&R)"
 
 #: rkward/windows/rkhtmlwindow.cpp:1035
 #, kde-format
@@ -6135,7 +6139,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1193
 #, kde-format
 msgid "Choose another file"
-msgstr ""
+msgstr "選擇另一個檔案"
 
 #: rkward/windows/rkhtmlwindow.cpp:1215
 #, kde-format
@@ -6150,12 +6154,12 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1248
 #, kde-format
 msgid "Technical details"
-msgstr ""
+msgstr "技術細節"
 
 #: rkward/windows/rkhtmlwindow.cpp:1271
 #, kde-format
 msgid "About"
-msgstr ""
+msgstr "關於"
 
 #: rkward/windows/rkhtmlwindow.cpp:1278
 #, kde-format
@@ -6235,7 +6239,7 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format
 msgid "Search R Help"
-msgstr ""
+msgstr "搜尋 R 說明"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:61
 #, kde-format
@@ -6276,17 +6280,17 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:88
 #, kde-format
 msgid "Show Output"
-msgstr ""
+msgstr "顯示輸出"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:100
 #, kde-format
 msgid "Color Scheme"
-msgstr ""
+msgstr "配色方案"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:133
 #, kde-format
 msgid "Show/Hide %1"
-msgstr ""
+msgstr "顯示/隱藏 %1"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:147
 #, kde-format
@@ -6391,7 +6395,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:383
 #, kde-format
 msgid "Close immediately"
-msgstr ""
+msgstr "立即關閉"
 
 #: rkward/windows/rkwindowcatcher.cpp:512
 #, kde-format
@@ -6401,7 +6405,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:517
 #, kde-format
 msgid "Width"
-msgstr ""
+msgstr "寬度"
 
 #: rkward/windows/rkwindowcatcher.cpp:527
 #, kde-format
@@ -6517,22 +6521,22 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:730
 #, kde-format
 msgid "Set fixed size 500x500"
-msgstr ""
+msgstr "設定固定大小 500x500"
 
 #: rkward/windows/rkwindowcatcher.cpp:733
 #, kde-format
 msgid "Set fixed size 1000x1000"
-msgstr ""
+msgstr "設定固定大小 1000x1000"
 
 #: rkward/windows/rkwindowcatcher.cpp:736
 #, kde-format
 msgid "Set fixed size 2000x2000"
-msgstr ""
+msgstr "設定固定大小 2000x2000"
 
 #: rkward/windows/rkwindowcatcher.cpp:739
 #, kde-format
 msgid "Set specified fixed size..."
-msgstr ""
+msgstr "設定指定固定大小..."
 
 #: rkward/windows/rkwindowcatcher.cpp:744
 #, kde-format
@@ -6572,7 +6576,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:782
 #, kde-format
 msgid "Clear history"
-msgstr ""
+msgstr "清除歷史"
 
 #: rkward/windows/rkwindowcatcher.cpp:788
 #, kde-format
@@ -6615,7 +6619,7 @@ msgstr ""
 #: rkward/windows/rkworkplace.cpp:452
 #, kde-format
 msgid "Open in default application?"
-msgstr ""
+msgstr "在預設應用程式開啟？"
 
 #: rkward/windows/rkworkplace.cpp:539
 #, kde-format
@@ -6645,17 +6649,17 @@ msgstr ""
 #: rkward/windows/rkworkplace.cpp:980
 #, kde-format
 msgid "Save Workplace layout"
-msgstr ""
+msgstr "儲存工作區佈局"
 
 #: rkward/windows/rkworkplace.cpp:989
 #, kde-format
 msgid "Restore Workplace layout"
-msgstr ""
+msgstr "復原工作區佈局"
 
 #: rkward/windows/rkworkplaceview.cpp:61
 #, kde-format
 msgid "Close all"
-msgstr ""
+msgstr "全部關閉"
 
 #: rkward/windows/rkworkplaceview.cpp:238
 #, kde-format
@@ -6670,7 +6674,7 @@ msgstr ""
 #: rkward/windows/rkworkplaceview.cpp:248
 #, kde-format
 msgid "Split Ve&rtical"
-msgstr ""
+msgstr "垂直分割(&R)"
 
 #: rkward/windows/rkworkplaceview.cpp:251
 #, kde-format
@@ -6680,7 +6684,7 @@ msgstr ""
 #: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split &Horizontal"
-msgstr ""
+msgstr "水平分割(&H)"
 
 #: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
@@ -6690,12 +6694,12 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:54
 #, kde-format
 msgid "R workspace browser"
-msgstr ""
+msgstr "R 工作區瀏覽器"
 
 #: rkward/windows/robjectbrowser.cpp:57
 #, kde-format
 msgid "R Workspace"
-msgstr ""
+msgstr "R 工作區"
 
 #: rkward/windows/robjectbrowser.cpp:115 rkward/windows/robjectbrowser.cpp:254
 #, kde-format
@@ -6705,7 +6709,7 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:117
 #, kde-format
 msgid "View"
-msgstr ""
+msgstr "檢視"
 
 #: rkward/windows/robjectbrowser.cpp:121
 #, kde-format
@@ -6752,12 +6756,12 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:201
 #, kde-format
 msgid "Name already in use"
-msgstr ""
+msgstr "名稱已被使用"
 
 #: rkward/windows/robjectbrowser.cpp:231
 #, kde-format
 msgid "Rename object"
-msgstr ""
+msgstr "重新命名物件"
 
 #: rkward/windows/robjectbrowser.cpp:231
 #, kde-format
