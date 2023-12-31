@@ -1779,8 +1779,8 @@ msgid ""
 "fixed by installing kate.</p>"
 msgstr ""
 "<p>Els connectors de Kate proporcionen una funcionalitat important en "
-"RKWard. Pareix que no n'hi ha cap d'instal·lat. A Linux/BSD, açò generalment "
-"es pot solucionar instal·lant Kate.</p>"
+"RKWard. Pareix que no n'hi ha cap d'instal·lat. En Linux/BSD, açò "
+"generalment es pot solucionar instal·lant Kate.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:169
 #, kde-format
