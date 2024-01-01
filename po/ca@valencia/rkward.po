@@ -550,12 +550,12 @@ msgstr "Feu doble clic en estos camps per a modificar els nivells del factor."
 #: rkward/dataeditor/twintable.cpp:99
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
-msgstr "Retalla la secció seleccionada i la posa al porta-retalls"
+msgstr "Retalla la secció seleccionada i la posa a dins del porta-retalls"
 
 #: rkward/dataeditor/twintable.cpp:101
 #, kde-format
 msgid "Copies the selected section to the clipboard"
-msgstr "Copia la secció seleccionada al porta-retalls"
+msgstr "Copia la secció seleccionada a dins del porta-retalls"
 
 #: rkward/dataeditor/twintable.cpp:104
 #, kde-format
@@ -3907,8 +3907,8 @@ msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
-"<p>Hi ha hagut un problema en iniciar l'execució del dorsal R. S'ha/n "
-"produït els errors següents:</p>\n"
+"<p>Hi ha hagut un problema en iniciar l'execució del dorsal R. S'han produït "
+"els errors següents:</p>\n"
 
 #: rkward/rbackend/rkrinterface.cpp:99
 #, kde-format
