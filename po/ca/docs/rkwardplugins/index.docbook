@@ -107,7 +107,7 @@ as Authors, publish date, the abstract, and Keywords -->
 >Introducció</title>
 
 	<para
->Aquest document descriu com escriure els vostres propis connectors. La documentació ha crescut força amb el temps. No deixeu que això us espanti. Recomanem llegir els quatre passos bàsics (en termes generals, a continuació), per obtenir una idea bàsica de com funcionen les coses. Després d'això, és possible que vulgueu fullejar la taula de continguts per veure quins temes avançats podrien ser rellevants per a vós. </para>
+>Aquest document descriu com escriure els vostres propis connectors. La documentació ha crescut força amb el temps. No deixeu que això us espanti. Recomanem llegir els quatre passos bàsics (en termes generals, a continuació), per a obtenir una idea bàsica de com funcionen les coses. Després d'això, és possible que vulgueu fullejar la taula de continguts per a veure quins temes avançats podrien ser rellevants per a vós. </para>
 	<para
 >Per a preguntes i comentaris, escriviu a la llista de correu de desenvolupament del &rkward;. </para>
 	<para
@@ -145,7 +145,7 @@ as Authors, publish date, the abstract, and Keywords -->
 	<para
 >Aquests es tractaran per ordre. </para>
 	<para
->Es poden utilitzar alguns conceptes avançats en aquests quatre passos, però es tracten en capítols separats, per mantenir les coses senzilles: <itemizedlist>
+>Es poden utilitzar alguns conceptes avançats en aquests quatre passos, però es tracten en capítols separats, per a mantenir les coses senzilles: <itemizedlist>
 			<listitem
 ><para
 ><link linkend="logic"
@@ -527,7 +527,7 @@ as Authors, publish date, the abstract, and Keywords -->
 >&lt;tabbook&gt;</command
 >[...]<command
 >&lt;/tabbook&gt;</command
-> per definir el «tabbook» i després per a cada pàgina del «tabbook» utilitzeu <command
+> per a definir el «tabbook» i després per a cada pàgina del «tabbook» utilitzeu <command
 >&lt;tab&gt;</command
 >[...]<command
 >&lt;/tab&gt;</command
@@ -566,7 +566,7 @@ as Authors, publish date, the abstract, and Keywords -->
 	<para
 >A continuació, imbriquem un <command
 >&lt;column&gt;</command
-> dins la fila. Aquests són els següents elements que es col·locaran sobre dels altres (de dalt a baix), i tots estaran a la dreta del <command
+> dins la fila. Aquests són els elements següents que es col·locaran sobre dels altres (de dalt a baix), i tots estaran a la dreta del <command
 >&lt;varselector&gt;</command
 >. </para>
 	<programlisting
@@ -598,13 +598,13 @@ as Authors, publish date, the abstract, and Keywords -->
 >&lt;varslot&gt;</command
 > tingui un valor vàlid. Finalment, l'atribut <parameter
 >type</parameter
-> encara no s'ha interpretat, però s'utilitzarà per tenir en compte que només es permeten els tipus correctes de variables a <command
+> encara no s'ha interpretat, però s'utilitzarà per a tenir en compte que només es permeten els tipus correctes de variables a <command
 >&lt;varslot&gt;</command
 >. </para>
 	<para
 >En cas que us pregunteu sobre l'atribut <parameter
 >i18n_context</parameter
->: aquest és per proporcionar context per ajudar a la traducció correcta de la paraula "against", utilitzada com a etiqueta de <command
+>: aquest és per a proporcionar context per a ajudar a la traducció correcta de la paraula "against", utilitzada com a etiqueta de <command
 >&lt;varslot&gt;</command
 >, però no afecta directament la funcionalitat del connector. Més sobre això en <link linkend="i18n_general"
 >un capítol separat</link
@@ -706,7 +706,7 @@ as Authors, publish date, the abstract, and Keywords -->
 >&lt;frame label="Confidence Interval" id="frame_conf_int"&gt;
         </programlisting>
 	<para
->Aquí hi ha un altre element de la disposició: per indicar que els dos elements següents estan junts, dibuixem un <command
+>Aquí hi ha un altre element de la disposició: per a indicar que els dos elements següents estan junts, dibuixem un <command
 >&lt;frame&gt;</command
 > (quadre). Aquest marc pot tenir una <parameter
 >label</parameter
@@ -782,7 +782,7 @@ as Authors, publish date, the abstract, and Keywords -->
 	<para
 >En realitat no cal definir una interfície addicional <command
 >&lt;wizard&gt;</command
->, però així és com es faria. Per afegir una interfície assistent, afegiu una etiqueta <command
+>, però així és com es faria. Per a afegir una interfície assistent, afegiu una etiqueta <command
 >&lt;wizard&gt;</command
 > al mateix nivell que l'etiqueta <command
 >&lt;dialog&gt;</command
@@ -868,7 +868,7 @@ as Authors, publish date, the abstract, and Keywords -->
 >&lt;checkbox&gt;</command
 >, <command
 >&lt;dropdown&gt;</command
->, tots tenen una funció similar: per a seleccionar una de diverses opcions. Òbviament, una casella de selecció només permet triar entre dues opcions: marcada o no, de manera que no la podeu utilitzar si hi ha més de dues opcions per triar. Però quan utilitzar quin dels elements? Algunes regles generals: </para>
+>, tots tenen una funció similar: per a seleccionar una de diverses opcions. Òbviament, una casella de selecció només permet triar entre dues opcions: marcada o no, de manera que no la podeu utilitzar si hi ha més de dues opcions per a triar. Però quan utilitzar quin dels elements? Algunes regles generals: </para>
 		<para
 >Si esteu creant un <command
 >&lt;radio&gt;</command
@@ -888,9 +888,9 @@ as Authors, publish date, the abstract, and Keywords -->
 >&lt;dropdown&gt;</command
 > és principalment una qüestió d'espai. El <command
 >&lt;dropdown&gt;</command
-> té l'avantatge d'utilitzar poc espai, fins i tot si hi ha moltes opcions per triar. D'altra banda, un <command
+> té l'avantatge d'utilitzar poc espai, fins i tot si hi ha moltes opcions per a triar. D'altra banda, un <command
 >&lt;radio&gt;</command
-> té l'avantatge de fer visibles alhora totes les opcions possibles per a l'usuari, sense fer clic a la fletxa desplegable. Generalment, si hi ha sis o més opcions per triar, és preferible un <command
+> té l'avantatge de fer visibles alhora totes les opcions possibles per a l'usuari, sense fer clic a la fletxa desplegable. Generalment, si hi ha sis o més opcions per a triar, és preferible un <command
 >&lt;dropdown&gt;</command
 >. Si hi ha cinc o menys opcions, un <command
 >&lt;radio&gt;</command
@@ -921,7 +921,7 @@ as Authors, publish date, the abstract, and Keywords -->
 >paquet <application
 >rkwarddev</application
 ></link
->. Proporciona algunes funcions de l'&R; per crear codi &javascript; utilitzat habitualment en el &rkward;. També pot detectar automàticament les variables utilitzades en un fitxer &XML; de connector i crear codi bàsic &javascript; a partir d'aquest per a començar. </para>
+>. Proporciona algunes funcions de l'&R; per a crear codi &javascript; utilitzat habitualment en el &rkward;. També pot detectar automàticament les variables utilitzades en un fitxer &XML; de connector i crear codi bàsic &javascript; a partir d'aquest per a començar. </para>
 	</tip>
 	<note>
 		<para
@@ -972,13 +972,13 @@ as Authors, publish date, the abstract, and Keywords -->
 		<para
 >com a text net. A continuació cal omplir el valor que l'usuari ha seleccionat com a primera variable. Ho obtenim utilitzant <function
 >getString ("x")</function
->, i l'afegeix a la cadena per ser «reproduït». Això mostra el valor de l'element de la &IGU; amb <parameter
+>, i l'afegeix a la cadena per a ser «reproduït». Això mostra el valor de l'element de la &IGU; amb <parameter
 >id=</parameter
 ><replaceable
 >"x"</replaceable
 >: la nostra primera <command
 >&lt;checkbox&gt;</command
->. A continuació, afegim una «, » i fem el mateix per obtenir el valor de l'element <replaceable
+>. A continuació, afegim una «, » i fem el mateix per a obtenir el valor de l'element <replaceable
 >"y"</replaceable
 >, la segona <command
 >&lt;checkbox&gt;</command
@@ -990,7 +990,7 @@ as Authors, publish date, the abstract, and Keywords -->
 		<para
 >Tingueu en compte que en lloc de concatenar els fragments de sortida amb «+», també podeu utilitzar diverses sentències <function
 >echo()</function
->. Tot s'imprimeix en una sola línia. Per produir un salt de línia en el codi generat, inseriu una <replaceable
+>. Tot s'imprimeix en una sola línia. Per a produir un salt de línia en el codi generat, inseriu una <replaceable
 >"\n"</replaceable
 > en la cadena reproduïda. En teoria, fins i tot podeu produir moltes línies amb una única sentència d'eco, però manteniu-la en una (o menys) línia de codi generat per <function
 >echo()</function
@@ -1001,7 +1001,7 @@ as Authors, publish date, the abstract, and Keywords -->
 >getString()</function
 >, també hi ha funcions <function
 >getBoolean()</function
->, que intentaran retornar el valor com un element binari (apropiat per utilitzar en una sentència <function
+>, que intentaran retornar el valor com un element binari (apropiat per a utilitzar en una sentència <function
 >if()</function
 >), i <function
 >getList()</function
@@ -1068,7 +1068,7 @@ echo ('rk.print (res)\n');
 >rk.print()</function
 >, i amb això és suficient. La classe JS <function
 >Header</function
-> és un ajudant de nivell JS per generar una crida a <function
+> és un ajudant de nivell JS per a generar una crida a <function
 >rk.header()</function
 > (només cal donar un cop d'ull al codi &R; generat). En alguns casos, és possible que vulgueu cridar <function
 >echo («rk.header (...)»)</function
@@ -1084,7 +1084,7 @@ echo ('rk.print (res)\n');
 >rk.results()</function
 >, i si cal, <function
 >rk.print.literal()</function
->. Si això no sembla satisfer les vostres necessitats de format, contacteu amb nosaltres a la llista de correu per obtenir ajuda. </para>
+>. Si això no sembla satisfer les vostres necessitats de format, contacteu amb nosaltres a la llista de correu per a obtenir ajuda. </para>
 		<para
 >Felicitats! Heu creat el vostre primer connector. Llegiu en els capítols següents quant a conceptes més avançats. </para>
 	</sect2>
@@ -1137,7 +1137,7 @@ echo ('rk.print (res)\n');
 		<para
 >Si feu càlculs molt complexos, afegiu un comentari aquí i allà, especialment per a marcar les seccions lògiques. Tingueu en compte que hi ha una funció dedicada <command
 >comment()</command
-> per inserir comentaris traduïbles en el codi generat. </para>
+> per a inserir comentaris traduïbles en el codi generat. </para>
 		<para
 >Per exemple, el codi generat podria tenir aquest aspecte. El mateix codi sense sagnat o comentaris seria bastant difícil de llegir, malgrat la seva modesta complexitat: </para>
 		<programlisting
@@ -1253,7 +1253,7 @@ Aquesta secció sempre es mostrarà a la part superior de la pàgina d'ajuda.
 La secció d'ús pot contenir una mica més d'informació pràctica. Però
 no explica tots els paràmetres en detall (això es fa a la secció «settings»).
 
-Per iniciar un paràgraf nou, inseriu una línia buida, com es mostra a dalt.
+Per a iniciar un paràgraf nou, inseriu una línia buida, com es mostra a dalt.
 Aquesta línia, en canvi, serà al mateix paràgraf.
 
 En totes les seccions podeu inserir codi HTML senzill, com ara el text &lt;b&gt;bold&lt;/b&gt; o &lt;i&gt;italic&lt;/i&gt;. No obstant això, manteniu el format al mínim necessari.
@@ -1265,7 +1265,7 @@ La secció d'ús és sempre la segona secció que es mostra en una pàgina d'aju
 Si cal, podeu afegir seccions addicionals entre les seccions d'ús i de configuració.
 No obstant això, normalment no ho necessitareu mentre documenteu els connectors.
 L'atribut «id» proporciona un punt d'ancoratge per a saltar a aquesta secció
-des del menú de navegació. L'atribut «short_title» proporciona un títol curt per utilitzar a la barra de navegació.
+des del menú de navegació. L'atribut «short_title» proporciona un títol curt per a utilitzar a la barra de navegació.
 Això és opcional, per defecte el "títol" principal s'utilitzarà tant com a encapçalament de la secció, com a nom de l'enllaç a la barra de navegació.
 
 En qualsevol secció podeu inserir enllaços per a més informació. Ho feu afegint
@@ -1328,8 +1328,8 @@ La secció de relacions normalment conté diversos enllaços, com ara:
         &lt;technical&gt;
 La secció tècnica (opcional, sempre l'última) pot contenir alguns detalls tècnics de la implementació del connector,
 que només són d'interès per als desenvolupadors del RKWard. Això és particularment rellevant
-per als connectors que estan dissenyats per ser incrustats en molts altres connectors,
-i podria detallar quines opcions estan disponibles per personalitzar el connector incrustat,
+per als connectors que estan dissenyats per a ser incrustats en molts altres connectors,
+i podria detallar quines opcions estan disponibles per a personalitzar el connector incrustat,
 i quines seccions de codi contenen quin codi R.
         &lt;/technical&gt;
 &lt;/document&gt;
@@ -1346,7 +1346,7 @@ i quines seccions de codi contenen quin codi R.
 	<para
 >Tots els conceptes bàsics de crear un connector per al &rkward; s'han descrit en els capítols anteriors. Aquests conceptes bàsics haurien de ser suficients per a molts casos, si no la majoria. No obstant això, de vegades voleu més control sobre com es comporta la &IGU; del connector. </para>
 	<para
->Per exemple, suposem que voleu ampliar l'exemple de la prova t utilitzat en aquesta documentació per permetre: comparar una variable amb una altra variable (com es mostra), així com comparar una variable amb un valor constant. Ara, una manera de fer-ho seria afegir un control d'opcions que canviï entre els dos modes, i afegir un botó de selecció de valors per introduir el valor constant amb el qual comparar. Considereu aquest exemple simplificat: </para>
+>Per exemple, suposem que voleu ampliar l'exemple de la prova t utilitzat en aquesta documentació per a permetre: comparar una variable amb una altra variable (com es mostra), així com comparar una variable amb un valor constant. Ara, una manera de fer-ho seria afegir un control d'opcions que canviï entre els dos modes, i afegir un botó de selecció de valors per introduir el valor constant amb el qual comparar. Considereu aquest exemple simplificat: </para>
 	<programlisting
 >&lt;!DOCTYPE rkplugin&gt;
 &lt;document&gt;
@@ -1463,7 +1463,7 @@ i quines seccions de codi contenen quin codi R.
 >o</emphasis
 > es mostra el botó de selecció de valors i es requereix (depenent de quina opció està seleccionada en el control d'opcions). La &IGU; està canviant segons l'opció del botó. Proveu l'exemple, si voleu. </para>
 	<para
->Per obtenir una llista completa de propietats, consulteu la <link linkend="reference"
+>Per a obtenir una llista completa de propietats, consulteu la <link linkend="reference"
 >referència</link
 >. Una propietat més, però, és especial perquè tots els elements de la &IGU; la tenen: <quote
 >enabled</quote
@@ -1476,7 +1476,7 @@ i quines seccions de codi contenen quin codi R.
 >&lt;convert&gt;</command
 > i <command
 >&lt;connect&gt;</command
->, hi ha diversos elements més per utilitzar a la secció <command
+>, hi ha diversos elements més per a utilitzar a la secció <command
 >&lt;logic&gt;</command
 >. Per exemple, les construccions condicionals també es poden implementar utilitzant l'element <command
 >&lt;switch&gt;</command
@@ -1527,7 +1527,7 @@ i quines seccions de codi contenen quin codi R.
 >"constant"</replaceable
 >. Després utilitzem <function
 >gui.setValue()</function
-> per establir les propietats <quote
+> per a establir les propietats <quote
 >enabled</quote
 > de <replaceable
 >"y"</replaceable
@@ -1556,7 +1556,7 @@ i quines seccions de codi contenen quin codi R.
 >Incrustar connectors en connectors</title>
 <sect1 id="sect_embedding"
 ><title
->Casos d'ús per incrustar</title>
+>Casos d'ús per a incrustar</title>
 	<para
 >En escriure connectors, sovint trobareu que esteu creant una sèrie de connectors que només difereixen en alguns aspectes, però tenen molt més en comú. Per exemple, per al traçat, hi ha una sèrie d'opcions &R; genèriques que es poden utilitzar amb la majoria de tipus de diagrames. Hauríeu de crear una &IGU; i una plantilla JS per a aquests una vegada i una altra? </para>
 	<para
@@ -1683,7 +1683,7 @@ i quines seccions de codi contenen quin codi R.
 	<para>
 		<caution>
 			<para
->Probablement el «botó» d'aproximació només s'hauria d'utilitzar per als connectors que mai poden no ser vàlids (per configuració que manca/no vàlida). En cas contrari, l'usuari no podria enviar el codi, però podria tenir dificultats per esbrinar-ho, el motiu està amagat darrere d'algun botó. </para
+>Probablement el «botó» d'aproximació només s'hauria d'utilitzar per als connectors que mai poden no ser vàlids (per configuració que manca/no vàlida). En cas contrari, l'usuari no podria enviar el codi, però podria tenir dificultats per a esbrinar-ho, el motiu està amagat darrere d'algun botó. </para
 >	
 		</caution>
 	</para>
@@ -1694,7 +1694,7 @@ i quines seccions de codi contenen quin codi R.
 	<para
 >Alguns connectors, i de fet, el «plot_options» utilitzat a l'exemple anterior és un d'ells, no es completen per si sols. Simplement no tenen els elements de la &IGU; per a seleccionar alguns valors importants. Estan destinats només a ser incrustat en altres connectors. </para>
 	<para
->Fins a quin punt està incomplet el connector «plot_options»? Bé, per algunes opcions de configuració, necessita conèixer el nom dels objectes/expressions dels eixos x i y (de fet, funcionarà bé si només en té un, però necessita almenys un per a funcionar correctament). No obstant això, no té un mecanisme per seleccionar aquests objectes, ni introduir-los d'una altra manera. Com sap d'ells? </para>
+>Fins a quin punt està incomplet el connector «plot_options»? Bé, per algunes opcions de configuració, necessita conèixer el nom dels objectes/expressions dels eixos x i y (de fet, funcionarà bé si només en té un, però necessita almenys un per a funcionar correctament). No obstant això, no té un mecanisme per a seleccionar aquests objectes, ni introduir-los d'una altra manera. Com sap d'ells? </para>
 	<para
 >A la secció lògica del connector «plot_options» hi ha dues línies addicionals, encara no explicades: </para>
 	<programlisting
@@ -1749,11 +1749,11 @@ i quines seccions de codi contenen quin codi R.
 >.xml</literal
 >, i <literal role="extension"
 >.rkh</literal
->, després canviar les poques porcions que són diferents. No obstant això, i si algun temps després trobeu un error ortogràfic que s'ha copiat i enganxat a tots els connectors? I si voleu afegir suport per a una nova característica? Hauríeu de tornar a visitar tots els connectors i canviar-ho a cadascun. Un procés pesat i tediós. </para>
+>, després canviar les poques porcions que són diferents. No obstant això, i si algun temps després trobeu un error ortogràfic que s'ha copiat i enganxat a tots els connectors? I si voleu afegir suport per a una característica nova? Hauríeu de tornar a visitar tots els connectors i canviar-ho a cadascun. Un procés pesat i tediós. </para>
 	<para
 >Un segon enfocament seria utilitzar <link linkend="embedding"
 >incrustacions</link
->. Tanmateix, en alguns casos això no es presta bé al problema que tenim entre mans, principalment perquè els «fragments» que podeu incrustar són de vegades massa grans per ser útils, i posa algunes restriccions en la disposició. Per a aquests casos, els conceptes <link linkend="include_js"
+>. Tanmateix, en alguns casos això no es presta bé al problema que tenim entre mans, principalment perquè els «fragments» que podeu incrustar són de vegades massa grans per a ser útils, i posa algunes restriccions en la disposició. Per a aquests casos, els conceptes <link linkend="include_js"
 >incloent fitxers <literal role="extension"
 >.js</literal
 ></link
@@ -2022,7 +2022,7 @@ function getSpecifics () {
 
 <chapter id="specialized_plugins">
 <title
->Conceptes per utilitzar en connectors especialitzats</title>
+>Conceptes per a utilitzar en connectors especialitzats</title>
 <para
 >Aquest capítol conté informació sobre alguns temes que només són útils per a certes classes de connectors. </para>
 
@@ -2051,7 +2051,7 @@ function getSpecifics () {
 >rk.graph.off()</function
 > després de cridar <function
 >rk.graph.on()</function
->. En cas contrari, el fitxer de sortida es deixarà en un estat trencat. Per assegurar-vos que <function
+>. En cas contrari, el fitxer de sortida es deixarà en un estat trencat. Per a assegurar-vos que <function
 >rk.graph.off()</function
 > realment sigui cridat, haureu d'ajustar <emphasis
 >totes les ordres</emphasis
@@ -2075,7 +2075,7 @@ function getSpecifics () {
 >. No obstant això, es recomana llegir primer aquesta secció, ja que l'enfocament és similar en cada cas.</para
 ></note>
 		<para
->Una característica molt útil per a tots els connectors que generen un diagrama/gràfic és proporcionar una previsualització d'actualització automàtica. Per fer-ho, necessitareu dues coses: Afegir una casella de selecció <command
+>Una característica molt útil per a tots els connectors que generen un diagrama/gràfic és proporcionar una previsualització d'actualització automàtica. Per a fer-ho, necessitareu dues coses: Afegir una casella de selecció <command
 >&lt;preview&gt;</command
 > a la <link linkend="mainxml"
 >definició de la IGU</link
@@ -2108,7 +2108,7 @@ function getSpecifics () {
 		<para
 >Ajustar la plantilla JS és només una mica més de feina, aquí haureu d'assegurar-vos que només es genera el diagrama en si, i es mostra en un dispositiu en pantalla, en lloc d'anar dirigit a la sortida. És a dir, sense impressió de capçaleres, <function
 >rk.graphics.on()</function
->, o crides similars. Per ajudar-vos en això, el &rkward; cridarà les funcions <function
+>, o crides similars. Per a ajudar-vos en això, el &rkward; cridarà les funcions <function
 >preprocess()</function
 >, <function
 >calculate()</function
@@ -2345,7 +2345,7 @@ function getSpecifics () {
 		<para
 >L'element <command
 >&lt;preview&gt;</command
-> es pot utilitzar per crear vistes prèvies per a qualsevol tipus de finestra de "document" que es pot adjuntar al lloc de treball del &rkward;. A més de <link linkend="preview_plots"
+> es pot utilitzar per a crear vistes prèvies per a qualsevol tipus de finestra de "document" que es pot adjuntar al lloc de treball del &rkward;. A més de <link linkend="preview_plots"
 >diagrames</link
 > i <link linkend="preview_data"
 >finestres de dades</link
@@ -2355,7 +2355,7 @@ function getSpecifics () {
 		<para
 >Si heu llegit les seccions que descriuen la vista prèvia del diagrama i les vistes prèvies de les dades, hauríeu de tenir una idea general sobre el procediment, però les vistes prèvies «personalitzades» requereixen una mica més de treball manual entre bastidors. La funció &R; més important que cal mirar és <command
 >rk.assign.preview.data()</command
->, aquí. El següent llistat curt mostra com podria ser el codi &R; generat (previsualització) per a un connector que creï una sortida de fitxer de text: </para>
+>, aquí. El llistat curt següent mostra com podria ser el codi &R; generat (previsualització) per a un connector que creï una sortida de fitxer de text: </para>
 		<programlisting
 >## Per a ser generat en la secció de codi preview() d'un connector
         pdata &lt;- rk.get.preview.data("SOMEID")
@@ -2388,7 +2388,7 @@ function getSpecifics () {
 	<title
 >Connectors dependents de context</title>
 	<para
->Fins ara hem assumit que tots els connectors sempre tenen sentit, i tots es col·loquen al menú principal. No obstant això, alguns connectors només tenen sentit (o addicionalment) en un context determinat. P. ex., un connector per exportar el contingut d'un dispositiu gràfic X11 de l'&R; és òbviament el més útil quan es col·loca en el menú d'un dispositiu X11, no a la barra de menús principal. A més, aquest connector hauria de conèixer el número de dispositiu en què hauria d'operar, sense haver de preguntar-ho a l'usuari. </para>
+>Fins ara hem assumit que tots els connectors sempre tenen sentit, i tots es col·loquen al menú principal. No obstant això, alguns connectors només tenen sentit (o addicionalment) en un context determinat. P. ex., un connector per a exportar el contingut d'un dispositiu gràfic X11 de l'&R; és òbviament el més útil quan es col·loca en el menú d'un dispositiu X11, no a la barra de menús principal. A més, aquest connector hauria de conèixer el número de dispositiu en què hauria d'operar, sense haver de preguntar-ho a l'usuari. </para>
 	<para
 >Anomenem aquests connectors dependents del context. Per tant, en el fitxer <link linkend="pluginmap"
 >&pluginmap;</link
@@ -2462,7 +2462,7 @@ function getSpecifics () {
 		<para
 >El context <replaceable
 >"import"</replaceable
-> s'utilitza per declarar els connectors del filtre de fitxers d'importació. Simplement col·loqueu-los en un context amb <parameter
+> s'utilitza per a declarar els connectors del filtre de fitxers d'importació. Simplement col·loqueu-los en un context amb <parameter
 >id=</parameter
 ><replaceable
 >"import"</replaceable
@@ -2603,7 +2603,7 @@ function getSpecifics () {
 >rkward::level_select</command
 >, per exemple, que simplement podeu <link linkend="embedding"
 >incrustar</link
-> en el vostre propi connector. Fins i tot us permet especificar una expressió diferent per executar en lloc de <command
+> en el vostre propi connector. Fins i tot us permet especificar una expressió diferent per a executar en lloc de <command
 >levels()</command
 >.</para>
 </sect1>
@@ -2724,7 +2724,7 @@ function getSpecifics () {
 	<para
 >Per descomptat, també podeu utilitzar la lògica <link linkend="logic"
 >UI</link
-> dins d'un «optionset». Hi ha dues opcions per fer això: podeu fer-ho fent la connexió (o creació de scripts) a la secció principal <command
+> dins d'un «optionset». Hi ha dues opcions per a fer això: podeu fer-ho fent la connexió (o creació de scripts) a la secció principal <command
 >&lt;logic&gt;</command
 > del connector, com és habitual. No obstant això, accedireu als elements de la IU a la regió de continguts com (&pex;) «set.contents.firstname.XYZ». Tingueu en compte el prefix "set" (l'<parameter
 >id</parameter
@@ -2755,9 +2755,9 @@ function getSpecifics () {
 		<para
 >Fins ara hem considerat un <command
 >&lt;optionset&gt;</command
-> que proporciona botons per afegir/eliminar elements. No obstant això, en alguns casos, és molt més natural seleccionar elements fora de l'<command
+> que proporciona botons per a afegir/eliminar elements. No obstant això, en alguns casos, és molt més natural seleccionar elements fora de l'<command
 >&lt;optionset&gt;</command
->, i proporcionar només opcions per personalitzar alguns aspectes de cada element en un <command
+>, i proporcionar només opcions per a personalitzar alguns aspectes de cada element en un <command
 >&lt;optionset&gt;</command
 >. Per exemple, suposeu que voleu permetre a l'usuari traçar diversos objectes dins d'un diagrama. Per a cada objecte, l'usuari hauria de poder especificar el color de la línia. <emphasis
 >Podeu</emphasis
@@ -2861,7 +2861,7 @@ function getSpecifics () {
 ><title
 >Compatibilitat de la versió del &rkward;</title>
 	<para
->Fem tot el possible per assegurar-nos que els connectors desenvolupats per a una versió antiga del &rkward; romandran funcionals en versions posteriors del &rkward;. No obstant això, el contrari no sempre és cert, ja que s'han afegit característiques noves. Com que no tots els usuaris estan executant l'última versió del &rkward;, això vol dir que el vostre connector podria no funcionar per a tothom.</para>
+>Fem tot el possible per a assegurar-nos que els connectors desenvolupats per a una versió antiga del &rkward; romandran funcionals en versions posteriors del &rkward;. No obstant això, el contrari no sempre és cert, ja que s'han afegit característiques noves. Com que no tots els usuaris estan executant l'última versió del &rkward;, això vol dir que el vostre connector podria no funcionar per a tothom.</para>
 	<para
 >Quan tingueu coneixement d'aquests problemes de compatibilitat, haureu d'assegurar-vos de documentar aquest fet en el fitxer &pluginmap;, utilitzant l'element <command
 >&lt;dependencies&gt;</command
@@ -2895,7 +2895,7 @@ x        &lt;/components ...&gt;
 >id="myplugin"</replaceable
 > es proporciona en dues variants alternatives. La primera versió, reduïda, s'utilitzarà per a les versions del &rkward; abans de la 0.6.1. L'últim utilitza característiques que són noves en el &rkward; 0.6.1, i només s'utilitzaran a partir del &rkward; 0.6.1 i posteriors.</para>
 	<para
->Proporcionar variants alternatives com aquesta és una manera molt fàcil d'usar per fer ús de característiques noves, tot i que encara manté el suport per a versions anteriors del &rkward;. Les versions alternatives haurien de compartir el mateix <parameter
+>Proporcionar variants alternatives com aquesta és una manera molt fàcil d'usar per a fer ús de característiques noves, tot i que encara manté el suport per a versions anteriors del &rkward;. Les versions alternatives haurien de compartir el mateix <parameter
 >id</parameter
 > (en cas contrari es produiran avisos), i només es poden definir <emphasis
 >dins del mateix fitxer</emphasis
@@ -2949,7 +2949,7 @@ x        &lt;/components ...&gt;
 ></listitem>
 	</itemizedlist>
 	<para
->En molts casos, és possible proporcionar fàcilment una funcionalitat reduïda, si una característica determinada no està disponible en la versió en execució de l'&R;. Considereu el següent exemple curt d'un fitxer <literal role="extension"
+>En molts casos, és possible proporcionar fàcilment una funcionalitat reduïda, si una característica determinada no està disponible en la versió en execució de l'&R;. Considereu l'exemple curt següent d'un fitxer <literal role="extension"
 >.xml</literal
 >:</para>
 	<programlisting
@@ -3021,7 +3021,7 @@ x        &lt;/components ...&gt;
 >distribuït com un paquet &R;</link
 >, declareu una dependència del paquet (com es mostra a la secció anterior), en lloc del mapa.</para>
 	<para
->Per assegurar-vos que els connectors requerits es carreguen realment, utilitzeu l'etiqueta <command
+>Per a assegurar-vos que els connectors requerits es carreguen realment, utilitzeu l'etiqueta <command
 >&lt;require&gt;</command
 > (vegeu la <link linkend="pluginmapelements"
 >referència</link
@@ -3031,7 +3031,7 @@ x        &lt;/components ...&gt;
 ><title
 >Un exemple</title>
 	<para
->Per aclarir com es poden barrejar les definicions de dependències, aquí hi ha un exemple combinat:</para>
+>Per a aclarir com es poden barrejar les definicions de dependències, aquí hi ha un exemple combinat:</para>
 <programlisting
 >&lt;document ...&gt;
         &lt;dependencies rkward_min_version="0.5.0c"&gt;
@@ -3077,7 +3077,7 @@ x        &lt;/components ...&gt;
 ><title
 >Consideracions generals</title>
 		<para
->Un punt important per entendre les traduccions de programari, en contrast amb les traduccions d'altres materials de text, és que els traductors sovint tindran un temps força llarg per fer-se una imatge completa de <emphasis
+>Un punt important per a entendre les traduccions de programari, en contrast amb les traduccions d'altres materials de text, és que els traductors sovint tindran un temps força llarg per a fer-se una imatge completa de <emphasis
 >què</emphasis
 > estan traduint. Les traduccions de programari es basen necessàriament en fragments de text força curts: cada etiqueta que doneu a una <command
 >&lt;option&gt;</command
@@ -3266,9 +3266,9 @@ user (selection from a list of values shown next to this element) --&gt;
 >makeHeaderCode()/Header()</command
 > que solen citar els seus arguments, les cadenes i18n() estan protegides de cites duplicades. Essencialment, això funciona, enviant primer la cadena traduïda a través de <command
 >quote()</command
-> (per fer-la citada), després a través de <command
+> (per a fer-la citada), després a través de <command
 >noquote()</command
-> (per protegir-la de les cites addicionals). Si necessiteu una cadena traduïble que no estigui entre cometes, utilitzeu <command
+> (per a protegir-la de les cites addicionals). Si necessiteu una cadena traduïble que no estigui entre cometes, utilitzeu <command
 >i18n(noquote ("El meu missatge"))</command
 >. Si necessiteu una cadena traduïble per a ser citada, una segona vegada, envieu-la a través de <command
 >quote()</command
@@ -3379,7 +3379,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		<itemizedlist>
 			<listitem
 ><para
->Els connectors del &rkward; no es poden traduir fins a la versió 0.6.3, i abans no s'havien escrit pensant en l'«i18n». Per tant, trobareu cadenes força ambigües i altres problemes d'«i18n» respecte a altres projectes madurs. No treballeu en silenci per solucionar-ho, però feu-nos-ho saber (o als mantenidors dels connectors), de manera que puguem solucionar aquests problemes.</para
+>Els connectors del &rkward; no es poden traduir fins a la versió 0.6.3, i abans no s'havien escrit pensant en l'«i18n». Per tant, trobareu cadenes força ambigües i altres problemes d'«i18n» respecte a altres projectes madurs. No treballeu en silenci per a solucionar-ho, però feu-nos-ho saber (o als mantenidors dels connectors), de manera que puguem solucionar aquests problemes.</para
 ></listitem>
 			<listitem
 ><para
@@ -3459,7 +3459,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >category</parameter
 > a <command
 >&lt;about&gt;</command
-> es pot definir de forma bastant lliure, però hauria de ser significatiu, ja que es creu que s'utilitza per ordenar connectors en grups. Tots els altres atributs d'aquesta etiqueta d'obertura són obligatoris i s'han d'omplir amb contingut raonable. </para>
+> es pot definir de forma bastant lliure, però hauria de ser significatiu, ja que es creu que s'utilitza per a ordenar connectors en grups. Tots els altres atributs d'aquesta etiqueta d'obertura són obligatoris i s'han d'omplir amb contingut raonable. </para>
 <para
 >També s'ha d'indicar almenys un <command
 >&lt;author&gt;</command
@@ -3482,7 +3482,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >&lt;include&gt;</command
 > i <command
 >&lt;insert&gt;</command
-> per repetir informació a través de diversos fitxers <literal role="extension"
+> per a repetir informació a través de diversos fitxers <literal role="extension"
 >.xml</literal
 > (&pex;, informació sobre un autor que estava implicat en diversos connectors). <link linkend="sect_similar_plugins"
 >Més informació</link
@@ -3513,23 +3513,23 @@ user (selection from a list of values shown next to this element) --&gt;
 	<para
 >Aquesta secció de la documentació descriu com s'han d'empaquetar els connectors externs de manera que el &rkward; els pugui utilitzar. La creació del connector en si és idèntica a les seccions anteriors. És a dir, probablement hauríeu d'escriure primer un connector funcional i després tornar aquí per a aprendre a distribuir-lo. </para>
 	<para
->Com que els connectors externs són una característica relativament jove, els detalls d'això probablement canviaran en futures versions. Us convidem a contribuir amb les vostres idees per millorar el procés. </para>
+>Com que els connectors externs són una característica relativament jove, els detalls d'això probablement canviaran en futures versions. Us convidem a contribuir amb les vostres idees per a millorar el procés. </para>
 	<tip>
 		<para
 >Aquests documents expliquen els detalls dels connectors externs perquè pugueu aprendre com funcionen. A més a més d'això, cal mirar el <link linkend="rkwarddev"
 >paquet <application
 >rkwarddev</application
 ></link
->, dissenyat per automatitzar gran part del procés d'escriptura. </para>
+>, dissenyat per a automatitzar gran part del procés d'escriptura. </para>
 	</tip>
 </sect1>
 <sect1 id="why_external_plugins">
 <title
 >Per què connectors externs?</title>
 	<para
->El nombre de paquets per estendre la funcionalitat de l'&R; ja és immens, i està pujant. D'una banda, volem animar-vos a escriure connectors fins i tot per a les tasques més especialitzades que necessiteu resoldre. D'altra banda, l'usuari mitjà no hauria de perdre's en grans arbres de menús plens de termes estadístics desconeguts. Per tant, també semblava raonable mantenir la gestió dels connectors en el &rkward; bastant modular. L'equip del &rkward; manté el seu repositori propi de paquets públics a <ulink url="https://files.kde.org/rkward/R/"
+>El nombre de paquets per a ampliar la funcionalitat de l'&R; ja és immens, i està pujant. D'una banda, volem animar-vos a escriure connectors fins i tot per a les tasques més especialitzades que necessiteu resoldre. D'altra banda, l'usuari mitjà no hauria de perdre's en grans arbres de menús plens de termes estadístics desconeguts. Per tant, també semblava raonable mantenir la gestió dels connectors en el &rkward; bastant modular. L'equip del &rkward; manté el seu repositori propi de paquets públics a <ulink url="https://files.kde.org/rkward/R/"
 >https://files.kde.org/rkward/R/</ulink
->, designat per allotjar els vostres connectors externs. </para>
+>, designat per a allotjar els vostres connectors externs. </para>
 	<para
 >Com a regla general, els connectors que semblen servir a un propòsit àmpliament utilitzat (&pex;, t-Tests) haurien de formar part del paquet central, mentre que els que serveixen a un grup bastant limitat de persones amb interessos especials haurien de proporcionar-se com un paquet opcional. Per a vós, com a autor d'un connector, la millor pràctica és començar amb un connector extern. </para>
 </sect1>
@@ -3696,7 +3696,7 @@ user (selection from a list of values shown next to this element) --&gt;
 			<para
 >Un altre directori opcional és "tests", que està destinat a proporcionar els fitxers necessaris per a <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing"
 >proves automatitzades de connectors</ulink
->. Aquestes proves són útils per comprovar ràpidament si els connectors encara funcionen amb versions noves de l'&R; o del &rkward;. Si voleu incloure proves, realment hauríeu de restringir-vos a l'esquema de noms i jerarquia que es mostra aquí. És a dir, les proves han de residir en un directori anomenat <filename
+>. Aquestes proves són útils per a comprovar ràpidament si els connectors encara funcionen amb versions noves de l'&R; o del &rkward;. Si voleu incloure proves, realment hauríeu de restringir-vos a l'esquema de noms i jerarquia que es mostra aquí. És a dir, les proves han de residir en un directori anomenat <filename
 >tests</filename
 >, que inclou un fitxer <filename
 >testsuite.R</filename
@@ -3723,7 +3723,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		<title
 >Construcció del paquet del connector</title>
 		<para
->Com s'ha explicat anteriorment, els connectors externs del &rkward; són, en efecte, paquets &R;, i per tant, el procés d'empaquetatge és idèntic. En contrast amb els paquets &R; «reals», un paquet de connector pur no porta cap codi &R; addicional (tot i que per descomptat podeu afegir connectors del &rkward; als paquets &R; habituals, utilitzant els mateixos mètodes que s'expliquen aquí). Això hauria de fer encara més fàcil crear un paquet operatiu, sempre que tingueu un fitxer <filename
+>Com s'ha explicat anteriorment, els connectors externs del &rkward; són, en efecte, paquets &R; i, per tant, el procés d'empaquetatge és idèntic. En contrast amb els paquets &R; «reals», un paquet de connector pur no porta cap codi &R; addicional (tot i que per descomptat podeu afegir connectors del &rkward; als paquets &R; habituals, utilitzant els mateixos mètodes que s'expliquen aquí). Això hauria de fer encara més fàcil crear un paquet operatiu, sempre que tingueu un fitxer <filename
 >DESCRIPTION</filename
 > vàlid i s'adhereixi a la jerarquia de fitxers explicada en les <link linkend="structure_of_a_plugin_package"
 >seccions anteriors</link
@@ -3778,7 +3778,7 @@ user (selection from a list of values shown next to this element) --&gt;
 ><title
 >Vista general</title>
 		<para
->Escriure connectors externs implica escriure fitxers en tres llenguatges (&XML;, &javascript; i R) i la creació d'una jerarquia estandarditzada de directoris. Per fer-ho molt més fàcil als desenvolupadors voluntaris de connectors, estem proporcionant el paquet <application
+>Escriure connectors externs implica escriure fitxers en tres llenguatges (&XML;, &javascript; i R) i la creació d'una jerarquia estandarditzada de directoris. Per a fer-ho molt més fàcil als desenvolupadors voluntaris de connectors, estem proporcionant el paquet <application
 >rkwarddev</application
 >. Proporciona una sèrie de funcions simples de l'&R; per a crear el codi &XML; per a tots els elements de diàleg com els «tabbooks», caselles de selecció, llistes desplegables o navegadors de fitxers, així com funcions per a crear el codi &javascript; i fitxers d'ajuda del &rkward; per a començar. La funció <function
 >rk.plugin.skeleton()</function
@@ -3806,7 +3806,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		<para
 >També es pot trobar la <ulink url="https://files.kde.org/rkward/R/pckg/rkwarddev/rkwarddev.pdf"
 >documentació completa en format PDF</ulink
->. Es pot trobar una introducció més detallada per treballar amb el paquet al <ulink url="https://files.kde.org/rkward/R/pckg/rkwarddev/rkwarddev_vignette.pdf"
+>. Es pot trobar una introducció més detallada per a treballar amb el paquet al <ulink url="https://files.kde.org/rkward/R/pckg/rkwarddev/rkwarddev_vignette.pdf"
 >resum bàsic del «rkwarddev»</ulink
 >.</para>
 	</sect1>
@@ -3815,7 +3815,7 @@ user (selection from a list of values shown next to this element) --&gt;
 ><title
 >Exemple pràctic</title>
 		<para
->Per tenir una idea de com «crear scripts en un connector», en comparació amb l'enfocament directe que heu vist en els capítols anteriors, crearem el connector complet de la prova t una vegada més; aquesta vegada només amb les funcions &R; del paquet <application
+>Per a tenir una idea de com «crear scripts en un connector», en comparació amb l'enfocament directe que heu vist en els capítols anteriors, crearem el connector complet de la prova t una vegada més; aquesta vegada només amb les funcions &R; del paquet <application
 >rkwarddev</application
 >.</para>
 
@@ -3869,7 +3869,7 @@ var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required
 >variables</replaceable
 >: Una característica destacada del paquet és que totes les funcions poden generar ID automàtics, de manera que no us heu de molestar pensant o recordant en valors d'<parameter
 >id</parameter
-> per referir-vos a un element específic del connector. Senzillament, podeu donar els objectes &R; com a referència, ja que totes les funcions que necessiten un ID d'algun altre element també poden llegir-lo des d'aquests objectes. <function
+> per a referir-vos a un element específic del connector. Senzillament, podeu donar els objectes &R; com a referència, ja que totes les funcions que necessiten un ID d'algun altre element també poden llegir-lo des d'aquests objectes. <function
 >rk.XML.varselector()</function
 > és una mica especial, ja que normalment no té contingut específic per a crear un ID (pot, però només si especifiqueu una etiqueta), de manera que hem d'establir un nom d'ID. Però <function
 >rk.XML.varslot()</function
@@ -3887,7 +3887,7 @@ var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required
 			<para
 >El <application
 >rkwarddev</application
-> és capaç de fer molta automatització per ajudar-vos a construir els vostres connectors. No obstant això, podria ser preferible no utilitzar-ho en tota la seva màxima extensió. Si el vostre objectiu és produir codi que no només funcioni, sinó que també es pugui llegir fàcilment i en comparació l'script generador amb un ésser humà, hauríeu de considerar establir sempre ID útils amb <parameter
+> és capaç de fer molta automatització per a ajudar-vos a construir els vostres connectors. No obstant això, podria ser preferible no utilitzar-ho en tota la seva màxima extensió. Si el vostre objectiu és produir codi que no només funcioni, sinó que també es pugui llegir fàcilment i en comparació l'script generador amb un ésser humà, hauríeu de considerar establir sempre ID útils amb <parameter
 >id.name</parameter
 >. Anomenar els vostres objectes &R; idèntics a aquests ID també ajudarà a obtenir codi de script que sigui fàcil d'entendre. </para>
 		</tip>
@@ -3905,7 +3905,7 @@ var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required
 >val</parameter
 > per al valor d'una opció i el booleà <parameter
 >chk</parameter
-> per especificar si aquesta opció està marcada de manera predeterminada.</para>
+> per a especificar si aquesta opció està marcada de manera predeterminada.</para>
 		<programlisting
 >test.hypothesis &lt;- rk.XML.radio("using test hypothesis",
         options=list(
@@ -3933,7 +3933,7 @@ basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothe
 		<para
 ><function
 >rk.XML.cbox()</function
-> és una excepció rara on el nom de la funció no conté el nom complet de l'etiqueta, per desar algun tecleig per a aquest element utilitzat sovint. Això és el que <function
+> és una excepció rara on el nom de la funció no conté el nom complet de l'etiqueta, per a desar algun tecleig per a aquest element utilitzat sovint. Això és el que <function
 >basic.settings</function
 > conté ara:</para>
 		<programlisting
@@ -3952,7 +3952,7 @@ basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothe
 &lt;/row&gt;
                 </programlisting>
 		<para
->De manera similar, les següents línies crearan objectes &R; per als elements de la pestanya «Opcions», introduint funcions per a «spinboxes» (botons de selecció de valors), «frames» i «stretch»:</para>
+>De manera similar, les línies següents crearan objectes &R; per als elements de la pestanya «Opcions», introduint funcions per a «spinboxes» (botons de selecció de valors), «frames» i «stretch»:</para>
 		<programlisting
 >check.eqvar &lt;- rk.XML.cbox("assume equal variances", value="1", un.value="0")
 conf.level &lt;- rk.XML.spinbox("confidence level", min=0, max=1, initial=0.95)
@@ -4034,7 +4034,7 @@ conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="C
 >paste()</function
 >, però depenent dels objectes d'entrada els reemplaçarà amb el seu ID &XML;, el nom de variable &javascript; o fins i tot blocs de codi &javascript; complets.</para>
 			<para
->Per a l'exemple de la prova t, necessitem dos objectes JS: un per calcular els resultats, i un per imprimir-los a la funció <function
+>Per a l'exemple de la prova t, necessitem dos objectes JS: un per a calcular els resultats, i un per a imprimir-los a la funció <function
 >printout()</function
 >:</para>
 		<programlisting
@@ -4142,7 +4142,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 ><para
 >La funció <function
 >rk.rkh.scan()</function
-> també pot explorar els fitxers &XML; existents per crear un esquelet de fitxer d'ajuda.</para
+> també pot explorar els fitxers &XML; existents per a crear un esquelet de fitxer d'ajuda.</para
 ></tip>
 		</sect2>
 
@@ -4174,7 +4174,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 >load=</parameter
 ><replaceable
 >TRUE</replaceable
-> afegirà automàticament el connector nou a la configuració del &rkward; (ja que està en un directori temporal, i per tant, deixarà d'existir quan es tanqui el &rkward;, s'eliminarà automàticament de nou pel &rkward; durant l'inici següent), <parameter
+> afegirà automàticament el connector nou a la configuració del &rkward; (ja que està en un directori temporal i, per tant, deixarà d'existir quan es tanqui el &rkward;, s'eliminarà automàticament de nou pel &rkward; durant l'inici següent), <parameter
 >edit=</parameter
 ><replaceable
 >TRUE</replaceable
@@ -4326,7 +4326,7 @@ variables &lt;- rk.XML.varselector(
 )
     </programlisting>
     <para
->Per afegir seccions globals com <command
+>Per a afegir seccions globals com <command
 >&lt;summary&gt;</command
 > o <command
 >&lt;usage&gt;</command
@@ -4334,7 +4334,7 @@ variables &lt;- rk.XML.varselector(
 >rk.rkh.summary()</function
 > o <function
 >rk.rkh.usage()</function
-> d'acord amb això. Els seus resultats s'utilitzen per establir els elements de la llista com <parameter
+> d'acord amb això. Els seus resultats s'utilitzen per a establir els elements de la llista com <parameter
 >summary</parameter
 > o <parameter
 >usage</parameter
@@ -4352,7 +4352,7 @@ variables &lt;- rk.XML.varselector(
     <para
 >El paquet <application
 >rkwarddev</application
-> és capaç de produir connectors externs amb suport complet d'«i18n». Per exemple, totes les funcions rellevants que generen objectes XML ofereixen un paràmetre opcional per especificar <replaceable
+> és capaç de produir connectors externs amb suport complet d'«i18n». Per exemple, totes les funcions rellevants que generen objectes XML ofereixen un paràmetre opcional per a especificar <replaceable
 >i18n_context</replaceable
 > o <replaceable
 >noi18n_label</replaceable
@@ -4413,7 +4413,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >Propietats de cadena</term>
 <listitem
 ><para
->El tipus de propietat més senzill, utilitzat per contenir un tros de text. Modificadors: <variablelist>
+>El tipus de propietat més senzill, utilitzat per a contenir un tros de text. Modificadors: <variablelist>
 	<varlistentry>
 	<term
 >Sense modificador ("")</term>
@@ -4427,7 +4427,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >quoted</term>
 	<listitem
 ><para
->La cadena en la forma citada (adequada per passar a &R; com a caràcter).</para
+>La cadena en la forma citada (adequada per a passar a &R; com a caràcter).</para
 ></listitem>
 	</varlistentry>
 	</variablelist
@@ -4821,7 +4821,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ></term>
 	<listitem
 ><para
->En alguns casos, voldreu una còpia gairebé literal, però canvieu el nom d'etiqueta de l'element a copiar. L'exemple més important d'això és quan voleu copiar tot un &lt;tab&gt; des d'una interfície de diàleg a &lt;page&gt; d'una interfície assistent. En aquest cas, establiu copy_element_tag_name="page" per fer aquesta conversió automàticament.</para
+>En alguns casos, voldreu una còpia gairebé literal, però canvieu el nom d'etiqueta de l'element a copiar. L'exemple més important d'això és quan voleu copiar tot un &lt;tab&gt; des d'una interfície de diàleg a &lt;page&gt; d'una interfície assistent. En aquest cas, establiu copy_element_tag_name="page" per a fer aquesta conversió automàticament.</para
 ></listitem>
 	</varlistentry>
 	</variablelist
@@ -4902,7 +4902,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ><title
 >Elements de disposició</title>
 <para
->Tots els elements d'aquesta secció accepten un atribut id="identifierstring". Aquest atribut és opcional per a tots els elements. Es pot utilitzar, per exemple, per ocultar/inhabilitar tot l'element de la disposició i tots els elements continguts en ell (vegeu el <link linkend="logic"
+>Tots els elements d'aquesta secció accepten un atribut id="identifierstring". Aquest atribut és opcional per a tots els elements. Es pot utilitzar, per exemple, per a ocultar/inhabilitar tot l'element de la disposició i tots els elements continguts en ell (vegeu el <link linkend="logic"
 >capítol de la lògica de la &IGU;</link
 >). La cadena «id» no pot contenir «.» (punt) ni «;» (punt i coma), i generalment s'ha de limitar a caràcters alfanumèrics i el guió baix («_»). Només es llisten els atributs addicionals.</para>
 <variablelist>
@@ -4949,7 +4949,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;frame&gt;</term>
 <listitem
 ><para
->Dibuixa un marc/quadre al voltant dels seus fills directes. Es pot utilitzar per agrupar visualment les opcions relacionades. La disposició dins d'un marc és de dalt a baix, llevat que col·loqueu una &lt;row&gt; a dins. Atributs: <variablelist>
+>Dibuixa un marc/quadre al voltant dels seus fills directes. Es pot utilitzar per a agrupar visualment les opcions relacionades. La disposició dins d'un marc és de dalt a baix, llevat que col·loqueu una &lt;row&gt; a dins. Atributs: <variablelist>
 	<varlistentry>
 	<term
 ><parameter
@@ -5076,7 +5076,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;varslot&gt;</term>
 <listitem
 ><para
->S'utilitza conjuntament amb un "varselector" per permetre que l'usuari seleccioni una o més variables. Atributs: <variablelist>
+>S'utilitza conjuntament amb un "varselector" per a permetre que l'usuari seleccioni una o més variables. Atributs: <variablelist>
 	<varlistentry>
 	<term
 ><parameter
@@ -5114,7 +5114,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ></term>
 	<listitem
 ><para
->Si es requereix que per enviar el codi aquest «varslot» tingui un valor vàlid. Vegeu la <link linkend="elementproperties"
+>Si es requereix que per a enviar el codi aquest «varslot» tingui un valor vàlid. Vegeu la <link linkend="elementproperties"
 >propietat requerida</link
 > (opcional, predeterminada a "false")</para
 ></listitem>
@@ -5212,7 +5212,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ></term>
 	<listitem
 ><para
->La longitud mínima que un objecte ha de tenir per ser acceptable. (Opcional, el valor predeterminat és "0")</para
+>La longitud mínima que un objecte ha de tenir per a ser acceptable. (Opcional, el valor predeterminat és "0")</para
 ></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -5499,7 +5499,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ></term>
 	<listitem
 ><para
->Si es requereix que per enviar el codi aquesta entrada no estigui buida. Vegeu la <link linkend="elementproperties"
+>Si es requereix que per a enviar el codi aquesta entrada no estigui buida. Vegeu la <link linkend="elementproperties"
 >propietat requerida</link
 > (opcional, predeterminat a "false")</para
 ></listitem>
@@ -5697,7 +5697,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;optionset&gt;</term>
 <listitem
 ><para
->Una interfície d'usuari per repetir un conjunt d'opcions per a un nombre arbitrari d'elements (<link linkend="optionset"
+>Una interfície d'usuari per a repetir un conjunt d'opcions per a un nombre arbitrari d'elements (<link linkend="optionset"
 >introducció als «optionsets»</link
 >). Atributs:</para>
 	<variablelist>
@@ -5894,7 +5894,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ></term>
 	<listitem
 ><para
->Si es requereix que per enviar el codi el camp no estigui buit. Tingueu en compte que això no significa necessàriament que el nom de fitxer seleccionat sigui vàlid. Vegeu la <link linkend="elementproperties"
+>Si es requereix que per a enviar el codi el camp no estigui buit. Tingueu en compte que això no significa necessàriament que el nom de fitxer seleccionat sigui vàlid. Vegeu la <link linkend="elementproperties"
 >propietat requerida</link
 > (opcional, predeterminat a "true")</para
 ></listitem>
@@ -5937,7 +5937,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ></term>
 	<listitem
 ><para
->Si es requereix que per enviar el codi el camp tingui un nom d'objecte admès. Vegeu la <link linkend="elementproperties"
+>Si es requereix que per a enviar el codi el camp tingui un nom d'objecte admès. Vegeu la <link linkend="elementproperties"
 >propietat requerida</link
 > (opcional, predeterminat a "true")</para
 ></listitem>
@@ -6055,7 +6055,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;formula&gt;</term>
 <listitem
 ><para
->Aquest element avançat permet a l'usuari seleccionar una fórmula/conjunt d'interaccions a partir de les variables seleccionades. Per exemple, per un GLM, aquest element es pot utilitzar per permetre a l'usuari especificar els termes d'interacció en el model. Atributs: <variablelist>
+>Aquest element avançat permet a l'usuari seleccionar una fórmula/conjunt d'interaccions a partir de les variables seleccionades. Per exemple, per un GLM, aquest element es pot utilitzar per a permetre a l'usuari especificar els termes d'interacció en el model. Atributs: <variablelist>
 	<varlistentry>
 	<term
 ><parameter
@@ -6207,7 +6207,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;external&gt;</term>
 <listitem
 ><para
->Crea una nova propietat (cadena) que se suposa que està connectada a una propietat externa si el connector s'incrusta. Vegeu la <link linkend="embedding_incomplete"
+>Crea una propietat nova (cadena) que se suposa que està connectada a una propietat externa si el connector s'incrusta. Vegeu la <link linkend="embedding_incomplete"
 >secció sobre els connectors «incomplets»</link
 >. Atributs: <variablelist>
 	<varlistentry>
@@ -6715,7 +6715,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >selected</term>
 	<listitem
 ><para
->Les cadenes actualment seleccionades. Modificador "labeled" per recuperar les etiquetes corresponents. En un &lt;valueselector&gt; probablement no el voldreu utilitzar directament (només en un &lt;select&gt;). (Llegeix/escriu StringList)</para
+>Les cadenes actualment seleccionades. Modificador "labeled" per a recuperar les etiquetes corresponents. En un &lt;valueselector&gt; probablement no el voldreu utilitzar directament (només en un &lt;select&gt;). (Llegeix/escriu StringList)</para
 ></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -6946,7 +6946,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >cbind</term>
 			<listitem
 ><para
->Dades en un format adequat per enganxar a &R;, embolcallades en una expressió «cbind» (cadena; només lectura).</para
+>Dades en un format adequat per a enganxar a &R;, embolcallades en una expressió «cbind» (cadena; només lectura).</para
 ></listitem>
 		</varlistentry>
 	</variablelist
@@ -7374,7 +7374,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;dependencies&gt;</term>
 <listitem
 ><para
->Aquest element, especificant dependències, es permet com a fill directe de l'element &lt;document&gt; (un cop), i com a fill dels elements &lt;component&gt; (un cop per a cada element &lt;component&gt;). Especifica les dependències que s'han de complir per utilitzar els connectors. Consulteu el <link linkend="chapter_dependencies"
+>Aquest element, especificant dependències, es permet com a fill directe de l'element &lt;document&gt; (un cop), i com a fill dels elements &lt;component&gt; (un cop per a cada element &lt;component&gt;). Especifica les dependències que s'han de complir per a utilitzar els connectors. Consulteu el <link linkend="chapter_dependencies"
 >capítol sobre dependències</link
 > per a una visió general. Atributs:</para>
 	<variablelist>
@@ -7484,7 +7484,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ><para
 >Pot estar present exactament una vegada com a fill directe de l'element &lt;document&gt;. Conté la metainformació sobre el &pluginmap; (o connector). Consulteu el <link linkend="chapter_about_information"
 >capítol sobre la informació «about»</link
-> per obtenir una visió general. Atributs:</para>
+> per a obtenir una visió general. Atributs:</para>
 	<variablelist>
 	<varlistentry>
 	<term
@@ -7499,7 +7499,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >version</term>
 	<listitem
 ><para
->Número de versió. Opcional. El format no està restringit, però per estar sobre segur, seguiu esquemes de versions habituals com ara "x.y.z".</para
+>Número de versió. Opcional. El format no està restringit, però per a estar sobre segur, seguiu esquemes de versions habituals com ara "x.y.z".</para
 ></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -7842,7 +7842,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >map</term>
 	<listitem
 ><para
->Per incloure un fitxer &pluginmap; des d'un paquet diferent (o un &pluginmap; del &rkward; des del vostre &pluginmap; extern), podeu referir-vos a ell pel seu <replaceable
+>Per a incloure un fitxer &pluginmap; des d'un paquet diferent (o un &pluginmap; del &rkward; des del vostre &pluginmap; extern), podeu referir-vos a ell pel seu <replaceable
 >namespacename::id</replaceable
 >, com s'especifica en l'element &lt;document&gt; necessari del &pluginmap;. La inclusió fallarà si no es coneix cap &pluginmap; per aquest identificador (&pex;, no està instal·lat en el sistema de l'usuari). Hauríeu d'utilitzar aquest mètode per a incloure els &pluginmap; fora del paquet, només. Per als mapes dins del paquet, especificar un camí relatiu (l'atribut <parameter
 >file</parameter
@@ -7858,7 +7858,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 
 <sect1 id="helpfileelements"
 ><title
->Elements per utilitzar en fitxers .rkh (ajuda)</title>
+>Elements per a utilitzar en fitxers .rkh (ajuda)</title>
 <variablelist>
 <varlistentry>
 <term
@@ -8078,7 +8078,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >Classe «Component»</term>
 <listitem
 ><para
->Classe que representa un únic component o component-propietat. La instància més important d'aquesta classe és la variable "gui" que està predefinida com a propietat arrel del component actual. Hi ha disponibles els següents mètodes per a exemples de la classe «Component»: <variablelist>
+>Classe que representa un únic component o component-propietat. La instància més important d'aquesta classe és la variable "gui" que està predefinida com a propietat arrel del component actual. Hi ha disponibles els mètodes següents per a exemples de la classe «Component»: <variablelist>
 	<varlistentry
 ><term
 >absoluteId(base_id)</term
@@ -8166,7 +8166,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ><para
 >Classe que representa un únic objecte &R;. Es pot obtenir una instància d'aquesta classe utilitzant <command
 >makeRObject(objectname)</command
->. Hi ha disponibles els següents mètodes per a exemples de la classe "RObject": <warning
+>. Hi ha disponibles els mètodes següents per a exemples de la classe "RObject": <warning
 ><para
 >Si hi ha ordres pendents al dorsal, la informació proporcionada per aquests mètodes pot estar desactualitzada en el moment en què s'executi el codi del connector. <emphasis
 >No</emphasis
@@ -8330,7 +8330,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ><para
 ><command
 >include(filename)</command
-> es pot utilitzar per incloure un fitxer JS separat.</para
+> es pot utilitzar per a incloure un fitxer JS separat.</para
 ></listitem>
 </varlistentry>
 <varlistentry
@@ -8340,7 +8340,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ><para
 ><command
 >doRCommand(command, callback)</command
-> es pot utilitzar per consultar l'&R; per obtenir informació. Llegiu la secció sobre <link linkend="querying_r_for_info"
+> es pot utilitzar per consultar l'&R; per a obtenir informació. Llegiu la secció sobre <link linkend="querying_r_for_info"
 >consultes &R; des de dins d'un connector</link
 > per a més detalls i advertències.</para
 ></listitem>

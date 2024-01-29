@@ -129,7 +129,7 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 >IDE</acronym
 > per al llenguatge de creació de scripts en &R; per al càlcul estadístic.</para>
 <para
->Per obtenir més informació, consulteu al <ulink url="https://rkward.kde.org/"
+>Per a obtenir més informació, consulteu al <ulink url="https://rkward.kde.org/"
 >lloc web del &rkward;</ulink
 > i a la documentació inclosa amb el &rkward;.</para>
 </refsect1>
@@ -196,7 +196,7 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 ></term>
 <listitem
 ><para
->Executa el dorsal del &rkward; a través de l'ordre de depuració especificada. Per afegir opcions de la línia d'ordres a l'ordre del depurador, incloeu-les entre cometes simples ('') juntament amb l'ordre. <emphasis
+>Executa el dorsal del &rkward; a través de l'ordre de depuració especificada. Per a afegir opcions de la línia d'ordres a l'ordre del depurador, incloeu-les entre cometes simples ('') juntament amb l'ordre. <emphasis
 >NOTA:</emphasis
 > Els arguments del depurador estaran separats per espais. Si això no és apropiat, haureu d'escriure el vostre propi script d'embolcall per a cridar el depurador. A més, assegureu-vos de redirigir tota la sortida del depurador i/o l'entrada, segons correspongui. Vegeu els exemples.</para
 ></listitem>
@@ -272,7 +272,7 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 ></term>
 <listitem
 ><para
->Podeu especificar qualsevol nombre de fitxers o &URL; per obrir-los al &rkward;. Normalment, aquests seran fitxers de l'espai de treball, fitxers del lloc de treball, fitxers de script de l'&R; o &URL; com rkward:// (&pex;, per a començar amb un diàleg de connector). Si especifiqueu més d'un fitxer de l'espai de treball, els espais de treball es fusionaran i no es recomana.</para
+>Podeu especificar qualsevol nombre de fitxers o &URL; per a obrir-los al &rkward;. Normalment, aquests seran fitxers de l'espai de treball, fitxers del lloc de treball, fitxers de script de l'&R; o &URL; com rkward:// (&pex;, per a començar amb un diàleg de connector). Si especifiqueu més d'un fitxer de l'espai de treball, els espais de treball es fusionaran i no es recomana.</para
 ></listitem>
 </varlistentry>
 </variablelist>

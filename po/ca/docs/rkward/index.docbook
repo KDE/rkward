@@ -103,7 +103,7 @@ Please at least include KDE, the KDE package it is in, the name
 <title
 >Introducció</title>
 <para
->El &rkward; està destinat a ser un frontal gràfic fàcil d'utilitzar per al potent llenguatge &R; per al càlcul estadístic. Com que l'&R; és un llenguatge de programació amb totes les funcionalitats, el &rkward; mai podrà oferir una interfície gràfica completa per a tot l'&R;. No obstant això, el &rkward; s'esforça per simplificar la tasca habitual, per proporcionar un punt d'entrada fàcil per als nouvinguts, mentre que al mateix temps, es proporciona accés transparent a la potència completa del llenguatge &R; subjacent per als usuaris avançats. </para>
+>El &rkward; està destinat a ser un frontal gràfic fàcil d'utilitzar per al potent llenguatge &R; per al càlcul estadístic. Com que l'&R; és un llenguatge de programació amb totes les funcionalitats, el &rkward; mai podrà oferir una interfície gràfica completa per a tot l'&R;. No obstant això, el &rkward; s'esforça per simplificar la tasca habitual, per a proporcionar un punt d'entrada fàcil per als nouvinguts, mentre que al mateix temps, es proporciona accés transparent a la potència completa del llenguatge &R; subjacent per als usuaris avançats. </para>
 </chapter>
 
 <chapter id="using-kapp">
@@ -121,7 +121,7 @@ Please at least include KDE, the KDE package it is in, the name
 >no</emphasis
 > en aquest document. </para>
 <para
->Una guia útil per començar amb el &rkward; és la <ulink url="https://rkward.kde.org/UserDocumentation"
+>Una guia útil per a començar amb el &rkward; és la <ulink url="https://rkward.kde.org/UserDocumentation"
 >Secció de documentació d'usuari al wiki del &rkward;</ulink
 >. </para>
 <para
