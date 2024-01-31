@@ -1,17 +1,17 @@
 # Translation of rkward__embedded.po to Catalan
-# Copyright (C) 2015-2023 This_file_is_part_of_KDE
+# Copyright (C) 2015-2024 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2018, 2019, 2020, 2021, 2022, 2023.
 # SPDX-FileCopyrightText: 2018, 2020, 2022, 2023 Antoni Bella Pérez <antonibella5@yahoo.com>
+# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2023-11-07 20:19+0100\n"
-"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"PO-Revision-Date: 2024-01-30 11:55+0100\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -654,7 +654,7 @@ msgid ""
 "To install from a private repository, set your personal access token (PAT, "
 "GitHub and GitLab only)."
 msgstr ""
-"Per instal·lar a partir d'un repositori privat, establiu el testimoni "
+"Per a instal·lar a partir d'un repositori privat, establiu el testimoni "
 "d'accés personal (PAT, només GitHub i GitLab)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
@@ -663,7 +663,7 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the user name (Bitbucket only)."
 msgstr ""
-"Per instal·lar a partir d'un repositori privat, establiu el nom d'usuari "
+"Per a instal·lar a partir d'un repositori privat, establiu el nom d'usuari "
 "(només Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
@@ -672,7 +672,7 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the password (Bitbucket only)."
 msgstr ""
-"Per instal·lar a partir d'un repositori privat, establiu la contrasenya "
+"Per a instal·lar a partir d'un repositori privat, establiu la contrasenya "
 "(només Bitbucket)."
 
 #. i18n: ectx: (Install from git/svn) <dialog label="...">

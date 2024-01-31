@@ -1,17 +1,17 @@
 # Translation of rkward__pages.po to Catalan
-# Copyright (C) 2014-2022 This_file_is_part_of_KDE
+# Copyright (C) 2014-2024 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2020, 2022.
-# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2022-08-27 13:09+0200\n"
-"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"PO-Revision-Date: 2024-01-30 12:04+0100\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.08.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -45,7 +45,7 @@ msgid ""
 "Arguably this can make it a bit confusing on where to find the addon "
 "features you are looking for."
 msgstr ""
-"Per oferir-vos les millors característiques, el RKWard combina tecnologies "
+"Per a oferir-vos les millors característiques, el RKWard combina tecnologies "
 "diferents. Es pot dir que això pot fer que sigui una mica confús trobar les "
 "característiques del complement que esteu buscant."
 
@@ -95,9 +95,10 @@ msgid ""
 "for download, separately."
 msgstr ""
 "Els <strong>connectors del RKWard</strong>: Si esteu buscant un diàleg "
-"gràfic per ajudar-vos a importar/convertir/analitzar/visualitzar les dades, "
-"aquests diàlegs s'implementen principalment com a connectors en el RKWard. "
-"Molts d'aquests connectors estan disponibles per descarregar, per separat."
+"gràfic per a ajudar-vos a importar/convertir/analitzar/visualitzar les "
+"dades, aquests diàlegs s'implementen principalment com a connectors en el "
+"RKWard. Molts d'aquests connectors estan disponibles per a descarregar, per "
+"separat."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -125,9 +126,9 @@ msgid ""
 "and plugins)."
 msgstr ""
 "A més de les eines normals de la línia d'ordres de l'R per a la gestió dels "
-"paquets de l'R (veure <link href=\"rkward://rhelp/install.packages\"/>), el "
-"RKWard ofereix un diàleg gràfic per cercar, instal·lar i/o carregar paquets "
-"(Arranjament->Gestiona els paquets i els connectors de l'R)."
+"paquets de l'R (vegeu <link href=\"rkward://rhelp/install.packages\"/>), el "
+"RKWard ofereix un diàleg gràfic per a cercar, instal·lar i/o carregar "
+"paquets (Arranjament->Gestiona els paquets i els connectors de l'R)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -168,8 +169,8 @@ msgstr ""
 "potent que utilitza el mateix component d'edició de text que també "
 "s'utilitza en el RKWard. També té una gran varietat de complements, p. ex. "
 "per a crear retalls de codi, o per a gestionar projectes en un repositori "
-"del git. Algunes d'aquests, com p. ex. l'eina de navegació de traça inversa "
-"de C++ no tenen molt sentit en el context del RKWard, però molts sí. Per "
+"del git. Alguns d'aquests, com p. ex. l'eina de navegació de traça inversa "
+"de C++ no tenen molt sentit en el context del RKWard, però molts sí. Per a "
 "explorar el que hi ha disponible, assegureu-vos que teniu el Kate "
 "instal·lat, i després visiteu <link href=\"rkward://settings/addons"
 "\">Arranjament->Complements</link>. S'ha informat que els complements "
@@ -195,7 +196,7 @@ msgid ""
 msgstr ""
 "Els connectors del RKWard es poden instal·lar des de diverses fonts, però la "
 "distribució habitual dels paquets de complements és a través de paquets de "
-"l'R. Per cercar paquets de l'R que proporciona diàlegs gràfics del RKWard, "
+"l'R. Per a cercar paquets de l'R que proporciona diàlegs gràfics del RKWard, "
 "utilitza el diàleg normal (<link href=\"rkward://actions/rpackage_install"
 "\">Arranjament->Gestiona els paquets i els connectors de l'R</link>), i "
 "activeu l'opció «Mostra només els paquets que proporcionin diàlegs del "
@@ -223,7 +224,7 @@ msgstr ""
 "s'allotgen en plataformes com github.com, i coneixent l'URL del repositori, "
 "es pot instal·lar amb pocs clics, fent servir <link href=\"rkward://"
 "runplugin/rkward::install_from_git/fullURL.text=https://github.com/rkward-"
-"community/rk.Teaching.git\">aquest diàleg</link> (pre-inicialitzat per a la "
+"community/rk.Teaching.git\">aquest diàleg</link> (preinicialitzat per a la "
 "instal·lació del «rk.Teaching»)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
@@ -236,7 +237,7 @@ msgstr "Crear els vostres propis connectors del RKWard"
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Still missing something?"
-msgstr "Encara manca quelcom?"
+msgstr "Encara manca res?"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -1357,7 +1358,7 @@ msgstr ""
 "Aquesta és la classe més habitual d'incompatibilitat de versions. El mateix "
 "consell s'aplica com a dalt, és a dir, instal·leu una versió actualitzada "
 "del RKWard. No obstant això, si no hi ha cap actualització disponible "
-"immediatament, i esteu desesperat per continuar treballant, establiu <link "
+"immediatament, i esteu desesperat per a continuar treballant, establiu <link "
 "href=\"rkward://settings/graphics\">Arranjament->Gràfics en pantalla</link>-"
 ">«Integració dels dispositius estàndards de l'R» a «Sense integració». "
 "Llavors podreu utilitzar els dispositius en pantalla estàndard (X11() o "
@@ -1397,7 +1398,7 @@ msgid ""
 "output window does not discard the modifications, but on closing RKWard you "
 "will be prompted to save (or discard) any pending changes."
 msgstr ""
-"La sortida del RKWard es pot desar i obrir com a fitxers normals. Per "
+"La sortida del RKWard es pot desar i obrir com a fitxers normals. Per a "
 "dirigir la sortida a un fitxer de sortida específic, cal «activar-ho». "
 "Tancar una finestra de sortida no descarta les modificacions, però en tancar "
 "el RKWard se us demanarà que deseu (o descarteu) els canvis pendents."
@@ -1415,7 +1416,7 @@ msgid ""
 "To write to the active RKWard output file from custom R code, refer to <link "
 "href=\"rkward://rhelp/rk.print\"/>, and the functions linked from there."
 msgstr ""
-"Per escriure al fitxer de sortida del RKWard actiu a partir del codi R "
+"Per a escriure al fitxer de sortida del RKWard actiu a partir del codi R "
 "personalitzat, vegeu <link href=\"rkward://rhelp/rk.print\"/>, i les "
 "funcions enllaçades des d'allà."
 
@@ -1426,7 +1427,7 @@ msgid ""
 "To load / save / switch between output files, etc., refer to <link href="
 "\"rkward://rhelp/rk.output\"/>."
 msgstr ""
-"Per carregar / desar / canviar entre fitxers de sortida, etc., vegeu <link "
+"Per a carregar / desar / canviar entre fitxers de sortida, etc., vegeu <link "
 "href=\"rkward://rhelp/rk.output\"/>."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
@@ -1484,7 +1485,7 @@ msgid ""
 msgstr ""
 "El RKWard també us ajuda a escriure documents RMarkdown (Rmd). En particular "
 "hi ha una característica de previsualització potent per a scripts «.Rmd». "
-"Mentre que el RMarkdown és genial per escriure «informes» interactius, la "
+"Mentre que el RMarkdown és genial per a escriure «informes» interactius, la "
 "sortida del RKWard és molt fàcil d'utilitzar per a la documentació ad-hoc "
 "mentre exploreu les vostres dades."
 
@@ -1880,7 +1881,7 @@ msgstr ""
 "està disponible en versions anteriors del RKWard. El HUD es pot invocar "
 "utilitzant Ctrl+Alt+i. Això és especialment útil si es busca una funció, la "
 "drecera d'una funció o alguna cosa en els menús, però no es vol passar per "
-"cada menú individualment per trobar-la."
+"cada menú individualment per a trobar-la."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -2213,7 +2214,7 @@ msgstr ""
 "paquet base de l'R) es porten a terme des d'un paquet extern. Si llegiu això "
 "per primer cop o reinicieu el RKWard després d'instal·lar-lo i intenteu "
 "seguir l'enllaç no tindreu sort. Primer cal executar una prova des "
-"d'«Anàlisi -> Moment» per solucionar això."
+"d'«Anàlisi -> Moment» per a solucionar això."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:25
@@ -2339,8 +2340,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:42
 #, kde-format
 msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
-msgstr ""
-"Penso que he fet quelcom incorrecte? A on està el «Desfer» i el «Refer»?"
+msgstr "Penso que he fet res incorrecte? A on està el «Desfer» i el «Refer»?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
