@@ -1,17 +1,17 @@
 # Translation of rkward__pages.po to Catalan (Valencian)
-# Copyright (C) 2014-2022 This_file_is_part_of_KDE
+# Copyright (C) 2014-2024 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2020, 2022.
-# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2022-08-27 13:09+0200\n"
-"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"PO-Revision-Date: 2024-01-30 12:04+0100\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.08.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -45,7 +45,7 @@ msgid ""
 "Arguably this can make it a bit confusing on where to find the addon "
 "features you are looking for."
 msgstr ""
-"Per oferir-vos les millors característiques, RKWard combina tecnologies "
+"Per a oferir-vos les millors característiques, RKWard combina tecnologies "
 "diferents. Es pot dir que açò pot fer que siga una mica confús trobar les "
 "característiques del complement que esteu buscant."
 
@@ -97,7 +97,7 @@ msgstr ""
 "Els <strong>connectors de RKWard</strong>: Si esteu buscant un diàleg gràfic "
 "per a ajudar-vos a importar/convertir/analitzar/visualitzar les dades, estos "
 "diàlegs s'implementen principalment com a connectors en RKWard. Molts "
-"d'estos connectors estan disponibles per descarregar, per separat."
+"d'estos connectors estan disponibles per a descarregar, per separat."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -125,7 +125,7 @@ msgid ""
 "and plugins)."
 msgstr ""
 "A més de les eines normals de la línia d'ordres d'R per a la gestió dels "
-"paquets d'R (veure <link href=\"rkward://rhelp/install.packages\"/>), RKWard "
+"paquets d'R (vegeu <link href=\"rkward://rhelp/install.packages\"/>), RKWard "
 "oferix un diàleg gràfic per a buscar, instal·lar i/o carregar paquets "
 "(Configuració->Gestiona els paquets i els connectors d'R)."
 
@@ -168,8 +168,8 @@ msgstr ""
 "potent que utilitza el mateix component d'edició de text que també "
 "s'utilitza en RKWard. També té una gran varietat de complements, p. ex., per "
 "a crear fragments de codi, o per a gestionar projectes en un repositori de "
-"git. Algunes d'estos, com p. ex., l'eina de navegació de traça inversa de C+"
-"+ no tenen molt sentit en el context de RKWard, però molts sí. Per explorar "
+"git. Alguns d'estos, com p. ex., l'eina de navegació de traça inversa de C++ "
+"no tenen molt sentit en el context de RKWard, però molts sí. Per a explorar "
 "el que hi ha disponible, assegureu-vos que teniu Kate instal·lat, i després "
 "visiteu <link href=\"rkward://settings/addons\">Configuració->Complements</"
 "link>. S'ha informat que els complements mostrats en negreta són útils i "
@@ -222,8 +222,8 @@ msgstr ""
 "plataformes com github.com, i coneixent l'URL del repositori, es pot "
 "instal·lar amb pocs clics, fent servir <link href=\"rkward://runplugin/"
 "rkward::install_from_git/fullURL.text=https://github.com/rkward-community/rk."
-"Teaching.git\">este diàleg</link> (pre-inicialitzat per a la instal·lació "
-"del «rk.Teaching»)."
+"Teaching.git\">este diàleg</link> (preinicialitzat per a la instal·lació del "
+"«rk.Teaching»)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:47
@@ -235,7 +235,7 @@ msgstr "Crear els vostres propis connectors de RKWard"
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Still missing something?"
-msgstr "Encara falta alguna cosa?"
+msgstr "Encara falta res?"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -2339,7 +2339,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:42
 #, kde-format
 msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
-msgstr "Pense que he fet alguna cosa incorrecte? A on està «Desfer» i «Refer»?"
+msgstr "Pense que he fet res incorrecte? A on està «Desfer» i «Refer»?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
