@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-09 19:01+0300\n"
+"PO-Revision-Date: 2024-02-10 14:19+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.01.95\n"
+"X-Generator: Lokalize 23.08.4\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -38,13 +38,13 @@ msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
-"'%1' nesnesi düzenlemek için açılamadı. Ya yok ya da RKWard bu tür "
+"‘%1’ nesnesi düzenlemek için açılamadı. Ya yok ya da RKWard bu tür "
 "nesnelerin düzenlenmesini henüz desteklemiyor."
 
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
 msgid "Cannot edit '%1'"
-msgstr "'%1' Düzenlenemiyor"
+msgstr "‘%1’ Düzenlenemiyor"
 
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
@@ -57,7 +57,7 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
-"Dosya açılırken bir hata oluştu '%1':\n"
+"‘%1’ dosyası açılırken bir hata oluştu:\n"
 "%2"
 
 #: rkward/agents/rkloadagent.cpp:62
@@ -75,7 +75,7 @@ msgid ""
 msgstr ""
 "PostScript dosyaları için KDE yazdırma iletişim kutusu sağlayacak bir hizmet "
 "bulunamadı. Bunun yerine genel bir PostScript görüntüleyicisi (varsa) açmayı "
-"deneyeceğiz.<br><br>'Okular'ı kurmayı düşünün veya RKWard'ı, KDE yazdırma "
+"deneyeceğiz.<br><br>‘Okular’ı kurmayı düşünün veya RKWard’ı, KDE yazdırma "
 "iletişim kutusunu kullanarak yazdırmayı denemeyecek şekilde yapılandırın."
 
 #: rkward/agents/rkprintagent.cpp:82
@@ -89,7 +89,7 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
-"Kalan R komutlarının bitmesi bekleniyor. Hemen çıkmak için İptal'e basın "
+"Kalan R komutlarının bitmesi bekleniyor. Hemen çıkmak için İptal’e basın "
 "(UYARI: Bu, veri kaybına neden olabilir)"
 
 #: rkward/agents/rkquitagent.cpp:30
@@ -102,7 +102,7 @@ msgstr "Bitirmek için R Bekleniyor"
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
-"\"%1\" adlı bir dosya halihazırda var. Üzerine yazmak istediğinizden emin "
+"‘%1’ adlı bir dosya halihazırda var. Üzerine yazmak istediğinizden emin "
 "misiniz?"
 
 #: rkward/agents/rksaveagent.cpp:51
@@ -111,8 +111,8 @@ msgid ""
 "A file named \"%1\" already exists, and will be overwritten when saving to "
 "\"%2\". Are you sure you want to overwrite it?"
 msgstr ""
-"\"%1\" adlı bir dosya halihazırda var ve \"%2\" konumuna kaydedilirken "
-"üzerine yazılacak. Üzerine yazmak istediğinizden emin misiniz?"
+"‘%1’ adlı bir dosya halihazırda var ve ‘%2’ konumuna kaydedilirken üzerine "
+"yazılacak. Üzerine yazmak istediğinizden emin misiniz?"
 
 #: rkward/agents/rksaveagent.cpp:53
 #, kde-format
@@ -120,7 +120,7 @@ msgid ""
 "Files named \"%1\" and \"%2\" already exist, and will both be overwritten. "
 "Are you sure you want to overwrite them?"
 msgstr ""
-"\"%1\" ve \"%2\" adlı dosyalar halihazırda var ve her ikisinin de üzerine "
+"‘%1’ ve ‘%2’ adlı dosyalar halihazırda var ve her ikisinin de üzerine "
 "yazılacak. Üzerilerine yazmak istediğinizden emin misiniz?"
 
 #: rkward/agents/rksaveagent.cpp:56
@@ -194,7 +194,7 @@ msgid ""
 msgstr ""
 "R işletkesinde çalışan bir komut, aşağıdaki dosya(lar)ı düzenlemenizi "
 "istiyor. Lütfen bu dosyalara bakın, uygun şekilde düzenleyin ve kaydedin. "
-"İşiniz bittiğinde \"Bitti\" düğmesine basın veya sürdürmek için bu iletişim "
+"İşiniz bittiğinde ‘Bitti’ düğmesine basın veya sürdürmek için bu iletişim "
 "kutusunu kapatın.<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:86
@@ -209,7 +209,7 @@ msgid ""
 "created or imported, in contrast to data contained in a loaded R package. "
 "Technically, this corresponds to the <i>.GlobalEnv</i> environment."
 msgstr ""
-"Bu bölüm, \"çalışma alanınızdaki\" veriyi içerir. Bu, yüklü bir R paketinde "
+"Bu bölüm, ‘çalışma alanınızdaki’ veriyi içerir. Bu, yüklü bir R paketinde "
 "bulunan verilerin aksine, oluşturduğunuz veya içe aktardığınız verilerdir. "
 "Teknik olarak bu, <i>.GlobalEnv</i> ortamına karşılık gelir."
 
@@ -221,7 +221,7 @@ msgid ""
 "Should this situation constitute a regular use case for your work, please "
 "let us know at rkward-devel@kde.org, so we can consider possible solutions."
 msgstr ""
-"Çalışma alanınız 10.000'den fazla üst düzey nesne içeriyor. RKWard bu durum "
+"Çalışma alanınız 10.000’den fazla üst düzey nesne içeriyor. RKWard bu durum "
 "için eniyilenmemiştir ve R komutları arasında gecikmeler yaşayabilirsiniz. "
 "Bu durumun işiniz için düzenli bir kullanım durumu teşkil etmesi halinde, "
 "lütfen rkward-devel@kde.org adresinden bize bildirin, böylece olası "
@@ -238,7 +238,7 @@ msgid ""
 "The object '%1' was removed from workspace or changed to a different type of "
 "object, but is currently opened for editing. Do you want to restore it?"
 msgstr ""
-"'%1' nesnesi çalışma alanından kaldırıldı veya farklı türde bir nesneyle "
+"‘%1’ nesnesi çalışma alanından kaldırıldı veya farklı türde bir nesneyle "
 "değiştirildi; ancak şu anda düzenleme için açık. Geri yüklemek istiyor "
 "musunuz?"
 
@@ -254,9 +254,9 @@ msgid ""
 "for editing, it will be removed in the editor, too. There's no way to get it "
 "back."
 msgstr ""
-"'%1' nesnesini kaldırmayı gerçekten istiyor musunuz? Nesne şu anda "
+"‘%1’ nesnesini kaldırmayı gerçekten istiyor musunuz? Nesne şu anda "
 "düzenlemeye açık, düzenleyiciden de kaldırılacak. Onu geri almanın hiçbir "
-"yolu yok."
+"yolu olmayacak."
 
 #: rkward/core/rkmodificationtracker.cpp:75
 #: rkward/core/rkmodificationtracker.cpp:80
@@ -269,7 +269,7 @@ msgstr "Nesneyi Kaldır?"
 msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
-"'%1' nesnesini kaldırmayı gerçekten istiyor musunuz? Onu geri almanın hiçbir "
+"‘%1’ nesnesini kaldırmayı gerçekten istiyor musunuz? Onu geri almanın hiçbir "
 "yolu olmayacak."
 
 #: rkward/core/rkmodificationtracker.cpp:351
@@ -318,9 +318,9 @@ msgid ""
 "to list namespaces which are loaded, but not attached to a package on the "
 "search path. These are typically 'imported' namespaces."
 msgstr ""
-"Bu özel nesne aslında R'de hiçbir yerde yoktur. Burada, arama yolundaki bir "
+"Bu özel nesne aslında R’de hiçbir yerde yoktur. Burada, arama yolundaki bir "
 "pakete yüklenen ancak eklenmeyen ad alanlarını listelemek için kullanılır. "
-"Bunlar genellikle 'içe aktarılan' ad alanlarıdır."
+"Bunlar genellikle ‘içe aktarılan’ ad alanlarıdır."
 
 #: rkward/core/rkrownames.cpp:101
 #, kde-format
@@ -410,13 +410,13 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
-"'%1' paketi (büyük olasılıkla yeni yüklediniz) şu anda yapı bilgilerini alma "
+"‘%1’ paketi (büyük olasılıkla yeni yüklediniz) şu anda yapı bilgilerini alma "
 "konusunda kara listede. Pratik olarak bu, bu paketteki nesnelerin nesne "
 "tarayıcısında görünmeyeceği ve bu paketteki nesneler için hiçbir nesne adı "
 "tamamlama veya işlev argümanı ipucu olmayacağı anlamına gelir.\n"
 "Paketler büyük miktarda veri içeriyorsa ve yüklenmesi çok uzun sürecekse "
 "genellikle kara listeye alınır. Paketi listeden çıkarmak için Ayarlar → "
-"RKWard Uygulamasını Yapılandır → Çalışma Alanı'nı ziyaret edin."
+"RKWard Uygulamasını Yapılandır → Çalışma Alanı’nı ziyaret edin."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -430,9 +430,9 @@ msgid ""
 "your \"workspace\". Most importantly, this includes loaded packages, but "
 "also objects added to R's <i>search()<i>-path using <i>attach()</i>."
 msgstr ""
-"Bu bölüm, <i>.GlobalEnv</i>'nin/\"çalışma alanınızın\" parçası olmayan "
+"Bu bölüm, <i>.GlobalEnv</i>’nin/‘çalışma alanınızın’ parçası olmayan "
 "ortamları içerir. En önemlisi bu, yüklenen paketleri ve aynı zamanda "
-"<i>attach()</i> kullanılarak R'nin <i>search()<i> yoluna eklenen nesneleri "
+"<i>attach()</i> kullanılarak R’nin <i>search()<i> yoluna eklenen nesneleri "
 "de içerir."
 
 #: rkward/core/robjectlist.cpp:87
@@ -441,7 +441,7 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
-"%1 paketi çıkarılamadı; bu, RKWard'da gereklidir. Bunu gerçekten yapmak "
+"%1 paketi çıkarılamadı; bu, RKWard’da gereklidir. Bunu gerçekten yapmak "
 "istiyorsanız bunu R konsolunda yapın."
 
 #: rkward/core/robjectlist.cpp:90
@@ -619,7 +619,7 @@ msgid ""
 "know what you are doing, but you are strongly advised to fix the table, and/"
 "or backup your data, first."
 msgstr ""
-"'%1' düzenleyicisi aşağıdaki yinelenen sütunları içeriyor. Bu tabloyu "
+"‘%1’ düzenleyicisi aşağıdaki yinelenen sütunları içeriyor. Bu tabloyu "
 "düzenlemek güvenli olmayabilir ve bu yüzden devre dışı bırakıldı. Ne "
 "yaptığınızı biliyorsanız düzenlemeyi yeniden etkinleştirebilirsiniz; ancak "
 "öncelikle tabloyu düzeltmeniz ve/veya verilerinizi yedeklemeniz önemle "
@@ -653,7 +653,7 @@ msgstr "Yukarıya yeni vaka ekle (%1 konumunda)"
 #: rkward/dataeditor/twintable.cpp:285
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
-msgstr "İmlenen satırları (%1-%2) sil"
+msgstr "İmlenen satırları (%1–%2) sil"
 
 #: rkward/dataeditor/twintable.cpp:291
 #, kde-format
@@ -668,7 +668,7 @@ msgstr "Pano içeriği ekleniyor…"
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
 msgid "Reporting bugs in RKWard"
-msgstr "RKWard'da Hata Raporlama"
+msgstr "RKWard’da Hata Raporlama"
 
 #: rkward/dialogs/rkerrordialog.cpp:45
 #, kde-format
@@ -682,7 +682,7 @@ msgid ""
 "b></p><p>In case this is not possible for some reason, refer to <a href="
 "\"%3\">%3</a> for alternative ways of reporting issues.</p>"
 msgstr ""
-"<p><b>Hataları veya istekleri nereye bildirmeliyim?</b></p><p>RKWard'ı "
+"<p><b>Hataları veya istekleri nereye bildirmeliyim?</b></p><p>RKWard’ı "
 "geliştirmeye yardımcı olmak üzere zaman ayırdığınız için teşekkür ederiz. "
 "İsteğinizi verimli bir şekilde ele almamıza yardımcı olmak için lütfen hata "
 "raporlarınızı veya dileklerinizi <a href=\"%1\">KDE hata izleme sistemine</"
@@ -701,11 +701,11 @@ msgid ""
 "sure to fill in the missing bits - in English - where indicated, especially "
 "in the \"Comment\" field.</p>"
 msgstr ""
-"<p><b>Hangi bilgileri, nasıl sağlamalıyım?</b></p>\"Hata Bildir\"e tıklamak "
+"<p><b>Hangi bilgileri, nasıl sağlamalıyım?</b></p>‘Hata Bildir’e tıklamak "
 "sizi KDE hata izleme sistemine götürecektir. Giriş yaptıktan sonra bazı "
-"bilgiler rapor formuna önceden doldurulmuş olacaktır. Lütfen, özellikle "
-"\"Comment\" alanında, belirtilen yerlerde eksik kısımları - İngilizce olarak "
-"- doldurduğunuzdan emin olun.</p>"
+"bilgiler rapor formuna önceden doldurulmuş olur. Lütfen, özellikle ‘Comment’ "
+"alanında, belirtilen yerlerde eksik kısımları—İngilizce olarak—"
+"doldurduğunuzdan emin olun.</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:58
 #, kde-format
@@ -726,7 +726,7 @@ msgid ""
 msgstr ""
 "Şimdi KDE hata izleme sistemine yönlendiriliyorsunuz. Bu sayfayı birkaç "
 "saniyeden daha uzun süre görüyorsanız (örneğin, JavaScript devre dışıysa) "
-"lütfen aşağıdaki \"Sürdür\" düğmesine tıklayın."
+"lütfen aşağıdaki ‘Sürdür’ düğmesine tıklayın."
 
 #: rkward/dialogs/rkerrordialog.cpp:80
 #, kde-format
@@ -845,7 +845,7 @@ msgid ""
 "\n"
 msgstr ""
 "RKWard birçok farklı pakette kullanılabilir ve bazen sorunlar tek bir "
-"kurulum yöntemine özgüdür. RKWard'ı nasıl kurdunuz (hangi dosyaları "
+"kurulum yöntemine özgüdür. RKWard’ı nasıl kurdunuz (hangi dosyaları "
 "indirdiniz)?\n"
 "###Lütfen doldurun###\n"
 "\n"
@@ -859,7 +859,7 @@ msgid ""
 msgstr ""
 "Kurulumunuzla ilgili bazı bilgileri toplarken lütfen bekleyin.\n"
 "Arka ucun devre dışı kalması veya kapatılması durumunda bu adımı atlamak "
-"için 'İptal'e basmak isteyebilirsiniz."
+"için ‘İptal’e basmak isteyebilirsiniz."
 
 #: rkward/dialogs/rkerrordialog.cpp:146
 #, kde-format
@@ -908,7 +908,7 @@ msgid ""
 "formats, but requires a number of additional R packages to be installed (you "
 "will be prompted for missing packages). Do you want to give that a try?"
 msgstr ""
-"'Rio' paketi, birçok farklı dosya biçiminin içe aktarılması için genel "
+"‘rio’ paketi, birçok farklı dosya biçiminin içe aktarılması için genel "
 "destek sunar; ancak bir dizi ek R paketinin kurulmasını gerektirir (eksik "
 "paketler için uyarılacaksınız). Bunu denemek istiyor musunuz?"
 
@@ -924,7 +924,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:91
 #, kde-format
 msgid "Use 'rio'-based importer"
-msgstr "'rio' tabanlı içe aktarıcıyı kullan"
+msgstr "‘rio’ tabanlı içe aktarıcıyı kullan"
 
 #: rkward/dialogs/rkimportdialog.cpp:95 rkward/dialogs/rkimportdialog.cpp:113
 #, kde-format
@@ -934,7 +934,7 @@ msgstr "Başka bir yöntem dene"
 #: rkward/dialogs/rkimportdialog.cpp:101
 #, kde-format
 msgid "Generic 'rio'-based importer"
-msgstr "Genel 'rio' tabanlı içe aktarıcı"
+msgstr "Genel ‘rio’ tabanlı içe aktarıcı"
 
 #: rkward/dialogs/rkimportdialog.cpp:105
 #, kde-format
@@ -959,7 +959,7 @@ msgid ""
 "or \"Back\" to explore other options.</p>"
 msgstr ""
 "<b>Başlamaya hazırız</b><p>Seçili içe aktarma iletişim kutusunu başlatmak "
-"için \"Son\"a veya diğer seçenekleri keşfetmek için \"Geri\"ye tıklayın.</p>"
+"için ‘Son’a veya diğer seçenekleri keşfetmek için ‘Geri’ye tıklayın.</p>"
 
 #: rkward/dialogs/rkimportdialog.cpp:125
 #, kde-format
@@ -1030,7 +1030,7 @@ msgid ""
 "sure, that you want to remove these packages, please do so on the R command "
 "line."
 msgstr ""
-"Kaldırmak üzere seçtiğiniz aşağıdaki paketler RKWard'ın çalışması için "
+"Kaldırmak üzere seçtiğiniz aşağıdaki paketler RKWard’ın çalışması için "
 "gereklidir ve kaldırılmayacaktır. Bu paketleri kaldırmak istediğinizden "
 "kesinlikle eminseniz lütfen bunu R komut satırından yapın."
 
@@ -1104,7 +1104,7 @@ msgid ""
 msgstr ""
 "<p>Kurulum için seçtiğiniz dizine (%1), şu anki kullanıcı izinlerinizle "
 "yazılamaz.</p><p>Bunun yerine %2 konumuna yüklemek ister misiniz (Ayrıca "
-"\"İptal\"e basıp \"Depoları Yapılandır\" seçeneğiyle başka bir dizin de "
+"‘İptal\"e basıp ‘Depoları Yapılandır’ seçeneğiyle başka bir dizin de "
 "ayarlanabilir)?</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:247
@@ -1116,8 +1116,8 @@ msgid ""
 "supported in RKWard on Windows.</p>"
 msgstr ""
 "<p>Alternatif olarak, bu makinede bir yönetici hesabına erişiminiz varsa "
-"paketleri kurmak için bunu kullanabilir veya '%1' izinlerini "
-"değiştirebilirsiniz. Ne yazık ki Windows'ta RKWard'da yönetici kipine geçiş "
+"paketleri kurmak için bunu kullanabilir veya ‘%1’ izinlerini "
+"değiştirebilirsiniz. Ne yazık ki Windows’ta RKWard’da yönetici kipine geçiş "
 "henüz desteklenmiyor.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:249
@@ -1270,7 +1270,7 @@ msgid ""
 "packages."
 msgstr ""
 "Bazı paketler, söz konusu paketin kullanılması için kesinlikle gerekli "
-"olmayan; ancak ilgili ek işlevsellik sağlayabilecek ek paketleri \"önerir\". "
+"olmayan; ancak ilgili ek işlevsellik sağlayabilecek ek paketleri ‘önerir’. "
 "Önerilen ek paketleri içermek için bu seçeneği işaretleyin."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:675
@@ -1301,8 +1301,8 @@ msgid ""
 "Repositories\" button."
 msgstr ""
 "Arka uç tarafından talep edilen şu paket(ler) paket depolarında bulunamadı: "
-"\"%1\". Paket adı yanlış yazılmış olabilir veya belki de \"Depoları "
-"Yapılandır\" düğmesi aracılığıyla ek depolar eklemeniz gerekebilir."
+"‘%1’. Paket adı yanlış yazılmış olabilir veya belki de ‘Depoları Yapılandır’ "
+"düğmesi aracılığıyla ek depolar eklemeniz gerekebilir."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:771
 #, kde-format
@@ -1336,7 +1336,7 @@ msgid ""
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
 msgstr ""
 "<p>Bu sütunda RKWard simgesiyle imlenen paketler, genellikle ek grafik "
-"iletişim kutuları ile RKWard'a yönelik geliştirmeler sağlar.</p>"
+"iletişim kutuları ile RKWard’a yönelik geliştirmeler sağlar.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:945
 #, kde-format
@@ -1382,7 +1382,7 @@ msgid ""
 "Packages for which an update is available. This may include packages which "
 "were merely built against a newer version of R."
 msgstr ""
-"Kullanılabilir güncelleştirmeleri olan paketler. Bu, yalnızca R'nin daha "
+"Kullanılabilir güncelleştirmeleri olan paketler. Bu, yalnızca R’nin daha "
 "yeni bir sürümüne göre yapılı paketleri içerebilir."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:976
@@ -1601,7 +1601,7 @@ msgid ""
 "(Attempt to) install the package %1 and its dependencies for this version of "
 "R. In most cases, this requires a working internet connection."
 msgstr ""
-"R'nin bu sürümü için %1 paketini ve bağımlılıklarını kurmayı deneyin. Çoğu "
+"R’nin bu sürümü için %1 paketini ve bağımlılıklarını kurmayı deneyin. Çoğu "
 "durumda, bunun için çalışan bir internet bağlantısı gerekir."
 
 #: rkward/dialogs/rksetupwizard.cpp:90 rkward/dialogs/rksetupwizard.cpp:101
@@ -1660,7 +1660,7 @@ msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of RKWard has been detected.</p>"
 msgstr ""
-"<p>RKWard'ın yeni bir sürümü algılandığından kurulum yardımcısı "
+"<p>RKWard’ın yeni bir sürümü algılandığından kurulum yardımcısı "
 "kendiliğinden çağrıldı.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:128
@@ -1669,7 +1669,7 @@ msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of R has been detected.</p>"
 msgstr ""
-"<p>R'ın yeni bir sürümü algılandığından kurulum yardımcısı kendiliğinden "
+"<p>R’nin yeni bir sürümü algılandığından kurulum yardımcısı kendiliğinden "
 "çağrıldı.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:130
@@ -1712,7 +1712,7 @@ msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
 "RKWard."
 msgstr ""
-"Bu sorun kendiliğinden düzeltilemiyor. RKWard'ı yeniden kurmanız gerekecek."
+"Bu sorun kendiliğinden düzeltilemiyor. RKWard’ı yeniden kurmanız gerekecek."
 
 #: rkward/dialogs/rksetupwizard.cpp:148 rkward/dialogs/rksetupwizard.cpp:161
 #: rkward/dialogs/rksetupwizard.cpp:185
@@ -1764,9 +1764,9 @@ msgid ""
 "like none are installed on this system. On Linux/BSD, this can usually be "
 "fixed by installing kate.</p>"
 msgstr ""
-"<p>RKWard'daki önemli sayıda işlevsellik Kate eklentileri tarafından "
+"<p>RKWard’daki önemli sayıda işlevsellik Kate eklentileri tarafından "
 "sağlanır. Bu sistemde hiçbiri kurulu değil gibi görünüyor. Bunu genellikle "
-"Linux/BSD'de Kate\"i kurularak düzeltilebilirsiniz.</p>"
+"Linux/BSD’de Kate’i kurarak düzeltebilirsiniz.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:169
 #, kde-format
@@ -1823,13 +1823,13 @@ msgstr "Temel kurulum"
 #, kde-format
 msgid "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
 msgstr ""
-"<b>R arka ucu çöktü. Kurulum yardımcısından çıkmak için \"İptal\"e tıklayın."
-"</b>"
+"<b>R arka ucu çöktü. Kurulum yardımcısından çıkmak için ‘İptal’e tıklayın.</"
+"b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:213
 #, kde-format
 msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
-msgstr "<b>R arka ucu başladı. Sürdürmek için \"Sonraki\"ye tıklayın.</b>"
+msgstr "<b>R arka ucu başladı. Sürdürmek için ‘Sonraki’ye tıklayın.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:220
 #, kde-format
@@ -1889,7 +1889,7 @@ msgid ""
 "and cannot be fixed, automatically. You will have to reinstall RKWard!</p>"
 msgstr ""
 "<h1>Yeniden kurulum gerekiyor</h1><p>RKWard kurulumunuz bozuk ve "
-"kendiliğinden düzeltilemiyor. RKWard'ı yeniden kurmanız gerekecek!</p>"
+"kendiliğinden düzeltilemiyor. RKWard’ı yeniden kurmanız gerekecek!</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:264
 #, kde-format
@@ -1947,8 +1947,8 @@ msgid ""
 "supply an rkward.ini file to specify a non-standard location."
 msgstr ""
 "RKWard bu sistemde bir R kurulumunu algılayamadı. R kurulu değil veya "
-"standart kurulum konumlarından birinde değil. '--r-executable <i>auto / "
-"PATH_TO_R</i>' komut satırı parametresini kullanabilir veya standart olmayan "
+"standart kurulum konumlarından birinde değil. ‘--r-executable <i>auto / "
+"PATH_TO_R</i>’ komut satırı parametresini kullanabilir veya standart olmayan "
 "bir konum belirtmek için bir rkward.ini dosyası sağlayabilirsiniz."
 
 #: rkward/main.cpp:221
@@ -1969,7 +1969,7 @@ msgstr "R istatistik dili için ön uç"
 #: rkward/main.cpp:260
 #, kde-format
 msgid "(c) 2002 - 2022"
-msgstr "(c) 2002 - 2022"
+msgstr "(c) 2002–2022"
 
 #: rkward/main.cpp:261
 #, kde-format
@@ -1999,7 +1999,7 @@ msgstr "Prasenjit Kapat"
 #: rkward/main.cpp:263
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
-msgstr "Birçok eklenti, öneriler, çizdirme geçmişi özelliği"
+msgstr "Birçok eklenti, öneriler, grafik geçmişi özelliği"
 
 #: rkward/main.cpp:264
 #, kde-format
@@ -2064,7 +2064,7 @@ msgstr "Çeşitli yardımcı yorumlar ve tartışmalar"
 #: rkward/main.cpp:271
 #, kde-format
 msgid "Adrien d'Hardemare"
-msgstr "Adrien d'Hardemare"
+msgstr "Adrien d’Hardemare"
 
 #: rkward/main.cpp:271
 #, kde-format
@@ -2191,7 +2191,7 @@ msgstr "Nasıl atıf yapılır:"
 #: rkward/main.cpp:283
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
-msgstr "Journal of Statistical Software'de hakemli makale"
+msgstr "Journal of Statistical Software’de hakemli makale"
 
 #: rkward/main.cpp:289
 #, kde-format
@@ -2205,7 +2205,7 @@ msgstr ""
 #: rkward/main.cpp:290
 #, kde-format
 msgid "Verbosity of debug messages (0-5)"
-msgstr "Hata ayıklama iletilerinin ayrıntı düzeyi (0-5)"
+msgstr "Hata ayıklama iletilerinin ayrıntı düzeyi (0–5)"
 
 #: rkward/main.cpp:291
 #, kde-format
@@ -2224,7 +2224,7 @@ msgid ""
 "('') together with the command. Make sure to re-direct stdout!)"
 msgstr ""
 "Arka uç için hata ayıklayıcısı. (Hata ayıklayıcısı argümanlarını komutla "
-"birlikte tek tırnak ('') içine alın. stdout'u yeniden yönlendirdiğinizden "
+"birlikte tek tırnak ('') içine alın. stdout’u yeniden yönlendirdiğinizden "
 "emin olun!)"
 
 #: rkward/main.cpp:294
@@ -2313,8 +2313,8 @@ msgid ""
 "an rkward.ini file to specify the new location."
 msgstr ""
 "Derleme zamanında (%1) belirtilen R yürütülebiliri yok veya yürütülebilir "
-"değil. Büyük olasılıkla, R'nin kurulumu taşındı. '--r-executable <i>auto / "
-"PATH_TO_R</i>' komut satırı parametresini kullanabilir veya yeni konumu "
+"değil. Büyük olasılıkla, R’nin kurulumu taşındı. ‘--r-executable <i>auto / "
+"PATH_TO_R</i>’ komut satırı parametresini kullanabilir veya yeni konumu "
 "belirtmek için bir rkward.ini dosyası sağlayabilirsiniz."
 
 #: rkward/misc/celleditor.cpp:49
@@ -2365,12 +2365,12 @@ msgstr "Sabit kesinlik:"
 #: rkward/misc/editformatdialog.cpp:72
 #, kde-format
 msgid "Formatting options for '%1'"
-msgstr "'%1' Biçimlendirme Seçenekleri"
+msgstr "‘%1’ Biçimlendirme Seçenekleri"
 
 #: rkward/misc/editlabelsdialog.cpp:204
 #, kde-format
 msgid "Levels / Value labels for '%1'"
-msgstr "'%1' Düzeyleri/Değer Etiketleri"
+msgstr "‘%1’ Düzeyleri/Değer Etiketleri"
 
 #: rkward/misc/editlabelsdialog.cpp:207
 #, kde-format
@@ -2419,7 +2419,7 @@ msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
 "</p>"
 msgstr ""
-"<p><em>Not:</em> Bu ayar, siz RKWard'ı yeniden başlatana kadar etkili olmaz."
+"<p><em>Not:</em> Bu ayar, siz RKWard’ı yeniden başlatana kadar etkili olmaz."
 "</p>"
 
 #: rkward/misc/rkdynamicsearchline.cpp:24
@@ -2438,9 +2438,9 @@ msgid ""
 msgstr ""
 "<p><b>Not:</b>Bu arama satırı, düzenli ifadeler olarak adlandırılan "
 "ifadeleri kabul eder. Aramayı dizinin başındaki eşlemelerle sınırlandırmak "
-"için süzgeci '^' ile başlatın, örn. ('^rk.'). Aramaları dizinin sonuna kadar "
-"sınırlandırmak için süzgecin sonuna '$' ekleyin. Arama teriminin ortasındaki "
-"rastgele metni eşleştirmek için '.*.' kullanın.</p>"
+"için süzgeci ‘^’ ile başlatın, örn. (‘^rk.’). Aramaları dizinin sonuna kadar "
+"sınırlandırmak için süzgecin sonuna ‘$’ ekleyin. Arama teriminin ortasındaki "
+"rastgele metni eşleştirmek için ‘.*.’ kullanın.</p>"
 
 #: rkward/misc/rkfindbar.cpp:58
 #, kde-format
@@ -2541,7 +2541,7 @@ msgid ""
 "objects that are not (or do not contain) functions, or to those that are (or "
 "contain) functions."
 msgstr ""
-"Belirli bir işlevi ararken 'veri' nesnelerini dışlamak isteyebilirsiniz "
+"Belirli bir işlevi ararken ‘veri’ nesnelerini dışlamak isteyebilirsiniz "
 "(veya bunun tersi de geçerlidir). Bu denetim, listeyi işlev olmayan (veya "
 "içermeyen) veya işlev olan (veya içeren) nesnelerle sınırlamanıza olanak "
 "tanır."
@@ -2588,7 +2588,7 @@ msgstr "Dosya seçimi iptal edildi"
 #: rkward/misc/rkoutputdirectory.cpp:151
 #, kde-format
 msgid "Are you sure you want to overwrite the existing file '%1'?"
-msgstr "Var olan '%1' dosyasının üzerine yazmak istediğinizden emin misiniz?"
+msgstr "Var olan ‘%1’ dosyasının üzerine yazmak istediğinizden emin misiniz?"
 
 #: rkward/misc/rkoutputdirectory.cpp:152 rkward/plugin/rkpluginbrowser.cpp:136
 #, kde-format
@@ -2715,27 +2715,27 @@ msgstr "Çıktı, kendiliğinden etkinleştirildi"
 #: rkward/misc/rkoutputdirectory.cpp:512
 #, kde-format
 msgid "Output '%1' is already loaded in this session. Cannot create it."
-msgstr "'%1' çıktısı bu oturumda halihazırda yüklü. Oluşturulamıyor."
+msgstr "‘%1’ çıktısı bu oturumda halihazırda yüklü. Oluşturulamıyor."
 
 #: rkward/misc/rkoutputdirectory.cpp:513
 #, kde-format
 msgid "A file named '%1' already exists. Cannot create it."
-msgstr "'%1' adlı bir dosya halihazırda var. Oluşturulamıyor."
+msgstr "‘%1’ adlı bir dosya halihazırda var. Oluşturulamıyor."
 
 #: rkward/misc/rkoutputdirectory.cpp:524
 #, kde-format
 msgid "File '%1' does not exist."
-msgstr "'%1' dosyası yok."
+msgstr "‘%1’ dosyası yok."
 
 #: rkward/misc/rkoutputdirectory.cpp:564
 #, kde-format
 msgid "The output identified by '%1' is not loaded in this session."
-msgstr "'%1' tarafından tanımlanan çıktı bu oturumda yüklü değil."
+msgstr "‘%1’ tarafından tanımlanan çıktı bu oturumda yüklü değil."
 
 #: rkward/misc/rkoutputdirectory.cpp:593
 #, kde-format
 msgid "Unhandled output command '%1'"
-msgstr "İşlenmeyen çıkış komutu '%1'"
+msgstr "İşlenmeyen çıktı komutu ‘%1’"
 
 #: rkward/misc/rkprogresscontrol.cpp:245
 #, kde-format
@@ -3055,8 +3055,8 @@ msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
 "Expect further errors to be reported below"
 msgstr ""
-"XML dosyası ayrıştırılırken hata oluştu. Hata iletisi şuydu: '%2'. satırda, "
-"'%3'. sütunda '%1'. Aşağıda daha fazla hatanın bildirilmesini bekleyin"
+"XML dosyası ayrıştırılırken hata oluştu. Hata iletisi şuydu: ‘%2’. satırda, "
+"‘%3’. sütunda ‘%1’. Aşağıda daha fazla hatanın bildirilmesini bekleyin"
 
 #: rkward/misc/xmlhelper.cpp:160
 #, kde-format
@@ -3066,18 +3066,18 @@ msgstr "Geçersiz ögenin alt ögeleri alınmaya çalışılıyor"
 #: rkward/misc/xmlhelper.cpp:171
 #, kde-format
 msgid "Expected exactly one element '%1' but found %2"
-msgstr "Tam olarak bir '%1' ögesi bekleniyordu; ancak %2 bulundu"
+msgstr "Tam olarak bir ‘%1’ ögesi bekleniyordu; ancak %2 bulundu"
 
 #: rkward/misc/xmlhelper.cpp:225 rkward/misc/xmlhelper.cpp:237
 #, kde-format
 msgid "'%1'-attribute not given. Assuming '%2'"
-msgstr "'%1' özniteliği verilmedi. '%2' varsayılıyor"
+msgstr "‘%1’ özniteliği verilmedi; ‘%2’ varsayılıyor"
 
 #: rkward/misc/xmlhelper.cpp:260
 #, kde-format
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
 msgstr ""
-"Geçersiz öznitelik değeri. İzin verilen değerler yalnızca '%1' değerlerinden "
+"Geçersiz öznitelik değeri. İzin verilen değerler yalnızca ‘%1’ değerlerinden "
 "biridir."
 
 #: rkward/misc/xmlhelper.cpp:274
@@ -3094,7 +3094,7 @@ msgstr "Geçersiz öznitelik değeri. Yalnızca gerçek sayılara izin verilir."
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
-"Geçersiz öznitelik değeri. İzin verilen değerler yalnızca '%1' veya '%2' "
+"Geçersiz öznitelik değeri. İzin verilen değerler yalnızca ‘%1’ veya ‘%2’ "
 "değerlerinden biridir."
 
 #: rkward/misc/xmlhelper.cpp:340
@@ -3105,7 +3105,7 @@ msgstr "Geçersiz ögenin içeriği alınmaya çalışılıyor"
 #: rkward/misc/xmlhelper.cpp:381
 #, kde-format
 msgid "XML-parsing '%1' "
-msgstr "'%1' dosyasındaki XML ayrıştırılıyor "
+msgstr "‘%1’ dosyasındaki XML ayrıştırılıyor "
 
 #: rkward/plugin/rkcheckbox.cpp:64
 #, kde-format
@@ -3129,8 +3129,8 @@ msgid ""
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
 ">Configure RKWard->Plugins), or perhaps the plugin was renamed."
 msgstr ""
-"'%1' adındaki bir eklentiyi çağırmayı denediniz; ancak bu eklenti şu anda "
-"bilinmiyor. Büyük olasılıkla ilgili PluginMap'i yüklemeniz gerekiyor "
+"‘%1’ adındaki bir eklentiyi çağırmayı denediniz; ancak bu eklenti şu anda "
+"bilinmiyor. Büyük olasılıkla ilgili PluginMap’i yüklemeniz gerekiyor "
 "(Ayarlar  → RKWard Uygulamasını Yapılandır → Eklentiler) veya eklenti "
 "yeniden adlandırılmış olabilir."
 
@@ -3146,7 +3146,7 @@ msgid ""
 "this should not happen, unless you modified the parameters by hand. Please "
 "consider reporting this issue."
 msgstr ""
-"'%1' eklentisini çağırmaya çalışırken hatalı serileştirme biçimi. Genel "
+"‘%1’ eklentisini çağırmaya çalışırken hatalı serileştirme biçimi. Genel "
 "olarak, parametreleri elle değiştirmediğiniz sürece bu gerçekleşmemelidir. "
 "Lütfen bu sorunu bildirmeyi düşünün."
 
@@ -3203,13 +3203,13 @@ msgstr "%1 eklenti eşlem dosyası açılamadı. (Okunamıyor veya ayrıştırı
 msgid ""
 "Skipping plugin map file '%1': Not compatible with this version of RKWard"
 msgstr ""
-"'%1' eklenti eşlem dosyası atlanıyor: RKWard'ın bu sürümüyle uyumlu değil"
+"‘%1’ eklenti eşlem dosyası atlanıyor: RKWard’ın bu sürümüyle uyumlu değil"
 
 #: rkward/plugin/rkcomponentmap.cpp:597
 #, kde-format
 msgid ""
 "Specified required file '%1' does not exist or is not readable. Ignoring."
-msgstr "Belirtilen gerekli dosya '%1' yok veya okunamıyor. Yok sayılıyor."
+msgstr "Belirtilen gerekli dosya ‘%1’ yok veya okunamıyor. Yok sayılıyor."
 
 #: rkward/plugin/rkcomponentmap.cpp:615
 #, kde-format
@@ -3217,7 +3217,7 @@ msgid ""
 "Could not resolve specified required pluginmap '%1'. You may have to install "
 "additional packages."
 msgstr ""
-"Belirtilen gerekli eklenti haritası '%1' çözülemedi. Ek paketler kurmanız "
+"Belirtilen gerekli eklenti haritası ‘%1’ çözülemedi. Ek paketler kurmanız "
 "gerekebilir."
 
 #: rkward/plugin/rkcomponentmap.cpp:649
@@ -3225,7 +3225,7 @@ msgstr ""
 msgid ""
 "Duplicate declaration of component id \"%1\" within pluginmap file \"%2\"."
 msgstr ""
-"\"%2\" eklenti eşlem dosyasındaki \"%1\" bileşen kimliğinin yinelenen beyanı."
+"‘%2’ eklenti eşlem dosyasındaki ‘%1’ bileşen kimliğinin yinelenen beyanı."
 
 #: rkward/plugin/rkcomponentmap.cpp:655
 #, kde-format
@@ -3233,7 +3233,7 @@ msgid ""
 "Specified file '%1' for component id \"%2\" does not exist or is not "
 "readable. Ignoring."
 msgstr ""
-"\"%2\" bileşen kimliği için belirtilen '%1' dosyası yok veya okunamıyor. Yok "
+"‘%2’ bileşen kimliği için belirtilen ‘%1’ dosyası yok veya okunamıyor. Yok "
 "sayılıyor."
 
 #: rkward/plugin/rkcomponentmap.cpp:671
@@ -3242,7 +3242,7 @@ msgid ""
 "Component '%1' is not available in a version compatible with this version of "
 "RKWard"
 msgstr ""
-"'%1' bileşeni, RKWard'ın bu sürümüyle uyumlu bir sürümde kullanılabilir değil"
+"‘%1’ bileşeni, RKWard’ın bu sürümüyle uyumlu bir sürümde kullanılabilir değil"
 
 #: rkward/plugin/rkcomponentmeta.cpp:41
 #, kde-format
@@ -3509,8 +3509,8 @@ msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr ""
-"Bu eklentinin açıklaması (\"%1\") ayrıştırılmaya çalışılırken bir hata "
-"oluştu. Ayrıntılar için lütfen stdout'a bakın."
+"Bu eklentinin açıklaması (‘%1’) ayrıştırılmaya çalışılırken bir hata oluştu. "
+"Ayrıntılar için lütfen stdout’a bakın."
 
 #: rkward/plugin/rkstandardcomponent.cpp:89
 #, kde-format
@@ -3567,7 +3567,7 @@ msgid ""
 "Click 'Submit' to run the commands."
 msgstr ""
 "Aşağıda, yaptığınız ayarlara karşılık gelen R komutlarının önizlemesini "
-"görebilirsiniz. Komutları çalıştırmak için 'Gönder'e tıklayın."
+"görebilirsiniz. Komutları çalıştırmak için ‘Gönder’e tıklayın."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:528
 #, kde-format
@@ -3576,7 +3576,7 @@ msgid ""
 "run. Click 'Submit' to run the commands."
 msgstr ""
 "Aşağıda ayarlarınızın sonucunu ve çalıştırılacak R komutlarını "
-"önizleyebilirsiniz. Komutları çalıştırmak için 'Gönder'e tıklayın."
+"önizleyebilirsiniz. Komutları çalıştırmak için ‘Gönder’e tıklayın."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:582
 #: rkward/plugin/rkstandardcomponentgui.cpp:600
@@ -3612,7 +3612,7 @@ msgid ""
 "just those in <i>.GlobalEnv</i>. Check this, if you want to select objects "
 "from a loaded package."
 msgstr ""
-"Tüm ortamlardaki nesneleri yalnızca <i>.GlobalEnv</i>'dekiler yerine "
+"Tüm ortamlardaki nesneleri yalnızca <i>.GlobalEnv</i>’dekiler yerine "
 "<i>search()</i> yolu üzerinde gösterin. Yüklü bir paketten nesneler seçmek "
 "istiyorsanız bunu işaretleyin."
 
@@ -3708,8 +3708,8 @@ msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
 "token '%2'"
 msgstr ""
-"Arka uç süreciyle el sıkışma sırasında hata oluştu. '%1' jetonu "
-"bekleniyordu, '%2' jetonu alındı"
+"Arka uç süreciyle el sıkışma sırasında hata oluştu. ‘%1’ jetonu "
+"bekleniyordu, ‘%2’ jetonu alındı"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:225
 #, kde-format
@@ -3718,8 +3718,8 @@ msgid ""
 "'%1' while backend is '%2'.\n"
 "Please fix your installation."
 msgstr ""
-"Arka uç süreciyle el sıkışma sırasında sürüm uyuşmazlığı. Ön uç '%1' sürümü, "
-"arka uç ise '%2'.\n"
+"Arka uç süreciyle el sıkışma sırasında sürüm uyuşmazlığı. Ön uç ‘%1’ "
+"sürümünde, arka uç ise ‘%2’.\n"
 "Lütfen kurulumunuzu onarın."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:259
@@ -3731,12 +3731,12 @@ msgstr "Arka uç süreci başlatılamadı. Lütfen kurulumunuzu denetleyin."
 #: rkward/rbackend/rkfrontendtransmitter.cpp:260
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
-msgstr "Arka uç süreci, %1 çıkış kodu ve '%2' iletisi ile başlatılamadı."
+msgstr "Arka uç süreci, %1 çıkış kodu ve ‘%2’ iletisi ile başlatılamadı."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:261
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
-msgstr "Arka uç süreci, %1 kodu ve '%2' iletisi ile çıktı."
+msgstr "Arka uç süreci, %1 kodu ve ‘%2’ iletisi ile çıktı."
 
 #: rkward/rbackend/rkrbackend.cpp:572
 #, kde-format
@@ -3774,12 +3774,12 @@ msgid ""
 "and fix your installation</b>. For help with that, see <a href=\"https://"
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 msgstr ""
-"</p>\t- 'rkward' R kitaplığı ya hiç yüklenemedi ya da doğru sürümde değil. "
+"<p>\t- ‘rkward’ R kitaplığı ya hiç yüklenemedi ya da doğru sürümde değil. "
 "Bu, tek bir özelliğin eksik olmasından, tümüyle işlevsiz kalmasına kadar her "
 "türlü hataya yol açabilir. Bunun en olası nedeni, son kurulumun tüm "
 "dosyaları doğru yere yerleştirmemesidir. Ancak bazı durumlarda, önceki "
 "kurulumdan kalan ve temiz bir şekilde çıkarılmayan kalıntılar bunun nedeni "
-"olabilir.</p>\t\t<p><b>Şimdi RKWard'dan çıkıp kurulumunuzu düzeltmelisiniz</"
+"olabilir.</p>\t\t<p><b>Şimdi RKWard’dan çıkıp kurulumunuzu düzeltmelisiniz</"
 "b>. Bununle ilgili ek yardım için <a href=\"https://rkward.kde.org/compiling"
 "\">https://rkward.kde.org/compiling</a> adresine bakın.</p>\n"
 
@@ -3792,8 +3792,8 @@ msgid ""
 "\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</"
 "p></p>\n"
 msgstr ""
-"<p>\t-R ile iletişim kurulurken bir sorun oluştu. Büyük olasılıkla bu, "
-"kurulumun bozuk olduğunu gösteriyor.</p>\t\t<p><b><b>Şimdi RKWard'dan çıkıp "
+"<p>\t- R ile iletişim kurulurken bir sorun oluştu. Büyük olasılıkla bu, "
+"kurulumun bozuk olduğunu gösteriyor.</p>\t\t<p><b><b>Şimdi RKWard’dan çıkıp "
 "kurulumunuzu düzeltmelisiniz</b>. Bununle ilgili ek yardım için <a href="
 "\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a> "
 "adresine bakın.</p></p>\n"
@@ -3830,7 +3830,7 @@ msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
-"<p>\t-Henüz RKWard tarafından ele alınmayan, belirtilmemiş bir hata oluştu. "
+"<p>\t- Henüz RKWard tarafından ele alınmayan, belirtilmemiş bir hata oluştu. "
 "Büyük olasılıkla RKWard düzgün çalışmayacaktır. Lütfen kurulumunuzu "
 "denetleyin.</p>\n"
 
@@ -3871,9 +3871,9 @@ msgstr ""
 "Ayrıca özellik henüz iyi bir şekilde sınanmamıştır ve sürdürmeden önce "
 "çalışma alanınızı kaydetmeniz önerilebilir.\n"
 "Açık herhangi bir veri düzenleyiciniz varsa veya herhangi bir şüphede "
-"kaldıysanız önce bunları kapatmanız önerilir (bu büyük olasılıkla RKWard'ın "
+"kaldıysanız önce bunları kapatmanız önerilir (bu büyük olasılıkla RKWard’ın "
 "sonraki sürümlerinde kendiliğinden algılanacaktır). Bu durumda lütfen şimdi "
-"'İptal'i seçin, ardından veri pencerelerini kapatın, kaydedin ve yeniden "
+"‘İptal’i seçin, ardından veri pencerelerini kapatın, kaydedin ve yeniden "
 "deneyin."
 
 #: rkward/rbackend/rkrinterface.cpp:596
@@ -3899,7 +3899,7 @@ msgstr "Dosya, yazmak için açılamadı. Komutlar kaydedilmiyor"
 #: rkward/rbackend/rkrinterface.cpp:719
 #, kde-format
 msgid "Error: unrecognized request '%1'"
-msgstr "Hata: Tanımlanamayan istek '%1'"
+msgstr "Hata: Tanımlanamayan istek ‘%1’"
 
 #: rkward/rbackend/rkrinterface.cpp:792
 #, kde-format
@@ -3909,19 +3909,19 @@ msgid ""
 "package-management tool, and there you can try to locate and install the "
 "needed package."
 msgstr ""
-"R-arka ucu, geçerli görevi gerçekleştirmek için şu anda kurulu olmayan '%1' "
+"R arka ucu, geçerli görevi gerçekleştirmek için şu anda kurulu olmayan ‘%1’ "
 "paketine gereksinimi olduğunu belirtti. Paket yönetim aracını açacağız ve "
 "orada gerekli paketi bulup kurmayı deneyebilirsiniz."
 
 #: rkward/rbackend/rkrinterface.cpp:792
 #, kde-format
 msgid "Require package '%1'"
-msgstr "'%1' Paketi Gerekli"
+msgstr "‘%1’ Paketi Gerekli"
 
 #: rkward/rbackend/rkrinterface.cpp:812
 #, kde-format
 msgid "Unrecognized call '%1'"
-msgstr "Tanımlanamayan çağrı '%1'"
+msgstr "Tanımlanamayan çağrı ‘%1’"
 
 #: rkward/rbackend/rkrinterface.cpp:892
 #, kde-format
@@ -3944,7 +3944,7 @@ msgstr ""
 "hatta çalışma alanını bile kurtaramazsınız (ama eğer şanslıysanız R bunu "
 "zaten yapmıştır). Yapabileceğiniz tek şey, açık komut dosyalarını/çıktıyı "
 "kaydetmek veya açık veri düzenleyicilerden veri kopyalamaktır. Bundan sonra "
-"RKWard'dan çıkın. Üzgünüm!"
+"RKWard’dan çıkın. Üzgünüm!"
 
 #: rkward/rbackend/rkrinterface.cpp:912
 #, kde-format
@@ -3981,13 +3981,13 @@ msgstr ""
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
-"<p>Sonraki çizdirmeyi görmek için Giriş'e basın veya iptal etmek için "
-"'İptal'e tıklayın.</p>"
+"<p>Sonraki grafiği görmek için Giriş’e basın veya iptal etmek için ‘İptal’e "
+"tıklayın.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
 #, kde-format
 msgid "Ok to show next plot?"
-msgstr "Sonraki çizdirmeyi gösterelim mi?"
+msgstr "Sonraki grafiği gösterelim mi?"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -4016,13 +4016,13 @@ msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
 "katepart, and will exit, now. Please install katepart, and try again."
 msgstr ""
-"'katepart' bileşeni yüklenemedi. RKWard, katepart olmadan çalışamaz ve şimdi "
-"çıkacaktır. Lütfen katepart'ı kurun ve yeniden deneyin."
+"‘katepart’ bileşeni yüklenemedi. RKWard, katepart olmadan çalışamaz ve şimdi "
+"çıkacaktır. Lütfen katepart’ı kurun ve yeniden deneyin."
 
 #: rkward/rkconsole.cpp:91
 #, kde-format
 msgid "'katepart' component could not be found"
-msgstr "'katepart' Bileşeni Bulunamadı"
+msgstr "‘katepart’ Bileşeni Bulunamadı"
 
 #: rkward/rkconsole.cpp:132 rkward/windows/rkcommandeditorwindow.cpp:408
 #, kde-format
@@ -4102,11 +4102,11 @@ msgid ""
 "want to append it to the command in the console, or do you want to reset the "
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
-"RKWard'ı komut dosyası düzenleyicisi komutlarını R Konsolu aracılığıyla "
+"RKWard’ı komut dosyası düzenleyicisi komutlarını R Konsolu aracılığıyla "
 "iletecek biçimde yapılandırdınız. Ancak şu anda konsolda başka bir komut "
 "etkin. Bunu konsoldaki komuta eklemek mi istiyorsunuz yoksa önce konsolu "
 "sıfırlamak mı istiyorsunuz? Yeni komutu şimdi çalıştırmak istemiyorsanız "
-"İptal'e basın."
+"İptal’e basın."
 
 #: rkward/rkconsole.cpp:911
 #, kde-format
@@ -4166,16 +4166,16 @@ msgid ""
 "before doing so.</p><p><i>Note</i>: Checking 'Do not ask again' will "
 "suppress this message for the remainder of this session, only."
 msgstr ""
-"<p>Büyük olasılıkla bir yerlerdeki 'rkward://' bağlantısına tıklayarak "
-"RKWard'ın dışından bir RKWard iletişim kutusu başlatmak üzeresiniz. Bu "
-"bağlantıyı dış bir web sitesinde bulmanız durumunda, R'nin bilgisayarınızda "
+"<p>Büyük olasılıkla bir yerlerdeki ‘rkward://’ bağlantısına tıklayarak "
+"RKWard’ın dışından bir RKWard iletişim kutusu başlatmak üzeresiniz. Bu "
+"bağlantıyı dış bir web sitesinde bulmanız durumunda, R’nin bilgisayarınızda "
 "<b>kötü amaçlı yazılımların indirilmesi ve kurulması da dahil olmak üzere</"
 "b> rastgele komutlar çalıştırmak için kullanılabileceğini lütfen unutmayın. "
-"Takip ettiğiniz bağlantının kaynağına güvenmiyorsanız aşağıdaki 'İptal'e "
-"basmalısınız.</p><p>'Sürdür’e tıklatmanız durumunda, iletişim penceresinde "
-"'Gönder'e tıklamadığınız sürece hiçbir R kodu çalıştırılmayacaktır ve bunu "
+"Takip ettiğiniz bağlantının kaynağına güvenmiyorsanız aşağıdaki ‘İptal’e "
+"basmalısınız.</p><p>‘Sürdür’e tıklatmanız durumunda, iletişim penceresinde "
+"‘Gönder’e tıklamadığınız sürece hiçbir R kodu çalıştırılmayacaktır ve bunu "
 "yapmadan önce oluşturulan R kodunu incelemeniz önerilir.</p><p><i>Not</i>: "
-"'Bir daha sorma' seçeneğinin işaretlenmesi bu iletinin yalnızca bu oturumun "
+"‘Bir daha sorma’ seçeneğinin işaretlenmesi bu iletinin yalnızca bu oturumun "
 "geri kalanı boyunca gizlenmesine neden olacaktır."
 
 #: rkward/rkward.cpp:304
@@ -4197,7 +4197,7 @@ msgid ""
 msgstr ""
 "Yeni RKWard eklenti paketleri (aşağıda listelenmiştir) kendiliğinden bulundu "
 "ve etkinleştirildi. Seçili eklenti paketlerini devre dışı bırakmak için "
-"Ayarlar → RKWard Uygulamasını Yapılandır → Eklentiler'i kullanın."
+"Ayarlar → RKWard Uygulamasını Yapılandır → Eklentiler’i kullanın."
 
 #: rkward/rkward.cpp:350
 #, kde-format
@@ -4213,9 +4213,9 @@ msgid ""
 "more information). They have been disabled."
 msgstr ""
 "Aşağıdaki RKWard eklenti eşlemi dosyaları yüklenemedi ve devre dışı "
-"bırakıldı. Bunun nedeni bunların bozuk olması, RKWard'ın bu sürümüyle uyumlu "
+"bırakıldı. Bunun nedeni bunların bozuk olması, RKWard’ın bu sürümüyle uyumlu "
 "olmaması veya doğrudan yükleme amaçlı olmaması olabilir (daha fazla bilgi "
-"için 'Ayrıntılar'a bakın). Engellenmiş olabilirler."
+"için ‘Ayrıntılar’a bakın). Engellenmiş olabilirler."
 
 #: rkward/rkward.cpp:354 rkward/rkward.cpp:358
 #, kde-format
@@ -4231,8 +4231,8 @@ msgid ""
 "plugins were loaded, successfully, however."
 msgstr ""
 "Aşağıdaki RKWard eklenti eşlemi dosyaları yüklenirken bazı hatalarla "
-"karşılaşıldı. Bunun nedeni bireysel eklentilerin bozuk olması veya RKWard'ın "
-"bu sürümüyle uyumlu olmaması olabilir (daha fazla bilgi için 'Ayrıntılar'a "
+"karşılaşıldı. Bunun nedeni bireysel eklentilerin bozuk olması veya RKWard’ın "
+"bu sürümüyle uyumlu olmaması olabilir (daha fazla bilgi için ‘Ayrıntılar’a "
 "bakın). Ancak diğer eklentiler başarıyla yüklendi."
 
 #: rkward/rkward.cpp:358
@@ -4242,7 +4242,7 @@ msgid ""
 "upgrade RKWard, or remove and re-add them in Settings->Configure RKWard-"
 ">Plugins."
 msgstr ""
-"Not: RKWard'ı yükseltene veya Ayarlar → RKWard Uygulamasını Yapılandır → "
+"Not: RKWard’ı yükseltene veya Ayarlar → RKWard Uygulamasını Yapılandır → "
 "Eklentiler bölümünden kaldırıp yeniden ekleyene kadar bu eklenti eşlemi "
 "dosyaları hakkında bir daha uyarılmayacaksınız."
 
@@ -4688,7 +4688,7 @@ msgstr "Nesne görüntüleyicisi: %1"
 #: rkward/robjectviewer.cpp:126
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
-msgstr "Nesne değiştirildi. \"Güncelle\"ye tıklamak isteyebilirsiniz"
+msgstr "Nesne değiştirildi. ‘Güncelle’ye tıklamak isteyebilirsiniz"
 
 #: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:110
 #, kde-format
@@ -4731,7 +4731,7 @@ msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
 msgstr ""
-"\"%1\" dosyası (\"%2\" tarafından gerekli) bulunamadı. Lütfen kurulumunuzu "
+"‘%1’ dosyası (‘%2’ tarafından gerekli) bulunamadı. Lütfen kurulumunuzu "
 "denetleyin."
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:54
@@ -4748,7 +4748,7 @@ msgstr "satır içi kod"
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
 msgid "Script Error at '%1' line %2: %3\n"
-msgstr "'%1' içinde %2. satırda betik hatası: %3\n"
+msgstr "‘%1’ içinde %2. satırda betik hatası: %3\n"
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:88
 #, kde-format
@@ -4756,8 +4756,8 @@ msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
 msgstr ""
-"Hata ('\"%1\" dosyası (\"%2\" tarafından gerekli) bulunamadı. Lütfen "
-"kurulumunuzu denetleyin.');\n"
+"Hata (“‘%1’ dosyası (‘%2’ tarafından gerekli) bulunamadı. Lütfen "
+"kurulumunuzu denetleyin.”);\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:83
 #, kde-format
@@ -4801,7 +4801,7 @@ msgstr ""
 "<h1>Eklentiler</h1><p>RKWard eklentileri, her biri kendi yapılandırma "
 "seçeneklerine sahip çeşitli biçimlerde gelir:</p><h2>R Paketleri</h2><p><a "
 "href=\"rkward://settings/rpackages\">R dilinin kendisi için eklentiler</a>. "
-"Bunlar genellikle \"CRAN\"dan indirilir. Bu eklenti paketlerinden bazıları "
+"Bunlar genellikle ‘CRAN’dan indirilir. Bu eklenti paketlerinden bazıları "
 "ayrıca RKWard eklentileri içerebilir.</p><h2>RKWard Eklentileri</h2><p><a "
 "href=\"rkward://settings/plugins\">R işlevselliğine yönelik grafik iletişim "
 "kutuları</a>. Bu eklentiler genellikle RKWard veya bir R paketiyle önceden "
@@ -4925,7 +4925,7 @@ msgstr "Tamamlama ögelerinde klavye dolaşımı"
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:81
 #, kde-format
 msgid "'$'-operator (list$member)"
-msgstr "'$' işleci (list$üyesi)"
+msgstr "‘$’ işleci (list$üyesi)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:81
 #, kde-format
@@ -4943,12 +4943,12 @@ msgstr "list() ve data.frame() nesnelerinin üyelerine erişme işleci"
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:86
 #, kde-format
 msgid "'@'-operator (object@member)"
-msgstr "'@' işleci (nesne@üye)"
+msgstr "‘@’ işleci (nesne@üye)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:86
 #, kde-format
 msgid "'slot()'-function (slot(object, member))"
-msgstr "'slot()' işleci (slot(nesne, üye))"
+msgstr "‘slot()’ işleci (slot(nesne, üye))"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:88
 #, kde-format
@@ -4956,7 +4956,7 @@ msgctxt ""
 "Note: S4-slot() is a programming term in R, and should not be translated, "
 "here"
 msgid "Operator for access to S4-slot()s"
-msgstr "S4-slot()'larına erişim işleci"
+msgstr "S4-slot()’larına erişim işleci"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
@@ -5130,7 +5130,7 @@ msgid ""
 "Directory where rkward may store files (setting takes effect after "
 "restarting RKWard)"
 msgstr ""
-"RKWard'ın dosyaları depolayabileceği dizin (ayar, RKWard yeniden "
+"RKWard’ın dosyaları depolayabileceği dizin (ayar, RKWard yeniden "
 "başlatıldıktan sonra etkili olur)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:67
@@ -5143,7 +5143,7 @@ msgstr "Başlangıç davranışı"
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
 msgstr ""
-"Varsa başlangıç dizininden .RData dosyasını yükle ('--restore' R seçeneği)"
+"Varsa başlangıç dizininden .RData dosyasını yükle (‘--restore’ R seçeneği)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
@@ -5189,7 +5189,7 @@ msgid ""
 "directory of loaded workspaces, that directory will take precedence.</p>"
 msgstr ""
 "<p>Kullanılacak ilk çalışma dizini. Başlangıçta bir çalışma alanı "
-"yüklüyorsanız ve RKWard'ı yüklenen çalışma alanlarının dizinine geçecek "
+"yüklüyorsanız ve RKWard’ı yüklenen çalışma alanlarının dizinine geçecek "
 "şekilde yapılandırdıysanız bu dizinin öncelikli olacağını unutmayın.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:90
@@ -5302,12 +5302,12 @@ msgid ""
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
 "name of a function such as <i>cairoDevice</i>.</p>"
 msgstr ""
-"<p>Çizdirme için kullanılacak öntanımlı aygıt, yani hiçbir grafik aygıtı "
-"etkin değilken yeni grafik oluşturulduğunda (bkz. <i>options(\"aygıt\")</i>)."
-"</p><p>RKWard yerel aygıtı, çoğu kullanıcı için önerilen seçimdir. Bu, "
-"<i>RK()</i> R komutuna karşılık gelir.</p><p>'Platform öntanımlı aygıtı', "
+"<p>Grafik için kullanılacak öntanımlı aygıt, yani hiçbir grafik aygıtı etkin "
+"değilken yeni grafik oluşturulduğunda (bkz. <i>options(\"aygıt\")</i>).</"
+"p><p>RKWard yerel aygıtı, çoğu kullanıcı için önerilen seçimdir. Bu, "
+"<i>RK()</i> R komutuna karşılık gelir.</p><p>‘Platform öntanımlı aygıtı’, "
 "platforma bağlı olarak <i>X11()</i>, <i>windows()</i> veya <i>quartz()</"
-"i>'dan birine karşılık gelir.</p><p>Ayrıca <i>cairoDevice</i> gibi bir "
+"i>’dan birine karşılık gelir.</p><p>Ayrıca <i>cairoDevice</i> gibi bir "
 "işlevin adını da belirtebilirsiniz.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:76
@@ -5356,11 +5356,11 @@ msgstr ""
 "yerel aygıtına (<i>RK()</i>) yeniden yönlendirilebilir. İşlev argümanlarının "
 "tümü olmasa da bazıları eşleştirilecek, diğerleri yok sayılacaktır.</"
 "li><li>Özgün platforma özel aygıtlar RKWard pencerelerine yerleştirilip "
-"kullanılabilir. Bu seçenek macOS'te kullanılamaz.</li><li>Özgün platforma "
-"özel aygıtlar, RKWard'a özgü özellikler eklenmeden değiştirilmeden "
+"kullanılabilir. Bu seçenek macOS’te kullanılamaz.</li><li>Özgün platforma "
+"özel aygıtlar, RKWard’a özgü özellikler eklenmeden değiştirilmeden "
 "kullanılabilir.</li></ul><p>Bu ayardan bağımsız olarak, özgün aygıtlara her "
 "zaman <i>grDevices::X11()</i> vb. olarak erişilebilir.</p><p>Bir aygıtı "
-"tanımlanmamış bir platformda kullanmak (örneğin, macOS'te <i>Windows()</i>) "
+"tanımlanmamış bir platformda kullanmak (örneğin, macOS’te <i>Windows()</i>) "
 "her zaman <i>RK()</i> aygıtına geri dönecektir.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:105
@@ -5391,12 +5391,12 @@ msgstr "Ekran aygıtı geçmişi"
 #: rkward/settings/rksettingsmodulegraphics.cpp:123
 #, kde-format
 msgid "Maximum number of recorded plots:"
-msgstr "En çok kayıtlı çizdirme sayısı:"
+msgstr "En çok kayıtlı grafik sayısı:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:127
 #, kde-format
 msgid "Maximum size of a single recorded plot (in KB):"
-msgstr "Bir kayıtlı çizdirmenin en büyük boyutu (KB):"
+msgstr "Bir kayıtlı grafiğin en büyük boyutu (KB):"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:155
 #, kde-format
@@ -5418,8 +5418,8 @@ msgstr ""
 "örneğin, <i>Proje</i> eklentisi için sürüm denetimli bir dosya yüklerken.</"
 "p><p>Burada listelenen eklentiler özel olarak RKWard için geliştirilmemiştir "
 "ve birçoğu RKWard bağlamında pek bir anlam ifade etmemektedir. <b>Koyu</b> "
-"ile gösterilen eklentiler, RKWard kullanıcıları tarafından \"yararlı\" "
-"olarak rapor edilmiştir.</p>"
+"ile gösterilen eklentiler, RKWard kullanıcıları tarafından ‘yararlı’ olarak "
+"rapor edilmiştir.</p>"
 
 #: rkward/settings/rksettingsmodulekateplugins.cpp:96
 #, kde-format
@@ -5454,7 +5454,7 @@ msgstr "Konsola girilen komutlar"
 #: rkward/settings/rksettingsmoduleoutput.cpp:48
 #, kde-format
 msgid "Commands run via the 'Run' menu"
-msgstr "'Çalıştır' menüsü ile çalıştırılan komutlar"
+msgstr "‘Çalıştır’ menüsü ile çalıştırılan komutlar"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:49
 #, kde-format
@@ -5823,7 +5823,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:350
 #, kde-format
 msgid "Install from git"
-msgstr "Git'ten Kur"
+msgstr "Git’ten Kur"
 
 #: rkward/settings/rksettingsmoduler.cpp:351
 #, kde-format
@@ -5833,7 +5833,7 @@ msgid ""
 "such packages, comfortably."
 msgstr ""
 "Bazı eklenti paketleri CRAN deposunda yoktur; ancak geliştirme depolarından "
-"kurulabilir. Bu tür paketleri rahatça kurmak için \"%1\" düğmesini kullanın."
+"kurulabilir. Bu tür paketleri rahatça kurmak için ‘%1’ düğmesini kullanın."
 
 #: rkward/settings/rksettingsmoduler.cpp:359
 #, kde-format
@@ -5864,9 +5864,9 @@ msgid ""
 "often fail to work correctly in a different version of R."
 msgstr ""
 "Eklenecek kitaplık konumunu belirtin veya seçin.\n"
-"Konumların, R sürüm numarasının ilk iki bileşenine (örneğin 3.5'e) "
-"kendilğinden genişleyecek bir '%v' içerebileceğini unutmayın. Bunun "
-"içerilmesi önerilir; çünkü R'nin bir sürümü için derlenen R paketleri "
+"Konumların, R sürüm numarasının ilk iki bileşenine (örneğin 3.5’e) "
+"kendilğinden genişleyecek bir ‘%v’ içerebileceğini unutmayın. Bunun "
+"içerilmesi önerilir; çünkü R’nin bir sürümü için derlenen R paketleri "
 "genellikle farklı bir R sürümünde düzgün çalışmaz."
 
 #: rkward/settings/rksettingsmoduler.cpp:427
@@ -5883,7 +5883,7 @@ msgstr "Depo Ekle"
 #: rkward/settings/rksettingsmoduler.cpp:440
 #, kde-format
 msgid "Add URL of new repository"
-msgstr "Yeni deponun URL'sini ekle"
+msgstr "Yeni deponun URL’sini ekle"
 
 #: rkward/settings/rksettingsmoduler.cpp:446
 #, kde-format
@@ -5912,8 +5912,8 @@ msgid ""
 "for an incompatible version of R."
 msgstr ""
 "Yapılandırılmış kitaplık konumları (bu sistemde R paketlerinin kurulacağı "
-"yer), RKWard'ın önceki sürümlerinde öntanımlı kitaplık konumu olarak "
-"önerilen '%1' dizinini içerir. RKWard dışındaki R oturumları tarafından "
+"yer), RKWard’ın önceki sürümlerinde öntanımlı kitaplık konumu olarak "
+"önerilen ‘%1’ dizinini içerir. RKWard dışındaki R oturumları tarafından "
 "erişilemediğinden (açıkça yapılandırılmadıkça) bu dizinin kullanılması artık "
 "önerilmemektedir. Ayrıca dizin adında R sürüm numarasının bulunmaması "
 "nedeniyle, uyumsuz bir R sürümü için oluşturulmuş paketlerin kullanılmasına "
@@ -5932,8 +5932,8 @@ msgid ""
 "R. Packages will continue to work (if they are compatible with this version "
 "of R)."
 msgstr ""
-"Şu anda çalışmakta olan R'nin sürüm numarasını içerecek şekilde bu konumu "
-"yeniden adlandırın. Paketler çalışmayı sürdürecektir (eğer R'nin bu "
+"Şu anda çalışmakta olan R’nin sürüm numarasını içerecek şekilde bu konumu "
+"yeniden adlandırın. Paketler çalışmayı sürdürecektir (eğer R’nin bu "
 "sürümüyle uyumlularsa)."
 
 #: rkward/settings/rksettingsmoduler.cpp:596
@@ -6082,8 +6082,8 @@ msgid ""
 "\" (letter 'S' in the type column). Cancelling such commands could lead to "
 "loss of data. These commands have _not_ been cancelled."
 msgstr ""
-"İptal etmeye çalıştığınız komutlardan bazıları \"sync\" olarak imlendi (tür "
-"sütununda 'S' harfi). Bu tür komutların iptal edilmesi veri kaybına neden "
+"İptal etmeye çalıştığınız komutlardan bazıları ‘sync’ olarak imlendi (tür "
+"sütununda ‘S’ harfi). Bu tür komutların iptal edilmesi veri kaybına neden "
 "olabilir. Bu komutlar iptal edilmedi."
 
 #: rkward/windows/rcontrolwindow.cpp:122
@@ -6122,9 +6122,9 @@ msgid ""
 "this session. To enable the call tip, install any other (earlier or later) "
 "version of (lib|kf5)ktexteditor."
 msgstr ""
-"ktexteditor'un 5.92.0 sürümündeki bir hata nedeniyle (şu anda kullanımda "
+"ktexteditor’un 5.92.0 sürümündeki bir hata nedeniyle (şu anda kullanımda "
 "olan sürüm), işlev çağrısı ipucu özelliği çökebilir ve bu oturumda devre "
-"dışı bırakıldı. Çağrı ipucunu etkinleştirmek için (lib|kf5)ktexteditor'un "
+"dışı bırakıldı. Çağrı ipucunu etkinleştirmek için (lib|kf5)ktexteditor’un "
 "başka herhangi bir (önceki veya sonraki) sürümünü kurun."
 
 #: rkward/windows/rkcodecompletion.cpp:61
@@ -6155,7 +6155,7 @@ msgstr "Yerel dosya adları"
 #: rkward/windows/rkcommandeditorwindow.cpp:173
 #, kde-format
 msgid "Unable to open \"%1\""
-msgstr "\"%1\" açılamıyor"
+msgstr "‘%1’ açılamıyor"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:173
 #, kde-format
@@ -6215,7 +6215,7 @@ msgstr "RKWard Çıktısı"
 #: rkward/windows/rkcommandeditorwindow.cpp:407
 #, kde-format
 msgid "Plot"
-msgstr "Çizdir"
+msgstr "Grafik"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:410
 #, kde-format
@@ -6254,7 +6254,7 @@ msgid ""
 "if there is no call to <i>rk.print()</i> or other RKWard output commands."
 msgstr ""
 "Herhangi bir çıktıyı RKWard Çıkış Penceresinde önizleyin. <i>rk.print()</"
-"i>'e veya diğer RKWard çıktı komutlarına çağrı yapılmadığı takdirde bu "
+"i>’e veya diğer RKWard çıktı komutlarına çağrı yapılmadığı takdirde bu "
 "önizleme boş olacaktır."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:424
@@ -6277,12 +6277,12 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:432
 #, kde-format
 msgid "Save Script..."
-msgstr "Betiği Kaydet..."
+msgstr "Betiği Kaydet…"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:434
 #, kde-format
 msgid "Save Script As..."
-msgstr "Betiği Farklı Kaydet..."
+msgstr "Betiği Farklı Kaydet…"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:514
 #: rkward/windows/rkcommandeditorwindow.cpp:780
@@ -6293,7 +6293,7 @@ msgstr " [değiştirildi]"
 #: rkward/windows/rkcommandeditorwindow.cpp:521
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr "\"%1\" belgesi değiştirildi. Yine de kapatılsın mı?"
+msgstr "‘%1’ belgesi değiştirildi. Yine de kapatılsın mı?"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:521
 #, kde-format
@@ -6317,7 +6317,7 @@ msgstr ""
 "kaçınmayı <b>dener</b> (teknik olarak, <i>local()</i> değerlendirme ortamını "
 "kullanarak). <b>Ancak önizleme özelliğini kullanmanın beklenmeyen yan "
 "etkilere neden olabileceği durumlar da vardır</b>.</p><p>Bu durum özellikle "
-"<i>globalenv()</i>'ye açık atamalar içeren betikler veya dosya "
+"<i>globalenv()</i>’ye açık atamalar içeren betikler veya dosya "
 "sisteminizdeki dosyaları değiştiren betikler için geçerlidir. Ayrıca "
 "paketleri veya paket ad alanlarını eklemek/çıkarmak, çalışan R oturumunun "
 "tümünü etkileyecektir.</p><p>Önizleme özelliğini kullanırken ve özellikle de "
@@ -6334,7 +6334,7 @@ msgstr "Önizlemelerin olası yan etkileri"
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
-"'%1' betiğinin kendiliğinden kaydı oluşturulmaya çalışılırken bir hata "
+"‘%1’ betiğinin kendiliğinden kaydı oluşturulmaya çalışılırken bir hata "
 "oluştu:"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:779
@@ -6345,7 +6345,7 @@ msgstr "Adsız"
 #: rkward/windows/rkcommandeditorwindow.cpp:909
 #, kde-format
 msgid "Preview of rendered R Markdown"
-msgstr "Sunulan R Markdown'un önizlemesi"
+msgstr "Sunulan R Markdown’un önizlemesi"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
@@ -6364,9 +6364,9 @@ msgid ""
 msgstr ""
 "R Markdown dosyalarını oluşturmak için gereken <tt>pandoc</tt> yazılımı "
 "kurulu değil veya çalışan R oturumunun sistem yolunda değil. <a href="
-"\"https://pandoc.org/\">https://pandoc.org/</a> adresinden pandoc'u kurmanız "
+"\"https://pandoc.org/\">https://pandoc.org/</a> adresinden pandoc’u kurmanız "
 "gerekir.</br>Kurulurysa; ancak bulunamıyorsa, <a href=\"rkward://settings/"
-"rbackend\">Ayarlar → RKward Uygulamasını Yapılandır → R-Arka Ucu</a> "
+"rbackend\">Ayarlar → RKward Uygulamasını Yapılandır → R Arka Ucu</a> "
 "konumuna gidip çalışan R oturumunun sistem yoluna eklemeyi deneyin."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:926
@@ -6377,7 +6377,7 @@ msgstr "Üretilen R çıktısının önizlemesi"
 #: rkward/windows/rkcommandeditorwindow.cpp:934
 #, kde-format
 msgid "Preview of generated plot"
-msgstr "Üretilen çizdirmenin önizlemesi"
+msgstr "Üretilen grafiğin önizlemesi"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:941
 #, kde-format
@@ -6457,7 +6457,7 @@ msgstr ""
 "<p>Bu işlevi çağırana ulaşılana kadar sürdürün (başka bir hata ayıklama "
 "ifadesine daha önce ulaşılmadığı sürece)</p><p><b>Not:</b> Bazı durumlarda "
 "çağrı işlevine hiçbir zaman ulaşılamaz çünkü çağrı arayanın son adımıdır. Bu "
-"durumlarda davranış 'Sürdür' ile aynıdır.</p>"
+"durumlarda davranış ‘Sürdür’ ile aynıdır.</p>"
 
 #: rkward/windows/rkdebugconsole.cpp:51
 #, kde-format
@@ -6493,7 +6493,7 @@ msgid ""
 msgstr ""
 "Bir hata ayıklayıcısı etkinken bu pencere kapatılamaz. Bunun ne anlama "
 "geldiği hakkında hiçbir fikriniz yoksa ve çıkmak istiyorsanız bu pencerenin "
-"sağ tarafındaki 'İptal' düğmesine basın."
+"sağ tarafındaki ‘İptal’ düğmesine basın."
 
 #: rkward/windows/rkdebugmessagewindow.cpp:70
 #, kde-format
@@ -6534,7 +6534,7 @@ msgstr "Yeniden Adlandır…"
 #: rkward/windows/rkfilebrowser.cpp:169
 #, kde-format
 msgid "New name for '%1':"
-msgstr "'%1' için yeni ad:"
+msgstr "‘%1’ için yeni ad:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:59
 #, kde-format
@@ -6598,9 +6598,9 @@ msgid ""
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
 "more options."
 msgstr ""
-"'%1' üzerinde yardım bulunamadı. Belki ilgili paket kurulmamış/"
+"‘%1’ üzerinde yardım bulunamadı. Belki ilgili paket kurulmamış/"
 "yüklenmemiştir veya komutu yanlış yazmış olabilirsiniz. Daha fazla seçenek "
-"için Yardım → R Yardımında Ara'yı kullanmayı deneyin."
+"için Yardım → R Yardımında Ara’yı kullanmayı deneyin."
 
 #: rkward/windows/rkhelpsearchwindow.cpp:160
 #, kde-format
@@ -6825,7 +6825,7 @@ msgstr "Adsız Arayüz Ögesi"
 #: rkward/windows/rkhtmlwindow.cpp:1375
 #, kde-format
 msgid "R Reference on '%1'"
-msgstr "'%1' Üzerinde R Başvurusu"
+msgstr "‘%1’ Üzerinde R Başvurusu"
 
 #: rkward/windows/rkhtmlwindow.cpp:1386
 #, kde-format
@@ -6955,7 +6955,7 @@ msgid ""
 "Therefore, if you want to configure keyboard shortcuts e.g. for use inside "
 "the script editor, you need to open a script editor window, and activate it."
 msgstr ""
-"Teknik nedenlerden dolayı, aşağıdaki iletişim kutusu yalnızca RKWard'ın o "
+"Teknik nedenlerden dolayı, aşağıdaki iletişim kutusu yalnızca RKWard’ın o "
 "anda etkin olan bölümleri için klavye kısayollarını yapılandırmanıza olanak "
 "tanır.\n"
 "\n"
@@ -6978,7 +6978,7 @@ msgid ""
 "Therefore, if you want to configure tool buttons e.g. for use inside the "
 "script editor, you need to open a script editor window, and activate it."
 msgstr ""
-"Teknik nedenlerden dolayı, aşağıdaki iletişim kutusu yalnızca RKWard'ın o "
+"Teknik nedenlerden dolayı, aşağıdaki iletişim kutusu yalnızca RKWard’ın o "
 "anda etkin olan bölümleri için araç çubuklarını yapılandırmanıza olanak "
 "tanır.\n"
 "\n"
@@ -6993,8 +6993,8 @@ msgid ""
 "this is not currently supported in this build of RKWard on Mac OS X. See "
 "https://rkward.kde.org/mac for more information."
 msgstr ""
-"RKWard'a yeni bir R grafik aygıtı penceresi yerleştirmeyi denediniz. Ancak "
-"bu, şu anda macOS'teki RKWard'ın bu yapısında desteklenmemektedir. Daha "
+"RKWard’a yeni bir R grafik aygıtı penceresi yerleştirmeyi denediniz. Ancak "
+"bu, şu anda macOS’teki RKWard’ın bu yapısında desteklenmemektedir. Daha "
 "fazla bilgi için https://rkward.kde.org/mac adresine bakın."
 
 #: rkward/windows/rkwindowcatcher.cpp:124
@@ -7012,11 +7012,11 @@ msgid ""
 "Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen "
 "Graphics."
 msgstr ""
-"RKWard'a yeni bir R grafik aygıtı penceresi gömmeyi denediniz. Ancak ya "
+"RKWard’a yeni bir R grafik aygıtı penceresi gömmeyi denediniz. Ancak ya "
 "hiçbir pencere oluşturulmadı ya da RKWard yeni pencereyi algılayamadı. "
-"RKWard'ın daha iyisini yapması gerektiğini düşünüyorsanız bunu bir hata "
+"RKWard’ın daha iyisini yapması gerektiğini düşünüyorsanız bunu bir hata "
 "olarak bildirmeyi düşünün. Alternatif olarak, Ayarlar → RKWard Uygulamasını "
-"Yapılandır → Ekran Grafikleri'ni değiştirmek isteyebilirsiniz."
+"Yapılandır → Ekran Grafikleri’ni değiştirmek isteyebilirsiniz."
 
 #: rkward/windows/rkwindowcatcher.cpp:294
 #, kde-format
@@ -7062,10 +7062,10 @@ msgid ""
 "close the graphics device immediately, in case it is stuck. However, the "
 "last plot may be missing from the plot history, if you do this.</p>"
 msgstr ""
-"<p>Grafik aygıtı kapatılıyor ve son çizdirme, çizdirme geçmişine "
-"kaydediliyor. R arka ucu hâlâ meşgulse bu biraz zaman alabilir. Sıkışması "
-"durumunda grafik aygıtını hemen kapatabilirsiniz. Ancak bunu yaparsanız son "
-"grafik çizdirme geçmişinde eksik olabilir.</p>"
+"<p>Grafik aygıtı kapatılıyor ve son çizim, grafik geçmişine kaydediliyor. R "
+"arka ucu hâlâ meşgulse bu biraz zaman alabilir. Sıkışması durumunda grafik "
+"aygıtını hemen kapatabilirsiniz. Ancak bunu yaparsanız son grafik çizimi "
+"geçmişinde eksik olabilir.</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:381
 #, kde-format
@@ -7073,7 +7073,7 @@ msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
 "close it manually in this case.</p>"
 msgstr ""
-"<p>Not: X11'de gömülü pencere silinebilir ve bu durumda onu elle kapatmanız "
+"<p>Not: X11’de gömülü pencere silinebilir ve bu durumda onu elle kapatmanız "
 "gerekecektir.</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:383
@@ -7124,7 +7124,7 @@ msgstr "Grafiğin kaydedileceği R nesnesinin adını belirt"
 #: rkward/windows/rkwindowcatcher.cpp:607
 #, kde-format
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "%1 numaralı grafik aygıtının içeriğini '%2' nesnesine kaydet"
+msgstr "%1 numaralı grafik aygıtının içeriğini ‘%2’ nesnesine kaydet"
 
 #: rkward/windows/rkwindowcatcher.cpp:616
 #, kde-format
@@ -7134,7 +7134,7 @@ msgstr "%1 numaralı grafik aygıtını çoğalt"
 #: rkward/windows/rkwindowcatcher.cpp:622
 #, kde-format
 msgid "Load next plot in device number %1"
-msgstr "%1 numaralı aygıta sonraki çizdirmeyi yükle"
+msgstr "%1 numaralı aygıta sonraki grafiği yükle"
 
 #: rkward/windows/rkwindowcatcher.cpp:623
 #: rkward/windows/rkwindowcatcher.cpp:631
@@ -7143,37 +7143,37 @@ msgstr "%1 numaralı aygıta sonraki çizdirmeyi yükle"
 #: rkward/windows/rkwindowcatcher.cpp:655
 #, kde-format
 msgid "Loading plot from history"
-msgstr "Çizdirme geçmişten yükleniyor"
+msgstr "Grafik geçmişten yükleniyor"
 
 #: rkward/windows/rkwindowcatcher.cpp:630
 #, kde-format
 msgid "Load previous plot in device number %1"
-msgstr "%1 numaralı aygıta önceki çizdirmeyi yükle"
+msgstr "%1 numaralı aygıta önceki grafiği yükle"
 
 #: rkward/windows/rkwindowcatcher.cpp:638
 #, kde-format
 msgid "Load first plot in device number %1"
-msgstr "%1 numaralı aygıta ilk çizdirmeyi yükle"
+msgstr "%1 numaralı aygıta ilk grafiği yükle"
 
 #: rkward/windows/rkwindowcatcher.cpp:646
 #, kde-format
 msgid "Load last plot in device number %1"
-msgstr "%1 numaralı aygıta son çizdirmeyi yükle"
+msgstr "%1 numaralı aygıta son grafiği yükle"
 
 #: rkward/windows/rkwindowcatcher.cpp:654
 #, kde-format
 msgid "Load plot %1 in device number %2"
-msgstr "%2 numaralı aygıta %1 çizdirmesini yükle"
+msgstr "%2 numaralı aygıta %1 grafiğini yükle"
 
 #: rkward/windows/rkwindowcatcher.cpp:662
 #, kde-format
 msgid "Append this plot to history (device number %1)"
-msgstr "Bu çizdirmeyi geçmişe ekle (aygıt numarası %1)"
+msgstr "Bu grafiği geçmişe ekle (aygıt numarası %1)"
 
 #: rkward/windows/rkwindowcatcher.cpp:668
 #, kde-format
 msgid "Remove current plot from history (device number %1)"
-msgstr "Bu çizdirmeyi geçmişten kaldır (aygıt numarası %1)"
+msgstr "Bu grafiği geçmişten kaldır (aygıt numarası %1)"
 
 #: rkward/windows/rkwindowcatcher.cpp:674
 #, kde-format
@@ -7181,23 +7181,23 @@ msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
-"Bu, yalnızca bunun değil, tüm aygıt pencerelerinin çizdirme geçmişini "
+"Bu, yalnızca bunun değil, tüm aygıt pencerelerinin grafik geçmişini "
 "temizleyecektir. Amacınız bu değilse aşağıdaki iptal düğmesine basın."
 
 #: rkward/windows/rkwindowcatcher.cpp:676
 #, kde-format
 msgid "Clear plot history"
-msgstr "Çizdirme geçmişini temizle"
+msgstr "Grafik geçmişini temizle"
 
 #: rkward/windows/rkwindowcatcher.cpp:682
 #, kde-format
 msgid "Plot properties (device number %1)"
-msgstr "Çizdirme özellikleri (aygıt numarası %1)"
+msgstr "Grafik özellikleri (aygıt numarası %1)"
 
 #: rkward/windows/rkwindowcatcher.cpp:696
 #, kde-format
 msgid "<Unsaved plot>"
-msgstr "<kaydedilmemiş çizdirme>"
+msgstr "<kaydedilmemiş grafik>"
 
 #: rkward/windows/rkwindowcatcher.cpp:723
 #, kde-format
@@ -7227,37 +7227,37 @@ msgstr "Belirtilen Büyüklüğü Ayarla…"
 #: rkward/windows/rkwindowcatcher.cpp:744
 #, kde-format
 msgid "Previous plot"
-msgstr "Önceki Çizdirme"
+msgstr "Önceki Grafik"
 
 #: rkward/windows/rkwindowcatcher.cpp:749
 #, kde-format
 msgid "First plot"
-msgstr "İlk Çizdirme"
+msgstr "İlk Grafik"
 
 #: rkward/windows/rkwindowcatcher.cpp:754
 #, kde-format
 msgid "Next plot"
-msgstr "Sonraki Çizdirme"
+msgstr "Sonraki Grafik"
 
 #: rkward/windows/rkwindowcatcher.cpp:759
 #, kde-format
 msgid "Last plot"
-msgstr "Son Çizdirme"
+msgstr "Son Grafik"
 
 #: rkward/windows/rkwindowcatcher.cpp:762
 #, kde-format
 msgid "Go to plot"
-msgstr "Çizdirmeye Git"
+msgstr "Grafiğe Git"
 
 #: rkward/windows/rkwindowcatcher.cpp:771
 #, kde-format
 msgid "Append this plot"
-msgstr "Bu Çizdirmeyi İliştir"
+msgstr "Bu Grafiği İliştir"
 
 #: rkward/windows/rkwindowcatcher.cpp:776
 #, kde-format
 msgid "Remove this plot"
-msgstr "Bu Çizdirmeyi Kaldır"
+msgstr "Bu Grafiği Kaldır"
 
 #: rkward/windows/rkwindowcatcher.cpp:782
 #, kde-format
@@ -7267,7 +7267,7 @@ msgstr "Geçmişi Temizle"
 #: rkward/windows/rkwindowcatcher.cpp:788
 #, kde-format
 msgid "Plot properties"
-msgstr "Çizim Özellikleri"
+msgstr "Grafik Özellikleri"
 
 #: rkward/windows/rkwindowcatcher.cpp:793
 #, kde-format
@@ -7301,8 +7301,8 @@ msgid ""
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
-"Açmaya çalıştığınız URL ('%1') yerel bir dosya değil veya dosya türü RKWard "
-"tarafından desteklenmiyor. URL'yi öntanımlı uygulamada açmak istiyor musunuz?"
+"Açmaya çalıştığınız URL (‘%1’) yerel bir dosya değil veya dosya türü RKWard "
+"tarafından desteklenmiyor. URL’yi öntanımlı uygulamada açmak istiyor musunuz?"
 
 #: rkward/windows/rkworkplace.cpp:452
 #, kde-format
@@ -7312,7 +7312,7 @@ msgstr "Öntanımlı Uygulama İle Aç?"
 #: rkward/windows/rkworkplace.cpp:539
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
-msgstr "Çıktı dosyası açılamadı. Hata iletisi '%1' idi"
+msgstr "Çıktı dosyası açılamadı. Hata iletisi ‘%1’ idi"
 
 #: rkward/windows/rkworkplace.cpp:647
 #, kde-format
@@ -7328,7 +7328,7 @@ msgid ""
 ">Configure RKWard->General.\n"
 "Really edit object?"
 msgstr ""
-"Çok büyük (%2 alan) \"%1\" nesnesini düzenlemek üzeresiniz. RKWard, yerleşik "
+"Çok büyük (%2 alan) ‘%1’ nesnesini düzenlemek üzeresiniz. RKWard, yerleşik "
 "veri düzenleyicisinde çok büyük nesneleri işlemek için eniyilenmemiştir. Bu, "
 "çok fazla bellek kullanacaktır ve sisteminize bağlı olarak çok yavaş "
 "olabilir. Büyük nesneler için genellikle komut satırı araçları kullanılarak "
@@ -7450,7 +7450,7 @@ msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as "
 "'%2' instead."
 msgstr ""
-"GlobalEnv'de '%1' adlı bir nesne halihazırda var. Bunun yerine '%2' kopyası "
+"GlobalEnv’de ‘%1’ adlı bir nesne halihazırda var. Bunun yerine ‘%2’ kopyası "
 "olarak oluşturuldu."
 
 #: rkward/windows/robjectbrowser.cpp:201
