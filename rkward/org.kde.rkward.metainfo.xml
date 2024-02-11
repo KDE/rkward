@@ -81,7 +81,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <p xml:lang="pt">O RKWard pretende tornar-se uma interface simples de usar e transparente para o R, um sistema poderoso para cálculos estatísticos e gráficos. Para além de uma interface adequada para as funções estatísticas mais importantes, as futuras versões também irão oferecer uma integração transparente com os pacotes de aplicações de escritório.</p>
     <p xml:lang="sl">Cilj RKWard-a je postati preprosto za uporabo in pregledno začelje za R, zmogljivsistem za izračunavanje statistike in grafiko. Poleg priročnega grafičnega vmesnika za najpomembnejše statistične funkcije bodo tudi prihodnje različice zagotavljale brezhibno integracijo s pisarniškim paketom.</p>
     <p xml:lang="sv">RKward har som mål att bli ett lättanvänt, transparent gränssnitt till R, ett kraftfullt system för statistiska beräkningar och grafik. Förutom ett praktiskt grafiskt användargränssnitt för de viktigaste statistikfunktionerna, kommer framtida versioner också att tillhandahålla sömlös integrering med en kontorssvit.</p>
-    <p xml:lang="tr">RKWard, istatistiksel hesaplama ve grafikler için güçlü bir sistem olan R için kullanımı kolay, şeffaf bir ön uç olmayı hedefler. En önemli istatistiksel işlevler için uygun bir kullanıcı arayüzünün yanı sıra, gelecekteki sürümler ayrıca bir ofis paketiyle sorunsuz tümleşim sağlayacaktır.</p>
+    <p xml:lang="tr">RKWard, istatistiksel hesaplama ve grafikler için güçlü bir sistem olan R için kullanımı kolay, saydam bir ön uç olmayı hedefler. En önemli istatistiksel işlevler için uygun bir kullanıcı arayüzünün yanı sıra, gelecekteki sürümler ayrıca bir ofis paketiyle sorunsuz tümleşim sağlayacaktır.</p>
     <p xml:lang="uk">RKWard — проста у користуванні, прозора оболонка до R — потужної системи для статистичних обчислень та побудови графіків. Окрім зручного графічного інтерфейсу до більшості статистичних функцій, у майбутніх версіях буде реалізовано безшовну інтеграцію із комплексами офісних програм.</p>
     <p xml:lang="x-test">xxRKWard aims to become an easy to use, transparent frontend to R, a powerful system for statistical computation and graphics. Besides a convenient GUI for the most important statistical functions, future versions will also provide seamless integration with an office-suite.xx</p>
   </description>
@@ -159,7 +159,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="sk">Práca s dátami v RKward</caption>
       <caption xml:lang="sl">Delo s podatki v RKward-u</caption>
       <caption xml:lang="sv">Arbeta med data i RKward</caption>
-      <caption xml:lang="tr">RKWard'da veri ile çalışma</caption>
+      <caption xml:lang="tr">RKWard’da veri ile çalışma</caption>
       <caption xml:lang="uk">Робота з даними у RKWard</caption>
       <caption xml:lang="x-test">xxWorking with data in RKWardxx</caption>
       <image>https://rkward.kde.org/assets/img/EditorDataFrame.png</image>
