@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-12 15:34+0300\n"
+"PO-Revision-Date: 2024-02-13 13:33+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -784,7 +784,7 @@ msgstr "Güven aralığını hesapla"
 #, kde-format
 msgctxt "R code comment"
 msgid "cor requires all objects to be inside the same data.frame."
-msgstr "cor, tüm nesnelerin aynı veri.çerçeve içinde olmasını gerektirir."
+msgstr "cor, tüm nesnelerin aynı data.frame içinde olmasını gerektirir."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:49
@@ -2582,7 +2582,7 @@ msgid ""
 msgstr ""
 "Yalnızca genel doğrusal model için gösterilir: Hedeflenen pay serbestlik "
 "dereceleri. Bir hatırlatma olarak, bu, tahmin edilecek parametre sayısı veya "
-"grup/örnek sayısı eksi 1'dir."
+"grup/örnek sayısı eksi 1’dir."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for denominator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:68
@@ -3426,19 +3426,19 @@ msgstr "İlk örneklem. Vektörlerin sayısal olması gerekir."
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:18
 #, kde-format
 msgid "Second sample. The vectors need to be numeric."
-msgstr ""
+msgstr "İkinci örneklem. Vektörlerin sayısal olması gerekir."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:19
 #, kde-format
 msgid "Alternative hypothesis to use for the test."
-msgstr ""
+msgstr "Test için kullanılacak alternatif hipotez."
 
 #. i18n: ectx: (Mood Two-Sample Test of Scale) <dialog label="...">
 #: rkward/plugins/analysis/TESTS/mood_test.xml:11
 #, kde-format
 msgid "Mood Two-Sample Test of Scale"
-msgstr ""
+msgstr "Mood İki Örneklemli Ölçek Testi"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests)
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
@@ -3448,13 +3448,13 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.js:18
 #, kde-format
 msgid "Length"
-msgstr ""
+msgstr "Uzunluk"
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots)
 #: rkward/plugins/analysis/TESTS/PP_test.js:23
 #, kde-format
 msgid "Dickey-Fuller"
-msgstr ""
+msgstr "Dickey-Fuller"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots)
@@ -3462,7 +3462,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.js:29
 #, kde-format
 msgid "Truncation lag parameter"
-msgstr ""
+msgstr "Kesme gecikme parametresi"
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots) <summary>
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:8
@@ -3471,6 +3471,8 @@ msgid ""
 "This test computes the Phillips-Perron test for the null hypothesis that x "
 "has a unit root against a stationary alternative."
 msgstr ""
+"Bu test, x’in durağan bir alternatife karşı birim köke sahip olduğu boş "
+"hipotezi için Phillips–Perron testini hesaplar."
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots) <usage>
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:12
@@ -3479,12 +3481,15 @@ msgid ""
 "Select the data sets for which you want to perform the Phillips-Perron test. "
 "For this test the samples need to be numeric vectors (see below for details)."
 msgstr ""
+"Phillips–Perron testini gerçekleştirmek istediğiniz veri kümelerini seçin. "
+"Bu test için örneklemlerin sayısal vektörler olması gerekir (ayrıntılar için "
+"aşağıya bakın)."
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots) <settings> <setting> (refers to element labelled "version of truncation lag parameter")
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:19
 #, kde-format
 msgid "Which version of the truncation lag parameter should be used?"
-msgstr ""
+msgstr "Kesme gecikmesi parametresinin hangi sürümü kullanılmalıdır?"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "Exclude missing values")
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "Exclude missing values")
@@ -3494,13 +3499,13 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:22
 #, kde-format
 msgid "Exclude missing values from calculation?"
-msgstr ""
+msgstr "Eksik değerler hesaplamadan çıkarılsın mı?"
 
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="...">
 #: rkward/plugins/analysis/TESTS/PP_test.xml:11
 #, kde-format
 msgid "Phillips-Perron Test for Unit Roots"
-msgstr ""
+msgstr "Birim Kökler için Phillips–Perron Testi"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="Phillips-Perron Test for Unit Roots"> <tab label="Basic settings"> <radio label="...">
@@ -3508,7 +3513,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:22
 #, kde-format
 msgid "version of truncation lag parameter"
-msgstr ""
+msgstr "kesme gecikmesi parametresinin sürümü"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="version of truncation lag parameter"> <option label="...">
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="Phillips-Perron Test for Unit Roots"> <tab label="Basic settings"> <radio label="version of truncation lag parameter"> <option label="...">
@@ -3516,7 +3521,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:23
 #, kde-format
 msgid "short"
-msgstr ""
+msgstr "kısa"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="version of truncation lag parameter"> <option label="...">
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="Phillips-Perron Test for Unit Roots"> <tab label="Basic settings"> <radio label="version of truncation lag parameter"> <option label="...">
@@ -3524,7 +3529,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:24
 #, kde-format
 msgid "long"
-msgstr ""
+msgstr "uzun"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests)
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="...">
@@ -3532,7 +3537,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/Box_test.xml:11
 #, kde-format
 msgid "Box-Pierce and Ljung-Box Tests"
-msgstr ""
+msgstr "Box–Pierce ve Ljung–Box Testleri"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <summary>
 #: rkward/plugins/analysis/time_series/Box_test.rkh:8
@@ -3541,6 +3546,8 @@ msgid ""
 "This test computes Box-Pierce or Ljung-Box test statistic for examining the "
 "null hypothesis of independence in a given time series."
 msgstr ""
+"Bu test, belirli bir zaman serisinde bağımsızlığın boş hipotezini incelemek "
+"için Box–Pierce veya Ljung–Box test istatistiğini hesaplar."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <usage>
 #: rkward/plugins/analysis/time_series/Box_test.rkh:12
@@ -3550,61 +3557,64 @@ msgid ""
 "Box test. For this test the samples need to be numeric vectors (see below "
 "for details)."
 msgstr ""
+"Box–Pierce veya Ljung–Box testini gerçekleştirmek istediğiniz veri "
+"kümelerini seçin. Bu test için örneklemlerin sayısal vektörler olması "
+"gerekir (ayrıntılar için aşağıya bakın)."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "lag")
 #: rkward/plugins/analysis/time_series/Box_test.rkh:19
 #, kde-format
 msgid "Number of autocorrelation coefficients to base the test on."
-msgstr ""
+msgstr "Testin temel alınacağı otokorelasyon katsayılarının sayısı."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "test to be performed")
 #: rkward/plugins/analysis/time_series/Box_test.rkh:20
 #, kde-format
 msgid "Define type of test. Either Ljung-Box or Box-Pierce can be used."
-msgstr ""
+msgstr "Test türünü tanımlayın. Ljung–Box veya Box–Pierce kullanılabilir."
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> <tab label="Basic settings"> <spinbox label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:18
 #, kde-format
 msgid "lag"
-msgstr ""
+msgstr "gecikme"
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> <tab label="Basic settings"> <frame label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:19
 #, kde-format
 msgid "Type of test"
-msgstr ""
+msgstr "Testin türü"
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> <tab label="Basic settings"> <frame label="Type of test"> <radio label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:20
 #, kde-format
 msgid "test to be performed"
-msgstr ""
+msgstr "gerçekleştirilecek test"
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> [...] <radio label="test to be performed"> <option label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:21
 #, kde-format
 msgid "Box-Pierce"
-msgstr ""
+msgstr "Box–Pierce"
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> [...] <radio label="test to be performed"> <option label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:22
 #, kde-format
 msgid "Ljung-Box"
-msgstr ""
+msgstr "Ljung–Box"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
 #: rkward/plugins/analysis/time_series/hp_filter.js:21
 #, kde-format
 msgid "Missing values cannot be handled in Hodrick-Prescott Filter"
-msgstr ""
+msgstr "Eksik değerler Hodrick–Prescott Filtresinde işlenemez"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
 #: rkward/plugins/analysis/time_series/hp_filter.js:24
 #, kde-format
 msgctxt "R code comment"
 msgid "The HP Filter itself. Thanks to Grant V. Farnsworth"
-msgstr ""
+msgstr "HP süzgecinin kendisi. Grant V. Farnsworth’a teşekkürler"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="...">
@@ -3612,7 +3622,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:40
 #, kde-format
 msgid "Lambda"
-msgstr ""
+msgstr "Lambda"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <summary>
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:8
@@ -3621,6 +3631,8 @@ msgid ""
 "This plugin extracts and plots the long term trend of a series and "
 "(optionally) its cyclical component."
 msgstr ""
+"Bu eklenti, bir serinin uzun vadeli trendini ve (isteğe bağlı olarak) "
+"döngüsel bileşenini çıkarır ve çizer."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <usage>
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:12
@@ -3629,6 +3641,8 @@ msgid ""
 "The Hodrick-Prescott filter is used to separate the long term trend of a "
 "time series from its cyclical (short term) component."
 msgstr ""
+"Hodrick–Prescott süzgeci, bir zaman serisinin uzun vadeli trendini döngüsel "
+"(kısa vadeli) bileşeninden ayırmak için kullanılır."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <usage>
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:12
@@ -3638,6 +3652,9 @@ msgid ""
 "relation with the original series provided so as to give a graphic view of "
 "the filtering operation."
 msgstr ""
+"Ortaya çıkan seri nesne(ler)ine ek olarak, bu eklenti, süzme işleminin "
+"grafiksel bir görünümünü verecek şekilde bunları sağlanan özgün seriyle "
+"ilişkili olarak çizebilir."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Variable:")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:20
@@ -3646,6 +3663,8 @@ msgid ""
 "Select the data to be computed. It must be a single Time Series object or a "
 "Numeric Vector. NA values are not admitted."
 msgstr ""
+"Hesaplanacak verileri seçin. Tek bir Zaman Serisi nesnesi veya Sayısal "
+"Vektör olmalıdır. NA değerleri kabul edilmez."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Lambda")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:21
@@ -3655,6 +3674,9 @@ msgid ""
 "most common values depending on the frequency of the data (<i>Annual</i>, "
 "<i>Quarterly</i> and <i>Monthly</i>). (Default: 1600)"
 msgstr ""
+"Bu, yumuşatma parametresidir. Verilerin sıklığına bağlı olarak en yaygın üç "
+"değeri içeren bir açılır menünüz vardır (<i>Yıllık</i>, <i>Üç Aylık</i> ve "
+"<i>Aylık</i>). (Öntanımlı: 1600)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Custom value")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:22
@@ -3662,6 +3684,8 @@ msgstr ""
 msgid ""
 "Select if you want to specify a lambda value yourself in the spinbox below."
 msgstr ""
+"Aşağıdaki değer kutusunda kendiniz bir lambda değeri belirlemek istiyorsanız "
+"seçin."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Output series")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:23
@@ -3674,12 +3698,18 @@ msgid ""
 "original series to avoid overwriting other variables' trend/cycle (i.e. "
 "\"myseries.hptrend\").</i>"
 msgstr ""
+"Çalışma alanında hangi sonuçtaki serinin oluşturulması gerektiğini seçin. "
+"Özgün serinin trendi öntanımlı olarak oluşturulur. Seri için tanımlayıcı "
+"olarak kullanmak istediğiniz herhangi bir adı yazın. Öntanımlı olarak <i>hp</"
+"i> ve ardından <i>trend</i> ve/veya <i>cycle</i> gelir. <i>İpucu: Diğer "
+"değişkenlerin trendinin/döngüsünün üzerine yazmayı önlemek için özgün "
+"serinin adını ekleyebilirsiniz (örneğin, \"myseries.hptrend\").</i>"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Plot Cycle")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:25
 #, kde-format
 msgid "Plot the cyclical component below the trend graph. (Default: YES)"
-msgstr ""
+msgstr "Döngüsel bileşeni trend grafiğinin altına çizin. (Öntanımlı: EVET)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Lines")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:26
@@ -3688,6 +3718,8 @@ msgid ""
 "Here you can adjust the line width, type and colour of each series on the "
 "plot. (Default: blue series, red trend and dark green cycle)"
 msgstr ""
+"Burada çizimdeki her serinin çizgi genişliğini, türünü ve rengini "
+"ayarlayabilirsiniz. (Öntanımlı: mavi seri, kırmızı trend ve koyu yeşil döngü)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Original series and trend Y axis label")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:28
@@ -3697,6 +3729,9 @@ msgid ""
 "If empty, the default label is the name of the original series plus <i>, "
 "Trend</i>."
 msgstr ""
+"Burada trend grafiğinin (üst) Y ekseni etiketindeki metni "
+"belirleyebilirsiniz. Boşsa öntanımlı etiket özgün serinin adı artı <i>, "
+"Trend</i> olur."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Cycle Y axis label")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:29
@@ -3705,6 +3740,8 @@ msgid ""
 "Here you can specify the text on the Y axis label of the cycle plot (lower - "
 "if applicable). If empty, the default label is <i>Cycle</i>."
 msgstr ""
+"Burada döngü grafiğinin Y ekseni etiketindeki metni belirleyebilirsiniz "
+"(varsa alt). Boşsa öntanımlı etiket <i>Döngü</i>’dür."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "interpret as string")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:30
@@ -3713,84 +3750,87 @@ msgid ""
 "Enable or disable the labels being evaluated as literal (quoted) strings. To "
 "achieve a line-break (in a quoted string), enter '\\n'. (Default: YES)"
 msgstr ""
+"Değişmez (alıntılanan) diziler olarak değerlendirilen etiketleri "
+"etkinleştirin veya devre dışı bırakın. Satır sonu elde etmek için (tırnak "
+"içine alınmış bir dizide), ‘\\n’ girin. (Öntanımlı: EVET)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
 #, kde-format
 msgid "Select Variable"
-msgstr ""
+msgstr "Değişken Seç"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <varslot label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:37
 #, kde-format
 msgid "Variable:"
-msgstr ""
+msgstr "Değişken:"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:42
 #, kde-format
 msgid "100 (Annual)"
-msgstr ""
+msgstr "100 (Yıllık)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:43
 #, kde-format
 msgid "1600 (Quarterly)"
-msgstr ""
+msgstr "1600 (Çeyreklik)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:44
 #, kde-format
 msgid "14400 (Monthly)"
-msgstr ""
+msgstr "14400 (Aylık)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="Lambda"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:46
 #, kde-format
 msgid "Custom value"
-msgstr ""
+msgstr "Özel değer"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:51
 #, kde-format
 msgid "Output series"
-msgstr ""
+msgstr "Çıktı serileri"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="Output series"> <saveobject label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:52
 #, kde-format
 msgid "Save trend"
-msgstr ""
+msgstr "Trendi kaydet"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="Output series"> <saveobject label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:53
 #, kde-format
 msgid "Save cycle"
-msgstr ""
+msgstr "Döngüyü kaydet"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:60
 #, kde-format
 msgid "Plot options"
-msgstr ""
+msgstr "Grafik seçenekleri"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:61
 #, kde-format
 msgid "Plot Cycle"
-msgstr ""
+msgstr "Grafik Döngüsü"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:62
 #, kde-format
 msgid "Lines"
-msgstr ""
+msgstr "Çizgiler"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Lines"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:64
 #, kde-format
 msgid "Original series"
-msgstr ""
+msgstr "Özgün seriler"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Original series"> <spinbox label="...">
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Trend"> <spinbox label="...">
@@ -3800,7 +3840,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:93
 #, kde-format
 msgid "Line width"
-msgstr ""
+msgstr "Çizgi genişliği"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Original series"> <dropdown label="...">
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Trend"> <dropdown label="...">
@@ -3810,7 +3850,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:94
 #, kde-format
 msgid "Line type"
-msgstr ""
+msgstr "Çizgi türü"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:67
@@ -3818,7 +3858,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:95
 #, kde-format
 msgid "default"
-msgstr ""
+msgstr "öntanımlı"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:68
@@ -3826,7 +3866,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:96
 #, kde-format
 msgid "Solid"
-msgstr ""
+msgstr "Düz"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:69
@@ -3834,7 +3874,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:97
 #, kde-format
 msgid "Dashed"
-msgstr ""
+msgstr "Tireli"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:70
@@ -3842,7 +3882,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:98
 #, kde-format
 msgid "Dotted"
-msgstr ""
+msgstr "Noktalı"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:71
@@ -3850,7 +3890,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:99
 #, kde-format
 msgid "Dot-Dash"
-msgstr ""
+msgstr "Noktalı tireli"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:72
@@ -3858,7 +3898,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:100
 #, kde-format
 msgid "Long-dash"
-msgstr ""
+msgstr "Uzun tireli"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:73
@@ -3866,7 +3906,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:101
 #, kde-format
 msgid "Two-dash"
-msgstr ""
+msgstr "İki tireli"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="null hypothesis"> <option label="...">
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Lines"> <frame label="...">
@@ -3874,69 +3914,69 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:20
 #, kde-format
 msgid "Trend"
-msgstr ""
+msgstr "Trend"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Lines"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:92
 #, kde-format
 msgid "Cycle"
-msgstr ""
+msgstr "Döngü"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:108
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr ""
+msgstr "Etiketler (öntanımlılar için boş bırakın)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:110
 #, kde-format
 msgid "Original series and trend Y axis label"
-msgstr ""
+msgstr "Özgün seriler ve trendin Y ekseni etiketi"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:111
 #, kde-format
 msgid "Cycle Y axis label"
-msgstr ""
+msgstr "Döngünün Y ekseni etiketi"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/analysis/time_series/hp_filter.xml:113
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
-msgstr ""
+msgstr "Bu etiketler değişmez (tırnaklanmış) diziler olarak mı yorumlansın?"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:115
 #: rkward/plugins/analysis/time_series/hp_filter.xml:116
 #, kde-format
 msgid "interpret as string"
-msgstr ""
+msgstr "dizi olarak yorumla"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:23
 #, kde-format
 msgctxt "R code comment"
 msgid "remove NAs"
-msgstr ""
+msgstr "NA’ları kaldır"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:27
 #, kde-format
 msgid "KPSS Level"
-msgstr ""
+msgstr "KPSS Düzeyi"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:27
 #, kde-format
 msgid "KPSS Trend"
-msgstr ""
+msgstr "KPSS Trendi"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:37
 #, kde-format
 msgid "KPSS Test for Level Stationarity"
-msgstr ""
+msgstr "KPSS Düzey Durağanlığı Testi"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <summary>
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:8
@@ -3945,6 +3985,8 @@ msgid ""
 "This test computes the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test for the "
 "null hypothesis that x is level or trend stationary."
 msgstr ""
+"Bu test, x’in düzey veya trend durağanlığı olduğuna ilişkin sıfır hipotezi "
+"için Kwiatkowski–Phillips–Schmidt–Shin (KPSS) testini hesaplar."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <usage>
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:12
@@ -3954,6 +3996,9 @@ msgid ""
 "Schmidt-Shin (KPSS) test. For this test the samples need to be numeric "
 "vectors (see below for details)."
 msgstr ""
+"Kwiatkowski–Phillips–Schmidt–Shin (KPSS) testini gerçekleştirmek istediğiniz "
+"veri kümelerini seçin. Bu test için örneklemlerin sayısal vektörler olması "
+"gerekir (ayrıntılar için aşağıya bakın)."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "null hypothesis")
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:19
@@ -3962,6 +4007,7 @@ msgid ""
 "Indicates the null hypothesis and must be one of \"Level\" (default) or "
 "\"Trend\"."
 msgstr ""
+"Boş hipotezi belirtir ve ‘Düzey’ (öntanımlı) veya ‘Trend’den biri olmalıdır."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "version of truncation lag parameter")
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:20
@@ -3970,30 +4016,32 @@ msgid ""
 "Defines whether the short or long version of the truncation lag parameter is "
 "used."
 msgstr ""
+"Kesme gecikmesi parametresinin kısa veya uzun sürümünün kullanılıp "
+"kullanılmayacağını tanımlar."
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="...">
 #: rkward/plugins/analysis/time_series/kpss_test.xml:18
 #, kde-format
 msgid "null hypothesis"
-msgstr ""
+msgstr "sıfır hipotezi"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="null hypothesis"> <option label="...">
 #: rkward/plugins/analysis/time_series/kpss_test.xml:19
 #, kde-format
 msgid "Level"
-msgstr ""
+msgstr "Düzey"
 
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances)
 #: rkward/plugins/analysis/variances/bartlett_test.js:24
 #, kde-format
 msgid "Bartlett's K-squared"
-msgstr ""
+msgstr "Bartlett’in k kare’si"
 
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances) <summary>
 #: rkward/plugins/analysis/variances/bartlett_test.rkh:8
 #, kde-format
 msgid "This test performs the Bartlett Test of Homogeneity of Variances."
-msgstr ""
+msgstr "Bu test, Bartlett Varyansların Homojenliği Testini gerçekleştirir."
 
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances) <usage>
 #: rkward/plugins/analysis/variances/bartlett_test.rkh:12
@@ -4002,6 +4050,8 @@ msgid ""
 "Select several numeric vectors to perform Bartlett's test of the null that "
 "the variances in each of the samples are the same."
 msgstr ""
+"Örneklerin her birindeki varyansların aynı olduğunu gösteren boş değere "
+"ilişkin Bartlett testini gerçekleştirmek için birkaç sayısal vektör seçin."
 
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances) <settings> <setting> (refers to element labelled "samples")
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances) <settings> <setting> (refers to element labelled "samples")
@@ -4012,12 +4062,14 @@ msgid ""
 "The samples to be checked for equal variance. The vectors need to be "
 "numeric, but don't need to have the same length."
 msgstr ""
+"Örneklerin eşit varyans açısından denetlenmesi gerekir. Vektörlerin sayısal "
+"olması gerekir; ancak aynı uzunluğa sahip olmaları gerekmez."
 
 #. i18n: ectx: (Bartlett Test of Homogeneity of Variances) <dialog label="...">
 #: rkward/plugins/analysis/variances/bartlett_test.xml:11
 #, kde-format
 msgid "Bartlett Test of Homogeneity of Variances"
-msgstr ""
+msgstr "Bartlett Varyansların Homojenliği Testi"
 
 #. i18n: ectx: (Fligner-Killeen Test of Homogeneity of Variances) <dialog label="Fligner-Killeen Test of Homogeneity of Variances"> <varslot label="...">
 #. i18n: ectx: (Bartlett Test of Homogeneity of Variances) <dialog label="Bartlett Test of Homogeneity of Variances"> <varslot label="...">
@@ -4025,43 +4077,43 @@ msgstr ""
 #: rkward/plugins/analysis/variances/fligner_test.xml:15
 #, kde-format
 msgid "samples"
-msgstr ""
+msgstr "örneklemler"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:27
 #, kde-format
 msgid "Numerator DF"
-msgstr ""
+msgstr "Pay Serbestlik Derecesi"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:28
 #, kde-format
 msgid "Denominator DF"
-msgstr ""
+msgstr "Payda Serbestlik Derecesi"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:30
 #, kde-format
 msgid "Lower CI"
-msgstr ""
+msgstr "Alt Güven Aralığı"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:31
 #, kde-format
 msgid "Upper CI"
-msgstr ""
+msgstr "Üst Güven Aralığı"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:32
 #, kde-format
 msgid "ratio of variances"
-msgstr ""
+msgstr "varyanslar oranı"
 
 #. i18n: ectx: (Loaded from F test) <summary>
 #: rkward/plugins/analysis/variances/F_test.rkh:8
 #, kde-format
 msgid "This test performs the F Test to compare two variances."
-msgstr ""
+msgstr "Bu test, iki varyansı karşılaştırmak için F Testini gerçekleştirir."
 
 #. i18n: ectx: (Loaded from F test) <usage>
 #: rkward/plugins/analysis/variances/F_test.rkh:12
@@ -4071,48 +4123,51 @@ msgid ""
 "test. For this test the samples need to be numeric vectors (see below for "
 "details)."
 msgstr ""
+"F testiyle varyansları karşılaştırmak için normal popülasyonlardan iki örnek "
+"seçin. Bu test için örneklemlerin sayısal vektörler olması gerekir "
+"(ayrıntılar için aşağıya bakın)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "compare")
 #: rkward/plugins/analysis/variances/F_test.rkh:18
 #, kde-format
 msgid "First sample (numeric vector)."
-msgstr ""
+msgstr "İlk örneklem (sayısal vektör)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "against")
 #: rkward/plugins/analysis/variances/F_test.rkh:19
 #, kde-format
 msgid "Second sample (numeric vector)."
-msgstr ""
+msgstr "İkinci örneklem (sayısal vektör)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/variances/F_test.rkh:20
 #, kde-format
 msgid "Alternative hypothesis of the test."
-msgstr ""
+msgstr "Testin alternatif hipotezi."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "Hypothesized ratio")
 #: rkward/plugins/analysis/variances/F_test.rkh:22
 #, kde-format
 msgid "Defines the hypothesized ratio of the population variances."
-msgstr ""
+msgstr "Popülasyon varyanslarının öntanımlı oranını tanımlar."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "Confidence level")
 #: rkward/plugins/analysis/variances/F_test.rkh:23
 #, no-c-format, kde-format
 msgid "Defines the confidence level of the interval (95% is typical)."
-msgstr ""
+msgstr "Aralığın güven düzeyini tanımlar (%​95 tipiktir)."
 
 #. i18n: ectx: (F test) <dialog label="...">
 #: rkward/plugins/analysis/variances/F_test.xml:11
 #, kde-format
 msgid "F test"
-msgstr ""
+msgstr "F testi"
 
 #. i18n: ectx: (F test) <dialog label="F test"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/analysis/variances/F_test.xml:29
 #, kde-format
 msgid "Hypothesized ratio"
-msgstr ""
+msgstr "Varsayılan oran"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Options"> <frame label="Compute confidence interval"> <spinbox label="...">
 #. i18n: ectx: (F test) <dialog label="F test"> <tab label="Options"> <spinbox label="...">
@@ -4120,13 +4175,13 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:36
 #, kde-format
 msgid "Confidence level"
-msgstr ""
+msgstr "Güven düzeyi"
 
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances)
 #: rkward/plugins/analysis/variances/fligner_test.js:24
 #, kde-format
 msgid "Fligner-Killeen:med X^2 test statistic"
-msgstr ""
+msgstr "Fligner–Killeen:med X^2 test istatistiği"
 
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances) <summary>
 #: rkward/plugins/analysis/variances/fligner_test.rkh:8
@@ -4134,6 +4189,7 @@ msgstr ""
 msgid ""
 "This test performs the Fligner-Killeen Test of Homogeneity of Variances."
 msgstr ""
+"Bu test, Fligner–Killeen Varyansların Homojenliği Testini gerçekleştirir."
 
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances) <usage>
 #: rkward/plugins/analysis/variances/fligner_test.rkh:12
@@ -4142,12 +4198,15 @@ msgid ""
 "Select several numeric vectors to perform the Fligner-Killeen (median) test "
 "of the null that the variances in each of the samples are the same."
 msgstr ""
+"Numunelerin her birindeki varyansların aynı olduğu boş değere ilişkin "
+"Fligner–Killeen (ortanca) testini gerçekleştirmek için birkaç sayısal vektör "
+"seçin."
 
 #. i18n: ectx: (Fligner-Killeen Test of Homogeneity of Variances) <dialog label="...">
 #: rkward/plugins/analysis/variances/fligner_test.xml:11
 #, kde-format
 msgid "Fligner-Killeen Test of Homogeneity of Variances"
-msgstr ""
+msgstr "Fligner–Killeen Varyansların Homojenliği Testi"
 
 #. i18n: ectx: (Loaded from Levene's Test) <summary>
 #: rkward/plugins/analysis/variances/levene_test.rkh:8
@@ -4156,6 +4215,8 @@ msgid ""
 "This test performs the Levene's test for homogeneity of variance across "
 "groups."
 msgstr ""
+"Bu test, gruplar arasındaki varyansın homojenliği için Levene testini "
+"gerçekleştirir."
 
 #. i18n: ectx: (Loaded from Levene's Test) <usage>
 #: rkward/plugins/analysis/variances/levene_test.rkh:12
@@ -4164,18 +4225,20 @@ msgid ""
 "Select the response variable and the factor defining groups to test for "
 "homogeneity of variance across groups."
 msgstr ""
+"Gruplar arasındaki varyansın homojenliğini sınamak için yanıt değişkenini ve "
+"çarpan tanımlayan grupları seçin."
 
 #. i18n: ectx: (Loaded from Levene's Test) <settings> <setting> (refers to element labelled "response variable")
 #: rkward/plugins/analysis/variances/levene_test.rkh:17
 #, kde-format
 msgid "response variable (numeric vector)."
-msgstr ""
+msgstr "yanıt değişkeni (sayısal vektör)."
 
 #. i18n: ectx: (Loaded from Levene's Test) <settings> <setting> (refers to element labelled "groups")
 #: rkward/plugins/analysis/variances/levene_test.rkh:18
 #, kde-format
 msgid "factor defining groups (factor)."
-msgstr ""
+msgstr "çarpan tanımlayan gruplar (çarpan)."
 
 #. i18n: ectx: (Loaded from Levene's Test) <related>
 #: rkward/plugins/analysis/variances/levene_test.rkh:20
@@ -4185,54 +4248,57 @@ msgid ""
 "Honor of Harold Hotelling, I. Olkin et al. eds., Stanford University Press, "
 "pp. 278-292."
 msgstr ""
+"Levene, H. (1960). In Contributions to Probability and Statistics: Essays in "
+"Honor of Harold Hotelling, I. Olkin et al. eds., Stanford University Press, "
+"pp. 278-292."
 
 #. i18n: ectx: (Levene's Test) <dialog label="Levene's Test"> <varslot label="...">
 #: rkward/plugins/analysis/variances/levene_test.xml:15
 #, kde-format
 msgid "response variable"
-msgstr ""
+msgstr "yanıt değişkeni"
 
 #. i18n: ectx: (Levene's Test) <dialog label="Levene's Test"> <varslot label="...">
 #: rkward/plugins/analysis/variances/levene_test.xml:16
 #, kde-format
 msgid "groups"
-msgstr ""
+msgstr "gruplar"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:84
 #, kde-format
 msgid "Continuity correction in normal approximation for p-value"
-msgstr ""
+msgstr "P değeri için normal yaklaşımda süreklilik düzeltmesi"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
 #, kde-format
 msgid "Location Shift"
-msgstr ""
+msgstr "Konum Kayması"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
 #, kde-format
 msgid "Hypothesis"
-msgstr ""
+msgstr "Hipotez"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
 #, kde-format
 msgid "Confidence interval percent"
-msgstr ""
+msgstr "Güven aralığı yüzdesi"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
 #, kde-format
 msgid "Confidence interval of difference"
-msgstr ""
+msgstr "Farkın güven aralığı"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
 #, kde-format
 msgid "Difference in Location"
-msgstr ""
+msgstr "Konumdaki Fark"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <summary>
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:8
@@ -4241,6 +4307,8 @@ msgid ""
 "This test performs the Wilcoxon Rank Sum and Signed Rank Tests (the first is "
 "equivalent to the Mann-Whitney test)."
 msgstr ""
+"Bu test, Wilcoxon Sıra Toplamı ve İşaretli Sıra Testlerini gerçekleştirir "
+"(ilki Mann-Whitney testine eşdeğerdir)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <usage>
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:12
@@ -4250,6 +4318,10 @@ msgid ""
 "test on the null that the true distribution of x (or the difference between "
 "the paired vectors) is symmetric about 0 (or the specified location)."
 msgstr ""
+"X’in gerçek dağılımının (veya eşleştirilmiş vektörler arasındaki farkın) 0 "
+"(veya belirtilen konum) civarında simetrik olduğunu gösteren boş değer "
+"üzerinde Wilcoxon imzalı sıralama testi gerçekleştirmek için tek bir vektör "
+"(veya eşleştirilmiş test) seçin."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <usage>
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:12
@@ -4260,6 +4332,10 @@ msgid ""
 "details) on the null that the distributions of x and y differ (by 0 or the "
 "specified location shift)."
 msgstr ""
+"x ve y dağılımlarının farklı olduğu (0’a veya belirtilen konum kaymasına "
+"göre) boş değer üzerinde Wilcoxon sıra toplamı testini (Mann–Whitney testine "
+"eşdeğerdir: Ayrıntılar için <link href=\"rkward://rhelp/wilcox.test\"/> "
+"bölümüne bakın) gerçekleştirmek için iki vektör seçin."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:21
@@ -4268,6 +4344,8 @@ msgid ""
 "The alternative hypothesis. \"greater\" means that x is shifted to the right "
 "of y / of the location parameter."
 msgstr ""
+"Alternatif hipotez. ‘daha büyük’, x’in konum parametresindeki y /’nin sağına "
+"kaydırıldığı anlamına gelir."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Paired test")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:22
@@ -4276,24 +4354,27 @@ msgid ""
 "Check this for a paired test (Wilcoxon signed rank test of the difference "
 "between the two vectors)."
 msgstr ""
+"Eşleştirilmiş bir test için bunu denetleyin (iki vektör arasındaki farkın "
+"Wilcoxon imzalı sıralama testi)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Compute confidence interval")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:24
 #, kde-format
 msgid "Check this if you want the confidence interval to be computed/printed."
 msgstr ""
+"Güven aralığının hesaplanmasını/yazdırılmasını istiyorsanız bunu işaretleyin."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Confidence level")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:25
 #, kde-format
 msgid "Confidence level of the printed confidence interval."
-msgstr ""
+msgstr "Yazdırılan güven aralığının güven düzeyi."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Location (shift) to test against (mu)")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:26
 #, kde-format
 msgid "The location / location shift to form the null hypothesis."
-msgstr ""
+msgstr "Sıfır hipotezini oluşturmak için konum/konum kayması."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Compute exact p-value")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:27
@@ -4303,6 +4384,9 @@ msgid ""
 "asymptomatic p-value is calculated if and only if you have less than 50 "
 "cases per group without binding when an exact test should be performed."
 msgstr ""
+"Kesin bir p değeri hesaplanmalı mıdır? Öntanımlı olarak (‘Kendiliğinden’) "
+"asemptomatik bir p değeri, kesin bir testin yapılması gerektiğinde yalnızca "
+"grup başına 50’den az vakanız varsa bağlayıcı olmadan hesaplanır."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Allow ties")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:28
@@ -4310,6 +4394,8 @@ msgstr ""
 msgid ""
 "Check this option to compute an exact p-value even in the presence of ties."
 msgstr ""
+"Bağların varlığında bile kesin bir p değeri hesaplamak için bu seçeneği "
+"işaretleyin."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Apply continuity correction")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:29
@@ -4318,87 +4404,89 @@ msgid ""
 "If checked a continuity correction in the normal approximation for the p-"
 "value is applied."
 msgstr ""
+"Denetlenirse p değeri için normal yaklaşımda bir süreklilik düzeltmesi "
+"uygulanır."
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:14
 #, kde-format
 msgid "Wilcoxon/Mann-Whitney Test"
-msgstr ""
+msgstr "Wilcoxon/Mann–Whitney Testi"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <varslot label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:21
 #, kde-format
 msgctxt "compare against"
 msgid "against (optional)"
-msgstr ""
+msgstr "karşı (isteğe bağlı)"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:25
 #, kde-format
 msgid "First is less"
-msgstr ""
+msgstr "Birincisi daha az"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <checkbox label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:27
 #, kde-format
 msgid "Paired test"
-msgstr ""
+msgstr "Eşli test"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <saveobject label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:29
 #, kde-format
 msgid "Save results to workspace"
-msgstr ""
+msgstr "Sonuçları çalışma alanına kaydet"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:38
 #, kde-format
 msgid "Location (shift) to test against (mu)"
-msgstr ""
+msgstr "Test edilecek konum (kaydırması) (mu)"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:39
 #, kde-format
 msgid "p-value options"
-msgstr ""
+msgstr "p değeri seçenekleri"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Options"> <frame label="p-value options"> <radio label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:40
 #, kde-format
 msgid "Compute exact p-value"
-msgstr ""
+msgstr "Tam p değerini hesapla"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Options"> <frame label="p-value options"> <checkbox label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:47
 #, kde-format
 msgid "Apply continuity correction"
-msgstr ""
+msgstr "Süreklilik düzeltmesi uygula"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Options"> <frame label="p-value options"> <checkbox label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:50
 #, kde-format
 msgid "Allow ties"
-msgstr ""
+msgstr "Bağlara izin ver"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:18
 #, kde-format
 msgctxt "R code comment"
 msgid "Split each input variable by grouping factor(s)"
-msgstr ""
+msgstr "Her giriş değişkenini çarpan(lar)ı gruplayarak böl"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:20
 #, kde-format
 msgctxt "R code comment"
 msgid "Convert nested list into flat list"
-msgstr ""
+msgstr "İç içe geçmiş listeyi düz listeye dönüştür"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:23
 #, kde-format
 msgid "Object"
-msgstr ""
+msgstr "Nesne"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:27
@@ -4407,12 +4495,14 @@ msgctxt "R code comment"
 msgid ""
 "we wrap each single call in a \"try\" statement to always continue on errors."
 msgstr ""
+"Hatalarda her zaman sürdürmek için her bir çağrıyı bir ‘try’ ifadesine "
+"sarıyoruz."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:30
 #, kde-format
 msgid "mean"
-msgstr ""
+msgstr "ortalama"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Loaded from Descriptive Statistics)
@@ -4420,7 +4510,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:25
 #, kde-format
 msgid "geometric mean"
-msgstr ""
+msgstr "geometrik ortalama"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Loaded from Descriptive Statistics)
@@ -4428,7 +4518,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:29
 #, kde-format
 msgid "interquantile mean"
-msgstr ""
+msgstr "miktarlar arası ortalama"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Loaded from Descriptive Statistics)
@@ -4436,44 +4526,44 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:33
 #, kde-format
 msgid "harmonic mean"
-msgstr ""
+msgstr "harmonik ortalama"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:45
 #, kde-format
 msgid "median"
-msgstr ""
+msgstr "ortanca"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:50
 #, kde-format
 msgid "min"
-msgstr ""
+msgstr "en düşük"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:51
 #, kde-format
 msgid "max"
-msgstr ""
+msgstr "en yüksek"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:55
 #, kde-format
 msgid "standard deviation"
-msgstr ""
+msgstr "standart sapma"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:58
 #, kde-format
 msgctxt "noun"
 msgid "sum"
-msgstr ""
+msgstr "toplam"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:61
 #, kde-format
 msgid "product"
-msgstr ""
+msgstr "çarpım"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Dispersion"> <checkbox label="...">
@@ -4483,25 +4573,25 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:80 rkward/plugins/uni1.2/description.xml:84
 #, kde-format
 msgid "Median Absolute Deviation"
-msgstr ""
+msgstr "Ortanca Mutlak Sapma"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:70
 #, kde-format
 msgid "total length (N)"
-msgstr ""
+msgstr "toplam uzunluk (N)"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:71
 #, kde-format
 msgid "number of NAs"
-msgstr ""
+msgstr "NA’ların sayısı"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:78
 #, kde-format
 msgid "Descriptive statistics"
-msgstr ""
+msgstr "Tanımlayıcı istatistikler"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <summary>
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:11
@@ -4510,6 +4600,8 @@ msgid ""
 "Compute the most common descriptive statistics for one or more numeric "
 "vectors"
 msgstr ""
+"Bir veya daha fazla sayısal vektör için en yaygın tanımlayıcı istatistikleri "
+"hesaplayın"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <usage>
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:14
@@ -4519,6 +4611,10 @@ msgid ""
 "objects need to be numeric vectors. On the subsequent tabs/pages specify, "
 "which statistics you want computed (see below for details)."
 msgstr ""
+"Çözümlemek için bir veya daha fazla nesne seçin. Çoğu çözümleme türü için "
+"nesnelerin sayısal vektörler olması gerekir. Sonraki sekmelerde/sayfalarda "
+"hangi istatistiklerin hesaplanmasını istediğinizi belirtin (ayrıntılar için "
+"aşağıya bakın)."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <usage>
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:14
@@ -4527,12 +4623,14 @@ msgid ""
 "Each selected variable will be analysed independently of the others. NA "
 "values are excluded from the calculations."
 msgstr ""
+"Seçilen her değişken diğerlerinden bağımsız olarak çözümlenecektir. NA "
+"değerleri hesaplamalarda içerilmez."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
 #, kde-format
 msgid "Select one or more numeric vectors to analyse"
-msgstr ""
+msgstr "Çözümlemek için bir veya daha fazla sayısal vektör seç"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "group by:")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:22
@@ -4544,42 +4642,49 @@ msgid ""
 "any grouping). If specifying more than one grouping factor, separate splits "
 "will be performed for each combination of values of the grouping factors."
 msgstr ""
+"İsteğe bağlı olarak, her bir giriş vektörünün bölüneceği bir veya daha fazla "
+"gruplandırma çarpanını seçin. Gruplandırma çarpanlarının giriş vektörleriyle "
+"aynı uzunlukta olması gerekir (ve dolayısıyla herhangi bir gruplama "
+"kullanılıyorsa tüm giriş vektörlerinin aynı uzunlukta olması gerekir). "
+"Birden fazla gruplandırma çarpanı belirtilirse gruplandırma çarpanlarının "
+"her bir değer kombinasyonu için ayrı bölmeler gerçekleştirilecektir."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:24
 #, kde-format
 msgid "Should the mean value be computed?"
-msgstr ""
+msgstr "Ortalama değer hesaplansın mı?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Trim of mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:25
 #, kde-format
 msgid "Trim of the mean. See <link href=\"rkward://rhelp/mean\"/>"
 msgstr ""
+"Ortalamanın kırpılması. <link href=\"rkward://rhelp/mean\"/> bölümüne bakın"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Geometric mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:26
 #, kde-format
 msgid "Should the geometric mean value be computed?"
-msgstr ""
+msgstr "Geometrik ortalama değer hesaplansın mı?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Interquantile mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:27
 #, kde-format
 msgid "Should the interquantile mean value be computed?"
-msgstr ""
+msgstr "Miktarlar arası ortalama değer hesaplansın mı?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Standard deviation")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:28
 #, kde-format
 msgid "Compute the standard deviation?"
-msgstr ""
+msgstr "Standart sapmayı hesaplansın mı?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Median")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:30
 #, kde-format
 msgid "Should the median value be computed?"
-msgstr ""
+msgstr "Ortanca değer hesaplansın mı?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "mad")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:31
@@ -4589,12 +4694,16 @@ msgid ""
 "absolute deviations from the median, and (by default) adjust by a factor for "
 "asymptotically normal consistency (see <link href=\"rkward://rhelp/mad\"/>)."
 msgstr ""
+"Ortanca mutlak sapmayı, yani ortancadan mutlak sapmaların (düşük/yüksek) "
+"ortancasını hesaplayın ve (öntanımlı olarak) asimptotik olarak normal "
+"tutarlılık için bir çarpanla ayarlama yapın (bkz. <link href=\"rkward://"
+"rhelp) /deli\"/>)."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Constant")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:32
 #, kde-format
 msgid "Scale factor to use when computing the median absolute deviation"
-msgstr ""
+msgstr "Ortanca mutlak sapmayı hesaplarken kullanılacak ölçek çarpanı"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Treatment of even sample sizes")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:33
@@ -4603,37 +4712,39 @@ msgid ""
 "How to treat even size samples: Average the two middle values, take the "
 "lower, or take the higher"
 msgstr ""
+"Eşit boyutlu örneklemler nasıl işlenir: Ortadaki iki değerin ortalamasını "
+"alın, düşük olanı veya yüksek olanı alın"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "range")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:35
 #, kde-format
 msgid "Compute the range, i.e. lowest and highest value"
-msgstr ""
+msgstr "Erimi, yani en düşük ve en yüksek değeri hesaplayın"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "sum")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:36
 #, kde-format
 msgid "Compute the sum of all values"
-msgstr ""
+msgstr "Tüm değerlerin toplamını hesaplayın"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "prod")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:37
 #, kde-format
 msgid "Compute the product of all values"
-msgstr ""
+msgstr "Tüm değerlerin çarpımını hesaplayın"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Length and NAs")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:38
 #, kde-format
 msgid ""
 "Count the total number of values, and the number of missing values (NAs)"
-msgstr ""
+msgstr "Toplam değer sayısını ve eksik değerlerin (NA) sayısını sayın"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:20
 #, kde-format
 msgid "group by:"
-msgstr ""
+msgstr "şuna göre gruplandır:"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <checkbox label="...">
@@ -4641,7 +4752,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:36
 #, kde-format
 msgid "Save results to file"
-msgstr ""
+msgstr "Sonuçları dosyaya kaydet"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <browser label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <browser label="...">
@@ -4649,13 +4760,13 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:37
 #, kde-format
 msgid "Name of the file"
-msgstr ""
+msgstr "Dosyanın adı"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:27
 #, kde-format
 msgid "Mean Standard Deviation"
-msgstr ""
+msgstr "Ortalama Standart Sapma"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
@@ -4666,13 +4777,13 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:116
 #, kde-format
 msgid "Mean"
-msgstr ""
+msgstr "Ortalama"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <spinbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:31
 #, kde-format
 msgid "Trim of mean"
-msgstr ""
+msgstr "Ortalamanın kırpılması"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
@@ -4680,7 +4791,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:48
 #, kde-format
 msgid "Geometric mean"
-msgstr ""
+msgstr "Geometrik ortalama"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
@@ -4688,7 +4799,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:49
 #, kde-format
 msgid "Interquantile mean"
-msgstr ""
+msgstr "Miktarlar arası ortalama"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
@@ -4696,19 +4807,19 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:50
 #, kde-format
 msgid "Harmonic mean"
-msgstr ""
+msgstr "Harmonik ortalama"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:38
 #, kde-format
 msgid "Standard deviation"
-msgstr ""
+msgstr "Standart sapma"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:42
 #, kde-format
 msgid "Median, MAD"
-msgstr ""
+msgstr "Ortanca, Ortanca Mutlak Sapma"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <checkbox label="...">
@@ -4721,19 +4832,19 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:115
 #, kde-format
 msgid "Median"
-msgstr ""
+msgstr "Ortanca"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:47
 #, kde-format
 msgid "Median Absolute Deviation (mad)"
-msgstr ""
+msgstr "Ortanca Mutlak Sapma (MAD)"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="Median Absolute Deviation (mad)"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:48
 #, kde-format
 msgid "mad"
-msgstr ""
+msgstr "mad"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Dispersion"> <spinbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="Median Absolute Deviation (mad)"> <spinbox label="...">
@@ -4741,55 +4852,55 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:85
 #, kde-format
 msgid "Constant"
-msgstr ""
+msgstr "Sabit"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="Median Absolute Deviation (mad)"> <radio label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:50
 #, kde-format
 msgid "Treatment of even sample sizes"
-msgstr ""
+msgstr "Eşit örneklem boyutlarının işlenmesi"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> [...] <radio label="Treatment of even sample sizes"> <option label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:51
 #, kde-format
 msgid "use lo-median"
-msgstr ""
+msgstr "düşük ortancayı kullan"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> [...] <radio label="Treatment of even sample sizes"> <option label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:52
 #, kde-format
 msgid "use average"
-msgstr ""
+msgstr "ortalamayı kullan"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> [...] <radio label="Treatment of even sample sizes"> <option label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:53
 #, kde-format
 msgid "use hi-median"
-msgstr ""
+msgstr "yüksek ortancayı kullan"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:59
 #, kde-format
 msgid "Range, Sum, Product and Length"
-msgstr ""
+msgstr "Erim, Toplam, Çarpım ve Uzunluk"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:63
 #, kde-format
 msgid "range"
-msgstr ""
+msgstr "erim"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:64
 #, kde-format
 msgid "sum"
-msgstr ""
+msgstr "toplam"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:65
 #, kde-format
 msgid "prod"
-msgstr ""
+msgstr "çarpım"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="General"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
@@ -4797,13 +4908,13 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:42
 #, kde-format
 msgid "Length and NAs"
-msgstr ""
+msgstr "Uzunluk ve NA’lar"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot)
 #: rkward/plugins/plots/cor_graph.js:56
 #, kde-format
 msgid "Legend:"
-msgstr ""
+msgstr "Gösterge:"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <summary>
 #: rkward/plugins/plots/cor_graph.rkh:8
@@ -4816,6 +4927,12 @@ msgid ""
 "php?graph=137\">R Graph Gallery (137) Correlation Matrix</link>, from where "
 "was adapted and formatted for RKWard."
 msgstr ""
+"Korelasyon Matrisi Grafiği. En üstte korelasyonun (mutlak) değeri artı cor."
+"test sonucu yıldız olarak sunulur. Altta, iki değişkenli dağılım grafikleri "
+"uygun bir çizgiyle çizilmiştir. Grafik ve kod, <link href=\"http://"
+"addictedtor.free.fr/graphiques/RGraphGallery.php?graph=137\">R Grafik "
+"Galerisi (137) Korelasyon Matrisi</link>’nde bulunabilir; buradan RKWard "
+"için uyarlanmış ve biçimlendirilmiştir."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <usage>
 #: rkward/plugins/plots/cor_graph.rkh:12
@@ -4825,6 +4942,9 @@ msgid ""
 "to treat missing values, what precision you want, and if you want to scale "
 "text."
 msgstr ""
+"Çizdirilecek bir veya daha fazla nesneyi seçip kullanılacak yöntemi, eksik "
+"değerlerin nasıl ele alınacağını, hangi hassasiyeti istediğinizi ve metni "
+"ölçeklendirmek isteyip istemediğinizi seçin."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/cor_graph.rkh:18
@@ -4833,6 +4953,8 @@ msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
 msgstr ""
+"Bir veri matrisi veya sayısal bir veri çerçevesi veya bir veri matrisinden "
+"birden fazla değişken seçin"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/plots/cor_graph.rkh:20
@@ -4841,6 +4963,8 @@ msgid ""
 "Indicates which correlation coefficient (or covariance) is to be computed. "
 "One of \"pearson\", \"kendall\", or \"spearman\", can be used"
 msgstr ""
+"Hangi korelasyon katsayısının (veya kovaryansın) hesaplanacağını belirtir. "
+"‘pearson’, ‘kendall’ veya ‘spearman’ seçeneklerinden biri kullanılabilir"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/plots/cor_graph.rkh:21
@@ -4853,12 +4977,19 @@ msgid ""
 "covariance or correlation matrices which are not positive semidefinite. "
 "\"pairwise\" only works with the \"pearson\" method for cov and var."
 msgstr ""
+"Eksik değerlerin nasıl işleneceğini seçin. Kullanım ‘tam senaryolar’ ise "
+"eksik değerler BÜYÜK/küçük harfe göre silinerek işlenir. Kullanım ‘ikili’ "
+"değerine sahipse her bir değişken çifti arasındaki korelasyon, bu "
+"değişkenler üzerindeki tüm tam gözlem çiftleri kullanılarak hesaplanır. Bu, "
+"pozitif yarı kesin olmayan kovaryans veya korelasyon matrisleriyle "
+"sonuçlanabilir. ‘ikili’ yalnızca cov ve var için ‘pearson’ yöntemiyle "
+"çalışır."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Precision (digits)")
 #: rkward/plugins/plots/cor_graph.rkh:22
 #, kde-format
 msgid "Select how many digits after decimal point should be shown"
-msgstr ""
+msgstr "Ondalık noktadan sonra kaç basamağın gösterileceğini seçin"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Scale text")
 #: rkward/plugins/plots/cor_graph.rkh:23
@@ -4867,6 +4998,8 @@ msgid ""
 "Select it if you want to scale text according to the (absolute) correlation "
 "value."
 msgstr ""
+"Metni (mutlak) korelasyon değerine göre ölçeklendirmek istiyorsanız bunu "
+"seçin."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <related>
 #: rkward/plugins/plots/cor_graph.rkh:25
@@ -4875,360 +5008,362 @@ msgid ""
 "<link href=\"http://addictedtor.free.fr/graphiques/RGraphGallery.php?"
 "graph=137\">R Graph Gallery (137) Correlation Matrix</link>"
 msgstr ""
+"<link href=\"http://addictedtor.free.fr/graphiques/RGraphGallery.php?"
+"graph=137\">R Grafik Galerisi (137) Korelasyon Matrisi</link>"
 
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/plots/cor_graph.xml:24
 #, kde-format
 msgid "Pearson"
-msgstr ""
+msgstr "Pearson"
 
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/plots/cor_graph.xml:25
 #, kde-format
 msgid "Kendall"
-msgstr ""
+msgstr "Kendall"
 
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/plots/cor_graph.xml:26
 #, kde-format
 msgid "Spearman"
-msgstr ""
+msgstr "Spearman"
 
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/cor_graph.xml:32
 #, kde-format
 msgid "Precision (digits)"
-msgstr ""
+msgstr "Kesinlik (Basamaklar)"
 
 #. i18n: i18n: Should text be scaled?
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/cor_graph.xml:33
 #, kde-format
 msgid "Scale text"
-msgstr ""
+msgstr "Metni ölçeklendir"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "RKWard Takımı"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:17
 #, kde-format
 msgid "Number of cases"
-msgstr ""
+msgstr "Senaryolar sayısı"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:18
 #, kde-format
 msgid "Number of missing values"
-msgstr ""
+msgstr "Eksik değerler sayısı"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:39
 #, kde-format
 msgctxt "standard deviation; short"
 msgid "sd"
-msgstr ""
+msgstr "sd"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <checkbox label="...">
 #: rkward/plugins/uni1.2/code.js:42 rkward/plugins/uni1.2/description.xml:60
 #, kde-format
 msgid "Minimum"
-msgstr ""
+msgstr "En düşük"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <checkbox label="...">
 #: rkward/plugins/uni1.2/code.js:45 rkward/plugins/uni1.2/description.xml:61
 #, kde-format
 msgid "Maximum"
-msgstr ""
+msgstr "En yüksek"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:50
 #, kde-format
 msgid "Minimum values"
-msgstr ""
+msgstr "En düşük değerler"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:56
 #, kde-format
 msgid "Maximum values"
-msgstr ""
+msgstr "En yüksek değerler"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:63
 #, kde-format
 msgid "Inter Quartile Range"
-msgstr ""
+msgstr "Çeyrekler Arası Erim"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:67
 #, kde-format
 msgid "Quartiles"
-msgstr ""
+msgstr "Çeyrekler"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:72
 #, kde-format
 msgid "Quantiles"
-msgstr ""
+msgstr "Nicelikler"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:75
 #, kde-format
 msgctxt "R code comment"
 msgid "robust statistics"
-msgstr ""
+msgstr "sağlam istatistikler"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Robust mean"> <checkbox label="...">
 #: rkward/plugins/uni1.2/code.js:77 rkward/plugins/uni1.2/description.xml:90
 #, kde-format
 msgid "Trimmed Mean"
-msgstr ""
+msgstr "Kırpılmış Ortalama"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:84
 #, kde-format
 msgid "Location Estimate"
-msgstr ""
+msgstr "Konum Tahmini"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:84
 #, kde-format
 msgid "Mad scale estimate"
-msgstr ""
+msgstr "MAD ölçeği tahmini"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:91
 #, kde-format
 msgid "Huber M-Estimator"
-msgstr ""
+msgstr "Huber M Tahmincisi"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:96
 #, kde-format
 msgctxt "R code comment"
 msgid "store results"
-msgstr ""
+msgstr "sonuçları depola"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:103
 #, kde-format
 msgid "Univariate statistics"
-msgstr ""
+msgstr "Tek değişkenli istatistikler"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:105
 #, kde-format
 msgid "Proportion of trimmed values for trimmed mean"
-msgstr ""
+msgstr "Kırpılmış ortalama için kırpılmış değerlerin oranı"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:108
 #, kde-format
 msgid "Constant for the MAD estimation"
-msgstr ""
+msgstr "MAD tahmini için sabit"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:111
 #, kde-format
 msgid "Winsorized values for Huber estimator"
-msgstr ""
+msgstr "Huber tahmincisi için Winsorized değerleri"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:112
 #, kde-format
 msgid "Tolerance in Huber estimator"
-msgstr ""
+msgstr "Huber tahmincisindeki tolerans"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:114
 #, kde-format
 msgid "Mu for Huber estimator"
-msgstr ""
+msgstr "Huber tahmincisi için Mu"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:117
 #, kde-format
 msgid "S for Huber estimator"
-msgstr ""
+msgstr "Huber tahmincisi için S"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <radio label="...">
 #: rkward/plugins/uni1.2/code.js:119 rkward/plugins/uni1.2/description.xml:114
 #, kde-format
 msgid "Initial value"
-msgstr ""
+msgstr "Başlangıç değeri"
 
 #. i18n: ectx: (Basic statistics) <dialog label="...">
 #: rkward/plugins/uni1.2/description.xml:26
 #, kde-format
 msgid "Basic statistics"
-msgstr ""
+msgstr "Temel istatistikler"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #: rkward/plugins/uni1.2/description.xml:28
 #, kde-format
 msgid "Select variables"
-msgstr ""
+msgstr "Değişkenler seç"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/uni1.2/description.xml:32
 #, kde-format
 msgid "Variable"
-msgstr ""
+msgstr "Değişken"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #: rkward/plugins/uni1.2/description.xml:39
 #, kde-format
 msgid "Statistics"
-msgstr ""
+msgstr "İstatistikler"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:40
 #, kde-format
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:45
 #, kde-format
 msgid "Moments"
-msgstr ""
+msgstr "Momentler"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:54
 #, kde-format
 msgid "Sd"
-msgstr ""
+msgstr "Sd"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:57
 #, kde-format
 msgid "extrema"
-msgstr ""
+msgstr "extrema"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:64
 #, kde-format
 msgid "Number of minimum values displayed"
-msgstr ""
+msgstr "Görüntülenen en az değer sayısı"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:65
 #, kde-format
 msgid "Number of maximum values displayed"
-msgstr ""
+msgstr "Görüntülenen en çok değer sayısı"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:69
 #, kde-format
 msgid "Quantile"
-msgstr ""
+msgstr "Dağılım dilimi"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:72
 #, kde-format
 msgid "Interquartile Range"
-msgstr ""
+msgstr "Çeyrekler arası erim"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:73
 #, kde-format
 msgid "Quartile"
-msgstr ""
+msgstr "Çeyrek"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:76
 #, kde-format
 msgid "Other (eg : for deciles, enter 10)"
-msgstr ""
+msgstr "Diğer (örneğin: Ondalık sayılar için 10 girin)"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #: rkward/plugins/uni1.2/description.xml:80
 #, kde-format
 msgid "Robust statistics"
-msgstr ""
+msgstr "Sağlam istatistikler"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:82
 #, kde-format
 msgid "Dispersion"
-msgstr ""
+msgstr "Dağılım"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:88
 #, kde-format
 msgid "Robust mean"
-msgstr ""
+msgstr "Sağlam ortalama"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Robust mean"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:91
 #, kde-format
 msgid "Percentage of trimmed values"
-msgstr ""
+msgstr "Kırpılan değerlerin yüzdesi"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:94
 #, kde-format
 msgid "M-Estimator"
-msgstr ""
+msgstr "M tahmincisi"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:96
 #, kde-format
 msgid "Huber -M estimator (Require MASS Library)"
-msgstr ""
+msgstr "Huber -M tahmincisi (MASS kitaplığını gerektirir)"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:97
 #, kde-format
 msgid "Winsorize at 'k' sd"
-msgstr ""
+msgstr "‘k’ sd’de Winsorize"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:101
 #, kde-format
 msgid "Custom Mu value"
-msgstr ""
+msgstr "Özel Mu değeri"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <input label="...">
 #: rkward/plugins/uni1.2/description.xml:102
 #, kde-format
 msgid "Enter your value"
-msgstr ""
+msgstr "Değerinizi girin"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:105
 #, kde-format
 msgid "Custom s value"
-msgstr ""
+msgstr "Özel S değeri"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <input label="...">
 #: rkward/plugins/uni1.2/description.xml:106
 #, kde-format
 msgid "S value"
-msgstr ""
+msgstr "S değeri"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:111
 #, kde-format
 msgid "Tolerance"
-msgstr ""
+msgstr "Tolerans"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:124
 #, kde-format
 msgid "Omit missing values"
-msgstr ""
+msgstr "Eksik değerleri atla"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Options"> <saveobject label="...">
 #: rkward/plugins/uni1.2/description.xml:125
 #, kde-format
 msgid "Store results"
-msgstr ""
+msgstr "Sonuçları depola"
