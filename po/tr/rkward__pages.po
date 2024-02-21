@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-07 16:02+0300\n"
+"PO-Revision-Date: 2024-02-20 13:39+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.01.95\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,7 +31,7 @@ msgstr "emir_sari@icloud.com"
 #: rkward/pages/rkward_addons.rkh:8
 #, kde-format
 msgid "RKWard Add-Ons"
-msgstr ""
+msgstr "RKWard Eklentileri"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -41,12 +41,15 @@ msgid ""
 "Arguably this can make it a bit confusing on where to find the addon "
 "features you are looking for."
 msgstr ""
+"Size en iyi özellikleri sunmak için RKWard farklı teknolojileri birleştirir. "
+"Büyük olasılıkla bu, aradığınız eklenti özelliklerini nerede bulacağınız "
+"konusunda biraz kafa karıştırıcı olabilir."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
 #, kde-format
 msgid "In a nutshell:"
-msgstr ""
+msgstr "Kısacası:"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -57,6 +60,9 @@ msgid ""
 "additional R functions that you can use in scripts, or in the interactive R "
 "console."
 msgstr ""
+"<strong>R paketleri</strong>, büyük miktarda veri algoritması ve aracı "
+"sunar. Bu işlevsellik (çoğunlukla) komut dosyalarında veya etkileşimli R "
+"konsolunda kullanabileceğiniz ek R işlevleri biçiminde sağlanır."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -68,6 +74,11 @@ msgid ""
 "activated by default. It can further be extended with custom scripts, or "
 "color-schemes."
 msgstr ""
+"<strong>Kate eklentileri</strong>: Kate, RKWard’ın betik düzenleyicisinin "
+"arkasındaki işletkedir. Birçoğunun RKWard ile önceden kurulu olarak gelmesi "
+"gereken güçlü eklenti özellikleriyle birlikte gelir. Ancak çok sayıda "
+"olmaları nedeniyle hepsi öntanımlı olarak etkin değildir. Özel komut "
+"dosyaları veya renk şemalarıyla daha da genişletilebilir."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -78,6 +89,10 @@ msgid ""
 "mostly implemented as plugin-ins in RKWard. Many such plugins are available "
 "for download, separately."
 msgstr ""
+"<strong>RKWard eklentileri</strong>: Verinizi içe aktarmanıza/dönüştürmenize/"
+"çözümlemenize/görselleştirmenize yardımcı olacak grafiksel bir iletişim "
+"kutusu arıyorsanız bu tür iletişim kutuları çoğunlukla RKWard’da eklentiler "
+"olarak uygulanır. Bu tür eklentilerin çoğu ayrı olarak indirilebilir."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -86,12 +101,14 @@ msgid ""
 "The following sections deal with these, in turn, showing you how to find / "
 "install, what you need."
 msgstr ""
+"Aşağıdaki bölümlerde bunlar ele alınmakta ve neye gereksiniminiz olduğunu "
+"nasıl bulacağınız/kuracağınız gösterilmektedir."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:24
 #, kde-format
 msgid "R packages"
-msgstr ""
+msgstr "R paketleri"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -102,6 +119,10 @@ msgid ""
 "dialog to search, install and/or load packages (Settings->Manage R packages "
 "and plugins)."
 msgstr ""
+"R paketlerini yönetmek için normal R komut satırı araçlarına ek olarak "
+"(<link href=\"rkward://rhelp/install.packages\"/> bölümüne bakın) RKWard, "
+"paketleri aramak, kurmak ve/veya yüklemek için grafiksel bir iletişim kutusu "
+"sunar (Ayarlar → R paketlerini ve eklentilerini yönet)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -112,12 +133,16 @@ msgid ""
 "source is fully automated, you may still have to install additional "
 "libraries or other software for the compilation."
 msgstr ""
+"Öntanımlı olarak R paketlerinin Windows ve macOS’te derlenmiş ikili dosyalar "
+"olarak dağıtıldığını; ancak Linux’ta dağıtılmadığını unutmayın. İkincisi "
+"için kaynaktan kurulum tamamen otomatik olsa da derleme için yine de ek "
+"kitaplıklar veya başka yazılımlar kurmanız gerekebilir."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:32
 #, kde-format
 msgid "Kate Add-ons"
-msgstr ""
+msgstr "Kate Eklentileri"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
 #: rkward/pages/rkward_addons.rkh:32
@@ -133,12 +158,22 @@ msgid ""
 ">Addons</link>. Addons shown in bold have been reported to be useful and "
 "work well in RKWard, but feel free to explore the others, too."
 msgstr ""
+"<link href=\"https://kate.kde.org\">Kate</link>, RKWard’da da kullanılan "
+"metin düzenleme bileşenini kullanan çok güçlü bir metin düzenleyicisidir. "
+"Ayrıca çeşitli eklentilerle birlikte gelir; kod parçacıkları oluşturmak veya "
+"git deposundaki projeleri yönetmek için. Bunlardan bazıları; örneğin, C++ "
+"geri iz dolaşım aracı, RKWard bağlamında pek bir anlam ifade etmez, ancak "
+"başka birçoğu sizin işinize yarayacaktır. Nelerin kullanılabilir olduğuna "
+"bakmak içi Kate’in kurulu olduğundan emin olun ve <link href=\"rkward://"
+"settings/addons\">Ayarlar → Eklentiler</link> sayfasına gidin. Kalın "
+"harflerle gösterilen eklentilerin yararlı olduğu ve RKWard’da iyi çalıştığı "
+"rapor edilmiştir; ancak diğerlerini de keşfetmekten çekinmeyin."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:39
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "RKWard Eklentileri"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -151,6 +186,12 @@ msgid ""
 "plugins</link>), and check the option \"Show only packages providing RKWard "
 "dialogs\"."
 msgstr ""
+"RKWard eklentileri çeşitli kaynaklardan kurulabilir; ancak eklenti "
+"paketlerinin genel dağıtımı R paketleri aracılığıyla yapılır. RKWard grafik "
+"iletişim kutuları sağlayan R paketlerini aramak için normal iletişim "
+"kutusunu kullanın (<link href=\"rkward://actions/rpackage_install\">Ayarlar "
+"→ R Paketlerini ve Eklentilerini Yönet</link>) ve \"Yalnızca RKWard iletişim "
+"kutularını sağlayan paketleri göster\" seçeneğini işaretleyin."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -166,18 +207,27 @@ msgid ""
 "text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
 "link> (pre-initialized for installation of rk.Teaching)."
 msgstr ""
+"Bu şekilde paketlenen tüm RKWard eklentileri R paket kurulum iletişim "
+"kutusunda görünür olmayabilir; çünkü henüz öntanımlı depoda barındırılmıyor "
+"olabilirler. Bu eklentilerden bir tanesi; örneğin, <link href=\"https://"
+"github.com/rkward-community/rk.Teaching\">rk.Teaching</link> eklentiler "
+"kümesidir. Bunların bir çoğu, Github gibi platformlarda barındırılırlar ve "
+"depo URL’sini biliyorsanız <link href=\"rkward://runplugin/rkward::"
+"install_from_git/fullURL.text=https://github.com/rkward-community/rk."
+"Teaching.git\">bu iletişim kutusu</link> kullanılarak kurulabilir (rk."
+"Teaching için örnek olarak gösterilmiştir)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Creating your own RKWard Plugins"
-msgstr ""
+msgstr "Kendi RKWard eklentilerinizi oluşturmak"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Still missing something?"
-msgstr ""
+msgstr "Hâlâ bir şeyler mi eksik?"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -191,18 +241,26 @@ msgid ""
 "rhelp/rkward-package\">rkward package overview</link> for RKWard specific "
 "function for development and scripting."
 msgstr ""
+"RKWard’ı özel iletişim kutularınızla geliştirmenin ne kadar kolay olduğunu "
+"öğrenmek ve çalışmanızı RKWard kullanıcılarıyla paylaşma üzerine bilgi almak "
+"için <link href=\"help:/rkwardplugins/index.html\">RKWard için Eklenti "
+"Yazımına Giriş</link> (<link href=\"https://rkward.kde.org/doc/rkwardplugins/"
+"\">çevrimiçi güncel sürüm</link>) belgesine bir göz atın. Betik yazımı ve "
+"geliştirme üzerine RKWard’a özel işlevleri öğrenmek için <link href="
+"\"rkward://rhelp/rkward-package\">RKWard Paketlerine Genel Bakış</link> "
+"belgesine bakabilirsiniz."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
 #, kde-format
 msgid "Using the RKWard R Console"
-msgstr ""
+msgstr "RKWard R Konsolunu Kullanmak"
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
 #, kde-format
 msgid "Describe features and settings regarding the RKWard R Console."
-msgstr ""
+msgstr "RKWard R Konsoluna ilişkin özellikleri ve ayarları açıklayın."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
@@ -211,12 +269,14 @@ msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labelled \"R Console\" to invoke it."
 msgstr ""
+"Konsol, öntanımlı olarak uygulama penceresinin alt kısmında bulunabilir. "
+"Çağırmak için ‘R Konsolu’ etiketli araç düğmesine basın."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
 #, kde-format
 msgid "What is the console?"
-msgstr ""
+msgstr "Konsol nedir?"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -227,6 +287,10 @@ msgid ""
 "know some basics of the R language. Select Help->Help on R for some "
 "introductory information."
 msgstr ""
+"RKWard istatistiksel hesaplama için R dilini temel alır. Konsol, R "
+"komutlarını doğrudan girmenize olanak tanır. Açıkçası, bunu kullanmak için R "
+"dilinin bazı temellerini bilmeniz gerekir. Bazı tanıtıcı bilgiler için "
+"Yardım → R Hakkında Yardım’ı seçin."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -236,6 +300,9 @@ msgid ""
 "complex commands / scripts, using the Script File Editor (File->New->Script "
 "File) is much more comfortable."
 msgstr ""
+"Konsol, etkileşimli kullanım ve küçük komutlar için tasarlanmıştır. Karmaşık "
+"komutları/betikleri düzenlemek için Betik Dosyası Düzenleyicisi’ni (Dosya → "
+"Yeni → Betik Dosyası) kullanmak çok daha rahattır."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -244,12 +311,14 @@ msgid ""
 "Many console features are available from the context menu. To invoke the "
 "context menu, click the right mouse button inside the console window."
 msgstr ""
+"Bağlam menüsünden birçok konsol özelliğine ulaşılabilir. Bağlam menüsünü "
+"çağırmak için konsol penceresinin içinde sağ fare düğmesine tıklayın."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:23
 #, kde-format
 msgid "Interrupting commands"
-msgstr ""
+msgstr "Komutları yarıda kesmek"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Interrupting commands">
 #: rkward/pages/rkward_console.rkh:23
@@ -261,12 +330,17 @@ msgid ""
 "time (e.g. some action you invoked from the Analysis menu), the console will "
 "only become available again, when the R backend becomes idle."
 msgstr ""
+"Çalışan bir komutu durdurmak için Kontrol+C düğmelerine basın veya bağlam "
+"menüsünden ‘Çalışan Komutu Yarıda Kes’ seçeneğini seçin. Komutun mutlaka "
+"hemen bitmeyeceğini unutmayın. Aynı anda çalışan başka komutlar varsa "
+"(örneğin, ‘Çözümleme’ menüsünden başlattığınız bir eylem), konsol yalnızca R "
+"arka ucu boşta kaldığında yeniden kullanılabilir duruma gelecektir."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:27
 #, kde-format
 msgid "Re-running selected commands"
-msgstr ""
+msgstr "Seçili komutları yeniden çalıştırmak"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Re-running selected commands">
 #: rkward/pages/rkward_console.rkh:27
@@ -277,12 +351,16 @@ msgid ""
 "+Return). Leading \"> \" and \"+ \" on the selected lines will be removed "
 "automatically."
 msgstr ""
+"Seçili komutları (bir diziyi) yeniden çalıştırmak için bunları fareyi "
+"kullanarak seçin. Daha sonra bağlam menüsünden ‘Seçimi Çalıştır’ı seçin "
+"(öntanımlı kısayol Kontrol+Dönüş’tür). Seçili satırların başındaki ‘>’ ve "
+"‘+’ işaretleri kendiliğinden kaldırılacaktır."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:31
 #, kde-format
 msgid "Copying commands / output"
-msgstr ""
+msgstr "Komutları/Çıktıyı kopyalamak"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -293,6 +371,10 @@ msgid ""
 "\"> \" and \"+ \". In contrast, \"Copy commands, only\" will remove the "
 "prompts from the text copied into the clipboard."
 msgstr ""
+"Bağlam menüsünden (veya Düzen menüsünden) kullanılabilen iki kopyalama kipi "
+"vardır. Bunlardan biri, seçimi tam anlamıyla kopyalamanıza olanak tanır, "
+"yani ‘> ’ ve ‘+ ’ istemlerini de içerir. Bunun tersine, ‘Yalnızca Komutları "
+"Kopyala’ seçeneği panoya kopyalanan metindeki istemleri kaldıracaktır."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -301,12 +383,15 @@ msgid ""
 "Note that the customary shortcut for copying text - Ctrl+C - does NOT work "
 "in the console, as Ctrl+C already means interrupting the current command."
 msgstr ""
+"Metni kopyalamak için kullanılan alışılmış kısayolun (Kontrol+C) konsolda "
+"ÇALIŞMADIĞINI unutmayın; çünkü Kontrol+C zaten geçerli komutun kesilmesi "
+"anlamına gelir."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:37
 #, kde-format
 msgid "Function reference"
-msgstr ""
+msgstr "İşlev başvurusu"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Function reference">
 #: rkward/pages/rkward_console.rkh:37
@@ -316,12 +401,15 @@ msgid ""
 "try to look up the R help page for whichever keyword the cursor is currently "
 "on."
 msgstr ""
+"F2 düğmesine basmak (veya bağlam menüsünden ‘İşlev Başvurusu’nu seçmek), "
+"imlecin o anda üzerinde bulunduğu anahtar sözcüğe ilişkin R yardım sayfasını "
+"aramaya çalışacaktır."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:41
 #, kde-format
 msgid "Navigating the command history"
-msgstr ""
+msgstr "Komut geçmişinde dolaşmak"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -330,6 +418,8 @@ msgid ""
 "The console provides a mechanism to recall recent commands, similar to the "
 "readline functionality offered in R or most shells."
 msgstr ""
+"Konsol, R’de veya çoğu kabukta sunulan satırı okuma işlevine benzer şekilde, "
+"son komutları geri çağırmak için bir mekanizma sağlar."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -340,6 +430,10 @@ msgid ""
 "pressing the down arrow goes downwards in the command history. Of course, "
 "you can also edit a recalled command line."
 msgstr ""
+"Önceki komutu geri çağırmak için yukarı oka basmanız yeterlidir. Bundan "
+"önceki komutu geri çağırmak için yukarı oka art arda basın ve bu şekilde "
+"sürdürün. Benzer şekilde, aşağı oka basmak komut geçmişinde aşağı doğru "
+"gider. Elbette geri çağrılan bir komut satırını da düzenleyebilirsiniz."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -350,6 +444,10 @@ msgid ""
 "console. Now use Shift+Up / Shift+Down. You will note, that only those "
 "recent command lines that started with \"print\" will be shown."
 msgstr ""
+"Belirli bir diziyle başlayan satırlar için komut geçmişinde arama yapmak da "
+"olanaklıdır. Bunu kullanmak için konsola örneğin ‘print’ yazın. Şimdi Üst "
+"Karakter+Yukarı/Aşağı düğmelerini kullanın. Yalnızca ‘print’ ile başlayan "
+"son komut satırlarının gösterileceğini göreceksiniz."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -360,6 +458,11 @@ msgid ""
 "while pressing Up/Down without the Shift key will show only matching lines. "
 "(see <link href=\"#settings\">Section settings</link>)."
 msgstr ""
+"Komut geçmişini aramanın ikinci kipini öntanımlı yapmak olanaklıdır. Bu "
+"durumda Üst Karakter+Yukarı/Aşağı düğmelerine basıldığında tüm komutlarda "
+"gezinilirken, Üst Karakter düğmesi olmadan Yukarı/Aşağı düğmesine "
+"basıldığında yalnızca eşleşen çizgiler gösterilir (bkz. <link href="
+"\"#settings\">Bölüm Ayarları</link>)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
