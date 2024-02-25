@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-13 13:34+0300\n"
+"PO-Revision-Date: 2024-02-24 21:46+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.04.70\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -983,7 +983,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:131
 #, kde-format
 msgid "No import method found"
-msgstr "Bulunan içe aktarma yöntemi yok"
+msgstr "İçe aktarma yöntemi bulunamadı"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:52
 #, kde-format
@@ -1771,7 +1771,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:169
 #, kde-format
 msgid "None found"
-msgstr "Bulunan yok"
+msgstr "Bir şey bulunamadı"
 
 #: rkward/dialogs/rksetupwizard.cpp:172
 #, kde-format
