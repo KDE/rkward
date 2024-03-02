@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-16 10:23+0300\n"
+"PO-Revision-Date: 2024-03-01 15:29+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.02.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1940,8 +1940,8 @@ msgid ""
 "If checked, missing values will be excluded from calculation of skewness and "
 "kurtosis."
 msgstr ""
-"İşaretlenirse eksik değerler çarpıklık ve basıklık hesaplamasının dışında "
-"tutulacaktır."
+"İşaretlenirse eksik değerler çarpıklık ve basıklık hesaplamasından "
+"dışlanacaktır."
 
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="...">
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:12
@@ -3499,7 +3499,7 @@ msgstr "Kesme gecikmesi parametresinin hangi sürümü kullanılmalıdır?"
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:22
 #, kde-format
 msgid "Exclude missing values from calculation?"
-msgstr "Eksik değerler hesaplamadan çıkarılsın mı?"
+msgstr "Eksik değerler hesaplamadan dışlansın mı?"
 
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="...">
 #: rkward/plugins/analysis/TESTS/PP_test.xml:11
@@ -4624,7 +4624,7 @@ msgid ""
 "values are excluded from the calculations."
 msgstr ""
 "Seçilen her değişken diğerlerinden bağımsız olarak çözümlenecektir. NA "
-"değerleri hesaplamalarda içerilmez."
+"değerleri hesaplamalardan dışlanır."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
