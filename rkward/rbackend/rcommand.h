@@ -196,7 +196,7 @@ public:
 
 	template<typename T> void whenFinished(const QObject* receiver, const T func) {
 		QObject::connect(notifier(), &RCommandNotifier::commandFinished, receiver, func);
-	};
+	}
 private:
 friend class RInterface;
 friend class RCommandStack;

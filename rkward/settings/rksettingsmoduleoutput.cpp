@@ -96,7 +96,7 @@ void RKCarbonCopySettings::applyChanges() {
 
 	cc_globally_enabled = cc_globally_enabled_box->isChecked ();
 
-	foreach (RKCarbonCopySettings *sibling, instances) {
+	for (RKCarbonCopySettings *sibling : std::as_const(instances)) {
 		if (sibling != this) sibling->update ();
 	}
 }
@@ -123,7 +123,9 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	auto auto_raise_box = auto_raise.makeCheckbox(i18n("raise window on new output"), this);
 	group_layout->addWidget (auto_raise_box);
 	auto_raise_box->setEnabled (auto_show);
-	connect(auto_show_box, &QCheckBox::stateChanged, auto_raise_box, &QWidget::setEnabled);
+	connect(auto_show_box, &QCheckBox::stateChanged, auto_raise_box, [auto_raise_box](int state) {
+		auto_raise_box->setEnabled(state);
+	});
 
 	main_vbox->addWidget (group);
 

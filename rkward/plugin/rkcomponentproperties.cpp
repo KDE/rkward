@@ -887,12 +887,8 @@ bool RKComponentPropertyRObjects::setObjectValueSilent (RObject* object) {
 	RK_TRACE (PLUGIN);
 
 	problems.clear ();
-#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
-	QSet<RObject*> unique(object_list.constBegin(), object_list.constEnd());
-#else
-	QSet<RObject*> unique = object_list.toSet ();
-#endif
-	foreach (RObject *obj, unique) {
+	const QSet<RObject*> unique(object_list.constBegin(), object_list.constEnd());
+	for (RObject *obj : unique) {
 		stopListenForObject (obj);
 	}
 	object_list.clear ();
@@ -910,7 +906,7 @@ void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newl
 	RK_TRACE (PLUGIN);
 
 	if (newlist != object_list) {
-		setObjectValueSilent (0);
+		setObjectValueSilent (nullptr);
 		for (int i = 0; i < newlist.size (); ++i) {
 			addObjectValueSilent (newlist[i]);
 		}

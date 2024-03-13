@@ -50,7 +50,8 @@ void RKXMLGUISyncer::watchXMLGUIClientUIrc (KXMLGUIClient *client, bool recursiv
 	}
 
 	if (recursive) {
-		foreach (KXMLGUIClient *child, client->childClients ()) {
+		const auto childs = client->childClients ();
+		for (KXMLGUIClient *child : childs) {
 			watchXMLGUIClientUIrc (child, true);
 		}
 	}

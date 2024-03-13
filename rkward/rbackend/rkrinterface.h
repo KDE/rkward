@@ -49,10 +49,10 @@ public:
 		RCommand *c = new RCommand(QString(), RCommand::EmptyCommand | RCommand::Sync);
 		c->whenFinished(receiver, func);
 		issueCommand(c, chain);
-	};
+	}
 
 /** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
-	static RCommandChain *startChain(RCommandChain *parent=0);
+	static RCommandChain *startChain(RCommandChain *parent = nullptr);
 /** closes the command chain. The chain (and even its parent, if it is already closed) may be deleted right afterwards! */
 	static void closeChain(RCommandChain *chain);
 
@@ -68,7 +68,7 @@ not be interrupted. */
 	void pauseProcessing (bool pause);
 
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
-	RCommand *runningCommand () const { return (all_current_commands.isEmpty () ? 0 : all_current_commands.last ()); };
+	RCommand *runningCommand () const { return (all_current_commands.isEmpty () ? nullptr : all_current_commands.last ()); };
 
 	enum RStatus {
 		Busy,
@@ -107,7 +107,7 @@ private:
 	QList<RCommand*> all_current_commands;
 /** NOTE: processing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
 	QList<RBackendRequest*> command_requests;
-	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? 0 : command_requests.last ()); };
+	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? nullptr : command_requests.last ()); };
 	void tryNextCommand ();
 	void doNextCommand (RCommand *command);
 	RCommand *popPreviousCommand (int id);
@@ -141,7 +141,7 @@ friend class RCommand;
 protected:
 	void handleRequest (RBackendRequest *request);
 	static RInterface *_instance;
-	void _issueCommand(RCommand *command, RCommandChain *chain=0);
+	void _issueCommand(RCommand *command, RCommandChain *chain = nullptr);
 /** constructor */
 	RInterface();
 Q_SIGNALS:

@@ -66,7 +66,7 @@ protected:
 /** constructor
 @param parent parent widget
 @param type Type of window (see RKMDIWindow::Type).*/
-	RKMDIWindow (QWidget *parent, int type, bool tool_window=false, const char *name=0);
+	RKMDIWindow (QWidget *parent, int type, bool tool_window=false, const char *name = nullptr);
 	virtual ~RKMDIWindow ();
 public Q_SLOTS:
 /** Reimplemented from QWidget::setCaption () to Q_EMIT the signal captionChanged () when the caption is changed. */
@@ -107,7 +107,7 @@ public:
 /** Set a status message to be shown in a popup inside the window. The message persists until the given R command has finished, or until this function is called with an empty string.
 This should be used, when the information shown is currently out-of-date (e.g. when refreshing a preview / loading a plot from history), _not_ when the window
 is simply busy (e.g. when saving the current plot to history). */
-	void setStatusMessage (const QString& message, RCommand* command=0);
+	void setStatusMessage (const QString& message, RCommand* command = nullptr);
 /** Set a style hint for the window. So far the only interpreted style hint is "preview", and not all windows implement it. Base implements hiding of "active" indicator border for "preview"s. */
 	virtual void setWindowStyleHint (const QString& hint);
 
@@ -149,7 +149,7 @@ protected:
 	void removeUiBuddy(QObject* buddy);
 
 /** reimplemented from QWidget to emulate focus-follows-mouse behavior */
-	void enterEvent (QEvent *event) override;
+	void enterEvent (QEnterEvent *event) override;
 /** @see globalContextProperty() */
 	void setGlobalContextProperty (const QString& property, const QString& value) { global_context_properties.insert (property, value); };
 

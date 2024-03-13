@@ -300,7 +300,7 @@ void RKMDIWindow::slotActivateForFocusFollowsMouse () {
 	}
 }
 
-void RKMDIWindow::enterEvent (QEvent *event) {
+void RKMDIWindow::enterEvent (QEnterEvent *event) {
 	RK_TRACE (APP);
 
 	if (!isActive ()) {

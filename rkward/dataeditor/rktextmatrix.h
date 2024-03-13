@@ -21,7 +21,7 @@ public:
 	~RKTextMatrix ();
 
 	static RKTextMatrix matrixFromClipboard ();
-	static RKTextMatrix matrixFromSeparatedValues (const QString& text, const QRegularExpression &tab = {"\t"}, const QChar& brk='\n');
+	static RKTextMatrix matrixFromSeparatedValues (const QString& text, const QRegularExpression &tab = QRegularExpression(QStringLiteral("\t")), const QChar& brk = QLatin1Char('\n'));
 
 	QString toTabSeparatedValues () const;
 	void copyToClipboard () const;

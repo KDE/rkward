@@ -21,6 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QApplication>
+#include <QActionGroup>
 
 #include "twintablemember.h"
 #include "rkvareditmodel.h"

@@ -36,4 +36,4 @@ SET(plugin_STAT_SRCS
    )
 
 ADD_LIBRARY(plugin STATIC ${plugin_STAT_SRCS})
-TARGET_LINK_LIBRARIES(plugin Qt6::Widgets KF6::TextEditor KF6::WindowSystem)
+TARGET_LINK_LIBRARIES(plugin Qt6::Widgets KF6::TextEditor KF6::WindowSystem KF6::I18n)
