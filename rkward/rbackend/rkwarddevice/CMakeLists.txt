@@ -18,7 +18,7 @@ SET (
 )
 
 ADD_LIBRARY(rkgraphicsdevice.frontend STATIC ${rkgraphicsdevice_frontend_SRCS})
-TARGET_LINK_LIBRARIES(rkgraphicsdevice.frontend Qt5::Widgets Qt5::Core Qt5::Network KF5::CoreAddons KF5::WidgetsAddons KF5::I18n KF5::ConfigCore KF5::Parts)
+TARGET_LINK_LIBRARIES(rkgraphicsdevice.frontend Qt6::Widgets Qt6::Core Qt6::Network KF6::CoreAddons KF6::WidgetsAddons KF6::I18n KF6::ConfigCore KF6::Parts)
 
 ADD_LIBRARY(rkgraphicsdevice.backend STATIC ${rkgraphicsdevice_backend_SRCS})
-TARGET_LINK_LIBRARIES(rkgraphicsdevice.backend Qt5::Core Qt5::Network)
+TARGET_LINK_LIBRARIES(rkgraphicsdevice.backend Qt6::Core Qt6::Network)

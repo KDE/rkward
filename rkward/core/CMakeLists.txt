@@ -17,5 +17,5 @@ SET(core_STAT_SRCS
    )
 
 ADD_LIBRARY(core STATIC ${core_STAT_SRCS})
-TARGET_LINK_LIBRARIES(core Qt5::Core Qt5::Widgets KF5::WidgetsAddons KF5::I18n KF5::Parts)
+TARGET_LINK_LIBRARIES(core Qt6::Core Qt6::Widgets KF6::WidgetsAddons KF6::I18n KF6::Parts)
 

@@ -32,7 +32,7 @@ SET(windows_STAT_SRCS
 
 ADD_LIBRARY(windows STATIC ${windows_STAT_SRCS})
 IF(NO_QT_WEBENGINE)
-TARGET_LINK_LIBRARIES(windows Qt5::Widgets Qt5::Xml Qt5::PrintSupport Qt5::WebKitWidgets KF5::WebKit KF5::TextEditor KF5::Notifications KF5::WindowSystem KF5::KIOFileWidgets)
+TARGET_LINK_LIBRARIES(windows Qt6::Widgets Qt6::Xml Qt6::PrintSupport Qt6::WebKitWidgets KF6::WebKit KF6::TextEditor KF6::Notifications KF6::WindowSystem KF6::KIOFileWidgets)
 ELSE(NO_QT_WEBENGINE)
-TARGET_LINK_LIBRARIES(windows Qt5::Widgets Qt5::Xml Qt5::PrintSupport Qt5::WebEngineWidgets KF5::TextEditor KF5::Notifications KF5::WindowSystem KF5::KIOFileWidgets)
+TARGET_LINK_LIBRARIES(windows Qt6::Widgets Qt6::Xml Qt6::PrintSupport Qt6::WebEngineWidgets KF6::TextEditor KF6::Notifications KF6::WindowSystem KF6::KIOFileWidgets)
 ENDIF(NO_QT_WEBENGINE)

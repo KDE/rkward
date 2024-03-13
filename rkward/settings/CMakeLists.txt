@@ -34,4 +34,4 @@ IF (WIN32 OR USE_BINARY_PACKAGES)
 ENDIF (WIN32 OR USE_BINARY_PACKAGES)
 
 ADD_LIBRARY(settings STATIC ${settings_STAT_SRCS})
-TARGET_LINK_LIBRARIES(settings Qt5::Widgets KF5::WidgetsAddons Qt5::Xml KF5::ConfigCore KF5::Parts KF5::TextEditor)
+TARGET_LINK_LIBRARIES(settings Qt6::Widgets KF6::WidgetsAddons Qt6::Xml KF6::ConfigCore KF6::Parts KF6::TextEditor KF6::I18n)
