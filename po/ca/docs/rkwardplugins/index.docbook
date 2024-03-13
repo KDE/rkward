@@ -1306,7 +1306,7 @@ Normalment el títol de l'element de la IGU s'extraurà a partir de la
 <link linkend="mainxml"
 >definició &XML; del connector</link
 >, automàticament. Tanmateix,
-per a alguns elements de la IGU aquesta descripció pot no ser suficient per identificar-los amb fiabilitat.
+per a alguns elements de la IGU aquesta descripció pot no ser suficient per a identificar-los amb fiabilitat.
 En aquest cas podeu afegir un títol explícit usant l'atribut "title".
                 &lt;/setting&gt;
                 &lt;setting id="id_of_elementc"&gt;
@@ -1346,7 +1346,7 @@ i quines seccions de codi contenen quin codi R.
 	<para
 >Tots els conceptes bàsics de crear un connector per al &rkward; s'han descrit en els capítols anteriors. Aquests conceptes bàsics haurien de ser suficients per a molts casos, si no la majoria. No obstant això, de vegades voleu més control sobre com es comporta la &IGU; del connector. </para>
 	<para
->Per exemple, suposem que voleu ampliar l'exemple de la prova t utilitzat en aquesta documentació per a permetre: comparar una variable amb una altra variable (com es mostra), així com comparar una variable amb un valor constant. Ara, una manera de fer-ho seria afegir un control d'opcions que canviï entre els dos modes, i afegir un botó de selecció de valors per introduir el valor constant amb el qual comparar. Considereu aquest exemple simplificat: </para>
+>Per exemple, suposem que voleu ampliar l'exemple de la prova t utilitzat en aquesta documentació per a permetre: comparar una variable amb una altra variable (com es mostra), així com comparar una variable amb un valor constant. Ara, una manera de fer-ho seria afegir un control d'opcions que canviï entre els dos modes, i afegir un botó de selecció de valors per a introduir el valor constant amb el qual comparar. Considereu aquest exemple simplificat: </para>
 	<programlisting
 >&lt;!DOCTYPE rkplugin&gt;
 &lt;document&gt;
@@ -1489,7 +1489,7 @@ i quines seccions de codi contenen quin codi R.
 <title
 >Lògica de la &IGU; amb scripts</title>
 	<para
->Sovint és suficient connectar les propietats tal com es descriu anteriorment, però de vegades és més flexible o més pràctic utilitzar JS per crear scripts en la lògica de la &IGU;. D'aquesta manera, l'exemple anterior es podria reescriure com: </para>
+>Sovint és suficient connectar les propietats tal com es descriu anteriorment, però de vegades és més flexible o més pràctic utilitzar JS per a crear scripts en la lògica de la &IGU;. D'aquesta manera, l'exemple anterior es podria reescriure com: </para>
 	<programlisting
 >[...]
         &lt;code file="code.js"/&gt;
@@ -3085,7 +3085,7 @@ x        &lt;/components ...&gt;
 >&lt;radio&gt;</command
 >, cada cadena que marqueu per a la traducció en una crida de funció <command
 >i18n()</command
->, formarà una «unitat de traducció» separada. En essència, cada fragment es presentarà al traductor de forma aïllada. Bé, no un aïllament complet, ja que intentem proporcionar al traductor tant context significatiu com es pugui extreure automàticament. Però en alguns punts els traductors necessitaran un context addicional per donar sentit a una cadena, especialment quan les cadenes siguin curtes. </para>
+>, formarà una «unitat de traducció» separada. En essència, cada fragment es presentarà al traductor de forma aïllada. Bé, no un aïllament complet, ja que intentem proporcionar al traductor tant context significatiu com es pugui extreure automàticament. Però en alguns punts els traductors necessitaran un context addicional per a donar sentit a una cadena, especialment quan les cadenes siguin curtes. </para>
 	</sect1>
 	<sect1 id="i18n_xml"
 ><title
@@ -3397,7 +3397,7 @@ user (selection from a list of values shown next to this element) --&gt;
 <para
 >Així que heu escrit un conjunt de connectors, i us esteu preparant per a <link linkend="external_plugins"
 >compartir el vostre treball</link
->. Per assegurar-vos que els usuaris sàpiguen de què tracta el vostre treball, amb quins termes poden utilitzar-lo i distribuir-lo, i a qui han de contactar sobre problemes o idees, heu d'afegir informació <emphasis
+>. Per a assegurar-vos que els usuaris sàpiguen de què tracta el vostre treball, amb quins termes poden utilitzar-lo i distribuir-lo, i a qui han de contactar sobre problemes o idees, heu d'afegir informació <emphasis
 >sobre</emphasis
 > els vostres connectors. Això es pot fer utilitzant l'element <command
 >&lt;about&gt;</command
@@ -5519,7 +5519,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ><para
 >Aquest element d'entrada <emphasis
 >no</emphasis
-> està optimitzat per introduir/editar grans quantitats de dades. Si bé no hi ha un límit estricte en la mida d'una &lt;matrix&gt;, en general no hauria de superar al voltant de deu files/columnes. Si espereu dades més grans, permeteu als usuaris seleccionar-lo com un objecte &R; (el qual pot ser una bona idea com a opció alternativa, en gairebé <emphasis
+> està optimitzat per a introduir/editar grans quantitats de dades. Si bé no hi ha un límit estricte en la mida d'una &lt;matrix&gt;, en general no hauria de superar al voltant de deu files/columnes. Si espereu dades més grans, permeteu als usuaris seleccionar-lo com un objecte &R; (el qual pot ser una bona idea com a opció alternativa, en gairebé <emphasis
 >cada</emphasis
 > instància on utilitzeu un element de matriu).</para
 ></note
@@ -6552,7 +6552,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;script&gt;</term>
 <listitem
 ><para
->Defineix el codi de script per controlar la lògica de la IU. Vegeu la <link linkend="logic_scripted"
+>Defineix el codi de script per a controlar la lògica de la IU. Vegeu la <link linkend="logic_scripted"
 >secció sobre la lògica de script de GUJI</link
 > per a més detalls. El codi de l'script a executar es pot donar utilitzant l'atribut <parameter
 >"file"</parameter
@@ -7302,7 +7302,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
   <entry
 >embedded.pluginmap</entry>
   <entry
->Combina els botons de selecció de valors, entrada i control d'opcions per proporcionar entrada per a dades numèriques, numèriques i lògiques.</entry>
+>Combina els botons de selecció de valors, entrada i control d'opcions per a proporcionar entrada de dades de caràcters, numèriques i lògiques.</entry>
   <entry
 >Dades->Recodifica dades categòriques</entry>
 </row>
@@ -8340,7 +8340,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ><para
 ><command
 >doRCommand(command, callback)</command
-> es pot utilitzar per consultar l'&R; per a obtenir informació. Llegiu la secció sobre <link linkend="querying_r_for_info"
+> es pot utilitzar per a consultar l'&R; per a obtenir informació. Llegiu la secció sobre <link linkend="querying_r_for_info"
 >consultes &R; des de dins d'un connector</link
 > per a més detalls i advertències.</para
 ></listitem>
