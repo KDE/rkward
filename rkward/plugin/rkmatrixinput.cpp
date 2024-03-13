@@ -120,7 +120,7 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 		return QString ("cbind (\n" + ret.join (",\n") + "\n)");
 	} else if (modifier.startsWith (QLatin1String ("row."))) {
 		bool ok;
-		int row = modifier.midRef(4).toInt(&ok);
+		int row = QStringView(modifier).mid(4).toInt(&ok);
 		if ((row >= 0) && ok) {
 			return (rowStrings (row));
 		}

@@ -265,7 +265,8 @@ QVariantList RKComponentScriptingProxy::getObjectInfo (const QString &name) {
 		QVariantList ret;
 
 		QVariantList dims;
-		foreach (int dim, object->getDimensions ()) {
+		const auto objectDims = object->getDimensions ();
+		for (int dim : objectDims) {
 			dims.append (dim);
 		}
 		ret.append (QVariant (dims));

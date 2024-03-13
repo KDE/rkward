@@ -136,7 +136,7 @@ void QtScriptBackend::threadError (const QString &message) {
 
 	if (dead) return;	// we are already dead, so we've shown an error before.
 
-	KMessageBox::error (0, i18n ("The QtScript-backend has reported an error:\n%1", message), i18n ("Scripting error"));
+	KMessageBox::error (nullptr, i18n ("The QtScript-backend has reported an error:\n%1", message), i18n ("Scripting error"));
 
 	Q_EMIT haveError();
 	destroy ();

@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rcontainerobject.h"
 
-#include <qregexp.h>
+#include <QRegularExpression>
 
 #include "../rbackend/rkrinterface.h"
 #include "robjectlist.h"
@@ -375,8 +375,8 @@ QString RContainerObject::validizeName (const QString &child_name, bool unique) 
 	QString ret = child_name;
 	if (ret.isEmpty ()) ret = "var";
 	else {
-		ret = ret.replace (QRegExp ("[^a-zA-Z0-9_]"), ".");
-		ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
+		ret = ret.replace (QRegularExpression ("[^a-zA-Z0-9_]"), ".");
+		ret = ret.replace (QRegularExpression ("^\\.*[0-9]+"), ".");
 	}
 	if (!unique) return ret;
 

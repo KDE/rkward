@@ -452,7 +452,7 @@ void RInterface::timerEvent (QTimerEvent *) {
 void RInterface::flushOutput (bool forced) {
 // do not trace. called periodically
 //	RK_TRACE (RBACKEND);
-	ROutputList list = RKRBackendProtocolFrontend::instance ()->flushOutput (forced);
+	const ROutputList list = RKRBackendProtocolFrontend::instance ()->flushOutput (forced);
 
 	// this must come _after_ the output has been flushed.
 	if (forced || !list.isEmpty ()) {
@@ -462,7 +462,7 @@ void RInterface::flushOutput (bool forced) {
 		}
 	}
 
-	foreach (ROutput *output, list) {
+	for (ROutput *output, list) {
 		if (all_current_commands.isEmpty ()) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "output without receiver'%s'", qPrintable (output->output));
 			if (RKConsole::mainConsole()) RKConsole::mainConsole()->insertSpontaneousROutput(output);  // the "if" is to prevent crash, should output arrive during exit
@@ -473,7 +473,7 @@ void RInterface::flushOutput (bool forced) {
 		}
 
 		bool first = true;
-		foreach (RCommand* command, all_current_commands) {
+		for (RCommand* command : std::as_const(all_current_commands)) {
 			ROutput *coutput = output;
 			if (!first) {		// this output belongs to several commands at once. So we need to copy it.
 				coutput = new ROutput;
@@ -536,8 +536,8 @@ void RInterface::closeChain(RCommandChain *chain) {
 void RInterface::cancelAll () {
 	RK_TRACE (RBACKEND);
 
-	QList<RCommand*> all_commands = RCommandStack::regular_stack->allCommands ();
-	foreach (RCommand* command, all_commands) cancelCommand (command);
+	const QList<RCommand*> all_commands = RCommandStack::regular_stack->allCommands ();
+	for (RCommand* command : all_commands) cancelCommand (command);
 }
 
 bool RInterface::softCancelCommand (RCommand* command) {

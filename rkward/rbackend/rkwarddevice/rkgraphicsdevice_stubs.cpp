@@ -596,7 +596,7 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 		else if (keycode == Qt::Key_Insert) r_key_name = knINS;
 		else if (keycode == Qt::Key_Delete) r_key_name = knDEL;
 
-		Rf_doKeybd (dev, r_key_name, text.toUtf8 ());
+		Rf_doKeybd (dev, r_key_name, text.toUtf8 ().data());
 	} else {    // all others are mouse events
 		Rf_doMouseEvent (dev, event_code == RKDMouseDown ? meMouseDown : (event_code == RKDMouseUp ? meMouseUp : meMouseMove), buttons, x, y);
 	}

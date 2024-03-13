@@ -46,7 +46,8 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 
 // copy main window toolbar settings
 	QMap<QString, Qt::ToolButtonStyle> main_window_toolbar_styles;
-	foreach (KToolBar *bar, RKWardMainWindow::getMain ()->toolBars ()) {
+	const auto toolbars = RKWardMainWindow::getMain ()->toolBars ();
+	for (KToolBar *bar : toolbars) {
 		main_window_toolbar_styles.insert (bar->objectName (), bar->toolButtonStyle ());
 	}
 
@@ -71,7 +72,8 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	captured = widget_to_capture;
 	// Special case for graph windows: We don't want to touch their default size before showing. So tell the toolbars to step back, if needed.
 	if (widget_to_capture->isType(RKMDIWindow::X11Window)) {
-		foreach (KToolBar *bar, toolBars()) {
+		const auto bars = toolBars();
+		for (KToolBar *bar : bars) {
 			bar->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 		}
 	}
@@ -81,7 +83,8 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	connect (guiFactory (), &KXMLGUIFactory::makingChanges, this, &DetachedWindowContainer::hideEmptyMenus);
 
 // sanitize toolbars
-	foreach (KToolBar *bar, toolBars ()) {
+	const auto bars = toolBars();
+	for (KToolBar *bar : bars) {
 		if (main_window_toolbar_styles.contains (bar->objectName ())) {
 			bar->setToolButtonStyle (main_window_toolbar_styles[bar->objectName ()]);
 		} else {
@@ -106,7 +109,7 @@ void DetachedWindowContainer::hideEmptyMenus (bool ignore) {
 	// remove empty menus (we had to define them in detachedwindowcontainer.rc in order to force a sane menu order)
 	QStringList menu_names;
 	menu_names << "file" << "device" << "history" << "edit" << "run" << "view" << "settings";
-	foreach (const QString& name, menu_names) {
+	for (const QString& name : std::as_const(menu_names)) {
 		QMenu* menu = dynamic_cast<QMenu*>(guiFactory ()->container (name, this));
 		if (menu) menu->menuAction ()->setVisible (!menu->isEmpty ());
 	}

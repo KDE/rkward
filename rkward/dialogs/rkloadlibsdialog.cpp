@@ -6,16 +6,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rkloadlibsdialog.h"
 
-#include <qwidget.h>
-#include <qlayout.h>
+#include <QLayout>
 #include <QTreeWidget>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <QLabel>
+#include <QPushButton>
 #include <qcheckbox.h>
-#include <qdir.h>
-#include <qregexp.h>
-#include <qtimer.h>
-#include <qtextstream.h>
+#include <QDir>
+#include <QTimer>
+#include <QTextStream>
 #include <QCloseEvent>
 #include <QSortFilterProxyModel>
 #include <QApplication>

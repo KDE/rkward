@@ -670,7 +670,7 @@ void RKWardMainWindow::initActions() {
 // debug code: prints out all current actions
 void printActionsRecursive (QAction* action, const QString &prefix) {
 	if (action->menu ()) {
-		foreach (QAction *a, action->menu ()->actions ()) printActionsRecursive (a, prefix + action->text () + "->");
+		for (QAction *a : action->menu ()->actions ()) printActionsRecursive (a, prefix + action->text () + "->");
 	} else {
 		qDebug ("%s", qPrintable (prefix + action->text ()));
 	}
@@ -703,7 +703,8 @@ void RKWardMainWindow::partChanged(KParts::Part *part) {
 	if (gui_rebuild_locked) return;
 	if (!part) return;
 	createGUI(part);
-	foreach (QAction *a, actions()) {
+	const auto actionsList = actions();
+	for (QAction *a : actionsList) {
 		if (a->statusTip().isEmpty()) a->setStatusTip(a->whatsThis());
 	}
 
@@ -741,7 +742,7 @@ void RKWardMainWindow::partChanged(KParts::Part *part) {
 	}
 /*
 	// debug code: prints out all current actions
-	foreach (QAction *action, menuBar ()->actions ()) printActionsRecursive (action, QString ());
+	for (QAction *action : menuBar ()->actions ()) printActionsRecursive (action, QString ());
 */
 }
 

@@ -185,8 +185,8 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	// some versions of KDE appear to re-use the actions, others don't, and yet other are just plain broken (see this thread: https://mail.kde.org/pipermail/rkward-devel/2011-March/002770.html)
 	// Therefore, we remove all actions, explicitly, each time the menu is shown, then add them again.
 	QList<QAction*> menu_actions = menu->actions ();
-	QAction *first_sep = 0;
-	foreach (QAction* act, menu_actions) {
+	QAction *first_sep = nullptr;
+	for (QAction* act : std::as_const(menu_actions)) {
 		if (added_service_actions.contains (act)) menu->removeAction (act);
 		if (!first_sep && act->isSeparator ()) first_sep = act;
 	}
@@ -194,16 +194,11 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	menu_actions = menu->actions ();
 
 	menu->insertAction (first_sep, rename_action);
-#if KIO_VERSION >= QT_VERSION_CHECK(5,82,0)
 	fi_actions->insertOpenWithActionsTo(nullptr, menu, QStringList());
 	fi_actions->addActionsTo(menu);
-#else
-	fi_actions->addOpenWithActionsTo (menu, QString ());
-	fi_actions->addServiceActionsTo (menu);
-#endif
 
-	QList<QAction*> menu_actions_after = menu->actions ();
-	foreach (QAction* act, menu_actions_after) if (!menu_actions.contains (act)) added_service_actions.append (act);
+	const QList<QAction*> menu_actions_after = menu->actions ();
+	for (QAction* act : menu_actions_after) if (!menu_actions.contains (act)) added_service_actions.append (act);
 }
 
 // does not work in d-tor. Apparently it's too late, then

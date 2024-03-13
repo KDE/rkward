@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QDialog>
-#include <QMatrix4x4>
+#include <QTransform>
 #include <QFontMetricsF>
 
 #include <KLocalizedString>
@@ -165,7 +165,7 @@ int RKGraphicsDevice::finalizeTilingPattern(int extend) {
 
 void RKGraphicsDevice::viewKilled () {
 	RK_TRACE (GRAPHICS_DEVICE);
-	view = 0;
+	view = nullptr;
 //	closeDevice(devices.key(this));  // Do not do this, here. Don't mark the device as dead until R thinks so, too, and tells us about it.
 }
 
@@ -473,7 +473,7 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 		QPainterPath sub;
 		QSizeF size = strSize(text, font);
 		sub.addText(-(hadj * size.width()), 0, font, text);
-		QMatrix4x4 trans;
+		QTransform trans;
 		trans.translate(x, y);
 		trans.rotate(-rot);
 		recorded_path.addPath(trans.map(sub));
@@ -503,7 +503,7 @@ void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* as
 	QRectF rect = fm.boundingRect (c);
 	*ascent = -rect.top ();
 	*descent = rect.bottom ();
-	*width = fm.width (c);
+	*width = fm.horizontalAdvance (c);
 }
 
 void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBrush& brush) {

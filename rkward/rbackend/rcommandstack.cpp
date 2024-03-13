@@ -113,7 +113,7 @@ void RCommandStack::listCommandsRecursive (QList<RCommand*> *list, const RComman
 	RK_TRACE (RBACKEND);
 
 	if (chain->is_command) list->append (const_cast<RCommandChain*>(chain)->toCommand ());
-	foreach (const RCommandChain* coc, chain->sub_commands) {
+	for (const RCommandChain* coc : std::as_const(chain->sub_commands)) {
 		listCommandsRecursive (list, coc);
 	}
 }

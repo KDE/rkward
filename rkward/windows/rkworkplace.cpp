@@ -314,7 +314,8 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 void RKWorkplace::placeToolWindows() {
 	RK_TRACE (APP);
 
-	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
+	const auto windows = RKToolWindowList::registeredToolWindows ();
+	for (const RKToolWindowList::ToolWindowRepresentation& rep : windows) {
 		placeInToolWindowBar (rep.window, rep.default_placement);
 	}
 }
@@ -640,7 +641,8 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 
 	if (!ed) {
 		unsigned long size = 1;
-		foreach (int dim, iobj->getDimensions ()) {
+		const auto objDims = iobj->getDimensions ();
+		for (int dim, objDims) {
 			size *= dim;
 		}
 		if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {
@@ -952,8 +954,8 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	if (base_url.isLocalFile () && !base_url.isEmpty ()) workplace_description.append ("base::::" + base_url.url ());
 
 	// window order in the workplace view may have changed with respect to our list. Thus we first generate a properly sorted list
-	RKWorkplaceObjectList list = getObjectList (RKMDIWindow::DocumentWindow, RKMDIWindow::Detached);
-	foreach (RKMDIWindow *win, list) {
+	const RKWorkplaceObjectList list = getObjectList (RKMDIWindow::DocumentWindow, RKMDIWindow::Detached);
+	for (RKMDIWindow *win : list) {
 		QString desc = makeItemDescription (win);
 		if (!desc.isEmpty ()) workplace_description.append (desc);
 	}
@@ -961,8 +963,8 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	workplace_description.append (QStringLiteral ("layout::::") + wview->listLayout ());
 	workplace_description.append (wview->listContents ());
 
-	list = getObjectList (RKMDIWindow::ToolWindow, RKMDIWindow::AnyWindowState);
-	foreach (RKMDIWindow *win, list) {
+	const auto objectList = getObjectList (RKMDIWindow::ToolWindow, RKMDIWindow::AnyWindowState);
+	for (RKMDIWindow *win : objectList) {
 		QString desc = makeItemDescription (win);
 		if (!desc.isEmpty ()) workplace_description.append (desc);
 	}

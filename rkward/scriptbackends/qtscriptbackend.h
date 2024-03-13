@@ -56,11 +56,6 @@ private:
 #include <QMutex>
 #include <QtQml/QJSEngine>
 
-template<typename T> QJSValue rkJSMakeArray(QJSEngine *engine, QVector<T> list) {
-	auto ret = engine->newArray(list.size());
-	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));
-	return ret;
-}
 template<typename T> QJSValue rkJSMakeArray(QJSEngine *engine, QList<T> list) {
 	auto ret = engine->newArray(list.size());
 	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));

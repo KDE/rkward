@@ -62,7 +62,9 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 		{{(int) DontAdd, i18n("Do not add")}, {(int) AddSingleLine, i18n("Add only if single line")}, {(int) AlwaysAdd, i18n("Add all commands")}}
 	), this);
 	add_piped_commands_to_history_box->setEnabled(pipe_user_commands_through_console_box->isChecked());
-	connect(pipe_user_commands_through_console_box, &QCheckBox::stateChanged, add_piped_commands_to_history_box, &QCheckBox::setEnabled);
+	connect(pipe_user_commands_through_console_box, &QCheckBox::stateChanged, add_piped_commands_to_history_box, [add_piped_commands_to_history_box](int state) {
+		add_piped_commands_to_history_box->setEnabled(state);
+	});
 	vbox->addWidget (add_piped_commands_to_history_box);
 
 	vbox->addSpacing (2*RKStyle::spacingHint ());
