@@ -39,9 +39,9 @@ public:
 	KTextEditor::View* view () const { return (_view); };
 	void setLinePrefixes(const QString &_prefix, const QString &_continuation_prefix) { prefix = _prefix; continuation_prefix = _continuation_prefix; };
 	void modelGainedLateData(RKCompletionModelBase *model);
-public slots:
+public Q_SLOTS:
 	void userTriggeredCompletion ();
-private slots:
+private Q_SLOTS:
 	void lineWrapped (KTextEditor::Document *document, const KTextEditor::Cursor &position);
 	void lineUnwrapped (KTextEditor::Document *document, int line);
 	void textInserted (KTextEditor::Document *document, const KTextEditor::Cursor &position, const QString &text);
@@ -176,7 +176,7 @@ class RKFileCompletionModelWorker : public QThread {
 	Q_OBJECT
 public:
 	explicit RKFileCompletionModelWorker (const QString &string);
-signals:
+Q_SIGNALS:
 	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
 private:
 	void run () override;
@@ -193,7 +193,7 @@ public:
 	void updateCompletionList (const QString& fragment);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	QStringList rawPartialCompletions() const;
-private slots:
+private Q_SLOTS:
 	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
 private:
 	void launchThread ();
@@ -211,7 +211,7 @@ public:
 	const QStringList results() const { return filtered_results; };
 	const QString fragment() const { return current_fragment; };
 	const QString mode() const { return current_mode; };
-signals:
+Q_SIGNALS:
 	void resultsComplete();
 private:
 	void doUpdateFromR();

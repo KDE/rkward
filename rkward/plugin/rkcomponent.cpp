@@ -377,7 +377,7 @@ void RKComponent::changed () {
 		parentComponent ()->changed ();
 	}
 
-	emit componentChanged(this);
+	Q_EMIT componentChanged(this);
 }
 
 RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) const {

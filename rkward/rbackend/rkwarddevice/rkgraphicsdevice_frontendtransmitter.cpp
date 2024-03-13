@@ -248,7 +248,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			if (!device) {
 				if (opcode == RKDCancel) {
 					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation canceled");
-					emit stopInteraction();
+					Q_EMIT stopInteraction();
 				} else if (opcode == RKDQueryResolution) {
 					auto screen = QGuiApplication::primaryScreen();
 					streamer.outstream << (qint32) screen->logicalDotsPerInchX() << (qint32) screen->logicalDotsPerInchY();

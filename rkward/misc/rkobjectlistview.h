@@ -52,11 +52,11 @@ from your custom menu items, to figure out, which object you should operate on. 
 	RObject* objectAtIndex (const QModelIndex& index) const;
 /** Takes care initializing the RKObjectListView */
 	void initialize ();
-signals:
+Q_SIGNALS:
 /** This signal is emitted just before the context-menu is shown. If you connect to this signal, you can make some adjustments to the context-menu.
 If you set *suppress to true, showing the context menu will be suppressed. */
 	void aboutToShowContextMenu (RObject *object, bool *suppress);
-public slots:
+public Q_SLOTS:
 	void updateComplete ();
 	void updateStarted ();
 	void settingsChanged ();
@@ -92,9 +92,9 @@ public:
 	void addSettingsToMenu (QMenu* menu, QAction* before);
 
 	QWidget* filterWidget (QWidget *parent);
-signals:
+Q_SIGNALS:
 	void settingsChanged ();
-public slots:
+public Q_SLOTS:
 	void filterSettingsChanged ();
 	void updateSelfNow ();
 	void resetFilters ();

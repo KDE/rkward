@@ -31,7 +31,7 @@ public:
 	QStringList getUiLabelPair () const override;
 	int type () override { return ComponentInput; };
 	bool isValid () override;
-public slots:
+public Q_SLOTS:
 	void textChanged ();
 	void textChangedFromUi ();
 	void requirednessChanged (RKComponentPropertyBase *);

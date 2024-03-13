@@ -156,7 +156,7 @@ public:
 	static const quint32 trailing_item_id = 0xFFFFFFFE;
 	int add_trailing_columns;
 	int add_trailing_rows;
-public slots:
+public Q_SLOTS:
 	void r_rowsInserted (const QModelIndex& parent, int start, int end) {
 		RK_TRACE (MISC);
 		RK_ASSERT (!parent.isValid ());
@@ -172,13 +172,13 @@ public slots:
 		endRemoveRows ();
 	}
 	void r_dataChanged (const QModelIndex& from, const QModelIndex& to) {
-		emit dataChanged(mapFromSource(from), mapFromSource(to));
+		Q_EMIT dataChanged(mapFromSource(from), mapFromSource(to));
 	}
 	void r_headerDataChanged(Qt::Orientation o,int from,int to) {
-		emit headerDataChanged(o, from, to);
+		Q_EMIT headerDataChanged(o, from, to);
 	}
 	void r_layoutChanged () {
-		emit layoutChanged();
+		Q_EMIT layoutChanged();
 	}
 };
 
@@ -382,7 +382,7 @@ void RKAccordionTable::rowClicked (QModelIndex row) {
 	}
 	if (!row.parent ().isValid ()) {
 		if (row.row () >= pmodel->rowCount () - pmodel->add_trailing_rows) {
-			emit addRow(row.row());
+			Q_EMIT addRow(row.row());
 		}
 	}
 }
@@ -394,7 +394,7 @@ void RKAccordionTable::currentChanged (const QModelIndex& current, const QModelI
 	if (handling_a_click) return;
 	if (!pmodel->isFake (current)) {
 		setExpanded (current, true);
-		emit activated(current.row());
+		Q_EMIT activated(current.row());
 	}
 }
 
@@ -483,7 +483,7 @@ void RKAccordionTable::removeClicked () {
 		RK_ASSERT (row >= 0);
 		return;
 	}
-	emit removeRow(row);
+	Q_EMIT removeRow(row);
 }
 
 void RKAccordionTable::setModel (QAbstractItemModel* model) {

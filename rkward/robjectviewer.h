@@ -38,7 +38,7 @@ public:
 		PrintPage = 1,
 		StructurePage = 2
 	};
-public slots:
+public Q_SLOTS:
 	void currentTabChanged (int new_current);
 protected:
 	friend class RKWorkplace;
@@ -74,7 +74,7 @@ public:
 	void invalidate (const QString& reason);
 	void initialize ();
 	void setText (const QString& text);
-public slots:
+public Q_SLOTS:
 	virtual void update ();
 protected:
 	virtual RCommand* makeCommand() = 0;

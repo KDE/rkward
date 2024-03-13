@@ -174,7 +174,7 @@ void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
 			delete _workspace_config;
 			_workspace_config = 0;
 		}
-		emit workspaceUrlChanged(url);
+		Q_EMIT workspaceUrlChanged(url);
 	}
 }
 
@@ -1168,7 +1168,7 @@ void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
 
 	updateSwitcher ();
 
-	emit activeWindowChanged (window);
+	Q_EMIT activeWindowChanged (window);
 }
 
 void RKMDIWindowHistory::next (QAction* prev_action, QAction *next_action) {

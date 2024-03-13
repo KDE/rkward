@@ -176,7 +176,7 @@ public:
 	virtual void addComponentToCurrentPage (RKComponent *component);
 /** @returns true if the component is inactive, i.e. disabled, or hidden in the GUI */
 	bool isInactive ();
-public slots:
+public Q_SLOTS:
 /** This handles changes in the default properties (enabledness, visibility, requiredness). You will use similar slots in derived classes to handle
 specialized properties */
 	void propertyValueChanged (RKComponentPropertyBase *property);
@@ -204,10 +204,10 @@ public:
 
 /** Find the id of this component. NOTE: this is slow. Better to store the id in the first place, if needed */
 	QString getIdInParent () const;
-protected slots:
+protected Q_SLOTS:
 /** if a child component self-destructs, it should remove itself from its parent *before* destructing. Don't use in a regular destructor. Call only if the child dies unexpectedly */
 	void removeFromParent ();
-signals:
+Q_SIGNALS:
 /** emitted from changed() */
 	void componentChanged (RKComponent* component);
 protected:

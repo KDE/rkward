@@ -18,10 +18,10 @@ class RKPasteSpecialAction : public QAction {
 public:
 	explicit RKPasteSpecialAction (QObject* parent);
 	~RKPasteSpecialAction ();
-public slots:
+public Q_SLOTS:
 /** The actual workhorse of the action. */
 	void doSpecialPaste ();
-signals:
+Q_SIGNALS:
 /** Connect to this signal to receive the resulting text to be pasted */
 	void pasteText (const QString&);
 };
@@ -63,7 +63,7 @@ public:
 	
 	QString resultingText ();
 	void accept() override;
-public slots:
+public Q_SLOTS:
 	void updateState ();
 private:
 	QString prepString (const QString& src, const Quoting quot) const;

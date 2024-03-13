@@ -74,7 +74,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 		RK_ASSERT (command->getDataLength() > 0);
 		// NOTE: The problem is that e.g. R_LIBS_USER is not in .libPaths() if it does not exist, yet. But it should be available as an option, of course
 		library_locations = command->stringVector();
-		emit libraryLocationsChanged(library_locations);
+		Q_EMIT libraryLocationsChanged(library_locations);
 	});
 	RInterface::issueCommand(command, chain);
 }
@@ -154,7 +154,7 @@ void RKLoadLibsDialog::addLibraryLocation (const QString& new_loc) {
 
 	if (QDir ().mkpath (new_loc)) RKSettingsModuleRPackages::addLibraryLocation (new_loc, chain);
 	library_locations.prepend (new_loc);
-	emit libraryLocationsChanged(library_locations);
+	Q_EMIT libraryLocationsChanged(library_locations);
 }
 
 bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_liblocs) {
@@ -321,7 +321,7 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 	control->addRCommand(rcommand);
 	RInterface::issueCommand(rcommand, chain);
 	connect(rcommand->notifier(), &RCommandNotifier::commandFinished, this, [this]() {
-		emit installedPackagesChanged();
+		Q_EMIT installedPackagesChanged();
 	});
 }
 
@@ -593,7 +593,7 @@ public:
 				r.setLeft(r.left() + r.width()/2);
 				if (r.contains(e->pos())) {
 					if (event->type() == QEvent::MouseButtonRelease) {
-						emit selectAllUpdates();
+						Q_EMIT selectAllUpdates();
 					}
 					event->accept();
 					return true;
@@ -606,7 +606,7 @@ public:
 	QTreeView* table;
 	QIcon expanded;
 	QIcon collapsed;
-signals:
+Q_SIGNALS:
 	void selectAllUpdates();
 };
 
@@ -1106,9 +1106,9 @@ bool RKRPackageInstallationStatus::setData (const QModelIndex &index, const QVar
 	if (irow >= 0) installed_status[irow] = stat;
 	if (arow >= 0) available_status[arow] = stat;
 
-	emit dataChanged(index, index);
-	if (bindex.isValid ()) emit dataChanged(bindex, bindex);
-	emit changed();
+	Q_EMIT dataChanged(index, index);
+	if (bindex.isValid ()) Q_EMIT dataChanged(bindex, bindex);
+	Q_EMIT changed();
 
 	return true;
 }

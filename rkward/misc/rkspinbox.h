@@ -58,7 +58,7 @@ protected:
 /** reimplemented from QSpinBox to adjust the internal value */
 	void stepBy (int steps) override;
 	QValidator::State validate (QString &input, int &pos ) const override;
-private slots:
+private Q_SLOTS:
 	void updateValue (int value);
 	void emitValueChange ();
 private:

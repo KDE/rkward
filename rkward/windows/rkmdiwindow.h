@@ -68,8 +68,8 @@ protected:
 @param type Type of window (see RKMDIWindow::Type).*/
 	RKMDIWindow (QWidget *parent, int type, bool tool_window=false, const char *name=0);
 	virtual ~RKMDIWindow ();
-public slots:
-/** Reimplemented from QWidget::setCaption () to emit the signal captionChanged () when the caption is changed. */
+public Q_SLOTS:
+/** Reimplemented from QWidget::setCaption () to Q_EMIT the signal captionChanged () when the caption is changed. */
 	void setCaption (const QString &caption);
 public:
 /** @returns true, if the window's document was modified (and would need to be saved) */
@@ -130,13 +130,13 @@ is simply busy (e.g. when saving the current plot to history). */
  *  For the time being, only a single buddy is allowed, and it must outlive all mdi windows. */
 	void addUiBuddy(KXMLGUIClient* buddy);
 	KXMLGUIClient* uiBuddy() const { return ui_buddy; };
-signals:
+Q_SIGNALS:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
 	void captionChanged (RKMDIWindow *);
 /** This signal is emitted, when the window was activated *with* focus */
 	void windowActivated (RKMDIWindow *);
-protected slots:
+protected Q_SLOTS:
 	void showWindowHelp ();
 	void showWindowSettings ();
 	void clearStatusMessage ();
@@ -160,7 +160,7 @@ protected:
 friend class RKWorkplace;
 /** type of this window */
 	int type;
-private slots:
+private Q_SLOTS:
 	void slotActivateForFocusFollowsMouse ();
 protected:
 	QAction* file_save_as_action;

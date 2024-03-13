@@ -23,9 +23,9 @@ public:
 	bool hadError () const;
 	QStringList errors () const;
 	void start ();
-private slots:
+private Q_SLOTS:
 	void jobDone (KJob* job);
-signals:
+Q_SIGNALS:
 	void finished (RKJobSequence *seq);
 private:
 	void nextJob ();

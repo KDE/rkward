@@ -161,11 +161,11 @@ public:
 	}
 #endif
 
-signals:
+Q_SIGNALS:
 	void pageInternalNavigation (const QUrl& url);
 protected:
 #ifdef NO_QT_WEBENGINE
-/** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
+/** reimplemented to always Q_EMIT linkClicked() for pages that need special handling (importantly, rkward://-urls). */
 	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, QWebPage::NavigationType type) override {
 		QUrl navurl = request.url ();
 		QUrl cururl (mainFrame ()->url ());
@@ -199,7 +199,7 @@ protected:
 
 		if (cururl.matches (navurl, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
 			RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (cururl.toString ()), qPrintable (navurl.toString ()));
-			emit pageInternalNavigation(navurl);
+			Q_EMIT pageInternalNavigation(navurl);
 			return true;
 		}
 

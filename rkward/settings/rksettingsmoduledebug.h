@@ -32,7 +32,7 @@ public:
 	QString caption() const override;
 
 	// static members are declared in debug.h and defined in main.cpp
-public slots:
+public Q_SLOTS:
 	void settingChanged (int);
 private:
 	RKSpinBox* command_timeout_box;

@@ -106,7 +106,7 @@ friend class RKSettingsModulePluginsModel;
 	/** Registers the plugin maps that are shipped with RKWard.
 	 * @param force_add All default maps are also activated, even if they were already known, and disabled by the user. */
 	static void registerDefaultPluginMaps (AddMode add_mode);
-public slots:
+public Q_SLOTS:
 	void settingChanged ();
 	void configurePluginmaps ();
 private:
@@ -138,7 +138,7 @@ public:
 /** (re-)initialize the model */
 	void init (const RKSettingsModulePlugins::RKPluginMapList &known_plugin_maps);
 	RKSettingsModulePlugins::RKPluginMapList pluginMaps () { return plugin_maps; };
-public slots:
+public Q_SLOTS:
 	void swapRows (int rowa, int rowb);
 	void insertNewStrings (int above_row);
 private:

@@ -240,7 +240,7 @@ public:
 	QStringList listPlugins ();
 	void setPluginStatus (const QStringList &ids, const QStringList &contexts, const QStringList& visible);
 	bool isPluginMapLoaded (const QString& abs_filename) const;
-public slots:
+public Q_SLOTS:
 /** Slot called, when a menu-item for a component is selected. Responsible for creating the GUI. */
 	void activateComponent ();
 private:

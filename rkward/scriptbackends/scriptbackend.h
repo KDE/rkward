@@ -52,7 +52,7 @@ public:
 	virtual bool isBusy () { return busy; };
 	
 	virtual void writeData (const QVariant &data) = 0;
-signals:
+Q_SIGNALS:
 	void commandDone (int);
 	void idle ();
 	void requestValue (const QString &, const int);

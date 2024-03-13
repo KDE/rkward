@@ -353,7 +353,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 		QTimer::singleShot (0, gui, SLOT (show()));
 	}
 	changed ();
-	emit standardInitializationComplete();
+	Q_EMIT standardInitializationComplete();
 }
 
 RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview (RKComponentPropertyBool* controller, const QString& label, const QString &id) {

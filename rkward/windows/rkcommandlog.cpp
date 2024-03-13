@@ -262,7 +262,7 @@ RKCommandLogView::~RKCommandLogView () {
 void RKCommandLogView::contextMenuEvent(QContextMenuEvent *event) {
 	RK_TRACE(APP);
 
-	emit popupMenuRequest(event->globalPos());
+	Q_EMIT popupMenuRequest(event->globalPos());
 	event->accept();
 }
 

@@ -78,7 +78,7 @@ void RKRecentUrls::notifyChangeProxy() {
 }
 
 void RKRecentUrls::notifyChange() {
-	emit recentUrlsChanged();
+	Q_EMIT recentUrlsChanged();
 }
 
 RKRecentUrls::RKRecentUrls(QObject* parent) : QObject(parent) {

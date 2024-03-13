@@ -42,7 +42,7 @@ friend class RCommand;
 	void rCommandDone (RCommand *command);
 	RKCommandLog (QWidget *parent, bool tool_window, const char *name=0);
 	~RKCommandLog ();
-public slots:
+public Q_SLOTS:
 /** configures the log_view-window */
 	void configureLog ();
 /** clears the log_view-window */
@@ -71,9 +71,9 @@ class RKCommandLogView : public QTextEdit {
 public:
 	explicit RKCommandLogView (RKCommandLog *parent);
 	~RKCommandLogView ();
-public slots:
+public Q_SLOTS:
 	void selectAll ();
-signals:
+Q_SIGNALS:
 	void popupMenuRequest (const QPoint &pos);
 protected:
 	void contextMenuEvent (QContextMenuEvent *event) override;
@@ -91,7 +91,7 @@ public:
 	~RKCommandLogPart ();
 
 	void initActions ();
-public slots:
+public Q_SLOTS:
 	void doPopupMenu (const QPoint &pos);
 private:
 	RKCommandLog *log;

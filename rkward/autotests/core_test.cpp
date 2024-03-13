@@ -117,7 +117,7 @@ class RKWardCoreTest: public QObject {
 	}
     
 	QPointer<RKWardMainWindow> main_win;
-private slots:
+private Q_SLOTS:
 	void init() {
 		testLog("Starting next test");
 	}

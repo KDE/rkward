@@ -208,7 +208,7 @@ void RInterface::tryNextCommand () {
 				return;
 			}
 
-			if (previously_idle) emit backendStatusChanged(Busy);
+			if (previously_idle) Q_EMIT backendStatusChanged(Busy);
 			previously_idle = false;
 
 			doNextCommand (command);
@@ -217,7 +217,7 @@ void RInterface::tryNextCommand () {
 	}
 
 	if (on_top_level) {
-		if (!previously_idle) emit backendStatusChanged(Idle);
+		if (!previously_idle) Q_EMIT backendStatusChanged(Idle);
 		previously_idle = true;
 	}
 }
@@ -585,7 +585,7 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));
-		emit backendWorkdirChanged();
+		Q_EMIT backendWorkdirChanged();
 	} else if (call == "highlightRCode") {
 		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(calllist.mid(1).join('\n')));
 	} else if (call == "quit") {
@@ -910,7 +910,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			QString message = request->params["message"].toString ();
 			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
 			RKErrorDialog::reportableErrorMessage (0, message, QString (), i18n ("R engine has died"), "r_engine_has_died");
-			emit backendStatusChanged(Dead);
+			Q_EMIT backendStatusChanged(Dead);
 			while (!all_current_commands.isEmpty()) {
 				auto c = all_current_commands.takeLast();
 				c->status |= RCommand::Failed;

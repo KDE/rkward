@@ -75,9 +75,9 @@ public:
 	RKComponentScriptingProxy* scriptingProxy ();
 
 	RKXMLGUIPreviewArea *addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id = QString ());
-signals:
+Q_SIGNALS:
 	void standardInitializationComplete ();
-public slots:
+public Q_SLOTS:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
 	void backendIdle ();

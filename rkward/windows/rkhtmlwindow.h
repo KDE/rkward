@@ -72,7 +72,7 @@ public:
 	RKOutputDirectory *outputDirectory() const { return dir; };
 
 	WindowMode mode () { return window_mode; };
-public slots:
+public Q_SLOTS:
 	void slotPrint();
 	void slotExport();
 	void slotSave();
@@ -91,7 +91,7 @@ public slots:
 	void zoomOut ();
 	void setTextEncoding (QTextCodec* encoding);
 	void updateState();
-private slots:
+private Q_SLOTS:
 	void scrollToBottom ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
 	void mimeTypeJobFail (KJob*);
@@ -223,7 +223,7 @@ private:
 	QString current_default_path;
 	KDirWatch *file_watcher;
 	QMultiHash<QString, RKHTMLWindow *> windows;
-private slots:
+private Q_SLOTS:
 	void fileChanged (const QString &path);
 	void windowDestroyed (QObject *window);
 	void rewatchOutput ();

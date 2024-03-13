@@ -112,7 +112,7 @@ void RObjectList::updateFromR (RCommandChain *chain) {
 		return;
 	}
 
-	emit updateStarted();
+	Q_EMIT updateStarted();
 	update_chain = RInterface::startChain (chain);
 
 	RCommand *command = new RCommand("list (search (), loadedNamespaces ())", RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
@@ -143,7 +143,7 @@ void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_
 		return;
 	}
 
-	emit updateStarted();
+	Q_EMIT updateStarted();
 	update_chain = RInterface::startChain (chain);
 
 	updateEnvironments (current_searchpath, false);
@@ -161,7 +161,7 @@ void RObjectList::makeUpdateCompleteCallback() {
 		update_chain = 0;
 
 		RK_DEBUG (OBJECTS, DL_DEBUG, "object list update complete");
-		emit updateComplete();
+		Q_EMIT updateComplete();
 	});
 	RInterface::issueCommand(command, update_chain);
 }

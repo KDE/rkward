@@ -105,7 +105,7 @@ public:
 
 
 /**
-This class takes care of propagating object-modifications to all editors/variable-browsers etc. that need to know about them. For instance, if an object was removed in the R-workspace, the RObjectList will notify the RKModificationTracker. The modification tracker will then find out, whether there are editor(s) currently editing the removed object. If so, it will prompt the user what to do. Or, if an object is renamed in an editor, the RKModificationTracker will find out, whether the object is opened in further editors (not possible, yet) and tell those to update accordingly. It will further emit signals so the RObjectBrowser and RKVarselector(s) can update their object-lists.
+This class takes care of propagating object-modifications to all editors/variable-browsers etc. that need to know about them. For instance, if an object was removed in the R-workspace, the RObjectList will notify the RKModificationTracker. The modification tracker will then find out, whether there are editor(s) currently editing the removed object. If so, it will prompt the user what to do. Or, if an object is renamed in an editor, the RKModificationTracker will find out, whether the object is opened in further editors (not possible, yet) and tell those to update accordingly. It will further Q_EMIT signals so the RObjectBrowser and RKVarselector(s) can update their object-lists.
 
 @author Thomas Friedrichsmeier
 */

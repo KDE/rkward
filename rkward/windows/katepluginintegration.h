@@ -34,7 +34,7 @@ public:
 	void loadPlugins(const QStringList &plugins);
 	KatePluginIntegrationWindow *mainWindow() const { return window; };
 	int knownPluginCount() const { return known_plugins.size(); };
-private slots:
+private Q_SLOTS:
 friend class KatePluginIntegrationWindow;
 	void saveConfigAndUnload();
 	// These are the implementations of the KTextEditor::Application interface.
@@ -72,7 +72,7 @@ public:
 	KTextEditor::MainWindow *mainWindow() const { return main; };
 	KXMLGUIClient* persistentGuiClient() { return this; }
 	KXMLGUIClient* dynamicGuiClient() const { return dynamic_actions_client; }
-private slots:
+private Q_SLOTS:
 	// These are the implementations of the KTextEditor::MainWindow interface.
 	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
 	QWidget *createToolView(KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text);
@@ -117,7 +117,7 @@ friend class KatePluginIntegrationApp;
 
 	KatePluginIntegrationApp *app;
 	KXMLGUIClient *dynamic_actions_client;
-private slots:
+private Q_SLOTS:
 	void catchXMLGUIClientsHack(KXMLGUIClient* client);
 	void activeWindowChanged(RKMDIWindow *window);
 private:

@@ -38,10 +38,10 @@ public:
 	virtual void apply() = 0;
 	virtual void activated() = 0;
 	bool isChanged() const { return _changed; };
-signals:
+Q_SIGNALS:
 	void changed();
 protected:
-	void setChanged() { _changed = true; emit changed(); };
+	void setChanged() { _changed = true; Q_EMIT changed(); };
 	void clearChanged() { _changed = false; };
 private:
 	bool _changed;
@@ -72,12 +72,12 @@ public:
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QStringList &package_names);
 	static void showPluginmapConfig (QWidget *parent=0, RCommandChain *chain=0);
 	QStringList currentLibraryLocations ()  const { return library_locations; };
-signals:
+Q_SIGNALS:
 	void libraryLocationsChanged (const QStringList &liblocs);
 	void installedPackagesChanged ();
 protected:
 	void closeEvent (QCloseEvent *e) override;
-protected slots:
+protected Q_SLOTS:
 	void automatedInstall (const QStringList &packages);
 	void slotPageChanged ();
 private:
@@ -115,9 +115,9 @@ public:
 	~LoadUnloadWidget ();
 	void apply() override;
 	void activated() override;
-signals:
+Q_SIGNALS:
 	void loadUnloadDone ();
-public slots:
+public Q_SLOTS:
 	void loadButtonClicked ();
 	void detachButtonClicked ();
 	void updateInstalledPackages ();
@@ -191,9 +191,9 @@ public:
 /** reset all installation states to NoAction */
 	void clearStatus ();
 	bool initialized () const { return _initialized; };
-signals:
+Q_SIGNALS:
 	void changed();
-private slots:
+private Q_SLOTS:
 	void statusCommandFinished (RCommand *command);
 private:
 	QStringList available_packages, available_titles, available_versions, available_repos;
@@ -238,7 +238,7 @@ public:
 	void initialize ();
 	void apply() override;
 	void activated() override;
-public slots:
+public Q_SLOTS:
 	void filterChanged ();
 	void markAllUpdates ();
 	void configureRepositories ();

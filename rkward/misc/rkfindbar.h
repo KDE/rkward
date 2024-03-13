@@ -36,14 +36,14 @@ However, these can't be inserted into anything other than QToolBar or QMenu... *
 	QCheckBox* getOption (const FindOptions option);
 	bool isOptionSet (const FindOptions option) const;
 	void indicateSearchFail ();
-public slots:
+public Q_SLOTS:
 	void activate ();
 	void activateWithFindAsYouType ();
 	void forward ();
 	void backward ();
-signals:
+Q_SIGNALS:
 	void findRequest (const QString& text, bool backwards, const RKFindBar *findbar, bool *result);
-private slots:
+private Q_SLOTS:
 /** search term _or_ search options changed. Triggers a forward search, if FindAsYouType is active */
 	void searchChanged ();
 private:

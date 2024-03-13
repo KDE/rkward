@@ -22,7 +22,7 @@ public:
 	~RKQuitAgent ();
 
 	static bool quittingInProgress () { return quitting; };
-public slots:
+public Q_SLOTS:
 	void doQuitNow ();
 	void showWaitDialog ();
 private:

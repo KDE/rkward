@@ -945,7 +945,7 @@ void RKFileCompletionModelWorker::run () {
 		exes = comp.allMatches ();
 	}
 
-	emit completionsReady(string, exes, files);
+	Q_EMIT completionsReady(string, exes, files);
 }
 
 RKFileCompletionModel::RKFileCompletionModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
@@ -1050,7 +1050,7 @@ void RKDynamicCompletionsAddition::update(const QString &mode, const QString &fr
 		current_filterlist = filterlist;
 		if (status == Ready) filterResults(); // no update was triggered, above, need to update filter, manually
 	}
-	if (status == Ready) emit resultsComplete();
+	if (status == Ready) Q_EMIT resultsComplete();
 }
 
 void RKDynamicCompletionsAddition::doUpdateFromR() {
@@ -1084,7 +1084,7 @@ void RKDynamicCompletionsAddition::doUpdateFromR() {
 		}
 		filterResults();
 		status = Ready;
-		emit resultsComplete();
+		Q_EMIT resultsComplete();
 	});
 	RInterface::issueCommand(command);
 }

@@ -43,7 +43,7 @@ public:
 	QList<int> relativeSourceLines () const { return _rel_src_lines; };
 	QString debugPrompt () const { return _prompt; };
 	RCommand *command () const { return _command; };
-signals:
+Q_SIGNALS:
 	void newDebugState ();
 private:
 	RCommand *_command;

@@ -248,7 +248,7 @@ void RKOptionSet::fetchPropertyValuesRecursive (PropertyValueMap *list, bool inc
 void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* property) {
 	if (updating) return;
 	updating = true;
-	if (model) emit model->layoutAboutToBeChanged();
+	if (model) Q_EMIT model->layoutAboutToBeChanged();
 
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (property == serialization_of_set);
@@ -325,7 +325,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	active_row = -1;
 	current_row->setIntValue (qMin (0, row - 1));
 
-	if (model) emit model->layoutChanged();
+	if (model) Q_EMIT model->layoutChanged();
 	changed ();
 }
 
@@ -488,7 +488,7 @@ void RKOptionSet::setRowState (int row, bool finished, bool valid) {
 		valid ? --n_invalid_rows : ++n_invalid_rows;
 		changed = true;
 	}
-	if (changed && model) emit model->dataChanged(model->index(row, 0), model->index(row, model->columnCount() - 1));
+	if (changed && model) Q_EMIT model->dataChanged(model->index(row, 0), model->index(row, model->columnCount() - 1));
 }
 
 void RKOptionSet::changed () {
@@ -504,7 +504,7 @@ void RKOptionSet::changed () {
 	ComponentStatus s = recursiveStatus ();
 	if (s != last_known_status) {
 		last_known_status = s;
-		if (model) emit model->headerDataChanged(Qt::Horizontal, 0, model->columnCount() - 1);
+		if (model) Q_EMIT model->headerDataChanged(Qt::Horizontal, 0, model->columnCount() - 1);
 	}
 
 	RKComponent::changed ();
@@ -527,7 +527,7 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 		target->setValueAt (row, value);
 
 		if (model && (inf.display_index >= 0)) {
-			emit model->dataChanged(model->index(inf.display_index, row), model->index(inf.display_index, row));
+			Q_EMIT model->dataChanged(model->index(inf.display_index, row), model->index(inf.display_index, row));
 		}
 	}
 
@@ -550,7 +550,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 
 	if (target == keycolumn) handleKeycolumnUpdate ();
 	else {
-		if (model) emit model->dataChanged(model->index(ci.display_index, 0), model->index(ci.display_index, model->rowCount()));
+		if (model) Q_EMIT model->dataChanged(model->index(ci.display_index, 0), model->index(ci.display_index, model->rowCount()));
 		applyContentsFromExternalColumn (target, active_row);
 	}
 }
@@ -817,7 +817,7 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 
 void RKOptionSetDisplayModel::doResetNow () {
 	RK_TRACE (PLUGIN);
-	emit layoutChanged();
+	Q_EMIT layoutChanged();
 	set->updateCurrentRowInDisplay ();
 }
 
@@ -846,7 +846,7 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 void RKOptionSetDisplayModel::triggerReset() {
 	RK_TRACE (PLUGIN);
 	if (!reset_timer.isActive ()) {
-		emit layoutAboutToBeChanged();
+		Q_EMIT layoutAboutToBeChanged();
 		reset_timer.start ();
 	}
 }

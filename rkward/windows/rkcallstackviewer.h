@@ -25,7 +25,7 @@ public:
 /** reimplemented to create the real widget only when the viewer is shown for the first time */
 	void showEvent (QShowEvent *e) override;
 	static RKCallstackViewer *instance () { return _instance; };
-public slots:
+public Q_SLOTS:
 	void newDebugState ();
 private:
 	void createRealWidget ();
@@ -44,7 +44,7 @@ public:
 	~RKCallstackViewerWidget ();
 
 	void updateState ();
-private slots:
+private Q_SLOTS:
 	void frameChanged (int frame_number);
 private:
 	QListWidget *frame_selector;

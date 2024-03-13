@@ -36,7 +36,7 @@ public:
 	ComponentStatus recursiveStatus () override;
 	/** reimplemented from RKComponent */
 	void changed () override;
-private slots:
+private Q_SLOTS:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
@@ -142,7 +142,7 @@ friend class RKOptionSet;
 	Qt::ItemFlags flags (const QModelIndex& index) const override;
 	Qt::DropActions supportedDropActions () const override;
 	Qt::DropActions supportedDragActions () const override;
-private slots:
+private Q_SLOTS:
 	void doResetNow ();
 };
 

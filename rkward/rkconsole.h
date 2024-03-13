@@ -136,7 +136,7 @@ friend class RKConsolePart;
 	void pipeCommandThroughConsoleLocal (const QString &command);
 
 	RKConsolePart *console_part;
-public slots:
+public Q_SLOTS:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
 	void paste ();

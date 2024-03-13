@@ -92,16 +92,16 @@ void ScriptBackend::commandFinished (const QString &output) {
 				// no heading for the preview code (not shown in the code box)
 				code_property->setPreview (_output);
 			} else {
-				emit commandDone(current_flags);
+				Q_EMIT commandDone(current_flags);
 			}
 		} else {
-			emit commandDone(current_flags);
+			Q_EMIT commandDone(current_flags);
 		}
 	}
 	busy = false;
 	tryNextFunction ();
 	if (!busy) {
-		emit idle();
+		Q_EMIT idle();
 	}
 }
 

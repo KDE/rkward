@@ -178,7 +178,7 @@ void RKMatrixInput::setCellValue (int row, int column, const QString& value) {
 	}
 	col.storage[row] = value;
 	updateColumn (column);
-	emit model->dataChanged(model->index(row, column), model->index(row, column));
+	Q_EMIT model->dataChanged(model->index(row, column), model->index(row, column));
 }
 
 void RKMatrixInput::setColumnValue (int column, const QString& value) {
@@ -187,7 +187,7 @@ void RKMatrixInput::setColumnValue (int column, const QString& value) {
 	if (!expandStorageForColumn (column)) return;
 	columns[column].storage = value.split ('\t', RKCompatibility::KeepEmptyParts());
 	updateColumn (column);
-	emit model->dataChanged (model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
+	Q_EMIT model->dataChanged (model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
 }
 
 void RKMatrixInput::updateColumn (int column) {
@@ -301,7 +301,7 @@ void RKMatrixInput::updateAll () {
 	}
 	if (new_valid != is_valid) {
 		is_valid = new_valid;
-		emit model->headerDataChanged(Qt::Horizontal, 0, column_count->intValue() - 1);
+		Q_EMIT model->headerDataChanged(Qt::Horizontal, 0, column_count->intValue() - 1);
 	}
 	changed ();
 }
@@ -323,9 +323,9 @@ void RKMatrixInput::dimensionPropertyChanged (RKComponentPropertyBase *property)
 		}
 	}
 
-	emit model->layoutAboutToBeChanged();
+	Q_EMIT model->layoutAboutToBeChanged();
 	updateAll();
-	emit model->layoutChanged();
+	Q_EMIT model->layoutChanged();
 }
 
 void RKMatrixInput::tsvPropertyChanged () {

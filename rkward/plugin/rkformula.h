@@ -36,7 +36,7 @@ public:
 
 /** RTTI */
 	int type () override { return ComponentFormula; };
-public slots:
+public Q_SLOTS:
 	void typeChange (int id);
 	void addButtonClicked ();
 	void removeButtonClicked ();

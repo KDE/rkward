@@ -31,7 +31,7 @@ public:
 	RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKVarSelector ();
 	int type () override { return ComponentVarSelector; };
-private slots:
+private Q_SLOTS:
 	void objectSelectionChanged ();
 	void rootChanged ();
 	void showFilterWidget ();

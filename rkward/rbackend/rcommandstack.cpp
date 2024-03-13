@@ -372,6 +372,6 @@ void RCommandStackModel::itemChange (RCommandChain* item) {
 	RK_TRACE (RBACKEND);
 
 	QModelIndex item_index = indexFor (item);
-	emit dataChanged(item_index, item_index);
+	Q_EMIT dataChanged(item_index, item_index);
 }
 

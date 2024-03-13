@@ -33,7 +33,7 @@ public:
 
 	static bool shouldCarbonCopyCommand (const RCommand *command);
 	static bool includeOutputInCarbonCopy () { return (cc_globally_enabled && cc_command_output); };
-public slots:
+public Q_SLOTS:
 	void applyChanges() override;
 private:
 	// There can be multiple instances of this widget, which need to be kept in sync.
@@ -77,7 +77,7 @@ public:
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };
 	static bool sharedDefaultOutput() { return shared_default_output; };
-public slots:
+public Q_SLOTS:
 	void boxChanged ();
 private:
 	QComboBox *graphics_type_box;

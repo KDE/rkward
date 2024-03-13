@@ -538,7 +538,7 @@ bool RKSettingsModulePluginsModel::setData (const QModelIndex& index, const QVar
 			if (!plugin_maps.all_maps.contains(id)) return false;
 			auto &handle = plugin_maps.all_maps[id];
 			handle.active = value.toBool ();
-			emit dataChanged(index, index);
+			Q_EMIT dataChanged(index, index);
 			return true;
 		}
 	}

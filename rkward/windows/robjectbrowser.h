@@ -55,7 +55,7 @@ Q_OBJECT
 public:
 	explicit RObjectBrowserInternal (QWidget *parent, RObjectBrowser *browser);
 	~RObjectBrowserInternal ();
-private slots:
+private Q_SLOTS:
 	void updateButtonClicked ();
 	void contextMenuCallback (RObject *object, bool *suppress);
 

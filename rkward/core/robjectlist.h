@@ -58,7 +58,7 @@ public:
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
 	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
 	QString getObjectDescription () const override;
-signals:
+Q_SIGNALS:
 /// emitted when the list of objects is about to be updated	// TODO: remove me
 	void updateStarted ();
 /// emitted when the list of objects has been updated	// TODO: remove me
@@ -71,7 +71,7 @@ protected:
 	QString removeChildCommand (RObject *object) const override;
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString renameChildCommand (RObject *object, const QString &new_name) const override;
-/// reimplemented from RContainerObject to emit a change signal
+/// reimplemented from RContainerObject to Q_EMIT a change signal
 	void objectsChanged ();
 	bool updateStructure (RData *new_data) override;
 	void updateEnvironments (const QStringList &env_names, bool force_globalenv_update);
