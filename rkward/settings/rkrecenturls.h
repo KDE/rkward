@@ -31,7 +31,7 @@ public:
 	static QString workspaceId();
 	static QString outputId();
 	static RKRecentUrls* notifier();
-signals:
+Q_SIGNALS:
 	void recentUrlsChanged();
 private:
 	RKRecentUrls(QObject* parent);

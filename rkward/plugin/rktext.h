@@ -28,7 +28,7 @@ public:
 	RKComponentPropertyBase *text;
 	QVariant value (const QString &modifier=QString ()) override { return (text->value (modifier)); };
 	int type () override { return ComponentText; };
-public slots:
+public Q_SLOTS:
 	void textChanged (RKComponentPropertyBase *);
 private:
 	QLabel *label;

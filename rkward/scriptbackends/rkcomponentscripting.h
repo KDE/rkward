@@ -32,7 +32,7 @@ public:
 	~RKComponentScriptingProxy ();
 
 	void initialize (const QString& file, const QString& command);
-public slots:
+public Q_SLOTS:
 	void componentChanged (RKComponent* changed);
 	void propertyChanged (RKComponentPropertyBase* changed);
 
@@ -53,9 +53,9 @@ public:
 	Q_INVOKABLE QVariantList getObjectInfo (const QString &name);
 	Q_INVOKABLE QString getObjectParent (const QString &name);
 	Q_INVOKABLE QString getObjectChild (const QString &name);
-signals:
+Q_SIGNALS:
 	void haveError ();
-private slots:
+private Q_SLOTS:
 	void scriptRCommandFinished (RCommand* command);
 private:
 	RKComponent* component;

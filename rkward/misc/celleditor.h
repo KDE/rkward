@@ -35,9 +35,9 @@ public:
 	void setValueLabels (const RObject::ValueLabels& labels);
 
 	void setText (const QString& text);
-signals:
+Q_SIGNALS:
 	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
-public slots:
+public Q_SLOTS:
 	void selectedFromList (QAction* action);
 	void showValueLabels ();
 protected:

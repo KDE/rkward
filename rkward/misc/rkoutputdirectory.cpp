@@ -597,7 +597,7 @@ void RKOutputDirectory::setKnownModified(bool modified) {
 	RK_TRACE(APP);
 	if (known_modified != modified) {
 		known_modified = modified;
-		emit stateChange(isActive(), modified);
+		Q_EMIT stateChange(isActive(), modified);
 	}
 }
 

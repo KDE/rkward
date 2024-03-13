@@ -25,7 +25,7 @@ class RKVarLevelsTable : public RKTableView {
 public:
 	RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels& labels);
 	~RKVarLevelsTable ();
-public slots:
+public Q_SLOTS:
 /** cut */
 	void cut ();
 /** cut */
@@ -88,9 +88,9 @@ public:
 	void initialize (const RObject::ValueLabels& labels, const QString& varname);
 
 	RObject::ValueLabels getLabels () const { return labels; };
-signals:
+Q_SIGNALS:
 	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
-protected slots:
+protected Q_SLOTS:
 	void dialogDone (int result);
 private:
 	EditLabelsDialog* dialog;

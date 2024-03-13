@@ -144,7 +144,7 @@ protected:
 	void _issueCommand(RCommand *command, RCommandChain *chain=0);
 /** constructor */
 	RInterface();
-signals:
+Q_SIGNALS:
 	void backendWorkdirChanged();
 /** Note: status is actually RInterface::RStatus */
 	void backendStatusChanged(int new_status);

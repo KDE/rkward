@@ -76,7 +76,7 @@ public:
 	static void purgeAllNoAsk();
 
 	void setKnownModified(bool modified);
-signals:
+Q_SIGNALS:
 	void stateChange(bool active, bool modified);
 private:
 	RKOutputDirectory();

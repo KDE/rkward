@@ -29,12 +29,12 @@ public:
 	int type () override { return ComponentMatrixInput; };
 	bool isValid () override { return is_valid; };
 	QVariant value (const QString &modifier=QString ()) override;
-public slots:
+public Q_SLOTS:
 	void cut ();
 	void copy ();
 	void paste ();
 	void clearSelectedCells ();
-private slots:
+private Q_SLOTS:
 	void dimensionPropertyChanged (RKComponentPropertyBase *property);
 	void tsvPropertyChanged ();
 private:

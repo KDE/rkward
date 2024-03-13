@@ -35,7 +35,7 @@ RKSettingsModuleWidget::RKSettingsModuleWidget(QWidget *parent, RKSettingsModule
 
 void RKSettingsModuleWidget::change() {
 	changed = true;
-	emit settingsChanged();
+	Q_EMIT settingsChanged();
 }
 
 

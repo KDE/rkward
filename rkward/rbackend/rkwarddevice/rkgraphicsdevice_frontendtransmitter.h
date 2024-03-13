@@ -25,12 +25,12 @@ public:
 	~RKGraphicsDeviceFrontendTransmitter ();
 	QString serverName () const { return server_name; };
 	static double lwdscale;
-public slots:
+public Q_SLOTS:
 	void newData ();
 	void newConnection ();
 	void locatorDone (bool ok, double x, double y);
 	void newPageConfirmDone (bool accepted);
-signals:
+Q_SIGNALS:
 	void stopInteraction ();
 private:
 	void setupServer ();

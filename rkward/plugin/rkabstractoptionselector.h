@@ -31,7 +31,7 @@ public:
 	QVariant value (const QString &modifier=QString ()) override { return (string->value (modifier)); };
 /** reimplemented from RKComponent to add enabledness properties for the options, dynamically, if requested */
 	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder) override;
-public slots:
+public Q_SLOTS:
 	void itemSelected (int id);
 	void propertyChanged (RKComponentPropertyBase *property);
 	void ItemPropertyChanged (RKComponentPropertyBase *property);

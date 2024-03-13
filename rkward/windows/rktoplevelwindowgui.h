@@ -25,7 +25,7 @@ public:
 	explicit RKTopLevelWindowGUI (KXmlGuiWindow *for_window);
 	~RKTopLevelWindowGUI ();
 	void initToolWindowActions ();
-public slots:
+public Q_SLOTS:
 	// windows menu
 	/** Raise the help search window */
 	void showHelpSearch ();
@@ -54,7 +54,7 @@ public slots:
 	void configureShortcuts ();
 	/** configure key bindings. Reimplemented to show notice before the actual dialog. */
 	void configureToolbars ();
-private slots:
+private Q_SLOTS:
 	void toggleToolView ();
 	void previousWindow ();
 	void nextWindow ();

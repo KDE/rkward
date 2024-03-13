@@ -31,7 +31,7 @@ private:
 	QMap<QTreeWidgetItem *, QPointer<RKMDIWindow>> window_checklist;
 	QTreeWidgetItem *save_project_check;
 	QMap<QTreeWidgetItem *, QString> outputdir_checklist;
-private slots:
+private Q_SLOTS:
 	void saveWorkplaceChanged ();
 	void saveSelected ();
 };

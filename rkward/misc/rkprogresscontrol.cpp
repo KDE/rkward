@@ -169,7 +169,7 @@ void RKProgressControl::dialogDestroyed () {
 				RInterface::instance()->cancelCommand(*it);
 			}
 		}
-		emit cancelled();
+		Q_EMIT cancelled();
 	}
 }
 

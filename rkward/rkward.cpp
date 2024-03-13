@@ -213,7 +213,7 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 
 	e->ignore();
 	if (doQueryQuit()) {
-		emit aboutToQuitRKWard();
+		Q_EMIT aboutToQuitRKWard();
 		new RKQuitAgent(this);
 	}
 }

@@ -132,7 +132,7 @@ void RKSaveObjectChooser::objectRemoved (RObject* removed) {
 		setRootObject (0);
 	} else if (removed == current_object) {
 		stopListenForObject (removed);
-		current_full_name.clear ();	// hack to achieve proper emit of change signal
+		current_full_name.clear ();	// hack to achieve proper Q_EMIT of change signal
 		QTimer::singleShot (0, this, SLOT (updateState()));
 	} else {
 		RK_ASSERT (false);
@@ -187,7 +187,7 @@ void RKSaveObjectChooser::updateState () {
 
 	if ((new_name != current_full_name) || (sender () == overwrite_confirm)) {
 		current_full_name = new_name;
-		emit changed(isOk());
+		Q_EMIT changed(isOk());
 	}
 }
 

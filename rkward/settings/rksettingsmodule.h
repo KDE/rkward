@@ -134,14 +134,14 @@ public:
 /** Mark this module as "changed" (propagates to parent module) */
 	void change ();
 	bool hasChanges () { return changed; };
-signals:
+Q_SIGNALS:
 	void settingsChanged();
 	void apply();
 protected:
 	bool changed;
 /** temporary indirection until applyChanges() has been obsolete, everywhere */
 	void doApply() {
-		emit apply();
+		Q_EMIT apply();
 		applyChanges();
 		changed = false;
 	}

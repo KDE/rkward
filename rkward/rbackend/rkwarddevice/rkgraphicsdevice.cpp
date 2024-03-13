@@ -591,8 +591,8 @@ void RKGraphicsDevice::setActive (bool active) {
 	} else {
 		view->setWindowTitle(i18nc("Window title", "%1 (Inactive)", base_title));
 	}
-	emit activeChanged(active);
-	emit captionChanged(view->windowTitle());
+	Q_EMIT activeChanged(active);
+	Q_EMIT captionChanged(view->windowTitle());
 }
 
 void RKGraphicsDevice::goInteractive (const QString& prompt) {
@@ -607,7 +607,7 @@ void RKGraphicsDevice::goInteractive (const QString& prompt) {
 	view->setToolTip (prompt);
 	view->show ();
 	view->raise ();
-	emit goingInteractive(true, prompt);
+	Q_EMIT goingInteractive(true, prompt);
 }
 
 void RKGraphicsDevice::locator () {
@@ -646,7 +646,7 @@ void RKGraphicsDevice::newPageDialogDone (int result) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (dialog);
-	emit newPageConfirmDone(result == QDialog::Accepted);
+	Q_EMIT newPageConfirmDone(result == QDialog::Accepted);
 	interaction_opcode = -1;
 	stopInteraction ();
 }
@@ -687,7 +687,7 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 		if (event->type () == QEvent::MouseButtonRelease) {
 			QMouseEvent *me = static_cast<QMouseEvent*> (event);
 			if (me->button () == Qt::LeftButton) {
-				emit locatorDone(true, me->x(), me->y());
+				Q_EMIT locatorDone(true, me->x(), me->y());
 				interaction_opcode = -1;
 			}
 			stopInteraction ();
@@ -754,10 +754,10 @@ void RKGraphicsDevice::stopInteraction () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (interaction_opcode == RKDLocator) {
-		emit locatorDone(false, 0.0, 0.0);
+		Q_EMIT locatorDone(false, 0.0, 0.0);
 	} else if (interaction_opcode == RKDNewPageConfirm) {
 		RK_ASSERT (dialog);
-		emit newPageConfirmDone(true);
+		Q_EMIT newPageConfirmDone(true);
 	} else if (interaction_opcode == RKDStartGettingEvents) {
 		// not much to do, fortunately, as getting graphics events is non-blocking
 		stored_events.clear ();
@@ -776,7 +776,7 @@ void RKGraphicsDevice::stopInteraction () {
 		checkSize ();
 		view->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
 	}
-	emit goingInteractive(false, QString());
+	Q_EMIT goingInteractive(false, QString());
 	interaction_opcode = -1;
 }
 

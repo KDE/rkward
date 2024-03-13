@@ -145,7 +145,7 @@ void RKObjectListView::contextMenuEvent (QContextMenuEvent* event) {
 
 	menu_object = objectAtIndex (indexAt (event->pos ()));
 	bool suppress = false;
-	emit aboutToShowContextMenu(menu_object, &suppress);
+	Q_EMIT aboutToShowContextMenu(menu_object, &suppress);
 
 	if (!suppress) menu->popup (event->globalPos ());
 }
@@ -495,5 +495,5 @@ void RKObjectListViewSettings::updateSelfNow () {
 
 	invalidateFilter ();
 
-	emit settingsChanged();
+	Q_EMIT settingsChanged();
 }

@@ -23,7 +23,7 @@ protected:
 	~RKRecoverDialog ();
 	static QString saveFileFor (const QString &recovery_file);
 	QStringList files;
-private slots:
+private Q_SLOTS:
 	void deleteButtonClicked ();
 };
 

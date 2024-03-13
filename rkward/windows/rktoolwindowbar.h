@@ -41,7 +41,7 @@ public:
 	void restoreSize (const KConfigGroup &cg);
 	void saveSize (KConfigGroup &cg) const;
 	void captionChanged(RKMDIWindow* window);
-private slots:
+private Q_SLOTS:
 	void tabClicked (int id);
 	void changeAttachment ();
 	void moveToolWindow (int target);

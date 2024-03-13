@@ -26,9 +26,9 @@ public:
 
 	// reimplemented to refuse closing while inside the debugger
 	bool close (CloseWindowMode ask_save) override;
-public slots:
+public Q_SLOTS:
 	void newDebugState ();
-private slots:
+private Q_SLOTS:
 	void sendReplySlot ();
 private:
 	QPushButton* addButton(const QString &command, const QString &text, const QString &tip);

@@ -22,7 +22,7 @@ Allows editing of format-attributes for an RKVariable
 */
 class EditFormatDialog : public QDialog {
 	Q_OBJECT
-public slots:
+public Q_SLOTS:
 	void precisionFieldChanged (int);
 protected:
 /** reimplemented to make the newly selected options available */
@@ -52,9 +52,9 @@ public:
 
 	void initialize (const RKVariable::FormattingOptions& options, const QString& varname);
 	RKVariable::FormattingOptions getOptions () const { return options; };
-signals:
+Q_SIGNALS:
 	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
-protected slots:
+protected Q_SLOTS:
 	void dialogDone (int result);
 private:
 	RKVariable::FormattingOptions options;

@@ -37,7 +37,7 @@ public:
 
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
 	void restoreObject (RObject *object) override;
-private slots:
+private Q_SLOTS:
 	void detachModel ();
 private:
 /// syncs the whole table.

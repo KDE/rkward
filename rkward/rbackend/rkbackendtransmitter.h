@@ -25,7 +25,7 @@ public:
 	void writeRequest (RBackendRequest *request) override;
 	void requestReceived (RBackendRequest *request) override;
 	void handleTransmissionError (const QString &message) override;
-public slots:
+public Q_SLOTS:
 	void doExit(); // To be called from main thread via QMetaMethod::invoke
 private:
 	void timerEvent (QTimerEvent *event) override;

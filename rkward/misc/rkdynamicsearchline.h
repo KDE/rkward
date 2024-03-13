@@ -26,9 +26,9 @@ public:
 /** If a model is set, will call setFilterRegExp() when the search string is changed. */
 	void setModelToFilter (QSortFilterProxyModel* _model) { model = _model; };
 	QString regexpTip () const;
-signals:
+Q_SIGNALS:
 	void searchChanged (const QRegExp& search);
-private slots:
+private Q_SLOTS:
 	void textChanged ();
 	void delayedSearch ();
 private:

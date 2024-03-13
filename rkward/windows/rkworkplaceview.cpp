@@ -129,7 +129,7 @@ void RKWorkplaceViewPane::tabRemoved (int index) {
 	RK_TRACE (APP);
 	QTabWidget::tabRemoved (index);
 //	if (count () < 2) tabBar ()->hide ();
-	if (count () < 1) emit becameEmpty(this);
+	if (count () < 1) Q_EMIT becameEmpty(this);
 	workplace_view->updateActions ();
 }
 
@@ -484,7 +484,7 @@ void RKWorkplaceView::setCaption(const QString &caption) {
 	RK_TRACE(APP);
 
 	QWidget::setWindowTitle(caption);
-	emit captionChanged(caption);
+	Q_EMIT captionChanged(caption);
 }
 
 void RKWorkplaceView::restoreLayout(const QString& desc) {

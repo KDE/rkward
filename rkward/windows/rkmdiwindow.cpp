@@ -105,7 +105,7 @@ QString RKMDIWindow::shortCaption () {
 void RKMDIWindow::setCaption(const QString &caption) {
 	RK_TRACE(APP);
 	QWidget::setWindowTitle(caption);
-	emit captionChanged(this);
+	Q_EMIT captionChanged(this);
 	if (tool_window_bar) tool_window_bar->captionChanged(this);
 }
 
@@ -141,7 +141,7 @@ void RKMDIWindow::activate (bool with_focus) {
 		}
 	}
 
-	emit windowActivated(this);
+	Q_EMIT windowActivated(this);
 	if (with_focus) {
 		if (old_focus) old_focus->clearFocus ();
 		topLevelWidget ()->activateWindow ();
@@ -214,7 +214,7 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 
 			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *>(e);
 			if (ev->activated()) {
-				emit windowActivated(this);
+				Q_EMIT windowActivated(this);
 				setFocus();      // focus doesn't always work correctly for the kate part
 				active = true;
 			} else {

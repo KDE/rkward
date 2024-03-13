@@ -30,9 +30,9 @@ public:
 	QString label() const;
 	void setLabel(const QString &label);
 	void setWindow(RKMDIWindow* window);
-protected slots:
+protected Q_SLOTS:
 	void prepareMenu ();
-signals:
+Q_SIGNALS:
 	void previewClosed (RKXMLGUIPreviewArea *preview);
 private:
 	QLabel *lab;
@@ -62,9 +62,9 @@ public:
 	bool needsCommand () const { return !updating && (update_pending == UpdatePending); };
 	QString previewId () const { return id; };
 	QString shortStatusLabel () const;
-signals:
+Q_SIGNALS:
 	void statusChanged ();
-private slots:
+private Q_SLOTS:
 	void previewCommandDone (RCommand *command);
 private:
 	void setStatusMessage (const QString &);

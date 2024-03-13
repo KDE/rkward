@@ -138,7 +138,7 @@ void QtScriptBackend::threadError (const QString &message) {
 
 	KMessageBox::error (0, i18n ("The QtScript-backend has reported an error:\n%1", message), i18n ("Scripting error"));
 
-	emit haveError();
+	Q_EMIT haveError();
 	destroy ();
 }
 
@@ -151,7 +151,7 @@ void QtScriptBackend::commandDone (const QString &result) {
 void QtScriptBackend::needData (const QString &identifier, const int hint) {
 	RK_TRACE (PHP);
 
-	emit requestValue(identifier, hint);
+	Q_EMIT requestValue(identifier, hint);
 }
 
 
@@ -211,7 +211,7 @@ void QtScriptBackendThread::setData (const QVariant &data) {
 QVariant QtScriptBackendThread::getValue (const QString &identifier, const int hint) {
 	RK_TRACE (PHP);
 
-	emit needData(identifier, hint);
+	Q_EMIT needData(identifier, hint);
 	QVariant ret;
 	while (true) {
 		if (killed) return QVariant ();
@@ -256,7 +256,7 @@ bool QtScriptBackendThread::scriptError(const QJSValue &val) {
 	if (!val.isError()) return false;
 
 	QString message = i18n("Script Error in %1, line %2: %3\nBacktrace:\n%4", val.property("fileName").toString(), val.property("lineNumber").toInt(), val.toString(), val.property("stack").toString());  // TODO: correct?
-	emit error(message);
+	Q_EMIT error(message);
 
 	return true;
 }
@@ -272,7 +272,7 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 
 	QFile file(_filename);
 	if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
-		emit error(i18n("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile));
+		Q_EMIT error(i18n("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile));
 		return false;
 	}
 
@@ -292,7 +292,7 @@ void QtScriptBackendThread::run () {
 	if (!includeFile (_commonfile)) return;  // TODO: import this as a module and re-use the engine in the next thread?
 	if (!includeFile (_scriptfile)) return;
 
-	emit commandDone("startup complete");
+	Q_EMIT commandDone("startup complete");
 
 	QString command;
 	while (true) {
@@ -317,7 +317,7 @@ void QtScriptBackendThread::run () {
 		// do it!
 		QJSValue result = engine.evaluate (command);
 		if (scriptError(result)) return;
-		emit commandDone(result.toString());
+		Q_EMIT commandDone(result.toString());
 
 		command.clear ();
 	}

@@ -105,15 +105,15 @@ public:
 	int endRecordGroup();
 	void useGroup(int index, const QTransform &matrix);
 	void destroyGroup(int index);
-public slots:
+public Q_SLOTS:
 	void stopInteraction ();
-signals:
+Q_SIGNALS:
 	void goingInteractive (bool interactive, const QString &prompt);
 	void activeChanged (bool);
 	void locatorDone (bool ok, double x, double y);
 	void newPageConfirmDone (bool accepted);
 	void captionChanged (const QString &caption);
-private slots:
+private Q_SLOTS:
 	void updateNow ();
 	void newPageDialogDone (int result);
 	void viewKilled ();

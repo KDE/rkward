@@ -23,7 +23,7 @@ public:
 	RKDropDown (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKDropDown ();
 	int type () override { return ComponentDropDown; };
-public slots:
+public Q_SLOTS:
 	// workaround for a qt bug (3.3.7)
 	void comboItemActivated (int id);
 protected:

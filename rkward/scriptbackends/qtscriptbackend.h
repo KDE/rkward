@@ -38,7 +38,7 @@ public:
 #ifdef JSBACKEND_PERFORMANCE_TEST
 	static void _performanceTest();
 #endif
-public slots:
+public Q_SLOTS:
 	void threadError (const QString &message);
 	void commandDone (const QString &result);
 	void needData (const QString &identifier, const int hint);
@@ -77,11 +77,11 @@ public:
 	void setData (const QVariant &data);
 	void kill () { killed = true; };
 	void goToSleep (bool sleep);
-signals:
+Q_SIGNALS:
 	void commandDone (const QString &result);
 	void needData (const QString &identifier, const int hint);
 	void error (const QString &error);
-protected slots:
+protected Q_SLOTS:
 	QVariant getValue (const QString &identifier);
 	QVariant getList (const QString &identifier);
 	QVariant getString (const QString &identifier);

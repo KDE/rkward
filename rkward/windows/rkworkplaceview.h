@@ -35,9 +35,9 @@ protected:
 	void tabRemoved (int index) override;
 	void tabInserted (int index) override;
 	bool eventFilter (QObject* obj, QEvent* event) override;
-signals:
+Q_SIGNALS:
 	void becameEmpty (RKWorkplaceViewPane* pane);
-private slots:
+private Q_SLOTS:
 /** handle context menu requests */
 	void showContextMenu (const QPoint &pos);
 /** handle close request from context menu */
@@ -74,7 +74,7 @@ public:
 
 /** @returns the currently active window */
 	RKMDIWindow *activePage () const;
-/** reimplemented form QWidget::setCaption () to emit captionChanged () when the caption changes */
+/** reimplemented form QWidget::setCaption () to Q_EMIT captionChanged () when the caption changes */
 	void setCaption (const QString &caption);
 /** initialize the window left/right actions */
 	void initActions (KActionCollection *ac);
@@ -90,14 +90,14 @@ public:
 /** For use right after workplace restoration: Purge any panes set up by restoreLayout(), but left empty */
 	void purgeEmptyPanes ();
 	void splitView(Qt::Orientation orientation) { splitView (orientation, QString()); };
-signals:
+Q_SIGNALS:
 /** a new page / window was activated
 @param widget the newly activated window */
 	void pageChanged (RKMDIWindow *widget);
 /** caption has changed
 @param new_caption the new caption */
 	void captionChanged (const QString &new_caption);
-private slots:
+private Q_SLOTS:
 /** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
 	void childCaptionChanged (RKMDIWindow *widget);
 /** Active the page left of the current tab */

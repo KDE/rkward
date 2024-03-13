@@ -37,10 +37,10 @@ public:
 	void setRKModel (RKVarEditModelBase* model);
 	int trueRows () const override;	// re-implemented from RKTableView
 	int trueColumns () const override;	// re-implemented from RKTableView
-public slots:
+public Q_SLOTS:
 /** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
 	void blankSelected ();
-signals:
+Q_SIGNALS:
 	void contextMenuRequest (int row, int col, const QPoint& pos);
 protected:
 	TwinTableMember *twin;
@@ -54,7 +54,7 @@ protected:
 	bool rw;
 friend class TwinTable;
 	void setTwin (TwinTableMember *new_twin);
-protected slots:
+protected Q_SLOTS:
 	void handleContextMenuRequest (const QPoint& pos);
 	void updateColWidth (int section, int old_w, int new_w);
 	void tableSelectionChanged (const QItemSelection& selected, const QItemSelection& deselected);

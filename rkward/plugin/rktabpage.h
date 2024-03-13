@@ -31,7 +31,7 @@ public:
 
 	int type () override { return ComponentTab; };
 
-public slots:
+public Q_SLOTS:
 /** called when visibile or enabled properties change */
 	void visibleEnabledChanged (RKComponentPropertyBase *property);
 private:

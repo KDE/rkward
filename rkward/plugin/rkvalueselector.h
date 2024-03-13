@@ -27,7 +27,7 @@ public:
 	int type () override { return ComponentValueSelector; };
 	QVariant value (const QString &modifier=QString ()) override;
 	QStringList getUiLabelPair () const override;
-private slots:
+private Q_SLOTS:
 	void selectionPropertyChanged ();
 	void listSelectionChanged ();
 	void labelsPropertyChanged ();

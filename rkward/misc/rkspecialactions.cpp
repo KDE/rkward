@@ -33,7 +33,7 @@ void RKPasteSpecialAction::doSpecialPaste() {
 	RKPasteSpecialDialog* dialog = new RKPasteSpecialDialog(pwin);
 	int res = dialog->exec();
 	if (res == QDialog::Accepted) {
-		emit pasteText(dialog->resultingText());
+		Q_EMIT pasteText(dialog->resultingText());
 	}
 	dialog->deleteLater();
 }

@@ -31,7 +31,7 @@ public:
 	QStringList getUiLabelPair () const override;
 	int type () override { return ComponentSaveObject; };
 	bool isValid () override;
-public slots:
+public Q_SLOTS:
 	void externalChange ();
 	void internalChange ();
 private:

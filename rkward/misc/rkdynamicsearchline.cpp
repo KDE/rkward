@@ -61,5 +61,5 @@ void RKDynamicSearchLine::delayedSearch () {
 	QRegExp filter (term, Qt::CaseInsensitive, allnum ? QRegExp::FixedString : QRegExp::RegExp2);
 	if (model) model->setFilterRegExp (filter);
 	removeAction (working_indicator);
-	emit searchChanged(filter);
+	Q_EMIT searchChanged(filter);
 }

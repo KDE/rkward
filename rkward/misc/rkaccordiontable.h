@@ -25,13 +25,13 @@ public:
 	void setShowAddRemoveButtons (bool show);
 
 	QSize sizeHint () const override;                                                  // reimplemented to assure a proper size for the content
-public slots:
+public Q_SLOTS:
 	void rowExpanded (QModelIndex row);
 	void rowClicked (QModelIndex row);
 	void updateWidget ();
 	void removeClicked ();
 	void activateRow (int row);
-signals:
+Q_SIGNALS:
 	void activated (int row);
 	void addRow (int where);
 	void removeRow (int which);

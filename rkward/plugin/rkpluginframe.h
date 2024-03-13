@@ -32,7 +32,7 @@ public:
 
 /** re-implemented to create "checked" property on demand. */
 	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder) override;
-private slots:
+private Q_SLOTS:
 /** called when checked property changes */
 	void propertyChanged (RKComponentPropertyBase *property);
 	void checkedChanged (bool new_state);

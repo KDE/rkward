@@ -31,7 +31,7 @@ public:
 
 	RKComponentPropertyInt *intvalue;
 	RKComponentPropertyDouble *realvalue;
-public slots:
+public Q_SLOTS:
 	void valueChangedFromUi ();
 	void valueChanged (RKComponentPropertyBase *property);
 private:

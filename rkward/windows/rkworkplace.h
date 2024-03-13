@@ -49,11 +49,11 @@ public:
 	RKMDIWindow *previousDocumentWindow ();
 	void next (QAction *prev_action, QAction *next_action);
 	void prev (QAction *prev_action, QAction *next_action);
-public slots:
+public Q_SLOTS:
 	void windowActivated (RKMDIWindow *window);
-signals:
+Q_SIGNALS:
 	void activeWindowChanged (RKMDIWindow *window);
-private slots:
+private Q_SLOTS:
 	void switcherDestroyed ();
 private:
 	void updateSwitcher ();
@@ -217,16 +217,16 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Inform the workplace that this window is handled outside the regular attached/detached mechanisms (such as preview windows). Internally, this just sets the window to detached, without giving it a DetachedWindowContainer.
 This seems good enough for now, but may be something to revisit in case of unexpected problems. */
 	void setWindowNotManaged(RKMDIWindow *window);
-signals:
+Q_SIGNALS:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const QUrl &url);
-public slots:
+public Q_SLOTS:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void removeWindow (QObject *window);
 	void saveSettings ();
 /** Proxy for QDesktopServices::setUrlHandler(), set in c'tor. Simply calls RKHTMLWindow::handleRKWardUrl(). */
 	void openRKWardUrl(const QUrl& url);
-private slots:
+private Q_SLOTS:
 	void namedWindowDestroyed (QObject *);
 	void namedWindowOwnerDestroyed (QObject *);
 private:

@@ -79,7 +79,7 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 	QToolButton *tb = new QToolButton();
 	tb->setAutoRaise(true);
 	tb->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete));
-	connect(tb, &QAbstractButton::clicked, this, [this]() { hide(); emit previewClosed(this); });
+	connect(tb, &QAbstractButton::clicked, this, [this]() { hide(); Q_EMIT previewClosed(this); });
 
 	QToolButton *menu_button = new QToolButton(this);
 	menu_button->setPopupMode(QToolButton::InstantPopup);
@@ -249,7 +249,7 @@ void RKPreviewManager::setStatusMessage (const QString& message) {
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (id);
 	if (window) window->setStatusMessage (message);
 
-	emit statusChanged();
+	Q_EMIT statusChanged();
 }
 
 QString RKPreviewManager::shortStatusLabel() const {

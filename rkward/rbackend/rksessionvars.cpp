@@ -46,7 +46,7 @@ void RKSessionVars::setInstalledPackages (const QStringList &new_list) {
 	RK_TRACE (RBACKEND);
 
 	installed_packages = new_list;
-	emit installedPackagesChanged();
+	Q_EMIT installedPackagesChanged();
 }
 
 void RKSessionVars::setRVersion (const QString& version_string) {

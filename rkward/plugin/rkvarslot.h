@@ -36,7 +36,7 @@ public:
 /** reimplemented to call updateLook (), in case enabledness changed */
 	void changed () override { updateLook (); RKComponent::changed (); };
 	void updateLook ();
-public slots:
+public Q_SLOTS:
 /** Called when the select-button is pressed */
 	void selectPressed ();
 	void removePressed ();

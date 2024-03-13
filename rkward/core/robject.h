@@ -207,10 +207,10 @@ public:
 /** try to find the object as a child object of this object.
 @param name of the object (relative to this object)
 @returns a pointer to the object (if found) or 0 if not found */
-	RObject *findObject (const QString &name) { return findObjects (parseObjectPath (name), false, "$").value (0); };
+	RObject *findObject (const QString &name) { return findObjects (parseObjectPath (name), false, QStringLiteral("$")).value (0); };
 /** Function for code completion: given the partial name, find all objects matching this partial name
 @param partial_name The partial name to look up */
-	RObject::ObjectList findObjectsMatching (const QString &partial_name) { return findObjects (parseObjectPath (partial_name), true, "$"); };
+	RObject::ObjectList findObjectsMatching (const QString &partial_name) { return findObjects (parseObjectPath (partial_name), true, QStringLiteral("$")); };
 /** Get full-qualified object names for a list of objects as returned by findObjectsMatching */
 	static QStringList getFullNames (const RObject::ObjectList &objects, int options);
 
@@ -245,9 +245,9 @@ protected:
 	QStringList classnames;
 /** or-ed combination of PseudoObjectType flags of pseudo objects available in this object */
 	qint8 contained_objects;
-	RSlotsPseudoObject *slotsPseudoObject () const { return (hasPseudoObject (SlotsObject) ? slots_objects.value (this) : 0); };
+	RSlotsPseudoObject *slotsPseudoObject () const { return (hasPseudoObject (SlotsObject) ? slots_objects.value (this) : nullptr); };
 /** returns the namespace environment for this object. Always returns 0 for objects which are not a package environment! */
-	REnvironmentObject* namespaceEnvironment () const { return (hasPseudoObject (NamespaceObject) ? namespace_objects.value (this) : 0); };
+	REnvironmentObject* namespaceEnvironment () const { return (hasPseudoObject (NamespaceObject) ? namespace_objects.value (this) : nullptr); };
 	void setSpecialChildObject (RObject *special, PseudoObjectType special_type);
 
 /** Worker function for findObject() and findObjectsMatching().

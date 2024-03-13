@@ -85,14 +85,14 @@ QMap<QString, KTextEditor::Document*> RKCommandEditorWindow::unnamed_documents;
 KTextEditor::Document* createDocument(bool with_signals) {
 	if (with_signals) {
 #if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
-		emit KTextEditor::Editor::instance()->application()->aboutToCreateDocuments();
+		Q_EMIT KTextEditor::Editor::instance()->application()->aboutToCreateDocuments();
 #endif
 	}
 	KTextEditor::Document* ret = KTextEditor::Editor::instance()->createDocument (RKWardMainWindow::getMain ());
 	if (with_signals) {
-		emit KTextEditor::Editor::instance()->application()->documentCreated(ret);
+		Q_EMIT KTextEditor::Editor::instance()->application()->documentCreated(ret);
 #if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
-		emit KTextEditor::Editor::instance()->application()->documentsCreated(QList<KTextEditor::Document*>() << ret);
+		Q_EMIT KTextEditor::Editor::instance()->application()->documentsCreated(QList<KTextEditor::Document*>() << ret);
 #endif
 	}
 	return ret;
@@ -194,7 +194,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	else RK_ASSERT (false);
 	m_view = m_doc->createView (this, RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow());
 	if (visible_to_kateplugins) {
-		emit RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow()->viewCreated (m_view);
+		Q_EMIT RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow()->viewCreated (m_view);
 	}
 	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
@@ -311,16 +311,16 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 		// if this is the only view, destroy the document. Note that doc has to be destroyed before view. konsole plugin (and possibly others) assumes it.
 		RK_ASSERT(views.at(0) == m_view);
 		if (visible_to_kateplugins) {
-			emit KTextEditor::Editor::instance()->application()->documentWillBeDeleted(m_doc);
+			Q_EMIT KTextEditor::Editor::instance()->application()->documentWillBeDeleted(m_doc);
 #if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
-			emit KTextEditor::Editor::instance()->application()->aboutToDeleteDocuments(QList<KTextEditor::Document*>() << m_doc);
+			Q_EMIT KTextEditor::Editor::instance()->application()->aboutToDeleteDocuments(QList<KTextEditor::Document*>() << m_doc);
 #endif
 		}
 		m_doc->deleteLater();
 		if (visible_to_kateplugins) {
-			emit KTextEditor::Editor::instance()->application()->documentDeleted(m_doc);
+			Q_EMIT KTextEditor::Editor::instance()->application()->documentDeleted(m_doc);
 #if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
-			emit KTextEditor::Editor::instance()->application()->documentsDeleted(QList<KTextEditor::Document*>() << m_doc);
+			Q_EMIT KTextEditor::Editor::instance()->application()->documentsDeleted(QList<KTextEditor::Document*>() << m_doc);
 #endif
 		}
 		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();

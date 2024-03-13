@@ -31,7 +31,7 @@ public:
 	virtual ~RKMultiStringSelectorV2 ();
 	void setModel (QAbstractItemModel *model, int main_column=-1);
 	void setAlwaysAddAtBottom (bool always_add_at_bottom) { add_at_bottom = always_add_at_bottom; };
-public slots:
+public Q_SLOTS:
 	void buttonClicked ();
 	void updateButtons ();
 	void anyModelDataChange ();
@@ -42,7 +42,7 @@ protected:
 	QPushButton* up_button;
 	QPushButton* down_button;
 	bool add_at_bottom;
-signals:
+Q_SIGNALS:
 	void insertNewStrings (int above_row);
 	void swapRows (int rowa, int rowb);
 /** emitted whenever there is a change in the data selection */
@@ -65,10 +65,10 @@ public:
 	void setValues (const QStringList& values);
 private:
 	QStringListModel *model;
-private slots:
+private Q_SLOTS:
 	void insertNewStringsImpl (int above_row);
 	void swapRowsImpl (int rowa, int rowb);
-signals:
+Q_SIGNALS:
 /** This signal is triggered, when the "Add"-button is pressed. Connect to this to your custom slot, and add strings to the (empty) string_list. If you don't touch the string_list or set it to empty, nothing will be added to the list. */
 	void getNewStrings (QStringList *string_list);
 };

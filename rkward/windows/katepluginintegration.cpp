@@ -116,10 +116,10 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 #endif
 		if (plugin) {
 			known_plugins[identifier].plugin = plugin;
-			emit KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
+			Q_EMIT KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
 			QObject* created = mainWindow()->createPluginView(plugin);
 			if (created) {
-				emit mainWindow()->main->pluginViewCreated(identifier, created);
+				Q_EMIT mainWindow()->main->pluginViewCreated(identifier, created);
 				KTextEditor::SessionConfigInterface *interface = qobject_cast<KTextEditor::SessionConfigInterface *>(created);
 				if (interface) {
 					// NOTE: Some plugins (noteably the Search in files plugin) will misbehave, unless readSessionConfig has been called!
@@ -185,10 +185,10 @@ void KatePluginIntegrationApp::unloadPlugin(const QString &identifier) {
 			KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(identifier));
 			interface->writeSessionConfig(group);
 		}
-		emit mainWindow()->main->pluginViewDeleted(identifier, view);
+		Q_EMIT mainWindow()->main->pluginViewDeleted(identifier, view);
 		delete view;
 	}
-	emit app->pluginDeleted(identifier, info.plugin);
+	Q_EMIT app->pluginDeleted(identifier, info.plugin);
 	delete info.plugin;
 	info.plugin = 0;
 }
@@ -358,12 +358,12 @@ public:
 
 	void showEvent(QShowEvent *e) override {
 		RKMDIWindow::showEvent(e);
-		emit toolVisibleChanged(true);
+		Q_EMIT toolVisibleChanged(true);
 	}
 
 	void hideEvent(QHideEvent *e) override {
 		RKMDIWindow::hideEvent(e);
-		emit toolVisibleChanged(false);
+		Q_EMIT toolVisibleChanged(false);
 	}
 
 /** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this override
@@ -378,7 +378,7 @@ public:
 		}
 		RKMDIWindow::childEvent(ev);
 	}
-signals:
+Q_SIGNALS:
 	void toolVisibleChanged(bool);
 };
 
@@ -474,7 +474,7 @@ void KatePluginIntegrationWindow::activeWindowChanged(RKMDIWindow* window) {
 	RK_TRACE (APP);
 
 	if (window->isType(RKMDIWindow::CommandEditorWindow)) {
-		emit main->viewChanged(static_cast<RKCommandEditorWindow *>(window)->getView());
+		Q_EMIT main->viewChanged(static_cast<RKCommandEditorWindow *>(window)->getView());
 	}
 }
 

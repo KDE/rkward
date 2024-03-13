@@ -32,7 +32,7 @@ public:
 	/** Simple convenience function similar to QIODevice::waitForReadyRead(), but waiting for a full line to be available.
 	    In particular on Windows, we often receive _less_ than a full line per chunk. */
 	static QString waitReadLine (QIODevice *con, int msecs);
-private slots:
+private Q_SLOTS:
 	void connectAndEnterLoop ();
 	void backendExit (int exitcode);
 private:

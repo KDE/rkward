@@ -75,7 +75,7 @@ public:
 		setText (i18n ("&Function reference"));
 		connect (this, &QAction::triggered, this, &RKSearchRHelpAction::doSearch);
 	};
-public slots:
+public Q_SLOTS:
 	void doSearch () {
 		RK_TRACE (MISC);
 		QString symbol, package;
@@ -117,7 +117,7 @@ public:
 	QAction *action () {
 		return menu->menuAction ();
 	}
-public slots:
+public Q_SLOTS:
 	void init () {
 		RK_TRACE (MISC);
 		QString symbol, package;

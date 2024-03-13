@@ -38,10 +38,10 @@ public:
 		EditorReject,
 		EditorExit
 	};
-signals:
+Q_SIGNALS:
 	// much like QAbstractItemDelegate::closeEditor(), but with our own flexible EndEditHint
 	void doCloseEditor (QWidget* editor, RKItemDelegate::EditorDoneReason);
-public slots:
+public Q_SLOTS:
 	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason);
 private:
 	RKVarEditModel* datamodel;
@@ -71,12 +71,12 @@ public:
 	QItemSelectionRange getSelectionBoundaries () const;
 	int trailing_rows;
 	int trailing_columns;
-signals:
+Q_SIGNALS:
 	void blankSelectionRequest ();
 protected:
-/** will emit blankSelectionRequest() on DEL and BACKSPACE. Also scrolls to current index on key presses. */
+/** will Q_EMIT blankSelectionRequest() on DEL and BACKSPACE. Also scrolls to current index on key presses. */
 	void keyPressEvent (QKeyEvent *e) override;
-private slots:
+private Q_SLOTS:
 	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason);
 };
 
