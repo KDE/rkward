@@ -11,7 +11,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QRect>
 #include <QString>
 
-class QStringList;
 class QDomNode;
 class KXMLGUIClient;
 class QWidget;

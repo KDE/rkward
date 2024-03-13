@@ -253,7 +253,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (!options_further.get().isEmpty ()) list.append (options_further.get() + '\n');
 	if (!options_addpaths.get().isEmpty ()) {
 		QString command = "rk.adjust.system.path (add=c(";
-		foreach (const QString &p, options_addpaths.get()) {
+		for (const QString &p : options_addpaths.get()) {
 			command.append (RObject::rQuote (p));
 		}
 		list.append (command + "))\n");
@@ -395,7 +395,7 @@ QString RKSettingsModuleRPackages::userLibraryLocation () {
 }
 
 QStringList RKSettingsModuleRPackages::libraryLocations () {
-	return (QStringList (userLibraryLocation ()) + expandLibLocs (liblocs + defaultliblocs));
+	return (QStringList (userLibraryLocation ()) + expandLibLocs (liblocs.get() + defaultliblocs));
 }
 
 QStringList RKSettingsModuleRPackages::addUserLibLocTo (const QStringList& liblocs) {

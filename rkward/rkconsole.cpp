@@ -381,7 +381,7 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 		}
 	} else if (e->type () == QEvent::MouseButtonRelease){
 		QMouseEvent *m = (QMouseEvent *)e;
-		if (m->button() == Qt::MidButton) {
+		if (m->button() == Qt::MiddleButton) {
 			QClipboard *cb = QApplication::clipboard ();
 			submitBatch (cb->text (QClipboard::Selection));
 			return (true);

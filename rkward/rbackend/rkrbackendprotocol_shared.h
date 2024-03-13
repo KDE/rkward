@@ -54,13 +54,13 @@ public:
 
 	RCommandProxy *takeCommand () {
 		RCommandProxy* ret = command;
-		command = 0;
+		command = nullptr;
 		return ret;
 	}
 
 	ROutputList *takeOutput () {
 		ROutputList* ret = output;
-		output = 0;
+		output = nullptr;
 		return ret;
 	}
 

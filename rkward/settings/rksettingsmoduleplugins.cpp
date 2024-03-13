@@ -370,7 +370,7 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, AddMo
 	RK_TRACE (SETTINGS);
 
 	QStringList added;
-	foreach (const QString &map, maps) {
+	for (const QString &map : maps) {
 		if (map.isEmpty ()) continue;
 		if (known_plugin_maps.addMap(map, add_mode)) {
 			added.append(map);
@@ -400,12 +400,14 @@ QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &bas
 	RK_TRACE (SETTINGS);
 
 	QDir dir (basedir);
-	QStringList maps = dir.entryList (QDir::Files).filter (QRegExp (".*\\.pluginmap$"));
+	const QStringList maps = dir.entryList (QDir::Files).filter (QRegularExpression (".*\\.pluginmap$"));
 	QStringList ret;
-	foreach (const QString &map, maps) ret.append (dir.absoluteFilePath (map));
+	for (const QString &map : maps) {
+		ret.append (dir.absoluteFilePath (map));
+	}
 
 	QStringList subdirs = dir.entryList (QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-	foreach (const QString& subdir, subdirs) {
+	for (const QString& subdir : subdirs) {
 		ret.append (findPluginMapsRecursive (dir.absoluteFilePath (subdir)));
 	}
 
@@ -418,7 +420,7 @@ RKSettingsModulePluginsModel::RKSettingsModulePluginsModel (QObject* parent) : Q
 
 RKSettingsModulePluginsModel::~RKSettingsModulePluginsModel() {
 	RK_TRACE (SETTINGS);
-	foreach (const PluginMapMetaInfo &inf, plugin_map_dynamic_info) {
+	for (const PluginMapMetaInfo &inf : std::as_const(plugin_map_dynamic_info)) {
 		delete (inf.about);
 	}
 }

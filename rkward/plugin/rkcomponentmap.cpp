@@ -330,12 +330,12 @@ void RKComponentGUIXML::clearOverrides () {
 ////////////////////////////// Bhttp://apps.sourceforge.net/mediawiki/rkward/nfs/project/r/rk/rkward/6/6d/RKWardApplicationDetached.pngEGIN RKComponentMap /////////////////////////////////////
 
 // static members
-RKComponentMap *RKComponentMap::component_map = 0;
+RKComponentMap *RKComponentMap::component_map = nullptr;
 
 void RKComponentMap::initialize () {
 	RK_TRACE (PLUGIN);
 
-	RK_ASSERT (component_map == 0);
+	RK_ASSERT (component_map == nullptr);
 	component_map = new RKComponentMap ();
 }
 
@@ -388,7 +388,7 @@ RKComponentGUIXML *RKComponentMap::getContext (const QString &id) {
 	if (context) return context;
 
 	RK_DEBUG (PLUGIN, DL_WARNING, "no such context %s", id.toLatin1 ().data ());
-	return (0);
+	return nullptr;
 }
 
 RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
@@ -398,7 +398,7 @@ RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
 	if (handle) return handle;
 
 	RK_DEBUG (PLUGIN, DL_WARNING, "no such component %s", id.toLatin1 ().data ());
-	return (0);
+	return nullptr;
 }
 
 RKComponentHandle* RKComponentMap::getComponentHandleLocal (const QString &id) {
@@ -466,7 +466,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 		return false;
 	}
 
-	RKStandardComponent *component = handle->invoke (0, 0);
+	RKStandardComponent *component = handle->invoke (nullptr, nullptr);
 	RK_ASSERT (component);
 
 	RKComponent::PropertyValueMap state;
@@ -542,7 +542,8 @@ void RKComponentMap::finalizeAll () {
 	finalize ();
 	setXMLGUIBuildDocument (gui_xml);
 	actionCollection ()->readSettings ();
-	foreach (RKComponentGUIXML *ctx, getMap()->contexts) {
+	const auto contexts = getMap()->contexts;
+	for (RKComponentGUIXML *ctx : contexts) {
 		ctx->finalize ();
 	}
 }
@@ -666,7 +667,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		}
 	}
 
-	foreach (const QString &id, depfailed_local_components) {
+	for (const QString &id : std::as_const(depfailed_local_components)) {
 		if (local_components.contains (id)) continue;
 		ret.addAndPrintError (DL_ERROR, i18n ("Component '%1' is not available in a version compatible with this version of RKWard", id));
 	}

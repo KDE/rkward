@@ -16,7 +16,7 @@ namespace RKErrorDialog {
 /** Displays an error message with a button "Report bug" */
 	void reportableErrorMessage (QWidget *parent_widget, const QString &user_message, const QString &details, const QString &caption, const QString &message_code);
 /** Open "Report bug" dialog */
-	void reportBug (QWidget *parent_widget = 0, const QString &message_info=QString ());
+	void reportBug (QWidget *parent_widget = nullptr, const QString &message_info=QString ());
 };
 
 #endif

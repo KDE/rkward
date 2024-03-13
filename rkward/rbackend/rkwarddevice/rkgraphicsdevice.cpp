@@ -10,6 +10,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QDialog>
+#include <QMatrix4x4>
+#include <QFontMetricsF>
 
 #include <KLocalizedString>
 #include <sys/stat.h>
@@ -36,7 +38,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	interaction_opcode = -1;
-	dialog = 0;
+	dialog = nullptr;
 	id = 0;
 	recording_path = false;
 	current_mask = 0;
@@ -471,7 +473,7 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 		QPainterPath sub;
 		QSizeF size = strSize(text, font);
 		sub.addText(-(hadj * size.width()), 0, font, text);
-		QMatrix trans;
+		QMatrix4x4 trans;
 		trans.translate(x, y);
 		trans.rotate(-rot);
 		recorded_path.addPath(trans.map(sub));
@@ -622,7 +624,7 @@ void RKGraphicsDevice::confirmNewPage () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (interaction_opcode < 0);
-	RK_ASSERT (dialog == 0);
+	RK_ASSERT (dialog == nullptr);
 	interaction_opcode = RKDNewPageConfirm;
 
 	QString msg = i18n ("<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>");
@@ -687,7 +689,7 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 		if (event->type () == QEvent::MouseButtonRelease) {
 			QMouseEvent *me = static_cast<QMouseEvent*> (event);
 			if (me->button () == Qt::LeftButton) {
-				Q_EMIT locatorDone(true, me->x(), me->y());
+				Q_EMIT locatorDone(true, me->position().x(), me->position().y());
 				interaction_opcode = -1;
 			}
 			stopInteraction ();
@@ -699,11 +701,11 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 			StoredEvent sev;
 
 			sev.event_code = event->type () == QEvent::MouseButtonPress ? RKDMouseDown : (event->type () == QEvent::MouseButtonRelease ? RKDMouseUp : RKDMouseMove);
-			sev.x = me->x ();
-			sev.y = me->y ();
+			sev.x = me->position().x ();
+			sev.y = me->position().y ();
 			sev.buttons = 0;
 			if (me->buttons () & Qt::LeftButton) sev.buttons |= RKDMouseLeftButton;
-			if (me->buttons () & Qt::MidButton) sev.buttons |= RKDMouseMiddleButton;
+			if (me->buttons () & Qt::MiddleButton) sev.buttons |= RKDMouseMiddleButton;
 			if (me->buttons () & Qt::RightButton) sev.buttons |= RKDMouseRightButton;
 
 			// Mouse move event may be generated much faster than R can handle them. We simply lump them together
@@ -768,7 +770,7 @@ void RKGraphicsDevice::stopInteraction () {
 
 	if (dialog) {
 		dialog->deleteLater ();
-		dialog = 0;
+		dialog = nullptr;
 	}
 	if (view) {	// might already be destroyed
 		view->setCursor (Qt::ArrowCursor);

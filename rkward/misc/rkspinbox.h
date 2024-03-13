@@ -22,7 +22,7 @@ class RKSpinBox : public QSpinBox {
 	Q_OBJECT
 public:
 /** constructor. Use on of setIntMode or setRealMode to initialize the Spinbox! */
-	explicit RKSpinBox (QWidget *parent = 0);
+	explicit RKSpinBox (QWidget *parent = nullptr);
 /** dtor */
 	~RKSpinBox ();
 

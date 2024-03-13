@@ -316,7 +316,7 @@ void RObject::fetchMoreIfNeeded (int levels) {
 	if (levels <= 0) return;
 	if (!isContainer ()) return;
 	const RObjectMap children = static_cast<RContainerObject*> (this)->childmap;
-	foreach (RObject* child, children) {
+	for (RObject* child : children) {
 		child->fetchMoreIfNeeded (levels - 1);
 	}
 }

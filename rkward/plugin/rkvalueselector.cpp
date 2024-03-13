@@ -155,7 +155,7 @@ void RKValueSelector::selectionPropertyChanged () {
 	}
 
 	list_view->selectionModel ()->clearSelection ();
-	foreach (const int row, selected_rows) {
+	for (const int row : std::as_const(selected_rows)) {
 		list_view->selectionModel ()->select (model->index (row), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 	}
 	updating = false;

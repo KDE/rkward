@@ -104,7 +104,7 @@ public:
 	RKConfigGroup(const char *name, std::initializer_list<RKConfigBase*> values) : RKConfigBase(name),
 		values(values) {};
 	template<typename T> RKConfigGroup(const char *name, size_t count, RKConfigValue<T>* _values) : RKConfigBase(name),
-		values(count) { for (size_t i = 0; i < count; ++i) values[i] = (_values + i); };
+		values(count) { for (size_t i = 0; i < count; ++i) values[i] = (_values + i); }
 	~RKConfigGroup() {};
 	void loadConfig(KConfigGroup &cg) override {
 		KConfigGroup lcg = cg;
