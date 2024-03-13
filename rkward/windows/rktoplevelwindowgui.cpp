@@ -127,7 +127,8 @@ void RKTopLevelWindowGUI::initToolWindowActions () {
 		ref = ref.nextSiblingElement (action_tag);
 	}
 	QAction *action;
-	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
+	const auto windows = RKToolWindowList::registeredToolWindows ();
+	for (const RKToolWindowList::ToolWindowRepresentation& rep : windows) {
 		QString id = QLatin1String ("window_show_") + rep.id;
 		action = actionCollection ()->addAction (id, this, SLOT (toggleToolView()));
 		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));
@@ -147,7 +148,8 @@ void RKTopLevelWindowGUI::configureShortcuts () {
 	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the keyboard shortcuts only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure keyboard shortcuts e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), "configure_shortcuts_kparts");
 
 	KShortcutsDialog dlg (KShortcutsEditor::AllActions, KShortcutsEditor::LetterShortcutsAllowed, qobject_cast<QWidget*> (parent()));
-	foreach (KXMLGUIClient *client, factory ()->clients ()) {
+	const auto clients = factory ()->clients ();
+	for (KXMLGUIClient *client : clients) {
 		if (client && !client->xmlFile ().isEmpty ()) dlg.addCollection (client->actionCollection());
 	}
 	dlg.addCollection (RKComponentMap::getMap ()->actionCollection (), i18n ("RKWard Plugins"));

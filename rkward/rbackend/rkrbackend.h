@@ -12,15 +12,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QMap>
 #include <QVariant>
-#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
-#	include <QRecursiveMutex>
-#else
-#	include <QMutex>
-#endif
+#include <QRecursiveMutex>
 #include <QStringList>
+#include <QStringEncoder>
+#include <QStringDecoder>
 #include <QEvent>
-#include <QTextEncoder>
-#include <QTextDecoder>
 
 #include "rcommand.h"
 #include "rcommandstack.h"
@@ -134,13 +130,13 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	bool isKilled () { return (killed != NotKilled); };
 
 	static QString toUtf8 (const char *local_coded) {
-		return this_pointer->current_locale_decoder->toUnicode (local_coded);
+		return this_pointer->current_locale_decoder(local_coded);
 	}
 	static QByteArray fromUtf8 (const QString &uni_coded) {
-		return this_pointer->current_locale_encoder->fromUnicode (uni_coded);
+		return this_pointer->current_locale_encoder(uni_coded);
 	}
-	QTextEncoder *current_locale_encoder;
-	QTextDecoder *current_locale_decoder;
+	QStringEncoder current_locale_encoder;
+	QStringDecoder current_locale_decoder;
 
 	struct RKReplStatus {
 		QByteArray user_command_buffer;

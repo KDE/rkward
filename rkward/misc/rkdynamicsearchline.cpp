@@ -58,8 +58,8 @@ void RKDynamicSearchLine::delayedSearch () {
 		}
 	}
 
-	QRegExp filter (term, Qt::CaseInsensitive, allnum ? QRegExp::FixedString : QRegExp::RegExp2);
-	if (model) model->setFilterRegExp (filter);
+	QRegularExpression filter (allnum ? QRegularExpression::escape(term) : term, QRegularExpression::CaseInsensitiveOption);
+	if (model) model->setFilterRegularExpression (filter);
 	removeAction (working_indicator);
 	Q_EMIT searchChanged(filter);
 }

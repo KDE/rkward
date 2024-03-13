@@ -19,15 +19,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #endif
 
 // statics
-RKRBackend *RKRBackend::this_pointer = 0;
+RKRBackend *RKRBackend::this_pointer = nullptr;
 RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 0, RKRBackend::RKReplStatus::NoUserCommand, 0, RKRBackend::RKReplStatus::NotInBrowserContext, false };
-void* RKRBackend::default_global_context = 0;
+void* RKRBackend::default_global_context = nullptr;
 
 #include <qstring.h>
 #include <QStringList>
 #include <QThread>
 #include <QDir>
-#include <qtextcodec.h>
 
 #include "../core/robject.h"
 #include "../version.h"
@@ -140,7 +139,7 @@ void RKRBackend::interruptCommand (int command_id) {
 		}
 	} else {
 		// if the command to cancel is *not* the topmost command, then do not interrupt, yet.
-		foreach (RCommandProxy *candidate, all_current_commands) {
+		for (RCommandProxy *candidate : std::as_const(all_current_commands)) {
 			if (candidate->id == command_id) {
 				if (!current_commands_to_cancel.contains (candidate)) {
 					RK_DEBUG (RBACKEND, DL_DEBUG, "scheduling delayed interrupt for command id %d", command_id);
@@ -918,7 +917,7 @@ void doError (const QString &callstring) {
 			RKRBackend::repl_status.interrupted = false;
 			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {	// was interrupted only to step out of the repl iteration
 				QMutexLocker lock (&(RKRBackend::this_pointer->all_current_commands_mutex));
-				foreach (RCommandProxy *command, RKRBackend::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
+				for (RCommandProxy *command : std::as_const(RKRBackend::this_pointer->all_current_commands)) command->status |= RCommand::Canceled;
 				RK_DEBUG (RBACKEND, DL_DEBUG, "interrupted");
 			}
 		}
@@ -1008,15 +1007,9 @@ SEXP doUpdateLocale () {
 	RK_TRACE (RBACKEND);
 
 	RK_DEBUG (RBACKEND, DL_WARNING, "Changing locale");
-	if (RKRBackend::this_pointer->current_locale_encoder) {
-		delete (RKRBackend::this_pointer->current_locale_encoder);
-		delete (RKRBackend::this_pointer->current_locale_decoder);
-		QTextCodec::setCodecForLocale (0);
-	}
-	RK_ASSERT (QTextCodec::codecForLocale ());
-	RKRBackend::this_pointer->current_locale_encoder = QTextCodec::codecForLocale ()->makeEncoder (QTextCodec::DefaultConversion);  // NOTE: shall pass non-representable characters unmodified, rather than stripping them.
-	RKRBackend::this_pointer->current_locale_decoder = QTextCodec::codecForLocale ()->makeDecoder (QTextCodec::DefaultConversion);
-	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", QTextCodec::codecForLocale ()->name ().data ());
+	RKRBackend::this_pointer->current_locale_encoder = QStringEncoder(QStringEncoder::System);  // NOTE: shall pass non-representable characters unmodified, rather than stripping them.
+	RKRBackend::this_pointer->current_locale_decoder = QStringDecoder(QStringEncoder::System);
+	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", RKRBackend::this_pointer->current_locale_decoder.name());
 
 	return R_NilValue;
 }
@@ -1548,7 +1541,7 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 
 		// This method may look a bit over-complex, but remember that repl_status.user_command_successful_up_to works on an *encoded* buffer
 		QByteArray remainder_encoded = repl_status.user_command_buffer.mid (repl_status.user_command_successful_up_to);
-		QString remainder = RKRBackend::toUtf8 (remainder_encoded);
+		QString remainder = current_locale_decoder(remainder_encoded);
 		current_command->has_been_run_up_to = current_command->command.length () - remainder.length ();
 	}
 

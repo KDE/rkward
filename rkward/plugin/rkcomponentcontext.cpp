@@ -55,7 +55,7 @@ void RKContextHandler::componentActionActivated () {
 	RK_TRACE (PLUGIN);
 
 	// find handle that triggered action
-	RKComponentHandle *handle = 0;
+	RKComponentHandle *handle = nullptr;
 	const QAction *action = dynamic_cast<const QAction *> (sender ());
 	if (action_map.contains (action)) handle = action_map[action];
 	if (!handle) {
@@ -71,10 +71,10 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 	RK_ASSERT (handle);
 
 	// create component
-	RKComponent *component = handle->invoke (0, 0);
+	RKComponent *component = handle->invoke (nullptr, nullptr);
 
 	// set context values
-	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+	for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (it.key () != "#noid#") {
 			QString id = it.key ();
 			QString remainder;

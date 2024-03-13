@@ -282,9 +282,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 		}
 	}
 
-	smart_iface = qobject_cast<KTextEditor::MovingInterface*> (m_doc);
 	initBlocks ();
-	RK_ASSERT (smart_iface);
 
 	connect (&autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
 	connect (&preview_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doRenderPreview);
@@ -348,7 +346,7 @@ QAction *findAction (KTextEditor::View* view, const QString &actionName) {
 	QList<KActionCollection*> acs = view->findChildren<KActionCollection*>();
 	acs.append (view->actionCollection ());
 
-	foreach (KActionCollection* ac, acs) {
+	for (KActionCollection* ac : std::as_const(acs)) {
 		QAction* found = ac->action (actionName);
 		if (found) return found;
 	}
@@ -436,7 +434,6 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 
 void RKCommandEditorWindow::initBlocks () {
 	RK_TRACE (COMMANDEDITOR);
-	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT (block_records.isEmpty ());
 
 	KActionCollection* ac = getPart ()->actionCollection ();
@@ -1045,13 +1042,12 @@ void RKCommandEditorWindow::clearUnusedBlocks () {
 
 void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range) {
 	RK_TRACE (COMMANDEDITOR);
-	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	clearUnusedBlocks ();
 	removeBlock (index);
 
-	KTextEditor::MovingRange* srange = smart_iface->newMovingRange (range);
+	KTextEditor::MovingRange* srange = doc->newMovingRange (range);
 	srange->setInsertBehaviors (KTextEditor::MovingRange::ExpandRight);
 
 	QString actiontext = i18n ("%1 (Active)", index + 1);
@@ -1067,7 +1063,6 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 
 void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
 	RK_TRACE (COMMANDEDITOR);
-	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	if (!was_deleted) {
@@ -1196,7 +1191,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 	for (int i = 0; i < doc->lines (); ++i)
 	{
 		const QString &line = doc->line(i);
-		QList<KTextEditor::AttributeBlock> attribs = view->lineAttributes(i);
+		const QList<KTextEditor::AttributeBlock> attribs = view->lineAttributes(i);
 		int lineStart = 0;
 
 		if (mode == RInteractiveSession) {
@@ -1220,7 +1215,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 
 		int handledUntil = lineStart;
 		int remainingChars = line.length();
-		foreach ( const KTextEditor::AttributeBlock& block, attribs ) {
+		for ( const KTextEditor::AttributeBlock& block : attribs ) {
 			if ((block.start + block.length) <= handledUntil) continue;
 			int start = qMax(block.start, lineStart);
 			if ( start > handledUntil ) {

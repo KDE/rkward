@@ -313,7 +313,7 @@ void RKStandardComponent::discard () {
 	wizard = 0;
 
 	// clear all properties. Not the code property, as the script backend relies on it
-	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+	for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (it.value () != code) {
 			if (it.value ()->isProperty ()) {
 				static_cast<RKComponentPropertyBase *> (it.value ())->deleteLater ();
@@ -571,7 +571,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 	XMLChildList::const_iterator it;
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		bool add_to_layout = true;
-		RKComponent *widget = 0;
+		RKComponent *widget = nullptr;
 		QDomElement e = *it;		// shorthand
 		QString id = xml.getStringAttribute (e, "id", QString (), DL_INFO);
 
@@ -670,7 +670,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);
 			if (handle) {
 				if (xml.getBoolAttribute (e, "as_button", false, DL_INFO)) {
-					RKStandardComponent* swidget = handle->invoke (component (), 0);
+					RKStandardComponent* swidget = handle->invoke (component (), nullptr);
 					widget = swidget;
 					QString dummy = xml.i18nStringAttribute (e, "label", i18n ("Options"), DL_WARNING);
 					swidget->setCaption (dummy);

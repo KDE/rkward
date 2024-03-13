@@ -178,8 +178,8 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 	QList<KActionCollection*> acs = view->findChildren<KActionCollection*>();
 	acs.append (view->actionCollection ());
 
-	QAction* found = 0;
-	foreach (KActionCollection* ac, acs) {
+	QAction* found = nullptr;
+	for (KActionCollection* ac : std::as_const(acs)) {
 		found = ac->action (actionName);
 		if (found) break;
 	}
@@ -761,8 +761,8 @@ QString RKConsole::cleanSelection (const QString &origin) {
 
 	QString ret;
 	ret.reserve (origin.length ());
-	QStringList lines = origin.split ('\n');
-	foreach (const QString& line, lines) {
+	cosnt QStringList lines = origin.split ('\n');
+	for (const QString& line : lines) {
 		if (line.startsWith(nprefix)) {
 			ret.append(line.midRef(nprefix.length()));
 		} else if (line.startsWith(iprefix)) {
