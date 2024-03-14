@@ -2,10 +2,10 @@
     "id": "org.kde.rkward",
     "branch": "master",
     "runtime": "org.kde.Platform",
-    "runtime-version": "5.15-22.08",
+    "runtime-version": "6.6",
     "sdk": "org.kde.Sdk",
     "base": "io.qt.qtwebengine.BaseApp",
-    "base-version": "5.15-22.08",
+    "base-version": "6.6",
     "command": "rkward",
     "tags": ["nightly"],
     "desktop-file-name-suffix": " (Nightly)",
@@ -39,7 +39,7 @@
         {
             "name": "kate",
             "buildsystem": "cmake-ninja",
-            "sources": [ { "type": "git", "url": "https://invent.kde.org/utilities/kate.git", "branch": "release/23.08" } ]
+            "sources": [ { "type": "git", "url": "https://invent.kde.org/utilities/kate.git", "branch": "master" } ]
         },
         {
             "buildsystem": "cmake",
