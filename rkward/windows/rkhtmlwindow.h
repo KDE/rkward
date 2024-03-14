@@ -9,15 +9,18 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKHTMLWINDOW_H
 
 #include <QUrl>
-#include <kparts/part.h>
-#include <kio/jobclasses.h>
+#include <KParts/Part>
 
 #include <QDomElement>
 #include <QNetworkRequest>
 
 #include "../windows/rkmdiwindow.h"
 
+namespace KIO {
+class Job;
+}
 class KActionCollection;
+class KJob;
 class KRecentFilesAction;
 class QAction;
 class RKComponentHandle;

@@ -30,6 +30,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget () {
 	RK_TRACE (APP);
 
+	setDocumentMode(true);
 	workplace_view = parent;
 
 	setTabsClosable (true);

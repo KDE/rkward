@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KMessageBox>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
-#include <kio/job.h>
+#include <KIO/StoredTransferJob>
 #include <kservice.h>
 #include <kcodecaction.h>
 #include <KColorScheme>
@@ -616,11 +616,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		QString host = url.host ();
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
-#if KIO_VERSION < QT_VERSION_CHECK(5,78,0)
-			connect (job, static_cast<void (KIO::TransferJob::*)(KIO::Job*, const QString&)>(&KIO::TransferJob::mimetype), this, &RKHTMLWindow::mimeTypeDetermined);
-#else
 			connect (job, &KIO::TransferJob::mimeTypeFound, this, &RKHTMLWindow::mimeTypeDetermined);
-#endif
 			// WORKAROUND. See slot.
 			connect (job, &KIO::TransferJob::result, this, &RKHTMLWindow::mimeTypeJobFail);
 			return true;
