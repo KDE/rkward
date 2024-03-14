@@ -90,11 +90,7 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append ("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING);
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
 	lines.append ("Qt version (compile time): " QT_VERSION_STR);
-#ifdef NO_QT_WEBENGINE
-	lines.append ("Using QtWebKit for HTML rendering");
-#else
 	lines.append ("Using QWebEngine for HTML rendering");
-#endif
 #if defined Q_OS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
 #elif defined Q_OS_MACOS
