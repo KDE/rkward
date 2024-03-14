@@ -330,7 +330,6 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : RKLoadLibsDialog
 	LoadUnloadWidget::parent = dialog;
 	
 	QVBoxLayout *mvbox = new QVBoxLayout (this);
-	mvbox->setContentsMargins (0, 0, 0, 0);
 	
 	QHBoxLayout *hbox = new QHBoxLayout ();
 	mvbox->addLayout (hbox);
@@ -614,8 +613,19 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : RKLoad
 	
 	QVBoxLayout *vbox = new QVBoxLayout(this);
 	vbox->setContentsMargins(0, 0, 0, 0);
+	vbox->setSpacing(0);
 	QHBoxLayout *filterbox = new QHBoxLayout();
+	filterbox->setContentsMargins(
+		style()->pixelMetric(QStyle::PM_LayoutLeftMargin),
+		style()->pixelMetric(QStyle::PM_LayoutTopMargin),
+		style()->pixelMetric(QStyle::PM_LayoutRightMargin),
+		style()->pixelMetric(QStyle::PM_LayoutBottomMargin)
+	);
+	filterbox->setSpacing(style()->pixelMetric(QStyle::PM_LayoutHorizontalSpacing));
 	vbox->addLayout(filterbox);
+	auto horizontalSeparator = new QFrame(this);
+	horizontalSeparator->setFrameShape(QFrame::HLine);
+	vbox->addWidget(horizontalSeparator);
 
 	packages_view = new QTreeView (this);
 	packages_status = new RKRPackageInstallationStatus(this, packages_view);
@@ -632,11 +642,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : RKLoad
 	packages_view->setIndentation (0);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
 	QString dummy("This is to force a sensible min width for the packages view (empty on construction)");
-#if QT_VERSION >= QT_VERSION_CHECK(5,11,0)
 	packages_view->setMinimumWidth(packages_view->fontMetrics().horizontalAdvance(dummy)*2);
-#else
-	packages_view->setMinimumWidth(packages_view->fontMetrics().width(dummy)*2);
-#endif
 	vbox->addWidget (packages_view);
 
 	QLabel *label = new QLabel (i18n ("Show only packages matching:"), this);
@@ -650,11 +656,22 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : RKLoad
 	connect (rkward_packages_only, &QCheckBox::stateChanged, this, &InstallPackagesWidget::filterChanged);
 	filterChanged ();
 
+	horizontalSeparator = new QFrame(this);
+	horizontalSeparator->setFrameShape(QFrame::HLine);
+	vbox->addWidget(horizontalSeparator);
+
 	filterbox->addWidget (label);
 	filterbox->addWidget (filter_edit);
 	filterbox->addWidget (rkward_packages_only);
 
 	auto settingsbox = new QHBoxLayout();
+	settingsbox->setContentsMargins(
+		style()->pixelMetric(QStyle::PM_LayoutLeftMargin),
+		style()->pixelMetric(QStyle::PM_LayoutTopMargin),
+		style()->pixelMetric(QStyle::PM_LayoutRightMargin),
+		style()->pixelMetric(QStyle::PM_LayoutBottomMargin)
+	);
+	settingsbox->setSpacing(style()->pixelMetric(QStyle::PM_LayoutHorizontalSpacing));
 	vbox->addLayout(settingsbox);
 	settingsbox->addWidget(new QLabel(i18n("Install packages to:")));
 	libloc_selector = new QComboBox();
@@ -1190,7 +1207,6 @@ RKPluginMapSelectionWidget::RKPluginMapSelectionWidget (RKLoadLibsDialog* dialog
 	model = 0;
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
-	vbox->setContentsMargins (0, 0, 0, 0);
 	vbox->addWidget (new QLabel (i18n ("Installed plugin groups (.pluginmap files)"), this));
 	selector = new RKMultiStringSelectorV2 (QString (), this);
 	selector->setAlwaysAddAtBottom (true);
