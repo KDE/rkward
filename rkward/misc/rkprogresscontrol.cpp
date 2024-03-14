@@ -408,13 +408,16 @@ RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool all
 	wrapper->setAutoFillBackground(true);
 	auto layout = new QVBoxLayout(wrapper);
 	layout->setContentsMargins(0,0,0,0);
+	layout->setSpacing(0);
 	message_widget = new KMessageWidget();
+	message_widget->setPosition(KMessageWidget::Position::Header);
 	message_widget->setWordWrap(true);
 	message_widget->setCloseButtonVisible(false);  // we want a button, instead, for consistency with cancel
 	if (allow_cancel) {
 		setCloseAction(i18n("Cancel"));
 	}
 	output_display = new QTextEdit();
+	output_display->setProperty("_breeze_force_frame", false);
 	layout->addWidget(message_widget);
 	layout->addWidget(output_display);
 	wrapper->resize(display_area->size());
