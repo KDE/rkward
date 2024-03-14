@@ -399,7 +399,7 @@ int main (int argc, char *argv[]) {
 	RKSessionVars::r_binary = r_exe;
 
 	if (app.isSessionRestored ()) {
-		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
+		kRestoreMainWindows<RKWardMainWindow>();	// well, whatever this is supposed to do -> TODO
 	} else {
 		new RKWardMainWindow ();
 	}

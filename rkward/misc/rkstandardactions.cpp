@@ -34,7 +34,7 @@ QAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *re
 	QAction* ret = new RKPasteSpecialAction (window->standardActionCollection ());
 	window->standardActionCollection ()->addAction ("paste_special", ret);
 	ret->connect (ret, SIGNAL (pasteText(QString)), receiver, member);
-	window->standardActionCollection ()->setDefaultShortcut (ret, Qt::ShiftModifier + Qt::ControlModifier + Qt::Key_V);
+	window->standardActionCollection ()->setDefaultShortcut (ret, Qt::ShiftModifier | Qt::ControlModifier | Qt::Key_V);
 	return ret;
 }
 
@@ -50,7 +50,10 @@ QAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *rece
 		ret->setText (i18n ("Run selection"));
 	}
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunLine));
-	window->standardActionCollection ()->setDefaultShortcuts (ret, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Return << Qt::ControlModifier + Qt::Key_Enter);
+	window->standardActionCollection ()->setDefaultShortcuts (ret, {
+		Qt::ControlModifier | Qt::Key_Return,
+		Qt::ControlModifier | Qt::Key_Enter
+	});
 
 	return ret;
 }
@@ -61,7 +64,10 @@ QAction* RKStandardActions::runAll (RKMDIWindow *window, const QObject *receiver
 	QAction* ret = window->standardActionCollection ()->addAction ("run_all", receiver, member);
 	ret->setText (i18n ("Run all"));
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunAll));
-	window->standardActionCollection ()->setDefaultShortcuts (ret, QList<QKeySequence>() << Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Return << Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Enter);
+	window->standardActionCollection ()->setDefaultShortcuts (ret, {
+		Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_Return,
+		Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_Enter
+	});
 
 	return ret;
 }

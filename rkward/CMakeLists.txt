@@ -57,7 +57,7 @@ ADD_EXECUTABLE(rkward main.cpp)
 # NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
 TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
-FILE(RELATIVE_PATH RelPathToData /${BIN_INSTALL_DIR} /${DATA_INSTALL_DIR})
+FILE(RELATIVE_PATH RelPathToData /${KDE_INSTALL_BINDIR} /${KDE_INSTALL_DATADIR})
 TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DREL_PATH_TO_DATA="${RelPathToData}")
 
 SET_TARGET_PROPERTIES(rkward PROPERTIES
@@ -81,8 +81,8 @@ ENDIF(KF5Crash_FOUND)
 
 ########### install files ###############
 
-INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward)
-INSTALL(FILES resource.ver DESTINATION ${DATA_INSTALL_DIR}/rkward)
+INSTALL(DIRECTORY plugins/ pages DESTINATION ${KDE_INSTALL_DATADIR}/rkward)
+INSTALL(FILES resource.ver DESTINATION ${KDE_INSTALL_DATADIR}/rkward)
 # This is for running directly from the build tree.
 EXECUTE_PROCESS(
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall
@@ -122,7 +122,7 @@ IF(APPLE)
     set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_BUNDLE_VERSION "${RKVERSION_NUMBER}")
     set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_COPYRIGHT "RKWard Team")
 ELSE()
-    INSTALL(TARGETS rkward DESTINATION ${BIN_INSTALL_DIR})
+    INSTALL(TARGETS rkward ${KF6_INSTALL_TARGETS_DEFAULT_ARGS})
 ENDIF()
 
 INSTALL(FILES org.kde.rkward.desktop DESTINATION ${KDE_INSTALL_APPDIR})

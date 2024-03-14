@@ -836,8 +836,8 @@ void RKHTMLWindow::flushOutput () {
 	}
 
 	// TODO: remove legacy code below, eventually
-	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."), i18n ("Flush output?"));
-	if (res==KMessageBox::Yes) {
+	int res = KMessageBox::questionTwoActions (this, i18n ("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."), i18n ("Flush output?"), KStandardGuiItem::clear(), KStandardGuiItem::cancel());
+	if (res==KMessageBox::PrimaryAction) {
 		QFile out_file (current_url.toLocalFile ());
 		RCommand *c = new RCommand ("rk.flush.output (" + RCommand::rQuote (out_file.fileName ()) + ", ask=FALSE)\n", RCommand::App);
 		connect (c->notifier (), &RCommandNotifier::commandFinished, this, &RKHTMLWindow::refresh);
@@ -892,11 +892,12 @@ void RKHTMLWindowPart::initActions () {
 	KCodecAction *encoding = new KCodecAction (QIcon::fromTheme("character-set"), i18n ("Default &Encoding"), this, true);
 	encoding->setWhatsThis(i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
 	actionCollection ()->addAction ("view_encoding", encoding);
-#if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5,78,0)
-	connect (encoding, static_cast<void (KCodecAction::*)(QTextCodec *)>(&KCodecAction::triggered), window, &RKHTMLWindow::setTextEncoding);
-#else
-	connect (encoding, &KCodecAction::codecTriggered, window, &RKHTMLWindow::setTextEncoding);
-#endif
+	connect (encoding, &KCodecAction::codecNameTriggered, window, [this](const QByteArray &name) {
+		auto encoding = QStringConverter::encodingForName(name.constData());
+		if (encoding) {
+			window->setTextEncoding(encoding.value());
+		}
+	});
 
 	print = actionCollection()->addAction(KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
 	export_page = actionCollection()->addAction("save_html", new QAction(QIcon::fromTheme("file-save"), i18n("Export Page as HTML"), this));

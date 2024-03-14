@@ -23,7 +23,8 @@ RKRBackend *RKRBackend::this_pointer = nullptr;
 RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 0, RKRBackend::RKReplStatus::NoUserCommand, 0, RKRBackend::RKReplStatus::NotInBrowserContext, false };
 void* RKRBackend::default_global_context = nullptr;
 
-#include <qstring.h>
+#include <QString>
+#include <QTextCodec>
 #include <QStringList>
 #include <QThread>
 #include <QDir>
@@ -783,7 +784,7 @@ void RBusy (int busy) {
 			}
 			if (RKRBackend::this_pointer->current_command->type & RCommand::CCCommand) {
 				QByteArray chunk = RKRBackend::repl_status.user_command_buffer.mid (RKRBackend::repl_status.user_command_parsed_up_to, RKRBackend::repl_status.user_command_transmitted_up_to - RKRBackend::repl_status.user_command_parsed_up_to);
-				RKRBackend::this_pointer->printCommand (RKRBackend::toUtf8 (chunk));
+				RKRBackend::this_pointer->printCommand (RKRBackend::toUtf8 (chunk.data()));
 			}
 			RKRBackend::repl_status.user_command_parsed_up_to = RKRBackend::repl_status.user_command_transmitted_up_to;
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning;
@@ -806,7 +807,6 @@ RKRBackend::RKRBackend() : stdout_stderr_mutex(DUMMY_MUTEX_FLAGS) {
 	RK_ASSERT (this_pointer == 0);
 	this_pointer = this;
 
-	current_locale_encoder = 0; // marks locale as not yet initialized
 	doUpdateLocale ();
 	r_running = false;
 
@@ -943,8 +943,8 @@ SEXP doSubstackCall (SEXP _call, SEXP _args) {
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
 	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(call, RKRSupport::SEXPToNestedStrings(_args));
-	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error.toLatin1()).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
@@ -955,8 +955,8 @@ SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 	R_CheckUserInterrupt ();
 
 	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
-	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error.toLatin1()).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }

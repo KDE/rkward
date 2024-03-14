@@ -13,7 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QUrl>
 #include <QTimer>
 
-#include <kparts/part.h>
+#include <KParts/Part>
 
 #include "../settings/rksettings.h"
 

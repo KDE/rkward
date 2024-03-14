@@ -225,7 +225,7 @@ QString RKPasteSpecialDialog::resultingText () {
 
 	if (dim == DimSingleString) return prepString(clip, quot);
 
-	QRegExp fieldsep;
+	QRegularExpression fieldsep;
 	if (sep == SepCustom) fieldsep.setPattern (separator_freefield->text ());
 	else if (sep == SepWhitespace) fieldsep.setPattern ("\\s+");
 	else if (sep == SepSpace) fieldsep.setPattern (" ");

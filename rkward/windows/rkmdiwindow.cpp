@@ -220,8 +220,8 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 			} else {
 				active = false;
 			}
-			if (layout()->margin () < 1) {
-				layout()->setMargin (1);
+			if (layout()->contentsMargins ().top() < 1) {
+				layout()->setContentsMargins (1, 1, 1, 1);
 			}
 			update ();
 		}

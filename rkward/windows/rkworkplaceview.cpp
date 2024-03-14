@@ -236,24 +236,30 @@ void RKWorkplaceView::initActions (KActionCollection *ac) {
 
 	action_page_left = (QAction *) ac->addAction ("left_window", this, SLOT (pageLeft()));
 	action_page_left->setText (i18n ("Window Left"));
-	ac->setDefaultShortcuts (action_page_left, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Less << Qt::ControlModifier + Qt::Key_Comma);
+	ac->setDefaultShortcuts (action_page_left, {
+		Qt::ControlModifier | Qt::Key_Less,
+		Qt::ControlModifier | Qt::Key_Comma
+	});
 
 	action_page_right = (QAction *) ac->addAction ("right_window", this, SLOT (pageRight()));
 	action_page_right->setText (i18n ("Window Right"));
-	ac->setDefaultShortcuts (action_page_right, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Greater << Qt::ControlModifier + Qt::Key_Period);
+	ac->setDefaultShortcuts (action_page_right, {
+		Qt::ControlModifier | Qt::Key_Greater,
+		Qt::ControlModifier | Qt::Key_Period
+	});
 
 	// NOTE: Icons, shortcuts, action names for split view actions as in kate
 	action_split_vert = ac->addAction (QStringLiteral ("view_split_vert"));
 	action_split_vert->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-left-right")));
 	action_split_vert->setText (i18n("Split Ve&rtical"));
-	ac->setDefaultShortcut (action_split_vert, Qt::CTRL + Qt::SHIFT + Qt::Key_L);
+	ac->setDefaultShortcut (action_split_vert, Qt::CTRL | Qt::SHIFT | Qt::Key_L);
 	connect (action_split_vert, &QAction::triggered, this, &RKWorkplaceView::splitViewVert);
 	action_split_vert->setWhatsThis (i18n ("Split the currently active view into two views, vertically."));
 
 	action_split_horiz = ac->addAction (QStringLiteral ("view_split_horiz"));
 	action_split_horiz->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-top-bottom")));
 	action_split_horiz->setText (i18n ("Split &Horizontal"));
-	ac->setDefaultShortcut (action_split_horiz, Qt::CTRL + Qt::SHIFT + Qt::Key_T);
+	ac->setDefaultShortcut (action_split_horiz, Qt::CTRL | Qt::SHIFT | Qt::Key_T);
 	connect (action_split_horiz, &QAction::triggered, this, &RKWorkplaceView::splitViewHoriz);
 	action_split_horiz->setWhatsThis (i18n ("Split the currently active view into two views, horizontally."));
 

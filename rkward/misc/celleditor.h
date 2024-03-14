@@ -13,7 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/robject.h"
 #include "rktableview.h"
 
-class QStringList;
 class QMenu;
 class QEvent;
 class QKeyEvent;

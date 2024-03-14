@@ -90,7 +90,7 @@ void RKLoadLibsDialog::queryClose() {
 		changes |= pages[i]->isChanged();
 	}
 	if (changes) {
-		do_close = (KMessageBox::questionYesNo(this, i18n("Closing will discard pending changes. Are you sure?"), i18n("Discard changes?"), KGuiItem("Discard"), KGuiItem("Do no close")) == KMessageBox::Yes);
+		do_close = (KMessageBox::questionTwoActions(this, i18n("Closing will discard pending changes. Are you sure?"), i18n("Discard changes?"), KStandardGuiItem::discard(), KGuiItem(i18nc("@action:button", "Do no close"))) == KMessageBox::PrimaryAction);
 	}
 	if (do_close) close();
 }
@@ -186,9 +186,9 @@ bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_li
 		KMessageBox::informationList (this, i18n ("Your current user permissions do not allow removing the following packages. These will be skipped."), not_writable, i18n ("Insufficient user permissions"));
 		int res = KMessageBox::No;
 #else
-		int res = KMessageBox::questionYesNoList (this, i18n ("Your current user permissions do not allow removing the following packages. Do you want to skip these packages, or do you want to proceed with administrator privileges (you will be prompted for the password)?"), not_writable, i18n ("Insufficient user permissions"), KGuiItem ("Become root"), KGuiItem ("Skip these packages"));
+		int res = KMessageBox::questionTwoActionsList (this, i18n ("Your current user permissions do not allow removing the following packages. Do you want to skip these packages, or do you want to proceed with administrator privileges (you will be prompted for the password)?"), not_writable, i18n ("Insufficient user permissions"), KGuiItem (i18nc("@action:button", "Become root")), KGuiItem (i18nc("@action:button", "Skip these packages")));
 #endif
-		if (res == KMessageBox::Yes) as_root = true;
+		if (res == KMessageBox::PrimaryAction) as_root = true;
 		else {
 			for (int i = not_writable_int.count () - 1; i >= 0; --i) {
 				packages.removeAt (not_writable_int[i]);
@@ -248,9 +248,9 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 		if (res == KMessageBox::Continue) to_libloc = altlibloc;
 #else
 		message.append (i18n ("<p>Alternatively, if you are the administrator of this machine, you can try to install the packages as root (you'll be prompted for the root password).</p>"));
-		int res = KMessageBox::warningYesNoCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)), KGuiItem (i18n ("Become root")));
-		if (res == KMessageBox::Yes) to_libloc = altlibloc;
-		if (res == KMessageBox::No) as_root = true;
+		int res = KMessageBox::warningTwoActionsCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)), KGuiItem (i18n ("Become root")));
+		if (res == KMessageBox::PrimaryAction) to_libloc = altlibloc;
+		if (res == KMessageBox::SecondaryAction) as_root = true;
 #endif
 		if (res == KMessageBox::Cancel) return false;
 	}
@@ -766,7 +766,7 @@ void InstallPackagesWidget::trySelectPackages (const QStringList &package_names)
 			}
 		}
 		if (!failed_names.isEmpty()) {
-			KMessageBox::error(0, i18n("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n("Package not available"));
+			KMessageBox::error(nullptr, i18n("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n("Package not available"));
 		}
 	}, parent->chain);
 }
@@ -1051,7 +1051,7 @@ Qt::ItemFlags RKRPackageInstallationStatus::flags (const QModelIndex &index) con
 	qint64 pos = index.internalId ();
 	Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
 	if (pos >= 0) flags |= Qt::ItemIsUserCheckable;
-	if (pos == InstalledPackages) flags |= Qt::ItemIsTristate;
+	if (pos == InstalledPackages) flags |= Qt::ItemIsUserTristate;
 	return flags;
 }
 
@@ -1170,9 +1170,9 @@ bool RKRPackageInstallationStatusSortFilterModel::filterAcceptsRow (int source_r
 	}
 // filter on Name and Title
 	QString name = sourceModel()->index(source_row, RKRPackageInstallationStatus::PackageName, source_parent).data().toString();
-	if (name.contains (filterRegExp ())) return true;
+	if (name.contains (filterRegularExpression ())) return true;
 	QString title = sourceModel()->index(source_row, RKRPackageInstallationStatus::PackageTitle, source_parent).data().toString();
-	return (title.contains (filterRegExp ()));
+	return (title.contains (filterRegularExpression ()));
 }
 
 void RKRPackageInstallationStatusSortFilterModel::setRKWardOnly (bool only) {

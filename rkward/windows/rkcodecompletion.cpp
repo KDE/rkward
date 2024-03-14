@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QIcon>
 #include <QDir>
 #include <QAction>
+#include <QTimer>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -76,36 +77,30 @@ RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCo
 	update_call = true;
 	cached_position = KTextEditor::Cursor (-1, -1);
 
-	cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
-	if (cc_iface) {
-		cc_iface->setAutomaticInvocationEnabled (false);
-		completion_model = new RKCodeCompletionModel (this);
-		file_completion_model = new RKFileCompletionModel (this);
-		callhint_model = new RKCallHintModel (this);
-		arghint_model = new RKArgumentHintModel (this);
-		cc_iface->registerCompletionModel (new RKCompletionNotifierModel (this));  // (at least) one model needs to be registered, so we will know, when completion was triggered by the user (shortcut)
-		completion_timer = new QTimer (this);
-		completion_timer->setSingleShot (true);
-		connect (completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
-		connect (view->document (), &KTextEditor::Document::textInserted, this, &RKCompletionManager::textInserted);
-		connect (view->document (), &KTextEditor::Document::textRemoved, this, &RKCompletionManager::textRemoved);
-		connect (view->document (), &KTextEditor::Document::lineWrapped, this, &RKCompletionManager::lineWrapped);
-		connect (view->document (), &KTextEditor::Document::lineUnwrapped, this, &RKCompletionManager::lineUnwrapped);
-		connect (view, &KTextEditor::View::cursorPositionChanged, this, &RKCompletionManager::cursorPositionChanged);
-		const QObjectList children = _view->children ();
-		for (QObjectList::const_iterator it = children.constBegin(); it != children.constEnd (); ++it) {
-			(*it)->installEventFilter (this);  // to handle Tab-key; installing on the view, alone, is not enough.
-		}
-
-		// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
-		//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
-		//       to a pointer to the default kate keyword completion model
-		kate_keyword_completion_model = KTextEditor::Editor::instance ()->findChild<KTextEditor::CodeCompletionModel *> ();
-		if (!kate_keyword_completion_model) kate_keyword_completion_model = view->findChild<KTextEditor::CodeCompletionModel *> (QString());
-
-	} else {
-		RK_ASSERT (false);  // Not a katepart?
+	view->setAutomaticInvocationEnabled (false);
+	completion_model = new RKCodeCompletionModel (this);
+	file_completion_model = new RKFileCompletionModel (this);
+	callhint_model = new RKCallHintModel (this);
+	arghint_model = new RKArgumentHintModel (this);
+	view->registerCompletionModel (new RKCompletionNotifierModel (this));  // (at least) one model needs to be registered, so we will know, when completion was triggered by the user (shortcut)
+	completion_timer = new QTimer (this);
+	completion_timer->setSingleShot (true);
+	connect (completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
+	connect (view->document (), &KTextEditor::Document::textInserted, this, &RKCompletionManager::textInserted);
+	connect (view->document (), &KTextEditor::Document::textRemoved, this, &RKCompletionManager::textRemoved);
+	connect (view->document (), &KTextEditor::Document::lineWrapped, this, &RKCompletionManager::lineWrapped);
+	connect (view->document (), &KTextEditor::Document::lineUnwrapped, this, &RKCompletionManager::lineUnwrapped);
+	connect (view, &KTextEditor::View::cursorPositionChanged, this, &RKCompletionManager::cursorPositionChanged);
+	const QObjectList children = _view->children ();
+	for (QObjectList::const_iterator it = children.constBegin(); it != children.constEnd (); ++it) {
+		(*it)->installEventFilter (this);  // to handle Tab-key; installing on the view, alone, is not enough.
 	}
+
+	// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
+	//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
+	//       to a pointer to the default kate keyword completion model
+	kate_keyword_completion_model = KTextEditor::Editor::instance ()->findChild<KTextEditor::CodeCompletionModel *> ();
+	if (!kate_keyword_completion_model) kate_keyword_completion_model = view->findChild<KTextEditor::CodeCompletionModel *> (QString());
 }
 
 RKCompletionManager::~RKCompletionManager () {
@@ -113,7 +108,7 @@ RKCompletionManager::~RKCompletionManager () {
 }
 
 void RKCompletionManager::tryCompletionProxy () {
-	if (cc_iface->isCompletionActive ()) {
+	if (_view->isCompletionActive ()) {
 		// Handle this in the next event cycle, as more than one event may trigger
 		completion_timer->start (0);
 	} else if (settings->autoEnabled ()) {
@@ -139,9 +134,9 @@ void RKCompletionManager::userTriggeredCompletion () {
 
 void RKCompletionManager::tryCompletion () {
 	RK_TRACE (COMMANDEDITOR);
-	if (!cc_iface) {
+	if (!_view) {
 		// NOTE: This should not be possible, because the connections  have not been set up in the constructor, in this case.
-		RK_ASSERT (cc_iface);
+		RK_ASSERT (_view);
 		return;
 	}
 	if (ignore_next_trigger) {
@@ -164,7 +159,7 @@ void RKCompletionManager::tryCompletion () {
 		if (end > cursor_pos) {
 			symbol_range = KTextEditor::Range ();   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
 		} else {
-			if (doc->defaultStyleAt (c) == KTextEditor::dsComment) symbol_range = KTextEditor::Range ();	// do not hint while in comments
+			if (doc->defaultStyleAt (c) == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range ();	// do not hint while in comments
 		}
 	}
 
@@ -210,17 +205,17 @@ void RKCompletionManager::tryCompletion () {
 }
 
 bool isCode (KTextEditor::Document* doc, int line, int column) {
-	KTextEditor::DefaultStyle style = doc->defaultStyleAt (KTextEditor::Cursor (line, column));
-	if (style == KTextEditor::dsComment) return false;
-	if (style == KTextEditor::dsString) return false;
-	if (style == KTextEditor::dsChar) return false;
+	KSyntaxHighlighting::Theme::TextStyle style = doc->defaultStyleAt (KTextEditor::Cursor (line, column));
+	if (style == KSyntaxHighlighting::Theme::TextStyle::Comment) return false;
+	if (style == KSyntaxHighlighting::Theme::TextStyle::String) return false;
+	if (style == KSyntaxHighlighting::Theme::TextStyle::Char) return false;
 	return true;
 }
 
 void RKCompletionManager::updateCallHint () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (cc_iface->isCompletionActive () && !update_call) return;
+	if (_view->isCompletionActive () && !update_call) return;
 	update_call = false;
 
 	int line = cached_position.line () + 1;
@@ -270,7 +265,7 @@ void RKCompletionManager::updateCallHint () {
 	}
 
 	// now identify the symbol and object (if any)
-	RObject *object = 0;
+	RObject *object = nullptr;
 	call_opening = KTextEditor::Cursor (-1, -1);
 	if (potential_symbol_end > 0) {
 		QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end);
@@ -289,7 +284,7 @@ void RKCompletionManager::startModel( KTextEditor::CodeCompletionModel *model, b
 	}
 	if (start) {
 		if (!started_models.contains (model)) {
-			cc_iface->startCompletion (range, model);
+			_view->startCompletion (range, model);
 			started_models.append (model);
 		}
 		auto ci = dynamic_cast<KTextEditor::CodeCompletionModelControllerInterface*>(model);
@@ -302,7 +297,7 @@ void RKCompletionManager::startModel( KTextEditor::CodeCompletionModel *model, b
 void RKCompletionManager::updateVisibility () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (user_triggered || !cc_iface->isCompletionActive()) {
+	if (user_triggered || !_view->isCompletionActive()) {
 		started_models.clear ();
 	}
 
@@ -327,7 +322,7 @@ void RKCompletionManager::modelGainedLateData(RKCompletionModelBase* model) {
 }
 
 void RKCompletionManager::textInserted (KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
-	if (cc_iface->isCompletionActive ()) {
+	if (_view->isCompletionActive ()) {
 		if (position < call_opening) update_call = true;
 		else if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
 	}
@@ -335,7 +330,7 @@ void RKCompletionManager::textInserted (KTextEditor::Document*, const KTextEdito
 }
 
 void RKCompletionManager::textRemoved (KTextEditor::Document*, const KTextEditor::Range& range, const QString& text) {
-	if (cc_iface->isCompletionActive ()) {
+	if (_view->isCompletionActive ()) {
 		if (range.start () < call_opening) update_call = true;
 		else if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
 	}
@@ -353,7 +348,7 @@ void RKCompletionManager::lineUnwrapped (KTextEditor::Document* , int ) {
 }
 
 void RKCompletionManager::cursorPositionChanged (KTextEditor::View* view, const KTextEditor::Cursor& newPosition) {
-	if (cc_iface->isCompletionActive ()) {
+	if (_view->isCompletionActive ()) {
 		if (newPosition < call_opening) update_call = true;
 		else {
 			QString text = view->document ()->text (KTextEditor::Range (newPosition, cached_position));
@@ -469,7 +464,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
 		QKeyEvent *k = static_cast<QKeyEvent *> (event);
 
-		if (!cc_iface->isCompletionActive()) {
+		if (!_view->isCompletionActive()) {
 			if (k->type () == QEvent::ShortcutOverride) return true; // retriggered as key event
 			if (settings->tabKeyInvokesCompletion() && k->key() == Qt::Key_Tab && k->modifiers() == Qt::NoModifier) {
 				userTriggeredCompletion();
@@ -482,7 +477,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 		if ((k->key() == Qt::Key_Tab) || (k->key() == Qt::Key_Return) || (k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Backtab) || (k->key() == Qt::Key_Up) || (k->key() == Qt::Key_Down)) {
 			if (onlyCallHintShown()) {
 				completion_timer->start(0);
-				cc_iface->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
+				_view->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
 							// the completion window should come back up, without delay
 				return false;
 			}
@@ -494,7 +489,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				return true;
 			}
 			bool callhint_active = started_models.contains(callhint_model);
-			cc_iface->forceCompletion();
+			_view->forceCompletion();
 			started_models.clear();  // forceCompletion(), also aborts. Keep track of that.
 // TODO: If nothing was actually modified, should return press be sent? Configurable?
 			completion_timer->stop();  // do not bring up completion right again, but do restore the call-hint, if applicable
@@ -526,7 +521,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				if (candidate_completions.size() == 1) {
 					// Ouch, how messy. We want to make sure completion stops (except for any call hints), and is not re-triggered by the insertion, itself
 					bool callhint_active = started_models.contains(callhint_model);
-					cc_iface->abortCompletion ();
+					_view->abortCompletion ();
 					started_models.clear ();
 					completion_timer->stop();
 					if (callhint_active) startModel(callhint_model, true, currentCallRange());
@@ -535,7 +530,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				QApplication::beep ();
 			}
 			return true;
-		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && cc_iface->isCompletionActive ()) {
+		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && _view->isCompletionActive ()) {
 			bool navigate = (settings->cursorNavigatesCompletions() && k->modifiers() == Qt::NoModifier) || (!settings->cursorNavigatesCompletions() && k->modifiers() == Qt::AltModifier);
 
 			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
@@ -559,7 +554,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				else RK_ASSERT (action);
 				return true;
 			} else {
-				cc_iface->abortCompletion ();
+				_view->abortCompletion ();
 				return false;
 			}
 		}

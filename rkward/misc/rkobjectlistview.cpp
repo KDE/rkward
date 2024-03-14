@@ -335,7 +335,7 @@ void RKObjectListViewSettings::resetFilters () {
 		hide_functions = hide_non_functions = false;
 		filter_on_class = filter_on_label = filter_on_name = true;
 		depth_limit = 1;
-		setFilterRegExp (QRegExp ());
+		setFilterRegularExpression (QRegularExpression{});
 	}
 	in_reset_filters = false;
 	updateSelf ();
@@ -432,13 +432,13 @@ bool RKObjectListViewSettings::acceptRow (int source_row, const QModelIndex& sou
 	if (hide_functions && object->isType (RObject::Function)) return false;
 	if (hide_non_functions && !object->isType (RObject::Function)) return false;
 
-	if (filterRegExp ().isEmpty ()) return true;
-	if (filter_on_name && object->getShortName ().contains (filterRegExp ())) return true;
-	if (filter_on_label && object->getLabel ().contains (filterRegExp ())) return true;
+	if (filterRegularExpression ().isValid ()) return true;
+	if (filter_on_name && object->getShortName ().contains (filterRegularExpression ())) return true;
+	if (filter_on_label && object->getLabel ().contains (filterRegularExpression ())) return true;
 	if (filter_on_class) {
 		QStringList cnames = object->classNames ();
 		for (int i = cnames.length () - 1; i >= 0; --i) {
-			if (cnames[i].contains (filterRegExp ())) return true;
+			if (cnames[i].contains (filterRegularExpression ())) return true;
 		}
 	}
 

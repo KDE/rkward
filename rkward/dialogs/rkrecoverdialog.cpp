@@ -7,9 +7,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkrecoverdialog.h"
 
-#include <krun.h>
 #include <KLocalizedString>
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 #include <QDir>
 #include <QFileInfo>
@@ -36,7 +35,7 @@ RKRecoverDialog::RKRecoverDialog (const QStringList &recovery_files) : QDialog (
 
 	QString text = QString ("<p><b>%1</b></p>").arg (caption);
 	text.append (i18n ("<p>It looks like RKWard has crashed, recently. We are sorry about that! However, not everything is lost, and with a bit of luck, your data has been saved in time.</p>"));
-	text.append (i18np ("<p>A workspace recovery file exists, dating from <i>%2</i>.</p>", "<p>%1 workspace recovery files exist, the most recent one of which dates from <i>%2</i>.</p>", recovery_files.count (), QFileInfo (recovery_files.first ()).lastModified ().toString (Qt::SystemLocaleShortDate)));
+	text.append (i18np ("<p>A workspace recovery file exists, dating from <i>%2</i>.</p>", "<p>%1 workspace recovery files exist, the most recent one of which dates from <i>%2</i>.</p>", recovery_files.count (),  QLocale::system().toString(QFileInfo (recovery_files.first ()).lastModified (), QLocale::ShortFormat)));
 	text.append (i18n ("<p>Do you want to open this file, now, save it for later (as <i>%1</i>), or discard it?</p>", saveFileFor (recovery_files.first ())));
 	layout->addWidget (RKCommonFunctions::wordWrappedLabel (text));
 

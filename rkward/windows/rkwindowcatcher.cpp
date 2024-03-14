@@ -20,6 +20,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <KWindowInfo>
+#include <KX11Extras>
 
 #include "../settings/rksettingsmodulegraphics.h"
 #include "../dialogs/rkerrordialog.h"
@@ -78,7 +79,7 @@ void RKWindowCatcher::start (int prev_cur_device) {
 #ifdef Q_OS_WIN
 	windows_before_add = RKWindowCatcherPrivate::toplevelWindows ();
 #else
-	windows_before_add = KWindowSystem::windows ();
+	windows_before_add = KX11Extras::windows ();
 #endif
 }
 
@@ -92,7 +93,7 @@ WId RKWindowCatcher::createdWindow () {
 	}
 #else
 	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
-	QList<WId> windows_after_add = KWindowSystem::windows ();
+	QList<WId> windows_after_add = KX11Extras::windows ();
 	WId candidate = windows_after_add.value (windows_after_add.size () - 1);
 	if (!windows_before_add.contains (windows_after_add.last ())) {
 		return candidate;
@@ -123,7 +124,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #if defined Q_OS_MACOS
 			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See https://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
 #else
-			RKErrorDialog::reportableErrorMessage (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
+			RKErrorDialog::reportableErrorMessage (nullptr, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
 #endif
 		}
 	}
@@ -376,11 +377,11 @@ void RKCaughtX11Window::commonClose(bool in_destructor) {
 		close_attempted = true;
 	} else {
 		if (in_destructor) return;
-		if (KMessageBox::questionYesNo(this, i18n("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
+		if (KMessageBox::questionTwoActions(this, i18n("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
 #if !defined Q_OS_WIN
 		+ i18n("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
 #endif
-		, status, KGuiItem(i18n("Close immediately")), KGuiItem(i18n("Keep waiting"))) == KMessageBox::Yes) forceClose();
+		, status, KGuiItem(i18n("Close immediately")), KGuiItem(i18n("Keep waiting"))) == KMessageBox::PrimaryAction) forceClose();
 	}
 }
 

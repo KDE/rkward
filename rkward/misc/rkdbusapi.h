@@ -19,7 +19,7 @@ public:
 	explicit RKDBusAPI (QObject *parent);
 	~RKDBusAPI () {};
 public Q_SLOTS:
-	Q_SCRIPTABLE void openAnyUrl (const QStringList &urls, bool warn_external=true);
+	Q_SCRIPTABLE void openAnyUrl (const QStringList &urls, const QString &token, bool warn_external=true);
 };
 
 #endif

@@ -335,11 +335,11 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 			return GenericRRequestResult::makeError(i18n("Output has been modified. Not closing it."));
 		}
 		if (discard == Ask) {
-			auto res = KMessageBox::questionYesNoCancel(RKWardMainWindow::getMain(), i18n("The output has been modified, and closing it will discard all changes. What do you want to do?"), i18n("Discard unsaved changes?"), KStandardGuiItem::discard(), KStandardGuiItem::save(), KStandardGuiItem::cancel());
+			auto res = KMessageBox::questionTwoActionsCancel(RKWardMainWindow::getMain(), i18n("The output has been modified, and closing it will discard all changes. What do you want to do?"), i18n("Discard unsaved changes?"), KStandardGuiItem::discard(), KStandardGuiItem::save(), KStandardGuiItem::cancel());
 			if (res == KMessageBox::Cancel) {
 				return GenericRRequestResult::makeError(i18n("User canceled"));
 			}
-			if (res == KMessageBox::No) {
+			if (res == KMessageBox::SecondaryAction) {
 				auto ret = save(save_filename);
 				if (ret.failed()) return ret;
 			}

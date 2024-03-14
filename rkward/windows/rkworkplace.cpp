@@ -7,13 +7,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkworkplace.h"
 
-#include <kparts/partmanager.h>
-#include <kmessagebox.h>
+#include <KParts/PartManager>
+#include <KMessageBox>
 #include <KLocalizedString>
-#include <kactioncollection.h>
-#include <krun.h>
+#include <KActionCollection>
 #include <KSharedConfig>
 #include <KMessageWidget>
+#include <KIO/OpenUrlJob>
 
 #include <QFileInfo>
 #include <QCryptographicHash>
@@ -52,17 +52,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 // static
-RKWorkplace *RKWorkplace::main_workplace = 0;
+RKWorkplace *RKWorkplace::main_workplace = nullptr;
 
 #include <QLabel> // remove ME
 
 RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
-	RK_ASSERT (main_workplace == 0);
+	RK_ASSERT (main_workplace == nullptr);
 
 	main_workplace = this;
 	QDesktopServices::setUrlHandler("rkward", this, "openRKWardUrl");
-	_workspace_config = 0;
+	_workspace_config = nullptr;
 	window_placement_override = RKMDIWindow::AnyWindowState;
 
 	// message area
@@ -124,7 +124,7 @@ RKWorkplace::~RKWorkplace () {
 	delete _workspace_config;
 //	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
 	for (int i = 0; i < windows.size (); ++i) {
-		disconnect (windows[i], 0, this, 0);
+		disconnect (windows[i], nullptr, this, nullptr);
 	}
 }
 
@@ -172,7 +172,7 @@ void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
 			_workspace_config = _new_config;
 		} else {
 			delete _workspace_config;
-			_workspace_config = 0;
+			_workspace_config = nullptr;
 		}
 		Q_EMIT workspaceUrlChanged(url);
 	}
@@ -450,11 +450,11 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype.name ()));
 	}
 
-	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.toDisplayString ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
+	if (KMessageBox::questionTwoActions (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.toDisplayString ()), i18n ("Open in default application?"), KStandardGuiItem::open(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction) {
 		return false;
 	}
-	KRun *runner = new KRun (url, topLevelWidget());		// according to KRun-documentation, KRun will self-destruct when done.
-	runner->setRunExecutables (false);
+	auto openUrlJob = new KIO::OpenUrlJob(url);
+	openUrlJob->start();
 	return false;
 }
 
@@ -642,7 +642,7 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 	if (!ed) {
 		unsigned long size = 1;
 		const auto objDims = iobj->getDimensions ();
-		for (int dim, objDims) {
+		for (int dim : objDims) {
 			size *= dim;
 		}
 		if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {

@@ -8,7 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qstringlist.h>
 #include <qdom.h>
-#include <qregexp.h>
 #include <QDir>
 #include <QStandardPaths>
 #include <QCoreApplication>
@@ -17,7 +16,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <kxmlguiclient.h>
 
-#include "../settings/rksettingsmodulegeneral.h"
 #include "../windows/rkworkplace.h"
 #include "../version.h"
 #include "../debug.h"

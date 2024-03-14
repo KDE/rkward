@@ -89,7 +89,7 @@ public Q_SLOTS:
 	void refresh ();
 	void zoomIn ();
 	void zoomOut ();
-	void setTextEncoding (QTextCodec* encoding);
+	void setTextEncoding (QStringConverter::Encoding encoding);
 	void updateState();
 private Q_SLOTS:
 	void scrollToBottom ();
