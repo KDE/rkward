@@ -7,8 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkhtmlwindow.h"
 
 #include <KLocalizedString>
-#include <kmessagebox.h>
-#include <kparts/plugin.h>
+#include <KMessageBox>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
 #include <kio/job.h>
@@ -22,8 +21,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qfileinfo.h>
 #include <qwidget.h>
 #include <qlayout.h>
-#include <qtimer.h>
-#include <qdir.h>
+#include <QTimer>
+#include <QDir>
 #include <QHBoxLayout>
 #include <QHostInfo>
 #include <QPrintDialog>
@@ -37,6 +36,18 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QMimeDatabase>
 #include <QCheckBox>
 #include <QFileDialog>
+#include <QStringEncoder>
+#include <QWebEngineUrlSchemeHandler>
+#include <QWebEngineUrlRequestJob>
+#include <QBuffer>
+#include <QWebEnginePage>
+#include <QWebEngineView>
+#include <QWebEngineSettings>
+#include <QWebEngineProfile>
+#include <QWebEngineScript>
+#include <QWebEngineScriptCollection>
+#include <QWheelEvent>
+#include <QWebEngineFindTextResult>
 
 #include "../rbackend/rkrinterface.h"
 #include "rkhelpsearchwindow.h"
@@ -66,76 +77,23 @@ QUrl restorableUrl(const QUrl &url) {
 	return QUrl(url.url().replace(RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE"));
 }
 
-#ifdef NO_QT_WEBENGINE
-#	include <QWebFrame>
-#	include <QNetworkRequest>
-#	include <kwebpage.h>
-#	include <kwebview.h>
-class RKWebPage : public KWebPage {
-#else
-#	include <QWebEnginePage>
-#	include <QWebEngineView>
-#	include <QWebEngineSettings>
-#	include <QWebEngineProfile>
-#	include <QWebEngineScript>
-#	include <QWebEngineScriptCollection>
 class RKWebPage : public QWebEnginePage {
-#endif
 	Q_OBJECT
 public:
-#ifdef NO_QT_WEBENGINE
-// NOTE: According to an earlier note at this place, KIOIntegration used to be very buggy around KF5 5.9.0. It seem to just work,
-//       at 5.44.0, and the symptoms are probably not terrible for earlier versions, so we use it here (allows us to render help:/-pages
-//       inside the help window.
-	explicit RKWebPage (RKHTMLWindow* window): KWebPage (window, KPartsIntegration | KIOIntegration) {
-#else
 	explicit RKWebPage (RKHTMLWindow* window): QWebEnginePage (window) {
-#endif
 		RK_TRACE (APP);
 		RKWebPage::window = window;
 		direct_load = false;
-#ifdef NO_QT_WEBENGINE
-		settings ()->setFontFamily (QWebSettings::StandardFont, QFontDatabase::systemFont(QFontDatabase::GeneralFont).family ());
-		settings ()->setFontFamily (QWebSettings::FixedFont, QFontDatabase::systemFont(QFontDatabase::FixedFont).family ());
-#else
 		settings ()->setFontFamily (QWebEngineSettings::StandardFont, QFontDatabase::systemFont(QFontDatabase::GeneralFont).family ());
 		settings ()->setFontFamily (QWebEngineSettings::FixedFont, QFontDatabase::systemFont(QFontDatabase::FixedFont).family ());
-#endif
 	}
 
 	void load (const QUrl& url) {
 		RK_TRACE (APP);
 		direct_load = true;
-#ifdef NO_QT_WEBENGINE
-		mainFrame ()->load (url);
-#else
 		QWebEnginePage::load (url);
-#endif
 	}
 
-#ifdef NO_QT_WEBENGINE
-	QUrl url () {
-		return mainFrame ()->url ();
-	}
-	void setHtmlWrapper(const QString &html, const QUrl &baseurl) {
-		direct_load = true;
-		mainFrame()->setHtml(html, baseurl);
-	}
-	QPointF scrollPosition () const {
-		return mainFrame ()->scrollPosition ();
-	}
-	void setScrollPosition (const QPoint &pos)  {
-		mainFrame ()->setScrollPosition (pos);
-	}
-	void setScrollPositionWhenDone(const QPoint &pos)  {
-		QMetaObject::Connection * const connection = new QMetaObject::Connection;
-		*connection = connect(this, &QWebPage::loadFinished, [this, pos, connection](){
-			QObject::disconnect(*connection);
-			delete connection;
-			setScrollPosition(pos);
-		});
-	}
-#else
 	void setHtmlWrapper(const QString &html, const QUrl &baseurl) {
 		direct_load = true;
 		setHtml(html, baseurl);
@@ -159,21 +117,12 @@ public:
 			setScrollPosition(pos);
 		});
 	}
-#endif
 
 Q_SIGNALS:
 	void pageInternalNavigation (const QUrl& url);
 protected:
-#ifdef NO_QT_WEBENGINE
-/** reimplemented to always Q_EMIT linkClicked() for pages that need special handling (importantly, rkward://-urls). */
-	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, QWebPage::NavigationType type) override {
-		QUrl navurl = request.url ();
-		QUrl cururl (mainFrame ()->url ());
-		bool is_main_frame = frame == mainFrame ();
-#else
 	bool acceptNavigationRequest (const QUrl &navurl, QWebEnginePage::NavigationType type, bool is_main_frame) override {
 		QUrl cururl (url ());
-#endif
 		Q_UNUSED (type);
 
 		RK_TRACE (APP);
@@ -207,16 +156,10 @@ protected:
 		return false;
 	}
 
-#ifdef NO_QT_WEBENGINE
-/** reimplemented to schedule new window creation for the next page to load */
-	QWebPage* createWindow (QWebPage::WebWindowType) override {
-#else
 	QWebEnginePage* createWindow (QWebEnginePage::WebWindowType) override {
-#endif
 		RK_TRACE (APP);
 		RKWebPage *ret = new RKWebPage (nullptr);
 		RKHTMLWindow::new_window = ret; // Don't actually create a full window, until we know which URL we're talking about.
-#ifndef NO_QT_WEBENGINE
 		// sigh: acceptNavigationRequest() does  not get called on the new page...
 		QMetaObject::Connection * const connection = new QMetaObject::Connection;
 		*connection = connect (ret, &RKWebPage::loadStarted, [ret, connection
@@ -228,7 +171,6 @@ protected:
 			delete connection;
 			ret->acceptNavigationRequest (ret->url (), QWebEnginePage::NavigationTypeLinkClicked, true);
 		});
-#endif
 		return (ret);
 	}
 
@@ -237,18 +179,12 @@ friend class RKHTMLWindow;
 	bool direct_load;
 };
 
-#ifdef NO_QT_WEBENGINE
-class RKWebView : public KWebView {
-public:
-	RKWebView (QWidget *parent) : KWebView (parent, false) {};
-#else
-#include <QWheelEvent>
 class RKWebView : public QWebEngineView {
 public:
 	RKWebView (QWidget *parent) : QWebEngineView (parent) {};
 	void print (QPrinter *printer) {
 		if (!page ()) return;
-		page ()->print (printer, [](bool){});
+        QWebEngineView::forPage(page ())->print (printer);
 	};
 protected:
 	bool eventFilter(QObject *, QEvent *event) override {
@@ -270,13 +206,8 @@ protected:
 /*	void wheelEvent (QWheelEvent *event) override {
 		[handle zooming]
 	} */
-#endif
 };
 
-#ifndef NO_QT_WEBENGINE
-#include <QWebEngineUrlSchemeHandler>
-#include <QWebEngineUrlRequestJob>
-#include <QBuffer>
 class RKWebEngineKIOForwarder : public QWebEngineUrlSchemeHandler {
 public:
 	RKWebEngineKIOForwarder (QObject *parent) : QWebEngineUrlSchemeHandler (parent) {}
@@ -301,14 +232,13 @@ private:
 	}
 	QMap<KIO::StoredTransferJob*,QPointer<QWebEngineUrlRequestJob>> jobs;
 };
-#endif
 
 
 RKWebPage* RKHTMLWindow::new_window = nullptr;
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
 
-	current_cache_file = 0;
+	current_cache_file = nullptr;
 	QVBoxLayout* layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	view = new RKWebView (this);
@@ -322,15 +252,11 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	view->setPage (page);
 	view->setContextMenuPolicy (Qt::CustomContextMenu);
 	layout->addWidget (view, 1);
-#ifdef NO_QT_WEBENGINE
-	findbar = new RKFindBar (this);
-#else
 	findbar = new RKFindBar (this, true);
 	findbar->setPrimaryOptions (QList<QWidget*>() << findbar->getOption (RKFindBar::FindAsYouType) << findbar->getOption (RKFindBar::MatchCase));
 	if (!QWebEngineProfile::defaultProfile ()->urlSchemeHandler ("help")) {
 		QWebEngineProfile::defaultProfile ()->installUrlSchemeHandler ("help", new RKWebEngineKIOForwarder (RKWardMainWindow::getMain()));
 	}
-#endif
 	// Apply current color scheme to page. This needs support in the CSS of the page, so will only work for RKWard help and output pages.
 	// Note that the CSS in those pages also has "automatic" support for dark mode ("prefers-color-scheme: dark"; but see https://bugreports.qt.io/browse/QTBUG-89753), however, 
 	// for a seamless appearance, the only option is to set the theme colors dynamically, via javascript.
@@ -343,21 +269,18 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	                                                "rksetcolor('--shadow-color', '%5');").arg(scheme->foreground().color().name(), scheme->background().color().name(),
 	                                                scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name(),
 	                                                scheme->shade(KColorScheme::MidShade).name());
-#ifdef NO_QT_WEBENGINE
-	connect(page, &RKWebPage::loadFinished, [this, color_scheme_js](){
-		page->mainFrame()->evaluateJavaScript(color_scheme_js);
-	});
-#else
 	auto p = QWebEngineProfile::defaultProfile();
 	QWebEngineScript fix_color_scheme;
-	QString id = QStringLiteral("fix_color_scheme");
-	p->scripts()->remove(p->scripts()->findScript(id));  // remove any existing variant of the script. It might have been created for the wrong theme.
+	const QString id = QStringLiteral("fix_color_scheme");
+	const auto scripts = p->scripts()->find(id);
+	for (const auto &script : scripts) {
+		p->scripts()->remove(script);  // remove any existing variant of the script. It might have been created for the wrong theme.
+	}
 	fix_color_scheme.setName(id);
 	fix_color_scheme.setInjectionPoint(QWebEngineScript::DocumentReady);
 	fix_color_scheme.setSourceCode(color_scheme_js);
 	p->scripts()->insert(fix_color_scheme);
 	//page->setBackgroundColor(scheme.background().color());  // avoids brief white blink while loading, but is too risky on pages that are not dark scheme aware.
-#endif
 
 	layout->addWidget (findbar);
 	findbar->hide ();
@@ -368,36 +291,22 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	setPart (part);
 	part->initActions ();
 	initializeActivationSignals ();
-#if KPARTS_VERSION < QT_VERSION_CHECK(5, 72, 0)
-	part->setSelectable (true);
-#endif
 	setFocusPolicy (Qt::StrongFocus);
 	setFocusProxy (view);
 
 	// We have to connect this in order to allow browsing.
 	connect (page, &RKWebPage::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
-#ifdef NO_QT_WEBENGINE
-	connect (page, &QWebPage::downloadRequested, [this](const QNetworkRequest &request) { page->downloadUrl (request.url ()); });
-#else
-	connect (page->profile (), &QWebEngineProfile::downloadRequested, this, [this](QWebEngineDownloadItem* item) {
+	connect (page->profile (), &QWebEngineProfile::downloadRequested, this, [this](QWebEngineDownloadRequest* item) {
 		QString defpath;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 		defpath = QDir(item->downloadDirectory()).absoluteFilePath(item->downloadFileName());
-#else
-		defpath = item->path();
-#endif
 		QString path = QFileDialog::getSaveFileName(this, i18n("Save as"), defpath);
 		if (path.isEmpty()) return;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 		QFileInfo fi(path);
 		item->setDownloadDirectory(fi.absolutePath());
 		item->setDownloadFileName(fi.fileName());
-#else
-		item->setPath(path);
-#endif
 		item->accept();
 	});
-#endif
+
 	connect (page, &RKWebPage::printRequested, this, &RKHTMLWindow::slotPrint);
 	connect (view, &QWidget::customContextMenuRequested, this, &RKHTMLWindow::makeContextMenu);
 
@@ -431,7 +340,7 @@ bool RKHTMLWindow::isModified () {
 void RKHTMLWindow::makeContextMenu (const QPoint& pos) {
 	RK_TRACE (APP);
 
-	QMenu *menu = page->createStandardContextMenu ();
+	QMenu *menu = QWebEngineView::forPage(page)->createStandardContextMenu ();
 	menu->addAction (part->run_selection);
 	menu->exec (view->mapToGlobal (pos));
 	delete (menu);
@@ -457,26 +366,16 @@ void RKHTMLWindow::runSelection () {
 void RKHTMLWindow::findRequest (const QString& text, bool backwards, const RKFindBar* findbar, bool* found) {
 	RK_TRACE (APP);
 
-#ifdef NO_QT_WEBENGINE
-	QWebPage::FindFlags flags = QWebPage::FindWrapsAroundDocument;
-	if (backwards) flags |= QWebPage::FindBackward;
-	bool highlight = findbar->isOptionSet (RKFindBar::HighlightAll);
-	if (highlight) flags |= QWebPage::HighlightAllOccurrences;
-	if (findbar->isOptionSet (RKFindBar::MatchCase)) flags |= QWebPage::FindCaseSensitively;
-
-	// clear previous highlight, if any
-	if (have_highlight) page->findText (QString (), QWebPage::HighlightAllOccurrences);
-
-	*found = page->findText (text, flags);
-	have_highlight = found && highlight;
-#else
 	// QWebEngine does not offer highlight all
 	*found = true;
 	QWebEnginePage::FindFlags flags;
 	if (backwards) flags |= QWebEnginePage::FindBackward;
 	if (findbar->isOptionSet (RKFindBar::MatchCase)) flags |= QWebEnginePage::FindCaseSensitively;
-	page->findText (text, flags, [this](bool found) { if (!found) this->findbar->indicateSearchFail(); });
-#endif
+	page->findText (text, flags, [this](QWebEngineFindTextResult result) {
+		if (result.numberOfMatches() == 0) {
+			this->findbar->indicateSearchFail();
+		}
+	});
 }
 
 
@@ -858,11 +757,7 @@ void RKHTMLWindow::scrollToBottom () {
 	RK_TRACE (APP);
 
 	RK_ASSERT (window_mode == HTMLOutputWindow);
-#ifdef NO_QT_WEBENGINE
-	page->mainFrame ()->setScrollBarValue (Qt::Vertical, view->page ()->mainFrame ()->scrollBarMaximum (Qt::Vertical));
-#else
 	page->runJavaScript(QString("{ let se = (document.scrollingElement || document.body); se.scrollTop = se.scrollHeight; }"));
-#endif
 }
 
 void RKHTMLWindow::zoomIn () {
@@ -875,10 +770,11 @@ void RKHTMLWindow::zoomOut () {
 	view->setZoomFactor (view->zoomFactor () / 1.1);
 }
 
-void RKHTMLWindow::setTextEncoding (QTextCodec* encoding) {
+void RKHTMLWindow::setTextEncoding (QStringConverter::Encoding encoding) {
 	RK_TRACE (APP);
 
-	page->settings ()->setDefaultTextEncoding (encoding->name ());
+    QStringEncoder converter(encoding);
+	page->settings ()->setDefaultTextEncoding (converter.name ());
 	view->reload ();
 }
 
@@ -1312,7 +1208,7 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 	int npos;
 	QString ret;
 	while ((npos = text.indexOf ("<link", pos)) >= 0) {
-		ret += text.midRef(pos, npos - pos);
+		ret += QStringView{text}.mid(pos, npos - pos);
 
 		QString href;
 		int href_start = text.indexOf (" href=\"", npos + 5);
@@ -1332,14 +1228,14 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 		ret += prepareHelpLink (href, linktext);
 		pos = end;
 	}
-	ret += text.midRef(pos);
+	ret += QStringView{text}.mid(pos);
 
 	if (component_xml) {
 		text = ret;
 		ret.clear ();
 		pos = 0;
 		while ((npos = text.indexOf ("<label ", pos)) >= 0) {
-			ret += text.midRef(pos, npos - pos);
+			ret += QStringView{text}.mid(pos, npos - pos);
 
 			QString id;
 			int id_start = text.indexOf ("id=\"", npos + 6);
@@ -1351,7 +1247,7 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 			}
 			ret += resolveLabel (id);
 		}
-		ret += text.midRef(pos);
+		ret += QStringView{text}.mid(pos);
 	}
 
 	RK_DEBUG (APP, DL_DEBUG, "%s", qPrintable (ret));
