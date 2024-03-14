@@ -490,7 +490,7 @@ void RKWardMainWindow::initActions() {
 
 	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script");
 	connect(fileOpenScript, &QAction::triggered, this, [this]() { slotOpenCommandEditor(); });
-	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
+	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier | Qt::AltModifier | Qt::Key_O);
 	fileOpenScript->setText(i18n("Open R Script File..."));
 
 	fileOpenOutput = actionCollection()->addAction(KStandardAction::Open, "file_open_output", this, SLOT(slotOpenOutput()));
@@ -514,7 +514,7 @@ void RKWardMainWindow::initActions() {
 	fileOpenWorkspace = actionCollection()->addAction(KStandardAction::Open, "file_openx");
 	connect(fileOpenWorkspace, &QAction::triggered, this, [this](){ askOpenWorkspace(); });
 	fileOpenWorkspace->setText (i18n ("Open Workspace..."));
-	actionCollection ()->setDefaultShortcut (fileOpenWorkspace, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
+	actionCollection ()->setDefaultShortcut (fileOpenWorkspace, Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_O);
 	fileOpenWorkspace->setWhatsThis(i18n ("Opens an existing document"));
 
 	fileOpenRecentWorkspace = RKRecentUrls::claimAction(RKRecentUrls::workspaceId());
@@ -525,11 +525,11 @@ void RKWardMainWindow::initActions() {
 
 	fileSaveWorkspace = actionCollection ()->addAction (KStandardAction::Save, "file_savex", this, SLOT(slotFileSaveWorkspace()));
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
-	actionCollection ()->setDefaultShortcut (fileSaveWorkspace, Qt::ControlModifier + Qt::AltModifier + Qt::Key_S);
+	actionCollection ()->setDefaultShortcut (fileSaveWorkspace, Qt::ControlModifier | Qt::AltModifier | Qt::Key_S);
 	fileSaveWorkspace->setWhatsThis(i18n ("Saves the actual document"));
 
 	fileSaveWorkspaceAs = actionCollection ()->addAction (KStandardAction::SaveAs, "file_save_asx", this, SLOT(slotFileSaveWorkspaceAs()));
-	actionCollection ()->setDefaultShortcut (fileSaveWorkspaceAs, Qt::ControlModifier + Qt::AltModifier + Qt::ShiftModifier + Qt::Key_S);
+	actionCollection ()->setDefaultShortcut (fileSaveWorkspaceAs, Qt::ControlModifier | Qt::AltModifier | Qt::ShiftModifier | Qt::Key_S);
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 	fileSaveWorkspaceAs->setWhatsThis(i18n ("Saves the actual document as..."));
 
@@ -538,7 +538,7 @@ void RKWardMainWindow::initActions() {
 
 	interrupt_all_commands = actionCollection ()->addAction ("cancel_all_commands", this, SLOT (slotCancelAllCommands()));
 	interrupt_all_commands->setText (i18n ("Interrupt all commands"));
-	actionCollection ()->setDefaultShortcut (interrupt_all_commands, Qt::ShiftModifier + Qt::Key_Escape);
+	actionCollection ()->setDefaultShortcut (interrupt_all_commands, Qt::ShiftModifier | Qt::Key_Escape);
 	interrupt_all_commands->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_all_commands->setEnabled (false);		// enabled from within setRStatus()
 
@@ -634,8 +634,8 @@ void RKWardMainWindow::initActions() {
 			while (!RInterface::instance()->backendIsDead() && !RInterface::instance()->backendIsIdle()) {
 				RK_DEBUG(APP, DL_DEBUG, "Backend not idle while restart requested.");
 				message = i18n("<p>One or more operations are pending.</p><p>If you have recently chosen to save your workspace, and you see this message, <b>your data may not be saved, yet!</b></p><p>How do you want to proceed?</p>");
-				auto res = KMessageBox::warningYesNoCancel(this, message, i18n("R commands still pending"), KGuiItem(i18n("Force restart now")), KGuiItem(i18n("Check again")), KGuiItem(i18n("Cancel restarting")));
-				if (res == KMessageBox::Yes) {
+				auto res = KMessageBox::warningTwoActionsCancel(this, message, i18n("R commands still pending"), KGuiItem(i18n("Force restart now")), KGuiItem(i18n("Check again")), KGuiItem(i18n("Cancel restarting")));
+				if (res == KMessageBox::PrimaryAction) {
 					forced = true;
 					break;
 				} else if (res == KMessageBox::Cancel) {

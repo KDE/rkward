@@ -473,6 +473,6 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 
 	UNPROTECT (1); /* value */
 
-	RK_ASSERT (!res.contains (0));
+	RK_ASSERT (!res.contains (nullptr));
 	storage->setData (res);
 }

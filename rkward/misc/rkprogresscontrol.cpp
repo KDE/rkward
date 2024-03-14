@@ -213,7 +213,7 @@ QString RKProgressControl::fullCommandOutput() {
 	RK_TRACE (MISC);
 
 	QString ret;
-	foreach (const ROutput& out, output_log) ret.append (out.output);
+	for (const ROutput& out : std::as_const(output_log)) ret.append (out.output);
 	return ret;
 }
 

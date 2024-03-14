@@ -8,8 +8,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rktoplevelwindowgui.h"
 
 #include <KLocalizedString>
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KAboutData>
+#include <KColorSchemeMenu>
 #include <kaboutapplicationdialog.h>
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
@@ -78,11 +79,11 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	next_action = actionCollection ()->addAction ("next_window", this, SLOT (nextWindow()));
 	next_action->setText (i18n ("Next Window"));
 	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
-	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Tab);
+	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_Tab);
 
 	QAction* action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
 	action->setText (i18n ("Activate Document view"));
-	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_0);
+	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier | Qt::Key_0);
 
 	action = actionCollection()->addAction("output_show");
 	action->setText(i18n("Show Output"));
@@ -96,11 +97,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	KStandardAction::configureToolbars (this, SLOT (configureToolbars()), actionCollection ());
 	// Color scheme action. NOTE: selection is non-permanent for KF5 <= 5.87.0, auto-saved afterwards. Apparently, auto-save cannot be implemented for earlier versions within a few lines of code
 	KColorSchemeManager *manager = new KColorSchemeManager(this);
-#if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5, 67, 0)
-	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(i18n("Color Scheme"), QString(), this));
-#else
-	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(this));
-#endif
+	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), KColorSchemeMenu::createMenu(manager, this));
 	// our "status bar" is inlined, and always visible. Action below would only hide and show a useless proxy
 	// KF6 TODO: Still needed at all?
 	QAction *a = for_window->action("options_show_statusbar");

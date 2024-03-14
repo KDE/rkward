@@ -116,7 +116,6 @@ void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 	splitter->setContentsMargins (0, 0, 0, 0);
 	container->layout ()->setContentsMargins (0, 0, 0, 0);
 	container->layout ()->setSpacing (0);
-	container->layout ()->setMargin (0);
 	container->hide ();
 
 	connect (splitter, &QSplitter::splitterMoved, this, &RKToolWindowBar::splitterMoved);

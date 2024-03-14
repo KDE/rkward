@@ -32,9 +32,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagebox.h>
 #include <kshellcompletion.h>
 #include <ktexteditor/editor.h>
-#include <ktexteditor/configinterface.h>
-#include <ktexteditor/codecompletioninterface.h>
-#include <ktexteditor/markinterface.h>
 #include <ktexteditor_version.h>
 #include <kxmlguifactory.h>
 #include <kio/filecopyjob.h>
@@ -135,11 +132,9 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setMetaInfo (shortCaption (), QUrl ("rkward://page/rkward_console"), RKSettings::PageConsole);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
-	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
-	RK_ASSERT(confint);
-	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [confint](bool val) { confint->setConfigValue("scrollbar-minimap", val); });
+	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [this](bool val) { view->setConfigValue("scrollbar-minimap", val); });
 	getPart()->actionCollection()->addAction("view_show_minimap", action);
-	action = RKSettingsModuleConsole::wordWrap()->makeAction(this, i18n("Dynamic word wrap"), [confint](bool val) { confint->setConfigValue("dynamic-word-wrap", val); });
+	action = RKSettingsModuleConsole::wordWrap()->makeAction(this, i18n("Dynamic word wrap"), [this](bool val) { view->setConfigValue("dynamic-word-wrap", val); });
 	getPart()->actionCollection()->addAction("view_dynamic_word_wrap", action);
 
 	nprefix = "> ";
@@ -312,7 +307,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		if (modifier == Qt::NoModifier) setCursorClear (para, pos - 1);
 		else if (modifier == Qt::ShiftModifier) triggerEditAction ("select_char_left");
 		else if (modifier == Qt::ControlModifier) triggerEditAction ("word_left");
-		else if (modifier == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_left");
+		else if (modifier == (Qt::ControlModifier | Qt::ShiftModifier)) triggerEditAction ("select_word_left");
 		else return false;
 
 		return true;
@@ -322,7 +317,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		if (modifier == Qt::NoModifier) setCursorClear (para, pos + 1);
 		else if (modifier == Qt::ShiftModifier) triggerEditAction ("select_char_right");
 		else if (modifier == Qt::ControlModifier) triggerEditAction ("word_right");
-		else if (modifier == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_right");
+		else if (modifier == (Qt::ControlModifier | Qt::ShiftModifier)) triggerEditAction ("select_word_right");
 		else return false;
 
 		return true;
@@ -469,7 +464,7 @@ void RKConsole::submitCommand () {
 			last_line_end = 0;
 			RK_ASSERT (false);
 		}
-		command.append(input_buffer.leftRef(last_line_end));
+		command.append(QStringView{input_buffer}.left(last_line_end));
 		if (last_line_end < (input_buffer.size() - 1)) {
 			input_buffer = input_buffer.mid(last_line_end + 1);
 		} else {
@@ -581,10 +576,8 @@ void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 
 	int end_line = doc->lines () -1;
 	if (output->type != ROutput::Output || (!command)) {
-		KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (doc);
-		RK_ASSERT (markiface);
 		for (int line = first_line; line < end_line; ++line) {
-			markiface->addMark (line, command ? KTextEditor::MarkInterface::BreakpointActive : KTextEditor::MarkInterface::BreakpointDisabled);
+			doc->addMark (line, command ? KTextEditor::Document::BreakpointActive : KTextEditor::Document::BreakpointDisabled);
 		}
 	}
 
@@ -634,7 +627,7 @@ void RKConsole::submitBatch (const QString &batch) {
 		int pos = currentCursorPositionInCommand ();
 		if (pos >= 0) {
 			setCurrentEditingLine(line.left(pos));
-			input_buffer.append(line.midRef(pos));
+			input_buffer.append(QStringView{line}.mid(pos));
 		}
 	}
 	if (!current_command) tryNextInBuffer ();
@@ -761,12 +754,12 @@ QString RKConsole::cleanSelection (const QString &origin) {
 
 	QString ret;
 	ret.reserve (origin.length ());
-	cosnt QStringList lines = origin.split ('\n');
+	const QStringList lines = origin.split ('\n');
 	for (const QString& line : lines) {
 		if (line.startsWith(nprefix)) {
-			ret.append(line.midRef(nprefix.length()));
+			ret.append(QStringView{line}.mid(nprefix.length()));
 		} else if (line.startsWith(iprefix)) {
-			ret.append(line.midRef(iprefix.length()));
+			ret.append(QStringView{line}.mid(iprefix.length()));
 		} else {
 			ret.append(line);
 		}
@@ -908,10 +901,10 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 
 	activate (false);
 	if (isBusy () && (!previous_chunk_was_piped)) {
-		int res = KMessageBox::questionYesNoCancel (this, i18n ("You have configured RKWard to pipe script editor commands through the R Console. However, another command is currently active in the console. Do you want to append it to the command in the console, or do you want to reset the console, first? Press cancel if you do not wish to run the new command, now."), i18n ("R Console is busy"), KGuiItem (i18n ("Append")), KGuiItem (i18n ("Reset, then submit")));
-		if (res == KMessageBox::No) {
+		int res = KMessageBox::questionTwoActionsCancel (this, i18n ("You have configured RKWard to pipe script editor commands through the R Console. However, another command is currently active in the console. Do you want to append it to the command in the console, or do you want to reset the console, first? Press cancel if you do not wish to run the new command, now."), i18n ("R Console is busy"), KGuiItem (i18n ("Append")), KGuiItem (i18n ("Reset, then submit")));
+		if (res == KMessageBox::Cancel) {
 			resetConsole ();
-		} else if (res != KMessageBox::Yes) {
+		} else if (res != KMessageBox::PrimaryAction) {
 			return;
 		}
 	}

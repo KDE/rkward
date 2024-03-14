@@ -7,6 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rktexthints.h"
 
 #include <KLocalizedString>
+#include <KTextEditor/Document>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../core/robjectlist.h"
@@ -16,12 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 RKTextHints::RKTextHints(KTextEditor::View *view, const RKCodeCompletionSettings *settings) : QObject(view), KTextEditor::TextHintProvider(), settings(settings) {
 	RK_TRACE(COMMANDEDITOR);
-	auto iface = qobject_cast<KTextEditor::TextHintInterface*>(view);
-	if (iface) {
-		iface->registerTextHintProvider(this);
-	} else {
-		RK_ASSERT(iface);
-	}
+	view->registerTextHintProvider(this);
 }
 
 RKTextHints::~RKTextHints() {

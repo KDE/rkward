@@ -9,13 +9,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kxmlguifactory.h>
 
 #include <ktexteditor/editor.h>
-#include <ktexteditor/modificationinterface.h>
-#include <ktexteditor/markinterface.h>
 #include <KTextEditor/Application>
 
-#include <qapplication.h>
-#include <qfile.h>
-#include <qtimer.h>
+#include <QApplication>
+#include <QActionGroup>
+#include <QFile>
+#include <QTimer>
 #include <QHBoxLayout>
 #include <QCloseEvent>
 #include <QFrame>
@@ -170,7 +169,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 					m_doc->readSessionConfig (conf);
 				}
 			} else {
-				KMessageBox::messageBox (this, KMessageBox::Error, i18n ("Unable to open \"%1\"", url.toDisplayString ()), i18n ("Could not open command file"));
+				KMessageBox::error(this, i18n ("Unable to open \"%1\"", url.toDisplayString ()), i18n ("Could not open command file"));
 			}
 		}
 	}
@@ -189,9 +188,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	// yes, we want to be notified, if the file has changed on disk.
 	// why, oh why is this not the default?
 	// this needs to be set *before* the view is created!
-	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
-	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
-	else RK_ASSERT (false);
+	m_doc->setModifiedOnDiskWarning (true);
 	m_view = m_doc->createView (this, RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow());
 	if (visible_to_kateplugins) {
 		Q_EMIT RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow()->viewCreated (m_view);
@@ -515,9 +512,9 @@ QString RKCommandEditorWindow::fullCaption () {
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	if (isModified ()) {
-		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?", windowTitle ()), i18n ("File not saved"));
+		int status = KMessageBox::warningTwoActions (this, i18n ("The document \"%1\" has been modified. Close it anyway?", windowTitle ()), i18n ("File not saved"), KStandardGuiItem::close(), KStandardGuiItem::cancel());
 	
-		if (status != KMessageBox::Yes) {
+		if (status != KMessageBox::PrimaryAction) {
 			e->ignore ();
 			return;
 		}
@@ -635,7 +632,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	QTemporaryFile save (QDir::tempPath () + QLatin1String ("/rkward_XXXXXX") + RKSettingsModuleCommandEditor::autosaveSuffix ());
 	RK_ASSERT (save.open ());
 	QTextStream out (&save);
-	out.setCodec ("UTF-8");		// make sure that all characters can be saved, without nagging the user
+	out.setEncoding (QStringConverter::Utf8);		// make sure that all characters can be saved, without nagging the user
 	out << m_doc->text ();
 	save.close ();
 	save.setAutoRemove (false);
@@ -741,22 +738,16 @@ void RKCommandEditorWindow::setText (const QString &text) {
 	bool old_rw = m_doc->isReadWrite ();
 	if (!old_rw) m_doc->setReadWrite (true);
 	m_doc->setText (text);
-	KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (m_doc);
-	if (markiface) markiface->clearMarks ();
+	m_doc->clearMarks ();
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 
 void RKCommandEditorWindow::highlightLine (int linenum) {
 	RK_TRACE (COMMANDEDITOR);
 
-	KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (m_doc);
-	if (!markiface) {
-		RK_ASSERT (markiface);
-		return;
-	}
 	bool old_rw = m_doc->isReadWrite ();
 	if (!old_rw) m_doc->setReadWrite (true);
-	markiface->addMark (linenum, KTextEditor::MarkInterface::Execution);
+	m_doc->addMark (linenum, KTextEditor::Document::Execution);
 	m_view->setCursorPosition (KTextEditor::Cursor (linenum, 0));
 	if (!old_rw) m_doc->setReadWrite (false);
 }
@@ -897,7 +888,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	RK_ASSERT (preview_input_file->open (QIODevice::WriteOnly));
 	QTextStream out (preview_input_file);
-	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
+	out.setEncoding (QStringConverter::Utf8);     // make sure that all characters can be saved, without nagging the user
 	out << m_doc->text ();
 	preview_input_file->close ();
 
@@ -1047,7 +1038,7 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 	clearUnusedBlocks ();
 	removeBlock (index);
 
-	KTextEditor::MovingRange* srange = doc->newMovingRange (range);
+	KTextEditor::MovingRange* srange = m_doc->newMovingRange (range);
 	srange->setInsertBehaviors (KTextEditor::MovingRange::ExpandRight);
 
 	QString actiontext = i18n ("%1 (Active)", index + 1);
@@ -1169,7 +1160,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 	QString ret;
 
 	QString opening;
-	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute (KTextEditor::dsNormal);
+	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute (KSyntaxHighlighting::Theme::TextStyle::Normal);
 	if ( !m_defaultAttribute ) {
 		opening = "<pre class=\"%3\">";
 	} else {
@@ -1179,7 +1170,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 				// Note: copying the default text/background colors is pointless in our case, and leads to subtle inconsistencies.
 	}
 
-	const KTextEditor::Attribute::Ptr noAttrib(0);
+	const KTextEditor::Attribute::Ptr noAttrib(nullptr);
 
 	if (mode == RScript) ret = opening.arg ("code");
 	enum {

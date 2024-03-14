@@ -44,8 +44,8 @@ public:
 		NumPages = PageDebug + 1
 	};
 
-	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0, RCommandChain *chain=0);
-	static void configureSettings (const QString& page, QWidget *parent=0, RCommandChain *chain=0);
+	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=nullptr, RCommandChain *chain=nullptr);
+	static void configureSettings (const QString& page, QWidget *parent=nullptr, RCommandChain *chain=nullptr);
 
 	static void loadSettings (KConfig *config);
 	static void saveSettings (KConfig *config);
@@ -58,7 +58,7 @@ public:
 public Q_SLOTS:
 	void pageChange (KPageWidgetItem *current, KPageWidgetItem *before);
 protected:
-	RKSettings (QWidget *parent = 0);
+	RKSettings (QWidget *parent = nullptr);
 	~RKSettings ();
 
 	void done (int result) override;
@@ -81,7 +81,7 @@ friend class RKWardMainWindow;
 	void registerPageModule(SettingsPage super, int child);
 };
 
-/** This class represents a very simple QObject. It's only purpose is to Q_EMIT signals when certain settings have changed. Classes that need to
+/** This class represents a very simple QObject. It's only purpose is to emit signals when certain settings have changed. Classes that need to
 update themselves on certain changed settings should connect to those signals. */
 class RKSettingsTracker : public QObject {
 	Q_OBJECT

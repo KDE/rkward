@@ -145,7 +145,7 @@ void RKCallstackViewerWidget::frameChanged (int frame_number) {
 		QStringList lines = RKDebugHandler::instance ()->functions ().value (frame_number).split ('\n');
 		QString call = RKDebugHandler::instance ()->calls ().value (frame_number + 1);
 		call = call.left (call.indexOf ('(')).trimmed ();
-		QRegExp call_exp (QRegExp::escape (call) + "\\s*\\(");
+		QRegularExpression call_exp (QRegularExpression::escape (call) + "\\s*\\(");
 		for (int i = lines.size () - 1; i >= 0; --i) {
 			if (lines.at (i).contains (call_exp)) frame_source->highlightLine (i);
 		}

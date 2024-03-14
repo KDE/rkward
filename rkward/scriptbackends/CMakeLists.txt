@@ -15,4 +15,4 @@ SET(scriptbackends_STAT_SRCS
 ADD_LIBRARY(scriptbackends STATIC ${scriptbackends_STAT_SRCS})
 TARGET_LINK_LIBRARIES(scriptbackends Qt6::Qml Qt6::Widgets Qt6::Xml KF6::WidgetsAddons KF6::I18n)
 
-INSTALL(FILES common.js rkcomponentscripting.js DESTINATION ${DATA_INSTALL_DIR}/rkward/phpfiles )
+INSTALL(FILES common.js rkcomponentscripting.js DESTINATION ${KDE_INSTALL_DATADIR}/rkward/phpfiles )

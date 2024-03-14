@@ -21,4 +21,4 @@ INSTALL(FILES
 	s4_slots.png
 	paste_inside_selection.png
 	paste_inside_table.png
-	DESTINATION ${DATA_INSTALL_DIR}/rkward/icons)
+    DESTINATION ${KDE_INSTALL_DATADIR}/rkward/icons)

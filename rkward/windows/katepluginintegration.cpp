@@ -15,7 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QStatusBar>
 
 #include <KPluginFactory>
-#include <KPluginLoader>
 #include <KPluginMetaData>
 #include <KTextEditor/Editor>
 #include <KTextEditor/Application>
@@ -42,17 +41,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
-	dummy_view = 0;
+	dummy_view = nullptr;
 	window = new KatePluginIntegrationWindow(this);
 	app = new KTextEditor::Application(this);
 	KTextEditor::Editor::instance()->setApplication(app);
 
 	// enumerate all available kate plugins
-#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,89,0)
 	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("ktexteditor"));
-#else
-	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("ktexteditor"), [](const KPluginMetaData &) { return true; });
-#endif
 	for (int i = plugins.size() -1; i >= 0; --i) {
 		PluginInfo info;
 		info.plugin = 0;
@@ -97,43 +92,32 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 
 	if (!known_plugins.contains (identifier)) {
 		RK_DEBUG (APP, DL_WARNING, "Plugin %s is not known", qPrintable (identifier));
-		return 0;
+		return nullptr;
 	}
 
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
-	KPluginFactory *factory = KPluginLoader(known_plugins[identifier].data.fileName ()).factory ();
-	if (factory) {
-#endif
-		if (identifier == "katekonsoleplugin") {
-			// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
-			if (qEnvironmentVariableIsEmpty("EDITOR")) qputenv("EDITOR", "vi");
-		}
+	if (identifier == "katekonsoleplugin") {
+		// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
+		if (qEnvironmentVariableIsEmpty("EDITOR")) qputenv("EDITOR", "vi");
+	}
 
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
-		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin>(this, QVariantList () << identifier);
-#else
-		KTextEditor::Plugin *plugin = KPluginFactory::instantiatePlugin<KTextEditor::Plugin>(known_plugins[identifier].data, this, QVariantList() << identifier).plugin;
-#endif
-		if (plugin) {
-			known_plugins[identifier].plugin = plugin;
-			Q_EMIT KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
-			QObject* created = mainWindow()->createPluginView(plugin);
-			if (created) {
-				Q_EMIT mainWindow()->main->pluginViewCreated(identifier, created);
-				KTextEditor::SessionConfigInterface *interface = qobject_cast<KTextEditor::SessionConfigInterface *>(created);
-				if (interface) {
-					// NOTE: Some plugins (noteably the Search in files plugin) will misbehave, unless readSessionConfig has been called!
-					KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(identifier));
-					interface->readSessionConfig(group);
-				}
+	KTextEditor::Plugin *plugin = KPluginFactory::instantiatePlugin<KTextEditor::Plugin>(known_plugins[identifier].data, this, QVariantList() << identifier).plugin;
+	if (plugin) {
+		known_plugins[identifier].plugin = plugin;
+		Q_EMIT KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
+		QObject* created = mainWindow()->createPluginView(plugin);
+		if (created) {
+			Q_EMIT mainWindow()->main->pluginViewCreated(identifier, created);
+			KTextEditor::SessionConfigInterface *interface = qobject_cast<KTextEditor::SessionConfigInterface *>(created);
+			if (interface) {
+				// NOTE: Some plugins (noteably the Search in files plugin) will misbehave, unless readSessionConfig has been called!
+				KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(identifier));
+				interface->readSessionConfig(group);
 			}
-			return plugin;
 		}
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
+		return plugin;
 	}
-#endif
 
-	return 0;
+	return nullptr;
 }
 
 void KatePluginIntegrationApp::loadPlugins(const QStringList& plugins) {
@@ -190,7 +174,7 @@ void KatePluginIntegrationApp::unloadPlugin(const QString &identifier) {
 	}
 	Q_EMIT app->pluginDeleted(identifier, info.plugin);
 	delete info.plugin;
-	info.plugin = 0;
+	info.plugin = nullptr;
 }
 
 void KatePluginIntegrationApp::saveConfigAndUnload() {
@@ -224,7 +208,7 @@ RKCommandEditorWindow* findWindowForView(KTextEditor::View *view) {
 			return static_cast<RKCommandEditorWindow*>(w[i]);
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 RKCommandEditorWindow* findWindowForDocument(KTextEditor::Document *document) {
@@ -237,7 +221,7 @@ RKCommandEditorWindow* findWindowForDocument(KTextEditor::Document *document) {
 			return static_cast<RKCommandEditorWindow*>(w[i]);
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 QList<KTextEditor::Document *> KatePluginIntegrationApp::documents() {
@@ -267,7 +251,7 @@ KTextEditor::Document *KatePluginIntegrationApp::findUrl(const QUrl &url) {
 			if (v) return v->document();
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 KTextEditor::Document *KatePluginIntegrationApp::openUrl(const QUrl &url, const QString &encoding) {
@@ -275,7 +259,7 @@ KTextEditor::Document *KatePluginIntegrationApp::openUrl(const QUrl &url, const 
 
 	KTextEditor::View *v = window->openUrl(url, encoding);
 	if (v) return v->document();
-	return 0;
+	return nullptr;
 }
 
 bool KatePluginIntegrationApp::closeDocument(KTextEditor::Document *document) {
@@ -314,7 +298,7 @@ KTextEditor::Plugin *KatePluginIntegrationApp::plugin(const QString &name) {
 	if (known_plugins.contains(name)) {
 		return known_plugins[name].plugin;
 	}
-	return 0;
+	return nullptr;
 }
 
 ///  END  KTextEditor::Application interface
@@ -505,7 +489,7 @@ KTextEditor::View *KatePluginIntegrationWindow::activateView(KTextEditor::Docume
 		return w->getView();
 	}
 	if (app->dummy_view && document == app->dummy_view->document()) return app->dummy_view;
-	return 0;
+	return nullptr;
 }
 
 KTextEditor::View *KatePluginIntegrationWindow::openUrl(const QUrl &url, const QString &encoding) {
@@ -514,7 +498,7 @@ KTextEditor::View *KatePluginIntegrationWindow::openUrl(const QUrl &url, const Q
 	if (w) return static_cast<RKCommandEditorWindow*>(w)->getView();
 
 	RK_ASSERT(w);  // should not happen
-	return 0;
+	return nullptr;
 }
 
 QObject *KatePluginIntegrationWindow::pluginView(const QString &name) {

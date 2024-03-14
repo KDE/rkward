@@ -85,7 +85,7 @@ void GetFileNameWidget::setFilter (const QString &filter) {
 	RK_TRACE (MISC);
 
 	RK_ASSERT (edit);
-	edit->setFilter (filter);
+	edit->setNameFilter (filter);
 }
 
 void GetFileNameWidget::updateLastUsedUrl (const QUrl& url) {

@@ -16,11 +16,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 KColorScheme* RKStyle::_view_scheme = nullptr;
 
 int RKStyle::marginHint() {
-	return QApplication::style()->pixelMetric(QStyle::PM_DefaultChildMargin);
+	return QApplication::style()->pixelMetric(QStyle::PM_LayoutTopMargin);
 }
 
 int RKStyle::spacingHint() {
-	return QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
+	return QApplication::style()->pixelMetric(QStyle::PM_LayoutHorizontalSpacing);
 }
 
 KColorScheme* RKStyle::viewScheme() {

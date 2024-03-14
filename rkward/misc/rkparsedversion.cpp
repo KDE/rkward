@@ -16,7 +16,7 @@ RKParsedVersion::RKParsedVersion(const QString& version) {
 		while (true) {
 			++pos;
 			if (!(pos < version.size () && version[pos].isDigit ())) {
-				int val = version.midRef(opos, pos - opos).toInt();
+				int val = QStringView{version}.mid(opos, pos - opos).toInt();
 				if ((val < 0) || (val > 255) || (pos == opos)) {
 					RK_DEBUG (MISC, DL_ERROR, "Invalid version specification '%s'", qPrintable (version));
 					if (val > 255) val = 255;

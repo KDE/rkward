@@ -14,7 +14,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <ktexteditor/view.h>
 
 #include <ktexteditor/codecompletionmodel.h>
-#include <ktexteditor/codecompletioninterface.h>
 #include <ktexteditor/codecompletionmodelcontrollerinterface.h>
 
 class QEvent;
@@ -57,7 +56,6 @@ private:
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy ();
 	void updateCallHint ();
-	KTextEditor::CodeCompletionInterface *cc_iface;
 	RKCodeCompletionModel *completion_model;
 	RKFileCompletionModel *file_completion_model;
 	RKCallHintModel *callhint_model;

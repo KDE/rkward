@@ -14,8 +14,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
 #define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
 
-#include <QTextCodec>
-
 #include "rkrbackend.h"
 #include "../debug.h"
 
@@ -123,7 +121,7 @@ SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {
 #if R_VERSION >= R_Version(2,13,0)
-		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
+		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 ().constData(), CE_UTF8));
 #else
 		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
 		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
@@ -154,7 +152,7 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {
 #if R_VERSION >= R_Version(2,13,0)
-		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
+		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 ().constData(), CE_UTF8));
 #else
 		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
 		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
@@ -319,7 +317,7 @@ void RKRShadowEnvironment::updateCacheForGlobalenvSymbol(const QString& name) {
 
 void RKRShadowEnvironment::updateSymbolCache(const QString& name) {
 	RK_TRACE(RBACKEND);
-	SEXP rname = Rf_installChar(Rf_mkCharCE(name.toUtf8(), CE_UTF8));
+	SEXP rname = Rf_installChar(Rf_mkCharCE(name.toUtf8().constData(), CE_UTF8));
 	PROTECT(rname);
 	SEXP symbol_g = Rf_findVar(rname, R_GlobalEnv);
 	PROTECT(symbol_g);

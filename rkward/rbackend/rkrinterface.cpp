@@ -462,7 +462,7 @@ void RInterface::flushOutput (bool forced) {
 		}
 	}
 
-	for (ROutput *output, list) {
+	for (ROutput *output : list) {
 		if (all_current_commands.isEmpty ()) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "output without receiver'%s'", qPrintable (output->output));
 			if (RKConsole::mainConsole()) RKConsole::mainConsole()->insertSpontaneousROutput(output);  // the "if" is to prevent crash, should output arrive during exit
