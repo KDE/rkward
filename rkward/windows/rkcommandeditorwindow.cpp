@@ -34,8 +34,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kstandardaction.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <kio/deletejob.h>
-#include <kio/job.h>
+#include <KIO/DeleteJob>
+#include <KIO/FileCopyJob>
 #include <kconfiggroup.h>
 #include <krandom.h>
 #include <kwidgetsaddons_version.h>
