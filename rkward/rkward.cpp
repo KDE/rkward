@@ -54,7 +54,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "core/renvironmentobject.h"
 #include "misc/rkstandardicons.h"
 #include "misc/rkcommonfunctions.h"
-#include "misc/rkcompatibility.h"
 #include "misc/rkxmlguisyncer.h"
 #include "misc/rkdbusapi.h"
 #include "misc/rkdialogbuttonbox.h"
@@ -607,15 +606,9 @@ void RKWardMainWindow::initActions() {
 	save_any_action = new KActionMenu (QIcon::fromTheme("document-save"), i18n ("Save..."), this);
 	actionCollection ()->addAction ("save_any", save_any_action);
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
 	open_any_action->setPopupMode(QToolButton::InstantPopup);
 	new_any_action->setPopupMode(QToolButton::InstantPopup);
 	save_any_action->setPopupMode(QToolButton::InstantPopup);
-#else
-	open_any_action->setDelayed(false);
-	new_any_action->setDelayed(false);
-	save_any_action->setDelayed(false);
-#endif
 
 	save_any_action->addAction (fileSaveWorkspace);
 	save_any_action->addAction (fileSaveWorkspaceAs);
@@ -832,7 +825,7 @@ void RKWardMainWindow::readOptions () {
 	KConfigGroup cg = config->group ("General Options");
 	QSize size = cg.readEntry ("Geometry", QSize ());
 	if (size.isEmpty ()) {
-		size = RKCompatibility::availableGeometry(this).size();
+		size = screen() ? screen()->availableGeometry().size() : QApplication::primaryScreen()->availableGeometry().size();
 	}
 	resize (size);
 

@@ -38,13 +38,8 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	term_edit = new KHistoryComboBox (this);
 	QString dummylong("This is quite a long search term by any standard, indeed");
 	QString dummyshort("A short search term");
-#if QT_VERSION >= QT_VERSION_CHECK(5,11,0)
 	term_edit->setMaximumWidth(fontMetrics().horizontalAdvance(dummylong));
 	term_edit->setMinimumWidth(fontMetrics().horizontalAdvance(dummyshort));
-#else
-	term_edit->setMaximumWidth(fontMetrics().width(dummylong));
-	term_edit->setMinimumWidth(fontMetrics().width(dummyshort));
-#endif
 	connect (term_edit, &KHistoryComboBox::editTextChanged, this, &RKFindBar::searchChanged);
 	connect (term_edit, static_cast<void (KHistoryComboBox::*)(const QString&)>(&KHistoryComboBox::returnPressed), this, &RKFindBar::forward);
 	regular_palette = term_edit->palette ();

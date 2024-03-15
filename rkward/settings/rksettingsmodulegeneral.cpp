@@ -22,7 +22,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstyle.h"
 
@@ -110,7 +109,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	group_layout->addWidget (button);
 	workplace_save_chooser->addButton (button, DontSaveWorkplace);	
 	if ((button = workplace_save_chooser->button (workplace_save_mode))) button->setChecked (true);
-	connect (workplace_save_chooser, RKCompatibility::groupButtonClicked(), this, &RKSettingsModuleGeneral::change);
+	connect (workplace_save_chooser, &QButtonGroup::idClicked, this, &RKSettingsModuleGeneral::change);
 	main_vbox->addWidget (group_box);
 
 	main_vbox->addSpacing (2*RKStyle::spacingHint ());

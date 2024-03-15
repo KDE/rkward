@@ -13,7 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rcontainerobject.h"
 #include "robjectlist.h"
 #include "../rbackend/rkrinterface.h"
-#include "../misc/rkcompatibility.h"
 
 #include "rkmodificationtracker.h"
 
@@ -861,7 +860,7 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 	formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 	formatting_options.precision = 0;
 
-	QStringList list = string.split ('#', RKCompatibility::SkipEmptyParts());
+	QStringList list = string.split ('#', Qt::SkipEmptyParts);
 	QString option, parameter;
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 		option = (*it).section (':', 0, 0);

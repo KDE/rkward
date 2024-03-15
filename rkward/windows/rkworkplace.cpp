@@ -44,7 +44,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../rkward.h"
@@ -903,7 +902,7 @@ ItemSpecification parseItemDescription (const QString &description) {
 			RK_ASSERT (false);
 			return ret;
 		}
-		ret.params = description.mid (typeend + 2, specstart - typeend - 2).split (':', RKCompatibility::SkipEmptyParts());
+		ret.params = description.mid (typeend + 2, specstart - typeend - 2).split (':', Qt::SkipEmptyParts);
 		ret.specification = description.mid (specstart + 2);
 	} else {
 		ret.specification = description.mid (typeend + 1);

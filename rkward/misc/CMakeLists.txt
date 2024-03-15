@@ -11,7 +11,6 @@ SET(misc_STAT_SRCS
    xmlhelper.cpp
    multistringselector.cpp
    rkcommonfunctions.cpp
-   rkcompatibility.cpp
    rkprogresscontrol.cpp
    rksaveobjectchooser.cpp
    rkdummypart.cpp
