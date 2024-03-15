@@ -9,7 +9,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QDBusConnection>
 #include <KWindowSystem>
+#if __has_include(<KStartupInfo>)
 #include <KStartupInfo>
+#endif
 #include "../rkward.h"
 
 #include "../debug.h"
@@ -40,7 +42,9 @@ void RKDBusAPI::openAnyUrl (const QStringList& urls, const QString &token, bool 
 	main->raise();
 
 	if (KWindowSystem::isPlatformX11()) {
+#if __has_include(<KStartupInfo>)
 		KStartupInfo::setNewStartupId(main->windowHandle(), token.toUtf8());
+#endif
 	} else if (KWindowSystem::isPlatformWayland()) {
 		KWindowSystem::setCurrentXdgActivationToken(token);
 	}
