@@ -184,7 +184,7 @@ bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_li
 	if (!not_writable.isEmpty ()) {
 #ifdef Q_OS_WIN
 		KMessageBox::informationList (this, i18n ("Your current user permissions do not allow removing the following packages. These will be skipped."), not_writable, i18n ("Insufficient user permissions"));
-		int res = KMessageBox::No;
+		int res = KMessageBox::SecondaryAction;
 #else
 		int res = KMessageBox::questionTwoActionsList (this, i18n ("Your current user permissions do not allow removing the following packages. Do you want to skip these packages, or do you want to proceed with administrator privileges (you will be prompted for the password)?"), not_writable, i18n ("Insufficient user permissions"), KGuiItem (i18nc("@action:button", "Become root")), KGuiItem (i18nc("@action:button", "Skip these packages")));
 #endif
