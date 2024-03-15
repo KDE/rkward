@@ -19,8 +19,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KMessageBox>
 #include <KLocalizedString>
 #include <KWindowSystem>
+#if __has_include(<KWindowInfo>)
 #include <KWindowInfo>
 #include <KX11Extras>
+#endif
 
 #include "../settings/rksettingsmodulegraphics.h"
 #include "../dialogs/rkerrordialog.h"
@@ -116,9 +118,11 @@ void RKWindowCatcher::stop (int new_cur_device) {
 	if (new_cur_device != last_cur_device) {
 		if (created_window) {
 			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
+#if __has_include(<KWindowInfo>)
 			KWindowInfo wininfo (created_window, NET::WMName | NET::WMGeometry);
 			QWindow *window = QWindow::fromWinId (created_window);
 			RKWorkplace::mainWorkplace ()->newX11Window (window, new_cur_device);
+#endif
 		} else {
 #if defined Q_OS_MACOS
 			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See https://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
@@ -134,6 +138,7 @@ void RKWindowCatcher::pollWatchedWindowStates () {
 	// RK_TRACE (APP);
 	// Well, this really bad, but the notification in KWindowSystem (windowChanged(), windowRemoved()) just don't work for embedded windows. So we have to use polling to
 	// check whether windows changed their name, or have gone away... KF5 5.15.0, X.
+#if __has_include(<KWindowInfo>)
 	for (QMap<WId, RKMDIWindow*>::const_iterator it = watchers_list.constBegin (); it != watchers_list.constEnd (); ++it) {
 		KWindowInfo wininfo (it.key (), NET::WMName);
 		if (!wininfo.valid ()) it.value ()->deleteLater ();
@@ -141,6 +146,7 @@ void RKWindowCatcher::pollWatchedWindowStates () {
 			if (it.value ()->shortCaption () != wininfo.name ()) it.value ()->setCaption (wininfo.name ());
 		}
 	}
+#endif
 	if (!watchers_list.isEmpty ()) {
 		poll_timer.start ();
 	}
@@ -150,11 +156,13 @@ void RKWindowCatcher::registerWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_TRACE (APP);
 	RK_ASSERT (!watchers_list.contains (watched));
 
+#if __has_include(<KWindowInfo>)
 	KWindowInfo wininfo (watched, NET::WMName);
 	if (!wininfo.valid ()) {
 		RK_DEBUG (APP, DL_ERROR, "Cannot fetch window info. Platform limitation? Not watching for window changes.")
 		return;
 	}
+#endif
 
 	if (watchers_list.isEmpty ()) {
 		poll_timer.start ();
@@ -327,7 +335,9 @@ void RKCaughtX11Window::doEmbed () {
 			capture->deleteLater ();
 		} */
 		qApp->sync ();
+#if __has_include(<KWindowInfo>)
 		KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
+#endif
 		capture = QWidget::createWindowContainer (embedded, xembed_container);
 		xembed_container->layout ()->addWidget (capture);
 		xembed_container->show ();
