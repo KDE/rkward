@@ -10,9 +10,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <kactioncollection.h>
 
-#include <qtimer.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
+#include <QApplication>
+#include <QTimer>
+#include <QPushButton>
+#include <QLabel>
 #include <QCloseEvent>
 #include <QCheckBox>
 #include <QSplitter>
@@ -23,7 +24,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../misc/rkstyle.h"
@@ -76,7 +76,7 @@ public:
 		setSizes (sizes);
 
 		if (QSplitter::window ()->isVisible ()) {
-			QRect boundary = RKCompatibility::availableGeometry(this);
+			QRect boundary = screen() ? screen()->availableGeometry() : QApplication::primaryScreen()->availableGeometry();
 			int new_width = window->width ();
 			int new_height = window->height ();
 			int new_x = window->x ();

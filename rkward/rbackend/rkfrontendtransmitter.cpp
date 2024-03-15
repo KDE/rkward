@@ -155,13 +155,9 @@ void RKFrontendTransmitter::run () {
 #endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Starting backend. Timestamp %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 	if (quirkmode) {
-#if QT_VERSION >= QT_VERSION_CHECK(5,10,0)
 		backend->setProgram(RKSessionVars::RBinary());
 		backend->setArguments(args);
 		backend->startDetached();
-#else
-		QProcess::startDetached(RKSessionVars::RBinary(), args);
-#endif
 	} else {
 		backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 

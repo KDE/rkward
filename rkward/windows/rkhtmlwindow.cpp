@@ -58,7 +58,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
@@ -504,7 +503,7 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 			if (path.startsWith ('/')) path = path.mid (1);
 			int sep = path.indexOf ('/');
 			// NOTE: These links may originate externally, even from untrusted sources. The submit mode *must* remain "ManualSubmit" for this reason!
-			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', RKCompatibility::SkipEmptyParts()), RKComponentMap::ManualSubmit);
+			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', Qt::SkipEmptyParts), RKComponentMap::ManualSubmit);
 		} else if (url.host () == "rhelp") {
 			// TODO: find a nice solution to render this in the current window
 			QStringList spec = url.path ().mid (1).split ('/');
@@ -638,11 +637,7 @@ void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
 		QUrl url = tj->url ();
 		if (!tj->redirectUrl ().isEmpty ()) url = tj->redirectUrl ();
 		KIO::TransferJob *secondchance = KIO::get (url, KIO::Reload);
-#if KIO_VERSION < QT_VERSION_CHECK(5,78,0)
-		connect (secondchance, static_cast<void (KIO::TransferJob::*)(KIO::Job*, const QString&)>(&KIO::TransferJob::mimetype), this, &RKHTMLWindow::mimeTypeDetermined);
-#else
 		connect (secondchance, &KIO::TransferJob::mimeTypeFound, this, &RKHTMLWindow::mimeTypeDetermined);
-#endif
 		connect (secondchance, &KIO::TransferJob::result, this, &RKHTMLWindow::mimeTypeJobFail2);
 	}
 }
@@ -1288,7 +1283,7 @@ QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &tex
 QString RKHelpRenderer::componentPathToId (const QString &path) {
 	RK_TRACE (APP);
 
-	QStringList path_segments = path.split ('/', RKCompatibility::SkipEmptyParts());
+	QStringList path_segments = path.split ('/', Qt::SkipEmptyParts);
 	if (path_segments.count () > 2) return 0;
 	if (path_segments.count () < 1) return 0;
 	if (path_segments.count () == 1) path_segments.push_front ("rkward");

@@ -186,11 +186,7 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
  *  @returns: true, if output was actually fetched (or no output was available), false, if the function gave up on a locked mutex. */
 	bool fetchStdoutStderr (bool forcibly);
 /** public for technical reasons */
-#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
 	QRecursiveMutex stdout_stderr_mutex;
-#else
-	QMutex stdout_stderr_mutex;
-#endif
 
 	void setPriorityCommand (RCommandProxy *command);
 	RCommandProxy *pending_priority_command;

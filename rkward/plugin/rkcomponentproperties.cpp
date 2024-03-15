@@ -84,7 +84,6 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 #include "rkcomponentproperties.h"
 
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 
 #include <KLocalizedString>
 
@@ -1011,13 +1010,13 @@ bool RKComponentPropertyRObjects::setValueList (const QStringList& values) {
 bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	return setValueList (value.split (sep, RKCompatibility::SkipEmptyParts()));
+	return setValueList (value.split (sep, Qt::SkipEmptyParts));
 }
 
 bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	QStringList slist = value.split (sep, RKCompatibility::SkipEmptyParts());
+	QStringList slist = value.split (sep, Qt::SkipEmptyParts);
 
 	for (QStringList::const_iterator it = slist.cbegin (); it != slist.cend (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (*it);

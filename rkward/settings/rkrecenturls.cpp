@@ -46,23 +46,7 @@ QUrl RKRecentUrls::mostRecentUrl(const QString& id) {
 }
 
 QList<QUrl> RKRecentUrls::allRecentUrls(const QString& id) {
-#if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5, 93, 0)
-	// KRecentFilesAction::urls() returns random order... Let's make an effort for a reasonable sorting.
-	auto unsorted = action(id)->urls();
-	auto list = action(id)->actions();
-	QList<QUrl> ret;
-	for (int i = list.size()-1; i >= 0; --i) {
-		for (int j = 0; j < unsorted.size(); ++j) {
-			if (list[i]->text().contains(unsorted[j].fileName())) {
-				ret.append(unsorted.takeAt(j));
-				break;
-			}
-		}
-	}
-	return ret + unsorted;
-#else
 	return action(id)->urls();
-#endif
 }
 
 RKRecentUrls* RKRecentUrls::notifier() {

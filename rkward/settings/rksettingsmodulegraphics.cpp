@@ -24,7 +24,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkstandardicons.h"
 #include "../core/robject.h"
 #include "../debug.h"
@@ -69,7 +68,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	                                  "<p>The RKWard native device is the recommended choice for most users. This corresponds to the R command <i>RK()</i>.</p>"
 	                                  "<p>The 'Platform default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or <i>quartz()</i>, depending on the platform.</p>"
 	                                  "<p>You can also specify the name of a function such as <i>cairoDevice</i>.</p>"), group);
-	connect (default_device_group, RKCompatibility::groupButtonClicked(), this, &RKSettingsModuleGraphics::boxChanged);
+	connect (default_device_group, &QButtonGroup::idClicked, this, &RKSettingsModuleGraphics::boxChanged);
 	connect (default_device_other_edit, &QLineEdit::textChanged, this, &RKSettingsModuleGraphics::boxChanged);
 	h_layout1->addWidget (group);
 
@@ -99,7 +98,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	                                  "<li>The original platform specific devices can be used unchanged, without the addition of RKWard specific features.</li></ul>"
 	                                  "<p>Regardless of this setting, the original devices are always accessible as <i>grDevices::X11()</i>, etc.</p>"
 	                                  "<p>Using a device on a platform where it is not defined (e.g. <i>Windows()</i> on Mac OS X) will always fall back to the <i>RK()</i> device.</p>"), group);
-	connect (replace_standard_devices_group, RKCompatibility::groupButtonClicked(), this, &RKSettingsModuleGraphics::boxChanged);
+	connect (replace_standard_devices_group, &QButtonGroup::idClicked, this, &RKSettingsModuleGraphics::boxChanged);
 	h_layout1->addWidget (group);
 
 	group = new QGroupBox(i18n("Default window size (for RK(), or embedded device windows)"));

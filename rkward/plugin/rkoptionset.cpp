@@ -18,7 +18,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkaccordiontable.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
@@ -191,7 +190,7 @@ QString serializeList (const QStringList &list) {
 }
 
 QStringList unserializeList  (const QString &serial) {
-	QStringList ret = serial.split ('\t', RKCompatibility::KeepEmptyParts());
+	QStringList ret = serial.split ('\t', Qt::KeepEmptyParts);
 	for (int i = 0; i < ret.size (); ++i) {
 		ret[i] = RKCommonFunctions::unescape (ret[i]);
 	}
@@ -211,7 +210,7 @@ QString serializeMap (const RKComponent::PropertyValueMap &map) {
 
 RKComponent::PropertyValueMap unserializeMap (const QString &serial) {
 	RKComponent::PropertyValueMap ret;
-	QStringList l = serial.split ('\t', RKCompatibility::KeepEmptyParts());
+	QStringList l = serial.split ('\t', Qt::KeepEmptyParts);
 	for (int i = 0; i < l.size (); ++i) {
 		QString &line = l[i];
 		int sep = line.indexOf ('=');

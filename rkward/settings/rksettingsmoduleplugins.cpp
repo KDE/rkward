@@ -26,7 +26,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkstyle.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/xmlhelper.h"
 #include "../plugin/rkcomponentmap.h"
@@ -68,7 +67,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	button_group->addButton (button, PreferWizard);
 	if ((button = button_group->button (interface_pref))) button->setChecked (true);
 
-	connect (button_group, RKCompatibility::groupButtonClicked(), this, &RKSettingsModulePlugins::settingChanged);
+	connect (button_group, &QButtonGroup::idClicked, this, &RKSettingsModulePlugins::settingChanged);
 	main_vbox->addWidget (button_box);
 
 	main_vbox->addSpacing (2*RKStyle::spacingHint ());

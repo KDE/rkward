@@ -13,9 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../version.h"
 
 #include <kcoreaddons_version.h>
-#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
-#include <kcoreaddons.h>
-#endif
+#include <KCoreAddons>
 
 #include <QTemporaryFile>
 #include <QStandardPaths>
@@ -23,7 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKSessionVars* RKSessionVars::_instance = 0;
+RKSessionVars* RKSessionVars::_instance = nullptr;
 RKParsedVersion RKSessionVars::rkward_version(RKWARD_VERSION);
 RKParsedVersion RKSessionVars::r_version;
 QString RKSessionVars::r_version_string;
