@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -34,7 +34,7 @@ msgstr ""
 #: rkward/plugins/distributions.pluginmap:116
 #, kde-format
 msgid "Distributions"
-msgstr ""
+msgstr "Distribuoj"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/distributions.pluginmap:10
@@ -53,7 +53,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/shapiro_test.xml:9
 #, kde-format
 msgid "Shapiro-Wilk Normality Test"
-msgstr ""
+msgstr "Testo pri Normaleco de Shapiro-Wilk"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Anderson-Darling Normality Test)
@@ -63,7 +63,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/ad_test.xml:9
 #, kde-format
 msgid "Anderson-Darling Normality Test"
-msgstr ""
+msgstr "Testo de Normaleco de Anderson-Darling"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Cramer-von Mises Normality Test)
@@ -73,7 +73,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/cvm_test.xml:9
 #, kde-format
 msgid "Cramer-von Mises Normality Test"
-msgstr ""
+msgstr "Testo pri Normaleco de Cramer-von Mises"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Pearson chi-square Normality Test)
@@ -83,7 +83,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/pearson_test.xml:9
 #, kde-format
 msgid "Pearson chi-square Normality Test"
-msgstr ""
+msgstr "Pearson chi-kvadrata Normalec-testo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Shapiro-Wilk Normality Test)
@@ -91,7 +91,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/sf_test.js:14
 #, kde-format
 msgid "Shapiro-Francia Normality Test"
-msgstr ""
+msgstr "Testo pri Normaleco de Shapiro-Francia"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Lilliefors (Kolmogorov-Smirnov) Normality Test) <dialog label="...">
@@ -99,7 +99,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/lillie_test.xml:9
 #, kde-format
 msgid "Lilliefors (Kolmogorov-Smirnov) Normality Test"
-msgstr ""
+msgstr "Lilliefors (Kolmogorov-Smirnov) Normaleca Testo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test)
@@ -109,7 +109,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/jb_test.xml:10
 #, kde-format
 msgid "Jarque-Bera Normality Test"
-msgstr ""
+msgstr "Jarque-Bera Normaleca Testo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Beta distribution calculator) <dialog label="...">
@@ -117,25 +117,25 @@ msgstr ""
 #: rkward/plugins/distributions/beta.xml:21
 #, kde-format
 msgid "Beta distribution calculator"
-msgstr ""
+msgstr "Beta distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:35
 #, kde-format
 msgid "Plot Beta distribution"
-msgstr ""
+msgstr "Grafiko Beta-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:37
 #, kde-format
 msgid "Binomial distribution calculator"
-msgstr ""
+msgstr "Binoma distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:38
 #, kde-format
 msgid "Plot binomial distribution"
-msgstr ""
+msgstr "Grafiku binomdistribuon"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Cauchy distribution calculator) <dialog label="...">
@@ -143,13 +143,13 @@ msgstr ""
 #: rkward/plugins/distributions/cauchy.xml:20
 #, kde-format
 msgid "Cauchy distribution calculator"
-msgstr ""
+msgstr "Cauchy distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:41
 #, kde-format
 msgid "Plot Cauchy distribution"
-msgstr ""
+msgstr "Grafiko Cauchy-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Chi-squared distribution calculator) <dialog label="...">
@@ -157,13 +157,13 @@ msgstr ""
 #: rkward/plugins/distributions/chi_squared.xml:20
 #, kde-format
 msgid "Chi-squared distribution calculator"
-msgstr ""
+msgstr "Chi-kvadrata distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:44
 #, kde-format
 msgid "Plot Chi-squared distribution"
-msgstr ""
+msgstr "Grafiko Chi-kvadrata distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Exponential distribution calculator) <dialog label="...">
@@ -171,13 +171,13 @@ msgstr ""
 #: rkward/plugins/distributions/exponential.xml:19
 #, kde-format
 msgid "Exponential distribution calculator"
-msgstr ""
+msgstr "Eksponenta distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:47
 #, kde-format
 msgid "Plot Exponential distribution"
-msgstr ""
+msgstr "Grafiko Eksponenta distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (F distribution calculator) <dialog label="...">
@@ -185,13 +185,13 @@ msgstr ""
 #: rkward/plugins/distributions/f.xml:21
 #, kde-format
 msgid "F distribution calculator"
-msgstr ""
+msgstr "F distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:50
 #, kde-format
 msgid "Plot F distribution"
-msgstr ""
+msgstr "Grafiko F-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Gamma distribution calculator) <dialog label="...">
@@ -199,13 +199,13 @@ msgstr ""
 #: rkward/plugins/distributions/gamma.xml:20
 #, kde-format
 msgid "Gamma distribution calculator"
-msgstr ""
+msgstr "Gama distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:53
 #, kde-format
 msgid "Plot Gamma distribution"
-msgstr ""
+msgstr "Grafiko Gamma distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Geometric distribution calculator) <dialog label="...">
@@ -213,13 +213,13 @@ msgstr ""
 #: rkward/plugins/distributions/geom.xml:22
 #, kde-format
 msgid "Geometric distribution calculator"
-msgstr ""
+msgstr "Geometria distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:56
 #, kde-format
 msgid "Plot Geometric distribution"
-msgstr ""
+msgstr "Grafiko Geometria distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Gumbel distribution calculator) <dialog label="...">
@@ -227,7 +227,7 @@ msgstr ""
 #: rkward/plugins/distributions/gumbel.xml:20
 #, kde-format
 msgid "Gumbel distribution calculator"
-msgstr ""
+msgstr "Gumbel distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Hypergeometric distribution calculator) <dialog label="...">
@@ -235,13 +235,13 @@ msgstr ""
 #: rkward/plugins/distributions/hypergeometric.xml:24
 #, kde-format
 msgid "Hypergeometric distribution calculator"
-msgstr ""
+msgstr "Hipergeometria distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:61
 #, kde-format
 msgid "Plot Hypergeometric distribution"
-msgstr ""
+msgstr "Grafiko Hipergeometria distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Logistic distribution calculator) <dialog label="...">
@@ -249,13 +249,13 @@ msgstr ""
 #: rkward/plugins/distributions/logistic.xml:20
 #, kde-format
 msgid "Logistic distribution calculator"
-msgstr ""
+msgstr "Loĝistika distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:64
 #, kde-format
 msgid "Plot Logistic distribution"
-msgstr ""
+msgstr "Grafiko Loĝistika dissendo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Log Normal distribution calculator) <dialog label="...">
@@ -263,13 +263,13 @@ msgstr ""
 #: rkward/plugins/distributions/log_normal.xml:20
 #, kde-format
 msgid "Log Normal distribution calculator"
-msgstr ""
+msgstr "Protokoli Normdistribuan kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:67
 #, kde-format
 msgid "Plot Log Normal distribution"
-msgstr ""
+msgstr "Grafike Protokoli Normdistribuon"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Negative Binomial distribution calculator) <dialog label="...">
@@ -277,13 +277,13 @@ msgstr ""
 #: rkward/plugins/distributions/negative_binomial.xml:23
 #, kde-format
 msgid "Negative Binomial distribution calculator"
-msgstr ""
+msgstr "Negativa Binoma distribuokalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:70
 #, kde-format
 msgid "Plot Negative Binomial distribution"
-msgstr ""
+msgstr "Grafiko Negativa Binoma distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Normal distribution calculator) <dialog label="...">
@@ -291,13 +291,13 @@ msgstr ""
 #: rkward/plugins/distributions/normal.xml:20
 #, kde-format
 msgid "Normal distribution calculator"
-msgstr ""
+msgstr "Normala distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:73
 #, kde-format
 msgid "Plot Normal distribution"
-msgstr ""
+msgstr "Grafiko Normala distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Poisson distribution calculator) <dialog label="...">
@@ -305,13 +305,13 @@ msgstr ""
 #: rkward/plugins/distributions/poisson.xml:22
 #, kde-format
 msgid "Poisson distribution calculator"
-msgstr ""
+msgstr "Poisson-distribuokalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:76
 #, kde-format
 msgid "Plot Poisson distribution"
-msgstr ""
+msgstr "Grafiko Poisson-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (t distribution calculator) <dialog label="...">
@@ -319,13 +319,13 @@ msgstr ""
 #: rkward/plugins/distributions/t.xml:20
 #, kde-format
 msgid "t distribution calculator"
-msgstr ""
+msgstr "t distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:79
 #, kde-format
 msgid "Plot t distribution"
-msgstr ""
+msgstr "Grafiku t distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Studentized Range (Tukey) distribution calculator) <dialog label="...">
@@ -333,13 +333,13 @@ msgstr ""
 #: rkward/plugins/distributions/tukey.xml:21
 #, kde-format
 msgid "Studentized Range (Tukey) distribution calculator"
-msgstr ""
+msgstr "Studentized Range (Tukey) distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:82
 #, kde-format
 msgid "Plot Studentized Range (Tukey) distribution"
-msgstr ""
+msgstr "Grafiko Studentized Range (Tukey) distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Uniform distribution calculator) <dialog label="...">
@@ -347,13 +347,13 @@ msgstr ""
 #: rkward/plugins/distributions/uniform.xml:20
 #, kde-format
 msgid "Uniform distribution calculator"
-msgstr ""
+msgstr "Uniforma distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:85
 #, kde-format
 msgid "Plot Uniform distribution"
-msgstr ""
+msgstr "Grafiko Uniforma distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Weibull distribution calculator) <dialog label="...">
@@ -361,13 +361,13 @@ msgstr ""
 #: rkward/plugins/distributions/weibull.xml:20
 #, kde-format
 msgid "Weibull distribution calculator"
-msgstr ""
+msgstr "Weibull distribua kalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:88
 #, kde-format
 msgid "Plot Weibull distribution"
-msgstr ""
+msgstr "Grafiko Weibull-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Wilcoxon Rank Sum distribution calculator) <dialog label="...">
@@ -375,127 +375,127 @@ msgstr ""
 #: rkward/plugins/distributions/wilcoxon.xml:23
 #, kde-format
 msgid "Wilcoxon Rank Sum distribution calculator"
-msgstr ""
+msgstr "Wilcoxon Rank Sum distribukalkulilo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:91
 #, kde-format
 msgid "Plot Wilcoxon Rank Sum distribution"
-msgstr ""
+msgstr "Grafiko Wilcoxon Rank Sum-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:95
 #, kde-format
 msgid "Binomial CLT"
-msgstr ""
+msgstr "Binomo CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:96
 #, kde-format
 msgid "Geometric CLT"
-msgstr ""
+msgstr "Geometria CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:97
 #, kde-format
 msgid "Hypergeometric CLT"
-msgstr ""
+msgstr "Hipergeometria CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:98
 #, kde-format
 msgid "Negative Binomial CLT"
-msgstr ""
+msgstr "Negativa Binomo CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:99
 #, kde-format
 msgid "Poisson CLT"
-msgstr ""
+msgstr "Poisson CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:100
 #, kde-format
 msgid "Wilcoxon CLT"
-msgstr ""
+msgstr "Wilcoxon CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:102
 #, kde-format
 msgid "Beta CLT"
-msgstr ""
+msgstr "Beta CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:103
 #, kde-format
 msgid "Chi-squared CLT"
-msgstr ""
+msgstr "Ĥi-kvadrata CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:104
 #, kde-format
 msgid "Exponential CLT"
-msgstr ""
+msgstr "Eksponenta CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:105
 #, kde-format
 msgid "F CLT"
-msgstr ""
+msgstr "F CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:106
 #, kde-format
 msgid "Gamma CLT"
-msgstr ""
+msgstr "Gama CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:107
 #, kde-format
 msgid "Logistic CLT"
-msgstr ""
+msgstr "Loĝistika CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:108
 #, kde-format
 msgid "Log Normal CLT"
-msgstr ""
+msgstr "Protokoli Normala CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:109
 #, kde-format
 msgid "Normal CLT"
-msgstr ""
+msgstr "Normala CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:110
 #, kde-format
 msgid "t CLT"
-msgstr ""
+msgstr "t CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:111
 #, kde-format
 msgid "Uniform CLT"
-msgstr ""
+msgstr "Uniforma CLT"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:112
 #, kde-format
 msgid "Weibull CLT"
-msgstr ""
+msgstr "Weibull CLT"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:117
 #, kde-format
 msgid "Distribution Analysis"
-msgstr ""
+msgstr "Distribua Analizo"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:126
 #, kde-format
 msgid "Univariate continuous distributions"
-msgstr ""
+msgstr "Unuvariaj kontinuaj distribuoj"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:127
@@ -507,13 +507,13 @@ msgstr "Betao"
 #: rkward/plugins/distributions.pluginmap:132
 #, kde-format
 msgid "Cauchy"
-msgstr ""
+msgstr "Cauchy"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:136
 #, kde-format
 msgid "Chi-squared"
-msgstr ""
+msgstr "Ĥi-kvadrata"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:141
@@ -537,19 +537,19 @@ msgstr "Gamo"
 #: rkward/plugins/distributions.pluginmap:156
 #, kde-format
 msgid "Gumbel"
-msgstr ""
+msgstr "Gumbel"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:159
 #, kde-format
 msgid "Logistic"
-msgstr ""
+msgstr "Loĝistiko"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:164
 #, kde-format
 msgid "Log Normal"
-msgstr ""
+msgstr "Protokoli Normala"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:169
@@ -561,7 +561,7 @@ msgstr "Normala"
 #: rkward/plugins/distributions.pluginmap:174
 #, kde-format
 msgid "Tukey"
-msgstr ""
+msgstr "Tukey"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:178
@@ -585,7 +585,7 @@ msgstr "Weibull"
 #: rkward/plugins/distributions.pluginmap:195
 #, kde-format
 msgid "Univariate discrete distributions"
-msgstr ""
+msgstr "Unuvariaj diskretaj distribuoj"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate discrete distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:196
@@ -621,13 +621,13 @@ msgstr "Poisson"
 #: rkward/plugins/distributions.pluginmap:221
 #, kde-format
 msgid "Wilcoxon Rank Sum"
-msgstr ""
+msgstr "Rangosumo de Wilcoxon"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator)
 #: rkward/plugins/distributions/beta.js:9
 #, kde-format
 msgid "Beta distribution"
-msgstr ""
+msgstr "Beta-distribuo"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <summary>
 #: rkward/plugins/distributions/beta.rkh:11
@@ -643,7 +643,7 @@ msgstr ""
 #: rkward/plugins/distributions/beta.rkh:18
 #, kde-format
 msgid "Parameter of the Beta distribution"
-msgstr ""
+msgstr "Parametro de la Beta-distribuo"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <settings> <setting> (refers to element labelled "non-centrality parameter (ncp)")
 #. i18n: ectx: (Loaded from Chi-squared distribution calculator) <settings> <setting> (refers to element labelled "non-centrality parameter")
@@ -665,31 +665,31 @@ msgstr ""
 #: rkward/plugins/distributions/plot_t_distribution.xml:24
 #, kde-format
 msgid "Non-centrality parameter"
-msgstr ""
+msgstr "Ne-centreca parametro"
 
 #. i18n: ectx: (Beta distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/beta.xml:15
 #, kde-format
 msgid "Shape 1"
-msgstr ""
+msgstr "Formo 1"
 
 #. i18n: ectx: (Beta distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/beta.xml:16
 #, kde-format
 msgid "Shape 2"
-msgstr ""
+msgstr "Formo 2"
 
 #. i18n: ectx: (Beta distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/beta.xml:17
 #, kde-format
 msgid "non-centrality parameter (ncp)"
-msgstr ""
+msgstr "ne-centreca parametro (ncp)"
 
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities)
 #: rkward/plugins/distributions/binomial.js:9
 #, kde-format
 msgid "Binomial distribution"
-msgstr ""
+msgstr "Binoma distribuo"
 
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <summary>
 #: rkward/plugins/distributions/binomial.rkh:11
@@ -713,7 +713,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_binomial_distribution.rkh:21
 #, kde-format
 msgid "Number of binomial trials"
-msgstr ""
+msgstr "Nombro de binomaj provoj"
 
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <settings> <setting> (refers to element labelled "Probability of success")
 #: rkward/plugins/distributions/binomial.rkh:20
@@ -736,7 +736,7 @@ msgstr ""
 #: rkward/plugins/distributions/binomial.xml:18
 #, kde-format
 msgid "Binomial trials"
-msgstr ""
+msgstr "Binomaj provoj"
 
 #. i18n: ectx: (Binomial probabilities, quantiles, densities) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/binomial.xml:19
@@ -748,13 +748,13 @@ msgstr "Verŝajneco de sukceso"
 #: rkward/plugins/distributions/binomial.xml:23
 #, kde-format
 msgid "Binomial probabilities, quantiles, densities"
-msgstr ""
+msgstr "Binomaj verŝajnecoj, kvantiloj, densecoj"
 
 #. i18n: ectx: (Loaded from Cauchy distribution calculator)
 #: rkward/plugins/distributions/cauchy.js:9
 #, kde-format
 msgid "Cauchy distribution"
-msgstr ""
+msgstr "Cauchy-distribuo"
 
 #. i18n: ectx: (Loaded from Cauchy distribution calculator) <summary>
 #: rkward/plugins/distributions/cauchy.rkh:11
@@ -770,7 +770,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_cauchy_distribution.rkh:21
 #, kde-format
 msgid "Location parameter (median) of the Cauchy distribution"
-msgstr ""
+msgstr "Lokparametro (mediano) de la Cauchy-distribuo"
 
 #. i18n: ectx: (Loaded from Cauchy distribution calculator) <settings> <setting> (refers to element labelled "Scale")
 #. i18n: ectx: (Loaded from Plot Cauchy probabilities) <settings> <setting> (refers to element labelled "Scale")
@@ -778,7 +778,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_cauchy_distribution.rkh:22
 #, kde-format
 msgid "Scale parameter of the Cauchy distribution"
-msgstr ""
+msgstr "Skala parametro de la Cauchy-distribuo"
 
 #. i18n: ectx: (Cauchy distribution calculator) <snippets> <snippet> <spinbox label="...">
 #. i18n: ectx: (Plot Cauchy probabilities) <snippets> [...] <frame label="Parameters"> <spinbox label="...">
@@ -822,7 +822,7 @@ msgstr "Skali"
 #: rkward/plugins/distributions/chi_squared.js:10
 #, kde-format
 msgid "Chi-squared distribution"
-msgstr ""
+msgstr "Ĥi-kvadrata distribuo"
 
 #. i18n: ectx: (Loaded from Chi-squared distribution calculator) <summary>
 #: rkward/plugins/distributions/chi_squared.rkh:11
@@ -861,7 +861,7 @@ msgstr "Gradoj de Libereco"
 #: rkward/plugins/distributions/f.xml:17 rkward/plugins/distributions/t.xml:16
 #, kde-format
 msgid "non-centrality parameter"
-msgstr ""
+msgstr "ne-centreca parametro"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Beta to Normal) <snippets> <snippet> <setting> (refers to element labelled "Beta Parameters")
 #: rkward/plugins/distributions/clt/plot_beta_clt.rkh:14
@@ -875,7 +875,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_beta_clt.xml:12
 #, kde-format
 msgid "Beta Parameters"
-msgstr ""
+msgstr "Beta-Parametroj"
 
 #. i18n: ectx: (Plot Beta probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Beta to Normal) <snippets> <snippet> <frame label="Beta Parameters"> <spinbox label="...">
@@ -883,7 +883,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_beta_distribution.xml:23
 #, kde-format
 msgid "Shape1 (a)"
-msgstr ""
+msgstr "Formo 1 (a)"
 
 #. i18n: ectx: (Plot Beta probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Beta to Normal) <snippets> <snippet> <frame label="Beta Parameters"> <spinbox label="...">
@@ -891,7 +891,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_beta_distribution.xml:24
 #, kde-format
 msgid "Shape2 (b)"
-msgstr ""
+msgstr "Formo 2 (b)"
 
 #. i18n: ectx: (Central Limit Theorem: Beta to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_beta_clt.xml:22
@@ -904,7 +904,7 @@ msgstr "Betao"
 #: rkward/plugins/distributions/clt/plot_beta_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Beta to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Beta al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippets> <snippet> <setting> (refers to element labelled "Binomial Parameters")
 #: rkward/plugins/distributions/clt/plot_binomial_clt.rkh:14
@@ -918,7 +918,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_binomial_clt.xml:12
 #, kde-format
 msgid "Binomial Parameters"
-msgstr ""
+msgstr "Binomaj Parametroj"
 
 #. i18n: ectx: (Plot binomial probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Binomial to Normal) <snippets> <snippet> <frame label="Binomial Parameters"> <spinbox label="...">
@@ -940,7 +940,7 @@ msgstr "Nombro de provoj"
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:33
 #, kde-format
 msgid "Probability of success on each trial"
-msgstr ""
+msgstr "Probableco de sukceso en ĉiu provo"
 
 #. i18n: ectx: (Central Limit Theorem: Binomial to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_binomial_clt.xml:22
@@ -953,7 +953,7 @@ msgstr "Binomo"
 #: rkward/plugins/distributions/clt/plot_binomial_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Binomial to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Binomo al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Chi squared to Normal) <snippets> <snippet> <setting> (refers to element labelled "Chi squared Parameters")
 #: rkward/plugins/distributions/clt/plot_chi_squared_clt.rkh:14
@@ -967,7 +967,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_chi_squared_clt.xml:12
 #, kde-format
 msgid "Chi squared Parameters"
-msgstr ""
+msgstr "Chi kvadrata Parametroj"
 
 #. i18n: ectx: (Central Limit Theorem: Chi squared to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_chi_squared_clt.xml:22
@@ -980,7 +980,7 @@ msgstr "Ĉi-kvadrata"
 #: rkward/plugins/distributions/clt/plot_chi_squared_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Chi squared to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Ĥio kvadratita al Normalo"
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <summary>
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <summary>
@@ -1183,7 +1183,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:23
 #, kde-format
 msgid "Pointtype for the Normal curve."
-msgstr ""
+msgstr "Punktotipo por la Normala kurbo."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Color")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Color")
@@ -1205,7 +1205,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:24
 #, kde-format
 msgid "Color of the Normal curve."
-msgstr ""
+msgstr "Koloro de la Normala kurbo."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Plot Options")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Plot Options")
@@ -1227,7 +1227,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:25
 #, kde-format
 msgid "Various plot options."
-msgstr ""
+msgstr "Diversaj grafiko-opcioj."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Preview")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Preview")
@@ -1249,7 +1249,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:26
 #, kde-format
 msgid "Preview button."
-msgstr ""
+msgstr "Antaŭrigardu butonon."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Histogram Options")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Histogram Options")
@@ -1298,7 +1298,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:30
 #, kde-format
 msgid "Stepfunction options"
-msgstr ""
+msgstr "Opcioj de paŝofunkcio"
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting label="Stepfunction options"> (refers to element labelled "")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting label="Stepfunction options"> (refers to element labelled "")
@@ -1344,7 +1344,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:32
 #, kde-format
 msgid "<insert snippet=\"dist_related\"/>"
-msgstr ""
+msgstr "<insert snippet=\"dist_related\"/>"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <i18n label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <i18n label="...">
@@ -1366,7 +1366,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:14
 #, kde-format
 msgid "Sample Averages"
-msgstr ""
+msgstr "Specimenaj Mezumoj"
 
 #. i18n: ectx: (Plot Beta probabilities) <snippets> <snippet> <frame label="...">
 #. i18n: ectx: (Plot binomial probabilities) <snippets> <snippet> <frame label="...">
@@ -1448,7 +1448,7 @@ msgstr "Parametroj"
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:43
 #, kde-format
 msgid "CLT Samples"
-msgstr ""
+msgstr "CLT Specimenoj"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <frame label="CLT Samples"> <spinbox label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <frame label="CLT Samples"> <spinbox label="...">
@@ -1470,7 +1470,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:44
 #, kde-format
 msgid "Samples for Average"
-msgstr ""
+msgstr "Specimenoj por Mezumo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <frame label="CLT Samples"> <spinbox label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <frame label="CLT Samples"> <spinbox label="...">
@@ -1492,7 +1492,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:45
 #, kde-format
 msgid "Samples for distribution"
-msgstr ""
+msgstr "Specimenoj por distribuo"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <radio label="...">
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <radio label="...">
@@ -1553,7 +1553,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:16
 #, kde-format
 msgid "Choose type of function plot"
-msgstr ""
+msgstr "Elektu tipon de funkcio-grafiko"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <radio label="Choose type of function plot"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <radio label="Choose type of function plot"> <option label="...">
@@ -1575,7 +1575,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:51
 #, kde-format
 msgid "Histogram and Density"
-msgstr ""
+msgstr "Histogramo kaj denseco"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <radio label="Choose type of function plot"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <radio label="Choose type of function plot"> <option label="...">
@@ -1597,7 +1597,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:52
 #, kde-format
 msgid "ECDF and Distribution"
-msgstr ""
+msgstr "ECDF kaj Distribuo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <checkbox label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <checkbox label="...">
@@ -1619,7 +1619,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:54
 #, kde-format
 msgid "Use normalised random variable"
-msgstr ""
+msgstr "Uzu normaligitan hazardan variablon"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <frame label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <frame label="...">
@@ -1641,7 +1641,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:55
 #, kde-format
 msgid "Normal Curve Options"
-msgstr ""
+msgstr "Normalaj Kurbaj Opcioj"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <frame label="Normal Curve Options"> <checkbox label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <frame label="Normal Curve Options"> <checkbox label="...">
@@ -1663,7 +1663,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:56
 #, kde-format
 msgid "Draw normal curve"
-msgstr ""
+msgstr "Desegnu normalan kurbon"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <frame label="Normal Curve Options"> <dropdown label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <frame label="Normal Curve Options"> <dropdown label="...">
@@ -1685,7 +1685,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:57
 #, kde-format
 msgid "Type of points/lines"
-msgstr ""
+msgstr "Tipo de punktoj/linioj"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
@@ -1707,7 +1707,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:58
 #, kde-format
 msgid "Individual points "
-msgstr ""
+msgstr "Individuaj punktoj"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
@@ -1751,7 +1751,7 @@ msgstr "Linioj"
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:60
 #, kde-format
 msgid "Points connected by lines (both)"
-msgstr ""
+msgstr "Punktoj ligitaj per linioj (ambaŭ)"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
@@ -1773,7 +1773,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:61
 #, kde-format
 msgid "Points overlaid by lines "
-msgstr ""
+msgstr "Punktoj supermetitaj per linioj"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
@@ -1795,7 +1795,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:62
 #, kde-format
 msgid "Vertical lines (high-density)"
-msgstr ""
+msgstr "Vertikalaj linioj (alta denseco)"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
@@ -1817,7 +1817,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:63
 #, kde-format
 msgid "Step-function on left edge"
-msgstr ""
+msgstr "Paŝo-funkcio sur maldekstra rando"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
@@ -1839,7 +1839,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:64
 #, kde-format
 msgid "Step-function on right edge"
-msgstr ""
+msgstr "Paŝo-funkcio sur dekstra rando"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <frame label="Normal Curve Options"> <embed label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <frame label="Normal Curve Options"> <embed label="...">
@@ -1922,7 +1922,7 @@ msgstr "Koloro"
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:24
 #, kde-format
 msgid "Plot Options"
-msgstr ""
+msgstr "Grafikaj Opcioj"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <preview label="...">
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <preview label="...">
@@ -2027,7 +2027,7 @@ msgstr "Histogramo"
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:78
 #, kde-format
 msgid "Histogram Options"
-msgstr ""
+msgstr "Histogramaj Opcioj"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="...">
@@ -2049,7 +2049,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:81
 #, kde-format
 msgid "ECDF options"
-msgstr ""
+msgstr "ECDF-opcioj"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Exponential to Normal) <snippets> <snippet> <setting> (refers to element labelled "Exponential Parameters")
 #: rkward/plugins/distributions/clt/plot_exponential_clt.rkh:14
@@ -2063,7 +2063,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_exponential_clt.xml:12
 #, kde-format
 msgid "Exponential Parameters"
-msgstr ""
+msgstr "Eksponentaj Parametroj"
 
 #. i18n: ectx: (Exponential distribution calculator) <snippets> <snippet> <spinbox label="...">
 #. i18n: ectx: (Plot Exponential probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -2088,7 +2088,7 @@ msgstr "Eksponenta"
 #: rkward/plugins/distributions/clt/plot_exponential_clt.xml:23
 #, kde-format
 msgid "Central Limit Theorem: Exponential to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Eksponenta al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: F to Normal) <snippets> <snippet> <setting> (refers to element labelled "F Parameters")
 #: rkward/plugins/distributions/clt/plot_f_clt.rkh:14
@@ -2103,7 +2103,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_f_clt.xml:12
 #, kde-format
 msgid "F Parameters"
-msgstr ""
+msgstr "F Parametroj"
 
 #. i18n: ectx: (Loaded from F distribution calculator) <settings> <setting> (refers to element labelled "Numerator degrees of Freedom")
 #. i18n: ectx: (Plot F probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -2113,7 +2113,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_f_distribution.xml:23
 #, kde-format
 msgid "Numerator degrees of freedom"
-msgstr ""
+msgstr "Numerilgradoj da libereco"
 
 #. i18n: ectx: (Loaded from F distribution calculator) <settings> <setting> (refers to element labelled "Denominator degrees of Freedom")
 #. i18n: ectx: (Plot F probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -2123,7 +2123,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_f_distribution.xml:24
 #, kde-format
 msgid "Denominator degrees of freedom"
-msgstr ""
+msgstr "Denominator gradoj de libereco"
 
 #. i18n: ectx: (Central Limit Theorem: F to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_f_clt.xml:23
@@ -2136,7 +2136,7 @@ msgstr "F"
 #: rkward/plugins/distributions/clt/plot_f_clt.xml:25
 #, kde-format
 msgid "Central Limit Theorem: F to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: F al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Gamma to Normal) <snippets> <snippet> <setting> (refers to element labelled "Gamma Parameters")
 #: rkward/plugins/distributions/clt/plot_gamma_clt.rkh:14
@@ -2150,7 +2150,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_gamma_clt.xml:12
 #, kde-format
 msgid "Gamma Parameters"
-msgstr ""
+msgstr "Gamaj Parametroj"
 
 #. i18n: ectx: (Gamma distribution calculator) <snippets> <snippet> <spinbox label="...">
 #. i18n: ectx: (Plot Gamma probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -2174,7 +2174,7 @@ msgstr "Formo"
 #: rkward/plugins/distributions/plot_gamma_distribution.xml:24
 #, kde-format
 msgid "Rate (lambda) or 1/Scale"
-msgstr ""
+msgstr "Tarifo (lambda) aŭ 1/Skalo"
 
 #. i18n: ectx: (Central Limit Theorem: Gamma to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_gamma_clt.xml:22
@@ -2187,7 +2187,7 @@ msgstr "Gamo"
 #: rkward/plugins/distributions/clt/plot_gamma_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Gamma to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Gamo al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippets> <snippet> <setting> (refers to element labelled "Geometric Parameters")
 #: rkward/plugins/distributions/clt/plot_geometric_clt.rkh:14
@@ -2201,7 +2201,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_geometric_clt.xml:12
 #, kde-format
 msgid "Geometric Parameters"
-msgstr ""
+msgstr "Geometriaj Parametroj"
 
 #. i18n: ectx: (Central Limit Theorem: Geometric to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_geometric_clt.xml:21
@@ -2214,7 +2214,7 @@ msgstr "Geometria"
 #: rkward/plugins/distributions/clt/plot_geometric_clt.xml:23
 #, kde-format
 msgid "Central Limit Theorem: Geometric to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Geometria al Normala"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Hypergeometric to Normal) <snippets> <snippet> <setting> (refers to element labelled "Hypergeometric Parameters")
 #: rkward/plugins/distributions/clt/plot_hypergeometric_clt.rkh:14
@@ -2228,7 +2228,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_hypergeometric_clt.xml:12
 #, kde-format
 msgid "Hypergeometric Parameters"
-msgstr ""
+msgstr "Hipergeometriaj Parametroj"
 
 #. i18n: ectx: (Plot hypergeometric probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Hypergeometric to Normal) <snippets> <snippet> <frame label="Hypergeometric Parameters"> <spinbox label="...">
@@ -2236,7 +2236,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_hypergeometric_distribution.xml:23
 #, kde-format
 msgid "Number of white balls (m)"
-msgstr ""
+msgstr "Nombro da blankaj pilkoj (m)"
 
 #. i18n: ectx: (Plot hypergeometric probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Hypergeometric to Normal) <snippets> <snippet> <frame label="Hypergeometric Parameters"> <spinbox label="...">
@@ -2244,7 +2244,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_hypergeometric_distribution.xml:24
 #, kde-format
 msgid "Number of black balls (n)"
-msgstr ""
+msgstr "Nombro da nigraj pilkoj (n)"
 
 #. i18n: ectx: (Plot hypergeometric probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Hypergeometric to Normal) <snippets> <snippet> <frame label="Hypergeometric Parameters"> <spinbox label="...">
@@ -2252,7 +2252,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_hypergeometric_distribution.xml:25
 #, kde-format
 msgid "Number of balls drawn (k)"
-msgstr ""
+msgstr "Nombro da pilkoj tiritaj (k)"
 
 #. i18n: ectx: (Central Limit Theorem: Hypergeometric to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_hypergeometric_clt.xml:23
@@ -2265,7 +2265,7 @@ msgstr "Hipergeometria"
 #: rkward/plugins/distributions/clt/plot_hypergeometric_clt.xml:25
 #, kde-format
 msgid "Central Limit Theorem: Hypergeometric to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Hipergeometria al Normala"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Logistic to Normal) <snippets> <snippet> <setting> (refers to element labelled "Logistic Parameters")
 #: rkward/plugins/distributions/clt/plot_logistic_clt.rkh:14
@@ -2279,20 +2279,20 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_logistic_clt.xml:12
 #, kde-format
 msgid "Logistic Parameters"
-msgstr ""
+msgstr "Loĝistikaj Parametroj"
 
 #. i18n: ectx: (Central Limit Theorem: Logistic to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_logistic_clt.xml:22
 #, kde-format
 msgctxt "Distribution name"
 msgid "Logistic"
-msgstr ""
+msgstr "Loĝistiko"
 
 #. i18n: ectx: (Central Limit Theorem: Logistic to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_logistic_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Logistic to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Loĝistiko al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Lognormal to Normal) <snippets> <snippet> <setting> (refers to element labelled "Lognormal Parameters (in log-scale)")
 #: rkward/plugins/distributions/clt/plot_lognormal_clt.rkh:14
@@ -2306,7 +2306,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_lognormal_clt.xml:12
 #, kde-format
 msgid "Lognormal Parameters (in log-scale)"
-msgstr ""
+msgstr "Lognormalaj Parametroj (en log-skalo)"
 
 #. i18n: ectx: (Plot Lognormal probabilities) <snippets> <snippet> <frame label="Parameters (on log scale)"> <spinbox label="...">
 #. i18n: ectx: (Plot Normal probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -2341,13 +2341,13 @@ msgstr "Norma devio"
 #, kde-format
 msgctxt "Distribution name"
 msgid "Lognormal"
-msgstr ""
+msgstr "Lognormala"
 
 #. i18n: ectx: (Central Limit Theorem: Lognormal to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_lognormal_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Lognormal to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Lognormala al Normala"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Negative Binomial to Normal) <snippets> <snippet> <setting> (refers to element labelled "Negative Binomial Parameters")
 #: rkward/plugins/distributions/clt/plot_negbinomial_clt.rkh:14
@@ -2361,7 +2361,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_negbinomial_clt.xml:12
 #, kde-format
 msgid "Negative Binomial Parameters"
-msgstr ""
+msgstr "Negativaj Binomaj Parametroj"
 
 #. i18n: ectx: (Negative Binomial distribution calculator) <snippets> <snippet> <spinbox label="...">
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -2371,13 +2371,13 @@ msgstr ""
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:29
 #, kde-format
 msgid "Target number of successful trials"
-msgstr ""
+msgstr "Cela nombro de sukcesaj provoj"
 
 #. i18n: ectx: (Central Limit Theorem: Negative Binomial to Normal) <snippets> <snippet> <frame label="Negative Binomial Parameters"> <spinbox label="...">
 #: rkward/plugins/distributions/clt/plot_negbinomial_clt.xml:14
 #, kde-format
 msgid "Dispersion"
-msgstr ""
+msgstr "Disperdo"
 
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> [...] <radio label="Type of Parametrization"> <option label="...">
 #. i18n: ectx: (Central Limit Theorem: Negative Binomial to Normal) <snippets> <snippet> <frame label="Negative Binomial Parameters"> <spinbox label="...">
@@ -2387,7 +2387,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:38
 #, kde-format
 msgid "Success probability"
-msgstr ""
+msgstr "Sukcesprobablo"
 
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> [...] <radio label="Type of Parametrization"> <option label="...">
 #. i18n: ectx: (Central Limit Theorem: Negative Binomial to Normal) <snippets> <snippet> <frame label="Negative Binomial Parameters"> <spinbox label="...">
@@ -2397,7 +2397,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:39
 #, kde-format
 msgid "Mean (mu)"
-msgstr ""
+msgstr "Mezumo (mu)"
 
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> <snippet> <frame label="Parameters"> <radio label="...">
 #. i18n: ectx: (Central Limit Theorem: Negative Binomial to Normal) <snippets> <snippet> <frame label="Negative Binomial Parameters"> <radio label="...">
@@ -2405,7 +2405,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:37
 #, kde-format
 msgid "Type of Parametrization"
-msgstr ""
+msgstr "Tipo de Parametrigo"
 
 #. i18n: ectx: (Central Limit Theorem: Negative Binomial to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_negbinomial_clt.xml:34
@@ -2418,7 +2418,7 @@ msgstr "Negativa Binomo"
 #: rkward/plugins/distributions/clt/plot_negbinomial_clt.xml:43
 #, kde-format
 msgid "Central Limit Theorem: Negative Binomial to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Negativa Binomo al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Normal to Normal) <snippets> <snippet> <setting> (refers to element labelled "Normal Parameters")
 #: rkward/plugins/distributions/clt/plot_normal_clt.rkh:13
@@ -2432,7 +2432,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_normal_clt.xml:12
 #, kde-format
 msgid "Normal Parameters"
-msgstr ""
+msgstr "Normalaj Parametroj"
 
 #. i18n: ectx: (Central Limit Theorem: Normal to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_normal_clt.xml:22
@@ -2445,7 +2445,7 @@ msgstr "Normala"
 #: rkward/plugins/distributions/clt/plot_normal_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Normal to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Normala al Normala"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Poisson to Normal) <snippets> <snippet> <setting> (refers to element labelled "Poisson Parameters")
 #: rkward/plugins/distributions/clt/plot_poisson_clt.rkh:14
@@ -2459,7 +2459,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_poisson_clt.xml:12
 #, kde-format
 msgid "Poisson Parameters"
-msgstr ""
+msgstr "Parametroj de Poisson"
 
 #. i18n: ectx: (Central Limit Theorem: Poisson to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_poisson_clt.xml:21
@@ -2472,7 +2472,7 @@ msgstr "Poisson"
 #: rkward/plugins/distributions/clt/plot_poisson_clt.xml:23
 #, kde-format
 msgid "Central Limit Theorem: Poisson to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Poisson al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: t to Normal) <snippets> <snippet> <setting> (refers to element labelled "t Parameters")
 #: rkward/plugins/distributions/clt/plot_t_clt.rkh:14
@@ -2487,7 +2487,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_t_clt.xml:12
 #, kde-format
 msgid "t Parameters"
-msgstr ""
+msgstr "t Parametroj"
 
 #. i18n: ectx: (Central Limit Theorem: t to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_t_clt.xml:22
@@ -2500,7 +2500,7 @@ msgstr "t"
 #: rkward/plugins/distributions/clt/plot_t_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: t to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: t al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Uniform to Normal) <snippets> <snippet> <setting> (refers to element labelled "Uniform Parameters")
 #: rkward/plugins/distributions/clt/plot_uniform_clt.rkh:14
@@ -2514,7 +2514,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_uniform_clt.xml:12
 #, kde-format
 msgid "Uniform Parameters"
-msgstr ""
+msgstr "Uniformaj Parametroj"
 
 #. i18n: ectx: (Plot Uniform probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Uniform to Normal) <snippets> <snippet> <frame label="Uniform Parameters"> <spinbox label="...">
@@ -2543,7 +2543,7 @@ msgstr "Uniformo"
 #: rkward/plugins/distributions/clt/plot_uniform_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Uniform to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Uniforma al Normala"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Weibull to Normal) <snippets> <snippet> <setting> (refers to element labelled "Weibull Parameters")
 #: rkward/plugins/distributions/clt/plot_weibull_clt.rkh:14
@@ -2557,7 +2557,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_weibull_clt.xml:12
 #, kde-format
 msgid "Weibull Parameters"
-msgstr ""
+msgstr "Weibull Parametroj"
 
 #. i18n: ectx: (Central Limit Theorem: Weibull to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_weibull_clt.xml:22
@@ -2570,7 +2570,7 @@ msgstr "Weibull"
 #: rkward/plugins/distributions/clt/plot_weibull_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Weibull to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Weibull al Normalo"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Wilcoxon to Normal) <snippets> <snippet> <setting> (refers to element labelled "Wilcoxon Parameters")
 #: rkward/plugins/distributions/clt/plot_wilcoxon_clt.rkh:14
@@ -2584,7 +2584,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_wilcoxon_clt.xml:12
 #, kde-format
 msgid "Wilcoxon Parameters"
-msgstr ""
+msgstr "Parametroj de Wilcoxon"
 
 #. i18n: ectx: (Plot Wilcoxon Rank Sum statistic probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Wilcoxon to Normal) <snippets> <snippet> <frame label="Wilcoxon Parameters"> <spinbox label="...">
@@ -2592,7 +2592,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_wilcoxon_distribution.xml:23
 #, kde-format
 msgid "Number of Observations in first sample (m)"
-msgstr ""
+msgstr "Nombro da Observaĵoj en unua specimeno (m)"
 
 #. i18n: ectx: (Plot Wilcoxon Rank Sum statistic probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #. i18n: ectx: (Central Limit Theorem: Wilcoxon to Normal) <snippets> <snippet> <frame label="Wilcoxon Parameters"> <spinbox label="...">
@@ -2600,20 +2600,20 @@ msgstr ""
 #: rkward/plugins/distributions/plot_wilcoxon_distribution.xml:24
 #, kde-format
 msgid "Number of Observations in second sample (n)"
-msgstr ""
+msgstr "Nombro da Observaĵoj en dua provaĵo (n)"
 
 #. i18n: ectx: (Central Limit Theorem: Wilcoxon to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_wilcoxon_clt.xml:22
 #, kde-format
 msgctxt "Distribution name"
 msgid "Wilcoxon"
-msgstr ""
+msgstr "Wilcoxon"
 
 #. i18n: ectx: (Central Limit Theorem: Wilcoxon to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_wilcoxon_clt.xml:24
 #, kde-format
 msgid "Central Limit Theorem: Wilcoxon to Normal"
-msgstr ""
+msgstr "Centra Limteoremo: Wilcoxon al Normalo"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <caption title="...">
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <caption title="...">
@@ -2638,7 +2638,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_help_snippets.xml:8
 #, kde-format
 msgid "Generic settings"
-msgstr ""
+msgstr "Ĝeneralaj agordoj"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Mode")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Mode")
@@ -2827,7 +2827,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_help_snippets.xml:15
 #, kde-format
 msgid "When calculating densities, return these as log (d)."
-msgstr ""
+msgstr "Dum kalkulado de densecoj, redonu ĉi tiujn kiel log (d)."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Lower tail")
@@ -2879,7 +2879,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_help_snippets.xml:17
 #, kde-format
 msgid "Show a preview of the result."
-msgstr ""
+msgstr "Montru antaŭrigardon de la rezulto."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <caption title="...">
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <caption title="...">
@@ -2904,7 +2904,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_help_snippets.xml:18
 #, kde-format
 msgid "Distribution specific settings"
-msgstr ""
+msgstr "Distribuaj specifaj agordoj"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <usage>
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <usage>
@@ -2983,7 +2983,7 @@ msgstr "Reĝimo"
 #: rkward/plugins/distributions/dist_snippets.xml:25
 #, kde-format
 msgid "Calculate probabilities for given quantiles"
-msgstr ""
+msgstr "Kalkuli probablojn por donitaj kvantiloj"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <dropdown label="Mode"> <option label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <dropdown label="Mode"> <option label="...">
@@ -3008,7 +3008,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:26
 #, kde-format
 msgid "Calculate densities at given quantiles"
-msgstr ""
+msgstr "Kalkulu densecojn ĉe donitaj kvantiloj"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <dropdown label="Mode"> <option label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <dropdown label="Mode"> <option label="...">
@@ -3033,7 +3033,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:27
 #, kde-format
 msgid "Calculate quantiles for given probabilities"
-msgstr ""
+msgstr "Kalkuli kvantilojn por donitaj probabloj"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <spinbox label="...">
@@ -3058,7 +3058,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:32
 #, kde-format
 msgid "Number of quantiles"
-msgstr ""
+msgstr "Nombro de kvantiloj"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <spinbox label="...">
@@ -3083,7 +3083,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:33
 #, kde-format
 msgid "Number of probabilities"
-msgstr ""
+msgstr "Nombro de probabloj"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <text>
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <text>
@@ -3108,7 +3108,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:34
 #, kde-format
 msgid "- or -"
-msgstr ""
+msgstr "- aŭ -"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <matrix label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <matrix label="...">
@@ -3133,7 +3133,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:35
 #, kde-format
 msgid "Specify Quantiles (optional)"
-msgstr ""
+msgstr "Specifi Kvantilojn (laŭvola)"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <matrix label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <matrix label="...">
@@ -3158,7 +3158,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:36
 #, kde-format
 msgid "Specify Probabilities (optional)"
-msgstr ""
+msgstr "Specifi Probablecojn (laŭvola)"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <checkbox label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <checkbox label="...">
@@ -3183,7 +3183,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:37
 #, kde-format
 msgid "Logarithmic probabilities"
-msgstr ""
+msgstr "Logaritmaj probabloj"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <checkbox label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <checkbox label="...">
@@ -3208,7 +3208,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:38
 #, kde-format
 msgid "Logarithmic densities"
-msgstr ""
+msgstr "Logaritmaj densecoj"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <checkbox label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <checkbox label="...">
@@ -3233,13 +3233,13 @@ msgstr ""
 #: rkward/plugins/distributions/dist_snippets.xml:39
 #, kde-format
 msgid "Lower tail"
-msgstr ""
+msgstr "Malsupra vosto"
 
 #. i18n: ectx: (Loaded from Exponential distribution calculator)
 #: rkward/plugins/distributions/exponential.js:10
 #, kde-format
 msgid "Exponential distribution"
-msgstr ""
+msgstr "Eksponenta distribuo"
 
 #. i18n: ectx: (Loaded from Exponential distribution calculator) <summary>
 #: rkward/plugins/distributions/exponential.rkh:11
@@ -3253,7 +3253,7 @@ msgstr ""
 #: rkward/plugins/distributions/exponential.rkh:17
 #, kde-format
 msgid "Rate parameter λ (1/mean)"
-msgstr ""
+msgstr "Indice parametro λ (1/mezumo)"
 
 #. i18n: ectx: (Loaded from Exponential distribution calculator) <related>
 #: rkward/plugins/distributions/exponential.rkh:19
@@ -3267,7 +3267,7 @@ msgstr ""
 #: rkward/plugins/distributions/f.js:9
 #, kde-format
 msgid "F distribution"
-msgstr ""
+msgstr "F distribuo"
 
 #. i18n: ectx: (Loaded from F distribution calculator) <summary>
 #: rkward/plugins/distributions/f.rkh:11
@@ -3281,19 +3281,19 @@ msgstr ""
 #: rkward/plugins/distributions/f.xml:15
 #, kde-format
 msgid "Numerator degrees of Freedom"
-msgstr ""
+msgstr "Numeraj gradoj de Libereco"
 
 #. i18n: ectx: (F distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/f.xml:16
 #, kde-format
 msgid "Denominator degrees of Freedom"
-msgstr ""
+msgstr "Denominatoraj gradoj de Libereco"
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator)
 #: rkward/plugins/distributions/gamma.js:9
 #, kde-format
 msgid "Gamma distribution"
-msgstr ""
+msgstr "Gama distribuo"
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator) <summary>
 #: rkward/plugins/distributions/gamma.rkh:11
@@ -3307,13 +3307,13 @@ msgstr ""
 #: rkward/plugins/distributions/gamma.rkh:17
 #, kde-format
 msgid "Shape parameter (k)"
-msgstr ""
+msgstr "Forma parametro (k)"
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator) <settings> <setting> (refers to element labelled "Rate")
 #: rkward/plugins/distributions/gamma.rkh:18
 #, kde-format
 msgid "Rate parameter β (inverse of scale parameter)"
-msgstr ""
+msgstr "Indice parametro β (inversa de skala parametro)"
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator) <related>
 #: rkward/plugins/distributions/gamma.rkh:20
@@ -3335,7 +3335,7 @@ msgstr ""
 #: rkward/plugins/distributions/geom.js:10
 #, kde-format
 msgid "Geometric distribution"
-msgstr ""
+msgstr "Geometria distribuo"
 
 #. i18n: ectx: (Loaded from Geometric distribution calculator) <summary>
 #: rkward/plugins/distributions/geom.rkh:11
@@ -3374,13 +3374,13 @@ msgstr ""
 #: rkward/plugins/distributions/geom.xml:18
 #, kde-format
 msgid "probability of success in each trial"
-msgstr ""
+msgstr "probableco de sukceso en ĉiu provo"
 
 #. i18n: ectx: (Loaded from Gumbel distribution calculator)
 #: rkward/plugins/distributions/gumbel.js:15
 #, kde-format
 msgid "Gumbel distribution"
-msgstr ""
+msgstr "Gumbel-distribuo"
 
 #. i18n: ectx: (Loaded from Gumbel distribution calculator) <summary>
 #: rkward/plugins/distributions/gumbel.rkh:11
@@ -3394,7 +3394,7 @@ msgstr ""
 #: rkward/plugins/distributions/gumbel.rkh:17
 #, kde-format
 msgid "Location parameter."
-msgstr ""
+msgstr "Loka parametro."
 
 #. i18n: ectx: (Loaded from Gumbel distribution calculator) <settings> <setting> (refers to element labelled "Scale")
 #. i18n: ectx: (Loaded from Logistic distribution calculator) <settings> <setting> (refers to element labelled "Scale")
@@ -3402,7 +3402,7 @@ msgstr ""
 #: rkward/plugins/distributions/logistic.rkh:18
 #, kde-format
 msgid "Scale parameter."
-msgstr ""
+msgstr "Skala parametro."
 
 #. i18n: ectx: (Loaded from Gumbel distribution calculator) <related>
 #: rkward/plugins/distributions/gumbel.rkh:20
@@ -3416,7 +3416,7 @@ msgstr ""
 #: rkward/plugins/distributions/hypergeometric.js:9
 #, kde-format
 msgid "Hypergeometric distribution"
-msgstr ""
+msgstr "Hipergeometria distribuo"
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator) <summary>
 #: rkward/plugins/distributions/hypergeometric.rkh:11
@@ -3442,7 +3442,7 @@ msgstr ""
 #: rkward/plugins/distributions/hypergeometric.xml:18
 #, kde-format
 msgid "m (Number of white balls in the urn)"
-msgstr ""
+msgstr "m (Nombro da blankaj pilkoj en la urno)"
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator) <settings> <setting> (refers to element labelled "n (Number of black balls in the urn)")
 #. i18n: ectx: (Hypergeometric distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -3450,25 +3450,25 @@ msgstr ""
 #: rkward/plugins/distributions/hypergeometric.xml:19
 #, kde-format
 msgid "n (Number of black balls in the urn)"
-msgstr ""
+msgstr "n (Nombro da nigraj pilkoj en la urno)"
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator) <settings> <setting> (refers to element labelled "k (Number of balls drawn from the urn)")
 #: rkward/plugins/distributions/hypergeometric.rkh:21
 #, kde-format
 msgid "k (Number of draws from the urn)"
-msgstr ""
+msgstr "k (Nombro de remizoj de la urno)"
 
 #. i18n: ectx: (Hypergeometric distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/hypergeometric.xml:20
 #, kde-format
 msgid "k (Number of balls drawn from the urn)"
-msgstr ""
+msgstr "k (Nombro da pilkoj eltiritaj el la urno)"
 
 #. i18n: ectx: (Loaded from Log Normal distribution calculator)
 #: rkward/plugins/distributions/log_normal.js:9
 #, kde-format
 msgid "Log Normal distribution"
-msgstr ""
+msgstr "Protokoli Normala distribuo"
 
 #. i18n: ectx: (Loaded from Log Normal distribution calculator) <summary>
 #: rkward/plugins/distributions/log_normal.rkh:11
@@ -3482,31 +3482,31 @@ msgstr ""
 #: rkward/plugins/distributions/log_normal.rkh:17
 #, kde-format
 msgid "meanlog (mean of the distribution on the log scale)"
-msgstr ""
+msgstr "meanlog (meznombro de la distribuo sur la logskalo)"
 
 #. i18n: ectx: (Loaded from Log Normal distribution calculator) <settings> <setting> (refers to element labelled "sdlog (standard deviation on log scale)")
 #: rkward/plugins/distributions/log_normal.rkh:18
 #, kde-format
 msgid "sdlog (standard deviation of the distribution on the log scale)"
-msgstr ""
+msgstr "sdlog (norma devio de la distribuo sur la logskalo)"
 
 #. i18n: ectx: (Log Normal distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/log_normal.xml:15
 #, kde-format
 msgid "meanlog (mean on log scale)"
-msgstr ""
+msgstr "meznombro (meznombro laŭ logskalo)"
 
 #. i18n: ectx: (Log Normal distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/log_normal.xml:16
 #, kde-format
 msgid "sdlog (standard deviation on log scale)"
-msgstr ""
+msgstr "sdlog (norma devio laŭ logskalo)"
 
 #. i18n: ectx: (Loaded from Logistic distribution calculator)
 #: rkward/plugins/distributions/logistic.js:11
 #, kde-format
 msgid "Logistic distribution"
-msgstr ""
+msgstr "Loĝistika distribuo"
 
 #. i18n: ectx: (Loaded from Logistic distribution calculator) <summary>
 #: rkward/plugins/distributions/logistic.rkh:11
@@ -3520,13 +3520,13 @@ msgstr ""
 #: rkward/plugins/distributions/logistic.rkh:17
 #, kde-format
 msgid "Location parameter μ (corresponds to the mean)."
-msgstr ""
+msgstr "Lokparametro μ (korespondas al la meznombro)."
 
 #. i18n: ectx: (Loaded from Negative Binomial distribution calculator)
 #: rkward/plugins/distributions/negative_binomial.js:11
 #, kde-format
 msgid "Negative Binomial distribution"
-msgstr ""
+msgstr "Negativa Binoma distribuo"
 
 #. i18n: ectx: (Loaded from Negative Binomial distribution calculator) <summary>
 #: rkward/plugins/distributions/negative_binomial.rkh:11
@@ -3548,7 +3548,7 @@ msgstr ""
 #: rkward/plugins/distributions/negative_binomial.rkh:19
 #, kde-format
 msgid "Target number of successes. This need not be an integer."
-msgstr ""
+msgstr "Cela nombro da sukcesoj. Ĉi tio ne devas esti entjero."
 
 #. i18n: ectx: (Loaded from Negative Binomial distribution calculator) <settings> <setting> (refers to element labelled "Probability of success in each trial")
 #: rkward/plugins/distributions/negative_binomial.rkh:20
@@ -3573,13 +3573,13 @@ msgstr ""
 #: rkward/plugins/distributions/plot_binomial_distribution.rkh:22
 #, kde-format
 msgid "Probability of success in each trial"
-msgstr ""
+msgstr "Probableco de sukceso en ĉiu provo"
 
 #. i18n: ectx: (Loaded from Normal distribution calculator)
 #: rkward/plugins/distributions/normal.js:9
 #, kde-format
 msgid "Normal distribution"
-msgstr ""
+msgstr "Normala distribuo"
 
 #. i18n: ectx: (Loaded from Normal distribution calculator) <summary>
 #: rkward/plugins/distributions/normal.rkh:11
@@ -3593,13 +3593,13 @@ msgstr ""
 #: rkward/plugins/distributions/normal.rkh:17
 #, kde-format
 msgid "Mean."
-msgstr ""
+msgstr "Mean."
 
 #. i18n: ectx: (Loaded from Normal distribution calculator) <settings> <setting> (refers to element labelled "sigma (standard deviation)")
 #: rkward/plugins/distributions/normal.rkh:18
 #, kde-format
 msgid "Standard deviation."
-msgstr ""
+msgstr "Norma devio."
 
 #. i18n: ectx: (Loaded from Normal distribution calculator) <related>
 #: rkward/plugins/distributions/normal.rkh:20
@@ -3613,13 +3613,13 @@ msgstr ""
 #: rkward/plugins/distributions/normal.xml:15
 #, kde-format
 msgid "mu (mean)"
-msgstr ""
+msgstr "mu (signifo)"
 
 #. i18n: ectx: (Normal distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/normal.xml:16
 #, kde-format
 msgid "sigma (standard deviation)"
-msgstr ""
+msgstr "sigma (norma devio)"
 
 #. i18n: ectx: (Loaded from Plot Beta probabilities)
 #: rkward/plugins/distributions/plot_beta_distribution.js:15
@@ -3632,25 +3632,25 @@ msgstr "Betao"
 #: rkward/plugins/distributions/plot_beta_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Beta distribution."
-msgstr ""
+msgstr "Densaj kaj distribuaj funkcio-grafikoj por la Beta-distribuo."
 
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <settings> <setting> (refers to element labelled "Shape1 (a)")
 #: rkward/plugins/distributions/plot_beta_distribution.rkh:21
 #, kde-format
 msgid "shape1 parameter of the Beta distribution."
-msgstr ""
+msgstr "shape1 parametro de la Beta-distribuo."
 
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <settings> <setting> (refers to element labelled "Shape2 (b)")
 #: rkward/plugins/distributions/plot_beta_distribution.rkh:22
 #, kde-format
 msgid "shape2 parameter of the Beta distribution."
-msgstr ""
+msgstr "shape2 parametro de la Beta-distribuo."
 
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <settings> <setting> (refers to element labelled "Non-centrality parameter (ncp)")
 #: rkward/plugins/distributions/plot_beta_distribution.rkh:23
 #, kde-format
 msgid "Non-centrality parameter of the Beta distribution."
-msgstr ""
+msgstr "Ne-centreca parametro de la Beta-distribuo."
 
 #. i18n: ectx: (Plot Beta probabilities) <snippets> <snippet> <frame label="...">
 #. i18n: ectx: (Plot binomial probabilities) <snippets> <snippet> <frame label="...">
@@ -3734,7 +3734,7 @@ msgstr "Gamo/Intervalo"
 #: rkward/plugins/distributions/plot_wilcoxon_distribution.xml:17
 #, kde-format
 msgid "Lower quantile"
-msgstr ""
+msgstr "Malsupra kvantilo"
 
 #. i18n: ectx: (Plot Beta probabilities) <snippets> <snippet> <frame label="Range"> <spinbox label="...">
 #. i18n: ectx: (Plot binomial probabilities) <snippets> <snippet> <frame label="Range"> <spinbox label="...">
@@ -3772,19 +3772,19 @@ msgstr ""
 #: rkward/plugins/distributions/plot_weibull_distribution.xml:18
 #, kde-format
 msgid "Upper quantile"
-msgstr ""
+msgstr "Supra kvantilo"
 
 #. i18n: ectx: (Plot Beta probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #: rkward/plugins/distributions/plot_beta_distribution.xml:25
 #, kde-format
 msgid "Non-centrality parameter (ncp)"
-msgstr ""
+msgstr "Ne-centreca parametro (ncp)"
 
 #. i18n: ectx: (Plot Beta probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_beta_distribution.xml:30
 #, kde-format
 msgid "Plot Beta probabilities"
-msgstr ""
+msgstr "Grafiko Beta-probabloj"
 
 #. i18n: ectx: (Loaded from Plot binomial probabilities)
 #: rkward/plugins/distributions/plot_binomial_distribution.js:15
@@ -3797,39 +3797,39 @@ msgstr "Binomo"
 #: rkward/plugins/distributions/plot_binomial_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Binomial distribution."
-msgstr ""
+msgstr "Denseco kaj distribua funkcio grafikoj por la Binoma distribuo."
 
 #. i18n: ectx: (Plot binomial probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_binomial_distribution.xml:29
 #, kde-format
 msgid "Plot binomial probabilities"
-msgstr ""
+msgstr "Grafiku binomajn probablojn"
 
 #. i18n: ectx: (Loaded from Plot Cauchy probabilities)
 #: rkward/plugins/distributions/plot_cauchy_distribution.js:15
 #, kde-format
 msgctxt "Cauchy distribution"
 msgid "Cauchy"
-msgstr ""
+msgstr "Cauchy"
 
 #. i18n: ectx: (Loaded from Plot Cauchy probabilities) <summary>
 #: rkward/plugins/distributions/plot_cauchy_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Cauchy distribution."
-msgstr ""
+msgstr "Densaj kaj distribuaj funkcio-grafikoj por la Cauchy-distribuo."
 
 #. i18n: ectx: (Plot Cauchy probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_cauchy_distribution.xml:31
 #, kde-format
 msgid "Plot Cauchy probabilities"
-msgstr ""
+msgstr "Grafiku Cauchy-probablecojn"
 
 #. i18n: ectx: (Loaded from Plot Chi-squared probabilities)
 #: rkward/plugins/distributions/plot_chi_squared_distribution.js:15
 #, kde-format
 msgctxt "Chi-square distribution"
 msgid "Chi-square"
-msgstr ""
+msgstr "Ĥi-kvadrato"
 
 #. i18n: ectx: (Loaded from Plot Chi-squared probabilities) <summary>
 #: rkward/plugins/distributions/plot_chi_squared_distribution.rkh:12
@@ -3844,13 +3844,13 @@ msgstr ""
 #: rkward/plugins/distributions/plot_chi_squared_distribution.rkh:22
 #, kde-format
 msgid "See R reference on Chi-squared distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Chi-kvadrata distribuo."
 
 #. i18n: ectx: (Plot Chi-squared probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_chi_squared_distribution.xml:29
 #, kde-format
 msgid "Plot Chi-squared probabilities"
-msgstr ""
+msgstr "Grafiku Chi-kvadratajn probablojn"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <radio label="Choose type of function plot"> <option label="...">
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <radio label="Choose type of function plot"> <option label="...">
@@ -3893,7 +3893,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:17
 #, kde-format
 msgid "Plot density function"
-msgstr ""
+msgstr "Grafika denseca funkcio"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <radio label="Choose type of function plot"> <option label="...">
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <radio label="Choose type of function plot"> <option label="...">
@@ -3936,7 +3936,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:18
 #, kde-format
 msgid "Plot distribution"
-msgstr ""
+msgstr "Distribuo de grafiko"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <checkbox label="...">
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <checkbox label="...">
@@ -4022,7 +4022,7 @@ msgstr "Logaritma"
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:21
 #, kde-format
 msgid "Lower Tail"
-msgstr ""
+msgstr "Malsupra Vosto"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Logarithmic")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Logarithmic")
@@ -4066,6 +4066,7 @@ msgstr ""
 #, kde-format
 msgid "Check this box if log of the function values are to be plotted."
 msgstr ""
+"Marku ĉi tiun skatolon se protokolo de la funkciovaloroj estas grafikotaj."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower Tail")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower Tail")
@@ -4296,7 +4297,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:51
 #, kde-format
 msgid "Density Function, or"
-msgstr ""
+msgstr "Densa Funkcio, aŭ"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
@@ -4339,7 +4340,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:51
 #, kde-format
 msgid "Distribution Function"
-msgstr ""
+msgstr "Distribua Funkcio"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Number of Observations")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Number of Observations")
@@ -4382,7 +4383,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:57
 #, kde-format
 msgid "Number of observations (points) for constructing the plot (n)."
-msgstr ""
+msgstr "Nombro de observoj (punktoj) por konstrui la grafikon (n)."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower quantile")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower quantile")
@@ -4426,7 +4427,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:62
 #, kde-format
 msgid "Smallest value at which the function is to be plotted."
-msgstr ""
+msgstr "Plej malgranda valoro ĉe kiu la funkcio estas grafikota."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Upper quantile")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Upper quantile")
@@ -4562,7 +4563,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:66
 #, kde-format
 msgid "Number of Observations"
-msgstr ""
+msgstr "Nombro de Observoj"
 
 #. i18n: ectx: (Loaded from Plot Exponential probabilities)
 #: rkward/plugins/distributions/plot_exponential_distribution.js:15
@@ -4582,13 +4583,13 @@ msgstr ""
 #: rkward/plugins/distributions/plot_exponential_distribution.rkh:21
 #, kde-format
 msgid "See R reference on Exponential distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Eksponenta distribuo."
 
 #. i18n: ectx: (Plot Exponential probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_exponential_distribution.xml:28
 #, kde-format
 msgid "Plot Exponential probabilities"
-msgstr ""
+msgstr "Grafiku Eksponentaj probabloj"
 
 #. i18n: ectx: (Loaded from Plot F probabilities)
 #: rkward/plugins/distributions/plot_f_distribution.js:15
@@ -4601,7 +4602,7 @@ msgstr "F"
 #: rkward/plugins/distributions/plot_f_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the F distribution."
-msgstr ""
+msgstr "Denseco kaj distribua funkcio grafikoj por la F-distribuo."
 
 #. i18n: ectx: (Loaded from Plot F probabilities) <settings> <setting> (refers to element labelled "Numerator degrees of freedom")
 #. i18n: ectx: (Loaded from Plot F probabilities) <settings> <setting> (refers to element labelled "Denominator degrees of freedom")
@@ -4611,13 +4612,13 @@ msgstr ""
 #: rkward/plugins/distributions/plot_f_distribution.rkh:23
 #, kde-format
 msgid "See R reference on F distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri F-distribuo."
 
 #. i18n: ectx: (Plot F probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_f_distribution.xml:30
 #, kde-format
 msgid "Plot F probabilities"
-msgstr ""
+msgstr "Grafiku F-probablecojn"
 
 #. i18n: ectx: (Loaded from Plot Gamma probabilities)
 #: rkward/plugins/distributions/plot_gamma_distribution.js:15
@@ -4630,7 +4631,7 @@ msgstr "Gamo"
 #: rkward/plugins/distributions/plot_gamma_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Gamma distribution."
-msgstr ""
+msgstr "Denseco kaj distribuofunkcigrafikoj por la Gama distribuo."
 
 #. i18n: ectx: (Loaded from Plot Gamma probabilities) <settings> <setting> (refers to element labelled "Shape")
 #. i18n: ectx: (Loaded from Plot Gamma probabilities) <settings> <setting> (refers to element labelled "Rate (lambda) or 1/Scale")
@@ -4638,13 +4639,13 @@ msgstr ""
 #: rkward/plugins/distributions/plot_gamma_distribution.rkh:22
 #, kde-format
 msgid "See R reference on Gamma distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Gama distribuo."
 
 #. i18n: ectx: (Plot Gamma probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_gamma_distribution.xml:29
 #, kde-format
 msgid "Plot Gamma probabilities"
-msgstr ""
+msgstr "Grafiku Gamajn probablojn"
 
 #. i18n: ectx: (Loaded from Plot geometric probabilities)
 #: rkward/plugins/distributions/plot_geometric_distribution.js:15
@@ -4657,19 +4658,19 @@ msgstr "Geometria"
 #: rkward/plugins/distributions/plot_geometric_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Geometric distribution."
-msgstr ""
+msgstr "Denseco kaj distribua funkcio grafikoj por la Geometria distribuo."
 
 #. i18n: ectx: (Loaded from Plot geometric probabilities) <settings> <setting> (refers to element labelled "Probability of success on each trial")
 #: rkward/plugins/distributions/plot_geometric_distribution.rkh:21
 #, kde-format
 msgid "See R reference on Geometric distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Geometria distribuo."
 
 #. i18n: ectx: (Plot geometric probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_geometric_distribution.xml:28
 #, kde-format
 msgid "Plot geometric probabilities"
-msgstr ""
+msgstr "Grafiku geometriajn probablojn"
 
 #. i18n: ectx: (Loaded from Plot hypergeometric probabilities)
 #: rkward/plugins/distributions/plot_hypergeometric_distribution.js:15
@@ -4693,32 +4694,32 @@ msgstr ""
 #: rkward/plugins/distributions/plot_hypergeometric_distribution.rkh:23
 #, kde-format
 msgid "See R reference on Hypergeometric distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Hipergeometria distribuo."
 
 #. i18n: ectx: (Plot hypergeometric probabilities) <snippets> <snippet> <frame label="Range"> <spinbox label="...">
 #: rkward/plugins/distributions/plot_hypergeometric_distribution.xml:18
 #, kde-format
 msgid "Upper quantile (at most k)"
-msgstr ""
+msgstr "Supra kvantilo (maksimume k)"
 
 #. i18n: ectx: (Plot hypergeometric probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_hypergeometric_distribution.xml:30
 #, kde-format
 msgid "Plot hypergeometric probabilities"
-msgstr ""
+msgstr "Grafiku hipergeometriajn probablojn"
 
 #. i18n: ectx: (Loaded from Plot Logistic probabilities)
 #: rkward/plugins/distributions/plot_logistic_distribution.js:15
 #, kde-format
 msgctxt "Logistic distribution"
 msgid "Logistic"
-msgstr ""
+msgstr "Loĝistiko"
 
 #. i18n: ectx: (Loaded from Plot Logistic probabilities) <summary>
 #: rkward/plugins/distributions/plot_logistic_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Logistic distribution."
-msgstr ""
+msgstr "Densaj kaj distribuaj funkcioj grafikoj por la Loĝistika distribuo."
 
 #. i18n: ectx: (Loaded from Plot Logistic probabilities) <settings> <setting> (refers to element labelled "Location")
 #. i18n: ectx: (Loaded from Plot Logistic probabilities) <settings> <setting> (refers to element labelled "Scale")
@@ -4726,26 +4727,26 @@ msgstr ""
 #: rkward/plugins/distributions/plot_logistic_distribution.rkh:22
 #, kde-format
 msgid "See R reference on Logistic distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Loĝistika distribuo."
 
 #. i18n: ectx: (Plot Logistic probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_logistic_distribution.xml:29
 #, kde-format
 msgid "Plot Logistic probabilities"
-msgstr ""
+msgstr "Grafiko Loĝistikaj probabloj"
 
 #. i18n: ectx: (Loaded from Plot Lognormal probabilities)
 #: rkward/plugins/distributions/plot_lognormal_distribution.js:15
 #, kde-format
 msgctxt "Log-Normal distribution"
 msgid "Log-Normal"
-msgstr ""
+msgstr "Log-Normala"
 
 #. i18n: ectx: (Loaded from Plot Lognormal probabilities) <summary>
 #: rkward/plugins/distributions/plot_lognormal_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Lognormal distribution."
-msgstr ""
+msgstr "Densaj kaj distribuaj funkciografikoj por la Lognormala distribuo."
 
 #. i18n: ectx: (Loaded from Plot Lognormal probabilities) <settings> <setting> (refers to element labelled "Mean")
 #. i18n: ectx: (Loaded from Plot Lognormal probabilities) <settings> <setting> (refers to element labelled "Standard deviation")
@@ -4753,19 +4754,19 @@ msgstr ""
 #: rkward/plugins/distributions/plot_lognormal_distribution.rkh:22
 #, kde-format
 msgid "See R reference on Lognormal distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Lognormala distribuo."
 
 #. i18n: ectx: (Plot Lognormal probabilities) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/plot_lognormal_distribution.xml:22
 #, kde-format
 msgid "Parameters (on log scale)"
-msgstr ""
+msgstr "Parametroj (laŭ logskalo)"
 
 #. i18n: ectx: (Plot Lognormal probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_lognormal_distribution.xml:29
 #, kde-format
 msgid "Plot Lognormal probabilities"
-msgstr ""
+msgstr "Grafiku Lognormalajn probablojn"
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities)
 #: rkward/plugins/distributions/plot_negbinomial_distribution.js:21
@@ -4806,7 +4807,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_negbinomial_distribution.rkh:24
 #, kde-format
 msgid "See R reference on Negative Binomial distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Negativa Binoma distribuo."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Type of Parametrization")
 #: rkward/plugins/distributions/plot_negbinomial_distribution.rkh:25
@@ -4820,19 +4821,19 @@ msgstr ""
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:30
 #, kde-format
 msgid "Dispersion (Size)"
-msgstr ""
+msgstr "Disvastigo (Grandeco)"
 
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:34
 #, kde-format
 msgid "Mean (alternate parameter, mu)"
-msgstr ""
+msgstr "Meznomo (alterna parametro, mu)"
 
 #. i18n: ectx: (Plot negative binomial probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:47
 #, kde-format
 msgid "Plot negative binomial probabilities"
-msgstr ""
+msgstr "Grafiku negativajn binomajn probablojn"
 
 #. i18n: ectx: (Loaded from Plot Normal probabilities)
 #: rkward/plugins/distributions/plot_normal_distribution.js:15
@@ -4845,7 +4846,7 @@ msgstr "Normala"
 #: rkward/plugins/distributions/plot_normal_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Normal distribution."
-msgstr ""
+msgstr "Denseco kaj distribua funkcio grafikoj por la Normala distribuo."
 
 #. i18n: ectx: (Loaded from Plot Normal probabilities) <settings> <setting> (refers to element labelled "Mean")
 #. i18n: ectx: (Loaded from Plot Normal probabilities) <settings> <setting> (refers to element labelled "Standard deviation")
@@ -4853,13 +4854,13 @@ msgstr ""
 #: rkward/plugins/distributions/plot_normal_distribution.rkh:22
 #, kde-format
 msgid "See R reference on Normal distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Normala distribuo."
 
 #. i18n: ectx: (Plot Normal probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_normal_distribution.xml:29
 #, kde-format
 msgid "Plot Normal probabilities"
-msgstr ""
+msgstr "Grafiku Normalajn probablojn"
 
 #. i18n: ectx: (Loaded from Plot Poisson probabilities)
 #: rkward/plugins/distributions/plot_poisson_distribution.js:15
@@ -4872,32 +4873,32 @@ msgstr "Poisson"
 #: rkward/plugins/distributions/plot_poisson_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Poisson distribution."
-msgstr ""
+msgstr "Denseco kaj distribua funkcio grafikoj por la Poisson-distribuo."
 
 #. i18n: ectx: (Loaded from Plot Poisson probabilities) <settings> <setting> (refers to element labelled "Mean")
 #: rkward/plugins/distributions/plot_poisson_distribution.rkh:21
 #, kde-format
 msgid "See R reference on Poisson distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Poisson-distribuo."
 
 #. i18n: ectx: (Plot Poisson probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_poisson_distribution.xml:28
 #, kde-format
 msgid "Plot Poisson probabilities"
-msgstr ""
+msgstr "Grafiku Poisson-probablecojn"
 
 #. i18n: ectx: (Loaded from Plot Student T probabilities)
 #: rkward/plugins/distributions/plot_t_distribution.js:15
 #, kde-format
 msgctxt "t distribution"
 msgid "Student t"
-msgstr ""
+msgstr "Studento t"
 
 #. i18n: ectx: (Loaded from Plot Student T probabilities) <summary>
 #: rkward/plugins/distributions/plot_t_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the t distribution."
-msgstr ""
+msgstr "Denseco kaj distribua funkcio grafikoj por la t distribuo."
 
 #. i18n: ectx: (Loaded from Plot Student T probabilities) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #. i18n: ectx: (Loaded from Plot Student T probabilities) <settings> <setting> (refers to element labelled "Non-centrality parameter")
@@ -4905,20 +4906,20 @@ msgstr ""
 #: rkward/plugins/distributions/plot_t_distribution.rkh:22
 #, kde-format
 msgid "See R reference on t distribution."
-msgstr ""
+msgstr "Vidu R-referenco pri t distribuo."
 
 #. i18n: ectx: (Plot Student T probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_t_distribution.xml:29
 #, kde-format
 msgid "Plot Student T probabilities"
-msgstr ""
+msgstr "Grafiku Student T-probablecojn"
 
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities)
 #: rkward/plugins/distributions/plot_tukey_distribution.js:15
 #, kde-format
 msgctxt "Tukey distribution"
 msgid "Studentized Range (Tukey)"
-msgstr ""
+msgstr "Studentigita Gamo (Tukey)"
 
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <summary>
 #: rkward/plugins/distributions/plot_tukey_distribution.rkh:12
@@ -4942,7 +4943,7 @@ msgstr ""
 #: rkward/plugins/distributions/tukey.rkh:19
 #, kde-format
 msgid "Number of independent observations whose range to consider."
-msgstr ""
+msgstr "Nombro de sendependaj observoj, kies intervalon konsideri."
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <settings> <setting> (refers to element labelled "Degrees of freedom for standard deviation estimate")
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <settings> <setting> (refers to element labelled "Degrees of freedom for standard deviation estimate")
@@ -4960,7 +4961,7 @@ msgstr ""
 #: rkward/plugins/distributions/tukey.xml:16
 #, kde-format
 msgid "Number of observations"
-msgstr ""
+msgstr "Nombro de observoj"
 
 #. i18n: ectx: (Studentized Range (Tukey) distribution calculator) <snippets> <snippet> <spinbox label="...">
 #. i18n: ectx: (Plot Studentized Range (Tukey) probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -4968,13 +4969,13 @@ msgstr ""
 #: rkward/plugins/distributions/tukey.xml:17
 #, kde-format
 msgid "Degrees of freedom for standard deviation estimate"
-msgstr ""
+msgstr "Gradoj de libereco por norma devio-takso"
 
 #. i18n: ectx: (Plot Studentized Range (Tukey) probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_tukey_distribution.xml:32
 #, kde-format
 msgid "Plot Studentized Range (Tukey) probabilities"
-msgstr ""
+msgstr "Grafiko Studentized Range (Tukey) probabloj"
 
 #. i18n: ectx: (Loaded from Plot Uniform probabilities)
 #: rkward/plugins/distributions/plot_uniform_distribution.js:15
@@ -4987,7 +4988,7 @@ msgstr "Uniformo"
 #: rkward/plugins/distributions/plot_uniform_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Uniform distribution."
-msgstr ""
+msgstr "Denseco kaj distribua funkcio grafikoj por la Uniforma distribuo."
 
 #. i18n: ectx: (Loaded from Plot Uniform probabilities) <settings> <setting> (refers to element labelled "Minimum")
 #. i18n: ectx: (Loaded from Plot Uniform probabilities) <settings> <setting> (refers to element labelled "Maximum")
@@ -4995,13 +4996,13 @@ msgstr ""
 #: rkward/plugins/distributions/plot_uniform_distribution.rkh:22
 #, kde-format
 msgid "See R reference on Uniform distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Uniforma distribuo."
 
 #. i18n: ectx: (Plot Uniform probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_uniform_distribution.xml:29
 #, kde-format
 msgid "Plot Uniform probabilities"
-msgstr ""
+msgstr "Grafiko Uniformaj probabloj"
 
 #. i18n: ectx: (Loaded from Plot Weibull probabilities)
 #: rkward/plugins/distributions/plot_weibull_distribution.js:15
@@ -5014,7 +5015,7 @@ msgstr "Weibull"
 #: rkward/plugins/distributions/plot_weibull_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Weibull distribution."
-msgstr ""
+msgstr "Densaj kaj distribuaj funkcio-grafikoj por la Weibull-distribuo."
 
 #. i18n: ectx: (Loaded from Plot Weibull probabilities) <settings> <setting> (refers to element labelled "Shape")
 #. i18n: ectx: (Loaded from Plot Weibull probabilities) <settings> <setting> (refers to element labelled "Scale")
@@ -5022,26 +5023,26 @@ msgstr ""
 #: rkward/plugins/distributions/plot_weibull_distribution.rkh:22
 #, kde-format
 msgid "See R reference on Weibull distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Weibull-distribuo."
 
 #. i18n: ectx: (Plot Weibull probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_weibull_distribution.xml:29
 #, kde-format
 msgid "Plot Weibull probabilities"
-msgstr ""
+msgstr "Grafiku Weibull-probablecojn"
 
 #. i18n: ectx: (Loaded from Plot Wilcoxon Rank Sum statistic probabilities)
 #: rkward/plugins/distributions/plot_wilcoxon_distribution.js:15
 #, kde-format
 msgctxt "Wilcoxon Rank Sum distribution"
 msgid "Wilcoxon Rank Sum"
-msgstr ""
+msgstr "Rangosumo de Wilcoxon"
 
 #. i18n: ectx: (Loaded from Plot Wilcoxon Rank Sum statistic probabilities) <summary>
 #: rkward/plugins/distributions/plot_wilcoxon_distribution.rkh:12
 #, kde-format
 msgid "Density and distribution function plots for the Wilcoxon distribution."
-msgstr ""
+msgstr "Denso kaj distribuofunkcigrafikoj por la Wilcoxon-distribuo."
 
 #. i18n: ectx: (Loaded from Plot Wilcoxon Rank Sum statistic probabilities) <settings> <setting> (refers to element labelled "Number of Observations in first sample (m)")
 #. i18n: ectx: (Loaded from Plot Wilcoxon Rank Sum statistic probabilities) <settings> <setting> (refers to element labelled "Number of Observations in second sample (n)")
@@ -5049,25 +5050,25 @@ msgstr ""
 #: rkward/plugins/distributions/plot_wilcoxon_distribution.rkh:22
 #, kde-format
 msgid "See R reference on Wilcoxon distribution."
-msgstr ""
+msgstr "Vidu R-referencon pri Wilcoxon-distribuo."
 
 #. i18n: ectx: (Plot Wilcoxon Rank Sum statistic probabilities) <snippets> <snippet> <frame label="Range"> <spinbox label="...">
 #: rkward/plugins/distributions/plot_wilcoxon_distribution.xml:18
 #, kde-format
 msgid "Upper quantile (at most m*n)"
-msgstr ""
+msgstr "Supra kvantilo (maksimume m*n)"
 
 #. i18n: ectx: (Plot Wilcoxon Rank Sum statistic probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_wilcoxon_distribution.xml:29
 #, kde-format
 msgid "Plot Wilcoxon Rank Sum statistic probabilities"
-msgstr ""
+msgstr "Grafiku Wilcoxon Rank Sum statistikaj probablecoj"
 
 #. i18n: ectx: (Loaded from Poisson distribution calculator)
 #: rkward/plugins/distributions/poisson.js:10
 #, kde-format
 msgid "Poisson distribution"
-msgstr ""
+msgstr "Poisson-distribuo"
 
 #. i18n: ectx: (Loaded from Poisson distribution calculator) <summary>
 #: rkward/plugins/distributions/poisson.rkh:11
@@ -5092,19 +5093,19 @@ msgstr ""
 #: rkward/plugins/distributions/poisson.rkh:19
 #, kde-format
 msgid "The expected (mean) number of events in the region of interest."
-msgstr ""
+msgstr "La atendata (averaĝa) nombro da eventoj en la interesa regiono."
 
 #. i18n: ectx: (Poisson distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/poisson.xml:18
 #, kde-format
 msgid "λ (Lambda)"
-msgstr ""
+msgstr "λ (Lambda)"
 
 #. i18n: ectx: (Loaded from t distribution calculator)
 #: rkward/plugins/distributions/t.js:9
 #, kde-format
 msgid "t distribution"
-msgstr ""
+msgstr "t distribuo"
 
 #. i18n: ectx: (Loaded from t distribution calculator) <summary>
 #: rkward/plugins/distributions/t.rkh:11
@@ -5118,13 +5119,13 @@ msgstr ""
 #: rkward/plugins/distributions/t.rkh:17
 #, kde-format
 msgid "Degrees of freedom."
-msgstr ""
+msgstr "Gradoj de libereco."
 
 #. i18n: ectx: (Loaded from t distribution calculator) <settings> <setting> (refers to element labelled "non-centrality parameter")
 #: rkward/plugins/distributions/t.rkh:18
 #, kde-format
 msgid "Non-centrality parameter."
-msgstr ""
+msgstr "Ne-centreca parametro."
 
 #. i18n: ectx: (Shapiro-Wilk Normality Test) <dialog label="Shapiro-Wilk Normality Test"> <tab label="...">
 #. i18n: ectx: (Anderson-Darling Normality Test) <dialog label="Anderson-Darling Normality Test"> <tab label="...">
@@ -5141,7 +5142,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/shapiro_test.xml:11
 #, kde-format
 msgid "Select Variables"
-msgstr ""
+msgstr "Elektu Variaĵojn"
 
 #. i18n: ectx: (Shapiro-Wilk Normality Test) <dialog label="Shapiro-Wilk Normality Test"> <tab label="Select Variables"> <varslot label="...">
 #. i18n: ectx: (Anderson-Darling Normality Test) <dialog label="Anderson-Darling Normality Test"> <tab label="Select Variables"> <varslot label="...">
@@ -5158,7 +5159,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/shapiro_test.xml:17
 #, kde-format
 msgid "variable(s):"
-msgstr ""
+msgstr "variablo(j):"
 
 #. i18n: ectx: (Anderson-Darling Normality Test) <dialog label="Anderson-Darling Normality Test"> <tab label="Select Variables"> <text>
 #. i18n: ectx: (Cramer-von Mises Normality Test) <dialog label="Cramer-von Mises Normality Test"> <tab label="Select Variables"> <text>
@@ -5168,7 +5169,7 @@ msgstr ""
 #: rkward/plugins/distributions/tests/pearson_test.xml:18
 #, kde-format
 msgid "Note: Objects must have at least 8 values"
-msgstr ""
+msgstr "Noto: Objektoj devas havi almenaŭ 8 valorojn"
 
 #. i18n: ectx: (Shapiro-Wilk Normality Test) <dialog label="Shapiro-Wilk Normality Test"> <tab label="...">
 #. i18n: ectx: (Anderson-Darling Normality Test) <dialog label="Anderson-Darling Normality Test"> <tab label="...">
@@ -5202,7 +5203,7 @@ msgstr "Elektebloj"
 #: rkward/plugins/distributions/tests/shapiro_test.xml:27
 #, kde-format
 msgid "Show Length and NAs"
-msgstr ""
+msgstr "Montru Longon kaj NAojn"
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <summary>
 #: rkward/plugins/distributions/tests/jb_test.rkh:8
@@ -5260,25 +5261,25 @@ msgstr ""
 #: rkward/plugins/distributions/tests/jb_test.xml:25
 #, kde-format
 msgid "Exclude NAs"
-msgstr ""
+msgstr "Ekskludi NAojn"
 
 #. i18n: ectx: (Loaded from Lilliefors (Kolmogorov-Smirnov) Normality Test)
 #: rkward/plugins/distributions/tests/lillie_test.js:14
 #, kde-format
 msgid "Lilliefors (Kolmogorov-Smirnov) Normality test"
-msgstr ""
+msgstr "Lilliefors (Kolmogorov-Smirnov) Testo de normaleco"
 
 #. i18n: ectx: (Lilliefors (Kolmogorov-Smirnov) Normality Test) <dialog label="Lilliefors (Kolmogorov-Smirnov) Normality Test"> <tab label="Select Variables"> <text>
 #: rkward/plugins/distributions/tests/lillie_test.xml:18
 #, kde-format
 msgid "Note: Objects must have at least 5 values"
-msgstr ""
+msgstr "Noto: Objektoj devas havi almenaŭ 5 valorojn"
 
 #. i18n: ectx: (Loaded from Pearson chi-square Normality Test)
 #: rkward/plugins/distributions/tests/pearson_test.js:13
 #, kde-format
 msgid "number of classes"
-msgstr ""
+msgstr "nombro da klasoj"
 
 #. i18n: ectx: (Loaded from Pearson chi-square Normality Test)
 #: rkward/plugins/distributions/tests/pearson_test.js:14
@@ -5290,37 +5291,37 @@ msgstr "gradoj de libereco"
 #: rkward/plugins/distributions/tests/pearson_test.xml:27
 #, kde-format
 msgid "p-value from chi^2-distribution from"
-msgstr ""
+msgstr "p-valoro de chi^2-distribuo de"
 
 #. i18n: ectx: (Pearson chi-square Normality Test) <dialog label="Pearson chi-square Normality Test"> <tab label="Options"> <radio label="p-value from chi^2-distribution from"> <option label="...">
 #: rkward/plugins/distributions/tests/pearson_test.xml:28
 #, kde-format
 msgid "n.classes-3 degrees of freedom"
-msgstr ""
+msgstr "n.klasoj-3 gradoj de libereco"
 
 #. i18n: ectx: (Pearson chi-square Normality Test) <dialog label="Pearson chi-square Normality Test"> <tab label="Options"> <radio label="p-value from chi^2-distribution from"> <option label="...">
 #: rkward/plugins/distributions/tests/pearson_test.xml:29
 #, kde-format
 msgid "n.classes-1 degrees of freedom"
-msgstr ""
+msgstr "n.klasoj-1 gradoj de libereco"
 
 #. i18n: ectx: (Shapiro-Wilk Normality Test) <dialog label="Shapiro-Wilk Normality Test"> <tab label="Select Variables"> <text>
 #: rkward/plugins/distributions/tests/sf_test.xml:18
 #, kde-format
 msgid "Note: Objects must have between 5 and 5000 values"
-msgstr ""
+msgstr "Noto: Objektoj devas havi inter 5 kaj 5000 valorojn"
 
 #. i18n: ectx: (Shapiro-Wilk Normality Test) <dialog label="Shapiro-Wilk Normality Test"> <tab label="Select Variables"> <text>
 #: rkward/plugins/distributions/tests/shapiro_test.xml:18
 #, kde-format
 msgid "Note: Objects must have between 3 and 5000 values"
-msgstr ""
+msgstr "Noto: Objektoj devas havi inter 3 kaj 5000 valorojn"
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator)
 #: rkward/plugins/distributions/tukey.js:9
 #, kde-format
 msgid "Studentized Range (Tukey) distribution"
-msgstr ""
+msgstr "Studentized Range (Tukey) distribuo"
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <summary>
 #: rkward/plugins/distributions/tukey.rkh:11
@@ -5343,7 +5344,7 @@ msgstr ""
 #: rkward/plugins/distributions/uniform.js:11
 #, kde-format
 msgid "Uniform distribution"
-msgstr ""
+msgstr "Unuforma distribuo"
 
 #. i18n: ectx: (Loaded from Uniform distribution calculator) <summary>
 #: rkward/plugins/distributions/uniform.rkh:11
@@ -5357,31 +5358,31 @@ msgstr ""
 #: rkward/plugins/distributions/uniform.rkh:17
 #, kde-format
 msgid "Lower limit."
-msgstr ""
+msgstr "Malsupra limo."
 
 #. i18n: ectx: (Loaded from Uniform distribution calculator) <settings> <setting> (refers to element labelled "Upper limit of the distribution")
 #: rkward/plugins/distributions/uniform.rkh:18
 #, kde-format
 msgid "Upper limit."
-msgstr ""
+msgstr "Supra limo."
 
 #. i18n: ectx: (Uniform distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/uniform.xml:15
 #, kde-format
 msgid "Lower limit of the distribution"
-msgstr ""
+msgstr "Malsupra limo de la distribuo"
 
 #. i18n: ectx: (Uniform distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/uniform.xml:16
 #, kde-format
 msgid "Upper limit of the distribution"
-msgstr ""
+msgstr "Supra limo de la distribuo"
 
 #. i18n: ectx: (Loaded from Weibull distribution calculator)
 #: rkward/plugins/distributions/weibull.js:9
 #, kde-format
 msgid "Weibull distribution"
-msgstr ""
+msgstr "Weibull-distribuo"
 
 #. i18n: ectx: (Loaded from Weibull distribution calculator) <summary>
 #: rkward/plugins/distributions/weibull.rkh:11
@@ -5395,19 +5396,19 @@ msgstr ""
 #: rkward/plugins/distributions/weibull.rkh:17
 #, kde-format
 msgid "Shape parameter (k)."
-msgstr ""
+msgstr "Forma parametro (k)."
 
 #. i18n: ectx: (Loaded from Weibull distribution calculator) <settings> <setting> (refers to element labelled "Scale")
 #: rkward/plugins/distributions/weibull.rkh:18
 #, kde-format
 msgid "Scale parameter (λ)."
-msgstr ""
+msgstr "Skala parametro (λ)."
 
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator)
 #: rkward/plugins/distributions/wilcoxon.js:11
 #, kde-format
 msgid "Wilcoxon Rank Sum distribution"
-msgstr ""
+msgstr "Wilcoxon Rank Sum-distribuo"
 
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <summary>
 #: rkward/plugins/distributions/wilcoxon.rkh:11
@@ -5434,7 +5435,7 @@ msgstr ""
 #: rkward/plugins/distributions/wilcoxon.xml:18
 #, kde-format
 msgid "m (Numbers of observations in the first sample)"
-msgstr ""
+msgstr "m (Nombroj da observaĵoj en la unua specimeno)"
 
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <settings> <setting> (refers to element labelled "n (Numbers of observations in the second sample)")
 #. i18n: ectx: (Wilcoxon Rank Sum distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -5442,11 +5443,11 @@ msgstr ""
 #: rkward/plugins/distributions/wilcoxon.xml:19
 #, kde-format
 msgid "n (Numbers of observations in the second sample)"
-msgstr ""
+msgstr "n (Nombroj da observoj en la dua specimeno)"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "RKWard Teamo"

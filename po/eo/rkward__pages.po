@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -32,7 +32,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:8
 #, kde-format
 msgid "RKWard Add-Ons"
-msgstr ""
+msgstr "RKWard Aldonaĵoj"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -47,7 +47,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:9
 #, kde-format
 msgid "In a nutshell:"
-msgstr ""
+msgstr "En malmultaj vortoj:"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -92,7 +92,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:24
 #, kde-format
 msgid "R packages"
-msgstr ""
+msgstr "R-pakaĵoj"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -118,7 +118,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:32
 #, kde-format
 msgid "Kate Add-ons"
-msgstr ""
+msgstr "Kate Aldonaĵoj"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
 #: rkward/pages/rkward_addons.rkh:32
@@ -139,7 +139,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:39
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "RKWard Kromaĵoj"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -172,13 +172,13 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Creating your own RKWard Plugins"
-msgstr ""
+msgstr "Kreante viajn proprajn RKWard Kromaĵojn"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Still missing something?"
-msgstr ""
+msgstr "Ĉu ankoraŭ ion mankas?"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -197,13 +197,13 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:8
 #, kde-format
 msgid "Using the RKWard R Console"
-msgstr ""
+msgstr "Uzante la RKWard R-Konzolon"
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
 #, kde-format
 msgid "Describe features and settings regarding the RKWard R Console."
-msgstr ""
+msgstr "Priskribu funkciojn kaj agordojn pri la RKWard R-Konzolo."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
@@ -217,7 +217,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:15
 #, kde-format
 msgid "What is the console?"
-msgstr ""
+msgstr "Kio estas la konzolo?"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -250,7 +250,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:23
 #, kde-format
 msgid "Interrupting commands"
-msgstr ""
+msgstr "Interrompi komandojn"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Interrupting commands">
 #: rkward/pages/rkward_console.rkh:23
@@ -267,7 +267,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:27
 #, kde-format
 msgid "Re-running selected commands"
-msgstr ""
+msgstr "Refunkciigi elektitajn komandojn"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Re-running selected commands">
 #: rkward/pages/rkward_console.rkh:27
@@ -283,7 +283,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:31
 #, kde-format
 msgid "Copying commands / output"
-msgstr ""
+msgstr "Kopiante komandojn / eligo"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -307,7 +307,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:37
 #, kde-format
 msgid "Function reference"
-msgstr ""
+msgstr "Funkcia referenco"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Function reference">
 #: rkward/pages/rkward_console.rkh:37
@@ -322,7 +322,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:41
 #, kde-format
 msgid "Navigating the command history"
-msgstr ""
+msgstr "Navigante la komandhistorion"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -375,7 +375,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:53
 #, kde-format
 msgid "Filename and Object name completion"
-msgstr ""
+msgstr "Dosiernomo kaj Objektnomo kompletigo"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -413,7 +413,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:47
 #, kde-format
 msgid "Configurable Settings"
-msgstr ""
+msgstr "Agordeblaj Agordoj"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -487,7 +487,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:8
 #, kde-format
 msgid "RKWard for new Users"
-msgstr ""
+msgstr "RKWard por novaj Uzantoj"
 
 #. i18n: ectx: (RKWard for new Users) <summary>
 #: rkward/pages/rkward_for_new_users.rkh:9
@@ -501,7 +501,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:14
 #, kde-format
 msgid "Where's my data?"
-msgstr ""
+msgstr "Kie estas miaj datumoj?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -556,7 +556,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:23
 #, kde-format
 msgid "How can I make use of my results in an external application?"
-msgstr ""
+msgstr "Kiel mi povas uzi miajn rezultojn en ekstera aplikaĵo?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -589,7 +589,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:30
 #, kde-format
 msgid "Basic Analyses"
-msgstr ""
+msgstr "Bazaj Analizoj"
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -634,7 +634,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:38
 #, kde-format
 msgid "So much more"
-msgstr ""
+msgstr "Tiom pli"
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -660,7 +660,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:8
 #, kde-format
 msgid "RKWard for R Users"
-msgstr ""
+msgstr "RKWard por R Uzantoj"
 
 #. i18n: ectx: (RKWard for R Users) <summary>
 #: rkward/pages/rkward_for_r_users.rkh:9
@@ -674,7 +674,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "The Console"
-msgstr ""
+msgstr "La Konzolo"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -728,13 +728,13 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "See <link href=\"rkward://page/rkward_console\"/> for more details."
-msgstr ""
+msgstr "Vidu <link href=\"rkward://page/rkward_console\"/> por pliaj detaloj."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:26
 #, kde-format
 msgid "Script Editors"
-msgstr ""
+msgstr "Skripto Redaktoroj"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -770,7 +770,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:33
 #, kde-format
 msgid "Workspace View"
-msgstr ""
+msgstr "Laborspaca Vido"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -801,7 +801,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:38
 #, kde-format
 msgid "R Help"
-msgstr ""
+msgstr "R Helpo"
 
 #. i18n: ectx: (RKWard for R Users) <section title="R Help">
 #: rkward/pages/rkward_for_r_users.rkh:38
@@ -819,7 +819,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:41
 #, kde-format
 msgid "Managing installed and loaded Libraries"
-msgstr ""
+msgstr "Administri instalitajn kaj ŝargitajn Bibliotekojn"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Managing installed and loaded Libraries">
 #: rkward/pages/rkward_for_r_users.rkh:41
@@ -833,7 +833,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:44
 #, kde-format
 msgid "Window management"
-msgstr ""
+msgstr "Fenestra administrado"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -865,7 +865,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:51
 #, kde-format
 msgid "Editing data"
-msgstr ""
+msgstr "Redaktado de datumoj"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -909,7 +909,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:59
 #, kde-format
 msgid "Utility functions"
-msgstr ""
+msgstr "Utilaj funkcioj"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Utility functions">
 #: rkward/pages/rkward_for_r_users.rkh:59
@@ -924,7 +924,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:62
 #, kde-format
 msgid "Everything else"
-msgstr ""
+msgstr "Ĉio alia"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Everything else">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -960,7 +960,7 @@ msgstr ""
 #: rkward/pages/rkward_incompatible_version.rkh:8
 #, kde-format
 msgid "Version incompatibilities"
-msgstr ""
+msgstr "Nekongruoj de versioj"
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -995,7 +995,7 @@ msgstr ""
 #: rkward/pages/rkward_incompatible_version.rkh:17
 #, kde-format
 msgid "Graphics Engine Version Mismatch"
-msgstr ""
+msgstr "Malkongruo de Versio de Grafika Motoro"
 
 #. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
 #: rkward/pages/rkward_incompatible_version.rkh:17
@@ -1014,7 +1014,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:8
 #, kde-format
 msgid "RKWard Output"
-msgstr ""
+msgstr "RKWard Eligo"
 
 #. i18n: ectx: (RKWard Output) <summary>
 #: rkward/pages/rkward_output.rkh:9
@@ -1042,7 +1042,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:16
 #, kde-format
 msgid "Producing RKWard output from R"
-msgstr ""
+msgstr "Produktante RKWard-produktaĵon de R"
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:16
@@ -1064,7 +1064,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:22
 #, kde-format
 msgid "Using the output in an office suite"
-msgstr ""
+msgstr "Uzante la eligon en oficeja aro"
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
@@ -1091,7 +1091,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:28
 #, kde-format
 msgid "RKWard output vs. R Markdown"
-msgstr ""
+msgstr "RKWard eligo kontraŭ R Markdown"
 
 #. i18n: ectx: (RKWard Output) <section title="RKWard output vs. R Markdown">
 #: rkward/pages/rkward_output.rkh:28
@@ -1107,7 +1107,7 @@ msgstr ""
 #: rkward/pages/rkward_plot_history.rkh:8
 #, kde-format
 msgid "Screen device history"
-msgstr ""
+msgstr "Ekrana aparato-historio"
 
 #. i18n: ectx: (Screen device history) <summary>
 #: rkward/pages/rkward_plot_history.rkh:10
@@ -1285,7 +1285,7 @@ msgstr "Teĥnikaj detaloj"
 #: rkward/pages/rkward_plot_history.rkh:39
 #, kde-format
 msgid "Some assorted technical details:"
-msgstr ""
+msgstr "Kelkaj diversaj teknikaj detaloj:"
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1334,19 +1334,19 @@ msgstr ""
 #: rkward/pages/rkward_plot_history.rkh:49
 #, kde-format
 msgid "<link href=\"rkward://rhelp/lattice.options\"/> (needs lattice)"
-msgstr ""
+msgstr "<link href=\"rkward://rhelp/lattice.options\"/> (bezonas kradon)"
 
 #. i18n: ectx: (Screen device history) <related>
 #: rkward/pages/rkward_plot_history.rkh:49
 #, kde-format
 msgid "<link href=\"rkward://rhelp/trellis.last.object\"/> (needs lattice)"
-msgstr ""
+msgstr "<link href=\"rkward://rhelp/trellis.last.object\"/> (bezonas kradon)"
 
 #. i18n: ectx: (RKWard Shortcut keys) <title>
 #: rkward/pages/rkward_shortcuts.rkh:8
 #, kde-format
 msgid "RKWard Shortcut keys"
-msgstr ""
+msgstr "RKWard Ŝparklavoj"
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1395,13 +1395,14 @@ msgstr ""
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "RKWard Default Shortcut keys"
-msgstr ""
+msgstr "RKWard Defaŭltaj fulmoklavoj"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "To point out some of the less discoverable or more important shortcuts:"
 msgstr ""
+"Por atentigi kelkajn el la malpli malkovreblaj aŭ pli gravaj ŝparvojoj:"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1431,7 +1432,7 @@ msgstr ""
 #: rkward/pages/rkward_split_views.rkh:8
 #, kde-format
 msgid "Split views"
-msgstr ""
+msgstr "Dividitaj vidoj"
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1452,7 +1453,7 @@ msgstr ""
 #: rkward/pages/rkward_split_views.rkh:16
 #, kde-format
 msgid "Splitting views"
-msgstr ""
+msgstr "Disigi vidojn"
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1480,19 +1481,19 @@ msgstr ""
 #: rkward/pages/rkward_split_views.rkh:22
 #, kde-format
 msgid "Closing split views"
-msgstr ""
+msgstr "Fermante dividitaj vidoj"
 
 #. i18n: ectx: (Split views) <section title="Closing split views">
 #: rkward/pages/rkward_split_views.rkh:22
 #, kde-format
 msgid "To remove a view area, simply close all windows inside it."
-msgstr ""
+msgstr "Por forigi rigardan areon, simple fermu ĉiujn fenestrojn en ĝi."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <title>
 #: rkward/pages/rkward_trouble_shooting.rkh:8
 #, kde-format
 msgid "Trouble Shooting / FAQ"
-msgstr ""
+msgstr "Problemoj / Oftaj Demandoj"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <summary>
 #: rkward/pages/rkward_trouble_shooting.rkh:9
@@ -1509,13 +1510,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:12
 #, kde-format
 msgid "The \"Analysis\" menu is missing, or shows up as \"(no label)\""
-msgstr ""
+msgstr "La menuo \"Analizo\" mankas, aŭ aperas kiel \"(neniu etikedo)\""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
 #, kde-format
 msgid "Missing menu items"
-msgstr ""
+msgstr "Mankas menueroj"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The \"Analysis\" menu is missing, or shows up as \"(no label)\"">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -1532,13 +1533,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "People tend to ask me what RKWard means. What should I answer?"
-msgstr ""
+msgstr "Homoj emas demandi min, kion signifas RKWard. Kion mi respondu?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "What does \"RKWard\" mean?"
-msgstr ""
+msgstr "Kion signifas \"RKWard\"?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1563,7 +1564,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:20
 #, kde-format
 msgid "Commands not processing"
-msgstr ""
+msgstr "Komandoj ne prilaborataj"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:20
@@ -1597,7 +1598,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:25
 #, kde-format
 msgid "Missing packages"
-msgstr ""
+msgstr "Mankas pakoj"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:25
@@ -1646,7 +1647,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:32
 #, kde-format
 msgid "RKWard integration with an office-suite"
-msgstr ""
+msgstr "RKWard-integriĝo kun oficeja aro"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?">
 #: rkward/pages/rkward_trouble_shooting.rkh:32
@@ -1665,13 +1666,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:35
 #, kde-format
 msgid "RKWard is running since ages. Has it hung up?"
-msgstr ""
+msgstr "RKWard funkcias ekde aĝoj. Ĉu ĝi pendigis?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
 #, kde-format
 msgid "RKWard seems to hang"
-msgstr ""
+msgstr "RKWard ŝajnas pendi"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
@@ -1713,6 +1714,7 @@ msgstr ""
 #, kde-format
 msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
 msgstr ""
+"Mi pensas, ke mi faris ion malĝuste? Kie estas \"Malfari\" kaj \"Refari\"?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
@@ -1748,49 +1750,51 @@ msgstr ""
 #: rkward/pages/rkward_welcome.rkh:8
 #, kde-format
 msgid "Welcome to RKWard"
-msgstr ""
+msgstr "Bonvenon al RKWard"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:10
 #, kde-format
 msgid "My recent script files"
-msgstr ""
+msgstr "Miaj lastatempaj skriptodosieroj"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:12
 #, kde-format
 msgid "My recent workspaces"
-msgstr ""
+msgstr "Miaj lastatempaj laborspacoj"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:14
 #, kde-format
 msgid "My recent output files"
-msgstr ""
+msgstr "Miaj lastatempaj eligdosieroj"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "Import or enter data"
-msgstr ""
+msgstr "Importu aŭ enigu datumojn"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/new_data_frame\">Enter new data</link>"
 msgstr ""
+"<link href=\"rkward://actions/new_data_frame\">Enigu novajn datumojn</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/import_assistant\">Import data</link>"
 msgstr ""
+"<link href=\"rkward://actions/import_assistant\">Importu datumojn</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:23
 #, kde-format
 msgid "Useful settings"
-msgstr ""
+msgstr "Utilaj agordoj"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1820,7 +1824,7 @@ msgstr ""
 #: rkward/pages/rkward_welcome.rkh:31
 #, kde-format
 msgid "Documentation starting points"
-msgstr ""
+msgstr "Dokumentaj deirpunktoj"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Documentation starting points">
 #: rkward/pages/rkward_welcome.rkh:31
@@ -1834,7 +1838,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:8
 #, kde-format
 msgid "Workspace Browser"
-msgstr ""
+msgstr "Laborspaca Retumilo"
 
 #. i18n: ectx: (Workspace Browser) <summary>
 #: rkward/pages/rkward_workspace_browser.rkh:10
@@ -1861,7 +1865,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:16
 #, kde-format
 msgid "What is shown"
-msgstr ""
+msgstr "Kio montriĝas"
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -1967,7 +1971,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "Further actions available for objects in the .GlobalEnv:"
-msgstr ""
+msgstr "Pliaj agoj haveblaj por objektoj en la .GlobalEnv:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -1981,7 +1985,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "<b>Rename / Delete</b>: These should be obvious."
-msgstr ""
+msgstr "<b>Alinomi / Forigi</b>: Ĉi tiuj devus esti evidentaj."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
