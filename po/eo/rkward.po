@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-03-27 19:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "okellogg@users.sourceforge.net"
 
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
@@ -1271,7 +1271,7 @@ msgstr "Resaniĝi"
 #, kde-format
 msgid "Saves the recovery file(s), and opens it (or the most recent one)"
 msgstr ""
-"Konservas la reakiran dosieron(j)n, kaj malfermas ĝin (aŭ la plej "
+"Konservas la reakira(j)n dosiero(j)n, kaj malfermas ĝin (aŭ la plej "
 "lastatempan)"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:46
@@ -1282,7 +1282,8 @@ msgstr "Konservi por poste"
 #: rkward/dialogs/rkrecoverdialog.cpp:47
 #, kde-format
 msgid "Saves the recovery file(s) for later use, but does not open it"
-msgstr "Konservas la reakiran dosieron(j)n por posta uzo, sed ne malfermas ĝin"
+msgstr ""
+"Konservas la reakira(j)n dosiero(j)n por posta uzo, sed ne malfermas ĝin"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:48 rkward/windows/robjectbrowser.cpp:125
 #, kde-format
@@ -4148,7 +4149,7 @@ msgstr "RKWard Eligdosieroj [*.rko](*.rko);;Ĉiuj dosieroj [*](*)"
 #: rkward/rkward.cpp:1049
 #, kde-format
 msgid "Open script file(s)"
-msgstr "Malfermi skriptodosieron(j)"
+msgstr "Malfermi skriptodosiero(j)n"
 
 #: rkward/rkward.cpp:1063
 #, kde-format
