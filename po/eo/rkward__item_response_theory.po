@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-03-28 08:18+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -1546,13 +1546,13 @@ msgstr "Cifereca deriva algoritmo por proksimigi Hessian matricon:"
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:79
 #, kde-format
 msgid "Forward difference approximation"
-msgstr "Antaŭa diferenco aproksimado"
+msgstr "Alproksimiĝo al antaŭa diferenco"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Numerical derivative algorithm to approximate Hessian matrix:"> <option label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:80
 #, kde-format
 msgid "Central difference approximation"
-msgstr "Centra diferenco-aproksimado"
+msgstr "Centra diferenc-alproksimiĝo"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model)
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.js:59
