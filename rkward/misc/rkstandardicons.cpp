@@ -17,7 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 // static
-RKStandardIcons* RKStandardIcons::instance = 0;
+RKStandardIcons* RKStandardIcons::instance = nullptr;
 
 void RKStandardIcons::initIcons () {
 	RK_TRACE (APP);

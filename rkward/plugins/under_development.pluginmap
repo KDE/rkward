@@ -5,7 +5,7 @@ SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 -->
 
-<document base_prefix="" namespace="rkward" priority="low" id="under_development" priority="low">
+<document base_prefix="" namespace="rkward" priority="low" id="under_development">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Plugins under development"
