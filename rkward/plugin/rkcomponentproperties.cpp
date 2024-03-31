@@ -806,7 +806,7 @@ RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool 
 RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {
 	RK_TRACE (PLUGIN);
 
-	setObjectValueSilent (0);
+	setObjectValueSilent(nullptr);
 }
 
 bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
@@ -959,7 +959,7 @@ QString RKComponentPropertyRObjects::checkObjectProblems (RObject *object) const
 RObject *RKComponentPropertyRObjects::objectValue () {
 	RK_TRACE (PLUGIN);
 
-	if (object_list.empty ()) return 0;
+	if (object_list.empty()) return nullptr;
 	return (object_list.first ());
 }
 
@@ -994,7 +994,7 @@ QVariant RKComponentPropertyRObjects::value (const QString &modifier) {
 bool RKComponentPropertyRObjects::setValueList (const QStringList& values) {
 	RK_TRACE (PLUGIN);
 
-	setObjectValue (0);
+	setObjectValue(nullptr);
 
 	bool ok = true;
 	for (int i = 0; i < values.size (); ++i) {
@@ -1212,7 +1212,7 @@ void RKComponentPropertyConvert::setMode (ConvertMode mode) {
 	RK_TRACE (PLUGIN);
 
 	_mode = mode;
-	sourcePropertyChanged (0);
+	sourcePropertyChanged(nullptr);
 }
 
 void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
@@ -1231,14 +1231,14 @@ void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
 		}
 	}
 
-	sourcePropertyChanged (0);
+	sourcePropertyChanged(nullptr);
 }
 
 void RKComponentPropertyConvert::setStandard (const QString &standard) {
 	RK_TRACE (PLUGIN);
 
 	RKComponentPropertyConvert::standard = standard;
-	sourcePropertyChanged (0);
+	sourcePropertyChanged(nullptr);
 }
 
 void RKComponentPropertyConvert::setRange (double min, double max) {
@@ -1246,7 +1246,7 @@ void RKComponentPropertyConvert::setRange (double min, double max) {
 
 	RKComponentPropertyConvert::min = min;
 	RKComponentPropertyConvert::max = max;
-	sourcePropertyChanged (0);
+	sourcePropertyChanged(nullptr);
 }
 
 void RKComponentPropertyConvert::selfChanged (RKComponentPropertyBase *) {
@@ -1357,7 +1357,7 @@ RKComponentPropertySwitch::RKComponentPropertySwitch (RKComponent* parent, const
 
 	RKComponentPropertySwitch::def_values = def_values;
 	RKComponentPropertySwitch::standards = standards;
-	condition_prop = 0;
+	condition_prop = nullptr;
 	c_parent = parent;
 
 	connect (this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::selfChanged);
@@ -1396,7 +1396,7 @@ QVariant RKComponentPropertySwitch::value (const QString& modifier) {
 	QVariant cond = condition_prop->value (condition_prop_modifier);
 	int index = 0;
 	if (standards.isEmpty ()) {
-		if (RKComponentPropertyBool::variantToBool (cond, 0)) index = 1;
+		if (RKComponentPropertyBool::variantToBool(cond, nullptr)) index = 1;
 	} else {
 		index = standards.indexOf (cond.toString ());		// NOTE: list search. Could use a hash, instead, but in general there won't be more than a hand full of standards
 		if (index < 0) index = standards.size ();	// remainder-category
@@ -1433,7 +1433,7 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 
 	for (int i = 0; i < _value_props.size (); ++i) {
 		QString mod;
-		RKComponentPropertyBase *p = 0;
+		RKComponentPropertyBase *p = nullptr;
 		if (!_value_props[i].isEmpty ()) p = c_parent->lookupProperty (_value_props[i], &mod, true);	// Don't try to look it up, if it's empty (as it always is for fixed_value, as this would generate a warning.)
 		value_props.append (p);	// NOTE: Even if it is 0. value() takes care of that.
 		value_prop_mods.append (mod);

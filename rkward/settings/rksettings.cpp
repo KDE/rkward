@@ -30,8 +30,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 //static
-RKSettings *RKSettings::settings_dialog = 0;
-RKSettingsTracker *RKSettings::settings_tracker = 0;
+RKSettings *RKSettings::settings_dialog = nullptr;
+RKSettingsTracker *RKSettings::settings_tracker = nullptr;
 
 //static 
 void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommandChain *chain) {
@@ -83,7 +83,7 @@ void RKSettings::configureSettings (const QString& page, QWidget *parent, RComma
 //static
 void RKSettings::dialogClosed () {
 	RK_TRACE (SETTINGS);
-	settings_dialog = 0;
+	settings_dialog = nullptr;
 }
 
 RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
@@ -134,20 +134,20 @@ void RKSettings::registerPageModule(RKSettings::SettingsPage super, int child) {
 void RKSettings::initModules () {
 	RK_TRACE (SETTINGS);
 
-	auto ktexteditorpages = RKSettingsModuleCommandEditor::kateConfigPages(this, 0);
+	auto ktexteditorpages = RKSettingsModuleCommandEditor::kateConfigPages(this, nullptr);
 	pages.resize(NumPages + ktexteditorpages.size());
-	modules.insert (PagePlugins, new RKSettingsModulePlugins (this, 0));
-	modules.insert (PageKatePlugins, new RKSettingsModuleKatePlugins (this, 0));
-	modules.insert (PageR, new RKSettingsModuleR (this, 0));
-	modules.insert (PageRPackages, new RKSettingsModuleRPackages (this, 0));
-	modules.insert (PageGeneral, new RKSettingsModuleGeneral (this, 0));
-	modules.insert (PageOutput, new RKSettingsModuleOutput (this, 0));
-	modules.insert (PageX11, new RKSettingsModuleGraphics (this, 0));
-	modules.insert (PageWatch, new RKSettingsModuleWatch (this, 0));
-	modules.insert (PageConsole, new RKSettingsModuleConsole (this, 0));
-	modules.insert (PageCommandEditor, new RKSettingsModuleCommandEditor (this, 0));
-	modules.insert (PageObjectBrowser, new RKSettingsModuleObjectBrowser (this, 0));
-	modules.insert (PageDebug, new RKSettingsModuleDebug (this, 0));
+	modules.insert (PagePlugins, new RKSettingsModulePlugins(this, nullptr));
+	modules.insert (PageKatePlugins, new RKSettingsModuleKatePlugins(this, nullptr));
+	modules.insert (PageR, new RKSettingsModuleR(this, nullptr));
+	modules.insert (PageRPackages, new RKSettingsModuleRPackages(this, nullptr));
+	modules.insert (PageGeneral, new RKSettingsModuleGeneral(this, nullptr));
+	modules.insert (PageOutput, new RKSettingsModuleOutput(this, nullptr));
+	modules.insert (PageX11, new RKSettingsModuleGraphics(this, nullptr));
+	modules.insert (PageWatch, new RKSettingsModuleWatch(this, nullptr));
+	modules.insert (PageConsole, new RKSettingsModuleConsole(this, nullptr));
+	modules.insert (PageCommandEditor, new RKSettingsModuleCommandEditor(this, nullptr));
+	modules.insert (PageObjectBrowser, new RKSettingsModuleObjectBrowser(this, nullptr));
+	modules.insert (PageDebug, new RKSettingsModuleDebug(this, nullptr));
 	for (int i = 0; i < ktexteditorpages.size(); ++i) {
 		modules.insert(NumPages+i, ktexteditorpages[i]);
 	}

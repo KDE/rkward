@@ -28,7 +28,7 @@ class RCommandChain;
 class RKHelpSearchWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
-	RKHelpSearchWindow (QWidget *parent, bool tool_window, const char *name=0);
+	RKHelpSearchWindow (QWidget *parent, bool tool_window, const char *name=nullptr);
 	~RKHelpSearchWindow ();
 /** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
 @param context_line The current line

@@ -105,7 +105,7 @@ RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 
 	if (current && factory) {
 		factory->removeClient(current);
-		current->setFactory (0);
+		current->setFactory(nullptr);
 	}
 	delete menubar;
 	delete builder;

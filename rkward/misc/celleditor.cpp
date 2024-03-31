@@ -20,7 +20,7 @@ CellEditor::CellEditor (QWidget* parent) : QLineEdit (parent) {
 
 	setFrame (false);
 
-	value_list = 0;
+	value_list = nullptr;
 }
 
 CellEditor::~CellEditor () {

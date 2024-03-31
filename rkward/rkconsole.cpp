@@ -55,7 +55,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "debug.h"
 
 // static
-RKConsole* RKConsole::main_console = 0;
+RKConsole* RKConsole::main_console = nullptr;
 
 RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, RKMDIWindow::ConsoleWindow, tool_window, name), commands_history (false, false) {
 	RK_TRACE (APP);
@@ -146,7 +146,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 
 	commands_history.setHistory (RKSettingsModuleConsole::loadCommandHistory ());
 
-	current_command = 0;
+	current_command = nullptr;
 	current_command_displayed_up_to = 0;
 	tab_key_pressed_before = false;
 	previous_chunk_was_piped = false;
@@ -196,7 +196,7 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 		getPart ()->actionCollection ()->addAction (actionName, ret);
 		return ret;
 	} else {
-		return 0;
+		return nullptr;
 	}
 }
 
@@ -702,7 +702,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 		if (url.isEmpty ()) return;
 	}
 
-	QTemporaryFile *tmpfile = 0;
+	QTemporaryFile *tmpfile = nullptr;
 	QString filename;
 	if (!url.isLocalFile ()) {
 		tmpfile = new QTemporaryFile (this);
@@ -857,12 +857,12 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));
-	ac->setDefaultShortcut (interrupt_command_action, REAL_CTRL_KEY + Qt::Key_C);
+	ac->setDefaultShortcut (interrupt_command_action, REAL_CTRL_KEY | Qt::Key_C);
 	interrupt_command_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_command_action->setEnabled (false);
 
 	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
-	ac->setDefaultShortcut (copy_literal_action, REAL_CMD_KEY + Qt::Key_C);
+	ac->setDefaultShortcut (copy_literal_action, REAL_CMD_KEY | Qt::Key_C);
 	copy_literal_action->setText (i18n ("Copy selection literally"));
 
 	copy_commands_action = ac->addAction ("rkconsole_copy_commands", this, SLOT (copyCommands()));
@@ -952,7 +952,7 @@ void RKConsole::activate (bool with_focus) {
 ///################### BEGIN RKConsolePart ####################
 
 
-RKConsolePart::RKConsolePart (RKConsole *console) : KParts::Part (0) {
+RKConsolePart::RKConsolePart(RKConsole *console) : KParts::Part(nullptr) {
 	RK_TRACE (APP);
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());

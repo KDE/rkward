@@ -98,8 +98,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	RK_ASSERT (editor);
 
 	QUrl url = _url;
-	m_doc = 0;
-	preview_dir = 0;
+	m_doc = nullptr;
+	preview_dir = nullptr;
 	visible_to_kateplugins = flags & RKCommandEditorFlags::VisibleToKTextEditorPlugins;
 	if (visible_to_kateplugins) addUiBuddy(RKWardMainWindow::getMain()->katePluginIntegration()->mainWindow()->dynamicGuiClient());
 	bool use_r_highlighting = (flags & RKCommandEditorFlags::ForceRHighlighting) || (url.isEmpty() && (flags & RKCommandEditorFlags::DefaultToRHighlighting)) || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName ());
@@ -334,7 +334,7 @@ QAction *findAction (KTextEditor::View* view, const QString &actionName) {
 		if (found) return found;
 	}
 
-	return 0;
+	return nullptr;
 }
 
 void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
@@ -348,8 +348,8 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	// NOTE: enter_and_submit is not currently added to the menu
 	QAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
 	action->setText (i18n ("Insert line break and run"));
-	ac->setDefaultShortcuts (action, QList<QKeySequence>() << Qt::AltModifier + Qt::Key_Return << Qt::AltModifier + Qt::Key_Enter);
-	ac->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
+	ac->setDefaultShortcuts (action, QList<QKeySequence>() << (Qt::AltModifier | Qt::Key_Return) << (Qt::AltModifier | Qt::Key_Enter));
+	ac->setDefaultShortcut (action, Qt::AltModifier | Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
 
 	RKStandardActions::functionHelp (this, this);
 	RKStandardActions::onlineHelp (this, this);
@@ -462,7 +462,7 @@ void RKCommandEditorWindow::initBlocks () {
 		actionmenu_run_block->addAction (record.run);
 
 		// these two not strictly needed due to removeBlock(), below. Silences a GCC warning, however.
-		record.range = 0;
+		record.range = nullptr;
 		record.active = false;
 
 		block_records.append (record);
@@ -564,9 +564,9 @@ void RKCommandEditorWindow::discardPreview () {
 		preview_manager->setPreviewDisabled ();
 		RInterface::issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
 		delete preview_dir;
-		preview_dir = 0;
+		preview_dir = nullptr;
 		delete preview_input_file;
-		preview_input_file = 0;
+		preview_input_file = nullptr;
 	}
 	action_no_preview->setChecked (true);
 }
@@ -833,13 +833,13 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	if (!preview_dir) {
 		preview_dir = new QTemporaryDir ();
-		preview_input_file = 0;
+		preview_input_file = nullptr;
 	}
 	if (preview_input_file) {
 		// When switching between .Rmd and .R previews, discard input file
 		if ((mode == RMarkdownPreview) != (preview_input_file->fileName().endsWith (".Rmd"))) {
 			delete preview_input_file;
-			preview_input_file = 0;
+			preview_input_file = nullptr;
 		} else {
 			preview_input_file->remove ();  // If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in open(WriteOnly), below.
 		}
@@ -1039,7 +1039,7 @@ void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
 	}
 
 	QString actiontext = i18n ("%1 (Unused)", index + 1);
-	block_records[index].range = 0;
+	block_records[index].range = nullptr;
 	block_records[index].active = false;
 	block_records[index].mark->setText (actiontext);
 	block_records[index].unmark->setText (actiontext);
@@ -1060,8 +1060,8 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 }
 
 // static
-KTextEditor::Document* RKCommandHighlighter::_doc = 0;
-KTextEditor::View* RKCommandHighlighter::_view = 0;
+KTextEditor::Document* RKCommandHighlighter::_doc = nullptr;
+KTextEditor::View* RKCommandHighlighter::_view = nullptr;
 KTextEditor::Document* RKCommandHighlighter::getDoc () {
 	if (_doc) return _doc;
 
@@ -1071,7 +1071,7 @@ KTextEditor::Document* RKCommandHighlighter::getDoc () {
 
 	_doc = editor->createDocument (RKWardMainWindow::getMain ());
 // NOTE: A (dummy) view is needed to access highlighting attributes.
-	_view = _doc->createView (0);
+	_view = _doc->createView(nullptr);
 	_view->hide ();
 	RK_ASSERT (_doc);
 	return _doc;

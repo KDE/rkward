@@ -43,7 +43,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KPageDialog (parent) {
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
-	installation_process = 0;
+	installation_process = nullptr;
 
 	setFaceType (KPageDialog::Tabbed);
 	setModal (modal);
@@ -325,7 +325,7 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 
 ////////////////////// LoadUnloadWidget ////////////////////////////
 
-LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : RKLoadLibsDialogPage (0) {
+LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : RKLoadLibsDialogPage(nullptr) {
 	RK_TRACE (DIALOGS);
 	LoadUnloadWidget::parent = dialog;
 	
@@ -607,7 +607,7 @@ Q_SIGNALS:
 	void selectAllUpdates();
 };
 
-InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : RKLoadLibsDialogPage (0) {
+InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : RKLoadLibsDialogPage(nullptr) {
 	RK_TRACE (DIALOGS);
 	InstallPackagesWidget::parent = dialog;
 	
@@ -1204,7 +1204,7 @@ void RKRPackageInstallationStatusSortFilterModel::setRKWardOnly (bool only) {
 #include "../misc/multistringselector.h"
 RKPluginMapSelectionWidget::RKPluginMapSelectionWidget (RKLoadLibsDialog* dialog) : RKLoadLibsDialogPage(dialog) {
 	RK_TRACE (DIALOGS);
-	model = 0;
+	model = nullptr;
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->addWidget (new QLabel (i18n ("Installed plugin groups (.pluginmap files)"), this));
@@ -1236,7 +1236,7 @@ void RKPluginMapSelectionWidget::apply () {
 	if (!isChanged()) return;
 	RK_ASSERT (model);
 	auto new_list = RKSettingsModulePlugins::setPluginMaps(model->pluginMaps());
-	selector->setModel (0); // we don't want any extra change notification for this
+	selector->setModel(nullptr); // we don't want any extra change notification for this
 	model->init (new_list);
 	selector->setModel (model, 1);
 	clearChanged();

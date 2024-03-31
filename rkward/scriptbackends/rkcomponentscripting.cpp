@@ -69,7 +69,7 @@ void RKComponentScriptingProxy::handleScriptError(const QJSValue &val, const QSt
 	if (file.isEmpty ()) file = _scriptfile;
 	if (val.isError()) {
 		QString message = i18n("Script Error at '%1' line %2: %3\n", file.isEmpty() ? i18n("inlined code") : file, val.property("lineNumber").toInt(), val.toString());
-		KMessageBox::detailedError (0, message, val.property("stack").toString());
+		KMessageBox::detailedError(nullptr, message, val.property("stack").toString());
 		Q_EMIT haveError();
 	}
 }

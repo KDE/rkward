@@ -40,11 +40,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define COL_PACKAGE 3
 #define COL_COUNT 4
 
-RKHelpSearchWindow* RKHelpSearchWindow::main_help_search = 0;
+RKHelpSearchWindow* RKHelpSearchWindow::main_help_search = nullptr;
 
 RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, SearchHelpWindow, tool_window, name) {
 	RK_TRACE (APP);
-	setPart (new RKDummyPart (0, this));
+	setPart (new RKDummyPart(nullptr, this));
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 

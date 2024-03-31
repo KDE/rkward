@@ -23,7 +23,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Variable;
-	data = 0;
+	data = nullptr;
 	setDataType (RObject::DataNumeric);
 }
 
@@ -55,7 +55,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 		// store what we want to keep of the edit data
 		int num_listeners = data->num_listeners;
 		ValueLabels *value_labels = data->value_labels;
-		data->value_labels = 0;	// prevent destruction
+		data->value_labels = nullptr;	// prevent destruction
 		FormattingOptions formatting_options = data->formatting_options;
 
 		// destroy and re-allocate edit data
@@ -139,7 +139,7 @@ void RKVariable::beginEdit () {
 
 	if (!data) {
 		allocateEditData ();
-		if (!(isPending () || (parentObject () && parentObject ()->isPending ()))) updateDataFromR (0);
+		if (!(isPending () || (parentObject () && parentObject ()->isPending ()))) updateDataFromR(nullptr);
 	}
 	++(data->num_listeners);
 }
@@ -162,7 +162,7 @@ void RKVariable::allocateEditData () {
 	
 	data = new RKVarEditData;
 	data->sync_locks = 0;
-	data->value_labels = 0;
+	data->value_labels = nullptr;
 	data->formatting_options.alignment = FormattingOptions::AlignDefault;
 	data->formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 	data->formatting_options.precision = 0;
@@ -190,7 +190,7 @@ void RKVariable::discardEditData () {
 
 	delete data->value_labels;
 	delete data;
-	data = 0;
+	data = nullptr;
 
 	if (isPending ())  (type -= Pending);
 }
@@ -590,7 +590,7 @@ QString *RKVariable::getCharacter (int from_row, int to_row) const {
 	RK_TRACE (OBJECTS);
 	if (to_row >= getLength ()) {
 		RK_ASSERT (false);
-		return 0;
+		return nullptr;
 	}
 	RK_ASSERT (from_row <= to_row);
 
@@ -693,7 +693,7 @@ void RKVariable::setValueLabels (const ValueLabels& labels) {
 		if (!data->value_labels) return;	// no change: was empty, is empty
 
 		delete data->value_labels;
-		data->value_labels = 0;
+		data->value_labels = nullptr;
 	} else {
 		if (!(data->value_labels)) data->value_labels = new RObject::ValueLabels;
 		else {
@@ -708,7 +708,7 @@ void RKVariable::setValueLabels (const ValueLabels& labels) {
 void RKVariable::updateValueLabels () {
 	RK_TRACE (OBJECTS);
 
-	writeValueLabels (0);
+	writeValueLabels(nullptr);
 	RKModificationTracker::instance()->objectMetaChanged (this);
 
 	ValueLabels *labels = data->value_labels;

@@ -300,7 +300,7 @@ RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
 		}
 
 		char name[sizeof(void*)*2+3];
-		sprintf(name, "%p", baseenvir);
+		sprintf(name, "%p", (void*) baseenvir);
 		SEXP tr = Rf_allocVector(LGLSXP, 1);
 		LOGICAL(tr)[0] = true;
 		Rf_defineVar(Rf_install(name), RKRSupport::callSimpleFun2(Rf_install("new.env"), tr, R_EmptyEnv, R_GlobalEnv), shadowenvbase);

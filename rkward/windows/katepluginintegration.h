@@ -108,7 +108,7 @@ friend class KatePluginIntegrationApp;
 	KTextEditor::MainWindow *main;
 	QObject* createPluginView(KTextEditor::Plugin* plugin);
 	struct PluginResources {
-		PluginResources() : view(0) {};
+		PluginResources() : view(nullptr) {};
 		QObject *view;
 		QList<KXMLGUIClient*> clients;
 		QList<RKMDIWindow*> windows;

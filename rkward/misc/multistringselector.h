@@ -27,8 +27,8 @@ class QTreeView;
 class RKMultiStringSelectorV2 : public QWidget {
 	Q_OBJECT
 public:
-	explicit RKMultiStringSelectorV2 (const QString& label, QWidget* parent = 0);
-	virtual ~RKMultiStringSelectorV2 ();
+	explicit RKMultiStringSelectorV2(const QString& label, QWidget* parent = nullptr);
+	virtual ~RKMultiStringSelectorV2();
 	void setModel (QAbstractItemModel *model, int main_column=-1);
 	void setAlwaysAddAtBottom (bool always_add_at_bottom) { add_at_bottom = always_add_at_bottom; };
 public Q_SLOTS:
@@ -56,8 +56,8 @@ Q_SIGNALS:
 class MultiStringSelector : public RKMultiStringSelectorV2 {
 Q_OBJECT
 public:
-	explicit MultiStringSelector (const QString& label, QWidget* parent = 0);
-	~MultiStringSelector ();
+	explicit MultiStringSelector(const QString& label, QWidget* parent = nullptr);
+	~MultiStringSelector();
 
 /** get list of current strings (in the correct order, of course) */
 	QStringList getValues ();

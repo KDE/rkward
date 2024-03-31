@@ -75,7 +75,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 		if (!(dev && RKGraphicsDeviceBackendTransmitter::instance () && desc->init (dev, pointsize, family, bg))) {
 			R_Free (dev);
 			delete (desc);
-			desc = 0;
+			desc = nullptr;
 		} else {
 			desc->devnum = 0;  // graphics engine will send an Activate-event, before we were even
 			                   // able to see our own devnum and call RKD_Create. Therefore, initialize

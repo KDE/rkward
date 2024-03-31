@@ -75,7 +75,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	prev_action = actionCollection ()->addAction ("prev_window", this, SLOT (previousWindow()));
 	prev_action->setText (i18n ("Previous Window"));
 	prev_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"));
-	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier + Qt::Key_Tab);
+	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier | Qt::Key_Tab);
 	next_action = actionCollection ()->addAction ("next_window", this, SLOT (nextWindow()));
 	next_action->setText (i18n ("Next Window"));
 	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));

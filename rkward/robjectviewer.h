@@ -69,7 +69,7 @@ protected:
 	RObjectViewerWidget (QWidget* parent, RObject* object);
 	virtual ~RObjectViewerWidget ();
 public:
-	void objectKilled () { _object = 0; };
+	void objectKilled() { _object = nullptr; };
 
 	void invalidate (const QString& reason);
 	void initialize ();

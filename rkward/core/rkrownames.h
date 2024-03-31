@@ -22,7 +22,7 @@ public:
 	void writeMetaData (RCommandChain *) override {};
 
 /** Reimplemented to always try to write data as numbers, if possible */
-	void writeData (int from_row, int to_row, RCommandChain *chain=0) override;
+	void writeData (int from_row, int to_row, RCommandChain *chain=nullptr) override;
 /** Reimplemented to check, whether the values are all 1:n, custom, or invalid. */
 	void setText (int row, const QString &text) override;
 /** Reimplemented to also adjust the subsequent row names, if, and only if rownames are 1:n */

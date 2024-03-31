@@ -25,8 +25,8 @@ class QAction;
 class RKFileBrowser : public RKMDIWindow {
 	Q_OBJECT
 public:
-	RKFileBrowser (QWidget *parent, bool tool_window, const char *name=0);
-	~RKFileBrowser ();
+	RKFileBrowser(QWidget *parent, bool tool_window, const char *name=nullptr);
+	~RKFileBrowser();
 
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
 	void showEvent (QShowEvent *e) override;

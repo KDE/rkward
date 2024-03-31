@@ -27,7 +27,7 @@ public:
 
 	~QtScriptBackend ();
 
-	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true) override;
+	bool initialize (RKComponentPropertyCode *code_property=nullptr, bool add_headings=true) override;
 	void destroy () override;
 	
 	void preprocess (int flags) override { callFunction ("do_preprocess ();\n", flags, Preprocess); };

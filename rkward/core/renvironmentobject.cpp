@@ -27,7 +27,7 @@ REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString 
 		if (name.contains (':')) {
 			type |= PackageEnv;
 		}
-	} else if (parent == 0) {
+	} else if (parent == nullptr) {
 		RK_ASSERT (name == ".GlobalEnv");
 		type |= ToplevelEnv | GlobalEnv;
 	}
@@ -96,7 +96,7 @@ void REnvironmentObject::updateFromR(RCommandChain *chain, const QStringList &ad
 	for (int i = removed_symbols.size() -1; i >= 0; --i) {
 		RObject *removed_object = findChildByName(removed_symbols[i]);
 		RK_ASSERT(removed_object);
-		if (removed_object) RKModificationTracker::instance()->removeObject(removed_object, 0, true);
+		if (removed_object) RKModificationTracker::instance()->removeObject(removed_object, nullptr, true);
 	}
 
 	for (int i = added_symbols.size() -1; i >= 0; --i) {
@@ -135,7 +135,7 @@ bool REnvironmentObject::updateStructure (RData *new_data) {
 		if (new_data->getDataLength () > (StorageSizeBasicInfo + 1)) {
 			RK_ASSERT (new_data->getDataLength () == (StorageSizeBasicInfo + 2));
 			updateNamespace (new_data_data.at (StoragePositionNamespace));
-		} else updateNamespace (0);
+		} else updateNamespace(nullptr);
 	} else {
 		RK_ASSERT (false);
 	}
@@ -146,7 +146,7 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 	RK_TRACE (OBJECTS);
 
 	if (!new_data) {
-		setSpecialChildObject (0, NamespaceObject);
+		setSpecialChildObject(nullptr, NamespaceObject);
 		return;
 	}
 

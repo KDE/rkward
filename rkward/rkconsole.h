@@ -40,7 +40,7 @@ class RKConsole : public RKMDIWindow, public RKScriptContextProvider {
 Q_OBJECT
 public:
 /** Constructor. */
-	RKConsole (QWidget *parent, bool tool_window, const char *name=0);
+	RKConsole (QWidget *parent, bool tool_window, const char *name=nullptr);
 /** Destructor */
 	~RKConsole ();
 

@@ -30,7 +30,7 @@ class QSplitter;
 class TwinTable : public RKEditor, public RObjectListener, public KXMLGUIClient {
 	Q_OBJECT
 public: 
-	explicit TwinTable (QWidget *parent=0);
+	explicit TwinTable(QWidget *parent=nullptr);
 	~TwinTable ();
 /** Pastes clipboard content to the current table */
 	void paste (RKEditor::PasteMode paste_mode);

@@ -119,16 +119,16 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		column_map.insert (column_property, col_inf);
 	}
 
-	keycolumn = 0;
+	keycolumn = nullptr;
 	QString keycol = xml->getStringAttribute (element, "keycolumn", QString (), DL_DEBUG);
 	if (!keycol.isEmpty ()) {
 		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 		if (!column_map.contains (keycolumn)) {
 			RK_DEBUG (PLUGIN, DL_ERROR, "optionset does not contain an optioncolumn named %s. Falling back to manual insertion mode", qPrintable (keycol));
-			keycolumn = 0;
+			keycolumn = nullptr;
 		} else if (!column_map[keycolumn].external) {
 			RK_DEBUG (PLUGIN, DL_ERROR, "keycolumn (%s) is not marked as external. Falling back to manual insertion mode", qPrintable (keycol));
-			keycolumn = 0;
+			keycolumn = nullptr;
 		} else {
 			updating = true;
 			keycolumn->setValue (KEYCOLUMN_UNINITIALIZED_VALUE);
@@ -270,7 +270,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	QList<RowInfo> new_rows;
 	int row = 0;
 	QStringList items = fetchStringValue (property).split ('\n');
-	bool keys_missing = (keycolumn != 0);
+	bool keys_missing = (keycolumn != nullptr);
 	for (int i = 0; i < items.size (); ++i) {
 		const QString &item = items[i];
 		int sep = item.indexOf ('=');
@@ -688,7 +688,7 @@ void RKOptionSet::setContentsForRow (int row) {
 		// from the default_row_state, instead.
 		for (PropertyValueMap::const_iterator it = default_row_state.constBegin (); it != default_row_state.constEnd (); ++it) {
 			if (!map->contains (it.key ())) {
-				RKComponentPropertyBase *prop = contents_container->lookupProperty (it.key (), 0, true);
+				RKComponentPropertyBase *prop = contents_container->lookupProperty(it.key(), nullptr, true);
 				if (prop) {		// found a property
 					RK_ASSERT (!prop->isInternal ());
 					prop->setValue (it.value ());

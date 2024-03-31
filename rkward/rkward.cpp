@@ -93,24 +93,24 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 // This nevers gets called. It's needed to trick ld into linking correctly. Nothing else.
 void bogusCalls () {
-	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
-	RKReadLineDialog::readLine (0, QString(), QString(), 0, 0);	// TODO: see above
-	RKSelectListDialog::doSelect (0, QString(), QStringList(), QStringList(), false);	// TODO: see above
-	new RKEditorDataFrame (0, 0);
-	DetachedWindowContainer (0, false);
-	new RKWorkplaceView (0);
-	new RKEditObjectAgent (QStringList (), 0);
-	RKPrintAgent::printPostscript (QString (), false);
+	ShowEditTextFileAgent::showEditFiles(nullptr);                                   // TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
+	RKReadLineDialog::readLine(nullptr, QString(), QString(), nullptr, nullptr);     // TODO: see above
+	RKSelectListDialog::doSelect(nullptr, QString(), QStringList(), QStringList(), false); // TODO: see above
+	new RKEditorDataFrame(nullptr, nullptr);
+	DetachedWindowContainer(nullptr, false);
+	new RKWorkplaceView(nullptr);
+	new RKEditObjectAgent(QStringList(), nullptr);
+	RKPrintAgent::printPostscript(QString(), false);
 }
 
 /** Main window **/
 
 //static
-RKWardMainWindow *RKWardMainWindow::rkward_mainwin = 0;
+RKWardMainWindow *RKWardMainWindow::rkward_mainwin = nullptr;
 
 RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
-	RK_TRACE (APP);
-	RK_ASSERT (rkward_mainwin == 0);
+	RK_TRACE(APP);
+	RK_ASSERT(rkward_mainwin == nullptr);
 
 	Q_INIT_RESOURCE(resources);
 	testmode_suppress_dialogs = false;
@@ -350,11 +350,11 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 	}
 	if (!completely_broken_maps.isEmpty ()) {
 		QString maplist = "<ul><li>" + completely_broken_maps.join ("</li>\n<li>") + "</li></ul>";
-		KMessageBox::detailedError (0, QString ("<p>%1</p><p>%2</p>").arg (i18n ("The following RKWard pluginmap files could not be loaded, and have been disabled. This could be because they are broken, not compatible with this version of RKWard, or not meant for direct loading (see the 'Details' for more information). They have been disabled."), maplist), completely_broken_maps_details.join ("\n"), i18n ("Failed to load some plugin maps"));
+		KMessageBox::detailedError(nullptr, QString("<p>%1</p><p>%2</p>").arg(i18n("The following RKWard pluginmap files could not be loaded, and have been disabled. This could be because they are broken, not compatible with this version of RKWard, or not meant for direct loading (see the 'Details' for more information). They have been disabled."), maplist), completely_broken_maps_details.join ("\n"), i18n("Failed to load some plugin maps"));
 	}
 	if (!somewhat_broken_maps.isEmpty ()) {
 		QString maplist = "<ul><li>" + somewhat_broken_maps.join ("</li>\n<li>") + "</li></ul>";
-		KMessageBox::detailedError (0, QString ("<p>%1</p><p>%2</p><p>%3</p>").arg (i18n ("Some errors were encountered while loading the following RKWard pluginmap files. This could be because individual plugins are broken or not compatible with this version of RKWard (see the 'Details' for more information). Other plugins were loaded, successfully, however."), maplist, i18n ("Note: You will not be warned about these pluginmap files again, until you upgrade RKWard, or remove and re-add them in Settings->Configure RKWard->Plugins.")), somewhat_broken_maps_details.join ("\n"), i18n ("Failed to load some plugin maps"));
+		KMessageBox::detailedError(nullptr, QString("<p>%1</p><p>%2</p><p>%3</p>").arg(i18n("Some errors were encountered while loading the following RKWard pluginmap files. This could be because individual plugins are broken or not compatible with this version of RKWard (see the 'Details' for more information). Other plugins were loaded, successfully, however."), maplist, i18n("Note: You will not be warned about these pluginmap files again, until you upgrade RKWard, or remove and re-add them in Settings->Configure RKWard->Plugins.")), somewhat_broken_maps_details.join("\n"), i18n("Failed to load some plugin maps"));
 	}
 
 	slotSetStatusReady ();
@@ -427,41 +427,41 @@ void RKWardMainWindow::configureCarbonCopy () {
 void RKWardMainWindow::initToolViewsAndR () {
 	RK_TRACE (APP);
 
-	RObjectBrowser::object_browser = new RObjectBrowser (0, true);
+	RObjectBrowser::object_browser = new RObjectBrowser(nullptr, true);
 	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
-	RKToolWindowList::registerToolWindow (RObjectBrowser::mainBrowser (), "workspace", RKToolWindowList::Left, Qt::AltModifier + Qt::Key_1);
+	RKToolWindowList::registerToolWindow (RObjectBrowser::mainBrowser (), "workspace", RKToolWindowList::Left, Qt::AltModifier | Qt::Key_1);
 
-	RKCommandLog::rkcommand_log = new RKCommandLog (0, true);
-	RKToolWindowList::registerToolWindow (RKCommandLog::rkcommand_log, "commandlog", RKToolWindowList::Bottom, Qt::AltModifier + Qt::Key_3);
+	RKCommandLog::rkcommand_log = new RKCommandLog(nullptr, true);
+	RKToolWindowList::registerToolWindow (RKCommandLog::rkcommand_log, "commandlog", RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_3);
 
 	startR ();
 
-	RKFileBrowser::main_browser = new RKFileBrowser (0, true);
+	RKFileBrowser::main_browser = new RKFileBrowser(nullptr, true);
 	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
-	RKToolWindowList::registerToolWindow (RKFileBrowser::main_browser, "filebrowser", RKToolWindowList::Left, Qt::AltModifier + Qt::Key_2);
+	RKToolWindowList::registerToolWindow (RKFileBrowser::main_browser, "filebrowser", RKToolWindowList::Left, Qt::AltModifier | Qt::Key_2);
 
-	RControlWindow::control_window = new RControlWindow (0, true);
+	RControlWindow::control_window = new RControlWindow(nullptr, true);
 	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
-	RKToolWindowList::registerToolWindow (RControlWindow::getControl (), "pendingjobs", RKToolWindowList::Nowhere, Qt::AltModifier + Qt::Key_4);
+	RKToolWindowList::registerToolWindow (RControlWindow::getControl (), "pendingjobs", RKToolWindowList::Nowhere, Qt::AltModifier | Qt::Key_4);
 
-	RKConsole *console = new RKConsole (0, true);
+	RKConsole *console = new RKConsole(nullptr, true);
 	RKConsole::setMainConsole (console);
-	RKToolWindowList::registerToolWindow (console, "console", RKToolWindowList::Bottom, Qt::AltModifier + Qt::Key_5);
+	RKToolWindowList::registerToolWindow (console, "console", RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_5);
 
-	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true);
+	RKHelpSearchWindow *help_search = new RKHelpSearchWindow(nullptr, true);
 	RKHelpSearchWindow::main_help_search = help_search;
-	RKToolWindowList::registerToolWindow (help_search, "helpsearch", RKToolWindowList::Bottom, Qt::AltModifier + Qt::Key_6);
+	RKToolWindowList::registerToolWindow (help_search, "helpsearch", RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_6);
 
-	RKCallstackViewer::_instance = new RKCallstackViewer (0, true);
+	RKCallstackViewer::_instance = new RKCallstackViewer(nullptr, true);
 	RKCallstackViewer::instance ()->setCaption (i18n ("Debugger Frames"));
-	RKToolWindowList::registerToolWindow (RKCallstackViewer::instance (), "debugframes", RKToolWindowList::Right, Qt::AltModifier + Qt::Key_8);
+	RKToolWindowList::registerToolWindow (RKCallstackViewer::instance (), "debugframes", RKToolWindowList::Right, Qt::AltModifier | Qt::Key_8);
 
 	// HACK: Creating this _after_ the callstackviewer is important, so the debug console will end up the active window when entering a debug context
-	RKDebugConsole::_instance = new RKDebugConsole (0, true);
+	RKDebugConsole::_instance = new RKDebugConsole(nullptr, true);
 	RKDebugConsole::instance ()->setCaption (i18n ("Debugger Console"));
-	RKToolWindowList::registerToolWindow (RKDebugConsole::instance (), "debugconsole", RKToolWindowList::Nowhere, Qt::AltModifier + Qt::Key_7);
+	RKToolWindowList::registerToolWindow (RKDebugConsole::instance (), "debugconsole", RKToolWindowList::Nowhere, Qt::AltModifier | Qt::Key_7);
 
-	RKDebugMessageWindow::_instance = new RKDebugMessageWindow (0, true);
+	RKDebugMessageWindow::_instance = new RKDebugMessageWindow(nullptr, true);
 	RKDebugMessageWindow::instance ()->setCaption (i18n ("RKWard Debug Messages"));
 	RKToolWindowList::registerToolWindow (RKDebugMessageWindow::instance (), "rkdebugmessages", RKToolWindowList::Nowhere, 0);
 
@@ -881,7 +881,7 @@ void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 
 void RKWardMainWindow::slotFileLoadLibs () {
 	RK_TRACE (APP);
-	RKLoadLibsDialog *dial = new RKLoadLibsDialog (this, 0);
+	RKLoadLibsDialog *dial = new RKLoadLibsDialog(this, nullptr);
 	dial->show ();
 }
 
@@ -983,8 +983,8 @@ void RKWardMainWindow::slotNewCommandEditor () {
 void RKWardMainWindow::openAnyFile () {
 	RK_TRACE (APP);
 
-	QFileDialog* dialog = new QFileDialog (0, QString (), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename).toLocalFile(), QString ("*|All Files (*)\n%1|R Script Files (%1)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()));
-	dialog->setFileMode (QFileDialog::ExistingFiles);
+	QFileDialog* dialog = new QFileDialog(nullptr, QString(), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename).toLocalFile(), QString ("*|All Files (*)\n%1|R Script Files (%1)").arg(RKSettingsModuleCommandEditor::scriptFileFilter()));
+	dialog->setFileMode(QFileDialog::ExistingFiles);
 
 // Create a type selection widget, and hack it into the dialog:
 	QFrame* dummy = new QFrame (this);

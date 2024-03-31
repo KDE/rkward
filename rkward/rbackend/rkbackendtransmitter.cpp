@@ -76,7 +76,7 @@ void RKRBackendTransmitter::doExit(){
 	auto con = connection;
 	killTimer(flushtimerid);
 	connection->waitForBytesWritten (1000);
-	connection = 0; // See handleTransmissionError
+	connection = nullptr; // See handleTransmissionError
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Aborting connection to frontend");
 	con->abort();  // TODO: This never seems to complete!
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Done aborting connection to frontend");
@@ -118,7 +118,7 @@ void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 
 		// "Synchronous" requests are not necessarily answered in the order they have been queued
 		int id = request->id;
-		RBackendRequest* current_sync_request = 0;
+		RBackendRequest* current_sync_request = nullptr;
 		for (int i = current_sync_requests.size () - 1; i >= 0; --i) {
 			RBackendRequest *candidate = current_sync_requests[i];
 			if (id == candidate->id) {

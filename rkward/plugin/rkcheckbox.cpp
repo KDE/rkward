@@ -33,7 +33,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_componen
 
 	// initialize
 	updating = false;
-	changedState (0);
+	changedState(nullptr);
 }
 
 RKCheckBox::~RKCheckBox () {

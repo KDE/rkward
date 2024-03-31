@@ -52,8 +52,8 @@ void RBackendRequest::mergeReply (RBackendRequest *reply) {
 	command = reply->command;
 	params = reply->params;
 	output = reply->output;
-	reply->command = 0;
-	reply->output = 0;
+	reply->command = nullptr;
+	reply->output = nullptr;
 }
 
 RBackendRequest* RBackendRequest::duplicate () {
@@ -67,8 +67,8 @@ RBackendRequest* RBackendRequest::duplicate () {
 	ret->params = params;
 	ret->output = output;
 	// prevent double deletion issues
-	command = 0;
-	output = 0;
+	command = nullptr;
+	output = nullptr;
 	return ret;
 }
 
@@ -146,11 +146,11 @@ QString RKROutputBuffer::popOutputCapture (bool highlighted) {
 
 void appendToOutputList (ROutputList *list, const QString &output, ROutput::ROutputType output_type) {
 // No trace
-	ROutput *current_output = 0;
+	ROutput *current_output = nullptr;
 	if (!list->isEmpty ()) {
 		// Merge with previous output fragment, if of the same type
 		current_output = list->last ();
-		if (current_output->type != output_type) current_output = 0;
+		if (current_output->type != output_type) current_output = nullptr;
 	}
 	if (!current_output) {
 		current_output = new ROutput;
@@ -237,7 +237,7 @@ namespace RK_Debug {
 	int RK_Debug_Level = 0;
 	int RK_Debug_Flags = DEBUG_ALL;
 	int RK_Debug_CommandStep = 0;
-	QFile *debug_file = 0;
+	QFile *debug_file = nullptr;
 
 	bool setupLogFile (const QString &basename) {
 		QStringList all_debug_files (basename);

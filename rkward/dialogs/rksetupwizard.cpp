@@ -320,7 +320,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 	auto res = wizard->exec();
 	if (res == QDialog::Accepted) {
 		if (!wizard->packages_to_install.isEmpty()) {
-			RKLoadLibsDialog::showInstallPackagesModal(wizard, 0, wizard->packages_to_install);
+			RKLoadLibsDialog::showInstallPackagesModal(wizard, nullptr, wizard->packages_to_install);
 		}
 
 #if 0 && (defined(Q_OS_LINUX) || defined(Q_OS_UNIX))  // D'uh: muon (5.8.0) does not have an "install" command line option or equivalent

@@ -64,7 +64,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	show_all_envs_action->setToolTip (i18n ("Show objects in all environments on the <i>search()</i> path, instead of just those in <i>.GlobalEnv</i>. Check this, if you want to select objects from a loaded package."));
 	connect (show_all_envs_action, &QAction::toggled, this, &RKVarSelector::rootChanged);
 
-	filter_widget = 0;
+	filter_widget = nullptr;
 	filter_widget_placeholder = new QVBoxLayout ();
 	filter_widget_placeholder->setContentsMargins (0, 0, 0, 0);
 	vbox->addLayout (filter_widget_placeholder);

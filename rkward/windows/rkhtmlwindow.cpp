@@ -973,13 +973,13 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 
 	QStringList anchors, anchornames;
 
-	RKComponentHandle *chandle = 0;
+	RKComponentHandle *chandle = nullptr;
 	if (for_component) {
 		chandle = componentPathToHandle (url.path ());
 		if (!chandle) return false;
 	}
 
-	XMLHelper component_xml_helper (for_component ? chandle->getFilename () : QString (), for_component ? chandle->messageCatalog () : 0);
+	XMLHelper component_xml_helper(for_component ? chandle->getFilename() : QString(), for_component ? chandle->messageCatalog() : nullptr);
 	component_xml = &component_xml_helper;
 	QString help_file_name;
 	QDomElement element;
@@ -1284,8 +1284,8 @@ QString RKHelpRenderer::componentPathToId (const QString &path) {
 	RK_TRACE (APP);
 
 	QStringList path_segments = path.split ('/', Qt::SkipEmptyParts);
-	if (path_segments.count () > 2) return 0;
-	if (path_segments.count () < 1) return 0;
+	if (path_segments.count () > 2) return QString();
+	if (path_segments.count () < 1) return QString();
 	if (path_segments.count () == 1) path_segments.push_front ("rkward");
 	RK_ASSERT (path_segments.count () == 2);
 
@@ -1326,7 +1326,7 @@ void RKHelpRenderer::writeHTML (const QString& string) {
 #include <KIO/CopyJob>
 
 // static
-RKOutputWindowManager* RKOutputWindowManager::_self = 0;
+RKOutputWindowManager* RKOutputWindowManager::_self = nullptr;
 
 RKOutputWindowManager* RKOutputWindowManager::self () {
 	if (!_self) {
@@ -1443,7 +1443,7 @@ QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows(const QString 
 void RKOutputWindowManager::fileChanged (const QString &path) {
 	RK_TRACE (APP);
 
-	RKHTMLWindow *w = 0;
+	RKHTMLWindow *w = nullptr;
 	QList<RKHTMLWindow *> window_list = windows.values (path);
 	for (int i = 0; i < window_list.size (); ++i) {
 		window_list[i]->refresh ();

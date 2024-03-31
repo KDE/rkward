@@ -25,20 +25,20 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // static
 RObjectList *RObjectList::object_list = nullptr;
 
-RObjectList::RObjectList () : RContainerObject (0, QString ()) {
+RObjectList::RObjectList() : RContainerObject(nullptr, QString()) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT(!object_list);
 	object_list = this;
 
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
-	connect(update_timer, &QTimer::timeout, this, [this]() { updateFromR(0); });
-	update_chain = 0;
+	connect(update_timer, &QTimer::timeout, this, [this]() { updateFromR(nullptr); });
+	update_chain = nullptr;
 
 	type = RObject::Workspace;
 	name = "search()";
 
-	globalenv = new REnvironmentObject (0, ".GlobalEnv");
+	globalenv = new REnvironmentObject(nullptr, ".GlobalEnv");
 	globalenv->updateFromR(nullptr);
 
    // TODO: Do we really need tracker notification at this stage?
@@ -158,7 +158,7 @@ void RObjectList::makeUpdateCompleteCallback() {
 	whenCommandFinished(command, [this](RCommand*) {
 		RK_ASSERT (update_chain);
 		RInterface::closeChain (update_chain);
-		update_chain = 0;
+		update_chain = nullptr;
 
 		RK_DEBUG (OBJECTS, DL_DEBUG, "object list update complete");
 		Q_EMIT updateComplete();
@@ -188,7 +188,7 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 
 		RObject *obj = findChildByName (name);
 		if (obj && (i > 0) && (env_names.lastIndexOf (name, i-1) > -1)) {		// duplicate environment names can happen (e.g. if a data.frame is attached multiple times)
-			obj = 0;	// only copy the old item once
+			obj = nullptr;	// only copy the old item once
 		}
 		if (!obj) {
 			obj = createTopLevelEnvironment (name);
@@ -206,7 +206,7 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 		
 		if (new_pos < 0) {	// environment is gone
 			RK_DEBUG (OBJECTS, DL_INFO, "removing toplevel environment %s from list", obj->getShortName ().toLatin1 ().data ());
-			if (RKModificationTracker::instance()->removeObject (obj, 0, true)) --i;
+			if (RKModificationTracker::instance()->removeObject(obj, nullptr, true)) --i;
 			else (newchildmap.insert (i, obj));
 		} else if (new_pos != i) {
 			// this call is rather expensive, all in all, but fortunately called very rarely
@@ -300,7 +300,7 @@ REnvironmentObject* RObjectList::findPackage (const QString &namespacename) cons
 			return env;
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 bool RObjectList::updateStructure (RData *) {

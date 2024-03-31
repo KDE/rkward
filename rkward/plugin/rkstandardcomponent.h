@@ -63,7 +63,7 @@ public:
 /** Submits the current code (by simulating a click on the ok button).
 @param in_chain The command chain to insert the command in (0 for regular command stack).
 @return false, if the plugin-code could not be submitted (e.g. plugin was not satisfied) */
-	bool submit (RCommandChain *in_chain = 0);
+	bool submit(RCommandChain *in_chain = nullptr);
 /** convenience access function: closes the corresponding GUI */
 	void close ();
 /** reimplemented to actually return Dead or Processing when appropriate */

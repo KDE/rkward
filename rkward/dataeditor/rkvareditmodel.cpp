@@ -23,10 +23,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), RObjectListener (RObjectListener::DataModel) {
 	RK_TRACE (EDITOR);
 
-	meta_model = 0;
+	meta_model = nullptr;
 	trailing_rows = trailing_cols = 0;
 	edit_blocks = 0;
-	rownames = 0;
+	rownames = nullptr;
 	header_locked = false;
 	duplicate_check_triggered = false;
 	reset_scheduled = false;
@@ -47,7 +47,7 @@ RKVariable* RKVarEditModel::getObject (int index) const {
 
 	if (index >= trueCols ()) {
 		RK_ASSERT (false);
-		return 0;
+		return nullptr;
 	}
 	return objects[index];
 }
@@ -912,7 +912,7 @@ void RKVarEditDataFrameModel::objectRemoved (RObject* object) {
 	if (object == dataframe) {
 		while (!objects.isEmpty ()) RKVarEditModel::objectRemoved (objects.last());		// NOTE: The rownames object (index position 0) must always go away last!
 		stopListenForObject (dataframe);
-		dataframe = 0;
+		dataframe = nullptr;
 	}
 
 	RKVarEditModel::objectRemoved (object);

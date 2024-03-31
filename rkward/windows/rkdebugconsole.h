@@ -19,8 +19,8 @@ class QLabel;
 class RKDebugConsole : public RKMDIWindow {
 	Q_OBJECT
 public:
-	RKDebugConsole (QWidget *parent, bool tool_window, const char *name=0);
-	~RKDebugConsole ();
+	RKDebugConsole(QWidget *parent, bool tool_window, const char *name=nullptr);
+	~RKDebugConsole();
 
 	static RKDebugConsole *instance () { return _instance; };
 

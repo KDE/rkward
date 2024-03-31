@@ -545,10 +545,10 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 
 				// No, we cannot just send a fake key event, easily...
 				KActionCollection *kate_edit_actions = view ()->findChild<KActionCollection*> ("edit_actions");
-				QAction *action = kate_edit_actions ? (kate_edit_actions->action (k->key () == Qt::Key_Up ? "move_line_up" : "move_line_down")) : 0;
+				QAction *action = kate_edit_actions ? (kate_edit_actions->action (k->key () == Qt::Key_Up ? "move_line_up" : "move_line_down")) : nullptr;
 				if (!action) {
 					kate_edit_actions = view ()->actionCollection ();
-					action = kate_edit_actions ? (kate_edit_actions->action (k->key () == Qt::Key_Up ? "move_line_up" : "move_line_down")) : 0;
+					action = kate_edit_actions ? (kate_edit_actions->action (k->key () == Qt::Key_Up ? "move_line_up" : "move_line_down")) : nullptr;
 				}
 				if (action) action->trigger ();
 				else RK_ASSERT (action);
@@ -731,7 +731,7 @@ QStringList RKCodeCompletionModel::rawPartialCompletions() const {
 //////////////////////// RKCallHintModel //////////////////////////
 RKCallHintModel::RKCallHintModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
-	function = 0;
+	function = nullptr;
 }
 
 // TODO: There could be more than one function by a certain name, and we could support this!
@@ -945,7 +945,7 @@ void RKFileCompletionModelWorker::run () {
 
 RKFileCompletionModel::RKFileCompletionModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
-	worker = 0;
+	worker = nullptr;
 }
 
 RKFileCompletionModel::~RKFileCompletionModel () {
@@ -978,7 +978,7 @@ void RKFileCompletionModel::completionsReady (const QString& string, const QStri
 	RK_TRACE (COMMANDEDITOR);
 
 	RK_DEBUG (COMMANDEDITOR, DL_DEBUG, "Filename completion finished for '%s': %d matches", qPrintable (string), files.size () + exes.size ());
-	worker = 0;
+	worker = nullptr;
 	if (current_fragment == string) {
 		beginResetModel ();
 		names = files + exes; // TODO: This could be prettier

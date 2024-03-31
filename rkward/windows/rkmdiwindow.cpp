@@ -164,8 +164,8 @@ bool RKMDIWindow::close (CloseWindowMode ask_save) {
 			if (tool_window_bar) RKWorkplace::mainWorkplace ()->attachWindow (this);
 			else {
 				state = Attached;
-				hide ();
-				setParent (0);
+				hide();
+				setParent(nullptr);
 			}
 		}
 

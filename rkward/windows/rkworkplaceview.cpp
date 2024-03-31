@@ -203,7 +203,7 @@ RKWorkplaceViewPane* RKWorkplaceView::createPane (bool init_actions) {
 RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QSplitter (parent) {
 	RK_TRACE (APP);
 
-	newpane = 0;
+	newpane = nullptr;
 	RKWorkplaceViewPane *pane = createPane (false);
 	addWidget (pane);
 	panes.append (pane);
@@ -388,7 +388,7 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, const QString &des
 	if (!RKWorkplace::mainWorkplace ()->restoreDocumentWindow (_description, base)) {
 		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
 	}
-	newpane = 0;
+	newpane = nullptr;
 
 	splitter->setSizes (sizes);
 	setUpdatesEnabled (true);
@@ -424,11 +424,11 @@ RKWorkplaceViewPane* RKWorkplaceView::findWindow (RKMDIWindow *widget) const {
 	for (int i = 0; i < panes.size (); ++i) {
 		if (panes[i]->indexOf (widget) > -1) return panes[i];
 	}
-	return 0;
+	return nullptr;
 }
 
 bool RKWorkplaceView::hasWindow (RKMDIWindow *widget) const {
-	return (findWindow (widget) != 0);
+	return (findWindow (widget) != nullptr);
 }
 
 bool RKWorkplaceView::windowInActivePane (RKMDIWindow *widget) const {
@@ -453,9 +453,9 @@ void RKWorkplaceView::purgePane (RKWorkplaceViewPane* pane) {
 	if (panes.count () < 2) return;  // keep at least one pane around for layout purposes
 
 	QSplitter* split = static_cast<QSplitter*> (pane->parentWidget ());
-	pane->hide ();
-	pane->setParent (0); // TODO: needed?
-	pane->deleteLater ();
+	pane->hide();
+	pane->setParent(nullptr); // TODO: needed?
+	pane->deleteLater();
 	while (split != this && split->count () < 1) {
 		QSplitter* p = static_cast<QSplitter*> (split->parentWidget ());
 		delete (split);
@@ -508,8 +508,8 @@ void RKWorkplaceView::restoreLayout(const QString& desc) {
 			RKMDIWindow *win = static_cast<RKMDIWindow*> (panes[i]->widget (0));
 			panes[i]->removeTab (0);
 			windows_to_readd.append (win);
-			win->hide ();
-			win->setParent (0);
+			win->hide();
+			win->setParent(nullptr);
 		}
 	}
 	while (count ()) {
@@ -581,7 +581,7 @@ void RKWorkplaceView::nextPane () {
 void RKWorkplaceView::purgeEmptyPanes () {
 	RK_TRACE (APP);
 
-	newpane = 0; // just in case of broken specifications during workplace restoration
+	newpane = nullptr; // just in case of broken specifications during workplace restoration
 	for (int i = 0; i < panes.count (); ++i) {
 		if (panes.count() > 1 && panes[i]->count() < 1) {
 			purgePane (panes[i]);

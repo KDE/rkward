@@ -37,12 +37,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 // static
-RKFileBrowser *RKFileBrowser::main_browser = 0;
+RKFileBrowser *RKFileBrowser::main_browser = nullptr;
 
 RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, FileBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
 
-	real_widget = 0;
+	real_widget = nullptr;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);

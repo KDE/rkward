@@ -22,8 +22,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	textedit = 0;
-	lineedit = 0;
+	textedit = nullptr;
+	lineedit = nullptr;
 
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();

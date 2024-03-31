@@ -70,7 +70,7 @@ public:
 @param chain RCommandChain to run the necessary commands in
 @param package_name name of the required package */
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QStringList &package_names);
-	static void showPluginmapConfig (QWidget *parent=0, RCommandChain *chain=0);
+	static void showPluginmapConfig(QWidget *parent=nullptr, RCommandChain *chain=nullptr);
 	QStringList currentLibraryLocations ()  const { return library_locations; };
 Q_SIGNALS:
 	void libraryLocationsChanged (const QStringList &liblocs);
@@ -213,8 +213,8 @@ private:
 
 class RKRPackageInstallationStatusSortFilterModel : public QSortFilterProxyModel {
 public:
-	explicit RKRPackageInstallationStatusSortFilterModel (QObject* parent = 0);
-	~RKRPackageInstallationStatusSortFilterModel ();
+	explicit RKRPackageInstallationStatusSortFilterModel(QObject* parent = nullptr);
+	~RKRPackageInstallationStatusSortFilterModel();
 	void setRKWardOnly (bool only);
 protected:
 	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;

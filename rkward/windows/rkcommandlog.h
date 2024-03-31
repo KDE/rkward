@@ -40,8 +40,8 @@ protected:
 friend class RCommand;
 /** Command has finished. If the command has failed, it may be necessary to print some more information */
 	void rCommandDone (RCommand *command);
-	RKCommandLog (QWidget *parent, bool tool_window, const char *name=0);
-	~RKCommandLog ();
+	RKCommandLog(QWidget *parent, bool tool_window, const char *name=nullptr);
+	~RKCommandLog();
 public Q_SLOTS:
 /** configures the log_view-window */
 	void configureLog ();

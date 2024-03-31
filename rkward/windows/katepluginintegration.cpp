@@ -50,7 +50,7 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("ktexteditor"));
 	for (int i = plugins.size() -1; i >= 0; --i) {
 		PluginInfo info;
-		info.plugin = 0;
+		info.plugin = nullptr;
 		info.data = plugins[i];
 		// Note: creates a lookup-table *and* eliminates potential dupes later in the search path
 		known_plugins.insert(idForPlugin(info.data), info);
@@ -627,7 +627,7 @@ QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plug
 	active_plugin = plugin;
 	PluginResources& resources = plugin_resources.insert(plugin, PluginResources()).value();
 	resources.view = plugin->createView(main);
-	active_plugin = 0;
+	active_plugin = nullptr;
 	disconnect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
 	fixUpPluginUI(app->idForPlugin(plugin), resources);
 	connect(plugin, &QObject::destroyed, this, [this, plugin]() { plugin_resources.remove(plugin); });

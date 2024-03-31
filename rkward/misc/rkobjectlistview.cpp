@@ -63,14 +63,14 @@ public:
 RKObjectListView::RKObjectListView (bool toolwindow, QWidget *parent) : QTreeView (parent) {
 	RK_TRACE (APP);
 
-	root_object = 0;
+	root_object = nullptr;
 	rkdelegate = new RKObjectListViewRootDelegate (this);
 	settings = new RKObjectListViewSettings (toolwindow, this);
 	setSortingEnabled (true);
 	sortByColumn (0, Qt::AscendingOrder);
 
 	menu = new QMenu (this);
-	settings->addSettingsToMenu (menu, 0);
+	settings->addSettingsToMenu(menu, nullptr);
 
 	connect (this, &QAbstractItemView::clicked, this, &RKObjectListView::itemClicked);
 }
@@ -204,7 +204,7 @@ RKObjectListViewSettings::RKObjectListViewSettings (bool tool_window, QObject* p
 	update_timer->setSingleShot (true);
 	connect (update_timer, &QTimer::timeout, this, &RKObjectListViewSettings::updateSelfNow);
 
-	filter_widget = 0;
+	filter_widget = nullptr;
 	in_reset_filters = false;
 
 	persistent_settings_actions[ShowObjectsHidden] = new QAction (i18n ("Show Hidden Objects"), this);

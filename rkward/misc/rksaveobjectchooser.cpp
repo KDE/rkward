@@ -31,8 +31,8 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, const QString &initia
 	object_exists = false;
 	addNotificationType (RObjectListener::ObjectRemoved);
 	addNotificationType (RObjectListener::ChildAdded);
-	root_object = 0;
-	current_object = 0;
+	root_object = nullptr;
+	current_object = nullptr;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
@@ -61,7 +61,7 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, const QString &initia
 	layout->addLayout(hlayout);
 
 	// initialize
-	setRootObject (0);
+	setRootObject(nullptr);
 }
 
 RKSaveObjectChooser::~RKSaveObjectChooser () {
@@ -115,7 +115,7 @@ void RKSaveObjectChooser::selectRootObject () {
 
 	if (dialog->result () == QDialog::Accepted) {
 		RObject::ObjectList sel = list_view->selectedObjects ();
-		if (sel.isEmpty ()) setRootObject (0);
+		if (sel.isEmpty()) setRootObject(nullptr);
 		else {
 			RK_ASSERT (sel.size () == 1);
 			setRootObject (sel[0]);
@@ -129,7 +129,7 @@ void RKSaveObjectChooser::objectRemoved (RObject* removed) {
 	RK_TRACE (MISC);
 
 	if (removed == root_object) {
-		setRootObject (0);
+		setRootObject(nullptr);
 	} else if (removed == current_object) {
 		stopListenForObject (removed);
 		current_full_name.clear ();	// hack to achieve proper Q_EMIT of change signal

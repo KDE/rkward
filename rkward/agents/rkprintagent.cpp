@@ -59,7 +59,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	}
 
 	auto provider = result.plugin;
-	QAction *printaction = printaction = provider->action ("print");
+	QAction *printaction = provider->action("print");
 	if (!printaction) printaction = provider->action ("file_print");
 	if (!printaction) {
 		QAction *a = new QAction (provider);

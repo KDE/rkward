@@ -267,7 +267,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 			}
 		}
 		if (pos < 0) {   // not yet known: implicit registration -> create corresponding named_window_spec on the fly.
-			registerNamedWindow (window_name_override, 0, attached ? RKWardMainWindow::getMain () : 0);
+			registerNamedWindow(window_name_override, nullptr, attached ? RKWardMainWindow::getMain() : nullptr);
 			pos = named_windows.size () - 1;
 		}
 
@@ -285,7 +285,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 
 		// add window in the correct area
 		if (nw.parent == RKWardMainWindow::getMain ()) attached = true;
-		else if (nw.parent == 0) attached = false;
+		else if (nw.parent == nullptr) attached = false;
 		else { // custom parent
 			RKXMLGUIPreviewArea* area = qobject_cast<RKXMLGUIPreviewArea*>(nw.parent);
 			if (!area) {
@@ -378,7 +378,7 @@ RKMDIWindow* RKWorkplace::getNamedWindow (const QString& id) {
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 void RKWorkplace::namedWindowDestroyed (QObject* window) {
@@ -390,7 +390,7 @@ void RKWorkplace::namedWindowDestroyed (QObject* window) {
 				named_windows.removeAt (i);
 				return;
 			} else {
-				named_windows[i].window = 0;
+				named_windows[i].window = nullptr;
 			}
 		}
 	}
@@ -486,7 +486,7 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 
 	if (url.isEmpty ()) {
 		RK_ASSERT (false);
-		return 0;
+		return nullptr;
 	}
 
 	if (only_once) {
@@ -603,7 +603,7 @@ bool RKWorkplace::canEditObject (RObject *object) {
 RKEditor* RKWorkplace::editNewDataFrame (const QString &name) {
 	RK_TRACE (APP);
 
-	RKEditorDataFrame* ed = new RKEditorDataFrame (name, 0);
+	RKEditorDataFrame* ed = new RKEditorDataFrame(name, nullptr);
 	addWindow (ed);
 	ed->activate ();
 
@@ -619,12 +619,12 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 		if (iobj->isVariable () && iobj->parentObject ()->isDataFrame ()) {
 			iobj = iobj->parentObject ();
 		} else {
-			return 0;
+			return nullptr;
 		}
 	}
 
 	bool activate = window_style_override != "preview";
-	RKEditor *ed = 0;
+	RKEditor *ed = nullptr;
 	QList<RKEditor*> existing_editors = object->editors ();
 	RKMDIWindow *nw = getNamedWindow(window_name_override);
 	for (int i = 0; i < existing_editors.size (); ++i) {
@@ -646,11 +646,11 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 		}
 		if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {
 			if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit using command line means or to split into smaller chunks before editing. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure this warning (or turn it off entirely) under Settings->Configure RKWard->General.\nReally edit object?", iobj->getFullName (), size), i18n ("About to edit very large object")) != KMessageBox::Continue) {
-				return 0;
+				return nullptr;
 			}
 		}
 
-		ed = new RKEditorDataFrame (static_cast<RContainerObject*> (iobj), 0);
+		ed = new RKEditorDataFrame(static_cast<RContainerObject*>(iobj), nullptr);
 		addWindow (ed);
 	}
 
@@ -747,7 +747,7 @@ void RKWorkplace::removeWindow (QObject *object) {
 void RKWorkplace::windowRemoved () {
 	RK_TRACE (APP);
 
-	if (activeWindow (RKMDIWindow::AnyWindowState) != 0) return;	// some RKMDIWindow is already active
+	if (activeWindow (RKMDIWindow::AnyWindowState) != nullptr) return;	// some RKMDIWindow is already active
 	QWidget *appWin = QApplication::activeWindow ();
 	if (appWin && appWin != RKWardMainWindow::getMain () && !qobject_cast<DetachedWindowContainer*> (appWin)) return; // a dialog window or the like is active
 
@@ -940,7 +940,7 @@ RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, const ItemSpecifica
 bool RKWorkplace::restoreDocumentWindow (const QString &description, const QString &base) {
 	RK_TRACE (APP);
 
-	return (restoreDocumentWindowInternal (this, parseItemDescription (description), base) != 0);
+	return (restoreDocumentWindowInternal(this, parseItemDescription(description), base) != nullptr);
 }
 
 QStringList RKWorkplace::makeWorkplaceDescription () {
@@ -997,7 +997,7 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	QString base;
 	for (int i = 0; i < description.size (); ++i) {
 		ItemSpecification spec = parseItemDescription (description[i]);
-		RKMDIWindow *win = 0;
+		RKMDIWindow *win = nullptr;
 		if (spec.type == "base") {
 			RK_ASSERT (i == 0);
 			base = spec.specification;
@@ -1061,7 +1061,7 @@ void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
 
 class RKMDIWindowHistoryWidget : public QListWidget {
 public:
-	RKMDIWindowHistoryWidget () : QListWidget (0) {
+	RKMDIWindowHistoryWidget() : QListWidget(nullptr) {
 		RK_TRACE (APP);
 
 		current = 0;
@@ -1148,7 +1148,7 @@ private:
 RKMDIWindowHistory::RKMDIWindowHistory (QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
-	switcher = 0;
+	switcher = nullptr;
 }
 
 RKMDIWindowHistory::~RKMDIWindowHistory () {
@@ -1192,7 +1192,7 @@ RKMDIWindow* RKMDIWindowHistory::previousDocumentWindow () {
 	for (int i = recent_windows.count () - 1; i >= 0; --i) {
 		if (!recent_windows[i]->isToolWindow ()) return (recent_windows[i]);
 	}
-	return 0;
+	return nullptr;
 }
 
 void RKMDIWindowHistory::updateSwitcher () {
@@ -1236,7 +1236,7 @@ void RKMDIWindowHistory::switcherDestroyed () {
 	RK_TRACE (APP);
 
 	RK_ASSERT (switcher);
-	switcher = 0;
+	switcher = nullptr;
 }
 
 void RKMDIWindowHistory::popLastWindow (RKMDIWindow* match) {

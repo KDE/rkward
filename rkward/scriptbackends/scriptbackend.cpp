@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 ScriptBackend::ScriptBackend () : QObject() {
 	busy = false;
 	current_type = Ignore;
-	code_property = 0;
+	code_property = nullptr;
 }
 
 ScriptBackend::~ScriptBackend () {

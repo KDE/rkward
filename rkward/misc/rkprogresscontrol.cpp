@@ -63,7 +63,7 @@ RKProgressControl::RKProgressControl (QObject *parent, const QString &text, cons
 	RKProgressControl::caption = caption;
 	RKProgressControl::mode = mode_flags;
 
-	dialog = 0;
+	dialog = nullptr;
 	is_done = false;
 	modal = false;
 	autodelete = false;
@@ -161,7 +161,7 @@ void RKProgressControl::addRCommand (RCommand *command, bool done_when_finished)
 void RKProgressControl::dialogDestroyed () {
 	RK_TRACE (MISC);
 
-	dialog = 0;
+	dialog = nullptr;
 	if ((!is_done) && (mode & AllowCancel)) {
 		is_done = true;
 		if (mode & AutoCancelCommands) {

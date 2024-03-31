@@ -262,7 +262,7 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	setItemsExpandable (false);        // custom handling
 	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-	pmodel = new RKAccordionDummyModel (0);
+	pmodel = new RKAccordionDummyModel(nullptr);
 	RKAccordionDelegate* delegate = new RKAccordionDelegate (this);
 	delegate->pmodel = pmodel;
 	setItemDelegateForColumn (0, delegate);
@@ -404,12 +404,12 @@ void RKAccordionTable::rowExpanded (QModelIndex row) {
 	for (int i = 0; i < pmodel->rowCount () - pmodel->add_trailing_rows; ++i) {
 		QModelIndex _row = model ()->index (i, 0);
 		if (i != row.row ()) {
-			setIndexWidget (model ()->index (0, 0, _row), 0);
-			setExpanded (_row, false);
+			setIndexWidget(model()->index(0, 0, _row), nullptr);
+			setExpanded(_row, false);
 		}
 	}
 	setFirstColumnSpanned (0, row, true);
-	setIndexWidget (model ()->index (0, 0, row), new RKWidgetGuard (0, editor_widget_container, this));
+	setIndexWidget(model()->index(0, 0, row), new RKWidgetGuard(nullptr, editor_widget_container, this));
 	setCurrentIndex (row);
 	scrollTo (row, EnsureVisible);                          // yes, we want both scrolls: We want the header row above the widget, if possible at all,
 	scrollTo (model ()->index (0, 0, row), EnsureVisible);  // but of course, having the header row visible without the widget is not enough...

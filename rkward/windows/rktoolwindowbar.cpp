@@ -31,7 +31,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define SPLITTER_MIN_SIZE 30
 
 RKToolWindowBar::RKToolWindowBar (KMultiTabBarPosition position, QWidget *parent) : KMultiTabBar (position, parent),
-	container (0) {
+	container(nullptr) {
 	RK_TRACE (APP);
 
 	setStyle (KMultiTabBar::KDEV3ICON);
@@ -177,10 +177,10 @@ void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 	removeTab (id);
 	widget_to_id.remove (widget);
 	disconnect (widget, &QObject::destroyed, this, &RKToolWindowBar::windowDestroyed);
-	widget->tool_window_bar = 0;
+	widget->tool_window_bar = nullptr;
 
 	if (widget->isAttached ()) {
-		widget->setParent (0);
+		widget->setParent(nullptr);
 		widget->hide ();
 	}
 
@@ -241,7 +241,7 @@ void RKToolWindowBar::hideWidget (RKMDIWindow *widget) {
 		container->hide ();
 	}
 
-	RKWardMainWindow::getMain()->partManager()->setActivePart (0);
+	RKWardMainWindow::getMain()->partManager()->setActivePart(nullptr);
 	widget->active = false;
 	widget->hide ();
 
@@ -273,7 +273,7 @@ RKMDIWindow* RKToolWindowBar::idToWidget (int id) const {
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {

@@ -70,7 +70,7 @@ RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*>
 	QTreeWidget *tree = new QTreeWidget ();
 	v_layout->addWidget (tree);
 
-	save_project_check = 0;
+	save_project_check = nullptr;
 	tree->header ()->hide ();
 
 	if (project) {

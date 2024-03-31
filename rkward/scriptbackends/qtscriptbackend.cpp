@@ -20,7 +20,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 QtScriptBackend::QtScriptBackend (const QString &filename, const RKMessageCatalog *catalog) : ScriptBackend () {
 	RK_TRACE (PHP);
 
-	script_thread = 0;
+	script_thread = nullptr;
 	QtScriptBackend::filename = filename;
 	QtScriptBackend::catalog = catalog;
 	dead = false;
@@ -88,7 +88,7 @@ void QtScriptBackend::destroy () {
 	if (!dead) {
 		if (script_thread) script_thread->goToSleep (false);
 		dead = true;
-		code_property = 0;
+		code_property = nullptr;
 		if (script_thread) script_thread->kill ();
 		QTimer::singleShot (10000, this, SLOT (deleteLater()));	// don't wait for ever for the process to die, even if it's somewhat dangerous
 	}
@@ -159,7 +159,7 @@ void QtScriptBackend::needData (const QString &identifier, const int hint) {
 
 #include <QUrl>
 
-QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog) : QThread (parent), engine (0) {
+QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog) : QThread (parent), engine(nullptr) {
 	RK_TRACE (PHP);
 
 	// you'd think the engine already was in this thread, but no, it is not. You'd also think, this was fixable by setting "this" as the engine's parent, instead of 0, but no, somehow not.

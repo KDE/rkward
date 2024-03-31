@@ -77,7 +77,7 @@ class RKObjectListViewSettings : public QSortFilterProxyModel {
 	Q_OBJECT
 public:
 /** ctor. copies the default settings from RKSettingsModuleObjectBrowser */ 
-	explicit RKObjectListViewSettings (bool toolwindow, QObject* parent=0);
+	explicit RKObjectListViewSettings (bool toolwindow, QObject* parent=nullptr);
 	~RKObjectListViewSettings ();
 
 /** enum of @em persistent settings. There are more settings than these, but those will not be stored */

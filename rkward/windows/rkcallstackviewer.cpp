@@ -22,12 +22,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKCallstackViewer* RKCallstackViewer::_instance = 0;
+RKCallstackViewer* RKCallstackViewer::_instance = nullptr;
 
 RKCallstackViewer::RKCallstackViewer (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, RKMDIWindow::CallstackViewerWindow, tool_window, name) {
 	RK_TRACE (APP);
 
-	real_widget = 0;
+	real_widget = nullptr;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);

@@ -16,7 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKRBackendProtocolFrontend* RKRBackendProtocolFrontend::_instance = 0;
+RKRBackendProtocolFrontend* RKRBackendProtocolFrontend::_instance = nullptr;
 RKRBackendProtocolFrontend::RKRBackendProtocolFrontend (RInterface* parent) : QObject (parent) {
 	RK_TRACE (RBACKEND);
 

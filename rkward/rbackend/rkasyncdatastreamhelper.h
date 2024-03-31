@@ -35,7 +35,7 @@ public:
 			auxstream (&auxbuffer, QIODevice::ReadWrite),
 			instream (&inbuffer, QIODevice::ReadOnly), 
 			outstream (&outbuffer, QIODevice::WriteOnly) {
-		device = 0;
+		device = nullptr;
 		expected_read_size = 0;
 	}
 	~RKAsyncDataStreamHelper () {};

@@ -18,7 +18,7 @@ class XMLHelper;
 /** very simple helper class to keep track of .pluginmap files */
 class RKPluginMapFile {
 public:
-	RKPluginMapFile (const QString &filename, const QString &basedir, const RKMessageCatalog *_catalog) { RKPluginMapFile::filename = filename; RKPluginMapFile::basedir = basedir; catalog = _catalog; about = 0; };
+	RKPluginMapFile (const QString &filename, const QString &basedir, const RKMessageCatalog *_catalog) : basedir(basedir), filename(filename), catalog(_catalog), about(nullptr) {};
 	~RKPluginMapFile () { delete about; };
 
 	QString getBaseDir () const { return basedir; };

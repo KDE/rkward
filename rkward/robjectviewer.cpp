@@ -88,7 +88,7 @@ void RObjectViewer::objectRemoved (RObject *object) {
 		status_label->show ();
 
 		stopListenForObject (_object);
-		_object = 0;
+		_object = nullptr;
 	} else {
 		RK_ASSERT (false);
 	}
@@ -183,8 +183,8 @@ void RObjectViewerWidget::invalidate (const QString& reason) {
 	palette.setColor (status_label->foregroundRole (), Qt::red);
 	status_label->setPalette (palette);
 
-	status_label->setText (reason);
-	update_button->setEnabled (_object != 0);
+	status_label->setText(reason);
+	update_button->setEnabled(_object != nullptr);
 }
 
 void RObjectViewerWidget::initialize () {
@@ -212,7 +212,7 @@ void RObjectViewerWidget::update() {
 	control->show(100);
 	command->whenFinished(this, [this](RCommand *command) {
 		setText(command->fullOutput());
-		update_button->setEnabled (_object != 0);
+		update_button->setEnabled(_object != nullptr);
 	});
 	RInterface::issueCommand(command);
 }

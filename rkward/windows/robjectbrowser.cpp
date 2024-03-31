@@ -35,12 +35,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 // static
-RObjectBrowser* RObjectBrowser::object_browser = 0;
+RObjectBrowser* RObjectBrowser::object_browser = nullptr;
 
 RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, WorkspaceBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
 
-	internal = 0;
+	internal = nullptr;
 	locked = true;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
@@ -159,7 +159,7 @@ void RObjectBrowserInternal::focusInEvent (QFocusEvent *e) {
 
 void RObjectBrowserInternal::updateButtonClicked () {
 	RK_TRACE (APP);
-	RObjectList::getObjectList ()->updateFromR (0);
+	RObjectList::getObjectList()->updateFromR(nullptr);
 }
 
 void RObjectBrowserInternal::currentHelpContext (QString* symbol, QString* package) {

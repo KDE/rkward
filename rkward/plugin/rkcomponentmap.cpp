@@ -244,7 +244,7 @@ RKComponentGUIXML::Menu *findMenu (RKComponentGUIXML::Menu *parent, const QStrin
 			if (e->is_menu && (e->id == id)) return static_cast<RKComponentGUIXML::Menu*> (e);
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement &description, const QString& cnamespace) {
@@ -405,7 +405,7 @@ RKComponentHandle* RKComponentMap::getComponentHandleLocal (const QString &id) {
 	RK_TRACE (PLUGIN);
 
 	QList<RKComponentHandle*> candidates = components.values (id);
-	if (candidates.isEmpty ()) return 0;
+	if (candidates.isEmpty ()) return nullptr;
 	if (candidates.length () == 1) return candidates.first ();
 
 	RK_DEBUG (PLUGIN, DL_INFO, "Looking for latest version of component %s, among %d candidates", qPrintable (id), candidates.size ());
@@ -703,7 +703,7 @@ void RKComponentMap::activateComponent () {
 		RK_ASSERT (handle);
 		return;
 	}
-	handle->invoke (0, 0);
+	handle->invoke(nullptr, nullptr);
 }
 
 void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {

@@ -63,7 +63,7 @@ public:
  *  If window is not 0, and the url is a help window, open it, there (otherwise in a new window).
  *  TODO: move to RKWorkplace? As this can really open a bunch of different things, although generally _from_ an html window.
  */
-	static bool handleRKWardURL (const QUrl &url, RKHTMLWindow *window=0);
+	static bool handleRKWardURL(const QUrl &url, RKHTMLWindow *window=nullptr);
 	void openRKHPage (const QUrl &url);
 
 	bool isModified () override;
@@ -176,7 +176,7 @@ friend class RKHTMLWindow;
 class RKHelpRenderer {
 public:
 /** ctor */
-	explicit RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
+	explicit RKHelpRenderer(QIODevice *_device) { device = _device; help_xml = nullptr; component_xml = nullptr; };
 /** destructor */
 	~RKHelpRenderer () {};
 /** render an rkward://[page|component]-page to the device given in the ctor.

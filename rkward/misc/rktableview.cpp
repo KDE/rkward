@@ -112,8 +112,8 @@ RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditModel* datamodel) : QI
 	RK_TRACE (EDITOR);
 
 	RKItemDelegate::datamodel = datamodel;
-	metamodel = 0;
-	genericmodel = 0;
+	metamodel = nullptr;
+	genericmodel = nullptr;
 	locked_for_modal_editor = false;
 }
 
@@ -121,8 +121,8 @@ RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel) 
 	RK_TRACE (EDITOR);
 
 	RKItemDelegate::metamodel = metamodel;
-	datamodel = 0;
-	genericmodel = 0;
+	datamodel = nullptr;
+	genericmodel = nullptr;
 	locked_for_modal_editor = false;
 }
 
@@ -131,8 +131,8 @@ RKItemDelegate::RKItemDelegate (QObject *parent, QAbstractItemModel* model, bool
 	Q_UNUSED (dummy);
 
 	genericmodel = model;
-	metamodel = 0;
-	datamodel = 0;
+	metamodel = nullptr;
+	datamodel = nullptr;
 	locked_for_modal_editor = false;
 }
 

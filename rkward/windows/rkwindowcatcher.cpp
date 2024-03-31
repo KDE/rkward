@@ -31,7 +31,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
-RKWindowCatcher *RKWindowCatcher::_instance = 0;
+RKWindowCatcher *RKWindowCatcher::_instance = nullptr;
 RKWindowCatcher* RKWindowCatcher::instance () {
 	if (!_instance) {
 		RK_TRACE (MISC);
@@ -232,7 +232,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 // static
 QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 
-RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
+RKCaughtX11Window::RKCaughtX11Window(QWindow* window_to_embed, int device_number) : RKMDIWindow(nullptr, X11Window) {
 	RK_TRACE (MISC);
 // TODO: Actually, the WindowCatcher should pass a QWindow*, not WId.
 	commonInit (device_number);
@@ -267,7 +267,7 @@ RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_numbe
 	QTimer::singleShot (100, this, SLOT (doEmbed()));
 }
 
-RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow (0, X11Window) {
+RKCaughtX11Window::RKCaughtX11Window(RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow(nullptr, X11Window) {
 	RK_TRACE (MISC);
 
 	commonInit (device_number);
@@ -290,16 +290,16 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
-	capture = 0;
-	embedded = 0;
+	capture = nullptr;
+	embedded = nullptr;
 	embedding_complete = false;
-	rk_native_device = 0;
+	rk_native_device = nullptr;
 	killed_in_r = close_attempted = false;
 	RKCaughtX11Window::device_number = device_number;
 	RK_ASSERT (!device_windows.contains (device_number));
 	device_windows.insert (device_number, this);
 
-	error_dialog = new RKProgressControl (0, i18n ("An error occurred"), i18n ("An error occurred"), RKProgressControl::DetailedError);
+	error_dialog = new RKProgressControl(nullptr, i18n("An error occurred"), i18n("An error occurred"), RKProgressControl::DetailedError);
 	setPart (new RKCaughtX11WindowPart (this));
 	setMetaInfo (i18n ("Graphics Device Window"), QUrl ("rkward://page/rkward_plot_history"), RKSettings::PageX11);
 	initializeActivationSignals ();
@@ -410,7 +410,7 @@ void RKCaughtX11Window::forceClose() {
 	if (embedded) {
 		// HACK: Somehow (R 3.0.0alpha), the X11() window is surprisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
-		embedded->setParent(0);
+		embedded->setParent(nullptr);
 		qApp->processEvents();
 	}
 	RKMDIWindow::close(NoAskSaveModified);
@@ -720,7 +720,7 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position, 
 //////////////////////////////// BEGIN RKCaughtX11WindowPart //////////////////////////
 
 
-RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KParts::Part (0) {
+RKCaughtX11WindowPart::RKCaughtX11WindowPart(RKCaughtX11Window *window) : KParts::Part(nullptr) {
 	RK_TRACE (MISC);
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());

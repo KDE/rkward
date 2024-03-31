@@ -29,8 +29,8 @@ double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72.0/96;
 RKGraphicsDeviceFrontendTransmitter::RKGraphicsDeviceFrontendTransmitter () : QObject () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	connection = 0;
-	local_server = 0;
+	connection = nullptr;
+	local_server = nullptr;
 
 	setupServer ();
 }
@@ -63,8 +63,8 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 	QString token = RKFrontendTransmitter::instance ()->connectionToken ();
 	QString token_c = RKFrontendTransmitter::waitReadLine(con, 2000).trimmed ();
 	if (token_c != token) {
-		KMessageBox::detailedError (0, QString ("<p>%1</p>").arg (i18n ("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n ("Expected connection token %1, but read connection token %2", token, token_c), i18n ("Error while connection graphics backend"));
-		con->close ();
+		KMessageBox::detailedError(nullptr, QString("<p>%1</p>").arg(i18n("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n("Expected connection token %1, but read connection token %2", token, token_c), i18n("Error while connection graphics backend"));
+		con->close();
 		return;
 	}
 
@@ -228,7 +228,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		streamer.instream >> opcode >> devnum;
 		RK_DEBUG (GRAPHICS_DEVICE, DL_DEBUG, "Received transmission of type %d, devnum %d, size %d", opcode, devnum+1, streamer.inSize ());
 
-		RKGraphicsDevice *device = 0;
+		RKGraphicsDevice *device = nullptr;
 		if (devnum && opcode == RKDCreate) {
 			double width, height;
 			QString title;

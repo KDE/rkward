@@ -124,10 +124,10 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 {
 	RK_TRACE (PLUGIN);
 
-	toggle_code_box = 0;
-	hsplitter = 0;
-	vsplitter = 0;
-	code_display = 0;
+	toggle_code_box = nullptr;
+	hsplitter = nullptr;
+	vsplitter = nullptr;
+	code_display = nullptr;
 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
@@ -144,7 +144,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	if (!enslaved) {
 		// code display
 		RKXMLGUIPreviewArea *area = addDockedPreview (&code_display_visibility, i18n ("Code Preview"), QString (), true);
-		code_display = new RKCommandEditorWindow (0, QUrl (), QString (), RKCommandEditorFlags::DefaultToRHighlighting);
+		code_display = new RKCommandEditorWindow(nullptr, QUrl(), QString(), RKCommandEditorFlags::DefaultToRHighlighting);
 		code_display->setReadOnly (true);
 		code_display_visibility.setBoolValue (!enslaved && RKSettingsModulePlugins::showCodeByDefault ());
 		area->setWindow(code_display);
@@ -272,7 +272,7 @@ void RKStandardComponentGUI::finalize () {
 RKXMLGUIPreviewArea* RKStandardComponentGUI::addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id, bool bottom) {
 	RK_TRACE (PLUGIN);
 
-	RKXMLGUIPreviewArea *area = new RKXMLGUIPreviewArea (label, 0);
+	RKXMLGUIPreviewArea *area = new RKXMLGUIPreviewArea(label, nullptr);
 	PreviewArea parea;
 	parea.preview_area = area;
 	parea.widget = area;   // may be replaced by a wrapper in "finalize"
@@ -350,7 +350,7 @@ void RKStandardComponentGUI::doPostShowCleanup () {
 	if (toggle_code_box) {  // is Dialog
 		hpreview_area->setMinimumWidth (80);
 		vpreview_area->setMinimumHeight (40);
-		previewVisibilityChanged (0);
+		previewVisibilityChanged(nullptr);
 	}
 }
 

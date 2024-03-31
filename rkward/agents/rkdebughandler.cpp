@@ -17,8 +17,8 @@ RKDebugHandler::RKDebugHandler (QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
 	_state = NotInDebugger;
-	_request = 0;
-	_command = 0;
+	_request = nullptr;
+	_command = nullptr;
 	_instance = this;
 }
 
@@ -68,7 +68,7 @@ void RKDebugHandler::submitDebugString (const QString &command) {
 
 	RKRBackendProtocolFrontend::setRequestCompleted (_request);
 
-	_command = 0;
+	_command = nullptr;
 	_state = InDebugRun;
 	Q_EMIT newDebugState();
 }
@@ -76,8 +76,8 @@ void RKDebugHandler::submitDebugString (const QString &command) {
 void RKDebugHandler::endDebug () {
 	RK_TRACE (APP);
 
-	_command = 0;
-	_request = 0;
+	_command = nullptr;
+	_request = nullptr;
 	_state = NotInDebugger;
 	Q_EMIT newDebugState();
 }

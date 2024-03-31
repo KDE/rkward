@@ -19,7 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKDynamicSearchLine::RKDynamicSearchLine (QWidget *parent) : QLineEdit (parent) {
 	RK_TRACE (MISC);
 
-	model = 0;
+	model = nullptr;
 	setClearButtonEnabled (true);
 	setPlaceholderText (i18n ("Search"));
 	timer.setSingleShot (true);

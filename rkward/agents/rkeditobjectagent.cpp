@@ -30,7 +30,7 @@ RKEditObjectAgent::RKEditObjectAgent (const QStringList &_object_names, RCommand
 			QString object_name = *it;
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
 			if (!(obj && RKWorkplace::mainWorkplace()->editObject (obj))) {
-				KMessageBox::information (0, i18n ("The object '%1', could not be opened for editing. Either it does not exist, or RKWard does not support editing this type of object, yet.", object_name), i18n ("Cannot edit '%1'", object_name));
+				KMessageBox::information(nullptr, i18n("The object '%1', could not be opened for editing. Either it does not exist, or RKWard does not support editing this type of object, yet.", object_name), i18n("Cannot edit '%1'", object_name));
 			}
 		}
 

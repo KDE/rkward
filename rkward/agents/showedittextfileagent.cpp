@@ -79,7 +79,7 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 
 		if (prompt) {
-			new ShowEditTextFileAgent (0, i18n ("A command running in the R-engine wants you to see the following file(s):<ul><li>") + display_titles.join ("</li></li>") + "</li></ul>", i18n ("Showing file(s)"));
+			new ShowEditTextFileAgent(nullptr, i18n("A command running in the R-engine wants you to see the following file(s):<ul><li>") + display_titles.join("</li></li>") + "</li></ul>", i18n("Showing file(s)"));
 		}
 	} else if (request->type == RBackendRequest::EditFiles) {
 		if (prompt) {

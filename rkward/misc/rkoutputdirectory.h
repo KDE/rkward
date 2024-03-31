@@ -40,12 +40,12 @@ public:
 		Ask,
 		Fail
 	};
-	GenericRRequestResult activate(RCommandChain* chain=0);
+	GenericRRequestResult activate(RCommandChain* chain=nullptr);
 	GenericRRequestResult revert(OverwriteBehavior discard=Ask);
 	GenericRRequestResult save(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRRequestResult exportAs(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRRequestResult clear(OverwriteBehavior discard=Ask);
-	GenericRRequestResult purge(OverwriteBehavior discard=Ask, RCommandChain* chain=0, bool activate_other=true);
+	GenericRRequestResult purge(OverwriteBehavior discard=Ask, RCommandChain* chain=nullptr, bool activate_other=true);
 	QString getId() const { return id; };
 	bool isEmpty() const;
 	bool isActive() const;
@@ -53,8 +53,8 @@ public:
 	bool isModifiedAccurate() const;
 	/** This function may not always be accurate, but is fast. It is fairly reliable as long as there is an active view, but should not be used when there is not.  */
 	bool isModifiedFast() const;
-	GenericRRequestResult view(bool raise, RCommandChain* chain=0);
-	RKMDIWindow* getOrCreateView(bool raise, RCommandChain* chain=0);
+	GenericRRequestResult view(bool raise, RCommandChain* chain=nullptr);
+	RKMDIWindow* getOrCreateView(bool raise, RCommandChain* chain=nullptr);
 	QString filename() const { return save_filename; };
 	QString workDir() const { return work_dir; }
 	QString workPath() const;
@@ -70,8 +70,8 @@ public:
  *  If no output is active, find and activate the next output without a save url.
  *  If that does not exist, activate and return the next existing output.
  *  If that does not exist, create a new output, activate and return it. */
-	static RKOutputDirectoryCallResult getCurrentOutput(RCommandChain *chain=0);
-	static RKOutputDirectoryCallResult get(const QString &filename=QString(), bool create=false, RCommandChain *chain=0);
+	static RKOutputDirectoryCallResult getCurrentOutput(RCommandChain *chain=nullptr);
+	static RKOutputDirectoryCallResult get(const QString &filename=QString(), bool create=false, RCommandChain *chain=nullptr);
 	static QList<RKOutputDirectory*> allOutputs();
 	static void purgeAllNoAsk();
 

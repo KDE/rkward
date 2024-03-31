@@ -41,7 +41,7 @@ RKMDIWindow* RKToolWindowList::findToolWindowById (const QString &id) {
 		if (RKToolWindowListPrivate::registered_tool_windows[i].id == id) return RKToolWindowListPrivate::registered_tool_windows[i].window;
 	}
 
-	return 0;
+	return nullptr;
 }
 
 void RKToolWindowList::unregisterToolWindow (RKMDIWindow *window) {

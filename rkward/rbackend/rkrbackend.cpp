@@ -157,7 +157,7 @@ void clearPendingInterrupt_Worker (void *) {
 
 void RKRBackend::clearPendingInterrupt () {
 	RK_TRACE (RBACKEND);
-	bool passed = R_ToplevelExec (clearPendingInterrupt_Worker, 0);
+	bool passed = R_ToplevelExec(clearPendingInterrupt_Worker, nullptr);
 	if (!passed) RK_DEBUG (RBACKEND, DL_DEBUG, "pending interrupt cleared");
 }
 
@@ -203,7 +203,7 @@ void RKInsertToplevelStatementFinishedCallback (void *) {
 
 	if (RKRBackend::this_pointer->r_running) {
 		int pos;
-		Rf_addTaskCallback (&RKToplevelStatementFinishedCallback, 0, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
+		Rf_addTaskCallback(&RKToplevelStatementFinishedCallback, nullptr, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
 	}
 }
 
@@ -867,7 +867,7 @@ void RKRBackend::connectCallbacks () {
 	ptr_R_ShowMessage = RShowMessage;		// rarely used in R on unix
 	ptr_R_ReadConsole = RReadConsole;
 	ptr_R_WriteConsoleEx = RWriteConsoleEx;
-	ptr_R_WriteConsole = 0;
+	ptr_R_WriteConsole = nullptr;
 	ptr_R_ResetConsole = RDoNothing;
 	ptr_R_FlushConsole = RDoNothing;
 	ptr_R_ClearerrConsole = RDoNothing;
@@ -1149,12 +1149,12 @@ bool RKRBackend::startR () {
 		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 6 },
 		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
 		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 2},
-		{ 0, 0, 0 }
+		{ nullptr, nullptr, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
 
 	connectCallbacks();
-	RKInsertToplevelStatementFinishedCallback (0);
+	RKInsertToplevelStatementFinishedCallback(nullptr);
 	RKREventLoop::setRKEventHandler (doPendingPriorityCommands);
 	default_global_context = R_GlobalContext;
 #ifdef Q_OS_WIN
@@ -1241,7 +1241,7 @@ struct SafeParseWrap {
 
 void safeParseVector (void *data) {
 	SafeParseWrap *wrap = static_cast<SafeParseWrap*> (data);
-	wrap->pr = 0;
+	wrap->pr = nullptr;
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
 	wrap->pr = R_ParseVector (wrap->cv, -1, &(wrap->status), R_NilValue);
 }
@@ -1443,7 +1443,7 @@ void doPendingPriorityCommands () {
 
 	if (RKRBackend::this_pointer->killed) return;
 	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
-	RKRBackend::this_pointer->pending_priority_command = 0;
+	RKRBackend::this_pointer->pending_priority_command = nullptr;
 	if (command) {
 		RK_DEBUG (RBACKEND, DL_DEBUG, "running priority command %s", qPrintable (command->command));
 		{
@@ -1510,7 +1510,7 @@ void RKRBackend::printAndClearCapturedMessages (bool with_header) {
 void RKRBackend::run (const QString &locale_dir) {
 	RK_TRACE (RBACKEND);
 	killed = NotKilled;
-	previous_command = 0;
+	previous_command = nullptr;
 
 	initialize (locale_dir);
 
@@ -1578,12 +1578,12 @@ RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHan
 	if ((!request->synchronous) && (!isKilled ())) {
 		RK_ASSERT(mayHandleSubstack);	// i.e. not called from fetchNextCommand
 		RK_ASSERT(!request->subcommandrequest);
-		return 0;
+		return nullptr;
 	}
 
 	int i = 0;
 	while (!request->done) {
-		if (killed) return 0;
+		if (killed) return nullptr;
 		// NOTE: processX11Events() may, conceivably, lead to new requests, which may also wait for sub-commands!
 		RKREventLoop::processX11Events ();
 		// NOTE: sleeping and waking up again can be surprisingly CPU-intensive (yes: more than the event processing, above. I have profiled it).
@@ -1597,7 +1597,7 @@ RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHan
 	while (pending_priority_command) RKREventLoop::processX11Events ();  // Probably not needed, but make sure to process priority commands first at all times.
 
 	RCommandProxy* command = request->takeCommand ();
-	if (!command) return 0;
+	if (!command) return nullptr;
 
 	{
 		QMutexLocker lock (&all_current_commands_mutex);
@@ -1623,7 +1623,7 @@ RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHan
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 RCommandProxy* RKRBackend::fetchNextCommand () {
@@ -1631,7 +1631,7 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 
 	RBackendRequest req (!isKilled (), RBackendRequest::CommandOut);	// when killed, we do *not* actually wait for the reply, before the request is deleted.
 	req.command = previous_command;
-	previous_command = 0;
+	previous_command = nullptr;
 
 	return (handleRequest (&req, false));
 }

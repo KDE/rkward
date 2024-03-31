@@ -17,8 +17,8 @@ class QTextEdit;
  * developers. */
 class RKDebugMessageWindow : public RKMDIWindow {
 public:
-	RKDebugMessageWindow (QWidget *parent, bool tool_window, const char *name=0);
-	~RKDebugMessageWindow ();
+	RKDebugMessageWindow(QWidget *parent, bool tool_window, const char *name=nullptr);
+	~RKDebugMessageWindow();
 
 /** reimplemented to create the real widget only when the viewer is shown */
 	void showEvent (QShowEvent *e) override;

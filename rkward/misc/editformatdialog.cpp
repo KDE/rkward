@@ -105,7 +105,7 @@ void EditFormatDialog::precisionFieldChanged (int) {
 EditFormatDialogProxy::EditFormatDialogProxy (QWidget* parent) : QWidget (parent) {
 	RK_TRACE (EDITOR);
 
-	dialog = 0;
+	dialog = nullptr;
 }
 
 EditFormatDialogProxy::~EditFormatDialogProxy () {
@@ -136,6 +136,6 @@ void EditFormatDialogProxy::dialogDone (int result) {
 		Q_EMIT done(this, RKItemDelegate::EditorReject);
 	}
 	dialog->deleteLater ();
-	dialog = 0;
+	dialog = nullptr;
 }
 

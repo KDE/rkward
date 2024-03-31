@@ -46,7 +46,7 @@ namespace RKCommonFunctions {
 	QString unescape (const QString &in);
 
 /** simultaneously sets tool tips and what's this tips on up to three QWidgets */
-	void setTips (const QString &tip, QWidget *first, QWidget *second=0, QWidget *third=0);
+	void setTips (const QString &tip, QWidget *first, QWidget *second=nullptr, QWidget *third=nullptr);
 	QString noteSettingsTakesEffectAfterRestart ();
 
 /** create a QLabel that has wordwarp enabled, in a single line of code. */

@@ -24,11 +24,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 //static
-RControlWindow *RControlWindow::control_window = 0;
+RControlWindow *RControlWindow::control_window = nullptr;
 
 RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, PendingJobsWindow, tool_window, name) {
 	RK_TRACE (APP);
-	setPart (new RKDummyPart (0, this));
+	setPart (new RKDummyPart(nullptr, this));
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
@@ -67,7 +67,7 @@ RControlWindow::~RControlWindow () {
 	RK_TRACE (APP);
 
 	if (commands_view->model ()) {
-		commands_view->setModel (0);
+		commands_view->setModel(nullptr);
 		RCommandStackModel::getModel ()->removeListener ();
 	}
 }
@@ -89,7 +89,7 @@ void RControlWindow::hideEvent (QHideEvent *e) {
 	RK_TRACE (APP);
 
 	if (commands_view->model ()) {
-		commands_view->setModel (0);
+		commands_view->setModel(nullptr);
 		RCommandStackModel::getModel ()->removeListener ();
 	}
 

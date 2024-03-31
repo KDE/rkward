@@ -149,7 +149,7 @@ void RKFormula::makeModelString () {
 	QString table_string, model_string, labels_string;
 	mangled_names.clear ();
 	RObject *dep_var = dependent->objectValue ();
-	RObject *container = 0;
+	RObject *container = nullptr;
 	if (dep_var) {
 		model_ok = true;
 	}
@@ -259,7 +259,7 @@ void RKFormula::addButtonClicked () {
 	// check for duplicates (remove from old list - new terms might have a different order of naming)
 	for (int inter = 0; inter < interactions.count (); ++inter) {
 		Interaction new_inter = interactions[inter];
-		QTreeWidgetItem *dupe = 0;
+		QTreeWidgetItem *dupe = nullptr;
 		for (InteractionMap::Iterator it = interaction_map.begin (); it != interaction_map.end (); ++it) {
 			Interaction existing_inter = it.value ();
 			// BEGIN: actual comparison
