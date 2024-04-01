@@ -47,7 +47,7 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 	KTextEditor::Editor::instance()->setApplication(app);
 
 	// enumerate all available kate plugins
-	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("ktexteditor"));
+	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("kf6/ktexteditor"));
 	for (int i = plugins.size() -1; i >= 0; --i) {
 		PluginInfo info;
 		info.plugin = nullptr;
