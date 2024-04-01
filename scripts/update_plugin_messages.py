@@ -170,7 +170,7 @@ def getFullText (element):
       rc.append ("\n\n" + getFullText (cn) + "\n\n")
     elif cn.nodeType != cn.COMMENT_NODE:
       rc.append(stripLineDummy (cn.toxml ()))
-  return ''.join (rc).strip ().replace ("&amp;", "&")
+  return ''.join (rc).strip ()       # NOTE: .replace ("&amp;", "&") not needed: gets passed through HTML.unesacpe in quote()
 
 # get the content of all text nodes inside this node (does not include xml tags)
 def getText (node):
