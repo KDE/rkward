@@ -83,6 +83,8 @@ private:
 
 /** Base class for the completion models employed in script editor. Essentially it takes care of the bureaucratic overhead involved in providing a group header */
 class RKCompletionModelBase : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
+	Q_OBJECT
+	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface)
 public:
 	explicit RKCompletionModelBase (RKCompletionManager *manager);
 	~RKCompletionModelBase ();
