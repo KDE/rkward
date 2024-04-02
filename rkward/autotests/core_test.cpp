@@ -329,8 +329,16 @@ private Q_SLOTS:
 
 		QPointer<RInterface> oldiface = RInterface::instance();
 		restart_action->trigger();
+		QElapsedTimer t;
+		t.start();
 		while (oldiface) {  // action may be delayed until next event processing
 			qApp->processEvents();
+			if (t.elapsed() > 30000) {
+				testLog("Backend shutdown timed out");
+				auto m = QApplication::activeModalWidget();
+				testLog("Active modal window (if any): %p (%s)", m, qPrintable(m ? m->windowTitle() : QString()));
+				break;
+			}
 		}
 		testLog("Backend is restarting");
 		waitForBackendStarted();
