@@ -42,6 +42,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rkcodecompletion.h"
 #include "windows/rktexthints.h"
+#include "windows/katepluginintegration.h"
 #include "rbackend/rkrinterface.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
@@ -89,7 +90,9 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	}
 
 	doc = editor->createDocument (this);
-	view = doc->createView (this);
+	// even though the R Console is not really a document window, it is for it to be constructed with a proper main window.
+	// E.g. argument hints don't get the correct window parent, otherwise
+	view = doc->createView (this, RKWardMainWindow::getMain()->katePluginIntegration()->mainWindow ()->mainWindow());
 	layout->addWidget (view);
 	view->setStatusBarEnabled (false);
 	setFocusProxy (view);
