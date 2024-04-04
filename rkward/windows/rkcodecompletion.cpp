@@ -748,16 +748,11 @@ void RKCallHintModel::setFunction(RObject* _function) {
 		QStringList args = fo->argumentNames ();
 		QStringList defs = fo->argumentDefaults ();
 
-		name = function->getFullName ();
-
 		formals = '(';
 		formatting.clear ();
-		KTextEditor::Attribute format;
-//		format.setFontBold (); // NOTE: Not good. makes size mis-calculation worse.
-		format.setForeground (QBrush (Qt::green));  // But turns out purple?!
+		QTextCharFormat format;
+		format.setForeground(QBrush(Qt::green));
 
-		// NOTE: Unfortunately, adding new-lines within (long) formals does not work. If this issue turns out to be relevant, we'll have to resort to breaking the formals into
-		// several (dummy) items.
 		int pos = 1;
 		for (int i = 0; i < args.size (); ++i) {
 			QString pair = args[i];
@@ -788,7 +783,6 @@ QVariant RKCallHintModel::data (const QModelIndex& index, int role) const {
 	if (role == Qt::DisplayRole) {
 		if (col == KTextEditor::CodeCompletionModel::Prefix) return (name);
 		if (col == KTextEditor::CodeCompletionModel::Arguments) return (formals);
-		if (col == KTextEditor::CodeCompletionModel::Postfix) return ("        "); // Size is off a bit for KF5 5.44.0. Provide some padding to work around cut-off parts.
 	} else if (role == KTextEditor::CodeCompletionModel::ArgumentHintDepth) {
 		return 1;
 	} else if (role == KTextEditor::CodeCompletionModel::CompletionRole) {
@@ -796,7 +790,7 @@ QVariant RKCallHintModel::data (const QModelIndex& index, int role) const {
 	} else if (role == KTextEditor::CodeCompletionModel::HighlightingMethod) {
 		if (col == KTextEditor::CodeCompletionModel::Arguments) return KTextEditor::CodeCompletionModel::CustomHighlighting;
 	} else if (role == KTextEditor::CodeCompletionModel::CustomHighlight) {
-		if (col == KTextEditor::CodeCompletionModel::Arguments)  return formatting;
+		if (col == KTextEditor::CodeCompletionModel::Arguments) return formatting;
 	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
 		return (10);
 	}
