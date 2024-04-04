@@ -113,6 +113,7 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	RK_ASSERT(rkward_mainwin == nullptr);
 
 	Q_INIT_RESOURCE(resources);
+	Q_INIT_RESOURCE(icons);
 	testmode_suppress_dialogs = false;
 	gui_rebuild_locked = true;
 	no_ask_save = true;

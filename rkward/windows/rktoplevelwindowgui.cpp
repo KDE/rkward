@@ -1,6 +1,6 @@
 /*
 rktoplevelwindowgui - This file is part of RKWard (https://rkward.kde.org). Created: Tue Apr 24 2007
-SPDX-FileCopyrightText: 2007-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -37,7 +37,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkmdiwindow.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkprogresscontrol.h"
-#include "../misc/rkcommonfunctions.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkerrordialog.h"
@@ -74,11 +73,11 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled
 	prev_action = actionCollection ()->addAction ("prev_window", this, SLOT (previousWindow()));
 	prev_action->setText (i18n ("Previous Window"));
-	prev_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"));
+	prev_action->setIcon(QIcon(":/rkward/icons/window_back.png"));
 	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier | Qt::Key_Tab);
 	next_action = actionCollection ()->addAction ("next_window", this, SLOT (nextWindow()));
 	next_action->setText (i18n ("Next Window"));
-	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
+	next_action->setIcon(QIcon(":rkward/icons/window_forward.png"));
 	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_Tab);
 
 	QAction* action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));

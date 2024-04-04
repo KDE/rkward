@@ -1,6 +1,6 @@
 /*
 rkstandardicons - This file is part of RKWard (https://rkward.kde.org). Created: Wed Oct 24 2007
-SPDX-FileCopyrightText: 2007-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -34,7 +34,7 @@ void RKStandardIcons::doInitIcons () {
 	RK_TRACE (APP);
 
 	// base path for icons provided by rkward itself
-	QString rkward_icon_base = RKCommonFunctions::getRKWardDataDir () + "icons/";
+	QString rkward_icon_base = ":/rkward/icons/";
 
 	// actions
 	icons[ActionRunAll] = QIcon (rkward_icon_base + "run_all.png");
@@ -122,12 +122,8 @@ void RKStandardIcons::doInitIcons () {
 
 	icons[DocumentPDF] = QIcon::fromTheme("application-pdf");
 
-	// this used to be accessible as QApplication::windowIcon(), but apparently no longer in Qt5
-	if (QFileInfo::exists(rkward_icon_base + "64-apps-rkward.png")) {
-		icons[RKWardIcon] = QIcon(rkward_icon_base + "64-apps-rkward.png");
-	} else {
-		icons[RKWardIcon] = QIcon::fromTheme("rkward"); // Does not work on Windows, thus only used as fallback
-	}
+	// this used to be accessible as QApplication::windowIcon(), but apparently no longer since Qt5 (despite documentation)
+	icons[RKWardIcon] = QIcon(rkward_icon_base + "rkward.svgz");
 
 	RK_DO ({
 		for (int i = ActionRunAll; i < Last; ++i) {

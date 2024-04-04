@@ -40,7 +40,7 @@ SET(RKWard_Sources
 	robjectviewer.cpp
 	rkconsole.cpp
 )
-QT_ADD_RESOURCES(RKWard_Sources resources.qrc)
+QT_ADD_RESOURCES(RKWard_Sources resources.qrc icons/icons.qrc)
 
 # somehow the detected R paths from FindR.cmake do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)

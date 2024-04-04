@@ -4,21 +4,4 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 ADD_SUBDIRECTORY(app-icon)
 
-INSTALL(FILES
-	rkward_logo.png
-	function.png
-	list.png
-	matrix.png
-	menu.svg
-	data-numeric.png
-	data-factor.png
-	data-logical.png
-	window_back.png
-	window_forward.png
-	run_line.png
-	run_selection.png
-	run_all.png
-	s4_slots.png
-	paste_inside_selection.png
-	paste_inside_table.png
-    DESTINATION ${KDE_INSTALL_DATADIR}/rkward/icons)
+# Note: Icons are installed via QRC from CMakeLists.txt in parent folder
