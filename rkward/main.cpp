@@ -278,8 +278,7 @@ int main (int argc, char *argv[]) {
 	KAboutData::setApplicationData (aboutData);
 
 	QCommandLineParser parser;
-	parser.addVersionOption ();
-	parser.addHelpOption ();
+	aboutData.setupCommandLine(&parser);
 	parser.addOption (QCommandLineOption ("evaluate", i18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), "Rcode", QString ()));
 	parser.addOption (QCommandLineOption ("debug-level", i18n ("Verbosity of debug messages (0-5)"), "level", "2"));
 	parser.addOption (QCommandLineOption ("debug-flags", i18n ("Mask for components to debug (see debug.h)"), "flags", QString::number (DEBUG_ALL)));
@@ -292,7 +291,6 @@ int main (int argc, char *argv[]) {
 	parser.addOption(QCommandLineOption("quirkmode", i18n("Disable some startup validation code. Experimental option, not intended for regular use.")));
 	parser.addPositionalArgument ("files", i18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
 
-	aboutData.setupCommandLine (&parser);
 	parser.process (app);
 	aboutData.processCommandLine (&parser);
 
