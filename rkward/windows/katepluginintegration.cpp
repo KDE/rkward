@@ -36,6 +36,50 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
+///  BEGIN  Helper class for tool windows
+class KatePluginWindow : public RKMDIWindow {
+	Q_OBJECT
+public:
+	KatePluginWindow(QWidget *parent, bool tool_window=true) : RKMDIWindow(parent, RKMDIWindow::KatePluginWindow, tool_window) {
+		RK_TRACE (APP);
+
+		QVBoxLayout *layout = new QVBoxLayout(this);
+		layout->setContentsMargins(0, 0, 0, 0);
+		setPart(new RKDummyPart(this, this));
+		initializeActivationSignals();
+		setFocusPolicy(Qt::ClickFocus);
+	}
+	~KatePluginWindow() {
+		RK_TRACE (APP);
+	}
+
+	void showEvent(QShowEvent *e) override {
+		RKMDIWindow::showEvent(e);
+		Q_EMIT toolVisibleChanged(true);
+	}
+
+	void hideEvent(QHideEvent *e) override {
+		RKMDIWindow::hideEvent(e);
+		Q_EMIT toolVisibleChanged(false);
+	}
+
+/** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this override
+ *  to do that. Where did the good old KVBox go? */
+	void childEvent(QChildEvent *ev) override {
+		if ((ev->type() == QEvent::ChildAdded) && ev->child()->isWidgetType()) {
+			QWidget *widget = qobject_cast<QWidget *>(ev->child()); // clazy:exclude=child-event-qobject-cast - Cast to QWidget is ok, we checked for widgetType(), above
+			if (widget) {
+				layout()->addWidget(widget);
+				setFocusProxy(widget);
+			}
+		}
+		RKMDIWindow::childEvent(ev);
+	}
+Q_SIGNALS:
+	void toolVisibleChanged(bool);
+};
+
+///  END  Helper class for tool windows
 ///  BEGIN  KTextEditor::Application interface
 
 KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (parent) {
@@ -184,6 +228,12 @@ void KatePluginIntegrationApp::saveConfigAndUnload() {
 		unloadPlugin(it.key());
 	}
 	known_plugins.clear();
+
+	// "Global" tool views such as the Diagnostic Window did not get unloaded with any plugin, but need to be torn down, while KXML (factory) is still availalbe
+	if (window->plugin_resources.contains(nullptr)) {
+		auto wins = window->plugin_resources[nullptr].windows;
+		for(auto win : wins) delete win;
+	}
 }
 
 QList<KTextEditor::MainWindow *> KatePluginIntegrationApp::mainWindows() {
@@ -304,7 +354,6 @@ KTextEditor::Plugin *KatePluginIntegrationApp::plugin(const QString &name) {
 ///  END  KTextEditor::Application interface
 ///  BEGIN  KTextEditor::MainWindow interface
 
-
 KatePluginIntegrationWindow::KatePluginIntegrationWindow(KatePluginIntegrationApp *parent) : QObject(parent), KXMLGUIClient() {
 	RK_TRACE(APP);
 
@@ -322,49 +371,6 @@ KatePluginIntegrationWindow::~KatePluginIntegrationWindow() {
 	RK_TRACE(APP);
 	delete dynamic_actions_client;
 }
-
-
-class KatePluginWindow : public RKMDIWindow {
-	Q_OBJECT
-public:
-	KatePluginWindow(QWidget *parent, bool tool_window=true) : RKMDIWindow(parent, RKMDIWindow::KatePluginWindow, tool_window) {
-		RK_TRACE (APP);
-
-		QVBoxLayout *layout = new QVBoxLayout(this);
-		layout->setContentsMargins(0, 0, 0, 0);
-		setPart(new RKDummyPart(this, this));
-		initializeActivationSignals();
-		setFocusPolicy(Qt::ClickFocus);
-	}
-	~KatePluginWindow() {
-		RK_TRACE (APP);
-	}
-
-	void showEvent(QShowEvent *e) override {
-		RKMDIWindow::showEvent(e);
-		Q_EMIT toolVisibleChanged(true);
-	}
-
-	void hideEvent(QHideEvent *e) override {
-		RKMDIWindow::hideEvent(e);
-		Q_EMIT toolVisibleChanged(false);
-	}
-
-/** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this override
- *  to do that. Where did the good old KVBox go? */
-	void childEvent(QChildEvent *ev) override {
-		if ((ev->type() == QEvent::ChildAdded) && ev->child()->isWidgetType()) {
-			QWidget *widget = qobject_cast<QWidget *>(ev->child()); // clazy:exclude=child-event-qobject-cast - Cast to QWidget is ok, we checked for widgetType(), above
-			if (widget) {
-				layout()->addWidget(widget);
-				setFocusProxy(widget);
-			}
-		}
-		RKMDIWindow::childEvent(ev);
-	}
-Q_SIGNALS:
-	void toolVisibleChanged(bool);
-};
 
 QWidget* KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text) {
 	RK_TRACE (APP);

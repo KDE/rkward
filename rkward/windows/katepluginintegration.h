@@ -64,6 +64,7 @@ friend class RKSettingsModuleKatePlugins;
 	QString idForPlugin(const KPluginMetaData &plugin) const;
 };
 
+class KatePluginWindow;
 class KatePluginIntegrationWindow : public QObject, public KXMLGUIClient {
 	Q_OBJECT
 public:
@@ -111,7 +112,7 @@ friend class KatePluginIntegrationApp;
 		PluginResources() : view(nullptr) {};
 		QObject *view;
 		QList<KXMLGUIClient*> clients;
-		QList<RKMDIWindow*> windows;
+		QList<KatePluginWindow*> windows;
 	};
 	QHash<QObject*, PluginResources> plugin_resources;
 
