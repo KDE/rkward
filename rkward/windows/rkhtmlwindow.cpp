@@ -1,6 +1,6 @@
 /*
 rkhtmlwindow - This file is part of RKWard (https://rkward.kde.org). Created: Wed Oct 12 2005
-SPDX-FileCopyrightText: 2005-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2005-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -599,7 +599,12 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 			}
 			if (!restore_position.isNull()) page->setScrollPositionWhenDone(restore_position);
 		} else {
-			fileDoesNotExistMessage ();
+			RK_DEBUG(APP, DL_WARNING, "Attempt to open non-existant local file %s", qPrintable(url.toLocalFile()));
+			if (window_mode == HTMLOutputWindow) {
+				page->setHtmlWrapper(QStringLiteral("<HTML><BODY><H1>") + i18n("RKWard output file %s does not (yet) exist").arg(url.toLocalFile()) + QStringLiteral("</H1>\n</BODY></HTML>"), QUrl());
+			} else {
+				fileDoesNotExistMessage ();
+			}
 		}
 		return ok;
 	}
@@ -740,7 +745,9 @@ void RKHTMLWindow::refresh () {
 		// need to re-render the page
 		openRKHPage(url());
 	} else {
-		view->reload();
+		// NOTE: Special handling for output window, which may not have existed at the time of first "load"
+		if (!view->url().isEmpty()) view->reload();
+		else view->load(url());
 	}
 }
 
@@ -806,16 +813,7 @@ void RKHTMLWindow::startNewCacheFile () {
 void RKHTMLWindow::fileDoesNotExistMessage () {
 	RK_TRACE (APP);
 
-	startNewCacheFile ();
-	if (window_mode == HTMLOutputWindow) {
-		current_cache_file->write (i18n ("<HTML><BODY><H1>RKWard output file could not be found</H1>\n</BODY></HTML>").toUtf8 ());
-	} else {
-		current_cache_file->write (QString ("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>").toUtf8 ());
-	}
-	current_cache_file->close ();
-
-	QUrl cache_url = QUrl::fromLocalFile (current_cache_file->fileName ());
-	page->load (cache_url);
+	page->setHtmlWrapper(QString("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>"), QUrl());;
 }
 
 void RKHTMLWindow::flushOutput () {
