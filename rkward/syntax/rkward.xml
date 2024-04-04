@@ -85,7 +85,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		</context>
 		
 		<!-- Common type highlight -->
-		<context attribute="Output Common Type" name="outputcommontype">
+		<context name="outputcommontype">
 			<!-- Floats are hard to catch in R Output -->
 			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]+]|[.,;:][^ \t])"/>
 			<WordDetect attribute="Output NA" context="#stay" String="NA"/>
@@ -94,7 +94,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		</context>
 		
 		<!-- Special context for tibble output -->
-		<context attribute="Output Tibble" lineEndContext="#stay" name="outputtibble">
+		<context lineEndContext="#stay" name="outputtibble">
 			<!-- If a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) -->
 			<Detect2Chars attribute="Prompt" context="#pop" char="&gt;" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
 			<Detect2Chars attribute="Prompt" context="#pop" char="+" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
@@ -111,7 +111,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		</context>
 		
 		<!-- Special context for str_view() -->
-		<context attribute="Output StrView" lineEndContext="#pop" name="outputstrview">
+		<context lineEndContext="#pop" name="outputstrview">
 			<IncludeRules context="OutputContinuationCheck"/>
 			<RegExpr attribute="Output Index" context="#stay" String="\[[0-9]+\]" firstNonSpace="true"/>
 			<RegExpr attribute="Output StrView Highlight" context="#stay" String="[&lt;][^&gt;]+[&gt;]"/>
