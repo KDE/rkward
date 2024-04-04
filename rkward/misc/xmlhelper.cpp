@@ -255,7 +255,6 @@ QString XMLHelper::i18nStringAttribute (const QDomElement& element, const QStrin
 	}
 
 	QString attr = element.attribute (name);
-	if(attr.contains("Analysis")) displayError(&element, attr, DL_ERROR);
 	if (attr.isEmpty ()) return attr;	// Do not translate empty strings!
 
 	const QString context = element.attribute ("i18n_context", QString ());
