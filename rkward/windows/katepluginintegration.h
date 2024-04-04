@@ -92,12 +92,17 @@ private Q_SLOTS:
 	bool hideToolView(QWidget *widget);
 	QObject *pluginView(const QString &name);
 
-/* Apparently, these are truely optional, so let's disable them for the time being
+	/* Apparently, these are truely optional. We provide dummy implementations anyway to
+	 * get a better signal to noise ratio in warnings.
+	 *
+	 * "Viewbar" is the area containing line number, etc. If not created by the main window,
+	 * each view gets equipped with its own bar. That may actually be preferrable, as
+	 * our global bottom bar is quite crowded, already. */
 	QWidget *createViewBar(KTextEditor::View *view);
 	void deleteViewBar(KTextEditor::View *view);
 	void showViewBar(KTextEditor::View *view);
 	void hideViewBar(KTextEditor::View *view);
-	void addWidgetToViewBar(KTextEditor::View *view, QWidget *bar); */
+	void addWidgetToViewBar(KTextEditor::View *view, QWidget *bar);
 
 // New in Kate 2023-07, not yet formalized in KTextEditor
 	QWidget *toolviewForName(const QString &toolviewName);

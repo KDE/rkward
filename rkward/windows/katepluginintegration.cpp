@@ -513,6 +513,29 @@ QObject *KatePluginIntegrationWindow::pluginView(const QString &name) {
 	return plugin_resources.value(app->plugin(name)).view;
 }
 
+/* BEGIN deliberately left unimplemented */
+QWidget *KatePluginIntegrationWindow::createViewBar(KTextEditor::View *) {
+	RK_TRACE (APP);
+	return nullptr;
+}
+
+void KatePluginIntegrationWindow::deleteViewBar(KTextEditor::View *) {
+	RK_TRACE (APP);
+}
+
+void KatePluginIntegrationWindow::showViewBar(KTextEditor::View *) {
+	RK_TRACE (APP);
+}
+
+void KatePluginIntegrationWindow::hideViewBar(KTextEditor::View *) {
+	RK_TRACE (APP);
+}
+
+void KatePluginIntegrationWindow::addWidgetToViewBar(KTextEditor::View *, QWidget *)  {
+	RK_TRACE (APP);
+}
+/* END deliberately left unimplemented */
+
 bool KatePluginIntegrationWindow::closeSplitView(KTextEditor::View* view) {
 	RK_TRACE (APP);
 
