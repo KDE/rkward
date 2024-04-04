@@ -205,8 +205,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	initializeActions (part->actionCollection ());
 	// The kate part is quite a beast to embed, when it comes to shortcuts. New ones get added, conflicting with ours.
 	// In this context we show no mercy, and rip out any conflicting shortcuts.
-	auto kate_acs = m_view->findChildren<KActionCollection*>();
-	kate_acs.append(m_view->actionCollection());
+	const auto kate_acs = m_view->findChildren<KActionCollection*>() << m_view->actionCollection();
 	QList<KActionCollection*> own_acs;
 	own_acs.append(part->actionCollection());
 	own_acs.append(standardActionCollection());
@@ -216,7 +215,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 		for (const auto own_action : own_actions) {
 			const auto own_scs = ac->defaultShortcuts(own_action);
 			for (const auto &own_sc : own_scs) {
-				for (const auto kate_ac : qAsConst(kate_acs)) {
+				for (const auto kate_ac : kate_acs) {
 					const auto kate_actions = kate_ac->actions();
 					for (auto kate_action : kate_actions) {
 						auto action_shortcuts = kate_ac->defaultShortcuts(kate_action);

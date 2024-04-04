@@ -35,7 +35,7 @@ ENDIF(FORCE_PRETTY_MAKEFILE)
 
 ADD_DEFINITIONS(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
-remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_NO_FOREACH) # TODO remove to compley to KDECompilerSettings
+remove_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove to compley to KDECompilerSettings
 
 #uncomment the line below to save ~250-350kB in object size
 #ADD_DEFINITIONS(-DRKWARD_NO_TRACE)

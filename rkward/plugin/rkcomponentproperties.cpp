@@ -267,7 +267,7 @@ void RKComponentPropertyStringList::setValueAt (int index, const QString& value)
 
 void RKComponentPropertyStringList::governorValueChanged (RKComponentPropertyBase *property) {
 	QVariant value = property->value (governor_modifier);
-	if (value.type () == QVariant::StringList) {
+	if (value.metaType() == QMetaType(QMetaType::QStringList)) {
 		setValueList (value.toStringList ());
 	} else {
 		setValue (value.toString ());
@@ -367,10 +367,10 @@ bool RKComponentPropertyBool::stringToBool (const QString &value, bool *ok) {
 }
 
 bool RKComponentPropertyBool::variantToBool (const QVariant &value, bool *ok) {
-	if (value.type () == QVariant::Bool) {
+	if (value.metaType() == QMetaType(QMetaType::Bool)) {
 		if (ok) *ok = true;
-		return value.toBool ();
-	} else if (value.canConvert (QVariant::Int)) {
+		return value.toBool();
+	} else if (value.canConvert(QMetaType(QMetaType::Int))) {
 		bool valid;
 		bool ret = (bool) value.toInt (&valid);
 		if (valid) {
@@ -444,12 +444,12 @@ void RKComponentPropertyBool::governorValueChanged (RKComponentPropertyBase *pro
 	RK_TRACE (PLUGIN);
 
 	QVariant value = property->value (governor_modifier);
-	if (value.type () == QVariant::String) {	// Qt's conversion from string to bool does not meet our needs
-		internalSetValue (value.toString ());
-	} else if (value.canConvert (QVariant::Bool)) {
-		internalSetValue (value.toBool ());
+	if (value.metaType() == QMetaType(QMetaType::QString)) {	// Qt's conversion from string to bool does not meet our needs
+		internalSetValue (value.toString());
+	} else if (value.canConvert(QMetaType(QMetaType::Bool))) {
+		internalSetValue(value.toBool());
 	} else {	// fallback for lists, and other stuff that really should not have been connected to a bool property, in the first place
-		internalSetValue (value.toString ());
+		internalSetValue(value.toString());
 	}
 	Q_EMIT valueChanged(this);
 }
@@ -1109,8 +1109,8 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 		setObjectList (static_cast <RKComponentPropertyRObjects *> (property)->objectList ());
 	} else {
 		QVariant value = property->value ();
-		if (value.type () == QVariant::StringList) {
-			setValueList (value.toStringList ());
+		if (value.metaType() == QMetaType(QMetaType::QStringList)) {
+			setValueList (value.toStringList());
 		} else {
 			setValue (value.toString ());
 		}
