@@ -373,7 +373,8 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 		// we seem to need this, as the kateview will swallow the contextMenuEvent, otherwise
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::RightButton) {
-			qApp->sendEvent (this, new QContextMenuEvent (QContextMenuEvent::Other, m->globalPos ()));
+			QPoint pos = m->globalPosition().toPoint();
+			qApp->sendEvent(this, new QContextMenuEvent(QContextMenuEvent::Mouse, mapFromGlobal(pos), pos));
 			return (true);
 		}
 	} else if (e->type () == QEvent::MouseButtonRelease){
@@ -401,7 +402,7 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 		// We try to map it back to the view, correctly.
 		QWidget *rec = dynamic_cast<QWidget*> (o);
 		if (!o) rec = view;
-		KTextEditor::Cursor pos = view->coordinatesToCursor (rec->mapTo (view, me->pos ()));
+		KTextEditor::Cursor pos = view->coordinatesToCursor(rec->mapTo(view, me->position().toPoint()));
 
 		bool in_last_line = (pos.line () == doc->lines () - 1) && (pos.column () >= prefix.length ());
 		if (!in_last_line) {
@@ -936,7 +937,7 @@ void RKConsole::contextMenuEvent (QContextMenuEvent * event) {
 	copy_literal_action->setEnabled (view->selection ());
 	run_selection_action->setEnabled (view->selection ());
 
-	console_part->showPopupMenu (event->pos ());
+	console_part->showPopupMenu(event->globalPos());
 
 	run_selection_action->setEnabled (true);
 	copy_literal_action->setEnabled (true);

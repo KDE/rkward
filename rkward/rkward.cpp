@@ -1,6 +1,6 @@
 /*
 rkward.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 29 2002
-SPDX-FileCopyrightText: 2002-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -464,7 +464,7 @@ void RKWardMainWindow::initToolViewsAndR () {
 
 	RKDebugMessageWindow::_instance = new RKDebugMessageWindow(nullptr, true);
 	RKDebugMessageWindow::instance ()->setCaption (i18n ("RKWard Debug Messages"));
-	RKToolWindowList::registerToolWindow (RKDebugMessageWindow::instance (), "rkdebugmessages", RKToolWindowList::Nowhere, 0);
+	RKToolWindowList::registerToolWindow (RKDebugMessageWindow::instance (), "rkdebugmessages", RKToolWindowList::Nowhere, QKeyCombination());
 
 	RKWorkplace::mainWorkplace ()->placeToolWindows ();
 }
