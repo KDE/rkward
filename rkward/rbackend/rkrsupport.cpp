@@ -135,16 +135,16 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 
 	if (var.isNull()) return R_NilValue;
 
-	QMetaType::Type t = (QMetaType::Type) var.type();
-	if (t == QMetaType::Bool) {
+	QMetaType t = var.metaType();
+	if (t == QMetaType(QMetaType::Bool)) {
 		SEXP ret = Rf_allocVector(LGLSXP, 1);
 		LOGICAL(ret)[0] = var.toBool();
 		return ret;
-	} else if (t == QMetaType::Int) {
+	} else if (t == QMetaType(QMetaType::Int)) {
 		SEXP ret = Rf_allocVector(INTSXP, 1);
 		INTEGER(ret)[0] = var.toInt();
 		return ret;
-	} else if (t != QMetaType::QString && t != QMetaType::QStringList) {
+	} else if (t != QMetaType(QMetaType::QString) && t != QMetaType(QMetaType::QStringList)) {
 		Rf_warning("unsupported QVariant type in QVariantToSEXP");
 	}
 	QStringList list = var.toStringList();

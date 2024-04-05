@@ -1,6 +1,6 @@
 /*
 rkxmlguipreviewarea - This file is part of RKWard (https://rkward.kde.org). Created: Wed Feb 03 2016
-SPDX-FileCopyrightText: 2016-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2016-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -92,7 +92,7 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 	hl->addWidget(lab);
 	hl->addWidget(tb);
 	hl->addStretch();
-	internal_layout = new QVBoxLayout(this);
+	internal_layout = new QVBoxLayout();
 	vl->addLayout(internal_layout);
 
 	menubar = new QMenuBar(nullptr); // it is important that the menubar never is a child of the main window, not even indirectly! https://bugs.kde.org/show_bug.cgi?id=416911
