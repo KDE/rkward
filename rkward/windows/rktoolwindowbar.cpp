@@ -1,6 +1,6 @@
 /*
 rktoolwindowbar - This file is part of RKWard (https://rkward.kde.org). Created: Fri Oct 12 2007
-SPDX-FileCopyrightText: 2007-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -146,6 +146,14 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	if (window->isAttached ()) {
 		reclaimDetached (window);
 	}
+
+	// This really belongs to katepart integration, but cannot be placed there, without major pains
+	// Needs to be a queued connect, as the "real" widget (listening for the call) may be constructed after it's container
+	// is being added, here.
+	QMetaObject::invokeMethod( RKWardMainWindow::getMain(),
+	[w = RKWardMainWindow::getMain(), window, tab = tab(id)] {
+		Q_EMIT w->tabForToolViewAdded(window, tab);
+	}, Qt::QueuedConnection);
 
 	show ();
 }

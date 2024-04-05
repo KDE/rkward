@@ -1,6 +1,6 @@
 /*
 rkward.h - This file is part of the RKWard project. Created: Tue Oct 29 2002
-SPDX-FileCopyrightText: 2002-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -67,6 +67,7 @@ protected:
 	virtual void closeEvent (QCloseEvent *e) override;
 Q_SIGNALS:
 	void aboutToQuitRKWard ();
+	void tabForToolViewAdded(QWidget*, QWidget*);  // Needed from katepluginintegration
 public Q_SLOTS:
 	void setWorkspaceUnmodified () { setWorkspaceMightBeModified (false); };
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
