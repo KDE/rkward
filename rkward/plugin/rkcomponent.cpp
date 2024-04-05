@@ -164,7 +164,7 @@ QString RKComponentBase::fetchStringValue (RKComponentBase* prop, const QString 
 		return (prop->value (modifier).toStringList ().join ("\n"));
 	}
 	QVariant value = prop->value (modifier);
-	if (value.type () == QVariant::StringList) {
+	if (value.metaType () == QMetaType(QMetaType::QStringList)) {
 		return value.toStringList ().join ("\n");
 	}
 	return (value.toString ());
