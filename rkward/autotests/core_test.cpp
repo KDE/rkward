@@ -91,20 +91,28 @@ class RKWardCoreTest: public QObject {
 
 	void listBackendLog() {
 		testLog("Listing (new) contents of /tmp/rkward.rbackend");
+		QByteArray output, oldoutput;
 		QFile f(QDir::tempPath() + "/rkward.rbackend");
-		f.open(QIODevice::ReadOnly);
-		auto output = f.readAll();
-		QFile fl(QDir::tempPath() + "/rkward.rbackend.listed");
-		fl.open(QIODevice::ReadOnly);
-		auto oldoutput = fl.readAll();
-		fl.close();
-		fl.open(QIODevice::ReadWrite | QIODevice::Truncate);
-		fl.write(output);
-		fl.close();
-		if (output.startsWith(oldoutput)) {
-			output = output.mid(oldoutput.length());
+		if (f.open(QIODevice::ReadOnly)) {
+			output = f.readAll();
+			f.close();
 		}
-		testLog("%s", output.data());
+
+		QFile fl(QDir::tempPath() + "/rkward.rbackend.listed");
+		if (fl.open(QIODevice::ReadOnly)) {
+			oldoutput = fl.readAll();
+			fl.close();
+		}
+
+		if (fl.open(QIODevice::ReadWrite | QIODevice::Truncate) ) {
+			fl.write(output);
+			fl.close();
+		}
+
+		if (output.startsWith(oldoutput)) {
+			output = output.sliced(oldoutput.length());
+		}
+		testLog(qPrintable(output.data()));
 	}
 
 	void waitForBackendStarted() {
