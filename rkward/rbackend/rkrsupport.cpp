@@ -163,11 +163,18 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 
 QVariant RKRSupport::SEXPToNestedStrings(SEXP from_exp) {
 	RK_TRACE (RBACKEND);
+
 	if (Rf_isVectorList(from_exp)) {  // NOTE: list() in R is a vectorlist in the C API...
 		QVariantList ret;
 		for(int i = 0; i < Rf_length(from_exp); ++i) {
 			SEXP el = VECTOR_ELT(from_exp, i);
 			ret.append(SEXPToNestedStrings(el));
+		}
+		return ret;
+	} else if (Rf_isPairList(from_exp)) {
+		QVariantList ret;
+		for(SEXP cons = from_exp; cons != R_NilValue; cons = CDR(cons)) {
+			ret.append(SEXPToNestedStrings(CAR(cons)));
 		}
 		return ret;
 	}
