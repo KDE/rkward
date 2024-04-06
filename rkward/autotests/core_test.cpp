@@ -1,6 +1,6 @@
 /*
 core_test - This file is part of RKWard (https://rkward.kde.org). Created: Thu Jun 09 2022
-SPDX-FileCopyrightText: 2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -44,10 +44,11 @@ void testLog(const char* fmt, ...) {
 	va_end(ap);
 }
 
-void RKDebug (int, int, const char* fmt, ...) {
+void RKDebug (int, int level, const char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	testLog(fmt, ap);
+	if (level >= DL_ERROR) QFAIL("error message during test (see above)");
 	va_end(ap);
 }
 
@@ -89,10 +90,20 @@ class RKWardCoreTest: public QObject {
 	}
 
 	void listBackendLog() {
-		testLog("Listing contents of /tmp/rkward.rbackend");
+		testLog("Listing (new) contents of /tmp/rkward.rbackend");
 		QFile f(QDir::tempPath() + "/rkward.rbackend");
 		f.open(QIODevice::ReadOnly);
 		auto output = f.readAll();
+		QFile fl(QDir::tempPath() + "/rkward.rbackend.listed");
+		fl.open(QIODevice::ReadOnly);
+		auto oldoutput = fl.readAll();
+		fl.close();
+		fl.open(QIODevice::ReadWrite | QIODevice::Truncate);
+		fl.write(output);
+		fl.close();
+		if (output.startsWith(oldoutput)) {
+			output = output.mid(oldoutput.length());
+		}
 		testLog("%s", output.data());
 	}
 
@@ -126,6 +137,7 @@ private Q_SLOTS:
 	void cleanup() {
 		testLog("Cleanup. Backend status: %s", qPrintable(backendStatus()));
 		waitForAllFinished();
+		listBackendLog();
 		testLog("Cleanup done. Backend status: %s", qPrintable(backendStatus()));
 	}
 
@@ -149,7 +161,7 @@ private Q_SLOTS:
 	}
 
 	void getIntVector() {
-		auto c = new RCommand("c(1, 2, 3)", RCommand::GetIntVector);
+		auto c = new RCommand("c(1, 2, 3)", RCommand::GetIntVector | RCommand::App);
 		runCommandWithTimeout(c, nullptr, [](RCommand *command) {
 			QCOMPARE(command->getDataType(), RData::IntVector);
 			QCOMPARE(command->getDataLength(), 3);
@@ -208,7 +220,7 @@ private Q_SLOTS:
 			    }
 			    dx->rename("dy");
 			}
-			auto c = new RCommand("dy$c", RCommand::GetIntVector);
+			auto c = new RCommand("dy$c", RCommand::GetIntVector | RCommand::App);
 			runCommandAsync(c, nullptr, [](RCommand *command) {
 			    QCOMPARE(command->getDataType(), RData::IntVector);
 			    QCOMPARE(command->getDataLength(), 2);

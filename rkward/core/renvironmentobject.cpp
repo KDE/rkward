@@ -95,7 +95,7 @@ void REnvironmentObject::updateFromR(RCommandChain *chain, const QStringList &ad
 
 	for (int i = removed_symbols.size() -1; i >= 0; --i) {
 		RObject *removed_object = findChildByName(removed_symbols[i]);
-		RK_ASSERT(removed_object);
+		if(!removed_object) RK_DEBUG(OBJECTS, DL_ERROR, "Removed object %s was not registered", qPrintable(removed_symbols[i]));
 		if (removed_object) RKModificationTracker::instance()->removeObject(removed_object, nullptr, true);
 	}
 

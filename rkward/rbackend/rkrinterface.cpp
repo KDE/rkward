@@ -537,7 +537,9 @@ void RInterface::cancelAll () {
 	RK_TRACE (RBACKEND);
 
 	const QList<RCommand*> all_commands = RCommandStack::regular_stack->allCommands ();
-	for (RCommand* command : all_commands) cancelCommand (command);
+	for (RCommand* command : all_commands) {
+		if (!(command->type() & RCommand::Sync)) cancelCommand(command);
+	}
 }
 
 bool RInterface::softCancelCommand (RCommand* command) {

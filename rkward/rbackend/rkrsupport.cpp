@@ -322,16 +322,6 @@ void RKRShadowEnvironment::updateCacheForGlobalenvSymbol(const QString& name) {
 	environmentFor(R_GlobalEnv)->updateSymbolCache(name);
 }
 
-void RKRShadowEnvironment::updateSymbolCache(const QString& name) {
-	RK_TRACE(RBACKEND);
-	SEXP rname = Rf_installChar(Rf_mkCharCE(name.toUtf8().constData(), CE_UTF8));
-	PROTECT(rname);
-	SEXP symbol_g = Rf_findVar(rname, R_GlobalEnv);
-	PROTECT(symbol_g);
-	Rf_defineVar(rname, symbol_g, shadowenvir);
-	UNPROTECT(2);
-}
-
 static void unbindSymbolWrapper(SEXP name, SEXP env) {
 #if R_VERSION >= R_Version(4, 0, 0)
 	R_removeVarFromFrame(name, env);
@@ -346,6 +336,17 @@ static void unbindSymbolWrapper(SEXP name, SEXP env) {
 	Rf_eval(call, R_BaseEnv);
 	UNPROTECT(1);
 #endif
+}
+
+void RKRShadowEnvironment::updateSymbolCache(const QString& name) {
+	RK_TRACE(RBACKEND);
+	SEXP rname = Rf_installChar(Rf_mkCharCE(name.toUtf8().constData(), CE_UTF8));
+	PROTECT(rname);
+	SEXP symbol_g = Rf_findVar(rname, R_GlobalEnv);
+	PROTECT(symbol_g);
+	if (symbol_g == R_UnboundValue) unbindSymbolWrapper(rname, shadowenvir);
+	else Rf_defineVar(rname, symbol_g, shadowenvir);
+	UNPROTECT(2);
 }
 
 RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {

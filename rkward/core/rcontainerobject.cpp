@@ -316,7 +316,7 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	}
 
 	RCommand *command = new RCommand (renameChildCommand (object, new_name), RCommand::App | RCommand::Sync);
-	command->setUpdatesObject(this);
+	command->setUpdatesObject(object);  // NOTE will be mapped to toplevel object, anyway
 	RInterface::issueCommand(command, nullptr);
 
 	object->name = new_name;
