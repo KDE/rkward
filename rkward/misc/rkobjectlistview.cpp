@@ -301,8 +301,8 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	else type_box->setCurrentIndex (0);
 	connect (type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
 
-	QHBoxLayout *bottom_layout = new QHBoxLayout (filter_widget);
-	layout->addLayout (bottom_layout);
+	QHBoxLayout *bottom_layout = new QHBoxLayout();
+	layout->addLayout(bottom_layout);
 	QCheckBox* hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
 	hidden_objects_box->setChecked (persistent_settings[ShowObjectsHidden]);
 	connect (hidden_objects_box, &QCheckBox::clicked, persistent_settings_actions[ShowObjectsHidden], &QAction::setChecked);
