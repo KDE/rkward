@@ -1,6 +1,6 @@
 /*
 rkrinterface.h - This file is part of the RKWard project. Created: Fri Nov 1 2002
-SPDX-FileCopyrightText: 2002-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -82,8 +82,6 @@ not be interrupted. */
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
 private:
-	void timerEvent (QTimerEvent *) override;
-	int flush_timer_id;
 /** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
 	void flushOutput (bool forced);
 /** pointer to the RThread */

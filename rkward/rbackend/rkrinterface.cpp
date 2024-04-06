@@ -1,6 +1,6 @@
 /*
 rkrinterface.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Fri Nov 1 2002
-SPDX-FileCopyrightText: 2002-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -79,7 +79,6 @@ RInterface::RInterface () {
 	previously_idle = false;
 	locked = 0;
 	backend_dead = false;
-	flush_timer_id = 0;
 	dummy_command_on_stack = nullptr;
 
 	// create a fake init command
@@ -322,8 +321,8 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	RK_TRACE (RBACKEND);
 
 	if (request->type == RBackendRequest::OutputStartedNotification) {
-		RK_ASSERT (flush_timer_id == 0);
-		flush_timer_id = startTimer (FLUSH_INTERVAL);	// calls flushOutput (false); see timerEvent ()
+		// We do _not_ flush the output right away, as it is likely to arrive in minuscule chunks. But we _do_ want to check, soon
+		QTimer::singleShot(FLUSH_INTERVAL, [this]() { flushOutput(false); });
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 		return;
 	}
@@ -444,23 +443,10 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	}
 }
 
-void RInterface::timerEvent (QTimerEvent *) {
-// do not trace. called periodically
-	flushOutput (false);
-}
-
 void RInterface::flushOutput (bool forced) {
 // do not trace. called periodically
 //	RK_TRACE (RBACKEND);
 	const ROutputList list = RKRBackendProtocolFrontend::instance ()->flushOutput (forced);
-
-	// this must come _after_ the output has been flushed.
-	if (forced || !list.isEmpty ()) {
-		if (flush_timer_id != 0) {
-			killTimer (flush_timer_id);
-			flush_timer_id = 0;
-		}
-	}
 
 	for (ROutput *output : list) {
 		if (all_current_commands.isEmpty ()) {
