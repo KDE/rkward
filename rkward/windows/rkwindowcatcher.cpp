@@ -77,28 +77,32 @@ void RKWindowCatcher::start (int prev_cur_device) {
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher activated");
 
 	last_cur_device = prev_cur_device;
-#ifdef Q_OS_WIN
+#if __has_include(<KWindowInfo>)
+	windows_before_add = KX11Extras::windows ();
+#elif defined(Q_OS_WIN)
 	windows_before_add = RKWindowCatcherPrivate::toplevelWindows ();
 #else
-	windows_before_add = KX11Extras::windows ();
+	RK_ASSERT(false); // code should not be reached
 #endif
 }
 
 WId RKWindowCatcher::createdWindow () {
 	RK_TRACE (MISC);
 
-#ifdef Q_OS_WIN
-	QList<WId> windows_after_add = RKWindowCatcherPrivate::toplevelWindows ();
-	for (int i = windows_after_add.size () - 1; i >= 0; --i) {
-		if (!windows_before_add.contains (windows_after_add[i])) return windows_after_add[i];
-	}
-#else
+#if __has_include(<KWindowInfo>)
 	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
 	QList<WId> windows_after_add = KX11Extras::windows ();
 	WId candidate = windows_after_add.value (windows_after_add.size () - 1);
 	if (!windows_before_add.contains (windows_after_add.last ())) {
 		return candidate;
 	}
+#elif defined(Q_OS_WIN)
+	QList<WId> windows_after_add = RKWindowCatcherPrivate::toplevelWindows ();
+	for (int i = windows_after_add.size () - 1; i >= 0; --i) {
+		if (!windows_before_add.contains (windows_after_add[i])) return windows_after_add[i];
+	}
+#else
+	RK_ASSERT(false); // code should not be reached
 #endif
 	return 0;
 }
