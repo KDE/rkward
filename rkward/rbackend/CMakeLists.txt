@@ -62,8 +62,8 @@ ENDIF(WIN32)
 IF(APPLE)
     TARGET_LINK_LIBRARIES(rkward.rbackend "-framework CoreFoundation")
     ADD_CUSTOM_COMMAND(TARGET rkward.rbackend POST_BUILD
-    COMMAND codesign -d --force --options runtime --verbose=4 -s - --entitlements "${CMAKE_CURRENT_SOURCE_DIR}/rkward.rbackend.entitlements" ${CMAKE_CURRENT_BINARY_DIR}/rkward.rbackend
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND codesign -d --force --options runtime --verbose=4 -s - --entitlements "${CMAKE_CURRENT_SOURCE_DIR}/rkward.rbackend.entitlements" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/rkward.rbackend
+    WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
     COMMENT "Adding entitlment for rkward.rbackend to link to external R lib...")
 ENDIF()
 IF(MSVC)
