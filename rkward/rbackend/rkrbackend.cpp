@@ -796,8 +796,7 @@ void RBusy (int busy) {
 
 SEXP doUpdateLocale ();
 // NOTE: stdout_stderr_mutex is recursive to support fork()s, better
-#define DUMMY_MUTEX_FLAGS
-RKRBackend::RKRBackend() : stdout_stderr_mutex(DUMMY_MUTEX_FLAGS) {
+RKRBackend::RKRBackend() : stdout_stderr_mutex() {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (this_pointer == nullptr);

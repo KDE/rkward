@@ -122,7 +122,7 @@ void RKFrontendTransmitter::run () {
 #endif
 
 	args.append (QStringLiteral("--debug-level=") + QString::number (RK_Debug::RK_Debug_Level));
-	// NOTE: QProQByteArray(cess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
+	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
 	args.append (QStringLiteral("--server-name=") + server->fullServerName ().toUtf8 ().toPercentEncoding ());
 	args.append (QStringLiteral("--rkd-server-name=") + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
 	args.append (QStringLiteral("--data-dir=") + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());

@@ -53,7 +53,7 @@ Currently these modifiers are known (but check the sources if in doubt):
 See RKComponentPropertyConvert
 
 \section RKComponentPropertyInternals Internal workings
-RKComponentProperties are QObjects, and communicate with each other via signals and slots. On each change they Q_EMIT a RKComponentPropertyBase::valueChanged (RKComponentPropertyBase *) signal with a pointer to self as parameter.
+RKComponentProperties are QObjects, and communicate with each other via signals and slots. On each change they emit a RKComponentPropertyBase::valueChanged (RKComponentPropertyBase *) signal with a pointer to self as parameter.
 
 Properties can be connected to each other using RKComponentPropertyBase::connectToGovernor (). The calling property will connect to the governor's valueChange () signal, and keep itself in sync.
 

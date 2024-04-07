@@ -38,7 +38,7 @@ RObjectList::RObjectList() : RContainerObject(nullptr, QString()) {
 	type = RObject::Workspace;
 	name = "search()";
 
-	globalenv = new REnvironmentObject(nullptr, ".GlobalEnv");
+	globalenv = new REnvironmentObject(nullptr, QStringLiteral(".GlobalEnv"));
 	globalenv->updateFromR(nullptr);
 
    // TODO: Do we really need tracker notification at this stage?

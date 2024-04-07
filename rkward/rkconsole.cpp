@@ -90,7 +90,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	}
 
 	doc = editor->createDocument (this);
-	// even though the R Console is not really a document window, it is for it to be constructed with a proper main window.
+	// even though the R Console is not really a document window, it is important for it to be constructed with a proper main window.
 	// E.g. argument hints don't get the correct window parent, otherwise
 	view = doc->createView (this, RKWardMainWindow::getMain()->katePluginIntegration()->mainWindow ()->mainWindow());
 	layout->addWidget (view);
@@ -905,7 +905,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 	activate (false);
 	if (isBusy () && (!previous_chunk_was_piped)) {
 		int res = KMessageBox::questionTwoActionsCancel (this, i18n ("You have configured RKWard to pipe script editor commands through the R Console. However, another command is currently active in the console. Do you want to append it to the command in the console, or do you want to reset the console, first? Press cancel if you do not wish to run the new command, now."), i18n ("R Console is busy"), KGuiItem (i18n ("Append")), KGuiItem (i18n ("Reset, then submit")));
-		if (res == KMessageBox::Cancel) {
+		if (res == KMessageBox::SecondaryAction) {
 			resetConsole ();
 		} else if (res != KMessageBox::PrimaryAction) {
 			return;

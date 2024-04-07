@@ -187,7 +187,7 @@ bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) 
 	beginInsertRows (QModelIndex (), row, row+count-1);
 	doInsertRowsInBackend (row, count);
 	for (int i=0; i < objects.size (); ++i) {
-// TODO: this does not Q_EMIT any data change notifications to other editors
+// TODO: this does not emit any data change notifications to other editors
 		objects[i]->insertRows (row, count);
 	}
 	endInsertRows ();
@@ -210,7 +210,7 @@ bool RKVarEditModel::removeRows (int row, int count, const QModelIndex& parent) 
 	beginRemoveRows (QModelIndex (), row, lastrow);
 	doRemoveRowsInBackend (row, lastrow - row + 1);
 	for (int i=0; i < objects.size (); ++i) {
-// TODO: this does not Q_EMIT any data change notifications to other editors
+// TODO: this does not emit any data change notifications to other editors
 		objects[i]->removeRows (row, lastrow);
 	}
 	endRemoveRows ();

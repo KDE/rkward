@@ -28,7 +28,7 @@ REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString 
 			type |= PackageEnv;
 		}
 	} else if (parent == nullptr) {
-		RK_ASSERT (name == ".GlobalEnv");
+		RK_ASSERT(name == QStringLiteral(".GlobalEnv"));
 		type |= ToplevelEnv | GlobalEnv;
 	}
 }

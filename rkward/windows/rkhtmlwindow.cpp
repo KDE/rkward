@@ -181,9 +181,9 @@ friend class RKHTMLWindow;
 class RKWebView : public QWebEngineView {
 public:
 	RKWebView (QWidget *parent) : QWebEngineView (parent) {};
-	void print (QPrinter *printer) {
-		if (!page ()) return;
-        QWebEngineView::forPage(page ())->print (printer);
+	void print(QPrinter *printer) {
+		if (!page()) return;
+		QWebEngineView::forPage(page())->print(printer);
 	};
 protected:
 	bool eventFilter(QObject *, QEvent *event) override {
@@ -771,7 +771,7 @@ void RKHTMLWindow::zoomOut () {
 void RKHTMLWindow::setTextEncoding (QStringConverter::Encoding encoding) {
 	RK_TRACE (APP);
 
-    QStringEncoder converter(encoding);
+	QStringEncoder converter(encoding);
 	page->settings ()->setDefaultTextEncoding (converter.name ());
 	view->reload ();
 }
@@ -825,7 +825,7 @@ void RKHTMLWindow::flushOutput () {
 	}
 
 	// TODO: remove legacy code below, eventually
-	int res = KMessageBox::questionTwoActions (this, i18n ("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."), i18n ("Flush output?"), KStandardGuiItem::clear(), KStandardGuiItem::cancel());
+	int res = KMessageBox::questionTwoActions(this, i18n ("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."), i18n("Flush output?"), KStandardGuiItem::clear(), KStandardGuiItem::cancel());
 	if (res==KMessageBox::PrimaryAction) {
 		QFile out_file (current_url.toLocalFile ());
 		RCommand *c = new RCommand ("rk.flush.output (" + RCommand::rQuote (out_file.fileName ()) + ", ask=FALSE)\n", RCommand::App);

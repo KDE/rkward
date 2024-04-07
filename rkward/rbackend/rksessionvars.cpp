@@ -86,6 +86,7 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
 	lines.append ("Qt version (compile time): " QT_VERSION_STR);
 	lines.append ("Using QWebEngine for HTML rendering");
+	lines.append(QStringLiteral("Running on: ") + QSysInfo::prettyProductName());
 	lines.append ("Local config directory: " + QStandardPaths::writableLocation (QStandardPaths::GenericConfigLocation));
 	lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
 	lines.append ("Backend version (as known to the frontend): " + r_version_string);

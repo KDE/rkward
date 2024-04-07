@@ -13,7 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QUrl>
 
 #include <KMessageBox>
-#include <kio_version.h>
 #include <KIO/OpenUrlJob>
 #include <KIO/JobUiDelegate>
 #include <KIO/JobUiDelegateFactory>
@@ -51,7 +50,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 		KMessageBox::error(RKWardMainWindow::getMain(), i18n("No service was found to provide a KDE print dialog for PostScript files. We will try to open a generic PostScript viewer (if any), instead.<br><br>Consider installing 'okular', or configure RKWard not to attempt to print using a KDE print dialog."), i18n("Unable to open KDE print dialog"));
 
 		// fallback: If we can't find a proper part, try to invoke a standalone PS reader, instead
-		auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(file), "application/postscript");
+		auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(file), QStringLiteral("application/postscript"));
 		job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, RKWardMainWindow::getMain()));
 		job->setDeleteTemporaryFile(delete_file);
 		job->start();
@@ -60,18 +59,17 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 
 	auto provider = result.plugin;
 	QAction *printaction = provider->action("print");
-	if (!printaction) printaction = provider->action ("file_print");
+	if (!printaction) printaction = provider->action("file_print");
 	if (!printaction) {
-		QAction *a = new QAction (provider);
-		bool ok = connect (a, SIGNAL (triggered()), provider, SLOT (slotPrint()));
+		QAction *a = new QAction(provider);
+		bool ok = connect(a, SIGNAL(triggered()), provider, SLOT(slotPrint()));
 		if (ok) printaction = a;
 	}
-	if (!(printaction && provider->openUrl (QUrl::fromLocalFile (file)))) {
+	if (!(printaction && provider->openUrl(QUrl::fromLocalFile(file)))) {
 		RK_DEBUG (APP, DL_WARNING, "No print action in postscript provider");
 		delete provider;
 		provider = nullptr;
 	}
-	
 
 	RKPrintAgent *agent = new RKPrintAgent(file, provider, delete_file);
 
