@@ -245,7 +245,15 @@ RKCaughtX11Window::RKCaughtX11Window(QWindow* window_to_embed, int device_number
 	//       So we need the RKWindowCatcher to help us.
 	RKWindowCatcher::instance ()->registerWatcher (embedded->winId (), this);
 
-#ifdef Q_OS_WIN
+#if __has_include(<KWindowInfo>)
+	KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
+	RK_ASSERT (wininfo.valid ());
+
+	// set a fixed size until the window is shown
+	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
+	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
+	setCaption (wininfo.name ());
+#elif defined(Q_OS_WIN)
 	WINDOWINFO wininfo;
 	wininfo.cbSize = sizeof (WINDOWINFO);
 	GetWindowInfo (reinterpret_cast<HWND> (embedded->winId ()), &wininfo);
@@ -258,13 +266,7 @@ RKCaughtX11Window::RKCaughtX11Window(QWindow* window_to_embed, int device_number
 	setGeometry (wininfo.rcClient.left, wininfo.rcClient.right, wininfo.rcClient.top, wininfo.rcClient.bottom);     // see comment in X11 section
 	move (wininfo.rcClient.left, wininfo.rcClient.top);             // else the window frame may be off scree on top/left.
 #else
-	KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
-	RK_ASSERT (wininfo.valid ());
-
-	// set a fixed size until the window is shown
-	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
-	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
-	setCaption (wininfo.name ());
+	RK_ASSERT(false);
 #endif
 
 	// We need to make sure that the R backend has had a chance to do event processing on the new device, or else embedding will fail (sometimes).
