@@ -36,7 +36,7 @@ RKConfigValue<int> RKSettingsModuleGraphics::graphics_hist_max_length {"graphics
 RKConfigValue<int> RKSettingsModuleGraphics::graphics_hist_max_plotsize {"graphics_hist_max_plotsize", 4096};
 RKConfigValue<bool> RKSettingsModuleGraphics::options_kde_printing {"kde printing", true};
 RKConfigValue<RKSettingsModuleGraphics::DefaultDevice, int> RKSettingsModuleGraphics::default_device {"default_device", RKDevice};
-RKConfigValue<QString> RKSettingsModuleGraphics::default_device_other {"default_device_custom", QString("cairoDevice")};
+RKConfigValue<QString> RKSettingsModuleGraphics::default_device_other {"default_device_custom", QString("Cairo")};
 RKConfigValue<RKSettingsModuleGraphics::StandardDevicesMode, int> RKSettingsModuleGraphics::replace_standard_devices {"replace_device", ReplaceDevice};
 
 RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
@@ -67,7 +67,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	RKCommonFunctions::setTips (i18n ("<p>The default device to be used for plotting, i.e. when new plot is created, while no graphics device is active (see <i>options(\"device\")</i>).</p>"
 	                                  "<p>The RKWard native device is the recommended choice for most users. This corresponds to the R command <i>RK()</i>.</p>"
 	                                  "<p>The 'Platform default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or <i>quartz()</i>, depending on the platform.</p>"
-	                                  "<p>You can also specify the name of a function such as <i>cairoDevice</i>.</p>"), group);
+	                                  "<p>You can also specify the name of a function such as <i>Cairo</i>.</p>"), group);
 	connect (default_device_group, &QButtonGroup::idClicked, this, &RKSettingsModuleGraphics::boxChanged);
 	connect (default_device_other_edit, &QLineEdit::textChanged, this, &RKSettingsModuleGraphics::boxChanged);
 	h_layout1->addWidget (group);

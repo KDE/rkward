@@ -1,3 +1,4 @@
+- Fixed: References to the package cairoDevice (removed on CRAN) have been replaced with Cairo
 - Fixed: Creating new output window from the UI would sometimes show empty window
 
 - Fixed: Better support for running from non-standard paths on Linux (e.g. user-local installation in home dir)
