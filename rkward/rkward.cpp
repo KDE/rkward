@@ -93,6 +93,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 // This nevers gets called. It's needed to trick ld into linking correctly. Nothing else.
 void bogusCalls () {
+#ifndef CCPCHECK_ONLY  // it would rightfully complain about some of these
 	ShowEditTextFileAgent::showEditFiles(nullptr);                                   // TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
 	RKReadLineDialog::readLine(nullptr, QString(), QString(), nullptr, nullptr);     // TODO: see above
 	RKSelectListDialog::doSelect(nullptr, QString(), QStringList(), QStringList(), false); // TODO: see above
@@ -101,6 +102,7 @@ void bogusCalls () {
 	new RKWorkplaceView(nullptr);
 	new RKEditObjectAgent(QStringList(), nullptr);
 	RKPrintAgent::printPostscript(QString(), false);
+#endif
 }
 
 /** Main window **/

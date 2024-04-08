@@ -29,7 +29,13 @@ void RKPasteSpecialAction::doSpecialPaste() {
 	RK_TRACE(MISC);
 
 	QWidget *pwin = nullptr;
-	if (!associatedWidgets().isEmpty()) pwin = associatedWidgets().at(0);
+	const auto objs = associatedObjects();
+	for(auto obj : objs) {
+		if (qobject_cast<QWidget*>(obj)) {
+			pwin = static_cast<QWidget*>(obj);
+			break;
+		}
+	}
 	RKPasteSpecialDialog* dialog = new RKPasteSpecialDialog(pwin);
 	int res = dialog->exec();
 	if (res == QDialog::Accepted) {

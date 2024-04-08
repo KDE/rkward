@@ -151,9 +151,9 @@ void RKProgressControl::addRCommand (RCommand *command, bool done_when_finished)
 	outstanding_commands.append(command);
 	connect(command->notifier(), &RCommandNotifier::commandOutput, this, QOverload<RCommand*, const ROutput*>::of(&RKProgressControl::newOutput));
 	if (done_when_finished) {
-		command->whenFinished(this, [this, done_when_finished](RCommand* command) {
+		command->whenFinished(this, [this](RCommand* command) {
 			outstanding_commands.removeAll(command);
-			if (done_when_finished) done();
+			done();
 		});
 	}
 }

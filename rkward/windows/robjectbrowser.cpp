@@ -194,7 +194,7 @@ void RObjectBrowserInternal::popupCopy () {
 void RObjectBrowserInternal::popupCopyToGlobalEnv () {
 	RK_TRACE (APP);
 
-	RObject *object = list_view->menuObject ();
+	const RObject *object = list_view->menuObject ();
 	QString name = object->getShortName ();
 
 	QString valid = RObjectList::getGlobalEnv ()->validizeName (name);

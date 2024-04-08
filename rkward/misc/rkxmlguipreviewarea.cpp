@@ -153,7 +153,7 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 		bool menu_empty = true;
 		for (int j = 0; j < subentries.size (); ++j) {
 			QAction *act = subentries[j];
-			if (act->isVisible () && act->isEnabled () && act) {
+			if (act->isVisible () && act->isEnabled()) {
 				entries_to_add.append (act);
 				if (!act->isSeparator ()) menu_empty = false;  // Copy separators, but purge menus with only separators in them.
 			}

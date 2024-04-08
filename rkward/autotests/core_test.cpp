@@ -195,7 +195,7 @@ private Q_SLOTS:
 		RInterface::whenAllFinished(this, []() {
 			auto a = RObjectList::getGlobalEnv()->findObject("a");
 			QVERIFY(a != nullptr);
-			QVERIFY(a->isContainer());
+			QVERIFY(a && a->isContainer());
 			auto ac = static_cast<RContainerObject*>(a);
 			QCOMPARE(ac->numChildren(), 3);
 			QCOMPARE(ac->findChildByIndex(0)->getDataType(), RObject::DataNumeric);
@@ -219,7 +219,7 @@ private Q_SLOTS:
 		runCommandAsync(new RCommand("dx <- data.frame(a=1:2, b=3:4)", RCommand::User), nullptr, [this, &lock](RCommand *) {
 			auto dx = RObjectList::getGlobalEnv()->findObject("dx");
 			QVERIFY(dx != nullptr);
-			QVERIFY(dx->isContainer());
+			QVERIFY(dx && dx->isContainer());
 			if (dx && dx->isContainer()) {
 			    auto dx_a = static_cast<RContainerObject*>(dx)->findChildByName("a");
 			    QVERIFY(dx_a != nullptr);
