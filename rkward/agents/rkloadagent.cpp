@@ -34,7 +34,7 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	_merge = merge;
 
 	// downlad the file, if remote
-	tmpfile = 0;
+	tmpfile = nullptr;
 	QString filename;
 	if (!url.isLocalFile ()) {
 		tmpfile = new QTemporaryFile (this);
@@ -59,10 +59,10 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate);
 	command->whenFinished(this, [this](RCommand* command) {
 		if (command->failed()) {
-			KMessageBox::error(0, i18n("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace()->workspaceURL().path(), command->warnings() + command->error()), i18n("Error loading workspace"));
+			KMessageBox::error(nullptr, i18n("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace()->workspaceURL().path(), command->warnings() + command->error()), i18n("Error loading workspace"));
 			RKWorkplace::mainWorkplace()->setWorkspaceURL(QUrl());
 		} else {
-			RKWorkplace::mainWorkplace ()->restoreWorkplace (0, _merge);
+			RKWorkplace::mainWorkplace()->restoreWorkplace(nullptr, _merge);
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
 				if (RKWorkplace::mainWorkplace ()->workspaceURL ().isLocalFile ()) {
 					RInterface::issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);

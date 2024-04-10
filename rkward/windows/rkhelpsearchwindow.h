@@ -28,7 +28,7 @@ class RCommandChain;
 class RKHelpSearchWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
-	RKHelpSearchWindow (QWidget *parent, bool tool_window, const char *name=0);
+	RKHelpSearchWindow (QWidget *parent, bool tool_window, const char *name=nullptr);
 	~RKHelpSearchWindow ();
 /** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
 @param context_line The current line
@@ -37,7 +37,7 @@ Will figure out the word under the cursor, and provide help on that (if there is
 	void getContextHelp (const QString &context_line, int cursor_pos);
 	void getFunctionHelp (const QString &function_name, const QString &package=QString(), const QString &type=QString ());
 	static RKHelpSearchWindow *mainHelpSearch () { return main_help_search; };
-public slots:
+public Q_SLOTS:
 	void slotFindButtonClicked();
 	void resultDoubleClicked (const QModelIndex& index);
 	void updateInstalledPackages ();

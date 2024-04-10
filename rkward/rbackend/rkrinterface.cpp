@@ -1,6 +1,6 @@
 /*
 rkrinterface.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Fri Nov 1 2002
-SPDX-FileCopyrightText: 2002-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -79,8 +79,7 @@ RInterface::RInterface () {
 	previously_idle = false;
 	locked = 0;
 	backend_dead = false;
-	flush_timer_id = 0;
-	dummy_command_on_stack = 0;
+	dummy_command_on_stack = nullptr;
 
 	// create a fake init command
 	runStartupCommand(new RCommand(i18n("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n("R Startup")), nullptr, 
@@ -96,7 +95,7 @@ RInterface::RInterface () {
 				// If length of details <= 512, it tries to show the details as a QLabel.
 				details = details.leftJustified (513);
 			}
-			KMessageBox::detailedError (0, message, details, i18n ("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
+			KMessageBox::detailedError(nullptr, message, details, i18n("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
 		}
 
 		startup_errors.clear ();
@@ -149,7 +148,7 @@ RCommand *RInterface::popPreviousCommand (int id) {
 		}
 	}
 	RK_ASSERT (false);
-	return 0;
+	return nullptr;
 }
 
 RCommandChain* RInterface::openSubcommandChain (RCommand* parent_command) {
@@ -164,13 +163,13 @@ void RInterface::closeSubcommandChain (RCommand* parent_command) {
 
 	if (current_commands_with_subcommands.contains (parent_command)) {
 		current_commands_with_subcommands.removeAll (parent_command);
-		doNextCommand (0);
+		doNextCommand(nullptr);
 	}
 	if (parent_command && (parent_command == dummy_command_on_stack)) {
 		all_current_commands.removeAll (dummy_command_on_stack);
 		RCommandStack::pop (dummy_command_on_stack);
 		handleCommandOut (dummy_command_on_stack);
-		dummy_command_on_stack = 0;
+		dummy_command_on_stack = nullptr;
 	}
 }
 
@@ -208,7 +207,7 @@ void RInterface::tryNextCommand () {
 				return;
 			}
 
-			if (previously_idle) emit backendStatusChanged(Busy);
+			if (previously_idle) Q_EMIT backendStatusChanged(Busy);
 			previously_idle = false;
 
 			doNextCommand (command);
@@ -217,7 +216,7 @@ void RInterface::tryNextCommand () {
 	}
 
 	if (on_top_level) {
-		if (!previously_idle) emit backendStatusChanged(Idle);
+		if (!previously_idle) Q_EMIT backendStatusChanged(Idle);
 		previously_idle = true;
 	}
 }
@@ -273,7 +272,7 @@ void RInterface::doNextCommand (RCommand *command) {
 	}
 
 	flushOutput (true);
-	RCommandProxy *proxy = 0;
+	RCommandProxy *proxy = nullptr;
 	if (command) {
 		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (true);
 		proxy = command->makeProxy ();
@@ -322,8 +321,8 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	RK_TRACE (RBACKEND);
 
 	if (request->type == RBackendRequest::OutputStartedNotification) {
-		RK_ASSERT (flush_timer_id == 0);
-		flush_timer_id = startTimer (FLUSH_INTERVAL);	// calls flushOutput (false); see timerEvent ()
+		// We do _not_ flush the output right away, as it is likely to arrive in minuscule chunks. But we _do_ want to check, soon
+		QTimer::singleShot(FLUSH_INTERVAL, [this]() { flushOutput(false); });
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 		return;
 	}
@@ -336,7 +335,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		} else {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "Fake command out");
 		}
-		RCommand *command = 0;
+		RCommand *command = nullptr;
 		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
 		// NOTE: cproxy should only ever be 0 in the very first cycle
@@ -351,7 +350,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		tryNextCommand ();
 	} else if (request->type == RBackendRequest::GenericRequestWithSubcommands) {
 		RCommandProxy *cproxy = request->takeCommand();
-		RCommand *parent = 0;
+		RCommand *parent = nullptr;
 		for (int i = all_current_commands.size () - 1; i >= 0; --i) {
 			if (all_current_commands[i]->id () == cproxy->id) {
 				parent = all_current_commands[i];
@@ -444,25 +443,12 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	}
 }
 
-void RInterface::timerEvent (QTimerEvent *) {
-// do not trace. called periodically
-	flushOutput (false);
-}
-
 void RInterface::flushOutput (bool forced) {
 // do not trace. called periodically
 //	RK_TRACE (RBACKEND);
-	ROutputList list = RKRBackendProtocolFrontend::instance ()->flushOutput (forced);
+	const ROutputList list = RKRBackendProtocolFrontend::instance ()->flushOutput (forced);
 
-	// this must come _after_ the output has been flushed.
-	if (forced || !list.isEmpty ()) {
-		if (flush_timer_id != 0) {
-			killTimer (flush_timer_id);
-			flush_timer_id = 0;
-		}
-	}
-
-	foreach (ROutput *output, list) {
+	for (ROutput *output : list) {
 		if (all_current_commands.isEmpty ()) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "output without receiver'%s'", qPrintable (output->output));
 			if (RKConsole::mainConsole()) RKConsole::mainConsole()->insertSpontaneousROutput(output);  // the "if" is to prevent crash, should output arrive during exit
@@ -473,7 +459,7 @@ void RInterface::flushOutput (bool forced) {
 		}
 
 		bool first = true;
-		foreach (RCommand* command, all_current_commands) {
+		for (RCommand* command : std::as_const(all_current_commands)) {
 			ROutput *coutput = output;
 			if (!first) {		// this output belongs to several commands at once. So we need to copy it.
 				coutput = new ROutput;
@@ -536,8 +522,10 @@ void RInterface::closeChain(RCommandChain *chain) {
 void RInterface::cancelAll () {
 	RK_TRACE (RBACKEND);
 
-	QList<RCommand*> all_commands = RCommandStack::regular_stack->allCommands ();
-	foreach (RCommand* command, all_commands) cancelCommand (command);
+	const QList<RCommand*> all_commands = RCommandStack::regular_stack->allCommands ();
+	for (RCommand* command : all_commands) {
+		if (!(command->type() & RCommand::Sync)) cancelCommand(command);
+	}
 }
 
 bool RInterface::softCancelCommand (RCommand* command) {
@@ -585,7 +573,7 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));
-		emit backendWorkdirChanged();
+		Q_EMIT backendWorkdirChanged();
 	} else if (call == "highlightRCode") {
 		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(calllist.mid(1).join('\n')));
 	} else if (call == "quit") {
@@ -593,7 +581,7 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 		// if we're still alive, quitting was canceled
 		return GenericRRequestResult::makeError(i18n("Quitting was canceled"));
 	} else if (call == "preLocaleChange") {
-		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please choose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
+		int res = KMessageBox::warningContinueCancel(nullptr, i18n("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please choose 'Cancel' now, then close the data windows, save, and retry."), i18n("Locale change"));
 		if (res != KMessageBox::Continue) return GenericRRequestResult::makeError(i18n("Changing the locale was canceled by user"));
 	} else if (call == "listPlugins") {
 		RK_ASSERT (calllist.count () == 1);
@@ -730,8 +718,8 @@ void RInterface::processHistoricalSubstackRequest (const QString &call, const QV
 	if (!parent_command) {
 		// This can happen for Tcl events. Create a dummy command on the stack to keep things looping.
 		parent_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
-		RCommandStack::issueCommand (parent_command, 0);
-		all_current_commands.append (parent_command);
+		RCommandStack::issueCommand(parent_command, nullptr);
+		all_current_commands.append(parent_command);
 		dummy_command_on_stack = parent_command;	// so we can get rid of it again, after it's sub-commands have finished
 	}
 	in_chain = openSubcommandChain (parent_command);
@@ -789,8 +777,8 @@ void RInterface::processHistoricalSubstackRequest (const QString &call, const QV
 	} else if (call == "require") {
 		RK_ASSERT (!arglist.isEmpty());
 		QString lib_name = arglist.value(0);
-		KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
-		RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, QStringList(lib_name));
+		KMessageBox::information(nullptr, i18n("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n("Require package '%1'", lib_name));
+		RKLoadLibsDialog::showInstallPackagesModal(nullptr, in_chain, QStringList(lib_name));
 	} else if (call == "doPlugin") {
 		if (arglist.count () >= 2) {
 			QString message;
@@ -832,8 +820,8 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 
 	if (type == RBackendRequest::CommandLineIn) {
 		int id = request->params["commandid"].toInt ();
-		RCommand *command = all_current_commands.value (0, 0);	// User command will always be the first.
-		if ((command == 0) || (command->id () != id)) {
+		RCommand *command = all_current_commands.value(0,nullptr);	// User command will always be the first.
+		if ((command == nullptr) || (command->id () != id)) {
 			RK_ASSERT (false);
 		} else {
 			command->commandLineIn ();
@@ -859,7 +847,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		}
 
 		bool synchronous = request->synchronous || (button_count > 1);
-		KMessageBox::createKMessageBox (dialog, button_box, button_count < 2 ? QMessageBox::Information : QMessageBox::Question, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec | KMessageBox::AllowLink);
+		KMessageBox::createKMessageBox(dialog, button_box, button_count < 2 ? QMessageBox::Information : QMessageBox::Question, message, QStringList(), QString(), nullptr, KMessageBox::Notify | KMessageBox::NoExec | KMessageBox::AllowLink);
 		dialog->setWindowTitle (caption);
 
 		if (!synchronous) {
@@ -889,7 +877,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		}
 
 
-		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), request->params["prompt"].toString (), command, &result);
+		bool ok = RKReadLineDialog::readLine(nullptr, i18n("R backend requests information"), request->params["prompt"].toString(), command, &result);
 		request->params["result"] = QVariant (result);
 
 		if (dummy_command) delete command;
@@ -909,8 +897,8 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			backend_dead = true;
 			QString message = request->params["message"].toString ();
 			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
-			RKErrorDialog::reportableErrorMessage (0, message, QString (), i18n ("R engine has died"), "r_engine_has_died");
-			emit backendStatusChanged(Dead);
+			RKErrorDialog::reportableErrorMessage(nullptr, message, QString(), i18n("R engine has died"), "r_engine_has_died");
+			Q_EMIT backendStatusChanged(Dead);
 			while (!all_current_commands.isEmpty()) {
 				auto c = all_current_commands.takeLast();
 				c->status |= RCommand::Failed;

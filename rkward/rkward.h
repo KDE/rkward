@@ -1,6 +1,6 @@
 /*
 rkward.h - This file is part of the RKWard project. Created: Tue Oct 29 2002
-SPDX-FileCopyrightText: 2002-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -65,9 +65,10 @@ protected:
 	void initToolViewsAndR ();
 	/** reimplemented from KMainWindow to call our doQueryClose (), and then (if quitting was not cancelled), invoke an RKQuitAgent to wait for the R-backend to finish up before actually quitting. */
 	virtual void closeEvent (QCloseEvent *e) override;
-signals:
+Q_SIGNALS:
 	void aboutToQuitRKWard ();
-public slots:
+	void tabForToolViewAdded(QWidget*, QWidget*);  // Needed from katepluginintegration
+public Q_SLOTS:
 	void setWorkspaceUnmodified () { setWorkspaceMightBeModified (false); };
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
     @see setNoAskSave ()
@@ -122,7 +123,7 @@ public slots:
 /** HACK this is only to make the compiler happy with -Woverloaded-virtual */
 	void setCaption (const QString &dummy, bool) override { setCaption (dummy); };
 	void openUrlsFromCommandLineOrDBus (bool warn_external, QStringList urls);
-private slots:
+private Q_SLOTS:
 	void partChanged (KParts::Part *new_part);
 private:
 /** Prompt for a local file to open, providing a choice of how to open the file (as R script, text, workspace, auto) */

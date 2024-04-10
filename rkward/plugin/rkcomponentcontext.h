@@ -39,7 +39,7 @@ protected:
 	~RKContextHandler ();
 /** add a QAction to the context. To be called from RKContext::makeContextHandler(). */
 	void addAction (const QString &id, RKComponentHandle *handle);
-private slots:
+private Q_SLOTS:
 /** slot to handle plugin activation */
 	void componentActionActivated ();
 private:

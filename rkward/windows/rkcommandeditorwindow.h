@@ -15,7 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
 #include <ktexteditor/movingrange.h>
-#include <ktexteditor/movinginterface.h>
 
 #include <QUrl>
 
@@ -115,7 +114,7 @@ public:
 	void highlightLine (int linenum);
 /** Returns the (main, non-preview) texteditor view in this editor. */
 	KTextEditor::View* getView () const { return m_view; };
-public slots:
+public Q_SLOTS:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption ();
 	void focusIn (KTextEditor::View *);
@@ -140,7 +139,7 @@ protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e) override;
 	void setWindowStyleHint (const QString& hint) override;
-private slots:
+private Q_SLOTS:
 /** mark current selection as a block */
 	void markBlock ();
 /** unmark a block */
@@ -165,7 +164,6 @@ private:
 	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
-	KTextEditor::MovingInterface *smart_iface;
 
 	void initializeActions (KActionCollection* ac);
 

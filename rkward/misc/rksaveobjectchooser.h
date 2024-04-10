@@ -31,10 +31,10 @@ public:
 	void setStyleSheet (const QString &style);
 	RObject* rootObject () const { return root_object; };
 	void setRootObject (RObject* new_root);
-private slots:
+private Q_SLOTS:
 	void updateState ();
 	void selectRootObject ();
-signals:
+Q_SIGNALS:
 	void changed (bool);
 protected:
 	void objectRemoved (RObject* removed) override;

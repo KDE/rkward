@@ -253,7 +253,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (!options_further.get().isEmpty ()) list.append (options_further.get() + '\n');
 	if (!options_addpaths.get().isEmpty ()) {
 		QString command = "rk.adjust.system.path (add=c(";
-		foreach (const QString &p, options_addpaths.get()) {
+		for (const QString &p : options_addpaths.get()) {
 			command.append (RObject::rQuote (p));
 		}
 		list.append (command + "))\n");
@@ -395,7 +395,7 @@ QString RKSettingsModuleRPackages::userLibraryLocation () {
 }
 
 QStringList RKSettingsModuleRPackages::libraryLocations () {
-	return (QStringList (userLibraryLocation ()) + expandLibLocs (liblocs + defaultliblocs));
+	return (QStringList (userLibraryLocation ()) + expandLibLocs (liblocs.get() + defaultliblocs));
 }
 
 QStringList RKSettingsModuleRPackages::addUserLibLocTo (const QStringList& liblocs) {
@@ -478,8 +478,8 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 	if (!liblocs.get().isEmpty()) {
 		bool first = true;
 		command = "local({\naddpaths <- unique (c(";
-		QStringList ll = expandLibLocs(liblocs);
-		foreach (const QString& libloc, ll) {
+		const QStringList ll = expandLibLocs(liblocs);
+		for (const QString& libloc : ll) {
 			if (first) first = false;
 			else command.append (", ");
 			command.append (RObject::rQuote (libloc));
@@ -490,8 +490,8 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 	// For add library locations set "the R way", try to interfere as little as possible.
 	command.append(".libPaths (unique (c (");
 	bool first = true;
-	QStringList ll = libraryLocations ();
-	foreach (const QString& libloc, ll) {
+	const QStringList ll = libraryLocations ();
+	for (const QString& libloc : ll) {
 		if (first) first = false;
 		else command.append (", ");
 		command.append (RObject::rQuote (libloc));

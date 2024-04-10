@@ -48,7 +48,7 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 
 		Option *opt = new Option;
 		opt->value = value;
-		opt->enabledness_prop = 0;
+		opt->enabledness_prop = nullptr;
 
 		options.insert (i, opt);
 		if (!name.isNull ()) named_options.insert (name, opt);
@@ -133,7 +133,7 @@ void RKAbstractOptionSelector::propertyChanged (RKComponentPropertyBase *propert
 void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	Option *opt = 0;
+	Option *opt = nullptr;
 	int id = -1;
 	for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 		RK_ASSERT (it.value ());

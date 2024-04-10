@@ -104,7 +104,7 @@ public:
 	RKConfigGroup(const char *name, std::initializer_list<RKConfigBase*> values) : RKConfigBase(name),
 		values(values) {};
 	template<typename T> RKConfigGroup(const char *name, size_t count, RKConfigValue<T>* _values) : RKConfigBase(name),
-		values(count) { for (size_t i = 0; i < count; ++i) values[i] = (_values + i); };
+		values(count) { for (size_t i = 0; i < count; ++i) values[i] = (_values + i); }
 	~RKConfigGroup() {};
 	void loadConfig(KConfigGroup &cg) override {
 		KConfigGroup lcg = cg;
@@ -134,14 +134,14 @@ public:
 /** Mark this module as "changed" (propagates to parent module) */
 	void change ();
 	bool hasChanges () { return changed; };
-signals:
+Q_SIGNALS:
 	void settingsChanged();
 	void apply();
 protected:
 	bool changed;
 /** temporary indirection until applyChanges() has been obsolete, everywhere */
 	void doApply() {
-		emit apply();
+		Q_EMIT apply();
 		applyChanges();
 		changed = false;
 	}

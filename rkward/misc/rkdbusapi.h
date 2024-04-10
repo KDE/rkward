@@ -18,8 +18,8 @@ public:
 /** Creates an object (should be a singleton) to relay incoming DBus calls, and registers it on the session bus. */
 	explicit RKDBusAPI (QObject *parent);
 	~RKDBusAPI () {};
-public slots:
-	Q_SCRIPTABLE void openAnyUrl (const QStringList &urls, bool warn_external=true);
+public Q_SLOTS:
+	Q_SCRIPTABLE void openAnyUrl (const QStringList &urls, const QString &token, bool warn_external=true);
 };
 
 #endif

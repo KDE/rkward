@@ -1,6 +1,6 @@
 /*
 xmlhelper.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Fri May 6 2005
-SPDX-FileCopyrightText: 2005-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2005-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -14,10 +14,23 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qfileinfo.h>
 #include <qdir.h>
 #include <QTextStream>
+#include <QXmlStreamReader>
+#include <QXmlStreamEntityResolver>
 
 #include <rkmessagecatalog.h>
 
 #include "../debug.h"
+
+/* We want to allow undelcared entities in our XML files, importantly arbitrary HTML entities inside our .rkh files. Further, we want to
+ * preserve them *non-replaced* in order to pass them along to the webegine for rendering.
+ *
+ * Arguably, this approach has always been hackist, but it used to work without the following acrobatics, for many years:
+ * When an unresolved entity is encountered, replace it by a pseudo-element that will be converted back to a regular entity in
+ * i18nElementText(). */
+#define ENTITIYHACK "RKENTITY"
+class DummyEntityResolver : public QXmlStreamEntityResolver {
+	QString resolveUndeclaredEntity(const QString &name) override { return QString("<" ENTITIYHACK ">%1</" ENTITIYHACK ">").arg(name); }
+};
 
 XMLHelper::XMLHelper (const QString &filename, const RKMessageCatalog *default_catalog) {
 	RK_TRACE (XML);
@@ -38,9 +51,12 @@ QDomElement XMLHelper::openXMLFile (int debug_level, bool with_includes, bool wi
 	QDomDocument doc;
 
 	QFile f (filename);
-	if (!f.open (QIODevice::ReadOnly)) displayError (0, i18n("Could not open file %1 for reading", filename), debug_level, DL_ERROR);
-	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
-		displayError (0, i18n ("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below", error_message, error_line, error_column), debug_level, DL_ERROR);
+	if (!f.open(QIODevice::ReadOnly)) displayError(nullptr, i18n("Could not open file %1 for reading", filename), debug_level, DL_ERROR);
+	QXmlStreamReader reader(&f);
+	DummyEntityResolver res;
+	reader.setEntityResolver(&res);
+	if (!doc.setContent(&reader, false, &error_message, &error_line, &error_column)) {
+		displayError(nullptr, i18n("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below", error_message, error_line, error_column), debug_level, DL_ERROR);
 		return QDomElement ();
 	}
 	f.close();
@@ -362,6 +378,9 @@ QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragr
 				// split after
 				ret.append (buffer);
 				buffer.clear ();
+				continue;
+			} else if (e.tagName() == QLatin1String(ENTITIYHACK)) {
+				ret.append(QChar('&') + e.text() + QChar(';'));
 				continue;
 			}
 		}

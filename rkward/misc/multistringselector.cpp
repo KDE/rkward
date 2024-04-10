@@ -61,7 +61,7 @@ void MultiStringSelector::insertNewStringsImpl (int above_row) {
 	RK_TRACE (MISC);
 
 	QStringList new_strings;
-	emit getNewStrings(&new_strings);
+	Q_EMIT getNewStrings(&new_strings);
 	model->insertRows (above_row, new_strings.size ());
 	for (int i = new_strings.size () - 1; i >= 0; --i) {
 		model->setData(model->index (above_row + i, 0), new_strings[i]);
@@ -134,7 +134,7 @@ void RKMultiStringSelectorV2::setModel (QAbstractItemModel* model, int main_colu
 	if (tree_view->model ()) {
 		// NOTE: Commented version gives compile error. Fortunately, we do not connect the model to any other slots, so the version below is ok.
 		//disconnect (tree_view->model (), 0, this, &RKMultiStringSelectorV2::anyModelDataChange);
-		disconnect (tree_view->model (), 0, this, 0);
+		disconnect(tree_view->model(), nullptr, this, nullptr);
 	}
 	tree_view->setModel (model);
 	connect (tree_view->selectionModel (), &QItemSelectionModel::currentChanged, this, &RKMultiStringSelectorV2::updateButtons);
@@ -164,7 +164,7 @@ void RKMultiStringSelectorV2::buttonClicked () {
 
 	if (sender () == add_button) {
 		if (add_at_bottom || (row < 0)) row = tree_view->model ()->rowCount ();
-		emit insertNewStrings(row);
+		Q_EMIT insertNewStrings(row);
 		tree_view->setCurrentIndex (tree_view->model ()->index (row, 0));
 	} else if (row < 0) {	// all actions below need a valid row
 		RK_ASSERT (false);
@@ -180,7 +180,7 @@ void RKMultiStringSelectorV2::buttonClicked () {
 			RK_ASSERT (row < tree_view->model ()->rowCount ());
 			rowb = qMin (row + 1, tree_view->model ()->rowCount () - 1);
 		}
-		emit swapRows(row, rowb);
+		Q_EMIT swapRows(row, rowb);
 		tree_view->setCurrentIndex (tree_view->model ()->index (rowb, 0));
 	}
 	anyModelDataChange ();
@@ -203,6 +203,6 @@ void RKMultiStringSelectorV2::updateButtons () {
 
 void RKMultiStringSelectorV2::anyModelDataChange () {
 	RK_TRACE (MISC);
-	emit listChanged();
+	Q_EMIT listChanged();
 }
 

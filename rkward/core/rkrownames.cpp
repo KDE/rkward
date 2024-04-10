@@ -38,7 +38,7 @@ RKRowNames::~RKRowNames () {
 void RKRowNames::beginEdit () {
 	RK_TRACE (OBJECTS);
 
-	bool just_initialized = (data == 0);
+	bool just_initialized = (data == nullptr);
 	RKVariable::beginEdit ();
 
 	if (just_initialized) {

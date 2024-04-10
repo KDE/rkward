@@ -21,6 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QApplication>
+#include <QActionGroup>
 
 #include "twintablemember.h"
 #include "rkvareditmodel.h"
@@ -33,7 +34,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (RObjectListener::Other), KXMLGUIClient () {
 	RK_TRACE (EDITOR);
 
-	main_object = 0;
+	main_object = nullptr;
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setContentsMargins (0, 0, 0, 0);
@@ -62,20 +63,20 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	// Note that the disconnects are on connections already set up by Qt. Since we don't want to worry about how these were set, we're disconnecting
 	// each in both old and new syntax.
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)));
-	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionClicked, 0, 0);
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionClicked, nullptr, nullptr);
 	connect (metaview->horizontalHeader (), &QHeaderView::sectionClicked, this, &TwinTable::metaHeaderClicked);
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)));
-	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionPressed, 0, 0);
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionPressed, nullptr, nullptr);
 	connect (metaview->horizontalHeader (), &QHeaderView::sectionPressed, this, &TwinTable::metaHeaderPressed);
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionEntered(int)));
-	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionEntered, 0, 0);
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionEntered, nullptr, nullptr);
 	connect (metaview->horizontalHeader (), &QHeaderView::sectionEntered, this, &TwinTable::metaHeaderEntered);
 	meta_header_anchor_section = -1;
 
 	// catch header context menu requests
 	connect (dataview, &TwinTableMember::contextMenuRequest, this, &TwinTable::contextMenu);
 	connect (metaview, &TwinTableMember::contextMenuRequest, this, &TwinTable::contextMenu);
-	context_menu_table = 0;
+	context_menu_table = nullptr;
 	context_menu_row = context_menu_column = -2;
 
 	setXMLFile ("rkeditordataframepart.rc");
@@ -249,7 +250,7 @@ void TwinTable::metaHeaderEntered (int section) {
 void TwinTable::contextMenu (int row, int col, const QPoint& pos) {
 	RK_TRACE (EDITOR);
 
-	RK_ASSERT (context_menu_table == 0);
+	RK_ASSERT (context_menu_table == nullptr);
 	context_menu_row = row;
 	context_menu_column = col;
 	QString container_name;
@@ -310,7 +311,7 @@ void TwinTable::contextMenu (int row, int col, const QPoint& pos) {
 		RK_ASSERT (false);	// but may happen, if ui.rc-file was not found
 	}
 
-	context_menu_table = 0;
+	context_menu_table = nullptr;
 	context_menu_row = context_menu_column = -2;
 }
 
@@ -441,7 +442,7 @@ TwinTableMember *TwinTable::activeTable () {
 	} else if (dataview->hasFocus ()) {
 		return dataview;
 	} else {
-		return 0;
+		return nullptr;
 	}
 }
 

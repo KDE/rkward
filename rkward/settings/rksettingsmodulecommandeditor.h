@@ -58,7 +58,7 @@ friend class RKSettingsModuleConsole;
 	RKConfigValue<bool> completion_type_enabled[N_COMPLETION_CATEGORIES] {{"Calltips", true}, {"Argument completion", true}, {"Object completion", true}, {"Filename completion", true}, {"Auto word completion", true}, {"mouseover", true}};
 	RKConfigValue<bool> cursor_navigates_completions {"Cursor navigate completions", true};
 	RKConfigValue<int> completion_options {"Completion option flags", (int) RObject::IncludeEnvirIfMasked};
-	RKConfigGroup dummyoptions = RKConfigGroup(0, N_COMPLETION_CATEGORIES, completion_type_enabled);
+	RKConfigGroup dummyoptions = RKConfigGroup(nullptr, N_COMPLETION_CATEGORIES, completion_type_enabled);
 	RKConfigValue<bool> completion_all_filetypes {"Completion all filetypes", true};
 	RKConfigGroup group {"Completion", { &dummyoptions, &auto_completion_enabled, &auto_completion_min_chars, &auto_completion_timeout, &auto_completion_cursor_activated, &tabkey_invokes_completion, &cursor_navigates_completions, &completion_options, &completion_all_filetypes }};
 };

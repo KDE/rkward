@@ -92,7 +92,7 @@ void RKTableView::keyPressEvent (QKeyEvent *e) {
 	RK_TRACE (EDITOR);
 
 	if ((e->key () == Qt::Key_Delete) || (e->key () == Qt::Key_Backspace)) {
-		emit blankSelectionRequest();
+		Q_EMIT blankSelectionRequest();
 		e->accept ();
 	} else {
 		QTableView::keyPressEvent (e);
@@ -112,8 +112,8 @@ RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditModel* datamodel) : QI
 	RK_TRACE (EDITOR);
 
 	RKItemDelegate::datamodel = datamodel;
-	metamodel = 0;
-	genericmodel = 0;
+	metamodel = nullptr;
+	genericmodel = nullptr;
 	locked_for_modal_editor = false;
 }
 
@@ -121,8 +121,8 @@ RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel) 
 	RK_TRACE (EDITOR);
 
 	RKItemDelegate::metamodel = metamodel;
-	datamodel = 0;
-	genericmodel = 0;
+	datamodel = nullptr;
+	genericmodel = nullptr;
 	locked_for_modal_editor = false;
 }
 
@@ -131,8 +131,8 @@ RKItemDelegate::RKItemDelegate (QObject *parent, QAbstractItemModel* model, bool
 	Q_UNUSED (dummy);
 
 	genericmodel = model;
-	metamodel = 0;
-	datamodel = 0;
+	metamodel = nullptr;
+	datamodel = nullptr;
 	locked_for_modal_editor = false;
 }
 
@@ -258,8 +258,8 @@ bool RKItemDelegate::eventFilter (QObject* object, QEvent* event) {
 void RKItemDelegate::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason) {
 	RK_TRACE (EDITOR);
 
-	if (reason != EditorReject) emit commitData(editor);
-	emit doCloseEditor(editor, reason);
+	if (reason != EditorReject) Q_EMIT commitData(editor);
+	Q_EMIT doCloseEditor(editor, reason);
 	locked_for_modal_editor = false;
 }
 

@@ -35,7 +35,7 @@ Anything else (everything after the fourth dot, or after the first character tha
 is returned as suffix (via the suffix pointer; if that is 0, an error is reported, instead). */
 	static QStringList frontendSessionInfo ();
 	static QString RBinary() { return r_binary; }
-signals:
+Q_SIGNALS:
 	void installedPackagesChanged ();
 protected:
 friend class RInterface;

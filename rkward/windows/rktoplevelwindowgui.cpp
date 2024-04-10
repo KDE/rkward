@@ -1,6 +1,6 @@
 /*
 rktoplevelwindowgui - This file is part of RKWard (https://rkward.kde.org). Created: Tue Apr 24 2007
-SPDX-FileCopyrightText: 2007-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -8,8 +8,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rktoplevelwindowgui.h"
 
 #include <KLocalizedString>
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KAboutData>
+#include <KColorSchemeMenu>
 #include <kaboutapplicationdialog.h>
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
@@ -36,7 +37,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkmdiwindow.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkprogresscontrol.h"
-#include "../misc/rkcommonfunctions.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkerrordialog.h"
@@ -73,16 +73,16 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled
 	prev_action = actionCollection ()->addAction ("prev_window", this, SLOT (previousWindow()));
 	prev_action->setText (i18n ("Previous Window"));
-	prev_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"));
-	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier + Qt::Key_Tab);
+	prev_action->setIcon(QIcon(":/rkward/icons/window_back.png"));
+	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier | Qt::Key_Tab);
 	next_action = actionCollection ()->addAction ("next_window", this, SLOT (nextWindow()));
 	next_action->setText (i18n ("Next Window"));
-	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
-	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Tab);
+	next_action->setIcon(QIcon(":rkward/icons/window_forward.png"));
+	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_Tab);
 
 	QAction* action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
 	action->setText (i18n ("Activate Document view"));
-	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_0);
+	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier | Qt::Key_0);
 
 	action = actionCollection()->addAction("output_show");
 	action->setText(i18n("Show Output"));
@@ -96,11 +96,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	KStandardAction::configureToolbars (this, SLOT (configureToolbars()), actionCollection ());
 	// Color scheme action. NOTE: selection is non-permanent for KF5 <= 5.87.0, auto-saved afterwards. Apparently, auto-save cannot be implemented for earlier versions within a few lines of code
 	KColorSchemeManager *manager = new KColorSchemeManager(this);
-#if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5, 67, 0)
-	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(i18n("Color Scheme"), QString(), this));
-#else
-	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(this));
-#endif
+	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), KColorSchemeMenu::createMenu(manager, this));
 	// our "status bar" is inlined, and always visible. Action below would only hide and show a useless proxy
 	// KF6 TODO: Still needed at all?
 	QAction *a = for_window->action("options_show_statusbar");
@@ -127,7 +123,8 @@ void RKTopLevelWindowGUI::initToolWindowActions () {
 		ref = ref.nextSiblingElement (action_tag);
 	}
 	QAction *action;
-	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
+	const auto windows = RKToolWindowList::registeredToolWindows ();
+	for (const RKToolWindowList::ToolWindowRepresentation& rep : windows) {
 		QString id = QLatin1String ("window_show_") + rep.id;
 		action = actionCollection ()->addAction (id, this, SLOT (toggleToolView()));
 		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));
@@ -147,7 +144,8 @@ void RKTopLevelWindowGUI::configureShortcuts () {
 	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the keyboard shortcuts only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure keyboard shortcuts e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), "configure_shortcuts_kparts");
 
 	KShortcutsDialog dlg (KShortcutsEditor::AllActions, KShortcutsEditor::LetterShortcutsAllowed, qobject_cast<QWidget*> (parent()));
-	foreach (KXMLGUIClient *client, factory ()->clients ()) {
+	const auto clients = factory ()->clients ();
+	for (KXMLGUIClient *client : clients) {
 		if (client && !client->xmlFile ().isEmpty ()) dlg.addCollection (client->actionCollection());
 	}
 	dlg.addCollection (RKComponentMap::getMap ()->actionCollection (), i18n ("RKWard Plugins"));

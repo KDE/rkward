@@ -40,12 +40,12 @@ RKComponentPropertyBase* RKComponentBase::lookupProperty (const QString &identif
 	if (p && p->isProperty ()) {
 		if (!remainder && !p_remainder->isEmpty ()) {
 			if (warn) RK_DEBUG (PLUGIN, DL_ERROR, "Modifier is not allowed, here, while looking up property: %s. (Remainder was %s)", qPrintable (identifier), qPrintable (*p_remainder));
-			return 0;
+			return nullptr;
 		}
 		return static_cast<RKComponentPropertyBase*> (p);
 	}
 	if (warn) RK_DEBUG (PLUGIN, DL_ERROR, "No such property: %s. Remainder was %s", qPrintable (identifier), qPrintable (*p_remainder));
-	return 0;
+	return nullptr;
 }
 
 void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
@@ -57,7 +57,7 @@ void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix, bool include_inactive_elements) const {
 	RK_TRACE (PLUGIN);
 
-	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+	for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (it.key () == "#noid#") continue;
 		if (it.value ()->isInternal ()) continue;
 
@@ -164,7 +164,7 @@ QString RKComponentBase::fetchStringValue (RKComponentBase* prop, const QString 
 		return (prop->value (modifier).toStringList ().join ("\n"));
 	}
 	QVariant value = prop->value (modifier);
-	if (value.type () == QVariant::StringList) {
+	if (value.metaType () == QMetaType(QMetaType::QStringList)) {
 		return value.toStringList ().join ("\n");
 	}
 	return (value.toString ());
@@ -212,9 +212,9 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 			if (!ok) RK_DEBUG (PLUGIN, DL_WARNING, "Could not convert value of %s to boolean", qPrintable (id));
 		} else {
 			if (hint == StringlistValue) {
-				if (val.type () != QVariant::StringList) RK_DEBUG (PLUGIN, DL_WARNING, "Value of %s is not a string list", qPrintable (id));
+				if (val.typeId() != QMetaType::QStringList) RK_DEBUG (PLUGIN, DL_WARNING, "Value of %s is not a string list", qPrintable (id));
 			} else if (hint == NumericValue) {
-				if (!val.canConvert (QVariant::Double)) RK_DEBUG (PLUGIN, DL_WARNING, "Value of %s is not numeric", qPrintable (id));
+				if (!val.canConvert<double>()) RK_DEBUG (PLUGIN, DL_WARNING, "Value of %s is not numeric", qPrintable (id));
 			} else {
 				RK_ASSERT (false);
 			}
@@ -236,7 +236,7 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 	bool processing = false;
 	bool children_satisfied = true;
 	// we always need to iterate over all children, since we need to make sure to find any which are dead or processing.
-	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+	for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		ComponentStatus s = it.value ()->recursiveStatus ();
 		if (s == Dead) return Dead;
 		if (s == Processing) processing = true;
@@ -314,7 +314,7 @@ void RKComponent::updateEnablednessRecursive (bool parent_enabled) {
 	/* RKComponent hierarchy does not always correspond to QWidget hierarchy (although in _most_ cases, it does. For this reason,
 	 * we need to update enabledness of all child components. */
 	if (changed) {
-		for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+		for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 			if (it.value ()->isComponent()) {
 				static_cast<RKComponent*> (it.value ())->updateEnablednessRecursive (enabled);
 			}
@@ -377,7 +377,7 @@ void RKComponent::changed () {
 		parentComponent ()->changed ();
 	}
 
-	emit componentChanged(this);
+	Q_EMIT componentChanged(this);
 }
 
 RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) const {
@@ -390,7 +390,7 @@ RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) const {
 		p = p->parentComponent ();
 	}
 	RK_ASSERT (false);
-	return 0;
+	return nullptr;
 }
 
 RKStandardComponent* RKComponent::topmostStandardComponent () {
@@ -401,7 +401,7 @@ RKStandardComponent* RKComponent::topmostStandardComponent () {
 	if (p->type () == RKComponent::ComponentStandard) return static_cast<RKStandardComponent*> (p);
 	// NOTE: currently, *only* standard components can be topmost
 	RK_ASSERT (false);
-	return 0;
+	return nullptr;
 }
 
 XMLHelper* RKComponent::xmlHelper () const {
@@ -418,7 +418,7 @@ void RKComponent::removeFromParent () {
 
 	QString key = getIdInParent ();
 	child_map.remove(key, this);
-	_parent = 0;
+	_parent = nullptr;
 }
 
 QString RKComponent::getIdInParent () const {

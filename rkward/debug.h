@@ -37,7 +37,11 @@ void RKDebug (int flags, int level, const char *fmt, ...);
 // Debug functions 
 #	define RK_DO(expr,flags,level) if ((flags & RK_Debug::RK_Debug_Flags) && (level >= RK_Debug::RK_Debug_Level)) { expr; }
 #	define RK_DEBUG(flags,level,...) { if ((flags & RK_Debug::RK_Debug_Flags) && (level >= RK_Debug::RK_Debug_Level)) RKDebug (flags,level,__VA_ARGS__); }
+#if defined(CPPCHECK_ONLY)
+#	define RK_ASSERT(x) assert(x) /* Keep it from complaining. Supressing nullPointerRedundantCheck does not appear to work. */
+#else
 #	define RK_ASSERT(x) if (!(x)) RK_DEBUG (DEBUG_ALL, DL_FATAL, "Assert '%s' failed at %s - function %s line %d", #x, __FILE__, __FUNCTION__, __LINE__);
+#endif
 #	ifndef RKWARD_NO_TRACE
 #		define RK_TRACE(flags) RK_DEBUG (flags, DL_TRACE, "Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
 #	else

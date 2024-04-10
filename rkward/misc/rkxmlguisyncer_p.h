@@ -25,8 +25,8 @@ public:
 	explicit RKXMLGUISyncerNotifier (QObject *parent) : QObject (parent) {};
 	~RKXMLGUISyncerNotifier () {};
 
-	void emitChangeSignal (KXMLGUIClient *client) { emit changed(client); };
-signals:
+	void emitChangeSignal (KXMLGUIClient *client) { Q_EMIT changed(client); };
+Q_SIGNALS:
 	void changed (KXMLGUIClient *client);
 };
 
@@ -50,7 +50,7 @@ public:
 	QTimer rebuild_guis_timer;
 
 	KDirWatch *file_watcher;
-public slots:
+public Q_SLOTS:
 	void uiRcFileChanged (const QString &path);
 	void actionCollectionDestroyed (QObject *object);
 	void guiFactoryDestroyed (QObject *object);

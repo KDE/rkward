@@ -205,7 +205,7 @@ QString resolveRSpecOrFail (QString input, const QString &message) {
 		if (ret.isNull ()) ret = QStandardPaths::findExecutable ("R");
 
 		if (ret.isNull() || !QFileInfo (ret).isExecutable()) {
-			QMessageBox::critical (0, i18n ("Unable to detect R installation"), i18n ("RKWard failed to detect an R installation on this system. Either R is not installed, or not at one of the standard installation locations. You can use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or supply an rkward.ini file to specify a non-standard location."));
+			QMessageBox::critical(nullptr, i18n("Unable to detect R installation"), i18n("RKWard failed to detect an R installation on this system. Either R is not installed, or not at one of the standard installation locations. You can use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or supply an rkward.ini file to specify a non-standard location."));
 			exit (1);
 		}
 
@@ -218,27 +218,21 @@ QString resolveRSpecOrFail (QString input, const QString &message) {
 
 		// TODO, while fixing krazy2 warnings: KMessageBox layout for static messages is quirky in that it has squeezed caption, and does not allow resize -> Submit a patch.
 		//KMessageBox::error (0, QString ("The R executable specified on the command line (%1) does not exist or is not executable.").arg (r_exe), "Specified R executable does not exist");
-		QMessageBox::critical (0, i18n ("Specified R executable does not exist"), message);
+		QMessageBox::critical(nullptr, i18n("Specified R executable does not exist"), message);
 		exit(1);
 	}
 	return QString(); // not reached
 }
 
-#ifndef NO_QT_WEBENGINE
 #include <QWebEngineUrlScheme>
-#endif
 
 int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
-	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-#ifndef NO_QT_WEBENGINE
 	// annoyingly, QWebEngineUrlSchemes have to be registered before creating the app.
 	QWebEngineUrlScheme scheme("help");
 	scheme.setSyntax (QWebEngineUrlScheme::Syntax::Path);
 	scheme.setFlags (QWebEngineUrlScheme::LocalScheme|QWebEngineUrlScheme::LocalAccessAllowed);
 	QWebEngineUrlScheme::registerScheme (scheme);
-#endif
 	QApplication app (argc, argv);
 #ifdef WITH_KCRASH
 	KCrash::setDrKonqiEnabled (true);
@@ -270,7 +264,7 @@ int main (int argc, char *argv[]) {
 	aboutData.addCredit (i18n ("Philippe Grosjean"), i18n ("Several helpful comments and discussions"));
 	aboutData.addCredit (i18n ("Adrien d'Hardemare"), i18n ("Plugins and patches"));
 	aboutData.addCredit (i18n ("Yves Jacolin"), i18n ("New website"));
-	aboutData.addCredit (i18n ("Germán Márquez Mejía"), i18n ("HP filter plugin, spanish translation"), 0);
+	aboutData.addCredit (i18n ("Germán Márquez Mejía"), i18n ("HP filter plugin, spanish translation"));
 	aboutData.addCredit (i18n ("Marco Martin"), i18n ("A cool icon"));
 	aboutData.addCredit (i18n ("Daniele Medri"), i18n ("RKWard logo, many suggestions, help on wording"));
 	aboutData.addCredit (i18n ("David Sibai"), i18n ("Several valuable comments, hints and patches"));
@@ -284,8 +278,7 @@ int main (int argc, char *argv[]) {
 	KAboutData::setApplicationData (aboutData);
 
 	QCommandLineParser parser;
-	parser.addVersionOption ();
-	parser.addHelpOption ();
+	aboutData.setupCommandLine(&parser);
 	parser.addOption (QCommandLineOption ("evaluate", i18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), "Rcode", QString ()));
 	parser.addOption (QCommandLineOption ("debug-level", i18n ("Verbosity of debug messages (0-5)"), "level", "2"));
 	parser.addOption (QCommandLineOption ("debug-flags", i18n ("Mask for components to debug (see debug.h)"), "flags", QString::number (DEBUG_ALL)));
@@ -298,7 +291,6 @@ int main (int argc, char *argv[]) {
 	parser.addOption(QCommandLineOption("quirkmode", i18n("Disable some startup validation code. Experimental option, not intended for regular use.")));
 	parser.addPositionalArgument ("files", i18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
 
-	aboutData.setupCommandLine (&parser);
 	parser.process (app);
 	aboutData.processCommandLine (&parser);
 
@@ -405,7 +397,7 @@ int main (int argc, char *argv[]) {
 	RKSessionVars::r_binary = r_exe;
 
 	if (app.isSessionRestored ()) {
-		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
+		kRestoreMainWindows<RKWardMainWindow>();	// well, whatever this is supposed to do -> TODO
 	} else {
 		new RKWardMainWindow ();
 	}
@@ -413,7 +405,7 @@ int main (int argc, char *argv[]) {
 	// do it!
 	int status = app.exec ();
 
-	qInstallMessageHandler (0);
+	qInstallMessageHandler(nullptr);
 	RK_Debug::debug_file->close ();
 
 	return status;

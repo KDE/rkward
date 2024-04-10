@@ -8,7 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qstringlist.h>
 #include <qdom.h>
-#include <qregexp.h>
 #include <QDir>
 #include <QStandardPaths>
 #include <QCoreApplication>
@@ -17,7 +16,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <kxmlguiclient.h>
 
-#include "../settings/rksettingsmodulegeneral.h"
 #include "../windows/rkworkplace.h"
 #include "../version.h"
 #include "../debug.h"
@@ -179,12 +177,8 @@ namespace RKCommonFunctions {
 				rkward_data_dir = inside_build_tree;
 				return rkward_data_dir;
 			}
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
 			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "resource.ver");
 			candidates += QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "rkward/resource.ver");  // Well, isn't this just silly? AppDataLocation may or may not contain the application name (on Mac)
-#else
-			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::GenericDataLocation, "resource.ver");  // Fails on Mac with unpatched Qt 5.10 (and before). See https://mail.kde.org/pipermail/kde-frameworks-devel/2018-May/063151.html
-#endif
 			for (int i = 0; i < candidates.size (); ++i) {
 				QFile resource_ver (candidates[i]);
 				if (resource_ver.open (QIODevice::ReadOnly) && (resource_ver.read (100).trimmed () == RKWARD_VERSION)) {

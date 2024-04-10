@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QFile>
 #include <KLocalizedString>
+#include <KLazyLocalizedString>
 
 #include "../debug.h"
 
@@ -31,28 +32,28 @@ RKMessageCatalog::~RKMessageCatalog () {
 
 QString RKMessageCatalog::translate(const QString &msgctxt, const QString &msgid, const QStringList &args) const {
 	RK_TRACE(MISC);
-	auto ret = ki18ndc(catalog_name, msgctxt.toUtf8(), msgid.toUtf8());
+	auto ret = ki18ndc(catalog_name.constData(), msgctxt.toUtf8().constData(), msgid.toUtf8().constData());
 	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
 	return ret.toString();
 }
 
 QString RKMessageCatalog::translate(const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count, const QStringList &args) const {
 	RK_TRACE(MISC);
-	auto ret = ki18ndcp(catalog_name, msgctxt.toUtf8(), msgid_singular.toUtf8(), msgid_plural.toUtf8()).subs(count);
+	auto ret = ki18ndcp(catalog_name.constData(), msgctxt.toUtf8().constData(), msgid_singular.toUtf8().constData(), msgid_plural.toUtf8().constData()).subs(count);
 	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
 	return ret.toString();
 }
 
 QString RKMessageCatalog::translate(const QString &msgid, const QStringList &args) const {
 	RK_TRACE(MISC);
-	auto ret = ki18nd(catalog_name, msgid.toUtf8());
+	auto ret = ki18nd(catalog_name.constData(), msgid.toUtf8().constData());
 	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
 	return ret.toString();
 }
 
 QString RKMessageCatalog::translate(const QString &msgid_singular, const QString &msgid_plural, unsigned long int count, const QStringList &args) const {
 	RK_TRACE(MISC);
-	auto ret = ki18ndp(catalog_name, msgid_singular.toUtf8(), msgid_plural.toUtf8()).subs(count);
+	auto ret = ki18ndp(catalog_name.constData(), msgid_singular.toUtf8().constData(), msgid_plural.toUtf8().constData()).subs(count);
 	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
 	return ret.toString();
 }
@@ -60,11 +61,11 @@ QString RKMessageCatalog::translate(const QString &msgid_singular, const QString
 RKMessageCatalog* RKMessageCatalog::CatalogHash::getCatalog (const QString& name, const QString& pathhint) {
 	RK_TRACE (MISC);
 
-	RKMessageCatalog *ret = catalogs.value (name, 0);
+	RKMessageCatalog *ret = catalogs.value (name, nullptr);
 	if (ret) return ret;
 	setup_mutex.lock ();
 		// try to look up again, in case initialized from another thread
-		ret = catalogs.value (name, 0);
+		ret = catalogs.value (name, nullptr);
 		if (!ret) {
 			ret = new RKMessageCatalog (name, pathhint);
 			catalogs.insert (name, ret);

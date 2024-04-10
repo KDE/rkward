@@ -22,7 +22,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/rcontainerobject.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkstandardicons.h"
-#include "../misc/rkcompatibility.h"
 
 #include "../debug.h"
 
@@ -66,7 +65,7 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	type_selector->addButton (button, (int) MainEffects);
 	vbox->addWidget (button = new QRadioButton (i18n ("Custom Model:"), this));
 	type_selector->addButton (button, (int) Custom);
-	connect (type_selector, RKCompatibility::groupButtonClicked(), this, &RKFormula::typeChange);
+	connect (type_selector, &QButtonGroup::idClicked, this, &RKFormula::typeChange);
 
 	custom_model_widget = new QWidget (this);
 	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget);
@@ -150,7 +149,7 @@ void RKFormula::makeModelString () {
 	QString table_string, model_string, labels_string;
 	mangled_names.clear ();
 	RObject *dep_var = dependent->objectValue ();
-	RObject *container = 0;
+	RObject *container = nullptr;
 	if (dep_var) {
 		model_ok = true;
 	}
@@ -260,7 +259,7 @@ void RKFormula::addButtonClicked () {
 	// check for duplicates (remove from old list - new terms might have a different order of naming)
 	for (int inter = 0; inter < interactions.count (); ++inter) {
 		Interaction new_inter = interactions[inter];
-		QTreeWidgetItem *dupe = 0;
+		QTreeWidgetItem *dupe = nullptr;
 		for (InteractionMap::Iterator it = interaction_map.begin (); it != interaction_map.end (); ++it) {
 			Interaction existing_inter = it.value ();
 			// BEGIN: actual comparison

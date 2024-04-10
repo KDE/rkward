@@ -1,6 +1,6 @@
 /*
 rkxmlguipreviewarea - This file is part of RKWard (https://rkward.kde.org). Created: Wed Feb 03 2016
-SPDX-FileCopyrightText: 2016-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2016-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -79,7 +79,7 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 	QToolButton *tb = new QToolButton();
 	tb->setAutoRaise(true);
 	tb->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete));
-	connect(tb, &QAbstractButton::clicked, this, [this]() { hide(); emit previewClosed(this); });
+	connect(tb, &QAbstractButton::clicked, this, [this]() { hide(); Q_EMIT previewClosed(this); });
 
 	QToolButton *menu_button = new QToolButton(this);
 	menu_button->setPopupMode(QToolButton::InstantPopup);
@@ -92,7 +92,7 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 	hl->addWidget(lab);
 	hl->addWidget(tb);
 	hl->addStretch();
-	internal_layout = new QVBoxLayout(this);
+	internal_layout = new QVBoxLayout();
 	vl->addLayout(internal_layout);
 
 	menubar = new QMenuBar(nullptr); // it is important that the menubar never is a child of the main window, not even indirectly! https://bugs.kde.org/show_bug.cgi?id=416911
@@ -105,7 +105,7 @@ RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 
 	if (current && factory) {
 		factory->removeClient(current);
-		current->setFactory (0);
+		current->setFactory(nullptr);
 	}
 	delete menubar;
 	delete builder;
@@ -153,7 +153,7 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 		bool menu_empty = true;
 		for (int j = 0; j < subentries.size (); ++j) {
 			QAction *act = subentries[j];
-			if (act->isVisible () && act->isEnabled () && act) {
+			if (act->isVisible () && act->isEnabled()) {
 				entries_to_add.append (act);
 				if (!act->isSeparator ()) menu_empty = false;  // Copy separators, but purge menus with only separators in them.
 			}
@@ -249,7 +249,7 @@ void RKPreviewManager::setStatusMessage (const QString& message) {
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (id);
 	if (window) window->setStatusMessage (message);
 
-	emit statusChanged();
+	Q_EMIT statusChanged();
 }
 
 QString RKPreviewManager::shortStatusLabel() const {

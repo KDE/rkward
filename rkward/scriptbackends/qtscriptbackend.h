@@ -27,7 +27,7 @@ public:
 
 	~QtScriptBackend ();
 
-	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true) override;
+	bool initialize (RKComponentPropertyCode *code_property=nullptr, bool add_headings=true) override;
 	void destroy () override;
 	
 	void preprocess (int flags) override { callFunction ("do_preprocess ();\n", flags, Preprocess); };
@@ -38,7 +38,7 @@ public:
 #ifdef JSBACKEND_PERFORMANCE_TEST
 	static void _performanceTest();
 #endif
-public slots:
+public Q_SLOTS:
 	void threadError (const QString &message);
 	void commandDone (const QString &result);
 	void needData (const QString &identifier, const int hint);
@@ -56,11 +56,6 @@ private:
 #include <QMutex>
 #include <QtQml/QJSEngine>
 
-template<typename T> QJSValue rkJSMakeArray(QJSEngine *engine, QVector<T> list) {
-	auto ret = engine->newArray(list.size());
-	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));
-	return ret;
-}
 template<typename T> QJSValue rkJSMakeArray(QJSEngine *engine, QList<T> list) {
 	auto ret = engine->newArray(list.size());
 	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));
@@ -77,11 +72,11 @@ public:
 	void setData (const QVariant &data);
 	void kill () { killed = true; };
 	void goToSleep (bool sleep);
-signals:
+Q_SIGNALS:
 	void commandDone (const QString &result);
 	void needData (const QString &identifier, const int hint);
 	void error (const QString &error);
-protected slots:
+protected Q_SLOTS:
 	QVariant getValue (const QString &identifier);
 	QVariant getList (const QString &identifier);
 	QVariant getString (const QString &identifier);

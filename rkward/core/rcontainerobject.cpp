@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rcontainerobject.h"
 
-#include <qregexp.h>
+#include <QRegularExpression>
 
 #include "../rbackend/rkrinterface.h"
 #include "robjectlist.h"
@@ -45,11 +45,11 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 			RK_ASSERT (false);
 			RK_DEBUG (OBJECTS, DL_ERROR, "%s cannot be represented", child->getFullName ().toLatin1 ().data ());
 			delete child;
-			return 0;
+			return nullptr;
 		} else {
 			int child_index = childmap.indexOf (child);
 			RK_ASSERT (child_index >= 0);
-			if (RKModificationTracker::instance()->removeObject (child, 0, true)) {
+			if (RKModificationTracker::instance()->removeObject(child, nullptr, true)) {
 				RData *child_name_data = new_data->structureVector ().at (StoragePositionName);
 				RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
 				RK_ASSERT (child_name_data->getDataLength () >= 1);
@@ -107,7 +107,7 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 		child_object = new RKVariable (this, child_name);
 	} else {
 		RK_DEBUG (OBJECTS, DL_WARNING, "Can't represent object '%s', type %d", child_name.toLatin1 ().data (), child_type);
-		return 0;
+		return nullptr;
 	}
 	RK_ASSERT (child_object);
 	RKModificationTracker::instance()->lockUpdates (true);	// object not yet added. prevent updates
@@ -116,7 +116,7 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 
 	if (!child_object) {
 		RK_ASSERT (false);
-		return 0;
+		return nullptr;
 	}
 	RKModificationTracker::instance()->beginAddObject (child_object, this, position);
 	childmap.insert (position, child_object);
@@ -143,12 +143,12 @@ void RContainerObject::updateChildren (RData *new_children) {
 		RK_ASSERT (child_name_data->getDataLength () >= 1);
 		QString child_name = child_name_data->stringVector ().at (0);
 
-		RObject *child_object = 0;
+		RObject *child_object = nullptr;
 		for (int j = 0; j < old_childmap.size (); ++j) {
 			RObject *obj = old_childmap[j];
 			if (obj && (obj->getShortName () == child_name)) {
 				child_object = obj;
-				old_childmap[j] = 0;	// in case of duplicate names, avoid finding the same child over and over again
+				old_childmap[j] = nullptr;	// in case of duplicate names, avoid finding the same child over and over again
 				break;
 			}
 		}
@@ -170,7 +170,7 @@ void RContainerObject::updateChildren (RData *new_children) {
 				new_childmap.insert (i, old_child);
 			} else {
 				RK_DEBUG (OBJECTS, DL_DEBUG, "child no longer present: %s.", old_child->getFullName ().toLatin1 ().data ());
-				if (RKModificationTracker::instance()->removeObject (old_child, 0, true)) --i;
+				if (RKModificationTracker::instance()->removeObject(old_child, nullptr, true)) --i;
 				else (new_childmap.insert (i, old_child));
 			}
 		} else {
@@ -209,7 +209,7 @@ RObject *RContainerObject::findChildByName (const QString &name) const {
 		RObject* obj = childmap[i];
 		if (obj->getShortName () == name) return (obj);
 	}
-	return 0;
+	return nullptr;
 }
 
 RObject *RContainerObject::findChildByIndex (int position) const {
@@ -218,7 +218,7 @@ RObject *RContainerObject::findChildByIndex (int position) const {
 		return childmap[position];
 	}
 	RK_ASSERT (false);
-	return 0;
+	return nullptr;
 }
 
 RKRowNames* RContainerObject::rowNames () {
@@ -234,7 +234,7 @@ RKRowNames* RContainerObject::rowNames () {
 void RContainerObject::updateRowNamesObject () {
 	RK_TRACE (OBJECTS);
 
-	RKRowNames *rownames_object = 0;
+	RKRowNames *rownames_object = nullptr;
 	if (hasPseudoObject (RowNamesObject)) rownames_object = rownames_objects.value (this);
 	if (!rownames_object) return;
 
@@ -244,7 +244,7 @@ void RContainerObject::updateRowNamesObject () {
 	rownames_object->dimensions[0] = childlen;
 
 	if (rownames_object->isType (NeedDataUpdate) && (!isPending ())) {
-		rownames_object->updateDataFromR (0);
+		rownames_object->updateDataFromR(nullptr);
 	}
 }
 
@@ -316,8 +316,8 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	}
 
 	RCommand *command = new RCommand (renameChildCommand (object, new_name), RCommand::App | RCommand::Sync);
-	command->setUpdatesObject(this);
-	RInterface::issueCommand (command, 0);
+	command->setUpdatesObject(object);  // NOTE will be mapped to toplevel object, anyway
+	RInterface::issueCommand(command, nullptr);
 
 	object->name = new_name;
 }
@@ -349,7 +349,7 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 		}
 
 		RCommand *command = new RCommand (removeChildCommand (object), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate);
-		RInterface::issueCommand (command, 0);
+		RInterface::issueCommand(command, nullptr);
 	}
 
 	removeChildNoDelete (object);
@@ -375,8 +375,8 @@ QString RContainerObject::validizeName (const QString &child_name, bool unique) 
 	QString ret = child_name;
 	if (ret.isEmpty ()) ret = "var";
 	else {
-		ret = ret.replace (QRegExp ("[^a-zA-Z0-9_]"), ".");
-		ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
+		ret = ret.replace (QRegularExpression ("[^a-zA-Z0-9_]"), ".");
+		ret = ret.replace (QRegularExpression ("^\\.*[0-9]+"), ".");
 	}
 	if (!unique) return ret;
 

@@ -11,7 +11,6 @@ SET(misc_STAT_SRCS
    xmlhelper.cpp
    multistringselector.cpp
    rkcommonfunctions.cpp
-   rkcompatibility.cpp
    rkprogresscontrol.cpp
    rksaveobjectchooser.cpp
    rkdummypart.cpp
@@ -38,4 +37,4 @@ SET(misc_STAT_SRCS
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
-TARGET_LINK_LIBRARIES(misc Qt5::Widgets KF5::WidgetsAddons KF5::KIOWidgets Qt5::Xml KF5::ConfigCore KF5::Parts KF5::WindowSystem KF5::TextEditor KF5::Archive)
+TARGET_LINK_LIBRARIES(misc Qt6::Widgets KF6::WidgetsAddons KF6::KIOWidgets Qt6::Xml KF6::ConfigCore KF6::Parts KF6::WindowSystem KF6::TextEditor KF6::Archive KF6::I18n)

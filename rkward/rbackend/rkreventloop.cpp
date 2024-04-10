@@ -59,11 +59,11 @@ void RKREventLoop::processX11Events() {
 
 	RKRBackend::repl_status.eval_depth++;
 // In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
-	R_ToplevelExec (processX11EventsWorker, 0);
+	R_ToplevelExec(processX11EventsWorker, nullptr);
 	RKRBackend::repl_status.eval_depth--;
 }
 
-static void (* RK_eventHandlerFunction)() = 0;
+static void (* RK_eventHandlerFunction)() = nullptr;
 
 #ifndef Q_OS_WIN
 static void (* RK_old_R_PolledEvents)();

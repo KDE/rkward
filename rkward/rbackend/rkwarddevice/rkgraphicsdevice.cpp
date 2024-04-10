@@ -10,6 +10,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QDialog>
+#include <QTransform>
+#include <QFontMetricsF>
 
 #include <KLocalizedString>
 #include <sys/stat.h>
@@ -36,7 +38,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	interaction_opcode = -1;
-	dialog = 0;
+	dialog = nullptr;
 	id = 0;
 	recording_path = false;
 	current_mask = 0;
@@ -163,7 +165,7 @@ int RKGraphicsDevice::finalizeTilingPattern(int extend) {
 
 void RKGraphicsDevice::viewKilled () {
 	RK_TRACE (GRAPHICS_DEVICE);
-	view = 0;
+	view = nullptr;
 //	closeDevice(devices.key(this));  // Do not do this, here. Don't mark the device as dead until R thinks so, too, and tells us about it.
 }
 
@@ -471,7 +473,7 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 		QPainterPath sub;
 		QSizeF size = strSize(text, font);
 		sub.addText(-(hadj * size.width()), 0, font, text);
-		QMatrix trans;
+		QTransform trans;
 		trans.translate(x, y);
 		trans.rotate(-rot);
 		recorded_path.addPath(trans.map(sub));
@@ -501,7 +503,7 @@ void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* as
 	QRectF rect = fm.boundingRect (c);
 	*ascent = -rect.top ();
 	*descent = rect.bottom ();
-	*width = fm.width (c);
+	*width = fm.horizontalAdvance (c);
 }
 
 void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBrush& brush) {
@@ -591,8 +593,8 @@ void RKGraphicsDevice::setActive (bool active) {
 	} else {
 		view->setWindowTitle(i18nc("Window title", "%1 (Inactive)", base_title));
 	}
-	emit activeChanged(active);
-	emit captionChanged(view->windowTitle());
+	Q_EMIT activeChanged(active);
+	Q_EMIT captionChanged(view->windowTitle());
 }
 
 void RKGraphicsDevice::goInteractive (const QString& prompt) {
@@ -607,7 +609,7 @@ void RKGraphicsDevice::goInteractive (const QString& prompt) {
 	view->setToolTip (prompt);
 	view->show ();
 	view->raise ();
-	emit goingInteractive(true, prompt);
+	Q_EMIT goingInteractive(true, prompt);
 }
 
 void RKGraphicsDevice::locator () {
@@ -622,7 +624,7 @@ void RKGraphicsDevice::confirmNewPage () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (interaction_opcode < 0);
-	RK_ASSERT (dialog == 0);
+	RK_ASSERT (dialog == nullptr);
 	interaction_opcode = RKDNewPageConfirm;
 
 	QString msg = i18n ("<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>");
@@ -646,7 +648,7 @@ void RKGraphicsDevice::newPageDialogDone (int result) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (dialog);
-	emit newPageConfirmDone(result == QDialog::Accepted);
+	Q_EMIT newPageConfirmDone(result == QDialog::Accepted);
 	interaction_opcode = -1;
 	stopInteraction ();
 }
@@ -687,7 +689,7 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 		if (event->type () == QEvent::MouseButtonRelease) {
 			QMouseEvent *me = static_cast<QMouseEvent*> (event);
 			if (me->button () == Qt::LeftButton) {
-				emit locatorDone(true, me->x(), me->y());
+				Q_EMIT locatorDone(true, me->position().x(), me->position().y());
 				interaction_opcode = -1;
 			}
 			stopInteraction ();
@@ -699,11 +701,11 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 			StoredEvent sev;
 
 			sev.event_code = event->type () == QEvent::MouseButtonPress ? RKDMouseDown : (event->type () == QEvent::MouseButtonRelease ? RKDMouseUp : RKDMouseMove);
-			sev.x = me->x ();
-			sev.y = me->y ();
+			sev.x = me->position().x ();
+			sev.y = me->position().y ();
 			sev.buttons = 0;
 			if (me->buttons () & Qt::LeftButton) sev.buttons |= RKDMouseLeftButton;
-			if (me->buttons () & Qt::MidButton) sev.buttons |= RKDMouseMiddleButton;
+			if (me->buttons () & Qt::MiddleButton) sev.buttons |= RKDMouseMiddleButton;
 			if (me->buttons () & Qt::RightButton) sev.buttons |= RKDMouseRightButton;
 
 			// Mouse move event may be generated much faster than R can handle them. We simply lump them together
@@ -754,10 +756,10 @@ void RKGraphicsDevice::stopInteraction () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (interaction_opcode == RKDLocator) {
-		emit locatorDone(false, 0.0, 0.0);
+		Q_EMIT locatorDone(false, 0.0, 0.0);
 	} else if (interaction_opcode == RKDNewPageConfirm) {
 		RK_ASSERT (dialog);
-		emit newPageConfirmDone(true);
+		Q_EMIT newPageConfirmDone(true);
 	} else if (interaction_opcode == RKDStartGettingEvents) {
 		// not much to do, fortunately, as getting graphics events is non-blocking
 		stored_events.clear ();
@@ -768,7 +770,7 @@ void RKGraphicsDevice::stopInteraction () {
 
 	if (dialog) {
 		dialog->deleteLater ();
-		dialog = 0;
+		dialog = nullptr;
 	}
 	if (view) {	// might already be destroyed
 		view->setCursor (Qt::ArrowCursor);
@@ -776,7 +778,7 @@ void RKGraphicsDevice::stopInteraction () {
 		checkSize ();
 		view->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
 	}
-	emit goingInteractive(false, QString());
+	Q_EMIT goingInteractive(false, QString());
 	interaction_opcode = -1;
 }
 

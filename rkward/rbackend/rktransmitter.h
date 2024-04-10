@@ -52,7 +52,7 @@ protected:
 	void setConnection (QLocalSocket *connection);
 	QLocalSocket *connection;
 	QString token;
-private slots:
+private Q_SLOTS:
 	/** Note: this blocks until a complete request has been received. Connected to the "readyRead"-signal of the connection. Calls requestReceived() once the request has been read. */
 	void fetchTransmission ();
 	void disconnected ();

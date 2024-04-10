@@ -35,13 +35,13 @@ public:
 
 /** retrieves the current location */
 	QString getLocation ();
-public slots:
+public Q_SLOTS:
 	void locationEditChanged (const QString &);
 	void updateLastUsedUrl (const QUrl& url);
-signals:
+Q_SIGNALS:
 	void locationChanged ();
 #ifdef Q_OS_WIN
-private slots:
+private Q_SLOTS:
 	void hackOverrideDirDialog ();
 #endif
 private:

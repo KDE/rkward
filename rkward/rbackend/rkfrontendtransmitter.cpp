@@ -10,13 +10,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkrbackendprotocol_frontend.h"
 #include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
 #include "rksessionvars.h"
-#include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulegeneral.h"
 
 #include <KLocalizedString>
 #include <krandom.h>
 
 #include <QCoreApplication>
+#include <QRegularExpression>
 #include <QProcess>
 #include <QLocalServer>
 #include <QLocalSocket>
@@ -81,7 +81,7 @@ void RKFrontendTransmitter::run () {
 
 	// Try to synchronize language selection in frontend and backend
 	QStringList env = QProcess::systemEnvironment ();
-	int index = env.indexOf (QRegExp("^LANGUAGE=.*", Qt::CaseInsensitive));
+	int index = env.indexOf (QRegularExpression(QStringLiteral("^LANGUAGE=.*"), QRegularExpression::CaseInsensitiveOption));
 	if (index >= 0) env.removeAt (index);
 	env.append ("LANGUAGE=" + QLocale ().name ().section ('_', 0, 0));
 	backend->setEnvironment (env);
@@ -121,12 +121,12 @@ void RKFrontendTransmitter::run () {
 	args.append(backend_executable);
 #endif
 
-	args.append ("--debug-level=" + QString::number (RK_Debug::RK_Debug_Level));
+	args.append (QStringLiteral("--debug-level=") + QString::number (RK_Debug::RK_Debug_Level));
 	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
-	args.append ("--server-name=" + server->fullServerName ().toUtf8 ().toPercentEncoding ());
-	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
-	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());
-	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
+	args.append (QStringLiteral("--server-name=") + server->fullServerName ().toUtf8 ().toPercentEncoding ());
+	args.append (QStringLiteral("--rkd-server-name=") + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
+	args.append (QStringLiteral("--data-dir=") + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());
+	args.append (QStringLiteral("--locale-dir=") + localeDir ().toUtf8 ().toPercentEncoding ());
 	RK_DO({
 		RK_DEBUG(RBACKEND, DL_DEBUG, "R binary: %s", qPrintable(RKSessionVars::RBinary()));
 		RK_DEBUG(RBACKEND, DL_DEBUG, "%s", qPrintable(args.join("\n")));
@@ -155,13 +155,9 @@ void RKFrontendTransmitter::run () {
 #endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Starting backend. Timestamp %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 	if (quirkmode) {
-#if QT_VERSION >= QT_VERSION_CHECK(5,10,0)
 		backend->setProgram(RKSessionVars::RBinary());
 		backend->setArguments(args);
 		backend->startDetached();
-#else
-		QProcess::startDetached(RKSessionVars::RBinary(), args);
-#endif
 	} else {
 		backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 
@@ -243,7 +239,7 @@ void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
 			delete (out);
 		}
 		delete list;
-		request->output = 0;
+		request->output = nullptr;
 		RK_ASSERT (request->synchronous);
 		writeRequest (request);	// to tell the backend, that we are keeping up. Also deletes the request.
 		return;

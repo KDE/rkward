@@ -1,0 +1,26 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+<qresource prefix="/rkward/icons">
+	<file>rkward_logo.png</file>
+	<file>function.png</file>
+	<file>list.png</file>
+	<file>matrix.png</file>
+	<file>menu.svg</file>
+	<file>data-numeric.png</file>
+	<file>data-factor.png</file>
+	<file>data-logical.png</file>
+	<file>window_back.png</file>
+	<file>window_forward.png</file>
+	<file>run_line.png</file>
+	<file>run_selection.png</file>
+	<file>run_all.png</file>
+	<file>s4_slots.png</file>
+	<file>paste_inside_selection.png</file>
+	<file>paste_inside_table.png</file>
+	<file alias="rkward.svgz">app-icon/sc-apps-rkward.svgz</file>
+</qresource>
+</RCC>

@@ -307,7 +307,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 			type |= RObject::Incomplete;
 			RK_DEBUG (RBACKEND, DL_DEBUG, "Depth limit reached. Will not recurse into slots of %s", name.toLatin1().data ());
 		} else {
-			RData::RDataStorage dummy (1, 0);
+			RData::RDataStorage dummy(1, nullptr);
 			dummy[0] = new RData ();
 
 			SEXP slots_pseudo_object = RKRSupport::callSimpleFun (rk_get_slots_fun, value, R_GlobalEnv);
@@ -330,7 +330,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 	} else if (is_function) {
 		storage_length = RObject::StorageSizeBasicInfo + 2;
 	}
-	RData::RDataStorage res (storage_length, 0);
+	RData::RDataStorage res(storage_length, nullptr);
 	res[RObject::StoragePositionName] = namedata;
 	res[RObject::StoragePositionType] = typedata;
 	res[RObject::StoragePositionClass] = classdata;
@@ -360,7 +360,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 			childcount = NAMED_CHILDREN_LIMIT;
 		}
 
-		RData::RDataStorage children (childcount, 0);
+		RData::RDataStorage children(childcount, nullptr);
 		for (int i = 0; i < childcount; ++i) {
 			children[i] = new RData ();		// NOTE: RData-ctor pre-initializes these to empty. Thus, we're safe even if there is an error while fetching one of the children.
 		}
@@ -429,7 +429,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 				type |= RObject::Incomplete;
 				RK_DEBUG (RBACKEND, DL_DEBUG, "Depth limit reached. Will not recurse into namespace of %s", name.toLatin1().data ());
 			} else {
-				RData::RDataStorage dummy (1, 0);
+				RData::RDataStorage dummy(1, nullptr);
 				dummy[0] = new RData ();
 
 				getStructureSafe (namespace_envir, "NAMESPACE", RObject::PseudoObject, dummy[0], nesting_depth+99);	// HACK: By default, do not recurse into the children of the namespace, until dealing with the namespace object itself.
@@ -473,6 +473,6 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 
 	UNPROTECT (1); /* value */
 
-	RK_ASSERT (!res.contains (0));
+	RK_ASSERT (!res.contains (nullptr));
 	storage->setData (res);
 }

@@ -22,7 +22,7 @@ class RKSpinBox : public QSpinBox {
 	Q_OBJECT
 public:
 /** constructor. Use on of setIntMode or setRealMode to initialize the Spinbox! */
-	explicit RKSpinBox (QWidget *parent = 0);
+	explicit RKSpinBox (QWidget *parent = nullptr);
 /** dtor */
 	~RKSpinBox ();
 
@@ -58,7 +58,7 @@ protected:
 /** reimplemented from QSpinBox to adjust the internal value */
 	void stepBy (int steps) override;
 	QValidator::State validate (QString &input, int &pos ) const override;
-private slots:
+private Q_SLOTS:
 	void updateValue (int value);
 	void emitValueChange ();
 private:

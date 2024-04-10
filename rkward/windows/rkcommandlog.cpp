@@ -27,7 +27,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 //static
-RKCommandLog *RKCommandLog::rkcommand_log = 0;
+RKCommandLog *RKCommandLog::rkcommand_log = nullptr;
 
 RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, CommandLogWindow, tool_window, name) {
 	RK_TRACE (APP);
@@ -262,7 +262,7 @@ RKCommandLogView::~RKCommandLogView () {
 void RKCommandLogView::contextMenuEvent(QContextMenuEvent *event) {
 	RK_TRACE(APP);
 
-	emit popupMenuRequest(event->globalPos());
+	Q_EMIT popupMenuRequest(event->globalPos());
 	event->accept();
 }
 
@@ -280,7 +280,7 @@ void RKCommandLogView::selectAll () {
 #include <QAction>
 #include <QGuiApplication>
 
-RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
+RKCommandLogPart::RKCommandLogPart(RKCommandLog *for_log) : KParts::Part(nullptr) {
 	RK_TRACE (APP);
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());

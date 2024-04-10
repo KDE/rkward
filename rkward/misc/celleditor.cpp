@@ -20,7 +20,7 @@ CellEditor::CellEditor (QWidget* parent) : QLineEdit (parent) {
 
 	setFrame (false);
 
-	value_list = 0;
+	value_list = nullptr;
 }
 
 CellEditor::~CellEditor () {
@@ -79,22 +79,22 @@ void CellEditor::keyPressEvent (QKeyEvent *e) {
 	if (e->modifiers () == Qt::NoModifier) {
 		if ((e->key () == Qt::Key_Left) || (e->key () == Qt::Key_Backspace)) {
 			if (cursorPosition () < 1) {
-				emit done(this, RKItemDelegate::EditorExitLeft);
+				Q_EMIT done(this, RKItemDelegate::EditorExitLeft);
 				return;
 			}
 		}
 		if (e->key () == Qt::Key_Right) {
 			if (cursorPosition () >= (int) text ().length ()) {
-				emit done(this, RKItemDelegate::EditorExitRight);
+				Q_EMIT done(this, RKItemDelegate::EditorExitRight);
 				return;
 			}
 		}
 		if (e->key () == Qt::Key_Up) {
-			emit done(this, RKItemDelegate::EditorExitUp);
+			Q_EMIT done(this, RKItemDelegate::EditorExitUp);
 			return;
 		}
 		if (e->key () == Qt::Key_Down) {
-			emit done(this, RKItemDelegate::EditorExitDown);
+			Q_EMIT done(this, RKItemDelegate::EditorExitDown);
 			return;
 		}
 	}

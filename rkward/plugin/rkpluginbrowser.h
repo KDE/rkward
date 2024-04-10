@@ -37,7 +37,7 @@ public:
 	QStringList getUiLabelPair () const override;
 	int type () override { return ComponentBrowser; };
 	ComponentStatus recursiveStatus () override;
-public slots:
+public Q_SLOTS:
 	void textChangedFromUi ();
 	void textChanged (RKComponentPropertyBase *);
 	void validateInput ();

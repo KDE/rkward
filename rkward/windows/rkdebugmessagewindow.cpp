@@ -19,12 +19,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKDebugMessageWindow* RKDebugMessageWindow::_instance = 0;
+RKDebugMessageWindow* RKDebugMessageWindow::_instance = nullptr;
 
 RKDebugMessageWindow::RKDebugMessageWindow (QWidget* parent, bool tool_window, const char* name) : RKMDIWindow (parent, RKMDIWindow::DebugMessageWindow, tool_window, name) {
 	RK_TRACE (APP);
 	RK_ASSERT (!_instance);
-	real_widget = 0;
+	real_widget = nullptr;
 	first = true;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
@@ -80,7 +80,7 @@ void RKDebugMessageWindow::discardWidget () {
 	if (real_widget) {
 		RK_DEBUG (APP, DL_INFO, "discarding debug message viewer");
 		delete real_widget;
-		real_widget = 0;
+		real_widget = nullptr;
 	}
 }
 

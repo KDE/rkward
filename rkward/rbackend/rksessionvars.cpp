@@ -13,9 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../version.h"
 
 #include <kcoreaddons_version.h>
-#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
-#include <kcoreaddons.h>
-#endif
+#include <KCoreAddons>
 
 #include <QTemporaryFile>
 #include <QStandardPaths>
@@ -23,7 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKSessionVars* RKSessionVars::_instance = 0;
+RKSessionVars* RKSessionVars::_instance = nullptr;
 RKParsedVersion RKSessionVars::rkward_version(RKWARD_VERSION);
 RKParsedVersion RKSessionVars::r_version;
 QString RKSessionVars::r_version_string;
@@ -46,7 +44,7 @@ void RKSessionVars::setInstalledPackages (const QStringList &new_list) {
 	RK_TRACE (RBACKEND);
 
 	installed_packages = new_list;
-	emit installedPackagesChanged();
+	Q_EMIT installedPackagesChanged();
 }
 
 void RKSessionVars::setRVersion (const QString& version_string) {
@@ -83,23 +81,12 @@ int RKSessionVars::compareRVersion (const QString& version) {
 QStringList RKSessionVars::frontendSessionInfo () {
 	QStringList lines;
 	lines.append ("RKWard version: " RKWARD_VERSION);
-	// KF5 TODO: find replacement for line below
-#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
 	lines.append ("KDE Frameworks version (runtime): " + QString (KCoreAddons::versionString ()));
-#endif
 	lines.append ("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING);
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
 	lines.append ("Qt version (compile time): " QT_VERSION_STR);
-#ifdef NO_QT_WEBENGINE
-	lines.append ("Using QtWebKit for HTML rendering");
-#else
 	lines.append ("Using QWebEngine for HTML rendering");
-#endif
-#if defined Q_OS_WIN
-	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
-#elif defined Q_OS_MACOS
-	lines.append ("MacOS runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::MacintoshVersion, 16));
-#endif
+	lines.append(QStringLiteral("Running on: ") + QSysInfo::prettyProductName());
 	lines.append ("Local config directory: " + QStandardPaths::writableLocation (QStandardPaths::GenericConfigLocation));
 	lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
 	lines.append ("Backend version (as known to the frontend): " + r_version_string);

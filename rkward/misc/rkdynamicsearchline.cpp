@@ -19,7 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKDynamicSearchLine::RKDynamicSearchLine (QWidget *parent) : QLineEdit (parent) {
 	RK_TRACE (MISC);
 
-	model = 0;
+	model = nullptr;
 	setClearButtonEnabled (true);
 	setPlaceholderText (i18n ("Search"));
 	timer.setSingleShot (true);
@@ -58,8 +58,8 @@ void RKDynamicSearchLine::delayedSearch () {
 		}
 	}
 
-	QRegExp filter (term, Qt::CaseInsensitive, allnum ? QRegExp::FixedString : QRegExp::RegExp2);
-	if (model) model->setFilterRegExp (filter);
+	QRegularExpression filter (allnum ? QRegularExpression::escape(term) : term, QRegularExpression::CaseInsensitiveOption);
+	if (model) model->setFilterRegularExpression (filter);
 	removeAction (working_indicator);
-	emit searchChanged(filter);
+	Q_EMIT searchChanged(filter);
 }

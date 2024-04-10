@@ -9,11 +9,12 @@ Library dependencies
 ====================
 
 It is important to note that RKWard makes a point of _not_ requiring the latest KDE / QT libraries. If you want to use the latest and greatest, be sure to use #ifdef's, and make a best
-effort to support features for older versions of libraries, too. For the moment, in the KF5 versions of RKWard, we're trying to support:
+effort to support features for older versions of libraries, too. Generally we aim to support the two most recent Ubunut LTS releases.
 
-Oldest library versions to support (= Ubuntu Bionic / 18.04; we generally try to support the two most recent LTS releases)
-* Qt: 5.9.5
-* KDE: 5.44.0
+Of course, with the switch to KF6, we made a clean cut, thus, currently the minimum requirements are:
+
+* Qt: 6.6.0
+* KDE: 6.0.0
 * R: 3.4.4
 
 Note: This is not set in stone, may change according to whatever is included in important distributions.

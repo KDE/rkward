@@ -45,11 +45,11 @@ public:
 Generally with few exceptions, you can only connect to properties that are either of the same class as this property, or of an extended class. Maybe in the future we will add some sophisticated converters allowing to connect vastly different types of properties in a meaningful way.
 If you specify a modifier, only the sub-value indicated by the modifier will be retrieved from the governing property on governorValueChanged. In this case reconcile_requirements is ignored. */
 	virtual void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
-signals:
+Q_SIGNALS:
 /** property has changed its value. Any connected RKComponentPropertys/RKComponents should update their state
 @param property A pointer to the changed property for easy reference */
 	void valueChanged (RKComponentPropertyBase *property);
-public slots:
+public Q_SLOTS:
 /** the (Qt-)slot in which (by default) the (RKComponent-)property is notified, when a property it depends on has changed. Generally you should reimplement this function to add special handling for the properties you know about. */
 	virtual void governorValueChanged (RKComponentPropertyBase *property);
 protected:
@@ -132,7 +132,7 @@ public:
 /** @param value_true string value if true/on
 @param value_false string value if false/off
 @param default_state value to use, if invalid string value was set */
-	RKComponentPropertyBool (QObject *parent, bool required, bool default_state=true, const QString &value_true="true", const QString &value_false="false");
+	RKComponentPropertyBool (QObject *parent, bool required, bool default_state=true, const QString &value_true=QStringLiteral("true"), const QString &value_false=QStringLiteral("false"));
 /** destructor */
 	~RKComponentPropertyBool ();
 /** Set this property to the inverted, i.e. true if set to false and vice-versa. Used for the "not" sub-property. */
@@ -375,13 +375,13 @@ public:
 
 /** set the preprocess code.
 @param code The code to set. If this is QString (), the property is seen to lack preprocess code and hence is not valid (see isValid ()). In contrast, empty strings are seen as valid */
-	void setPreprocess (const QString &code) { preprocess_code = code; emit valueChanged(this); };
+	void setPreprocess (const QString &code) { preprocess_code = code; Q_EMIT valueChanged(this); };
 /** see setPreprocess () */
-	void setCalculate (const QString &code) { calculate_code = code; emit valueChanged(this); };
+	void setCalculate (const QString &code) { calculate_code = code; Q_EMIT valueChanged(this); };
 /** see setPreprocess () */
-	void setPrintout (const QString &code) { printout_code = code; emit valueChanged(this); };
+	void setPrintout (const QString &code) { printout_code = code; Q_EMIT valueChanged(this); };
 /** see setPreview () */
-	void setPreview (const QString &code) { preview_code = code; emit valueChanged(this); };
+	void setPreview (const QString &code) { preview_code = code; Q_EMIT valueChanged(this); };
 
 	bool isValid () override { return (!(preprocess_code.isNull () || calculate_code.isNull () || printout_code.isNull ())); };
 
@@ -435,7 +435,7 @@ public:
 	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** reimplemented to do raise a warning, and do nothing else. */
 	bool setValue (const QString &value) override;
-public slots:
+public Q_SLOTS:
 /** unfortunately, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
 	void selfChanged (RKComponentPropertyBase *);
 /** a source property changed. Check the state */
@@ -472,7 +472,7 @@ public:
 
 	QVariant value (const QString &modifier=QString ()) override;
 	int type () override { return PropertySwitch; };
-public slots:
+public Q_SLOTS:
 /** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
 	void selfChanged (RKComponentPropertyBase *);
 /** a source property changed. Check the state */

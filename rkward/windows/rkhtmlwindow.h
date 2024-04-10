@@ -9,15 +9,18 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKHTMLWINDOW_H
 
 #include <QUrl>
-#include <kparts/part.h>
-#include <kio/jobclasses.h>
+#include <KParts/Part>
 
 #include <QDomElement>
 #include <QNetworkRequest>
 
 #include "../windows/rkmdiwindow.h"
 
+namespace KIO {
+class Job;
+}
 class KActionCollection;
+class KJob;
 class KRecentFilesAction;
 class QAction;
 class RKComponentHandle;
@@ -60,7 +63,7 @@ public:
  *  If window is not 0, and the url is a help window, open it, there (otherwise in a new window).
  *  TODO: move to RKWorkplace? As this can really open a bunch of different things, although generally _from_ an html window.
  */
-	static bool handleRKWardURL (const QUrl &url, RKHTMLWindow *window=0);
+	static bool handleRKWardURL(const QUrl &url, RKHTMLWindow *window=nullptr);
 	void openRKHPage (const QUrl &url);
 
 	bool isModified () override;
@@ -72,7 +75,7 @@ public:
 	RKOutputDirectory *outputDirectory() const { return dir; };
 
 	WindowMode mode () { return window_mode; };
-public slots:
+public Q_SLOTS:
 	void slotPrint();
 	void slotExport();
 	void slotSave();
@@ -89,9 +92,9 @@ public slots:
 	void refresh ();
 	void zoomIn ();
 	void zoomOut ();
-	void setTextEncoding (QTextCodec* encoding);
+	void setTextEncoding (QStringConverter::Encoding encoding);
 	void updateState();
-private slots:
+private Q_SLOTS:
 	void scrollToBottom ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
 	void mimeTypeJobFail (KJob*);
@@ -173,7 +176,7 @@ friend class RKHTMLWindow;
 class RKHelpRenderer {
 public:
 /** ctor */
-	explicit RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
+	explicit RKHelpRenderer(QIODevice *_device) { device = _device; help_xml = nullptr; component_xml = nullptr; };
 /** destructor */
 	~RKHelpRenderer () {};
 /** render an rkward://[page|component]-page to the device given in the ctor.
@@ -223,7 +226,7 @@ private:
 	QString current_default_path;
 	KDirWatch *file_watcher;
 	QMultiHash<QString, RKHTMLWindow *> windows;
-private slots:
+private Q_SLOTS:
 	void fileChanged (const QString &path);
 	void windowDestroyed (QObject *window);
 	void rewatchOutput ();

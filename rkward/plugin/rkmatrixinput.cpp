@@ -17,7 +17,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rktableview.h"
 #include "../dataeditor/rktextmatrix.h"
 #include "../misc/xmlhelper.h"
-#include "../misc/rkcompatibility.h"
 
 #include "../debug.h"
 
@@ -120,7 +119,7 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 		return QString ("cbind (\n" + ret.join (",\n") + "\n)");
 	} else if (modifier.startsWith (QLatin1String ("row."))) {
 		bool ok;
-		int row = modifier.midRef(4).toInt(&ok);
+		int row = QStringView(modifier).mid(4).toInt(&ok);
 		if ((row >= 0) && ok) {
 			return (rowStrings (row));
 		}
@@ -178,16 +177,16 @@ void RKMatrixInput::setCellValue (int row, int column, const QString& value) {
 	}
 	col.storage[row] = value;
 	updateColumn (column);
-	emit model->dataChanged(model->index(row, column), model->index(row, column));
+	Q_EMIT model->dataChanged(model->index(row, column), model->index(row, column));
 }
 
 void RKMatrixInput::setColumnValue (int column, const QString& value) {
 	RK_TRACE (PLUGIN);
 
 	if (!expandStorageForColumn (column)) return;
-	columns[column].storage = value.split ('\t', RKCompatibility::KeepEmptyParts());
+	columns[column].storage = value.split ('\t', Qt::KeepEmptyParts);
 	updateColumn (column);
-	emit model->dataChanged (model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
+	Q_EMIT model->dataChanged (model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
 }
 
 void RKMatrixInput::updateColumn (int column) {
@@ -301,7 +300,7 @@ void RKMatrixInput::updateAll () {
 	}
 	if (new_valid != is_valid) {
 		is_valid = new_valid;
-		emit model->headerDataChanged(Qt::Horizontal, 0, column_count->intValue() - 1);
+		Q_EMIT model->headerDataChanged(Qt::Horizontal, 0, column_count->intValue() - 1);
 	}
 	changed ();
 }
@@ -323,9 +322,9 @@ void RKMatrixInput::dimensionPropertyChanged (RKComponentPropertyBase *property)
 		}
 	}
 
-	emit model->layoutAboutToBeChanged();
+	Q_EMIT model->layoutAboutToBeChanged();
 	updateAll();
-	emit model->layoutChanged();
+	Q_EMIT model->layoutChanged();
 }
 
 void RKMatrixInput::tsvPropertyChanged () {
@@ -334,7 +333,7 @@ void RKMatrixInput::tsvPropertyChanged () {
 	RK_TRACE (PLUGIN);
 
 	columns.clear ();
-	QStringList coldata = fetchStringValue (tsv_data).split ('\n', RKCompatibility::KeepEmptyParts());
+	QStringList coldata = fetchStringValue (tsv_data).split ('\n', Qt::KeepEmptyParts);
 	for (int i = 0; i < coldata.size (); ++i) {
 		setColumnValue (i, coldata[i]);
 	}

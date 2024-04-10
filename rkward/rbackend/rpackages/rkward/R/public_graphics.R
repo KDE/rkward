@@ -82,8 +82,6 @@
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "SVG") {
 		if (!capabilities ("cairo")) {	# cairo support is not always compiled in
-			# requireNamespace ("cairoDevice")
-			# svg <- Cairo_svg
 			requireNamespace ("Cairo")
 			svg <- Cairo::CairoSVG
 		}

@@ -55,7 +55,7 @@ public:
 	};
 	
 	static bool plotHistoryEnabled () { return graphics_hist_enable; };
-public slots:
+public Q_SLOTS:
 	void boxChanged ();
 private:
 	void updateControls ();

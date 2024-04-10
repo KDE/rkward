@@ -103,7 +103,7 @@ void RKOrphanNamespacesObject::updateNamespacesFromR (RCommandChain* chain, cons
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		RObject *object = childmap[i];
 		if (!current_symbols.contains (object->getShortName ())) {
-			RKModificationTracker::instance()->removeObject (object, 0, true);
+			RKModificationTracker::instance()->removeObject(object, nullptr, true);
 		}
 	}
 
@@ -131,7 +131,7 @@ RKNamespaceObject* RKOrphanNamespacesObject::findOrphanNamespace (const QString&
 			return static_cast<RKNamespaceObject*> (obj);
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 QString RKOrphanNamespacesObject::getObjectDescription () const {

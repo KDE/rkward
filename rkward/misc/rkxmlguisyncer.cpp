@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKXMLGUISyncer* RKXMLGUISyncer::syncer = 0;
+RKXMLGUISyncer* RKXMLGUISyncer::syncer = nullptr;
 
 //static
 RKXMLGUISyncer *RKXMLGUISyncer::self () {
@@ -50,8 +50,9 @@ void RKXMLGUISyncer::watchXMLGUIClientUIrc (KXMLGUIClient *client, bool recursiv
 	}
 
 	if (recursive) {
-		foreach (KXMLGUIClient *child, client->childClients ()) {
-			watchXMLGUIClientUIrc (child, true);
+		const auto children = client->childClients();
+		for (KXMLGUIClient *child : children) {
+			watchXMLGUIClientUIrc(child, true);
 		}
 	}
 }
@@ -61,7 +62,7 @@ void RKXMLGUISyncer::registerChangeListener (KXMLGUIClient *watched_client, QObj
 
 	KActionCollection *ac = watched_client->actionCollection ();
 
-	RKXMLGUISyncerNotifier *notifier = new RKXMLGUISyncerNotifier (0);
+	RKXMLGUISyncerNotifier *notifier = new RKXMLGUISyncerNotifier(nullptr);
 	d->connect (notifier, SIGNAL (changed(KXMLGUIClient*)), receiver, method);
 
 	d->notifier_map.insert(ac, notifier);

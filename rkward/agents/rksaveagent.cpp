@@ -60,7 +60,7 @@ bool checkOverwriteWorkspace (const QUrl &url, QWidget *parent) {
 bool RKSaveAgent::saveWorkspaceAs(const QUrl& previous_url) {
 	RK_TRACE(APP);
 
-	QUrl save_url = QUrl::fromLocalFile(QFileDialog::getSaveFileName(RKWardMainWindow::getMain(), QString(), previous_url.toLocalFile(), i18n("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter()), 0, QFileDialog::DontConfirmOverwrite));
+	QUrl save_url = QUrl::fromLocalFile(QFileDialog::getSaveFileName(RKWardMainWindow::getMain(), QString(), previous_url.toLocalFile(), i18n("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter()), nullptr, QFileDialog::DontConfirmOverwrite));
 	if (save_url.isEmpty()) return false;
 	if (!checkOverwriteWorkspace(save_url, RKWardMainWindow::getMain())) return false;
 
@@ -75,7 +75,7 @@ bool RKSaveAgent::saveWorkspace(const QUrl& _url) {
 	if (url.isEmpty()) return saveWorkspaceAs();
 
 	RKWorkplace::mainWorkplace()->flushAllData();
-	auto save_chain = RInterface::startChain(0);
+	auto save_chain = RInterface::startChain(nullptr);
 
 	RKWorkplace::mainWorkplace()->saveWorkplace(url, save_chain);
 	auto command = new RCommand("save.image(" + RObject::rQuote(url.toLocalFile()) + ')', RCommand::App);

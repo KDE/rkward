@@ -56,7 +56,7 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	if (!object->isPseudoObject ()) {
 		if (removed_in_workspace) {
 			if (ed && (ed->getObject () == object) && object->canWrite ()) {	// NOTE: do not allow restoring of columns in a data.frame this way. See https://mail.kde.org/pipermail/rkward-devel/2012-March/003225.html and replies.
-				if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?", object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
+				if (KMessageBox::questionTwoActions(nullptr, i18n("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?", object->getFullName()), i18n("Restore object?"), KStandardGuiItem::ok(), KStandardGuiItem::cancel()) == KMessageBox::PrimaryAction) {
 					ed->restoreObject (object);
 					/* TODO: It would make a lot of sense to allow restoring to a different name, and possibly different location. This may need some thinking. Probably something like:
 					 * 	object->parentObject ()->removeChildNoDelete (parent);
@@ -72,12 +72,12 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 			}
 		} else {
 			if (editor || ed) {
-				if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? The object is currently opened for editing, it will be removed in the editor, too. There's no way to get it back.", object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
+				if (KMessageBox::questionTwoActions (nullptr, i18n ("Do you really want to remove the object '%1'? The object is currently opened for editing, it will be removed in the editor, too. There's no way to get it back.", object->getFullName ()), i18n ("Remove object?"), KStandardGuiItem::remove(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction) {
 					return false;
 				}
 			} else {
 				// TODO: check for other editors editing this object
-				if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? There's no way to get it back.", object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
+				if (KMessageBox::questionTwoActions (nullptr, i18n ("Do you really want to remove the object '%1'? There's no way to get it back.", object->getFullName ()), i18n ("Remove object?"), KStandardGuiItem::remove(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction) {
 					return false;
 				}
 			}
@@ -98,7 +98,7 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 		beginRemoveRows (object_index, object_row, object_row);
 	}
 
-	if (!(updates_locked || object->isPseudoObject ())) sendListenerNotification (RObjectListener::ObjectRemoved, object, 0, 0, 0);
+	if (!(updates_locked || object->isPseudoObject ())) sendListenerNotification (RObjectListener::ObjectRemoved, object, 0, 0, nullptr);
 
 	object->remove (removed_in_workspace);
 
@@ -128,7 +128,7 @@ void RKModificationTracker::moveObject (RContainerObject *parent, RObject* child
 	RK_ASSERT (parent->findChildByIndex (new_index) == child);
 	if (!updates_locked) {
 		endInsertRows ();
-		sendListenerNotification (RObjectListener::ChildMoved, parent, old_index, new_index, 0);
+		sendListenerNotification(RObjectListener::ChildMoved, parent, old_index, new_index, nullptr);
 	}
 }
 
@@ -138,10 +138,10 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 	object->rename (new_name);
 
 	if (!updates_locked) {
-		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, 0);
+		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, nullptr);
 
 		QModelIndex object_index = indexFor (object);
-		emit dataChanged(object_index, object_index);
+		Q_EMIT dataChanged(object_index, object_index);
 	}
 }
 
@@ -159,7 +159,7 @@ void RKModificationTracker::endAddObject (RObject *object, RObject* parent, int 
 	RK_TRACE (OBJECTS);
 
 	if (!updates_locked) {
-		if (!object->isPseudoObject ()) sendListenerNotification (RObjectListener::ChildAdded, parent, position, 0, 0);
+		if (!object->isPseudoObject ()) sendListenerNotification(RObjectListener::ChildAdded, parent, position, 0, nullptr);
 		endInsertRows ();
 	}
 }
@@ -168,10 +168,10 @@ void RKModificationTracker::objectMetaChanged (RObject *object) {
 	RK_TRACE (OBJECTS);
 
 	if (!updates_locked) {
-		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, 0);
+		sendListenerNotification(RObjectListener::MetaChanged, object, 0, 0, nullptr);
 
 		QModelIndex object_index = indexFor (object);
-		emit dataChanged(object_index, object_index.sibling(object_index.row(), ColumnCount-1));
+		Q_EMIT dataChanged(object_index, object_index.sibling(object_index.row(), ColumnCount-1));
 	}
 }
 
@@ -183,7 +183,7 @@ void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeS
 		delete changes;
 
 		QModelIndex object_index = indexFor (object);
-		emit dataChanged(object_index, object_index.sibling(object_index.row(), ColumnCount-1)); // might have changed dimensions, for instance
+		Q_EMIT dataChanged(object_index, object_index.sibling(object_index.row(), ColumnCount-1)); // might have changed dimensions, for instance
 	}
 }
 
@@ -230,7 +230,7 @@ void RKModificationTracker::sendListenerNotification (RObjectListener::Notificat
 		if (o->isContainer ()) {
 			RContainerObject *c = static_cast<RContainerObject*> (o);
 			for (int i = c->numChildren () - 1; i >= 0; --i) {
-				sendListenerNotification (RObjectListener::ObjectRemoved, c->findChildByIndex (i), 0, 0, 0);
+				sendListenerNotification(RObjectListener::ObjectRemoved, c->findChildByIndex(i), 0, 0, nullptr);
 			}
 		}
 	}
@@ -292,7 +292,7 @@ QModelIndex RKObjectListModel::parent (const QModelIndex& index) const {
 int RKObjectListModel::rowCount (const QModelIndex& parent) const {
 	RK_TRACE (OBJECTS);
 
-	RObject* parent_object = 0;
+	RObject* parent_object = nullptr;
 	if (parent.isValid ()) parent_object = static_cast<RObject*> (parent.internalPointer ());
 	else return 2;       // the root item
 
@@ -360,7 +360,7 @@ QVariant RKObjectListModel::headerData (int section, Qt::Orientation orientation
 bool RKObjectListModel::hasChildren(const QModelIndex& parent) const {
 	RK_TRACE (OBJECTS);
 
-	RObject* parent_object = 0;
+	RObject* parent_object = nullptr;
 	if (parent.isValid ()) parent_object = static_cast<RObject*> (parent.internalPointer ());
 	else return true;		// the root item
 

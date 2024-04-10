@@ -63,7 +63,7 @@ RKProgressControl::RKProgressControl (QObject *parent, const QString &text, cons
 	RKProgressControl::caption = caption;
 	RKProgressControl::mode = mode_flags;
 
-	dialog = 0;
+	dialog = nullptr;
 	is_done = false;
 	modal = false;
 	autodelete = false;
@@ -151,9 +151,9 @@ void RKProgressControl::addRCommand (RCommand *command, bool done_when_finished)
 	outstanding_commands.append(command);
 	connect(command->notifier(), &RCommandNotifier::commandOutput, this, QOverload<RCommand*, const ROutput*>::of(&RKProgressControl::newOutput));
 	if (done_when_finished) {
-		command->whenFinished(this, [this, done_when_finished](RCommand* command) {
+		command->whenFinished(this, [this](RCommand* command) {
 			outstanding_commands.removeAll(command);
-			if (done_when_finished) done();
+			done();
 		});
 	}
 }
@@ -161,7 +161,7 @@ void RKProgressControl::addRCommand (RCommand *command, bool done_when_finished)
 void RKProgressControl::dialogDestroyed () {
 	RK_TRACE (MISC);
 
-	dialog = 0;
+	dialog = nullptr;
 	if ((!is_done) && (mode & AllowCancel)) {
 		is_done = true;
 		if (mode & AutoCancelCommands) {
@@ -169,7 +169,7 @@ void RKProgressControl::dialogDestroyed () {
 				RInterface::instance()->cancelCommand(*it);
 			}
 		}
-		emit cancelled();
+		Q_EMIT cancelled();
 	}
 }
 
@@ -213,7 +213,7 @@ QString RKProgressControl::fullCommandOutput() {
 	RK_TRACE (MISC);
 
 	QString ret;
-	foreach (const ROutput& out, output_log) ret.append (out.output);
+	for (const ROutput& out : std::as_const(output_log)) ret.append (out.output);
 	return ret;
 }
 
@@ -408,13 +408,16 @@ RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool all
 	wrapper->setAutoFillBackground(true);
 	auto layout = new QVBoxLayout(wrapper);
 	layout->setContentsMargins(0,0,0,0);
+	layout->setSpacing(0);
 	message_widget = new KMessageWidget();
+	message_widget->setPosition(KMessageWidget::Position::Header);
 	message_widget->setWordWrap(true);
 	message_widget->setCloseButtonVisible(false);  // we want a button, instead, for consistency with cancel
 	if (allow_cancel) {
 		setCloseAction(i18n("Cancel"));
 	}
 	output_display = new QTextEdit();
+	output_display->setProperty("_breeze_force_frame", false);
 	layout->addWidget(message_widget);
 	layout->addWidget(output_display);
 	wrapper->resize(display_area->size());

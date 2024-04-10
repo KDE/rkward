@@ -7,13 +7,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkworkplace.h"
 
-#include <kparts/partmanager.h>
-#include <kmessagebox.h>
+#include <KParts/PartManager>
+#include <KMessageBox>
 #include <KLocalizedString>
-#include <kactioncollection.h>
-#include <krun.h>
+#include <KActionCollection>
 #include <KSharedConfig>
 #include <KMessageWidget>
+#include <KIO/OpenUrlJob>
 
 #include <QFileInfo>
 #include <QCryptographicHash>
@@ -44,7 +44,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../rkward.h"
@@ -52,17 +51,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 // static
-RKWorkplace *RKWorkplace::main_workplace = 0;
+RKWorkplace *RKWorkplace::main_workplace = nullptr;
 
 #include <QLabel> // remove ME
 
 RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
-	RK_ASSERT (main_workplace == 0);
+	RK_ASSERT (main_workplace == nullptr);
 
 	main_workplace = this;
 	QDesktopServices::setUrlHandler("rkward", this, "openRKWardUrl");
-	_workspace_config = 0;
+	_workspace_config = nullptr;
 	window_placement_override = RKMDIWindow::AnyWindowState;
 
 	// message area
@@ -124,7 +123,7 @@ RKWorkplace::~RKWorkplace () {
 	delete _workspace_config;
 //	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
 	for (int i = 0; i < windows.size (); ++i) {
-		disconnect (windows[i], 0, this, 0);
+		disconnect (windows[i], nullptr, this, nullptr);
 	}
 }
 
@@ -172,9 +171,9 @@ void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
 			_workspace_config = _new_config;
 		} else {
 			delete _workspace_config;
-			_workspace_config = 0;
+			_workspace_config = nullptr;
 		}
-		emit workspaceUrlChanged(url);
+		Q_EMIT workspaceUrlChanged(url);
 	}
 }
 
@@ -268,7 +267,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 			}
 		}
 		if (pos < 0) {   // not yet known: implicit registration -> create corresponding named_window_spec on the fly.
-			registerNamedWindow (window_name_override, 0, attached ? RKWardMainWindow::getMain () : 0);
+			registerNamedWindow(window_name_override, nullptr, attached ? RKWardMainWindow::getMain() : nullptr);
 			pos = named_windows.size () - 1;
 		}
 
@@ -286,7 +285,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 
 		// add window in the correct area
 		if (nw.parent == RKWardMainWindow::getMain ()) attached = true;
-		else if (nw.parent == 0) attached = false;
+		else if (nw.parent == nullptr) attached = false;
 		else { // custom parent
 			RKXMLGUIPreviewArea* area = qobject_cast<RKXMLGUIPreviewArea*>(nw.parent);
 			if (!area) {
@@ -314,7 +313,8 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 void RKWorkplace::placeToolWindows() {
 	RK_TRACE (APP);
 
-	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
+	const auto windows = RKToolWindowList::registeredToolWindows ();
+	for (const RKToolWindowList::ToolWindowRepresentation& rep : windows) {
 		placeInToolWindowBar (rep.window, rep.default_placement);
 	}
 }
@@ -378,7 +378,7 @@ RKMDIWindow* RKWorkplace::getNamedWindow (const QString& id) {
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 void RKWorkplace::namedWindowDestroyed (QObject* window) {
@@ -390,7 +390,7 @@ void RKWorkplace::namedWindowDestroyed (QObject* window) {
 				named_windows.removeAt (i);
 				return;
 			} else {
-				named_windows[i].window = 0;
+				named_windows[i].window = nullptr;
 			}
 		}
 	}
@@ -449,11 +449,11 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype.name ()));
 	}
 
-	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.toDisplayString ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
+	if (KMessageBox::questionTwoActions (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.toDisplayString ()), i18n ("Open in default application?"), KStandardGuiItem::open(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction) {
 		return false;
 	}
-	KRun *runner = new KRun (url, topLevelWidget());		// according to KRun-documentation, KRun will self-destruct when done.
-	runner->setRunExecutables (false);
+	auto openUrlJob = new KIO::OpenUrlJob(url);
+	openUrlJob->start();
 	return false;
 }
 
@@ -486,7 +486,7 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 
 	if (url.isEmpty ()) {
 		RK_ASSERT (false);
-		return 0;
+		return nullptr;
 	}
 
 	if (only_once) {
@@ -603,7 +603,7 @@ bool RKWorkplace::canEditObject (RObject *object) {
 RKEditor* RKWorkplace::editNewDataFrame (const QString &name) {
 	RK_TRACE (APP);
 
-	RKEditorDataFrame* ed = new RKEditorDataFrame (name, 0);
+	RKEditorDataFrame* ed = new RKEditorDataFrame(name, nullptr);
 	addWindow (ed);
 	ed->activate ();
 
@@ -619,12 +619,12 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 		if (iobj->isVariable () && iobj->parentObject ()->isDataFrame ()) {
 			iobj = iobj->parentObject ();
 		} else {
-			return 0;
+			return nullptr;
 		}
 	}
 
 	bool activate = window_style_override != "preview";
-	RKEditor *ed = 0;
+	RKEditor *ed = nullptr;
 	QList<RKEditor*> existing_editors = object->editors ();
 	RKMDIWindow *nw = getNamedWindow(window_name_override);
 	for (int i = 0; i < existing_editors.size (); ++i) {
@@ -640,16 +640,17 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 
 	if (!ed) {
 		unsigned long size = 1;
-		foreach (int dim, iobj->getDimensions ()) {
+		const auto objDims = iobj->getDimensions ();
+		for (int dim : objDims) {
 			size *= dim;
 		}
 		if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {
 			if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit using command line means or to split into smaller chunks before editing. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure this warning (or turn it off entirely) under Settings->Configure RKWard->General.\nReally edit object?", iobj->getFullName (), size), i18n ("About to edit very large object")) != KMessageBox::Continue) {
-				return 0;
+				return nullptr;
 			}
 		}
 
-		ed = new RKEditorDataFrame (static_cast<RContainerObject*> (iobj), 0);
+		ed = new RKEditorDataFrame(static_cast<RContainerObject*>(iobj), nullptr);
 		addWindow (ed);
 	}
 
@@ -746,7 +747,7 @@ void RKWorkplace::removeWindow (QObject *object) {
 void RKWorkplace::windowRemoved () {
 	RK_TRACE (APP);
 
-	if (activeWindow (RKMDIWindow::AnyWindowState) != 0) return;	// some RKMDIWindow is already active
+	if (activeWindow (RKMDIWindow::AnyWindowState) != nullptr) return;	// some RKMDIWindow is already active
 	QWidget *appWin = QApplication::activeWindow ();
 	if (appWin && appWin != RKWardMainWindow::getMain () && !qobject_cast<DetachedWindowContainer*> (appWin)) return; // a dialog window or the like is active
 
@@ -901,7 +902,7 @@ ItemSpecification parseItemDescription (const QString &description) {
 			RK_ASSERT (false);
 			return ret;
 		}
-		ret.params = description.mid (typeend + 2, specstart - typeend - 2).split (':', RKCompatibility::SkipEmptyParts());
+		ret.params = description.mid (typeend + 2, specstart - typeend - 2).split (':', Qt::SkipEmptyParts);
 		ret.specification = description.mid (specstart + 2);
 	} else {
 		ret.specification = description.mid (typeend + 1);
@@ -939,7 +940,7 @@ RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, const ItemSpecifica
 bool RKWorkplace::restoreDocumentWindow (const QString &description, const QString &base) {
 	RK_TRACE (APP);
 
-	return (restoreDocumentWindowInternal (this, parseItemDescription (description), base) != 0);
+	return (restoreDocumentWindowInternal(this, parseItemDescription(description), base) != nullptr);
 }
 
 QStringList RKWorkplace::makeWorkplaceDescription () {
@@ -952,8 +953,8 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	if (base_url.isLocalFile () && !base_url.isEmpty ()) workplace_description.append ("base::::" + base_url.url ());
 
 	// window order in the workplace view may have changed with respect to our list. Thus we first generate a properly sorted list
-	RKWorkplaceObjectList list = getObjectList (RKMDIWindow::DocumentWindow, RKMDIWindow::Detached);
-	foreach (RKMDIWindow *win, list) {
+	const RKWorkplaceObjectList list = getObjectList (RKMDIWindow::DocumentWindow, RKMDIWindow::Detached);
+	for (RKMDIWindow *win : list) {
 		QString desc = makeItemDescription (win);
 		if (!desc.isEmpty ()) workplace_description.append (desc);
 	}
@@ -961,8 +962,8 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	workplace_description.append (QStringLiteral ("layout::::") + wview->listLayout ());
 	workplace_description.append (wview->listContents ());
 
-	list = getObjectList (RKMDIWindow::ToolWindow, RKMDIWindow::AnyWindowState);
-	foreach (RKMDIWindow *win, list) {
+	const auto objectList = getObjectList (RKMDIWindow::ToolWindow, RKMDIWindow::AnyWindowState);
+	for (RKMDIWindow *win : objectList) {
 		QString desc = makeItemDescription (win);
 		if (!desc.isEmpty ()) workplace_description.append (desc);
 	}
@@ -996,7 +997,7 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	QString base;
 	for (int i = 0; i < description.size (); ++i) {
 		ItemSpecification spec = parseItemDescription (description[i]);
-		RKMDIWindow *win = 0;
+		RKMDIWindow *win = nullptr;
 		if (spec.type == "base") {
 			RK_ASSERT (i == 0);
 			base = spec.specification;
@@ -1060,7 +1061,7 @@ void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
 
 class RKMDIWindowHistoryWidget : public QListWidget {
 public:
-	RKMDIWindowHistoryWidget () : QListWidget (0) {
+	RKMDIWindowHistoryWidget() : QListWidget(nullptr) {
 		RK_TRACE (APP);
 
 		current = 0;
@@ -1147,7 +1148,7 @@ private:
 RKMDIWindowHistory::RKMDIWindowHistory (QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
-	switcher = 0;
+	switcher = nullptr;
 }
 
 RKMDIWindowHistory::~RKMDIWindowHistory () {
@@ -1168,7 +1169,7 @@ void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
 
 	updateSwitcher ();
 
-	emit activeWindowChanged (window);
+	Q_EMIT activeWindowChanged (window);
 }
 
 void RKMDIWindowHistory::next (QAction* prev_action, QAction *next_action) {
@@ -1191,7 +1192,7 @@ RKMDIWindow* RKMDIWindowHistory::previousDocumentWindow () {
 	for (int i = recent_windows.count () - 1; i >= 0; --i) {
 		if (!recent_windows[i]->isToolWindow ()) return (recent_windows[i]);
 	}
-	return 0;
+	return nullptr;
 }
 
 void RKMDIWindowHistory::updateSwitcher () {
@@ -1235,7 +1236,7 @@ void RKMDIWindowHistory::switcherDestroyed () {
 	RK_TRACE (APP);
 
 	RK_ASSERT (switcher);
-	switcher = 0;
+	switcher = nullptr;
 }
 
 void RKMDIWindowHistory::popLastWindow (RKMDIWindow* match) {

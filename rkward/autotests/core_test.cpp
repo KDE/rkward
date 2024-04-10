@@ -1,6 +1,6 @@
 /*
 core_test - This file is part of RKWard (https://rkward.kde.org). Created: Thu Jun 09 2022
-SPDX-FileCopyrightText: 2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QRegularExpression>
 
 #include <KAboutData>
+#include <KLocalizedString>
 #include <KActionCollection>
 
 #include "../debug.h"
@@ -43,10 +44,11 @@ void testLog(const char* fmt, ...) {
 	va_end(ap);
 }
 
-void RKDebug (int, int, const char* fmt, ...) {
+void RKDebug (int, int level, const char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	testLog(fmt, ap);
+	if (level >= DL_ERROR) QFAIL("error message during test (see above)");
 	va_end(ap);
 }
 
@@ -88,11 +90,29 @@ class RKWardCoreTest: public QObject {
 	}
 
 	void listBackendLog() {
-		testLog("Listing contents of /tmp/rkward.rbackend");
+		testLog("Listing (new) contents of /tmp/rkward.rbackend");
+		QByteArray output, oldoutput;
 		QFile f(QDir::tempPath() + "/rkward.rbackend");
-		f.open(QIODevice::ReadOnly);
-		auto output = f.readAll();
-		testLog("%s", output.data());
+		if (f.open(QIODevice::ReadOnly)) {
+			output = f.readAll();
+			f.close();
+		}
+
+		QFile fl(QDir::tempPath() + "/rkward.rbackend.listed");
+		if (fl.open(QIODevice::ReadOnly)) {
+			oldoutput = fl.readAll();
+			fl.close();
+		}
+
+		if (fl.open(QIODevice::ReadWrite | QIODevice::Truncate) ) {
+			fl.write(output);
+			fl.close();
+		}
+
+		if (output.startsWith(oldoutput)) {
+			output = output.sliced(oldoutput.length());
+		}
+		testLog(qPrintable(output.data()));
 	}
 
 	void waitForBackendStarted() {
@@ -117,7 +137,7 @@ class RKWardCoreTest: public QObject {
 	}
     
 	QPointer<RKWardMainWindow> main_win;
-private slots:
+private Q_SLOTS:
 	void init() {
 		testLog("Starting next test");
 	}
@@ -125,6 +145,7 @@ private slots:
 	void cleanup() {
 		testLog("Cleanup. Backend status: %s", qPrintable(backendStatus()));
 		waitForAllFinished();
+		listBackendLog();
 		testLog("Cleanup done. Backend status: %s", qPrintable(backendStatus()));
 	}
 
@@ -132,6 +153,7 @@ private slots:
 		_test_timer.start();
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
 		// qputenv("QT_LOGGING_RULES", "qt.qpa.windows.debug=true");  // Deliberately overwriting the rules set in the CI, as we are producing too much output, otherwise  -- TODO: does not appear to have any effect
+		KLocalizedString::setApplicationDomain("rkward");
 		KAboutData::setApplicationData(KAboutData("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL)); // component name needed for .rc files to load
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		testLog(R_EXECUTABLE);
@@ -147,7 +169,7 @@ private slots:
 	}
 
 	void getIntVector() {
-		auto c = new RCommand("c(1, 2, 3)", RCommand::GetIntVector);
+		auto c = new RCommand("c(1, 2, 3)", RCommand::GetIntVector | RCommand::App);
 		runCommandWithTimeout(c, nullptr, [](RCommand *command) {
 			QCOMPARE(command->getDataType(), RData::IntVector);
 			QCOMPARE(command->getDataLength(), 3);
@@ -173,7 +195,7 @@ private slots:
 		RInterface::whenAllFinished(this, []() {
 			auto a = RObjectList::getGlobalEnv()->findObject("a");
 			QVERIFY(a != nullptr);
-			QVERIFY(a->isContainer());
+			QVERIFY(a && a->isContainer());
 			auto ac = static_cast<RContainerObject*>(a);
 			QCOMPARE(ac->numChildren(), 3);
 			QCOMPARE(ac->findChildByIndex(0)->getDataType(), RObject::DataNumeric);
@@ -197,7 +219,7 @@ private slots:
 		runCommandAsync(new RCommand("dx <- data.frame(a=1:2, b=3:4)", RCommand::User), nullptr, [this, &lock](RCommand *) {
 			auto dx = RObjectList::getGlobalEnv()->findObject("dx");
 			QVERIFY(dx != nullptr);
-			QVERIFY(dx->isContainer());
+			QVERIFY(dx && dx->isContainer());
 			if (dx && dx->isContainer()) {
 			    auto dx_a = static_cast<RContainerObject*>(dx)->findChildByName("a");
 			    QVERIFY(dx_a != nullptr);
@@ -206,7 +228,7 @@ private slots:
 			    }
 			    dx->rename("dy");
 			}
-			auto c = new RCommand("dy$c", RCommand::GetIntVector);
+			auto c = new RCommand("dy$c", RCommand::GetIntVector | RCommand::App);
 			runCommandAsync(c, nullptr, [](RCommand *command) {
 			    QCOMPARE(command->getDataType(), RData::IntVector);
 			    QCOMPARE(command->getDataLength(), 2);
@@ -327,8 +349,16 @@ private slots:
 
 		QPointer<RInterface> oldiface = RInterface::instance();
 		restart_action->trigger();
+		QElapsedTimer t;
+		t.start();
 		while (oldiface) {  // action may be delayed until next event processing
 			qApp->processEvents();
+			if (t.elapsed() > 30000) {
+				testLog("Backend shutdown timed out");
+				auto m = QApplication::activeModalWidget();
+				testLog("Active modal window (if any): %p (%s)", m, qPrintable(m ? m->windowTitle() : QString()));
+				break;
+			}
 		}
 		testLog("Backend is restarting");
 		waitForBackendStarted();

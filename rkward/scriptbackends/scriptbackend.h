@@ -41,7 +41,7 @@ public:
 @param code_property If you supply a pointer to an RKComponentPropertyCode, The backend will directly set values for this property in response to calls to preproces (), calculate (), printout (), and cleanup ().
 @param add_headings (Only meaningful, if code_property is not 0). If set to true, heading comments will be added to each section of the code (e.g. "## Do calculations")
 @returns true on successful initialization, false on errors */
-	virtual bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true) = 0;
+	virtual bool initialize (RKComponentPropertyCode *code_property=nullptr, bool add_headings=true) = 0;
 	virtual void destroy () = 0;
 	
 	virtual void preprocess (int flags) = 0;
@@ -52,7 +52,7 @@ public:
 	virtual bool isBusy () { return busy; };
 	
 	virtual void writeData (const QVariant &data) = 0;
-signals:
+Q_SIGNALS:
 	void commandDone (int);
 	void idle ();
 	void requestValue (const QString &, const int);

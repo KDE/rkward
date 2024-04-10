@@ -17,7 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <functional>
 
 //static
-RCommandChain* RKSettingsModule::chain = 0;
+RCommandChain* RKSettingsModule::chain = nullptr;
 
 RKSettingsModule::RKSettingsModule(RKSettings *gui, QWidget *parent) : RKSettingsModuleWidget (parent, nullptr) {
 	connect(this, &RKSettingsModule::settingsChanged, gui, &RKSettings::enableApply);
@@ -35,7 +35,7 @@ RKSettingsModuleWidget::RKSettingsModuleWidget(QWidget *parent, RKSettingsModule
 
 void RKSettingsModuleWidget::change() {
 	changed = true;
-	emit settingsChanged();
+	Q_EMIT settingsChanged();
 }
 
 

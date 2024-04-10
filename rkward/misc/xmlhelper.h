@@ -27,7 +27,7 @@ public:
 /** create an instance of XMLHelper.
  @param filename the name of the file to parse. The file is not yet opened on construction. Use openXMLFile() for that. 
  @param default_catalog message catalog to use in case none is specified in the xml file itself. */
-	explicit XMLHelper (const QString &filename, const RKMessageCatalog *default_catalog=0);
+	explicit XMLHelper (const QString &filename, const RKMessageCatalog *default_catalog=nullptr);
 /** destructor */
 	~XMLHelper ();
 /** Return the a pointer to the message catalog in use. This may - or may not - be the same as specified as default catalog in the constructor.

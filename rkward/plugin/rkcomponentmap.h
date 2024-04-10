@@ -18,7 +18,7 @@ class XMLHelper;
 /** very simple helper class to keep track of .pluginmap files */
 class RKPluginMapFile {
 public:
-	RKPluginMapFile (const QString &filename, const QString &basedir, const RKMessageCatalog *_catalog) { RKPluginMapFile::filename = filename; RKPluginMapFile::basedir = basedir; catalog = _catalog; about = 0; };
+	RKPluginMapFile (const QString &filename, const QString &basedir, const RKMessageCatalog *_catalog) : basedir(basedir), filename(filename), catalog(_catalog), about(nullptr) {};
 	~RKPluginMapFile () { delete about; };
 
 	QString getBaseDir () const { return basedir; };
@@ -235,12 +235,12 @@ public:
 	};
 /** invokes the specified component as toplevel
 @param message If a non-null pointer to QString is given, error messages are written into this string *instead* of being displayed */
-	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message=0, RCommandChain *in_chain = 0);
+	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message = nullptr, RCommandChain *in_chain = nullptr);
 /** @returns for rk.list.plugins(): Return a list of all currently registered component ids, their context, menu, and label (i.e. current four strings per component) */
 	QStringList listPlugins ();
 	void setPluginStatus (const QStringList &ids, const QStringList &contexts, const QStringList& visible);
 	bool isPluginMapLoaded (const QString& abs_filename) const;
-public slots:
+public Q_SLOTS:
 /** Slot called, when a menu-item for a component is selected. Responsible for creating the GUI. */
 	void activateComponent ();
 private:

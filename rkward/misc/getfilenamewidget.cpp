@@ -85,7 +85,7 @@ void GetFileNameWidget::setFilter (const QString &filter) {
 	RK_TRACE (MISC);
 
 	RK_ASSERT (edit);
-	edit->setFilter (filter);
+	edit->setNameFilter (filter);
 }
 
 void GetFileNameWidget::updateLastUsedUrl (const QUrl& url) {
@@ -111,14 +111,14 @@ void GetFileNameWidget::hackOverrideDirDialog () {
 	dummy.setOptions (QFileDialog::ShowDirsOnly);
 	if (dummy.exec ()) {
 		edit->setUrl (QUrl::fromLocalFile (dummy.selectedFiles ().value (0)));
-		emit (locationChanged ());
+		Q_EMIT (locationChanged ());
 	}
 }
 #endif
 
 void GetFileNameWidget::locationEditChanged (const QString &) {
 	RK_TRACE (MISC);
-	emit locationChanged();
+	Q_EMIT locationChanged();
 }
 
 QString GetFileNameWidget::getLocation () {

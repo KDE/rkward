@@ -105,7 +105,7 @@ QString RKMDIWindow::shortCaption () {
 void RKMDIWindow::setCaption(const QString &caption) {
 	RK_TRACE(APP);
 	QWidget::setWindowTitle(caption);
-	emit captionChanged(this);
+	Q_EMIT captionChanged(this);
 	if (tool_window_bar) tool_window_bar->captionChanged(this);
 }
 
@@ -141,7 +141,7 @@ void RKMDIWindow::activate (bool with_focus) {
 		}
 	}
 
-	emit windowActivated(this);
+	Q_EMIT windowActivated(this);
 	if (with_focus) {
 		if (old_focus) old_focus->clearFocus ();
 		topLevelWidget ()->activateWindow ();
@@ -164,8 +164,8 @@ bool RKMDIWindow::close (CloseWindowMode ask_save) {
 			if (tool_window_bar) RKWorkplace::mainWorkplace ()->attachWindow (this);
 			else {
 				state = Attached;
-				hide ();
-				setParent (0);
+				hide();
+				setParent(nullptr);
 			}
 		}
 
@@ -214,14 +214,14 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 
 			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *>(e);
 			if (ev->activated()) {
-				emit windowActivated(this);
+				Q_EMIT windowActivated(this);
 				setFocus();      // focus doesn't always work correctly for the kate part
 				active = true;
 			} else {
 				active = false;
 			}
-			if (layout()->margin () < 1) {
-				layout()->setMargin (1);
+			if (layout()->contentsMargins ().top() < 1) {
+				layout()->setContentsMargins (1, 1, 1, 1);
 			}
 			update ();
 		}
@@ -300,7 +300,7 @@ void RKMDIWindow::slotActivateForFocusFollowsMouse () {
 	}
 }
 
-void RKMDIWindow::enterEvent (QEvent *event) {
+void RKMDIWindow::enterEvent (QEnterEvent *event) {
 	RK_TRACE (APP);
 
 	if (!isActive ()) {
@@ -340,10 +340,6 @@ void RKMDIWindow::showStatusMessageNow() {
 		layout->setContentsMargins (10, 10, 10, 10);
 		status_popup = new KMessageWidget (status_popup_container);
 		status_popup->setCloseButtonVisible (true);
-#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(6,0,0)
-		// see below
-		status_popup->setWordWrap(true);
-#endif
 		status_popup->setMessageType (KMessageWidget::Warning);
 		layout->addWidget (status_popup);
 		layout->addStretch ();
@@ -363,15 +359,7 @@ void RKMDIWindow::showStatusMessageNow() {
 		}
 		if (status_popup->text () != status_message) {
 			if (status_popup->isVisible ()) status_popup->hide (); // otherwise, the KMessageWidget does not update geometry (KF5, 5.15.0)
-#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(6,0,0)
-			// silly workaround: KMessageWidget does not specify top-alignment for its buttons unless in wordwrap mode.
-			// we don't want actual word wrap, but we do want top alignment
-			QString dummy = status_message;
-			if (!dummy.startsWith("<")) dummy = "<p>" + dummy + "</p>";
-			status_popup->setText (dummy.replace(" ", "&nbsp;"));
-#else
 			status_popup->setText (status_message);
-#endif
 			status_popup->animatedShow ();
 		}
 	} else {

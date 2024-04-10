@@ -172,7 +172,7 @@ bool RKVarLevelsTableModel::setData (const QModelIndex& index, const QVariant& v
 		endInsertRows ();
 	} else {
 		labels.insert (QString::number (index.row () + 1), text);
-		emit dataChanged(index, index);
+		Q_EMIT dataChanged(index, index);
 	}
 
 	if (text.isEmpty ()) {	// remove trailing empty rows
@@ -228,7 +228,7 @@ void EditLabelsDialog::accept () {
 
 EditLabelsDialogProxy::EditLabelsDialogProxy (QWidget* parent) : QWidget (parent) {
 	RK_TRACE (EDITOR);
-	dialog = 0;
+	dialog = nullptr;
 }
 
 EditLabelsDialogProxy::~EditLabelsDialogProxy () {
@@ -253,12 +253,12 @@ void EditLabelsDialogProxy::dialogDone (int result) {
 
 	if (result == QDialog::Accepted) {
 		labels = dialog->table->lmodel->labels;
-		emit done(this, RKItemDelegate::EditorExit);
+		Q_EMIT done(this, RKItemDelegate::EditorExit);
 	} else {
-		emit done(this, RKItemDelegate::EditorReject);
+		Q_EMIT done(this, RKItemDelegate::EditorReject);
 	}
 	dialog->deleteLater ();
-	dialog = 0;
+	dialog = nullptr;
 }
 
 

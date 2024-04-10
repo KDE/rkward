@@ -33,7 +33,7 @@ protected:
 	RKSelectListDialog (QWidget *parent, const QString &caption, const QStringList& choices, const QStringList& preselected, bool multiple);
 	/** destructor */
 	~RKSelectListDialog ();
-private slots:
+private Q_SLOTS:
 	void updateState ();
 private:
 	QListWidget *input;

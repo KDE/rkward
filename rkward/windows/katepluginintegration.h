@@ -34,7 +34,7 @@ public:
 	void loadPlugins(const QStringList &plugins);
 	KatePluginIntegrationWindow *mainWindow() const { return window; };
 	int knownPluginCount() const { return known_plugins.size(); };
-private slots:
+private Q_SLOTS:
 friend class KatePluginIntegrationWindow;
 	void saveConfigAndUnload();
 	// These are the implementations of the KTextEditor::Application interface.
@@ -64,6 +64,7 @@ friend class RKSettingsModuleKatePlugins;
 	QString idForPlugin(const KPluginMetaData &plugin) const;
 };
 
+class KatePluginWindow;
 class KatePluginIntegrationWindow : public QObject, public KXMLGUIClient {
 	Q_OBJECT
 public:
@@ -72,7 +73,7 @@ public:
 	KTextEditor::MainWindow *mainWindow() const { return main; };
 	KXMLGUIClient* persistentGuiClient() { return this; }
 	KXMLGUIClient* dynamicGuiClient() const { return dynamic_actions_client; }
-private slots:
+private Q_SLOTS:
 	// These are the implementations of the KTextEditor::MainWindow interface.
 	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
 	QWidget *createToolView(KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text);
@@ -91,12 +92,17 @@ private slots:
 	bool hideToolView(QWidget *widget);
 	QObject *pluginView(const QString &name);
 
-/* Apparently, these are truely optional, so let's disable them for the time being
+	/* Apparently, these are truely optional. We provide dummy implementations anyway to
+	 * get a better signal to noise ratio in warnings.
+	 *
+	 * "Viewbar" is the area containing line number, etc. If not created by the main window,
+	 * each view gets equipped with its own bar. That may actually be preferrable, as
+	 * our global bottom bar is quite crowded, already. */
 	QWidget *createViewBar(KTextEditor::View *view);
 	void deleteViewBar(KTextEditor::View *view);
 	void showViewBar(KTextEditor::View *view);
 	void hideViewBar(KTextEditor::View *view);
-	void addWidgetToViewBar(KTextEditor::View *view, QWidget *bar); */
+	void addWidgetToViewBar(KTextEditor::View *view, QWidget *bar);
 
 // New in Kate 2023-07, not yet formalized in KTextEditor
 	QWidget *toolviewForName(const QString &toolviewName);
@@ -108,16 +114,16 @@ friend class KatePluginIntegrationApp;
 	KTextEditor::MainWindow *main;
 	QObject* createPluginView(KTextEditor::Plugin* plugin);
 	struct PluginResources {
-		PluginResources() : view(0) {};
+		PluginResources() : view(nullptr) {};
 		QObject *view;
 		QList<KXMLGUIClient*> clients;
-		QList<RKMDIWindow*> windows;
+		QList<KatePluginWindow*> windows;
 	};
 	QHash<QObject*, PluginResources> plugin_resources;
 
 	KatePluginIntegrationApp *app;
 	KXMLGUIClient *dynamic_actions_client;
-private slots:
+private Q_SLOTS:
 	void catchXMLGUIClientsHack(KXMLGUIClient* client);
 	void activeWindowChanged(RKMDIWindow *window);
 private:

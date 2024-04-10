@@ -1,6 +1,6 @@
 /*
 rktoolwindowlist - This file is part of RKWard (https://rkward.kde.org). Created: Thu Apr 07 2011
-SPDX-FileCopyrightText: 2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2011-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -18,18 +18,18 @@ QList<RKToolWindowList::ToolWindowRepresentation>& RKToolWindowList::registeredT
 	return RKToolWindowListPrivate::registered_tool_windows;
 }
 
-void RKToolWindowList::registerToolWindow (RKMDIWindow *window, const QString &id, Placement default_placement, int default_shortcut) {
+void RKToolWindowList::registerToolWindow (RKMDIWindow *window, const QString &id, Placement default_placement, const QKeyCombination& default_shortcut) {
 	RK_TRACE (APP);
 
 	ToolWindowRepresentation tr;
 	tr.window = window;
 	tr.id = id;
 	tr.default_placement = default_placement;
+	tr.default_shortcut = default_shortcut;
 #ifdef Q_OS_MACOS
 	// HACK: Workaround for shortcut conflict issue: https://mail.kde.org/pipermail/rkward-devel/2011-December/003153.html
-	if (default_shortcut & Qt::AltModifier) default_shortcut |= Qt::ControlModifier;
+	if (default_shortcut.keyboardModifiers() & Qt::AltModifier) tr.default_shortcut = default_shortcut.keyboardModifiers() | Qt::ControlModifier | default_shortcut.key();
 #endif
-	tr.default_shortcut = default_shortcut;
 
 	RKToolWindowListPrivate::registered_tool_windows.append (tr);
 }
@@ -41,7 +41,7 @@ RKMDIWindow* RKToolWindowList::findToolWindowById (const QString &id) {
 		if (RKToolWindowListPrivate::registered_tool_windows[i].id == id) return RKToolWindowListPrivate::registered_tool_windows[i].window;
 	}
 
-	return 0;
+	return nullptr;
 }
 
 void RKToolWindowList::unregisterToolWindow (RKMDIWindow *window) {

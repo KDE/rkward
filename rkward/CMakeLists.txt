@@ -29,7 +29,6 @@ ADD_SUBDIRECTORY( misc )
 ADD_SUBDIRECTORY( core )
 ADD_SUBDIRECTORY( icons )
 ADD_SUBDIRECTORY( windows )
-ADD_SUBDIRECTORY( syntax )
 IF(BUILD_TESTING)
 	ADD_SUBDIRECTORY(autotests)
 ENDIF(BUILD_TESTING)
@@ -41,7 +40,7 @@ SET(RKWard_Sources
 	robjectviewer.cpp
 	rkconsole.cpp
 )
-QT5_ADD_RESOURCES(RKWard_Sources resources.qrc)
+QT_ADD_RESOURCES(RKWard_Sources resources.qrc icons/icons.qrc)
 
 # somehow the detected R paths from FindR.cmake do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
@@ -58,7 +57,7 @@ ADD_EXECUTABLE(rkward main.cpp)
 # NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
 TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
-FILE(RELATIVE_PATH RelPathToData /${BIN_INSTALL_DIR} /${DATA_INSTALL_DIR})
+FILE(RELATIVE_PATH RelPathToData /${KDE_INSTALL_BINDIR} /${KDE_INSTALL_DATADIR})
 TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DREL_PATH_TO_DATA="${RelPathToData}")
 
 SET_TARGET_PROPERTIES(rkward PROPERTIES
@@ -73,17 +72,17 @@ IF(APPLE)
 		@ONLY)
 ENDIF(APPLE)
 
-TARGET_LINK_LIBRARIES(rkward_lib windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui)
+TARGET_LINK_LIBRARIES(rkward_lib windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF6::WindowSystem Qt6::Widgets KF6::XmlGui)
 TARGET_LINK_LIBRARIES(rkward rkward_lib)
 IF(KF5Crash_FOUND)
-	TARGET_LINK_LIBRARIES(rkward KF5::Crash)
+	TARGET_LINK_LIBRARIES(rkward KF6::Crash)
 	SET_SOURCE_FILES_PROPERTIES(main.cpp PROPERTIES COMPILE_DEFINITIONS WITH_KCRASH=1)
 ENDIF(KF5Crash_FOUND)
 
 ########### install files ###############
 
-INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward)
-INSTALL(FILES resource.ver DESTINATION ${DATA_INSTALL_DIR}/rkward)
+INSTALL(DIRECTORY plugins/ pages DESTINATION ${KDE_INSTALL_DATADIR}/rkward)
+INSTALL(FILES resource.ver DESTINATION ${KDE_INSTALL_DATADIR}/rkward)
 # This is for running directly from the build tree.
 EXECUTE_PROCESS(
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall
@@ -104,7 +103,6 @@ ENDIF(SYMLINKS_FAILED)
 
 
 IF(APPLE)
-    INSTALL(TARGETS rkward DESTINATION ${BUNDLE_INSTALL_DIR})
     if(APPLE_STANDALONE_BUNDLE)
 #         INSTALL(FILES ${CMAKE_SOURCE_DIR}/rkward/icons/app-icon/rkward.icns DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents/Resources)
 #         INSTALL(FILES ${RKWARD_INFOPLIST_FILE} DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents)
@@ -122,24 +120,23 @@ IF(APPLE)
     set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${RKVERSION_NUMBER}")
     set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_BUNDLE_VERSION "${RKVERSION_NUMBER}")
     set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_COPYRIGHT "RKWard Team")
-ELSE()
-    INSTALL(TARGETS rkward DESTINATION ${BIN_INSTALL_DIR})
 ENDIF()
+INSTALL(TARGETS rkward ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
-INSTALL(FILES org.kde.rkward.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+INSTALL(FILES org.kde.rkward.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 INSTALL(FILES org.kde.rkward.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-INSTALL(FILES rkward.protocol DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES vnd.rkward.r.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
-INSTALL(FILES vnd.kde.rkward-output.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
-INSTALL(FILES vnd.kde.rmarkdown.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
+INSTALL(FILES rkward.protocol DESTINATION ${KDE_INSTALL_DATADIR}/kio/servicemenus)
+INSTALL(FILES vnd.rkward.r.xml DESTINATION ${KDE_INSTALL_MIMEDIR})
+INSTALL(FILES vnd.kde.rkward-output.xml DESTINATION ${KDE_INSTALL_MIMEDIR})
+INSTALL(FILES vnd.kde.rmarkdown.xml DESTINATION ${KDE_INSTALL_MIMEDIR})
 FIND_PACKAGE(SharedMimeInfo)
 IF(SharedMimeInfo_FOUND)
-	UPDATE_XDG_MIMETYPES(${XDG_MIME_INSTALL_DIR})
+	UPDATE_XDG_MIMETYPES(${KDE_INSTALL_MIMEDIR})
 ENDIF(SharedMimeInfo_FOUND)
 
-INSTALL(FILES RKWardRMd.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
-INSTALL(FILES RKWardLaTeX.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
-INSTALL(FILES RKWardR.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
-INSTALL(FILES RKWardroxygen2.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
-INSTALL(FILES RKWardutils.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
-INSTALL(FILES RKWardpapaja.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardRMd.xml DESTINATION ${KDE_INSTALL_DATADIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardLaTeX.xml DESTINATION ${KDE_INSTALL_DATADIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardR.xml DESTINATION ${KDE_INSTALL_DATADIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardroxygen2.xml DESTINATION ${KDE_INSTALL_DATADIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardutils.xml DESTINATION ${KDE_INSTALL_DATADIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardpapaja.xml DESTINATION ${KDE_INSTALL_DATADIR}/ktexteditor_snippets/data)

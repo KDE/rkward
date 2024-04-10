@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKDYNAMICSEARCHLINE_H
 
 #include <QLineEdit>
+#include <QRegularExpression>
 
 #include <QTimer>
 
@@ -26,9 +27,9 @@ public:
 /** If a model is set, will call setFilterRegExp() when the search string is changed. */
 	void setModelToFilter (QSortFilterProxyModel* _model) { model = _model; };
 	QString regexpTip () const;
-signals:
-	void searchChanged (const QRegExp& search);
-private slots:
+Q_SIGNALS:
+	void searchChanged (const QRegularExpression& search);
+private Q_SLOTS:
 	void textChanged ();
 	void delayedSearch ();
 private:

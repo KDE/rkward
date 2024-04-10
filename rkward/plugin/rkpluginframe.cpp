@@ -27,7 +27,7 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 	QVBoxLayout *inner = new QVBoxLayout (frame);
 	inner->setSpacing(RKStyle::spacingHint());
 
-	checked = 0;
+	checked = nullptr;
 	if (xml->getBoolAttribute (element, "checkable", false, DL_INFO)) {
 		frame->setCheckable (true);
 		frame->setChecked (xml->getBoolAttribute (element, "checked", true, DL_INFO));

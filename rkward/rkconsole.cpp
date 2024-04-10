@@ -32,9 +32,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagebox.h>
 #include <kshellcompletion.h>
 #include <ktexteditor/editor.h>
-#include <ktexteditor/configinterface.h>
-#include <ktexteditor/codecompletioninterface.h>
-#include <ktexteditor/markinterface.h>
 #include <ktexteditor_version.h>
 #include <kxmlguifactory.h>
 #include <kio/filecopyjob.h>
@@ -45,12 +42,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rkcodecompletion.h"
 #include "windows/rktexthints.h"
+#include "windows/katepluginintegration.h"
 #include "rbackend/rkrinterface.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
 #include "settings/rkrecenturls.h"
 #include "misc/rkcommonfunctions.h"
-#include "misc/rkcompatibility.h"
 #include "misc/rkstandardicons.h"
 #include "misc/rkstandardactions.h"
 #include "core/robjectlist.h"
@@ -59,7 +56,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "debug.h"
 
 // static
-RKConsole* RKConsole::main_console = 0;
+RKConsole* RKConsole::main_console = nullptr;
 
 RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, RKMDIWindow::ConsoleWindow, tool_window, name), commands_history (false, false) {
 	RK_TRACE (APP);
@@ -93,7 +90,9 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	}
 
 	doc = editor->createDocument (this);
-	view = doc->createView (this);
+	// even though the R Console is not really a document window, it is important for it to be constructed with a proper main window.
+	// E.g. argument hints don't get the correct window parent, otherwise
+	view = doc->createView (this, RKWardMainWindow::getMain()->katePluginIntegration()->mainWindow ()->mainWindow());
 	layout->addWidget (view);
 	view->setStatusBarEnabled (false);
 	setFocusProxy (view);
@@ -135,11 +134,9 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setMetaInfo (shortCaption (), QUrl ("rkward://page/rkward_console"), RKSettings::PageConsole);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
-	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
-	RK_ASSERT(confint);
-	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [confint](bool val) { confint->setConfigValue("scrollbar-minimap", val); });
+	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [this](bool val) { view->setConfigValue("scrollbar-minimap", val); });
 	getPart()->actionCollection()->addAction("view_show_minimap", action);
-	action = RKSettingsModuleConsole::wordWrap()->makeAction(this, i18n("Dynamic word wrap"), [confint](bool val) { confint->setConfigValue("dynamic-word-wrap", val); });
+	action = RKSettingsModuleConsole::wordWrap()->makeAction(this, i18n("Dynamic word wrap"), [this](bool val) { view->setConfigValue("dynamic-word-wrap", val); });
 	getPart()->actionCollection()->addAction("view_dynamic_word_wrap", action);
 
 	nprefix = "> ";
@@ -152,7 +149,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 
 	commands_history.setHistory (RKSettingsModuleConsole::loadCommandHistory ());
 
-	current_command = 0;
+	current_command = nullptr;
 	current_command_displayed_up_to = 0;
 	tab_key_pressed_before = false;
 	previous_chunk_was_piped = false;
@@ -178,8 +175,8 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 	QList<KActionCollection*> acs = view->findChildren<KActionCollection*>();
 	acs.append (view->actionCollection ());
 
-	QAction* found = 0;
-	foreach (KActionCollection* ac, acs) {
+	QAction* found = nullptr;
+	for (KActionCollection* ac : std::as_const(acs)) {
 		found = ac->action (actionName);
 		if (found) break;
 	}
@@ -202,7 +199,7 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 		getPart ()->actionCollection ()->addAction (actionName, ret);
 		return ret;
 	} else {
-		return 0;
+		return nullptr;
 	}
 }
 
@@ -312,7 +309,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		if (modifier == Qt::NoModifier) setCursorClear (para, pos - 1);
 		else if (modifier == Qt::ShiftModifier) triggerEditAction ("select_char_left");
 		else if (modifier == Qt::ControlModifier) triggerEditAction ("word_left");
-		else if (modifier == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_left");
+		else if (modifier == (Qt::ControlModifier | Qt::ShiftModifier)) triggerEditAction ("select_word_left");
 		else return false;
 
 		return true;
@@ -322,7 +319,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		if (modifier == Qt::NoModifier) setCursorClear (para, pos + 1);
 		else if (modifier == Qt::ShiftModifier) triggerEditAction ("select_char_right");
 		else if (modifier == Qt::ControlModifier) triggerEditAction ("word_right");
-		else if (modifier == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_right");
+		else if (modifier == (Qt::ControlModifier | Qt::ShiftModifier)) triggerEditAction ("select_word_right");
 		else return false;
 
 		return true;
@@ -376,12 +373,13 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 		// we seem to need this, as the kateview will swallow the contextMenuEvent, otherwise
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::RightButton) {
-			qApp->sendEvent (this, new QContextMenuEvent (QContextMenuEvent::Other, m->globalPos ()));
+			QPoint pos = m->globalPosition().toPoint();
+			qApp->sendEvent(this, new QContextMenuEvent(QContextMenuEvent::Mouse, mapFromGlobal(pos), pos));
 			return (true);
 		}
 	} else if (e->type () == QEvent::MouseButtonRelease){
 		QMouseEvent *m = (QMouseEvent *)e;
-		if (m->button() == Qt::MidButton) {
+		if (m->button() == Qt::MiddleButton) {
 			QClipboard *cb = QApplication::clipboard ();
 			submitBatch (cb->text (QClipboard::Selection));
 			return (true);
@@ -404,7 +402,7 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 		// We try to map it back to the view, correctly.
 		QWidget *rec = dynamic_cast<QWidget*> (o);
 		if (!o) rec = view;
-		KTextEditor::Cursor pos = view->coordinatesToCursor (rec->mapTo (view, me->pos ()));
+		KTextEditor::Cursor pos = view->coordinatesToCursor(rec->mapTo(view, me->position().toPoint()));
 
 		bool in_last_line = (pos.line () == doc->lines () - 1) && (pos.column () >= prefix.length ());
 		if (!in_last_line) {
@@ -469,7 +467,7 @@ void RKConsole::submitCommand () {
 			last_line_end = 0;
 			RK_ASSERT (false);
 		}
-		command.append(input_buffer.leftRef(last_line_end));
+		command.append(QStringView{input_buffer}.left(last_line_end));
 		if (last_line_end < (input_buffer.size() - 1)) {
 			input_buffer = input_buffer.mid(last_line_end + 1);
 		} else {
@@ -581,10 +579,8 @@ void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 
 	int end_line = doc->lines () -1;
 	if (output->type != ROutput::Output || (!command)) {
-		KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (doc);
-		RK_ASSERT (markiface);
 		for (int line = first_line; line < end_line; ++line) {
-			markiface->addMark (line, command ? KTextEditor::MarkInterface::BreakpointActive : KTextEditor::MarkInterface::BreakpointDisabled);
+			doc->addMark (line, command ? KTextEditor::Document::BreakpointActive : KTextEditor::Document::BreakpointDisabled);
 		}
 	}
 
@@ -634,7 +630,7 @@ void RKConsole::submitBatch (const QString &batch) {
 		int pos = currentCursorPositionInCommand ();
 		if (pos >= 0) {
 			setCurrentEditingLine(line.left(pos));
-			input_buffer.append(line.midRef(pos));
+			input_buffer.append(QStringView{line}.mid(pos));
 		}
 	}
 	if (!current_command) tryNextInBuffer ();
@@ -710,7 +706,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 		if (url.isEmpty ()) return;
 	}
 
-	QTemporaryFile *tmpfile = 0;
+	QTemporaryFile *tmpfile = nullptr;
 	QString filename;
 	if (!url.isLocalFile ()) {
 		tmpfile = new QTemporaryFile (this);
@@ -728,7 +724,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 
 	QFile file (filename);
 	if (!file.open (QIODevice::Text | QIODevice::ReadOnly)) return;
-	setCommandHistory (QString (file.readAll ()).split ('\n', RKCompatibility::SkipEmptyParts()), false);
+	setCommandHistory (QString (file.readAll ()).split ('\n', Qt::SkipEmptyParts), false);
 	file.close ();
 
 	delete (tmpfile);
@@ -761,12 +757,12 @@ QString RKConsole::cleanSelection (const QString &origin) {
 
 	QString ret;
 	ret.reserve (origin.length ());
-	QStringList lines = origin.split ('\n');
-	foreach (const QString& line, lines) {
+	const QStringList lines = origin.split ('\n');
+	for (const QString& line : lines) {
 		if (line.startsWith(nprefix)) {
-			ret.append(line.midRef(nprefix.length()));
+			ret.append(QStringView{line}.mid(nprefix.length()));
 		} else if (line.startsWith(iprefix)) {
-			ret.append(line.midRef(iprefix.length()));
+			ret.append(QStringView{line}.mid(iprefix.length()));
 		} else {
 			ret.append(line);
 		}
@@ -865,12 +861,12 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));
-	ac->setDefaultShortcut (interrupt_command_action, REAL_CTRL_KEY + Qt::Key_C);
+	ac->setDefaultShortcut (interrupt_command_action, REAL_CTRL_KEY | Qt::Key_C);
 	interrupt_command_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_command_action->setEnabled (false);
 
 	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
-	ac->setDefaultShortcut (copy_literal_action, REAL_CMD_KEY + Qt::Key_C);
+	ac->setDefaultShortcut (copy_literal_action, REAL_CMD_KEY | Qt::Key_C);
 	copy_literal_action->setText (i18n ("Copy selection literally"));
 
 	copy_commands_action = ac->addAction ("rkconsole_copy_commands", this, SLOT (copyCommands()));
@@ -908,15 +904,15 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 
 	activate (false);
 	if (isBusy () && (!previous_chunk_was_piped)) {
-		int res = KMessageBox::questionYesNoCancel (this, i18n ("You have configured RKWard to pipe script editor commands through the R Console. However, another command is currently active in the console. Do you want to append it to the command in the console, or do you want to reset the console, first? Press cancel if you do not wish to run the new command, now."), i18n ("R Console is busy"), KGuiItem (i18n ("Append")), KGuiItem (i18n ("Reset, then submit")));
-		if (res == KMessageBox::No) {
+		int res = KMessageBox::questionTwoActionsCancel (this, i18n ("You have configured RKWard to pipe script editor commands through the R Console. However, another command is currently active in the console. Do you want to append it to the command in the console, or do you want to reset the console, first? Press cancel if you do not wish to run the new command, now."), i18n ("R Console is busy"), KGuiItem (i18n ("Append")), KGuiItem (i18n ("Reset, then submit")));
+		if (res == KMessageBox::SecondaryAction) {
 			resetConsole ();
-		} else if (res != KMessageBox::Yes) {
+		} else if (res != KMessageBox::PrimaryAction) {
 			return;
 		}
 	}
 	if (RKSettingsModuleConsole::addPipedCommandsToHistory() != RKSettingsModuleConsole::DontAdd) {
-		QStringList lines = command_string.split ('\n', RKCompatibility::SkipEmptyParts());
+		QStringList lines = command_string.split ('\n', Qt::SkipEmptyParts);
 		if ((RKSettingsModuleConsole::addPipedCommandsToHistory() == RKSettingsModuleConsole::AlwaysAdd) || (lines.count () == 1)) {
 			for (int i = 0; i < lines.count (); ++i) {
 				commands_history.append (lines[i]);
@@ -941,7 +937,7 @@ void RKConsole::contextMenuEvent (QContextMenuEvent * event) {
 	copy_literal_action->setEnabled (view->selection ());
 	run_selection_action->setEnabled (view->selection ());
 
-	console_part->showPopupMenu (event->pos ());
+	console_part->showPopupMenu(event->globalPos());
 
 	run_selection_action->setEnabled (true);
 	copy_literal_action->setEnabled (true);
@@ -960,7 +956,7 @@ void RKConsole::activate (bool with_focus) {
 ///################### BEGIN RKConsolePart ####################
 
 
-RKConsolePart::RKConsolePart (RKConsole *console) : KParts::Part (0) {
+RKConsolePart::RKConsolePart(RKConsole *console) : KParts::Part(nullptr) {
 	RK_TRACE (APP);
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());

@@ -42,7 +42,7 @@ public:
 
 	QString caption() const override;
 	QIcon icon() const override;
-public slots:
+public Q_SLOTS:
 	void changedSetting (int);
 private:
 	enum FilterType { ShowInput=1, ShowOutput=2, ShowError=4, RaiseWindow=8 };

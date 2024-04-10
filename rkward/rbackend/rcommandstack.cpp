@@ -21,7 +21,7 @@ RCommandStack *RCommandStack::regular_stack;
 RCommandStack::RCommandStack () : RCommandChain () {
 	RK_TRACE (RBACKEND);
 	closed = false;
-	parent = 0;
+	parent = nullptr;
 }
 
 RCommandStack::~RCommandStack () {
@@ -98,7 +98,7 @@ RCommand* RCommandStack::currentCommand () {
 
 	RCommandChain *ret = activeSubItemOf (regular_stack);
 	if (ret) return ret->toCommand ();	// might still be 0, if it is not a command
-	return 0;
+	return nullptr;
 }
 
 RCommandChain* RCommandStack::activeSubItemOf (RCommandChain* item) {
@@ -113,7 +113,7 @@ void RCommandStack::listCommandsRecursive (QList<RCommand*> *list, const RComman
 	RK_TRACE (RBACKEND);
 
 	if (chain->is_command) list->append (const_cast<RCommandChain*>(chain)->toCommand ());
-	foreach (const RCommandChain* coc, chain->sub_commands) {
+	for (const RCommandChain* coc : std::as_const(chain->sub_commands)) {
 		listCommandsRecursive (list, coc);
 	}
 }
@@ -155,11 +155,11 @@ bool RCommandStack::popIfCompleted (RCommandChain* item) {
 #define NUM_COLS 4
 
 // static
-RCommandStackModel* RCommandStackModel::static_model = 0;
+RCommandStackModel* RCommandStackModel::static_model = nullptr;
 
 RCommandStackModel::RCommandStackModel (QObject *parent) : QAbstractItemModel (parent) {
 	RK_TRACE (RBACKEND);
-	RK_ASSERT (static_model == 0);	// only one instance should be created
+	RK_ASSERT(static_model == nullptr);	// only one instance should be created
 
 	static_model = this;
 	listeners = 0;
@@ -168,7 +168,7 @@ RCommandStackModel::RCommandStackModel (QObject *parent) : QAbstractItemModel (p
 RCommandStackModel::~RCommandStackModel () {
 	RK_TRACE (RBACKEND);
 
-	static_model = 0;
+	static_model = nullptr;
 	RK_ASSERT (!listeners);
 }
 
@@ -189,7 +189,7 @@ QModelIndex RCommandStackModel::index (int row, int column, const QModelIndex& p
 	RK_ASSERT (listeners > 0);
 	RK_TRACE (RBACKEND);
 
-	RCommandChain* index_data = 0;
+	RCommandChain* index_data = nullptr;
 	if (!parent.isValid ()) {
 		index_data = RCommandStack::regular_stack;
 	} else {
@@ -372,6 +372,6 @@ void RCommandStackModel::itemChange (RCommandChain* item) {
 	RK_TRACE (RBACKEND);
 
 	QModelIndex item_index = indexFor (item);
-	emit dataChanged(item_index, item_index);
+	Q_EMIT dataChanged(item_index, item_index);
 }
 

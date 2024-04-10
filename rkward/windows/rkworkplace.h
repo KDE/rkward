@@ -49,11 +49,11 @@ public:
 	RKMDIWindow *previousDocumentWindow ();
 	void next (QAction *prev_action, QAction *next_action);
 	void prev (QAction *prev_action, QAction *next_action);
-public slots:
+public Q_SLOTS:
 	void windowActivated (RKMDIWindow *window);
-signals:
+Q_SIGNALS:
 	void activeWindowChanged (RKMDIWindow *window);
-private slots:
+private Q_SLOTS:
 	void switcherDestroyed ();
 private:
 	void updateSwitcher ();
@@ -174,11 +174,11 @@ public:
 /** Write a description of all current windows to the R backend. This can later be read by restoreWorkplace (). Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param url the url to use. Can be left null, in which case the current workspace url will be used.
 @param chain command chain to place the command in */
-	void saveWorkplace (const QUrl &for_url=QUrl(), RCommandChain *chain=0);
+	void saveWorkplace (const QUrl &for_url=QUrl(), RCommandChain *chain=nullptr);
 /** Load a description of windows from the R backend (created by saveWorkplace ()), and (try to) restore all windows accordingly
 Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param chain command chain to place the command in */
-	void restoreWorkplace (RCommandChain *chain=0, bool merge=false);
+	void restoreWorkplace (RCommandChain *chain=nullptr, bool merge=false);
 /** Like the other restoreWorkplace (), but takes the description as a parameter rather than reading from the R workspace. To be used, when RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSeesion
 @param description workplace description */
 	void restoreWorkplace (const QStringList &description);
@@ -199,7 +199,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	KConfigBase *workspaceConfig ();
 	QString portableUrl (const QUrl &url);
 /** Register a named area where to place MDI windows. For directing preview windows to a specific location. */
-	void registerNamedWindow (const QString& id, QObject *owner, QWidget* parent, RKMDIWindow *window=0);
+	void registerNamedWindow (const QString& id, QObject *owner, QWidget* parent, RKMDIWindow *window=nullptr);
 /** Return the window in the specified named area (can be 0). */
 	RKMDIWindow *getNamedWindow (const QString& id);
 /** Make the next window to be created appear in a specific location (can be a named window). 
@@ -217,16 +217,16 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Inform the workplace that this window is handled outside the regular attached/detached mechanisms (such as preview windows). Internally, this just sets the window to detached, without giving it a DetachedWindowContainer.
 This seems good enough for now, but may be something to revisit in case of unexpected problems. */
 	void setWindowNotManaged(RKMDIWindow *window);
-signals:
+Q_SIGNALS:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const QUrl &url);
-public slots:
+public Q_SLOTS:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void removeWindow (QObject *window);
 	void saveSettings ();
 /** Proxy for QDesktopServices::setUrlHandler(), set in c'tor. Simply calls RKHTMLWindow::handleRKWardUrl(). */
 	void openRKWardUrl(const QUrl& url);
-private slots:
+private Q_SLOTS:
 	void namedWindowDestroyed (QObject *);
 	void namedWindowOwnerDestroyed (QObject *);
 private:

@@ -20,7 +20,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class QEvent;
 class QKeyEvent;
-class QStringList;
 class QAction;
 class KActionCollection;
 class RKConsolePart;
@@ -41,7 +40,7 @@ class RKConsole : public RKMDIWindow, public RKScriptContextProvider {
 Q_OBJECT
 public:
 /** Constructor. */
-	RKConsole (QWidget *parent, bool tool_window, const char *name=0);
+	RKConsole (QWidget *parent, bool tool_window, const char *name=nullptr);
 /** Destructor */
 	~RKConsole ();
 
@@ -136,7 +135,7 @@ friend class RKConsolePart;
 	void pipeCommandThroughConsoleLocal (const QString &command);
 
 	RKConsolePart *console_part;
-public slots:
+public Q_SLOTS:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
 	void paste ();

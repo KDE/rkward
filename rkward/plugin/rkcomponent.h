@@ -79,7 +79,7 @@ public:
 	virtual RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);
 /** Convenience wrapper around lookupComponent(), which will only return properties or 0, and optionally warn, if no prop could be found
 @param remainder In contrast to lookupComponent, this can be 0. In this case only exact matches are returned. */
-	RKComponentPropertyBase* lookupProperty (const QString &identifier, QString *remainder=0, bool warn=true);
+	RKComponentPropertyBase* lookupProperty (const QString &identifier, QString *remainder=nullptr, bool warn=true);
 /** Locate the component.subcomponent.property.value described by identifier and return its value as a string. Especially useful as a callback in code templates! Recursively walks subcomponents/properties until the requested value is found. @See RKComponentBase::lookupComponent */
 	QString fetchStringValue (const QString &identifier);
 	static QString fetchStringValue (RKComponentBase* prop, const QString &modifier=QString ());
@@ -176,7 +176,7 @@ public:
 	virtual void addComponentToCurrentPage (RKComponent *component);
 /** @returns true if the component is inactive, i.e. disabled, or hidden in the GUI */
 	bool isInactive ();
-public slots:
+public Q_SLOTS:
 /** This handles changes in the default properties (enabledness, visibility, requiredness). You will use similar slots in derived classes to handle
 specialized properties */
 	void propertyValueChanged (RKComponentPropertyBase *property);
@@ -196,7 +196,7 @@ public:
 /** The parent of this component. Should be notified, whenever isSatisfied () or recursiveStatus () changed. */
 	RKComponent *parentComponent () const { return _parent; };
 /** The standard component containing this component (if any). If @param id_adjust is given, it will be set to a relative path to the standard component. */
-	RKStandardComponent *standardComponent (QString *id_adjust=0) const;
+	RKStandardComponent *standardComponent (QString *id_adjust=nullptr) const;
 /** Like standardcomponent, but will return the topmost component in case of embedding. */
 	RKStandardComponent *topmostStandardComponent ();
 /** Return a properly initialize helper for parsing XML in this component. */
@@ -204,10 +204,10 @@ public:
 
 /** Find the id of this component. NOTE: this is slow. Better to store the id in the first place, if needed */
 	QString getIdInParent () const;
-protected slots:
+protected Q_SLOTS:
 /** if a child component self-destructs, it should remove itself from its parent *before* destructing. Don't use in a regular destructor. Call only if the child dies unexpectedly */
 	void removeFromParent ();
-signals:
+Q_SIGNALS:
 /** emitted from changed() */
 	void componentChanged (RKComponent* component);
 protected:

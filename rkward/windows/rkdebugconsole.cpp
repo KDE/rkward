@@ -24,7 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKDebugConsole* RKDebugConsole::_instance = 0;
+RKDebugConsole* RKDebugConsole::_instance = nullptr;
 
 RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, DebugConsoleWindow, tool_window, name) {
 	RK_TRACE (APP);

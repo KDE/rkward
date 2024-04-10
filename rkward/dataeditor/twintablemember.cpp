@@ -145,10 +145,10 @@ void TwinTableMember::handleContextMenuRequest (const QPoint& pos) {
 
 	if (sender () == horizontalHeader ()) {
 		int col = horizontalHeader ()->logicalIndexAt (pos);
-		if (col >= 0) emit contextMenuRequest(-1, col, horizontalHeader()->mapToGlobal(pos));
+		if (col >= 0) Q_EMIT contextMenuRequest(-1, col, horizontalHeader()->mapToGlobal(pos));
 	} else if (sender () == verticalHeader ()) {
 		int row = verticalHeader ()->logicalIndexAt (pos);
-		if (row >= 0) emit contextMenuRequest(row, -1, verticalHeader()->mapToGlobal(pos));
+		if (row >= 0) Q_EMIT contextMenuRequest(row, -1, verticalHeader()->mapToGlobal(pos));
 	} else {
 		RK_ASSERT (sender () == this);
 
@@ -157,7 +157,7 @@ void TwinTableMember::handleContextMenuRequest (const QPoint& pos) {
 		if ((row < 0) || (col < 0)) {
 			row = col = -2;	// to differentiate from the headers, above
 		}
-		emit contextMenuRequest(row, col, mapToGlobal(pos));
+		Q_EMIT contextMenuRequest(row, col, mapToGlobal(pos));
 	}
 }
 

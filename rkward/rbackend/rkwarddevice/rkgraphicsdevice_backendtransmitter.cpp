@@ -14,9 +14,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../../debug.h"
 
 RKAsyncDataStreamHelper<RKGraphicsDeviceTransmittionLengthType> RKGraphicsDeviceBackendTransmitter::streamer;
-QIODevice* RKGraphicsDeviceBackendTransmitter::connection = 0;
+QIODevice* RKGraphicsDeviceBackendTransmitter::connection = nullptr;
 QMutex RKGraphicsDeviceBackendTransmitter::mutex;
-RKGraphicsDeviceBackendTransmitter* RKGraphicsDeviceBackendTransmitter::_instance = 0;
+RKGraphicsDeviceBackendTransmitter* RKGraphicsDeviceBackendTransmitter::_instance = nullptr;
 
 RKGraphicsDeviceBackendTransmitter::RKGraphicsDeviceBackendTransmitter (QIODevice* _connection, bool is_q_local_socket) : QThread () {
 	RK_TRACE (GRAPHICS_DEVICE);
@@ -49,7 +49,7 @@ RKGraphicsDeviceBackendTransmitter* RKGraphicsDeviceBackendTransmitter::instance
 		_instance = new RKGraphicsDeviceBackendTransmitter (con, true);
 		return _instance;
 	}
-	return 0;
+	return nullptr;
 }
 
 bool RKGraphicsDeviceBackendTransmitter::connectionAlive () {
@@ -82,6 +82,6 @@ void RKGraphicsDeviceBackendTransmitter::kill () {
 		mutex.unlock ();
 		_instance->wait (1000);
 		delete _instance;
-		_instance = 0;
+		_instance = nullptr;
 	}
 }

@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 
 RCommand* RCommandChain::toCommand() {
-	return (is_command ? static_cast<RCommand*> (this) : 0);
+	return (is_command ? static_cast<RCommand*>(this) : nullptr);
 }
 
 
@@ -43,7 +43,7 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv) : 
 	status = 0;
 	has_been_run_up_to = 0;
 	_rk_equiv = rk_equiv;
-	_notifier = 0;
+	_notifier = nullptr;
 }
 
 RCommand::~RCommand(){

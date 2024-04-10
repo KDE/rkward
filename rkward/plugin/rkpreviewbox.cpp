@@ -102,7 +102,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 		connect (code_property, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedCode);
 	} else {
 		RK_DEBUG (PLUGIN, DL_WARNING, "Could not find code property in preview box (remainder: %s)", dummy.toLatin1().data ());
-		code_property = 0;
+		code_property = nullptr;
 	}
 
 	// initialize
@@ -110,7 +110,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	update_timer->setSingleShot (true);
 	connect (update_timer, &QTimer::timeout, this, &RKPreviewBox::tryPreviewNow);
 	updating = false;
-	changedState (0);
+	changedState(nullptr);
 }
 
 RKPreviewBox::~RKPreviewBox () {

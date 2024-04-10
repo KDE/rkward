@@ -18,7 +18,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkaccordiontable.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
@@ -120,16 +119,16 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		column_map.insert (column_property, col_inf);
 	}
 
-	keycolumn = 0;
+	keycolumn = nullptr;
 	QString keycol = xml->getStringAttribute (element, "keycolumn", QString (), DL_DEBUG);
 	if (!keycol.isEmpty ()) {
 		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 		if (!column_map.contains (keycolumn)) {
 			RK_DEBUG (PLUGIN, DL_ERROR, "optionset does not contain an optioncolumn named %s. Falling back to manual insertion mode", qPrintable (keycol));
-			keycolumn = 0;
+			keycolumn = nullptr;
 		} else if (!column_map[keycolumn].external) {
 			RK_DEBUG (PLUGIN, DL_ERROR, "keycolumn (%s) is not marked as external. Falling back to manual insertion mode", qPrintable (keycol));
-			keycolumn = 0;
+			keycolumn = nullptr;
 		} else {
 			updating = true;
 			keycolumn->setValue (KEYCOLUMN_UNINITIALIZED_VALUE);
@@ -191,7 +190,7 @@ QString serializeList (const QStringList &list) {
 }
 
 QStringList unserializeList  (const QString &serial) {
-	QStringList ret = serial.split ('\t', RKCompatibility::KeepEmptyParts());
+	QStringList ret = serial.split ('\t', Qt::KeepEmptyParts);
 	for (int i = 0; i < ret.size (); ++i) {
 		ret[i] = RKCommonFunctions::unescape (ret[i]);
 	}
@@ -211,7 +210,7 @@ QString serializeMap (const RKComponent::PropertyValueMap &map) {
 
 RKComponent::PropertyValueMap unserializeMap (const QString &serial) {
 	RKComponent::PropertyValueMap ret;
-	QStringList l = serial.split ('\t', RKCompatibility::KeepEmptyParts());
+	QStringList l = serial.split ('\t', Qt::KeepEmptyParts);
 	for (int i = 0; i < l.size (); ++i) {
 		QString &line = l[i];
 		int sep = line.indexOf ('=');
@@ -248,7 +247,7 @@ void RKOptionSet::fetchPropertyValuesRecursive (PropertyValueMap *list, bool inc
 void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* property) {
 	if (updating) return;
 	updating = true;
-	if (model) emit model->layoutAboutToBeChanged();
+	if (model) Q_EMIT model->layoutAboutToBeChanged();
 
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (property == serialization_of_set);
@@ -271,7 +270,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	QList<RowInfo> new_rows;
 	int row = 0;
 	QStringList items = fetchStringValue (property).split ('\n');
-	bool keys_missing = (keycolumn != 0);
+	bool keys_missing = (keycolumn != nullptr);
 	for (int i = 0; i < items.size (); ++i) {
 		const QString &item = items[i];
 		int sep = item.indexOf ('=');
@@ -325,7 +324,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	active_row = -1;
 	current_row->setIntValue (qMin (0, row - 1));
 
-	if (model) emit model->layoutChanged();
+	if (model) Q_EMIT model->layoutChanged();
 	changed ();
 }
 
@@ -488,7 +487,7 @@ void RKOptionSet::setRowState (int row, bool finished, bool valid) {
 		valid ? --n_invalid_rows : ++n_invalid_rows;
 		changed = true;
 	}
-	if (changed && model) emit model->dataChanged(model->index(row, 0), model->index(row, model->columnCount() - 1));
+	if (changed && model) Q_EMIT model->dataChanged(model->index(row, 0), model->index(row, model->columnCount() - 1));
 }
 
 void RKOptionSet::changed () {
@@ -504,7 +503,7 @@ void RKOptionSet::changed () {
 	ComponentStatus s = recursiveStatus ();
 	if (s != last_known_status) {
 		last_known_status = s;
-		if (model) emit model->headerDataChanged(Qt::Horizontal, 0, model->columnCount() - 1);
+		if (model) Q_EMIT model->headerDataChanged(Qt::Horizontal, 0, model->columnCount() - 1);
 	}
 
 	RKComponent::changed ();
@@ -527,7 +526,7 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 		target->setValueAt (row, value);
 
 		if (model && (inf.display_index >= 0)) {
-			emit model->dataChanged(model->index(inf.display_index, row), model->index(inf.display_index, row));
+			Q_EMIT model->dataChanged(model->index(inf.display_index, row), model->index(inf.display_index, row));
 		}
 	}
 
@@ -550,7 +549,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 
 	if (target == keycolumn) handleKeycolumnUpdate ();
 	else {
-		if (model) emit model->dataChanged(model->index(ci.display_index, 0), model->index(ci.display_index, model->rowCount()));
+		if (model) Q_EMIT model->dataChanged(model->index(ci.display_index, 0), model->index(ci.display_index, model->rowCount()));
 		applyContentsFromExternalColumn (target, active_row);
 	}
 }
@@ -689,7 +688,7 @@ void RKOptionSet::setContentsForRow (int row) {
 		// from the default_row_state, instead.
 		for (PropertyValueMap::const_iterator it = default_row_state.constBegin (); it != default_row_state.constEnd (); ++it) {
 			if (!map->contains (it.key ())) {
-				RKComponentPropertyBase *prop = contents_container->lookupProperty (it.key (), 0, true);
+				RKComponentPropertyBase *prop = contents_container->lookupProperty(it.key(), nullptr, true);
 				if (prop) {		// found a property
 					RK_ASSERT (!prop->isInternal ());
 					prop->setValue (it.value ());
@@ -817,7 +816,7 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 
 void RKOptionSetDisplayModel::doResetNow () {
 	RK_TRACE (PLUGIN);
-	emit layoutChanged();
+	Q_EMIT layoutChanged();
 	set->updateCurrentRowInDisplay ();
 }
 
@@ -846,7 +845,7 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 void RKOptionSetDisplayModel::triggerReset() {
 	RK_TRACE (PLUGIN);
 	if (!reset_timer.isActive ()) {
-		emit layoutAboutToBeChanged();
+		Q_EMIT layoutAboutToBeChanged();
 		reset_timer.start ();
 	}
 }

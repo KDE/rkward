@@ -63,14 +63,14 @@ public:
 RKObjectListView::RKObjectListView (bool toolwindow, QWidget *parent) : QTreeView (parent) {
 	RK_TRACE (APP);
 
-	root_object = 0;
+	root_object = nullptr;
 	rkdelegate = new RKObjectListViewRootDelegate (this);
 	settings = new RKObjectListViewSettings (toolwindow, this);
 	setSortingEnabled (true);
 	sortByColumn (0, Qt::AscendingOrder);
 
 	menu = new QMenu (this);
-	settings->addSettingsToMenu (menu, 0);
+	settings->addSettingsToMenu(menu, nullptr);
 
 	connect (this, &QAbstractItemView::clicked, this, &RKObjectListView::itemClicked);
 }
@@ -145,7 +145,7 @@ void RKObjectListView::contextMenuEvent (QContextMenuEvent* event) {
 
 	menu_object = objectAtIndex (indexAt (event->pos ()));
 	bool suppress = false;
-	emit aboutToShowContextMenu(menu_object, &suppress);
+	Q_EMIT aboutToShowContextMenu(menu_object, &suppress);
 
 	if (!suppress) menu->popup (event->globalPos ());
 }
@@ -204,7 +204,7 @@ RKObjectListViewSettings::RKObjectListViewSettings (bool tool_window, QObject* p
 	update_timer->setSingleShot (true);
 	connect (update_timer, &QTimer::timeout, this, &RKObjectListViewSettings::updateSelfNow);
 
-	filter_widget = 0;
+	filter_widget = nullptr;
 	in_reset_filters = false;
 
 	persistent_settings_actions[ShowObjectsHidden] = new QAction (i18n ("Show Hidden Objects"), this);
@@ -301,8 +301,8 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	else type_box->setCurrentIndex (0);
 	connect (type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
 
-	QHBoxLayout *bottom_layout = new QHBoxLayout (filter_widget);
-	layout->addLayout (bottom_layout);
+	QHBoxLayout *bottom_layout = new QHBoxLayout();
+	layout->addLayout(bottom_layout);
 	QCheckBox* hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
 	hidden_objects_box->setChecked (persistent_settings[ShowObjectsHidden]);
 	connect (hidden_objects_box, &QCheckBox::clicked, persistent_settings_actions[ShowObjectsHidden], &QAction::setChecked);
@@ -335,7 +335,7 @@ void RKObjectListViewSettings::resetFilters () {
 		hide_functions = hide_non_functions = false;
 		filter_on_class = filter_on_label = filter_on_name = true;
 		depth_limit = 1;
-		setFilterRegExp (QRegExp ());
+		setFilterRegularExpression (QRegularExpression{});
 	}
 	in_reset_filters = false;
 	updateSelf ();
@@ -432,13 +432,13 @@ bool RKObjectListViewSettings::acceptRow (int source_row, const QModelIndex& sou
 	if (hide_functions && object->isType (RObject::Function)) return false;
 	if (hide_non_functions && !object->isType (RObject::Function)) return false;
 
-	if (filterRegExp ().isEmpty ()) return true;
-	if (filter_on_name && object->getShortName ().contains (filterRegExp ())) return true;
-	if (filter_on_label && object->getLabel ().contains (filterRegExp ())) return true;
+	if (filterRegularExpression ().isValid ()) return true;
+	if (filter_on_name && object->getShortName ().contains (filterRegularExpression ())) return true;
+	if (filter_on_label && object->getLabel ().contains (filterRegularExpression ())) return true;
 	if (filter_on_class) {
 		QStringList cnames = object->classNames ();
 		for (int i = cnames.length () - 1; i >= 0; --i) {
-			if (cnames[i].contains (filterRegExp ())) return true;
+			if (cnames[i].contains (filterRegularExpression ())) return true;
 		}
 	}
 
@@ -495,5 +495,5 @@ void RKObjectListViewSettings::updateSelfNow () {
 
 	invalidateFilter ();
 
-	emit settingsChanged();
+	Q_EMIT settingsChanged();
 }

@@ -84,7 +84,6 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 #include "rkcomponentproperties.h"
 
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 
 #include <KLocalizedString>
 
@@ -115,7 +114,7 @@ bool RKComponentPropertyBase::setValue (const QString &string) {
 	RK_TRACE (PLUGIN);
 
 	_value = string;
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 	return true;
 }
 
@@ -268,7 +267,7 @@ void RKComponentPropertyStringList::setValueAt (int index, const QString& value)
 
 void RKComponentPropertyStringList::governorValueChanged (RKComponentPropertyBase *property) {
 	QVariant value = property->value (governor_modifier);
-	if (value.type () == QVariant::StringList) {
+	if (value.metaType() == QMetaType(QMetaType::QStringList)) {
 		setValueList (value.toStringList ());
 	} else {
 		setValue (value.toString ());
@@ -300,7 +299,7 @@ void RKComponentPropertyStringList::doChange () {
 	RK_TRACE (PLUGIN);
 	is_valid = checkListLength ();
 	_value.clear ();
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 }
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
@@ -368,10 +367,10 @@ bool RKComponentPropertyBool::stringToBool (const QString &value, bool *ok) {
 }
 
 bool RKComponentPropertyBool::variantToBool (const QVariant &value, bool *ok) {
-	if (value.type () == QVariant::Bool) {
+	if (value.metaType() == QMetaType(QMetaType::Bool)) {
 		if (ok) *ok = true;
-		return value.toBool ();
-	} else if (value.canConvert (QVariant::Int)) {
+		return value.toBool();
+	} else if (value.canConvert(QMetaType(QMetaType::Int))) {
 		bool valid;
 		bool ret = (bool) value.toInt (&valid);
 		if (valid) {
@@ -399,7 +398,7 @@ void RKComponentPropertyBool::setBoolValue (bool new_value) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (new_value);
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 }
 
 bool RKComponentPropertyBool::boolValue () {
@@ -428,7 +427,7 @@ bool RKComponentPropertyBool::setValue (const QString &string) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (string);
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 	return isValid ();
 }
 
@@ -445,14 +444,14 @@ void RKComponentPropertyBool::governorValueChanged (RKComponentPropertyBase *pro
 	RK_TRACE (PLUGIN);
 
 	QVariant value = property->value (governor_modifier);
-	if (value.type () == QVariant::String) {	// Qt's conversion from string to bool does not meet our needs
-		internalSetValue (value.toString ());
-	} else if (value.canConvert (QVariant::Bool)) {
-		internalSetValue (value.toBool ());
+	if (value.metaType() == QMetaType(QMetaType::QString)) {	// Qt's conversion from string to bool does not meet our needs
+		internalSetValue (value.toString());
+	} else if (value.canConvert(QMetaType(QMetaType::Bool))) {
+		internalSetValue(value.toBool());
 	} else {	// fallback for lists, and other stuff that really should not have been connected to a bool property, in the first place
-		internalSetValue (value.toString ());
+		internalSetValue(value.toString());
 	}
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 }
 
 
@@ -473,7 +472,7 @@ bool RKComponentPropertyInt::setIntValue (int new_value) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (new_value);
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 	return (isValid ());
 }
 
@@ -481,7 +480,7 @@ bool RKComponentPropertyInt::setValue (const QString &string) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (string);
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 	return (isValid ());
 }
 
@@ -586,7 +585,7 @@ void RKComponentPropertyInt::governorValueChanged (RKComponentPropertyBase *prop
 		internalSetValue(value.toString());
 	}
 
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 }
 
 QIntValidator *RKComponentPropertyInt::getValidator () {
@@ -631,7 +630,7 @@ bool RKComponentPropertyDouble::setDoubleValue (double new_value) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (new_value);
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 	return (isValid ());
 }
 
@@ -639,7 +638,7 @@ bool RKComponentPropertyDouble::setValue (const QString &string) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (string);
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 	return (isValid ());
 }
 
@@ -744,7 +743,7 @@ void RKComponentPropertyDouble::governorValueChanged (RKComponentPropertyBase *p
 		internalSetValue (value.toString ());
 	}
 
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 }
 
 QDoubleValidator *RKComponentPropertyDouble::getValidator () {
@@ -807,7 +806,7 @@ RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool 
 RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {
 	RK_TRACE (PLUGIN);
 
-	setObjectValueSilent (0);
+	setObjectValueSilent(nullptr);
 }
 
 bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
@@ -815,7 +814,7 @@ bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 
 	if (addObjectValueSilent (object)) {
 		updateValidity ();
-		emit valueChanged(this);
+		Q_EMIT valueChanged(this);
 		return isValid ();
 	}
 	return false;
@@ -843,7 +842,7 @@ void RKComponentPropertyRObjects::objectRemoved (RObject *object) {
 		problems.remove (object);
 		stopListenForObject (object);
 		updateValidity ();
-		emit valueChanged(this);
+		Q_EMIT valueChanged(this);
 	}
 }
 
@@ -857,7 +856,7 @@ void RKComponentPropertyRObjects::removeAt (int index) {
 	problems.remove (obj);
 	if (!object_list.contains (obj)) stopListenForObject (obj);
 	updateValidity ();
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 }
 
 void RKComponentPropertyRObjects::setClassFilter (const QStringList &classes) {
@@ -887,12 +886,8 @@ bool RKComponentPropertyRObjects::setObjectValueSilent (RObject* object) {
 	RK_TRACE (PLUGIN);
 
 	problems.clear ();
-#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
-	QSet<RObject*> unique(object_list.constBegin(), object_list.constEnd());
-#else
-	QSet<RObject*> unique = object_list.toSet ();
-#endif
-	foreach (RObject *obj, unique) {
+	const QSet<RObject*> unique(object_list.constBegin(), object_list.constEnd());
+	for (RObject *obj : unique) {
 		stopListenForObject (obj);
 	}
 	object_list.clear ();
@@ -902,7 +897,7 @@ bool RKComponentPropertyRObjects::setObjectValueSilent (RObject* object) {
 bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 	setObjectValueSilent (object);
 	updateValidity ();
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 	return isValid ();
 }
 
@@ -910,12 +905,12 @@ void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newl
 	RK_TRACE (PLUGIN);
 
 	if (newlist != object_list) {
-		setObjectValueSilent (0);
+		setObjectValueSilent (nullptr);
 		for (int i = 0; i < newlist.size (); ++i) {
 			addObjectValueSilent (newlist[i]);
 		}
 		updateValidity ();
-		emit valueChanged(this);
+		Q_EMIT valueChanged(this);
 	}
 }
 
@@ -964,7 +959,7 @@ QString RKComponentPropertyRObjects::checkObjectProblems (RObject *object) const
 RObject *RKComponentPropertyRObjects::objectValue () {
 	RK_TRACE (PLUGIN);
 
-	if (object_list.empty ()) return 0;
+	if (object_list.empty()) return nullptr;
 	return (object_list.first ());
 }
 
@@ -999,7 +994,7 @@ QVariant RKComponentPropertyRObjects::value (const QString &modifier) {
 bool RKComponentPropertyRObjects::setValueList (const QStringList& values) {
 	RK_TRACE (PLUGIN);
 
-	setObjectValue (0);
+	setObjectValue(nullptr);
 
 	bool ok = true;
 	for (int i = 0; i < values.size (); ++i) {
@@ -1008,20 +1003,20 @@ bool RKComponentPropertyRObjects::setValueList (const QStringList& values) {
 	}
 
 	updateValidity ();
-	emit valueChanged(this);
+	Q_EMIT valueChanged(this);
 	return (isValid () && ok);
 }
 
 bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	return setValueList (value.split (sep, RKCompatibility::SkipEmptyParts()));
+	return setValueList (value.split (sep, Qt::SkipEmptyParts));
 }
 
 bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	QStringList slist = value.split (sep, RKCompatibility::SkipEmptyParts());
+	QStringList slist = value.split (sep, Qt::SkipEmptyParts);
 
 	for (QStringList::const_iterator it = slist.cbegin (); it != slist.cend (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
@@ -1114,8 +1109,8 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 		setObjectList (static_cast <RKComponentPropertyRObjects *> (property)->objectList ());
 	} else {
 		QVariant value = property->value ();
-		if (value.type () == QVariant::StringList) {
-			setValueList (value.toStringList ());
+		if (value.metaType() == QMetaType(QMetaType::QStringList)) {
+			setValueList (value.toStringList());
 		} else {
 			setValue (value.toString ());
 		}
@@ -1133,7 +1128,7 @@ void RKComponentPropertyRObjects::objectMetaChanged (RObject *object) {
 			if (probs.isEmpty ()) problems.remove (object);
 			else problems.insert (object, probs);
 			updateValidity ();
-			emit valueChanged(this);
+			Q_EMIT valueChanged(this);
 		}
 	}
 }
@@ -1155,7 +1150,7 @@ void RKComponentPropertyRObjects::validizeAll (bool silent) {
 
 	updateValidity ();		// we should do this even if there are no changes in the list. There might have still been changes in the filter!
 	if (changes) {
-		if (!silent) emit valueChanged(this);
+		if (!silent) Q_EMIT valueChanged(this);
 	}
 }
 
@@ -1217,7 +1212,7 @@ void RKComponentPropertyConvert::setMode (ConvertMode mode) {
 	RK_TRACE (PLUGIN);
 
 	_mode = mode;
-	sourcePropertyChanged (0);
+	sourcePropertyChanged(nullptr);
 }
 
 void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
@@ -1236,14 +1231,14 @@ void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
 		}
 	}
 
-	sourcePropertyChanged (0);
+	sourcePropertyChanged(nullptr);
 }
 
 void RKComponentPropertyConvert::setStandard (const QString &standard) {
 	RK_TRACE (PLUGIN);
 
 	RKComponentPropertyConvert::standard = standard;
-	sourcePropertyChanged (0);
+	sourcePropertyChanged(nullptr);
 }
 
 void RKComponentPropertyConvert::setRange (double min, double max) {
@@ -1251,7 +1246,7 @@ void RKComponentPropertyConvert::setRange (double min, double max) {
 
 	RKComponentPropertyConvert::min = min;
 	RKComponentPropertyConvert::max = max;
-	sourcePropertyChanged (0);
+	sourcePropertyChanged(nullptr);
 }
 
 void RKComponentPropertyConvert::selfChanged (RKComponentPropertyBase *) {
@@ -1362,7 +1357,7 @@ RKComponentPropertySwitch::RKComponentPropertySwitch (RKComponent* parent, const
 
 	RKComponentPropertySwitch::def_values = def_values;
 	RKComponentPropertySwitch::standards = standards;
-	condition_prop = 0;
+	condition_prop = nullptr;
 	c_parent = parent;
 
 	connect (this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::selfChanged);
@@ -1388,7 +1383,7 @@ void RKComponentPropertySwitch::selfChanged (RKComponentPropertyBase *) {
 
 void RKComponentPropertySwitch::sourcePropertyChanged (RKComponentPropertyBase*) {
 	RK_TRACE (PLUGIN);
-	emit valueChanged(this);	// new value will be pulled by anyone interested
+	Q_EMIT valueChanged(this);	// new value will be pulled by anyone interested
 }
 
 QVariant RKComponentPropertySwitch::value (const QString& modifier) {
@@ -1401,7 +1396,7 @@ QVariant RKComponentPropertySwitch::value (const QString& modifier) {
 	QVariant cond = condition_prop->value (condition_prop_modifier);
 	int index = 0;
 	if (standards.isEmpty ()) {
-		if (RKComponentPropertyBool::variantToBool (cond, 0)) index = 1;
+		if (RKComponentPropertyBool::variantToBool(cond, nullptr)) index = 1;
 	} else {
 		index = standards.indexOf (cond.toString ());		// NOTE: list search. Could use a hash, instead, but in general there won't be more than a hand full of standards
 		if (index < 0) index = standards.size ();	// remainder-category
@@ -1438,7 +1433,7 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 
 	for (int i = 0; i < _value_props.size (); ++i) {
 		QString mod;
-		RKComponentPropertyBase *p = 0;
+		RKComponentPropertyBase *p = nullptr;
 		if (!_value_props[i].isEmpty ()) p = c_parent->lookupProperty (_value_props[i], &mod, true);	// Don't try to look it up, if it's empty (as it always is for fixed_value, as this would generate a warning.)
 		value_props.append (p);	// NOTE: Even if it is 0. value() takes care of that.
 		value_prop_mods.append (mod);

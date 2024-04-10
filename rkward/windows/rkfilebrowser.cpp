@@ -37,12 +37,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 // static
-RKFileBrowser *RKFileBrowser::main_browser = 0;
+RKFileBrowser *RKFileBrowser::main_browser = nullptr;
 
 RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, FileBrowserWindow, tool_window, name) {
 	RK_TRACE (APP);
 
-	real_widget = 0;
+	real_widget = nullptr;
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
@@ -100,41 +100,27 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	layout->addWidget (urlbox);
 
 	dir = new KDirOperator (QUrl (), this);
-	dir->setPreviewWidget (0);
+	dir->setPreviewWidget (nullptr);
 	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
 	dir->readConfig (config);
-	dir->setView (KFile::Tree);
+	dir->setViewMode (KFile::Tree);
 	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKFileBrowserWidget::saveConfig);
 	layout->addWidget (dir);
 
-#if KIO_VERSION < QT_VERSION_CHECK(5, 100, 0)
-	toolbar->addAction (dir->actionCollection ()->action ("up"));
-	toolbar->addAction (dir->actionCollection ()->action ("back"));
-	toolbar->addAction (dir->actionCollection ()->action ("forward"));
-	toolbar->addAction (dir->actionCollection ()->action ("home"));
-#else
 	toolbar->addAction (dir->action (KDirOperator::Up));
 	toolbar->addAction (dir->action (KDirOperator::Back));
 	toolbar->addAction (dir->action (KDirOperator::Forward));
 	toolbar->addAction (dir->action (KDirOperator::Home));
-#endif
 
 	QAction* action = new QAction (QIcon::fromTheme ("folder-sync"), i18n ("Working directory"), this);
 	action->setToolTip (action->text ());
 	connect(action, &QAction::triggered, this, [=] () { follow_working_directory = true; syncToWD(); });
 	toolbar->addAction (action);
 	toolbar->addSeparator ();
-#if KIO_VERSION < QT_VERSION_CHECK(5, 100, 0)
-	toolbar->addAction (dir->actionCollection ()->action ("short view"));
-	toolbar->addAction (dir->actionCollection ()->action ("tree view"));
-	toolbar->addAction (dir->actionCollection ()->action ("detailed view"));
-//	toolbar->addAction (dir->actionCollection ()->action ("detailed tree view"));	// should we have this as well? Trying to avoid crowding in the toolbar
-#else
 	toolbar->addAction (dir->action (KDirOperator::ShortView));
 	toolbar->addAction (dir->action (KDirOperator::TreeView));
 	toolbar->addAction (dir->action (KDirOperator::DetailedView));
 //	toolbar->addAction (dir->action (KDirOperator::DetailedTreeView));	// should we have this as well? Trying to avoid crowding in the toolbar
-#endif
 
 	fi_actions = new KFileItemActions (this);
 	rename_action = new QAction (i18n ("Rename"), this);  // Oh my, why isn't there a standard action for this?
@@ -185,8 +171,8 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	// some versions of KDE appear to re-use the actions, others don't, and yet other are just plain broken (see this thread: https://mail.kde.org/pipermail/rkward-devel/2011-March/002770.html)
 	// Therefore, we remove all actions, explicitly, each time the menu is shown, then add them again.
 	QList<QAction*> menu_actions = menu->actions ();
-	QAction *first_sep = 0;
-	foreach (QAction* act, menu_actions) {
+	QAction *first_sep = nullptr;
+	for (QAction* act : std::as_const(menu_actions)) {
 		if (added_service_actions.contains (act)) menu->removeAction (act);
 		if (!first_sep && act->isSeparator ()) first_sep = act;
 	}
@@ -194,16 +180,11 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	menu_actions = menu->actions ();
 
 	menu->insertAction (first_sep, rename_action);
-#if KIO_VERSION >= QT_VERSION_CHECK(5,82,0)
 	fi_actions->insertOpenWithActionsTo(nullptr, menu, QStringList());
 	fi_actions->addActionsTo(menu);
-#else
-	fi_actions->addOpenWithActionsTo (menu, QString ());
-	fi_actions->addServiceActionsTo (menu);
-#endif
 
-	QList<QAction*> menu_actions_after = menu->actions ();
-	foreach (QAction* act, menu_actions_after) if (!menu_actions.contains (act)) added_service_actions.append (act);
+	const QList<QAction*> menu_actions_after = menu->actions ();
+	for (QAction* act : menu_actions_after) if (!menu_actions.contains (act)) added_service_actions.append (act);
 }
 
 // does not work in d-tor. Apparently it's too late, then

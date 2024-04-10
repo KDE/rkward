@@ -11,7 +11,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QRect>
 #include <QString>
 
-class QStringList;
 class QDomNode;
 class KXMLGUIClient;
 class QWidget;
@@ -47,22 +46,13 @@ namespace RKCommonFunctions {
 	QString unescape (const QString &in);
 
 /** simultaneously sets tool tips and what's this tips on up to three QWidgets */
-	void setTips (const QString &tip, QWidget *first, QWidget *second=0, QWidget *third=0);
+	void setTips (const QString &tip, QWidget *first, QWidget *second=nullptr, QWidget *third=nullptr);
 	QString noteSettingsTakesEffectAfterRestart ();
 
 /** create a QLabel that has wordwarp enabled, in a single line of code. */
 	QLabel* wordWrappedLabel (const QString &text);
 /** create a QLabel that has wordwarp enabled, *and* clickable links (opened inside RKWard), in a single line of code. */
 	QLabel* linkedWrappedLabel (const QString &text);
-
-/** Porting aid: Qt::SplitBehaviorFlags was added in Qt 5.14, deprecating the previous flags in QString. Remove, once we depend on Qt >= 5.14 */
-#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
-	inline Qt::SplitBehaviorFlags KeepEmptyParts() { return Qt::KeepEmptyParts; };
-	inline Qt::SplitBehaviorFlags SkipEmptyParts() { return Qt::SkipEmptyParts; };
-#else
-	inline QString::SplitBehavior KeepEmptyParts() { return QString::KeepEmptyParts; };
-	inline QString::SplitBehavior SkipEmptyParts() { return QString::SkipEmptyParts; };
-#endif
 };
 
 #endif

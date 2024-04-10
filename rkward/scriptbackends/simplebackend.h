@@ -30,7 +30,7 @@ public:
 	void setPrintoutTemplate (const QString &template_string) { printout_template = template_string; };
 	void setPreviewTemplate (const QString &template_string) { preview_template = template_string; };
 
-	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true) override;
+	bool initialize (RKComponentPropertyCode *code_property=nullptr, bool add_headings=true) override;
 	void destroy () override;
 	
 	void preprocess (int flags) override;

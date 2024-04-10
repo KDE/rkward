@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKTEXTMATRIX_H
 
 #include <QStringList>
+#include <QRegularExpression>
 
 /** This class is meant to assist paste operations in tables. Most importantly, it provides methods to map
 to and from text/tab-separated-values format, and it does not hickup in case of ragged length data.
@@ -20,7 +21,7 @@ public:
 	~RKTextMatrix ();
 
 	static RKTextMatrix matrixFromClipboard ();
-	static RKTextMatrix matrixFromSeparatedValues (const QString& text, const QRegExp& tab=QRegExp ("\t"), const QChar& brk='\n');
+	static RKTextMatrix matrixFromSeparatedValues (const QString& text, const QRegularExpression &tab = QRegularExpression(QStringLiteral("\t")), const QChar& brk = QLatin1Char('\n'));
 
 	QString toTabSeparatedValues () const;
 	void copyToClipboard () const;

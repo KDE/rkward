@@ -30,6 +30,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget () {
 	RK_TRACE (APP);
 
+	setDocumentMode(true);
 	workplace_view = parent;
 
 	setTabsClosable (true);
@@ -129,7 +130,7 @@ void RKWorkplaceViewPane::tabRemoved (int index) {
 	RK_TRACE (APP);
 	QTabWidget::tabRemoved (index);
 //	if (count () < 2) tabBar ()->hide ();
-	if (count () < 1) emit becameEmpty(this);
+	if (count () < 1) Q_EMIT becameEmpty(this);
 	workplace_view->updateActions ();
 }
 
@@ -202,7 +203,7 @@ RKWorkplaceViewPane* RKWorkplaceView::createPane (bool init_actions) {
 RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QSplitter (parent) {
 	RK_TRACE (APP);
 
-	newpane = 0;
+	newpane = nullptr;
 	RKWorkplaceViewPane *pane = createPane (false);
 	addWidget (pane);
 	panes.append (pane);
@@ -236,24 +237,30 @@ void RKWorkplaceView::initActions (KActionCollection *ac) {
 
 	action_page_left = (QAction *) ac->addAction ("left_window", this, SLOT (pageLeft()));
 	action_page_left->setText (i18n ("Window Left"));
-	ac->setDefaultShortcuts (action_page_left, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Less << Qt::ControlModifier + Qt::Key_Comma);
+	ac->setDefaultShortcuts (action_page_left, {
+		Qt::ControlModifier | Qt::Key_Less,
+		Qt::ControlModifier | Qt::Key_Comma
+	});
 
 	action_page_right = (QAction *) ac->addAction ("right_window", this, SLOT (pageRight()));
 	action_page_right->setText (i18n ("Window Right"));
-	ac->setDefaultShortcuts (action_page_right, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Greater << Qt::ControlModifier + Qt::Key_Period);
+	ac->setDefaultShortcuts (action_page_right, {
+		Qt::ControlModifier | Qt::Key_Greater,
+		Qt::ControlModifier | Qt::Key_Period
+	});
 
 	// NOTE: Icons, shortcuts, action names for split view actions as in kate
 	action_split_vert = ac->addAction (QStringLiteral ("view_split_vert"));
 	action_split_vert->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-left-right")));
 	action_split_vert->setText (i18n("Split Ve&rtical"));
-	ac->setDefaultShortcut (action_split_vert, Qt::CTRL + Qt::SHIFT + Qt::Key_L);
+	ac->setDefaultShortcut (action_split_vert, Qt::CTRL | Qt::SHIFT | Qt::Key_L);
 	connect (action_split_vert, &QAction::triggered, this, &RKWorkplaceView::splitViewVert);
 	action_split_vert->setWhatsThis (i18n ("Split the currently active view into two views, vertically."));
 
 	action_split_horiz = ac->addAction (QStringLiteral ("view_split_horiz"));
 	action_split_horiz->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-top-bottom")));
 	action_split_horiz->setText (i18n ("Split &Horizontal"));
-	ac->setDefaultShortcut (action_split_horiz, Qt::CTRL + Qt::SHIFT + Qt::Key_T);
+	ac->setDefaultShortcut (action_split_horiz, Qt::CTRL | Qt::SHIFT | Qt::Key_T);
 	connect (action_split_horiz, &QAction::triggered, this, &RKWorkplaceView::splitViewHoriz);
 	action_split_horiz->setWhatsThis (i18n ("Split the currently active view into two views, horizontally."));
 
@@ -381,7 +388,7 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, const QString &des
 	if (!RKWorkplace::mainWorkplace ()->restoreDocumentWindow (_description, base)) {
 		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
 	}
-	newpane = 0;
+	newpane = nullptr;
 
 	splitter->setSizes (sizes);
 	setUpdatesEnabled (true);
@@ -417,11 +424,11 @@ RKWorkplaceViewPane* RKWorkplaceView::findWindow (RKMDIWindow *widget) const {
 	for (int i = 0; i < panes.size (); ++i) {
 		if (panes[i]->indexOf (widget) > -1) return panes[i];
 	}
-	return 0;
+	return nullptr;
 }
 
 bool RKWorkplaceView::hasWindow (RKMDIWindow *widget) const {
-	return (findWindow (widget) != 0);
+	return (findWindow (widget) != nullptr);
 }
 
 bool RKWorkplaceView::windowInActivePane (RKMDIWindow *widget) const {
@@ -446,9 +453,9 @@ void RKWorkplaceView::purgePane (RKWorkplaceViewPane* pane) {
 	if (panes.count () < 2) return;  // keep at least one pane around for layout purposes
 
 	QSplitter* split = static_cast<QSplitter*> (pane->parentWidget ());
-	pane->hide ();
-	pane->setParent (0); // TODO: needed?
-	pane->deleteLater ();
+	pane->hide();
+	pane->setParent(nullptr); // TODO: needed?
+	pane->deleteLater();
 	while (split != this && split->count () < 1) {
 		QSplitter* p = static_cast<QSplitter*> (split->parentWidget ());
 		delete (split);
@@ -484,7 +491,7 @@ void RKWorkplaceView::setCaption(const QString &caption) {
 	RK_TRACE(APP);
 
 	QWidget::setWindowTitle(caption);
-	emit captionChanged(caption);
+	Q_EMIT captionChanged(caption);
 }
 
 void RKWorkplaceView::restoreLayout(const QString& desc) {
@@ -501,8 +508,8 @@ void RKWorkplaceView::restoreLayout(const QString& desc) {
 			RKMDIWindow *win = static_cast<RKMDIWindow*> (panes[i]->widget (0));
 			panes[i]->removeTab (0);
 			windows_to_readd.append (win);
-			win->hide ();
-			win->setParent (0);
+			win->hide();
+			win->setParent(nullptr);
 		}
 	}
 	while (count ()) {
@@ -574,7 +581,7 @@ void RKWorkplaceView::nextPane () {
 void RKWorkplaceView::purgeEmptyPanes () {
 	RK_TRACE (APP);
 
-	newpane = 0; // just in case of broken specifications during workplace restoration
+	newpane = nullptr; // just in case of broken specifications during workplace restoration
 	for (int i = 0; i < panes.count (); ++i) {
 		if (panes.count() > 1 && panes[i]->count() < 1) {
 			purgePane (panes[i]);

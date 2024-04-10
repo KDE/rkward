@@ -41,7 +41,7 @@ RKTextMatrix RKTextMatrix::matrixFromClipboard () {
 }
 
 // static
-RKTextMatrix RKTextMatrix::matrixFromSeparatedValues (const QString& text, const QRegExp& tab, const QChar& brk) {
+RKTextMatrix RKTextMatrix::matrixFromSeparatedValues (const QString& text, const QRegularExpression& tab, const QChar& brk) {
 	RK_TRACE (EDITOR);
 
 	RKTextMatrix ret;

@@ -31,7 +31,7 @@ class RControlWindow : public RKMDIWindow {
 public:
 /** constructor.
 @param parent parent QWidget, usually RKGlobals::rkApp () or similar */
-	RControlWindow (QWidget *parent, bool tool_window, const char *name=0);
+	RControlWindow (QWidget *parent, bool tool_window, const char *name=nullptr);
 /** destructor */
 	~RControlWindow ();
 
@@ -41,7 +41,7 @@ public:
 	void hideEvent (QHideEvent *e) override;
 /** Static reference to the control window */
 	static RControlWindow* getControl () { return control_window; };
-public slots:
+public Q_SLOTS:
 /** cancel button was clicked. Cancel selected commands (unless they are RCommand::Sync). */
 	void cancelButtonClicked ();
 /** pause button was clicked. Pause/Resume processing of the stack */

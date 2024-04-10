@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 # SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
-CMAKE_MINIMUM_REQUIRED(VERSION 3.10.0)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.20.0)
 
 PROJECT(rkward)
 
@@ -10,7 +10,7 @@ IF(NOT CMAKE_VERBOSE_MAKEFILE)
 	SET (FORCE_PRETTY_MAKEFILE ON)
 ENDIF(NOT CMAKE_VERBOSE_MAKEFILE)
 
-FIND_PACKAGE(ECM 0.0.11 REQUIRED NO_MODULE)
+FIND_PACKAGE(ECM 6.0.0 REQUIRED NO_MODULE)
 
 SET(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 
@@ -22,30 +22,17 @@ INCLUDE(ECMAddAppIcon)
 INCLUDE(ECMMarkNonGuiExecutable)
 INCLUDE(FeatureSummary)
 
-FIND_PACKAGE(Qt5 5.9 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Qml PrintSupport)
-FIND_PACKAGE(KF5 5.44 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive OPTIONAL_COMPONENTS Crash)
-IF(NOT NO_QT_WEBENGINE)
-	FIND_PACKAGE(Qt5 5.9 OPTIONAL_COMPONENTS WebEngineWidgets)
-	IF(NOT Qt5WebEngineWidgets_FOUND OR Qt5WebEngineWidgets_VERSION VERSION_LESS "5.12.0")
-		MESSAGE(STATUS "QWebEngine not available (or version < 5.12). Falling back to QtWebKit")
-		SET(NO_QT_WEBENGINE 1)
-	ENDIF()
-ENDIF(NOT NO_QT_WEBENGINE)
-IF(NO_QT_WEBENGINE)
-	FIND_PACKAGE(KF5 5.44 REQUIRED COMPONENTS WebKit)
-	ADD_DEFINITIONS(-DNO_QT_WEBENGINE)  # TODO: rather set it for rkhtmlwindow, only
-ELSE(NO_QT_WEBENGINE)
-	MESSAGE(STATUS "QtWebEngine will be used for rendering HTML. To use KF5WebKit, instead (if available), pass -DNO_QT_WEBENGINE=1 in your call to cmake.")
-ENDIF(NO_QT_WEBENGINE)
+FIND_PACKAGE(Qt6 6.6 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Qml PrintSupport WebEngineWidgets Core5Compat) # TODO: remove compat
+FIND_PACKAGE(KF6 6.0.0 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive OPTIONAL_COMPONENTS Crash)
 FIND_PACKAGE(Gettext REQUIRED)
 
 IF(FORCE_PRETTY_MAKEFILE)
 	SET(CMAKE_VERBOSE_MAKEFILE OFF)
 ENDIF(FORCE_PRETTY_MAKEFILE)
 
-ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT_NO_CAST_TO_ASCII)
 ADD_DEFINITIONS(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
-ADD_DEFINITIONS(-DQT_NO_URL_CAST_FROM_STRING)
+
+remove_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove to compley to KDECompilerSettings
 
 #uncomment the line below to save ~250-350kB in object size
 #ADD_DEFINITIONS(-DRKWARD_NO_TRACE)

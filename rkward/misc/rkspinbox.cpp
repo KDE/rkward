@@ -19,7 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
 	RK_TRACE (MISC);
 
-	validator = 0;
+	validator = nullptr;
 	mode = Integer;
 	real_value = 0;
 	int_value = 0;
@@ -94,7 +94,7 @@ QValidator::State RKSpinBox::validate (QString &input, int &pos) const {
 void RKSpinBox::emitValueChange () {
 	RK_TRACE (MISC);
 
-	emit valueChanged(0);
+	Q_EMIT valueChanged(0);
 }
 
 void RKSpinBox::updateValue (int change) {

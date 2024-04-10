@@ -8,8 +8,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkdbusapi.h"
 
 #include <QDBusConnection>
-#include <kwindowsystem.h>
-#include "../windows/rkworkplace.h"
+#include <KWindowSystem>
+#if __has_include(<KStartupInfo>)
+#include <KStartupInfo>
+#endif
 #include "../rkward.h"
 
 #include "../debug.h"
@@ -30,7 +32,7 @@ RKDBusAPI::RKDBusAPI (QObject* parent): QObject (parent) {
 	QDBusConnection::sessionBus ().registerObject ("/", this, QDBusConnection::ExportScriptableSlots);
 }
 
-void RKDBusAPI::openAnyUrl (const QStringList& urls, bool warn_external) {
+void RKDBusAPI::openAnyUrl (const QStringList& urls, const QString &token, bool warn_external) {
 	RK_TRACE (APP);
 
 	// ok, raising the app window is totally hard to do, reliably. This solution copied from kate.
@@ -38,9 +40,16 @@ void RKDBusAPI::openAnyUrl (const QStringList& urls, bool warn_external) {
 	main->show();
 	main->activateWindow();
 	main->raise();
-	KWindowSystem::forceActiveWindow (main->winId ());
-	KWindowSystem::raiseWindow (main->winId ());
-	KWindowSystem::demandAttention (main->winId ());
+
+	if (KWindowSystem::isPlatformX11()) {
+#if __has_include(<KStartupInfo>)
+		KStartupInfo::setNewStartupId(main->windowHandle(), token.toUtf8());
+#endif
+	} else if (KWindowSystem::isPlatformWayland()) {
+		KWindowSystem::setCurrentXdgActivationToken(token);
+	}
+
+	KWindowSystem::activateWindow(main->windowHandle());
 	// end
 
 	RKWardMainWindow::getMain ()->openUrlsFromCommandLineOrDBus (warn_external, urls);

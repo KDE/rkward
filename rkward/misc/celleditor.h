@@ -13,7 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/robject.h"
 #include "rktableview.h"
 
-class QStringList;
 class QMenu;
 class QEvent;
 class QKeyEvent;
@@ -35,9 +34,9 @@ public:
 	void setValueLabels (const RObject::ValueLabels& labels);
 
 	void setText (const QString& text);
-signals:
+Q_SIGNALS:
 	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
-public slots:
+public Q_SLOTS:
 	void selectedFromList (QAction* action);
 	void showValueLabels ();
 protected:

@@ -83,7 +83,7 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	void setValueLabelString (const QString &string);
 
 /** Restores the variable including data and meta-data */
-	void restore (RCommandChain *chain=0);
+	void restore (RCommandChain *chain=nullptr);
 
 /** Stores formatting options set for this variable */
 	struct FormattingOptions {
@@ -162,8 +162,8 @@ protected:
 /** takes care of syncing the given range of cells */
 	void cellsChanged (int from_row, int to_row);
 /** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */
-	virtual void writeData (int from_row, int to_row, RCommandChain *chain=0);
-	void writeInvalidFields (QList<int> rows, RCommandChain *chain=0);
+	virtual void writeData (int from_row, int to_row, RCommandChain *chain=nullptr);
+	void writeInvalidFields (QList<int> rows, RCommandChain *chain=nullptr);
 /** writes the values labels to the backend */
 	void writeValueLabels (RCommandChain *chain) const;
 

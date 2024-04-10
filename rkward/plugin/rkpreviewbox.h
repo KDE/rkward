@@ -31,7 +31,7 @@ public:
 	int type () override { return ComponentPreviewBox; };
 	RKComponentPropertyBool *state;
 	QVariant value (const QString &modifier=QString ()) override;
-public slots:
+public Q_SLOTS:
 	void changedStateFromUi ();
 	void changedState (RKComponentPropertyBase *);
 	void changedCode (RKComponentPropertyBase *);

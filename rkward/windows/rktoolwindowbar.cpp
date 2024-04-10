@@ -1,6 +1,6 @@
 /*
 rktoolwindowbar - This file is part of RKWard (https://rkward.kde.org). Created: Fri Oct 12 2007
-SPDX-FileCopyrightText: 2007-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -31,7 +31,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define SPLITTER_MIN_SIZE 30
 
 RKToolWindowBar::RKToolWindowBar (KMultiTabBarPosition position, QWidget *parent) : KMultiTabBar (position, parent),
-	container (0) {
+	container(nullptr) {
 	RK_TRACE (APP);
 
 	setStyle (KMultiTabBar::KDEV3ICON);
@@ -116,7 +116,6 @@ void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 	splitter->setContentsMargins (0, 0, 0, 0);
 	container->layout ()->setContentsMargins (0, 0, 0, 0);
 	container->layout ()->setSpacing (0);
-	container->layout ()->setMargin (0);
 	container->hide ();
 
 	connect (splitter, &QSplitter::splitterMoved, this, &RKToolWindowBar::splitterMoved);
@@ -135,11 +134,7 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 		window->tool_window_bar->removeWidget (window);
 	}
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5,13,0)
 	appendTab (window->windowIcon (), id, window->shortCaption ());
-#else
-	appendTab (window->windowIcon ().pixmap (QSize (16, 16)), id, window->shortCaption ());
-#endif
 
 	window->tool_window_bar = this;
 	widget_to_id.insert (window, id);
@@ -151,6 +146,14 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	if (window->isAttached ()) {
 		reclaimDetached (window);
 	}
+
+	// This really belongs to katepart integration, but cannot be placed there, without major pains
+	// Needs to be a queued connect, as the "real" widget (listening for the call) may be constructed after it's container
+	// is being added, here.
+	QMetaObject::invokeMethod( RKWardMainWindow::getMain(),
+	[w = RKWardMainWindow::getMain(), window, tab = tab(id)] {
+		Q_EMIT w->tabForToolViewAdded(window, tab);
+	}, Qt::QueuedConnection);
 
 	show ();
 }
@@ -182,10 +185,10 @@ void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 	removeTab (id);
 	widget_to_id.remove (widget);
 	disconnect (widget, &QObject::destroyed, this, &RKToolWindowBar::windowDestroyed);
-	widget->tool_window_bar = 0;
+	widget->tool_window_bar = nullptr;
 
 	if (widget->isAttached ()) {
-		widget->setParent (0);
+		widget->setParent(nullptr);
 		widget->hide ();
 	}
 
@@ -246,7 +249,7 @@ void RKToolWindowBar::hideWidget (RKMDIWindow *widget) {
 		container->hide ();
 	}
 
-	RKWardMainWindow::getMain()->partManager()->setActivePart (0);
+	RKWardMainWindow::getMain()->partManager()->setActivePart(nullptr);
 	widget->active = false;
 	widget->hide ();
 
@@ -278,7 +281,7 @@ RKMDIWindow* RKToolWindowBar::idToWidget (int id) const {
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
@@ -305,11 +308,7 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n ("Top Sidebar"));
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n ("Bottom Sidebar"));
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("Not shown in sidebar"));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5,78,0)
 				connect(sel, &KSelectAction::indexTriggered, this, &RKToolWindowBar::moveToolWindow);
-#else
-				connect (sel, static_cast<void (KSelectAction::*)(int)>(&KSelectAction::triggered), this, &RKToolWindowBar::moveToolWindow);
-#endif
 				menu.addAction (sel);
 	
 				menu.exec (e->globalPos());
@@ -326,7 +325,8 @@ void RKToolWindowBar::contextMenuEvent (QContextMenuEvent* event) {
 	RK_TRACE (APP);
 
 	QMenu menu (this);
-	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
+	const auto windows = RKToolWindowList::registeredToolWindows ();
+	for (const RKToolWindowList::ToolWindowRepresentation& rep : windows) {
 		QAction *a = menu.addAction (rep.window->windowIcon (), rep.window->shortCaption ());
 		a->setCheckable (true);
 		a->setChecked (rep.window->tool_window_bar == this);

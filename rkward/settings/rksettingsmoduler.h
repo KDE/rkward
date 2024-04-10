@@ -44,9 +44,9 @@ public:
 	static QString helpBaseUrl () { return help_base_url; };
 
 	static int getDefaultWidth () { return options_width; };
-public slots:
+public Q_SLOTS:
 	void settingChanged ();
-private slots:
+private Q_SLOTS:
 	void addPaths (QStringList *string_list);
 private:
 	QLineEdit *outdec_input;
@@ -110,7 +110,7 @@ public:
 
 	QString caption() const override;
 	QIcon icon() const override;
-public slots:
+public Q_SLOTS:
 	void settingChanged ();
 	void addLibLoc (QStringList *string_list);
 	void addRepository (QStringList *string_list);

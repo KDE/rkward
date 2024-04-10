@@ -62,7 +62,7 @@ typedef QList<ROutput*> ROutputList;
  */
 class RCommandNotifier : public QObject {
 	Q_OBJECT
-signals:
+Q_SIGNALS:
 /** given command has finished (not necessarily successfully) */
 	void commandFinished(RCommand *command);
 /** new output for the given command */
@@ -73,9 +73,9 @@ private:
 friend class RCommand;
 	RCommandNotifier();
 	~RCommandNotifier();
-	void emitFinished(RCommand *command) { emit commandFinished(command); };
-	void emitOutput(RCommand *command, const ROutput* output) { emit commandOutput(command, output); };
-	void emitLineIn(RCommand *command) { emit commandLineIn(command); };
+	void emitFinished(RCommand *command) { Q_EMIT commandFinished(command); };
+	void emitOutput(RCommand *command, const ROutput* output) { Q_EMIT commandOutput(command, output); };
+	void emitLineIn(RCommand *command) { Q_EMIT commandLineIn(command); };
 };
 
 /** For introductory information on using RCommand, see \ref UsingTheInterfaceToR 
@@ -196,7 +196,7 @@ public:
 
 	template<typename T> void whenFinished(const QObject* receiver, const T func) {
 		QObject::connect(notifier(), &RCommandNotifier::commandFinished, receiver, func);
-	};
+	}
 private:
 friend class RInterface;
 friend class RCommandStack;
@@ -233,11 +233,11 @@ struct GenericRRequestResult {
 	}
 	GenericRRequestResult& addMessages(const GenericRRequestResult &other) {
 		if (!other.error.isEmpty()) {
-			if (!error.isEmpty()) error.append('\n');
+			if (!error.isEmpty()) error.append(QLatin1Char('\n'));
 			error.append(other.error);
 		}
 		if (!other.warning.isEmpty()) {
-			if (!warning.isEmpty()) warning.append('\n');
+			if (!warning.isEmpty()) warning.append(QLatin1Char('\n'));
 			warning.append(other.warning);
 		}
 		return *this;

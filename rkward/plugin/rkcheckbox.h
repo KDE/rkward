@@ -32,7 +32,7 @@ public:
 		return (state->value (modifier));
 	};
 	QStringList getUiLabelPair () const override;
-public slots:
+public Q_SLOTS:
 	void changedStateFromUi (int);
 	void changedState (RKComponentPropertyBase *);
 private:

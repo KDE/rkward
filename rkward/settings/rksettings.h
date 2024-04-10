@@ -44,8 +44,8 @@ public:
 		NumPages = PageDebug + 1
 	};
 
-	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0, RCommandChain *chain=0);
-	static void configureSettings (const QString& page, QWidget *parent=0, RCommandChain *chain=0);
+	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=nullptr, RCommandChain *chain=nullptr);
+	static void configureSettings (const QString& page, QWidget *parent=nullptr, RCommandChain *chain=nullptr);
 
 	static void loadSettings (KConfig *config);
 	static void saveSettings (KConfig *config);
@@ -55,14 +55,14 @@ public:
 	void enableApply ();
 	
 	static RKSettingsTracker* tracker () { return settings_tracker; };
-public slots:
+public Q_SLOTS:
 	void pageChange (KPageWidgetItem *current, KPageWidgetItem *before);
 protected:
-	RKSettings (QWidget *parent = 0);
+	RKSettings (QWidget *parent = nullptr);
 	~RKSettings ();
 
 	void done (int result) override;
-private slots:
+private Q_SLOTS:
 	void applyAll ();
 	void helpClicked ();
 private:
@@ -90,7 +90,7 @@ public:
 	~RKSettingsTracker ();
 
 	void signalSettingsChange (RKSettings::SettingsPage page);
-signals:
+Q_SIGNALS:
 	void settingsChanged (RKSettings::SettingsPage);
 };
 

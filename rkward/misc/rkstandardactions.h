@@ -18,13 +18,13 @@ class RKScriptContextProvider;
 
 @author Thomas Friedrichsmeier */
 namespace RKStandardActions {
-	QAction *copyLinesToOutput (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction *copyLinesToOutput (RKMDIWindow *window, const QObject *receiver=nullptr, const char *member=nullptr);
 /** Allows special pasting modes for script windows.
 @param member needs to have the signature void fun (const QString&). */
-	QAction* pasteSpecial (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction* pasteSpecial (RKMDIWindow *window, const QObject *receiver=nullptr, const char *member=nullptr);
 
-	QAction* runCurrent (RKMDIWindow *window, const QObject *receiver=0, const char *member=0, bool current_or_line=false);
-	QAction* runAll (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction* runCurrent (RKMDIWindow *window, const QObject *receiver=nullptr, const char *member=nullptr, bool current_or_line=false);
+	QAction* runAll (RKMDIWindow *window, const QObject *receiver=nullptr, const char *member=nullptr);
 
 	QAction* functionHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider);
 /** Search for current symbol / selection, online. Note that you will not have to connect this action to any slot to work. It does everything by itself.

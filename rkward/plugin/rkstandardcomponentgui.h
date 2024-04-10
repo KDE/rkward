@@ -78,7 +78,7 @@ public:
 	RKXMLGUIPreviewArea* addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id=QString (), bool bottom = false);
 /** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
 	virtual void finalize ();
-public slots:
+public Q_SLOTS:
 	void ok ();
 	void cancel ();
 	void toggleCode ();
@@ -87,7 +87,7 @@ public slots:
 	void updateCodeNow ();
 	void switchInterface () { component->switchInterface (); };
 	void copyCode ();
-private slots:
+private Q_SLOTS:
 	void previewVisibilityChanged (RKComponentPropertyBase*);
 	void previewCloseButtonClicked (RKXMLGUIPreviewArea *area);
 	void doPostShowCleanup ();
@@ -145,7 +145,7 @@ public:
 	void updateState ();
 
 	RKStandardComponentStack *getStack () { return stack; };
-public slots:
+public Q_SLOTS:
 	void next ();
 	void prev ();
 private:

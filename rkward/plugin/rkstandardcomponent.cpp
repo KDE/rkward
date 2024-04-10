@@ -55,12 +55,12 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	RKStandardComponent::filename = filename;
 	RKStandardComponent::id = id;
-	command_chain = 0;
-	backend = 0;
-	scripting = 0;
-	gui = 0;
-	wizard = 0;
-	xml = 0;
+	command_chain = nullptr;
+	backend = nullptr;
+	scripting = nullptr;
+	gui = nullptr;
+	wizard = nullptr;
+	xml = nullptr;
 	created = false;
 	killed = false;
 	addChild ("code", code = new RKComponentPropertyCode (this, true));		// do not change this name!
@@ -108,7 +108,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	connect (backend, &ScriptBackend::idle, this, &RKStandardComponent::backendIdle);
 	connect (backend, &ScriptBackend::requestValue, this, &RKStandardComponent::getValue);
 	connect (backend, &ScriptBackend::haveError, this, &RKStandardComponent::kill);
-	if (!backend->initialize (code, parent_component == 0)) return;
+	if (!backend->initialize (code, parent_component == nullptr)) return;
 
 	// check for existence of help file
 	element = xml->getChildElement(doc_element, "help", DL_WARNING);
@@ -221,7 +221,7 @@ XMLHelper* RKStandardComponent::getXmlHelper () {
 
 	if (!xml) {
 		RKComponentHandle *handle = RKComponentMap::getComponentHandle (id);
-		xml = new XMLHelper (filename, handle ? handle->messageCatalog () : 0);
+		xml = new XMLHelper(filename, handle ? handle->messageCatalog() : nullptr);
 	}
 	return xml;
 }
@@ -309,11 +309,11 @@ void RKStandardComponent::discard () {
 	created = false;
 	gui->hide ();
 	gui->deleteLater ();
-	gui = 0;
-	wizard = 0;
+	gui = nullptr;
+	wizard = nullptr;
 
 	// clear all properties. Not the code property, as the script backend relies on it
-	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+	for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (it.value () != code) {
 			if (it.value ()->isProperty ()) {
 				static_cast<RKComponentPropertyBase *> (it.value ())->deleteLater ();
@@ -353,14 +353,14 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 		QTimer::singleShot (0, gui, SLOT (show()));
 	}
 	changed ();
-	emit standardInitializationComplete();
+	Q_EMIT standardInitializationComplete();
 }
 
 RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview (RKComponentPropertyBool* controller, const QString& label, const QString &id) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (gui);
-	if (!gui) return 0;
+	if (!gui) return nullptr;
 	return gui->addDockedPreview (controller, label, id);
 }
 
@@ -445,7 +445,7 @@ void RKStandardComponent::getValue (const QString &id, const int hint) {
 bool RKStandardComponent::isWizardish () {
 	RK_TRACE (PLUGIN);
 
-	if (gui) return (wizard != 0);
+	if (gui) return (wizard != nullptr);
 	if (parentComponent ()) return (parentComponent ()->isWizardish ());
 	return false;
 }
@@ -571,7 +571,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 	XMLChildList::const_iterator it;
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		bool add_to_layout = true;
-		RKComponent *widget = 0;
+		RKComponent *widget = nullptr;
 		QDomElement e = *it;		// shorthand
 		QString id = xml.getStringAttribute (e, "id", QString (), DL_INFO);
 
@@ -670,7 +670,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);
 			if (handle) {
 				if (xml.getBoolAttribute (e, "as_button", false, DL_INFO)) {
-					RKStandardComponent* swidget = handle->invoke (component (), 0);
+					RKStandardComponent* swidget = handle->invoke (component (), nullptr);
 					widget = swidget;
 					QString dummy = xml.i18nStringAttribute (e, "label", i18n ("Options"), DL_WARNING);
 					swidget->setCaption (dummy);

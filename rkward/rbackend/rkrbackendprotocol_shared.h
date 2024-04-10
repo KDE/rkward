@@ -54,13 +54,13 @@ public:
 
 	RCommandProxy *takeCommand () {
 		RCommandProxy* ret = command;
-		command = 0;
+		command = nullptr;
 		return ret;
 	}
 
 	ROutputList *takeOutput () {
 		ROutputList* ret = output;
-		output = 0;
+		output = nullptr;
 		return ret;
 	}
 
@@ -102,7 +102,7 @@ public:
 	enum EventType {
 		RKWardEvent = QEvent::User + 1
 	};
-	explicit RKRBackendEvent (RBackendRequest* data=0) : QEvent ((QEvent::Type) RKWardEvent) { _data = data; };
+	explicit RKRBackendEvent(RBackendRequest* data=nullptr) : QEvent((QEvent::Type) RKWardEvent) { _data = data; };
 	~RKRBackendEvent () {};
 
 	RBackendRequest* data () { return _data; };

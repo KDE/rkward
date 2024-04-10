@@ -19,16 +19,16 @@ class QLabel;
 class RKDebugConsole : public RKMDIWindow {
 	Q_OBJECT
 public:
-	RKDebugConsole (QWidget *parent, bool tool_window, const char *name=0);
-	~RKDebugConsole ();
+	RKDebugConsole(QWidget *parent, bool tool_window, const char *name=nullptr);
+	~RKDebugConsole();
 
 	static RKDebugConsole *instance () { return _instance; };
 
 	// reimplemented to refuse closing while inside the debugger
 	bool close (CloseWindowMode ask_save) override;
-public slots:
+public Q_SLOTS:
 	void newDebugState ();
-private slots:
+private Q_SLOTS:
 	void sendReplySlot ();
 private:
 	QPushButton* addButton(const QString &command, const QString &text, const QString &tip);

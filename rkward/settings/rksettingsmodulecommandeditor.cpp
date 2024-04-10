@@ -198,9 +198,9 @@ bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &file
 	RK_TRACE (SETTINGS);
 
 	const QStringList exts = script_file_filter.get().split(' ');
-	foreach (const QString& ext, exts) {
-		QRegExp reg (ext, Qt::CaseInsensitive, QRegExp::Wildcard);
-		if (reg.exactMatch (filename)) return true;
+	for (const QString& ext : exts) {
+		auto reg = QRegularExpression::fromWildcard(ext, Qt::CaseInsensitive);
+		if (reg.match (filename).hasMatch()) return true;
 	}
 	return false;
 }

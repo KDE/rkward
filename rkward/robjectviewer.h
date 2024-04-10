@@ -38,7 +38,7 @@ public:
 		PrintPage = 1,
 		StructurePage = 2
 	};
-public slots:
+public Q_SLOTS:
 	void currentTabChanged (int new_current);
 protected:
 	friend class RKWorkplace;
@@ -69,12 +69,12 @@ protected:
 	RObjectViewerWidget (QWidget* parent, RObject* object);
 	virtual ~RObjectViewerWidget ();
 public:
-	void objectKilled () { _object = 0; };
+	void objectKilled() { _object = nullptr; };
 
 	void invalidate (const QString& reason);
 	void initialize ();
 	void setText (const QString& text);
-public slots:
+public Q_SLOTS:
 	virtual void update ();
 protected:
 	virtual RCommand* makeCommand() = 0;

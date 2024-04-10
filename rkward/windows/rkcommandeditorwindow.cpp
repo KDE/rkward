@@ -9,13 +9,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kxmlguifactory.h>
 
 #include <ktexteditor/editor.h>
-#include <ktexteditor/modificationinterface.h>
-#include <ktexteditor/markinterface.h>
 #include <KTextEditor/Application>
 
-#include <qapplication.h>
-#include <qfile.h>
-#include <qtimer.h>
+#include <QApplication>
+#include <QActionGroup>
+#include <QFile>
+#include <QTimer>
 #include <QHBoxLayout>
 #include <QCloseEvent>
 #include <QFrame>
@@ -35,8 +34,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kstandardaction.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <kio/deletejob.h>
-#include <kio/job.h>
+#include <KIO/DeleteJob>
+#include <KIO/FileCopyJob>
 #include <kconfiggroup.h>
 #include <krandom.h>
 #include <kwidgetsaddons_version.h>
@@ -83,17 +82,9 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 QMap<QString, KTextEditor::Document*> RKCommandEditorWindow::unnamed_documents;
 
 KTextEditor::Document* createDocument(bool with_signals) {
-	if (with_signals) {
-#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
-		emit KTextEditor::Editor::instance()->application()->aboutToCreateDocuments();
-#endif
-	}
 	KTextEditor::Document* ret = KTextEditor::Editor::instance()->createDocument (RKWardMainWindow::getMain ());
 	if (with_signals) {
-		emit KTextEditor::Editor::instance()->application()->documentCreated(ret);
-#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
-		emit KTextEditor::Editor::instance()->application()->documentsCreated(QList<KTextEditor::Document*>() << ret);
-#endif
+		Q_EMIT KTextEditor::Editor::instance()->application()->documentCreated(ret);
 	}
 	return ret;
 }
@@ -107,8 +98,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	RK_ASSERT (editor);
 
 	QUrl url = _url;
-	m_doc = 0;
-	preview_dir = 0;
+	m_doc = nullptr;
+	preview_dir = nullptr;
 	visible_to_kateplugins = flags & RKCommandEditorFlags::VisibleToKTextEditorPlugins;
 	if (visible_to_kateplugins) addUiBuddy(RKWardMainWindow::getMain()->katePluginIntegration()->mainWindow()->dynamicGuiClient());
 	bool use_r_highlighting = (flags & RKCommandEditorFlags::ForceRHighlighting) || (url.isEmpty() && (flags & RKCommandEditorFlags::DefaultToRHighlighting)) || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName ());
@@ -170,7 +161,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 					m_doc->readSessionConfig (conf);
 				}
 			} else {
-				KMessageBox::messageBox (this, KMessageBox::Error, i18n ("Unable to open \"%1\"", url.toDisplayString ()), i18n ("Could not open command file"));
+				KMessageBox::error(this, i18n ("Unable to open \"%1\"", url.toDisplayString ()), i18n ("Could not open command file"));
 			}
 		}
 	}
@@ -189,12 +180,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	// yes, we want to be notified, if the file has changed on disk.
 	// why, oh why is this not the default?
 	// this needs to be set *before* the view is created!
-	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
-	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
-	else RK_ASSERT (false);
+	m_doc->setModifiedOnDiskWarning (true);
 	m_view = m_doc->createView (this, RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow());
 	if (visible_to_kateplugins) {
-		emit RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow()->viewCreated (m_view);
+		Q_EMIT RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow()->viewCreated (m_view);
 	}
 	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
@@ -216,8 +205,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	initializeActions (part->actionCollection ());
 	// The kate part is quite a beast to embed, when it comes to shortcuts. New ones get added, conflicting with ours.
 	// In this context we show no mercy, and rip out any conflicting shortcuts.
-	auto kate_acs = m_view->findChildren<KActionCollection*>();
-	kate_acs.append(m_view->actionCollection());
+	const auto kate_acs = m_view->findChildren<KActionCollection*>() << m_view->actionCollection();
 	QList<KActionCollection*> own_acs;
 	own_acs.append(part->actionCollection());
 	own_acs.append(standardActionCollection());
@@ -227,7 +215,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 		for (const auto own_action : own_actions) {
 			const auto own_scs = ac->defaultShortcuts(own_action);
 			for (const auto &own_sc : own_scs) {
-				for (const auto kate_ac : qAsConst(kate_acs)) {
+				for (const auto kate_ac : kate_acs) {
 					const auto kate_actions = kate_ac->actions();
 					for (auto kate_action : kate_actions) {
 						auto action_shortcuts = kate_ac->defaultShortcuts(kate_action);
@@ -282,9 +270,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 		}
 	}
 
-	smart_iface = qobject_cast<KTextEditor::MovingInterface*> (m_doc);
 	initBlocks ();
-	RK_ASSERT (smart_iface);
 
 	connect (&autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
 	connect (&preview_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doRenderPreview);
@@ -311,17 +297,11 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 		// if this is the only view, destroy the document. Note that doc has to be destroyed before view. konsole plugin (and possibly others) assumes it.
 		RK_ASSERT(views.at(0) == m_view);
 		if (visible_to_kateplugins) {
-			emit KTextEditor::Editor::instance()->application()->documentWillBeDeleted(m_doc);
-#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
-			emit KTextEditor::Editor::instance()->application()->aboutToDeleteDocuments(QList<KTextEditor::Document*>() << m_doc);
-#endif
+			Q_EMIT KTextEditor::Editor::instance()->application()->documentWillBeDeleted(m_doc);
 		}
 		m_doc->deleteLater();
 		if (visible_to_kateplugins) {
-			emit KTextEditor::Editor::instance()->application()->documentDeleted(m_doc);
-#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
-			emit KTextEditor::Editor::instance()->application()->documentsDeleted(QList<KTextEditor::Document*>() << m_doc);
-#endif
+			Q_EMIT KTextEditor::Editor::instance()->application()->documentDeleted(m_doc);
 		}
 		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
 		unnamed_documents.remove (_id);
@@ -348,12 +328,12 @@ QAction *findAction (KTextEditor::View* view, const QString &actionName) {
 	QList<KActionCollection*> acs = view->findChildren<KActionCollection*>();
 	acs.append (view->actionCollection ());
 
-	foreach (KActionCollection* ac, acs) {
+	for (KActionCollection* ac : std::as_const(acs)) {
 		QAction* found = ac->action (actionName);
 		if (found) return found;
 	}
 
-	return 0;
+	return nullptr;
 }
 
 void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
@@ -367,18 +347,14 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	// NOTE: enter_and_submit is not currently added to the menu
 	QAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
 	action->setText (i18n ("Insert line break and run"));
-	ac->setDefaultShortcuts (action, QList<QKeySequence>() << Qt::AltModifier + Qt::Key_Return << Qt::AltModifier + Qt::Key_Enter);
-	ac->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
+	ac->setDefaultShortcuts (action, QList<QKeySequence>() << (Qt::AltModifier | Qt::Key_Return) << (Qt::AltModifier | Qt::Key_Enter));
+	ac->setDefaultShortcut (action, Qt::AltModifier | Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
 
 	RKStandardActions::functionHelp (this, this);
 	RKStandardActions::onlineHelp (this, this);
 
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
 	actionmenu_run_block->setPopupMode(QToolButton::InstantPopup);
-#else
-	actionmenu_run_block->setDelayed(false);
-#endif
 	ac->addAction ("run_block", actionmenu_run_block);
 	connect (actionmenu_run_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_mark_block = new KActionMenu (i18n ("Mark selection as block"), this);
@@ -395,11 +371,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
 	KActionMenu* actionmenu_preview = new KActionMenu (QIcon::fromTheme ("view-preview"), i18n ("Preview"), this);
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
 	actionmenu_preview->setPopupMode(QToolButton::InstantPopup);
-#else
-	actionmenu_preview->setDelayed (false);
-#endif
 	preview_modes = new QActionGroup (this);
 	actionmenu_preview->addAction (action_no_preview = new QAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("No preview"), preview_modes));
 	actionmenu_preview->addAction (new QAction (QIcon::fromTheme ("preview_math"), i18n ("R Markdown"), preview_modes));
@@ -436,7 +408,6 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 
 void RKCommandEditorWindow::initBlocks () {
 	RK_TRACE (COMMANDEDITOR);
-	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT (block_records.isEmpty ());
 
 	KActionCollection* ac = getPart ()->actionCollection ();
@@ -490,7 +461,7 @@ void RKCommandEditorWindow::initBlocks () {
 		actionmenu_run_block->addAction (record.run);
 
 		// these two not strictly needed due to removeBlock(), below. Silences a GCC warning, however.
-		record.range = 0;
+		record.range = nullptr;
 		record.active = false;
 
 		block_records.append (record);
@@ -518,9 +489,9 @@ QString RKCommandEditorWindow::fullCaption () {
 
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	if (isModified ()) {
-		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?", windowTitle ()), i18n ("File not saved"));
+		int status = KMessageBox::warningTwoActions (this, i18n ("The document \"%1\" has been modified. Close it anyway?", windowTitle ()), i18n ("File not saved"), KStandardGuiItem::close(), KStandardGuiItem::cancel());
 	
-		if (status != KMessageBox::Yes) {
+		if (status != KMessageBox::PrimaryAction) {
 			e->ignore ();
 			return;
 		}
@@ -592,9 +563,9 @@ void RKCommandEditorWindow::discardPreview () {
 		preview_manager->setPreviewDisabled ();
 		RInterface::issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
 		delete preview_dir;
-		preview_dir = 0;
+		preview_dir = nullptr;
 		delete preview_input_file;
-		preview_input_file = 0;
+		preview_input_file = nullptr;
 	}
 	action_no_preview->setChecked (true);
 }
@@ -638,7 +609,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	QTemporaryFile save (QDir::tempPath () + QLatin1String ("/rkward_XXXXXX") + RKSettingsModuleCommandEditor::autosaveSuffix ());
 	RK_ASSERT (save.open ());
 	QTextStream out (&save);
-	out.setCodec ("UTF-8");		// make sure that all characters can be saved, without nagging the user
+	out.setEncoding (QStringConverter::Utf8);		// make sure that all characters can be saved, without nagging the user
 	out << m_doc->text ();
 	save.close ();
 	save.setAutoRemove (false);
@@ -744,22 +715,16 @@ void RKCommandEditorWindow::setText (const QString &text) {
 	bool old_rw = m_doc->isReadWrite ();
 	if (!old_rw) m_doc->setReadWrite (true);
 	m_doc->setText (text);
-	KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (m_doc);
-	if (markiface) markiface->clearMarks ();
+	m_doc->clearMarks ();
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 
 void RKCommandEditorWindow::highlightLine (int linenum) {
 	RK_TRACE (COMMANDEDITOR);
 
-	KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (m_doc);
-	if (!markiface) {
-		RK_ASSERT (markiface);
-		return;
-	}
 	bool old_rw = m_doc->isReadWrite ();
 	if (!old_rw) m_doc->setReadWrite (true);
-	markiface->addMark (linenum, KTextEditor::MarkInterface::Execution);
+	m_doc->addMark (linenum, KTextEditor::Document::Execution);
 	m_view->setCursorPosition (KTextEditor::Cursor (linenum, 0));
 	if (!old_rw) m_doc->setReadWrite (false);
 }
@@ -867,13 +832,13 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	if (!preview_dir) {
 		preview_dir = new QTemporaryDir ();
-		preview_input_file = 0;
+		preview_input_file = nullptr;
 	}
 	if (preview_input_file) {
 		// When switching between .Rmd and .R previews, discard input file
 		if ((mode == RMarkdownPreview) != (preview_input_file->fileName().endsWith (".Rmd"))) {
 			delete preview_input_file;
-			preview_input_file = 0;
+			preview_input_file = nullptr;
 		} else {
 			preview_input_file->remove ();  // If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in open(WriteOnly), below.
 		}
@@ -900,7 +865,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	RK_ASSERT (preview_input_file->open (QIODevice::WriteOnly));
 	QTextStream out (preview_input_file);
-	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
+	out.setEncoding (QStringConverter::Utf8);     // make sure that all characters can be saved, without nagging the user
 	out << m_doc->text ();
 	preview_input_file->close ();
 
@@ -1045,13 +1010,12 @@ void RKCommandEditorWindow::clearUnusedBlocks () {
 
 void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range) {
 	RK_TRACE (COMMANDEDITOR);
-	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	clearUnusedBlocks ();
 	removeBlock (index);
 
-	KTextEditor::MovingRange* srange = smart_iface->newMovingRange (range);
+	KTextEditor::MovingRange* srange = m_doc->newMovingRange (range);
 	srange->setInsertBehaviors (KTextEditor::MovingRange::ExpandRight);
 
 	QString actiontext = i18n ("%1 (Active)", index + 1);
@@ -1067,7 +1031,6 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 
 void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
 	RK_TRACE (COMMANDEDITOR);
-	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	if (!was_deleted) {
@@ -1075,7 +1038,7 @@ void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
 	}
 
 	QString actiontext = i18n ("%1 (Unused)", index + 1);
-	block_records[index].range = 0;
+	block_records[index].range = nullptr;
 	block_records[index].active = false;
 	block_records[index].mark->setText (actiontext);
 	block_records[index].unmark->setText (actiontext);
@@ -1096,8 +1059,8 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 }
 
 // static
-KTextEditor::Document* RKCommandHighlighter::_doc = 0;
-KTextEditor::View* RKCommandHighlighter::_view = 0;
+KTextEditor::Document* RKCommandHighlighter::_doc = nullptr;
+KTextEditor::View* RKCommandHighlighter::_view = nullptr;
 KTextEditor::Document* RKCommandHighlighter::getDoc () {
 	if (_doc) return _doc;
 
@@ -1107,7 +1070,7 @@ KTextEditor::Document* RKCommandHighlighter::getDoc () {
 
 	_doc = editor->createDocument (RKWardMainWindow::getMain ());
 // NOTE: A (dummy) view is needed to access highlighting attributes.
-	_view = _doc->createView (0);
+	_view = _doc->createView(nullptr);
 	_view->hide ();
 	RK_ASSERT (_doc);
 	return _doc;
@@ -1174,7 +1137,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 	QString ret;
 
 	QString opening;
-	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute (KTextEditor::dsNormal);
+	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute (KSyntaxHighlighting::Theme::TextStyle::Normal);
 	if ( !m_defaultAttribute ) {
 		opening = "<pre class=\"%3\">";
 	} else {
@@ -1184,7 +1147,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 				// Note: copying the default text/background colors is pointless in our case, and leads to subtle inconsistencies.
 	}
 
-	const KTextEditor::Attribute::Ptr noAttrib(0);
+	const KTextEditor::Attribute::Ptr noAttrib(nullptr);
 
 	if (mode == RScript) ret = opening.arg ("code");
 	enum {
@@ -1196,7 +1159,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 	for (int i = 0; i < doc->lines (); ++i)
 	{
 		const QString &line = doc->line(i);
-		QList<KTextEditor::AttributeBlock> attribs = view->lineAttributes(i);
+		const QList<KTextEditor::AttributeBlock> attribs = view->lineAttributes(i);
 		int lineStart = 0;
 
 		if (mode == RInteractiveSession) {
@@ -1220,7 +1183,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 
 		int handledUntil = lineStart;
 		int remainingChars = line.length();
-		foreach ( const KTextEditor::AttributeBlock& block, attribs ) {
+		for ( const KTextEditor::AttributeBlock& block : attribs ) {
 			if ((block.start + block.length) <= handledUntil) continue;
 			int start = qMax(block.start, lineStart);
 			if ( start > handledUntil ) {

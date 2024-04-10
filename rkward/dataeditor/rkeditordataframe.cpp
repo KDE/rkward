@@ -70,7 +70,7 @@ void RKEditorDataFrame::commonInit () {
 	getPart ()->insertChildClient (this);
 	initializeActivationSignals ();
 
-	open_chain = RInterface::startChain (0);
+	open_chain = RInterface::startChain(nullptr);
 }
 
 RKEditorDataFrame::~RKEditorDataFrame () {
@@ -81,9 +81,9 @@ RKEditorDataFrame::~RKEditorDataFrame () {
 void RKEditorDataFrame::detachModel () {
 	RK_TRACE (EDITOR);
 
-	dataview->setRKModel (0);
-	metaview->setRKModel (0);
-	deleteLater ();
+	dataview->setRKModel(nullptr);
+	metaview->setRKModel(nullptr);
+	deleteLater();
 }
 
 void RKEditorDataFrame::flushChanges () {
@@ -110,6 +110,6 @@ void RKEditorDataFrame::restoreObject (RObject *object) {
 #ifdef __GNUC__
 #	warning TODO: this interface should be moved to the model for good.
 #endif
-	datamodel->restoreObject (object, 0);
+	datamodel->restoreObject(object, nullptr);
 }
 

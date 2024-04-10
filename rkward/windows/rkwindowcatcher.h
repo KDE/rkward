@@ -125,7 +125,7 @@ public:
 /** returns the window corresponding the to given R device number (or 0 if no such window exists) */
 	static RKCaughtX11Window* getWindow (int device_number) { return device_windows.value (device_number); };
 	void updateHistoryActions (int history_length, int position, const QStringList &labels);
-public slots:
+public Q_SLOTS:
 	void deviceInteractive (bool interactive, const QString &prompt);
 	
 /** Fixed size action was (potentially) toggled. Update to the new state */
@@ -161,7 +161,7 @@ public slots:
 	bool close (RKMDIWindow::CloseWindowMode ask_save) override;
 	void setKilledInR () { killed_in_r = true; };
 	void setWindowStyleHint (const QString& hint) override;
-private slots:
+private Q_SLOTS:
 	void doEmbed ();
 private:
 	void forceClose ();

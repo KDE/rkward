@@ -109,7 +109,7 @@ void RKErrorDialog::reportableErrorMessage (QWidget* parent_widget, const QStrin
 	KMessageBox::Options options = KMessageBox::Notify | KMessageBox::AllowLink;
 	dialog->setModal (true);
 
-	int ret = KMessageBox::createKMessageBox (dialog, buttonbox, QMessageBox::Critical, user_message, QStringList(), QString(), 0, options, details);
+	int ret = KMessageBox::createKMessageBox(dialog, buttonbox, QMessageBox::Critical, user_message, QStringList(), QString(), nullptr, options, details);
 
 	if (ret == QDialogButtonBox::No) {
 		reportBug (parent_widget, (message_code.isEmpty () ? QString () : i18n ("Message code: %1\n", message_code)) + user_message);

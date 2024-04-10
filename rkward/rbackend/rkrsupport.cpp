@@ -14,8 +14,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
 #define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
 
-#include <QTextCodec>
-
 #include "rkrbackend.h"
 #include "../debug.h"
 
@@ -123,7 +121,7 @@ SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {
 #if R_VERSION >= R_Version(2,13,0)
-		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
+		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 ().constData(), CE_UTF8));
 #else
 		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
 		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
@@ -137,16 +135,16 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 
 	if (var.isNull()) return R_NilValue;
 
-	QMetaType::Type t = (QMetaType::Type) var.type();
-	if (t == QMetaType::Bool) {
+	QMetaType t = var.metaType();
+	if (t == QMetaType(QMetaType::Bool)) {
 		SEXP ret = Rf_allocVector(LGLSXP, 1);
 		LOGICAL(ret)[0] = var.toBool();
 		return ret;
-	} else if (t == QMetaType::Int) {
+	} else if (t == QMetaType(QMetaType::Int)) {
 		SEXP ret = Rf_allocVector(INTSXP, 1);
 		INTEGER(ret)[0] = var.toInt();
 		return ret;
-	} else if (t != QMetaType::QString && t != QMetaType::QStringList) {
+	} else if (t != QMetaType(QMetaType::QString) && t != QMetaType(QMetaType::QStringList)) {
 		Rf_warning("unsupported QVariant type in QVariantToSEXP");
 	}
 	QStringList list = var.toStringList();
@@ -154,7 +152,7 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {
 #if R_VERSION >= R_Version(2,13,0)
-		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
+		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 ().constData(), CE_UTF8));
 #else
 		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
 		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
@@ -165,11 +163,18 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 
 QVariant RKRSupport::SEXPToNestedStrings(SEXP from_exp) {
 	RK_TRACE (RBACKEND);
+
 	if (Rf_isVectorList(from_exp)) {  // NOTE: list() in R is a vectorlist in the C API...
 		QVariantList ret;
 		for(int i = 0; i < Rf_length(from_exp); ++i) {
 			SEXP el = VECTOR_ELT(from_exp, i);
 			ret.append(SEXPToNestedStrings(el));
+		}
+		return ret;
+	} else if (Rf_isPairList(from_exp)) {
+		QVariantList ret;
+		for(SEXP cons = from_exp; cons != R_NilValue; cons = CDR(cons)) {
+			ret.append(SEXPToNestedStrings(CAR(cons)));
 		}
 		return ret;
 	}
@@ -302,7 +307,7 @@ RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
 		}
 
 		char name[sizeof(void*)*2+3];
-		sprintf(name, "%p", baseenvir);
+		sprintf(name, "%p", (void*) baseenvir);
 		SEXP tr = Rf_allocVector(LGLSXP, 1);
 		LOGICAL(tr)[0] = true;
 		Rf_defineVar(Rf_install(name), RKRSupport::callSimpleFun2(Rf_install("new.env"), tr, R_EmptyEnv, R_GlobalEnv), shadowenvbase);
@@ -315,16 +320,6 @@ RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
 void RKRShadowEnvironment::updateCacheForGlobalenvSymbol(const QString& name) {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "updating cached value for symbol %s", qPrintable(name));
 	environmentFor(R_GlobalEnv)->updateSymbolCache(name);
-}
-
-void RKRShadowEnvironment::updateSymbolCache(const QString& name) {
-	RK_TRACE(RBACKEND);
-	SEXP rname = Rf_installChar(Rf_mkCharCE(name.toUtf8(), CE_UTF8));
-	PROTECT(rname);
-	SEXP symbol_g = Rf_findVar(rname, R_GlobalEnv);
-	PROTECT(symbol_g);
-	Rf_defineVar(rname, symbol_g, shadowenvir);
-	UNPROTECT(2);
 }
 
 static void unbindSymbolWrapper(SEXP name, SEXP env) {
@@ -341,6 +336,17 @@ static void unbindSymbolWrapper(SEXP name, SEXP env) {
 	Rf_eval(call, R_BaseEnv);
 	UNPROTECT(1);
 #endif
+}
+
+void RKRShadowEnvironment::updateSymbolCache(const QString& name) {
+	RK_TRACE(RBACKEND);
+	SEXP rname = Rf_installChar(Rf_mkCharCE(name.toUtf8().constData(), CE_UTF8));
+	PROTECT(rname);
+	SEXP symbol_g = Rf_findVar(rname, R_GlobalEnv);
+	PROTECT(symbol_g);
+	if (symbol_g == R_UnboundValue) unbindSymbolWrapper(rname, shadowenvir);
+	else Rf_defineVar(rname, symbol_g, shadowenvir);
+	UNPROTECT(2);
 }
 
 RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {

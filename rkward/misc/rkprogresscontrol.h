@@ -71,9 +71,9 @@ public:
 /** Causes the dialog to delete itself, once all outstanding commands have finished. Usually set from doModel()/doNonModal(), instead. */
 	void autoDeleteWhenDone ();
 	QString fullCommandOutput ();
-signals:
+Q_SIGNALS:
 	void cancelled ();
-public slots:
+public Q_SLOTS:
 /** needed internally so we can easily keep track of whether the dialog is alive or not */
 	void dialogDestroyed ();
 /** the corresponding action has finished. If there have been no errors, the dialog is also closed. Otherwise, the text of the "cancel" button is changed to "finished". */

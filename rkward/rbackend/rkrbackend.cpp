@@ -19,15 +19,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #endif
 
 // statics
-RKRBackend *RKRBackend::this_pointer = 0;
+RKRBackend *RKRBackend::this_pointer = nullptr;
 RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 0, RKRBackend::RKReplStatus::NoUserCommand, 0, RKRBackend::RKReplStatus::NotInBrowserContext, false };
-void* RKRBackend::default_global_context = 0;
+void* RKRBackend::default_global_context = nullptr;
 
-#include <qstring.h>
+#include <QString>
+#include <QTextCodec>
 #include <QStringList>
 #include <QThread>
 #include <QDir>
-#include <qtextcodec.h>
 
 #include "../core/robject.h"
 #include "../version.h"
@@ -140,7 +140,7 @@ void RKRBackend::interruptCommand (int command_id) {
 		}
 	} else {
 		// if the command to cancel is *not* the topmost command, then do not interrupt, yet.
-		foreach (RCommandProxy *candidate, all_current_commands) {
+		for (RCommandProxy *candidate : std::as_const(all_current_commands)) {
 			if (candidate->id == command_id) {
 				if (!current_commands_to_cancel.contains (candidate)) {
 					RK_DEBUG (RBACKEND, DL_DEBUG, "scheduling delayed interrupt for command id %d", command_id);
@@ -157,7 +157,7 @@ void clearPendingInterrupt_Worker (void *) {
 
 void RKRBackend::clearPendingInterrupt () {
 	RK_TRACE (RBACKEND);
-	bool passed = R_ToplevelExec (clearPendingInterrupt_Worker, 0);
+	bool passed = R_ToplevelExec(clearPendingInterrupt_Worker, nullptr);
 	if (!passed) RK_DEBUG (RBACKEND, DL_DEBUG, "pending interrupt cleared");
 }
 
@@ -203,7 +203,7 @@ void RKInsertToplevelStatementFinishedCallback (void *) {
 
 	if (RKRBackend::this_pointer->r_running) {
 		int pos;
-		Rf_addTaskCallback (&RKToplevelStatementFinishedCallback, 0, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
+		Rf_addTaskCallback(&RKToplevelStatementFinishedCallback, nullptr, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
 	}
 }
 
@@ -505,10 +505,10 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		while (pos < buflen) {
 			int start = str.indexOf(winutf8start, pos);
 			if (start < 0) {
-				utf8.append (RKRBackend::toUtf8 (str.mid(pos)));
+				utf8.append (RKRBackend::toUtf8 (str.mid(pos).constData()));
 				break;
 			}
-			utf8.append (RKRBackend::toUtf8 (str.left(start)));
+			utf8.append (RKRBackend::toUtf8 (str.left(start).constData()));
 			start += winutf8start.length();
 			if (start >= buflen) break;
 			int end = str.indexOf(winutf8stop, start);
@@ -516,7 +516,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 				utf8.append(QString::fromUtf8(str.mid(start, end - start)));
 				pos = end + winutf8stop.length();
 			} else {
-				utf8.append(QString::fromUtf8(str.mid(start)));
+				utf8.append(QString::fromUtf8(str.mid(start).constData()));
 				break;
 			}
 		}
@@ -784,7 +784,7 @@ void RBusy (int busy) {
 			}
 			if (RKRBackend::this_pointer->current_command->type & RCommand::CCCommand) {
 				QByteArray chunk = RKRBackend::repl_status.user_command_buffer.mid (RKRBackend::repl_status.user_command_parsed_up_to, RKRBackend::repl_status.user_command_transmitted_up_to - RKRBackend::repl_status.user_command_parsed_up_to);
-				RKRBackend::this_pointer->printCommand (RKRBackend::toUtf8 (chunk));
+				RKRBackend::this_pointer->printCommand (RKRBackend::toUtf8 (chunk.data()));
 			}
 			RKRBackend::repl_status.user_command_parsed_up_to = RKRBackend::repl_status.user_command_transmitted_up_to;
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning;
@@ -796,23 +796,17 @@ void RBusy (int busy) {
 
 SEXP doUpdateLocale ();
 // NOTE: stdout_stderr_mutex is recursive to support fork()s, better
-#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
-#	define DUMMY_MUTEX_FLAGS
-#else
-#	define DUMMY_MUTEX_FLAGS QMutex::Recursive
-#endif
-RKRBackend::RKRBackend() : stdout_stderr_mutex(DUMMY_MUTEX_FLAGS) {
+RKRBackend::RKRBackend() : stdout_stderr_mutex() {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (this_pointer == 0);
+	RK_ASSERT (this_pointer == nullptr);
 	this_pointer = this;
 
-	current_locale_encoder = 0; // marks locale as not yet initialized
 	doUpdateLocale ();
 	r_running = false;
 
-	current_command = 0;
-	pending_priority_command = 0;
+	current_command = nullptr;
+	pending_priority_command = nullptr;
 	stdout_stderr_fd = -1;
 }
 
@@ -872,7 +866,7 @@ void RKRBackend::connectCallbacks () {
 	ptr_R_ShowMessage = RShowMessage;		// rarely used in R on unix
 	ptr_R_ReadConsole = RReadConsole;
 	ptr_R_WriteConsoleEx = RWriteConsoleEx;
-	ptr_R_WriteConsole = 0;
+	ptr_R_WriteConsole = nullptr;
 	ptr_R_ResetConsole = RDoNothing;
 	ptr_R_FlushConsole = RDoNothing;
 	ptr_R_ClearerrConsole = RDoNothing;
@@ -918,7 +912,7 @@ void doError (const QString &callstring) {
 			RKRBackend::repl_status.interrupted = false;
 			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {	// was interrupted only to step out of the repl iteration
 				QMutexLocker lock (&(RKRBackend::this_pointer->all_current_commands_mutex));
-				foreach (RCommandProxy *command, RKRBackend::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
+				for (RCommandProxy *command : std::as_const(RKRBackend::this_pointer->all_current_commands)) command->status |= RCommand::Canceled;
 				RK_DEBUG (RBACKEND, DL_DEBUG, "interrupted");
 			}
 		}
@@ -944,8 +938,8 @@ SEXP doSubstackCall (SEXP _call, SEXP _args) {
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
 	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(call, RKRSupport::SEXPToNestedStrings(_args));
-	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error.toLatin1()).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
@@ -956,8 +950,8 @@ SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 	R_CheckUserInterrupt ();
 
 	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
-	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error.toLatin1()).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
@@ -1008,15 +1002,9 @@ SEXP doUpdateLocale () {
 	RK_TRACE (RBACKEND);
 
 	RK_DEBUG (RBACKEND, DL_WARNING, "Changing locale");
-	if (RKRBackend::this_pointer->current_locale_encoder) {
-		delete (RKRBackend::this_pointer->current_locale_encoder);
-		delete (RKRBackend::this_pointer->current_locale_decoder);
-		QTextCodec::setCodecForLocale (0);
-	}
-	RK_ASSERT (QTextCodec::codecForLocale ());
-	RKRBackend::this_pointer->current_locale_encoder = QTextCodec::codecForLocale ()->makeEncoder (QTextCodec::DefaultConversion);  // NOTE: shall pass non-representable characters unmodified, rather than stripping them.
-	RKRBackend::this_pointer->current_locale_decoder = QTextCodec::codecForLocale ()->makeDecoder (QTextCodec::DefaultConversion);
-	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", QTextCodec::codecForLocale ()->name ().data ());
+	RKRBackend::this_pointer->current_locale_encoder = QStringEncoder(QStringEncoder::System);  // NOTE: shall pass non-representable characters unmodified, rather than stripping them.
+	RKRBackend::this_pointer->current_locale_decoder = QStringDecoder(QStringEncoder::System);
+	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", RKRBackend::this_pointer->current_locale_decoder.name());
 
 	return R_NilValue;
 }
@@ -1160,12 +1148,12 @@ bool RKRBackend::startR () {
 		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 6 },
 		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
 		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 2},
-		{ 0, 0, 0 }
+		{ nullptr, nullptr, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
 
 	connectCallbacks();
-	RKInsertToplevelStatementFinishedCallback (0);
+	RKInsertToplevelStatementFinishedCallback(nullptr);
 	RKREventLoop::setRKEventHandler (doPendingPriorityCommands);
 	default_global_context = R_GlobalContext;
 #ifdef Q_OS_WIN
@@ -1252,7 +1240,7 @@ struct SafeParseWrap {
 
 void safeParseVector (void *data) {
 	SafeParseWrap *wrap = static_cast<SafeParseWrap*> (data);
-	wrap->pr = 0;
+	wrap->pr = nullptr;
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
 	wrap->pr = R_ParseVector (wrap->cv, -1, &(wrap->status), R_NilValue);
 }
@@ -1454,7 +1442,7 @@ void doPendingPriorityCommands () {
 
 	if (RKRBackend::this_pointer->killed) return;
 	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
-	RKRBackend::this_pointer->pending_priority_command = 0;
+	RKRBackend::this_pointer->pending_priority_command = nullptr;
 	if (command) {
 		RK_DEBUG (RBACKEND, DL_DEBUG, "running priority command %s", qPrintable (command->command));
 		{
@@ -1521,7 +1509,7 @@ void RKRBackend::printAndClearCapturedMessages (bool with_header) {
 void RKRBackend::run (const QString &locale_dir) {
 	RK_TRACE (RBACKEND);
 	killed = NotKilled;
-	previous_command = 0;
+	previous_command = nullptr;
 
 	initialize (locale_dir);
 
@@ -1548,7 +1536,7 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 
 		// This method may look a bit over-complex, but remember that repl_status.user_command_successful_up_to works on an *encoded* buffer
 		QByteArray remainder_encoded = repl_status.user_command_buffer.mid (repl_status.user_command_successful_up_to);
-		QString remainder = RKRBackend::toUtf8 (remainder_encoded);
+		QString remainder = current_locale_decoder(remainder_encoded);
 		current_command->has_been_run_up_to = current_command->command.length () - remainder.length ();
 	}
 
@@ -1589,12 +1577,12 @@ RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHan
 	if ((!request->synchronous) && (!isKilled ())) {
 		RK_ASSERT(mayHandleSubstack);	// i.e. not called from fetchNextCommand
 		RK_ASSERT(!request->subcommandrequest);
-		return 0;
+		return nullptr;
 	}
 
 	int i = 0;
 	while (!request->done) {
-		if (killed) return 0;
+		if (killed) return nullptr;
 		// NOTE: processX11Events() may, conceivably, lead to new requests, which may also wait for sub-commands!
 		RKREventLoop::processX11Events ();
 		// NOTE: sleeping and waking up again can be surprisingly CPU-intensive (yes: more than the event processing, above. I have profiled it).
@@ -1608,7 +1596,7 @@ RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHan
 	while (pending_priority_command) RKREventLoop::processX11Events ();  // Probably not needed, but make sure to process priority commands first at all times.
 
 	RCommandProxy* command = request->takeCommand ();
-	if (!command) return 0;
+	if (!command) return nullptr;
 
 	{
 		QMutexLocker lock (&all_current_commands_mutex);
@@ -1634,7 +1622,7 @@ RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHan
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 RCommandProxy* RKRBackend::fetchNextCommand () {
@@ -1642,7 +1630,7 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 
 	RBackendRequest req (!isKilled (), RBackendRequest::CommandOut);	// when killed, we do *not* actually wait for the reply, before the request is deleted.
 	req.command = previous_command;
-	previous_command = 0;
+	previous_command = nullptr;
 
 	return (handleRequest (&req, false));
 }

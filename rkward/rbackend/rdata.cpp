@@ -14,7 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RData::RData () {
 	RK_TRACE (RBACKEND);
 	datatype = NoData;
-	data = 0;
+	data = nullptr;
 }
 
 RData::~RData () {
@@ -46,7 +46,7 @@ void RData::discardData () {
 		RK_ASSERT (datatype == NoData);
 	}
 
-	data = 0;
+	data = nullptr;
 	datatype = RData::NoData;
 }
 
@@ -62,7 +62,7 @@ void RData::swallowData (RData &from) {
 	data = from.data;
 	datatype = from.datatype;
 
-	from.data = 0;
+	from.data = nullptr;
 	from.datatype = RData::NoData;
 }
 

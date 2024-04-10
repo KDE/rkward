@@ -19,17 +19,19 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KMessageBox>
 #include <KLocalizedString>
 #include <KWindowSystem>
+#if __has_include(<KWindowInfo>)
 #include <KWindowInfo>
+#include <KX11Extras>
+#endif
 
 #include "../settings/rksettingsmodulegraphics.h"
 #include "../dialogs/rkerrordialog.h"
 #include "rkworkplace.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../debug.h"
 
-RKWindowCatcher *RKWindowCatcher::_instance = 0;
+RKWindowCatcher *RKWindowCatcher::_instance = nullptr;
 RKWindowCatcher* RKWindowCatcher::instance () {
 	if (!_instance) {
 		RK_TRACE (MISC);
@@ -75,28 +77,32 @@ void RKWindowCatcher::start (int prev_cur_device) {
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher activated");
 
 	last_cur_device = prev_cur_device;
-#ifdef Q_OS_WIN
+#if __has_include(<KWindowInfo>)
+	windows_before_add = KX11Extras::windows ();
+#elif defined(Q_OS_WIN)
 	windows_before_add = RKWindowCatcherPrivate::toplevelWindows ();
 #else
-	windows_before_add = KWindowSystem::windows ();
+	RK_ASSERT(false); // code should not be reached
 #endif
 }
 
 WId RKWindowCatcher::createdWindow () {
 	RK_TRACE (MISC);
 
-#ifdef Q_OS_WIN
+#if __has_include(<KWindowInfo>)
+	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
+	QList<WId> windows_after_add = KX11Extras::windows ();
+	WId candidate = windows_after_add.value (windows_after_add.size () - 1);
+	if (!windows_before_add.contains (windows_after_add.last ())) {
+		return candidate;
+	}
+#elif defined(Q_OS_WIN)
 	QList<WId> windows_after_add = RKWindowCatcherPrivate::toplevelWindows ();
 	for (int i = windows_after_add.size () - 1; i >= 0; --i) {
 		if (!windows_before_add.contains (windows_after_add[i])) return windows_after_add[i];
 	}
 #else
-	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
-	QList<WId> windows_after_add = KWindowSystem::windows ();
-	WId candidate = windows_after_add.value (windows_after_add.size () - 1);
-	if (!windows_before_add.contains (windows_after_add.last ())) {
-		return candidate;
-	}
+	RK_ASSERT(false); // code should not be reached
 #endif
 	return 0;
 }
@@ -116,14 +122,16 @@ void RKWindowCatcher::stop (int new_cur_device) {
 	if (new_cur_device != last_cur_device) {
 		if (created_window) {
 			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
+#if __has_include(<KWindowInfo>)
 			KWindowInfo wininfo (created_window, NET::WMName | NET::WMGeometry);
 			QWindow *window = QWindow::fromWinId (created_window);
 			RKWorkplace::mainWorkplace ()->newX11Window (window, new_cur_device);
+#endif
 		} else {
 #if defined Q_OS_MACOS
-			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See https://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
+			KMessageBox::information(nullptr, i18n("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See https://rkward.kde.org/mac for more information."), i18n("Could not embed R X11 window"), "embed_x11_device_not_supported");
 #else
-			RKErrorDialog::reportableErrorMessage (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
+			RKErrorDialog::reportableErrorMessage (nullptr, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
 #endif
 		}
 	}
@@ -134,6 +142,7 @@ void RKWindowCatcher::pollWatchedWindowStates () {
 	// RK_TRACE (APP);
 	// Well, this really bad, but the notification in KWindowSystem (windowChanged(), windowRemoved()) just don't work for embedded windows. So we have to use polling to
 	// check whether windows changed their name, or have gone away... KF5 5.15.0, X.
+#if __has_include(<KWindowInfo>)
 	for (QMap<WId, RKMDIWindow*>::const_iterator it = watchers_list.constBegin (); it != watchers_list.constEnd (); ++it) {
 		KWindowInfo wininfo (it.key (), NET::WMName);
 		if (!wininfo.valid ()) it.value ()->deleteLater ();
@@ -141,6 +150,7 @@ void RKWindowCatcher::pollWatchedWindowStates () {
 			if (it.value ()->shortCaption () != wininfo.name ()) it.value ()->setCaption (wininfo.name ());
 		}
 	}
+#endif
 	if (!watchers_list.isEmpty ()) {
 		poll_timer.start ();
 	}
@@ -150,11 +160,13 @@ void RKWindowCatcher::registerWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_TRACE (APP);
 	RK_ASSERT (!watchers_list.contains (watched));
 
+#if __has_include(<KWindowInfo>)
 	KWindowInfo wininfo (watched, NET::WMName);
 	if (!wininfo.valid ()) {
 		RK_DEBUG (APP, DL_ERROR, "Cannot fetch window info. Platform limitation? Not watching for window changes.")
 		return;
 	}
+#endif
 
 	if (watchers_list.isEmpty ()) {
 		poll_timer.start ();
@@ -224,7 +236,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 // static
 QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 
-RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
+RKCaughtX11Window::RKCaughtX11Window(QWindow* window_to_embed, int device_number) : RKMDIWindow(nullptr, X11Window) {
 	RK_TRACE (MISC);
 // TODO: Actually, the WindowCatcher should pass a QWindow*, not WId.
 	commonInit (device_number);
@@ -233,7 +245,15 @@ RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_numbe
 	//       So we need the RKWindowCatcher to help us.
 	RKWindowCatcher::instance ()->registerWatcher (embedded->winId (), this);
 
-#ifdef Q_OS_WIN
+#if __has_include(<KWindowInfo>)
+	KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
+	RK_ASSERT (wininfo.valid ());
+
+	// set a fixed size until the window is shown
+	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
+	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
+	setCaption (wininfo.name ());
+#elif defined(Q_OS_WIN)
 	WINDOWINFO wininfo;
 	wininfo.cbSize = sizeof (WINDOWINFO);
 	GetWindowInfo (reinterpret_cast<HWND> (embedded->winId ()), &wininfo);
@@ -246,20 +266,14 @@ RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_numbe
 	setGeometry (wininfo.rcClient.left, wininfo.rcClient.right, wininfo.rcClient.top, wininfo.rcClient.bottom);     // see comment in X11 section
 	move (wininfo.rcClient.left, wininfo.rcClient.top);             // else the window frame may be off scree on top/left.
 #else
-	KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
-	RK_ASSERT (wininfo.valid ());
-
-	// set a fixed size until the window is shown
-	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
-	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
-	setCaption (wininfo.name ());
+	RK_ASSERT(false);
 #endif
 
 	// We need to make sure that the R backend has had a chance to do event processing on the new device, or else embedding will fail (sometimes).
 	QTimer::singleShot (100, this, SLOT (doEmbed()));
 }
 
-RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow (0, X11Window) {
+RKCaughtX11Window::RKCaughtX11Window(RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow(nullptr, X11Window) {
 	RK_TRACE (MISC);
 
 	commonInit (device_number);
@@ -282,16 +296,16 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
-	capture = 0;
-	embedded = 0;
+	capture = nullptr;
+	embedded = nullptr;
 	embedding_complete = false;
-	rk_native_device = 0;
+	rk_native_device = nullptr;
 	killed_in_r = close_attempted = false;
 	RKCaughtX11Window::device_number = device_number;
 	RK_ASSERT (!device_windows.contains (device_number));
 	device_windows.insert (device_number, this);
 
-	error_dialog = new RKProgressControl (0, i18n ("An error occurred"), i18n ("An error occurred"), RKProgressControl::DetailedError);
+	error_dialog = new RKProgressControl(nullptr, i18n("An error occurred"), i18n("An error occurred"), RKProgressControl::DetailedError);
 	setPart (new RKCaughtX11WindowPart (this));
 	setMetaInfo (i18n ("Graphics Device Window"), QUrl ("rkward://page/rkward_plot_history"), RKSettings::PageX11);
 	initializeActivationSignals ();
@@ -327,7 +341,9 @@ void RKCaughtX11Window::doEmbed () {
 			capture->deleteLater ();
 		} */
 		qApp->sync ();
+#if __has_include(<KWindowInfo>)
 		KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
+#endif
 		capture = QWidget::createWindowContainer (embedded, xembed_container);
 		xembed_container->layout ()->addWidget (capture);
 		xembed_container->show ();
@@ -345,8 +361,8 @@ void RKCaughtX11Window::doEmbed () {
 	}
 
 	// try to be helpful when the window is too large to fit on screen
-	QRect dims = window ()->frameGeometry ();
-	QRect avail = RKCompatibility::availableGeometry(window());
+	const QRect dims = window ()->frameGeometry ();
+	const QRect avail = window()->screen() ? window()->screen()->availableGeometry() : QApplication::primaryScreen()->availableGeometry();
 	if ((dims.width () > avail.width ()) || (dims.height () > avail.height ())) {
 		KMessageBox::information (this, i18n ("The current window appears too large to fit on the screen. If this happens regularly, you may want to adjust the default graphics window size in Settings->Configure RKWard->Onscreen Graphics."), i18n ("Large window"), "dont_ask_again_large_x11_window");
 	}
@@ -376,11 +392,11 @@ void RKCaughtX11Window::commonClose(bool in_destructor) {
 		close_attempted = true;
 	} else {
 		if (in_destructor) return;
-		if (KMessageBox::questionYesNo(this, i18n("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
+		if (KMessageBox::questionTwoActions(this, i18n("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
 #if !defined Q_OS_WIN
 		+ i18n("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
 #endif
-		, status, KGuiItem(i18n("Close immediately")), KGuiItem(i18n("Keep waiting"))) == KMessageBox::Yes) forceClose();
+		, status, KGuiItem(i18n("Close immediately")), KGuiItem(i18n("Keep waiting"))) == KMessageBox::PrimaryAction) forceClose();
 	}
 }
 
@@ -400,7 +416,7 @@ void RKCaughtX11Window::forceClose() {
 	if (embedded) {
 		// HACK: Somehow (R 3.0.0alpha), the X11() window is surprisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
-		embedded->setParent(0);
+		embedded->setParent(nullptr);
 		qApp->processEvents();
 	}
 	RKMDIWindow::close(NoAskSaveModified);
@@ -710,7 +726,7 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position, 
 //////////////////////////////// BEGIN RKCaughtX11WindowPart //////////////////////////
 
 
-RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KParts::Part (0) {
+RKCaughtX11WindowPart::RKCaughtX11WindowPart(RKCaughtX11Window *window) : KParts::Part(nullptr) {
 	RK_TRACE (MISC);
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());

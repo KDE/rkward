@@ -82,10 +82,10 @@ public:
 	void objectDataChanged (RObject* object, const RObject::ChangeSet *changes) override;
 
 	RKVariable* getObject (int index) const;
-signals:
+Q_SIGNALS:
 	void modelDepleted ();
 	void hasDuplicates (const QStringList& dupes);
-private slots:
+private Q_SLOTS:
 	void checkDuplicatesNow ();
 	void doResetNow ();
 private:
@@ -186,7 +186,7 @@ public:
 	RContainerObject* getObject () const { return dataframe; };
 
 	void restoreObject (RObject* object, RCommandChain* chain) override;
-signals:
+Q_SIGNALS:
 	void modelObjectDestroyed ();
 protected:
 	void doInsertColumns (int index, int count) override;

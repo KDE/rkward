@@ -14,7 +14,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <ktexteditor/view.h>
 
 #include <ktexteditor/codecompletionmodel.h>
-#include <ktexteditor/codecompletioninterface.h>
 #include <ktexteditor/codecompletionmodelcontrollerinterface.h>
 
 class QEvent;
@@ -39,9 +38,9 @@ public:
 	KTextEditor::View* view () const { return (_view); };
 	void setLinePrefixes(const QString &_prefix, const QString &_continuation_prefix) { prefix = _prefix; continuation_prefix = _continuation_prefix; };
 	void modelGainedLateData(RKCompletionModelBase *model);
-public slots:
+public Q_SLOTS:
 	void userTriggeredCompletion ();
-private slots:
+private Q_SLOTS:
 	void lineWrapped (KTextEditor::Document *document, const KTextEditor::Cursor &position);
 	void lineUnwrapped (KTextEditor::Document *document, int line);
 	void textInserted (KTextEditor::Document *document, const KTextEditor::Cursor &position, const QString &text);
@@ -57,7 +56,6 @@ private:
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy ();
 	void updateCallHint ();
-	KTextEditor::CodeCompletionInterface *cc_iface;
 	RKCodeCompletionModel *completion_model;
 	RKFileCompletionModel *file_completion_model;
 	RKCallHintModel *callhint_model;
@@ -85,6 +83,8 @@ private:
 
 /** Base class for the completion models employed in script editor. Essentially it takes care of the bureaucratic overhead involved in providing a group header */
 class RKCompletionModelBase : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
+	Q_OBJECT
+	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface)
 public:
 	explicit RKCompletionModelBase (RKCompletionManager *manager);
 	~RKCompletionModelBase ();
@@ -176,7 +176,7 @@ class RKFileCompletionModelWorker : public QThread {
 	Q_OBJECT
 public:
 	explicit RKFileCompletionModelWorker (const QString &string);
-signals:
+Q_SIGNALS:
 	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
 private:
 	void run () override;
@@ -193,7 +193,7 @@ public:
 	void updateCompletionList (const QString& fragment);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	QStringList rawPartialCompletions() const;
-private slots:
+private Q_SLOTS:
 	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
 private:
 	void launchThread ();
@@ -211,7 +211,7 @@ public:
 	const QStringList results() const { return filtered_results; };
 	const QString fragment() const { return current_fragment; };
 	const QString mode() const { return current_mode; };
-signals:
+Q_SIGNALS:
 	void resultsComplete();
 private:
 	void doUpdateFromR();

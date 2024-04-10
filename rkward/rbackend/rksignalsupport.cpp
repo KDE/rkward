@@ -33,8 +33,8 @@ namespace RKSignalSupportPrivate {
 	struct sigaction r_sigabrt_handler;
 	struct sigaction default_sigabrt_handler;
 #endif
-	rk_sighandler_t r_sigint_handler = 0;
-	void (*new_sigint_handler) (void) = 0;
+	rk_sighandler_t r_sigint_handler = nullptr;
+	void (*new_sigint_handler) (void) = nullptr;
 	void internal_sigint_handler (int num) {
 		new_sigint_handler ();
 		signal (num, internal_sigint_handler);
@@ -110,9 +110,9 @@ void RKSignalSupport::saveDefaultSignalHandlers () {
 	RKSignalSupportPrivate::default_sigill_handler = signal (SIGILL, SIG_DFL);
 	RKSignalSupportPrivate::default_sigabrt_handler = signal (SIGABRT, SIG_DFL);
 #else
-	sigaction (SIGSEGV, 0, &RKSignalSupportPrivate::default_sigsegv_handler);
-	sigaction (SIGILL, 0, &RKSignalSupportPrivate::default_sigill_handler);
-	sigaction (SIGABRT, 0, &RKSignalSupportPrivate::default_sigabrt_handler);
+	sigaction (SIGSEGV, nullptr, &RKSignalSupportPrivate::default_sigsegv_handler);
+	sigaction (SIGILL, nullptr, &RKSignalSupportPrivate::default_sigill_handler);
+	sigaction (SIGABRT, nullptr, &RKSignalSupportPrivate::default_sigabrt_handler);
 #endif
 }
 
@@ -125,26 +125,26 @@ void RKSignalSupport::installSignalProxies () {
 	RKSignalSupportPrivate::r_sigabrt_handler = signal (SIGABRT, &RKSignalSupportPrivate::signal_proxy);
 #else
 	// retrieve R signal handler
-	sigaction (SIGSEGV, 0, &RKSignalSupportPrivate::r_sigsegv_handler);
-	sigaction (SIGILL, 0, &RKSignalSupportPrivate::r_sigill_handler);
-	sigaction (SIGABRT, 0, &RKSignalSupportPrivate::r_sigabrt_handler);
+	sigaction (SIGSEGV, nullptr, &RKSignalSupportPrivate::r_sigsegv_handler);
+	sigaction (SIGILL, nullptr, &RKSignalSupportPrivate::r_sigill_handler);
+	sigaction (SIGABRT, nullptr, &RKSignalSupportPrivate::r_sigabrt_handler);
 
 	// set new proxy handlers
 	struct sigaction proxy_action;
 	proxy_action = RKSignalSupportPrivate::r_sigsegv_handler;
 	proxy_action.sa_flags |= SA_SIGINFO;
 	proxy_action.sa_sigaction = &RKSignalSupportPrivate::signal_proxy;
-	sigaction (SIGSEGV, &proxy_action, 0);
+	sigaction (SIGSEGV, &proxy_action, nullptr);
 
 	proxy_action = RKSignalSupportPrivate::r_sigill_handler;
 	proxy_action.sa_flags |= SA_SIGINFO;
 	proxy_action.sa_sigaction = &RKSignalSupportPrivate::signal_proxy;
-	sigaction (SIGILL, &proxy_action, 0);
+	sigaction (SIGILL, &proxy_action, nullptr);
 
 	proxy_action = RKSignalSupportPrivate::default_sigabrt_handler;
 	proxy_action.sa_flags |= SA_SIGINFO;
 	proxy_action.sa_sigaction = &RKSignalSupportPrivate::signal_proxy;
-	sigaction (SIGABRT, &proxy_action, 0);
+	sigaction (SIGABRT, &proxy_action, nullptr);
 #endif
 }
 

@@ -30,7 +30,7 @@ class QSplitter;
 class TwinTable : public RKEditor, public RObjectListener, public KXMLGUIClient {
 	Q_OBJECT
 public: 
-	explicit TwinTable (QWidget *parent=0);
+	explicit TwinTable(QWidget *parent=nullptr);
 	~TwinTable ();
 /** Pastes clipboard content to the current table */
 	void paste (RKEditor::PasteMode paste_mode);
@@ -46,7 +46,7 @@ public:
 
 	QActionGroup* editActions () const { return edit_actions; };
 	void setWindowStyleHint (const QString& hint) override;
-public slots:
+public Q_SLOTS:
 	void metaHeaderPressed (int section);
 	void metaHeaderEntered (int section);
 	void metaHeaderClicked (int section);
@@ -109,7 +109,7 @@ protected:
 	void initActions ();
 
 	RObject* main_object;
-private slots:
+private Q_SLOTS:
 /** inserts a new column (NOTE the action connected to this signal carries the info, where the column is to be inserted) */
 	void insertColumn ();
 /** inserts a new row in the dataview (NOTE the action connected to this signal carries the info, where the column is to be inserted) */

@@ -75,7 +75,7 @@ RObject::RObject (RObject *parent, const QString &name) {
 	RObject::parent = parent;
 	RObject::name = name;
 	type = 0;
-	meta_map = 0;
+	meta_map = nullptr;
 	contained_objects = 0;
 	dimensions = RObjectPrivate::dim_null;	// safe initialization
 	guard = nullptr;
@@ -214,7 +214,7 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 		meta_map->insert (id, value);
 	}
 
-	if (sync) writeMetaData (0);
+	if (sync) writeMetaData(nullptr);
 	RKModificationTracker::instance()->objectMetaChanged (this);
 }
 
@@ -248,7 +248,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 		map_string.append ("NULL");
 
 		delete meta_map;	// now that it is synced, delete it
-		meta_map = 0;
+		meta_map = nullptr;
 	} else {
 		for (MetaMap::const_iterator it = meta_map->constBegin (); it != meta_map->constEnd (); ++it) {
 			if (!map_string.isEmpty ()) map_string.append (", ");
@@ -272,7 +272,7 @@ void RObject::updateFromR (RCommandChain *chain) {
 	} else if (isType(Environment)) {
 		REnvironmentObject *env = static_cast<REnvironmentObject*>(this);
 		if (isType(PackageEnv) && RKSettingsModuleObjectBrowser::isPackageBlacklisted(env->packageName())) {
-			KMessageBox::information (0, i18n ("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, the objects in this package will not appear in the object browser, and there will be no object name completion or function argument hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.", env->packageName()), i18n("Package blacklisted"), "packageblacklist" + env->packageName());
+			KMessageBox::information(nullptr, i18n ("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, the objects in this package will not appear in the object browser, and there will be no object name completion or function argument hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.", env->packageName()), i18n("Package blacklisted"), "packageblacklist" + env->packageName());
 			return;
 		}
 		commandstring = ".rk.get.structure (" + getFullName(DefaultObjectNameOptions) + ", " + rQuote(getShortName());
@@ -288,7 +288,7 @@ void RObject::updateFromR (RCommandChain *chain) {
 		if (command->failed ()) {
 			RK_DEBUG (OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ().data ());
 			// this may happen, if the object has been removed in the workspace in between
-			RKModificationTracker::instance()->removeObject (this, 0, true);
+			RKModificationTracker::instance()->removeObject(this, nullptr, true);
 			return;
 		}
 		if (parent && parent->isContainer()) {
@@ -307,7 +307,7 @@ void RObject::fetchMoreIfNeeded (int levels) {
 
 	if (isType (Updating)) return;
 	if (isType (Incomplete)) {
-		updateFromR (0);
+		updateFromR(nullptr);
 		return;
 	}
 	RSlotsPseudoObject *spo = slotsPseudoObject ();
@@ -316,7 +316,7 @@ void RObject::fetchMoreIfNeeded (int levels) {
 	if (levels <= 0) return;
 	if (!isContainer ()) return;
 	const RObjectMap children = static_cast<RContainerObject*> (this)->childmap;
-	foreach (RObject* child, children) {
+	for (RObject* child : children) {
 		child->fetchMoreIfNeeded (levels - 1);
 	}
 }
@@ -345,12 +345,12 @@ bool RObject::updateStructure (RData *new_data) {
 	properties_change |= updateSlots (new_data_data.at (StoragePositionSlots));
 
 	if (properties_change) RKModificationTracker::instance()->objectMetaChanged (this);
-	if (type & NeedDataUpdate) updateDataFromR (0);
+	if (type & NeedDataUpdate) updateDataFromR(nullptr);
 
 	if (type & Incomplete) {
 		// If the (new!) type is "Incomplete", it means, the structure getter simply stopped at this point.
 		// In case we already have child info, we should update it (TODO: perhaps only, if anything is listening for child objects?)
-		if (numChildrenForObjectModel () && (!isType (Updating))) updateFromR (0);
+		if (numChildrenForObjectModel () && (!isType (Updating))) updateFromR(nullptr);
 		return true;
 	}
 
@@ -486,7 +486,7 @@ bool RObject::updateMeta (RData *new_data) {
 	} else {		// no meta data received
 		if (meta_map) {
 			delete meta_map;
-			meta_map = 0;
+			meta_map = nullptr;
 			change = true;
 		}
 	}
@@ -537,7 +537,7 @@ bool RObject::updateSlots (RData *new_data) {
 		}
 		return ret;
 	} else if (slotsPseudoObject ()) {
-		setSpecialChildObject (0, SlotsObject);
+		setSpecialChildObject(nullptr, SlotsObject);
 	}
 	return false;
 }
@@ -594,7 +594,7 @@ RObject *RObject::findChildByObjectModelIndex (int index) const {
 		if (index == 0) return static_cast<const RObjectList *> (this)->orphanNamespacesObject ();
 		--index;
 	}
-	return 0;
+	return nullptr;
 }
 
 QList <RKEditor*> RObject::editors () const {
@@ -610,7 +610,7 @@ void RObject::rename (const QString &new_short_name) {
 void RObject::setSpecialChildObject (RObject* special, PseudoObjectType special_type) {
 	RK_TRACE (OBJECTS);
 
-	RObject *old_special = 0;
+	RObject *old_special = nullptr;
 	if (special_type == SlotsObject) old_special = slotsPseudoObject ();
 	else if (special_type == NamespaceObject) old_special = namespaceEnvironment ();
 	else if (special_type == RowNamesObject) old_special = rownames_objects.value (this);
@@ -619,7 +619,7 @@ void RObject::setSpecialChildObject (RObject* special, PseudoObjectType special_
 	if (special == old_special) return;
 
 	if (old_special) {
-		RKModificationTracker::instance()->removeObject (old_special, 0, true);
+		RKModificationTracker::instance()->removeObject(old_special, nullptr, true);
 		RK_ASSERT (!hasPseudoObject (special_type));	// should have been removed in the above statement via RObject::remove()
 	}
 

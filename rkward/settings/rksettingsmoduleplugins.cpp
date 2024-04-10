@@ -26,7 +26,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkstyle.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcompatibility.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/xmlhelper.h"
 #include "../plugin/rkcomponentmap.h"
@@ -68,7 +67,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	button_group->addButton (button, PreferWizard);
 	if ((button = button_group->button (interface_pref))) button->setChecked (true);
 
-	connect (button_group, RKCompatibility::groupButtonClicked(), this, &RKSettingsModulePlugins::settingChanged);
+	connect (button_group, &QButtonGroup::idClicked, this, &RKSettingsModulePlugins::settingChanged);
 	main_vbox->addWidget (button_box);
 
 	main_vbox->addSpacing (2*RKStyle::spacingHint ());
@@ -370,7 +369,7 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, AddMo
 	RK_TRACE (SETTINGS);
 
 	QStringList added;
-	foreach (const QString &map, maps) {
+	for (const QString &map : maps) {
 		if (map.isEmpty ()) continue;
 		if (known_plugin_maps.addMap(map, add_mode)) {
 			added.append(map);
@@ -400,12 +399,14 @@ QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &bas
 	RK_TRACE (SETTINGS);
 
 	QDir dir (basedir);
-	QStringList maps = dir.entryList (QDir::Files).filter (QRegExp (".*\\.pluginmap$"));
+	const QStringList maps = dir.entryList (QDir::Files).filter (QRegularExpression (".*\\.pluginmap$"));
 	QStringList ret;
-	foreach (const QString &map, maps) ret.append (dir.absoluteFilePath (map));
+	for (const QString &map : maps) {
+		ret.append (dir.absoluteFilePath (map));
+	}
 
 	QStringList subdirs = dir.entryList (QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-	foreach (const QString& subdir, subdirs) {
+	for (const QString& subdir : subdirs) {
 		ret.append (findPluginMapsRecursive (dir.absoluteFilePath (subdir)));
 	}
 
@@ -418,7 +419,7 @@ RKSettingsModulePluginsModel::RKSettingsModulePluginsModel (QObject* parent) : Q
 
 RKSettingsModulePluginsModel::~RKSettingsModulePluginsModel() {
 	RK_TRACE (SETTINGS);
-	foreach (const PluginMapMetaInfo &inf, plugin_map_dynamic_info) {
+	for (const PluginMapMetaInfo &inf : std::as_const(plugin_map_dynamic_info)) {
 		delete (inf.about);
 	}
 }
@@ -538,7 +539,7 @@ bool RKSettingsModulePluginsModel::setData (const QModelIndex& index, const QVar
 			if (!plugin_maps.all_maps.contains(id)) return false;
 			auto &handle = plugin_maps.all_maps[id];
 			handle.active = value.toBool ();
-			emit dataChanged(index, index);
+			Q_EMIT dataChanged(index, index);
 			return true;
 		}
 	}
