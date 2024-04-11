@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2022-06-04 13:52+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -2594,11 +2594,15 @@ msgstr "Potência-alvo do teste (1 menos a probabilidade de erro do Tipo II)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:61
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
+#| "reminder, this is (rows − 1)×(columns − 1) for a test of independence, "
+#| "and (cells − 1) for a test of goodness of fit."
 msgid ""
 "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
-"reminder, this is (rows − 1)×(columns − 1) for a test of independence, and "
-"(cells − 1) for a test of goodness of fit."
+"reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
+"independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
 "Só aparece para as estatísticas chi-quadrado: os graus de liberdade-alvo. "
 "Como chamada de atenção, isto é (linhas − 1)×(colunas − 1), para um teste de "
@@ -2645,12 +2649,17 @@ msgstr ""
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Minimum detectable effect size. Note that effect size specifications "
+#| "differ between the available methods. Be sure to read the note shown "
+#| "below the control.   As a reminder, for mapping between cohen's f and "
+#| "Eta² use f² = Eta² / (1 − Eta²)"
 msgid ""
 "Minimum detectable effect size. Note that effect size specifications differ "
 "between the available methods. Be sure to read the note shown below the "
-"control.   As a reminder, for mapping between cohen's f and Eta² use f² = "
-"Eta² / (1 − Eta²)"
+"control.   As a reminder, for mapping between cohen's f and Eta&sup2; use "
+"f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)"
 msgstr ""
 "O tamanho mínimo detectado do efeito. Lembre-se que as especificações do "
 "tamanho do efeito diferem entre os métodos disponíveis. Certifique-se que lê "
@@ -2952,8 +2961,9 @@ msgstr "Graus de liberdade do numerador"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
-#, kde-format
-msgid "df <sub> num </sub> : k − 1"
+#, fuzzy, kde-format
+#| msgid "df <sub> num </sub> : k − 1"
+msgid "df <sub> num </sub> : k &minus; 1"
 msgstr "df <sub> num </sub> : k − 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2964,8 +2974,9 @@ msgstr "Graus de liberdade do denominador"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
-#, kde-format
-msgid "df <sub> den </sub> : N − k"
+#, fuzzy, kde-format
+#| msgid "df <sub> den </sub> : N − k"
+msgid "df <sub> den </sub> : N &minus; k"
 msgstr "df <sub> den </sub> : N − k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">

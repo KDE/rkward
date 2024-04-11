@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2022-12-27 07:21+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -2395,8 +2395,8 @@ msgstr ""
 #, kde-format
 msgid ""
 "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
-"reminder, this is (rows − 1)×(columns − 1) for a test of independence, and "
-"(cells − 1) for a test of goodness of fit."
+"reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
+"independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for numerator")
@@ -2433,8 +2433,8 @@ msgstr ""
 msgid ""
 "Minimum detectable effect size. Note that effect size specifications differ "
 "between the available methods. Be sure to read the note shown below the "
-"control.   As a reminder, for mapping between cohen's f and Eta² use f² = "
-"Eta² / (1 − Eta²)"
+"control.   As a reminder, for mapping between cohen's f and Eta&sup2; use "
+"f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)"
 msgstr ""
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
@@ -2729,7 +2729,7 @@ msgstr ""
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
 #, kde-format
-msgid "df <sub> num </sub> : k − 1"
+msgid "df <sub> num </sub> : k &minus; 1"
 msgstr ""
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2741,7 +2741,7 @@ msgstr ""
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
 #, kde-format
-msgid "df <sub> den </sub> : N − k"
+msgid "df <sub> den </sub> : N &minus; k"
 msgstr ""
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">

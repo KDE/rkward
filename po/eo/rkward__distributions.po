@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
@@ -2853,7 +2853,7 @@ msgstr "Dum kalkulado de densecoj, redonu ĉi tiujn kiel log (d)."
 #, kde-format
 msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
-"probabilities are P[X > x]"
+"probabilities are P[X &gt; x]"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2023-10-07 21:11+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -2955,10 +2955,13 @@ msgstr "Ao calcular densidades devolvelas como log(d)."
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #: rkward/plugins/distributions/dist_help_snippets.xml:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper "
+#| "tail) probabilities are P[X > x]"
 msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
-"probabilities are P[X > x]"
+"probabilities are P[X &gt; x]"
 msgstr ""
 "Se se marca (predeterminado) as probabilidades son P[X ≤ x]. En caso "
 "contrario as probabilidades (de cola superior) son P[X > x]"

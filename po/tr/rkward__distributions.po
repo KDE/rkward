@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2024-02-16 11:19+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -2949,10 +2949,13 @@ msgstr "Yoğunlukları hesaplarken bunları log (d) olarak döndürün."
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #: rkward/plugins/distributions/dist_help_snippets.xml:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper "
+#| "tail) probabilities are P[X > x]"
 msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
-"probabilities are P[X > x]"
+"probabilities are P[X &gt; x]"
 msgstr ""
 "İşaretlenirse (öntanımlı) olasılıklar P[X ≤ x] olur. Aksi halde (üst kuyruk) "
 "olasılıklar P[X > x] olur"

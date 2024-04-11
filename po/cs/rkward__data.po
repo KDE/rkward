@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2023-02-02 14:20+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -674,7 +674,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Whether the minimum value is contained in the range to check against (i.e. "
-"compare 'larger or equal (>=)')."
+"compare 'larger or equal (&gt;=)')."
 msgstr ""
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Maximum (or empty)")
@@ -688,7 +688,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Whether the maximum value is contained in the range to check against (i.e. "
-"compare 'smaller or equal (<=)')."
+"compare 'smaller or equal (&lt;=)')."
 msgstr ""
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
@@ -697,8 +697,8 @@ msgstr ""
 msgid ""
 "You can also filter rows / cases by a custom R expression. If using this in "
 "combination with filtering by a column (see above), both conditions are "
-"combined by logical 'and' (&). Leave empty, if you do not want to filter on "
-"a custom expression."
+"combined by logical 'and' (&amp;). Leave empty, if you do not want to filter "
+"on a custom expression."
 msgstr ""
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")

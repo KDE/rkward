@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__distributions\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2022-05-07 17:46+0200\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -2956,10 +2956,13 @@ msgstr "Al calcular densidades, devolverlas como log(p)."
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #: rkward/plugins/distributions/dist_help_snippets.xml:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper "
+#| "tail) probabilities are P[X > x]"
 msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
-"probabilities are P[X > x]"
+"probabilities are P[X &gt; x]"
 msgstr ""
 "Si se encuentra activa (por omisión), las probabilidades son P[X ≤ x]. Si no "
 "(cola superior), las probabilidades son P[X > x]"

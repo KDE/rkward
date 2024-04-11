@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2020-01-05 19:10+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <kde-i18n-doc@kde.org>\n"
@@ -754,10 +754,13 @@ msgstr ""
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
 #: rkward/plugins/data/subset_dataframe.rkh:42
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Whether the minimum value is contained in the range to check against (i."
+#| "e. compare 'larger or equal (>=)')."
 msgid ""
 "Whether the minimum value is contained in the range to check against (i.e. "
-"compare 'larger or equal (>=)')."
+"compare 'larger or equal (&gt;=)')."
 msgstr ""
 "Se o valor mínimo está presente no intervalo co que se comproba (é dicir, "
 "comparar «maior ou igual (≥)»)."
@@ -770,22 +773,30 @@ msgstr "Ver enriba. Valor máximo."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (<=)")
 #: rkward/plugins/data/subset_dataframe.rkh:48
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Whether the maximum value is contained in the range to check against (i."
+#| "e. compare 'smaller or equal (<=)')."
 msgid ""
 "Whether the maximum value is contained in the range to check against (i.e. "
-"compare 'smaller or equal (<=)')."
+"compare 'smaller or equal (&lt;=)')."
 msgstr ""
 "Se o valor máximo está presente no intervalo co que se comproba (é dicir, "
 "comparar «menor ou igual (≤)»)."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:52
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "You can also filter rows / cases by a custom R expression. If using this "
+#| "in combination with filtering by a column (see above), both conditions "
+#| "are combined by logical 'and' (&). Leave empty, if you do not want to "
+#| "filter on a custom expression."
 msgid ""
 "You can also filter rows / cases by a custom R expression. If using this in "
 "combination with filtering by a column (see above), both conditions are "
-"combined by logical 'and' (&). Leave empty, if you do not want to filter on "
-"a custom expression."
+"combined by logical 'and' (&amp;). Leave empty, if you do not want to filter "
+"on a custom expression."
 msgstr ""
 "Tamén pode filtrar filas ou casos usando una expresión de R personalizada. "
 "Se usa isto e ademais filtra por columna (vexa enriba), as dúas condicións "

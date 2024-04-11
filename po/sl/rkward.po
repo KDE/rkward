@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2024-04-11 00:36+0000\n"
 "PO-Revision-Date: 2022-10-09 08:47+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Error loading workspace"
 msgstr "Napaka pri nalaganju delovnega prostora"
 
-#: rkward/agents/rkprintagent.cpp:82
+#: rkward/agents/rkprintagent.cpp:42
 #, kde-format
 msgid ""
 "No service was found to provide a KDE print dialog for PostScript files. We "
@@ -77,7 +77,7 @@ msgstr ""
 "okularja ali prilagodite RKWard, da ne poskuša tiskati s pogovornim okno za "
 "tiskanje KDE."
 
-#: rkward/agents/rkprintagent.cpp:82
+#: rkward/agents/rkprintagent.cpp:42
 #, kde-format
 msgid "Unable to open KDE print dialog"
 msgstr "Pogovornega okna za tiskanje KDE ni mogoče odpreti"
@@ -127,7 +127,7 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Ali želite prepisati datoteko?"
 
-#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:880
+#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:877
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgstr "Datoteke delovnega prostora R [%1](%1);; Vse datoteke [*](*)"
@@ -267,10 +267,10 @@ msgstr "Ali res želite odstraniti predmet »%1«? Ne morete ga dobiti nazaj."
 
 #: rkward/core/rkmodificationtracker.cpp:351
 #: rkward/dataeditor/rkvareditmodel.cpp:679
-#: rkward/dialogs/rkloadlibsdialog.cpp:352
-#: rkward/dialogs/rkloadlibsdialog.cpp:368
-#: rkward/dialogs/rkloadlibsdialog.cpp:938 rkward/misc/rkobjectlistview.cpp:267
-#: rkward/plugin/rkformula.cpp:74 rkward/plugin/rkvarslot.cpp:59
+#: rkward/dialogs/rkloadlibsdialog.cpp:349
+#: rkward/dialogs/rkloadlibsdialog.cpp:365
+#: rkward/dialogs/rkloadlibsdialog.cpp:953 rkward/misc/rkobjectlistview.cpp:267
+#: rkward/plugin/rkformula.cpp:73 rkward/plugin/rkvarslot.cpp:58
 #: rkward/settings/rksettingsmodulekateplugins.cpp:41
 #, kde-format
 msgid "Name"
@@ -355,7 +355,7 @@ msgstr "Podatkovni okvir"
 msgid "Array"
 msgstr "Polje"
 
-#: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:90
+#: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:95
 #, kde-format
 msgid "Matrix"
 msgstr "Matrika"
@@ -478,7 +478,7 @@ msgstr "Vnesite v ta polja, če želite dodati nove stolpce"
 msgid "Type on these fields to add new rows"
 msgstr "Vnesite v ta polja, če želite dodati nove vrstice"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:293 rkward/plugin/rkmatrixinput.cpp:518
+#: rkward/dataeditor/rkvareditmodel.cpp:293 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
 msgid "This value is not allowed, here"
 msgstr "Ta vrednost tukaj ni dovoljena"
@@ -533,27 +533,27 @@ msgstr "Dvokliknite ta polja, da prilagodite prikaz podatkov."
 msgid "Double click on these fields to edit factor levels."
 msgstr "Dvokliknite ta polja, da uredite ravni faktorjev."
 
-#: rkward/dataeditor/twintable.cpp:99
+#: rkward/dataeditor/twintable.cpp:100
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
 msgstr "Izreže izbrani odsek in ga postavi na odložišče"
 
-#: rkward/dataeditor/twintable.cpp:101
+#: rkward/dataeditor/twintable.cpp:102
 #, kde-format
 msgid "Copies the selected section to the clipboard"
 msgstr "Kopira izbrani odsek na odložišče"
 
-#: rkward/dataeditor/twintable.cpp:104
+#: rkward/dataeditor/twintable.cpp:105
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
 msgstr "Prilepi vsebino odložišča na trenutni položaj"
 
-#: rkward/dataeditor/twintable.cpp:107
+#: rkward/dataeditor/twintable.cpp:108
 #, kde-format
 msgid "Paste inside table"
 msgstr "Prilepi znotraj tabele"
 
-#: rkward/dataeditor/twintable.cpp:109
+#: rkward/dataeditor/twintable.cpp:110
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
@@ -561,12 +561,12 @@ msgid ""
 msgstr ""
 "Prilepi vsebino odložišča na trenutni položaj, vendar ne prek meja tabele"
 
-#: rkward/dataeditor/twintable.cpp:112
+#: rkward/dataeditor/twintable.cpp:113
 #, kde-format
 msgid "Paste inside selection"
 msgstr "Prilepi znotraj izbora"
 
-#: rkward/dataeditor/twintable.cpp:114
+#: rkward/dataeditor/twintable.cpp:115
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
@@ -575,34 +575,34 @@ msgstr ""
 "Prilepi vsebino odložišča na trenutni položaj, vendar ne prek meja "
 "trenutnega izbora"
 
-#: rkward/dataeditor/twintable.cpp:131
+#: rkward/dataeditor/twintable.cpp:132
 #, kde-format
 msgid "Show / Edit row names"
 msgstr "Pokaži / uredi imena vrstic"
 
-#: rkward/dataeditor/twintable.cpp:134 rkward/dataeditor/twintable.cpp:147
+#: rkward/dataeditor/twintable.cpp:135 rkward/dataeditor/twintable.cpp:148
 #, kde-format
 msgid "Enable editing"
 msgstr "Omogoči urejanje"
 
-#: rkward/dataeditor/twintable.cpp:139
+#: rkward/dataeditor/twintable.cpp:140
 #, kde-format
 msgctxt "verb: switch to read-only state. Make this short."
 msgid "Lock"
 msgstr "Zakleni"
 
-#: rkward/dataeditor/twintable.cpp:142
+#: rkward/dataeditor/twintable.cpp:143
 #, kde-format
 msgid "Disable editing (to prevent accidental modification of data)"
 msgstr "Onemogoči urejanje (za preprečevanje naključne spremembe podatkov)"
 
-#: rkward/dataeditor/twintable.cpp:144
+#: rkward/dataeditor/twintable.cpp:145
 #, kde-format
 msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
 msgstr "Odkleni"
 
-#: rkward/dataeditor/twintable.cpp:208
+#: rkward/dataeditor/twintable.cpp:209
 #, kde-format
 msgid ""
 "The editor '%1' contains the following duplicate columns. Editing this table "
@@ -615,42 +615,42 @@ msgstr ""
 "veste, kaj počnete, vendar vam svetujemo, da najprej popravite tabelo in/ali "
 "varnostno kopirate podatke."
 
-#: rkward/dataeditor/twintable.cpp:208
+#: rkward/dataeditor/twintable.cpp:209
 #, kde-format
 msgid "Duplicate columns detected"
 msgstr "Zaznani podvojeni stolpci"
 
-#: rkward/dataeditor/twintable.cpp:217
+#: rkward/dataeditor/twintable.cpp:218
 #, kde-format
 msgid "%1 [read-only]"
 msgstr "%1 [samo-za-branje]"
 
-#: rkward/dataeditor/twintable.cpp:262
+#: rkward/dataeditor/twintable.cpp:263
 #, kde-format
 msgid "Insert new variable left"
 msgstr "Vstavi novo spremenljivko levo"
 
-#: rkward/dataeditor/twintable.cpp:265
+#: rkward/dataeditor/twintable.cpp:266
 #, kde-format
 msgid "Delete this variable"
 msgstr "Izbriši to spremenljivko"
 
-#: rkward/dataeditor/twintable.cpp:276
+#: rkward/dataeditor/twintable.cpp:277
 #, kde-format
 msgid "Insert new case above (at %1)"
 msgstr "Vstavi nov primer zgoraj (pri %1)"
 
-#: rkward/dataeditor/twintable.cpp:285
+#: rkward/dataeditor/twintable.cpp:286
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
 msgstr "Izbriši označene vrstice (%1-%2)"
 
-#: rkward/dataeditor/twintable.cpp:291
+#: rkward/dataeditor/twintable.cpp:292
 #, kde-format
 msgid "Delete this row (%1)"
 msgstr "Izbriši to vrstico (%1)"
 
-#: rkward/dataeditor/twintable.cpp:413
+#: rkward/dataeditor/twintable.cpp:414
 #, kde-format
 msgid "Inserting clipboard contents..."
 msgstr "Vstavljanje vsebine odložišča ..."
@@ -973,44 +973,51 @@ msgstr ""
 msgid "No import method found"
 msgstr "Ni najdene metode uvoza"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:52
+#: rkward/dialogs/rkloadlibsdialog.cpp:50
 #, kde-format
 msgid "Configure Packages"
 msgstr "Prilagodi pakete"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:60
+#: rkward/dialogs/rkloadlibsdialog.cpp:58
 #, kde-format
 msgid "Load / Unload R packages"
 msgstr "Nalaganje / odlaganje paketov R"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:64
+#: rkward/dialogs/rkloadlibsdialog.cpp:62
 #, kde-format
 msgid "Install / Update / Remove R packages"
 msgstr "Namesti / posodobi / odstrani R-pakete"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:66
+#: rkward/dialogs/rkloadlibsdialog.cpp:64
 #, kde-format
 msgid "Manage RKWard Plugins"
 msgstr "Upravljaj vtičnike RKWard"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:95
+#: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Closing will discard pending changes. Are you sure?"
 msgstr "Zapiranje bo zavrglo spremembe v teku. Ali ste prepričani?"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:95
+#: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Discard changes?"
 msgstr "Naj zavržem spremembe?"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:169
-#: rkward/dialogs/rkloadlibsdialog.cpp:176
-#: rkward/dialogs/rkloadlibsdialog.cpp:207
+#: rkward/dialogs/rkloadlibsdialog.cpp:93
+#, fuzzy, kde-format
+#| msgid "Do not close"
+msgctxt "@action:button"
+msgid "Do no close"
+msgstr "Ne zapri"
+
+#: rkward/dialogs/rkloadlibsdialog.cpp:167
+#: rkward/dialogs/rkloadlibsdialog.cpp:174
+#: rkward/dialogs/rkloadlibsdialog.cpp:205
 #, kde-format
 msgid "Package %1 at %2"
 msgstr "Paket %1 pri %2"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:182
+#: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
 msgid ""
 "The following packages, which you have selected for removal, are essential "
@@ -1022,12 +1029,12 @@ msgstr ""
 "delovanje RKWarda in ne bodo odstranjeni. Če ste popolnoma prepričani, da "
 "želite odstraniti te pakete, to storite v ukazni vrstici R."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:182
+#: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
 msgid "Not removing certain packages"
 msgstr "Nekateri paketi se ne odstranjujejo"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:188
+#: rkward/dialogs/rkloadlibsdialog.cpp:186
 #, kde-format
 msgid ""
 "Your current user permissions do not allow removing the following packages. "
@@ -1036,13 +1043,13 @@ msgstr ""
 "Vaša trenutna uporabniška dovoljenja ne omogočajo odstranjevanja teh "
 "paketov. Ti bodo preskočeni."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:188
-#: rkward/dialogs/rkloadlibsdialog.cpp:191
+#: rkward/dialogs/rkloadlibsdialog.cpp:186
+#: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgid "Insufficient user permissions"
 msgstr "Nezadostne uporabniške pravice"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:191
+#: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgid ""
 "Your current user permissions do not allow removing the following packages. "
@@ -1053,7 +1060,21 @@ msgstr ""
 "paketov. Ali želite preskočiti te pakete ali želite nadaljevati s "
 "skrbniškimi pravicami (od vas bo zahtevano geslo)?"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:213
+#: rkward/dialogs/rkloadlibsdialog.cpp:189
+#, fuzzy, kde-format
+#| msgid "Become root"
+msgctxt "@action:button"
+msgid "Become root"
+msgstr "Postani korenski uporabnik"
+
+#: rkward/dialogs/rkloadlibsdialog.cpp:189
+#, fuzzy, kde-format
+#| msgid "Updateable Packages"
+msgctxt "@action:button"
+msgid "Skip these packages"
+msgstr "Paketi, ki jih je mogoče posodobiti"
+
+#: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
 msgid ""
 "You are about to remove the following packages. Are you sure you want to "
@@ -1061,28 +1082,28 @@ msgid ""
 msgstr ""
 "Odstranili boste naslednje pakete. Ali ste prepričani, da želite nadaljevati?"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:213
+#: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
 msgid "About to remove packages"
 msgstr "Odstranili boste pakete"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:216
+#: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
 msgid "Please stand by while removing selected packages"
 msgstr ""
 "Prosimo, bodite pri pripravljenosti pri odstranjevanju izbranih paketov"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:216
+#: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
 msgid "Removing packages"
 msgstr "Odstranjevanje paketov"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:243
+#: rkward/dialogs/rkloadlibsdialog.cpp:241
 #, kde-format
 msgid "Selected library location not writable"
 msgstr "Na izbrano mesto knjižnice ni mogoče pisati"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:244
+#: rkward/dialogs/rkloadlibsdialog.cpp:242
 #, kde-format
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
@@ -1095,7 +1116,7 @@ msgstr ""
 "namestiti v %2 (lahko pritisnete tudi »Prekliči« in uporabite gumb "
 "»Konfiguriraj repozitorije« za nastavitev drugega imenika)?</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:247
+#: rkward/dialogs/rkloadlibsdialog.cpp:245
 #, kde-format
 msgid ""
 "<p>Alternatively, if you have access to an administrator account on this "
@@ -1108,13 +1129,13 @@ msgstr ""
 "Oprostite, samodejno preklapljanje na skrbnika še ni podprto v programu "
 "RKWard na sistemu Windows.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:249
-#: rkward/dialogs/rkloadlibsdialog.cpp:253
+#: rkward/dialogs/rkloadlibsdialog.cpp:247
+#: rkward/dialogs/rkloadlibsdialog.cpp:251
 #, kde-format
 msgid "Install to %1"
 msgstr "Namesti v %1"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:252
+#: rkward/dialogs/rkloadlibsdialog.cpp:250
 #, kde-format
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
@@ -1124,22 +1145,22 @@ msgstr ""
 "<p>Če ste skrbnik tega računalnika, lahko poskusite namestiti pakete kot "
 "skrbnik root (od vas bo zahtevano skrbniško geslo).</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:253
+#: rkward/dialogs/rkloadlibsdialog.cpp:251
 #, kde-format
 msgid "Become root"
 msgstr "Postani korenski uporabnik"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:271
+#: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Please stand by while installing selected packages"
 msgstr "Bodite v pripravljenosti med nameščanjem izbranih paketov"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:271
+#: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Installing packages"
 msgstr "Nameščanje paketov"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:292
+#: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
 msgid ""
 "Neither kdesu nor kdesudo could be found. To install as root, please install "
@@ -1148,53 +1169,53 @@ msgstr ""
 "Ni mogoče najti niti kdesu niti kdesudo. Za namestitev kot root namestite "
 "vsaj enega od obeh paketov."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:292
+#: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
 msgid "kdesu not found"
 msgstr "kdesu ni bil najden"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:350
+#: rkward/dialogs/rkloadlibsdialog.cpp:347
 #, kde-format
 msgid "Installed packages"
 msgstr "Nameščeni paketi"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:352
-#: rkward/dialogs/rkloadlibsdialog.cpp:939
-#: rkward/settings/rksettingsmoduleplugins.cpp:525
+#: rkward/dialogs/rkloadlibsdialog.cpp:349
+#: rkward/dialogs/rkloadlibsdialog.cpp:954
+#: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
 #: rkward/windows/rkhelpsearchwindow.cpp:325
 #, kde-format
 msgid "Title"
 msgstr "Naslov"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:352
-#: rkward/dialogs/rkloadlibsdialog.cpp:940
+#: rkward/dialogs/rkloadlibsdialog.cpp:349
+#: rkward/dialogs/rkloadlibsdialog.cpp:955
 #, kde-format
 msgid "Version"
 msgstr "Različica"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:352
-#: rkward/dialogs/rkloadlibsdialog.cpp:941
+#: rkward/dialogs/rkloadlibsdialog.cpp:349
+#: rkward/dialogs/rkloadlibsdialog.cpp:956
 #, kde-format
 msgid "Location"
 msgstr "Mesto"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:357
+#: rkward/dialogs/rkloadlibsdialog.cpp:354
 #, kde-format
 msgid "Load"
 msgstr "Naloži"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:359
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
 #, kde-format
 msgid "Unload"
 msgstr "Odloži"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:366
+#: rkward/dialogs/rkloadlibsdialog.cpp:363
 #, kde-format
 msgid "Loaded packages"
 msgstr "Naloženi paketi"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:503
+#: rkward/dialogs/rkloadlibsdialog.cpp:500
 #, kde-format
 msgid ""
 "There has been an error while trying to load / unload packages. See "
@@ -1203,17 +1224,17 @@ msgstr ""
 "Pri poskusu nalaganja/odlaganju paketov je prišlo do napake. Podrobnosti si "
 "oglejte v nadaljevanju"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:582
+#: rkward/dialogs/rkloadlibsdialog.cpp:579
 #, kde-format
 msgid "Select all updates"
 msgstr "Izberi vse posodobitve"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:644
+#: rkward/dialogs/rkloadlibsdialog.cpp:648
 #, kde-format
 msgid "Show only packages matching:"
 msgstr "Prikaži samo pakete, ki se ujemajo:"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:646
+#: rkward/dialogs/rkloadlibsdialog.cpp:650
 #, kde-format
 msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
@@ -1222,12 +1243,12 @@ msgstr ""
 "<p>Pakete, prikazane na seznamu, lahko omejite z imeni ali naslovi, ki se "
 "ujemajo s filtrnim nizom.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:650
+#: rkward/dialogs/rkloadlibsdialog.cpp:654
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
 msgstr "Pokaži samo pakete, ki zagotavljajo pogovorna okna RKWard"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:651
+#: rkward/dialogs/rkloadlibsdialog.cpp:655
 #, kde-format
 msgid ""
 "<p>Some but not all R packages come with plugins for RKWard. That means they "
@@ -1238,17 +1259,17 @@ msgstr ""
 "pomeni, da poleg funkcij R zagotavljajo tudi grafični uporabniški vmesnik. "
 "Potrdite to polje, če želite pokazati samo takšne pakete.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:661
+#: rkward/dialogs/rkloadlibsdialog.cpp:676
 #, kde-format
 msgid "Install packages to:"
 msgstr "Namesti pakete v:"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:665
+#: rkward/dialogs/rkloadlibsdialog.cpp:680
 #, kde-format
 msgid "Install suggested packages"
 msgstr "Namesti predlagane pakete"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:667
+#: rkward/dialogs/rkloadlibsdialog.cpp:682
 #, kde-format
 msgid ""
 "Some packages \"suggest\" additional packages, which are not strictly "
@@ -1260,12 +1281,12 @@ msgstr ""
 "uporabo tega paketa, lahko pa zagotovijo dodatno povezano funkcionalnost. "
 "Preverite to možnost, če želite vključiti takšne dodatne predlagane pakete."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:675
+#: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
 msgid "Configure Repositories"
 msgstr "Prilagodi skladišča"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:677
+#: rkward/dialogs/rkloadlibsdialog.cpp:692
 #, kde-format
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
@@ -1274,12 +1295,12 @@ msgstr ""
 "Veliko paketov je na voljo v CRAN (Comprehensive R Archive Network) in "
 "drugih skladiščih.<br>Kliknite sem, če želite dodati več virov."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:701
+#: rkward/dialogs/rkloadlibsdialog.cpp:716
 #, kde-format
 msgid "<b>Install %1 packages (plus dependencies), remove %2 packages</b>"
 msgstr "<b>Namesti pakete %1 (in odvisnike), odstrani pakete %2</b>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:771
+#: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
 msgid ""
 "The following package(s) requested by the backend have not been found in the "
@@ -1291,12 +1312,12 @@ msgstr ""
 "\"%1\". Morda je bilo ime paketa napačno napisano. Ali pa morate dodati "
 "dodatne repozitorije prek gumba \"Konfiguriraj repozitorije\"."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:771
+#: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
 msgid "Package not available"
 msgstr "Paket ni na voljo"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:876
+#: rkward/dialogs/rkloadlibsdialog.cpp:891
 #, kde-format
 msgid ""
 "<p>Please stand by while searching for installed and available packages.</"
@@ -1309,14 +1330,14 @@ msgstr ""
 "lahko traja nekaj časa, še posebej če je en ali več repozitorijev začasno ni "
 "na voljo.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:937
+#: rkward/dialogs/rkloadlibsdialog.cpp:952
 #: rkward/rbackend/rcommandstack.cpp:314
-#: rkward/settings/rksettingsmoduleplugins.cpp:526
+#: rkward/settings/rksettingsmoduleplugins.cpp:527
 #, kde-format
 msgid "Status"
 msgstr "Stanje"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:944
+#: rkward/dialogs/rkloadlibsdialog.cpp:959
 #, kde-format
 msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
@@ -1325,7 +1346,7 @@ msgstr ""
 "<p>Paketi, označeni z ikono RKWard v tem stolpcu, zagotavljajo izboljšave za "
 "RKWard, običajno v obliki dodatnih grafičnih dialogov.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:945
+#: rkward/dialogs/rkloadlibsdialog.cpp:960
 #, kde-format
 msgid ""
 "<p>You can select packages for installation / removal by checking / "
@@ -1334,12 +1355,12 @@ msgstr ""
 "<p>Pakete za namestitev / odstranitev lahko izberete tako, da odkljukate / "
 "odstranite ustrezna polja v tem stolpcu.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:946
+#: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
 msgid "<p>The name of the package.</p>"
 msgstr "<p>Ime paketa.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:947
+#: rkward/dialogs/rkloadlibsdialog.cpp:962
 #, kde-format
 msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
@@ -1348,22 +1369,22 @@ msgstr ""
 "<p>Opisni naslov za paket. Trenutno to ni na voljo za pakete v ne-lokalnih "
 "repozitorijih.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:948
+#: rkward/dialogs/rkloadlibsdialog.cpp:963
 #, kde-format
 msgid "<p>Installed and / or available version of the package</p>"
 msgstr "<p>Nameščena in/ali razpoložljiva različica paketa</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:949
+#: rkward/dialogs/rkloadlibsdialog.cpp:964
 #, kde-format
 msgid "<p>Location where the package is installed / available</p>"
 msgstr "<p>Mesto, kjer je paket nameščen/na voljo</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:972
+#: rkward/dialogs/rkloadlibsdialog.cpp:987
 #, kde-format
 msgid "Updateable Packages"
 msgstr "Paketi, ki jih je mogoče posodobiti"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:973
+#: rkward/dialogs/rkloadlibsdialog.cpp:988
 #, kde-format
 msgid ""
 "Packages for which an update is available. This may include packages which "
@@ -1372,24 +1393,24 @@ msgstr ""
 "Paketi, za katere je na voljo posodobitev. To lahko vključuje pakete, ki so "
 "bili zgrajeni le proti novejši različici R."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:976
+#: rkward/dialogs/rkloadlibsdialog.cpp:991
 #, kde-format
 msgid "New Packages"
 msgstr "Novi paketi"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:977
+#: rkward/dialogs/rkloadlibsdialog.cpp:992
 #, kde-format
 msgid ""
 "Packages which are available for installation, but which are not currently "
 "installed."
 msgstr "Paketi, ki so na voljo za namestitev, vendar trenutno niso nameščeni."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:979
+#: rkward/dialogs/rkloadlibsdialog.cpp:994
 #, kde-format
 msgid "Installed Packages"
 msgstr "Nameščeni paketi"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:980
+#: rkward/dialogs/rkloadlibsdialog.cpp:995
 #, kde-format
 msgid ""
 "Packages which are installed locally. Note that updates may be available for "
@@ -1398,33 +1419,33 @@ msgstr ""
 "Paketi, ki so nameščeni lokalno. Upoštevajte, da so morda na voljo "
 "posodobitve za te pakete."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1008
+#: rkward/dialogs/rkloadlibsdialog.cpp:1023
 #, kde-format
 msgid "Install"
 msgstr "Namesti"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1011
+#: rkward/dialogs/rkloadlibsdialog.cpp:1026
 #: rkward/misc/multistringselector.cpp:107
 #, kde-format
 msgid "Remove"
 msgstr "Odstrani"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1196
+#: rkward/dialogs/rkloadlibsdialog.cpp:1210
 #, kde-format
 msgid "Installed plugin groups (.pluginmap files)"
 msgstr "Nameščene skupine vtičnikov (datoteke .pluginmap)"
 
-#: rkward/dialogs/rkreadlinedialog.cpp:43
+#: rkward/dialogs/rkreadlinedialog.cpp:44
 #, kde-format
 msgid "Context:"
 msgstr "Kontekst:"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:34
+#: rkward/dialogs/rkrecoverdialog.cpp:33
 #, kde-format
 msgid "Crash recovery file detected"
 msgstr "Zaznana je obnovitvena datoteka sesutja"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:38
+#: rkward/dialogs/rkrecoverdialog.cpp:37
 #, kde-format
 msgid ""
 "<p>It looks like RKWard has crashed, recently. We are sorry about that! "
@@ -1435,7 +1456,7 @@ msgstr ""
 "Vendar pa ni vse izgubljeno in z malo sreče so bili vaši podatki pravočasno "
 "shranjeni.</p>"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:39
+#: rkward/dialogs/rkrecoverdialog.cpp:38
 #, kde-format
 msgid "<p>A workspace recovery file exists, dating from <i>%2</i>.</p>"
 msgid_plural ""
@@ -1454,7 +1475,7 @@ msgstr[3] ""
 "<p>Obstajata %1 obnovitvenih datotek delovnega prostora, najnovejša sega iz "
 "<i>%2</i>.</p>"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:40
+#: rkward/dialogs/rkrecoverdialog.cpp:39
 #, kde-format
 msgid ""
 "<p>Do you want to open this file, now, save it for later (as <i>%1</i>), or "
@@ -1463,37 +1484,37 @@ msgstr ""
 "<p>Ali želite zdaj odpreti to datoteko, jo shraniti za pozneje (kot <i>%1</"
 "i>) ali jo zavreči?</p>"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:44
+#: rkward/dialogs/rkrecoverdialog.cpp:43
 #, kde-format
 msgid "Recover"
 msgstr "Obnovi"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:45
+#: rkward/dialogs/rkrecoverdialog.cpp:44
 #, kde-format
 msgid "Saves the recovery file(s), and opens it (or the most recent one)"
 msgstr "Shrani obnovitvene datoteke in jih odpre (ali najnovejšo)"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:46
+#: rkward/dialogs/rkrecoverdialog.cpp:45
 #, kde-format
 msgid "Save for later"
 msgstr "Shrani za pozneje"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:47
+#: rkward/dialogs/rkrecoverdialog.cpp:46
 #, kde-format
 msgid "Saves the recovery file(s) for later use, but does not open it"
 msgstr "Shrani obnovitvene datoteke za kasnejše uporabo, vendar jih ne odpre"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:48 rkward/windows/robjectbrowser.cpp:125
+#: rkward/dialogs/rkrecoverdialog.cpp:47 rkward/windows/robjectbrowser.cpp:125
 #, kde-format
 msgid "Delete"
 msgstr "Izbriši"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:49
+#: rkward/dialogs/rkrecoverdialog.cpp:48
 #, kde-format
 msgid "Deletes the recovery file(s)"
 msgstr "Izbriše obnovitvene datoteke"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:61
+#: rkward/dialogs/rkrecoverdialog.cpp:60
 #, kde-format
 msgid ""
 "You are about to delete the recovery file %2. There will be no way to bring "
@@ -1514,7 +1535,7 @@ msgstr[3] ""
 "Izbrisali boste %1 obnovitvenih datotek (zadnja je %2). Ne bo jih mogoče "
 "povrniti. Ali jih res želite izbrisati?"
 
-#: rkward/dialogs/rkrecoverdialog.cpp:61
+#: rkward/dialogs/rkrecoverdialog.cpp:60
 #, kde-format
 msgid "Really delete recovery file(s)?"
 msgstr "Ali res želite izbrisati obnovitvene datoteke?"
@@ -1957,244 +1978,244 @@ msgstr ""
 msgid "Specified R executable does not exist"
 msgstr "Določena izvajalna datoteka R ne obstaja"
 
-#: rkward/main.cpp:260
+#: rkward/main.cpp:254
 #, kde-format
 msgid "RKWard"
 msgstr "RKWard"
 
-#: rkward/main.cpp:260
+#: rkward/main.cpp:254
 #, kde-format
 msgid "Frontend to the R statistics language"
 msgstr "Začelje za statistični jezik R"
 
-#: rkward/main.cpp:260
+#: rkward/main.cpp:254
 #, kde-format
 msgid "(c) 2002 - 2022"
 msgstr "(c) 2002 - 2022"
 
-#: rkward/main.cpp:261
+#: rkward/main.cpp:255
 #, kde-format
 msgid "Thomas Friedrichsmeier"
 msgstr "Thomas Friedrichsmeier"
 
-#: rkward/main.cpp:261
+#: rkward/main.cpp:255
 #, kde-format
 msgid "Project leader / main developer"
 msgstr "Vodja projekta / glavni razvijalec"
 
-#: rkward/main.cpp:262
+#: rkward/main.cpp:256
 #, kde-format
 msgid "Pierre Ecochard"
 msgstr "Pierre Ecochard"
 
-#: rkward/main.cpp:262
+#: rkward/main.cpp:256
 #, kde-format
 msgid "C++ developer between 2004 and 2007"
 msgstr "C++ razvijalec med letoma 2004 in 2007"
 
-#: rkward/main.cpp:263
+#: rkward/main.cpp:257
 #, kde-format
 msgid "Prasenjit Kapat"
 msgstr "Prasenjit Kapat"
 
-#: rkward/main.cpp:263
+#: rkward/main.cpp:257
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
 msgstr "Veliko vtičnikov, predlogov, zgodovina grafov"
 
-#: rkward/main.cpp:264
+#: rkward/main.cpp:258
 #, kde-format
 msgid "Meik Michalke"
 msgstr "Meik Michalke"
 
-#: rkward/main.cpp:264
+#: rkward/main.cpp:258
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
 msgstr "Veliko vtičnikov, predlogov, paket rkwarddev"
 
-#: rkward/main.cpp:265
+#: rkward/main.cpp:259
 #, kde-format
 msgid "Stefan Roediger"
 msgstr "Stefan Roediger"
 
-#: rkward/main.cpp:265
+#: rkward/main.cpp:259
 #, kde-format
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Številni vtičniki, veliko predlogov, trženja, prevodov"
 
-#: rkward/main.cpp:266
+#: rkward/main.cpp:260
 #, kde-format
 msgid "Contributors in alphabetical order"
 msgstr "Avtorji prispevkov po abecednem vrstnem redu"
 
-#: rkward/main.cpp:267
+#: rkward/main.cpp:261
 #, kde-format
 msgid "Björn Balazs"
 msgstr "Björn Balazs"
 
-#: rkward/main.cpp:267 rkward/main.cpp:269
+#: rkward/main.cpp:261 rkward/main.cpp:263
 #, kde-format
 msgid "Extensive usability feedback"
 msgstr "Obsežne povratne informacije o uporabnosti"
 
-#: rkward/main.cpp:268
+#: rkward/main.cpp:262
 #, kde-format
 msgid "Aaron Batty"
 msgstr "Aaron Batty"
 
-#: rkward/main.cpp:268
+#: rkward/main.cpp:262
 #, kde-format
 msgid "Wealth of feedback, hardware donations"
 msgstr "Bogastvo povratnih informacij, donacije strojne opreme"
 
-#: rkward/main.cpp:269
+#: rkward/main.cpp:263
 #, kde-format
 msgid "Jan Dittrich"
 msgstr "Jan Dittrich"
 
-#: rkward/main.cpp:270
+#: rkward/main.cpp:264
 #, kde-format
 msgid "Philippe Grosjean"
 msgstr "Philippe Grosjean"
 
-#: rkward/main.cpp:270
+#: rkward/main.cpp:264
 #, kde-format
 msgid "Several helpful comments and discussions"
 msgstr "Več koristnih pripomb in razprav"
 
-#: rkward/main.cpp:271
+#: rkward/main.cpp:265
 #, kde-format
 msgid "Adrien d'Hardemare"
 msgstr "Adrien d'Hardemare"
 
-#: rkward/main.cpp:271
+#: rkward/main.cpp:265
 #, kde-format
 msgid "Plugins and patches"
 msgstr "Vtičniki in popravki"
 
-#: rkward/main.cpp:272
+#: rkward/main.cpp:266
 #, kde-format
 msgid "Yves Jacolin"
 msgstr "Yves Jacolin"
 
-#: rkward/main.cpp:272
+#: rkward/main.cpp:266
 #, kde-format
 msgid "New website"
 msgstr "Nova spletna stran"
 
-#: rkward/main.cpp:273
+#: rkward/main.cpp:267
 #, kde-format
 msgid "Germán Márquez Mejía"
 msgstr "Germán Márquez Mejía"
 
-#: rkward/main.cpp:273
+#: rkward/main.cpp:267
 #, kde-format
 msgid "HP filter plugin, spanish translation"
 msgstr "Vstavek filtra HP, španski prevod"
 
-#: rkward/main.cpp:274
+#: rkward/main.cpp:268
 #, kde-format
 msgid "Marco Martin"
 msgstr "Marco Martin"
 
-#: rkward/main.cpp:274
+#: rkward/main.cpp:268
 #, kde-format
 msgid "A cool icon"
 msgstr "Kulska ikona"
 
-#: rkward/main.cpp:275
+#: rkward/main.cpp:269
 #, kde-format
 msgid "Daniele Medri"
 msgstr "Daniele Medri"
 
-#: rkward/main.cpp:275
+#: rkward/main.cpp:269
 #, kde-format
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Logotip RKWard, veliko predlogov, pomoč pri ubesedenju"
 
-#: rkward/main.cpp:276
+#: rkward/main.cpp:270
 #, kde-format
 msgid "David Sibai"
 msgstr "David Sibai"
 
-#: rkward/main.cpp:276
+#: rkward/main.cpp:270
 #, kde-format
 msgid "Several valuable comments, hints and patches"
 msgstr "Več dragocenih komentarjev, namigov in popravkov"
 
-#: rkward/main.cpp:277
+#: rkward/main.cpp:271
 #, kde-format
 msgid "Ilias Soumpasis"
 msgstr "Sumpaza Ilias"
 
-#: rkward/main.cpp:277
+#: rkward/main.cpp:271
 #, kde-format
 msgid "Translation, Suggestions, plugins"
 msgstr "Prevajanje, predlogi, vtičniki"
 
-#: rkward/main.cpp:278
+#: rkward/main.cpp:272
 #, kde-format
 msgid "Ralf Tautenhahn"
 msgstr "Ralf Tautenhahn"
 
-#: rkward/main.cpp:278
+#: rkward/main.cpp:272
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Številne pripombe, koristni predlogi in poročila o napakah"
 
-#: rkward/main.cpp:279
+#: rkward/main.cpp:273
 #, kde-format
 msgid "Jannis Vajen"
 msgstr "Jannis Vajen"
 
-#: rkward/main.cpp:279
+#: rkward/main.cpp:273
 #, kde-format
 msgid "German Translation, bug reports"
 msgstr "Nemški prevod, poročila o napakah"
 
-#: rkward/main.cpp:280
+#: rkward/main.cpp:274
 #, kde-format
 msgid "Roland Vollgraf"
 msgstr "Roland Vollgraf"
 
-#: rkward/main.cpp:280
+#: rkward/main.cpp:274
 #, kde-format
 msgid "Some patches"
 msgstr "Nekaj popravkov"
 
-#: rkward/main.cpp:281
+#: rkward/main.cpp:275
 #, kde-format
 msgid "Roy Qu"
 msgstr "Roy Qu"
 
-#: rkward/main.cpp:281
+#: rkward/main.cpp:275
 #, kde-format
 msgid "patches and helpful comments"
 msgstr "popravki in koristne pripombe"
 
-#: rkward/main.cpp:282
+#: rkward/main.cpp:276
 #, kde-format
 msgid "Many more people on rkward-devel@kde.org"
 msgstr "Veliko več oseb na rkward-devel@kde.org"
 
-#: rkward/main.cpp:282
+#: rkward/main.cpp:276
 #, kde-format
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Oprostite, če smo vas pozabili na seznamu. Prosimo, kontaktirajte nas, da "
 "vas lahko dodamo"
 
-#: rkward/main.cpp:283
+#: rkward/main.cpp:277
 #, kde-format
 msgid "How to cite:"
 msgstr "Kako citirati:"
 
-#: rkward/main.cpp:283
+#: rkward/main.cpp:277
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
 msgstr "Medsebojno recenzirani članek v  Journal of Statistical Software"
 
-#: rkward/main.cpp:289
+#: rkward/main.cpp:282
 #, kde-format
 msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
@@ -2203,22 +2224,22 @@ msgstr ""
 "Po zagonu (in po nalaganju navedenega delovnega prostora, če je ustrezno) "
 "oceni dano kodo R."
 
-#: rkward/main.cpp:290
+#: rkward/main.cpp:283
 #, kde-format
 msgid "Verbosity of debug messages (0-5)"
 msgstr "Obsežnost sporočil za odpravljanje napak (0-5)"
 
-#: rkward/main.cpp:291
+#: rkward/main.cpp:284
 #, kde-format
 msgid "Mask for components to debug (see debug.h)"
 msgstr "Maska za komponente za razhroščevanje (glejte debug.h)"
 
-#: rkward/main.cpp:292
+#: rkward/main.cpp:285
 #, kde-format
 msgid "Where to send debug message (file|terminal)"
 msgstr "Kam poslati sporočilo o napaki (datoteka|terminal)"
 
-#: rkward/main.cpp:293
+#: rkward/main.cpp:286
 #, kde-format
 msgid ""
 "Debugger for the backend. (Enclose any debugger arguments in single quotes "
@@ -2228,7 +2249,7 @@ msgstr ""
 "vključite v enojne narekovaje ('') skupaj z ukazom. Prepričajte se, da "
 "preusmerjeno v stdout!)"
 
-#: rkward/main.cpp:294
+#: rkward/main.cpp:287
 #, kde-format
 msgid ""
 "Use specified R installation, instead of the one configured at compile time "
@@ -2237,7 +2258,7 @@ msgstr ""
 "Uporabite določeno namestitev R, namesto namestitve konfigurirane ob času "
 "prevoda (opomba: knjižnica rkward R mora biti nameščena na to namestitev R)"
 
-#: rkward/main.cpp:295
+#: rkward/main.cpp:288
 #, kde-format
 msgid ""
 "Reuse a running RKWard instance (if available). If a running instance is "
@@ -2248,7 +2269,7 @@ msgstr ""
 "ponovno uporabi, bodo tolmačeni samo argumenti datoteke, vse druge možnosti "
 "bodo prezrte."
 
-#: rkward/main.cpp:296
+#: rkward/main.cpp:289
 #, kde-format
 msgid ""
 "Behaves like --reuse, if any file arguments are also given, starts a new "
@@ -2257,7 +2278,7 @@ msgstr ""
 "Se obnaša kot --reuse, če so dani argumenti datoteke, se bo v nasprotnem "
 "primeru začel nov pojavek. Namenjen za uporabo v datoteki .desktop."
 
-#: rkward/main.cpp:297
+#: rkward/main.cpp:290
 #, kde-format
 msgid ""
 "When used in conjunction with rkward://runplugin/-URLs specified on the "
@@ -2268,7 +2289,7 @@ msgstr ""
 "vrstici, zatre opozorila o povezavah z zunanjimi (ne zaupanje vrednimi) "
 "aplikacijami."
 
-#: rkward/main.cpp:298
+#: rkward/main.cpp:291
 #, kde-format
 msgid ""
 "Disable some startup validation code. Experimental option, not intended for "
@@ -2277,7 +2298,7 @@ msgstr ""
 "Onemogoči nekaj kode za validacijo ob zagonu. Preizkusna možnost, ki ni "
 "namenjena redni uporabi."
 
-#: rkward/main.cpp:299
+#: rkward/main.cpp:292
 #, kde-format
 msgid ""
 "File or files to open, typically a workspace, or an R script file. When "
@@ -2287,7 +2308,7 @@ msgstr ""
 "datoteke skripta R. Pri nalaganju več stvari najprej določite delovni "
 "prostor."
 
-#: rkward/main.cpp:384
+#: rkward/main.cpp:376
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
@@ -2296,7 +2317,7 @@ msgstr ""
 "R izvajalna datoteka, določena v ukazni vrstici (%1), ne obstaja ali ni "
 "izvajalna."
 
-#: rkward/main.cpp:396
+#: rkward/main.cpp:388
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
@@ -2305,7 +2326,7 @@ msgstr ""
 "R izvajalna datoteka (%1), navedena v datoteki rkward.ini (%2), ne obstaja "
 "ali ni izvajalna."
 
-#: rkward/main.cpp:401
+#: rkward/main.cpp:393
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "
@@ -2414,7 +2435,7 @@ msgstr "Kliknite, če želite dodati novo vrstico"
 msgid "Remove this row / element"
 msgstr "Odstrani to vrstico/element"
 
-#: rkward/misc/rkcommonfunctions.cpp:249
+#: rkward/misc/rkcommonfunctions.cpp:243
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -2443,27 +2464,27 @@ msgstr ""
 "priložite '$'. Če želite ujemati poljubno besedilo sredi iskalnega izraza, "
 "vstavite '.*'.</p>"
 
-#: rkward/misc/rkfindbar.cpp:58
+#: rkward/misc/rkfindbar.cpp:53
 #, kde-format
 msgid "Search backwards (previous occurrence of search term)"
 msgstr "Iskanje nazaj (prejšnji pojav iskalnega izraza)"
 
-#: rkward/misc/rkfindbar.cpp:64
+#: rkward/misc/rkfindbar.cpp:59
 #, kde-format
 msgid "Search forward (next occurrence of search term)"
 msgstr "Iskanje naprej (naslednji pojav iskalnega izraza)"
 
-#: rkward/misc/rkfindbar.cpp:94
+#: rkward/misc/rkfindbar.cpp:89
 #, kde-format
 msgid "Match case"
 msgstr "Ujemanje velikosti črk"
 
-#: rkward/misc/rkfindbar.cpp:96 rkward/windows/rkhtmlwindow.cpp:1040
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:926
 #, kde-format
 msgid "Find as you type"
 msgstr "Išči med vnašanjem"
 
-#: rkward/misc/rkfindbar.cpp:99
+#: rkward/misc/rkfindbar.cpp:94
 #, kde-format
 msgid "Highlight all matches"
 msgstr "Poudari vsa ujemanja"
@@ -2566,82 +2587,82 @@ msgstr "Zavrže trenutne filtre iskanja predmetov"
 msgid "Show Fields"
 msgstr "Pokaži polja"
 
-#: rkward/misc/rkoutputdirectory.cpp:135
+#: rkward/misc/rkoutputdirectory.cpp:130
 #, kde-format
 msgid "Select destination file name"
 msgstr "Izberite ime ciljne datoteke"
 
-#: rkward/misc/rkoutputdirectory.cpp:137
+#: rkward/misc/rkoutputdirectory.cpp:132
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko)"
 msgstr "Izhodne datoteke RKWard [*.rko](*.rko)"
 
-#: rkward/misc/rkoutputdirectory.cpp:137
+#: rkward/misc/rkoutputdirectory.cpp:132
 #, kde-format
 msgid "All Files [*](*)"
 msgstr "Vse datoteke [*](*)"
 
-#: rkward/misc/rkoutputdirectory.cpp:142
+#: rkward/misc/rkoutputdirectory.cpp:137
 #, kde-format
 msgid "File selection canceled"
 msgstr "Izbor datoteke je preklican"
 
-#: rkward/misc/rkoutputdirectory.cpp:151
+#: rkward/misc/rkoutputdirectory.cpp:146
 #, kde-format
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "Ali ste prepričani, da želite prepisati obstoječo datoteko »%1«?"
 
-#: rkward/misc/rkoutputdirectory.cpp:152 rkward/plugin/rkpluginbrowser.cpp:136
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:136
 #, kde-format
 msgid "Overwrite?"
 msgstr "Ali želite prepisati?"
 
-#: rkward/misc/rkoutputdirectory.cpp:154 rkward/misc/rkoutputdirectory.cpp:340
+#: rkward/misc/rkoutputdirectory.cpp:149 rkward/misc/rkoutputdirectory.cpp:335
 #, kde-format
 msgid "User canceled"
 msgstr "Uporabnik je preklican"
 
-#: rkward/misc/rkoutputdirectory.cpp:156
+#: rkward/misc/rkoutputdirectory.cpp:151
 #, kde-format
 msgid "Not overwriting existing file"
 msgstr "Obstoječa datoteka ne bo prepisana"
 
-#: rkward/misc/rkoutputdirectory.cpp:179
+#: rkward/misc/rkoutputdirectory.cpp:174
 #, kde-format
 msgid "Error while writing temporary output archive %1"
 msgstr "Napaka pri pisanju začasnega izhodnega arhiva %1"
 
-#: rkward/misc/rkoutputdirectory.cpp:183
+#: rkward/misc/rkoutputdirectory.cpp:178
 #, kde-format
 msgid "Failure to remove existing file %1. Missing permissions?"
 msgstr "Odstranjevanje obstoječe datoteke %1 ni uspelo. Ni ustreznih pravic?"
 
-#: rkward/misc/rkoutputdirectory.cpp:188
+#: rkward/misc/rkoutputdirectory.cpp:183
 #, kde-format
 msgid "Failure while copying output archive to %1"
 msgstr "Napaka pri kopiranju izhodnega arhiva v %1"
 
-#: rkward/misc/rkoutputdirectory.cpp:200
+#: rkward/misc/rkoutputdirectory.cpp:195
 #, kde-format
 msgid "The path %1 does not exist or is not a file."
 msgstr "Pot %1 ne obstaja ali ni datoteka."
 
-#: rkward/misc/rkoutputdirectory.cpp:211
+#: rkward/misc/rkoutputdirectory.cpp:206
 #, kde-format
 msgid "Failure to open %1. Not an rkward output file?"
 msgstr "Odpiranje %1 ni bilo mogoče. Ni izhodna datoteka rkward?"
 
-#: rkward/misc/rkoutputdirectory.cpp:224
+#: rkward/misc/rkoutputdirectory.cpp:219
 #, kde-format
 msgid "Output directory %1 is already in use."
 msgstr "Izhodni imenik %1 je že v uporabi."
 
-#: rkward/misc/rkoutputdirectory.cpp:234
+#: rkward/misc/rkoutputdirectory.cpp:229
 #, kde-format
 msgid "Output had no modifications. Nothing reverted."
 msgstr "Izhod ni imel sprememb. Nič se ni povrnilo."
 
-#: rkward/misc/rkoutputdirectory.cpp:237
+#: rkward/misc/rkoutputdirectory.cpp:232
 #, kde-format
 msgid ""
 "This output has not been saved before. Reverting will clear it, entirely. "
@@ -2650,7 +2671,7 @@ msgstr ""
 "Ta izhod še ni bil shranjen. Povrnitev ga bo v celoti očistila. Ali ste "
 "prepričani, da želite nadaljevati?"
 
-#: rkward/misc/rkoutputdirectory.cpp:240
+#: rkward/misc/rkoutputdirectory.cpp:235
 #, kde-format
 msgid ""
 "Reverting will destroy any changes, since the last time you saved (%1). Are "
@@ -2659,12 +2680,12 @@ msgstr ""
 "Povrnitev bo izničila vse spremembe od zadnjega vašega shranjevanja (%1). "
 "Ali ste prepričani, da želite nadaljevati?"
 
-#: rkward/misc/rkoutputdirectory.cpp:245
+#: rkward/misc/rkoutputdirectory.cpp:240
 #, kde-format
 msgid "User canceled."
 msgstr "Uporabnik je preklical."
 
-#: rkward/misc/rkoutputdirectory.cpp:289
+#: rkward/misc/rkoutputdirectory.cpp:284
 #, kde-format
 msgid ""
 "Clearing will destroy any unsaved changes, and - upon saving - also saved "
@@ -2673,22 +2694,22 @@ msgstr ""
 "Čiščenje bo uničilo vse ne shranjene spremembe, in - ob shranjevanju - tudi "
 "shranjene spremembe. Ali ste prepričani, da želite nadaljevati?"
 
-#: rkward/misc/rkoutputdirectory.cpp:294
+#: rkward/misc/rkoutputdirectory.cpp:289
 #, kde-format
 msgid "Output is not empty. Not clearing it."
 msgstr "Izhod ni prazen. Ne bo očiščen."
 
-#: rkward/misc/rkoutputdirectory.cpp:327
+#: rkward/misc/rkoutputdirectory.cpp:322
 #, kde-format
 msgid "[Unnamed]"
 msgstr "[Neimenovano]"
 
-#: rkward/misc/rkoutputdirectory.cpp:335
+#: rkward/misc/rkoutputdirectory.cpp:330
 #, kde-format
 msgid "Output has been modified. Not closing it."
 msgstr "Izhod je bil spremenjen. Ne bo zaprt."
 
-#: rkward/misc/rkoutputdirectory.cpp:338
+#: rkward/misc/rkoutputdirectory.cpp:333
 #, kde-format
 msgid ""
 "The output has been modified, and closing it will discard all changes. What "
@@ -2697,42 +2718,42 @@ msgstr ""
 "Izhod je bil spremenjen in zapiranje bo zavrhlo vse spremembe. Kaj želite "
 "narediti?"
 
-#: rkward/misc/rkoutputdirectory.cpp:338
+#: rkward/misc/rkoutputdirectory.cpp:333
 #, kde-format
 msgid "Discard unsaved changes?"
 msgstr "Ali želite zavreči neshranjene spremembe?"
 
-#: rkward/misc/rkoutputdirectory.cpp:428
+#: rkward/misc/rkoutputdirectory.cpp:423
 #, kde-format
 msgid "New empty output directory has been created, automatically"
 msgstr "Ustvarjen je nov prazen izhodni imenik, samodejno"
 
-#: rkward/misc/rkoutputdirectory.cpp:445
+#: rkward/misc/rkoutputdirectory.cpp:440
 #, kde-format
 msgid "Output has been activated, automatically"
 msgstr "Izhod je bil samodejno aktiviran"
 
-#: rkward/misc/rkoutputdirectory.cpp:512
+#: rkward/misc/rkoutputdirectory.cpp:507
 #, kde-format
 msgid "Output '%1' is already loaded in this session. Cannot create it."
 msgstr "Izhod '%1' je že naložen v tej seji. Ne morete ga kreirati."
 
-#: rkward/misc/rkoutputdirectory.cpp:513
+#: rkward/misc/rkoutputdirectory.cpp:508
 #, kde-format
 msgid "A file named '%1' already exists. Cannot create it."
 msgstr "Datoteka z imenom '%1' že obstaja. Ne morete je kreirati."
 
-#: rkward/misc/rkoutputdirectory.cpp:524
+#: rkward/misc/rkoutputdirectory.cpp:519
 #, kde-format
 msgid "File '%1' does not exist."
 msgstr "Datoteka '%1' ne obstaja."
 
-#: rkward/misc/rkoutputdirectory.cpp:564
+#: rkward/misc/rkoutputdirectory.cpp:559
 #, kde-format
 msgid "The output identified by '%1' is not loaded in this session."
 msgstr "Izhod, ki ga poimenovan t '%1', ni naložen v tej seji."
 
-#: rkward/misc/rkoutputdirectory.cpp:593
+#: rkward/misc/rkoutputdirectory.cpp:588
 #, kde-format
 msgid "Unhandled output command '%1'"
 msgstr "Neobdelan izhodni ukaz '%1'"
@@ -2745,7 +2766,7 @@ msgstr ""
 "<b>Prišlo je do napak in / ali opozoril. Glejte si transkript spodaj</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:258
-#: rkward/settings/rksettingsmoduleoutput.cpp:185
+#: rkward/settings/rksettingsmoduleoutput.cpp:187
 #, kde-format
 msgid "Output"
 msgstr "Izhod"
@@ -2765,52 +2786,52 @@ msgstr "Napake / Opozorila"
 msgid "Errors / Warnings:"
 msgstr "Napake / Opozorila:"
 
-#: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:415
+#: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:417
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: rkward/misc/rkprogresscontrol.cpp:482
+#: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>Prišlo je do napake</b> (podrobnosti si oglejte spodaj)"
 
-#: rkward/misc/rkprogresscontrol.cpp:482
+#: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>Opravljeno</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:488
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Zapri"
 
-#: rkward/misc/rkprogresscontrol.cpp:533 rkward/windows/rkwindowcatcher.cpp:383
+#: rkward/misc/rkprogresscontrol.cpp:536 rkward/windows/rkwindowcatcher.cpp:399
 #, kde-format
 msgid "Keep waiting"
 msgstr "Čakaj še naprej"
 
-#: rkward/misc/rkprogresscontrol.cpp:533
+#: rkward/misc/rkprogresscontrol.cpp:536
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 "Zapiranje tega okna bo preklicalo trenutno operacijo. Ali ste prepričani?"
 
-#: rkward/misc/rkprogresscontrol.cpp:533
+#: rkward/misc/rkprogresscontrol.cpp:536
 #, kde-format
 msgid "Cancel operation"
 msgstr "Prekliči operacijo"
 
-#: rkward/misc/rkprogresscontrol.cpp:533
+#: rkward/misc/rkprogresscontrol.cpp:536
 #, kde-format
 msgid "Cancel && Close"
 msgstr "Prekliči in zapri"
 
-#: rkward/misc/rkprogresscontrol.cpp:545
+#: rkward/misc/rkprogresscontrol.cpp:548
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "Operacija je še v teku, prosim počakajte."
@@ -2845,122 +2866,122 @@ msgstr "Izberite nadrejeni predmet"
 msgid "Paste special..."
 msgstr "Posebno lepljenje ..."
 
-#: rkward/misc/rkspecialactions.cpp:64
+#: rkward/misc/rkspecialactions.cpp:69
 #, kde-format
 msgid "Paste Special..."
 msgstr "Posebno lepljenje ..."
 
-#: rkward/misc/rkspecialactions.cpp:81
+#: rkward/misc/rkspecialactions.cpp:86
 #, kde-format
 msgid "Paste Mode"
 msgstr "Način lepljenja"
 
-#: rkward/misc/rkspecialactions.cpp:84
+#: rkward/misc/rkspecialactions.cpp:89
 #, kde-format
 msgid "Single string"
 msgstr "Enojni niz"
 
-#: rkward/misc/rkspecialactions.cpp:87
+#: rkward/misc/rkspecialactions.cpp:92
 #, kde-format
 msgid "Vector"
 msgstr "Vektor"
 
-#: rkward/misc/rkspecialactions.cpp:93
+#: rkward/misc/rkspecialactions.cpp:98
 #, kde-format
 msgid "data.frame"
 msgstr "data.frame"
 
-#: rkward/misc/rkspecialactions.cpp:103
+#: rkward/misc/rkspecialactions.cpp:108
 #, kde-format
 msgid "Field Separator"
 msgstr "Ločilo polj"
 
-#: rkward/misc/rkspecialactions.cpp:106
+#: rkward/misc/rkspecialactions.cpp:111
 #, kde-format
 msgid "Tab"
 msgstr "Tabulatorka"
 
-#: rkward/misc/rkspecialactions.cpp:110
+#: rkward/misc/rkspecialactions.cpp:115
 #, kde-format
 msgid "Comma"
 msgstr "Vejica"
 
-#: rkward/misc/rkspecialactions.cpp:114
+#: rkward/misc/rkspecialactions.cpp:119
 #, kde-format
 msgid "Single space"
 msgstr "Enojni prostor"
 
-#: rkward/misc/rkspecialactions.cpp:117
+#: rkward/misc/rkspecialactions.cpp:122
 #, kde-format
 msgid "Any whitespace"
 msgstr "Poljuben presledek"
 
-#: rkward/misc/rkspecialactions.cpp:121
+#: rkward/misc/rkspecialactions.cpp:126
 #, kde-format
 msgid "Other:"
 msgstr "Drugo:"
 
-#: rkward/misc/rkspecialactions.cpp:134
+#: rkward/misc/rkspecialactions.cpp:139
 #, kde-format
 msgid "Quoting"
 msgstr "Navajanje"
 
-#: rkward/misc/rkspecialactions.cpp:137
+#: rkward/misc/rkspecialactions.cpp:142
 #, kde-format
 msgid "Do not quote values"
 msgstr "Ne citiraj vrednosti"
 
-#: rkward/misc/rkspecialactions.cpp:140
+#: rkward/misc/rkspecialactions.cpp:145
 #, kde-format
 msgid "Automatic"
 msgstr "Samodejno"
 
-#: rkward/misc/rkspecialactions.cpp:144
+#: rkward/misc/rkspecialactions.cpp:149
 #, kde-format
 msgid "Quote all values"
 msgstr "Podaj vse vrednosti v navednicah"
 
-#: rkward/misc/rkspecialactions.cpp:151
+#: rkward/misc/rkspecialactions.cpp:156
 #, kde-format
 msgid "Labels"
 msgstr "Oznake"
 
-#: rkward/misc/rkspecialactions.cpp:153
+#: rkward/misc/rkspecialactions.cpp:158
 #, kde-format
 msgid "First row contains labels"
 msgstr "Prva vrstica vsebuje oznake"
 
-#: rkward/misc/rkspecialactions.cpp:155
+#: rkward/misc/rkspecialactions.cpp:160
 #, kde-format
 msgid "First column contains labels"
 msgstr "Prvi stolpec vsebuje oznake"
 
-#: rkward/misc/rkspecialactions.cpp:160
+#: rkward/misc/rkspecialactions.cpp:165
 #, kde-format
 msgid "Transformations"
 msgstr "Transformacije"
 
-#: rkward/misc/rkspecialactions.cpp:162
+#: rkward/misc/rkspecialactions.cpp:167
 #, kde-format
 msgid "Reverse horizontally"
 msgstr "Vodoravno vzvratno"
 
-#: rkward/misc/rkspecialactions.cpp:164
+#: rkward/misc/rkspecialactions.cpp:169
 #, kde-format
 msgid "Reverse vertically"
 msgstr "Navpično vzvratno"
 
-#: rkward/misc/rkspecialactions.cpp:166
+#: rkward/misc/rkspecialactions.cpp:171
 #, kde-format
 msgid "Flip rows/columns"
 msgstr "Prevračanje vrstic/stolpcev"
 
-#: rkward/misc/rkspecialactions.cpp:168
+#: rkward/misc/rkspecialactions.cpp:173
 #, kde-format
 msgid "Insert NAs where needed"
 msgstr "Vstavi NA, kjer je to potrebno"
 
-#: rkward/misc/rkspecialactions.cpp:308
+#: rkward/misc/rkspecialactions.cpp:313
 #, kde-format
 msgid ""
 "Command failed to parse. Try using <i>Edit->Paste special...</i> in the R "
@@ -2969,12 +2990,12 @@ msgstr ""
 "Ukaza ni bilo mogoče razčleniti. Poskusite uporabiti <i>Uredi->Prilepi "
 "posebno...</i> v oknu konzole R za boljšo diagnostiko."
 
-#: rkward/misc/rkspecialactions.cpp:309
+#: rkward/misc/rkspecialactions.cpp:314
 #, kde-format
 msgid "Pasting object from clipboard data failed."
 msgstr "Lepljenje predmeta iz odložišča ni uspelo."
 
-#: rkward/misc/rkspecialactions.cpp:309
+#: rkward/misc/rkspecialactions.cpp:314
 #, kde-format
 msgid "Paste failed"
 msgstr "Lepljenje neuspešno"
@@ -3001,22 +3022,22 @@ msgstr "Zažene trenutni izbor (če obstaja) ali trenutno vrstico (če ni izbire
 msgid "Run selection"
 msgstr "Zaženi izbor"
 
-#: rkward/misc/rkstandardactions.cpp:62
+#: rkward/misc/rkstandardactions.cpp:65
 #, kde-format
 msgid "Run all"
 msgstr "Zaženi vse"
 
-#: rkward/misc/rkstandardactions.cpp:75
+#: rkward/misc/rkstandardactions.cpp:81
 #, kde-format
 msgid "&Function reference"
 msgstr "Vodnik po &funkcijah"
 
-#: rkward/misc/rkstandardactions.cpp:131
+#: rkward/misc/rkstandardactions.cpp:137
 #, kde-format
 msgid "[No keyword detected]"
 msgstr "[Ni zaznane tipkovnice]"
 
-#: rkward/misc/rkstandardactions.cpp:165
+#: rkward/misc/rkstandardactions.cpp:171
 #, kde-format
 msgid "Search online"
 msgstr "Išči v omrežju"
@@ -3046,12 +3067,12 @@ msgstr "Posodabljanje predogleda"
 msgid "Preview up to date"
 msgstr "Predogled je osvežen"
 
-#: rkward/misc/xmlhelper.cpp:41
+#: rkward/misc/xmlhelper.cpp:54
 #, kde-format
 msgid "Could not open file %1 for reading"
 msgstr "Datoteke »%1« ni bilo moč odpreti za branje"
 
-#: rkward/misc/xmlhelper.cpp:43
+#: rkward/misc/xmlhelper.cpp:59
 #, kde-format
 msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
@@ -3061,48 +3082,48 @@ msgstr ""
 "vrstici '%2', stolpec '%3'. Pričakujte nadaljnje napake, ki bodo sporočene v "
 "nadaljevanju"
 
-#: rkward/misc/xmlhelper.cpp:160
+#: rkward/misc/xmlhelper.cpp:176
 #, kde-format
 msgid "Trying to retrieve children of invalid element"
 msgstr "Poskus pridobivanja otrok neveljavnega elementa"
 
-#: rkward/misc/xmlhelper.cpp:171
+#: rkward/misc/xmlhelper.cpp:187
 #, kde-format
 msgid "Expected exactly one element '%1' but found %2"
 msgstr "Pričakovan natanko en element '%1', vendar najden %2"
 
-#: rkward/misc/xmlhelper.cpp:225 rkward/misc/xmlhelper.cpp:237
+#: rkward/misc/xmlhelper.cpp:241 rkward/misc/xmlhelper.cpp:253
 #, kde-format
 msgid "'%1'-attribute not given. Assuming '%2'"
 msgstr "Atribut '%1' ni podan. Predpostavljeno '%2'"
 
-#: rkward/misc/xmlhelper.cpp:260
+#: rkward/misc/xmlhelper.cpp:276
 #, kde-format
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
 msgstr "Neveljavna vrednost atributa. Dovoljene vrednosti so ene od '%1'."
 
-#: rkward/misc/xmlhelper.cpp:274
+#: rkward/misc/xmlhelper.cpp:290
 #, kde-format
 msgid "Illegal attribute value. Only integer numbers are allowed."
 msgstr "Neveljavna vrednost atributa. Dovoljena so samo cela števila."
 
-#: rkward/misc/xmlhelper.cpp:290
+#: rkward/misc/xmlhelper.cpp:306
 #, kde-format
 msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "Neveljavna vrednost atributa. Dovoljena so samo realna števila."
 
-#: rkward/misc/xmlhelper.cpp:308
+#: rkward/misc/xmlhelper.cpp:324
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
 "Neveljavna vrednost atributa. Dovoljene vrednosti so samo '%1' ali '%2'."
 
-#: rkward/misc/xmlhelper.cpp:340
+#: rkward/misc/xmlhelper.cpp:356
 #, kde-format
 msgid "Trying to retrieve contents of invalid element"
 msgstr "Poskus pridobivanja vsebine neveljavnega elementa"
 
-#: rkward/misc/xmlhelper.cpp:381
+#: rkward/misc/xmlhelper.cpp:400
 #, kde-format
 msgid "XML-parsing '%1' "
 msgstr "Razčlenjevanje XML '%1' "
@@ -3117,7 +3138,7 @@ msgstr "da"
 msgid "no"
 msgstr "ne"
 
-#: rkward/plugin/rkcomponentmap.cpp:266 rkward/plugin/rkcomponentmap.cpp:646
+#: rkward/plugin/rkcomponentmap.cpp:266 rkward/plugin/rkcomponentmap.cpp:647
 #, kde-format
 msgid "(no label)"
 msgstr "(ni oznake polja)"
@@ -3192,7 +3213,7 @@ msgstr ""
 msgid "Could not submit"
 msgstr "Ni bilo mogoče podati"
 
-#: rkward/plugin/rkcomponentmap.cpp:567
+#: rkward/plugin/rkcomponentmap.cpp:568
 #, kde-format
 msgid ""
 "Could not open plugin map file %1. (Is not readable, or failed to parse)"
@@ -3200,7 +3221,7 @@ msgstr ""
 "Datoteke mogoče odpreti prenosne datoteke vtičnika %1. (Ni bilo berljivo ali "
 "ni uspelo razčlenjevanje)"
 
-#: rkward/plugin/rkcomponentmap.cpp:582
+#: rkward/plugin/rkcomponentmap.cpp:583
 #, kde-format
 msgid ""
 "Skipping plugin map file '%1': Not compatible with this version of RKWard"
@@ -3208,14 +3229,14 @@ msgstr ""
 "Preskoči datoteko prenosa vtičnika '%1': Ni združljiva s to različico "
 "programa RKWard"
 
-#: rkward/plugin/rkcomponentmap.cpp:597
+#: rkward/plugin/rkcomponentmap.cpp:598
 #, kde-format
 msgid ""
 "Specified required file '%1' does not exist or is not readable. Ignoring."
 msgstr ""
 "Navedena zahtevana datoteka '%1' ne obstaja ali ni berljiva. Ignoriranje."
 
-#: rkward/plugin/rkcomponentmap.cpp:615
+#: rkward/plugin/rkcomponentmap.cpp:616
 #, kde-format
 msgid ""
 "Could not resolve specified required pluginmap '%1'. You may have to install "
@@ -3224,7 +3245,7 @@ msgstr ""
 "Določene zahtevane prenosne datoteke vtičnikov '%1' ni bilo mogoče "
 "razrešiti. Morda boste morali namestiti dodatne pakete."
 
-#: rkward/plugin/rkcomponentmap.cpp:649
+#: rkward/plugin/rkcomponentmap.cpp:650
 #, kde-format
 msgid ""
 "Duplicate declaration of component id \"%1\" within pluginmap file \"%2\"."
@@ -3232,7 +3253,7 @@ msgstr ""
 "Podvojena deklaracija komponente id '%1' znotraj prenosne datoteke vtičnika "
 "'%2'."
 
-#: rkward/plugin/rkcomponentmap.cpp:655
+#: rkward/plugin/rkcomponentmap.cpp:656
 #, kde-format
 msgid ""
 "Specified file '%1' for component id \"%2\" does not exist or is not "
@@ -3241,7 +3262,7 @@ msgstr ""
 "Navedena datoteka '%1' za komponente ID '%2' ne obstaja ali ni berljiva. "
 "Ignoriranje."
 
-#: rkward/plugin/rkcomponentmap.cpp:671
+#: rkward/plugin/rkcomponentmap.cpp:672
 #, kde-format
 msgid ""
 "Component '%1' is not available in a version compatible with this version of "
@@ -3250,70 +3271,70 @@ msgstr ""
 "Komponenta '%1' ni na voljo v različici, združljivi s to različico programa "
 "RKWard"
 
-#: rkward/plugin/rkcomponentmeta.cpp:41
+#: rkward/plugin/rkcomponentmeta.cpp:40
 #, kde-format
 msgid "Unspecified"
 msgstr "Nedoločeno"
 
-#: rkward/plugin/rkcomponentmeta.cpp:80
+#: rkward/plugin/rkcomponentmeta.cpp:79
 #, kde-format
 msgid "Copyright (c): %1"
 msgstr "Avtorske pravice (c): %1"
 
-#: rkward/plugin/rkcomponentmeta.cpp:81
+#: rkward/plugin/rkcomponentmeta.cpp:80
 #, kde-format
 msgid "License: %1"
 msgstr "Dovoljenje: %1"
 
-#: rkward/plugin/rkcomponentmeta.cpp:84
+#: rkward/plugin/rkcomponentmeta.cpp:83
 #, kde-format
 msgid "Authors:"
 msgstr "Avtorji:"
 
-#: rkward/plugin/rkcomponentmeta.cpp:90
+#: rkward/plugin/rkcomponentmeta.cpp:89
 #, kde-format
 msgctxt "Author roles (contributor, etc.)"
 msgid "Roles"
 msgstr "Vloge"
 
-#: rkward/plugin/rkcomponentmeta.cpp:98
+#: rkward/plugin/rkcomponentmeta.cpp:97
 #, kde-format
 msgid "Translators:"
 msgstr "Prevajalci:"
 
-#: rkward/plugin/rkcomponentmeta.cpp:197
+#: rkward/plugin/rkcomponentmeta.cpp:196
 #, kde-format
 msgid "RKWard plugin map"
 msgstr "Zemljevid vtičnikov RKWard"
 
-#: rkward/plugin/rkcomponentmeta.cpp:198
+#: rkward/plugin/rkcomponentmeta.cpp:197
 #, kde-format
 msgid "R package"
 msgstr "Paket R"
 
-#: rkward/plugin/rkcomponentproperties.cpp:933
+#: rkward/plugin/rkcomponentproperties.cpp:928
 #, kde-format
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
 msgstr ""
 "Ta predmet ima %1 dimenzijo/ie, vendar je/sta/so pričakovana/i/e %2 "
 "dimenzija/i/e."
 
-#: rkward/plugin/rkcomponentproperties.cpp:936
+#: rkward/plugin/rkcomponentproperties.cpp:931
 #, kde-format
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
 msgstr "Ta predmet ima dolžino %1, vendar je pričakovana najmanjša dolžina %2."
 
-#: rkward/plugin/rkcomponentproperties.cpp:937
+#: rkward/plugin/rkcomponentproperties.cpp:932
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
 msgstr "Ta predmet ima dolžino %1, vendar je pričakovana največja dolžina %2."
 
-#: rkward/plugin/rkcomponentproperties.cpp:949
+#: rkward/plugin/rkcomponentproperties.cpp:944
 #, kde-format
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
 msgstr "Zdi se, da ta predmet ne pripada nobenemu od razredov <i>%1</i>."
 
-#: rkward/plugin/rkcomponentproperties.cpp:956
+#: rkward/plugin/rkcomponentproperties.cpp:951
 #, kde-format
 msgid ""
 "This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</"
@@ -3321,42 +3342,42 @@ msgid ""
 msgstr ""
 "Podatkovni tip predmeta je <i>%1,</i>pričakovani tipi pa <i>so %2.</i>."
 
-#: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:35
+#: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:34
 #, kde-format
 msgid "Select one:"
 msgstr "Izberite enega:"
 
-#: rkward/plugin/rkformula.cpp:58
+#: rkward/plugin/rkformula.cpp:57
 #, kde-format
 msgid "Specify model"
 msgstr "Navedite model"
 
-#: rkward/plugin/rkformula.cpp:63
+#: rkward/plugin/rkformula.cpp:62
 #, kde-format
 msgid "Full Model"
 msgstr "Polni model"
 
-#: rkward/plugin/rkformula.cpp:65
+#: rkward/plugin/rkformula.cpp:64
 #, kde-format
 msgid "Main Effects only"
 msgstr "Samo glavni učinki"
 
-#: rkward/plugin/rkformula.cpp:67
+#: rkward/plugin/rkformula.cpp:66
 #, kde-format
 msgid "Custom Model:"
 msgstr "Model po meri:"
 
-#: rkward/plugin/rkformula.cpp:93
+#: rkward/plugin/rkformula.cpp:92
 #, kde-format
 msgid "Main effects"
 msgstr "Glavni učinki"
 
-#: rkward/plugin/rkformula.cpp:98
+#: rkward/plugin/rkformula.cpp:97
 #, kde-format
 msgid "Level"
 msgstr "Jakost"
 
-#: rkward/plugin/rkformula.cpp:98
+#: rkward/plugin/rkformula.cpp:97
 #, kde-format
 msgid "Term"
 msgstr "Izraz"
@@ -3366,67 +3387,67 @@ msgstr "Izraz"
 msgid "Enter text"
 msgstr "Vnesite besedilo"
 
-#: rkward/plugin/rkmatrixinput.cpp:36
+#: rkward/plugin/rkmatrixinput.cpp:35
 #, kde-format
 msgid "Enter data:"
 msgstr "Vnesite podatke:"
 
-#: rkward/plugin/rkmatrixinput.cpp:506
+#: rkward/plugin/rkmatrixinput.cpp:505
 #, kde-format
 msgid "Type on these cells to expand the table"
 msgstr "Vnesite v te celice, da razširite tabelo"
 
-#: rkward/plugin/rkmatrixinput.cpp:517
+#: rkward/plugin/rkmatrixinput.cpp:516
 #, kde-format
 msgid "Empty values are not allowed"
 msgstr "Prazne vrednosti niso dovoljene"
 
-#: rkward/plugin/rkmatrixinput.cpp:541
+#: rkward/plugin/rkmatrixinput.cpp:540
 #, kde-format
 msgid "This column contains illegal values in some of its cells"
 msgstr "V tem stolpcu so neveljavne vrednosti v nekaterih celicah"
 
-#: rkward/plugin/rkoptionset.cpp:52
+#: rkward/plugin/rkoptionset.cpp:51
 #, kde-format
 msgid "Updating status, please wait"
 msgstr "Posodabljanje stanja, počakajte"
 
-#: rkward/plugin/rkoptionset.cpp:811
+#: rkward/plugin/rkoptionset.cpp:810
 #, kde-format
 msgid "This row has not yet been processed."
 msgstr "Ta vrstica še ni bila obdelana."
 
-#: rkward/plugin/rkoptionset.cpp:812
+#: rkward/plugin/rkoptionset.cpp:811
 #, kde-format
 msgid "This row contains invalid settings."
 msgstr "V tej vrstici so neveljavne nastavitve."
 
-#: rkward/plugin/rkoptionset.cpp:832
+#: rkward/plugin/rkoptionset.cpp:831
 #, kde-format
 msgid "Please wait while settings are being processed"
 msgstr "Počakajte, da se nastavitve obdelajo"
 
-#: rkward/plugin/rkoptionset.cpp:835
+#: rkward/plugin/rkoptionset.cpp:834
 #, kde-format
 msgid "One or more rows contain invalid settings."
 msgstr "Ena ali več vrstic vsebuje neveljavne nastavitve."
 
-#: rkward/plugin/rkoptionset.cpp:836
+#: rkward/plugin/rkoptionset.cpp:835
 #, kde-format
 msgid "At least %1 rows have to be defined (if any)"
 msgstr "Najmanj %1 vrstic je treba definirati (če obstajajo)"
 
-#: rkward/plugin/rkoptionset.cpp:837
+#: rkward/plugin/rkoptionset.cpp:836
 #, kde-format
 msgid "At least %1 rows have to be defined"
 msgstr "Definirati je treba vsaj %1 vrstic"
 
-#: rkward/plugin/rkoptionset.cpp:838
+#: rkward/plugin/rkoptionset.cpp:837
 #, kde-format
 msgid "At most %1 rows may be defined"
 msgstr "Največ %1 vrstic je mogoče definirati"
 
-#: rkward/plugin/rkoptionset.cpp:839
+#: rkward/plugin/rkoptionset.cpp:838
 #, kde-format
 msgid "This element is not valid for the following reason(s):"
 msgstr "Ta element ni veljaven iz naslednjih razlogov:"
@@ -3505,7 +3526,7 @@ msgid "Enter value:"
 msgstr "Vnesite vrednost:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:397
+#: rkward/windows/rkcommandeditorwindow.cpp:373
 #, kde-format
 msgid "Preview"
 msgstr "Predogled"
@@ -3638,12 +3659,12 @@ msgstr "Razširi vse predmete korenske ravni (pokaži stolpce data.framov)"
 msgid "Collapse all root level objects (hide columns of data.frames)"
 msgstr "Strni vse predmete korenske ravni (skrij stolpce data.framov)"
 
-#: rkward/plugin/rkvarslot.cpp:38
+#: rkward/plugin/rkvarslot.cpp:37
 #, kde-format
 msgid "Variable:"
 msgstr "Spremenljivka:"
 
-#: rkward/plugin/rkvarslot.cpp:158
+#: rkward/plugin/rkvarslot.cpp:157
 #, kde-format
 msgid ""
 "<p>Using this object, here, may lead to failures or unexpected results, for "
@@ -3702,14 +3723,14 @@ msgstr ""
 "Zaledne izvajalne datoteke ni bilo mogoče najti. To je lahko težava "
 "namestitve."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:169
+#: rkward/rbackend/rkfrontendtransmitter.cpp:165
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Zaledne izvajalne datoteke ni bilo mogoče zagnati. Sporočilo o napaki je "
 "bilo: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:222
+#: rkward/rbackend/rkfrontendtransmitter.cpp:218
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3718,7 +3739,7 @@ msgstr ""
 "Napaka med rokovanjem z zalednim postopkom. Pričakovani žeton '%1', prejeti "
 "žeton '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:225
+#: rkward/rbackend/rkfrontendtransmitter.cpp:221
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3729,18 +3750,18 @@ msgstr ""
 "'%1' medtem ko je zaledna '%2'.\n"
 "Popravite namestitev."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:259
+#: rkward/rbackend/rkfrontendtransmitter.cpp:255
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Zalednega procesa ni bilo mogoče zagnati. Preverite namestitev."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:260
+#: rkward/rbackend/rkfrontendtransmitter.cpp:256
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Zaledni proces se ni uspel zagnati z izhodno kodo %1, sporočilo: %2."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:261
+#: rkward/rbackend/rkfrontendtransmitter.cpp:257
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Zaledni proces se je končal s kodo %1, sporočilo: '%2'."
@@ -3769,7 +3790,7 @@ msgstr "Sporočilo zaledja R"
 msgid "Question from the R backend"
 msgstr "Vprašanje zaledja R"
 
-#: rkward/rbackend/rkrbackend.cpp:1732
+#: rkward/rbackend/rkrbackend.cpp:1720
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3790,7 +3811,7 @@ msgstr ""
 "namestitev.</b> Za pomoč pri tem si oglejte <a href=\"http://rkward.kde.org/"
 "compiling\">http://rkward.kde.org/compiling.</a></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1736
+#: rkward/rbackend/rkrbackend.cpp:1724
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3804,12 +3825,12 @@ msgstr ""
 "popravite namestitev.</b> Za pomoč pri tem si oglejte <a href=\"http://"
 "rkward.kde.org/compiling\">http://rkward.kde.org/compiling.</a></p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1793
+#: rkward/rbackend/rkrbackend.cpp:1781
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Neustrezni inačici grafike"
 
-#: rkward/rbackend/rkrbackend.cpp:1793
+#: rkward/rbackend/rkrbackend.cpp:1781
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3820,17 +3841,17 @@ msgstr ""
 "zahteva ponovni prevod.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Dodatne informacije</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1793
+#: rkward/rbackend/rkrbackend.cpp:1781
 #, kde-format
 msgid "Ok"
 msgstr "V redu"
 
-#: rkward/rbackend/rkrinterface.cpp:86
+#: rkward/rbackend/rkrinterface.cpp:85
 #, kde-format
 msgid "R Startup"
 msgstr "Zagon R"
 
-#: rkward/rbackend/rkrinterface.cpp:89
+#: rkward/rbackend/rkrinterface.cpp:88
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -3839,7 +3860,7 @@ msgstr ""
 "<p>-Prišlo je do neznane napake, ki je RKWard še ne obravnava. RKWard najbrž "
 "ne bo deloval pravilno. Preverite nastavitev.</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:91
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
@@ -3847,17 +3868,17 @@ msgid ""
 msgstr ""
 "<p>Težava je bila pri zagonu zaledja R. Pojavile so se te napake:</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:99
+#: rkward/rbackend/rkrinterface.cpp:98
 #, kde-format
 msgid "Error starting R"
 msgstr "Napaka pri zagonu R"
 
-#: rkward/rbackend/rkrinterface.cpp:594
+#: rkward/rbackend/rkrinterface.cpp:582
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "Izhod iz programa je preklican"
 
-#: rkward/rbackend/rkrinterface.cpp:596
+#: rkward/rbackend/rkrinterface.cpp:584
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3880,32 +3901,32 @@ msgstr ""
 "različicah RKWard). V tem primeru izberite »Prekliči«, nato pa zaprite "
 "podatkovna okna, shranite in poskusite znova."
 
-#: rkward/rbackend/rkrinterface.cpp:596
+#: rkward/rbackend/rkrinterface.cpp:584
 #, kde-format
 msgid "Locale change"
 msgstr "Sprememba krajevnih nastavitev"
 
-#: rkward/rbackend/rkrinterface.cpp:597
+#: rkward/rbackend/rkrinterface.cpp:585
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "Spreminjanje krajevnih nastavitev je preklical uporabnik"
 
-#: rkward/rbackend/rkrinterface.cpp:700
+#: rkward/rbackend/rkrinterface.cpp:688
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "Poskus začetka snemanja, medtem ko že snemate ukaze. Prezrto."
 
-#: rkward/rbackend/rkrinterface.cpp:708
+#: rkward/rbackend/rkrinterface.cpp:696
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Datoteke ni bilo moč odpreti za pisanje. Ne beleži ukazov"
 
-#: rkward/rbackend/rkrinterface.cpp:719
+#: rkward/rbackend/rkrinterface.cpp:707
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Napaka: neprepoznana zahteva »%1«"
 
-#: rkward/rbackend/rkrinterface.cpp:792
+#: rkward/rbackend/rkrinterface.cpp:780
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3917,22 +3938,22 @@ msgstr ""
 "ki trenutno ni nameščen. Odprli bomo orodje za upravljanje paketov, tam pa "
 "lahko poskusite najti in namestiti potrebni paket."
 
-#: rkward/rbackend/rkrinterface.cpp:792
+#: rkward/rbackend/rkrinterface.cpp:780
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Zahtevaj paket '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:812
+#: rkward/rbackend/rkrinterface.cpp:800
 #, kde-format
 msgid "Unrecognized call '%1'"
 msgstr "Neprepoznani klic '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:892
+#: rkward/rbackend/rkrinterface.cpp:880
 #, kde-format
 msgid "R backend requests information"
 msgstr "Zaledje R zahteva informacije"
 
-#: rkward/rbackend/rkrinterface.cpp:911
+#: rkward/rbackend/rkrinterface.cpp:899
 #, kde-format
 msgid ""
 "\n"
@@ -3949,29 +3970,29 @@ msgstr ""
 "lahko shranite vse odprte ukazne datoteke, izhod ali kopiranje podatkov iz "
 "odprtih urejevalnikov podatkov. Po tem zapustite RKWard. Oprostite!"
 
-#: rkward/rbackend/rkrinterface.cpp:912
+#: rkward/rbackend/rkrinterface.cpp:900
 #, kde-format
 msgid "R engine has died"
 msgstr "Stroj R je umrl"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:206
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:208
 #, kde-format
 msgid "Graphics Device Number %1"
 msgstr "Številka grafične naprave %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:590
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:592
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (aktivno)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:592
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (neaktivno)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:618
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:620
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -3980,14 +4001,14 @@ msgstr ""
 "<h2>Iskanje točka/e</h2><p>Uporabite levi gumb miške za izbiro točk(e). "
 "Kateri koli drug gumb miške, da se ustavi.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:628
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:630
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Pritisnite Enter, da bi videli naslednji graf ali kliknite »Prekliči«, da "
 "prekinete.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:634
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Ali lahko pokažem naslednji graf?"
@@ -4013,7 +4034,7 @@ msgstr "Pričakovani žeton povezave %1 a prebran žeton povezave %2"
 msgid "Error while connection graphics backend"
 msgstr "Napaka pri povezovanju z grafičnim zaledjem"
 
-#: rkward/rkconsole.cpp:91
+#: rkward/rkconsole.cpp:88
 #, kde-format
 msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
@@ -4023,82 +4044,82 @@ msgstr ""
 "brez kateparta in bo takoj prenehal z izvajanjem. Namestite katepart in "
 "poskusite znova."
 
-#: rkward/rkconsole.cpp:91
+#: rkward/rkconsole.cpp:88
 #, kde-format
 msgid "'katepart' component could not be found"
 msgstr "komponente »katepart« ni bilo mogoče najti"
 
-#: rkward/rkconsole.cpp:132 rkward/windows/rkcommandeditorwindow.cpp:408
+#: rkward/rkconsole.cpp:131 rkward/windows/rkcommandeditorwindow.cpp:380
 #, kde-format
 msgid "R Console"
 msgstr "Konzola R"
 
-#: rkward/rkconsole.cpp:140
+#: rkward/rkconsole.cpp:137
 #, kde-format
 msgid "Scrollbar minimap"
 msgstr "Drsnik z mininačrtom"
 
-#: rkward/rkconsole.cpp:142
+#: rkward/rkconsole.cpp:139
 #, kde-format
 msgid "Dynamic word wrap"
 msgstr "Dinamično zavijanje besed"
 
-#: rkward/rkconsole.cpp:499
+#: rkward/rkconsole.cpp:497
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Skladenjska napaka\n"
 
-#: rkward/rkconsole.cpp:709
+#: rkward/rkconsole.cpp:705
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Izberite datoteko zgodovine ukazov, ki jo želite naložiti"
 
-#: rkward/rkconsole.cpp:709
+#: rkward/rkconsole.cpp:705
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "Datoteke zgodovine R [*.Rhistory](*.Rhistory);;Vse datoteke [*](*)"
 
-#: rkward/rkconsole.cpp:742
+#: rkward/rkconsole.cpp:738
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Izberite ime datoteke za shranjevanje zgodovine ukazov"
 
-#: rkward/rkconsole.cpp:742
+#: rkward/rkconsole.cpp:738
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "Datoteke zgodovine R [*.Rhistory] (*.Rhistory);;Vse datoteke [*] (*)"
 
-#: rkward/rkconsole.cpp:867
+#: rkward/rkconsole.cpp:863
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Prekini izvajanje ukaza"
 
-#: rkward/rkconsole.cpp:874
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopiraj izbor dobesedno"
 
-#: rkward/rkconsole.cpp:877
+#: rkward/rkconsole.cpp:873
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopiraj samo ukaze"
 
-#: rkward/rkconsole.cpp:884
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Print Console"
 msgstr "Natisni konzolo"
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Import command history..."
 msgstr "Uvozi zgodovino ukazov ..."
 
-#: rkward/rkconsole.cpp:892
+#: rkward/rkconsole.cpp:888
 #, kde-format
 msgid "Export command history..."
 msgstr "Izvozi zgodovino ukazov ..."
 
-#: rkward/rkconsole.cpp:911
+#: rkward/rkconsole.cpp:907
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4111,17 +4132,17 @@ msgstr ""
 "ukazu v konzoli ali želite najprej ponastaviti konzolo? Pritisnite prekliči, "
 "če ne želite zagnati novega ukaza."
 
-#: rkward/rkconsole.cpp:911
+#: rkward/rkconsole.cpp:907
 #, kde-format
 msgid "R Console is busy"
 msgstr "Konzola R je zasedena"
 
-#: rkward/rkconsole.cpp:911
+#: rkward/rkconsole.cpp:907
 #, kde-format
 msgid "Append"
 msgstr "Dopolni"
 
-#: rkward/rkconsole.cpp:911
+#: rkward/rkconsole.cpp:907
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Ponastavi, nato pa oddaj"
@@ -4155,7 +4176,7 @@ msgstr "Po&gled"
 msgid "&Run"
 msgstr "&Zaženi"
 
-#: rkward/rkward.cpp:303
+#: rkward/rkward.cpp:305
 #, kde-format
 msgid ""
 "<p>You are about to start an RKWard dialog from outside of RKWard, probably "
@@ -4180,17 +4201,17 @@ msgstr ""
 "ustvarjeno kodo R.</p><p><i>Opomba: Preverjanje</i>»Ne vprašaj znova« bo "
 "zatrlo to sporočilo samo za preostanek te seje."
 
-#: rkward/rkward.cpp:304
+#: rkward/rkward.cpp:306
 #, kde-format
 msgid "A note on external links"
 msgstr "Opomba o zunanjih povezavah"
 
-#: rkward/rkward.cpp:316
+#: rkward/rkward.cpp:318
 #, kde-format
 msgid "Setting up plugins..."
 msgstr "Nastavitev vtičnikov poteka ..."
 
-#: rkward/rkward.cpp:350
+#: rkward/rkward.cpp:352
 #, kde-format
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
@@ -4201,12 +4222,12 @@ msgstr ""
 "samodejno aktivirani. Če želite deaktivirati izbrane vtičnike, uporabite "
 "Nastavitve->Konfiguriraj RKWard->Vtičniki."
 
-#: rkward/rkward.cpp:350
+#: rkward/rkward.cpp:352
 #, kde-format
 msgid "New plugins found"
 msgstr "Najdeni novi vtičniki"
 
-#: rkward/rkward.cpp:354
+#: rkward/rkward.cpp:356
 #, kde-format
 msgid ""
 "The following RKWard pluginmap files could not be loaded, and have been "
@@ -4219,12 +4240,12 @@ msgstr ""
 "različico programa RKWard ali pa niso namenjeni za neposredno nalaganje (za "
 "več informacij glejte \"Podrobnosti\"). So onemogočene."
 
-#: rkward/rkward.cpp:354 rkward/rkward.cpp:358
+#: rkward/rkward.cpp:356 rkward/rkward.cpp:360
 #, kde-format
 msgid "Failed to load some plugin maps"
 msgstr "Nalaganje nekaterih preslikav vtičnikov"
 
-#: rkward/rkward.cpp:358
+#: rkward/rkward.cpp:360
 #, kde-format
 msgid ""
 "Some errors were encountered while loading the following RKWard pluginmap "
@@ -4237,7 +4258,7 @@ msgstr ""
 "ali niso združljivi s to različico programa RKWard (za več informacij glejte "
 "\"Podrobnosti\"). Drugi vtičniki so bili sicer uspešno naloženi."
 
-#: rkward/rkward.cpp:358
+#: rkward/rkward.cpp:360
 #, kde-format
 msgid ""
 "Note: You will not be warned about these pluginmap files again, until you "
@@ -4248,210 +4269,210 @@ msgstr ""
 "dokler ne nadgradite RKWard, ali jih odstranite in ponovno dodate v "
 "Nastavitve->Konfiguriraj RKWard->Vtičniki."
 
-#: rkward/rkward.cpp:414
+#: rkward/rkward.cpp:416
 #, kde-format
 msgid "Carbon Copy Settings"
 msgstr "Nastavitve pošiljk v vednost"
 
-#: rkward/rkward.cpp:432 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
+#: rkward/rkward.cpp:434 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
 #, kde-format
 msgid "Workspace"
 msgstr "Delovna površina"
 
-#: rkward/rkward.cpp:441
+#: rkward/rkward.cpp:443
 #, kde-format
 msgid "Files"
 msgstr "Datoteke"
 
-#: rkward/rkward.cpp:445
+#: rkward/rkward.cpp:447
 #, kde-format
 msgid "Pending Jobs"
 msgstr "Čakajoči posli"
 
-#: rkward/rkward.cpp:457
+#: rkward/rkward.cpp:459
 #, kde-format
 msgid "Debugger Frames"
 msgstr "Okvirji za odpravljanje napak"
 
-#: rkward/rkward.cpp:462
+#: rkward/rkward.cpp:464
 #, kde-format
 msgid "Debugger Console"
 msgstr "Konzola razhroščevalnika"
 
-#: rkward/rkward.cpp:466
+#: rkward/rkward.cpp:468
 #, kde-format
 msgid "RKWard Debug Messages"
 msgstr "Sporočila za razhroščevanje RKWard"
 
-#: rkward/rkward.cpp:478
+#: rkward/rkward.cpp:480
 #, kde-format
 msgid "Dataset"
 msgstr "Zbirka podatkov"
 
-#: rkward/rkward.cpp:480
+#: rkward/rkward.cpp:482
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Ustvari nov prazen nabor podatkov in ga odpre za urejanje"
 
-#: rkward/rkward.cpp:483
+#: rkward/rkward.cpp:485
 #, kde-format
 msgid "Script File"
 msgstr "Skriptna datoteka"
 
-#: rkward/rkward.cpp:487
+#: rkward/rkward.cpp:489
 #, kde-format
 msgid "Output document"
 msgstr "Izhodni dokument"
 
-#: rkward/rkward.cpp:489
+#: rkward/rkward.cpp:491
 #, kde-format
 msgid "Creates and activates a new output document"
 msgstr "Ustvari in aktivira nov izhodni dokument"
 
-#: rkward/rkward.cpp:494
+#: rkward/rkward.cpp:496
 #, kde-format
 msgid "Open R Script File..."
 msgstr "Odpri skriptno datoteko R ..."
 
-#: rkward/rkward.cpp:498
+#: rkward/rkward.cpp:500
 #, kde-format
 msgid "Open RKWard Output File..."
 msgstr "Odpri izhodno datoteko RKWard ..."
 
-#: rkward/rkward.cpp:502
+#: rkward/rkward.cpp:504
 #, kde-format
 msgid "Open any File..."
 msgstr "Odpri poljubno datoteko ..."
 
-#: rkward/rkward.cpp:507
+#: rkward/rkward.cpp:509
 #, kde-format
 msgid "Open Recent R Script File"
 msgstr "Odpri nedavno datoteko skripta R"
 
-#: rkward/rkward.cpp:511
+#: rkward/rkward.cpp:513
 #, kde-format
 msgid "Import Assistant"
 msgstr "Pomočnik za uvoz"
 
-#: rkward/rkward.cpp:512
+#: rkward/rkward.cpp:514
 #, kde-format
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr ""
 "Pomočnik za iskanje najboljše metode za uvoz podatkov v različnih formatih"
 
-#: rkward/rkward.cpp:516
+#: rkward/rkward.cpp:518
 #, kde-format
 msgid "Open Workspace..."
 msgstr "Odpri delovni prostor ..."
 
-#: rkward/rkward.cpp:518
+#: rkward/rkward.cpp:520
 #, kde-format
 msgid "Opens an existing document"
 msgstr "Odpre obstoječi dokument"
 
-#: rkward/rkward.cpp:523
+#: rkward/rkward.cpp:525
 #, kde-format
 msgid "Open Recent Workspace"
 msgstr "Odpri nedavni delovni prostor"
 
-#: rkward/rkward.cpp:524
+#: rkward/rkward.cpp:526
 #, kde-format
 msgid "Opens a recently used file"
 msgstr "Odpre nedavno uporabljeno datoteko"
 
-#: rkward/rkward.cpp:527
+#: rkward/rkward.cpp:529
 #, kde-format
 msgid "Save Workspace"
 msgstr "Shrani delovni prostor"
 
-#: rkward/rkward.cpp:529
+#: rkward/rkward.cpp:531
 #, kde-format
 msgid "Saves the actual document"
 msgstr "Shrani dejanski dokument"
 
-#: rkward/rkward.cpp:533
+#: rkward/rkward.cpp:535
 #, kde-format
 msgid "Save Workspace As"
 msgstr "Shrani delovni prostor kot"
 
-#: rkward/rkward.cpp:534
+#: rkward/rkward.cpp:536
 #, kde-format
 msgid "Saves the actual document as..."
 msgstr "Shrani dejanski dokument kot ..."
 
-#: rkward/rkward.cpp:537
+#: rkward/rkward.cpp:539
 #, kde-format
 msgid "Quits the application"
 msgstr "Zapre program"
 
-#: rkward/rkward.cpp:540
+#: rkward/rkward.cpp:542
 #, kde-format
 msgid "Interrupt all commands"
 msgstr "Prekini vse ukaze"
 
-#: rkward/rkward.cpp:546
+#: rkward/rkward.cpp:548
 #, kde-format
 msgid "CC commands to output..."
 msgstr "Ukazi CC za izhod ..."
 
-#: rkward/rkward.cpp:550 rkward/rkward.cpp:554
+#: rkward/rkward.cpp:552 rkward/rkward.cpp:556
 #, kde-format
 msgid "Manage R packages and plugins..."
 msgstr "Upravljaj pakete in vtičnike R ..."
 
-#: rkward/rkward.cpp:561
+#: rkward/rkward.cpp:563
 #, kde-format
 msgid "Close All Data"
 msgstr "Zapri vse podatke"
 
-#: rkward/rkward.cpp:562
+#: rkward/rkward.cpp:564
 #, kde-format
 msgid "Closes all open data editors"
 msgstr "Zapre vse odprte urejevalnike podatkov"
 
-#: rkward/rkward.cpp:567
+#: rkward/rkward.cpp:569
 #, kde-format
 msgid "Close All"
 msgstr "Zapri vse"
 
-#: rkward/rkward.cpp:571 rkward/windows/rktoolwindowbar.cpp:299
-#: rkward/windows/rkworkplaceview.cpp:96
+#: rkward/rkward.cpp:573 rkward/windows/rktoolwindowbar.cpp:302
+#: rkward/windows/rkworkplaceview.cpp:97
 #, kde-format
 msgid "Detach"
 msgstr "Odpni"
 
-#: rkward/rkward.cpp:575
+#: rkward/rkward.cpp:577
 #, kde-format
 msgid "Check installation"
 msgstr "Preveri namestitev"
 
-#: rkward/rkward.cpp:579
+#: rkward/rkward.cpp:581
 #, kde-format
 msgid "[No actions available for current view]"
 msgstr "[Za trenutni pogled ni na voljo nobenih dejanj]"
 
-#: rkward/rkward.cpp:586
+#: rkward/rkward.cpp:588
 #, kde-format
 msgid "Open..."
 msgstr "Odpri …"
 
-#: rkward/rkward.cpp:600
+#: rkward/rkward.cpp:602
 #, kde-format
 msgid "Create..."
 msgstr "Ustvari ..."
 
-#: rkward/rkward.cpp:607
+#: rkward/rkward.cpp:609
 #, kde-format
 msgid "Save..."
 msgstr "Shrani ..."
 
-#: rkward/rkward.cpp:629
+#: rkward/rkward.cpp:625
 #, kde-format
 msgid "Restart R Backend"
 msgstr "Ponovno zaženi zaledje R"
 
-#: rkward/rkward.cpp:631
+#: rkward/rkward.cpp:627
 #, kde-format
 msgid ""
 "<p>This feature is primarily targetted at advanced users working on scripts "
@@ -4465,12 +4486,12 @@ msgstr ""
 "okna z grafiko bodo zaprti.</p><p>Ali ste prepričani, da želite nadaljevati?"
 "</p>"
 
-#: rkward/rkward.cpp:632
+#: rkward/rkward.cpp:628
 #, kde-format
 msgid "Restart R backend"
 msgstr "Ponovno zaženi zaledje R"
 
-#: rkward/rkward.cpp:636
+#: rkward/rkward.cpp:632
 #, kde-format
 msgid ""
 "<p>One or more operations are pending.</p><p>If you have recently chosen to "
@@ -4481,122 +4502,122 @@ msgstr ""
 "želite shraniti vaš delovni prostor in vidite to sporočilo<b>vaši podatki "
 "morda še ne morejo biti shranjeni!</b></p><p>Kako želite nadaljevati?</p>"
 
-#: rkward/rkward.cpp:637
+#: rkward/rkward.cpp:633
 #, kde-format
 msgid "R commands still pending"
 msgstr "R ukaz je še v teku"
 
-#: rkward/rkward.cpp:637
+#: rkward/rkward.cpp:633
 #, kde-format
 msgid "Force restart now"
 msgstr "Prisili ponovni zagon zdaj"
 
-#: rkward/rkward.cpp:637
+#: rkward/rkward.cpp:633
 #, kde-format
 msgid "Check again"
 msgstr "Ponovno preveri"
 
-#: rkward/rkward.cpp:637
+#: rkward/rkward.cpp:633
 #, kde-format
 msgid "Cancel restarting"
 msgstr "Prekliči ponovni zagon"
 
-#: rkward/rkward.cpp:775
+#: rkward/rkward.cpp:772
 #, kde-format
 msgid "Current working directory"
 msgstr "Trenutna delovna mapa"
 
-#: rkward/rkward.cpp:793 rkward/windows/rcontrolwindow.cpp:40
+#: rkward/rkward.cpp:790 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
 msgid "Configure R backend"
 msgstr "Prilagodi zaledje R"
 
-#: rkward/rkward.cpp:847
+#: rkward/rkward.cpp:844
 #, kde-format
 msgid "Exiting..."
 msgstr "Izhod …"
 
-#: rkward/rkward.cpp:865
+#: rkward/rkward.cpp:862
 #, kde-format
 msgid "New dataset"
 msgstr "Nov nabor podatkov"
 
-#: rkward/rkward.cpp:865
+#: rkward/rkward.cpp:862
 #, kde-format
 msgid "Enter name for the new dataset"
 msgstr "Vnesite ime za nov nabor podatkov"
 
-#: rkward/rkward.cpp:877
+#: rkward/rkward.cpp:874
 #, kde-format
 msgid "Opening workspace..."
 msgstr "Odpiranje delovnega prostora ..."
 
-#: rkward/rkward.cpp:880
+#: rkward/rkward.cpp:877
 #, kde-format
 msgid "Select workspace to open..."
 msgstr "Izberite delovni prostor za odpiranje ..."
 
-#: rkward/rkward.cpp:960
+#: rkward/rkward.cpp:957
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr "Pogon <b>R</b> je zaseden."
 
-#: rkward/rkward.cpp:964
+#: rkward/rkward.cpp:961
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr "Pogon <b>R</b> je nedejaven."
 
-#: rkward/rkward.cpp:968
+#: rkward/rkward.cpp:965
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "Pogon <b>R</b> se inicializira."
 
-#: rkward/rkward.cpp:971
+#: rkward/rkward.cpp:968
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr "Pogon <b>R</b> ni na voljo."
 
-#: rkward/rkward.cpp:997
+#: rkward/rkward.cpp:994
 #, kde-format
 msgid "Open"
 msgstr "Odpri"
 
-#: rkward/rkward.cpp:1001
+#: rkward/rkward.cpp:998
 #, kde-format
 msgid "Opening mode:"
 msgstr "Način odpiranja:"
 
-#: rkward/rkward.cpp:1003
+#: rkward/rkward.cpp:1000
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Ugani vrsto datoteke, samodejno"
 
-#: rkward/rkward.cpp:1003
+#: rkward/rkward.cpp:1000
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Odpri kot besedilno/skriptno datoteko"
 
-#: rkward/rkward.cpp:1003
+#: rkward/rkward.cpp:1000
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Odpri kot besedilno datoteko in vsili poudarjanje R"
 
-#: rkward/rkward.cpp:1040
+#: rkward/rkward.cpp:1037
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Izberi izhodno datoteko RKWard za odpiranje ..."
 
-#: rkward/rkward.cpp:1040
+#: rkward/rkward.cpp:1037
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "Izhodne datoteke RKWard [*.rko](*.rko);;Vse datoteke [*](*)"
 
-#: rkward/rkward.cpp:1049
+#: rkward/rkward.cpp:1046
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Odpri skriptne datoteke"
 
-#: rkward/rkward.cpp:1063
+#: rkward/rkward.cpp:1060
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Neimenovani delovni prostor]"
@@ -5078,17 +5099,17 @@ msgstr "Dodaj samo, če je ena vrstica"
 msgid "Add all commands"
 msgstr "Dodaj vse ukaze"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:70
+#: rkward/settings/rksettingsmoduleconsole.cpp:72
 #, kde-format
 msgid "Command history is context sensitive by default"
 msgstr "Zgodovina ukazov je privzeto občutljiva na kontekst"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:134
+#: rkward/settings/rksettingsmoduleconsole.cpp:136
 #, kde-format
 msgid "Console"
 msgstr "Konzola"
 
-#: rkward/settings/rksettingsmoduledebug.cpp:33
+#: rkward/settings/rksettingsmoduledebug.cpp:32
 #, kde-format
 msgid ""
 "<b>These settings are for debugging purposes, only.</b> It is safe to leave "
@@ -5099,32 +5120,32 @@ msgstr ""
 "nedotaknjene. Prav tako se te nastavitve uporabljajo samo za trenutno sejo "
 "in ne bodo shranjene."
 
-#: rkward/settings/rksettingsmoduledebug.cpp:37
+#: rkward/settings/rksettingsmoduledebug.cpp:36
 #, kde-format
 msgid "Debug level"
 msgstr "Raven razhroščevanja"
 
-#: rkward/settings/rksettingsmoduledebug.cpp:47
+#: rkward/settings/rksettingsmoduledebug.cpp:46
 #, kde-format
 msgid "Debug flags"
 msgstr "Zastavice za razhroščevanje"
 
-#: rkward/settings/rksettingsmoduledebug.cpp:73
+#: rkward/settings/rksettingsmoduledebug.cpp:72
 #, kde-format
 msgid "Command timeout"
 msgstr "Časovni rok ukaza"
 
-#: rkward/settings/rksettingsmoduledebug.cpp:83
+#: rkward/settings/rksettingsmoduledebug.cpp:82
 #, kde-format
 msgid "<i>Note:</i> Debug output is written to %1"
 msgstr "<i>Opomba:</i> Izhod za razhroščevanje je zapisan v %1"
 
-#: rkward/settings/rksettingsmoduledebug.cpp:100
+#: rkward/settings/rksettingsmoduledebug.cpp:99
 #, kde-format
 msgid "Debug"
 msgstr "Razhrošči"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:61
+#: rkward/settings/rksettingsmodulegeneral.cpp:60
 #, kde-format
 msgid ""
 "Directory where rkward may store files (setting takes effect after "
@@ -5133,12 +5154,12 @@ msgstr ""
 "Imenik kamor lahko rkward shranjuje datoteke (nastavitev je uveljavljena po "
 "ponovnem zagonu RKWarda)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:67
+#: rkward/settings/rksettingsmodulegeneral.cpp:66
 #, kde-format
 msgid "Startup behavior"
 msgstr "Obnašanje ob zagonu"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:69
+#: rkward/settings/rksettingsmodulegeneral.cpp:68
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
@@ -5146,43 +5167,43 @@ msgstr ""
 "Datoteka Load.RData iz zagonskega imenika, če je na voljo (možnost R  '--"
 "restore')"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:70
+#: rkward/settings/rksettingsmodulegeneral.cpp:69
 #, kde-format
 msgid "Show RKWard Help on Startup"
 msgstr "Pokaži pomoč za RKWard pri zagonu"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:72
-#: rkward/settings/rksettingsmodulegeneral.cpp:78
+#: rkward/settings/rksettingsmodulegeneral.cpp:71
+#: rkward/settings/rksettingsmodulegeneral.cpp:77
 #, kde-format
 msgid "Initial working directory"
 msgstr "Začetna delovna mapa"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "Do not change current directory on startup"
 msgstr "Ne spreminjaj trenutne mape ob zagonu"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
 msgstr "Mapa datotek RKWard (kot je navedeno zgoraj)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "User home directory"
 msgstr "Domača mapa uporabnika"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "Last used directory"
 msgstr "Nazadnje uporabljena mapa"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "The following directory (please specify):"
 msgstr "Naslednja mapa (navedite):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:83
+#: rkward/settings/rksettingsmodulegeneral.cpp:82
 #, kde-format
 msgid ""
 "<p>The initial working directory to use. Note that if you are loading a "
@@ -5194,7 +5215,7 @@ msgstr ""
 "spremeni na imenik naloženih delovnih prostorov, bo ta imenik imel prednost."
 "</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:90
+#: rkward/settings/rksettingsmodulegeneral.cpp:89
 #, kde-format
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
@@ -5203,12 +5224,12 @@ msgstr ""
 "<p>Število nedavnih datotek, ki si jih želite zapomniti (v meniju Odpri "
 "nedavne skriptne datoteke R).</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:91
+#: rkward/settings/rksettingsmodulegeneral.cpp:90
 #, kde-format
 msgid "Maximum number of recently used files to remember per category"
 msgstr "Največje število zapomnjenih datotek na kategorijo"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:96
+#: rkward/settings/rksettingsmodulegeneral.cpp:95
 #, kde-format
 msgid ""
 "The workplace layout (i.e. which script-, data-, help-windows are open) may "
@@ -5219,14 +5240,14 @@ msgstr ""
 "odprta) se lahko shrani (in naloži) na delovni prostor R ali neodvisno od "
 "delovnega prostora R. Kaj vam je ljubše?"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:103
+#: rkward/settings/rksettingsmodulegeneral.cpp:102
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
 "Shrani/obnovi z delovnim prostorom R ob shranjevanju/nalaganju delovnega "
 "prostora"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:106
+#: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
@@ -5235,17 +5256,17 @@ msgstr ""
 "Shrani/obnovi neodvisno od delovnega prostora R (shrani na koncu seje "
 "RKWard, obnovi ob naslednjem začetku)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:109
+#: rkward/settings/rksettingsmodulegeneral.cpp:108
 #, kde-format
 msgid "Do not save/restore workplace layout"
 msgstr "Ne shranjuj/obnavljaj postavitve delovne površine"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:118
+#: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr "Pri nalaganju delovnega prostora spremeni ustrezni imenik."
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:122
+#: rkward/settings/rksettingsmodulegeneral.cpp:121
 #, kde-format
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
@@ -5254,48 +5275,56 @@ msgstr ""
 "Opozorilo pri urejanju predmetov z več kot tem številom polj (0 za "
 "neomejeno):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:127
+#: rkward/settings/rksettingsmodulegeneral.cpp:126
 #, kde-format
 msgid "MDI window focus behavior"
 msgstr "Vedenje pozornosti okna MDI"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:129
+#: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Click to focus"
 msgstr "Klikni za pozornost"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:129
+#: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Focus follows mouse"
 msgstr "Pozornost sledi miški"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:149
+#: rkward/settings/rksettingsmodulegeneral.cpp:148
 #, kde-format
 msgid "General"
 msgstr "Splošno"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:50
+#: rkward/settings/rksettingsmodulegraphics.cpp:49
 #, kde-format
 msgid "Default graphics device"
 msgstr "Privzeta grafična naprava"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:53
+#: rkward/settings/rksettingsmodulegraphics.cpp:52
 #, kde-format
 msgid "RKWard native device"
 msgstr "Domorodna naprava RKWard"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:56
+#: rkward/settings/rksettingsmodulegraphics.cpp:55
 #, kde-format
 msgid "Platform default device"
 msgstr "Privzeta naprava platforme"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:59
+#: rkward/settings/rksettingsmodulegraphics.cpp:58
 #, kde-format
 msgid "Other device:"
 msgstr "Druga naprava:"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:68
-#, kde-format
+#: rkward/settings/rksettingsmodulegraphics.cpp:67
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>The default device to be used for plotting, i.e. when new plot is "
+#| "created, while no graphics device is active (see <i>options(\"device\")</"
+#| "i>).</p><p>The RKWard native device is the recommended choice for most "
+#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
+#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
+#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
+#| "the name of a function such as <i>cairoDevice</i>.</p>"
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5303,7 +5332,7 @@ msgid ""
 "This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform default "
 "device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
-"name of a function such as <i>cairoDevice</i>.</p>"
+"name of a function such as <i>Cairo</i>.</p>"
 msgstr ""
 "<p>Privzeta naprava, ki jo je treba uporabiti za risanje, to je ob kreiranju "
 "novega grafikona, medtem ko nobena grafična naprava ni aktivna (glejte "
@@ -5313,27 +5342,27 @@ msgstr ""
 "i>ali <i>quartz()</i>, odvisno od platforme.</p><p>Določite lahko tudi ime "
 "funkcije, kot je <i>cairoDevice</i>.</p>"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:76
+#: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
 msgid "Integration of R standard devices"
 msgstr "Integracija standardnih naprav R"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:79
+#: rkward/settings/rksettingsmodulegraphics.cpp:78
 #, kde-format
 msgid "Replace with RKWard device"
 msgstr "Zamenjaj z napravo RKWard"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:82
+#: rkward/settings/rksettingsmodulegraphics.cpp:81
 #, kde-format
 msgid "Embed original device"
 msgstr "Vdelaj izvirno napravo"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:88
+#: rkward/settings/rksettingsmodulegraphics.cpp:87
 #, kde-format
 msgid "No device integration"
 msgstr "Brez integracije naprav"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:93
+#: rkward/settings/rksettingsmodulegraphics.cpp:92
 #, kde-format
 msgid ""
 "<p>Many scripts use calls to platform specific standard devices (<i>X11()</"
@@ -5366,43 +5395,43 @@ msgstr ""
 "platformi, kjer ni definirana (npr. <i>Windows()</i> na Mac OS X) se bo "
 "vedno vrnila na <i>napravo RK().</i></p>"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:105
+#: rkward/settings/rksettingsmodulegraphics.cpp:104
 #, kde-format
 msgid "Default window size (for RK(), or embedded device windows)"
 msgstr "Privzeta velikost okna (za RK() ali okna vdelane naprave)"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:107
+#: rkward/settings/rksettingsmodulegraphics.cpp:106
 #, kde-format
 msgid "Default width (inches):"
 msgstr "Privzeta širina (palci):"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:110
+#: rkward/settings/rksettingsmodulegraphics.cpp:109
 #, kde-format
 msgid "Default height (inches)"
 msgstr "Privzeta višina (palci)"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:114
+#: rkward/settings/rksettingsmodulegraphics.cpp:113
 #, kde-format
 msgid "Use KDE printer dialog for printing devices (if available)"
 msgstr ""
 "Uporabi pogovorno okno tiskalnika KDE za tiskalne naprave (če je na voljo)"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:116
+#: rkward/settings/rksettingsmodulegraphics.cpp:115
 #, kde-format
 msgid "Screen device history"
 msgstr "Zgodovina zaslonske naprave"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:123
+#: rkward/settings/rksettingsmodulegraphics.cpp:122
 #, kde-format
 msgid "Maximum number of recorded plots:"
 msgstr "Največje število posnetih grafov:"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:127
+#: rkward/settings/rksettingsmodulegraphics.cpp:126
 #, kde-format
 msgid "Maximum size of a single recorded plot (in KB):"
 msgstr "Največja velikost posameznega posnetega grafa (v KB):"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:155
+#: rkward/settings/rksettingsmodulegraphics.cpp:154
 #, kde-format
 msgid "Onscreen Graphics"
 msgstr "Grafika na zaslonu"
@@ -5485,7 +5514,7 @@ msgstr "prikaži okno na novem izhodu"
 msgid "raise window on new output"
 msgstr "dvigno okno na nov izhod"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:130
+#: rkward/settings/rksettingsmoduleoutput.cpp:132
 #, kde-format
 msgid ""
 "Default output (used, while no other output has been set, explicitly) is "
@@ -5494,17 +5523,17 @@ msgstr ""
 "Privzeti izhod (izrecno uporabljen, če ni bil nastavljen noben drug izhod) "
 "je v skupni rabi med delovnimi prostori(*)."
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:132
+#: rkward/settings/rksettingsmoduleoutput.cpp:134
 #, kde-format
 msgid "CSS file to use for output (leave empty for default)"
 msgstr "CSS datoteka za uporabo za izhod (pustite prazno za privzeto)"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:132
+#: rkward/settings/rksettingsmoduleoutput.cpp:134
 #, kde-format
 msgid "Select CSS file"
 msgstr "Izberite datoteko CSS"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:134
+#: rkward/settings/rksettingsmoduleoutput.cpp:136
 #, kde-format
 msgid ""
 "Select a CSS file for custom formatting of the output window. Leave empty to "
@@ -5517,52 +5546,52 @@ msgstr ""
 "om. Upoštevajte, da ta nastavitev začne veljati, samo ko inicializirate "
 "izhodno datoteko (npr. po popolnitvi izhoda)."
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:137
+#: rkward/settings/rksettingsmoduleoutput.cpp:139
 #, kde-format
 msgid "Graphics"
 msgstr "Grafika"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:141
+#: rkward/settings/rksettingsmoduleoutput.cpp:143
 #, kde-format
 msgid "File format"
 msgstr "Vrsta datoteke"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:143
+#: rkward/settings/rksettingsmoduleoutput.cpp:145
 #, kde-format
 msgid "<Default>"
 msgstr "<Privzeto>"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:144
+#: rkward/settings/rksettingsmoduleoutput.cpp:146
 #, kde-format
 msgid "PNG"
 msgstr "PNG"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:145
+#: rkward/settings/rksettingsmoduleoutput.cpp:147
 #, kde-format
 msgid "SVG"
 msgstr "SVG"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:146
+#: rkward/settings/rksettingsmoduleoutput.cpp:148
 #, kde-format
 msgid "JPG"
 msgstr "JPG"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:151
+#: rkward/settings/rksettingsmoduleoutput.cpp:153
 #, kde-format
 msgid "JPG quality"
 msgstr "Kakovost JPG"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:158
+#: rkward/settings/rksettingsmoduleoutput.cpp:160
 #, kde-format
 msgid "Width:"
 msgstr "Širina:"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:161
+#: rkward/settings/rksettingsmoduleoutput.cpp:163
 #, kde-format
 msgid "Height:"
 msgstr "Višina:"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:52
+#: rkward/settings/rksettingsmoduleplugins.cpp:51
 #, kde-format
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
@@ -5573,64 +5602,64 @@ msgstr ""
 "tradicionalnim pogovornim vmesnikom. Če sta na voljo oba, kateri način "
 "predstavitve vam je ljubši?"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:60
+#: rkward/settings/rksettingsmoduleplugins.cpp:59
 #, kde-format
 msgid "Always prefer dialogs"
 msgstr "Vedno daj prednost pogovornim oknom"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:63
+#: rkward/settings/rksettingsmoduleplugins.cpp:62
 #, kde-format
 msgid "Prefer recommended interface"
 msgstr "Prednost ima priporočeni vmesnik"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:66
+#: rkward/settings/rksettingsmoduleplugins.cpp:65
 #, kde-format
 msgid "Always prefer wizards"
 msgstr "Vedno imajo prednost čarovniki"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:76
+#: rkward/settings/rksettingsmoduleplugins.cpp:75
 #, kde-format
 msgid "Configure Active Plugins"
 msgstr "Prilagodi aktivne vtičnike"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:94
-#: rkward/windows/rktoplevelwindowgui.cpp:153
+#: rkward/settings/rksettingsmoduleplugins.cpp:93
+#: rkward/windows/rktoplevelwindowgui.cpp:151
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "Vtičniki RKWard"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:471
-#: rkward/windows/rkhtmlwindow.cpp:1257
+#: rkward/settings/rksettingsmoduleplugins.cpp:472
+#: rkward/windows/rkhtmlwindow.cpp:1143
 #, kde-format
 msgid "Dependencies"
 msgstr "Odvisnosti"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:494
+#: rkward/settings/rksettingsmoduleplugins.cpp:495
 #, kde-format
 msgid "Broken"
 msgstr "Okvarjeno"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:496
+#: rkward/settings/rksettingsmoduleplugins.cpp:497
 #, kde-format
 msgid "Loaded"
 msgstr "Naloženo"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:499
+#: rkward/settings/rksettingsmoduleplugins.cpp:500
 #, kde-format
 msgid "Quirky"
 msgstr "Domiselno"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:523
+#: rkward/settings/rksettingsmoduleplugins.cpp:524
 #, kde-format
 msgid "Active"
 msgstr "Dejavno"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:524
+#: rkward/settings/rksettingsmoduleplugins.cpp:525
 #, kde-format
 msgid "ID"
 msgstr "ID"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:552
+#: rkward/settings/rksettingsmoduleplugins.cpp:553
 #, kde-format
 msgid "Select .pluginmap-file"
 msgstr "Izberite datoteko .pluginmap-file"
@@ -6059,13 +6088,13 @@ msgstr "Z&godovina"
 msgid "&Window"
 msgstr "&Okno"
 
-#: rkward/windows/katepluginintegration.cpp:607
+#: rkward/windows/katepluginintegration.cpp:631
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr "v trenutnem skriptu"
 
-#: rkward/windows/katepluginintegration.cpp:608
+#: rkward/windows/katepluginintegration.cpp:632
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
@@ -6120,7 +6149,7 @@ msgid ""
 msgstr ""
 "Trenutni <b>klic:</b> %1<br><b>Okolje:</b> %2<br><b>Lokalni predmeti:</b> %3"
 
-#: rkward/windows/rkcodecompletion.cpp:59
+#: rkward/windows/rkcodecompletion.cpp:60
 #, kde-format
 msgid ""
 "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
@@ -6133,102 +6162,102 @@ msgstr ""
 "onemogočena. Če želite omogočiti namig za klic, namestite poljubno drugo "
 "(starejšo ali novejšo) različico (lib|kf5)ktexteditor."
 
-#: rkward/windows/rkcodecompletion.cpp:61
+#: rkward/windows/rkcodecompletion.cpp:62
 #, kde-format
 msgid "Incompatible version of ktexteditor"
 msgstr "Nezdružljiva različica ktexteditorja"
 
-#: rkward/windows/rkcodecompletion.cpp:695
+#: rkward/windows/rkcodecompletion.cpp:690
 #, kde-format
 msgid "Objects on search path"
 msgstr "Predmeti na iskalni poti"
 
-#: rkward/windows/rkcodecompletion.cpp:787
+#: rkward/windows/rkcodecompletion.cpp:777
 #, kde-format
 msgid "Function calls"
 msgstr "Klici funkcije"
 
-#: rkward/windows/rkcodecompletion.cpp:886
+#: rkward/windows/rkcodecompletion.cpp:875
 #, kde-format
 msgid "Function arguments"
 msgstr "Argumenti funkcije"
 
-#: rkward/windows/rkcodecompletion.cpp:1003
+#: rkward/windows/rkcodecompletion.cpp:992
 #, kde-format
 msgid "Local file names"
 msgstr "Imena krajevnih datotek"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:173
+#: rkward/windows/rkcommandeditorwindow.cpp:164
 #, kde-format
 msgid "Unable to open \"%1\""
 msgstr "Ni bilo mogoče odpreti »%1«"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:173
+#: rkward/windows/rkcommandeditorwindow.cpp:164
 #, kde-format
 msgid "Could not open command file"
 msgstr "Ni mogoče odpreti ukazne datoteke"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:215
+#: rkward/windows/rkcommandeditorwindow.cpp:204
 #, kde-format
 msgid "Script Editor"
 msgstr "Urejevalnik skriptov"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:369
+#: rkward/windows/rkcommandeditorwindow.cpp:349
 #, kde-format
 msgid "Insert line break and run"
 msgstr "Vstavi prelom vrstice in zaženi"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:376
+#: rkward/windows/rkcommandeditorwindow.cpp:356
 #, kde-format
 msgid "Run block"
 msgstr "Zaženi blok"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:384
+#: rkward/windows/rkcommandeditorwindow.cpp:360
 #, kde-format
 msgid "Mark selection as block"
 msgstr "Označi izbor kot blok"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:387
+#: rkward/windows/rkcommandeditorwindow.cpp:363
 #, kde-format
 msgid "Unmark block"
 msgstr "Odznači blok"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:392
+#: rkward/windows/rkcommandeditorwindow.cpp:368
 #, kde-format
 msgid "CD to script directory"
 msgstr "CD v mapo skriptov"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:393
+#: rkward/windows/rkcommandeditorwindow.cpp:369
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "Spremeni delovno mapo v mapo tega skripta"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:404
+#: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
 msgid "No preview"
 msgstr "Brez predogleda"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:405
+#: rkward/windows/rkcommandeditorwindow.cpp:377
 #, kde-format
 msgid "R Markdown"
 msgstr "R Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:406
+#: rkward/windows/rkcommandeditorwindow.cpp:378
 #, kde-format
 msgid "RKWard Output"
 msgstr "Izhod RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:407
+#: rkward/windows/rkcommandeditorwindow.cpp:379
 #, kde-format
 msgid "Plot"
 msgstr "Izriši"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:410
+#: rkward/windows/rkcommandeditorwindow.cpp:382
 #, kde-format
 msgid "Disable preview"
 msgstr "Onemogoči predogled"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:411
+#: rkward/windows/rkcommandeditorwindow.cpp:383
 #, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (appropriate for .Rmd "
@@ -6237,12 +6266,12 @@ msgstr ""
 "Predogled skripta, kot je upodobljen iz formata RMarkdown (primerno za "
 "datoteke .Rmd)."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:412
+#: rkward/windows/rkcommandeditorwindow.cpp:384
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "Predogled skripta, kot če bi se zagnal v interaktivni konzoli R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:413
+#: rkward/windows/rkcommandeditorwindow.cpp:385
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6253,7 +6282,7 @@ msgstr ""
 "Ta predogled bo prazen, če ni klica za <i>plot()</i> ali drugih grafičnih "
 "ukazov."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:414
+#: rkward/windows/rkcommandeditorwindow.cpp:386
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6262,13 +6291,13 @@ msgstr ""
 "Predogled katerega koli izhoda v izhodno okno RKWard. Ta predogled bo "
 "prazen, če ni klica na <i>rk.print()</i> ali drugih izhodnih ukazov RKWard."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:424
+#: rkward/windows/rkcommandeditorwindow.cpp:396
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Posodabljaj med vnosom"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:425
+#: rkward/windows/rkcommandeditorwindow.cpp:397
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6279,33 +6308,33 @@ msgstr ""
 "spremenite skript. Ko je ta možnost onemogočena, bo predogled posodobljen "
 "samo, kadar shranite skript."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:432
+#: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
 msgid "Save Script..."
 msgstr "Shrani skript ..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:434
+#: rkward/windows/rkcommandeditorwindow.cpp:406
 #, kde-format
 msgid "Save Script As..."
 msgstr "Shrani skript kot ..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:514
-#: rkward/windows/rkcommandeditorwindow.cpp:780
+#: rkward/windows/rkcommandeditorwindow.cpp:485
+#: rkward/windows/rkcommandeditorwindow.cpp:745
 #, kde-format
 msgid " [modified]"
 msgstr " [spremenjeno]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:521
+#: rkward/windows/rkcommandeditorwindow.cpp:492
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "Dokument »%1« je bil spremenjen. Ali ga vseeno želite zapreti?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:521
+#: rkward/windows/rkcommandeditorwindow.cpp:492
 #, kde-format
 msgid "File not saved"
 msgstr "Datoteka ni shranjena"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:576
+#: rkward/windows/rkcommandeditorwindow.cpp:547
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6328,12 +6357,12 @@ msgstr ""
 "izvaja.</p><p>Upoštevajte to pri uporabi predogledne funkcije in zlasti pri "
 "uporabi funkcije v skriptih, ki izvirajo iz nezaupanja vrednih virov.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:576
+#: rkward/windows/rkcommandeditorwindow.cpp:547
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Potencialni stranski učinki predogledov"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:699
+#: rkward/windows/rkcommandeditorwindow.cpp:670
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6341,22 +6370,22 @@ msgstr ""
 "Pri ustvarjanju samodejnega shranjevanje datoteke skripta '%1' je prišlo do "
 "napake:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:779
+#: rkward/windows/rkcommandeditorwindow.cpp:744
 #, kde-format
 msgid "Unnamed"
 msgstr "Neimenovano"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:909
+#: rkward/windows/rkcommandeditorwindow.cpp:874
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Predogled upodobljenega R markdowna"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:913
+#: rkward/windows/rkcommandeditorwindow.cpp:878
 #, kde-format
 msgid "Pandoc is not installed"
 msgstr "Pandoc ni nameščen"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:914
+#: rkward/windows/rkcommandeditorwindow.cpp:879
 #, kde-format
 msgid ""
 "The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
@@ -6373,27 +6402,27 @@ msgstr ""
 "sistemsko pot za tekoči R seji na <a href=\"rkward://settings/rbackend"
 "\">Nastavitve->Konfiguriraj RKward->R-zaledje</a>."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:926
+#: rkward/windows/rkcommandeditorwindow.cpp:891
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Predogled ustvarjenega izhoda RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:934
+#: rkward/windows/rkcommandeditorwindow.cpp:899
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Predogled ustvarjenega grafa"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:941
+#: rkward/windows/rkcommandeditorwindow.cpp:906
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Predogled skripta, ki se izvaja v interaktivni konzoli R-a"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1057
+#: rkward/windows/rkcommandeditorwindow.cpp:1021
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktivno)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1077
+#: rkward/windows/rkcommandeditorwindow.cpp:1040
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (neuporabljeno)"
@@ -6518,22 +6547,22 @@ msgstr ""
 msgid "About this window"
 msgstr "O tem oknu"
 
-#: rkward/windows/rkfilebrowser.cpp:122
+#: rkward/windows/rkfilebrowser.cpp:115
 #, kde-format
 msgid "Working directory"
 msgstr "Delovna mapa"
 
-#: rkward/windows/rkfilebrowser.cpp:140 rkward/windows/robjectbrowser.cpp:119
+#: rkward/windows/rkfilebrowser.cpp:126 rkward/windows/robjectbrowser.cpp:119
 #, kde-format
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: rkward/windows/rkfilebrowser.cpp:169
+#: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "Rename..."
 msgstr "Preimenuj …"
 
-#: rkward/windows/rkfilebrowser.cpp:169
+#: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "New name for '%1':"
 msgstr "Novo ime za »%1«:"
@@ -6629,47 +6658,43 @@ msgstr "Tema"
 msgid "Package"
 msgstr "Paket"
 
-#: rkward/windows/rkhtmlwindow.cpp:389
+#: rkward/windows/rkhtmlwindow.cpp:301
 #, kde-format
 msgid "Save as"
 msgstr "Shrani kot"
 
-#: rkward/windows/rkhtmlwindow.cpp:828
-#: rkward/windows/rktoplevelwindowgui.cpp:257
+#: rkward/windows/rkhtmlwindow.cpp:604
+#, kde-format
+msgid "RKWard output file %s does not (yet) exist"
+msgstr ""
+
+#: rkward/windows/rkhtmlwindow.cpp:723
+#: rkward/windows/rktoplevelwindowgui.cpp:255
 #, kde-format
 msgid "[Active]"
 msgstr "[Dejavno]"
 
-#: rkward/windows/rkhtmlwindow.cpp:839
+#: rkward/windows/rkhtmlwindow.cpp:734
 #, kde-format
 msgid "Output %1"
 msgstr "Izhod %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:894
+#: rkward/windows/rkhtmlwindow.cpp:788
 #, kde-format
 msgid "Output Window"
 msgstr "Izhodno okno"
 
-#: rkward/windows/rkhtmlwindow.cpp:896
+#: rkward/windows/rkhtmlwindow.cpp:790
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Osveži izhod"
 
-#: rkward/windows/rkhtmlwindow.cpp:924
-#, kde-format
-msgid ""
-"<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
-"</BODY></HTML>"
-msgstr ""
-"<HTML><BODY><H1>Izhodne datoteke RKWard ni bilo mogoče najti</H1>\n"
-"</BODY></HTML>"
-
-#: rkward/windows/rkhtmlwindow.cpp:926
+#: rkward/windows/rkhtmlwindow.cpp:816
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "Stran ne obstaja ali je okvarjena"
 
-#: rkward/windows/rkhtmlwindow.cpp:943
+#: rkward/windows/rkhtmlwindow.cpp:828
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6678,32 +6703,32 @@ msgstr ""
 "Ali res želite počistiti izhod? S tem boste odstranili tudi vse slikovne "
 "datoteke, uporabljene v izhodu. Ne bo jih mogoče obnoviti."
 
-#: rkward/windows/rkhtmlwindow.cpp:943
+#: rkward/windows/rkhtmlwindow.cpp:828
 #, kde-format
 msgid "Flush output?"
 msgstr "Splakni izhod?"
 
-#: rkward/windows/rkhtmlwindow.cpp:948
+#: rkward/windows/rkhtmlwindow.cpp:833
 #, kde-format
 msgid "Flushing output"
 msgstr "Splakujem izhod"
 
-#: rkward/windows/rkhtmlwindow.cpp:990
+#: rkward/windows/rkhtmlwindow.cpp:875
 #, kde-format
 msgid "Zoom In"
 msgstr "Približaj"
 
-#: rkward/windows/rkhtmlwindow.cpp:992
+#: rkward/windows/rkhtmlwindow.cpp:877
 #, kde-format
 msgid "Zoom Out"
 msgstr "Oddalji"
 
-#: rkward/windows/rkhtmlwindow.cpp:996
+#: rkward/windows/rkhtmlwindow.cpp:881
 #, kde-format
 msgid "Default &Encoding"
 msgstr "Privzeto kodiranje"
 
-#: rkward/windows/rkhtmlwindow.cpp:997
+#: rkward/windows/rkhtmlwindow.cpp:882
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6712,57 +6737,57 @@ msgstr ""
 "Nastavite kodiranje tako, da je privzeto, če na strani ali v glavah HTTP ni "
 "eksplicitno nastavljena koda."
 
-#: rkward/windows/rkhtmlwindow.cpp:1006
+#: rkward/windows/rkhtmlwindow.cpp:892
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Izvozi stran kot HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:1020
+#: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Save Output"
 msgstr "Shrani izhod"
 
-#: rkward/windows/rkhtmlwindow.cpp:1022
+#: rkward/windows/rkhtmlwindow.cpp:908
 #, kde-format
 msgid "Save Output As"
 msgstr "Shrani izhod kot"
 
-#: rkward/windows/rkhtmlwindow.cpp:1025
+#: rkward/windows/rkhtmlwindow.cpp:911
 #, kde-format
 msgid "&Clear Output"
 msgstr "Osveži izhod"
 
-#: rkward/windows/rkhtmlwindow.cpp:1031
+#: rkward/windows/rkhtmlwindow.cpp:917
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Povrni na zadnje shranjeno stanje"
 
-#: rkward/windows/rkhtmlwindow.cpp:1035
+#: rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Nastavi izhod kot aktiven"
 
-#: rkward/windows/rkhtmlwindow.cpp:1037
+#: rkward/windows/rkhtmlwindow.cpp:923
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Nastavi ta izhod kot datoteko, h kateri želite pripeti izhod."
 
-#: rkward/windows/rkhtmlwindow.cpp:1059
+#: rkward/windows/rkhtmlwindow.cpp:945
 #, kde-format
 msgid "Print output"
 msgstr "Izhod tiskanja"
 
-#: rkward/windows/rkhtmlwindow.cpp:1067
+#: rkward/windows/rkhtmlwindow.cpp:953
 #, kde-format
 msgid "Print page"
 msgstr "Natisni stran"
 
-#: rkward/windows/rkhtmlwindow.cpp:1124
+#: rkward/windows/rkhtmlwindow.cpp:1010
 #, kde-format
 msgid "No Title"
 msgstr "Brez naslova"
 
-#: rkward/windows/rkhtmlwindow.cpp:1137
+#: rkward/windows/rkhtmlwindow.cpp:1023
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6773,112 +6798,112 @@ msgstr ""
 "<p>Stran pomoči za to komponento še ni bila napisana (ali je polomljena). "
 "Prosimo, razmislite prispevku zanjo.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1142
+#: rkward/windows/rkhtmlwindow.cpp:1028
 #, kde-format
 msgid "Use %1 now"
 msgstr "Uporabi %1 zdaj"
 
-#: rkward/windows/rkhtmlwindow.cpp:1159
+#: rkward/windows/rkhtmlwindow.cpp:1045
 #, kde-format
 msgid "Summary"
 msgstr "Povzetek"
 
-#: rkward/windows/rkhtmlwindow.cpp:1166
+#: rkward/windows/rkhtmlwindow.cpp:1052
 #, kde-format
 msgid "Usage"
 msgstr "Raba"
 
-#: rkward/windows/rkhtmlwindow.cpp:1193
+#: rkward/windows/rkhtmlwindow.cpp:1079
 #, kde-format
 msgid "Choose another file"
 msgstr "Izberite drugo datoteko"
 
-#: rkward/windows/rkhtmlwindow.cpp:1215
+#: rkward/windows/rkhtmlwindow.cpp:1101
 #, kde-format
 msgid "GUI settings"
 msgstr "Nastavitve grafičnega vmesnika"
 
-#: rkward/windows/rkhtmlwindow.cpp:1240
+#: rkward/windows/rkhtmlwindow.cpp:1126
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Sorodne funkcije in strani"
 
-#: rkward/windows/rkhtmlwindow.cpp:1248
+#: rkward/windows/rkhtmlwindow.cpp:1134
 #, kde-format
 msgid "Technical details"
 msgstr "Tehnične podrobnosti"
 
-#: rkward/windows/rkhtmlwindow.cpp:1271
+#: rkward/windows/rkhtmlwindow.cpp:1157
 #, kde-format
 msgid "About"
 msgstr "O programu"
 
-#: rkward/windows/rkhtmlwindow.cpp:1278
+#: rkward/windows/rkhtmlwindow.cpp:1164
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Na tej strani:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1301
+#: rkward/windows/rkhtmlwindow.cpp:1187
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Neimenovani element grafičnega vmesnika"
 
-#: rkward/windows/rkhtmlwindow.cpp:1375
+#: rkward/windows/rkhtmlwindow.cpp:1261
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Sklic R za »%1«"
 
-#: rkward/windows/rkhtmlwindow.cpp:1386
+#: rkward/windows/rkhtmlwindow.cpp:1272
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "OKVARJEN SKLIC"
 
-#: rkward/windows/rkmdiwindow.cpp:433
+#: rkward/windows/rkmdiwindow.cpp:421
 #, kde-format
 msgid "Help on %1"
 msgstr "Pomoč za %1"
 
-#: rkward/windows/rkmdiwindow.cpp:437
+#: rkward/windows/rkmdiwindow.cpp:425
 #, kde-format
 msgid "Configure %1"
 msgstr "Prilagodi %1"
 
-#: rkward/windows/rktexthints.cpp:38
+#: rkward/windows/rktexthints.cpp:34
 #, kde-format
 msgid "The name <i>%1</i> might refer to:<br>"
 msgstr "Ime <i>%1</i> bi se lahko nanašalo na:<br>"
 
-#: rkward/windows/rktoolwindowbar.cpp:299
+#: rkward/windows/rktoolwindowbar.cpp:302
 #, kde-format
 msgid "Attach"
 msgstr "Pripni"
 
-#: rkward/windows/rktoolwindowbar.cpp:302
+#: rkward/windows/rktoolwindowbar.cpp:305
 #, kde-format
 msgid "Position"
 msgstr "Položaj"
 
-#: rkward/windows/rktoolwindowbar.cpp:303
+#: rkward/windows/rktoolwindowbar.cpp:306
 #, kde-format
 msgid "Left Sidebar"
 msgstr "Leva stranska vrstica"
 
-#: rkward/windows/rktoolwindowbar.cpp:304
+#: rkward/windows/rktoolwindowbar.cpp:307
 #, kde-format
 msgid "Right Sidebar"
 msgstr "Desna stranska vrstica"
 
-#: rkward/windows/rktoolwindowbar.cpp:305
+#: rkward/windows/rktoolwindowbar.cpp:308
 #, kde-format
 msgid "Top Sidebar"
 msgstr "Vrhnja stranska vrstica"
 
-#: rkward/windows/rktoolwindowbar.cpp:306
+#: rkward/windows/rktoolwindowbar.cpp:309
 #, kde-format
 msgid "Bottom Sidebar"
 msgstr "Spodnja stranska vrstica"
 
-#: rkward/windows/rktoolwindowbar.cpp:307
+#: rkward/windows/rktoolwindowbar.cpp:310
 #, kde-format
 msgid "Not shown in sidebar"
 msgstr "Ni prikazano v stranski vrstici"
@@ -6936,17 +6961,12 @@ msgstr "Aktiviraj pogled dokumenta"
 msgid "Show Output"
 msgstr "Pokaži izhod"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:100
-#, kde-format
-msgid "Color Scheme"
-msgstr "Barvna shema"
-
-#: rkward/windows/rktoplevelwindowgui.cpp:133
+#: rkward/windows/rktoplevelwindowgui.cpp:130
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Pokaži/skrij %1"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:147
+#: rkward/windows/rktoplevelwindowgui.cpp:144
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -6964,13 +6984,13 @@ msgstr ""
 "znotraj urejevalnika skriptov, morate odpreti okno urejevalnika skriptov in "
 "ga aktivirati."
 
-#: rkward/windows/rktoplevelwindowgui.cpp:147
-#: rkward/windows/rktoplevelwindowgui.cpp:160
+#: rkward/windows/rktoplevelwindowgui.cpp:144
+#: rkward/windows/rktoplevelwindowgui.cpp:158
 #, kde-format
 msgid "Note"
 msgstr "Opomba"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:160
+#: rkward/windows/rktoplevelwindowgui.cpp:158
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -6987,7 +7007,7 @@ msgstr ""
 "urejevalnika skriptov, morate odpreti okno urejevalnika skriptov in ga "
 "aktivirati."
 
-#: rkward/windows/rkwindowcatcher.cpp:124
+#: rkward/windows/rkwindowcatcher.cpp:132
 #, kde-format
 msgid ""
 "You have tried to embed a new R graphics device window in RKWard. However, "
@@ -6998,13 +7018,13 @@ msgstr ""
 "trenutno ni podprto v tej izvedbi RKWard na Mac OS X. Poglejte si http://"
 "rkward.kde.org/mac za več informacij."
 
-#: rkward/windows/rkwindowcatcher.cpp:124
-#: rkward/windows/rkwindowcatcher.cpp:126
+#: rkward/windows/rkwindowcatcher.cpp:132
+#: rkward/windows/rkwindowcatcher.cpp:134
 #, kde-format
 msgid "Could not embed R X11 window"
 msgstr "Ni bilo mogoče vdelati okna R X11"
 
-#: rkward/windows/rkwindowcatcher.cpp:126
+#: rkward/windows/rkwindowcatcher.cpp:134
 #, kde-format
 msgid ""
 "You have tried to embed a new R graphics device window in RKWard. However, "
@@ -7018,17 +7038,17 @@ msgstr ""
 "RKWard bolje, razmislite o tem, da bi to prijavili kot hrošča. Poleg tega "
 "boste morda želeli prilagoditi nastavitve-> RKWard->Onscreen Graphics."
 
-#: rkward/windows/rkwindowcatcher.cpp:294
+#: rkward/windows/rkwindowcatcher.cpp:308
 #, kde-format
 msgid "An error occurred"
 msgstr "Pojavila se je napaka"
 
-#: rkward/windows/rkwindowcatcher.cpp:296
+#: rkward/windows/rkwindowcatcher.cpp:310
 #, kde-format
 msgid "Graphics Device Window"
 msgstr "Okno grafične naprave"
 
-#: rkward/windows/rkwindowcatcher.cpp:351
+#: rkward/windows/rkwindowcatcher.cpp:367
 #, kde-format
 msgid ""
 "The current window appears too large to fit on the screen. If this happens "
@@ -7039,22 +7059,22 @@ msgstr ""
 "to redno dogaja, boste morda želeli prilagoditi privzeto velikost grafičnega "
 "okna v Nastavitve->Konfiguriraj RKWard->Zaslonska grafika."
 
-#: rkward/windows/rkwindowcatcher.cpp:351
+#: rkward/windows/rkwindowcatcher.cpp:367
 #, kde-format
 msgid "Large window"
 msgstr "Veliko okno"
 
-#: rkward/windows/rkwindowcatcher.cpp:371
+#: rkward/windows/rkwindowcatcher.cpp:387
 #, kde-format
 msgid "Closing device (saving history)"
 msgstr "Zapiranje naprave (shranjevanje zgodovine)"
 
-#: rkward/windows/rkwindowcatcher.cpp:373
+#: rkward/windows/rkwindowcatcher.cpp:389
 #, kde-format
 msgid "Shutting down device number %1"
 msgstr "Izklop naprave številka %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:379
+#: rkward/windows/rkwindowcatcher.cpp:395
 #, kde-format
 msgid ""
 "<p>The graphics device is being closed, saving the last plot to the plot "
@@ -7067,7 +7087,7 @@ msgstr ""
 "Grafično napravo lahko takoj zaprete, če se zatakne. Če to storite, morda "
 "zadnji grafikon manjka v zgodovini grafikonov.</p>"
 
-#: rkward/windows/rkwindowcatcher.cpp:381
+#: rkward/windows/rkwindowcatcher.cpp:397
 #, kde-format
 msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
@@ -7076,106 +7096,106 @@ msgstr ""
 "<p>Opomba: Na X11 se lahko vdelano okno izteče in v tem primeru ga boste "
 "morali ročno zapreti.</p>"
 
-#: rkward/windows/rkwindowcatcher.cpp:383
+#: rkward/windows/rkwindowcatcher.cpp:399
 #, kde-format
 msgid "Close immediately"
 msgstr "Zapri takoj"
 
-#: rkward/windows/rkwindowcatcher.cpp:512
+#: rkward/windows/rkwindowcatcher.cpp:528
 #, kde-format
 msgid "Specify fixed size"
 msgstr "Določi fiksno velikost"
 
-#: rkward/windows/rkwindowcatcher.cpp:517
+#: rkward/windows/rkwindowcatcher.cpp:533
 #, kde-format
 msgid "Width"
 msgstr "Širina"
 
-#: rkward/windows/rkwindowcatcher.cpp:527
+#: rkward/windows/rkwindowcatcher.cpp:543
 #, kde-format
 msgid "Height"
 msgstr "Višina"
 
-#: rkward/windows/rkwindowcatcher.cpp:561
+#: rkward/windows/rkwindowcatcher.cpp:577
 #, kde-format
 msgid "Activate graphics device number %1"
 msgstr "Aktiviraj grafično napravo številka %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:567
+#: rkward/windows/rkwindowcatcher.cpp:583
 #, kde-format
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "Kopiraj vsebino grafične naprave številka %1 v izhod"
 
-#: rkward/windows/rkwindowcatcher.cpp:575
+#: rkward/windows/rkwindowcatcher.cpp:591
 #, kde-format
 msgid "Print contents of graphics device number %1"
 msgstr "Natisni vsebino grafične naprave številka %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:583
+#: rkward/windows/rkwindowcatcher.cpp:599
 #, kde-format
 msgid "Specify R object"
 msgstr "Navedite predmet R"
 
-#: rkward/windows/rkwindowcatcher.cpp:587
+#: rkward/windows/rkwindowcatcher.cpp:603
 #, kde-format
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "Določite ime predmeta R, v katerega želite shraniti grafikon"
 
-#: rkward/windows/rkwindowcatcher.cpp:607
+#: rkward/windows/rkwindowcatcher.cpp:623
 #, kde-format
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "Shrani vsebino grafične naprave številka %1 v predmet »%2«"
 
-#: rkward/windows/rkwindowcatcher.cpp:616
+#: rkward/windows/rkwindowcatcher.cpp:632
 #, kde-format
 msgid "Duplicate graphics device number %1"
 msgstr "Podvoji grafično napravo številke %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:622
+#: rkward/windows/rkwindowcatcher.cpp:638
 #, kde-format
 msgid "Load next plot in device number %1"
 msgstr "Naloži naslednji graf v napravo številke %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:623
-#: rkward/windows/rkwindowcatcher.cpp:631
 #: rkward/windows/rkwindowcatcher.cpp:639
 #: rkward/windows/rkwindowcatcher.cpp:647
 #: rkward/windows/rkwindowcatcher.cpp:655
+#: rkward/windows/rkwindowcatcher.cpp:663
+#: rkward/windows/rkwindowcatcher.cpp:671
 #, kde-format
 msgid "Loading plot from history"
 msgstr "Nalaganje grafa iz zgodovine"
 
-#: rkward/windows/rkwindowcatcher.cpp:630
+#: rkward/windows/rkwindowcatcher.cpp:646
 #, kde-format
 msgid "Load previous plot in device number %1"
 msgstr "Naloži prejšnji graf v napravo številke %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:638
+#: rkward/windows/rkwindowcatcher.cpp:654
 #, kde-format
 msgid "Load first plot in device number %1"
 msgstr "Naloži prvi graf v napravo številke %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:646
+#: rkward/windows/rkwindowcatcher.cpp:662
 #, kde-format
 msgid "Load last plot in device number %1"
 msgstr "Naloži zadnji graf v napravo številke %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:654
+#: rkward/windows/rkwindowcatcher.cpp:670
 #, kde-format
 msgid "Load plot %1 in device number %2"
 msgstr "Naloži graf %1 v napravo številke %2"
 
-#: rkward/windows/rkwindowcatcher.cpp:662
+#: rkward/windows/rkwindowcatcher.cpp:678
 #, kde-format
 msgid "Append this plot to history (device number %1)"
 msgstr "Ta graf priloži zgodovini (številka naprave %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:668
+#: rkward/windows/rkwindowcatcher.cpp:684
 #, kde-format
 msgid "Remove current plot from history (device number %1)"
 msgstr "Odstrani trenutni graf iz zgodovine (naprava številke %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:674
+#: rkward/windows/rkwindowcatcher.cpp:690
 #, kde-format
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
@@ -7184,112 +7204,112 @@ msgstr ""
 "To bo počistilo zgodovino grafikonov za vsa okna naprav, ne samo za to. Če "
 "to ni vaš namen, pritisnite prekliči spodaj."
 
-#: rkward/windows/rkwindowcatcher.cpp:676
+#: rkward/windows/rkwindowcatcher.cpp:692
 #, kde-format
 msgid "Clear plot history"
 msgstr "Počisti zgodovino grafov"
 
-#: rkward/windows/rkwindowcatcher.cpp:682
+#: rkward/windows/rkwindowcatcher.cpp:698
 #, kde-format
 msgid "Plot properties (device number %1)"
 msgstr "Lastnosti grafikona (številka naprave %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:696
+#: rkward/windows/rkwindowcatcher.cpp:712
 #, kde-format
 msgid "<Unsaved plot>"
 msgstr "<Neshranjen graf>"
 
-#: rkward/windows/rkwindowcatcher.cpp:723
+#: rkward/windows/rkwindowcatcher.cpp:739
 #, kde-format
 msgid "Draw area follows size of window"
 msgstr "Območje za risanje sledi velikosti okna"
 
-#: rkward/windows/rkwindowcatcher.cpp:730
+#: rkward/windows/rkwindowcatcher.cpp:746
 #, kde-format
 msgid "Set fixed size 500x500"
 msgstr "Nastavitev fiksne velikosti 500x500"
 
-#: rkward/windows/rkwindowcatcher.cpp:733
+#: rkward/windows/rkwindowcatcher.cpp:749
 #, kde-format
 msgid "Set fixed size 1000x1000"
 msgstr "Nastavitev fiksne velikosti 1000x1000"
 
-#: rkward/windows/rkwindowcatcher.cpp:736
+#: rkward/windows/rkwindowcatcher.cpp:752
 #, kde-format
 msgid "Set fixed size 2000x2000"
 msgstr "Nastavitev fiksne velikosti 2000x2000"
 
-#: rkward/windows/rkwindowcatcher.cpp:739
+#: rkward/windows/rkwindowcatcher.cpp:755
 #, kde-format
 msgid "Set specified fixed size..."
 msgstr "Nastavitev določene fiksne velikosti ..."
 
-#: rkward/windows/rkwindowcatcher.cpp:744
+#: rkward/windows/rkwindowcatcher.cpp:760
 #, kde-format
 msgid "Previous plot"
 msgstr "Prejšnji graf"
 
-#: rkward/windows/rkwindowcatcher.cpp:749
+#: rkward/windows/rkwindowcatcher.cpp:765
 #, kde-format
 msgid "First plot"
 msgstr "Prvi graf"
 
-#: rkward/windows/rkwindowcatcher.cpp:754
+#: rkward/windows/rkwindowcatcher.cpp:770
 #, kde-format
 msgid "Next plot"
 msgstr "Naslednji graf"
 
-#: rkward/windows/rkwindowcatcher.cpp:759
+#: rkward/windows/rkwindowcatcher.cpp:775
 #, kde-format
 msgid "Last plot"
 msgstr "Zadnji graf"
 
-#: rkward/windows/rkwindowcatcher.cpp:762
+#: rkward/windows/rkwindowcatcher.cpp:778
 #, kde-format
 msgid "Go to plot"
 msgstr "Pojdi na graf"
 
-#: rkward/windows/rkwindowcatcher.cpp:771
+#: rkward/windows/rkwindowcatcher.cpp:787
 #, kde-format
 msgid "Append this plot"
 msgstr "Priloži ta grafikon"
 
-#: rkward/windows/rkwindowcatcher.cpp:776
+#: rkward/windows/rkwindowcatcher.cpp:792
 #, kde-format
 msgid "Remove this plot"
 msgstr "Odstrani ta graf"
 
-#: rkward/windows/rkwindowcatcher.cpp:782
+#: rkward/windows/rkwindowcatcher.cpp:798
 #, kde-format
 msgid "Clear history"
 msgstr "Počisti zgodovino"
 
-#: rkward/windows/rkwindowcatcher.cpp:788
+#: rkward/windows/rkwindowcatcher.cpp:804
 #, kde-format
 msgid "Plot properties"
 msgstr "Lastnosti grafa"
 
-#: rkward/windows/rkwindowcatcher.cpp:793
+#: rkward/windows/rkwindowcatcher.cpp:809
 #, kde-format
 msgid "Make active"
 msgstr "Naredi aktivno"
 
-#: rkward/windows/rkwindowcatcher.cpp:797
+#: rkward/windows/rkwindowcatcher.cpp:813
 #, kde-format
 msgid "Copy to output"
 msgstr "Kopiraj v izhod"
 
-#: rkward/windows/rkwindowcatcher.cpp:801
+#: rkward/windows/rkwindowcatcher.cpp:817
 #, kde-format
 msgid "Store as R object..."
 msgstr "Shrani kot predmet R ..."
 
-#: rkward/windows/rkwindowcatcher.cpp:803
+#: rkward/windows/rkwindowcatcher.cpp:819
 #, kde-format
 msgid "Duplicate"
 msgstr "Podvoji"
 
-#: rkward/windows/rkwindowcatcher.cpp:807
+#: rkward/windows/rkwindowcatcher.cpp:823
 #, kde-format
 msgid "Stop interaction"
 msgstr "Prekini interakcijo"
@@ -7315,7 +7335,7 @@ msgid "Failed to open output file. Error message was '%1'"
 msgstr ""
 "Zadaj izvršitvene ni bilo mogoče zagnati. Sporočilo o napaki je bilo: '%1'"
 
-#: rkward/windows/rkworkplace.cpp:647
+#: rkward/windows/rkworkplace.cpp:648
 #, kde-format
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
@@ -7340,52 +7360,52 @@ msgstr ""
 "lahko konfigurirate v razdelku Nastavitve->Configure RKWard->General.\n"
 "Res urejati predmet?"
 
-#: rkward/windows/rkworkplace.cpp:647
+#: rkward/windows/rkworkplace.cpp:648
 #, kde-format
 msgid "About to edit very large object"
 msgstr "Sledi urejanje zelo velikega predmeta"
 
-#: rkward/windows/rkworkplace.cpp:980
+#: rkward/windows/rkworkplace.cpp:981
 #, kde-format
 msgid "Save Workplace layout"
 msgstr "Shrani postavitev delovnega mesta"
 
-#: rkward/windows/rkworkplace.cpp:989
+#: rkward/windows/rkworkplace.cpp:990
 #, kde-format
 msgid "Restore Workplace layout"
 msgstr "Obnovi postavitev delovnega mesta"
 
-#: rkward/windows/rkworkplaceview.cpp:61
+#: rkward/windows/rkworkplaceview.cpp:62
 #, kde-format
 msgid "Close all"
 msgstr "Zapri vse"
 
-#: rkward/windows/rkworkplaceview.cpp:238
+#: rkward/windows/rkworkplaceview.cpp:239
 #, kde-format
 msgid "Window Left"
 msgstr "Okno levo"
 
-#: rkward/windows/rkworkplaceview.cpp:242
+#: rkward/windows/rkworkplaceview.cpp:246
 #, kde-format
 msgid "Window Right"
 msgstr "Okno desno"
 
-#: rkward/windows/rkworkplaceview.cpp:248
+#: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split Ve&rtical"
 msgstr "Razdeli &navpično"
 
-#: rkward/windows/rkworkplaceview.cpp:251
+#: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
 msgstr "Trenutno dejavni pogled razdelite na dva pogleda, navpično."
 
-#: rkward/windows/rkworkplaceview.cpp:255
+#: rkward/windows/rkworkplaceview.cpp:262
 #, kde-format
 msgid "Split &Horizontal"
 msgstr "Razdeli &vodoravno"
 
-#: rkward/windows/rkworkplaceview.cpp:258
+#: rkward/windows/rkworkplaceview.cpp:265
 #, kde-format
 msgid "Split the currently active view into two views, horizontally."
 msgstr "Razdelite trenutno dejavni pogled na dva pogleda, vodoravno."
@@ -7473,6 +7493,16 @@ msgstr "Vnesite novo ime"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Ogled v urejevalniku (samo za branje)"
+
+#~ msgid ""
+#~ "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
+#~ "</BODY></HTML>"
+#~ msgstr ""
+#~ "<HTML><BODY><H1>Izhodne datoteke RKWard ni bilo mogoče najti</H1>\n"
+#~ "</BODY></HTML>"
+
+#~ msgid "Color Scheme"
+#~ msgstr "Barvna shema"
 
 #~| msgid "[Not saved]"
 #~ msgid "[No token received]"
