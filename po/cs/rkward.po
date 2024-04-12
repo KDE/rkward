@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
+"POT-Creation-Date: 2024-04-12 00:35+0000\n"
 "PO-Revision-Date: 2023-11-10 16:29+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -5854,13 +5854,13 @@ msgstr "&Historie"
 msgid "&Window"
 msgstr "O&kno"
 
-#: rkward/windows/katepluginintegration.cpp:631
+#: rkward/windows/katepluginintegration.cpp:669
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr "V současném skriptu"
 
-#: rkward/windows/katepluginintegration.cpp:632
+#: rkward/windows/katepluginintegration.cpp:670
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"

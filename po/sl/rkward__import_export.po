@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-05-03 08:22+0200\n"
+"PO-Revision-Date: 2024-04-11 07:38+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Lokalize 21.12.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2007,15 +2007,7 @@ msgstr "Naloži podatkovno datoteko R."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
-#, fuzzy, kde-format
-#| msgid ""
-#| "Choose the R file to import. This would be a file created e.g. by saving "
-#| "the workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
-#| "\">save()</link> command, or the <link href=\"rkward://component/save_r\"/"
-#| "> plugin. The main difference to loading a workspace via Workspace->Open "
-#| "Workspace, is that the workspace is not cleaned, first, but rather merged "
-#| "with your existing workspace. If in doubt, use Workspace->Open Workspace, "
-#| "instead of this plugin."
+#, kde-format
 msgid ""
 "Choose the R file to import. This would be a file created e.g. by saving the "
 "workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
@@ -2029,9 +2021,9 @@ msgstr ""
 "ustvarjena iz delovnega prostora RKWard z uporabo R ukaza <link href="
 "\"rkward://rhelp/save\">save()</link> ali vtičnika <link href=\"rkward://"
 "component/save_r\"/> Glavna razlika pri nalaganju delovnega prostora prek "
-"Delovni prostor->Odpri delovni prostor je v tem, da delovni prostor ni "
+"Delovni prostor-&gt;Odpri delovni prostor je v tem, da delovni prostor ni "
 "najprej očiščen, ampak je združen z obstoječim delovnim prostorom. Če ste v "
-"dvomih, namesto tega vtičnika uporabite Delovni prostor->Odpri delovni "
+"dvomih, namesto tega vtičnika uporabite Delovni prostor-&gt;Odpri delovni "
 "prostor."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>

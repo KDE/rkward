@@ -3,22 +3,22 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-10-08 08:48+0300\n"
+"POT-Creation-Date: 2024-04-12 00:35+0000\n"
+"PO-Revision-Date: 2024-04-11 08:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language-Team: Ukrainian\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1023,8 +1023,7 @@ msgid "Discard changes?"
 msgstr "Відкинути зміни?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "Не закривати"
@@ -1081,18 +1080,16 @@ msgstr ""
 "адміністратора (програма попросить вас вказати пароль адміністратора)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Увійти до облікового запису root"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Пакунки з оновленнями"
+msgstr "Пропустити ці пакунки"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5389,15 +5386,7 @@ msgid "Other device:"
 msgstr "Інший пристрій:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5413,7 +5402,7 @@ msgstr ""
 "пристрій RKWard. Цей пристрій визначається за допомогою команди R <i>RK()</"
 "i>.</p><p>«Типовий для платформи пристрій» визначає один із пристроїв, "
 "<i>X11()</i>, <i>windows()</i> або <i>quartz()</i>, залежно від платформи.</"
-"p><p>Ви також можете вказати назву функції, наприклад <i>cairoDevice</i>.</p>"
+"p><p>Ви також можете вказати назву функції, наприклад <i>Cairo</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -6170,13 +6159,13 @@ msgstr "&Журнал"
 msgid "&Window"
 msgstr "&Вікно"
 
-#: rkward/windows/katepluginintegration.cpp:631
+#: rkward/windows/katepluginintegration.cpp:669
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr "у поточному скрипті"
 
-#: rkward/windows/katepluginintegration.cpp:632
+#: rkward/windows/katepluginintegration.cpp:670
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
@@ -6764,7 +6753,7 @@ msgstr "Зберегти як"
 #: rkward/windows/rkhtmlwindow.cpp:604
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
-msgstr ""
+msgstr "Файла результатів RKWard %s ще не існує"
 
 #: rkward/windows/rkhtmlwindow.cpp:723
 #: rkward/windows/rktoplevelwindowgui.cpp:255

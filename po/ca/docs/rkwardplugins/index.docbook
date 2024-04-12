@@ -1419,9 +1419,7 @@ i quines seccions de codi contenen quin codi R.
 >getString("mode")</function
 >), sinó <replaceable
 >"mode.string"</replaceable
->. En realitat, aquesta és la manera interna en què funciona un control d'opcions: té una propietat <quote
->string</quote
->, que té el seu valor de cadena. <function
+>. En realitat, aquesta és la manera interna en què funciona un control d'opcions: té una propietat «string», que té el seu valor de cadena. <function
 >getString("mode")</function
 > és només una abreviatura, i equival a <function
 >getString("mode.string")</function
@@ -1465,11 +1463,7 @@ i quines seccions de codi contenen quin codi R.
 	<para
 >Per a obtenir una llista completa de propietats, consulteu la <link linkend="reference"
 >referència</link
->. Una propietat més, però, és especial perquè tots els elements de la &IGU; la tenen: <quote
->enabled</quote
->. Això és una mica menys dràstic que <quote
->visible</quote
->. No mostra/oculta l'element de la &IGU;, però només l'activa/desactiva. Els elements desactivats es mostren normalment en gris i no reaccionen a l'entrada de l'usuari. </para>
+>. Una propietat més, però, és especial perquè tots els elements de la &IGU; la tenen: «enabled». Això és una mica menys dràstic que «visible». No mostra/oculta l'element de la &IGU;, però només l'activa/desactiva. Els elements desactivats es mostren normalment en gris i no reaccionen a l'entrada de l'usuari. </para>
 	<note>
 		<para
 >A més de <command
@@ -1527,9 +1521,7 @@ i quines seccions de codi contenen quin codi R.
 >"constant"</replaceable
 >. Després utilitzem <function
 >gui.setValue()</function
-> per a establir les propietats <quote
->enabled</quote
-> de <replaceable
+> per a establir les propietats «enabled» de <replaceable
 >"y"</replaceable
 > i <replaceable
 >"constant"</replaceable
@@ -1595,13 +1587,7 @@ i quines seccions de codi contenen quin codi R.
 >id</parameter
 > com la majoria d'elements. El component del paràmetre especifica quin connector incrustar, com es defineix al fitxer &pluginmap; (<replaceable
 >"rkward::plot_options"</replaceable
-> és el resultat de concatenar l'espai de noms <quote
->rkward</quote
->, un separador <quote
->::</quote
->, i el nom del component <quote
->plot_options</quote
->). </para>
+> és el resultat de concatenar l'espai de noms «rkward», un separador «::», i el nom del component «plot_options»). </para>
 </sect1>
 <sect1 id="embedding_code">
 <title
@@ -1728,9 +1714,7 @@ i quines seccions de codi contenen quin codi R.
 >"xvarslot"</replaceable
 > i <replaceable
 >"yvarslot"</replaceable
-> en aquest exemple) a les propietats <quote
->external</quote
-> rebudes del connector incrustat. Això és tot. Tota la resta es prepara automàticament. </para>
+> en aquest exemple) a les propietats «external» rebudes del connector incrustat. Això és tot. Tota la resta es prepara automàticament. </para>
 </sect1>
 </chapter>
 
@@ -3463,15 +3447,7 @@ user (selection from a list of values shown next to this element) --&gt;
 <para
 >També s'ha d'indicar almenys un <command
 >&lt;author&gt;</command
-> amb una adreça de correu electrònic vàlida i també s'ha de donar el rol <quote
->aut</quote
-> (<quote
->author</quote
->). En cas que el vostre connector causi problemes o algú vulgui compartir la seva gratitud amb vosaltres, hauria de ser fàcil contactar algú que hi estigui implicat. Per a més informació sobre altres rols vàlids, com <quote
->ctb</quote
-> per als col·laboradors de codi o <quote
->cre</quote
-> per al manteniment de paquets, consulteu la <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html"
+> amb una adreça de correu electrònic vàlida i també s'ha de donar el rol «aut» («author»). En cas que el vostre connector causi problemes o algú vulgui compartir la seva gratitud amb vosaltres, hauria de ser fàcil contactar algú que hi estigui implicat. Per a més informació sobre altres rols vàlids, com «ctb» per als col·laboradors de codi o «cre» per al manteniment de paquets, consulteu la <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html"
 >documentació de l'R sobre <function
 >person()</function
 ></ulink
@@ -3584,13 +3560,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >sometest_name</token
 > s'han de substituir pels seus noms correctes, d'acord amb això. A més, <token
 >ll</token
-> és un marcador de posició per a una abreviatura de l'idioma (&pex;, <quote
->de</quote
->, <quote
->en</quote
-> o <quote
->es</quote
->). </para>
+> és un marcador de posició per a una abreviatura de l'idioma (&pex;, «de», «en» o «es»). </para>
 		</note>
 		<tip>
 			<para
@@ -3618,9 +3588,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >.js</link
 > del connector. És a dir, fins i tot el directori "plugins" és opcional. Pot ajudar a donar una mica d'ordre als vostres fitxers, especialment si incloeu més d'un connector/diàleg a l'arxiu, que no és cap problema per descomptat. Podeu tenir tants directoris per als fitxers de connectors reals com creieu oportú, només s'han d'assemblar al <link linkend="pluginmap"
 >&pluginmap;</link
->, respectivament. També és possible incloure diversos fitxers &pluginmap;, si s'adapta a les vostres necessitats, però llavors hauríeu d'incloure'ls tots a <quote
->plugin_name.pluginmap</quote
->. </para>
+>, respectivament. També és possible incloure diversos fitxers &pluginmap;, si s'adapta a les vostres necessitats, però llavors hauríeu d'incloure'ls tots a «plugin_name.pluginmap». </para>
 			<para
 >Cada paquet &R; ha de tenir un fitxer <filename
 >DESCRIPTION</filename
@@ -3636,9 +3604,7 @@ user (selection from a list of values shown next to this element) --&gt;
 			<para
 >A més del contingut general d'un fitxer <filename
 >DESCRIPTION</filename
->, assegureu-vos també d'incloure la línia <quote
->Enhances: rkward</quote
->. Això farà que el &rkward; escanegi automàticament el paquet cercant connectors si està instal·lat. Un exemple de fitxer <filename
+>, assegureu-vos també d'incloure la línia «Enhances: rkward». Això farà que el &rkward; escanegi automàticament el paquet cercant connectors si està instal·lat. Un exemple de fitxer <filename
 >DESCRIPTION</filename
 > té aquest aspecte: </para>
 			<programlisting
@@ -3667,9 +3633,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >paquet <application
 >rkwarddev</application
 ></link
-> i proporcioneu tota la informació necessària a través de l'opció <quote
->about</quote
->, es crearà automàticament un fitxer <filename
+> i proporcioneu tota la informació necessària a través de l'opció «about», es crearà automàticament un fitxer <filename
 >DESCRIPTION</filename
 > que funciona. </para>
 			</tip>
@@ -3800,9 +3764,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		<para
 >El <application
 >rkwarddev</application
-> depèn d'un altre paquet petit anomenat <quote
->XiMpLe</quote
->, que és un analitzador i generador de &XML; molt senzill i també està present en el mateix repositori.</para>
+> depèn d'un altre paquet petit anomenat «XiMpLe», que és un analitzador i generador de &XML; molt senzill i també està present en el mateix repositori.</para>
 		<para
 >També es pot trobar la <ulink url="https://files.kde.org/rkward/R/pckg/rkwarddev/rkwarddev.pdf"
 >documentació completa en format PDF</ulink
@@ -3831,9 +3793,7 @@ user (selection from a list of values shown next to this element) --&gt;
 ></menuchoice
 >. Com suggereix el nom, podeu crear esquelets de connectors per a una edició posterior. Aquest diàleg al seu torn es va generar amb un script del <application
 >rkwarddev</application
-> que trobareu al directori <quote
->demo</quote
-> del paquet i de codi font de paquet instal·lat, com a exemple addicional. També podeu executar-la cridant <function
+> que trobareu al directori «demo» del paquet i de codi font de paquet instal·lat, com a exemple addicional. També podeu executar-la cridant <function
 >demo("skeleton_dialog")</function
 ></para
 ></tip>
@@ -3892,9 +3852,7 @@ var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required
 >. Anomenar els vostres objectes &R; idèntics a aquests ID també ajudarà a obtenir codi de script que sigui fàcil d'entendre. </para>
 		</tip>
 		<para
->Si voleu veure com es veu el codi XML de l'element definit si l'exporteu a un fitxer, només podeu cridar l'objecte pel seu nom. Per tant, si heu anomenat <quote
->var.x</quote
-> en la vostra sessió &R;, hauríeu de veure quelcom com això:</para>
+>Si voleu veure com es veu el codi XML de l'element definit si l'exporteu a un fitxer, només podeu cridar l'objecte pel seu nom. Per tant, si heu anomenat «var.x» en la vostra sessió &R;, hauríeu de veure quelcom com això:</para>
 		<programlisting
 >&lt;varslot id="vrsl_compare" label="compare" source="vars" types="number" required="true" /&gt;
                 </programlisting>
@@ -4079,9 +4037,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 >&gt;=</command
 > o <command
 >||</command
->, de manera que podeu comparar lògicament els objectes &R; sense la necessitat de posar cometes la major part del temps. Mirem l'objecte <quote
->JS.calc</quote
-> resultant, que ara conté una cadena de caràcters amb aquest contingut:</para>
+>, de manera que podeu comparar lògicament els objectes &R; sense la necessitat de posar cometes la major part del temps. Mirem l'objecte «JS.calc» resultant, que ara conté una cadena de caràcters amb aquest contingut:</para>
 		<programlisting
 >echo("res &lt;- t.test (x=" + vrslCompare + ", y=" + vrslAgainst + ", hypothesis=\"" + radUsngtsth + "\"");
         if(chcPardsmpl) {
@@ -4188,9 +4144,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 >TRUE</replaceable
 > si executareu l'script repetidament (&pex;, després dels canvis al codi), ja que de manera predeterminada no se sobreescriuran fitxers.</para>
 			<para
->L'objecte resultant <quote
->plugin.dir</quote
-> conté el camí al directori on es va crear el connector. Això pot ser útil en combinació amb la funció <function
+>L'objecte resultant «plugin.dir» conté el camí al directori on es va crear el connector. Això pot ser útil en combinació amb la funció <function
 >rk.build.package()</function
 >, per a construir un paquet &R; real per a compartir el vostre connector amb altres; &pex;, per enviant-lo a l'equip de desenvolupament del &rkward; per a afegir-lo al nostre repositori de connectors.</para>
 		</sect2>
@@ -4200,9 +4154,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 		<para
 >Per a recapitular tot l'anterior, aquí hi ha l'script complet per a crear l'exemple de prova t que funciona. Afegint el codi ja explicat, també carrega el paquet si cal, i utilitza l'entorn <function
 >local()</function
->, de manera que tots els objectes creats no acabaran a l'espai de treball actual (excepte el <quote
->plugin.dir</quote
->):</para>
+>, de manera que tots els objectes creats no acabaran a l'espai de treball actual (excepte el «plugin.dir»):</para>
 		<programlisting
 >require(rkwarddev)
 

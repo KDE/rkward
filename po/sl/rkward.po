@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-10-09 08:47+0200\n"
+"POT-Creation-Date: 2024-04-12 00:35+0000\n"
+"PO-Revision-Date: 2024-04-11 07:46+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1004,8 +1004,7 @@ msgid "Discard changes?"
 msgstr "Naj zavržem spremembe?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "Ne zapri"
@@ -1061,18 +1060,16 @@ msgstr ""
 "skrbniškimi pravicami (od vas bo zahtevano geslo)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Postani korenski uporabnik"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Paketi, ki jih je mogoče posodobiti"
+msgstr "Preskoči te pakete"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5316,15 +5313,7 @@ msgid "Other device:"
 msgstr "Druga naprava:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5340,7 +5329,7 @@ msgstr ""
 "izbira za večino uporabnikov. To ustreza ukazu R <i>RK()</i>.</p><p>"
 "\"Privzeta naprava platforme\" ustreza enemu od <i>X11()</i>, <i>windows()</"
 "i>ali <i>quartz()</i>, odvisno od platforme.</p><p>Določite lahko tudi ime "
-"funkcije, kot je <i>cairoDevice</i>.</p>"
+"funkcije, kot je <i>Cairo</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -6088,13 +6077,13 @@ msgstr "Z&godovina"
 msgid "&Window"
 msgstr "&Okno"
 
-#: rkward/windows/katepluginintegration.cpp:631
+#: rkward/windows/katepluginintegration.cpp:669
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr "v trenutnem skriptu"
 
-#: rkward/windows/katepluginintegration.cpp:632
+#: rkward/windows/katepluginintegration.cpp:670
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
@@ -6666,7 +6655,7 @@ msgstr "Shrani kot"
 #: rkward/windows/rkhtmlwindow.cpp:604
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
-msgstr ""
+msgstr "Izhodna datoteka RKWard %s (še) ne obstaja"
 
 #: rkward/windows/rkhtmlwindow.cpp:723
 #: rkward/windows/rktoplevelwindowgui.cpp:255

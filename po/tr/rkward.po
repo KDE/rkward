@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-02-24 21:46+0300\n"
+"POT-Creation-Date: 2024-04-12 00:35+0000\n"
+"PO-Revision-Date: 2024-04-12 01:12+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1016,8 +1016,7 @@ msgid "Discard changes?"
 msgstr "Değişiklikleri At?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "Kapatma"
@@ -1073,18 +1072,16 @@ msgstr ""
 "ayrıcalıklarınızla sürdürmek mi istiyorsunuz (parola istenecektir)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Yetkili Kullanıcı Ol"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Güncellenebilir Paketler"
+msgstr "Bu Paketlera Atla"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -3624,7 +3621,7 @@ msgstr "Değişkenleri seç"
 #: rkward/plugin/rkvarselector.cpp:62
 #, kde-format
 msgid "Show all environments"
-msgstr "Tüm Ortamları Göster"
+msgstr "Tüm ortamları göster"
 
 #: rkward/plugin/rkvarselector.cpp:64
 #, kde-format
@@ -4412,7 +4409,7 @@ msgstr "Tüm komutları yarıda keser"
 #: rkward/rkward.cpp:548
 #, kde-format
 msgid "CC commands to output..."
-msgstr "Komutları çıktıya kopyalar…"
+msgstr "Komutları Çıktıya Kopyala…"
 
 #: rkward/rkward.cpp:552 rkward/rkward.cpp:556
 #, kde-format
@@ -5082,7 +5079,7 @@ msgstr "Komutları betik düzenleyicisinden konsol aracılığıyla çalıştır
 #: rkward/settings/rksettingsmoduleconsole.cpp:60
 #, kde-format
 msgid "Also add those commands to console history"
-msgstr "Aynı zamanda bu komutları, konsol geçmişine ekle"
+msgstr "Aynı zamanda bu komutları konsol geçmişine ekle"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
@@ -5313,15 +5310,7 @@ msgid "Other device:"
 msgstr "Diğer aygıt:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5336,8 +5325,8 @@ msgstr ""
 "p><p>RKWard yerel aygıtı, çoğu kullanıcı için önerilen seçimdir. Bu, "
 "<i>RK()</i> R komutuna karşılık gelir.</p><p>‘Platform öntanımlı aygıtı’, "
 "platforma bağlı olarak <i>X11()</i>, <i>windows()</i> veya <i>quartz()</"
-"i>’dan birine karşılık gelir.</p><p>Ayrıca <i>cairoDevice</i> gibi bir "
-"işlevin adını da belirtebilirsiniz.</p>"
+"i>’dan birine karşılık gelir.</p><p>Ayrıca <i>Cairo</i> gibi bir işlevin "
+"adını da belirtebilirsiniz.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -6082,13 +6071,13 @@ msgstr "&Geçmiş"
 msgid "&Window"
 msgstr "&Pencere"
 
-#: rkward/windows/katepluginintegration.cpp:631
+#: rkward/windows/katepluginintegration.cpp:669
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr "Geçerli betikte"
 
-#: rkward/windows/katepluginintegration.cpp:632
+#: rkward/windows/katepluginintegration.cpp:670
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
@@ -6664,7 +6653,7 @@ msgstr "Farklı Kaydet"
 #: rkward/windows/rkhtmlwindow.cpp:604
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
-msgstr ""
+msgstr "RKWard çıktı dosyası %s (henüz) yok"
 
 #: rkward/windows/rkhtmlwindow.cpp:723
 #: rkward/windows/rktoplevelwindowgui.cpp:255
@@ -6910,7 +6899,7 @@ msgstr "Kenar çubuğunda gösterilmiyor"
 #: rkward/windows/rktoplevelwindowgui.cpp:57
 #, kde-format
 msgid "Help on R"
-msgstr "R Hakkında Yardım"
+msgstr "R Üzerine Yardım"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format

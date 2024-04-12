@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Freek de Kruijf <freekdekruijf@kde.nl>, 2014, 2022.
+# SPDX-FileCopyrightText: 2014, 2022, 2024 Freek de Kruijf <freekdekruijf@kde.nl>
 # Jaap Woldringh <jjhwoldringh@kde.nl>, 2014, 2015, 2016, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-06-04 09:52+0200\n"
+"PO-Revision-Date: 2024-04-11 11:53+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.04.1\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Jaap Woldringh"
+msgstr "Jaap Woldringh t/m 2020,Freek de Kruijf - 2024"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "jjhwoldringh@kde.nl"
+msgstr "jjhwoldringh@kde.nl,freekdekruijf@kde.nl"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
@@ -2586,19 +2586,15 @@ msgstr "Gewenste onderscheidingsvermogen van toets (1 minus Type II foutkans)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:61
-#, fuzzy, kde-format
-#| msgid ""
-#| "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
-#| "reminder, this is (rows − 1)×(columns − 1) for a test of independence, "
-#| "and (cells − 1) for a test of goodness of fit."
+#, kde-format
 msgid ""
 "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
 "reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
 "independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
 "Alleen getoond bij Chi-kwadraat toetsen: Gewenste vrijheidsgraden. Ter "
-"herinnering, dit is (rijen-1)x(kolommen-1), voor een "
-"onafhankelijkheidstoets, en (cellen-1) voor een toets hoe goed een "
+"herinnering, dit is (rijen&minus;1)&times;(kolommen&minus;1), voor een "
+"onafhankelijkheidstoets, en (cellen&minus;1) voor een toets hoe goed een "
 "aanpassing (fit) is."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for numerator")
@@ -2641,12 +2637,7 @@ msgstr ""
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
-#, fuzzy, kde-format
-#| msgid ""
-#| "Minimum detectable effect size. Note that effect size specifications "
-#| "differ between the available methods. Be sure to read the note shown "
-#| "below the control.   As a reminder, for mapping between cohen's f and "
-#| "Eta² use f² = Eta² / (1 − Eta²)"
+#, kde-format
 msgid ""
 "Minimum detectable effect size. Note that effect size specifications differ "
 "between the available methods. Be sure to read the note shown below the "
@@ -2656,7 +2647,8 @@ msgstr ""
 "Kleinste detecteerbare effectgrootte. Merk op dat de specificaties voor de "
 "effectgrootte verschillend zijn voor de beschikbare methodes. Lees de op het "
 "scherm getoonde opmerking goed. Ter herinnering: voor de afbeelding van "
-"Cohen's f op Eta² moet u f² = Eta² / (1 − Eta²) gebruiken."
+"Cohen's f op Eta&sup2; moet u f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;) "
+"gebruiken."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
@@ -2955,10 +2947,9 @@ msgstr "Vrijheidsgraden voor teller"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
-#, fuzzy, kde-format
-#| msgid "df <sub> num </sub> : k − 1"
+#, kde-format
 msgid "df <sub> num </sub> : k &minus; 1"
-msgstr "df <sub> tel </sub> : k − 1"
+msgstr "df <sub> tel </sub> : k &minus; 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2968,10 +2959,9 @@ msgstr "Vrijheidsgraden voor noemer"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
-#, fuzzy, kde-format
-#| msgid "df <sub> den </sub> : N − k"
+#, kde-format
 msgid "df <sub> den </sub> : N &minus; k"
-msgstr "df <sub> noem </sub> : N − k"
+msgstr "df <sub> noem </sub> : N &minus; k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185

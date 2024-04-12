@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-09 19:30\n"
+"POT-Creation-Date: 2024-04-12 00:35+0000\n"
+"PO-Revision-Date: 2024-04-11 19:21\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/rkward/rkward.pot\n"
-"X-Crowdin-File-ID: 10430\n"
+"X-Crowdin-File: /kf6-trunk/messages/rkward/rkward.pot\n"
+"X-Crowdin-File-ID: 53232\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -873,11 +873,10 @@ msgid "Discard changes?"
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Auto close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr "自动关闭"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
@@ -922,18 +921,16 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "成为 root"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "可更新的包"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5489,13 +5486,13 @@ msgstr "&历史"
 msgid "&Window"
 msgstr "窗口(&W)"
 
-#: rkward/windows/katepluginintegration.cpp:631
+#: rkward/windows/katepluginintegration.cpp:669
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr ""
 
-#: rkward/windows/katepluginintegration.cpp:632
+#: rkward/windows/katepluginintegration.cpp:670
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2023-08-23 19:41+0200\n"
+"PO-Revision-Date: 2024-04-11 07:44+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2557,19 +2557,15 @@ msgstr "Ciljna moč testa (1 minus verjetnost napake II vrste)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:61
-#, fuzzy, kde-format
-#| msgid ""
-#| "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
-#| "reminder, this is (rows − 1)×(columns − 1) for a test of independence, "
-#| "and (cells − 1) for a test of goodness of fit."
+#, kde-format
 msgid ""
 "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
 "reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
 "independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
 "Prikazano samo za statistiko hi-kvadrat: Ciljno usmerjene stopnje prostosti. "
-"Kot opomnik, to je (vrstice − 1)×(stolpci − 1) za test neodvisnosti, in "
-"(celice − 1) za test kakovosti napovedi."
+"Kot opomnik, to je (vrstice &minus;1)&times;(stolpci &minus; 1) za test "
+"neodvisnosti, in (celice &minus; 1) za test kakovosti napovedi."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for numerator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:65
@@ -2611,12 +2607,7 @@ msgstr ""
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
-#, fuzzy, kde-format
-#| msgid ""
-#| "Minimum detectable effect size. Note that effect size specifications "
-#| "differ between the available methods. Be sure to read the note shown "
-#| "below the control.   As a reminder, for mapping between cohen's f and "
-#| "Eta² use f² = Eta² / (1 − Eta²)"
+#, kde-format
 msgid ""
 "Minimum detectable effect size. Note that effect size specifications differ "
 "between the available methods. Be sure to read the note shown below the "
@@ -2626,7 +2617,7 @@ msgstr ""
 "Najmanjša velikost zaznavnega učinka. Upoštevajte, da se specifikacije "
 "velikosti učinka razlikujejo med razpoložljivimi metodami. Preberite opombo, "
 "prikazano pod kontrolnikom.  Kot opomnik, za preslikavo med Cohenovim f in "
-"Eta² uporabite f² = Eta² / (1 − Eta²)"
+"Eta&sup2; uporabite f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
@@ -2702,7 +2693,7 @@ msgstr "Izberite metodo"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:108
 #, kde-format
 msgid "t-Tests of means"
-msgstr "t-testi povprečij "
+msgstr "t-testi povprečij"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Select a method"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:109
@@ -2921,10 +2912,9 @@ msgstr "Stopnja značilnosti za števec"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
-#, fuzzy, kde-format
-#| msgid "df <sub> num </sub> : k − 1"
+#, kde-format
 msgid "df <sub> num </sub> : k &minus; 1"
-msgstr "df <sub> num </sub> : k − 1"
+msgstr "df <sub> num </sub> : k &minus; 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2934,10 +2924,9 @@ msgstr "Stopnja značilnosti imenovalca"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
-#, fuzzy, kde-format
-#| msgid "df <sub> den </sub> : N − k"
+#, kde-format
 msgid "df <sub> den </sub> : N &minus; k"
-msgstr "df <sub> den </sub> : N − k"
+msgstr "df <sub> den </sub> : N &minus; k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185

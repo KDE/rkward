@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-01-30 11:54+0100\n"
+"PO-Revision-Date: 2024-04-11 12:51+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2961,16 +2961,13 @@ msgstr "Quan es calculen les densitats, es retornen com a «log» (d)."
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #: rkward/plugins/distributions/dist_help_snippets.xml:16
-#, fuzzy, kde-format
-#| msgid ""
-#| "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper "
-#| "tail) probabilities are P[X > x]"
+#, kde-format
 msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
 "probabilities are P[X &gt; x]"
 msgstr ""
 "Si està marcada (per omissió), les probabilitats seran P[X ≤ x]. Altrament "
-"(cua superior), les probabilitats seran P[X > x]"
+"(cua superior), les probabilitats seran P[X &gt; x]"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting>
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting>

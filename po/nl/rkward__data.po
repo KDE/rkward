@@ -1,32 +1,32 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Freek de Kruijf <freekdekruijf@kde.nl>, 2015.
+# SPDX-FileCopyrightText: 2015, 2024 Freek de Kruijf <freekdekruijf@kde.nl>
 # Jaap Woldringh <jjhwoldringh@kde.nl>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2016-02-01 16:55+0100\n"
-"Last-Translator: Jaap Woldringh <jjhwoldringh@kde.nl>\n"
-"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"PO-Revision-Date: 2024-04-11 10:44+0200\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Freek de Kruijf,Jaap Woldringh"
+msgstr "Jaap Woldringh t/m 2020,Freek de Kruijf - 2024"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "freekdekruijf@kde.nl,jjh.woldringh@kde.nl"
+msgstr "jjh.woldringh@kde.nl,freekdekruijf@kde.nl"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/data.pluginmap:10
@@ -759,16 +759,13 @@ msgstr ""
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
 #: rkward/plugins/data/subset_dataframe.rkh:42
-#, fuzzy, kde-format
-#| msgid ""
-#| "Whether the minimum value is contained in the range to check against (i."
-#| "e. compare 'larger or equal (>=)')."
+#, kde-format
 msgid ""
 "Whether the minimum value is contained in the range to check against (i.e. "
 "compare 'larger or equal (&gt;=)')."
 msgstr ""
 "Of de kleinste waarde behoort tot het bereik waarvoor moet worden "
-"gecontroleerd (bijv. vergelijk 'groter of gelijk aan (>=)')."
+"gecontroleerd (bijv. vergelijk 'groter of gelijk aan (&gt;=)')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Maximum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:45
@@ -778,25 +775,17 @@ msgstr "Zie boven. Grootste waarde."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (<=)")
 #: rkward/plugins/data/subset_dataframe.rkh:48
-#, fuzzy, kde-format
-#| msgid ""
-#| "Whether the maximum value is contained in the range to check against (i."
-#| "e. compare 'smaller or equal (<=)')."
+#, kde-format
 msgid ""
 "Whether the maximum value is contained in the range to check against (i.e. "
 "compare 'smaller or equal (&lt;=)')."
 msgstr ""
 "Of de grootste waarde behoort tot het bereik waarvoor moet worden "
-"gecontroleerd (bijv. vergelijk 'kleiner of gelijk aan (<=)')."
+"gecontroleerd (bijv. vergelijk 'kleiner of gelijk aan (&lt;=)')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:52
-#, fuzzy, kde-format
-#| msgid ""
-#| "You can also filter rows / cases by a custom R expression. If using this "
-#| "in combination with filtering by a column (see above), both conditions "
-#| "are combined by logical 'and' (&). Leave empty, if you do not want to "
-#| "filter on a custom expression."
+#, kde-format
 msgid ""
 "You can also filter rows / cases by a custom R expression. If using this in "
 "combination with filtering by a column (see above), both conditions are "
@@ -805,8 +794,8 @@ msgid ""
 msgstr ""
 "U kunt ook rijen / gevallen filteren met een aangepaste expressie in R. "
 "Indien u dit doet samen met het filteren naar een kolom (zie boven), worden "
-"beide condities gecombineerd met een logische 'and' (&). Laat dit leeg als u "
-"niet wilt filteren met een aangepaste expressie."
+"beide condities gecombineerd met een logische 'and' (&amp;). Laat dit leeg "
+"als u niet wilt filteren met een aangepaste expressie."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")
 #: rkward/plugins/data/subset_dataframe.rkh:56

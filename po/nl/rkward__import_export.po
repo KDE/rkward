@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Freek de Kruijf <freekdekruijf@kde.nl>, 2015, 2022.
+# SPDX-FileCopyrightText: 2015, 2022, 2024 Freek de Kruijf <freekdekruijf@kde.nl>
 # Jaap Woldringh <jjhwoldringh@kde.nl>, 2015, 2016, 2018, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-04-26 12:06+0200\n"
+"PO-Revision-Date: 2024-04-11 11:56+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.04.0\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Freek de Kruijf,Jaap Woldringh"
+msgstr "Jaap Woldringh t/m 2020,Freek de Kruijf - 2024"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "freekdekruijf@kde.nl,jjh.woldringh@kde.nl"
+msgstr "jjh.woldringh@kde.nl,freekdekruijf@kde.nl"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="...">
@@ -2022,15 +2022,7 @@ msgstr "Een R gegevensbestand inlezen."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
-#, fuzzy, kde-format
-#| msgid ""
-#| "Choose the R file to import. This would be a file created e.g. by saving "
-#| "the workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
-#| "\">save()</link> command, or the <link href=\"rkward://component/save_r\"/"
-#| "> plugin. The main difference to loading a workspace via Workspace->Open "
-#| "Workspace, is that the workspace is not cleaned, first, but rather merged "
-#| "with your existing workspace. If in doubt, use Workspace->Open Workspace, "
-#| "instead of this plugin."
+#, kde-format
 msgid ""
 "Choose the R file to import. This would be a file created e.g. by saving the "
 "workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
@@ -2044,9 +2036,10 @@ msgstr ""
 "door het opslaan van de werkruimte uit RKWard, met de opdracht in R <link "
 "href=\"rkward://rhelp/save\">save()</link>, of de plugin <link href="
 "\"rkward://component/save_r\"/>. Het voornaamste verschil met het inlezen "
-"van een werkruimte, met Werkruimte>Werkruimte openen, is dat de werkruimte "
-"niet eerst wordt opgeschoond, maar met de bestaande werkruimte wordt samen "
-"gevoegd. Bij twijfel, gebruik Werkruimte>Werkruimte openen en niet de plugin."
+"van een werkruimte, met Werkruimte&gt;Werkruimte openen, is dat de "
+"werkruimte niet eerst wordt opgeschoond, maar met de bestaande werkruimte "
+"wordt samen gevoegd. Bij twijfel, gebruik Werkruimte&gt;Werkruimte openen en "
+"niet de plugin."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12

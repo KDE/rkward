@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-01-30 11:56+0100\n"
+"PO-Revision-Date: 2024-04-11 12:52+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2030,15 +2030,7 @@ msgstr "Carrega un fitxer de dades R."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
-#, fuzzy, kde-format
-#| msgid ""
-#| "Choose the R file to import. This would be a file created e.g. by saving "
-#| "the workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
-#| "\">save()</link> command, or the <link href=\"rkward://component/save_r\"/"
-#| "> plugin. The main difference to loading a workspace via Workspace->Open "
-#| "Workspace, is that the workspace is not cleaned, first, but rather merged "
-#| "with your existing workspace. If in doubt, use Workspace->Open Workspace, "
-#| "instead of this plugin."
+#, kde-format
 msgid ""
 "Choose the R file to import. This would be a file created e.g. by saving the "
 "workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
@@ -2052,9 +2044,9 @@ msgstr ""
 "l'espai de treball des del RKWard, usant l'ordre de l'R <link href="
 "\"rkward://rhelp/save\">save()</link>, o el connector <link href=\"rkward://"
 "component/save_r\"/>. La diferència principal en carregar un espai de "
-"treball via «Espai de treball -> Obre un espai de treball», és que primer no "
-"es neteja l'espai de treball, sinó que es fusiona amb l'espai de treball "
-"existent. En cas de dubte, useu «Espai de treball -> Obre un espai de "
+"treball via «Espai de treball -&gt; Obre un espai de treball», és que primer "
+"no es neteja l'espai de treball, sinó que es fusiona amb l'espai de treball "
+"existent. En cas de dubte, useu «Espai de treball -&gt; Obre un espai de "
 "treball», en lloc d'aquest connector."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>

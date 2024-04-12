@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-02-20 13:39+0300\n"
+"PO-Revision-Date: 2024-04-12 01:11+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -472,12 +472,15 @@ msgid ""
 "using <i>File->Import / Export command history</i> or the R commands "
 "<i>savehistory()</i> and <i>loadhistory()</i>."
 msgstr ""
+"“<i>Dosya → Komut Geçmişini İçe/Dışa Aktar</i>” veya <i>savehistory()</i> ve "
+"<i>loadhistory()</i> R komutlarını kullanarak oturumunuz sırasında bir komut "
+"geçmişini istediğiniz gibi yükleyebilir veya kaydedebilirsiniz."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:53
 #, kde-format
 msgid "Filename and Object name completion"
-msgstr ""
+msgstr "Dosya ve Nesne Adı Tamamlaması"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -487,6 +490,9 @@ msgid ""
 "complete the name of that R object. If several objects start with the typed "
 "characters, a list of all those objects will be shown."
 msgstr ""
+"Bir R nesnesinin adını yazarken Sekme düğmesine basıldığında, R nesnesinin "
+"adı tamamlamaya çalışılır. Birkaç nesne yazılan karakterlerle başlarsa tüm "
+"bu nesnelerin bir listesi gösterilecektir."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -497,6 +503,10 @@ msgid ""
 "\", and press Tab again. The word will be changed to \"paste\", as that is "
 "the only matching object name."
 msgstr ""
+"Örnek olarak, konsolda “base::ya” girin, ardından Sekme düğmesine basın. Bu, "
+"“ya” ile başlayarak paket tabanından gelen tüm nesneleri listeleyecektir. "
+"Şimdi bir “p” ekleyin ve Sekme düğmesine yeniden basın. Sözcük “yapıştır” "
+"olarak değiştirilecektir; çünkü bu tek eşleşen nesne adıdır."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -507,6 +517,10 @@ msgid ""
 "seems to be inside a quoted string that does not seem to be part of an "
 "object name."
 msgstr ""
+"Bazı basit buluşsal yöntemlere dayanarak, RKWard, uygun olduğunda nesne "
+"adları yerine dosya adlarını tamamlamaya çalışacaktır. Bu, imleç bir nesne "
+"adının parçası gibi görünmeyen alıntı yapılan bir dizinin içinde "
+"göründüğünde yapılır."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #. i18n: ectx: (Screen device history) <section title="...">
@@ -515,7 +529,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:47
 #, kde-format
 msgid "Configurable Settings"
-msgstr ""
+msgstr "Yapılandırılabilir Ayarlar"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -525,6 +539,10 @@ msgid ""
 "console\">Settings->Configure RKWard->R Console</a> or \"Configure\" from "
 "the context menu. The following options are configurable:"
 msgstr ""
+"Konsolun davranışını yapılandırmak için “<a href=\"rkward://settings/console"
+"\">Ayarlar → RKWard Uygulamasını Yapılandır → R Konsolu</a>” yolunu izleyin "
+"veya bağlam menüsünden “Yapılandır” seçeneğini seçin. Aşağıdaki seçenekler "
+"yapılandırılabilirdir:"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -535,6 +553,10 @@ msgid ""
 "next starting RKWard again. If this is not checked, each session of RKWard "
 "will start out with an empty command history."
 msgstr ""
+"<b>Komut Geçmişini Yükle/Kaydet</b>: <link href=\"#command_history\">Komut "
+"geçmişinin</link> RKWard kapatılırken kaydedilip kaydedilmediği ve yeniden "
+"açıldığında geri yüklenip yüklenmeyeceği. Bu işaretli değilse RKWard’ın her "
+"bir oturumu boş bir komut geçmişiyle başlar."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -543,6 +565,8 @@ msgid ""
 "<b>Maximum length of command history</b>: Only this many lines are kept in "
 "the <link href=\"#command_history\">command history</link>."
 msgstr ""
+"<b>Komut geçmişinin en çok büyüklüğü</b>: Yalnızca bu sayı kadar <link href="
+"\"#command_history\">komut geçmişi</link> tutulur."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -554,6 +578,10 @@ msgid ""
 "top of the console window. To clear the console entirely, choose \"Clear\" "
 "from the context menu or the Edit menu."
 msgstr ""
+"<b>Konsolda görüntülenecek en çok paragraf/satır sayısı</b>: Konsolda bu "
+"sayı kadar (komut ve çıktı) gösterilir. Bu satır sayısı aşıldığında, "
+"satırlar konsol penceresinin üstünden başlanarak kaldırılır. Konsolu tümüyle "
+"temizlemek için bağlam menüsünden veya Düzen menüsünden ‘Temizle’yi seçin."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -564,6 +592,10 @@ msgid ""
 "their results will be shown in the console. If this option is not checked, "
 "the commands will only be visible in the Command log, but not in the console."
 msgstr ""
+"<b>Komutları betik düzenleyicisinden konsol aracılığıyla çalıştır</b>: Betik "
+"düzenleyicilerinden gelen komutlar konsoldan gönderilebilir, yani komutlar "
+"ve sonuçları konsolda gösterilecektir. Bu seçenek işaretlenmezse komutlar "
+"yalnızca komut günlüğünde görünür; ancak konsolda görünmez."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -574,6 +606,10 @@ msgid ""
 "history. Turning off this option may help to keep the console history \"clean"
 "\"."
 msgstr ""
+"<b>Aynı zamanda bu komutları konsol geçmişine ekle</b>: Yukarıdaki seçenek "
+"işaretlenirse bu, konsol geçmişine bu tür komutların da eklenip "
+"eklenmediğini etkiler. Bu seçeneğin kapatılması, konsol geçmişinin temiz "
+"kalmasına yardımcı olabilir."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -584,12 +620,17 @@ msgid ""
 "\">command history</link> is the default, i.e. available with Up/Down "
 "without Shift. Else the key binding for this is Shift+Up/Down."
 msgstr ""
+"<b>Komut geçmişi öntanımlı olarak bağlama duyarlıdır</b>: Bu işaretlenmişse "
+"<link href=\"#command_history\">komut geçmişinin</link> bağlama duyarlı "
+"olarak dolaşımı öntanımlıdır; yani Üst Karakter düğmesine basılmadan Yukarı/"
+"Aşağı düğmeleri kullanılabilir. Aksi takdirde Üst Karakter düğmesi basılı "
+"tutulmalıdır."
 
 #. i18n: ectx: (RKWard for new Users) <title>
 #: rkward/pages/rkward_for_new_users.rkh:8
 #, kde-format
 msgid "RKWard for new Users"
-msgstr ""
+msgstr "Yeni Kullanıcılar için RKWard"
 
 #. i18n: ectx: (RKWard for new Users) <summary>
 #: rkward/pages/rkward_for_new_users.rkh:9
@@ -598,12 +639,15 @@ msgid ""
 "Provide some starting points for users new to R and RKWard. For a more in "
 "depth guide see <link href=\"rkward://page/rkward_for_r_users\"/>."
 msgstr ""
+"Yeni R ve RKWard kullanıcıları için birkaç başlangıç noktası sağlar. Daha "
+"ayrıntılı bir klıavuz için <link href=\"rkward://page/rkward_for_r_users\"/> "
+"bölümüne bakın."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:14
 #, kde-format
 msgid "Where's my data?"
-msgstr ""
+msgstr "Verim nerede?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -615,6 +659,11 @@ msgid ""
 "course, R can deal with this sort of data (technically called a \"data.frame"
 "\"), it is much more flexible, and may be slightly confusing at first."
 msgstr ""
+"Daha önce farklı istatistik araçları kullandıysanız tüm verinizin temel "
+"olarak tek bir elektronik tabloda depolandığı ve bu elektronik tablonun her "
+"zaman görünür olduğu fikrine alışkın olabilirsiniz. Tabii ki, R bu tür "
+"verilerle (teknik olarak “data.frame” olarak adlandırılır) ilgilenebilirken, "
+"çok daha esnektir ve ilk başta biraz kafa karıştırıcı olabilir."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -627,6 +676,12 @@ msgid ""
 "of the language itself, the functions, are stored just like data and can "
 "also be edited."
 msgstr ""
+"R, dolayısıyla RKWard, çok sayıda farklı veri türüyle ilgilenebilir: İyi "
+"bilinen elektronik tablolar, aynı zamanda farklı vektörlerin veya diğer "
+"nesnelerin listesi olarak adlandırılan tek veri vektörleri (bir elektronik "
+"tablodaki sütun gibi) Bu farklı uzunluklara, tek veri noktalarına, vb. "
+"Olabilir. Dilin çoğu bile; örneğin işlevleri, veri gibi saklanır ve "
+"düzenlenebilir."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -642,6 +697,16 @@ msgid ""
 "other objects are predefined in libraries, such as \"package:base\". See "
 "<link href=\"rkward://page/rkward_workspace_browser\"/> for details."
 msgstr ""
+"Aynı zamanda, R bir kerede yalnızca bir veri parçasıyla çalışmakla sınırlı "
+"değildir, bunun yerine tüm farklı değişkenlerinizin, tablolarınızın vb. "
+"erişilebilir olduğu bir “çalışma alanınız” vardır. Bir kerede birçok veriye "
+"ve diğer tiplerde ek verilere sahip olabilirsiniz. Uygulama penceresinin sol "
+"tarafında, “çalışma alanı” etiketli bir simge olmalıdır. Çalışma alanınızda "
+"bulunan tüm nesneleri görmek için buna tıklayabilirsiniz. Oluşturduğunuz "
+"veya değiştirdiğiniz tüm nesneler “.globalenv” içinde görünür. Diğer "
+"nesnelerin çoğu, “package::base” gibi kütüphanelerde önceden tanımlanmıştır. "
+"Ayrıntılar için <link href=\"rkward://page/rkward_workspace_browser\"/> "
+"bölümüne bakın."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -653,12 +718,17 @@ msgid ""
 "work with pre-existing data, pick the appropriate option from the File-"
 ">Import menu."
 msgstr ""
+"Tüm bu ayrıntılar için endişelenmenize gerek yoktur. Yeni bir elektronik "
+"tablo (data.frame) oluşturmak için menüden “Dosya → Yeni → Veri Kümesi” "
+"seçeneğini seçin. Tek yapmanız gereken bu tabloya bir ad atamaktır, "
+"sonrasında düzenlemeye başlayabilirsiniz. Önceden var olan verilerle "
+"çalışmak için “Dosya → İçe Aktar” menüsünden uygun seçeneği seçin."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:23
 #, kde-format
 msgid "How can I make use of my results in an external application?"
-msgstr ""
+msgstr "Veri sonuçlarımı başka bir uygulamada nice kullanabilirim?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -667,6 +737,8 @@ msgid ""
 "In this section you will learn about some basic methods how to make use of "
 "your results in external applications."
 msgstr ""
+"Bu bölümde, dış uygulamalarda sonuçlarınızı nasıl kullanacağınızı "
+"öğreneceksiniz."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -677,6 +749,9 @@ msgid ""
 "your work since a standard of RKWard is to show everything in chronological "
 "order together with the date of creation."
 msgstr ""
+"Yaptığınız testlerden metinsel bir çıktı ürettiğinizi varsayalım. Bu, "
+"RKWard’ın “Çıktı Penceresi”nde sunulacaktır. RKWard standardı, her şeyi "
+"kronolojik sırada yaratma tarihi ile birlikte göstermektir."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -686,12 +761,15 @@ msgid ""
 "the output. The easiest method of reusing the output is to select the "
 "relevant portion, and copy and paste them to an office suite."
 msgstr ""
+"Çıktı ile çalışma üzerine ayrıntılar için <link href=\"rkward://page/"
+"rkward_output\"/> bölümüne bakın. Çıktıyı yeniden kullanmanın en kolay yolu, "
+"ilgili kısmı seçip bir ofis yazılımına kopyala ve yapıştır yapmaktır."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:30
 #, kde-format
 msgid "Basic Analyses"
-msgstr ""
+msgstr "Temel Çözümlemeler"
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -704,6 +782,12 @@ msgid ""
 "introduced above. On the additional tabs you can choose which types of "
 "descriptive statistics should be calculated."
 msgstr ""
+"Kendinizi RKWard ile (veya verilerinizle) aşina etmek için yapılacak ilk "
+"şeylerden biri menüden “Çözümleme → Tanımlayıcı İstatistik” seçeneğini "
+"seçmek olabilir. Çözümlemek için bir veya daha çok değişken seçmenizi "
+"sağlayan bir iletişim kutusu sunulacaktır. Bu, yukarıda tanıtılan çalışma "
+"alanı tarayıcısına benzer. Ek sekmelerde hangi tür tanımlayıcı "
+"istatistiklerin hesaplanması gerektiğini seçebilirsiniz."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -723,6 +807,17 @@ msgid ""
 "\"Calculate\" to perform the actual calculations, and \"Printout\" to "
 "generate output in RKWard's output window."
 msgstr ""
+"İletişim kutusunun sağ alt kısmında ‘Kod’ etiketli bir düğme vardır. Bunu "
+"kullanarak bir metin alanını gösterebilir/gizleyebilirsiniz. Bu metin "
+"alanının içeriğine bakarsanız (daha rahat görüntülemek için pencereyi "
+"yeniden boyutlandırmanız gerekebilir), metnin iletişim kutusunda seçtiğiniz "
+"ayarlara göre değiştiğini görebilirsiniz. Bu metin aslında R sözdizimidir. "
+"Bu hesaplamaları R'de gerçekleştirmek için gereken koddur. Yineleyen "
+"görevleri otomatikleştirmek istiyorseniz çözümlemelerinizi tam anlamıyla "
+"programlamak için bu sözdizimi kullanabilirsiniz. Kodun üç bölüme "
+"ayrıldığını unutmayın: Gerekli kitaplıkları yüklemek veya yardımcı işlevleri "
+"tanımlamak için ‘Ön İşlem’, gerçek hesaplamaları gerçekleştirmek için "
+"‘Hesapla’ ve RKWard’ın çıktı penceresinde çıktı oluşturmak için ‘Yazdır’."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -731,12 +826,14 @@ msgid ""
 "For now, just click submit, once you've made your choices, and watch the "
 "results show up in a new window."
 msgstr ""
+"Şimdilik, seçimlerinizi yaptıktan sonra Gönder’e tıklayın ve sonuçların yeni "
+"bir pencerede görünmesini izleyin."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:38
 #, kde-format
 msgid "So much more"
-msgstr ""
+msgstr "Çok daha fazlası"
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -749,6 +846,13 @@ msgid ""
 "easier, both for users new to R, and R experts. Read on in <link href="
 "\"rkward://page/rkward_for_r_users\"/> for more on this."
 msgstr ""
+"RKWard’ın amacı, önce tam bir programlama dili öğrenmek zorunda kalmadan R "
+"dilinin gücünü kullanıcının kolayca erişilebilir hale getirmesidir. Bununla "
+"birlikte, ileri gereksinimler için R dilinin tam esnekliğini kullanmak "
+"isteyebilirsiniz. RKWard, hem R ve R uzmanları için yeni kullanıcılar için "
+"bunu kolaylaştırmak için birçok araç sunuyor. Bunun hakkında daha fazla "
+"ayrıntı için <link href=\"rkward://page/rkward_for_r_users\"/> bölümüne "
+"bakın."
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -757,12 +861,14 @@ msgid ""
 "Also, you may want to select Help->Help on R from the menu for some starting "
 "points in learning R."
 msgstr ""
+"R öğrenme konusunda bazı başlangıç noktaları için “Yardım → R Üzerine "
+"Yardım” seçeneğini kullanmak isteyebilirsiniz."
 
 #. i18n: ectx: (RKWard for R Users) <title>
 #: rkward/pages/rkward_for_r_users.rkh:8
 #, kde-format
 msgid "RKWard for R Users"
-msgstr ""
+msgstr "R Kullanıcıları için RKWard"
 
 #. i18n: ectx: (RKWard for R Users) <summary>
 #: rkward/pages/rkward_for_r_users.rkh:9
@@ -771,12 +877,14 @@ msgid ""
 "Briefly explains the main components of RKWard, assuming the user is already "
 "familiar with basic concepts of R."
 msgstr ""
+"Kullanıcının R’nin temel kavramlarına halihazırda aşina olduğunu varsayarak "
+"RKWard’ın ana bileşenlerini kısaca açıklar."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "The Console"
-msgstr ""
+msgstr "Konsol"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -786,6 +894,9 @@ msgid ""
 "the bottom on the screen. There you will notice several buttons, one of "
 "which is labelled \"R Console\" and has a console icon."
 msgstr ""
+"Önce şunu bilin: Standart R konsolunun bir öykünmesi ekranın altında "
+"bulunabilir. Orada, biri ‘R Konsolu’ olarak etiketlenmiş ve bir konsol "
+"simgesi olan birkaç düğmeyi fark edeceksiniz."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -794,12 +905,14 @@ msgid ""
 "This console works almost exactly like the regular R text console, so you "
 "can start working right away. Differences include:"
 msgstr ""
+"Bu konsol neredeyse normal R metin konsolu gibi çalışır, böylece hemen "
+"çalışmaya başlayabilirsiniz. Farklılıklar şunları içerir:"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Sözdizim Vurgulaması"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -808,6 +921,8 @@ msgid ""
 "While typing function calls, a list of arguments to that function is shown "
 "in a box (argument hinting)"
 msgstr ""
+"İşlev çağrılarını yazarken, bu işlevin argümanlarının bir listesi bir kutuda "
+"gösterilir (argüman ipucu)"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -817,6 +932,9 @@ msgid ""
 "R help for that symbol. Also available from the Help menu, or the right "
 "mouse button menu"
 msgstr ""
+"İmleç bir R sembolü veya işlevi üzerindeyken, F2’ye basmak bu sembol için "
+"olan R yardımını arayacaktır. Yardım menüsünden veya sağ fare düğmesi "
+"menüsünden de kullanılabilir."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -825,18 +943,21 @@ msgid ""
 "You can easily create a transcript of the commands you run in the console "
 "using Run->CC commands to output..."
 msgstr ""
+"“Çalıştır → Komutları Çıktıya Kopyala…” seçeneğiyle konsolda çalıştırdığınız "
+"komutların bir yazıdökümünü alabilirsiniz"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "See <link href=\"rkward://page/rkward_console\"/> for more details."
 msgstr ""
+"Ayrıntılar için <link href=\"rkward://page/rkward_console\"/> bölümüne bakın."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:26
 #, kde-format
 msgid "Script Editors"
-msgstr ""
+msgstr "Betik Düzenleyicileri"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -847,6 +968,10 @@ msgid ""
 "syntax highlighting, and many more features), choose File->New->Script File, "
 "or open an already existing Script file using File->Open R Script File."
 msgstr ""
+"Genellikle betikleri doğrudan konsola yazmak yerine ayrı bir dosyaya yazmak "
+"daha uygundur. Yeni bir komut dosyası düzenleyicisini açmak için (sözdizim "
+"vurgulama ve daha birçok özellik ile), “Dosya → Yeni → Betik” yolunu izleyin "
+"veya “Dosya → R Betiği Aç” seçeneğini kullanın."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -856,6 +981,9 @@ msgid ""
 "(the area of the window, that you are most likely reading this text, in). "
 "You can open any number of script editor windows at the same time."
 msgstr ""
+"Düzenleyicinin ana çalışma alanında (pencerenin alanı, büyük olasılıkla bu "
+"metni okuduğunuz) yeni bir pencerede açıldığını fark edeceksiniz. Aynı anda "
+"herhangi bir sayıda betik düzenleyicisi penceresini açabilirsiniz."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -867,12 +995,17 @@ msgid ""
 "type of active window. Hence, if you look at the Run menu while reading "
 "this, there will be no entries."
 msgstr ""
+"Kodu bir betik düzenleyicisi penceresinde çalıştırmak için kopyalayıp "
+"konsola yapıştırın veya çalıştırma menüsünde tüm çalıştırma veya seçimi "
+"çalıştırma gibi eylemlerden birini seçin. Not: Menülerin içeriği etkin "
+"pencerenin türüne göre değişebilir. Bu nedenle, bunu okurken Çalıştır "
+"menüsüne bakarsanız, girdi olmayacaktır."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:33
 #, kde-format
 msgid "Workspace View"
-msgstr ""
+msgstr "Çalışma Alanı Görünümü"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -887,6 +1020,14 @@ msgid ""
 "explore data and functions in loaded R libraries (and even in package "
 "namespaces)."
 msgstr ""
+"RKWard bir çalışma alanı görünümü veya bir nesne tarayıcısı ile birlikte "
+"gelir. Öntanımlı olarak bu, uygulama penceresinin sol tarafındaki “Çalışma "
+"Alanı” bölümünde kullanılabilir. Bu, R çalışma alanındaki tüm nesneleri "
+"incelemenize ve değiştirmenize izin verir. Öntanımlı olarak yalnızca \"."
+"GlobalEnv\" ortamı gösterilir (genelde işinizi yaptığınız alan; ayrıntılı "
+"bilgi için <link href=\"rkward://rhelp/.GlobalEnv\"/> bölümüne bakın). ‘Tüm "
+"ortamları göster’ seçeneğini işaretlerseniz yüklü R kitaplıklarındaki tüm "
+"veriyi ve işlevleri görebilirsiniz (hatta paket ad alanlarındakileri bile)."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -898,12 +1039,17 @@ msgid ""
 "available actions. See <link href=\"rkward://page/rkward_workspace_browser\"/"
 "> for details."
 msgstr ""
+"Nesne tarayıcısı, hangi tür nesne türlerini (üstte) seçmek için işlev "
+"sağlar. Farenin bir ögenin üzerine getirilmesi, sembol hakkında bazı ek "
+"bilgiler gösterecektir. Bir ögeye sağ tıklamak kullanılabilir işlemleri "
+"gösterir. Ayrıntılar için <link href=\"rkward://page/rkward_workspace_browser"
+"\"/> bölümüne bakın."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:38
 #, kde-format
 msgid "R Help"
-msgstr ""
+msgstr "R Yardımı"
 
 #. i18n: ectx: (RKWard for R Users) <section title="R Help">
 #: rkward/pages/rkward_for_r_users.rkh:38
@@ -916,12 +1062,18 @@ msgid ""
 "located at the bottom of the window (next to the console button). To view a "
 "help page found using this tool, double-click on it."
 msgstr ""
+"Öntanımlı olarak R yardımı sayfaları RKWard içinde HTML olarak gösterilir. "
+"Yardımı konsolda; örneğin, “?print” veya “help (print)” veya “help.start ()” "
+"yazarak da çağırabilirsiniz. Ek olarak, kurulu R yardımı içinde arama yapmak "
+"için bir araç penceresi de vardır. Bu, pencerenin alt kısmındaki bir düğme "
+"aracılığıyla (konsol düğmesinin yanında) çağrılabilir. Bu araç ile bulunan "
+"bir yardımı görüntülemek için üzerine çift tıklayın."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:41
 #, kde-format
 msgid "Managing installed and loaded Libraries"
-msgstr ""
+msgstr "Kurulu ve Yüklü Kitaplıkları Yönetmek"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Managing installed and loaded Libraries">
 #: rkward/pages/rkward_for_r_users.rkh:41
@@ -930,12 +1082,15 @@ msgid ""
 "RKWard provides an advanced dialog to have installation, updating, and "
 "loading of packages. This is available from Settings->Manage R Packages."
 msgstr ""
+"RKWard; paketlerin kurulması, güncellenmesi ve yüklenmesi için gelişmiş bir "
+"iletişim kutusu sağlar. Buna, “Ayarlar → R Paketlerini Yönet” bölümünden "
+"ulaşılabilir."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:44
 #, kde-format
 msgid "Window management"
-msgstr ""
+msgstr "Pencere Yönetimi"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -945,6 +1100,10 @@ msgid ""
 "level window using Windows->Detach. Similarly, detached windows can be "
 "attached to the main workplace using Window->Attach to main window."
 msgstr ""
+"Ana görünüm alanında gösterilen tüm pencereler, “Pencereler → Ayır” "
+"kullanılarak ayrı bir üst düzey pencereye ayrılabilir. Benzer şekilde, ayrık "
+"pencereler ana pencere kullanılarak ana çalışma alanına “Pencereler → "
+"İliştir” kullanılarak eklenebilir."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -954,6 +1113,10 @@ msgid ""
 "Ctrl+Shift+Tab cycle through all active document / tool windows in your "
 "session."
 msgstr ""
+"Pencereler, “Pencereler → Kapat” kullanılarak kapatılabilir (öntanımlı "
+"olarak Kontrol + W). Kontrol + Sekme ve Kontrol + Üst Karakter + Sekme ile "
+"oturumunuzdaki tüm etkin belge ve araç pencereleri arasında geçiş "
+"yapabilirsiniz."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -962,12 +1125,14 @@ msgid ""
 "Tool windows (e.g. the R Console) can be detached and re-attached using the "
 "arrow-icon in their window border."
 msgstr ""
+"Araç pencereleri (örneğin, R Konsolu), pencere kenarlığındaki ok simgesi "
+"kullanılarak ayrılabilir veya yeniden iliştirilebilir."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:51
 #, kde-format
 msgid "Editing data"
-msgstr ""
+msgstr "Veri Düzenlemek"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -979,6 +1144,11 @@ msgid ""
 "explore the data editor, either choose File->New->Dataset, or right-click a "
 "data.frame in the Workspace browser, and choose Edit from the menu."
 msgstr ""
+"RKWard, data.frames için yerleşik bir düzenleyici sağlar. Aslında, birçok "
+"veriyi düzenleyebilirsiniz. Yine de veriler R içinde düzenli bir data.frame "
+"olarak saklanır. Veri düzenleyicisini keşfetmek için “Dosya → Yeni → Veri "
+"Kümesi”ni seçin veya çalışma alanı tarayıcısındaki bir data.frame’e sağ "
+"tıklayp ve menüden Düzenle’yi seçin."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -987,12 +1157,14 @@ msgid ""
 "Support for adding other types of data, esp. single vectors is planned, but "
 "not currently supported."
 msgstr ""
+"Başka veri türleri için destek; örneğin tekil vektörler gibi, planlanmakta "
+"olup şu an desteklenmemektedir."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:56
 #, kde-format
 msgid "Graphics"
-msgstr ""
+msgstr "Grafikler"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Graphics">
 #: rkward/pages/rkward_for_r_users.rkh:56
