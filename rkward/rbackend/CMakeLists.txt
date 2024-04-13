@@ -77,7 +77,7 @@ ENDIF(MSVC)
 IF(WIN32)
 	# on Widows, we install to the rbackend subdirectory, because 1) LIBEXEC_INSTALL_DIR == BIN_INSTALL_DIR and 2) we don't want the backend to pick up
 	# all the KDE library versions, first, when loading DLLs
-	INSTALL(TARGETS rkward.rbackend DESTINATION ${BIN_INSTALL_DIR}/rbackend)
+	INSTALL(TARGETS rkward.rbackend DESTINATION ${KDE_INSTALL_BINDIR}/rbackend)
 ELSE(WIN32)
-	INSTALL(TARGETS rkward.rbackend DESTINATION ${LIBEXEC_INSTALL_DIR})
+	INSTALL(TARGETS rkward.rbackend DESTINATION ${KDE_INSTALL_LIBEXECDIR})
 ENDIF(WIN32)
