@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-01-30 12:04+0100\n"
+"PO-Revision-Date: 2024-04-11 13:24+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -1343,15 +1343,7 @@ msgstr "La versió del motor gràfic no coincidix"
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
 #: rkward/pages/rkward_incompatible_version.rkh:17
-#, fuzzy, kde-format
-#| msgid ""
-#| "This is the most common kind of version incompatibility. The same advice "
-#| "applies as above, i.e. please install an updated version of RKWard. "
-#| "However, if no update appears to be immediately available, and you are "
-#| "desparate to continue working, set <link href=\"rkward://settings/graphics"
-#| "\">Settings->Onscreen Graphics</link>->\"Integration of R standard device"
-#| "\" to \"No integration\". Then you can use the vanille onscreen devices "
-#| "(X11() or Windows() or Quartz()), for plotting."
+#, kde-format
 msgid ""
 "This is the most common kind of version incompatibility. The same advice "
 "applies as above, i.e. please install an updated version of RKWard. However, "
@@ -1365,10 +1357,10 @@ msgstr ""
 "consell s'aplica com a dalt, és a dir, instal·leu una versió actualitzada de "
 "RKWard. No obstant açò, si no hi ha cap actualització disponible "
 "immediatament, i esteu desesperat per a continuar treballant, establiu <link "
-"href=\"rkward://settings/graphics\">Configuració->Gràfics en pantalla</link>-"
-">«Integració dels dispositius estàndards d'R» a «Sense integració». Llavors "
-"podreu utilitzar els dispositius en pantalla estàndard (X11() o Windows() o "
-"Quartz()), per a dibuixar."
+"href=\"rkward://settings/graphics\">Configuració-&gt;Gràfics en pantalla</"
+"link>-&gt;«Integració dels dispositius estàndards d'R» a «Sense integració». "
+"Llavors podreu utilitzar els dispositius en pantalla estàndard (X11() o "
+"Windows() o Quartz()), per a dibuixar."
 
 #. i18n: ectx: (RKWard Output) <title>
 #: rkward/pages/rkward_output.rkh:8
@@ -1563,19 +1555,7 @@ msgstr ""
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>Go to plot</b>: This provides a drop-down list of _all_ the plots "
-#| "stored in the history; giving an easily accessible \"jumping\" action. "
-#| "RKWard tries hard to identify the appropriate plot calls, but this is not "
-#| "always feasible. In such cases a further attempt is made to identify the "
-#| "<i>X label</i>, <i>Y label</i> and the <i>Main</i> titles of the plot and "
-#| "the displayed string looks like \"<b>X:</b> <i>xlab</i>; <b>Y:</b> "
-#| "<i>ylab</i>; <i>main</i>\". Sometimes even that is not possible "
-#| "(indicated by <b><Unknown></b>). Plots which are pending to be saved are "
-#| "indicated by <b><Unsaved plot></b>. The displayed strings are prepended "
-#| "with their corresponding position in the history. For the usual \"linear "
-#| "browsing\" see first / previous / next / last actions below."
+#, kde-format
 msgid ""
 "<b>Go to plot</b>: This provides a drop-down list of _all_ the plots stored "
 "in the history; giving an easily accessible \"jumping\" action. RKWard tries "
@@ -1596,11 +1576,11 @@ msgstr ""
 "casos es fa un intent més per a identificar les <i>X label</i>, <i>Y label</"
 "i> i els títols <i>Main</i> del diagrama i les cadenes mostrades que "
 "pareguen com «<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; <i>main</i>». A "
-"vegades, no és possible ni açò (indicat per un <b><Desconegut></b>). Els "
-"diagrames que estan pendents de guardar s'indiquen amb <b><Diagrama sense "
-"guardar></b>. Les cadenes visualitzades es precedixen amb la seua posició "
-"corresponent en l'historial. Per a la «navegació lineal» habitual vegeu les "
-"accions primer / previ / següent / últim davall."
+"vegades, no és possible ni açò (indicat per un <b>&lt;Desconegut&gt;</b>). "
+"Els diagrames que estan pendents de guardar s'indiquen amb <b>&lt;Diagrama "
+"sense guardar&gt;</b>. Les cadenes visualitzades es precedixen amb la seua "
+"posició corresponent en l'historial. Per a la «navegació lineal» habitual "
+"vegeu les accions primer / previ / següent / últim davall."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -2468,29 +2448,23 @@ msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "‎<link href=\"rkward://settings/addons\">Further add-on related settings "
-#| "(e.g., git/project integration)‎</link>"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)&lrm;</link>"
 msgstr ""
-"<link href=\"rkward://settings/addons\">Configuració relacionada amb "
-"complements (p. ex., git/integració projecte)</link>"
+"&lrm;<link href=\"rkward://settings/addons\">Configuració relacionada amb "
+"complements (p. ex., git/integració projecte)&lrm;</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "‎<link href=\"rkward://settings/general\">Startup options</link> "
-#| "(including this page)‎"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
 "(including this page)&lrm;"
 msgstr ""
-"‎<link href=\"rkward://settings/general\">Opcions d'inici</link> (inclosa "
-"esta pàgina)‎"
+"‎&lrm;<link href=\"rkward://settings/general\">Opcions d'inici</link> "
+"(inclosa esta pàgina)‎&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31
@@ -2637,7 +2611,7 @@ msgid ""
 "Hovering the mouse pointer over an object will show a short summary of the "
 "objects' basic properties."
 msgstr ""
-"En passar l'apuntador del ratolí per damunt un objecte es mostrarà un resum "
+"En passar el punter del ratolí per damunt un objecte es mostrarà un resum "
 "curt de les propietats bàsiques de l'objecte."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">

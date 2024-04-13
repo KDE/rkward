@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-12 00:35+0000\n"
-"PO-Revision-Date: 2024-01-30 11:53+0100\n"
+"PO-Revision-Date: 2024-04-11 12:56+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -1024,8 +1024,7 @@ msgid "Discard changes?"
 msgstr "Voleu descartar els canvis?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "No el tanques"
@@ -1082,18 +1081,16 @@ msgstr ""
 "d'administrador (se li demanarà la contrasenya)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Convertir-se en administrador"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Paquets que es poden actualitzar"
+msgstr "Omet estos paquets"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5407,15 +5404,7 @@ msgstr "Un altre dispositiu:"
 
 # skip-rule: t-sc-plot
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5431,8 +5420,8 @@ msgstr ""
 "l'opció recomanada per a la majoria d'usuaris. Correspon a l'ordre R "
 "<i>RK()</i>.</p><p>El «Dispositiu predeterminat de la plataforma» correspon "
 "a un de <i>X11()</i>, <i>windows()</i>, o <i>quartz()</i>, depenent de la "
-"plataforma.</p><p>També podeu especificar el nom d'una funció com "
-"<i>cairoDevice</i>.</p>"
+"plataforma.</p><p>També podeu especificar el nom d'una funció com <i>Cairo</"
+"i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -6785,7 +6774,7 @@ msgstr "Anomena i guarda"
 #: rkward/windows/rkhtmlwindow.cpp:604
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
-msgstr ""
+msgstr "El fitxer d'eixida %s de RKWard (encara) no existix"
 
 #: rkward/windows/rkhtmlwindow.cpp:723
 #: rkward/windows/rktoplevelwindowgui.cpp:255
@@ -7617,13 +7606,3 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure en l'editor (només lectura)"
-
-#~ msgid ""
-#~ "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
-#~ "</BODY></HTML>"
-#~ msgstr ""
-#~ "<HTML><BODY><H1>El fitxer d'eixida de RKWard no s'ha pogut trobar</H1>\n"
-#~ "</BODY></HTML>"
-
-#~ msgid "Color Scheme"
-#~ msgstr "Esquema de color"

@@ -1,16 +1,16 @@
 # Translation of rkward__graphics_device.po to Catalan (Valencian)
-# Copyright (C) 2015-2022 This_file_is_part_of_KDE
+# Copyright (C) 2015-2024 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2018, 2019, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2018, 2019, 2022, 2024.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2022-05-08 11:09+0200\n"
+"PO-Revision-Date: 2024-04-11 13:23+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -345,9 +345,9 @@ msgid ""
 msgstr ""
 "Este és el paràmetre <i>family</i> de <b>postscript</b>. Assegureu-vos de "
 "triar una família que estiga disponible a la màquina. La classe «URW» de "
-"famílies de tipus de lletres requerix ghostscript. En cas de dubte, deixeu-"
-"ho com a «Predeterminada», s'utilitzarà la família predeterminada "
-"(Helvètica). Vegeu la referència d'R quant a postscript per a més detalls."
+"famílies de lletres requerix el ghostscript. En cas de dubte, deixeu-ho com "
+"a «Predeterminada», s'utilitzarà la família predeterminada (Helvètica). "
+"Vegeu la referència d'R quant a postscript per a més detalls."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font Encoding")
 #: rkward/plugins/x11device/export.rkh:42
@@ -359,10 +359,10 @@ msgid ""
 "the R reference on postscript for more details."
 msgstr ""
 "Este és el paràmetre <i>encoding</i> de <b>postscript</b>. Assegureu-vos de "
-"triar una codificació compatible amb la família triada de tipus de lletra. "
-"En cas de dubte, deixeu-ho com a «Predeterminada», s'utilitzarà la "
-"codificació predeterminada (ISOLatin1). Vegeu la referència d'R quant a "
-"postscript per a més detalls."
+"triar una codificació compatible amb la família triada de lletra. En cas de "
+"dubte, deixeu-ho com a «Predeterminada», s'utilitzarà la codificació "
+"predeterminada (ISOLatin1). Vegeu la referència d'R quant a postscript per a "
+"més detalls."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Default Title")
 #: rkward/plugins/x11device/export.rkh:43
@@ -630,13 +630,13 @@ msgstr "Horitzontal (ps/gs)"
 #: rkward/plugins/x11device/export.xml:133
 #, kde-format
 msgid "Font properties"
-msgstr "Propietats del tipus de lletra"
+msgstr "Propietats de la lletra"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Font properties"> <dropdown label="...">
 #: rkward/plugins/x11device/export.xml:135
 #, kde-format
 msgid "Font family"
-msgstr "Família del tipus de lletra"
+msgstr "Família de la lletra"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:137
@@ -762,7 +762,7 @@ msgstr "URWTimes"
 #: rkward/plugins/x11device/export.xml:158
 #, kde-format
 msgid "Font Encoding"
-msgstr "Codificació del tipus de lletra"
+msgstr "Codificació de la lletra"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
 #: rkward/plugins/x11device/export.xml:160
