@@ -1,18 +1,18 @@
-# Xavier Besnard <xavier.besnard@kde.org>, 2021, 2022.
+# SPDX-FileCopyrightText: 2021, 2022, 2024 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__distributions\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-05-11 11:17+0200\n"
+"PO-Revision-Date: 2024-04-12 15:06+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.04.0\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -2964,16 +2964,13 @@ msgstr "Lors du calcul de densités, les retourne comme log (d)."
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Lower tail")
 #: rkward/plugins/distributions/dist_help_snippets.xml:16
-#, fuzzy, kde-format
-#| msgid ""
-#| "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper "
-#| "tail) probabilities are P[X > x]"
+#, kde-format
 msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
 "probabilities are P[X &gt; x]"
 msgstr ""
-"Si elle est cochée (par défaut), les probabilités sont P [ X ≤ x ]. Sinon "
-"(queue supérieure), les probabilités sont P [ X > x ]."
+"Lorsque cette est sélectionnée (Par défaut), les probabilités sont P [ X ≤ "
+"x ]. Sinon (Queue supérieure), les probabilités sont P [ X &gt; x ]."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting>
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting>

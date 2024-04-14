@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-04-14 00:04+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "okellogg@users.sourceforge.net"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
@@ -41,6 +41,8 @@ msgstr "Grafikoj"
 msgid ""
 "Plugins for producing various plots. Part of the official RKWard distribution"
 msgstr ""
+"Kromaĵoj por produkti diversajn grafikojn. Parto de la oficiala RKWard-"
+"distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Barplot)
@@ -176,6 +178,8 @@ msgid ""
 "barplot is a bit picky about attributes, so we need to convert to vector or "
 "matrix explicitly"
 msgstr ""
+"barplot estas iom elektema pri atributoj, do ni devas eksplicite konverti al "
+"vektoro aŭ matrico"
 
 #. i18n: ectx: (Loaded from Barplot) <summary>
 #: rkward/plugins/plots/barplot.rkh:8
@@ -191,6 +195,8 @@ msgid ""
 "Choose a matrix, vector or a factor to be plotted. Further options are "
 "available on the second tab."
 msgstr ""
+"Elektu matricon, vektoron aŭ faktoron por esti grafika. Pliaj ebloj haveblas "
+"sur la dua langeto."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
@@ -204,6 +210,9 @@ msgid ""
 "option. Refer to <link href=\"rkward://component/one_var_tabulation\"/> for "
 "details on the dependent options."
 msgstr ""
+"Se viaj datumoj devas esti entabeligitaj/agregitaj antaŭ komploto, marku ĉi "
+"tiun elekteblon. Vidu al <link href=\"rkward://component/one_var_tabulation"
+"\"/> por detaloj pri la dependaj elektebloj."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Matrix, Vector or Factor")
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Variable")
@@ -213,6 +222,8 @@ msgid ""
 "If your data is already suitable for plotting, directly, specify it here. "
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
+"Se viaj datumoj jam taŭgas por grafikaĵo, rekte specifu ĝin ĉi tie. Alie, "
+"lasu ĉi tion malplena, kaj marku la elekteblon \"Tabulado\", supre."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Limit number of groups")
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Limit number of groups")
@@ -227,6 +238,10 @@ msgid ""
 "set a limit. See Refer to <link href=\"rkward://component/limit_vector_length"
 "\"/> for details on the dependent options."
 msgstr ""
+"Se estas tre multaj kategorioj en viaj datumoj, eble havas sencon limigi la "
+"kvanton de kategorioj kiuj estos montrataj. Marku ĉi tion, se vi volas "
+"agordi limon. Vidu Riferu al <link href=\"rkward://component/"
+"limit_vector_length\"/> por detaloj pri la dependaj elektebloj."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Bar labels")
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Labeling")
@@ -243,6 +258,11 @@ msgid ""
 "string, or as an R statement (e.g. if the names are stored in a different "
 "variable in the workspace)."
 msgstr ""
+"Metodo por atribui etikedojn al la grafiko. \"defaŭlte\" signifas, ke la "
+"etikedoj estas elektitaj aŭtomate. Se neniuj etikedoj estas haveblaj, ĉi tio "
+"ĝenerale presas la valorojn. La aliaj elektebloj permesas al vi specifi la "
+"etikedojn kiel laŭvortan ĉenon, aŭ kiel R-deklaron (ekz. se la nomoj estas "
+"konservitaj en malsama variablo en la laborspaco)."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Barplot Options")
 #: rkward/plugins/plots/barplot.rkh:28
@@ -251,6 +271,9 @@ msgid ""
 "Since these settings are reused in further plugins, they are documented on a "
 "page of their own: See <link href=\"rkward://component/barplot_embed\"/>."
 msgstr ""
+"Ĉar ĉi tiuj agordoj estas reuzataj en pliaj kromprogramoj, ili estas "
+"dokumentitaj sur propra paĝo: Vidu <link href=\"rkward://component/"
+"barplot_embed\"/>."
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
@@ -508,6 +531,8 @@ msgid ""
 "calculates the mean for all data and adds a point at the corresponding "
 "position"
 msgstr ""
+"kalkulas la meznombre por ĉiuj datumoj kaj aldonas punkton ĉe la responda "
+"pozicio"
 
 #. i18n: ectx: (Loaded from Boxplot) <summary>
 #: rkward/plugins/plots/box_plot.rkh:8
@@ -522,6 +547,9 @@ msgid ""
 "Choose numerical data to be plotted. Data can be organized in separate "
 "vectors, or in a single outcome variable and one or more grouping variables."
 msgstr ""
+"Elektu nombrajn datumojn por esti grafikaj. Datenoj povas esti organizitaj "
+"en apartaj vektoroj, aŭ en ununura rezultvariablo kaj unu aŭ pluraj grupaj "
+"variabloj."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Data format")
 #: rkward/plugins/plots/box_plot.rkh:18
@@ -531,6 +559,9 @@ msgid ""
 "vectors, or a single outcome variable split by one or more grouping "
 "variables."
 msgstr ""
+"Elektu la formaton de viaj datumoj. Ĉi tio povas aŭ esti apartaj nombraj "
+"vektoroj, aŭ ununura rezulta variablo dividita per unu aŭ pluraj grupaj "
+"variabloj."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:19
@@ -545,6 +576,8 @@ msgid ""
 "For single(grouped) variable mode: Select one numerical vector as the "
 "outcome variable."
 msgstr ""
+"Por ununura (grupigita) varia reĝimo: Elektu unu nombran vektoron kiel "
+"rezultan variablon."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Group variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:21
@@ -554,6 +587,9 @@ msgid ""
 "group the outcome variable. Group variables should have the same length as "
 "the outcome variable."
 msgstr ""
+"Por ununura (grupigita) varia reĝimo: Elektu unu aŭ plurajn vektorojn per "
+"kiuj grupigi la rezultan variablon. Grupvariabloj devus havi la saman longon "
+"kiel la rezultvariablo."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Dodged groups")
 #: rkward/plugins/plots/box_plot.rkh:22
@@ -564,6 +600,11 @@ msgid ""
 "This allows you to select, across how many group variables, boxes should be "
 "dodged (\"0\" for no dodging, \"1\" to dodge only the first group variable)."
 msgstr ""
+"Por unuopa (grupigita) varia reĝimo: Eviti skatolojn ene de unu aŭ pluraj "
+"grupoj povas esti bela opcio kiam la rezulto estas dividita de pluraj grupaj "
+"variabloj. Ĉi tio ebligas al vi elekti, laŭ kiom da grupvariabloj, skatoloj "
+"estu evititaj (\"0\" por neniu evitado, \"1\" por eviti nur la unuan "
+"grupvariablon)."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Box width")
 #: rkward/plugins/plots/box_plot.rkh:24
@@ -590,6 +631,8 @@ msgid ""
 "Whether to draw outliers (if any). Outliers are draw as dots, if this option "
 "is checked."
 msgstr ""
+"Ĉu desegni eksteraĵojn (se ekzistas). Outliers estas desegnataj kiel "
+"punktoj, se ĉi tiu elekteblo estas markita."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Show mean")
 #: rkward/plugins/plots/box_plot.rkh:29
@@ -605,6 +648,9 @@ msgid ""
 "defines the fraction of observations to be trimmed from each end of a "
 "variable before the arithmetic mean is computed."
 msgstr ""
+"Trim validas nur por la aritmetika meznombro. Defaŭlte tajlado estas "
+"agordita al nulo. Ĝi difinas la frakcion de observaĵoj por esti tajlita de "
+"ĉiu fino de variablo antaŭ ol la aritmetika meznombro estas komputita."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "mean symbol")
 #: rkward/plugins/plots/box_plot.rkh:31
@@ -620,6 +666,9 @@ msgid ""
 "the default. Others include the geometric mean, the harmonic mean and "
 "interquartile mean (IQM)."
 msgstr ""
+"Uzu ĉi tiun opcion por elekti specifan tipon de meznombro. La aritmetika "
+"meznombro estas la defaŭlta. Aliaj inkludas la geometrian meznombrecon, la "
+"harmonian meznombrecon kaj interkvartilan meznombrecon (IQM)."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "show standard deviation")
 #: rkward/plugins/plots/box_plot.rkh:33
@@ -634,6 +683,8 @@ msgid ""
 "If the standard deviation is to be indicated: Symbol to use as mark for the "
 "upper sd."
 msgstr ""
+"Se la norma devio estas indikita: Simbolo por uzi kiel markon por la supra "
+"sd."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "standard deviation symbol (lower)")
 #: rkward/plugins/plots/box_plot.rkh:35
@@ -642,6 +693,8 @@ msgid ""
 "If the standard deviation is to be indicated: Symbol to use as mark for the "
 "lower sd."
 msgstr ""
+"Se la norma devio estas indikita: Simbolo por uzi kiel markon por la "
+"malsupra sd."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "size")
 #: rkward/plugins/plots/box_plot.rkh:36
@@ -650,6 +703,8 @@ msgid ""
 "Size of mean / sd indicators. This option is only available, if at least one "
 "of mean or sd are to be drawn."
 msgstr ""
+"Grandeco de mezumo/sd-indikiloj. Ĉi tiu elekteblo disponeblas nur, se "
+"almenaŭ unu el meznombro aŭ sd estas desegnita."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/box_plot.rkh:37
@@ -658,6 +713,8 @@ msgid ""
 "Color of mean / sd indicators. This option is only available, if at least "
 "one of mean or sd are to be drawn."
 msgstr ""
+"Koloro de mezumo/sd-indikiloj. Ĉi tiu elekteblo disponeblas nur, se almenaŭ "
+"unu el meznombro aŭ sd estas desegnita."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting title="..."> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/box_plot.rkh:38
@@ -672,6 +729,9 @@ msgid ""
 "Since these settings are reused in further plugins, they are documented on a "
 "page of their own: See <link href=\"rkward://component/plot_options\"/>."
 msgstr ""
+"Ĉar ĉi tiuj agordoj estas reuzataj en pliaj kromprogramoj, ili estas "
+"dokumentitaj sur propra paĝo: Vidu <link href=\"rkward://component/"
+"plot_options\"/>."
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:41
@@ -901,6 +961,8 @@ msgstr "Longo"
 msgid ""
 "Plot an estimated density curve. Highest density regions can be marked up."
 msgstr ""
+"Grafiku laŭtaksan denseckurbon. Plej altdensecaj regionoj povas esti "
+"markitaj."
 
 #. i18n: ectx: (Loaded from Density Plot) <usage>
 #: rkward/plugins/plots/density_plot.rkh:12
@@ -909,6 +971,7 @@ msgid ""
 "Select a numeric vector to estimate density for. For further options, see "
 "below."
 msgstr ""
+"Elektu nombran vektoron por taksi densecon. Por pliaj elektoj, vidu sube."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/density_plot.rkh:18
@@ -924,6 +987,9 @@ msgid ""
 "regions marked up. For the second option, only the gaussian smoothing kernel "
 "is available (see below)."
 msgstr ""
+"Speco de grafiko: Ebena denseckurbo, aŭ denseckurbo kun plej altaj densecaj "
+"regionoj markitaj. Por la dua elekteblo, nur la gaŭsa glatiga kerno estas "
+"disponebla (vidu sube)."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Smoothing Kernel")
 #: rkward/plugins/plots/density_plot.rkh:24
@@ -932,6 +998,8 @@ msgid ""
 "Smoothing kernel to use. See <link href=\"rkward://rhelp/density\"/> for "
 "details on the available kernels."
 msgstr ""
+"Glatiga kerno por uzi. Vidu <link href=\"rkward://rhelp/density\"/> por "
+"detaloj pri la disponeblaj kernoj."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Bandwidth")
 #: rkward/plugins/plots/density_plot.rkh:25
@@ -941,6 +1009,9 @@ msgid ""
 "kernels. This is the <i>bw</i> option of <link href=\"rkward://rhelp/density"
 "\">density()</link>."
 msgstr ""
+"Reĝimo elekti bandwidth. Ĉi tio validas nur por gaŭsaj glatigaj kernoj. Jen "
+"la <i>bw</i> elekteblo de <link href=\"rkward://rhelp/density\">density()</"
+"link>."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Adjust Bandwidth")
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Adjust Bandwidth")
@@ -957,6 +1028,8 @@ msgid ""
 "Whether missing values should be removed. Otherwise missing values lead to "
 "an error during density estimation."
 msgstr ""
+"Ĉu mankantaj valoroj estu forigitaj. Alie mankantaj valoroj kondukas al "
+"eraro dum densectakso."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Resolution")
 #: rkward/plugins/plots/density_plot.rkh:28
@@ -965,6 +1038,8 @@ msgid ""
 "Resolution of the density estimation, i.e. the number of (equally spaced) "
 "points at which the density is estimated."
 msgstr ""
+"Distingivo de la densectakso, t.e. la nombro da (same interspacigitaj) "
+"punktoj ĉe kiuj la denseco estas taksita."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Add rug")
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Add rug to plot")
@@ -981,6 +1056,8 @@ msgid ""
 "Height of the rug ticks, where 1 corresponds to the height of the entire "
 "plot."
 msgstr ""
+"Alteco de la tapiŝo tiktakos, kie 1 respondas al la alteco de la tuta "
+"grafiko."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Line width of ticks")
 #: rkward/plugins/plots/density_plot.rkh:33
@@ -1007,6 +1084,8 @@ msgid ""
 "Further options regarding the look of the plot. See <link href=\"rkward://"
 "component/plot_options\"/> for details."
 msgstr ""
+"Pliaj ebloj pri la aspekto de la grafiko. Vidu <link href=\"rkward://"
+"component/plot_options\"/> por detaloj."
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Variable(s)"> <varslot label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Variable(s)"> <varslot label="...">
@@ -1242,6 +1321,8 @@ msgid ""
 "Data is not numeric, but proceeding as requested.\\nDid you forget to check "
 "the tabulate option?"
 msgstr ""
+"Datumoj ne estas nombraj, sed daŭrigas laŭ la peto.\\nĈu vi forgesis marki "
+"la elekteblon de tabulado?"
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Dot chart) <dialog label="...">
@@ -1264,6 +1345,9 @@ msgid ""
 "Otherwise, leave this empty, and check the <i><label id=\"tabulate\"/></i> "
 "option, below."
 msgstr ""
+"Se viaj datumoj jam taŭgas por grafikaĵo, rekte specifu ĝin ĉi tie. Alie, "
+"lasu ĉi tion malplena, kaj marku la elekteblon <i><label id=\"tabulate\"/></"
+"i>, sube."
 
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Plot Options")
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Plot Options")
@@ -1272,6 +1356,8 @@ msgstr ""
 msgid ""
 "Generic plot options. See <link href=\"rkward://component/plot_options\"/>."
 msgstr ""
+"Ĝeneralaj grafiko-elektebloj. Vidu <link href=\"rkward://component/"
+"plot_options\"/>."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function)
 #: rkward/plugins/plots/ecdf_plot.js:29
@@ -1304,6 +1390,8 @@ msgid ""
 "Select a variable to plot an ECDF for. The theoretical normal distribution "
 "and a rug can be added to the plot."
 msgstr ""
+"Elektu variablon por instigi ECDF. La teoria normala distribuo kaj tapiŝo "
+"povas esti aldonitaj al la grafiko."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/ecdf_plot.rkh:16
@@ -1318,6 +1406,8 @@ msgid ""
 "Options to change the look of the ECDF plot itself. Refer to <link href="
 "\"rkward://component/plot_stepfun_options\"/> for details."
 msgstr ""
+"Elektebloj por ŝanĝi la aspekton de la ECDF-grafiko mem. Vidu al <link href="
+"\"rkward://component/plot_stepfun_options\"/> por detaloj."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Draw Theoretical Normal Distribution")
 #: rkward/plugins/plots/ecdf_plot.rkh:20
@@ -1333,6 +1423,9 @@ msgid ""
 "standard deviation of the plotted data? If this is not set a normal curve "
 "with mean 0 and sd 1 is drawn."
 msgstr ""
+"Ĉu la normala distribua kurbo estu alĝustigita por kongrui kun la meznombro "
+"kaj norma devio de la grafikaj datumoj? Se ĉi tio ne estas agordita, normala "
+"kurbo kun meznombro 0 kaj sd 1 estas desegnita."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/ecdf_plot.rkh:22
@@ -1371,6 +1464,8 @@ msgid ""
 "Further generic plot options. Refer to <link href=\"rkward://component/"
 "plot_options\"/> for details."
 msgstr ""
+"Pliaj ĝeneralaj grafiko-elektebloj. Vidu al <link href=\"rkward://component/"
+"plot_options\"/> por detaloj."
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:28
@@ -1458,6 +1553,7 @@ msgstr "Grafiku histogramon."
 msgid ""
 "Select a variable to plot a histogram. For available options, see below."
 msgstr ""
+"Elektu variablon por montri histogramon. Por disponeblaj opcioj, vidu sube."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/histogram.rkh:16
@@ -1472,6 +1568,8 @@ msgid ""
 "Options concerning the calculation and look of the histogram. Refer to <link "
 "href=\"rkward://component/histogram_options\"/> for details."
 msgstr ""
+"Elektebloj koncerne la kalkulon kaj aspekton de la histogramo. Vidu al <link "
+"href=\"rkward://component/histogram_options\"/> por detaloj."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Plot Density curve")
 #: rkward/plugins/plots/histogram.rkh:20
@@ -1480,6 +1578,8 @@ msgid ""
 "Should a density curve be plotted over the histogram? This option is only "
 "available, if the histogram is density scaled."
 msgstr ""
+"Ĉu denskurbo estu grafika super la histogramo? Ĉi tiu elekteblo disponeblas "
+"nur, se la histogramo estas denseca skalita."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/histogram.rkh:21
@@ -1494,6 +1594,8 @@ msgid ""
 "The smoothing bandwidth used to calculate the density estimate. See <link "
 "href=\"rkward://rhelp/density\"/> for details."
 msgstr ""
+"La glatiga bendolarĝo uzata por kalkuli la densecan takson. Vidu <link href="
+"\"rkward://rhelp/density\"/> por detaloj."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Remove Missing Values")
 #: rkward/plugins/plots/histogram.rkh:24
@@ -1501,6 +1603,8 @@ msgstr ""
 msgid ""
 "Remove missing values? If not checked, missing values will cause an error."
 msgstr ""
+"Ĉu forigi mankantajn valorojn? Se ne estas markita, mankantaj valoroj kaŭzos "
+"eraron."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "resolution")
 #: rkward/plugins/plots/histogram.rkh:25
@@ -1572,6 +1676,8 @@ msgid ""
 "frequency, percentage and cumulative percentage will be printed under the "
 "plot."
 msgstr ""
+"Elektu vektoron aŭ faktoron por esti grafika. La ofteco, akumula ofteco, "
+"procento kaj akumula procento estos presitaj sub la grafiko."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Raw vector to plot")
 #: rkward/plugins/plots/pareto.rkh:19
@@ -1581,6 +1687,9 @@ msgid ""
 "data suitable for direct display in a pareto chart, specify it here. "
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
+"Se viaj datumoj jam enhavas difektokalkulojn aŭ difektajn kostojn, aŭ aliajn "
+"datumojn taŭgajn por rekta montrado en pareto-diagramo, specifu ĝin ĉi tie. "
+"Alie, lasu ĉi tion malplena, kaj marku la elekteblon \"Tabulado\", supre."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Print descriptives")
 #: rkward/plugins/plots/pareto.rkh:20
@@ -1589,6 +1698,8 @@ msgid ""
 "Whether to print the frequency, cumulative frequency, percentage and "
 "cumulative percentage below the plot in the output window."
 msgstr ""
+"Ĉu presi la frekvencon, akumulan frekvencon, procenton kaj akumulan "
+"procenton sub la grafiko en la eligofenestro."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/pareto.rkh:24
@@ -1597,6 +1708,8 @@ msgid ""
 "Further options for the plot. Refer to <link href=\"rkward://component/"
 "plot_options\"/> for details."
 msgstr ""
+"Pliaj ebloj por la grafiko. Vidu al <link href=\"rkward://component/"
+"plot_options\"/> por detaloj."
 
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/pareto.xml:37
@@ -1650,6 +1763,8 @@ msgid ""
 "Draws a pie chart from numerical data, or from tabulated data. Further "
 "options are available on the second tab."
 msgstr ""
+"Desegnas kuk-diagramon el nombraj datumoj aŭ el tabeligitaj datumoj. Pliaj "
+"ebloj haveblas sur la dua langeto."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Colors")
 #: rkward/plugins/plots/piechart.rkh:28
@@ -1670,6 +1785,8 @@ msgid ""
 "Radius of the pie. For long labels it may be necessary to make the pie "
 "smaller than the default."
 msgstr ""
+"Radiuso de la kukaĵo. Por longaj etikedoj eble necesas fari la kukaĵon pli "
+"malgranda ol la defaŭlta."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "density")
 #: rkward/plugins/plots/piechart.rkh:32
@@ -1678,6 +1795,8 @@ msgid ""
 "Density of shading lines (lines per inch). The default value of -1 means no "
 "shading lines are drawn."
 msgstr ""
+"Denso de ombraj linioj (linioj per colo). La defaŭlta valoro de -1 signifas "
+"ke neniuj ombraj linioj estas desegnitaj."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in density")
 #: rkward/plugins/plots/piechart.rkh:33
@@ -1686,6 +1805,9 @@ msgid ""
 "The density of shading lines can be varied per pie slice. Set this to values "
 "other than 0 to get different densities of shading lines for each slice."
 msgstr ""
+"La denseco de ombraj linioj povas esti variita per kukaĵotranĉaĵo. Agordu ĉi "
+"tion al valoroj krom 0 por akiri malsamajn densecojn de ombraj linioj por "
+"ĉiu tranĉaĵo."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "angle")
 #: rkward/plugins/plots/piechart.rkh:34
@@ -1695,6 +1817,9 @@ msgid ""
 "This option is only available, if shading lines are drawn, as controlled by "
 "the density options above."
 msgstr ""
+"Deklivo de ombraj linioj, donitaj kiel angulo en gradoj (maldekstrume). Ĉi "
+"tiu elekteblo disponeblas nur, se ombraj linioj estas desegnitaj, kiel regas "
+"la supre densecaj elektoj."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in angle")
 #: rkward/plugins/plots/piechart.rkh:35
@@ -1705,6 +1830,10 @@ msgid ""
 "option is only available, if shading lines are drawn, as controlled by the "
 "density options above."
 msgstr ""
+"La deklivo de ombraj linioj povas esti variita per torttranĉo. Agordu ĉi "
+"tion al valoroj krom 0 por akiri malsamajn deklivojn de ombraj linioj por "
+"ĉiu tranĉaĵo. Ĉi tiu elekteblo disponeblas nur, se ombraj linioj estas "
+"desegnitaj, kiel regas la supre densecaj elektoj."
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/piechart.xml:78
@@ -1779,6 +1908,8 @@ msgid ""
 "This is an implementation of the standard (traditional S) graphics function "
 "<b>plot</b>."
 msgstr ""
+"Ĉi tio estas efektivigo de la norma (tradicia S) grafika funkcio <b>grafiko</"
+"b>."
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
@@ -1786,6 +1917,7 @@ msgstr ""
 msgid ""
 "Choose the X and Y variables and customize the options to draw the plot."
 msgstr ""
+"Elektu la X kaj Y-variablojn kaj agordu la eblojn por desegni la grafikon."
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
@@ -1798,6 +1930,12 @@ msgid ""
 "meaningful visualization of the data, but does not allow for fine grained "
 "control."
 msgstr ""
+"Noto: <b>grafiko</b> estas ĝenerala funkcio. La speco de grafiko, kiun vi "
+"efektive ricevos, dependas de la tipo de la eniga variabloj. Ekzemple, por "
+"nombraj vektoroj oni produktas disvastigon (vidu malsupre), dum por data."
+"frames kiel disvastigmatrico estas grafikita, ktp. Tio ofte estas utila por "
+"disponigi signifan bildigon de la datenoj, sed ne permesas fajnan grajnan "
+"regon."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "X variable")
 #: rkward/plugins/plots/plot.rkh:18
@@ -1809,6 +1947,11 @@ msgid ""
 "indices of the plotting variable is taken as the x-coordinate. See R "
 "reference on 'plot' for more details."
 msgstr ""
+"Jen la argumento <i>x</i>. Kaj necesas desegni ajnan grafikon. En la plej "
+"simpla kazo de desegnado de variabloj de klasa tipo entjero/numera, kiam \"Y "
+"Variable\" ne estas provizita, tio estas fakte la y-koordinato kaj la "
+"indeksoj de la grafika variablo estas prenita kiel la x-koordinato. Vidu R-"
+"referencon sur 'grafiko' por pliaj detaloj."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Y variable")
 #: rkward/plugins/plots/plot.rkh:19
@@ -1817,6 +1960,8 @@ msgid ""
 "This is the <i>y</i> argument. Note that this is not always needed, and does "
 "not have an effect for some types of x variables."
 msgstr ""
+"Jen la argumento <i>y</i>. Notu, ke tio ne ĉiam bezonas, kaj ne efikas por "
+"iuj specoj de x-variabloj."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/plot.rkh:21
@@ -1826,6 +1971,9 @@ msgid ""
 "plot_options\"/> for details. Note that some of these settings may not have "
 "an effect, depending on the type of plot actually produced."
 msgstr ""
+"Pliaj ĝeneralaj grafiko-elektebloj. Vidu al <link href=\"rkward://component/"
+"plot_options\"/> por detaloj. Notu, ke iuj el ĉi tiuj agordoj eble ne "
+"efikas, depende de la speco de grafiko efektive produktita."
 
 #. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/plot.xml:21
@@ -1973,6 +2121,8 @@ msgid ""
 "Enter value - for diff.col. enter a vector -<br/> eg: c(1,2) or "
 "c('red','green')"
 msgstr ""
+"Enigu valoron - por diff.col. enigu vektoron -<br/> ekz.: c(1,2) aŭ "
+"c('ruĝa', 'verda')"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:69
@@ -2001,6 +2151,8 @@ msgid ""
 "A numerical value giving the amount by which plotting text and symbols "
 "should be scaled relative to the default."
 msgstr ""
+"Nombra valoro donanta la kvanton laŭ kiu grafika teksto kaj simboloj devus "
+"esti skalitaj relative al la defaŭlta."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:86
@@ -2021,6 +2173,8 @@ msgid ""
 "Either an integer specifying a symbol or a single character to be used as "
 "the default in plotting points."
 msgstr ""
+"Aŭ entjero specifanta simbolon aŭ ununuran signon por esti uzata kiel "
+"defaŭlta en desegnado de punktoj."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:100
@@ -2035,6 +2189,8 @@ msgid ""
 "Scatterplot matrix plot produces scatterplot matrices with univariate "
 "displays down the diagonal."
 msgstr ""
+"Disvastplota matrica grafiko produktas disvastigmatricojn kun unuvariaj "
+"ekranoj laŭ la diagonalo."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <usage>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:12
@@ -2043,6 +2199,8 @@ msgid ""
 "Choose one or more objects to be plotted. Choose the diagonal plot and how "
 "the scatterplots should be plotted from the options tab."
 msgstr ""
+"Elektu unu aŭ plurajn objektojn por esti komplotataj. Elektu la diagonalan "
+"grafikon kaj kiel la disvastigojn devus esti grafikitaj de la opciolangeto."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:18
@@ -2051,6 +2209,8 @@ msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
 msgstr ""
+"Elektu datummatricon aŭ nombran datumkadron aŭ pli ol unu variablojn el "
+"datummatrico"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
@@ -2108,6 +2268,8 @@ msgid ""
 "Select it if you want data-concentration ellipses to be plotted in "
 "scatterplots. The ellipses are plotted at levels 0.5 and 0.9."
 msgstr ""
+"Elektu ĝin se vi volas, ke datumkoncentrigaj elipsoj estu grafikataj en "
+"disaj diagramoj. La elipsoj estas punktitaj ĉe niveloj 0.5 kaj 0.9."
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:23
@@ -2166,6 +2328,10 @@ msgid ""
 "<link href=\"http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html"
 "\">Rcmdr package</link>."
 msgstr ""
+"Elektu la datumojn por produkti la tigo-kaj-folian grafikon. Vidu <link href="
+"\"rkward://rhelp/stem\"/>. Por pli kompleksa tigo-kaj-folio grafiko referu "
+"al la <link href=\"http://cran.r-project.org/src/contrib/Descriptions/Rcmdr."
+"html\">Rcmdr-pakaĵo</link>."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "variable:")
 #: rkward/plugins/plots/stem.rkh:18
@@ -2181,6 +2347,8 @@ msgid ""
 "This controls the length of the plot. A scale of 2 will make the plot "
 "roughly twice as long as the default."
 msgstr ""
+"Ĉi tio regas la longon de la grafiko. Skalo de 2 faros la grafikon "
+"proksimume duoble pli longa ol la defaŭlta."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot width")
 #: rkward/plugins/plots/stem.rkh:21

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-04-14 00:17+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "okellogg@users.sourceforge.net"
 
 #. i18n: ectx: (Level selector) <dialog label="...">
 #: rkward/plugins/distributions/../data/level_select.xml:65
@@ -48,6 +48,9 @@ msgid ""
 "Generic plugin to limit a single numeric vector to the n largest / smallest "
 "values. This plugin is designed to be embedded into other plugins."
 msgstr ""
+"Ĝenerala kromaĵo por limigi ununuran nombran vektoron al la n plej grandaj / "
+"plej malgrandaj valoroj. Ĉi tiu kromaĵo estas desegnita por esti enigita en "
+"aliajn kromaĵojn."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <usage>
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:12
@@ -56,6 +59,8 @@ msgid ""
 "Specify the desired length cutoff and sorting. Note that the result is "
 "always sorted, with the sum of remainder values appended at the end."
 msgstr ""
+"Indiku la deziratan longotranĉon kaj ordigon. Notu ke la rezulto estas ĉiam "
+"ordigita, kun la sumo de restvaloroj almetitaj ĉe la fino."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Limit")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:17
@@ -64,6 +69,8 @@ msgid ""
 "Maximum number of regular groups to display. One additional group \"others\" "
 "will be displayed, if appropriate."
 msgstr ""
+"Maksimuma nombro de regulaj grupoj por montri. Unu plia grupo \"aliaj\" "
+"estos montrata, se konvene."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:18
@@ -72,6 +79,8 @@ msgid ""
 "Should the largest or the lowest values be kept? For most purposes, you will "
 "want to keep the largest values."
 msgstr ""
+"Ĉu la plej grandaj aŭ la plej malaltaj valoroj estu konservitaj? Por plej "
+"multaj celoj, vi volos konservi la plej grandajn valorojn."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Add remainder category")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:19
@@ -80,6 +89,8 @@ msgid ""
 "Should a category be added for the remaining value (those which have been "
 "cut off)? Note: This will always be appended to the end of the vector."
 msgstr ""
+"Ĉu oni devas aldoni kategorion por la restanta valoro (tiuj kiuj estis "
+"fortranĉitaj)? Noto: Ĉi tio ĉiam estos almetita al la fino de la vektoro."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
@@ -94,6 +105,8 @@ msgid ""
 "If you chose to use a custom statistic for summarizing the cut off values, "
 "specify it, here, as a function of <em>x</em>."
 msgstr ""
+"Se vi elektis uzi propran statistpiktogram por resumi la fortranĉvalorojn, "
+"specifu ĝin ĉi tie kiel funkcio de <em>x</em>."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Remainder category label")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:22
@@ -102,6 +115,8 @@ msgid ""
 "Label to use for the \"others\" category. Note: If your data is not labeled, "
 "emptying this field will sometimes be preferable."
 msgstr ""
+"Etikedo por uzi por la kategorio \"aliaj\". Noto: Se viaj datumoj ne estas "
+"etikeditaj, malplenigi ĉi tiun kampon foje estos preferinda."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -123,6 +138,8 @@ msgid ""
 "General users may skip this section of help, this is primarily for "
 "developers."
 msgstr ""
+"Ĝeneralaj uzantoj povas preterlasi ĉi tiun sekcion de helpo, ĉi tio estas "
+"ĉefe por programistoj."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
@@ -142,6 +159,8 @@ msgid ""
 "The following external properties are provided for use in the embedding "
 "plugin."
 msgstr ""
+"La jenaj eksteraj propraĵoj estas provizitaj por uzo en la enkonstrua "
+"kromaĵo."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -151,6 +170,7 @@ msgid ""
 "<i>invar</i>: Symbol name of the input variable to be limited. Defaults to "
 "'x'."
 msgstr ""
+"<i>invar</i>: Simbolonomo de la eniga variablo limigota. Defaŭlte al 'x'."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -160,6 +180,8 @@ msgid ""
 "<i>outvar</i>: Symbol name to use for the output variable (the limited "
 "vector). May be identical to <i>invar</i>. Defaults to 'x'."
 msgstr ""
+"<i>outvar</i>: Simbolonomo por uzi por la eliga variablo (la limigita "
+"vektoro). Povas esti identa al <i>invar</i>. Defaŭlte al 'x'."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -170,6 +192,9 @@ msgid ""
 "limitation options, suitable for pasting into the <i>parameters</i> argument "
 "of <b>rk.header()</b>."
 msgstr ""
+"<i>parametroj</i>: Ĉi tiu propreco estos agordita al ĉeno priskribanta la "
+"limigajn elektojn, taŭga por alglui en la argumenton <i>parametroj</i> de "
+"<b>rk.header()</b>."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="...">
@@ -270,6 +295,8 @@ msgid ""
 "Generic tabulation plugin (single outcome vector). This plugin is designed "
 "to be embedded into other plugins."
 msgstr ""
+"Ĝenerala tabulado kromaĵo (ununura rezulta vektoro). Ĉi tiu kromaĵo estas "
+"desegnita por esti enigita en aliajn kromaĵojn."
 
 #. i18n: ectx: (Loaded from Tabulate) <usage>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:12
@@ -278,6 +305,8 @@ msgid ""
 "Allows to tabulate frequencies, or aggregate a single variable, by the "
 "levels of one or more grouping variables."
 msgstr ""
+"Permesas tabeligi frekvencojn, aŭ aldoni ununuran variablon, laŭ la niveloj "
+"de unu aŭ pluraj grupaj variabloj."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Grouping factors")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:17
@@ -286,6 +315,8 @@ msgid ""
 "Select the grouping variables. Often, these will be factors. The levels of "
 "each grouping variable will be crossed."
 msgstr ""
+"Elektu la grupajn variablojn. Ofte, ĉi tiuj estos faktoroj. La niveloj de "
+"ĉiu grupiga variablo estos krucitaj."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
@@ -294,6 +325,8 @@ msgid ""
 "Type of tabulation / statistic to compute. This can be frequency of "
 "occurrence, or a function of a separate vector."
 msgstr ""
+"Tipo de tabeligo/statistiko por komputi. Tio povas esti ofteco de okazo, aŭ "
+"funkcio de aparta vektoro."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Values")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:19
@@ -302,6 +335,8 @@ msgid ""
 "When computing a statistic other than frequency, specify the vector "
 "containing the underlying data, here."
 msgstr ""
+"Dum komputado de statistiko krom frekvenco, specifu la vektoron enhavantan "
+"la subestajn datumojn, ĉi tie."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Custom statistic")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:20
@@ -312,6 +347,11 @@ msgid ""
 "(a sub-group of the variable selected above) as parameter \"x\", and must "
 "return a single numeric value. Typical examples are \"mean(x)\" or \"sd(x)\"."
 msgstr ""
+"Kiam la statistiko estas agordita al \"Alia:\", tio ebligas al vi specifi "
+"arbitran funkcion por komputi la statistpiktogram. La funkcio povas preni "
+"vektoron (subgrupo de la variablo elektita supre) kiel parametro \"x\", kaj "
+"devas redoni ununuran nombra valoro. Tipaj ekzemploj estas \"mean(x)\" aŭ "
+"\"sd(x)\"."
 
 #. i18n: ectx: (Loaded from Tabulate) <related>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
@@ -326,6 +366,8 @@ msgid ""
 "<link href=\"rkward://component/crosstab_multi\"/> for tabulation of "
 "frequencies across many variables."
 msgstr ""
+"<link href=\"rkward://component/crosstab_multi\"/> por tabeligado de "
+"frekvencoj tra multaj variabloj."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -335,6 +377,8 @@ msgid ""
 "The following external properties are provided for use in the embedding "
 "plugin:"
 msgstr ""
+"La sekvaj eksteraj propraĵoj estas provizitaj por uzo en la enkonstrua "
+"kromaĵo:"
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -345,6 +389,9 @@ msgid ""
 "default. Connect your own to this one (<i>client=\"embedded_id.varsource."
 "selected\" governor=\"myvarselector_id.selected\"</i>)."
 msgstr ""
+"<i>varsource</i>: La tabulacia kromaĵo ne montras sian propran varselektilon "
+"defaŭlte. Konektu vian propran al ĉi tiu (<i>client=\"embedded_id.varsource."
+"selected\" governor=\"myvarselector_id.selected\"</i>)."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -354,6 +401,8 @@ msgid ""
 "<i>outvar</i>: By default, the plugin produces a table in a variable called "
 "\"x\". You can set it to use a different name, here."
 msgstr ""
+"<i>outvar</i>: Defaŭlte, la kromprogramo produktas tabelon en variablo "
+"nomata \"x\". Vi povas agordi ĝin por uzi alian nomon, ĉi tie."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -364,6 +413,9 @@ msgid ""
 "grouping variables in an R variable, set this to an object name to use. Else "
 "set this to \"\" to disable. Defaults to \"title\""
 msgstr ""
+"<i>titlevar</i>: Se vi volas, ke la kromaĵo konservu priskribon de la grupaj "
+"variabloj en R-variablo, agordu ĉi tion al objektonomo por uzi. Alie agordu "
+"ĉi tion al \"\" por malŝalti. Defaŭlte al \"titolo\""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -373,6 +425,8 @@ msgid ""
 "<i>fun_label</i>: This property will be set to a description of the "
 "statistic."
 msgstr ""
+"<i>fun_label</i>: Ĉi tiu propreco estos agordita al priskribo de la "
+"statistiko."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -383,6 +437,9 @@ msgid ""
 "tabulation options, suitable for pasting into the <i>parameters</i> argument "
 "of <b>rk.header()</b>."
 msgstr ""
+"<i>parametroj</i>: Ĉi tiu propreco estos agordita al ĉeno priskribanta la "
+"tabelopciojn, taŭga por alglui en la argumenton <i>parametroj</i> de <b>rk."
+"header()</b>."
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
@@ -467,6 +524,8 @@ msgid ""
 "Not for direct use: Utility plugins that can be included by other plugins. "
 "Part of the official RKWard distribution"
 msgstr ""
+"Ne por rekta uzo: Utilaj aldonaĵoj, kiuj povas esti inkluzivitaj de aliaj "
+"aldonaĵoj. Parto de la oficiala RKWard-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <embed label="...">
@@ -569,6 +628,8 @@ msgid ""
 "If you want a certain commit, tag or branch for installation, define that "
 "here."
 msgstr ""
+"Se vi volas certan kommit, etikedon aŭ branĉon por instalo, difinu tion ĉi "
+"tie."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:34
@@ -577,6 +638,7 @@ msgid ""
 "If you want to install from a subdirectory of the repository, define that "
 "here."
 msgstr ""
+"Se vi volas instali el subdosierujo de la deponejo, difinu tion ĉi tie."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:38
@@ -585,20 +647,22 @@ msgid ""
 "To install from a private repository, set your personal access token (PAT, "
 "GitHub and GitLab only)."
 msgstr ""
+"Por instali el privata deponejo, agordu vian personan alirĵetonon (nur PAT, "
+"GitHub kaj GitLab)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:41
 #, kde-format
 msgid ""
 "To install from a private repository, set the user name (Bitbucket only)."
-msgstr ""
+msgstr "Por instali de privata deponejo, agordu la uzantnomon (nur Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:44
 #, kde-format
 msgid ""
 "To install from a private repository, set the password (Bitbucket only)."
-msgstr ""
+msgstr "Por instali el privata deponejo, agordu la pasvorton (nur Bitbucket)."
 
 #. i18n: ectx: (Install from git/svn) <dialog label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:30
@@ -715,6 +779,8 @@ msgid ""
 "Not for direct use: Defines the names and order of top level menus. Part of "
 "the official RKWard distribution"
 msgstr ""
+"Ne por rekta uzo: Difinas la nomojn kaj ordon de supranivelaj menuoj. Parto "
+"de la oficiala RKWard-distribuo"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:24
@@ -766,6 +832,9 @@ msgid ""
 "Choose if you want stacked bars, legend, and rainbow colors. Also you can "
 "choose if you want to display or not bar values (labels) and in what place."
 msgstr ""
+"Elektu ĉu vi volas staplitajn stangojn, legendojn kaj ĉielarkajn kolorojn. "
+"Ankaŭ vi povas elekti ĉu vi volas montri aŭ ne trinkvalorojn (etikedoj) kaj "
+"en kiu loko."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Draw Legend")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:17
@@ -775,6 +844,9 @@ msgid ""
 "used to construct the legend, so this option has no effect, if the rows are "
 "not named."
 msgstr ""
+"Ĉu legendo estu aldonita al la barploto? La vicnomoj de la datumoj estos "
+"uzataj por konstrui la legendon, do ĉi tiu elekteblo ne efikas, se la vicoj "
+"ne estas nomitaj."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Colors")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:18
@@ -790,6 +862,9 @@ msgid ""
 "meaningful for two-dimensional data. If you choose stacked bars you can not "
 "display bar values, below."
 msgstr ""
+"Elektu tipon inter apudmetitaj stangoj kaj stakitaj stangoj. Ĉi tiu agordo "
+"estas signifa nur por dudimensiaj datumoj. Se vi elektas staplitajn stangojn "
+"vi ne povas montri stangajn valorojn, sube."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Display values")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:20
@@ -804,6 +879,8 @@ msgid ""
 "If you have selected to display bar values (labels) you can select where "
 "should they be displayed:"
 msgstr ""
+"Se vi elektis montri strekvalorojn (etikedojn), vi povas elekti kie ili estu "
+"montrataj:"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
@@ -829,6 +906,8 @@ msgstr "Ene de la kradoj"
 msgid ""
 "Generic plot options. See <link href=\"rkward://component/plot_options\"/>."
 msgstr ""
+"Ĝeneralaj grafiko-elektebloj. Vidu <link href=\"rkward://component/"
+"plot_options\"/>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -839,6 +918,9 @@ msgid ""
 "provide a means to select input data. When embedding this plugin, you will "
 "be interested in the following properties:"
 msgstr ""
+"Ĉi tiu kromaĵo estas intencita esti enigita en aliaj kromprogramoj. Ĝi per "
+"si mem ne provizas rimedon por elekti enigajn datumojn. Enkorpigante ĉi tiun "
+"kromaĵon, vi interesiĝos pri la jenaj propraĵoj:"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -848,6 +930,8 @@ msgid ""
 "<i>xvar</i>: The name of the data variable. You can connect this to a "
 "varslot, or set it to a fixed string such as \"x\". This is required."
 msgstr ""
+"<i>xvar</i>: La nomo de la datuma variablo. Vi povas konekti ĉi tion al "
+"varslot, aŭ agordi ĝin al fiksa ĉeno kiel \"x\". Ĉi tio estas postulata."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -857,6 +941,8 @@ msgid ""
 "<i>code.preprocess</i>: Provides a summary of parameters to be used in a "
 "call to <b>rk.header()</b>, if you have a use for it."
 msgstr ""
+"<i>code.preprocess</i>: Provizas resumon de parametroj uzeblaj en voko al "
+"<b>rk.header()</b>, se vi havas uzon por ĝi."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -865,6 +951,7 @@ msgstr ""
 msgid ""
 "<i>code.printout</i>: The actual commands needed to construct the barplot."
 msgstr ""
+"<i>code.printout</i>: La realaj ordonoj necesaj por konstrui la barploton."
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:22
@@ -957,6 +1044,8 @@ msgid ""
 "This plugin is meant to be used embedded, and you should not really ever see "
 "this help page."
 msgstr ""
+"Ĉi tiu kromaĵo estas destinita por esti uzata enigita, kaj vi neniam devus "
+"vidi ĉi tiun helppaĝon."
 
 #. i18n: ectx: (Loaded from Choose color) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:19
@@ -1492,6 +1581,8 @@ msgid ""
 "This plugin provides various options for <b>hist</b> or <b>plot.histogram</"
 "b>."
 msgstr ""
+"Ĉi tiu kromaĵo provizas diversajn elekteblojn por <b>hist</b> aŭ <b>plot."
+"histogram</b>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <usage>
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:11
@@ -1503,6 +1594,11 @@ msgid ""
 "combinations might not produce any sensible plot, so read the R references "
 "to make a judicious choice of parameters."
 msgstr ""
+"Ĉi tiu kromaĵo estas plejparte uzata kiel enigita kromaĵo. Ĉiuj GUI-"
+"elementoj ĉi tie starigas diversajn parametrojn al aŭ hist aŭ plot.histogram-"
+"funkcioj. Por parametra specifa helpo vidu la respektivajn R-referencojn. "
+"Malmultaj parametraj kombinaĵoj eble ne produktas ajnan senchavan grafikon, "
+"do legu la R-referencojn por fari prudentan elekton de parametroj."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Add bars to current plot")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:15
@@ -1511,6 +1607,8 @@ msgid ""
 "Check this box if the histogram is to be added to the current plot. This is "
 "the <i>add</i> parameter."
 msgstr ""
+"Marku ĉi tiun skatolon se la histogramo estas aldonota al la nuna grafikaĵo. "
+"Ĉi tio estas la parametro <i>aldoni</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Frequency")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:16
@@ -1547,6 +1645,13 @@ msgid ""
 "points in the range of the variable. The number of break points in this case "
 "is provided by 'Vector length' (see below)."
 msgstr ""
+"Ĉi tio estas la parametro <i>rompoj</i> al <b>hist</b>, krom se oni elektas "
+"aŭ 'Entjerajn nombrojn' aŭ 'Vektoro de rompopunktoj'. La opcio 'Entjeraj "
+"nombroj' fiksas la rompopunktojn kiel la entjeroj inter la minimumo kaj la "
+"maksimumo de la variablo. La opcio 'Vektoro de rompopunktoj' starigas egale "
+"interspacigitajn rompopunktojn en la intervalo de la variablo. La nombro da "
+"rompopunktoj en ĉi tiu kazo estas disponigita per \"Vektora longo\" (vidu "
+"malsupre)."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Suggested cells")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:22
@@ -1556,6 +1661,9 @@ msgid ""
 "suggestion to the number of cells. This is the <i>breaks</i> parameter with "
 "a single number argument."
 msgstr ""
+"Se 'Ununura nombro' estas elektita en la supra kampo, tiam ĉi tio donas "
+"sugeston pri la nombro da ĉeloj. Ĉi tio estas la parametro <i>rompoj</i> kun "
+"unusola argumento."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Vector length")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:23
@@ -1568,6 +1676,13 @@ msgid ""
 "code). The range of the variable is extended by 10% before obtaining the "
 "sequence, so that both the minimum and maximum points are included."
 msgstr ""
+"Se \"Vektoro de rompopunktoj\" estas elektita en la supra kampo, tiam tio "
+"disponigas la longon de la vektoro de egale interspacigitaj rompopunktoj en "
+"la intervalo de la variablo. Ĉi tio estas la parametro <i>rompoj</i> kun "
+"vektora argumento. La fakta sekvenco estas kalkulita per enlinia funkciovoko "
+"(vidu la generitan kodon). La gamo de la variablo estas etendita je 10% "
+"antaŭ akiri la sekvencon, tiel ke ambaŭ la minimumaj kaj maksimumaj punktoj "
+"estas inkluditaj."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Draw border")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:25
@@ -1577,6 +1692,9 @@ msgid ""
 "<i>border=FALSE</i> is added to the code. Otherwise a color is provided as "
 "the argument to <i>border</i>."
 msgstr ""
+"Ĉu limo al la histogramaj stangoj estas desegnita. Se nemarkite tiam, "
+"<i>border=FALSE</i> estas aldonita al la kodo. Alie koloro estas provizita "
+"kiel la argumento al <i>limo</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:26
@@ -1585,6 +1703,8 @@ msgid ""
 "This is the <i>border</i> argument which provides the color of the border. "
 "Check the above box to use this option."
 msgstr ""
+"Ĉi tiu estas la argumento <i>limo</i> kiu provizas la koloron de la limo. "
+"Marku la supran skatolon por uzi ĉi tiun elekteblon."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Line type for histogram")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:28
@@ -1594,6 +1714,9 @@ msgid ""
 "select a fill color to make a sensible plot. See R reference for further "
 "details."
 msgstr ""
+"Ĉi tio estas la parametro <i>lty</i>. Elektante 'Malplena' ne desegnos "
+"neniujn liniojn, elektu plenigkoloron por fari senchavan grafikon. Vidu R-"
+"referencon por pliaj detaloj."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Density of shading lines")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:29
@@ -1602,6 +1725,8 @@ msgid ""
 "This is the <i>density</i> parameter. See the R reference on 'rect' for more "
 "details."
 msgstr ""
+"Ĉi tio estas la parametro <i>denseco</i>. Vidu la R-referencon pri 'rect' "
+"por pliaj detaloj."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Angle of shading lines")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:30
@@ -1623,6 +1748,9 @@ msgid ""
 "color. If it is empty, then <i>col</i> is not used in the code, otherwise "
 "the chosen color is used to fill the bars."
 msgstr ""
+"Ĉi tio estas la parametro <i>col</i>. La enkonstrua kromaĵo povus agordi "
+"defaŭltan koloron. Se ĝi estas malplena, tiam <i>kol</i> ne estas uzata en "
+"la kodo, alie la elektita koloro estas uzata por plenigi la stangojn."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -1637,6 +1765,8 @@ msgstr ""
 msgid ""
 "The following external tags are provided for use in the embedding plugin."
 msgstr ""
+"La sekvaj eksteraj etikedoj estas provizitaj por uzo en la enkonstrua "
+"kromaĵo."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
@@ -1649,6 +1779,8 @@ msgid ""
 "<i>code.printout</i>: This contains all the other options determining the "
 "look of the plot."
 msgstr ""
+"<i>code.printout</i>: Ĉi tio enhavas ĉiujn aliajn eblojn determinantajn la "
+"aspekton de la grafiko."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
@@ -1661,6 +1793,8 @@ msgid ""
 "<i>allow_addtoplot</i>: Setting this to \"true\" (\"false\") enables "
 "(disables) the display of the '<label id=\"addtoplot\"/>' check box."
 msgstr ""
+"<i>allow_addtoplot</i>: Agordi ĉi tion al \"true\" (\"false\") ebligas "
+"(malŝaltas) la montradon de la markobutono '<label id=\"addtoplot\"/>'."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1670,6 +1804,8 @@ msgid ""
 "<i>varname</i>: For linking to the variable name for which histogram is "
 "being plotted. This is used in the 'Integer numbers' option for breaks."
 msgstr ""
+"<i>varname</i>: Por ligi al la variablo nomo por kiu histogramo estas "
+"grafika. Ĉi tio estas uzata en la elekteblo 'Entjeraj nombroj' por paŭzoj."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1679,6 +1815,8 @@ msgid ""
 "<i>allow_freq</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of the '<label id=\"freq\"/>' check box."
 msgstr ""
+"<i>allow_freq</i>: Agordi ĉi tion al \"vera\" (\"falsa\") ebligas "
+"(malŝaltas) la montradon de la markobutono '<label id=\"freq\"/>'."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1688,6 +1826,8 @@ msgid ""
 "<i>allow_barlabels</i>: Setting this to \"true\" (\"false\") enables "
 "(disables) the display of the '<label id=\"barlabels\"/>' check box."
 msgstr ""
+"<i>allow_barlabels</i>: Agordi ĉi tion al \"true\" (\"false\") ebligas "
+"(malŝaltas) la montradon de la markobutono '<label id=\"barlabels\"/>'."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1697,6 +1837,8 @@ msgid ""
 "In order to allow flexible use, the generated options are separated into "
 "three different sections:"
 msgstr ""
+"Por permesi flekseblan uzon, la generitaj elektebloj estas apartigitaj en "
+"tri malsamajn sekciojn:"
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1706,6 +1848,8 @@ msgid ""
 "<i>code.preprocess</i>: Options suitable for use in a call to <b>rk."
 "header()</b>. These are safe to ignore, if you do not need them."
 msgstr ""
+"<i>code.preprocess</i>: Opcioj taŭgaj por uzado en voko al <b>rk.header()</"
+"b>. Ĉi tiuj estas sekure ignori, se vi ne bezonas ilin."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1933,6 +2077,10 @@ msgid ""
 "available in a specific embedded situation. When a particular feature is "
 "available, it is explained as below."
 msgstr ""
+"Ĝenerala kromprogramo por grafik-elektebloj. Pli ofte, ĉi tiu kromaĵo estas "
+"enigita en aliajn kromaĵojn. Kiel rezulto, ne ĉiuj funkcioj klarigitaj ĉi "
+"tie estas haveblaj en specifa enigita situacio. Kiam aparta funkcio estas "
+"disponebla, ĝi estas klarigita kiel sube."
 
 #. i18n: ectx: (Loaded from Default plot options) <usage>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:12
@@ -1948,6 +2096,8 @@ msgid ""
 "This is the <i>main</i> argument to plot.default. See R reference on <b>plot."
 "default</b>. To achieve a line-break (in a quoted string), enter '\\n'."
 msgstr ""
+"Ĉi tiu estas la <i>ĉefa</i> argumento al plot.default. Vidu R-referencon sur "
+"<b>plot.default</b>. Por atingi linio-rompon (en citita ĉeno), enigu '\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:19
@@ -1956,6 +2106,8 @@ msgid ""
 "If this box is checked, the <i>main</i> title will be used literally "
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
+"Se ĉi tiu skatolo estas markita, la titolo <i>ĉefa</i> estos uzata laŭvorte "
+"(citita). Alie is estos interpretita kiel R-deklaro"
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Sub-title (at bottom). Leave empty for default title")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:20
@@ -1964,6 +2116,8 @@ msgid ""
 "This is the <i>sub</i> argument to plot.default. See R reference on <b>plot."
 "default</b>. To achieve a line-break (in a quoted string), enter '\\n'."
 msgstr ""
+"Ĉi tiu estas la <i>sub</i> argumento al plot.default. Vidu R-referencon sur "
+"<b>plot.default</b>. Por atingi linio-rompon (en citita ĉeno), enigu '\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:21
@@ -1972,6 +2126,8 @@ msgid ""
 "If this box is checked, the <i>sub</i> title will be used literally "
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
+"Se ĉi tiu skatolo estas markita, la <i>sub</i> titolo estos uzata laŭvorte "
+"(citita). Alie is estos interpretita kiel R-deklaro"
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Custom margins")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:22
@@ -2016,6 +2172,8 @@ msgid ""
 "Uncheck this box to avoid drawing the X axis. This is the <i>xaxt</i> "
 "argument to par. See R reference on <b>par</b>."
 msgstr ""
+"Malmarku ĉi tiun skatolon por eviti desegni la X-akson. Jen la <i>xaxt</i> "
+"argumento al par. Vidu R-referencon sur <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw Y axis")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:30
@@ -2024,6 +2182,8 @@ msgid ""
 "Uncheck this box to avoid drawing the Y axis. This is the <i>yaxt</i> "
 "argument to par. See R reference on <b>par</b>."
 msgstr ""
+"Malmarku ĉi tiun skatolon por eviti desegni la Y-akson. Jen la <i>yaxt</i> "
+"argumento al par. Vidu R-referencon sur <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "X axis logarithmic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:31
@@ -2032,6 +2192,9 @@ msgid ""
 "This specifies the <i>log</i> argument to plot.default. Check this box to "
 "set <i>log=\"x\"</i>. See R reference on <b>plot.default</b>."
 msgstr ""
+"Ĉi tio specifas la argumenton <i>log</i> al plot.default. Marku ĉi tiun "
+"skatolon por agordi <i>log=\"x\"</i>. Vidu R-referencon sur <b>plot.default</"
+"b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Y axis logarithmic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:32
@@ -2041,6 +2204,9 @@ msgid ""
 "set <i>log=\"y\"</i>. Check both the boxes to set <i>log=\"xy\"</i>. See R "
 "reference on <b>plot.default</b>."
 msgstr ""
+"Ĉi tio specifas la argumenton <i>log</i> al plot.default. Marku ĉi tiun "
+"skatolon por agordi <i>log=\"y\"</i>. Marku ambaŭ la skatolojn por agordi "
+"<i>log=\"xy\"</i>. Vidu R-referencon sur <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Labels (leave empty for default)")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:34
@@ -2051,6 +2217,10 @@ msgid ""
 "labels being evaluated as literal (quoted) strings. To achieve a line-break "
 "(in a quoted string), enter '\\n'."
 msgstr ""
+"La X kaj Y-akso-etikedoj. Ĉi tiuj estas la <i>xlab</i> kaj <i>ylab</i> "
+"argumentoj al <b>plot.default</b> respektive. La markobutonoj ebligas aŭ "
+"malŝaltas la etikedojn taksitajn kiel laŭvortajn (cititajn) ĉenojn. Por "
+"atingi linio-rompon (en citita ĉeno), enigu '\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:35
@@ -2060,6 +2230,9 @@ msgid ""
 "to <b>plot.default</b> respectively. For automatic evaluation of the limits, "
 "leave these blank."
 msgstr ""
+"La X kaj Y-akso limoj. Ĉi tiuj estas la <i>xlim</i> kaj <i>ylim</i> "
+"argumentoj al <b>plot.default</b> respektive. Por aŭtomata taksado de la "
+"limoj, lasu ĉi tiujn malplenajn."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Type of points/lines")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:38
@@ -2069,6 +2242,9 @@ msgid ""
 "function use its default plotting type, choose the 'default' option. This is "
 "the <i>type</i> argument to <b>plot.default</b>."
 msgstr ""
+"Elektu unu el la listigitaj punkto/liniotipoj por la grafiko. Por lasi la "
+"alvokan funkcion uzi sian defaŭltan grafikan tipon, elektu la opcion "
+"'defaŭlta'. Ĉi tiu estas la argumento <i>tipo</i> al <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:40
@@ -2078,6 +2254,9 @@ msgid ""
 "function use its default plotting color, choose the 'default' option. This "
 "is the <i>col</i> argument to <b>plot.default</b>."
 msgstr ""
+"Elektu unu el la listigitaj punkto/liniaj koloroj por la grafiko. Por lasi "
+"la alvokan funkcion uzi sian defaŭltan grafikan koloron, elektu la opcion "
+"'defaŭlta'. Ĉi tiu estas la argumento <i>col</i> al <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Aspect ratio")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:43
@@ -2094,6 +2273,11 @@ msgid ""
 "not for <b>plot.default</b> but rather for the function <b>grid</b>. For "
 "this to be functional the embedding plugin should implement it internally."
 msgstr ""
+"Marku ĉi tiun skatolon por aldoni kradon al la nuna grafiko. Por diversaj "
+"kradaj elektoj vidu <link href=\"rkward://component/x11grid\"/>. Notu, ke ĉi "
+"tiuj elektebloj ne estas por <b>plot.default</b> sed prefere por la funkcio "
+"<b>krado</b>. Por ke ĉi tio estu funkcia, la eniga kromaĵo devus efektivigi "
+"ĝin interne."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2119,6 +2303,9 @@ msgid ""
 "possibilities are p,l,b,o,h,s and S; the options for the <i>type</i> "
 "argument."
 msgstr ""
+"<i>default_pointtype</i>: Ĉeno kiu provizas la defaŭltan punktotipo kiam la "
+"uzanto elektas 'Defaŭlta' por '<label id=\"pointtype\"/>'. La eblecoj estas "
+"p,l,b,o,h,s kaj S; la elektebloj por la argumento <i>tipo</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2130,6 +2317,10 @@ msgid ""
 "various possibilities see the code color_chooser.xml; the options for the "
 "<i>col</i> argument."
 msgstr ""
+"<i>default_pointcolor</i>: Ĉeno kiu provizas la defaŭltan punktokoloron kiam "
+"la uzanto elektas 'Defaŭltan' por '<label id=\"pointcolor\"/>'. Por diversaj "
+"eblecoj vidu la kodon color_chooser.xml; la opcioj por la argumento <i>kol</"
+"i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2142,6 +2333,11 @@ msgid ""
 "unquoted. If you want to specify a literal string add quotes, explicitly, as "
 "\"&amp;<i>quote;</i>\"."
 msgstr ""
+"<i>default_main</i>: Ĉeno specifanta la argumenton <i>ĉefa</i> al <b>plot."
+"default</b>. Defaŭlte tio estas \"\" kio signifas, ke la ĉefa titolo "
+"generita de la grafika funkcio estas uzata. Noto: La defaŭlto ĉiam estas "
+"uzata necitita. Se vi volas specifi laŭvortan ĉenon aldonu citilojn, "
+"eksplicite, kiel \"&amp;<i>citaĵo;</i>\"."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2151,6 +2347,8 @@ msgid ""
 "<i>default_sub</i>: Similar to <i>main</i> above but for the subtitle "
 "argument <i>sub</i>."
 msgstr ""
+"<i>default_sub</i>: Simile al <i>ĉefa</i> supre sed por la subtitola "
+"argumento <i>sub</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2160,6 +2358,8 @@ msgid ""
 "<i>default_xlab</i>: Similar to <i>main</i> above but for the X-label "
 "argument <i>xlab</i>."
 msgstr ""
+"<i>default_xlab</i>: Simile al <i>ĉefa</i> supre sed por la X-etikedo "
+"argumento <i>xlab</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2169,6 +2369,8 @@ msgid ""
 "<i>default_ylab</i>: Similar to <i>main</i> above but for the Y-label "
 "argument <i>ylab</i>."
 msgstr ""
+"<i>default_ylab</i>: Simile al <i>ĉefa</i> supre sed por la Y-etikedo "
+"argumento <i>ylab</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2178,6 +2380,9 @@ msgid ""
 "<i>allow_log</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of '<label id=\"xlog\"/>' and '<label id=\"ylog\"/>' check boxes."
 msgstr ""
+"<i>allow_log</i>: Agordi ĉi tion al \"vera\" (\"falsa\") ebligas (malŝaltas) "
+"la montradon de '<label id=\"xlog\"/>' kaj '<label id= \"ylog\"/>' "
+"markobutonoj."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2188,6 +2393,9 @@ msgid ""
 "the display of '<label id=\"xminvalue\"/>' and '<label id=\"xmaxvalue\"/>' "
 "input boxes."
 msgstr ""
+"<i>allow_xlim</i>: Agordi ĉi tion al \"true\" (\"false\") ebligas "
+"(malŝaltas) la montradon de '<label id=\"xminvalue\"/>' kaj '<label id= "
+"\"xmaxvalue\"/>' enigoskatoloj."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2198,6 +2406,9 @@ msgid ""
 "the display of '<label id=\"yminvalue\"/>' and '<label id=\"ymaxvalue\"/>' "
 "input boxes."
 msgstr ""
+"<i>allow_ylim</i>: Agordi ĉi tion al \"true\" (\"false\") ebligas "
+"(malŝaltas) la montradon de '<label id=\"yminvalue\"/>' kaj '<label id= "
+"\"ymaxvalue\"/>' enigoskatoloj."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2207,6 +2418,8 @@ msgid ""
 "<i>allow_type</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of the '<label id=\"pointtypepage\"/>' tab."
 msgstr ""
+"<i>allow_type</i>: Agordi ĉi tion al \"vera\" (\"falsa\") ebligas "
+"(malŝaltas) la montradon de la langeto '<label id=\"pointtypepage\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2216,6 +2429,8 @@ msgid ""
 "<i>allow_aspect</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of the '<label id=\"aspectratio\"/>' tab."
 msgstr ""
+"<i>allow_aspect</i>: Agordi ĉi tion al \"vera\" (\"falsa\") ebligas "
+"(malŝaltas) la montradon de la langeto '<label id=\"aspectratio\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2230,6 +2445,14 @@ msgid ""
 "following call:<br> printIndented (\"\\t\", getRK_val (\"plot_options.code."
 "calculate\"));</br><br> after the plotting function should do the job.</br>"
 msgstr ""
+"<i>allow_grid</i>: Agordi ĉi tion al \"true\" (\"false\") ebligas "
+"(malŝaltas) la montradon de la langeto '<label id=\"tab_grid\"/>'. Se \"vera"
+"\", la fakta kodo por kradaj elektoj povas esti eltirita el code.calculate "
+"(vidu malsupre) kiu siavice ĉerpas ĝin el grid_options.code.printout. "
+"Specife, se la aldonaĵo de grafik-elektebloj estas enigitaj uzante <i>id="
+"\"plot_options\"</i> tiam la sekva alvoko:<br> printIndented (\"\\t\", "
+"getRK_val (\"plot_options.code.calculate\"));</br><br> post kiam la grafika "
+"funkcio devus fari la laboron.</br>"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2239,6 +2462,8 @@ msgid ""
 "In order to allow flexible use, the generated options are separated into "
 "different sections:"
 msgstr ""
+"Por permesi flekseblan uzon, la generitaj elektebloj estas apartigitaj en "
+"malsamajn sekciojn:"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2248,6 +2473,8 @@ msgid ""
 "<i>code.preprocess</i>: Nothing yet, but will hopefully include some <b>par</"
 "b> options."
 msgstr ""
+"<i>code.preprocess</i>: Ankoraŭ nenio, sed espereble inkludos kelkajn "
+"elekteblojn de <b>par</b>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2256,6 +2483,7 @@ msgstr ""
 msgid ""
 "<i>code.calculate</i>: Currently this contains only the <b>grid</b>-options."
 msgstr ""
+"<i>code.calculate</i>: Nuntempe ĉi tio enhavas nur la <b>krado</b>-opciojn."
 
 #. i18n: ectx: (Default plot options) <dialog label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:78
@@ -2545,6 +2773,9 @@ msgid ""
 "that one data unit in the x direction is equal in length to asp * one data "
 "unit in the y direction."
 msgstr ""
+"Notu ke se Aspekto estas finhava pozitiva valoro tiam la fenestro estas "
+"starigita tiel ke unu datumunuo en la x-direkto estas egala en longo al asp "
+"* unu datumunuo en la y-direkto."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:168
@@ -2554,6 +2785,10 @@ msgid ""
 "are represented accurately on screen. Values with Aspect > 1 can be used to "
 "produce more accurate maps when using latitude and longitude."
 msgstr ""
+"La speciala kazo Aspect == 1 produktas grafikojn kie distancoj inter punktoj "
+"estas reprezentitaj precize sur ekrano. Valoroj kun Aspect > 1 povas esti "
+"uzataj por produkti pli precizajn mapojn kiam oni uzas latitudon kaj "
+"longitudon."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:172
@@ -2575,6 +2810,8 @@ msgid ""
 "description of the individual parameters see the R reference on 'plot."
 "stepfun'."
 msgstr ""
+"Diversaj grafikaj parametroj por <b>plot.stepfun</b>. Por detala priskribo "
+"de la individuaj parametroj vidu la R-referencon sur 'plot.stepfun'."
 
 #. i18n: ectx: (Loaded from Step function plot options) <usage>
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:11
@@ -2584,6 +2821,9 @@ msgid ""
 "arguments to the plot.stepfun function. This plugin is useful in "
 "constructing <b>ecdf</b> plots."
 msgstr ""
+"Ĉi tio supozeble estas uzata kiel enigita kromaĵo. Ĉiuj elementoj estas "
+"argumentoj al la funkcio plot.stepfun. Ĉi tiu kromaĵo estas utila por "
+"konstrui <b>ecdf</b>-grafikojn."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Add to current plot")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:15
@@ -2592,6 +2832,8 @@ msgid ""
 "This is the <i>add</i> argument. This option might be disabled by the "
 "embedding plugin."
 msgstr ""
+"Jen la argumento <i>aldoni</i>. Ĉi tiu elekteblo povus esti malŝaltita de la "
+"eniga kromaĵo."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Line type for all lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:16
@@ -2606,6 +2848,8 @@ msgid ""
 "This is the <i>do.points</i> argument. Uncheck this option if points are NOT "
 "to be drawn."
 msgstr ""
+"Jen la argumento <i>do.points</i>. Malmarku ĉi tiun elekteblon se punktoj NE "
+"estas tiritaj."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:18
@@ -2614,6 +2858,8 @@ msgid ""
 "This is the <i>col.points</i> argument. Leave this as 'default' for using "
 "the standard color settings from par()."
 msgstr ""
+"Jen la argumento <i>col.points</i>. Lasu ĉi tion kiel 'defaŭlta' por uzi la "
+"normajn kolorajn agordojn de par()."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Horizontal Lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:19
@@ -2628,6 +2874,8 @@ msgid ""
 "This is the <i>verticals</i> arguments. Uncheck this option if vertical "
 "lines are NOT to be drawn."
 msgstr ""
+"Jen la <i>vertikalaj</i> argumentoj. Malmarku ĉi tiun elekteblon se "
+"vertikalaj linioj NE estas desegnitaj."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:21
@@ -2647,6 +2895,14 @@ msgid ""
 "of the same (specified) color. Otherwise (i.e., when both the colors are "
 "provided) both the colors are provided as a character vector of length two."
 msgstr ""
+"La supraj du elektoj ne estas por <b>plot.stepfun</b>, sed prefere por "
+"<b>ecdf</b>. Tiuj ĉi estas videblaj nur en la kunteksto de 'ecdf'. Ili estas "
+"uzataj por agordi la koloron por la horizontalaj linioj ĉe y = 0 kaj y = 1 "
+"respektive. Specife, ĉi tiu estas la argumento <i>col.01line</i> al <b>ecdf</"
+"b>. Se nur unu estas disponigita (t.e. la alia estas agordita kiel "
+"'Defaŭlta') tiam ambaŭ la linio estas de la sama (specifita) koloro. Alie (t."
+"e., kiam ambaŭ la koloroj estas disponigitaj) ambaŭ la koloroj estas "
+"disponigitaj kiel signo vektoro de longo du."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2656,6 +2912,8 @@ msgid ""
 "<i>default_dopoints</i>: Setting this to \"true\" (\"false\") toggles the "
 "state of the '<label id=\"do_points\"/>' check box."
 msgstr ""
+"<i>default_dopoints</i>: Agordi ĉi tion al \"true\" (\"false\") ŝanĝas la "
+"staton de la markobutono '<label id=\"do_points\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2665,6 +2923,8 @@ msgid ""
 "<i>default_verticals</i>: Setting this to \"true\" (\"false\") toggles the "
 "state of the '<label id=\"verticals\"/>' check box."
 msgstr ""
+"<i>default_verticals</i>: Agordi ĉi tion al \"true\" (\"false\") ŝanĝas la "
+"staton de la markobutono '<label id=\"verticals\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2675,6 +2935,10 @@ msgid ""
 "(disables) the display of the two frames ('<label id=\"frame_col_y0\"/>' and "
 "'<label id=\"frame_col_y0\"/>') for <i>col.01line</i> option to <b>ecdf</b>."
 msgstr ""
+"<i>allow_col01line</i>: Agordi ĉi tion al \"true\" (\"false\") ebligas "
+"(malŝaltas) la montradon de la du kadroj ('<label id=\"frame_col_y0\"/>' kaj "
+"' <label id=\"frame_col_y0\"/>') por <i>col.01line</i> elekteblo al <b>ecdf</"
+"b>."
 
 #. i18n: ectx: (Step function plot options) <dialog label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:33
@@ -2774,6 +3038,12 @@ msgid ""
 "trellis graphics devices (see <link href=\"rkward://rhelp/Lattice\"/> for "
 "some information)."
 msgstr ""
+"Diversaj parametroj por la <b>krado</b>. Por detala priskribo de la "
+"individuaj parametroj vidu la R-referencon pri 'krado'. Notu ke tio funkcias "
+"nur kiam normaj (tradiciaj S) grafikaj funkcioj (vidu library(help=\"graphics"
+"\")) estas uzataj por konstrui la grafikon. Ĉi tio ne funkcias por kradaj "
+"grafikaj aparatoj (vidu <link href=\"rkward://rhelp/Lattice\"/> por iuj "
+"informoj)."
 
 #. i18n: ectx: (Loaded from Grid options) <usage>
 #: rkward/plugins/distributions/../x11device/grid.rkh:11
@@ -2782,6 +3052,8 @@ msgid ""
 "This may or may not be used as an embedded plugin. When used on a trellis "
 "device the produced error message is displayed."
 msgstr ""
+"Ĉi tio povas aŭ ne esti uzata kiel enigita kromaĵo. Kiam estas uzata sur "
+"trellis-aparato, la produktita erarmesaĝo estas montrata."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of X cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:15
@@ -2792,6 +3064,10 @@ msgid ""
 "vertical lines. Select 'Specify below' to provide a specified (to be "
 "specified below) number of vertical lines in the grid."
 msgstr ""
+"Jen la argumento <i>nx</i>. La defaŭlta estas NULL, en kiu kazo, la "
+"vertikalaj linioj estas desegnitaj ĉe la aksaj tiktakoj. Elektu Neniun por "
+"ne desegni la vertikalajn liniojn. Elektu 'Specifiku sube' por provizi "
+"specifitan (specifotan sube) nombron da vertikalaj linioj en la krado."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "X Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:16
@@ -2800,6 +3076,8 @@ msgid ""
 "This is the <i>nx</i> argument, when 'Specify below' is selected in the "
 "above option list."
 msgstr ""
+"Ĉi tiu estas la argumento <i>nx</i>, kiam 'Specifi sube' estas elektita en "
+"la supra elektolisto."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of Y cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:17
@@ -2808,6 +3086,8 @@ msgid ""
 "This is the <i>ny</i> argument. Similar to <i>nx</i>. See the explanation on "
 "number of x cells above."
 msgstr ""
+"Jen la <i>ny</i> argumento. Simile al <i>nx</i>. Vidu la klarigon pri nombro "
+"da x-ĉeloj supre."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Y Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:18
@@ -2816,6 +3096,8 @@ msgid ""
 "This is the <i>ny</i> argument when a specified (by the user) number of y "
 "cells are to be used. Similar to x cells."
 msgstr ""
+"Ĉi tiu estas la argumento <i>ny</i> kiam specifita (de la uzanto) nombro da "
+"y ĉeloj estas uzota. Simila al x-ĉeloj."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Custom Line width")
 #: rkward/plugins/distributions/../x11device/grid.rkh:19
@@ -2824,6 +3106,8 @@ msgid ""
 "Check this option to use a custom line width. In which case, provide the "
 "width below."
 msgstr ""
+"Marku ĉi tiun elekteblon por uzi propran liniolarĝon. En tiu kazo, donu la "
+"larĝon sube."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line width")
 #: rkward/plugins/distributions/../x11device/grid.rkh:20
@@ -2838,6 +3122,8 @@ msgid ""
 "This is the <i>lty</i> argument. Choosing Default will not add any arguments "
 "to the grid function call, hence the default line type will be used."
 msgstr ""
+"Jen la <i>lty</i> argumento. Elektante Defaŭltan ne aldonos argumentojn al "
+"la krada funkciovoko, tial la defaŭlta linio-tipo estos uzata."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../x11device/grid.rkh:22
@@ -2846,6 +3132,8 @@ msgid ""
 "This is the <i>col</i> argument. The Default option is similar to that of "
 "Line type (see above)."
 msgstr ""
+"Jen la argumento <i>kol</i>. La Defaŭlta elekteblo estas simila al tiu de "
+"Linio-tipo (vidu supre)."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Equilogs")
 #: rkward/plugins/distributions/../x11device/grid.rkh:23
@@ -2854,6 +3142,8 @@ msgid ""
 "This is the <i>equilogs</i> argument. Uncheck this option to set "
 "<i>equilogs=FALSE</i>."
 msgstr ""
+"Ĉi tio estas la argumento <i>equilogs</i>. Malmarku ĉi tiun elekteblon por "
+"agordi <i>equilogs=FALSE</i>."
 
 #. i18n: ectx: (Grid options) <dialog label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:24

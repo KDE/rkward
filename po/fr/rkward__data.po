@@ -1,18 +1,18 @@
-# SPDX-FileCopyrightText: 2020, 2021, 2023 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2020, 2021, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__data\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2023-10-26 16:19+0200\n"
+"PO-Revision-Date: 2024-04-12 15:11+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -762,16 +762,13 @@ msgstr ""
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
 #: rkward/plugins/data/subset_dataframe.rkh:42
-#, fuzzy, kde-format
-#| msgid ""
-#| "Whether the minimum value is contained in the range to check against (i."
-#| "e. compare 'larger or equal (>=)')."
+#, kde-format
 msgid ""
 "Whether the minimum value is contained in the range to check against (i.e. "
 "compare 'larger or equal (&gt;=)')."
 msgstr ""
-"Si la valeur minimale est contenue dans la plage de test (par exemple, "
-"comparaison « Plus grand ou égal » « >= »)."
+"Selon que la valeur minimale est contenue dans la plage objet de la "
+"vérification (Par exemple, comparaison « Plus grand ou égal » « >= »)."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Maximum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:45
@@ -781,36 +778,28 @@ msgstr "Veuillez regarder ci-dessus. Valeur maximale."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (<=)")
 #: rkward/plugins/data/subset_dataframe.rkh:48
-#, fuzzy, kde-format
-#| msgid ""
-#| "Whether the maximum value is contained in the range to check against (i."
-#| "e. compare 'smaller or equal (<=)')."
+#, kde-format
 msgid ""
 "Whether the maximum value is contained in the range to check against (i.e. "
 "compare 'smaller or equal (&lt;=)')."
 msgstr ""
-"Si la valeur maximale est contenue dans la plage de test (par exemple, "
-"comparaison « Plus petit ou égal » « <= »)."
+"Selon la valeur maximale est contenue dans la plage objet de la vérification "
+"(Par exemple, comparer « Plus petit ou égal (&lt;=) » )."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:52
-#, fuzzy, kde-format
-#| msgid ""
-#| "You can also filter rows / cases by a custom R expression. If using this "
-#| "in combination with filtering by a column (see above), both conditions "
-#| "are combined by logical 'and' (&). Leave empty, if you do not want to "
-#| "filter on a custom expression."
+#, kde-format
 msgid ""
 "You can also filter rows / cases by a custom R expression. If using this in "
 "combination with filtering by a column (see above), both conditions are "
 "combined by logical 'and' (&amp;). Leave empty, if you do not want to filter "
 "on a custom expression."
 msgstr ""
-"Vous pouvez aussi filtrer les lignes / cas grâce à une expression « R » "
+"Vous pouvez aussi filtrer les lignes / cellules grâce à une expression « R » "
 "personnalisée. En cas d'utilisation conjointe avec le filtrage par une "
 "colonne (Voir ci-dessus), les deux conditions sont combinées par un « ET » "
-"logique. Veuillez laisser vide, si vous ne voulez pas filtrer avec une "
-"expression personnalisée."
+"logique (&amp;). Veuillez laisser vide, si vous ne voulez pas filtrer avec "
+"une expression personnalisée."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")
 #: rkward/plugins/data/subset_dataframe.rkh:56

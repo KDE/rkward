@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-12 00:35+0000\n"
-"PO-Revision-Date: 2024-03-27 19:34+0100\n"
+"PO-Revision-Date: 2024-04-13 11:51+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -869,11 +869,10 @@ msgid "Discard changes?"
 msgstr "Forĵeti ŝanĝojn?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr "Ne fermi"
+msgstr "Ne efektivigi fermon"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
@@ -918,18 +917,16 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Fariĝu radiko"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Ĝisdatigeblaj Pakoj"
+msgstr "Preterlasi ĉi pakojn"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5966,7 +5963,7 @@ msgstr "Ŝlosilvortoj"
 #: rkward/windows/rkhelpsearchwindow.cpp:86
 #, kde-format
 msgid "Package:"
-msgstr "Pakon:"
+msgstr "Pako:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:99
 #, kde-format
@@ -6785,6 +6782,8 @@ msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as "
 "'%2' instead."
 msgstr ""
+"Objekto nome '%1' jam ekzistas en la GlobalEnv. Kreita kiel kopio de '%2' "
+"anstataŭe."
 
 #: rkward/windows/robjectbrowser.cpp:201
 #, kde-format
@@ -6805,6 +6804,3 @@ msgstr "Enigu la novan nomon"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Vidi en redaktilo (nurlegebla)"
-
-#~ msgid "Color Scheme"
-#~ msgstr "Kolorskemo"

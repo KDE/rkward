@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-03-27 19:34+0100\n"
+"PO-Revision-Date: 2024-04-14 00:17+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -41,6 +41,8 @@ msgid ""
 "Plugins for transforming, subsetting, recoding, etc. of data. Part of the "
 "official RKWard distribution"
 msgstr ""
+"Kromaĵoj por transformado, subagordo, rekodigo ktp de datumoj. Parto de la "
+"oficiala RKWard-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/data.pluginmap:24
@@ -117,6 +119,8 @@ msgid ""
 "Use as.character() as intermediate data format, to support adding and "
 "dropping levels"
 msgstr ""
+"Uzu as.character() kiel meza datumformato, por subteni aldonadon kaj forigon "
+"de niveloj"
 
 #. i18n: ectx: (Loaded from Recode categorical data)
 #: rkward/plugins/data/recode_categorical.js:78
@@ -150,6 +154,9 @@ msgid ""
 "to recode vectors that are coded numerically, but this only makes sense for "
 "numeric vectors with only a limited number of unique values."
 msgstr ""
+"Permesas al vi rekodi vektoron kun kategoriaj datumoj. Ĉi tiu kromaĵo ankaŭ "
+"permesas rekondigi vektorojn, kiuj estas kodigitaj cifere, sed tio nur havas "
+"sencon por nombraj vektoroj kun nur limigita nombro da unikaj valoroj."
 
 #. i18n: ectx: (Recode categorical data) <usage>
 #: rkward/plugins/data/recode_categorical.rkh:15
@@ -159,6 +166,9 @@ msgid ""
 "storage mode of the resulting data. Then, on the second tab, specify the "
 "recodings to make."
 msgstr ""
+"Elektu la vektoron por rekondigi, kaj kie konservi la recodigitajn datumojn. "
+"Elektu la konservan reĝimon de la rezultaj datumoj. Poste, sur la dua "
+"langeto, specifu la kodadojn por fari."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Select variable to recode")
 #: rkward/plugins/data/recode_categorical.rkh:21
@@ -173,6 +183,8 @@ msgid ""
 "Select whether to overwrite/replace the input vector with the recoded data, "
 "or save to a different vector."
 msgstr ""
+"Elektu ĉu anstataŭi/anstataŭigi la enigvektoron per la rekoditaj datumoj, aŭ "
+"konservi al alia vektoro."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Object to save to")
 #: rkward/plugins/data/recode_categorical.rkh:27
@@ -194,6 +206,9 @@ msgid ""
 "values. The preview is limited to the first 500 rows of data, for "
 "performance reasons."
 msgstr ""
+"Montru antaŭrigardon de la rekodigo, kiel tabelo kun du kolumnoj por "
+"malnovaj kaj novaj valoroj. La antaŭvido estas limigita al la unuaj 500 "
+"vicoj da datumoj, pro agado-kialoj."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Recodings")
 #: rkward/plugins/data/recode_categorical.rkh:37
@@ -204,6 +219,10 @@ msgid ""
 "recodings, click the \"remove/x\"-button. For each recoding, select the "
 "following:"
 msgstr ""
+"La supra duono de ĉi tiu langeto permesas al vi specifi rekodigojn por "
+"individuaj enigvaloroj. Por aldoni pliajn kodadojn, alklaku la butonon "
+"\"aldoni/+\". Por forigi rekodigojn, alklaku la butonon \"forigi/x\". Por "
+"ĉiu rekodigo, elektu la jenon:"
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Old values")
 #: rkward/plugins/data/recode_categorical.rkh:41
@@ -215,6 +234,11 @@ msgid ""
 "several input values are to be replaced with one output value, you can "
 "select them all at once."
 msgstr ""
+"Por ĉiu rekodigo, unue elektu la malnovan valoron(j)n por rekodigi. Ĉi tio "
+"povas esti aŭ NA/mankas, aŭ elektu ne-NA valoron(j)n sur la maldekstra "
+"flanko, kaj aldonu ilin al la valoroj rekoditaj per klako de la sago-butono. "
+"Se pluraj enigvaloroj devas esti anstataŭigitaj per unu eligvaloro, vi povas "
+"elekti ilin ĉiujn samtempe."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "New value")
 #: rkward/plugins/data/recode_categorical.rkh:46
@@ -223,6 +247,8 @@ msgid ""
 "Enter the new value (or set it to be NA). For factors and character vectors, "
 "values will be quoted, automatically."
 msgstr ""
+"Enigu la novan valoron (aŭ agordu ĝin kiel NA). Por faktoroj kaj signaj "
+"vektoroj, valoroj estos cititaj aŭtomate."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Any other values")
 #: rkward/plugins/data/recode_categorical.rkh:49
@@ -232,6 +258,9 @@ msgid ""
 "can either be left unchanged (\"Copy\"), or can be replaced with a specific "
 "value or NA."
 msgstr ""
+"Ĉiuj enigvaloroj (inkluzive de NA) por kiuj neniu rekodigo estis specifita, "
+"supre, povas aŭ esti lasitaj senŝanĝaj (\"Kopiu\"), aŭ povas esti "
+"anstataŭigitaj per specifa valoro aŭ NA."
 
 #. i18n: ectx: (Recode categorical data) <related>
 #: rkward/plugins/data/recode_categorical.rkh:54
@@ -247,6 +276,9 @@ msgid ""
 "\"/> and <link href=\"rkward://component/rkward/multi_input\"/> embeddable "
 "plugins."
 msgstr ""
+"Ĉi tiu kromaĵo uzas la <link href=\"rkward://component/rkward/level_select\"/"
+"> kaj <link href=\"rkward://component/rkward/multi_input\"/> enkonstrueblajn "
+"kromaĵojn."
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="...">
 #: rkward/plugins/data/recode_categorical.xml:30
@@ -427,6 +459,9 @@ msgid ""
 "sort by. By default the object to be sorted is replaced with the sorted "
 "variant, but you can also specify to save to a separate object."
 msgstr ""
+"Elektu la objekton por ordigi. Por data.frames, ankaŭ specifu la kolumnon "
+"por ordigi. Defaŭlte la ordigota objekto estas anstataŭigita per la ordigita "
+"varianto, sed vi ankaŭ povas specifi konservi al aparta objekto."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to be sorted")
 #: rkward/plugins/data/sort.rkh:17
@@ -435,6 +470,8 @@ msgid ""
 "The object to sort. If a data.frame editor window is currently active, the "
 "corresponding object name will be filled in as a default."
 msgstr ""
+"La objekto por ordigi. Se data.frame-redaktila fenestro estas nuntempe "
+"aktiva, la responda objektonomo estos plenigita defaŭlte."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort by")
 #: rkward/plugins/data/sort.rkh:18
@@ -450,6 +487,9 @@ msgid ""
 "the sorted variant. If, instead, you want to keep the unsorted object, "
 "choose \"Another object\" to save the sorted object, separately."
 msgstr ""
+"Elektu \"Sama objekto\" (la defaŭlta) por anstataŭigi la objekton por ordigi "
+"per la ordigita varianto. Se vi anstataŭe volas konservi la neordigitan "
+"objekton, elektu \"Alia objekto\" por konservi la ordigitan objekton, aparte."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to save to")
 #: rkward/plugins/data/sort.rkh:20
@@ -458,6 +498,7 @@ msgid ""
 "Only, if you selected \"Another object\", above: Specify the object to save "
 "to."
 msgstr ""
+"Nur, se vi elektis \"Alia objekto\", supre: Specifu la objekton por konservi."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/data/sort.rkh:21
@@ -466,6 +507,8 @@ msgid ""
 "Show a preview of the sorted data. The preview is limited to 200 rows and 50 "
 "columns of data, for performance reasons."
 msgstr ""
+"Montru antaŭrigardon de la ordigitaj datumoj. La antaŭvido estas limigita al "
+"200 vicoj kaj 50 kolumnoj da datumoj, pro agado-kialoj."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort order")
 #: rkward/plugins/data/sort.rkh:24
@@ -480,6 +523,8 @@ msgid ""
 "Allows to apply conversions, which may affect sort order (when sorting data."
 "frames, this option is available for each column to sort by)."
 msgstr ""
+"Permesas apliki konvertiĝojn, kiuj povas influi ordigon (dum ordigo de data."
+"frames, ĉi tiu opcio estas disponebla por ĉiu kolumno por ordigi)."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Order")
 #: rkward/plugins/data/sort.rkh:26
@@ -488,6 +533,8 @@ msgid ""
 "When sorting data.frames, this option allows to reverse the global sort "
 "order for individual columns."
 msgstr ""
+"Dum ordigo de data.frames, ĉi tiu opcio permesas inversigi la ĉiean ordigon "
+"por individuaj kolumnoj."
 
 #. i18n: ectx: (Loaded from Sort data) <related>
 #: rkward/plugins/data/sort.rkh:28
@@ -619,6 +666,9 @@ msgid ""
 "cases, and / or columns. A data.frame containing only the specified subset "
 "is saved to your workspace."
 msgstr ""
+"Elektu la data.frame al subaro. Poste specifu regulojn por filtri laŭ "
+"vicoj / kazoj, kaj / aŭ kolumnoj. Data.frame enhavanta nur la specifitan "
+"subaron estas konservita al via laborspaco."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Data (data.frame)")
 #: rkward/plugins/data/subset_dataframe.rkh:23
@@ -633,6 +683,8 @@ msgid ""
 "Preview the resulting subset. Note that the preview is limited to the first "
 "500 rows and 100 columns, for performance reasons."
 msgstr ""
+"Antaŭrigardu la rezultan subaron. Notu, ke la antaŭrigardo estas limigita al "
+"la unuaj 500 vicoj kaj 100 kolumnoj, pro agado-kialoj."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Filter by variable")
 #: rkward/plugins/data/subset_dataframe.rkh:30
@@ -641,6 +693,8 @@ msgid ""
 "Select a column of the data.frame specifying the condition to filter cases "
 "on. Leave empty, if you do not want to filter on a column."
 msgstr ""
+"Elektu kolumnon de la data.frame specifantan la kondiĉon por filtri kazojn. "
+"Lasu malplena, se vi ne volas filtri sur kolumno."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Keep cases matching rule")
 #: rkward/plugins/data/subset_dataframe.rkh:33
@@ -649,6 +703,8 @@ msgid ""
 "Select the type of condition. Note that depending on the type of the filter "
 "variable, different options are available"
 msgstr ""
+"Elektu la tipon de kondiĉo. Notu, ke depende de la tipo de la filtrila "
+"variablo, malsamaj opcioj estas disponeblaj"
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Value (pasted as-is, use proper quoting!)")
 #: rkward/plugins/data/subset_dataframe.rkh:36
@@ -660,6 +716,11 @@ msgid ""
 "column of the data.frame. However, if you want to compare to fixed strings, "
 "you will have to make sure to quote these. E.g. 'c (\"City A\", \"City B\")'."
 msgstr ""
+"La valoro kun kiu kompari (por kondiĉtipoj egala/ne egala, kaj unu el/ne unu "
+"el). Notu, ke ĉi tio estos algluita kiel R-kodo, laŭvorte. Ĉi tio signifas, "
+"ke vi povas specifi ajnan validan R-esprimon, inkluzive de la nomo de alia "
+"kolumno de la data.frame. Tamen, se vi volas kompari kun fiksaj ĉenoj, vi "
+"devos certigi citi ĉi tiujn. ekz. 'c (\"Urbo A\", \"Urbo B\")'."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Minimum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:39
@@ -671,6 +732,12 @@ msgid ""
 "pasted as R code, verbatim. This means, you can specify any valid R "
 "expression, including the name of another column of the data.frame."
 msgstr ""
+"Por kompari kontraŭ intervaloj (kondiĉspecoj inter/ne inter), minimumaj kaj/"
+"aŭ maksimumaj valoroj povas esti specifitaj. Se iu estas preterlasita, nur "
+"la alia estas kontrolita (t.e. pli granda / pli malgranda ol). Notu, ke ĉi "
+"tio estos algluita kiel R-kodo, laŭvorte. Ĉi tio signifas, ke vi povas "
+"specifi ajnan validan R-esprimon, inkluzive de la nomo de alia kolumno de la "
+"data.frame."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
 #: rkward/plugins/data/subset_dataframe.rkh:42
@@ -679,6 +746,8 @@ msgid ""
 "Whether the minimum value is contained in the range to check against (i.e. "
 "compare 'larger or equal (&gt;=)')."
 msgstr ""
+"Ĉu la minimuma valoro estas enhavita en la intervalo por kontroli (t.e. "
+"komparu 'pli granda aŭ egala (>=)')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Maximum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:45
@@ -693,6 +762,8 @@ msgid ""
 "Whether the maximum value is contained in the range to check against (i.e. "
 "compare 'smaller or equal (&lt;=)')."
 msgstr ""
+"Ĉu la maksimuma valoro estas enhavita en la intervalo por kontroli (t.e. "
+"komparu 'pli malgranda aŭ egala (&lt;=)')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:52
@@ -703,6 +774,10 @@ msgid ""
 "combined by logical 'and' (&amp;). Leave empty, if you do not want to filter "
 "on a custom expression."
 msgstr ""
+"Vi ankaŭ povas filtri vicojn / kazojn per propra R-esprimo. Se oni uzas ĉi "
+"tion en kombinaĵo kun filtrado per kolumno (vidu supre), ambaŭ kondiĉoj "
+"estas kombinitaj per logika 'kaj' (&amp;). Lasu malplena, se vi ne volas "
+"filtri laŭ propra esprimo."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")
 #: rkward/plugins/data/subset_dataframe.rkh:56
@@ -711,6 +786,8 @@ msgid ""
 "Check this, if you want to remove some columns from the resulting data."
 "frame. Otherwise, all columns will be included."
 msgstr ""
+"Marku ĉi tion, se vi volas forigi kelkajn kolumnojn de la rezulta data."
+"frame. Alie, ĉiuj kolumnoj estos inkluzivitaj."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Selected variables")
 #: rkward/plugins/data/subset_dataframe.rkh:59

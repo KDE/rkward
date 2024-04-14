@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-03-28 08:18+0100\n"
+"PO-Revision-Date: 2024-04-14 00:04+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -42,6 +42,8 @@ msgid ""
 "Assorted plugins for univariate and multivariate data analysis. Part of the "
 "official RKWard distribution"
 msgstr ""
+"Variaj aldonaĵoj por unuvaria kaj plurvaria datuma analizo. Parto de la "
+"oficiala RKWard-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:24
@@ -394,6 +396,10 @@ msgid ""
 "component/ansari_bradley_test\"/> in that exact p-values can also be "
 "computed in the presence of ties."
 msgstr ""
+"Ĉi tiu testo elfaras la Ansari-Bradley-du-provan precizan teston por testi "
+"por diferenco en skalparametroj. Ĉi tiu testo diferencas de <link href="
+"\"rkward://component/ansari_bradley_test\"/> en tio, ke precizaj p-valoroj "
+"ankaŭ povas esti komputitaj en ĉeesto de kravatoj."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <usage>
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <usage>
@@ -404,6 +410,9 @@ msgid ""
 "Select two data sets for the Ansari-Bradley two-sample test. For this test "
 "the samples need to be numeric vectors (see below for details)."
 msgstr ""
+"Elektu du datumajn arojn por la du-specimena testo de Ansari-Bradley. Por ĉi "
+"tiu testo la provaĵoj devas esti nombraj vektoroj (vidu malsupre por "
+"detaloj)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "compare")
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "compare")
@@ -435,6 +444,8 @@ msgid ""
 "Here you can specify the alternative hypothesis. It must be one of \"two "
 "sided\", \"greater\" or \"less\"."
 msgstr ""
+"Ĉi tie vi povas specifi la alternativan hipotezon. Ĝi devas esti unu el "
+"\"two sided\", \"greater\" aŭ \"less\"."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "compute exact p-value")
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.rkh:22
@@ -458,6 +469,7 @@ msgstr "Marku ĉi tion se vi volas, ke la konfida intervalo estu komputita."
 msgid ""
 "Here you can define the confidence level of the interval (95% is typical)."
 msgstr ""
+"Ĉi tie vi povas difini la konfidan nivelon de la intervalo (95% estas tipa)."
 
 #. i18n: ectx: (Ansari-Bradley two-sample exact test) <dialog label="...">
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.xml:15
@@ -742,6 +754,8 @@ msgid ""
 "This test performs the Ansari-Bradley two-sample test to test for a "
 "difference in scale parameters."
 msgstr ""
+"Ĉi tiu testo elfaras la du-provan teston de Ansari-Bradley por provi "
+"diferencon en skalparametroj."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "compute exact p-value")
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.rkh:22
@@ -751,6 +765,9 @@ msgid ""
 "value in the presence of ties, use <link href=\"rkward://component/"
 "ansari_bradley_exact_test\"/>."
 msgstr ""
+"Difinas ĉu preciza p-valoro devus esti komputita. Por kalkuli precizan p-"
+"valoron en ĉeesto de ligoj, uzu <link href=\"rkward://component/"
+"ansari_bradley_exact_test\"/>."
 
 #. i18n: ectx: (Ansari-Bradley two-sample test) <dialog label="...">
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.xml:15
@@ -788,6 +805,8 @@ msgid ""
 "Non-numeric variables will be treated as ordered data and transformed into "
 "numeric ranks"
 msgstr ""
+"Ne-nombraj variabloj estos traktataj kiel ordigitaj datumoj kaj "
+"transformitaj en nombrajn rangojn"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:60
@@ -826,6 +845,9 @@ msgid ""
 "we need to exclude incomplete cases first to match the use=\"complete.obs\" "
 "parameter in cor()"
 msgstr ""
+"ĉar ni devas fari duopaj komparoj pro teknikaj kialoj,\n"
+"ni devas unue ekskludi nekompletajn kazojn por kongrui kun la parametro use="
+"\"complete.obs\" en cor()"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:86
@@ -882,7 +904,7 @@ msgstr "asignita rango"
 #, kde-format
 msgid ""
 "Calculate a correlation matrix given a number of numerical input vectors."
-msgstr ""
+msgstr "Kalkuli korelacian matricon donitan nombron da nombraj enigvektoroj."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <usage>
 #: rkward/plugins/analysis/corr_matrix.rkh:12
@@ -892,6 +914,9 @@ msgid ""
 "calculated for each pair of vectors. Optionally, (two-sided) p-values are "
 "calculated for each pair."
 msgstr ""
+"Elektu la vektorojn por kalkuli korelaciojn. Korelacio estas kalkulita por "
+"ĉiu paro de vektoroj. Laŭvole, (duflankaj) p-valoroj estas kalkulitaj por "
+"ĉiu paro."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/corr_matrix.rkh:18
@@ -904,6 +929,12 @@ msgid ""
 "categorial variables are dichotomous, polyserial/polychoric is equivalent to "
 "biserial/tetrachoric correlations."
 msgstr ""
+"Elektu la vektorojn por esti korelaciitaj. Por Pearson, Kendall kaj "
+"Spearman, la vektoroj devas esti nombraj (vidu malsupre), kaj de egala "
+"longo. Pluriseriaj korelacioj estas kalkulitaj inter paroj de nombraj kaj "
+"kategoriaj variabloj, kaj polikoraj korelacioj inter kategoriaj variabloj. "
+"Se la kategoriaj variabloj estas dikotomaj, poliseriaj/poliĥoriaj estas "
+"ekvivalentaj al biseriaj/tetraĥoraj korelacioj."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Calculate p values")
 #: rkward/plugins/analysis/corr_matrix.rkh:20
@@ -914,6 +945,9 @@ msgid ""
 "tests of bivariate normality are conducted, and also the standard errors are "
 "reported."
 msgstr ""
+"Se markite, plia tabelo kun la (duflankaj) signifovaloroj estas kalkulita "
+"kaj presita. Por poliseriaj/polikoraj korelacioj, Ĥi-kvadrataj testoj de "
+"duvaria normaleco estas faritaj, kaj ankaŭ la normaj eraroj estas raportitaj."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/analysis/corr_matrix.rkh:21
@@ -928,6 +962,8 @@ msgid ""
 "For Kendall and Spearman, if some variables are not numeric but ordered "
 "categorial variables, have them treated as numeric ranks."
 msgstr ""
+"Por Kendall kaj Spearman, se kelkaj variabloj ne estas nombraj sed ordigitaj "
+"kategoriaj variabloj, traktu ilin kiel nombrajn rangojn."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/analysis/corr_matrix.rkh:23
@@ -937,6 +973,9 @@ msgid ""
 "e. even for those pairs of variables, where neither value is missing), or "
 "should they only be excluded for those pairs where it is actually missing?"
 msgstr ""
+"En kazo de mankantaj valoroj, vico estu ekskludita de ĉiu kalkulo (t.e. eĉ "
+"por tiuj paroj de variabloj, kie neniu valoro mankas), aŭ ĉu ili nur estu "
+"ekskluditaj por tiuj paroj kie ĝi fakte mankas?"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:19
@@ -1093,6 +1132,8 @@ msgid ""
 "convenience function to bind together several two dimensional tables into a "
 "single three dimensional table\n"
 msgstr ""
+"konvena funkcio por kunligi plurajn dudimensiajn tabelojn en ununuran "
+"tridimensian tabelon\n"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:22
@@ -1195,6 +1236,9 @@ msgid ""
 "values in one \"dependent\" variable crossed with the values in one or more "
 "\"independent\" variables."
 msgstr ""
+"Kalkuli dudimensiajn eventualajn tabelojn por la kalkulo de okazoj de "
+"valoroj en unu \"dependa\" variablo krucita kun la valoroj en unu aŭ pluraj "
+"\"sendependaj\" variabloj."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab.rkh:12
@@ -1207,6 +1251,12 @@ msgid ""
 "each table, the occurrence of combinations of values in the \"dependent\" "
 "and \"independent\" variable is counted."
 msgstr ""
+"Indiku la variablon \"dependa\". Ĉi tiu variablo ĉeestos en ĉiuj kreitaj "
+"tabeloj. Indiku unu aŭ plurajn \"sendependajn\" variablojn. Ĉiu el ĉi tiuj "
+"estos kructabelita kontraŭ la \"dependa\" variablo. \"Dependa\" kaj "
+"\"Sendependa\", ĉi tie, ne implicas iujn ajn inferencajn statistikojn. En "
+"ĉiu tabelo, la okazo de kombinaĵoj de valoroj en la \"dependa\" kaj "
+"\"sendependa\" variablo estas nombrita."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab.rkh:12
@@ -1216,6 +1266,8 @@ msgid ""
 "(into a single table), use <link href=\"rkward://component/crosstab_multi\"/"
 ">."
 msgstr ""
+"Por kompleta kructabelo de tri aŭ pli da variabloj unu kontraŭ la alia (en "
+"ununuran tabelon), uzu <link href=\"rkward://component/crosstab_multi\"/>."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Dependent")
 #: rkward/plugins/analysis/crosstab.rkh:20
@@ -1224,6 +1276,8 @@ msgid ""
 "Select any vector that can be interpreted as a factor. This variable will be "
 "present in all tables."
 msgstr ""
+"Elektu ajnan vektoron kiu povas esti interpretita kiel faktoro. Ĉi tiu "
+"variablo ĉeestos en ĉiuj tabeloj."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Independent")
 #: rkward/plugins/analysis/crosstab.rkh:21
@@ -1232,6 +1286,8 @@ msgid ""
 "Select one or more vectors that can be interpreted as a factor. Each of "
 "these will be cross-tabulated against the \"dependent\" variable."
 msgstr ""
+"Elektu unu aŭ plurajn vektorojn, kiuj povas esti interpretitaj kiel faktoro. "
+"Ĉiu el ĉi tiuj estos kructabelita kontraŭ la \"dependa\" variablo."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Chisquare")
 #: rkward/plugins/analysis/crosstab.rkh:22
@@ -1252,6 +1308,8 @@ msgid ""
 "Allows to preview the result. Only the first table (and plot) is shown in "
 "the preview, even if more than one table is produced."
 msgstr ""
+"Permesas antaŭrigardi la rezulton. Nur la unua tabelo (kaj grafiko) estas "
+"montrita en la antaŭvido, eĉ se pli ol unu tabelo estas produktita."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show sums")
 #: rkward/plugins/analysis/crosstab.rkh:27
@@ -1266,6 +1324,8 @@ msgid ""
 "Calculate and show the proportion (in %) of each cell's count of the "
 "corresponding row's total count."
 msgstr ""
+"Kalkulu kaj montru la proporcion (en %) de la kalkulo de ĉiu ĉelo de la "
+"totala kalkulo de la responda vico."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show percent of column")
 #: rkward/plugins/analysis/crosstab.rkh:29
@@ -1274,6 +1334,8 @@ msgid ""
 "Calculate and show the proportion (in %) of each cell's count of the "
 "corresponding column's total count."
 msgstr ""
+"Kalkulu kaj montru la proporcion (en %) de la kalkulo de ĉiu ĉelo de la "
+"totala kalkulo de la responda kolumno."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show percent of total")
 #: rkward/plugins/analysis/crosstab.rkh:30
@@ -1282,6 +1344,8 @@ msgid ""
 "Calculate and show the proportion (in %) of each cell's count of overall "
 "total count."
 msgstr ""
+"Kalkulu kaj montru la proporcion (en %) de la kalkulo de ĉiu ĉelo de totala "
+"totala kalkulo."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Method of computing p-value")
 #: rkward/plugins/analysis/crosstab.rkh:33
@@ -1308,6 +1372,8 @@ msgid ""
 "Various options controlling the look of the generated barplot(s). See <link "
 "href=\"rkward://component/barplot_embed\"/>"
 msgstr ""
+"Diversaj elektebloj regantaj la aspekton de la generita barploto(j). Vidu "
+"<link href=\"rkward://component/barplot_embed\"/>"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/analysis/crosstab.xml:24
@@ -1426,6 +1492,7 @@ msgid ""
 "Multiple crosstabulation where all the variables are crosstabulated with all "
 "the others."
 msgstr ""
+"Multobla kructabelo kie ĉiuj variabloj estas kructabelitaj kun ĉiuj aliaj."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
@@ -1441,6 +1508,9 @@ msgid ""
 "counted only for one \"dependent\" variable, <link href=\"rkward://component/"
 "crosstab\"/> may be more appropriate, and offers more options."
 msgstr ""
+"Por la kazo de du variabloj, aŭ kiam la aperoj de valoroj devus esti "
+"kalkulitaj nur por unu \"dependa\" variablo, <link href=\"rkward://component/"
+"crosstab\"/> povas esti pli taŭga, kaj ofertas pli da ebloj."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <settings> <setting> (refers to element labelled "variables:")
 #: rkward/plugins/analysis/crosstab_multi.rkh:19
@@ -1449,6 +1519,8 @@ msgid ""
 "Select a data frame or more than one variables from a data frame or with the "
 "same length"
 msgstr ""
+"Elektu datumkadron aŭ pli ol unu variablojn el datumkadro aŭ kun la sama "
+"longo"
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/analysis/crosstab_multi.rkh:20
@@ -1457,6 +1529,9 @@ msgid ""
 "Should NA (and NaN) values be excluded (default)? If this option is not "
 "checked, missing values are listed in the table just like regular values."
 msgstr ""
+"Ĉu NA (kaj NaN) valoroj estu ekskluditaj (defaŭlte)? Se ĉi tiu elekteblo ne "
+"estas markita, mankantaj valoroj estas listigitaj en la tabelo same kiel "
+"regulaj valoroj."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <settings> <setting> (refers to element labelled "Row variables")
 #: rkward/plugins/analysis/crosstab_multi.rkh:21
@@ -1465,6 +1540,8 @@ msgid ""
 "Control the \"width\" of the printed table: Categories of the first n "
 "selected variables are listed as rows, the remaining ones as columns."
 msgstr ""
+"Regi la \"larĝon\" de la presita tabelo: Kategorioj de la unuaj n elektitaj "
+"variabloj estas listigitaj kiel vicoj, la ceteraj kiel kolumnoj."
 
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="N to N Crosstabulation"> <varslot label="...">
 #: rkward/plugins/analysis/crosstab_multi.xml:15
@@ -1493,6 +1570,8 @@ msgid ""
 "This test performs the D'Agostino test for skewness in normally distributed "
 "data."
 msgstr ""
+"Ĉi tiu testo elfaras la D'Agostino-teston pri dekliniĝo en normale "
+"distribuitaj datenoj."
 
 #. i18n: ectx: (Loaded from D'Agostino test of skewness) <usage>
 #: rkward/plugins/analysis/moments/agostino_test.rkh:12
@@ -1502,6 +1581,9 @@ msgid ""
 "distributed data. You can choose multiple data. See <link href=\"rkward://"
 "rhelp/agostino.test\"/>."
 msgstr ""
+"Elektu la datumojn por elfari la D'Agostino-teston pri deformado en normale "
+"distribuitaj datumoj. Vi povas elekti plurajn datumojn. Vidu <link href="
+"\"rkward://rhelp/agostino.test\"/>."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "variable(s):")
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "variable(s):")
@@ -1524,6 +1606,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and can be "
 "of different length."
 msgstr ""
+"Elektu la datumojn por esti komputitaj. La vektoroj devas esti nombraj, kaj "
+"povas esti de malsama longo."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "Show Length and NAs")
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "Show Length and NAs")
@@ -1554,6 +1638,8 @@ msgid ""
 "Show the total length of the data, and the number of missing values (purely "
 "informational, does not affect the test)?"
 msgstr ""
+"Montru la totalan longon de la datumoj, kaj la nombron da mankantaj valoroj "
+"(nure informa, ne influas la teston)?"
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "Verbose alternative hypothesis")
 #. i18n: ectx: (Loaded from D'Agostino test of skewness) <settings> <setting> (refers to element labelled "Verbose alternative hypothesis")
@@ -1566,6 +1652,8 @@ msgid ""
 "If checked, a verbose description of the alternative hypothesis will be "
 "shown along with the results"
 msgstr ""
+"Se markite, multvorta priskribo de la alternativa hipotezo estos montrita "
+"kune kun la rezultoj"
 
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="D'Agostino test of skewness"> <tab label="Basic settings"> <radio label="...">
@@ -1625,6 +1713,8 @@ msgstr "Anscombe-Glynn-testo de kurtozo"
 msgid ""
 "This test performs the Anscombe-Glynn test of kurtosis for normal samples."
 msgstr ""
+"Ĉi tiu testo elfaras la Anscombe-Glynn-teston de kurtozo por normalaj "
+"provaĵoj."
 
 #. i18n: ectx: (Loaded from Anscombe-Glynn test of kurtosis) <usage>
 #: rkward/plugins/analysis/moments/anscombe_test.rkh:12
@@ -1634,6 +1724,9 @@ msgid ""
 "samples. You can choose multiple data. See <link href=\"rkward://rhelp/"
 "anscombe.test\"/>."
 msgstr ""
+"Elektu la datumojn por plenumi la Anscombe-Glynn-teston de kurtozo por "
+"normalaj specimenoj. Vi povas elekti plurajn datumojn. Vidu <link href="
+"\"rkward://rhelp/anscombe.test\"/>."
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis)
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="...">
@@ -1650,6 +1743,8 @@ msgid ""
 "This test performs the Bonett-Seier test of Geary's measure of kurtosis for "
 "normally distributed data."
 msgstr ""
+"Tiu testo elfaras la Bonett-Seier-teston de la mezuro de Geary de kurtozo "
+"por normale distribuitaj datenoj."
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <usage>
 #: rkward/plugins/analysis/moments/bonett_test.rkh:12
@@ -1659,6 +1754,9 @@ msgid ""
 "kurtosis for normally distributed data. You can choose multiple data. See "
 "<link href=\"rkward://rhelp/bonett.test\"/>."
 msgstr ""
+"Elektu la datumojn por plenumi la Bonett-Seier-teston de la mezuro de Geary "
+"de kurtozo por normale distribuitaj datumoj. Vi povas elekti plurajn "
+"datumojn. Vidu <link href=\"rkward://rhelp/bonett.test\"/>."
 
 #. i18n: ectx: (Loaded from sample moment)
 #: rkward/plugins/analysis/moments/moment.js:9
@@ -1686,6 +1784,8 @@ msgid ""
 "Choose the data to compute the sample moments. You can choose multiple data. "
 "See <link href=\"rkward://rhelp/moment\"/>."
 msgstr ""
+"Elektu la datumojn por kalkuli la specimenajn momentojn. Vi povas elekti "
+"plurajn datumojn. Vidu <link href=\"rkward://rhelp/moment\"/>."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "compute central moments")
 #: rkward/plugins/analysis/moments/moment.rkh:20
@@ -1706,6 +1806,8 @@ msgid ""
 "If checked, missing values will be excluded from calculation (default "
 "setting in RKWard)."
 msgstr ""
+"Se markite, mankantaj valoroj estos ekskluditaj de kalkulo (defaŭlta agordo "
+"en RKWard)."
 
 #. i18n: ectx: (sample moment) <dialog label="...">
 #: rkward/plugins/analysis/moments/moment.xml:11
@@ -1796,6 +1898,8 @@ msgid ""
 "This computes the estimator of Pearson's measure of kurtosis, Geary's "
 "kurtosis and skewness of given data."
 msgstr ""
+"Ĉi tio kalkulas la taksilon de la mezuro de Pearson de kurtozo, la kurtozo "
+"de Geary kaj deformeco de donitaj datenoj."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <usage>
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:12
@@ -1805,6 +1909,10 @@ msgid ""
 "multiple data. See <link href=\"rkward://rhelp/skewness\"/>, <link href="
 "\"rkward://rhelp/kurtosis\"/> and <link href=\"rkward://rhelp/geary\"/>."
 msgstr ""
+"Elektu la datumojn por komputi la kurtozon kaj/aŭ dekliniĝon. Vi povas "
+"elekti plurajn datumojn. Vidu <link href=\"rkward://rhelp/skewness\"/>, "
+"<link href=\"rkward://rhelp/kurtosis\"/> kaj <link href=\"rkward://rhelp/"
+"geary \"/>."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Skewness")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:20
@@ -1831,6 +1939,8 @@ msgid ""
 "If checked, missing values will be excluded from calculation of skewness and "
 "kurtosis."
 msgstr ""
+"Se markite, mankantaj valoroj estos ekskluditaj de kalkulo de skewness kaj "
+"kurtozo."
 
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="...">
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:12
@@ -1918,6 +2028,10 @@ msgid ""
 "data. Please consider that this test is no longer recommended. See <link "
 "href=\"rkward://rhelp/chisq.out.test\"/>."
 msgstr ""
+"Elektu la datuman aron por trovi unu eksteraĵon, surbaze de kvadrata "
+"distribuo de kvadrataj diferencoj inter datumoj kaj specimena meznombro. Vi "
+"povas elekti plurajn datumojn. Bonvolu konsideri, ke ĉi tiu testo ne plu "
+"estas rekomendita. Vidu <link href=\"rkward://rhelp/chisq.out.test\"/>."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:18
@@ -1927,6 +2041,9 @@ msgid ""
 "of different length. For the calculation missing values are removed from the "
 "data."
 msgstr ""
+"Elektu la datumojn por esti komputitaj. La vektoroj devas esti nombraj, kaj "
+"povas esti de malsama longo. Por la kalkulo mankantaj valoroj estas "
+"forigitaj de la datumoj."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "Opposite")
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:20
@@ -1935,6 +2052,9 @@ msgid ""
 "Check if you want not the value with largest difference from the mean, but "
 "opposite (lowest, if most suspicious is highest etc.)."
 msgstr ""
+"Kontrolu ĉu vi volas ne la valoron kun plej granda diferenco de la "
+"meznombro, sed kontraŭa (plej malsupra, se plej suspektinda estas plej alta "
+"ktp.)."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "Show additional descriptives")
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Show additional descriptives")
@@ -1950,6 +2070,9 @@ msgid ""
 "with interpretation of the test result (purely informational, does not "
 "affect the test). Missing values will be ignored."
 msgstr ""
+"Presu pliajn priskribajn statistikojn (mezumo, sd, mediano, min, maksimumo) "
+"por helpi pri interpretado de la testrezulto (nure informa, ne influas la "
+"teston). Mankantaj valoroj estos ignoritaj."
 
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="Chi-squared test for outlier"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> <tab label="Options"> <frame label="...">
@@ -2012,6 +2135,8 @@ msgid ""
 "Choose the data to perform the Dixon test for outlier. You can choose "
 "multiple vectors. See <link href=\"rkward://rhelp/dixon.test\"/>."
 msgstr ""
+"Elektu la datumojn por plenumi la Dixon-teston pri eksteraĵo. Vi povas "
+"elekti plurajn vektorojn. Vidu <link href=\"rkward://rhelp/dixon.test\"/>."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:18
@@ -2020,6 +2145,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and can be "
 "of different length but there is a limit."
 msgstr ""
+"Elektu la datumojn por esti komputitaj. La vektoroj devas esti nombraj, kaj "
+"povas esti de malsama longo sed ekzistas limo."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Variant of test")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:20
@@ -2030,6 +2157,9 @@ msgid ""
 "suitable variant is selected automatically, according to the size of the "
 "sample."
 msgstr ""
+"Specifas la varianton de provo farota. Vidu <link href=\"rkward://rhelp/"
+"dixon.test\"/> por detaloj. La defaŭlta valoro (0) signifas, ke taŭga "
+"varianto estas elektita aŭtomate, laŭ la grandeco de la specimeno."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "two-sided")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:21
@@ -2046,6 +2176,8 @@ msgid ""
 "Here you can define if you want to check not the value with largest "
 "difference from the mean, but opposite."
 msgstr ""
+"Ĉi tie vi povas difini ĉu vi volas kontroli ne la valoron kun plej granda "
+"diferenco de la meznombro, sed kontraŭa."
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:11
@@ -2125,6 +2257,8 @@ msgstr "Grubbs testas por unu aŭ du outliers en datuma specimeno"
 msgid ""
 "This test performs the Grubbs tests for one or two outliers in data sample."
 msgstr ""
+"Ĉi tiu testo elfaras la Grubbs-testojn por unu aŭ du outliers en datuma "
+"specimeno."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <usage>
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:12
@@ -2134,6 +2268,9 @@ msgid ""
 "sample. You can choose multiple data. See <link href=\"rkward://rhelp/grubbs."
 "test\"/>."
 msgstr ""
+"Elektu la datumojn por fari la Grubbs-testojn por unu aŭ du eksterordinaroj "
+"en datuma specimeno. Vi povas elekti plurajn datumojn. Vidu <link href="
+"\"rkward://rhelp/grubbs.test\"/>."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:18
@@ -2142,6 +2279,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and may be "
 "of different length."
 msgstr ""
+"Elektu la datumojn por esti komputitaj. La vektoroj devas esti nombraj, kaj "
+"povas esti de malsama longo."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "Variant of test")
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:20
@@ -2150,6 +2289,8 @@ msgid ""
 "Variant of test to be performed. One or two outliers can be detected, on the "
 "same, or on opposite tails."
 msgstr ""
+"Variaĵo de provo farota. Unu aŭ du eksteruloj povas esti detektitaj, sur la "
+"sama, aŭ sur kontraŭaj vostoj."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "two-sided")
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:21
@@ -2187,6 +2328,8 @@ msgstr "Trovu eblan eksteraĵon"
 msgid ""
 "Shows the value with largest difference from sample mean (potential outlier)."
 msgstr ""
+"Montras la valoron kun plej granda diferenco de specimena meznombro (ebla "
+"eksterordinara)."
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean) <usage>
 #: rkward/plugins/analysis/outliers/outlier.rkh:12
@@ -2196,6 +2339,9 @@ msgid ""
 "sample mean. You can select multiple vectors. See <link href=\"rkward://"
 "rhelp/outlier\"/>."
 msgstr ""
+"Elektu la datumojn por trovi la valoron kun la plej granda diferenco de la "
+"specimena meznombro. Vi povas elekti plurajn vektorojn. Vidu <link href="
+"\"rkward://rhelp/outlier\"/>."
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/outlier.rkh:18
@@ -2204,6 +2350,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric. Any missing "
 "values are ignored in the calculation."
 msgstr ""
+"Elektu la datumojn por esti komputitaj. La vektoroj devas esti nombraj. Ĉiuj "
+"mankantaj valoroj estas ignoritaj en la kalkulo."
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean) <settings> <setting> (refers to element labelled "Opposite")
 #: rkward/plugins/analysis/outliers/outlier.rkh:20
@@ -2212,6 +2360,9 @@ msgid ""
 "Select this option to give the opposite value. If the largest value has "
 "maximum difference from the mean, it gives smallest and vice versa."
 msgstr ""
+"Elektu ĉi tiun opcion por doni la kontraŭan valoron. Se la plej granda "
+"valoro havas maksimuman diferencon de la meznombro, ĝi donas plej malgrandan "
+"kaj inverse."
 
 #. i18n: ectx: (Find value with largest difference from the mean) <dialog label="...">
 #: rkward/plugins/analysis/outliers/outlier.xml:11
@@ -2341,6 +2492,15 @@ msgid ""
 "increase sample size(s) or effect size, or decrease effect power or "
 "parameter count."
 msgstr ""
+"Konsiderante tri el la parametroj 'potenco de testo', 'specimena grandeco', "
+"'efekta grandeco' kaj 'signifnivelo', ĉi tiu kromaĵo taksos la kvaran, t.e. "
+"ekzemple la testan potencon de t.test je difinita specimena grandeco. , "
+"efikgrandeco, kaj nivelo de signifo. Maldekstre, specifu la statistikan "
+"metodon, dekstre, enigu la valorojn de la donitaj parametroj. En la regilo "
+"en la mezo, elektu kiun el la parametroj taksi. Notu ke en kelkaj kazoj ne "
+"estos eble taksi (finian) parametron ĉe la donitaj specifoj. Ĝenerale, tio "
+"signifas, ke vi devas pliigi specimenan grandecon(j) aŭ efikgrandecon, aŭ "
+"malpliigi efikpotencon aŭ parametron."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Select a method")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:34
@@ -2361,6 +2521,9 @@ msgid ""
 "Only enabled where applicable. Specify the nature of samples used in the "
 "test. For samples of different sizes, only one sample size can be estimated."
 msgstr ""
+"Nur ebligita kie aplikebla. Indiku la naturon de specimenoj uzataj en la "
+"testo. Por specimenoj de malsamaj grandecoj, nur unu specimengrandeco povas "
+"esti taksita."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Using test hypothesis")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:43
@@ -2370,6 +2533,9 @@ msgid ""
 "\"first is greater\", a positive effect size is expected. For \"second is "
 "greater\", a negative effect size is expected."
 msgstr ""
+"Indiku la hipotezon por uzi. Notu, ke por la unuflanka hipotezo \"unue estas "
+"pli granda\", oni atendas pozitivan efpiktogram. Por \"sekundo estas pli "
+"granda\", oni atendas negativan efpiktogram."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Provided effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:47
@@ -2378,6 +2544,8 @@ msgid ""
 "Only shown where applicable. Allows you to select, whether to specify the "
 "effect size as Cohen's f, or as Eta squared."
 msgstr ""
+"Nur montrata kie aplikebla. Permesas al vi elekti ĉu specifi la "
+"efikgrandecon kiel f de Cohen aŭ kiel Eta kvadrato."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Parameter to determine")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:52
@@ -2399,6 +2567,9 @@ msgid ""
 "reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
 "independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
+"Nur montrata por ĥi-kvadrata statistiko: Celitaj gradoj de libereco. Kiel "
+"rememorigilo, ĉi tio estas (vicoj − 1)×(kolumnoj − 1) por testo de "
+"sendependeco, kaj (ĉeloj − 1) por testo de boneco de taŭgeco."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for numerator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:65
@@ -2408,6 +2579,9 @@ msgid ""
 "As a reminder, this is the number of parameters to estimate, or number of "
 "groups/samples minus 1."
 msgstr ""
+"Nur montrata por ĝenerala lineara modelo: Celitaj numeratorgradoj da "
+"libereco. Kiel memorigilo, ĉi tio estas la nombro da parametroj por taksi, "
+"aŭ nombro da grupoj/specimenoj minus 1."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for denominator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:68
@@ -2418,6 +2592,10 @@ msgid ""
 "total number of observations minus numerator degrees of freedom minus 1, or "
 "total number of observations minus number of groups/samples."
 msgstr ""
+"Nur montrata por ĝenerala lineara modelo: Disponeblaj denominatoraj gradoj "
+"da libereco / gradoj da libereco de la erara termino. Kiel rememorigilo, ĉi "
+"tio estas la tutsumo de observaĵoj minus numeratorgradoj da libereco minus "
+"1, aŭ tutsumo de observaĵoj minus nombro de grupoj/specimenoj."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Sample size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:73
@@ -2427,6 +2605,9 @@ msgid ""
 "observations per sample, per group, or in total. Make sure to read the note "
 "shown below the control."
 msgstr ""
+"Specimena grandeco. Notu, ke depende de la elektita metodo, ĉi tio povas "
+"signifi observaĵojn por specimeno, por grupo aŭ entute. Nepre legi la noton "
+"montritan sub la regilo."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
@@ -2437,6 +2618,10 @@ msgid ""
 "control.   As a reminder, for mapping between cohen's f and Eta&sup2; use "
 "f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)"
 msgstr ""
+"Minimuma konstatebla efikgrandeco. Notu, ke efikgrandecspecifoj malsamas "
+"inter la disponeblaj metodoj. Nepre legu la noton montritan sub la regilo. "
+"Kiel memorigilo, por mapado inter f de cohen kaj Eta² uzu f² = Eta² / (1 − "
+"Eta²)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
@@ -2451,6 +2636,8 @@ msgid ""
 "<link href=\"rkward://rhelp/pwr\"> Description of the R package \"pwr\", "
 "used to perform the power calculations. </link>"
 msgstr ""
+"<link href=\"rkward://rhelp/pwr\"> Priskribo de la R-pakaĵo \"pwr\", uzata "
+"por fari la potencokalkulojn. </link>"
 
 #. i18n: ectx: (Power analysis) <about shortinfo="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:14
@@ -2669,7 +2856,7 @@ msgstr "Parametro por determini"
 msgctxt ""
 "Here 'power' is a common statistical term and should not be translated"
 msgid "Power of test"
-msgstr ""
+msgstr "Potenco de testo"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2729,10 +2916,9 @@ msgstr "Gradoj de libereco por numeratoro"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
-#, fuzzy, kde-format
-#| msgid "df <sub> num </sub> : k − 1"
+#, kde-format
 msgid "df <sub> num </sub> : k &minus; 1"
-msgstr "df <sub> nombro </sub> : k − 1"
+msgstr "df <sub> num </sub> : k &minus; 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2742,10 +2928,9 @@ msgstr "Gradoj de libereco por denominatoro"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
-#, fuzzy, kde-format
-#| msgid "df <sub> den </sub> : N − k"
+#, kde-format
 msgid "df <sub> den </sub> : N &minus; k"
-msgstr "df <sub> den </sub> : N − k"
+msgstr "df <sub> den </sub> : N &minus; k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185
@@ -2847,6 +3032,8 @@ msgid ""
 "basic functionality. For more options refer to <link href=\"rkward://rhelp/lm"
 "\"/>."
 msgstr ""
+"Faru simplan linearan regreson. Nuntempe, ĉi tiu kromaĵo provizas nur bazajn "
+"funkciojn. Por pliaj elektebloj referu al <link href=\"rkward://rhelp/lm\"/>."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <usage>
 #: rkward/plugins/analysis/regression/linear_regression.rkh:12
@@ -2855,6 +3042,8 @@ msgid ""
 "Select the variable to be predicted (dependent), and one or more independent "
 "variables."
 msgstr ""
+"Elektu la antaŭdirotan variablon (dependan), kaj unu aŭ plurajn sendependajn "
+"variablojn."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "dependent variable")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:18
@@ -2870,6 +3059,9 @@ msgid ""
 "Note that factor variables are treated as categorial predictors, while "
 "numeric variables are treated as continuous predictors, automatically."
 msgstr ""
+"Unu aŭ pluraj sendependaj variabloj, ĉiu de la sama longo kiel la dependa. "
+"Notu ke faktoraj variabloj estas traktataj kiel kategoriaj prognoziloj, dum "
+"nombraj variabloj estas traktataj kiel kontinuaj prognoziloj, aŭtomate."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Include intercept")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:20
@@ -2884,6 +3076,8 @@ msgid ""
 "Print standardized correlation coefficients? This requires the lm.beta "
 "package."
 msgstr ""
+"Ĉu presi normigitajn korelaciajn koeficientojn? Ĉi tio postulas la pakaĵon "
+"lm.beta."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Show ANOVA table")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:22
@@ -3050,6 +3244,9 @@ msgid ""
 "each other. For two samples, specify whether the variables are paired or "
 "independent samples. For details, see below."
 msgstr ""
+"Elektu du nombrajn vektorojn aŭ unu vektoron kaj konstanton por kompari unu "
+"kontraŭ la alia. Por du specimenoj, specifu ĉu la variabloj estas parigitaj "
+"aŭ sendependaj specimenoj. Por detaloj, vidu malsupre."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "Test form")
 #: rkward/plugins/analysis/t_test.rkh:18
@@ -3058,6 +3255,8 @@ msgid ""
 "Choose whether you want a two samples test (paired samples or independent "
 "samples), or to test a single variable against a constant"
 msgstr ""
+"Elektu ĉu vi volas du provan teston (paritaj specimenoj aŭ sendependaj "
+"specimenoj), aŭ testi ununuran variablon kontraŭ konstanto"
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "compare")
 #: rkward/plugins/analysis/t_test.rkh:19
@@ -3071,7 +3270,7 @@ msgstr "Nombra vektoro por la unua variablo"
 msgid ""
 "A numeric vector for the second variable. Available for two samples tests "
 "only."
-msgstr ""
+msgstr "Nombra vektoro por la dua variablo. Havebla nur por du provaj provoj."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "against")
 #: rkward/plugins/analysis/t_test.rkh:21
@@ -3086,6 +3285,8 @@ msgid ""
 "Whether to assume equal variances for the two samples (for independent "
 "samples t-test, only). This option is implied for a paired test."
 msgstr ""
+"Ĉu supozi egalajn variancojn por la du specimenoj (por sendependaj provaĵoj "
+"t-testo, nur). Ĉi tiu elekteblo estas implicita por parigita testo."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/t_test.rkh:23
@@ -3150,6 +3351,10 @@ msgid ""
 "pairs or repeated measures on the same subject, select \"Paired samples\". "
 "Finally, you can also test a single sample against a constant value."
 msgstr ""
+"Elektu \"Sendependaj specimenoj\" kiam vi komparas datumojn de du malsamaj "
+"populacioj (ekz. traktadogrupo kontraŭ kontrolgrupo). Por kompari kongruajn "
+"parojn aŭ ripetajn mezurojn pri la sama temo, elektu \"Parigitaj specimenoj"
+"\". Fine, vi ankaŭ povas testi ununuran specimenon kontraŭ konstanta valoro."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:68
@@ -3158,6 +3363,8 @@ msgid ""
 "Select the parameters of the t-test. If your hypothesis is directed, "
 "selecting a directional test hypothesis may increase test power."
 msgstr ""
+"Elektu la parametrojn de la t-testo. Se via hipotezo estas direktita, elekti "
+"unudirektan testhipotezon povas pliigi testan potencon."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:75
@@ -3166,6 +3373,8 @@ msgid ""
 "Sometimes it's helpful to get an estimate of the confidence interval of the "
 "difference in means."
 msgstr ""
+"Kelkfoje estas utile akiri takson de la konfida intervalo de la diferenco en "
+"mezumoj."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:75
@@ -3174,6 +3383,8 @@ msgid ""
 "Below you can specify whether one should be shown, and which confidence-"
 "level should be applied (95% corresponds to a 5% level of significance)."
 msgstr ""
+"Malsupre vi povas specifi ĉu oni devas montri, kaj kiun konfidan nivelon "
+"apliki (95% respondas al 5%-nivelo de signifo)."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <summary>
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:8
@@ -3189,6 +3400,9 @@ msgid ""
 "Mood Two-Sample Test. For this test the samples need to be numeric vectors "
 "(see below for details)."
 msgstr ""
+"Elektu du datumajn arojn por provi diferencon en skalaj parametroj per la "
+"Mood Two-Sample Test. Por ĉi tiu testo la provaĵoj devas esti nombraj "
+"vektoroj (vidu malsupre por detaloj)."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <settings> <setting> (refers to element labelled "compare")
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:17
@@ -3245,6 +3459,8 @@ msgid ""
 "This test computes the Phillips-Perron test for the null hypothesis that x "
 "has a unit root against a stationary alternative."
 msgstr ""
+"Tiu ĉi testo kalkulas la Phillips-Perron-teston por la nula hipotezo ke x "
+"havas unuradpiktogram kontraŭ senmova alternativo."
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots) <usage>
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:12
@@ -3253,6 +3469,9 @@ msgid ""
 "Select the data sets for which you want to perform the Phillips-Perron test. "
 "For this test the samples need to be numeric vectors (see below for details)."
 msgstr ""
+"Elektu la datumajn arojn por kiuj vi volas fari la Phillips-Perron-teston. "
+"Por ĉi tiu testo la provaĵoj devas esti nombraj vektoroj (vidu malsupre por "
+"detaloj)."
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots) <settings> <setting> (refers to element labelled "version of truncation lag parameter")
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:19
@@ -3315,6 +3534,8 @@ msgid ""
 "This test computes Box-Pierce or Ljung-Box test statistic for examining the "
 "null hypothesis of independence in a given time series."
 msgstr ""
+"Tiu ĉi testo komputas Box-Pierce aŭ Ljung-Box teststatistpiktogram por "
+"ekzamenado de la nula hipotezo de sendependeco en antaŭfiksita temposerio."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <usage>
 #: rkward/plugins/analysis/time_series/Box_test.rkh:12
@@ -3324,6 +3545,9 @@ msgid ""
 "Box test. For this test the samples need to be numeric vectors (see below "
 "for details)."
 msgstr ""
+"Elektu la datumajn arojn por kiuj vi volas fari la Box-Pierce aŭ Ljung-Box-"
+"teston. Por ĉi tiu testo la provaĵoj devas esti nombraj vektoroj (vidu "
+"malsupre por detaloj)."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "lag")
 #: rkward/plugins/analysis/time_series/Box_test.rkh:19
@@ -3396,6 +3620,8 @@ msgid ""
 "This plugin extracts and plots the long term trend of a series and "
 "(optionally) its cyclical component."
 msgstr ""
+"Ĉi tiu kromaĵo ĉerpas kaj prezentas la longtempan tendencon de serio kaj "
+"(laŭvole) ĝian ciklan komponanton."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <usage>
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:12
@@ -3404,6 +3630,8 @@ msgid ""
 "The Hodrick-Prescott filter is used to separate the long term trend of a "
 "time series from its cyclical (short term) component."
 msgstr ""
+"La Hodrick-Prescott-filtrilo estas uzata por apartigi la longperspektivan "
+"tendencon de temposerio de ĝia cikla (mallongperspektiva) komponento."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <usage>
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:12
@@ -3413,6 +3641,9 @@ msgid ""
 "relation with the original series provided so as to give a graphic view of "
 "the filtering operation."
 msgstr ""
+"Aldone al la rezulta(j) serio(j) objekto(j), ĉi tiu kromaĵo povas bildigi "
+"ilin rilate al la originala serio provizita por doni grafikan vidon de la "
+"filtra operacio."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Variable:")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:20
@@ -3421,6 +3652,8 @@ msgid ""
 "Select the data to be computed. It must be a single Time Series object or a "
 "Numeric Vector. NA values are not admitted."
 msgstr ""
+"Elektu la datumojn por esti komputitaj. Ĝi devas esti ununura Tempo-Serio-"
+"objekto aŭ Numera Vektoro. NA valoroj ne estas akceptitaj."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Lambda")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:21
@@ -3430,13 +3663,16 @@ msgid ""
 "most common values depending on the frequency of the data (<i>Annual</i>, "
 "<i>Quarterly</i> and <i>Monthly</i>). (Default: 1600)"
 msgstr ""
+"Ĉi tiu estas la glatiga parametro. Vi havas falmenuon kun la tri plej oftaj "
+"valoroj depende de la ofteco de la datumoj (<i>Jara</i>, <i>Kvarona</i> kaj "
+"<i>Monata</i>). (Defaŭlte: 1600)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Custom value")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:22
 #, kde-format
 msgid ""
 "Select if you want to specify a lambda value yourself in the spinbox below."
-msgstr ""
+msgstr "Elektu, se vi volas mem specifi lambdan valoron en la suban skatolon."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Output series")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:23
@@ -3449,6 +3685,12 @@ msgid ""
 "original series to avoid overwriting other variables' trend/cycle (i.e. "
 "\"myseries.hptrend\").</i>"
 msgstr ""
+"Elektu kiun rezultan serion kreu en la laborspaco. La tendenco de la origina "
+"serio estas kreita defaŭlte. Skribu ajnan nomon, kiun vi volas uzi kiel "
+"identigilon por la serio. Defaŭlte, ĝi estas <i>hp</i> sekvata de "
+"<i>tendenco</i> kaj/aŭ <i>ciklo</i>. <i>Konsileto: vi povas aldoni la nomon "
+"de la origina serio por eviti anstataŭi la tendencon/ciklon de aliaj "
+"variabloj (t.e. \"myseries.hptrend\").</i>"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Plot Cycle")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:25
@@ -3463,6 +3705,8 @@ msgid ""
 "Here you can adjust the line width, type and colour of each series on the "
 "plot. (Default: blue series, red trend and dark green cycle)"
 msgstr ""
+"Ĉi tie vi povas ĝustigi la linilarĝon, tipon kaj koloron de ĉiu serio sur la "
+"grafiko. (Defaŭlte: blua serio, ruĝa tendenco kaj malhelverda ciklo)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Original series and trend Y axis label")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:28
@@ -3472,6 +3716,9 @@ msgid ""
 "If empty, the default label is the name of the original series plus <i>, "
 "Trend</i>."
 msgstr ""
+"Ĉi tie vi povas specifi la tekston sur la Y-akso-etikedo de la tendenca "
+"grafiko (supra). Se malplena, la defaŭlta etikedo estas la nomo de la "
+"origina serio plus <i>, Tendenco</i>."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Cycle Y axis label")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:29
@@ -3480,6 +3727,9 @@ msgid ""
 "Here you can specify the text on the Y axis label of the cycle plot (lower - "
 "if applicable). If empty, the default label is <i>Cycle</i>."
 msgstr ""
+"Ĉi tie vi povas specifi la tekston sur la Y-akso-etikedo de la cikla grafiko "
+"(malsupra - se aplikeble). Se malplena, la defaŭlta etikedo estas <i>Ciklo</"
+"i>."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "interpret as string")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:30
@@ -3488,6 +3738,8 @@ msgid ""
 "Enable or disable the labels being evaluated as literal (quoted) strings. To "
 "achieve a line-break (in a quoted string), enter '\\n'. (Default: YES)"
 msgstr ""
+"Ebligu aŭ malebligu la etikedojn taksitajn kiel laŭvortajn (citajn) ĉenojn. "
+"Por atingi linio-rompon (en citita ĉeno), enigu '\\n'. (Defaŭlte: JES)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
@@ -3720,6 +3972,8 @@ msgid ""
 "This test computes the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test for the "
 "null hypothesis that x is level or trend stationary."
 msgstr ""
+"Ĉi tiu testo kalkulas la Kwiatkowski-Phillips-Schmidt-Shin (KPSS) teston por "
+"la nula hipotezo ke x estas nivela aŭ tendenco senmova."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <usage>
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:12
@@ -3729,6 +3983,9 @@ msgid ""
 "Schmidt-Shin (KPSS) test. For this test the samples need to be numeric "
 "vectors (see below for details)."
 msgstr ""
+"Elektu la datumajn arojn por kiuj vi volas fari la provon Kwiatkowski-"
+"Phillips-Schmidt-Shin (KPSS). Por ĉi tiu testo la provaĵoj devas esti "
+"nombraj vektoroj (vidu malsupre por detaloj)."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "null hypothesis")
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:19
@@ -3737,6 +3994,8 @@ msgid ""
 "Indicates the null hypothesis and must be one of \"Level\" (default) or "
 "\"Trend\"."
 msgstr ""
+"Indikas la nulan hipotezon kaj devas esti unu el \"Nivelo\" (defaŭlte) aŭ "
+"\"Tendenco\"."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "version of truncation lag parameter")
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:20
@@ -3745,6 +4004,8 @@ msgid ""
 "Defines whether the short or long version of the truncation lag parameter is "
 "used."
 msgstr ""
+"Difinas ĉu la mallonga aŭ longa versio de la detranĉa malfruo parametro "
+"estas uzata."
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="...">
 #: rkward/plugins/analysis/time_series/kpss_test.xml:18
@@ -3777,6 +4038,8 @@ msgid ""
 "Select several numeric vectors to perform Bartlett's test of the null that "
 "the variances in each of the samples are the same."
 msgstr ""
+"Elektu plurajn nombrajn vektorojn por plenumi la teston de Bartlett pri la "
+"nulo, ke la variancoj en ĉiu el la specimenoj estas la samaj."
 
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances) <settings> <setting> (refers to element labelled "samples")
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances) <settings> <setting> (refers to element labelled "samples")
@@ -3787,6 +4050,8 @@ msgid ""
 "The samples to be checked for equal variance. The vectors need to be "
 "numeric, but don't need to have the same length."
 msgstr ""
+"La specimenoj por esti kontrolitaj por egala varianco. La vektoroj devas "
+"esti nombraj, sed ne bezonas havi la saman longon."
 
 #. i18n: ectx: (Bartlett Test of Homogeneity of Variances) <dialog label="...">
 #: rkward/plugins/analysis/variances/bartlett_test.xml:11
@@ -3846,6 +4111,9 @@ msgid ""
 "test. For this test the samples need to be numeric vectors (see below for "
 "details)."
 msgstr ""
+"Elektu du specimenojn el normalaj populacioj por kompari la variancojn per "
+"la F-testo. Por ĉi tiu testo la provaĵoj devas esti nombraj vektoroj (vidu "
+"malsupre por detaloj)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "compare")
 #: rkward/plugins/analysis/variances/F_test.rkh:18
@@ -3909,6 +4177,7 @@ msgstr "Fligner-Killeen:med X^2-teststatistiko"
 msgid ""
 "This test performs the Fligner-Killeen Test of Homogeneity of Variances."
 msgstr ""
+"Ĉi tiu testo elfaras la Fligner-Killeen-Teston de Homogeneco de Variancoj."
 
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances) <usage>
 #: rkward/plugins/analysis/variances/fligner_test.rkh:12
@@ -3917,6 +4186,8 @@ msgid ""
 "Select several numeric vectors to perform the Fligner-Killeen (median) test "
 "of the null that the variances in each of the samples are the same."
 msgstr ""
+"Elektu plurajn nombrajn vektorojn por fari la Fligner-Killeen (mediano) "
+"teston de la nulo ke la variancoj en ĉiu el la specimenoj estas la samaj."
 
 #. i18n: ectx: (Fligner-Killeen Test of Homogeneity of Variances) <dialog label="...">
 #: rkward/plugins/analysis/variances/fligner_test.xml:11
@@ -3931,6 +4202,8 @@ msgid ""
 "This test performs the Levene's test for homogeneity of variance across "
 "groups."
 msgstr ""
+"Tiu testo elfaras la teston de la Levene por homogeneco de varianco trans "
+"grupoj."
 
 #. i18n: ectx: (Loaded from Levene's Test) <usage>
 #: rkward/plugins/analysis/variances/levene_test.rkh:12
@@ -3939,6 +4212,8 @@ msgid ""
 "Select the response variable and the factor defining groups to test for "
 "homogeneity of variance across groups."
 msgstr ""
+"Elektu la respondvariablon kaj la faktoron difinantajn grupojn por testi pri "
+"homogeneco de varianco inter grupoj."
 
 #. i18n: ectx: (Loaded from Levene's Test) <settings> <setting> (refers to element labelled "response variable")
 #: rkward/plugins/analysis/variances/levene_test.rkh:17
@@ -3960,6 +4235,9 @@ msgid ""
 "Honor of Harold Hotelling, I. Olkin et al. eds., Stanford University Press, "
 "pp. 278-292."
 msgstr ""
+"Levene, H. (1960). En Kontribuoj al Probability and Statistics: Eseoj en "
+"Honoro de Harold Hotelling, I. Olkin et al. Red., Stanford University Press, "
+"pp 278-292."
 
 #. i18n: ectx: (Levene's Test) <dialog label="Levene's Test"> <varslot label="...">
 #: rkward/plugins/analysis/variances/levene_test.xml:15
@@ -4016,6 +4294,8 @@ msgid ""
 "This test performs the Wilcoxon Rank Sum and Signed Rank Tests (the first is "
 "equivalent to the Mann-Whitney test)."
 msgstr ""
+"Tiu ĉi testo elfaras la Wilcoxon Rank Sum kaj Signed Rank Tests (la unua "
+"estas ekvivalenta al la Mann-Whitney-testo)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <usage>
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:12
@@ -4025,6 +4305,9 @@ msgid ""
 "test on the null that the true distribution of x (or the difference between "
 "the paired vectors) is symmetric about 0 (or the specified location)."
 msgstr ""
+"Elektu ununuran vektoron (aŭ parigitan teston) por plenumi Wilcoxon-signitan "
+"rangoteston sur la nulo ke la vera distribuo de x (aŭ la diferenco inter la "
+"paritaj vektoroj) estas simetria ĉirkaŭ 0 (aŭ la specifita loko)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <usage>
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:12
@@ -4035,6 +4318,10 @@ msgid ""
 "details) on the null that the distributions of x and y differ (by 0 or the "
 "specified location shift)."
 msgstr ""
+"Elektu du vektorojn por fari Wilcoxon-rangan sumon-teston (ekvivalenta al la "
+"Mann-Whitney-testo: vidu <link href=\"rkward://rhelp/wilcox.test\"/> por "
+"detaloj) pri la nulo, ke la distribuoj de x kaj y malsamas (per 0 aŭ la "
+"specifita lokoŝanĝo)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:21
@@ -4043,6 +4330,8 @@ msgid ""
 "The alternative hypothesis. \"greater\" means that x is shifted to the right "
 "of y / of the location parameter."
 msgstr ""
+"La alternativa hipotezo. \"pli granda\" signifas ke x estas movita dekstren "
+"de y / de la loka parametro."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Paired test")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:22
@@ -4051,6 +4340,8 @@ msgid ""
 "Check this for a paired test (Wilcoxon signed rank test of the difference "
 "between the two vectors)."
 msgstr ""
+"Marku ĉi tion por parigita testo (Wilcoxon subskribita rangotesto de la "
+"diferenco inter la du vektoroj)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Compute confidence interval")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:24
@@ -4079,6 +4370,9 @@ msgid ""
 "asymptomatic p-value is calculated if and only if you have less than 50 "
 "cases per group without binding when an exact test should be performed."
 msgstr ""
+"Ĉu preciza p-valoro estu kalkulita? Defaŭlte (\"Aŭtomata\") sensimptoma p-"
+"valoro estas kalkulita se kaj nur se vi havas malpli ol 50 kazojn per grupo "
+"sen ligado kiam preciza testo devus esti farita."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Allow ties")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:28
@@ -4086,6 +4380,8 @@ msgstr ""
 msgid ""
 "Check this option to compute an exact p-value even in the presence of ties."
 msgstr ""
+"Marku ĉi tiun elekteblon por kalkuli precizan p-valoron eĉ en ĉeesto de "
+"ligoj."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Apply continuity correction")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:29
@@ -4094,6 +4390,8 @@ msgid ""
 "If checked a continuity correction in the normal approximation for the p-"
 "value is applied."
 msgstr ""
+"Se markite, kontinueckorekto en la normala aproksimado por la p-valoro estas "
+"aplikata."
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:14
@@ -4183,6 +4481,8 @@ msgctxt "R code comment"
 msgid ""
 "we wrap each single call in a \"try\" statement to always continue on errors."
 msgstr ""
+"ni envolvas ĉiun unuopan vokon en \"try\" deklaro por ĉiam daŭrigi pri "
+"eraroj."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:30
@@ -4286,6 +4586,8 @@ msgid ""
 "Compute the most common descriptive statistics for one or more numeric "
 "vectors"
 msgstr ""
+"Kalkulu la plej oftajn priskribajn statistikojn por unu aŭ pluraj nombraj "
+"vektoroj"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <usage>
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:14
@@ -4295,6 +4597,9 @@ msgid ""
 "objects need to be numeric vectors. On the subsequent tabs/pages specify, "
 "which statistics you want computed (see below for details)."
 msgstr ""
+"Elektu unu aŭ plurajn objektojn por analizi. Por plej multaj specoj de "
+"analizo, la objektoj devas esti nombraj vektoroj. Sur la postaj langetoj/"
+"paĝoj specifu, kiajn statistikojn vi volas komputi (vidu sube por detaloj)."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <usage>
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:14
@@ -4303,6 +4608,8 @@ msgid ""
 "Each selected variable will be analysed independently of the others. NA "
 "values are excluded from the calculations."
 msgstr ""
+"Ĉiu elektita variablo estos analizita sendepende de la aliaj. NA-valoroj "
+"estas ekskluditaj de la kalkuloj."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
@@ -4320,6 +4627,12 @@ msgid ""
 "any grouping). If specifying more than one grouping factor, separate splits "
 "will be performed for each combination of values of the grouping factors."
 msgstr ""
+"Laŭvole elektu unu aŭ plurajn grupigajn faktorojn per kiuj disfendi ĉiun "
+"enigvektoron. La grupigfaktoroj devas esti de la sama longo kiel la "
+"enigvektoroj (kaj tiel, ĉiuj enigvektoroj devas esti de la sama longo, se "
+"uzado de ajna grupiĝo). Se oni specifas pli ol unu grupigan faktoron, "
+"apartaj disigoj estos faritaj por ĉiu kombinaĵo de valoroj de la "
+"grupigfaktoroj."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:24
@@ -4365,6 +4678,10 @@ msgid ""
 "absolute deviations from the median, and (by default) adjust by a factor for "
 "asymptotically normal consistency (see <link href=\"rkward://rhelp/mad\"/>)."
 msgstr ""
+"Kalkulu la mezan absolutan devion, t.e., la (lo-/hi-) medianon de la "
+"absolutaj devioj de la mediano, kaj (defaŭlte) ĝustigu per faktoro por "
+"asimptote normala konsistenco (vidu <link href=\"rkward://\". help/freneza\"/"
+">)."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Constant")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:32
@@ -4379,6 +4696,8 @@ msgid ""
 "How to treat even size samples: Average the two middle values, take the "
 "lower, or take the higher"
 msgstr ""
+"Kiel trakti egalgrandajn specimenojn: Mezumu la du mezajn valorojn, prenu la "
+"pli malaltan, aŭ prenu la pli altan"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "range")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:35
@@ -4404,6 +4723,8 @@ msgstr "Kalkuli la produkton de ĉiuj valoroj"
 msgid ""
 "Count the total number of values, and the number of missing values (NAs)"
 msgstr ""
+"Kalkulu la totalan nombron da valoroj, kaj la nombron da mankantaj valoroj "
+"(NAoj)"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:20
@@ -4592,6 +4913,12 @@ msgid ""
 "php?graph=137\">R Graph Gallery (137) Correlation Matrix</link>, from where "
 "was adapted and formatted for RKWard."
 msgstr ""
+"Korelacia Matrico-Grafiko. Supre la (absoluta) valoro de la korelacio estas "
+"prezentita plus la rezulto de la kor.testo kiel steloj. Sur fundo, la "
+"duvariaj disaj diagramoj estas punktitaj kun konvenita linio. La grafikaĵo "
+"kaj la kodo troveblas ĉe <link href=\"http://addictedtor.free.fr/graphiques/"
+"RGraphGallery.php?graph=137\">R Graph Gallery (137) Korelacia Matrico</"
+"link>, de kie estis adaptita kaj formatita por RKWard."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <usage>
 #: rkward/plugins/plots/cor_graph.rkh:12
@@ -4601,6 +4928,9 @@ msgid ""
 "to treat missing values, what precision you want, and if you want to scale "
 "text."
 msgstr ""
+"Elektu unu aŭ plurajn objektojn por esti komplotataj. Elektu la metodon "
+"uzatan, kiel trakti mankantajn valorojn, kian precizecon vi volas, kaj se vi "
+"volas skali tekston."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/cor_graph.rkh:18
@@ -4609,6 +4939,8 @@ msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
 msgstr ""
+"Elektu datummatricon aŭ nombran datumkadron aŭ pli ol unu variablojn el "
+"datummatrico"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/plots/cor_graph.rkh:20
@@ -4617,6 +4949,8 @@ msgid ""
 "Indicates which correlation coefficient (or covariance) is to be computed. "
 "One of \"pearson\", \"kendall\", or \"spearman\", can be used"
 msgstr ""
+"Indikas kiun korelacian koeficienton (aŭ kunvariancon) estas komputota. Unu "
+"el \"pearson\", \"kendall\", aŭ \"lancisto\", povas esti uzata"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/plots/cor_graph.rkh:21
@@ -4629,6 +4963,13 @@ msgid ""
 "covariance or correlation matrices which are not positive semidefinite. "
 "\"pairwise\" only works with the \"pearson\" method for cov and var."
 msgstr ""
+"Elektu kiel trakti mankantajn valorojn. Se uzo estas \"tutaj kazoj\" tiam "
+"mankantaj valoroj estas pritraktataj per kazlauze forigo. Se uzo havas la "
+"valoron \"parole\" tiam la korelacio inter ĉiu paro de variabloj estas "
+"komputita uzante ĉiujn kompletajn parojn de observaĵoj sur tiuj variabloj. "
+"Tio povas rezultigi kunvariancon aŭ korelaciajn matricojn kiuj ne estas "
+"pozitivaj duondifinaj. \"pairwise\" funkcias nur kun la metodo \"pearson\" "
+"por cov kaj var."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Precision (digits)")
 #: rkward/plugins/plots/cor_graph.rkh:22
@@ -4643,6 +4984,7 @@ msgid ""
 "Select it if you want to scale text according to the (absolute) correlation "
 "value."
 msgstr ""
+"Elektu ĝin se vi volas skali tekston laŭ la (absoluta) korelacia valoro."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <related>
 #: rkward/plugins/plots/cor_graph.rkh:25
@@ -4651,6 +4993,8 @@ msgid ""
 "<link href=\"http://addictedtor.free.fr/graphiques/RGraphGallery.php?"
 "graph=137\">R Graph Gallery (137) Correlation Matrix</link>"
 msgstr ""
+"<link href=\"http://addictedtor.free.fr/graphiques/RGraphGallery.php?"
+"graph=137\">R Graph Gallery (137) Korelacia Matrico</link>"
 
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/plots/cor_graph.xml:24

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-04-14 00:17+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "okellogg@users.sourceforge.net"
 
 #. i18n: ectx: (RKWard Add-Ons) <title>
 #: rkward/pages/rkward_addons.rkh:8
@@ -42,6 +42,9 @@ msgid ""
 "Arguably this can make it a bit confusing on where to find the addon "
 "features you are looking for."
 msgstr ""
+"Por oferti al vi la plej bonajn funkciojn, RKWard kombinas malsamajn "
+"teknologiojn. Verŝajne ĉi tio povas iom konfuzi pri kie trovi la aldonajn "
+"funkciojn, kiujn vi serĉas."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -58,6 +61,10 @@ msgid ""
 "additional R functions that you can use in scripts, or in the interactive R "
 "console."
 msgstr ""
+"<strong>R-pakaĵoj</strong> ofertas egan nekredeblan kvanton da datumaj "
+"algoritmoj kaj iloj. Ĉi tiu funkcio estas (plejparte) provizita en la formo "
+"de pliaj R-funkcioj, kiujn vi povas uzi en skriptoj, aŭ en la interaga R-"
+"konzolo."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -69,6 +76,11 @@ msgid ""
 "activated by default. It can further be extended with custom scripts, or "
 "color-schemes."
 msgstr ""
+"<strong>Kate-aldonaĵoj</strong>: Kate estas la motoro malantaŭ la "
+"skriptoredaktilo de RKWard. Ĝi venas kun potencaj aldonaj funkcioj, multaj "
+"el kiuj devus esti antaŭinstalitaj kun RKWard. Tamen, pro ilia tuta nombro, "
+"ne ĉiuj estas aktivigitaj defaŭlte. Ĝi plu povas esti etendita per propraj "
+"skriptoj aŭ kolorskemoj."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -79,6 +91,10 @@ msgid ""
 "mostly implemented as plugin-ins in RKWard. Many such plugins are available "
 "for download, separately."
 msgstr ""
+"<strong>RKWard-aldonaĵoj</strong>: Se vi serĉas grafikan dialogon por helpi "
+"vin importi/konverti/analizi/bildigi viajn datumojn, tiaj dialogoj estas "
+"plejparte realigitaj kiel kromprogramoj en RKWard. Multaj tiaj aldonaĵoj "
+"estas disponeblaj por elŝuto, aparte."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -87,6 +103,8 @@ msgid ""
 "The following sections deal with these, in turn, showing you how to find / "
 "install, what you need."
 msgstr ""
+"La sekvaj sekcioj traktas ĉi tiujn, siavice, montrante al vi kiel trovi / "
+"instali, kion vi bezonas."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:24
@@ -103,6 +121,10 @@ msgid ""
 "dialog to search, install and/or load packages (Settings->Manage R packages "
 "and plugins)."
 msgstr ""
+"Aldone al la regulaj R komandliniaj iloj por administri R-pakaĵojn (vidu "
+"<link href=\"rkward://rhelp/install.packages\"/>), RKWard ofertas grafikan "
+"dialogon por serĉi, instali kaj/aŭ ŝargi pakaĵojn. (Agordoj-> Administri R-"
+"pakaĵojn kaj kromaĵojn)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -113,6 +135,10 @@ msgid ""
 "source is fully automated, you may still have to install additional "
 "libraries or other software for the compilation."
 msgstr ""
+"Notu ke, defaŭlte, R-pakaĵoj estas distribuitaj kiel kompilitaj binaroj en "
+"Vindozo kaj MacOS, sed ne Linukso. Dum por ĉi-lasta, instalado de fonto "
+"estas plene aŭtomatigita, vi eble ankoraŭ devos instali pliajn bibliotekojn "
+"aŭ alian programaron por la kompilo."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:32
@@ -134,6 +160,16 @@ msgid ""
 ">Addons</link>. Addons shown in bold have been reported to be useful and "
 "work well in RKWard, but feel free to explore the others, too."
 msgstr ""
+"<link href=\"https://kate.kde.org\">Kate</link> estas tre potenca "
+"tekstredaktilo uzanta la saman tekstredaktadkomponenton kiu ankaŭ estas "
+"uzata en RKWard. Ĝi ankaŭ venas kun diversaj aldonaĵoj, ekz. por krei kodajn "
+"fragmentojn, aŭ por administri projektojn en git-deponejo. Kelkaj el tiuj - "
+"kiel ekz. la C++ retrotrava navigado ne havas multe da senco en la kunteksto "
+"de RKWard, sed multaj faras. Por esplori kio disponeblas, certigu, ke vi "
+"havas kate instalitan, tiam vizitu <link href=\"rkward://settings/addons"
+"\">Agordoj->Aldonaĵoj</link>. Aldonaĵoj montritaj en grasa skribo laŭdire "
+"estas utilaj kaj funkcias bone en RKWard, sed bonvolu esplori ankaŭ la "
+"aliajn."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:39
@@ -152,6 +188,12 @@ msgid ""
 "plugins</link>), and check the option \"Show only packages providing RKWard "
 "dialogs\"."
 msgstr ""
+"RKWard-aldonaĵoj povas esti instalitaj el diversaj fontoj, sed la kutima "
+"distribuo de aldonaĵoj estas per R-pakaĵoj. Por serĉi R-pakaĵojn, kiuj "
+"provizas RKWard-grafikajn dialogojn, uzu la regulan dialogon (<link href="
+"\"rkward://actions/rpackage_install\">Agordoj->Administri R-pakaĵojn kaj "
+"kromaĵojn</link>), kaj marku la elekteblon \"Montri nur pakaĵojn provizantaj "
+"RKWard-dialogojn\"."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -167,6 +209,16 @@ msgid ""
 "text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
 "link> (pre-initialized for installation of rk.Teaching)."
 msgstr ""
+"Ne ĉiuj RKWard-aldonaĵoj pakitaj tiel estos videblaj en la dialogo de "
+"instalado de R-pakaĵo, ĉar ili ne estas gastigitaj (ankoraŭ) en la defaŭltaj "
+"deponejoj, precipe, en la momento de ĉi tiu skribado, la tre ampleksa <link "
+"href=\"https: //github.com/rkward-community/rk.Teaching\">rk.Teaching</link> "
+"aro da kromprogramoj. Multaj el ĉi tiuj estas gastigitaj en platformoj kiel "
+"github.com, kaj konante la deponejon URL, povas esti instalitaj per "
+"malmultaj klakoj, uzante <link href=\"rkward://runplugin/rkward::"
+"install_from_git/fullURL.text=https: //github.com/rkward-community/rk."
+"Teaching.git\">tiu ĉi dialogo</link> (antaŭkomencigita por instalo de rk."
+"Teaching)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:47
@@ -192,6 +244,13 @@ msgid ""
 "rhelp/rkward-package\">rkward package overview</link> for RKWard specific "
 "function for development and scripting."
 msgstr ""
+"Rigardu la <link href=\"help:/rkwardplugins/index.html\">Enkonduko al "
+"Skribado de Kromaĵoj por RKWard</link> (<link href=\"https://rkward.kde.org/"
+"doc/rkwardplugins /\">plej lastatempa versio interrete</link>) por lerni "
+"kiom facile estas plibonigi RKWard per viaj propraj dialogoj. Kaj se vi "
+"ŝatas, kiel dividi vian laboron kun la komunumo de uzantoj de RKWard. Vidu "
+"la <link href=\"rkward://rhelp/rkward-package\">superrigardon de la pakaĵo "
+"de rkward</link> por specifa funkcio de RKWard por disvolviĝo kaj skripto."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -212,6 +271,8 @@ msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labelled \"R Console\" to invoke it."
 msgstr ""
+"La konzolo povas - defaŭlte - troviĝi ĉe la fundo de la aplika fenestro. "
+"Premu la ilan butonon etikeditan \"R Console\" por alvoki ĝin."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
@@ -228,6 +289,10 @@ msgid ""
 "know some basics of the R language. Select Help->Help on R for some "
 "introductory information."
 msgstr ""
+"RKWard estas bazita sur la R-lingvo por statistika komputado. La konzolo "
+"permesas vin enigi R-komandojn rekte. Evidente, por uzi ĉi tion, vi devas "
+"koni kelkajn bazaĵojn de la R-lingvo. Elektu Helpo->Helpo sur R por iuj "
+"enkondukaj informoj."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -237,6 +302,9 @@ msgid ""
 "complex commands / scripts, using the Script File Editor (File->New->Script "
 "File) is much more comfortable."
 msgstr ""
+"La konzolo estas destinita por interaga uzo kaj malgrandaj komandoj. Por "
+"redaktado de kompleksaj komandoj / skriptoj, uzi la Script File Editor "
+"(Dosiero->Nov->Script File) estas multe pli komforta."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -245,6 +313,8 @@ msgid ""
 "Many console features are available from the context menu. To invoke the "
 "context menu, click the right mouse button inside the console window."
 msgstr ""
+"Multaj konzolaj funkcioj haveblas el la kunteksta menuo. Por alvoki la "
+"kuntekstan menuon, alklaku la dekstran musbutonon ene de la konzola fenestro."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:23
@@ -262,6 +332,11 @@ msgid ""
 "time (e.g. some action you invoked from the Analysis menu), the console will "
 "only become available again, when the R backend becomes idle."
 msgstr ""
+"Por interrompi kurantan komandon, premu Ctrl+C, aŭ elektu \"Interrompi rulan "
+"komandon\" el la kunteksta menuo. Notu, ke la komando ne nepre finiĝos tuj. "
+"Se ekzistas pluraj aliaj komandoj funkcianta samtempe (ekz. iu ago, kiun vi "
+"alvokis el la Analiza menuo), la konzolo nur iĝos disponebla denove, kiam la "
+"R-backend iĝas neaktiva."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:27
@@ -278,6 +353,10 @@ msgid ""
 "+Return). Leading \"> \" and \"+ \" on the selected lines will be removed "
 "automatically."
 msgstr ""
+"Por reruli (sekvencon de) elektitaj komandoj, elektu ilin per la muso. Poste "
+"elektu \"Run elekton\" el la kunteksta menuo (defaŭlta ŝparvojo estas Ctrl"
+"+Reveno). Ĉefaj \"> \" kaj \"+ \" sur la elektitaj linioj estos aŭtomate "
+"forigitaj."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:31
@@ -294,6 +373,10 @@ msgid ""
 "\"> \" and \"+ \". In contrast, \"Copy commands, only\" will remove the "
 "prompts from the text copied into the clipboard."
 msgstr ""
+"Estas du kopireĝimoj haveblaj de la kunteksta menuo (aŭ la Redakti menuo). "
+"Unu permesas al vi kopii la elekton laŭvorte, t.e. inkluzivante la invitojn "
+"\"> \" kaj \"+ \". Kontraste, \"Kopiu komandojn, nur\" forigos la instigojn "
+"el la teksto kopiita en la tondujo."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -302,6 +385,8 @@ msgid ""
 "Note that the customary shortcut for copying text - Ctrl+C - does NOT work "
 "in the console, as Ctrl+C already means interrupting the current command."
 msgstr ""
+"Notu, ke la kutima ŝparvojo por kopii tekston - Ctrl+C - NE funkcias en la "
+"konzolo, ĉar Ctrl+C jam signifas interrompi la nunan komandon."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:37
@@ -317,6 +402,9 @@ msgid ""
 "try to look up the R help page for whichever keyword the cursor is currently "
 "on."
 msgstr ""
+"Premante F2 (aŭ elektante \"Funkcia referenco\" el la kunteksta menuo) "
+"provos serĉi la R-helppaĝon por kiu ajn ŝlosilvorto la kursoro estas "
+"nuntempe."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:41
@@ -331,6 +419,8 @@ msgid ""
 "The console provides a mechanism to recall recent commands, similar to the "
 "readline functionality offered in R or most shells."
 msgstr ""
+"La konzolo disponigas mekanismon por memori lastatempajn komandojn, similajn "
+"al la readline-funkcieco ofertita en R aŭ la plej multaj konkoj."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -341,6 +431,10 @@ msgid ""
 "pressing the down arrow goes downwards in the command history. Of course, "
 "you can also edit a recalled command line."
 msgstr ""
+"Por rememori la antaŭan komandon, simple premu la supren-sagon. Premu la "
+"supren sagon plurfoje por revoki la komandon antaŭ tio, kaj tiel plu. "
+"Simile, premante la malsupren sagon iras malsupren en la komanda historio. "
+"Kompreneble, vi ankaŭ povas redakti revokitan komandlinion."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -351,6 +445,10 @@ msgid ""
 "console. Now use Shift+Up / Shift+Down. You will note, that only those "
 "recent command lines that started with \"print\" will be shown."
 msgstr ""
+"Eblas ankaŭ serĉi la komandhistorion por linioj komenciĝantaj per specifita "
+"ĉeno. Por uzi ĉi tion, enigu - ekzemple - \"print\" en la konzolo. Nun uzu "
+"Maj+Supren / Maj+Supren. Vi rimarkos, ke nur tiuj lastatempaj komandlinioj "
+"kiuj komenciĝis per \"print\" estos montritaj."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -361,6 +459,10 @@ msgid ""
 "while pressing Up/Down without the Shift key will show only matching lines. "
 "(see <link href=\"#settings\">Section settings</link>)."
 msgstr ""
+"Eblas fari la duan reĝimon serĉi la komandhistorion la defaŭltan. En ĉi tiu "
+"kazo, premante Shift+Supren/Malsupren navigos ĉiujn komandojn, dum premu "
+"Supren/Malsupren sen la Majusklilo montros nur kongruajn liniojn. (vidu "
+"<link href=\"#settings\">Sekciajn agordojn</link>)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -370,6 +472,9 @@ msgid ""
 "using <i>File->Import / Export command history</i> or the R commands "
 "<i>savehistory()</i> and <i>loadhistory()</i>."
 msgstr ""
+"Vi ankaŭ povas konservi/ŝargi komandhistorion iam ajn dum via seanco, uzante "
+"<i>Dosiero->Importi/Eksporti komandhistorion</i> aŭ la R-komandojn "
+"<i>savehistory()</i> kaj <i> ŝarghistorio()</i>."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:53
@@ -385,6 +490,9 @@ msgid ""
 "complete the name of that R object. If several objects start with the typed "
 "characters, a list of all those objects will be shown."
 msgstr ""
+"Premante la Tab-klavon dum tajpado de la nomo de R-objekto provos kompletigi "
+"la nomon de tiu R-objekto. Se pluraj objektoj komenciĝas per la tajpitaj "
+"signoj, listo de ĉiuj tiuj objektoj estos montrita."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -395,6 +503,10 @@ msgid ""
 "\", and press Tab again. The word will be changed to \"paste\", as that is "
 "the only matching object name."
 msgstr ""
+"Ekzemple, enigu \"base::pa\" en la konzolo, tiam premu Tab. Ĉi tio listigos "
+"ĉiujn objektojn el paka bazo komencante per \"pa\". Nun aldonu \"s\", kaj "
+"premu Tab denove. La vorto estos ŝanĝita al \"glui\", ĉar tio estas la sola "
+"kongrua objektonomo."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -405,6 +517,9 @@ msgid ""
 "seems to be inside a quoted string that does not seem to be part of an "
 "object name."
 msgstr ""
+"Surbaze de kelkaj simplaj heŭristiko, RKWard provos kompletigi dosiernomojn "
+"anstataŭ objektonomojn, kie konvene. Ĉi tio estas farita, kiam la kursoro "
+"ŝajnas esti ene de citita ĉeno kiu ne ŝajnas esti parto de objektonomo."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #. i18n: ectx: (Screen device history) <section title="...">
@@ -423,6 +538,9 @@ msgid ""
 "console\">Settings->Configure RKWard->R Console</a> or \"Configure\" from "
 "the context menu. The following options are configurable:"
 msgstr ""
+"Por agordi la konduton de la konzolo, elektu <a href=\"rkward://settings/"
+"console\">Agordoj->Agordu RKWard->R-Konzolon</a> aŭ \"Agordu\" el la "
+"kunteksta menuo. La sekvaj elektebloj estas agordeblaj:"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -433,6 +551,10 @@ msgid ""
 "next starting RKWard again. If this is not checked, each session of RKWard "
 "will start out with an empty command history."
 msgstr ""
+"<b>Ŝargi/konservi komandhistorion</b>: Ĉu la <link href=\"#command_history"
+"\">komandhistorio</link> estas konservita dum la fermo de RKWard, kaj "
+"reŝargita kiam poste lanĉas RKWard denove. Se ĉi tio ne estas markita, ĉiu "
+"seanco de RKWard komenciĝos kun malplena komandhistorio."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -441,6 +563,9 @@ msgid ""
 "<b>Maximum length of command history</b>: Only this many lines are kept in "
 "the <link href=\"#command_history\">command history</link>."
 msgstr ""
+"<b>Maksimuma longeco de komanda historio</b>: Nur ĉi tiuj multaj linioj "
+"estas konservitaj en la <link href=\"#command_history\">komanda historio</"
+"link>."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -452,6 +577,11 @@ msgid ""
 "top of the console window. To clear the console entirely, choose \"Clear\" "
 "from the context menu or the Edit menu."
 msgstr ""
+"<b>Maksimuma nombro da alineoj/linioj por montri en la konzolo</b>: Ne pli "
+"ol tiom da tutaj linioj (komandoj kaj eligo) estos montrata en la konzolo. "
+"Kiam ĉi tiu nombro da linioj estas superita, linioj estos forigitaj ĉe la "
+"supro de la konzola fenestro. Por tute malplenigi la konzolon, elektu "
+"\"Forigi\" el la kunteksta menuo aŭ la Redaktu menuo."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -462,6 +592,11 @@ msgid ""
 "their results will be shown in the console. If this option is not checked, "
 "the commands will only be visible in the Command log, but not in the console."
 msgstr ""
+"<b>Ruli komandojn de skriptredaktilo tra la konzolo</b>: Komandoj venantaj "
+"de skriptredaktiloj povas esti senditaj tra la konzolo, t.e. la komandoj kaj "
+"iliaj rezultoj estos montritaj en la konzolo. Se ĉi tiu elekteblo ne estas "
+"markita, la komandoj nur estos videblaj en la Komando protokolo, sed ne en "
+"la konzolo."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -472,6 +607,10 @@ msgid ""
 "history. Turning off this option may help to keep the console history \"clean"
 "\"."
 msgstr ""
+"<b>Ankaŭ aldonu tiujn komandojn al la historio de la konzolo</b>: Se la "
+"supra elekteblo estas markita, tio influas, ĉu tiaj komandoj ankaŭ estas "
+"aldonitaj al la historio de la konzolo. Malŝalti ĉi tiun elekteblon povas "
+"helpi konservi la konzolan historion \"pura\"."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -482,6 +621,11 @@ msgid ""
 "\">command history</link> is the default, i.e. available with Up/Down "
 "without Shift. Else the key binding for this is Shift+Up/Down."
 msgstr ""
+"<b>Komandhistorio estas defaŭlte kuntekst-sentema</b>: Se ĉi tio estas "
+"markita, la kuntekst-sentema reĝimo de navigi la <link href="
+"\"#command_history\">komanda historio</link> estas la defaŭlta, t.e. havebla "
+"kun Supren/Malsupren sen Shift. Alie, la klavbindado por ĉi tio estas Maj"
+"+Supren/Malsupren."
 
 #. i18n: ectx: (RKWard for new Users) <title>
 #: rkward/pages/rkward_for_new_users.rkh:8
@@ -496,6 +640,8 @@ msgid ""
 "Provide some starting points for users new to R and RKWard. For a more in "
 "depth guide see <link href=\"rkward://page/rkward_for_r_users\"/>."
 msgstr ""
+"Provizu kelkajn deirpunktojn por uzantoj novaj al R kaj RKWard. Por pli "
+"profunda gvidilo vidu <link href=\"rkward://page/rkward_for_r_users\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -513,6 +659,12 @@ msgid ""
 "course, R can deal with this sort of data (technically called a \"data.frame"
 "\"), it is much more flexible, and may be slightly confusing at first."
 msgstr ""
+"Se vi antaŭe uzis malsamajn statistikajn ilojn, vi eble alkutimiĝis al la "
+"ideo, ke ĉiuj viaj datumoj estas esence konservitaj en unu ununura "
+"kalkultabelo, kaj tiu kalkultabelo estas videbla la tutan tempon. Kvankam, "
+"kompreneble, R povas trakti ĉi tiun specon de datumoj (teknike nomataj "
+"\"data.frame\"), ĝi estas multe pli fleksebla, kaj povas esti iomete konfuza "
+"komence."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -525,6 +677,12 @@ msgid ""
 "of the language itself, the functions, are stored just like data and can "
 "also be edited."
 msgstr ""
+"R - kaj tial RKWard - povas trakti grandan nombron da malsamaj specoj de "
+"datumoj: La konataj kalkultabeloj, sed ankaŭ ununuraj vektoroj de datumoj "
+"(kiel kolumno en kalkultabelo), tiel nomataj \"listoj\" de malsamaj vektoroj "
+"aŭ aliaj objektoj kiuj povas havi malsamajn longojn, ununurajn "
+"datumpunktojn, ktp. Eĉ la plej granda parto de la lingvo mem, la funkcioj, "
+"estas konservitaj same kiel datumoj kaj ankaŭ povas esti redaktita."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -540,6 +698,16 @@ msgid ""
 "other objects are predefined in libraries, such as \"package:base\". See "
 "<link href=\"rkward://page/rkward_workspace_browser\"/> for details."
 msgstr ""
+"Samtempe, R ne estas limigita al laboro kun nur unu datumo samtempe, sed "
+"prefere vi havas \"Laborspaco\", kie ĉiuj viaj malsamaj variabloj, tabeloj, "
+"ktp. estas alireblaj. Vi povas havi multajn datumojn.kadrojn samtempe, kaj "
+"pliajn datumojn de aliaj tipoj. Ĉe la maldekstra flanko de la aplika "
+"fenestro, devus esti piktogramo etikedita \"Laborspaco\". Vi povas alklaki "
+"ĉi tion por vidi ĉiujn objektojn ĉeestantajn en via laborspaco. Ĉiuj "
+"objektoj, kiujn vi kreas aŭ modifas, estos videblaj ene de la \".GlobalEnv"
+"\". Plej multaj aliaj objektoj estas antaŭdifinitaj en bibliotekoj, kiel "
+"\"package:base\". Vidu <link href=\"rkward://page/rkward_workspace_browser\"/"
+"> por detaloj."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -551,6 +719,11 @@ msgid ""
 "work with pre-existing data, pick the appropriate option from the File-"
 ">Import menu."
 msgstr ""
+"Vi ne bezonas zorgi pri ĉiuj ĉi tiuj detaloj. Por krei novan kalkultabelon "
+"(data.frame), elektu Dosiero->Nova->Datumaro el la menuo. Ĉio, kion vi devas "
+"fari, estas atribui nomon al ĉi tiu tabelo, tiam vi povas komenci redakti. "
+"Por labori kun antaŭekzistaj datumoj, elektu la taŭgan elekteblon el la "
+"menuo Dosiero->Importi."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -565,6 +738,8 @@ msgid ""
 "In this section you will learn about some basic methods how to make use of "
 "your results in external applications."
 msgstr ""
+"En ĉi tiu sekcio vi lernos pri iuj bazaj metodoj kiel uzi viajn rezultojn en "
+"eksteraj aplikoj."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -575,6 +750,10 @@ msgid ""
 "your work since a standard of RKWard is to show everything in chronological "
 "order together with the date of creation."
 msgstr ""
+"Supozu, ke vi produktis tekstan eligon el testoj, kiujn vi faris. Tia estos "
+"prezentita en la \"eligfenestro\" de RKWard. Estas facile observi vian "
+"laboron ĉar normo de RKWard estas montri ĉion en kronologia ordo kune kun la "
+"dato de kreado."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -584,6 +763,9 @@ msgid ""
 "the output. The easiest method of reusing the output is to select the "
 "relevant portion, and copy and paste them to an office suite."
 msgstr ""
+"Vidu <link href=\"rkward://page/rkward_output\"/> por detaloj pri laboro kun "
+"la eligo. La plej facila metodo por reuzi la produktaĵon estas elekti la "
+"koncernan parton, kaj kopii kaj alglui ilin al oficeja aro."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -602,6 +784,12 @@ msgid ""
 "introduced above. On the additional tabs you can choose which types of "
 "descriptive statistics should be calculated."
 msgstr ""
+"Por konatiĝi kun RKWard (aŭ kun viaj datumoj), unu el la unuaj aferoj por "
+"fari povus esti elekti Analizon->Priskribajn Statistiko el la Menuo. Oni "
+"prezentos al vi dialogon, kiu ebligas al vi elekti unu aŭ plurajn variablojn "
+"por analizi. Ĉi tio aspektas simila al la laborspaca retumilo prezentita "
+"supre. Sur la aldonaj langetoj vi povas elekti kiajn tipojn de priskribaj "
+"statistikoj estu kalkulitaj."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -621,6 +809,19 @@ msgid ""
 "\"Calculate\" to perform the actual calculations, and \"Printout\" to "
 "generate output in RKWard's output window."
 msgstr ""
+"Malsupre dekstre de la dialogo, estas butono kun la nomo \"Kodo\". Uzante ĉi "
+"tion, vi povas montri/kaŝi tekstan areon. Se vi rigardas la enhavon de ĉi "
+"tiu teksta areo (vi eble devos regrandigi la fenestron por vidi ĝin pli "
+"komforte), vi povas vidi la tekston ŝanĝiĝi laŭ la agordoj, kiujn vi elektas "
+"en la dialogo. Ĉi tiu teksto estas fakte R-sintakso. Estas la kodo, kiu "
+"necesas por plenumi ĉi tiujn kalkulojn en R. Plejparto de RKWard baziĝas sur "
+"generado de ĉi tiu kodo por vi, kaj poste ruli ĝin ene de R. Poste, kiam vi "
+"sentas vin pli komforta, havu specifajn bezonojn ne kovritajn de RKWard, aŭ "
+"vi volas aŭtomatigi ripetajn taskojn, vi povas uzi ĉi tiun sintakson por "
+"laŭvorte programi viajn analizojn. Notu, ke la kodo estas dividita en ĝis "
+"tri sekciojn: \"Antaŭprocezo\" por ŝargi bezonatajn bibliotekojn aŭ difini "
+"helpajn funkciojn, \"Kalkuli\" por plenumi la realajn kalkulojn, kaj "
+"\"Presado\" por generi eliron en la eligofenestro de RKWard. ."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -629,6 +830,8 @@ msgid ""
 "For now, just click submit, once you've made your choices, and watch the "
 "results show up in a new window."
 msgstr ""
+"Nuntempe, simple alklaku sendi, post kiam vi faris viajn elektojn, kaj "
+"rigardu, ke la rezultoj aperos en nova fenestro."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -647,6 +850,12 @@ msgid ""
 "easier, both for users new to R, and R experts. Read on in <link href="
 "\"rkward://page/rkward_for_r_users\"/> for more on this."
 msgstr ""
+"La celo de RKWard estas fari la potencon de la R-lingvo facile alirebla por "
+"la uzanto, sen devi unue lerni plenan programlingvon. Tamen, por altnivelaj "
+"bezonoj, vi eble volas uzi la plenan flekseblecon de la R-lingvo. RKWard "
+"ofertas multajn ilojn por faciligi tion, kaj por uzantoj novaj al R, kaj R-"
+"fakuloj. Legu plu en <link href=\"rkward://page/rkward_for_r_users\"/> por "
+"pli pri tio."
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -655,6 +864,8 @@ msgid ""
 "Also, you may want to select Help->Help on R from the menu for some starting "
 "points in learning R."
 msgstr ""
+"Ankaŭ, vi eble volas elekti Helpon->Helpon pri R el la menuo por kelkaj "
+"deirpunktoj en lernado de R."
 
 #. i18n: ectx: (RKWard for R Users) <title>
 #: rkward/pages/rkward_for_r_users.rkh:8
@@ -669,6 +880,8 @@ msgid ""
 "Briefly explains the main components of RKWard, assuming the user is already "
 "familiar with basic concepts of R."
 msgstr ""
+"Nelonge klarigas la ĉefkomponentojn de RKWard, supozante ke la uzanto jam "
+"konas bazajn konceptojn de R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -684,6 +897,9 @@ msgid ""
 "the bottom on the screen. There you will notice several buttons, one of "
 "which is labelled \"R Console\" and has a console icon."
 msgstr ""
+"Unue: Emulado de la norma R-konzolo troviĝas malsupre sur la ekrano. Tie vi "
+"rimarkos plurajn butonojn, unu el kiuj estas etikedita \"R-Konzolo\" kaj "
+"havas konzola piktogramon."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -692,6 +908,8 @@ msgid ""
 "This console works almost exactly like the regular R text console, so you "
 "can start working right away. Differences include:"
 msgstr ""
+"Ĉi tiu konzolo funkcias preskaŭ ekzakte kiel la regula R-teksta konzolo, do "
+"vi povas komenci labori tuj. Diferencoj inkluzivas:"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -706,6 +924,8 @@ msgid ""
 "While typing function calls, a list of arguments to that function is shown "
 "in a box (argument hinting)"
 msgstr ""
+"Dum tajpado de funkciovokoj, listo de argumentoj al tiu funkcio estas "
+"montrita en kesto (argumento sugesto)"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -715,6 +935,9 @@ msgid ""
 "R help for that symbol. Also available from the Help menu, or the right "
 "mouse button menu"
 msgstr ""
+"Dum la kursoro estas sur R-simbolo aŭ funkcio, premante F2 serĉos la R-"
+"helpon por tiu simbolo. Ankaŭ havebla de la Helpmenuo, aŭ la dekstra "
+"musbutono menuo"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -723,6 +946,8 @@ msgid ""
 "You can easily create a transcript of the commands you run in the console "
 "using Run->CC commands to output..."
 msgstr ""
+"Vi povas facile krei transskribon de la komandoj, kiujn vi rulas en la "
+"konzolo uzante Run->CC-komandojn por eligi..."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -745,6 +970,11 @@ msgid ""
 "syntax highlighting, and many more features), choose File->New->Script File, "
 "or open an already existing Script file using File->Open R Script File."
 msgstr ""
+"Ofte estas pli oportune skribi skriptojn en aparta dosiero, anstataŭ tajpi "
+"ilin rekte en la konzolo. Por malfermi novan skripto-redaktilon (kun "
+"sintaksa reliefigo, kaj multaj pliaj funkcioj), elektu Dosiero->Nova-"
+">Skripto-Dosiero, aŭ malfermu jam ekzistantan Skripto-dosieron per Dosiero-"
+">Malfermu R-Skripto-Dosiero."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -754,6 +984,10 @@ msgid ""
 "(the area of the window, that you are most likely reading this text, in). "
 "You can open any number of script editor windows at the same time."
 msgstr ""
+"Vi rimarkos, ke la redaktilo malfermiĝas en nova fenestro en la ĉefa "
+"laborejo (la areo de la fenestro, en kiu vi plej verŝajne legas ĉi tiun "
+"tekston). Vi povas malfermi ajnan nombron da skriptoredaktilo fenestroj "
+"samtempe."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -765,6 +999,11 @@ msgid ""
 "type of active window. Hence, if you look at the Run menu while reading "
 "this, there will be no entries."
 msgstr ""
+"Por ruli la kodon en fenestro de skriptredaktilo, aŭ kopiu kaj algluu ĝin al "
+"la konzolo, aŭ elektu unu el la agoj en la menuo Run, kiel Run All aŭ Run "
+"Selection. Noto: La enhavo de la menuoj povas ŝanĝiĝi laŭ la speco de aktiva "
+"fenestro. Sekve, se vi rigardas la Run-menuon dum vi legas ĉi tion, ne estos "
+"enskriboj."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -785,6 +1024,13 @@ msgid ""
 "explore data and functions in loaded R libraries (and even in package "
 "namespaces)."
 msgstr ""
+"RKWard venas kun \"laborspaca vido\" aŭ \"objekta retumilo\". Defaŭlte ĉi "
+"tio disponeblas alklakante \"Laborspaco\" maldekstre de la aplika fenestro. "
+"Ĉi tio ebligas al vi ekzameni kaj manipuli ĉiujn objektojn en la R-"
+"laborspaco. Defaŭlte, nur la medio \".GlobalEnv\" estas montrata (kie vi "
+"kutime faros vian laboron; vidu <link href=\"rkward://rhelp/.GlobalEnv\"/>). "
+"Sed, markante \"Montri ĉiujn mediojn\", vi povas facile esplori datumojn kaj "
+"funkciojn en ŝargitaj R-bibliotekoj (kaj eĉ en pakaj nomspacoj)."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -796,6 +1042,11 @@ msgid ""
 "available actions. See <link href=\"rkward://page/rkward_workspace_browser\"/"
 "> for details."
 msgstr ""
+"La objekta retumilo disponigas funkcion por elekti kiuj specoj de objekto "
+"estas montritaj (supre). Ŝvebi la muson super ero montros kelkajn pliajn "
+"informojn pri la simbolo. Dekstre alklako sur objekto montros disponeblajn "
+"agojn. Vidu <link href=\"rkward://page/rkward_workspace_browser\"/> por "
+"detaloj."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:38
@@ -814,6 +1065,12 @@ msgid ""
 "located at the bottom of the window (next to the console button). To view a "
 "help page found using this tool, double-click on it."
 msgstr ""
+"Defaŭlte R-helppaĝoj estas montritaj kiel HTML, ene de RKWard. Vi povas "
+"alvoki la helpon laŭ la kutima maniero rulante ekz. \"?print\" aŭ \"help "
+"(print)\" aŭ \"help.start ()\" en la konzolo. Aldone, estas ila fenestro por "
+"serĉi viajn instalitajn R-helppaĝojn. Ĉi tio estas alirebla per butono "
+"situanta ĉe la malsupro de la fenestro (apud la konzola butono). Por vidi "
+"helppaĝon trovitan per ĉi tiu ilo, duoble alklaku ĝin."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:41
@@ -828,6 +1085,8 @@ msgid ""
 "RKWard provides an advanced dialog to have installation, updating, and "
 "loading of packages. This is available from Settings->Manage R Packages."
 msgstr ""
+"RKWard disponigas altnivelan dialogon por havi instaladon, ĝisdatigon kaj "
+"ŝargon de pakaĵoj. Ĉi tio haveblas de Agordoj-> Administri R-Pakojn."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -843,6 +1102,10 @@ msgid ""
 "level window using Windows->Detach. Similarly, detached windows can be "
 "attached to the main workplace using Window->Attach to main window."
 msgstr ""
+"Ĉiuj fenestroj montritaj en la ĉefa vido-areo povas esti dekroĉitaj al "
+"aparta supra nivela fenestro per Vindozo->Malligi. Simile, dekroĉitaj "
+"fenestroj povas esti alkroĉitaj al la ĉefa laborejo uzante Fenestro->Alligi "
+"al ĉefa fenestro."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -852,6 +1115,9 @@ msgid ""
 "Ctrl+Shift+Tab cycle through all active document / tool windows in your "
 "session."
 msgstr ""
+"Vindozo povas esti fermita uzante Vindozo->Fermi (Ctrl+W defaŭlte). Ctrl+Tab "
+"kaj Ctrl+Shift+Tab cirkulas tra ĉiuj aktivaj dokumentoj/ilfenestroj en via "
+"seanco."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -860,6 +1126,8 @@ msgid ""
 "Tool windows (e.g. the R Console) can be detached and re-attached using the "
 "arrow-icon in their window border."
 msgstr ""
+"Ilfenestroj (ekz. la R-Konzolo) povas esti dekroĉitaj kaj re-aligitaj uzante "
+"la sago-piktogramon en sia fenestra rando."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -877,6 +1145,11 @@ msgid ""
 "explore the data editor, either choose File->New->Dataset, or right-click a "
 "data.frame in the Workspace browser, and choose Edit from the menu."
 msgstr ""
+"RKWard disponigas enkonstruitan redaktilon por data.frames. Fakte, vi povas "
+"redakti multajn data.frames samtempe, kaj eĉ dum longaj kalkuloj. Ankoraŭ la "
+"datumoj estas konservitaj kiel regula data.frame en R. Por esplori la "
+"datuman redaktilon, aŭ elektu Dosiero->Nova->Dataserio, aŭ dekstre alklaku "
+"data.frame en la retumilo de Workspace, kaj elektu Redakti el la menuo."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -885,6 +1158,8 @@ msgid ""
 "Support for adding other types of data, esp. single vectors is planned, but "
 "not currently supported."
 msgstr ""
+"Subteno por aldoni aliajn specojn de datumoj, spec. unuopaj vektoroj estas "
+"planitaj, sed nuntempe ne subtenataj."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:56
@@ -904,6 +1179,13 @@ msgid ""
 "browse your plots. See <link href=\"rkward://page/rkward_plot_history\"/> "
 "for details."
 msgstr ""
+"R havas kelkajn ege potencajn grafiksistemojn (kvankam ne interagajn) "
+"provizitajn de diversaj pakaĵoj kiel <b>grafikaĵoj</b> kaj <b>krado</b>. "
+"RKWard ĉirkaŭvolvas la norman platform-dependan ekranan aparaton por provizi "
+"unuforman sperton. Krom la norma funkcieco de ĉi tiuj pakoj, RKWard "
+"disponigas ekranan aparaton historia mekanismo por konservi kaj foliumi "
+"viajn grafikojn. Vidu <link href=\"rkward://page/rkward_plot_history\"/> por "
+"detaloj."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:59
@@ -919,6 +1201,9 @@ msgid ""
 "the <link href=\"rkward://rhelp/rkward-package\">rkward package overview</"
 "link>."
 msgstr ""
+"RKWard provizas diversajn utilajn funkciojn, kiuj estas listigitaj en la "
+"indekso de la <link href=\"rkward://rhelp/rkward-package\">rkward-"
+"superrigardo pri pakaĵo</link>."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -939,6 +1224,14 @@ msgid ""
 "to script your code by hand, you can use dialogs to gain usage examples or "
 "snippets of code for functions you are less familiar with in R."
 msgstr ""
+"Vi rimarkos, ke RKWard provizas multajn pliajn menuopciojn. Ĉi tiuj provizas "
+"aliron al funkcieco en R. Fakte, ili faras tion per generado de R-sintakso "
+"el agordoj faritaj en grafika dialogo. Ekzemple, elektu Analizon-"
+">Priskribajn Statistikojn. Vi rimarkos malgrandan fenestron ĉe la fundo "
+"(povas esti ŝaltita aŭ malŝaltita per la butono \"Kodo\") kiu enhavas la R-"
+"kodon necesan por generi ĉi tiujn statistikojn. Tiel, eĉ se vi preferas "
+"skribi vian kodon mane, vi povas uzi dialogojn por akiri uzajn ekzemplojn aŭ "
+"fragmentojn de kodo por funkcioj, kiujn vi malpli konas en R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Everything else">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -947,6 +1240,8 @@ msgid ""
 "Also, all commands that are executed get shown in the Command Log, available "
 "as a tool window next to the R Console."
 msgstr ""
+"Ankaŭ ĉiuj ordonoj, kiuj estas plenumitaj, montriĝas en la Komanda "
+"Protokolo, disponebla kiel ila fenestro apud la R-Konzolo."
 
 #. i18n: ectx: (RKWard for R Users) <related>
 #: rkward/pages/rkward_for_r_users.rkh:68
@@ -955,6 +1250,8 @@ msgid ""
 "<link href=\"rkward://page/rkward_for_new_users\"/> For an introduction to "
 "some more basic concepts"
 msgstr ""
+"<link href=\"rkward://page/rkward_for_new_users\"/> Por enkonduko al kelkaj "
+"pli bazaj konceptoj"
 
 #. i18n: ectx: (Version incompatibilities) <title>
 #: rkward/pages/rkward_incompatible_version.rkh:8
@@ -972,6 +1269,11 @@ msgid ""
 "Quite often, this does not actually have to be a <i>new</i> version, but "
 "simply one that was compiled against your new version of R."
 msgstr ""
+"Dum RKWard provas subteni grandan nombron da malsamaj R-versioj, kelkfoje, "
+"nova versio de R ne estos kongrua kun RKWard el la skatolo. En ĉi tiuj kazoj "
+"vi devos instali novan version de RKWard. Sufiĉe ofte, ĉi tio fakte ne devas "
+"esti <i>nova</i> versio, sed simple unu kiu estis kompilita kontraŭ via nova "
+"versio de R."
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -981,6 +1283,9 @@ msgid ""
 "distribution, but no updated package is available, please contact your "
 "distribution maintainer or file a bug report, there."
 msgstr ""
+"Se vi instalis RKWard uzante la pakaĵadministrilon de via Linuksa distribuo, "
+"sed neniu ĝisdatigita pako disponeblas, bonvolu kontakti vian distribuan "
+"prizorganton aŭ prezenti cimraporton tie."
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -990,6 +1295,9 @@ msgid ""
 "information, see <link href=\"https://rkward.kde.org\">the project homepage</"
 "link>."
 msgstr ""
+"Por pliaj informoj pri disponeblaj versioj, kaj pli da problemoj pri solvo, "
+"vidu <link href=\"https://rkward.kde.org\">la hejmpaĝon de la projekto</"
+"link>."
 
 #. i18n: ectx: (Version incompatibilities) <section title="...">
 #: rkward/pages/rkward_incompatible_version.rkh:17
@@ -1009,6 +1317,13 @@ msgid ""
 "integration\". Then you can use the vanille onscreen devices (X11() or "
 "Windows() or Quartz()), for plotting."
 msgstr ""
+"Ĉi tiu estas la plej ofta speco de versio-nekongruo. La sama konsilo validas "
+"kiel supre, t.e. bonvolu instali ĝisdatigitan version de RKWard. Tamen, se "
+"neniu ĝisdatigo ŝajnas esti tuj disponebla, kaj vi nepre volas daŭrigi "
+"labori, agordu <link href=\"rkward://settings/graphics\">Agordoj->Onekranaj "
+"Grafikoj</link>->\"Integriĝo de R-norma aparato\" al \"Neniu integriĝo\". "
+"Tiam vi povas uzi la vanilajn surekranajn aparatojn (X11() aŭ Windows() aŭ "
+"Quartz()), por grafikado."
 
 #. i18n: ectx: (RKWard Output) <title>
 #: rkward/pages/rkward_output.rkh:8
@@ -1027,6 +1342,12 @@ msgid ""
 "link>), this output file may or may not be shared across different "
 "workspaces."
 msgstr ""
+"La RKWard eligfenestro, aŭ, pli ĝenerale, RKWard eligdosieroj (.rko) estas "
+"celitaj kiel facila maniero konservi protokolon de la laboro sur viaj "
+"datumoj. Defaŭlte, unu eligodosiero ĉiam disponeblas. Depende de via agordo "
+"(<link href=\"rkward://settings/output\">Agordoj->Agordu RKWard->Eligo</"
+"link>), ĉi tiu eligodosiero povas aŭ ne esti dividita en malsamaj "
+"laborspacoj."
 
 #. i18n: ectx: (RKWard Output) <summary>
 #: rkward/pages/rkward_output.rkh:9
@@ -1037,6 +1358,10 @@ msgid ""
 "output window does not discard the modifications, but on closing RKWard you "
 "will be prompted to save (or discard) any pending changes."
 msgstr ""
+"RKWard-eligo povas esti konservita kaj malfermita kiel regulaj dosieroj. Por "
+"direkti eligon al specifa eligdosiero, vi devos \"aktivigi\" ĝin. Fermi "
+"eligfenestron ne forĵetas la modifojn, sed ĉe la fermo de RKWard oni petos "
+"vin konservi (aŭ forĵeti) iujn ajn pritraktatajn ŝanĝojn."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:16
@@ -1051,6 +1376,8 @@ msgid ""
 "To write to the active RKWard output file from custom R code, refer to <link "
 "href=\"rkward://rhelp/rk.print\"/>, and the functions linked from there."
 msgstr ""
+"Por skribi al la aktiva RKWard-eligdosiero de propra R-kodo, referu al <link "
+"href=\"rkward://rhelp/rk.print\"/>, kaj la funkcioj ligitaj de tie."
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:16
@@ -1059,6 +1386,8 @@ msgid ""
 "To load / save / switch between output files, etc., refer to <link href="
 "\"rkward://rhelp/rk.output\"/>."
 msgstr ""
+"Por ŝargi/konservi/ŝanĝi inter eligdosieroj ktp., raportu al <link href="
+"\"rkward://rhelp/rk.output\"/>."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:22
@@ -1075,6 +1404,11 @@ msgid ""
 "at least in OpenOffice or LibreOffice. You can also drag and drop images "
 "from the output to an OpenOffice or LibreOffice document."
 msgstr ""
+"La plej facila maniero akiri eligon en vian oficejan aron estas unue elekti "
+"la koncernajn partojn, kopii ilin (Redakti->Kopii), poste alglui ilin. Ĉi "
+"tio bone funkcias, almenaŭ en OpenOffice aŭ LibreOffice. Vi ankaŭ povas "
+"treni kaj faligi bildojn de la eligo al dokumento de OpenOffice aŭ "
+"LibreOffice."
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
@@ -1086,6 +1420,11 @@ msgid ""
 "retrieve the files from the \".rkward\" of your home directory (location "
 "configurable in Settings->Configure RKWard->General)."
 msgstr ""
+"Interne, RKWard-eligdosieroj nuntempe simple baziĝas sur HTML. Se vi bezonas "
+"aliron al la krudaj HTML kaj bilddosieroj, .rko-dosiero estas nur zip'ed "
+"dosierujo. Vi povas malzipi ĝin uzante normajn ilojn, aŭ malfermi ĝin en "
+"RKWard, kaj preni la dosierojn el la \".rkward\" de via hejma dosierujo "
+"(loko agordebla en Agordoj->Agordu RKWard->Ĝenerale)."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:28
@@ -1102,6 +1441,10 @@ msgid ""
 "great for writing interactive \"reports\", the RKWard Output is very easy to "
 "use for ad-hoc documentation while exploring your data."
 msgstr ""
+"RKWard ankaŭ helpas vin verki RMarkdown (Rmd) dokumentojn. Precipe ekzistas "
+"potenca antaŭrigarda trajto por .Rmd-skriptoj. Dum RMarkdown estas bonega "
+"por verki interagajn \"raportojn\", la RKWard Eligo estas tre facile uzebla "
+"por ad-hoc dokumentado dum esplorado de viaj datumoj."
 
 #. i18n: ectx: (Screen device history) <title>
 #: rkward/pages/rkward_plot_history.rkh:8
@@ -1119,6 +1462,11 @@ msgid ""
 "is planned for future. See the Technical Details section below for more "
 "information."
 msgstr ""
+"La ekrana aparato-historio disponigas interfacon por trarigardi viajn "
+"grafikojn, simile al tTT-legilo. La nuna efektivigo komprenas plej multajn "
+"funkciovokojn de la grafikaj kaj kradaj pakaĵoj. Aldono de aliaj grafikaj "
+"motoroj estas planita por estonteco. Vidu la sekcion de Teknikaj Detaloj "
+"sube por pliaj informoj."
 
 #. i18n: ectx: (Screen device history) <summary>
 #: rkward/pages/rkward_plot_history.rkh:10
@@ -1132,6 +1480,13 @@ msgid ""
 "addition, \"preview\" devices, which are available on some of the plugins "
 "are not managed either."
 msgstr ""
+"La ekranaparato-historio estas nur atingebla de malferma ekrana aparato, sub "
+"la menuo <i>Historio</i>. Ĝi disponeblas ĉe la plej multaj ekranaj aparatoj "
+"fenestroj. Tiaj aparatoj estas nomitaj \"administritaj\" aparatoj por la "
+"celo de ĉi tiu helppaĝo. Dosieraj aparatoj, kiel png, pdf, ktp. evidente ne "
+"estas tuŝitaj de ĉi tiu ekranhistoria efektivigo, kaj tial ili ne estas "
+"administritaj. Krome, \"antaŭrigardi\" aparatoj, kiuj estas disponeblaj ĉe "
+"kelkaj el la kromprogramoj ankaŭ ne estas administritaj."
 
 #. i18n: ectx: (Screen device history) <section title="...">
 #. i18n: ectx: (Workspace Browser) <section title="...">
@@ -1150,6 +1505,10 @@ msgid ""
 "can be configured from the device window's Settings->Configure Toolbars menu "
 "item."
 msgstr ""
+"Pluraj agoj disponeblas aŭ de la menuo <i>Historio</i> aŭ de la ilobreto-"
+"piktogramoj sur administrita aparato. La montrataj piktogramoj sur la "
+"ilobreto povas esti agorditaj de la menuero Agordoj->Agordu Ilobretojn de la "
+"fenestro de la aparato."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1167,6 +1526,17 @@ msgid ""
 "corresponding position in the history. For the usual \"linear browsing\" see "
 "first / previous / next / last actions below."
 msgstr ""
+"<b>Iri al grafiko</b>: Ĉi tio provizas falliston de _ĉiuj_ grafikoj "
+"konservitaj en la historio; donante facile alireblan agon de \"saltado\". "
+"RKWard klopodas por identigi la taŭgajn grafikovokojn, sed tio ne ĉiam estas "
+"farebla. En tiaj kazoj oni faras plian provon identigi la <i>X-etikedon</i>, "
+"<i>Y-etikedon</i> kaj la <i>Ĉefajn</i>titolojn de la grafiko kaj la montrata "
+"ĉeno aspektas kiel \"<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; <i>ĉefa</"
+"i>\". Foje eĉ tio ne eblas (indikita per <b>&lt;Nekonata&gt;</b>). Grafikoj "
+"kiuj estas atendataj por esti konservitaj estas indikitaj per <b>&lt;"
+"Nekonservita grafiko&gt;</b>. La montritaj ĉenoj estas antaŭmetitaj kun sia "
+"responda pozicio en la historio. Por la kutima \"linia foliumado\" vidu "
+"unuajn / antaŭajn / sekvajn / lastajn agojn sube."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1179,6 +1549,13 @@ msgid ""
 "For example, a base graphics plot modified by, say, <code>abline(h=0, v=0)</"
 "code> will automatically get stored \"in-place\" in the history."
 msgstr ""
+"<b>Unua, Antaŭa, Sekva kaj Lasta grafiko</b>: Evidentaj foliumantaj (aŭ "
+"reludantaj) agoj. Ĉi tiuj provos konservi ajnan nekonservitan/pritraktatan "
+"grafikon antaŭ ol montri/reludi la celitan (unuan / antaŭan / sekvan / "
+"lastan) grafikon. Ĉi tio devus esti tre helpema por foliumi al jam "
+"konservita en la historio kaj ĝisdatigi ĝin. Ekzemple, baza grafika grafiko "
+"modifita per, ekzemple, <code>abline(h=0, v=0)</code> aŭtomate estos "
+"konservita \"loke\" en la historio."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1191,6 +1568,11 @@ msgid ""
 "handy. But this flexibility comes at the cost of not being able to identify "
 "the plot call."
 msgstr ""
+"<b>Aldoni ĉi tiun grafikaĵon</b>: Ĉi tiu ago estas provizita por perforte "
+"almeti la montritan grafikon al la fino de la historio, sendepende de ĝia "
+"stato (konservita / nekonservita) kaj tipo (grafikoj / krado / ...). En "
+"kazoj, kiam grafiko ne aŭtomate konserviĝas en la historio, ĉi tiu ago devus "
+"esti utila. Sed ĉi tiu fleksebleco kostas ne povi identigi la grafikvokon."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1205,6 +1587,14 @@ msgid ""
 "if it happens to be displayed on a second device, then you can re-add it to "
 "the history from the second device."
 msgstr ""
+"<b>Forigi ĉi tiun grafikon</b>: Ĉi tio forigos la nuntempe montritan el la "
+"historio (se ĝi estas konservita) kaj reludos la sekvan \"disponeblan\" "
+"grafikon. Kiam pluraj aparatoj montras la saman grafikon (por esti preciza, "
+"sama pozicio en la historio), tiam forigo de grafiko de unu aparato ne "
+"forigos ĝin de aliaj aparatoj; anstataŭe ĝi starigos la staton de ĉi tiu "
+"grafiko sur la aliaj aparatoj kiel nova / pritraktata. Tiel, se vi hazarde "
+"forigi unu erare, kaj se ĝi okazas esti montrata sur dua aparato, tiam vi "
+"povas re-aldoni ĝin al la historio de la dua aparato."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1216,6 +1606,11 @@ msgid ""
 "screen device history close all open devices and call <code>rk.clear.plot."
 "history()</code>"
 msgstr ""
+"<b>Malplenigi historion</b>: Kiel la nomo sugestas, ĉi tiu ago malplenigos "
+"la grafikan historion. Sed la grafikoj nuntempe montrataj sur la aparatoj, "
+"post plia ago, estos aldonitaj reen al la historio. Por tute restarigi la "
+"ekranan aparathistorion fermu ĉiujn malfermitajn aparatojn kaj voku <code>rk."
+"clear.plot.history()</code>"
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1225,6 +1620,9 @@ msgid ""
 "size of the displayed plot as stored in the memory, the position of the "
 "current plot in the history, and, whenever possible the complete plot call."
 msgstr ""
+"<b>Grafiko-proprecoj</b>: Ĉi tio montras kelkajn pliajn informojn kiel la "
+"grandeco de la montrata grafiko kiel konservita en la memoro, la pozicio de "
+"la nuna grafiko en la historio, kaj, kiam ajn eblas, la kompletan grafikon."
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1234,6 +1632,9 @@ msgid ""
 "<a href=\"rkward://settings/graphics\">Settings->Configure RKWard->Onscreen "
 "Graphics</a>:"
 msgstr ""
+"Iuj defaŭltaj agordoj por la Ekrana aparato-historio povas esti agorditaj de "
+"<a href=\"rkward://settings/graphics\">Agordoj->Agordu RKWard->Onekranaj "
+"Grafikoj</a>:"
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1249,6 +1650,16 @@ msgid ""
 "may want to disable this when the implemented history behavior seems non-"
 "intuitive or when dealing with large plots."
 msgstr ""
+"<b>Historio de la ekrano de la aparato</b>: Ebligas/malŝaltas la registradon "
+"de grafikoj ĉiee. Vi povas ŝanĝi ĉi tion de ene de funkcianta seanco de "
+"RKWard, kiu influos ĉiujn nun malfermitajn kaj estontajn ekranajn aparatojn. "
+"Se nemarkite, RKWard ne konservos pluajn grafikojn en la historio; kvankam, "
+"tiuj jam konservitaj ne estas perditaj! Vi povas aliri la konservitajn "
+"grafikojn reebligante ĉi tion. Ŝaltante ĉi tion, RKWard provas konservi iujn "
+"ajn nekonservitajn grafikojn, sed atentu precipe kiam la maksimuma "
+"historiolongo estas malgranda (vidu sube). Vi eble volas malŝalti ĉi tion "
+"kiam la efektivigita historia konduto ŝajnas neintuicia aŭ kiam traktas "
+"grandajn grafikojn."
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1262,6 +1673,13 @@ msgid ""
 "appropriate number of plots from the beginning of the history stack will get "
 "removed, which may not be desirable."
 msgstr ""
+"<b>Maksimuma nombro da registritaj grafikoj</b>: Regas la maksimuman nombron "
+"da grafikoj, kiuj povas esti konservitaj en la historio. Kiam ĉi tiu limo "
+"estas atingita, grafikoj de la komenco de la historio estos forigitaj "
+"unuope, simile al puŝ-pop-stako. Averta dialogo montriĝas kiam tio okazas. "
+"Atentu kiam agordas ĉi tion sub la nombro da jam konservitaj grafikoj. En "
+"tiu kazo taŭga nombro da grafikoj de la komenco de la historia stako estos "
+"forigita, kio eble ne estas dezirinda."
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1274,6 +1692,12 @@ msgid ""
 "will affect only the future plots (that is, will not remove any already "
 "stored, yet large, plots)."
 msgstr ""
+"<b>Maksimuma grandeco de ununura registrita grafiko</b>: Regas la maksimuman "
+"permesitan grandecon (en KB) de ununura grafiko kiu povas esti konservita en "
+"la historio. Por grafiko pli granda ol ĉi tiu specifita grandeco, dialogujo, "
+"por konservi aŭ ignori la grafikon, estos prezentita. Male al la ĉi-supra "
+"longolimigo, ĉi tiu agordo influos nur la estontajn grafikojn (tio estas, ne "
+"forigos iujn ajn jam konservitajn, tamen grandajn, grafikojn)."
 
 #. i18n: ectx: (Screen device history) <section title="...">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1298,6 +1722,12 @@ msgid ""
 "device specific information) or <i>history</i> (returns information on all "
 "the saved plots in the history)."
 msgstr ""
+"<code>rk.plot.history.summary(which,type)</code>: ĉi tiu helpa funkcio "
+"provizas kelkajn resumojn pri la ekranaparata historio. Ĉi tie, <code>kiu</"
+"code> estas \"device id\" (defaŭlte estas <i>NULL</i>: resumoj pri ĉiuj "
+"administritaj aparatoj) kaj <code>tipo</code> estas aŭ <i> aparatoj</i> "
+"(resendas specifajn informojn pri aparato) aŭ <i>historio</i> (resendas "
+"informojn pri ĉiuj konservitaj grafikoj en la historio)."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1307,6 +1737,9 @@ msgid ""
 "<code>graphics::plot.new()</code> or <code>graphics::persp()</code> or "
 "<code>lattice::print.trellis()</code> are captured."
 msgstr ""
+"Teknike parolante, funkciovokoj kiuj pasas tra aŭ <code>graphics::plot."
+"new()</code> aŭ <code>graphics::persp()</code> aŭ <code>lattice::print."
+"trellis() </code> estas kaptitaj."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1315,6 +1748,8 @@ msgid ""
 "The base graphics plots are recorded and replayed using <code>recordPlot()</"
 "code> and <code>replayPlot()</code>."
 msgstr ""
+"La bazaj grafikaj grafikoj estas registritaj kaj reluditaj per "
+"<code>recordPlot()</code> kaj <code>replayPlot()</code>."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1329,6 +1764,14 @@ msgid ""
 "may seem innocuous, but it will have irreparable consequences when trying to "
 "use <code>trellis.last.object()</code>, thereafter. You have been warned!"
 msgstr ""
+"La kradaj grafikoj estas aldonitaj al la historio uzante propran funkcion "
+"<code>print.trellis()</code> agordita de <code>lattice.options(\"print."
+"function\")</code>. Do, vi estas avertita kontraŭ rekomencigi aŭ modifi ĉi "
+"tion de funkcianta seanco de RKWard. Simile, vi tre forte konsilas kontraŭ "
+"uzi la metodon <code>plot</code> sur trellis-objekto ĉar ĝi ne trapasos "
+"<code>print.trellis()</code> kaj do ne estos konservita en la historio. Ĉi "
+"tio povas ŝajni sendanĝera, sed ĝi havos neripareblajn sekvojn kiam oni "
+"provos uzi <code>trellis.last.object()</code>, poste. Vi estas avertita!"
 
 #. i18n: ectx: (Screen device history) <related>
 #: rkward/pages/rkward_plot_history.rkh:49
@@ -1357,6 +1800,9 @@ msgid ""
 "interest is to browse the menu. Shortcuts are listed next to their action in "
 "the menu."
 msgstr ""
+"Vi povas regi RKWard en multaj situacioj sen uzi musaparaton, uzante nur la "
+"klavaron. La plej facila maniero ekscii pri interesaj ŝparvojoj estas "
+"foliumi la menuon. Ŝparvojoj estas listigitaj apud ilia ago en la menuo."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1370,6 +1816,12 @@ msgid ""
 "function or something in the menus, but do not want to go through each menu "
 "individually to find it."
 msgstr ""
+"Alia ebleco estas uzi la kapon-ekranon (HUD). La HUD-menuo estas serĉkampo, "
+"kiu ebligas neklaran serĉadon en la menuoj. La HUD estis enkondukita en "
+"nunaj KDE-aplikoj kaj tial ankoraŭ ne haveblas en pli malnovaj versioj de "
+"RKWard. La HUD povas esti alvokita uzante Ctrl+Alt+i. Ĉi tio estas precipe "
+"utila se vi serĉas funkcion, la ŝparvojon de funkcio aŭ ion en la menuoj, "
+"sed ne volas trairi ĉiun menuon individue por trovi ĝin."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1382,6 +1834,13 @@ msgid ""
 "Settings->Configure Shortcuts. Most shortcuts for the script editor are "
 "managed separately using Settings->Configure Editor->Shortcuts."
 msgstr ""
+"Plej multaj ŝparvojoj estas agordeblaj, uzante Agordojn->Agordu Ŝparvojojn. "
+"Pro teknikaj kialoj, nur la ŝparvojoj de tiuj komponantoj estos listigitaj, "
+"kiuj estas aktivaj tiutempe. Tial, ekzemple, se vi volas redakti la "
+"ŝparvojojn por la datumredaktilo, unue malfermu datuman redaktilon, poste "
+"elektu Agordoj->Agordu Ŝparvojojn. Plej multaj ŝparvojoj por la skriba "
+"redaktilo estas administritaj aparte per Agordoj->Agordu Redaktilon-"
+">Ŝparvojoj."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1390,6 +1849,8 @@ msgid ""
 "On most systems, you can also configure shortcuts by right-clicking on the "
 "respective menu item."
 msgstr ""
+"En plej multaj sistemoj, vi ankaŭ povas agordi ŝparvojojn per dekstra klako "
+"sur la respektiva menuero."
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="...">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1411,6 +1872,8 @@ msgid ""
 "To cycle between document / tool windows inside RKWard, use Ctrl+Tab and Ctrl"
 "+Shift+Tab"
 msgstr ""
+"Por bicikli inter dokumentoj/ilaj fenestroj ene de RKWard, uzu Ctrl+Tab kaj "
+"Ctrl+Shift+Tab"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1419,6 +1882,8 @@ msgid ""
 "To run code from scripts / help pages / the console, select it, and use Ctrl"
 "+Enter"
 msgstr ""
+"Por ruli kodon el skriptoj / helppaĝoj / la konzolo, elektu ĝin, kaj uzu Ctrl"
+"+Enter"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1427,6 +1892,8 @@ msgid ""
 "F2 to search the R help for the symbol under the cursor in scripts and the "
 "console"
 msgstr ""
+"F2 por serĉi la R-helpon por la simbolo sub la kursoro en skriptoj kaj la "
+"konzolo"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8
@@ -1440,6 +1907,8 @@ msgstr "Dividitaj vidoj"
 msgid ""
 "Split views can be used to partition the main window into several view areas."
 msgstr ""
+"Dividitaj vidoj povas esti uzataj por dividi la ĉefan fenestron en plurajn "
+"vidajn areojn."
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1448,6 +1917,8 @@ msgid ""
 "They can be used to make better use of screen space, but also to view far-"
 "apart portions of a single file, simultaneously."
 msgstr ""
+"Ili povas esti uzataj por pli bone utiligi ekranan spacon, sed ankaŭ por "
+"rigardi malproksimajn partojn de ununura dosiero, samtempe."
 
 #. i18n: ectx: (Split views) <section title="...">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1466,6 +1937,13 @@ msgid ""
 "window. When splitting other windows (such as onscreen graphics devices), "
 "the new view area will be initialized to show this help page."
 msgstr ""
+"Disdividado de vidoj estas nuntempe subtenata nur por la ĉefa fenestro. Uzu "
+"Fenestro->Dividi Vertikale aŭ Fenestro->Dividi Horizontalon por dividi la "
+"nunan rigardareon vertikale aŭ horizontale. Por fenestroj kiuj subtenas ĝin "
+"(ekz. skriptoj, helppaĝoj), la lastatempe kreita rigardareo enhavos kopion "
+"de la nuna fenestro. Dum disigo de aliaj fenestroj (kiel ekzemple surekranaj "
+"grafikaj aparatoj), la nova vido-areo estos pravigita por montri ĉi tiun "
+"helppaĝon."
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1476,6 +1954,10 @@ msgid ""
 "make sure that the view area where you want them new window to open has "
 "focus / is active."
 msgstr ""
+"Por aldoni pliajn dosierojn al rigarda areo, simple malfermu ilin laŭ la "
+"normala maniero (el la fenestro \"Dosiero-Retumilo\", la menuo aŭ el la "
+"fenestro \"R Console\"). Simple certigu, ke la rigardareo kie vi volas ke "
+"ili malfermu la novan fenestron havas fokuson / estas aktiva."
 
 #. i18n: ectx: (Split views) <section title="...">
 #: rkward/pages/rkward_split_views.rkh:22
@@ -1505,6 +1987,11 @@ msgid ""
 "common issues. See also <link href=\"https://rkward.kde.org/faq\">the online "
 "FAQ</link>."
 msgstr ""
+"RKWard estas malproksima de kompleta kaj certe estas multaj problemoj, kiuj "
+"devas esti riparitaj. Tamen, iuj el la aferoj, kiujn vi rimarkas, ne estas "
+"pro la naturo de RKWard sed R aŭ io alia. Ĉi tiu sekcio provos kovri iujn "
+"oftajn problemojn. Vidu ankaŭ <link href=\"https://rkward.kde.org/faq\">la "
+"interretan Oftaj Demandoj</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -1528,6 +2015,11 @@ msgid ""
 "Starting with version 0.6.3, RKWard should detect a changed installation "
 "path, and adjust paths, automatically."
 msgstr ""
+"Ĉi tiu problemo ofte okazos, kiam oni movas RKWard-instalaĵon al malsama "
+"vojo, ekzemple. sur Vindozo kaj Mac. Vi eble devos viziti Agordojn->Agordi "
+"RKWard->Aldonaĵojn kaj re-aldoni la koncernajn \".pluginmap\"-dosierojn. "
+"Komencante kun versio 0.6.3, RKWard devus detekti ŝanĝitan instalvojon, kaj "
+"ĝustigi vojojn, aŭtomate."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1551,6 +2043,11 @@ msgid ""
 "link>, which delivered the basic GUI technologies for RKWard. And <link href="
 "\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's another story."
 msgstr ""
+"Jes, ĝi estas tre stranga nomo. ;) Tamen R devenas evidente de la <link href="
+"\"http://www.r-project.org/\">R-lingvo</link>, kiu estas la statistika bazo "
+"de RKWard. K estas derivita de <link href=\"http://kde.org/\">KDE</link>, "
+"kiu liveris la bazajn GUI-teknologiojn por RKWard. Kaj <link href=\"http://"
+"en.wikipedia.org/wiki/Ward\">Ward</link>? Tio estas alia rakonto."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:20
@@ -1559,6 +2056,8 @@ msgid ""
 "Sometimes I enter a command short after the start of RKWard but it is not "
 "processed. What's wrong?"
 msgstr ""
+"Kelkfoje mi enmetas komandon baldaŭ post la komenco de RKWard sed ĝi ne "
+"estas procesita. Kio estas malbona?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:20
@@ -1576,6 +2075,11 @@ msgid ""
 "at the little box on the right bottom corner of RKWard. If it is green you "
 "can go ahead."
 msgstr ""
+"Ĉi tio okazas ĉar RKWard unue komenciĝas kaj posta R estas komencita en la "
+"fono. Depende de la rapido de via maŝino povas daŭri iom da tempo por "
+"komenci R. Ĉiukaze vi povas kontroli la staton de R ene de RKWard. Nur "
+"rigardu la skatolon ĉe la dekstra malsupra angulo de RKWard. Se ĝi estas "
+"verda, vi povas antaŭeniri."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:20
@@ -1586,6 +2090,10 @@ msgid ""
 "commands will be placed into a queue, first, and executed as soon as the "
 "backend becomes available, again."
 msgstr ""
+"Vi povas komenci sendi komandojn dum la backend ankoraŭ ne komenciĝis, aŭ "
+"dum alia longa kalkulo ankoraŭ okazas. En ĉi tiu kazo viaj komandoj estos "
+"metitaj en atendovicon, unue, kaj plenumitaj tuj kiam la backend iĝas "
+"disponebla, denove."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:25
@@ -1593,6 +2101,8 @@ msgstr ""
 msgid ""
 "RKWard says it needs a package. Was the installation of RKWard not complete?"
 msgstr ""
+"RKWard diras, ke ĝi bezonas pakaĵon. Ĉu la instalado de RKWard ne estis "
+"kompleta?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:25
@@ -1610,6 +2120,11 @@ msgid ""
 "on \"external\" packages (obtained from <link href=\"http://cran.r-project."
 "org/\">The Comprehensive R Archive Network (CRAN)</link>) to perform a task."
 msgstr ""
+"RKWard havas esence ĉiujn funkciojn, kiuj venas kun la normaj pakaĵoj de R. "
+"Sed RKWard estas samtempe sufiĉe etendebla. Multaj programistoj uzis ĉi tion "
+"kaj tiel kelkaj el la proceduroj en RKWard dependas de \"eksteraj\" pakaĵoj "
+"(akiritaj de <link href=\"http://cran.r-project.org/\">La Ampleksa R-Arkivo "
+"Reto (CRAN)</link>) por plenumi taskon."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:25
@@ -1623,6 +2138,12 @@ msgid ""
 "be out of luck. First you need to run a test from Analysis->Moment to "
 "achieve this."
 msgstr ""
+"Jen ekzemplo. Ĉiuj testoj rilataj al <link href=\"rkward://rhelp/moments"
+"\">malsenceco</link> kaj <link href=\"rkward://rhelp/moments\">kurtozo</"
+"link> (kiujn vi certe atendus esti sendita kiel baza pako de R) estas "
+"faritaj de ekstera pako. Se vi legis ĉi tion la unuan fojon aŭ rekomencis "
+"RKWard post kiam vi instalis ĝin kaj provos sekvi la ligilon, vi estos "
+"malfeliĉa. Unue vi devas fari teston de Analizo->Momento por atingi ĉi tion."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:25
@@ -1634,6 +2155,11 @@ msgid ""
 "You'll be guided through the install procedure for the required package. "
 "Please note you need root privileges in certain situations."
 msgstr ""
+"Tipe, vi vokus ilin de R per <link href=\"rkward://rhelp/update.packages"
+"\">update.packages</link> kaj <link href=\"rkward://rhelp/library"
+"\">biblioteko</link> por atingi tion. Sed RKWard simpligas ĉi tion por vi. "
+"Vi estos gvidita tra la instala proceduro por la bezonata pako. Bonvolu "
+"noti, ke vi bezonas radikajn privilegiojn en certaj situacioj."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:32
@@ -1642,6 +2168,8 @@ msgid ""
 "RKWard claims to take care of seamless integration with an office-suite. Why "
 "is there no native option to save it as an office file?"
 msgstr ""
+"RKWard asertas zorgi pri senjunta integriĝo kun oficeja aro. Kial ne "
+"ekzistas denaska elekteblo por konservi ĝin kiel oficejan dosieron?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:32
@@ -1661,6 +2189,13 @@ msgid ""
 "document or Office document, among others. Current RKWard versions support "
 "this in principle in the export menu."
 msgstr ""
+"Ni konsentas, ke RKWard ankoraŭ tre mankas kiam temas pri oficeja integriĝo, "
+"kaj \"senjunta\" integriĝo estas ankoraŭ malproksime. Vidu al <link href="
+"\"rkward://page/rkward_output\"/> por informoj pri kiel plenumi la plej "
+"gravajn aferojn nun. Intertempe, eblas fari analizojn en RMarkdown-"
+"dokumentoj. Ĉi tiuj povas esti konservitaj kiel PDF, TeX-dokumento aŭ Office-"
+"dokumento, inter aliaj. Nunaj versioj de RKWard principe subtenas tion en la "
+"eksporta menuo."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
@@ -1685,6 +2220,11 @@ msgid ""
 "there is still something to calculate or plot. If it turns green, R is done "
 "calculating."
 msgstr ""
+"Ĉi tio dependas. Iuj provoj kaj grafikoj nur bezonas iom da tempo se vi "
+"havas grandajn kvantojn da datumoj aŭ kompleksajn kalkulojn. Tial pacienco "
+"foje necesas. Ĉiukaze vi povas kontroli la staton de R ene de RKWard. Nur "
+"rigardu la skatolon ĉe la dekstra malsupra angulo de RKWard. Ruĝa signifas, "
+"ke ankoraŭ estas io por kalkuli aŭ plani. Se ĝi fariĝas verda, R finkalkulas."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
@@ -1696,6 +2236,11 @@ msgid ""
 "An example of very memory hungry tests are the <link href=\"rkward://rhelp/"
 "wilcox.test\">Wilcoxon Rank Sum and Signed Rank Tests</link>."
 msgstr ""
+"Sed iuj statistikaj provoj estas sufiĉe memoraj kaj stakoj kaj povas igi la "
+"tutan sistemon neresponda, se estas multe da interŝanĝado. Ĉi tio ne estas "
+"cimo en RKWard aŭ R, nur la kalkulo kondukanta vian sistemon al ĝiaj limoj. "
+"Ekzemplo de testoj tre avidaj de memoro estas la <link href=\"rkward://rhelp/"
+"wilcox.test\">Rangosumo de Wilcoxon kaj Subskribitaj Rangotestoj</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
@@ -1708,6 +2253,12 @@ msgid ""
 "issue (see: <link href=\"rkward://rhelp/mem.limits\"/>, and <link href="
 "\"rkward://rhelp/memory.limit\"/>)."
 msgstr ""
+"Tial gravas, ke vi konas la teston. Plie, estas tre grave konservi la "
+"laborspacon kaj aliajn sekciojn pri kiuj vi laboris antaŭ ol vi fari tiajn "
+"operaciojn. Nuntempe ne ekzistas reakira funkcio ene de RKWard en kazo de "
+"paneo! Vi povas trovi enkonstruitajn testojn de R por trakti ĉi tiun memoran "
+"problemon (vidu: <link href=\"rkward://rhelp/mem.limits\"/>, kaj <link href="
+"\"rkward://rhelp/ memoro.limo\"/>)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
@@ -1732,6 +2283,11 @@ msgid ""
 "important that you know what you do before you start. It's recommended to "
 "use copies of original data and to give everything a meaningful name."
 msgstr ""
+"Ĝuste nun RKWard ne havas \"malfari\" aŭ \"refari\" en ĉiuj lokoj. Ekzemple "
+"ekzistas tia funkcieco por la skriptoredaktilo, sed ne estas malfari aŭ "
+"refari por finitaj grafikoj aŭ testoj. Tial gravas, ke vi sciu, kion vi "
+"faras antaŭ ol komenci. Oni rekomendas uzi kopiojn de originalaj datumoj kaj "
+"doni al ĉio signifoplenan nomon."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
@@ -1745,6 +2301,13 @@ msgid ""
 "relevant settings in combination with the creation date. Moreover you can "
 "check and copy any code generated for your documentation purposes."
 msgstr ""
+"Tamen, RKWard provas doni al vi kiel eble plej multe da informoj pri aferoj, "
+"kiujn vi faris. Por testoj kaj grafikoj kiujn vi ruliĝas el la menuo, la "
+"<link href=\"rkward://page/rkward_output\"/> enhavos \"run again\" ligilon "
+"sub la eligo. Vi povas uzi ĉi tion por refari ĉi tiun agon kun identaj aŭ "
+"iomete modifitaj agordoj. Ankaŭ, testoj kaj grafikoj provas montri la plej "
+"gravajn agordojn en kombinaĵo kun la kredato. Cetere vi povas kontroli kaj "
+"kopii ajnan kodon generitan por viaj dokumentaj celoj."
 
 #. i18n: ectx: (Welcome to RKWard) <title>
 #: rkward/pages/rkward_welcome.rkh:8
@@ -1803,6 +2366,8 @@ msgid ""
 "<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
 "packages</link>"
 msgstr ""
+"<link href=\"rkward://actions/rpackage_install\">Instali R kaj RKWard-"
+"pakaĵojn</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1811,6 +2376,8 @@ msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)&lrm;</link>"
 msgstr ""
+"&lrm;<link href=\"rkward://settings/addons\">Pliaj aldonaj rilataj agordoj "
+"(ekz., git/project integriĝo)</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1819,6 +2386,8 @@ msgid ""
 "&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
 "(including this page)&lrm;"
 msgstr ""
+"&lrm;<link href=\"rkward://settings/general\">Startumaj opcioj</link> "
+"(inkluzive de ĉi tiu paĝo)&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31
@@ -1833,6 +2402,8 @@ msgid ""
 "External links: <link href=\"https://rkward.kde.org/\">project homepage</"
 "link>"
 msgstr ""
+"Eksteraj ligiloj: <link href=\"https://rkward.kde.org/\">hejmpaĝo de la "
+"projekto</link>"
 
 #. i18n: ectx: (Workspace Browser) <title>
 #: rkward/pages/rkward_workspace_browser.rkh:8
@@ -1850,6 +2421,11 @@ msgid ""
 "except you browse R objects in your workspace, instead of files on your "
 "computer."
 msgstr ""
+"La laborspaca retumilo permesas vidi kaj manipuli R-objektojn. Ĉi tio "
+"inkluzivas kaj viajn proprajn objektojn (datumoj, funkcioj), kaj tiel "
+"nomataj \"pakaĵmedioj\". Kiel malglata analogio, ĉi tio similas al regula "
+"dosiersistema retumilo, krom vi foliumas R-objektojn en via laborspaco, "
+"anstataŭ dosierojn en via komputilo."
 
 #. i18n: ectx: (Workspace Browser) <summary>
 #: rkward/pages/rkward_workspace_browser.rkh:10
@@ -1860,6 +2436,10 @@ msgid ""
 "\"Workspace\" icon, which is located on the top of the left window border, "
 "by default."
 msgstr ""
+"La laborspaca retumilo povas esti alvokita per Vindozo->Aktivigi->Montri/"
+"Kaŝi Laborspacan Foliumilon (defaŭlta ŝparvojo estas Alt+1), aŭ alklakante "
+"la piktogramon \"Laborspaco\", kiu situas sur la supro de la maldekstra "
+"fenestra rando. , defaŭlte."
 
 #. i18n: ectx: (Workspace Browser) <section title="...">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -1878,6 +2458,12 @@ msgid ""
 "Environments\" (available at the top of the browser window, or choosing "
 "\"Show Objects\" from the context menu)."
 msgstr ""
+"Laŭvorte centoj aŭ eĉ miloj da objektoj ĉeestas en tipa R-seanco. Ĉi tio "
+"povas esti superforta komence, tial la laborspaca retumilo proponas montri "
+"nur certan subaron de objektoj. La elektoj ĉi tie estas \"Montri Kaŝitajn "
+"Objektojn\", \"Ĉiuj kontraŭ Ne-Funkcioj kontraŭ Funkcioj\", kaj \"Montri "
+"ĉiujn mediojn\" (disponebla ĉe la supro de la retumila fenestro, aŭ "
+"elektante \"Montri Objektojn\". \" el la kunteksta menuo)."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -1888,6 +2474,10 @@ msgid ""
 "objects, which are not meant for direct use, so it's generally safe to hide "
 "them from view."
 msgstr ""
+"La unua devus esti evidenta. Ĝi regas ĉu objektoj kies nomo komenciĝas per "
+"punkto ('.') estas montritaj aŭ ne. Tiuj estas ofte uzataj por internaj "
+"objektoj, kiuj ne estas destinitaj por rekta uzo, do ĝenerale estas sekure "
+"kaŝi ilin de vido."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -1897,6 +2487,9 @@ msgid ""
 "while \"Functions\" shows only functions, and \"Non-Functions\" shows all "
 "other objects (typically data)."
 msgstr ""
+"La dua permesas elekti laŭ la tipo de objekto. \"Ĉio\" ne filtras, dum "
+"\"Funkcioj\" montras nur funkciojn, kaj \"Ne-Funkcioj\" montras ĉiujn aliajn "
+"objektojn (tipe datumoj)."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -1910,6 +2503,13 @@ msgid ""
 "globalenv\"/>) is shown, which is the environment, in which you create and "
 "edit your data."
 msgstr ""
+"La elekteblo \"Montri ĉiujn mediojn\" regas, ĉu pakaj medioj kaj iliaj "
+"objektoj estas montritaj. Proksimume, se vi malŝaltas ĉi tiun opcion, nur "
+"viaj \"propraj\" objektoj estas montritaj, dum kun la opcio ŝaltita, ĉiuj "
+"antaŭdifinitaj objektoj ankaŭ estas montritaj. Pli teknike parolante, kiam "
+"la elekteblo estas malŝaltita, nur la .GlobalEnv (vidu <link href=\"rkward://"
+"rhelp/globalenv\"/>) montriĝas, kiu estas la medio, en kiu vi kreas kaj "
+"redaktas vian datumoj."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -1920,6 +2520,10 @@ msgid ""
 "the left of the object name. Clicking on this will expand the view to show "
 "all the children of the object."
 msgstr ""
+"Notu, ke objektoj estas organizitaj en hierarkio, t.e. iuj specoj de "
+"objektoj enhavas pliajn \"infanajn\" objektojn. Ĉi tio estas indikita per "
+"simbolo \"+\" maldekstre de la objektonomo. Alklakante ĉi tion vastigos la "
+"vidon por montri ĉiujn filojn de la objekto."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -1928,6 +2532,8 @@ msgid ""
 "Hovering the mouse pointer over an object will show a short summary of the "
 "objects' basic properties."
 msgstr ""
+"Ŝvebi la musmontrilon super objekto montros mallongan resumon de la bazaj "
+"trajtoj de la objektoj."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -1938,6 +2544,9 @@ msgid ""
 "some types of objects. The most important actions for objects in package "
 "environments:"
 msgstr ""
+"Pluraj agoj disponeblas el la kunteksta menuo (per dekstre alklako sur unu "
+"el la objektoj), tamen iuj el ĉi tiuj agoj disponeblas nur por iuj specoj de "
+"objektoj. La plej gravaj agoj por objektoj en pakaj medioj:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -1946,6 +2555,8 @@ msgid ""
 "<b>Search Help</b>: This will try to locate and show a relevant R help page "
 "on the object."
 msgstr ""
+"<b>Serĉi Helpon</b>: Ĉi tio provos lokalizi kaj montri koncernan R-helppaĝon "
+"sur la objekto."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -1956,6 +2567,10 @@ msgid ""
 "\">print</link> and <link href=\"rkward://rhelp/summary\">summary</link> to "
 "show more information."
 msgstr ""
+"<b>Vidi</b>: Malfermu fenestron kun detalaj informoj pri la objekto. Ĉi tio, "
+"inter aliaj, uzos la R-komandojn <link href=\"rkward://rhelp/print\">print</"
+"link> kaj <link href=\"rkward://rhelp/summary\">resumo</link> por montri "
+"pliajn informojn."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -1966,6 +2581,9 @@ msgid ""
 "copy an object from the environment \"package:datasets\" into the ."
 "GlobalEnv, and in a second step, edit it."
 msgstr ""
+"<b>Kopii al nova simbolo / Kopiu al .GlobalEnv</b>: Por manipuli objektojn, "
+"vi devas kopii ilin al la .GlobalEnv. Ekzemple, vi povus kopii objekton el "
+"la medio \"package:datasets\" en la .GlobalEnv, kaj en dua paŝo, redakti ĝin."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -1980,6 +2598,8 @@ msgid ""
 "<b>Edit</b>: Open the object in a data editor. Currently editing is only "
 "supported for data.frames."
 msgstr ""
+"<b>Redakti</b>: Malfermu la objekton en datuma redaktilo. Nuntempe redaktado "
+"estas subtenata nur por data.frames."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -1994,6 +2614,8 @@ msgid ""
 "Some default settings for the Workspace Browser can be configured using the "
 "context menu:"
 msgstr ""
+"Kelkaj defaŭltaj agordoj por la Laborspaca Foliumilo povas esti agorditaj "
+"per la kunteksta menuo:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2004,6 +2626,10 @@ msgid ""
 "the workspace browser, these configure the <i>default</i> settings in the "
 "workspace browser (i.e. those that are effectively after restarting RKWard)."
 msgstr ""
+"<b>Montri kaŝitajn objektojn/montri ĉiujn mediojn</b>: Vidu <link href="
+"\"#introduction\">supre</link>. Kontraste al la agordoj faritaj rekte en la "
+"laborspaca retumilo, ĉi tiuj agordas la <i>defaŭltajn</i> agordojn en la "
+"laborspaca retumilo (t.e. tiuj kiuj estas efektive post rekomenco de RKWard)."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2013,6 +2639,8 @@ msgid ""
 "(such as environments, lists) are shown, even if they do not correspond to "
 "the current filter."
 msgstr ""
+"<b>Montri objektojn kun infanoj</b>: Regas ĉu objektoj kun infanoj (kiel "
+"medioj, listoj) estas montritaj, eĉ se ili ne respondas al la nuna filtrilo."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2021,6 +2649,8 @@ msgid ""
 "<b>Show variables / functions</b>: Equivalent to the \"All vs. Non-Function "
 "vs. Functions\" control described <link href=\"#introduction\">above</link>."
 msgstr ""
+"<b>Montri variablojn/funkciojn</b>: Ekvivalenta al la regilo \"Ĉio vs. Ne-"
+"Funkcio vs. Funkcioj\" priskribita <link href=\"#introduction\">supre</link>."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2029,6 +2659,8 @@ msgid ""
 "<b>Label field / Type field / Class field</b>: Which columns are shown for "
 "each object?"
 msgstr ""
+"<b>Etikedkampo / Tipokampo / Klasa kampo</b>: Kiuj kolumnoj estas montritaj "
+"por ĉiu objekto?"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2037,6 +2669,8 @@ msgid ""
 "One additional setting is available from <a href=\"rkward://settings/browser"
 "\">Settings->Configure RKWard->Workspace</a>:"
 msgstr ""
+"Unu plia agordo disponeblas de <a href=\"rkward://settings/browser\">Agordoj-"
+">Agordu RKWard->Laborspaco</a>:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2050,3 +2684,10 @@ msgid ""
 "and is \"blacklisted\" by default. If you note that loading a package takes "
 "exceedingly long, you may consider adding it to this list."
 msgstr ""
+"<b>Neniam alportu la strukturon de ĉi tiuj pakoj</b>: Kelkaj (malmultaj) R-"
+"pakaĵoj enhavas <b>tre</b> multajn malgrandajn objektojn (dekmiloj). En la "
+"plej malbona kazo, provi preni strukturinformojn pri tiuj (t.e. alporti la "
+"informojn por esti montrita en la laborspaca retumilo) povas konsumi multajn "
+"rimedojn kaj igi RKWard neresponda. Pako \"GO\" estas unu tia pakaĵo, kaj "
+"estas \"nigralisto\" defaŭlte. Se vi rimarkas, ke ŝargo de pakaĵo daŭras "
+"treege, vi povas konsideri aldoni ĝin al ĉi tiu listo."

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-04-14 00:04+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "okellogg@users.sourceforge.net"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
@@ -48,6 +48,8 @@ msgid ""
 "Plugins for use in graphics device (e.g. X11()) windows. Part of the "
 "official RKWard distribution"
 msgstr ""
+"Kromaĵoj por uzo en grafika aparato (ekz. X11()) fenestroj. Parto de la "
+"oficiala RKWard-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/x11device.pluginmap:23
@@ -75,6 +77,8 @@ msgid ""
 "The \"cairo\" library, providing SVG-support, is not compiled in by default "
 "on some systems."
 msgstr ""
+"La biblioteko \"kairo\", provizanta SVG-subtenon, ne estas kompilita "
+"defaŭlte en iuj sistemoj."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <summary>
 #: rkward/plugins/x11device/export.rkh:8
@@ -83,6 +87,8 @@ msgid ""
 "Export the current contents of a graphics device to a postscript/pdf/png/"
 "jpeg file either using the native functions or using ghostscript."
 msgstr ""
+"Eksportu la aktualan enhavon de grafika aparato al postscript/pdf/png/jpeg-"
+"dosiero aŭ uzante la denaskajn funkciojn aŭ uzante fantomskripton."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <usage>
 #: rkward/plugins/x11device/export.rkh:11
@@ -101,6 +107,19 @@ msgid ""
 "mostly using <b>par</b>(). Note that all the parameters to postscript are "
 "also valid parameters to dev2bitmap."
 msgstr ""
+"Elektu eksportantan funkcion kaj dosiernomon por konservi. Pliaj elektebloj "
+"por grandeco kaj distingivo ktp ankaŭ estas disponeblaj (vidu sube). "
+"Eksporto estas farita per <b>dev.print</b>. Por eksporti uzante ghostscript, "
+"estas uzata <b>dev2bitmap</b>, kiu bezonas Ghostscript. La plej multaj el la "
+"eksportantaj parametroj estas rekte senditaj al la eksporta funkcio "
+"(<b>postscript</b>, <b>pdf</b>, <b>svg</b>, <b>png</b> aŭ <b>jpeg</b>) per "
+"dev.print. Rimarku, ke ne ekzistas \"koloraj\" opcioj (kiel fono aŭ malfono) "
+"en ĉi tiu kromaĵo. Ĉi tio estas ĉar dev.print simple presas la nunajn "
+"grafikaĵojn (plejparte sur X11) al la specifita dosiero en la elektita "
+"formato. Por agordi fonajn (aŭ antaŭajn) kolorojn, ĉi tiuj devos esti "
+"provizitaj kiam oni vokas la grafikan funkcion, plejparte uzante <b>par</"
+"b>(). Notu, ke ĉiuj parametroj al postskribaĵo ankaŭ estas validaj "
+"parametroj al dev2bitmap."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <usage>
 #: rkward/plugins/x11device/export.rkh:11
@@ -118,6 +137,11 @@ msgid ""
 "<i>file</i> parameter to dev.print. For exporting via ghostscript provide a "
 "suitable extension."
 msgstr ""
+"La dosiernomo al kiu konservi. Defaŭlte la dosiero estos konservita en la "
+"dosierujo de kie RkWard estis komencita, kiu estas la hejma dosierujo de la "
+"uzanto kiam komencite de K-menuo. Post kontrolo de taŭga dosier-etendado, ĉi "
+"tio estas la parametro <i>dosiero</i> al dev.print. Por eksporti per "
+"ghostscript havigu taŭgan etendon."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic File extension")
 #: rkward/plugins/x11device/export.rkh:20
@@ -129,6 +153,12 @@ msgid ""
 "relevant extension is appended to the filename above to construct the full "
 "filename. This option is disabled for exporting via ghostscript."
 msgstr ""
+"Marku ĉi tiun skatolon por lasi RKWard detekti la dosier-etendon aŭtomate. "
+"Se la dosiernomo specifita en la skatolo 'Dosiernomo' jam havas koncernan "
+"etendon, tiam nenio estas farita, tio estas, la specifita dosiernomo estas "
+"uzata. Alie koncerna etendo estas almetita al la dosiernomo supre por "
+"konstrui la plenan dosiernomon. Ĉi tiu opcio estas malŝaltita por eksportado "
+"per ghostscript."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Output format")
 #: rkward/plugins/x11device/export.rkh:21
@@ -139,6 +169,10 @@ msgid ""
 "is chosen then the output format of the ghostscript device will need to be "
 "provided (see below under 'Ghostscript specific options')."
 msgstr ""
+"Elektu ĉu uzi postskribo, pdf, svg, png aŭ jpeg por eksporti la dosieron. Ĉi "
+"tiu estas la parametro <i>aparato</i> al dev.print. Se 'per Ghostscript' "
+"estas elektita tiam la eligformato de la ghostscript-aparato devos esti "
+"provizita (vidu sube sub 'Ghostscript specifaj opcioj')."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "EPS compatible")
 #: rkward/plugins/x11device/export.rkh:22
@@ -150,6 +184,11 @@ msgid ""
 "can not be set in this case. This sets the <i>onefile</i> parameter to "
 "postscript to FALSE."
 msgstr ""
+"Kiam vi eksportas en postskribformato, tio ebligas al vi elekti ĉu EPSF (."
+"eps-file) kaplinio estu generita. Ĉi tio ŝajnas generi pli porteblajn "
+"dosierojn, do rekomendas en la plej multaj kazoj. Papergrandeco kaj "
+"orientiĝo ne povas esti agordita en ĉi tiu kazo. Ĉi tio agordas la "
+"parametron <i>onefile</i> al postskribo al FALSO."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Width")
 #: rkward/plugins/x11device/export.rkh:25
@@ -157,6 +196,8 @@ msgstr ""
 msgid ""
 "Check this box to let the export function determine the width automatically."
 msgstr ""
+"Marku ĉi tiun skatolon por ke la eksporta funkcio aŭtomate determini la "
+"larĝon."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Height")
 #: rkward/plugins/x11device/export.rkh:26
@@ -178,6 +219,16 @@ msgid ""
 "the provided resolution value is used. None of these matter for exporting to "
 "Postscript/PDF where the width parameter is provided in inches."
 msgstr ""
+"Ĉi tio estas la parametro <i>larĝo</i> al la eksportanta funkcio. Ĉi tio "
+"estas specifita en coloj. Por JPEG/PNG-eksportoj (kiuj postulas larĝon en "
+"rastrumeroj), la fakta larĝo estas taksita multobligante la larĝvaloron "
+"provizitan en coloj kun la distingivo (en dpi, 'punktoj per colo'). Do, "
+"width_pixels = width_inches * resolution_dpi. Se distingivo estas agordita "
+"al 'Defaŭlta Distingivo', tiam valoro de 96 estas uzata kiel la defaŭlta "
+"distingivo por eksporti al jpeg aŭ png kaj valoro de 72 estas uzata por "
+"eksporti per fantoma skribo. Alie la provizita distingiva valoro estas "
+"uzata. Neniu el ĉi tiuj gravas por eksporti al Postscript/PDF kie la "
+"larĝparametro estas provizita en coloj."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
 #: rkward/plugins/x11device/export.rkh:27
@@ -189,6 +240,11 @@ msgid ""
 "as the width (in pixels) parameter value. Again, none of these are required "
 "for exporting to Postscript/PDF."
 msgstr ""
+"<b>jpeg</b> aŭ <b>png</b> funkcioj bezonas almenaŭ unu el larĝo/alteco por "
+"esti provizita. Ni superregas ĉi tiun limigon legante en la larĝo (en coloj) "
+"de <b>par(\"din\")[1]</b> kaj poste fiksante 'par(\"din\")[1] * distingivo' "
+"kiel la larĝo (en rastrumeroj) parametrovaloro. Denove, neniu el ĉi tiuj "
+"estas bezonataj por eksporti al Postscript/PDF."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Height in inches")
 #: rkward/plugins/x11device/export.rkh:30
@@ -197,6 +253,8 @@ msgid ""
 "This is the <i>height</i> parameter to the exporting function. Similar to "
 "'Width'."
 msgstr ""
+"Ĉi tio estas la parametro <i>alteco</i> al la eksporta funkcio. Simila al "
+"'Larĝo'."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Point size")
 #: rkward/plugins/x11device/export.rkh:33
@@ -214,6 +272,11 @@ msgid ""
 "resolution (when 'Default Resolution' is checked) is 96 for PNG/JPEG exports "
 "and it is 72 for Ghostscript exports."
 msgstr ""
+"Havebla nur por PNG/JPEG/Ghostscript, ĉi tiu estas la parametro <i>res</i> "
+"al dev.print aŭ dev2bitmap. Ĉi tiu valoro estas uzata en konvertado de larĝo/"
+"alteco en rastrumeroj al coloj kiel priskribite supre (sub 'Larĝo'). La "
+"defaŭlta distingivo (kiam 'Defaŭlta Distingivo' estas markita) estas 96 por "
+"PNG/JPEG-eksportoj kaj ĝi estas 72 por Ghostscript-eksportoj."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "JPEG Quality")
 #: rkward/plugins/x11device/export.rkh:35
@@ -222,6 +285,9 @@ msgid ""
 "Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</"
 "b>. Sets the quality for JPEG exporting. The default quality is 75."
 msgstr ""
+"Disponebla nur por JPEG, ĉi tiu estas la parametro <i>kvalito</i> al "
+"<b>jpeg</b>. Agordas la kvaliton por JPEG-eksportado. La defaŭlta kvalito "
+"estas 75."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Paper Size")
 #: rkward/plugins/x11device/export.rkh:38
@@ -232,6 +298,10 @@ msgid ""
 "<b>postscript</b>. This is available only for Postscript/PDF exports. This "
 "is the <i>paper</i> option to the exporting function."
 msgstr ""
+"Uzu ĉi tion por agordi la papergrandecon por eksporto. Elektu 'Defaŭltan' "
+"por ne specifi ajnan paperan opcion. Aliaj opcioj estas klarigitaj en R-"
+"referenco por <b>postskribo</b>. Ĉi tio disponeblas nur por eksportaĵoj "
+"Postscript/PDF. Ĉi tio estas la opcio <i>papera</i> al la eksporta funkcio."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Pagecentre")
 #: rkward/plugins/x11device/export.rkh:39
@@ -240,6 +310,8 @@ msgid ""
 "Uncheck this for NOT centering the image on the page. This is the "
 "<i>pagecentre</i> parameter."
 msgstr ""
+"Malmarku ĉi tion por NE centri la bildon sur la paĝo. Ĉi tio estas la "
+"parametro <i>pagecentre</i>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Horizontal (ps/gs)")
 #: rkward/plugins/x11device/export.rkh:40
@@ -248,6 +320,8 @@ msgid ""
 "Available only for Postscript/Ghostscript exporting, this is the "
 "<i>horizontal</i> parameter."
 msgstr ""
+"Havebla nur por eksportado de Postscript/Ghostscript, ĉi tiu estas la "
+"<i>horizontala</i> parametro."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font family")
 #: rkward/plugins/x11device/export.rkh:41
@@ -259,6 +333,11 @@ msgid ""
 "family (Helvectica) will be used. See the R reference on postscript for more "
 "details."
 msgstr ""
+"Ĉi tio estas la <i>familio</i> parametro al <b>postskribo</b>. Nepre elektu "
+"familion disponeblan en la maŝino. La 'URW' klaso de tiparfamilioj postulas "
+"fantoman skribaĵon. Se vi dubas lasu ĉi tion kiel 'Defaŭlta', la defaŭlta "
+"familio (Helvectica) estos uzata. Vidu la R-referencon en postskribo por "
+"pliaj detaloj."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font Encoding")
 #: rkward/plugins/x11device/export.rkh:42
@@ -269,6 +348,10 @@ msgid ""
 "leave this as 'Default', the default encoding (ISOLatin1) will be used. See "
 "the R reference on postscript for more details."
 msgstr ""
+"Ĉi tio estas la <i>kodigo</i> parametro al <b>postscript</b>. Nepre elektu "
+"kodigon kongruan kun la elektita tiparfamilio. Se vi dubas lasu ĉi tion kiel "
+"'Defaŭlta', la defaŭlta kodado (ISOLatin1) estos uzata. Vidu la R-referencon "
+"en postskribo por pliaj detaloj."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Default Title")
 #: rkward/plugins/x11device/export.rkh:43
@@ -278,6 +361,10 @@ msgid ""
 "this is not displayed on the plot, but rather it is embedded inside the "
 "graphics file. This is the <i>title</i> parameter to <b>postscript</b>."
 msgstr ""
+"Malmarku ĉi tiun skatolon, por specifi propran titolon al la grafika "
+"dosiero. Notu, ke ĉi tio ne estas montrata en la grafiko, sed prefere ĝi "
+"estas enigita en la grafika dosiero. Ĉi tio estas la parametro <i>titolo</i> "
+"al <b>postskribo</b>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "GS Output device")
 #: rkward/plugins/x11device/export.rkh:46
@@ -287,6 +374,9 @@ msgid ""
 "supported by ghostscript. Select \"Other\" and see the option below to use "
 "these formats."
 msgstr ""
+"Dosiera formato por uzi. Nur la plej oftaj estas listigitaj, sed multaj pli "
+"estas subtenataj de ghostscript. Elektu \"Aliaj\" kaj vidu la opcion sube "
+"por uzi ĉi tiujn formatojn."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Other Ghostscript device")
 #: rkward/plugins/x11device/export.rkh:47
@@ -296,6 +386,9 @@ msgid ""
 "identifier as used by ghostscript. Running \"ghostscript --help\" (or \"gs --"
 "help\") in a terminal should give a list of available devices."
 msgstr ""
+"Elektu \"Aliaj\" en la supra opcio por uzi ĉi tiun agordon. Indiku la "
+"aparato-identigilon kiel uzatan de ghostscript. Ruli \"ghostscript --help"
+"\" (aŭ \"gs --help\") en terminalo devus doni liston de disponeblaj aparatoj."
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="...">
 #: rkward/plugins/x11device/export.xml:63

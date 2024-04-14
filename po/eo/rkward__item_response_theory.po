@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-03-28 08:18+0100\n"
+"PO-Revision-Date: 2024-04-14 00:04+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "okellogg@users.sourceforge.net"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:59
@@ -146,6 +146,8 @@ msgid ""
 "This plugin estimates parameters under Item Response Theory approach, using "
 "the <link href=\"rkward://rhelp/ltm-package\">ltm</link> package."
 msgstr ""
+"Ĉi tiu kromaĵo taksas parametrojn laŭ Item-Responda Teorio, uzante la pakon "
+"<link href=\"rkward://rhelp/ltm-package\">ltm</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <usage>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <usage>
@@ -172,6 +174,8 @@ msgid ""
 "The complete results can be stored as a new object in the current workspace "
 "for further use (e.g. plotting item characteristic curves)."
 msgstr ""
+"La kompletaj rezultoj povas esti konservitaj kiel nova objekto en la nuna "
+"laborspaco por plua uzo (ekz. grafikado de objekt-karakterizaj kurboj)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <usage>
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:12
@@ -181,6 +185,9 @@ msgid ""
 "matrix of manifest variables (dichotomous item responses) must be selected. "
 "Further options are described in the sections below."
 msgstr ""
+"Por konveni la du parametran loĝistikan modelon kun defaŭltaj agordoj, nur "
+"la matrico de manifestaj variabloj (dikotomaj objektorespondoj) devas esti "
+"elektita. Pliaj elektoj estas priskribitaj en la sekcioj sube."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
@@ -219,6 +226,8 @@ msgid ""
 "Select the matrix of dichotomous item responses from the objects shown on "
 "the left."
 msgstr ""
+"Elektu la matricon de dikotomaj objektorespondoj el la objektoj montritaj "
+"maldekstre."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:25
@@ -229,6 +238,10 @@ msgid ""
 "specific layout of that matrix please refer to the manual for the <link href="
 "\"rkward://rhelp/ltm\">ltm()</link> function."
 msgstr ""
+"Se vi volas ripari parametrojn, vi unue devas prepari matricon de "
+"fiksvaloraj limoj kaj poste elekti ĝin ĉi tie. Por detalaj informoj pri la "
+"specifa aranĝo de tiu matrico bonvolu konsulti la manlibron por la funkcio "
+"<link href=\"rkward://rhelp/ltm\">ltm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:28
@@ -240,6 +253,11 @@ msgid ""
 "of that matrix please refer to the manual for the <link href=\"rkward://"
 "rhelp/ltm\">ltm()</link> function."
 msgstr ""
+"Defaŭlte startvaloroj por la parametroj estas kalkulitaj aŭtomate. "
+"Alternative, vi povas devigi la uzon de hazardaj komencaj valoroj, aŭ doni "
+"matricon de valoroj por esti uzataj. Por detalaj informoj pri la specifa "
+"aranĝo de tiu matrico bonvolu konsulti la manlibron por la funkcio <link "
+"href=\"rkward://rhelp/ltm\">ltm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Use only complete cases")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Use only complete cases")
@@ -256,6 +274,8 @@ msgid ""
 "Specifies how missing values are to be treated. By default all available "
 "cases are used. If checked, only complete cases will be considered."
 msgstr ""
+"Specifas kiel mankantaj valoroj estas traktotaj. Defaŭlte ĉiuj disponeblaj "
+"kazoj estas uzataj. Se markite, nur kompletaj kazoj estos konsiderataj."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
@@ -272,6 +292,8 @@ msgid ""
 "If checked, the coefficients' estimates are reported under the usual Item "
 "Response Theory parameterization (which is the default)."
 msgstr ""
+"Se markite, la taksoj de la koeficientoj estas raportitaj sub la kutima Item "
+"Response Theory-parametrizado (kiu estas la defaŭlta)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Number of EM iterations:")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:39
@@ -359,6 +381,9 @@ msgid ""
 "BFGS-B, or SANN instead. Please refer to the <link href=\"rkward://rhelp/"
 "optim\">optim()</link> manual for details."
 msgstr ""
+"La defaŭlta optimumiga metodo estas BFGS. Ĝi povas esti agordita al Nelder-"
+"Mead, CG, L-BFGS-B, aŭ SANN anstataŭe. Bonvolu konsulti la manlibron <link "
+"href=\"rkward://rhelp/optim\">optim()</link> por detaloj."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
@@ -389,6 +414,8 @@ msgid ""
 "Please refer to the <code>ltm</code> manuals for further information and "
 "detailed command line options:"
 msgstr ""
+"Bonvolu konsulti la manlibrojn de <code>ltm</code> por pliaj informoj kaj "
+"detalaj komandliniaj elektebloj:"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <technical>
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:64
@@ -397,6 +424,8 @@ msgid ""
 "The two factor solution of the <code>ltm()</code> function is not yet fully "
 "implemented (quadratic term is missing)."
 msgstr ""
+"La dufaktora solvo de la funkcio <code>ltm()</code> ankoraŭ ne estas plene "
+"efektivigita (kvadratika termino mankas)."
 
 #. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:18
@@ -834,6 +863,9 @@ msgid ""
 "matrix of manifest variables (dichotomous item responses) must be selected. "
 "Further options are described in the sections below."
 msgstr ""
+"Por konveni la modelon de tri parametroj de Birnbaum kun defaŭltaj agordoj, "
+"nur la matrico de manifestaj variabloj (dikotomaj objektorespondoj) devas "
+"esti elektita. Pliaj elektoj estas priskribitaj en la sekcioj sube."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:25
@@ -844,6 +876,10 @@ msgid ""
 "specific layout of that matrix please refer to the manual for the <link href="
 "\"rkward://rhelp/tpm\">tpm()</link> function."
 msgstr ""
+"Se vi volas ripari parametrojn, vi unue devas prepari matricon de "
+"fiksvaloraj limoj kaj poste elekti ĝin ĉi tie. Por detalaj informoj pri la "
+"specifa aranĝo de tiu matrico bonvolu konsulti la manlibron por la funkcio "
+"<link href=\"rkward://rhelp/tpm\">tpm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Upper bound for guessing parameter")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:28
@@ -851,6 +887,7 @@ msgstr ""
 msgid ""
 "Limits the estimated guessing parameter (accepts values between 0 and 1)."
 msgstr ""
+"Limigas la taksitan divenan parametron (akceptas valorojn inter 0 kaj 1)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:31
@@ -862,6 +899,11 @@ msgid ""
 "of that matrix please refer to the manual for the <link href=\"rkward://"
 "rhelp/tpm\">tpm()</link> function."
 msgstr ""
+"Defaŭlte startvaloroj por la parametroj estas kalkulitaj aŭtomate. "
+"Alternative, vi povas devigi la uzon de hazardaj komencaj valoroj, aŭ doni "
+"matricon de valoroj por esti uzataj. Por detalaj informoj pri la specifa "
+"aranĝo de tiu matrico bonvolu konsulti la manlibron por la funkcio <link "
+"href=\"rkward://rhelp/tpm\">tpm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Assume equal discrimination parameters")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:34
@@ -871,6 +913,9 @@ msgid ""
 "items, as in the 1PL Rasch model. That leaves difficulty and guessing "
 "parameters to be estimated."
 msgstr ""
+"Se markite estas supozite ke diskriminaciaj parametroj estas egalaj por ĉiuj "
+"eroj, kiel en la 1PL Rasch-modelo. Tio lasas malfacilecon kaj divenajn "
+"parametrojn por esti taksitaj."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:45
@@ -908,6 +953,9 @@ msgid ""
 "for optimization. Alternatively, <link href=\"rkward://rhelp/nlminb"
 "\">nlminb()</link> can be called."
 msgstr ""
+"Defaŭlte <link href=\"rkward://rhelp/optim\">optim()</link> estas uzata por "
+"optimumigo. Alternative, <link href=\"rkward://rhelp/nlminb\">nlminb()</"
+"link> povas esti vokita."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Optimization method"> (refers to element labelled "Optimization method:")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:54
@@ -918,6 +966,10 @@ msgid ""
 "refer to the <link href=\"rkward://rhelp/optim\">optim()</link> manual for "
 "details."
 msgstr ""
+"<i>Nur se <code>optim()</code> estas uzata:</i> La defaŭlta optimumiga "
+"metodo estas BFGS. Ĝi povas esti agordita al Nelder-Mead, CG, L-BFGS-B, aŭ "
+"SANN anstataŭe. Bonvolu konsulti la manlibron <link href=\"rkward://rhelp/"
+"optim\">optim()</link> por detaloj."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Step-length for approximation")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:57
@@ -926,6 +978,8 @@ msgid ""
 "Used in the central difference approximation that approximates the hessian. "
 "Defaults to 1e-03."
 msgstr ""
+"Uzite en la centra diferencproksimumado kiu proksimumas la hesian. Defaŭlte "
+"al 1e-03."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <technical>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <technical>
@@ -1064,6 +1118,8 @@ msgid ""
 "This plugin estimates parameters under Item Response Theory approach, using "
 "the <link href=\"rkward://rhelp/eRm-package\">eRm</link> package."
 msgstr ""
+"Ĉi tiu kromaĵo taksas parametrojn laŭ Item-Responda Teorio, uzante la pakon "
+"<link href=\"rkward://rhelp/eRm-package\">eRm</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <usage>
 #: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:12
@@ -1075,6 +1131,11 @@ msgid ""
 "expected layout of matrices and vectors please refer to the manual for the "
 "<link href=\"rkward://rhelp/LLTM\">LLTM()</link> function."
 msgstr ""
+"Por konveni la linearan loĝistikan testmodelon kun defaŭltaj agordoj, nur la "
+"matrico de manifestaj variabloj (dikotomaj objektorespondoj) devas esti "
+"elektita. Pliaj elektoj estas priskribitaj en la sekcioj sube. Por detalaj "
+"informoj pri la atendata aranĝo de matricoj kaj vektoroj bonvolu konsulti la "
+"manlibron por la funkcio <link href=\"rkward://rhelp/LLTM\">LLTM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Number of measurement points")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Number of measurement points")
@@ -1088,6 +1149,9 @@ msgid ""
 "data matrix (defaults to 1). This will divide the columns in the matrix into "
 "equally sized subsets of data."
 msgstr ""
+"Se ripetita mezurado validas, specifu kiom da estas reprezentitaj en la "
+"datummatrico (defaŭlte al 1). Ĉi tio dividos la kolumnojn en la matrico en "
+"samgrandajn subarojn de datumoj."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Group contrasts")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Group contrasts")
@@ -1101,6 +1165,9 @@ msgid ""
 "membership of each subject must be given. By default no group contrasts are "
 "imposed."
 msgstr ""
+"Se vi volas kalkuli grupkontrastojn, vektoro determinanta la grupan "
+"membrecon de ĉiu subjekto devas esti donita. Defaŭlte neniuj grupkontrastoj "
+"estas truditaj."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:31
@@ -1109,6 +1176,8 @@ msgid ""
 "By default the design matrix for the LLTM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
+"Defaŭlte la dezajnomatrico por la LLTM estos komputita aŭtomate. "
+"Alternative, vi povas specifi vian propran desegnan matricon ĉi tie."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Eta start values")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Eta start values")
@@ -1125,6 +1194,8 @@ msgid ""
 "By default eta values start with the 0-vector. To change this, a vector of "
 "starting values can be specified."
 msgstr ""
+"Defaŭlte eta valoroj komenciĝas per la 0-vektoro. Por ŝanĝi ĉi tion, vektoro "
+"de komencaj valoroj povas esti specifita."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Compute standard error")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Compute standard error")
@@ -1155,6 +1226,9 @@ msgid ""
 "By default parameters are normalized to sum-0 by specifying an appropriate "
 "design matrix. Uncheck this box to restrict the first parameter to 0."
 msgstr ""
+"Defaŭlte parametroj estas normaligitaj al sum-0 precizigante taŭgan "
+"dezajnmatricon. Malmarku ĉi tiun skatolon por limigi la unuan parametron al "
+"0."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <related>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <related>
@@ -1171,6 +1245,8 @@ msgid ""
 "Please refer to the <code>eRm</code> manuals for further information and "
 "detailed command line options:"
 msgstr ""
+"Bonvolu konsulti la manlibrojn de <code>eRm</code> por pliaj informoj kaj "
+"detalaj komandliniaj elektebloj:"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:24
@@ -1368,6 +1444,9 @@ msgid ""
 "variables (dichotomous item responses) must be selected. Further options are "
 "described in the sections below."
 msgstr ""
+"Por konveni la Rasch-modelon kun defaŭltaj agordoj, nur la matrico de "
+"manifestaj variabloj (dikotomaj objektorespondoj) devas esti elektita. Pliaj "
+"elektoj estas priskribitaj en la sekcioj sube."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:25
@@ -1378,6 +1457,10 @@ msgid ""
 "specific layout of that matrix please refer to the manual for the <link href="
 "\"rkward://rhelp/rasch\">rasch()</link> function."
 msgstr ""
+"Se vi volas ripari parametrojn, vi unue devas prepari matricon de "
+"fiksvaloraj limoj kaj poste elekti ĝin ĉi tie. Por detalaj informoj pri la "
+"specifa aranĝo de tiu matrico bonvolu konsulti la manlibron por la funkcio "
+"<link href=\"rkward://rhelp/rasch\">rasch()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:28
@@ -1389,6 +1472,11 @@ msgid ""
 "of that matrix please refer to the manual for the <link href=\"rkward://"
 "rhelp/rasch\">rasch()</link> function."
 msgstr ""
+"Defaŭlte startvaloroj por la parametroj estas kalkulitaj aŭtomate. "
+"Alternative, vi povas devigi la uzon de hazardaj komencaj valoroj, aŭ doni "
+"matricon de valoroj por esti uzataj. Por detalaj informoj pri la specifa "
+"aranĝo de tiu matrico bonvolu konsulti la manlibron por la funkcio <link "
+"href=\"rkward://rhelp/rasch\">rasch()</link>."
 
 #. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:18
@@ -1410,6 +1498,9 @@ msgid ""
 "matrix of manifest variables (polytomous item responses) must be selected. "
 "Further options are described in the sections below."
 msgstr ""
+"Por konveni la ĝeneraligitan partan kreditmodelon kun defaŭltaj agordoj, nur "
+"la matrico de manifestaj variabloj (politomaj objektorespondoj) devas esti "
+"elektita. Pliaj elektoj estas priskribitaj en la sekcioj sube."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
@@ -1420,6 +1511,8 @@ msgid ""
 "Select the matrix of polytomous item responses from the objects shown on the "
 "left."
 msgstr ""
+"Elektu la matricon de politomaj objektorespondoj el la objektoj montritaj "
+"maldekstre."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Item selection")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:23
@@ -1428,6 +1521,8 @@ msgid ""
 "If you only want to use a subset of items from selected object, you can "
 "specify these here."
 msgstr ""
+"Se vi volas nur uzi subaron de eroj el elektita objekto, vi povas specifi ĉi "
+"tiujn ĉi tie."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constrained)?")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:28
@@ -1437,6 +1532,9 @@ msgid ""
 "individually. Alternatively, you can estimate one discrimination parameter "
 "that is equal for all items, or fix it at 1 for all items."
 msgstr ""
+"Elektu ĉu diskriminaciaj parametroj estu komputitaj por ĉiu objekto "
+"individue. Alternative, vi povas taksi unu diskriminacian parametron kiu "
+"estas egala por ĉiuj eroj, aŭ fiksi ĝin je 1 por ĉiuj eroj."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:31
@@ -1448,6 +1546,11 @@ msgid ""
 "that list please refer to the manual for the <link href=\"rkward://rhelp/gpcm"
 "\">gpcm()</link> function."
 msgstr ""
+"Defaŭlte startvaloroj por la parametroj estas kalkulitaj aŭtomate. "
+"Alternative, vi povas devigi la uzon de hazardaj komencaj valoroj, aŭ doni "
+"liston de uzotaj valoroj. Por detalaj informoj pri la specifa aranĝo de tiu "
+"listo bonvolu konsulti la manlibron por la funkcio <link href=\"rkward://"
+"rhelp/gpcm\">gpcm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Numerical derivative algorithm to approximate Hessian matrix:")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:54
@@ -1456,6 +1559,8 @@ msgid ""
 "Options are forward difference approximation (the default) and central "
 "difference approximation."
 msgstr ""
+"Elektebloj estas antaŭa diferencproksimumado (la defaŭlta) kaj centra "
+"diferencproksimumado."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Step-length for approximation")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:57
@@ -1465,6 +1570,9 @@ msgid ""
 "use central difference approximation, change this to a larger value, e.g., "
 "1e-03 or 1e-04."
 msgstr ""
+"Paŝa grandeco por esti uzata en la nombra derivaĵo. Defaŭlte estas 1e-06. Se "
+"vi uzas centran diferencon, ŝanĝu ĉi tion al pli granda valoro, ekz., 1e-03 "
+"aŭ 1e-04."
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:22
@@ -1568,6 +1676,9 @@ msgid ""
 "manifest variables (polytomous item responses) must be selected. Further "
 "options are described in the sections below."
 msgstr ""
+"Por konveni la gradigitan respondmodelon kun defaŭltaj agordoj, nur la "
+"matrico de manifestaj variabloj (politomaj objektorespondoj) devas esti "
+"elektita. Pliaj elektoj estas priskribitaj en la sekcioj sube."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:25
@@ -1576,6 +1687,8 @@ msgid ""
 "If checked it is assumed that discrimination parameters are equal for all "
 "items."
 msgstr ""
+"Se markite oni supozas, ke diskriminaciaj parametroj estas egalaj por ĉiuj "
+"eroj."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:28
@@ -1587,6 +1700,11 @@ msgid ""
 "that list please refer to the manual for the <link href=\"rkward://rhelp/grm"
 "\">grm()</link> function."
 msgstr ""
+"Defaŭlte startvaloroj por la parametroj estas kalkulitaj aŭtomate. "
+"Alternative, vi povas devigi la uzon de hazardaj komencaj valoroj, aŭ doni "
+"liston de uzotaj valoroj. Por detalaj informoj pri la specifa aranĝo de tiu "
+"listo bonvolu konsulti la manlibron por la funkcio <link href=\"rkward://"
+"rhelp/grm\">grm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Compute Hessian matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:31
@@ -1606,6 +1724,8 @@ msgstr "Nombro da ciferoj por mallongigi objektonomojn"
 msgid ""
 "Specifies how many digits are used in abbreviating item names. Defaults to 6."
 msgstr ""
+"Specifas kiom da ciferoj estas uzataj por mallongigi objektonomojn. Defaŭlte "
+"al 6."
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:18
@@ -1647,6 +1767,11 @@ msgid ""
 "expected layout of matrices and vectors please refer to the manual for the "
 "<link href=\"rkward://rhelp/LPCM\">LPCM()</link> function."
 msgstr ""
+"Por konveni la linearan partan kreditmodelon kun defaŭltaj agordoj, nur la "
+"matrico de manifestaj variabloj (objektaj respondoj) devas esti elektita. "
+"Pliaj elektoj estas priskribitaj en la sekcioj sube. Por detalaj informoj "
+"pri la atendata aranĝo de matricoj kaj vektoroj bonvolu konsulti la "
+"manlibron por la funkcio <link href=\"rkward://rhelp/LPCM\">LPCM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
@@ -1668,6 +1793,8 @@ msgid ""
 "By default the design matrix for the LPCM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
+"Defaŭlte la dezajnomatrico por la LPCM estos komputita aŭtomate. "
+"Alternative, vi povas specifi vian propran desegnan matricon ĉi tie."
 
 #. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:24
@@ -1691,6 +1818,11 @@ msgid ""
 "layout of matrices and vectors please refer to the manual for the <link href="
 "\"rkward://rhelp/LRSM\">LRSM()</link> function."
 msgstr ""
+"Por konveni la linearan taksan skalmodelon kun defaŭltaj agordoj, nur la "
+"matrico de manifestaj variabloj (objektaj respondoj) devas esti elektita. "
+"Pliaj elektoj estas priskribitaj en la sekcioj sube. Por detalaj informoj "
+"pri la atendata aranĝo de matricoj kaj vektoroj bonvolu konsulti la "
+"manlibron por la funkcio <link href=\"rkward://rhelp/LRSM\">LRSM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:31
@@ -1699,6 +1831,8 @@ msgid ""
 "By default the design matrix for the LRSM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
+"Defaŭlte la dezajnomatrico por la LRSM estos komputita aŭtomate. "
+"Alternative, vi povas specifi vian propran desegnan matricon ĉi tie."
 
 #. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:27
@@ -1722,6 +1856,11 @@ msgid ""
 "layout of matrices and vectors please refer to the manual for the <link href="
 "\"rkward://rhelp/PCM\">PCM()</link> function."
 msgstr ""
+"Por konveni la partan kreditmodelon kun defaŭltaj agordoj, nur la matrico de "
+"manifestaj variabloj (objektaj respondoj) devas esti elektita. Pliaj elektoj "
+"estas priskribitaj en la sekcioj sube. Por detalaj informoj pri la atendata "
+"aranĝo de matricoj kaj vektoroj bonvolu konsulti la manlibron por la funkcio "
+"<link href=\"rkward://rhelp/PCM\">PCM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:25
@@ -1730,6 +1869,8 @@ msgid ""
 "By default the design matrix for the PCM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
+"Defaŭlte la dezajnomatrico por la PCM estos komputita aŭtomate. Alternative, "
+"vi povas specifi vian propran desegnan matricon ĉi tie."
 
 #. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:24
@@ -1753,6 +1894,11 @@ msgid ""
 "layout of matrices and vectors please refer to the manual for the <link href="
 "\"rkward://rhelp/RSM\">RSM()</link> function."
 msgstr ""
+"Por konveni la taksan skalmodelon kun defaŭltaj agordoj, nur la matrico de "
+"manifestaj variabloj (objektaj respondoj) devas esti elektita. Pliaj elektoj "
+"estas priskribitaj en la sekcioj sube. Por detalaj informoj pri la atendata "
+"aranĝo de matricoj kaj vektoroj bonvolu konsulti la manlibron por la funkcio "
+"<link href=\"rkward://rhelp/RSM\">RSM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:25
@@ -1761,6 +1907,8 @@ msgid ""
 "By default the design matrix for the RSM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
+"Defaŭlte la dezajnomatrico por la RSM estos komputita aŭtomate. Alternative, "
+"vi povas specifi vian propran desegnan matricon ĉi tie."
 
 #. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:24
@@ -2119,6 +2267,8 @@ msgid ""
 "Response patterns, person-fit statistics (L0, Lz) and probabilities for each "
 "response pattern (Pr):"
 msgstr ""
+"Respondpadronoj, person-taŭga statistiko (L0, Lz) kaj verŝajnecoj por ĉiu "
+"respondpadrono (Pr):"
 
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:20
@@ -2206,6 +2356,9 @@ msgid ""
 "substantially larger than the second eigenvalue of data under the assumed "
 "IRT model</em>"
 msgstr ""
+"Alternativa hipotezo: <em>La dua ajgenvaloro de la observitaj datenoj estas "
+"sufiĉe pli granda ol la dua ajgenvaloro de datumoj sub la supozita IRT-"
+"modelo</em>"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:34

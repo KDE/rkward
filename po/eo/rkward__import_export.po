@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-04-14 00:04+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "okellogg@users.sourceforge.net"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="...">
@@ -390,6 +390,9 @@ msgid ""
 "probably uses a different locale than your R session. In this case, check "
 "this option, and specify the correct character encoding below."
 msgstr ""
+"Se speciala signo (ekz. umlauts) ne aperas ĝuste, la datumdosiero probable "
+"uzas malsaman lokaĵon ol via R-seanco. En ĉi tiu kazo, marku ĉi tiun "
+"elekteblon, kaj specifu la ĝustan signokodigon sube."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
@@ -405,6 +408,8 @@ msgid ""
 "Select character encoding to convert from. The option above needs to be "
 "checked, for this to be enabled."
 msgstr ""
+"Elektu signan kodigon por konverti. La supra elekteblo devas esti markita, "
+"por ke ĉi tio estu ebligita."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
@@ -421,6 +426,10 @@ msgid ""
 "Note that the available encodings may differ from platform to platform. See "
 "<link href=\"rkward://rhelp/iconvlist\"/> for a list of available encodings."
 msgstr ""
+"Se neniu el la ĉi-supraj kodigoj kongruas, vi povas specifi ĉi tie kodigon. "
+"Notu, ke la disponeblaj kodigoj povas malsami de platformo al platformo. "
+"Vidu <link href=\"rkward://rhelp/iconvlist\"/> por listo de disponeblaj "
+"kodigoj."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data)
 #: rkward/plugins/00saveload/import/import_csv.js:46
@@ -442,6 +451,8 @@ msgid ""
 "Import Comma Separated Value files (other delimiters besides comma are "
 "supported)."
 msgstr ""
+"Importu dosierojn kun disigitaj valoroj por komoj (aliaj limigiloj krom komo "
+"estas subtenataj)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <usage>
 #: rkward/plugins/00saveload/import/import_csv.rkh:12
@@ -450,6 +461,8 @@ msgid ""
 "Choose the CSV file to import. An R object containing the data will be "
 "created. See <link href=\"rkward://rhelp/read.table\"/>."
 msgstr ""
+"Elektu la CSV-dosieron por importi. R-objekto enhavanta la datumojn estos "
+"kreita. Vidu <link href=\"rkward://rhelp/read.table\"/>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "File name")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "File name")
@@ -472,6 +485,9 @@ msgid ""
 "affects several of the other settings, importantly <i><label id=\"dec\"/></"
 "i> and <i><label id=\"sep\"/></i>."
 msgstr ""
+"Elektu el unu el la antaŭdifinitaj (plej oftaj formatoj). Ĉi tiu agordo "
+"influas plurajn el la aliaj agordoj, grave <i><label id=\"dec\"/></i> kaj "
+"<i><label id=\"sep\"/></i>."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:20
@@ -480,6 +496,7 @@ msgid ""
 "Whether the first row of the file contains should be interpreted as column "
 "names"
 msgstr ""
+"Ĉu la unua vico de la dosiero enhavas devus esti interpretita kiel kolonnomoj"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/import/import_csv.rkh:21
@@ -518,6 +535,8 @@ msgid ""
 "The name of an R object to store the imported data in. If you choose an "
 "existing symbol name, you will be prompted, whether to overwrite this object."
 msgstr ""
+"La nomo de R-objekto en kiu stoki la importitajn datumojn. Se vi elektas "
+"ekzistantan simbolnomon, oni petos vin, ĉu anstataŭi ĉi tiun objekton."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Open imported data for editing")
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Open imported data for editing")
@@ -539,6 +558,8 @@ msgid ""
 "Show a preview of the imported data. At most the first 50 rows and columns "
 "will be shown."
 msgstr ""
+"Montru antaŭrigardon de la importitaj datumoj. Maksimume la unuaj 50 vicoj "
+"kaj kolumnoj estos montritaj."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Row names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:30
@@ -548,6 +569,9 @@ msgid ""
 "can specify a single column containing the row names (typically the first). "
 "Or you can provide a character vector of names."
 msgstr ""
+"Kiel determini vicnomojn? Aŭ la vicoj povas esti numeritaj 1...n. Aŭ vi "
+"povas specifi ununuran kolumnon enhavantan la vicnomojn (tipe la unua). Aŭ "
+"vi povas provizi signan vektoron de nomoj."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column number or variable name")
 #: rkward/plugins/00saveload/import/import_csv.rkh:31
@@ -556,6 +580,8 @@ msgid ""
 "See above. The column containing the row names, given either as a number, or "
 "as a column name (in the latter case, make sure to quote the name)"
 msgstr ""
+"Vidu supre. La kolumno enhavanta la vicnomojn, donitaj aŭ kiel nombro, aŭ "
+"kiel kolumnonomo (en ĉi-lasta kazo, nepre citi la nomon)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of row names (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:32
@@ -565,6 +591,8 @@ msgid ""
 "\"), but you can also specify the name of an R object containing the names "
 "to use)"
 msgstr ""
+"Vidu supre. Vektoro de vicnomoj (ekz. c (\"row1\", \"row2\", ..., \"rown\"), "
+"sed vi povas ankaŭ specifi la nomon de R-objekto enhavanta la nomojn por uzi)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:33
@@ -573,6 +601,8 @@ msgid ""
 "Use automatic column names (possibly read from first row of file), or use "
 "manually specified names?"
 msgstr ""
+"Ĉu uzi aŭtomatajn kolonnomojn (eble legitaj de la unua vico de dosiero), aŭ "
+"uzi permane specifitajn nomojn?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of column names (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:34
@@ -582,6 +612,9 @@ msgid ""
 "\"col2\", ..., \"coln\"), but you can also specify the name of an R object "
 "containing the names to use)"
 msgstr ""
+"Vidu supre. Specifu signan vektoron de kolonnomoj (ekz. c (\"col1\", "
+"\"col2\", ..., \"coln\"), sed vi povas ankaŭ specifi la nomon de R-objekto "
+"enhavanta la nomojn por uzi )"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Check syntax of column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:35
@@ -594,7 +627,7 @@ msgstr "Ĉu kolumnomoj estu kontrolitaj por valideco?"
 #, kde-format
 msgid ""
 "Should be class of each column be determined automatically, or specified?"
-msgstr ""
+msgstr "Ĉu klaso de ĉiu kolumno estu aŭtomate aŭ specifita?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of column classes (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:37
@@ -603,6 +636,8 @@ msgid ""
 "See above. Specify a character vector with the names of the classes to use "
 "for each column."
 msgstr ""
+"Vidu supre. Indiku signan vektoron kun la nomoj de la klasoj por uzi por ĉiu "
+"kolumno."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip trailing fields")
 #: rkward/plugins/00saveload/import/import_csv.rkh:38
@@ -612,6 +647,9 @@ msgid ""
 "five rows of input) be skipped? See parameter flush in <link href=\"rkward://"
 "rhelp/read.table\"/>."
 msgstr ""
+"Ĉu pliaj kolumnoj (ne specifitaj supre, kaj ne ene de la unuaj kvin vicoj de "
+"enigo) estu preterlasitaj? Vidu parametron flui en <link href=\"rkward://"
+"rhelp/read.table\"/>."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Pad rows if unequal length")
 #: rkward/plugins/00saveload/import/import_csv.rkh:39
@@ -620,6 +658,8 @@ msgid ""
 "If checked, and the rows have differing length, they will be padded with "
 "empty values in the imported data."
 msgstr ""
+"Se markite, kaj la vicoj havas malsaman longon, ili estos plenigitaj kun "
+"malplenaj valoroj en la importitaj datumoj."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Allow escaped characters")
 #: rkward/plugins/00saveload/import/import_csv.rkh:43
@@ -628,13 +668,15 @@ msgid ""
 "Should a backslash ('\\') followed by a character be treated as an escaped "
 "character? Otherwise the sequence is read literally."
 msgstr ""
+"Ĉu malantaŭa oblikvo ('\\') sekvata de signo estu traktata kiel eskapinta "
+"signo? Alie la sinsekvo estas legita laŭvorte."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Strip leading and trailing whitespace")
 #: rkward/plugins/00saveload/import/import_csv.rkh:44
 #, kde-format
 msgid ""
 "Should leading and trailing white space be removed from character fields?"
-msgstr ""
+msgstr "Ĉu gvida kaj malantaŭa blanka spaco estu forigitaj de signokampoj?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Convert character columns to factors")
 #: rkward/plugins/00saveload/import/import_csv.rkh:45
@@ -643,6 +685,8 @@ msgid ""
 "Should columns containing character data be converted to factors in R, or "
 "should they be read as character vectors?"
 msgstr ""
+"Ĉu kolumnoj enhavantaj signodatenojn estu konvertitaj al faktoroj en R, aŭ "
+"ĉu ili estu legitaj kiel signovektoroj?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Missing value string")
 #: rkward/plugins/00saveload/import/import_csv.rkh:46
@@ -651,6 +695,9 @@ msgid ""
 "How are missing values (NAs) written in the file to be imported? (Blank "
 "fields are also interpreted as NAs in columns that are not strings.)"
 msgstr ""
+"Kiel mankantaj valoroj (NAoj) estas skribitaj en la dosiero importota? "
+"(Malplenaj kampoj ankaŭ estas interpretitaj kiel NAoj en kolumnoj kiuj ne "
+"estas ĉenoj.)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "String delimiter")
 #: rkward/plugins/00saveload/import/import_csv.rkh:47
@@ -666,6 +713,9 @@ msgid ""
 "use, here. Simply enter all character to use (without spaces or comma, e.g. "
 "\"'@ to use \", ', and @ as string delimiters)."
 msgstr ""
+"Se vi elektis \"alia\" supre, vi povas specifi kian citan signon uzi ĉi tie. "
+"Simple enigu ĉiun uzontan signon (sen spacoj aŭ komo, ekz. \"'@ por uzi \", "
+"', kaj @ kiel ĉenlimilojn)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip x lines at the start of the file")
 #: rkward/plugins/00saveload/import/import_csv.rkh:50
@@ -674,6 +724,8 @@ msgid ""
 "This many rows will be skipped at the start of the file. Use, for instance, "
 "if the file contains a text header."
 msgstr ""
+"Ĉi tiuj multaj vicoj estos preterlasitaj ĉe la komenco de la dosiero. Uzu, "
+"ekzemple, se la dosiero enhavas tekstan kaplinion."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Max number of lines to read (-1 for no limit)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:51
@@ -688,6 +740,8 @@ msgid ""
 "If you enter a single character, here, everything after that character in a "
 "line will be ignored. Leave blank to disable detection of comments."
 msgstr ""
+"Se vi enigas ununuran signon, ĉi tie, ĉio post tiu signo en linio estos "
+"ignorita. Lasu malplena por malebligi detekton de komentoj."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip blank lines")
 #: rkward/plugins/00saveload/import/import_csv.rkh:53
@@ -1210,6 +1264,11 @@ msgid ""
 "usually be preferable, as it will provide more specific options, and with "
 "less packages to install."
 msgstr ""
+"Importu diversajn formatojn. Ĉi tio estas ĝenerala aliro bazita sur la "
+"pakaĵo \"rio\" R, kiu siavice dependas de diversaj pliaj pakaĵoj. Se "
+"ekzistas dediĉita kromaĵo por la formato kiun vi volas importi, uzi tion "
+"kutime estos preferinda, ĉar ĝi provizos pli specifajn elekteblojn, kaj kun "
+"malpli da pakaĵoj por instali."
 
 #. i18n: ectx: (Loaded from Generic data import) <usage>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:16
@@ -1218,6 +1277,8 @@ msgid ""
 "Select the data file to import. An R object containing the data will be "
 "created. This will usually be a data.frame, or a list."
 msgstr ""
+"Elektu la datumdosieron por importi. R-objekto enhavanta la datumojn estos "
+"kreita. Ĉi tio kutime estos data.frame, aŭ listo."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Edit Object")
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Edit Object")
@@ -1229,6 +1290,9 @@ msgid ""
 "Currently, this is only possible, if the object is saved as a data.frame "
 "(see next option)."
 msgstr ""
+"Ĉu la objekto devus esti malfermita por redaktado post kiam ĝi estis "
+"importita. Nuntempe, tio nur eblas, se la objekto estas konservita kiel data."
+"frame (vidu sekvan elekteblon)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import a list of all datasets")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:25
@@ -1237,6 +1301,9 @@ msgid ""
 "Some data files may contain more than one set of data (e.g. several sheets "
 "inside one excel file). Check this option to import all datasets as a list."
 msgstr ""
+"Iuj datumdosieroj povas enhavi pli ol unu aron da datumoj (ekz. pluraj "
+"folioj ene de unu excel-dosiero). Marku ĉi tiun elekteblon por importi ĉiujn "
+"datumarojn kiel liston."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import specific sub-set")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:26
@@ -1245,6 +1312,8 @@ msgid ""
 "For datasets containing more than one set of data, specify which set to "
 "import (this will usually be a name or a number)."
 msgstr ""
+"Por datumaroj enhavantaj pli ol unu aron da datumoj, specifu kiun aron "
+"importi (tio kutime estos nomo aŭ nombro)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:27
@@ -1254,6 +1323,9 @@ msgid ""
 "performance reasons (and only the first dataset in case of multiple sets in "
 "the file)."
 msgstr ""
+"Antaŭrigardu importitajn datumojn. Nur la unuaj 50 vicoj kaj kolumnoj estas "
+"montritaj, pro agado-kialoj (kaj nur la unua datumaro en kazo de pluraj aroj "
+"en la dosiero)."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <checkbox label="...">
@@ -1319,6 +1391,14 @@ msgid ""
 "<link href=\"http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf\">R News "
 "4/1 p30-31</link>."
 msgstr ""
+"Elektu la SPSS-datumdosieron por importi. Kutime tiuj dosieroj havas la "
+"finaĵon '*.sav'. R-objekto enhavanta la SPSS-datenojn estos kreita. Ĉi tio "
+"povas aŭ esti data.frame, aŭ listo. Pluraj elektebloj traktas pritraktado de "
+"etikedoj kaj signokodigado. Vidu <link href=\"rkward://rhelp/read.spss\"/>. "
+"Aliaj SPSS-dosieroj ol datumdosieroj (t.e.:*.por, *.jnl, *.cht, *.spo, *."
+"sps) ne estas subtenataj. Por aferoj rilataj al pritraktado de tempo/datoj "
+"bonvolu raporti al <link href=\"http://cran.r-project.org/doc/Rnews/"
+"Rnews_2004-1.pdf\">R News 4/1 p30-31 </link>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Import as a data.frame")
 #: rkward/plugins/00saveload/import/import_spss.rkh:24
@@ -1327,6 +1407,8 @@ msgid ""
 "Whether to save the data as a data.frame. The alternative is saving as a "
 "list (useful, if the columns in your SPSS data have different lengths)"
 msgstr ""
+"Ĉu konservi la datumojn kiel data.frame. La alternativo estas konservi kiel "
+"listo (utila, se la kolumnoj en viaj SPSS-datumoj havas malsamajn longojn)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Convert Variable labels to RKWard format")
 #: rkward/plugins/00saveload/import/import_spss.rkh:26
@@ -1338,6 +1420,11 @@ msgid ""
 "as an attribute \"variable.labels\" (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
+"RKWard povas montri SPSS kiel variajn etikedojn. Marku ĉi tiun elekteblon, "
+"se vi ŝatus konverti la SPSS-variablan etikedojn al formato RKWard. Se vi "
+"lasas la elekteblon nemarkita, la SPSS-variablaj etikedoj ankoraŭ estos "
+"disponeblaj kiel atributo \"variable.labels\" (vidu <link href=\"rkward://"
+"rhelp/read.spss\"/>)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Use value labels")
 #: rkward/plugins/00saveload/import/import_spss.rkh:27
@@ -1346,6 +1433,8 @@ msgid ""
 "Should SPSS variables with value labels be converted to R factors with those "
 "levels?"
 msgstr ""
+"Ĉu SPSS-variabloj kun valoraj etikedoj estu konvertitaj al R-faktoroj kun "
+"tiuj niveloj?"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Maximum number of labels per object")
 #: rkward/plugins/00saveload/import/import_spss.rkh:28
@@ -1354,6 +1443,8 @@ msgid ""
 "Maximum number of factor levels to use (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
+"Maksimuma nombro da faktoraj niveloj por uzi (vidu <link href=\"rkward://"
+"rhelp/read.spss\"/>)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Trim white space")
 #: rkward/plugins/00saveload/import/import_spss.rkh:29
@@ -1369,6 +1460,9 @@ msgid ""
 "performance reasons. Internally, the preview uses a data.frame, even if "
 "<label id=\"data_frame\"/> is not checked."
 msgstr ""
+"Antaŭrigardu importitajn datumojn. Nur la unuaj 50 vicoj kaj kolumnoj estas "
+"montritaj, pro agado-kialoj. Interne, la antaŭrigardo uzas data.frame, eĉ se "
+"<label id=\"data_frame\"/> ne estas markita."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:24
@@ -1432,6 +1526,10 @@ msgid ""
 "dta'. An R object containing the STATA data will be created. STATA files "
 "other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported."
 msgstr ""
+"Elektu la STATA-datumdosieron por importi. Kutime tiuj dosieroj havas la "
+"finaĵon '*.dta'. R-objekto enhavanta la STATA-datenojn estos kreita. STATA-"
+"dosieroj krom datumdosieroj (t.e.:*.log, *.smcl, *.do, *.ado) ne estas "
+"subtenataj."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/import_stata.rkh:21
@@ -1440,6 +1538,8 @@ msgid ""
 "The filename of the file to import. This may also be a URL (http://, http:// "
 "and ftp:// are supported)."
 msgstr ""
+"La dosiernomo de la importota dosiero. Ĉi tio ankaŭ povas esti URL (http://, "
+"http:// kaj ftp:// estas subtenataj)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Edit Object")
 #: rkward/plugins/00saveload/import/import_stata.rkh:23
@@ -1456,6 +1556,8 @@ msgid ""
 "Convert Stata dates to R 'Date' class (see <link href=\"rkward://rhelp/read."
 "dta\"/>, <link href=\"rkward://rhelp/Dates\"/>)."
 msgstr ""
+"Konverti Stata-datojn al R 'Dato' klaso (vidu <link href=\"rkward://rhelp/"
+"read.dta\"/>, <link href=\"rkward://rhelp/Dates\"/>)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Use Stata value labels to create factors?")
 #: rkward/plugins/00saveload/import/import_stata.rkh:26
@@ -1464,6 +1566,8 @@ msgid ""
 "R uses value labels only for factors. Should Stata variable with value "
 "labels be converted to factors?"
 msgstr ""
+"R uzas valoretikedojn nur por faktoroj. Ĉu Stata-variablo kun valoraj "
+"etikedoj estu konvertita al faktoroj?"
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "For version 8 or later, store information about different types of missing data?")
 #: rkward/plugins/00saveload/import/import_stata.rkh:27
@@ -1473,6 +1577,10 @@ msgid ""
 "values. If this option is set, this information is stored in an attribute of "
 "the imported data. See <link href=\"rkward://rhelp/read.dta\"/> for details."
 msgstr ""
+"Stata versio 8 kaj supre diferencigas diversajn malsamajn specojn de "
+"mankantaj valoroj. Se ĉi tiu elekteblo estas agordita, ĉi tiu informo estas "
+"konservita en atributo de la importitaj datumoj. Vidu <link href=\"rkward://"
+"rhelp/read.dta\"/> por detaloj."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert '_' in Stata variable names to '.' in R names")
 #: rkward/plugins/00saveload/import/import_stata.rkh:28
@@ -1482,6 +1590,9 @@ msgid ""
 "problems in some (rare) situations. Should underscore characters be "
 "converted to dots ('.')?"
 msgstr ""
+"La substreko ('_') kutime ne estas uzata en R-variablonomoj, kaj povas kaŭzi "
+"problemojn en kelkaj (maloftaj) situacioj. Ĉu substrekaj signoj estu "
+"konvertitaj al punktoj ('.')?"
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_stata.rkh:29
@@ -1490,6 +1601,8 @@ msgid ""
 "Preview imported data. Only the first 50 rows and columns are shown, for "
 "performance reasons."
 msgstr ""
+"Antaŭrigardu importitajn datumojn. Nur la unuaj 50 vicoj kaj kolumnoj estas "
+"montritaj, pro agado-kialoj."
 
 #. i18n: ectx: (Import STATA file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:18
@@ -1528,6 +1641,8 @@ msgid ""
 "For version 8 or later, store information about different types of missing "
 "data?"
 msgstr ""
+"Por versio 8 aŭ posta, ĉu konservi informojn pri malsamaj specoj de "
+"mankantaj datumoj?"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:32
@@ -1542,6 +1657,8 @@ msgid ""
 "Preview not available, because package gdata is not installed or cannot be "
 "loaded."
 msgstr ""
+"Antaŭrigardo ne havebla, ĉar pako gdata ne estas instalita aŭ ne estas "
+"ŝargita."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="...">
@@ -1570,6 +1687,12 @@ msgid ""
 "you may want to try the Java-based alternative <link href=\"rkward://"
 "component/import_xls_xlconnect\"/>."
 msgstr ""
+"Elektu la Microsoft Excel-dosieron por importi folion. R-objekto enhavanta "
+"la datumojn estos kreita. Ĉi tiu metodo por importi Excel-foliojn baziĝas "
+"sur R-pakaĵo \"gdata\", kaj postulas funkciantan Perl-agordon. Se tio ne "
+"funkcias en via sistemo, aŭ ne produktas la atendatajn rezultojn, vi eble "
+"volas provi la Java-bazitan alternativon <link href=\"rkward://component/"
+"import_xls_xlconnect\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Name or number of sheet")
 #: rkward/plugins/00saveload/import/import_xls.rkh:22
@@ -1584,6 +1707,8 @@ msgid ""
 "Print details as the file is processed. This may be helpful in "
 "troubleshooting."
 msgstr ""
+"Presu detalojn dum la dosiero estas prilaborita. Ĉi tio povas esti helpema "
+"por solvi problemojn."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Number of rows to skip")
 #: rkward/plugins/00saveload/import/import_xls.rkh:24
@@ -1656,6 +1781,8 @@ msgid ""
 "Preview not available, because package XLConnect is not installed or cannot "
 "be loaded."
 msgstr ""
+"Antaŭrigardo ne havebla, ĉar pako XLConnect ne estas instalita aŭ ne estas "
+"ŝargita."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <usage>
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:16
@@ -1667,6 +1794,11 @@ msgid ""
 "case this does not work on your system, you may want to try the Perl-based "
 "alternative <link href=\"rkward://component/import_xls\"/>."
 msgstr ""
+"Elektu la Microsoft Excel-dosieron por importi folion. R-objekto enhavanta "
+"la datumojn estos kreita. Ĉi tiu metodo por importi Excel-foliojn baziĝas "
+"sur R-pakaĵo \"XLconnect\", kaj postulas funkciantan Java-agordon. Se tio ne "
+"funkcias en via sistemo, vi eble volas provi la Perl-bazitan alternativon "
+"<link href=\"rkward://component/import_xls\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of sheet")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:24
@@ -1675,6 +1807,8 @@ msgid ""
 "Numeric index or name/label of the sheet to import from the file. If you "
 "specify a name, here, make sure to quote it."
 msgstr ""
+"Nombra indekso aŭ nomo/etikedo de la folio por importi el la dosiero. Se vi "
+"specifas nomon, ĉi tie, nepre citi ĝin."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:25
@@ -1683,6 +1817,8 @@ msgid ""
 "Whether the first row of data should be used as column headers. "
 "Alternatively, columns are named, automatically (by index)."
 msgstr ""
+"Ĉu la unua vico de datumoj estu uzata kiel kolumnkapoj. Alternative, "
+"kolumnoj estas nomitaj, aŭtomate (laŭ indekso)."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of column with row names (if any)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:26
@@ -1692,6 +1828,9 @@ msgid ""
 "specify a name, here, make sure to quote it. If you leave this field empty, "
 "row-names will be assigned automatically (row numbers)"
 msgstr ""
+"Nombra indekso aŭ nomo/etikedo de la kolumno enhavanta vicnomojn. Se vi "
+"specifas nomon, ĉi tie, nepre citi ĝin. Se vi lasas ĉi tiun kampon malplena, "
+"vico-nomoj estos asignitaj aŭtomate (vicaj numeroj)"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Row")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:33
@@ -1701,6 +1840,9 @@ msgid ""
 "the start row will be determined, automatically. Alternatively, you can "
 "specify a range in spreadsheet notation, below."
 msgstr ""
+"Unua vico de datumoj importendaj ene de la folio. Se lasita al 0 (la "
+"defaŭlta), la komenca vico estos determinita, aŭtomate. Alternative, vi "
+"povas specifi gamon en kalkultabela notacio, sube."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:35
@@ -1709,6 +1851,8 @@ msgid ""
 "First column of data to import within the sheet. See <label id=\"startrow\"/"
 ">, above."
 msgstr ""
+"Unua kolumno de datumoj por importi en la folio. Vidu <label id=\"startrow\"/"
+">, supre."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Row")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:37
@@ -1717,6 +1861,8 @@ msgid ""
 "Last row of data to import within the sheet. See <label id=\"startrow\"/>, "
 "above."
 msgstr ""
+"Lasta vico de datumoj importendaj ene de la folio. Vidu <label id=\"startrow"
+"\"/>, supre."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:38
@@ -1725,6 +1871,8 @@ msgid ""
 "Last column of data to import within the sheet. See <label id=\"startrow\"/"
 ">, above."
 msgstr ""
+"Lasta kolumno de datumoj por importi en la folio. Vidu <label id=\"startrow"
+"\"/>, supre."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:39
@@ -1733,6 +1881,8 @@ msgid ""
 "Specify the range to import within the sheet in spreadsheet notation (e.g. "
 "\"A10:B20\")."
 msgstr ""
+"Indiku la intervalon por importi ene de la folio en kalkultabelo (ekz. \"A10:"
+"B20\")."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing rows")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:40
@@ -1741,6 +1891,8 @@ msgid ""
 "If checked, empty leading and trailing rows will be omitted from the "
 "imported data."
 msgstr ""
+"Se markite, malplenaj antaŭaj kaj postaj vicoj estos preterlasitaj de la "
+"importitaj datumoj."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing columns")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:41
@@ -1749,6 +1901,8 @@ msgid ""
 "If checked, empty leading and trailing columns will be omitted from the "
 "imported data."
 msgstr ""
+"Se markite, malplenaj gvidaj kaj postaj kolumnoj estos preterlasitaj de la "
+"importitaj datumoj."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column classes (empty for automatic)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:42
@@ -1761,6 +1915,12 @@ msgid ""
 "this control empty, entirely. Also note that most common type conversions "
 "can also be done <i>after</i> the data has been imported."
 msgstr ""
+"Ebligas al vi superregi la aŭtomatan datumtipdetekton. Specifu R-datumtipojn "
+"kiel \"signo\" aŭ \"numera\", ĉi tie. Ajna specifo, kiun vi faras ĉi tie, "
+"estos aplikata al <b>ĉiuj</b> importitaj kolumnoj (la specifo estos "
+"\"reciklita\", se necese). Por uzi aŭtomatan datumtipdetekton, lasu ĉi tiun "
+"regilon tute malplena. Notu ankaŭ, ke plej oftaj tipkonvertoj ankaŭ povas "
+"esti faritaj <i>post</i> la datumoj importitaj."
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:22
@@ -1862,6 +2022,13 @@ msgid ""
 "with your existing workspace. If in doubt, use Workspace-&gt;Open Workspace, "
 "instead of this plugin."
 msgstr ""
+"Elektu la R-dosieron por importi. Ĉi tio estus dosiero kreita ekz. "
+"konservante la laborspacon de RKWard, uzante la komandon R <link href="
+"\"rkward://rhelp/save\">save()</link>, aŭ la <link href=\"rkward://component/"
+"save_r \"/> kromaĵo. La ĉefa diferenco al ŝargo de laborspaco per Workspace-"
+">Open Workspace, estas ke la laborspaco unue ne estas purigita, sed prefere "
+"kunfandita kun via ekzistanta laborspaco. Se vi dubas, uzu Laborspacon-"
+">Malfermu Laborspacon, anstataŭ ĉi tiun kromprogramon."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
@@ -1871,6 +2038,9 @@ msgid ""
 "will be overwritten, if the loaded workspace contains objects of the same "
 "names."
 msgstr ""
+"Nepre konservu vian laborspacon antaŭ ol uzi ĉi tiun kromprogramon, ĉar viaj "
+"variabloj estos anstataŭitaj, se la ŝargita laborspaco enhavas objektojn de "
+"la samaj nomoj."
 
 #. i18n: ectx: (Loaded from Load an R data file) <settings> <setting> (refers to element labelled "R data file to load")
 #: rkward/plugins/00saveload/import/load_data.rkh:19
@@ -1887,6 +2057,10 @@ msgid ""
 "not yet exist, it will be created. If it already exists, it will be "
 "overwritten completely, i.e. deleting all objects inside it!"
 msgstr ""
+"Marku ĉi tiun elekteblon (kaj specifu medion), por ŝargi la datumojn en "
+"medion krom .GlobalEnv. Se la specifita medio ankoraŭ ne ekzistas, ĝi estos "
+"kreita. Se ĝi jam ekzistas, ĝi estos tute anstataŭita, t.e. forigante ĉiujn "
+"objektojn en ĝi!"
 
 #. i18n: ectx: (Load an R data file) <dialog label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:14
@@ -1907,6 +2081,8 @@ msgid ""
 "WARNING: This may overwrite existing objects in .GlobalEnv. Be sure to save "
 "your workspace, first."
 msgstr ""
+"AVERTO: Ĉi tio povas anstataŭigi ekzistantajn objektojn en .GlobalEnv. Nepre "
+"konservu vian laborspacon unue."
 
 #. i18n: ectx: (Load an R data file) <dialog label="Load an R data file"> <saveobject label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:17
@@ -1920,7 +2096,7 @@ msgstr "Konservu al medio"
 msgid ""
 "WARNING: If the environment already exists, all objects inside it will be "
 "lost."
-msgstr ""
+msgstr "AVERTO: Se la medio jam ekzistas, ĉiuj objektoj en ĝi estos perditaj."
 
 #. i18n: ectx: (Loaded from Source an R file)
 #: rkward/plugins/00saveload/import/source.js:27
@@ -1942,6 +2118,9 @@ msgid ""
 "of R statements, which are then evaluated (see <link href=\"rkward://rhelp/"
 "source\"/>)."
 msgstr ""
+"Elektu dosieron por ŝargi. Ĉi tiu dosiero estos ŝargita kaj interpretita "
+"kiel skripto de R-deklaroj, kiuj poste estas taksitaj (vidu <link href="
+"\"rkward://rhelp/source\"/>)."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/source.rkh:18
@@ -1957,6 +2136,9 @@ msgid ""
 "source file. This may be needed, if the source file refers to further files "
 "using relative paths."
 msgstr ""
+"Se markite, la labordosierujo estos ŝanĝita de la dosierujo de la "
+"fontdosiero. Ĉi tio povas esti bezonata, se la fontdosiero rilatas al pliaj "
+"dosieroj uzante relativajn vojojn."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Run in a local environment")
 #: rkward/plugins/00saveload/import/source.rkh:20
@@ -1968,13 +2150,18 @@ msgid ""
 "create new objects (in contrast to just producing printed output), it will "
 "have to be run in the global environment."
 msgstr ""
+"Se markite, la fontdosiero estas interpretita en loka medio, anstataŭe de la "
+"ĉiea medio. Ĉi tio estas multe pli sekura, ĉar neniuj ekzistantaj objektoj "
+"estos anstataŭitaj. Aliflanke, se la celo de la fontdosiero estas krei "
+"novajn objektojn (kontraste al nur produktado de presita eligo), ĝi devos "
+"esti rulita en la ĉiea medio."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Echo source statements")
 #: rkward/plugins/00saveload/import/source.rkh:22
 #, kde-format
 msgid ""
 "Should each source statement be echoed after parsing, and before evaluation?"
-msgstr ""
+msgstr "Ĉu ĉiu fonta deklaro devus esti eĥita post analizo, kaj antaŭ taksado?"
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Prompt for echoed lines (empty for default)")
 #: rkward/plugins/00saveload/import/source.rkh:23
@@ -1983,6 +2170,8 @@ msgid ""
 "What should be printed at the start of each echoed source line (to "
 "differentiate it from the output)? Leave empty for the default."
 msgstr ""
+"Kio devus esti presita ĉe la komenco de ĉiu eĥita fontlinio (por diferencigi "
+"ĝin de la eligo)? Lasu malplena por la defaŭlta."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Maximal length of echoed statements")
 #: rkward/plugins/00saveload/import/source.rkh:24
@@ -2003,6 +2192,7 @@ msgid ""
 "Print the result of each single evaluation (instead of just the final "
 "result)."
 msgstr ""
+"Presu la rezulton de ĉiu unuopa taksado (anstataŭ nur la fina rezulto)."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Source an R file) <dialog label="...">
@@ -2094,6 +2284,10 @@ msgid ""
 "defined via output_format will be used, see the documentation on rmarkdown::"
 "render()."
 msgstr ""
+"Agordu la celformaton por eksportitaj dosieroj. Se vi elektas aŭ \"Ĉiuj "
+"formatoj difinitaj en dokumento\" aŭ \"Unua formato difinita en dokumento\", "
+"la formatoj difinitaj per output_format estos uzataj, vidu la dokumentadon "
+"pri rmarkdown::render()."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save as")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:27
@@ -2108,6 +2302,8 @@ msgid ""
 "Choose the target directory to export to, file names are automatically "
 "generated according to the formats defined in the document."
 msgstr ""
+"Elektu la celan dosierujon por eksporti, dosiernomoj aŭtomate generiĝas laŭ "
+"la formatoj difinitaj en la dokumento."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Markdown version")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:34
@@ -2119,6 +2315,12 @@ msgid ""
 "between various output formats. But be aware that some formats may require "
 "special configuration or templates to produce proper results."
 msgstr ""
+"Agordu la version de markdown por uzi. Pli malnovaj v1 dokumentoj estas "
+"prezentitaj nur en HTML-formaton, uzante la markdown-pakaĵon. Se vi dubas, "
+"lasu ĝin al la pli nova v2; tiuj dokumentoj estas prezentitaj per pandoc, "
+"kiu ebligas al vi elekti inter diversaj eligformatoj. Sed konsciu, ke iuj "
+"formatoj povas postuli specialan agordon aŭ ŝablonojn por produkti taŭgajn "
+"rezultojn."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Export RMarkdown) <about name="...">
@@ -2321,6 +2523,9 @@ msgid ""
 "Save one or more selected R objects to a file. <b>Note:</b> Use <i>Workspace-"
 ">Save Workspace</i> for saving the complete workspace."
 msgstr ""
+"Konservu unu aŭ plurajn elektitajn R-objektojn al dosiero. <b>Noto:</b> Uzu "
+"<i>Laborspaco->Konservi Laborspacon</i> por konservi la kompletan "
+"laborspacon."
 
 #. i18n: ectx: (Loaded from Save R objects) <usage>
 #: rkward/plugins/00saveload/save/save.rkh:12
@@ -2329,6 +2534,9 @@ msgid ""
 "Select the objects to save, and a filename to save to. Created data files "
 "can be loaded using <link href=\"rkward://component/load_r_object\"/>."
 msgstr ""
+"Elektu la objektojn por konservi, kaj dosiernomon por konservi. Kreitaj "
+"datumdosieroj povas esti ŝargitaj per <link href=\"rkward://component/"
+"load_r_object\"/>."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Object")
 #: rkward/plugins/00saveload/save/save.rkh:16
@@ -2356,6 +2564,9 @@ msgid ""
 "allows to select the method of compression. Some methods are not available "
 "for versions of R before 2.10.0."
 msgstr ""
+"La dosiero povas esti kunpremita por atingi pli malgrandan dosiergrandecon. "
+"Ĉi tiu regilo permesas elekti la metodon de kunpremo. Iuj metodoj ne "
+"disponeblas por versioj de R antaŭ 2.10.0."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression level")
 #: rkward/plugins/00saveload/save/save.rkh:20
@@ -2553,6 +2764,10 @@ msgid ""
 "to save to. All other options allow you to define the file format, handling "
 "of column and row names as well as special character handling."
 msgstr ""
+"Elektu tabelan datuman objekton (kiel datumkadro aŭ matrico) kaj elektu "
+"dosieron por konservi. Ĉiuj aliaj elektebloj permesas al vi difini la "
+"dosierformaton, uzadon de kolumno- kaj vico-nomoj kaj ankaŭ speciala signo-"
+"traktado."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Data")
 #: rkward/plugins/00saveload/save/write_csv.rkh:25
@@ -2561,6 +2776,8 @@ msgid ""
 "Select a data object to export. Valid data types are array, data.frame, "
 "matrix, character, numeric, and integer."
 msgstr ""
+"Elektu datumon por eksporti. Validaj datumtipoj estas tabelo, data.frame, "
+"matrico, signo, nombra kaj entjero."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:29
@@ -2569,6 +2786,8 @@ msgid ""
 "The file to save to. Existing files will be overwritten, unless the append "
 "option is checked."
 msgstr ""
+"La dosiero por konservi. Ekzistantaj dosieroj estos anstataŭitaj, krom se la "
+"aldona elekteblo estas markita."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Append to file (if it exists)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:32
@@ -2577,6 +2796,8 @@ msgid ""
 "Should existing files be overwritten or the data appended? If this is greyed "
 "out, the selected preset sets this for you."
 msgstr ""
+"Ĉu ekzistantaj dosieroj devus esti anstataŭitaj aŭ la datumoj aldonitaj? Se "
+"ĉi tio estas grizigita, la elektita antaŭmeto fiksas ĉi tion por vi."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File format")
 #: rkward/plugins/00saveload/save/write_csv.rkh:35
@@ -2586,6 +2807,9 @@ msgid ""
 "options (like field separator and decimal point) with reasonable defaults. "
 "Use the custom format if you need more control."
 msgstr ""
+"Elektu unu el la defaŭltaj dosierformatoj ĉi tie. Ili starigos kelkajn el la "
+"elektebloj (kiel kampa apartigilo kaj dekuma punkto) kun akcepteblaj "
+"defaŭltoj. Uzu la propran formaton se vi bezonas pli da rego."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:39
@@ -2594,6 +2818,8 @@ msgid ""
 "Specify the desired decimal point character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
+"Indiku la deziratan decimalpunktan signon. Se ĉi tio estas grizigita, la "
+"elektita antaŭmeto fiksas ĉi tion por vi."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:42
@@ -2608,6 +2834,8 @@ msgid ""
 "Specify the desired field separator character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
+"Indiku la deziratan kampan apartigilon. Se ĉi tio estas grizigita, la "
+"elektita antaŭmeto fiksas ĉi tion por vi."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:48
@@ -2634,6 +2862,8 @@ msgid ""
 "Decide how to deal with column names. If this is greyed out, the selected "
 "preset sets this for you."
 msgstr ""
+"Decidu kiel trakti kolonnomojn. Se ĉi tio estas grizigita, la elektita "
+"antaŭmeto fiksas ĉi tion por vi."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:63
@@ -2648,6 +2878,8 @@ msgid ""
 "If the default character encoding doesn't work for you, you can set a "
 "specific one here."
 msgstr ""
+"Se la defaŭlta signokodigo ne funkcias por vi, vi povas agordi specifan ĉi "
+"tie."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Custom encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:71
@@ -2656,6 +2888,8 @@ msgid ""
 "Use this field to set a custom encoding, in case the dropdown menu doesn't "
 "list the one you need."
 msgstr ""
+"Uzu ĉi tiun kampon por agordi propran kodigon, se la falmenuo ne listigas "
+"tiun, kiun vi bezonas."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Quote all strings")
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
@@ -2671,6 +2905,9 @@ msgid ""
 "escaped or double quoted. If this is greyed out, the selected preset sets "
 "this for you."
 msgstr ""
+"Regas kiel ekzistantaj citaĵoj en valoroj estas pritraktitaj -- ili povas "
+"esti aŭ ellasitaj aŭ duoble cititaj. Se ĉi tio estas grizigita, la elektita "
+"antaŭmeto fiksas ĉi tion por vi."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Character for missing values")
 #: rkward/plugins/00saveload/save/write_csv.rkh:81
@@ -2686,6 +2923,9 @@ msgid ""
 "operating systems, changing this option might help in case you run into "
 "problems when exchanging files with other people."
 msgstr ""
+"Agordu la signon uzatan por indiki liniorompon (EOL). Ĉi tio varias inter "
+"operaciumoj, ŝanĝi ĉi tiun elekteblon povus helpi se vi renkontos problemojn "
+"dum interŝanĝado de dosieroj kun aliaj homoj."
 
 #. i18n: ectx: (Export Table / CSV files) <related>
 #: rkward/plugins/00saveload/save/write_csv.rkh:88
@@ -2694,6 +2934,8 @@ msgid ""
 "<link href=\"rkward://rhelp/write.table\"> R manual page for write.table(), "
 "which is called by this plugin. </link>"
 msgstr ""
+"<link href=\"rkward://rhelp/write.table\"> R-manlibropaĝo por write.table(), "
+"kiu estas vokita de ĉi tiu kromaĵo. </link>"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:51
@@ -2872,6 +3114,8 @@ msgid ""
 "Choose a directory to set/change the working directory for R. The R function "
 "<b>setwd</b> is used to do the job."
 msgstr ""
+"Elektu dosierujon por agordi/ŝanĝi la labordosierujon por R. La R-funkcio "
+"<b>setwd</b> estas uzata por fari la laboron."
 
 #. i18n: ectx: (Set the working directory) <dialog label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:10
@@ -2898,6 +3142,8 @@ msgid ""
 "Plugins for reading and writing data in various formats. Part of the "
 "official RKWard distribution"
 msgstr ""
+"Kromaĵoj por legi kaj skribi datumojn en diversaj formatoj. Parto de la "
+"oficiala RKWard-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:24

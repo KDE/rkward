@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-04-14 00:04+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "okellogg@users.sourceforge.net"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
@@ -43,6 +43,8 @@ msgid ""
 "Distribution functions, plots, tests of (normal) distribution, central limit "
 "theorem. Part of the official RKWard distribution"
 msgstr ""
+"Distribuaj funkcioj, grafikoj, testoj de (normala) distribuo, centra "
+"limteoremo. Parto de la oficiala RKWard-distribuo"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Shapiro-Wilk Normality Test)
@@ -636,6 +638,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Beta distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Beta-"
+"distribuo."
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <settings> <setting> (refers to element labelled "Shape 1")
 #. i18n: ectx: (Loaded from Beta distribution calculator) <settings> <setting> (refers to element labelled "Shape 2")
@@ -698,6 +702,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "binomial distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la dunoma "
+"distribuo."
 
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <summary>
 #: rkward/plugins/distributions/binomial.rkh:11
@@ -706,6 +712,8 @@ msgid ""
 "Note: For the binomial distribution, quantiles can be interpreted as number "
 "of successes in the given number of trials."
 msgstr ""
+"Notu: Por la binoma distribuo, kvantiloj povas esti interpretitaj kiel "
+"nombro da sukcesoj en la donita nombro da provoj."
 
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <settings> <setting> (refers to element labelled "Binomial trials")
 #. i18n: ectx: (Loaded from Plot binomial probabilities) <settings> <setting> (refers to element labelled "Number of trials")
@@ -723,6 +731,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability, here."
 msgstr ""
+"Probableco de sukceso en ĉiu provo. Rimarku, ke ĉi tiu agordo <b>ne</b> "
+"estas tuŝita de la agordo \"log probabloj\", t.e. ĉiam specifu la simplan "
+"probablecon, ĉi tie."
 
 #. i18n: ectx: (Binomial probabilities, quantiles, densities)
 #: rkward/plugins/distributions/binomial.xml:13
@@ -731,6 +742,8 @@ msgid ""
 "Quantiles can be interpreted as number of successes in the given number of "
 "trials."
 msgstr ""
+"Kvantiloj povas esti interpretitaj kiel nombro da sukcesoj en la "
+"antaŭfiksita nombro da provoj."
 
 #. i18n: ectx: (Binomial probabilities, quantiles, densities) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/binomial.xml:18
@@ -763,6 +776,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Cauchy distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Cauchy-"
+"distribuo."
 
 #. i18n: ectx: (Loaded from Cauchy distribution calculator) <settings> <setting> (refers to element labelled "Location")
 #. i18n: ectx: (Loaded from Plot Cauchy probabilities) <settings> <setting> (refers to element labelled "Location")
@@ -831,6 +846,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the Chi-"
 "squared (χ²) distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Ĥi-"
+"kvadrata (χ²) distribuo."
 
 #. i18n: ectx: (Loaded from Chi-squared distribution calculator) <settings> <setting> (refers to element labelled "Degrees of Freedom")
 #. i18n: ectx: (Plot Chi-squared probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -870,6 +887,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_beta_distribution\"/"
 ">."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/plot_beta_distribution"
+"\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Beta to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_beta_clt.xml:12
@@ -913,6 +932,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_binomial_distribution"
 "\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_binomial_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Binomial to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_binomial_clt.xml:12
@@ -962,6 +983,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/"
 "plot_chi_squared_distribution\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_chi_squared_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Chi squared to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_chi_squared_clt.xml:12
@@ -1009,6 +1032,12 @@ msgid ""
 "histograms or distribution functions. For brevity, D will denote the "
 "contending distribution (<label id=\"dist_name\"/> here)."
 msgstr ""
+"Normala aproksimado al <label id=\"dist_name\"/> Ekzemplaj mezumoj. "
+"Plejparto de ĉi tiu helpdosiero estas ĝenerala priskribo de CLT-kromaĵoj. "
+"Ekzemplaj mezumoj de rivala distribuo (<label id=\"dist_name\"/> ĉi tie) "
+"estas komparitaj kun celo Normala distribuo. La komparo estas farita surbaze "
+"de aŭ histogramoj aŭ distribuaj funkcioj. Por koncizeco, D indikos la "
+"disputantan distribuon (<label id=\"dist_name\"/> ĉi tie)."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <usage>
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <usage>
@@ -1034,6 +1063,9 @@ msgid ""
 "CLT and a choice of function. The function specific options are provided in "
 "different tabs."
 msgstr ""
+"Elektu la <label id=\"dist_name\"/> parametrojn, la specimenajn grandecojn "
+"necesajn por CLT kaj elekton de funkcio. La funkcio-specifaj opcioj estas "
+"provizitaj en malsamaj langetoj."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for Average")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for Average")
@@ -1059,6 +1091,9 @@ msgid ""
 "value of the parameters, one would be interested in seeing how the "
 "distribution of the sample averages change as this number increases."
 msgstr ""
+"Ĉi tiuj multaj specimenoj (nAvg) estas uzataj por kalkuli specimenan "
+"mezumon. Por fiksa valoro de la parametroj, oni interesus vidi kiel la "
+"distribuo de la specimenaj mezumoj ŝanĝiĝas dum ĉi tiu nombro pliiĝas."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for distribution")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for distribution")
@@ -1085,6 +1120,10 @@ msgid ""
 "these averages are used to construct the 'Histogram' or the 'Distribution "
 "function'."
 msgstr ""
+"Ĉi tiuj multaj aroj-de-specimenoj (nDist) estas uzataj por havi ian ideon "
+"pri la distribuo de la specimenaj mezumoj. Ĉiu aro provizas mezumon. Tiam ĉi "
+"tiuj mezumoj estas uzataj por konstrui la 'Histogramon' aŭ la 'Distribuan "
+"funkcion'."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
@@ -1109,6 +1148,8 @@ msgid ""
 "Choose one of 'Histogram' or 'Distribution function' to compare the "
 "distribution of the sample averages of D with that of Normal distribution."
 msgstr ""
+"Elektu unu el 'Histogramo' aŭ 'Distribua funkcio' por kompari la distribuon "
+"de la specimenaj mezumoj de D kun tiu de Normala distribuo."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Use normalised random variable")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Use normalised random variable")
@@ -1137,6 +1178,12 @@ msgid ""
 "the target distribution is Normal with the mean E(D) and standard deviation "
 "S(D)/sqrt(nAvg)."
 msgstr ""
+"Ĉu la provaĵmezumoj devus esti normaligitaj, per subtrahado de la meznombro, "
+"E (D), de D kaj dividado per la norma devio, S (D)/sqrt (nAvg), kie S (D) "
+"estas la norma devio de D? Se farite tiel, tiam la cela Normala distribuo "
+"estas prenita kiel la norma, tio estas, kun meznombro 0 kaj varianco 1. Alie "
+"la celdistribuo estas Normala kun la meznombro E(D) kaj norma devio S(D)/"
+"sqrt( nAvg)."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Draw normal curve")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Draw normal curve")
@@ -1162,6 +1209,9 @@ msgid ""
 "samples are drawn from the target Normal distribution and their density "
 "values are plotted."
 msgstr ""
+"Ĉu Normala kurbo estu desegnita? Por la kazo de \"Histogramo\", nDist "
+"hazardaj provaĵoj estas desegnitaj de la celo Normala distribuo kaj iliaj "
+"densecvaloroj estas punktitaj."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Type of points/lines")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Type of points/lines")
@@ -1277,6 +1327,11 @@ msgid ""
 "disabled. See RKWard help on <link href=\"rkward://component/"
 "histogram_options\"/> for other histogram centric details."
 msgstr ""
+"La markobutono 'Frekvenco' estas nedisponebla ĉar, en ĉi tiu situacio, "
+"desegni la histogramon per <i>freq=TRUE</i> ne havas sencon. Ankaŭ, ĉar "
+"histogramo estas la ĉefa grafiko, 'Aldoni al nuna grafiko' markobutono ankaŭ "
+"estis malŝaltita. Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"histogram_options\"/> por aliaj histogramcentraj detaloj."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting label="..."> (refers to element labelled "")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting label="..."> (refers to element labelled "")
@@ -1323,6 +1378,9 @@ msgid ""
 "See the help on the <link href=\"rkward://component/plot_stepfun_options\"/> "
 "plugin. The 'Add to current plot' option is unavailable."
 msgstr ""
+"Vidu la helpon ĉe la kromaĵo <link href=\"rkward://component/"
+"plot_stepfun_options\"/>. La opcio 'Aldoni al nuna grafiko' ne estas "
+"disponebla."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <related>
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <related>
@@ -2058,6 +2116,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/"
 "plot_exponential_distribution\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_exponential_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Exponential to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_exponential_clt.xml:12
@@ -2098,6 +2158,9 @@ msgid ""
 "For variance to exist we need the 'Denominator degrees of freedom' parameter "
 "to be greater than 4."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/plot_f_distribution\"/"
+">. Por ke varianco ekzistu, ni bezonas la parametron \"Denominator gradoj de "
+"libereco\" esti pli granda ol 4."
 
 #. i18n: ectx: (Central Limit Theorem: F to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_f_clt.xml:12
@@ -2145,6 +2208,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_gamma_distribution\"/"
 ">."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/plot_gamma_distribution"
+"\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Gamma to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_gamma_clt.xml:12
@@ -2196,6 +2261,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/"
 "plot_geometric_distribution\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_geometric_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Geometric to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_geometric_clt.xml:12
@@ -2223,6 +2290,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/"
 "plot_hypergeometric_distribution\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_hypergeometric_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Hypergeometric to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_hypergeometric_clt.xml:12
@@ -2274,6 +2343,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_logistic_distribution"
 "\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_logistic_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Logistic to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_logistic_clt.xml:12
@@ -2301,6 +2372,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/"
 "plot_lognormal_distribution\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_lognormal_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Lognormal to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_lognormal_clt.xml:12
@@ -2356,6 +2429,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/"
 "plot_negbinomial_distribution\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_negbinomal_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Negative Binomial to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_negbinomial_clt.xml:12
@@ -2427,6 +2502,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_normal_distribution"
 "\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_normal_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Normal to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_normal_clt.xml:12
@@ -2454,6 +2531,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_poisson_distribution"
 "\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_poisson_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Poisson to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_poisson_clt.xml:12
@@ -2482,6 +2561,9 @@ msgid ""
 "For the variance to exist, the 'Degrees of freedom' parameter has to be "
 "greater than 2."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/plot_t_distribution\"/"
+">. Por ke la varianco ekzistu, la parametro \"Gradoj de libereco\" devas "
+"esti pli granda ol 2."
 
 #. i18n: ectx: (Central Limit Theorem: t to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_t_clt.xml:12
@@ -2509,6 +2591,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_uniform_distribution"
 "\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_uniform_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Uniform to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_uniform_clt.xml:12
@@ -2552,6 +2636,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_weibull_distribution"
 "\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_weibull_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Weibull to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_weibull_clt.xml:12
@@ -2579,6 +2665,8 @@ msgid ""
 "See RKWard help on <link href=\"rkward://component/plot_wilcoxon_distribution"
 "\"/>."
 msgstr ""
+"Vidu RKWard-helpon ĉe <link href=\"rkward://component/"
+"plot_wilcoxon_distribution\"/>."
 
 #. i18n: ectx: (Central Limit Theorem: Wilcoxon to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_wilcoxon_clt.xml:12
@@ -2666,6 +2754,8 @@ msgid ""
 "Specify the quantity to be calculated (probabilities, densities, or "
 "quantiles), and the quantity given (probabilities or quantiles)"
 msgstr ""
+"Indiku la kvanton esti kalkulita (probablecoj, densecoj aŭ kvantiloj), kaj "
+"la kvanto donita (probablecoj aŭ kvantiloj)"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Number of quantiles")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Number of quantiles")
@@ -2693,6 +2783,8 @@ msgid ""
 "When calculating densities or probabilities, specify the number of evenly "
 "spaces quantiles to show. Alternatively, use the setting above."
 msgstr ""
+"Dum kalkulado de densecoj aŭ probabloj, specifu la nombron da egalspacaj "
+"kvantiloj por montri. Alternative, uzu la agordon supre."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
@@ -2720,6 +2812,8 @@ msgid ""
 "When calculating densities or probabilities, specify one or more quantiles. "
 "Alternatively, leave this empty to use the setting above, instead."
 msgstr ""
+"Dum kalkulado de densecoj aŭ probabloj, specifu unu aŭ pluraj kvantilojn. "
+"Alternative, lasu ĉi tion malplena por uzi la supran agordon anstataŭe."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Number of probabilities")
@@ -2748,6 +2842,9 @@ msgid ""
 "probabilities (optionally logarithmic) to show. Alternatively, use the "
 "setting below."
 msgstr ""
+"Dum kalkulado de kvantiloj, specifu la nombron da egale interspacigitaj "
+"verŝajnecoj (laŭvole logaritmaj) por montri. Alternative, uzu la suban "
+"agordon."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
@@ -2776,6 +2873,9 @@ msgid ""
 "logarithmic (see below). If this setting is left empty, the setting above is "
 "used, instead."
 msgstr ""
+"Dum kalkulado de kvantiloj, specifu unu aŭ pluraj verŝajnecojn, laŭvole "
+"logaritmajn (vidu malsupre). Se ĉi tiu agordo estas lasita malplena, la "
+"agordo supre estas uzata anstataŭe."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
@@ -2803,6 +2903,8 @@ msgid ""
 "When calculating probabilities, return these as log (p). When specifying "
 "probabilities, these are supplied as log (p)."
 msgstr ""
+"Dum kalkulado de probabloj, redonu ĉi tiujn kiel log (p). Kiam oni specifas "
+"probablojn, ĉi tiuj estas liveritaj kiel log (p)."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Logarithmic densities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Logarithmic densities")
@@ -2855,6 +2957,8 @@ msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
 "probabilities are P[X &gt; x]"
 msgstr ""
+"Se markite (la defaŭlta) probabloj estas P[X ≤ x]. Alie (supra vosto) "
+"probabloj estas P[X &gt; x]"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting>
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting>
@@ -2934,6 +3038,9 @@ msgid ""
 "case a short sequence of evenly spaced values will be filled in, "
 "automatically."
 msgstr ""
+"Elektu la deziratan operacion, tiam specifu la valorojn de intereso. La "
+"enigvaloroj (kvantoj aŭ probabloj) povas esti lasitaj malplenaj, en kiu kazo "
+"mallonga sekvenco de egale interspacigitaj valoroj estos plenigita, aŭtomate."
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <dropdown label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <dropdown label="...">
@@ -3248,6 +3355,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Exponential distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la "
+"Eksponenta distribuo."
 
 #. i18n: ectx: (Loaded from Exponential distribution calculator) <settings> <setting> (refers to element labelled "Rate")
 #: rkward/plugins/distributions/exponential.rkh:17
@@ -3262,6 +3371,8 @@ msgid ""
 "<link href=\"rkward://component/rkward/gamma_probabilities\"/> (of which the "
 "exponential distribution is a special case)"
 msgstr ""
+"<link href=\"rkward://component/rkward/gamma_probabilities\"/> (de kiu la "
+"eksponenta distribuo estas speciala kazo)"
 
 #. i18n: ectx: (Loaded from F distribution calculator)
 #: rkward/plugins/distributions/f.js:9
@@ -3276,6 +3387,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the F "
 "distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la F-"
+"distribuo."
 
 #. i18n: ectx: (F distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/f.xml:15
@@ -3302,6 +3415,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "gamma distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la gama-"
+"distribuo."
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator) <settings> <setting> (refers to element labelled "Shape")
 #: rkward/plugins/distributions/gamma.rkh:17
@@ -3322,6 +3437,8 @@ msgid ""
 "<link href=\"rkward://component/rkward/exponential_probabilities\"/> (a "
 "special case of the gamma distribution with shape=1)"
 msgstr ""
+"<link href=\"rkward://component/rkward/exponential_probabilities\"/> "
+"(speciala kazo de la gama-distribuo kun formo=1)"
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator) <related>
 #: rkward/plugins/distributions/gamma.rkh:20
@@ -3330,6 +3447,8 @@ msgid ""
 "<link href=\"rkward://rhelp/GammaDist\">R help on Gamma Distribution "
 "functions</link>"
 msgstr ""
+"<link href=\"rkward://rhelp/GammaDist\">R-helpo pri funkcioj de Gamma "
+"Distribuo</link>"
 
 #. i18n: ectx: (Loaded from Geometric distribution calculator)
 #: rkward/plugins/distributions/geom.js:10
@@ -3344,6 +3463,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Geometric distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la "
+"Geometria distribuo."
 
 #. i18n: ectx: (Loaded from Geometric distribution calculator) <summary>
 #: rkward/plugins/distributions/geom.rkh:11
@@ -3352,6 +3473,8 @@ msgid ""
 "Quantiles in the geometric distribution represent the number of failures in "
 "a sequence of Bernoulli trials before the first success."
 msgstr ""
+"Kvantiloj en la geometria distribuo reprezentas la nombron da fiaskoj en "
+"sekvenco de Bernoulli-provoj antaŭ la unua sukceso."
 
 #. i18n: ectx: (Loaded from Geometric distribution calculator) <settings> <setting> (refers to element labelled "probability of success in each trial")
 #: rkward/plugins/distributions/geom.rkh:19
@@ -3361,6 +3484,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability,"
 msgstr ""
+"Probableco de sukceso en ĉiu provo. Rimarku, ke ĉi tiu agordo <b>ne</b> "
+"estas tuŝita de la agordo \"log probabloj\", t.e. ĉiam specifu la simplan "
+"probablecon,"
 
 #. i18n: ectx: (Geometric distribution calculator)
 #: rkward/plugins/distributions/geom.xml:13
@@ -3369,6 +3495,8 @@ msgid ""
 "Quantiles represent the number of failures in a sequence of Bernoulli trials "
 "before the first success."
 msgstr ""
+"Kvantiloj reprezentas la nombron da fiaskoj en sekvenco de Bernoulli-provoj "
+"antaŭ la unua sukceso."
 
 #. i18n: ectx: (Geometric distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/geom.xml:18
@@ -3389,6 +3517,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Gumbel distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Gumbel-"
+"distribuo."
 
 #. i18n: ectx: (Loaded from Gumbel distribution calculator) <settings> <setting> (refers to element labelled "Location")
 #: rkward/plugins/distributions/gumbel.rkh:17
@@ -3411,6 +3541,8 @@ msgid ""
 "<link href=\"rkward://rhelp/pgumgel\">R help on the gumbel distribution "
 "functions from package FAdist</link>"
 msgstr ""
+"<link href=\"rkward://rhelp/pgumgel\">R-helpo pri la gumbel distribuaj "
+"funkcioj de pako FAdist</link>"
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator)
 #: rkward/plugins/distributions/hypergeometric.js:9
@@ -3425,6 +3557,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Hypergeometric distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la "
+"Hipergeometria distribuo."
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator) <summary>
 #. i18n: ectx: (Hypergeometric distribution calculator)
@@ -3435,6 +3569,8 @@ msgid ""
 "Quantiles represent the number of white balls drawn in k draws without "
 "replacement from an urn containing m white and n black balls."
 msgstr ""
+"Kvantoj reprezentas la nombron da blankaj pilkoj desegnitaj en k remizoj sen "
+"anstataŭigo de urno enhavanta m blankajn kaj n nigrajn pilkojn."
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator) <settings> <setting> (refers to element labelled "m (Number of white balls in the urn)")
 #. i18n: ectx: (Hypergeometric distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -3477,6 +3613,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the Log-"
 "Normal distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Log-"
+"Normala distribuo."
 
 #. i18n: ectx: (Loaded from Log Normal distribution calculator) <settings> <setting> (refers to element labelled "meanlog (mean on log scale)")
 #: rkward/plugins/distributions/log_normal.rkh:17
@@ -3515,6 +3653,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "logistic distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la "
+"loĝistika distribuo."
 
 #. i18n: ectx: (Loaded from Logistic distribution calculator) <settings> <setting> (refers to element labelled "Location")
 #: rkward/plugins/distributions/logistic.rkh:17
@@ -3535,6 +3675,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Negative Binomial distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Negativa "
+"Binomo-distribuo."
 
 #. i18n: ectx: (Loaded from Negative Binomial distribution calculator) <summary>
 #: rkward/plugins/distributions/negative_binomial.rkh:11
@@ -3543,6 +3685,8 @@ msgid ""
 "Note: Quantiles represents the number of failures in a sequence of Bernoulli "
 "trials before the target number of successes is reached."
 msgstr ""
+"Notu: Kvantiloj reprezentas la nombron da fiaskoj en sekvenco de Bernoulli-"
+"provoj antaŭ ol la celnombro de sukcesoj estas atingita."
 
 #. i18n: ectx: (Loaded from Negative Binomial distribution calculator) <settings> <setting> (refers to element labelled "Target number of successful trials")
 #: rkward/plugins/distributions/negative_binomial.rkh:19
@@ -3558,6 +3702,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability."
 msgstr ""
+"Probableco de sukceso en ĉiu provo. Rimarku, ke ĉi tiu agordo <b>ne</b> "
+"estas tuŝita de la agordo \"log probabloj\", t.e. ĉiam specifu la simplan "
+"probablecon."
 
 #. i18n: ectx: (Negative Binomial distribution calculator)
 #: rkward/plugins/distributions/negative_binomial.xml:13
@@ -3566,6 +3713,8 @@ msgid ""
 "Quantiles represent the number of failures in a sequence of Bernoulli trials "
 "before the target number of successes is reached."
 msgstr ""
+"Kvantiloj reprezentas la nombron da fiaskoj en sekvenco de Bernoulli-provoj "
+"antaŭ ol la celnombro de sukcesoj estas atingita."
 
 #. i18n: ectx: (Loaded from Plot binomial probabilities) <settings> <setting> (refers to element labelled "Probability of success on each trial")
 #. i18n: ectx: (Negative Binomial distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -3588,6 +3737,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Normal distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Normala "
+"distribuo."
 
 #. i18n: ectx: (Loaded from Normal distribution calculator) <settings> <setting> (refers to element labelled "mu (mean)")
 #: rkward/plugins/distributions/normal.rkh:17
@@ -3608,6 +3759,8 @@ msgid ""
 "Various tests for normality of observed measures are available, for instance "
 "<link href=\"rkward://component/rkward/jb_test\"/>."
 msgstr ""
+"Diversaj testoj pri normaleco de observitaj mezuroj estas disponeblaj, "
+"ekzemple <link href=\"rkward://component/rkward/jb_test\"/>."
 
 #. i18n: ectx: (Normal distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/normal.xml:15
@@ -3836,7 +3989,7 @@ msgstr "Ĥi-kvadrato"
 #, kde-format
 msgid ""
 "Density and distribution function plots for the Chi-squared distribution."
-msgstr ""
+msgstr "Densec- kaj distribu-funkciaj grafikoj por la Ĥi-kvadrata distribuo."
 
 #. i18n: ectx: (Loaded from Plot Chi-squared probabilities) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #. i18n: ectx: (Loaded from Plot Chi-squared probabilities) <settings> <setting> (refers to element labelled "Non-centrality parameter")
@@ -4113,6 +4266,9 @@ msgid ""
 "this box if the upper tail of the distribution function (P[X > x]) is to be "
 "plotted."
 msgstr ""
+"Ĉi tiu opcio validas nur por grafiko de la distribua funkcio. Malmarku ĉi "
+"tiun skatolon se la supra vosto de la distribua funkcio (P[X > x]) estas "
+"grafikota."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Preview")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Preview")
@@ -4163,6 +4319,13 @@ msgid ""
 "try again. If it still persists, use only the \"Submit\" button to view the "
 "exported plot in the Output window."
 msgstr ""
+"Marku ĉi tiun skatolon por antaŭrigardi la funkcion. Nova grafika fenestro "
+"aperos kaj ĝi estos dinamike ĝisdatigita laŭ la elekto de parametroj. Eble "
+"necesas iom por ke la fenestro aperos. Kelkfoje, nur malplena grafika "
+"aparato povas montriĝi, en kiu kazo, fermu la aparaton (dev.off() aŭ eble eĉ "
+"graphics.off()), malmarku la skatolon, atendu iom kaj provu denove. Se ĝi "
+"ankoraŭ daŭras, uzu nur la butonon \"Submeti\" por vidi la eksportitan "
+"grafikon en la Eligo-fenestro."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Plot Options")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Plot Options")
@@ -4208,6 +4371,8 @@ msgid ""
 "Various plotting parameter settings for the plot. See the help page of "
 "\"Plot Options\" for more details."
 msgstr ""
+"Diversaj grafikaj parametro-agordoj por la grafiko. Vidu la helppaĝon de "
+"\"Plot Options\" por pliaj detaloj."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <usage>
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <usage>
@@ -4255,6 +4420,10 @@ msgid ""
 "the \"Output\" window. To dynamically visualize the plot check the \"Preview"
 "\" box."
 msgstr ""
+"Elektu taŭgajn valorojn por la diversaj parametroj de la distribuo kaj "
+"elektu la tipon de funkcio. La butono \"Submeti\" eksportos la grafikon al "
+"la fenestro \"Eligo\". Por dinamike bildigi la grafikon kontrolu la skatolon "
+"\"Antaŭrigardo\"."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
@@ -4474,6 +4643,9 @@ msgid ""
 "be evaluated at 'n' equally spaced points between the lower quantile and the "
 "upper quantile (inclusive of end points)."
 msgstr ""
+"Plej granda valoro ĉe kiu la funkcio estas grafikota. Do, la funkcio estos "
+"taksita ĉe 'n' egale interspacigitaj punktoj inter la malsupra kvantilo kaj "
+"la supra kvantilo (inkluzive de finpunktoj)."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Upper quantile")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Upper quantile")
@@ -4521,6 +4693,9 @@ msgid ""
 "between the lower quantile and the upper quantile (inclusive of the end "
 "points)."
 msgstr ""
+"Plej granda valoro ĉe kiu la funkcio estas grafikota. Ĉar tio estas diskreta "
+"distribuo la funkcio estos taksita ĉe ĉiuj entjeroj inter la malsupra "
+"kvantilo kaj la supra kvantilo (inkluzive de la finpunktoj)."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <spinbox label="...">
@@ -4577,7 +4752,7 @@ msgstr "Eksponenta"
 #, kde-format
 msgid ""
 "Density and distribution function plots for the Exponential distribution."
-msgstr ""
+msgstr "Denseco kaj distribua funkcio grafikoj por la Eksponenta distribuo."
 
 #. i18n: ectx: (Loaded from Plot Exponential probabilities) <settings> <setting> (refers to element labelled "Rate")
 #: rkward/plugins/distributions/plot_exponential_distribution.rkh:21
@@ -4685,6 +4860,7 @@ msgstr "Hipergeometria"
 msgid ""
 "Density and distribution function plots for the Hypergeometric distribution."
 msgstr ""
+"Densaj kaj distribuaj funkcio-grafikoj por la Hipergeometria distribuo."
 
 #. i18n: ectx: (Loaded from Plot hypergeometric probabilities) <settings> <setting> (refers to element labelled "Number of white balls (m)")
 #. i18n: ectx: (Loaded from Plot hypergeometric probabilities) <settings> <setting> (refers to element labelled "Number of black balls (n)")
@@ -4782,6 +4958,7 @@ msgid ""
 "Density and distribution function plots for the Negative Binomial "
 "distribution."
 msgstr ""
+"Denseco kaj distribua funkcio-grafikoj por la Negativa Binomo-distribuo."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Target number of successful trials")
 #: rkward/plugins/distributions/plot_negbinomial_distribution.rkh:21
@@ -4791,6 +4968,9 @@ msgid ""
 "parametrization is used. This is always a non-negative integer. See R "
 "reference on Negative Binomial distribution."
 msgstr ""
+"Ĉi tiu estas la parametro <i>grandeco</i> kiam la 'probabla' formo de la "
+"parametrigo estas uzata. Ĉi tio ĉiam estas nenegativa entjero. Vidu R-"
+"referencon pri Negativa Binoma distribuo."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Dispersion (Size)")
 #: rkward/plugins/distributions/plot_negbinomial_distribution.rkh:22
@@ -4800,6 +4980,9 @@ msgid ""
 "is used. This is a non-negative real number. See R reference on Negative "
 "Binomial distribution."
 msgstr ""
+"Ĉi tiu estas la parametro <i>grandeco</i> kiam la formo 'mu' de la "
+"parametrigo estas uzata. Ĉi tio estas nenegativa reela nombro. Vidu R-"
+"referencon pri Negativa Binoma distribuo."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Probability of success on each trial")
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Mean (alternate parameter, mu)")
@@ -4816,6 +4999,8 @@ msgid ""
 "The type of the parametrization to be used. See R reference on Negative "
 "Binomial distribution."
 msgstr ""
+"La tipo de la parametrigo uzota. Vidu R-referencon pri Negativa Binoma "
+"distribuo."
 
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:30
@@ -4926,7 +5111,7 @@ msgstr "Studentigita Gamo (Tukey)"
 #, kde-format
 msgid ""
 "Distribution function plot for the Studentized Range (Tukey) distribution."
-msgstr ""
+msgstr "Distribua funkcio-grafiko por la Studentized Range (Tukey) distribuo."
 
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <settings> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Plot Studentized Range (Tukey) probabilities) <dialog label="Plot Studentized Range (Tukey) probabilities"> <text>
@@ -4935,7 +5120,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Only the distribution function can be plotted for the Tukey distribution."
-msgstr ""
+msgstr "Nur la distribua funkcio povas esti grafika por la Tukey-distribuo."
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <settings> <setting> (refers to element labelled "Number of observations")
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <settings> <setting> (refers to element labelled "Number of observations")
@@ -4953,7 +5138,7 @@ msgstr "Nombro de sendependaj observoj, kies intervalon konsideri."
 msgid ""
 "Degrees of freedom for the (independent sample) estimate of standard "
 "deviation."
-msgstr ""
+msgstr "Gradoj de libereco por la (sendependa provaĵo) takso de norma devio."
 
 #. i18n: ectx: (Studentized Range (Tukey) distribution calculator) <snippets> <snippet> <spinbox label="...">
 #. i18n: ectx: (Plot Studentized Range (Tukey) probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -5077,6 +5262,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Poisson distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la "
+"distribuo de Poisson."
 
 #. i18n: ectx: (Loaded from Poisson distribution calculator) <summary>
 #. i18n: ectx: (Poisson distribution calculator)
@@ -5088,6 +5275,9 @@ msgid ""
 "g. a fixed number of trials, or a fixed period of time), where λ (lambda) is "
 "the expected (mean) number of such events."
 msgstr ""
+"Kvantiloj reprezentas la nombron da okazaĵoj observitaj en precizigita "
+"regiono (ekz. fiksa nombro da provoj, aŭ fiksa tempodaŭro), kie λ (lambda) "
+"estas la atendata (averaĝa) nombro da tiaj okazaĵoj."
 
 #. i18n: ectx: (Loaded from Poisson distribution calculator) <settings> <setting> (refers to element labelled "λ (Lambda)")
 #: rkward/plugins/distributions/poisson.rkh:19
@@ -5114,6 +5304,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "<i>t</i> distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la <i>t</i> "
+"distribuo."
 
 #. i18n: ectx: (Loaded from t distribution calculator) <settings> <setting> (refers to element labelled "Degrees of Freedom")
 #: rkward/plugins/distributions/t.rkh:17
@@ -5212,6 +5404,8 @@ msgid ""
 "This plugin calculates a Jarque-Bera chi-squared statistic for a variable x "
 "and tests against the null hypothesis of normality."
 msgstr ""
+"Ĉi tiu kromaĵo kalkulas Jarque-Bera ĥi-kvadratan statistpiktogram por "
+"variablo x kaj testas kontraŭ la nula hipotezo de normaleco."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <usage>
 #: rkward/plugins/distributions/tests/jb_test.rkh:12
@@ -5223,6 +5417,11 @@ msgid ""
 "value.  The statistic's distribution is asymptotic, so this test performs "
 "better when working with big samples."
 msgstr ""
+"Elektu unu aŭ plurajn nombrajn variablojn por testi kontraŭ normaleco. "
+"Individua provo estas farita por ĉiu el ili. La produktaĵo konsistas el la "
+"JB-ĥi-kvadrata statistiko kun 2 gradoj da libereco kaj ĝia koresponda p-"
+"valoro. La distribuo de la statistiko estas asimptota, do ĉi tiu testo "
+"funkcias pli bone kiam oni laboras kun grandaj specimenoj."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <usage>
 #: rkward/plugins/distributions/tests/jb_test.rkh:12
@@ -5232,6 +5431,9 @@ msgid ""
 "option is checked, as neglecting this will usually prevent the test from "
 "succeeding."
 msgstr ""
+"Certigu, ke la datumoj ne enhavas NA-ojn aŭ, se jes, ke la opcio 'Ekskludi "
+"NA-ojn' estas markita, ĉar neglekti tion kutime malhelpos la sukceson de la "
+"testo."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/distributions/tests/jb_test.rkh:21
@@ -5240,6 +5442,8 @@ msgid ""
 "Select the data to be computed (one or more variables). The vectors need to "
 "be numeric and can be of different length."
 msgstr ""
+"Elektu la datumojn por esti komputitaj (unu aŭ pluraj variabloj). La "
+"vektoroj devas esti nombraj kaj povas esti de malsama longo."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "Show Length and NAs")
 #: rkward/plugins/distributions/tests/jb_test.rkh:22
@@ -5248,6 +5452,8 @@ msgid ""
 "Select if you want to include the number of observations and NAs in the "
 "output. (Default: YES)"
 msgstr ""
+"Elektu se vi volas inkluzivi la nombron da observoj kaj NA-oj en la eligo. "
+"(Defaŭlte: JES)"
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "Exclude NAs")
 #: rkward/plugins/distributions/tests/jb_test.rkh:23
@@ -5256,6 +5462,8 @@ msgid ""
 "Select if your data has missing values. The NAs are then omitted when "
 "performing the test. (Default: YES)"
 msgstr ""
+"Elektu se viaj datumoj havas mankantajn valorojn. La NAoj tiam estas "
+"preterlasitaj dum elfarado de la testo. (Defaŭlte: JES)"
 
 #. i18n: ectx: (Jarque-Bera Normality Test) <dialog label="Jarque-Bera Normality Test"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/distributions/tests/jb_test.xml:25
@@ -5330,6 +5538,9 @@ msgid ""
 "Provides a calculator for probabilities, quantiles in the Standardized Range "
 "(Tukey) distribution. Calculating densities is not supported by this plugin."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj en la Normigita Intervalo "
+"(Tukey) distribuo. Kalkulado de densecoj ne estas subtenata de ĉi tiu "
+"kromaĵo."
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <summary>
 #: rkward/plugins/distributions/tukey.rkh:11
@@ -5339,6 +5550,9 @@ msgid ""
 "observations, and the standard deviation estimate (based on given number of "
 "degrees of freedom) of an independent sample."
 msgstr ""
+"Kvantiloj estas la rilatumo inter la observita intervalo en la antaŭfiksita "
+"nombro da observaĵoj, kaj la norma devia takso (surbaze de antaŭfiksita "
+"nombro da gradoj da libereco) de sendependa provaĵo."
 
 #. i18n: ectx: (Loaded from Uniform distribution calculator)
 #: rkward/plugins/distributions/uniform.js:11
@@ -5353,6 +5567,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Uniform distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Uniforma "
+"distribuo."
 
 #. i18n: ectx: (Loaded from Uniform distribution calculator) <settings> <setting> (refers to element labelled "Lower limit of the distribution")
 #: rkward/plugins/distributions/uniform.rkh:17
@@ -5391,6 +5607,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Weibull distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Weibull-"
+"distribuo."
 
 #. i18n: ectx: (Loaded from Weibull distribution calculator) <settings> <setting> (refers to element labelled "Shape")
 #: rkward/plugins/distributions/weibull.rkh:17
@@ -5417,6 +5635,8 @@ msgid ""
 "Provides a calculator for probabilities, quantiles, and densities in the "
 "Wilcoxon distribution."
 msgstr ""
+"Disponigas kalkulilon por probablecoj, kvantiloj kaj densecoj en la Wilcoxon-"
+"distribuo."
 
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <summary>
 #. i18n: ectx: (Wilcoxon Rank Sum distribution calculator)
@@ -5428,6 +5648,9 @@ msgid ""
 "the number of pairs from sample x and y, for which y[j] is not greater than "
 "x[i]."
 msgstr ""
+"Kvantiloj egalrilatas al la valoro de la Wilcoxon Rank Sum-statistiko, t.e. "
+"la nombro da paroj de provaĵo x kaj y, por kiuj y[j] ne estas pli granda ol "
+"x[i]."
 
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <settings> <setting> (refers to element labelled "m (Numbers of observations in the first sample)")
 #. i18n: ectx: (Wilcoxon Rank Sum distribution calculator) <snippets> <snippet> <spinbox label="...">
