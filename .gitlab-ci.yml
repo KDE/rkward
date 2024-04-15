@@ -10,3 +10,4 @@ include:
       - /gitlab-templates/windows.yml
       - /gitlab-templates/flatpak.yml
       - /gitlab-templates/craft-appimage.yml
+      - /gitlab-templates/craft-windows-x86-64.yml
