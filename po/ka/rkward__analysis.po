@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-13 14:43+0200\n"
+"PO-Revision-Date: 2024-04-14 06:06+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -419,7 +419,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:20
 #, kde-format
 msgid "Select the data to be computed. The vectors need to be numeric."
-msgstr ""
+msgstr "აირჩიეთ გამოსათვლელი მონაცემები. ვექტორები რიცხვითი უნდა იყოს."
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "Test hypothesis (H1)")
 #. i18n: ectx: (Loaded from D'Agostino test of skewness) <settings> <setting> (refers to element labelled "Test hypothesis (H1)")

@@ -1,20 +1,23 @@
+# Translation for rkward.po to Euskara/Basque (eu).
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
+# SPDX-FileCopyrightText: 2024 KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>
 #
+# Translators:
 # SPDX-FileCopyrightText: 2024 Iñigo Salvador Azurmendi <xalba@ni.eus>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-12 00:35+0000\n"
-"PO-Revision-Date: 2024-04-13 11:17+0200\n"
+"PO-Revision-Date: 2024-04-14 12:56+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
@@ -33,16 +36,18 @@ msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
+"Ezin izan du '%1' objektua editatzeko ireki. Edo ez da existitzen, edo "
+"«RKWard»ek ez dauka oraindik objektu mota hori editatzeko euskarririk."
 
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
 msgid "Cannot edit '%1'"
-msgstr ""
+msgstr "Ezin du editatu '%1'"
 
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
 msgid "Loading Workspace..."
-msgstr ""
+msgstr "Langunea zamatzen..."
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -50,11 +55,13 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
+"'%1' fitxategi irekitzeko errore bat gertatu da:\n"
+"%2"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
 msgid "Error loading workspace"
-msgstr ""
+msgstr "Langunea zamatzeko errorea"
 
 #: rkward/agents/rkprintagent.cpp:42
 #, kde-format
@@ -68,7 +75,7 @@ msgstr ""
 #: rkward/agents/rkprintagent.cpp:42
 #, kde-format
 msgid "Unable to open KDE print dialog"
-msgstr ""
+msgstr "Ezin du KDE inprimatzeko elkarrizketa-koadroa ireki"
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
@@ -76,17 +83,21 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
+"Gelditzen diren R komandoak bukatzeko zain. Berehala irteteko, sakatu Utzi "
+"(OHARRA: Horrek datu galera eragin lezake)"
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
 msgid "Waiting for R to finish"
-msgstr ""
+msgstr "R bukatzeko zain"
 
 #: rkward/agents/rksaveagent.cpp:49
 #, kde-format
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
+"\"%1\" izeneko fitxategia badago lehendik ere. Ziur zaude gainidatzi nahi "
+"duzula?"
 
 #: rkward/agents/rksaveagent.cpp:51
 #, kde-format
@@ -94,6 +105,8 @@ msgid ""
 "A file named \"%1\" already exists, and will be overwritten when saving to "
 "\"%2\". Are you sure you want to overwrite it?"
 msgstr ""
+"\"%1\" izeneko fitxategia badago lehendik ere, eta \"%2\"(e)ra gordetzean "
+"gainidatzi egingo da. Ziur zaude gainidatzi nahi duzula?"
 
 #: rkward/agents/rksaveagent.cpp:53
 #, kde-format
@@ -101,16 +114,18 @@ msgid ""
 "Files named \"%1\" and \"%2\" already exist, and will both be overwritten. "
 "Are you sure you want to overwrite them?"
 msgstr ""
+"\"%1\" eta \"%2\" izeneko fitxategiak lehendik daude, eta biak gainidatzi "
+"egingo dira. Ziur zaude gainidatzi nahi dituzula?"
 
 #: rkward/agents/rksaveagent.cpp:56
-#, fuzzy, kde-format
+#, kde-format
 msgid "Overwrite File?"
 msgstr "Fitxategia gainidatzi?"
 
 #: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:877
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
-msgstr ""
+msgstr "R langune fitxategiak [%1](%1);;Fitxategi denak [*](*)"
 
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
@@ -123,12 +138,12 @@ msgstr ""
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
 msgid "Saving workspace"
-msgstr ""
+msgstr "Langunea gordetzen"
 
 #: rkward/agents/rksaveagent.cpp:90
 #, kde-format
 msgid "Save failed"
-msgstr ""
+msgstr "Gordetzea huts egin du"
 
 #: rkward/agents/rksaveagent.cpp:90
 #, kde-format
@@ -136,13 +151,15 @@ msgid ""
 "An error occurred while trying to save the workspace. You data was <b>not</"
 "b> saved."
 msgstr ""
+"Errore bat gertatu da langunea gordetzen saiatzean. Zure datuak <b>ez</b> "
+"dira gorde."
 
 #: rkward/agents/showedittextfileagent.cpp:30
 #: rkward/misc/rkprogresscontrol.cpp:361
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
-msgstr ""
+msgstr "Eginda"
 
 #: rkward/agents/showedittextfileagent.cpp:82
 #, kde-format
@@ -150,11 +167,13 @@ msgid ""
 "A command running in the R-engine wants you to see the following file(s):"
 "<ul><li>"
 msgstr ""
+"R-motorran exekutatzen ari den komando batek ondoko fitxategia(k) ikus d(e/"
+"it)zazun nahi du:<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:82
 #, kde-format
 msgid "Showing file(s)"
-msgstr ""
+msgstr "Fitxategia(k) erakusten"
 
 #: rkward/agents/showedittextfileagent.cpp:86
 #, kde-format
@@ -163,6 +182,10 @@ msgid ""
 "Please look at these files, edit them as appropriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.<ul><li>"
 msgstr ""
+"R-motorran exekutatzen ari den komando batek ondoko fitxategia(k) editatu "
+"d(e/it)zazun nahi du. Mesedez, begiratu fitxategi horiei, editatu behar den "
+"eran, eta gorde itzazu. Egindakoan, sakatu \"Eginda\" botoia, edo itxi "
+"elkarrizketa-koadro hau berrekiteko.<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:86
 #, kde-format
@@ -303,7 +326,7 @@ msgstr "Erabilera"
 #: rkward/core/robject.cpp:170
 #, kde-format
 msgid "Data frame"
-msgstr ""
+msgstr "Datu-markoa"
 
 #: rkward/core/robject.cpp:172
 #, kde-format
@@ -389,12 +412,14 @@ msgstr ""
 #, kde-format
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
+"Zehaztu duzun izena jada erabiltzen ari da edo baliogabea da. %1 gisa "
+"berrizendatu da"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:51
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
 #, kde-format
 msgid "Invalid Name"
-msgstr ""
+msgstr "Izen baliogabea"
 
 #. i18n: ectx: Menu (edit)
 #: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
@@ -402,7 +427,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindowpart.rc:10
 #: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkhelpwindow.rc:13
 #: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Edit"
 msgstr "&Editatu"
 
@@ -438,7 +463,7 @@ msgid "This column contains one or more invalid fields"
 msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:682
-#, fuzzy, kde-format
+#, kde-format
 msgid "Format"
 msgstr "Formatua"
 
@@ -533,7 +558,7 @@ msgid "Disable editing (to prevent accidental modification of data)"
 msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:145
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
 msgstr "Giltzapetik askatu"
@@ -550,47 +575,47 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:209
 #, kde-format
 msgid "Duplicate columns detected"
-msgstr ""
+msgstr "Bikoiztutako zutabeak antzeman dira"
 
 #: rkward/dataeditor/twintable.cpp:218
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 [read-only]"
-msgstr "Irakurtzeko soilik"
+msgstr "%1 [soilik irakurtzeko]"
 
 #: rkward/dataeditor/twintable.cpp:263
 #, kde-format
 msgid "Insert new variable left"
-msgstr ""
+msgstr "Sartu aldagai berri bat ezkerrean"
 
 #: rkward/dataeditor/twintable.cpp:266
 #, kde-format
 msgid "Delete this variable"
-msgstr ""
+msgstr "Ezabatu aldagai hori"
 
 #: rkward/dataeditor/twintable.cpp:277
 #, kde-format
 msgid "Insert new case above (at %1)"
-msgstr ""
+msgstr "Sartu goian kasu berri bat (%1(e)an)"
 
 #: rkward/dataeditor/twintable.cpp:286
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
-msgstr ""
+msgstr "Ezabatu markatutako errenkadak (%1-%2)"
 
 #: rkward/dataeditor/twintable.cpp:292
 #, kde-format
 msgid "Delete this row (%1)"
-msgstr ""
+msgstr "Ezabatu errenkada hori (%1)"
 
 #: rkward/dataeditor/twintable.cpp:414
 #, kde-format
 msgid "Inserting clipboard contents..."
-msgstr ""
+msgstr "Arbeleko edukia sartzen..."
 
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
 msgid "Reporting bugs in RKWard"
-msgstr ""
+msgstr "RKWard(e)ko akatsen berri ematen"
 
 #: rkward/dialogs/rkerrordialog.cpp:45
 #, kde-format
@@ -639,7 +664,7 @@ msgid "Proceed"
 msgstr ""
 
 #: rkward/dialogs/rkerrordialog.cpp:103
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show Details"
 msgstr "Erakutsi xehetasunak"
 
@@ -862,9 +887,9 @@ msgid "Closing will discard pending changes. Are you sure?"
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
+#, kde-format
 msgid "Discard changes?"
-msgstr "Baztertu aldaketak"
+msgstr "Aldaketak baztertu?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
@@ -1022,24 +1047,24 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
 #: rkward/windows/rkhelpsearchwindow.cpp:325
-#, fuzzy, kde-format
+#, kde-format
 msgid "Title"
-msgstr "Titulua"
+msgstr "Izenburua"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:955
-#, fuzzy, kde-format
+#, kde-format
 msgid "Version"
 msgstr "Bertsioa"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:956
-#, fuzzy, kde-format
+#, kde-format
 msgid "Location"
 msgstr "Kokalekua"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:354
-#, fuzzy, kde-format
+#, kde-format
 msgid "Load"
 msgstr "Zamatu"
 
@@ -1152,7 +1177,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:952
 #: rkward/rbackend/rcommandstack.cpp:314
 #: rkward/settings/rksettingsmoduleplugins.cpp:527
-#, fuzzy, kde-format
+#, kde-format
 msgid "Status"
 msgstr "Egoera"
 
@@ -1195,7 +1220,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:987
 #, kde-format
 msgid "Updateable Packages"
-msgstr ""
+msgstr "Pakete eguneragarriak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:988
 #, kde-format
@@ -1207,7 +1232,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:991
 #, kde-format
 msgid "New Packages"
-msgstr ""
+msgstr "Pakete berriak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:992
 #, kde-format
@@ -1215,11 +1240,13 @@ msgid ""
 "Packages which are available for installation, but which are not currently "
 "installed."
 msgstr ""
+"Instalatzeko erabilgarri egon arren une honetan instalatu gabe dauden "
+"paketeak."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:994
 #, kde-format
 msgid "Installed Packages"
-msgstr ""
+msgstr "Instalatutako paketeak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:995
 #, kde-format
@@ -1227,32 +1254,34 @@ msgid ""
 "Packages which are installed locally. Note that updates may be available for "
 "these packages."
 msgstr ""
+"Lokalki instalatuta dauden paketeak. Kontuan izan pakete hauetarako "
+"eguneratzeak egon daitezkeela."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1023
-#, fuzzy, kde-format
+#, kde-format
 msgid "Install"
 msgstr "Instalatu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1026
 #: rkward/misc/multistringselector.cpp:107
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove"
 msgstr "Kendu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1210
 #, kde-format
 msgid "Installed plugin groups (.pluginmap files)"
-msgstr ""
+msgstr "Instalatutako plugin-taldeak (.pluginmap fitxategiak)"
 
 #: rkward/dialogs/rkreadlinedialog.cpp:44
 #, kde-format
 msgid "Context:"
-msgstr ""
+msgstr "Testuingurua:"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:33
 #, kde-format
 msgid "Crash recovery file detected"
-msgstr ""
+msgstr "Kraskaduratik berreskuratzeko fitxaegia antzeman da"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:37
 #, kde-format
@@ -1299,7 +1328,7 @@ msgid "Saves the recovery file(s) for later use, but does not open it"
 msgstr ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:47 rkward/windows/robjectbrowser.cpp:125
-#, fuzzy, kde-format
+#, kde-format
 msgid "Delete"
 msgstr "Ezabatu"
 
@@ -1327,32 +1356,32 @@ msgstr ""
 #: rkward/dialogs/rksavemodifieddialog.cpp:64
 #, kde-format
 msgid "Save modified"
-msgstr ""
+msgstr "Gorde aldatutakoa"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:67
 #, kde-format
 msgid ""
 "The following items have been modified. Do you want to save them before "
 "closing?"
-msgstr ""
+msgstr "Ondoko elementuak aldatu dira. Itxi aurretik gorde nahi dituzu?"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:77
 #, kde-format
 msgid "R Workspace (Data and Functions)"
-msgstr ""
+msgstr "R langunea (datuak eta funtzioak)"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:80
 #, kde-format
 msgid "[Not saved]"
-msgstr ""
+msgstr "[Gorde gabe]"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:88
 #, kde-format
 msgid "Output files"
-msgstr ""
+msgstr "Irteerako fitxategiak"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:100
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scripts"
 msgstr "Gidoiak"
 
@@ -1360,42 +1389,42 @@ msgstr "Gidoiak"
 #, kde-format
 msgctxt "Save the selected items"
 msgid "Save selected"
-msgstr ""
+msgstr "Gorde hautatutakoa"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:116
 #, kde-format
 msgid "Discard all"
-msgstr ""
+msgstr "Baztertu dena"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgid "Do not close"
 msgstr "Ez itxi"
 
 #: rkward/dialogs/rkselectlistdialog.cpp:39
 #, kde-format
 msgid "<b>Select one or more:</b>"
-msgstr ""
+msgstr "<b>Hautatu bat edo gehiago:</b>"
 
 #: rkward/dialogs/rkselectlistdialog.cpp:40
 #, kde-format
 msgid "<b>Select one:</b>"
-msgstr ""
+msgstr "<b>Hautatu bat:</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:53
 #, kde-format
 msgid "No action needed."
-msgstr ""
+msgstr "Ez da ekintzarik behar."
 
 #: rkward/dialogs/rksetupwizard.cpp:88
 #, kde-format
 msgid "Not installed"
-msgstr ""
+msgstr "Ez instalatu"
 
 #: rkward/dialogs/rksetupwizard.cpp:89 rkward/dialogs/rksetupwizard.cpp:100
-#, fuzzy, kde-format
+#, kde-format
 msgid "Install %1"
-msgstr "Instalatu"
+msgstr "Instalatu %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:89
 #, kde-format
@@ -1418,9 +1447,9 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:92 rkward/dialogs/rksetupwizard.cpp:112
-#, fuzzy, kde-format
+#, kde-format
 msgid "Installed"
-msgstr "(instalatuta)"
+msgstr "Instalatuta"
 
 #: rkward/dialogs/rksetupwizard.cpp:100
 #, kde-format
@@ -1436,9 +1465,9 @@ msgid "Proceed without %1. You will be missing some functionality."
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:109
-#, fuzzy, kde-format
+#, kde-format
 msgid "Not found"
-msgstr "(ez da aurkitu)"
+msgstr "Ez da aurkitu"
 
 #: rkward/dialogs/rksetupwizard.cpp:123
 #, kde-format
@@ -1476,22 +1505,22 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:135
 #, kde-format
 msgid "RKWard Setup Assistant"
-msgstr ""
+msgstr "RKWard ezartzeko morroia"
 
 #: rkward/dialogs/rksetupwizard.cpp:141
 #, kde-format
 msgid "Installation directory"
-msgstr ""
+msgstr "Instalatzeko direktorioa"
 
 #: rkward/dialogs/rksetupwizard.cpp:143
-#, fuzzy, kde-format
+#, kde-format
 msgid "Not found."
-msgstr "(ez da aurkitu)"
+msgstr "Ez da aurkitu."
 
 #: rkward/dialogs/rksetupwizard.cpp:145
 #, kde-format
 msgid "Reinstallation required"
-msgstr ""
+msgstr "Berrinstalatzea beharrekoa da"
 
 #: rkward/dialogs/rksetupwizard.cpp:145
 #, kde-format
@@ -1499,17 +1528,18 @@ msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
 "RKWard."
 msgstr ""
+"Arazo hau ezin da automatikoki konpondu. RKWard berrinstalatu beharko duzu."
 
 #: rkward/dialogs/rksetupwizard.cpp:148 rkward/dialogs/rksetupwizard.cpp:161
 #: rkward/dialogs/rksetupwizard.cpp:185
 #, kde-format
 msgid "Found."
-msgstr ""
+msgstr "Aurkitu da."
 
 #: rkward/dialogs/rksetupwizard.cpp:152
 #, kde-format
 msgid "RKWard plugins"
-msgstr ""
+msgstr "RKWard pluginak"
 
 #: rkward/dialogs/rksetupwizard.cpp:154
 #, kde-format
@@ -1519,27 +1549,27 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:155
 #, kde-format
 msgid "None selected"
-msgstr ""
+msgstr "Ez da batere hautatu"
 
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
 msgid "Restore defaults"
-msgstr ""
+msgstr "Lehenespetara lehengoratu"
 
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
 msgid "Enable the default plugins"
-msgstr ""
+msgstr "Gaitu plugin lehenetsiak"
 
 #: rkward/dialogs/rksetupwizard.cpp:157
 #, kde-format
 msgid "Proceed without plugins"
-msgstr ""
+msgstr "Jarraitu pluginik gabe"
 
 #: rkward/dialogs/rksetupwizard.cpp:165
 #, kde-format
 msgid "Kate plugins"
-msgstr ""
+msgstr "«Kate»ren pluginak"
 
 #: rkward/dialogs/rksetupwizard.cpp:168
 #, kde-format
@@ -1552,14 +1582,14 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:169
 #, kde-format
 msgid "None found"
-msgstr ""
+msgstr "Ez da batere aurkitu"
 
 #: rkward/dialogs/rksetupwizard.cpp:172
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Plugina %1 aurkitu da."
+msgstr[1] "%1 plugin aurkitu dira."
 
 #: rkward/dialogs/rksetupwizard.cpp:177
 #, kde-format
@@ -1572,19 +1602,19 @@ msgid "Exists"
 msgstr "Dago"
 
 #: rkward/dialogs/rksetupwizard.cpp:182
-#, fuzzy, kde-format
+#, kde-format
 msgid "Import"
 msgstr "Inportatu"
 
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
-msgstr ""
+msgstr "Inportatu saiora, irteerako formatu berrian gorde ahal izan dezazun."
 
 #: rkward/dialogs/rksetupwizard.cpp:183
 #, kde-format
 msgid "No action"
-msgstr ""
+msgstr "Ekintzarik ez"
 
 #: rkward/dialogs/rksetupwizard.cpp:183
 #, kde-format
@@ -1592,21 +1622,25 @@ msgid ""
 "Ignore (and keep) the file. You can import it manually, at any time, using "
 "rk.import.legacy.output()"
 msgstr ""
+"Ezikusi (eta mantendu) fitxategia. Nahi duzunean eskuz inportatu dezakezu rk."
+"import.legacy.output() erabiliz"
 
 #: rkward/dialogs/rksetupwizard.cpp:194
 #, kde-format
 msgid "Basic installation"
-msgstr ""
+msgstr "Oinarrizko instalazioa"
 
 #: rkward/dialogs/rksetupwizard.cpp:205
 #, kde-format
 msgid "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
 msgstr ""
+"<b>R bizkarraldekoa kraskatu egin da. \"Utzi\" klikatu ezarpen morroitik "
+"irteteko.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:213
 #, kde-format
 msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
-msgstr ""
+msgstr "<b>R bizkarraldekoa abiatu da. \"Hurrengoa\" klikatu jarraitzeko.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:220
 #, kde-format
@@ -1625,7 +1659,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:224
 #, kde-format
 msgid "R Packages"
-msgstr ""
+msgstr "R paketeak"
 
 #: rkward/dialogs/rksetupwizard.cpp:229
 #, kde-format
@@ -1633,6 +1667,8 @@ msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
 "Rmd) files. This is optional but recommended."
 msgstr ""
+"«pandoc» softwarea beharrezkoa da «R markdown» errendatzeko (edo "
+"aurreikusteko). Aukerakoa da, baino gomendatua."
 
 #: rkward/dialogs/rksetupwizard.cpp:230
 #, kde-format
@@ -1714,7 +1750,7 @@ msgid "Specified R executable does not exist"
 msgstr ""
 
 #: rkward/main.cpp:254
-#, fuzzy, kde-format
+#, kde-format
 msgid "RKWard"
 msgstr "RKWard"
 
@@ -1724,9 +1760,9 @@ msgid "Frontend to the R statistics language"
 msgstr ""
 
 #: rkward/main.cpp:254
-#, fuzzy, kde-format
+#, kde-format
 msgid "(c) 2002 - 2022"
-msgstr "(c) 2023"
+msgstr "(c) 2002 - 2022"
 
 #: rkward/main.cpp:255
 #, kde-format
@@ -1849,7 +1885,7 @@ msgid "HP filter plugin, spanish translation"
 msgstr ""
 
 #: rkward/main.cpp:268
-#, fuzzy, kde-format
+#, kde-format
 msgid "Marco Martin"
 msgstr "Marco Martin"
 
@@ -2050,22 +2086,22 @@ msgid "[Omitted %1 more factor levels]"
 msgstr ""
 
 #: rkward/misc/editformatdialog.cpp:32
-#, fuzzy, kde-format
+#, kde-format
 msgid "Alignment"
 msgstr "Lerrokatzea"
 
 #: rkward/misc/editformatdialog.cpp:37
-#, fuzzy, kde-format
+#, kde-format
 msgid "Default"
 msgstr "Lehenetsia"
 
 #: rkward/misc/editformatdialog.cpp:39
-#, fuzzy, kde-format
+#, kde-format
 msgid "Left"
 msgstr "Ezkerra"
 
 #: rkward/misc/editformatdialog.cpp:41
-#, fuzzy, kde-format
+#, kde-format
 msgid "Right"
 msgstr "Eskuinera"
 
@@ -2108,22 +2144,22 @@ msgid ""
 msgstr ""
 
 #: rkward/misc/multistringselector.cpp:36
-#, fuzzy, kde-format
+#, kde-format
 msgid "Filename"
 msgstr "Fitxategi-izena"
 
 #: rkward/misc/multistringselector.cpp:103
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add"
 msgstr "Gehitu"
 
 #: rkward/misc/multistringselector.cpp:113
-#, fuzzy, kde-format
+#, kde-format
 msgid "Up"
 msgstr "Gora"
 
 #: rkward/misc/multistringselector.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgid "Down"
 msgstr "Behera"
 
@@ -2145,7 +2181,7 @@ msgid ""
 msgstr ""
 
 #: rkward/misc/rkdynamicsearchline.cpp:24
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search"
 msgstr "Bilatu"
 
@@ -2284,34 +2320,34 @@ msgid "RKWard Output Files [*.rko](*.rko)"
 msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:132
-#, fuzzy, kde-format
+#, kde-format
 msgid "All Files [*](*)"
-msgstr "Fitxategi guztiak (*)"
+msgstr "Fitxategi denak [*](*)"
 
 #: rkward/misc/rkoutputdirectory.cpp:137
 #, kde-format
 msgid "File selection canceled"
-msgstr ""
+msgstr "Fitxategi-hautapena bertan behera utzi da"
 
 #: rkward/misc/rkoutputdirectory.cpp:146
 #, kde-format
 msgid "Are you sure you want to overwrite the existing file '%1'?"
-msgstr ""
+msgstr "Ziur zaude dagoen '%1' fitxategia gainidatzi nahi duzula?"
 
 #: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:136
 #, kde-format
 msgid "Overwrite?"
-msgstr ""
+msgstr "Gainidatzi?"
 
 #: rkward/misc/rkoutputdirectory.cpp:149 rkward/misc/rkoutputdirectory.cpp:335
 #, kde-format
 msgid "User canceled"
-msgstr ""
+msgstr "Erabiltzaileak utzi du"
 
 #: rkward/misc/rkoutputdirectory.cpp:151
 #, kde-format
 msgid "Not overwriting existing file"
-msgstr ""
+msgstr "Dagoen fitxategia ez da gainidatziko"
 
 #: rkward/misc/rkoutputdirectory.cpp:174
 #, kde-format
@@ -2380,7 +2416,7 @@ msgid "Output is not empty. Not clearing it."
 msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:322
-#, fuzzy, kde-format
+#, kde-format
 msgid "[Unnamed]"
 msgstr "(Izengabea)"
 
@@ -2422,7 +2458,7 @@ msgid "A file named '%1' already exists. Cannot create it."
 msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:519
-#, fuzzy, kde-format
+#, kde-format
 msgid "File '%1' does not exist."
 msgstr "'%1' fitxategia ez da existitzen."
 
@@ -2444,14 +2480,14 @@ msgstr ""
 
 #: rkward/misc/rkprogresscontrol.cpp:258
 #: rkward/settings/rksettingsmoduleoutput.cpp:187
-#, fuzzy, kde-format
+#, kde-format
 msgid "Output"
 msgstr "Irteera"
 
 #: rkward/misc/rkprogresscontrol.cpp:259
-#, fuzzy, kde-format
+#, kde-format
 msgid "Output:"
-msgstr "Irteera"
+msgstr "Irteera:"
 
 #: rkward/misc/rkprogresscontrol.cpp:261
 #, kde-format
@@ -2466,7 +2502,7 @@ msgstr ""
 #: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:417
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:54
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cancel"
 msgstr "Utzi"
 
@@ -2483,7 +2519,7 @@ msgstr ""
 #: rkward/misc/rkprogresscontrol.cpp:488
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
-#, fuzzy, kde-format
+#, kde-format
 msgid "Close"
 msgstr "Itxi"
 
@@ -2513,7 +2549,7 @@ msgid "An operation is still running, please wait."
 msgstr ""
 
 #: rkward/misc/rksaveobjectchooser.cpp:44
-#, fuzzy, kde-format
+#, kde-format
 msgid "Change"
 msgstr "Aldatu"
 
@@ -2565,42 +2601,42 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:98
 #, kde-format
 msgid "data.frame"
-msgstr ""
+msgstr "data.frame"
 
 #: rkward/misc/rkspecialactions.cpp:108
 #, kde-format
 msgid "Field Separator"
-msgstr ""
+msgstr "Eremu-bereizlea"
 
 #: rkward/misc/rkspecialactions.cpp:111
-#, fuzzy, kde-format
+#, kde-format
 msgid "Tab"
 msgstr "Tabulazioa"
 
 #: rkward/misc/rkspecialactions.cpp:115
 #, kde-format
 msgid "Comma"
-msgstr ""
+msgstr "Koma"
 
 #: rkward/misc/rkspecialactions.cpp:119
 #, kde-format
 msgid "Single space"
-msgstr ""
+msgstr "Zuriune bakarra"
 
 #: rkward/misc/rkspecialactions.cpp:122
 #, kde-format
 msgid "Any whitespace"
-msgstr ""
+msgstr "Zuriuneak jarraian"
 
 #: rkward/misc/rkspecialactions.cpp:126
-#, fuzzy, kde-format
+#, kde-format
 msgid "Other:"
 msgstr "Bestelakoa:"
 
 #: rkward/misc/rkspecialactions.cpp:139
 #, kde-format
 msgid "Quoting"
-msgstr ""
+msgstr "Aipua"
 
 #: rkward/misc/rkspecialactions.cpp:142
 #, kde-format
@@ -2608,7 +2644,7 @@ msgid "Do not quote values"
 msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:145
-#, fuzzy, kde-format
+#, kde-format
 msgid "Automatic"
 msgstr "Automatikoa"
 
@@ -2620,37 +2656,37 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:156
 #, kde-format
 msgid "Labels"
-msgstr ""
+msgstr "Etiketak"
 
 #: rkward/misc/rkspecialactions.cpp:158
 #, kde-format
 msgid "First row contains labels"
-msgstr ""
+msgstr "Lehenengo errenkadak etiketak ditu"
 
 #: rkward/misc/rkspecialactions.cpp:160
 #, kde-format
 msgid "First column contains labels"
-msgstr ""
+msgstr "Lehen zutabeak etiketak ditu"
 
 #: rkward/misc/rkspecialactions.cpp:165
 #, kde-format
 msgid "Transformations"
-msgstr ""
+msgstr "Eraldaketak"
 
 #: rkward/misc/rkspecialactions.cpp:167
 #, kde-format
 msgid "Reverse horizontally"
-msgstr ""
+msgstr "Alderantzikatu horizontalki"
 
 #: rkward/misc/rkspecialactions.cpp:169
 #, kde-format
 msgid "Reverse vertically"
-msgstr ""
+msgstr "Alderantzikatu bertikalki"
 
 #: rkward/misc/rkspecialactions.cpp:171
 #, kde-format
 msgid "Flip rows/columns"
-msgstr ""
+msgstr "Trukatu errenkadak/zutabeak"
 
 #: rkward/misc/rkspecialactions.cpp:173
 #, kde-format
@@ -2799,19 +2835,19 @@ msgid "XML-parsing '%1' "
 msgstr ""
 
 #: rkward/plugin/rkcheckbox.cpp:64
-#, fuzzy, kde-format
+#, kde-format
 msgid "yes"
 msgstr "bai"
 
 #: rkward/plugin/rkcheckbox.cpp:64
-#, fuzzy, kde-format
+#, kde-format
 msgid "no"
 msgstr "ez"
 
 #: rkward/plugin/rkcomponentmap.cpp:266 rkward/plugin/rkcomponentmap.cpp:647
 #, kde-format
 msgid "(no label)"
-msgstr ""
+msgstr "(etiketarik ez)"
 
 #: rkward/plugin/rkcomponentmap.cpp:463
 #, kde-format
@@ -2824,7 +2860,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmap.cpp:465
 #, kde-format
 msgid "No such plugin"
-msgstr ""
+msgstr "Ez dago halako pluginik"
 
 #: rkward/plugin/rkcomponentmap.cpp:475
 #, kde-format
@@ -2845,6 +2881,8 @@ msgid ""
 "\n"
 "The plugin has crashed."
 msgstr ""
+"\n"
+"Plugina kraskatu egin da."
 
 #: rkward/plugin/rkcomponentmap.cpp:508
 #, kde-format
@@ -2856,7 +2894,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmap.cpp:511
 #, kde-format
 msgid "Not all settings applied"
-msgstr ""
+msgstr "Ezarpen guztiak ez dira aplikatu"
 
 #: rkward/plugin/rkcomponentmap.cpp:524
 #, kde-format
@@ -2916,60 +2954,62 @@ msgid ""
 msgstr ""
 
 #: rkward/plugin/rkcomponentmeta.cpp:40
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unspecified"
 msgstr "Zehaztu gabe"
 
 #: rkward/plugin/rkcomponentmeta.cpp:79
 #, kde-format
 msgid "Copyright (c): %1"
-msgstr ""
+msgstr "Copyright (c): %1"
 
 #: rkward/plugin/rkcomponentmeta.cpp:80
-#, fuzzy, kde-format
+#, kde-format
 msgid "License: %1"
-msgstr "Lizentzia:"
+msgstr "Lizentzia: %1"
 
 #: rkward/plugin/rkcomponentmeta.cpp:83
 #, kde-format
 msgid "Authors:"
-msgstr ""
+msgstr "Egileak:"
 
 #: rkward/plugin/rkcomponentmeta.cpp:89
 #, kde-format
 msgctxt "Author roles (contributor, etc.)"
 msgid "Roles"
-msgstr ""
+msgstr "Eginkizunak"
 
 #: rkward/plugin/rkcomponentmeta.cpp:97
-#, fuzzy, kde-format
+#, kde-format
 msgid "Translators:"
-msgstr "Itzultzaileak"
+msgstr "Itzultzaileak:"
 
 #: rkward/plugin/rkcomponentmeta.cpp:196
 #, kde-format
 msgid "RKWard plugin map"
-msgstr ""
+msgstr "RKWard pluginen mapa"
 
 #: rkward/plugin/rkcomponentmeta.cpp:197
 #, kde-format
 msgid "R package"
-msgstr ""
+msgstr "R paketea"
 
 #: rkward/plugin/rkcomponentproperties.cpp:928
 #, kde-format
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
-msgstr ""
+msgstr "Objektu honek %1 dimentsio ditu, baino %2 dimentio espero ziren."
 
 #: rkward/plugin/rkcomponentproperties.cpp:931
 #, kde-format
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
 msgstr ""
+"Objektu honek %1(e)ko luzera du, baina %2(e)ko gutxieneko luzera espero zen."
 
 #: rkward/plugin/rkcomponentproperties.cpp:932
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
 msgstr ""
+"Objektu honek %1(e)ko luzera du, baina %2(e)ko gehieneko luzera espero zen."
 
 #: rkward/plugin/rkcomponentproperties.cpp:944
 #, kde-format
@@ -3014,7 +3054,7 @@ msgid "Main effects"
 msgstr ""
 
 #: rkward/plugin/rkformula.cpp:97
-#, fuzzy, kde-format
+#, kde-format
 msgid "Level"
 msgstr "Maila"
 
@@ -3094,12 +3134,12 @@ msgid "This element is not valid for the following reason(s):"
 msgstr ""
 
 #: rkward/plugin/rkpluginbrowser.cpp:46
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enter filename"
 msgstr "Sartu fitxategi-izena"
 
 #: rkward/plugin/rkpluginbrowser.cpp:47
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select"
 msgstr "Hautatu"
 
@@ -3161,13 +3201,13 @@ msgid "my.data"
 msgstr ""
 
 #: rkward/plugin/rkpluginspinbox.cpp:35
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enter value:"
 msgstr "Sartu balioa:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
 #: rkward/windows/rkcommandeditorwindow.cpp:373
-#, fuzzy, kde-format
+#, kde-format
 msgid "Preview"
 msgstr "Aurreikuspegia"
 
@@ -3184,7 +3224,7 @@ msgid "Could not create plugin"
 msgstr ""
 
 #: rkward/plugin/rkstandardcomponent.cpp:675
-#, fuzzy, kde-format
+#, kde-format
 msgid "Options"
 msgstr "Aukerak"
 
@@ -3207,7 +3247,7 @@ msgstr ""
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:198
 #: rkward/plugin/rkstandardcomponentgui.cpp:497
-#, fuzzy, kde-format
+#, kde-format
 msgid "Help"
 msgstr "Laguntza"
 
@@ -3242,30 +3282,30 @@ msgstr ""
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:582
 #: rkward/plugin/rkstandardcomponentgui.cpp:600
-#, fuzzy, kde-format
+#, kde-format
 msgid "Next >"
-msgstr "Hurrengoa"
+msgstr "Hurrengoa >"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:592
 #: rkward/plugin/rkstandardcomponentgui.cpp:610
-#, fuzzy, kde-format
+#, kde-format
 msgid "< Back"
-msgstr "Atzera"
+msgstr "< Atzera"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:613
 #, kde-format
 msgid "Use Dialog"
-msgstr ""
+msgstr "Erabili elkarrizketa-koadroa"
 
 #: rkward/plugin/rkvarselector.cpp:48
 #, kde-format
 msgid "Select Variable(s)"
-msgstr ""
+msgstr "Hautatu aldagia(k)"
 
 #: rkward/plugin/rkvarselector.cpp:62
 #, kde-format
 msgid "Show all environments"
-msgstr ""
+msgstr "Erakutsi ingurune denak"
 
 #: rkward/plugin/rkvarselector.cpp:64
 #, kde-format
@@ -3278,17 +3318,19 @@ msgstr ""
 #: rkward/plugin/rkvarselector.cpp:71
 #, kde-format
 msgid "Show filter options"
-msgstr ""
+msgstr "Erakutsi iragazki-aukerak"
 
 #: rkward/plugin/rkvarselector.cpp:127
 #, kde-format
 msgid "Expand all root level objects (show columns of data.frames)"
 msgstr ""
+"Zabaldu erro mailako objektu denak (erakutsi «data.frame»tako zutabeak)"
 
 #: rkward/plugin/rkvarselector.cpp:131
 #, kde-format
 msgid "Collapse all root level objects (hide columns of data.frames)"
 msgstr ""
+"Tolestu erro mailako objektu denak (ezkutatu «data.frame»tako zutabeak)"
 
 #: rkward/plugin/rkvarslot.cpp:37
 #, fuzzy, kde-format
@@ -4420,17 +4462,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:71
 #, kde-format
 msgid "Tab key invokes code completion"
-msgstr ""
+msgstr "Tabulatzeko teklak kode-osatzea eskatzen du"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
 #, kde-format
 msgid "Up/down cursor keys"
-msgstr ""
+msgstr "Gora/behera kurtsore-teklak"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
 #, kde-format
 msgid "Alt+Up/down cursor keys"
-msgstr ""
+msgstr "Alt+Gora/behera kurtsore-teklak"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:76
 #, kde-format
@@ -4449,12 +4491,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:81
 #, kde-format
 msgid "'$'-operator (list$member)"
-msgstr ""
+msgstr "'$'-operadore (zerrenda$kidea)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:81
 #, kde-format
 msgid "'[['-operator (list[[\"member\"]])"
-msgstr ""
+msgstr "'[['-operadore (list[[\"kidea\"]])"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:83
 #, kde-format
@@ -4462,7 +4504,7 @@ msgctxt ""
 "Note: list() and data.frame() are programming terms in R, and should not be "
 "translated, here"
 msgid "Operator for access to members of list() and data.frame() objects"
-msgstr ""
+msgstr "list() eta data.frame() objektuetako kideetara iristeko operadorea"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:86
 #, kde-format
@@ -4581,7 +4623,7 @@ msgid "Also add those commands to console history"
 msgstr ""
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
-#, fuzzy, kde-format
+#, kde-format
 msgid "Do not add"
 msgstr "Ez gehitu"
 
@@ -4634,7 +4676,7 @@ msgid "<i>Note:</i> Debug output is written to %1"
 msgstr ""
 
 #: rkward/settings/rksettingsmoduledebug.cpp:99
-#, fuzzy, kde-format
+#, kde-format
 msgid "Debug"
 msgstr "Araztu"
 
@@ -4765,7 +4807,7 @@ msgid "Focus follows mouse"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:148
-#, fuzzy, kde-format
+#, kde-format
 msgid "General"
 msgstr "Orokorra"
 
@@ -4978,7 +5020,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:139
-#, fuzzy, kde-format
+#, kde-format
 msgid "Graphics"
 msgstr "Grafikoak"
 
@@ -4993,19 +5035,19 @@ msgid "<Default>"
 msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:146
-#, fuzzy, kde-format
+#, kde-format
 msgid "PNG"
 msgstr "PNG"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:147
-#, fuzzy, kde-format
+#, kde-format
 msgid "SVG"
-msgstr "SV&G"
+msgstr "SVG"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:148
-#, fuzzy, kde-format
+#, kde-format
 msgid "JPG"
-msgstr "jpg"
+msgstr "JPG"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:153
 #, kde-format
@@ -5013,12 +5055,12 @@ msgid "JPG quality"
 msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:160
-#, fuzzy, kde-format
+#, kde-format
 msgid "Width:"
 msgstr "Zabalera:"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:163
-#, fuzzy, kde-format
+#, kde-format
 msgid "Height:"
 msgstr "Altuera:"
 
@@ -5078,12 +5120,12 @@ msgid "Quirky"
 msgstr ""
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:524
-#, fuzzy, kde-format
+#, kde-format
 msgid "Active"
 msgstr "Aktibo"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:525
-#, fuzzy, kde-format
+#, kde-format
 msgid "ID"
 msgstr "ID"
 
@@ -5147,17 +5189,17 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:101
 #, kde-format
 msgid "Keep comments in functions"
-msgstr ""
+msgstr "Mantendu funtzioetako iruzkinak"
 
 #: rkward/settings/rksettingsmoduler.cpp:102
 #, kde-format
 msgid "TRUE (default)"
-msgstr ""
+msgstr "EGIA (lehenetsia)"
 
 #: rkward/settings/rksettingsmoduler.cpp:102
-#, fuzzy, kde-format
+#, kde-format
 msgid "FALSE"
-msgstr "gezurrezkoa"
+msgstr "GEZURRA"
 
 #: rkward/settings/rksettingsmoduler.cpp:106
 #, kde-format
@@ -5166,9 +5208,9 @@ msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:107
 #: rkward/settings/rksettingsmoduler.cpp:120
-#, fuzzy, kde-format
+#, kde-format
 msgid "TRUE"
-msgstr "egiazkoa"
+msgstr "EGIA"
 
 #: rkward/settings/rksettingsmoduler.cpp:107
 #: rkward/settings/rksettingsmoduler.cpp:120
@@ -5229,7 +5271,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:217
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Add directory to list"
 msgid "Add"
 msgstr "Gehitu"
@@ -5314,7 +5356,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:427
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Add file to list"
 msgid "Add"
 msgstr "Gehitu"
@@ -5357,7 +5399,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:588
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Berrizendatu"
@@ -5371,7 +5413,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:596
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Kendu"
@@ -5384,7 +5426,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:601
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "Mantendu"
@@ -5462,14 +5504,14 @@ msgstr ""
 #. i18n: ectx: Menu (device)
 #: rkward/windows/detachedwindowcontainer.rc:13
 #: rkward/windows/rkcatchedx11windowpart.rc:9
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Device"
-msgstr "Gailua:"
+msgstr "&Gailua"
 
 #. i18n: ectx: Menu (history)
 #: rkward/windows/detachedwindowcontainer.rc:32
 #: rkward/windows/rkcatchedx11windowpart.rc:19
-#, fuzzy, kde-format
+#, kde-format
 msgid "&History"
 msgstr "&Historia"
 
@@ -5477,7 +5519,7 @@ msgstr "&Historia"
 #: rkward/windows/detachedwindowcontainer.rc:43
 #: rkward/windows/katepluginintegration.rc:9
 #: rkward/windows/rktoplevelwindowgui.rc:10
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Window"
 msgstr "&Leihoa"
 
@@ -5485,23 +5527,23 @@ msgstr "&Leihoa"
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
-msgstr ""
+msgstr "uneko gidoian"
 
 #: rkward/windows/katepluginintegration.cpp:670
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
-msgstr ""
+msgstr "Irekitako gidoietan"
 
 #: rkward/windows/rcontrolwindow.cpp:45 rkward/windows/rcontrolwindow.cpp:131
 #, kde-format
 msgid "Pause execution"
-msgstr ""
+msgstr "Etenaldia exekuzioan"
 
 #: rkward/windows/rcontrolwindow.cpp:50
 #, kde-format
 msgid "Cancel selected commands"
-msgstr ""
+msgstr "Bertan behera utzi hautatutako komandoak"
 
 #: rkward/windows/rcontrolwindow.cpp:122
 #, kde-format
@@ -5514,23 +5556,23 @@ msgstr ""
 #: rkward/windows/rcontrolwindow.cpp:122
 #, kde-format
 msgid "Some commands not cancelled"
-msgstr ""
+msgstr "Komando batzuk ez dira bertan behera utzi"
 
 #: rkward/windows/rcontrolwindow.cpp:135
 #, kde-format
 msgid "Resume execution"
-msgstr ""
+msgstr "Berrekin exekuzioa"
 
 #: rkward/windows/rkcallstackviewer.cpp:89
 #, kde-format
 msgid "<b>Active calls</b>"
-msgstr ""
+msgstr "<b>Dei aktiboak</b>"
 
 #: rkward/windows/rkcallstackviewer.cpp:117
 #: rkward/windows/rkdebugconsole.cpp:94
 #, kde-format
 msgid "Not in a debugger context"
-msgstr ""
+msgstr "Ez dago arazteko testuinguru batean"
 
 #: rkward/windows/rkcallstackviewer.cpp:136
 #, kde-format
@@ -5684,30 +5726,30 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:404
-#, fuzzy, kde-format
+#, kde-format
 msgid "Save Script..."
-msgstr "Gorde gidoia"
+msgstr "Gorde gidoia..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:406
 #, kde-format
 msgid "Save Script As..."
-msgstr ""
+msgstr "Gorde gidoia honela..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:485
 #: rkward/windows/rkcommandeditorwindow.cpp:745
 #, kde-format
 msgid " [modified]"
-msgstr ""
+msgstr " [aldatua]"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:492
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
+msgstr "\"%1\" dokumentua aldatu egin da. Itxi hala ere?"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:492
 #, kde-format
 msgid "File not saved"
-msgstr ""
+msgstr "Fitxategia ez da gorde"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:547
 #, kde-format
@@ -5726,7 +5768,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:547
 #, kde-format
 msgid "Potential side-effects of previews"
-msgstr ""
+msgstr "Aurreikuspegiek izan ditzaketen albo-ondorioak"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:670
 #, kde-format
@@ -5776,14 +5818,14 @@ msgid "Preview of script running in interactive R Console"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1021
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 (Active)"
-msgstr "Aktibo"
+msgstr "%1 (Aktibo)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1040
 #, kde-format
 msgid "%1 (Unused)"
-msgstr ""
+msgstr "%1 (Erabili gabe)"
 
 #. i18n: ectx: Menu (tools)
 #: rkward/windows/rkcommandeditorwindowpart.rc:11
@@ -5807,7 +5849,7 @@ msgid "An unspecified error occurred while running the command.\n"
 msgstr ""
 
 #: rkward/windows/rkcommandlog.cpp:302
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure"
 msgstr "Konfiguratu"
 
@@ -5832,7 +5874,7 @@ msgid "Evaluate the next statement, stepping into function calls."
 msgstr ""
 
 #: rkward/windows/rkdebugconsole.cpp:46
-#, fuzzy, kde-format
+#, kde-format
 msgid "Step out"
 msgstr "Karpora irten"
 
@@ -5856,7 +5898,7 @@ msgid "Finish current loop or function."
 msgstr ""
 
 #: rkward/windows/rkdebugconsole.cpp:52
-#, fuzzy, kde-format
+#, kde-format
 msgid "Continue"
 msgstr "Jarraitu"
 
@@ -5899,14 +5941,14 @@ msgid "Working directory"
 msgstr ""
 
 #: rkward/windows/rkfilebrowser.cpp:126 rkward/windows/robjectbrowser.cpp:119
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rename"
 msgstr "Berrizendatu"
 
 #: rkward/windows/rkfilebrowser.cpp:155
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rename..."
-msgstr "Berrizendatu"
+msgstr "Berrizendatu..."
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
@@ -5914,7 +5956,7 @@ msgid "New name for '%1':"
 msgstr ""
 
 #: rkward/windows/rkhelpsearchwindow.cpp:59
-#, fuzzy, kde-format
+#, kde-format
 msgid "Find:"
 msgstr "Aurkitu:"
 
@@ -5924,7 +5966,7 @@ msgid "Fields:"
 msgstr ""
 
 #: rkward/windows/rkhelpsearchwindow.cpp:80
-#, fuzzy, kde-format
+#, kde-format
 msgid "All"
 msgstr "Dena"
 
@@ -5939,12 +5981,12 @@ msgid "Keywords"
 msgstr ""
 
 #: rkward/windows/rkhelpsearchwindow.cpp:86
-#, fuzzy, kde-format
+#, kde-format
 msgid "Package:"
-msgstr "Paketea"
+msgstr "Paketea:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:99
-#, fuzzy, kde-format
+#, kde-format
 msgid "Case sensitive"
 msgstr "Maius./minus. bereiztea"
 
@@ -5954,7 +5996,7 @@ msgid "Fuzzy matching"
 msgstr ""
 
 #: rkward/windows/rkhelpsearchwindow.cpp:105
-#, fuzzy, kde-format
+#, kde-format
 msgid "Find"
 msgstr "Aurkitu"
 
@@ -5992,17 +6034,17 @@ msgid "All loaded packages"
 msgstr ""
 
 #: rkward/windows/rkhelpsearchwindow.cpp:324
-#, fuzzy, kde-format
+#, kde-format
 msgid "Topic"
 msgstr "Mintzagaia"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:326
-#, fuzzy, kde-format
+#, kde-format
 msgid "Package"
 msgstr "Paketea"
 
 #: rkward/windows/rkhtmlwindow.cpp:301
-#, fuzzy, kde-format
+#, kde-format
 msgid "Save as"
 msgstr "Gorde honela"
 

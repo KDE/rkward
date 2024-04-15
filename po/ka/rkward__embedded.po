@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-12 05:34+0200\n"
+"PO-Revision-Date: 2024-04-14 06:40+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Gerogian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -39,7 +39,7 @@ msgstr "დონის ამრჩევი"
 #: rkward/plugins/distributions/../data/level_select.xml:67
 #, kde-format
 msgid "Note: Some values were cut off."
-msgstr ""
+msgstr "შენიშვნა: ზოგიერთი მნიშვნელობა მოიჭრა."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <summary>
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:8
@@ -123,6 +123,8 @@ msgid ""
 "General users may skip this section of help, this is primarily for "
 "developers."
 msgstr ""
+"ჩვეულებრივ მომხმარებლებს დახმარების ეს სექცია შეუძლიათ, გამოტოვონ. ის "
+"ძირითადად პროგრამისტებისთვისაა."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
@@ -132,7 +134,7 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid "The generated code is available from <i>code.calculate</i>."
-msgstr ""
+msgstr "გენერირებული კოდი ხელმისაწვდომია ცვლადიდან <i>code.calculate</i>."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -141,7 +143,7 @@ msgstr ""
 msgid ""
 "The following external properties are provided for use in the embedding "
 "plugin."
-msgstr ""
+msgstr "ჩაშენებული დამატებისთვის მოწოდებულია შემდეგი გარე თვისებები."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -207,7 +209,7 @@ msgstr "ყველაზე დიდი მნიშვნელობებ�
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:35
 #, kde-format
 msgid "Add remainder category"
-msgstr ""
+msgstr "დარჩენილი კატეგორიის დამატება"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="...">
@@ -243,13 +245,13 @@ msgstr "სხვა:"
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:41
 #, kde-format
 msgid "Custom statistic (as function of x)"
-msgstr ""
+msgstr "მომხმარებლის სტატისტიკა (X-ის ფუნქციის სახით)"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:43
 #, kde-format
 msgid "Remainder category label"
-msgstr ""
+msgstr "დარჩენილი კატეგორიის ჭდე"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <radio label=""> <option label="...">
 #: rkward/plugins/distributions/../data/multi_input.xml:101
@@ -420,7 +422,7 @@ msgstr "ტაბულაციის ჯგუფები"
 #, kde-format
 msgctxt "Tabulate X by Y [by Z [...]]"
 msgid " by "
-msgstr ""
+msgstr " რამდენით "
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
@@ -434,7 +436,7 @@ msgstr "ტაბულაციის სტატისტიკა"
 #: rkward/plugins/distributions/../embedded.pluginmap:28
 #, kde-format
 msgid "Tabulate"
-msgstr ""
+msgstr "ტაბულაცია"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:53
@@ -452,13 +454,13 @@ msgstr "მნიშვნელობები"
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:62
 #, kde-format
 msgid "Custom statistic"
-msgstr ""
+msgstr "მომხმარებლის სტატისტიკა"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:10
 #, kde-format
 msgid "Embedded plugins"
-msgstr ""
+msgstr "ჩაშენებული დამატებები"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:10
@@ -486,7 +488,7 @@ msgstr "ფერის ამრჩევი"
 #: rkward/plugins/distributions/../embedded.pluginmap:24
 #, kde-format
 msgid "Step Function plot options"
-msgstr ""
+msgstr "საფეხუროვანი ფუნქციის ნახაზის პარამეტრები"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:25
@@ -500,7 +502,7 @@ msgstr "ჰისტოგრამის მორგება"
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:21
 #, kde-format
 msgid "Barplot Options"
-msgstr ""
+msgstr "სვეტოვანი დიაგრამის მორგება"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:31
@@ -518,7 +520,7 @@ msgstr "მნიშვნელობით არჩევა"
 #: rkward/plugins/distributions/../embedded.pluginmap:34
 #, kde-format
 msgid "Multi Input"
-msgstr ""
+msgstr "ერთზე მეტი შეყვანა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:38
@@ -610,7 +612,7 @@ msgstr "დაყენება git/svn-დან"
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:32
 #, kde-format
 msgid "Package source"
-msgstr ""
+msgstr "პაკეტის წყარო"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:33
@@ -634,7 +636,7 @@ msgstr "GitLab"
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:36
 #, kde-format
 msgid "Bitbucket"
-msgstr ""
+msgstr "Bitbucket"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:37
@@ -809,19 +811,19 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Above the bars"
-msgstr ""
+msgstr "სვეტების ზემოთ"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Beside the bars"
-msgstr ""
+msgstr "სვეტების გვერდზე"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Inside the bars"
-msgstr ""
+msgstr "სვეტების შიგნით"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:26
@@ -829,6 +831,8 @@ msgstr ""
 msgid ""
 "Generic plot options. See <link href=\"rkward://component/plot_options\"/>."
 msgstr ""
+"ზოგადი ნახაზის პარამეტრები. იხ: <link href=\"rkward://component/plot_options"
+"\"/>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -870,7 +874,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:22
 #, kde-format
 msgid "Draw Legend"
-msgstr ""
+msgstr "ახსნის დახატვა"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:23
@@ -882,13 +886,13 @@ msgstr "ფერები"
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:24
 #, kde-format
 msgid "Default (grayscale)"
-msgstr ""
+msgstr "ნაგულისხმევი (შავთეთრი)"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:25
 #, kde-format
 msgid "Rainbow colors"
-msgstr ""
+msgstr "ცისარტყელის ფერები"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:27
@@ -900,7 +904,7 @@ msgstr "ტიპი"
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:28
 #, kde-format
 msgid "Juxtaposed"
-msgstr ""
+msgstr "გვერდიგვერდ"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:29
@@ -924,25 +928,25 @@ msgstr "განლაგება"
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:34
 #, kde-format
 msgid "Above Bars"
-msgstr ""
+msgstr "სვეტების ზემოთ"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:35
 #, kde-format
 msgid "Beside Bars"
-msgstr ""
+msgstr "სვეტების გვერდზე"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:36
 #, kde-format
 msgid "Inside Bars"
-msgstr ""
+msgstr "სვეტების შიგნით"
 
 #. i18n: ectx: (Loaded from Choose color) <summary>
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:8
 #, kde-format
 msgid "Simple color picker."
-msgstr ""
+msgstr "მარტივი ფერების ამრჩევი."
 
 #. i18n: ectx: (Loaded from Choose color) <usage>
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:12
@@ -957,12 +961,14 @@ msgid ""
 "This plugin is meant to be used embedded, and you should not really ever see "
 "this help page."
 msgstr ""
+"ეს დამატება ჩაშენებული სახით უნდა გამოიყენოთ და ამ გვერდს ვერასდროს უნდა "
+"ხედავდეთ."
 
 #. i18n: ectx: (Loaded from Choose color) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:19
 #, kde-format
 msgid "The color to use."
-msgstr ""
+msgstr "გამოსაყენებელი ფერი."
 
 #. i18n: ectx: (Choose color) <dialog label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:22
@@ -1008,7 +1014,7 @@ msgstr "ნაგულისხმები"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:25
 #, kde-format
 msgid "Azure"
-msgstr ""
+msgstr "ლაჟვარდისფერი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:26
@@ -1164,19 +1170,19 @@ msgstr "ნაცრისფერი4"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:51
 #, kde-format
 msgid "Lawngreen"
-msgstr ""
+msgstr "მწვანემდელო"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:52
 #, kde-format
 msgid "Limegreen"
-msgstr ""
+msgstr "ლიმონისფერიმწვანე"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:53
 #, kde-format
 msgid "Linen"
-msgstr ""
+msgstr "სელისფერი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:54
@@ -1188,43 +1194,43 @@ msgstr "ალისფერი"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:55
 #, kde-format
 msgid "Magenta1"
-msgstr ""
+msgstr "იისფერი1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:56
 #, kde-format
 msgid "Magenta2"
-msgstr ""
+msgstr "იისფერი2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:57
 #, kde-format
 msgid "Magenta3"
-msgstr ""
+msgstr "იისფერი3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:58
 #, kde-format
 msgid "Magenta4"
-msgstr ""
+msgstr "იისფერი4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:59
 #, kde-format
 msgid "Mintcream"
-msgstr ""
+msgstr "კრემისფერიმწვანე"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:60
 #, kde-format
 msgid "Mistyrose"
-msgstr ""
+msgstr "ღია ვარდისფერი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:61
 #, kde-format
 msgid "Navajowhite"
-msgstr ""
+msgstr "ნავაიოთეთრი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:62
@@ -1242,19 +1248,19 @@ msgstr "ორქიდეა"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:64
 #, kde-format
 msgid "Palegreen"
-msgstr ""
+msgstr "მკრთალი მწვანე"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:65
 #, kde-format
 msgid "Papayawhip"
-msgstr ""
+msgstr "Papayawhip (#FFEFD5)"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:66
 #, kde-format
 msgid "Peachpuff"
-msgstr ""
+msgstr "Peachpuff (#FFDAB9)"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:67
@@ -1296,7 +1302,7 @@ msgstr "წითელი4"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:73
 #, kde-format
 msgid "Royalblue"
-msgstr ""
+msgstr "სამეფოლურჯი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:74
@@ -1308,19 +1314,19 @@ msgstr "სალმონი"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:75
 #, kde-format
 msgid "Sandybrown"
-msgstr ""
+msgstr "ქვიშისფერ-ყავისფერი (#F4A460)"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:76
 #, kde-format
 msgid "Seagreen"
-msgstr ""
+msgstr "ზღვისფერიმწვანე"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:77
 #, kde-format
 msgid "Sienna"
-msgstr ""
+msgstr "სიენისფერი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:78
@@ -1332,7 +1338,7 @@ msgstr "ცისფერი"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:79
 #, kde-format
 msgid "Slategrey"
-msgstr ""
+msgstr "აგურისფერინაცრისფერი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:80
@@ -1344,13 +1350,13 @@ msgstr "თოვლი"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:81
 #, kde-format
 msgid "Springgreen"
-msgstr ""
+msgstr "გაზაფხულისმწვანე"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:82
 #, kde-format
 msgid "Steelblue"
-msgstr ""
+msgstr "ფოლადისლურჯი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:83
@@ -1362,7 +1368,7 @@ msgstr "Tg"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:84
 #, kde-format
 msgid "Thistle"
-msgstr ""
+msgstr "ნარშავი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:85
@@ -1380,25 +1386,25 @@ msgstr "იისფერი"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:87
 #, kde-format
 msgid "Violetred1"
-msgstr ""
+msgstr "იისფერიწითელი1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:88
 #, kde-format
 msgid "Violetred2"
-msgstr ""
+msgstr "იისფერიწითელი2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:89
 #, kde-format
 msgid "Violetred3"
-msgstr ""
+msgstr "იისფერიწითელი3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:90
 #, kde-format
 msgid "Violetred4"
-msgstr ""
+msgstr "იისფერიწითელი4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:91
@@ -1428,7 +1434,7 @@ msgstr "ყვითელი1"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:95
 #, kde-format
 msgid "Yellow2"
-msgstr ""
+msgstr "ყვითელი2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:96
@@ -1446,31 +1452,31 @@ msgstr "ყვითელი4"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:98
 #, kde-format
 msgid "Yellowgreen"
-msgstr ""
+msgstr "ყვითელიმწვანე"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:18
 #, kde-format
 msgid "Break points"
-msgstr ""
+msgstr "გაყოფის წერტილები"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:21
 #, no-c-format, kde-format
 msgid "Approximately %1 cells"
-msgstr ""
+msgstr "დაახლ %1 უჯრედი"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:24
 #, kde-format
 msgid "Integers"
-msgstr ""
+msgstr "მთელი რიცხვები"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:27
 #, no-c-format, kde-format
 msgid "Equally spaced vector of length %1"
-msgstr ""
+msgstr "თანაბრად განაწილებული ვექტორი სიგრძით %1"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:40
@@ -1516,25 +1522,25 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:16
 #, kde-format
 msgid "This is the <i>freq</i> parameter."
-msgstr ""
+msgstr "ეს <i>freq</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Bar labels")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:17
 #, kde-format
 msgid "This is the <i>label</i> parameter."
-msgstr ""
+msgstr "ეს <i>label</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Right closed")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:18
 #, kde-format
 msgid "This is the <i>right</i> parameter."
-msgstr ""
+msgstr "ეს <i>right</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Include in lowest cell")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:19
 #, kde-format
 msgid "This is the <i>include.lowest</i> parameter."
-msgstr ""
+msgstr "ეს <i>include.lowest</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:21
@@ -1607,13 +1613,13 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:30
 #, kde-format
 msgid "This is the <i>angle</i> parameter."
-msgstr ""
+msgstr "ეს <i>angle</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Use Fill color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:32
 #, kde-format
 msgid "Check this box to use a fill color for the histogram bars."
-msgstr ""
+msgstr "ჩართეთ ეს, ჰისტოგრამის სვეტების ფერით შევსების ჩასართავად."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:33
@@ -1712,31 +1718,31 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:43
 #, kde-format
 msgid "<i>code.calculate</i>: This contains only the <i>breaks</i>-option."
-msgstr ""
+msgstr "<i>code.calculate</i>: ეს, მხოლოდ, <i>breaks</i>-პარამეტრს შიცავს."
 
 #. i18n: ectx: (Default histogram options) <dialog label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:53
 #, kde-format
 msgid "Default histogram options"
-msgstr ""
+msgstr "ნაგულისხმევი ჰისტოგრამის პარამეტრები"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:56
 #, kde-format
 msgid "Add bars to current plot"
-msgstr ""
+msgstr "სვეტების დამატება მიმდინარე ნახაზში"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:58
 #, kde-format
 msgid "Bar labels"
-msgstr ""
+msgstr "სვეტის ჭდეები"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:60
 #, kde-format
 msgid "Histogram Breakpoints"
-msgstr ""
+msgstr "ჰისტოგრამის გაწყვეტის წერტილები"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:61
@@ -1748,7 +1754,7 @@ msgstr "მეთოდი"
 #: rkward/plugins/distributions/../plots/histogram_options.xml:62
 #, kde-format
 msgid "Sturges"
-msgstr ""
+msgstr "სტურჯები"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:63
@@ -1760,7 +1766,7 @@ msgstr "სკოტის ფორმულა"
 #: rkward/plugins/distributions/../plots/histogram_options.xml:64
 #, kde-format
 msgid "Friedman-Diaconis"
-msgstr ""
+msgstr "ფრიდმა-დიაკონისი"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:65
@@ -1778,13 +1784,13 @@ msgstr "მთელი რიცხვები"
 #: rkward/plugins/distributions/../plots/histogram_options.xml:67
 #, kde-format
 msgid "Vector of break points"
-msgstr ""
+msgstr "გაჩერების წერტილების ვექტორი"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:70
 #, kde-format
 msgid "Suggested cells"
-msgstr ""
+msgstr "მინიშნებული უჯრედები"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:71
@@ -1796,13 +1802,13 @@ msgstr "ვექტორის სიგრძე"
 #: rkward/plugins/distributions/../plots/histogram_options.xml:73
 #, kde-format
 msgid "Right closed"
-msgstr ""
+msgstr "მარჯვნივ დახურულია"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:75
 #, kde-format
 msgid "Include in lowest cell"
-msgstr ""
+msgstr "ჩასმა ყველაზე დაბალ უჯრედში"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <text>
 #: rkward/plugins/distributions/../plots/histogram_options.xml:76
@@ -1922,7 +1928,7 @@ msgstr "ჰისტოგრამის შევსების მორგ�
 #: rkward/plugins/distributions/../plots/histogram_options.xml:99
 #, kde-format
 msgid "Use Fill color"
-msgstr ""
+msgstr "შევსების ფერის გამოყენება"
 
 #. i18n: ectx: (Loaded from Default plot options) <summary>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:8
@@ -1976,7 +1982,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.rkh:22
 #, kde-format
 msgid "Enable this option, if you want to customize the margins."
-msgstr ""
+msgstr "ჩართეთ ეს პარამეტრი, თუ გნებავთ, საზღვრები მოირგოთ."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Top")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:23
@@ -2093,14 +2099,14 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>xvar</i>: The variable to be used for the x-coordinates."
-msgstr ""
+msgstr "<i>xvar</i>: X კოორდინატებისთვის გამოყენებული ცვლადი."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>yvar</i>: The variable to be used for the y-coordinates."
-msgstr ""
+msgstr "<i>yvar</i>: Y კოორდინატებისთვის გამოყენებული ცვლადი."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2254,13 +2260,13 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:78
 #, kde-format
 msgid "Default plot options"
-msgstr ""
+msgstr "ნაგულისხმევი ნახაზის პარამეტრები"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:80
 #, kde-format
 msgid "Title and margins"
-msgstr ""
+msgstr "სათაური და ზღვრები"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:82
@@ -2272,7 +2278,7 @@ msgstr "მთავარი სათაური"
 #: rkward/plugins/distributions/../plots/plot_options.xml:83
 #, kde-format
 msgid "Main title (on top). Leave empty for default title"
-msgstr ""
+msgstr "მთავარი სათაური (ზემოდან). ნაგულისხმევი სათაურისთვის დატოვეთ ცარიელი"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <checkbox label="...">
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <checkbox label="...">
@@ -2292,13 +2298,13 @@ msgstr "სუბტიტრები"
 #: rkward/plugins/distributions/../plots/plot_options.xml:87
 #, kde-format
 msgid "Sub-title (at bottom). Leave empty for default title"
-msgstr ""
+msgstr "ქვესათაური (ბოლოში). ნაგულისხმევი სათაურისთვის დატოვეთ ცარიელი"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:90
 #, kde-format
 msgid "Custom margins"
-msgstr ""
+msgstr "მომხმარებლის ზღვრები"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:91
@@ -2352,31 +2358,31 @@ msgstr "Y ღერძის დახატვა"
 #: rkward/plugins/distributions/../plots/plot_options.xml:107
 #, kde-format
 msgid "X axis logarithmic"
-msgstr ""
+msgstr "ლოგარითმული X ღერძი"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:108
 #, kde-format
 msgid "Y axis logarithmic"
-msgstr ""
+msgstr "ლოგარითმული Y ღერძი"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:111
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr ""
+msgstr "ჭდეები (ნაგულისხმევი მნიშვნელობის გამოსაყენებლად ცარიელი დატოვეთ)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:113
 #, kde-format
 msgid "X axis label"
-msgstr ""
+msgstr "X-ღერძის ჭდე"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:114
 #, kde-format
 msgid "Y axis label"
-msgstr ""
+msgstr "Y-ღერძის ჭდე"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:116
@@ -2389,7 +2395,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:119
 #, kde-format
 msgid "interpret as string"
-msgstr ""
+msgstr "ინტერპრეტაცია სტრიქონის სახით"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:122
@@ -2497,7 +2503,7 @@ msgstr "ხაზებით შეერთებული წერტილ�
 #: rkward/plugins/distributions/../plots/plot_options.xml:155
 #, kde-format
 msgid "Plot points overlaid by lines "
-msgstr ""
+msgstr "ხაზებით გადახატული წერტილების დახატვა "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:156
@@ -2557,7 +2563,7 @@ msgstr "ბადე"
 #: rkward/plugins/distributions/../plots/plot_options.xml:173
 #, kde-format
 msgid "Add Grid to the plot"
-msgstr ""
+msgstr "ბადის დამატება ნახაზისთვის"
 
 #. i18n: ectx: (Loaded from Step function plot options) <summary>
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:8
@@ -2589,7 +2595,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:16
 #, kde-format
 msgid "This is the <i>lty</i> argument."
-msgstr ""
+msgstr "ეს <i>lty</i> არგუმენტია."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw points")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:17
@@ -2611,7 +2617,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:19
 #, kde-format
 msgid "This is the <i>col.hor</i> argument."
-msgstr ""
+msgstr "ეს <i>col.hor</i> არგუმენტია."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw vertical lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:20
@@ -2625,7 +2631,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:21
 #, kde-format
 msgid "This is the <i>col.vert</i> argument."
-msgstr ""
+msgstr "ეს <i>col.vert</i> არგუმენტია."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "For y = 1 line")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:23
@@ -2672,19 +2678,19 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:33
 #, kde-format
 msgid "Step function plot options"
-msgstr ""
+msgstr "საფეხუროვანი ფუნქციის ნახაზის პარამეტრები"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:35
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "მორგება"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:36
 #, kde-format
 msgid "Add to current plot"
-msgstr ""
+msgstr "დამატება მიმდინარე ნახაზში"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:37
@@ -2753,7 +2759,7 @@ msgstr "RKWard -ის გუნდი"
 #: rkward/plugins/distributions/../testing/run_code.xml:10
 #, kde-format
 msgid "Internal plugin for automated testing"
-msgstr ""
+msgstr "შიდა დამატება ავტომატური შემოწმებისთვის"
 
 #. i18n: ectx: (Loaded from Grid options) <summary>
 #: rkward/plugins/distributions/../x11device/grid.rkh:8
@@ -2851,7 +2857,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:24
 #, kde-format
 msgid "Grid options"
-msgstr ""
+msgstr "ბადის მორგება"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:27
@@ -2873,7 +2879,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:37
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "არაფერი"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
@@ -2905,13 +2911,13 @@ msgstr "Y უჯრედები"
 #: rkward/plugins/distributions/../x11device/grid.xml:44
 #, kde-format
 msgid "Custom Line width"
-msgstr ""
+msgstr "ხაზის სიგანის ხელით მითითება"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:45
 #, kde-format
 msgid "Equilogs"
-msgstr ""
+msgstr "ეკვილოგარითმული"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:48
@@ -2929,4 +2935,4 @@ msgstr "ხაზის ტიპი"
 #: rkward/plugins/distributions/../x11device/grid.xml:62
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
-msgstr ""
+msgstr "შენიშვნა: არ ეხება Trellis ტიპის მოწყობილობებს!"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-12 05:35+0200\n"
+"PO-Revision-Date: 2024-04-14 14:31+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -292,7 +292,7 @@ msgstr "ISO8859-11 ლათინური/ტაილანდური"
 #: rkward/plugins/00saveload/save/write_csv.xml:149
 #, kde-format
 msgid "ISO8859-13 Latin-7 Baltic Rim"
-msgstr ""
+msgstr "ISO8859-13 Latin-7 ბალტიკა"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -322,7 +322,7 @@ msgstr "ISO8859-14 Latin-8 კელტური"
 #: rkward/plugins/00saveload/save/write_csv.xml:151
 #, kde-format
 msgid "ISO8859-15 Latin-9 Western European (EUR)"
-msgstr ""
+msgstr "ISO8859-15 Latin-9 აღმოსავლეთ-ევროპული (EUR)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -337,7 +337,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:152
 #, kde-format
 msgid "ISO8859-16 Latin-10 South-Eastern European"
-msgstr ""
+msgstr "ISO8859-16 Latin-10 სამხრეთ-აღმოსავლეთ ევროპული"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
@@ -427,13 +427,13 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "copy from the local environment to globalenv()"
-msgstr ""
+msgstr "კოპირება ლოკალური გარემოდან globalenv()-ში"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data)
 #: rkward/plugins/00saveload/import/import_csv.js:56
 #, kde-format
 msgid "Import text / csv data"
-msgstr ""
+msgstr "ტექსტური / CSV მონაცემების შემოტანა"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <summary>
 #: rkward/plugins/00saveload/import/import_csv.rkh:8
@@ -462,7 +462,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:23
 #, kde-format
 msgid "The filename of the file to import"
-msgstr ""
+msgstr "შემოსატანი ფაილის სახელი"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Data format")
 #: rkward/plugins/00saveload/import/import_csv.rkh:19
@@ -485,7 +485,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.rkh:21
 #, kde-format
 msgid "Decimal character used in the imported file"
-msgstr ""
+msgstr "შემოტანილ ფაილში გამოყენებული წილადის სიმბოლო"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Specify decimal point character")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Specify field separator character")
@@ -493,13 +493,13 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.rkh:24
 #, kde-format
 msgid "If you selected \"other\" above, specify the character, here."
-msgstr ""
+msgstr "თუ ზემოთ \"სხვა\" აირჩიეთ, აქ სიმბოლოს მითითება გჭირდებათ."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Field separator character")
 #: rkward/plugins/00saveload/import/import_csv.rkh:23
 #, kde-format
 msgid "The separator character used in the imported file"
-msgstr ""
+msgstr "შემოტანილ ფაილში გამოყენებული გამყოფი სიმბოლო"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Object to save to")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Object to save to")
@@ -526,7 +526,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:29
 #, kde-format
 msgid "Whether the object should be opened for editing after it was imported"
-msgstr ""
+msgstr "გახსნება თუ არა ობიექტი ჩასასწორებლად მისი შემოტანის შემდეგ"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Preview")
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Preview")
@@ -585,14 +585,14 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.rkh:35
 #, kde-format
 msgid "Should column names be checked for validity?"
-msgstr ""
+msgstr "უნდა შემოწმდეს თუ არა სვეტის სახელები სისწორეზე?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Classes of columns")
 #: rkward/plugins/00saveload/import/import_csv.rkh:36
 #, kde-format
 msgid ""
 "Should be class of each column be determined automatically, or specified?"
-msgstr ""
+msgstr "უნდა იყოს თითოეული სვეტის კლასი ავტომატურად დადგენილი? თუ მითითებული?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of column classes (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:37
@@ -654,7 +654,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.rkh:47
 #, kde-format
 msgid "String delimiter character(s) used in the file"
-msgstr ""
+msgstr "ფაილში გამოყენებული გამყოფი სიმბოლო(ები)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Specify quoting character(s)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:48
@@ -677,7 +677,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.rkh:51
 #, kde-format
 msgid "Maximum number of rows to read (-1 to read all lines)"
-msgstr ""
+msgstr "წასაკითხი მწკრივების მაქსიმალური რაოდენობა (-1 ყველა ხაზის წასაკითხად)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Character for comments")
 #: rkward/plugins/00saveload/import/import_csv.rkh:52
@@ -691,7 +691,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.rkh:53
 #, kde-format
 msgid "Should blank lines be ignored?"
-msgstr ""
+msgstr "გამოვტოვო ცარიელი ხაზები?"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="...">
@@ -741,7 +741,7 @@ msgstr "ფაილის სახელი"
 #: rkward/plugins/00saveload/import/import_csv.xml:106
 #, kde-format
 msgid "Data format"
-msgstr ""
+msgstr "მონაცემების ფორმატი"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -749,7 +749,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:69
 #, kde-format
 msgid "Comma separated values (CSV)"
-msgstr ""
+msgstr "მძიმით გამოყოფილი მნიშვნელობები (CSV)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -758,6 +758,7 @@ msgstr ""
 #, kde-format
 msgid "Semicolon separated values, comma as decimal separator (CSV2)"
 msgstr ""
+"ორიწერტილით გამოყოფილი მნიშვნელობები, მძიმე როგორც წილადის გამყოფი (CSV2)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -765,7 +766,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:71
 #, kde-format
 msgid "Tab separated values (TAB)"
-msgstr ""
+msgstr "ტაბულაციით გამოყოფილი მნიშვნელობები (TAB)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -774,12 +775,13 @@ msgstr ""
 #, kde-format
 msgid "Tab separated values, comma as decimal separator (TAB2)"
 msgstr ""
+"ტაბულაციით გამოყოფილი მნიშვნელობები, მძიმე როგორც წილადის გამყოფი (TAB2)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:111
 #, kde-format
 msgid "read.table() default (whitespace separated values)"
-msgstr ""
+msgstr "read.table()-ის ნაგულისხმევი (ჰარეთი გამოყოფილი მნიშვნელობები)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -796,7 +798,7 @@ msgstr "ხელით მითითებული"
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:24
 #, kde-format
 msgid "Use first row as column names"
-msgstr ""
+msgstr "სვეტის სახელები პირველ მწკრივში"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="...">
@@ -804,7 +806,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:78
 #, kde-format
 msgid "Decimal point character"
-msgstr ""
+msgstr "წილადის გამყოფი სიმბოლო"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Decimal point character"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="Decimal point character"> <option label="...">
@@ -832,7 +834,7 @@ msgstr "',' (მძიმე)"
 #: rkward/plugins/00saveload/import/import_csv.xml:126
 #, kde-format
 msgid "Specify decimal point character"
-msgstr ""
+msgstr "მიუთითეთ წილადის გამყოფი სიმბოლო"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <frame label="Options"> <radio label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="...">
@@ -842,7 +844,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:87
 #, kde-format
 msgid "Field separator character"
-msgstr ""
+msgstr "ველის გამყოფი სიმბოლო"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Field separator character"> <option label="...">
@@ -882,7 +884,7 @@ msgstr "ნებისმიერი ჰარე"
 #: rkward/plugins/00saveload/save/write.xml:36
 #, kde-format
 msgid "Specify field separator character"
-msgstr ""
+msgstr "მიუთითეთ ველი გამყოფი სიმბოლო"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <saveobject label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <saveobject label="...">
@@ -906,7 +908,7 @@ msgstr "ობიექტის შენახვა მისამართ�
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:29
 #, kde-format
 msgid "Open imported data for editing"
-msgstr ""
+msgstr "შემოტანილი მონაცემების გახსნა ჩასასწორებლად"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <preview label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <preview label="...">
@@ -934,7 +936,7 @@ msgstr "მწკრივები და სვეტები"
 #: rkward/plugins/00saveload/import/import_csv.xml:151
 #, kde-format
 msgid "Row Specifications"
-msgstr ""
+msgstr "მწკრივის სპეციფიკაციები"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="Row  specifications"> <radio label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Row Specifications"> <radio label="...">
@@ -958,13 +960,13 @@ msgstr "ავტომატური"
 #: rkward/plugins/00saveload/import/import_csv.xml:154
 #, kde-format
 msgid "Numeric row names"
-msgstr ""
+msgstr "რიცხვითი მწკრივის სახელები"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:155
 #, kde-format
 msgid "As specified in column x:"
-msgstr ""
+msgstr "როგორც მითითებულია სვეტში x:"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:156
@@ -976,19 +978,19 @@ msgstr "ვექტორის გამოყენება"
 #: rkward/plugins/00saveload/import/import_csv.xml:158
 #, kde-format
 msgid "Column number or variable name"
-msgstr ""
+msgstr "სვეტის ნომერი ან ცვლადის სახელი"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Row Specifications"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:159
 #, kde-format
 msgid "Vector of row names (quoted)"
-msgstr ""
+msgstr "მწკრივის სახელების ვექტორი (ბრჭყალებში)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:164
 #, kde-format
 msgid "Column Specifications"
-msgstr ""
+msgstr "სვეტის სპეციფიკაციები"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="Column specifications"> <radio label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <radio label="...">
@@ -1004,19 +1006,19 @@ msgstr "სვეტების სახელები"
 #: rkward/plugins/00saveload/import/import_csv.xml:173
 #, kde-format
 msgid "Use a character vector"
-msgstr ""
+msgstr "სიმბოლური ვექტორის გამოყენება"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:169
 #, kde-format
 msgid "Vector of column names (quoted)"
-msgstr ""
+msgstr "სვეტის სახელების ვექტორი (ბრჭყალებში)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:170
 #, kde-format
 msgid "Check syntax of column names"
-msgstr ""
+msgstr "შეამოწმეთ სვეტის სახელების სინტაქსი"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <radio label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:171
@@ -1028,13 +1030,13 @@ msgstr "სვეტის კლასები"
 #: rkward/plugins/00saveload/import/import_csv.xml:175
 #, kde-format
 msgid "Vector of column classes (quoted)"
-msgstr ""
+msgstr "სვეტის კლასების ვექტორი (ბრჭყალებში)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:180
 #, kde-format
 msgid "Skip trailing fields"
-msgstr ""
+msgstr "ბოლო ველების გამოტოვება"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <checkbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <checkbox label="...">
@@ -1042,7 +1044,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:42
 #, kde-format
 msgid "Pad rows if unequal length"
-msgstr ""
+msgstr "მწკრივების შევსება, თუ სიგრძე ტოლი არაა"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="...">
@@ -1056,7 +1058,7 @@ msgstr "მეტი პარამეტრი"
 #: rkward/plugins/00saveload/import/import_csv.xml:186
 #, kde-format
 msgid "String handling"
-msgstr ""
+msgstr "სტრიქონების დამუშავება"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:187
@@ -1078,7 +1080,7 @@ msgstr "თავში და ბოლოში გამოტოვებე
 #: rkward/plugins/00saveload/import/import_xls.xml:37
 #, kde-format
 msgid "Convert character columns to factors"
-msgstr ""
+msgstr "სიმბოლური სვეტების ფაქტორებში გადაყვანა"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Convert character columns to factors"> <option label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <radio label="Convert character columns to factors"> <option label="...">
@@ -1086,7 +1088,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:38
 #, kde-format
 msgid "Convert to factor"
-msgstr ""
+msgstr "ფაქტორში გადაყვანა"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Convert character columns to factors"> <option label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <radio label="Convert character columns to factors"> <option label="...">
@@ -1132,7 +1134,7 @@ msgstr "მხოლოდ, '"
 #: rkward/plugins/00saveload/import/import_csv.xml:203
 #, kde-format
 msgid "\" and '"
-msgstr ""
+msgstr "\" და '"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="String delimiter"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:204
@@ -1144,7 +1146,7 @@ msgstr "არერთი / გამორთულია"
 #: rkward/plugins/00saveload/import/import_csv.xml:207
 #, kde-format
 msgid "Specify quoting character(s)"
-msgstr ""
+msgstr "მიუთითეთ ბრჭყალის სიმბოლო(ები)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:211
@@ -1156,19 +1158,19 @@ msgstr "გამოტოვება"
 #: rkward/plugins/00saveload/import/import_csv.xml:212
 #, kde-format
 msgid "Skip x lines at the start of the file"
-msgstr ""
+msgstr "ფალის დასაწყისიდან x ხაზის გამოტოვება"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:213
 #, kde-format
 msgid "Max number of lines to read (-1 for no limit)"
-msgstr ""
+msgstr "წასაკითხი ხაზების მაქსიმალური რაოდენობა (-1 ყველა ხაზის წასაკითხად)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:214
 #, kde-format
 msgid "Character for comments"
-msgstr ""
+msgstr "სიმბოლო კომენტარებისთვის"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:215
@@ -1188,7 +1190,7 @@ msgstr "ცარიელი ხაზების გამოტოვებ�
 #, kde-format
 msgctxt "R code comment"
 msgid "assign to globalenv()"
-msgstr ""
+msgstr "globalenv()-ზე მინიჭება"
 
 #. i18n: ectx: (Loaded from Generic data import)
 #. i18n: ectx: (Generic data import) <dialog label="...">
@@ -1196,7 +1198,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:19
 #, kde-format
 msgid "Generic data import"
-msgstr ""
+msgstr "ზოგადი მონაცემების შემოტანა"
 
 #. i18n: ectx: (Loaded from Generic data import) <summary>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:11
@@ -1267,19 +1269,19 @@ msgstr "ობიექტის ჩასწორება"
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:29
 #, kde-format
 msgid "If the file contains more than one dataset"
-msgstr ""
+msgstr "თუ ფაილი ერთზე მეტ მონაცემების სეტს შეიცავს"
 
 #. i18n: ectx: (Generic data import) <dialog label="Generic data import"> <tab label="General"> <frame label="If the file contains more than one dataset"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:30
 #, kde-format
 msgid "Import a list of all datasets"
-msgstr ""
+msgstr "ყველა მონაცემების სეტის სიის შემოტანა"
 
 #. i18n: ectx: (Generic data import) <dialog label="Generic data import"> <tab label="General"> <frame label="If the file contains more than one dataset"> <input label="...">
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:31
 #, kde-format
 msgid "Import specific sub-set"
-msgstr ""
+msgstr "მითითებული ქვესეტისშემოტანა"
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import STATA file)
@@ -1288,7 +1290,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "set variable labels for use in RKWard"
-msgstr ""
+msgstr "დააყენეთ ცვლადის ჭდეები RKWard-ში გამოსაყენებლად"
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
@@ -1296,13 +1298,13 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.js:56
 #, kde-format
 msgid "Import SPSS data"
-msgstr ""
+msgstr "SPSS-ის მონაცემების შემოტანა"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <summary>
 #: rkward/plugins/00saveload/import/import_spss.rkh:11
 #, kde-format
 msgid "Import SPSS data files."
-msgstr ""
+msgstr "SPSS-ის მონაცემების ფაილების შემოტანა."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <usage>
 #: rkward/plugins/00saveload/import/import_spss.rkh:15
@@ -1357,7 +1359,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_spss.rkh:29
 #, kde-format
 msgid "Trim trailing white space from labels?"
-msgstr ""
+msgstr "მოვაცილო ჰარე ბოლოში ჭდეებს?"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_spss.rkh:30
@@ -1372,13 +1374,13 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_spss.xml:24
 #, kde-format
 msgid "Import SPSS file"
-msgstr ""
+msgstr "SPSS ფაილის შემოტანა"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:34
 #, kde-format
 msgid "Import as a data.frame"
-msgstr ""
+msgstr "შემოტანა, როგორც data.frame"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:35
@@ -1390,37 +1392,37 @@ msgstr "ჭდეები"
 #: rkward/plugins/00saveload/import/import_spss.xml:36
 #, kde-format
 msgid "Convert Variable labels to RKWard format"
-msgstr ""
+msgstr "ცვლადის ჭდეების გადაყვანა RKWard-ის ფორმატში"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="Labels"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:37
 #, kde-format
 msgid "Use value labels"
-msgstr ""
+msgstr "მნიშვნელობის ჭდეების გამოყენება"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="Labels"> <spinbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:38
 #, kde-format
 msgid "Maximum number of labels per object"
-msgstr ""
+msgstr "მაქსიმალური ჭდეების რაოდენობა თითოეული ობიექტისთვის"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="Labels"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:39
 #, kde-format
 msgid "Trim white space"
-msgstr ""
+msgstr "თეთრი ჰარეს მოკვეთა"
 
 #. i18n: ectx: (Loaded from Import STATA file)
 #: rkward/plugins/00saveload/import/import_stata.js:72
 #, kde-format
 msgid "Import Stata File"
-msgstr ""
+msgstr "Stata-ის ფაილის შემოტანა"
 
 #. i18n: ectx: (Loaded from Import STATA file) <summary>
 #: rkward/plugins/00saveload/import/import_stata.rkh:11
 #, kde-format
 msgid "Import STATA data files."
-msgstr ""
+msgstr "Stata-ის მონაცემების ფაილების შემოტანა."
 
 #. i18n: ectx: (Loaded from Import STATA file) <usage>
 #: rkward/plugins/00saveload/import/import_stata.rkh:15
@@ -1491,7 +1493,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_stata.xml:18
 #, kde-format
 msgid "Import STATA file"
-msgstr ""
+msgstr "Stata-ის ფაილის შემოტანა"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="...">
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <frame label="...">
@@ -1509,13 +1511,13 @@ msgstr "გამართვა"
 #: rkward/plugins/00saveload/import/import_stata.xml:29
 #, kde-format
 msgid "Convert Stata dates to 'Date' class"
-msgstr ""
+msgstr "Stata-ის თარიღების გადაყვანა 'Date' კლასში"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:30
 #, kde-format
 msgid "Use Stata value labels to create factors?"
-msgstr ""
+msgstr "გამოვიყენო Stata-ის მნიშვნელობის ჭდეები ფაქტორების შესაქმნელად?"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:31
@@ -1546,7 +1548,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:18
 #, kde-format
 msgid "Import Microsoft EXCEL sheet"
-msgstr ""
+msgstr "Microsoft Exce-ის ცხრილის შემოტანა"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <summary>
 #: rkward/plugins/00saveload/import/import_xls.rkh:8
@@ -1571,7 +1573,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.rkh:22
 #, kde-format
 msgid "Specifies the sheet to be imported"
-msgstr ""
+msgstr "მიუთითებს შემოსატან ფურცელს"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Print details as the file is processed")
 #: rkward/plugins/00saveload/import/import_xls.rkh:23
@@ -1580,6 +1582,8 @@ msgid ""
 "Print details as the file is processed. This may be helpful in "
 "troubleshooting."
 msgstr ""
+"დეტალების გამოტანა ფაილის დამუშავების მიმდინარეობისას. შეიძლება დაგეხმაროთ "
+"პრობლემის ძებნისას."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Number of rows to skip")
 #: rkward/plugins/00saveload/import/import_xls.rkh:24
@@ -1617,7 +1621,7 @@ msgstr "დიაპაზონი"
 #: rkward/plugins/00saveload/import/import_xls.xml:33
 #, kde-format
 msgid "Max number of rows to read (-1 for no limit)"
-msgstr ""
+msgstr "წასაკითხი მწკრივების მაქსიმალური რაოდენობა (-1 ყველა ხაზის წასაკითხად)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="Range"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:34
@@ -1631,19 +1635,19 @@ msgstr "გამოსატოვებელი მწკრივები�
 #: rkward/plugins/00saveload/save/write_csv.xml:168
 #, kde-format
 msgid "Character for missing values"
-msgstr ""
+msgstr "სიმბოლო ნაკლული მნიშვნელობებისთვის"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:45
 #, kde-format
 msgid "Error handling"
-msgstr ""
+msgstr "შეცდომების დამუშავება"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="Error handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:46
 #, kde-format
 msgid "Print details as the file is processed"
-msgstr ""
+msgstr "დეტალების გამოტანა ფაილის დამუშავების მიმდინარეობისას"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.js:10
@@ -1762,25 +1766,25 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:22
 #, kde-format
 msgid "Index or \"name\" of sheet"
-msgstr ""
+msgstr "ინდექსი ან \"სახელი\" ფურცლისთვის"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:25
 #, kde-format
 msgid "Index or \"name\" of column with row names (if any)"
-msgstr ""
+msgstr "მწკრივის სახელების შემცველი სვეტის ინდექსი ან \"სახელი\" (თუ არსებობს)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:34
 #, kde-format
 msgid "Rows and columns"
-msgstr ""
+msgstr "მწკრივები და სვეტები"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <frame label="Range"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:37
 #, kde-format
 msgid "Start row / column (\"0\" for automatic)"
-msgstr ""
+msgstr "პირველი მწკრივი / სვეტი (\"0\" ავტომატურისთვის)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> [...] <frame label="Start row / column (\"0\" for automatic)"> <spinbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> [...] <frame label="End row / column (\"0\" for automatic)"> <spinbox label="...">
@@ -1802,31 +1806,31 @@ msgstr "სვეტი"
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:41
 #, kde-format
 msgid "End row / column (\"0\" for automatic)"
-msgstr ""
+msgstr "ბოლო მწკრივი / სვეტი (\"0\" ავტომატურისთვის)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <frame label="Range"> <text>
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:46
 #, kde-format
 msgid "- <b>or</b> Excel Range (e.g. \"A10:B20\") -"
-msgstr ""
+msgstr "- <b>or</b> Excel-ის შუალედი (e.g. \"A10:B20\") -"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:50
 #, kde-format
 msgid "Skip empty leading or trailing rows"
-msgstr ""
+msgstr "თავში და ბოლოში ცარიელი ჰარეების მწკრივების გამოტოვება"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:51
 #, kde-format
 msgid "Skip empty leading or trailing columns"
-msgstr ""
+msgstr "თავში და ბოლოში ცარიელი ჰარეების სვეტების გამოტოვება"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <matrix label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:53
 #, kde-format
 msgid "Column classes (empty for automatic)"
-msgstr ""
+msgstr "სვეტის კლასები (ცარიელი ავტომატურისთვის)"
 
 #. i18n: ectx: (Loaded from Load an R data file)
 #: rkward/plugins/00saveload/import/load_data.js:25
@@ -1872,7 +1876,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/load_data.rkh:19
 #, kde-format
 msgid "The filename of the file to load"
-msgstr ""
+msgstr "ჩასატვირთი ფაილის სახელი"
 
 #. i18n: ectx: (Loaded from Load an R data file) <settings> <setting> (refers to element labelled "Save to environment")
 #: rkward/plugins/00saveload/import/load_data.rkh:20
@@ -1888,7 +1892,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/load_data.xml:14
 #, kde-format
 msgid "Load an R data file"
-msgstr ""
+msgstr "R-ის მონაცემების ფაილის ჩატვირთვა"
 
 #. i18n: ectx: (Load an R data file) <dialog label="Load an R data file"> <browser label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:15
@@ -1922,7 +1926,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/source.js:27
 #, kde-format
 msgid "Source R file"
-msgstr ""
+msgstr "R-ის წყაროს ფაილი"
 
 #. i18n: ectx: (Loaded from Source an R file) <summary>
 #: rkward/plugins/00saveload/import/source.rkh:8
@@ -1943,7 +1947,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/source.rkh:18
 #, kde-format
 msgid "The filename of the source file to run"
-msgstr ""
+msgstr "გასაშვები წყაროს ფაილის სახელი"
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Use directory of source file as working directory")
 #: rkward/plugins/00saveload/import/source.rkh:19
@@ -1984,13 +1988,13 @@ msgstr ""
 #: rkward/plugins/00saveload/import/source.rkh:24
 #, kde-format
 msgid "Maximum length of an echoed source line."
-msgstr ""
+msgstr "გამოტანილი კოდის ხაზის მაქსიმალური სიგრძე."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Verbose")
 #: rkward/plugins/00saveload/import/source.rkh:25
 #, kde-format
 msgid "Print additional diagnostics."
-msgstr ""
+msgstr "დამატებითი დიაგნოსტიკის გამოტანა."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Print eval")
 #: rkward/plugins/00saveload/import/source.rkh:26
@@ -2006,7 +2010,7 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:25
 #, kde-format
 msgid "Source an R file"
-msgstr ""
+msgstr "R-ის ფაილის ჩასმა"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="...">
 #: rkward/plugins/00saveload/import/source.xml:20
@@ -2018,19 +2022,19 @@ msgstr "ძირითადი პარამეტრები"
 #: rkward/plugins/00saveload/import/source.xml:22
 #, kde-format
 msgid "Use directory of source file as working directory"
-msgstr ""
+msgstr "კოდის ფაილის საქაღალდის გამოყენება სამუშაო საქაღალდედ"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:23
 #, kde-format
 msgid "Run in a local environment"
-msgstr ""
+msgstr "გაშვება ლოკალურ გარემოში"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <text>
 #: rkward/plugins/00saveload/import/source.xml:24
 #, kde-format
 msgid "WARNING: This may overwrite existing objects without prompting!"
-msgstr ""
+msgstr "გაფრთხილება: ამან, შეიძლება, ფაილები უკითხავად გადააწეროს!"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="...">
 #: rkward/plugins/00saveload/import/source.xml:27
@@ -2042,19 +2046,19 @@ msgstr "გამოტანის პარამეტრები"
 #: rkward/plugins/00saveload/import/source.xml:28
 #, kde-format
 msgid "Echo source statements"
-msgstr ""
+msgstr "კოდის ინსტრუქციების ექო"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <input label="...">
 #: rkward/plugins/00saveload/import/source.xml:29
 #, kde-format
 msgid "Prompt for echoed lines (empty for default)"
-msgstr ""
+msgstr "ჭდე გამოტანილი ხაზებისთვის (ცარიელი ნაგულისხმევისთვის)"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <spinbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:30
 #, kde-format
 msgid "Maximal length of echoed statements"
-msgstr ""
+msgstr "გამოტანილი ინსტრუქციების მაქსიმალური სიგრძე"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:31
@@ -2066,20 +2070,20 @@ msgstr "დამატებითი შეტყობინებები"
 #: rkward/plugins/00saveload/import/source.xml:32
 #, kde-format
 msgid "Print eval"
-msgstr ""
+msgstr "Eval-ის გამოტანა"
 
 #. i18n: ectx: (Loaded from Export RMarkdown)
 #: rkward/plugins/00saveload/save/ExportRMarkdown.js:121
 #: rkward/plugins/00saveload/save/ExportRMarkdown.js:123
 #, kde-format
 msgid "Export RMarkdown file"
-msgstr ""
+msgstr "RMarkdown ფაილის გატანა"
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "RMarkdown file")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:21
 #, kde-format
 msgid "Choose the file to be exported."
-msgstr ""
+msgstr "აირჩიეთ გასატანი ფაილი."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Target format")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:24
@@ -2095,7 +2099,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:27
 #, kde-format
 msgid "Choose the target file name to export to."
-msgstr ""
+msgstr "აირჩიეთ სამიზნე ფაილის სახელი, სადაც გატანა მოხდება."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:30
@@ -2126,7 +2130,7 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:33
 #, kde-format
 msgid "Export RMarkdown"
-msgstr ""
+msgstr "RMarkdow-ის გატანა"
 
 #. i18n: ectx: (Export RMarkdown) <about shortinfo="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:16
@@ -2158,7 +2162,7 @@ msgstr "წყარო და სამიზნე"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:71
 #, kde-format
 msgid "RMarkdown file"
-msgstr ""
+msgstr "RMarkdown ფაილი"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:72
@@ -2170,19 +2174,19 @@ msgstr "სამიზნე ფორმატი"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:73
 #, kde-format
 msgid "All formats defined in document"
-msgstr ""
+msgstr "დოკუმენტში აღწერილი ყველა ფორმატი"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:74
 #, kde-format
 msgid "First format defined in document"
-msgstr ""
+msgstr "დოკუმენტში აღწერილი პირველი ფორმატი"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:75
 #, kde-format
 msgid "Beamer presentation"
-msgstr ""
+msgstr "პრეზენტაცია Beamer"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:76
@@ -2218,7 +2222,7 @@ msgstr "Markdown (GitHub, ძველი)"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:81
 #, kde-format
 msgid "Markdown (GitHub)"
-msgstr ""
+msgstr "Markdown (GitHub)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:82
@@ -2242,19 +2246,19 @@ msgstr "PDF"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:85
 #, kde-format
 msgid "PowerPoint"
-msgstr ""
+msgstr "PowerPoint"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:86
 #, kde-format
 msgid "RTF"
-msgstr ""
+msgstr "RTF"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:87
 #, kde-format
 msgid "Vignette (HTML)"
-msgstr ""
+msgstr "Vignette (HTML)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:88
@@ -2276,7 +2280,7 @@ msgstr "შენახვა როგორც"
 #: rkward/plugins/00saveload/save/write_csv.xml:60
 #, kde-format
 msgid "Save to"
-msgstr ""
+msgstr "შენახვა მისამართზე"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:96
@@ -2308,7 +2312,7 @@ msgstr "v2"
 #: rkward/plugins/00saveload/save/save.xml:33
 #, kde-format
 msgid "Save R objects"
-msgstr ""
+msgstr "R-ის ობიექტების შენახვა"
 
 #. i18n: ectx: (Loaded from Save R objects) <summary>
 #: rkward/plugins/00saveload/save/save.rkh:8
@@ -2330,19 +2334,19 @@ msgstr ""
 #: rkward/plugins/00saveload/save/save.rkh:16
 #, kde-format
 msgid "One or more objects to save."
-msgstr ""
+msgstr "ერთი ან მეტი შესანახი ობიექტი."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/save/save.rkh:17
 #, kde-format
 msgid "Location to save to."
-msgstr ""
+msgstr "მონაცემების შენახვის ადგილი."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Ascii")
 #: rkward/plugins/00saveload/save/save.rkh:18
 #, kde-format
 msgid "Write an ascii, rather than binary representation of the object(s)."
-msgstr ""
+msgstr "ობიექტების ბინარულის მაგიერ ASCII სახით ჩააწერა."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression")
 #: rkward/plugins/00saveload/save/save.rkh:19
@@ -2352,12 +2356,15 @@ msgid ""
 "allows to select the method of compression. Some methods are not available "
 "for versions of R before 2.10.0."
 msgstr ""
+"ფაილი შეიძლება შეიკუმშოს არქივში, რომ დისკზე ნაკლები ადგილი დაიკავოს. ეს "
+"საშუალებას გაძლევთ, შეკუმშვის მეთოდი აირჩიოთ. ზოგიერთი მეთოდი "
+"ხელმიუწვდომელია R-ის ვერსიამდე 2.10.0."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression level")
 #: rkward/plugins/00saveload/save/save.rkh:20
 #, kde-format
 msgid "Compression level. Higher values indicate better compression."
-msgstr ""
+msgstr "შეკუმშვის დონე. მაღალი მნიშვნელობა უკეთეს შეკუმშვას ნიშნავს."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Enable xz extreme compression")
 #: rkward/plugins/00saveload/save/save.rkh:21
@@ -2373,7 +2380,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:20
 #, kde-format
 msgid "Select variables"
-msgstr ""
+msgstr "აირჩიეთ ცვლადები"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/00saveload/save/save.xml:39
@@ -2385,7 +2392,7 @@ msgstr "ობიექტი"
 #: rkward/plugins/00saveload/save/save.xml:48
 #, kde-format
 msgid "Ascii"
-msgstr ""
+msgstr "Ascii"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="Options"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/save.xml:49
@@ -2397,7 +2404,7 @@ msgstr "შეკუმშვა"
 #: rkward/plugins/00saveload/save/save.xml:50
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "არაფერი"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> [...] <dropdown label="Compression"> <option label="...">
 #: rkward/plugins/00saveload/save/save.xml:51
@@ -2539,7 +2546,7 @@ msgstr "ფაილი"
 #: rkward/plugins/00saveload/save/write_csv.rkh:13
 #, kde-format
 msgid "Export data to CSV or similar file formats."
-msgstr ""
+msgstr "მონაცემების გატანა CSV ან მსგავს ფაილის ფორმატებში."
 
 #. i18n: ectx: (Export Table / CSV files) <usage>
 #: rkward/plugins/00saveload/save/write_csv.rkh:16
@@ -2615,7 +2622,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:53
 #, kde-format
 msgid "Decide how to deal with row names."
-msgstr ""
+msgstr "აირჩიეთ, როგორ მოუვლით მწკრივის სახელებს."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Row names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:56
@@ -2657,7 +2664,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
 #, kde-format
 msgid "Check this to have all string values quoted."
-msgstr ""
+msgstr "ჩართეთ, თუ გნებავთ ყველა სტრიქონი ბრჭყალებში გქონდეთ."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Handling double quote characters")
 #: rkward/plugins/00saveload/save/write_csv.rkh:78
@@ -2672,7 +2679,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:81
 #, kde-format
 msgid "Set the character to indicate missing data."
-msgstr ""
+msgstr "დააყენეთ სიმბოლო ნაკლული მონაცემების მისათითებლად."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Newline character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:84
@@ -2695,25 +2702,25 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:51
 #, kde-format
 msgid "Data and File Format"
-msgstr ""
+msgstr "მონაცემების და ფაილის ფორმატი"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <varselector label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:54
 #, kde-format
 msgid "Select a variable or table"
-msgstr ""
+msgstr "აირჩიეთ ცვლადი ან ცხრილი"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="Save to"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:62
 #, kde-format
 msgid "Append to file (if it exists)"
-msgstr ""
+msgstr "ფაილის ბოლოში მიწერა (თუ არსებობს)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:68
 #, kde-format
 msgid "File format"
-msgstr ""
+msgstr "ფაილის ფორმატი"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Decimal point character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Field separator character"> <option label="...">
@@ -2725,7 +2732,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:121
 #, kde-format
 msgid "Custom (specify below)"
-msgstr ""
+msgstr "სხვა (მიუთითეთ ქვემოთ)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <varselector label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:105
@@ -2737,13 +2744,13 @@ msgstr "აირჩიეთ მწკრივის ან სვეტის
 #: rkward/plugins/00saveload/save/write_csv.xml:108
 #, kde-format
 msgid "Row  specifications"
-msgstr ""
+msgstr "მწკრივის სპეციფიკაციები"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:110
 #, kde-format
 msgid "Use current row names"
-msgstr ""
+msgstr "მიმდინარე მწკრივის სახელების გამოყენება"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <radio label="Row names"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <radio label="Column names"> <option label="...">
@@ -2751,37 +2758,37 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:120
 #, kde-format
 msgid "No names"
-msgstr ""
+msgstr "სახელების გარეშე"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="Row  specifications"> <varslot label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:114
 #, kde-format
 msgid "Row names (character vector)"
-msgstr ""
+msgstr "მწკრივის სახელები (სიმბოლო ვექტორი)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:117
 #, kde-format
 msgid "Column specifications"
-msgstr ""
+msgstr "სვეტის სპეციფიკაციები"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <radio label="Column names"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:119
 #, kde-format
 msgid "Use current column names"
-msgstr ""
+msgstr "მიმდინარე სვეტის სახელების გამოყენება"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="Column specifications"> <varslot label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:123
 #, kde-format
 msgid "Column names (character vector)"
-msgstr ""
+msgstr "სვეტის სახელები (სიმბოლო ვექტორი)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:129
 #, kde-format
 msgid "Encoding and Character Options"
-msgstr ""
+msgstr "კოდირებისა და სიმბოლოს პარამეტრები"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="Encoding"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:133
@@ -2793,7 +2800,7 @@ msgstr "ფაილის კოდირება"
 #: rkward/plugins/00saveload/save/write_csv.xml:134
 #, kde-format
 msgid "(default)"
-msgstr ""
+msgstr "(ნაგულისხმევი)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="Encoding"> <input label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:155
@@ -2811,7 +2818,7 @@ msgstr "ყველა სტრიქონის ციტირება"
 #: rkward/plugins/00saveload/save/write_csv.xml:162
 #, kde-format
 msgid "Handling double quote characters"
-msgstr ""
+msgstr "ორმაგი ბრჭყალის სიმბოლოს დამუშავება"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="Handling double quote characters"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:163
@@ -2835,31 +2842,31 @@ msgstr "ახალი ხაზის სიმბოლო"
 #: rkward/plugins/00saveload/save/write_csv.xml:170
 #, kde-format
 msgid "\\n (LF: GNU/Linux, BSD, OS X)"
-msgstr ""
+msgstr "\\n (LF: GNU/Linux, BSD, OS X)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:171
 #, kde-format
 msgid "\\r\\n (CR+LF: Windows, DOS)"
-msgstr ""
+msgstr "\\r\\n (CR+LF: Windows, DOS)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:172
 #, kde-format
 msgid "\\r (CR: Mac OS <= 9)"
-msgstr ""
+msgstr "\\r (CR: Mac OS <= 9)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:173
 #, kde-format
 msgid "\\n\\r (LF+CR: RISC OS)"
-msgstr ""
+msgstr "\\n\\r (LF+CR: RISC OS)"
 
 #. i18n: ectx: (Loaded from Set the working directory) <summary>
 #: rkward/plugins/00saveload/setworkdir.rkh:8
 #, kde-format
 msgid "Set or change the current working directory."
-msgstr ""
+msgstr "მიმდინარე სამუშაო საქაღალდის დაყენება ან შეცვლა."
 
 #. i18n: ectx: (Loaded from Set the working directory) <usage>
 #: rkward/plugins/00saveload/setworkdir.rkh:11
@@ -2935,13 +2942,13 @@ msgstr "ტექსტი / მძიმით გამოყოფილი �
 #: rkward/plugins/import_export.pluginmap:41
 #, kde-format
 msgid "Import Stata"
-msgstr ""
+msgstr "Stata-ის შემოტანა"
 
 #. i18n: ectx: <components> <component label="Import Stata"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:42
 #, kde-format
 msgid "Stata data files"
-msgstr ""
+msgstr "Stata-ის მონაცემების ფაილები"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:44
@@ -2971,7 +2978,7 @@ msgstr "Microsoft Excel-ის ფაილები (Java)"
 #: rkward/plugins/import_export.pluginmap:51
 #, kde-format
 msgid "Generic import (rio-based)"
-msgstr ""
+msgstr "ზოგადი შემოტანა (დაფუძნებული rio-ზე)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:53

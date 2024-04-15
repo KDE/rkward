@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-04-13 19:32+0200\n"
+"PO-Revision-Date: 2024-04-14 14:39+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -32,7 +32,7 @@ msgstr "Temuri.doghonadze@gmail.com"
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:59
 #, kde-format
 msgid "2PL parameter estimation"
-msgstr ""
+msgstr "2პლ პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
@@ -129,7 +129,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "keep results in current workspace"
-msgstr ""
+msgstr "შედეგების დატოვება მიმდინარე სამუშაო სივრცეში"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <summary>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <summary>
@@ -204,7 +204,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:20
 #, kde-format
 msgid "Matrix of manifest variables"
-msgstr ""
+msgstr "მანიფესტის ცვლადების მატრიცა"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
@@ -297,7 +297,7 @@ msgstr "ნაგულისხმევად 40."
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:42
 #, kde-format
 msgid "Number of quasi-Newton iterations"
-msgstr ""
+msgstr "კვაზი-ნიუტონის იტერაციების რაოდენობა"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
@@ -402,7 +402,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:18
 #, kde-format
 msgid "IRT parameter estimation: Two parameter logistic model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: ორპარამეტრიანი ლოგისტიკის მოდელი"
 
 #. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="...">
 #. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="...">
@@ -666,7 +666,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:48
 #, kde-format
 msgid "Usual IRT parameterization"
-msgstr ""
+msgstr "ჩვეულებრივი დპთ პარამეტრიზაცია"
 
 #. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:48
@@ -706,7 +706,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:56
 #, kde-format
 msgid "Number of quasi-Newton iterations:"
-msgstr ""
+msgstr "კვაზი-ნიუტონის იტერაციების რაოდენობა:"
 
 #. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <spinbox label="...">
 #. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <spinbox label="...">
@@ -818,13 +818,13 @@ msgstr "SANN"
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:67
 #, kde-format
 msgid "Print verbose info about optimization"
-msgstr ""
+msgstr "მეტი შეტყობინების გამოტანა ოპტიმიზაციის შესახებ"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model)
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.js:65
 #, kde-format
 msgid "3PL parameter estimation"
-msgstr ""
+msgstr "3პლ პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <usage>
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:12
@@ -951,13 +951,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:20
 #, kde-format
 msgid "IRT parameter estimation: Birnbaum three parameter model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: ბირნბაუმის სამპარამეტრიანი მოდელი"
 
 #. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:40
 #, kde-format
 msgid "Upper bound for guessing parameter"
-msgstr ""
+msgstr "გამოცნობის პარამეტრის ზედა ზღვარი"
 
 #. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:49
@@ -999,13 +999,13 @@ msgstr "nlminb()"
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:82
 #, kde-format
 msgid "Step-length for approximation"
-msgstr ""
+msgstr "ნაბიჯის სიგრძე აპროქსიმაციისთვის"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
 #: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.js:40
 #, kde-format
 msgid "LLTM  parameter estimation"
-msgstr ""
+msgstr "LLTM  პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
@@ -1176,7 +1176,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:24
 #, kde-format
 msgid "IRT parameter estimation: Linear logistic test model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: წრფივი ლოგისტიკის შემოწმების მოდელი"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <spinbox label="...">
 #. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <spinbox label="...">
@@ -1186,7 +1186,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:34
 #, kde-format
 msgid "Number of measurement points"
-msgstr ""
+msgstr "გაზომვის წერტილების რაოდენობა"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <radio label="...">
 #. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <radio label="...">
@@ -1206,7 +1206,7 @@ msgstr "ჯგუფის კონტრასტები"
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:37
 #, kde-format
 msgid "All subjects belong to one group"
-msgstr ""
+msgstr "ყველა ობიექტი ერთ ჯგუფს ეკუთვნის"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <radio label="Group contrasts"> <option label="...">
 #. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <radio label="Group contrasts"> <option label="...">
@@ -1226,7 +1226,7 @@ msgstr "ჯგუფის კონტრასტების გამოთ�
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:40
 #, kde-format
 msgid "Use this group vector:"
-msgstr ""
+msgstr "ამ ჯგუფის ვექტორს გამოყენება:"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="...">
@@ -1240,7 +1240,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:41
 #, kde-format
 msgid "Design matrix"
-msgstr ""
+msgstr "დიზაინი-მატრიცა"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
 #. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
@@ -1254,7 +1254,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:43
 #, kde-format
 msgid "Use own design matrix"
-msgstr ""
+msgstr "საკუთარი დიზაინ-მატრიცის გამოყენება"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <varslot label="...">
 #. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <varslot label="...">
@@ -1310,7 +1310,7 @@ msgstr "0-ვექტორის გამოყენება"
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:49
 #, kde-format
 msgid "Use own vector of eta start values"
-msgstr ""
+msgstr "ეტას საწყისი მნიშვნელობების საკუთარი ვექტორის გამოყენება"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <varslot label="...">
 #. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <varslot label="...">
@@ -1352,13 +1352,13 @@ msgstr "სტანდარტული შეცდომის გამო�
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:54
 #, kde-format
 msgid "Normalize parameters to sum-0"
-msgstr ""
+msgstr "პარამეტრების ნორმალიზება ჯამით 0"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.js:55
 #, kde-format
 msgid "Rasch parameter estimation"
-msgstr ""
+msgstr "რაშის პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <usage>
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:12
@@ -1394,13 +1394,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:18
 #, kde-format
 msgid "IRT parameter estimation: Rasch model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: რაშის მოდელი"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model)
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.js:74
 #, kde-format
 msgid "GPCM parameter estimation"
-msgstr ""
+msgstr "GPCM პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <usage>
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:12
@@ -1470,7 +1470,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:22
 #, kde-format
 msgid "IRT parameter estimation: Generalized partial credit model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: ნაწილობრივი სესხების განზოგადებული მოდელი"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <frame label="...">
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="...">
@@ -1478,7 +1478,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:24
 #, kde-format
 msgid "Item selection"
-msgstr ""
+msgstr "ჩანაწერების არჩევანი"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <frame label="Item selection"> <checkbox label="...">
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Item selection"> <checkbox label="...">
@@ -1486,7 +1486,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:25
 #, kde-format
 msgid "Select a subset of items"
-msgstr ""
+msgstr "აირჩიეთ ჩანაწერების ქვესიმრავლე"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <frame label="Item selection"> <varslot label="...">
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Item selection"> <varslot label="...">
@@ -1494,13 +1494,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:26
 #, kde-format
 msgid "List of items:"
-msgstr ""
+msgstr "ჩანაწერების სია:"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:43
 #, kde-format
 msgid "Should parameters be fixed (constrained)?"
-msgstr ""
+msgstr "უნდა იყოს თუ არა პარამეტრები ფიქსირებული (შეზღუდული)?"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Should parameters be fixed (constrained)?"> <option label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:44
@@ -1512,13 +1512,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:45
 #, kde-format
 msgid "Equal discrimination parameter across items"
-msgstr ""
+msgstr "ტოლი დისკრიმინაციის პარამეტრი ყველა ჩანაწერისთვის"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Should parameters be fixed (constrained)?"> <option label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:46
 #, kde-format
 msgid "Discrimination parameter fixed at 1 across items"
-msgstr ""
+msgstr "დისკრიმინაციის პარამეტრი დაყენებულია 1-ზე ყველა ჩანაწერისთვის"
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <radio label="Start values"> <option label="...">
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Start values"> <option label="...">
@@ -1526,7 +1526,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:42
 #, kde-format
 msgid "Use own list of start values"
-msgstr ""
+msgstr "საწყისი მნიშვნელობების საკუთარი სიის გამოყენება"
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <varslot label="...">
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <varslot label="...">
@@ -1534,7 +1534,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:44
 #, kde-format
 msgid "List of start values:"
-msgstr ""
+msgstr "საწყისი მნიშვნელობების სია:"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:78
@@ -1546,19 +1546,19 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:79
 #, kde-format
 msgid "Forward difference approximation"
-msgstr ""
+msgstr "აპროქსიმაცია მარჯვენა სხვაობით"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Numerical derivative algorithm to approximate Hessian matrix:"> <option label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:80
 #, kde-format
 msgid "Central difference approximation"
-msgstr ""
+msgstr "აპროქსიმაცია ცენტრალური სხვაობით"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model)
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.js:59
 #, kde-format
 msgid "GRM parameter estimation"
-msgstr ""
+msgstr "GRM პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <usage>
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:12
@@ -1592,13 +1592,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:31
 #, kde-format
 msgid "If checked the Hessian matrix is computed."
-msgstr ""
+msgstr "თუ ჩართულია, ჰესიანის მატრიცა გამოითვლება."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="..."> (refers to element labelled "Number of digits to abbreviate item names:")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:51
 #, kde-format
 msgid "Number of digits to abbreviate item names"
-msgstr ""
+msgstr "ციფრების რაოდენობა ჩანაწერის სახელის აბრევიატურებისთვის"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="Number of digits to abbreviate item names"> (refers to element labelled "Number of digits to abbreviate item names:")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:51
@@ -1611,13 +1611,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:18
 #, kde-format
 msgid "IRT parameter estimation: Graded response model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: შეფასებული პასუხის მოდელი"
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <frame label="Should parameters be fixed (constraints)?"> <checkbox label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:36
 #, kde-format
 msgid "Assume equal discrimination parameters across items"
-msgstr ""
+msgstr "ტოლი დისკრიმინაციის პარამეტრის ჩათვლა ყველა ჩანაწერისთვის"
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:46
@@ -1629,13 +1629,13 @@ msgstr "ჰესიანის მატრიცის გამოთვლ�
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:65
 #, kde-format
 msgid "Number of digits to abbreviate item names:"
-msgstr ""
+msgstr "ციფრების რაოდენობა ჩანაწერის სახელის აბრევიატურებისთვის:"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model)
 #: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.js:40
 #, kde-format
 msgid "LPCM  parameter estimation"
-msgstr ""
+msgstr "LPCM  პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <usage>
 #: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:12
@@ -1672,13 +1672,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:24
 #, kde-format
 msgid "IRT parameter estimation: Linear partial credit model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: წრფივი ნაწილობრივი კრედიტის მოდელი"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model)
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.js:40
 #, kde-format
 msgid "LRSM  parameter estimation"
-msgstr ""
+msgstr "LRSM  პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <usage>
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:12
@@ -1703,13 +1703,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:27
 #, kde-format
 msgid "IRT parameter estimation: Linear rating scale model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: შეფასებების შკალის წრფივი მოდელი"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model)
 #: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:35
 #, kde-format
 msgid "PCM  parameter estimation"
-msgstr ""
+msgstr "PCM  პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <usage>
 #: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:12
@@ -1734,13 +1734,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:24
 #, kde-format
 msgid "IRT parameter estimation: Partial credit model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: ნაწილობრივი კრედიტის მოდელი"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:35
 #, kde-format
 msgid "RSM  parameter estimation"
-msgstr ""
+msgstr "RSM  პარამეტრის შეფასება"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <usage>
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:12
@@ -1765,25 +1765,25 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:24
 #, kde-format
 msgid "IRT parameter estimation: Rating scale model"
-msgstr ""
+msgstr "დპთ-ის პარამეტრის შეფასება: შეფასებების შკალის მოდელი"
 
 #. i18n: ectx: (Loaded from Wald test)
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.js:28
 #, no-c-format, kde-format
 msgid "Wald test (%1)"
-msgstr ""
+msgstr "უალდის შემოწმება(%1)"
 
 #. i18n: ectx: (Loaded from Wald test)
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.js:32
 #, kde-format
 msgid "Wald test on item level (z-values):"
-msgstr ""
+msgstr "უალდის შემოწმება ჩანაწერის დონეზე (z-მნიშვნელობები):"
 
 #. i18n: ectx: (Wald test) <dialog label="...">
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:19
 #, kde-format
 msgid "Wald test"
-msgstr ""
+msgstr "უალდის შემოწმება"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="...">
 #. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="...">
@@ -1805,7 +1805,7 @@ msgstr "მონაცემები"
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:25
 #, kde-format
 msgid "Choose fitted model to test:"
-msgstr ""
+msgstr "აირჩიეთ აპროქსიმაციის მოდელი შესამოწმებლად:"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Data"> <text>
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <text>
@@ -1817,7 +1817,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:30
 #, kde-format
 msgid "Only objects of class Rm are valid!"
-msgstr ""
+msgstr "ობიექტების გამოყენება, მხოლოდ, კლასიდან Rm შეგიძლიათ!"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <radio label="...">
@@ -1855,7 +1855,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:38
 #, kde-format
 msgid "Select grouping vector:"
-msgstr ""
+msgstr "აირჩიეთ დაჯგუფების ვექტორი:"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:42
@@ -1877,13 +1877,13 @@ msgstr "nlm()"
 #: rkward/plugins/irt.pluginmap:36
 #, kde-format
 msgid "Cronbach's alpha"
-msgstr ""
+msgstr "კრონბახის ალფა"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:68
 #, kde-format
 msgid "Dataset"
-msgstr ""
+msgstr "მონაცემების სეტი"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:70
@@ -1901,25 +1901,25 @@ msgstr "ჩანაწერები:"
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:73
 #, kde-format
 msgid "<br />Sample units:"
-msgstr ""
+msgstr "<br />შერჩევის ერთეულები:"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:76
 #, kde-format
 msgid "Effects on alpha if items are removed:"
-msgstr ""
+msgstr "გავლენა ალფაზე, თუ ჩანაწერები წაიშლება:"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:79
 #, no-c-format, kde-format
 msgid "%1% Confidence interval:"
-msgstr ""
+msgstr "%1% ნდობის ინერვალი:"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <varslot label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:22
 #, kde-format
 msgid "Item responses:"
-msgstr ""
+msgstr "პუნქტის პასუხები:"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <text>
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:23
@@ -1943,7 +1943,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:32
 #, kde-format
 msgid "Ignore missing values"
-msgstr ""
+msgstr "ნაკლული მნიშვნელობების გამოტოვება"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:33
@@ -1955,19 +1955,19 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:34
 #, kde-format
 msgid "Confidence interval:"
-msgstr ""
+msgstr "ნდობის ინტერვალი:"
 
 #. i18n: ectx: (Loaded from Goodness of Fit (Rasch model))
 #: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.js:23
 #, no-c-format, kde-format
 msgid "Goodness of Fit for Rasch Models (%1)"
-msgstr ""
+msgstr "თანხმობის კრიტერიუმი რაშის მოდელისთვის (%1)"
 
 #. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:14
 #, kde-format
 msgid "Goodness of Fit (Rasch model)"
-msgstr ""
+msgstr "თანხმობის კრიტერიუმი (რაშის მოდელი)"
 
 #. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="Data"> <varslot label="...">
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <varslot label="...">
@@ -1977,7 +1977,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:26
 #, kde-format
 msgid "Choose fitted model to examine:"
-msgstr ""
+msgstr "აირჩიეთ აპროქსიმაციის მოდელი შესამოწმებლად:"
 
 #. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="Data"> <text>
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Model"> <text>
@@ -1985,19 +1985,19 @@ msgstr ""
 #: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:26
 #, kde-format
 msgid "Only objects of class rasch are valid!"
-msgstr ""
+msgstr "ობიექტების გამოყენება, მხოლოდ, კლასიდან rasch შეგიძლიათ!"
 
 #. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="Data"> <frame label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:23
 #, kde-format
 msgid "Bootstrap options"
-msgstr ""
+msgstr "გამოღების პარამეტრები"
 
 #. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="Data"> <frame label="Bootstrap options"> <spinbox label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:24
 #, kde-format
 msgid "Number of samples"
-msgstr ""
+msgstr "შერჩევების რაოდენობა"
 
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:41
@@ -2015,7 +2015,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:46
 #, kde-format
 msgid "Ability Categories:"
-msgstr ""
+msgstr "შესაძლებლობის კატეგორიები:"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
@@ -2023,7 +2023,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:36
 #, kde-format
 msgid "Monte Carlo samples:"
-msgstr ""
+msgstr "მონტე კარლოს შერჩევები:"
 
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:49
@@ -2043,19 +2043,19 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:27
 #, kde-format
 msgid "Only objects of class ltm, rasch and tpm are valid!"
-msgstr ""
+msgstr "ობიექტების გამოყენება, მხოლოდ, კლასებიდან rasch, ltm და tpm შეგიძლიათ!"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:32
 #, kde-format
 msgid "Grouping of sample units"
-msgstr ""
+msgstr "შერჩევის ერთეულების დაჯგუფება"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <frame label="Grouping of sample units"> <spinbox label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:33
 #, kde-format
 msgid "Number of categories"
-msgstr ""
+msgstr "კატეგორიების რაოდენობა"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <frame label="Grouping of sample units"> <dropdown label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:34
@@ -2067,13 +2067,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:35
 #, kde-format
 msgid "Median of each group"
-msgstr ""
+msgstr "თითოეული ჯგუფის მედიანი"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> [...] <dropdown label="Summarize the ability estimates by"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:36
 #, kde-format
 msgid "Mean of each group"
-msgstr ""
+msgstr "თითოეული ჯგუფის საშუალო"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="...">
@@ -2081,13 +2081,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:47
 #, kde-format
 msgid "p value assumptions"
-msgstr ""
+msgstr "p-მნიშვნელობის დაშვებები"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:40
 #, kde-format
 msgid "Assume chi-squared distribution"
-msgstr ""
+msgstr "ხი-კვადრატის განაწილების დაშვება"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
@@ -2103,7 +2103,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:51
 #, kde-format
 msgid "Number of replications"
-msgstr ""
+msgstr "რეპლიკაციების რაოდენობა"
 
 #. i18n: ectx: (Loaded from Person-fit statistics for Rasch, LTM and 3PM)
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:40
@@ -2129,7 +2129,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:29
 #, kde-format
 msgid "Alternative hypothesis to test"
-msgstr ""
+msgstr "ალტერნატიული ჰიპოთეზა შესამოწმებლად"
 
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <radio label="Alternative hypothesis to test"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:30
@@ -2153,7 +2153,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:42
 #, kde-format
 msgid "Response pattern"
-msgstr ""
+msgstr "პასუხის ნიმუში"
 
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="Response pattern"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:43
@@ -2171,13 +2171,13 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:46
 #, kde-format
 msgid "Select matrix or data.frame with pattern to use:"
-msgstr ""
+msgstr "აირჩიეთ გამოსაყენებელი მატრიცა ან data.frame ნიმუშით:"
 
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:48
 #, kde-format
 msgid "Assume standard normal distribution"
-msgstr ""
+msgstr "სტანდარტული ნორმალური განაწილების დაშვება"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:26
@@ -2189,7 +2189,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:30
 #, kde-format
 msgid "Matrix of tetrachoric correlations:"
-msgstr ""
+msgstr "ტეტრაქორული კორელაციების მატრიცა:"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:32
@@ -2222,7 +2222,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:37
 #, kde-format
 msgid "p-value:"
-msgstr ""
+msgstr "p-მნიშვნელობა:"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="...">
@@ -2230,31 +2230,31 @@ msgstr ""
 #: rkward/plugins/irt.pluginmap:39
 #, kde-format
 msgid "Unidimensionality check (Rasch, LTM, 3PM)"
-msgstr ""
+msgstr "ერთგანზომილებიანობის შემოწმება (Rasch, LTM, 3PM)"
 
 #. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <varslot label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:22
 #, kde-format
 msgid "Choose fitted model to check:"
-msgstr ""
+msgstr "აირჩიეთ აპროქსიმაციის მოდელი შესამოწმებლად:"
 
 #. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <text>
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:23
 #, kde-format
 msgid "Only objects of class rasch, ltm or tpm are valid!"
-msgstr ""
+msgstr "ობიექტების გამოყენება, მხოლოდ, კლასებიდან rasch, ltm და tpm შეგიძლიათ!"
 
 #. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <frame label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:25
 #, kde-format
 msgid "Monte Carlo options"
-msgstr ""
+msgstr "მონტე კარლოს მორგება"
 
 #. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <frame label="Monte Carlo options"> <spinbox label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:26
 #, kde-format
 msgid "Number of samples:"
-msgstr ""
+msgstr "შერჩევების რაოდენობა:"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
@@ -2263,43 +2263,44 @@ msgstr ""
 #: rkward/plugins/irt.pluginmap:83
 #, kde-format
 msgid "Item Response Theory"
-msgstr ""
+msgstr "ტესტურ დავალებათა თეორია"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/irt.pluginmap:10
 #, kde-format
 msgid "Item Response Theory Plugins. Part of the official RKWard distribution"
 msgstr ""
+"ტესტურ დავალებათა თეორიის დამატებები. RKWard-ის ოფიციალური პაკეტის ნაწილი"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:24
 #, kde-format
 msgid "Rasch model fit"
-msgstr ""
+msgstr "რაშის მოდელის აპროქსიმაცია"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:25
 #, kde-format
 msgid "Two parameter logistic model fit"
-msgstr ""
+msgstr "ორპარამეტრიანი ლოგისტიკური მოდელის აპროქსიმაცია"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:26
 #, kde-format
 msgid "Birnbaum three parameter model fit"
-msgstr ""
+msgstr "ბირნბაუმის სამპარამეტრიანი მოდელის აპროქსიმაცია"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:27
 #, kde-format
 msgid "Linear logistic test model fit"
-msgstr ""
+msgstr "წრფივი ლოგისტიკური მოდელის აპროქსიმაცია"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:29
 #, kde-format
 msgid "Graded response model fit"
-msgstr ""
+msgstr "ქულების მქონე პასუხის მოდელის აპროქსიმაცია"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:30
@@ -2353,31 +2354,31 @@ msgstr ""
 #: rkward/plugins/irt.pluginmap:42
 #, kde-format
 msgid "Wald test (RSM, PCM)"
-msgstr ""
+msgstr "უალდის შემოწმება (RSM, PCM)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:43
 #, kde-format
 msgid "Andersen LR Plot (RSM, PCM)"
-msgstr ""
+msgstr "ანდერსენის LR ნახაზი (RSM, PCM)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:45
 #, kde-format
 msgid "Plot fitted Rasch model"
-msgstr ""
+msgstr "აპროქსიმირებული რაშის მოდელის დახაზვა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:46
 #, kde-format
 msgid "Plot fitted two parameter logistic model"
-msgstr ""
+msgstr "აპროქსიმირებული ორპარამეტრიანი ლოგისტიკის მოდელის დახატვა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:47
 #, kde-format
 msgid "Plot fitted Birnbaum three parameter model"
-msgstr ""
+msgstr "აპროქსიმირებული ბირნბაუმის სამპარამეტრიანი მოდელის დახაზვა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:49
@@ -2408,7 +2409,7 @@ msgstr "ანალიზი"
 #: rkward/plugins/irt.pluginmap:57 rkward/plugins/irt.pluginmap:84
 #, kde-format
 msgid "Dichotomous data"
-msgstr ""
+msgstr "დიხოტომური მონაცემები"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Item Response Theory"> <menu label="...">
 #. i18n: ectx: <hierarchy> <menu label="Plots"> <menu label="Item Response Theory"> <menu label="...">
@@ -2433,7 +2434,7 @@ msgstr "გრაფიკები"
 #: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:82
 #, kde-format
 msgid "Two parameter logistic model plot"
-msgstr ""
+msgstr "ორპარამეტრიანი ლოგისტიკის მოდელის დახატვა"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2485,7 +2486,7 @@ msgstr ""
 #, kde-format
 msgctxt "Item response theory"
 msgid "Ability"
-msgstr ""
+msgstr "შესაძლებლობა"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2497,7 +2498,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.js:109
 #, kde-format
 msgid "Standard Error"
-msgstr ""
+msgstr "სტანდარტული შეცდომა"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2509,13 +2510,13 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.js:110
 #, kde-format
 msgid "Standard Error of Measurement"
-msgstr ""
+msgstr "გაზომვის სტანდარტული აცდენა"
 
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="...">
 #: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:20
 #, kde-format
 msgid "Plotting fitted 2PL model"
-msgstr ""
+msgstr "ვხატავ აპროქსიმირებულ 2პლ მოდელს"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="...">
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="...">
@@ -2549,13 +2550,13 @@ msgstr "მოდელი"
 #: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:17
 #, kde-format
 msgid "Choose fitted model to plot:"
-msgstr ""
+msgstr "აირჩიეთ აპროქსიმაციის მოდელი დასახატად:"
 
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Model"> <text>
 #: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:27
 #, kde-format
 msgid "Only objects of class ltm are valid!"
-msgstr ""
+msgstr "ობიექტების გამოყენება, მხოლოდ, კლასიდან ltm შეგიძლიათ!"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="...">
@@ -2567,7 +2568,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:32
 #, kde-format
 msgid "Plot type"
-msgstr ""
+msgstr "ნახაზის ტიპი"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="...">
@@ -2579,7 +2580,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:34
 #, kde-format
 msgid "Type of plot"
-msgstr ""
+msgstr "ნახაზის ტიპი"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
@@ -2591,7 +2592,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:35
 #, kde-format
 msgid "Plot item(s)"
-msgstr ""
+msgstr "ჩანაწერების დახატვა"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
@@ -2603,7 +2604,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:36
 #, kde-format
 msgid "Plot test information"
-msgstr ""
+msgstr "შემოწმების ინფორმაციის დახატვა"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
@@ -2615,7 +2616,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:37
 #, kde-format
 msgid "Plot standard error"
-msgstr ""
+msgstr "სტანდარტული შეცდომის დახატვა"
 
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
 #: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:39
@@ -2633,7 +2634,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:39
 #, kde-format
 msgid "Type of item plot"
-msgstr ""
+msgstr "ჩანაწერის დახატვის ტიპი"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
@@ -2675,7 +2676,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:46
 #, kde-format
 msgid "Optional item selection"
-msgstr ""
+msgstr "არასავალდებული ჩანაწერის არჩევანი"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Optional item selection"> <input label="...">
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <frame label="Optional item selection"> <input label="...">
@@ -2693,7 +2694,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:47
 #, kde-format
 msgid "List of items (plot all if empty)"
-msgstr ""
+msgstr "ჩანაწერების სია (ყველას დახაზვა, თუ ცარიელია)"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <frame label="...">
@@ -2779,7 +2780,7 @@ msgstr "ანოტაცია"
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:61
 #, kde-format
 msgid "Annotate plotted lines"
-msgstr ""
+msgstr "დახატული ხაზების ანოტაცია"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
@@ -2811,7 +2812,7 @@ msgstr "ახსნის ჩვენება"
 #: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:45
 #, kde-format
 msgid "Plain lines, no annotation"
-msgstr ""
+msgstr "უბრალო ხაზები, ანოტაციის გარეშე"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <embed label="...">
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <embed label="...">
@@ -2829,13 +2830,13 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:74
 #, kde-format
 msgid "Generic plot options"
-msgstr ""
+msgstr "ზოგადი ნახაზის პარამეტრები"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:79
 #, kde-format
 msgid "Rasch model plot"
-msgstr ""
+msgstr "რაშის მოდელის დახატვა"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="...">
 #: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:19
@@ -2847,19 +2848,19 @@ msgstr ""
 #: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:79
 #, kde-format
 msgid "Birnbaum three parameter model plot"
-msgstr ""
+msgstr "ბირნბაუმის სამპარამეტრიანი მოდელის დახაზვა"
 
 #. i18n: ectx: (Plotting fitted 3PL model) <dialog label="...">
 #: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:19
 #, kde-format
 msgid "Plotting fitted 3PL model"
-msgstr ""
+msgstr "ვხატავ აპროქსიმირებულ 3პლ მოდელს"
 
 #. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Model"> <text>
 #: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:26
 #, kde-format
 msgid "Only objects of class tpm are valid!"
-msgstr ""
+msgstr "ობიექტების გამოყენება, მხოლოდ, კლასიდან tpm შეგიძლიათ!"
 
 #. i18n: ectx: (Loaded from Plotting fitted graded response model)
 #: rkward/plugins/plots/irt/polytomous/plot_grm.js:87
@@ -2877,7 +2878,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:26
 #, kde-format
 msgid "Only objects of class grm are valid!"
-msgstr ""
+msgstr "ობიექტების გამოყენება, მხოლოდ, კლასიდან grm შეგიძლიათ!"
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:42
@@ -2895,19 +2896,19 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:47
 #, kde-format
 msgid "Category (plot all if set to 0)"
-msgstr ""
+msgstr "კატეგორია (ყველას დახატვა, თუ ნულია)"
 
 #. i18n: ectx: (Loaded from Plotting fitted partial credit model)
 #: rkward/plugins/plots/irt/polytomous/plot_pcm.js:73
 #, kde-format
 msgid "Partial credit model plot"
-msgstr ""
+msgstr "ნაწილობრივი კრედიტის მოდელის დახატვა"
 
 #. i18n: ectx: (Plotting fitted partial credit model) <dialog label="...">
 #: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:11
 #, kde-format
 msgid "Plotting fitted partial credit model"
-msgstr ""
+msgstr "ვხატავ აპროქსიმირებული ნაწილობრივი კრედიტის მოდელს"
 
 #. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Optional item selection"> <checkbox label="...">
 #. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Optional item selection"> <checkbox label="...">
@@ -2923,7 +2924,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:29
 #, kde-format
 msgid "Ask before next figure is drawn"
-msgstr ""
+msgstr "კითხვა შემდეგი ფიგურის დახატვამდე"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="...">
 #. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="...">
@@ -2959,13 +2960,13 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.js:90
 #, kde-format
 msgid "Andersen's LR test"
-msgstr ""
+msgstr "ანდერსენის LR შემოწმება"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:23
 #, kde-format
 msgid "Andersen LR-Test"
-msgstr ""
+msgstr "ანდერსენის LR შემოწმება"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <varslot label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:29
@@ -2983,13 +2984,13 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:36
 #, kde-format
 msgid "Use vector to define groups"
-msgstr ""
+msgstr "ვექტორის გამოყენება ჯგუფების აღსაწერად"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <text>
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:39
 #, kde-format
 msgid "Can be numeric, character or a factor"
-msgstr ""
+msgstr "შეიძლება იყოს რიცხვითი, სიმბოლო ან ფაქტორი"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:44
@@ -3003,20 +3004,20 @@ msgstr "ხაზვის მორგება"
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:52
 #, kde-format
 msgid "Confidence intervals"
-msgstr ""
+msgstr "ნდობის ინტერვალები"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Confidence intervals"> <checkbox label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:50
 #, kde-format
 msgid "Compute standard errors"
-msgstr ""
+msgstr "სტანდარტული შეცდომების გამოთვლა"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Confidence intervals"> <spinbox label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:53
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:57
 #, kde-format
 msgid "Confidence level:"
-msgstr ""
+msgstr "ნდობის დონე:"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Confidence intervals"> <checkbox label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:56
@@ -3040,13 +3041,13 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:70
 #, kde-format
 msgid "Plain dots, no annotation"
-msgstr ""
+msgstr "უბრალო წერტილები, ანოტაციის გარეშე"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="Annotation"> <option label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:71
 #, kde-format
 msgid "Interactive labeling"
-msgstr ""
+msgstr "ინტერაქტიური ჭდეები"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
