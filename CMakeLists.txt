@@ -22,7 +22,7 @@ INCLUDE(ECMAddAppIcon)
 INCLUDE(ECMMarkNonGuiExecutable)
 INCLUDE(FeatureSummary)
 
-FIND_PACKAGE(Qt5 5.9 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Qml PrintSupport)
+FIND_PACKAGE(Qt5 5.9 REQUIRED COMPONENTS Widgets Core Xml Network Qml PrintSupport)
 FIND_PACKAGE(KF5 5.44 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive OPTIONAL_COMPONENTS Crash)
 IF(NOT NO_QT_WEBENGINE)
 	FIND_PACKAGE(Qt5 5.9 OPTIONAL_COMPONENTS WebEngineWidgets)
