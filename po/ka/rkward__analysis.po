@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-14 06:06+0200\n"
+"PO-Revision-Date: 2024-04-15 14:30+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -174,7 +174,7 @@ msgstr "მუდის ორშერჩევიანი ზუსტი შ
 #: rkward/plugins/analysis.pluginmap:48
 #, kde-format
 msgid "Chi-squared Test for Outlier"
-msgstr ""
+msgstr "ხი-კვადრატის შემოწმება ამოვარდნისთვის"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:49
@@ -186,7 +186,7 @@ msgstr "დიქსონის შემოწმება"
 #: rkward/plugins/analysis.pluginmap:50
 #, kde-format
 msgid "Find Outlier"
-msgstr ""
+msgstr "ამოვარდნის პოვნა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:51
@@ -199,7 +199,7 @@ msgstr "გრაბსის შემოწმება"
 #: rkward/plugins/analysis.pluginmap:54 rkward/plugins/analysis/crosstab.xml:18
 #, kde-format
 msgid "N to 1 Crosstabulation"
-msgstr ""
+msgstr "კვეთადი ცხრილი N-დან 1-მდე"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="...">
@@ -207,7 +207,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab_multi.xml:11
 #, kde-format
 msgid "N to N Crosstabulation"
-msgstr ""
+msgstr "კვეთადი ცხრილი N-დან N-მდე"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:58
@@ -221,7 +221,7 @@ msgstr "ბოქსი-პირსის ან ლიუნგ-ბოქს�
 #: rkward/plugins/analysis/time_series/kpss_test.xml:11
 #, kde-format
 msgid "KPSS Test for Stationarity"
-msgstr ""
+msgstr "KPSS შემოწმება სტაციონარულობაზე"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
@@ -289,7 +289,7 @@ msgstr "მომენტები"
 #: rkward/plugins/analysis.pluginmap:97
 #, kde-format
 msgid "Outlier Tests"
-msgstr ""
+msgstr "ამოვარდნის შემოწმებები"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:103
@@ -301,7 +301,7 @@ msgstr "რეგრესია"
 #: rkward/plugins/analysis.pluginmap:106
 #, kde-format
 msgid "Variances / Scale"
-msgstr ""
+msgstr "დისპერსია / მასშტაბი"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Variances / Scale"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:107
@@ -367,7 +367,7 @@ msgstr "null.value"
 #: rkward/plugins/analysis/t_test.js:75
 #, kde-format
 msgid "confidence interval percent"
-msgstr ""
+msgstr "ნდობის ინტერვალის პროცენტი"
 
 #. i18n: ectx: (Loaded from t-Test)
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test)
@@ -377,7 +377,7 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.js:76
 #, kde-format
 msgid "confidence interval of difference"
-msgstr ""
+msgstr "განსხვავების ნდობის ინტერვალი"
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test)
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test)
@@ -385,7 +385,7 @@ msgstr ""
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.js:51
 #, kde-format
 msgid "estimate of the ratio of scales"
-msgstr ""
+msgstr "მასშტაბების შეფარდების შეფასება"
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <summary>
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.rkh:8
@@ -809,14 +809,14 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate correlation matrix"
-msgstr ""
+msgstr "კორელაციის მატრიცის გამოთვლა"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:75
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate matrix of probabilities"
-msgstr ""
+msgstr "ალბათობების მატრიცის გამოთვლა"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:78
@@ -920,7 +920,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.rkh:21
 #, kde-format
 msgid "Method of correlation to be used."
-msgstr ""
+msgstr "კორელაციის გამოყენებული მეთოდი."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Treat ordered categorial variables as numeric ranks")
 #: rkward/plugins/analysis/corr_matrix.rkh:22
@@ -1020,7 +1020,7 @@ msgstr "მეთოდი"
 #: rkward/plugins/analysis/corr_matrix.xml:31
 #, kde-format
 msgid "Pearson's product-moment correlation"
-msgstr ""
+msgstr "პირსონის პროდუქტი-მომენტის კორელაცია"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:32
@@ -1038,13 +1038,13 @@ msgstr "სპეარმანის რო"
 #: rkward/plugins/analysis/corr_matrix.xml:34
 #, kde-format
 msgid "Polyserial correlation"
-msgstr ""
+msgstr "მრავალხაზიანი კორელაცია"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:35
 #, kde-format
 msgid "Polychoric correlation"
-msgstr ""
+msgstr "პოლიქორულიკორელაცია"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:37
@@ -1084,7 +1084,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.xml:30
 #, kde-format
 msgid "pairwise"
-msgstr ""
+msgstr "წყვილებად"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:17
@@ -1392,13 +1392,13 @@ msgstr "მონტე კარლო"
 #: rkward/plugins/analysis/crosstab.xml:45
 #, kde-format
 msgid "Number of replicates"
-msgstr ""
+msgstr "გამეორებების რაოდენობა"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Chisquare Options"> <frame label="Number of replicates"> <spinbox label="...">
 #: rkward/plugins/analysis/crosstab.xml:46
 #, kde-format
 msgid "Number of replicates used in the Monte Carlo Method"
-msgstr ""
+msgstr "გამეორებების რაოდენობა მონტე-კარლოს მეთოდისთვის"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Chisquare Options"> <checkbox label="...">
 #: rkward/plugins/analysis/crosstab.xml:48
@@ -1610,7 +1610,7 @@ msgstr "NA-ების და სიგრძის ჩვენება"
 #: rkward/plugins/analysis/moments/bonett_test.xml:29
 #, kde-format
 msgid "Verbose alternative hypothesis"
-msgstr ""
+msgstr "დაწვრილებითი ალტერნატიული ჰიპოთეზა"
 
 #. i18n: ectx: (Loaded from Anscombe-Glynn test of kurtosis)
 #. i18n: ectx: (Anscombe-Glynn test of kurtosis) <dialog label="...">
@@ -1618,7 +1618,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/anscombe_test.xml:11
 #, kde-format
 msgid "Anscombe-Glynn test of kurtosis"
-msgstr ""
+msgstr "ანსკომბე-კლინის ტექსტი ექსცესისთვის"
 
 #. i18n: ectx: (Loaded from Anscombe-Glynn test of kurtosis) <summary>
 #: rkward/plugins/analysis/moments/anscombe_test.rkh:8
@@ -1642,7 +1642,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/bonett_test.xml:11
 #, kde-format
 msgid "Bonett-Seier test of Geary's kurtosis"
-msgstr ""
+msgstr "ბონეტ-ზაიერის ტექსტი გირის ექსცესისთვის"
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <summary>
 #: rkward/plugins/analysis/moments/bonett_test.rkh:8
@@ -1902,7 +1902,7 @@ msgstr "ცვალებადობა"
 #: rkward/plugins/analysis/outliers/chisq_out_test.xml:11
 #, kde-format
 msgid "Chi-squared test for outlier"
-msgstr ""
+msgstr "ხი-კვადრატის შემოწმება ამოვარდნისთვის"
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <summary>
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:8
@@ -1992,19 +1992,19 @@ msgstr "დამატებითი აღმწერი პარამე�
 #: rkward/plugins/analysis/outliers/dixon_test.js:10
 #, kde-format
 msgid "Dixon Q-statistic"
-msgstr ""
+msgstr "დიქსონის Q-სტატისტიკა"
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier)
 #: rkward/plugins/analysis/outliers/dixon_test.js:17
 #, kde-format
 msgid "Dixon test for outlier"
-msgstr ""
+msgstr "დიქსონის შემოწმება ამოვარდნისთვის"
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <summary>
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:8
 #, kde-format
 msgid "This test performs the Dixon test for outlier."
-msgstr ""
+msgstr "ეს ტესტი დიქსონის შემოწმებას განახორციელებს ამოვარდნისთვის."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <usage>
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:12
@@ -2052,7 +2052,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/dixon_test.xml:11
 #, kde-format
 msgid "Dixon tests for outlier"
-msgstr ""
+msgstr "დიქსონის შემოწმებები ამოვარდნისთვის"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> <tab label="Options"> <frame label="test specific settings"> <dropdown label="...">
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> <tab label="Options"> <frame label="test specific settings"> <radio label="...">
@@ -2162,7 +2162,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:26
 #, kde-format
 msgid "10 (test for one outlier)"
-msgstr ""
+msgstr "10 (შემოწმება ერთი ამოვარდნისთვის)"
 
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> [...] <radio label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:27
@@ -2180,7 +2180,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/outlier.js:15
 #, kde-format
 msgid "Find potential outlier"
-msgstr ""
+msgstr "პოტენციური ამოვარდნის პოვნა"
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean) <summary>
 #: rkward/plugins/analysis/outliers/outlier.rkh:8
@@ -2225,7 +2225,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate f from eta squared"
-msgstr ""
+msgstr "f-ის გამოთვლა ეტაკვადრატიდან"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:206
@@ -2245,7 +2245,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "Prepare printout"
-msgstr ""
+msgstr "გამოტანის მომზადება"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:212
@@ -2511,7 +2511,7 @@ msgstr "აირჩიეთ მეთოდი"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:108
 #, kde-format
 msgid "t-Tests of means"
-msgstr ""
+msgstr "საშუალოების t-შემოწმებები"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Select a method"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:109
@@ -2523,13 +2523,13 @@ msgstr "კორელაციის შემოწმება"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:110
 #, kde-format
 msgid "ANOVA (balanced one-way)"
-msgstr ""
+msgstr "ANOVA (დაბალანსებული ერთმხრივი)"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Select a method"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:111
 #, kde-format
 msgid "General linear model"
-msgstr ""
+msgstr "ზოგადი წრფივი მოდელი"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Select a method"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:112
@@ -2547,7 +2547,7 @@ msgstr "პროპორციის შემოწმებები"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:114
 #, kde-format
 msgid "Mean of a normal distribution (known variance)"
-msgstr ""
+msgstr "ნორმალური განაწილების საშუალო (ცნობილი დისპერსია)"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:116
@@ -2567,14 +2567,14 @@ msgstr "სემპლები"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:124
 #, kde-format
 msgid "Two samples (equal sizes)"
-msgstr ""
+msgstr "ორი შერჩევა (ტოლი ზომებით)"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:119
 #: rkward/plugins/analysis/power/Poweranalysis.xml:125
 #, kde-format
 msgid "Two samples (different sizes)"
-msgstr ""
+msgstr "ორი შერჩევა (არატოლი ზომებით)"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <dropdown label="Test form"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
@@ -2582,7 +2582,7 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.xml:28
 #, kde-format
 msgid "Single sample (test against constant)"
-msgstr ""
+msgstr "ერთ შერჩევა (შემოწმება კონსტანტაზე)"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <dropdown label="Test form"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
@@ -2590,19 +2590,19 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.xml:27
 #, kde-format
 msgid "Paired samples"
-msgstr ""
+msgstr "დაწყვილებული შერჩევები"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:126
 #, kde-format
 msgid "One sample"
-msgstr ""
+msgstr "ერთი შერჩევა"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:128
 #, kde-format
 msgid "Using test hypothesis"
-msgstr ""
+msgstr "ჰიპოთეზაზე დაყრდნობით"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
@@ -2626,13 +2626,13 @@ msgstr "მეორე მეტია"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:133
 #, kde-format
 msgid "Hypothesis probably expects a negative effect size!"
-msgstr ""
+msgstr "ჰიპოთეზას, ალბათ, უარყოფითი ეფექტის ზომა სჭირდება!"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:136
 #, kde-format
 msgid "Hypothesis probably expects a positive effect size!"
-msgstr ""
+msgstr "ჰიპოთეზას, ალბათ, დადებითი ეფექტის ზომა სჭირდება!"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <radio label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:139
@@ -2656,13 +2656,13 @@ msgstr "Η²"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:150
 #, kde-format
 msgid "Target measure"
-msgstr ""
+msgstr "სამიზნის გაზომვა"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:151
 #, kde-format
 msgid "Parameter to determine"
-msgstr ""
+msgstr "დასადგენი პარამეტრი"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:152
@@ -2670,7 +2670,7 @@ msgstr ""
 msgctxt ""
 "Here 'power' is a common statistical term and should not be translated"
 msgid "Power of test"
-msgstr ""
+msgstr "შემოწმების სიმძლავრე"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2678,7 +2678,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:184
 #, kde-format
 msgid "Sample size"
-msgstr ""
+msgstr "შერჩევის ზომა"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2706,7 +2706,7 @@ msgstr "პარამეტრების რაოდენობა"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:162
 #, kde-format
 msgid "Known measures"
-msgstr ""
+msgstr "ცნობილი გაზომვები"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:164
@@ -2732,7 +2732,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
 #, kde-format
 msgid "df <sub> num </sub> : k &minus; 1"
-msgstr ""
+msgstr "df <sub> რიცხვ </sub> : k &minus; 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2762,73 +2762,74 @@ msgstr "მეორე შერჩევის ზომა"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:187
 #, kde-format
 msgid "Number of observations"
-msgstr ""
+msgstr "დაკვირვებების რაოდენობები"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:190
 #, kde-format
 msgid "Number of observations <b> per sample </b>"
-msgstr ""
+msgstr "დაკვირვებების რაოდენობა <b> თითოეული შერჩევისთვის </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:195
 #, kde-format
 msgid "Number of observations <b> per group </b>"
-msgstr ""
+msgstr "დაკვირვებების რაოდენობა <b> თითოეული ჯგუფისთვის </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:200
 #, kde-format
 msgid "Number of observations <b> in total </b>"
-msgstr ""
+msgstr "დაკვირვებების რაოდენობა <b> ჯამში </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:205
 #, kde-format
 msgid "Number of <b> pairs </b>"
-msgstr ""
+msgstr "<b> წყვილების </b> რაოდენობა"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:213
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's d </b>"
-msgstr ""
+msgstr "გაზომვას არჩეული მეთოდისთვის წარმოადგენს <b> კოენის d </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:218
 #, kde-format
 msgid "Measure for selected method is <b> Pearson's r </b>"
-msgstr ""
+msgstr "გაზომვას არჩეული მეთოდისთვის წარმოადგენს <b> პირსონის r </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:223
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's f </b>"
-msgstr ""
+msgstr "გაზომვას არჩეული მეთოდისთვის წარმოადგენს <b> კოენის f </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:228
 #, kde-format
 msgid "Measure for selected method is <b> Eta <sup> 2 </sup> </b>"
-msgstr ""
+msgstr "გაზომვას არჩეული მეთოდისთვის წარმოადგენს <b> ეტა <sup> 2 </sup> </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:235
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's f <sup> 2 </sup> </b>"
 msgstr ""
+"გაზომვას არჩეული მეთოდისთვის წარმოადგენს <b> კოენის f <sup> 2 </sup> </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:242
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's w </b>"
-msgstr ""
+msgstr "გაზომვას არჩეული მეთოდისთვის წარმოადგენს <b> კოენის w </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:247
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's h </b>"
-msgstr ""
+msgstr "გაზომვას არჩეული მეთოდისთვის წარმოადგენს <b> კოენის h </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <saveobject label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:257
@@ -2894,7 +2895,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.rkh:24
 #, kde-format
 msgid "Save the full fitted model."
-msgstr ""
+msgstr "სრულად აპროქსიმირებული მოდელის შენახვა."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Save fitted values")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:25
@@ -2912,7 +2913,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.xml:11
 #, kde-format
 msgid "Fitting Linear Models"
-msgstr ""
+msgstr "აპროქსიმაცია წრფივი მოდელებით"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:12
@@ -2936,19 +2937,19 @@ msgstr "დამოუკიდებელი ცვლადები"
 #: rkward/plugins/analysis/regression/linear_regression.xml:18
 #, kde-format
 msgid "Include intercept"
-msgstr ""
+msgstr "კონსტანტის ჩასმა"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Model"> <checkbox label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:19
 #, kde-format
 msgid "Show standardized coefficients"
-msgstr ""
+msgstr "სტანდარტიზებული კოეფიციენტების ჩვენება"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Model"> <checkbox label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:20
 #, kde-format
 msgid "Show ANOVA table"
-msgstr ""
+msgstr "ANOVA ცხრილის ჩვენება"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:26
@@ -2960,19 +2961,19 @@ msgstr "შენახვა"
 #: rkward/plugins/analysis/regression/linear_regression.xml:29
 #, kde-format
 msgid "Save full fitted model"
-msgstr ""
+msgstr "სრულად აპროქსიმირებული მოდელის შენახვა"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Save"> <saveobject label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:33
 #, kde-format
 msgid "Save fitted values"
-msgstr ""
+msgstr "აპროქსიმირებული მნიშვნელობების შენახვა"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Save"> <saveobject label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:34
 #, kde-format
 msgid "Save residuals"
-msgstr ""
+msgstr "ნაშთების შენახვა"
 
 #. i18n: ectx: (Loaded from t-Test)
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
@@ -2992,19 +2993,19 @@ msgstr "მუდმივი მნიშვნელობა: %1"
 #: rkward/plugins/analysis/t_test.js:61
 #, kde-format
 msgid "Equal variances"
-msgstr ""
+msgstr "ტოლი დისპერსიები"
 
 #. i18n: ectx: (Loaded from t-Test)
 #: rkward/plugins/analysis/t_test.js:61
 #, kde-format
 msgid "assumed"
-msgstr ""
+msgstr "დაშვებულია"
 
 #. i18n: ectx: (Loaded from t-Test)
 #: rkward/plugins/analysis/t_test.js:61
 #, kde-format
 msgid "not assumed"
-msgstr ""
+msgstr "დაშვებული არაა"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Loaded from t-Test)
@@ -3024,7 +3025,7 @@ msgstr "ცვლადის სახელი"
 #: rkward/plugins/analysis/t_test.js:69
 #, kde-format
 msgid "estimated mean"
-msgstr ""
+msgstr "დაშვებული საშუალო"
 
 #. i18n: ectx: (Loaded from t-Test)
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests)
@@ -3101,19 +3102,19 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.rkh:26
 #, kde-format
 msgid "Confidence level to print."
-msgstr ""
+msgstr "დასაბეჭდი ნდობის დონე."
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <dropdown label="...">
 #: rkward/plugins/analysis/t_test.xml:25
 #, kde-format
 msgid "Test form"
-msgstr ""
+msgstr "შემოწმების ფორმა"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <dropdown label="Test form"> <option label="...">
 #: rkward/plugins/analysis/t_test.xml:26
 #, kde-format
 msgid "Independent samples"
-msgstr ""
+msgstr "დამოუკიდებელი შერჩევები"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <checkbox label="...">
 #: rkward/plugins/analysis/t_test.xml:37
@@ -3131,7 +3132,7 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.xml:56
 #, kde-format
 msgid "Two Variable t-Test"
-msgstr ""
+msgstr "ორცვლადიანი t-შემოწმება"
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:58
@@ -3526,7 +3527,7 @@ msgstr "მითითებული მნიშვნელობა"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:51
 #, kde-format
 msgid "Output series"
-msgstr ""
+msgstr "გამოსავალი მიმდევრობები"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="Output series"> <saveobject label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:52
@@ -3562,7 +3563,7 @@ msgstr "ხაზები"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:64
 #, kde-format
 msgid "Original series"
-msgstr ""
+msgstr "ორიგინალი მიმდევრობები"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Original series"> <spinbox label="...">
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Trend"> <spinbox label="...">
@@ -3664,13 +3665,13 @@ msgstr "ჭდეები (ნაგულისხმევი მნიშვ
 #: rkward/plugins/analysis/time_series/hp_filter.xml:110
 #, kde-format
 msgid "Original series and trend Y axis label"
-msgstr ""
+msgstr "საწყისი მიმდევრობებისა და ტრენდის Y ღერძის ჭდე"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:111
 #, kde-format
 msgid "Cycle Y axis label"
-msgstr ""
+msgstr "ციკლის Y ღერძის ჭდე"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/analysis/time_series/hp_filter.xml:113
@@ -3683,7 +3684,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:116
 #, kde-format
 msgid "interpret as string"
-msgstr ""
+msgstr "ინტერპრეტაცია სტრიქონის სახით"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:23
@@ -3708,7 +3709,7 @@ msgstr "KPSS-ის ტრენდი"
 #: rkward/plugins/analysis/time_series/kpss_test.js:37
 #, kde-format
 msgid "KPSS Test for Level Stationarity"
-msgstr ""
+msgstr "KPSS შემოწმება დონის სტაციონარულობაზე"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <summary>
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:8
@@ -3747,7 +3748,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:18
 #, kde-format
 msgid "null hypothesis"
-msgstr ""
+msgstr "ნულოვანი ჰიპოთეზა"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="null hypothesis"> <option label="...">
 #: rkward/plugins/analysis/time_series/kpss_test.xml:19
@@ -3759,7 +3760,7 @@ msgstr "დონე"
 #: rkward/plugins/analysis/variances/bartlett_test.js:24
 #, kde-format
 msgid "Bartlett's K-squared"
-msgstr ""
+msgstr "ბარტლეტის K-კვადრატი"
 
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances) <summary>
 #: rkward/plugins/analysis/variances/bartlett_test.rkh:8
@@ -3827,7 +3828,7 @@ msgstr "ზედა ნი"
 #: rkward/plugins/analysis/variances/F_test.js:32
 #, kde-format
 msgid "ratio of variances"
-msgstr ""
+msgstr "დისპერსიის ფარდობა"
 
 #. i18n: ectx: (Loaded from F test) <summary>
 #: rkward/plugins/analysis/variances/F_test.rkh:8
@@ -3848,19 +3849,19 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.rkh:18
 #, kde-format
 msgid "First sample (numeric vector)."
-msgstr ""
+msgstr "პირველი შერჩევა (რიცხვითი ვექტორი)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "against")
 #: rkward/plugins/analysis/variances/F_test.rkh:19
 #, kde-format
 msgid "Second sample (numeric vector)."
-msgstr ""
+msgstr "მეორე შერჩევა (რიცხვითი ვექტორი)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/variances/F_test.rkh:20
 #, kde-format
 msgid "Alternative hypothesis of the test."
-msgstr ""
+msgstr "შემოწმების ალტერნატიული ჰიპოთეზა."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "Hypothesized ratio")
 #: rkward/plugins/analysis/variances/F_test.rkh:22
@@ -3884,7 +3885,7 @@ msgstr "F შემოწმება"
 #: rkward/plugins/analysis/variances/F_test.xml:29
 #, kde-format
 msgid "Hypothesized ratio"
-msgstr ""
+msgstr "ჰიპოთეტური ფარდობა"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Options"> <frame label="Compute confidence interval"> <spinbox label="...">
 #. i18n: ectx: (F test) <dialog label="F test"> <tab label="Options"> <spinbox label="...">
@@ -4979,13 +4980,13 @@ msgstr "შეიყვანეთ თქვენი მნიშვნელ�
 #: rkward/plugins/uni1.2/description.xml:105
 #, kde-format
 msgid "Custom s value"
-msgstr ""
+msgstr "მომხმარებლის S მნიშვნელობა"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <input label="...">
 #: rkward/plugins/uni1.2/description.xml:106
 #, kde-format
 msgid "S value"
-msgstr ""
+msgstr "S-ის მნიშვნელობა"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:111
@@ -4997,10 +4998,10 @@ msgstr "დაშვება"
 #: rkward/plugins/uni1.2/description.xml:124
 #, kde-format
 msgid "Omit missing values"
-msgstr ""
+msgstr "ნაკლული მნიშვნელობების ამოღება"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Options"> <saveobject label="...">
 #: rkward/plugins/uni1.2/description.xml:125
 #, kde-format
 msgid "Store results"
-msgstr ""
+msgstr "შედეგების დამახსოვრება"
