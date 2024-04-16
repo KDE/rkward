@@ -11,5 +11,8 @@ include:
       - /gitlab-templates/flatpak.yml
       - /gitlab-templates/craft-appimage.yml
       - /gitlab-templates/craft-macos-arm64.yml
-      - /gitlab-templates/craft-macos-x86-64.yml
       - /gitlab-templates/craft-windows-x86-64.yml
+
+# NOTE: Neither QWebEngine nor QtWebKit are available in craft
+#       on x86 mac, so we cannot have:
+#     - /gitlab-templates/craft-macos-x86-64.yml
