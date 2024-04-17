@@ -81,7 +81,9 @@ RInterface::RInterface () {
 	backend_dead = false;
 	dummy_command_on_stack = nullptr;
 
-	// create a fake init command
+	// Create a fake init command. This is the top level command designed to capture all output of the startup sequence.
+	// The backend will fetch this command, then send a BackendRequest::Started event. In response to this, we will send further
+	// (sub)-commands to set everything up (see there).
 	auto fake_c = new RCommand(i18n("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n("R Startup"));
 	fake_c->whenFinished(this, [this](RCommand *command) {
 		QString message = startup_errors;
@@ -437,8 +439,6 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			RK_ASSERT (command->getDataLength () == 1);
 			RKSettingsModuleR::help_base_url = command->stringVector ().value (0);
 		});
-
-		// NOTE: more initialization commands get run *after* we have determined the standard library locations (see rCommandDone())
 	} else {
 		processRBackendRequest (request);
 	}
