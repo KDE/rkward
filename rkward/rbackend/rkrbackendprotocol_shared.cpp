@@ -20,8 +20,6 @@ RCommandProxy::RCommandProxy (const QString &command, int type) {
 
 RCommandProxy::~RCommandProxy () {
 	RK_TRACE (RBACKEND);
-
-	RK_ASSERT ((type & RCommand::Internal) || (getDataType () == RData::NoData));
 }
 
 

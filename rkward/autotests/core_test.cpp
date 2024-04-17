@@ -177,6 +177,29 @@ private Q_SLOTS:
 		});
 	}
 
+	void encodingTest() {
+		QString test_string = QStringLiteral("français");
+		RInterface::issueCommand(QStringLiteral("x <- ") + RObject::rQuote(test_string), RCommand::User);
+		auto c = new RCommand(QStringLiteral("cat(x); y <- \"fran\\xE7ais\"; Encoding(y) <- \"latin1\"; list(x==y, x, y)"), RCommand::GetStructuredData | RCommand::App);
+		runCommandWithTimeout(c, nullptr, [test_string](RCommand *command) {
+			QCOMPARE(command->output(), test_string);
+			QCOMPARE(command->getDataType(), RData::StructureVector);
+			QCOMPARE(command->getDataLength(), 3);
+			QVERIFY(command->structureVector().value(0)->intVector().value(0, 0) > 0);
+			QCOMPARE(command->structureVector().value(1)->stringVector().value(0), test_string);
+			QCOMPARE(command->structureVector().value(2)->stringVector().value(0), test_string);
+		});
+		// This one is to test that we don't screw up on strings exceeding the conversion buffer size
+		c = new RCommand(QStringLiteral("x <- paste0(rep(x, 2000), collapse=\",\"); cat(x); x"), RCommand::GetStringVector | RCommand::App);
+		runCommandWithTimeout(c, nullptr, [test_string](RCommand *command) {
+			QCOMPARE(command->output().count(test_string), 2000);
+			QCOMPARE(command->getDataType(), RData::StringVector);
+			QCOMPARE(command->getDataLength(), 1);
+			QCOMPARE(command->stringVector().value(0).count(test_string), 2000);
+		});
+		RInterface::issueCommand(QStringLiteral("rm(x); rm(y)"), RCommand::User);
+	}
+
 	void irregularShortNameTest() {
 		QVERIFY(RObject::irregularShortName("0x"));
 		QVERIFY(RObject::irregularShortName(".1x"));

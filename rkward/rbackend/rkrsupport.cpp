@@ -422,6 +422,7 @@ QByteArray RKTextCodec::doConv(void *cd, const QByteArray &inp) {
 void *RKTextCodec::from_native = nullptr;
 void *RKTextCodec::to_native = nullptr;
 void RKTextCodec::reinit() {
+	// TODO: Detect if running in a UTF-8 locale, in which case all conversion can be omitted
 	if (from_native) {
 		Riconv_close(from_native);
 		Riconv_close(to_native);

@@ -1594,6 +1594,7 @@ RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHan
 
 	{
 		QMutexLocker lock (&all_current_commands_mutex);
+		RK_ASSERT(command != current_command);
 		all_current_commands.append (command);
 		current_command = command;
 	}
