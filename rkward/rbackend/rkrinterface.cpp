@@ -82,10 +82,10 @@ RInterface::RInterface () {
 	dummy_command_on_stack = nullptr;
 
 	// create a fake init command
-	runStartupCommand(new RCommand(i18n("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n("R Startup")), nullptr, 
-	[this](RCommand *command) {
+	auto fake_c = new RCommand(i18n("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n("R Startup"));
+	fake_c->whenFinished(this, [this](RCommand *command) {
 		QString message = startup_errors;
-		if (startup_phase2_error) message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
+		if (startup_phase2_error || command->failed()) message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
 		if (!message.isEmpty ()) {
 			message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
 
@@ -100,6 +100,7 @@ RInterface::RInterface () {
 
 		startup_errors.clear ();
 	});
+	_issueCommand(fake_c);
 
 	new RKSessionVars (this);
 	new RKDebugHandler (this);
