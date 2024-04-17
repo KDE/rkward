@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-13 07:37+0200\n"
+"PO-Revision-Date: 2024-04-16 05:46+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -41,6 +41,8 @@ msgid ""
 "Plugins for transforming, subsetting, recoding, etc. of data. Part of the "
 "official RKWard distribution"
 msgstr ""
+"დამატებები მონაცემების გარდაქმნისთვის, ქვესეტისთვის, რეკოდირებისთვის და ა.შ. "
+"წარმოადგენს RKWard-ის ოფიციალური პაკეტის ნაწილს"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/data.pluginmap:24
@@ -71,7 +73,7 @@ msgstr "ქვესეტის data.frame"
 #: rkward/plugins/data/recode_categorical.xml:29
 #, kde-format
 msgid "Recode categorical data"
-msgstr ""
+msgstr "კატეგორიალური მონაცემების რეკოდირება"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/data.pluginmap:31
@@ -83,7 +85,7 @@ msgstr "მონაცემები"
 #: rkward/plugins/data/generate_random.xml:22
 #, kde-format
 msgid "Generate random data (normal distribution)"
-msgstr ""
+msgstr "შემთხვევითი მონაცემები გენერაცია (ნორმალური განაწილება)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
 #: rkward/plugins/data/generate_random.xml:24
@@ -117,6 +119,8 @@ msgid ""
 "Use as.character() as intermediate data format, to support adding and "
 "dropping levels"
 msgstr ""
+"გამოიყენეთ as.character() შუალედურ მონაცემების ფორმატად, დონეების დამატებისა "
+"და წაშლის მხარდაჭერისთვის"
 
 #. i18n: ectx: (Loaded from Recode categorical data)
 #: rkward/plugins/data/recode_categorical.js:78
@@ -140,7 +144,7 @@ msgstr "გამოტანილი ცვლადი"
 #: rkward/plugins/data/recode_categorical.js:96
 #, kde-format
 msgid "Number of differences after recoding"
-msgstr ""
+msgstr "სხვაობების რაოდენობა რეკოდირების შემდეგ"
 
 #. i18n: ectx: (Recode categorical data) <summary>
 #: rkward/plugins/data/recode_categorical.rkh:11
@@ -164,7 +168,7 @@ msgstr ""
 #: rkward/plugins/data/recode_categorical.rkh:21
 #, kde-format
 msgid "Select the vector to recode"
-msgstr ""
+msgstr "აირჩიეთ ვექტორი რეკოდირებისთვის"
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/data/recode_categorical.rkh:24
@@ -179,12 +183,13 @@ msgstr ""
 #, kde-format
 msgid "Pick a name (and optionally a container) for the recoded data."
 msgstr ""
+"აირჩიეთ სახელი (და სურვილისამებრ კონტეინერი) რეკოდირებული მონაცემებისთვის."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Data type after recoding")
 #: rkward/plugins/data/recode_categorical.rkh:30
 #, kde-format
 msgid "Storage mode of the recoded data."
-msgstr ""
+msgstr "რეკოდირებული მონაცემები საცავის რეჟიმი."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/data/recode_categorical.rkh:33
@@ -261,7 +266,7 @@ msgstr "შეყვანისა და გამოტანის ცვლ
 #: rkward/plugins/data/recode_categorical.xml:32
 #, kde-format
 msgid "Select variable to recode"
-msgstr ""
+msgstr "აირჩიეთ ცვლადი რეკოდირებისთვის"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="...">
@@ -297,7 +302,7 @@ msgstr "ობიექტის შენახვა მისამართ�
 #: rkward/plugins/data/recode_categorical.xml:40
 #, kde-format
 msgid "Data type after recoding"
-msgstr ""
+msgstr "მონაცემების ტიპი რეკოდირების ტიპი"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
 #: rkward/plugins/data/recode_categorical.xml:41
@@ -444,6 +449,8 @@ msgstr ""
 #, kde-format
 msgid "Only for data.frame objects. Select the column(s) to sort by."
 msgstr ""
+"მხოლოდ, data.frame ობიექტებისთვის. აირჩიეთ სვეტ(ებ)-ი, რომლითაც დალაგება "
+"მოხდება."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/data/sort.rkh:19
@@ -461,6 +468,8 @@ msgid ""
 "Only, if you selected \"Another object\", above: Specify the object to save "
 "to."
 msgstr ""
+"მხოლოდ, თუ აირჩიეთ \"სხვა ობიექტი. ზემოთ: მიუთითეთ ობიექტი, სადაც შენახვა "
+"მოხდება."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/data/sort.rkh:21
@@ -612,7 +621,7 @@ msgstr "subset_dataframe"
 #: rkward/plugins/data/subset_dataframe.rkh:13
 #, kde-format
 msgid "Select a subset of rows and / or columns of a data.frame"
-msgstr ""
+msgstr "აირჩიეთ data.frame-ის მწკრივების ან / და სვეტების ქვესიმრავლე"
 
 #. i18n: ectx: (subset_dataframe) <usage>
 #: rkward/plugins/data/subset_dataframe.rkh:16
@@ -627,7 +636,7 @@ msgstr ""
 #: rkward/plugins/data/subset_dataframe.rkh:23
 #, kde-format
 msgid "Select the data.frame to subset."
-msgstr ""
+msgstr "აირჩიეთ data.frame ქვესიმრავლისთვის."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/data/subset_dataframe.rkh:26
@@ -833,7 +842,7 @@ msgstr "არის ცრუ"
 #: rkward/plugins/data/subset_dataframe.xml:106
 #, kde-format
 msgid "Value (pasted as-is, use proper quoting!)"
-msgstr ""
+msgstr "მნიშვნელობა (ჩასმულია როგორც იყო. გამოიყენეთ სწორი ციტირება!)"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <input label="...">
 #: rkward/plugins/data/subset_dataframe.xml:109

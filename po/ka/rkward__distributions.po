@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-13 09:40+0200\n"
+"PO-Revision-Date: 2024-04-16 06:10+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3328,13 +3328,13 @@ msgstr ""
 #: rkward/plugins/distributions/f.xml:15
 #, kde-format
 msgid "Numerator degrees of Freedom"
-msgstr ""
+msgstr "თავისუფლების ხარისხის მრიცხველი"
 
 #. i18n: ectx: (F distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/f.xml:16
 #, kde-format
 msgid "Denominator degrees of Freedom"
-msgstr ""
+msgstr "თავისუფლების ხარისხის მნიშვნელი"
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator)
 #: rkward/plugins/distributions/gamma.js:9
@@ -3362,7 +3362,7 @@ msgstr "ფორმის პარამეტრი (k)"
 #: rkward/plugins/distributions/gamma.rkh:18
 #, kde-format
 msgid "Rate parameter β (inverse of scale parameter)"
-msgstr ""
+msgstr "მაჩვენებლის პარამეტრი β (შებრუნებული მასშტაბის პარამეტრი)"
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator) <related>
 #: rkward/plugins/distributions/gamma.rkh:20
@@ -3515,13 +3515,13 @@ msgstr "n (შავი ბურთების რაოდენობა კ
 #: rkward/plugins/distributions/hypergeometric.rkh:21
 #, kde-format
 msgid "k (Number of draws from the urn)"
-msgstr ""
+msgstr "k (ლარნაკიდან ამოღებების რაოდენობა)"
 
 #. i18n: ectx: (Hypergeometric distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/hypergeometric.xml:20
 #, kde-format
 msgid "k (Number of balls drawn from the urn)"
-msgstr ""
+msgstr "k (ლარნაკიდან ამოღებული ბურთების რაოდენობა)"
 
 #. i18n: ectx: (Loaded from Log Normal distribution calculator)
 #: rkward/plugins/distributions/log_normal.js:9
@@ -3543,25 +3543,25 @@ msgstr ""
 #: rkward/plugins/distributions/log_normal.rkh:17
 #, kde-format
 msgid "meanlog (mean of the distribution on the log scale)"
-msgstr ""
+msgstr "meanlog (განაწილების საშუალო ლოგარითმულ შკალაზე)"
 
 #. i18n: ectx: (Loaded from Log Normal distribution calculator) <settings> <setting> (refers to element labelled "sdlog (standard deviation on log scale)")
 #: rkward/plugins/distributions/log_normal.rkh:18
 #, kde-format
 msgid "sdlog (standard deviation of the distribution on the log scale)"
-msgstr ""
+msgstr "sdlog (განაწილების სტანდარტული აცდენა ლოგარითმულ შკალაზე)"
 
 #. i18n: ectx: (Log Normal distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/log_normal.xml:15
 #, kde-format
 msgid "meanlog (mean on log scale)"
-msgstr ""
+msgstr "meanlog (საშუალო ლოგარითმულ შკალაზე)"
 
 #. i18n: ectx: (Log Normal distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/log_normal.xml:16
 #, kde-format
 msgid "sdlog (standard deviation on log scale)"
-msgstr ""
+msgstr "sdlog (სტანდარტული აცდენა ლოგარითმულ შკალაზე)"
 
 #. i18n: ectx: (Loaded from Logistic distribution calculator)
 #: rkward/plugins/distributions/logistic.js:11
@@ -4495,7 +4495,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:62
 #, kde-format
 msgid "Smallest value at which the function is to be plotted."
-msgstr ""
+msgstr "უმცირესი მნიშვნელობა, რომელზეც ფუნქციის დახატვა მოხდება."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Upper quantile")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Upper quantile")
@@ -4903,7 +4903,7 @@ msgstr "დისპერსია (ზომა)"
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:34
 #, kde-format
 msgid "Mean (alternate parameter, mu)"
-msgstr ""
+msgstr "საშუალო (ალტერნატიული პარამეტრი, მიუ)"
 
 #. i18n: ectx: (Plot negative binomial probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:47
@@ -5014,6 +5014,7 @@ msgstr ""
 msgid ""
 "Only the distribution function can be plotted for the Tukey distribution."
 msgstr ""
+"ტაკის განაწილებისთვის შესაძლებელია, მხოლოდ, განაწილების ფუნქციების დახაზვა."
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <settings> <setting> (refers to element labelled "Number of observations")
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <settings> <setting> (refers to element labelled "Number of observations")
@@ -5375,7 +5376,7 @@ msgstr "თავისუფლების ხარისხები"
 #: rkward/plugins/distributions/tests/pearson_test.xml:27
 #, kde-format
 msgid "p-value from chi^2-distribution from"
-msgstr ""
+msgstr "p-მნიშვნელობა ხი-კვადრატის განაწილებიდან"
 
 #. i18n: ectx: (Pearson chi-square Normality Test) <dialog label="Pearson chi-square Normality Test"> <tab label="Options"> <radio label="p-value from chi^2-distribution from"> <option label="...">
 #: rkward/plugins/distributions/tests/pearson_test.xml:28

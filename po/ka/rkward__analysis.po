@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-15 14:30+0200\n"
+"PO-Revision-Date: 2024-04-16 05:27+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1020,7 +1020,7 @@ msgstr "მეთოდი"
 #: rkward/plugins/analysis/corr_matrix.xml:31
 #, kde-format
 msgid "Pearson's product-moment correlation"
-msgstr "პირსონის პროდუქტი-მომენტის კორელაცია"
+msgstr "პირსონის ნამრავლი-მომენტის კორელაცია"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:32
@@ -1258,7 +1258,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.rkh:27
 #, kde-format
 msgid "Calculate and show sums / margins"
-msgstr ""
+msgstr "ჯამების / საზღვრების გამოთვლა და ჩვენება"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show percent of row")
 #: rkward/plugins/analysis/crosstab.rkh:28
@@ -1300,7 +1300,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.rkh:35
 #, kde-format
 msgid "Show the chisquare expected values per cell."
-msgstr ""
+msgstr "ხიკვადრატის მოსალოდმელი მნიშვნელობების ჩვენება ყველა უჯრედისთვის."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Barplot Options")
 #: rkward/plugins/analysis/crosstab.rkh:38
@@ -3193,19 +3193,19 @@ msgstr ""
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:17
 #, kde-format
 msgid "First sample. The vectors need to be numeric."
-msgstr ""
+msgstr "პირველი შერჩევა. ვექტორი რიცხვითი უნდა იყოს."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <settings> <setting> (refers to element labelled "against")
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:18
 #, kde-format
 msgid "Second sample. The vectors need to be numeric."
-msgstr ""
+msgstr "მეორე შერჩევა. ვექტორი რიცხვითი უნდა იყოს."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:19
 #, kde-format
 msgid "Alternative hypothesis to use for the test."
-msgstr ""
+msgstr "შემოწმებისთვის გამოყენებული ალტერნატიული ჰიპოთეზა."
 
 #. i18n: ectx: (Mood Two-Sample Test of Scale) <dialog label="...">
 #: rkward/plugins/analysis/TESTS/mood_test.xml:11
@@ -3267,7 +3267,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:22
 #, kde-format
 msgid "Exclude missing values from calculation?"
-msgstr ""
+msgstr "ამოვიღო ნაკლული მნიშვნელობები გამოთვლიდან?"
 
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="...">
 #: rkward/plugins/analysis/TESTS/PP_test.xml:11
@@ -3305,7 +3305,7 @@ msgstr "გრძელი"
 #: rkward/plugins/analysis/time_series/Box_test.xml:11
 #, kde-format
 msgid "Box-Pierce and Ljung-Box Tests"
-msgstr ""
+msgstr "ბოქსი-პირსის ან ლიუნგ-ბოქსის შემოწმებები"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <summary>
 #: rkward/plugins/analysis/time_series/Box_test.rkh:8
@@ -4246,7 +4246,7 @@ msgstr "ჯამი"
 #: rkward/plugins/descriptive/descriptive_statistics.js:61
 #, kde-format
 msgid "product"
-msgstr "პროდუქტი"
+msgstr "ნამრავლი"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Dispersion"> <checkbox label="...">
@@ -4346,13 +4346,13 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:28
 #, kde-format
 msgid "Compute the standard deviation?"
-msgstr ""
+msgstr "გამოვთვალო სტანდარტული გადახრა?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Median")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:30
 #, kde-format
 msgid "Should the median value be computed?"
-msgstr ""
+msgstr "გამოვთვალო მედიანის მნიშვნელობა?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "mad")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:31
@@ -4381,19 +4381,19 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:35
 #, kde-format
 msgid "Compute the range, i.e. lowest and highest value"
-msgstr ""
+msgstr "შუალედის გამოთვლა. ანუ, უმაღლესი და უმცირესი მნიშვნელობების"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "sum")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:36
 #, kde-format
 msgid "Compute the sum of all values"
-msgstr ""
+msgstr "ყველა მნიშვნელობის ჯამის გამოთვლა"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "prod")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:37
 #, kde-format
 msgid "Compute the product of all values"
-msgstr ""
+msgstr "ყველა მნიშვნელობის ნამრავლის გამოთვლა"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Length and NAs")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:38
@@ -4428,7 +4428,7 @@ msgstr "ფაილის სახელი"
 #: rkward/plugins/descriptive/descriptive_statistics.xml:27
 #, kde-format
 msgid "Mean Standard Deviation"
-msgstr ""
+msgstr "საშუალო სტანდარტული გადახრა"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
@@ -4445,7 +4445,7 @@ msgstr "მნიშვნელობა"
 #: rkward/plugins/descriptive/descriptive_statistics.xml:31
 #, kde-format
 msgid "Trim of mean"
-msgstr ""
+msgstr "საშუალოს წაკვეთა"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
@@ -4461,7 +4461,7 @@ msgstr "საშუალო გეომეტრიული"
 #: rkward/plugins/uni1.2/description.xml:49
 #, kde-format
 msgid "Interquantile mean"
-msgstr ""
+msgstr "კვანტილთშორისი საშუალო"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
@@ -4481,7 +4481,7 @@ msgstr "სტანდარტული აცდენა"
 #: rkward/plugins/descriptive/descriptive_statistics.xml:42
 #, kde-format
 msgid "Median, MAD"
-msgstr ""
+msgstr "მედიანი, MAD"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <checkbox label="...">
@@ -4500,7 +4500,7 @@ msgstr "საშუალო"
 #: rkward/plugins/descriptive/descriptive_statistics.xml:47
 #, kde-format
 msgid "Median Absolute Deviation (mad)"
-msgstr ""
+msgstr "მედიანის აბსოლუტური გადახრა (mad)"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="Median Absolute Deviation (mad)"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:48
@@ -4520,31 +4520,31 @@ msgstr "კონსტანტა"
 #: rkward/plugins/descriptive/descriptive_statistics.xml:50
 #, kde-format
 msgid "Treatment of even sample sizes"
-msgstr ""
+msgstr "ლუწი შერჩეულის ზომების დამუშავება"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> [...] <radio label="Treatment of even sample sizes"> <option label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:51
 #, kde-format
 msgid "use lo-median"
-msgstr ""
+msgstr "ქვედა მედიანი"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> [...] <radio label="Treatment of even sample sizes"> <option label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:52
 #, kde-format
 msgid "use average"
-msgstr ""
+msgstr "საშუალოს გამოყენება"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> [...] <radio label="Treatment of even sample sizes"> <option label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:53
 #, kde-format
 msgid "use hi-median"
-msgstr ""
+msgstr "ზედა მედიანი"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:59
 #, kde-format
 msgid "Range, Sum, Product and Length"
-msgstr ""
+msgstr "შუალედი, ჯამი, ნამრავლი და სიგრძე"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:63
@@ -4562,7 +4562,7 @@ msgstr "ჯამი"
 #: rkward/plugins/descriptive/descriptive_statistics.xml:65
 #, kde-format
 msgid "prod"
-msgstr ""
+msgstr "ნამრ"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="General"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
@@ -4570,7 +4570,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:42
 #, kde-format
 msgid "Length and NAs"
-msgstr ""
+msgstr "სიგრძე და NA-ები"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot)
 #: rkward/plugins/plots/cor_graph.js:56
@@ -4648,6 +4648,8 @@ msgid ""
 "<link href=\"http://addictedtor.free.fr/graphiques/RGraphGallery.php?"
 "graph=137\">R Graph Gallery (137) Correlation Matrix</link>"
 msgstr ""
+"<link href=\"http://addictedtor.free.fr/graphiques/RGraphGallery.php?"
+"graph=137\">R-ის გრაფიკის გალერეის (137) კორელაციის მატრიცა</link>"
 
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/plots/cor_graph.xml:24
@@ -4736,7 +4738,7 @@ msgstr "მაქსიმალური მნიშვნელობებ�
 #: rkward/plugins/uni1.2/code.js:63
 #, kde-format
 msgid "Inter Quartile Range"
-msgstr ""
+msgstr "კვარტილთშორისი შუალედი"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:67
@@ -4755,14 +4757,14 @@ msgstr "კვანტილები"
 #, kde-format
 msgctxt "R code comment"
 msgid "robust statistics"
-msgstr ""
+msgstr "რობასტული სტატისტიკა"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Robust mean"> <checkbox label="...">
 #: rkward/plugins/uni1.2/code.js:77 rkward/plugins/uni1.2/description.xml:90
 #, kde-format
 msgid "Trimmed Mean"
-msgstr ""
+msgstr "წაკვეთილი საშუალო"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:84
@@ -4878,7 +4880,7 @@ msgstr "მომენტები"
 #: rkward/plugins/uni1.2/description.xml:54
 #, kde-format
 msgid "Sd"
-msgstr ""
+msgstr "Sd"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:57
@@ -4890,13 +4892,13 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:64
 #, kde-format
 msgid "Number of minimum values displayed"
-msgstr ""
+msgstr "ნაჩვენები მინიმალური მნიშვნელობების რაოდენობა"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:65
 #, kde-format
 msgid "Number of maximum values displayed"
-msgstr ""
+msgstr "ნაჩვენები მაქსიმალური მნიშვნელობების რაოდენობა"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:69
@@ -4908,7 +4910,7 @@ msgstr "კვანტილი"
 #: rkward/plugins/uni1.2/description.xml:72
 #, kde-format
 msgid "Interquartile Range"
-msgstr ""
+msgstr "კვარტილთშორისი დიაპაზონი"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:73
@@ -4920,13 +4922,13 @@ msgstr "კვარტილი"
 #: rkward/plugins/uni1.2/description.xml:76
 #, kde-format
 msgid "Other (eg : for deciles, enter 10)"
-msgstr ""
+msgstr "სხვა (მაგ : დეკილებისთვის შეიყვანეთ 10)"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #: rkward/plugins/uni1.2/description.xml:80
 #, kde-format
 msgid "Robust statistics"
-msgstr ""
+msgstr "რობასტული სტატისტიკა"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:82
@@ -4938,19 +4940,19 @@ msgstr "დისპერსია"
 #: rkward/plugins/uni1.2/description.xml:88
 #, kde-format
 msgid "Robust mean"
-msgstr ""
+msgstr "რობასტული საშუალო"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Robust mean"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:91
 #, kde-format
 msgid "Percentage of trimmed values"
-msgstr ""
+msgstr "წაკვეთილი მნიშვნელობების პროცენტულობა"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:94
 #, kde-format
 msgid "M-Estimator"
-msgstr ""
+msgstr "M-ის შეფასების საშუალება"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:96
@@ -4968,7 +4970,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:101
 #, kde-format
 msgid "Custom Mu value"
-msgstr ""
+msgstr "მომხმარებლის მიუს მნიშვნელობა"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <input label="...">
 #: rkward/plugins/uni1.2/description.xml:102

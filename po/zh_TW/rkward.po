@@ -1,13 +1,13 @@
 # Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-12 00:35+0000\n"
-"PO-Revision-Date: 2023-12-25 18:25+0900\n"
+"PO-Revision-Date: 2024-04-17 05:55+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -362,7 +362,7 @@ msgstr ""
 #: rkward/core/robject.cpp:275
 #, kde-format
 msgid "Package blacklisted"
-msgstr ""
+msgstr "套件包已加入黑名單"
 
 #: rkward/core/robjectlist.cpp:75
 #, kde-format
@@ -378,11 +378,13 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
+"並未取消載入套件包 %1。它是 RKWard 所需要的。如果您真的要取消載入它，請透過 "
+"R 主控台進行。"
 
 #: rkward/core/robjectlist.cpp:90
 #, kde-format
 msgid "Package %1 appears not to have been loaded"
-msgstr ""
+msgstr "套件包 %1 似乎並非已被載入"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:51
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
@@ -841,22 +843,22 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:50
 #, kde-format
 msgid "Configure Packages"
-msgstr ""
+msgstr "設定套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:58
 #, kde-format
 msgid "Load / Unload R packages"
-msgstr ""
+msgstr "載入 / 取消載入 R 套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:62
 #, kde-format
 msgid "Install / Update / Remove R packages"
-msgstr ""
+msgstr "安裝 / 更新 / 移除 R 套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:64
 #, kde-format
 msgid "Manage RKWard Plugins"
-msgstr ""
+msgstr "管理 RKWard 外掛程式"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
@@ -869,8 +871,7 @@ msgid "Discard changes?"
 msgstr "捨棄變更？"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "不要關閉"
@@ -918,8 +919,7 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "變成 root"
@@ -940,7 +940,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
 msgid "About to remove packages"
-msgstr ""
+msgstr "即將移除套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
@@ -950,7 +950,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
 msgid "Removing packages"
-msgstr ""
+msgstr "移除套件包中"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:241
 #, kde-format
@@ -1116,7 +1116,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
 msgid "Configure Repositories"
-msgstr ""
+msgstr "設定軟體庫"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:692
 #, kde-format
@@ -1199,7 +1199,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:987
 #, kde-format
 msgid "Updateable Packages"
-msgstr ""
+msgstr "可更新的套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:988
 #, kde-format
@@ -1211,7 +1211,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:991
 #, kde-format
 msgid "New Packages"
-msgstr ""
+msgstr "新套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:992
 #, kde-format
@@ -1223,7 +1223,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:994
 #, kde-format
 msgid "Installed Packages"
-msgstr ""
+msgstr "已安裝套件包"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:995
 #, kde-format
@@ -1626,7 +1626,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:224
 #, kde-format
 msgid "R Packages"
-msgstr ""
+msgstr "R 套件包"
 
 #: rkward/dialogs/rksetupwizard.cpp:229
 #, kde-format
@@ -5053,7 +5053,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:75
 #, kde-format
 msgid "Configure Active Plugins"
-msgstr ""
+msgstr "設定作用中的外掛程式"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:93
 #: rkward/windows/rktoplevelwindowgui.cpp:151
@@ -5257,17 +5257,17 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:337
 #, kde-format
 msgid "Archive downloaded packages"
-msgstr ""
+msgstr "封存已下載的套件包"
 
 #: rkward/settings/rksettingsmoduler.cpp:339
 #, kde-format
 msgid "Build packages from source"
-msgstr ""
+msgstr "從原始碼編譯套件包"
 
 #: rkward/settings/rksettingsmoduler.cpp:341
 #, kde-format
 msgid "Build packages from source (not configurable on this platform)"
-msgstr ""
+msgstr "從原始碼編譯套件包（在此平台上無法設定）"
 
 #: rkward/settings/rksettingsmoduler.cpp:345
 #, kde-format
@@ -5327,17 +5327,17 @@ msgstr "新增"
 #: rkward/settings/rksettingsmoduler.cpp:440
 #, kde-format
 msgid "Add repository"
-msgstr ""
+msgstr "新增軟體庫"
 
 #: rkward/settings/rksettingsmoduler.cpp:440
 #, kde-format
 msgid "Add URL of new repository"
-msgstr ""
+msgstr "新增新軟體庫的網址"
 
 #: rkward/settings/rksettingsmoduler.cpp:446
 #, kde-format
 msgid "R-Packages"
-msgstr ""
+msgstr "R 套件包"
 
 #: rkward/settings/rksettingsmoduler.cpp:456
 #, kde-format
@@ -5814,7 +5814,7 @@ msgstr ""
 #: rkward/windows/rkcommandlog.cpp:302
 #, kde-format
 msgid "Configure"
-msgstr ""
+msgstr "設定"
 
 #: rkward/windows/rkdebugconsole.cpp:44
 #, kde-format
@@ -5863,7 +5863,7 @@ msgstr ""
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Continue"
-msgstr ""
+msgstr "繼續"
 
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
@@ -5989,12 +5989,12 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:235
 #, kde-format
 msgid "All installed packages"
-msgstr ""
+msgstr "所有已安裝的套件包"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:236
 #, kde-format
 msgid "All loaded packages"
-msgstr ""
+msgstr "所有已載入的套件包"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:324
 #, kde-format
@@ -6004,7 +6004,7 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:326
 #, kde-format
 msgid "Package"
-msgstr ""
+msgstr "套件包"
 
 #: rkward/windows/rkhtmlwindow.cpp:301
 #, kde-format
@@ -6119,17 +6119,17 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:945
 #, kde-format
 msgid "Print output"
-msgstr ""
+msgstr "列印輸出"
 
 #: rkward/windows/rkhtmlwindow.cpp:953
 #, kde-format
 msgid "Print page"
-msgstr ""
+msgstr "列印頁面"
 
 #: rkward/windows/rkhtmlwindow.cpp:1010
 #, kde-format
 msgid "No Title"
-msgstr ""
+msgstr "無標題"
 
 #: rkward/windows/rkhtmlwindow.cpp:1023
 #, kde-format
@@ -6142,17 +6142,17 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1028
 #, kde-format
 msgid "Use %1 now"
-msgstr ""
+msgstr "現在使用 %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:1045
 #, kde-format
 msgid "Summary"
-msgstr ""
+msgstr "摘要"
 
 #: rkward/windows/rkhtmlwindow.cpp:1052
 #, kde-format
 msgid "Usage"
-msgstr ""
+msgstr "用法"
 
 #: rkward/windows/rkhtmlwindow.cpp:1079
 #, kde-format
@@ -6162,7 +6162,7 @@ msgstr "選擇另一個檔案"
 #: rkward/windows/rkhtmlwindow.cpp:1101
 #, kde-format
 msgid "GUI settings"
-msgstr ""
+msgstr "GUI 設定"
 
 #: rkward/windows/rkhtmlwindow.cpp:1126
 #, kde-format
@@ -6207,7 +6207,7 @@ msgstr ""
 #: rkward/windows/rkmdiwindow.cpp:425
 #, kde-format
 msgid "Configure %1"
-msgstr ""
+msgstr "設定 %1"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -6227,22 +6227,22 @@ msgstr ""
 #: rkward/windows/rktoolwindowbar.cpp:306
 #, kde-format
 msgid "Left Sidebar"
-msgstr ""
+msgstr "左方邊列"
 
 #: rkward/windows/rktoolwindowbar.cpp:307
 #, kde-format
 msgid "Right Sidebar"
-msgstr ""
+msgstr "右方邊列"
 
 #: rkward/windows/rktoolwindowbar.cpp:308
 #, kde-format
 msgid "Top Sidebar"
-msgstr ""
+msgstr "頂端邊列"
 
 #: rkward/windows/rktoolwindowbar.cpp:309
 #, kde-format
 msgid "Bottom Sidebar"
-msgstr ""
+msgstr "底部邊列"
 
 #: rkward/windows/rktoolwindowbar.cpp:310
 #, kde-format
@@ -6717,7 +6717,7 @@ msgstr "R 工作區"
 #: rkward/windows/robjectbrowser.cpp:115 rkward/windows/robjectbrowser.cpp:254
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "編輯"
 
 #: rkward/windows/robjectbrowser.cpp:117
 #, kde-format
@@ -6742,17 +6742,17 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:129
 #, kde-format
 msgid "Unload Package"
-msgstr ""
+msgstr "取消載入套件包"
 
 #: rkward/windows/robjectbrowser.cpp:131
 #, kde-format
 msgid "Load / Unload Packages"
-msgstr ""
+msgstr "載入 / 取消載入套件包"
 
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
 msgid "Copy object"
-msgstr ""
+msgstr "複製物件"
 
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
@@ -6779,7 +6779,7 @@ msgstr "重新命名物件"
 #: rkward/windows/robjectbrowser.cpp:231
 #, kde-format
 msgid "Enter the new name"
-msgstr ""
+msgstr "輸入新名稱"
 
 #: rkward/windows/robjectbrowser.cpp:254
 #, kde-format
