@@ -14,8 +14,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVariant>
 #include <QRecursiveMutex>
 #include <QStringList>
-#include <QStringEncoder>
-#include <QStringDecoder>
 #include <QEvent>
 
 #include "rcommand.h"
@@ -128,15 +126,6 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 /** "Kills" the backend. Actually this just tells the thread that it is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = ExitNow; };
 	bool isKilled () { return (killed != NotKilled); };
-
-	static QString toUtf8 (const char *local_coded) {
-		return this_pointer->current_locale_decoder(local_coded);
-	}
-	static QByteArray fromUtf8 (const QString &uni_coded) {
-		return this_pointer->current_locale_encoder(uni_coded);
-	}
-	QStringEncoder current_locale_encoder;
-	QStringDecoder current_locale_decoder;
 
 	struct RKReplStatus {
 		QByteArray user_command_buffer;

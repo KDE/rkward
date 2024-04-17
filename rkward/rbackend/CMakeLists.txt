@@ -48,7 +48,7 @@ ADD_DEFINITIONS (-DRKWARD_BACKEND_PATH="${KDE_INSTALL_FULL_LIBEXECDIR}")
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 ADD_EXECUTABLE(rkward.rbackend ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
 ECM_MARK_NONGUI_EXECUTABLE(rkward.rbackend)
-TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt6::Network Qt6::Core KF6::I18n Qt6::Core5Compat)
+TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt6::Network Qt6::Core KF6::I18n)
 IF(WIN32)
 # 64MB stack size is what R itself is build with on Windows, while by default the stack size would be 1MB
 # Not sure, if 64MB is actually needed, but 1MB does cause trouble e.g. with some shiny apps.

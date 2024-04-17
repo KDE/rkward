@@ -58,4 +58,19 @@ private:
 	static SEXP shadowenvbase;
 };
 
+class RKTextCodec {
+public:
+	static QString fromNative(const QByteArray& buf) {
+		return QString::fromUtf8(doConv(from_native, buf));
+	}
+	static QByteArray toNative(const QString& buf) {
+		return doConv(from_native, buf.toUtf8());
+	}
+	static void reinit();
+private:
+	static QByteArray doConv(void *cd, const QByteArray &inp);
+	static void *from_native;
+	static void *to_native;
+};
+
 #endif

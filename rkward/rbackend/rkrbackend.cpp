@@ -24,7 +24,6 @@ RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 
 void* RKRBackend::default_global_context = nullptr;
 
 #include <QString>
-#include <QTextCodec>
 #include <QStringList>
 #include <QThread>
 #include <QDir>
@@ -296,7 +295,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					RKRBackend::repl_status.user_command_completely_transmitted = false;
 					RKRBackend::repl_status.user_command_parsed_up_to = 0;
 					RKRBackend::repl_status.user_command_successful_up_to = 0;
-					RKRBackend::repl_status.user_command_buffer = RKRBackend::fromUtf8 (command->command);
+					RKRBackend::repl_status.user_command_buffer = RKTextCodec::toNative(command->command);
 					RKTransmitNextUserCommandChunk (buf, buflen);
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
 					return 1;
@@ -306,7 +305,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					// fully transmitted, but R is still asking for more? This looks like an incomplete statement.
 					// HOWEVER: It may also have been an empty statement such as " ", so let's check whether the prompt looks like a "continue" prompt
 					bool incomplete = false;
-					if (RKRBackend::toUtf8 (prompt) == RKRSupport::SEXPToString (Rf_GetOption (Rf_install ("continue"), R_BaseEnv))) {
+					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(Rf_GetOption(Rf_install("continue"), R_BaseEnv))) {
 						incomplete = true;
 					}
 					if (incomplete) RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
@@ -405,7 +404,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 		RK_ASSERT (false);	// should not reach this point.
 	}
 
-	QByteArray localres = RKRBackend::fromUtf8 (request.params["result"].toString ());
+	QByteArray localres = RKTextCodec::toNative(request.params["result"].toString());
 	// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
 	qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
 	return 1;
@@ -438,7 +437,7 @@ bool RKRBackend::fetchStdoutStderr (bool forcibly) {
 		if (bytes <= 0) break;
 		buffer[bytes] = '\0';
 		// NOTE: we must not risk blocking inside handleOutput, while the stdout_stderr_mutex is locked!
-		handleOutput (RKRBackend::toUtf8 (buffer), bytes, ROutput::Warning, false);
+		handleOutput(RKTextCodec::fromNative(buffer), bytes, ROutput::Warning, false);
 	}
 
 	stdout_stderr_mutex.unlock ();
@@ -499,7 +498,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	QByteArray str(buf, buflen);
 	QString utf8;
 	if (winutf8start.isEmpty()) {
-		utf8 = RKRBackend::toUtf8 (buf);
+		utf8 = RKTextCodec::fromNative(buf);
 	} else {
 		int pos = 0;
 		while (pos < buflen) {
@@ -522,7 +521,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		}
 	}
 #else
-	QString utf8 = RKRBackend::toUtf8 (buf);
+	QString utf8 = RKTextCodec::fromNative(buf);
 #endif
 	RKRBackend::this_pointer->handleOutput (utf8, buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
@@ -643,7 +642,7 @@ int RChooseFile(int isnew, char *buf, int len) {
 	params << "choosefile" << QString() /* caption */ << QString() /* initial */ << "*" /* filter */ << (isnew ? "newfile" : "file");
 	auto res = RKRBackend::this_pointer->handlePlainGenericRequest(params, true);
 
-	QByteArray localres = RKRBackend::fromUtf8(res.ret.toString());
+	QByteArray localres = RKTextCodec::toNative(res.ret.toString());
 	qstrncpy ((char *) buf, localres.data(), len);
 
 // return length of filename (strlen(buf))
@@ -784,7 +783,7 @@ void RBusy (int busy) {
 			}
 			if (RKRBackend::this_pointer->current_command->type & RCommand::CCCommand) {
 				QByteArray chunk = RKRBackend::repl_status.user_command_buffer.mid (RKRBackend::repl_status.user_command_parsed_up_to, RKRBackend::repl_status.user_command_transmitted_up_to - RKRBackend::repl_status.user_command_parsed_up_to);
-				RKRBackend::this_pointer->printCommand (RKRBackend::toUtf8 (chunk.data()));
+				RKRBackend::this_pointer->printCommand(RKTextCodec::fromNative(chunk.data()));
 			}
 			RKRBackend::repl_status.user_command_parsed_up_to = RKRBackend::repl_status.user_command_transmitted_up_to;
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning;
@@ -938,8 +937,8 @@ SEXP doSubstackCall (SEXP _call, SEXP _args) {
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
 	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(call, RKRSupport::SEXPToNestedStrings(_args));
-	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning).constData());  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error.toLatin1()).constData());
+	if (!ret.warning.isEmpty()) Rf_warning(RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKTextCodec::toNative(ret.error).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
@@ -950,8 +949,8 @@ SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 	R_CheckUserInterrupt ();
 
 	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
-	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning).constData());  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error.toLatin1()).constData());
+	if (!ret.warning.isEmpty()) Rf_warning(RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKTextCodec::toNative(ret.error).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
@@ -983,9 +982,6 @@ SEXP doSimpleBackendCall (SEXP _call) {
 	} else if (call == QStringLiteral ("error")) {  // capture error message
 		doError (list.value (1));
 		return R_NilValue;
-	} else if (call == QStringLiteral ("locale.name")) {
-		RK_ASSERT (QTextCodec::codecForLocale());
-		return (RKRSupport::StringListToSEXP (QStringList (QTextCodec::codecForLocale()->name ().data ())));
 	} else if (call == QStringLiteral ("tempdir")) {
 		return (RKRSupport::StringListToSEXP (QStringList (RKRBackendProtocolBackend::dataDir ())));
 	}
@@ -998,13 +994,11 @@ void R_CheckStackWrapper (void *) {
 	R_CheckStack ();
 }
 
-SEXP doUpdateLocale () {
-	RK_TRACE (RBACKEND);
+SEXP doUpdateLocale() {
+	RK_TRACE(RBACKEND);
 
-	RK_DEBUG (RBACKEND, DL_WARNING, "Changing locale");
-	RKRBackend::this_pointer->current_locale_encoder = QStringEncoder(QStringEncoder::System);  // NOTE: shall pass non-representable characters unmodified, rather than stripping them.
-	RKRBackend::this_pointer->current_locale_decoder = QStringDecoder(QStringEncoder::System);
-	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", RKRBackend::this_pointer->current_locale_decoder.name());
+	RK_DEBUG(RBACKEND, DL_WARNING, "Changing locale");
+	RKTextCodec::reinit();
 
 	return R_NilValue;
 }
@@ -1251,7 +1245,7 @@ SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *err
 	SafeParseWrap wrap;
 	wrap.status = PARSE_NULL;
 
-	QByteArray localc = RKRBackend::fromUtf8 (command_qstring); // needed so the string below does not go out of scope
+	QByteArray localc = RKTextCodec::toNative(command_qstring); // needed so the string below does not go out of scope
 	const char *command = localc.data ();
 
 	PROTECT(wrap.cv=Rf_allocVector(STRSXP, 1));
@@ -1477,8 +1471,8 @@ void RKRBackend::catToOutputFile (const QString &out) {
 		RK_ASSERT (false);
 		return;
 	}
-	f.write (RKRBackend::fromUtf8 (out));
-	f.close ();
+	f.write(RKTextCodec::toNative(out));
+	f.close();
 }
 
 void RKRBackend::printCommand (const QString &command) {
@@ -1536,7 +1530,7 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 
 		// This method may look a bit over-complex, but remember that repl_status.user_command_successful_up_to works on an *encoded* buffer
 		QByteArray remainder_encoded = repl_status.user_command_buffer.mid (repl_status.user_command_successful_up_to);
-		QString remainder = current_locale_decoder(remainder_encoded);
+		QString remainder = RKTextCodec::fromNative(remainder_encoded);
 		current_command->has_been_run_up_to = current_command->command.length () - remainder.length ();
 	}
 

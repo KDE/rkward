@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <Rdefines.h>
 #include <Rversion.h>
+#include <R_ext/Riconv.h>
 
 // needed to detect CHARSXP encoding
 #define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
@@ -106,7 +107,7 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 				} else if (IS_LATIN1 (dummy)) {
 					list.append (QString::fromLatin1 (CHAR (dummy)));
 				} else {
-					list.append (RKRBackend::toUtf8 (CHAR (dummy)));
+					list.append(RKTextCodec::fromNative(CHAR(dummy)));
 				}
 			}
 		}
@@ -120,12 +121,7 @@ SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
 
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {
-#if R_VERSION >= R_Version(2,13,0)
-		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 ().constData(), CE_UTF8));
-#else
-		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
-		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
-#endif
+		SET_STRING_ELT(ret, i, Rf_mkCharCE(list[i].toUtf8().constData(), CE_UTF8));
 	}
 	return ret;
 }
@@ -151,12 +147,7 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {
-#if R_VERSION >= R_Version(2,13,0)
-		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 ().constData(), CE_UTF8));
-#else
-		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
-		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
-#endif
+		SET_STRING_ELT(ret, i, Rf_mkCharCE(list[i].toUtf8().constData(), CE_UTF8));
 	}
 	return ret;
 }
@@ -399,4 +390,42 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "changed %s\n", qPrintable(res.changed.join(", ")));
 	RK_DEBUG(RBACKEND, DL_DEBUG, "removed %s\n", qPrintable(res.removed.join(", ")));
 	return res;
+}
+
+QByteArray RKTextCodec::doConv(void *cd, const QByteArray &inp) {
+	const char *inbuf = inp.constData();
+	size_t inbytesleft = inp.size();
+	const char *inbufpos = inbuf;
+	char outbuf[8192];
+	QByteArray ret;
+	while (inbytesleft) {
+		char *outbufpos = outbuf;
+		size_t outbytesleft = 8192;
+		Riconv(cd, nullptr, nullptr, &outbufpos, &outbytesleft); // init
+
+		Riconv(cd, &inbufpos, &inbytesleft, &outbufpos, &outbytesleft);
+		ret += QByteArray(outbuf, 8192-outbytesleft);
+// Do we need 0 termination?
+		if (!inbytesleft) return ret; // done
+
+		if (outbytesleft > 100) {
+			// conversion failed but the output buffer still has plenty of room ->
+			// we must have encountered an invalid / incomplete multibyte char in inbuf. Let's try next char.
+			ret.append(*inbufpos);
+			inbufpos++;
+			inbytesleft--;
+		} // NOTE else: outbuf buffer wasn't lage enough: we just loop
+	}
+	return ret;
+}
+
+void *RKTextCodec::from_native = nullptr;
+void *RKTextCodec::to_native = nullptr;
+void RKTextCodec::reinit() {
+	if (from_native) {
+		Riconv_close(from_native);
+		Riconv_close(to_native);
+	}
+	from_native = Riconv_open("UTF-8", "");
+	to_native = Riconv_open("", "UTF-8");
 }
