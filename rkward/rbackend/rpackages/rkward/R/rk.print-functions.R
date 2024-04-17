@@ -112,6 +112,8 @@
 		htmlfile <- rk.get.output.html.file()
 		if(requireNamespace ("R2HTML", quietly = TRUE)) {
 			R2HTML::HTML(x, file=htmlfile, ...)
+		} else {
+			.rk.cat.output("Please install package R2HTML to enable output!")
 		}
 	}
 }

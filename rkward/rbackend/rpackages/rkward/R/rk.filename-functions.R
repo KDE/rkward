@@ -128,10 +128,10 @@
 	if (!file.exists (x)) {
 		encoding.name <- function() {
 			li <- l10n_info();
-			if(isTrue(li$'UTF-8')) return("UTF-8")  # hopefully the most common case, these days
+			if(isTRUE(li$'UTF-8')) return("UTF-8")  # hopefully the most common case, these days
 			if(!is.null(li$codeset)) return(li$codeset)
 			if(!is.null(li$codepage)) return(paste0("windows-", li$codepage))
-			return(tail(strsplit(Sys.getlocale("LC_CTYPE", ".") ,1)))
+			return(tail(strsplit(Sys.getlocale("LC_CTYPE"), ".") ,1))
 		}
 		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", encoding.name(), "\"?>\n", sep=""))
 		.rk.cat.output ("<html><head>\n<title>RKWard Output</title>\n")
