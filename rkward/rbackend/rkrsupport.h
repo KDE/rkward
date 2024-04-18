@@ -64,7 +64,7 @@ public:
 		return QString::fromUtf8(doConv(from_native, buf));
 	}
 	static QByteArray toNative(const QString& buf) {
-		return doConv(from_native, buf.toUtf8());
+		return doConv(to_native, buf.toUtf8());
 	}
 	static void reinit();
 private:
