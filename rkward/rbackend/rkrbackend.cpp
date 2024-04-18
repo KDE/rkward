@@ -504,10 +504,10 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		while (pos < buflen) {
 			int start = str.indexOf(winutf8start, pos);
 			if (start < 0) {
-				utf8.append(RKTextCode::fromNative(str.mid(pos)));
+				utf8.append(RKTextCodec::fromNative(str.mid(pos)));
 				break;
 			}
-			utf8.append(RKTextCode::fromNative(str.left(start)));
+			utf8.append(RKTextCodec::fromNative(str.left(start)));
 			start += winutf8start.length();
 			if (start >= buflen) break;
 			int end = str.indexOf(winutf8stop, start);
