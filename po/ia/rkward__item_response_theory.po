@@ -1,31 +1,31 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the rkward package.
+#
+# giovanni <g.sora@tiscali.it>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-04-18 19:50\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-04-18 12:23+0200\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
+"Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/rkward/rkward__item_response_theory.pot\n"
-"X-Crowdin-File-ID: 53234\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, Honghao Li"
+msgstr "Giovanni Sora"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, honghao.li@outlook.jp"
+msgstr "g.sora@tiscali.it"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:59
@@ -63,7 +63,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:28
 #, kde-format
 msgid "Call:"
-msgstr "呼叫:"
+msgstr "Appello:"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
@@ -519,7 +519,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:24
 #, kde-format
 msgid "Options"
-msgstr "选项"
+msgstr "Optiones"
 
 #. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="...">
@@ -637,7 +637,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:52
 #, kde-format
 msgid "Misc options"
-msgstr ""
+msgstr "Optiones Mixte"
 
 #. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
 #. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
@@ -747,7 +747,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:59
 #, kde-format
 msgid "BFGS"
-msgstr "BFGS"
+msgstr ""
 
 #. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
 #. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
@@ -803,7 +803,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:63
 #, kde-format
 msgid "SANN"
-msgstr "SANN"
+msgstr ""
 
 #. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <checkbox label="...">
 #. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <checkbox label="...">
@@ -934,7 +934,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:67
 #, kde-format
 msgid "Todo:"
-msgstr "待办事项："
+msgstr "De facer:"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <technical>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <technical>
@@ -1798,7 +1798,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:18
 #, kde-format
 msgid "Data"
-msgstr "数据 "
+msgstr "Datos"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Data"> <varslot label="...">
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:25
@@ -1832,7 +1832,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:33
 #, kde-format
 msgid "Median"
-msgstr "中位数"
+msgstr "Median"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="Split criterion for subject raw scores"> <option label="...">
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <radio label="Split criterion for subject raw scores"> <option label="...">
@@ -1840,7 +1840,7 @@ msgstr "中位数"
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:34
 #, kde-format
 msgid "Mean"
-msgstr "平均值"
+msgstr "Media"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="Split criterion for subject raw scores"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:39
@@ -1866,7 +1866,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:44
 #, kde-format
 msgid "nlm()"
-msgstr "nlm()"
+msgstr ""
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Cronbach's alpha)
@@ -1882,7 +1882,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:68
 #, kde-format
 msgid "Dataset"
-msgstr "数据集"
+msgstr "Insimul de datos"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:70
@@ -1894,7 +1894,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:73
 #, kde-format
 msgid "Items:"
-msgstr "项目："
+msgstr "Elementos:"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:73
@@ -2400,7 +2400,7 @@ msgstr ""
 #: rkward/plugins/irt.pluginmap:55
 #, kde-format
 msgid "Analysis"
-msgstr "分析"
+msgstr ""
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Item Response Theory"> <menu label="...">
 #. i18n: ectx: <hierarchy> <menu label="Plots"> <menu label="Item Response Theory"> <menu label="...">
@@ -2420,13 +2420,13 @@ msgstr ""
 #: rkward/plugins/irt.pluginmap:71
 #, kde-format
 msgid "Tests"
-msgstr "测试"
+msgstr "Provas"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/irt.pluginmap:82
 #, kde-format
 msgid "Plots"
-msgstr ""
+msgstr "Plots (Tracias)"
 
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
 #: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:82
@@ -2532,7 +2532,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:25
 #, kde-format
 msgid "Model"
-msgstr "模型"
+msgstr "Modello"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Model"> <varslot label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Model"> <varslot label="...">
@@ -2726,7 +2726,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:62
 #, kde-format
 msgid "From:"
-msgstr "来自："
+msgstr "Ex:"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Range of person parameters"> <spinbox label="...">
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
@@ -2748,7 +2748,7 @@ msgstr "来自："
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:63
 #, kde-format
 msgid "To:"
-msgstr "至："
+msgstr "A:"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="...">
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="...">
@@ -2766,7 +2766,7 @@ msgstr "至："
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:67
 #, kde-format
 msgid "Annotation"
-msgstr "注解"
+msgstr "Annotation"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
@@ -2794,7 +2794,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:44
 #, kde-format
 msgid "Show legend"
-msgstr "显示图例"
+msgstr "Monstra legenda"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-16 05:27+0200\n"
+"PO-Revision-Date: 2024-04-17 12:40+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1811,19 +1811,19 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:20
 #, kde-format
 msgid "If this option is chosen, Skewness will be computed."
-msgstr ""
+msgstr "თუ ეს პარამეტრი ჩართულია, ასიმეტრია გამოითვლება."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Kurtosis")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:21
 #, kde-format
 msgid "If this option is chosen, Pearson's kurtosis will be computed."
-msgstr ""
+msgstr "თუ ეს პარამეტრი ჩართულია, პირსონის ექსცესი გამოითვლება."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Geary's kurtosis")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:22
 #, kde-format
 msgid "If this option is chosen, Geary's kurtosis will be computed."
-msgstr ""
+msgstr "თუ ეს პარამეტრი ჩართულია, გერის ექსცესი გამოითვლება."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:23
@@ -2156,7 +2156,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:21
 #, kde-format
 msgid "Should the test be treated as two-sided?"
-msgstr ""
+msgstr "უნდა იყოს თუ არა ეს შემოწმება აღქმული, როგორც ორმხრივი?"
 
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> [...] <radio label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:26
@@ -2218,7 +2218,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/outlier.xml:11
 #, kde-format
 msgid "Find value with largest difference from the mean"
-msgstr ""
+msgstr "საშუალოდან უდიდესი განსხვავების მნიშვნელობის პოვნა"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:88
@@ -2353,7 +2353,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:37
 #, kde-format
 msgid "Number of groups. For ANOVA, only."
-msgstr ""
+msgstr "ჯგუფების რაოდენობა. მხოლოდ, ANOVA-სთვის."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Samples")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:40
@@ -2384,7 +2384,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:52
 #, kde-format
 msgid "Parameter to estimate, given the others."
-msgstr ""
+msgstr "დასადგენი პარამეტრი. გადაეცემა სხვებს."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Power")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:57
@@ -2443,7 +2443,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
 #, kde-format
 msgid "Targeted level of significance"
-msgstr ""
+msgstr "სამიზნე მნიშვნელობის დონე"
 
 #. i18n: ectx: (Power analysis) <related>
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:88
@@ -3126,7 +3126,7 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.xml:49
 #, kde-format
 msgid "Show Confidence Interval"
-msgstr ""
+msgstr "ნდობის ინტერვალის ჩვენება"
 
 #. i18n: ectx: (t-Test) <wizard label="...">
 #: rkward/plugins/analysis/t_test.xml:56
@@ -3942,7 +3942,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/levene_test.rkh:17
 #, kde-format
 msgid "response variable (numeric vector)."
-msgstr ""
+msgstr "პასუხის ცვლადი (რიცხვითი ვექტორი)."
 
 #. i18n: ectx: (Loaded from Levene's Test) <settings> <setting> (refers to element labelled "groups")
 #: rkward/plugins/analysis/variances/levene_test.rkh:18
@@ -4060,7 +4060,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:25
 #, kde-format
 msgid "Confidence level of the printed confidence interval."
-msgstr ""
+msgstr "დაბეჭდილი ნდობის ინტერვალის ნდობის დონე."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Location (shift) to test against (mu)")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:26
@@ -4322,19 +4322,19 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:24
 #, kde-format
 msgid "Should the mean value be computed?"
-msgstr ""
+msgstr "გამოვთვალო საშუალო მნიშვნელობა?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Trim of mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:25
 #, kde-format
 msgid "Trim of the mean. See <link href=\"rkward://rhelp/mean\"/>"
-msgstr ""
+msgstr "საშუალოს წაკვეთა. იხ. <link href=\"rkward://rhelp/mean\"/>"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Geometric mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:26
 #, kde-format
 msgid "Should the geometric mean value be computed?"
-msgstr ""
+msgstr "გამოვთვალო გეომეტრიული საშუალო მნიშვნელობა?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Interquantile mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:27
@@ -4631,7 +4631,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.rkh:22
 #, kde-format
 msgid "Select how many digits after decimal point should be shown"
-msgstr ""
+msgstr "აირჩიეთ, რამდენი ციფრი იქნება ნაჩვენები წილადის სიმბოლოს შემდეგ"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Scale text")
 #: rkward/plugins/plots/cor_graph.rkh:23

@@ -1,32 +1,31 @@
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
-# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023 Vít Pelčák <vit@pelcak.org>
-# Vit Pelcak <vit@pelcak.org>, 2021, 2023.
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the rkward package.
 #
+# giovanni <g.sora@tiscali.it>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-19 00:35+0000\n"
-"PO-Revision-Date: 2023-11-10 16:29+0100\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
-"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
-"Language: cs\n"
+"PO-Revision-Date: 2024-04-18 11:56+0200\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
+"Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.08.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pavel Fric"
+msgstr "Giovanni Sora"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pavelfric@seznam.cz"
+msgstr "g.sora@tiscali.it"
 
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
@@ -34,18 +33,16 @@ msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
-"Objekt '%1' nemohl být otevřen pro úpravy. Buď neexistuje, nebo RKWard ještě "
-"úpravu tohoto typu objektu nepodporuje."
 
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
 msgid "Cannot edit '%1'"
-msgstr "Nelze upravit '%1'"
+msgstr ""
 
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
 msgid "Loading Workspace..."
-msgstr "Načítání pracovní plochy..."
+msgstr ""
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -53,13 +50,11 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
-"Při otevírání souboru %1' se vyskytla chyba:\n"
-"%2"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
 msgid "Error loading workspace"
-msgstr "Chyba při načítání pracovního prostředí"
+msgstr ""
 
 #: rkward/agents/rkprintagent.cpp:42
 #, kde-format
@@ -69,15 +64,11 @@ msgid ""
 "<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
 "print using a KDE print dialog."
 msgstr ""
-"Nebyla nalezena žádná služba, která by poskytla tiskový dialog KDE pro "
-"postscriptové soubory. Pokusíme se místo toho otevřít obecný prohlížeč "
-"postscriptových souborů, je-li jaký.<br> <br> Zvažte instalaci Okularu, nebo "
-"RKWard nastavte tak, aby se nepokoušel používat tiskový dialog KDE."
 
 #: rkward/agents/rkprintagent.cpp:42
 #, kde-format
 msgid "Unable to open KDE print dialog"
-msgstr "Nelze otevřít tiskový dialog KDE"
+msgstr ""
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
@@ -85,19 +76,19 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
-"Čeká se na dokončená zbývajících příkazů  Rd. Pro okamžité ukončení "
-"stiskněte Zrušit (Varování: Toto by mohlo vést ke ztrátě dat)"
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
 msgid "Waiting for R to finish"
-msgstr "Čeká se na ukončení R"
+msgstr ""
 
 #: rkward/agents/rksaveagent.cpp:49
 #, kde-format
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "Soubor s názvem \"%1\" již existuje. Opravdu si jej přejete přepsat?"
+msgstr ""
+"Un file de nomine \"%1\" jam existe. Vos es secur que vos vole super scriber "
+"lo?"
 
 #: rkward/agents/rksaveagent.cpp:51
 #, kde-format
@@ -105,8 +96,6 @@ msgid ""
 "A file named \"%1\" already exists, and will be overwritten when saving to "
 "\"%2\". Are you sure you want to overwrite it?"
 msgstr ""
-"Soubor s názvem \"%1\" již existuje a bude při ukládání do \"%2\" přepsán. "
-"Opravdu si jej přejete přepsat?"
 
 #: rkward/agents/rksaveagent.cpp:53
 #, kde-format
@@ -118,12 +107,12 @@ msgstr ""
 #: rkward/agents/rksaveagent.cpp:56
 #, kde-format
 msgid "Overwrite File?"
-msgstr "Přepsat soubor?"
+msgstr "Super scribe le file?"
 
 #: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:877
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
-msgstr "Soubory pracovního prostředí R [%1](%1);;*Všechny soubory [*](*)"
+msgstr ""
 
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
@@ -136,12 +125,12 @@ msgstr ""
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
 msgid "Saving workspace"
-msgstr "Ukládám pracovní prostředí"
+msgstr ""
 
 #: rkward/agents/rksaveagent.cpp:90
 #, kde-format
 msgid "Save failed"
-msgstr "Uložení selhalo"
+msgstr "Salvamento fallite"
 
 #: rkward/agents/rksaveagent.cpp:90
 #, kde-format
@@ -149,15 +138,13 @@ msgid ""
 "An error occurred while trying to save the workspace. You data was <b>not</"
 "b> saved."
 msgstr ""
-"Při ukládání pracovního prostředí došlo k chybě. Vaše data <b>nebyla</b> "
-"uložena."
 
 #: rkward/agents/showedittextfileagent.cpp:30
 #: rkward/misc/rkprogresscontrol.cpp:361
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
-msgstr "Hotovo"
+msgstr "Facite"
 
 #: rkward/agents/showedittextfileagent.cpp:82
 #, kde-format
@@ -165,12 +152,11 @@ msgid ""
 "A command running in the R-engine wants you to see the following file(s):"
 "<ul><li>"
 msgstr ""
-"Příkaz běžící v jádru R chce, abyste viděl následující soubor(y):<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:82
 #, kde-format
 msgid "Showing file(s)"
-msgstr "Zobrazuji soubor(y)"
+msgstr "Monstrante file(s)"
 
 #: rkward/agents/showedittextfileagent.cpp:86
 #, kde-format
@@ -183,7 +169,7 @@ msgstr ""
 #: rkward/agents/showedittextfileagent.cpp:86
 #, kde-format
 msgid "Edit file(s)"
-msgstr "Upravit soubor(y)"
+msgstr "Modifica file(s)"
 
 #: rkward/core/renvironmentobject.cpp:42
 #, kde-format
@@ -205,7 +191,7 @@ msgstr ""
 #: rkward/core/renvironmentobject.cpp:113
 #, kde-format
 msgid "Many objects in workspace"
-msgstr "Spousta objektů v pracovní ploše"
+msgstr "Multe objectos in spatio de labor"
 
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
@@ -213,13 +199,11 @@ msgid ""
 "The object '%1' was removed from workspace or changed to a different type of "
 "object, but is currently opened for editing. Do you want to restore it?"
 msgstr ""
-"Objekt '%1' byl odstraněn z pracovního prostředí, nebo změněn na jiný typ "
-"objektu, ale je v současnosti otevřen pro úpravy. Chcete jej obnovit?"
 
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
 msgid "Restore object?"
-msgstr "Obnovit objekt?"
+msgstr "Restabili objecto?"
 
 #: rkward/core/rkmodificationtracker.cpp:75
 #, kde-format
@@ -228,22 +212,18 @@ msgid ""
 "for editing, it will be removed in the editor, too. There's no way to get it "
 "back."
 msgstr ""
-"Opravdu chcete odstranit objekt '%1'? Objekt je v současnosti otevřen pro "
-"úpravy. Bude odstraněn i z editoru. Není žádný způsob, jak jej vrátit zpět."
 
 #: rkward/core/rkmodificationtracker.cpp:75
 #: rkward/core/rkmodificationtracker.cpp:80
 #, kde-format
 msgid "Remove object?"
-msgstr "Odstranit objekt?"
+msgstr "Remove Objecto?"
 
 #: rkward/core/rkmodificationtracker.cpp:80
 #, kde-format
 msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
-"Opravdu chcete odstranit objekt '%1'? Není žádná možnost vrátit tento krok "
-"zpět."
 
 #: rkward/core/rkmodificationtracker.cpp:351
 #: rkward/dataeditor/rkvareditmodel.cpp:679
@@ -254,7 +234,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulekateplugins.cpp:41
 #, kde-format
 msgid "Name"
-msgstr "Název"
+msgstr "Nomine"
 
 #: rkward/core/rkmodificationtracker.cpp:352
 #: rkward/dataeditor/rkvareditmodel.cpp:680
@@ -262,7 +242,7 @@ msgstr "Název"
 #: rkward/misc/rkobjectlistview.cpp:269
 #, kde-format
 msgid "Label"
-msgstr "Popisek"
+msgstr "Etiquetta"
 
 #: rkward/core/rkmodificationtracker.cpp:353
 #: rkward/dataeditor/rkvareditmodel.cpp:681
@@ -270,13 +250,13 @@ msgstr "Popisek"
 #: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
 msgid "Type"
-msgstr "Typ"
+msgstr "Typo"
 
 #: rkward/core/rkmodificationtracker.cpp:354
 #: rkward/misc/rkobjectlistview.cpp:213 rkward/misc/rkobjectlistview.cpp:271
 #, kde-format
 msgid "Class"
-msgstr "Třída"
+msgstr "Classe"
 
 #: rkward/core/rkpseudoobjects.cpp:71
 #, kde-format
@@ -291,85 +271,82 @@ msgid ""
 "to list namespaces which are loaded, but not attached to a package on the "
 "search path. These are typically 'imported' namespaces."
 msgstr ""
-"Tento zvláštní objekt ve skutečnosti v R neexistuje. Je zde používán pro "
-"vypsání jmenných prostorů, jež jsou načteny, ale nejsou připojeny k balíčku "
-"v prohledávané cestě. Jedná se typicky o \"importované\" jmenné prostory."
 
 #: rkward/core/rkrownames.cpp:101
 #, kde-format
 msgid "new.row"
-msgstr ""
+msgstr "nove.rango"
 
 #: rkward/core/robject.cpp:161
 #, kde-format
 msgid "Full location:"
-msgstr "Úplný údaj o poloze:"
+msgstr "Location complete:"
 
 #: rkward/core/robject.cpp:163
 #, kde-format
 msgid "Label:"
-msgstr "Popisek:"
+msgstr "Etiquetta:"
 
 #: rkward/core/robject.cpp:164
 #, kde-format
 msgid "Type:"
-msgstr "Typ:"
+msgstr "Typo:"
 
 #: rkward/core/robject.cpp:167
 #, kde-format
 msgid "Function"
-msgstr "Funkce"
+msgstr "Function"
 
 #: rkward/core/robject.cpp:168
 #, kde-format
 msgid "Usage: "
-msgstr "Využití: "
+msgstr "Uso: "
 
 #: rkward/core/robject.cpp:170
 #, kde-format
 msgid "Data frame"
-msgstr "Časový rámec"
+msgstr ""
 
 #: rkward/core/robject.cpp:172
 #, kde-format
 msgid "Array"
-msgstr "Pole"
+msgstr ""
 
 #: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:95
 #, kde-format
 msgid "Matrix"
-msgstr "Matice"
+msgstr "Matrix"
 
 #: rkward/core/robject.cpp:176
 #, kde-format
 msgid "List"
-msgstr "Seznam"
+msgstr "Lista"
 
 #: rkward/core/robject.cpp:178
 #, kde-format
 msgctxt "Noun; in brackets, data type of the var is stated"
 msgid "Variable (%1)"
-msgstr "Proměnná (%1)"
+msgstr "Variabile (%1)"
 
 #: rkward/core/robject.cpp:180
 #, kde-format
 msgid "Environment"
-msgstr "Prostředí"
+msgstr "Ambiente"
 
 #: rkward/core/robject.cpp:185
 #, kde-format
 msgid "Length: "
-msgstr "Délka: "
+msgstr "Longitude:"
 
 #: rkward/core/robject.cpp:187
 #, kde-format
 msgid "Dimensions: "
-msgstr "Rozměry: "
+msgstr "Dimensiones: "
 
 #: rkward/core/robject.cpp:195
 #, kde-format
 msgid "Class(es):"
-msgstr "Třída(y):"
+msgstr "Class(es):"
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -383,19 +360,11 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
-"Balíček '%1' (který jste pravděpodobně právě načetli) je nyní umístěn na "
-"černé listině kvůli získávání údajů o struktuře. Především to znamená, že "
-"předměty v tomto balíčku se nebudou objevovat v prohlížeči objektů, a že "
-"nebude žádné dokončování názvu předmětu nebo radění argumentů k funkcím pro "
-"objekty v tomto balíčku.\n"
-"Balíčky jsou obvykle na černou listinu umisťovány, když obsahují obrovské "
-"množství dat, což by vedlo k dlouhému načítání. Aby nebyl tento balíček dále "
-"na seznamu, jděte do Nastavení → Nastavit RKWard → Pracovní prostředí."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
 msgid "Package blacklisted"
-msgstr "Balíček byl umístěn na černou listinu"
+msgstr ""
 
 #: rkward/core/robjectlist.cpp:75
 #, kde-format
@@ -411,27 +380,23 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
-"Nebyl odstraněn balíček %1. RKWard jej vyžaduje. Pokud to skutečně chcete "
-"udělat, udělejte to v konzoli R."
 
 #: rkward/core/robjectlist.cpp:90
 #, kde-format
 msgid "Package %1 appears not to have been loaded"
-msgstr "Zdá se, že balíček %1 nebyl načten"
+msgstr ""
 
 #: rkward/dataeditor/rkeditordataframe.cpp:51
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
 #, kde-format
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
-"Název, který jste zadali, je již používán, nebo je neplatný. Přejmenován na "
-"%1"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:51
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
 #, kde-format
 msgid "Invalid Name"
-msgstr "Neplatný název"
+msgstr "Nomine invalide"
 
 #. i18n: ectx: Menu (edit)
 #: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
@@ -441,105 +406,105 @@ msgstr "Neplatný název"
 #: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
 #, kde-format
 msgid "&Edit"
-msgstr "&Upravit"
+msgstr "&Edita"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
 #: rkward/dataeditor/rkvareditmodel.cpp:550
 #, kde-format
 msgid "Type on these fields to add new columns"
-msgstr "Pište v těchto polích pro přidání nových sloupců"
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:274
 #, kde-format
 msgid "Type on these fields to add new rows"
-msgstr "Pište v těchto polích pro přidání nových řádků"
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:293 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
 msgid "This value is not allowed, here"
-msgstr "Tato hodnota zde není dovolena"
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:361
 #, kde-format
 msgid "#New Variable#"
-msgstr "#Nová proměnná#"
+msgstr "#Nove variabile#"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:362
 #, kde-format
 msgid "Row names"
-msgstr "Názvy řádků"
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:367
 #, kde-format
 msgid "This column contains one or more invalid fields"
-msgstr "Tento sloupec obsahuje jedno nebo více neplatných polí"
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
 msgid "Format"
-msgstr "Formát"
+msgstr "Formato"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:683
 #, kde-format
 msgid "Levels"
-msgstr "Úrovně"
+msgstr "Nivellos"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:686
 #, kde-format
 msgid "Edit these fields to rename variables."
-msgstr "Upravit tato pole pro přejmenování proměnných."
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:687
 #, kde-format
 msgid "A descriptive label for each column (optional)."
-msgstr "Popisný popisek pro každý sloupec (volitelné)."
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:688
 #, kde-format
 msgid "Type of data."
-msgstr "Typ dat."
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:689
 #, kde-format
 msgid "Double click on these fields to customize data display."
-msgstr "Dvakrát klikněte na tato pole pro upravení zobrazení dat.přizpůsobení."
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:690
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
-msgstr "Dvakrát klikněte na tato pole pro upravení úrovní faktorů."
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:100
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
-msgstr "Vyjme současný výběr a umístí jej do schránky"
+msgstr "Talia le section seligite e pone lo al area de transferentia"
 
 #: rkward/dataeditor/twintable.cpp:102
 #, kde-format
 msgid "Copies the selected section to the clipboard"
-msgstr "Zkopíruje vybranou sekci do schránky"
+msgstr "Copia le section seligite al area de transferentia"
 
 #: rkward/dataeditor/twintable.cpp:105
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
-msgstr "Vloží současný obsah schránky na aktuální pozici"
+msgstr "Colla le contentos del area de transferentia al position currente"
 
 #: rkward/dataeditor/twintable.cpp:108
 #, kde-format
 msgid "Paste inside table"
-msgstr "Vložit do tabulky"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:110
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
-msgstr "Vloží obsah schránky v současné poloze, ale ne za hranice tabulky"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:113
 #, kde-format
 msgid "Paste inside selection"
-msgstr "Vložit do výběru"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:115
 #, kde-format
@@ -547,7 +512,6 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
 msgstr ""
-"Vloží obsah schránky v současné poloze, ale ne za hranice nynějšího výběru"
 
 #: rkward/dataeditor/twintable.cpp:132
 #, kde-format
@@ -557,13 +521,13 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:135 rkward/dataeditor/twintable.cpp:148
 #, kde-format
 msgid "Enable editing"
-msgstr "Povolit úpravy kódu"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:140
 #, kde-format
 msgctxt "verb: switch to read-only state. Make this short."
 msgid "Lock"
-msgstr "Uzamknout"
+msgstr "Bloca"
 
 #: rkward/dataeditor/twintable.cpp:143
 #, kde-format
@@ -574,7 +538,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
-msgstr "Odemknout"
+msgstr "Disbloca"
 
 #: rkward/dataeditor/twintable.cpp:209
 #, kde-format
@@ -584,55 +548,51 @@ msgid ""
 "know what you are doing, but you are strongly advised to fix the table, and/"
 "or backup your data, first."
 msgstr ""
-"Editor '%1' obsahuje následující duplicitní sloupce. Úpravy této tabulky "
-"nemusí být bezpečné a byly zakázány. Úpravy můžete znovu povolit, pokud "
-"víte, co děláte, ale velmi se doporučuje nejprve tabulku opravit a/nebo "
-"zazálohovat vaše data."
 
 #: rkward/dataeditor/twintable.cpp:209
 #, kde-format
 msgid "Duplicate columns detected"
-msgstr "Zjištěny zdvojené sloupce"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:218
 #, kde-format
 msgid "%1 [read-only]"
-msgstr "%1 [pouze ke čtení]"
+msgstr "%1 [Solmente de lectura]"
 
 #: rkward/dataeditor/twintable.cpp:263
 #, kde-format
 msgid "Insert new variable left"
-msgstr "Novou proměnnou vložit vlevo"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:266
 #, kde-format
 msgid "Delete this variable"
-msgstr "Smazat tuto proměnnou"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:277
 #, kde-format
 msgid "Insert new case above (at %1)"
-msgstr "Vložit nový případ výše (při %1)"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:286
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
-msgstr "Smazat označené řádky (%1-%2)"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:292
 #, kde-format
 msgid "Delete this row (%1)"
-msgstr "Smazat tento řádek (%1)"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:414
 #, kde-format
 msgid "Inserting clipboard contents..."
-msgstr "Vkládám obsah schránky..."
+msgstr ""
 
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
 msgid "Reporting bugs in RKWard"
-msgstr "Hlášení chyb v RKWardu"
+msgstr ""
 
 #: rkward/dialogs/rkerrordialog.cpp:45
 #, kde-format
@@ -660,7 +620,7 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:58
 #, kde-format
 msgid "Report issue"
-msgstr "Nahlásit chybu"
+msgstr "Reporta problema"
 
 #: rkward/dialogs/rkerrordialog.cpp:73
 #, kde-format
@@ -678,22 +638,22 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:80
 #, kde-format
 msgid "Proceed"
-msgstr "Pokračovat"
+msgstr "Procede"
 
 #: rkward/dialogs/rkerrordialog.cpp:103
 #, kde-format
 msgid "Show Details"
-msgstr "Zobrazit podrobnosti"
+msgstr "Monstra Detalios"
 
 #: rkward/dialogs/rkerrordialog.cpp:105
 #, kde-format
 msgid "Report As Bug"
-msgstr "Nahlásit jako chybu"
+msgstr ""
 
 #: rkward/dialogs/rkerrordialog.cpp:115
 #, kde-format
 msgid "Message code: %1\n"
-msgstr "Kód zprávy: %1\n"
+msgstr ""
 
 #: rkward/dialogs/rkerrordialog.cpp:124
 #, kde-format
@@ -710,9 +670,6 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"Prosím, podejte krátké shrnutí problému:\n"
-"###Vyplňte, prosím###\n"
-"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:128
 #, kde-format
@@ -722,10 +679,6 @@ msgid ""
 "###Please fill in (if applicable)###\n"
 "\n"
 msgstr ""
-"Objevilo se hlášení o chybě uvedené níže. Vedle toho byly pozorovány "
-"následující příznaky:\n"
-"###Prosím, vyplňte (pokud platí)###\n"
-"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:130
 #, kde-format
@@ -734,9 +687,6 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"Co jste - popsáno podrobně - dělal předtím, než se objevil tento problém?\n"
-"###Prosím, vyplňte###\n"
-"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:131
 #, kde-format
@@ -746,10 +696,6 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"Když zkoušíte zopakovat to, co jste popsali výše, nastanou opět problémy "
-"(ne, někdy, vždy)?\n"
-"###Prosím, vyplňte###\n"
-"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:132
 #, kde-format
@@ -759,10 +705,6 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"Je-li to možné zkusit: Když uděláte tu samou věc v sezení R mimo RKWard, "
-"vidíte ten stejný problém?\n"
-"###Prosím, vyplňte###\n"
-"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:133
 #, kde-format
@@ -773,11 +715,6 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"Máte nějaké další informace, které by nám pomohly vysledovat tento problém? "
-"A zvláště, pokud je to možné, můžete nám poskytnout vzorek dat a ukázkový "
-"kód R, který by pomohl reprodukovat tento problém?\n"
-"###Prosím, vyplňte###\n"
-"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:134
 #, kde-format
@@ -788,11 +725,6 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"RKWard je dostupný v mnoha lišících se baleních, a někdy jsou problémy "
-"spojeny s určitým způsobem instalace. Jak jste RKWard nainstaloval (které "
-"soubory jste stáhli)?\n"
-"###Prosím, vyplňte###\n"
-"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:146
 #, kde-format
@@ -801,20 +733,16 @@ msgid ""
 "In case the backend has died or hung up, you may want to press 'Cancel' to "
 "skip this step."
 msgstr ""
-"Prosím, počkejte okamžik, dokud se neshromáždí některé údaje vztahující se k "
-"vašemu nastavení.\n"
-"V případě, že podpůrná vrstva zhavarovala, nebo se zasekla, můžete stisknout "
-"\"Zrušit\" pro přeskočení tohoto kroku."
 
 #: rkward/dialogs/rkerrordialog.cpp:146
 #, kde-format
 msgid "Gathering setup information"
-msgstr "Shromažďují se údaje o nastavení"
+msgstr ""
 
 #: rkward/dialogs/rkimportdialog.cpp:29
 #, kde-format
 msgid "Import Data Assistant"
-msgstr "Pomocník s importem dat"
+msgstr ""
 
 #: rkward/dialogs/rkimportdialog.cpp:54
 #, kde-format
@@ -823,9 +751,6 @@ msgid ""
 "generally provide the most options. Is the file you wish to import in one of "
 "the following formats?"
 msgstr ""
-"Pro některé formáty RKWard poskytuje speciální provides importní dialogy, a "
-"ty obecně poskytují nejvíce možností. Je importovaný soubor v jednom z "
-"následujících formátů?"
 
 #: rkward/dialogs/rkimportdialog.cpp:56
 #, kde-format
@@ -837,12 +762,12 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:70
 #, kde-format
 msgid "None of the above / try another method"
-msgstr "Žádná z výše uvedených / zkusit jinou metodu"
+msgstr ""
 
 #: rkward/dialogs/rkimportdialog.cpp:76
 #, kde-format
 msgid "Select format"
-msgstr "Vyberte formát"
+msgstr "Selige formato"
 
 #: rkward/dialogs/rkimportdialog.cpp:80
 #, kde-format
@@ -851,9 +776,6 @@ msgid ""
 "formats, but requires a number of additional R packages to be installed (you "
 "will be prompted for missing packages). Do you want to give that a try?"
 msgstr ""
-"Balíček 'rio' poskytuje obecnou podporu pro import spousty formátů souborů, "
-"ale vyžaduje instalace několika dodatečných balíčků R (budete dotázáni na "
-"chybějící balíčky). Chcete to zkusit?"
 
 #: rkward/dialogs/rkimportdialog.cpp:82
 #, kde-format
@@ -865,17 +787,17 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:91
 #, kde-format
 msgid "Use 'rio'-based importer"
-msgstr "Použít import založený na 'rio'"
+msgstr ""
 
 #: rkward/dialogs/rkimportdialog.cpp:95 rkward/dialogs/rkimportdialog.cpp:113
 #, kde-format
 msgid "Try another method"
-msgstr "Zkusit jinou metodu"
+msgstr ""
 
 #: rkward/dialogs/rkimportdialog.cpp:101
 #, kde-format
 msgid "Generic 'rio'-based importer"
-msgstr "Obecný import založený na 'rio'"
+msgstr ""
 
 #: rkward/dialogs/rkimportdialog.cpp:105
 #, kde-format
@@ -884,13 +806,11 @@ msgid ""
 "application on your system, importing it from clipboard (copy and paste) may "
 "be viable."
 msgstr ""
-"Pokud jsou vaše data středně velká, a můžete je otevřít/zobrazit v jiné "
-"aplikaci, jejich import ze schránky (zkopírovat a vložit) může být možný."
 
 #: rkward/dialogs/rkimportdialog.cpp:110 rkward/dialogs/rkimportdialog.cpp:119
 #, kde-format
 msgid "Import from clipboard"
-msgstr "Importovat ze schránky"
+msgstr "Importa ex area de transferentia"
 
 #: rkward/dialogs/rkimportdialog.cpp:123
 #, kde-format
@@ -898,13 +818,11 @@ msgid ""
 "<b>Ready to go</b><p>Click \"Finish\" to start the selected import dialog, "
 "or \"Back\" to explore other options.</p>"
 msgstr ""
-"<b>Můžeme pokračovat</b><p>Klikněte na \"Dokončit\" pro zahájení vybraného "
-"dialogu pro import, nebo \"Zpět\" pro prozkoumání jiných možností.</p>"
 
 #: rkward/dialogs/rkimportdialog.cpp:125
 #, kde-format
 msgid "Start import dialog"
-msgstr "Spustit dialog importu"
+msgstr ""
 
 #: rkward/dialogs/rkimportdialog.cpp:129
 #, kde-format
@@ -914,59 +832,54 @@ msgid ""
 "li><li>Save your data to a different format in the original application</"
 "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgstr ""
-"Žádné další metody importu nejsou momentálně k dispozici. Můžete zkusit: "
-"<ul><li>Zkontrolovat dostupnost dalších modulů pro import</li><li>Uložit "
-"vaše data v původní aplikaci do jiného formátu</li><li>Zeptat se na radu na "
-"rkward-users@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:131
 #, kde-format
 msgid "No import method found"
-msgstr "Nebyla nalezena žádná metoda importu"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:50
 #, kde-format
 msgid "Configure Packages"
-msgstr "Nastavit balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:58
 #, kde-format
 msgid "Load / Unload R packages"
-msgstr "Načíst/Zrušit načtení balíčků R"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:62
 #, kde-format
 msgid "Install / Update / Remove R packages"
-msgstr "Instalovat / Aktualizovat / Odstranit balíčky R"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:64
 #, kde-format
 msgid "Manage RKWard Plugins"
-msgstr "Spravovat moduly pro RKWard"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Closing will discard pending changes. Are you sure?"
-msgstr "Zavření zahodí čekající změny. Jste si jisti?"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Discard changes?"
-msgstr "Zahodit změny?"
+msgstr "Abandona modificationes?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr "Nezavírat"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
 #: rkward/dialogs/rkloadlibsdialog.cpp:205
 #, kde-format
 msgid "Package %1 at %2"
-msgstr "Balíček %1 v %2"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
@@ -976,14 +889,11 @@ msgid ""
 "sure, that you want to remove these packages, please do so on the R command "
 "line."
 msgstr ""
-"Následující balíčky, které jste vybral k odstranění, jsou pro chod RKWardu "
-"nepostradatelné a nebudou odstraněny. Pokud si jste naprosto jist, že tyto "
-"balíčky chcete odstranit, prosím, udělejte tak v příkazovém řádku R."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
 msgid "Not removing certain packages"
-msgstr "Jisté balíčky nebudou odstraněny"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:186
 #, kde-format
@@ -991,14 +901,12 @@ msgid ""
 "Your current user permissions do not allow removing the following packages. "
 "These will be skipped."
 msgstr ""
-"Vaše současná uživatelská oprávnění nedovolují odstranění následujících "
-"balíčků. Budou přeskočeny."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:186
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgid "Insufficient user permissions"
-msgstr "Nedostatečná uživatelská oprávnění"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
@@ -1007,23 +915,18 @@ msgid ""
 "Do you want to skip these packages, or do you want to proceed with "
 "administrator privileges (you will be prompted for the password)?"
 msgstr ""
-"Vaše současná uživatelská oprávnění nedovolují odstranění následujících "
-"balíčků. Chcete tyto balíčky přeskočit, nebo chcete pokračovat s právy "
-"správce systému (budete vyzváni k zadání hesla)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
-msgstr "Staňte se superuživatelem"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Aktualizovatelné balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -1031,28 +934,26 @@ msgid ""
 "You are about to remove the following packages. Are you sure you want to "
 "proceed?"
 msgstr ""
-"Chystáte se odstranit následující balíčky. Jste si jisti, že chcete "
-"pokračovat?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
 msgid "About to remove packages"
-msgstr "Chystané odstranění balíčků"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
 msgid "Please stand by while removing selected packages"
-msgstr "Prosím, počkejte zatímco jsou odstraňovány vybrané balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
 msgid "Removing packages"
-msgstr "Odstraňují se balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:241
 #, kde-format
 msgid "Selected library location not writable"
-msgstr "Vybrané umístění knihovny není zapisovatelné"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:242
 #, kde-format
@@ -1062,10 +963,6 @@ msgid ""
 "instead (you can also press \"Cancel\" and use the \"Configure Repositories"
 "\"-button to set up a different directory)?</p>"
 msgstr ""
-"<p>Adresář, který jste zvolil pro instalaci (%1) není s vašimi současnými "
-"uživatelskými oprávněními zapisovatelný.</p><p>Chtěli byste namísto něj "
-"instalovat do %2, (taktéž můžete stisknout \"Zrušit\" a použít tlačítko "
-"\"Nastavit zdroje\" pro nastavení jiného adresáře)?</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:245
 #, kde-format
@@ -1075,16 +972,12 @@ msgid ""
 "permissions of '%1'. Sorry, automatic switching to Administrator is not yet "
 "supported in RKWard on Windows.</p>"
 msgstr ""
-"<p>Případně, pokud na tomto stroji máte přístup k účtu správce systému, "
-"můžete pro nainstalování balíčků použít tento, anebo byste mohli změnit "
-"oprávnění pro '%1'. Omlouváme se za to, že v operačním systému Windows "
-"RKWard automatické přepínání na účet správce ještě nepodporuje.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:247
 #: rkward/dialogs/rkloadlibsdialog.cpp:251
 #, kde-format
 msgid "Install to %1"
-msgstr "Nainstalovat do %1"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:250
 #, kde-format
@@ -1093,24 +986,21 @@ msgid ""
 "to install the packages as root (you'll be prompted for the root password).</"
 "p>"
 msgstr ""
-"<p>Případně, pokud jste na tomto stroji správcem systému, můžete zkusit "
-"instalaci balíčků pod účtem superuživatele (budete vyzváni k zadání hesla "
-"superuživatele.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:251
 #, kde-format
 msgid "Become root"
-msgstr "Staňte se superuživatelem"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Please stand by while installing selected packages"
-msgstr "Prosím, počkejte  zatímco jsou instalovány vybrané balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Installing packages"
-msgstr "Instalují se balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
@@ -1122,12 +1012,12 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
 msgid "kdesu not found"
-msgstr "kdesu nebylo nalezeno"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:347
 #, kde-format
 msgid "Installed packages"
-msgstr "Nainstalovány balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:954
@@ -1136,34 +1026,34 @@ msgstr "Nainstalovány balíčky"
 #: rkward/windows/rkhelpsearchwindow.cpp:325
 #, kde-format
 msgid "Title"
-msgstr "Název"
+msgstr "Titulo"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:955
 #, kde-format
 msgid "Version"
-msgstr "Verze"
+msgstr "Version"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:956
 #, kde-format
 msgid "Location"
-msgstr "Umístění"
+msgstr "Location"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:354
 #, kde-format
 msgid "Load"
-msgstr "Načíst"
+msgstr "Carga"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:356
 #, kde-format
 msgid "Unload"
-msgstr "Zrušit načtení"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:363
 #, kde-format
 msgid "Loaded packages"
-msgstr "Načtené balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:500
 #, kde-format
@@ -1171,18 +1061,16 @@ msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
 msgstr ""
-"Při pokusu o načtení/odstranění balíčků se vyskytla chyba. Podívejte se, "
-"prosím, kvůli podrobnostem, na zápis níže"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:579
 #, kde-format
 msgid "Select all updates"
-msgstr "Vybrat všechny aktualizace"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:648
 #, kde-format
 msgid "Show only packages matching:"
-msgstr "Zobrazit pouze balíčky odpovídající:"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:650
 #, kde-format
@@ -1194,7 +1082,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:654
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
-msgstr "Ukázat pouze balíčky poskytující dialogy RKWardu"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:655
 #, kde-format
@@ -1203,19 +1091,16 @@ msgid ""
 "provide a graphical user-interface in addition to R functions. Check this "
 "box to show only such packages.</p>"
 msgstr ""
-"<p>Některé, ale ne všechny, balíčky R jsou přiloženy k přídavným modulům pro "
-"RKWard. To znamená, že mimoto poskytují grafické uživatelské rozhraní k "
-"funkcím R. Zaškrtněte toto okénko pro ukázání jen takovýchto balíčků.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:676
 #, kde-format
 msgid "Install packages to:"
-msgstr "Nainstalovat balíčky do:"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:680
 #, kde-format
 msgid "Install suggested packages"
-msgstr "Nainstalovat navržené balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:682
 #, kde-format
@@ -1225,15 +1110,11 @@ msgid ""
 "functionality. Check this option to include such additional suggested "
 "packages."
 msgstr ""
-"Některé balíčky \"navrhují\" dodatečné balíčky, které nejsou přísně vzato "
-"nezbytné pro používání toho balíčku, ale mohou poskytovat dodatečnou "
-"související funkcionalitu. Zaškrtněte tuto volbu, aby byly takové dodatečné "
-"balíčky zahrnuty."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
 msgid "Configure Repositories"
-msgstr "Nastavit repozitáře"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:692
 #, kde-format
@@ -1241,13 +1122,11 @@ msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories.<br>Click this to add more sources."
 msgstr ""
-"Mnoho balíčků je dostupných na CRAN (Comprehensive R Archive Network), a v "
-"dalších repozitářích.<br>(pro přidání dalších klikněte zde)."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:716
 #, kde-format
 msgid "<b>Install %1 packages (plus dependencies), remove %2 packages</b>"
-msgstr "<b>Nainstalovat %1 balíčky (plus závislosti), odstranit %2 balíčků</b>"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
@@ -1257,14 +1136,11 @@ msgid ""
 "maybe you need to add additional repositories via the \"Configure "
 "Repositories\" button."
 msgstr ""
-"Následující balíčky požadované podpůrnou vrstvou nejsou ve zdrojích balíčků: "
-"\"%1\". Možná byl název balíčku zadán špatně. Nebo musíte nastavit doplňkové "
-"zdroje přes tlačítko \"Nastavit zdroje\"."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
 msgid "Package not available"
-msgstr "Balíček není dostupný"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:891
 #, kde-format
@@ -1274,17 +1150,13 @@ msgid ""
 "may take some time, esp. if one or more repositories are temporarily "
 "unavailable.</p>"
 msgstr ""
-"<p>Prosím, čekejte zatímco se hledají nainstalované a dostupné balíčky.</"
-"p><p><strong>Poznámka:</strong> Toto hledání vyžaduje pracující internetové "
-"spojení a může nějakou dobu trvat, zejména pokud je jedno nebo i více "
-"skladišť balíčků dočasně nedostupných.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:952
 #: rkward/rbackend/rcommandstack.cpp:314
 #: rkward/settings/rksettingsmoduleplugins.cpp:527
 #, kde-format
 msgid "Status"
-msgstr "Stav"
+msgstr "Stato"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:959
 #, kde-format
@@ -1292,8 +1164,6 @@ msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
 msgstr ""
-"<p>Balíčky označené ikonou RKWardu v tomto sloupci poskytují vylepšení pro "
-"RKWard, typicky v podobě dodatečných grafických dialogů.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:960
 #, kde-format
@@ -1301,13 +1171,11 @@ msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
-"<p>Balíčky pro instalaci/odstranění vyberete zaškrtnutím/zrušením zaškrtnutí "
-"odpovídajících políček v tomto sloupci.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
 msgid "<p>The name of the package.</p>"
-msgstr "<p>Název balíčku.</p>"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:962
 #, kde-format
@@ -1315,23 +1183,21 @@ msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
 "packages in non-local repositories.</p>"
 msgstr ""
-"<p>Popisné záhlaví pro balíček. V současnosti toto u balíčků uložených ve "
-"skladištích, co nejsou místní, není dostupné.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:963
 #, kde-format
 msgid "<p>Installed and / or available version of the package</p>"
-msgstr "<p>Nainstalovaná a/nebo dostupná verze balíčku</p>"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:964
 #, kde-format
 msgid "<p>Location where the package is installed / available</p>"
-msgstr "<p>Místo, kde je balíček nainstalován/dostupný</p>"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:987
 #, kde-format
 msgid "Updateable Packages"
-msgstr "Aktualizovatelné balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:988
 #, kde-format
@@ -1339,13 +1205,11 @@ msgid ""
 "Packages for which an update is available. This may include packages which "
 "were merely built against a newer version of R."
 msgstr ""
-"Balíčky, pro které je dostupná aktualizace. Může to zahrnovat balíčky, které "
-"prostě byly sestaveny proti novější verzi R."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:991
 #, kde-format
 msgid "New Packages"
-msgstr "Nové balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:992
 #, kde-format
@@ -1353,13 +1217,11 @@ msgid ""
 "Packages which are available for installation, but which are not currently "
 "installed."
 msgstr ""
-"Balíčky, které jsou pro instalaci dostupné, ale které nyní nejsou "
-"nainstalované."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:994
 #, kde-format
 msgid "Installed Packages"
-msgstr "Nainstalované balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:995
 #, kde-format
@@ -1367,34 +1229,32 @@ msgid ""
 "Packages which are installed locally. Note that updates may be available for "
 "these packages."
 msgstr ""
-"Balíčky, které jsou nainstalovány místně. Všimněte si, že pro tyto balíčky "
-"mohou být dostupné aktualizace."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1023
 #, kde-format
 msgid "Install"
-msgstr "Instalovat"
+msgstr "Installa"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1026
 #: rkward/misc/multistringselector.cpp:107
 #, kde-format
 msgid "Remove"
-msgstr "Odstranit"
+msgstr "Remove"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1210
 #, kde-format
 msgid "Installed plugin groups (.pluginmap files)"
-msgstr "Nainstalované skupiny přídavných modulů (soubory .pluginmap)"
+msgstr ""
 
 #: rkward/dialogs/rkreadlinedialog.cpp:44
 #, kde-format
 msgid "Context:"
-msgstr "Kontext:"
+msgstr "Contexto:"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:33
 #, kde-format
 msgid "Crash recovery file detected"
-msgstr "Zjištěn soubor pro obnovení po pádu"
+msgstr ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:37
 #, kde-format
@@ -1403,8 +1263,6 @@ msgid ""
 "However, not everything is lost, and with a bit of luck, your data has been "
 "saved in time.</p>"
 msgstr ""
-"<p>Vypadá to, jakoby RKWard nedávno spadl. Je nám to líto. Nicméně ještě "
-"není všechno ztraceno, a s trochou štěstí byla vaše data zachráněna včas.</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:38
 #, kde-format
@@ -1413,14 +1271,7 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist, the most recent one of which dates "
 "from <i>%2</i>.</p>"
 msgstr[0] ""
-"<p>Soubor pro obnovení pracovního prostředí existuje, datování od <i>%2</i>."
-"</p>"
 msgstr[1] ""
-"<p>Existují %1 soubory pro obnovení pracovního prostředí, nejnovější se "
-"datuje k <i>%2</i>.</p>"
-msgstr[2] ""
-"<p>Existuje %1 souborů pro obnovení pracovního prostředí, nejnovější se "
-"datuje k <i>%2</i>.</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:39
 #, kde-format
@@ -1428,38 +1279,36 @@ msgid ""
 "<p>Do you want to open this file, now, save it for later (as <i>%1</i>), or "
 "discard it?</p>"
 msgstr ""
-"<p>Chcete nyní otevřít tento soubor, uložit jej na později (jako <i>%1</i>), "
-"nebo jej zahodit?</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:43
 #, kde-format
 msgid "Recover"
-msgstr "Obnovit"
+msgstr "Recupera"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:44
 #, kde-format
 msgid "Saves the recovery file(s), and opens it (or the most recent one)"
-msgstr "Uloží soubor(y) pro obnovení, a otevře je (nebo ten nejnovější)"
+msgstr ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:45
 #, kde-format
 msgid "Save for later"
-msgstr "Uložit na později"
+msgstr "Salveguarda per depost"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:46
 #, kde-format
 msgid "Saves the recovery file(s) for later use, but does not open it"
-msgstr "Uloží soubor(y) pro obnovení pro pozdější užití, ale neotevře je."
+msgstr ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:47 rkward/windows/robjectbrowser.cpp:125
 #, kde-format
 msgid "Delete"
-msgstr "Smazat"
+msgstr "Dele"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:48
 #, kde-format
 msgid "Deletes the recovery file(s)"
-msgstr "Smaže soubor(y) pro obnovení"
+msgstr ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:60
 #, kde-format
@@ -1470,92 +1319,85 @@ msgid_plural ""
 "You are about to delete %1 recovery files (the most recent one is %2). There "
 "will be no way to bring them back. Really delete them?"
 msgstr[0] ""
-"Chystáte se také smazat soubor pro obnovení %2. Nebude žádná možnost krok "
-"vrátit zpět. Opravdu jej smazat?"
 msgstr[1] ""
-"Chystáte se také smazat %1 soubory pro obnovení (nejnovější je %2). Nebude "
-"žádný způsob, jak je vrátit zpět. Opravdu je smazat?"
-msgstr[2] ""
-"Chystáte se také smazat %1 souborů pro obnovení (nejnovější je %2). Nebude "
-"žádný způsob, jak je vrátit zpět. Opravdu je smazat?"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:60
 #, kde-format
 msgid "Really delete recovery file(s)?"
-msgstr "Opravdu smazat soubory pro obnovení?"
+msgstr ""
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:64
 #, kde-format
 msgid "Save modified"
-msgstr "Uložit změněné"
+msgstr ""
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:67
 #, kde-format
 msgid ""
 "The following items have been modified. Do you want to save them before "
 "closing?"
-msgstr "Následující položky byly změněny. Přejete si je uložit před uzavřením?"
+msgstr ""
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:77
 #, kde-format
 msgid "R Workspace (Data and Functions)"
-msgstr "Pracovní plocha R (Data a Funkce)"
+msgstr ""
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:80
 #, kde-format
 msgid "[Not saved]"
-msgstr "[Neuloženo]"
+msgstr "[Non salveguardate]"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:88
 #, kde-format
 msgid "Output files"
-msgstr "Výstupní soubory"
+msgstr ""
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:100
 #, kde-format
 msgid "Scripts"
-msgstr "Skripty"
+msgstr "Scripts"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:115
 #, kde-format
 msgctxt "Save the selected items"
 msgid "Save selected"
-msgstr "Uložit vybrané"
+msgstr "Salveguarda seligite"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:116
 #, kde-format
 msgid "Discard all"
-msgstr "Zahodit vše"
+msgstr "Abandona toto"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:117
 #, kde-format
 msgid "Do not close"
-msgstr "Nezavírat"
+msgstr "Non Claude"
 
 #: rkward/dialogs/rkselectlistdialog.cpp:39
 #, kde-format
 msgid "<b>Select one or more:</b>"
-msgstr "<b>Vyberte jeden nebo více:</b>"
+msgstr ""
 
 #: rkward/dialogs/rkselectlistdialog.cpp:40
 #, kde-format
 msgid "<b>Select one:</b>"
-msgstr "<b>Vybrat jeden:</b>"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:53
 #, kde-format
 msgid "No action needed."
-msgstr "Není potřeba žádná činnost."
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:88
 #, kde-format
 msgid "Not installed"
-msgstr "Nenainstalováno"
+msgstr "Non installate"
 
 #: rkward/dialogs/rksetupwizard.cpp:89 rkward/dialogs/rksetupwizard.cpp:100
 #, kde-format
 msgid "Install %1"
-msgstr "Instalovat %1"
+msgstr "Installa %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:89
 #, kde-format
@@ -1568,7 +1410,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:157
 #, kde-format
 msgid "No change"
-msgstr "Žádná změna"
+msgstr "Nulle modification"
 
 #: rkward/dialogs/rksetupwizard.cpp:90
 #, kde-format
@@ -1580,7 +1422,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:92 rkward/dialogs/rksetupwizard.cpp:112
 #, kde-format
 msgid "Installed"
-msgstr "Nainstalováno"
+msgstr "Installate"
 
 #: rkward/dialogs/rksetupwizard.cpp:100
 #, kde-format
@@ -1598,7 +1440,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:109
 #, kde-format
 msgid "Not found"
-msgstr "Nenalezeno"
+msgstr "Non trovate"
 
 #: rkward/dialogs/rksetupwizard.cpp:123
 #, kde-format
@@ -1606,8 +1448,6 @@ msgid ""
 "<p>This dialog will guide you through a quick check of the basic setup of "
 "the required (or recommended) components.</p>"
 msgstr ""
-"<p>Tento nástroj vás provede rychlou kontrolou základního nastavení "
-"vyžadovaných (nebo doporučených) součástí.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:125
 #, kde-format
@@ -1615,8 +1455,6 @@ msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of RKWard has been detected.</p>"
 msgstr ""
-"<p>Asistent nastavení byl automaticky spuštěn protože byla zjištěna nová "
-"verze RKWard.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:128
 #, kde-format
@@ -1640,17 +1478,17 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:135
 #, kde-format
 msgid "RKWard Setup Assistant"
-msgstr "Asistent nastavení RKWard"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:141
 #, kde-format
 msgid "Installation directory"
-msgstr "Adresář pro instalaci"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:143
 #, kde-format
 msgid "Not found."
-msgstr "Nenalezeno."
+msgstr "Non trovate."
 
 #: rkward/dialogs/rksetupwizard.cpp:145
 #, kde-format
@@ -1668,12 +1506,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:185
 #, kde-format
 msgid "Found."
-msgstr "Nalezeno."
+msgstr "Trovate: "
 
 #: rkward/dialogs/rksetupwizard.cpp:152
 #, kde-format
 msgid "RKWard plugins"
-msgstr "Moduly pro RKWard"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:154
 #, kde-format
@@ -1683,12 +1521,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:155
 #, kde-format
 msgid "None selected"
-msgstr "Nic nevybráno"
+msgstr "Necun seligite"
 
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
 msgid "Restore defaults"
-msgstr "Obnovit výchozí"
+msgstr "Restabili a valores predefinite"
 
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
@@ -1703,7 +1541,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:165
 #, kde-format
 msgid "Kate plugins"
-msgstr "Moduly Kate"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:168
 #, kde-format
@@ -1716,30 +1554,29 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:169
 #, kde-format
 msgid "None found"
-msgstr "Nic nebylo nalezeno"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:172
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
-msgstr[0] "Nalezen %1 modul."
-msgstr[1] "Nalezeny %1 moduly."
-msgstr[2] "Nalezeno %1 modulů."
+msgstr[0] ""
+msgstr[1] ""
 
 #: rkward/dialogs/rksetupwizard.cpp:177
 #, kde-format
 msgid "Pre 0.7.3 output file"
-msgstr "Výstupní soubor verze před 0.7.3"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:180
 #, kde-format
 msgid "Exists"
-msgstr "Existuje"
+msgstr "Existe"
 
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
 msgid "Import"
-msgstr "Importovat"
+msgstr "Importa"
 
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
@@ -1749,7 +1586,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:183
 #, kde-format
 msgid "No action"
-msgstr "Žádná činnost"
+msgstr "Nulle action"
 
 #: rkward/dialogs/rksetupwizard.cpp:183
 #, kde-format
@@ -1758,11 +1595,10 @@ msgid ""
 "rk.import.legacy.output()"
 msgstr ""
 
-# 59637 AttribValues/label
 #: rkward/dialogs/rksetupwizard.cpp:194
 #, kde-format
 msgid "Basic installation"
-msgstr "Základní instalace"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:205
 #, kde-format
@@ -1773,8 +1609,6 @@ msgstr ""
 #, kde-format
 msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
 msgstr ""
-"<b>Podpůrná vrstva R byla spuštěna. Pro pokračování klikněte na \"Následující"
-"\".</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:220
 #, kde-format
@@ -1793,7 +1627,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:224
 #, kde-format
 msgid "R Packages"
-msgstr "Balíčky R"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:229
 #, kde-format
@@ -1812,12 +1646,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:233
 #, kde-format
 msgid "External software"
-msgstr "Podpůrný software"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:240
 #, kde-format
 msgid "Summary of the next steps"
-msgstr "Shrnutí následujících kroků"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:261
 #, kde-format
@@ -1829,7 +1663,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:264
 #, kde-format
 msgid "<h2>Software to install</h2>"
-msgstr "<h2>Software, který je třeba nainstalovat</h2>"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:274
 #, kde-format
@@ -1838,19 +1672,16 @@ msgid ""
 "installation is not (yet) supported. Click on the links, below, for download "
 "information:</p><li>%1</li>"
 msgstr ""
-"<p>Doporučujeme nainstalovat následující software, ale automatická instalace "
-"není (zatím) podporována. Klikněte na odkazy níže pro informace o stažení:</"
-"p><li>%1</li>"
 
 #: rkward/dialogs/rksetupwizard.cpp:276
 #, kde-format
 msgid "No software to install"
-msgstr "Není třeba instalovat žádný software"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:278
 #, kde-format
 msgid "<h2>R packages to install</h2>"
-msgstr "<h2>Balíčky R, které je třeba nainstalovat</h2>"
+msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:280
 #, kde-format
@@ -1859,19 +1690,16 @@ msgid ""
 "dialog will be started when you press finish. You may be prompted to select "
 "a download mirror.</p>"
 msgstr ""
-"<p>Je doporučena instalace %1 balíčků R. Jejich instalace bude spuštěna po "
-"stisknutí tlačítka \"Dokončit\". Můžete být požádáni abyste vybrali patřičný "
-"zrcadlící server.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:282
 #, kde-format
 msgid "No R packages to install"
-msgstr "Není třeba instalovat žádný balíček R"
+msgstr ""
 
 #: rkward/main.cpp:208
 #, kde-format
 msgid "Unable to detect R installation"
-msgstr "Nelze najít instalaci R"
+msgstr ""
 
 #: rkward/main.cpp:208
 #, kde-format
@@ -1885,7 +1713,7 @@ msgstr ""
 #: rkward/main.cpp:221
 #, kde-format
 msgid "Specified R executable does not exist"
-msgstr "Zadaný spustitelný soubor R neexistuje"
+msgstr ""
 
 #: rkward/main.cpp:254
 #, kde-format
@@ -1895,7 +1723,7 @@ msgstr "RKWard"
 #: rkward/main.cpp:254
 #, kde-format
 msgid "Frontend to the R statistics language"
-msgstr "Rozhraní pro statistický jazyk R"
+msgstr ""
 
 #: rkward/main.cpp:254
 #, kde-format
@@ -1905,57 +1733,57 @@ msgstr "(c) 2002 - 2022"
 #: rkward/main.cpp:255
 #, kde-format
 msgid "Thomas Friedrichsmeier"
-msgstr "Thomas Friedrichsmeier"
+msgstr ""
 
 #: rkward/main.cpp:255
 #, kde-format
 msgid "Project leader / main developer"
-msgstr "Vedoucí projektu / hlavní vývojář"
+msgstr ""
 
 #: rkward/main.cpp:256
 #, kde-format
 msgid "Pierre Ecochard"
-msgstr "Pierre Ecochard"
+msgstr ""
 
 #: rkward/main.cpp:256
 #, kde-format
 msgid "C++ developer between 2004 and 2007"
-msgstr "Vývojář v C++ mezi roky 2004 a 2007"
+msgstr ""
 
 #: rkward/main.cpp:257
 #, kde-format
 msgid "Prasenjit Kapat"
-msgstr "Prasenjit Kapat"
+msgstr ""
 
 #: rkward/main.cpp:257
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
-msgstr "Mnoho přídavných modulů, návrhy, funkce historie nákresu"
+msgstr ""
 
 #: rkward/main.cpp:258
 #, kde-format
 msgid "Meik Michalke"
-msgstr "Meik Michalke"
+msgstr ""
 
 #: rkward/main.cpp:258
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
-msgstr "Mnoho přídavných modulů, návrhy, balíček rkwarddev"
+msgstr ""
 
 #: rkward/main.cpp:259
 #, kde-format
 msgid "Stefan Roediger"
-msgstr "Stefan Roediger"
+msgstr ""
 
 #: rkward/main.cpp:259
 #, kde-format
 msgid "Many plugins, suggestions, marketing, translations"
-msgstr "Mnohé přídavné moduly, návrhy, marketing a překlady"
+msgstr ""
 
 #: rkward/main.cpp:260
 #, kde-format
 msgid "Contributors in alphabetical order"
-msgstr "Přispěvatelé podle abecedního pořadí"
+msgstr ""
 
 #: rkward/main.cpp:261
 #, kde-format
@@ -1970,7 +1798,7 @@ msgstr ""
 #: rkward/main.cpp:262
 #, kde-format
 msgid "Aaron Batty"
-msgstr "Aaron Batty"
+msgstr ""
 
 #: rkward/main.cpp:262
 #, kde-format
@@ -1980,47 +1808,47 @@ msgstr ""
 #: rkward/main.cpp:263
 #, kde-format
 msgid "Jan Dittrich"
-msgstr "Jan Dittrich"
+msgstr ""
 
 #: rkward/main.cpp:264
 #, kde-format
 msgid "Philippe Grosjean"
-msgstr "Philippe Grosjean"
+msgstr ""
 
 #: rkward/main.cpp:264
 #, kde-format
 msgid "Several helpful comments and discussions"
-msgstr "Několik užitečných komentářů a rozhovorů"
+msgstr ""
 
 #: rkward/main.cpp:265
 #, kde-format
 msgid "Adrien d'Hardemare"
-msgstr "Adrien d'Hardemare"
+msgstr ""
 
 #: rkward/main.cpp:265
 #, kde-format
 msgid "Plugins and patches"
-msgstr "Moduly a změny"
+msgstr ""
 
 #: rkward/main.cpp:266
 #, kde-format
 msgid "Yves Jacolin"
-msgstr "Yves Jacolin"
+msgstr ""
 
 #: rkward/main.cpp:266
 #, kde-format
 msgid "New website"
-msgstr "Nové stránky"
+msgstr ""
 
 #: rkward/main.cpp:267
 #, kde-format
 msgid "Germán Márquez Mejía"
-msgstr "Germán Márquez Mejía"
+msgstr ""
 
 #: rkward/main.cpp:267
 #, kde-format
 msgid "HP filter plugin, spanish translation"
-msgstr "Filtrovací přídavný modul HP, překlad do španělštiny"
+msgstr ""
 
 #: rkward/main.cpp:268
 #, kde-format
@@ -2030,7 +1858,7 @@ msgstr "Marco Martin"
 #: rkward/main.cpp:268
 #, kde-format
 msgid "A cool icon"
-msgstr "Skvělá ikona"
+msgstr ""
 
 #: rkward/main.cpp:269
 #, kde-format
@@ -2040,79 +1868,77 @@ msgstr "Daniele Medri"
 #: rkward/main.cpp:269
 #, kde-format
 msgid "RKWard logo, many suggestions, help on wording"
-msgstr "Logo pro RKWard, četné návrhy, pomoc s textem"
+msgstr ""
 
 #: rkward/main.cpp:270
 #, kde-format
 msgid "David Sibai"
-msgstr "David Sibai"
+msgstr ""
 
 #: rkward/main.cpp:270
 #, kde-format
 msgid "Several valuable comments, hints and patches"
-msgstr "Několik užitečných komentářů, rad a úprav"
+msgstr ""
 
 #: rkward/main.cpp:271
 #, kde-format
 msgid "Ilias Soumpasis"
-msgstr "Ilias Soumpasis"
+msgstr ""
 
 #: rkward/main.cpp:271
 #, kde-format
 msgid "Translation, Suggestions, plugins"
-msgstr "Překlady, návrhy a přídavné moduly"
+msgstr ""
 
 #: rkward/main.cpp:272
 #, kde-format
 msgid "Ralf Tautenhahn"
-msgstr "Ralf Tautenhahn"
+msgstr ""
 
 #: rkward/main.cpp:272
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
-msgstr "Mnoho komentářů, užitečných doporučení a nahlášených chyb"
+msgstr ""
 
 #: rkward/main.cpp:273
 #, kde-format
 msgid "Jannis Vajen"
-msgstr "Jannis Vajen"
+msgstr ""
 
 #: rkward/main.cpp:273
 #, kde-format
 msgid "German Translation, bug reports"
-msgstr "Překlad do němčiny, hlášení chyb"
+msgstr ""
 
 #: rkward/main.cpp:274
 #, kde-format
 msgid "Roland Vollgraf"
-msgstr "Roland Vollgraf"
+msgstr ""
 
 #: rkward/main.cpp:274
 #, kde-format
 msgid "Some patches"
-msgstr "Některé změny"
+msgstr ""
 
 #: rkward/main.cpp:275
 #, kde-format
 msgid "Roy Qu"
-msgstr "Roy Qu"
+msgstr ""
 
 #: rkward/main.cpp:275
 #, kde-format
 msgid "patches and helpful comments"
-msgstr "úpravy a užitečné komentáře"
+msgstr ""
 
 #: rkward/main.cpp:276
 #, kde-format
 msgid "Many more people on rkward-devel@kde.org"
-msgstr "Všichni ti lidé na rkward-devel@kde.org"
+msgstr ""
 
 #: rkward/main.cpp:276
 #, kde-format
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
-"Prominutí, pokud jste zde nebyli zmíněni. Prosím, spojte se s námi, abychom "
-"vás sem mohli přidat"
 
 #: rkward/main.cpp:277
 #, kde-format
@@ -2130,18 +1956,16 @@ msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
 "evaluate the given R code."
 msgstr ""
-"Po spuštění (a po načtení určeného pracovního prostředí, je-li to vhodné), "
-"vyhodnotit stanovený kód R."
 
 #: rkward/main.cpp:283
 #, kde-format
 msgid "Verbosity of debug messages (0-5)"
-msgstr "Mnohomluvnost ladících hlášení (0-5)"
+msgstr ""
 
 #: rkward/main.cpp:284
 #, kde-format
 msgid "Mask for components to debug (see debug.h)"
-msgstr "Přestrojit pro součásti, které mají být laděny (viz debug.h)"
+msgstr ""
 
 #: rkward/main.cpp:285
 #, kde-format
@@ -2154,9 +1978,6 @@ msgid ""
 "Debugger for the backend. (Enclose any debugger arguments in single quotes "
 "('') together with the command. Make sure to re-direct stdout!)"
 msgstr ""
-"Ladicí program pro podpůrnou vrstvu. (Uzavřete všechny argumenty pro ladicí "
-"program společně s příkazem do jednoduchých uvozovek (''). Zajistěte "
-"přesměrování výstupu - stdout)"
 
 #: rkward/main.cpp:287
 #, kde-format
@@ -2164,8 +1985,6 @@ msgid ""
 "Use specified R installation, instead of the one configured at compile time "
 "(note: rkward R library must be installed to that installation of R)"
 msgstr ""
-"Použít danou instalaci R namísto té, která byla nastavena v době kompilace "
-"(Poznámka: knihovna rkward R musí být nainstalována do té instalace R)"
 
 #: rkward/main.cpp:288
 #, kde-format
@@ -2174,9 +1993,6 @@ msgid ""
 "reused, only the file arguments will be interpreted, all other options will "
 "be ignored."
 msgstr ""
-"Použít běžící instanci RKWardu znovu (je-li dostupná). Pokud je běžící "
-"instance opět použita, budou se vykládat jen argumenty souboru, všechny "
-"ostatní volby budou ignorovány. "
 
 #: rkward/main.cpp:289
 #, kde-format
@@ -2206,9 +2022,6 @@ msgid ""
 "File or files to open, typically a workspace, or an R script file. When "
 "loading several things, you should specify the workspace, first."
 msgstr ""
-"Soubor nebo soubory k otevření, obyčejně pracovní prostředí, nebo soubor se "
-"skriptem R. Při načtení několika věcí byste měl nejprve stanovit pracovní "
-"prostředí."
 
 #: rkward/main.cpp:376
 #, kde-format
@@ -2216,8 +2029,6 @@ msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
 "executable."
 msgstr ""
-"Spustitelný soubor R zadaný na příkazové řádce (%1) neexistuje nebo není "
-"spustitelný."
 
 #: rkward/main.cpp:388
 #, kde-format
@@ -2225,8 +2036,6 @@ msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
 "or is not executable."
 msgstr ""
-"Spustitelný soubor R (%1) zadaný v souboru rkward.ini (%2) neexistuje nebo "
-"není spustitelný."
 
 #: rkward/main.cpp:393
 #, kde-format
@@ -2245,52 +2054,52 @@ msgstr ""
 #: rkward/misc/editformatdialog.cpp:32
 #, kde-format
 msgid "Alignment"
-msgstr "Zarovnání"
+msgstr "Alineamento"
 
 #: rkward/misc/editformatdialog.cpp:37
 #, kde-format
 msgid "Default"
-msgstr "Výchozí"
+msgstr "Predefinite"
 
 #: rkward/misc/editformatdialog.cpp:39
 #, kde-format
 msgid "Left"
-msgstr "Vlevo"
+msgstr "Sinistra"
 
 #: rkward/misc/editformatdialog.cpp:41
 #, kde-format
 msgid "Right"
-msgstr "Vpravo"
+msgstr "Dextera"
 
 #: rkward/misc/editformatdialog.cpp:46
 #, kde-format
 msgid "Decimal Places"
-msgstr "Desetinná místa"
+msgstr "Placias decimal"
 
 #: rkward/misc/editformatdialog.cpp:49
 #, kde-format
 msgid "Default setting"
-msgstr "Výchozí nastavení"
+msgstr "Preferentia predefinite"
 
 #: rkward/misc/editformatdialog.cpp:51
 #, kde-format
 msgid "As required"
-msgstr "Jak požadováno"
+msgstr ""
 
 #: rkward/misc/editformatdialog.cpp:53
 #, kde-format
 msgid "Fixed precision:"
-msgstr "Pevně daná přesnost:"
+msgstr ""
 
 #: rkward/misc/editformatdialog.cpp:72
 #, kde-format
 msgid "Formatting options for '%1'"
-msgstr "Volby formátování pro '%1'"
+msgstr ""
 
 #: rkward/misc/editlabelsdialog.cpp:204
 #, kde-format
 msgid "Levels / Value labels for '%1'"
-msgstr "Úrovně / Značky hodnot pro '%1'"
+msgstr ""
 
 #: rkward/misc/editlabelsdialog.cpp:207
 #, kde-format
@@ -2299,39 +2108,36 @@ msgid ""
 "index column is read only). To remove levels at the end of the list, just "
 "set them to empty."
 msgstr ""
-"Úrovně mohou být přiřazeny pouze k po sobě následujícím celým číslům, "
-"počínaje 1, (sloupec rejstříku je pouze pro čtení). Pro odstranění úrovní na "
-"konci seznamu je pouze musíte nastavit jako prázdné."
 
 #: rkward/misc/multistringselector.cpp:36
 #, kde-format
 msgid "Filename"
-msgstr "Název souboru"
+msgstr "Nomine de file"
 
 #: rkward/misc/multistringselector.cpp:103
 #, kde-format
 msgid "Add"
-msgstr "Přidat"
+msgstr "Adde"
 
 #: rkward/misc/multistringselector.cpp:113
 #, kde-format
 msgid "Up"
-msgstr "Nahoru"
+msgstr "In alto"
 
 #: rkward/misc/multistringselector.cpp:117
 #, kde-format
 msgid "Down"
-msgstr "Dolů"
+msgstr "A basso"
 
 #: rkward/misc/rkaccordiontable.cpp:85
 #, kde-format
 msgid "Click to add new row"
-msgstr "Klikněte pro přidání nové řady"
+msgstr ""
 
 #: rkward/misc/rkaccordiontable.cpp:441
 #, kde-format
 msgid "Remove this row / element"
-msgstr "Odstranit řádek / prvek"
+msgstr ""
 
 #: rkward/misc/rkcommonfunctions.cpp:243
 #, kde-format
@@ -2339,13 +2145,11 @@ msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
 "</p>"
 msgstr ""
-"<p><em>Poznámka:</em> Toto nastavení se neprojeví, dokud RKWard nespustíte "
-"znovu.</p>"
 
 #: rkward/misc/rkdynamicsearchline.cpp:24
 #, kde-format
 msgid "Search"
-msgstr "Hledat"
+msgstr "Cerca"
 
 #: rkward/misc/rkdynamicsearchline.cpp:46
 #, kde-format
@@ -2360,37 +2164,37 @@ msgstr ""
 #: rkward/misc/rkfindbar.cpp:53
 #, kde-format
 msgid "Search backwards (previous occurrence of search term)"
-msgstr "Hledat dozadu (předchozí výskyt hledaného pojmu"
+msgstr ""
 
 #: rkward/misc/rkfindbar.cpp:59
 #, kde-format
 msgid "Search forward (next occurrence of search term)"
-msgstr "Hledat dopředu (další výskyt hledaného pojmu)"
+msgstr ""
 
 #: rkward/misc/rkfindbar.cpp:89
 #, kde-format
 msgid "Match case"
-msgstr "Rozlišovat malá/VELKÁ"
+msgstr "Distingue inter majusculas e minusculas"
 
 #: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:926
 #, kde-format
 msgid "Find as you type"
-msgstr "Hledat při psaní"
+msgstr "Trova durante que tu typa"
 
 #: rkward/misc/rkfindbar.cpp:94
 #, kde-format
 msgid "Highlight all matches"
-msgstr "Zvýraznit všechny odpovídající"
+msgstr "Evidentia omne coincidentias"
 
 #: rkward/misc/rkobjectlistview.cpp:51
 #, kde-format
 msgid "Other Environments"
-msgstr "Ostatní prostředí"
+msgstr ""
 
 #: rkward/misc/rkobjectlistview.cpp:53
 #, kde-format
 msgid "My Workspace"
-msgstr "Moje pracovní plocha"
+msgstr ""
 
 #: rkward/misc/rkobjectlistview.cpp:54
 #, kde-format
@@ -2400,7 +2204,7 @@ msgstr ""
 #: rkward/misc/rkobjectlistview.cpp:210 rkward/misc/rkobjectlistview.cpp:306
 #, kde-format
 msgid "Show Hidden Objects"
-msgstr "Zobrazit skryté objekty"
+msgstr ""
 
 #: rkward/misc/rkobjectlistview.cpp:261
 #, kde-format
@@ -2416,7 +2220,7 @@ msgstr ""
 #: rkward/misc/rkobjectlistview.cpp:283
 #, kde-format
 msgid "Top level objects, and direct children"
-msgstr "Objekty nejvyšší úrovně, a přímí potomci"
+msgstr ""
 
 #: rkward/misc/rkobjectlistview.cpp:284
 #, kde-format
@@ -2431,12 +2235,12 @@ msgstr ""
 #: rkward/misc/rkobjectlistview.cpp:293
 #, kde-format
 msgid "Show all objects"
-msgstr "Zobrazit všechny objekty"
+msgstr ""
 
 #: rkward/misc/rkobjectlistview.cpp:294
 #, kde-format
 msgid "Show functions, only"
-msgstr "Ukázat funkce, pouze"
+msgstr ""
 
 #: rkward/misc/rkobjectlistview.cpp:295
 #, kde-format
@@ -2469,12 +2273,12 @@ msgstr ""
 #: rkward/misc/rkobjectlistview.cpp:478
 #, kde-format
 msgid "Show Fields"
-msgstr "Zobrazit všechna pole"
+msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:130
 #, kde-format
 msgid "Select destination file name"
-msgstr "Vyberte název cílového souboru"
+msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:132
 #, kde-format
@@ -2484,37 +2288,37 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:132
 #, kde-format
 msgid "All Files [*](*)"
-msgstr "Všechny soubory [*](*)"
+msgstr "Omne files [*](*)"
 
 #: rkward/misc/rkoutputdirectory.cpp:137
 #, kde-format
 msgid "File selection canceled"
-msgstr "Výběr souborů zrušen"
+msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:146
 #, kde-format
 msgid "Are you sure you want to overwrite the existing file '%1'?"
-msgstr "Opravdu si přejete přepsat existující soubor '%1'?"
+msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:136
 #, kde-format
 msgid "Overwrite?"
-msgstr "Přepsat?"
+msgstr "Super scribe?"
 
 #: rkward/misc/rkoutputdirectory.cpp:149 rkward/misc/rkoutputdirectory.cpp:335
 #, kde-format
 msgid "User canceled"
-msgstr "Zrušeno uživatelem"
+msgstr "Usator cancellate"
 
 #: rkward/misc/rkoutputdirectory.cpp:151
 #, kde-format
 msgid "Not overwriting existing file"
-msgstr "Nepřepisuji existující soubor"
+msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:174
 #, kde-format
 msgid "Error while writing temporary output archive %1"
-msgstr "Chyba při zapisování dočasného výstupního archivu %1"
+msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:178
 #, kde-format
@@ -2563,7 +2367,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:240
 #, kde-format
 msgid "User canceled."
-msgstr "Zrušeno uživatelem."
+msgstr "Usator cancellate."
 
 #: rkward/misc/rkoutputdirectory.cpp:284
 #, kde-format
@@ -2580,7 +2384,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:322
 #, kde-format
 msgid "[Unnamed]"
-msgstr "[Nepojmenované]"
+msgstr "[sin nomine]"
 
 #: rkward/misc/rkoutputdirectory.cpp:330
 #, kde-format
@@ -2597,7 +2401,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:333
 #, kde-format
 msgid "Discard unsaved changes?"
-msgstr "Zahodit neuložené změny?"
+msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:423
 #, kde-format
@@ -2617,12 +2421,12 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:508
 #, kde-format
 msgid "A file named '%1' already exists. Cannot create it."
-msgstr "Soubor s názvem \"%1\" již existuje. Nelze jej vytvořit."
+msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:519
 #, kde-format
 msgid "File '%1' does not exist."
-msgstr "Soubor '%1' neexistuje."
+msgstr "Le file '%1' non existe."
 
 #: rkward/misc/rkoutputdirectory.cpp:559
 #, kde-format
@@ -2638,35 +2442,35 @@ msgstr ""
 #, kde-format
 msgid ""
 "<b>There have been errors and / or warnings. See below for a transcript</b>"
-msgstr "<b>Vyskytly se chyby a/nebo varování. Podívejte se níže na zápis</b>"
+msgstr ""
 
 #: rkward/misc/rkprogresscontrol.cpp:258
 #: rkward/settings/rksettingsmoduleoutput.cpp:187
 #, kde-format
 msgid "Output"
-msgstr "Výstup"
+msgstr "Exito"
 
 #: rkward/misc/rkprogresscontrol.cpp:259
 #, kde-format
 msgid "Output:"
-msgstr "Výstup:"
+msgstr "Egresso:"
 
 #: rkward/misc/rkprogresscontrol.cpp:261
 #, kde-format
 msgid "Errors / Warnings"
-msgstr "Chyby / varování"
+msgstr "Errores / Avisos"
 
 #: rkward/misc/rkprogresscontrol.cpp:262
 #, kde-format
 msgid "Errors / Warnings:"
-msgstr "Chyby / varování:"
+msgstr "Errores / Avisos:"
 
 #: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:417
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
-msgstr "Zrušit"
+msgstr "Cancella"
 
 #: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
@@ -2676,14 +2480,14 @@ msgstr ""
 #: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
 msgid "<b>Done</b>"
-msgstr "<b>Hotovo</b>"
+msgstr "<b>Facite</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:488
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
-msgstr "Zavřít"
+msgstr "Claude"
 
 #: rkward/misc/rkprogresscontrol.cpp:536 rkward/windows/rkwindowcatcher.cpp:399
 #, kde-format
@@ -2698,7 +2502,7 @@ msgstr ""
 #: rkward/misc/rkprogresscontrol.cpp:536
 #, kde-format
 msgid "Cancel operation"
-msgstr ""
+msgstr "Cancella operation"
 
 #: rkward/misc/rkprogresscontrol.cpp:536
 #, kde-format
@@ -2713,12 +2517,12 @@ msgstr ""
 #: rkward/misc/rksaveobjectchooser.cpp:44
 #, kde-format
 msgid "Change"
-msgstr "Změnit"
+msgstr "Modifica"
 
 #: rkward/misc/rksaveobjectchooser.cpp:54
 #, kde-format
 msgid "Overwrite"
-msgstr "Přepsat"
+msgstr "Super scribe"
 
 #: rkward/misc/rksaveobjectchooser.cpp:56
 #, kde-format
@@ -2728,37 +2532,37 @@ msgstr ""
 #: rkward/misc/rksaveobjectchooser.cpp:88
 #, kde-format
 msgid "Parent object: %1"
-msgstr "Rodičovský objekt: %1"
+msgstr ""
 
 #: rkward/misc/rksaveobjectchooser.cpp:98
 #, kde-format
 msgid "Select parent object"
-msgstr "Vyberte rodičovský objekt"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr "Vložit jinak..."
+msgstr "Colla special..."
 
 #: rkward/misc/rkspecialactions.cpp:69
 #, kde-format
 msgid "Paste Special..."
-msgstr "Vložit jinak..."
+msgstr "Colla special..."
 
 #: rkward/misc/rkspecialactions.cpp:86
 #, kde-format
 msgid "Paste Mode"
-msgstr "Režim vkládání"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:89
 #, kde-format
 msgid "Single string"
-msgstr "Jeden řetězec"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:92
 #, kde-format
 msgid "Vector"
-msgstr "Vektor"
+msgstr "Vector"
 
 #: rkward/misc/rkspecialactions.cpp:98
 #, kde-format
@@ -2768,57 +2572,57 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:108
 #, kde-format
 msgid "Field Separator"
-msgstr "Oddělovač polí"
+msgstr "Separator de campo"
 
 #: rkward/misc/rkspecialactions.cpp:111
 #, kde-format
 msgid "Tab"
-msgstr "Tabulátor"
+msgstr "Tab"
 
 #: rkward/misc/rkspecialactions.cpp:115
 #, kde-format
 msgid "Comma"
-msgstr "Čárka"
+msgstr "Virgula"
 
 #: rkward/misc/rkspecialactions.cpp:119
 #, kde-format
 msgid "Single space"
-msgstr "Jedna mezera"
+msgstr "Spatio Singule"
 
 #: rkward/misc/rkspecialactions.cpp:122
 #, kde-format
 msgid "Any whitespace"
-msgstr "Jakékoli prázdné místo"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:126
 #, kde-format
 msgid "Other:"
-msgstr "Jiné:"
+msgstr "Altere:"
 
 #: rkward/misc/rkspecialactions.cpp:139
 #, kde-format
 msgid "Quoting"
-msgstr "Citování"
+msgstr "Citar"
 
 #: rkward/misc/rkspecialactions.cpp:142
 #, kde-format
 msgid "Do not quote values"
-msgstr "Nedávat hodnoty do uvozovek"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:145
 #, kde-format
 msgid "Automatic"
-msgstr "Automaticky"
+msgstr "Automatic"
 
 #: rkward/misc/rkspecialactions.cpp:149
 #, kde-format
 msgid "Quote all values"
-msgstr "Dávat všechny hodnoty do uvozovek"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:156
 #, kde-format
 msgid "Labels"
-msgstr "Popisky"
+msgstr "Etiquettas"
 
 #: rkward/misc/rkspecialactions.cpp:158
 #, kde-format
@@ -2833,27 +2637,27 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:165
 #, kde-format
 msgid "Transformations"
-msgstr "Transformace"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:167
 #, kde-format
 msgid "Reverse horizontally"
-msgstr "Otočit vodorovně"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:169
 #, kde-format
 msgid "Reverse vertically"
-msgstr "Otočit svisle"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:171
 #, kde-format
 msgid "Flip rows/columns"
-msgstr "Prohodit řádky/sloupce"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:173
 #, kde-format
 msgid "Insert NAs where needed"
-msgstr "Vložit NA, kde je to potřeba"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:313
 #, kde-format
@@ -2870,17 +2674,17 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:314
 #, kde-format
 msgid "Paste failed"
-msgstr "Vložení selhalo"
+msgstr "Il falleva a collar"
 
 #: rkward/misc/rkstandardactions.cpp:27
 #, kde-format
 msgid "Copy lines to output"
-msgstr "Kopírovat řádky do výstupu"
+msgstr ""
 
 #: rkward/misc/rkstandardactions.cpp:46
 #, kde-format
 msgid "Run line / selection"
-msgstr "Provést řádek/výběr"
+msgstr ""
 
 #: rkward/misc/rkstandardactions.cpp:47
 #, kde-format
@@ -2888,23 +2692,21 @@ msgid ""
 "Runs the current selection (if any) or the current line (if there is no "
 "selection)"
 msgstr ""
-"Provede nynější výběr (je-li jaký) nebo nynější řádek (pokud není vybráno "
-"nic)"
 
 #: rkward/misc/rkstandardactions.cpp:50
 #, kde-format
 msgid "Run selection"
-msgstr "Provést výběr"
+msgstr ""
 
 #: rkward/misc/rkstandardactions.cpp:65
 #, kde-format
 msgid "Run all"
-msgstr "Provést vše"
+msgstr ""
 
 #: rkward/misc/rkstandardactions.cpp:81
 #, kde-format
 msgid "&Function reference"
-msgstr "Odkaz na &funkci"
+msgstr ""
 
 #: rkward/misc/rkstandardactions.cpp:137
 #, kde-format
@@ -2914,37 +2716,37 @@ msgstr ""
 #: rkward/misc/rkstandardactions.cpp:171
 #, kde-format
 msgid "Search online"
-msgstr "Hledat online"
+msgstr "Cerca  in linea"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:202
 #, kde-format
 msgid "Warnings or Errors:"
-msgstr "Varování nebo chyby:"
+msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:259
 #, kde-format
 msgid "Preview not (yet) possible"
-msgstr "Náhled není (ještě) možný"
+msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:261
 #, kde-format
 msgid "Preview disabled"
-msgstr "Náhled zakázán"
+msgstr "Vista preliminar dishabilitate"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:263
 #, kde-format
 msgid "Preview updating"
-msgstr "Obnovení náhledu"
+msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:265
 #, kde-format
 msgid "Preview up to date"
-msgstr "Náhled je aktuální"
+msgstr ""
 
 #: rkward/misc/xmlhelper.cpp:54
 #, kde-format
 msgid "Could not open file %1 for reading"
-msgstr "Nelze otevřít soubor %1 pro čtení"
+msgstr "Non pote aperir file '%1 in lectura"
 
 #: rkward/misc/xmlhelper.cpp:59
 #, kde-format
@@ -2952,69 +2754,66 @@ msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
 "Expect further errors to be reported below"
 msgstr ""
-"Chyba při zpracování souboru XML. Hlášení o chybě bylo: '%1' v řádku '%2', "
-"sloupec '%3'. Další chyby budou dále oznamovány níže"
 
 #: rkward/misc/xmlhelper.cpp:176
 #, kde-format
 msgid "Trying to retrieve children of invalid element"
-msgstr "Pokouší se najít potomky neplatného prvku"
+msgstr ""
 
 #: rkward/misc/xmlhelper.cpp:187
 #, kde-format
 msgid "Expected exactly one element '%1' but found %2"
-msgstr "Očekáván přesně jeden prvek '%1', ale nalezeny %2"
+msgstr ""
 
 #: rkward/misc/xmlhelper.cpp:241 rkward/misc/xmlhelper.cpp:253
 #, kde-format
 msgid "'%1'-attribute not given. Assuming '%2'"
-msgstr "'%1' - nezadána vlastnost. Předpokládá se '%2'"
+msgstr ""
 
 #: rkward/misc/xmlhelper.cpp:276
 #, kde-format
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr "Nedovolená hodnota atributu. Povoleny jsou pouze hodnoty jeden z '%1'."
+msgstr ""
 
 #: rkward/misc/xmlhelper.cpp:290
 #, kde-format
 msgid "Illegal attribute value. Only integer numbers are allowed."
-msgstr "Nedovolená hodnota atributu. Povolena jsou pouze celá čísla."
+msgstr ""
 
 #: rkward/misc/xmlhelper.cpp:306
 #, kde-format
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr "Nedovolená hodnota atributu. Povolena jsou pouze desetinná čísla."
+msgstr ""
 
 #: rkward/misc/xmlhelper.cpp:324
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
-"Nedovolená hodnota atributu. Povoleny jsou pouze hodnoty '%1' nebo '%2'."
 
 #: rkward/misc/xmlhelper.cpp:356
 #, kde-format
 msgid "Trying to retrieve contents of invalid element"
-msgstr "Zkoušíte vyvolat obsah neplatného prvku"
+msgstr ""
 
 #: rkward/misc/xmlhelper.cpp:400
 #, kde-format
 msgid "XML-parsing '%1' "
-msgstr "Analýza XML '%1' "
+msgstr ""
 
 #: rkward/plugin/rkcheckbox.cpp:64
 #, kde-format
 msgid "yes"
-msgstr "ano"
+msgstr "si"
 
 #: rkward/plugin/rkcheckbox.cpp:64
 #, kde-format
 msgid "no"
-msgstr "ne"
+msgstr "no"
 
 #: rkward/plugin/rkcomponentmap.cpp:266 rkward/plugin/rkcomponentmap.cpp:647
 #, kde-format
 msgid "(no label)"
-msgstr "(žádný popisek)"
+msgstr "(Nulle Etiquetta)"
 
 #: rkward/plugin/rkcomponentmap.cpp:463
 #, kde-format
@@ -3023,15 +2822,11 @@ msgid ""
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
 ">Configure RKWard->Plugins), or perhaps the plugin was renamed."
 msgstr ""
-"Pokusil jste se vyvolat přídavný modul s názvem '%1', ale tento přídavný "
-"modul je v současnosti neznámý. Pravděpodobně musíte načíst odpovídající "
-"mapu přídavných modulů (Nastavit → Nastavit RKWard → Přídavné moduly), nebo "
-"byl možná tento přídavný modul přejmenován."
 
 #: rkward/plugin/rkcomponentmap.cpp:465
 #, kde-format
 msgid "No such plugin"
-msgstr "Žádný takový modul"
+msgstr ""
 
 #: rkward/plugin/rkcomponentmap.cpp:475
 #, kde-format
@@ -3044,7 +2839,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmap.cpp:477
 #, kde-format
 msgid "Bad serialization format"
-msgstr "Nesprávný formát pro řazení"
+msgstr ""
 
 #: rkward/plugin/rkcomponentmap.cpp:500
 #, kde-format
@@ -3052,8 +2847,6 @@ msgid ""
 "\n"
 "The plugin has crashed."
 msgstr ""
-"\n"
-"Přídavný modul spadl."
 
 #: rkward/plugin/rkcomponentmap.cpp:508
 #, kde-format
@@ -3061,13 +2854,11 @@ msgid ""
 "Not all specified settings could be applied. Most likely this is because "
 "some R objects are no longer present in your current workspace."
 msgstr ""
-"Ne všechna stanovená nastavení se mohla použít. Většinou jde o to, že "
-"některé objekty R již nejsou dostupné ve vašem pracovním prostředí."
 
 #: rkward/plugin/rkcomponentmap.cpp:511
 #, kde-format
 msgid "Not all settings applied"
-msgstr "Nepoužita všechna nastavení"
+msgstr ""
 
 #: rkward/plugin/rkcomponentmap.cpp:524
 #, kde-format
@@ -3075,13 +2866,11 @@ msgid ""
 "\n"
 "The plugin could not be auto-submitted with these settings."
 msgstr ""
-"\n"
-"Přídavný modul nemohl být s těmito nastaveními automaticky odeslán."
 
 #: rkward/plugin/rkcomponentmap.cpp:526
 #, kde-format
 msgid "Could not submit"
-msgstr "Nepodařilo se odeslat"
+msgstr ""
 
 #: rkward/plugin/rkcomponentmap.cpp:568
 #, kde-format
@@ -3094,15 +2883,12 @@ msgstr ""
 msgid ""
 "Skipping plugin map file '%1': Not compatible with this version of RKWard"
 msgstr ""
-"Přeskakuje se soubor s přiřazením přídavného modulu %1. Není kompatibilní s "
-"touto verzí RKWardu"
 
 #: rkward/plugin/rkcomponentmap.cpp:598
 #, kde-format
 msgid ""
 "Specified required file '%1' does not exist or is not readable. Ignoring."
 msgstr ""
-"Určený požadovaný soubor '%1' neexistuje nebo není čitelný. Ignoruji jej."
 
 #: rkward/plugin/rkcomponentmap.cpp:616
 #, kde-format
@@ -3110,16 +2896,12 @@ msgid ""
 "Could not resolve specified required pluginmap '%1'. You may have to install "
 "additional packages."
 msgstr ""
-"Nepodařilo se analyzovat určenou požadovanou mapu přídavných modulů '%1'. "
-"Možná budete muset nainstalovat dodatečné balíčky."
 
 #: rkward/plugin/rkcomponentmap.cpp:650
 #, kde-format
 msgid ""
 "Duplicate declaration of component id \"%1\" within pluginmap file \"%2\"."
 msgstr ""
-"Duplicitní deklarace ID součásti \"%1\" v souboru s mapou přídavných modulů "
-"\"%2\"."
 
 #: rkward/plugin/rkcomponentmap.cpp:656
 #, kde-format
@@ -3127,76 +2909,74 @@ msgid ""
 "Specified file '%1' for component id \"%2\" does not exist or is not "
 "readable. Ignoring."
 msgstr ""
-"Určený soubor '%1' pro ID součásti \"%2\" neexistuje nebo není čitelný. "
-"Ignoruji jej."
 
 #: rkward/plugin/rkcomponentmap.cpp:672
 #, kde-format
 msgid ""
 "Component '%1' is not available in a version compatible with this version of "
 "RKWard"
-msgstr "Součást '%1' není dostupná ve verzi vhodné pro tuto verzi RKWardu"
+msgstr ""
 
 #: rkward/plugin/rkcomponentmeta.cpp:40
 #, kde-format
 msgid "Unspecified"
-msgstr "Neurčeno"
+msgstr "Non specificate"
 
 #: rkward/plugin/rkcomponentmeta.cpp:79
 #, kde-format
 msgid "Copyright (c): %1"
-msgstr "Autorská práva (c): %1"
+msgstr "Copyright (c): %1"
 
 #: rkward/plugin/rkcomponentmeta.cpp:80
 #, kde-format
 msgid "License: %1"
-msgstr "Licence: %1"
+msgstr "Licentia; %1"
 
 #: rkward/plugin/rkcomponentmeta.cpp:83
 #, kde-format
 msgid "Authors:"
-msgstr "Autoři:"
+msgstr "Autores:"
 
 #: rkward/plugin/rkcomponentmeta.cpp:89
 #, kde-format
 msgctxt "Author roles (contributor, etc.)"
 msgid "Roles"
-msgstr "Úlohy"
+msgstr "Rolos:"
 
 #: rkward/plugin/rkcomponentmeta.cpp:97
 #, kde-format
 msgid "Translators:"
-msgstr "Překladatelé:"
+msgstr "Traductores:"
 
 #: rkward/plugin/rkcomponentmeta.cpp:196
 #, kde-format
 msgid "RKWard plugin map"
-msgstr "Mapa přídavného modulu pro RKWard"
+msgstr ""
 
 #: rkward/plugin/rkcomponentmeta.cpp:197
 #, kde-format
 msgid "R package"
-msgstr "Balíček R"
+msgstr ""
 
 #: rkward/plugin/rkcomponentproperties.cpp:928
 #, kde-format
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
-msgstr "Tento objekt má %1 rozměr(y), ale je/jsou očekáván(y) %2 rozměr(y)."
+msgstr ""
 
 #: rkward/plugin/rkcomponentproperties.cpp:931
 #, kde-format
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
-msgstr "Tento objekt má délku %1, ale je očekávána nejmenší délka %2."
+msgstr ""
 
 #: rkward/plugin/rkcomponentproperties.cpp:932
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
-msgstr "Tento objekt má délku %1, ale je očekávána největší délka %2."
+msgstr ""
 
 #: rkward/plugin/rkcomponentproperties.cpp:944
 #, kde-format
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
-msgstr "Nezdá se, že by tento objekt patřil do některé ze tříd <i>%1</i>."
+msgstr ""
 
 #: rkward/plugin/rkcomponentproperties.cpp:951
 #, kde-format
@@ -3204,133 +2984,131 @@ msgid ""
 "This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</"
 "i>."
 msgstr ""
-"Datový typ tohoto objektu je <i>%1</i>, ale dovolený typ(y) je/jsou <i>%2</"
-"i>."
 
 #: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:34
 #, kde-format
 msgid "Select one:"
-msgstr "Vyberte jeden:"
+msgstr ""
 
 #: rkward/plugin/rkformula.cpp:57
 #, kde-format
 msgid "Specify model"
-msgstr "Stanovit model"
+msgstr ""
 
 #: rkward/plugin/rkformula.cpp:62
 #, kde-format
 msgid "Full Model"
-msgstr "Plný model"
+msgstr ""
 
 #: rkward/plugin/rkformula.cpp:64
 #, kde-format
 msgid "Main Effects only"
-msgstr "Pouze hlavní efekty"
+msgstr ""
 
 #: rkward/plugin/rkformula.cpp:66
 #, kde-format
 msgid "Custom Model:"
-msgstr "Vlastní model:"
+msgstr ""
 
 #: rkward/plugin/rkformula.cpp:92
 #, kde-format
 msgid "Main effects"
-msgstr "Hlavní efekty"
+msgstr ""
 
 #: rkward/plugin/rkformula.cpp:97
 #, kde-format
 msgid "Level"
-msgstr "Úroveň"
+msgstr "Nivello"
 
 #: rkward/plugin/rkformula.cpp:97
 #, kde-format
 msgid "Term"
-msgstr "Terminál"
+msgstr "Termino"
 
 #: rkward/plugin/rkinput.cpp:41
 #, kde-format
 msgid "Enter text"
-msgstr "Zadejte text"
+msgstr ""
 
 #: rkward/plugin/rkmatrixinput.cpp:35
 #, kde-format
 msgid "Enter data:"
-msgstr "Zadejte data:"
+msgstr "Inserta datos:"
 
 #: rkward/plugin/rkmatrixinput.cpp:505
 #, kde-format
 msgid "Type on these cells to expand the table"
-msgstr "Pište do těchto buněk pro rozšíření tabulky"
+msgstr ""
 
 #: rkward/plugin/rkmatrixinput.cpp:516
 #, kde-format
 msgid "Empty values are not allowed"
-msgstr "Prázdné hodnoty nejsou dovoleny"
+msgstr ""
 
 #: rkward/plugin/rkmatrixinput.cpp:540
 #, kde-format
 msgid "This column contains illegal values in some of its cells"
-msgstr "Tento sloupec obsahuje v některých svých buňkách neplatné hodnoty"
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:51
 #, kde-format
 msgid "Updating status, please wait"
-msgstr "Aktualizuje se stav. Prosím, počkejte"
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:810
 #, kde-format
 msgid "This row has not yet been processed."
-msgstr "Tento řádek ještě nebyl zpracován."
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:811
 #, kde-format
 msgid "This row contains invalid settings."
-msgstr "Tento řádek obsahuje neplatná nastavení."
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:831
 #, kde-format
 msgid "Please wait while settings are being processed"
-msgstr "Prosím, počkejte zatímco jsou nastavení zpracovávána"
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:834
 #, kde-format
 msgid "One or more rows contain invalid settings."
-msgstr "Jeden nebo více řádků obsahuje neplatná nastavení."
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:835
 #, kde-format
 msgid "At least %1 rows have to be defined (if any)"
-msgstr "Musí se zadat alespoň %1 řádků (jestli nějaký)"
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:836
 #, kde-format
 msgid "At least %1 rows have to be defined"
-msgstr "Musí se zadat alespoň %1 řádků"
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:837
 #, kde-format
 msgid "At most %1 rows may be defined"
-msgstr "Může být zadáno nanejvýš %1 řádků"
+msgstr ""
 
 #: rkward/plugin/rkoptionset.cpp:838
 #, kde-format
 msgid "This element is not valid for the following reason(s):"
-msgstr "Tento prvek není platný z následujícího důvodu(ů):"
+msgstr ""
 
 #: rkward/plugin/rkpluginbrowser.cpp:46
 #, kde-format
 msgid "Enter filename"
-msgstr "Zadejte název souboru"
+msgstr ""
 
 #: rkward/plugin/rkpluginbrowser.cpp:47
 #, kde-format
 msgid "Select"
-msgstr "Vybrat"
+msgstr "Selige"
 
 #: rkward/plugin/rkpluginbrowser.cpp:123
 #, kde-format
 msgid "The file or directory does not exist."
-msgstr "Soubor nebo adresář neexistuje."
+msgstr "Le file o le directorio non existe."
 
 #: rkward/plugin/rkpluginbrowser.cpp:126
 #, kde-format
@@ -3377,23 +3155,23 @@ msgstr ""
 #: rkward/plugin/rkpluginsaveobject.cpp:29
 #, kde-format
 msgid "Save to:"
-msgstr "Uložit do:"
+msgstr "Salveguarda in:"
 
 #: rkward/plugin/rkpluginsaveobject.cpp:30
 #, kde-format
 msgid "my.data"
-msgstr "Moje data"
+msgstr "mi.datos"
 
 #: rkward/plugin/rkpluginspinbox.cpp:35
 #, kde-format
 msgid "Enter value:"
-msgstr "Zadat hodnotu:"
+msgstr "Inserta valor:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
 #: rkward/windows/rkcommandeditorwindow.cpp:373
 #, kde-format
 msgid "Preview"
-msgstr "Náhled"
+msgstr "Vista preliminar"
 
 #: rkward/plugin/rkstandardcomponent.cpp:89
 #, kde-format
@@ -3401,56 +3179,54 @@ msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr ""
-"Při pokusu o přečtení popisu k tomuto přídavnému modulu se vyskytla chyba "
-"('%1'). Prosím, podívejte se na podrobnosti ve standardním výstupu."
 
 #: rkward/plugin/rkstandardcomponent.cpp:89
 #, kde-format
 msgid "Could not create plugin"
-msgstr "Nepodařilo se vytvořit přídavný modul"
+msgstr ""
 
 #: rkward/plugin/rkstandardcomponent.cpp:675
 #, kde-format
 msgid "Options"
-msgstr "Možnosti"
+msgstr "Optiones"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:146
 #: rkward/plugin/rkstandardcomponentgui.cpp:215
 #, kde-format
 msgid "Code Preview"
-msgstr "Náhled kódu"
+msgstr ""
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:184
 #: rkward/plugin/rkstandardcomponentgui.cpp:605
 #, kde-format
 msgid "Submit"
-msgstr "Odeslat"
+msgstr "Submitte"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:192
 #, kde-format
 msgid "Auto close"
-msgstr "Automaticky zavřít"
+msgstr "Claude automaticamente"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:198
 #: rkward/plugin/rkstandardcomponentgui.cpp:497
 #, kde-format
 msgid "Help"
-msgstr "Nápověda"
+msgstr "Adjuta"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:204
 #, kde-format
 msgid "Use Wizard"
-msgstr "Použít průvodce"
+msgstr ""
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:323
 #, kde-format
 msgid "Run again"
-msgstr "Spustit znovu"
+msgstr ""
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:448
 #, kde-format
 msgid "Processing. Please wait"
-msgstr "Zpracovává se. Prosím, počkejte"
+msgstr ""
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:525
 #, kde-format
@@ -3458,8 +3234,6 @@ msgid ""
 "Below you can preview the R commands corresponding to the settings you made. "
 "Click 'Submit' to run the commands."
 msgstr ""
-"Níže můžete vidět příkaz(y), které odpovídají nastavení, jež jste udělali."
-"Klikněte na \"Předat\" pro provedení příkazu(ů)."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:528
 #, kde-format
@@ -3472,23 +3246,23 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponentgui.cpp:600
 #, kde-format
 msgid "Next >"
-msgstr "Následující >"
+msgstr "Proxime >"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:592
 #: rkward/plugin/rkstandardcomponentgui.cpp:610
 #, kde-format
 msgid "< Back"
-msgstr "< Zpět"
+msgstr "< Retro"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:613
 #, kde-format
 msgid "Use Dialog"
-msgstr "Použít dialog"
+msgstr ""
 
 #: rkward/plugin/rkvarselector.cpp:48
 #, kde-format
 msgid "Select Variable(s)"
-msgstr "Vyberte proměnnou(é)"
+msgstr ""
 
 #: rkward/plugin/rkvarselector.cpp:62
 #, kde-format
@@ -3521,39 +3295,39 @@ msgstr ""
 #: rkward/plugin/rkvarslot.cpp:37
 #, kde-format
 msgid "Variable:"
-msgstr "Proměnná:"
+msgstr "Variabile:"
 
 #: rkward/plugin/rkvarslot.cpp:157
 #, kde-format
 msgid ""
 "<p>Using this object, here, may lead to failures or unexpected results, for "
 "the following reason(s):</p>"
-msgstr "<p>Tento objekt zde není povolen z následujícího(ch) důvodu(ů):</p>"
+msgstr ""
 
 #: rkward/rbackend/rcommandstack.cpp:268
 #, kde-format
 msgid "Running"
-msgstr "Spuštěno"
+msgstr "Il es in execution"
 
 #: rkward/rbackend/rcommandstack.cpp:271
 #, kde-format
 msgid "Canceled"
-msgstr "Zrušeno"
+msgstr "Cancellate"
 
 #: rkward/rbackend/rcommandstack.cpp:280
 #, kde-format
 msgid "Command Chain"
-msgstr "Sled příkazů"
+msgstr ""
 
 #: rkward/rbackend/rcommandstack.cpp:282
 #, kde-format
 msgid "Closed"
-msgstr "Uzavřeno"
+msgstr "Claudite"
 
 #: rkward/rbackend/rcommandstack.cpp:283
 #, kde-format
 msgid "Waiting"
-msgstr "Čeká se"
+msgstr "Expectante"
 
 #: rkward/rbackend/rcommandstack.cpp:286
 #, kde-format
@@ -3563,13 +3337,13 @@ msgstr ""
 #: rkward/rbackend/rcommandstack.cpp:312
 #, kde-format
 msgid "Command"
-msgstr "Příkaz"
+msgstr "Commando"
 
 #: rkward/rbackend/rcommandstack.cpp:315
 #: rkward/settings/rksettingsmodulekateplugins.cpp:41
 #, kde-format
 msgid "Description"
-msgstr "Popis"
+msgstr "Description"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:109
 #, kde-format
@@ -3577,14 +3351,11 @@ msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
 msgstr ""
-"Nepodařilo se najít spustitelný soubor podpůrné vrstvy. Jedná se "
-"pravděpodobně o problém s vaší instalací."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:165
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
-"Nepodařilo se spustit spustitelný soubor podpůrné vrstvy. Zpráva o chybě: %1"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:218
 #, kde-format
@@ -3592,8 +3363,6 @@ msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
 "token '%2'"
 msgstr ""
-"Chyba při komunikaci s procesem podpůrné vrstvy. Očekáván symbol '%1', "
-"obdržen symbol '%2'"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:221
 #, kde-format
@@ -3602,15 +3371,12 @@ msgid ""
 "'%1' while backend is '%2'.\n"
 "Please fix your installation."
 msgstr ""
-"Neshoda ve verzích při komunikaci s procesem jádra. Uživatelské rozhraní je "
-"ve verzi '%1' zatímco jádro je ve verzi '%2'.\n"
-"Prosím, opravte svou instalaci."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:255
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
-msgstr "Nepodařilo se spustit proces jádra. Prosím, prověřte svou instalaci."
+msgstr ""
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:256
 #, kde-format
@@ -3625,7 +3391,7 @@ msgstr ""
 #: rkward/rbackend/rkrbackend.cpp:571
 #, kde-format
 msgid "The R engine has shut down with status: %1"
-msgstr "Jádro R bylo zastaveno se stavem: %1"
+msgstr ""
 
 #: rkward/rbackend/rkrbackend.cpp:592
 #, kde-format
@@ -3633,18 +3399,16 @@ msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
-"Jádro R narazilo na kritickou chybu:\n"
-"%1"
 
 #: rkward/rbackend/rkrbackend.cpp:762
 #, kde-format
 msgid "Message from the R backend"
-msgstr "Zpráva od jádra k R"
+msgstr ""
 
 #: rkward/rbackend/rkrbackend.cpp:770
 #, kde-format
 msgid "Question from the R backend"
-msgstr "Dotaz od jádra k R"
+msgstr ""
 
 #: rkward/rbackend/rkrbackend.cpp:1715
 #, kde-format
@@ -3690,7 +3454,7 @@ msgstr "OK"
 #: rkward/rbackend/rkrinterface.cpp:87
 #, kde-format
 msgid "R Startup"
-msgstr "Spuštění "
+msgstr ""
 
 #: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
@@ -3698,8 +3462,6 @@ msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
-"<p>\t-Vyskytla se neurčitá chyba, kterou RKWard zatím nezvládá. RKWard "
-"pravděpodobně nebude pracovat správně. Prosím, ověřte svou instalaci.</p>\n"
 
 #: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
@@ -3707,13 +3469,11 @@ msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
-"<p>Došlo k problémům při spouštění jádra R. Vyskytla se následující chyba(y):"
-"</p>\n"
 
 #: rkward/rbackend/rkrinterface.cpp:100
 #, kde-format
 msgid "Error starting R"
-msgstr "Chyba při spuštění R"
+msgstr ""
 
 #: rkward/rbackend/rkrinterface.cpp:583
 #, kde-format
@@ -3733,15 +3493,6 @@ msgid ""
 "RKWard). In this case, please choose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
-"Příkaz v jádru R se pokouší změnit kódování znaků. I když pro to RKWard "
-"nabízí podporu, a pokusí se přizpůsobit novému jazykovému nastavení, může "
-"tato operace vést k sotva patrným chybám, jestliže jsou současně otevřena "
-"okna s daty. Vlastnost také ještě není dobře vyzkoušena, a bude rozumné, "
-"když svou práci, předtím než budete pokračovat, uložíte.\n"
-"pokud máte otevřen nějaký editor dat, nebo v případě jakýchkoli pochybností, "
-"doporučuje se jej nejprve zavřít (v pozdějších verzích RKWardu toto bude "
-"zřejmě zjištěno automaticky). Prosím, v tomto případě zvolte Zrušit, potom "
-"uložte okna s daty, uložte a pokračujte."
 
 #: rkward/rbackend/rkrinterface.cpp:585
 #, kde-format
@@ -3776,14 +3527,11 @@ msgid ""
 "package-management tool, and there you can try to locate and install the "
 "needed package."
 msgstr ""
-"Podpůrná vrstva R požaduje balíček '%1' kvůli provedení úkolu, který v "
-"současnosti není nainstalován. Bude otevřen nástroj pro správu balíčků. Z "
-"něj se můžete pokusit o nalezení a nainstalování nezbytného balíčku."
 
 #: rkward/rbackend/rkrinterface.cpp:781
 #, kde-format
 msgid "Require package '%1'"
-msgstr "Vyžadován balíček '%1'"
+msgstr ""
 
 #: rkward/rbackend/rkrinterface.cpp:801
 #, kde-format
@@ -3793,7 +3541,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:881
 #, kde-format
 msgid "R backend requests information"
-msgstr "Jádro R požaduje informace"
+msgstr ""
 
 #: rkward/rbackend/rkrinterface.cpp:900
 #, kde-format
@@ -3805,35 +3553,28 @@ msgid ""
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
-"\n"
-"Jádro R bude zastaveno okamžitě Znamená to, že dále nemůžete používat "
-"jakékoli funkce závisející na jádru k R Také jinak řečeno, nemůžete provádět "
-"vůbec nic, dokonce ani uložit pracovní prostředí Máte-li štěstí, udělal to "
-"už R. Ovšem to, co můžete udělat, je, že můžete uložit otevřené soubory s "
-"příkazy, výstupy, nebo data z otevřeného editoru dat. Poté ukončete RKWard. "
-"Promiňte."
 
 #: rkward/rbackend/rkrinterface.cpp:901
 #, kde-format
 msgid "R engine has died"
-msgstr "Jádro R zhavarovalo"
+msgstr ""
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:208
 #, kde-format
 msgid "Graphics Device Number %1"
-msgstr "Číslo grafického zařízení %1"
+msgstr ""
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:592
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
-msgstr "%1 (Aktivní)"
+msgstr "%1 (Active)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
-msgstr "%1 (Neaktivní)"
+msgstr "%1 (Inactive)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:620
 #, kde-format
@@ -3841,20 +3582,16 @@ msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
-"<h2>Hledání bodu</h2><p>Použijte levé tlačítko myši pro výběr bodu/bodů. "
-"Jakékoli jiné tlačítko myši pro zastavení.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:630
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
-"<p>Stiskněte klávesu Enter, abyste uviděli další nákres, nebo klikněte na "
-"Zrušit pro přerušení.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:634
 #, kde-format
 msgid "Ok to show next plot?"
-msgstr "OK pro zobrazení dalšího nákresu?"
+msgstr ""
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -3863,19 +3600,16 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
-"Při pokusu o připojení znázorňovacího zobrazovacího jádra se vyskytla chyba. "
-"To znamená, že grafika na obrazovce pomocí zařízení RKWard v tomto sezení "
-"nebude pracovat."
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
 msgid "Expected connection token %1, but read connection token %2"
-msgstr "Očekáván symbol pro spojení %1, ale přečten symbol pro spojení %2"
+msgstr ""
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
 msgid "Error while connection graphics backend"
-msgstr "Chyba při připojování grafické podpůrné vrstvy"
+msgstr ""
 
 #: rkward/rkconsole.cpp:88
 #, kde-format
@@ -3883,18 +3617,16 @@ msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
 "katepart, and will exit, now. Please install katepart, and try again."
 msgstr ""
-"Součást 'katepart' se nepodařilo načíst. RKWard bez katepart nemůže běžet a "
-"bude nyní ukončen. Prosím, nainstalujte katepart, a pak to zkuste znovu."
 
 #: rkward/rkconsole.cpp:88
 #, kde-format
 msgid "'katepart' component could not be found"
-msgstr "Součást 'katepart' se nepodařilo najít"
+msgstr ""
 
 #: rkward/rkconsole.cpp:131 rkward/windows/rkcommandeditorwindow.cpp:380
 #, kde-format
 msgid "R Console"
-msgstr "Konzole R"
+msgstr ""
 
 #: rkward/rkconsole.cpp:137
 #, kde-format
@@ -3904,17 +3636,17 @@ msgstr ""
 #: rkward/rkconsole.cpp:139
 #, kde-format
 msgid "Dynamic word wrap"
-msgstr ""
+msgstr "Excision dynamic de parola"
 
 #: rkward/rkconsole.cpp:497
 #, kde-format
 msgid "Syntax error\n"
-msgstr "Syntaktická chyba\n"
+msgstr ""
 
 #: rkward/rkconsole.cpp:705
 #, kde-format
 msgid "Select command history file to load"
-msgstr "Vyberte soubor s historií příkazů, který se má načíst"
+msgstr ""
 
 #: rkward/rkconsole.cpp:705
 #, kde-format
@@ -3924,7 +3656,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:738
 #, kde-format
 msgid "Select filename to save command history"
-msgstr "Vyberte název souboru, kam se historie příkazů má uložit"
+msgstr ""
 
 #: rkward/rkconsole.cpp:738
 #, kde-format
@@ -3934,32 +3666,32 @@ msgstr ""
 #: rkward/rkconsole.cpp:863
 #, kde-format
 msgid "Interrupt running command"
-msgstr "Přerušit prováděný příkaz"
+msgstr ""
 
 #: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Copy selection literally"
-msgstr "Kopírovat výběr doslovně"
+msgstr ""
 
 #: rkward/rkconsole.cpp:873
 #, kde-format
 msgid "Copy commands, only"
-msgstr "Kopírovat pouze příkazy"
+msgstr ""
 
 #: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Print Console"
-msgstr "Vypsat konzoli"
+msgstr ""
 
 #: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Import command history..."
-msgstr "Importovat historii příkazů..."
+msgstr ""
 
 #: rkward/rkconsole.cpp:888
 #, kde-format
 msgid "Export command history..."
-msgstr "Exportovat historii příkazů..."
+msgstr ""
 
 #: rkward/rkconsole.cpp:907
 #, kde-format
@@ -3969,25 +3701,21 @@ msgid ""
 "want to append it to the command in the console, or do you want to reset the "
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
-"Nastavili jste RKWard na vedení příkazů skriptovacího editoru přes konzoli "
-"R. Nicméně je v současnosti ovládací panel zaneprázdněn jiným příkazem. "
-"Chcete jej přidat k příkazu v konzoli, nebo chcete konzoli nejprve "
-"resetovat? Pokud nyní nový příkaz spustit nechcete, stiskněte Zrušit."
 
 #: rkward/rkconsole.cpp:907
 #, kde-format
 msgid "R Console is busy"
-msgstr "Konzole R je zaneprázdněna"
+msgstr ""
 
 #: rkward/rkconsole.cpp:907
 #, kde-format
 msgid "Append"
-msgstr "Přidat"
+msgstr "Appende"
 
 #: rkward/rkconsole.cpp:907
 #, kde-format
 msgid "Reset, then submit"
-msgstr "Vymazat, pak odeslat"
+msgstr ""
 
 #. i18n: ectx: Menu (file)
 #: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
@@ -3997,7 +3725,7 @@ msgstr "Vymazat, pak odeslat"
 #: rkward/windows/rkstandardactions.rc:12
 #, kde-format
 msgid "&File"
-msgstr "&Soubor"
+msgstr "&File"
 
 #. i18n: ectx: Menu (view)
 #: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
@@ -4006,7 +3734,7 @@ msgstr "&Soubor"
 #: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
 #, kde-format
 msgid "&View"
-msgstr "Po&hled"
+msgstr "&Vista"
 
 #. i18n: ectx: Menu (run)
 #: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
@@ -4016,7 +3744,7 @@ msgstr "Po&hled"
 #: rkward/windows/rkstandardactions.rc:18
 #, kde-format
 msgid "&Run"
-msgstr "&Spustit"
+msgstr "E&xeque"
 
 #: rkward/rkward.cpp:305
 #, kde-format
@@ -4041,7 +3769,7 @@ msgstr ""
 #: rkward/rkward.cpp:318
 #, kde-format
 msgid "Setting up plugins..."
-msgstr "Nastavují se přídavné moduly..."
+msgstr ""
 
 #: rkward/rkward.cpp:352
 #, kde-format
@@ -4050,14 +3778,11 @@ msgid ""
 "activated, automatically. To de-activate selected plugin packs, use Settings-"
 ">Configure RKWard->Plugins."
 msgstr ""
-"Byly nalezeny nové balíčky s přídavnými moduly pro RKWard (uvedeny v seznamu "
-"níže). Tyto byly automaticky zapnuty. Pro vypnutí vybraných balíčků s "
-"přídavnými moduly, použijte Nastavení -> Nastavit RKWard -> Přídavné moduly."
 
 #: rkward/rkward.cpp:352
 #, kde-format
 msgid "New plugins found"
-msgstr "Nalezeny nové přídavné moduly"
+msgstr ""
 
 #: rkward/rkward.cpp:356
 #, kde-format
@@ -4067,15 +3792,11 @@ msgid ""
 "version of RKWard, or not meant for direct loading (see the 'Details' for "
 "more information). They have been disabled."
 msgstr ""
-"Následující soubory s přiřazením přídavných modulů RKWard se nepodařilo "
-"načíst, a byly zakázány. Mohlo by to být tím, že jsou poškozeny, "
-"nekompatibilní s touto verzí RKWardu, nebo nejsou určeny k přímému načtení "
-"(Další informace hledejte v Podrobnosti). Byly zakázány."
 
 #: rkward/rkward.cpp:356 rkward/rkward.cpp:360
 #, kde-format
 msgid "Failed to load some plugin maps"
-msgstr "Nepodařilo se načíst některé mapy přídavných modulů"
+msgstr ""
 
 #: rkward/rkward.cpp:360
 #, kde-format
@@ -4085,10 +3806,6 @@ msgid ""
 "with this version of RKWard (see the 'Details' for more information). Other "
 "plugins were loaded, successfully, however."
 msgstr ""
-"Při načítání následujících souborů s přiřazením přídavných modulů RKWardu se "
-"vyskytly nějaké chyby. Mohlo by to být tím, že jednotlivé přídavné moduly "
-"jsou poškozeny, nekompatibilní s touto verzí RKWardu (Další informace "
-"hledejte v Podrobnosti). Jiné přídavné moduly byly ovšem úspěšně načteny."
 
 #: rkward/rkward.cpp:360
 #, kde-format
@@ -4097,29 +3814,26 @@ msgid ""
 "upgrade RKWard, or remove and re-add them in Settings->Configure RKWard-"
 ">Plugins."
 msgstr ""
-"Poznámka: Kvůli těmto souborům s mapami přídavných modulů nebudete znovu "
-"varováni, dokud RKWard nezaktualizujete, nebo dokud je neodstraníte a znovu "
-"nepřidáte v Nastavení -> Nastavit RKWard -> Přídavné moduly."
 
 #: rkward/rkward.cpp:416
 #, kde-format
 msgid "Carbon Copy Settings"
-msgstr "Nastavení zasílání kopie"
+msgstr ""
 
 #: rkward/rkward.cpp:434 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
 #, kde-format
 msgid "Workspace"
-msgstr "Pracovní plocha"
+msgstr "Spatio de labor"
 
 #: rkward/rkward.cpp:443
 #, kde-format
 msgid "Files"
-msgstr "Soubory"
+msgstr "Files"
 
 #: rkward/rkward.cpp:447
 #, kde-format
 msgid "Pending Jobs"
-msgstr "Úkoly čekající na vyřízení"
+msgstr ""
 
 #: rkward/rkward.cpp:459
 #, kde-format
@@ -4129,32 +3843,32 @@ msgstr ""
 #: rkward/rkward.cpp:464
 #, kde-format
 msgid "Debugger Console"
-msgstr "Konzole ladiče"
+msgstr ""
 
 #: rkward/rkward.cpp:468
 #, kde-format
 msgid "RKWard Debug Messages"
-msgstr "Ladicí zprávy RKWard"
+msgstr ""
 
 #: rkward/rkward.cpp:480
 #, kde-format
 msgid "Dataset"
-msgstr "Soubor dat"
+msgstr "Insimul de datos"
 
 #: rkward/rkward.cpp:482
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
-msgstr "Vytvoří nový prázdný soubor dat a otevře jej pro úpravy"
+msgstr ""
 
 #: rkward/rkward.cpp:485
 #, kde-format
 msgid "Script File"
-msgstr "Soubor skriptu"
+msgstr "File de script"
 
 #: rkward/rkward.cpp:489
 #, kde-format
 msgid "Output document"
-msgstr "Výstupní dokument"
+msgstr ""
 
 #: rkward/rkward.cpp:491
 #, kde-format
@@ -4164,114 +3878,114 @@ msgstr ""
 #: rkward/rkward.cpp:496
 #, kde-format
 msgid "Open R Script File..."
-msgstr "Otevřít soubor skriptu R..."
+msgstr ""
 
 #: rkward/rkward.cpp:500
 #, kde-format
 msgid "Open RKWard Output File..."
-msgstr "Otevřít výstupní soubor RKWard..."
+msgstr ""
 
 #: rkward/rkward.cpp:504
 #, kde-format
 msgid "Open any File..."
-msgstr "Otevřít jakýkoliv soubor..."
+msgstr ""
 
 #: rkward/rkward.cpp:509
 #, kde-format
 msgid "Open Recent R Script File"
-msgstr "Otevřít nedávný soubor skriptu R"
+msgstr ""
 
 #: rkward/rkward.cpp:513
 #, kde-format
 msgid "Import Assistant"
-msgstr "Pomocník s importem"
+msgstr ""
 
 #: rkward/rkward.cpp:514
 #, kde-format
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
-msgstr "Pomocník pro nalezení nejlepší metody pro import dat z různých formátů"
+msgstr ""
 
 #: rkward/rkward.cpp:518
 #, kde-format
 msgid "Open Workspace..."
-msgstr "Otevřít pracovní prostředí..."
+msgstr ""
 
 #: rkward/rkward.cpp:520
 #, kde-format
 msgid "Opens an existing document"
-msgstr "Otevře existující dokument"
+msgstr ""
 
 #: rkward/rkward.cpp:525
 #, kde-format
 msgid "Open Recent Workspace"
-msgstr "Otevřít nedávné pracovní prostředí"
+msgstr ""
 
 #: rkward/rkward.cpp:526
 #, kde-format
 msgid "Opens a recently used file"
-msgstr "Otevře nedávno použitý soubor"
+msgstr "Aperi un file usate recentemente"
 
 #: rkward/rkward.cpp:529
 #, kde-format
 msgid "Save Workspace"
-msgstr "Uložit pracovní prostředí"
+msgstr ""
 
 #: rkward/rkward.cpp:531
 #, kde-format
 msgid "Saves the actual document"
-msgstr "Uloží současný dokument"
+msgstr ""
 
 #: rkward/rkward.cpp:535
 #, kde-format
 msgid "Save Workspace As"
-msgstr "Uložit pracovní prostředí jako"
+msgstr ""
 
 #: rkward/rkward.cpp:536
 #, kde-format
 msgid "Saves the actual document as..."
-msgstr "Uložit současný dokument jako..."
+msgstr ""
 
 #: rkward/rkward.cpp:539
 #, kde-format
 msgid "Quits the application"
-msgstr "Ukončí aplikaci"
+msgstr "Quita le application"
 
 #: rkward/rkward.cpp:542
 #, kde-format
 msgid "Interrupt all commands"
-msgstr "Přerušit všechny příkazy"
+msgstr ""
 
 #: rkward/rkward.cpp:548
 #, kde-format
 msgid "CC commands to output..."
-msgstr "Příkazy CC do výstupu..."
+msgstr ""
 
 #: rkward/rkward.cpp:552 rkward/rkward.cpp:556
 #, kde-format
 msgid "Manage R packages and plugins..."
-msgstr "Spravovat balíček R a přídavné moduly..."
+msgstr ""
 
 #: rkward/rkward.cpp:563
 #, kde-format
 msgid "Close All Data"
-msgstr "Zavřít všechna data"
+msgstr ""
 
 #: rkward/rkward.cpp:564
 #, kde-format
 msgid "Closes all open data editors"
-msgstr "Zavře všechny otevřené editory dat"
+msgstr ""
 
 #: rkward/rkward.cpp:569
 #, kde-format
 msgid "Close All"
-msgstr "Zavřít vše"
+msgstr "Claude omne"
 
 #: rkward/rkward.cpp:573 rkward/windows/rktoolwindowbar.cpp:302
 #: rkward/windows/rkworkplaceview.cpp:97
 #, kde-format
 msgid "Detach"
-msgstr "Odpojit"
+msgstr "Detalia"
 
 #: rkward/rkward.cpp:577
 #, kde-format
@@ -4281,27 +3995,27 @@ msgstr ""
 #: rkward/rkward.cpp:581
 #, kde-format
 msgid "[No actions available for current view]"
-msgstr "[Pro nynější pohled nejsou dostupné žádné činnosti]"
+msgstr ""
 
 #: rkward/rkward.cpp:588
 #, kde-format
 msgid "Open..."
-msgstr "Otevřít..."
+msgstr "Aperi..."
 
 #: rkward/rkward.cpp:602
 #, kde-format
 msgid "Create..."
-msgstr "Vytvořit..."
+msgstr "Crea..."
 
 #: rkward/rkward.cpp:609
 #, kde-format
 msgid "Save..."
-msgstr "Uložit..."
+msgstr "Salveguarda..."
 
 #: rkward/rkward.cpp:625
 #, kde-format
 msgid "Restart R Backend"
-msgstr "Restartovat podpůrnou vrstvu R"
+msgstr ""
 
 #: rkward/rkward.cpp:627
 #, kde-format
@@ -4315,7 +4029,7 @@ msgstr ""
 #: rkward/rkward.cpp:628
 #, kde-format
 msgid "Restart R backend"
-msgstr "Restartovat podpůrnou vrstvu R"
+msgstr ""
 
 #: rkward/rkward.cpp:632
 #, kde-format
@@ -4333,22 +4047,22 @@ msgstr ""
 #: rkward/rkward.cpp:633
 #, kde-format
 msgid "Force restart now"
-msgstr "Nyní vynutit restart"
+msgstr ""
 
 #: rkward/rkward.cpp:633
 #, kde-format
 msgid "Check again"
-msgstr "Znovu zkontrolovat"
+msgstr "Verifica de nove"
 
 #: rkward/rkward.cpp:633
 #, kde-format
 msgid "Cancel restarting"
-msgstr "Zrušit restart"
+msgstr ""
 
 #: rkward/rkward.cpp:772
 #, kde-format
 msgid "Current working directory"
-msgstr "Nynější pracovní adresář"
+msgstr ""
 
 #: rkward/rkward.cpp:790 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
@@ -4358,42 +4072,42 @@ msgstr ""
 #: rkward/rkward.cpp:844
 #, kde-format
 msgid "Exiting..."
-msgstr "Ukončuji..."
+msgstr "Exiente..."
 
 #: rkward/rkward.cpp:862
 #, kde-format
 msgid "New dataset"
-msgstr "Nový soubor dat"
+msgstr ""
 
 #: rkward/rkward.cpp:862
 #, kde-format
 msgid "Enter name for the new dataset"
-msgstr "Zadejte název pro nový soubor dat"
+msgstr ""
 
 #: rkward/rkward.cpp:874
 #, kde-format
 msgid "Opening workspace..."
-msgstr "Otevírá se pracovní prostředí..."
+msgstr ""
 
 #: rkward/rkward.cpp:877
 #, kde-format
 msgid "Select workspace to open..."
-msgstr "Vyberte pracovní prostředí k otevření..."
+msgstr ""
 
 #: rkward/rkward.cpp:957
 #, kde-format
 msgid "The <b>R</b> engine is busy."
-msgstr "Jádro <b>R</b> je zaneprázdněno."
+msgstr ""
 
 #: rkward/rkward.cpp:961
 #, kde-format
 msgid "The <b>R</b> engine is idle."
-msgstr "Jádro <b>R</b> je nečinné."
+msgstr ""
 
 #: rkward/rkward.cpp:965
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
-msgstr "Jádro <b>R</b> je inicializováno."
+msgstr ""
 
 #: rkward/rkward.cpp:968
 #, kde-format
@@ -4403,7 +4117,7 @@ msgstr ""
 #: rkward/rkward.cpp:994
 #, kde-format
 msgid "Open"
-msgstr "Otevřít"
+msgstr "Aperi"
 
 #: rkward/rkward.cpp:998
 #, kde-format
@@ -4438,48 +4152,48 @@ msgstr ""
 #: rkward/rkward.cpp:1046
 #, kde-format
 msgid "Open script file(s)"
-msgstr "Otevřít soubor(y) skriptu"
+msgstr ""
 
 #: rkward/rkward.cpp:1060
 #, kde-format
 msgid "[Unnamed Workspace]"
-msgstr "[Nepojmenované pracovní prostředí]"
+msgstr ""
 
 #. i18n: ectx: Menu (new_data)
 #: rkward/rkwardui.rc:13
 #, kde-format
 msgid "&New"
-msgstr "&Nový"
+msgstr "&Nove "
 
 #. i18n: ectx: Menu (open_specific)
 #: rkward/rkwardui.rc:19
 #, kde-format
 msgid "&Open by Type"
-msgstr "&Otevřít podle typu"
+msgstr ""
 
 #. i18n: ectx: Menu (import)
 #: rkward/rkwardui.rc:25
 #, kde-format
 msgid "&Import"
-msgstr "&Importovat"
+msgstr "&Importa"
 
 #. i18n: ectx: Menu (export)
 #: rkward/rkwardui.rc:30
 #, kde-format
 msgid "&Export"
-msgstr "&Exportovat"
+msgstr "&Exporta"
 
 #. i18n: ectx: Menu (workspace)
 #: rkward/rkwardui.rc:36
 #, kde-format
 msgid "&Workspace"
-msgstr "&Pracovní plocha"
+msgstr "&Spatio de labor"
 
 #. i18n: ectx: Menu (window)
 #: rkward/rkwardui.rc:75
 #, kde-format
 msgid "&Windows"
-msgstr "O&kna"
+msgstr "&Fenestras"
 
 #. i18n: ectx: Menu (window_activate)
 #: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
@@ -4487,7 +4201,7 @@ msgstr "O&kna"
 #: rkward/windows/rktoplevelwindowgui.rc:15
 #, kde-format
 msgid "&Activate"
-msgstr "&Aktivovat"
+msgstr "&Activar"
 
 #. i18n: ectx: Menu (settings)
 #: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
@@ -4496,7 +4210,7 @@ msgstr "&Aktivovat"
 #: rkward/windows/rktoplevelwindowgui.rc:26
 #, kde-format
 msgid "&Settings"
-msgstr "Na&stavení"
+msgstr "Preferentia&s"
 
 #. i18n: ectx: Menu (help)
 #: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
@@ -4504,42 +4218,42 @@ msgstr "Na&stavení"
 #: rkward/windows/rktoplevelwindowgui.rc:33
 #, kde-format
 msgid "&Help"
-msgstr "Nápo&věda"
+msgstr "Ad&juta"
 
 #: rkward/robjectviewer.cpp:49
 #, kde-format
 msgid "summary (x)"
-msgstr "shrnutí (x)"
+msgstr ""
 
 #: rkward/robjectviewer.cpp:50
 #, kde-format
 msgid "print (x)"
-msgstr "tisk (x)"
+msgstr ""
 
 #: rkward/robjectviewer.cpp:51
 #, kde-format
 msgid "str (x)"
-msgstr "str (x)"
+msgstr ""
 
 #: rkward/robjectviewer.cpp:79
 #, kde-format
 msgid "<b>Object was deleted</b>"
-msgstr "<b>Objekt byl smazán</b>"
+msgstr ""
 
 #: rkward/robjectviewer.cpp:122
 #, kde-format
 msgid "Object Viewer: %1"
-msgstr "Prohlížeč objektů: %1"
+msgstr ""
 
 #: rkward/robjectviewer.cpp:126
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
-msgstr "Objekt se změnil. Klikněte na \"Obnovit\""
+msgstr ""
 
 #: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:110
 #, kde-format
 msgid "Update"
-msgstr "Aktualizovat"
+msgstr "Actualisa"
 
 #: rkward/robjectviewer.cpp:211
 #, kde-format
@@ -4552,13 +4266,11 @@ msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
 msgstr ""
-"Podpůrná vrstva pro QtScript nahlásilo chybu:\n"
-"%1"
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:139
 #, kde-format
 msgid "Scripting error"
-msgstr "Chyba ve skriptování"
+msgstr ""
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:258
 #, kde-format
@@ -4574,14 +4286,12 @@ msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
 msgstr ""
-"Soubor \"%1\" (vyžadován \"%2\") se nepodařilo najít. Prosím, zkontrolujte  "
-"svou instalaci."
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:54
 #: rkward/scriptbackends/rkcomponentscripting.cpp:56
 #, kde-format
 msgid "Error opening script file %1"
-msgstr "Chyba při otevírání souboru skriptu %1"
+msgstr ""
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
@@ -4599,28 +4309,26 @@ msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
 msgstr ""
-"chyba ('soubor \"%1\" (vyžadován \"%2\") se nepodařilo najít. Prosím, ověřte "
-"svou instalaci.');\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:83
 #, kde-format
 msgid "## Prepare\n"
-msgstr "## Připravit\n"
+msgstr ""
 
 #: rkward/scriptbackends/scriptbackend.cpp:86
 #, kde-format
 msgid "## Compute\n"
-msgstr "## Vypočítat\n"
+msgstr ""
 
 #: rkward/scriptbackends/scriptbackend.cpp:89
 #, kde-format
 msgid "## Print result\n"
-msgstr "## Tisknout výsledek\n"
+msgstr ""
 
 #: rkward/settings/rksettings.cpp:93
 #, kde-format
 msgid "Settings"
-msgstr "Nastavení"
+msgstr "Preferentias"
 
 #: rkward/settings/rksettings.cpp:157
 #, kde-format
@@ -4645,12 +4353,12 @@ msgstr ""
 #: rkward/settings/rksettings.cpp:162
 #, kde-format
 msgid "Add-ons"
-msgstr "Doplňky"
+msgstr "Accessorios"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:44
 #, kde-format
 msgid "Code Completion / Code Hints"
-msgstr "Doplnění kódu / Nápověda kódu"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
@@ -4675,7 +4383,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
 msgid "Auto word completion"
-msgstr ""
+msgstr "Completamento de parola automatic"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
@@ -4685,7 +4393,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:51
 #, kde-format
 msgid "Start code completions/hints, automatically"
-msgstr "Zahájit doplňování kódu/nápovědy automaticky"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:59
 #, kde-format
@@ -4789,7 +4497,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
 msgid "Always"
-msgstr "Vždy"
+msgstr "Sempre"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:93
 #, kde-format
@@ -4811,22 +4519,22 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:120
 #, kde-format
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr "Nastavení označená (*) začnou působit až po novém spuštění RKWard"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:127
 #, kde-format
 msgid "Autosaves"
-msgstr "Automatické ukládání"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:133
 #, kde-format
 msgid "Autosave interval (minutes)"
-msgstr "Interval automatického ukládání (v minutách)"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:135
 #, kde-format
 msgid "Keep autosave file after manual save"
-msgstr "Ponechat automaticky uložený soubor po ručním uložení"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:143
 #, kde-format
@@ -4836,25 +4544,21 @@ msgid ""
 "always be opened with R syntax highlighting.</p><p>Filters are case "
 "insensitive.</p>"
 msgstr ""
-"<p>Seznam filtrů (přípony souborových názvů), se kterými se má zacházet jako "
-"se soubory skriptů R. Především soubory odpovídající jednomu z těchto filtrů "
-"budou vždy otevřeny se zvýrazněním syntaxe R.</p><p>Filtry nerozlišují velká "
-"a malá písmena.</p>"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:145
 #, kde-format
 msgid "R script file filters (separated by spaces)"
-msgstr "Filtry souborů se skripty R (oddělené mezerami)"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:157
 #, kde-format
 msgid "Script editor"
-msgstr "Editor skriptů"
+msgstr "Editor de script"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:45
 #, kde-format
 msgid "Load/Save command history"
-msgstr "Načíst/Uložit historii příkazů"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:47
 #, kde-format
@@ -4871,37 +4575,37 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:57
 #, kde-format
 msgid "Run commands from script editor through console"
-msgstr "Provést příkazy z editoru skriptů přes konzoli"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:60
 #, kde-format
 msgid "Also add those commands to console history"
-msgstr "Přidat i tyto příkazy do historie konzole"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
 msgid "Do not add"
-msgstr "Nepřidávat"
+msgstr "Non adde"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
 msgid "Add only if single line"
-msgstr "Přidat pouze, jde-li o jeden řádek"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
 msgid "Add all commands"
-msgstr "Přidat všechny příkazy"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:72
 #, kde-format
 msgid "Command history is context sensitive by default"
-msgstr "Historie příkazů ve výchozím nastavení citlivá na kontext"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:136
 #, kde-format
 msgid "Console"
-msgstr "Konzole"
+msgstr "Console"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:32
 #, kde-format
@@ -4910,34 +4614,31 @@ msgid ""
 "them untouched. Also, these settings will only apply to the current session, "
 "and will not be saved."
 msgstr ""
-"<b>Tato nastavení slouží jenom účelu ladění.</b>Je bezpečné ponechat je "
-"nezměněné tak, jak jsou. Tato nastavení se použijí pouze na nynější sezení a "
-"nebudou uložena."
 
 #: rkward/settings/rksettingsmoduledebug.cpp:36
 #, kde-format
 msgid "Debug level"
-msgstr "Úroveň ladění"
+msgstr "Nivello de cribrar (verificar)"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:46
 #, kde-format
 msgid "Debug flags"
-msgstr "Příznaky ladění"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduledebug.cpp:72
 #, kde-format
 msgid "Command timeout"
-msgstr "Časový interval příkazu"
+msgstr "Tempore de Commando expirate"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:82
 #, kde-format
 msgid "<i>Note:</i> Debug output is written to %1"
-msgstr "<i>Poznámka:</i> Výstup ladění je zapsán do %1"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduledebug.cpp:99
 #, kde-format
 msgid "Debug"
-msgstr "Ladění"
+msgstr "Cribra (debug)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:60
 #, kde-format
@@ -4945,57 +4646,53 @@ msgid ""
 "Directory where rkward may store files (setting takes effect after "
 "restarting RKWard)"
 msgstr ""
-"Adresář, v němž by RKWard může uchovávat soubory (změna nastavení bude "
-"vyžadovat restart RKWardu)."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:66
 #, kde-format
 msgid "Startup behavior"
-msgstr "Chování při spuštění"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:68
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
 msgstr ""
-"Načíst soubor .RData z počátečního pracovního adresáře, je-li dostupný "
-"(volba R '--restore')"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:69
 #, kde-format
 msgid "Show RKWard Help on Startup"
-msgstr "Ukázat nápovědu k RKWardu při spuštění"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:71
 #: rkward/settings/rksettingsmodulegeneral.cpp:77
 #, kde-format
 msgid "Initial working directory"
-msgstr "Počáteční pracovní adresář"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "Do not change current directory on startup"
-msgstr "Při spuštění neměnit nynější adresář"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
-msgstr "Adresář se soubory RKWard (jak je určen výše)"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "User home directory"
-msgstr "Uživatelův domovský adresář"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "Last used directory"
-msgstr "Naposledy použitý adresář"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "The following directory (please specify):"
-msgstr "Následující adresář (prosím, zadejte):"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:82
 #, kde-format
@@ -5004,10 +4701,6 @@ msgid ""
 "workspace on startup, and you have configured RKWard to change to the "
 "directory of loaded workspaces, that directory will take precedence.</p>"
 msgstr ""
-"<p>Počáteční pracovní adresář, který se má použít. Všimněte si, že pokud "
-"načítáte pracovní plochu při spuštění, a RKWard máte nastaven tak, aby "
-"udělal změnu na adresář načtených pracovních ploch, bude mít tento adresář "
-"přednost.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:89
 #, kde-format
@@ -5015,8 +4708,6 @@ msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
 "menu).</p>"
 msgstr ""
-"<p>Počet nedávných souborů k zapamatování (v nabídce Otevřít nedávný soubor "
-"skriptu R).</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:90
 #, kde-format
@@ -5030,16 +4721,11 @@ msgid ""
 "be saved (and loaded) per R workspace, or independent of the R workspace. "
 "Which do you prefer?"
 msgstr ""
-"Rozvržení pracoviště (to jest, která okna se skripty, daty, s nápovědou jsou "
-"otevřená), může být uloženo (a načteno) podle pracovního prostředí R, nebo "
-"na něm nezávisle. Čemu dáváte přednost?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:102
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
-"Uložit/Obnovit společně s pracovním prostředím R, když je ukládáno/načítáno "
-"pracovní prostředí"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -5047,19 +4733,16 @@ msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
 "restore at next start)"
 msgstr ""
-"Uložit/Obnovit nezávisle na pracovním prostředí R (bude uloženo na konci "
-"sezení RKWardu, obnoveno při novém spuštění)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:108
 #, kde-format
 msgid "Do not save/restore workplace layout"
-msgstr "Neukládat/neobnovovat rozvržení pracoviště"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr ""
-"Při načtení pracovního prostředí se přepnout do odpovídajícího adresáře."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:121
 #, kde-format
@@ -5067,59 +4750,49 @@ msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
 msgstr ""
-"Upozornit, když by byly upravovány objekty s více než tímto počtem polí (0 "
-"pro bez omezení):"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:126
 #, kde-format
 msgid "MDI window focus behavior"
-msgstr "Chování při zaměření na okno MDI"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Click to focus"
-msgstr "Klikněte pro zaměření"
+msgstr "Pulsa pro focalisar"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Focus follows mouse"
-msgstr "Zaměření následuje myš"
+msgstr "Foco seque mus"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:148
 #, kde-format
 msgid "General"
-msgstr "Obecné"
+msgstr "General"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:49
 #, kde-format
 msgid "Default graphics device"
-msgstr "Výchozí grafické zařízení"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:52
 #, kde-format
 msgid "RKWard native device"
-msgstr "Vlastní zařízení RKWardu"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:55
 #, kde-format
 msgid "Platform default device"
-msgstr "Výchozí zařízení systému"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:58
 #, kde-format
 msgid "Other device:"
-msgstr "Jiné zařízení:"
+msgstr "Altere dispositivo"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5129,33 +4802,26 @@ msgid ""
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
 "name of a function such as <i>Cairo</i>.</p>"
 msgstr ""
-"<p>Výchozí zařízení se používá ke kreslení, to znamená, když je vytvářen "
-"nový nákres, zatímco není činné žádné znázorňovací zařízení (Podívejte se na "
-"<i>options(\"device\")</i>).</p><p>Původní zařízení RKWard je doporučovanou "
-"volbou pro většinu uživatelů. Odpovídá příkazu R <i>RK()</i>.</p><p>Výchozí "
-"zařízení systému odpovídá jednomu z <i>X11()</i>, <i>windows()</i>, nebo "
-"<i>quartz()</i>, v závislosti na systému.</p><p>Také můžete zadat název "
-"funkce, například <i>cairoDevice</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
 msgid "Integration of R standard devices"
-msgstr "Začlenění běžných zařízení R"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:78
 #, kde-format
 msgid "Replace with RKWard device"
-msgstr "Načíst zařízením RKWardu"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:81
 #, kde-format
 msgid "Embed original device"
-msgstr "Vložit původní zařízení"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:87
 #, kde-format
 msgid "No device integration"
-msgstr "Žádné začleňování zařízení"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:92
 #, kde-format
@@ -5175,60 +4841,46 @@ msgid ""
 "<i>Windows()</i> on Mac OS X) will always fall back to the <i>RK()</i> "
 "device.</p>"
 msgstr ""
-"<p>Mnoho skriptů používá volání běžných zařízení vlastních systému "
-"(<i>X11()</i>, <i>windows()</i>, <i>quartz()</i>), ačkoli se tu dají použít "
-"všechna zobrazovací zařízení. RKWard poskytuje pro tyto funkce běžných "
-"zařízení přetížení, která mohou při užití v uživatelově kódu změnit jejich "
-"chování:</p><ul><li>Volání mohou být přesměrována do původního zařízení "
-"RKWardu (<i>RK()</i>). Některé, ale ne všechny argumenty funkce budou "
-"porovnány, jiné budou ignorovány.</li><li>Lze použít původních zařízení "
-"vlastních systému, budou ale vložena do oken RKWardu. Tato volba není "
-"dostupná na MacOS X.</li><li>Původní zařízení vlastní systému lze použít "
-"nezměněna, bez přidání funkcí vlastních RKWardu.</li></ul><p>Bez ohledu na "
-"toto nastavení jsou původní zařízení vždy přístupná jako <i>grDevices::"
-"X11()</i>, atd.</p><p>použití zařízení v systému, v němž není vymezeno "
-"(např. <i>Windows()</i> na Mac OS X) vždy povede k ustoupení k zařízení "
-"<i>RK()</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:104
 #, kde-format
 msgid "Default window size (for RK(), or embedded device windows)"
-msgstr "Výchozí velikost okna (pro RK(), nebo vložená okna)"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:106
 #, kde-format
 msgid "Default width (inches):"
-msgstr "Výchozí šířka (palce):"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:109
 #, kde-format
 msgid "Default height (inches)"
-msgstr "Výchozí výška (palce):"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:113
 #, kde-format
 msgid "Use KDE printer dialog for printing devices (if available)"
-msgstr "Použít tiskový dialog KDE pro tisková zařízení (je-li dostupný)"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:115
 #, kde-format
 msgid "Screen device history"
-msgstr "Historie zařízení obrazovky"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:122
 #, kde-format
 msgid "Maximum number of recorded plots:"
-msgstr "Největší počet načtených nákresů:"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:126
 #, kde-format
 msgid "Maximum size of a single recorded plot (in KB):"
-msgstr "Největší velikost jednoho načteného nákresu (v KB):"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:154
 #, kde-format
 msgid "Onscreen Graphics"
-msgstr "Grafika na obrazovce"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulekateplugins.cpp:36
 #, kde-format
@@ -5240,72 +4892,66 @@ msgid ""
 "not make a whole lot of sense in the context of RKWard. Plugins shown in "
 "<b>bold</b> have been reported as \"useful\" by RKWard users.</p>"
 msgstr ""
-"<p>Moduly Kate, jež chcete načíst v RKWard. Pamatujte, že některé načtené "
-"moduly nebudou vidět dokud nejsou splněny některé podmínky, např. když "
-"načítáte soubor pod kontrolou verzí pro modul <i>projektu</i>.  Zde vypsané "
-"moduly nebyly vyvinuty konkrétně pro RKWard a některé pro RKWard ani nemá "
-"smysl používat. Moduly zobrazené <b>tučně</b> byly uživateli RKWard shledány "
-"\"užitečnými\".</p>"
 
 #: rkward/settings/rksettingsmodulekateplugins.cpp:96
 #, kde-format
 msgid "Kate Plugins"
-msgstr "Moduly Kate"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:40
 #, kde-format
 msgid "Never fetch the structure of these packages:"
-msgstr "Nikdy nestahovat strukturu těchto balíčků:"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:72
 #, kde-format
 msgid "Add exclusion"
-msgstr "Přidat výjimku"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:72
 #, kde-format
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr "Přidejte název balíčku pro který by neměla být stahována struktura"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:41
 #, kde-format
 msgid "Carbon copy commands to output"
-msgstr "Poslat kopii příkazů do výstupu"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:47
 #, kde-format
 msgid "Commands entered in the console"
-msgstr "Příkazy zadané v konzoli"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:48
 #, kde-format
 msgid "Commands run via the 'Run' menu"
-msgstr "Příkazy spouštěné přes nabídku 'Spustit'"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:49
 #, kde-format
 msgid "Commands originating from dialogs and plugins"
-msgstr "Příkazy původem z dialogů a modulů"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:50
 #, kde-format
 msgid "Also carbon copy the command output"
-msgstr "Taky posílat kopii výstupu příkazů"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:119
 #, kde-format
 msgid "Output Window options"
-msgstr "Volby výstupního okna"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:121
 #, kde-format
 msgid "show window on new output"
-msgstr "Zobrazit okno při novém výstupu"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:123
 #, kde-format
 msgid "raise window on new output"
-msgstr "Přesunout okno při novém výstupu do popředí"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:132
 #, kde-format
@@ -5313,18 +4959,16 @@ msgid ""
 "Default output (used, while no other output has been set, explicitly) is "
 "shared across workspaces(*)."
 msgstr ""
-"Výchozí výstup (použit pokud nebyl explicitně nastaven jiný výstup) je "
-"sdílen napříč pracovišti(*)."
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:134
 #, kde-format
 msgid "CSS file to use for output (leave empty for default)"
-msgstr "Soubor CSS pro použití výstupu (ve výchozím stavu prázdný)"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:134
 #, kde-format
 msgid "Select CSS file"
-msgstr "Vyberte soubor CSS:"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:136
 #, kde-format
@@ -5338,17 +4982,17 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:139
 #, kde-format
 msgid "Graphics"
-msgstr "Grafika"
+msgstr "Graphiches"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:143
 #, kde-format
 msgid "File format"
-msgstr "Formát souboru"
+msgstr "Formato de file"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:145
 #, kde-format
 msgid "<Default>"
-msgstr "<Výchozí>"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:146
 #, kde-format
@@ -5368,17 +5012,17 @@ msgstr "JPG"
 #: rkward/settings/rksettingsmoduleoutput.cpp:153
 #, kde-format
 msgid "JPG quality"
-msgstr "Kvalita JPG"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:160
 #, kde-format
 msgid "Width:"
-msgstr "Šířka:"
+msgstr "Largessa:"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:163
 #, kde-format
 msgid "Height:"
-msgstr "Výška:"
+msgstr "Altessa:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:51
 #, kde-format
@@ -5387,13 +5031,11 @@ msgid ""
 "traditional dialog interface. If both are available, which mode of "
 "presentation do you prefer?"
 msgstr ""
-"Některé moduly jsou dostupné jak s průvodcem tak s tradičním dialogem. Pokud "
-"jsou dostupné oba, který režim preferujete?"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:59
 #, kde-format
 msgid "Always prefer dialogs"
-msgstr "Vždy preferovat dialogy"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:62
 #, kde-format
@@ -5403,34 +5045,34 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:65
 #, kde-format
 msgid "Always prefer wizards"
-msgstr "Vždy preferovat průvodce"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:75
 #, kde-format
 msgid "Configure Active Plugins"
-msgstr "Nastavit aktivní moduly"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:93
 #: rkward/windows/rktoplevelwindowgui.cpp:151
 #, kde-format
 msgid "RKWard Plugins"
-msgstr "Moduly pro RKWard"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:472
 #: rkward/windows/rkhtmlwindow.cpp:1143
 #, kde-format
 msgid "Dependencies"
-msgstr "Závislosti"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:495
 #, kde-format
 msgid "Broken"
-msgstr "Poškozené"
+msgstr "Rupte"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:497
 #, kde-format
 msgid "Loaded"
-msgstr "Načteno"
+msgstr "Cargate"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:500
 #, kde-format
@@ -5440,7 +5082,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:524
 #, kde-format
 msgid "Active"
-msgstr "Aktivní"
+msgstr "Activar"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:525
 #, kde-format
@@ -5517,7 +5159,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:102
 #, kde-format
 msgid "FALSE"
-msgstr "NEPRAVDA"
+msgstr "FALSE"
 
 #: rkward/settings/rksettingsmoduler.cpp:106
 #, kde-format
@@ -5528,7 +5170,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:120
 #, kde-format
 msgid "TRUE"
-msgstr "PRAVDA"
+msgstr "TRUE"
 
 #: rkward/settings/rksettingsmoduler.cpp:107
 #: rkward/settings/rksettingsmoduler.cpp:120
@@ -5554,7 +5196,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:123
 #, kde-format
 msgid "Editor command"
-msgstr ""
+msgstr "Commando de editor"
 
 #: rkward/settings/rksettingsmoduler.cpp:134
 #, kde-format
@@ -5592,39 +5234,37 @@ msgstr ""
 #, kde-format
 msgctxt "Add directory to list"
 msgid "Add"
-msgstr "Přidat"
+msgstr "Adde"
 
 #: rkward/settings/rksettingsmoduler.cpp:320
 #, kde-format
 msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
-"Zrcadlo CRAN (ponechte prázdné pokud chcete být dotázáni v každém sezení):"
 
 #: rkward/settings/rksettingsmoduler.cpp:327
 #, kde-format
 msgid "Select mirror"
-msgstr "Vybrat zrcadlo"
+msgstr "Selige speculo"
 
 #: rkward/settings/rksettingsmoduler.cpp:331
 #, kde-format
 msgid "Additional package repositories (where libraries are downloaded from)"
-msgstr "Dodatečné repozitáře balíčků (odkud jsou stahovány knihovny)"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:337
 #, kde-format
 msgid "Archive downloaded packages"
-msgstr "Archivovat stažené balíčky"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:339
 #, kde-format
 msgid "Build packages from source"
-msgstr "Sestavit balíčky ze zdrojových souborů"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:341
 #, kde-format
 msgid "Build packages from source (not configurable on this platform)"
 msgstr ""
-"Sestavit balíčky ze zdrojových souborů (na této platformě nelze nastavit)"
 
 #: rkward/settings/rksettingsmoduler.cpp:345
 #, kde-format
@@ -5638,7 +5278,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:350
 #, kde-format
 msgid "Install from git"
-msgstr "Instalovat z gitu"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:351
 #, kde-format
@@ -5647,14 +5287,11 @@ msgid ""
 "installed from development repositories. Use the button \"%1\", to install "
 "such packages, comfortably."
 msgstr ""
-"Některé balíčky doplňků nejsou v repozitáři CRAN dostupné, ale lze je "
-"nainstalovat z vývojových repozitářů. Použijte tlačítko \"%1\" pro pohodlné "
-"nainstalování takových balíčků."
 
 #: rkward/settings/rksettingsmoduler.cpp:359
 #, kde-format
 msgid "R Library locations (where libraries get installed to, locally)"
-msgstr "Umístění knihoven R (kde budou knihovny R lokálně nainstalované)"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:364
 #, kde-format
@@ -5662,13 +5299,11 @@ msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
 msgstr ""
-"Poznámka: Výchozí umístění bude vždy použito společně s místy, které v tomto "
-"seznamu zadáte"
 
 #: rkward/settings/rksettingsmoduler.cpp:415
 #, kde-format
 msgid "Add R Library Directory"
-msgstr "Přidat knihovnu R"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:417
 #, kde-format
@@ -5679,21 +5314,17 @@ msgid ""
 "this is recommended, because R packages compiled for one version of R will "
 "often fail to work correctly in a different version of R."
 msgstr ""
-"Zadejte nebo vyberte umístění knihovny, které chcete přidat.\n"
-"Pamatujte, že místa mohou obsahovat '%v', které automaticky rozšíří první "
-"dvě části čísla verze R (např. na 3.5). Doporučujeme jej zahrnout protože "
-"balíky R kompilované pro jednu verzi často nefungují pro jinou verzi R."
 
 #: rkward/settings/rksettingsmoduler.cpp:427
 #, kde-format
 msgctxt "Add file to list"
 msgid "Add"
-msgstr "Přidat"
+msgstr "Adde"
 
 #: rkward/settings/rksettingsmoduler.cpp:440
 #, kde-format
 msgid "Add repository"
-msgstr "Přidat repozitář"
+msgstr "Adde repositorio"
 
 #: rkward/settings/rksettingsmoduler.cpp:440
 #, kde-format
@@ -5703,12 +5334,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:446
 #, kde-format
 msgid "R-Packages"
-msgstr "Balíčky R"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:456
 #, kde-format
 msgid "Select CRAN mirror"
-msgstr "Vyberte zrcadlo CRAN"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:583
 #, kde-format
@@ -5731,7 +5362,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
-msgstr "Přejmenovat"
+msgstr "Renomina"
 
 #: rkward/settings/rksettingsmoduler.cpp:588
 #, kde-format
@@ -5745,7 +5376,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
-msgstr "Odstranit"
+msgstr "Remove"
 
 #: rkward/settings/rksettingsmoduler.cpp:596
 #, kde-format
@@ -5758,7 +5389,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
-msgstr "Ponechat"
+msgstr "Mantene"
 
 #: rkward/settings/rksettingsmoduler.cpp:601
 #, kde-format
@@ -5775,42 +5406,42 @@ msgstr ""
 #: rkward/settings/rksettingsmodulewatch.cpp:123
 #, kde-format
 msgid "always show command"
-msgstr "vždy zobrazit příkaz"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulewatch.cpp:125
 #, kde-format
 msgid "always show result"
-msgstr "vždy zobrazit výsledek"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulewatch.cpp:127
 #, kde-format
 msgid "show errors"
-msgstr "zobrazit chyby"
+msgstr "Monstra Errores"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:129
 #, kde-format
 msgid "show/raise window"
-msgstr "zobrazit/zvednout okno"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
 msgid "User commands"
-msgstr "Uživatelské příkazy"
+msgstr "Commandos de usator"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:133
 #, kde-format
 msgid "Plugin generated commands"
-msgstr "Příkazy vygenerované modulem"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulewatch.cpp:134
 #, kde-format
 msgid "Application commands"
-msgstr "Příkazy aplikací"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulewatch.cpp:135
 #, kde-format
 msgid "Synchronization commands"
-msgstr "Příkazy synchronizace"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulewatch.cpp:139
 #, kde-format
@@ -5818,14 +5449,12 @@ msgid ""
 "Maximum number of paragraphs/lines to display in the Command Log (0 for no "
 "limit)"
 msgstr ""
-"Největší počet odstavců/řádků, které se mají ukazovat v Záznamu příkazů (0 "
-"pro žádné omezení)"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:237
 #: rkward/windows/rkcommandlog.cpp:44
 #, kde-format
 msgid "Command log"
-msgstr "Záznam příkazů"
+msgstr ""
 
 #: rkward/windows/detachedwindowcontainer.cpp:36
 #, kde-format
@@ -5837,14 +5466,14 @@ msgstr ""
 #: rkward/windows/rkcatchedx11windowpart.rc:9
 #, kde-format
 msgid "&Device"
-msgstr "Zaří&zení"
+msgstr "&Dispositivo"
 
 #. i18n: ectx: Menu (history)
 #: rkward/windows/detachedwindowcontainer.rc:32
 #: rkward/windows/rkcatchedx11windowpart.rc:19
 #, kde-format
 msgid "&History"
-msgstr "&Historie"
+msgstr "&Historia"
 
 #. i18n: ectx: Menu (window)
 #: rkward/windows/detachedwindowcontainer.rc:43
@@ -5852,24 +5481,24 @@ msgstr "&Historie"
 #: rkward/windows/rktoplevelwindowgui.rc:10
 #, kde-format
 msgid "&Window"
-msgstr "O&kno"
+msgstr "&Fenestra"
 
 #: rkward/windows/katepluginintegration.cpp:669
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
-msgstr "V současném skriptu"
+msgstr ""
 
 #: rkward/windows/katepluginintegration.cpp:670
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
-msgstr "V otevřených skriptech"
+msgstr ""
 
 #: rkward/windows/rcontrolwindow.cpp:45 rkward/windows/rcontrolwindow.cpp:131
 #, kde-format
 msgid "Pause execution"
-msgstr "Pozastaví běh programu"
+msgstr ""
 
 #: rkward/windows/rcontrolwindow.cpp:50
 #, kde-format
@@ -5948,7 +5577,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:164
 #, kde-format
 msgid "Unable to open \"%1\""
-msgstr "Nelze otevřít \"%1\""
+msgstr "Incapace a aperir '%1'"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:164
 #, kde-format
@@ -5958,7 +5587,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:204
 #, kde-format
 msgid "Script Editor"
-msgstr "Editor skriptů"
+msgstr "Editor de script"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:349
 #, kde-format
@@ -5968,7 +5597,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:356
 #, kde-format
 msgid "Run block"
-msgstr "Spustit blok"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:360
 #, kde-format
@@ -5993,12 +5622,12 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
 msgid "No preview"
-msgstr ""
+msgstr "Nulle vista preliminar"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:377
 #, kde-format
 msgid "R Markdown"
-msgstr "R Markdown"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:378
 #, kde-format
@@ -6008,7 +5637,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:379
 #, kde-format
 msgid "Plot"
-msgstr "Vykreslit"
+msgstr "Plot (Tracia)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:382
 #, kde-format
@@ -6059,18 +5688,18 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
 msgid "Save Script..."
-msgstr "Uložit skript..."
+msgstr "Salveguarda Script..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:406
 #, kde-format
 msgid "Save Script As..."
-msgstr "Uložit skript jako..."
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:485
 #: rkward/windows/rkcommandeditorwindow.cpp:745
 #, kde-format
 msgid " [modified]"
-msgstr " [změněno]"
+msgstr " [Modificate]"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:492
 #, kde-format
@@ -6080,7 +5709,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:492
 #, kde-format
 msgid "File not saved"
-msgstr "Soubor neuložen"
+msgstr "File non salveguardate"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:547
 #, kde-format
@@ -6110,7 +5739,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:744
 #, kde-format
 msgid "Unnamed"
-msgstr "Nepojmenované"
+msgstr "Sin nomine"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:874
 #, kde-format
@@ -6151,12 +5780,12 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:1021
 #, kde-format
 msgid "%1 (Active)"
-msgstr "%1 (Aktivní)"
+msgstr "%1 (Active)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1040
 #, kde-format
 msgid "%1 (Unused)"
-msgstr "%1 (Nepoužito)"
+msgstr "%1 (Non usate)"
 
 #. i18n: ectx: Menu (tools)
 #: rkward/windows/rkcommandeditorwindowpart.rc:11
@@ -6172,7 +5801,7 @@ msgstr ""
 #: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
-msgstr "Syntaktická chyba.\n"
+msgstr ""
 
 #: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
@@ -6182,7 +5811,7 @@ msgstr ""
 #: rkward/windows/rkcommandlog.cpp:302
 #, kde-format
 msgid "Configure"
-msgstr "Nastavit"
+msgstr "Configura"
 
 #: rkward/windows/rkdebugconsole.cpp:44
 #, kde-format
@@ -6207,7 +5836,7 @@ msgstr ""
 #: rkward/windows/rkdebugconsole.cpp:46
 #, kde-format
 msgid "Step out"
-msgstr "Krok ven"
+msgstr "Exi de passo"
 
 #: rkward/windows/rkdebugconsole.cpp:47
 #, kde-format
@@ -6231,12 +5860,12 @@ msgstr ""
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Continue"
-msgstr "Pokračovat"
+msgstr "Continua"
 
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Continue evaluation."
-msgstr "Pokračovat ve vyhodnocování"
+msgstr ""
 
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
@@ -6269,37 +5898,37 @@ msgstr ""
 #: rkward/windows/rkfilebrowser.cpp:115
 #, kde-format
 msgid "Working directory"
-msgstr "Pracovní adresář"
+msgstr "Directorio de travalio"
 
 #: rkward/windows/rkfilebrowser.cpp:126 rkward/windows/robjectbrowser.cpp:119
 #, kde-format
 msgid "Rename"
-msgstr "Přejmenovat"
+msgstr "Renomina"
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "Rename..."
-msgstr "Přejmenovat..."
+msgstr "Renomina..."
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "New name for '%1':"
-msgstr "Nový název pro '%1':"
+msgstr ""
 
 #: rkward/windows/rkhelpsearchwindow.cpp:59
 #, kde-format
 msgid "Find:"
-msgstr "Najít:"
+msgstr "Trova:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:62
 #, kde-format
 msgid "Fields:"
-msgstr "Pole:"
+msgstr "Campos:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:80
 #, kde-format
 msgid "All"
-msgstr "Vše"
+msgstr "Omne"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:81
 #, kde-format
@@ -6309,17 +5938,17 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:82
 #, kde-format
 msgid "Keywords"
-msgstr "Klíčová slova"
+msgstr "Parolas clave"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:86
 #, kde-format
 msgid "Package:"
-msgstr "Balíček:"
+msgstr "Pacchetto:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:99
 #, kde-format
 msgid "Case sensitive"
-msgstr "Rozlišovat VELKÁ/malá"
+msgstr "Sensibile al differentia inter majusculas e minusculas"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:101
 #, kde-format
@@ -6329,12 +5958,12 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:105
 #, kde-format
 msgid "Find"
-msgstr "Najít"
+msgstr "Trova"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:120
 #, kde-format
 msgid "Help search"
-msgstr "Hledat nápovědu"
+msgstr ""
 
 #: rkward/windows/rkhelpsearchwindow.cpp:157
 #, kde-format
@@ -6367,17 +5996,17 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:324
 #, kde-format
 msgid "Topic"
-msgstr "Téma"
+msgstr "Topico"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:326
 #, kde-format
 msgid "Package"
-msgstr "Balíček"
+msgstr "Pacchetto"
 
 #: rkward/windows/rkhtmlwindow.cpp:301
 #, kde-format
 msgid "Save as"
-msgstr "Uložit jako"
+msgstr "Salveguarda como"
 
 #: rkward/windows/rkhtmlwindow.cpp:604
 #, kde-format
@@ -6388,17 +6017,17 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:255
 #, kde-format
 msgid "[Active]"
-msgstr "[Aktivní]"
+msgstr "[Active]"
 
 #: rkward/windows/rkhtmlwindow.cpp:734
 #, kde-format
 msgid "Output %1"
-msgstr "Výstup %1"
+msgstr "Exito %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:788
 #, kde-format
 msgid "Output Window"
-msgstr "Výstupní okno"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:790
 #, kde-format
@@ -6430,17 +6059,17 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:875
 #, kde-format
 msgid "Zoom In"
-msgstr "Přiblížit"
+msgstr "Zoom In (aggrandir)"
 
 #: rkward/windows/rkhtmlwindow.cpp:877
 #, kde-format
 msgid "Zoom Out"
-msgstr "Oddálit"
+msgstr "Zoom Out (Diminuer)"
 
 #: rkward/windows/rkhtmlwindow.cpp:881
 #, kde-format
 msgid "Default &Encoding"
-msgstr "Výchozí &kódování"
+msgstr "Codifica pre&definite:"
 
 #: rkward/windows/rkhtmlwindow.cpp:882
 #, kde-format
@@ -6452,32 +6081,32 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:892
 #, kde-format
 msgid "Export Page as HTML"
-msgstr "Exportovat soubor do HTML"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Save Output"
-msgstr "Uložit výstup"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:908
 #, kde-format
 msgid "Save Output As"
-msgstr "Uložit výstup jako"
+msgstr "S&alva resultato de egresso como ..."
 
 #: rkward/windows/rkhtmlwindow.cpp:911
 #, kde-format
 msgid "&Clear Output"
-msgstr "&Vyprázdnit výstup"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:917
 #, kde-format
 msgid "&Revert to last saved state"
-msgstr "V&rátit na poslední uložený stav"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "Set Output as &Active"
-msgstr "Nastavit výstup jako &aktivní"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:923
 #, kde-format
@@ -6487,17 +6116,17 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:945
 #, kde-format
 msgid "Print output"
-msgstr "Vytisknout výstup"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:953
 #, kde-format
 msgid "Print page"
-msgstr "Vytisknout stránku"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:1010
 #, kde-format
 msgid "No Title"
-msgstr "Bez názvu"
+msgstr "Necun titulo"
 
 #: rkward/windows/rkhtmlwindow.cpp:1023
 #, kde-format
@@ -6515,22 +6144,22 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1045
 #, kde-format
 msgid "Summary"
-msgstr "Shrnutí"
+msgstr "Summario"
 
 #: rkward/windows/rkhtmlwindow.cpp:1052
 #, kde-format
 msgid "Usage"
-msgstr "Využití"
+msgstr "Uso"
 
 #: rkward/windows/rkhtmlwindow.cpp:1079
 #, kde-format
 msgid "Choose another file"
-msgstr "Vybrat jiný soubor"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:1101
 #, kde-format
 msgid "GUI settings"
-msgstr "Nastavení uživatelského rozhraní"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:1126
 #, kde-format
@@ -6540,12 +6169,12 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1134
 #, kde-format
 msgid "Technical details"
-msgstr "Technické podrobnosti"
+msgstr "Detalios technic"
 
 #: rkward/windows/rkhtmlwindow.cpp:1157
 #, kde-format
 msgid "About"
-msgstr "O aplikaci"
+msgstr "A proposito"
 
 #: rkward/windows/rkhtmlwindow.cpp:1164
 #, kde-format
@@ -6570,12 +6199,12 @@ msgstr ""
 #: rkward/windows/rkmdiwindow.cpp:421
 #, kde-format
 msgid "Help on %1"
-msgstr "Nápověda k %1"
+msgstr ""
 
 #: rkward/windows/rkmdiwindow.cpp:425
 #, kde-format
 msgid "Configure %1"
-msgstr "Nastavit %1"
+msgstr "Configura %1"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -6585,32 +6214,32 @@ msgstr ""
 #: rkward/windows/rktoolwindowbar.cpp:302
 #, kde-format
 msgid "Attach"
-msgstr "Přiložit"
+msgstr "Attacha"
 
 #: rkward/windows/rktoolwindowbar.cpp:305
 #, kde-format
 msgid "Position"
-msgstr "Pozice"
+msgstr "Position"
 
 #: rkward/windows/rktoolwindowbar.cpp:306
 #, kde-format
 msgid "Left Sidebar"
-msgstr "Levá postranní panel"
+msgstr "Barra lateral sinistre"
 
 #: rkward/windows/rktoolwindowbar.cpp:307
 #, kde-format
 msgid "Right Sidebar"
-msgstr "Pravý postranní panel"
+msgstr "Barra lateral dextere"
 
 #: rkward/windows/rktoolwindowbar.cpp:308
 #, kde-format
 msgid "Top Sidebar"
-msgstr "Horní postranní panel"
+msgstr "Barra lateral al culmine"
 
 #: rkward/windows/rktoolwindowbar.cpp:309
 #, kde-format
 msgid "Bottom Sidebar"
-msgstr "Spodní postranní panel"
+msgstr "Barra lateral a basso"
 
 #: rkward/windows/rktoolwindowbar.cpp:310
 #, kde-format
@@ -6620,7 +6249,7 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:57
 #, kde-format
 msgid "Help on R"
-msgstr "Nápověda pro R"
+msgstr ""
 
 #: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format
@@ -6651,12 +6280,12 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:75
 #, kde-format
 msgid "Previous Window"
-msgstr "Předchozí okno"
+msgstr "Previe fenestra"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:79
 #, kde-format
 msgid "Next Window"
-msgstr "Následující okno"
+msgstr "Proxime fenestra"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:84
 #, kde-format
@@ -6666,12 +6295,12 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:88
 #, kde-format
 msgid "Show Output"
-msgstr "Zobrazit výstup"
+msgstr "Monstra Exito"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:130
 #, kde-format
 msgid "Show/Hide %1"
-msgstr "Zobrazit / Skrýt %1"
+msgstr "Monstra/Cela %1"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:144
 #, kde-format
@@ -6688,7 +6317,7 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:158
 #, kde-format
 msgid "Note"
-msgstr "Poznámka"
+msgstr "Nota"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:158
 #, kde-format
@@ -6727,7 +6356,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:308
 #, kde-format
 msgid "An error occurred"
-msgstr "Vyskytla se chyba"
+msgstr "Un error occurreva"
 
 #: rkward/windows/rkwindowcatcher.cpp:310
 #, kde-format
@@ -6786,12 +6415,12 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:533
 #, kde-format
 msgid "Width"
-msgstr "Šířka"
+msgstr "Largessa"
 
 #: rkward/windows/rkwindowcatcher.cpp:543
 #, kde-format
 msgid "Height"
-msgstr "Výška"
+msgstr "Altessa"
 
 #: rkward/windows/rkwindowcatcher.cpp:577
 #, kde-format
@@ -6957,7 +6586,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:798
 #, kde-format
 msgid "Clear history"
-msgstr "Vyprázdnit historii"
+msgstr "Netta historia"
 
 #: rkward/windows/rkwindowcatcher.cpp:804
 #, kde-format
@@ -6967,7 +6596,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:809
 #, kde-format
 msgid "Make active"
-msgstr "Aktivovat"
+msgstr ""
 
 #: rkward/windows/rkwindowcatcher.cpp:813
 #, kde-format
@@ -6982,7 +6611,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:819
 #, kde-format
 msgid "Duplicate"
-msgstr "Duplikovat"
+msgstr "Duplica"
 
 #: rkward/windows/rkwindowcatcher.cpp:823
 #, kde-format
@@ -6996,8 +6625,6 @@ msgid ""
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
-"URL, kterou chcete otevřít  ('%1') není lokální soubor nebo typ souboru "
-"RKWard nepodporuje. Chcete otevřít odkaz ve výchozí aplikaci?"
 
 #: rkward/windows/rkworkplace.cpp:452
 #, kde-format
@@ -7042,7 +6669,7 @@ msgstr ""
 #: rkward/windows/rkworkplaceview.cpp:62
 #, kde-format
 msgid "Close all"
-msgstr "Zavřít vše"
+msgstr "Claude omne"
 
 #: rkward/windows/rkworkplaceview.cpp:239
 #, kde-format
@@ -7057,42 +6684,42 @@ msgstr ""
 #: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split Ve&rtical"
-msgstr "&Rozdělit svisle"
+msgstr "Divide ve&rtical"
 
 #: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
-msgstr "Rozdělit právě aktivní pohled vodorovně na dva."
+msgstr ""
 
 #: rkward/windows/rkworkplaceview.cpp:262
 #, kde-format
 msgid "Split &Horizontal"
-msgstr "Rozdělit vo&dorovně"
+msgstr "Divide &Horizontal"
 
 #: rkward/windows/rkworkplaceview.cpp:265
 #, kde-format
 msgid "Split the currently active view into two views, horizontally."
-msgstr "Rozdělit právě aktivní pohled vodorovně na dva."
+msgstr ""
 
 #: rkward/windows/robjectbrowser.cpp:54
 #, kde-format
 msgid "R workspace browser"
-msgstr "Prohlížeč pracovní plochy R"
+msgstr ""
 
 #: rkward/windows/robjectbrowser.cpp:57
 #, kde-format
 msgid "R Workspace"
-msgstr "Pracovní plocha R"
+msgstr ""
 
 #: rkward/windows/robjectbrowser.cpp:115 rkward/windows/robjectbrowser.cpp:254
 #, kde-format
 msgid "Edit"
-msgstr "Upravit"
+msgstr "Modifica"
 
 #: rkward/windows/robjectbrowser.cpp:117
 #, kde-format
 msgid "View"
-msgstr "Pohled"
+msgstr "Vista"
 
 #: rkward/windows/robjectbrowser.cpp:121
 #, kde-format
@@ -7117,12 +6744,12 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:131
 #, kde-format
 msgid "Load / Unload Packages"
-msgstr "Načíst/Zrušit načtení balíčků"
+msgstr ""
 
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
 msgid "Copy object"
-msgstr "Kopírovat objekt"
+msgstr ""
 
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
@@ -7139,12 +6766,12 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:201
 #, kde-format
 msgid "Name already in use"
-msgstr "Název je již používán"
+msgstr ""
 
 #: rkward/windows/robjectbrowser.cpp:231
 #, kde-format
 msgid "Rename object"
-msgstr "Přejmenovat objekt"
+msgstr "Renomina Objecto"
 
 #: rkward/windows/robjectbrowser.cpp:231
 #, kde-format
@@ -7155,6 +6782,3 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
-
-#~ msgid "Color Scheme"
-#~ msgstr "Barevné schéma"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-12 00:35+0000\n"
+"POT-Creation-Date: 2024-04-19 00:35+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -3662,12 +3662,12 @@ msgstr "Taustaprotsessi käivitamine nurjus väljumiskoodiga %1."
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Taustaprotsess lõpetas töö koodiga %1."
 
-#: rkward/rbackend/rkrbackend.cpp:572
+#: rkward/rbackend/rkrbackend.cpp:571
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R-i mootor lõpetas töö staatusega %1"
 
-#: rkward/rbackend/rkrbackend.cpp:593
+#: rkward/rbackend/rkrbackend.cpp:592
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3676,17 +3676,17 @@ msgstr ""
 "R-i mootorit tabas saatuslik tõrge:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:763
+#: rkward/rbackend/rkrbackend.cpp:762
 #, kde-format
 msgid "Message from the R backend"
 msgstr "R-i taustaprogrammi teade"
 
-#: rkward/rbackend/rkrbackend.cpp:771
+#: rkward/rbackend/rkrbackend.cpp:770
 #, kde-format
 msgid "Question from the R backend"
 msgstr "R-i taustaprogrammi küsimus"
 
-#: rkward/rbackend/rkrbackend.cpp:1720
+#: rkward/rbackend/rkrbackend.cpp:1715
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3718,7 +3718,7 @@ msgstr ""
 "Asjakohast abi võib leida aadressil <a href=\"http://rkward.kde.org/compiling"
 "\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1724
+#: rkward/rbackend/rkrbackend.cpp:1719
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3739,12 +3739,12 @@ msgstr ""
 "leida aadressil <a href=\"http://rkward.kde.org/compiling\">http://rkward."
 "kde.org/compiling</a>.<p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3752,17 +3752,17 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid "Ok"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:85
+#: rkward/rbackend/rkrinterface.cpp:87
 #, kde-format
 msgid "R Startup"
 msgstr "R-i käivitamine"
 
-#: rkward/rbackend/rkrinterface.cpp:88
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -3772,7 +3772,7 @@ msgstr ""
 "hakata. Tõenäoliselt ei toimi RKWard päris korralikult. Palun kontrolli oma "
 "seadistust.</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:90
+#: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
@@ -3781,17 +3781,17 @@ msgstr ""
 "<p>R-i taustaprogrammi käivitamisel ilmnes probleem. Tekkisid järgmised "
 "tõrked:</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:98
+#: rkward/rbackend/rkrinterface.cpp:100
 #, kde-format
 msgid "Error starting R"
 msgstr "Tõrge R-i käivitamisel"
 
-#: rkward/rbackend/rkrinterface.cpp:582
+#: rkward/rbackend/rkrinterface.cpp:583
 #, kde-format
 msgid "Quitting was canceled"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:584
+#: rkward/rbackend/rkrinterface.cpp:585
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3814,33 +3814,33 @@ msgstr ""
 "uuemates RKWardi versioonides automaatselt). Selleks klõpsa praegu \"Loobu"
 "\", sulge andmeaknad, salvesta ja proovi uuesti."
 
-#: rkward/rbackend/rkrinterface.cpp:584
+#: rkward/rbackend/rkrinterface.cpp:585
 #, kde-format
 msgid "Locale change"
 msgstr "Lokaadi muutus"
 
-#: rkward/rbackend/rkrinterface.cpp:585
+#: rkward/rbackend/rkrinterface.cpp:586
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:688
+#: rkward/rbackend/rkrinterface.cpp:689
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:696
+#: rkward/rbackend/rkrinterface.cpp:697
 #, fuzzy, kde-format
 #| msgid "Could not open file %1 for reading"
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Faili %1 avamine lugemiseks nurjus"
 
-#: rkward/rbackend/rkrinterface.cpp:707
+#: rkward/rbackend/rkrinterface.cpp:708
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:780
+#: rkward/rbackend/rkrinterface.cpp:781
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3852,22 +3852,22 @@ msgstr ""
 "paketti \"%1\", mida praegu ei ole paigaldatud. Me avame paketihalduri, kus "
 "võid vajaliku paketi üles otsida ja paigaldada."
 
-#: rkward/rbackend/rkrinterface.cpp:780
+#: rkward/rbackend/rkrinterface.cpp:781
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Vajalik on pakett \"%1\""
 
-#: rkward/rbackend/rkrinterface.cpp:800
+#: rkward/rbackend/rkrinterface.cpp:801
 #, kde-format
 msgid "Unrecognized call '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:880
+#: rkward/rbackend/rkrinterface.cpp:881
 #, kde-format
 msgid "R backend requests information"
 msgstr "R-i taustaprogramm soovib teavet"
 
-#: rkward/rbackend/rkrinterface.cpp:899
+#: rkward/rbackend/rkrinterface.cpp:900
 #, kde-format
 msgid ""
 "\n"
@@ -3885,7 +3885,7 @@ msgstr ""
 "kopeerida avatud andmeredaktoritest andmeid. Pärast seda pole midagi muud "
 "teha, kui väljuda RKWardist! Andestust!"
 
-#: rkward/rbackend/rkrinterface.cpp:900
+#: rkward/rbackend/rkrinterface.cpp:901
 #, kde-format
 msgid "R engine has died"
 msgstr "R-i mootor suri"

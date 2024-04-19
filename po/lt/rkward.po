@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-12 00:35+0000\n"
+"POT-Creation-Date: 2024-04-19 00:35+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -3545,12 +3545,12 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:572
+#: rkward/rbackend/rkrbackend.cpp:571
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R variklis sustojo būsenoje %1"
 
-#: rkward/rbackend/rkrbackend.cpp:593
+#: rkward/rbackend/rkrbackend.cpp:592
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3559,17 +3559,17 @@ msgstr ""
 "R variklis patyrė lemtingą klaidą:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:763
+#: rkward/rbackend/rkrbackend.cpp:762
 #, kde-format
 msgid "Message from the R backend"
 msgstr "R variklio pranešimas"
 
-#: rkward/rbackend/rkrbackend.cpp:771
+#: rkward/rbackend/rkrbackend.cpp:770
 #, kde-format
 msgid "Question from the R backend"
 msgstr "R variklio klausimas"
 
-#: rkward/rbackend/rkrbackend.cpp:1720
+#: rkward/rbackend/rkrbackend.cpp:1715
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3597,7 +3597,7 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1724
+#: rkward/rbackend/rkrbackend.cpp:1719
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3622,12 +3622,12 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3635,17 +3635,17 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid "Ok"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:85
+#: rkward/rbackend/rkrinterface.cpp:87
 #, kde-format
 msgid "R Startup"
 msgstr "R paleidimas"
 
-#: rkward/rbackend/rkrinterface.cpp:88
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -3654,24 +3654,24 @@ msgstr ""
 "<p>\t-Įvyko netikėta klaida, kurios RKWard dar negali apdoroti. Tikėtina, "
 "kad nebeveiks tinkamai. Patikrinkite konfigūraciją.</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:90
+#: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr "<p>Nepavyko paleisti R variklio. Klaidos:</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:98
+#: rkward/rbackend/rkrinterface.cpp:100
 #, kde-format
 msgid "Error starting R"
 msgstr "R paleidimo klaida"
 
-#: rkward/rbackend/rkrinterface.cpp:582
+#: rkward/rbackend/rkrinterface.cpp:583
 #, kde-format
 msgid "Quitting was canceled"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:584
+#: rkward/rbackend/rkrinterface.cpp:585
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3685,33 +3685,33 @@ msgid ""
 "windows, save, and retry."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:584
+#: rkward/rbackend/rkrinterface.cpp:585
 #, kde-format
 msgid "Locale change"
 msgstr "Lokalės keitimas"
 
-#: rkward/rbackend/rkrinterface.cpp:585
+#: rkward/rbackend/rkrinterface.cpp:586
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:688
+#: rkward/rbackend/rkrinterface.cpp:689
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:696
+#: rkward/rbackend/rkrinterface.cpp:697
 #, fuzzy, kde-format
 #| msgid "Could not open file %1 for reading"
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Nepavyksta perskaityti ir atverti %1 failo."
 
-#: rkward/rbackend/rkrinterface.cpp:707
+#: rkward/rbackend/rkrinterface.cpp:708
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:780
+#: rkward/rbackend/rkrinterface.cpp:781
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3723,22 +3723,22 @@ msgstr ""
 "Netrukus bus atverta paketų tvarkytuvė, kurioje galėsite rasti ir įdiegti "
 "reikiamą paketą."
 
-#: rkward/rbackend/rkrinterface.cpp:780
+#: rkward/rbackend/rkrinterface.cpp:781
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Reikia paketo „%1“"
 
-#: rkward/rbackend/rkrinterface.cpp:800
+#: rkward/rbackend/rkrinterface.cpp:801
 #, kde-format
 msgid "Unrecognized call '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:880
+#: rkward/rbackend/rkrinterface.cpp:881
 #, kde-format
 msgid "R backend requests information"
 msgstr "R varikliui reikia informacijos"
 
-#: rkward/rbackend/rkrinterface.cpp:899
+#: rkward/rbackend/rkrinterface.cpp:900
 #, kde-format
 msgid ""
 "\n"
@@ -3749,7 +3749,7 @@ msgid ""
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:900
+#: rkward/rbackend/rkrinterface.cpp:901
 #, kde-format
 msgid "R engine has died"
 msgstr "R variklis nulūžo"

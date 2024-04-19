@@ -1,38 +1,38 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the rkward package.
+#
+# giovanni <g.sora@tiscali.it>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-18 19:50\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-04-18 12:03+0200\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
+"Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/rkward/rkward__analysis.pot\n"
-"X-Crowdin-File-ID: 53242\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, Honghao Li"
+msgstr "Giovanni Sora"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, honghao.li@outlook.jp"
+msgstr "g.sora@tiscali.it"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:10 rkward/plugins/analysis.pluginmap:71
 #, kde-format
 msgid "Analysis"
-msgstr "分析"
+msgstr ""
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/analysis.pluginmap:10
@@ -255,7 +255,7 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:77
 #, kde-format
 msgid "Correlation"
-msgstr "相关系数"
+msgstr ""
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:81
@@ -267,7 +267,7 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:85
 #, kde-format
 msgid "Means"
-msgstr "平均值："
+msgstr ""
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Means"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:86
@@ -346,7 +346,7 @@ msgstr ""
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.js:44
 #, kde-format
 msgid "statistic"
-msgstr ""
+msgstr "statistic"
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test)
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test)
@@ -497,7 +497,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:16
 #, kde-format
 msgid "Basic settings"
-msgstr ""
+msgstr "Preferentias basic"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <varslot label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <varslot label="...">
@@ -513,7 +513,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:20
 #, kde-format
 msgid "compare"
-msgstr "比较"
+msgstr "compara"
 
 #. i18n: ectx: (Loaded from t-Test)
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <varslot label="...">
@@ -591,7 +591,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.xml:21
 #, kde-format
 msgid "greater"
-msgstr "大于"
+msgstr "major que"
 
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Basic settings"> <radio label="Test hypothesis (H1)"> <option label="...">
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="D'Agostino test of skewness"> <tab label="Basic settings"> <radio label="Test hypothesis (H1)"> <option label="...">
@@ -609,7 +609,7 @@ msgstr "大于"
 #: rkward/plugins/analysis/variances/F_test.xml:22
 #, kde-format
 msgid "less"
-msgstr "较低"
+msgstr "minus"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="...">
@@ -653,7 +653,7 @@ msgstr "较低"
 #: rkward/plugins/uni1.2/description.xml:123
 #, kde-format
 msgid "Options"
-msgstr "选项"
+msgstr "Optiones"
 
 #. i18n: ectx: (Ansari-Bradley two-sample test) <dialog label="Ansari-Bradley two-sample test"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (Ansari-Bradley two-sample exact test) <dialog label="Ansari-Bradley two-sample exact test"> <tab label="Options"> <radio label="...">
@@ -671,7 +671,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:41
 #, kde-format
 msgid "Always"
-msgstr "总是显示"
+msgstr "Sempre"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> [...] <radio label="Compute exact p-value"> <option label="...">
 #. i18n: ectx: (Ansari-Bradley two-sample test) <dialog label="Ansari-Bradley two-sample test"> <tab label="Options"> <radio label="compute exact p-value"> <option label="...">
@@ -681,7 +681,7 @@ msgstr "总是显示"
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:42
 #, kde-format
 msgid "Automatic"
-msgstr "自动"
+msgstr "Automatic"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> [...] <radio label="Compute exact p-value"> <option label="...">
 #. i18n: ectx: (Ansari-Bradley two-sample test) <dialog label="Ansari-Bradley two-sample test"> <tab label="Options"> <radio label="compute exact p-value"> <option label="...">
@@ -691,7 +691,7 @@ msgstr "自动"
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:43
 #, kde-format
 msgid "Never"
-msgstr "从不显示"
+msgstr "Jammais"
 
 #. i18n: ectx: (Ansari-Bradley two-sample test) <dialog label="Ansari-Bradley two-sample test"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Ansari-Bradley two-sample exact test) <dialog label="Ansari-Bradley two-sample exact test"> <tab label="Options"> <frame label="...">
@@ -861,7 +861,7 @@ msgstr ""
 #, kde-format
 msgctxt "noun"
 msgid "Variable:"
-msgstr "变量："
+msgstr "Variabile:"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:146
@@ -962,7 +962,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.xml:13
 #, kde-format
 msgid "Variables"
-msgstr "变量"
+msgstr "Variabiles"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Variables"> <varslot label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Variables"> <varslot label="...">
@@ -1011,7 +1011,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.js:88 rkward/plugins/plots/cor_graph.xml:23
 #, kde-format
 msgid "Method"
-msgstr "算法"
+msgstr "Method"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:31
@@ -1081,7 +1081,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.xml:30
 #, kde-format
 msgid "pairwise"
-msgstr ""
+msgstr "Comparation inter par (Pairwise)"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:17
@@ -1097,7 +1097,7 @@ msgstr ""
 #, kde-format
 msgctxt "a statistic indicator"
 msgid "statistic"
-msgstr ""
+msgstr "statistic"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:37
@@ -1112,7 +1112,7 @@ msgstr ""
 #, kde-format
 msgctxt "noun"
 msgid "count"
-msgstr "数量"
+msgstr "computa"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:56
@@ -1141,7 +1141,7 @@ msgstr ""
 #, kde-format
 msgctxt "expected count"
 msgid "expected"
-msgstr "期望"
+msgstr "expectate"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:75
@@ -1163,7 +1163,7 @@ msgstr ""
 #, kde-format
 msgctxt "a statistic indicator"
 msgid "Statistic"
-msgstr ""
+msgstr "Stato"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:94
@@ -1383,7 +1383,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.xml:43
 #, kde-format
 msgid "Monte Carlo"
-msgstr "蒙特卡洛"
+msgstr ""
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Chisquare Options"> <frame label="...">
 #: rkward/plugins/analysis/crosstab.xml:45
@@ -1468,7 +1468,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab_multi.xml:15
 #, kde-format
 msgid "variables:"
-msgstr "变量:"
+msgstr "variabiles:"
 
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="N to N Crosstabulation"> <spinbox label="...">
 #: rkward/plugins/analysis/crosstab_multi.xml:17
@@ -1715,7 +1715,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/moment.xml:23
 #, kde-format
 msgid "Order"
-msgstr "序列"
+msgstr "Ordine"
 
 #. i18n: ectx: (sample moment) <dialog label="sample moment"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/analysis/moments/moment.xml:24
@@ -1753,7 +1753,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/outlier.xml:26
 #, kde-format
 msgid "additional settings"
-msgstr ""
+msgstr "preferentias additional"
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis)
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="...">
@@ -1891,7 +1891,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:36 rkward/plugins/uni1.2/description.xml:53
 #, kde-format
 msgid "Variance"
-msgstr "方差"
+msgstr "variantia"
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier)
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="...">
@@ -2063,31 +2063,31 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/dixon_test.xml:26
 #, kde-format
 msgid "0 (Automatic)"
-msgstr ""
+msgstr "0 (Automatic)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:27
 #, kde-format
 msgid "10 (sample size 3-7)"
-msgstr ""
+msgstr "10 (Dimension de exemplo 3-7)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:28
 #, kde-format
 msgid "11 (sample size 8-10)"
-msgstr ""
+msgstr "11 (Dimension de exemplo 8-10)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:29
 #, kde-format
 msgid "12"
-msgstr "12"
+msgstr ""
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:30
 #, kde-format
 msgid "20 (sample size 11-13)"
-msgstr ""
+msgstr "20 (Dimension de exemplo 11-13)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:31
@@ -2099,7 +2099,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/dixon_test.xml:32
 #, kde-format
 msgid "22"
-msgstr "22"
+msgstr ""
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> <tab label="Options"> <frame label="test specific settings"> <checkbox label="...">
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> <tab label="Options"> <frame label="test specific settings"> <checkbox label="...">
@@ -2248,19 +2248,19 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.js:212
 #, kde-format
 msgid "alternative"
-msgstr "另类"
+msgstr "alternative"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:214
 #, kde-format
 msgid "Parameters"
-msgstr "参数"
+msgstr "Parametros"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:214
 #, kde-format
 msgid "<strong>Note:</strong>"
-msgstr ""
+msgstr "<strong>Nota:</strong>"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2284,7 +2284,7 @@ msgstr ""
 #, kde-format
 msgctxt "effect size"
 msgid "small"
-msgstr "小型"
+msgstr "parve"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2296,7 +2296,7 @@ msgstr "小型"
 #, kde-format
 msgctxt "effect size"
 msgid "medium"
-msgstr "中"
+msgstr "medie"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2308,7 +2308,7 @@ msgstr "中"
 #, kde-format
 msgctxt "effect size"
 msgid "large"
-msgstr "大型"
+msgstr "grande"
 
 #. i18n: ectx: (Power analysis) <title>
 #. i18n: ectx: (Power analysis) <about name="...">
@@ -2461,7 +2461,7 @@ msgstr ""
 #, kde-format
 msgctxt "Author name"
 msgid "Meik"
-msgstr "Meik"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <about> <author family="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:15
@@ -2475,7 +2475,7 @@ msgstr ""
 #, kde-format
 msgctxt "Author name"
 msgid "Thomas"
-msgstr "王五"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <about> <author family="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:16
@@ -2550,14 +2550,14 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:116
 #, kde-format
 msgid "Number of groups"
-msgstr ""
+msgstr "Numero de gruppos"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:117
 #: rkward/plugins/analysis/power/Poweranalysis.xml:123
 #, kde-format
 msgid "Samples"
-msgstr "采样数"
+msgstr "Specimen"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:118
@@ -2675,7 +2675,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:184
 #, kde-format
 msgid "Sample size"
-msgstr ""
+msgstr "Dimension de exemplo"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2711,13 +2711,13 @@ msgstr ""
 msgctxt ""
 "Here 'power' is a common statistical term and should not be translated"
 msgid "Power"
-msgstr "功率"
+msgstr "Potentia"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:167
 #, kde-format
 msgid "Degrees of freedom"
-msgstr "自由度"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:168
@@ -2915,7 +2915,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.xml:12
 #, kde-format
 msgid "Model"
-msgstr "模型"
+msgstr "Modello"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Model"> <varslot label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:16
@@ -2951,7 +2951,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.xml:26
 #, kde-format
 msgid "Save"
-msgstr "保存"
+msgstr "Salveguarda"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Save"> <saveobject label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:29
@@ -3015,7 +3015,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:12
 #, kde-format
 msgid "Variable Name"
-msgstr "变量名称"
+msgstr "Nomine de variabile"
 
 #. i18n: ectx: (Loaded from t-Test)
 #: rkward/plugins/analysis/t_test.js:69
@@ -3029,7 +3029,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/Box_test.js:24
 #, kde-format
 msgid "degrees of freedom"
-msgstr "自由度"
+msgstr ""
 
 #. i18n: ectx: (Loaded from t-Test) <summary>
 #: rkward/plugins/analysis/t_test.rkh:8
@@ -3217,7 +3217,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.js:18
 #, kde-format
 msgid "Length"
-msgstr "长度"
+msgstr "Longitude"
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots)
 #: rkward/plugins/analysis/TESTS/PP_test.js:23
@@ -3285,7 +3285,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:23
 #, kde-format
 msgid "short"
-msgstr "短"
+msgstr "breve"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="version of truncation lag parameter"> <option label="...">
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="Phillips-Perron Test for Unit Roots"> <tab label="Basic settings"> <radio label="version of truncation lag parameter"> <option label="...">
@@ -3293,7 +3293,7 @@ msgstr "短"
 #: rkward/plugins/analysis/time_series/kpss_test.xml:24
 #, kde-format
 msgid "long"
-msgstr "长"
+msgstr "longe"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests)
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="...">
@@ -3336,7 +3336,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/Box_test.xml:18
 #, kde-format
 msgid "lag"
-msgstr "滞后"
+msgstr "retardo"
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> <tab label="Basic settings"> <frame label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:19
@@ -3493,7 +3493,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:37
 #, kde-format
 msgid "Variable:"
-msgstr "变量："
+msgstr "Variabile:"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:42
@@ -3511,7 +3511,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:44
 #, kde-format
 msgid "14400 (Monthly)"
-msgstr ""
+msgstr "14400 (Cata mense)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="Lambda"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:46
@@ -3553,7 +3553,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:62
 #, kde-format
 msgid "Lines"
-msgstr "线"
+msgstr "Lineas"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Lines"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:64
@@ -3569,7 +3569,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:93
 #, kde-format
 msgid "Line width"
-msgstr "线宽"
+msgstr "Largessa de linea"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Original series"> <dropdown label="...">
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Trend"> <dropdown label="...">
@@ -3587,7 +3587,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:95
 #, kde-format
 msgid "default"
-msgstr "默认"
+msgstr "Predefinite"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:68
@@ -3595,7 +3595,7 @@ msgstr "默认"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:96
 #, kde-format
 msgid "Solid"
-msgstr "纯色"
+msgstr "Solido"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:69
@@ -3603,7 +3603,7 @@ msgstr "纯色"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:97
 #, kde-format
 msgid "Dashed"
-msgstr "虚线"
+msgstr ""
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:70
@@ -3643,13 +3643,13 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:20
 #, kde-format
 msgid "Trend"
-msgstr "趋势"
+msgstr ""
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Lines"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:92
 #, kde-format
 msgid "Cycle"
-msgstr "周期"
+msgstr ""
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:108
@@ -3750,7 +3750,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:19
 #, kde-format
 msgid "Level"
-msgstr "关卡"
+msgstr "Nivello"
 
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances)
 #: rkward/plugins/analysis/variances/bartlett_test.js:24
@@ -3794,7 +3794,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/fligner_test.xml:15
 #, kde-format
 msgid "samples"
-msgstr "采样数"
+msgstr "Specimen"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:27
@@ -3965,7 +3965,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/levene_test.xml:16
 #, kde-format
 msgid "groups"
-msgstr "分组"
+msgstr "gruppos"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:84
@@ -4167,7 +4167,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.js:23
 #, kde-format
 msgid "Object"
-msgstr "物体"
+msgstr "Objecto"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:27
@@ -4181,7 +4181,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.js:30
 #, kde-format
 msgid "mean"
-msgstr "均值"
+msgstr "media"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Loaded from Descriptive Statistics)
@@ -4211,38 +4211,38 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.js:45
 #, kde-format
 msgid "median"
-msgstr "中位数"
+msgstr "Median"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:50
 #, kde-format
 msgid "min"
-msgstr "分钟"
+msgstr "min"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:51
 #, kde-format
 msgid "max"
-msgstr "最大"
+msgstr "max"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:55
 #, kde-format
 msgid "standard deviation"
-msgstr "标准方差"
+msgstr "Deviation standard"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:58
 #, kde-format
 msgctxt "noun"
 msgid "sum"
-msgstr "总计"
+msgstr "summa"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:61
 #, kde-format
 msgid "product"
-msgstr "结果"
+msgstr "producto"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Dispersion"> <checkbox label="...">
@@ -4402,7 +4402,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.xml:20
 #, kde-format
 msgid "group by:"
-msgstr ""
+msgstr "Gruppa Per"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <checkbox label="...">
@@ -4435,7 +4435,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:116
 #, kde-format
 msgid "Mean"
-msgstr "平均值"
+msgstr "Media"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <spinbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:31
@@ -4471,7 +4471,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.xml:38
 #, kde-format
 msgid "Standard deviation"
-msgstr "标准方差"
+msgstr "Deviation standard"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:42
@@ -4490,7 +4490,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:115
 #, kde-format
 msgid "Median"
-msgstr "中位数"
+msgstr "Median"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:47
@@ -4502,7 +4502,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.xml:48
 #, kde-format
 msgid "mad"
-msgstr "生气"
+msgstr "mad"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Dispersion"> <spinbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="Median Absolute Deviation (mad)"> <spinbox label="...">
@@ -4510,7 +4510,7 @@ msgstr "生气"
 #: rkward/plugins/uni1.2/description.xml:85
 #, kde-format
 msgid "Constant"
-msgstr "常量"
+msgstr "Constante"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="Median Absolute Deviation (mad)"> <radio label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:50
@@ -4546,19 +4546,19 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.xml:63
 #, kde-format
 msgid "range"
-msgstr "范围"
+msgstr "Extension"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:64
 #, kde-format
 msgid "sum"
-msgstr "总计"
+msgstr "summa"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:65
 #, kde-format
 msgid "prod"
-msgstr "产品"
+msgstr ""
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="General"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
@@ -4572,7 +4572,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.js:56
 #, kde-format
 msgid "Legend:"
-msgstr "图例:"
+msgstr "Legenda:"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <summary>
 #: rkward/plugins/plots/cor_graph.rkh:8
@@ -4700,21 +4700,21 @@ msgstr ""
 #, kde-format
 msgctxt "standard deviation; short"
 msgid "sd"
-msgstr "标准差"
+msgstr "sd"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <checkbox label="...">
 #: rkward/plugins/uni1.2/code.js:42 rkward/plugins/uni1.2/description.xml:60
 #, kde-format
 msgid "Minimum"
-msgstr "最小"
+msgstr "Minimo"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <checkbox label="...">
 #: rkward/plugins/uni1.2/code.js:45 rkward/plugins/uni1.2/description.xml:61
 #, kde-format
 msgid "Maximum"
-msgstr "最大"
+msgstr "Maximo"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:50
@@ -4832,7 +4832,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:119 rkward/plugins/uni1.2/description.xml:114
 #, kde-format
 msgid "Initial value"
-msgstr ""
+msgstr "Valor initial"
 
 #. i18n: ectx: (Basic statistics) <dialog label="...">
 #: rkward/plugins/uni1.2/description.xml:26
@@ -4850,19 +4850,19 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:32
 #, kde-format
 msgid "Variable"
-msgstr "变量"
+msgstr "Variabile"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #: rkward/plugins/uni1.2/description.xml:39
 #, kde-format
 msgid "Statistics"
-msgstr "详情"
+msgstr "Statistica"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:40
 #, kde-format
 msgid "General"
-msgstr "通用"
+msgstr "General"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:45
@@ -4874,13 +4874,13 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:54
 #, kde-format
 msgid "Sd"
-msgstr "标准差"
+msgstr "Sd"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:57
 #, kde-format
 msgid "extrema"
-msgstr "极值"
+msgstr ""
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:64
@@ -4988,7 +4988,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:111
 #, kde-format
 msgid "Tolerance"
-msgstr "公差"
+msgstr ""
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:124

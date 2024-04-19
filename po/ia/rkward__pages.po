@@ -1,38 +1,37 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the rkward package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# giovanni <g.sora@tiscali.it>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-17 09:20+0200\n"
-"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
-"Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
-"Language: ka\n"
+"PO-Revision-Date: 2024-04-18 12:25+0200\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
+"Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Temuri Doghonadze"
+msgstr "Giovanni Sora"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "Temuri.doghonadze@gmail.com"
+msgstr "g.sora@tiscali.it"
 
 #. i18n: ectx: (RKWard Add-Ons) <title>
 #: rkward/pages/rkward_addons.rkh:8
 #, kde-format
 msgid "RKWard Add-Ons"
-msgstr "RKWard -ის დამატებები"
+msgstr ""
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -42,15 +41,12 @@ msgid ""
 "Arguably this can make it a bit confusing on where to find the addon "
 "features you are looking for."
 msgstr ""
-"იმისათვის, რომ საუკეთესო ფუნქციონალი შემოგთავაზობთ, RKWard სხვადასხვა "
-"ტექნოლოგიას იყენებს. ეს შეიძლება ცოტა დამაბნეველი იყოს, სად მოძებნოთ "
-"ფუნქციები, რომელიც გჭირდებათ."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
 #, kde-format
 msgid "In a nutshell:"
-msgstr "მოკლედ:"
+msgstr ""
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -90,14 +86,12 @@ msgid ""
 "The following sections deal with these, in turn, showing you how to find / "
 "install, what you need."
 msgstr ""
-"ეს სექციები მოუვლიან ამას. და გაჩვენებენ, როგორ იპოვოთ / დააყენოთ, რაც "
-"გჭირდებათ."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:24
 #, kde-format
 msgid "R packages"
-msgstr "R -ის პაკეტები"
+msgstr ""
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -123,7 +117,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:32
 #, kde-format
 msgid "Kate Add-ons"
-msgstr "Kate -ის დამატებები"
+msgstr ""
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
 #: rkward/pages/rkward_addons.rkh:32
@@ -144,7 +138,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:39
 #, kde-format
 msgid "RKWard Plugins"
-msgstr "RKWard-ის დამატებები"
+msgstr ""
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -177,13 +171,13 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Creating your own RKWard Plugins"
-msgstr "შექმენით RKWard-ის საკუთარი დამატება"
+msgstr ""
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Still missing something?"
-msgstr "კიდევ გაკლიათ რამე?"
+msgstr ""
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -202,13 +196,13 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:8
 #, kde-format
 msgid "Using the RKWard R Console"
-msgstr "RKWard R-ის კონსოლის გამოყენება"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
 #, kde-format
 msgid "Describe features and settings regarding the RKWard R Console."
-msgstr "აღწერეთ თვისებები და პარამეტრები RkWard R კონსოლის შესახებ."
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
@@ -217,14 +211,12 @@ msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labelled \"R Console\" to invoke it."
 msgstr ""
-"კონსოლეს შეუძლია - ნაგულისხმევად - გამოჩნდეს აპლიკაციის ფანჯრის ქვედა "
-"მხარეს. ჩასაშვებად დააწექით ღილაკს ჭდით \"R-ის კონსოლი\"."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
 #, kde-format
 msgid "What is the console?"
-msgstr "რა არის კონსოლი?"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -252,14 +244,12 @@ msgid ""
 "Many console features are available from the context menu. To invoke the "
 "context menu, click the right mouse button inside the console window."
 msgstr ""
-"კონსოლის ბევრი ფუნქცია კონტექსტური მენიუდანაა ხელმისაწვდომი. კონტექსტური "
-"მენიუს გამოსაძახებელად კონსოლის ფანჯარაში მარჯვენა თაგუნას ღილაკს დააჭირეთ."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:23
 #, kde-format
 msgid "Interrupting commands"
-msgstr "ბრძანებების შესრულება"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Interrupting commands">
 #: rkward/pages/rkward_console.rkh:23
@@ -276,7 +266,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:27
 #, kde-format
 msgid "Re-running selected commands"
-msgstr "მონიშნული ბრძანებების თავიდან გშვება"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Re-running selected commands">
 #: rkward/pages/rkward_console.rkh:27
@@ -292,7 +282,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:31
 #, kde-format
 msgid "Copying commands / output"
-msgstr "ბრძანებების / გამოტანის კოპირება"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -316,7 +306,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:37
 #, kde-format
 msgid "Function reference"
-msgstr "ფუნქციების სახელმძღვანელო"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Function reference">
 #: rkward/pages/rkward_console.rkh:37
@@ -331,7 +321,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:41
 #, kde-format
 msgid "Navigating the command history"
-msgstr "ბრძანებების ისტორიის ნავიგაცია"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -384,7 +374,7 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:53
 #, kde-format
 msgid "Filename and Object name completion"
-msgstr "ფაილისა და ობიექტის სახელის დასრულება"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -422,7 +412,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:47
 #, kde-format
 msgid "Configurable Settings"
-msgstr "მორგებადი პარამეტრები"
+msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -496,7 +486,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:8
 #, kde-format
 msgid "RKWard for new Users"
-msgstr "RKWard ახალი მომხმარებლებისთვის"
+msgstr ""
 
 #. i18n: ectx: (RKWard for new Users) <summary>
 #: rkward/pages/rkward_for_new_users.rkh:9
@@ -510,7 +500,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:14
 #, kde-format
 msgid "Where's my data?"
-msgstr "სადაა ჩემი მონაცემები?"
+msgstr ""
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -565,7 +555,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:23
 #, kde-format
 msgid "How can I make use of my results in an external application?"
-msgstr "როგორ გამოვიყენო ჩემი შედეგები გარე აპლიკაციაში?"
+msgstr ""
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -598,7 +588,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:30
 #, kde-format
 msgid "Basic Analyses"
-msgstr "ძირითადი ანალიზები"
+msgstr ""
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -643,7 +633,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:38
 #, kde-format
 msgid "So much more"
-msgstr "და ბევრი სხვა რამ"
+msgstr ""
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -669,7 +659,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:8
 #, kde-format
 msgid "RKWard for R Users"
-msgstr "RKWard R-ის მომხმარებლებისთვის"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <summary>
 #: rkward/pages/rkward_for_r_users.rkh:9
@@ -683,7 +673,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "The Console"
-msgstr "კონსოლი"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -706,7 +696,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "Syntax highlighting"
-msgstr "სინტაქსის გამოკვეთა"
+msgstr "Evidentiar syntaxe"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -738,13 +728,12 @@ msgstr ""
 #, kde-format
 msgid "See <link href=\"rkward://page/rkward_console\"/> for more details."
 msgstr ""
-"მეტი დეტალებისთვის იხილეთ <link href=\"rkward://page/rkward_console\"/>."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:26
 #, kde-format
 msgid "Script Editors"
-msgstr "სკრიპტის რედაქტორები"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -780,7 +769,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:33
 #, kde-format
 msgid "Workspace View"
-msgstr "სამუშაო სივრცის ხედი"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -811,7 +800,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:38
 #, kde-format
 msgid "R Help"
-msgstr "R-ის დახმარება"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <section title="R Help">
 #: rkward/pages/rkward_for_r_users.rkh:38
@@ -829,7 +818,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:41
 #, kde-format
 msgid "Managing installed and loaded Libraries"
-msgstr "დაყენებული და ჩატვირთული ბიბლიოთეკების მართვა"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <section title="Managing installed and loaded Libraries">
 #: rkward/pages/rkward_for_r_users.rkh:41
@@ -843,7 +832,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:44
 #, kde-format
 msgid "Window management"
-msgstr "ფანჯრების მართვა"
+msgstr "Gestion de Fenestra"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -875,7 +864,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:51
 #, kde-format
 msgid "Editing data"
-msgstr "მონაცემების ჩასწორება"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -900,7 +889,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:56
 #, kde-format
 msgid "Graphics"
-msgstr "გრაფიკა"
+msgstr "Graphiches"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Graphics">
 #: rkward/pages/rkward_for_r_users.rkh:56
@@ -919,7 +908,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:59
 #, kde-format
 msgid "Utility functions"
-msgstr "დამხმარე ფუნქციები"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <section title="Utility functions">
 #: rkward/pages/rkward_for_r_users.rkh:59
@@ -934,7 +923,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:62
 #, kde-format
 msgid "Everything else"
-msgstr "დანარჩენი ყველაფერი"
+msgstr ""
 
 #. i18n: ectx: (RKWard for R Users) <section title="Everything else">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -970,7 +959,7 @@ msgstr ""
 #: rkward/pages/rkward_incompatible_version.rkh:8
 #, kde-format
 msgid "Version incompatibilities"
-msgstr "ვერსიის შეუთავსებლობები"
+msgstr ""
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -1005,7 +994,7 @@ msgstr ""
 #: rkward/pages/rkward_incompatible_version.rkh:17
 #, kde-format
 msgid "Graphics Engine Version Mismatch"
-msgstr "გრაფიკის ძრავის ვერსია არ ემთხვევა"
+msgstr ""
 
 #. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
 #: rkward/pages/rkward_incompatible_version.rkh:17
@@ -1024,7 +1013,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:8
 #, kde-format
 msgid "RKWard Output"
-msgstr "RKWard-ის გამოტანა"
+msgstr ""
 
 #. i18n: ectx: (RKWard Output) <summary>
 #: rkward/pages/rkward_output.rkh:9
@@ -1052,7 +1041,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:16
 #, kde-format
 msgid "Producing RKWard output from R"
-msgstr "RKWard-ის გამოტანის შექმნა R-დან"
+msgstr ""
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:16
@@ -1074,7 +1063,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:22
 #, kde-format
 msgid "Using the output in an office suite"
-msgstr "ოფისის პროგრამების გამოტანილი ინფორმაციის გამოყენება"
+msgstr ""
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
@@ -1101,7 +1090,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:28
 #, kde-format
 msgid "RKWard output vs. R Markdown"
-msgstr "RKWard-ის გამოტანა და R-ის მარკდაუნი"
+msgstr ""
 
 #. i18n: ectx: (RKWard Output) <section title="RKWard output vs. R Markdown">
 #: rkward/pages/rkward_output.rkh:28
@@ -1117,7 +1106,7 @@ msgstr ""
 #: rkward/pages/rkward_plot_history.rkh:8
 #, kde-format
 msgid "Screen device history"
-msgstr "გამოტანის მოწყობილობის ჟურნალი"
+msgstr ""
 
 #. i18n: ectx: (Screen device history) <summary>
 #: rkward/pages/rkward_plot_history.rkh:10
@@ -1149,7 +1138,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "Available actions"
-msgstr "ხელმისაწვდომი ქმედებები"
+msgstr "Actiones disponibile"
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1289,13 +1278,13 @@ msgstr ""
 #: rkward/pages/rkward_plot_history.rkh:39
 #, kde-format
 msgid "Technical Details"
-msgstr "ტექნიკური დეტალები"
+msgstr "Detalios technic"
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
 #, kde-format
 msgid "Some assorted technical details:"
-msgstr "ზოგიერთი მნიშვნელოვანი ტექნიკური დეტალები:"
+msgstr ""
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1345,20 +1334,18 @@ msgstr ""
 #, kde-format
 msgid "<link href=\"rkward://rhelp/lattice.options\"/> (needs lattice)"
 msgstr ""
-"<link href=\"rkward://rhelp/lattice.options\"/> (სჭირდება პაკეტი lattice)"
 
 #. i18n: ectx: (Screen device history) <related>
 #: rkward/pages/rkward_plot_history.rkh:49
 #, kde-format
 msgid "<link href=\"rkward://rhelp/trellis.last.object\"/> (needs lattice)"
 msgstr ""
-"<link href=\"rkward://rhelp/trellis.last.object\"/> (სჭირდება პაკეტი lattice)"
 
 #. i18n: ectx: (RKWard Shortcut keys) <title>
 #: rkward/pages/rkward_shortcuts.rkh:8
 #, kde-format
 msgid "RKWard Shortcut keys"
-msgstr "RKWard-ის მალსახმობი ღილაკები"
+msgstr ""
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1407,7 +1394,7 @@ msgstr ""
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "RKWard Default Shortcut keys"
-msgstr "RKWard-ის ნაგულისხმევი მალსახმობი ღილაკები"
+msgstr ""
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1430,8 +1417,6 @@ msgid ""
 "To run code from scripts / help pages / the console, select it, and use Ctrl"
 "+Enter"
 msgstr ""
-"სკრიპტებიდან / დახმარების გვერდებიდან / კონსოლიდან კოდის გასაშვებად მონიშნეთ "
-"ის და დააწექით Ctrl+Enter"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1439,13 +1424,13 @@ msgstr ""
 msgid ""
 "F2 to search the R help for the symbol under the cursor in scripts and the "
 "console"
-msgstr "F2 R-ის დახმარება კონსოლში კურსორის ქვეშ არსებული სიმბოლოსთვის"
+msgstr ""
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8
 #, kde-format
 msgid "Split views"
-msgstr "ხედების გაყოფა"
+msgstr ""
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1453,8 +1438,6 @@ msgstr "ხედების გაყოფა"
 msgid ""
 "Split views can be used to partition the main window into several view areas."
 msgstr ""
-"ხედების გაყოფა, შეგიძლიათ, მთავარი ფანჯრის რამდენიმე ხედად გასაყოფად "
-"გამოიყენოთ."
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1468,7 +1451,7 @@ msgstr ""
 #: rkward/pages/rkward_split_views.rkh:16
 #, kde-format
 msgid "Splitting views"
-msgstr "ხედების გაყოფა"
+msgstr ""
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1496,19 +1479,19 @@ msgstr ""
 #: rkward/pages/rkward_split_views.rkh:22
 #, kde-format
 msgid "Closing split views"
-msgstr "გაყოფილი ხედების დახურვა"
+msgstr ""
 
 #. i18n: ectx: (Split views) <section title="Closing split views">
 #: rkward/pages/rkward_split_views.rkh:22
 #, kde-format
 msgid "To remove a view area, simply close all windows inside it."
-msgstr "ხედის ალაგის მოსაცილებლად, უბრალოდ მასში ყველა ფანჯარა დახურეთ."
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <title>
 #: rkward/pages/rkward_trouble_shooting.rkh:8
 #, kde-format
 msgid "Trouble Shooting / FAQ"
-msgstr "პრობლემების გადაჭრა / ხდკ"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <summary>
 #: rkward/pages/rkward_trouble_shooting.rkh:9
@@ -1525,13 +1508,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:12
 #, kde-format
 msgid "The \"Analysis\" menu is missing, or shows up as \"(no label)\""
-msgstr "მენიუ \"ანალიზი\" არ ჩანს, ან ჩანს, როგორც \"(ჭდის გარეშე)\""
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
 #, kde-format
 msgid "Missing menu items"
-msgstr "ნაკლული მენიუს პუნქტები"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The \"Analysis\" menu is missing, or shows up as \"(no label)\"">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -1548,13 +1531,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "People tend to ask me what RKWard means. What should I answer?"
-msgstr "ხალხი მეკითხება, რას ნიშნავს RKWard. რა უნდა ვუპასუხო?"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "What does \"RKWard\" mean?"
-msgstr "რას ნიშნავს \"RKWard\"?"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1579,7 +1562,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:20
 #, kde-format
 msgid "Commands not processing"
-msgstr "ბრძანებები არ მუშავდება"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:20
@@ -1607,13 +1590,13 @@ msgstr ""
 #, kde-format
 msgid ""
 "RKWard says it needs a package. Was the installation of RKWard not complete?"
-msgstr "RKWard იძახის, რომ მას პაკეტი სჭირდება. ბოლომდე დააყენეთ RKWard?"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:25
 #, kde-format
 msgid "Missing packages"
-msgstr "ნაკლული პაკეტები"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:25
@@ -1662,7 +1645,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:32
 #, kde-format
 msgid "RKWard integration with an office-suite"
-msgstr "RKWard-ის ჩაშენება საოფისე აპლიკაციებთან"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?">
 #: rkward/pages/rkward_trouble_shooting.rkh:32
@@ -1681,13 +1664,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:35
 #, kde-format
 msgid "RKWard is running since ages. Has it hung up?"
-msgstr "RKWard კაი ხანია, გაშვებულია. დაეკიდა?"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
 #, kde-format
 msgid "RKWard seems to hang"
-msgstr "როგორც ჩანს, RKWard დაეკიდა"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
@@ -1728,13 +1711,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:42
 #, kde-format
 msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
-msgstr "მგონი რაღაც გავაფუჭე! სადაა 'გაუქმება' და 'გამეორება'?"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
 #, kde-format
 msgid "Undo/Redo"
-msgstr "გაუქმება/გამეორება"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
@@ -1764,52 +1747,49 @@ msgstr ""
 #: rkward/pages/rkward_welcome.rkh:8
 #, kde-format
 msgid "Welcome to RKWard"
-msgstr "მოგესალმებათ RKWard"
+msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:10
 #, kde-format
 msgid "My recent script files"
-msgstr "ჩემი უახლესი სკრიპტები"
+msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:12
 #, kde-format
 msgid "My recent workspaces"
-msgstr "ჩემი უახლესი სამუშაო სივრცეები"
+msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:14
 #, kde-format
 msgid "My recent output files"
-msgstr "ჩემი უახლესი გამოტანის ფაილები"
+msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "Import or enter data"
-msgstr "შეიყვანეთ ან შეიტანეთ მონაცემები"
+msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/new_data_frame\">Enter new data</link>"
 msgstr ""
-"<link href=\"rkward://actions/new_data_frame\">შეიყვანეთ ახალ მონაცემები</"
-"link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/import_assistant\">Import data</link>"
-msgstr ""
-"<link href=\"rkward://actions/import_assistant\">მონაცემების შემოტანა</link>"
+msgstr "<link href=\"rkward://actions/import_assistant\">Importa datos</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:23
 #, kde-format
 msgid "Useful settings"
-msgstr "სასარგებლო პარამეტრები"
+msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1818,8 +1798,6 @@ msgid ""
 "<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
 "packages</link>"
 msgstr ""
-"<link href=\"rkward://actions/rpackage_install\">R-ის და RKWard-ის პაკეტების "
-"დაყენება</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1828,8 +1806,6 @@ msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)&lrm;</link>"
 msgstr ""
-"&lrm;<link href=\"rkward://settings/addons\">მეტი პარამეტრი დამატებისთვის "
-"(მაგ: git/პროექტთან ინტეგრაცია)&lrm;</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1838,14 +1814,12 @@ msgid ""
 "&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
 "(including this page)&lrm;"
 msgstr ""
-"&lrm;<link href=\"rkward://settings/general\">გაშვების მორგება</link> (ამ "
-"გვერდის ჩათვლით)&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31
 #, kde-format
 msgid "Documentation starting points"
-msgstr "დოკუმენტაციის გაშვების წერტილები"
+msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Documentation starting points">
 #: rkward/pages/rkward_welcome.rkh:31
@@ -1854,14 +1828,12 @@ msgid ""
 "External links: <link href=\"https://rkward.kde.org/\">project homepage</"
 "link>"
 msgstr ""
-"გარე ბმულები: <link href=\"https://rkward.kde.org/\">პროექტის ვებგვერდი</"
-"link>"
 
 #. i18n: ectx: (Workspace Browser) <title>
 #: rkward/pages/rkward_workspace_browser.rkh:8
 #, kde-format
 msgid "Workspace Browser"
-msgstr "სამუშაო სივრცის ბრაუზერი"
+msgstr ""
 
 #. i18n: ectx: (Workspace Browser) <summary>
 #: rkward/pages/rkward_workspace_browser.rkh:10
@@ -1888,7 +1860,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:16
 #, kde-format
 msgid "What is shown"
-msgstr "რა არის ნაჩვენები"
+msgstr ""
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -1994,7 +1966,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "Further actions available for objects in the .GlobalEnv:"
-msgstr "ობიექტებისთვის მეტი ქმედება ხელმისაწვდომია ფაილში .GlobalEnv:"
+msgstr ""
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2008,7 +1980,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "<b>Rename / Delete</b>: These should be obvious."
-msgstr "<b>გადარქმევა / წაშლა </b>: თავისთავს ხსნის."
+msgstr ""
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2017,8 +1989,6 @@ msgid ""
 "Some default settings for the Workspace Browser can be configured using the "
 "context menu:"
 msgstr ""
-"ზოგიერთი ნაგულისხმევი პარამეტრი სამუშაო სივრცის ბრაუზერისთვის კონტექსტური "
-"მენიუდან შეგიძლიათ, მოირგოთ:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2054,8 +2024,6 @@ msgid ""
 "<b>Label field / Type field / Class field</b>: Which columns are shown for "
 "each object?"
 msgstr ""
-"<b>ჭდის ველი / ტიპის ველი / კლასის ველი</b>: რომელი სვეტებია ნაჩვენები "
-"თითოეული ობიექტისთვის?"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2064,8 +2032,6 @@ msgid ""
 "One additional setting is available from <a href=\"rkward://settings/browser"
 "\">Settings->Configure RKWard->Workspace</a>:"
 msgstr ""
-"ერთი დამატებითი პარამეტრი ხელმისაწვდომია <a href=\"rkward://settings/browser"
-"\">მორგება->RKWard-ის მორგება->სამუშაო სივრცე</a>:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-12 00:35+0000\n"
+"POT-Creation-Date: 2024-04-19 00:35+0000\n"
 "PO-Revision-Date: 2022-07-24 15:13+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -3731,12 +3731,12 @@ msgstr "Der Backend-Prozess kann nicht gestartet werden (Rückgabewert: %1)."
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Der Backend-Prozess hat sich mit dem Rückgabewert %1 beendet."
 
-#: rkward/rbackend/rkrbackend.cpp:572
+#: rkward/rbackend/rkrbackend.cpp:571
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "Die R-Engine wurde beendet mit dem Status: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:593
+#: rkward/rbackend/rkrbackend.cpp:592
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3745,17 +3745,17 @@ msgstr ""
 "Die R-Engine ist auf einen fatalen Fehler getroffen:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:763
+#: rkward/rbackend/rkrbackend.cpp:762
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Benachrichtigung vom R-Backend"
 
-#: rkward/rbackend/rkrbackend.cpp:771
+#: rkward/rbackend/rkrbackend.cpp:770
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Benachrichtigung vom R-Backend"
 
-#: rkward/rbackend/rkrbackend.cpp:1720
+#: rkward/rbackend/rkrbackend.cpp:1715
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3788,7 +3788,7 @@ msgstr ""
 "Sie sich bitte an <a href=\"http://rkward.kde.org/compiling\">http://rkward."
 "kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1724
+#: rkward/rbackend/rkrbackend.cpp:1719
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3809,12 +3809,12 @@ msgstr ""
 "\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</"
 "p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3822,17 +3822,17 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1781
+#: rkward/rbackend/rkrbackend.cpp:1776
 #, kde-format
 msgid "Ok"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:85
+#: rkward/rbackend/rkrinterface.cpp:87
 #, kde-format
 msgid "R Startup"
 msgstr "R Start"
 
-#: rkward/rbackend/rkrinterface.cpp:88
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -3842,7 +3842,7 @@ msgstr ""
 "RKWard gehandhabt werden kann. Wahrscheinlich wird RKWard nicht richtig "
 "funktionieren. Bitte überprüfen Sie ihr Setup.</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:90
+#: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
@@ -3851,17 +3851,17 @@ msgstr ""
 "<p>Es gab ein Problem beim Start vom R-Backend. Die folgenden Fehler traten "
 "auf:</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:98
+#: rkward/rbackend/rkrinterface.cpp:100
 #, kde-format
 msgid "Error starting R"
 msgstr "Fehler beim Start von R"
 
-#: rkward/rbackend/rkrinterface.cpp:582
+#: rkward/rbackend/rkrinterface.cpp:583
 #, kde-format
 msgid "Quitting was canceled"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:584
+#: rkward/rbackend/rkrinterface.cpp:585
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3885,33 +3885,33 @@ msgstr ""
 "wählen Sie jetzt bitten \"Abbrechen\", schließen Sie die Datenfenster, "
 "speichern Sie und versuchen Sie es erneut."
 
-#: rkward/rbackend/rkrinterface.cpp:584
+#: rkward/rbackend/rkrinterface.cpp:585
 #, kde-format
 msgid "Locale change"
 msgstr "Lokale Änderung"
 
-#: rkward/rbackend/rkrinterface.cpp:585
+#: rkward/rbackend/rkrinterface.cpp:586
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:688
+#: rkward/rbackend/rkrinterface.cpp:689
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:696
+#: rkward/rbackend/rkrinterface.cpp:697
 #, fuzzy, kde-format
 #| msgid "Could not open file %1 for reading"
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Datei %1 kann nicht zum Lesen geöffnet werden"
 
-#: rkward/rbackend/rkrinterface.cpp:707
+#: rkward/rbackend/rkrinterface.cpp:708
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:780
+#: rkward/rbackend/rkrinterface.cpp:781
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3923,22 +3923,22 @@ msgstr ""
 "durchzuführen. Es wird das Paketverwaltungs-Programm geöffnet. Von dort "
 "können Sie versuchen, das benötigte Paket zu finden und zu installieren."
 
-#: rkward/rbackend/rkrinterface.cpp:780
+#: rkward/rbackend/rkrinterface.cpp:781
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Paket „%1“ erforderlich"
 
-#: rkward/rbackend/rkrinterface.cpp:800
+#: rkward/rbackend/rkrinterface.cpp:801
 #, kde-format
 msgid "Unrecognized call '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:880
+#: rkward/rbackend/rkrinterface.cpp:881
 #, kde-format
 msgid "R backend requests information"
 msgstr "R-Backend erbittet Informationen"
 
-#: rkward/rbackend/rkrinterface.cpp:899
+#: rkward/rbackend/rkrinterface.cpp:900
 #, kde-format
 msgid ""
 "\n"
@@ -3956,7 +3956,7 @@ msgstr ""
 "Skript-Dateien oder Ausgaben zu speichern, oder Daten aus bereits geöffneten "
 "Daten-Editoren herauskopieren. Schließen Sie RKWard anschließend."
 
-#: rkward/rbackend/rkrinterface.cpp:900
+#: rkward/rbackend/rkrinterface.cpp:901
 #, kde-format
 msgid "R engine has died"
 msgstr "R-Engine ist abgestürzt"

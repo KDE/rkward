@@ -1,31 +1,31 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the rkward package.
+#
+# giovanni <g.sora@tiscali.it>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-18 19:50\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-04-18 12:14+0200\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
+"Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/rkward/rkward__embedded.pot\n"
-"X-Crowdin-File-ID: 53260\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, Honghao Li"
+msgstr "Giovanni Sora"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, honghao.li@outlook.jp"
+msgstr "g.sora@tiscali.it"
 
 #. i18n: ectx: (Level selector) <dialog label="...">
 #: rkward/plugins/distributions/../data/level_select.xml:65
@@ -182,13 +182,13 @@ msgstr ""
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:29
 #, kde-format
 msgid "Limit"
-msgstr "限制"
+msgstr "Limite"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:30
 #, kde-format
 msgid "Sorting"
-msgstr "排序"
+msgstr "Ordinar"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:31
@@ -214,7 +214,7 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:55
 #, kde-format
 msgid "Statistic"
-msgstr ""
+msgstr "Stato"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
@@ -222,13 +222,13 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:57
 #, kde-format
 msgid "Sum"
-msgstr "Sum"
+msgstr "Summa"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:38
 #, kde-format
 msgid "Mean"
-msgstr "平均值"
+msgstr "Media"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
@@ -236,7 +236,7 @@ msgstr "平均值"
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:58
 #, kde-format
 msgid "Other:"
-msgstr "其他："
+msgstr "Altere:"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:41
@@ -316,7 +316,7 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
 #, kde-format
 msgid "<link href=\"rkward://component/crosstab\"/> and"
-msgstr ""
+msgstr "<link href=\"rkward://component/crosstab\"/> e"
 
 #. i18n: ectx: (Loaded from Tabulate) <related>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
@@ -393,20 +393,20 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.xml:57
 #, kde-format
 msgid "Frequency"
-msgstr "频率"
+msgstr "Frequentia"
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:35
 #, no-c-format, kde-format
 msgid "Sum of %1"
-msgstr ""
+msgstr "Summa de %1"
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:37
 #, no-c-format, kde-format
 msgctxt "(function name) of (object name)"
 msgid "%1 of %2"
-msgstr "%1 / %2"
+msgstr "%1 de %2"
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
@@ -419,7 +419,7 @@ msgstr ""
 #, kde-format
 msgctxt "Tabulate X by Y [by Z [...]]"
 msgid " by "
-msgstr " 设计人 "
+msgstr " per "
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
@@ -445,7 +445,7 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:61
 #, kde-format
 msgid "Values"
-msgstr "数值"
+msgstr "Valores"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <input label="...">
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:62
@@ -479,7 +479,7 @@ msgstr ""
 #: rkward/plugins/distributions/../embedded.pluginmap:23
 #, kde-format
 msgid "Color Chooser"
-msgstr "颜色选择器"
+msgstr "Selector de color"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:24
@@ -491,7 +491,7 @@ msgstr ""
 #: rkward/plugins/distributions/../embedded.pluginmap:25
 #, kde-format
 msgid "Histogram Options"
-msgstr "直方图选项"
+msgstr ""
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Barplot Options) <dialog label="...">
@@ -621,13 +621,13 @@ msgstr ""
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:34
 #, kde-format
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:35
 #, kde-format
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:36
@@ -657,7 +657,7 @@ msgstr ""
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:42
 #, kde-format
 msgid "Repository"
-msgstr ""
+msgstr "Deposito o Repositorio"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:44
@@ -693,13 +693,13 @@ msgstr ""
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:51
 #, kde-format
 msgid "User"
-msgstr ""
+msgstr "Usator"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:52
 #, kde-format
 msgid "Password"
-msgstr ""
+msgstr "Contrasigno"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/distributions/../menu.pluginmap:10
@@ -719,19 +719,19 @@ msgstr ""
 #: rkward/plugins/distributions/../menu.pluginmap:24
 #, kde-format
 msgid "Data"
-msgstr "数据 "
+msgstr "Datos"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:27
 #, kde-format
 msgid "Analysis"
-msgstr "分析"
+msgstr ""
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:30
 #, kde-format
 msgid "Plots"
-msgstr ""
+msgstr "Plots (Tracias)"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:33
@@ -743,7 +743,7 @@ msgstr ""
 #: rkward/plugins/distributions/../menu.pluginmap:35
 #, kde-format
 msgid "empty"
-msgstr "清空"
+msgstr "vacue"
 
 #. i18n: ectx: (Loaded from Barplot Options)
 #: rkward/plugins/distributions/../plots/barplot_embed.js:57
@@ -875,7 +875,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:23
 #, kde-format
 msgid "Colors"
-msgstr "色彩"
+msgstr "Colores"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:24
@@ -887,13 +887,13 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:25
 #, kde-format
 msgid "Rainbow colors"
-msgstr ""
+msgstr "Colores Rainbow (Iris)"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:27
 #, kde-format
 msgid "Type"
-msgstr "文件系统"
+msgstr "Typo"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:28
@@ -905,7 +905,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:29
 #, kde-format
 msgid "Stacked"
-msgstr "堆叠"
+msgstr "Pilate"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:32
@@ -917,7 +917,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:33
 #, kde-format
 msgid "Placement"
-msgstr "位置"
+msgstr "Placiamento"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:34
@@ -947,7 +947,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:12
 #, kde-format
 msgid "Pick a color."
-msgstr "拾取颜色."
+msgstr "Selige un color."
 
 #. i18n: ectx: (Loaded from Choose color) <usage>
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:12
@@ -967,7 +967,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/color_chooser.xml:22
 #, kde-format
 msgid "Choose color"
-msgstr ""
+msgstr "Selige color"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <embed label="...">
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="...">
@@ -991,7 +991,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:58
 #, kde-format
 msgid "Color"
-msgstr "颜色"
+msgstr "Color"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
@@ -1001,355 +1001,355 @@ msgstr "颜色"
 #: rkward/plugins/distributions/../plots/plot_options.xml:151
 #, kde-format
 msgid "default"
-msgstr "默认"
+msgstr "Predefinite"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:25
 #, kde-format
 msgid "Azure"
-msgstr ""
+msgstr "Azure"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:26
 #, kde-format
 msgid "Black"
-msgstr "黑色"
+msgstr "Nigre"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:27
 #, kde-format
 msgid "Blue"
-msgstr "蓝色"
+msgstr "Blau"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:28
 #, kde-format
 msgid "Blue1"
-msgstr "蓝色1"
+msgstr "Blau1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:29
 #, kde-format
 msgid "Blue2"
-msgstr "蓝色2"
+msgstr "Blau2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:30
 #, kde-format
 msgid "Blue3"
-msgstr "蓝色3"
+msgstr "Blau3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:31
 #, kde-format
 msgid "Blue4"
-msgstr "蓝色4"
+msgstr "Blau4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:32
 #, kde-format
 msgid "Brown"
-msgstr ""
+msgstr "Brun"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:33
 #, kde-format
 msgid "Cyan"
-msgstr "青色"
+msgstr "Cyano"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:34
 #, kde-format
 msgid "Darkviolet"
-msgstr ""
+msgstr "Violette Obscur"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:35
 #, kde-format
 msgid "Gold"
-msgstr "金币"
+msgstr "Auro"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:36
 #, kde-format
 msgid "Gray"
-msgstr "灰色"
+msgstr "Gris"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:37
 #, kde-format
 msgid "Gray1"
-msgstr "灰色1"
+msgstr "Gris1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:38
 #, kde-format
 msgid "Gray2"
-msgstr "灰色2"
+msgstr "Gris2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:39
 #, kde-format
 msgid "Gray3"
-msgstr "灰色3"
+msgstr "Gris3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:40
 #, kde-format
 msgid "Gray4"
-msgstr "灰色4"
+msgstr "Gris4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:41
 #, kde-format
 msgid "Green"
-msgstr "绿色"
+msgstr "Verde"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:42
 #, kde-format
 msgid "Green1"
-msgstr "绿色1"
+msgstr "Verde1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:43
 #, kde-format
 msgid "Green2"
-msgstr "绿色2"
+msgstr "Verde2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:44
 #, kde-format
 msgid "Green3"
-msgstr "绿色3"
+msgstr "Verde3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:45
 #, kde-format
 msgid "Green4"
-msgstr "绿色4"
+msgstr "Verde4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:46
 #, kde-format
 msgid "Grey"
-msgstr "灰"
+msgstr "Gris"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:47
 #, kde-format
 msgid "Grey1"
-msgstr "灰色1"
+msgstr "Gris1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:48
 #, kde-format
 msgid "Grey2"
-msgstr "灰色2"
+msgstr "Gris2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:49
 #, kde-format
 msgid "Grey3"
-msgstr "灰色3"
+msgstr "Gris3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:50
 #, kde-format
 msgid "Grey4"
-msgstr "灰色4"
+msgstr "Gris4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:51
 #, kde-format
 msgid "Lawngreen"
-msgstr ""
+msgstr "Verde Gazon"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:52
 #, kde-format
 msgid "Limegreen"
-msgstr ""
+msgstr "Verde Lima"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:53
 #, kde-format
 msgid "Linen"
-msgstr ""
+msgstr "Lino"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:54
 #, kde-format
 msgid "Magenta"
-msgstr "品红"
+msgstr "Magenta"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:55
 #, kde-format
 msgid "Magenta1"
-msgstr "洋红色1"
+msgstr "Magenta1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:56
 #, kde-format
 msgid "Magenta2"
-msgstr "洋红色2"
+msgstr "Magenta2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:57
 #, kde-format
 msgid "Magenta3"
-msgstr "洋红色3"
+msgstr "Magenta3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:58
 #, kde-format
 msgid "Magenta4"
-msgstr "洋红色4"
+msgstr "Magenta4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:59
 #, kde-format
 msgid "Mintcream"
-msgstr ""
+msgstr "Crema Mentha"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:60
 #, kde-format
 msgid "Mistyrose"
-msgstr ""
+msgstr "Rosate Brumose"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:61
 #, kde-format
 msgid "Navajowhite"
-msgstr ""
+msgstr "Blanco Navajo"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:62
 #, kde-format
 msgid "Orange"
-msgstr "奥朗日"
+msgstr "Orange"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:63
 #, kde-format
 msgid "Orchid"
-msgstr ""
+msgstr "Orchidea"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:64
 #, kde-format
 msgid "Palegreen"
-msgstr ""
+msgstr "Verde Pallide"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:65
 #, kde-format
 msgid "Papayawhip"
-msgstr ""
+msgstr "Flagello Papaya"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:66
 #, kde-format
 msgid "Peachpuff"
-msgstr ""
+msgstr "Sufflo Persica"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:67
 #, kde-format
 msgid "Pink"
-msgstr "粉"
+msgstr "Rosate"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:68
 #, kde-format
 msgid "Red"
-msgstr "红色"
+msgstr "Rubie"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:69
 #, kde-format
 msgid "Red1"
-msgstr "红色1"
+msgstr "Rubie1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:70
 #, kde-format
 msgid "Red2"
-msgstr "红色2"
+msgstr "Rubie2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:71
 #, kde-format
 msgid "Red3"
-msgstr "红色3"
+msgstr "Rubie3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:72
 #, kde-format
 msgid "Red4"
-msgstr "红色4"
+msgstr "Rubie4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:73
 #, kde-format
 msgid "Royalblue"
-msgstr ""
+msgstr "Blau Royal"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:74
 #, kde-format
 msgid "Salmon"
-msgstr "萨蒙河"
+msgstr "Salmon"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:75
 #, kde-format
 msgid "Sandybrown"
-msgstr ""
+msgstr "Brun Arena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:76
 #, kde-format
 msgid "Seagreen"
-msgstr ""
+msgstr "Verde Mar"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:77
 #, kde-format
 msgid "Sienna"
-msgstr ""
+msgstr "Terra de Siena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:78
 #, kde-format
 msgid "Skyblue"
-msgstr ""
+msgstr "Celeste"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:79
 #, kde-format
 msgid "Slategrey"
-msgstr ""
+msgstr "Gris Ardesia"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:80
 #, kde-format
 msgid "Snow"
-msgstr "雪"
+msgstr "Nive"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:81
 #, kde-format
 msgid "Springgreen"
-msgstr ""
+msgstr "Verde Primavera"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:82
 #, kde-format
 msgid "Steelblue"
-msgstr ""
+msgstr "Blau Aciero"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:83
@@ -1361,91 +1361,91 @@ msgstr "Tan"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:84
 #, kde-format
 msgid "Thistle"
-msgstr ""
+msgstr "Cardo"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:85
 #, kde-format
 msgid "Tomato"
-msgstr ""
+msgstr "Tomate"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:86
 #, kde-format
 msgid "Violet"
-msgstr ""
+msgstr "Violetto"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:87
 #, kde-format
 msgid "Violetred1"
-msgstr ""
+msgstr "Rubie Violetto1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:88
 #, kde-format
 msgid "Violetred2"
-msgstr ""
+msgstr "Rubie Violetto2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:89
 #, kde-format
 msgid "Violetred3"
-msgstr ""
+msgstr "Rubie Violetto3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:90
 #, kde-format
 msgid "Violetred4"
-msgstr ""
+msgstr "Rubie Violetto4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:91
 #, kde-format
 msgid "Wheat"
-msgstr ""
+msgstr "Frumento"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:92
 #, kde-format
 msgid "White"
-msgstr "白色"
+msgstr "Blanco"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:93
 #, kde-format
 msgid "Yellow"
-msgstr "黄色"
+msgstr "Jalne"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:94
 #, kde-format
 msgid "Yellow1"
-msgstr "黄色1"
+msgstr "Jalne1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:95
 #, kde-format
 msgid "Yellow2"
-msgstr "黄色2"
+msgstr "Jalne2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:96
 #, kde-format
 msgid "Yellow3"
-msgstr "黄色3"
+msgstr "Jalne3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:97
 #, kde-format
 msgid "Yellow4"
-msgstr "黄色4"
+msgstr "Jalne4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:98
 #, kde-format
 msgid "Yellowgreen"
-msgstr ""
+msgstr "Verde Jalne"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:18
@@ -1476,13 +1476,13 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.js:42
 #, kde-format
 msgid "Scale"
-msgstr "比例"
+msgstr "Scala"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:40
 #, kde-format
 msgid "Density"
-msgstr "密度"
+msgstr "Densitate"
 
 #. i18n: ectx: (Loaded from Default histogram options) <summary>
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:8
@@ -1741,7 +1741,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.xml:61
 #, kde-format
 msgid "Method"
-msgstr "算法"
+msgstr "Method"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:62
@@ -1753,7 +1753,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.xml:63
 #, kde-format
 msgid "Scott"
-msgstr ""
+msgstr "Scott"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:64
@@ -1835,7 +1835,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:51
 #, kde-format
 msgid "Solid"
-msgstr "立体"
+msgstr "Solido"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -1845,7 +1845,7 @@ msgstr "立体"
 #: rkward/plugins/distributions/../x11device/grid.xml:52
 #, kde-format
 msgid "Dashed"
-msgstr "虚线"
+msgstr ""
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -2265,7 +2265,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:82
 #, kde-format
 msgid "Main title"
-msgstr "主标题"
+msgstr "Titulo principal"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:83
@@ -2285,7 +2285,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:86
 #, kde-format
 msgid "Subtitle"
-msgstr "子标题"
+msgstr "Sub-Titulo"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:87
@@ -2303,31 +2303,31 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:91
 #, kde-format
 msgid "Top"
-msgstr "上移"
+msgstr "Culmine"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:92
 #, kde-format
 msgid "Bottom"
-msgstr "置底"
+msgstr "Basso"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:93
 #, kde-format
 msgid "Left"
-msgstr "左方"
+msgstr "Sinistra"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:94
 #, kde-format
 msgid "Right"
-msgstr "右侧"
+msgstr "Dextera"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:99
 #, kde-format
 msgid "Axes"
-msgstr "坐标轴"
+msgstr "Axes:"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:101
@@ -2369,13 +2369,13 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:113
 #, kde-format
 msgid "X axis label"
-msgstr ""
+msgstr "Etiquetta de axe x"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:114
 #, kde-format
 msgid "Y axis label"
-msgstr ""
+msgstr "Etiquetta de axe y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:116
@@ -2526,7 +2526,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:166
 #, kde-format
 msgid "Aspect ratio"
-msgstr "宽高比"
+msgstr "Proportiones (rata de aspecto):"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:167
@@ -2550,7 +2550,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:172
 #, kde-format
 msgid "Grid"
-msgstr "网格"
+msgstr "Grillia"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Grid"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:173
@@ -2677,7 +2677,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:35
 #, kde-format
 msgid "Options"
-msgstr "选项"
+msgstr "Optiones"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:36
@@ -2697,13 +2697,13 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:50
 #, kde-format
 msgid "Default"
-msgstr "默认"
+msgstr "Predefinite"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:47
 #, kde-format
 msgid "Points"
-msgstr "点"
+msgstr "Punctos"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Points"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:48
@@ -2715,13 +2715,13 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:53
 #, kde-format
 msgid "Horizontal Lines"
-msgstr "水平切割线"
+msgstr "Lineas horizontal"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:56
 #, kde-format
 msgid "Vertical lines"
-msgstr "垂直线"
+msgstr "Lineas vertical"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Vertical lines"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:57
@@ -2872,7 +2872,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:37
 #, kde-format
 msgid "None"
-msgstr "未分组"
+msgstr "Necun"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
@@ -2916,7 +2916,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:48
 #, kde-format
 msgid "Line width"
-msgstr "线条宽度"
+msgstr "Largessa de linea"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:49

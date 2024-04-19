@@ -1,38 +1,38 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the rkward package.
+#
+# giovanni <g.sora@tiscali.it>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-04-18 19:50\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2024-04-18 12:27+0200\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
+"Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/rkward/rkward__plots.pot\n"
-"X-Crowdin-File-ID: 53228\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, Honghao Li"
+msgstr "Giovanni Sora"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, honghao.li@outlook.jp"
+msgstr "g.sora@tiscali.it"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/plots.pluginmap:10 rkward/plugins/plots.pluginmap:40
 #, kde-format
 msgid "Plots"
-msgstr ""
+msgstr "Plots (Tracias)"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/plots.pluginmap:10
@@ -95,7 +95,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot_matrix.xml:26
 #, kde-format
 msgid "Histogram"
-msgstr "直方图"
+msgstr "Histogramma"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/plots.pluginmap:31
@@ -165,7 +165,7 @@ msgstr ""
 #: rkward/plugins/plots/stripchart_plot.js:28
 #, kde-format
 msgid "Variable"
-msgstr "浮动"
+msgstr "Variabile"
 
 #. i18n: ectx: (Loaded from Barplot)
 #: rkward/plugins/plots/barplot.js:34
@@ -264,7 +264,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot_matrix.xml:13
 #, kde-format
 msgid "Variables"
-msgstr "变量"
+msgstr "Variabiles"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/barplot.xml:42
@@ -280,7 +280,7 @@ msgstr ""
 #: rkward/plugins/plots/pareto.xml:39 rkward/plugins/plots/piechart.xml:51
 #, kde-format
 msgid "- or -"
-msgstr "- 或 -"
+msgstr "- o -"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <frame label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <frame label="...">
@@ -310,7 +310,7 @@ msgstr ""
 #: rkward/plugins/plots/pareto.xml:51 rkward/plugins/plots/piechart.xml:60
 #, kde-format
 msgid "Limit"
-msgstr "限制"
+msgstr "Limite"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Limit"> <frame label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Limit"> <frame label="...">
@@ -406,7 +406,7 @@ msgstr ""
 #: rkward/plugins/plots/stem.xml:22 rkward/plugins/plots/stripchart_plot.xml:35
 #, kde-format
 msgid "Options"
-msgstr "选项"
+msgstr "Optiones"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Options"> <embed label="...">
 #: rkward/plugins/plots/barplot.xml:71
@@ -676,7 +676,7 @@ msgstr ""
 #: rkward/plugins/plots/box_plot.xml:41
 #, kde-format
 msgid "Data format"
-msgstr "数据格式"
+msgstr "Formato de Datos"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="Data format"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:42
@@ -724,13 +724,13 @@ msgstr ""
 #: rkward/plugins/plots/piechart.xml:67
 #, kde-format
 msgid "Labels"
-msgstr "标记"
+msgstr "Etiquettas"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:57
 #, kde-format
 msgid "Labeling"
-msgstr ""
+msgstr "Etiquetta"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:65
@@ -742,19 +742,19 @@ msgstr ""
 #: rkward/plugins/plots/box_plot.xml:74
 #, kde-format
 msgid "orientation"
-msgstr "朝向"
+msgstr "Orientation"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="orientation"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:75
 #, kde-format
 msgid "horizontal"
-msgstr "水平"
+msgstr "Horizontal"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="orientation"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:76
 #, kde-format
 msgid "vertical"
-msgstr "垂直"
+msgstr "Vertical"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/box_plot.xml:78
@@ -778,7 +778,7 @@ msgstr ""
 #: rkward/plugins/plots/box_plot.xml:82
 #, kde-format
 msgid "size"
-msgstr "大小"
+msgstr "Dimension"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Size and color of marks"> <embed label="...">
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <embed label="...">
@@ -793,7 +793,7 @@ msgstr "大小"
 #: rkward/plugins/plots/scatterplot.xml:60
 #, kde-format
 msgid "Color"
-msgstr "彩色"
+msgstr "Color"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/plots/box_plot.xml:87
@@ -892,7 +892,7 @@ msgstr ""
 #: rkward/plugins/plots/density_plot.js:50
 #, kde-format
 msgid "Length"
-msgstr "长度"
+msgstr "Longitude"
 
 #. i18n: ectx: (Loaded from Density Plot) <summary>
 #: rkward/plugins/plots/density_plot.rkh:8
@@ -1058,13 +1058,13 @@ msgstr ""
 #: rkward/plugins/plots/density_plot.xml:57
 #, kde-format
 msgid "rectangular"
-msgstr "矩形投影"
+msgstr "Rectangular"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:58
 #, kde-format
 msgid "triangular"
-msgstr "三角形"
+msgstr "Triangular"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:59
@@ -1082,7 +1082,7 @@ msgstr ""
 #: rkward/plugins/plots/density_plot.xml:61
 #, kde-format
 msgid "cosine"
-msgstr "余弦"
+msgstr "Cosino"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:62
@@ -1096,7 +1096,7 @@ msgstr ""
 #: rkward/plugins/plots/histogram.xml:57
 #, kde-format
 msgid "Bandwidth"
-msgstr ""
+msgstr "Largessa de banda"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1104,7 +1104,7 @@ msgstr ""
 #: rkward/plugins/plots/histogram.xml:58
 #, kde-format
 msgid "nrd0"
-msgstr "nrd0"
+msgstr ""
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1112,7 +1112,7 @@ msgstr "nrd0"
 #: rkward/plugins/plots/histogram.xml:59
 #, kde-format
 msgid "nrd"
-msgstr "nrd"
+msgstr ""
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1120,7 +1120,7 @@ msgstr "nrd"
 #: rkward/plugins/plots/histogram.xml:60
 #, kde-format
 msgid "ucv"
-msgstr "ucv"
+msgstr ""
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1128,7 +1128,7 @@ msgstr "ucv"
 #: rkward/plugins/plots/histogram.xml:61
 #, kde-format
 msgid "bcv"
-msgstr "bcv"
+msgstr ""
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1166,7 +1166,7 @@ msgstr ""
 #: rkward/plugins/plots/density_plot.xml:77
 #, kde-format
 msgid "Resolution"
-msgstr "解析度"
+msgstr "Resolution"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="...">
@@ -1174,7 +1174,7 @@ msgstr "解析度"
 #: rkward/plugins/plots/ecdf_plot.xml:50
 #, kde-format
 msgid "Rug"
-msgstr "地毯"
+msgstr ""
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <checkbox label="...">
 #: rkward/plugins/plots/density_plot.xml:85
@@ -1282,13 +1282,13 @@ msgstr ""
 #: rkward/plugins/plots/ecdf_plot.js:31
 #, kde-format
 msgid "Minimum"
-msgstr "最小"
+msgstr "Minimo"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function)
 #: rkward/plugins/plots/ecdf_plot.js:32
 #, kde-format
 msgid "Maximum"
-msgstr "最大"
+msgstr "Maximo"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <summary>
 #: rkward/plugins/plots/ecdf_plot.rkh:8
@@ -1395,7 +1395,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:75
 #, kde-format
 msgid "Further options"
-msgstr ""
+msgstr "Optiones ulterior"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:45
@@ -1518,13 +1518,13 @@ msgstr ""
 #: rkward/plugins/plots/histogram.xml:45 rkward/plugins/plots/histogram.xml:46
 #, kde-format
 msgid "Histogram Options"
-msgstr "直方图选项"
+msgstr ""
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="...">
 #: rkward/plugins/plots/histogram.xml:48
 #, kde-format
 msgid "Density"
-msgstr "密度"
+msgstr "Densitate"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <checkbox label="...">
 #: rkward/plugins/plots/histogram.xml:49
@@ -1536,13 +1536,13 @@ msgstr ""
 #: rkward/plugins/plots/histogram.xml:51
 #, kde-format
 msgid "General options"
-msgstr "常规选项"
+msgstr "Optiones General"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="General options"> <spinbox label="...">
 #: rkward/plugins/plots/histogram.xml:54
 #, kde-format
 msgid "resolution"
-msgstr "解析度"
+msgstr "R resolution"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="...">
 #: rkward/plugins/plots/histogram.xml:56
@@ -1615,13 +1615,13 @@ msgstr ""
 #: rkward/plugins/plots/stripchart_plot.xml:48
 #, kde-format
 msgid "Orientation"
-msgstr "方向"
+msgstr "Orientation"
 
 #. i18n: ectx: (Loaded from Pie chart)
 #: rkward/plugins/plots/piechart.js:34
 #, kde-format
 msgid "Clockwise"
-msgstr "顺时针"
+msgstr "In senso horari"
 
 #. i18n: ectx: (Loaded from Pie chart)
 #: rkward/plugins/plots/piechart.js:36
@@ -1634,7 +1634,7 @@ msgstr ""
 #: rkward/plugins/plots/piechart.js:67 rkward/plugins/plots/piechart.xml:44
 #, kde-format
 msgid "Pie chart"
-msgstr "饼图"
+msgstr "Diagramma a torta"
 
 #. i18n: ectx: (Loaded from Pie chart) <summary>
 #: rkward/plugins/plots/piechart.rkh:8
@@ -1709,7 +1709,7 @@ msgstr ""
 #: rkward/plugins/plots/piechart.xml:78
 #, kde-format
 msgid "Colors"
-msgstr "色彩"
+msgstr "Colores"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/plots/piechart.xml:79
@@ -1721,37 +1721,37 @@ msgstr ""
 #: rkward/plugins/plots/piechart.xml:80
 #, kde-format
 msgid "Grayscale"
-msgstr "灰色"
+msgstr "Scala de gris"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/plots/piechart.xml:81
 #, kde-format
 msgid "Rainbow colors"
-msgstr ""
+msgstr "Colores Rainbow (Iris)"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/piechart.xml:85
 #, kde-format
 msgid "clockwise"
-msgstr "顺时针"
+msgstr "In senso horari"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:86
 #, kde-format
 msgid "Radius"
-msgstr "半径"
+msgstr "Radius"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/plots/piechart.xml:87
 #, kde-format
 msgid "Shading"
-msgstr "光影"
+msgstr "Umbrar"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:89
 #, kde-format
 msgid "density"
-msgstr "密度"
+msgstr "Densitate"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:90
@@ -1763,7 +1763,7 @@ msgstr ""
 #: rkward/plugins/plots/piechart.xml:93
 #, kde-format
 msgid "angle"
-msgstr "角"
+msgstr "angulo"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:94
@@ -1830,7 +1830,7 @@ msgstr ""
 #: rkward/plugins/plots/plot.xml:21
 #, kde-format
 msgid "X variable"
-msgstr "变量 X"
+msgstr "Variabile X"
 
 #. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/plot.xml:22
@@ -1983,7 +1983,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:78
 #, kde-format
 msgid "Size"
-msgstr "大小"
+msgstr "Dimension"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="Size"> <option label="...">
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="Symbol"> <option label="...">
@@ -2011,7 +2011,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:92
 #, kde-format
 msgid "Symbol"
-msgstr "代号"
+msgstr "Symbolo"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <text>
 #: rkward/plugins/plots/scatterplot.xml:97
@@ -2201,13 +2201,13 @@ msgstr ""
 #: rkward/plugins/plots/stem.xml:14
 #, kde-format
 msgid "Basic settings"
-msgstr ""
+msgstr "Preferentias basic"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Basic settings"> <varslot label="...">
 #: rkward/plugins/plots/stem.xml:18
 #, kde-format
 msgid "variable:"
-msgstr "变量："
+msgstr "Variabile:"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stem.xml:23
@@ -2225,7 +2225,7 @@ msgstr ""
 #: rkward/plugins/plots/stem.xml:25
 #, kde-format
 msgid "Tolerance"
-msgstr "公差"
+msgstr ""
 
 #. i18n: ectx: (Loaded from Stripchart)
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Variable(s)"> <varslot label="...">
@@ -2233,13 +2233,13 @@ msgstr "公差"
 #: rkward/plugins/plots/stripchart_plot.xml:29
 #, kde-format
 msgid "Group"
-msgstr "分组"
+msgstr "Gruppo"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Variable(s)"> <varslot label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:28
 #, kde-format
 msgid "variable"
-msgstr "变星"
+msgstr "variable"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:38
@@ -2265,25 +2265,25 @@ msgstr ""
 #: rkward/plugins/plots/stripchart_plot.xml:41
 #, kde-format
 msgid "Stack"
-msgstr "堆叠"
+msgstr "Stack (Pila)"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:44
 #, kde-format
 msgid "Offset"
-msgstr "偏移量"
+msgstr "Displaciamento"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Orientation"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:49
 #, kde-format
 msgid "Horizontal"
-msgstr "水平"
+msgstr "Horizontal"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Orientation"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:50
 #, kde-format
 msgid "Vertical"
-msgstr "垂直"
+msgstr "Vertical"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
