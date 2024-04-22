@@ -1,27 +1,27 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
-# SPDX-FileCopyrightText: 2023 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-19 00:35+0000\n"
-"PO-Revision-Date: 2023-12-04 09:01+0100\n"
+"PO-Revision-Date: 2024-04-21 10:21+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Adrián Chaves Fernández"
+msgstr "Adrián Chaves (Gallaecio)"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -1014,8 +1014,7 @@ msgid "Discard changes?"
 msgstr "Quere descartar os cambios?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "Non pechar"
@@ -1071,18 +1070,16 @@ msgstr ""
 "administrador (solicitaráselle o contrasinal)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
-msgstr "Facerse administrador"
+msgstr "Facerse root"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Paquetes que se poden actualizar"
+msgstr "Omitir estes paquetes"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5349,15 +5346,7 @@ msgstr "Outro dispositivo:"
 
 # skip-rule: trasno-window
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5374,7 +5363,7 @@ msgstr ""
 "<p>O «Dispositivo predeterminado da plataforma» corresponde a unha das "
 "seguintes ordes: <i>X11()</i>, <i>windows()</i> ou <i>quartz()</i> (segundo "
 "a plataforma).</p> <p>Tamén pode indicar o nome dunha función, como por "
-"exemplo <i>cairoDevice</i>.</p>"
+"exemplo <i>Cairo</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -6725,7 +6714,7 @@ msgstr "Gardar como"
 #: rkward/windows/rkhtmlwindow.cpp:604
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
-msgstr ""
+msgstr "O ficheiro de saída de RKWard %s (aínda) non existe."
 
 #: rkward/windows/rkhtmlwindow.cpp:723
 #: rkward/windows/rktoplevelwindowgui.cpp:255
