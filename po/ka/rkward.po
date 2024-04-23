@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-19 00:35+0000\n"
-"PO-Revision-Date: 2024-04-16 09:11+0200\n"
+"PO-Revision-Date: 2024-04-22 09:57+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1481,7 +1481,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:101
 #, kde-format
 msgid "Proceed without %1. You will be missing some functionality."
-msgstr ""
+msgstr "ვმუშაობ %1-ის გარეშე. ფუნქციონალის ნაწილმა, შეიძლება, არ იმუშაოს."
 
 #: rkward/dialogs/rksetupwizard.cpp:109
 #, kde-format
@@ -1564,7 +1564,7 @@ msgstr "RKWard -ის დამატებები"
 #: rkward/dialogs/rksetupwizard.cpp:154
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
-msgstr ""
+msgstr "<p>ჩართული დამატებების გარეშე. ეს ალბათ შემთხვევითაა.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:155
 #, kde-format
@@ -1629,7 +1629,7 @@ msgstr "შემოტანა"
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
-msgstr ""
+msgstr "შემოიტანეთ სესიაში, რომ ახალი გამოტანის ფორმატში შენახვა შეძლოთ."
 
 #: rkward/dialogs/rksetupwizard.cpp:183
 #, kde-format
@@ -1652,11 +1652,14 @@ msgstr "ძირითადი დაყენება"
 #, kde-format
 msgid "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
 msgstr ""
+"<b>R უკანაბოლო ავარიულად დასრულდა. დააწკაპუნეთ \"გაუქმებას\", რომ მორგების "
+"დამხმარიდან გახვიდეთ.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:213
 #, kde-format
 msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
 msgstr ""
+"<b>R უკანაბოლო გაეშვა. გასაგრძელებლად დააწკაპუნეთ ღილაკზე \"შემდეგი\".</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:220
 #, kde-format
