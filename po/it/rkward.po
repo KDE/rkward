@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the it package.
 # Daniele Medri <daniele@medri.org>, 2004-2005.
 # Paolo Zamponi <feus73@gmail.com>, 2018, 2019.
-# Vincenzo Reale <smart2128vr@gmail.com>, 2020, 2021, 2022.
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2024 Vincenzo Reale <smart2128vr@gmail.com>
 #
 #
 msgid ""
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
