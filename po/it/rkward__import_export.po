@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
-# Vincenzo Reale <smart2128vr@gmail.com>, 2020, 2022.
+# SPDX-FileCopyrightText: 2020, 2022, 2024 Vincenzo Reale <smart2128vr@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-04-26 15:00+0200\n"
+"PO-Revision-Date: 2024-04-11 18:22+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.04.0\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2029,15 +2029,7 @@ msgstr "Carica un file di dati di R."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
-#, fuzzy, kde-format
-#| msgid ""
-#| "Choose the R file to import. This would be a file created e.g. by saving "
-#| "the workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
-#| "\">save()</link> command, or the <link href=\"rkward://component/save_r\"/"
-#| "> plugin. The main difference to loading a workspace via Workspace->Open "
-#| "Workspace, is that the workspace is not cleaned, first, but rather merged "
-#| "with your existing workspace. If in doubt, use Workspace->Open Workspace, "
-#| "instead of this plugin."
+#, kde-format
 msgid ""
 "Choose the R file to import. This would be a file created e.g. by saving the "
 "workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
@@ -2051,10 +2043,10 @@ msgstr ""
 "esempio, salvando l'area di lavoro da RKWard, utilizzando il comando di R "
 "<link href=\"rkward://rhelp/save\">save()</link> o l'estensione <link href="
 "\"rkward://component/save_r\"/>. La differenza principale nel caricare "
-"un'area di lavoro tramite Area di lavoro->Apri area di lavoro, è che l'area "
-"di lavoro non viene prima pulita, ma piuttosto unita all'area di lavoro "
-"esistente. In caso di dubbi, utilizza Area di lavoro->Apri area di lavoro, "
-"anziché questa estensione."
+"un'area di lavoro tramite Area di lavoro-&gt;Apri area di lavoro, è che "
+"l'area di lavoro non viene prima pulita, ma piuttosto unita all'area di "
+"lavoro esistente. In caso di dubbi, utilizza Area di lavoro-&gt;Apri area di "
+"lavoro, anziché questa estensione."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12

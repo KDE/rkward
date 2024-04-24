@@ -955,11 +955,10 @@ msgid "Discard changes?"
 msgstr "Zahodit změny?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr "Nezavírat"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
@@ -1012,18 +1011,16 @@ msgstr ""
 "správce systému (budete vyzváni k zadání hesla)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
-msgstr "Staňte se superuživatelem"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Aktualizovatelné balíčky"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5111,15 +5108,7 @@ msgid "Other device:"
 msgstr "Jiné zařízení:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5129,13 +5118,6 @@ msgid ""
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
 "name of a function such as <i>Cairo</i>.</p>"
 msgstr ""
-"<p>Výchozí zařízení se používá ke kreslení, to znamená, když je vytvářen "
-"nový nákres, zatímco není činné žádné znázorňovací zařízení (Podívejte se na "
-"<i>options(\"device\")</i>).</p><p>Původní zařízení RKWard je doporučovanou "
-"volbou pro většinu uživatelů. Odpovídá příkazu R <i>RK()</i>.</p><p>Výchozí "
-"zařízení systému odpovídá jednomu z <i>X11()</i>, <i>windows()</i>, nebo "
-"<i>quartz()</i>, v závislosti na systému.</p><p>Také můžete zadat název "
-"funkce, například <i>cairoDevice</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -7155,6 +7137,3 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
-
-#~ msgid "Color Scheme"
-#~ msgstr "Barevné schéma"
