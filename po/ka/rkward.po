@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-19 00:35+0000\n"
-"PO-Revision-Date: 2024-04-24 09:54+0200\n"
+"PO-Revision-Date: 2024-04-25 10:30+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1062,6 +1062,8 @@ msgid ""
 "Neither kdesu nor kdesudo could be found. To install as root, please install "
 "one of these packages."
 msgstr ""
+"პროგრამები kdesu და kdesudo აღმოჩენილი არაა. root მომხმარებლით დასაყენებლად "
+"ამ პროგრამებიდან ერთ-ერთი გჭირდებათ."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
@@ -1115,6 +1117,8 @@ msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
 msgstr ""
+"შეცდომა პაკეტების ჩატვირთვა / გამოტვირთვისას. დეტალებისთვის იხილეთ "
+"ტრანსკრიპტი ქვემოთ"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:579
 #, kde-format
@@ -1176,6 +1180,8 @@ msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories.<br>Click this to add more sources."
 msgstr ""
+"ბევრი პაკეტი ხელმისაწვდომია CRAN-ზე (Comprehensive R Archive Network) და "
+"სხვა რეპოზიტორიებში.<br>დააწკაპუნეთ მეტი წყაროს დასამატებლად."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:716
 #, kde-format
@@ -2012,7 +2018,7 @@ msgstr "როგორ დავაციტირო:"
 #: rkward/main.cpp:277
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
-msgstr ""
+msgstr "გადამოწმებული სტატია სტატისტიკური პროგრამების ჟურნალში"
 
 #: rkward/main.cpp:282
 #, kde-format
@@ -2057,6 +2063,9 @@ msgid ""
 "reused, only the file arguments will be interpreted, all other options will "
 "be ignored."
 msgstr ""
+"RKWard-ის გაშვებული ასლის (თუ ხელმისაწვდომია) გამოყენება. თუ გამოიყენება "
+"უკვე გაშვებული ასლი, მოხდება, მხოლოდ, ფაილის არგუმენტების დამუშავება. ყველა "
+"სხვა პარამეტრი გამოტოვებული იქნება."
 
 #: rkward/main.cpp:289
 #, kde-format
@@ -2064,6 +2073,8 @@ msgid ""
 "Behaves like --reuse, if any file arguments are also given, starts a new "
 "instance, otherwise. Intended for use in the .desktop file."
 msgstr ""
+"იქცევა ისე, როგორც --reuse. თუ ასევე მითითებულია ფაილის არგუმენტებიც, "
+"გაუშვებს ახალ ასლს. განკუთვნილია .desktop ფალში გამოსაყენებლად."
 
 #: rkward/main.cpp:290
 #, kde-format
