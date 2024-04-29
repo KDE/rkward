@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014, 2015, 2016, 2022.
+# SPDX-FileCopyrightText: 2014, 2015, 2016, 2022, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-08-07 07:55+0200\n"
+"PO-Revision-Date: 2024-04-28 12:31+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 22.04.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2561,19 +2561,16 @@ msgstr "Moc celowa testu (1 minus prawdopodobieństwo błędu typu II)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:61
-#, fuzzy, kde-format
-#| msgid ""
-#| "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
-#| "reminder, this is (rows − 1)×(columns − 1) for a test of independence, "
-#| "and (cells − 1) for a test of goodness of fit."
+#, kde-format
 msgid ""
 "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
 "reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
 "independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
 "Pokazywane tylko dla statystyki chi-kwadrat: Celowe stopnie swobody. Jako "
-"przypomnienie, jest to (wiersze-1)x(kolumny-1) dla testu na niezależność, "
-"oraz (komórki-1) dla testu dobroci dopasowania."
+"przypomnienie, jest to (wiersze &minus; 1)&times;(kolumny &minus; 1) dla "
+"testu na niezależność, oraz (komórki &minus; 1) dla testu dobroci "
+"dopasowania."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for numerator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:65
@@ -2616,12 +2613,7 @@ msgstr ""
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
-#, fuzzy, kde-format
-#| msgid ""
-#| "Minimum detectable effect size. Note that effect size specifications "
-#| "differ between the available methods. Be sure to read the note shown "
-#| "below the control.   As a reminder, for mapping between cohen's f and "
-#| "Eta² use f² = Eta² / (1 − Eta²)"
+#, kde-format
 msgid ""
 "Minimum detectable effect size. Note that effect size specifications differ "
 "between the available methods. Be sure to read the note shown below the "
@@ -2631,7 +2623,8 @@ msgstr ""
 "Rozmiar minimalnego wykrywalnego efektu. Zauważ, że podanie rozmiaru efektu "
 "różni się pomiędzy dostępnymi metodami. Nie zapomnij przeczytać uwagi "
 "wyświetlanej poniżej elementu sterującego. Jako przypomnienie, do mapowania "
-"pomiędzy f cohena oraz Eta² użyj f² = Eta² / (1 − Eta²)"
+"pomiędzy f cohena oraz Eta&sup2; użyj f&sup2; = Eta&sup2; / (1 &minus; "
+"Eta&sup2;)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
@@ -2927,10 +2920,9 @@ msgstr "Stopnie swobody dla licznika"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
-#, fuzzy, kde-format
-#| msgid "df <sub> num </sub> : k − 1"
+#, kde-format
 msgid "df <sub> num </sub> : k &minus; 1"
-msgstr "df <sub> num </sub> : k − 1"
+msgstr "df <sub> num </sub> : k &minus; 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2940,10 +2932,9 @@ msgstr "Stopnie swobody dla mianownika"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
-#, fuzzy, kde-format
-#| msgid "df <sub> den </sub> : N − k"
+#, kde-format
 msgid "df <sub> den </sub> : N &minus; k"
-msgstr "df <sub> den </sub> : N − k"
+msgstr "df <sub> den </sub> : N &minus; k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185
