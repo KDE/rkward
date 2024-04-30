@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-24 21:46+0300\n"
+"PO-Revision-Date: 2024-04-30 00:24+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.04.70\n"
+"X-Generator: Lokalize 24.07.70\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -111,7 +111,7 @@ msgid ""
 "A file named \"%1\" already exists, and will be overwritten when saving to "
 "\"%2\". Are you sure you want to overwrite it?"
 msgstr ""
-"‘%1’ adlı bir dosya halihazırda var ve ‘%2’ konumuna kaydedilirken üzerine "
+"‘%1’ adlı bir dosya halihazırda var ve “%2” konumuna kaydedilirken üzerine "
 "yazılacak. Üzerine yazmak istediğinizden emin misiniz?"
 
 #: rkward/agents/rksaveagent.cpp:53
@@ -120,7 +120,7 @@ msgid ""
 "Files named \"%1\" and \"%2\" already exist, and will both be overwritten. "
 "Are you sure you want to overwrite them?"
 msgstr ""
-"‘%1’ ve ‘%2’ adlı dosyalar halihazırda var ve her ikisinin de üzerine "
+"‘%1’ ve “%2” adlı dosyalar halihazırda var ve her ikisinin de üzerine "
 "yazılacak. Üzerilerine yazmak istediğinizden emin misiniz?"
 
 #: rkward/agents/rksaveagent.cpp:56
@@ -3055,8 +3055,8 @@ msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
 "Expect further errors to be reported below"
 msgstr ""
-"XML dosyası ayrıştırılırken hata oluştu. Hata iletisi şuydu: ‘%2’. satırda, "
-"‘%3’. sütunda ‘%1’. Aşağıda daha fazla hatanın bildirilmesini bekleyin"
+"XML dosyası ayrıştırılırken hata oluştu. Hata iletisi şuydu: “%2”. satırda, "
+"“%3”. sütunda ‘%1’. Aşağıda daha fazla hatanın bildirilmesini bekleyin"
 
 #: rkward/misc/xmlhelper.cpp:160
 #, kde-format
@@ -3071,7 +3071,7 @@ msgstr "Tam olarak bir ‘%1’ ögesi bekleniyordu; ancak %2 bulundu"
 #: rkward/misc/xmlhelper.cpp:225 rkward/misc/xmlhelper.cpp:237
 #, kde-format
 msgid "'%1'-attribute not given. Assuming '%2'"
-msgstr "‘%1’ özniteliği verilmedi; ‘%2’ varsayılıyor"
+msgstr "‘%1’ özniteliği verilmedi; “%2” varsayılıyor"
 
 #: rkward/misc/xmlhelper.cpp:260
 #, kde-format
@@ -3094,7 +3094,7 @@ msgstr "Geçersiz öznitelik değeri. Yalnızca gerçek sayılara izin verilir."
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
-"Geçersiz öznitelik değeri. İzin verilen değerler yalnızca ‘%1’ veya ‘%2’ "
+"Geçersiz öznitelik değeri. İzin verilen değerler yalnızca ‘%1’ veya “%2” "
 "değerlerinden biridir."
 
 #: rkward/misc/xmlhelper.cpp:340
@@ -3225,7 +3225,7 @@ msgstr ""
 msgid ""
 "Duplicate declaration of component id \"%1\" within pluginmap file \"%2\"."
 msgstr ""
-"‘%2’ eklenti eşlem dosyasındaki ‘%1’ bileşen kimliğinin yinelenen beyanı."
+"“%2” eklenti eşlem dosyasındaki ‘%1’ bileşen kimliğinin yinelenen beyanı."
 
 #: rkward/plugin/rkcomponentmap.cpp:655
 #, kde-format
@@ -3233,7 +3233,7 @@ msgid ""
 "Specified file '%1' for component id \"%2\" does not exist or is not "
 "readable. Ignoring."
 msgstr ""
-"‘%2’ bileşen kimliği için belirtilen ‘%1’ dosyası yok veya okunamıyor. Yok "
+"“%2” bileşen kimliği için belirtilen ‘%1’ dosyası yok veya okunamıyor. Yok "
 "sayılıyor."
 
 #: rkward/plugin/rkcomponentmap.cpp:671
@@ -3709,7 +3709,7 @@ msgid ""
 "token '%2'"
 msgstr ""
 "Arka uç süreciyle el sıkışma sırasında hata oluştu. ‘%1’ jetonu "
-"bekleniyordu, ‘%2’ jetonu alındı"
+"bekleniyordu, “%2” jetonu alındı"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:225
 #, kde-format
@@ -3719,7 +3719,7 @@ msgid ""
 "Please fix your installation."
 msgstr ""
 "Arka uç süreciyle el sıkışma sırasında sürüm uyuşmazlığı. Ön uç ‘%1’ "
-"sürümünde, arka uç ise ‘%2’.\n"
+"sürümünde, arka uç ise “%2”.\n"
 "Lütfen kurulumunuzu onarın."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:259
@@ -3731,12 +3731,12 @@ msgstr "Arka uç süreci başlatılamadı. Lütfen kurulumunuzu denetleyin."
 #: rkward/rbackend/rkfrontendtransmitter.cpp:260
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
-msgstr "Arka uç süreci, %1 çıkış kodu ve ‘%2’ iletisi ile başlatılamadı."
+msgstr "Arka uç süreci, %1 çıkış kodu ve “%2” iletisi ile başlatılamadı."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:261
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
-msgstr "Arka uç süreci, %1 kodu ve ‘%2’ iletisi ile çıktı."
+msgstr "Arka uç süreci, %1 kodu ve “%2” iletisi ile çıktı."
 
 #: rkward/rbackend/rkrbackend.cpp:572
 #, kde-format
@@ -4731,7 +4731,7 @@ msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
 msgstr ""
-"‘%1’ dosyası (‘%2’ tarafından gerekli) bulunamadı. Lütfen kurulumunuzu "
+"‘%1’ dosyası (“%2” tarafından gerekli) bulunamadı. Lütfen kurulumunuzu "
 "denetleyin."
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:54
@@ -4756,7 +4756,7 @@ msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
 msgstr ""
-"Hata (“‘%1’ dosyası (‘%2’ tarafından gerekli) bulunamadı. Lütfen "
+"Hata (“‘%1’ dosyası (“%2” tarafından gerekli) bulunamadı. Lütfen "
 "kurulumunuzu denetleyin.”);\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:83
@@ -7124,7 +7124,7 @@ msgstr "Grafiğin kaydedileceği R nesnesinin adını belirt"
 #: rkward/windows/rkwindowcatcher.cpp:607
 #, kde-format
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "%1 numaralı grafik aygıtının içeriğini ‘%2’ nesnesine kaydet"
+msgstr "%1 numaralı grafik aygıtının içeriğini “%2” nesnesine kaydet"
 
 #: rkward/windows/rkwindowcatcher.cpp:616
 #, kde-format
@@ -7450,7 +7450,7 @@ msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as "
 "'%2' instead."
 msgstr ""
-"GlobalEnv’de ‘%1’ adlı bir nesne halihazırda var. Bunun yerine ‘%2’ kopyası "
+"GlobalEnv’de ‘%1’ adlı bir nesne halihazırda var. Bunun yerine “%2” kopyası "
 "olarak oluşturuldu."
 
 #: rkward/windows/robjectbrowser.cpp:201
