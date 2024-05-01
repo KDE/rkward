@@ -16,21 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rkrsupport.h"
 #include "../rkrbackend.h"
 
-#ifdef TRUE
-#	undef TRUE
-#endif
-#ifdef FALSE
-#	undef FALSE
-#endif
-#define R_USE_PROTOTPYES 1
-
-#include <R_ext/GraphicsEngine.h>
-#include <Rversion.h>
-
-// rcolor typedef added in R 3.0.0
-#ifndef rcolor
-#define rcolor unsigned int
-#endif
+#include "../rkrapi.h"
 
 struct RKGraphicsDeviceDesc {
 	bool init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg);

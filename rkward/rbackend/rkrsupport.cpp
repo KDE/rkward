@@ -7,14 +7,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkrsupport.h"
 
-#include <Rdefines.h>
-#include <Rversion.h>
-#include <R_ext/Riconv.h>
-
-// needed to detect CHARSXP encoding
-#define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
-#define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
-
 #include "rkrbackend.h"
 #include "../debug.h"
 

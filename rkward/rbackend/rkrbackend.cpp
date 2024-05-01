@@ -42,32 +42,9 @@ void* RKRBackend::default_global_context = nullptr;
 #include <stdint.h>
 #include <locale.h>
 
-#define R_INTERFACE_PTRS 1
-// for R_CStackStart/Limit
-#define CSTACK_DEFNS 1
-// keep R from defining tons of aliases
-#define R_NO_REMAP 1
-// What the...? "Conflicting definitions" between stdint.h and Rinterface.h despite the #if in Rinterface.h
-#define uintptr_t uintptr_t
-
-// needed to detect CHARSXP encoding
-#define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
-#define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
-
-#include <Rdefines.h>
-#include <R_ext/Rdynload.h>
-#include <R_ext/Callbacks.h>
-#include <R.h>
-#include <Rversion.h>
-#include <Rinternals.h>
-#include <R_ext/Parse.h>
-#include <Rembedded.h>
+#include "rkrapi.h"
 
 #ifdef Q_OS_WIN
-#	include <R_ext/RStartup.h>
-#	include <R_ext/Utils.h>
-#	include <R_ext/libextern.h>
-
 	structRstart RK_R_Params;
 
 	extern "C" {
@@ -76,8 +53,6 @@ void* RKRBackend::default_global_context = nullptr;
 		LibExtern uintptr_t R_CStackLimit;
 		LibExtern void R_SaveGlobalEnvToFile(char*);
 	}
-#else
-#	include <Rinterface.h>
 #endif
 
 #ifndef Q_OS_WIN
@@ -165,9 +140,6 @@ void RKRBackend::clearPendingInterrupt () {
 LibExtern void Rf_PrintWarnings (void);
 #endif
 extern "C" void run_Rmainloop (void);
-#ifndef Q_OS_WIN
-#	include <R_ext/eventloop.h>
-#endif
 
 #include "rdata.h"
 

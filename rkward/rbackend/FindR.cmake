@@ -12,11 +12,11 @@ ENDIF(R_EXECUTABLE)
 SET(CMAKE_FIND_APPBUNDLE NEVER)  # Do not get fooled by R GUI on Mac
 FIND_PROGRAM(R_EXECUTABLE R PATH_SUFFIXES lib/R/bin)
 
-IF(R_EXECUTABLE-NOTFOUND)
-	MESSAGE(FATAL_ERROR "Could NOT find R (TODO: name option)")
-ELSE(R_EXECUTABLE-NOTFOUND)
+IF(R_EXECUTABLE)
 	MESSAGE(STATUS "Using R at ${R_EXECUTABLE}")
-ENDIF(R_EXECUTABLE-NOTFOUND)
+ELSE(R_EXECUTABLE)
+	MESSAGE(FATAL_ERROR "Could NOT find R (if R is installed but no in path, call cmake with -DR_ECEUTABLE=/path/to/R)")
+ENDIF(R_EXECUTABLE)
 
 IF(NOT NO_CHECK_R)
     # find out about R architecture (needed for some paths)

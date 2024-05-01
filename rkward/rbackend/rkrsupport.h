@@ -15,8 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rdata.h"
 
-#define R_NO_REMAP 1
-#include <Rdefines.h>
+#include "rkrapi.h"
 
 /** Convenience functions for working with R. */
 namespace RKRSupport {
