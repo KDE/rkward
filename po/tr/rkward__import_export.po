@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-04-18 00:49+0300\n"
+"PO-Revision-Date: 2024-05-02 13:13+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.04.70\n"
+"X-Generator: Lokalize 24.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2014,15 +2014,7 @@ msgstr "Bir R verisi dosyası yükleyin."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
-#, fuzzy, kde-format
-#| msgid ""
-#| "Choose the R file to import. This would be a file created e.g. by saving "
-#| "the workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
-#| "\">save()</link> command, or the <link href=\"rkward://component/save_r\"/"
-#| "> plugin. The main difference to loading a workspace via Workspace-&gt;"
-#| "Open Workspace, is that the workspace is not cleaned, first, but rather "
-#| "merged with your existing workspace. If in doubt, use Workspace-&gt;Open "
-#| "Workspace, instead of this plugin."
+#, kde-format
 msgid ""
 "Choose the R file to import. This would be a file created e.g. by saving the "
 "workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
