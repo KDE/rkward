@@ -156,9 +156,9 @@ enum RKDEventCodes {
 static inline quint8 mapLineEndStyle(quint8 from) {
 	if (RKD_IN_FRONTEND) return from;
 	switch(from) {
-		MapEnum(GE_BUTT_CAP, 0x00, Qt::FlatCap);
-		MapEnum(GE_SQUARE_CAP, 0x10, Qt::SquareCap);
-		MapEnum(GE_ROUND_CAP, 0x20, Qt::RoundCap);
+		MapEnum(R_GE_lineend::GE_BUTT_CAP, 0x00, Qt::FlatCap);
+		MapEnum(R_GE_lineend::GE_SQUARE_CAP, 0x10, Qt::SquareCap);
+		MapEnum(R_GE_lineend::GE_ROUND_CAP, 0x20, Qt::RoundCap);
 	}
 	MapDefault({}, 0x00, Qt::FlatCap);
 }
@@ -166,9 +166,9 @@ static inline quint8 mapLineEndStyle(quint8 from) {
 static inline quint8 mapLineJoinStyle(quint8 from) {
 	if (RKD_IN_FRONTEND) return from;
 	switch(from) {
-		MapEnum(GE_MITRE_JOIN, 0x00, Qt::MiterJoin);
-		MapEnum(GE_BEVEL_JOIN, 0x40, Qt::BevelJoin);
-		MapEnum(GE_ROUND_JOIN, 0x80, Qt::RoundJoin);
+		MapEnum(R_GE_linejoin::GE_MITRE_JOIN, 0x00, Qt::MiterJoin);
+		MapEnum(R_GE_linejoin::GE_BEVEL_JOIN, 0x40, Qt::BevelJoin);
+		MapEnum(R_GE_linejoin::GE_ROUND_JOIN, 0x80, Qt::RoundJoin);
 		//MapEnum(GE_ROUND_JOIN, 0x100, Qt::SvgMiterJoin);  // not available in R, and wouldn't fit in quint8
 	}
 	MapDefault({}, 0x00, Qt::MiterJoin);
@@ -205,7 +205,7 @@ static inline int mapCompositionModeEnum(int from) {
 // Unsupported in Qt:
 // MapEnum(R_GE_compositeSaturate, xx, yy)
 	}
-	MapDefault(Rf_warning("Unsupported enumeration value %d", from), 0, QPainter::CompositionMode_SourceOver);
+	MapDefault(RFn::Rf_warning("Unsupported enumeration value %d", from), 0, QPainter::CompositionMode_SourceOver);
 }
 
 static inline quint8 mapFillRule(quint8 from) {

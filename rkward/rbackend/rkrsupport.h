@@ -33,6 +33,15 @@ namespace RKRSupport {
 	int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);
 	RData::RealStorage SEXPToRealArray (SEXP from_exp);
 	RData* SEXPToRData (SEXP from_exp);
+
+	/** Replacement for BEGIN_SUSPEND_INTERRUPTS-macro that we cannot easily use */
+	class InterruptSuspension {
+	public:
+		InterruptSuspension() { old_susp = ROb(R_interrupts_suspended); }
+		~InterruptSuspension() { ROb(R_interrupts_suspended) = old_susp; if(ROb(R_interrupts_pending)) RFn::Rf_onintr(); }
+	private:
+		Rboolean old_susp;
+	};
 };
 
 class RKRShadowEnvironment {

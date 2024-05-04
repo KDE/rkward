@@ -1,6 +1,6 @@
 /*
 rkstructuregetter - This file is part of the RKWard project. Created: Wed Apr 11 2007
-SPDX-FileCopyrightText: 2007-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -10,8 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QString>
 
-#define R_NO_REMAP 1
-#include <Rinternals.h>
+#include "rkrapi.h"
 
 class RData;
 
