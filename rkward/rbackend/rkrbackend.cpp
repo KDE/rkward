@@ -937,8 +937,8 @@ SEXP doSubstackCall (SEXP _call, SEXP _args) {
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
 	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(call, RKRSupport::SEXPToNestedStrings(_args));
-	if (!ret.warning.isEmpty()) Rf_warning(RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error(RKTextCodec::toNative(ret.error).constData());
+	if (!ret.warning.isEmpty()) Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
@@ -949,8 +949,8 @@ SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 	R_CheckUserInterrupt ();
 
 	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
-	if (!ret.warning.isEmpty()) Rf_warning(RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error(RKTextCodec::toNative(ret.error).constData());
+	if (!ret.warning.isEmpty()) Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
