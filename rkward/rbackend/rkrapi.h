@@ -123,6 +123,7 @@ IMPORT_R_API(R_ClearExternalPtr);
 IMPORT_R_API(R_ExternalPtrTag);
 IMPORT_R_API(R_ExternalPtrAddr);
 IMPORT_R_API(R_GE_getVersion);
+#if R_VERSION >= R_Version(4, 1, 0)
 IMPORT_R_API(R_GE_linearGradientColour);
 IMPORT_R_API(R_GE_linearGradientExtend);
 IMPORT_R_API(R_GE_linearGradientNumStops);
@@ -142,13 +143,14 @@ IMPORT_R_API(R_GE_radialGradientNumStops);
 IMPORT_R_API(R_GE_radialGradientR1);
 IMPORT_R_API(R_GE_radialGradientR2);
 IMPORT_R_API(R_GE_radialGradientStop);
-IMPORT_R_API(R_GE_str2col);
 IMPORT_R_API(R_GE_tilingPatternExtend);
 IMPORT_R_API(R_GE_tilingPatternFunction);
 IMPORT_R_API(R_GE_tilingPatternHeight);
 IMPORT_R_API(R_GE_tilingPatternWidth);
 IMPORT_R_API(R_GE_tilingPatternX);
 IMPORT_R_API(R_GE_tilingPatternY);
+#endif
+IMPORT_R_API(R_GE_str2col);
 IMPORT_R_API(R_InputHandlers);
 IMPORT_R_API(R_MakeExternalPtr);
 IMPORT_R_API(R_ParseVector);
@@ -271,6 +273,11 @@ IMPORT_R_API(ptr_R_ShowMessage);
 IMPORT_R_API(ptr_R_Suicide);
 IMPORT_R_API(ptr_R_WriteConsole);
 IMPORT_R_API(ptr_R_WriteConsoleEx);
+#endif
+
+#if R_VERSION >= R_Version(4, 2, 0)
+IMPORT_R_API(R_GE_clipPathFillRule);
+IMPORT_R_API(R_GE_maskType);
 #endif
 public:
 	static void init(void* dllinfo);

@@ -868,7 +868,7 @@ void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
 
 	// NOTE: chaching parameters before starting the write, in case they are ill-formed and produce errors
 	qint32 index = 0;
-	if (!Rfn::RFn::Rf_isNull(ref)) index = RFn::INTEGER(ref)[0];
+	if (!RFn::Rf_isNull(ref)) index = RFn::INTEGER(ref)[0];
 	bool have_trans = (trans != ROb(R_NilValue));
 	double matrix[6];
 	if (have_trans) {
