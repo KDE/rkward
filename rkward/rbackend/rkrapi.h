@@ -14,7 +14,9 @@ Encapsulate R API calls for abstraction over dl_open. WIP
 #ifndef RKRAPI_H
 #define RKRAPI_H
 
-#if defined(_WIN32) || defined(_MSC_VER) || defined(Win32)  // Note: no easy access to Q_OS_WIN at this point
+#include <QObject>
+#include <QMetaProperty>
+#if defined(Q_OS_WIN)
 #define Win32   // R assumes this on Windows
 #endif
 
@@ -77,8 +79,6 @@ extern "C" void run_Rmainloop(void);
 #define RK_DLOPEN_LIBRSO
 #ifdef RK_DLOPEN_LIBRSO
 
-#include <QObject>
-#include <QMetaProperty>
 // Using Qt Meta-Property system for introspection, in order to automate the dlsym-calls.
 // Only the _set ## X function is actually used (for initialization). The _get ## X functions are just to keep the MOC happy.
 // The actual access happens directly via the member (X)
@@ -118,6 +118,7 @@ IMPORT_R_API(REAL);
 IMPORT_R_API(R_CheckDeviceAvailable);
 IMPORT_R_API(R_CheckStack);
 IMPORT_R_API(R_CheckUserInterrupt);
+IMPORT_R_API(R_CStackLimit);
 IMPORT_R_API(R_CleanTempDir);
 IMPORT_R_API(R_ClearExternalPtr);
 IMPORT_R_API(R_ExternalPtrTag);
@@ -151,14 +152,11 @@ IMPORT_R_API(R_GE_tilingPatternX);
 IMPORT_R_API(R_GE_tilingPatternY);
 #endif
 IMPORT_R_API(R_GE_str2col);
-IMPORT_R_API(R_InputHandlers);
 IMPORT_R_API(R_MakeExternalPtr);
 IMPORT_R_API(R_ParseVector);
-IMPORT_R_API(R_PolledEvents);
 IMPORT_R_API(R_RunExitFinalizers);
 IMPORT_R_API(R_SaveGlobalEnvToFile);
 IMPORT_R_API(R_ToplevelExec);
-IMPORT_R_API(R_checkActivityEx);
 IMPORT_R_API(R_chk_calloc);
 IMPORT_R_API(R_chk_free);
 IMPORT_R_API(R_dot_Last);
@@ -167,9 +165,7 @@ IMPORT_R_API(R_lsInternal3);
 IMPORT_R_API(Rprintf); // currently unused
 IMPORT_R_API(R_registerRoutines);
 IMPORT_R_API(R_removeVarFromFrame);
-IMPORT_R_API(R_runHandlers);
 IMPORT_R_API(R_tryEval);
-IMPORT_R_API(R_wait_usec);
 IMPORT_R_API(Rf_GetOption);
 IMPORT_R_API(Rf_GetOption1);
 IMPORT_R_API(Rf_KillAllDevices);
@@ -233,21 +229,17 @@ IMPORT_R_API(SET_PRENV);
 IMPORT_R_API(SET_PRVALUE);
 IMPORT_R_API(TYPEOF);
 IMPORT_R_API(VECTOR_ELT);
-IMPORT_R_API(addInputHandler);
 IMPORT_R_API(run_Rmainloop);
 IMPORT_R_API(setup_Rmainloop);
 
-// NOTE / TODO: Some of these are essentially const, should be treated as such
+// data NOTE / TODO: Some of these are essentially const, should be treated as such
 IMPORT_R_API(R_BaseEnv);
 IMPORT_R_API(R_ClassSymbol);
-IMPORT_R_API(R_CStackLimit);
-IMPORT_R_API(R_CStackStart);
 IMPORT_R_API(R_DimSymbol);
 IMPORT_R_API(R_DirtyImage);
 IMPORT_R_API(R_EmptyEnv);
 IMPORT_R_API(R_GlobalContext);
 IMPORT_R_API(R_GlobalEnv);
-IMPORT_R_API(R_Interactive);
 IMPORT_R_API(R_NaInt);
 IMPORT_R_API(R_NaReal);
 IMPORT_R_API(R_NaString);
@@ -255,11 +247,9 @@ IMPORT_R_API(R_NamesSymbol);
 IMPORT_R_API(R_NilValue);
 IMPORT_R_API(R_interrupts_pending);
 IMPORT_R_API(R_interrupts_suspended);
-IMPORT_R_API(R_Consolefile);
-IMPORT_R_API(R_Outputfile);
 IMPORT_R_API(R_UnboundValue);
 
-#ifndef Win32
+#ifndef Q_OS_WIN
 IMPORT_R_API(ptr_R_Busy);
 IMPORT_R_API(ptr_R_ChooseFile);
 IMPORT_R_API(ptr_R_CleanUp);
@@ -273,6 +263,26 @@ IMPORT_R_API(ptr_R_ShowMessage);
 IMPORT_R_API(ptr_R_Suicide);
 IMPORT_R_API(ptr_R_WriteConsole);
 IMPORT_R_API(ptr_R_WriteConsoleEx);
+
+IMPORT_R_API(R_InputHandlers);
+IMPORT_R_API(R_PolledEvents);
+IMPORT_R_API(R_checkActivityEx);
+IMPORT_R_API(R_runHandlers);
+IMPORT_R_API(addInputHandler);
+
+// data
+IMPORT_R_API(R_wait_usec);
+IMPORT_R_API(R_CStackStart);
+IMPORT_R_API(R_Interactive);
+IMPORT_R_API(R_Consolefile);
+IMPORT_R_API(R_Outputfile);
+#else
+IMPORT_R_API(R_ProcessEvents);
+IMPORT_R_API(R_DefParams);
+IMPORT_R_API(R_SetParams);
+IMPORT_R_API(R_setStartTime);
+IMPORT_R_API(R_set_command_line_arguments);
+IMPORT_R_API(UserBreak);
 #endif
 
 #if R_VERSION >= R_Version(4, 2, 0)
