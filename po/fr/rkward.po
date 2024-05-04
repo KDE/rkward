@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-19 00:35+0000\n"
-"PO-Revision-Date: 2024-04-14 18:28+0200\n"
+"PO-Revision-Date: 2024-05-02 16:13+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -1085,7 +1085,7 @@ msgid ""
 msgstr ""
 "Vos permissions actuelles d'utilisateur ne vous permettent pas de supprimer "
 "les paquets suivants. Voulez-vous vraiment ignorer ces paquets ou voulez-"
-"vous continuer avec des privilèges de superutilisateur (vous allez être "
+"vous continuer avec des privilèges du compte administrateur (Vous allez être "
 "invité à fournir le mot de passe) ?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
@@ -1154,10 +1154,10 @@ msgid ""
 "permissions of '%1'. Sorry, automatic switching to Administrator is not yet "
 "supported in RKWard on Windows.</p>"
 msgstr ""
-"<p>De façon alternative, si vous avez accès à un compte superutilisateur sur "
+"<p>De façon alternative, si vous avez accès à un compte administrateur sur "
 "cette machine, vous pouvez l'utiliser pour installer un ou des paquets ou si "
 "vous voulez modifier les permissions de « %1 ». Désolé, le basculement "
-"automatique en mode superutilisateur n'est pas encore pris en charge dans "
+"automatique en mode administrateur n'est pas encore pris en charge dans "
 "RKWard sous Windows.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:247
@@ -1174,13 +1174,14 @@ msgid ""
 "p>"
 msgstr ""
 "<p>Alternativement, si vous êtes l'administrateur de cette machine, vous "
-"pouvez essayer d'installer les paquets comme superutilisateur (le mot de "
-"passe superutilisateur vous sera demandé).</p>"
+"pouvez essayer d'installer les paquets avec les privilèges du compte "
+"administrateur (Le mot de passe du compte administrateur vous sera demandé)."
+"</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:251
 #, kde-format
 msgid "Become root"
-msgstr "Devenir superutilisateur"
+msgstr "Devenir administrateur"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
@@ -1199,7 +1200,7 @@ msgid ""
 "one of these packages."
 msgstr ""
 "Il a été impossible de trouver ni « kdesu » ni « kdesudo ». Pour installer "
-"en mode « superutilisateur », veuillez installer l'un de ces paquets."
+"en mode administrateur, veuillez installer l'un de ces paquets."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
@@ -5536,7 +5537,7 @@ msgstr ""
 "mais pas tous, seront mis en correspondance, d'autres seront ignorés.</"
 "li><li>Les dispositifs originaux spécifiques à la plate-forme peuvent être "
 "utilisés, mais intégrés dans des fenêtres RKWard. Cette option n'est pas "
-"disponible sur MacOS X.</li><li>Les périphériques spécifiques à la plate-"
+"disponible sur macOS X.</li><li>Les périphériques spécifiques à la plate-"
 "forme d'origine peuvent être utilisés sans modification, sans l'ajout de "
 "fonctionnalités spécifiques à RKWard.</li></ul><p>Sans tenir compte de cette "
 "configuration, les périphériques d'origine sont toujours accessibles comme "
