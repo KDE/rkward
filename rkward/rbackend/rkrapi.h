@@ -77,10 +77,26 @@ extern "C" void run_Rmainloop(void);
 #define RK_DLOPEN_LIBRSO
 #ifdef RK_DLOPEN_LIBRSO
 
-//#define IMPORT_R_API(X) static constexpr decltype(::X) &X = ::X
-#define IMPORT_R_API(X) static constexpr decltype(::X) &X =::X
+#include <QObject>
+#include <QMetaProperty>
+// Using Qt Meta-Property system for introspection, in order to automate the dlsym-calls.
+// Only the _set ## X function is actually used (for initialization). The _get ## X functions are just to keep the MOC happy.
+// The actual access happens directly via the member (X)
+#define IMPORT_R_API(X) Q_PROPERTY(void* X READ _get ## X WRITE _set ## X) \
+                        public: static inline decltype(::X) *X = &::X; \
+                        void _set ## X (void* v) { X = (decltype(X)) v; } \
+                        void* _get ## X () { return (void*) X; }
+#define ROb(X) *(RFn::X)
+#else
+// For classic dynamic linking, set up the required members simply as aliases to the real thing
+#define IMPORT_R_API(X) static constexpr decltype(::X) &X = ::X
 #define ROb(X) (RFn::X)
-struct RFn {
+#endif
+
+class RFn : public QObject {
+Q_OBJECT
+public:
+// TODO: This list should be generated, automatically, at compile time
 IMPORT_R_API(CDR);
 IMPORT_R_API(CDDR);
 IMPORT_R_API(CAR);
@@ -146,6 +162,7 @@ IMPORT_R_API(R_chk_free);
 IMPORT_R_API(R_dot_Last);
 IMPORT_R_API(R_getEmbeddingDllInfo);
 IMPORT_R_API(R_lsInternal3);
+IMPORT_R_API(Rprintf); // currently unused
 IMPORT_R_API(R_registerRoutines);
 IMPORT_R_API(R_removeVarFromFrame);
 IMPORT_R_API(R_runHandlers);
@@ -255,7 +272,8 @@ IMPORT_R_API(ptr_R_Suicide);
 IMPORT_R_API(ptr_R_WriteConsole);
 IMPORT_R_API(ptr_R_WriteConsoleEx);
 #endif
+public:
+	static void init(void* dllinfo);
 };
-#endif
 
 #endif

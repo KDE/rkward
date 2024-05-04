@@ -29,6 +29,7 @@ SET (
 	rkrbackendprotocol_backend.cpp
 	rkreventloop.cpp
 	rkbackendtransmitter.cpp
+	rkrapi.cpp
 )
 
 SET (
