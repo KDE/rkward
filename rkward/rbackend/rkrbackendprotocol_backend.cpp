@@ -20,7 +20,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QUrl>
 
 #include <iostream>
-#include <dlfcn.h>
 
 #include "rkbackendtransmitter.h"
 #include "rktransmitter.h"
@@ -113,26 +112,19 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 		// TODO: Should rather take the libname from CMake
 		// maybe we also want to accept an absolute path specified on command line from the frontend
-#ifdef RK_DLOPEN_LIBRSO
 #ifdef Q_OS_WIN
 #	define RLIBNAME "R.dll"
 #else
 #	define RLIBNAME "libR.so"
 #endif
-//#if defined(RTLD_DEEPBIND)
-//		RK_DEBUG(RBACKEND, DL_DEBUG, "Now loading R lib, dynamically (deepbind)");
-//		RFn::init(dlopen(RLIBNAME, RTLD_NOW | RTLD_DEEPBIND));
-//#else
-		RK_DEBUG(RBACKEND, DL_DEBUG, "Now loading R lib, dynamically (local)");
-		RFn::init(dlopen(RLIBNAME, RTLD_NOW | RTLD_LOCAL));
-//#endif
-#endif
+		RFn::init(RLIBNAME);
+
 		RKRBackendTransmitter transmitter (servername, token);
 		RKRBackendProtocolBackend::p_transmitter = &transmitter;
 		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);
 		transmitter.start ();
 		RKRBackend::this_pointer->run (locale_dir);
-		// NOTE:: Since some unknown version of R (4.3.0 at the latest, but probabably much earlier), run_Rmainloop() does not return, it will
+		// NOTE:: Since some unknown version of R (4.3.0 at the latest, but probably much earlier), run_Rmainloop() does not return, it will
 		//        eventually exit, instead.
 		RKRBackendProtocolBackend::doExit();
 	}

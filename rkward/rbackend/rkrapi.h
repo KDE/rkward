@@ -280,6 +280,8 @@ IMPORT_R_API(R_DefParams);
 IMPORT_R_API(R_SetParams);
 IMPORT_R_API(R_setStartTime);
 IMPORT_R_API(R_set_command_line_arguments);
+IMPORT_R_API(getRUser);
+IMPORT_R_API(get_R_HOME);
 IMPORT_R_API(UserBreak);
 #endif
 
@@ -289,7 +291,7 @@ IMPORT_R_API(R_GE_maskType);
 #endif
 
 public:
-	static void init(void* dllinfo);
+	static void init(const char* dllname);
 };
 
 #endif

@@ -71,15 +71,15 @@ void RK_scheduleIntr () {
 	RK_DEBUG (RBACKEND, DL_DEBUG, "interrupt scheduled");
 	RKRBackend::repl_status.interrupted = true;
 #ifdef Q_OS_WIN
-	UserBreak = 1;
+	ROb(UserBreak) = 1;
 #else
-	RKSignalSupport::callOldSigIntHandler ();
+	RKSignalSupport::callOldSigIntHandler();
 #endif
 }
 
 void RK_doIntr () {
 	RK_scheduleIntr ();
-	RFn::R_CheckUserInterrupt ();
+	RFn::R_CheckUserInterrupt();
 }
 
 void RKRBackend::scheduleInterrupt () {
@@ -776,8 +776,8 @@ void RKRBackend::setupCallbacks () {
 	RFn::R_DefParams(&RK_R_Params);
 
 // IMPORTANT: see also the #ifndef QS_WS_WIN-portion!
-	RK_R_Params.rhome = get_R_HOME ();
-	RK_R_Params.home = getRUser ();
+	RK_R_Params.rhome = RFn::get_R_HOME();
+	RK_R_Params.home = RFn::getRUser();
 	RK_R_Params.CharacterMode = RGui;
 	RK_R_Params.ShowMessage = RShowMessage;
 #if R_VERSION < R_Version(4, 2, 0)
