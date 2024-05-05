@@ -1,6 +1,6 @@
 /*
 rkrbackendprotocol - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 04 2010
-SPDX-FileCopyrightText: 2010-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -15,14 +15,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QThread>
 #include <QLocalSocket>
 #include <QMutex>
-
-#include "rktransmitter.h"
-#include <iostream>
-
-#include "rkbackendtransmitter.h"
-#include <QUuid>		// mis-used as a random-string generator
+#include <QUuid>     // mis-used as a random-string generator
 #include <QDir>
 #include <QUrl>
+
+#include <iostream>
+#include <dlfcn.h>
+
+#include "rkbackendtransmitter.h"
+#include "rktransmitter.h"
+#include "rkrapi.h"
 
 #ifdef Q_OS_MACOS
 #include <CoreFoundation/CoreFoundation.h>
@@ -109,6 +111,22 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		// this token is sent both via stdout and the local socket connection. The frontend simply compares both values.
 		QString token = QUuid::createUuid ().toString ();
 
+		// TODO: Should rather take the libname from CMake
+		// maybe we also want to accept an absolute path specified on command line from the frontend
+#ifdef RK_DLOPEN_LIBRSO
+#ifdef Q_OS_WIN
+#	define RLIBNAME "R.dll"
+#else
+#	define RLIBNAME "libR.so"
+#endif
+//#if defined(RTLD_DEEPBIND)
+//		RK_DEBUG(RBACKEND, DL_DEBUG, "Now loading R lib, dynamically (deepbind)");
+//		RFn::init(dlopen(RLIBNAME, RTLD_NOW | RTLD_DEEPBIND));
+//#else
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Now loading R lib, dynamically (local)");
+		RFn::init(dlopen(RLIBNAME, RTLD_NOW | RTLD_LOCAL));
+//#endif
+#endif
 		RKRBackendTransmitter transmitter (servername, token);
 		RKRBackendProtocolBackend::p_transmitter = &transmitter;
 		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);

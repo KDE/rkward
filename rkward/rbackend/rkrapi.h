@@ -76,14 +76,12 @@ extern "C" {
 // some functions we need that are not declared
 extern "C" void run_Rmainloop(void);
 
-#define RK_DLOPEN_LIBRSO
 #ifdef RK_DLOPEN_LIBRSO
-
 // Using Qt Meta-Property system for introspection, in order to automate the dlsym-calls.
 // Only the _set ## X function is actually used (for initialization). The _get ## X functions are just to keep the MOC happy.
 // The actual access happens directly via the member (X)
 #define IMPORT_R_API(X) Q_PROPERTY(void* X READ _get ## X WRITE _set ## X) \
-                        public: static inline decltype(::X) *X = &::X; \
+                        public: static inline decltype(::X) *X = nullptr; \
                         void _set ## X (void* v) { X = (decltype(X)) v; } \
                         void* _get ## X () { return (void*) X; }
 #define ROb(X) *(RFn::X)
@@ -289,6 +287,7 @@ IMPORT_R_API(UserBreak);
 IMPORT_R_API(R_GE_clipPathFillRule);
 IMPORT_R_API(R_GE_maskType);
 #endif
+
 public:
 	static void init(void* dllinfo);
 };

@@ -22,3 +22,6 @@ TARGET_LINK_LIBRARIES(rkgraphicsdevice.frontend Qt6::Widgets Qt6::Core Qt6::Netw
 
 ADD_LIBRARY(rkgraphicsdevice.backend STATIC ${rkgraphicsdevice_backend_SRCS})
 TARGET_LINK_LIBRARIES(rkgraphicsdevice.backend Qt6::Core Qt6::Network)
+IF(${DLOPEN_RLIB})
+TARGET_COMPILE_DEFINITIONS(rkgraphicsdevice.backend PUBLIC RK_DLOPEN_LIBRSO)
+ENDIF()

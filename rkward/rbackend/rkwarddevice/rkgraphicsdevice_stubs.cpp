@@ -872,7 +872,7 @@ void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
 	bool have_trans = (trans != ROb(R_NilValue));
 	double matrix[6];
 	if (have_trans) {
-		for (int i = 0; i < 6; ++i) matrix[i] = REAL(trans)[i];  // order in cairo terms: xx, xy, x0, yx, yy, y0
+		for (int i = 0; i < 6; ++i) matrix[i] = RFn::REAL(trans)[i];  // order in cairo terms: xx, xy, x0, yx, yy, y0
 	}
 
 	{
