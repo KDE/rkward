@@ -7,7 +7,42 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 /** @file rkrapi.h
 
-Encapsulate R API calls for abstraction over dl_open. WIP
+Encapsulate R API calls for abstraction over dlopen().
+
+Problem description:
+
+1. The rkward.rbackend executable needs R functions (obviously) and Qt functions (for interfacing with the frontend).
+2. Both will pull in additional dependencies, some of which are the same, but some of which may be conflicting with each other.
+2a. Conflicts are especially to be expected in "bundle" cases, such as AppImage, when trying to use an rkward.rbackend in the bundle
+    with an installation of R on the system. Here, the AppImage, and the system may very likely sport different versions of the same libraries.
+(2aa. Why not just rely on a bundled R inside the AppImage? Because it will essentially be unable to build packages, again due to trying to
+      mix libraries from inside the AppImage with those outside.)
+2b. Another - limited - scenario is the (currently non-maintained) qtbase R package, which expects to be able to create a QApplication singleton.
+    Here, there is no clash of conflicting libraries, but a clash with two users of the library accessing the same singletons invalidly.
+3. The problem is aggravated by the fact that R may load essentially abitrary further libraries from packages. In the 2a) case, we want to load
+   all those from system locations, while the AppImage location is only for the Qt functions in rkward.rbackend.
+
+So how do we get two sets of libraries to load from two different search paths, without getting into the way of each other? Keeping them compartmentalised is
+done by loading them using dlopen() with the RTLD_LOCAL flag set. Now, dlopen() is "easy" enough for dealing with a plain C library like libR.so. (That's essentially
+what is done in this file).
+
+As for loading the two from different search paths, this problem cannot easily be resolved using either LD_LIBRARY_PATH (changes of which do not take
+effect, if they happen during the lifetime of the executable). BTW, it should be noted that R CMD itself configures LD_LIBRARY_PATH.
+RPATH or RUNPATH also cannot selectively pick one set of libraries from one search path, and another from another - at least not in a single library file.
+What can be done, however, is the following setup:
+
+1. Frontend sets up environment, removing any LD_LIBRARY_PATH pointing to inside the AppImage. Calls rkward.rbackend
+2. rkward.rbackend is just a tiny binary that dlopen()s two further things (each with RTLD_LOCAL):
+3. libR.so - this is easy enough to get from the right place, as it is not in any default path
+4. rkward.rbackend.lib encapsulates all Qt calls, and links against Qt libs (and dependencies), only. These are C++ and thus hard to load, but we
+   only need a single entry point from rkward.rbackend: "do_main(argc, argv)", and hand it the handle of libR.so, so it can look up the required R
+   symbols. (Note that is does not _load_ libR.so, only resolves the symbols.)
+   rkward.rbackend.lib should have RPATH/RUNPATH set when in an AppImage, pointing to the libs in the image.
+
+---
+
+All this written, I don't quite trust this scheme to be perfect, yet, and so one design goal is to keep the old (link all shared libs to rkward.rbackend, directly)
+available as a config option.
 
 */
 
