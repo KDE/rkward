@@ -41,6 +41,29 @@ QString findBackendAtPath (const QString &path) {
 	return QString ();
 }
 
+bool pathIsChildOf(const QString &parent, const QString &child) {
+	return QFileInfo(child).canonicalFilePath().startsWith(QFileInfo(parent).canonicalFilePath());
+}
+
+void removeFromPathList (const char* varname, const QString &path) {
+#ifdef Q_OS_WIN
+#	define PATH_VAR_SEP ';'
+#else
+#	define PATH_VAR_SEP ':'
+#endif
+	auto var = qgetenv(varname);
+	if (var.isEmpty()) return;
+
+	const auto list = QString::fromLocal8Bit(var).split(PATH_VAR_SEP);
+	QStringList newlist;
+	for(const auto &str : list) {
+		if (!pathIsChildOf(path, str)) {
+			newlist.append(str);
+		}
+	}
+	qputenv(varname, newlist.join(PATH_VAR_SEP).toLocal8Bit());
+}
+
 RKFrontendTransmitter::RKFrontendTransmitter () : RKAbstractTransmitter () {
 	RK_TRACE (RBACKEND);
 
@@ -79,11 +102,18 @@ void RKFrontendTransmitter::run () {
 	backend = new QProcess (this);
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 
-	// Try to synchronize language selection in frontend and backend
 	QStringList env = QProcess::systemEnvironment ();
+	// Try to synchronize language selection in frontend and backend
 	int index = env.indexOf (QRegularExpression(QStringLiteral("^LANGUAGE=.*"), QRegularExpression::CaseInsensitiveOption));
 	if (index >= 0) env.removeAt (index);
 	env.append ("LANGUAGE=" + QLocale ().name ().section ('_', 0, 0));
+
+	const auto appdir = QString::fromLocal8Bit(qgetenv("APPDIR"));
+	if (!appdir.isEmpty() && pathIsChildOf(appdir, RKSessionVars::RBinary())) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Detected running from AppImage with external R. Removing paths in %s from (LD_LIBRARY_)PATH", qPrintable(appdir));
+		removeFromPathList("LD_LIBRARY_PATH", appdir);
+		removeFromPathList("PATH", appdir);
+	}
 	backend->setEnvironment (env);
 
 	QStringList args;
