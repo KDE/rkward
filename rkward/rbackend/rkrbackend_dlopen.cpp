@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #endif
 
 void *resolve_symb(void* dllinfo, const char* name) {
-#if defined(Q_OS_WIN)
+#ifdef Win32
 	retrun GetProcAddress(dllinfo, name);
 #else
 	return dlsym(dllinfo, name);
@@ -29,8 +29,8 @@ int main(int argc, char *argv[]) {
 	auto r_dllinfo = LoadLibraryA("R.dll");
 	auto rkb_dllinfo = LoadLibraryA("rkward.rbackend.lib.dll");
 #else
-	auto r_dllinfo = dlopen("libR.so", RTLD_NOW | RTLD_LOCAL | RTLD_DEEPBIND);
-	auto rkb_dllinfo = dlopen("librkward.rbackend.lib.so", RTLD_NOW | RTLD_LOCAL | RTLD_DEEPBIND);
+	auto r_dllinfo = dlopen("libR.so", RTLD_NOW | RTLD_LOCAL);  // NOTE: RTLD_DEEPBIND causes undiagnosed runtime failure on Suse Tumbleweed around 05/24 (while it works, elsewhere)
+	auto rkb_dllinfo = dlopen("librkward.rbackend.lib.so", RTLD_NOW | RTLD_LOCAL);
 #endif
 	int (*do_main) (int, char**, void*, void* (*)(void*, const char*));
 	do_main = (decltype(do_main)) resolve_symb(rkb_dllinfo, "do_main");
