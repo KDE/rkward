@@ -58,7 +58,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		RKDebugMessageOutput (QtDebugMsg, QMessageLogContext (), buffer);
 	}
 
+#ifdef RK_DLOPEN_LIBRSO
+	extern "C"
+#	ifdef Q_OS_WIN
+	__declspec(dllexport)
+#	else
+	__attribute__((__visibility__("default")))
+#endif
+	int do_main(int argc, char *argv[], void* libr_dll_handle, void* (*dlsym_fun)(void*, const char*)) {
+#else
 	int main(int argc, char *argv[]) {
+#endif
 #ifdef Q_OS_MACOS
 		CFBundleRef mainBundle = CFBundleGetMainBundle();
 		if (mainBundle) {
@@ -112,12 +122,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 		// TODO: Should rather take the libname from CMake
 		// maybe we also want to accept an absolute path specified on command line from the frontend
-#ifdef Q_OS_WIN
-#	define RLIBNAME "R.dll"
-#else
-#	define RLIBNAME "libR.so"
+#ifdef RK_DLOPEN_LIBRSO
+		RFn::init(libr_dll_handle, dlsym_fun);
 #endif
-		RFn::init(RLIBNAME);
 
 		RKRBackendTransmitter transmitter (servername, token);
 		RKRBackendProtocolBackend::p_transmitter = &transmitter;
@@ -127,6 +134,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		// NOTE:: Since some unknown version of R (4.3.0 at the latest, but probably much earlier), run_Rmainloop() does not return, it will
 		//        eventually exit, instead.
 		RKRBackendProtocolBackend::doExit();
+		return 0;
 	}
 
 	void RKRBackendProtocolBackend::doExit() {

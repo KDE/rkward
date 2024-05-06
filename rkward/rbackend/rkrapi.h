@@ -326,7 +326,7 @@ IMPORT_R_API(R_GE_maskType);
 #endif
 
 public:
-	static void init(const char* dllname);
+	static void init(void* libr_dll_handle, void* (*dlsym_fun)(void*, const char*));
 };
 
 #endif
