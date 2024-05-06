@@ -16,7 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 void *resolve_symb(void* dllinfo, const char* name) {
 #ifdef Win32
-	retrun GetProcAddress(dllinfo, name);
+	return GetProcAddress((HMODULE) dllinfo, name);
 #else
 	return dlsym(dllinfo, name);
 #endif
