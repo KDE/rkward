@@ -5,7 +5,10 @@ SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifdef Q_OS_WIN
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#define Win32
+#endif
+#ifdef Win32
 #include <windows.h>
 #else
 #include <dlfcn.h>
@@ -22,7 +25,7 @@ void *resolve_symb(void* dllinfo, const char* name) {
 int main(int argc, char *argv[]) {
 // TODO: Debugging!
 // TODO: Take lib name from CMake?
-#ifdef Q_OS_WIN
+#ifdef Win32
 	auto r_dllinfo = LoadLibraryA("R.dll");
 	auto rkb_dllinfo = LoadLibraryA("rkward.rbackend.lib.dll");
 #else
