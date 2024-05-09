@@ -183,30 +183,35 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->newFrameConfirm = RKD_NewFrameConfirm;
 	dev->holdflush = RKD_HoldFlush;
 
-#if R_VERSION >= R_Version (4, 1, 0)
-	// patterns and gradients
-	dev->setPattern = RKD_SetPattern;
-	dev->releasePattern = RKD_ReleasePattern;
-	// clipping paths
-	dev->setClipPath = RKD_SetClipPath;
-	dev->releaseClipPath = RKD_ReleaseClipPath;
-	// masks
-	dev->setMask = RKD_SetMask;
-	dev->releaseMask = RKD_ReleaseMask;
-	dev->deviceVersion = qMin(15, R_GE_version);
-	dev->deviceClip = TRUE; // for now
+#if R_VERSION >= R_Version (4, 2, 0)
+	// NOTE: We need both a compiletime and a runtime check, in order to support running with an R older than what was used at compile time
+	if (RFn::R_GE_getVersion() >=  15) {
+		// patterns and gradients
+		dev->setPattern = RKD_SetPattern;
+		dev->releasePattern = RKD_ReleasePattern;
+		// clipping paths
+		dev->setClipPath = RKD_SetClipPath;
+		dev->releaseClipPath = RKD_ReleaseClipPath;
+		// masks
+		dev->setMask = RKD_SetMask;
+		dev->releaseMask = RKD_ReleaseMask;
+		dev->deviceVersion = qMin(15, R_GE_version);
+		dev->deviceClip = TRUE; // for now
+	}
 #endif
 
 #if R_VERSION >= R_Version (4, 2, 0)
-	// groups
-	dev->defineGroup = RKD_DefineGroup;
-	dev->useGroup = RKD_UseGroup;
-	dev->releaseGroup = RKD_ReleaseGroup;
+	if (RFn::R_GE_getVersion() >=  16) {
+		// groups
+		dev->defineGroup = RKD_DefineGroup;
+		dev->useGroup = RKD_UseGroup;
+		dev->releaseGroup = RKD_ReleaseGroup;
 
-	// stroked / filled paths
-	dev->stroke = RKD_Stroke;
-	dev->fill = RKD_Fill;
-	dev->fillStroke = RKD_FillStroke;
+		// stroked / filled paths
+		dev->stroke = RKD_Stroke;
+		dev->fill = RKD_Fill;
+		dev->fillStroke = RKD_FillStroke;
+	}
 #endif
 	return true;
 }

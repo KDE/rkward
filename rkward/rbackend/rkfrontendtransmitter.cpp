@@ -1,6 +1,6 @@
 /*
 rkfrontendtransmitter - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 04 2010
-SPDX-FileCopyrightText: 2010-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -40,6 +40,23 @@ QString findBackendAtPath (const QString &path) {
 	if (fi.exists () && fi.isExecutable ()) return ret;
 	return QString ();
 }
+
+#if defined(RK_DLOPEN_LIBRSO)
+QString findBackendLibAtPath(const QString &path) {
+	QDir dir(path);
+	dir.makeAbsolute();
+#ifdef Q_OS_WIN
+	QString ret = dir.filePath("rkward.rbackend.lib.dll");
+#elif defined(Q_OS_MACOS)
+	QString ret = dir.filePath("librkward.rbackend.lib.dylib");
+#else
+	QString ret = dir.filePath("librkward.rbackend.lib.so");
+#endif
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Looking for backend lib at %s", qPrintable(ret));
+	if (QFileInfo(ret).exists()) return ret;
+	return QString();
+}
+#endif
 
 bool pathIsChildOf(const QString &parent, const QString &child) {
 	return QFileInfo(child).canonicalFilePath().startsWith(QFileInfo(parent).canonicalFilePath());
@@ -114,7 +131,6 @@ void RKFrontendTransmitter::run () {
 		removeFromPathList("LD_LIBRARY_PATH", appdir);
 		removeFromPathList("PATH", appdir);
 	}
-	backend->setEnvironment (env);
 
 	QStringList args;
 	args.append("CMD");
@@ -140,6 +156,14 @@ void RKFrontendTransmitter::run () {
 		exec();   // To actually show the transmission error
 		return;
 	}
+
+#if defined(RK_DLOPEN_LIBRSO)
+	QString backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath()); // for running directly from the build tree, but also covers windows
+	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + "../lib"); // covers rkward in /usr[/local]/bin and lib in /usr/[/local]/lib -> regular install on Linux
+	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath()); // backend and lib both installed in libexec or similar
+	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);
+#endif
+	backend->setEnvironment(env);
 
 #ifdef Q_OS_WIN
 	// Needed for paths with spaces. R CMD is too simple to deal with those, even if we provide proper quoting.

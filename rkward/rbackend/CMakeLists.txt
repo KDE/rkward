@@ -47,21 +47,21 @@ ADD_LIBRARY(rbackend STATIC ${rbackend_frontend_SRCS} ${rbackend_shared_SRCS})
 TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt6::Widgets KF6::TextEditor KF6::WindowSystem)
 
 ADD_DEFINITIONS (-DRKWARD_BACKEND_PATH="${KDE_INSTALL_FULL_LIBEXECDIR}")
-LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
 # See rkrapi.h for documentation and rationale of the linking strategy
 IF(${DLOPEN_RLIB})
   ADD_LIBRARY(rkward.rbackend.lib SHARED ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
   TARGET_LINK_LIBRARIES(rkward.rbackend.lib rkgraphicsdevice.backend ${CMAKE_THREAD_LIBS_INIT} Qt6::Network Qt6::Core KF6::I18n)
   TARGET_COMPILE_DEFINITIONS(rkward.rbackend.lib PUBLIC RK_DLOPEN_LIBRSO)
+  TARGET_COMPILE_DEFINITIONS(rbackend PUBLIC RK_DLOPEN_LIBRSO)
   INSTALL(TARGETS rkward.rbackend.lib DESTINATION ${KDE_INSTALL_LIBDIR})
 
   ADD_EXECUTABLE(rkward.rbackend rkrbackend_dlopen.cpp)
-  TARGET_LINK_LIBRARIES(rkward.rbackend rkward.rbackend.lib)
   IF(NOT WIN32)
     TARGET_LINK_LIBRARIES(rkward.rbackend dl)
   ENDIF()
 ELSE(${DLOPEN_RLIB})
+  LINK_DIRECTORIES(${R_SHAREDLIBDIR})
   ADD_EXECUTABLE(rkward.rbackend ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
   TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt6::Network Qt6::Core KF6::I18n)
 ENDIF(${DLOPEN_RLIB})
