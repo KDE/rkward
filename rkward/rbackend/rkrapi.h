@@ -49,6 +49,12 @@ effect during the lifetime of an executable.
 4e. We cd back to where we were before 4c.
 5. do_main() is resolved from librkward.rbackend.lib.so, and called with a handle to libR.so to resolve all required R symbols.
 
+Now it may stand out that most of this is really just about Linux, and in particular about AppImage. Is it even worth it?
+- On Mac, while libs-references are usually absolute, this same fact prevents us from bundling R, which means we need to rely on libs outside of our
+  bundle. Signing gets throun by this. dlopen()ing, instead, helps (I think).
+- On all platforms, this allows us more flexibility to support more than just one version of R. E.g. when running with an R version older than that
+  used a compile-time, we can simply skip setting up certain graphics engine callbacks. The same would not be possible using regular linking.
+
 ---
 
 All this written, I don't quite trust this scheme to be perfect, yet, and so one design goal is to keep the old (link all shared libs to rkward.rbackend, directly)

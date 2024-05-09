@@ -49,8 +49,15 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	desc->height = height;
 
 	if (RFn::R_GE_getVersion() != R_GE_version) {
-		RKRBackend::this_pointer->graphicsEngineMismatchMessage(R_GE_version, RFn::R_GE_getVersion());
-		RFn::Rf_error("Graphics version mismatch");
+		if (RFn::R_GE_getVersion() < 14) {
+			RKRBackend::this_pointer->graphicsEngineMismatchMessage(R_GE_version, RFn::R_GE_getVersion());
+			RFn::Rf_error("Graphics version mismatch");
+		} else {
+			// All other cases currently thought ot be acceptible?
+			// GE version 17 adds capabilities(), so higher GE version should no longer be a problem.
+			// Lower GE version should be ok (down to 14, ATM), because we simply behave as though that was the case.
+			RK_DEBUG(RBACKEND, DL_WARNING, "GE version compile time: %d, GE version runtime %d", R_GE_version, RFn::R_GE_getVersion());
+		}
 	}
 	RFn::R_CheckDeviceAvailable();
 	pDevDesc dev;
@@ -183,7 +190,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->newFrameConfirm = RKD_NewFrameConfirm;
 	dev->holdflush = RKD_HoldFlush;
 
-#if R_VERSION >= R_Version (4, 2, 0)
+#if R_VERSION >= R_Version (4, 1, 0)
 	// NOTE: We need both a compiletime and a runtime check, in order to support running with an R older than what was used at compile time
 	if (RFn::R_GE_getVersion() >=  15) {
 		// patterns and gradients
@@ -195,7 +202,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 		// masks
 		dev->setMask = RKD_SetMask;
 		dev->releaseMask = RKD_ReleaseMask;
-		dev->deviceVersion = qMin(15, R_GE_version);
+		dev->deviceVersion = qMin(qMin(15, R_GE_version), RFn::R_GE_getVersion());
 		dev->deviceClip = TRUE; // for now
 	}
 #endif
