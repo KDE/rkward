@@ -23,6 +23,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDir>
 #include <QStandardPaths>
 #include <QElapsedTimer>
+#include <QTemporaryDir>
 
 #include "../version.h"
 #include "../debug.h"
@@ -158,11 +159,20 @@ void RKFrontendTransmitter::run () {
 	}
 
 #if defined(RK_DLOPEN_LIBRSO)
+	/** NOTE: For a description of the rationale for this involved loading procedure rkapi.h ! */
 	QString backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath()); // for running directly from the build tree, but also covers windows
 	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + "/../lib"); // covers rkward in /usr[/local]/bin and lib in /usr/[/local]/lib
 	                      // but also backend in /usr/lib/libexec and lib in /usr/lib-> regular install on Linux
 	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath()); // backend and lib both installed in libexec or similar
+#	if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);
+#	else
+	env.append(QStringLiteral("RK_BACKEND_LIB=") + QFileInfo(backend_lib).fileName());
+	QTemporaryDir rkward_only_dir("rkward_only");
+	QFile(QFileInfo(backend_lib).absolutePath()).link(rkward_only_dir.filePath("_rkward_only_dlpath"));
+	env.append(QStringLiteral("RK_ADD_LDPATH=./_rkward_only_dlpath"));
+	env.append(QStringLiteral("RK_LD_CWD=") + rkward_only_dir.path());
+#	endif
 #endif
 	backend->setEnvironment(env);
 

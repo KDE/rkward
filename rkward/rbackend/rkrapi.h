@@ -21,23 +21,33 @@ Problem description:
     Here, there is no clash of conflicting libraries, but a clash with two users of the library accessing the same singletons invalidly.
 3. The problem is aggravated by the fact that R may load essentially abitrary further libraries from packages. In the 2a) case, we want to load
    all those from system locations, while the AppImage location is only for the Qt functions in rkward.rbackend.
+4. R itself (time of writing: R 4.4, but unchanged in this respect since ages) tries to ensure correct lib search path by setting LD_LIBRARY_PATH to:
+   /Rs/own/libdir:/Rs/idea/of/where/system/libs/might/be/at:/Rs/java/libdir:/anything/previously/in/LD_LIBRARY_PATH
+   Now this puts several directories in front of the search path which may well contain libraries conflicting with the Qt libs we need.
+   E.g. it may contain /usr/lib/, while we'd hope to load Qt libs from inside an Appimage.
+5. Note that LD_LIBRARY_PATH overrides RUNPATH. RPATH is deprecated, and while it will probably be around for a long time to come, it is not so easy
+   to set. In fact, linuxdeployqt (the tool used to create Appimages in KDE infastructure) foolishly overwrites any RPATH we may set, manually.
 
-So how do we get two sets of libraries to load from two different search paths, without getting into the way of each other? Keeping them compartmentalised is
+So how do we get two sets of libraries to load from two different search paths, without getting into the way of each other? Keeping them compartimentalised is
 done by loading them using dlopen() with the RTLD_LOCAL flag set. Now, dlopen() is "easy" enough for dealing with a plain C library like libR.so. (That's essentially
-what is done in this file).
+what is done in this file). We shove everything else into another shared lib (librkward.rbackend.lib.so), so we can similarily dlopen it with RTLD_LOCAL. This lib
+exports a single (C) entry-point ("do_main()"), and can simply be handed a pointer to the libR.so, from where to resolve all required symbols.
 
-As for loading the two from different search paths, this problem cannot easily be resolved using either LD_LIBRARY_PATH (changes of which do not take
-effect, if they happen during the lifetime of the executable). BTW, it should be noted that R CMD itself configures LD_LIBRARY_PATH.
-RPATH or RUNPATH also cannot selectively pick one set of libraries from one search path, and another from another - at least not in a single library file.
-What can be done, however, is the following setup:
+As for loading the two from different search paths, having already compartimentalised our two sets of libs, we somehow need to make sure, the two sets are loaded
+with different effective search paths. RUNPATH and even RPATH won't help us here (see above), and changes done to LD_LIBRARY_PATH do not take
+effect during the lifetime of an executable.
 
-1. Frontend sets up environment, removing any LD_LIBRARY_PATH pointing to inside the AppImage. Calls rkward.rbackend
+1. Frontend creates a temporary dir with a symlink pointing to the path of the qt libs we want to load
+2. Frontend sets up environment, removing any LD_LIBRARY_PATH pointing to inside the AppImage, and sets some further envs vars (see below). Calls rkward.rbackend
 2. rkward.rbackend is just a tiny binary that dlopen()s two further things (each with RTLD_LOCAL):
-3. libR.so - this is easy enough to get from the right place, as it is not in any default path
-4. rkward.rbackend.lib encapsulates all Qt calls, and links against Qt libs (and dependencies), only. These are C++ and thus hard to load, but we
-   only need a single entry point from rkward.rbackend: "do_main(argc, argv)", and hand it the handle of libR.so, so it can look up the required R
-   symbols. (Note that is does not _load_ libR.so, only resolves the symbols.)
-   rkward.rbackend.lib should have RPATH/RUNPATH set when in an AppImage, pointing to the libs in the image.
+3. libR.so - this is easy enough to get from the right place, as it is not in any default path, and R CMD has added the appropriate stuff to LD_LIBRARY_PATH
+4. For loading librkward.rbackend.lib.so, we need a more complex approach:
+4a. First, we prepend the name of the symlink from step 1 to LD_LIBRARY_PATH as a *relative* path (relative to the temporary dir).
+4b. We execv() rkward.rbackend, again, for this to take effect.
+4c. We cd to the temporary dir: From this dir - and *only* from this dir - our addition to LD_LIBRARY_PATH will point to our desired path of qt libs
+4d. We dlopen() librkward.rbackend.lib.so
+4e. We cd back to where we were before 4c.
+5. do_main() is resolved from librkward.rbackend.lib.so, and called with a handle to libR.so to resolve all required R symbols.
 
 ---
 
