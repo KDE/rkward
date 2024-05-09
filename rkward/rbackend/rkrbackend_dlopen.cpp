@@ -100,7 +100,11 @@ int main(int argc, char *argv[]) {
 	int (*do_main) (int, char**, void*, void* (*)(void*, const char*));
 	do_main = (decltype(do_main)) resolve_symb(rkb_dllinfo, "do_main");
 	if (!do_main) {
+#if defined(Win32)
+		fprintf(stderr, "Failure to resolve do_main()\n");
+#else
 		fprintf(stderr, "Failure to resolve do_main(): %s\n", dlerror());
+#endif
 		exit(99);
 	}
 	return do_main(argc, argv, r_dllinfo, resolve_symb);
