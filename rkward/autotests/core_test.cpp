@@ -365,7 +365,7 @@ private Q_SLOTS:
 
 	void RKDeviceTest() {
 		// Well, this test is sort of lame but should at least catch major breakage in RK() device
-		runCommandAsync(new RCommand("demo(graphics)", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandAsync(new RCommand("demo(graphics, ask=FALSE)", RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(!command->failed());
 		});
 		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
