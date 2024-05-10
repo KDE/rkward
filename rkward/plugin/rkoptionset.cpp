@@ -44,7 +44,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	accordion = new RKAccordionTable (this);
 	layout->addWidget (accordion);
 
-	connect (accordion, static_cast<void (RKAccordionTable::*)(int)>(&RKAccordionTable::activated), this, &RKOptionSet::currentRowChanged);
+	connect (accordion, &RKAccordionTable::activatedRow, this, &RKOptionSet::currentRowChanged);
 	connect (accordion, &RKAccordionTable::addRow, this, &RKOptionSet::addRow);
 	connect (accordion, &RKAccordionTable::removeRow, this, &RKOptionSet::removeRow);
 

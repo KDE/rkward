@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 		}
 		setenv(LD_LIBRARY_PATH, curldpath.c_str(), 1);
 		unsetenv(RK_ADD_LDPATH);
-		char* const args[] = { argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], NULL };
+		char* const args[] = { argv[0], argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], nullptr };
 		execv(argv[0], args);
 	}
 #endif

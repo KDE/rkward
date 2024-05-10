@@ -247,7 +247,7 @@ void KatePluginIntegrationApp::saveConfigAndUnload() {
 
 	// "Global" tool views such as the Diagnostic Window did not get unloaded with any plugin, but need to be torn down, while KXML (factory) is still availalbe
 	if (window->plugin_resources.contains(nullptr)) {
-		auto wins = window->plugin_resources[nullptr].windows;
+		const auto wins = window->plugin_resources[nullptr].windows;
 		for(auto win : wins) delete win;
 	}
 }
@@ -452,7 +452,7 @@ QWidgetList KatePluginIntegrationWindow::widgets() {
 	RK_TRACE(APP);
 
 	QWidgetList ret;
-	auto list = RKWorkplace::mainWorkplace()->getObjectList();
+	const auto list = RKWorkplace::mainWorkplace()->getObjectList();
 	for (const auto win : list) {
 		if (win->isType(RKMDIWindow::KatePluginWindow) && win->isType(RKMDIWindow::DocumentWindow)) {
 			auto w = qobject_cast<KatePluginWindow*>(win)->internalWidget();

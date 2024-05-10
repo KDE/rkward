@@ -818,8 +818,8 @@ void RKRBackend::connectCallbacks () {
 
 // IMPORTANT: see also the #ifdef QS_WS_WIN-portion!
 // connect R standard callback to our own functions. Important: Don't do so, before our own versions are ready to be used!
-	ROb(R_Outputfile) = NULL;
-	ROb(R_Consolefile) = NULL;
+	ROb(R_Outputfile) = nullptr;
+	ROb(R_Consolefile) = nullptr;
 	ROb(ptr_R_Suicide) = RSuicide;
 	ROb(ptr_R_ShowMessage) = RShowMessage;		// rarely used in R on unix
 	ROb(ptr_R_ReadConsole) = RReadConsole;

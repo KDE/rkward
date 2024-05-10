@@ -325,7 +325,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 	if (request->type == RBackendRequest::OutputStartedNotification) {
 		// We do _not_ flush the output right away, as it is likely to arrive in minuscule chunks. But we _do_ want to check, soon
-		QTimer::singleShot(FLUSH_INTERVAL, [this]() { flushOutput(false); });
+		QTimer::singleShot(FLUSH_INTERVAL, this, [this]() { flushOutput(false); });
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 		return;
 	}
