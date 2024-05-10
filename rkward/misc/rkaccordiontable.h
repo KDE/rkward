@@ -32,7 +32,7 @@ public Q_SLOTS:
 	void removeClicked ();
 	void activateRow (int row);
 Q_SIGNALS:
-	void activated (int row);
+	void activatedRow(int row);
 	void addRow (int where);
 	void removeRow (int which);
 protected:

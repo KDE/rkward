@@ -398,16 +398,17 @@ RKSettingsModulePlugins::PluginMapStoredInfo RKSettingsModulePlugins::parsePlugi
 QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &basedir) {
 	RK_TRACE (SETTINGS);
 
-	QDir dir (basedir);
-	const QStringList maps = dir.entryList (QDir::Files).filter (QRegularExpression (".*\\.pluginmap$"));
+	QDir dir(basedir);
+	static const QRegularExpression pluginmapfile_ext((".*\\.pluginmap$"));
+	const QStringList maps = dir.entryList(QDir::Files).filter(pluginmapfile_ext);
 	QStringList ret;
 	for (const QString &map : maps) {
-		ret.append (dir.absoluteFilePath (map));
+		ret.append(dir.absoluteFilePath(map));
 	}
 
-	QStringList subdirs = dir.entryList (QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+	const QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
 	for (const QString& subdir : subdirs) {
-		ret.append (findPluginMapsRecursive (dir.absoluteFilePath (subdir)));
+		ret.append(findPluginMapsRecursive(dir.absoluteFilePath(subdir)));
 	}
 
 	return ret;

@@ -371,12 +371,14 @@ QString RContainerObject::renameChildCommand (RObject *object, const QString &ne
 QString RContainerObject::validizeName (const QString &child_name, bool unique) const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (isType (GlobalEnv) || isInGlobalEnv ());
+	static const QRegularExpression validizename1("[^a-zA-Z0-9_]");
+	static const QRegularExpression validizename2("^\\.*[0-9]+");
 
 	QString ret = child_name;
 	if (ret.isEmpty ()) ret = "var";
 	else {
-		ret = ret.replace (QRegularExpression ("[^a-zA-Z0-9_]"), ".");
-		ret = ret.replace (QRegularExpression ("^\\.*[0-9]+"), ".");
+		ret = ret.replace(validizename1, ".");
+		ret = ret.replace(validizename2, ".");
 	}
 	if (!unique) return ret;
 

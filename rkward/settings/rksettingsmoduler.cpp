@@ -253,7 +253,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (!options_further.get().isEmpty ()) list.append (options_further.get() + '\n');
 	if (!options_addpaths.get().isEmpty ()) {
 		QString command = "rk.adjust.system.path (add=c(";
-		for (const QString &p : options_addpaths.get()) {
+		for (const QString &p : std::as_const(options_addpaths.get())) {
 			command.append (RObject::rQuote (p));
 		}
 		list.append (command + "))\n");

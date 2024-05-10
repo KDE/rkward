@@ -394,7 +394,7 @@ void RKAccordionTable::currentChanged (const QModelIndex& current, const QModelI
 	if (handling_a_click) return;
 	if (!pmodel->isFake (current)) {
 		setExpanded (current, true);
-		Q_EMIT activated(current.row());
+		Q_EMIT activatedRow(current.row());
 	}
 }
 

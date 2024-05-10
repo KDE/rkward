@@ -122,7 +122,7 @@ void RKFrontendTransmitter::run () {
 
 	QStringList env = QProcess::systemEnvironment ();
 	// Try to synchronize language selection in frontend and backend
-	int index = env.indexOf (QRegularExpression(QStringLiteral("^LANGUAGE=.*"), QRegularExpression::CaseInsensitiveOption));
+	int index = env.indexOf(QRegularExpression(QStringLiteral("^LANGUAGE=.*"), QRegularExpression::CaseInsensitiveOption));  // clazy:exclude=use-static-quregularexpression ; it'LL only be craeted once
 	if (index >= 0) env.removeAt (index);
 	env.append ("LANGUAGE=" + QLocale ().name ().section ('_', 0, 0));
 
