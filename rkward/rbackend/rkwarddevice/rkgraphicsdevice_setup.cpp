@@ -64,7 +64,8 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	{
 		RKRSupport::InterruptSuspension susp;
 		/* Allocate and initialize the device driver data */
-		dev = (pDevDesc) RFn::R_chk_calloc(1, sizeof(DevDesc));
+		const size_t allocsize = sizeof(DevDesc) + 256; // deliberately overallocating, in case later version of R try to write something, here
+		dev = (pDevDesc) RFn::R_chk_calloc(1, allocsize);
 		// NOTE: The call to RKGraphicsDeviceBackendTransmitter::instance(), here is important beyond error checking. It might *create* the instance and connection, if this is the first use.
 		if (!(dev && RKGraphicsDeviceBackendTransmitter::instance () && desc->init (dev, pointsize, family, bg))) {
 			RFn::R_chk_free(dev);
