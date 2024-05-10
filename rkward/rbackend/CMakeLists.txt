@@ -55,6 +55,9 @@ IF(${DLOPEN_RLIB})
   TARGET_COMPILE_DEFINITIONS(rkward.rbackend.lib PUBLIC RK_DLOPEN_LIBRSO)
   TARGET_COMPILE_DEFINITIONS(rbackend PUBLIC RK_DLOPEN_LIBRSO)
   INSTALL(TARGETS rkward.rbackend.lib DESTINATION ${KDE_INSTALL_LIBDIR})
+  IF(APPLE)
+    TARGET_LINK_LIBRARIES(rkward.rbackend.lib "-framework CoreFoundation")
+  ENDIF()
 
   ADD_EXECUTABLE(rkward.rbackend rkrbackend_dlopen.cpp)
   IF(NOT WIN32)
@@ -78,7 +81,9 @@ IF(WIN32)
 ENDIF(WIN32)
 
 IF(APPLE)
-    TARGET_LINK_LIBRARIES(rkward.rbackend "-framework CoreFoundation")
+    IF(NOT ${DLOPEN_RLIB})
+        TARGET_LINK_LIBRARIES(rkward.rbackend "-framework CoreFoundation")
+    ENDIF()
     ADD_CUSTOM_COMMAND(TARGET rkward.rbackend POST_BUILD
     COMMAND codesign -d --force --options runtime --verbose=4 -s - --entitlements "${CMAKE_CURRENT_SOURCE_DIR}/rkward.rbackend.entitlements" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/rkward.rbackend
     WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
