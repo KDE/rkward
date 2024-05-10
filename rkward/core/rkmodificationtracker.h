@@ -37,7 +37,7 @@ public:
 	ListenerType listenerType () const { return type; };
 	bool wantsNotificationType (NotificationType type) const { return (notifications & type); };
 protected:
-	RObjectListener (ListenerType type);
+	explicit RObjectListener(ListenerType type);
 	virtual ~RObjectListener ();
 
 friend class RKModificationTracker;
@@ -76,8 +76,8 @@ public:
 		ColumnCount = ClassColumn + 1
 	};
 protected:
-	RKObjectListModel (QObject *parent);
-	virtual ~RKObjectListModel ();
+	explicit RKObjectListModel(QObject *parent);
+	virtual ~RKObjectListModel();
 public:
 	/** implements QAbstractItemModel::index() */
 	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const override;

@@ -27,7 +27,7 @@ class RKMDIWindow;
 class KatePluginIntegrationApp : public QObject {
 	Q_OBJECT
 public:
-	KatePluginIntegrationApp(QObject *parent);
+	explicit KatePluginIntegrationApp(QObject *parent);
 	~KatePluginIntegrationApp();
 	QObject* loadPlugin(const QString& identifier);
 	/** Loads the given plugins, *and* unloads all others. */
@@ -69,7 +69,7 @@ class KatePluginWindow;
 class KatePluginIntegrationWindow : public QObject, public KXMLGUIClient {
 	Q_OBJECT
 public:
-	KatePluginIntegrationWindow(KatePluginIntegrationApp *parent);
+	explicit KatePluginIntegrationWindow(KatePluginIntegrationApp *parent);
 	~KatePluginIntegrationWindow();
 	KTextEditor::MainWindow *mainWindow() const { return main; };
 	KXMLGUIClient* persistentGuiClient() { return this; }

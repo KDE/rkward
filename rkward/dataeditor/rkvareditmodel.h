@@ -159,8 +159,8 @@ public:
 	RKVarEditModel* getDataModel () const { return data_model; };
 protected:
 friend class RKVarEditModel;
-	RKVarEditMetaModel (RKVarEditModel* data_model);
-	~RKVarEditMetaModel ();
+	explicit RKVarEditMetaModel(RKVarEditModel* data_model);
+	~RKVarEditMetaModel();
 
 	void beginAddDataObject (int index);
 	void endAddDataObject ();

@@ -28,7 +28,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class RKAccordionDummyModel : public QAbstractProxyModel {
 	Q_OBJECT
 public:
-	RKAccordionDummyModel (QObject *parent) : QAbstractProxyModel (parent) {
+	explicit RKAccordionDummyModel(QObject *parent) : QAbstractProxyModel(parent) {
 		add_trailing_columns = 1;
 		add_trailing_rows = 1;
 	};
@@ -214,7 +214,7 @@ private:
 /** Responsible for drawing expand / collapse indicators in first column */
 class RKAccordionDelegate : public QStyledItemDelegate {
 public:
-	RKAccordionDelegate (RKAccordionTable* parent) : QStyledItemDelegate (parent) {
+	explicit RKAccordionDelegate(RKAccordionTable* parent) : QStyledItemDelegate(parent) {
 		table = parent;
 		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
 		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);

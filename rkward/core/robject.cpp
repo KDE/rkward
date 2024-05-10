@@ -33,7 +33,7 @@ namespace RObjectPrivate {
  *  This is needed, because RObject is not QObject dereived. */
 class RObjectLifeTimeGuard {
 public:
-	RObjectLifeTimeGuard(RObject *object) : command_count(0), object(object) {
+	explicit RObjectLifeTimeGuard(RObject *object) : command_count(0), object(object) {
 		object->guard = this;
 	};
 	~RObjectLifeTimeGuard() {

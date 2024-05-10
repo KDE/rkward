@@ -34,7 +34,7 @@ public:
 Q_SIGNALS:
 	void recentUrlsChanged();
 private:
-	RKRecentUrls(QObject* parent);
+	explicit RKRecentUrls(QObject* parent);
 	~RKRecentUrls();
 	void notifyChange();
 	static void notifyChangeProxy();

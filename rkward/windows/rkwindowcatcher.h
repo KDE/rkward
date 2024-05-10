@@ -115,8 +115,6 @@ public:
 	RKCaughtX11Window (RKGraphicsDevice *rkward_device, int device_number);
 /** dtor */
 	~RKCaughtX11Window ();
-/** TODO? */
-	bool isModified () override { return false; };
 
 /** reimplemented from RKMDIWindow to switch to fixed size mode, and disable the dynamic_size_action */
 	void prepareToBeAttached () override;

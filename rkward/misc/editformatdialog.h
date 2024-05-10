@@ -30,7 +30,7 @@ protected:
 
 friend class EditFormatDialogProxy;
 /** ctor */
-	EditFormatDialog (QWidget *parent);
+	explicit EditFormatDialog(QWidget *parent);
 /** dtor */
 	~EditFormatDialog ();
 

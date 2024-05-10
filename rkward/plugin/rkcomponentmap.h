@@ -145,8 +145,8 @@ public:
 	RKContextHandler *makeContextHandler (QObject *parent, bool create_actions=true);
 	QStringList components () { return component_menus.keys (); };
 protected:
-	RKComponentGUIXML (const QString &context_id);
-	virtual ~RKComponentGUIXML ();
+	explicit RKComponentGUIXML(const QString &context_id);
+	virtual ~RKComponentGUIXML();
 
 /** reset the xml file */
 	void clearGUIDescription ();

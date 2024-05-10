@@ -39,7 +39,7 @@ Q_SIGNALS:
 	void installedPackagesChanged ();
 protected:
 friend class RInterface;
-	RKSessionVars (RInterface *parent);
+	explicit RKSessionVars(RInterface *parent);
 	~RKSessionVars ();
 private:
 	static RKSessionVars* _instance;

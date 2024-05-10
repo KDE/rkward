@@ -180,7 +180,7 @@ friend class RKHTMLWindow;
 
 class RKWebView : public QWebEngineView {
 public:
-	RKWebView (QWidget *parent) : QWebEngineView (parent) {};
+	explicit RKWebView(QWidget *parent) : QWebEngineView(parent) {};
 	void print(QPrinter *printer) {
 		if (!page()) return;
 		QWebEngineView::forPage(page())->print(printer);
@@ -209,7 +209,7 @@ protected:
 
 class RKWebEngineKIOForwarder : public QWebEngineUrlSchemeHandler {
 public:
-	RKWebEngineKIOForwarder (QObject *parent) : QWebEngineUrlSchemeHandler (parent) {}
+	explicit RKWebEngineKIOForwarder(QObject *parent) : QWebEngineUrlSchemeHandler(parent) {}
 	void requestStarted (QWebEngineUrlRequestJob *request) override {
 		KIO::StoredTransferJob *job = KIO::storedGet(request->requestUrl (), KIO::NoReload, KIO::HideProgressInfo);
 		connect (job, &KIO::StoredTransferJob::result, this, [this, job](){ kioJobFinished(job); });
@@ -329,11 +329,6 @@ RKHTMLWindow::~RKHTMLWindow () {
 QUrl RKHTMLWindow::restorableUrl () {
 	RK_TRACE (APP);
 	return ::restorableUrl(current_url);
-}
-
-bool RKHTMLWindow::isModified () {
-	RK_TRACE (APP);
-	return false;
 }
 
 void RKHTMLWindow::makeContextMenu (const QPoint& pos) {

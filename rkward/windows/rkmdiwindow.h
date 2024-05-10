@@ -73,7 +73,7 @@ public Q_SLOTS:
 	void setCaption (const QString &caption);
 public:
 /** @returns true, if the window's document was modified (and would need to be saved) */
-	virtual bool isModified () { return false; };
+	virtual bool isModified () const { return false; };
 /** Ask the window's document to save itself.
 @returns true on success, _or_ if the document cannot be saved at all (in which case isModified() should return false, too. False, if saving failed / was cancelled */
 	virtual bool save () { return true; };

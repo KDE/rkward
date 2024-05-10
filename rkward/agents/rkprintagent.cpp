@@ -70,10 +70,13 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 		if (ok) printaction = a;
 	}
 	if (!(printaction && provider->openUrl(QUrl::fromLocalFile(file)))) {
-		RK_DEBUG (APP, DL_WARNING, "No print action in postscript provider");
+		if (!printaction) {
+			RK_DEBUG(APP, DL_WARNING, "No print action in postscript provider");
+		} else {
+			RK_DEBUG(APP, DL_WARNING, "Failure to open file %s in postscript provider", qPrintable(file));
+		}
 		delete provider;
 		provider = nullptr;
-	} else {
 		fallbackToGeneric(file, delete_file);
 		return;
 	}
