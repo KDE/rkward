@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
+"POT-Creation-Date: 2024-05-10 00:36+0000\n"
 "PO-Revision-Date: 2022-04-28 18:12+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -1883,7 +1883,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
-"(e.g., git/project integration)&lrm;</link>"
+"(e.g., git/project integration)</link>&lrm;"
 msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">

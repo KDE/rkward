@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
+"POT-Creation-Date: 2024-05-10 00:36+0000\n"
 "PO-Revision-Date: 2024-04-21 21:20+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -2387,10 +2387,13 @@ msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "&lrm;<link href=\"rkward://settings/addons\">Further add-on related "
+#| "settings (e.g., git/project integration)&lrm;</link>"
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
-"(e.g., git/project integration)&lrm;</link>"
+"(e.g., git/project integration)</link>&lrm;"
 msgstr ""
 "&lrm;<link href=\"rkward://settings/addons\">Eklentilerle ilgili ek ayarlar "
 "(örn. git/proje tümleştirmesi)&lrm;</link>"
