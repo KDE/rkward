@@ -120,14 +120,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		// this token is sent both via stdout and the local socket connection. The frontend simply compares both values.
 		QString token = QUuid::createUuid ().toString ();
 
-		// TODO: Should rather take the libname from CMake
-		// maybe we also want to accept an absolute path specified on command line from the frontend
 #ifdef RK_DLOPEN_LIBRSO
 		RFn::init(libr_dll_handle, dlsym_fun);
 #endif
 
 		RKRBackendTransmitter transmitter (servername, token);
-		RKRBackendProtocolBackend::p_transmitter = &transmitter; // cppcheck-suppress danlingReference ; -> valid for the lifetime of the backend
+		RKRBackendProtocolBackend::p_transmitter = &transmitter; // cppcheck-suppress danglingReference ; -> valid for the lifetime of the backend
 		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);
 		transmitter.start ();
 		RKRBackend::this_pointer->run (locale_dir);

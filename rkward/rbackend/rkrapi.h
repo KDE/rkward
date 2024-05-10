@@ -211,7 +211,6 @@ IMPORT_R_API(R_chk_free);
 IMPORT_R_API(R_dot_Last);
 IMPORT_R_API(R_getEmbeddingDllInfo);
 IMPORT_R_API(R_lsInternal3);
-IMPORT_R_API(Rprintf); // currently unused
 IMPORT_R_API(R_registerRoutines);
 IMPORT_R_API(R_removeVarFromFrame);
 IMPORT_R_API(R_tryEval);

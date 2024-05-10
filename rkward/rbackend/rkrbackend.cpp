@@ -1263,20 +1263,6 @@ SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error) {
 		*error = RKRBackend::NoError;
 	}
 
-// actually, the code inside this #if worked up to R 2.15.x.
-// see the corresponding #if in runCommand
-#if R_VERSION < R_Version(2,13,0)
-	// for safety, let's protect exp for the two print calls below.
-	// TODO: this is not good. It causes an additional RFn::Rf_protect and URFn::Rf_protect. Need to (re-)move printing
-	RFn::Rf_protect (exp);
-	/* Do NOT ask me why, but the line below is needed for warnings to be printed, while otherwise they would not be shown.
-	Apparently we need to print at least something in order to achieve this. Whatever really happens in Rprintf () to have such an effect, I did not bother to find out. */
-	RFn::Rprintf((char *) "");
-
-	RFn::Rf_PrintWarnings();
-
-	RFn::Rf_unprotect (1);		// exp; We unprotect this, as most of the time the caller is not really interested in the result
-#endif
 	return exp;
 }
 
@@ -1336,14 +1322,12 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 		if (error == NoError) {
 			RFn::Rf_protect (parsed);
 			SEXP exp;
-#if R_VERSION >= R_Version(2,13,0)
-			int warn_level = RKRSupport::SEXPToInt (RFn::Rf_GetOption1(RFn::Rf_install("warn")), 0);
+			// Make sure any warning arising during the command actually get assuciated with it (rather than getting printed, after the next user command)
+			int warn_level = RKRSupport::SEXPToInt(RFn::Rf_GetOption1(RFn::Rf_install("warn")), 0);
 			if (warn_level != 1) setWarnOption (1);
-#endif
 			RFn::Rf_protect (exp = runCommandInternalBase (parsed, &error));
-#if R_VERSION >= R_Version(2,13,0)
 			if (warn_level != 1) setWarnOption (warn_level);
-#endif
+
 			if (error == NoError) {
 				if (ctype & RCommand::GetStringVector) {
 					command->setData (RKRSupport::SEXPToStringList (exp));

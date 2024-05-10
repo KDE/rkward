@@ -42,7 +42,7 @@ public:
 	void updateFromR (RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces);
 	
 	QString getFullName (int) const override { return QString (); };
-	QString makeChildName (const QString &short_child_name, bool, int) const override { return short_child_name; };
+	QString makeChildName(const QString &short_child_name, int) const override { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) override {};
 

@@ -378,15 +378,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 				SEXP child = RFn::Rf_findVar (current_childname, value);
 				RFn::Rf_protect (child);
 
-				bool child_misplaced = false;
-				if (at_toplevel && with_namespace && (!RKRBackend::this_pointer->RRuntimeIsVersion (2, 14, 0))) {
-					if (!RFn::Rf_isNull (namespace_envir)) {
-						SEXP dummy = RFn::Rf_findVarInFrame(namespace_envir, current_childname);
-						if (RFn::Rf_isNull (dummy) || (dummy == ROb(R_UnboundValue))) child_misplaced = true;
-					}
-				}
-
-				getStructureSafe (child, childnames[i], child_misplaced ? RObject::Misplaced : 0, children[i], nesting_depth + 1);
+				getStructureSafe (child, childnames[i], 0, children[i], nesting_depth + 1);
 				RFn::Rf_unprotect (2); /* current_childname, child */
 			}
 		} else if (do_cont) {
