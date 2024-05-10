@@ -191,10 +191,8 @@
 # Internal function to create wrapper around an R device function (used for X11(), windows(), and quartz()).
 #' @importFrom utils getFromNamespace
 ".rk.make.device.wrapper" <- function (devicename) {
-	# dummy objects to satisfy R CMD check
-	bg <- title <- antialias <- NULL
 	ret <- eval (substitute (
-		function (width=getOption("rk.screendevice.width"), height=getOption("rk.screendevice.height"), pointsize=12) {
+		function (width=getOption("rk.screendevice.width"), height=getOption("rk.screendevice.height"), pointsize=12, bg, title, antialias) {
 			rk.mode <- getOption ("rk.override.platform.devices")
 			if (identical (rk.mode, "replace") || !exists (devicename, envir=asNamespace ("grDevices"), inherits=FALSE)) {
 				if (!identical (rk.mode, "replace")) {

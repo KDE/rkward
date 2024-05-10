@@ -314,7 +314,7 @@ bool RObjectList::updateStructure (RData *) {
 QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) const {
 	RK_TRACE (OBJECTS);
 
-	return (makeChildName (new_name, false, IncludeEnvirIfNotGlobalEnv) + " <- " + object->getFullName () + '\n' + removeChildCommand (object));
+	return (makeChildName(new_name, IncludeEnvirIfNotGlobalEnv) + " <- " + object->getFullName() + '\n' + removeChildCommand(object));
 }
 
 QString RObjectList::removeChildCommand (RObject *object) const {

@@ -42,42 +42,10 @@ void* RKRBackend::default_global_context = nullptr;
 #include <stdint.h>
 #include <locale.h>
 
-#define R_INTERFACE_PTRS 1
-// for R_CStackStart/Limit
-#define CSTACK_DEFNS 1
-// keep R from defining tons of aliases
-#define R_NO_REMAP 1
-// What the...? "Conflicting definitions" between stdint.h and Rinterface.h despite the #if in Rinterface.h
-#define uintptr_t uintptr_t
-
-// needed to detect CHARSXP encoding
-#define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
-#define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
-
-#include <Rdefines.h>
-#include <R_ext/Rdynload.h>
-#include <R_ext/Callbacks.h>
-#include <R.h>
-#include <Rversion.h>
-#include <Rinternals.h>
-#include <R_ext/Parse.h>
-#include <Rembedded.h>
+#include "rkrapi.h"
 
 #ifdef Q_OS_WIN
-#	include <R_ext/RStartup.h>
-#	include <R_ext/Utils.h>
-#	include <R_ext/libextern.h>
-
 	structRstart RK_R_Params;
-
-	extern "C" {
-		// why oh why isn't Rinterface.h available on Windows?
-		LibExtern void* R_GlobalContext;
-		LibExtern uintptr_t R_CStackLimit;
-		LibExtern void R_SaveGlobalEnvToFile(char*);
-	}
-#else
-#	include <Rinterface.h>
 #endif
 
 #ifndef Q_OS_WIN
@@ -103,15 +71,15 @@ void RK_scheduleIntr () {
 	RK_DEBUG (RBACKEND, DL_DEBUG, "interrupt scheduled");
 	RKRBackend::repl_status.interrupted = true;
 #ifdef Q_OS_WIN
-	UserBreak = 1;
+	ROb(UserBreak) = 1;
 #else
-	RKSignalSupport::callOldSigIntHandler ();
+	RKSignalSupport::callOldSigIntHandler();
 #endif
 }
 
 void RK_doIntr () {
 	RK_scheduleIntr ();
-	R_CheckUserInterrupt ();
+	RFn::R_CheckUserInterrupt();
 }
 
 void RKRBackend::scheduleInterrupt () {
@@ -151,23 +119,14 @@ void RKRBackend::interruptCommand (int command_id) {
 }
 
 void clearPendingInterrupt_Worker (void *) {
-	R_CheckUserInterrupt ();
+	RFn::R_CheckUserInterrupt ();
 }
 
 void RKRBackend::clearPendingInterrupt () {
 	RK_TRACE (RBACKEND);
-	bool passed = R_ToplevelExec(clearPendingInterrupt_Worker, nullptr);
+	bool passed = RFn::R_ToplevelExec(clearPendingInterrupt_Worker, nullptr);
 	if (!passed) RK_DEBUG (RBACKEND, DL_DEBUG, "pending interrupt cleared");
 }
-
-// some functions we need that are not declared
-#if R_VERSION < R_Version(2,13,0)
-LibExtern void Rf_PrintWarnings (void);
-#endif
-extern "C" void run_Rmainloop (void);
-#ifndef Q_OS_WIN
-#	include <R_ext/eventloop.h>
-#endif
 
 #include "rdata.h"
 
@@ -202,7 +161,7 @@ void RKInsertToplevelStatementFinishedCallback (void *) {
 
 	if (RKRBackend::this_pointer->r_running) {
 		int pos;
-		Rf_addTaskCallback(&RKToplevelStatementFinishedCallback, nullptr, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
+		RFn::Rf_addTaskCallback(&RKToplevelStatementFinishedCallback, nullptr, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
 	}
 }
 
@@ -256,7 +215,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	RK_ASSERT (RKRBackend::repl_status.eval_depth >= 0);
 
 	if (RKRBackend::repl_status.browser_context) {		// previously we were in a browser context. Check, whether we've left that.
-		if (RKRBackend::default_global_context == R_GlobalContext) {
+		if (RKRBackend::default_global_context == ROb(R_GlobalContext)) {
 			RKRBackend::repl_status.browser_context = RKRBackend::RKReplStatus::NotInBrowserContext;
 			RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("endBrowserContext"), false);
 		}
@@ -289,7 +248,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					Problems to deal with:
 					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
 					- One difficulty lies in finding out, just when a command has finished (successfully or with an error). RKToplevelStatementFinishCallback(), and doError() handle the respective cases.
-					NOTE; in R 2.12.0 and above, Rf_countContexts() might help to find out when we are back to square 1!
+					NOTE; in R 2.12.0 and above, RFn::Rf_countContexts() might help to find out when we are back to square 1!
 					*/
 					RKRBackend::repl_status.user_command_transmitted_up_to = 0;
 					RKRBackend::repl_status.user_command_completely_transmitted = false;
@@ -305,13 +264,13 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					// fully transmitted, but R is still asking for more? This looks like an incomplete statement.
 					// HOWEVER: It may also have been an empty statement such as " ", so let's check whether the prompt looks like a "continue" prompt
 					bool incomplete = false;
-					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(Rf_GetOption(Rf_install("continue"), R_BaseEnv))) {
+					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption(RFn::Rf_install("continue"), ROb(R_BaseEnv)))) {
 						incomplete = true;
 					}
 					if (incomplete) RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
 					if (RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture ();	// HACK: No capture active, but commandFinished() will try to end one
-					Rf_error ("");	// to discard the buffer
+					RFn::Rf_error("");	// to discard the buffer
 				} else {
 					RKTransmitNextUserCommandChunk (buf, buflen);
 					return 1;
@@ -327,7 +286,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				// 2) User called browser ()
 				// 3) R jumped us back to toplevel behind our backs.
 				// Let's find out, which one it is.
-				if (hist && (RKRBackend::default_global_context != R_GlobalContext)) {
+				if (hist && (RKRBackend::default_global_context != ROb(R_GlobalContext))) {
 					break;	// this looks like a call to browser(). Will be handled below.
 				}
 
@@ -337,13 +296,13 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					n_frames = dummy->intVector ().at (0);
 				}
 				// What the ??? Why does this simple version always return 0?
-				//int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (Rf_install ("sys.nframe"), R_GlobalEnv));
+				//int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (RFn::Rf_install ("sys.nframe"), ROb(R_GlobalEnv)));
 				if (n_frames < 1) {
 					// No active frames? This can't be a call to readline(), then, so probably R jumped us back to toplevel, behind our backs.
 					// For safety, let's reset and start over.
 					RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-					Rf_error("");	// to discard the buffer
+					RFn::Rf_error("");	// to discard the buffer
 				} else {
 					// A call to readline(). Will be handled below
 					break;
@@ -368,7 +327,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	params["cancelled"] = QVariant (false);
 
 	// add info for browser requests
-	if (hist && (RKRBackend::default_global_context != R_GlobalContext)) {
+	if (hist && (RKRBackend::default_global_context != ROb(R_GlobalContext))) {
 		if (RKRBackend::repl_status.browser_context == RKRBackend::RKReplStatus::InBrowserContextPreventRecursion) {
 			qstrncpy ((char *) buf, "n\n", buflen);	// skip this, by feeding the browser() a continue
 			return 1;
@@ -400,7 +359,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	RKRBackend::this_pointer->handleRequest (&request);
 	if (request.params["cancelled"].toBool ()) {
 		if (RKRBackend::this_pointer->current_command) RKRBackend::this_pointer->current_command->status |= RCommand::Canceled;
-		Rf_error ("cancelled");
+		RFn::Rf_error("cancelled");
 		RK_ASSERT (false);	// should not reach this point.
 	}
 
@@ -537,17 +496,17 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// Nothing to clean up
 	if (!RKRBackend::this_pointer->r_running) return;			// prevent recursion (if an error occurs, here, we get jumped to the console repl, again!)
-	R_CheckUserInterrupt ();	// if there are any user interrupts pending, we want them handled *NOW*
+	RFn::R_CheckUserInterrupt();	// if there are any user interrupts pending, we want them handled *NOW*
 	RKRBackend::this_pointer->r_running = false;
 
 	// we could be in a signal handler, and the stack base may have changed.
-	uintptr_t old_lim = R_CStackLimit;
-	R_CStackLimit = (uintptr_t)-1;
+	uintptr_t old_lim = ROb(R_CStackLimit);
+	ROb(R_CStackLimit) = (uintptr_t)-1;
 
 	if ((status != 0) && (RKRBackend::this_pointer->killed != RKRBackend::ExitNow)) RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::EmergencySaveThenExit) {
-		if (R_DirtyImage) {
+		if (ROb(R_DirtyImage)) {
 			QString filename;
 			QDir dir (RKRBackendProtocolBackend::dataDir ());
 			int i=0;
@@ -558,7 +517,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			}
 			filename = dir.absoluteFilePath (filename);
 
-			R_SaveGlobalEnvToFile (filename.toLocal8Bit ().data ());
+			RFn::R_SaveGlobalEnvToFile(filename.toLocal8Bit().data());
 			RK_DEBUG(RBACKEND, DL_WARNING, "Created emergency save file in %s", qPrintable(filename));
 		} else {
 			RK_DEBUG(RBACKEND, DL_WARNING, "Image not dirty while crashing. No emergency save created.");
@@ -572,14 +531,14 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Cleaning up");
-		R_RunExitFinalizers ();
-		Rf_KillAllDevices ();
-		R_CleanTempDir ();
+		RFn::R_RunExitFinalizers ();
+		RFn::Rf_KillAllDevices ();
+		RFn::R_CleanTempDir ();
 	}
 
 	RKRBackend::this_pointer->killed = RKRBackend::AlreadyDead;	// just in case
 
-	R_CStackLimit = old_lim;	// well, it should not matter any longer, but...
+	ROb(R_CStackLimit) = old_lim;	// well, it should not matter any longer, but...
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Cleanup finished");
 	RKRBackendProtocolBackend::doExit();
 }
@@ -605,13 +564,13 @@ void RKRBackend::tryToDoEmergencySave () {
 		// If we are in the correct thread, things are easy:
 		RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 		RCleanUp (SA_SUICIDE, 1, 0);
-		RK_doIntr ();	// to jump out of the loop, if needed
+		RK_doIntr();	// to jump out of the loop, if needed
 	} else {
 		// If we are in the wrong thread, things are a lot more tricky. We need to cause the R thread to exit, and wait for it to finish saving.
 		// Fortunately, if we are in the wrong thread, that probably means, the R thread did *not* crash, and will thus still be functional
 		this_pointer->killed = EmergencySaveThenExit;
 		return;
-		RK_scheduleIntr ();
+		RK_scheduleIntr();
 		for (int i = 0; i < 100; ++i) {		// give it up to ten seconds to interrupt and exit the loop
 			if (!this_pointer->r_running) break;
 			RKRBackendProtocolBackend::msleep (100);
@@ -693,11 +652,11 @@ SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, SEXP promp
 
 	REditFilesHelper (file_strings, title_strings, wtitle_string, edit, del_files, do_prompt);
 
-	return (R_NilValue);
+	return (ROb(R_NilValue));
 }
 
 SEXP doEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP prompt) {
-	return (doShowEditFiles (files, titles, wtitle, R_NilValue, prompt, RBackendRequest::EditFiles));
+	return (doShowEditFiles (files, titles, wtitle, ROb(R_NilValue), prompt, RBackendRequest::EditFiles));
 }
 
 int REditFile (const char *buf) {
@@ -751,8 +710,8 @@ SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP
 
 	int result = doDialogHelper (RKRSupport::SEXPToString (caption), RKRSupport::SEXPToString (message), RKRSupport::SEXPToString (button_yes), RKRSupport::SEXPToString (button_no), RKRSupport::SEXPToString (button_cancel), RKRSupport::SEXPToString (default_button), RKRSupport::SEXPToInt (wait));
 
-	SEXP ret = Rf_allocVector(INTSXP, 1);
-	INTEGER (ret)[0] = result;
+	SEXP ret = RFn::Rf_allocVector(INTSXP, 1);
+	RFn::INTEGER(ret)[0] = result;
 	return ret;
 }
 
@@ -813,12 +772,12 @@ RKRBackend::RKRBackend() : stdout_stderr_mutex() {
 void RKRBackend::setupCallbacks () {
 	RK_TRACE (RBACKEND);
 
-	R_setStartTime();
-	R_DefParams(&RK_R_Params);
+	RFn::R_setStartTime();
+	RFn::R_DefParams(&RK_R_Params);
 
 // IMPORTANT: see also the #ifndef QS_WS_WIN-portion!
-	RK_R_Params.rhome = get_R_HOME ();
-	RK_R_Params.home = getRUser ();
+	RK_R_Params.rhome = RFn::get_R_HOME();
+	RK_R_Params.home = RFn::getRUser();
 	RK_R_Params.CharacterMode = RGui;
 	RK_R_Params.ShowMessage = RShowMessage;
 #if R_VERSION < R_Version(4, 2, 0)
@@ -842,7 +801,7 @@ void RKRBackend::setupCallbacks () {
 
 void RKRBackend::connectCallbacks () {
 	RK_TRACE (RBACKEND);
-	R_SetParams(&RK_R_Params);
+	RFn::R_SetParams(&RK_R_Params);
 }
 #else
 void RKRBackend::setupCallbacks () {
@@ -851,7 +810,7 @@ void RKRBackend::setupCallbacks () {
 /*
 SEXP dummyselectlist (SEXP, SEXP, SEXP, SEXP) {
 	qDebug ("got it");
-	return R_NilValue;
+	return ROb(R_NilValue);
 }*/
 
 void RKRBackend::connectCallbacks () {
@@ -859,29 +818,29 @@ void RKRBackend::connectCallbacks () {
 
 // IMPORTANT: see also the #ifdef QS_WS_WIN-portion!
 // connect R standard callback to our own functions. Important: Don't do so, before our own versions are ready to be used!
-	R_Outputfile = NULL;
-	R_Consolefile = NULL;
-	ptr_R_Suicide = RSuicide;
-	ptr_R_ShowMessage = RShowMessage;		// rarely used in R on unix
-	ptr_R_ReadConsole = RReadConsole;
-	ptr_R_WriteConsoleEx = RWriteConsoleEx;
-	ptr_R_WriteConsole = nullptr;
-	ptr_R_ResetConsole = RDoNothing;
-	ptr_R_FlushConsole = RDoNothing;
-	ptr_R_ClearerrConsole = RDoNothing;
-	ptr_R_Busy = RBusy;
-	ptr_R_CleanUp = RCleanUp;			// unfortunately, it seems, we can't safely cancel quitting anymore, here!
-	ptr_R_ShowFiles = RShowFiles;
-	ptr_R_ChooseFile = RChooseFile;
+	ROb(R_Outputfile) = NULL;
+	ROb(R_Consolefile) = NULL;
+	ROb(ptr_R_Suicide) = RSuicide;
+	ROb(ptr_R_ShowMessage) = RShowMessage;		// rarely used in R on unix
+	ROb(ptr_R_ReadConsole) = RReadConsole;
+	ROb(ptr_R_WriteConsoleEx) = RWriteConsoleEx;
+	ROb(ptr_R_WriteConsole) = nullptr;
+	ROb(ptr_R_ResetConsole) = RDoNothing;
+	ROb(ptr_R_FlushConsole) = RDoNothing;
+	ROb(ptr_R_ClearerrConsole) = RDoNothing;
+	ROb(ptr_R_Busy) = RBusy;
+	ROb(ptr_R_CleanUp) = RCleanUp;			// unfortunately, it seems, we can't safely cancel quitting anymore, here!
+	ROb(ptr_R_ShowFiles) = RShowFiles;
+	ROb(ptr_R_ChooseFile) = RChooseFile;
 // TODO: R devels disabled this for some reason. We set it anyway...
-	ptr_R_EditFile = REditFile;
-//	ptr_R_EditFiles = REditFiles;		// undefined reference
-/*	ptr_do_selectlist = dummyselectlist;
-	ptr_do_dataviewer = dummyselectlist;*/
+	ROb(ptr_R_EditFile) = REditFile;
+//	ROb(ptr_R_EditFiles) = REditFiles;		// undefined reference
+/*	ROb(ptr_do_selectlist) = dummyselectlist;
+	ROb(ptr_do_dataviewer) = dummyselectlist;*/
 
 // these two, we won't override
-//	ptr_R_loadhistory = ... 	// we keep our own history
-//	ptr_R_savehistory = ...	// we keep our own history
+//	ROb(ptr_R_loadhistory) = ... 	// we keep our own history
+//	ROb(ptr_R_savehistory) = ...	// we keep our own history
 }
 #endif
 
@@ -889,11 +848,6 @@ RKRBackend::~RKRBackend () {
 	RK_TRACE (RBACKEND);
 }
 
-#ifdef _MSC_VER
-extern "C" int R_interrupts_pending;
-#else
-LibExtern int R_interrupts_pending;
-#endif
 void doError (const QString &callstring) {
 	RK_TRACE (RBACKEND);
 
@@ -901,12 +855,12 @@ void doError (const QString &callstring) {
 		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 	}
 	if (RKRBackend::repl_status.interrupted) {
-		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending if not yet cleared.
+		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
 		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
 #ifdef Q_OS_WIN
-		if (!UserBreak) {
+		if (!ROb(UserBreak)) {
 #else
-		if (!R_interrupts_pending) {
+		if (!ROb(R_interrupts_pending)) {
 #endif
 			RKRBackend::repl_status.interrupted = false;
 			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {	// was interrupted only to step out of the repl iteration
@@ -924,7 +878,7 @@ void doError (const QString &callstring) {
 SEXP doSubstackCall (SEXP _call, SEXP _args) {
 	RK_TRACE (RBACKEND);
 
-	R_CheckUserInterrupt ();
+	RFn::R_CheckUserInterrupt ();
 
 	QString call = RKRSupport::SEXPToStringList(_call).value(0);
 /*	// this is a useful place to sneak in test code for profiling
@@ -932,13 +886,13 @@ SEXP doSubstackCall (SEXP _call, SEXP _args) {
 		for (int i = 10000; i >= 1; --i) {
 			setWarnOption (i);
 		}
-		return R_NilValue;
+		return ROb(R_NilValue);
 	} */
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
 	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(call, RKRSupport::SEXPToNestedStrings(_args));
-	if (!ret.warning.isEmpty()) Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
+	if (!ret.warning.isEmpty()) RFn::Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) RFn::Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
@@ -946,11 +900,11 @@ SEXP doSubstackCall (SEXP _call, SEXP _args) {
 SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 	RK_TRACE (RBACKEND);
 
-	R_CheckUserInterrupt ();
+	RFn::R_CheckUserInterrupt ();
 
 	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
-	if (!ret.warning.isEmpty()) Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
+	if (!ret.warning.isEmpty()) RFn::Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) RFn::Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
@@ -981,17 +935,17 @@ SEXP doSimpleBackendCall (SEXP _call) {
 		}
 	} else if (call == QStringLiteral ("error")) {  // capture error message
 		doError (list.value (1));
-		return R_NilValue;
+		return ROb(R_NilValue);
 	} else if (call == QStringLiteral ("tempdir")) {
 		return (RKRSupport::StringListToSEXP (QStringList (RKRBackendProtocolBackend::dataDir ())));
 	}
 
 	RK_ASSERT (false);  // Unhandled call.
-	return R_NilValue;
+	return ROb(R_NilValue);
 }
 
 void R_CheckStackWrapper (void *) {
-	R_CheckStack ();
+	RFn::R_CheckStack ();
 }
 
 SEXP doUpdateLocale() {
@@ -1000,7 +954,7 @@ SEXP doUpdateLocale() {
 	RK_DEBUG(RBACKEND, DL_WARNING, "Changing locale");
 	RKTextCodec::reinit();
 
-	return R_NilValue;
+	return ROb(R_NilValue);
 }
 
 SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
@@ -1008,25 +962,25 @@ SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename
 
 	RKStructureGetter getter (false);
 	RData *ret = getter.getStructure (toplevel, name, envlevel, namespacename);
-	return R_MakeExternalPtr (ret, RKWard_RData_Tag, R_NilValue);
+	return RFn::R_MakeExternalPtr(ret, RKWard_RData_Tag, ROb(R_NilValue));
 }
 
 SEXP doGetGlobalEnvStructure (SEXP name, SEXP envlevel, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
 
-	return doGetStructure (Rf_findVar (Rf_install (CHAR (STRING_ELT (name, 0))), R_GlobalEnv), name, envlevel, namespacename);
+	return doGetStructure(RFn::Rf_findVar(RFn::Rf_installChar(RFn::STRING_ELT(name, 0)), ROb(R_GlobalEnv)), name, envlevel, namespacename);
 }
 
 /** copy a symbol without touching it (esp. not forcing any promises) */
 SEXP doCopyNoEval (SEXP fromname, SEXP fromenv, SEXP toname, SEXP toenv) {
 	RK_TRACE (RBACKEND);
 
-	if(!Rf_isString (fromname) || Rf_length (fromname) != 1) Rf_error ("fromname is not a single string");
-	if(!Rf_isString (toname) || Rf_length (toname) != 1) Rf_error ("toname is not a single string");
-	if(!Rf_isEnvironment (fromenv)) Rf_error ("fromenv is not an environment");
-	if(!Rf_isEnvironment (toenv)) Rf_error ("toenv is not an environment");
-	Rf_defineVar (Rf_install (CHAR (STRING_ELT (toname, 0))), Rf_findVar (Rf_install (CHAR (STRING_ELT (fromname, 0))), fromenv), toenv);
-	return (R_NilValue);
+	if(!RFn::Rf_isString(fromname) || RFn::Rf_length(fromname) != 1) RFn::Rf_error ("fromname is not a single string");
+	if(!RFn::Rf_isString(toname) || RFn::Rf_length(toname) != 1) RFn::Rf_error ("toname is not a single string");
+	if(!RFn::Rf_isEnvironment(fromenv)) RFn::Rf_error("fromenv is not an environment");
+	if(!RFn::Rf_isEnvironment(toenv)) RFn::Rf_error("toenv is not an environment");
+	RFn::Rf_defineVar(RFn::Rf_installChar(RFn::STRING_ELT(toname, 0)), RFn::Rf_findVar(RFn::Rf_installChar(RFn::STRING_ELT(fromname, 0)), fromenv), toenv);
+	return (ROb(R_NilValue));
 }
 
 SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEXP suppress_messages, SEXP suppress_output, SEXP allow_nesting) {
@@ -1040,7 +994,7 @@ SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEX
 		if (RKRSupport::SEXPToInt (suppress_output)) cm |= RKROutputBuffer::SuppressOutput;
 		if (!RKRSupport::SEXPToInt (allow_nesting)) cm |= RKROutputBuffer::NoNesting;
 		RKRBackend::this_pointer->pushOutputCapture (cm);
-		return (R_NilValue);
+		return (ROb(R_NilValue));
 	} else {
 		return RKRSupport::StringListToSEXP (QStringList (RKRBackend::this_pointer->popOutputCapture (RKRSupport::SEXPToInt (mode) == 2)));
 	}
@@ -1052,7 +1006,7 @@ void doPendingPriorityCommands ();
 
 SEXP checkEnv(SEXP a) {
 	auto res = RKRShadowEnvironment::diffAndUpdate(a);
-	return Rf_list3(RKRSupport::StringListToSEXP(res.added), RKRSupport::StringListToSEXP(res.removed), RKRSupport::StringListToSEXP(res.changed));
+	return RFn::Rf_list3(RKRSupport::StringListToSEXP(res.added), RKRSupport::StringListToSEXP(res.removed), RKRSupport::StringListToSEXP(res.changed));
 }
 
 bool RKRBackend::startR () {
@@ -1066,10 +1020,10 @@ bool RKRBackend::startR () {
 	r_running = true;
 	int argc = 3;
 	char* argv[3] = { qstrdup ("--slave"), qstrdup ("--no-save"), qstrdup ("--no-restore") };
-	Rf_initialize_R (argc, argv);
+	RFn::Rf_initialize_R(argc, argv);
 
 #ifdef Q_OS_WIN
-	R_set_command_line_arguments(argc, argv);
+	RFn::R_set_command_line_arguments(argc, argv);
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 #endif
 
@@ -1087,21 +1041,21 @@ bool RKRBackend::startR () {
 #ifndef Q_OS_WIN
 	// It is important to set this *early*, so R does not bail out, if there is an error in .Rprofile.
 	// On windows, set in connectCallbacks() for technical reasons, and that seems sufficient.
-	R_Interactive = (Rboolean) TRUE;
+	ROb(R_Interactive) = Rboolean::TRUE;
 #endif
 
-	setup_Rmainloop ();
+	RFn::setup_Rmainloop();
 
 #ifndef Q_OS_WIN
 	// safety check: If we are beyond the stack boundaries already, we better disable stack checking
 	// this has to come *after* the first setup_Rmainloop ()!
-	Rboolean stack_ok = R_ToplevelExec (R_CheckStackWrapper, (void *) 0);
+	Rboolean stack_ok = RFn::R_ToplevelExec(R_CheckStackWrapper, (void *) 0);
 	if (!stack_ok) {
 		RK_DEBUG (RBACKEND, DL_WARNING, "R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize.");
 		RK_DEBUG (RBACKEND, DL_WARNING, "Whether or not things work after this, *please* submit a bug report.");
-		R_CStackStart = (uintptr_t) -1;
-		R_CStackLimit = (uintptr_t) -1;
-		setup_Rmainloop ();
+		ROb(R_CStackStart) = (uintptr_t) -1;
+		ROb(R_CStackLimit) = (uintptr_t) -1;
+		RFn::setup_Rmainloop();
 	}
 #endif
 
@@ -1110,17 +1064,17 @@ bool RKRBackend::startR () {
 	// But historically, it was placed here (after setup_Rmainloop(), and conceivably there
 	// was a reason to that (might have been reset in setup_Rmainloop() in earlier versions
 	// of R.
-	R_Interactive = (Rboolean) TRUE;
+	ROb(R_Interactive) = Rboolean::TRUE;
 #endif
 
 	setlocale (LC_NUMERIC, "C");	// Under some conditions something appears to mess with the locale. R will not work correctly without LC_NUMERIC=C
 
 	RBackendRequest req (false, RBackendRequest::SetParamsFromBackend);
-	req.params["na_real"] = NA_REAL;	// may not be initialized before setup_Rmainloop!
-	req.params["na_int"] = NA_INTEGER;
+	req.params["na_real"] = ROb(R_NaReal);	// may not be initialized before setup_Rmainloop!
+	req.params["na_int"] = ROb(R_NaInt);
 	handleRequest (&req);
 
-	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
+	RKWard_RData_Tag = RFn::Rf_install ("RKWard_RData_Tag");
 
 	RKSignalSupport::installSignalProxies ();	// for the crash signals
 	RKSignalSupport::installSigIntAndUsrHandlers (RK_scheduleIntr);
@@ -1144,12 +1098,12 @@ bool RKRBackend::startR () {
 		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 2},
 		{ nullptr, nullptr, 0 }
 	};
-	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
+	RFn::R_registerRoutines(RFn::R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
 
 	connectCallbacks();
 	RKInsertToplevelStatementFinishedCallback(nullptr);
-	RKREventLoop::setRKEventHandler (doPendingPriorityCommands);
-	default_global_context = R_GlobalContext;
+	RKREventLoop::setRKEventHandler(doPendingPriorityCommands);
+	default_global_context = ROb(R_GlobalContext);
 #ifdef Q_OS_WIN
 	// See the corresponding note in RWriteConsoleEx(). For auto-detecting UTF8 markers in console output.
 	win_do_detect_winutf8markers = true;
@@ -1220,8 +1174,8 @@ void RKRBackend::enterEventLoop () {
 	pthread_atfork (prepareFork, completeForkMaster, completeForkChild);
 #endif
 
-	run_Rmainloop ();
-	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
+	RFn::run_Rmainloop();
+	// NOTE: Do NOT run RFn::Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
 	// NOTE: never reached with R since ?? at least 4.3: RCleanUp is expected to exit the process
 	RK_DEBUG(RBACKEND, DL_DEBUG, "R loop finished");
 }
@@ -1236,7 +1190,7 @@ void safeParseVector (void *data) {
 	SafeParseWrap *wrap = static_cast<SafeParseWrap*> (data);
 	wrap->pr = nullptr;
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
-	wrap->pr = R_ParseVector (wrap->cv, -1, &(wrap->status), R_NilValue);
+	wrap->pr = RFn::R_ParseVector(wrap->cv, -1, &(wrap->status), ROb(R_NilValue));
 }
 
 SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *error) {
@@ -1248,16 +1202,16 @@ SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *err
 	QByteArray localc = RKTextCodec::toNative(command_qstring); // needed so the string below does not go out of scope
 	const char *command = localc.data ();
 
-	PROTECT(wrap.cv=Rf_allocVector(STRSXP, 1));
-	SET_STRING_ELT(wrap.cv, 0, Rf_mkChar(command));
+	RFn::Rf_protect(wrap.cv=RFn::Rf_allocVector(STRSXP, 1));
+	RFn::SET_STRING_ELT(wrap.cv, 0, RFn::Rf_mkChar(command));
 
 	// Yes, if there is an error in the parse, R does jump back to toplevel!
 	// trying to parse list(""=1) is an example in R 3.1.1
-	R_ToplevelExec (safeParseVector, &wrap);
+	RFn::R_ToplevelExec(safeParseVector, &wrap);
 	SEXP pr = wrap.pr;
-	UNPROTECT(1);
+	RFn::Rf_unprotect(1);
 
-	if ((!pr) || (TYPEOF (pr) == NILSXP)) {
+	if ((!pr) || (RFn::TYPEOF (pr) == NILSXP)) {
 		// got a null SEXP. This means parse was *not* ok, even if R_ParseVector told us otherwise
 		if (wrap.status == PARSE_OK) {
 			wrap.status = PARSE_ERROR;
@@ -1270,12 +1224,12 @@ SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *err
 			*error = RKRBackend::Incomplete;
 		} else if (wrap.status == PARSE_ERROR) {
 			//extern SEXP parseError (SEXP call, int linenum);
-			//parseError (R_NilValue, 0);
+			//parseError (ROb(R_NilValue), 0);
 			*error = RKRBackend::SyntaxError;
 		} else { // PARSE_NULL
 			*error = RKRBackend::OtherError;
 		}
-		pr = R_NilValue;
+		pr = ROb(R_NilValue);
 	}
 
 	return pr;
@@ -1287,20 +1241,20 @@ SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error) {
 	SEXP exp;
 	int r_error = 0;
 
-	exp=R_NilValue;
+	exp=ROb(R_NilValue);
 
-	if (TYPEOF(pr)==EXPRSXP && LENGTH(pr)>0) {
+	if (RFn::TYPEOF(pr)==EXPRSXP && RFn::LENGTH(pr)>0) {
 		int bi=0;
-		while (bi<LENGTH(pr)) {
-			SEXP pxp=VECTOR_ELT(pr, bi);
-			exp=R_tryEval(pxp, R_GlobalEnv, &r_error);
+		while (bi<RFn::LENGTH(pr)) {
+			SEXP pxp=RFn::VECTOR_ELT(pr, bi);
+			exp=RFn::R_tryEval(pxp, ROb(R_GlobalEnv), &r_error);
 			bi++;
 			if (r_error) {
 				break;
 			}
 		}
 	} else {
-		exp=R_tryEval(pr, R_GlobalEnv, &r_error);
+		exp=RFn::R_tryEval(pr, ROb(R_GlobalEnv), &r_error);
 	}
 
 	if (r_error) {
@@ -1309,20 +1263,6 @@ SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error) {
 		*error = RKRBackend::NoError;
 	}
 
-// actually, the code inside this #if worked up to R 2.15.x.
-// see the corresponding #if in runCommand
-#if R_VERSION < R_Version(2,13,0)
-	// for safety, let's protect exp for the two print calls below.
-	// TODO: this is not good. It causes an additional PROTECT and UPROTECT. Need to (re-)move printing
-	PROTECT (exp);
-	/* Do NOT ask me why, but the line below is needed for warnings to be printed, while otherwise they would not be shown.
-	Apparently we need to print at least something in order to achieve this. Whatever really happens in Rprintf () to have such an effect, I did not bother to find out. */
-	Rprintf ((char *) "");
-
-	Rf_PrintWarnings ();
-
-	UNPROTECT (1);		// exp; We unprotect this, as most of the time the caller is not really interested in the result
-#endif
 	return exp;
 }
 
@@ -1345,15 +1285,15 @@ RCommandProxy *RKRBackend::runDirectCommand (const QString &command, RCommand::C
 
 void setWarnOption (int level) {
 	SEXP s, t;
-	PROTECT (t = s = Rf_allocList (2));
-	SET_TYPEOF (s, LANGSXP);
-	SETCAR (t, Rf_install ("options")); t = CDR (t);
-	SETCAR (t, Rf_ScalarInteger (level));
-	SET_TAG (t, Rf_install ("warn"));
+	RFn::Rf_protect (t = s = RFn::Rf_allocList(2));
+	RFn::SET_TYPEOF (s, LANGSXP);
+	RFn::SETCAR(t, RFn::Rf_install("options")); t = RFn::CDR (t);
+	RFn::SETCAR(t, RFn::Rf_ScalarInteger(level));
+	RFn::SET_TAG(t, RFn::Rf_install("warn"));
 // The above is rougly equivalent to parseCommand ("options(warn=" + QString::number (level) + ")", &error), but ~100 times faster
 	RKRBackend::RKWardRError error;
 	runCommandInternalBase (s, &error);
-	UNPROTECT (1);
+	RFn::Rf_unprotect (1);
 }
 
 void RKRBackend::runCommand (RCommandProxy *command) {
@@ -1371,7 +1311,7 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	if (ctype & RCommand::CCOutput) startOutputCapture ();
 
 	if (ctype & RCommand::QuitCommand) {
-		R_dot_Last ();		// should run while communication with frontend is still possible
+		RFn::R_dot_Last ();		// should run while communication with frontend is still possible
 		RBackendRequest req (true, RBackendRequest::BackendExit);
 		req.params["regular"] = QVariant (true);
 		handleRequest (&req);
@@ -1380,16 +1320,14 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 		repl_status.eval_depth++;
 		SEXP parsed = parseCommand (command->command, &error);
 		if (error == NoError) {
-			PROTECT (parsed);
+			RFn::Rf_protect (parsed);
 			SEXP exp;
-#if R_VERSION >= R_Version(2,13,0)
-			int warn_level = RKRSupport::SEXPToInt (Rf_GetOption1 (Rf_install ("warn")), 0);
+			// Make sure any warning arising during the command actually get assuciated with it (rather than getting printed, after the next user command)
+			int warn_level = RKRSupport::SEXPToInt(RFn::Rf_GetOption1(RFn::Rf_install("warn")), 0);
 			if (warn_level != 1) setWarnOption (1);
-#endif
-			PROTECT (exp = runCommandInternalBase (parsed, &error));
-#if R_VERSION >= R_Version(2,13,0)
+			RFn::Rf_protect (exp = runCommandInternalBase (parsed, &error));
 			if (warn_level != 1) setWarnOption (warn_level);
-#endif
+
 			if (error == NoError) {
 				if (ctype & RCommand::GetStringVector) {
 					command->setData (RKRSupport::SEXPToStringList (exp));
@@ -1403,7 +1341,7 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 					delete dummy;
 				}
 			}
-			UNPROTECT (2); // exp, parsed
+			RFn::Rf_unprotect (2); // exp, parsed
 		}
 		repl_status.eval_depth--;
 	}
@@ -1752,7 +1690,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 		} 
 	}
 
-	auto changes = RKRShadowEnvironment::diffAndUpdate(R_GlobalEnv);
+	auto changes = RKRShadowEnvironment::diffAndUpdate(ROb(R_GlobalEnv));
 	if (!changes.isEmpty()) {
 		QVariantList args;
 		args.append(changes.added);

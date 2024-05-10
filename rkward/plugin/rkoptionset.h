@@ -85,7 +85,7 @@ friend class RKOptionSetDisplayModel;
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
 	QList<RKComponentPropertyStringList*> visible_columns;
 	struct RowInfo {
-		RowInfo (PropertyValueMap initial_values) : valid (false), finished (false), full_row_map (initial_values) {};
+		explicit RowInfo(PropertyValueMap initial_values) : valid(false), finished(false), full_row_map(initial_values) {};
 		bool valid;		/**< has finished processing and is known to be valid */
 		bool finished;	/**< has finished processing */
 		PropertyValueMap full_row_map;	/**< complete status representation of this row, (see RKComponent::fetchPropertyValuesRecursive()) */

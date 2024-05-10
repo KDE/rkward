@@ -19,8 +19,8 @@ public:
 @returns The url of the recovery file, if user selected to load it. An empty QUrl otherwise. */
 	static QUrl checkRecoverCrashedWorkspace ();
 protected:
-	RKRecoverDialog (const QStringList &recovery_files);
-	~RKRecoverDialog ();
+	explicit RKRecoverDialog(const QStringList &recovery_files);
+	~RKRecoverDialog();
 	static QString saveFileFor (const QString &recovery_file);
 	QStringList files;
 private Q_SLOTS:

@@ -205,7 +205,7 @@ private:
 class RKDynamicCompletionsAddition : public QObject {
 	Q_OBJECT
 public:
-	RKDynamicCompletionsAddition(RKCompletionModelBase *parent);
+	explicit RKDynamicCompletionsAddition(RKCompletionModelBase *parent);
 	~RKDynamicCompletionsAddition();
 	void update(const QString &mode, const QString &fragment, const QString &filterprefix, const QStringList &filterlist);
 	const QStringList results() const { return filtered_results; };

@@ -161,7 +161,7 @@ void RKSettingsModulePlugins::RKPluginMapList::readFromConfig(KConfigGroup& cg) 
 		else inf.state = (PluginMapState) ppmg.readEntry("State", (int) Working);
 		inf.last_modified = ppmg.readEntry ("timestamp", QDateTime ());
 		inf.id = ppmg.readEntry ("id");
-		inf.version = ppmg.readEntry ("version");
+		inf.version = RKParsedVersion(ppmg.readEntry("version"));
 		inf.priority = ppmg.readEntry ("priority", (int) PriorityMedium);
 		addMap(inf, ppmg.readEntry("Active", false) ? ForceActivate : DoNotActivate);
 	}
@@ -371,7 +371,7 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, AddMo
 	QStringList added;
 	for (const QString &map : maps) {
 		if (map.isEmpty ()) continue;
-		if (known_plugin_maps.addMap(map, add_mode)) {
+		if (known_plugin_maps.addMap(PluginMapStoredInfo(map), add_mode)) {
 			added.append(map);
 		}
 	}
@@ -391,7 +391,7 @@ RKSettingsModulePlugins::PluginMapStoredInfo RKSettingsModulePlugins::parsePlugi
 	inf.id = RKPluginMapFile::parseId(de, xml);
 	inf.priority = xml.getMultiChoiceAttribute(de, "priority", "hidden;low;medium;high", (int) PriorityMedium, DL_WARNING);
 	auto about = xml.getChildElement(de, "about", DL_WARNING);
-	inf.version = xml.getStringAttribute(about, "version", QString(), DL_WARNING);
+	inf.version = RKParsedVersion(xml.getStringAttribute(about, "version", QString(), DL_WARNING));
 	return inf;
 }
 

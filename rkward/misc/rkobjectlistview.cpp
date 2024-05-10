@@ -32,7 +32,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 /** Responsible for drawing the root level items "My Objects" and "Other Environments" */
 class RKObjectListViewRootDelegate : public QStyledItemDelegate {
 public:
-	RKObjectListViewRootDelegate (RKObjectListView* parent) : QStyledItemDelegate (parent) {
+	explicit RKObjectListViewRootDelegate(RKObjectListView* parent) : QStyledItemDelegate(parent) {
 		tree = parent;
 		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
 		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);

@@ -1,6 +1,6 @@
 /*
 rkreventloop - This file is part of RKWard (https://rkward.kde.org). Created: Tue Apr 23 2013
-SPDX-FileCopyrightText: 2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -8,13 +8,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkreventloop.h"
 #include "rkrbackend.h"
 
-#ifdef Q_OS_WIN
-#	define Win32
-#	include <R.h>
-#else
-#	include <R_ext/eventloop.h>
-#endif
-#include <Rinternals.h>
+#include "rkrapi.h"
 
 #include "../debug.h"
 
@@ -25,16 +19,16 @@ static void processX11EventsWorker (void *) {
 #ifndef Q_OS_WIN
 	for (;;) {
 		fd_set *what;
-		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, RK_doIntr);
-		R_runHandlers(R_InputHandlers, what);
+		what = RFn::R_checkActivityEx(ROb(R_wait_usec) > 0 ? ROb(R_wait_usec) : 50, 1, RK_doIntr);
+		RFn::R_runHandlers(ROb(R_InputHandlers), what);
 		if (what == NULL) break;
 	}
 	/* This seems to be needed to make Rcmdr react to events. Has this always been the case? It was commented out for a long time, without anybody noticing. */
-	R_PolledEvents ();
+	(*ROb(R_PolledEvents))();
 #else
 	// TODO: correct?
 	// NOTE: We essentially process events while waiting. Perhaps we should simply use the equivalent of "try(sleep(0.01))", instead.
-	R_ProcessEvents();
+	RFn::R_ProcessEvents();
 #endif
 
 #if 0
@@ -59,7 +53,7 @@ void RKREventLoop::processX11Events() {
 
 	RKRBackend::repl_status.eval_depth++;
 // In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
-	R_ToplevelExec(processX11EventsWorker, nullptr);
+	RFn::R_ToplevelExec(processX11EventsWorker, nullptr);
 	RKRBackend::repl_status.eval_depth--;
 }
 
@@ -105,14 +99,14 @@ void RKREventLoop::setRKEventHandler (void (* handler) ()) {
 	if (!pipe (fds)) {
 		ifd = fds[0];
 		ofd = fds[1];
-		addInputHandler (R_InputHandlers, ifd, RK_eventHandlerWrapper, 32);
+		RFn::addInputHandler(ROb(R_InputHandlers), ifd, RK_eventHandlerWrapper, 32);
 		ok = true;
 	}
 	if (ok) return;
 
 	// if pipe method did not work, fall back to R_PolledEvents
-	RK_old_R_PolledEvents = R_PolledEvents;
-	R_PolledEvents = RK_eventHandlerChain;
+	RK_old_R_PolledEvents = ROb(R_PolledEvents);
+	ROb(R_PolledEvents) = RK_eventHandlerChain;
 #endif
 }
 

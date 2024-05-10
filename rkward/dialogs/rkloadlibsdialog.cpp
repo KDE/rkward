@@ -550,7 +550,7 @@ void LoadUnloadWidget::apply () {
 class InstallPackagesDelegate : public QStyledItemDelegate {
 	Q_OBJECT
 public:
-	InstallPackagesDelegate (QTreeView* parent) : QStyledItemDelegate (parent) {
+	explicit InstallPackagesDelegate(QTreeView* parent) : QStyledItemDelegate(parent) {
 		table = parent;
 		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
 		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);

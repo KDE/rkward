@@ -1,6 +1,6 @@
 /*
 rkgraphicsdevice_setup - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 18 2013
-SPDX-FileCopyrightText: 2013-2021 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -16,21 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rkrsupport.h"
 #include "../rkrbackend.h"
 
-#ifdef TRUE
-#	undef TRUE
-#endif
-#ifdef FALSE
-#	undef FALSE
-#endif
-#define R_USE_PROTOTPYES 1
-
-#include <R_ext/GraphicsEngine.h>
-#include <Rversion.h>
-
-// rcolor typedef added in R 3.0.0
-#ifndef rcolor
-#define rcolor unsigned int
-#endif
+#include "../rkrapi.h"
 
 struct RKGraphicsDeviceDesc {
 	bool init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg);
@@ -56,25 +42,34 @@ struct RKGraphicsDeviceDesc {
 void RKStartGraphicsDevice (double width, double height, double pointsize, const QStringList &family, rcolor bg, const char* title, bool antialias) {
 	static quint32 id = 0;
 	if (width <= 0 || height <= 0) {
-		Rf_error ("Invalid width or height: (%g, %g)", width, height);
+		RFn::Rf_error("Invalid width or height: (%g, %g)", width, height);
 	}
 	RKGraphicsDeviceDesc *desc = new RKGraphicsDeviceDesc;
 	desc->width = width;
 	desc->height = height;
 
-	if (R_GE_getVersion() != R_GE_version) {
-		RKRBackend::this_pointer->graphicsEngineMismatchMessage(R_GE_version, R_GE_getVersion());
-		Rf_error("Graphics version mismatch");
+	if (RFn::R_GE_getVersion() != R_GE_version) {
+		if (RFn::R_GE_getVersion() < 14) {
+			RKRBackend::this_pointer->graphicsEngineMismatchMessage(R_GE_version, RFn::R_GE_getVersion());
+			RFn::Rf_error("Graphics version mismatch");
+		} else {
+			// All other cases currently thought ot be acceptible?
+			// GE version 17 adds capabilities(), so higher GE version should no longer be a problem.
+			// Lower GE version should be ok (down to 14, ATM), because we simply behave as though that was the case.
+			RK_DEBUG(RBACKEND, DL_WARNING, "GE version compile time: %d, GE version runtime %d", R_GE_version, RFn::R_GE_getVersion());
+		}
 	}
-	R_CheckDeviceAvailable ();
+	RFn::R_CheckDeviceAvailable();
 	pDevDesc dev;
-	BEGIN_SUSPEND_INTERRUPTS {
+	{
+		RKRSupport::InterruptSuspension susp;
 		/* Allocate and initialize the device driver data */
-		dev = (pDevDesc) R_Calloc(1, DevDesc);
+		const size_t allocsize = sizeof(DevDesc) + 256; // deliberately overallocating, in case later version of R try to write something, here
+		dev = (pDevDesc) RFn::R_chk_calloc(1, allocsize);
 		// NOTE: The call to RKGraphicsDeviceBackendTransmitter::instance(), here is important beyond error checking. It might *create* the instance and connection, if this is the first use.
 		if (!(dev && RKGraphicsDeviceBackendTransmitter::instance () && desc->init (dev, pointsize, family, bg))) {
-			R_Free (dev);
-			delete (desc);
+			RFn::R_chk_free(dev);
+			delete(desc);
 			desc = nullptr;
 		} else {
 			desc->devnum = 0;  // graphics engine will send an Activate-event, before we were even
@@ -82,23 +77,23 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 			                   // devnum to 0, so as not to confuse the frontend
 			desc->id = id++;   // extra identifier to make sure, R and the frontend are really talking about the same device
 			                   // in case of potentially out-of-sync operations (notably RKDAdjustSize)
-			pGEDevDesc gdd = GEcreateDevDesc(dev);
-			gdd->displayList = R_NilValue;
-			GEaddDevice2(gdd, "RKGraphicsDevice");
+			pGEDevDesc gdd = RFn::GEcreateDevDesc(dev);
+			gdd->displayList = ROb(R_NilValue);
+			RFn::GEaddDevice2(gdd, "RKGraphicsDevice");
 		}
-	} END_SUSPEND_INTERRUPTS;
+	};
 
 	if (desc) {
-		desc->devnum = curDevice ();
-		RKD_Create (desc->width, desc->height, dev, title, antialias, desc->id);
+		desc->devnum = RFn::Rf_curDevice();
+		RKD_Create(desc->width, desc->height, dev, title, antialias, desc->id);
 	} else {
-		Rf_error("unable to start device");
+		RFn::Rf_error("unable to start device");
 	}
 }
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias) {
-	RKStartGraphicsDevice (Rf_asReal (width), Rf_asReal (height), Rf_asReal (pointsize), RKRSupport::SEXPToStringList (family), R_GE_str2col (CHAR(Rf_asChar(bg))), CHAR(Rf_asChar(title)), Rf_asLogical (antialias));
-	return R_NilValue;
+	RKStartGraphicsDevice(RFn::Rf_asReal(width), RFn::Rf_asReal(height), RFn::Rf_asReal(pointsize), RKRSupport::SEXPToStringList(family), RFn::R_GE_str2col(RFn::R_CHAR(RFn::Rf_asChar(bg))), RFn::R_CHAR(RFn::Rf_asChar(title)), RFn::Rf_asLogical(antialias));
+	return ROb(R_NilValue);
 }
 
 bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg) {
@@ -197,29 +192,34 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->holdflush = RKD_HoldFlush;
 
 #if R_VERSION >= R_Version (4, 1, 0)
-	// patterns and gradients
-	dev->setPattern = RKD_SetPattern;
-	dev->releasePattern = RKD_ReleasePattern;
-	// clipping paths
-	dev->setClipPath = RKD_SetClipPath;
-	dev->releaseClipPath = RKD_ReleaseClipPath;
-	// masks
-	dev->setMask = RKD_SetMask;
-	dev->releaseMask = RKD_ReleaseMask;
-	dev->deviceVersion = qMin(15, R_GE_version);
-	dev->deviceClip = TRUE; // for now
+	// NOTE: We need both a compiletime and a runtime check, in order to support running with an R older than what was used at compile time
+	if (RFn::R_GE_getVersion() >=  15) {
+		// patterns and gradients
+		dev->setPattern = RKD_SetPattern;
+		dev->releasePattern = RKD_ReleasePattern;
+		// clipping paths
+		dev->setClipPath = RKD_SetClipPath;
+		dev->releaseClipPath = RKD_ReleaseClipPath;
+		// masks
+		dev->setMask = RKD_SetMask;
+		dev->releaseMask = RKD_ReleaseMask;
+		dev->deviceVersion = qMin(qMin(15, R_GE_version), RFn::R_GE_getVersion());
+		dev->deviceClip = TRUE; // for now
+	}
 #endif
 
 #if R_VERSION >= R_Version (4, 2, 0)
-	// groups
-	dev->defineGroup = RKD_DefineGroup;
-	dev->useGroup = RKD_UseGroup;
-	dev->releaseGroup = RKD_ReleaseGroup;
+	if (RFn::R_GE_getVersion() >=  16) {
+		// groups
+		dev->defineGroup = RKD_DefineGroup;
+		dev->useGroup = RKD_UseGroup;
+		dev->releaseGroup = RKD_ReleaseGroup;
 
-	// stroked / filled paths
-	dev->stroke = RKD_Stroke;
-	dev->fill = RKD_Fill;
-	dev->fillStroke = RKD_FillStroke;
+		// stroked / filled paths
+		dev->stroke = RKD_Stroke;
+		dev->fill = RKD_Fill;
+		dev->fillStroke = RKD_FillStroke;
+	}
 #endif
 	return true;
 }

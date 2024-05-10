@@ -41,7 +41,7 @@ public:
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
 	virtual void restoreObject (RObject *object) = 0;
 
-	bool isModified () override { return false; };
+	bool isModified() const override { return false; };
 protected:
 	RObject *object;
 };

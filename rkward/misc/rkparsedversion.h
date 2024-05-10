@@ -13,7 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 Anything else (everything after the fourth dot, or after the first character that is neither dot, nor digit) is stored as a string, and compared lexically. */
 class RKParsedVersion {
 public:
-	RKParsedVersion(const QString& from_string);
+	explicit RKParsedVersion(const QString& from_string);
 	RKParsedVersion() : version_numeric(0) {};
 /** Create a null version that will always compare as higher than other (non-null) versions */
 	static RKParsedVersion maxVersion() {

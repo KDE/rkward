@@ -27,7 +27,7 @@ public:
 	virtual void updateFromR (RCommandChain *chain, const QStringList &added_symbols, const QStringList &removed_symbols);
 
 	QString getFullName (int) const override;
-	QString makeChildName (const QString &short_child_name, bool misplaced, int options) const override;
+	QString makeChildName(const QString &short_child_name, int options) const override;
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain) override;
 	QString packageName () const;

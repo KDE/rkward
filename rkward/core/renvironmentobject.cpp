@@ -55,10 +55,10 @@ QString REnvironmentObject::getFullName (int options) const {
 
 	if (type & GlobalEnv) return name;	// .GlobalEnv
 	if ((type & ToplevelEnv) && (options & IncludeEnvirIfNotGlobalEnv)) return ("as.environment (" + rQuote (name) + ')');
-	return parent->makeChildName (name, type & Misplaced, options);
+	return parent->makeChildName(name, options);
 }
 
-QString REnvironmentObject::makeChildName (const QString &short_child_name, bool misplaced, int options) const {
+QString REnvironmentObject::makeChildName (const QString &short_child_name, int options) const {
 	RK_TRACE (OBJECTS);
 
 	QString safe_name;
@@ -77,8 +77,8 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 /* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremely ugly. We need to give them (and only them) this special treatment. */
 // TODO: hopefully one day operator "::" will work even in those cases. So check back later, and remove after a sufficient amount of backwards compatibility time
 // NOTE: This appears to have been fixed in R 2.14.0, when all packages were forced to have namespaces. Currently backend has a version check to set "misplaced", appropriately.
-		if ((type & PackageEnv) && (!misplaced)) return (packageName () + "::" + safe_name);
-		return (getFullName (options) + '$' + safe_name);
+		if (type & PackageEnv) return (packageName() + "::" + safe_name);
+		return (getFullName(options) + '$' + safe_name);
 	}
 	return (getFullName (options) + '$' + safe_name);
 }
@@ -168,7 +168,7 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 QString REnvironmentObject::renameChildCommand (RObject *object, const QString &new_name) const {
 	RK_TRACE (OBJECTS);
 
-	return (makeChildName (new_name, false, IncludeEnvirIfNotGlobalEnv) + " <- " + object->getFullName () + '\n' + removeChildCommand (object));
+	return (makeChildName(new_name, IncludeEnvirIfNotGlobalEnv) + " <- " + object->getFullName() + '\n' + removeChildCommand(object));
 }
 
 QString REnvironmentObject::removeChildCommand (RObject *object) const {

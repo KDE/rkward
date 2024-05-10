@@ -363,6 +363,15 @@ private Q_SLOTS:
 		waitForAllFinished();  // priority_command_done must remain in scope until done
 	}
 
+	void RKDeviceTest() {
+		// Well, this test is sort of lame but should at least catch major breakage in RK() device
+		runCommandAsync(new RCommand("demo(graphics, ask=FALSE)", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(!command->failed());
+		});
+		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
+		waitForAllFinished();  // priority_command_done must remain in scope until done
+	}
+
 	void restartRBackend() {
 		auto restart_action = RKWardMainWindow::getMain()->actionCollection()->action("restart_r");
 		QVERIFY(restart_action != nullptr);

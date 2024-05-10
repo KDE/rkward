@@ -676,9 +676,9 @@ QUrl RKCommandEditorWindow::url () const {
 	return (m_doc->url ());
 }
 
-bool RKCommandEditorWindow::isModified () {
+bool RKCommandEditorWindow::isModified() const {
 	RK_TRACE (COMMANDEDITOR);
-	return m_doc->isModified ();
+	return m_doc->isModified();
 }
 
 bool RKCommandEditorWindow::save () {

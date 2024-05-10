@@ -94,8 +94,8 @@ private:
 class RKMatrixInputModel : public QAbstractTableModel {
 private:
 friend class RKMatrixInput;
-	RKMatrixInputModel (RKMatrixInput *matrix);
-	virtual ~RKMatrixInputModel ();
+	explicit RKMatrixInputModel(RKMatrixInput *matrix);
+	virtual ~RKMatrixInputModel();
 	int rowCount (const QModelIndex &parent = QModelIndex()) const override; // implemented for QAbstractTableModel
 	int columnCount (const QModelIndex &parent = QModelIndex()) const override; // implemented for QAbstractTableModel
 	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override; // re-implemented for QAbstractTableModel

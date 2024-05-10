@@ -8,6 +8,7 @@ IF(NOT WIN32)
 	FIND_PACKAGE(Threads)
 ENDIF(NOT WIN32)
 
+SET(DLOPEN_RLIB 1) # TODO: Allow configuration
 ADD_SUBDIRECTORY( rpackages )
 ADD_SUBDIRECTORY( rkwarddevice )
 
@@ -29,6 +30,7 @@ SET (
 	rkrbackendprotocol_backend.cpp
 	rkreventloop.cpp
 	rkbackendtransmitter.cpp
+	rkrapi.cpp
 )
 
 SET (
@@ -45,10 +47,26 @@ ADD_LIBRARY(rbackend STATIC ${rbackend_frontend_SRCS} ${rbackend_shared_SRCS})
 TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt6::Widgets KF6::TextEditor KF6::WindowSystem)
 
 ADD_DEFINITIONS (-DRKWARD_BACKEND_PATH="${KDE_INSTALL_FULL_LIBEXECDIR}")
-LINK_DIRECTORIES(${R_SHAREDLIBDIR})
-ADD_EXECUTABLE(rkward.rbackend ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
+
+# See rkrapi.h for documentation and rationale of the linking strategy
+IF(${DLOPEN_RLIB})
+  ADD_LIBRARY(rkward.rbackend.lib SHARED ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
+  TARGET_LINK_LIBRARIES(rkward.rbackend.lib rkgraphicsdevice.backend ${CMAKE_THREAD_LIBS_INIT} Qt6::Network Qt6::Core KF6::I18n)
+  TARGET_COMPILE_DEFINITIONS(rkward.rbackend.lib PUBLIC RK_DLOPEN_LIBRSO)
+  TARGET_COMPILE_DEFINITIONS(rbackend PUBLIC RK_DLOPEN_LIBRSO)
+  INSTALL(TARGETS rkward.rbackend.lib DESTINATION ${KDE_INSTALL_LIBDIR})
+
+  ADD_EXECUTABLE(rkward.rbackend rkrbackend_dlopen.cpp)
+  IF(NOT WIN32)
+    TARGET_LINK_LIBRARIES(rkward.rbackend dl)
+  ENDIF()
+ELSE(${DLOPEN_RLIB})
+  LINK_DIRECTORIES(${R_SHAREDLIBDIR})
+  ADD_EXECUTABLE(rkward.rbackend ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
+  TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt6::Network Qt6::Core KF6::I18n)
+ENDIF(${DLOPEN_RLIB})
 ECM_MARK_NONGUI_EXECUTABLE(rkward.rbackend)
-TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt6::Network Qt6::Core KF6::I18n)
+
 IF(WIN32)
 # 64MB stack size is what R itself is build with on Windows, while by default the stack size would be 1MB
 # Not sure, if 64MB is actually needed, but 1MB does cause trouble e.g. with some shiny apps.
@@ -75,7 +93,7 @@ ADD_DEPENDENCIES(rkward.rbackend R_lib)
 ENDIF(MSVC)
 
 IF(WIN32)
-	# on Widows, we install to the rbackend subdirectory, because 1) LIBEXEC_INSTALL_DIR == BIN_INSTALL_DIR and 2) we don't want the backend to pick up
+	# on Windows, we install to the rbackend subdirectory, because 1) LIBEXEC_INSTALL_DIR == BIN_INSTALL_DIR and 2) we don't want the backend to pick up
 	# all the KDE library versions, first, when loading DLLs
 	INSTALL(TARGETS rkward.rbackend DESTINATION ${KDE_INSTALL_BINDIR}/rbackend)
 ELSE(WIN32)

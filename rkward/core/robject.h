@@ -49,7 +49,7 @@ public:
 		GlobalEnv=1 << 9,
 		ToplevelEnv=1 << 10,
 		PackageEnv=1 << 11,
-		Misplaced=1 << 12,		/** < the object is not in the namespace where it would be expected */
+//		Misplaced=1 << 12,		/** < the object is not in the namespace where it would be expected */
 		S4Object=1 << 13,
 		Numeric=1 << 14,
 		Factor=2 << 14,
@@ -228,7 +228,7 @@ public:
 	};
 
 /** generates a (full) name for a child of this object with the given name. */
-	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false, int object_name_options=DefaultObjectNameOptions) const;
+	virtual QString makeChildName (const QString &short_child_name, int object_name_options=DefaultObjectNameOptions) const;
 protected:
 // why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;

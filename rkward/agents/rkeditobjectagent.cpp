@@ -16,10 +16,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKEditObjectAgent::RKEditObjectAgent (const QStringList &_object_names, RCommandChain *chain) {
+RKEditObjectAgent::RKEditObjectAgent (const QStringList &_object_names, RCommandChain *chain) : object_names(_object_names) {
 	RK_TRACE (APP);
-
-	RKEditObjectAgent::object_names = _object_names;
 
 	// first issue an empty command to trigger an update of the object list
 	RInterface::issueCommand (new RCommand (QString (), RCommand::EmptyCommand | RCommand::ObjectListUpdate), chain);

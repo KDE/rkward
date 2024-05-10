@@ -40,7 +40,7 @@ class KActionCollection;
 class RKCommandEditorWindowPart : public KParts::Part {
 protected:
 friend class RKCommandEditorWindow;
-	RKCommandEditorWindowPart (QWidget *parent);
+	explicit RKCommandEditorWindowPart(QWidget *parent);
 	~RKCommandEditorWindowPart ();
 };
 
@@ -84,7 +84,7 @@ public:
 /** destructor */
 	~RKCommandEditorWindow ();
 /** returns, whether the document was modified since the last save */
-	bool isModified () override;
+	bool isModified() const override;
 /** saves the document, returns true on success */
 	bool save () override;
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */

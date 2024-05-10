@@ -22,4 +22,4 @@ Options:
   require-passing-tests-on: [ 'Linux', 'FreeBSD', 'Windows' ]
   tests-load-sensitve: True
   per-test-timeout: 90
-  cppcheck-arguments: '--enable=warning,style,performance --inline-suppr -DRKWARD_VERSION="dummy" -DCPPCHECK_ONLY=1'
+  cppcheck-arguments: '--enable=warning,style,performance --inline-suppr -DR_EXECUTABLE=\"/usr/bin/R\" -DRKWARD_VERSION=\"dummy\" -DCPPCHECK_ONLY=1'

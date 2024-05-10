@@ -65,8 +65,6 @@ public:
  */
 	static bool handleRKWardURL(const QUrl &url, RKHTMLWindow *window=nullptr);
 	void openRKHPage (const QUrl &url);
-
-	bool isModified () override;
 /** Return current url */
 	QUrl url () const { return current_url; };
 /** Return current url in a restorable way, i.e. for help pages, abstract the session specific part of the path */

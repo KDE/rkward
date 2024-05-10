@@ -1,6 +1,6 @@
 /*
 rkrbackendprotocol - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 04 2010
-SPDX-FileCopyrightText: 2010-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -15,14 +15,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QThread>
 #include <QLocalSocket>
 #include <QMutex>
+#include <QUuid>     // mis-used as a random-string generator
+#include <QDir>
+#include <QUrl>
 
-#include "rktransmitter.h"
 #include <iostream>
 
 #include "rkbackendtransmitter.h"
-#include <QUuid>		// mis-used as a random-string generator
-#include <QDir>
-#include <QUrl>
+#include "rktransmitter.h"
+#include "rkrapi.h"
 
 #ifdef Q_OS_MACOS
 #include <CoreFoundation/CoreFoundation.h>
@@ -57,7 +58,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		RKDebugMessageOutput (QtDebugMsg, QMessageLogContext (), buffer);
 	}
 
+#ifdef RK_DLOPEN_LIBRSO
+	extern "C"
+#	ifdef Q_OS_WIN
+	__declspec(dllexport)
+#	else
+	__attribute__((__visibility__("default")))
+#endif
+	int do_main(int argc, char *argv[], void* libr_dll_handle, void* (*dlsym_fun)(void*, const char*)) {
+#else
 	int main(int argc, char *argv[]) {
+#endif
 #ifdef Q_OS_MACOS
 		CFBundleRef mainBundle = CFBundleGetMainBundle();
 		if (mainBundle) {
@@ -109,14 +120,19 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		// this token is sent both via stdout and the local socket connection. The frontend simply compares both values.
 		QString token = QUuid::createUuid ().toString ();
 
+#ifdef RK_DLOPEN_LIBRSO
+		RFn::init(libr_dll_handle, dlsym_fun);
+#endif
+
 		RKRBackendTransmitter transmitter (servername, token);
-		RKRBackendProtocolBackend::p_transmitter = &transmitter;
+		RKRBackendProtocolBackend::p_transmitter = &transmitter; // cppcheck-suppress danglingReference ; -> valid for the lifetime of the backend
 		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);
 		transmitter.start ();
 		RKRBackend::this_pointer->run (locale_dir);
-		// NOTE:: Since some unknown version of R (4.3.0 at the latest, but probabably much earlier), run_Rmainloop() does not return, it will
+		// NOTE:: Since some unknown version of R (4.3.0 at the latest, but probably much earlier), run_Rmainloop() does not return, it will
 		//        eventually exit, instead.
 		RKRBackendProtocolBackend::doExit();
+		return 0;
 	}
 
 	void RKRBackendProtocolBackend::doExit() {

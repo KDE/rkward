@@ -40,7 +40,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class KatePluginWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
-	KatePluginWindow(QWidget *parent, bool tool_window=true) : RKMDIWindow(parent, RKMDIWindow::KatePluginWindow, tool_window) {
+	explicit KatePluginWindow(QWidget *parent, bool tool_window=true) : RKMDIWindow(parent, RKMDIWindow::KatePluginWindow, tool_window) {
 		RK_TRACE (APP);
 
 		QVBoxLayout *layout = new QVBoxLayout(this);

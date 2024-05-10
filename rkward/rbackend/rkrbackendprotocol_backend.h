@@ -13,6 +13,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class QThread;
 class RKRBackendTransmitter;
 
+extern "C"
+#ifdef Q_OS_WIN
+	__declspec(dllexport)
+#else
+	__attribute__((__visibility__("default")))
+#endif
+int do_main(int, char**, void*, void* (*)(void*, const char*));
+
 class RKRBackendProtocolBackend {
 public:
 	static bool inRThread ();
@@ -29,6 +37,7 @@ friend class RKRBackend;
 friend class RKRBackendThread;
 friend class RKRBackendTransmitter;
 friend int main(int, char**);
+friend int do_main(int, char**, void*, void* (*)(void*, const char*));
 	void sendRequest (RBackendRequest *request);
 	static void msleep (int delay);
 	static RKRBackendProtocolBackend* instance () { return _instance; };

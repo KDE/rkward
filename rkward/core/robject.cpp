@@ -33,7 +33,7 @@ namespace RObjectPrivate {
  *  This is needed, because RObject is not QObject dereived. */
 class RObjectLifeTimeGuard {
 public:
-	RObjectLifeTimeGuard(RObject *object) : command_count(0), object(object) {
+	explicit RObjectLifeTimeGuard(RObject *object) : command_count(0), object(object) {
 		object->guard = this;
 	};
 	~RObjectLifeTimeGuard() {
@@ -121,7 +121,7 @@ bool RObject::irregularShortName (const QString &name) {
 
 QString RObject::getFullName (int options) const {
 	RK_TRACE (OBJECTS);
-	return parent->makeChildName (RObject::name, type & Misplaced, options);
+	return parent->makeChildName(RObject::name, options);
 }
 
 QString RObject::getLabel () const {
@@ -229,7 +229,7 @@ bool RObject::inherits (const QString &class_name) const {
 	return (classnames.contains (class_name));
 }
 
-QString RObject::makeChildName (const QString &short_child_name, bool, int options) const {
+QString RObject::makeChildName(const QString &short_child_name, int options) const {
 	RK_TRACE (OBJECTS);
 	if (options & DollarExpansion) {
 		if (irregularShortName (short_child_name)) return (getFullName (options) + '$' + rQuote (short_child_name));
@@ -437,7 +437,6 @@ bool RObject::updateType (RData *new_data) {
 	bool changed = false;
 	int new_type = new_data->intVector ().at (0);
 	if (type & PseudoObject) new_type |= PseudoObject;
-	if (type & Misplaced) new_type |= Misplaced;
 	if (type & Pending) new_type |= Pending;	// NOTE: why don't we just clear the pending flag, here? Well, we don't want to generate a change notification for this. TODO: rethink the logic, and maybe use an appropriate mask
 	if (type & NeedDataUpdate) new_type |= NeedDataUpdate;
 	if (type != new_type) {

@@ -181,7 +181,7 @@ friend class RKConsole;
 protected:
 /** constructor. Protected. Meant to the created by the RKConsole itself
 @param console The console for this part */
-	RKConsolePart (RKConsole *console);
+	explicit RKConsolePart(RKConsole *console);
 /** destructor */
 	~RKConsolePart ();
 

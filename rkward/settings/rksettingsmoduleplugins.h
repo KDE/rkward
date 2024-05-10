@@ -71,7 +71,7 @@ public:
 
 	/** Helper struct used by RKSettingsModulePlugins to keep track of plugin map files. */
 	struct PluginMapStoredInfo {
-		PluginMapStoredInfo (const QString &_filename) : filename (_filename), state(Working) {};
+		explicit PluginMapStoredInfo(const QString &_filename) : filename(_filename), state(Working) {};
 		QString filename;
 		PluginMapState state;
 		int priority;
