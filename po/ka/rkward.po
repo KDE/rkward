@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-19 00:35+0000\n"
-"PO-Revision-Date: 2024-04-25 10:30+0200\n"
+"PO-Revision-Date: 2024-05-01 05:36+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -418,6 +418,8 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
+"პაკეტის %1 გამოტვირთვა არ მომხდარა, რადგან ის აუცილებელია RKWard-ის "
+"მუშაობისთვის. თუ ეს მართლა გნებავთ, გააკეთოთ ეს R-ის კონსოლიდან შეგიძლიათ."
 
 #: rkward/core/robjectlist.cpp:90
 #, kde-format
@@ -539,6 +541,8 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
 msgstr ""
+"ჩასვამს ბუფერის შემცველობას მიმდინარე მდებარეობაზე, მაგრამ არა ცხრილის "
+"საზღვრებს მიღმა"
 
 #: rkward/dataeditor/twintable.cpp:113
 #, kde-format
@@ -551,6 +555,8 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
 msgstr ""
+"ჩასვამს ბუფერის შემცველობას მიმდინარე მდებარეობაზე, მაგრამ არა მიმდინარე "
+"მონიშნულის საზღვრებს მიღმა"
 
 #: rkward/dataeditor/twintable.cpp:132
 #, kde-format
@@ -674,6 +680,9 @@ msgid ""
 "continue to see this page for more than a few seconds (e.g. if JavaScript is "
 "disabled), please click \"Proceed\", below."
 msgstr ""
+"ახლა KDE-ის შეცდომების ტრეკინგის სისტემაზე გადაგამისამართებთ. თუ ამ გვერდს "
+"რამდენიმე წამზე მეტი ხედავთ (მაგ: თუ JavaScript გათიშულია), დააწკაპუნეთ "
+"დაბლა ღილაკზე \"გაგრძელება\"."
 
 #: rkward/dialogs/rkerrordialog.cpp:80
 #, kde-format
@@ -702,6 +711,9 @@ msgid ""
 "Please fill in the missing bits *in English*.\n"
 "\n"
 msgstr ""
+"---პრობლემის აღწერა---\n"
+"შეავსეთ ნაკლული ველები *ინგლისურად*.\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:126
 #, kde-format
@@ -776,6 +788,9 @@ msgid ""
 "In case the backend has died or hung up, you may want to press 'Cancel' to "
 "skip this step."
 msgstr ""
+"მოითმინეთ, სანამ თქვენი გარემოს ინფორმაციის შეგროვება ხდება.\n"
+"იმ შემთხვევაში, თუ უკანაბოლო მოკვდა ან დაეკიდა, ამ ნაბიჯის გამოსატოვებლად "
+"დააწექით ღილაკს 'გაუქმება'."
 
 #: rkward/dialogs/rkerrordialog.cpp:146
 #, kde-format
@@ -1277,6 +1292,8 @@ msgid ""
 "Packages which are available for installation, but which are not currently "
 "installed."
 msgstr ""
+"პაკეტები, რომლებიც ხელმისაწვდომია დასაყენებლად, მაგრამ ამჟამად დაყენებული "
+"არაა."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:994
 #, kde-format
@@ -1289,6 +1306,8 @@ msgid ""
 "Packages which are installed locally. Note that updates may be available for "
 "these packages."
 msgstr ""
+"პაკეტები, რომლებიც ლოკალურადაა დაყენებული. დაიმახსოვრეთ, რომ ამ "
+"პაკეტებისთვის, შეიძლება, განახლებები ხელმისაწვდომი არ იყოს."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1023
 #, kde-format
@@ -1686,6 +1705,8 @@ msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
 "required."
 msgstr ""
+"R2HTML პაკეტი თითქმის ყველა RKWard-ს გამოტანის ფუნქციის მიერ გამოიყენება, "
+"ამიტომ მისი ქონა აუცილებელია."
 
 #: rkward/dialogs/rksetupwizard.cpp:221
 #, kde-format
@@ -1693,6 +1714,8 @@ msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
 "preview rendering), which is an optional but recommended feature."
 msgstr ""
+"პაკეტი rmarkdown .Rmd ფაილებს რენდერისთვისაა აუცილებელი (მინიატურის რენდერის "
+"ჩათვლით). რაც არასავალდებულო, მაგრამ რეკომენდებული ფუნქციაა."
 
 #: rkward/dialogs/rksetupwizard.cpp:224
 #, kde-format
@@ -1705,6 +1728,8 @@ msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
 "Rmd) files. This is optional but recommended."
 msgstr ""
+"პროგრამა pandoc R-ის მარკდაუნის (.Rmd) ფაილების რენდერისთვის (ან "
+"მინიატურისთვის) გამოიყენება. ეს არასავალდებულო, მაგრამ რეკომენდებულია."
 
 #: rkward/dialogs/rksetupwizard.cpp:230
 #, kde-format
@@ -2104,6 +2129,8 @@ msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
 "executable."
 msgstr ""
+"R-ის გამშვები ფაილი, რომელიც ბრძანების სტრიქონშია (%1) მითითებული, არ "
+"არსებობს, ან გაშვებადი არაა."
 
 #: rkward/main.cpp:388
 #, kde-format
@@ -2111,6 +2138,8 @@ msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
 "or is not executable."
 msgstr ""
+"R-ის გამშვები ფაილი (%1), რომელიც rkward.ini ფაილშია მითითებული (%2) არ "
+"არსებობს, ან გაშვებადი არაა."
 
 #: rkward/main.cpp:393
 #, kde-format
@@ -2551,7 +2580,7 @@ msgstr "გაუქმება"
 #: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
-msgstr ""
+msgstr "<b>აღმოჩენილია შეცდომა</b> (დეტალები იხილეთ ქვემოთ)"
 
 #: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
@@ -2961,6 +2990,8 @@ msgstr "გადაცემა შეუძლებელია"
 msgid ""
 "Could not open plugin map file %1. (Is not readable, or failed to parse)"
 msgstr ""
+"ვერ გავხსენი დამატებების ასახვის ფაილი %1. (ის წაკითხვადი არაა, ან მისი "
+"დამუშავება ჩავარდა)"
 
 #: rkward/plugin/rkcomponentmap.cpp:583
 #, kde-format
@@ -3046,16 +3077,17 @@ msgstr "R-ის პაკეტი"
 #, kde-format
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
 msgstr ""
+"ობიექტს გააჩნია %1 განზომილება, მაგრამ მოველოდი მხოლოდ %2 განზომილებას."
 
 #: rkward/plugin/rkcomponentproperties.cpp:931
 #, kde-format
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
-msgstr ""
+msgstr "ობიექტის სიგრძეა %1, მაგრამ მინიმალურ სიგრძეს %2 მოველოდი."
 
 #: rkward/plugin/rkcomponentproperties.cpp:932
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
-msgstr ""
+msgstr "ობიექტის სიგრძეა %1, მაგრამ მაქსიმალურ სიგრძეს %2 მოველოდი."
 
 #: rkward/plugin/rkcomponentproperties.cpp:944
 #, kde-format
@@ -4576,7 +4608,7 @@ msgctxt ""
 "Note: S4-slot() is a programming term in R, and should not be translated, "
 "here"
 msgid "Operator for access to S4-slot()s"
-msgstr ""
+msgstr "ოპერატორი S4-slot()-ებთან წვდომისთვის"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
@@ -4615,6 +4647,8 @@ msgstr ""
 #, kde-format
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
 msgstr ""
+"პარამეტრები, რომლებიც მონიშნულია ვარსკვლავით (*) ძალაში RKWard-ის "
+"გადატვირთვამდე არ შევა"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:127
 #, kde-format
@@ -4728,7 +4762,7 @@ msgstr "ბრძანების მოლოდინის ვადა"
 #: rkward/settings/rksettingsmoduledebug.cpp:82
 #, kde-format
 msgid "<i>Note:</i> Debug output is written to %1"
-msgstr ""
+msgstr "<i>შენიშვნა:</i> გამართვის ინფორმაცია ჩაიწერა ფაილში %1"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:99
 #, kde-format
@@ -5714,7 +5748,7 @@ msgstr "სკრიპტის საქაღალდში გადას�
 #: rkward/windows/rkcommandeditorwindow.cpp:369
 #, kde-format
 msgid "Change the working directory to the directory of this script"
-msgstr ""
+msgstr "სამუშაო საქაღალდის შეცვლა სკრიპტის საქაღალდეზე"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
@@ -6731,7 +6765,7 @@ msgstr "გავხსნა ნაგულისხმევ აპლიკ�
 #: rkward/windows/rkworkplace.cpp:539
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
-msgstr ""
+msgstr "გამოტანის ფაილის გახსნა ჩავარდა. შეცდომის შეტყობინება: '%1'"
 
 #: rkward/windows/rkworkplace.cpp:648
 #, kde-format
@@ -6786,7 +6820,7 @@ msgstr "&ვერტიკალურად გაყოფა"
 #: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
-msgstr ""
+msgstr "მიმდინარე აქტიური ხედის შვეულად, ორ ხედად გაყოფა."
 
 #: rkward/windows/rkworkplaceview.cpp:262
 #, kde-format
@@ -6796,7 +6830,7 @@ msgstr "&ჰორიზონტალურად გაყოფა"
 #: rkward/windows/rkworkplaceview.cpp:265
 #, kde-format
 msgid "Split the currently active view into two views, horizontally."
-msgstr ""
+msgstr "მიმდინარე აქტიური ხედის თარაზულად, ორ ხედად გაყოფა."
 
 #: rkward/windows/robjectbrowser.cpp:54
 #, kde-format

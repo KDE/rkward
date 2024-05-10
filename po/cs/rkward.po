@@ -1,22 +1,22 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023 Vít Pelčák <vit@pelcak.org>
-# Vit Pelcak <vit@pelcak.org>, 2021, 2023.
+# SPDX-FileCopyrightText: 2021, 2023, 2024 Vit Pelcak <vit@pelcak.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-19 00:35+0000\n"
-"PO-Revision-Date: 2023-11-10 16:29+0100\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2024-04-30 15:49+0200\n"
+"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -958,7 +958,7 @@ msgstr "Zahodit změny?"
 #, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr ""
+msgstr "Nezavírat"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
@@ -1014,13 +1014,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Become root"
-msgstr ""
+msgstr "Staňte se superuživatelem"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr ""
+msgstr "Přeskočit tyto balíčky"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5118,6 +5118,13 @@ msgid ""
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
 "name of a function such as <i>Cairo</i>.</p>"
 msgstr ""
+"<p>Výchozí zařízení se používá ke kreslení, to znamená, když je vytvářen "
+"nový nákres, zatímco není činné žádné znázorňovací zařízení (Podívejte se na "
+"<i>options(\"device\")</i>).</p><p>Původní zařízení RKWard je doporučovanou "
+"volbou pro většinu uživatelů. Odpovídá příkazu R <i>RK()</i>.</p><p>Výchozí "
+"zařízení systému odpovídá jednomu z <i>X11()</i>, <i>windows()</i>, nebo "
+"<i>quartz()</i>, v závislosti na systému.</p><p>Také můžete zadat název "
+"funkce, například <i>Cairo</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -6364,7 +6371,7 @@ msgstr "Uložit jako"
 #: rkward/windows/rkhtmlwindow.cpp:604
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
-msgstr ""
+msgstr "Výstupní soubor RKward %s (zatím) neexistuje."
 
 #: rkward/windows/rkhtmlwindow.cpp:723
 #: rkward/windows/rktoplevelwindowgui.cpp:255

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-17 12:40+0200\n"
+"PO-Revision-Date: 2024-05-01 05:38+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1289,12 +1289,14 @@ msgstr ""
 #, kde-format
 msgid "Should Monte-Carlo simulation be used to compute the p-value(s)?"
 msgstr ""
+"უნდა იყოს თუ არა მონტე-კარლოს სიმულაცია გამოყენებული p-მნიშვნელობების "
+"გამოსათვლელად?"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Number of replicates used in the Monte Carlo Method")
 #: rkward/plugins/analysis/crosstab.rkh:34
 #, kde-format
 msgid "Number of replicates used in the Monte-Carlo test (if applicable)."
-msgstr ""
+msgstr "გამეორებების რაოდენობა მონტე-კარლოს მეთოდისთვის (თუ საჭიროა)."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show expect values")
 #: rkward/plugins/analysis/crosstab.rkh:35
