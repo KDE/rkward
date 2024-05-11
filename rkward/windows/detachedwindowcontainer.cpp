@@ -30,9 +30,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture, bool copy_geometry) : KParts::MainWindow  () {
 	RK_TRACE (APP);
 
-	actionCollection ()->addAction (KStandardAction::Close, "dwindow_close", this, SLOT(close()));
+	actionCollection()->addAction(KStandardAction::Close, "dwindow_close", this, &DetachedWindowContainer::close);
 
-	QAction *reattach = actionCollection ()->addAction ("dwindow_attach", this, SLOT(slotReattach()));
+	QAction *reattach = actionCollection()->addAction("dwindow_attach", this, &DetachedWindowContainer::slotReattach);
 	reattach->setText (i18n ("Attach to main window"));
 	reattach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAttachWindow));
 

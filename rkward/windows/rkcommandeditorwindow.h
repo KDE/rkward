@@ -141,12 +141,12 @@ protected:
 	void setWindowStyleHint (const QString& hint) override;
 private Q_SLOTS:
 /** mark current selection as a block */
-	void markBlock ();
+	void markBlock(int index);
 /** unmark a block */
-	void unmarkBlock ();
+	void unmarkBlock(int index);
 /** run a block */
-	void runBlock ();
-	void clearUnusedBlocks ();
+	void runBlock(int index);
+	void clearUnusedBlocks();
 /** handler to control when autosaves should be created, preview should be updated */
 	void textChanged ();
 /** Render the (.Rmd) current script */

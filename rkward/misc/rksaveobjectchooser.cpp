@@ -133,7 +133,7 @@ void RKSaveObjectChooser::objectRemoved (RObject* removed) {
 	} else if (removed == current_object) {
 		stopListenForObject (removed);
 		current_full_name.clear ();	// hack to achieve proper Q_EMIT of change signal
-		QTimer::singleShot (0, this, SLOT (updateState()));
+		QTimer::singleShot(0, this, &RKSaveObjectChooser::updateState);
 	} else {
 		RK_ASSERT (false);
 	}

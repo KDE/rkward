@@ -94,13 +94,13 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	}
 
 	// define standard actions
-	QAction *cut = KStandardAction::cut (this, SLOT (cut()), this);
-	display->addAction (cut);
-	QAction *copy = KStandardAction::copy (this, SLOT (copy()), this);
-	display->addAction (copy);
-	QAction *paste = KStandardAction::paste (this, SLOT (paste()), this);
-	display->addAction (paste);
-	display->setContextMenuPolicy (Qt::ActionsContextMenu);
+	QAction *cut = KStandardAction::cut(this, &RKMatrixInput::cut, this);
+	display->addAction(cut);
+	QAction *copy = KStandardAction::copy(this, &RKMatrixInput::copy, this);
+	display->addAction(copy);
+	QAction *paste = KStandardAction::paste(this, &RKMatrixInput::paste, this);
+	display->addAction(paste);
+	display->setContextMenuPolicy(Qt::ActionsContextMenu);
 
 	display->setRKItemDelegate (new RKItemDelegate (display, model, true));
 	connect (display, &RKTableView::blankSelectionRequest, this, &RKMatrixInput::clearSelectedCells);

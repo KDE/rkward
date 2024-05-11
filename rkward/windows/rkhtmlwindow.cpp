@@ -866,12 +866,12 @@ void RKHTMLWindowPart::initActions () {
 #endif
 
 	// common actions
-	actionCollection ()->addAction (KStandardAction::Copy, "copy", window->view->pageAction (RKWebPage::Copy), SLOT (trigger()));
+	actionCollection()->addAction(KStandardAction::Copy, "copy", window->view->pageAction(RKWebPage::Copy), &QAction::trigger);
 	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new QAction (QIcon::fromTheme("zoom-in"), i18n ("Zoom In"), this));
 	connect (zoom_in, &QAction::triggered, window, &RKHTMLWindow::zoomIn);
 	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new QAction (QIcon::fromTheme("zoom-out"), i18n ("Zoom Out"), this));
 	connect (zoom_out, &QAction::triggered, window, &RKHTMLWindow::zoomOut);
-	actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (RKWebPage::SelectAll), SLOT (trigger()));
+	actionCollection()->addAction(KStandardAction::SelectAll, "select_all", window->view->pageAction(RKWebPage::SelectAll), &QAction::trigger);
 	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
 	KCodecAction *encoding = new KCodecAction (QIcon::fromTheme("character-set"), i18n ("Default &Encoding"), this, true);
 	encoding->setWhatsThis(i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
@@ -883,46 +883,46 @@ void RKHTMLWindowPart::initActions () {
 		}
 	});
 
-	print = actionCollection()->addAction(KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
+	print = actionCollection()->addAction(KStandardAction::Print, "print_html", window, &RKHTMLWindow::slotPrint);
 	export_page = actionCollection()->addAction("save_html", new QAction(QIcon::fromTheme("file-save"), i18n("Export Page as HTML"), this));
 	connect(export_page, &QAction::triggered, window, &RKHTMLWindow::slotExport);
 
 	run_selection = RKStandardActions::runCurrent (window, window, SLOT (runSelection()));
 
 	// help window actions
-	back = actionCollection ()->addAction (KStandardAction::Back, "help_back", window, SLOT (slotBack()));
+	back = actionCollection()->addAction(KStandardAction::Back, "help_back", window, &RKHTMLWindow::slotBack);
 	back->setEnabled (false);
 
-	forward = actionCollection ()->addAction (KStandardAction::Forward, "help_forward", window, SLOT (slotForward()));
+	forward = actionCollection()->addAction(KStandardAction::Forward, "help_forward", window, &RKHTMLWindow::slotForward);
 	forward->setEnabled (false);
 
 	// output window actions
-	window->file_save_action = actionCollection()->addAction(KStandardAction::Save, window, SLOT(slotSave()));
+	window->file_save_action = actionCollection()->addAction(KStandardAction::Save, "file_save", window, &RKHTMLWindow::slotSave);
 	window->file_save_action->setText(i18n("Save Output"));
-	window->file_save_as_action = actionCollection()->addAction(KStandardAction::SaveAs, window, SLOT(slotSaveAs()));
+	window->file_save_as_action = actionCollection()->addAction(KStandardAction::SaveAs, "file_save_as", window, &RKHTMLWindow::slotSaveAs);
 	window->file_save_as_action->setText(i18n("Save Output As"));
 
-	outputFlush = actionCollection ()->addAction ("output_flush", window, SLOT (flushOutput()));
+	outputFlush = actionCollection()->addAction("output_flush", window, &RKHTMLWindow::flushOutput);
 	outputFlush->setText (i18n ("&Clear Output"));
 	outputFlush->setIcon (QIcon::fromTheme("edit-delete"));
 
 	outputRefresh = actionCollection()->addAction("output_refresh", window->page->action(RKWebPage::Reload));
 
-	revert = actionCollection()->addAction("output_revert", window, SLOT(slotRevert()));
+	revert = actionCollection()->addAction("output_revert", window, &RKHTMLWindow::slotRevert);
 	revert->setText(i18n("&Revert to last saved state"));
 	revert->setIcon(QIcon::fromTheme("edit-undo"));
 
-	activate = actionCollection()->addAction("output_activate", window, SLOT(slotActivate()));
+	activate = actionCollection()->addAction("output_activate", window, &RKHTMLWindow::slotActivate);
 	activate->setText(i18n("Set Output as &Active"));
 	activate->setIcon(QIcon::fromTheme("emblem-favorite"));
 	activate->setWhatsThis(i18n("Set this output as the file to append output to."));
 
-	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
+	actionCollection()->addAction(KStandardAction::Find, "find", window->findbar, &RKFindBar::activate);
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
 	actionCollection ()->setDefaultShortcut (findAhead, '/');
 	connect (findAhead, &QAction::triggered, window->findbar, &RKFindBar::activate);
-	actionCollection ()->addAction (KStandardAction::FindNext, "find_next", window->findbar, SLOT (forward()));
-	actionCollection ()->addAction (KStandardAction::FindPrev, "find_previous", window->findbar, SLOT (backward()));
+	actionCollection()->addAction(KStandardAction::FindNext, "find_next", window->findbar, &RKFindBar::forward);
+	actionCollection()->addAction(KStandardAction::FindPrev, "find_previous", window->findbar, &RKFindBar::backward);
 }
 
 void RKHTMLWindowPart::setOutputDirectoryActionsEnabled(bool enable) {
@@ -1397,7 +1397,7 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 	// watch list (KDE 4.10.2; always?), so we need to re-add it. To make things complex, however, this may happen
 	// asynchronously, with this function called (via rk.set.output.html.file()), _before_ KDirWatch purges the file.
 	// To hack around the race condition, we re-watch the output file after a short delay.
-	QTimer::singleShot (100, this, SLOT (rewatchOutput()));
+	QTimer::singleShot(100, this, [this](){ rewatchOutput(); });
 #endif
 	if (path == current_default_path) return;
 

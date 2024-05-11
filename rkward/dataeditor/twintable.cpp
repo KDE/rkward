@@ -96,48 +96,48 @@ TwinTable::~TwinTable() {
 void TwinTable::initActions () {
 	RK_TRACE (EDITOR);
 
-	editCut = actionCollection ()->addAction (KStandardAction::Cut, "cut", this, SLOT(cut()));
+	editCut = actionCollection()->addAction(KStandardAction::Cut, "cut", this, &TwinTable::cut);
 	editCut->setWhatsThis(i18n("Cuts the selected section and puts it to the clipboard"));
-	editCopy = actionCollection ()->addAction (KStandardAction::Copy, "copy", this, SLOT(copy()));
+	editCopy = actionCollection()->addAction (KStandardAction::Copy, "copy", this, &TwinTable::copy);
 	editCopy->setWhatsThis(i18n("Copies the selected section to the clipboard"));
 //	editor->editActions ()->addAction (editCopy);	// this is a read-only action, not an "edit" action
-	editPaste = actionCollection ()->addAction (KStandardAction::Paste, "paste", this, SLOT(paste()));
+	editPaste = actionCollection()->addAction(KStandardAction::Paste, "paste", this, qOverload<>(&TwinTable::paste));
 	editPaste->setWhatsThis(i18n("Pastes the clipboard contents to current position"));
 
-	editPasteToTable = actionCollection ()->addAction ("paste_to_table", this, SLOT(pasteToTable()));
-	editPasteToTable->setText (i18n("Paste inside table"));
-	editPasteToTable->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionPasteInsideTable));
+	editPasteToTable = actionCollection()->addAction("paste_to_table", this, &TwinTable::pasteToTable);
+	editPasteToTable->setText(i18n("Paste inside table"));
+	editPasteToTable->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionPasteInsideTable));
 	editPasteToTable->setWhatsThis(i18n("Pastes the clipboard contents to current position, but not beyond the table's boundaries"));
 
-	editPasteToSelection = actionCollection ()->addAction ("paste_to_selection", this, SLOT(pasteToSelection()));
-	editPasteToSelection->setText (i18n("Paste inside selection"));
-	editPasteToSelection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionPasteInsideSelection));
+	editPasteToSelection = actionCollection()->addAction("paste_to_selection", this, &TwinTable::pasteToSelection);
+	editPasteToSelection->setText(i18n("Paste inside selection"));
+	editPasteToSelection->setIcon(RKStandardIcons::getIcon (RKStandardIcons::ActionPasteInsideSelection));
 	editPasteToSelection->setWhatsThis(i18n("Pastes the clipboard contents to current position, but not beyond the boundaries of the current selection"));
 
 	// header menus
-	action_insert_col_left = actionCollection ()->addAction ("insert_col_left", this, SLOT (insertColumn()));
-	action_insert_col_left->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertVar));
-	action_delete_col = actionCollection ()->addAction ("delete_col", this, SLOT (deleteColumn()));
-	action_delete_col->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
+	action_insert_col_left = actionCollection()->addAction("insert_col_left", this, &TwinTable::insertColumn);
+	action_insert_col_left->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionInsertVar));
+	action_delete_col = actionCollection()->addAction("delete_col", this, &TwinTable::deleteColumn);
+	action_delete_col->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDeleteVar));
 
-	action_insert_row_above = actionCollection ()->addAction ("insert_row_above", this, SLOT (insertRow()));
-	action_insert_row_above->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow));
-	action_delete_row = actionCollection ()->addAction ("delete_row", this, SLOT (deleteRow()));
-	action_delete_row->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
-	action_delete_rows = actionCollection ()->addAction ("delete_rows", this, SLOT (deleteSelectedRows()));
-	action_delete_rows->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
+	action_insert_row_above = actionCollection()->addAction("insert_row_above", this, &TwinTable::insertRow);
+	action_insert_row_above->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionInsertRow));
+	action_delete_row = actionCollection()->addAction("delete_row", this, &TwinTable::deleteRow);
+	action_delete_row->setIcon(RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
+	action_delete_rows = actionCollection()->addAction("delete_rows", this, &TwinTable::deleteSelectedRows);
+	action_delete_rows->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDeleteRow));
 
 	// global actions
-	action_show_rownames = actionCollection ()->addAction ("show_rownames", this, SLOT (showRownames(bool)));
-	action_show_rownames->setText (i18n("Show / Edit row names"));
-	action_show_rownames->setCheckable (true);
-	action_enable_editing = actionCollection ()->addAction ("enable_editing", this, SLOT (enableEditing(bool)));
-	action_enable_editing->setText (i18n("Enable editing"));
-	action_enable_editing->setCheckable (true);
+	action_show_rownames = actionCollection()->addAction("show_rownames", this, &TwinTable::showRownames);
+	action_show_rownames->setText(i18n("Show / Edit row names"));
+	action_show_rownames->setCheckable(true);
+	action_enable_editing = actionCollection()->addAction ("enable_editing", this, &TwinTable::enableEditing);
+	action_enable_editing->setText(i18n("Enable editing"));
+	action_enable_editing->setCheckable(true);
 	// these actually do the same thing, but are designed to work well in the toolbar
-	QActionGroup *lockactions = new QActionGroup (this);
-	lockactions->setExclusive (true);
-	action_tb_lock_editing = new KToggleAction (i18nc ("verb: switch to read-only state. Make this short.", "Lock"), this);
+	QActionGroup *lockactions = new QActionGroup(this);
+	lockactions->setExclusive(true);
+	action_tb_lock_editing = new KToggleAction(i18nc("verb: switch to read-only state. Make this short.", "Lock"), this);
 	action_tb_lock_editing->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionLock));
 	action_tb_lock_editing->setActionGroup (lockactions);
 	action_tb_lock_editing->setWhatsThis(i18n ("Disable editing (to prevent accidental modification of data)"));

@@ -122,7 +122,7 @@ void EditFormatDialogProxy::initialize (const RKVariable::FormattingOptions& opt
 	dialog->initialize (options, varname);
 
 	connect (dialog, &QDialog::finished, this, &EditFormatDialogProxy::dialogDone);
-	QTimer::singleShot (0, dialog, SLOT (exec()));
+	QTimer::singleShot(0, dialog, &EditFormatDialog::exec);
 }
 
 void EditFormatDialogProxy::dialogDone (int result) {

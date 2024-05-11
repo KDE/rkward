@@ -63,8 +63,8 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	configure_pluginmaps_pageitem = addChild (new RKPluginMapSelectionWidget (this), i18n ("Manage RKWard Plugins"));
 
-	connect (this, &KPageDialog::currentPageChanged, this, &RKLoadLibsDialog::slotPageChanged);
-	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
+	connect(this, &KPageDialog::currentPageChanged, this, &RKLoadLibsDialog::slotPageChanged);
+	QTimer::singleShot(0, this, [this](){ slotPageChanged(); });
 
 	RCommand *command = new RCommand(".libPaths()", RCommand::App | RCommand::GetStringVector);
 	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {

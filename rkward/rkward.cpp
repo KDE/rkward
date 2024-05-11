@@ -93,7 +93,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 // This nevers gets called. It's needed to trick ld into linking correctly. Nothing else.
 void bogusCalls () {
-#ifndef CCPCHECK_ONLY  // it would rightfully complain about some of these
+#ifndef CPPCHECK_ONLY  // it would rightfully complain about some of these
 	ShowEditTextFileAgent::showEditFiles(nullptr);                                   // TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
 	RKReadLineDialog::readLine(nullptr, QString(), QString(), nullptr, nullptr);     // TODO: see above
 	RKSelectListDialog::doSelect(nullptr, QString(), QStringList(), QStringList(), false); // TODO: see above
@@ -177,7 +177,7 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	RKComponentMap::initialize ();
 
 	// stuff which should wait until the event loop is running
-	QTimer::singleShot (0, this, SLOT (doPostInit()));
+	QTimer::singleShot(0, this, &RKWardMainWindow::doPostInit);
 }
 
 RKWardMainWindow::~RKWardMainWindow() {
@@ -476,16 +476,16 @@ void RKWardMainWindow::initActions() {
 	QAction *action;
 
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
-	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame()));
+	new_data_frame = actionCollection()->addAction("new_data_frame", this, &RKWardMainWindow::slotNewDataFrame);
 	new_data_frame->setText (i18n ("Dataset"));
 	new_data_frame->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowDataFrameEditor));
 	new_data_frame->setWhatsThis(i18n ("Creates new empty dataset and opens it for editing"));
 
-	new_command_editor = actionCollection ()->addAction (KStandardAction::New, "new_command_editor", this, SLOT(slotNewCommandEditor()));
+	new_command_editor = actionCollection()->addAction(KStandardAction::New, "new_command_editor", this, &RKWardMainWindow::slotNewCommandEditor);
 	new_command_editor->setText (i18n ("Script File"));
 	new_command_editor->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor));
 
-	new_output = actionCollection ()->addAction("new_output", this, SLOT(slotNewOutput()));
+	new_output = actionCollection()->addAction("new_output", this, &RKWardMainWindow::slotNewOutput);
 	new_output->setText(i18n("Output document"));
 	new_output->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
 	new_output->setWhatsThis(i18n("Creates and activates a new output document"));
@@ -495,7 +495,7 @@ void RKWardMainWindow::initActions() {
 	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier | Qt::AltModifier | Qt::Key_O);
 	fileOpenScript->setText(i18n("Open R Script File..."));
 
-	fileOpenOutput = actionCollection()->addAction(KStandardAction::Open, "file_open_output", this, SLOT(slotOpenOutput()));
+	fileOpenOutput = actionCollection()->addAction(KStandardAction::Open, "file_open_output", this, [this](){ slotOpenOutput(); });
 	actionCollection()->setDefaultShortcut(fileOpenOutput, QKeySequence());
 	fileOpenOutput->setText(i18n("Open RKWard Output File..."));
 
@@ -525,54 +525,54 @@ void RKWardMainWindow::initActions() {
 	fileOpenRecentWorkspace->setText (i18n ("Open Recent Workspace"));
 	fileOpenRecentWorkspace->setWhatsThis(i18n ("Opens a recently used file"));
 
-	fileSaveWorkspace = actionCollection ()->addAction (KStandardAction::Save, "file_savex", this, SLOT(slotFileSaveWorkspace()));
+	fileSaveWorkspace = actionCollection()->addAction(KStandardAction::Save, "file_savex", this, [](){ RKSaveAgent::saveWorkspace(); });
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
 	actionCollection ()->setDefaultShortcut (fileSaveWorkspace, Qt::ControlModifier | Qt::AltModifier | Qt::Key_S);
 	fileSaveWorkspace->setWhatsThis(i18n ("Saves the actual document"));
 
-	fileSaveWorkspaceAs = actionCollection ()->addAction (KStandardAction::SaveAs, "file_save_asx", this, SLOT(slotFileSaveWorkspaceAs()));
+	fileSaveWorkspaceAs = actionCollection()->addAction(KStandardAction::SaveAs, "file_save_asx", this, [](){ RKSaveAgent::saveWorkspaceAs(); });
 	actionCollection ()->setDefaultShortcut (fileSaveWorkspaceAs, Qt::ControlModifier | Qt::AltModifier | Qt::ShiftModifier | Qt::Key_S);
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 	fileSaveWorkspaceAs->setWhatsThis(i18n ("Saves the actual document as..."));
 
-	fileQuit = actionCollection ()->addAction (KStandardAction::Quit, "file_quitx", this, SLOT(close()));
+	fileQuit = actionCollection()->addAction(KStandardAction::Quit, "file_quitx", this, &RKWardMainWindow::close);
 	fileQuit->setWhatsThis(i18n ("Quits the application"));
 
-	interrupt_all_commands = actionCollection ()->addAction ("cancel_all_commands", this, SLOT (slotCancelAllCommands()));
+	interrupt_all_commands = actionCollection()->addAction("cancel_all_commands", this, &RKWardMainWindow::slotCancelAllCommands);
 	interrupt_all_commands->setText (i18n ("Interrupt all commands"));
 	actionCollection ()->setDefaultShortcut (interrupt_all_commands, Qt::ShiftModifier | Qt::Key_Escape);
 	interrupt_all_commands->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_all_commands->setEnabled (false);		// enabled from within setRStatus()
 
-	action = actionCollection ()->addAction ("carbon_copy", this, SLOT (configureCarbonCopy()));
+	action = actionCollection()->addAction("carbon_copy", this, &RKWardMainWindow::configureCarbonCopy);
 	action->setText (i18n ("CC commands to output..."));
 
 	// These two currently do the same thing
-	action = actionCollection ()->addAction ("load_unload_libs", this, SLOT (slotFileLoadLibs()));
+	action = actionCollection()->addAction("load_unload_libs", this, &RKWardMainWindow::slotFileLoadLibs); // TODO: set page
 	action->setText (i18n ("Manage R packages and plugins..."));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
-	action = actionCollection ()->addAction ("configure_packages", this, SLOT (slotFileLoadLibs()));
+	action = actionCollection()->addAction("configure_packages", this, &RKWardMainWindow::slotFileLoadLibs); // TODO: set page
 	action->setText (i18n ("Manage R packages and plugins..."));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
 	setStandardToolBarMenuEnabled (true);
 	createStandardStatusBarAction ();
 
-	close_all_editors = actionCollection ()->addAction ("close_all_editors", this, SLOT (slotCloseAllEditors()));
+	close_all_editors = actionCollection()->addAction("close_all_editors", this, &RKWardMainWindow::slotCloseAllEditors);
 	close_all_editors->setText (i18n ("Close All Data"));
 	close_all_editors->setWhatsThis(i18n ("Closes all open data editors"));
 
-	action = actionCollection ()->addAction (KStandardAction::Close, "window_close", this, SLOT (slotCloseWindow()));
+	action = actionCollection()->addAction(KStandardAction::Close, "window_close", this, &RKWardMainWindow::slotCloseWindow);
 
-	window_close_all = actionCollection ()->addAction ("window_close_all", this, SLOT (slotCloseAllWindows()));
+	window_close_all = actionCollection()->addAction("window_close_all", this, &RKWardMainWindow::slotCloseAllWindows);
 	window_close_all->setText (i18n ("Close All"));
 
-	window_detach = actionCollection ()->addAction ("window_detach", this, SLOT (slotDetachWindow()));
+	window_detach = actionCollection()->addAction("window_detach", this, &RKWardMainWindow::slotDetachWindow);
 	window_detach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDetachWindow));
 	window_detach->setText (i18n ("Detach"));
 
-	configure = actionCollection ()->addAction (KStandardAction::Preferences, "options_configure", this, SLOT (slotConfigure()));
+	configure = actionCollection()->addAction(KStandardAction::Preferences, "options_configure", this, &RKWardMainWindow::slotConfigure);
 	action = actionCollection()->addAction("setup_wizard");
 	action->setText(i18n("Check installation"));
 	connect(action, &QAction::triggered, &RKSetupWizard::manualCheck);
@@ -886,16 +886,6 @@ void RKWardMainWindow::slotFileLoadLibs () {
 	RK_TRACE (APP);
 	RKLoadLibsDialog *dial = new RKLoadLibsDialog(this, nullptr);
 	dial->show ();
-}
-
-void RKWardMainWindow::slotFileSaveWorkspace () {
-	RK_TRACE (APP);
-	RKSaveAgent::saveWorkspace();
-}
-
-void RKWardMainWindow::slotFileSaveWorkspaceAs () {
-	RK_TRACE (APP);
-	RKSaveAgent::saveWorkspaceAs();
 }
 
 void RKWardMainWindow::updateCWD () {

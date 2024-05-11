@@ -125,7 +125,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #endif
 
 		RKRBackendTransmitter transmitter (servername, token);
-		RKRBackendProtocolBackend::p_transmitter = &transmitter; // cppcheck-suppress danglingReference ; -> valid for the lifetime of the backend
+		RKRBackendProtocolBackend::p_transmitter = &transmitter; // cppcheck-suppress danglingLifetime ; -> valid for the lifetime of the backend
 		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);
 		transmitter.start ();
 		RKRBackend::this_pointer->run (locale_dir);

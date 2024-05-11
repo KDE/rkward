@@ -270,7 +270,7 @@ RKCaughtX11Window::RKCaughtX11Window(QWindow* window_to_embed, int device_number
 #endif
 
 	// We need to make sure that the R backend has had a chance to do event processing on the new device, or else embedding will fail (sometimes).
-	QTimer::singleShot (100, this, SLOT (doEmbed()));
+	QTimer::singleShot(100, this, [this](){ doEmbed(); });
 }
 
 RKCaughtX11Window::RKCaughtX11Window(RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow(nullptr, X11Window) {
@@ -290,7 +290,7 @@ RKCaughtX11Window::RKCaughtX11Window(RKGraphicsDevice* rkward_device, int device
 	xembed_container->show();
 	setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-	QTimer::singleShot (0, this, SLOT (doEmbed()));
+	QTimer::singleShot(0, this, [this](){ doEmbed(); });
 }
 
 void RKCaughtX11Window::commonInit (int device_number) {
@@ -357,7 +357,7 @@ void RKCaughtX11Window::doEmbed () {
 	if (!isAttached ()) {
 		// make xembed_container resizable, again, now that it actually has a content
 		dynamic_size_action->setChecked (true);
-		QTimer::singleShot (0, this, SLOT (fixedSizeToggled())); // For whatever reason, apparently we have to wait for the next event loop with this.
+		QTimer::singleShot(0, this, [this](){ fixedSizeToggled(); }); // For whatever reason, apparently we have to wait for the next event loop with this.
 	}
 
 	// try to be helpful when the window is too large to fit on screen
@@ -742,35 +742,35 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart(RKCaughtX11Window *window) : KParts
 	window->actions_not_for_preview.append (window->dynamic_size_action);
 
 	QAction *action;
-	action = actionCollection ()->addAction ("set_fixed_size_1", window, SLOT (setFixedSize1()));
+	action = actionCollection()->addAction("set_fixed_size_1", window, &RKCaughtX11Window::setFixedSize1);
 	action->setText (i18n ("Set fixed size 500x500"));
 	window->actions_not_for_preview.append (action);
-	action = actionCollection ()->addAction ("set_fixed_size_2", window, SLOT (setFixedSize2()));
+	action = actionCollection()->addAction("set_fixed_size_2", window, &RKCaughtX11Window::setFixedSize2);
 	action->setText (i18n ("Set fixed size 1000x1000"));
 	window->actions_not_for_preview.append (action);
-	action = actionCollection ()->addAction ("set_fixed_size_3", window, SLOT (setFixedSize3()));
+	action = actionCollection()->addAction("set_fixed_size_3", window, &RKCaughtX11Window::setFixedSize3);
 	action->setText (i18n ("Set fixed size 2000x2000"));
 	window->actions_not_for_preview.append (action);
-	action = actionCollection ()->addAction ("set_fixed_size_manual", window, SLOT (setFixedSizeManual()));
+	action = actionCollection()->addAction("set_fixed_size_manual", window, &RKCaughtX11Window::setFixedSizeManual);
 	action->setText (i18n ("Set specified fixed size..."));
 	window->actions_not_for_preview.append (action);
 
-	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
+	action = actionCollection()->addAction("plot_prev", window, &RKCaughtX11Window::previousPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Previous plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft));
 	window->plot_prev_action = (QAction *) action;
-	action = actionCollection ()->addAction ("plot_first", window, SLOT (firstPlot()));
+	action = actionCollection()->addAction("plot_first", window, &RKCaughtX11Window::firstPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("First plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveFirst));
 	window->plot_first_action = (QAction *) action;
-	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
+	action = actionCollection()->addAction("plot_next", window, &RKCaughtX11Window::nextPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Next plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight));
 	window->plot_next_action = (QAction *) action;
-	action = actionCollection ()->addAction ("plot_last", window, SLOT (lastPlot()));
+	action = actionCollection()->addAction("plot_last", window, &RKCaughtX11Window::lastPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
@@ -782,44 +782,44 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart(RKCaughtX11Window *window) : KParts
 	actionCollection ()->addAction ("plot_list", action);
 	connect (action, &QAction::triggered, window, &RKCaughtX11Window::gotoPlot);
 
-	action = actionCollection ()->addAction ("plot_force_append", window, SLOT (forceAppendCurrentPlot()));
+	action = actionCollection()->addAction("plot_force_append", window, &RKCaughtX11Window::forceAppendCurrentPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Append this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
 	window->plot_force_append_action = (QAction *) action;
-	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
+	action = actionCollection()->addAction("plot_remove", window, &RKCaughtX11Window::removeCurrentPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Remove this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
 	window->plot_remove_action = (QAction *) action;
 
-	action = actionCollection ()->addAction ("plot_clear_history", window, SLOT (clearHistory()));
+	action = actionCollection()->addAction("plot_clear_history", window, &RKCaughtX11Window::clearHistory);
 	window->plot_clear_history_action = (QAction *) action;
 	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
 	window->actions_not_for_preview.append (action);
 
-	action = actionCollection ()->addAction ("plot_properties", window, SLOT (showPlotInfo()));
+	action = actionCollection()->addAction("plot_properties", window, &RKCaughtX11Window::showPlotInfo);
 	window->plot_properties_action = (QAction *) action;
 	action->setText (i18n ("Plot properties"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDocumentInfo));
 	window->actions_not_for_preview.append (action);
 
-	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
+	action = actionCollection()->addAction("device_activate", window, &RKCaughtX11Window::activateDevice);
 	action->setText (i18n ("Make active"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionFlagGreen));
 	window->actions_not_for_preview.append (action);
-	action = actionCollection ()->addAction ("device_copy_to_output", window, SLOT (copyDeviceToOutput()));
+	action = actionCollection()->addAction("device_copy_to_output", window, &RKCaughtX11Window::copyDeviceToOutput);
 	action->setText (i18n ("Copy to output"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
-	action = actionCollection ()->addAction (KStandardAction::Print, "device_print", window, SLOT (printDevice()));
-	action = actionCollection ()->addAction ("device_copy_to_r_object", window, SLOT (copyDeviceToRObject()));
+	action = actionCollection()->addAction(KStandardAction::Print, "device_print", window, &RKCaughtX11Window::printDevice);
+	action = actionCollection()->addAction("device_copy_to_r_object", window, &RKCaughtX11Window::copyDeviceToRObject);
 	action->setText (i18n ("Store as R object..."));
-	action = actionCollection ()->addAction ("device_duplicate", window, SLOT (duplicateDevice()));
+	action = actionCollection()->addAction("device_duplicate", window, &RKCaughtX11Window::duplicateDevice);
 	action->setText (i18n ("Duplicate"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionWindowDuplicate));
 
-	action = window->stop_interaction = actionCollection ()->addAction ("stop_interaction", window, SLOT (stopInteraction()));
+	action = window->stop_interaction = actionCollection()->addAction("stop_interaction", window, &RKCaughtX11Window::stopInteraction);
 	action->setText (i18n ("Stop interaction"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	action->setVisible (false);

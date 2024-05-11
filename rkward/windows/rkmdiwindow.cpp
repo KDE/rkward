@@ -315,7 +315,7 @@ void RKMDIWindow::enterEvent (QEnterEvent *event) {
 				//
 				// Finally, in some cases (such as when a new script window was created), we need a short delay, as we may be catching an enter event on a window that is in the same place,
 				// where the newly created window goes. This would cause activation to switch back, immediately.
-				QTimer::singleShot (50, this, SLOT (slotActivateForFocusFollowsMouse()));
+				QTimer::singleShot(50, this, [this](){ slotActivateForFocusFollowsMouse(); });
 			}
 		}
 	}
@@ -417,11 +417,11 @@ void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QUrl& 
 	settings_page = _settings_page;
 
 	if (!help_url.isEmpty ()) {
-		QAction *action = standardActionCollection ()->addAction ("window_help", this, SLOT (showWindowHelp()));
+		QAction *action = standardActionCollection()->addAction("window_help", this, &RKMDIWindow::showWindowHelp);
 		action->setText (i18n ("Help on %1", generic_window_name));
 	}
 	if (settings_page != RKSettings::NoPage) {
-		QAction *action = standardActionCollection ()->addAction ("window_configure", this, SLOT (showWindowSettings()));
+		QAction *action = standardActionCollection()->addAction("window_configure", this, &RKMDIWindow::showWindowSettings);
 		action->setText (i18n ("Configure %1", generic_window_name));
 	}
 }

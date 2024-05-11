@@ -53,17 +53,17 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	setXMLFile ("rktoplevelwindowgui.rc");
 
 	// help menu
-	QAction *help_invoke_r_help = actionCollection ()->addAction ("invoke_r_help", this, SLOT(invokeRHelp()));
+	QAction *help_invoke_r_help = actionCollection()->addAction("invoke_r_help", this, &RKTopLevelWindowGUI::invokeRHelp);
 	help_invoke_r_help->setText (i18n ("Help on R"));
-	QAction *show_help_search = actionCollection ()->addAction ("show_help_search", this, SLOT(showHelpSearch()));
+	QAction *show_help_search = actionCollection()->addAction("show_help_search", this, &RKTopLevelWindowGUI::showHelpSearch);
 	show_help_search->setText (i18n ("Search R Help"));
-	QAction *show_rkward_help = actionCollection ()->addAction (KStandardAction::HelpContents, "rkward_help", this, SLOT (showRKWardHelp()));
+	QAction *show_rkward_help = actionCollection()->addAction(KStandardAction::HelpContents, "rkward_help", this, &RKTopLevelWindowGUI::showRKWardHelp);
 	show_rkward_help->setText(i18n("RKWard Dashboard and Help"));
 
-	actionCollection()->addAction(KStandardAction::AboutApp, "about_app", this, SLOT(showAboutApplication()));
-	actionCollection()->addAction(KStandardAction::WhatsThis, "whats_this", this, SLOT(startWhatsThis()));
-	actionCollection()->addAction(KStandardAction::ReportBug, "report_bug", this, SLOT(reportRKWardBug()));
-	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, "switch_application_language", this, SLOT(showSwitchApplicationLanguage()));
+	actionCollection()->addAction(KStandardAction::AboutApp, "about_app", this, &RKTopLevelWindowGUI::showAboutApplication);
+	actionCollection()->addAction(KStandardAction::WhatsThis, "whats_this", this, &RKTopLevelWindowGUI::startWhatsThis);
+	actionCollection()->addAction(KStandardAction::ReportBug, "report_bug", this, &RKTopLevelWindowGUI::reportRKWardBug);
+	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, "switch_application_language", this, &RKTopLevelWindowGUI::showSwitchApplicationLanguage);
 
 	help_invoke_r_help->setWhatsThis(i18n ("Shows the R help index"));
 	show_help_search->setWhatsThis(i18n ("Shows/raises the R Help Search window"));
@@ -71,16 +71,16 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 
 	// window menu
 	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled
-	prev_action = actionCollection ()->addAction ("prev_window", this, SLOT (previousWindow()));
-	prev_action->setText (i18n ("Previous Window"));
+	prev_action = actionCollection()->addAction("prev_window", this, &RKTopLevelWindowGUI::previousWindow);
+	prev_action->setText(i18n("Previous Window"));
 	prev_action->setIcon(QIcon(":/rkward/icons/window_back.png"));
 	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier | Qt::Key_Tab);
-	next_action = actionCollection ()->addAction ("next_window", this, SLOT (nextWindow()));
-	next_action->setText (i18n ("Next Window"));
+	next_action = actionCollection()->addAction("next_window", this, &RKTopLevelWindowGUI::nextWindow);
+	next_action->setText(i18n("Next Window"));
 	next_action->setIcon(QIcon(":rkward/icons/window_forward.png"));
 	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_Tab);
 
-	QAction* action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
+	QAction* action = actionCollection()->addAction("window_activate_docview", this, &RKTopLevelWindowGUI::activateDocumentView);
 	action->setText (i18n ("Activate Document view"));
 	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier | Qt::Key_0);
 
@@ -92,8 +92,8 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	connect(output_windows_menu, &QMenu::triggered, this, &RKTopLevelWindowGUI::slotOutputShow);
 
 	// settings
-	KStandardAction::keyBindings (this, SLOT (configureShortcuts()), actionCollection ());
-	KStandardAction::configureToolbars (this, SLOT (configureToolbars()), actionCollection ());
+	KStandardAction::keyBindings(this, &RKTopLevelWindowGUI::configureShortcuts, actionCollection());
+	KStandardAction::configureToolbars(this, &RKTopLevelWindowGUI::configureToolbars, actionCollection());
 	// Color scheme action. NOTE: selection is non-permanent for KF5 <= 5.87.0, auto-saved afterwards. Apparently, auto-save cannot be implemented for earlier versions within a few lines of code
 	KColorSchemeManager *manager = new KColorSchemeManager(this);
 	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), KColorSchemeMenu::createMenu(manager, this));
