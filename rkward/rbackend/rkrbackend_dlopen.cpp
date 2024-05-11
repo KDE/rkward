@@ -32,8 +32,10 @@ void *resolve_symb(void* dllinfo, const char* name) {
 auto loadlib(const char* name) {
 #ifdef Win32
 	auto ret = LoadLibraryA(name);
+#elif defined(LM_ID_NEWLM)
+	auto ret = dlmopen(LM_ID_NEWLM, name, RTLD_NOW | RTLD_LOCAL); // NOTE: RTLD_DEEPBIND causes undiagnosed runtime failure on Suse Tumbleweed around 05/24 (while it works, elsewhere)
 #else
-	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL); // NOTE: RTLD_DEEPBIND causes undiagnosed runtime failure on Suse Tumbleweed around 05/24 (while it works, elsewhere)
+	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL);
 #endif
 	if (!ret) {
 #ifdef Win32
@@ -48,7 +50,6 @@ auto loadlib(const char* name) {
 
 int main(int argc, char *argv[]) {
 // TODO: Take lib name from CMake?
-// TODO: Use dlmopen, where available?
 
 /** NOTE: For a description of the rationale for this involved loading procedure rkapi.h ! */
 	if (argc > 10) {
