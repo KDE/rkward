@@ -89,6 +89,16 @@ available as a config option.
 #	undef FALSE
 #endif
 
+#include <Rversion.h>
+
+#if defined(Win32) && (R_VERSION >= R_Version(4, 3, 0))
+// We don't use Complex.h ourselves, but it is included from Rinternals.h and comes with a non-standard definition
+// that trips up MSVC. Fortunately, we can disable that via a define.
+#define R_LEGACY_RCOMPLEX
+#include <R_ext/Complex.h>
+#undef R_LEGACY_RCOMPLEX
+#endif
+
 // Common includes
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
