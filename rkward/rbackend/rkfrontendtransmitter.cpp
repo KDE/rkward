@@ -54,7 +54,7 @@ QString findBackendLibAtPath(const QString &path) {
 	QString ret = dir.filePath("librkward.rbackend.lib.so");
 #endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Looking for backend lib at %s", qPrintable(ret));
-	if (QFileInfo(ret).exists()) return ret;
+	if (QFileInfo::exists(ret)) return ret;
 	return QString();
 }
 #endif

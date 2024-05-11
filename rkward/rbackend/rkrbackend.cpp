@@ -1049,7 +1049,7 @@ bool RKRBackend::startR () {
 #ifndef Q_OS_WIN
 	// safety check: If we are beyond the stack boundaries already, we better disable stack checking
 	// this has to come *after* the first setup_Rmainloop ()!
-	Rboolean stack_ok = RFn::R_ToplevelExec(R_CheckStackWrapper, (void *) 0);
+	Rboolean stack_ok = RFn::R_ToplevelExec(R_CheckStackWrapper, nullptr);
 	if (!stack_ok) {
 		RK_DEBUG (RBACKEND, DL_WARNING, "R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize.");
 		RK_DEBUG (RBACKEND, DL_WARNING, "Whether or not things work after this, *please* submit a bug report.");
@@ -1098,7 +1098,7 @@ bool RKRBackend::startR () {
 		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 2},
 		{ nullptr, nullptr, 0 }
 	};
-	RFn::R_registerRoutines(RFn::R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
+	RFn::R_registerRoutines(RFn::R_getEmbeddingDllInfo(), nullptr, callMethods, nullptr, nullptr);
 
 	connectCallbacks();
 	RKInsertToplevelStatementFinishedCallback(nullptr);
@@ -1150,9 +1150,9 @@ void completeForkMaster () {
 	// Block SIGCHLD in the main thread from now on. I don't fully understand, why, but otherwise, these signals
 	// interrupt the select() call in the fork()ing code of library(parallel)
 	sigset_t new_set;
-	sigemptyset (&new_set);
-	sigaddset (&new_set, SIGCHLD);
-	pthread_sigmask (SIG_BLOCK, &new_set, NULL);
+	sigemptyset(&new_set);
+	sigaddset(&new_set, SIGCHLD);
+	pthread_sigmask(SIG_BLOCK, &new_set, nullptr);
 
 //	This was used to show a warning message. Unfortunately, however, forks also occur on every popen (i.e. in system(..., intern=TRUE).
 //	RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("forkNotification"), false);
