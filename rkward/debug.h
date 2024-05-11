@@ -31,7 +31,7 @@ void RKDebug (int flags, int level, const char *fmt, ...);
 #define OUTPUT 1 << 10
 #define XML 1 << 11
 #define GRAPHICS_DEVICE 1 << 12
-#define DEBUG_ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | COMMANDEDITOR | MISC | DIALOGS | OUTPUT | XML | GRAPHICS_DEVICE)
+#define DEBUG_ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | SETTINGS | RBACKEND | COMMANDEDITOR | MISC | DIALOGS | OUTPUT | XML | GRAPHICS_DEVICE)
 
 #ifdef RKWARD_DEBUG
 // Debug functions 
