@@ -93,7 +93,7 @@ void RKVarEditModel::checkDuplicates () {
 
 	if (duplicate_check_triggered) return;
 	duplicate_check_triggered = true;
-	QTimer::singleShot (0, this, SLOT (checkDuplicatesNow()));
+	QTimer::singleShot(0, this, &RKVarEditModel::checkDuplicatesNow);
 }
 
 void RKVarEditModel::checkDuplicatesNow () {
@@ -131,8 +131,8 @@ void RKVarEditModel::scheduleReset () {
 
 	if (!reset_scheduled) {
 		reset_scheduled = true;
-		QTimer::singleShot (0, this, SLOT (doResetNow()));
-		beginResetModel ();
+		QTimer::singleShot(0, this, &RKVarEditModel::doResetNow);
+		beginResetModel();
 	}
 }
 

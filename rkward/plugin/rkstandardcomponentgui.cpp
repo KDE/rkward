@@ -150,7 +150,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 		area->setWindow(code_display);
 
 		KActionCollection *action_collection = new KActionCollection (this);
-		action_collection->addAction (KStandardAction::Copy, this, SLOT (copyCode()));
+		action_collection->addAction(KStandardAction::Copy, "copy", this, &RKStandardComponentGUI::copyCode);
 	}
 }
 
@@ -297,7 +297,7 @@ void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	setMinimumSize (min.expandedTo (QSize (50, 50)));
 
 	if (toggle_code_box) {	// this is a dialog, not  wizard
-		QTimer::singleShot (0, this, SLOT (doPostShowCleanup()));
+		QTimer::singleShot(0, this, &RKStandardComponentGUI::doPostShowCleanup);
 	}
 }
 

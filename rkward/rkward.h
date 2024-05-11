@@ -76,10 +76,6 @@ public Q_SLOTS:
 	void askOpenWorkspace (const QUrl &url=QUrl());
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
-	/** save a document */
-	void slotFileSaveWorkspace();
-	/** save a document by a new filename*/
-	void slotFileSaveWorkspaceAs();
 	/** shows the dialog to install/load/unload packages */
 	void slotFileLoadLibs ();
 	/** shows the dialog to import data */

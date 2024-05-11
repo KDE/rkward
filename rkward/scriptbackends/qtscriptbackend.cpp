@@ -90,7 +90,7 @@ void QtScriptBackend::destroy () {
 		dead = true;
 		code_property = nullptr;
 		if (script_thread) script_thread->kill ();
-		QTimer::singleShot (10000, this, SLOT (deleteLater()));	// don't wait for ever for the process to die, even if it's somewhat dangerous
+		QTimer::singleShot(10000, this, [this](){ deleteLater(); });	// don't wait for ever for the process to die, even if it's somewhat dangerous
 	}
 
 	busy = false;

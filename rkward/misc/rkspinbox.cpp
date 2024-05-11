@@ -66,7 +66,7 @@ int RKSpinBox::valueFromText (const QString & text) const {
 		if (ok && (new_value != real_value)) {
 			double *cheat = const_cast<double*> (&real_value);
 			*cheat = new_value;
-			QTimer::singleShot (0, const_cast<RKSpinBox*>(this), SLOT (emitValueChange()));
+			QTimer::singleShot(0, const_cast<RKSpinBox*>(this), &RKSpinBox::emitValueChange);
 		}
 		return 0;
 	} else {
@@ -75,7 +75,7 @@ int RKSpinBox::valueFromText (const QString & text) const {
 		if (ok && (new_value != int_value)) {
 			int *cheat = const_cast<int*> (&int_value);
 			*cheat = new_value;
-			QTimer::singleShot (0, const_cast<RKSpinBox*>(this), SLOT (emitValueChange()));
+			QTimer::singleShot(0, const_cast<RKSpinBox*>(this), &RKSpinBox::emitValueChange);
 		}
 		return 0;
 	}

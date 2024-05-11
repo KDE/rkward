@@ -50,7 +50,7 @@ void CellEditor::setValueLabels (const RObject::ValueLabels& labels) {
 	}
 	connect (value_list, &QMenu::triggered, this, &CellEditor::selectedFromList);
 
-	QTimer::singleShot (200, this, SLOT (showValueLabels()));
+	QTimer::singleShot(200, this, &CellEditor::showValueLabels);
 }
 
 void CellEditor::selectedFromList (QAction* action) {

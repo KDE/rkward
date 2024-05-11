@@ -857,35 +857,35 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	RKStandardActions::copyLinesToOutput (this, this, SLOT (copyLinesToOutput()));
 	RKStandardActions::functionHelp (this, this);
 	RKStandardActions::onlineHelp (this, this);
-	run_selection_action = RKStandardActions::runCurrent (this, this, SLOT (runSelection()));
+	run_selection_action = RKStandardActions::runCurrent(this, this, SLOT (runSelection()));
 
-	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));
-	interrupt_command_action->setText (i18n ("Interrupt running command"));
-	ac->setDefaultShortcut (interrupt_command_action, REAL_CTRL_KEY | Qt::Key_C);
-	interrupt_command_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
-	interrupt_command_action->setEnabled (false);
+	interrupt_command_action = ac->addAction("interrupt", this, &RKConsole::resetConsole);
+	interrupt_command_action->setText(i18n("Interrupt running command"));
+	ac->setDefaultShortcut(interrupt_command_action, REAL_CTRL_KEY | Qt::Key_C);
+	interrupt_command_action->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionInterrupt));
+	interrupt_command_action->setEnabled(false);
 
-	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
-	ac->setDefaultShortcut (copy_literal_action, REAL_CMD_KEY | Qt::Key_C);
-	copy_literal_action->setText (i18n ("Copy selection literally"));
+	copy_literal_action = ac->addAction("rkconsole_copy_literal", this, &RKConsole::literalCopy);
+	ac->setDefaultShortcut(copy_literal_action, REAL_CMD_KEY | Qt::Key_C);
+	copy_literal_action->setText(i18n("Copy selection literally"));
 
-	copy_commands_action = ac->addAction ("rkconsole_copy_commands", this, SLOT (copyCommands()));
-	copy_commands_action->setText (i18n ("Copy commands, only"));
+	copy_commands_action = ac->addAction("rkconsole_copy_commands", this, &RKConsole::copyCommands);
+	copy_commands_action->setText(i18n("Copy commands, only"));
 
 	RKStandardActions::pasteSpecial (this, this, SLOT (submitBatch(QString)));
 
-	ac->addAction (KStandardAction::Clear, "rkconsole_clear", this, SLOT (clear()));
-	paste_action = ac->addAction (KStandardAction::Paste, "rkconsole_paste", this, SLOT (paste()));
+	ac->addAction(KStandardAction::Clear, "rkconsole_clear", this, &RKConsole::clear);
+	paste_action = ac->addAction(KStandardAction::Paste, "rkconsole_paste", this, &RKConsole::paste);
 
 	addProxyAction ("file_print", i18n ("Print Console"));
 	addProxyAction ("file_export_html");
 	addProxyAction ("view_inc_font_sizes");
 	addProxyAction ("view_dec_font_sizes");
 
-	QAction *action = ac->addAction ("loadhistory", this, SLOT (userLoadHistory()));
-	action->setText (i18n ("Import command history..."));
-	action = ac->addAction ("savehistory", this, SLOT (userSaveHistory()));
-	action->setText (i18n ("Export command history..."));
+	QAction *action = ac->addAction("loadhistory", this, [this](){ userLoadHistory(); });
+	action->setText(i18n("Import command history..."));
+	action = ac->addAction("savehistory", this, [this](){ userSaveHistory(); });
+	action->setText(i18n("Export command history..."));
 }
 
 void RKConsole::pipeUserCommand (const QString &command) {

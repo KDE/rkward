@@ -82,7 +82,7 @@ bool RKReadLineDialog::readLine (QWidget *parent, const QString &caption, const 
 
 	RKReadLineDialog *dialog = new RKReadLineDialog (parent, caption, prompt, command);
 	if (!stored_geom.isNull ()) dialog->restoreGeometry (stored_geom);
-	QTimer::singleShot (0, dialog->input, SLOT(setFocus()));
+	QTimer::singleShot(0, dialog, [dialog](){ dialog->input->setFocus(); });
 	int res = dialog->exec ();
 	*result = dialog->input->text ();
 	stored_geom = dialog->saveGeometry ();

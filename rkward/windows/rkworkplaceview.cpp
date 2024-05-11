@@ -91,10 +91,10 @@ void RKWorkplaceViewPane::showContextMenu (const QPoint &pos) {
 	if (tab < 0) return;	// no context menu for the empty area
 
 	QMenu* m = new QMenu (this);
-	QAction *action = KStandardAction::close (this, SLOT (contextMenuClosePage()), this);
+	QAction *action = KStandardAction::close(this, &RKWorkplaceViewPane::contextMenuClosePage, this);
 	action->setData (tab);
 	m->addAction (action);
-	action = m->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDetachWindow), i18n("Detach"), this, SLOT (contextMenuDetachWindow()));
+	action = m->addAction(RKStandardIcons::getIcon(RKStandardIcons::ActionDetachWindow), i18n("Detach"), this, &RKWorkplaceViewPane::contextMenuDetachWindow);
 	action->setData (tab);
 	m->exec (mapToGlobal (pos));
 	delete m;
@@ -235,14 +235,14 @@ RKWorkplaceViewPane* RKWorkplaceView::activePane () const {
 void RKWorkplaceView::initActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
-	action_page_left = (QAction *) ac->addAction ("left_window", this, SLOT (pageLeft()));
+	action_page_left = (QAction *) ac->addAction("left_window", this, &RKWorkplaceView::pageLeft);
 	action_page_left->setText (i18n ("Window Left"));
 	ac->setDefaultShortcuts (action_page_left, {
 		Qt::ControlModifier | Qt::Key_Less,
 		Qt::ControlModifier | Qt::Key_Comma
 	});
 
-	action_page_right = (QAction *) ac->addAction ("right_window", this, SLOT (pageRight()));
+	action_page_right = (QAction *) ac->addAction("right_window", this, &RKWorkplaceView::pageRight);
 	action_page_right->setText (i18n ("Window Right"));
 	ac->setDefaultShortcuts (action_page_right, {
 		Qt::ControlModifier | Qt::Key_Greater,

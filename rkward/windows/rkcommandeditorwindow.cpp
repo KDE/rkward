@@ -345,7 +345,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_run_all = RKStandardActions::runAll (this, this, SLOT (runAll()));
 	action_run_current = RKStandardActions::runCurrent (this, this, SLOT (runCurrent()), true);
 	// NOTE: enter_and_submit is not currently added to the menu
-	QAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
+	QAction *action = ac->addAction("enter_and_submit", this, &RKCommandEditorWindow::enterAndSubmit);
 	action->setText (i18n ("Insert line break and run"));
 	ac->setDefaultShortcuts (action, QList<QKeySequence>() << (Qt::AltModifier | Qt::Key_Return) << (Qt::AltModifier | Qt::Key_Enter));
 	ac->setDefaultShortcut (action, Qt::AltModifier | Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
@@ -364,7 +364,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	ac->addAction ("unmark_block", actionmenu_unmark_block);
 	connect (actionmenu_unmark_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 
-	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript()));
+	action_setwd_to_script = ac->addAction("setwd_to_script", this, &RKCommandEditorWindow::setWDToScript);
 	action_setwd_to_script->setText (i18n ("CD to script directory"));
 	action_setwd_to_script->setWhatsThis(i18n ("Change the working directory to the directory of this script"));
 	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
@@ -446,18 +446,15 @@ void RKCommandEditorWindow::initBlocks () {
 		colorsquare.fill (colors[i]);
 		QIcon icon (colorsquare);
 
-		record.mark = ac->addAction ("markblock" + QString::number (i), this, SLOT (markBlock()));
+		record.mark = ac->addAction("markblock" + QString::number(i), this, [this, i](){ markBlock(i); });
 		record.mark->setIcon (icon);
-		record.mark->setData (i);
 		actionmenu_mark_block->addAction (record.mark);
-		record.unmark = ac->addAction ("unmarkblock" + QString::number (i), this, SLOT (unmarkBlock()));
+		record.unmark = ac->addAction("unmarkblock" + QString::number(i), this, [this, i](){ unmarkBlock(i); });
 		record.unmark->setIcon (icon);
-		record.unmark->setData (i);
 		actionmenu_unmark_block->addAction (record.unmark);
-		record.run = ac->addAction ("runblock" + QString::number (i), this, SLOT (runBlock()));
+		record.run = ac->addAction("runblock" + QString::number(i), this, [this, i](){ runBlock(i); });
 		ac->setDefaultShortcut (record.run, shortcuts[i]);
 		record.run->setIcon (icon);
-		record.run->setData (i);
 		actionmenu_run_block->addAction (record.run);
 
 		// these two not strictly needed due to removeBlock(), below. Silences a GCC warning, however.
@@ -943,17 +940,10 @@ void RKCommandEditorWindow::runAll () {
 	RKConsole::pipeUserCommand (command);
 }
 
-void RKCommandEditorWindow::runBlock () {
+void RKCommandEditorWindow::runBlock(int index) {
 	RK_TRACE (COMMANDEDITOR);
 
-	QAction* action = qobject_cast<QAction*>(sender ());
-	if (!action) {
-		RK_ASSERT (false);
-		return;
-	}
-
 	clearUnusedBlocks ();	// this block might have been removed meanwhile
-	int index = action->data ().toInt ();
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 	if (block_records[index].active) {
 		QString command = m_doc->text (*(block_records[index].range));
@@ -963,16 +953,9 @@ void RKCommandEditorWindow::runBlock () {
 	}
 }
 
-void RKCommandEditorWindow::markBlock () {
+void RKCommandEditorWindow::markBlock(int index) {
 	RK_TRACE (COMMANDEDITOR);
 
-	QAction* action = qobject_cast<QAction*>(sender ());
-	if (!action) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	int index = action->data ().toInt ();
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 	if (m_view->selection ()) {
 		addBlock (index, m_view->selectionRange ());
@@ -981,16 +964,9 @@ void RKCommandEditorWindow::markBlock () {
 	}
 }
 
-void RKCommandEditorWindow::unmarkBlock () {
+void RKCommandEditorWindow::unmarkBlock(int index) {
 	RK_TRACE (COMMANDEDITOR);
 
-	QAction* action = qobject_cast<QAction*>(sender ());
-	if (!action) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	int index = action->data ().toInt ();
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 	removeBlock (index);
 }

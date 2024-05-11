@@ -295,10 +295,10 @@ RKCommandLogPart::~RKCommandLogPart () {
 void RKCommandLogPart::initActions () {
 	RK_TRACE (APP);
 
-	copy = actionCollection ()->addAction (KStandardAction::Copy, "log_copy", log->getView (), SLOT (copy()));
-	actionCollection ()->addAction (KStandardAction::Clear, "log_clear", log, SLOT (clearLog()));
-	actionCollection ()->addAction (KStandardAction::SelectAll, "log_select_all", log->getView (), SLOT (selectAll()));
-	QAction *configure = actionCollection ()->addAction ("log_configure", log, SLOT(configureLog()));
+	copy = actionCollection()->addAction(KStandardAction::Copy, "log_copy", log->getView(), &RKCommandLogView::copy);
+	actionCollection()->addAction(KStandardAction::Clear, "log_clear", log, &RKCommandLog::clearLog);
+	actionCollection()->addAction(KStandardAction::SelectAll, "log_select_all", log->getView(), &RKCommandLogView::selectAll);
+	QAction *configure = actionCollection()->addAction("log_configure", log, &RKCommandLog::configureLog);
 	configure->setText (i18n ("Configure"));
 
 	run_selection = RKStandardActions::runCurrent (log, log, SLOT(runSelection()));

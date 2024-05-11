@@ -46,7 +46,7 @@ RKContextHandler::~RKContextHandler () {
 void RKContextHandler::addAction (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
-	QAction *action = actionCollection ()->addAction (id, this, SLOT (componentActionActivated()));
+	QAction *action = actionCollection()->addAction(id, this, &RKContextHandler::componentActionActivated);
 	action->setText (handle->getLabel ());
 	action_map.insert (action, handle);
 }

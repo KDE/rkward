@@ -35,9 +35,9 @@ RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels&
 	verticalHeader ()->setFixedWidth (40);
 	setMinimumWidth (80);
 
-	addAction (KStandardAction::cut (this, SLOT (cut()), this));
-	addAction (KStandardAction::copy (this, SLOT (copy()), this));
-	addAction (KStandardAction::paste (this, SLOT (paste()), this));
+	addAction(KStandardAction::cut(this, &RKVarLevelsTable::cut, this));
+	addAction(KStandardAction::copy(this, &RKVarLevelsTable::copy, this));
+	addAction(KStandardAction::paste(this, &RKVarLevelsTable::paste, this));
 	setContextMenuPolicy (Qt::ActionsContextMenu);
 
 	setModel (lmodel = new RKVarLevelsTableModel (labels, this));
@@ -244,7 +244,7 @@ void EditLabelsDialogProxy::initialize (const RObject::ValueLabels& labels, cons
 
 	dialog = new EditLabelsDialog (this, labels, varname);
 	connect (dialog, &QDialog::finished, this, &EditLabelsDialogProxy::dialogDone);
-	QTimer::singleShot (0, dialog, SLOT (exec()));
+	QTimer::singleShot(0, dialog, &EditLabelsDialog::exec);
 }
 
 void EditLabelsDialogProxy::dialogDone (int result) {

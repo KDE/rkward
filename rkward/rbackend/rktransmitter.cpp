@@ -263,7 +263,7 @@ void RKAbstractTransmitter::setConnection (QLocalSocket *_connection) {
 	connect (connection, &QLocalSocket::disconnected, this, &RKAbstractTransmitter::disconnected);
 
 	// In case something is pending already.
-	if (connection->bytesAvailable ()) QTimer::singleShot (0, this, SLOT (fetchTransmission()));
+	if (connection->bytesAvailable ()) QTimer::singleShot(0, this, &RKAbstractTransmitter::fetchTransmission);
 }
 
 void RKAbstractTransmitter::disconnected () {

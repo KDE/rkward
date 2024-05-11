@@ -41,7 +41,7 @@ public:
 
 		if (invocationType == KTextEditor::CodeCompletionModel::UserInvocation) {
 			// NOTE: Without this short timeout, the completion window will sometimes disappear, again, right away.
-			QTimer::singleShot (50, manager, SLOT(userTriggeredCompletion()));
+			QTimer::singleShot(50, manager, [this](){ manager->userTriggeredCompletion();});
 		}
 	}
 	QVariant data (const QModelIndex&, int) const override {

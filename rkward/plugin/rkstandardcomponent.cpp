@@ -348,7 +348,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	if (gui && (!enslaved)) {
 		// somehow, when switching the interface, and we show before the old GUI has been fully deleted (it is deleted via deleteLater (), then there may be strange graphical glitches until the GUI is first redrawn completely.
 		// Likely a difficult bug in Qt. Delaying the show until the next event loop solves the problem.
-		QTimer::singleShot (0, gui, SLOT (show()));
+		QTimer::singleShot(0, gui, [this]() { gui->show(); });
 	}
 	changed ();
 	Q_EMIT standardInitializationComplete();
@@ -386,7 +386,7 @@ void RKStandardComponent::close () {
 	RK_TRACE (PLUGIN);
 
 	if (gui && (!parentComponent ())) {
-		QTimer::singleShot (0, gui, SLOT (close()));
+		QTimer::singleShot(0, gui, [this]() { gui->close(); });
 	} else {
 		RK_ASSERT (false);
 	}
@@ -401,7 +401,7 @@ void RKStandardComponent::changed () {
 	// don't trigger update twice
 	if (!update_pending) {
 		update_pending = true;
-		QTimer::singleShot (0, this, SLOT (handleChange()));
+		QTimer::singleShot(0, this, [this](){ handleChange(); });
 	}
 }
 
