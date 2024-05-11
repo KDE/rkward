@@ -50,11 +50,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 
-RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename, const QString &id) : RKComponent (parent_component, parent_widget) {
+RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename, const QString &id) : RKComponent (parent_component, parent_widget), filename(filename), id(id) {
 	RK_TRACE (PLUGIN);
 
-	RKStandardComponent::filename = filename;
-	RKStandardComponent::id = id;
 	command_chain = nullptr;
 	backend = nullptr;
 	scripting = nullptr;
