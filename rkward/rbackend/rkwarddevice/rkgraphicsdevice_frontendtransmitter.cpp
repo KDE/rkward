@@ -226,7 +226,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 
 		quint8 opcode, devnum;
 		streamer.instream >> opcode >> devnum;
-		RK_DEBUG (GRAPHICS_DEVICE, DL_DEBUG, "Received transmission of type %d, devnum %d, size %d", opcode, devnum+1, streamer.inSize ());
+		RK_DEBUG(GRAPHICS_DEVICE, DL_TRACE, "Received transmission of type %d, devnum %d, size %d", opcode, devnum+1, streamer.inSize ());
 
 		RKGraphicsDevice *device = nullptr;
 		if (devnum && opcode == RKDCreate) {

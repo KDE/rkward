@@ -139,9 +139,9 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 	if (RFn::TYPEOF (from) == PROMSXP) {
 		ret = RFn::PRVALUE(from);
 		if (ret == ROb(R_UnboundValue)) {
-			RK_DEBUG (RBACKEND, DL_DEBUG, "temporarily resolving unbound promise");
+			RK_DEBUG(RBACKEND, DL_TRACE, "temporarily resolving unbound promise");
 
-			RFn::Rf_protect (from);
+			RFn::Rf_protect(from);
 			//SET_PRSEEN(from, 1);  // NOTE: SET_PRSEEN was removed from Rinternals.h in R 4.2.0. Its only use is to prevent recursion, however.
 			                        //       Not setting it from here, only means, any recursion will be detected one level later.
 			ret = RFn::Rf_eval(RFn::PRCODE(from), RFn::PRENV(from));
@@ -152,7 +152,7 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 			}
 			RFn::Rf_unprotect (1);
 
-			RK_DEBUG (RBACKEND, DL_DEBUG, "resolved type is %d", RFn::TYPEOF (ret));
+			RK_DEBUG(RBACKEND, DL_TRACE, "resolved type is %d", RFn::TYPEOF(ret));
 		}
 	}
 
@@ -170,7 +170,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 	bool no_recurse = (nesting_depth >= 2);	// TODO: should be configurable
 	unsigned int type = 0;
 
-	RK_DEBUG (RBACKEND, DL_DEBUG, "fetching '%s': %p, s-type %d", name.toLatin1().data(), val, RFn::TYPEOF (val));
+	RK_DEBUG(RBACKEND, DL_TRACE, "fetching '%s': %p, s-type %d", name.toLatin1().data(), val, RFn::TYPEOF (val));
 
 	SEXP value = val;
 	PROTECT_INDEX value_index;
