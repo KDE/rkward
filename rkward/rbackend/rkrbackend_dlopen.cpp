@@ -29,13 +29,22 @@ void *resolve_symb(void* dllinfo, const char* name) {
 #endif
 }
 
+// See https://stackoverflow.com/questions/34813412/how-to-detect-if-building-with-address-sanitizer-when-building-with-gcc-4-8
+#if defined(__has_feature)
+#   if __has_feature(address_sanitizer) // for clang
+#       define __SANITIZE_ADDRESS__
+#   endif
+#endif
+
 auto loadlib(const char* name) {
-#ifdef Win32
+#if defined(Win32)
 	auto ret = LoadLibraryA(name);
-#elif defined(LM_ID_NEWLM)
-	auto ret = dlmopen(LM_ID_NEWLM, name, RTLD_NOW | RTLD_LOCAL); // NOTE: RTLD_DEEPBIND causes undiagnosed runtime failure on Suse Tumbleweed around 05/24 (while it works, elsewhere)
+#elif defined(LM_ID_NEWLM) && !defined(__SANITIZE_ADDRESS__)
+	auto ret = dlmopen(LM_ID_NEWLM, name, RTLD_NOW | RTLD_LOCAL);
 #else
-	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL);
+	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL);  // NOTE: RTLD_DEEPBIND causes undiagnosed runtime failure on Suse Tumbleweed around 05/24 (while it works, elsewhere)
+	                                                 //       possibly again due to address sanitization on the gitlab job?
+#warning dlmopen is not available on this platform, or disabled due to compiling with address_sanitizer
 #endif
 	if (!ret) {
 #ifdef Win32
