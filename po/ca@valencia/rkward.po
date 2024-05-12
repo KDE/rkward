@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-19 00:35+0000\n"
+"POT-Creation-Date: 2024-05-12 00:36+0000\n"
 "PO-Revision-Date: 2024-04-11 12:56+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -35,7 +35,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "pep.roca@gmail.com,antonibella5@yahoo.com,txemaq@gmail.com"
 
-#: rkward/agents/rkeditobjectagent.cpp:33
+#: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
 msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
@@ -44,7 +44,7 @@ msgstr ""
 "No s'ha pogut obrir l'objecte «%1» per a editar-lo. O bé no existix, o bé "
 "RKWard encara no permet editar este tipus d'objecte."
 
-#: rkward/agents/rkeditobjectagent.cpp:33
+#: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
 msgid "Cannot edit '%1'"
 msgstr "No es pot editar «%1»"
@@ -52,7 +52,7 @@ msgstr "No es pot editar «%1»"
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
 msgid "Loading Workspace..."
-msgstr "S'està carregant l'espai de treball..."
+msgstr "S'està carregant l'espai de treball…"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -421,8 +421,7 @@ msgstr ""
 "de funció per als objectes en este paquet.\n"
 "Habitualment un paquet es fica en la llista negra, si té una enorme "
 "quantitat de dades i es tardaria molt a carregar-lo. Per a traure'l de la "
-"llista, anar fins a «Configuració -> Configura RKWard... -> Espai de "
-"treball»."
+"llista, anar fins a «Configuració -> Configura RKWard… -> Espai de treball»."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -669,7 +668,7 @@ msgstr "Suprimix esta fila (%1)"
 #: rkward/dataeditor/twintable.cpp:414
 #, kde-format
 msgid "Inserting clipboard contents..."
-msgstr "S'està inserint el contingut del porta-retalls..."
+msgstr "S'està inserint el contingut del porta-retalls…"
 
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
@@ -1275,8 +1274,7 @@ msgid ""
 msgstr ""
 "<p>Alguns (però no tots) paquets d'R tenen connectors per a RKWard. Açò vol "
 "dir que proporcionen una interfície gràfica d'usuari de manera addicional a "
-"les funcions d'R. Seleccioneu esta casella per a mostrar només estos paquets."
-"</p>"
+"les funcions d'R. Marqueu esta casella per a mostrar només estos paquets.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:676
 #, kde-format
@@ -1298,8 +1296,8 @@ msgid ""
 msgstr ""
 "Alguns paquets «suggerixen» paquets addicionals, que no són estrictament "
 "necessaris per a utilitzar este paquet, però que poden proporcionar "
-"funcionalitats relacionades addicionals. Seleccioneu esta opció per a "
-"incloure estos paquets suggerits addicionals."
+"funcionalitats relacionades addicionals. Marqueu esta opció per a incloure "
+"estos paquets suggerits addicionals."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
@@ -1663,8 +1661,8 @@ msgid ""
 "will be prompted with a link to a download page at the last page of this "
 "dialog)"
 msgstr ""
-"Seleccioneu %1 per a instal·lar (la instal·lació pròpiament dita encara no "
-"està admesa, però se us demanarà un enllaç cap a una pàgina de descàrrega en "
+"Marqueu %1 per a instal·lar (la instal·lació pròpiament dita encara no està "
+"admesa, però se us demanarà un enllaç cap a una pàgina de descàrrega en "
 "l'última pàgina d'este diàleg)"
 
 #: rkward/dialogs/rksetupwizard.cpp:101
@@ -1716,7 +1714,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:133
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
-msgstr "<b>S'està esperant pel dorsal d'R...</b>"
+msgstr "<b>S'està esperant pel dorsal d'R…</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:135
 #, kde-format
@@ -2506,7 +2504,7 @@ msgstr "Busca avant (ocurrència següent del terme de busca)"
 msgid "Match case"
 msgstr "Coincidència de majúscules"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:926
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "Find as you type"
 msgstr "Busca en teclejar"
@@ -2893,12 +2891,12 @@ msgstr "Escolliu l'objecte pare"
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr "Apegades especial..."
+msgstr "Apegades especial…"
 
 #: rkward/misc/rkspecialactions.cpp:69
 #, kde-format
 msgid "Paste Special..."
-msgstr "Apegades especial..."
+msgstr "Apegades especial…"
 
 #: rkward/misc/rkspecialactions.cpp:86
 #, kde-format
@@ -3022,7 +3020,7 @@ msgid ""
 "Console window for better diagnostics."
 msgstr ""
 "No s'ha pogut analitzar l'ordre. Proveu d'utilitzar <i>Edita->Apegades "
-"especial...</i> en la finestra de la consola d'R per a un diagnòstic millor."
+"especial…</i> en la finestra de la consola d'R per a un diagnòstic millor."
 
 #: rkward/misc/rkspecialactions.cpp:314
 #, kde-format
@@ -3191,8 +3189,8 @@ msgid ""
 msgstr ""
 "Heu intentat executar el connector «%1», però este connector és desconegut. "
 "Probablement necessiteu carregar el fitxer corresponent PluginMap "
-"(Configuració -> Configura RKWard... -> Connectors), o potser el connector "
-"ha sigut canviat el nom."
+"(Configuració -> Configura RKWard… -> Connectors), o potser el connector ha "
+"sigut canviat el nom."
 
 #: rkward/plugin/rkcomponentmap.cpp:465
 #, kde-format
@@ -3690,7 +3688,7 @@ msgid ""
 "from a loaded package."
 msgstr ""
 "Mostra els objectes a tots els entorns del camí <i>search()</i>, en lloc de "
-"només els de <i>.GlobalEnv</i>. Seleccioneu-la si voleu seleccionar objectes "
+"només els de <i>.GlobalEnv</i>. Activeu açò si voleu seleccionar objectes "
 "des d'un paquet carregat."
 
 #: rkward/plugin/rkvarselector.cpp:71
@@ -3769,7 +3767,7 @@ msgstr "Ordre"
 msgid "Description"
 msgstr "Descripció"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:109
+#: rkward/rbackend/rkfrontendtransmitter.cpp:156
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3778,13 +3776,13 @@ msgstr ""
 "No s'ha pogut trobar l'executable del dorsal. Probablement es tracta d'un "
 "problema amb la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:165
+#: rkward/rbackend/rkfrontendtransmitter.cpp:230
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "No s'ha pogut iniciar l'executable del dorsal. El missatge d'error és: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:218
+#: rkward/rbackend/rkfrontendtransmitter.cpp:283
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3793,7 +3791,7 @@ msgstr ""
 "Error durant la conformitat de connexió amb el procés del dorsal. S'esperava "
 "el testimoni «%1», i s'ha rebut el testimoni «%2»"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:221
+#: rkward/rbackend/rkfrontendtransmitter.cpp:286
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3804,30 +3802,30 @@ msgstr ""
 "dorsal. El frontal té la versió «%1» mentre que el dorsal té la «%2».\n"
 "Esmeneu la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:255
+#: rkward/rbackend/rkfrontendtransmitter.cpp:320
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "No s'ha pogut iniciar el dorsal. Comproveu la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:256
+#: rkward/rbackend/rkfrontendtransmitter.cpp:321
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "El procés del dorsal ha fallat en iniciar-se amb el codi d'eixida %1, "
 "missatge: «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:257
+#: rkward/rbackend/rkfrontendtransmitter.cpp:322
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "El procés del dorsal ha eixit amb el codi %1, missatge: «%2»."
 
-#: rkward/rbackend/rkrbackend.cpp:571
+#: rkward/rbackend/rkrbackend.cpp:530
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "El motor R s'ha parat amb l'estat: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:592
+#: rkward/rbackend/rkrbackend.cpp:551
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3836,17 +3834,17 @@ msgstr ""
 "El motor R ha trobat un error fatal:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:762
+#: rkward/rbackend/rkrbackend.cpp:721
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Missatge del dorsal R"
 
-#: rkward/rbackend/rkrbackend.cpp:770
+#: rkward/rbackend/rkrbackend.cpp:729
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Pregunta del dorsal R"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1653
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3868,7 +3866,7 @@ msgstr ""
 "consultar <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1719
+#: rkward/rbackend/rkrbackend.cpp:1657
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3883,12 +3881,12 @@ msgstr ""
 "href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</"
 "a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1776
+#: rkward/rbackend/rkrbackend.cpp:1714
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "La versió del motor gràfic no coincidix"
 
-#: rkward/rbackend/rkrbackend.cpp:1776
+#: rkward/rbackend/rkrbackend.cpp:1714
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3899,7 +3897,7 @@ msgstr ""
 "requerix una recompilació.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Informació addicional</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1776
+#: rkward/rbackend/rkrbackend.cpp:1714
 #, kde-format
 msgid "Ok"
 msgstr "D'acord"
@@ -4016,7 +4014,7 @@ msgstr "Crida no reconeguda «%1»"
 msgid "R backend requests information"
 msgstr "El dorsal R sol·licita informació"
 
-#: rkward/rbackend/rkrinterface.cpp:900
+#: rkward/rbackend/rkrinterface.cpp:901
 #, kde-format
 msgid ""
 "\n"
@@ -4034,7 +4032,7 @@ msgstr ""
 "l'eixida, o copiar dades dels editors de dades oberts. Eixiu de RKWard "
 "després d'açò."
 
-#: rkward/rbackend/rkrinterface.cpp:901
+#: rkward/rbackend/rkrinterface.cpp:902
 #, kde-format
 msgid "R engine has died"
 msgstr "El motor R s'ha parat"
@@ -4181,12 +4179,12 @@ msgstr "Imprimix la consola"
 #: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Import command history..."
-msgstr "Importa l'historial d'ordres..."
+msgstr "Importa l'historial d'ordres…"
 
 #: rkward/rkconsole.cpp:888
 #, kde-format
 msgid "Export command history..."
-msgstr "Exporta l'historial d'ordres..."
+msgstr "Exporta l'historial d'ordres…"
 
 #: rkward/rkconsole.cpp:907
 #, kde-format
@@ -4268,8 +4266,8 @@ msgstr ""
 "«Cancel·la» tot seguit.</p><p>En cas que cliqueu en «Continua», no "
 "s'executarà cap codi R, fins que no cliqueu «Envia» en la finestra de "
 "diàleg, i us animem a revisar el codi R generat abans de fer-ho.</"
-"p><p><i>Nota</i>: Seleccionant «No ho tornes a preguntar», només suprimirà "
-"este missatge per a la resta d'esta sessió."
+"p><p><i>Nota</i>: Activant «No ho tornes a preguntar», només suprimirà este "
+"missatge per a la resta d'esta sessió."
 
 #: rkward/rkward.cpp:306
 #, kde-format
@@ -4280,7 +4278,7 @@ msgstr "Una nota sobre els enllaços externs"
 #: rkward/rkward.cpp:318
 #, kde-format
 msgid "Setting up plugins..."
-msgstr "S'estan configurant els connectors..."
+msgstr "S'estan configurant els connectors…"
 
 #: rkward/rkward.cpp:352
 #, kde-format
@@ -4291,7 +4289,7 @@ msgid ""
 msgstr ""
 "S'han trobat paquets nous (llistats davall) de connectors de RKWard, i s'han "
 "activat automàticament. Per a desactivar els paquets de connectors "
-"seleccionats, utilitzeu «Configuració -> Configura RKWard... -> Connectors»."
+"seleccionats, utilitzeu «Configuració -> Configura RKWard… -> Connectors»."
 
 #: rkward/rkward.cpp:352
 #, kde-format
@@ -4338,7 +4336,7 @@ msgid ""
 msgstr ""
 "Nota: No tornarà a aparéixer l'avís quant a estos fitxers del mapa de "
 "connectors, fins que actualitzeu RKWard, o els elimineu i els torneu a "
-"afegir a «Configuració -> Configura RKWard... -> Connectors»."
+"afegir a «Configuració -> Configura RKWard… -> Connectors»."
 
 #: rkward/rkward.cpp:416
 #, kde-format
@@ -4403,17 +4401,17 @@ msgstr "Crea i activa un document d'eixida nou"
 #: rkward/rkward.cpp:496
 #, kde-format
 msgid "Open R Script File..."
-msgstr "Obri un fitxer de script d'R..."
+msgstr "Obri un fitxer de script d'R…"
 
 #: rkward/rkward.cpp:500
 #, kde-format
 msgid "Open RKWard Output File..."
-msgstr "Obri un fitxer d'eixida de RKWard..."
+msgstr "Obri un fitxer d'eixida de RKWard…"
 
 #: rkward/rkward.cpp:504
 #, kde-format
 msgid "Open any File..."
-msgstr "Obri qualsevol fitxer..."
+msgstr "Obri qualsevol fitxer…"
 
 #: rkward/rkward.cpp:509
 #, kde-format
@@ -4436,7 +4434,7 @@ msgstr ""
 #: rkward/rkward.cpp:518
 #, kde-format
 msgid "Open Workspace..."
-msgstr "Obri un espai de treball..."
+msgstr "Obri un espai de treball…"
 
 #: rkward/rkward.cpp:520
 #, kde-format
@@ -4471,7 +4469,7 @@ msgstr "Anomena i guarda l'espai de treball"
 #: rkward/rkward.cpp:536
 #, kde-format
 msgid "Saves the actual document as..."
-msgstr "Guarda el document existent com a..."
+msgstr "Guarda el document existent com a…"
 
 #: rkward/rkward.cpp:539
 #, kde-format
@@ -4486,12 +4484,12 @@ msgstr "Interromp totes les ordres"
 #: rkward/rkward.cpp:548
 #, kde-format
 msgid "CC commands to output..."
-msgstr "Copia les ordres a l'eixida..."
+msgstr "Copia les ordres a l'eixida…"
 
 #: rkward/rkward.cpp:552 rkward/rkward.cpp:556
 #, kde-format
 msgid "Manage R packages and plugins..."
-msgstr "Gestiona els paquets i els connectors d'R..."
+msgstr "Gestiona els paquets i els connectors d'R…"
 
 #: rkward/rkward.cpp:563
 #, kde-format
@@ -4527,17 +4525,17 @@ msgstr "[No hi ha disponible cap acció per a la vista actual]"
 #: rkward/rkward.cpp:588
 #, kde-format
 msgid "Open..."
-msgstr "Obri..."
+msgstr "Obri…"
 
 #: rkward/rkward.cpp:602
 #, kde-format
 msgid "Create..."
-msgstr "Crea..."
+msgstr "Crea…"
 
 #: rkward/rkward.cpp:609
 #, kde-format
 msgid "Save..."
-msgstr "Guarda..."
+msgstr "Guarda…"
 
 #: rkward/rkward.cpp:625
 #, kde-format
@@ -4609,7 +4607,7 @@ msgstr "Configura el dorsal R"
 #: rkward/rkward.cpp:844
 #, kde-format
 msgid "Exiting..."
-msgstr "S'està eixint..."
+msgstr "S'està eixint…"
 
 #: rkward/rkward.cpp:862
 #, kde-format
@@ -4624,12 +4622,12 @@ msgstr "Introduïu el nom per al conjunt de dades nou"
 #: rkward/rkward.cpp:874
 #, kde-format
 msgid "Opening workspace..."
-msgstr "S'està obrint l'espai de treball..."
+msgstr "S'està obrint l'espai de treball…"
 
 #: rkward/rkward.cpp:877
 #, kde-format
 msgid "Select workspace to open..."
-msgstr "Selecciona l'espai de treball que s'ha d'obrir..."
+msgstr "Selecciona l'espai de treball que s'ha d'obrir…"
 
 #: rkward/rkward.cpp:957
 #, kde-format
@@ -4679,7 +4677,7 @@ msgstr "Obri com a fitxer de text i força el ressaltat d'R"
 #: rkward/rkward.cpp:1037
 #, kde-format
 msgid "Select RKWard Output file to open..."
-msgstr "Seleccioneu un fitxer d'eixida de RKWard que s'ha d'obrir..."
+msgstr "Seleccioneu un fitxer d'eixida de RKWard que s'ha d'obrir…"
 
 #: rkward/rkward.cpp:1037
 #, kde-format
@@ -5017,7 +5015,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:77
 #, kde-format
 msgid "Keyboard navigation of completion items"
-msgstr "Navegació amb el teclat dels elements de compleció"
+msgstr "Navegueu amb el teclat dels elements de compleció"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:81
 #, kde-format
@@ -5716,7 +5714,7 @@ msgid "RKWard Plugins"
 msgstr "Connectors de RKWard"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:472
-#: rkward/windows/rkhtmlwindow.cpp:1143
+#: rkward/windows/rkhtmlwindow.cpp:1138
 #, kde-format
 msgid "Dependencies"
 msgstr "Dependències"
@@ -6406,19 +6404,19 @@ msgid ""
 "every time you modify the script. When this option is disabled, the preview "
 "will be updated whenever you save the script, only."
 msgstr ""
-"Quan se selecciona esta opció, s'activarà una actualització de la vista "
-"prèvia cada vegada que modifiqueu l'script. Quan no se selecciona, la vista "
-"prèvia s'actualitzarà només quan guardeu l'script."
+"Quan es marca esta opció, s'activarà una actualització de la vista prèvia "
+"cada vegada que modifiqueu l'script. Quan no està marcada, la vista prèvia "
+"s'actualitzarà només quan guardeu l'script."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
 msgid "Save Script..."
-msgstr "Guarda l'script..."
+msgstr "Guarda l'script…"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:406
 #, kde-format
 msgid "Save Script As..."
-msgstr "Anomena i guarda l'script..."
+msgstr "Anomena i guarda l'script…"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:485
 #: rkward/windows/rkcommandeditorwindow.cpp:745
@@ -6648,7 +6646,7 @@ msgstr ""
 "<b>No</b> oferix cap característica per a depurar el codi d'R.</p><p>Cal "
 "tindre en compte que la llista de missatges es neteja cada vegada que es "
 "tanca la finestra.</p><p>Es pot controlar el tipus i el nivell de gravetat "
-"dels missatges a «Configuració -> Configura RKWard... -> Depuració»</p>"
+"dels missatges a «Configuració -> Configura RKWard… -> Depuració»</p>"
 
 #: rkward/windows/rkdebugmessagewindow.cpp:71
 #, kde-format
@@ -6668,7 +6666,7 @@ msgstr "Canvia el nom"
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "Rename..."
-msgstr "Canvia el nom..."
+msgstr "Canvia el nom…"
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
@@ -6771,38 +6769,38 @@ msgstr "Paquet"
 msgid "Save as"
 msgstr "Anomena i guarda"
 
-#: rkward/windows/rkhtmlwindow.cpp:604
+#: rkward/windows/rkhtmlwindow.cpp:599
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "El fitxer d'eixida %s de RKWard (encara) no existix"
 
-#: rkward/windows/rkhtmlwindow.cpp:723
+#: rkward/windows/rkhtmlwindow.cpp:718
 #: rkward/windows/rktoplevelwindowgui.cpp:255
 #, kde-format
 msgid "[Active]"
 msgstr "[Actiu]"
 
-#: rkward/windows/rkhtmlwindow.cpp:734
+#: rkward/windows/rkhtmlwindow.cpp:729
 #, kde-format
 msgid "Output %1"
 msgstr "Eixida de %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:788
+#: rkward/windows/rkhtmlwindow.cpp:783
 #, kde-format
 msgid "Output Window"
 msgstr "Finestra de l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:790
+#: rkward/windows/rkhtmlwindow.cpp:785
 #, kde-format
 msgid "&Refresh Output"
 msgstr "Act&ualitza l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:816
+#: rkward/windows/rkhtmlwindow.cpp:811
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "La pàgina no existix o està trencada"
 
-#: rkward/windows/rkhtmlwindow.cpp:828
+#: rkward/windows/rkhtmlwindow.cpp:823
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6811,32 +6809,32 @@ msgstr ""
 "Segur que voleu netejar l'eixida? Açò també eliminarà tots els fitxers "
 "d'imatge utilitzats en l'eixida. No es podrà restaurar."
 
-#: rkward/windows/rkhtmlwindow.cpp:828
+#: rkward/windows/rkhtmlwindow.cpp:823
 #, kde-format
 msgid "Flush output?"
 msgstr "Voleu netejar l'eixida?"
 
-#: rkward/windows/rkhtmlwindow.cpp:833
+#: rkward/windows/rkhtmlwindow.cpp:828
 #, kde-format
 msgid "Flushing output"
 msgstr "S'està netejant l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:875
+#: rkward/windows/rkhtmlwindow.cpp:870
 #, kde-format
 msgid "Zoom In"
 msgstr "Amplia"
 
-#: rkward/windows/rkhtmlwindow.cpp:877
+#: rkward/windows/rkhtmlwindow.cpp:872
 #, kde-format
 msgid "Zoom Out"
 msgstr "Reduïx"
 
-#: rkward/windows/rkhtmlwindow.cpp:881
+#: rkward/windows/rkhtmlwindow.cpp:876
 #, kde-format
 msgid "Default &Encoding"
 msgstr "Codificació pre&determinada"
 
-#: rkward/windows/rkhtmlwindow.cpp:882
+#: rkward/windows/rkhtmlwindow.cpp:877
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6845,58 +6843,58 @@ msgstr ""
 "Establix la codificació a assumir en cas que no s'haja establit cap "
 "codificació explícita a la pàgina a les capçaleres HTTP."
 
-#: rkward/windows/rkhtmlwindow.cpp:892
+#: rkward/windows/rkhtmlwindow.cpp:887
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Exporta la pàgina com a HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:901
 #, kde-format
 msgid "Save Output"
 msgstr "Guarda l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:908
+#: rkward/windows/rkhtmlwindow.cpp:903
 #, kde-format
 msgid "Save Output As"
 msgstr "Guarda l'eixida com a"
 
-#: rkward/windows/rkhtmlwindow.cpp:911
+#: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Neteja l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:917
+#: rkward/windows/rkhtmlwindow.cpp:912
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Retorna a l'últim estat guardat"
 
-#: rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/windows/rkhtmlwindow.cpp:916
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Guarda l'eixida com a &activa"
 
-#: rkward/windows/rkhtmlwindow.cpp:923
+#: rkward/windows/rkhtmlwindow.cpp:918
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Establix esta eixida com a fitxer al qual afegir l'eixida."
 
-#: rkward/windows/rkhtmlwindow.cpp:945
+#: rkward/windows/rkhtmlwindow.cpp:940
 #, kde-format
 msgid "Print output"
 msgstr "Imprimix l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:953
+#: rkward/windows/rkhtmlwindow.cpp:948
 #, kde-format
 msgid "Print page"
 msgstr "Imprimix la pàgina"
 
-#: rkward/windows/rkhtmlwindow.cpp:1010
+#: rkward/windows/rkhtmlwindow.cpp:1005
 #, kde-format
 msgid "No Title"
 msgstr "Sense títol"
 
 # ??? Per revisar : Núria
-#: rkward/windows/rkhtmlwindow.cpp:1023
+#: rkward/windows/rkhtmlwindow.cpp:1018
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6907,62 +6905,62 @@ msgstr ""
 "<p>La pàgina d'ajuda per a este component encara no s'ha escrit (o està "
 "incompleta). Considereu contribuir-hi.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1028
+#: rkward/windows/rkhtmlwindow.cpp:1023
 #, kde-format
 msgid "Use %1 now"
 msgstr "Utilitza %1 ara"
 
-#: rkward/windows/rkhtmlwindow.cpp:1045
+#: rkward/windows/rkhtmlwindow.cpp:1040
 #, kde-format
 msgid "Summary"
 msgstr "Resum"
 
-#: rkward/windows/rkhtmlwindow.cpp:1052
+#: rkward/windows/rkhtmlwindow.cpp:1047
 #, kde-format
 msgid "Usage"
 msgstr "Ús"
 
-#: rkward/windows/rkhtmlwindow.cpp:1079
+#: rkward/windows/rkhtmlwindow.cpp:1074
 #, kde-format
 msgid "Choose another file"
 msgstr "Seleccioneu un altre fitxer"
 
-#: rkward/windows/rkhtmlwindow.cpp:1101
+#: rkward/windows/rkhtmlwindow.cpp:1096
 #, kde-format
 msgid "GUI settings"
 msgstr "Configureu la IGU"
 
-#: rkward/windows/rkhtmlwindow.cpp:1126
+#: rkward/windows/rkhtmlwindow.cpp:1121
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Funcions relacionades i pàgines"
 
-#: rkward/windows/rkhtmlwindow.cpp:1134
+#: rkward/windows/rkhtmlwindow.cpp:1129
 #, kde-format
 msgid "Technical details"
 msgstr "Detalls tècnics"
 
-#: rkward/windows/rkhtmlwindow.cpp:1157
+#: rkward/windows/rkhtmlwindow.cpp:1152
 #, kde-format
 msgid "About"
 msgstr "Quant a"
 
-#: rkward/windows/rkhtmlwindow.cpp:1164
+#: rkward/windows/rkhtmlwindow.cpp:1159
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>En esta pàgina:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1187
+#: rkward/windows/rkhtmlwindow.cpp:1182
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Element de la IGU sense nom"
 
-#: rkward/windows/rkhtmlwindow.cpp:1261
+#: rkward/windows/rkhtmlwindow.cpp:1256
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Ajuda d'R sobre «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1272
+#: rkward/windows/rkhtmlwindow.cpp:1267
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "REFERÈNCIA TRENCADA"
@@ -7144,7 +7142,7 @@ msgstr ""
 "RKWard. Tanmateix, no s'ha creat cap finestra, o RKWard ha fallat en "
 "detectar la finestra nova. Si creieu que RKWard ho podria haver fet millor, "
 "considereu informar-ho com un error. De manera alternativa, podríeu voler "
-"ajustar «Configuració -> Configura RKWard... -> Gràfics en pantalla»."
+"ajustar «Configuració -> Configura RKWard… -> Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:308
 #, kde-format
@@ -7165,7 +7163,7 @@ msgid ""
 msgstr ""
 "La finestra actual pareix massa gran per a ajustar-se a la pantalla. Si açò "
 "passa sovint, podríeu voler ajustar la mida predeterminada de la finestra "
-"gràfica a «Configuració -> Configura RKWard... -> Gràfics en pantalla»."
+"gràfica a «Configuració -> Configura RKWard… -> Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:367
 #, kde-format
@@ -7202,8 +7200,8 @@ msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
 "close it manually in this case.</p>"
 msgstr ""
-"<p>Nota: En l'X11, caldrà expurgar la finestra incrustada. En este cas "
-"caldrà tancar-la manualment.</p>"
+"<p>Nota: En X11, caldrà expurgar la finestra incrustada. En este cas caldrà "
+"tancar-la manualment.</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:399
 #, kde-format
@@ -7353,7 +7351,7 @@ msgstr "Establix una mida fixa de 2000x2000"
 #: rkward/windows/rkwindowcatcher.cpp:755
 #, kde-format
 msgid "Set specified fixed size..."
-msgstr "Establix una mida fixa especificada..."
+msgstr "Establix una mida fixa especificada…"
 
 #: rkward/windows/rkwindowcatcher.cpp:760
 #, kde-format
@@ -7413,7 +7411,7 @@ msgstr "Copia a l'eixida"
 #: rkward/windows/rkwindowcatcher.cpp:817
 #, kde-format
 msgid "Store as R object..."
-msgstr "Guarda com un objecte R..."
+msgstr "Guarda com un objecte R…"
 
 #: rkward/windows/rkwindowcatcher.cpp:819
 #, kde-format
@@ -7469,8 +7467,7 @@ msgstr ""
 "petits abans d'editar-los. D'altra banda, si teniu memòria suficient, o les "
 "dades són prou simples (les dades numèriques són més fàcils de gestionar que "
 "els factors), es podran editar sense problemes. Podeu configurar este avís "
-"(o desactivar-lo del tot) a «Configuració -> Configura RKWard... -> "
-"General».\n"
+"(o desactivar-lo del tot) a «Configuració -> Configura RKWard… -> General».\n"
 "Edite l'objecte?"
 
 #: rkward/windows/rkworkplace.cpp:648

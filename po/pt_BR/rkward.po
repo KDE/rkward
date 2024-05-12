@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-19 00:35+0000\n"
+"POT-Creation-Date: 2024-05-12 00:36+0000\n"
 "PO-Revision-Date: 2021-10-26 13:50-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -29,7 +29,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "alvarenga@kde.org"
 
-#: rkward/agents/rkeditobjectagent.cpp:33
+#: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
 msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
@@ -38,7 +38,7 @@ msgstr ""
 "Não foi possível abrir o objeto '%1' para edição. Ele não existe ou o RKWard "
 "ainda não tem suporte a edição desse tipo de objeto."
 
-#: rkward/agents/rkeditobjectagent.cpp:33
+#: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
 msgid "Cannot edit '%1'"
 msgstr "Não foi possível editar o '%1'"
@@ -2443,7 +2443,7 @@ msgstr "Procurar para frente (próxima ocorrência do termo de pesquisa)"
 msgid "Match case"
 msgstr "Diferenciar maiúsculas de minúsculas"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:926
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "Find as you type"
 msgstr "Procurar enquanto digita"
@@ -3701,7 +3701,7 @@ msgstr "Comando"
 msgid "Description"
 msgstr "Descrição"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:109
+#: rkward/rbackend/rkfrontendtransmitter.cpp:156
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3710,14 +3710,14 @@ msgstr ""
 "Não foi possível encontrar o executável da infraestrutura. Provavelmente "
 "isso é um problema com sua instalação."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:165
+#: rkward/rbackend/rkfrontendtransmitter.cpp:230
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Não foi possível iniciar o executável da infraestrutura. A mensagem de erro "
 "foi: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:218
+#: rkward/rbackend/rkfrontendtransmitter.cpp:283
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3726,7 +3726,7 @@ msgstr ""
 "Erro durante a comunicação inicial com o processo da infraestrutura. Era "
 "esperado o elemento '%1', mas foi recebido o '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:221
+#: rkward/rbackend/rkfrontendtransmitter.cpp:286
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3738,7 +3738,7 @@ msgstr ""
 "infraestrutura é a versão '%2'.\n"
 "Corrija sua instalação."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:255
+#: rkward/rbackend/rkfrontendtransmitter.cpp:320
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3746,7 +3746,7 @@ msgstr ""
 "Não foi possível iniciar o processo da infraestrutura. Verifique sua "
 "instalação."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:256
+#: rkward/rbackend/rkfrontendtransmitter.cpp:321
 #, fuzzy, kde-format
 #| msgid "The backend process failed to start with exit code %1."
 msgid "The backend process failed to start with exit code %1, message: '%2'."
@@ -3754,18 +3754,18 @@ msgstr ""
 "O processo da infraestrutura não conseguiu iniciar devido ao erro com o "
 "código %1."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:257
+#: rkward/rbackend/rkfrontendtransmitter.cpp:322
 #, fuzzy, kde-format
 #| msgid "Backend process has exited with code %1."
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "O processo da infraestrutura fechou com o código de erro %1."
 
-#: rkward/rbackend/rkrbackend.cpp:571
+#: rkward/rbackend/rkrbackend.cpp:530
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "O mecanismo do R foi encerrado com o status: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:592
+#: rkward/rbackend/rkrbackend.cpp:551
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3774,17 +3774,17 @@ msgstr ""
 "O mecanismo do R obteve um erro fatal:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:762
+#: rkward/rbackend/rkrbackend.cpp:721
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Mensagem da infraestrutura do R"
 
-#: rkward/rbackend/rkrbackend.cpp:770
+#: rkward/rbackend/rkrbackend.cpp:729
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Pergunta da infraestrutura do R"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1653
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3816,7 +3816,7 @@ msgstr ""
 "obter ajuda sobre o assunto, leia <a href=\"http://rkward.kde.org/compiling"
 "\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1719
+#: rkward/rbackend/rkrbackend.cpp:1657
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3837,12 +3837,12 @@ msgstr ""
 "o assunto, leia <a href=\"http://rkward.kde.org/compiling\">http://rkward."
 "kde.org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1776
+#: rkward/rbackend/rkrbackend.cpp:1714
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1776
+#: rkward/rbackend/rkrbackend.cpp:1714
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3850,7 +3850,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1776
+#: rkward/rbackend/rkrbackend.cpp:1714
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -3967,7 +3967,7 @@ msgstr ""
 msgid "R backend requests information"
 msgstr "A infraestrutura do R pede informações"
 
-#: rkward/rbackend/rkrinterface.cpp:900
+#: rkward/rbackend/rkrinterface.cpp:901
 #, kde-format
 msgid ""
 "\n"
@@ -3986,7 +3986,7 @@ msgstr ""
 "das janelas de editores de dados abertas. Saia do RKWard depois disso. "
 "Pedimos desculpas!"
 
-#: rkward/rbackend/rkrinterface.cpp:901
+#: rkward/rbackend/rkrinterface.cpp:902
 #, kde-format
 msgid "R engine has died"
 msgstr "O mecanismo do R foi encerrado"
@@ -5665,7 +5665,7 @@ msgid "RKWard Plugins"
 msgstr "Plugins do RKWard"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:472
-#: rkward/windows/rkhtmlwindow.cpp:1143
+#: rkward/windows/rkhtmlwindow.cpp:1138
 #, kde-format
 msgid "Dependencies"
 msgstr "Dependências"
@@ -6687,39 +6687,39 @@ msgstr "Pacote"
 msgid "Save as"
 msgstr "Falha ao salvar"
 
-#: rkward/windows/rkhtmlwindow.cpp:604
+#: rkward/windows/rkhtmlwindow.cpp:599
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:723
+#: rkward/windows/rkhtmlwindow.cpp:718
 #: rkward/windows/rktoplevelwindowgui.cpp:255
 #, fuzzy, kde-format
 #| msgid "Active"
 msgid "[Active]"
 msgstr "Ativo"
 
-#: rkward/windows/rkhtmlwindow.cpp:734
+#: rkward/windows/rkhtmlwindow.cpp:729
 #, kde-format
 msgid "Output %1"
 msgstr "Saída %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:788
+#: rkward/windows/rkhtmlwindow.cpp:783
 #, kde-format
 msgid "Output Window"
 msgstr "Janela de resultados"
 
-#: rkward/windows/rkhtmlwindow.cpp:790
+#: rkward/windows/rkhtmlwindow.cpp:785
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Atualizar a saída"
 
-#: rkward/windows/rkhtmlwindow.cpp:816
+#: rkward/windows/rkhtmlwindow.cpp:811
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "A página não existe ou está com problemas"
 
-#: rkward/windows/rkhtmlwindow.cpp:828
+#: rkward/windows/rkhtmlwindow.cpp:823
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6728,32 +6728,32 @@ msgstr ""
 "Deseja realmente limpar a saída? Isso também removerá todos os arquivos de "
 "imagem usados na saída. Não será possível recuperar essas informações."
 
-#: rkward/windows/rkhtmlwindow.cpp:828
+#: rkward/windows/rkhtmlwindow.cpp:823
 #, kde-format
 msgid "Flush output?"
 msgstr "Enviar as saídas pendentes?"
 
-#: rkward/windows/rkhtmlwindow.cpp:833
+#: rkward/windows/rkhtmlwindow.cpp:828
 #, kde-format
 msgid "Flushing output"
 msgstr "Enviando os dados pendentes para a saída"
 
-#: rkward/windows/rkhtmlwindow.cpp:875
+#: rkward/windows/rkhtmlwindow.cpp:870
 #, kde-format
 msgid "Zoom In"
 msgstr "Ampliar"
 
-#: rkward/windows/rkhtmlwindow.cpp:877
+#: rkward/windows/rkhtmlwindow.cpp:872
 #, kde-format
 msgid "Zoom Out"
 msgstr "Reduzir"
 
-#: rkward/windows/rkhtmlwindow.cpp:881
+#: rkward/windows/rkhtmlwindow.cpp:876
 #, kde-format
 msgid "Default &Encoding"
 msgstr "&Configuração padrão"
 
-#: rkward/windows/rkhtmlwindow.cpp:882
+#: rkward/windows/rkhtmlwindow.cpp:877
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6762,62 +6762,62 @@ msgstr ""
 "Define a codificação a ser usada no caso de não definir nenhuma codificação "
 "explícita na página ou nos cabeçalhos HTTP."
 
-#: rkward/windows/rkhtmlwindow.cpp:892
+#: rkward/windows/rkhtmlwindow.cpp:887
 #, fuzzy, kde-format
 #| msgid "Export page as HTML"
 msgid "Export Page as HTML"
 msgstr "Exportar página como HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:901
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Save Output"
 msgstr "Salvar a saída como HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:908
+#: rkward/windows/rkhtmlwindow.cpp:903
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Save Output As"
 msgstr "Salvar a saída como HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:911
+#: rkward/windows/rkhtmlwindow.cpp:906
 #, fuzzy, kde-format
 #| msgid "&Refresh Output"
 msgid "&Clear Output"
 msgstr "&Atualizar a saída"
 
-#: rkward/windows/rkhtmlwindow.cpp:917
+#: rkward/windows/rkhtmlwindow.cpp:912
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/windows/rkhtmlwindow.cpp:916
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Set Output as &Active"
 msgstr "Salvar a saída como HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:923
+#: rkward/windows/rkhtmlwindow.cpp:918
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:945
+#: rkward/windows/rkhtmlwindow.cpp:940
 #, kde-format
 msgid "Print output"
 msgstr "Imprimir o resultado da saída"
 
-#: rkward/windows/rkhtmlwindow.cpp:953
+#: rkward/windows/rkhtmlwindow.cpp:948
 #, kde-format
 msgid "Print page"
 msgstr "Imprimir página"
 
-#: rkward/windows/rkhtmlwindow.cpp:1010
+#: rkward/windows/rkhtmlwindow.cpp:1005
 #, kde-format
 msgid "No Title"
 msgstr "Nenhum título"
 
-#: rkward/windows/rkhtmlwindow.cpp:1023
+#: rkward/windows/rkhtmlwindow.cpp:1018
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6828,63 +6828,63 @@ msgstr ""
 "<p>A página de ajuda para este componente ainda não foi escrita (ou está com "
 "problemas). Considere contribuir com a mesma.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1028
+#: rkward/windows/rkhtmlwindow.cpp:1023
 #, kde-format
 msgid "Use %1 now"
 msgstr "Usar o %1 agora"
 
-#: rkward/windows/rkhtmlwindow.cpp:1045
+#: rkward/windows/rkhtmlwindow.cpp:1040
 #, kde-format
 msgid "Summary"
 msgstr "Resumo"
 
-#: rkward/windows/rkhtmlwindow.cpp:1052
+#: rkward/windows/rkhtmlwindow.cpp:1047
 #, kde-format
 msgid "Usage"
 msgstr "Uso"
 
-#: rkward/windows/rkhtmlwindow.cpp:1079
+#: rkward/windows/rkhtmlwindow.cpp:1074
 #, fuzzy, kde-format
 #| msgid "<<Open another file>>"
 msgid "Choose another file"
 msgstr "<<Abrir outro arquivo>>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1101
+#: rkward/windows/rkhtmlwindow.cpp:1096
 #, kde-format
 msgid "GUI settings"
 msgstr "Configurações da interface"
 
-#: rkward/windows/rkhtmlwindow.cpp:1126
+#: rkward/windows/rkhtmlwindow.cpp:1121
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Funções e páginas relacionadas"
 
-#: rkward/windows/rkhtmlwindow.cpp:1134
+#: rkward/windows/rkhtmlwindow.cpp:1129
 #, kde-format
 msgid "Technical details"
 msgstr "Detalhes técnicos"
 
-#: rkward/windows/rkhtmlwindow.cpp:1157
+#: rkward/windows/rkhtmlwindow.cpp:1152
 #, kde-format
 msgid "About"
 msgstr "Sobre"
 
-#: rkward/windows/rkhtmlwindow.cpp:1164
+#: rkward/windows/rkhtmlwindow.cpp:1159
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Nesta página:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1187
+#: rkward/windows/rkhtmlwindow.cpp:1182
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Elemento da interface gráfica sem nome"
 
-#: rkward/windows/rkhtmlwindow.cpp:1261
+#: rkward/windows/rkhtmlwindow.cpp:1256
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Referência do R sobre '%1'"
 
-#: rkward/windows/rkhtmlwindow.cpp:1272
+#: rkward/windows/rkhtmlwindow.cpp:1267
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "REFERÊNCIA INVÁLIDA"

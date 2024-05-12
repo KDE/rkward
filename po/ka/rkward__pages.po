@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-10 00:36+0000\n"
-"PO-Revision-Date: 2024-04-17 09:20+0200\n"
+"PO-Revision-Date: 2024-05-10 07:35+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1823,16 +1823,13 @@ msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "&lrm;<link href=\"rkward://settings/addons\">Further add-on related "
-#| "settings (e.g., git/project integration)&lrm;</link>"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)</link>&lrm;"
 msgstr ""
 "&lrm;<link href=\"rkward://settings/addons\">მეტი პარამეტრი დამატებისთვის "
-"(მაგ: git/პროექტთან ინტეგრაცია)&lrm;</link>"
+"(მაგ: git/პროექტთან ინტეგრაცია)</link>&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
