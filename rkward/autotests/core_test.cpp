@@ -369,7 +369,7 @@ private Q_SLOTS:
 			QVERIFY(!command->failed());
 		});
 		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
-		waitForAllFinished();  // priority_command_done must remain in scope until done
+		waitForAllFinished(5000);  // priority_command_done must remain in scope until done
 	}
 
 	void restartRBackend() {
