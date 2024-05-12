@@ -126,11 +126,11 @@ void RKTopLevelWindowGUI::initToolWindowActions () {
 	const auto windows = RKToolWindowList::registeredToolWindows ();
 	for (const RKToolWindowList::ToolWindowRepresentation& rep : windows) {
 		QString id = QLatin1String ("window_show_") + rep.id;
-		action = actionCollection ()->addAction (id, this, SLOT (toggleToolView()));
+		QString wid = rep.id;
+		action = actionCollection()->addAction(id, this, [this, wid](){ toggleToolView(wid); });
 		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));
 		action->setIcon (rep.window->windowIcon ());
 		actionCollection ()->setDefaultShortcut (action, rep.default_shortcut);
-		action->setProperty ("rk_toolwindow_id", rep.id);
 		QDomElement e = doc.createElement (action_tag);
 		e.setAttribute (name_attr, id);
 		menu.insertBefore (e, ref);
@@ -204,14 +204,12 @@ void RKTopLevelWindowGUI::toggleToolView (RKMDIWindow *tool_window) {
 	}
 }
 
-void RKTopLevelWindowGUI::toggleToolView () {
+void RKTopLevelWindowGUI::toggleToolView(const QString &id) {
 	RK_TRACE (APP);
-	QAction *act = dynamic_cast<QAction*> (sender ());
-	RK_ASSERT (act);
 
-	RKMDIWindow *win = RKToolWindowList::findToolWindowById (act->property ("rk_toolwindow_id").toString ());
-	RK_ASSERT (win);
-	toggleToolView (win);
+	RKMDIWindow *win = RKToolWindowList::findToolWindowById(id);
+	RK_ASSERT(win);
+	toggleToolView(win);
 }
 
 void RKTopLevelWindowGUI::showHelpSearch () {

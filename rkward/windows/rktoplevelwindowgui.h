@@ -55,7 +55,7 @@ public Q_SLOTS:
 	/** configure key bindings. Reimplemented to show notice before the actual dialog. */
 	void configureToolbars ();
 private Q_SLOTS:
-	void toggleToolView ();
+	void toggleToolView(const QString &id);
 	void previousWindow ();
 	void nextWindow ();
 private:
