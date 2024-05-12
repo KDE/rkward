@@ -217,8 +217,8 @@ msgid ""
 "details on the dependent options."
 msgstr ""
 "Si cal que les dades estiguen tabulades / agregades abans de dibuixar-les, "
-"seleccioneu esta opció. Vegeu <link href=\"rkward://component/"
-"one_var_tabulation\"/> per a detalls de les opcions dependents."
+"marqueu esta opció. Vegeu <link href=\"rkward://component/one_var_tabulation"
+"\"/> per a detalls de les opcions dependents."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Matrix, Vector or Factor")
@@ -230,7 +230,7 @@ msgid ""
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
 "Si les dades ja són adequades per a dibuixar-les directament, especifiqueu-"
-"ho ací. En cas contrari, deixeu açò buit i seleccioneu l'opció «Convertix a "
+"ho ací. En cas contrari, deixeu açò buit i marqueu l'opció «Convertix a "
 "taula», a dalt."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Limit number of groups")
@@ -247,7 +247,7 @@ msgid ""
 "\"/> for details on the dependent options."
 msgstr ""
 "Si hi ha moltes categories a les dades, pot tindre sentit limitar la "
-"quantitat de categories que es mostraran. Seleccioneu-la si voleu definir un "
+"quantitat de categories que es mostraran. Activeu açò si voleu definir un "
 "límit. Vegeu <link href=\"rkward://component/limit_vector_length\"/> per als "
 "detalls de les opcions dependents."
 
@@ -648,8 +648,8 @@ msgid ""
 "Whether to draw outliers (if any). Outliers are draw as dots, if this option "
 "is checked."
 msgstr ""
-"Indica si es dibuixaran les observacions atípiques (si n'hi ha). Si s'ha "
-"seleccionat esta opció, les observacions atípiques es dibuixaran amb punts."
+"Indica si es dibuixaran les observacions atípiques (si n'hi ha). Les "
+"observacions atípiques es dibuixen amb punts, si s'ha marcat esta opció."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Show mean")
 #: rkward/plugins/plots/box_plot.rkh:29
@@ -1368,7 +1368,7 @@ msgid ""
 "option, below."
 msgstr ""
 "Si les dades ja són adequades per a dibuixar-les directament, especifiqueu-"
-"ho ací. En cas contrari, deixeu açò buit i seleccioneu l'opció <i><label id="
+"ho ací. En cas contrari, deixeu açò buit i marqueu l'opció <i><label id="
 "\"tabulate\"/></i>, davall."
 
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Plot Options")
@@ -1629,7 +1629,7 @@ msgstr ""
 msgid ""
 "Remove missing values? If not checked, missing values will cause an error."
 msgstr ""
-"Voleu eliminar els valors que falten? Si no se selecciona, els valors que "
+"Voleu eliminar els valors que falten? Si no està marcada, els valors que "
 "falten provocaran un error."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "resolution")
@@ -1718,7 +1718,7 @@ msgid ""
 msgstr ""
 "Si les dades ja contenen comptadors de defectes o costos de defectes, o "
 "altres dades adequades per a dibuixar-les directament en un diagrama de "
-"Pareto, especifiqueu-ho ací. En cas contrari, deixeu açò buit i seleccioneu "
+"Pareto, especifiqueu-ho ací. En cas contrari, deixeu açò buit i marqueu "
 "l'opció «Convertix a taula», a dalt."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Print descriptives")

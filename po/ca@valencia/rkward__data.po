@@ -803,7 +803,7 @@ msgid ""
 "Check this, if you want to remove some columns from the resulting data."
 "frame. Otherwise, all columns will be included."
 msgstr ""
-"Seleccioneu-la per a eliminar columnes de «data.frame» resultant. En cas "
+"Marqueu-la per a eliminar columnes de «data.frame» resultant. En cas "
 "contrari, s'inclouran totes les columnes."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Selected variables")

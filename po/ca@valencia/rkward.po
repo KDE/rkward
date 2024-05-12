@@ -52,7 +52,7 @@ msgstr "No es pot editar «%1»"
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
 msgid "Loading Workspace..."
-msgstr "S'està carregant l'espai de treball..."
+msgstr "S'està carregant l'espai de treball…"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -421,8 +421,7 @@ msgstr ""
 "de funció per als objectes en este paquet.\n"
 "Habitualment un paquet es fica en la llista negra, si té una enorme "
 "quantitat de dades i es tardaria molt a carregar-lo. Per a traure'l de la "
-"llista, anar fins a «Configuració -> Configura RKWard... -> Espai de "
-"treball»."
+"llista, anar fins a «Configuració -> Configura RKWard… -> Espai de treball»."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -669,7 +668,7 @@ msgstr "Suprimix esta fila (%1)"
 #: rkward/dataeditor/twintable.cpp:413
 #, kde-format
 msgid "Inserting clipboard contents..."
-msgstr "S'està inserint el contingut del porta-retalls..."
+msgstr "S'està inserint el contingut del porta-retalls…"
 
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
@@ -1257,8 +1256,7 @@ msgid ""
 msgstr ""
 "<p>Alguns (però no tots) paquets d'R tenen connectors per a RKWard. Açò vol "
 "dir que proporcionen una interfície gràfica d'usuari de manera addicional a "
-"les funcions d'R. Seleccioneu esta casella per a mostrar només estos paquets."
-"</p>"
+"les funcions d'R. Marqueu esta casella per a mostrar només estos paquets.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:661
 #, kde-format
@@ -1280,8 +1278,8 @@ msgid ""
 msgstr ""
 "Alguns paquets «suggerixen» paquets addicionals, que no són estrictament "
 "necessaris per a utilitzar este paquet, però que poden proporcionar "
-"funcionalitats relacionades addicionals. Seleccioneu esta opció per a "
-"incloure estos paquets suggerits addicionals."
+"funcionalitats relacionades addicionals. Marqueu esta opció per a incloure "
+"estos paquets suggerits addicionals."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:675
 #, kde-format
@@ -1645,8 +1643,8 @@ msgid ""
 "will be prompted with a link to a download page at the last page of this "
 "dialog)"
 msgstr ""
-"Seleccioneu %1 per a instal·lar (la instal·lació pròpiament dita encara no "
-"està admesa, però se us demanarà un enllaç cap a una pàgina de descàrrega en "
+"Marqueu %1 per a instal·lar (la instal·lació pròpiament dita encara no està "
+"admesa, però se us demanarà un enllaç cap a una pàgina de descàrrega en "
 "l'última pàgina d'este diàleg)"
 
 #: rkward/dialogs/rksetupwizard.cpp:101
@@ -1698,7 +1696,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:133
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
-msgstr "<b>S'està esperant pel dorsal d'R...</b>"
+msgstr "<b>S'està esperant pel dorsal d'R…</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:135
 #, kde-format
@@ -2875,12 +2873,12 @@ msgstr "Escolliu l'objecte pare"
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr "Apegades especial..."
+msgstr "Apegades especial…"
 
 #: rkward/misc/rkspecialactions.cpp:64
 #, kde-format
 msgid "Paste Special..."
-msgstr "Apegades especial..."
+msgstr "Apegades especial…"
 
 #: rkward/misc/rkspecialactions.cpp:81
 #, kde-format
@@ -3004,7 +3002,7 @@ msgid ""
 "Console window for better diagnostics."
 msgstr ""
 "No s'ha pogut analitzar l'ordre. Proveu d'utilitzar <i>Edita->Apegades "
-"especial...</i> en la finestra de la consola d'R per a un diagnòstic millor."
+"especial…</i> en la finestra de la consola d'R per a un diagnòstic millor."
 
 #: rkward/misc/rkspecialactions.cpp:309
 #, kde-format
@@ -3173,8 +3171,8 @@ msgid ""
 msgstr ""
 "Heu intentat executar el connector «%1», però este connector és desconegut. "
 "Probablement necessiteu carregar el fitxer corresponent PluginMap "
-"(Configuració -> Configura RKWard... -> Connectors), o potser el connector "
-"ha sigut canviat el nom."
+"(Configuració -> Configura RKWard… -> Connectors), o potser el connector ha "
+"sigut canviat el nom."
 
 #: rkward/plugin/rkcomponentmap.cpp:465
 #, kde-format
@@ -3672,7 +3670,7 @@ msgid ""
 "from a loaded package."
 msgstr ""
 "Mostra els objectes a tots els entorns del camí <i>search()</i>, en lloc de "
-"només els de <i>.GlobalEnv</i>. Seleccioneu-la si voleu seleccionar objectes "
+"només els de <i>.GlobalEnv</i>. Activeu açò si voleu seleccionar objectes "
 "des d'un paquet carregat."
 
 #: rkward/plugin/rkvarselector.cpp:71
@@ -4163,12 +4161,12 @@ msgstr "Imprimix la consola"
 #: rkward/rkconsole.cpp:890
 #, kde-format
 msgid "Import command history..."
-msgstr "Importa l'historial d'ordres..."
+msgstr "Importa l'historial d'ordres…"
 
 #: rkward/rkconsole.cpp:892
 #, kde-format
 msgid "Export command history..."
-msgstr "Exporta l'historial d'ordres..."
+msgstr "Exporta l'historial d'ordres…"
 
 #: rkward/rkconsole.cpp:911
 #, kde-format
@@ -4250,8 +4248,8 @@ msgstr ""
 "«Cancel·la» tot seguit.</p><p>En cas que cliqueu en «Continua», no "
 "s'executarà cap codi R, fins que no cliqueu «Envia» en la finestra de "
 "diàleg, i us animem a revisar el codi R generat abans de fer-ho.</"
-"p><p><i>Nota</i>: Seleccionant «No ho tornes a preguntar», només suprimirà "
-"este missatge per a la resta d'esta sessió."
+"p><p><i>Nota</i>: Activant «No ho tornes a preguntar», només suprimirà este "
+"missatge per a la resta d'esta sessió."
 
 #: rkward/rkward.cpp:304
 #, kde-format
@@ -4262,7 +4260,7 @@ msgstr "Una nota sobre els enllaços externs"
 #: rkward/rkward.cpp:316
 #, kde-format
 msgid "Setting up plugins..."
-msgstr "S'estan configurant els connectors..."
+msgstr "S'estan configurant els connectors…"
 
 #: rkward/rkward.cpp:350
 #, kde-format
@@ -4273,7 +4271,7 @@ msgid ""
 msgstr ""
 "S'han trobat paquets nous (llistats davall) de connectors de RKWard, i s'han "
 "activat automàticament. Per a desactivar els paquets de connectors "
-"seleccionats, utilitzeu «Configuració -> Configura RKWard... -> Connectors»."
+"seleccionats, utilitzeu «Configuració -> Configura RKWard… -> Connectors»."
 
 #: rkward/rkward.cpp:350
 #, kde-format
@@ -4320,7 +4318,7 @@ msgid ""
 msgstr ""
 "Nota: No tornarà a aparéixer l'avís quant a estos fitxers del mapa de "
 "connectors, fins que actualitzeu RKWard, o els elimineu i els torneu a "
-"afegir a «Configuració -> Configura RKWard... -> Connectors»."
+"afegir a «Configuració -> Configura RKWard… -> Connectors»."
 
 #: rkward/rkward.cpp:414
 #, kde-format
@@ -4385,17 +4383,17 @@ msgstr "Crea i activa un document d'eixida nou"
 #: rkward/rkward.cpp:494
 #, kde-format
 msgid "Open R Script File..."
-msgstr "Obri un fitxer de script d'R..."
+msgstr "Obri un fitxer de script d'R…"
 
 #: rkward/rkward.cpp:498
 #, kde-format
 msgid "Open RKWard Output File..."
-msgstr "Obri un fitxer d'eixida de RKWard..."
+msgstr "Obri un fitxer d'eixida de RKWard…"
 
 #: rkward/rkward.cpp:502
 #, kde-format
 msgid "Open any File..."
-msgstr "Obri qualsevol fitxer..."
+msgstr "Obri qualsevol fitxer…"
 
 #: rkward/rkward.cpp:507
 #, kde-format
@@ -4418,7 +4416,7 @@ msgstr ""
 #: rkward/rkward.cpp:516
 #, kde-format
 msgid "Open Workspace..."
-msgstr "Obri un espai de treball..."
+msgstr "Obri un espai de treball…"
 
 #: rkward/rkward.cpp:518
 #, kde-format
@@ -4453,7 +4451,7 @@ msgstr "Anomena i guarda l'espai de treball"
 #: rkward/rkward.cpp:534
 #, kde-format
 msgid "Saves the actual document as..."
-msgstr "Guarda el document existent com a..."
+msgstr "Guarda el document existent com a…"
 
 #: rkward/rkward.cpp:537
 #, kde-format
@@ -4468,12 +4466,12 @@ msgstr "Interromp totes les ordres"
 #: rkward/rkward.cpp:546
 #, kde-format
 msgid "CC commands to output..."
-msgstr "Copia les ordres a l'eixida..."
+msgstr "Copia les ordres a l'eixida…"
 
 #: rkward/rkward.cpp:550 rkward/rkward.cpp:554
 #, kde-format
 msgid "Manage R packages and plugins..."
-msgstr "Gestiona els paquets i els connectors d'R..."
+msgstr "Gestiona els paquets i els connectors d'R…"
 
 #: rkward/rkward.cpp:561
 #, kde-format
@@ -4509,17 +4507,17 @@ msgstr "[No hi ha disponible cap acció per a la vista actual]"
 #: rkward/rkward.cpp:586
 #, kde-format
 msgid "Open..."
-msgstr "Obri..."
+msgstr "Obri…"
 
 #: rkward/rkward.cpp:600
 #, kde-format
 msgid "Create..."
-msgstr "Crea..."
+msgstr "Crea…"
 
 #: rkward/rkward.cpp:607
 #, kde-format
 msgid "Save..."
-msgstr "Guarda..."
+msgstr "Guarda…"
 
 #: rkward/rkward.cpp:629
 #, kde-format
@@ -4591,7 +4589,7 @@ msgstr "Configura el dorsal R"
 #: rkward/rkward.cpp:847
 #, kde-format
 msgid "Exiting..."
-msgstr "S'està eixint..."
+msgstr "S'està eixint…"
 
 #: rkward/rkward.cpp:865
 #, kde-format
@@ -4606,12 +4604,12 @@ msgstr "Introduïu el nom per al conjunt de dades nou"
 #: rkward/rkward.cpp:877
 #, kde-format
 msgid "Opening workspace..."
-msgstr "S'està obrint l'espai de treball..."
+msgstr "S'està obrint l'espai de treball…"
 
 #: rkward/rkward.cpp:880
 #, kde-format
 msgid "Select workspace to open..."
-msgstr "Selecciona l'espai de treball que s'ha d'obrir..."
+msgstr "Selecciona l'espai de treball que s'ha d'obrir…"
 
 #: rkward/rkward.cpp:960
 #, kde-format
@@ -4661,7 +4659,7 @@ msgstr "Obri com a fitxer de text i força el ressaltat d'R"
 #: rkward/rkward.cpp:1040
 #, kde-format
 msgid "Select RKWard Output file to open..."
-msgstr "Seleccioneu un fitxer d'eixida de RKWard que s'ha d'obrir..."
+msgstr "Seleccioneu un fitxer d'eixida de RKWard que s'ha d'obrir…"
 
 #: rkward/rkward.cpp:1040
 #, kde-format
@@ -4999,7 +4997,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:77
 #, kde-format
 msgid "Keyboard navigation of completion items"
-msgstr "Navegació amb el teclat dels elements de compleció"
+msgstr "Navegueu amb el teclat dels elements de compleció"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:81
 #, kde-format
@@ -6388,19 +6386,19 @@ msgid ""
 "every time you modify the script. When this option is disabled, the preview "
 "will be updated whenever you save the script, only."
 msgstr ""
-"Quan se selecciona esta opció, s'activarà una actualització de la vista "
-"prèvia cada vegada que modifiqueu l'script. Quan no se selecciona, la vista "
-"prèvia s'actualitzarà només quan guardeu l'script."
+"Quan es marca esta opció, s'activarà una actualització de la vista prèvia "
+"cada vegada que modifiqueu l'script. Quan no està marcada, la vista prèvia "
+"s'actualitzarà només quan guardeu l'script."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:432
 #, kde-format
 msgid "Save Script..."
-msgstr "Guarda l'script..."
+msgstr "Guarda l'script…"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:434
 #, kde-format
 msgid "Save Script As..."
-msgstr "Anomena i guarda l'script..."
+msgstr "Anomena i guarda l'script…"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:514
 #: rkward/windows/rkcommandeditorwindow.cpp:780
@@ -6630,7 +6628,7 @@ msgstr ""
 "<b>No</b> oferix cap característica per a depurar el codi d'R.</p><p>Cal "
 "tindre en compte que la llista de missatges es neteja cada vegada que es "
 "tanca la finestra.</p><p>Es pot controlar el tipus i el nivell de gravetat "
-"dels missatges a «Configuració -> Configura RKWard... -> Depuració»</p>"
+"dels missatges a «Configuració -> Configura RKWard… -> Depuració»</p>"
 
 #: rkward/windows/rkdebugmessagewindow.cpp:71
 #, kde-format
@@ -6650,7 +6648,7 @@ msgstr "Canvia el nom"
 #: rkward/windows/rkfilebrowser.cpp:169
 #, kde-format
 msgid "Rename..."
-msgstr "Canvia el nom..."
+msgstr "Canvia el nom…"
 
 #: rkward/windows/rkfilebrowser.cpp:169
 #, kde-format
@@ -7135,7 +7133,7 @@ msgstr ""
 "RKWard. Tanmateix, no s'ha creat cap finestra, o RKWard ha fallat en "
 "detectar la finestra nova. Si creieu que RKWard ho podria haver fet millor, "
 "considereu informar-ho com un error. De manera alternativa, podríeu voler "
-"ajustar «Configuració -> Configura RKWard... -> Gràfics en pantalla»."
+"ajustar «Configuració -> Configura RKWard… -> Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:294
 #, kde-format
@@ -7156,7 +7154,7 @@ msgid ""
 msgstr ""
 "La finestra actual pareix massa gran per a ajustar-se a la pantalla. Si açò "
 "passa sovint, podríeu voler ajustar la mida predeterminada de la finestra "
-"gràfica a «Configuració -> Configura RKWard... -> Gràfics en pantalla»."
+"gràfica a «Configuració -> Configura RKWard… -> Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:351
 #, kde-format
@@ -7193,8 +7191,8 @@ msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
 "close it manually in this case.</p>"
 msgstr ""
-"<p>Nota: En l'X11, caldrà expurgar la finestra incrustada. En este cas "
-"caldrà tancar-la manualment.</p>"
+"<p>Nota: En X11, caldrà expurgar la finestra incrustada. En este cas caldrà "
+"tancar-la manualment.</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:383
 #, kde-format
@@ -7344,7 +7342,7 @@ msgstr "Establix una mida fixa de 2000x2000"
 #: rkward/windows/rkwindowcatcher.cpp:739
 #, kde-format
 msgid "Set specified fixed size..."
-msgstr "Establix una mida fixa especificada..."
+msgstr "Establix una mida fixa especificada…"
 
 #: rkward/windows/rkwindowcatcher.cpp:744
 #, kde-format
@@ -7404,7 +7402,7 @@ msgstr "Copia a l'eixida"
 #: rkward/windows/rkwindowcatcher.cpp:801
 #, kde-format
 msgid "Store as R object..."
-msgstr "Guarda com un objecte R..."
+msgstr "Guarda com un objecte R…"
 
 #: rkward/windows/rkwindowcatcher.cpp:803
 #, kde-format
@@ -7460,8 +7458,7 @@ msgstr ""
 "petits abans d'editar-los. D'altra banda, si teniu memòria suficient, o les "
 "dades són prou simples (les dades numèriques són més fàcils de gestionar que "
 "els factors), es podran editar sense problemes. Podeu configurar este avís "
-"(o desactivar-lo del tot) a «Configuració -> Configura RKWard... -> "
-"General».\n"
+"(o desactivar-lo del tot) a «Configuració -> Configura RKWard… -> General».\n"
 "Edite l'objecte?"
 
 #: rkward/windows/rkworkplace.cpp:647

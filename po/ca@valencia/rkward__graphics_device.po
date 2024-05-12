@@ -58,7 +58,7 @@ msgstr ""
 #: rkward/plugins/x11device.pluginmap:23
 #, kde-format
 msgid "Export..."
-msgstr "Exporta..."
+msgstr "Exporta…"
 
 #. i18n: ectx: <context> <menu label="...">
 #: rkward/plugins/x11device.pluginmap:27
@@ -160,7 +160,7 @@ msgid ""
 "relevant extension is appended to the filename above to construct the full "
 "filename. This option is disabled for exporting via ghostscript."
 msgstr ""
-"Seleccioneu esta casella per a permetre que RKWard detecte automàticament "
+"Marqueu esta casella per a permetre que RKWard detecte automàticament "
 "l'extensió del fitxer. Si el nom del fitxer especificat en el quadro «Nom de "
 "fitxer» ja té una extensió adequada, no es fa res, és a dir, s'utilitza el "
 "nom de fitxer especificat. Altrament, s'afig una extensió adequada al nom "
@@ -203,7 +203,7 @@ msgstr ""
 msgid ""
 "Check this box to let the export function determine the width automatically."
 msgstr ""
-"Seleccioneu esta casella per a deixar que la funció d'exportació determine "
+"Marqueu esta casella per a deixar que la funció d'exportació determine "
 "automàticament l'amplària."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Height")
@@ -320,7 +320,7 @@ msgid ""
 "Uncheck this for NOT centering the image on the page. This is the "
 "<i>pagecentre</i> parameter."
 msgstr ""
-"Desactiveu-la per a NO centrar la imatge a la pàgina. Este és el paràmetre "
+"Desmarqueu-la per a NO centrar la imatge a la pàgina. Este és el paràmetre "
 "<i>pagecentre</i>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Horizontal (ps/gs)")
@@ -372,7 +372,7 @@ msgid ""
 "this is not displayed on the plot, but rather it is embedded inside the "
 "graphics file. This is the <i>title</i> parameter to <b>postscript</b>."
 msgstr ""
-"Desseleccioneu esta casella per a especificar un títol personalitzat per al "
+"Desmarqueu esta casella per a especificar un títol personalitzat per al "
 "fitxer dels gràfics. Cal tindre en compte que no es mostra en el diagrama, "
 "sinó que s'incrusta en el fitxer dels gràfics. Este és el paràmetre "
 "<i>title</i> de <b>postscript</b>."

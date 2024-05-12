@@ -2967,7 +2967,7 @@ msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
 "probabilities are P[X > x]"
 msgstr ""
-"Si se selecciona (de manera predeterminada), les probabilitats seran P[X ≤ "
+"Si està marcada (de manera predeterminada), les probabilitats seran P[X ≤ "
 "x]. Altrament (cua superior), les probabilitats seran P[X > x]"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting>
@@ -4243,8 +4243,7 @@ msgstr "Cua inferior"
 #, kde-format
 msgid "Check this box if log of the function values are to be plotted."
 msgstr ""
-"Seleccioneu esta casella si voleu dibuixar el logaritme dels valors de la "
-"funció."
+"Marqueu esta casella si voleu dibuixar el logaritme dels valors de la funció."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower Tail")
@@ -4293,7 +4292,7 @@ msgid ""
 "plotted."
 msgstr ""
 "Esta opció només és vàlida per a dibuixar la funció de la distribució. "
-"Desseleccioneu-la per a dibuixar la cua superior de la funció de la "
+"Desmarqueu la casella per a dibuixar la cua superior de la funció de la "
 "distribució (P[X > x])."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Preview")
@@ -4345,14 +4344,14 @@ msgid ""
 "try again. If it still persists, use only the \"Submit\" button to view the "
 "exported plot in the Output window."
 msgstr ""
-"Seleccioneu esta casella per a veure una vista prèvia del diagrama de la "
-"funció. S'obrirà una finestra de gràfics nova i s'actualitzarà dinàmicament "
-"segons l'elecció dels paràmetres. És possible que tarde un temps a mostrar-"
-"se la finestra. De vegades, només es pot mostrar un dispositiu de gràfics "
-"buit, en este cas, tanqueu el dispositiu (dev.off() o fins i tot graphics."
-"off()), desmarqueu la casella, espereu un moment i torneu-ho a provar. Si "
-"encara persistix, utilitzeu només el botó «Envia» per a veure el diagrama "
-"exportat en la finestra d'eixida."
+"Marqueu esta casella per a veure una vista prèvia del diagrama de la funció. "
+"S'obrirà una finestra de gràfics nova i s'actualitzarà dinàmicament segons "
+"l'elecció dels paràmetres. És possible que tarde un temps a mostrar-se la "
+"finestra. De vegades, només es pot mostrar un dispositiu de gràfics buit, en "
+"este cas, tanqueu el dispositiu (dev.off() o fins i tot graphics.off()), "
+"desmarqueu la casella, espereu un moment i torneu-ho a provar. Si encara "
+"persistix, utilitzeu només el botó «Envia» per a veure el diagrama exportat "
+"en la finestra d'eixida."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Plot Options")
@@ -4451,7 +4450,7 @@ msgstr ""
 "Seleccioneu els valors apropiats per als diferents paràmetres de la "
 "distribució i seleccioneu el tipus de la funció. El botó «Envia» exportarà "
 "el diagrama a la finestra d'eixida. Per a visualitzar dinàmicament el "
-"diagrama, seleccioneu la casella «Vista prèvia»."
+"diagrama, marqueu la casella «Vista prèvia»."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
@@ -5497,8 +5496,8 @@ msgid ""
 "succeeding."
 msgstr ""
 "Assegureu-vos que les dades no contenen SD o, si les tenen, que l'opció "
-"«Excloeu els SD» està seleccionada. Si no ho feu, evitareu que la prova "
-"tinga èxit."
+"«Excloeu els SD» està marcada. Si no ho feu, evitareu que la prova tinga "
+"èxit."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/distributions/tests/jb_test.rkh:21
