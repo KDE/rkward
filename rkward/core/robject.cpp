@@ -560,7 +560,6 @@ int RObject::getObjectModelIndexOf (RObject *child) const {
 	}
 	if (isType (Workspace)) {
 		if (child == static_cast<const RObjectList*> (this)->orphanNamespacesObject ()) return offset;
-		offset += 1;
 	}
 	return -1;
 }
@@ -591,7 +590,6 @@ RObject *RObject::findChildByObjectModelIndex (int index) const {
 	}
 	if (isType (Workspace)) {
 		if (index == 0) return static_cast<const RObjectList *> (this)->orphanNamespacesObject ();
-		--index;
 	}
 	return nullptr;
 }

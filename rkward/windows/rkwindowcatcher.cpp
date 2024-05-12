@@ -812,7 +812,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart(RKCaughtX11Window *window) : KParts
 	action = actionCollection()->addAction("device_copy_to_output", window, &RKCaughtX11Window::copyDeviceToOutput);
 	action->setText (i18n ("Copy to output"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
-	action = actionCollection()->addAction(KStandardAction::Print, "device_print", window, &RKCaughtX11Window::printDevice);
+	actionCollection()->addAction(KStandardAction::Print, "device_print", window, &RKCaughtX11Window::printDevice);
 	action = actionCollection()->addAction("device_copy_to_r_object", window, &RKCaughtX11Window::copyDeviceToRObject);
 	action->setText (i18n ("Store as R object..."));
 	action = actionCollection()->addAction("device_duplicate", window, &RKCaughtX11Window::duplicateDevice);
