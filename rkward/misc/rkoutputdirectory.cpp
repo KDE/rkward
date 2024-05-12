@@ -410,7 +410,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain* c
 	if (outputs.isEmpty()) {
 		if (RKSettingsModuleOutput::sharedDefaultOutput()) {
 			QString filename = RKSettingsModuleGeneral::filesPath() + "default.rko";
-			auto ret = get(filename, !QFileInfo::exists(filename), chain);
+			ret = get(filename, !QFileInfo::exists(filename), chain);
 			if (ret.dir()) {
 				ret.dir()->activate(chain);
 				return ret;

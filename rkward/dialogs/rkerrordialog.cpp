@@ -36,10 +36,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class RKBugzillaReportDialog : public QDialog {
 public:
-	RKBugzillaReportDialog (QWidget* parent, const QString& report_template) : QDialog (parent) {
+	RKBugzillaReportDialog(QWidget* parent, const QString& report_template) : QDialog(parent), report_template(report_template) {
 		RK_TRACE (DIALOGS);
 
-		RKBugzillaReportDialog::report_template = report_template;
 		setWindowTitle (i18n ("Reporting bugs in RKWard"));
 		QVBoxLayout *layout = new QVBoxLayout (this);
 		QLabel *label = RKCommonFunctions::wordWrappedLabel (i18n ("<p><b>Where should I report bugs or wishes?</b></p><p>Thank you for taking the time to help improve RKWard. To help us "

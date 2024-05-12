@@ -94,12 +94,12 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	}
 
 	// define standard actions
-	QAction *cut = KStandardAction::cut(this, &RKMatrixInput::cut, this);
-	display->addAction(cut);
-	QAction *copy = KStandardAction::copy(this, &RKMatrixInput::copy, this);
-	display->addAction(copy);
-	QAction *paste = KStandardAction::paste(this, &RKMatrixInput::paste, this);
-	display->addAction(paste);
+	QAction *acut = KStandardAction::cut(this, &RKMatrixInput::cut, this);
+	display->addAction(acut);
+	QAction *acopy = KStandardAction::copy(this, &RKMatrixInput::copy, this);
+	display->addAction(acopy);
+	QAction *apaste = KStandardAction::paste(this, &RKMatrixInput::paste, this);
+	display->addAction(apaste);
 	display->setContextMenuPolicy(Qt::ActionsContextMenu);
 
 	display->setRKItemDelegate (new RKItemDelegate (display, model, true));

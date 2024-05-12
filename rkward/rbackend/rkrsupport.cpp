@@ -256,7 +256,7 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 		case EXTPTRSXP:
 			if (RFn::R_ExternalPtrTag(from_exp) == RKWard_RData_Tag) {		// our very own data
 				delete data;
-				data = (RData*) RFn::R_ExternalPtrAddr(from_exp);
+				data = static_cast<RData*>(RFn::R_ExternalPtrAddr(from_exp));
 				RFn::R_ClearExternalPtr(from_exp);
 				break;
 			}

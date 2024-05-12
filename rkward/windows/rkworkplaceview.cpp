@@ -235,14 +235,14 @@ RKWorkplaceViewPane* RKWorkplaceView::activePane () const {
 void RKWorkplaceView::initActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
-	action_page_left = (QAction *) ac->addAction("left_window", this, &RKWorkplaceView::pageLeft);
+	action_page_left = ac->addAction("left_window", this, &RKWorkplaceView::pageLeft);
 	action_page_left->setText (i18n ("Window Left"));
 	ac->setDefaultShortcuts (action_page_left, {
 		Qt::ControlModifier | Qt::Key_Less,
 		Qt::ControlModifier | Qt::Key_Comma
 	});
 
-	action_page_right = (QAction *) ac->addAction("right_window", this, &RKWorkplaceView::pageRight);
+	action_page_right = ac->addAction("right_window", this, &RKWorkplaceView::pageRight);
 	action_page_right->setText (i18n ("Window Right"));
 	ac->setDefaultShortcuts (action_page_right, {
 		Qt::ControlModifier | Qt::Key_Greater,

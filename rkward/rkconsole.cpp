@@ -367,7 +367,7 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 	}
 
 	if ((e->type () == QEvent::KeyPress) || (e->type () == QEvent::Shortcut)) {
-		QKeyEvent *k = (QKeyEvent *)e;
+		QKeyEvent *k = static_cast<QKeyEvent *>(e);
 		return (handleKeyPress (k));
 	} else if (e->type () == QEvent::MouseButtonPress) {
 		// we seem to need this, as the kateview will swallow the contextMenuEvent, otherwise
