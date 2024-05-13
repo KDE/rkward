@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-12 00:36+0000\n"
+"POT-Creation-Date: 2024-05-13 00:36+0000\n"
 "PO-Revision-Date: 2023-07-31 11:13+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -655,12 +655,12 @@ msgstr "Ta bort raden (%1)"
 msgid "Inserting clipboard contents..."
 msgstr "Infogar klippbordets innehåll..."
 
-#: rkward/dialogs/rkerrordialog.cpp:43
+#: rkward/dialogs/rkerrordialog.cpp:42
 #, kde-format
 msgid "Reporting bugs in RKWard"
 msgstr "Rapportera fel i RKWard"
 
-#: rkward/dialogs/rkerrordialog.cpp:45
+#: rkward/dialogs/rkerrordialog.cpp:44
 #, kde-format
 msgid ""
 "<p><b>Where should I report bugs or wishes?</b></p><p>Thank you for taking "
@@ -681,7 +681,7 @@ msgstr ""
 "anledning inte är möjligt, se <a href=\"%3\">%3</a> för alternativa sätt att "
 "rapportera problem.</p>"
 
-#: rkward/dialogs/rkerrordialog.cpp:51
+#: rkward/dialogs/rkerrordialog.cpp:50
 #, kde-format
 msgid ""
 "<p><b>What information should I provide, and how?</b></p>Clicking \"Report "
@@ -696,17 +696,17 @@ msgstr ""
 "rapportformuläret. Försäkra dig om att du fyller i de saknade delarna, på "
 "engelska, där det anges, i synnerhet i fältet \"Kommentar\".</p>"
 
-#: rkward/dialogs/rkerrordialog.cpp:58
+#: rkward/dialogs/rkerrordialog.cpp:57
 #, kde-format
 msgid "Report issue"
 msgstr "Rapportera problem"
 
-#: rkward/dialogs/rkerrordialog.cpp:73
+#: rkward/dialogs/rkerrordialog.cpp:72
 #, kde-format
 msgid "Forwarding you to the KDE bugtracking system"
 msgstr "Vidarebefordrar till KDE:s felspårningssystem"
 
-#: rkward/dialogs/rkerrordialog.cpp:74
+#: rkward/dialogs/rkerrordialog.cpp:73
 #, kde-format
 msgid ""
 "You are now being forwarded to the KDE bugtracking system. Should you "
@@ -717,27 +717,27 @@ msgstr ""
 "den här sidan mer en några sekunder (t.ex. om Javaskript är inaktiverat), "
 "klicka då på \"Fortsätt\" nedan."
 
-#: rkward/dialogs/rkerrordialog.cpp:80
+#: rkward/dialogs/rkerrordialog.cpp:79
 #, kde-format
 msgid "Proceed"
 msgstr "Fortsätt"
 
-#: rkward/dialogs/rkerrordialog.cpp:103
+#: rkward/dialogs/rkerrordialog.cpp:102
 #, kde-format
 msgid "Show Details"
 msgstr "Visa detaljinformation"
 
-#: rkward/dialogs/rkerrordialog.cpp:105
+#: rkward/dialogs/rkerrordialog.cpp:104
 #, kde-format
 msgid "Report As Bug"
 msgstr "Rapportera som fel"
 
-#: rkward/dialogs/rkerrordialog.cpp:115
+#: rkward/dialogs/rkerrordialog.cpp:114
 #, kde-format
 msgid "Message code: %1\n"
 msgstr "Meddelandekod: %1\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:124
+#: rkward/dialogs/rkerrordialog.cpp:123
 #, kde-format
 msgid ""
 "---Problem description---\n"
@@ -748,7 +748,7 @@ msgstr ""
 "Fyll i de saknade delarna *på engelska*.\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:126
+#: rkward/dialogs/rkerrordialog.cpp:125
 #, kde-format
 msgid ""
 "Please give a brief summary on the problem:\n"
@@ -759,7 +759,7 @@ msgstr ""
 "###Fyll i här###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:128
+#: rkward/dialogs/rkerrordialog.cpp:127
 #, kde-format
 msgid ""
 "I encountered the error message quoted below. Additionally, I saw the "
@@ -772,7 +772,7 @@ msgstr ""
 "###Fyll i här (om tillämpligt)###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:130
+#: rkward/dialogs/rkerrordialog.cpp:129
 #, kde-format
 msgid ""
 "What - in detail - did you do directly before you encountered this problem?\n"
@@ -783,7 +783,7 @@ msgstr ""
 "###Fyll i här###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:131
+#: rkward/dialogs/rkerrordialog.cpp:130
 #, kde-format
 msgid ""
 "When you try to repeat the above, does the problem occur again (no, "
@@ -796,7 +796,7 @@ msgstr ""
 "###Fyll i här###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:132
+#: rkward/dialogs/rkerrordialog.cpp:131
 #, kde-format
 msgid ""
 "If applicable: When doing the same thing in an R session outside of RKWard, "
@@ -809,7 +809,7 @@ msgstr ""
 "###Fyll i här###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:133
+#: rkward/dialogs/rkerrordialog.cpp:132
 #, kde-format
 msgid ""
 "Do you have any further information that might help us to track this problem "
@@ -824,7 +824,7 @@ msgstr ""
 "###Fyll i här###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:134
+#: rkward/dialogs/rkerrordialog.cpp:133
 #, kde-format
 msgid ""
 "RKWard is available in many different packagings, and sometimes problems are "
@@ -839,7 +839,7 @@ msgstr ""
 "###Fyll i här###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:146
+#: rkward/dialogs/rkerrordialog.cpp:145
 #, kde-format
 msgid ""
 "Please stand by while gathering some information on your setup.\n"
@@ -850,7 +850,7 @@ msgstr ""
 "Om bakgrundsprogrammet har dött eller hängt sig, kan du behöva trycka på "
 "'Avbryt' för att hoppa över steget."
 
-#: rkward/dialogs/rkerrordialog.cpp:146
+#: rkward/dialogs/rkerrordialog.cpp:145
 #, kde-format
 msgid "Gathering setup information"
 msgstr "Samlar in inställningsinformation"
@@ -1182,7 +1182,7 @@ msgstr "Installerade paket"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:954
-#: rkward/settings/rksettingsmoduleplugins.cpp:526
+#: rkward/settings/rksettingsmoduleplugins.cpp:527
 #: rkward/windows/rkhelpsearchwindow.cpp:83
 #: rkward/windows/rkhelpsearchwindow.cpp:325
 #, kde-format
@@ -1334,7 +1334,7 @@ msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:952
 #: rkward/rbackend/rcommandstack.cpp:314
-#: rkward/settings/rksettingsmoduleplugins.cpp:527
+#: rkward/settings/rksettingsmoduleplugins.cpp:528
 #, kde-format
 msgid "Status"
 msgstr "Status"
@@ -3515,7 +3515,7 @@ msgstr "Ange värde:"
 msgid "Preview"
 msgstr "Förhandsgranskning"
 
-#: rkward/plugin/rkstandardcomponent.cpp:89
+#: rkward/plugin/rkstandardcomponent.cpp:87
 #, kde-format
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
@@ -3524,12 +3524,12 @@ msgstr ""
 "Ett fel har uppstått vid försök att tolka beskrivningen av "
 "insticksprogrammet ('%1'). Se standardutmatningen för detaljinformation."
 
-#: rkward/plugin/rkstandardcomponent.cpp:89
+#: rkward/plugin/rkstandardcomponent.cpp:87
 #, kde-format
 msgid "Could not create plugin"
 msgstr "Kunde inte skapa insticksprogram"
 
-#: rkward/plugin/rkstandardcomponent.cpp:675
+#: rkward/plugin/rkstandardcomponent.cpp:673
 #, kde-format
 msgid "Options"
 msgstr "Alternativ"
@@ -4547,67 +4547,67 @@ msgstr "Öppnar arbetsyta..."
 msgid "Select workspace to open..."
 msgstr "Välj arbetsyta att öppna..."
 
-#: rkward/rkward.cpp:957
+#: rkward/rkward.cpp:947
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr "<b>R</b>-bakgrundsprogrammet är upptaget"
 
-#: rkward/rkward.cpp:961
+#: rkward/rkward.cpp:951
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr "<b>R</b>-bakgrundsprogrammet är overksamt."
 
-#: rkward/rkward.cpp:965
+#: rkward/rkward.cpp:955
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "<b>R</b>-bakgrundsprogrammet håller på att initieras."
 
-#: rkward/rkward.cpp:968
+#: rkward/rkward.cpp:958
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr "<b>R</b>-bakgrundsprogrammet är inte tillgängligt."
 
-#: rkward/rkward.cpp:994
+#: rkward/rkward.cpp:984
 #, kde-format
 msgid "Open"
 msgstr "Öppna"
 
-#: rkward/rkward.cpp:998
+#: rkward/rkward.cpp:988
 #, kde-format
 msgid "Opening mode:"
 msgstr "Öppningsmetod:"
 
-#: rkward/rkward.cpp:1000
+#: rkward/rkward.cpp:990
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Gissa automatiskt filtyp"
 
-#: rkward/rkward.cpp:1000
+#: rkward/rkward.cpp:990
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Öppna som text- eller skriptfil"
 
-#: rkward/rkward.cpp:1000
+#: rkward/rkward.cpp:990
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Öppna som textfil och använd R-färgläggning"
 
-#: rkward/rkward.cpp:1037
+#: rkward/rkward.cpp:1027
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Välj RKWard-utdatafil att öppna..."
 
-#: rkward/rkward.cpp:1037
+#: rkward/rkward.cpp:1027
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "RKWard-utdatafiler [*.rko](*.rko);;Alla filer [*](*)"
 
-#: rkward/rkward.cpp:1046
+#: rkward/rkward.cpp:1036
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Öppna skriptfil(er)"
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1050
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[namnlös arbetsyta]"
@@ -5618,38 +5618,38 @@ msgstr "Anpassa aktiva insticksprogram"
 msgid "RKWard Plugins"
 msgstr "RKWard-insticksprogram"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:472
+#: rkward/settings/rksettingsmoduleplugins.cpp:473
 #: rkward/windows/rkhtmlwindow.cpp:1138
 #, kde-format
 msgid "Dependencies"
 msgstr "Beroenden"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:495
+#: rkward/settings/rksettingsmoduleplugins.cpp:496
 #, kde-format
 msgid "Broken"
 msgstr "Felaktiga"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:497
+#: rkward/settings/rksettingsmoduleplugins.cpp:498
 #, kde-format
 msgid "Loaded"
 msgstr "Laddade"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:500
+#: rkward/settings/rksettingsmoduleplugins.cpp:501
 #, kde-format
 msgid "Quirky"
 msgstr "Excentriska"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:524
+#: rkward/settings/rksettingsmoduleplugins.cpp:525
 #, kde-format
 msgid "Active"
 msgstr "Aktiva"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:525
+#: rkward/settings/rksettingsmoduleplugins.cpp:526
 #, kde-format
 msgid "ID"
 msgstr "Id"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:553
+#: rkward/settings/rksettingsmoduleplugins.cpp:554
 #, kde-format
 msgid "Select .pluginmap-file"
 msgstr "Välj filen .pluginmap"
@@ -6312,23 +6312,23 @@ msgstr "Spara skript..."
 msgid "Save Script As..."
 msgstr "Spara skript som..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:485
-#: rkward/windows/rkcommandeditorwindow.cpp:745
+#: rkward/windows/rkcommandeditorwindow.cpp:482
+#: rkward/windows/rkcommandeditorwindow.cpp:742
 #, kde-format
 msgid " [modified]"
 msgstr " [ändrat]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:492
+#: rkward/windows/rkcommandeditorwindow.cpp:489
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "Dokumentet \"%1\" har ändrats. Stäng det ändå?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:492
+#: rkward/windows/rkcommandeditorwindow.cpp:489
 #, kde-format
 msgid "File not saved"
 msgstr "Filen har inte sparats"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:547
+#: rkward/windows/rkcommandeditorwindow.cpp:544
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6352,33 +6352,33 @@ msgstr ""
 "förhandsgranskningsfunktionen används, i synnerhet när funktionen används "
 "med skript som ursprungligen kommer från opålitliga källor.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:547
+#: rkward/windows/rkcommandeditorwindow.cpp:544
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Potentiella sidoeffekter av förhandsgranskningar"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:670
+#: rkward/windows/rkcommandeditorwindow.cpp:667
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "Ett fel uppstod vid försök att automatiskt spara skriptfilen '%1':"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:744
+#: rkward/windows/rkcommandeditorwindow.cpp:741
 #, kde-format
 msgid "Unnamed"
 msgstr "Namnlös"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:874
+#: rkward/windows/rkcommandeditorwindow.cpp:871
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Förhandsgranskning av återgiven R Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:878
+#: rkward/windows/rkcommandeditorwindow.cpp:875
 #, kde-format
 msgid "Pandoc is not installed"
 msgstr "Pandoc är inte installerat"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:879
+#: rkward/windows/rkcommandeditorwindow.cpp:876
 #, kde-format
 msgid ""
 "The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
@@ -6395,27 +6395,27 @@ msgstr ""
 "till den i systemsökvägen för R-sessionen som kör med <a href=\"rkward://"
 "settings/rbackend\">Inställningar -> Anpassa RKward -> R-gränssnitt</a>."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:891
+#: rkward/windows/rkcommandeditorwindow.cpp:888
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Förhandsgranskning av utdata skapad av RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:899
+#: rkward/windows/rkcommandeditorwindow.cpp:896
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Förhandsgranskning av skapat diagram"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:906
+#: rkward/windows/rkcommandeditorwindow.cpp:903
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Förhandsgranskning av skript som kör i interaktiv R-terminal"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1021
+#: rkward/windows/rkcommandeditorwindow.cpp:997
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktiv)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1040
+#: rkward/windows/rkcommandeditorwindow.cpp:1016
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (oanvänd)"
@@ -6663,7 +6663,7 @@ msgid "RKWard output file %s does not (yet) exist"
 msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:718
-#: rkward/windows/rktoplevelwindowgui.cpp:255
+#: rkward/windows/rktoplevelwindowgui.cpp:253
 #, kde-format
 msgid "[Active]"
 msgstr "[Aktiv]"
@@ -6955,7 +6955,7 @@ msgstr "Aktivera dokumentvisning"
 msgid "Show Output"
 msgstr "Visa utdata"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:130
+#: rkward/windows/rktoplevelwindowgui.cpp:131
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Visa eller dölj %1"
