@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-10 00:36+0000\n"
-"PO-Revision-Date: 2024-05-07 11:57+0200\n"
+"PO-Revision-Date: 2024-05-12 18:22+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -2501,17 +2501,14 @@ msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "&lrm;<link href=\"rkward://settings/addons\">Further add-on related "
-#| "settings (e.g., git/project integration)&lrm;</link>"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)</link>&lrm;"
 msgstr ""
-"&lrm;<link href=\"rkward://settings/addons\">Modules additionnels "
-"supplémentaires concernant les paramètres (Par exemple, l'intégration de "
-"« git » avec le projet). &lrm;</link>"
+"&lrm;<link href=\"rkward://settings/addons\">Module additionnel "
+"supplémentaires concernant la configuration (Par exemple, l'intégration de "
+"« git » et du projet)</link>&lrm;."
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
