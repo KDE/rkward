@@ -35,10 +35,7 @@ public:
 		ReadLine,      // 4
 		CommandOut,                  /**< Request the next command, and notify about the result of the previus. TODO split. */
 		Started,
-		EvalRequest,
-		CallbackRequest,
-		GenericRequestWithSubcommands,   // 9
-		PlainGenericRequest,
+		RCallRequest,   // 7
 		SetParamsFromBackend,
 		Debugger,
 		CommandLineIn,	/**< The next line of the current user command has been submitted in the backend. */

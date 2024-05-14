@@ -217,10 +217,10 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	if (RKRBackend::repl_status.browser_context) {		// previously we were in a browser context. Check, whether we've left that.
 		if (RKRBackend::default_global_context == ROb(R_GlobalContext)) {
 			RKRBackend::repl_status.browser_context = RKRBackend::RKReplStatus::NotInBrowserContext;
-			RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("endBrowserContext"), false);
+			RKRBackend::this_pointer->doRCallRequest("endBrowserContext", QVariant(), RKRBackend::Asynchronous);
 		}
 	}
-	
+
 	if ((!RKRBackend::repl_status.browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
 		while (true) {
 			if (RKRBackend::this_pointer->isKilled() || (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand)) {
@@ -598,8 +598,8 @@ int RChooseFile(int isnew, char *buf, int len) {
 	RK_TRACE (RBACKEND);
 
 	QStringList params;
-	params << "choosefile" << QString() /* caption */ << QString() /* initial */ << "*" /* filter */ << (isnew ? "newfile" : "file");
-	auto res = RKRBackend::this_pointer->handlePlainGenericRequest(params, true);
+	params << QString() /* caption */ << QString() /* initial */ << "*" /* filter */ << (isnew ? "newfile" : "file");
+	auto res = RKRBackend::this_pointer->doRCallRequest("choosefile", params, RKRBackend::Synchronous);
 
 	QByteArray localres = RKTextCodec::toNative(res.ret.toString());
 	qstrncpy ((char *) buf, localres.data(), len);
@@ -890,13 +890,14 @@ SEXP doSubstackCall (SEXP _call, SEXP _args) {
 	} */
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
-	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(call, RKRSupport::SEXPToNestedStrings(_args));
+	auto ret = RKRBackend::this_pointer->doRCallRequest(call, RKRSupport::SEXPToNestedStrings(_args), RKRBackend::SynchronousWithSubcommands);
 	if (!ret.warning.isEmpty()) RFn::Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
 	if (!ret.error.isEmpty()) RFn::Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
 
+// TODO: remove this entry point in favor of doSubstackCall
 SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 	RK_TRACE (RBACKEND);
 
@@ -1416,10 +1417,8 @@ void RKRBackend::catToOutputFile (const QString &out) {
 void RKRBackend::printCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
-	QStringList params ("highlightRCode");
-	params.append (command);
-	QString highlighted = handlePlainGenericRequest(params, true).ret.toString();
-	catToOutputFile (highlighted);
+	QString highlighted = doRCallRequest("highlightRCode", command, RKRBackend::Synchronous).ret.toString();
+	catToOutputFile(highlighted);
 }
 
 void RKRBackend::startOutputCapture () {
@@ -1568,14 +1567,17 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 	return (handleRequest (&req, false));
 }
 
-GenericRRequestResult RKRBackend::handleRequestWithSubcommands(const QString &call, const QVariant &params) {
+GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVariant &params, RequestFlags flags) {
 	RK_TRACE (RBACKEND);
 
-	RBackendRequest request(true, RBackendRequest::GenericRequestWithSubcommands);
+	bool synchronous = flags != Asynchronous;
+	RBackendRequest request(synchronous, RBackendRequest::RCallRequest);
 	request.params["call"] = call;
 	if (!params.isNull()) request.params["args"] = params;
-	request.command = current_command;
-	request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
+	if (flags == SynchronousWithSubcommands) {
+		request.params["cid"] = current_command->id;
+		request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
+	}
 	handleRequest(&request);
 	delete request.subcommandrequest;
 	return request.getResult();
@@ -1588,28 +1590,31 @@ QString getLibLoc() {
 GenericRRequestResult RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
 	RK_TRACE (RBACKEND);
 
-	RBackendRequest request (synchronous, RBackendRequest::PlainGenericRequest);
-	if (parameters.value (0) == "getSessionInfo") {
-		QStringList dummy = parameters;
-		dummy.append (RKRBackendProtocolBackend::backendDebugFile ());
-// NOTE: R_SVN_REVISON used to be a string, but has changed to numeric constant in R 3.0.0. QString::arg() handles both.
-		dummy.append (QString (R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg (R_SVN_REVISION));
-		request.params["call"] = dummy;
-	} else if (parameters.value (0) == "set.output.file") {
-		output_file = parameters.value (1);
-		if (parameters.length () > 2) {
-			RK_ASSERT (parameters.value (2) == "SILENT");
-			return GenericRRequestResult();  // For automated testing and previews. The frontend should not be notified, here
-		}
-		request.params["call"] = parameters;
-	} else if (parameters.value(0) == "home") {
-		if (parameters.value(1) == "home") return GenericRRequestResult(RKRBackendProtocolBackend::dataDir());
-		else if (parameters.value(1) == "lib") return GenericRRequestResult(getLibLoc());
-	} else {
-		request.params["call"] = parameters;
+	const QString call = parameters.value(0);
+	const QStringList args = parameters.mid(1);
+	if ((call == "set.output.file") && (args.value(1) == "SILENT")) {
+		return GenericRRequestResult();  // For automated testing and previews. The frontend should not be notified, here
+	} else if (call == "home") {
+		if (args.value(0) == "home") return GenericRRequestResult(RKRBackendProtocolBackend::dataDir());
+		else if (args.value(0) == "lib") return GenericRRequestResult(getLibLoc());
 	}
-	handleRequest (&request);
-	return request.getResult();
+
+	auto res = doRCallRequest(call, QVariant(args), synchronous ? Synchronous : Asynchronous);
+
+	if (call == "getSessionInfo") {
+		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
+		QStringList lines("-- Frontend --");
+		lines.append(res.ret.toStringList());
+		lines.append(QString());
+		lines.append("-- Backend --");
+		lines.append("Debug message file (this may contain relevant diagnostic output in case of trouble):");
+		lines.append(RKRBackendProtocolBackend::backendDebugFile());
+		lines.append(QString());
+		// NOTE: R_SVN_REVISON used to be a string, but has changed to numeric constant in R 3.0.0. QString::arg() handles both.
+		lines.append(QString("R version (compile time): %1").arg(QString(R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg(R_SVN_REVISION)));
+		res.ret = QVariant(lines);
+	}
+	return res;
 }
 
 void RKRBackend::initialize (const QString &locale_dir) {
@@ -1686,7 +1691,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 			QVariantList args;
 			args.append(QVariant(toplevel_env_names));
 			args.append(QVariant(loaded_namespaces));
-			handleRequestWithSubcommands("syncenvs", args);
+			doRCallRequest("syncenvs", args, SynchronousWithSubcommands);
 		} 
 	}
 
@@ -1696,7 +1701,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 		args.append(changes.added);
 		args.append(changes.removed);
 		args.append(changes.changed);
-		handleRequestWithSubcommands("sync", args);
+		doRCallRequest("sync", args, SynchronousWithSubcommands);
 	}
 }
 

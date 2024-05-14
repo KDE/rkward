@@ -93,11 +93,16 @@ public:
 	RCommandProxy *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
 
 	void handleRequest(RBackendRequest *request) { handleRequest (request, true); };
-/** A relic of history. In contrast to handlePlainGenericRequest(), these requests support running sub-commands. However, the remaining requests which are currently handled this way
-should probably be converted to dedicated RKRBackendRequest's in the future. See also handlePlainGenericRequest(). */
-	GenericRRequestResult handleRequestWithSubcommands(const QString &call, const QVariant &args=QVariant());
-/** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). Note that this function has considerable overlap with
-handleHistoricalSubstackRequest(). Exactly which requests get handled by which function is somewhat arbitrary, ATM. However, request that do not need sub-commands to be run, should generally be converted to use handlePlainGenericRequest(). (And probably all historicalSubstackRequests should be replaced!) */
+
+	enum RequestFlags {
+		Asynchronous,
+		Synchronous,
+		SynchronousWithSubcommands
+	};
+
+/** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). */
+	GenericRRequestResult doRCallRequest(const QString &call, const QVariant &args, RequestFlags flags);
+/** TODO: merge with the above. For calls that are known not to require a subcommand */
 	GenericRRequestResult handlePlainGenericRequest(const QStringList &parameters, bool synchronous);
 	RCommandProxy* fetchNextCommand ();
 

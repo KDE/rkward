@@ -351,24 +351,39 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			handleCommandOut (command);
 		}
 		tryNextCommand ();
-	} else if (request->type == RBackendRequest::GenericRequestWithSubcommands) {
-		RCommandProxy *cproxy = request->takeCommand();
-		RCommand *parent = nullptr;
-		for (int i = all_current_commands.size () - 1; i >= 0; --i) {
-			if (all_current_commands[i]->id () == cproxy->id) {
-				parent = all_current_commands[i];
-				break;
+	} else if (request->type == RBackendRequest::RCallRequest) {
+		const auto params = request->params;
+
+		auto subcommandrequest = request->subcommandrequest;
+		RCommandChain *in_chain = RCommandStack::regular_stack;
+		if (subcommandrequest) {
+			int id = params.value("cid").toInt();
+			RCommand *parent = nullptr;
+			for (int i = all_current_commands.size() - 1; i >= 0; --i) {
+				if (all_current_commands[i]->id() == id) {
+					parent = all_current_commands[i];
+					break;
+				}
 			}
+			if (!parent) {
+				// This can happen for Tcl events. Create a dummy command on the stack to keep things looping.
+				parent = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
+				RCommandStack::issueCommand(parent, nullptr);
+				all_current_commands.append(parent);
+				dummy_command_on_stack = parent;	// so we can get rid of it again, after it's sub-commands have finished
+			}
+			in_chain = openSubcommandChain(parent);
+			RK_DEBUG(RBACKEND, DL_DEBUG, "started sub-command chain (%p) for command %s", in_chain, qPrintable(parent->command()));
+
+			command_requests.append(request->subcommandrequest);
+			request->subcommandrequest = nullptr;  // it is now a separate request. Make sure we won't try to send it back as part of this one.
 		}
-		delete cproxy;
-		RK_ASSERT(request->subcommandrequest);
-		command_requests.append(request->subcommandrequest);
-		request->subcommandrequest = nullptr;  // it is now a separate request. Make sure we won't try to send it back as part of this one.
-		processHistoricalSubstackRequest(request->params["call"].toString(), request->params.value("args"), parent, request);
+
+		request->setResult(processRCallRequest(params.value("call").toString(), params.value("args"), in_chain));
+
+		if (subcommandrequest) closeChain(in_chain);
+
 		RKRBackendProtocolFrontend::setRequestCompleted(request);
-	} else if (request->type == RBackendRequest::PlainGenericRequest) {
-		request->setResult(processPlainGenericRequest(request->params["call"].toStringList()));
-		RKRBackendProtocolFrontend::setRequestCompleted (request);
 	} else if (request->type == RBackendRequest::Started) {
 		// The backend thread has finished basic initialization, but we still have more to do...
 		startup_errors = request->params["message"].toString ();
@@ -564,167 +579,8 @@ void RInterface::pauseProcessing (bool pause) {
 	else locked -= locked & User;
 }
 
-GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &calllist) {
+GenericRRequestResult RInterface::processRCallRequest (const QString &call, const QVariant &args, RCommandChain *in_chain) {
 	RK_TRACE (RBACKEND);
-
-	QString call = calllist.value (0);
-	if (call == "set.output.file") {
-		RK_ASSERT (calllist.count () == 2);
-		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist.value (1));
-	} else if (call == "wdChange") {
-		// in case of separate processes, apply new working directory in frontend, too.
-		QDir::setCurrent (calllist.value (1));
-		Q_EMIT backendWorkdirChanged();
-	} else if (call == "highlightRCode") {
-		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(calllist.mid(1).join('\n')));
-	} else if (call == "quit") {
-		RKWardMainWindow::getMain ()->close ();
-		// if we're still alive, quitting was canceled
-		return GenericRRequestResult::makeError(i18n("Quitting was canceled"));
-	} else if (call == "preLocaleChange") {
-		int res = KMessageBox::warningContinueCancel(nullptr, i18n("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please choose 'Cancel' now, then close the data windows, save, and retry."), i18n("Locale change"));
-		if (res != KMessageBox::Continue) return GenericRRequestResult::makeError(i18n("Changing the locale was canceled by user"));
-	} else if (call == "listPlugins") {
-		RK_ASSERT (calllist.count () == 1);
-		return GenericRRequestResult(RKComponentMap::getMap()->listPlugins());
-	} else if (call == "setPluginStatus") {
-		QStringList params = calllist.mid (1);
-		RK_ASSERT ((params.size () % 3) == 0);
-		const int rows = params.size () / 3;
-		QStringList ids = params.mid (0, rows);
-		QStringList contexts = params.mid (rows, rows);
-		QStringList visible = params.mid (rows*2, rows);
-		RKComponentMap::getMap ()->setPluginStatus (ids, contexts, visible);
-	} else if (call == "loadPluginMaps") {
-		bool force = (calllist.value (1) == "force");
-		bool reload = (calllist.value (2) == "reload");
-		RKSettingsModulePlugins::registerPluginMaps (calllist.mid (3), force ? RKSettingsModulePlugins::ForceActivate : RKSettingsModulePlugins::AutoActivateIfNew, reload);
-	} else if (call == "updateInstalledPackagesList") {
-		RKSessionVars::instance ()->setInstalledPackages (calllist.mid (1));
-	} else if (call == "showHTML") {
-		RK_ASSERT (calllist.count () == 2);
-		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl::fromUserInput (calllist.value (1), QDir::currentPath (), QUrl::AssumeLocalFile));
-	} else if (call == "select.list") {
-		QString title = calllist.value (1);
-		bool multiple = (calllist.value (2) == "multi");
-		int num_preselects = calllist.value (3).toInt ();
-		QStringList preselects = calllist.mid (4, num_preselects);
-		QStringList choices = calllist.mid (4 + num_preselects);
-
-		QStringList results = RKSelectListDialog::doSelect (QApplication::activeWindow(), title, choices, preselects, multiple);
-		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
-		return GenericRRequestResult(results);
-	} else if (call == "choosefile") {
-		QFileDialog d(nullptr, calllist.value(1));  // caption
-		QString initial = calllist.value(2);
-		QString cat;
-		if (initial.startsWith('#')) {
-			cat = initial.mid(1);
-			initial = QFileInfo(RKRecentUrls::mostRecentUrl(cat).toLocalFile()).absolutePath();
-		}
-
-		d.setDirectory(initial);
-		QString filter = calllist.value(3);
-		if (!filter.isEmpty()) {
-			if (!filter.contains('(')) filter += '(' + filter + ')';
-			d.setNameFilter(filter);
-		}
-		QString mode = calllist.value(4);
-		if (mode == "file") d.setFileMode(QFileDialog::ExistingFile);
-		else if (mode == "files") d.setFileMode(QFileDialog::ExistingFiles);
-		else if (mode == "dir") d.setFileMode(QFileDialog::Directory);
-		else if (mode == "newfile") {
-			d.setFileMode(QFileDialog::AnyFile);
-			d.setAcceptMode(QFileDialog::AcceptSave);
-		} else RK_ASSERT(false);
-
-		d.exec();
-		auto res = d.selectedFiles();
-		if (!res.isEmpty() && !cat.isEmpty()) {
-			RKRecentUrls::addRecentUrl(cat, QUrl::fromLocalFile(res.value(0)));
-		}
-
-		return GenericRRequestResult(res);
-	} else if (call == "commandHistory") {
-		if (calllist.value (1) == "get") {
-			return GenericRRequestResult(RKConsole::mainConsole()->commandHistory());
-		} else {
-			RKConsole::mainConsole ()->setCommandHistory (calllist.mid (2), calllist.value (1) == "append");
-		}
-	} else if (call == "getWorkspaceUrl") {
-		QUrl url = RKWorkplace::mainWorkplace ()->workspaceURL ();
-		if (!url.isEmpty()) return GenericRRequestResult(url.url());
-	} else if (call == "workplace.layout") {
-		if (calllist.value (1) == "set") {
-			if (calllist.value (2) == "close") RKWorkplace::mainWorkplace ()->closeAll ();
-			QStringList list = calllist.mid (3);
-			RKWorkplace::mainWorkplace ()->restoreWorkplace (list);
-		} else {
-			RK_ASSERT (calllist.value (1) == "get");
-			return GenericRRequestResult(RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ());
-		}
-	} else if (call == "set.window.placement.hint") {
-		RKWorkplace::mainWorkplace ()->setWindowPlacementOverrides (calllist.value (1), calllist.value (2), calllist.value (3));
-	} else if (call == "getSessionInfo") {
-		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
-		QStringList lines ("-- Frontend --");
-		lines.append (RKSessionVars::frontendSessionInfo ());
-		lines.append (QString ());
-		lines.append ("-- Backend --");
-		lines.append ("Debug message file (this may contain relevant diagnostic output in case of trouble):");
-		lines.append (calllist.value (1));
-		lines.append (QString ());
-		lines.append ("R version (compile time): " + calllist.value (2));
-		return GenericRRequestResult(lines);
-	} else if (call == "recordCommands") {
-		RK_ASSERT (calllist.count () == 3);
-		QString filename = calllist.value (1);
-		bool unfiltered = (calllist.value (2) == "include.all");
-
-		if (filename.isEmpty ()) {
-			command_logfile_mode = NotRecordingCommands;
-			command_logfile.close ();
-		} else {
-			if (command_logfile_mode != NotRecordingCommands) {
-				return GenericRRequestResult(QVariant(), i18n("Attempt to start recording, while already recording commands. Ignoring."));
-			} else {
-				command_logfile.setFileName (filename);
-				bool ok = command_logfile.open (QIODevice::WriteOnly | QIODevice::Truncate);
-				if (ok) {
-					if (unfiltered) command_logfile_mode = RecordingCommandsUnfiltered;
-					else command_logfile_mode = RecordingCommands;
-				} else {
-					return GenericRRequestResult::makeError(i18n("Could not open file for writing. Not recording commands"));
-				}
-			}
-		}
-	} else if (call == "printPreview") {
-		RKPrintAgent::printPostscript (calllist.value (1), true);
-	} else if (call == "endBrowserContext") {
-		RKDebugHandler::instance ()->endDebug ();
-	} else if (call == "switchLanguage") {
-		RKMessageCatalog::switchLanguage (calllist.value (1));
-	} else {
-		return GenericRRequestResult::makeError(i18n("Error: unrecognized request '%1'", call));
-	}
-
-	// for those calls which were recognized, but do not return anything
-	return GenericRRequestResult();
-}
-
-void RInterface::processHistoricalSubstackRequest (const QString &call, const QVariant &args, RCommand *parent_command, RBackendRequest *request) {
-	RK_TRACE (RBACKEND);
-
-	RCommandChain *in_chain;
-	if (!parent_command) {
-		// This can happen for Tcl events. Create a dummy command on the stack to keep things looping.
-		parent_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
-		RCommandStack::issueCommand(parent_command, nullptr);
-		all_current_commands.append(parent_command);
-		dummy_command_on_stack = parent_command;	// so we can get rid of it again, after it's sub-commands have finished
-	}
-	in_chain = openSubcommandChain (parent_command);
-	RK_DEBUG (RBACKEND, DL_DEBUG, "started sub-command chain (%p) for command %s", in_chain, qPrintable (parent_command->command ()));
 
 	if (call == "sync") {
 		QVariantList al = args.toList();  // added, removed, changed
@@ -742,28 +598,26 @@ void RInterface::processHistoricalSubstackRequest (const QString &call, const QV
 				RK_DEBUG (RBACKEND, DL_WARNING, "lookup failed for changed symbol %s", qPrintable(object_name));
 			}
 		}
-		closeChain(in_chain);
-		return;
+		return GenericRRequestResult();
 	}
 	if (call == "syncenvs") {
 		QVariantList al = args.toList();  // envs, namespaces
 		RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update of object list");
 		RObjectList::getObjectList ()->updateFromR (in_chain, al.value(0).toStringList(), al.value(1).toStringList());
-		closeChain(in_chain);
-		return;
+		return GenericRRequestResult();
 	}
 
-	// NOTE: all requests below are wrapped from R commands, and pass all arguments as stringlist (although that may worth changing
+	// NOTE: all requests below pass all arguments as single stringlist (although that may worth changing)
 	QStringList arglist = args.toStringList();
 	if (false) {  // syntax dummy
 #ifndef DISABLE_RKWINDOWCATCHER
 	// NOTE: WARNING: When converting these to PlainGenericRequests, the occasional "error, figure margins too large" starts coming up, again. Not sure, why.
- 	} else if (call == "startOpenX11") {
+	} else if (call == "startOpenX11") {
 		RK_ASSERT(arglist.count() == 1);
 		RKWindowCatcher::instance()->start(arglist.value(0).toInt());
- 	} else if (call == "endOpenX11") {
+	} else if (call == "endOpenX11") {
 		RK_ASSERT(arglist.count() == 1);
-		RKWindowCatcher::instance()->stop(arglist.value (0).toInt());
+		RKWindowCatcher::instance()->stop(arglist.value(0).toInt());
 	} else if (call == "updateDeviceHistory") {
 		if (!arglist.isEmpty()) {
 			RKWindowCatcher::instance()->updateHistory(arglist);
@@ -790,18 +644,146 @@ void RInterface::processHistoricalSubstackRequest (const QString &call, const QV
 			ok = RKComponentMap::invokeComponent(arglist[0], arglist.mid(2), mode, &message, in_chain);
 
 			if (!message.isEmpty ()) {
-				request->setResult(GenericRRequestResult(QVariant(), ok ? message : QString(), !ok ? message : QString()));
+				return (GenericRRequestResult(QVariant(), ok ? message : QString(), !ok ? message : QString()));
 			}
 		} else {
 			RK_ASSERT (false);
 		}
 	} else if (call == QStringLiteral ("output")) {
-		request->setResult(RKOutputDirectory::handleRCall(arglist, in_chain));
+		return(RKOutputDirectory::handleRCall(arglist, in_chain));
+	} else if (call == "set.output.file") {
+		RK_ASSERT(arglist.count () == 1);
+		RKOutputWindowManager::self()->setCurrentOutputPath(arglist.value(0));
+	} else if (call == "wdChange") {
+		// in case of separate processes, apply new working directory in frontend, too.
+		QDir::setCurrent(arglist.value(0));
+		Q_EMIT backendWorkdirChanged();
+	} else if (call == "highlightRCode") {
+		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(arglist.join('\n')));
+	} else if (call == "quit") {
+		RKWardMainWindow::getMain()->close();
+		// if we're still alive, quitting was canceled
+		return GenericRRequestResult::makeError(i18n("Quitting was canceled"));
+	} else if (call == "preLocaleChange") {
+		int res = KMessageBox::warningContinueCancel(nullptr, i18n("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please choose 'Cancel' now, then close the data windows, save, and retry."), i18n("Locale change"));
+		if (res != KMessageBox::Continue) return GenericRRequestResult::makeError(i18n("Changing the locale was canceled by user"));
+	} else if (call == "listPlugins") {
+		RK_ASSERT(arglist.isEmpty());
+		return GenericRRequestResult(RKComponentMap::getMap()->listPlugins());
+	} else if (call == "setPluginStatus") {
+		// TODO: Pass args in a saner way
+		RK_ASSERT((arglist.size() % 3) == 0);
+		const int rows = arglist.size() / 3;
+		QStringList ids = arglist.mid(0, rows);
+		QStringList contexts = arglist.mid(rows, rows);
+		QStringList visible = arglist.mid(rows*2, rows);
+		RKComponentMap::getMap()->setPluginStatus(ids, contexts, visible);
+	} else if (call == "loadPluginMaps") {
+		bool force = (arglist.value(0) == "force");
+		bool reload = (arglist.value(1) == "reload");
+		RKSettingsModulePlugins::registerPluginMaps(arglist.mid(2), force ? RKSettingsModulePlugins::ForceActivate : RKSettingsModulePlugins::AutoActivateIfNew, reload);
+	} else if (call == "updateInstalledPackagesList") {
+		RKSessionVars::instance ()->setInstalledPackages(arglist);
+	} else if (call == "showHTML") {
+		RK_ASSERT(arglist.size() == 1);
+		RKWorkplace::mainWorkplace()->openHelpWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath (), QUrl::AssumeLocalFile));
+	} else if (call == "select.list") {
+		QString title = arglist.value(0);
+		bool multiple = (arglist.value(1) == "multi");
+		int num_preselects = arglist.value(2).toInt ();
+		QStringList preselects = arglist.mid(3, num_preselects);
+		QStringList choices = arglist.mid(3 + num_preselects);
+
+		QStringList results = RKSelectListDialog::doSelect(QApplication::activeWindow(), title, choices, preselects, multiple);
+		if (results.isEmpty()) results.append("");	// R wants to have it that way
+		return GenericRRequestResult(results);
+	} else if (call == "choosefile") {
+		QFileDialog d(nullptr, arglist.value(0));  // caption
+		QString initial = arglist.value(1);
+		QString cat;
+		if (initial.startsWith('#')) {
+			cat = initial.mid(1);
+			initial = QFileInfo(RKRecentUrls::mostRecentUrl(cat).toLocalFile()).absolutePath();
+		}
+
+		d.setDirectory(initial);
+		QString filter = arglist.value(2);
+		if (!filter.isEmpty()) {
+			if (!filter.contains('(')) filter += '(' + filter + ')';
+			d.setNameFilter(filter);
+		}
+		QString mode = arglist.value(3);
+		if (mode == "file") d.setFileMode(QFileDialog::ExistingFile);
+		else if (mode == "files") d.setFileMode(QFileDialog::ExistingFiles);
+		else if (mode == "dir") d.setFileMode(QFileDialog::Directory);
+		else if (mode == "newfile") {
+			d.setFileMode(QFileDialog::AnyFile);
+			d.setAcceptMode(QFileDialog::AcceptSave);
+		} else RK_ASSERT(false);
+
+		d.exec();
+		auto res = d.selectedFiles();
+		if (!res.isEmpty() && !cat.isEmpty()) {
+			RKRecentUrls::addRecentUrl(cat, QUrl::fromLocalFile(res.value(0)));
+		}
+
+		return GenericRRequestResult(res);
+	} else if (call == "commandHistory") {
+		if (arglist.value(0) == "get") {
+			return GenericRRequestResult(RKConsole::mainConsole()->commandHistory());
+		} else {
+			RKConsole::mainConsole()->setCommandHistory(arglist.mid(1), arglist.value(0) == "append");
+		}
+	} else if (call == "getWorkspaceUrl") {
+		QUrl url = RKWorkplace::mainWorkplace ()->workspaceURL ();
+		if (!url.isEmpty()) return GenericRRequestResult(url.url());
+	} else if (call == "workplace.layout") {
+		if (arglist.value(0) == "set") {
+			if (arglist.value(1) == "close") RKWorkplace::mainWorkplace ()->closeAll ();
+			QStringList list = arglist.mid(2);
+			RKWorkplace::mainWorkplace()->restoreWorkplace(list);
+		} else {
+			RK_ASSERT(arglist.value(0) == "get");
+			return GenericRRequestResult(RKWorkplace::mainWorkplace()->makeWorkplaceDescription());
+		}
+	} else if (call == "set.window.placement.hint") {
+		RKWorkplace::mainWorkplace ()->setWindowPlacementOverrides(arglist.value(0), arglist.value(1), arglist.value(2));
+	} else if (call == "getSessionInfo") {
+		return GenericRRequestResult(RKSessionVars::frontendSessionInfo());
+	} else if (call == "recordCommands") {
+		RK_ASSERT(arglist.count() == 2);
+		QString filename = arglist.value(0);
+		bool unfiltered = (arglist.value(1) == "include.all");
+
+		if (filename.isEmpty()) {
+			command_logfile_mode = NotRecordingCommands;
+			command_logfile.close();
+		} else {
+			if (command_logfile_mode != NotRecordingCommands) {
+				return GenericRRequestResult(QVariant(), i18n("Attempt to start recording, while already recording commands. Ignoring."));
+			} else {
+				command_logfile.setFileName (filename);
+				bool ok = command_logfile.open (QIODevice::WriteOnly | QIODevice::Truncate);
+				if (ok) {
+					if (unfiltered) command_logfile_mode = RecordingCommandsUnfiltered;
+					else command_logfile_mode = RecordingCommands;
+				} else {
+					return GenericRRequestResult::makeError(i18n("Could not open file for writing. Not recording commands"));
+				}
+			}
+		}
+	} else if (call == "printPreview") {
+		RKPrintAgent::printPostscript(arglist.value(0), true);
+	} else if (call == "endBrowserContext") {
+		RKDebugHandler::instance ()->endDebug();
+	} else if (call == "switchLanguage") {
+		RKMessageCatalog::switchLanguage(arglist.value(0));
 	} else {
-		request->setResult(GenericRRequestResult::makeError(i18n("Unrecognized call '%1'", call)));
+		return GenericRRequestResult::makeError(i18n("Error: unrecognized request '%1'", call));
 	}
-	
-	closeChain (in_chain);
+
+	// for those calls which were recognized, but do not return anything
+	return GenericRRequestResult();
 }
 
 int addButtonToBox (QDialog *dialog, QDialogButtonBox *box, QDialogButtonBox::StandardButton which, const QString &text, const QString &def_text, bool is_default) {
