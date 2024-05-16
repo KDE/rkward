@@ -1806,16 +1806,11 @@ msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "&lrm;<link href=\"rkward://settings/addons\">Further add-on related "
-#| "settings (e.g., git/project integration)&lrm;</link>"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)</link>&lrm;"
 msgstr ""
-"&lrm;‎<link href=\"rkward://settings/addons\">Další nastavení doplňků (např. "
-"integrace git/projektů)&lrm;‎</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23

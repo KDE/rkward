@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-18 12:03+0200\n"
+"PO-Revision-Date: 2024-05-15 11:05+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -32,7 +32,7 @@ msgstr "g.sora@tiscali.it"
 #: rkward/plugins/analysis.pluginmap:10 rkward/plugins/analysis.pluginmap:71
 #, kde-format
 msgid "Analysis"
-msgstr ""
+msgstr "Analyse"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/analysis.pluginmap:10
@@ -78,7 +78,7 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:28 rkward/plugins/analysis/t_test.xml:20
 #, kde-format
 msgid "t-Test"
-msgstr ""
+msgstr "t-Test"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:29
@@ -91,7 +91,7 @@ msgstr ""
 #, kde-format
 msgctxt "Statistics"
 msgid "Moment"
-msgstr ""
+msgstr "Momento"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:33
@@ -125,7 +125,7 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:39
 #, kde-format
 msgid "F-Test"
-msgstr ""
+msgstr "F-Test"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:40
@@ -533,7 +533,7 @@ msgstr "compara"
 #, kde-format
 msgctxt "compare against"
 msgid "against"
-msgstr ""
+msgstr "contra"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <radio label="...">
@@ -836,7 +836,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.js:131
 #, kde-format
 msgid "Coefficient"
-msgstr ""
+msgstr "Coefficiente"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:134
@@ -2475,7 +2475,7 @@ msgstr ""
 #, kde-format
 msgctxt "Author name"
 msgid "Thomas"
-msgstr ""
+msgstr "Thomas"
 
 #. i18n: ectx: (Power analysis) <about> <author family="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:16
