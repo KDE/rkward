@@ -8,15 +8,8 @@ ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 
 INCLUDE(SetVersionNumber.cmake)
 
-IF(APPLE)
-	SET(CPACK_BUNDLE_ICON rkward.icns)
-	SET(CPACK_BUNDLE_NAME RKWard)
-	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
-ENDIF()
-
-# once tested and working this could become the default on Mac:
-OPTION(APPLE_STANDALONE_BUNDLE "Generate a standalone app bundle when building on Mac" OFF)
-ADD_FEATURE_INFO("App Bundle" APPLE_STANDALONE_BUNDLE "Generate a standalone app bundle when building on Mac. Do not use for now.")
+OPTION(DLOPEN_RLIB "dlopen the R library at runtime rather than linking it" ON)
+ADD_FEATURE_INFO("dlopen() R library" DLOPEN_RLIB "This feature allows more flexibility in using a different R installation at runtime than at compile time.")
 
 ADD_SUBDIRECTORY( dataeditor )
 ADD_SUBDIRECTORY( settings )
@@ -50,6 +43,7 @@ LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
 ADD_LIBRARY(rkward_lib STATIC ${RKWard_Lib_Sources})
 TARGET_COMPILE_DEFINITIONS(rkward_lib PUBLIC -DR_EXECUTABLE="${R_EXECUTABLE}")
+TARGET_LINK_LIBRARIES(rkward_lib windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF6::WindowSystem Qt6::Widgets KF6::XmlGui)
 
 SET(RKWard_App_Sources
 	main.cpp
@@ -59,11 +53,15 @@ FILE(GLOB ICON_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/*-apps-rkward.pn
 ECM_ADD_APP_ICON(RKWard_App_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
 ADD_EXECUTABLE(rkward ${RKWard_App_Sources})
 
-# NOTE: These definitions are needed for the startup procedure (main.cpp), only.
-# We should switch with to target_compile_definitions once we require CMAKE 2.6+
+# NOTE: These path definitions are needed for the startup procedure (main.cpp), only.
 TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
 FILE(RELATIVE_PATH RelPathToData /${KDE_INSTALL_BINDIR} /${KDE_INSTALL_DATADIR})
 TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DREL_PATH_TO_DATA="${RelPathToData}")
+TARGET_LINK_LIBRARIES(rkward rkward_lib)
+IF(KF6Crash_FOUND)
+	TARGET_LINK_LIBRARIES(rkward KF6::Crash)
+	SET_SOURCE_FILES_PROPERTIES(main.cpp PROPERTIES COMPILE_DEFINITIONS WITH_KCRASH=1)
+ENDIF(KF6Crash_FOUND)
 
 SET_TARGET_PROPERTIES(rkward PROPERTIES
         MACOSX_BUNDLE_BUNDLE_NAME "RKWard")
@@ -76,13 +74,6 @@ IF(APPLE)
 		${RKWARD_INFOPLIST_FILE}
 		@ONLY)
 ENDIF(APPLE)
-
-TARGET_LINK_LIBRARIES(rkward_lib windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF6::WindowSystem Qt6::Widgets KF6::XmlGui)
-TARGET_LINK_LIBRARIES(rkward rkward_lib)
-IF(KF5Crash_FOUND)
-	TARGET_LINK_LIBRARIES(rkward KF6::Crash)
-	SET_SOURCE_FILES_PROPERTIES(main.cpp PROPERTIES COMPILE_DEFINITIONS WITH_KCRASH=1)
-ENDIF(KF5Crash_FOUND)
 
 ########### install files ###############
 
@@ -108,10 +99,6 @@ ENDIF(SYMLINKS_FAILED)
 
 
 IF(APPLE)
-    if(APPLE_STANDALONE_BUNDLE)
-#         INSTALL(FILES ${CMAKE_SOURCE_DIR}/rkward/icons/app-icon/rkward.icns DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents/Resources)
-#         INSTALL(FILES ${RKWARD_INFOPLIST_FILE} DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents)
-    ENDIF()
     # the MacOSX bundle display name property (CFBundleDisplayName) is not currently supported by cmake,
     # so has to be set for all targets in this cmake file
     SET(MACOSX_BUNDLE_DISPLAY_NAME RKWard)
