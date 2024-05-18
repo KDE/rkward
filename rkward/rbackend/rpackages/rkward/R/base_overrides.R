@@ -68,7 +68,7 @@
 "q" <- function (save = "default", status = 0, runLast = TRUE, ...) {
 	# test if this is running in RKWard, otherwise pass through to the actual q()
 	if (isTRUE(.rk.inside.rkward.session())){
-		.rk.do.plain.call ("quit")
+		.rk.call("quit")
 	} else {
 		base::q(save = save, status = status, runLast = runLast)
 	}
@@ -88,7 +88,7 @@
 #' @rdname base_overrides
 "Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
 	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
-		 .rk.do.plain.call ("preLocaleChange", NULL)
+		 .rk.call("preLocaleChange")
 
 		ret <- base::Sys.setlocale (category, locale, ...)
 
@@ -105,7 +105,7 @@
 #' @rdname base_overrides
 "setwd" <- function () {
 	ret <- eval (body (base::setwd))
-	.rk.do.plain.call ("wdChange", base::getwd (), synchronous=FALSE)
+	.rk.call.async("wdChange", base::getwd())
 	invisible (ret)
 }
 formals (setwd) <- formals (base::setwd)

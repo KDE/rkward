@@ -125,18 +125,29 @@
 	}
 }
 
-".rk.do.call" <- function (x, args=NULL) {
-	x <- .Call ("rk.do.command", x, args, PACKAGE="(embedding)");
+# TODO: replace me
+".rk.do.call" <- function (command, args=NULL) {
+	x <- .Call("rk.call", command, args, TRUE, TRUE, PACKAGE="(embedding)");
 	if (is.null(x)) invisible(NULL)
 	else x
 }
 
-".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
-	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous), PACKAGE="(embedding)")
+# Synchronous call to the frontend *without* allowing subcommands
+".rk.call" <- function(command, args=NULL) {
+	x <- .Call("rk.call", command, args, TRUE, FALSE, PACKAGE="(embedding)")
+	if (is.null(x)) invisible(NULL)
+	else x
 }
 
-".rk.do.simple.call" <- function (x, args=NULL) {
-	.Call ("rk.simple", c (x, args), PACKAGE="(embedding)")
+# Asynchronous call to the frontend
+".rk.call.async" <- function(command, args=NULL) {
+	.Call("rk.call", command, args, FALSE, FALSE, PACKAGE="(embedding)")
+	invisible(NULL)
+}
+
+# TODO: replace me
+".rk.do.simple.call" <- function(command, args=NULL) {
+	.Call("rk.simple", c(command, args), PACKAGE="(embedding)")
 }
 
 #' @export
@@ -174,7 +185,7 @@
 	new <- match (new, available$Package)	# same for new packages
 
 	# as a side effect, we update the list of known installed packages in the frontend
-	.rk.do.plain.call ("updateInstalledPackagesList", sort (unique (as.character (inst$Package))), synchronous=FALSE)
+	.rk.call.async("updateInstalledPackagesList", sort(unique(as.character(inst$Package))))
 
 	list ("available" = list (available$Package, available$Title, available$Version, available$Repository, grepl ("rkward", available$Enhances)),
 		"installed" = list (inst$Package, inst$Title, inst$Version, inst$LibPath, grepl ("rkward", inst$Enhances)),
@@ -192,7 +203,7 @@
 	enhance.rk <- ifelse(is.na(x$Enhances), FALSE, grepl("rkward", x$Enhances))
 
 	# as a side effect, we update the list of known installed packages in the frontend
-	.rk.do.plain.call ("updateInstalledPackagesList", sort (unique (as.character (x$Package))), synchronous=FALSE)
+	.rk.call.async("updateInstalledPackagesList", sort(unique(as.character(x$Package))))
 	# check for pluginmaps only in packages which enhance RKWard
 	rk.load.pluginmaps (.rk.find.package.pluginmaps(x$Package[enhance.rk]), force.add=FALSE, force.reload=FALSE)
 
@@ -317,18 +328,18 @@ assign(".rk.shadow.envs", new.env(parent=emptyenv()), envir=.rk.variables)
 	## History manipulation function (overloads for functions by the same name in package utils)
 	rk.replace.function ("loadhistory",  as.environment ("package:utils"),
 		function (file = ".Rhistory") {
-			invisible (.rk.do.plain.call ("commandHistory", c ("set", readLines (file))))
+			invisible(.rk.call("commandHistory", c("set", readLines(file))))
 		}, copy.formals = FALSE)
 
 	rk.replace.function ("savehistory",  as.environment ("package:utils"),
 		function (file = ".Rhistory") {
-			invisible (writeLines (.rk.do.plain.call ("commandHistory", "get"), file))
+			invisible(writeLines(.rk.call("commandHistory", "get"), file))
 		}, copy.formals = FALSE)
 
 	rk.replace.function ("timestamp",  as.environment ("package:utils"),
 		function (stamp = date(), prefix = "##------ ", suffix = " ------##", quiet = FALSE) {
 			stamp <- paste(prefix, stamp, suffix, sep = "")
-			.rk.do.plain.call ("commandHistory", c ("append", stamp))
+			.rk.call("commandHistory", c("append", stamp))
 			if (!quiet) cat(stamp, sep = "\n")
 			invisible(stamp)
 		}, copy.formals = FALSE)

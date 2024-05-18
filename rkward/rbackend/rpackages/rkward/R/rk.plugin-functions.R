@@ -118,7 +118,7 @@
 		}
 	}
 	if (missing (pluginmap.files)) pluginmap.files <- character(0)
-	.rk.do.plain.call ("loadPluginMaps", c (ifelse (isTRUE (force.add), "force", "noforce"), ifelse (isTRUE (force.reload), "reload", "noreload"), as.character (pluginmap.files)), synchronous=FALSE)
+	.rk.call.async("loadPluginMaps", c(ifelse(isTRUE(force.add), "force", "noforce"), ifelse(isTRUE(force.reload), "reload", "noreload"), as.character(pluginmap.files)))
 }
 
 #' List of modify loaded plugins
@@ -165,7 +165,7 @@
 #' rk.set.plugin.status ("rkward::t_test", visible=FALSE)
 #' }
 "rk.list.plugins" <- function () {
-	plugs <- .rk.do.plain.call("listPlugins")
+	plugs <- .rk.call("listPlugins")
 	columns = c ("ID", "Context", "Menupath", "Label")
 	as.data.frame (matrix (plugs, ncol=length (columns), byrow=TRUE, dimnames=list (1:(length (plugs)/length (columns)), columns)), stringsAsFactors=FALSE)
 }
@@ -176,7 +176,8 @@
 	id <- as.character (id)
 	context <- rep (as.character (context), length.out=length (id))
 	visible <- rep (as.character (as.numeric (visible)), length.out=length (id))
-	.rk.do.plain.call ("setPluginStatus", c (id, context, visible))
+	# NOTE: Passing params as flat character vector for purely historical reasons. This could be changed.
+	.rk.call("setPluginStatus", c(id, context, visible))
 	invisible (NULL)
 }
 

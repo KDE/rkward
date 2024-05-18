@@ -98,7 +98,7 @@
 #' @export
 #' @rdname rk.get.tempfile.name
 "rk.get.workspace.url" <- function () {
-	res <- .rk.do.plain.call ("getWorkspaceUrl")
+	res <- .rk.call("getWorkspaceUrl")
 	if (length (res)) res
 	else NULL
 }
@@ -106,7 +106,11 @@
 #' @export
 #' @rdname rk.get.tempfile.name
 "rk.home" <- function (component="home") {
-	normalizePath (.rk.do.plain.call ("home", component))
+	if(component %in% c("home", "lib")) {
+		normalizePath(.rk.do.simple.call ("home", component))
+	} else {
+		stop("Unknown component type");
+	}
 }
 
 #' @export
@@ -221,7 +225,7 @@
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
-	.rk.do.plain.call ("set.output.file", c (x, if (isTRUE (silent)) "SILENT" else NULL), synchronous=FALSE)
+	if (!isTRUE(silent)) .rk.call.async("set.output.file", x)
 	invisible (oldfile)
 }
 

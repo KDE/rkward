@@ -298,7 +298,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			sync_outfile <- function() {
 				# Manually notify frontend of current output file.  This is usually suppressed for auto-texting, but important, here, since
 				# the frontend uses this to detect, which output is active.
-				rkward:::.rk.do.plain.call ("set.output.file", c (rk.get.output.html.file()), synchronous=FALSE)
+				rkward:::.rk.call.async("set.output.file", c(rk.get.output.html.file()))
 			}
 
 			x <- rk.output()            # get active output

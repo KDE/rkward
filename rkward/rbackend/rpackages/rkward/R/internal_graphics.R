@@ -106,7 +106,7 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 
 			printfile <- .rk.variables$.rk.printer.devices[[as.character (which)]]
 			if (!is.null (printfile)) {
-				rkward:::.rk.do.plain.call ("printPreview", printfile, FALSE)
+				rkward:::.rk.call.async("printPreview", printfile)
 				rkward:::.rk.variables$.rk.printer.devices[[as.character (which)]] <- NULL
 			}
 

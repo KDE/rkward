@@ -7,10 +7,13 @@
 #' Gathers and prints information on the setup of the current RKWard session.
 #' In general, you should always include this information when reporting a bug
 #' in RKWard.
-#' 
+#'
 #' Typically, when reporting a bug, you should use \code{Help->Report Bug...}
 #' from the menu. Internally, this will call \code{rk.sessionInfo()}.
-#' 
+#'
+#' The returned information is untranslated, deliberately, as it is meant for
+#' pasting into the bug tracker.
+#'
 #' @return Returns the object created by \code{sessionInfo()}, invisibly. Note
 #'   that this includes only the information on the R portion of the session.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
@@ -23,8 +26,12 @@
 #' \dontrun{
 #' rk.sessionInfo()
 #' }
-"rk.sessionInfo" <- function () {
-	cat (.rk.do.plain.call ("getSessionInfo"), sep="\n")
-	cat ("R runtime session info:\n")
-	print (sessionInfo())
+"rk.sessionInfo" <- function() {
+	# Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
+	cat("-- Frontend --\n");
+	cat(.rk.call("frontendSessionInfo"), sep="\n")
+	cat("\n-- Backend --\n");
+	cat(.rk.do.simple.call("backendSessionInfo"), sep="\n")
+	cat("\nR runtime session info:\n")
+	print(sessionInfo())
 }

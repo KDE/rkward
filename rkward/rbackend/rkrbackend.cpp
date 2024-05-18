@@ -875,7 +875,8 @@ void doError (const QString &callstring) {
 	}
 }
 
-SEXP doSubstackCall (SEXP _call, SEXP _args) {
+// TODO: Pass nested/sync as a single enum value, in the first place
+SEXP doSubstackCall (SEXP _call, SEXP _args, SEXP _sync, SEXP _nested) {
 	RK_TRACE (RBACKEND);
 
 	RFn::R_CheckUserInterrupt ();
@@ -888,26 +889,20 @@ SEXP doSubstackCall (SEXP _call, SEXP _args) {
 		}
 		return ROb(R_NilValue);
 	} */
+	bool sync = RKRSupport::SEXPToInt(_sync);
+	bool nested = RKRSupport::SEXPToInt(_nested);
+	RKRBackend::RequestFlags flags = sync ? (nested ? RKRBackend::SynchronousWithSubcommands : RKRBackend::Synchronous) : RKRBackend::Asynchronous;
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
-	auto ret = RKRBackend::this_pointer->doRCallRequest(call, RKRSupport::SEXPToNestedStrings(_args), RKRBackend::SynchronousWithSubcommands);
+	auto ret = RKRBackend::this_pointer->doRCallRequest(call, RKRSupport::SEXPToNestedStrings(_args), flags);
 	if (!ret.warning.isEmpty()) RFn::Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
 	if (!ret.error.isEmpty()) RFn::Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
 }
 
-// TODO: remove this entry point in favor of doSubstackCall
-SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
-	RK_TRACE (RBACKEND);
-
-	RFn::R_CheckUserInterrupt ();
-
-	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
-	if (!ret.warning.isEmpty()) RFn::Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData());  // print warnings, first, as errors will cause a stop
-	if (!ret.error.isEmpty()) RFn::Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
-
-	return RKRSupport::QVariantToSEXP(ret.ret);
+QString getLibLoc() {
+	return RKRBackendProtocolBackend::dataDir() + "/.rkward_packages/" + QString::number(RKRBackend::this_pointer->r_version / 10);
 }
 
 // Function to handle several simple calls from R code, that do not need any special arguments, or interaction with the frontend process.
@@ -939,6 +934,18 @@ SEXP doSimpleBackendCall (SEXP _call) {
 		return ROb(R_NilValue);
 	} else if (call == QStringLiteral ("tempdir")) {
 		return (RKRSupport::StringListToSEXP (QStringList (RKRBackendProtocolBackend::dataDir ())));
+	} else if (call == "home") {
+		if (list.value(1) == "home") return RKRSupport::StringListToSEXP(QStringList(RKRBackendProtocolBackend::dataDir()));
+		else if (list.value(1) == "lib") return RKRSupport::StringListToSEXP(QStringList(getLibLoc()));
+		else RK_ASSERT(false); // should have been handled in frontend
+	} else if (call == "backendSessionInfo") {
+		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
+		QStringList lines("Debug message file (this may contain relevant diagnostic output in case of trouble):");
+		lines.append(RKRBackendProtocolBackend::backendDebugFile());
+		lines.append(QString());
+		// NOTE: R_SVN_REVISON used to be a string, but has changed to numeric constant in R 3.0.0. QString::arg() handles both.
+		lines.append(QString("R version (compile time): %1").arg(QString(R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg(R_SVN_REVISION)));
+		return RKRSupport::StringListToSEXP(lines);
 	}
 
 	RK_ASSERT (false);  // Unhandled call.
@@ -1085,8 +1092,7 @@ bool RKRBackend::startR () {
 		// NOTE: Intermediate cast to void* to avoid compiler warning
 		{ "rk.check.env", (DL_FUNC) (void*) &checkEnv, 1 },
 		{ "rk.simple", (DL_FUNC) (void*) &doSimpleBackendCall, 1},
-		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 2 },
-		{ "rk.do.generic.request", (DL_FUNC) (void*) &doPlainGenericRequest, 2 },
+		{ "rk.call", (DL_FUNC) (void*) &doSubstackCall, 4 },
 		{ "rk.get.structure", (DL_FUNC) (void*) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) (void*) &doGetGlobalEnvStructure, 3 },
 		{ "rk.copy.no.eval", (DL_FUNC) (void*) &doCopyNoEval, 4 },
@@ -1581,40 +1587,6 @@ GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVar
 	handleRequest(&request);
 	delete request.subcommandrequest;
 	return request.getResult();
-}
-
-QString getLibLoc() {
-	return RKRBackendProtocolBackend::dataDir () + "/.rkward_packages/" + QString::number (RKRBackend::this_pointer->r_version / 10);
-}
-
-GenericRRequestResult RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
-	RK_TRACE (RBACKEND);
-
-	const QString call = parameters.value(0);
-	const QStringList args = parameters.mid(1);
-	if ((call == "set.output.file") && (args.value(1) == "SILENT")) {
-		return GenericRRequestResult();  // For automated testing and previews. The frontend should not be notified, here
-	} else if (call == "home") {
-		if (args.value(0) == "home") return GenericRRequestResult(RKRBackendProtocolBackend::dataDir());
-		else if (args.value(0) == "lib") return GenericRRequestResult(getLibLoc());
-	}
-
-	auto res = doRCallRequest(call, QVariant(args), synchronous ? Synchronous : Asynchronous);
-
-	if (call == "getSessionInfo") {
-		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
-		QStringList lines("-- Frontend --");
-		lines.append(res.ret.toStringList());
-		lines.append(QString());
-		lines.append("-- Backend --");
-		lines.append("Debug message file (this may contain relevant diagnostic output in case of trouble):");
-		lines.append(RKRBackendProtocolBackend::backendDebugFile());
-		lines.append(QString());
-		// NOTE: R_SVN_REVISON used to be a string, but has changed to numeric constant in R 3.0.0. QString::arg() handles both.
-		lines.append(QString("R version (compile time): %1").arg(QString(R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg(R_SVN_REVISION)));
-		res.ret = QVariant(lines);
-	}
-	return res;
 }
 
 void RKRBackend::initialize (const QString &locale_dir) {

@@ -102,8 +102,6 @@ public:
 
 /** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). */
 	GenericRRequestResult doRCallRequest(const QString &call, const QVariant &args, RequestFlags flags);
-/** TODO: merge with the above. For calls that are known not to require a subcommand */
-	GenericRRequestResult handlePlainGenericRequest(const QStringList &parameters, bool synchronous);
 	RCommandProxy* fetchNextCommand ();
 
 /** The command currently being executed. */

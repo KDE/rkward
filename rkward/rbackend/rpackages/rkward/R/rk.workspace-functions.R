@@ -58,7 +58,7 @@
 			description <- substitute()
 		}
 	}
-	if (missing (description)) lines <- .rk.do.plain.call ("workplace.layout", "get")
+	if (missing (description)) lines <- .rk.call("workplace.layout", "get")
 	else lines <- description
 	writeLines (lines, file)
 }
@@ -90,7 +90,7 @@
 	close <- "close"
 	if (!isTRUE (close.windows)) close <- "noclose"
 	if (!exists ("lines", inherits=FALSE)) lines <- readLines (file)
-	.rk.do.plain.call ("workplace.layout", c ("set", close, lines), synchronous=FALSE)
+	.rk.call.async("workplace.layout", c("set", close, lines))
 	invisible (NULL)
 }
 
@@ -128,8 +128,8 @@
 #' }, "attached")
 #' }
 ".rk.with.window.hints" <- function (expr, placement="", name="", style="") {
-	.rk.do.plain.call ("set.window.placement.hint", as.character (c (placement, name, style)), FALSE)
-	on.exit (.rk.do.plain.call ("set.window.placement.hint", c ("", "", ""), FALSE))
+	.rk.call.async("set.window.placement.hint", as.character(c(placement, name, style)))
+	on.exit(.rk.call.async("set.window.placement.hint", c("", "", "")))
 	eval.parent (expr)
 	invisible (NULL)
 }

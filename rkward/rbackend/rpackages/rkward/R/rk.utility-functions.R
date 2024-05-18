@@ -163,7 +163,8 @@
 "rk.record.commands" <- function (filename, include.all = FALSE) {
 	if (is.null (filename)) filename = ""
 
-	res <- .rk.do.plain.call ("recordCommands", c(as.character (filename), if (include.all) "include.all" else "normal"))
+	# NOTE: Passing params as flat character vector for purely historical reasons. This could be changed.
+	res <- .rk.call("recordCommands", c(as.character(filename), if (include.all) "include.all" else "normal"))
 
 	if (!length (res)) invisible (TRUE)
 	else {
@@ -187,8 +188,8 @@
 #'
 #' @export
 #' @rdname rk.switch.frontend.language
-"rk.switch.frontend.language" <- function (LANG="C") {
-   .rk.do.plain.call ("switchLanguage", as.character (LANG))
+"rk.switch.frontend.language" <- function(LANG="C") {
+   .rk.call("switchLanguage", as.character(LANG))
 }
 
 #' Add one or more paths to the filesystem search path used in this session

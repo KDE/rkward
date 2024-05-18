@@ -277,7 +277,7 @@ rktest.initializeEnvironment <- function () {
 	rktest.replace ("rk.set.output.html.file", function (x) {
 		stopifnot(is.character(x))
 		assign(".rk.output.html.file", x, .rk.variables)
-		rkward:::.rk.do.plain.call ("set.output.file", c (x, "SILENT"), synchronous=FALSE)
+		# NOT calling: rkward:::.rk.call.async("set.output.file", x)
 	})
 	assign("initialized", TRUE, envir=.rktest.tmp.storage)
 }

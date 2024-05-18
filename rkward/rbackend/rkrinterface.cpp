@@ -748,7 +748,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		}
 	} else if (call == "set.window.placement.hint") {
 		RKWorkplace::mainWorkplace ()->setWindowPlacementOverrides(arglist.value(0), arglist.value(1), arglist.value(2));
-	} else if (call == "getSessionInfo") {
+	} else if (call == "frontendSessionInfo") {
 		return GenericRRequestResult(RKSessionVars::frontendSessionInfo());
 	} else if (call == "recordCommands") {
 		RK_ASSERT(arglist.count() == 2);

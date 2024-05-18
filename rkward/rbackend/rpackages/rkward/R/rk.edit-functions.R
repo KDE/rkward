@@ -94,5 +94,5 @@
 #' @export
 #' @rdname rk.edit
 "rk.show.html" <- function (url) {
-	invisible (.rk.do.plain.call ("showHTML", as.character (url), synchronous=FALSE));
+	.rk.call.async("showHTML", as.character(url));
 }

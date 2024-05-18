@@ -213,7 +213,8 @@
     }
   }
 
-  .rk.do.plain.call ("select.list", params)
+  # NOTE: Passing all params as flat plain character vector for purely historical reasons. This could be changed.
+  .rk.call("select.list", as.character(params))
 }
 
 # file dialog
@@ -227,14 +228,15 @@
 #' @rdname rk.show.messages
 "rk.select.file" <- function(caption, initial, filter = '*', mode=c("file", "files", "dir", "newfile")) {
     mode <- match.arg(mode)
-	.rk.do.plain.call (
+    # NOTE: Passing all params as flat plain character vector for purely historical reasons. This could be changed.
+    .rk.call(
         "choosefile",
-        list(
-            if (missing (caption)) "" else caption,
-            if (missing (initial)) "" else initial,
+        as.character(c(
+            if (missing(caption)) "" else caption,
+            if (missing(initial)) "" else initial,
             filter,
             mode[1]
-        )
+        ))
     )
 }
 

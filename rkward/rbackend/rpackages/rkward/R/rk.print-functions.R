@@ -121,7 +121,7 @@
 #' @export
 #' @rdname rk.results
 "rk.print.code" <- function(code) {
-	.rk.cat.output (.rk.do.plain.call ("highlightRCode", as.character (code)))
+	.rk.cat.output(.rk.call("highlightRCode", as.character(code)))
 }
 
 #' @export

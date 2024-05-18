@@ -260,6 +260,16 @@ private Q_SLOTS:
 			lock = false;
 		});
 		while(lock) qApp->processEvents();
+
+		// Saw a frontend crash on this idiom, once:
+		RInterface::issueCommand("x <- list(NULL, 1)", RCommand::User);
+		RInterface::whenAllFinished(this, [](RCommand*) {
+			QCOMPARE(RObjectList::getGlobalEnv()->findObject("x")->getLength(), 2);
+		});
+		RInterface::issueCommand("x[[1]] <- NULL", RCommand::User);
+		RInterface::whenAllFinished(this, [](RCommand*) {
+			QCOMPARE(RObjectList::getGlobalEnv()->findObject("x")->getLength(), 1);
+		});
 	}
 
 	void parseErrorTest() {
