@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<about
 		name="Distributions"
 		shortinfo="Distribution functions, plots, tests of (normal) distribution, central limit theorem. Part of the official RKWard distribution"
-		version="0.7.6"
+		version="0.8.0"
 		license="GPL"
 		url="https://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>
