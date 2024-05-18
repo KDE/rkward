@@ -63,52 +63,52 @@ RK.Output <- setRefClass(Class="RK.Output", fields=list(id="character"),
 	# The implementation of most of these is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
 		activate=function() {
 "Set this output as the one that rk.print and other RKWard Output functions will write to."
-			.rk.do.call("output", c ("activate", .checkId()))
+			.rk.call.nested("output", c ("activate", .checkId()))
 		},
 		isEmpty=function() {
 "Returns TRUE, if the output is currently empty."
-			.rk.do.call("output", c ("isEmpty", .checkId()))
+			.rk.call.nested("output", c ("isEmpty", .checkId()))
 		},
 		isModified=function() {
 "Returns TRUE, if this output has any changes that may need saving."
-			.rk.do.call("output", c ("isModified", .checkId()))
+			.rk.call.nested("output", c ("isModified", .checkId()))
 		},
 		revert=function(discard=NULL) {
 "Revert this output to the last saved state. If no previous state is available (never saved, before), clears the output."
-			.rk.do.call("output", c ("revert", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
+			.rk.call.nested("output", c ("revert", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
 		},
 		save=function(filename, overwrite=NULL) {
 "Save this output, either to the last known save location (if no filename is specified) or to a new location (\"save as\")."
 			if (missing(filename)) filename <- ""
-			.rk.do.call("output", c ("save", .checkId(), if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail", filename))
+			.rk.call.nested("output", c ("save", .checkId(), if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail", filename))
 		},
 		export=function(filename, overwrite=NULL) {
 "Save this output, to the specified location, but keep it associated with the previous location (\"save a copy\")."
 			if (missing(filename)) stop("No file name specified")
-			.rk.do.call("output", c ("export", .checkId(), if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail", filename))
+			.rk.call.nested("output", c ("export", .checkId(), if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail", filename))
 		},
 		clear=function(discard=NULL) {
 "Clear all content from this output. As with any function in this class, this affects the working copy, only, until you call save. Therefore, by default, the user will be prompted for confirmation
 if and only if there are unsaved changes pending."
-			.rk.do.call("output", c ("clear", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
+			.rk.call.nested("output", c ("clear", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
 		},
 		close=function(discard=NULL) {
 "Forget about this output file, also closing any open views. Note: Trying to call any further methods on this object will fail."
-			.rk.do.call("output", c ("close", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
+			.rk.call.nested("output", c ("close", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
 			id<<-character(0)
 		},
 		view=function(raise=TRUE) {
 "Open this output for viewing in the frontend."
-			.rk.do.call("output", c ("view", .checkId(), if(isTRUE(raise)) "raise" else ""))
+			.rk.call.nested("output", c ("view", .checkId(), if(isTRUE(raise)) "raise" else ""))
 		},
 		.workingDir=function() {
 "The path of the working copy of this object. Please don't use this except for automated tests. The internals may be subject to change."
-			.rk.do.call("output", c ("workingDir", .checkId()))
+			.rk.call.nested("output", c ("workingDir", .checkId()))
 		},
 		filename=function() {
 "Return the target filename for this output, i.e. the location where it will be saved, to. This will be an empty string for newly created outputs that have not been saved, yet.
 Do not write anything to the target filename, directly! This is purely for information."
-			.rk.do.call("output", c ("filename", .checkId()))
+			.rk.call.nested("output", c ("filename", .checkId()))
 		},
 		.checkId=function() {
 "For internal use: Throws an error, if the id parameter is NULL or too long, returns a length one character vector otherwise."
@@ -122,7 +122,7 @@ Do not write anything to the target filename, directly! This is purely for infor
 #' @rdname RK.Output
 "rk.output" <- function(filename=NULL, create=FALSE, all=FALSE) {
 	if(all && (!is.null(filename) || create)) stop("'all' cannot be combined with 'create' or 'filename'")
-	id <- .rk.do.call("output", c ("get", if(isTRUE(all)) "all" else "one", if(isTRUE(create)) "create" else "", if(is.null(filename)) "" else as.character(filename)))
+	id <- .rk.call.nested("output", c ("get", if(isTRUE(all)) "all" else "one", if(isTRUE(create)) "create" else "", if(is.null(filename)) "" else as.character(filename)))
 	ret <- lapply(id, function(id) RK.Output(id=id))
 	if (all) ret
 	else ret[[1]]

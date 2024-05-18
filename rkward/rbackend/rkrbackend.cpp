@@ -876,7 +876,7 @@ void doError (const QString &callstring) {
 }
 
 // TODO: Pass nested/sync as a single enum value, in the first place
-SEXP doSubstackCall (SEXP _call, SEXP _args, SEXP _sync, SEXP _nested) {
+SEXP doRCall (SEXP _call, SEXP _args, SEXP _sync, SEXP _nested) {
 	RK_TRACE (RBACKEND);
 
 	RFn::R_CheckUserInterrupt ();
@@ -1092,7 +1092,7 @@ bool RKRBackend::startR () {
 		// NOTE: Intermediate cast to void* to avoid compiler warning
 		{ "rk.check.env", (DL_FUNC) (void*) &checkEnv, 1 },
 		{ "rk.simple", (DL_FUNC) (void*) &doSimpleBackendCall, 1},
-		{ "rk.call", (DL_FUNC) (void*) &doSubstackCall, 4 },
+		{ "rk.call", (DL_FUNC) (void*) &doRCall, 4 },
 		{ "rk.get.structure", (DL_FUNC) (void*) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) (void*) &doGetGlobalEnvStructure, 3 },
 		{ "rk.copy.no.eval", (DL_FUNC) (void*) &doCopyNoEval, 4 },

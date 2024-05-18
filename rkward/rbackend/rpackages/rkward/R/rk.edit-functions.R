@@ -34,7 +34,7 @@
 #' }
 "rk.edit" <- function (x) {
 	object <- deparse (substitute (x))
-	.rk.do.call ("edit", object)
+	.rk.call.nested("edit", object)
 }
 
 #' @param name name of the environment to use (optional).

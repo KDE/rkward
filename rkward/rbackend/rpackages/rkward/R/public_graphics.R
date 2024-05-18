@@ -169,10 +169,10 @@
 #' rk.embed.device (grDevices::X11(title="X11 device window"))
 #' plot (rnorm (10))
 #' }
-"rk.embed.device" <- function (expr) {
-	oldd <- dev.cur ()
-	.rk.do.call ("startOpenX11", as.character (oldd));
-	on.exit (.rk.do.call ("endOpenX11", as.character (dev.cur())));
+"rk.embed.device" <- function(expr) {
+	oldd <- dev.cur()
+	.rk.call("startOpenX11", as.character(oldd));
+	on.exit (.rk.call("endOpenX11", as.character(dev.cur())));
 	on.exit ({  # This serves to make R do all necessary X11 event processing, _while_ we are in the process of embedding the device in the frontend.
 		for (i in 1:10) {
 			if (.rk.variables$devembedded) break
@@ -1024,7 +1024,7 @@
 			positions [2 * (1:ndevs) - 1] <- devIds
 			ihP <- sapply (histPositions[devIds], "[[", "pos.cur"); ihP [is.na (ihP)] <- sP.length + 1
 			positions [2 * (1:ndevs)] <- ihP
-			.rk.do.call ("updateDeviceHistory", c (ifelse (enable.plot.hist, sP.length, 0), .get.sP.calls (), positions));
+			.rk.call("updateDeviceHistory", c(ifelse(enable.plot.hist, sP.length, 0), .get.sP.calls(), positions));
 		}
 		invisible ()
 	}

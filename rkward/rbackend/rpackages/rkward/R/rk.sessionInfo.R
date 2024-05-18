@@ -31,7 +31,7 @@
 	cat("-- Frontend --\n");
 	cat(.rk.call("frontendSessionInfo"), sep="\n")
 	cat("\n-- Backend --\n");
-	cat(.rk.do.simple.call("backendSessionInfo"), sep="\n")
+	cat(.rk.call.backend("backendSessionInfo"), sep="\n")
 	cat("\nR runtime session info:\n")
 	print(sessionInfo())
 }

@@ -100,7 +100,7 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 				rk.record.plot$onDelDevice (devId = which)
 			
 			# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
-			rkward:::.rk.do.call("killDevice", as.character(which))
+			rkward:::.rk.call("killDevice", as.character(which))
 			
 			ret <- eval(body(rkward:::.rk.backups$dev.off))
 

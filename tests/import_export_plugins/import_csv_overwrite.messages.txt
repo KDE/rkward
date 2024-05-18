@@ -1,2 +1,2 @@
-Error in .rk.do.call("doPlugin", callstrings) : 
+Error in .rk.call.nested("doPlugin", callstrings) : 
 The plugin could not be auto-submitted with these settings.

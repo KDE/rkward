@@ -121,15 +121,19 @@
 ".rk.do.error" <- function () {
 # comment in R sources says, it may not be good to query options during error handling. But what can we do, if R_ShowErrorMessages is not longer exported?
 	if (getOption ("show.error.messages")) {
-		.rk.do.simple.call ("error", geterrmessage ())
+		.rk.call.backend("error", geterrmessage())
 	}
 }
 
-# TODO: replace me
-".rk.do.call" <- function (command, args=NULL) {
-	x <- .Call("rk.call", command, args, TRUE, TRUE, PACKAGE="(embedding)");
-	if (is.null(x)) invisible(NULL)
-	else x
+# C call into the backend process only
+".rk.call.backend" <- function(command, args=NULL) {
+	.Call("rk.simple", c(command, args), PACKAGE="(embedding)")
+}
+
+# Asynchronous call to the frontend. This is faster than .rk.call(.nested), if no return value is needed.
+".rk.call.async" <- function(command, args=NULL) {
+	.Call("rk.call", command, args, FALSE, FALSE, PACKAGE="(embedding)")
+	invisible(NULL)
 }
 
 # Synchronous call to the frontend *without* allowing subcommands
@@ -139,15 +143,11 @@
 	else x
 }
 
-# Asynchronous call to the frontend
-".rk.call.async" <- function(command, args=NULL) {
-	.Call("rk.call", command, args, FALSE, FALSE, PACKAGE="(embedding)")
-	invisible(NULL)
-}
-
-# TODO: replace me
-".rk.do.simple.call" <- function(command, args=NULL) {
-	.Call("rk.simple", c(command, args), PACKAGE="(embedding)")
+# Synchronous call to the frontend *with* allowing subcommands
+".rk.call.nested" <- function (command, args=NULL) {
+	x <- .Call("rk.call", command, args, TRUE, TRUE, PACKAGE="(embedding)");
+	if (is.null(x)) invisible(NULL)
+	else x
 }
 
 #' @export

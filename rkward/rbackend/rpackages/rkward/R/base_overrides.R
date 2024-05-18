@@ -50,7 +50,7 @@
 	if (!suppressWarnings(base::require(as.character(package), quietly = quietly, character.only = TRUE, ...))) {
 		if (missing (package)) stop ("No package name given")
 		rk.capture.output(allow.nesting=FALSE)
-		try(.rk.do.call("require", as.character(package)))
+		try(.rk.call.nested("require", as.character(package)))
 		rk.end.capture.output()
 		invisible(base::require(as.character(package), quietly = TRUE, character.only = TRUE, ...))
 	} else {

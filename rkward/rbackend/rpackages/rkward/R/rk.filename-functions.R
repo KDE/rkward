@@ -84,15 +84,15 @@
 #' rk.set.output.html.file(outfile)
 #' }
 "rk.get.tempfile.name" <- function (prefix="image", extension=".jpg", directory=dirname (rk.get.output.html.file ())) {
-	x <- .rk.do.simple.call ("unused.filename", c (prefix, extension, directory))
+	x <- .rk.call.backend("unused.filename", c(prefix, extension, directory))
 	ret <- x[2]
-	names (ret) <- x[1]
+	names(ret) <- x[1]
 	ret
 }
 
 #' @export
-"rk.tempdir" <- function () {
-	.rk.do.simple.call ("tempdir")
+"rk.tempdir" <- function() {
+	.rk.call.backend("tempdir")
 }
 
 #' @export
@@ -107,7 +107,7 @@
 #' @rdname rk.get.tempfile.name
 "rk.home" <- function (component="home") {
 	if(component %in% c("home", "lib")) {
-		normalizePath(.rk.do.simple.call ("home", component))
+		normalizePath(.rk.call.backend("home", component))
 	} else {
 		stop("Unknown component type");
 	}

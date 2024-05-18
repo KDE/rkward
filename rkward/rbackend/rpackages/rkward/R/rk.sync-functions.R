@@ -33,12 +33,12 @@
 #' }
 "rk.sync" <- function (x) {
 	object <- deparse (substitute (x))
-	.rk.do.call("sync", list(NULL, NULL, object))
+	.rk.call.nested("sync", list(NULL, NULL, object))
 }
 
 # should this really be public?
 #' @export
 #' @rdname rk.sync
 "rk.sync.global" <- function () {
-	.rk.do.call("sync", rk.check.env.changes(globalenv()))
+	.rk.call.nested("sync", rk.check.env.changes(globalenv()))
 }

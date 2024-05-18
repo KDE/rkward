@@ -5,5 +5,5 @@ Warning in system(full, intern = TRUE, ignore.stderr = quiet) :
 Error: Failed to install 'unknown package' from Git:
   Command failed (128)
 In addition: Warning message:
-In .rk.do.call("doPlugin", callstrings) :
+In .rk.call.nested("doPlugin", callstrings) :
   Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace.

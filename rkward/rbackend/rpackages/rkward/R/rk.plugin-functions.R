@@ -77,7 +77,7 @@
 	}
 
 	# do call
-	.rk.do.call ("doPlugin", callstrings)
+	.rk.call.nested("doPlugin", callstrings)
 	invisible (TRUE)
 }
 
