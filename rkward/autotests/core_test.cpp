@@ -83,7 +83,7 @@ class RKWardCoreTest: public QObject {
 	}
 
 	void waitForAllFinished(int timeoutms = 2000) {
-		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand*){}, timeoutms);
+		runCommandWithTimeout(new RCommand("# waitForAllFinished", RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand*){}, timeoutms);
 	}
 
 	void cleanGlobalenv() {
@@ -372,7 +372,7 @@ private Q_SLOTS:
 			priority_command_done = true;
 			RInterface::instance()->cancelAll();
 		});
-		waitForAllFinished();  // priority_command_done must remain in scope until done
+		waitForAllFinished(5000);  // priority_command_done must remain in scope until done (even if interrupting fails for some reason)
 	}
 
 	void RKConsoleHistoryTest() {

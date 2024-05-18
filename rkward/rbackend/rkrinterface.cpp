@@ -560,8 +560,10 @@ void RInterface::cancelCommand (RCommand *command) {
 		command->status |= RCommand::Canceled;
 		if (command->status & RCommand::Running) {
 			if ((RKDebugHandler::instance ()->state () == RKDebugHandler::InDebugPrompt) && (command == RKDebugHandler::instance ()->command ())) {
+				RK_DEBUG(RBACKEND, DL_DEBUG, "Interrupting debug prompt");
 				RKDebugHandler::instance ()->sendCancel ();
 			} else {
+				RK_DEBUG(RBACKEND, DL_DEBUG, "Interrupting running command %d", command->id());
 				RKRBackendProtocolFrontend::instance ()->interruptCommand (command->id ());
 			}
 		}
