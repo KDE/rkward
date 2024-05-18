@@ -372,7 +372,8 @@ private Q_SLOTS:
 			priority_command_done = true;
 			RInterface::instance()->cancelAll();
 		});
-		waitForAllFinished(5000);  // priority_command_done must remain in scope until done (even if interrupting fails for some reason)
+		waitForAllFinished();
+		waitForAllFinished(4000);  // priority_command_done must remain in scope until done (even if interrupting fails for some reason)
 	}
 
 	void RKConsoleHistoryTest() {

@@ -35,24 +35,29 @@ ENDIF(BUILD_TESTING)
 
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 
-SET(RKWard_Sources
+# For auto-tests: pack everything except main in a dummy library
+SET(RKWard_Lib_Sources
 	rkward.cpp
 	robjectviewer.cpp
 	rkconsole.cpp
 )
-QT_ADD_RESOURCES(RKWard_Sources resources.qrc icons/icons.qrc)
+QT_ADD_RESOURCES(RKWard_Lib_Sources resources.qrc icons/icons.qrc)
 
 # somehow the detected R paths from FindR.cmake do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
+ADD_LIBRARY(rkward_lib STATIC ${RKWard_Lib_Sources})
+TARGET_COMPILE_DEFINITIONS(rkward_lib PUBLIC -DR_EXECUTABLE="${R_EXECUTABLE}")
+
+SET(RKWard_App_Sources
+	main.cpp
+)
 FILE(GLOB ICON_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/*-apps-rkward.png")
 # recent ECM versions will prefer the scalable version: prepend it to the icon source list (older versions generate a warning on the SVG, but so what):
-ECM_ADD_APP_ICON(RKWard_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
-ADD_LIBRARY(rkward_lib STATIC ${RKWard_Sources}) # For auto-tests: pack everything except main in a dummy library
-TARGET_COMPILE_DEFINITIONS(rkward_lib PUBLIC -DR_EXECUTABLE="${R_EXECUTABLE}")
-ADD_EXECUTABLE(rkward main.cpp)
+ECM_ADD_APP_ICON(RKWard_App_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
+ADD_EXECUTABLE(rkward ${RKWard_App_Sources})
 
 # NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
