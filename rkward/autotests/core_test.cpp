@@ -382,9 +382,9 @@ private Q_SLOTS:
 		runCommandWithTimeout(new RCommand("local({x <- tempfile(); savehistory(x); readLines(x)})", RCommand::GetStringVector | RCommand::App), nullptr, [](RCommand *command) {
 			QCOMPARE(command->stringVector().filter(UNIQUE_STRING).size(), 1);
 		});
-		console->pipeUserCommand("timestamp(prefix=\"" UNIQUE_STRING "\"");
+		console->pipeUserCommand("timestamp(prefix=\"" UNIQUE_STRING "\")");
 		waitForAllFinished();
-		QCOMPARE(console->commandHistory().filter(UNIQUE_STRING).size(), 2);
+		QCOMPARE(console->commandHistory().filter(UNIQUE_STRING).size(), 3);
 	}
 
 	void RKDeviceTest() {
