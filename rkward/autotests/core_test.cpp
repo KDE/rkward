@@ -19,6 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 #include "../rkward.h"
+#include "../rkconsole.h"
 #include "../version.h"
 #include "../agents/rkquitagent.h"
 #include "../rbackend/rksessionvars.h"
@@ -270,6 +271,7 @@ private Q_SLOTS:
 		RInterface::whenAllFinished(this, [](RCommand*) {
 			QCOMPARE(RObjectList::getGlobalEnv()->findObject("x")->getLength(), 1);
 		});
+		cleanGlobalenv();
 	}
 
 	void parseErrorTest() {
@@ -371,6 +373,18 @@ private Q_SLOTS:
 			RInterface::instance()->cancelAll();
 		});
 		waitForAllFinished();  // priority_command_done must remain in scope until done
+	}
+
+	void RKConsoleHistoryTest() {
+#		define UNIQUE_STRING "unique_command_string"
+		auto console = RKConsole::mainConsole();
+		console->pipeUserCommand("if (FALSE) " UNIQUE_STRING "()");
+		runCommandWithTimeout(new RCommand("local({x <- tempfile(); savehistory(x); readLines(x)})", RCommand::GetStringVector | RCommand::App), nullptr, [](RCommand *command) {
+			QCOMPARE(command->stringVector().filter(UNIQUE_STRING).size(), 1);
+		});
+		console->pipeUserCommand("timestamp(prefix=\"" UNIQUE_STRING "\"");
+		waitForAllFinished();
+		QCOMPARE(console->commandHistory().filter(UNIQUE_STRING).size(), 2);
 	}
 
 	void RKDeviceTest() {

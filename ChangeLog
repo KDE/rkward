@@ -1,3 +1,6 @@
+- Fixed: R functions loadhistory(), savehistory(), and timestamp() broken
+- Changed: R shared library is now loaded, dynamically, rather than linked at compile time.
+           This allows more flexibility on which R version to use at runtime, esp. in the context of AppImage binaries
 - Fixed: References to the package cairoDevice (removed on CRAN) have been replaced with Cairo
 - Fixed: Creating new output window from the UI would sometimes show empty window
 

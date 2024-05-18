@@ -328,18 +328,18 @@ assign(".rk.shadow.envs", new.env(parent=emptyenv()), envir=.rk.variables)
 	## History manipulation function (overloads for functions by the same name in package utils)
 	rk.replace.function ("loadhistory",  as.environment ("package:utils"),
 		function (file = ".Rhistory") {
-			invisible(.rk.call("commandHistory", c("set", readLines(file))))
+			invisible(rkward:::.rk.call("commandHistory", c("set", readLines(file))))
 		}, copy.formals = FALSE)
 
 	rk.replace.function ("savehistory",  as.environment ("package:utils"),
 		function (file = ".Rhistory") {
-			invisible(writeLines(.rk.call("commandHistory", "get"), file))
+			invisible(writeLines(rkward:::.rk.call("commandHistory", "get"), file))
 		}, copy.formals = FALSE)
 
 	rk.replace.function ("timestamp",  as.environment ("package:utils"),
 		function (stamp = date(), prefix = "##------ ", suffix = " ------##", quiet = FALSE) {
 			stamp <- paste(prefix, stamp, suffix, sep = "")
-			.rk.call("commandHistory", c("append", stamp))
+			rkward:::.rk.call("commandHistory", c("append", stamp))
 			if (!quiet) cat(stamp, sep = "\n")
 			invisible(stamp)
 		}, copy.formals = FALSE)

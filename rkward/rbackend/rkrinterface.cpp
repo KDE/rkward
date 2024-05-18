@@ -582,6 +582,7 @@ void RInterface::pauseProcessing (bool pause) {
 GenericRRequestResult RInterface::processRCallRequest (const QString &call, const QVariant &args, RCommandChain *in_chain) {
 	RK_TRACE (RBACKEND);
 
+	// TODO: All these calls should be mapped to an enum directly in the backend, for efficiency, and to avoid typo-bugs
 	if (call == "sync") {
 		QVariantList al = args.toList();  // added, removed, changed
 		RObjectList::getGlobalEnv()->updateFromR(in_chain, al.value(0).toStringList(), al.value(1).toStringList());
@@ -607,7 +608,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		return GenericRRequestResult();
 	}
 
-	// NOTE: all requests below pass all arguments as single stringlist (although that may worth changing)
+	// NOTE: all requests below pass their arguments as single stringlist (although that may be worth changing)
 	QStringList arglist = args.toStringList();
 	if (false) {  // syntax dummy
 #ifndef DISABLE_RKWINDOWCATCHER
