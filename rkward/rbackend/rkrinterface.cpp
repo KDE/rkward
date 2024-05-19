@@ -178,6 +178,7 @@ void RInterface::closeSubcommandChain (RCommand* parent_command) {
 
 void RInterface::tryNextCommand () {
 	RK_TRACE (RBACKEND);
+
 	RCommand *command = RCommandStack::currentCommand ();
 	if (command_requests.isEmpty ()) {
 		// if the backend is not requesting anything, only priority commands will be pushed
@@ -332,6 +333,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 	flushOutput (true);
 	if (request->type == RBackendRequest::CommandOut) {
+		if (backend_dead) return; // Backend may or may not be able to transmit finished commands after exit, and therefore we've already discarded all active commands
 		RCommandProxy *cproxy = request->takeCommand ();
 		if (cproxy) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "Command out \"%s\", id %d", qPrintable (cproxy->command), cproxy->id);
@@ -878,14 +880,15 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			na_real = request->params["na_real"].toDouble ();
 			na_int = request->params["na_int"].toInt ();
 	} else if (type == RBackendRequest::BackendExit) {
-		if (request->params.value ("regular", QVariant (false)).toBool ()) backend_dead = true;		// regular exit via QuitCommand
 		if (!backend_dead) {
 			backend_dead = true;
-			QString message = request->params["message"].toString ();
-			RK_DEBUG(RBACKEND, DL_ERROR, "Backend exit: %s", qPrintable(message));
-			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
-			RKErrorDialog::reportableErrorMessage(nullptr, message, QString(), i18n("R engine has died"), "r_engine_has_died");
 			Q_EMIT backendStatusChanged(Dead);
+			if (!(request->params.value("regular", QVariant(false)).toBool())) { // irregular exit
+				QString message = request->params["message"].toString ();
+				RK_DEBUG(RBACKEND, DL_ERROR, "Backend exit: %s", qPrintable(message));
+				message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
+				RKErrorDialog::reportableErrorMessage(nullptr, message, QString(), i18n("R engine has died"), "r_engine_has_died");
+			}
 			while (!all_current_commands.isEmpty()) {
 				auto c = all_current_commands.takeLast();
 				c->status |= RCommand::Failed;

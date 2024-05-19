@@ -1,6 +1,6 @@
 /*
 rkquitagent - This file is part of RKWard (https://rkward.kde.org). Created: Thu Jan 18 2007
-SPDX-FileCopyrightText: 2007 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -24,7 +24,7 @@ RKQuitAgent::RKQuitAgent (QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
 	quitting = true;
-	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::QuitCommand);
+	RCommand *command = new RCommand(QString("# Quit"), RCommand::EmptyCommand | RCommand::QuitCommand);
 
 	RKWardMainWindow::getMain ()->hide ();
 	cancel_dialog = new RKProgressControl (this, i18n ("Waiting for remaining R commands to finish. To quit immediately, press Cancel (WARNING: This may result in loss of data)"), i18n ("Waiting for R to finish"), RKProgressControl::AllowCancel | RKProgressControl::ShowAtOnce);

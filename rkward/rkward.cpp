@@ -654,7 +654,7 @@ void RKWardMainWindow::initActions() {
 				RKConsole::mainConsole()->resetConsole();
 				restart_now();
 			} else {
-				RCommand *c = new RCommand(QString(), RCommand::QuitCommand);
+				RCommand *c = new RCommand(QString("# Quit (restarting)"), RCommand::QuitCommand);
 				c->whenFinished(this, [this, restart_now]() { QTimer::singleShot(0, this, restart_now); });
 				RInterface::issueCommand(c);
 			}

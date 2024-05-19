@@ -431,7 +431,7 @@ private Q_SLOTS:
 	void cleanupTestCase()
 	{
 		// at least the backend should exit properly, to avoid creating emergency save files
-		RInterface::issueCommand(new RCommand(QString(), RCommand::QuitCommand));
+		RInterface::issueCommand(new RCommand(QString("# Quit (test cleanup)"), RCommand::QuitCommand));
 		RKWardMainWindow::getMain()->slotCloseAllWindows();
 		while (!(RInterface::instance()->backendIsDead())) {
 			qApp->processEvents();
