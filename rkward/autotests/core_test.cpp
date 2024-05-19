@@ -397,6 +397,18 @@ private Q_SLOTS:
 		waitForAllFinished(5000);  // priority_command_done must remain in scope until done
 	}
 
+	void HTMLWindowTest() {
+		// this test, too, is extremely basic, but sometimes there are problems instantiating a QWebEnginePage
+		runCommandAsync(new RCommand("?print", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(!command->failed());
+			QCOMPARE(RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::HelpWindow).size(), 1);
+			RKWorkplace::mainWorkplace()->closeAll(RKMDIWindow::HelpWindow);
+			QCOMPARE(RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::HelpWindow).size(), 0);
+		});
+		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
+		waitForAllFinished(5000);  // priority_command_done must remain in scope until done
+	}
+
 	void restartRBackend() {
 		auto restart_action = RKWardMainWindow::getMain()->actionCollection()->action("restart_r");
 		QVERIFY(restart_action != nullptr);
