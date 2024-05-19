@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-13 00:36+0000\n"
+"POT-Creation-Date: 2024-05-19 00:36+0000\n"
 "PO-Revision-Date: 2018-12-04 13:52+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3704,7 +3704,7 @@ msgstr "Viesti R-taustaosasta"
 msgid "Question from the R backend"
 msgstr "Kysymys R-taustaosasta"
 
-#: rkward/rbackend/rkrbackend.cpp:1653
+#: rkward/rbackend/rkrbackend.cpp:1630
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3736,7 +3736,7 @@ msgstr ""
 "href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>."
 "</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1657
+#: rkward/rbackend/rkrbackend.cpp:1634
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3756,12 +3756,12 @@ msgstr ""
 "lopettaa RKWard ja korjata asennus</b>. Lisäohjeita tähän: <a href=\"http://"
 "rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1714
+#: rkward/rbackend/rkrbackend.cpp:1691
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1714
+#: rkward/rbackend/rkrbackend.cpp:1691
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3769,7 +3769,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1714
+#: rkward/rbackend/rkrbackend.cpp:1691
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -3802,12 +3802,29 @@ msgstr ""
 msgid "Error starting R"
 msgstr "Virhe käynnistettäessä R:ää"
 
-#: rkward/rbackend/rkrinterface.cpp:583
+#: rkward/rbackend/rkrinterface.cpp:638
+#, kde-format
+msgid ""
+"The R-backend has indicated that in order to carry out the current task it "
+"needs the package '%1', which is not currently installed. We will open the "
+"package-management tool, and there you can try to locate and install the "
+"needed package."
+msgstr ""
+"R-taustaosa kertoo, että suorittaakseen nykyisen tehtävän se tarvitsee "
+"pakettia ”%1”, jota ei ole asennettu. Nyt avataan pakettienhallintatyökalu, "
+"jossa voit etsiä asentaa tarvittavan paketin."
+
+#: rkward/rbackend/rkrinterface.cpp:638
+#, kde-format
+msgid "Require package '%1'"
+msgstr "Vaaditaan paketti ”%1”"
+
+#: rkward/rbackend/rkrinterface.cpp:669
 #, kde-format
 msgid "Quitting was canceled"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:585
+#: rkward/rbackend/rkrinterface.cpp:671
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3830,60 +3847,38 @@ msgstr ""
 "automaattisesti.) Valitse tällöin ensin ”Peru”, sulje sitten dataikkunat ja "
 "yritä uudelleen."
 
-#: rkward/rbackend/rkrinterface.cpp:585
+#: rkward/rbackend/rkrinterface.cpp:671
 #, kde-format
 msgid "Locale change"
 msgstr "Maa-asetusten muutos"
 
-#: rkward/rbackend/rkrinterface.cpp:586
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:689
+#: rkward/rbackend/rkrinterface.cpp:766
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:697
+#: rkward/rbackend/rkrinterface.cpp:774
 #, fuzzy, kde-format
 #| msgid "Could not open file %1 for reading"
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Tiedostoa %1 ei voitu avata luettavaksi"
 
-#: rkward/rbackend/rkrinterface.cpp:708
+#: rkward/rbackend/rkrinterface.cpp:785
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:781
-#, kde-format
-msgid ""
-"The R-backend has indicated that in order to carry out the current task it "
-"needs the package '%1', which is not currently installed. We will open the "
-"package-management tool, and there you can try to locate and install the "
-"needed package."
-msgstr ""
-"R-taustaosa kertoo, että suorittaakseen nykyisen tehtävän se tarvitsee "
-"pakettia ”%1”, jota ei ole asennettu. Nyt avataan pakettienhallintatyökalu, "
-"jossa voit etsiä asentaa tarvittavan paketin."
-
-#: rkward/rbackend/rkrinterface.cpp:781
-#, kde-format
-msgid "Require package '%1'"
-msgstr "Vaaditaan paketti ”%1”"
-
-#: rkward/rbackend/rkrinterface.cpp:801
-#, kde-format
-msgid "Unrecognized call '%1'"
-msgstr ""
-
-#: rkward/rbackend/rkrinterface.cpp:881
+#: rkward/rbackend/rkrinterface.cpp:866
 #, kde-format
 msgid "R backend requests information"
 msgstr "R-taustaosa pyytää tietoja"
 
-#: rkward/rbackend/rkrinterface.cpp:901
+#: rkward/rbackend/rkrinterface.cpp:886
 #, kde-format
 msgid ""
 "\n"
@@ -3900,7 +3895,7 @@ msgstr ""
 "komentotiedostot ja tulosteen tai kopioi datasi avoimista datamuokkaimista. "
 "Lopeta RKWard sen jälkeen. Pahoittelut!"
 
-#: rkward/rbackend/rkrinterface.cpp:902
+#: rkward/rbackend/rkrinterface.cpp:887
 #, kde-format
 msgid "R engine has died"
 msgstr "R-moottori on pysähtynyt"
