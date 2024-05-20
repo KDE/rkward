@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-19 00:36+0000\n"
+"POT-Creation-Date: 2024-05-20 00:36+0000\n"
 "PO-Revision-Date: 2022-10-08 17:07+0200\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -3910,7 +3910,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "Error al arrancar R"
 
-#: rkward/rbackend/rkrinterface.cpp:638
+#: rkward/rbackend/rkrinterface.cpp:641
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3922,17 +3922,17 @@ msgstr ""
 "«%1», actualmente no instalado. Se abrirá la herramienta de gestión de "
 "paquetes y allí podrá intentar ubicar e instalar el paquete solicitado."
 
-#: rkward/rbackend/rkrinterface.cpp:638
+#: rkward/rbackend/rkrinterface.cpp:641
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Requerir el paquete «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:669
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "La salida fue cancelada"
 
-#: rkward/rbackend/rkrinterface.cpp:671
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3956,40 +3956,40 @@ msgstr ""
 "automáticamente en futuras versiones de RKWard). En este caso, elija "
 "«Cancelar» ahora, cierre las ventanas de datos, guarde y re-intente de nuevo."
 
-#: rkward/rbackend/rkrinterface.cpp:671
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid "Locale change"
 msgstr "Configuración regional"
 
-#: rkward/rbackend/rkrinterface.cpp:672
+#: rkward/rbackend/rkrinterface.cpp:675
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "El cambio de lenguaje fue cancelado por el usuario"
 
-#: rkward/rbackend/rkrinterface.cpp:766
+#: rkward/rbackend/rkrinterface.cpp:769
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 "Se ha intentado iniciar el registro, cuando ya se están registrando órdenes. "
 "Ignorado."
 
-#: rkward/rbackend/rkrinterface.cpp:774
+#: rkward/rbackend/rkrinterface.cpp:777
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr ""
 "No se ha podido abrir el archivo para escritura. No se guardarán las órdenes"
 
-#: rkward/rbackend/rkrinterface.cpp:785
+#: rkward/rbackend/rkrinterface.cpp:788
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Error: petición no reconocida «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:866
+#: rkward/rbackend/rkrinterface.cpp:869
 #, kde-format
 msgid "R backend requests information"
 msgstr "El motor R solicita información"
 
-#: rkward/rbackend/rkrinterface.cpp:886
+#: rkward/rbackend/rkrinterface.cpp:890
 #, kde-format
 msgid ""
 "\n"
@@ -4007,7 +4007,7 @@ msgstr ""
 "archivo de órdenes, la salida o copiar datos de cualquier editor de datos "
 "abierto. Cierre RKWard tras ello. ¡Lo sentimos!"
 
-#: rkward/rbackend/rkrinterface.cpp:887
+#: rkward/rbackend/rkrinterface.cpp:891
 #, kde-format
 msgid "R engine has died"
 msgstr "El motor R ha muerto"

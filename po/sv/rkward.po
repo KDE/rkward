@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-19 00:36+0000\n"
+"POT-Creation-Date: 2024-05-20 00:36+0000\n"
 "PO-Revision-Date: 2023-07-31 11:13+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -3860,7 +3860,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "Fel vid start av R"
 
-#: rkward/rbackend/rkrinterface.cpp:638
+#: rkward/rbackend/rkrinterface.cpp:641
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3873,17 +3873,17 @@ msgstr ""
 "Pakethanteringsverktyget kommer att öppnas, och där kan du försöka att "
 "lokalisera och installera det nödvändiga paketet."
 
-#: rkward/rbackend/rkrinterface.cpp:638
+#: rkward/rbackend/rkrinterface.cpp:641
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Kräv paket '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:669
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "Avsluta avbröts"
 
-#: rkward/rbackend/rkrinterface.cpp:671
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3906,37 +3906,37 @@ msgstr ""
 "automatiskt i senare versioner av RKWard). I detta fall, välj 'Avbryt' nu, "
 "stäng datafönstren, spara, och försök igen."
 
-#: rkward/rbackend/rkrinterface.cpp:671
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid "Locale change"
 msgstr "Ändring av landsinställningar"
 
-#: rkward/rbackend/rkrinterface.cpp:672
+#: rkward/rbackend/rkrinterface.cpp:675
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "Ändring av landsinställningar avbröts av användaren"
 
-#: rkward/rbackend/rkrinterface.cpp:766
+#: rkward/rbackend/rkrinterface.cpp:769
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "Försök att starta inspelning när kommandon redan spelas in. Ignoreras."
 
-#: rkward/rbackend/rkrinterface.cpp:774
+#: rkward/rbackend/rkrinterface.cpp:777
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Kunde inte öppna filen för skrivning. Spelar inte in kommandon"
 
-#: rkward/rbackend/rkrinterface.cpp:785
+#: rkward/rbackend/rkrinterface.cpp:788
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Fel: begäran '%1' kändes inte igen"
 
-#: rkward/rbackend/rkrinterface.cpp:866
+#: rkward/rbackend/rkrinterface.cpp:869
 #, kde-format
 msgid "R backend requests information"
 msgstr "R-bakgrundsprogrammet begär information"
 
-#: rkward/rbackend/rkrinterface.cpp:886
+#: rkward/rbackend/rkrinterface.cpp:890
 #, kde-format
 msgid ""
 "\n"
@@ -3954,7 +3954,7 @@ msgstr ""
 "öppna kommandofiler, spara utdata, eller kopiera data från öppna "
 "dataeditorer. Avsluta därefter RKWard. Ursäkta!"
 
-#: rkward/rbackend/rkrinterface.cpp:887
+#: rkward/rbackend/rkrinterface.cpp:891
 #, kde-format
 msgid "R engine has died"
 msgstr "R-bakgrundsprogrammet har dött"

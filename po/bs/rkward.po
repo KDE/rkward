@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kde4.14\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-19 00:36+0000\n"
+"POT-Creation-Date: 2024-05-20 00:36+0000\n"
 "PO-Revision-Date: 2015-02-22 23:06+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian\n"
@@ -3482,7 +3482,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:638
+#: rkward/rbackend/rkrinterface.cpp:641
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3491,17 +3491,17 @@ msgid ""
 "needed package."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:638
+#: rkward/rbackend/rkrinterface.cpp:641
 #, kde-format
 msgid "Require package '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:669
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Quitting was canceled"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:671
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3515,37 +3515,37 @@ msgid ""
 "windows, save, and retry."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:671
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid "Locale change"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:672
+#: rkward/rbackend/rkrinterface.cpp:675
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:766
+#: rkward/rbackend/rkrinterface.cpp:769
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:774
+#: rkward/rbackend/rkrinterface.cpp:777
 #, fuzzy, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Nije u mogućnosti da otvori datoteku \"%1\" za čitanje"
 
-#: rkward/rbackend/rkrinterface.cpp:785
+#: rkward/rbackend/rkrinterface.cpp:788
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:866
+#: rkward/rbackend/rkrinterface.cpp:869
 #, kde-format
 msgid "R backend requests information"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:886
+#: rkward/rbackend/rkrinterface.cpp:890
 #, kde-format
 msgid ""
 "\n"
@@ -3556,7 +3556,7 @@ msgid ""
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:887
+#: rkward/rbackend/rkrinterface.cpp:891
 #, kde-format
 msgid "R engine has died"
 msgstr ""
