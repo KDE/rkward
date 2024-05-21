@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkrbackendprotocol_frontend.h"
 #include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
 #include "rksessionvars.h"
+#include "../misc/rkcommandlineargs.h"
 #include "../settings/rksettingsmodulegeneral.h"
 
 #include <KLocalizedString>
@@ -107,7 +108,7 @@ QString localeDir () {
 void RKFrontendTransmitter::run () {
 	RK_TRACE (RBACKEND);
 
-	quirkmode = RKSettingsModuleGeneral::startupOption("quirkmode").toBool();
+	quirkmode = RKCommandLineArgs::get(RKCommandLineArgs::QuirkMode).toBool();
 
 	// start server
 	server = new QLocalServer (this);
@@ -135,7 +136,7 @@ void RKFrontendTransmitter::run () {
 
 	QStringList args;
 	args.append("CMD");
-	QString debugger = RKSettingsModuleGeneral::startupOption("backend-debugger").toString();
+	QString debugger = RKCommandLineArgs::get(RKCommandLineArgs::BackendDebugger).toString();
 	if (!debugger.isEmpty()) {
 		args += debugger.split(' ');
 	}

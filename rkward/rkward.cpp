@@ -53,6 +53,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
 #include "misc/rkstandardicons.h"
+#include "misc/rkcommandlineargs.h"
 #include "misc/rkcommonfunctions.h"
 #include "misc/rkxmlguisyncer.h"
 #include "misc/rkdialogbuttonbox.h"
@@ -222,9 +223,9 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
-	QStringList open_urls = RKSettingsModuleGeneral::takeStartupOption("initial_urls").toStringList();
-	bool warn_external = RKSettingsModuleGeneral::takeStartupOption("warn_external").toBool();
-	QString evaluate_code = RKSettingsModuleGeneral::takeStartupOption("evaluate").toString();
+	QStringList open_urls = RKCommandLineArgs::get(RKCommandLineArgs::UrlArgs).toStringList();
+	bool warn_external = !RKCommandLineArgs::get(RKCommandLineArgs::NoWarnExternal).toBool();
+	QString evaluate_code = RKCommandLineArgs::get(RKCommandLineArgs::Evaluate).toString();
 
 	initPlugins ();
 	gui_rebuild_locked = false;
@@ -650,7 +651,7 @@ void RKWardMainWindow::initActions() {
 				RKConsole::mainConsole()->resetConsole();
 				restart_now();
 			} else {
-				RCommand *c = new RCommand(QString("# Quit (restarting)"), RCommand::App | RCommand::EmptyCommand || RCommand::QuitCommand);
+				RCommand *c = new RCommand(QString("# Quit (restarting)"), RCommand::App | RCommand::EmptyCommand | RCommand::QuitCommand);
 				c->whenFinished(this, [this, restart_now]() { QTimer::singleShot(0, this, restart_now); });
 				RInterface::issueCommand(c);
 			}

@@ -1,6 +1,6 @@
 /*
 main.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 29 2002
-SPDX-FileCopyrightText: 2002-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -60,7 +60,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QThread>
 #include <QApplication>
 #include <QUrl>
-#include <QCommandLineParser>
 #include <QTime>
 #include <QSettings>
 #include <QStandardPaths>
@@ -83,6 +82,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "windows/rkdebugmessagewindow.h"
 #include "misc/rkcommonfunctions.h"
 #include "../3rdparty/KDSingleApplication/kdsingleapplication.h"
+#include "misc/rkcommandlineargs.h"
 
 #ifdef Q_OS_WIN
 	// these are needed for the exit hack.
@@ -279,50 +279,22 @@ int main (int argc, char *argv[]) {
 	aboutData.setOtherText(QString("<p><b>%1</b></p><ul><li><a href=\"https://www.jstatsoft.org/article/view/v049i09\">%2</a></li><li>Friedrichsmeier, T. &amp; the RKWard Team (%3). RKWard: %4. Version %5. %6</li></ul>").arg(i18n("How to cite:"), i18n("Peer-reviewed article in the Journal of Statistical Software"), aboutData.copyrightStatement().right(4), aboutData.shortDescription(), aboutData.version(), aboutData.homepage()));
 	KAboutData::setApplicationData (aboutData);
 
-	QCommandLineParser parser;
-	aboutData.setupCommandLine(&parser);
-	parser.addOption (QCommandLineOption ("evaluate", i18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), "Rcode", QString ()));
-	parser.addOption (QCommandLineOption ("debug-level", i18n ("Verbosity of debug messages (0-5)"), "level", "2"));
-	parser.addOption (QCommandLineOption ("debug-flags", i18n ("Mask for components to debug (see debug.h)"), "flags", QString::number (DEBUG_ALL)));
-	parser.addOption (QCommandLineOption ("debug-output", i18n ("Where to send debug message (file|terminal)"), "where", "file"));
-	parser.addOption (QCommandLineOption ("backend-debugger", i18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "command", QString ()));
-	parser.addOption (QCommandLineOption ("r-executable", i18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "command", QString ()));
-	parser.addOption (QCommandLineOption ("reuse", i18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored.")));
-	parser.addOption (QCommandLineOption ("autoreuse", i18n ("Behaves like --reuse, if any file arguments are also given, starts a new instance, otherwise. Intended for use in the .desktop file.")));
-	parser.addOption (QCommandLineOption ("nowarn-external", i18n ("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links.")));
-	parser.addOption(QCommandLineOption("quirkmode", i18n("Disable some startup validation code. Experimental option, not intended for regular use.")));
-	parser.addPositionalArgument ("files", i18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
-
-	parser.process (app);
-	aboutData.processCommandLine (&parser);
+	RKCommandLineArgs args(&aboutData, app);
 
 	// Set up debugging
-	RK_Debug::RK_Debug_Level = DL_FATAL - QString (parser.value ("debug-level")).toInt ();
-	RK_Debug::RK_Debug_Flags = QString (parser.value ("debug-flags")).toInt ();
-	RK_Debug_Terminal = QString (parser.value ("debug-output")) == "terminal";
-	if (RK_Debug::setupLogFile (QDir::tempPath () + "/rkward.frontend")) {
-		RK_DEBUG (APP, DL_INFO, "Full debug output is at %s", qPrintable (RK_Debug::debug_file->fileName ()));
+	RK_Debug::RK_Debug_Level = DL_FATAL - args[RKCommandLineArgs::DebugLevel].toInt();
+	RK_Debug::RK_Debug_Flags = args[RKCommandLineArgs::DebugFlags].toInt();
+	RK_Debug_Terminal = args[RKCommandLineArgs::DebugOutput].toString() == QLatin1String("terminal");
+	if (RK_Debug::setupLogFile(QDir::tempPath() + "/rkward.frontend")) {
+		RK_DEBUG(APP, DL_INFO, "Full debug output is at %s", qPrintable(RK_Debug::debug_file->fileName()));
 	} else {
 		RK_Debug_Terminal = true;
-		RK_DEBUG (APP, DL_INFO, "Failed to open debug file %s", qPrintable (RK_Debug::debug_file->fileName ()));
+		RK_DEBUG(APP, DL_INFO, "Failed to open debug file %s", qPrintable(RK_Debug::debug_file->fileName()));
 	}
-	qInstallMessageHandler (RKDebugMessageOutput);
+	qInstallMessageHandler(RKDebugMessageOutput);
 	RK_DO({
 		RK_DEBUG(APP, DL_DEBUG, "Basic runtime info (expected to be incomplete at this stage):\n%s", qPrintable(RKSessionVars::frontendSessionInfo().join("\n")));
 	}, APP, DL_DEBUG);
-
-	// handle positional (file) arguments, first
-	QStringList url_args = parser.positionalArguments ();
-	if (!url_args.isEmpty ()) {
-		for (int i = 0; i < url_args.size (); ++i) {
-			url_args[i] = QUrl::fromUserInput (url_args[i], QDir::currentPath (), QUrl::AssumeLocalFile).toString ();
-		}
-		RKSettingsModuleGeneral::setStartupOption("initial_urls", url_args);
-		RKSettingsModuleGeneral::setStartupOption("warn_external", !parser.isSet("nowarn-external"));
-	}
-	RKSettingsModuleGeneral::setStartupOption("evaluate", parser.value("evaluate"));
-	RKSettingsModuleGeneral::setStartupOption("backend-debugger", parser.value("backend-debugger"));
-	RKSettingsModuleGeneral::setStartupOption("quirkmode", parser.isSet("quirkmode"));
 
 	// MacOS may need some path adjustments, first
 #if defined(Q_OS_MACOS)
@@ -349,7 +321,7 @@ int main (int argc, char *argv[]) {
 	}
 
 	// Handle --reuse option, by forwarding url arguments to existing RKWard process (if any) and exiting
-	if (parser.isSet ("reuse") || (parser.isSet ("autoreuse") && !url_args.isEmpty ())) {
+	if (args[RKCommandLineArgs::Reuse].toBool() || (args[RKCommandLineArgs::AutoReuse].toBool() && !args[RKCommandLineArgs::UrlArgs].toStringList().isEmpty())) {
 		if (!app_singleton.isPrimaryInstance()) {
 			QByteArray call;
 			QDataStream stream(&call, QIODevice::WriteOnly);
@@ -369,7 +341,7 @@ int main (int argc, char *argv[]) {
 	//- command line parameter
 	//- Specified in cfg file next to rkward executable
 	//- compile-time default
-	QString r_exe = parser.value ("r-executable");
+	QString r_exe = args[RKCommandLineArgs::RExecutable].toString();
 	if (!r_exe.isNull ()) {
 		r_exe = resolveRSpecOrFail (r_exe, i18n ("The R executable specified on the command line (%1) does not exist or is not executable.", r_exe));
 		RK_DEBUG (APP, DL_DEBUG, "Using R specified on command line");

@@ -10,6 +10,7 @@ SET(misc_STAT_SRCS
    rkobjectlistview.cpp
    xmlhelper.cpp
    multistringselector.cpp
+   rkcommandlineargs.cpp
    rkcommonfunctions.cpp
    rkprogresscontrol.cpp
    rksaveobjectchooser.cpp

@@ -92,10 +92,6 @@ public:
 	static bool rkwardVersionChanged () { return rkward_version_changed; };
 	/** Returns true, if rkward seems to have started from a different path than on the previous run. */
 	static bool installationMoved () { return installation_moved; };
-
-	static void setStartupOption(const QString &key, const QVariant &value) { startup_options[key] = value; };
-	static QVariant startupOption(const QString &key) { return startup_options.value(key); };
-	static QVariant takeStartupOption(const QString &key) { return startup_options.take(key); };
 private:
 	GetFileNameWidget *files_choser;
 	QButtonGroup *workplace_save_chooser;
@@ -117,8 +113,6 @@ private:
 	static bool rkward_version_changed;
 	static bool installation_moved;
 	static RKConfigValue<int> num_recent_files;
-
-	static QVariantMap startup_options;
 };
 
 #endif

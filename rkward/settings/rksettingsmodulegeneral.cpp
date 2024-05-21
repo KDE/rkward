@@ -51,8 +51,6 @@ bool RKSettingsModuleGeneral::installation_moved = false;
 QString RKSettingsModuleGeneral::previous_rkward_data_dir;
 RKConfigValue<int> RKSettingsModuleGeneral::num_recent_files { "Max number of recent files", 8 };
 
-QVariantMap RKSettingsModuleGeneral::startup_options;
-
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
