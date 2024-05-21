@@ -1,3 +1,4 @@
+- Added: Command line option "--setup" to force (re-)initialization as if a new version of RKWard had been installed
 - Fixed: R functions loadhistory(), savehistory(), and timestamp() broken
 - Changed: R shared library is now loaded, dynamically, rather than linked at compile time.
            This allows more flexibility on which R version to use at runtime, esp. in the context of AppImage binaries

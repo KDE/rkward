@@ -35,6 +35,7 @@ RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication &app) {
 	parser.addOption(QCommandLineOption("autoreuse", i18n("Behaves like --reuse, if any file arguments are also given, starts a new instance, otherwise. Intended for use in the .desktop file.")));
 	parser.addOption(QCommandLineOption("nowarn-external", i18n("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links.")));
 	parser.addOption(QCommandLineOption("quirkmode", i18n("Disable some startup validation code. Experimental option, not intended for regular use.")));
+	parser.addOption(QCommandLineOption("setup", i18n("Act as if the version of RKWard had changed (show setup wizard, and (re-)install rkward R package).")));
 	parser.addPositionalArgument("files", i18n("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
 
 	parser.process(app);
@@ -51,6 +52,7 @@ RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication &app) {
 	storage[AutoReuse] = parser.isSet("autoreuse");
 	storage[NoWarnExternal] = parser.isSet("nowarn-external");
 	storage[QuirkMode] = parser.isSet("quirkmode");
+	storage[Setup] = parser.isSet("setup");
 	QStringList url_args = parser.positionalArguments ();
 	if (!url_args.isEmpty ()) {
 		for (int i = 0; i < url_args.size(); ++i) {

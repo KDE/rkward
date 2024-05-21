@@ -372,12 +372,11 @@ void RKWardMainWindow::startR () {
 	// This may look redundant at first (since the package still needs to be installed from the
 	// backend. However, if frontend and backend are on different machines (eventually), only  the
 	// filesPath is shared between both.
-	QStringList packages;
-	packages << "rkward.tgz" << "rkwardtests.tgz";
+	QStringList packages({"rkward.tgz", "rkwardtests.tgz"});
 	for (int i = 0; i < packages.size (); ++i) {
 		QString package = QDir (packages_path).absoluteFilePath (packages[i]);
-		if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
-			RK_DEBUG(APP, DL_INFO, "RKWard version changed. Discarding cached package at %s", qPrintable (package));
+		if (RKSettingsModuleGeneral::rkwardVersionChanged() || RKCommandLineArgs::get(RKCommandLineArgs::Setup).toBool()) {
+			RK_DEBUG(APP, DL_INFO, "RKWard version changed or setup requested. Discarding cached package at %s", qPrintable(package));
 			if(QFileInfo::exists(package)) RK_ASSERT(QFile::remove(package));
 		}
 		if (!QFileInfo::exists(package)) {

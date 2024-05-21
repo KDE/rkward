@@ -1,6 +1,6 @@
 /*
 rksettingsmodulegeneral - This file is part of RKWard (https://rkward.kde.org). Created: Fri Jul 30 2004
-SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -22,6 +22,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcommandlineargs.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstyle.h"
 
@@ -172,7 +173,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 				config->deleteGroup(groups[i]);
 			}
 		}
-		rkward_version_changed = (cg.readEntry("previous runtime version", QString()) != RKWARD_VERSION);
+		rkward_version_changed = (cg.readEntry("previous runtime version", QString()) != RKWARD_VERSION) || RKCommandLineArgs::get(RKCommandLineArgs::Setup).toBool();
 	} else {
 		cg.writeEntry("config file version", (int) RKWardConfig_Latest);
 		cg.writeEntry("previous runtime version", QString(RKWARD_VERSION));

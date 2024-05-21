@@ -1,6 +1,6 @@
 /*
 rkrbackend - This file is part of the RKWard project. Created: Sun Jul 25 2004
-SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -73,7 +73,7 @@ public:
 
 /** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
 Note that you should call initialize only once in a application */
-	void initialize (const QString &locale_dir);
+	void initialize(const QString &locale_dir, bool setup);
 
 	void enterEventLoop ();
 protected:
@@ -160,7 +160,7 @@ public:
 /** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
 /** the main loop. See \ref RKRBackend for a more detailed description */
-	void run (const QString &locale_dir);
+	void run(const QString &locale_dir, bool setup);
 	static void scheduleInterrupt ();
 
 	void startOutputCapture ();

@@ -1,6 +1,6 @@
 /*
 rkrbackend - This file is part of RKWard (https://rkward.kde.org). Created: Sun Jul 25 2004
-SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -1443,12 +1443,12 @@ void RKRBackend::printAndClearCapturedMessages (bool with_header) {
 	catToOutputFile (out);
 }
 
-void RKRBackend::run (const QString &locale_dir) {
+void RKRBackend::run(const QString &locale_dir, bool setup) {
 	RK_TRACE (RBACKEND);
 	killed = NotKilled;
 	previous_command = nullptr;
 
-	initialize (locale_dir);
+	initialize(locale_dir, setup);
 
 	enterEventLoop();
 }
@@ -1589,7 +1589,7 @@ GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVar
 	return request.getResult();
 }
 
-void RKRBackend::initialize (const QString &locale_dir) {
+void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	RK_TRACE (RBACKEND);
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
@@ -1604,12 +1604,13 @@ void RKRBackend::initialize (const QString &locale_dir) {
 	// Try to load rkward package. If that fails, or is the wrong version, try to install
 	// rkward package, then load again.
 	QString libloc = getLibLoc();
-	QString versioncheck = QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (RKWARD_VERSION);
+	QString versioncheck = QString("stopifnot(.rk.app.version==\"%1\")").arg(RKWARD_VERSION);
 	QString command = "local({\n"
-	                  "  libloc <- " + RKRSharedFunctionality::quote (libloc) + "\n"
+	                  "  libloc <- " + RKRSharedFunctionality::quote(libloc) + "\n"
 	                  "  if (!dir.exists (libloc)) dir.create(libloc, recursive=TRUE)\n"
 	                  "  ok <- FALSE\n"
-	                  "  suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); " + versioncheck + "; ok <- TRUE}))\n"
+	                  + (setup ? "# skipping: " : "") +
+	                  " suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); " + versioncheck + "; ok <- TRUE}))\n"
 	                  "  if (!ok) {\n"
 	                  "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
 	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\", INSTALL_opts=\"--no-multiarch\")\n"
@@ -1617,10 +1618,10 @@ void RKRBackend::initialize (const QString &locale_dir) {
 	                  "  }\n"
 	                  "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be avaiable for help serach, but hopefully, not get into the way, otherwise
 	                  "})\n";
-	if (!runDirectCommand (command)) lib_load_fail = true;
-	RK_setupGettext (locale_dir);	// must happen *after* package loading, since R will re-set it
-	if (!runDirectCommand (versioncheck)) lib_load_fail = true;
-	if (!runDirectCommand (".rk.fix.assignments ()\n")) sink_fail = true;
+	if (!runDirectCommand(command)) lib_load_fail = true;
+	RK_setupGettext(locale_dir);	// must happen *after* package loading, since R will re-set it
+	if (!runDirectCommand(versioncheck + "\n")) lib_load_fail = true;
+	if (!runDirectCommand(".rk.fix.assignments ()\n")) sink_fail = true;
 
 // error/output sink and help browser
 	if (!runDirectCommand ("options (error=quote (.rk.do.error ()))\n")) sink_fail = true;
