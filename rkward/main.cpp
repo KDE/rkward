@@ -279,7 +279,7 @@ int main (int argc, char *argv[]) {
 	aboutData.setOtherText(QString("<p><b>%1</b></p><ul><li><a href=\"https://www.jstatsoft.org/article/view/v049i09\">%2</a></li><li>Friedrichsmeier, T. &amp; the RKWard Team (%3). RKWard: %4. Version %5. %6</li></ul>").arg(i18n("How to cite:"), i18n("Peer-reviewed article in the Journal of Statistical Software"), aboutData.copyrightStatement().right(4), aboutData.shortDescription(), aboutData.version(), aboutData.homepage()));
 	KAboutData::setApplicationData (aboutData);
 
-	RKCommandLineArgs args(&aboutData, app);
+	RKCommandLineArgs args(&aboutData, &app);
 
 	// Set up debugging
 	RK_Debug::RK_Debug_Level = DL_FATAL - args[RKCommandLineArgs::DebugLevel].toInt();

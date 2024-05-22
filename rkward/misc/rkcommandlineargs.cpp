@@ -17,7 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 RKCommandLineArgs* RKCommandLineArgs::instance = nullptr;
 
-RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication &app) {
+RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication *app) {
 	RK_TRACE(MISC);
 	RK_ASSERT(instance == nullptr);
 
@@ -38,7 +38,7 @@ RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication &app) {
 	parser.addOption(QCommandLineOption("setup", i18n("Act as if the version of RKWard had changed (show setup wizard, and (re-)install rkward R package).")));
 	parser.addPositionalArgument("files", i18n("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
 
-	parser.process(app);
+	parser.process(*app);
 	about->processCommandLine(&parser);
 
 	storage.resize(NUM_OPTIONS);

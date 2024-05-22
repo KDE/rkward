@@ -28,6 +28,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcommandlineargs.h"
 
 QElapsedTimer _test_timer;
 
@@ -155,7 +156,9 @@ private Q_SLOTS:
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
 		// qputenv("QT_LOGGING_RULES", "qt.qpa.windows.debug=true");  // Deliberately overwriting the rules set in the CI, as we are producing too much output, otherwise  -- TODO: does not appear to have any effect
 		KLocalizedString::setApplicationDomain("rkward");
-		KAboutData::setApplicationData(KAboutData("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL)); // component name needed for .rc files to load
+		KAboutData about("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL); // component name needed for .rc files to load
+		KAboutData::setApplicationData(about);
+		new RKCommandLineArgs(&about, qApp);
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		testLog(R_EXECUTABLE);
 		RKSessionVars::r_binary = R_EXECUTABLE;
