@@ -1,21 +1,21 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# Steve Allewell <steve.allewell@gmail.com>, 2019, 2020, 2022.
+# SPDX-FileCopyrightText: 2019, 2020, 2022, 2024 Steve Allewell <steve.allewell@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-20 00:36+0000\n"
-"PO-Revision-Date: 2022-12-31 15:30+0000\n"
+"PO-Revision-Date: 2024-05-23 19:22+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
-"Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
+"Language-Team: British English\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -998,11 +998,10 @@ msgid "Discard changes?"
 msgstr "Discard changes?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr "Do not close"
+msgstr "Do no close"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
@@ -1056,18 +1055,16 @@ msgstr ""
 "administrator privileges (you will be prompted for the password)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Become root"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Updatable Packages"
+msgstr "Skip these packages"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -5283,15 +5280,7 @@ msgid "Other device:"
 msgstr "Other device:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5307,7 +5296,7 @@ msgstr ""
 "This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform default "
 "device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
-"name of a function such as <i>cairoDevice</i>.</p>"
+"name of a function such as <i>Cairo</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -6629,7 +6618,7 @@ msgstr "Save as"
 #: rkward/windows/rkhtmlwindow.cpp:599
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
-msgstr ""
+msgstr "RKWard output file %s does not (yet) exist"
 
 #: rkward/windows/rkhtmlwindow.cpp:718
 #: rkward/windows/rktoplevelwindowgui.cpp:253
