@@ -32,7 +32,7 @@ RKDBusAPI::RKDBusAPI (QObject* parent): QObject (parent) {
 	QDBusConnection::sessionBus ().registerObject ("/", this, QDBusConnection::ExportScriptableSlots);
 }
 
-void RKDBusAPI::openAnyUrl (const QStringList& urls, const QString &token, bool warn_external) {
+void RKDBusAPI::openAnyUrl (const QStringList& urls, bool warn_external) {
 	RK_TRACE (APP);
 
 	// ok, raising the app window is totally hard to do, reliably. This solution copied from kate.
@@ -41,13 +41,7 @@ void RKDBusAPI::openAnyUrl (const QStringList& urls, const QString &token, bool 
 	main->activateWindow();
 	main->raise();
 
-	if (KWindowSystem::isPlatformX11()) {
-#if __has_include(<KStartupInfo>)
-		KStartupInfo::setNewStartupId(main->windowHandle(), token.toUtf8());
-#endif
-	} else if (KWindowSystem::isPlatformWayland()) {
-		KWindowSystem::setCurrentXdgActivationToken(token);
-	}
+	// omitting activation token
 
 	KWindowSystem::activateWindow(main->windowHandle());
 	// end

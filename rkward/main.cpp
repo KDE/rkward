@@ -45,6 +45,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KUrlAuthorized>
 #include <KMessageBox>
+#if __has_include(<KStartupInfo>)
+#	include <KStartupInfo>
+#endif
 #ifdef WITH_KCRASH
 #	include <KCrash>
 #endif
@@ -362,6 +365,9 @@ int main (int argc, char *argv[]) {
 					RK_DEBUG (DEBUG_ALL, DL_ERROR, "Error while placing dbus call: %s", qPrintable (reply.error ().message ()));
 					return 1;
 				}
+#if __has_include(<KStartupInfo>)
+				KStartupInfo::appStarted();
+#endif
 				return 0;
 			}
 		}
