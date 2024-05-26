@@ -64,7 +64,7 @@ bool pathIsChildOf(const QString &parent, const QString &child) {
 	return QFileInfo(child).canonicalFilePath().startsWith(QFileInfo(parent).canonicalFilePath());
 }
 
-void removeFromPathList (const char* varname, const QString &path) {
+void removeFromPathList (const char* varname, bool (*shouldRemove)(const QString &path)) {
 #ifdef Q_OS_WIN
 #	define PATH_VAR_SEP ';'
 #else
@@ -76,7 +76,9 @@ void removeFromPathList (const char* varname, const QString &path) {
 	const auto list = QString::fromLocal8Bit(var).split(PATH_VAR_SEP);
 	QStringList newlist;
 	for(const auto &str : list) {
-		if (!pathIsChildOf(path, str)) {
+		if (shouldRemove(str)) {
+			RK_DEBUG(RBACKEND, DL_DEBUG, "Removing path %s from $%s", qPrintable(str), varname);
+		} else {
 			newlist.append(str);
 		}
 	}
@@ -127,11 +129,10 @@ void RKFrontendTransmitter::run () {
 	if (index >= 0) env.removeAt (index);
 	env.append ("LANGUAGE=" + QLocale ().name ().section ('_', 0, 0));
 
-	const auto appdir = QString::fromLocal8Bit(qgetenv("APPDIR"));
-	if (!appdir.isEmpty() && pathIsChildOf(appdir, RKSessionVars::RBinary())) {
-		RK_DEBUG(RBACKEND, DL_DEBUG, "Detected running from AppImage with external R. Removing paths in %s from (LD_LIBRARY_)PATH", qPrintable(appdir));
-		removeFromPathList("LD_LIBRARY_PATH", appdir);
-		removeFromPathList("PATH", appdir);
+	if (RKSessionVars::runningInAppImage() && RKSessionVars::isPathInAppImage(RKSessionVars::RBinary())) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Detected running from AppImage with external R.");
+		removeFromPathList("LD_LIBRARY_PATH", RKSessionVars::isPathInAppImage);
+		removeFromPathList("PATH", RKSessionVars::isPathInAppImage);
 	}
 
 	QStringList args;

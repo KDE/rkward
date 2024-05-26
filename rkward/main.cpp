@@ -391,6 +391,7 @@ int main (int argc, char *argv[]) {
 			stream >> urls;
 			stream >> nowarn;
 			if (call == QStringLiteral("openAnyUrl")) {
+				// We must not block while the frontend may potentially show a warning message (causing long delay)
 				QTimer::singleShot(0, main, [nowarn, urls, main]() {
 					main->openUrlsFromCommandLineOrExternal(nowarn.toBool(), urls.toStringList());
 				});

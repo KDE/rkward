@@ -35,6 +35,8 @@ Anything else (everything after the fourth dot, or after the first character tha
 is returned as suffix (via the suffix pointer; if that is 0, an error is reported, instead). */
 	static QStringList frontendSessionInfo ();
 	static QString RBinary() { return r_binary; }
+	static bool runningInAppImage() { return !appimagedir.isNull(); }
+	static bool isPathInAppImage(const QString &path);
 Q_SIGNALS:
 	void installedPackagesChanged ();
 protected:
@@ -48,6 +50,7 @@ private:
 	static RKParsedVersion rkward_version;
 	static RKParsedVersion r_version;
 	static QString r_version_string;
+	static QString appimagedir;
 friend int main(int, char**);
 friend class RKWardCoreTest;
 	static QString r_binary;

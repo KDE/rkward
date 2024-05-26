@@ -18,6 +18,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QTemporaryFile>
 #include <QStandardPaths>
 #include <QSysInfo>
+#include <QFileInfo>
 
 #include "../debug.h"
 
@@ -26,18 +27,26 @@ RKParsedVersion RKSessionVars::rkward_version(RKWARD_VERSION);
 RKParsedVersion RKSessionVars::r_version;
 QString RKSessionVars::r_version_string;
 QString RKSessionVars::r_binary;
+QString RKSessionVars::appimagedir;
 
 RKSessionVars::RKSessionVars (RInterface *parent) : QObject (parent) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (!_instance);
 
 	_instance = this;
+	auto appdir = qgetenv("APPDIR");
+	if (!appdir.isEmpty()) appimagedir = QFileInfo(QString::fromLocal8Bit(appdir)).canonicalFilePath();
 }
 
 RKSessionVars::~RKSessionVars () {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT(_instance == this);
 	_instance = nullptr;
+}
+
+bool RKSessionVars::isPathInAppImage(const QString &path) {
+	if (!runningInAppImage()) return false;
+	return QFileInfo(path).canonicalFilePath().startsWith(appimagedir);
 }
 
 void RKSessionVars::setInstalledPackages (const QStringList &new_list) {

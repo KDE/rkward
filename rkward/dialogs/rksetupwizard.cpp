@@ -202,6 +202,7 @@ void RKSetupWizard::setupWizardPhase2() {
 	// Wait for R Interface, then enable dialog
 	if (!RInterface::instance()->backendIsIdle()) {
 		if (RInterface::instance()->backendIsDead()) {
+			// TODO
 			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"));
 		} else {
 			QTimer::singleShot(100, this, &RKSetupWizard::setupWizardPhase2);
@@ -213,8 +214,13 @@ void RKSetupWizard::setupWizardPhase2() {
 	waiting_to_start_label->setText(i18n("<b>R backend has started. Click \"Next\" to continue.</b>"));
 	setValid(firstpageref, true);
 
-	// R packages page
+	// R backend page
 	// This must be created _after_ the backend has started, for obvious reasons.
+	createStandardPage();
+	current_layout->addWidget(new QLabel(i18n("R backend info, here")));
+	addPage(current_page, i18n("R Backend"));
+
+	// R packages page
 	createStandardPage();
 
 	appendItem(makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error));
