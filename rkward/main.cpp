@@ -325,8 +325,7 @@ int main (int argc, char *argv[]) {
 		if (!app_singleton.isPrimaryInstance()) {
 			QByteArray call;
 			QDataStream stream(&call, QIODevice::WriteOnly);
-			// TODO: nowarn-external
-			stream << QVariant(QStringLiteral("openAnyUrl")) << QVariant(url_args) << QVariant(parser.isSet("nowarn-external"));
+			stream << QVariant(QStringLiteral("openAnyUrl")) << args[RKCommandLineArgs::UrlArgs] << args[RKCommandLineArgs::NoWarnExternal];
 			app_singleton.sendMessageWithTimeout(call, 1000);
 			// TODO: should always debug to terminal in this case!
 			RK_DEBUG (DEBUG_ALL, DL_INFO, "Reusing running instance");
@@ -392,7 +391,9 @@ int main (int argc, char *argv[]) {
 			stream >> urls;
 			stream >> nowarn;
 			if (call == QStringLiteral("openAnyUrl")) {
-				main->openUrlsFromCommandLineOrDBus(!nowarn.toBool(), urls.toStringList());
+				QTimer::singleShot(0, main, [nowarn, urls, main]() {
+					main->openUrlsFromCommandLineOrExternal(nowarn.toBool(), urls.toStringList());
+				});
 			} else {
 				RK_DEBUG (APP, DL_ERROR, "Unrecognized SingleApplication call");
 			}

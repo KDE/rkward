@@ -224,7 +224,6 @@ void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
 	QStringList open_urls = RKCommandLineArgs::get(RKCommandLineArgs::UrlArgs).toStringList();
-	bool warn_external = !RKCommandLineArgs::get(RKCommandLineArgs::NoWarnExternal).toBool();
 	QString evaluate_code = RKCommandLineArgs::get(RKCommandLineArgs::Evaluate).toString();
 
 	initPlugins ();
@@ -258,7 +257,7 @@ void RKWardMainWindow::doPostInit () {
 		// the help window will be on top
 		if (RKSettingsModuleGeneral::showHelpOnStartup ()) toplevel_actions->showRKWardHelp ();
 
-		openUrlsFromCommandLineOrDBus (warn_external, open_urls);
+		openUrlsFromCommandLineOrExternal(true, open_urls);
 	} else {
 		if (RKSettingsModuleGeneral::openRestoreFileOnLoad() && QFile::exists(".RData")) {
 			// setNoAskSave(true); was called earlier
@@ -284,7 +283,7 @@ void RKWardMainWindow::doPostInit () {
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
-void RKWardMainWindow::openUrlsFromCommandLineOrDBus (bool warn_external, QStringList _urls) {
+void RKWardMainWindow::openUrlsFromCommandLineOrExternal(bool no_warn_external, QStringList _urls) {
 	RK_TRACE (APP);
 
 	bool any_dangerous_urls = false;
@@ -297,7 +296,8 @@ void RKWardMainWindow::openUrlsFromCommandLineOrDBus (bool warn_external, QStrin
 		urls.append (url);
 	}
 
-	if (warn_external && any_dangerous_urls) {
+	// --nowarn-external, if used cross-process, must be set on the commandline in both this, *and* the calling process
+	if (any_dangerous_urls && !(no_warn_external && RKCommandLineArgs::get(RKCommandLineArgs::NoWarnExternal).toBool())) {
 		RK_ASSERT (urls.size () == 1);
 		QString message = i18n ("<p>You are about to start an RKWard dialog from outside of RKWard, probably by clicking on an 'rkward://'-link, somewhere. In case you have found this link on an external website, please bear in mind that R can be used to run arbitrary commands on your computer, <b>potentially including downloading and installing malicious software</b>. If you do not trust the source of the link you were following, you should press 'Cancel', below.</p><p>In case you click 'Continue', no R code will be run, unless and until you click 'Submit' in the dialog window, and you are encouraged to review the generated R code, before doing so.</p><p><i>Note</i>: Checking 'Do not ask again' will suppress this message for the remainder of this session, only.");
 		if (KMessageBox::warningContinueCancel (this, message, i18n ("A note on external links"), KStandardGuiItem::cont (), KStandardGuiItem::cancel (), "external_link_warning") != KMessageBox::Continue) return;
