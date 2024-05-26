@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-20 00:36+0000\n"
+"POT-Creation-Date: 2024-05-26 00:36+0000\n"
 "PO-Revision-Date: 2024-04-28 12:35+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -1953,12 +1953,12 @@ msgstr ""
 msgid "No R packages to install"
 msgstr "Brak pakietów R do wgrania"
 
-#: rkward/main.cpp:208
+#: rkward/main.cpp:211
 #, kde-format
 msgid "Unable to detect R installation"
 msgstr "Nie można wykryć instalacji R"
 
-#: rkward/main.cpp:208
+#: rkward/main.cpp:211
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -1971,251 +1971,251 @@ msgstr ""
 "<i>auto / PATH_TO_R</i>', lub wskazać plik rkward.ini, aby określić to "
 "niezwyczajne miejsce."
 
-#: rkward/main.cpp:221
+#: rkward/main.cpp:224
 #, kde-format
 msgid "Specified R executable does not exist"
 msgstr "Podany plik wykonywalny R nie istnieje"
 
-#: rkward/main.cpp:254
+#: rkward/main.cpp:257
 #, kde-format
 msgid "RKWard"
 msgstr "RKWard"
 
-#: rkward/main.cpp:254
+#: rkward/main.cpp:257
 #, kde-format
 msgid "Frontend to the R statistics language"
 msgstr "Interfejs dla języka statystycznego R"
 
-#: rkward/main.cpp:254
+#: rkward/main.cpp:257
 #, kde-format
 msgid "(c) 2002 - 2022"
 msgstr "(c) 2002 - 2022"
 
-#: rkward/main.cpp:255
+#: rkward/main.cpp:258
 #, kde-format
 msgid "Thomas Friedrichsmeier"
 msgstr "Thomas Friedrichsmeier"
 
-#: rkward/main.cpp:255
+#: rkward/main.cpp:258
 #, kde-format
 msgid "Project leader / main developer"
 msgstr "Lider projektu / główny programista"
 
-#: rkward/main.cpp:256
+#: rkward/main.cpp:259
 #, kde-format
 msgid "Pierre Ecochard"
 msgstr "Pierre Ecochard"
 
-#: rkward/main.cpp:256
+#: rkward/main.cpp:259
 #, kde-format
 msgid "C++ developer between 2004 and 2007"
 msgstr "Programista C++ pomiędzy 2004 i 2007"
 
-#: rkward/main.cpp:257
+#: rkward/main.cpp:260
 #, kde-format
 msgid "Prasenjit Kapat"
 msgstr "Prasenjit Kapat"
 
-#: rkward/main.cpp:257
+#: rkward/main.cpp:260
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
 msgstr "Wiele wtyczek, sugestii, funkcja historii wykresu"
 
-#: rkward/main.cpp:258
+#: rkward/main.cpp:261
 #, kde-format
 msgid "Meik Michalke"
 msgstr "Meik Michalke"
 
-#: rkward/main.cpp:258
+#: rkward/main.cpp:261
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
 msgstr "Wiele wtyczek, sugestii, pakiet rkwarddev"
 
-#: rkward/main.cpp:259
+#: rkward/main.cpp:262
 #, kde-format
 msgid "Stefan Roediger"
 msgstr "Stefan Roediger"
 
-#: rkward/main.cpp:259
+#: rkward/main.cpp:262
 #, kde-format
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Wiele wtyczek, sugestii, marketing, tłumaczenia"
 
-#: rkward/main.cpp:260
+#: rkward/main.cpp:263
 #, kde-format
 msgid "Contributors in alphabetical order"
 msgstr "Współtwórstwo w kolejności alfabetycznej"
 
-#: rkward/main.cpp:261
+#: rkward/main.cpp:264
 #, kde-format
 msgid "Björn Balazs"
 msgstr "Björn Balazs"
 
-#: rkward/main.cpp:261 rkward/main.cpp:263
+#: rkward/main.cpp:264 rkward/main.cpp:266
 #, kde-format
 msgid "Extensive usability feedback"
 msgstr "Wyczerpująca informacja zwrotna nt. używalności"
 
-#: rkward/main.cpp:262
+#: rkward/main.cpp:265
 #, kde-format
 msgid "Aaron Batty"
 msgstr "Aaron Batty"
 
-#: rkward/main.cpp:262
+#: rkward/main.cpp:265
 #, kde-format
 msgid "Wealth of feedback, hardware donations"
 msgstr "Bogactwo informacji zwrotnej, przekazanie sprzętu"
 
-#: rkward/main.cpp:263
+#: rkward/main.cpp:266
 #, kde-format
 msgid "Jan Dittrich"
 msgstr "Jan Dittrich"
 
-#: rkward/main.cpp:264
+#: rkward/main.cpp:267
 #, kde-format
 msgid "Philippe Grosjean"
 msgstr "Philippe Grosjean"
 
-#: rkward/main.cpp:264
+#: rkward/main.cpp:267
 #, kde-format
 msgid "Several helpful comments and discussions"
 msgstr "Kilka pomocnych komentarzy i dyskusji"
 
-#: rkward/main.cpp:265
+#: rkward/main.cpp:268
 #, kde-format
 msgid "Adrien d'Hardemare"
 msgstr "Adrien d'Hardemare"
 
-#: rkward/main.cpp:265
+#: rkward/main.cpp:268
 #, kde-format
 msgid "Plugins and patches"
 msgstr "Wtyczki i łatki"
 
-#: rkward/main.cpp:266
+#: rkward/main.cpp:269
 #, kde-format
 msgid "Yves Jacolin"
 msgstr "Yves Jacolin"
 
-#: rkward/main.cpp:266
+#: rkward/main.cpp:269
 #, kde-format
 msgid "New website"
 msgstr "Nowa strona internetowa"
 
-#: rkward/main.cpp:267
+#: rkward/main.cpp:270
 #, kde-format
 msgid "Germán Márquez Mejía"
 msgstr "Germán Márquez Mejía"
 
-#: rkward/main.cpp:267
+#: rkward/main.cpp:270
 #, kde-format
 msgid "HP filter plugin, spanish translation"
 msgstr "Wtyczka filtra HP, tłumaczenie na hiszpański"
 
-#: rkward/main.cpp:268
+#: rkward/main.cpp:271
 #, kde-format
 msgid "Marco Martin"
 msgstr "Marco Martin"
 
-#: rkward/main.cpp:268
+#: rkward/main.cpp:271
 #, kde-format
 msgid "A cool icon"
 msgstr "Świetna ikona"
 
-#: rkward/main.cpp:269
+#: rkward/main.cpp:272
 #, kde-format
 msgid "Daniele Medri"
 msgstr "Daniele Medri"
 
-#: rkward/main.cpp:269
+#: rkward/main.cpp:272
 #, kde-format
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Logo RKWard, wiele sugestii, pomoc słowna"
 
-#: rkward/main.cpp:270
+#: rkward/main.cpp:273
 #, kde-format
 msgid "David Sibai"
 msgstr "David Sibai"
 
-#: rkward/main.cpp:270
+#: rkward/main.cpp:273
 #, kde-format
 msgid "Several valuable comments, hints and patches"
 msgstr "Kilka wartościowych komentarzy, wskazówki i łatki"
 
-#: rkward/main.cpp:271
+#: rkward/main.cpp:274
 #, kde-format
 msgid "Ilias Soumpasis"
 msgstr "Ilias Soumpasis"
 
-#: rkward/main.cpp:271
+#: rkward/main.cpp:274
 #, kde-format
 msgid "Translation, Suggestions, plugins"
 msgstr "Tłumaczenie, sugestie, wtyczki"
 
-#: rkward/main.cpp:272
+#: rkward/main.cpp:275
 #, kde-format
 msgid "Ralf Tautenhahn"
 msgstr "Ralf Tautenhahn"
 
-#: rkward/main.cpp:272
+#: rkward/main.cpp:275
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Wiele komentarzy, użyteczne sugestie i zgłoszenia błędów"
 
-#: rkward/main.cpp:273
+#: rkward/main.cpp:276
 #, kde-format
 msgid "Jannis Vajen"
 msgstr "Jannis Vajen"
 
-#: rkward/main.cpp:273
+#: rkward/main.cpp:276
 #, kde-format
 msgid "German Translation, bug reports"
 msgstr "Tłumaczenie na niemiecki, zgłoszenia błędów"
 
-#: rkward/main.cpp:274
+#: rkward/main.cpp:277
 #, kde-format
 msgid "Roland Vollgraf"
 msgstr "Roland Vollgraf"
 
-#: rkward/main.cpp:274
+#: rkward/main.cpp:277
 #, kde-format
 msgid "Some patches"
 msgstr "Kilka łatek"
 
-#: rkward/main.cpp:275
+#: rkward/main.cpp:278
 #, kde-format
 msgid "Roy Qu"
 msgstr "Roy Qu"
 
-#: rkward/main.cpp:275
+#: rkward/main.cpp:278
 #, kde-format
 msgid "patches and helpful comments"
 msgstr "łatki i użyteczne komentarze"
 
-#: rkward/main.cpp:276
+#: rkward/main.cpp:279
 #, kde-format
 msgid "Many more people on rkward-devel@kde.org"
 msgstr "Wiele więcej osób na rkward-devel@kde.org"
 
-#: rkward/main.cpp:276
+#: rkward/main.cpp:279
 #, kde-format
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Wybacz, jeśli zapomnieliśmy cię wyszczególnić. Proszę się z nami "
 "skontaktować, abyśmy mogli cię dodać"
 
-#: rkward/main.cpp:277
+#: rkward/main.cpp:280
 #, kde-format
 msgid "How to cite:"
 msgstr "Jak cytować:"
 
-#: rkward/main.cpp:277
+#: rkward/main.cpp:280
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
 msgstr ""
 "Artykuł oceniony przez współpracowników w Dzienniku Oprogramowania "
 "Statystycznego"
 
-#: rkward/main.cpp:282
+#: rkward/main.cpp:285
 #, kde-format
 msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
@@ -2224,22 +2224,22 @@ msgstr ""
 "Po uruchomieniu (i po wczytaniu podanej przestrzeni roboczej, jeśli ma "
 "zastosowanie), wykonaj podany kod R."
 
-#: rkward/main.cpp:283
+#: rkward/main.cpp:286
 #, kde-format
 msgid "Verbosity of debug messages (0-5)"
 msgstr "Obfitość wiadomości diagnostycznych (0-5)"
 
-#: rkward/main.cpp:284
+#: rkward/main.cpp:287
 #, kde-format
 msgid "Mask for components to debug (see debug.h)"
 msgstr "Maska dla składników do diagnozowania (zobacz debug.h)"
 
-#: rkward/main.cpp:285
+#: rkward/main.cpp:288
 #, kde-format
 msgid "Where to send debug message (file|terminal)"
 msgstr "Gdzie wysyłać wiadomości diagnostyczne (plik|terminal)"
 
-#: rkward/main.cpp:286
+#: rkward/main.cpp:289
 #, kde-format
 msgid ""
 "Debugger for the backend. (Enclose any debugger arguments in single quotes "
@@ -2249,7 +2249,7 @@ msgstr ""
 "diagnostycznego w pojedynczych cudzysłowach ('') wraz z poleceniem. Upewnij "
 "się, że nastąpi przekierowanie do standardowego wyjścia!)"
 
-#: rkward/main.cpp:287
+#: rkward/main.cpp:290
 #, kde-format
 msgid ""
 "Use specified R installation, instead of the one configured at compile time "
@@ -2258,7 +2258,7 @@ msgstr ""
 "Użyj podanej instalacji R, zamiast tej ustawionej w czasie kompilowania "
 "(uwaga: biblioteka R rkward musi być zainstalowana w tej instalacji R )"
 
-#: rkward/main.cpp:288
+#: rkward/main.cpp:291
 #, kde-format
 msgid ""
 "Reuse a running RKWard instance (if available). If a running instance is "
@@ -2269,7 +2269,7 @@ msgstr ""
 "użyciu uruchomionego wystąpienia, zinterpretowane zostaną tylko argumenty "
 "plikowe, wszystkie inne opcje zostaną pominięte."
 
-#: rkward/main.cpp:289
+#: rkward/main.cpp:292
 #, kde-format
 msgid ""
 "Behaves like --reuse, if any file arguments are also given, starts a new "
@@ -2279,7 +2279,7 @@ msgstr ""
 "przeciwnym przypadku rozpoczyna nowe wystąpienie. Przeznaczone do stosowania "
 "w plikach .desktop."
 
-#: rkward/main.cpp:290
+#: rkward/main.cpp:293
 #, kde-format
 msgid ""
 "When used in conjunction with rkward://runplugin/-URLs specified on the "
@@ -2290,7 +2290,7 @@ msgstr ""
 "poleceń, to wygasza ostrzeżenie o zewnętrznych (niezaufanych) odnośnikach "
 "aplikacji."
 
-#: rkward/main.cpp:291
+#: rkward/main.cpp:294
 #, kde-format
 msgid ""
 "Disable some startup validation code. Experimental option, not intended for "
@@ -2299,7 +2299,7 @@ msgstr ""
 "Wyłącz kod sprawdzający po uruchomieniu. Ustawienie próbne i nie "
 "przeznaczone do zwyczajnego używania."
 
-#: rkward/main.cpp:292
+#: rkward/main.cpp:295
 #, kde-format
 msgid ""
 "File or files to open, typically a workspace, or an R script file. When "
@@ -2309,7 +2309,7 @@ msgstr ""
 "Przy wczytywaniu kilku rzeczy, najpierw powinno określać się przestrzeń "
 "roboczą."
 
-#: rkward/main.cpp:376
+#: rkward/main.cpp:382
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
@@ -2318,7 +2318,7 @@ msgstr ""
 "Plik wykonywalny R w wierszu poleceń (%1) nie istnieje lub jest "
 "niewykonywalny."
 
-#: rkward/main.cpp:388
+#: rkward/main.cpp:394
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
@@ -2327,7 +2327,7 @@ msgstr ""
 "Plik wykonywalny R (%1) określony w pliku rkward.ini (%2) nie istnieje lub "
 "jest niewykonywalny."
 
-#: rkward/main.cpp:393
+#: rkward/main.cpp:399
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "
