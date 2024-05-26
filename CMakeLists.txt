@@ -22,7 +22,7 @@ INCLUDE(ECMAddAppIcon)
 INCLUDE(ECMMarkNonGuiExecutable)
 INCLUDE(FeatureSummary)
 
-FIND_PACKAGE(Qt6 6.6 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Qml PrintSupport WebEngineWidgets Core5Compat DBus) # TODO: remove compat
+FIND_PACKAGE(Qt6 6.6 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Qml PrintSupport WebEngineWidgets Core5Compat) # TODO: remove compat
 FIND_PACKAGE(KF6 6.0.0 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive OPTIONAL_COMPONENTS Crash)
 FIND_PACKAGE(Gettext REQUIRED)
 
@@ -37,6 +37,7 @@ remove_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove to compley to KDECompi
 #uncomment the line below to save ~250-350kB in object size
 #ADD_DEFINITIONS(-DRKWARD_NO_TRACE)
 
+ADD_SUBDIRECTORY(3rdparty/KDSingleApplication)
 ADD_SUBDIRECTORY(rkward)
 ADD_SUBDIRECTORY(doc)
 ADD_SUBDIRECTORY(tests)
