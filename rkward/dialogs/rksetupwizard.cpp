@@ -36,6 +36,53 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
+class RKSetupWizardPage : public QWidget {
+public:
+	RKSetupWizardPage(RKSetupWizard* wizard, const QString& caption) : QWidget(), wizard(wizard), current_row(-1), glayout(nullptr) {
+		RK_TRACE (DIALOGS);
+		ref = wizard->addPage(this, caption);
+	};
+
+	void lazyInitOnce(std::function<void(RKSetupWizardPage*)> initfun) {
+		auto refcopy = ref;
+		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, refcopy, initfun](KPageWidgetItem* current, KPageWidgetItem*) mutable {
+			if (current && current == refcopy) {
+				initfun(this);
+				refcopy = nullptr;
+			}
+		});
+	}
+	void lazyInitRepeated(std::function<void(RKSetupWizardPage*)> initfun) {
+		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, initfun](KPageWidgetItem* current, KPageWidgetItem*) {
+			if (current && current == ref) {
+				initfun(this);
+			}
+		});
+	}
+
+	RKSetupWizard *wizard;
+	int current_row;
+	QGridLayout *glayout;
+	KPageWidgetItem *ref;
+	void appendItem(RKSetupWizardItem* item) {
+		RK_TRACE (DIALOGS);
+
+		if (!glayout) {
+			RK_ASSERT(!layout());  // must now mix with different type of layout
+			glayout = new QGridLayout(this);
+			glayout->setColumnStretch(1, 2);
+			glayout->setColumnStretch(2, 1);
+		}
+
+		item->createWidget(glayout, ++current_row);
+		wizard->items.append(item);
+	};
+	void addStretch() {
+		RK_ASSERT(glayout); // Offered for grid-layout pages, only, for now
+		glayout->setRowStretch(++current_row, 1);
+	}
+};
+
 bool RKSetupWizard::has_been_run = false;
 
 void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
@@ -118,7 +165,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	RK_TRACE (DIALOGS);
 
 	// Cover page
-	auto firstpage = new QWidget();
+	auto firstpage = new RKSetupWizardPage(this, i18n("RKWard Setup Assistant"));
 	auto l = new QVBoxLayout(firstpage);
 	QString intro = i18n("<p>This dialog will guide you through a quick check of the basic setup of the required (or recommended) components.</p>");
 	if (reason == NewVersionRKWard) {
@@ -132,11 +179,11 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	l->addWidget(RKCommonFunctions::wordWrappedLabel(intro));
 	waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");
 	l->addWidget(waiting_to_start_label);
-	firstpageref = addPage (firstpage, i18n("RKWard Setup Assistant"));
+	firstpageref = firstpage->ref;;
 	setValid(firstpageref, false);
 
 	// Basic installation page
-	createStandardPage();
+	auto page = new RKSetupWizardPage(this, i18n("Basic installation"));
 	reinstallation_required = false;
 	auto idir = new RKSetupWizardItem(i18n("Installation directory"));
 	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
@@ -147,7 +194,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	} else {
 		idir->setStatus(RKSetupWizardItem::Good, i18n("Found."));
 	}
-	appendItem(idir);
+	page->appendItem(idir);
 
 	auto pluginmaps = new RKSetupWizardItem(i18n("RKWard plugins"));
 	if (RKSettingsModulePlugins::pluginMaps().isEmpty()) {
@@ -160,7 +207,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	} else {
 		pluginmaps->setStatus(RKSetupWizardItem::Good, i18n("Found."));
 	}
-	appendItem(pluginmaps);
+	page->appendItem(pluginmaps);
 
 	auto kateplugins = new RKSetupWizardItem(i18n("Kate plugins"));
 	int kateplugincount = RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount();
@@ -171,7 +218,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	} else {
 		kateplugins->setStatus(RKSetupWizardItem::Good, i18np("Found %1 plugin.", "Found %1 plugins.", kateplugincount));
 	}
-	appendItem(kateplugins);
+	page->appendItem(kateplugins);
 
 	// TODO: Remove, eventually
 	auto legacy_output = new RKSetupWizardItem(i18n("Pre 0.7.3 output file"));
@@ -184,79 +231,50 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	} else {
 		legacy_output->setStatus(RKSetupWizardItem::Good, i18n("Found."));
 	}
-	appendItem(legacy_output);
+	page->appendItem(legacy_output);
 
 	for (int i = 0; i < settings_items.size(); ++i) {
-		appendItem(settings_items[i]);
+		page->appendItem(settings_items[i]);
 	}
+	page->addStretch();
 
-	current_layout->setRowStretch(++current_row, 1);
-	addPage(current_page, i18n("Basic installation"));
-
-	// Next we'll want to wait for the R backend to start up. Previous solution was to set Qt::ApplicationModal, and wait, calling processEvents().
-	// This does not seem to work well on mac, however, so instead we return, here, so exec will be called from outside, then fire a timer to finish constuction.
-	QTimer::singleShot(10, this, &RKSetupWizard::setupWizardPhase2);
-}
-
-void RKSetupWizard::setupWizardPhase2() {
-	// Wait for R Interface, then enable dialog
-	if (!RInterface::instance()->backendIsIdle()) {
-		if (RInterface::instance()->backendIsDead()) {
-			// TODO
-			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"));
-		} else {
-			QTimer::singleShot(100, this, &RKSetupWizard::setupWizardPhase2);
-		}
-		return;
-	}
-	RK_TRACE(APP);
-
-	waiting_to_start_label->setText(i18n("<b>R backend has started. Click \"Next\" to continue.</b>"));
-	setValid(firstpageref, true);
+	// The following pages need the R backend, and are thus initialized lazily
 
 	// R backend page
-	// This must be created _after_ the backend has started, for obvious reasons.
-	createStandardPage();
-	current_layout->addWidget(new QLabel(i18n("R backend info, here")));
-	addPage(current_page, i18n("R Backend"));
+	page = new RKSetupWizardPage(this, i18n("R Backend"));
+	page->lazyInitOnce([](RKSetupWizardPage *p) {
+		auto l = new QVBoxLayout(p);
+		l->addWidget(new QLabel(i18n("R backend info, here")));
+		l->addStretch();
+	});
 
 	// R packages page
-	createStandardPage();
-
-	appendItem(makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error));
-	appendItem(makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning));
-
-	current_layout->setRowStretch(++current_row, 1);
-	addPage(current_page, i18n("R Packages"));
+	page = new RKSetupWizardPage(this, i18n("R Packages"));
+	page->lazyInitOnce([](RKSetupWizardPage *p) {
+		p->appendItem(makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error));
+		p->appendItem(makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning));
+		p->addStretch();
+	});
 
 	// external software page
-	createStandardPage();
-
-	appendItem(makeSoftwareCheck("pandoc", i18n("The pandoc software is needed for rendering (or previewing) R markdown (.Rmd) files. This is optional but recommended."), "https://pandoc.org/installing.html", RKSetupWizardItem::Warning));
-	appendItem(makeSoftwareCheck("kbibtex", i18n("The kbibtex software is useful for managing citations while writing articles. It integrates into RKWard via the Document Preview kate plugin."), "https://userbase.kde.org/KBibTeX", RKSetupWizardItem::Warning));
-
-	current_layout->setRowStretch(++current_row, 1);
-	second_to_last_page_ref = addPage(current_page, i18n("External software"));
+	page = new RKSetupWizardPage(this, i18n("External software"));
+	page->lazyInitOnce([](RKSetupWizardPage *p) {
+		p->appendItem(makeSoftwareCheck("pandoc", i18n("The pandoc software is needed for rendering (or previewing) R markdown (.Rmd) files. This is optional but recommended."), "https://pandoc.org/installing.html", RKSetupWizardItem::Warning));
+		p->appendItem(makeSoftwareCheck("kbibtex", i18n("The kbibtex software is useful for managing citations while writing articles. It integrates into RKWard via the Document Preview kate plugin."), "https://userbase.kde.org/KBibTeX", RKSetupWizardItem::Warning));
+		p->addStretch();
+	});
 
 	// summary page
-	createStandardPage();
-	last_page_label = RKCommonFunctions::linkedWrappedLabel("");
-	current_layout->addWidget(last_page_label, 0, 0, 0, 3);
-	current_layout->setRowStretch(1, 1);
-	addPage(current_page, i18n("Summary of the next steps"));
-}
+	page = new RKSetupWizardPage(this, i18n("Summary of the next steps"));
+	l = new QVBoxLayout(page);
+	auto last_page_label = RKCommonFunctions::linkedWrappedLabel("");
+	l->addWidget(last_page_label);
+	l->addStretch();
+	page->lazyInitRepeated([this, last_page_label](RKSetupWizardPage *) {
+		software_to_install.clear();
+		packages_to_install.clear();
+		r_commands_to_run.clear();;
 
-RKSetupWizard::~RKSetupWizard() {
-	RK_TRACE (DIALOGS);
-	for(int i = 0; i < items.size(); ++i) {
-		delete items[i];
-	}
-}
-
-void RKSetupWizard::next() {
-	RK_TRACE (DIALOGS);
-
-	if (currentPage() == second_to_last_page_ref) {
 		// NOTE: This is not quite clean: Some settings get applied before clicking finish, this way.
 		//       However, I don't really want to pop up a separate dialog for a summary page, either.
 		for(int i = 0; i < items.size(); ++i) {
@@ -293,8 +311,35 @@ void RKSetupWizard::next() {
 		last_page_label->setText(label_text);
 		int new_height = qMax(height(), spare_height+last_page_label->minimumSizeHint().height());
 		resize(width(), new_height);
+	});
+
+	// Next we'll want to wait for the R backend to start up. Previous solution was to set Qt::ApplicationModal, and wait, calling processEvents().
+	// This does not seem to work well on mac, however, so instead we return, here, so exec will be called from outside, then fire a timer to finish constuction.
+	QTimer::singleShot(10, this, &RKSetupWizard::setupWizardPhase2);
+}
+
+void RKSetupWizard::setupWizardPhase2() {
+	// Wait for R Interface, then enable dialog
+	if (!RInterface::instance()->backendIsIdle()) {
+		if (RInterface::instance()->backendIsDead()) {
+			// TODO
+			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"));
+		} else {
+			QTimer::singleShot(100, this, &RKSetupWizard::setupWizardPhase2);
+		}
+		return;
 	}
-	KAssistantDialog::next();
+	RK_TRACE(APP);
+
+	waiting_to_start_label->setText(i18n("<b>R backend has started. Click \"Next\" to continue.</b>"));
+	setValid(firstpageref, true);
+}
+
+RKSetupWizard::~RKSetupWizard() {
+	RK_TRACE (DIALOGS);
+	for(int i = 0; i < items.size(); ++i) {
+		delete items[i];
+	}
 }
 
 void RKSetupWizard::doAutoCheck() {
@@ -343,21 +388,6 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 	}
 
 	delete wizard;
-}
-
-void RKSetupWizard::createStandardPage() {
-	RK_TRACE (DIALOGS);
-	current_page = new QWidget();
-	current_layout = new QGridLayout(current_page);
-	current_layout->setColumnStretch(1, 2);
-	current_layout->setColumnStretch(2, 1);
-	current_row = -1;
-}
-
-void RKSetupWizard::appendItem(RKSetupWizardItem* item) {
-	RK_TRACE (DIALOGS);
-	item->createWidget(current_layout, ++current_row);
-	items.append(item);
 }
 
 void RKSetupWizard::markSoftwareForInstallation(const QString& name, const QString& downloadurl, bool install) {

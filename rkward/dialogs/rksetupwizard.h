@@ -14,6 +14,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class QGridLayout;
 class QLabel;
 class RKSetupWizardItem;
+class RKSetupWizardPage;
+
 class RKSetupWizard : public KAssistantDialog {
 protected:
 	enum InvokationReason {
@@ -43,17 +45,9 @@ private:
 	QStringList software_to_install_urls;
 	QStringList packages_to_install;
 	QStringList r_commands_to_run;
-	void createStandardPage();
-	QWidget *current_page;
-	int current_row;
-	QGridLayout* current_layout;
-	void appendItem(RKSetupWizardItem* item);
+friend class RKSetupWizardPage;
 	QList<RKSetupWizardItem*> items;
 	bool reinstallation_required;
-
-	void next() override;
-	KPageWidgetItem *second_to_last_page_ref;
-	QLabel* last_page_label;
 };
 
 class QComboBox;
@@ -73,6 +67,7 @@ public:
 	void setShortLabel(const QString &label) { shortlabel = label; };
 	void setLongLabel(const QString &label) { longlabel = label; };
 private:
+friend class RKSetupWizardPage;
 friend class RKSetupWizard;
 	void createWidget(QGridLayout *layout, int row);
 	void apply(RKSetupWizard *wizard);
