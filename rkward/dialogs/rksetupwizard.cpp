@@ -18,6 +18,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QTimer>
 #include <QFileInfo>
 #include <QStandardPaths>
+#include <QRadioButton>
+#include <QGroupBox>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -85,15 +87,18 @@ public:
 
 bool RKSetupWizard::has_been_run = false;
 
-void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
+static auto iconForStatus(RKSetupWizardItem::Status status) {
 	QString icon_id;
-	if (status == Good) icon_id = QLatin1String("dialog-positive");
-	else if (status == Warning) icon_id = QLatin1String("dialog-warning");
+	if (status == RKSetupWizardItem::Good) icon_id = QLatin1String("dialog-positive");
+	else if (status == RKSetupWizardItem::Warning) icon_id = QLatin1String("dialog-warning");
 	else icon_id = QLatin1String("dialog-error");
-	auto label = new QLabel();
-	label->setPixmap(QIcon::fromTheme(icon_id).pixmap(32, 32));  // TODO: Correct way to not hardcode size?
-	layout->addWidget(label, row, 0);
+	return (QIcon::fromTheme(icon_id).pixmap(32, 32));  // TODO: Correct way to not hardcode size?
+}
 
+void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
+	auto label = new QLabel();
+	label->setPixmap(iconForStatus(status));
+	layout->addWidget(label, row, 0);
 	layout->addWidget(new QLabel(shortlabel + ": " + shortstatuslabel), row, 1);
 
 	if (options.isEmpty()) {
@@ -165,8 +170,8 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	RK_TRACE (DIALOGS);
 
 	// Cover page
-	auto firstpage = new RKSetupWizardPage(this, i18n("RKWard Setup Assistant"));
-	auto l = new QVBoxLayout(firstpage);
+	auto page = new RKSetupWizardPage(this, i18n("RKWard Setup Assistant"));
+	auto l = new QVBoxLayout(page);
 	QString intro = i18n("<p>This dialog will guide you through a quick check of the basic setup of the required (or recommended) components.</p>");
 	if (reason == NewVersionRKWard) {
 		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of RKWard has been detected.</p>");
@@ -177,13 +182,10 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		intro += i18n("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>");
 	}
 	l->addWidget(RKCommonFunctions::wordWrappedLabel(intro));
-	waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");
-	l->addWidget(waiting_to_start_label);
-	firstpageref = firstpage->ref;;
-	setValid(firstpageref, false);
+	l->addStretch();
 
 	// Basic installation page
-	auto page = new RKSetupWizardPage(this, i18n("Basic installation"));
+	page = new RKSetupWizardPage(this, i18n("Basic installation"));
 	reinstallation_required = false;
 	auto idir = new RKSetupWizardItem(i18n("Installation directory"));
 	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
@@ -239,13 +241,56 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	page->addStretch();
 
 	// The following pages need the R backend, and are thus initialized lazily
-
 	// R backend page
 	page = new RKSetupWizardPage(this, i18n("R Backend"));
-	page->lazyInitOnce([](RKSetupWizardPage *p) {
+	page->lazyInitOnce([this](RKSetupWizardPage *p) {
 		auto l = new QVBoxLayout(p);
-		l->addWidget(new QLabel(i18n("R backend info, here")));
+		l->addWidget(new QLabel(i18n("RKWard is currently using the R installation at <nobr>%1</nobr>.", RKSessionVars::RBinary())));
+		auto h = new QHBoxLayout();
+		l->addLayout(h);
+		auto rstatus_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>"));
+		auto rstatus_icon = new QLabel();
+		auto anim = RKStandardIcons::busyAnimation(rstatus_icon, [rstatus_icon](const QIcon& icon) {
+			rstatus_icon->setPixmap(icon.pixmap(32, 32));
+		});
+		h->addWidget(rstatus_icon);
+		h->addWidget(rstatus_label);
+		h->setStretch(1, 2);
 		l->addStretch();
+		auto pageref = p->ref;
+		setValid(pageref, false);
+		auto statuslambda = [this, pageref, rstatus_label, rstatus_icon, anim, l]() {
+			if (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) return;
+
+			anim->stop();
+			if (RInterface::instance()->backendIsDead()) {
+				rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Error));
+				rstatus_label->setText(i18n("<b>R backend has crashed.</b>"));
+			} else {
+				RK_ASSERT(RInterface::instance()->backendIsIdle());
+				QString statustext = i18n("<b>R version %1 started, successfully.</b>", RKSessionVars::RVersion(false));
+				if (RKSessionVars::isPathInAppImage(RKSessionVars::RBinary())) {
+					rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Warning));
+					statustext.append(i18n("<p>You are using the R version bundled inside the RKWard AppImage.</p>"
+					                       "<p>This version comes with several technical limitations. Importantly, "
+					                       "yu will not be able to install most R addon packages. "
+					                       "In general, it is therefore recommended to select a system-installed "
+					                       "version of R, instead, below.</p>"));
+				} else {
+					rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Good));
+				}
+				rstatus_label->setText(statustext);
+				setValid(pageref, true);
+			}
+
+			auto box = new QGroupBox(i18n("R version to use"));
+			l->addWidget(box);
+			auto bl = new QVBoxLayout(box);
+			auto button = new QRadioButton(i18n("Keep current version"), box); bl->addWidget(button);
+			button = new QRadioButton(i18n("Some dummy option, TODO"), box); bl->addWidget(button);
+		};
+		connect(RInterface::instance(), &RInterface::backendStatusChanged, this, statuslambda);
+		statuslambda();
 	});
 
 	// R packages page
@@ -312,27 +357,6 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		int new_height = qMax(height(), spare_height+last_page_label->minimumSizeHint().height());
 		resize(width(), new_height);
 	});
-
-	// Next we'll want to wait for the R backend to start up. Previous solution was to set Qt::ApplicationModal, and wait, calling processEvents().
-	// This does not seem to work well on mac, however, so instead we return, here, so exec will be called from outside, then fire a timer to finish constuction.
-	QTimer::singleShot(10, this, &RKSetupWizard::setupWizardPhase2);
-}
-
-void RKSetupWizard::setupWizardPhase2() {
-	// Wait for R Interface, then enable dialog
-	if (!RInterface::instance()->backendIsIdle()) {
-		if (RInterface::instance()->backendIsDead()) {
-			// TODO
-			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"));
-		} else {
-			QTimer::singleShot(100, this, &RKSetupWizard::setupWizardPhase2);
-		}
-		return;
-	}
-	RK_TRACE(APP);
-
-	waiting_to_start_label->setText(i18n("<b>R backend has started. Click \"Next\" to continue.</b>"));
-	setValid(firstpageref, true);
 }
 
 RKSetupWizard::~RKSetupWizard() {

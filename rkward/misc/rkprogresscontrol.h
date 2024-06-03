@@ -125,7 +125,6 @@ private:
 	bool allow_cancel;
 	bool is_done;
 	bool any_failed;
-	int animation_step;
 	QWidget* wrapper;
 	QWidget* display_area;
 	KMessageWidget *message_widget;

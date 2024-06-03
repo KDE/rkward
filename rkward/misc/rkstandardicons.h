@@ -1,6 +1,6 @@
 /*
 rkstandardicons - This file is part of the RKWard project. Created: Wed Oct 24 2007
-SPDX-FileCopyrightText: 2007-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -120,6 +120,9 @@ public:
 
 	/** convenience function to get the icon most suited for the given RKMDIWindow */
 	static QIcon iconForWindow (const RKMDIWindow* window);
+
+	/** create a "busy" animation that will cycle through appropriate items using the "setter" function */
+	static QTimer* busyAnimation(QObject *parent, std::function<void(const QIcon &)> setter);
 private:
 	// NOTE: Using a static array of QIcons lead to crashes on exit (Qt 5.4.1). Moving that inside a class instance seems to fix the issue.
 	QIcon icons[Last];

@@ -186,3 +186,22 @@ QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
 	RK_ASSERT (false);
 	return QIcon ();
 }
+
+QTimer *RKStandardIcons::busyAnimation(QObject *parent, std::function<void (const QIcon &)> setter) {
+	RK_TRACE (APP);
+
+	setter(getIcon(RKWardIcon));
+	auto t = new QTimer(parent);
+	t->setInterval(750);
+	int animation_step = 0;
+	QObject::connect(t, &QTimer::timeout, parent, [setter, animation_step]() mutable {
+		animation_step = (animation_step + 1) % 2;
+		if (animation_step) {
+			setter(QIcon::fromTheme("computer-symbolic"));
+		} else {
+			setter(getIcon(RKWardIcon));
+		}
+	});
+	t->start();
+	return t;
+}

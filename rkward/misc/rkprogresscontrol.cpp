@@ -1,6 +1,6 @@
 /*
 rkprogresscontol - This file is part of RKWard (https://rkward.kde.org). Created: Sun Sep 10 2006
-SPDX-FileCopyrightText: 2006-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2006-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -503,20 +503,9 @@ void RKInlineProgressControl::show(int delay_ms) {
 	} else {
 		wrapper->show();
 	}
-	animation_step = 0;
-	message_widget->setIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
-	auto t = new QTimer(this);
-	t->setInterval(750);
-	connect(t, &QTimer::timeout, this, [this]() {
-		if (is_done) return;
-		animation_step = (animation_step + 1) % 2;
-		if (animation_step) {
-			message_widget->setIcon(QIcon::fromTheme("computer-symbolic"));
-		} else {
-			message_widget->setIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
-		}
+	RKStandardIcons::busyAnimation(this, [this](const QIcon &icon) {
+		if (!is_done) message_widget->setIcon(icon);
 	});
-	t->start();
 }
 
 bool RKInlineProgressControl::eventFilter(QObject *w, QEvent *e) {
