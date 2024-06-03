@@ -1,7 +1,7 @@
 # Translation for rkward__graphics_device.po to Euskara/Basque (eu).
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
-# KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>.
+# SPDX-FileCopyrightText: 2024 KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>
 #
 # Translators:
 # SPDX-FileCopyrightText: 2024 Iñigo Salvador Azurmendi <xalba@ni.eus>
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-04-14 11:36+0200\n"
+"PO-Revision-Date: 2024-06-02 23:35+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -157,6 +157,12 @@ msgid ""
 "relevant extension is appended to the filename above to construct the full "
 "filename. This option is disabled for exporting via ghostscript."
 msgstr ""
+"Markatu lauki hau «RKWard»ek fitxategiaren luzapena automatikoki antzeman "
+"dezan uzteko. 'Fitxategi-izena' laukian dagoen fitxategi-izenak dagoeneko "
+"luzapen egoki bat badu, ez zaio ezer egingo, adierazitako fitxategi-izena "
+"erabiliko da. Bestela, goiko fitxategi-izenari luzapen egoki bat erantsiko "
+"zaio fitxategi-izen osoa eraikitzeko. Aukera hau ezgaituta dago ghostscript "
+"bidez esportatzeko."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Output format")
 #: rkward/plugins/x11device/export.rkh:21
@@ -167,6 +173,11 @@ msgid ""
 "is chosen then the output format of the ghostscript device will need to be "
 "provided (see below under 'Ghostscript specific options')."
 msgstr ""
+"Aukeratu fitxategi hau esportatzeko postscript, pdf, svg, png edo jpeg "
+"erabili behar den. Hau da «dev.print»en <i>gailua</i> parametroa. "
+"'Ghostscript bidez' aukeratzen bada, ghostscript gailuaren irteerako "
+"formatua eman beharko da (begiratu behean, '«Ghostscript»en berariazko "
+"aukerak' barruan)."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "EPS compatible")
 #: rkward/plugins/x11device/export.rkh:22
@@ -178,6 +189,11 @@ msgid ""
 "can not be set in this case. This sets the <i>onefile</i> parameter to "
 "postscript to FALSE."
 msgstr ""
+"Postscript formatuan esportatzean, honek, EPSF (.eps-fitxategia) goiburu bat "
+"sortu behar den erabakitzeko aukera ematen dizu. Fitxategi eramangarriagoak "
+"sortzen dituela ematen du, beraz gomendatua da kasu gehienetan. Kasu honetan "
+"orriaren neurria eta orientazioa ezin dira ezarri. Honek «postscript»en "
+"<i>onefile</i> parametroa FALTSU ezartzen du."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Width")
 #: rkward/plugins/x11device/export.rkh:25
@@ -207,6 +223,15 @@ msgid ""
 "the provided resolution value is used. None of these matter for exporting to "
 "Postscript/PDF where the width parameter is provided in inches."
 msgstr ""
+"Hau da esportatzeko funtzioaren <i>zabalera</i> parametroa. Hazbetetan "
+"adierazten da. JPEG/PNG gisa esportatzeko (zabalera pixeletan behar du), "
+"zabaleraren balioa ebaluatzen da, hazbetetan emandako zabaleraren balioa "
+"bereizmenarekin ('dpi'tan, 'puntu hazbeteko') biderkatuz. Beraz, "
+"zabalera_pixel = zabalera_hazbete * bereizmena_dpi. Bereizmena 'Bereizmen "
+"lehenetsia' gisa ezartzen bada, 96ko balioa erabiltzen da JPEG edo PNG gisa "
+"esportatzeko eta 72ko balioa erabiltzen da ghostscript bidez esportatzeko. "
+"Bestela, emandako balioa erabiltzen da. Guzti horrek ez du axola Postscript/"
+"PDF gisa esportatzeko, zabaleraren balioa hazbetetan ematen baita."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
 #: rkward/plugins/x11device/export.rkh:27
@@ -218,6 +243,11 @@ msgid ""
 "as the width (in pixels) parameter value. Again, none of these are required "
 "for exporting to Postscript/PDF."
 msgstr ""
+"<b>jpeg</b> edo <b>png</b> funtzioek bietako bat, zabalera/altuera, ematea "
+"behar dute. Murrizketa hori gainditzeko zabalera (hazbetetan) <b>par(\"din\")"
+"[1]</b>etik irakurri eta ondoren 'par(\"din\")[1] * bereizmena' zabalera "
+"(pixeletan) parametroaren balio gisa ezartzen dugu. Berriz ere, Postscript/"
+"PDF gisaesportatzeko ez da beharrezkoa horietako batere."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Height in inches")
 #: rkward/plugins/x11device/export.rkh:30
@@ -245,6 +275,12 @@ msgid ""
 "resolution (when 'Default Resolution' is checked) is 96 for PNG/JPEG exports "
 "and it is 72 for Ghostscript exports."
 msgstr ""
+"PNG/JPEG/Ghostscript-erako bakarrik erabilgarri, hau da «dev.print» edo "
+"«dev2bitmap»en <i>bereizmen</i> parametroa. Balio hau erabiltzen da goran "
+"('Zabalera' barruan) adierazitako moduan zabalera/altuera pixeletik "
+"hazbetera bihurtzeko. Lehenetsitako bereizmena ('Bereizmen lehenetsia' "
+"markatuta dagoenean) 96 da PNG/JPEG gisa esportatzeko eta 72 Ghostscript "
+"gisa esportatzeko."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "JPEG Quality")
 #: rkward/plugins/x11device/export.rkh:35
@@ -253,7 +289,7 @@ msgid ""
 "Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</"
 "b>. Sets the quality for JPEG exporting. The default quality is 75."
 msgstr ""
-"JPEGrako bakarrik erabilgarri, hori da <b>jpeg<b>ren <i>kalitatea</i> "
+"JPEGrako bakarrik erabilgarri, hori da <b>jpeg</b>ren <i>kalitatea</i> "
 "parametroa. JPEG esportatzeko kalitatea ezartzen du. Kalitate lehenetsia 75 "
 "da."
 
@@ -302,6 +338,11 @@ msgid ""
 "family (Helvectica) will be used. See the R reference on postscript for more "
 "details."
 msgstr ""
+"Hau da <b>postscript</b>en <i>familia</i> parametroa. Ziurtatu hautatutako "
+"familia makinan erabilgarri dagolea. Letra-tipo familien 'URW' klaseak "
+"ghostscript behar du. Zalantza izanez gero, utzi 'Lehenetsia\" gisa, "
+"lehenetsitako familia (Helvetica) erabiliko da. Begiratu «R»rako "
+"«postscript»en erreferentzia xehetasun bila."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font Encoding")
 #: rkward/plugins/x11device/export.rkh:42
@@ -312,6 +353,11 @@ msgid ""
 "leave this as 'Default', the default encoding (ISOLatin1) will be used. See "
 "the R reference on postscript for more details."
 msgstr ""
+"Hau da <b>postscript</b>en <i>kodeketa</i> parametroa. Ziurtatu hautatutako "
+"letra-tipo familiarekin bateragarria den kodeketa bat aukeratzen duzula. "
+"Zalantza izanez gero, utzi 'Lehenetsia\" gisa, lehenetsitako kodeketa "
+"(ISOLatin1) erabiliko da. Begiratu «R»rako «postscript»en erreferentzia "
+"xehetasun bila."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Default Title")
 #: rkward/plugins/x11device/export.rkh:43
@@ -323,7 +369,7 @@ msgid ""
 msgstr ""
 "Kendu marka lauki horri, grafiko-fitxategiari izenburu bat neurrira "
 "ipintzeko. Kontuan izan hori ez dela diagraman azalduko, baizik eta grafiko-"
-"fitxategi barruan txertatuta dagoela. Hori da <b>postscript<b>en "
+"fitxategi barruan txertatuta dagoela. Hori da <b>postscript</b>en "
 "<i>izenburua</i> parametroa."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "GS Output device")
