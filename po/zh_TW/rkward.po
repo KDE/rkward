@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-27 00:36+0000\n"
-"PO-Revision-Date: 2024-04-17 05:55+0900\n"
+"PO-Revision-Date: 2024-06-04 06:02+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -648,12 +648,12 @@ msgstr "顯示詳情"
 #: rkward/dialogs/rkerrordialog.cpp:104
 #, kde-format
 msgid "Report As Bug"
-msgstr ""
+msgstr "回報為臭蟲"
 
 #: rkward/dialogs/rkerrordialog.cpp:114
 #, kde-format
 msgid "Message code: %1\n"
-msgstr ""
+msgstr "訊息代碼：%1\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:123
 #, kde-format
@@ -744,7 +744,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:29
 #, kde-format
 msgid "Import Data Assistant"
-msgstr ""
+msgstr "匯入資料助理"
 
 #: rkward/dialogs/rkimportdialog.cpp:54
 #, kde-format
@@ -812,7 +812,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:110 rkward/dialogs/rkimportdialog.cpp:119
 #, kde-format
 msgid "Import from clipboard"
-msgstr ""
+msgstr "從剪貼簿匯入"
 
 #: rkward/dialogs/rkimportdialog.cpp:123
 #, kde-format
@@ -824,7 +824,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:125
 #, kde-format
 msgid "Start import dialog"
-msgstr ""
+msgstr "開始匯入對話框"
 
 #: rkward/dialogs/rkimportdialog.cpp:129
 #, kde-format
@@ -838,7 +838,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:131
 #, kde-format
 msgid "No import method found"
-msgstr ""
+msgstr "沒有找到匯入方法"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:50
 #, kde-format
@@ -881,7 +881,7 @@ msgstr "不要關閉"
 #: rkward/dialogs/rkloadlibsdialog.cpp:205
 #, kde-format
 msgid "Package %1 at %2"
-msgstr ""
+msgstr "於 %2 的套件包 %1"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
@@ -891,18 +891,20 @@ msgid ""
 "sure, that you want to remove these packages, please do so on the R command "
 "line."
 msgstr ""
+"以下選取要移除的套件是 RKWard 正常運作所必須的，因此不會被移除。如果您完全確"
+"定您真的要移除它們，請到 R 指令列上進行。"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
 msgid "Not removing certain packages"
-msgstr ""
+msgstr "將不會移除某些套件"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:186
 #, kde-format
 msgid ""
 "Your current user permissions do not allow removing the following packages. "
 "These will be skipped."
-msgstr ""
+msgstr "您目前的使用者權限不允許移除以下套件。它們將被跳過。"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:186
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
@@ -928,7 +930,7 @@ msgstr "變成 root"
 #, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr ""
+msgstr "跳過這些套件"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -1675,12 +1677,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:276
 #, kde-format
 msgid "No software to install"
-msgstr ""
+msgstr "沒有能安裝的軟體"
 
 #: rkward/dialogs/rksetupwizard.cpp:278
 #, kde-format
 msgid "<h2>R packages to install</h2>"
-msgstr ""
+msgstr "<h2>要安裝的 R 套件</h2>"
 
 #: rkward/dialogs/rksetupwizard.cpp:280
 #, kde-format
@@ -1693,7 +1695,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:282
 #, kde-format
 msgid "No R packages to install"
-msgstr ""
+msgstr "沒有要安裝的 R 套件"
 
 #: rkward/main.cpp:209
 #, kde-format
@@ -1757,7 +1759,7 @@ msgstr ""
 #: rkward/main.cpp:259
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
-msgstr ""
+msgstr "許多外掛程式、建議，以及圖表歷史功能"
 
 #: rkward/main.cpp:260
 #, kde-format
@@ -1767,7 +1769,7 @@ msgstr ""
 #: rkward/main.cpp:260
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
-msgstr ""
+msgstr "許多外掛程式、建議，以及 rkwarddev 套件"
 
 #: rkward/main.cpp:261
 #, kde-format
@@ -2957,7 +2959,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmeta.cpp:197
 #, kde-format
 msgid "R package"
-msgstr ""
+msgstr "R 套件"
 
 #: rkward/plugin/rkcomponentproperties.cpp:928
 #, kde-format
@@ -3488,7 +3490,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:641
 #, kde-format
 msgid "Require package '%1'"
-msgstr ""
+msgstr "需要套件 '%1'"
 
 #: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
@@ -3582,12 +3584,12 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:630
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
-msgstr ""
+msgstr "<p>按下 Enter 來看下一個圖表，或點擊「取消」來中止。</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:634
 #, kde-format
 msgid "Ok to show next plot?"
-msgstr ""
+msgstr "要顯示下一個圖表嗎？"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -3960,7 +3962,7 @@ msgstr ""
 #: rkward/rkward.cpp:548 rkward/rkward.cpp:552
 #, kde-format
 msgid "Manage R packages and plugins..."
-msgstr ""
+msgstr "管理 R 套件與外掛程式…"
 
 #: rkward/rkward.cpp:559
 #, kde-format
@@ -5162,7 +5164,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:106
 #, kde-format
 msgid "Keep comments in packages"
-msgstr ""
+msgstr "保留套件中的註解"
 
 #: rkward/settings/rksettingsmoduler.cpp:107
 #: rkward/settings/rksettingsmoduler.cpp:120
@@ -5635,7 +5637,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:379
 #, kde-format
 msgid "Plot"
-msgstr ""
+msgstr "圖表"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:382
 #, kde-format
@@ -5661,6 +5663,8 @@ msgid ""
 "will be empty, if there is no call to <i>plot()</i> or other graphics "
 "commands."
 msgstr ""
+"預覽執行此文稿會產生的任何螢幕上的圖形。若沒有呼叫 <i>plot()</i> 或其他圖形指"
+"令，這個預覽會是空的。"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:386
 #, kde-format
@@ -5768,7 +5772,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:896
 #, kde-format
 msgid "Preview of generated plot"
-msgstr ""
+msgstr "生成圖表的預覽"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:903
 #, kde-format
@@ -6392,6 +6396,9 @@ msgid ""
 "close the graphics device immediately, in case it is stuck. However, the "
 "last plot may be missing from the plot history, if you do this.</p>"
 msgstr ""
+"<p>正在關閉圖形裝置，並將最後一個圖表寫入圖表歷史中。這可能會需要一段時間，如"
+"果 R 後端仍在忙碌中的話。如果它卡住了，您也可以馬上關閉圖形裝置，但這麼做很可"
+"能會使最後一個圖表不會記錄在圖表歷史當中。</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:397
 #, kde-format
@@ -6509,17 +6516,17 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:692
 #, kde-format
 msgid "Clear plot history"
-msgstr ""
+msgstr "清除圖表歷史"
 
 #: rkward/windows/rkwindowcatcher.cpp:698
 #, kde-format
 msgid "Plot properties (device number %1)"
-msgstr ""
+msgstr "圖表屬性（裝置編號 %1）"
 
 #: rkward/windows/rkwindowcatcher.cpp:712
 #, kde-format
 msgid "<Unsaved plot>"
-msgstr ""
+msgstr "<未儲存的圖表>"
 
 #: rkward/windows/rkwindowcatcher.cpp:739
 #, kde-format
