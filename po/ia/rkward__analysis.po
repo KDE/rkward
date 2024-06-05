@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-05-15 11:05+0200\n"
+"PO-Revision-Date: 2024-06-04 12:43+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1663,7 +1663,7 @@ msgstr ""
 #, kde-format
 msgctxt "Statistical moment"
 msgid "Moment"
-msgstr ""
+msgstr "Momento"
 
 #. i18n: ectx: (Loaded from sample moment)
 #: rkward/plugins/analysis/moments/moment.js:14
@@ -3875,7 +3875,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.xml:11
 #, kde-format
 msgid "F test"
-msgstr ""
+msgstr "F test"
 
 #. i18n: ectx: (F test) <dialog label="F test"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/analysis/variances/F_test.xml:29
