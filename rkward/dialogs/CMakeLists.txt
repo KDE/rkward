@@ -17,4 +17,4 @@ SET(dialogs_STAT_SRCS
 
 ADD_DEFINITIONS(-DLIBEXECDIR="${KDE_INSTALL_LIBEXECDIR}")
 ADD_LIBRARY(dialogs STATIC ${dialogs_STAT_SRCS})
-TARGET_LINK_LIBRARIES(dialogs Qt6::Widgets KF6::Parts KF6::ConfigWidgets KF6::TextEditor KF6::I18n)
+TARGET_LINK_LIBRARIES(dialogs Qt6::Widgets KF6::Parts KF6::ConfigWidgets KF6::TextEditor KF6::I18n KF6::KIOWidgets)

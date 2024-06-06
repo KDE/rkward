@@ -20,8 +20,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QStandardPaths>
 #include <QRadioButton>
 #include <QGroupBox>
+#include <QButtonGroup>
 
 #include <KLocalizedString>
+#include <KUrlRequester>
 #include <KMessageBox>
 
 #include "../settings/rksettingsmoduleplugins.h"
@@ -263,9 +265,11 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 			if (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) return;
 
 			anim->stop();
+			bool current_valid = true;
 			if (RInterface::instance()->backendIsDead()) {
 				rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Error));
 				rstatus_label->setText(i18n("<b>R backend has crashed.</b>"));
+				current_valid = false;
 			} else {
 				RK_ASSERT(RInterface::instance()->backendIsIdle());
 				QString statustext = i18n("<b>R version %1 started, successfully.</b>", RKSessionVars::RVersion(false));
@@ -283,11 +287,34 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 				setValid(pageref, true);
 			}
 
+			// Selector widget for R installation. Need to delete/recreate this on each page enter
+			delete (property("sel").value<QWidget*>());
 			auto box = new QGroupBox(i18n("R version to use"));
+			setProperty("sel", QVariant::fromValue(box));
+
+			auto group = new QButtonGroup(box);
 			l->addWidget(box);
 			auto bl = new QVBoxLayout(box);
-			auto button = new QRadioButton(i18n("Keep current version"), box); bl->addWidget(button);
-			button = new QRadioButton(i18n("Some dummy option, TODO"), box); bl->addWidget(button);
+			QStringList r_installations = RKSessionVars::findRInstallations();
+			r_installations.removeAll(RKSessionVars::RBinary());
+			auto button = new QRadioButton(i18n("Keep current version"), box); bl->addWidget(button); group->addButton(button, 0);
+			if (!current_valid) button->setText(i18n("Attempt to restart R at %1", RKSessionVars::RBinary()));
+			button->setChecked(true);
+
+			for(const QString &inst : std::as_const(r_installations)) {
+				button = new QRadioButton(i18n("Use R at %1", inst), box); bl->addWidget(button); group->addButton(button);
+			}
+			button = new QRadioButton(i18n("Use R at:"), box); bl->addWidget(button); group->addButton(button);
+			auto req = new KUrlRequester(); bl->addWidget(req);
+			req->setPlaceholderText(i18n("Select another R executable"));
+			req->setEnabled(false);
+			req->setWindowTitle(i18n("Select R executable"));
+			connect(button, &QAbstractButton::toggled, req, &QWidget::setEnabled);
+
+			next_callbacks.insert(pageref, [group]() -> bool {
+				bool proceed = (group->checkedId() == 0) && RInterface::instance()->backendIsIdle();
+				return proceed;
+			});
 		};
 		connect(RInterface::instance(), &RInterface::backendStatusChanged, this, statuslambda);
 		statuslambda();
@@ -315,7 +342,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	auto last_page_label = RKCommonFunctions::linkedWrappedLabel("");
 	l->addWidget(last_page_label);
 	l->addStretch();
-	page->lazyInitRepeated([this, last_page_label](RKSetupWizardPage *) {
+	page->lazyInitRepeated([this, last_page_label](RKSetupWizardPage *page) {
 		software_to_install.clear();
 		packages_to_install.clear();
 		r_commands_to_run.clear();;
@@ -350,12 +377,9 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		} else {
 			label_text.append(i18n("No R packages to install"));
 		}
-
-		// TODO: This height calculation is not quite correct, somehow, but good enough for now.
-		int spare_height = height() - last_page_label->parentWidget()->sizeHint().height();
 		last_page_label->setText(label_text);
-		int new_height = qMax(height(), spare_height+last_page_label->minimumSizeHint().height());
-		resize(width(), new_height);
+		// Somehow we need to help the geometry along, or height will not take line-wraps into account
+		last_page_label->setMinimumHeight(last_page_label->heightForWidth(page->width()));
 	});
 }
 
@@ -364,6 +388,15 @@ RKSetupWizard::~RKSetupWizard() {
 	for(int i = 0; i < items.size(); ++i) {
 		delete items[i];
 	}
+}
+
+void RKSetupWizard::next() {
+	RK_TRACE (DIALOGS);
+
+	if (next_callbacks.contains(currentPage())) {
+		if (!next_callbacks[currentPage()]()) return;
+	}
+	KAssistantDialog::next();
 }
 
 void RKSetupWizard::doAutoCheck() {

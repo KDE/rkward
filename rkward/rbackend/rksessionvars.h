@@ -37,6 +37,7 @@ is returned as suffix (via the suffix pointer; if that is 0, an error is reporte
 	static QString RBinary() { return r_binary; }
 	static bool runningInAppImage() { return !appimagedir.isNull(); }
 	static bool isPathInAppImage(const QString &path);
+	static QStringList findRInstallations();
 Q_SIGNALS:
 	void installedPackagesChanged ();
 protected:

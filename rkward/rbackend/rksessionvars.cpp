@@ -1,6 +1,6 @@
 /*
 rksessionvars - This file is part of RKWard (https://rkward.kde.org). Created: Thu Sep 08 2011
-SPDX-FileCopyrightText: 2011-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2011-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -19,6 +19,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QStandardPaths>
 #include <QSysInfo>
 #include <QFileInfo>
+#include <QVersionNumber>
+#include <QDir>
 
 #include "../debug.h"
 
@@ -105,3 +107,52 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	return lines;
 }
 
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
+static QString findExeAtPath (const QString &appname, const QString &path) {
+	QDir dir (path);
+	dir.makeAbsolute ();
+	if (QFileInfo (dir.filePath (appname)).isExecutable ()) return dir.filePath (appname);
+#ifdef Q_OS_WIN
+	if (QFileInfo (dir.filePath (appname + ".exe")).isExecutable ()) return dir.filePath (appname + ".exe");
+	if (QFileInfo (dir.filePath (appname + ".com")).isExecutable ()) return dir.filePath (appname + ".com");
+#endif
+	return QString ();
+}
+
+/** glob dirs instroot/prefix-* /rpath, sorted by version number represented in "*" */
+static QStringList globVersionedDirs(const QString &instroot, const QString &prefix, const QString &rpath) {
+	QStringList ret;
+	if (QFileInfo(instroot).isReadable()) {
+		QDir dir(instroot);
+		QStringList candidates = dir.entryList(QStringList(prefix + "*"), QDir::Dirs);
+		std::sort(candidates.begin(), candidates.end(), [prefix](const QString&a, const QString& b) -> bool {
+			return QVersionNumber::fromString(a.mid(prefix.length())) > QVersionNumber::fromString(b.mid(prefix.length()));
+		});
+		for (int i = 0; i < candidates.count(); ++i) {
+			QString found = findExeAtPath(rpath, dir.absoluteFilePath(candidates[i]));
+			if (!found.isNull()) ret.append(found);
+		}
+	}
+	return ret;
+}
+#endif
+
+QStringList RKSessionVars::findRInstallations() {
+	QStringList ret;
+#if defined(Q_OS_MACOS)
+	ret = globVersionedDirs("/Library/Frameworks/R.framework/Versions", QString(), "Resources/bin/R");
+#elif defined(Q_OS_WIN)
+	QString instroot = QString(getenv("PROGRAMFILES")) + "/R";
+	if (!QFileInfo(instroot).isReadable()) instroot = QString(getenv("PROGRAMFILES(x86)")) + "/R";
+	ret = globVersionedDirs(instroot, "R-", "bin/R");
+#else
+	const QStringList candidates{"/usr/bin/R", "/usr/local/bin/R"};
+	for(const QString &p : candidates) {
+		if (!ret.contains(p) && QFileInfo(p).isExecutable()) ret.append(p);
+	}
+#endif
+	// On Unix, but also, if R was not found in the default locations try to find R in the system path.
+	QString r = QStandardPaths::findExecutable("R");
+	if (!(r.isNull() || ret.contains(r))) ret.append(r);
+	return ret;
+}

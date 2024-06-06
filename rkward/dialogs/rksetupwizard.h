@@ -1,6 +1,6 @@
 /*
-rksetupwizard - This file is part of the RKWard project. Created: Fri May 25 20200
-SPDX-FileCopyrightText: 2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+rksetupwizard - This file is part of the RKWard project. Created: Fri May 25 2020
+SPDX-FileCopyrightText: 2020-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -36,12 +36,14 @@ public:
 
 	void markSoftwareForInstallation(const QString &name, const QString &download_url, bool install);
 	void markRPackageForInstallation(const QString &name, bool install);
+	void next() override;
 private:
 	QStringList software_to_install;
 	QStringList software_to_install_urls;
 	QStringList packages_to_install;
 	QStringList r_commands_to_run;
 friend class RKSetupWizardPage;
+	QMap<KPageWidgetItem*, std::function<bool()>> next_callbacks;
 	QList<RKSetupWizardItem*> items;
 	bool reinstallation_required;
 };

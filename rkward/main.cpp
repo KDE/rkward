@@ -63,14 +63,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QTime>
 #include <QSettings>
 #include <QStandardPaths>
-#if defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
-#	include <QVersionNumber>
-#endif
-
-#ifdef Q_OS_MACOS
-	// Needed to allow execution of launchctl
-#	include <QProcess>
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -102,17 +94,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #else
 #	define PATH_VAR_SEP ':'
 #endif
-
-QString findExeAtPath (const QString &appname, const QString &path) {
-	QDir dir (path);
-	dir.makeAbsolute ();
-	if (QFileInfo (dir.filePath (appname)).isExecutable ()) return dir.filePath (appname);
-#ifdef Q_OS_WIN
-	if (QFileInfo (dir.filePath (appname + ".exe")).isExecutable ()) return dir.filePath (appname + ".exe");
-	if (QFileInfo (dir.filePath (appname + ".com")).isExecutable ()) return dir.filePath (appname + ".com");
-#endif
-	return QString ();
-}
 
 bool RK_Debug_Terminal = true;
 QMutex RK_Debug_Mutex;
@@ -165,45 +146,7 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 installation path(s) for this platform. */
 QString resolveRSpecOrFail (QString input, const QString &message) {
 	if (input == QLatin1String ("auto")) {
-		QString ret;
-#ifdef Q_OS_MACOS
-		QString instroot ("/Library/Frameworks/R.framework/Versions");
-		if (QFileInfo (instroot).isReadable ()) {
-			QDir dir (instroot);
-			QStringList candidates = dir.entryList ();
-			QVersionNumber highest (0, 0, 0);
-			for (int i = candidates.count () - 1; i >= 0; --i) {
-				QString found = findExeAtPath ("Resources/bin/R", dir.absoluteFilePath (candidates[i]));
-				if (!found.isNull()) {
-					QVersionNumber version = QVersionNumber::fromString (candidates[i]);
-					if (version > highest) {
-						ret = found;
-					}
-				}
-			}
-		}
-#endif
-#ifdef Q_OS_WIN
-		QString instroot = QString (getenv ("PROGRAMFILES")) + "/R";
-		if (!QFileInfo (instroot).isReadable ()) instroot = QString (getenv ("PROGRAMFILES(x86)")) + "/R";
-		if (QFileInfo (instroot).isReadable ()) {
-			QDir dir (instroot);
-			QStringList candidates = dir.entryList (QStringList ("R-*"), QDir::Dirs);
-			QVersionNumber highest (0, 0, 0);
-			for (int i = candidates.count () - 1; i >= 0; --i) {
-				QString found = findExeAtPath ("bin/R", dir.absoluteFilePath (candidates[i]));
-				if (!found.isNull()) {
-					QVersionNumber version = QVersionNumber::fromString (candidates[i].mid (2));
-					if (version > highest) {
-						ret = found;
-					}
-				}
-			}
-		}
-#endif
-		// On Unix, but also, if R was not found in the default locations on Windows or Mac,
-		// try to find R in the system path.
-		if (ret.isNull ()) ret = QStandardPaths::findExecutable ("R");
+		QString ret = RKSessionVars::findRInstallations().value(0);
 
 		if (ret.isNull() || !QFileInfo (ret).isExecutable()) {
 			QMessageBox::critical(nullptr, i18n("Unable to detect R installation"), i18n("RKWard failed to detect an R installation on this system. Either R is not installed, or not at one of the standard installation locations. You can use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or supply an rkward.ini file to specify a non-standard location."));
