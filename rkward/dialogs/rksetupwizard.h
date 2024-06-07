@@ -46,6 +46,7 @@ friend class RKSetupWizardPage;
 	QMap<KPageWidgetItem*, std::function<bool()>> next_callbacks;
 	QList<RKSetupWizardItem*> items;
 	bool reinstallation_required;
+	InvokationReason reason;
 };
 
 class QComboBox;

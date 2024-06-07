@@ -413,14 +413,12 @@ private Q_SLOTS:
 	}
 
 	void restartRBackend() {
-		auto restart_action = RKWardMainWindow::getMain()->actionCollection()->action("restart_r");
-		QVERIFY(restart_action != nullptr);
 		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
 		waitForAllFinished();
 		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
 
 		QPointer<RInterface> oldiface = RInterface::instance();
-		restart_action->trigger();
+		RKWardMainWindow::getMain()->triggerBackendRestart(false);
 		QElapsedTimer t;
 		t.start();
 		while (oldiface) {  // action may be delayed until next event processing

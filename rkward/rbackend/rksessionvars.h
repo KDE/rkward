@@ -54,6 +54,7 @@ private:
 	static QString appimagedir;
 friend int main(int, char**);
 friend class RKWardCoreTest;
+friend class RKSetupWizard;
 	static QString r_binary;
 };
 

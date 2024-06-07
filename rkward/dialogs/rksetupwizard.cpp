@@ -97,6 +97,110 @@ static auto iconForStatus(RKSetupWizardItem::Status status) {
 	return (QIcon::fromTheme(icon_id).pixmap(32, 32));  // TODO: Correct way to not hardcode size?
 }
 
+class RBackendStatusWidget : public QWidget {
+public:
+	RBackendStatusWidget(QWidget *parent) : QWidget(parent), anim(nullptr) {
+		auto l = new QVBoxLayout(this);
+		rinst_label = new QLabel();
+		l->addWidget(rinst_label);
+		auto h = new QHBoxLayout();
+		l->addLayout(h);
+		rstatus_label = RKCommonFunctions::wordWrappedLabel(QString());
+		rstatus_icon = new QLabel();
+		h->addWidget(rstatus_icon);
+		h->addWidget(rstatus_label);
+		h->setStretch(1, 2);
+		update();
+	}
+	void update() {
+		if (RInterface::instance()->backendIsDead()) {
+			rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Error));
+			rstatus_label->setText(i18n("<b>R backend has crashed.</b>"));
+			if (anim) {
+				delete anim;
+				anim = nullptr;
+			}
+		} else if (RInterface::instance()->backendIsIdle()) {
+			QString statustext = i18n("<b>R version %1 started, successfully.</b>", RKSessionVars::RVersion(false));
+			if (RKSessionVars::isPathInAppImage(RKSessionVars::RBinary())) {
+				rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Warning));
+				statustext.append(i18n("<p>You are using the R version bundled inside the RKWard AppImage.</p>"
+				                       "<p>This version comes with several technical limitations. Importantly, "
+				                       "yu will not be able to install most R addon packages. "
+				                       "In general, it is therefore recommended to select a system-installed "
+				                       "version of R, instead, below.</p>"));
+			} else {
+				rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Good));
+			}
+			rstatus_label->setText(statustext);
+			if (anim) {
+				delete anim;
+				anim = nullptr;
+			}
+		} else {
+			rinst_label->setText(i18n("RKWard is currently using the R installation at <nobr>%1</nobr>.", RKSessionVars::RBinary()));
+			rstatus_label->setText(i18n("<b>Waiting for R backend...</b>"));
+			if (!anim) anim = RKStandardIcons::busyAnimation(this, [this](const QIcon& icon) {
+				rstatus_icon->setPixmap(icon.pixmap(32, 32));
+			});
+		}
+	}
+private:
+	QLabel *rstatus_label, *rstatus_icon, *rinst_label;
+	QTimer *anim;
+};
+
+class RBackendSelectionWidget : public QGroupBox {
+public:
+	RBackendSelectionWidget(QWidget *parent) : QGroupBox(parent) {
+		group = new QButtonGroup(this);
+		auto l = new QVBoxLayout(this);
+		bl = new QVBoxLayout();
+		l->addLayout(bl);
+
+		auto button = new QRadioButton(i18n("Use R at:")); l->addWidget(button); group->addButton(button, -1);
+		req = new KUrlRequester(); l->addWidget(req);
+		req->setPlaceholderText(i18n("Select another R executable"));
+		req->setEnabled(false);
+		req->setWindowTitle(i18n("Select R executable"));
+		connect(button, &QAbstractButton::toggled, req, &QWidget::setEnabled);
+	}
+
+	void updateOptions() {
+		// clear previous buttons, if any
+		for (int i = 0; i < r_installations.size(); ++i) {
+			delete (group->button(i));
+		}
+
+		r_installations = RKSessionVars::findRInstallations();
+		r_installations.removeAll(RKSessionVars::RBinary());
+		r_installations.prepend(RKSessionVars::RBinary());
+		for(int i = 0; i < r_installations.size(); ++i) {
+			addButton(i18n("Use R at %1", r_installations[i]), i);
+		}
+		auto button = group->button(0);
+		if (RInterface::instance()->backendIsDead()) button->setText(i18n("Attempt to restart R at %1", RKSessionVars::RBinary()));
+		else button->setText(i18n("Keep current version"));
+		button->setChecked(true);
+	}
+	QRadioButton *addButton(const QString &text, int index) {
+		auto button = new QRadioButton(text);
+		bl->addWidget(button);
+		group->addButton(button, index);
+		return button;
+	}
+	QString selectedOpt() {
+		int index = group->checkedId();
+		if (index >= 0) return r_installations[index];
+		return req->text();
+	}
+	QButtonGroup *group;
+private:
+	QVBoxLayout *bl;
+	QStringList r_installations;
+	KUrlRequester *req;
+};
+
 void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
 	auto label = new QLabel();
 	label->setPixmap(iconForStatus(status));
@@ -168,7 +272,7 @@ RKSetupWizardItem* makeSoftwareCheck(const QString &exename, const QString& expl
 	return ret;
 }
 
-RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) : KAssistantDialog(parent) {
+RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) : KAssistantDialog(parent), reason(reason) {
 	RK_TRACE (DIALOGS);
 
 	// Cover page
@@ -247,76 +351,42 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	page = new RKSetupWizardPage(this, i18n("R Backend"));
 	page->lazyInitOnce([this](RKSetupWizardPage *p) {
 		auto l = new QVBoxLayout(p);
-		l->addWidget(new QLabel(i18n("RKWard is currently using the R installation at <nobr>%1</nobr>.", RKSessionVars::RBinary())));
-		auto h = new QHBoxLayout();
-		l->addLayout(h);
-		auto rstatus_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>"));
-		auto rstatus_icon = new QLabel();
-		auto anim = RKStandardIcons::busyAnimation(rstatus_icon, [rstatus_icon](const QIcon& icon) {
-			rstatus_icon->setPixmap(icon.pixmap(32, 32));
-		});
-		h->addWidget(rstatus_icon);
-		h->addWidget(rstatus_label);
-		h->setStretch(1, 2);
+		auto status = new RBackendStatusWidget(p);
+		auto select = new RBackendSelectionWidget(p);
+		l->addWidget(status);
+		l->addWidget(select);
 		l->addStretch();
 		auto pageref = p->ref;
 		setValid(pageref, false);
-		auto statuslambda = [this, pageref, rstatus_label, rstatus_icon, anim, l]() {
-			if (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) return;
 
-			anim->stop();
-			bool current_valid = true;
-			if (RInterface::instance()->backendIsDead()) {
-				rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Error));
-				rstatus_label->setText(i18n("<b>R backend has crashed.</b>"));
-				current_valid = false;
-			} else {
-				RK_ASSERT(RInterface::instance()->backendIsIdle());
-				QString statustext = i18n("<b>R version %1 started, successfully.</b>", RKSessionVars::RVersion(false));
-				if (RKSessionVars::isPathInAppImage(RKSessionVars::RBinary())) {
-					rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Warning));
-					statustext.append(i18n("<p>You are using the R version bundled inside the RKWard AppImage.</p>"
-					                       "<p>This version comes with several technical limitations. Importantly, "
-					                       "yu will not be able to install most R addon packages. "
-					                       "In general, it is therefore recommended to select a system-installed "
-					                       "version of R, instead, below.</p>"));
-				} else {
-					rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Good));
+		auto statuslambda = [this, pageref, status, select]() {
+			status->update();
+			if (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) {
+				select->hide();
+				return;
+			}
+			select->updateOptions();
+			select->show();
+			setValid(pageref, true);
+
+			next_callbacks.insert(pageref, [select, pageref, this]() -> bool {
+				bool restart_needed = (select->group->checkedId() != 0) || RInterface::instance()->backendIsDead();
+				if (restart_needed) {
+					RKSessionVars::r_binary = select->selectedOpt();
+					if (RKWardMainWindow::getMain()->triggerBackendRestart(this->reason == ManualCheck)) {
+						select->hide();
+						setValid(pageref, false);
+					}
 				}
-				rstatus_label->setText(statustext);
-				setValid(pageref, true);
-			}
-
-			// Selector widget for R installation. Need to delete/recreate this on each page enter
-			delete (property("sel").value<QWidget*>());
-			auto box = new QGroupBox(i18n("R version to use"));
-			setProperty("sel", QVariant::fromValue(box));
-
-			auto group = new QButtonGroup(box);
-			l->addWidget(box);
-			auto bl = new QVBoxLayout(box);
-			QStringList r_installations = RKSessionVars::findRInstallations();
-			r_installations.removeAll(RKSessionVars::RBinary());
-			auto button = new QRadioButton(i18n("Keep current version"), box); bl->addWidget(button); group->addButton(button, 0);
-			if (!current_valid) button->setText(i18n("Attempt to restart R at %1", RKSessionVars::RBinary()));
-			button->setChecked(true);
-
-			for(const QString &inst : std::as_const(r_installations)) {
-				button = new QRadioButton(i18n("Use R at %1", inst), box); bl->addWidget(button); group->addButton(button);
-			}
-			button = new QRadioButton(i18n("Use R at:"), box); bl->addWidget(button); group->addButton(button);
-			auto req = new KUrlRequester(); bl->addWidget(req);
-			req->setPlaceholderText(i18n("Select another R executable"));
-			req->setEnabled(false);
-			req->setWindowTitle(i18n("Select R executable"));
-			connect(button, &QAbstractButton::toggled, req, &QWidget::setEnabled);
-
-			next_callbacks.insert(pageref, [group]() -> bool {
-				bool proceed = (group->checkedId() == 0) && RInterface::instance()->backendIsIdle();
-				return proceed;
+				return !restart_needed;
 			});
 		};
 		connect(RInterface::instance(), &RInterface::backendStatusChanged, this, statuslambda);
+		// when restarting the backend, the RInterface::instance() itself is exchanged
+		connect(RKWardMainWindow::getMain(), &RKWardMainWindow::backendCreated, this, [this, statuslambda]() {
+			connect(RInterface::instance(), &RInterface::backendStatusChanged, this, statuslambda);
+			statuslambda();
+		});
 		statuslambda();
 	});
 

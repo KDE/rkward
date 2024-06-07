@@ -68,6 +68,7 @@ protected:
 Q_SIGNALS:
 	void aboutToQuitRKWard ();
 	void tabForToolViewAdded(QWidget*, QWidget*);  // Needed from katepluginintegration
+	void backendCreated();
 public Q_SLOTS:
 	void setWorkspaceUnmodified () { setWorkspaceMightBeModified (false); };
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
@@ -119,6 +120,9 @@ public Q_SLOTS:
 /** HACK this is only to make the compiler happy with -Woverloaded-virtual */
 	void setCaption (const QString &dummy, bool) override { setCaption (dummy); };
 	void openUrlsFromCommandLineOrExternal(bool no_warn_external, QStringList urls);
+/** Trigger restart of backend. Does not wait for restart to actually complete.
+ *  Return true, if restart was triggered, false if restart has been cancelled */
+	bool triggerBackendRestart(bool promptsave=true);
 private Q_SLOTS:
 	void partChanged (KParts::Part *new_part);
 private:
