@@ -25,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QStandardPaths>
 #include <QElapsedTimer>
 #include <QTemporaryDir>
+#include <QSettings>
 
 #include "../version.h"
 #include "../debug.h"
@@ -107,10 +108,65 @@ QString localeDir () {
 	return QFileInfo (file.left (file.size() - relpath.size ())).absolutePath ();
 }
 
+/** Check if the given path to R (or "auto") is executable, and fail with an appropriate message, otherwise. If "auto" is given as input, try to auto-locate an R installation at the standard
+installation path(s) for this platform. */
+QString RKFrontendTransmitter::resolveRSpecOrFail(QString input) {
+	if (input == QLatin1String("auto")) {
+		QString ret = RKSessionVars::findRInstallations().value(0);
+
+		if (ret.isNull() || !QFileInfo(ret).isExecutable()) {
+			handleTransmissionError(i18n("RKWard failed to detect an R installation on this system. Either R is not installed, or not at one of the standard installation locations."));
+		}
+		RK_DEBUG (APP, DL_DEBUG, "Using auto-detected R at %s", qPrintable (ret));
+		return ret;
+	}
+
+	if (!QFileInfo(input).isExecutable()) {
+		handleTransmissionError(i18n("The configured R installation at <b>%1</b> does not exist or is not an executable.", input));
+	}
+	return input;
+}
+
+void RKFrontendTransmitter::detectAndCheckRBinary() {
+	if (!RKSessionVars::RBinary().isEmpty()) return;
+
+	// Look for R:
+	//- command line parameter
+	//- Specified in cfg file next to rkward executable
+	//- compile-time default
+	QString r_exe = RKCommandLineArgs::get(RKCommandLineArgs::RExecutable).toString();
+	if (!r_exe.isEmpty()) {
+		RK_DEBUG(APP, DL_DEBUG, "Using R as specified on command line");
+	} else {
+		QDir frontend_path = qApp->applicationDirPath();
+		QFileInfo rkward_ini_file(frontend_path.absoluteFilePath("rkward.ini"));
+		if (rkward_ini_file.isReadable()) {
+			QSettings rkward_ini(rkward_ini_file.absoluteFilePath(), QSettings::IniFormat);
+			r_exe = rkward_ini.value("R executable").toString ();
+			if (!r_exe.isNull()) {
+				if (QDir::isRelativePath(r_exe) && r_exe != QStringLiteral("auto")) {
+					r_exe = frontend_path.absoluteFilePath (r_exe);
+				}
+			}
+			RK_DEBUG(APP, DL_DEBUG, "Using R as configured in config file %s", qPrintable (rkward_ini_file.absoluteFilePath ()));
+		} else {
+			RK_DEBUG(APP, DL_DEBUG, "Using R as configured at compile time");
+			r_exe = R_EXECUTABLE;
+		}
+	}
+	if (r_exe.isEmpty()) {
+		RK_DEBUG(APP, DL_DEBUG, "Falling back to auto-detection of R binary");
+		r_exe = "auto";
+	}
+
+	RKSessionVars::r_binary = resolveRSpecOrFail(r_exe);
+}
+
 void RKFrontendTransmitter::run () {
 	RK_TRACE (RBACKEND);
 
 	quirkmode = RKCommandLineArgs::get(RKCommandLineArgs::QuirkMode).toBool();
+	detectAndCheckRBinary();
 
 	// start server
 	server = new QLocalServer (this);
@@ -320,9 +376,9 @@ void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
 void RKFrontendTransmitter::backendExit (int exitcode) {
 	RK_TRACE (RBACKEND);
 
-	if (!exitcode && token.isEmpty ()) handleTransmissionError (i18n ("The backend process could not be started. Please check your installation."));
-	else if (token.isEmpty ()) handleTransmissionError (i18n ("The backend process failed to start with exit code %1, message: '%2'.", exitcode, QString::fromLocal8Bit(backend->readAllStandardError())));
-	else handleTransmissionError (i18n ("Backend process has exited with code %1, message: '%2'.", exitcode, QString::fromLocal8Bit(backend->readAllStandardError())));
+	if (!exitcode && token.isEmpty()) handleTransmissionError(i18n("The backend process could not be started. Please check your installation."));
+	else if (token.isEmpty()) handleTransmissionError(i18n("The backend process failed to start with exit code %1, message: '%2'.", exitcode, QString::fromLocal8Bit(backend->readAllStandardError().replace('\n', "<br>"))));
+	else handleTransmissionError(i18n("Backend process has exited with code %1, message: '%2'.", exitcode, QString::fromLocal8Bit(backend->readAllStandardError().replace('\n', "<br>"))));
 }
 
 void RKFrontendTransmitter::writeRequest (RBackendRequest *request) {

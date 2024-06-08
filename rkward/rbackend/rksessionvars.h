@@ -52,7 +52,7 @@ private:
 	static RKParsedVersion r_version;
 	static QString r_version_string;
 	static QString appimagedir;
-friend int main(int, char**);
+friend class RKFrontendTransmitter;
 friend class RKWardCoreTest;
 friend class RKSetupWizard;
 	static QString r_binary;

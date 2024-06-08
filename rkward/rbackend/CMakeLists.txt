@@ -44,6 +44,7 @@ SET (
 )
 
 ADD_LIBRARY(rbackend STATIC ${rbackend_frontend_SRCS} ${rbackend_shared_SRCS})
+TARGET_COMPILE_DEFINITIONS(rbackend PUBLIC -DR_EXECUTABLE="${R_EXECUTABLE}")
 TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt6::Widgets KF6::TextEditor KF6::WindowSystem)
 
 ADD_DEFINITIONS (-DRKWARD_BACKEND_PATH="${KDE_INSTALL_FULL_LIBEXECDIR}")

@@ -44,6 +44,9 @@ private:
 	QLocalServer* server;
 	RKRBackendProtocolFrontend* frontend;
 	RKGraphicsDeviceFrontendTransmitter* rkd_transmitter;
+
+	QString resolveRSpecOrFail(QString input);
+	void detectAndCheckRBinary();
 };
 
 #endif

@@ -61,8 +61,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QApplication>
 #include <QUrl>
 #include <QTime>
-#include <QSettings>
-#include <QStandardPaths>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,10 +82,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "debug.h"
 
 #include "version.h"
-
-#ifndef R_EXECUTABLE
-#error config problem
-#endif
 
 #ifdef Q_OS_WIN
 #	define PATH_VAR_SEP ';'
@@ -140,32 +134,6 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 		// not safe to call from any other than the GUI thread
 		RKDebugMessageWindow::newMessage (flags, level, QString (buffer));
 	}
-}
-
-/** Check if the given path to R (or "auto") is executable, and fail with an appropriate message, otherwise. If "auto" is given as input, try to auto-locate an R installation at the standard
-installation path(s) for this platform. */
-QString resolveRSpecOrFail (QString input, const QString &message) {
-	if (input == QLatin1String ("auto")) {
-		QString ret = RKSessionVars::findRInstallations().value(0);
-
-		if (ret.isNull() || !QFileInfo (ret).isExecutable()) {
-			QMessageBox::critical(nullptr, i18n("Unable to detect R installation"), i18n("RKWard failed to detect an R installation on this system. Either R is not installed, or not at one of the standard installation locations. You can use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or supply an rkward.ini file to specify a non-standard location."));
-			exit (1);
-		}
-
-		RK_DEBUG (APP, DL_DEBUG, "Using auto-detected R at %s", qPrintable (ret));
-		return ret;
-	} else {
-		if (QFileInfo (input).isExecutable ()) {
-			return input;
-		}
-
-		// TODO, while fixing krazy2 warnings: KMessageBox layout for static messages is quirky in that it has squeezed caption, and does not allow resize -> Submit a patch.
-		//KMessageBox::error (0, QString ("The R executable specified on the command line (%1) does not exist or is not executable.").arg (r_exe), "Specified R executable does not exist");
-		QMessageBox::critical(nullptr, i18n("Specified R executable does not exist"), message);
-		exit(1);
-	}
-	return QString(); // not reached
 }
 
 #include <QWebEngineUrlScheme>
@@ -278,35 +246,6 @@ int main (int argc, char *argv[]) {
 			return 0;
 		}
 	}
-
-	// Look for R:
-	//- command line parameter
-	//- Specified in cfg file next to rkward executable
-	//- compile-time default
-	QString r_exe = args[RKCommandLineArgs::RExecutable].toString();
-	if (!r_exe.isNull ()) {
-		r_exe = resolveRSpecOrFail (r_exe, i18n ("The R executable specified on the command line (%1) does not exist or is not executable.", r_exe));
-		RK_DEBUG (APP, DL_DEBUG, "Using R specified on command line");
-	} else {
-		QDir frontend_path = app.applicationDirPath ();
-		QFileInfo rkward_ini_file (frontend_path.absoluteFilePath ("rkward.ini"));
-		if (rkward_ini_file.isReadable ()) {
-			QSettings rkward_ini (rkward_ini_file.absoluteFilePath (), QSettings::IniFormat);
-			r_exe = rkward_ini.value ("R executable").toString ();
-			if (!r_exe.isNull ()) {
-				if (QDir::isRelativePath (r_exe) && r_exe != QStringLiteral ("auto")) {
-					r_exe = frontend_path.absoluteFilePath (r_exe);
-				}
-				r_exe = resolveRSpecOrFail (r_exe, i18n ("The R executable (%1) specified in the rkward.ini file (%2) does not exist or is not executable.", r_exe, rkward_ini_file.absoluteFilePath ()));
-			}
-			RK_DEBUG (APP, DL_DEBUG, "Using R as configured in config file %s", qPrintable (rkward_ini_file.absoluteFilePath ()));
-		}
-		if (r_exe.isNull ()) {
-			r_exe = resolveRSpecOrFail (R_EXECUTABLE, i18n ("The R executable specified at compile time (%1) does not exist or is not executable. Probably the installation of R has moved. You can use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or supply an rkward.ini file to specify the new location.", QString (R_EXECUTABLE)));
-			RK_DEBUG (APP, DL_DEBUG, "Using R as configured at compile time");
-		}
-	}
-	RKSessionVars::r_binary = r_exe;
 
 	if (app.isSessionRestored ()) {
 		kRestoreMainWindows<RKWardMainWindow>();	// well, whatever this is supposed to do -> TODO

@@ -112,7 +112,7 @@ public:
 		h->addWidget(rstatus_icon);
 		h->addWidget(rstatus_label);
 		h->setStretch(1, 2);
-		detail_button = new QPushButton(i18n("Show error details"));
+		detail_button = new QPushButton(i18n("Show problem details"));
 		connect(detail_button, &QPushButton::clicked, this, [this]() {
 			if (!backend_error.details.isEmpty()) {
 				// WORKAROUND for silly KMessageBox behavior. (still needed in KF6 6.3.0)

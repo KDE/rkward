@@ -37,12 +37,10 @@ SET(RKWard_Lib_Sources
 QT_ADD_RESOURCES(RKWard_Lib_Sources resources.qrc icons/icons.qrc)
 
 # somehow the detected R paths from FindR.cmake do not get passed down automatically
-GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
 ADD_LIBRARY(rkward_lib STATIC ${RKWard_Lib_Sources})
-TARGET_COMPILE_DEFINITIONS(rkward_lib PUBLIC -DR_EXECUTABLE="${R_EXECUTABLE}")
 TARGET_LINK_LIBRARIES(rkward_lib windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KDAB::kdsingleapplication KF6::WindowSystem Qt6::Widgets KF6::XmlGui)
 
 SET(RKWard_App_Sources

@@ -130,7 +130,6 @@ void RInterface::reportFatalError() {
 	RK_TRACE(RBACKEND);
 
 	RKErrorDialog::reportableErrorMessage(nullptr, backend_error.message, backend_error.details, backend_error.title, backend_error.id);
-	backend_error = BackendError();
 }
 
 bool RInterface::backendIsIdle () {
