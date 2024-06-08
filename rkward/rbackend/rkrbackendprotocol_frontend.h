@@ -1,6 +1,6 @@
 /*
 rkrbackendprotocol - This file is part of the RKWard project. Created: Thu Nov 04 2010
-SPDX-FileCopyrightText: 2010-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -27,13 +27,11 @@ public:
 	static void sendPriorityCommand (RCommandProxy *proxy);
 	void terminateBackend ();
 	void setupBackend ();
-	static RKRBackendProtocolFrontend* instance () { return _instance; };
 protected:
 /** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */
 	void customEvent (QEvent *e) override;
 	QThread* main_thread;
 private:
-	static RKRBackendProtocolFrontend* _instance;
 	RInterface *frontend;
 };
 

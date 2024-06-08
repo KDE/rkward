@@ -178,15 +178,15 @@ void RKRBackendProtocolBackend::sendRequest (RBackendRequest *_request) {
 	}
 	RKRBackendEvent* event = new RKRBackendEvent (request);
 	RK_ASSERT (request->type != RBackendRequest::Output);
-	qApp->postEvent (RKRBackendTransmitter::instance (), event);
+	qApp->postEvent(p_transmitter, event);
 }
 
 bool RKRBackendProtocolBackend::inRThread () {
 	return (QThread::currentThread () == instance ()->r_thread);
 }
 
-void RKRBackendProtocolBackend::msleep (int delay) {
-	static_cast<RKRBackendTransmitter*> (RKRBackendTransmitter::instance ())->publicmsleep (delay);
+void RKRBackendProtocolBackend::msleep(int delay) {
+	p_transmitter->publicmsleep(delay);
 }
 
 QString RKRBackendProtocolBackend::backendDebugFile () {

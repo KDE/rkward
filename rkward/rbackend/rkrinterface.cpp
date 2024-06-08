@@ -79,6 +79,7 @@ RInterface::RInterface () {
 	previously_idle = false;
 	locked = 0;
 	backend_dead = false;
+	backend_started = false;
 	dummy_command_on_stack = nullptr;
 
 	// Create a fake init command. This is the top level command designed to capture all output of the startup sequence.
@@ -86,34 +87,26 @@ RInterface::RInterface () {
 	// (sub)-commands to set everything up (see there).
 	auto fake_c = new RCommand(i18n("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n("R Startup"));
 	fake_c->whenFinished(this, [this](RCommand *command) {
-		QString message = startup_errors;
-		if (startup_phase2_error || command->failed()) message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
-		if (!message.isEmpty ()) {
-			message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
-
-			QString details = command->fullOutput().replace('<', "&lt;").replace('\n', "<br>");
-			if (!details.isEmpty ()) {
-				// WORKAROUND for stupid KMessageBox behavior. (kdelibs 4.2.3)
-				// If length of details <= 512, it tries to show the details as a QLabel.
-				details = details.leftJustified (513);
-			}
-			KMessageBox::detailedError(nullptr, message, details, i18n("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
+		if (startup_phase2_error || command->failed()) backend_error.message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
+		if (!backend_error.message.isEmpty ()) {
+			backend_error.message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
+			backend_error.details = command->fullOutput().replace('<', "&lt;").replace('\n', "<br>");
+			backend_error.title = i18n("Error starting R");
+			// reporting the error will happen via RKWardMainWindow, which calls the setup wizard in this case
 		}
-
-		startup_errors.clear ();
 	});
 	_issueCommand(fake_c);
 
-	new RKSessionVars (this);
-	new RKDebugHandler (this);
-	new RKRBackendProtocolFrontend (this);
-	RKRBackendProtocolFrontend::instance ()->setupBackend ();
+	new RKSessionVars(this);
+	new RKDebugHandler(this);
+	backendprotocol = new RKRBackendProtocolFrontend(this);
+	backendprotocol->setupBackend();
 
 	/////// Further initialization commands, which do not necessarily have to run before everything else can be queued, here. ///////
 	// NOTE: will receive the list as a call plain generic request from the backend ("updateInstalledPackagesList")
 	_issueCommand(new RCommand(".rk.get.installed.packages()", RCommand::App | RCommand::Sync));
 
-	whenAllFinished(this, []() { RKSettings::validateSettingsInteractive (); });
+	whenAllFinished(this, [this]() { backend_started = !backend_dead; RKSettings::validateSettingsInteractive (); });
 }
 
 void RInterface::issueCommand(const QString &command, int type, const QString &rk_equiv, RCommandChain *chain) {
@@ -128,9 +121,16 @@ RInterface::~RInterface(){
 	// (noteably, it does call qApp->processEvents().
 	backend_dead = true;
 	RK_ASSERT(_instance == this);
-	delete RKRBackendProtocolFrontend::instance ();
+	delete backendprotocol;
 	_instance = nullptr;
 	RKWindowCatcher::discardInstance ();
+}
+
+void RInterface::reportFatalError() {
+	RK_TRACE(RBACKEND);
+
+	RKErrorDialog::reportableErrorMessage(nullptr, backend_error.message, backend_error.details, backend_error.title, backend_error.id);
+	backend_error = BackendError();
 }
 
 bool RInterface::backendIsIdle () {
@@ -389,7 +389,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		RKRBackendProtocolFrontend::setRequestCompleted(request);
 	} else if (request->type == RBackendRequest::Started) {
 		// The backend thread has finished basic initialization, but we still have more to do...
-		startup_errors = request->params["message"].toString ();
+		backend_error.message.append(request->params["message"].toString());
 
 		command_requests.append (request);
 		RCommandChain *chain = openSubcommandChain (runningCommand ());
@@ -465,7 +465,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 void RInterface::flushOutput (bool forced) {
 // do not trace. called periodically
 //	RK_TRACE (RBACKEND);
-	const ROutputList list = RKRBackendProtocolFrontend::instance ()->flushOutput (forced);
+	const ROutputList list = backendprotocol->flushOutput (forced);
 
 	for (ROutput *output : list) {
 		if (all_current_commands.isEmpty ()) {
@@ -515,6 +515,12 @@ void RInterface::issueCommand (RCommand *command, RCommandChain *chain) {
 
 void RInterface::_issueCommand(RCommand *command, RCommandChain *chain) { 
 	RK_TRACE (RBACKEND);
+
+	if (backend_dead) {
+		command->status |= RCommand::Failed;
+		handleCommandOut(command);
+		return;
+	}
 
 	if (command->command ().isEmpty ()) command->_type |= RCommand::EmptyCommand;
 	if (RKCarbonCopySettings::shouldCarbonCopyCommand (command)) {
@@ -567,7 +573,7 @@ void RInterface::cancelCommand (RCommand *command) {
 				RKDebugHandler::instance ()->sendCancel ();
 			} else {
 				RK_DEBUG(RBACKEND, DL_DEBUG, "Interrupting running command %d", command->id());
-				RKRBackendProtocolFrontend::instance ()->interruptCommand (command->id ());
+				backendprotocol->interruptCommand (command->id ());
 			}
 		}
 		RCommandStackModel::getModel ()->itemChange (command);
@@ -882,19 +888,30 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			na_int = request->params["na_int"].toInt ();
 	} else if (type == RBackendRequest::BackendExit) {
 		if (!backend_dead) {
+			bool report = false;
 			backend_dead = true;
-			Q_EMIT backendStatusChanged(Dead);
-			if (!(request->params.value("regular", QVariant(false)).toBool())) { // irregular exit
-				QString message = request->params["message"].toString ();
-				RK_DEBUG(RBACKEND, DL_ERROR, "Backend exit: %s", qPrintable(message));
-				message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
-				RKErrorDialog::reportableErrorMessage(nullptr, message, QString(), i18n("R engine has died"), "r_engine_has_died");
+			if (!request->params.value("regular", QVariant(false)).toBool()) { // irregular exit
+				backend_error.message.append(request->params["message"].toString());
+				RK_DEBUG(RBACKEND, DL_ERROR, "Backend exit: %s", qPrintable(backend_error.message));
+				if (backend_started) {
+					backend_error.message += i18n("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
+					backend_error.title = i18n("R engine has died");
+					backend_error.id = "r_engine_has_died";
+					report = true;
+				} else 	if (all_current_commands.isEmpty()) {
+					// the fake startup command may not technically have started running, if exit occurred early on
+					RCommand *fake_startup_command = RCommandStack::currentCommand();
+					if (fake_startup_command) handleCommandOut(fake_startup_command);
+					// in any case, reporting the error will happen from there
+				}
 			}
 			while (!all_current_commands.isEmpty()) {
 				auto c = all_current_commands.takeLast();
 				c->status |= RCommand::Failed;
 				handleCommandOut(c);
 			}
+			Q_EMIT backendStatusChanged(Dead);
+			if (report) reportFatalError();  // TODO: Reporting should probably be moved to RKWardMinaWindow, entirely
 		}
 	} else {
 		RK_ASSERT (false);

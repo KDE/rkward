@@ -85,7 +85,7 @@ void removeFromPathList (const char* varname, bool (*shouldRemove)(const QString
 	qputenv(varname, newlist.join(PATH_VAR_SEP).toLocal8Bit());
 }
 
-RKFrontendTransmitter::RKFrontendTransmitter () : RKAbstractTransmitter () {
+RKFrontendTransmitter::RKFrontendTransmitter(RKRBackendProtocolFrontend *frontend) : RKAbstractTransmitter(), frontend(frontend) {
 	RK_TRACE (RBACKEND);
 
 	rkd_transmitter = new RKGraphicsDeviceFrontendTransmitter ();
@@ -301,7 +301,7 @@ void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
 
 			if (handleOutput (out->output, out->output.length (), out->type)) {
 				RKRBackendEvent* event = new RKRBackendEvent (new RBackendRequest (false, RBackendRequest::OutputStartedNotification));
-				qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
+				qApp->postEvent(frontend, event);
 			}
 
 			delete (out);
@@ -314,7 +314,7 @@ void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
 	}
 
 	RKRBackendEvent* event = new RKRBackendEvent (request);
-	qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
+	qApp->postEvent(frontend, event);
 }
 
 void RKFrontendTransmitter::backendExit (int exitcode) {
@@ -340,7 +340,7 @@ void RKFrontendTransmitter::handleTransmissionError (const QString &message) {
 	RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
 	req->params["message"] = message;
 	RKRBackendEvent* event = new RKRBackendEvent (req);
-	qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
+	qApp->postEvent(frontend, event);
 
 	exit ();
 }

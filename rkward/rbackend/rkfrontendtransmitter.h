@@ -14,11 +14,12 @@ class QProcess;
 class QIODevice;
 class QLocalServer;
 class RKGraphicsDeviceFrontendTransmitter;
+class RKRBackendProtocolFrontend;
 
 class RKFrontendTransmitter : public RKAbstractTransmitter, public RKROutputBuffer {
 Q_OBJECT
 public:
-	RKFrontendTransmitter ();
+	RKFrontendTransmitter(RKRBackendProtocolFrontend *frontend);
 	~RKFrontendTransmitter ();
 
 	void run () override;
@@ -41,6 +42,7 @@ private:
 	bool quirkmode;
 	QProcess* backend;
 	QLocalServer* server;
+	RKRBackendProtocolFrontend* frontend;
 	RKGraphicsDeviceFrontendTransmitter* rkd_transmitter;
 };
 

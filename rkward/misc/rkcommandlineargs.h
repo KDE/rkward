@@ -44,6 +44,8 @@ public:
 		return instance->storage[op];
 	};
 private:
+friend class RKSetupWizard;
+	void set(const Option op, const QVariant value) { storage[op] = value; };
 	QList<QVariant> storage;
 	static RKCommandLineArgs *instance;
 };

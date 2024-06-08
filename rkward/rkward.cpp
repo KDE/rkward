@@ -388,7 +388,7 @@ void RKWardMainWindow::startR () {
 	}
 
 	RInterface::create();
-	Q_EMIT(backendCreated());
+	Q_EMIT backendCreated();
 	connect(RInterface::instance(), &RInterface::backendStatusChanged, this, &RKWardMainWindow::setRStatus);
 	RObjectList::init();
 
@@ -963,6 +963,9 @@ void RKWardMainWindow::setRStatus (int status) {
 		setIndictatorColor(statusbar_r_status, KColorScheme::NegativeText, KColorScheme::NegativeBackground);
 		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is unavailable."));
 		interrupt_all_commands->setEnabled(false);
+		if (RInterface::instance()->backendFailedToStart()) {
+			RKSetupWizard::doAutoCheck();  // The wizard itself will prevent recursion, if alread active
+		}
 	}
 }
 

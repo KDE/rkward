@@ -17,6 +17,7 @@ class RCommand;
 class RKWardMainWindow;
 class RKRBackend;
 class RBackendRequest;
+class RKRBackendProtocolFrontend;
 
 /** This class provides the main interface to the R-processor.
 
@@ -78,9 +79,18 @@ not be interrupted. */
 	};
 
 	bool backendIsDead () const { return backend_dead; };
+/** implies backendIsDead() */
+	bool backendFailedToStart() const { return (backend_dead && !backend_started); }
 	bool backendIsIdle ();
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
+	struct BackendError{
+		QString title;
+		QString id;
+		QString message;
+		QString details;
+	};
+	BackendError backendError() const { return backend_error; };
 private:
 /** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
 	void flushOutput (bool forced);
@@ -113,6 +123,7 @@ private:
 	RCommandChain* openSubcommandChain (RCommand *parent_command);
 	QList<RCommand *> current_commands_with_subcommands;
 	void closeSubcommandChain (RCommand *parent_command);
+	void reportFatalError();
 
 /** @see locked */
 	enum LockType {
@@ -124,14 +135,16 @@ private:
  * May be an OR'ed combination of several LockType s, but currently, there is only one LockType */
 	int locked;
 
-	QString startup_errors;
+	BackendError backend_error;
 	bool startup_phase2_error;
 	void runStartupCommand(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback);
 	RCommand *dummy_command_on_stack;
 friend class RKRBackendProtocolFrontend;
 	bool backend_dead;
+	bool backend_started;
 	static double na_real;
 	static int na_int;
+	RKRBackendProtocolFrontend *backendprotocol;
 friend class RKWardMainWindow;
 friend class RCommand;
 protected:

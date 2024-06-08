@@ -30,6 +30,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettings.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcommandlineargs.h"
 #include "../misc/rkstandardicons.h"
 #include "../dialogs/rkloadlibsdialog.h"
 #include "../windows/katepluginintegration.h"
@@ -88,6 +89,7 @@ public:
 };
 
 bool RKSetupWizard::has_been_run = false;
+bool RKSetupWizard::wizard_active = false;
 
 static auto iconForStatus(RKSetupWizardItem::Status status) {
 	QString icon_id;
@@ -110,12 +112,30 @@ public:
 		h->addWidget(rstatus_icon);
 		h->addWidget(rstatus_label);
 		h->setStretch(1, 2);
+		detail_button = new QPushButton(i18n("Show error details"));
+		connect(detail_button, &QPushButton::clicked, this, [this]() {
+			if (!backend_error.details.isEmpty()) {
+				// WORKAROUND for silly KMessageBox behavior. (still needed in KF6 6.3.0)
+				// If length of details <= 512, it tries to show the details as a QLabel.
+				backend_error.details = backend_error.details.leftJustified(513);
+			}
+			KMessageBox::detailedError(nullptr, backend_error.message, backend_error.details, backend_error.title, KMessageBox::Notify | KMessageBox::AllowLink);
+		});
+		h->addWidget(detail_button);
 		update();
 	}
 	void update() {
+		rinst_label->setText(i18n("RKWard is currently using the R installation at <nobr>%1</nobr>.", RKSessionVars::RBinary()));
+		detail_button->hide();
 		if (RInterface::instance()->backendIsDead()) {
 			rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Error));
-			rstatus_label->setText(i18n("<b>R backend has crashed.</b>"));
+			backend_error = RInterface::instance()->backendError();
+			detail_button->show();
+			if (RInterface::instance()->backendFailedToStart()) {
+				rstatus_label->setText(i18n("<b>R backend has failed to start.</b>"));
+			} else {
+				rstatus_label->setText(i18n("<b>R backend has crashed.</b>"));
+			}
 			if (anim) {
 				delete anim;
 				anim = nullptr;
@@ -138,7 +158,6 @@ public:
 				anim = nullptr;
 			}
 		} else {
-			rinst_label->setText(i18n("RKWard is currently using the R installation at <nobr>%1</nobr>.", RKSessionVars::RBinary()));
 			rstatus_label->setText(i18n("<b>Waiting for R backend...</b>"));
 			if (!anim) anim = RKStandardIcons::busyAnimation(this, [this](const QIcon& icon) {
 				rstatus_icon->setPixmap(icon.pixmap(32, 32));
@@ -147,7 +166,9 @@ public:
 	}
 private:
 	QLabel *rstatus_label, *rstatus_icon, *rinst_label;
+	QPushButton *detail_button;
 	QTimer *anim;
+	RInterface::BackendError backend_error;
 };
 
 class RBackendSelectionWidget : public QGroupBox {
@@ -274,20 +295,27 @@ RKSetupWizardItem* makeSoftwareCheck(const QString &exename, const QString& expl
 
 RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) : KAssistantDialog(parent), reason(reason) {
 	RK_TRACE (DIALOGS);
+	RK_ASSERT(!wizard_active);
+	wizard_active = true;
 
 	// Cover page
 	auto page = new RKSetupWizardPage(this, i18n("RKWard Setup Assistant"));
 	auto l = new QVBoxLayout(page);
-	QString intro = i18n("<p>This dialog will guide you through a quick check of the basic setup of the required (or recommended) components.</p>");
+	l->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("<p>This dialog will guide you through a quick check of the basic setup of the required (or recommended) components.</p>")));
 	if (reason == NewVersionRKWard) {
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of RKWard has been detected.</p>");
+		l->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("<p>The setup assistant has been invoked, automatically, because a new version of RKWard has been detected.</p>")));
 	} else if (reason == NewVersionR) {
 		// TODO: invoke this!
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of R has been detected.</p>");
+		l->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("<p>The setup assistant has been invoked, automatically, because a new version of R has been detected.</p>")));
 	} else if (reason == ProblemsDetected) {
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>");
+		auto hl = new QHBoxLayout();
+		l->addLayout(hl);
+		auto lab = new QLabel();
+		lab->setPixmap(iconForStatus(RKSetupWizardItem::Error));
+		hl->addWidget(lab);
+		hl->addWidget(RKCommonFunctions::wordWrappedLabel("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>"));
+		hl->setStretch(1,2);
 	}
-	l->addWidget(RKCommonFunctions::wordWrappedLabel(intro));
 	l->addStretch();
 
 	// Basic installation page
@@ -373,6 +401,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 				bool restart_needed = (select->group->checkedId() != 0) || RInterface::instance()->backendIsDead();
 				if (restart_needed) {
 					RKSessionVars::r_binary = select->selectedOpt();
+					RKCommandLineArgs::instance->set(RKCommandLineArgs::Setup, QVariant(true));
 					if (RKWardMainWindow::getMain()->triggerBackendRestart(this->reason == ManualCheck)) {
 						select->hide();
 						setValid(pageref, false);
@@ -458,6 +487,7 @@ RKSetupWizard::~RKSetupWizard() {
 	for(int i = 0; i < items.size(); ++i) {
 		delete items[i];
 	}
+	wizard_active = false;
 }
 
 void RKSetupWizard::next() {
@@ -475,7 +505,7 @@ void RKSetupWizard::doAutoCheck() {
 	// query settings modules for any problems
 	QList<RKSetupWizardItem*> settings_items = RKSettings::validateSettingsInteractive();
 	// check for those, and some cheap-but-important basics
-	if (RKCommonFunctions::getRKWardDataDir ().isEmpty () || RKSettingsModulePlugins::pluginMaps().isEmpty() || (RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount() == 0) || !settings_items.isEmpty()) {
+	if (RInterface::instance()->backendIsDead() || RKCommonFunctions::getRKWardDataDir().isEmpty () || RKSettingsModulePlugins::pluginMaps().isEmpty() || (RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount() == 0) || !settings_items.isEmpty()) {
 		fullInteractiveCheck(ProblemsDetected, settings_items);
 	} else if (RKSettingsModuleGeneral::rkwardVersionChanged()) {
 		fullInteractiveCheck(NewVersionRKWard, settings_items);
@@ -490,12 +520,13 @@ void RKSetupWizard::manualCheck() {
 void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) {
 	RK_TRACE (DIALOGS);
 
+	if (wizard_active) return; // This can actually happen: In particular, if backend fails to start
 	if (has_been_run && reason != ManualCheck) return;
 	has_been_run = true;
 
 	auto wizard = new RKSetupWizard(RKWardMainWindow::getMain(), reason, settings_items);
-
 	auto res = wizard->exec();
+
 	if (res == QDialog::Accepted) {
 		if (!wizard->packages_to_install.isEmpty()) {
 			RKLoadLibsDialog::showInstallPackagesModal(wizard, nullptr, wizard->packages_to_install);

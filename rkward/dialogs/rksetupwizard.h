@@ -47,6 +47,7 @@ friend class RKSetupWizardPage;
 	QList<RKSetupWizardItem*> items;
 	bool reinstallation_required;
 	InvokationReason reason;
+	static bool wizard_active;
 };
 
 class QComboBox;

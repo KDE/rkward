@@ -1,6 +1,6 @@
 /*
 rkrbackendprotocol - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 04 2010
-SPDX-FileCopyrightText: 2010-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -16,32 +16,28 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKRBackendProtocolFrontend* RKRBackendProtocolFrontend::_instance = nullptr;
 RKRBackendProtocolFrontend::RKRBackendProtocolFrontend (RInterface* parent) : QObject (parent) {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (!_instance);
 	frontend = parent;
-	_instance = this;
 }
 
-RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend () {
+RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend() {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT(_instance == this);
 	terminateBackend ();
-	RKFrontendTransmitter::instance ()->wait(1000);  // Wait for thread to catch the backend's exit request, and exit()
-	QMetaObject::invokeMethod(RKFrontendTransmitter::instance(), &RKFrontendTransmitter::quit, Qt::QueuedConnection);  // tell it to quit, otherwise
-	RKFrontendTransmitter::instance ()->wait(3000);  // Wait for thread to quit and clean up.
+	auto transmitter = RKFrontendTransmitter::instance();
+	transmitter->wait(1000);  // Wait for thread to catch the backend's exit request, and exit()
+	QMetaObject::invokeMethod(transmitter, &RKFrontendTransmitter::quit, Qt::QueuedConnection);  // tell it to quit, otherwise
+	transmitter->wait(3000);  // Wait for thread to quit and clean up.
 	qApp->processEvents(QEventLoop::AllEvents, 500); // Not strictly needed, but avoids some mem leaks on exit by handling all posted BackendExit events
-	delete RKFrontendTransmitter::instance ();
-	_instance = nullptr;
+	delete transmitter;
 }
 
 void RKRBackendProtocolFrontend::setupBackend () {
 	RK_TRACE (RBACKEND);
 
-	new RKFrontendTransmitter ();
+	new RKFrontendTransmitter(this);
 }
 
 void RKRBackendProtocolFrontend::setRequestCompleted (RBackendRequest *request) {
