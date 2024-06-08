@@ -261,7 +261,6 @@ void RKSettings::saveSettings (KConfig *config) {
 	FOREACH_SETTINGS_MODULE(syncConfig(config, RKConfigBase::SaveConfig));
 }
 
-#include <KAssistantDialog>
 QList<RKSetupWizardItem*> RKSettings::validateSettingsInteractive () {
 	RK_TRACE (SETTINGS);
 

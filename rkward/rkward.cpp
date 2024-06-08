@@ -38,6 +38,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KConfigGroup>
 #include <KColorScheme>
 #include <kwidgetsaddons_version.h>
+#include <KMessageWidget>
 
 // application specific includes
 #include "core/rkmodificationtracker.h"
@@ -363,6 +364,7 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 void RKWardMainWindow::startR () {
 	RK_TRACE (APP);
 
+	setRStatus(RInterface::Starting);
 	// make sure our general purpose files directory exists
 	QString packages_path = RKSettingsModuleGeneral::filesPath() + "/.rkward_packages";
 	bool ok = QDir ().mkpath (packages_path);
@@ -800,7 +802,6 @@ void RKWardMainWindow::initStatusBar () {
 	boxl->addWidget(dummy);
 
 	realbar->addPermanentWidget(box, 0);
-	setRStatus(RInterface::Starting);
 }
 
 void RKWardMainWindow::saveOptions () {
@@ -947,6 +948,7 @@ void setIndictatorColor(QWidget *widget, KColorScheme::ForegroundRole fg, KColor
 
 void RKWardMainWindow::setRStatus (int status) {
 	RK_TRACE (APP);
+	static KMessageWidget* rstatus_message = nullptr;
 
 	if (status == RInterface::Busy) {
 		setIndictatorColor(statusbar_r_status, KColorScheme::NegativeText, KColorScheme::NegativeBackground);
@@ -957,6 +959,7 @@ void RKWardMainWindow::setRStatus (int status) {
 		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is idle."));
 		interrupt_all_commands->setEnabled(false);
 	} else if (status == RInterface::Starting) {
+		if (rstatus_message) rstatus_message->hide();
 		setIndictatorColor(statusbar_r_status, KColorScheme::NeutralText, KColorScheme::NeutralBackground);
 		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is being initialized."));
 	} else {
@@ -965,6 +968,13 @@ void RKWardMainWindow::setRStatus (int status) {
 		interrupt_all_commands->setEnabled(false);
 		if (RInterface::instance()->backendFailedToStart()) {
 			RKSetupWizard::doAutoCheck();  // The wizard itself will prevent recursion, if alread active
+		}
+		if (!rstatus_message) {
+			rstatus_message = new KMessageWidget(i18n("R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting\">troubleshooting</a> for possible solutions."));
+			rstatus_message->setMessageType(KMessageWidget::Error);
+			rstatus_message->setCloseButtonVisible(false);
+			connect(rstatus_message, &KMessageWidget::linkActivated, this, [](const QString& url) { RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(url)); });
+			RKWorkplace::mainWorkplace()->addMessageWidget(rstatus_message);
 		}
 	}
 }

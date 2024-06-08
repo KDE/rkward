@@ -91,6 +91,7 @@ int RKSessionVars::compareRVersion (const QString& version) {
 }
 
 QStringList RKSessionVars::frontendSessionInfo () {
+	// NOTE: No translation on purpose. This is mostly meant for pasting to the bug tracker
 	QStringList lines;
 	lines.append ("RKWard version: " RKWARD_VERSION);
 	lines.append ("KDE Frameworks version (runtime): " + QString (KCoreAddons::versionString ()));

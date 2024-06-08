@@ -7,15 +7,28 @@ SPDX-License-Identifier: GPL-2.0-or-later
 <document>
 	<title>Trouble Shooting / FAQ</title>
 	<summary>
-	RKWard is far from complete and certainly there are many issues that need to be fixed. However, some of the things you notice are not due to the nature of RKWard but R or something else. This section will try to cover some common issues. See also <link href="https://rkward.kde.org/faq">the online FAQ</link>.
+	This page will try to cover some common issues you may encounter when using RKWard. See also <link href="https://rkward.kde.org/faq">the online FAQ</link>.
 	</summary>
 	<section title="The &quot;Analysis&quot; menu is missing, or shows up as &quot;(no label)&quot;" shorttitle="Missing menu items" id="missing_menu_items">
 		This problem will often occur, when moving an RKWard installation to a different path, esp. on Windows and Mac. You may have to visit
 		Settings->Configure RKWard->Plugins and re-add the relevant ".pluginmap"-files. Starting with version 0.6.3, RKWard should detect
 		a changed installation path, and adjust paths, automatically.
 	</section>
-	<section title="People tend to ask me what RKWard means. What should I answer?" shorttitle="What does &quot;RKWard&quot; mean?" id="the_name_problems">
-		Yes, it's a very odd name. ;) However, R comes obviously from the <link href="http://www.r-project.org/">R-language</link>, which is the statistical basis of RKWard. K is derived from <link href="http://kde.org/">KDE</link>, which delivered the basic GUI technologies for RKWard. And <link href="http://en.wikipedia.org/wiki/Ward">Ward</link>? That's another story.
+	<section title="The R backend crashed or failed to start" shorttitle="Crashed backend" id="crashed_backend">
+		A times the R backend will fail to start due to a configuration or installation problem. Common causes are changed paths, or an update to R. Usually,
+		in these cases, the setup dialog is shown when starting RKWard, and this allows to select a different installation of R. (Note: You will be offered
+		a selection of installations found a common paths, but you can also specify a non-detected installation, manually.)
+
+		In many cases, it will "just work" to select a version of R other than what has been used at compile time. Should you run into trouble, it is advised to
+		use the same, or a similar version of R to what was available during compilation, however.
+
+		You can manually change the R backend at any time, using Settings->Check installation. Be sure to save your data, before changing the backend! You can
+		also use the command-line option --r-executable in order to start a session using a specific installation of R.
+	</section>
+	<section title="Why shouldn't I use R bundled inside the RKWard AppImage" shorttitle="AppImage" id="appimage">
+		The AppImage includes an installation of R for convenience, but this installation is not, and cannot technically be made fully functional. Importantly,
+		you will not generally be able to install R packages (other than ones implemented purely in R). Also, you may run into conflicts between the R installation
+		inside the AppImage, and R packages that are installed system-wide. This may cause subtle and surprising bugs.
 	</section>
 	<section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?" shorttitle="Commands not processing" id="not_yet_ready_problems">
 		This happens because RKWard starts first and subsequent R is started in the background. Depending on the speed of your machine it can take some time to start R. In any case you can check the state of R within RKWard. Just look at the little box on the right bottom corner of RKWard. If it is green you can go ahead.
@@ -31,6 +44,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	</section>
 	<section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?" shorttitle="RKWard integration with an office-suite" id="integration_in_office_suite">
 		We agree that RKWard is still very lacking when it comes to office integration, and "seamless" integration is still far away. Refer to <link href="rkward://page/rkward_output"/> for information on how to accomplish the most important things right now. In the meantime, it is possible to carry out analyses in RMarkdown documents. These can be saved as PDF, TeX document or Office document, among others. Current RKWard versions support this in principle in the export menu.
+	</section>
+	<section title="People tend to ask me what RKWard means. What should I answer?" shorttitle="What does &quot;RKWard&quot; mean?" id="the_name_problems">
+		Yes, it's a very odd name. ;) However, R comes obviously from the <link href="http://www.r-project.org/">R-language</link>, which is the statistical basis of RKWard. K is derived from <link href="http://kde.org/">KDE</link>, which delivered the basic GUI technologies for RKWard. And <link href="http://en.wikipedia.org/wiki/Ward">Ward</link>? That's another story.
 	</section>
 	<section title="RKWard is running since ages. Has it hung up?" shorttitle="RKWard seems to hang" id="hung_up_problems">
 		This depends. Some test and plots just need some time if you have huge amounts of data or sophisticated calculations. Therefore patience is sometimes needed. In any case you can check the state of R within RKWard. Just look at the little box on the right bottom corner of RKWard. Red means there is still something to calculate or plot. If it turns green, R is done calculating.
