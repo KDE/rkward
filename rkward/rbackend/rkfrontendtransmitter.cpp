@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rksessionvars.h"
 #include "../misc/rkcommandlineargs.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmoduler.h"
 
 #include <KLocalizedString>
 #include <krandom.h>
@@ -137,6 +138,9 @@ void RKFrontendTransmitter::detectAndCheckRBinary() {
 	QString r_exe = RKCommandLineArgs::get(RKCommandLineArgs::RExecutable).toString();
 	if (!r_exe.isEmpty()) {
 		RK_DEBUG(APP, DL_DEBUG, "Using R as specified on command line");
+	} else if (!RKSettingsModuleR::userConfiguredRBinary().isEmpty()) {
+		RK_DEBUG(APP, DL_DEBUG, "Using R as previously user-configured");
+		r_exe = RKSettingsModuleR::userConfiguredRBinary();
 	} else {
 		QDir frontend_path = qApp->applicationDirPath();
 		QFileInfo rkward_ini_file(frontend_path.absoluteFilePath("rkward.ini"));

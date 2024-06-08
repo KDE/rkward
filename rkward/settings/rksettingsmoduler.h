@@ -1,6 +1,6 @@
 /*
 rksettingsmoduler - This file is part of the RKWard project. Created: Wed Jul 28 2004
-SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -44,6 +44,7 @@ public:
 	static QString helpBaseUrl () { return help_base_url; };
 
 	static int getDefaultWidth () { return options_width; };
+	static QString userConfiguredRBinary() { return options_r_binary; };
 public Q_SLOTS:
 	void settingChanged ();
 private Q_SLOTS:
@@ -69,6 +70,8 @@ private:
 	static RKConfigValue<QString> options_pager;
 	static RKConfigValue<QString> options_further;
 	static RKConfigValue<QStringList> options_addpaths;
+friend class RKSetupWizard;
+	static RKConfigValue<QString> options_r_binary;
 
 // constants
 	static QString builtin_editor;

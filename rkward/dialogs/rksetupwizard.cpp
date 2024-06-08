@@ -201,7 +201,7 @@ public:
 		}
 		auto button = group->button(0);
 		if (RInterface::instance()->backendIsDead()) button->setText(i18n("Attempt to restart R at %1", RKSessionVars::RBinary()));
-		else button->setText(i18n("Keep current version"));
+		else button->setText(i18n("Keep current version (%1)", RKSessionVars::RBinary()));
 		button->setChecked(true);
 	}
 	QRadioButton *addButton(const QString &text, int index) {
@@ -524,6 +524,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 	if (has_been_run && reason != ManualCheck) return;
 	has_been_run = true;
 
+	QString old_r_binary = RKSessionVars::RBinary();
 	auto wizard = new RKSetupWizard(RKWardMainWindow::getMain(), reason, settings_items);
 	auto res = wizard->exec();
 
@@ -542,6 +543,10 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 #endif
 		for(int i = 0; i < wizard->r_commands_to_run.size(); ++i) {
 			RInterface::issueCommand(wizard->r_commands_to_run[i], RCommand::App);
+		}
+
+		if (!RInterface::instance()->backendIsDead() && (RKSessionVars::RBinary() != old_r_binary)) {
+			RKSettingsModuleR::options_r_binary = RKSessionVars::RBinary();
 		}
 	}
 

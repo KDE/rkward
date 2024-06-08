@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkrinterface.h"
 #include "../settings/rksettingsmoduledebug.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmoduler.h"
 #include "../version.h"
 
 #include <kcoreaddons_version.h>
@@ -153,6 +154,10 @@ QStringList RKSessionVars::findRInstallations() {
 #endif
 	// On Unix, but also, if R was not found in the default locations try to find R in the system path.
 	QString r = QStandardPaths::findExecutable("R");
-	if (!(r.isNull() || ret.contains(r))) ret.append(r);
+	if (!(r.isEmpty() || ret.contains(r))) ret.append(r);
+	// NOTE: in a default start, the configured R binary takes precedence over all the others, *but*
+	//       --r-executable auto was specified, we want to detect as if from scratch. Thus appending, rather than prepending
+	r = RKSettingsModuleR::userConfiguredRBinary();
+	if (!(r.isEmpty() || ret.contains(r))) ret.append(r);
 	return ret;
 }

@@ -57,6 +57,7 @@ RKConfigValue<QString> RKSettingsModuleR::options_editor {"editor", builtin_edit
 RKConfigValue<QString> RKSettingsModuleR::options_pager {"pager", builtin_editor};
 RKConfigValue<QString> RKSettingsModuleR::options_further {"further init commands", QString()};
 RKConfigValue<QStringList> RKSettingsModuleR::options_addpaths {"addsyspaths", QStringList()};
+RKConfigValue<QString> RKSettingsModuleR::options_r_binary {"user configured R binary", QString()};
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -284,6 +285,7 @@ void RKSettingsModuleR::syncConfig(KConfig *config, RKConfigBase::ConfigSyncActi
 	options_pager.syncConfig(cg, a);
 	options_further.syncConfig(cg, a);
 	options_addpaths.syncConfig(cg, a);
+	options_r_binary.syncConfig(cg, a);
 }
 
 //#################################################
