@@ -43,7 +43,7 @@ LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
 ADD_LIBRARY(rkward_lib STATIC ${RKWard_Lib_Sources})
 TARGET_COMPILE_DEFINITIONS(rkward_lib PUBLIC -DR_EXECUTABLE="${R_EXECUTABLE}")
-TARGET_LINK_LIBRARIES(rkward_lib windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF6::WindowSystem Qt6::Widgets KF6::XmlGui)
+TARGET_LINK_LIBRARIES(rkward_lib windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KDAB::kdsingleapplication KF6::WindowSystem Qt6::Widgets KF6::XmlGui)
 
 SET(RKWard_App_Sources
 	main.cpp

@@ -37,6 +37,7 @@ remove_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove to compley to KDECompi
 #uncomment the line below to save ~250-350kB in object size
 #ADD_DEFINITIONS(-DRKWARD_NO_TRACE)
 
+ADD_SUBDIRECTORY(3rdparty/KDSingleApplication)
 ADD_SUBDIRECTORY(rkward)
 ADD_SUBDIRECTORY(doc)
 ADD_SUBDIRECTORY(tests)

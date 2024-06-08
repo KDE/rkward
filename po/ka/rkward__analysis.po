@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-05-01 05:38+0200\n"
+"PO-Revision-Date: 2024-06-05 13:08+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3806,13 +3806,13 @@ msgstr "სემპლები"
 #: rkward/plugins/analysis/variances/F_test.js:27
 #, kde-format
 msgid "Numerator DF"
-msgstr ""
+msgstr "მრიცხველი DF"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:28
 #, kde-format
 msgid "Denominator DF"
-msgstr ""
+msgstr "მნიშვნელი DF"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:30

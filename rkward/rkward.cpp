@@ -55,7 +55,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "misc/rkstandardicons.h"
 #include "misc/rkcommonfunctions.h"
 #include "misc/rkxmlguisyncer.h"
-#include "misc/rkdbusapi.h"
 #include "misc/rkdialogbuttonbox.h"
 #include "misc/rkstyle.h"
 #include "dialogs/rkloadlibsdialog.h"
@@ -278,9 +277,6 @@ void RKWardMainWindow::doPostInit () {
 	RInterface::issueCommand (command);
 
 	if (!evaluate_code.isEmpty ()) RKConsole::pipeUserCommand (evaluate_code);
-	RKDBusAPI *dbus = new RKDBusAPI (this);
-	connect (this, &RKWardMainWindow::aboutToQuitRKWard, dbus, &RKDBusAPI::deleteLater);
-	// around on the bus in this case.
 
 	updateCWD ();
 	connect (RInterface::instance(), &RInterface::backendWorkdirChanged, this, &RKWardMainWindow::updateCWD);

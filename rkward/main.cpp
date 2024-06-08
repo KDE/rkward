@@ -45,6 +45,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KUrlAuthorized>
 #include <KMessageBox>
+#if __has_include(<KStartupInfo>)
+#	include <KStartupInfo>
+#endif
+#include <KWindowSystem>
 #ifdef WITH_KCRASH
 #	include <KCrash>
 #endif
@@ -57,9 +61,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QApplication>
 #include <QUrl>
 #include <QCommandLineParser>
-#include <QDBusConnection>
-#include <QDBusInterface>
-#include <QDBusReply>
 #include <QTime>
 #include <QSettings>
 #include <QStandardPaths>
@@ -80,8 +81,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "settings/rksettingsmodulegeneral.h"
 #include "rbackend/rksessionvars.h"
 #include "windows/rkdebugmessagewindow.h"
-#include "misc/rkdbusapi.h"
 #include "misc/rkcommonfunctions.h"
+#include "../3rdparty/KDSingleApplication/kdsingleapplication.h"
 
 #ifdef Q_OS_WIN
 	// these are needed for the exit hack.
@@ -230,10 +231,11 @@ int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
 	// annoyingly, QWebEngineUrlSchemes have to be registered before creating the app.
 	QWebEngineUrlScheme scheme("help");
-	scheme.setSyntax (QWebEngineUrlScheme::Syntax::Path);
-	scheme.setFlags (QWebEngineUrlScheme::LocalScheme|QWebEngineUrlScheme::LocalAccessAllowed);
-	QWebEngineUrlScheme::registerScheme (scheme);
-	QApplication app (argc, argv);
+	scheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
+	scheme.setFlags(QWebEngineUrlScheme::LocalScheme|QWebEngineUrlScheme::LocalAccessAllowed);
+	QWebEngineUrlScheme::registerScheme(scheme);
+	QApplication app(argc, argv);
+	KDSingleApplication app_singleton;
 #ifdef WITH_KCRASH
 	KCrash::setDrKonqiEnabled (true);
 #endif
@@ -330,10 +332,6 @@ int main (int argc, char *argv[]) {
 		qputenv ("PATH", QString ("%1/bin:%1/sbin:%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
 		if (RK_Debug::RK_Debug_Level > 3) qDebug ("Adjusting system path to %s", qPrintable (qgetenv ("PATH")));
 	}
-	if (!qEnvironmentVariableIsSet ("DBUS_LAUNCHD_SESSION_BUS_SOCKET")) {
-		// try to ensure that DBus is running before trying to connect
-		QProcess::execute ("launchctl", QStringList () << "load" << "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
-	}
 #elif defined(Q_OS_UNIX)
 	QStringList data_dirs = QString(qgetenv("XDG_DATA_DIRS")).split(PATH_VAR_SEP);;
 	QString reldatadir = QDir::cleanPath(QDir(app.applicationDirPath()).absoluteFilePath(REL_PATH_TO_DATA));
@@ -350,20 +348,20 @@ int main (int argc, char *argv[]) {
 		qputenv("PATH", syspaths.join(PATH_VAR_SEP).toLocal8Bit());
 	}
 
-	// Handle --reuse option, by placing a dbus-call to existing RKWard process (if any) and exiting
+	// Handle --reuse option, by forwarding url arguments to existing RKWard process (if any) and exiting
 	if (parser.isSet ("reuse") || (parser.isSet ("autoreuse") && !url_args.isEmpty ())) {
-		if (!QDBusConnection::sessionBus ().isConnected ()) {
-			RK_DEBUG (DEBUG_ALL, DL_WARNING, "Could not connect to session dbus");
-		} else {
-			QDBusInterface iface (RKDBUS_SERVICENAME, "/", "", QDBusConnection::sessionBus ());
-			if (iface.isValid ()) {
-				QDBusReply<void> reply = iface.call ("openAnyUrl", url_args, !parser.isSet ("nowarn-external"));
-				if (!reply.isValid ()) {
-					RK_DEBUG (DEBUG_ALL, DL_ERROR, "Error while placing dbus call: %s", qPrintable (reply.error ().message ()));
-					return 1;
-				}
-				return 0;
-			}
+		if (!app_singleton.isPrimaryInstance()) {
+			QByteArray call;
+			QDataStream stream(&call, QIODevice::WriteOnly);
+			// TODO: nowarn-external
+			stream << QVariant(QStringLiteral("openAnyUrl")) << QVariant(url_args) << QVariant(parser.isSet("nowarn-external"));
+			app_singleton.sendMessageWithTimeout(call, 1000);
+			// TODO: should always debug to terminal in this case!
+			RK_DEBUG (DEBUG_ALL, DL_INFO, "Reusing running instance");
+#if __has_include(<KStartupInfo>)
+			KStartupInfo::appStarted();
+#endif
+			return 0;
 		}
 	}
 
@@ -400,6 +398,33 @@ int main (int argc, char *argv[]) {
 		kRestoreMainWindows<RKWardMainWindow>();	// well, whatever this is supposed to do -> TODO
 	} else {
 		new RKWardMainWindow ();
+	}
+
+	if (app_singleton.isPrimaryInstance()) {
+		QObject::connect(&app_singleton, &KDSingleApplication::messageReceived, RKWardMainWindow::getMain(), [](const QByteArray &_message) {
+			// ok, raising the app window is totally hard to do, reliably. This solution copied from kate.
+			auto *main = RKWardMainWindow::getMain();
+			main->show();
+			main->activateWindow();
+			main->raise();
+			// [omitting activation token]
+			KWindowSystem::activateWindow(main->windowHandle());
+			// end
+
+			QByteArray message = _message;
+			QDataStream stream(&message, QIODevice::ReadOnly);
+			QVariant call;
+			QVariant urls;
+			QVariant nowarn;
+			stream >> call;
+			stream >> urls;
+			stream >> nowarn;
+			if (call == QStringLiteral("openAnyUrl")) {
+				main->openUrlsFromCommandLineOrDBus(!nowarn.toBool(), urls.toStringList());
+			} else {
+				RK_DEBUG (APP, DL_ERROR, "Unrecognized SingleApplication call");
+			}
+		});
 	}
 
 	// do it!
