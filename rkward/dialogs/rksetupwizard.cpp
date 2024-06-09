@@ -202,7 +202,11 @@ public:
 		auto button = group->button(0);
 		if (RInterface::instance()->backendIsDead()) button->setText(i18n("Attempt to restart R at %1", RKSessionVars::RBinary()));
 		else button->setText(i18n("Keep current version (%1)", RKSessionVars::RBinary()));
-		button->setChecked(true);
+		if (RKSessionVars::isPathInAppImage(RKSessionVars::RBinary()) && (r_installations.size() > 1)) {
+			group->button(1)->setChecked(true);
+		} else {
+			button->setChecked(true);
+		}
 	}
 	QRadioButton *addButton(const QString &text, int index) {
 		auto button = new QRadioButton(text);
