@@ -391,6 +391,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 			status->update();
 			if (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) {
 				select->hide();
+				setValid(pageref, false);
 				return;
 			}
 			select->updateOptions();
