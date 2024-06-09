@@ -146,7 +146,7 @@ public:
 				rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Warning));
 				statustext.append(i18n("<p>You are using the R version bundled inside the RKWard AppImage.</p>"
 				                       "<p>This version comes with several technical limitations. Importantly, "
-				                       "yu will not be able to install most R addon packages. "
+				                       "you will not be able to install most R addon packages. "
 				                       "In general, it is therefore recommended to select a system-installed "
 				                       "version of R, instead, below.</p>"));
 			} else {
