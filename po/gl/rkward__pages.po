@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-10 00:36+0000\n"
+"POT-Creation-Date: 2024-06-09 00:36+0000\n"
 "PO-Revision-Date: 2023-11-18 16:22+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -1975,26 +1975,12 @@ msgstr "Solución de problemas"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <summary>
 #: rkward/pages/rkward_trouble_shooting.rkh:9
-#, fuzzy, kde-format
-#| msgid ""
-#| "RKWard is far from complete and certainly there are many issues that need "
-#| "to be fixed. However, some of the things you notice are not due to the "
-#| "nature of RKWard but R or something else. This section will try to cover "
-#| "some common issues. See also <link href=\"http://rkward.kde.org/faq\">the "
-#| "online FAQ</link>."
+#, kde-format
 msgid ""
-"RKWard is far from complete and certainly there are many issues that need to "
-"be fixed. However, some of the things you notice are not due to the nature "
-"of RKWard but R or something else. This section will try to cover some "
-"common issues. See also <link href=\"https://rkward.kde.org/faq\">the online "
-"FAQ</link>."
+"This page will try to cover some common issues you may encounter when using "
+"RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
+"link>."
 msgstr ""
-"RKWard está bastante incompleto e desde logo existen moitos problemas que "
-"temos que solucionar. Porén, algúns dos problemas que detectará non son "
-"culpa de RKWard, senón que se deben á forma de funcionar de R ou a outra "
-"causa allea. Esta sección intenta explicar algúns problemas habituais. "
-"Consulte tamén as <link href=\"http://rkward.kde.org/faq\">preguntas "
-"habituais en Internet</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2028,40 +2014,73 @@ msgstr ""
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
-msgid "People tend to ask me what RKWard means. What should I answer?"
-msgstr "A xente pregúntame que significa «RKWard». Que lles digo?"
+msgid "The R backend crashed or failed to start"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
-msgid "What does \"RKWard\" mean?"
-msgstr "Que significa «RKWard»?"
-
-#. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
-#: rkward/pages/rkward_trouble_shooting.rkh:17
-#, fuzzy, kde-format
-#| msgid ""
-#| "Yes, it's a very odd name. ;) However, R comes obviously from the <link "
-#| "href=\"http://www.r-project.org/\">R-language</link> which is the "
-#| "statistical basis of RKWard. K is derived from <link href=\"http://kde."
-#| "org/\">KDE</link> which delivered the basic GUI technologies for RKWard. "
-#| "And <link href=\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's "
-#| "another story."
-msgid ""
-"Yes, it's a very odd name. ;) However, R comes obviously from the <link href="
-"\"http://www.r-project.org/\">R-language</link>, which is the statistical "
-"basis of RKWard. K is derived from <link href=\"http://kde.org/\">KDE</"
-"link>, which delivered the basic GUI technologies for RKWard. And <link href="
-"\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's another story."
+msgid "Crashed backend"
 msgstr ""
-"Si, é un nome algo raro. ;) Obviamente, o R ven da <link href=\"http://www.r-"
-"project.org/\">linguaxe R</link>, que é a base estatística de RKWard. O K "
-"ven de <link href=\"http://kde.org/\">KDE</link>, que forneceu as "
-"tecnoloxías básicas de interface que usa RKWard. E<link href=\"http://en."
-"wikipedia.org/wiki/Ward\">Ward</link>? Iso xa é outra historia."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
+#: rkward/pages/rkward_trouble_shooting.rkh:17
+#, kde-format
+msgid ""
+"A times the R backend will fail to start due to a configuration or "
+"installation problem. Common causes are changed paths, or an update to R. "
+"Usually, in these cases, the setup dialog is shown when starting RKWard, and "
+"this allows to select a different installation of R. (Note: You will be "
+"offered a selection of installations found a common paths, but you can also "
+"specify a non-detected installation, manually.)"
+msgstr ""
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
+#: rkward/pages/rkward_trouble_shooting.rkh:17
+#, kde-format
+msgid ""
+"In many cases, it will \"just work\" to select a version of R other than "
+"what has been used at compile time. Should you run into trouble, it is "
+"advised to use the same, or a similar version of R to what was available "
+"during compilation, however."
+msgstr ""
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
+#: rkward/pages/rkward_trouble_shooting.rkh:17
+#, kde-format
+msgid ""
+"You can manually change the R backend at any time, using Settings->Check "
+"installation. Be sure to save your data, before changing the backend! You "
+"can also use the command-line option --r-executable in order to start a "
+"session using a specific installation of R."
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:20
+#: rkward/pages/rkward_trouble_shooting.rkh:28
+#, kde-format
+msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
+msgstr ""
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:28
+#, kde-format
+msgid "AppImage"
+msgstr ""
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
+#: rkward/pages/rkward_trouble_shooting.rkh:28
+#, kde-format
+msgid ""
+"The AppImage includes an installation of R for convenience, but this "
+"installation is not, and cannot technically be made fully functional. "
+"Importantly, you will not generally be able to install R packages (other "
+"than ones implemented purely in R). Also, you may run into conflicts between "
+"the R installation inside the AppImage, and R packages that are installed "
+"system-wide. This may cause subtle and surprising bugs."
+msgstr ""
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:33
 #, kde-format
 msgid ""
 "Sometimes I enter a command short after the start of RKWard but it is not "
@@ -2071,13 +2090,13 @@ msgstr ""
 "procesa. Que pasa?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:20
+#: rkward/pages/rkward_trouble_shooting.rkh:33
 #, kde-format
 msgid "Commands not processing"
 msgstr "A orde non está procesándose"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
-#: rkward/pages/rkward_trouble_shooting.rkh:20
+#: rkward/pages/rkward_trouble_shooting.rkh:33
 #, kde-format
 msgid ""
 "This happens because RKWard starts first and subsequent R is started in the "
@@ -2093,7 +2112,7 @@ msgstr ""
 "inferior dereita de RKWard. Se está verde, R iniciouse."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
-#: rkward/pages/rkward_trouble_shooting.rkh:20
+#: rkward/pages/rkward_trouble_shooting.rkh:33
 #, kde-format
 msgid ""
 "You can start submitting commands while the backend has not yet started, or "
@@ -2107,7 +2126,7 @@ msgstr ""
 "estea dispoñíbel."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:25
+#: rkward/pages/rkward_trouble_shooting.rkh:38
 #, kde-format
 msgid ""
 "RKWard says it needs a package. Was the installation of RKWard not complete?"
@@ -2116,13 +2135,13 @@ msgstr ""
 "completa?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:25
+#: rkward/pages/rkward_trouble_shooting.rkh:38
 #, kde-format
 msgid "Missing packages"
 msgstr "Faltan paquetes"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
-#: rkward/pages/rkward_trouble_shooting.rkh:25
+#: rkward/pages/rkward_trouble_shooting.rkh:38
 #, fuzzy, kde-format
 #| msgid ""
 #| "RKWard has basically all the functionality which comes with the standard "
@@ -2146,7 +2165,7 @@ msgstr ""
 "R») para realizar unha tarefa."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
-#: rkward/pages/rkward_trouble_shooting.rkh:25
+#: rkward/pages/rkward_trouble_shooting.rkh:38
 #, fuzzy, kde-format
 #| msgid ""
 #| "Here is an example. All tests related to <link href=\"rkward://rhelp/"
@@ -2173,7 +2192,7 @@ msgstr ""
 "Momento»."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
-#: rkward/pages/rkward_trouble_shooting.rkh:25
+#: rkward/pages/rkward_trouble_shooting.rkh:38
 #, fuzzy, kde-format
 #| msgid ""
 #| "Typically you would call them from R via <link href=\"rkward://rhelp/"
@@ -2195,7 +2214,7 @@ msgstr ""
 "privilexios de root en certos casos."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:32
+#: rkward/pages/rkward_trouble_shooting.rkh:45
 #, fuzzy, kde-format
 #| msgid ""
 #| "RKWard claims to take care of seamless integration with an office-suite. "
@@ -2209,13 +2228,13 @@ msgstr ""
 "correspondente?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:32
+#: rkward/pages/rkward_trouble_shooting.rkh:45
 #, kde-format
 msgid "RKWard integration with an office-suite"
 msgstr "Integración de RKWard con software de oficina"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?">
-#: rkward/pages/rkward_trouble_shooting.rkh:32
+#: rkward/pages/rkward_trouble_shooting.rkh:45
 #, fuzzy, kde-format
 #| msgid ""
 #| "We agree that RKWard is still very lacking when it comes to office "
@@ -2238,19 +2257,54 @@ msgstr ""
 "momentos."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:35
+#: rkward/pages/rkward_trouble_shooting.rkh:48
+#, kde-format
+msgid "People tend to ask me what RKWard means. What should I answer?"
+msgstr "A xente pregúntame que significa «RKWard». Que lles digo?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:48
+#, kde-format
+msgid "What does \"RKWard\" mean?"
+msgstr "Que significa «RKWard»?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
+#: rkward/pages/rkward_trouble_shooting.rkh:48
+#, fuzzy, kde-format
+#| msgid ""
+#| "Yes, it's a very odd name. ;) However, R comes obviously from the <link "
+#| "href=\"http://www.r-project.org/\">R-language</link> which is the "
+#| "statistical basis of RKWard. K is derived from <link href=\"http://kde."
+#| "org/\">KDE</link> which delivered the basic GUI technologies for RKWard. "
+#| "And <link href=\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's "
+#| "another story."
+msgid ""
+"Yes, it's a very odd name. ;) However, R comes obviously from the <link href="
+"\"http://www.r-project.org/\">R-language</link>, which is the statistical "
+"basis of RKWard. K is derived from <link href=\"http://kde.org/\">KDE</"
+"link>, which delivered the basic GUI technologies for RKWard. And <link href="
+"\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's another story."
+msgstr ""
+"Si, é un nome algo raro. ;) Obviamente, o R ven da <link href=\"http://www.r-"
+"project.org/\">linguaxe R</link>, que é a base estatística de RKWard. O K "
+"ven de <link href=\"http://kde.org/\">KDE</link>, que forneceu as "
+"tecnoloxías básicas de interface que usa RKWard. E<link href=\"http://en."
+"wikipedia.org/wiki/Ward\">Ward</link>? Iso xa é outra historia."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:51
 #, kde-format
 msgid "RKWard is running since ages. Has it hung up?"
 msgstr "RKWard leva unha eternidade en execución. Quedou colgado?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:35
+#: rkward/pages/rkward_trouble_shooting.rkh:51
 #, kde-format
 msgid "RKWard seems to hang"
 msgstr "RKWard parece quedar colgado"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
-#: rkward/pages/rkward_trouble_shooting.rkh:35
+#: rkward/pages/rkward_trouble_shooting.rkh:51
 #, fuzzy, kde-format
 #| msgid ""
 #| "This depends. Some test and plots just need some time if you have huge "
@@ -2275,7 +2329,7 @@ msgstr ""
 "está verde, os cálculos remataron."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
-#: rkward/pages/rkward_trouble_shooting.rkh:35
+#: rkward/pages/rkward_trouble_shooting.rkh:51
 #, kde-format
 msgid ""
 "But some statistical test are rather memory and stack hungry and can make "
@@ -2292,7 +2346,7 @@ msgstr ""
 "Wilcoxon</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
-#: rkward/pages/rkward_trouble_shooting.rkh:35
+#: rkward/pages/rkward_trouble_shooting.rkh:51
 #, fuzzy, kde-format
 #| msgid ""
 #| "Therefore it's important you know the test. Moreover it's very important "
@@ -2317,19 +2371,19 @@ msgstr ""
 "mem.limits\"/> e <link href=\"rkward://rhelp/memory.limit\"/>)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:42
+#: rkward/pages/rkward_trouble_shooting.rkh:58
 #, kde-format
 msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
 msgstr "Creo que fixen algo mal. Onde están «Desfacer» e «Refacer»?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
-#: rkward/pages/rkward_trouble_shooting.rkh:42
+#: rkward/pages/rkward_trouble_shooting.rkh:58
 #, kde-format
 msgid "Undo/Redo"
 msgstr "Desfacer/Refacer"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
-#: rkward/pages/rkward_trouble_shooting.rkh:42
+#: rkward/pages/rkward_trouble_shooting.rkh:58
 #, kde-format
 msgid ""
 "Right now RKWard doesn't have \"undo\" or \"redo\" functionality in all "
@@ -2345,7 +2399,7 @@ msgstr ""
 "copias dos datos orixinais e usar nomes descritivos para todo."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
-#: rkward/pages/rkward_trouble_shooting.rkh:42
+#: rkward/pages/rkward_trouble_shooting.rkh:58
 #, kde-format
 msgid ""
 "However, RKWard tries to give you as much information as possible about "
@@ -2751,6 +2805,27 @@ msgstr ""
 "paquete «GO», que está na lista negra de maneira predeterminada. Se nota que "
 "a carga dun paquete require un tempo excesivo, considere a posibilidade de "
 "engadilo a esta lista."
+
+#, fuzzy
+#~| msgid ""
+#~| "RKWard is far from complete and certainly there are many issues that "
+#~| "need to be fixed. However, some of the things you notice are not due to "
+#~| "the nature of RKWard but R or something else. This section will try to "
+#~| "cover some common issues. See also <link href=\"http://rkward.kde.org/faq"
+#~| "\">the online FAQ</link>."
+#~ msgid ""
+#~ "RKWard is far from complete and certainly there are many issues that need "
+#~ "to be fixed. However, some of the things you notice are not due to the "
+#~ "nature of RKWard but R or something else. This section will try to cover "
+#~ "some common issues. See also <link href=\"https://rkward.kde.org/faq"
+#~ "\">the online FAQ</link>."
+#~ msgstr ""
+#~ "RKWard está bastante incompleto e desde logo existen moitos problemas que "
+#~ "temos que solucionar. Porén, algúns dos problemas que detectará non son "
+#~ "culpa de RKWard, senón que se deben á forma de funcionar de R ou a outra "
+#~ "causa allea. Esta sección intenta explicar algúns problemas habituais. "
+#~ "Consulte tamén as <link href=\"http://rkward.kde.org/faq\">preguntas "
+#~ "habituais en Internet</link>."
 
 #~ msgid ""
 #~ "This help page gives a rough overview of the most important parts of "
