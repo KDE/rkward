@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		a changed installation path, and adjust paths, automatically.
 	</section>
 	<section title="The R backend crashed or failed to start" shorttitle="Crashed backend" id="crashed_backend">
-		A times the R backend will fail to start due to a configuration or installation problem. Common causes are changed paths, or an update to R. Usually,
+		At times the R backend will fail to start due to a configuration or installation problem. Common causes are changed paths, or an update to R. Usually,
 		in these cases, the setup dialog is shown when starting RKWard, and this allows to select a different installation of R. (Note: You will be offered
 		a selection of installations found a common paths, but you can also specify a non-detected installation, manually.)
 
