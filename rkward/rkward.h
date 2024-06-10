@@ -65,6 +65,7 @@ protected:
 	void initToolViewsAndR ();
 	/** reimplemented from KMainWindow to call our doQueryClose (), and then (if quitting was not cancelled), invoke an RKQuitAgent to wait for the R-backend to finish up before actually quitting. */
 	virtual void closeEvent (QCloseEvent *e) override;
+	bool event(QEvent *e) override;
 Q_SIGNALS:
 	void aboutToQuitRKWard ();
 	void tabForToolViewAdded(QWidget*, QWidget*);  // Needed from katepluginintegration

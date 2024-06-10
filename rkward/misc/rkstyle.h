@@ -22,8 +22,8 @@ public:
 	static int spacingHint ();
 /// @returns a cached instance of the color scheme for normal views. Particularly useful for setting specials colors in item models
 	static KColorScheme* viewScheme();
-	static void cleanResources();
 private:
+friend class RKWardMainWindow;
 	static KColorScheme* _view_scheme;
 };
 

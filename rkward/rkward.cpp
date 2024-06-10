@@ -194,7 +194,7 @@ RKWardMainWindow::~RKWardMainWindow() {
 	delete RControlWindow::getControl ();
 	factory ()->removeClient (RKComponentMap::getMap ());
 	delete RKComponentMap::getMap ();
-	RKStyle::cleanResources();
+	delete RKStyle::_view_scheme;
 }
 
 KatePluginIntegrationApp* RKWardMainWindow::katePluginIntegration () {
@@ -219,6 +219,14 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 		Q_EMIT aboutToQuitRKWard();
 		new RKQuitAgent(this);
 	}
+}
+
+bool RKWardMainWindow::event(QEvent *e) {
+	if (e->type() == QEvent::ApplicationPaletteChange) {
+		delete RKStyle::_view_scheme;
+		RKStyle::_view_scheme = nullptr;
+	}
+	return KParts::MainWindow::event(e);
 }
 
 void RKWardMainWindow::doPostInit () {

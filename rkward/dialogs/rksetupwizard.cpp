@@ -553,7 +553,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 		// save backend selection (if one was made)
 		if (!RInterface::instance()->backendIsDead() && (RKSessionVars::RBinary() != old_r_binary)) {
 			if (RKSessionVars::isPathInAppImage(RKSessionVars::RBinary())) {
-				// the appimage path isn't stable, but leaving this empty causes it to be used by default (via rkward.ini)
+				// the appimage path isn't stable, but an empty setting causes it to be used by default (via rkward.ini)
 				RKSettingsModuleR::options_r_binary = QString();;
 			} else {
 				RKSettingsModuleR::options_r_binary = RKSessionVars::RBinary();

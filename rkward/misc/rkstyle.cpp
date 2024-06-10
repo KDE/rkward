@@ -26,14 +26,8 @@ int RKStyle::spacingHint() {
 KColorScheme* RKStyle::viewScheme() {
 	if (!_view_scheme) {
 		RK_TRACE(MISC);
+		// Note: Will be updated on changes with RKWardMainWindow::event
 		_view_scheme = new KColorScheme(QPalette::Normal);
-		QObject::connect(qApp, &QGuiApplication::paletteChanged, cleanResources);  // will be re-initialized when needed, again; NOTE: Not emitted before Qt 5.13.0, so quirky, before
 	}
 	return _view_scheme;
-}
-
-void RKStyle::cleanResources() {
-	RK_TRACE(MISC);
-	delete _view_scheme;
-	_view_scheme = nullptr;
 }
