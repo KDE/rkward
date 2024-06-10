@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-09 00:36+0000\n"
-"PO-Revision-Date: 2024-05-10 09:14+0100\n"
+"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"PO-Revision-Date: 2024-06-09 06:15+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -1985,6 +1985,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Ĉi tiu paĝo provos kovri iujn oftajn problemojn, kiujn vi eble renkontos "
+"uzante RKWard. Vidu ankaŭ <link href=\"https://rkward.kde.org/faq\">la "
+"enretan FAQ</link> (oftaj demandoj)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2018,19 +2021,19 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "La R-backend paneis aŭ malsukcesis komenciĝi"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Backend paneis"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid ""
-"A times the R backend will fail to start due to a configuration or "
+"At times the R backend will fail to start due to a configuration or "
 "installation problem. Common causes are changed paths, or an update to R. "
 "Usually, in these cases, the setup dialog is shown when starting RKWard, and "
 "this allows to select a different installation of R. (Note: You will be "

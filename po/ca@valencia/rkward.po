@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-09 00:36+0000\n"
-"PO-Revision-Date: 2024-04-11 12:56+0200\n"
+"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"PO-Revision-Date: 2024-06-09 11:46+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -1610,41 +1610,50 @@ msgid "<b>Select one:</b>"
 msgstr "<b>Seleccioneu un:</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:115
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show problem details"
-msgstr "Mostra els detalls"
+msgstr "Mostra els detalls del problema"
 
 #: rkward/dialogs/rksetupwizard.cpp:128
 #, kde-format
 msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
 msgstr ""
+"RKWard actualment està utilitzant la instal·lació d'R a <nobr>%1</nobr>."
 
 #: rkward/dialogs/rksetupwizard.cpp:135
-#, fuzzy, kde-format
-#| msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
+#, kde-format
 msgid "<b>R backend has failed to start.</b>"
-msgstr "<b>S'ha iniciat el dorsal d'R. Premeu «Següent» per a continuar.</b>"
+msgstr "<b>El dorsal d'R ha fallat en iniciar-se.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:137
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
-msgstr ""
+msgstr "<b>El dorsal d'R ha fallat.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:144
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
-msgstr ""
+msgstr "<b>S'ha iniciat correctament la versió %1 d'R.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:147
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>You are using the R version bundled inside the RKWard AppImage.</"
+#| "p><p>This version comes with several technical limitations. Importantly, "
+#| "yu will not be able to install most R addon packages. In general, it is "
+#| "therefore recommended to select a system-installed version of R, instead, "
+#| "below.</p>"
 msgid ""
 "<p>You are using the R version bundled inside the RKWard AppImage.</"
-"p><p>This version comes with several technical limitations. Importantly, yu "
+"p><p>This version comes with several technical limitations. Importantly, you "
 "will not be able to install most R addon packages. In general, it is "
 "therefore recommended to select a system-installed version of R, instead, "
 "below.</p>"
 msgstr ""
+"<p>Esteu utilitzant la versió d'R inclosa dins d'AppImage de RKWard.</"
+"p><p>Esta versió ve amb diverses limitacions tècniques. La més important és "
+"que no podreu instal·lar la majoria de paquets de complements d'R. Per tant, "
+"en general es recomana seleccionar una versió instal·lada al sistema d'R.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:161
 #, kde-format
@@ -1654,49 +1663,49 @@ msgstr "<b>S'està esperant pel dorsal d'R…</b>"
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
 msgid "Use R at:"
-msgstr ""
+msgstr "Utilitza R a:"
 
 #: rkward/dialogs/rksetupwizard.cpp:184
 #, kde-format
 msgid "Select another R executable"
-msgstr ""
+msgstr "Seleccioneu un altre executable d'R"
 
 #: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
 msgid "Select R executable"
-msgstr ""
+msgstr "Seleccioneu l'executable d'R"
 
 #: rkward/dialogs/rksetupwizard.cpp:200
 #, kde-format
 msgid "Use R at %1"
-msgstr ""
+msgstr "Utilitza R a %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:203
 #, kde-format
 msgid "Attempt to restart R at %1"
-msgstr ""
+msgstr "Intenta reiniciar R a %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:204
 #, kde-format
 msgid "Keep current version (%1)"
-msgstr ""
+msgstr "Mantín la versió actual (%1)"
 
-#: rkward/dialogs/rksetupwizard.cpp:232
+#: rkward/dialogs/rksetupwizard.cpp:236
 #, kde-format
 msgid "No action needed."
 msgstr "No cal fer cap acció."
 
-#: rkward/dialogs/rksetupwizard.cpp:267
+#: rkward/dialogs/rksetupwizard.cpp:271
 #, kde-format
 msgid "Not installed"
 msgstr "No està instal·lat"
 
-#: rkward/dialogs/rksetupwizard.cpp:268 rkward/dialogs/rksetupwizard.cpp:279
+#: rkward/dialogs/rksetupwizard.cpp:272 rkward/dialogs/rksetupwizard.cpp:283
 #, kde-format
 msgid "Install %1"
 msgstr "Instal·la %1"
 
-#: rkward/dialogs/rksetupwizard.cpp:268
+#: rkward/dialogs/rksetupwizard.cpp:272
 #, kde-format
 msgid ""
 "(Attempt to) install the package %1 and its dependencies for this version of "
@@ -1706,13 +1715,13 @@ msgstr ""
 "d'R. En la majoria dels casos, açò requerirà una connexió amb Internet que "
 "funcione."
 
-#: rkward/dialogs/rksetupwizard.cpp:269 rkward/dialogs/rksetupwizard.cpp:280
-#: rkward/dialogs/rksetupwizard.cpp:340
+#: rkward/dialogs/rksetupwizard.cpp:273 rkward/dialogs/rksetupwizard.cpp:284
+#: rkward/dialogs/rksetupwizard.cpp:344
 #, kde-format
 msgid "No change"
 msgstr "Sense canvis"
 
-#: rkward/dialogs/rksetupwizard.cpp:269
+#: rkward/dialogs/rksetupwizard.cpp:273
 #, kde-format
 msgid ""
 "Proceed without the package. You will again be given the option to install "
@@ -1721,12 +1730,12 @@ msgstr ""
 "Procediu sense el paquet. De nou se vos donarà l'opció d'instal·lar el "
 "paquet, quan este siga necessari."
 
-#: rkward/dialogs/rksetupwizard.cpp:271 rkward/dialogs/rksetupwizard.cpp:291
+#: rkward/dialogs/rksetupwizard.cpp:275 rkward/dialogs/rksetupwizard.cpp:295
 #, kde-format
 msgid "Installed"
 msgstr "Instal·lat"
 
-#: rkward/dialogs/rksetupwizard.cpp:279
+#: rkward/dialogs/rksetupwizard.cpp:283
 #, kde-format
 msgid ""
 "Mark %1 for installation (actual installation is not yet supported, but you "
@@ -1737,22 +1746,22 @@ msgstr ""
 "admesa, però se us demanarà un enllaç cap a una pàgina de descàrrega en "
 "l'última pàgina d'este diàleg)"
 
-#: rkward/dialogs/rksetupwizard.cpp:280
+#: rkward/dialogs/rksetupwizard.cpp:284
 #, kde-format
 msgid "Proceed without %1. You will be missing some functionality."
 msgstr "Continua sense %1. Faltarà alguna funcionalitat."
 
-#: rkward/dialogs/rksetupwizard.cpp:288
+#: rkward/dialogs/rksetupwizard.cpp:292
 #, kde-format
 msgid "Not found"
 msgstr "No s'ha trobat"
 
-#: rkward/dialogs/rksetupwizard.cpp:302
+#: rkward/dialogs/rksetupwizard.cpp:306
 #, kde-format
 msgid "RKWard Setup Assistant"
 msgstr "Assistent de configuració de RKWard"
 
-#: rkward/dialogs/rksetupwizard.cpp:304
+#: rkward/dialogs/rksetupwizard.cpp:308
 #, kde-format
 msgid ""
 "<p>This dialog will guide you through a quick check of the basic setup of "
@@ -1761,7 +1770,7 @@ msgstr ""
 "<p>Este diàleg vos guiarà a través d'una comprovació ràpida de la "
 "configuració bàsica dels components requerits (o recomanats).</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:306
+#: rkward/dialogs/rksetupwizard.cpp:310
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
@@ -1770,7 +1779,7 @@ msgstr ""
 "<p>S'ha invocat l'assistent de configuració, de manera automàtica, perquè "
 "s'ha detectat una nova versió de RKWard.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:309
+#: rkward/dialogs/rksetupwizard.cpp:313
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
@@ -1779,27 +1788,27 @@ msgstr ""
 "<p>S'ha invocat l'assistent de configuració, de manera automàtica, perquè "
 "s'ha detectat una nova versió d'R.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:322
+#: rkward/dialogs/rksetupwizard.cpp:326
 #, kde-format
 msgid "Basic installation"
 msgstr "Instal·lació bàsica"
 
-#: rkward/dialogs/rksetupwizard.cpp:324
+#: rkward/dialogs/rksetupwizard.cpp:328
 #, kde-format
 msgid "Installation directory"
 msgstr "Directori d'instal·lació"
 
-#: rkward/dialogs/rksetupwizard.cpp:326
+#: rkward/dialogs/rksetupwizard.cpp:330
 #, kde-format
 msgid "Not found."
 msgstr "No s'ha trobat."
 
-#: rkward/dialogs/rksetupwizard.cpp:328
+#: rkward/dialogs/rksetupwizard.cpp:332
 #, kde-format
 msgid "Reinstallation required"
 msgstr "Es requerix tornar a instal·lar"
 
-#: rkward/dialogs/rksetupwizard.cpp:328
+#: rkward/dialogs/rksetupwizard.cpp:332
 #, kde-format
 msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
@@ -1808,49 +1817,49 @@ msgstr ""
 "Este problema no es pot corregir automàticament. Haureu de tornar a "
 "instal·lar RKWard."
 
-#: rkward/dialogs/rksetupwizard.cpp:331 rkward/dialogs/rksetupwizard.cpp:344
-#: rkward/dialogs/rksetupwizard.cpp:368
+#: rkward/dialogs/rksetupwizard.cpp:335 rkward/dialogs/rksetupwizard.cpp:348
+#: rkward/dialogs/rksetupwizard.cpp:372
 #, kde-format
 msgid "Found."
 msgstr "S'ha trobat."
 
-#: rkward/dialogs/rksetupwizard.cpp:335
+#: rkward/dialogs/rksetupwizard.cpp:339
 #, kde-format
 msgid "RKWard plugins"
 msgstr "Connectors de RKWard"
 
-#: rkward/dialogs/rksetupwizard.cpp:337
+#: rkward/dialogs/rksetupwizard.cpp:341
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr ""
 "<p>No hi ha cap connector habilitat. Probablement açò no és intencionat.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:338
+#: rkward/dialogs/rksetupwizard.cpp:342
 #, kde-format
 msgid "None selected"
 msgstr "Res seleccionat"
 
-#: rkward/dialogs/rksetupwizard.cpp:339
+#: rkward/dialogs/rksetupwizard.cpp:343
 #, kde-format
 msgid "Restore defaults"
 msgstr "Restaura als valors predeterminats"
 
-#: rkward/dialogs/rksetupwizard.cpp:339
+#: rkward/dialogs/rksetupwizard.cpp:343
 #, kde-format
 msgid "Enable the default plugins"
 msgstr "Habilita els connectors predeterminats"
 
-#: rkward/dialogs/rksetupwizard.cpp:340
+#: rkward/dialogs/rksetupwizard.cpp:344
 #, kde-format
 msgid "Proceed without plugins"
 msgstr "Continua sense els connectors"
 
-#: rkward/dialogs/rksetupwizard.cpp:348
+#: rkward/dialogs/rksetupwizard.cpp:352
 #, kde-format
 msgid "Kate plugins"
 msgstr "Connectors de Kate"
 
-#: rkward/dialogs/rksetupwizard.cpp:351
+#: rkward/dialogs/rksetupwizard.cpp:355
 #, kde-format
 msgid ""
 "<p>Important functionality in RKWard is provided by kate plugins. It looks "
@@ -1861,46 +1870,46 @@ msgstr ""
 "RKWard. Pareix que no n'hi ha cap d'instal·lat. En Linux/BSD, açò "
 "generalment es pot solucionar instal·lant Kate.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:352
+#: rkward/dialogs/rksetupwizard.cpp:356
 #, kde-format
 msgid "None found"
 msgstr "No se n'ha trobat cap"
 
-#: rkward/dialogs/rksetupwizard.cpp:355
+#: rkward/dialogs/rksetupwizard.cpp:359
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
 msgstr[0] "S'ha trobat %1 connector."
 msgstr[1] "S'han trobat %1 connectors."
 
-#: rkward/dialogs/rksetupwizard.cpp:360
+#: rkward/dialogs/rksetupwizard.cpp:364
 #, kde-format
 msgid "Pre 0.7.3 output file"
 msgstr "Fitxer d'eixida previ a 0.7.3"
 
-#: rkward/dialogs/rksetupwizard.cpp:363
+#: rkward/dialogs/rksetupwizard.cpp:367
 #, kde-format
 msgid "Exists"
 msgstr "Existix"
 
-#: rkward/dialogs/rksetupwizard.cpp:365
+#: rkward/dialogs/rksetupwizard.cpp:369
 #, kde-format
 msgid "Import"
 msgstr "Importa"
 
-#: rkward/dialogs/rksetupwizard.cpp:365
+#: rkward/dialogs/rksetupwizard.cpp:369
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
 msgstr ""
 "Importa cap a la sessió, de manera que es pot guardar en el format nou "
 "d'eixida."
 
-#: rkward/dialogs/rksetupwizard.cpp:366
+#: rkward/dialogs/rksetupwizard.cpp:370
 #, kde-format
 msgid "No action"
 msgstr "Cap acció"
 
-#: rkward/dialogs/rksetupwizard.cpp:366
+#: rkward/dialogs/rksetupwizard.cpp:370
 #, kde-format
 msgid ""
 "Ignore (and keep) the file. You can import it manually, at any time, using "
@@ -1909,18 +1918,17 @@ msgstr ""
 "Ignora (i manté) el fitxer. El podeu importar manualment, en qualsevol "
 "moment, utilitzant «rk.import.legacy.output()»"
 
-#: rkward/dialogs/rksetupwizard.cpp:379
-#, fuzzy, kde-format
-#| msgid "R-Backend"
+#: rkward/dialogs/rksetupwizard.cpp:383
+#, kde-format
 msgid "R Backend"
 msgstr "Dorsal d'R"
 
-#: rkward/dialogs/rksetupwizard.cpp:423
+#: rkward/dialogs/rksetupwizard.cpp:428
 #, kde-format
 msgid "R Packages"
 msgstr "Paquets d'R"
 
-#: rkward/dialogs/rksetupwizard.cpp:425
+#: rkward/dialogs/rksetupwizard.cpp:430
 #, kde-format
 msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
@@ -1929,7 +1937,7 @@ msgstr ""
 "El paquet R2HTML és emprat per quasi totes les funcions d'eixida de RKWard "
 "i, per tant, és obligatori."
 
-#: rkward/dialogs/rksetupwizard.cpp:426
+#: rkward/dialogs/rksetupwizard.cpp:431
 #, kde-format
 msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
@@ -1939,12 +1947,12 @@ msgstr ""
 "(inclosa la representació de la vista prèvia), el qual és una característica "
 "opcional però recomanada."
 
-#: rkward/dialogs/rksetupwizard.cpp:431
+#: rkward/dialogs/rksetupwizard.cpp:436
 #, kde-format
 msgid "External software"
 msgstr "Programari extern"
 
-#: rkward/dialogs/rksetupwizard.cpp:433
+#: rkward/dialogs/rksetupwizard.cpp:438
 #, kde-format
 msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
@@ -1953,7 +1961,7 @@ msgstr ""
 "El programari pandoc és necessari per a renderitzar (o previsualitzar) "
 "fitxers R en markdown (.Rmd). Açò és opcional però recomanat."
 
-#: rkward/dialogs/rksetupwizard.cpp:434
+#: rkward/dialogs/rksetupwizard.cpp:439
 #, kde-format
 msgid ""
 "The kbibtex software is useful for managing citations while writing "
@@ -1963,12 +1971,12 @@ msgstr ""
 "articles. S'integra en RKWard a través del connector de Kate per a la Vista "
 "prèvia del document."
 
-#: rkward/dialogs/rksetupwizard.cpp:439
+#: rkward/dialogs/rksetupwizard.cpp:444
 #, kde-format
 msgid "Summary of the next steps"
 msgstr "Resum dels següents passos"
 
-#: rkward/dialogs/rksetupwizard.cpp:456
+#: rkward/dialogs/rksetupwizard.cpp:461
 #, kde-format
 msgid ""
 "<h1>Reinstallation required</h1><p>Your installation of RKWard is broken, "
@@ -1978,12 +1986,12 @@ msgstr ""
 "està trencada i no es pot reparar automàticament. Haureu de tornar a "
 "instal·lar RKWard!</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:459
+#: rkward/dialogs/rksetupwizard.cpp:464
 #, kde-format
 msgid "<h2>Software to install</h2>"
 msgstr "<h2>Programari per a instal·lar</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:469
+#: rkward/dialogs/rksetupwizard.cpp:474
 #, kde-format
 msgid ""
 "<p>The following software is recommended for installation, but automatic "
@@ -1994,17 +2002,17 @@ msgstr ""
 "automàtica (encara) no s'admet. Feu clic damunt dels següents enllaços per a "
 "obtindre la informació de descàrrega:</p><li>%1</li>"
 
-#: rkward/dialogs/rksetupwizard.cpp:471
+#: rkward/dialogs/rksetupwizard.cpp:476
 #, kde-format
 msgid "No software to install"
 msgstr "No hi ha cap programari que s'haja d'instal·lar"
 
-#: rkward/dialogs/rksetupwizard.cpp:473
+#: rkward/dialogs/rksetupwizard.cpp:478
 #, kde-format
 msgid "<h2>R packages to install</h2>"
 msgstr "<h2>Paquets d'R per a instal·lar</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:475
+#: rkward/dialogs/rksetupwizard.cpp:480
 #, kde-format
 msgid ""
 "<p>%1 R packages are marked for installation. The R package installation "
@@ -2015,7 +2023,7 @@ msgstr ""
 "del paquet R s'iniciarà quan premeu finalitzar. És possible que se vos "
 "demane que seleccioneu una rèplica de descàrrega.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:477
+#: rkward/dialogs/rksetupwizard.cpp:482
 #, kde-format
 msgid "No R packages to install"
 msgstr "No hi ha cap paquet d'R que s'haja d'instal·lar"
@@ -2452,6 +2460,8 @@ msgid ""
 "Act as if the version of RKWard had changed (show setup wizard, and "
 "(re-)install rkward R package)."
 msgstr ""
+"Actua com si la versió de RKWard haguera canviat (mostra l'assistent de "
+"configuració i (re)instal·la el paquet R de RKWard)."
 
 #: rkward/misc/rkcommandlineargs.cpp:39
 #, kde-format
@@ -3772,33 +3782,22 @@ msgid "Description"
 msgstr "Descripció"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:119
-#, fuzzy, kde-format
-#| msgid ""
-#| "RKWard failed to detect an R installation on this system. Either R is not "
-#| "installed, or not at one of the standard installation locations. You can "
-#| "use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', "
-#| "or supply an rkward.ini file to specify a non-standard location."
+#, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
 "RKWard ha fallat en detectar una instal·lació d'R en este sistema. O bé R no "
 "està instal·lat, o no ho està en una de les ubicacions estàndard "
-"d'instal·lació. Podeu utilitzar el paràmetre de la línia d'ordres «--r-"
-"executable <i>auto / PATH_TO_R</i>», o proporcionar un fitxer «rkward.ini» "
-"per a especificar una ubicació no estàndard."
+"d'instal·lació."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:126
-#, fuzzy, kde-format
-#| msgid ""
-#| "The R executable specified on the command line (%1) does not exist or is "
-#| "not executable."
+#, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
 "executable."
 msgstr ""
-"L'executable R especificat en la línia d'ordres (%1) no existix o no és un "
-"executable."
+"La instal·lació d'R configurada a <b>%1</b> no existix o no és un executable."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:218
 #, kde-format
@@ -4007,7 +4006,7 @@ msgstr ""
 "Si teniu qualsevol editor de dades obert, o en cas de dubte, primer es "
 "recomana tancar-los (probablement açò es detectarà automàticament en "
 "versions posteriors de RKWard). En este cas, ara seleccioneu «Cancel·la», i "
-"després tanqueu les finestres de dades, guardeu i torneu-ho a intentar."
+"després tanqueu les finestres de dades, guardeu i torneu-ho a provar."
 
 #: rkward/rbackend/rkrinterface.cpp:679
 #, kde-format
@@ -4134,7 +4133,7 @@ msgid ""
 msgstr ""
 "El component «katepart» no s'ha pogut carregar. RKWard no pot executar-se "
 "sense el katepart, i ara acabarà. Instal·leu el katepart, i torneu-ho a "
-"intentar."
+"provar."
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -4571,22 +4570,15 @@ msgid "Restart R Backend"
 msgstr "Reinicia el dorsal R"
 
 #: rkward/rkward.cpp:632
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>This feature is primarily targetted at advanced users working on "
-#| "scripts or packages. Please proceed with caution.</p><p><b>All unsaved "
-#| "data in this workspace will be lost!</b> All data editors, and graphics "
-#| "windows will be closed.</p><p>Are you sure you want to proceed?</p>"
+#, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
 "</b> All data editors, and graphics windows will be closed.</p><p>Are you "
 "sure you want to proceed?</p>"
 msgstr ""
-"<p>Esta característica està destinada principalment als usuaris avançats que "
-"treballen amb scripts o paquets. Procediu amb precaució.</p><p><b>Totes les "
-"dades sense guardar en este espai de treball es perdran!</b> Es tancaran "
-"tots els editors de dades i finestres de gràfics.</p><p>Segur que voleu "
-"continuar?</p>"
+"<p><b>Reiniciar el dorsal descartarà totes les dades sense guardar en este "
+"espai de treball</b> Es tancaran tots els editors de dades i finestres de "
+"gràfics.</p><p>Segur que voleu continuar?</p>"
 
 #: rkward/rkward.cpp:633
 #, kde-format
@@ -4687,6 +4679,9 @@ msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
+"El motor d'R no està disponible. Vegeu la <a href=\"rkward://page/"
+"rkward_trouble_shooting\">resolució de problemes</a> per a possibles "
+"solucions."
 
 #: rkward/rkward.cpp:1003
 #, kde-format
@@ -7642,44 +7637,3 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure en l'editor (només lectura)"
-
-#~ msgid ""
-#~ "<p>The setup assistant has been invoked, automatically, because a problem "
-#~ "has been detected in your setup.</p>"
-#~ msgstr ""
-#~ "<p>S'ha invocat l'assistent de configuració, de manera automàtica, perquè "
-#~ "s'ha detectat un problema en la vostra configuració.</p>"
-
-#~ msgid ""
-#~ "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
-#~ msgstr ""
-#~ "<b>El dorsal d'R ha fallat. Feu clic en «Cancel·la» per a eixir de "
-#~ "l'assistent de configuració.</b>"
-
-#~ msgid "Unable to detect R installation"
-#~ msgstr "No s'ha pogut detectar la instal·lació d'R"
-
-#~ msgid "Specified R executable does not exist"
-#~ msgstr "L'executable especificat d'R no existix"
-
-#~ msgid ""
-#~ "The R executable (%1) specified in the rkward.ini file (%2) does not "
-#~ "exist or is not executable."
-#~ msgstr ""
-#~ "L'executable R (%1) especificat en el fitxer «rkward.ini» (%2) no existix "
-#~ "o no és un executable."
-
-#~ msgid ""
-#~ "The R executable specified at compile time (%1) does not exist or is not "
-#~ "executable. Probably the installation of R has moved. You can use the "
-#~ "command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or "
-#~ "supply an rkward.ini file to specify the new location."
-#~ msgstr ""
-#~ "L'executable R especificat en temps de compilació (%1) no existix o no és "
-#~ "un executable. Probablement s'ha mogut la instal·lació d'R. Podeu "
-#~ "utilitzar el paràmetre de la línia d'ordres «--r-executable <i>auto / "
-#~ "PATH_TO_R</i>», o proporcionar un fitxer «rkward.ini» per a especificar "
-#~ "la ubicació nova."
-
-#~ msgid "Unrecognized call '%1'"
-#~ msgstr "Crida no reconeguda «%1»"

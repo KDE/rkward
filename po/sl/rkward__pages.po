@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-09 00:36+0000\n"
-"PO-Revision-Date: 2024-05-10 06:18+0200\n"
+"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"PO-Revision-Date: 2024-06-09 08:43+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1980,6 +1980,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Ta stran bo poskušala zajeti nekaj pogostih težav, na katere lahko naletite "
+"pri uporabi RKWarda. Glejte tudi <link href=\"https://rkward.kde.org/faq"
+"\">spletna pogosta vprašanja</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2013,25 +2016,37 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "Zaledje R se je sesulo ali pa se ni zagnalo"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Sesuto zaledje"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "A times the R backend will fail to start due to a configuration or "
+#| "installation problem. Common causes are changed paths, or an update to R. "
+#| "Usually, in these cases, the setup dialog is shown when starting RKWard, "
+#| "and this allows to select a different installation of R. (Note: You will "
+#| "be offered a selection of installations found a common paths, but you can "
+#| "also specify a non-detected installation, manually.)"
 msgid ""
-"A times the R backend will fail to start due to a configuration or "
+"At times the R backend will fail to start due to a configuration or "
 "installation problem. Common causes are changed paths, or an update to R. "
 "Usually, in these cases, the setup dialog is shown when starting RKWard, and "
 "this allows to select a different installation of R. (Note: You will be "
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"Nekajkrat se zaledje R ne bo zagnalo zaradi težave s konfiguracijo ali z "
+"namestitvijo. Pogosti vzroki so spremenjene poti ali posodobitev R. Običajno "
+"se v teh primerih ob zagonu RKWarda prikaže nastavitveno pogovorno okno, ki "
+"omogoča izbiro druge namestitve R. (Opomba: ponudil vam bo izbor najdenih "
+"namestitev običajne poti, lahko pa tudi določite nezaznano namestitev ročno.)"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2042,6 +2057,9 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"V mnogih primerih bo \"kar delovalo\", če izberete različico R, ki ni bila "
+"uporabljena v času prevajanja. Če naletite na težave, vam svetujemo, da "
+"uporabite isto ali podobno različico R, kot je bila na voljo med prevajanjem."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2052,18 +2070,22 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Zaledje R lahko kadar koli ročno spremenite z uporabo Nastavitve->Preveri "
+"namestitev. Ne pozabite shraniti svojih podatkov, preden spremenite zaledje! "
+"Uporabite lahko tudi možnost ukazne vrstice --r-executable, da začnete sejo "
+"s posebno namestitvijo R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
-msgstr ""
+msgstr "Zakaj ne bi uporabili R-ja v paketu znotraj RKWard AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2076,6 +2098,12 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"AppImage vključuje namestitev R zaradi udobja, vendar ta namestitev ni in je "
+"tehnično ni mogoče narediti popolnoma funkcionalno. Pomembno je, da na "
+"splošno ne boste mogli namestiti paketov R (razen tistih, ki so "
+"implementirani izključno v R). Prav tako lahko naletite na konflikte med "
+"namestitvijo R znotraj AppImage in paketi R, ki so nameščeni v celotnem "
+"sistemu. To lahko povzroča drobne in presenetljive napake."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33

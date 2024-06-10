@@ -33,9 +33,9 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 </affiliation>
 </author>
 <date
->30 de novembre de 2023</date>
+>26/5/2024</date>
 <releaseinfo
->RKWard 0.7.5</releaseinfo>
+>RKWard 0.8.0</releaseinfo>
 <productname
 >Aplicacions de KDE</productname>
 </refentryinfo>
@@ -214,7 +214,9 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 >/usr/bin/R</filename
 >. També podeu utilitzar la cadena <replaceable
 >«auto»</replaceable
->, en aquest cas el &rkward; intentarà trobar l'&R; en un dels camins d'instal·lació estàndard coneguts. TINGUEU EN COMPTE QUE, si bé el &rkward; sovint funcionarà amb les versions més noves de l'&R;, de vegades haureu de tornar a compilar per a aquesta versió, o podria ser totalment incompatible.</para
+>, en aquest cas el &rkward; intentarà trobar l'&R; en un dels camins d'instal·lació estàndard coneguts. TINGUEU EN COMPTE QUE, si bé el &rkward; sovint funcionarà amb les versions més noves de l'&R;, de vegades haureu de tornar a compilar per a aquesta versió, o podria ser totalment incompatible.</para>
+<para
+>Aquesta opció canvia la instal·lació de l'R només per a la sessió actual, no de manera persistent.</para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -252,7 +254,19 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 >fitxers_a_obrir</replaceable
 > conté els &URL; del formulari <replaceable
 >rkward://connector_a_executar/...</replaceable
->), el &rkward; mostrarà un avís que aquests &URL; es podrien utilitzar per a desencadenar accions malicioses al vostre sistema. Aquest avís s'aplica específicament als enllaços que es troben en llocs web no confiables o d'altres fonts externes que no siguin de confiança. Si voleu executar localment un script del &rkward;, podeu fer cas omís a aquest avís afegint --nowarn-extern a la línia d'ordres.</para
+>), el &rkward; mostrarà un avís que aquests &URL; es podrien utilitzar per a desencadenar accions malicioses al vostre sistema. Aquest avís s'aplica específicament als enllaços que es troben en llocs web no confiables o d'altres fonts externes que no siguin de confiança. Si voleu executar localment un script del &rkward;, podeu fer cas omís a aquest avís afegint --nowarn-extern a la línia d'ordres.</para>
+<para
+>(Si s'usa en combinació amb --reuse, llavors les *dues* ordres en qüestió cal que s'invoquin amb --nowarn-external, per tal d'evitar l'avís.)</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--setup</option
+></term>
+<listitem
+><para
+>Actua com si s'hagués instal·lat una versió nova del RKWard, reinstal·lant el paquet de suport de l'R, i mostrant l'assistent de configuració. Aquesta característica és dirigida principalment a desenvolupadors i provadors.</para
 ></listitem>
 </varlistentry>
 <varlistentry>

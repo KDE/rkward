@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-09 00:36+0000\n"
-"PO-Revision-Date: 2024-05-01 05:36+0200\n"
+"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"PO-Revision-Date: 2024-06-09 06:35+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1469,38 +1469,35 @@ msgid "<b>Select one:</b>"
 msgstr "<b>არჩიეთ ერთ-ერთი:</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:115
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show problem details"
-msgstr "დეტალების ჩვენება"
+msgstr "პრობლემის დეტალების ჩვენება"
 
 #: rkward/dialogs/rksetupwizard.cpp:128
 #, kde-format
 msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
-msgstr ""
+msgstr "RKWard ამჟამად იყენებს R-ის ფაილებს მისამართზე <nobr>%1</nobr>."
 
 #: rkward/dialogs/rksetupwizard.cpp:135
-#, fuzzy, kde-format
-#| msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
+#, kde-format
 msgid "<b>R backend has failed to start.</b>"
-msgstr ""
-"<b>R უკანაბოლო გაეშვა. გასაგრძელებლად დააწკაპუნეთ ღილაკზე \"შემდეგი\".</b>"
+msgstr "<b>R უკანაბოლოს გაშვება ჩავარდა.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:137
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
-msgstr ""
+msgstr "<b>R უკანაბოლო ავარიულად დასრულდა.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:144
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
-msgstr ""
+msgstr "<b>R ვერსია %1 წარმატებით გაეშვა.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:147
 #, kde-format
 msgid ""
 "<p>You are using the R version bundled inside the RKWard AppImage.</"
-"p><p>This version comes with several technical limitations. Importantly, yu "
+"p><p>This version comes with several technical limitations. Importantly, you "
 "will not be able to install most R addon packages. In general, it is "
 "therefore recommended to select a system-installed version of R, instead, "
 "below.</p>"
@@ -1514,74 +1511,74 @@ msgstr "<b>R უკანაბოლოს მოლოდინი...</b>"
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
 msgid "Use R at:"
-msgstr ""
+msgstr "R-ის გამოყენება მისამართიდან:"
 
 #: rkward/dialogs/rksetupwizard.cpp:184
 #, kde-format
 msgid "Select another R executable"
-msgstr ""
+msgstr "აირჩიეთ სხვა R-ის გამშვები ფაილი"
 
 #: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
 msgid "Select R executable"
-msgstr ""
+msgstr "აირჩიეთ R-ის გამშვები ფაილი"
 
 #: rkward/dialogs/rksetupwizard.cpp:200
 #, kde-format
 msgid "Use R at %1"
-msgstr ""
+msgstr "R-ის გამოყენება მისამართიდან %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:203
 #, kde-format
 msgid "Attempt to restart R at %1"
-msgstr ""
+msgstr "R-ის გადატვირთვის მცდელობა მისამართზე %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:204
 #, kde-format
 msgid "Keep current version (%1)"
-msgstr ""
+msgstr "მიმდინარე ვერსიის შენარჩუნება (%1)"
 
-#: rkward/dialogs/rksetupwizard.cpp:232
+#: rkward/dialogs/rksetupwizard.cpp:236
 #, kde-format
 msgid "No action needed."
 msgstr "გაკეთება არფრის გჭირდებათ."
 
-#: rkward/dialogs/rksetupwizard.cpp:267
+#: rkward/dialogs/rksetupwizard.cpp:271
 #, kde-format
 msgid "Not installed"
 msgstr "დაყენებული არაა"
 
-#: rkward/dialogs/rksetupwizard.cpp:268 rkward/dialogs/rksetupwizard.cpp:279
+#: rkward/dialogs/rksetupwizard.cpp:272 rkward/dialogs/rksetupwizard.cpp:283
 #, kde-format
 msgid "Install %1"
 msgstr "%1-ის დაყენება"
 
-#: rkward/dialogs/rksetupwizard.cpp:268
+#: rkward/dialogs/rksetupwizard.cpp:272
 #, kde-format
 msgid ""
 "(Attempt to) install the package %1 and its dependencies for this version of "
 "R. In most cases, this requires a working internet connection."
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:269 rkward/dialogs/rksetupwizard.cpp:280
-#: rkward/dialogs/rksetupwizard.cpp:340
+#: rkward/dialogs/rksetupwizard.cpp:273 rkward/dialogs/rksetupwizard.cpp:284
+#: rkward/dialogs/rksetupwizard.cpp:344
 #, kde-format
 msgid "No change"
 msgstr "ცვლილების გარეშე"
 
-#: rkward/dialogs/rksetupwizard.cpp:269
+#: rkward/dialogs/rksetupwizard.cpp:273
 #, kde-format
 msgid ""
 "Proceed without the package. You will again be given the option to install "
 "the package, when the package is needed."
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:271 rkward/dialogs/rksetupwizard.cpp:291
+#: rkward/dialogs/rksetupwizard.cpp:275 rkward/dialogs/rksetupwizard.cpp:295
 #, kde-format
 msgid "Installed"
 msgstr "დაყენებული"
 
-#: rkward/dialogs/rksetupwizard.cpp:279
+#: rkward/dialogs/rksetupwizard.cpp:283
 #, kde-format
 msgid ""
 "Mark %1 for installation (actual installation is not yet supported, but you "
@@ -1589,63 +1586,63 @@ msgid ""
 "dialog)"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:280
+#: rkward/dialogs/rksetupwizard.cpp:284
 #, kde-format
 msgid "Proceed without %1. You will be missing some functionality."
 msgstr "ვმუშაობ %1-ის გარეშე. ფუნქციონალის ნაწილმა, შეიძლება, არ იმუშაოს."
 
-#: rkward/dialogs/rksetupwizard.cpp:288
+#: rkward/dialogs/rksetupwizard.cpp:292
 #, kde-format
 msgid "Not found"
 msgstr "ნაპოვნი არაა"
 
-#: rkward/dialogs/rksetupwizard.cpp:302
+#: rkward/dialogs/rksetupwizard.cpp:306
 #, kde-format
 msgid "RKWard Setup Assistant"
 msgstr "RKWard -ის მორგების დამხმარე"
 
-#: rkward/dialogs/rksetupwizard.cpp:304
+#: rkward/dialogs/rksetupwizard.cpp:308
 #, kde-format
 msgid ""
 "<p>This dialog will guide you through a quick check of the basic setup of "
 "the required (or recommended) components.</p>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:306
+#: rkward/dialogs/rksetupwizard.cpp:310
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of RKWard has been detected.</p>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:309
+#: rkward/dialogs/rksetupwizard.cpp:313
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of R has been detected.</p>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:322
+#: rkward/dialogs/rksetupwizard.cpp:326
 #, kde-format
 msgid "Basic installation"
 msgstr "ძირითადი დაყენება"
 
-#: rkward/dialogs/rksetupwizard.cpp:324
+#: rkward/dialogs/rksetupwizard.cpp:328
 #, kde-format
 msgid "Installation directory"
 msgstr "დაყენების საქაღალდე"
 
-#: rkward/dialogs/rksetupwizard.cpp:326
+#: rkward/dialogs/rksetupwizard.cpp:330
 #, kde-format
 msgid "Not found."
 msgstr "ვერ მოიძებნა."
 
-#: rkward/dialogs/rksetupwizard.cpp:328
+#: rkward/dialogs/rksetupwizard.cpp:332
 #, kde-format
 msgid "Reinstallation required"
 msgstr "საჭიროა თავიდან დაყენება"
 
-#: rkward/dialogs/rksetupwizard.cpp:328
+#: rkward/dialogs/rksetupwizard.cpp:332
 #, kde-format
 msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
@@ -1654,48 +1651,48 @@ msgstr ""
 "პრობლეების ავტომატურად შესწორება შეუძლებელია. მოგიწევთ, თავიდან დააყენოთ "
 "RKWard."
 
-#: rkward/dialogs/rksetupwizard.cpp:331 rkward/dialogs/rksetupwizard.cpp:344
-#: rkward/dialogs/rksetupwizard.cpp:368
+#: rkward/dialogs/rksetupwizard.cpp:335 rkward/dialogs/rksetupwizard.cpp:348
+#: rkward/dialogs/rksetupwizard.cpp:372
 #, kde-format
 msgid "Found."
 msgstr "ნაპოვნია."
 
-#: rkward/dialogs/rksetupwizard.cpp:335
+#: rkward/dialogs/rksetupwizard.cpp:339
 #, kde-format
 msgid "RKWard plugins"
 msgstr "RKWard -ის დამატებები"
 
-#: rkward/dialogs/rksetupwizard.cpp:337
+#: rkward/dialogs/rksetupwizard.cpp:341
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr "<p>ჩართული დამატებების გარეშე. ეს ალბათ შემთხვევითაა.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:338
+#: rkward/dialogs/rksetupwizard.cpp:342
 #, kde-format
 msgid "None selected"
 msgstr "არცერთი არჩეულია"
 
-#: rkward/dialogs/rksetupwizard.cpp:339
+#: rkward/dialogs/rksetupwizard.cpp:343
 #, kde-format
 msgid "Restore defaults"
 msgstr "ნაგულისხმები მნიშვნელობების აღდგენა"
 
-#: rkward/dialogs/rksetupwizard.cpp:339
+#: rkward/dialogs/rksetupwizard.cpp:343
 #, kde-format
 msgid "Enable the default plugins"
 msgstr "ნაგულისხმები დამატებების ჩართვა"
 
-#: rkward/dialogs/rksetupwizard.cpp:340
+#: rkward/dialogs/rksetupwizard.cpp:344
 #, kde-format
 msgid "Proceed without plugins"
 msgstr "დამატებების გარეშე გაგრძელება"
 
-#: rkward/dialogs/rksetupwizard.cpp:348
+#: rkward/dialogs/rksetupwizard.cpp:352
 #, kde-format
 msgid "Kate plugins"
 msgstr "Kate -ის დამატებები"
 
-#: rkward/dialogs/rksetupwizard.cpp:351
+#: rkward/dialogs/rksetupwizard.cpp:355
 #, kde-format
 msgid ""
 "<p>Important functionality in RKWard is provided by kate plugins. It looks "
@@ -1703,62 +1700,61 @@ msgid ""
 "fixed by installing kate.</p>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:352
+#: rkward/dialogs/rksetupwizard.cpp:356
 #, kde-format
 msgid "None found"
 msgstr "არაფერია ნაპოვნი"
 
-#: rkward/dialogs/rksetupwizard.cpp:355
+#: rkward/dialogs/rksetupwizard.cpp:359
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
 msgstr[0] "ნაპოვნია %1 დამატება."
 msgstr[1] "ნაპოვნია %1 დამატება."
 
-#: rkward/dialogs/rksetupwizard.cpp:360
+#: rkward/dialogs/rksetupwizard.cpp:364
 #, kde-format
 msgid "Pre 0.7.3 output file"
 msgstr "0.7.3-ზე უფრო ძველი ფორმატის ფაილი"
 
-#: rkward/dialogs/rksetupwizard.cpp:363
+#: rkward/dialogs/rksetupwizard.cpp:367
 #, kde-format
 msgid "Exists"
 msgstr "არსებობს"
 
-#: rkward/dialogs/rksetupwizard.cpp:365
+#: rkward/dialogs/rksetupwizard.cpp:369
 #, kde-format
 msgid "Import"
 msgstr "შემოტანა"
 
-#: rkward/dialogs/rksetupwizard.cpp:365
+#: rkward/dialogs/rksetupwizard.cpp:369
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
 msgstr "შემოიტანეთ სესიაში, რომ ახალი გამოტანის ფორმატში შენახვა შეძლოთ."
 
-#: rkward/dialogs/rksetupwizard.cpp:366
+#: rkward/dialogs/rksetupwizard.cpp:370
 #, kde-format
 msgid "No action"
 msgstr "ქმედების გარეშე"
 
-#: rkward/dialogs/rksetupwizard.cpp:366
+#: rkward/dialogs/rksetupwizard.cpp:370
 #, kde-format
 msgid ""
 "Ignore (and keep) the file. You can import it manually, at any time, using "
 "rk.import.legacy.output()"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:379
-#, fuzzy, kde-format
-#| msgid "R-Backend"
+#: rkward/dialogs/rksetupwizard.cpp:383
+#, kde-format
 msgid "R Backend"
-msgstr "R-უკანაბოლო"
+msgstr "R უკანაბოლო"
 
-#: rkward/dialogs/rksetupwizard.cpp:423
+#: rkward/dialogs/rksetupwizard.cpp:428
 #, kde-format
 msgid "R Packages"
 msgstr "R -ის პაკეტები"
 
-#: rkward/dialogs/rksetupwizard.cpp:425
+#: rkward/dialogs/rksetupwizard.cpp:430
 #, kde-format
 msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
@@ -1767,7 +1763,7 @@ msgstr ""
 "R2HTML პაკეტი თითქმის ყველა RKWard-ს გამოტანის ფუნქციის მიერ გამოიყენება, "
 "ამიტომ მისი ქონა აუცილებელია."
 
-#: rkward/dialogs/rksetupwizard.cpp:426
+#: rkward/dialogs/rksetupwizard.cpp:431
 #, kde-format
 msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
@@ -1776,12 +1772,12 @@ msgstr ""
 "პაკეტი rmarkdown .Rmd ფაილებს რენდერისთვისაა აუცილებელი (მინიატურის რენდერის "
 "ჩათვლით). რაც არასავალდებულო, მაგრამ რეკომენდებული ფუნქციაა."
 
-#: rkward/dialogs/rksetupwizard.cpp:431
+#: rkward/dialogs/rksetupwizard.cpp:436
 #, kde-format
 msgid "External software"
 msgstr "გარე პროგრამები"
 
-#: rkward/dialogs/rksetupwizard.cpp:433
+#: rkward/dialogs/rksetupwizard.cpp:438
 #, kde-format
 msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
@@ -1790,31 +1786,31 @@ msgstr ""
 "პროგრამა pandoc R-ის მარკდაუნის (.Rmd) ფაილების რენდერისთვის (ან "
 "მინიატურისთვის) გამოიყენება. ეს არასავალდებულო, მაგრამ რეკომენდებულია."
 
-#: rkward/dialogs/rksetupwizard.cpp:434
+#: rkward/dialogs/rksetupwizard.cpp:439
 #, kde-format
 msgid ""
 "The kbibtex software is useful for managing citations while writing "
 "articles. It integrates into RKWard via the Document Preview kate plugin."
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:439
+#: rkward/dialogs/rksetupwizard.cpp:444
 #, kde-format
 msgid "Summary of the next steps"
 msgstr "შემდეგი ნაბიჯების შეჯამება"
 
-#: rkward/dialogs/rksetupwizard.cpp:456
+#: rkward/dialogs/rksetupwizard.cpp:461
 #, kde-format
 msgid ""
 "<h1>Reinstallation required</h1><p>Your installation of RKWard is broken, "
 "and cannot be fixed, automatically. You will have to reinstall RKWard!</p>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:459
+#: rkward/dialogs/rksetupwizard.cpp:464
 #, kde-format
 msgid "<h2>Software to install</h2>"
 msgstr "<h2>დასაყენებელი პროგრამები</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:469
+#: rkward/dialogs/rksetupwizard.cpp:474
 #, kde-format
 msgid ""
 "<p>The following software is recommended for installation, but automatic "
@@ -1822,17 +1818,17 @@ msgid ""
 "information:</p><li>%1</li>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:471
+#: rkward/dialogs/rksetupwizard.cpp:476
 #, kde-format
 msgid "No software to install"
 msgstr "პროგრამები დასაყენებელი არ აქვთ"
 
-#: rkward/dialogs/rksetupwizard.cpp:473
+#: rkward/dialogs/rksetupwizard.cpp:478
 #, kde-format
 msgid "<h2>R packages to install</h2>"
 msgstr "<h2>R-ის დასაყენებელი პაკეტები</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:475
+#: rkward/dialogs/rksetupwizard.cpp:480
 #, kde-format
 msgid ""
 "<p>%1 R packages are marked for installation. The R package installation "
@@ -1840,7 +1836,7 @@ msgid ""
 "a download mirror.</p>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:477
+#: rkward/dialogs/rksetupwizard.cpp:482
 #, kde-format
 msgid "No R packages to install"
 msgstr "R-ის პაკეტები დასაყენებელი არაა"
@@ -3484,16 +3480,12 @@ msgid ""
 msgstr ""
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:126
-#, fuzzy, kde-format
-#| msgid ""
-#| "The R executable specified on the command line (%1) does not exist or is "
-#| "not executable."
+#, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
 "executable."
 msgstr ""
-"R-ის გამშვები ფაილი, რომელიც ბრძანების სტრიქონშია (%1) მითითებული, არ "
-"არსებობს, ან გაშვებადი არაა."
+"მორგებული R-ის ფაილები მისამართზე <b>%1</b> არ არსებობს, ან გაშვებადი არაა."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:218
 #, kde-format

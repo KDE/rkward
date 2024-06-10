@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-09 00:36+0000\n"
-"PO-Revision-Date: 2024-05-10 14:33+0300\n"
+"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"PO-Revision-Date: 2024-06-09 09:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -2057,6 +2057,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"На цій сторінці наведено деякі типові проблеми, з якими ви можете зіткнутися "
+"при користуванні RKWard. Див. також <link href=\"https://rkward.kde.org/faq"
+"\">список поширених питань та відповідей на них в інтернеті</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2093,25 +2096,38 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "Модуль R аварійно завершує роботу або видає помилку при запуску"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Аварійний модуль"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "A times the R backend will fail to start due to a configuration or "
+#| "installation problem. Common causes are changed paths, or an update to R. "
+#| "Usually, in these cases, the setup dialog is shown when starting RKWard, "
+#| "and this allows to select a different installation of R. (Note: You will "
+#| "be offered a selection of installations found a common paths, but you can "
+#| "also specify a non-detected installation, manually.)"
 msgid ""
-"A times the R backend will fail to start due to a configuration or "
+"At times the R backend will fail to start due to a configuration or "
 "installation problem. Common causes are changed paths, or an update to R. "
 "Usually, in these cases, the setup dialog is shown when starting RKWard, and "
 "this allows to select a different installation of R. (Note: You will be "
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"Іноді модуль R не запускається через проблему із налаштуваннями або "
+"встановленням. Типовими причинами є зміна шляхів або оновлення R. Зазвичай, "
+"у цих випадках буде показано вікно налаштовування при запуску RKWard, і там "
+"ви можете вибрати іншу встановлену версію R. (Зауваження: програма "
+"запропонує вам набір встановлених до типових шляхів версій, але ви можете "
+"також вказати вручну невиявлену встановлену версію.)"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2122,6 +2138,10 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"Здебільшого, усе «просто працює» для вибору версії R, відмінної від тієї, "
+"яку було використано під час збирання. Втім, якщо у вас виникнуть проблеми, "
+"радимо скористатися тією ж або подібною версією R, яка була використана під "
+"час збирання."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2132,18 +2152,23 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Ви будь-коли можете змінити модуль R вручну за допомогою пункту «Параметри-"
+">Перевірити встановлення». Не забудьте зберегти ваші дані до зміни модуля! "
+"Ви також можете скористатися параметром командного рядка --r-executable, щоб "
+"запустити сеанс із використанням вказаної встановленої версії R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
 msgstr ""
+"Чому не можна скористатися R, який запаковано до самого AppImage RKWard"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2156,6 +2181,12 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"Пакунок AppImage включає для зручності встановлену версію R, але цю версію "
+"не можна зробити повністю функціональною. Важливо, що ви, загалом, не "
+"зможете встановлювати пакунки R (окрім тих, які реалізовано суто на R). "
+"Також у вас можуть виникнути конфлікти між версією R з пакунка AppImage і "
+"пакунками R, які встановлено на загальносистемному рівні. Це може призвести "
+"до неявних або несподіваних проблем."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-09 00:36+0000\n"
-"PO-Revision-Date: 2024-05-10 11:58+0200\n"
+"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"PO-Revision-Date: 2024-06-09 12:19+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2049,6 +2049,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Aquesta pàgina intenta cobrir diversos problemes habituals que podeu trobar "
+"en fer servir el RKWard. Vegeu també <link href=\"https://rkward.kde.org/faq"
+"\">les PMF en línia</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2084,25 +2087,39 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "El dorsal de l'R ha fallat o no s'ha pogut iniciar"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "El dorsal ha fallat"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "A times the R backend will fail to start due to a configuration or "
+#| "installation problem. Common causes are changed paths, or an update to R. "
+#| "Usually, in these cases, the setup dialog is shown when starting RKWard, "
+#| "and this allows to select a different installation of R. (Note: You will "
+#| "be offered a selection of installations found a common paths, but you can "
+#| "also specify a non-detected installation, manually.)"
 msgid ""
-"A times the R backend will fail to start due to a configuration or "
+"At times the R backend will fail to start due to a configuration or "
 "installation problem. Common causes are changed paths, or an update to R. "
 "Usually, in these cases, the setup dialog is shown when starting RKWard, and "
 "this allows to select a different installation of R. (Note: You will be "
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"A vegades el dorsal de l'R no s'inicia a causa d'un problema de configuració "
+"o instal·lació. Les causes habituals són camins canviats, o una "
+"actualització a l'R. Normalment, en aquests casos, es mostrarà el diàleg de "
+"configuració quan s'iniciï el RKWard, i això permet seleccionar una "
+"instal·lació diferent de l'R. (Nota: se us oferirà una selecció "
+"d'instal·lacions que han trobat camins habituals, però també podeu "
+"especificar manualment una instal·lació no detectada.)"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2113,6 +2130,10 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"En molts casos, «funcionarà» seleccionant una versió de R diferent de la que "
+"s'ha utilitzat en temps de compilació. En cas de tenir problemes, "
+"s'aconsella utilitzar la mateixa versió o una versió similar de l'R que "
+"estava disponible durant la compilació."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2123,18 +2144,24 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Podeu canviar manualment el dorsal de l'R en qualsevol moment, utilitzant "
+"Arranjament -> Comproveu la instal·lació. Assegureu-vos de desar les vostres "
+"dades abans de canviar el dorsal! També podeu utilitzar l'opció --r-"
+"executable de la línia d'ordres per a iniciar una sessió utilitzant una "
+"instal·lació específica de l'R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
 msgstr ""
+"Per què no s'hauria d'utilitzar l'R empaquetat dins de l'AppImage del RKWard"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2147,6 +2174,12 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"L'AppImage inclou una instal·lació de R per comoditat, però aquesta "
+"instal·lació no és, i tècnicament no es pot fer completament funcional. La "
+"més important és que generalment no podreu instal·lar paquets de l'R (a part "
+"dels implementats purament a l'R). A més, podeu tenir conflictes entre la "
+"instal·lació de l'R dins de l'AppImage i els paquets de l'R que estan "
+"instal·lats a tot el sistema. Això pot causar errors subtils i sorprenents."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
