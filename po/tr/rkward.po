@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-06-09 21:36+0300\n"
+"POT-Creation-Date: 2024-06-11 00:36+0000\n"
+"PO-Revision-Date: 2024-06-10 10:35+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -128,7 +128,7 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Üzerine Yazılsın mı?"
 
-#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:884
+#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:892
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgstr "R Çalışma Alanı dosyaları [%1](%1);;Tüm dosyalar [*](*)"
@@ -1624,13 +1624,7 @@ msgid "<b>R version %1 started, successfully.</b>"
 msgstr "<b>R sürüm %1, başarıyla başlatıldı.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:147
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>You are using the R version bundled inside the RKWard AppImage.</"
-#| "p><p>This version comes with several technical limitations. Importantly, "
-#| "yu will not be able to install most R addon packages. In general, it is "
-#| "therefore recommended to select a system-installed version of R, instead, "
-#| "below.</p>"
+#, kde-format
 msgid ""
 "<p>You are using the R version bundled inside the RKWard AppImage.</"
 "p><p>This version comes with several technical limitations. Importantly, you "
@@ -3164,8 +3158,8 @@ msgid ""
 msgstr ""
 "“%1” adındaki bir eklentiyi çağırmayı denediniz; ancak bu eklenti şu anda "
 "bilinmiyor. Büyük olasılıkla ilgili PluginMap’i yüklemeniz gerekiyor "
-"(Ayarlar  → RKWard Uygulamasını Yapılandır → Eklentiler) veya eklenti "
-"yeniden adlandırılmış olabilir."
+"(Ayarlar → RKWard Uygulamasını Yapılandır → Eklentiler) veya eklenti yeniden "
+"adlandırılmış olabilir."
 
 #: rkward/plugin/rkcomponentmap.cpp:465
 #, kde-format
@@ -4198,7 +4192,7 @@ msgstr "&Görünüm"
 msgid "&Run"
 msgstr "&Çalıştır"
 
-#: rkward/rkward.cpp:303
+#: rkward/rkward.cpp:311
 #, kde-format
 msgid ""
 "<p>You are about to start an RKWard dialog from outside of RKWard, probably "
@@ -4224,17 +4218,17 @@ msgstr ""
 "‘Bir daha sorma’ seçeneğinin işaretlenmesi bu iletinin yalnızca bu oturumun "
 "geri kalanı boyunca gizlenmesine neden olacaktır."
 
-#: rkward/rkward.cpp:304
+#: rkward/rkward.cpp:312
 #, kde-format
 msgid "A note on external links"
 msgstr "Dış Bağlantılar Üzerine"
 
-#: rkward/rkward.cpp:316
+#: rkward/rkward.cpp:324
 #, kde-format
 msgid "Setting up plugins..."
 msgstr "Eklentiler ayarlanıyor…"
 
-#: rkward/rkward.cpp:350
+#: rkward/rkward.cpp:358
 #, kde-format
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
@@ -4245,12 +4239,12 @@ msgstr ""
 "ve etkinleştirildi. Seçili eklenti paketlerini devre dışı bırakmak için "
 "Ayarlar → RKWard Uygulamasını Yapılandır → Eklentiler’i kullanın."
 
-#: rkward/rkward.cpp:350
+#: rkward/rkward.cpp:358
 #, kde-format
 msgid "New plugins found"
 msgstr "Yeni Eklentiler Bulundu"
 
-#: rkward/rkward.cpp:354
+#: rkward/rkward.cpp:362
 #, kde-format
 msgid ""
 "The following RKWard pluginmap files could not be loaded, and have been "
@@ -4263,12 +4257,12 @@ msgstr ""
 "olmaması veya doğrudan yükleme amaçlı olmaması olabilir (daha fazla bilgi "
 "için ‘Ayrıntılar’a bakın). Engellenmiş olabilirler."
 
-#: rkward/rkward.cpp:354 rkward/rkward.cpp:358
+#: rkward/rkward.cpp:362 rkward/rkward.cpp:366
 #, kde-format
 msgid "Failed to load some plugin maps"
 msgstr "Bazı Eklenti Eşlemleri Yüklenemedi"
 
-#: rkward/rkward.cpp:358
+#: rkward/rkward.cpp:366
 #, kde-format
 msgid ""
 "Some errors were encountered while loading the following RKWard pluginmap "
@@ -4281,7 +4275,7 @@ msgstr ""
 "bu sürümüyle uyumlu olmaması olabilir (daha fazla bilgi için ‘Ayrıntılar’a "
 "bakın). Ancak diğer eklentiler başarıyla yüklendi."
 
-#: rkward/rkward.cpp:358
+#: rkward/rkward.cpp:366
 #, kde-format
 msgid ""
 "Note: You will not be warned about these pluginmap files again, until you "
@@ -4292,210 +4286,210 @@ msgstr ""
 "Eklentiler bölümünden kaldırıp yeniden ekleyene kadar bu eklenti eşlemi "
 "dosyaları hakkında bir daha uyarılmayacaksınız."
 
-#: rkward/rkward.cpp:415
+#: rkward/rkward.cpp:423
 #, kde-format
 msgid "Carbon Copy Settings"
 msgstr "Karbon Kopya Ayarları"
 
-#: rkward/rkward.cpp:433 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
+#: rkward/rkward.cpp:441 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
 #, kde-format
 msgid "Workspace"
 msgstr "Çalışma Alanı"
 
-#: rkward/rkward.cpp:442
+#: rkward/rkward.cpp:450
 #, kde-format
 msgid "Files"
 msgstr "Dosyalar"
 
-#: rkward/rkward.cpp:446
+#: rkward/rkward.cpp:454
 #, kde-format
 msgid "Pending Jobs"
 msgstr "Bekleyen İşler"
 
-#: rkward/rkward.cpp:458
+#: rkward/rkward.cpp:466
 #, kde-format
 msgid "Debugger Frames"
 msgstr "Hata Ayıklayıcısı Çerçeveleri"
 
-#: rkward/rkward.cpp:463
+#: rkward/rkward.cpp:471
 #, kde-format
 msgid "Debugger Console"
 msgstr "Hata Ayıklayıcısı Konsolu"
 
-#: rkward/rkward.cpp:467
+#: rkward/rkward.cpp:475
 #, kde-format
 msgid "RKWard Debug Messages"
 msgstr "RKWard Hata Ayıklama İletileri"
 
-#: rkward/rkward.cpp:479
+#: rkward/rkward.cpp:487
 #, kde-format
 msgid "Dataset"
 msgstr "Veri Kümesi"
 
-#: rkward/rkward.cpp:481
+#: rkward/rkward.cpp:489
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Yeni boş veri kümesi oluşturur ve düzenleme için açar"
 
-#: rkward/rkward.cpp:484
+#: rkward/rkward.cpp:492
 #, kde-format
 msgid "Script File"
 msgstr "Betik Dosyası"
 
-#: rkward/rkward.cpp:488
+#: rkward/rkward.cpp:496
 #, kde-format
 msgid "Output document"
 msgstr "Çıktı Belgesi"
 
-#: rkward/rkward.cpp:490
+#: rkward/rkward.cpp:498
 #, kde-format
 msgid "Creates and activates a new output document"
 msgstr "Yeni bir çıktı belgesi oluşturur ve etkinleştirir"
 
-#: rkward/rkward.cpp:495
+#: rkward/rkward.cpp:503
 #, kde-format
 msgid "Open R Script File..."
 msgstr "R Betiği Dosyası Aç…"
 
-#: rkward/rkward.cpp:499
+#: rkward/rkward.cpp:507
 #, kde-format
 msgid "Open RKWard Output File..."
 msgstr "R Çıktısı Dosyası Aç…"
 
-#: rkward/rkward.cpp:503
+#: rkward/rkward.cpp:511
 #, kde-format
 msgid "Open any File..."
 msgstr "Herhangi Bir Dosyayı Aç…"
 
-#: rkward/rkward.cpp:508
+#: rkward/rkward.cpp:516
 #, kde-format
 msgid "Open Recent R Script File"
 msgstr "Son Kullanılan R Betiği Dosyasını Aç"
 
-#: rkward/rkward.cpp:512
+#: rkward/rkward.cpp:520
 #, kde-format
 msgid "Import Assistant"
 msgstr "İçe Aktarma Yardımcısı"
 
-#: rkward/rkward.cpp:513
+#: rkward/rkward.cpp:521
 #, kde-format
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr ""
 "Çeşitli biçimlerden veriyi içe aktarmanın en iyi yöntemini bulma yardımcısı"
 
-#: rkward/rkward.cpp:517
+#: rkward/rkward.cpp:525
 #, kde-format
 msgid "Open Workspace..."
 msgstr "Çalışma Alanı Aç…"
 
-#: rkward/rkward.cpp:519
+#: rkward/rkward.cpp:527
 #, kde-format
 msgid "Opens an existing document"
 msgstr "Var olan bir dosyayı açar"
 
-#: rkward/rkward.cpp:524
+#: rkward/rkward.cpp:532
 #, kde-format
 msgid "Open Recent Workspace"
 msgstr "Son Kullanılan Çalışma Alanını Aç"
 
-#: rkward/rkward.cpp:525
+#: rkward/rkward.cpp:533
 #, kde-format
 msgid "Opens a recently used file"
 msgstr "Son zamanlarda kullanılan bir dosyayı açar"
 
-#: rkward/rkward.cpp:528
+#: rkward/rkward.cpp:536
 #, kde-format
 msgid "Save Workspace"
 msgstr "Çalışma Alanını Kaydet"
 
-#: rkward/rkward.cpp:530
+#: rkward/rkward.cpp:538
 #, kde-format
 msgid "Saves the actual document"
 msgstr "Güncel dosyayı kaydeder"
 
-#: rkward/rkward.cpp:534
+#: rkward/rkward.cpp:542
 #, kde-format
 msgid "Save Workspace As"
 msgstr "Çalışma Alanını Farklı Kaydet"
 
-#: rkward/rkward.cpp:535
+#: rkward/rkward.cpp:543
 #, kde-format
 msgid "Saves the actual document as..."
 msgstr "Güncel dosyayı farklı kaydeder…"
 
-#: rkward/rkward.cpp:538
+#: rkward/rkward.cpp:546
 #, kde-format
 msgid "Quits the application"
 msgstr "Uygulamadan çıkar"
 
-#: rkward/rkward.cpp:541
+#: rkward/rkward.cpp:549
 #, kde-format
 msgid "Interrupt all commands"
 msgstr "Tüm komutları yarıda keser"
 
-#: rkward/rkward.cpp:547
+#: rkward/rkward.cpp:555
 #, kde-format
 msgid "CC commands to output..."
 msgstr "Komutları Çıktıya Kopyala…"
 
-#: rkward/rkward.cpp:551 rkward/rkward.cpp:555
+#: rkward/rkward.cpp:559 rkward/rkward.cpp:563
 #, kde-format
 msgid "Manage R packages and plugins..."
 msgstr "R Paketlerini ve Eklentilerini Yönet…"
 
-#: rkward/rkward.cpp:562
+#: rkward/rkward.cpp:570
 #, kde-format
 msgid "Close All Data"
 msgstr "Tüm Veriyi Kapat"
 
-#: rkward/rkward.cpp:563
+#: rkward/rkward.cpp:571
 #, kde-format
 msgid "Closes all open data editors"
 msgstr "Tüm açık veri düzenleyicilerini kapatır"
 
-#: rkward/rkward.cpp:568
+#: rkward/rkward.cpp:576
 #, kde-format
 msgid "Close All"
 msgstr "Tümünü Kapat"
 
-#: rkward/rkward.cpp:572 rkward/windows/rktoolwindowbar.cpp:302
+#: rkward/rkward.cpp:580 rkward/windows/rktoolwindowbar.cpp:302
 #: rkward/windows/rkworkplaceview.cpp:97
 #, kde-format
 msgid "Detach"
 msgstr "Ayır"
 
-#: rkward/rkward.cpp:576
+#: rkward/rkward.cpp:584
 #, kde-format
 msgid "Check installation"
 msgstr "Kurulumu Denetle"
 
-#: rkward/rkward.cpp:580
+#: rkward/rkward.cpp:588
 #, kde-format
 msgid "[No actions available for current view]"
 msgstr "[Geçerli görünüm için kullanılabilir eylem yok]"
 
-#: rkward/rkward.cpp:587
+#: rkward/rkward.cpp:595
 #, kde-format
 msgid "Open..."
 msgstr "Aç…"
 
-#: rkward/rkward.cpp:601
+#: rkward/rkward.cpp:609
 #, kde-format
 msgid "Create..."
 msgstr "Oluştur…"
 
-#: rkward/rkward.cpp:608
+#: rkward/rkward.cpp:616
 #, kde-format
 msgid "Save..."
 msgstr "Kaydet…"
 
-#: rkward/rkward.cpp:624
+#: rkward/rkward.cpp:632
 #, kde-format
 msgid "Restart R Backend"
 msgstr "R Arka Ucunu Yeniden Başlat"
 
-#: rkward/rkward.cpp:632
+#: rkward/rkward.cpp:640
 #, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
@@ -4506,12 +4500,12 @@ msgstr ""
 "işin kaybolmasına neden olacak!</b> Tüm veri düzenleyicileri ve grafik "
 "pencereleri kapatılacak.</p><p>Sürdürmek istediğinizden emin misiniz?</p>"
 
-#: rkward/rkward.cpp:633
+#: rkward/rkward.cpp:641
 #, kde-format
 msgid "Restart R backend"
 msgstr "R Arka Ucunu Yeniden Başlat"
 
-#: rkward/rkward.cpp:640
+#: rkward/rkward.cpp:648
 #, kde-format
 msgid ""
 "<p>One or more operations are pending.</p><p>If you have recently chosen to "
@@ -4522,82 +4516,82 @@ msgstr ""
 "alanınızı kaydetmeyi seçtiyseniz ve bu iletiyi görüyorsanız <b>veriniz henüz "
 "kaydedilmemiş olabilir!</b></p><p>Nasıl ilerlemek istiyorsunuz?</p>"
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "R commands still pending"
 msgstr "R Komutları Beklemede"
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Force restart now"
 msgstr "Şimdi Yeniden Başlatmayı Zorla"
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Check again"
 msgstr "Yeniden Denetle"
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Cancel restarting"
 msgstr "Yeniden Başlatmayı İptal Et"
 
-#: rkward/rkward.cpp:780
+#: rkward/rkward.cpp:788
 #, kde-format
 msgid "Current working directory"
 msgstr "Geçerli çalışma dizini"
 
-#: rkward/rkward.cpp:798 rkward/windows/rcontrolwindow.cpp:40
+#: rkward/rkward.cpp:806 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
 msgid "Configure R backend"
 msgstr "R Arka Ucunu Yapılandır"
 
-#: rkward/rkward.cpp:851
+#: rkward/rkward.cpp:859
 #, kde-format
 msgid "Exiting..."
 msgstr "Çıkılıyor…"
 
-#: rkward/rkward.cpp:869
+#: rkward/rkward.cpp:877
 #, kde-format
 msgid "New dataset"
 msgstr "Yeni Veri Kümesi"
 
-#: rkward/rkward.cpp:869
+#: rkward/rkward.cpp:877
 #, kde-format
 msgid "Enter name for the new dataset"
 msgstr "Yeni veri kümesi için ad girin"
 
-#: rkward/rkward.cpp:881
+#: rkward/rkward.cpp:889
 #, kde-format
 msgid "Opening workspace..."
 msgstr "Çalışma alanı açılıyor…"
 
-#: rkward/rkward.cpp:884
+#: rkward/rkward.cpp:892
 #, kde-format
 msgid "Select workspace to open..."
 msgstr "Açılacak çalışma alanını seç…"
 
-#: rkward/rkward.cpp:955
+#: rkward/rkward.cpp:963
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr "<b>R</b> işletkesi meşgul."
 
-#: rkward/rkward.cpp:959
+#: rkward/rkward.cpp:967
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr "<b>R</b> işletkesi boşta."
 
-#: rkward/rkward.cpp:964
+#: rkward/rkward.cpp:972
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "<b>R</b> işletkesi başlatılıyor."
 
-#: rkward/rkward.cpp:967
+#: rkward/rkward.cpp:975
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr "<b>R</b> işletkesi kullanılamıyor."
 
-#: rkward/rkward.cpp:973
+#: rkward/rkward.cpp:981
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
@@ -4606,47 +4600,47 @@ msgstr ""
 "R işletkesi kullanılamıyor. Olası çözümler için <a href=\"rkward://page/"
 "rkward_trouble_shooting\">tanılama</a> bölümüne bakın."
 
-#: rkward/rkward.cpp:1003
+#: rkward/rkward.cpp:1011
 #, kde-format
 msgid "Open"
 msgstr "Aç"
 
-#: rkward/rkward.cpp:1007
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Opening mode:"
 msgstr "Açma kipi:"
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Dosya türünü kendiliğinden tahmin et"
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Metin/betik dosyası olarak aç"
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Metin dosyası olarak aç ve R vurgulamasını zorla"
 
-#: rkward/rkward.cpp:1046
+#: rkward/rkward.cpp:1054
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Açılacak RKWard çıktı dosyasını seç…"
 
-#: rkward/rkward.cpp:1046
+#: rkward/rkward.cpp:1054
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "RKWard çıktı dosyaları [*.rko](*.rko);;Tüm dosyalar [*](*)"
 
-#: rkward/rkward.cpp:1055
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Betik dosyaları aç"
 
-#: rkward/rkward.cpp:1069
+#: rkward/rkward.cpp:1077
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Adsız Çalışma Alanı]"

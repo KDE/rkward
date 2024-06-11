@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"POT-Creation-Date: 2024-06-11 00:36+0000\n"
 "PO-Revision-Date: 2024-04-30 15:49+0200\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Přepsat soubor?"
 
-#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:884
+#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:892
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgstr "Soubory pracovního prostředí R [%1](%1);;*Všechny soubory [*](*)"
@@ -4046,7 +4046,7 @@ msgstr "Po&hled"
 msgid "&Run"
 msgstr "&Spustit"
 
-#: rkward/rkward.cpp:303
+#: rkward/rkward.cpp:311
 #, kde-format
 msgid ""
 "<p>You are about to start an RKWard dialog from outside of RKWard, probably "
@@ -4061,17 +4061,17 @@ msgid ""
 "suppress this message for the remainder of this session, only."
 msgstr ""
 
-#: rkward/rkward.cpp:304
+#: rkward/rkward.cpp:312
 #, kde-format
 msgid "A note on external links"
 msgstr ""
 
-#: rkward/rkward.cpp:316
+#: rkward/rkward.cpp:324
 #, kde-format
 msgid "Setting up plugins..."
 msgstr "Nastavují se přídavné moduly..."
 
-#: rkward/rkward.cpp:350
+#: rkward/rkward.cpp:358
 #, kde-format
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
@@ -4082,12 +4082,12 @@ msgstr ""
 "níže). Tyto byly automaticky zapnuty. Pro vypnutí vybraných balíčků s "
 "přídavnými moduly, použijte Nastavení -> Nastavit RKWard -> Přídavné moduly."
 
-#: rkward/rkward.cpp:350
+#: rkward/rkward.cpp:358
 #, kde-format
 msgid "New plugins found"
 msgstr "Nalezeny nové přídavné moduly"
 
-#: rkward/rkward.cpp:354
+#: rkward/rkward.cpp:362
 #, kde-format
 msgid ""
 "The following RKWard pluginmap files could not be loaded, and have been "
@@ -4100,12 +4100,12 @@ msgstr ""
 "nekompatibilní s touto verzí RKWardu, nebo nejsou určeny k přímému načtení "
 "(Další informace hledejte v Podrobnosti). Byly zakázány."
 
-#: rkward/rkward.cpp:354 rkward/rkward.cpp:358
+#: rkward/rkward.cpp:362 rkward/rkward.cpp:366
 #, kde-format
 msgid "Failed to load some plugin maps"
 msgstr "Nepodařilo se načíst některé mapy přídavných modulů"
 
-#: rkward/rkward.cpp:358
+#: rkward/rkward.cpp:366
 #, kde-format
 msgid ""
 "Some errors were encountered while loading the following RKWard pluginmap "
@@ -4118,7 +4118,7 @@ msgstr ""
 "jsou poškozeny, nekompatibilní s touto verzí RKWardu (Další informace "
 "hledejte v Podrobnosti). Jiné přídavné moduly byly ovšem úspěšně načteny."
 
-#: rkward/rkward.cpp:358
+#: rkward/rkward.cpp:366
 #, kde-format
 msgid ""
 "Note: You will not be warned about these pluginmap files again, until you "
@@ -4129,209 +4129,209 @@ msgstr ""
 "varováni, dokud RKWard nezaktualizujete, nebo dokud je neodstraníte a znovu "
 "nepřidáte v Nastavení -> Nastavit RKWard -> Přídavné moduly."
 
-#: rkward/rkward.cpp:415
+#: rkward/rkward.cpp:423
 #, kde-format
 msgid "Carbon Copy Settings"
 msgstr "Nastavení zasílání kopie"
 
-#: rkward/rkward.cpp:433 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
+#: rkward/rkward.cpp:441 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
 #, kde-format
 msgid "Workspace"
 msgstr "Pracovní plocha"
 
-#: rkward/rkward.cpp:442
+#: rkward/rkward.cpp:450
 #, kde-format
 msgid "Files"
 msgstr "Soubory"
 
-#: rkward/rkward.cpp:446
+#: rkward/rkward.cpp:454
 #, kde-format
 msgid "Pending Jobs"
 msgstr "Úkoly čekající na vyřízení"
 
-#: rkward/rkward.cpp:458
+#: rkward/rkward.cpp:466
 #, kde-format
 msgid "Debugger Frames"
 msgstr ""
 
-#: rkward/rkward.cpp:463
+#: rkward/rkward.cpp:471
 #, kde-format
 msgid "Debugger Console"
 msgstr "Konzole ladiče"
 
-#: rkward/rkward.cpp:467
+#: rkward/rkward.cpp:475
 #, kde-format
 msgid "RKWard Debug Messages"
 msgstr "Ladicí zprávy RKWard"
 
-#: rkward/rkward.cpp:479
+#: rkward/rkward.cpp:487
 #, kde-format
 msgid "Dataset"
 msgstr "Soubor dat"
 
-#: rkward/rkward.cpp:481
+#: rkward/rkward.cpp:489
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Vytvoří nový prázdný soubor dat a otevře jej pro úpravy"
 
-#: rkward/rkward.cpp:484
+#: rkward/rkward.cpp:492
 #, kde-format
 msgid "Script File"
 msgstr "Soubor skriptu"
 
-#: rkward/rkward.cpp:488
+#: rkward/rkward.cpp:496
 #, kde-format
 msgid "Output document"
 msgstr "Výstupní dokument"
 
-#: rkward/rkward.cpp:490
+#: rkward/rkward.cpp:498
 #, kde-format
 msgid "Creates and activates a new output document"
 msgstr ""
 
-#: rkward/rkward.cpp:495
+#: rkward/rkward.cpp:503
 #, kde-format
 msgid "Open R Script File..."
 msgstr "Otevřít soubor skriptu R..."
 
-#: rkward/rkward.cpp:499
+#: rkward/rkward.cpp:507
 #, kde-format
 msgid "Open RKWard Output File..."
 msgstr "Otevřít výstupní soubor RKWard..."
 
-#: rkward/rkward.cpp:503
+#: rkward/rkward.cpp:511
 #, kde-format
 msgid "Open any File..."
 msgstr "Otevřít jakýkoliv soubor..."
 
-#: rkward/rkward.cpp:508
+#: rkward/rkward.cpp:516
 #, kde-format
 msgid "Open Recent R Script File"
 msgstr "Otevřít nedávný soubor skriptu R"
 
-#: rkward/rkward.cpp:512
+#: rkward/rkward.cpp:520
 #, kde-format
 msgid "Import Assistant"
 msgstr "Pomocník s importem"
 
-#: rkward/rkward.cpp:513
+#: rkward/rkward.cpp:521
 #, kde-format
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr "Pomocník pro nalezení nejlepší metody pro import dat z různých formátů"
 
-#: rkward/rkward.cpp:517
+#: rkward/rkward.cpp:525
 #, kde-format
 msgid "Open Workspace..."
 msgstr "Otevřít pracovní prostředí..."
 
-#: rkward/rkward.cpp:519
+#: rkward/rkward.cpp:527
 #, kde-format
 msgid "Opens an existing document"
 msgstr "Otevře existující dokument"
 
-#: rkward/rkward.cpp:524
+#: rkward/rkward.cpp:532
 #, kde-format
 msgid "Open Recent Workspace"
 msgstr "Otevřít nedávné pracovní prostředí"
 
-#: rkward/rkward.cpp:525
+#: rkward/rkward.cpp:533
 #, kde-format
 msgid "Opens a recently used file"
 msgstr "Otevře nedávno použitý soubor"
 
-#: rkward/rkward.cpp:528
+#: rkward/rkward.cpp:536
 #, kde-format
 msgid "Save Workspace"
 msgstr "Uložit pracovní prostředí"
 
-#: rkward/rkward.cpp:530
+#: rkward/rkward.cpp:538
 #, kde-format
 msgid "Saves the actual document"
 msgstr "Uloží současný dokument"
 
-#: rkward/rkward.cpp:534
+#: rkward/rkward.cpp:542
 #, kde-format
 msgid "Save Workspace As"
 msgstr "Uložit pracovní prostředí jako"
 
-#: rkward/rkward.cpp:535
+#: rkward/rkward.cpp:543
 #, kde-format
 msgid "Saves the actual document as..."
 msgstr "Uložit současný dokument jako..."
 
-#: rkward/rkward.cpp:538
+#: rkward/rkward.cpp:546
 #, kde-format
 msgid "Quits the application"
 msgstr "Ukončí aplikaci"
 
-#: rkward/rkward.cpp:541
+#: rkward/rkward.cpp:549
 #, kde-format
 msgid "Interrupt all commands"
 msgstr "Přerušit všechny příkazy"
 
-#: rkward/rkward.cpp:547
+#: rkward/rkward.cpp:555
 #, kde-format
 msgid "CC commands to output..."
 msgstr "Příkazy CC do výstupu..."
 
-#: rkward/rkward.cpp:551 rkward/rkward.cpp:555
+#: rkward/rkward.cpp:559 rkward/rkward.cpp:563
 #, kde-format
 msgid "Manage R packages and plugins..."
 msgstr "Spravovat balíček R a přídavné moduly..."
 
-#: rkward/rkward.cpp:562
+#: rkward/rkward.cpp:570
 #, kde-format
 msgid "Close All Data"
 msgstr "Zavřít všechna data"
 
-#: rkward/rkward.cpp:563
+#: rkward/rkward.cpp:571
 #, kde-format
 msgid "Closes all open data editors"
 msgstr "Zavře všechny otevřené editory dat"
 
-#: rkward/rkward.cpp:568
+#: rkward/rkward.cpp:576
 #, kde-format
 msgid "Close All"
 msgstr "Zavřít vše"
 
-#: rkward/rkward.cpp:572 rkward/windows/rktoolwindowbar.cpp:302
+#: rkward/rkward.cpp:580 rkward/windows/rktoolwindowbar.cpp:302
 #: rkward/windows/rkworkplaceview.cpp:97
 #, kde-format
 msgid "Detach"
 msgstr "Odpojit"
 
-#: rkward/rkward.cpp:576
+#: rkward/rkward.cpp:584
 #, kde-format
 msgid "Check installation"
 msgstr ""
 
-#: rkward/rkward.cpp:580
+#: rkward/rkward.cpp:588
 #, kde-format
 msgid "[No actions available for current view]"
 msgstr "[Pro nynější pohled nejsou dostupné žádné činnosti]"
 
-#: rkward/rkward.cpp:587
+#: rkward/rkward.cpp:595
 #, kde-format
 msgid "Open..."
 msgstr "Otevřít..."
 
-#: rkward/rkward.cpp:601
+#: rkward/rkward.cpp:609
 #, kde-format
 msgid "Create..."
 msgstr "Vytvořit..."
 
-#: rkward/rkward.cpp:608
+#: rkward/rkward.cpp:616
 #, kde-format
 msgid "Save..."
 msgstr "Uložit..."
 
-#: rkward/rkward.cpp:624
+#: rkward/rkward.cpp:632
 #, kde-format
 msgid "Restart R Backend"
 msgstr "Restartovat podpůrnou vrstvu R"
 
-#: rkward/rkward.cpp:632
+#: rkward/rkward.cpp:640
 #, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
@@ -4339,12 +4339,12 @@ msgid ""
 "sure you want to proceed?</p>"
 msgstr ""
 
-#: rkward/rkward.cpp:633
+#: rkward/rkward.cpp:641
 #, kde-format
 msgid "Restart R backend"
 msgstr "Restartovat podpůrnou vrstvu R"
 
-#: rkward/rkward.cpp:640
+#: rkward/rkward.cpp:648
 #, kde-format
 msgid ""
 "<p>One or more operations are pending.</p><p>If you have recently chosen to "
@@ -4352,129 +4352,129 @@ msgid ""
 "saved, yet!</b></p><p>How do you want to proceed?</p>"
 msgstr ""
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "R commands still pending"
 msgstr ""
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Force restart now"
 msgstr "Nyní vynutit restart"
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Check again"
 msgstr "Znovu zkontrolovat"
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Cancel restarting"
 msgstr "Zrušit restart"
 
-#: rkward/rkward.cpp:780
+#: rkward/rkward.cpp:788
 #, kde-format
 msgid "Current working directory"
 msgstr "Nynější pracovní adresář"
 
-#: rkward/rkward.cpp:798 rkward/windows/rcontrolwindow.cpp:40
+#: rkward/rkward.cpp:806 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
 msgid "Configure R backend"
 msgstr ""
 
-#: rkward/rkward.cpp:851
+#: rkward/rkward.cpp:859
 #, kde-format
 msgid "Exiting..."
 msgstr "Ukončuji..."
 
-#: rkward/rkward.cpp:869
+#: rkward/rkward.cpp:877
 #, kde-format
 msgid "New dataset"
 msgstr "Nový soubor dat"
 
-#: rkward/rkward.cpp:869
+#: rkward/rkward.cpp:877
 #, kde-format
 msgid "Enter name for the new dataset"
 msgstr "Zadejte název pro nový soubor dat"
 
-#: rkward/rkward.cpp:881
+#: rkward/rkward.cpp:889
 #, kde-format
 msgid "Opening workspace..."
 msgstr "Otevírá se pracovní prostředí..."
 
-#: rkward/rkward.cpp:884
+#: rkward/rkward.cpp:892
 #, kde-format
 msgid "Select workspace to open..."
 msgstr "Vyberte pracovní prostředí k otevření..."
 
-#: rkward/rkward.cpp:955
+#: rkward/rkward.cpp:963
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr "Jádro <b>R</b> je zaneprázdněno."
 
-#: rkward/rkward.cpp:959
+#: rkward/rkward.cpp:967
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr "Jádro <b>R</b> je nečinné."
 
-#: rkward/rkward.cpp:964
+#: rkward/rkward.cpp:972
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "Jádro <b>R</b> je inicializováno."
 
-#: rkward/rkward.cpp:967
+#: rkward/rkward.cpp:975
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr ""
 
-#: rkward/rkward.cpp:973
+#: rkward/rkward.cpp:981
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
 
-#: rkward/rkward.cpp:1003
+#: rkward/rkward.cpp:1011
 #, kde-format
 msgid "Open"
 msgstr "Otevřít"
 
-#: rkward/rkward.cpp:1007
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Opening mode:"
 msgstr ""
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr ""
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, kde-format
 msgid "Open as text / script file"
 msgstr ""
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr ""
 
-#: rkward/rkward.cpp:1046
+#: rkward/rkward.cpp:1054
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr ""
 
-#: rkward/rkward.cpp:1046
+#: rkward/rkward.cpp:1054
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr ""
 
-#: rkward/rkward.cpp:1055
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Otevřít soubor(y) skriptu"
 
-#: rkward/rkward.cpp:1069
+#: rkward/rkward.cpp:1077
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Nepojmenované pracovní prostředí]"

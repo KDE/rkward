@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"POT-Creation-Date: 2024-06-11 00:36+0000\n"
 "PO-Revision-Date: 2012-10-09 04:02+0000\n"
 "Last-Translator: Giannis Katsampirhs <juankatsampirhs@gmail.com>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -122,7 +122,7 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Αντικατάσταση;"
 
-#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:884
+#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:892
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgstr ""
@@ -3927,7 +3927,7 @@ msgstr "Π&ροβολή"
 msgid "&Run"
 msgstr "&Εκτέλεση"
 
-#: rkward/rkward.cpp:303
+#: rkward/rkward.cpp:311
 #, kde-format
 msgid ""
 "<p>You are about to start an RKWard dialog from outside of RKWard, probably "
@@ -3942,17 +3942,17 @@ msgid ""
 "suppress this message for the remainder of this session, only."
 msgstr ""
 
-#: rkward/rkward.cpp:304
+#: rkward/rkward.cpp:312
 #, kde-format
 msgid "A note on external links"
 msgstr ""
 
-#: rkward/rkward.cpp:316
+#: rkward/rkward.cpp:324
 #, kde-format
 msgid "Setting up plugins..."
 msgstr "Ρύθμιση προσθέτων..."
 
-#: rkward/rkward.cpp:350
+#: rkward/rkward.cpp:358
 #, kde-format
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
@@ -3960,12 +3960,12 @@ msgid ""
 ">Configure RKWard->Plugins."
 msgstr ""
 
-#: rkward/rkward.cpp:350
+#: rkward/rkward.cpp:358
 #, kde-format
 msgid "New plugins found"
 msgstr ""
 
-#: rkward/rkward.cpp:354
+#: rkward/rkward.cpp:362
 #, kde-format
 msgid ""
 "The following RKWard pluginmap files could not be loaded, and have been "
@@ -3974,12 +3974,12 @@ msgid ""
 "more information). They have been disabled."
 msgstr ""
 
-#: rkward/rkward.cpp:354 rkward/rkward.cpp:358
+#: rkward/rkward.cpp:362 rkward/rkward.cpp:366
 #, kde-format
 msgid "Failed to load some plugin maps"
 msgstr ""
 
-#: rkward/rkward.cpp:358
+#: rkward/rkward.cpp:366
 #, kde-format
 msgid ""
 "Some errors were encountered while loading the following RKWard pluginmap "
@@ -3988,7 +3988,7 @@ msgid ""
 "plugins were loaded, successfully, however."
 msgstr ""
 
-#: rkward/rkward.cpp:358
+#: rkward/rkward.cpp:366
 #, kde-format
 msgid ""
 "Note: You will not be warned about these pluginmap files again, until you "
@@ -3996,215 +3996,215 @@ msgid ""
 ">Plugins."
 msgstr ""
 
-#: rkward/rkward.cpp:415
+#: rkward/rkward.cpp:423
 #, kde-format
 msgid "Carbon Copy Settings"
 msgstr ""
 
-#: rkward/rkward.cpp:433 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
+#: rkward/rkward.cpp:441 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
 #, kde-format
 msgid "Workspace"
 msgstr "Χώρος εργασίας"
 
-#: rkward/rkward.cpp:442
+#: rkward/rkward.cpp:450
 #, kde-format
 msgid "Files"
 msgstr "Αρχεία"
 
-#: rkward/rkward.cpp:446
+#: rkward/rkward.cpp:454
 #, kde-format
 msgid "Pending Jobs"
 msgstr "Εργασίες σε εκκρεμότητα"
 
-#: rkward/rkward.cpp:458
+#: rkward/rkward.cpp:466
 #, kde-format
 msgid "Debugger Frames"
 msgstr ""
 
-#: rkward/rkward.cpp:463
+#: rkward/rkward.cpp:471
 #, kde-format
 msgid "Debugger Console"
 msgstr ""
 
-#: rkward/rkward.cpp:467
+#: rkward/rkward.cpp:475
 #, kde-format
 msgid "RKWard Debug Messages"
 msgstr ""
 
-#: rkward/rkward.cpp:479
+#: rkward/rkward.cpp:487
 #, kde-format
 msgid "Dataset"
 msgstr "Πακέτο δεδομένων"
 
-#: rkward/rkward.cpp:481
+#: rkward/rkward.cpp:489
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
 msgstr ""
 "Δημιουργεί ένα καινούριο άδειο πακέτο δεδομένων και το ανοίγει για "
 "επεξεργασία"
 
-#: rkward/rkward.cpp:484
+#: rkward/rkward.cpp:492
 #, kde-format
 msgid "Script File"
 msgstr "Αρχείο σεναρίου"
 
-#: rkward/rkward.cpp:488
+#: rkward/rkward.cpp:496
 #, kde-format
 msgid "Output document"
 msgstr ""
 
-#: rkward/rkward.cpp:490
+#: rkward/rkward.cpp:498
 #, kde-format
 msgid "Creates and activates a new output document"
 msgstr ""
 
-#: rkward/rkward.cpp:495
+#: rkward/rkward.cpp:503
 #, kde-format
 msgid "Open R Script File..."
 msgstr ""
 
-#: rkward/rkward.cpp:499
+#: rkward/rkward.cpp:507
 #, fuzzy, kde-format
 #| msgid "&Refresh Output"
 msgid "Open RKWard Output File..."
 msgstr "&Ανανέωση Παραθύρου Αποτελεσμάτων"
 
-#: rkward/rkward.cpp:503
+#: rkward/rkward.cpp:511
 #, kde-format
 msgid "Open any File..."
 msgstr ""
 
-#: rkward/rkward.cpp:508
+#: rkward/rkward.cpp:516
 #, kde-format
 msgid "Open Recent R Script File"
 msgstr ""
 
-#: rkward/rkward.cpp:512
+#: rkward/rkward.cpp:520
 #, fuzzy, kde-format
 #| msgid "Import Data"
 msgid "Import Assistant"
 msgstr "Εισαγωγή δεδομένων"
 
-#: rkward/rkward.cpp:513
+#: rkward/rkward.cpp:521
 #, fuzzy, kde-format
 #| msgid "Import data from a variety of file formats"
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr "Εισαγωγή δεδομένων από διάφορους τύπους αρχείων"
 
-#: rkward/rkward.cpp:517
+#: rkward/rkward.cpp:525
 #, kde-format
 msgid "Open Workspace..."
 msgstr ""
 
-#: rkward/rkward.cpp:519
+#: rkward/rkward.cpp:527
 #, kde-format
 msgid "Opens an existing document"
 msgstr "Άνοιγμα ενός υπάρχοντος εγγράφου"
 
-#: rkward/rkward.cpp:524
+#: rkward/rkward.cpp:532
 #, kde-format
 msgid "Open Recent Workspace"
 msgstr ""
 
-#: rkward/rkward.cpp:525
+#: rkward/rkward.cpp:533
 #, kde-format
 msgid "Opens a recently used file"
 msgstr "Άνοιγμα ενός πρόσφατου αρχείου"
 
-#: rkward/rkward.cpp:528
+#: rkward/rkward.cpp:536
 #, kde-format
 msgid "Save Workspace"
 msgstr "Αποθήκευση χώρου εργασίας"
 
-#: rkward/rkward.cpp:530
+#: rkward/rkward.cpp:538
 #, kde-format
 msgid "Saves the actual document"
 msgstr "Αποθηκεύει το τρέχον έγγραφο"
 
-#: rkward/rkward.cpp:534
+#: rkward/rkward.cpp:542
 #, kde-format
 msgid "Save Workspace As"
 msgstr "Αποθήκευση χώρου εργασίας ως"
 
-#: rkward/rkward.cpp:535
+#: rkward/rkward.cpp:543
 #, kde-format
 msgid "Saves the actual document as..."
 msgstr "Αποθηκεύει το τρέχον έγγραφο ως..."
 
-#: rkward/rkward.cpp:538
+#: rkward/rkward.cpp:546
 #, kde-format
 msgid "Quits the application"
 msgstr "Κλείνει την εφαρμογή"
 
-#: rkward/rkward.cpp:541
+#: rkward/rkward.cpp:549
 #, kde-format
 msgid "Interrupt all commands"
 msgstr ""
 
-#: rkward/rkward.cpp:547
+#: rkward/rkward.cpp:555
 #, kde-format
 msgid "CC commands to output..."
 msgstr ""
 
-#: rkward/rkward.cpp:551 rkward/rkward.cpp:555
+#: rkward/rkward.cpp:559 rkward/rkward.cpp:563
 #, kde-format
 msgid "Manage R packages and plugins..."
 msgstr ""
 
-#: rkward/rkward.cpp:562
+#: rkward/rkward.cpp:570
 #, kde-format
 msgid "Close All Data"
 msgstr "Κλείσιμο όλων των δεδομένων"
 
-#: rkward/rkward.cpp:563
+#: rkward/rkward.cpp:571
 #, kde-format
 msgid "Closes all open data editors"
 msgstr "Κλείνει όλους τους ανοιχτούς επεξεργαστές δεδομένων"
 
-#: rkward/rkward.cpp:568
+#: rkward/rkward.cpp:576
 #, kde-format
 msgid "Close All"
 msgstr "Κλείσιμο όλων"
 
-#: rkward/rkward.cpp:572 rkward/windows/rktoolwindowbar.cpp:302
+#: rkward/rkward.cpp:580 rkward/windows/rktoolwindowbar.cpp:302
 #: rkward/windows/rkworkplaceview.cpp:97
 #, kde-format
 msgid "Detach"
 msgstr "Αποσύνδεση"
 
-#: rkward/rkward.cpp:576
+#: rkward/rkward.cpp:584
 #, kde-format
 msgid "Check installation"
 msgstr ""
 
-#: rkward/rkward.cpp:580
+#: rkward/rkward.cpp:588
 #, kde-format
 msgid "[No actions available for current view]"
 msgstr "[Καμία διαθέσιμη ενέργεια για την παρούσα προβολή]"
 
-#: rkward/rkward.cpp:587
+#: rkward/rkward.cpp:595
 #, kde-format
 msgid "Open..."
 msgstr ""
 
-#: rkward/rkward.cpp:601
+#: rkward/rkward.cpp:609
 #, kde-format
 msgid "Create..."
 msgstr ""
 
-#: rkward/rkward.cpp:608
+#: rkward/rkward.cpp:616
 #, kde-format
 msgid "Save..."
 msgstr ""
 
-#: rkward/rkward.cpp:624
+#: rkward/rkward.cpp:632
 #, fuzzy, kde-format
 #| msgid "Message from the R backend"
 msgid "Restart R Backend"
 msgstr "Μήνυμα από το σύστημα υποστήριξης R"
 
-#: rkward/rkward.cpp:632
+#: rkward/rkward.cpp:640
 #, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
@@ -4212,13 +4212,13 @@ msgid ""
 "sure you want to proceed?</p>"
 msgstr ""
 
-#: rkward/rkward.cpp:633
+#: rkward/rkward.cpp:641
 #, fuzzy, kde-format
 #| msgid "Message from the R backend"
 msgid "Restart R backend"
 msgstr "Μήνυμα από το σύστημα υποστήριξης R"
 
-#: rkward/rkward.cpp:640
+#: rkward/rkward.cpp:648
 #, kde-format
 msgid ""
 "<p>One or more operations are pending.</p><p>If you have recently chosen to "
@@ -4226,131 +4226,131 @@ msgid ""
 "saved, yet!</b></p><p>How do you want to proceed?</p>"
 msgstr ""
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "R commands still pending"
 msgstr ""
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Force restart now"
 msgstr ""
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Check again"
 msgstr ""
 
-#: rkward/rkward.cpp:641
+#: rkward/rkward.cpp:649
 #, kde-format
 msgid "Cancel restarting"
 msgstr ""
 
-#: rkward/rkward.cpp:780
+#: rkward/rkward.cpp:788
 #, kde-format
 msgid "Current working directory"
 msgstr ""
 
-#: rkward/rkward.cpp:798 rkward/windows/rcontrolwindow.cpp:40
+#: rkward/rkward.cpp:806 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
 msgid "Configure R backend"
 msgstr "Ρύθμιση του συστήματος υποστήριξης R"
 
-#: rkward/rkward.cpp:851
+#: rkward/rkward.cpp:859
 #, kde-format
 msgid "Exiting..."
 msgstr "Έξοδος..."
 
-#: rkward/rkward.cpp:869
+#: rkward/rkward.cpp:877
 #, kde-format
 msgid "New dataset"
 msgstr "Νέο πακέτο δεδομένων"
 
-#: rkward/rkward.cpp:869
+#: rkward/rkward.cpp:877
 #, kde-format
 msgid "Enter name for the new dataset"
 msgstr "Εισάγετε το όνομα για το νέο πακέτο δεδομένων"
 
-#: rkward/rkward.cpp:881
+#: rkward/rkward.cpp:889
 #, kde-format
 msgid "Opening workspace..."
 msgstr "Άνοιγμα χώρου εργασίας..."
 
-#: rkward/rkward.cpp:884
+#: rkward/rkward.cpp:892
 #, kde-format
 msgid "Select workspace to open..."
 msgstr ""
 
-#: rkward/rkward.cpp:955
+#: rkward/rkward.cpp:963
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr ""
 
-#: rkward/rkward.cpp:959
+#: rkward/rkward.cpp:967
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr ""
 
-#: rkward/rkward.cpp:964
+#: rkward/rkward.cpp:972
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr ""
 
-#: rkward/rkward.cpp:967
+#: rkward/rkward.cpp:975
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr ""
 
-#: rkward/rkward.cpp:973
+#: rkward/rkward.cpp:981
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
 
-#: rkward/rkward.cpp:1003
+#: rkward/rkward.cpp:1011
 #, kde-format
 msgid "Open"
 msgstr ""
 
-#: rkward/rkward.cpp:1007
+#: rkward/rkward.cpp:1015
 #, fuzzy, kde-format
 #| msgid "Specify model"
 msgid "Opening mode:"
 msgstr "Προσδιορισμός μοντέλου"
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr ""
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, fuzzy, kde-format
 #| msgid "Opens a recently used file"
 msgid "Open as text / script file"
 msgstr "Άνοιγμα ενός πρόσφατου αρχείου"
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1017
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr ""
 
-#: rkward/rkward.cpp:1046
+#: rkward/rkward.cpp:1054
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr ""
 
-#: rkward/rkward.cpp:1046
+#: rkward/rkward.cpp:1054
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr ""
 
-#: rkward/rkward.cpp:1055
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "Open script file(s)"
 msgstr ""
 
-#: rkward/rkward.cpp:1069
+#: rkward/rkward.cpp:1077
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Χώρος εργασίας χωρίς όνομα]"

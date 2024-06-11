@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-06-09 16:26+0200\n"
+"PO-Revision-Date: 2024-06-10 12:00+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -2077,14 +2077,7 @@ msgstr "Gecrashte backend"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
-#, fuzzy, kde-format
-#| msgid ""
-#| "A times the R backend will fail to start due to a configuration or "
-#| "installation problem. Common causes are changed paths, or an update to R. "
-#| "Usually, in these cases, the setup dialog is shown when starting RKWard, "
-#| "and this allows to select a different installation of R. (Note: You will "
-#| "be offered a selection of installations found a common paths, but you can "
-#| "also specify a non-detected installation, manually.)"
+#, kde-format
 msgid ""
 "At times the R backend will fail to start due to a configuration or "
 "installation problem. Common causes are changed paths, or an update to R. "
