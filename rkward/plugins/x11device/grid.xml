@@ -20,6 +20,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 		<connect client="lwd.enabled" governor="custlwd.state"/>
 		<connect client="trellis_note.visible" governor="is_embed.not" />
+		<connect client="preview.visible" governor="is_embed.not" />
 	</logic>
 	<dialog label="Grid options">
 		<row>
