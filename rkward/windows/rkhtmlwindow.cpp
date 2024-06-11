@@ -590,7 +590,11 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 				page->setHtmlWrapper(f.readAll(), url.adjusted(QUrl::RemoveFilename));
 				f.close ();
 			} else {
-				page->load (url);
+				// NOTE: Quirk in Qt 6.7: When first loading a page, the window is somehow brought to the front, again. In preview windows
+				//       (initially hidden), this leads to a strange pulsing effect. Delay the actual page load until the window is
+				//       actually shown (showEvent(), below).
+				//       With this, the flicker is still there, but feels more "natural"
+				if (isVisible()) page->load(url);
 			}
 			if (!restore_position.isNull()) page->setScrollPositionWhenDone(restore_position);
 		} else {
@@ -626,9 +630,20 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 	return true;
 }
 
+void RKHTMLWindow::showEvent(QShowEvent *event) {
+	RK_TRACE (APP);
+	RKMDIWindow::showEvent(event);
+	// see comment in openURL, above
+	if (page->url().isEmpty() && !current_url.isEmpty() && current_url != page->url()) {
+		QUrl real_url = current_url;
+		current_url.clear();
+		openURL(real_url);
+	}
+}
+
 void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
 	RK_TRACE (APP);
-	
+
 	KIO::TransferJob* tj = static_cast<KIO::TransferJob*> (job);
 	if (tj->error ()) {
 		// WORKAROUND for bug in KIO version 5.9.0: After a redirect, the transfer job would claim "does not exist". Here, we help it get over _one_ redirect, hoping R's help server

@@ -123,6 +123,7 @@ friend class RKHTMLWindowPart;
 	bool url_change_is_from_history;	// dirty!!!
 
 	QUrl current_url;
+	void showEvent(QShowEvent *event) override;
 	void startNewCacheFile ();
 	QTemporaryFile *current_cache_file;
 
