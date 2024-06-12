@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kde4.14\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
+"POT-Creation-Date: 2024-06-12 00:36+0000\n"
 "PO-Revision-Date: 2015-02-22 23:11+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian\n"
@@ -992,7 +992,7 @@ msgstr "Izbor boje"
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:58
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:63
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:66
-#: rkward/plugins/distributions/../x11device/grid.xml:58
+#: rkward/plugins/distributions/../x11device/grid.xml:59
 #, fuzzy, kde-format
 msgid "Color"
 msgstr "Boja"
@@ -1836,7 +1836,7 @@ msgstr ""
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:84
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:39
-#: rkward/plugins/distributions/../x11device/grid.xml:51
+#: rkward/plugins/distributions/../x11device/grid.xml:52
 #, fuzzy, kde-format
 msgid "Solid"
 msgstr "Čvrsto"
@@ -1846,7 +1846,7 @@ msgstr "Čvrsto"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:85
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:40
-#: rkward/plugins/distributions/../x11device/grid.xml:52
+#: rkward/plugins/distributions/../x11device/grid.xml:53
 #, fuzzy, kde-format
 msgid "Dashed"
 msgstr "Isprekidan"
@@ -1856,7 +1856,7 @@ msgstr "Isprekidan"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:86
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:41
-#: rkward/plugins/distributions/../x11device/grid.xml:53
+#: rkward/plugins/distributions/../x11device/grid.xml:54
 #, fuzzy, kde-format
 msgid "Dotted"
 msgstr "Tačkast"
@@ -1866,7 +1866,7 @@ msgstr "Tačkast"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:87
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:42
-#: rkward/plugins/distributions/../x11device/grid.xml:54
+#: rkward/plugins/distributions/../x11device/grid.xml:55
 #, fuzzy, kde-format
 msgid "Dot-Dash"
 msgstr "Crtica tačka"
@@ -1876,7 +1876,7 @@ msgstr "Crtica tačka"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:88
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:43
-#: rkward/plugins/distributions/../x11device/grid.xml:55
+#: rkward/plugins/distributions/../x11device/grid.xml:56
 #, kde-format
 msgid "Long-dash"
 msgstr ""
@@ -1886,7 +1886,7 @@ msgstr ""
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:89
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:44
-#: rkward/plugins/distributions/../x11device/grid.xml:56
+#: rkward/plugins/distributions/../x11device/grid.xml:57
 #, kde-format
 msgid "Two-dash"
 msgstr ""
@@ -2698,7 +2698,7 @@ msgstr ""
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:38
-#: rkward/plugins/distributions/../x11device/grid.xml:50
+#: rkward/plugins/distributions/../x11device/grid.xml:51
 #, fuzzy, kde-format
 msgid "Default"
 msgstr "Podrazumijevano"
@@ -2851,85 +2851,85 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: (Grid options) <dialog label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:24
+#: rkward/plugins/distributions/../x11device/grid.xml:25
 #, fuzzy, kde-format
 msgid "Grid options"
 msgstr "Opcije koordinatne mreže"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:27
+#: rkward/plugins/distributions/../x11device/grid.xml:28
 #, kde-format
 msgid "Number of X cells"
 msgstr ""
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:28
-#: rkward/plugins/distributions/../x11device/grid.xml:36
+#: rkward/plugins/distributions/../x11device/grid.xml:29
+#: rkward/plugins/distributions/../x11device/grid.xml:37
 #, kde-format
 msgid "At the ticks"
 msgstr ""
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:29
-#: rkward/plugins/distributions/../x11device/grid.xml:37
+#: rkward/plugins/distributions/../x11device/grid.xml:30
+#: rkward/plugins/distributions/../x11device/grid.xml:38
 #, fuzzy, kde-format
 msgid "None"
 msgstr "Ništa"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:30
-#: rkward/plugins/distributions/../x11device/grid.xml:38
+#: rkward/plugins/distributions/../x11device/grid.xml:31
+#: rkward/plugins/distributions/../x11device/grid.xml:39
 #, kde-format
 msgid "Specify below"
 msgstr ""
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:32
+#: rkward/plugins/distributions/../x11device/grid.xml:33
 #, fuzzy, kde-format
 msgid "X Cells"
 msgstr "Ćelije"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:35
+#: rkward/plugins/distributions/../x11device/grid.xml:36
 #, kde-format
 msgid "Number of Y cells"
 msgstr ""
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:40
+#: rkward/plugins/distributions/../x11device/grid.xml:41
 #, fuzzy, kde-format
 msgid "Y Cells"
 msgstr "Ćelije"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:44
+#: rkward/plugins/distributions/../x11device/grid.xml:45
 #, fuzzy, kde-format
 msgid "Custom Line width"
 msgstr "Vlastita širina linije:"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:45
+#: rkward/plugins/distributions/../x11device/grid.xml:46
 #, kde-format
 msgid "Equilogs"
 msgstr ""
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:48
+#: rkward/plugins/distributions/../x11device/grid.xml:49
 #, fuzzy, kde-format
 msgid "Line width"
 msgstr "Širina reda"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:49
+#: rkward/plugins/distributions/../x11device/grid.xml:50
 #, fuzzy, kde-format
 msgid "Line type"
 msgstr "Tip linije"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <text>
-#: rkward/plugins/distributions/../x11device/grid.xml:62
+#: rkward/plugins/distributions/../x11device/grid.xml:63
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
 msgstr ""

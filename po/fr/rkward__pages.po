@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-05-12 18:22+0200\n"
+"PO-Revision-Date: 2024-06-10 13:42+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -12,9 +12,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
-"X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
+"X-Environment: kde\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -548,7 +548,7 @@ msgstr ""
 "Reposant sur certaines heuristiques simples, RKWard essayera de compléter "
 "les noms de fichier, plutôt que des noms d'objets lorsque approprié. Ceci "
 "est fait lorsque le curseur semble être à l'intérieur d'une chaîne entre "
-"quotes, ne ressemblant pas à un nom d'objet."
+"guillemets, ne ressemblant pas à un nom d'objet."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #. i18n: ectx: (Screen device history) <section title="...">
@@ -1516,7 +1516,7 @@ msgid ""
 msgstr ""
 "RKWard vous aide également dans la rédaction de documents « RMarkdown ». En "
 "particulier, il y a une fonctionnalité puissante d'aperçu pour les scripts "
-"« .RMd ». Alors que RMarkdown est idéal pour écrire des « rapports » "
+"« .Rmd ». Alors que RMarkdown est idéal pour écrire des « rapports » "
 "interactifs, la sortie de RKWard est très facile à utiliser pour la "
 "documentation correspondante, tout en explorant vos données."
 
@@ -2091,6 +2091,10 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Cette page tentera de couvrir certains problèmes courants que vous pouvez "
+"rencontrer lors de l'utilisation de RKWard. Veuillez aussi consulter la "
+"<link href=\"https://rkward.kde.org/faq\">liste des questions les plus "
+"fréquentes (FAQ) en ligne</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2126,13 +2130,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "Le moteur pour R s'est planté ou n'a pas pu démarrer."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Plantage du moteur"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2155,6 +2159,11 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"Dans de nombreux cas, cela « fonctionnera simplement » par la sélection "
+"d'une version de R, différente de celle été utilisée au moment de la "
+"compilation. Cependant, si vous rencontrez des problèmes, il est conseillé "
+"d'utiliser la même version de R ou une version similaire à celle disponible "
+"lors de la compilation."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2165,18 +2174,25 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Vous pouvez modifier manuellement le moteur de R à tout moment, en utilisant "
+"le menu « Configuration / Vérifier l'installation ». Veuillez ne pas oublier "
+"de sauvegarder vos données, avant toute modification du moteur ! Vous pouvez "
+"également utiliser l'option de ligne de commandes « --r-executable » afin de "
+"démarrer une session utilisant une installation spécifique de R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
 msgstr ""
+"Pourquoi ne devrais-je pas utiliser la version de R fournie dans le paquet "
+"« AppImage » de  RKWard ?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2189,6 +2205,14 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"Le paquet « AppImage » comprend une installation de R pour plus de "
+"commodités. Mais cette installation n'est pas et ne peut techniquement pas "
+"être rendue pleinement fonctionnelle. Il est important de noter que vous ne "
+"pourrez généralement pas installer de paquets de R (Autres que ceux mis en "
+"œuvre uniquement dans R). En outre, vous pourriez faire face à des conflits "
+"entre l'installation R à l'intérieur du paquet « AppImage » et les paquets "
+"de R installés au niveau du système. Cela peut causer des bogues subtils et "
+"surprenants."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-11 00:36+0000\n"
+"POT-Creation-Date: 2024-06-12 00:36+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -2406,7 +2406,7 @@ msgstr "Edasiotsing (otsitava järgmine esinemine)"
 msgid "Match case"
 msgstr "Tõstutundlik"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format
 msgid "Find as you type"
 msgstr "Otsimine kirjutamise ajal"
@@ -5567,7 +5567,7 @@ msgid "RKWard Plugins"
 msgstr "RKWardi pluginad"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:473
-#: rkward/windows/rkhtmlwindow.cpp:1138
+#: rkward/windows/rkhtmlwindow.cpp:1153
 #, kde-format
 msgid "Dependencies"
 msgstr "Sõltuvused"
@@ -6111,36 +6111,22 @@ msgstr ""
 "<b>Aktiivne väljakutse:</b> %1<br><b>Keskkond:</b> %2<br><b>Kohalikud "
 "objektid:</b> %3"
 
-#: rkward/windows/rkcodecompletion.cpp:60
-#, kde-format
-msgid ""
-"Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
-"now), the function call tip feature would crash, and has been disabled in "
-"this session. To enable the call tip, install any other (earlier or later) "
-"version of (lib|kf5)ktexteditor."
-msgstr ""
-
-#: rkward/windows/rkcodecompletion.cpp:62
-#, kde-format
-msgid "Incompatible version of ktexteditor"
-msgstr ""
-
-#: rkward/windows/rkcodecompletion.cpp:690
+#: rkward/windows/rkcodecompletion.cpp:674
 #, kde-format
 msgid "Objects on search path"
 msgstr "Objektid otsinguteel"
 
-#: rkward/windows/rkcodecompletion.cpp:777
+#: rkward/windows/rkcodecompletion.cpp:761
 #, kde-format
 msgid "Function calls"
 msgstr "Funktsioonide väljakutsed"
 
-#: rkward/windows/rkcodecompletion.cpp:875
+#: rkward/windows/rkcodecompletion.cpp:859
 #, kde-format
 msgid "Function arguments"
 msgstr "Funktsioonide argumendid"
 
-#: rkward/windows/rkcodecompletion.cpp:992
+#: rkward/windows/rkcodecompletion.cpp:976
 #, kde-format
 msgid "Local file names"
 msgstr "Kohalikud failinimed"
@@ -6617,39 +6603,39 @@ msgstr "Pakett"
 msgid "Save as"
 msgstr "Salvesta kui"
 
-#: rkward/windows/rkhtmlwindow.cpp:599
+#: rkward/windows/rkhtmlwindow.cpp:603
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:718
+#: rkward/windows/rkhtmlwindow.cpp:733
 #: rkward/windows/rktoplevelwindowgui.cpp:253
 #, fuzzy, kde-format
 #| msgid "Active"
 msgid "[Active]"
 msgstr "Aktiivsed"
 
-#: rkward/windows/rkhtmlwindow.cpp:729
+#: rkward/windows/rkhtmlwindow.cpp:744
 #, kde-format
 msgid "Output %1"
 msgstr "Väljund %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:783
+#: rkward/windows/rkhtmlwindow.cpp:798
 #, kde-format
 msgid "Output Window"
 msgstr "Väljundiaken"
 
-#: rkward/windows/rkhtmlwindow.cpp:785
+#: rkward/windows/rkhtmlwindow.cpp:800
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Värskenda väljundit"
 
-#: rkward/windows/rkhtmlwindow.cpp:811
+#: rkward/windows/rkhtmlwindow.cpp:826
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "Lehekülge ei ole olemas või on see katki"
 
-#: rkward/windows/rkhtmlwindow.cpp:823
+#: rkward/windows/rkhtmlwindow.cpp:838
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6658,32 +6644,32 @@ msgstr ""
 "Kas tõesti puhastada väljund? See eemaldab ka kõik väljundis kasutatud "
 "pildifailid. Seda ei ole võimalik tagasi võtta."
 
-#: rkward/windows/rkhtmlwindow.cpp:823
+#: rkward/windows/rkhtmlwindow.cpp:838
 #, kde-format
 msgid "Flush output?"
 msgstr "Kas puhastada väljund?"
 
-#: rkward/windows/rkhtmlwindow.cpp:828
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid "Flushing output"
 msgstr "Väljundi puhastamine"
 
-#: rkward/windows/rkhtmlwindow.cpp:870
+#: rkward/windows/rkhtmlwindow.cpp:885
 #, kde-format
 msgid "Zoom In"
 msgstr "Suurenda"
 
-#: rkward/windows/rkhtmlwindow.cpp:872
+#: rkward/windows/rkhtmlwindow.cpp:887
 #, kde-format
 msgid "Zoom Out"
 msgstr "Vähenda"
 
-#: rkward/windows/rkhtmlwindow.cpp:876
+#: rkward/windows/rkhtmlwindow.cpp:891
 #, kde-format
 msgid "Default &Encoding"
 msgstr "Vaikimisi kod&eering"
 
-#: rkward/windows/rkhtmlwindow.cpp:877
+#: rkward/windows/rkhtmlwindow.cpp:892
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6692,62 +6678,62 @@ msgstr ""
 "Kodeeringu lisamine, mida eeldada, kui leheküljel või HTTP-päises ei ole "
 "kodeeringut otseselt määratud."
 
-#: rkward/windows/rkhtmlwindow.cpp:887
+#: rkward/windows/rkhtmlwindow.cpp:902
 #, fuzzy, kde-format
 #| msgid "Export page as HTML"
 msgid "Export Page as HTML"
 msgstr "Lehekülje eksport HTML-ina"
 
-#: rkward/windows/rkhtmlwindow.cpp:901
+#: rkward/windows/rkhtmlwindow.cpp:916
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Save Output"
 msgstr "Väljundi salvestamine HTML-ina"
 
-#: rkward/windows/rkhtmlwindow.cpp:903
+#: rkward/windows/rkhtmlwindow.cpp:918
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Save Output As"
 msgstr "Väljundi salvestamine HTML-ina"
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:921
 #, fuzzy, kde-format
 #| msgid "&Refresh Output"
 msgid "&Clear Output"
 msgstr "&Värskenda väljundit"
 
-#: rkward/windows/rkhtmlwindow.cpp:912
+#: rkward/windows/rkhtmlwindow.cpp:927
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:916
+#: rkward/windows/rkhtmlwindow.cpp:931
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Set Output as &Active"
 msgstr "Väljundi salvestamine HTML-ina"
 
-#: rkward/windows/rkhtmlwindow.cpp:918
+#: rkward/windows/rkhtmlwindow.cpp:933
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/windows/rkhtmlwindow.cpp:955
 #, kde-format
 msgid "Print output"
 msgstr "Väljundi näitamine"
 
-#: rkward/windows/rkhtmlwindow.cpp:948
+#: rkward/windows/rkhtmlwindow.cpp:963
 #, kde-format
 msgid "Print page"
 msgstr "Lehekülje näitamine"
 
-#: rkward/windows/rkhtmlwindow.cpp:1005
+#: rkward/windows/rkhtmlwindow.cpp:1020
 #, kde-format
 msgid "No Title"
 msgstr "Pealkiri puudub"
 
-#: rkward/windows/rkhtmlwindow.cpp:1018
+#: rkward/windows/rkhtmlwindow.cpp:1033
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6758,63 +6744,63 @@ msgstr ""
 "<p>Selle komponendid abilehekülge pole veel kirja pandud (või on see katki). "
 "Palun kaalu võimalust see ise valmis kirjutada.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1023
+#: rkward/windows/rkhtmlwindow.cpp:1038
 #, kde-format
 msgid "Use %1 now"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:1040
+#: rkward/windows/rkhtmlwindow.cpp:1055
 #, kde-format
 msgid "Summary"
 msgstr "Kokkuvõte"
 
-#: rkward/windows/rkhtmlwindow.cpp:1047
+#: rkward/windows/rkhtmlwindow.cpp:1062
 #, kde-format
 msgid "Usage"
 msgstr "Kasutus"
 
-#: rkward/windows/rkhtmlwindow.cpp:1074
+#: rkward/windows/rkhtmlwindow.cpp:1089
 #, fuzzy, kde-format
 #| msgid "<<Open another file>>"
 msgid "Choose another file"
 msgstr "<<Avada teine fail>>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1096
+#: rkward/windows/rkhtmlwindow.cpp:1111
 #, kde-format
 msgid "GUI settings"
 msgstr "Graafilise kasutajaliidese seadistused"
 
-#: rkward/windows/rkhtmlwindow.cpp:1121
+#: rkward/windows/rkhtmlwindow.cpp:1136
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Seonduvad funktsioonid ja leheküljed"
 
-#: rkward/windows/rkhtmlwindow.cpp:1129
+#: rkward/windows/rkhtmlwindow.cpp:1144
 #, kde-format
 msgid "Technical details"
 msgstr "Tehnilised üksikasjad"
 
-#: rkward/windows/rkhtmlwindow.cpp:1152
+#: rkward/windows/rkhtmlwindow.cpp:1167
 #, kde-format
 msgid "About"
 msgstr "Teave"
 
-#: rkward/windows/rkhtmlwindow.cpp:1159
+#: rkward/windows/rkhtmlwindow.cpp:1174
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Sellel leheküljel:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1182
+#: rkward/windows/rkhtmlwindow.cpp:1197
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Nimetu graafilise kasutajaliidese element"
 
-#: rkward/windows/rkhtmlwindow.cpp:1256
+#: rkward/windows/rkhtmlwindow.cpp:1271
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "R-i viited \"%1\" kohta"
 
-#: rkward/windows/rkhtmlwindow.cpp:1267
+#: rkward/windows/rkhtmlwindow.cpp:1282
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "KATKINE VIIDE"

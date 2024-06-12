@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__embedded\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
+"POT-Creation-Date: 2024-06-12 00:36+0000\n"
 "PO-Revision-Date: 2023-07-05 18:08-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -1082,7 +1082,7 @@ msgstr "Escolha a cor"
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:58
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:63
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:66
-#: rkward/plugins/distributions/../x11device/grid.xml:58
+#: rkward/plugins/distributions/../x11device/grid.xml:59
 #, kde-format
 msgid "Color"
 msgstr "Cor"
@@ -1985,7 +1985,7 @@ msgstr "Vazio (Sem linhas)"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:84
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:39
-#: rkward/plugins/distributions/../x11device/grid.xml:51
+#: rkward/plugins/distributions/../x11device/grid.xml:52
 #, kde-format
 msgid "Solid"
 msgstr "Sólida"
@@ -1995,7 +1995,7 @@ msgstr "Sólida"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:85
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:40
-#: rkward/plugins/distributions/../x11device/grid.xml:52
+#: rkward/plugins/distributions/../x11device/grid.xml:53
 #, kde-format
 msgid "Dashed"
 msgstr "Tracejada"
@@ -2005,7 +2005,7 @@ msgstr "Tracejada"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:86
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:41
-#: rkward/plugins/distributions/../x11device/grid.xml:53
+#: rkward/plugins/distributions/../x11device/grid.xml:54
 #, kde-format
 msgid "Dotted"
 msgstr "Pontilhada"
@@ -2015,7 +2015,7 @@ msgstr "Pontilhada"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:87
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:42
-#: rkward/plugins/distributions/../x11device/grid.xml:54
+#: rkward/plugins/distributions/../x11device/grid.xml:55
 #, kde-format
 msgid "Dot-Dash"
 msgstr "Traço-Ponto"
@@ -2025,7 +2025,7 @@ msgstr "Traço-Ponto"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:88
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:43
-#: rkward/plugins/distributions/../x11device/grid.xml:55
+#: rkward/plugins/distributions/../x11device/grid.xml:56
 #, kde-format
 msgid "Long-dash"
 msgstr "Traço longo"
@@ -2035,7 +2035,7 @@ msgstr "Traço longo"
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:89
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:44
-#: rkward/plugins/distributions/../x11device/grid.xml:56
+#: rkward/plugins/distributions/../x11device/grid.xml:57
 #, kde-format
 msgid "Two-dash"
 msgstr "Dois traços"
@@ -2988,7 +2988,7 @@ msgstr "Tipo de linha para todas as linhas"
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:38
-#: rkward/plugins/distributions/../x11device/grid.xml:50
+#: rkward/plugins/distributions/../x11device/grid.xml:51
 #, kde-format
 msgid "Default"
 msgstr "Padrão"
@@ -3168,85 +3168,85 @@ msgstr ""
 "<i>equilogs=FALSE</i>."
 
 #. i18n: ectx: (Grid options) <dialog label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:24
+#: rkward/plugins/distributions/../x11device/grid.xml:25
 #, kde-format
 msgid "Grid options"
 msgstr "Opções da grade"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:27
+#: rkward/plugins/distributions/../x11device/grid.xml:28
 #, kde-format
 msgid "Number of X cells"
 msgstr "Número de células em X"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:28
-#: rkward/plugins/distributions/../x11device/grid.xml:36
+#: rkward/plugins/distributions/../x11device/grid.xml:29
+#: rkward/plugins/distributions/../x11device/grid.xml:37
 #, kde-format
 msgid "At the ticks"
 msgstr "Nos traços"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:29
-#: rkward/plugins/distributions/../x11device/grid.xml:37
+#: rkward/plugins/distributions/../x11device/grid.xml:30
+#: rkward/plugins/distributions/../x11device/grid.xml:38
 #, kde-format
 msgid "None"
 msgstr "Nenhuma"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:30
-#: rkward/plugins/distributions/../x11device/grid.xml:38
+#: rkward/plugins/distributions/../x11device/grid.xml:31
+#: rkward/plugins/distributions/../x11device/grid.xml:39
 #, kde-format
 msgid "Specify below"
 msgstr "Indicar abaixo"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:32
+#: rkward/plugins/distributions/../x11device/grid.xml:33
 #, kde-format
 msgid "X Cells"
 msgstr "Células em X"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:35
+#: rkward/plugins/distributions/../x11device/grid.xml:36
 #, kde-format
 msgid "Number of Y cells"
 msgstr "Número de células em Y"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:40
+#: rkward/plugins/distributions/../x11device/grid.xml:41
 #, kde-format
 msgid "Y Cells"
 msgstr "Células em Y"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:44
+#: rkward/plugins/distributions/../x11device/grid.xml:45
 #, kde-format
 msgid "Custom Line width"
 msgstr "Espessura de linha personalizada"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:45
+#: rkward/plugins/distributions/../x11device/grid.xml:46
 #, kde-format
 msgid "Equilogs"
 msgstr "Equilogs"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:48
+#: rkward/plugins/distributions/../x11device/grid.xml:49
 #, kde-format
 msgid "Line width"
 msgstr "Espessura da linha"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:49
+#: rkward/plugins/distributions/../x11device/grid.xml:50
 #, kde-format
 msgid "Line type"
 msgstr "Tipo de linha"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <text>
-#: rkward/plugins/distributions/../x11device/grid.xml:62
+#: rkward/plugins/distributions/../x11device/grid.xml:63
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
 msgstr "Nota: Não se aplica nos dispositivos do tipo Trellis!"

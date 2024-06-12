@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-06-05 13:08+0200\n"
+"PO-Revision-Date: 2024-06-11 05:32+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1050,7 +1050,7 @@ msgstr "პოლიქორულიკორელაცია"
 #: rkward/plugins/analysis/corr_matrix.xml:37
 #, kde-format
 msgid "Treat ordered categorial variables as numeric ranks"
-msgstr ""
+msgstr "დალაგებული კატეგორიული ცვლადების რიცხვით რანგებად აღქმა"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="...">
@@ -1076,7 +1076,7 @@ msgstr "ნაკლული მნიშვნელობების ამ�
 #: rkward/plugins/plots/cor_graph.xml:29
 #, kde-format
 msgid "whole cases"
-msgstr ""
+msgstr "სრული დაკვირვებები"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Exclude missing values"> <option label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Exclude missing values"> <option label="...">
@@ -2728,7 +2728,7 @@ msgstr "თავისუფლების ხარისხი"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:168
 #, kde-format
 msgid "Degrees of freedom for numerator"
-msgstr ""
+msgstr "თავისუფლების ხარისხი მრიცხველისთვის"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
@@ -2740,7 +2740,7 @@ msgstr "df <sub> რიცხვ </sub> : k &minus; 1"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
 #, kde-format
 msgid "Degrees of freedom for denominator"
-msgstr ""
+msgstr "თავისუფლების ხარისხი მნიშვნელისთვის"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
@@ -3237,7 +3237,7 @@ msgstr "დიკი-ფულერი"
 #: rkward/plugins/analysis/time_series/kpss_test.js:29
 #, kde-format
 msgid "Truncation lag parameter"
-msgstr ""
+msgstr "წაკვეთის ლაგის პარამეტრი"
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots) <summary>
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:8
@@ -3259,7 +3259,7 @@ msgstr ""
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:19
 #, kde-format
 msgid "Which version of the truncation lag parameter should be used?"
-msgstr ""
+msgstr "რომელი ვერსიის წაკვეთის ლაგის პარამეტრი უნდა იქნეს გამოყენებული?"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "Exclude missing values")
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "Exclude missing values")
@@ -3275,7 +3275,7 @@ msgstr "ამოვიღო ნაკლული მნიშვნელო�
 #: rkward/plugins/analysis/TESTS/PP_test.xml:11
 #, kde-format
 msgid "Phillips-Perron Test for Unit Roots"
-msgstr ""
+msgstr "ფილიპს-პერონის ტესტი ერთეულის ფესვებისთვის"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="Phillips-Perron Test for Unit Roots"> <tab label="Basic settings"> <radio label="...">
@@ -3283,7 +3283,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:22
 #, kde-format
 msgid "version of truncation lag parameter"
-msgstr ""
+msgstr "წაკვეთის ლაგის პარამეტრის ვერსია"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="version of truncation lag parameter"> <option label="...">
 #. i18n: ectx: (Phillips-Perron Test for Unit Roots) <dialog label="Phillips-Perron Test for Unit Roots"> <tab label="Basic settings"> <radio label="version of truncation lag parameter"> <option label="...">
@@ -3950,7 +3950,7 @@ msgstr "პასუხის ცვლადი (რიცხვითი ვ�
 #: rkward/plugins/analysis/variances/levene_test.rkh:18
 #, kde-format
 msgid "factor defining groups (factor)."
-msgstr ""
+msgstr "ფაქტორი ჯგუფების აღწერისთვის (ფაქტორი)."
 
 #. i18n: ectx: (Loaded from Levene's Test) <related>
 #: rkward/plugins/analysis/variances/levene_test.rkh:20
@@ -3977,7 +3977,7 @@ msgstr "ჯგუფები"
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:84
 #, kde-format
 msgid "Continuity correction in normal approximation for p-value"
-msgstr ""
+msgstr "უწყვეტობის შესწორება p-მნიშვნელობის ნორმალურ წარმოდგენაში"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
@@ -4695,7 +4695,7 @@ msgstr "RKWard -ის გუნდი"
 #: rkward/plugins/uni1.2/code.js:17
 #, kde-format
 msgid "Number of cases"
-msgstr ""
+msgstr "დაკვირვებების რაოდენობა"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:18
@@ -4778,13 +4778,13 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:84
 #, kde-format
 msgid "Mad scale estimate"
-msgstr ""
+msgstr "MAD მასშტაბის შეფასება"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:91
 #, kde-format
 msgid "Huber M-Estimator"
-msgstr ""
+msgstr "ჰუბერის M-შემფასებელი"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:96
@@ -4797,7 +4797,7 @@ msgstr "შედეგების დამახსოვრება"
 #: rkward/plugins/uni1.2/code.js:103
 #, kde-format
 msgid "Univariate statistics"
-msgstr ""
+msgstr "ცალმხრივი სტატისტიკა"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:105

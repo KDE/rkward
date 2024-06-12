@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-11 00:36+0000\n"
-"PO-Revision-Date: 2024-05-02 16:13+0200\n"
+"POT-Creation-Date: 2024-06-12 00:36+0000\n"
+"PO-Revision-Date: 2024-06-10 09:59+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -13,9 +13,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
-"X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
+"X-Environment: kde\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -1635,33 +1635,29 @@ msgid "<b>Select one:</b>"
 msgstr "<b>Sélectionner un : </b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:115
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show problem details"
-msgstr "Afficher les détails"
+msgstr "Afficher les détails du problème"
 
 #: rkward/dialogs/rksetupwizard.cpp:128
 #, kde-format
 msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
-msgstr ""
+msgstr "RKWard utilise actuellement l'installation de R à <nobr>%1</nobr>."
 
 #: rkward/dialogs/rksetupwizard.cpp:135
-#, fuzzy, kde-format
-#| msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
+#, kde-format
 msgid "<b>R backend has failed to start.</b>"
-msgstr ""
-"<b>Le moteur de R a démarré. Veuillez cliquer sur « Suivant » pour continuer."
-"</b>"
+msgstr "<b>Il a été impossible de démarrer le moteur de R a démarré.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:137
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
-msgstr ""
+msgstr "<b>Le moteur de R s'est planté.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:144
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
-msgstr ""
+msgstr "<b>La version %1 de R a démarré avec succès.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:147
 #, kde-format
@@ -1681,32 +1677,32 @@ msgstr "<b>En attente du moteur de R...</b>"
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
 msgid "Use R at:"
-msgstr ""
+msgstr "Utilisez R à :"
 
 #: rkward/dialogs/rksetupwizard.cpp:184
 #, kde-format
 msgid "Select another R executable"
-msgstr ""
+msgstr "Sélectionnez un autre exécutable pour R"
 
 #: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
 msgid "Select R executable"
-msgstr ""
+msgstr "Sélectionnez un exécutable pour R"
 
 #: rkward/dialogs/rksetupwizard.cpp:200
 #, kde-format
 msgid "Use R at %1"
-msgstr ""
+msgstr "Utiliser R à %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:203
 #, kde-format
 msgid "Attempt to restart R at %1"
-msgstr ""
+msgstr "Tentative de redémarrage de R à %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:204
 #, kde-format
 msgid "Keep current version (%1)"
-msgstr ""
+msgstr "Conserver la version actuelle (%1)"
 
 #: rkward/dialogs/rksetupwizard.cpp:236
 #, kde-format
@@ -1939,8 +1935,7 @@ msgstr ""
 "tout moment, en utilisant la fonction « rk.import.legacy.output() »."
 
 #: rkward/dialogs/rksetupwizard.cpp:383
-#, fuzzy, kde-format
-#| msgid "R-Backend"
+#, kde-format
 msgid "R Backend"
 msgstr "Moteur de R"
 
@@ -2477,6 +2472,9 @@ msgid ""
 "Act as if the version of RKWard had changed (show setup wizard, and "
 "(re-)install rkward R package)."
 msgstr ""
+"Veuillez agir comme si la version de RKWard avait été modifiée (Veuillez "
+"afficher l'assistant de configuration et (ré)installez le paquet « rkward » "
+"de R)."
 
 #: rkward/misc/rkcommandlineargs.cpp:39
 #, kde-format
@@ -2533,7 +2531,7 @@ msgstr "Recherche en avant (Prochaine occurrence du terme recherché)."
 msgid "Match case"
 msgstr "Respecter la casse"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format
 msgid "Find as you type"
 msgstr "Rechercher au fur et à mesure de la saisie"
@@ -3805,34 +3803,23 @@ msgid "Description"
 msgstr "Description"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:119
-#, fuzzy, kde-format
-#| msgid ""
-#| "RKWard failed to detect an R installation on this system. Either R is not "
-#| "installed, or not at one of the standard installation locations. You can "
-#| "use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', "
-#| "or supply an rkward.ini file to specify a non-standard location."
+#, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
 "Il a été impossible pour RKWard de détecter une installation de R sur ce "
-"système. Soit R n'est pas installé, soit l'installation n'a pas été fait à "
-"un des emplacements classiques d'installation. Vous pouvez utiliser le "
-"paramètre « --r-executable <i>auto / PATH_TO_R</i>  » en ligne de commandes "
-"ou fournir un fichier « rkward.ini » pour spécifier un emplacement non "
-"standard."
+"système. Soit R n'est pas installé, soit l'installation n'a pas été faite à "
+"un des emplacements classiques d'installation."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:126
-#, fuzzy, kde-format
-#| msgid ""
-#| "The R executable specified on the command line (%1) does not exist or is "
-#| "not executable."
+#, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
 "executable."
 msgstr ""
-"L'exécutable R spécifié sur la ligne de commande (%1) n'existe pas ou n'est "
-"pas exécutable."
+"L'installation configurée de R à <b>%1</b> n'existe pas ou n'est pas "
+"exécutable."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:218
 #, kde-format
@@ -4624,22 +4611,15 @@ msgid "Restart R Backend"
 msgstr "Ré-initialiser le moteur de R"
 
 #: rkward/rkward.cpp:640
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>This feature is primarily targetted at advanced users working on "
-#| "scripts or packages. Please proceed with caution.</p><p><b>All unsaved "
-#| "data in this workspace will be lost!</b> All data editors, and graphics "
-#| "windows will be closed.</p><p>Are you sure you want to proceed?</p>"
+#, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
 "</b> All data editors, and graphics windows will be closed.</p><p>Are you "
 "sure you want to proceed?</p>"
 msgstr ""
-"<p>Cette fonctionnalité s'adresse tout d'abord aux utilisateurs avancés, "
-"travaillant avec des scripts ou des paquets. Veuillez continuer avec "
-"précaution.</p><p><b>Toutes les données non enregistrées seront perdues !</"
-"b> Tous les éditeurs de donnée et les fenêtres graphiques seront fermées.</"
-"p><p>Voulez-vous vraiment continuer ?</p>"
+"<p>b>Le redémarrage du moteur effacera toutes les données non enregistrées "
+"dans cet espace de travail !</b>Tous les éditeurs de données et les fenêtres "
+"graphiques seront fermées.</p><p>Voulez-vous vraiment continuer ?</p>"
 
 #: rkward/rkward.cpp:641
 #, kde-format
@@ -4739,6 +4719,8 @@ msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
+"Moteur de R indisponible. Veuillez consulter la page <a href=\"rkward://page/"
+"rkward_trouble_shooting\">dépannage</a> pour les solutions possibles."
 
 #: rkward/rkward.cpp:1011
 #, kde-format
@@ -5824,7 +5806,7 @@ msgid "RKWard Plugins"
 msgstr "Modules externes pour RKWard"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:473
-#: rkward/windows/rkhtmlwindow.cpp:1138
+#: rkward/windows/rkhtmlwindow.cpp:1153
 #, kde-format
 msgid "Dependencies"
 msgstr "Dépendances"
@@ -6356,41 +6338,22 @@ msgstr ""
 "<b>Appel courant : </b> %1<br><b>Environnement : </b> %2<br><b>Objets "
 "locaux : </b> %3"
 
-#: rkward/windows/rkcodecompletion.cpp:60
-#, kde-format
-msgid ""
-"Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
-"now), the function call tip feature would crash, and has been disabled in "
-"this session. To enable the call tip, install any other (earlier or later) "
-"version of (lib|kf5)ktexteditor."
-msgstr ""
-"En raison d'un bogue dans la version 5.92.0 du logiciel « ktexteditor » (la "
-"version en cours d'utilisation, en ce moment), la fonctionnalité « conseil "
-"d'appel de fonction » planterait et a été désactivé dans cette session. Pour "
-"activer l'appel, veuillez installer toute autre version (antérieure ou "
-"ultérieure) de (lib|kf5) ktexteditor."
-
-#: rkward/windows/rkcodecompletion.cpp:62
-#, kde-format
-msgid "Incompatible version of ktexteditor"
-msgstr "Version incompatible de ktexteditor"
-
-#: rkward/windows/rkcodecompletion.cpp:690
+#: rkward/windows/rkcodecompletion.cpp:674
 #, kde-format
 msgid "Objects on search path"
 msgstr "Objets dans l'emplacement de recherche"
 
-#: rkward/windows/rkcodecompletion.cpp:777
+#: rkward/windows/rkcodecompletion.cpp:761
 #, kde-format
 msgid "Function calls"
 msgstr "Appels de fonction"
 
-#: rkward/windows/rkcodecompletion.cpp:875
+#: rkward/windows/rkcodecompletion.cpp:859
 #, kde-format
 msgid "Function arguments"
 msgstr "Paramètres de fonction"
 
-#: rkward/windows/rkcodecompletion.cpp:992
+#: rkward/windows/rkcodecompletion.cpp:976
 #, kde-format
 msgid "Local file names"
 msgstr "Noms de fichiers locaux"
@@ -6885,38 +6848,38 @@ msgstr "Paquetage"
 msgid "Save as"
 msgstr "Enregistrer sous"
 
-#: rkward/windows/rkhtmlwindow.cpp:599
+#: rkward/windows/rkhtmlwindow.cpp:603
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "Le fichier de sortie de RKWard n'existe (pas) encore."
 
-#: rkward/windows/rkhtmlwindow.cpp:718
+#: rkward/windows/rkhtmlwindow.cpp:733
 #: rkward/windows/rktoplevelwindowgui.cpp:253
 #, kde-format
 msgid "[Active]"
 msgstr "[Actif]"
 
-#: rkward/windows/rkhtmlwindow.cpp:729
+#: rkward/windows/rkhtmlwindow.cpp:744
 #, kde-format
 msgid "Output %1"
 msgstr "Sortie de %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:783
+#: rkward/windows/rkhtmlwindow.cpp:798
 #, kde-format
 msgid "Output Window"
 msgstr "Fenêtre de sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:785
+#: rkward/windows/rkhtmlwindow.cpp:800
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Rafraîchir la sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:811
+#: rkward/windows/rkhtmlwindow.cpp:826
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "La page n'existe pas ou été incorrectement référencée"
 
-#: rkward/windows/rkhtmlwindow.cpp:823
+#: rkward/windows/rkhtmlwindow.cpp:838
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6926,32 +6889,32 @@ msgstr ""
 "fichiers d'images utilisés dans la sortie. Il sera impossible de la "
 "restaurer."
 
-#: rkward/windows/rkhtmlwindow.cpp:823
+#: rkward/windows/rkhtmlwindow.cpp:838
 #, kde-format
 msgid "Flush output?"
 msgstr "Vider la sortie ?"
 
-#: rkward/windows/rkhtmlwindow.cpp:828
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid "Flushing output"
 msgstr "Vidage de la sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:870
+#: rkward/windows/rkhtmlwindow.cpp:885
 #, kde-format
 msgid "Zoom In"
 msgstr "Zoom avant"
 
-#: rkward/windows/rkhtmlwindow.cpp:872
+#: rkward/windows/rkhtmlwindow.cpp:887
 #, kde-format
 msgid "Zoom Out"
 msgstr "Zoom arrière"
 
-#: rkward/windows/rkhtmlwindow.cpp:876
+#: rkward/windows/rkhtmlwindow.cpp:891
 #, kde-format
 msgid "Default &Encoding"
 msgstr "&Encodage par défaut"
 
-#: rkward/windows/rkhtmlwindow.cpp:877
+#: rkward/windows/rkhtmlwindow.cpp:892
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6960,58 +6923,58 @@ msgstr ""
 "Définissez le codage pour être sûr qu'aucun code implicite n'a été défini "
 "dans la page ou dans les en-têtes « http »."
 
-#: rkward/windows/rkhtmlwindow.cpp:887
+#: rkward/windows/rkhtmlwindow.cpp:902
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Exporter la page au format « HTML »"
 
-#: rkward/windows/rkhtmlwindow.cpp:901
+#: rkward/windows/rkhtmlwindow.cpp:916
 #, kde-format
 msgid "Save Output"
 msgstr "Enregistrer la sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:903
+#: rkward/windows/rkhtmlwindow.cpp:918
 #, kde-format
 msgid "Save Output As"
 msgstr "Enregistrer la sortie comme"
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "&Clear Output"
 msgstr "Effa&cer une sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:912
+#: rkward/windows/rkhtmlwindow.cpp:927
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Revenir au dernier état enregistré"
 
-#: rkward/windows/rkhtmlwindow.cpp:916
+#: rkward/windows/rkhtmlwindow.cpp:931
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Définir une sortie comme &active"
 
-#: rkward/windows/rkhtmlwindow.cpp:918
+#: rkward/windows/rkhtmlwindow.cpp:933
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr ""
 "Définir cette sortie comme le fichier dans lequel concaténer la sortie."
 
-#: rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/windows/rkhtmlwindow.cpp:955
 #, kde-format
 msgid "Print output"
 msgstr "Imprimer la sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:948
+#: rkward/windows/rkhtmlwindow.cpp:963
 #, kde-format
 msgid "Print page"
 msgstr "Imprimer une page"
 
-#: rkward/windows/rkhtmlwindow.cpp:1005
+#: rkward/windows/rkhtmlwindow.cpp:1020
 #, kde-format
 msgid "No Title"
 msgstr "Aucun titre"
 
-#: rkward/windows/rkhtmlwindow.cpp:1018
+#: rkward/windows/rkhtmlwindow.cpp:1033
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -7022,62 +6985,62 @@ msgstr ""
 "<p> La page d'aide pour ce composant n'a pas été encore écrite (ou est "
 "cassée). Veuillez prendre en compte que vous y contribuez.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1023
+#: rkward/windows/rkhtmlwindow.cpp:1038
 #, kde-format
 msgid "Use %1 now"
 msgstr "Utiliser %1 maintenant"
 
-#: rkward/windows/rkhtmlwindow.cpp:1040
+#: rkward/windows/rkhtmlwindow.cpp:1055
 #, kde-format
 msgid "Summary"
 msgstr "Résumé"
 
-#: rkward/windows/rkhtmlwindow.cpp:1047
+#: rkward/windows/rkhtmlwindow.cpp:1062
 #, kde-format
 msgid "Usage"
 msgstr "Utilisation"
 
-#: rkward/windows/rkhtmlwindow.cpp:1074
+#: rkward/windows/rkhtmlwindow.cpp:1089
 #, kde-format
 msgid "Choose another file"
 msgstr "Sélectionnez un autre fichier"
 
-#: rkward/windows/rkhtmlwindow.cpp:1096
+#: rkward/windows/rkhtmlwindow.cpp:1111
 #, kde-format
 msgid "GUI settings"
 msgstr "Configuration de l'interface graphique utilisateur"
 
-#: rkward/windows/rkhtmlwindow.cpp:1121
+#: rkward/windows/rkhtmlwindow.cpp:1136
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Fonctions et pages associées"
 
-#: rkward/windows/rkhtmlwindow.cpp:1129
+#: rkward/windows/rkhtmlwindow.cpp:1144
 #, kde-format
 msgid "Technical details"
 msgstr "Détails techniques"
 
-#: rkward/windows/rkhtmlwindow.cpp:1152
+#: rkward/windows/rkhtmlwindow.cpp:1167
 #, kde-format
 msgid "About"
 msgstr "À propos"
 
-#: rkward/windows/rkhtmlwindow.cpp:1159
+#: rkward/windows/rkhtmlwindow.cpp:1174
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Sur cette page : </h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1182
+#: rkward/windows/rkhtmlwindow.cpp:1197
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Élément sans nom de l'interface graphique utilisateur"
 
-#: rkward/windows/rkhtmlwindow.cpp:1256
+#: rkward/windows/rkhtmlwindow.cpp:1271
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Référence R vers « %1 »"
 
-#: rkward/windows/rkhtmlwindow.cpp:1267
+#: rkward/windows/rkhtmlwindow.cpp:1282
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "RÉFÉRENCE CASSÉE"
@@ -7730,6 +7693,21 @@ msgstr "Saisissez un nouveau nom"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Affichage dans l'éditeur (Lecture seule)"
+
+#~ msgid ""
+#~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
+#~ "now), the function call tip feature would crash, and has been disabled in "
+#~ "this session. To enable the call tip, install any other (earlier or "
+#~ "later) version of (lib|kf5)ktexteditor."
+#~ msgstr ""
+#~ "En raison d'un bogue dans la version 5.92.0 du logiciel "
+#~ "« ktexteditor » (la version en cours d'utilisation, en ce moment), la "
+#~ "fonctionnalité « conseil d'appel de fonction » planterait et a été "
+#~ "désactivé dans cette session. Pour activer l'appel, veuillez installer "
+#~ "toute autre version (antérieure ou ultérieure) de (lib|kf5) ktexteditor."
+
+#~ msgid "Incompatible version of ktexteditor"
+#~ msgstr "Version incompatible de ktexteditor"
 
 #~ msgid ""
 #~ "<p>The setup assistant has been invoked, automatically, because a problem "

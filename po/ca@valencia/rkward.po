@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-11 00:36+0000\n"
+"POT-Creation-Date: 2024-06-12 00:36+0000\n"
 "PO-Revision-Date: 2024-06-10 10:44+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2512,7 +2512,7 @@ msgstr "Busca avant (ocurrència següent del terme de busca)"
 msgid "Match case"
 msgstr "Coincidència de majúscules"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format
 msgid "Find as you type"
 msgstr "Busca en teclejar"
@@ -5742,7 +5742,7 @@ msgid "RKWard Plugins"
 msgstr "Connectors de RKWard"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:473
-#: rkward/windows/rkhtmlwindow.cpp:1138
+#: rkward/windows/rkhtmlwindow.cpp:1153
 #, kde-format
 msgid "Dependencies"
 msgstr "Dependències"
@@ -6273,41 +6273,22 @@ msgid ""
 msgstr ""
 "<b>Crida actual:</b> %1<br><b>Entorn:</b> %2<br><b>Objectes locals:</b> %3"
 
-#: rkward/windows/rkcodecompletion.cpp:60
-#, kde-format
-msgid ""
-"Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
-"now), the function call tip feature would crash, and has been disabled in "
-"this session. To enable the call tip, install any other (earlier or later) "
-"version of (lib|kf5)ktexteditor."
-msgstr ""
-"A causa d'un error en la versió 5.92.0 de KTextEditor (la versió en ús, en "
-"este moment), la crida a la funció de característica de consell podria "
-"fallar, i s'ha desactivat en esta sessió. Per a activar la punta de tocada, "
-"instal·leu qualsevol altra versió (anterior o posterior) de «(lib|"
-"kf5)ktexteditor»."
-
-#: rkward/windows/rkcodecompletion.cpp:62
-#, kde-format
-msgid "Incompatible version of ktexteditor"
-msgstr "Versió incompatible de KTextEditor"
-
-#: rkward/windows/rkcodecompletion.cpp:690
+#: rkward/windows/rkcodecompletion.cpp:674
 #, kde-format
 msgid "Objects on search path"
 msgstr "Objectes en el camí de busca"
 
-#: rkward/windows/rkcodecompletion.cpp:777
+#: rkward/windows/rkcodecompletion.cpp:761
 #, kde-format
 msgid "Function calls"
 msgstr "Crides a la funció"
 
-#: rkward/windows/rkcodecompletion.cpp:875
+#: rkward/windows/rkcodecompletion.cpp:859
 #, kde-format
 msgid "Function arguments"
 msgstr "Arguments de la funció"
 
-#: rkward/windows/rkcodecompletion.cpp:992
+#: rkward/windows/rkcodecompletion.cpp:976
 #, kde-format
 msgid "Local file names"
 msgstr "Noms dels fitxers locals"
@@ -6797,38 +6778,38 @@ msgstr "Paquet"
 msgid "Save as"
 msgstr "Anomena i guarda"
 
-#: rkward/windows/rkhtmlwindow.cpp:599
+#: rkward/windows/rkhtmlwindow.cpp:603
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "El fitxer d'eixida %s de RKWard (encara) no existix"
 
-#: rkward/windows/rkhtmlwindow.cpp:718
+#: rkward/windows/rkhtmlwindow.cpp:733
 #: rkward/windows/rktoplevelwindowgui.cpp:253
 #, kde-format
 msgid "[Active]"
 msgstr "[Actiu]"
 
-#: rkward/windows/rkhtmlwindow.cpp:729
+#: rkward/windows/rkhtmlwindow.cpp:744
 #, kde-format
 msgid "Output %1"
 msgstr "Eixida de %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:783
+#: rkward/windows/rkhtmlwindow.cpp:798
 #, kde-format
 msgid "Output Window"
 msgstr "Finestra de l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:785
+#: rkward/windows/rkhtmlwindow.cpp:800
 #, kde-format
 msgid "&Refresh Output"
 msgstr "Act&ualitza l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:811
+#: rkward/windows/rkhtmlwindow.cpp:826
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "La pàgina no existix o està trencada"
 
-#: rkward/windows/rkhtmlwindow.cpp:823
+#: rkward/windows/rkhtmlwindow.cpp:838
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6837,32 +6818,32 @@ msgstr ""
 "Segur que voleu netejar l'eixida? Açò també eliminarà tots els fitxers "
 "d'imatge utilitzats en l'eixida. No es podrà restaurar."
 
-#: rkward/windows/rkhtmlwindow.cpp:823
+#: rkward/windows/rkhtmlwindow.cpp:838
 #, kde-format
 msgid "Flush output?"
 msgstr "Voleu netejar l'eixida?"
 
-#: rkward/windows/rkhtmlwindow.cpp:828
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid "Flushing output"
 msgstr "S'està netejant l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:870
+#: rkward/windows/rkhtmlwindow.cpp:885
 #, kde-format
 msgid "Zoom In"
 msgstr "Amplia"
 
-#: rkward/windows/rkhtmlwindow.cpp:872
+#: rkward/windows/rkhtmlwindow.cpp:887
 #, kde-format
 msgid "Zoom Out"
 msgstr "Reduïx"
 
-#: rkward/windows/rkhtmlwindow.cpp:876
+#: rkward/windows/rkhtmlwindow.cpp:891
 #, kde-format
 msgid "Default &Encoding"
 msgstr "Codificació pre&determinada"
 
-#: rkward/windows/rkhtmlwindow.cpp:877
+#: rkward/windows/rkhtmlwindow.cpp:892
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6871,58 +6852,58 @@ msgstr ""
 "Establix la codificació a assumir en cas que no s'haja establit cap "
 "codificació explícita a la pàgina a les capçaleres HTTP."
 
-#: rkward/windows/rkhtmlwindow.cpp:887
+#: rkward/windows/rkhtmlwindow.cpp:902
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Exporta la pàgina com a HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:901
+#: rkward/windows/rkhtmlwindow.cpp:916
 #, kde-format
 msgid "Save Output"
 msgstr "Guarda l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:903
+#: rkward/windows/rkhtmlwindow.cpp:918
 #, kde-format
 msgid "Save Output As"
 msgstr "Guarda l'eixida com a"
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Neteja l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:912
+#: rkward/windows/rkhtmlwindow.cpp:927
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Retorna a l'últim estat guardat"
 
-#: rkward/windows/rkhtmlwindow.cpp:916
+#: rkward/windows/rkhtmlwindow.cpp:931
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Guarda l'eixida com a &activa"
 
-#: rkward/windows/rkhtmlwindow.cpp:918
+#: rkward/windows/rkhtmlwindow.cpp:933
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Establix esta eixida com a fitxer al qual afegir l'eixida."
 
-#: rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/windows/rkhtmlwindow.cpp:955
 #, kde-format
 msgid "Print output"
 msgstr "Imprimix l'eixida"
 
-#: rkward/windows/rkhtmlwindow.cpp:948
+#: rkward/windows/rkhtmlwindow.cpp:963
 #, kde-format
 msgid "Print page"
 msgstr "Imprimix la pàgina"
 
-#: rkward/windows/rkhtmlwindow.cpp:1005
+#: rkward/windows/rkhtmlwindow.cpp:1020
 #, kde-format
 msgid "No Title"
 msgstr "Sense títol"
 
 # ??? Per revisar : Núria
-#: rkward/windows/rkhtmlwindow.cpp:1018
+#: rkward/windows/rkhtmlwindow.cpp:1033
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6933,62 +6914,62 @@ msgstr ""
 "<p>La pàgina d'ajuda per a este component encara no s'ha escrit (o està "
 "incompleta). Considereu contribuir-hi.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1023
+#: rkward/windows/rkhtmlwindow.cpp:1038
 #, kde-format
 msgid "Use %1 now"
 msgstr "Utilitza %1 ara"
 
-#: rkward/windows/rkhtmlwindow.cpp:1040
+#: rkward/windows/rkhtmlwindow.cpp:1055
 #, kde-format
 msgid "Summary"
 msgstr "Resum"
 
-#: rkward/windows/rkhtmlwindow.cpp:1047
+#: rkward/windows/rkhtmlwindow.cpp:1062
 #, kde-format
 msgid "Usage"
 msgstr "Ús"
 
-#: rkward/windows/rkhtmlwindow.cpp:1074
+#: rkward/windows/rkhtmlwindow.cpp:1089
 #, kde-format
 msgid "Choose another file"
 msgstr "Seleccioneu un altre fitxer"
 
-#: rkward/windows/rkhtmlwindow.cpp:1096
+#: rkward/windows/rkhtmlwindow.cpp:1111
 #, kde-format
 msgid "GUI settings"
 msgstr "Configureu la IGU"
 
-#: rkward/windows/rkhtmlwindow.cpp:1121
+#: rkward/windows/rkhtmlwindow.cpp:1136
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Funcions relacionades i pàgines"
 
-#: rkward/windows/rkhtmlwindow.cpp:1129
+#: rkward/windows/rkhtmlwindow.cpp:1144
 #, kde-format
 msgid "Technical details"
 msgstr "Detalls tècnics"
 
-#: rkward/windows/rkhtmlwindow.cpp:1152
+#: rkward/windows/rkhtmlwindow.cpp:1167
 #, kde-format
 msgid "About"
 msgstr "Quant a"
 
-#: rkward/windows/rkhtmlwindow.cpp:1159
+#: rkward/windows/rkhtmlwindow.cpp:1174
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>En esta pàgina:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1182
+#: rkward/windows/rkhtmlwindow.cpp:1197
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Element de la IGU sense nom"
 
-#: rkward/windows/rkhtmlwindow.cpp:1256
+#: rkward/windows/rkhtmlwindow.cpp:1271
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Ajuda d'R sobre «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1267
+#: rkward/windows/rkhtmlwindow.cpp:1282
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "REFERÈNCIA TRENCADA"
@@ -7631,3 +7612,18 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure en l'editor (només lectura)"
+
+#~ msgid ""
+#~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
+#~ "now), the function call tip feature would crash, and has been disabled in "
+#~ "this session. To enable the call tip, install any other (earlier or "
+#~ "later) version of (lib|kf5)ktexteditor."
+#~ msgstr ""
+#~ "A causa d'un error en la versió 5.92.0 de KTextEditor (la versió en ús, "
+#~ "en este moment), la crida a la funció de característica de consell podria "
+#~ "fallar, i s'ha desactivat en esta sessió. Per a activar la punta de "
+#~ "tocada, instal·leu qualsevol altra versió (anterior o posterior) de «(lib|"
+#~ "kf5)ktexteditor»."
+
+#~ msgid "Incompatible version of ktexteditor"
+#~ msgstr "Versió incompatible de KTextEditor"

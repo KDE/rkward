@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-11 00:36+0000\n"
+"POT-Creation-Date: 2024-06-12 00:36+0000\n"
 "PO-Revision-Date: 2024-04-11 18:25+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -2500,7 +2500,7 @@ msgstr "Cerca in avanti (successive occorrenze del termine di ricerca)"
 msgid "Match case"
 msgstr "Distingui le maiuscole"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format
 msgid "Find as you type"
 msgstr "Cerca durante la digitazione"
@@ -5727,7 +5727,7 @@ msgid "RKWard Plugins"
 msgstr "Estensioni di RKWard"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:473
-#: rkward/windows/rkhtmlwindow.cpp:1138
+#: rkward/windows/rkhtmlwindow.cpp:1153
 #, kde-format
 msgid "Dependencies"
 msgstr "Dipendenze"
@@ -6254,41 +6254,22 @@ msgstr ""
 "<b>Chiamata attuale:</b> %1<br><b>Ambiente:</b> %2<br><b>Oggetti locali:</b> "
 "%3"
 
-#: rkward/windows/rkcodecompletion.cpp:60
-#, kde-format
-msgid ""
-"Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
-"now), the function call tip feature would crash, and has been disabled in "
-"this session. To enable the call tip, install any other (earlier or later) "
-"version of (lib|kf5)ktexteditor."
-msgstr ""
-"A causa di un bug nella versione 5.92.0 di ktexteditor (la versione in uso, "
-"in questo momento), la funzionalità di suggerimento delle funzioni genera "
-"una chiusura inattesa ed è stata disabilitata in questa sessione. Per "
-"abilitare il suggerimento, installa qualsiasi altra versione (precedente o "
-"successiva) di (lib|kf5)ktexteditor."
-
-#: rkward/windows/rkcodecompletion.cpp:62
-#, kde-format
-msgid "Incompatible version of ktexteditor"
-msgstr "Versione non compatibile di ktexteditor"
-
-#: rkward/windows/rkcodecompletion.cpp:690
+#: rkward/windows/rkcodecompletion.cpp:674
 #, kde-format
 msgid "Objects on search path"
 msgstr "Oggetti nel percorso di ricerca"
 
-#: rkward/windows/rkcodecompletion.cpp:777
+#: rkward/windows/rkcodecompletion.cpp:761
 #, kde-format
 msgid "Function calls"
 msgstr "Chiamate di funzione"
 
-#: rkward/windows/rkcodecompletion.cpp:875
+#: rkward/windows/rkcodecompletion.cpp:859
 #, kde-format
 msgid "Function arguments"
 msgstr "Argomenti della funzione"
 
-#: rkward/windows/rkcodecompletion.cpp:992
+#: rkward/windows/rkcodecompletion.cpp:976
 #, kde-format
 msgid "Local file names"
 msgstr "Nomi di file locali"
@@ -6777,38 +6758,38 @@ msgstr "Pacchetto"
 msgid "Save as"
 msgstr "Salva come"
 
-#: rkward/windows/rkhtmlwindow.cpp:599
+#: rkward/windows/rkhtmlwindow.cpp:603
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "Il file di uscita di RKward %s non esiste (ancora)."
 
-#: rkward/windows/rkhtmlwindow.cpp:718
+#: rkward/windows/rkhtmlwindow.cpp:733
 #: rkward/windows/rktoplevelwindowgui.cpp:253
 #, kde-format
 msgid "[Active]"
 msgstr "[Attivo]"
 
-#: rkward/windows/rkhtmlwindow.cpp:729
+#: rkward/windows/rkhtmlwindow.cpp:744
 #, kde-format
 msgid "Output %1"
 msgstr "Output %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:783
+#: rkward/windows/rkhtmlwindow.cpp:798
 #, kde-format
 msgid "Output Window"
 msgstr "Finestra di output"
 
-#: rkward/windows/rkhtmlwindow.cpp:785
+#: rkward/windows/rkhtmlwindow.cpp:800
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Aggiorna l'output"
 
-#: rkward/windows/rkhtmlwindow.cpp:811
+#: rkward/windows/rkhtmlwindow.cpp:826
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "La pagina non esiste oppure è danneggiata"
 
-#: rkward/windows/rkhtmlwindow.cpp:823
+#: rkward/windows/rkhtmlwindow.cpp:838
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6817,32 +6798,32 @@ msgstr ""
 "Vuoi veramente cancellare l'output? Questo rimuoverà anche tutte i file di "
 "immagine usati nell'output, e non sarà possibile ripristinarli."
 
-#: rkward/windows/rkhtmlwindow.cpp:823
+#: rkward/windows/rkhtmlwindow.cpp:838
 #, kde-format
 msgid "Flush output?"
 msgstr "Vuoi cancellare il risultato?"
 
-#: rkward/windows/rkhtmlwindow.cpp:828
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid "Flushing output"
 msgstr "Cancellare il risultato"
 
-#: rkward/windows/rkhtmlwindow.cpp:870
+#: rkward/windows/rkhtmlwindow.cpp:885
 #, kde-format
 msgid "Zoom In"
 msgstr "Ingrandisci"
 
-#: rkward/windows/rkhtmlwindow.cpp:872
+#: rkward/windows/rkhtmlwindow.cpp:887
 #, kde-format
 msgid "Zoom Out"
 msgstr "Rimpicciolisci"
 
-#: rkward/windows/rkhtmlwindow.cpp:876
+#: rkward/windows/rkhtmlwindow.cpp:891
 #, kde-format
 msgid "Default &Encoding"
 msgstr "Codifica pred&efinita"
 
-#: rkward/windows/rkhtmlwindow.cpp:877
+#: rkward/windows/rkhtmlwindow.cpp:892
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6851,57 +6832,57 @@ msgstr ""
 "Imposta la codifica da assumere nel caso che nella pagina o nelle "
 "intestazioni HTTP non ne sia impostata una esplicitamente."
 
-#: rkward/windows/rkhtmlwindow.cpp:887
+#: rkward/windows/rkhtmlwindow.cpp:902
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Esporta la pagina come HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:901
+#: rkward/windows/rkhtmlwindow.cpp:916
 #, kde-format
 msgid "Save Output"
 msgstr "Salva l'uscita"
 
-#: rkward/windows/rkhtmlwindow.cpp:903
+#: rkward/windows/rkhtmlwindow.cpp:918
 #, kde-format
 msgid "Save Output As"
 msgstr "S&alva uscita come"
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Cancella l'uscita."
 
-#: rkward/windows/rkhtmlwindow.cpp:912
+#: rkward/windows/rkhtmlwindow.cpp:927
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Ripristina all'ultimo stato salvato"
 
-#: rkward/windows/rkhtmlwindow.cpp:916
+#: rkward/windows/rkhtmlwindow.cpp:931
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Imposta l'uscita come &attiva"
 
-#: rkward/windows/rkhtmlwindow.cpp:918
+#: rkward/windows/rkhtmlwindow.cpp:933
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Imposta questa uscita come file al quale aggiungere l'uscita."
 
-#: rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/windows/rkhtmlwindow.cpp:955
 #, kde-format
 msgid "Print output"
 msgstr "Stampa l'output"
 
-#: rkward/windows/rkhtmlwindow.cpp:948
+#: rkward/windows/rkhtmlwindow.cpp:963
 #, kde-format
 msgid "Print page"
 msgstr "Stampa pagina"
 
-#: rkward/windows/rkhtmlwindow.cpp:1005
+#: rkward/windows/rkhtmlwindow.cpp:1020
 #, kde-format
 msgid "No Title"
 msgstr "Nessun titolo"
 
-#: rkward/windows/rkhtmlwindow.cpp:1018
+#: rkward/windows/rkhtmlwindow.cpp:1033
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6913,62 +6894,62 @@ msgstr ""
 "(oppure è danneggiata). Prendi in considerazione l'idea di contribuire alla "
 "sua scrittura.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1023
+#: rkward/windows/rkhtmlwindow.cpp:1038
 #, kde-format
 msgid "Use %1 now"
 msgstr "Usa %1 adesso"
 
-#: rkward/windows/rkhtmlwindow.cpp:1040
+#: rkward/windows/rkhtmlwindow.cpp:1055
 #, kde-format
 msgid "Summary"
 msgstr "Riassunto"
 
-#: rkward/windows/rkhtmlwindow.cpp:1047
+#: rkward/windows/rkhtmlwindow.cpp:1062
 #, kde-format
 msgid "Usage"
 msgstr "Uso"
 
-#: rkward/windows/rkhtmlwindow.cpp:1074
+#: rkward/windows/rkhtmlwindow.cpp:1089
 #, kde-format
 msgid "Choose another file"
 msgstr "Scegli un altro file"
 
-#: rkward/windows/rkhtmlwindow.cpp:1096
+#: rkward/windows/rkhtmlwindow.cpp:1111
 #, kde-format
 msgid "GUI settings"
 msgstr "Impostazioni della GUI"
 
-#: rkward/windows/rkhtmlwindow.cpp:1121
+#: rkward/windows/rkhtmlwindow.cpp:1136
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Funzioni e pagine correlate"
 
-#: rkward/windows/rkhtmlwindow.cpp:1129
+#: rkward/windows/rkhtmlwindow.cpp:1144
 #, kde-format
 msgid "Technical details"
 msgstr "Dettagli tecnici"
 
-#: rkward/windows/rkhtmlwindow.cpp:1152
+#: rkward/windows/rkhtmlwindow.cpp:1167
 #, kde-format
 msgid "About"
 msgstr "Informazioni su"
 
-#: rkward/windows/rkhtmlwindow.cpp:1159
+#: rkward/windows/rkhtmlwindow.cpp:1174
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>In questa pagina:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1182
+#: rkward/windows/rkhtmlwindow.cpp:1197
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Elemento della GUI senza nome"
 
-#: rkward/windows/rkhtmlwindow.cpp:1256
+#: rkward/windows/rkhtmlwindow.cpp:1271
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Riferimento di R su «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1267
+#: rkward/windows/rkhtmlwindow.cpp:1282
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "RIFERIMENTO INTERROTTO"
@@ -7615,6 +7596,21 @@ msgstr "Inserisci il nuovo nome"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Visualizza nell'editor (sola lettura)"
+
+#~ msgid ""
+#~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
+#~ "now), the function call tip feature would crash, and has been disabled in "
+#~ "this session. To enable the call tip, install any other (earlier or "
+#~ "later) version of (lib|kf5)ktexteditor."
+#~ msgstr ""
+#~ "A causa di un bug nella versione 5.92.0 di ktexteditor (la versione in "
+#~ "uso, in questo momento), la funzionalità di suggerimento delle funzioni "
+#~ "genera una chiusura inattesa ed è stata disabilitata in questa sessione. "
+#~ "Per abilitare il suggerimento, installa qualsiasi altra versione "
+#~ "(precedente o successiva) di (lib|kf5)ktexteditor."
+
+#~ msgid "Incompatible version of ktexteditor"
+#~ msgstr "Versione non compatibile di ktexteditor"
 
 #~ msgid ""
 #~ "<p>The setup assistant has been invoked, automatically, because a problem "
