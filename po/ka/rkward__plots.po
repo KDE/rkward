@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-04-13 19:15+0200\n"
+"PO-Revision-Date: 2024-06-12 06:03+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -422,7 +422,7 @@ msgstr "სვეტოვანი დიაგრამის მორგე�
 #, kde-format
 msgctxt "R code comment"
 msgid "split sample by grouping variables"
-msgstr ""
+msgstr "სინჯის დაყოფა ცვლადების დაჯგუფებით"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:37
@@ -769,7 +769,7 @@ msgstr "ინტერვალების დახაზვა"
 #: rkward/plugins/plots/box_plot.xml:79
 #, kde-format
 msgid "Draw Outliers"
-msgstr ""
+msgstr "განშტოებების დახატვა"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/plots/box_plot.xml:81
@@ -986,7 +986,7 @@ msgstr "დაემატოს ხალიჩა ნახაზს?"
 msgid ""
 "Height of the rug ticks, where 1 corresponds to the height of the entire "
 "plot."
-msgstr ""
+msgstr "ხალიჩის დანაყოფების სიმაღლე, სადაც 1 მთლიანი ნახაზის სიმაღლეა."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Line width of ticks")
 #: rkward/plugins/plots/density_plot.rkh:33
@@ -998,13 +998,13 @@ msgstr "ხალიჩის ხაზის სიგანე."
 #: rkward/plugins/plots/density_plot.rkh:34
 #, kde-format
 msgid "Should the rug be shown at the top or at the bottom of the plot?"
-msgstr ""
+msgstr "ხალიჩა ნაჩვენები იყოს ნახაზის ზედა თუ ქვედა მხარეს?"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/density_plot.rkh:35
 #, kde-format
 msgid "Color to use for drawing the rug."
-msgstr ""
+msgstr "ხალიჩის დახატვისთვის გამოყენებული ფერი."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/density_plot.rkh:38
@@ -1013,6 +1013,8 @@ msgid ""
 "Further options regarding the look of the plot. See <link href=\"rkward://"
 "component/plot_options\"/> for details."
 msgstr ""
+"პარამეტრები ნახაზის გარეგნობის მოსარგებად. მეტი დეტალები იხილეთ მისამართზე "
+"<link href=\"rkward://component/plot_options\"/>."
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Variable(s)"> <varslot label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Variable(s)"> <varslot label="...">
@@ -1195,7 +1197,7 @@ msgstr "ხალიჩის დამატება"
 #: rkward/plugins/plots/ecdf_plot.xml:58
 #, kde-format
 msgid "Ticksize"
-msgstr ""
+msgstr "დანაყოფის ზომა"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <spinbox label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <spinbox label="...">
@@ -1203,7 +1205,7 @@ msgstr ""
 #: rkward/plugins/plots/ecdf_plot.xml:59
 #, kde-format
 msgid "Line width of ticks"
-msgstr ""
+msgstr "დანაყოფებიანი ხაზის სისქე"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <radio label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <radio label="...">
@@ -1236,7 +1238,7 @@ msgstr "ღერძი/სათაური"
 #, kde-format
 msgctxt "R code comment"
 msgid "dotchart() is somewhat picky about data type"
-msgstr ""
+msgstr "dotchart() საკმაოდ პრეტენზიულია მონაცემების ტიპების მიმართ"
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Loaded from Pareto chart)
@@ -1358,13 +1360,13 @@ msgstr "მაღლიდან გნებავთ ხალიჩა ნა
 #: rkward/plugins/plots/ecdf_plot.rkh:25
 #, kde-format
 msgid "Height of the rug ticks"
-msgstr ""
+msgstr "ხალიჩის დანაყოფების სიმაღლე"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Line width of ticks")
 #: rkward/plugins/plots/ecdf_plot.rkh:26
 #, kde-format
 msgid "Line width of the rug ticks"
-msgstr ""
+msgstr "ხალიჩის დანაყოფების ხაზის სიგანე"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/ecdf_plot.rkh:27
@@ -2015,7 +2017,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:86
 #, kde-format
 msgid "Enter value - for diff.size. enter a vector -"
-msgstr ""
+msgstr "შეიყვანეთ მნიშვნელობა - diff.size-სთვის. შეიყვანეთ ვექტორი -"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot.xml:92
@@ -2035,7 +2037,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:100
 #, kde-format
 msgid "Enter value - for diff.symbol. enter a vector -"
-msgstr ""
+msgstr "შეიყვანეთ მნიშვნელობა - diff.synmbol-სთვის. შეიყვანეთ ვექტორი -"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <summary>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:8
