@@ -1,3 +1,5 @@
+- Fixed: Add breeze icons as a fallback on systems that use a different icon theme (fixes missing icons)
+- Added: Setup dialog includes setting to select a different R installation
 - Added: Command line option "--setup" to force (re-)initialization as if a new version of RKWard had been installed
 - Fixed: R functions loadhistory(), savehistory(), and timestamp() broken
 - Changed: R shared library is now loaded, dynamically, rather than linked at compile time.

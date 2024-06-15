@@ -23,7 +23,7 @@ INCLUDE(ECMMarkNonGuiExecutable)
 INCLUDE(FeatureSummary)
 
 FIND_PACKAGE(Qt6 6.6 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Qml PrintSupport WebEngineWidgets Core5Compat DBus) # TODO: remove compat
-FIND_PACKAGE(KF6 6.0.0 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive OPTIONAL_COMPONENTS Crash)
+FIND_PACKAGE(KF6 6.0.0 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive BreezeIcons OPTIONAL_COMPONENTS Crash)
 FIND_PACKAGE(Gettext REQUIRED)
 
 IF(FORCE_PRETTY_MAKEFILE)
