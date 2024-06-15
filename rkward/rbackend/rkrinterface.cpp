@@ -420,9 +420,9 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		// find out about standard library locations
 		runStartupCommand(new RCommand("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
 		[this](RCommand *command) {
-			RK_ASSERT (command->getDataType () == RData::StringVector);
-			RKSettingsModuleRPackages::r_libs_user = command->stringVector ().value (0);
-			RKSettingsModuleRPackages::defaultliblocs += command->stringVector ().mid (1);
+			RK_ASSERT(command->getDataType() == RData::StringVector);
+			RKSettingsModuleRPackages::r_libs_user = command->stringVector().value(0);
+			RKSettingsModuleRPackages::defaultliblocs = command->stringVector().mid(1);
 
 			RCommandChain *chain = command->parent;
 			RK_ASSERT (chain);
