@@ -432,7 +432,7 @@ bool RKObjectListViewSettings::acceptRow (int source_row, const QModelIndex& sou
 	if (hide_functions && object->isType (RObject::Function)) return false;
 	if (hide_non_functions && !object->isType (RObject::Function)) return false;
 
-	if (filterRegularExpression ().isValid ()) return true;
+	if (filterRegularExpression().pattern().isEmpty()) return true;
 	if (filter_on_name && object->getShortName ().contains (filterRegularExpression ())) return true;
 	if (filter_on_label && object->getLabel ().contains (filterRegularExpression ())) return true;
 	if (filter_on_class) {
