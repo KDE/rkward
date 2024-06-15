@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagebox.h>
 
 #include "../settings/rksettings.h"
+#include "../settings/rksettingsmoduler.h"
 #include "../misc/rkdummypart.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rcommand.h"
@@ -140,6 +141,6 @@ void RControlWindow::pauseButtonClicked () {
 void RControlWindow::configureButtonClicked () {
 	RK_TRACE (APP);
 
-	RKSettings::configureSettings (RKSettings::PageR, this);
+	RKSettings::configureSettings(RKSettingsModuleR::page_id, this);
 }
 

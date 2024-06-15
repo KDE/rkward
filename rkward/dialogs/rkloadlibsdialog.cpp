@@ -827,7 +827,7 @@ void InstallPackagesWidget::apply () {
 
 void InstallPackagesWidget::configureRepositories () {
 	RK_TRACE (DIALOGS);
-	RKSettings::configureSettings (RKSettings::PageRPackages, this, parent->chain);
+	RKSettings::configureSettings(RKSettingsModuleRPackages::page_id, this, parent->chain);
 }
 
 /////////// RKRPackageInstallationStatus /////////////////

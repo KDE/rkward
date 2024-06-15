@@ -53,8 +53,8 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-	connect (RKSettings::tracker (), &RKSettingsTracker::settingsChanged, this, &RKCommandLog::settingsChanged);
-	settingsChanged (RKSettings::PageWatch);
+	connect(RKSettingsModuleWatch::instance(), &RKSettingsModuleWatch::settingsChanged, this, &RKCommandLog::settingsChanged);
+	settingsChanged();
 }
 
 RKCommandLog::~RKCommandLog(){
@@ -210,12 +210,10 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 	command_input_shown.removeAll (command);
 }
 
-void RKCommandLog::settingsChanged (RKSettings::SettingsPage page) {
-	if (page != RKSettings::PageWatch) return;
-
+void RKCommandLog::settingsChanged() {
 	RK_TRACE (APP);
 
-	log_view->document ()->setMaximumBlockCount (RKSettingsModuleWatch::maxLogLines ());
+	log_view->document()->setMaximumBlockCount(RKSettingsModuleWatch::maxLogLines());
 }
 
 void RKCommandLog::linesAdded () {
@@ -228,7 +226,7 @@ void RKCommandLog::linesAdded () {
 
 void RKCommandLog::configureLog () {
 	RK_TRACE (APP);
-	RKSettings::configureSettings (RKSettings::PageWatch, this);
+	RKSettings::configureSettings(RKSettingsModuleWatch::page_id, this);
 }
 
 void RKCommandLog::clearLog () {

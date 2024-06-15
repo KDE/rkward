@@ -511,7 +511,7 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 		} else if (url.host () == "settings") {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
-			RKSettings::configureSettings(path);
+			RKSettings::configureSettings(RKSettingsModule::PageId(path.toLatin1()));
 		} else if (url.host () == "open") {
 			QString path = url.path().mid(1); // skip initial '/'
 			int sep = path.indexOf('/');
@@ -801,7 +801,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		type = RKMDIWindow::OutputWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 		part->setOutputWindowSkin ();
-		setMetaInfo (i18n ("Output Window"), QUrl ("rkward://page/rkward_output"), RKSettings::PageOutput);
+		setMetaInfo(i18n("Output Window"), QUrl("rkward://page/rkward_output"), RKSettingsModuleOutput::page_id);
 		connect (page, &RKWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
 		page->action (RKWebPage::Reload)->setText (i18n ("&Refresh Output"));
 

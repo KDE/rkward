@@ -21,23 +21,14 @@ configuration for the Command Editor windows
 class RKSettingsModuleDebug : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleDebug (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleDebug ();
+	RKSettingsModuleDebug(QObject *parent);
+	~RKSettingsModuleDebug();
 
-	void applyChanges () override;
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-
-	QString caption() const override;
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("debug");
 
 	// static members are declared in debug.h and defined in main.cpp
-public Q_SLOTS:
-	void settingChanged (int);
-private:
-	RKSpinBox* command_timeout_box;
-	RKSpinBox* debug_level_box;
-	QButtonGroup* debug_flags_group;
 };
 
 #endif

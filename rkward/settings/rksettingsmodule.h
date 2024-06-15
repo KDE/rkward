@@ -1,6 +1,6 @@
 /*
 rksettingsmodule - This file is part of the RKWard project. Created: Wed Jul 28 2004
-SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -124,20 +124,53 @@ private:
 	std::vector<RKConfigBase*> values;
 };
 
+class RKSettingsModuleWidget;
+
+/**
+Base class for settings modules. This provides a wrapper around the stored settings.
+
+UI pages (for the settings dialog) are created via pages().
+
+@author Thomas Friedrichsmeier
+*/
+class RKSettingsModule : public QObject {
+	Q_OBJECT
+public:
+	RKSettingsModule(QObject *parent);
+	virtual ~RKSettingsModule();
+/** Some settings modules execute R commands on "apply". If an RCommandChain is specified for the RKSettings-dialog, those commands should
+be inserted into this chain. It's safe to use this unconditionally, as if there is no chain, this will return 0, which corresponds to using the top-level chain */
+	RCommandChain *commandChain () { return chain; };
+	typedef QLatin1StringView PageId;
+	static constexpr PageId no_page_id = QLatin1String("");
+Q_SIGNALS:
+	void settingsChanged();
+protected:
+	virtual QList<RKSettingsModuleWidget*> createPages(QWidget *parent) = 0;
+private:
+friend class RKSettings;
+	static RCommandChain *chain;
+	virtual void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) = 0;
+	virtual void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
+};
+
 /** Base class for UI widgets operating on an RKSettingsModule. For now this is used, only where similar settings are shared across modules (e.g. code completion). Eventually, this could be used to disentangle RKSettingsModule from QWidget. */
 class RKSettingsModuleWidget : public QWidget {
 	Q_OBJECT
 public:
-	RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module);
+	RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module, const RKSettingsModule::PageId pageid, const RKSettingsModule::PageId superpageid = RKSettingsModule::no_page_id);
 	~RKSettingsModuleWidget() {};
 	virtual void applyChanges() = 0;
 /** Mark this module as "changed" (propagates to parent module) */
-	void change ();
-	bool hasChanges () { return changed; };
+	void change();
+	bool hasChanges() const { return changed; };
+	virtual QString longCaption() const { return windowTitle(); };
+	RKSettingsModule* parentModule() const { return parent_module; };
 Q_SIGNALS:
 	void settingsChanged();
 	void apply();
 protected:
+	QUrl helpURL() { return help_url; };
 	bool changed;
 /** temporary indirection until applyChanges() has been obsolete, everywhere */
 	void doApply() {
@@ -145,31 +178,11 @@ protected:
 		applyChanges();
 		changed = false;
 	}
-};
-
-/**
-Base class for settings modules. Provides some pure virtual calls.
-
-@author Thomas Friedrichsmeier
-*/
-class RKSettingsModule : public RKSettingsModuleWidget {
-public:
-	RKSettingsModule (RKSettings *gui, QWidget *parent);
-	virtual ~RKSettingsModule ();
-
-	virtual void save (KConfig *config) = 0;
-	
-	virtual QString caption() const = 0;
-	virtual QString longCaption() const { return caption(); };
-	virtual QIcon icon() const { return QIcon(); };
-/** Some settings modules execute R commands on "apply". If an RCommandChain is specified for the RKSettings-dialog, those commands should
-be inserted into this chain. It's safe to use this unconditionally, as if there is no chain, this will return 0, which corresponds to using the top-level chain */
-	RCommandChain *commandChain () { return chain; };
-
-	virtual QUrl helpURL () { return QUrl (); };
-private:
 friend class RKSettings;
-	static RCommandChain *chain;
+	const RKSettingsModule::PageId pageid;
+	const RKSettingsModule::PageId superpageid;
+	RKSettingsModule *parent_module;
+	QUrl help_url;
 };
 
 #endif

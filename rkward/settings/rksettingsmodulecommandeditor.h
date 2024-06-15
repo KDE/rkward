@@ -1,6 +1,6 @@
 /*
 rksettingsmodulecommandeditor - This file is part of the RKWard project. Created: Tue Oct 23 2007
-SPDX-FileCopyrightText: 2007-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -76,20 +76,6 @@ private:
 	RKCodeCompletionSettings *settings;
 };
 
-class RKSettingsModuleKTextEditorConfigWrapper : public RKSettingsModule {
-public:
-	RKSettingsModuleKTextEditorConfigWrapper(RKSettings* gui, QWidget* parent, KTextEditor::ConfigPage* wrapped);
-	~RKSettingsModuleKTextEditorConfigWrapper();
-	void applyChanges() override;
-	void save(KConfig *) override { };
-	static void validateSettingsInteractive(QList<RKSetupWizardItem*>*) {};
-	QString caption() const override;
-	QString longCaption() const override;
-	QIcon icon() const override;
-private:
-	KTextEditor::ConfigPage* page;
-};
-
 /**
 configuration for the Command Editor windows
 
@@ -98,16 +84,11 @@ configuration for the Command Editor windows
 class RKSettingsModuleCommandEditor : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleCommandEditor (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleCommandEditor ();
+	RKSettingsModuleCommandEditor(QObject *parent);
+	~RKSettingsModuleCommandEditor();
 	
-	void applyChanges () override;
-	void save (KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-
-	QString caption() const override;
-	QIcon icon() const override;
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
 
 	static const RKCodeCompletionSettings* completionSettings() { return &completion_settings; };
 
@@ -119,16 +100,13 @@ public:
 	static QString scriptFileFilter () { return script_file_filter; };
 	static bool matchesScriptFileFilter (const QString &filename);
 
-	static QList<RKSettingsModuleKTextEditorConfigWrapper*> kateConfigPages(RKSettings* gui, QWidget* parent);
+	static constexpr PageId page_id = QLatin1String("editor");
 private:
+friend class RKSettingsPageCommandEditor;
 	static RKCodeCompletionSettings completion_settings;
 	static RKConfigValue<bool> autosave_enabled;
 	static RKConfigValue<bool> autosave_keep;
 	static RKConfigValue<int> autosave_interval;
-
-	RKCodeCompletionSettingsWidget *completion_settings_widget;
-	QGroupBox* autosave_enabled_box;
-	QLineEdit* script_file_filter_box;
 
 	static RKConfigValue<QString> script_file_filter;
 };

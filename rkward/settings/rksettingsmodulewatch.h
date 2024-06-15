@@ -23,14 +23,13 @@ class RKSettingsModuleWatch : public RKSettingsModule
 {
 Q_OBJECT
 public:
-	RKSettingsModuleWatch (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleWatch ();
+	RKSettingsModuleWatch(QObject *parent);
+	~RKSettingsModuleWatch();
 
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("commandlog");
 
-	void applyChanges () override;
 	void validateGUI ();
 
 	static bool shouldShowInput (RCommand *command);
@@ -40,34 +39,18 @@ public:
 
 	static uint maxLogLines () { return max_log_lines; };
 
-	QString caption() const override;
-	QIcon icon() const override;
-public Q_SLOTS:
-	void changedSetting (int);
+	static RKSettingsModuleWatch *instance() { return _instance; };
 private:
+friend class RKSettingsPageWatch;
 	enum FilterType { ShowInput=1, ShowOutput=2, ShowError=4, RaiseWindow=8 };
 
 	static RKConfigValue<int> plugin_filter;
 	static RKConfigValue<int> app_filter;
 	static RKConfigValue<int> sync_filter;
 	static RKConfigValue<int> user_filter;
-	
-	struct FilterBoxes {
-		QCheckBox *input;
-		QCheckBox *output;
-		QCheckBox *error;
-		QCheckBox *raise;
-	};
-	
-	FilterBoxes *plugin_filter_boxes;
-	FilterBoxes *app_filter_boxes;
-	FilterBoxes *sync_filter_boxes;
-	FilterBoxes *user_filter_boxes;
-
-	int getFilterSettings (FilterBoxes *boxes);
-	FilterBoxes *addFilterSettings (QWidget *parent, QGridLayout *layout, int row, const QString &label, int state);
 
 	static RKConfigValue<uint> max_log_lines;
+	static RKSettingsModuleWatch* _instance;
 };
 
 #endif

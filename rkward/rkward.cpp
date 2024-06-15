@@ -126,7 +126,6 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	katepluginintegration = nullptr;
 	active_ui_buddy = nullptr;
 	RKCommonFunctions::getRKWardDataDir(); // call this before any forking, in order to avoid potential race conditions during initialization of data dir
-	RKSettings::settings_tracker = new RKSettingsTracker (this);
 
 	///////////////////////////////////////////////////////////////////
 	// call inits to invoke all other construction parts
@@ -399,9 +398,9 @@ void RKWardMainWindow::startR () {
 	RObjectBrowser::mainBrowser ()->unlock ();
 }
 
-void RKWardMainWindow::slotConfigure () {
-	RK_TRACE (APP);
-	RKSettings::configureSettings (RKSettings::NoPage, this);
+void RKWardMainWindow::slotConfigure() {
+	RK_TRACE(APP);
+	RKSettings::configureSettings(RKSettingsModule::no_page_id, this);
 }
 
 void RKWardMainWindow::slotCancelAllCommands () {
@@ -798,7 +797,7 @@ void RKWardMainWindow::initStatusBar () {
 	dummy->menu()->addAction(restart_r);
 	dummy->menu()->addSeparator();
 	QAction *a = new QAction(i18n("Configure R backend"), this);
-	connect(a, &QAction::triggered, this, []() { RKSettings::configureSettings(RKSettings::PageR); });
+	connect(a, &QAction::triggered, this, []() { RKSettings::configureSettings(RKSettingsModuleR::page_id); });
 	dummy->menu()->addAction(a);
 	dummy->setFixedHeight(statusbar_r_status->height());
 	boxl->addWidget(dummy);

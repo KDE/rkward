@@ -35,43 +35,66 @@ RKConfigValue<bool> RKSettingsModuleConsole::context_sensitive_history_by_defaul
 RKConfigValue<bool> RKSettingsModuleConsole::show_minimap {"show minimap", true};
 RKConfigValue<bool> RKSettingsModuleConsole::word_wrap {"dynamic word wrap", false};
 
-RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
-	RK_TRACE (SETTINGS);
+class RKSettingsPageConsole : public RKSettingsModuleWidget {
+public:
+	RKSettingsPageConsole(QWidget* parent, RKSettingsModule* parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleConsole::page_id) {
+		RK_TRACE(SETTINGS);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this);
+		setWindowTitle(i18n("Console"));
+		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowConsole));
+		help_url = QUrl("rkward://page/rkward_console#settings");
 
-	vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings, false));
+		QVBoxLayout *vbox = new QVBoxLayout(this);
 
-	vbox->addWidget (save_history.makeCheckbox(i18n("Load/Save command history"), this));
+		vbox->addWidget(completion_settings_widget = new RKCodeCompletionSettingsWidget(this, parentModule(), &RKSettingsModuleConsole::completion_settings, false));
 
-	vbox->addWidget (new QLabel (i18n ("Maximum length of command history (0 for no limit)"), this));
-	auto max_history_length_spinner = max_history_length.makeSpinBox(0, 10000, this);
-	vbox->addWidget (max_history_length_spinner);
+		vbox->addWidget(RKSettingsModuleConsole::save_history.makeCheckbox(i18n("Load/Save command history"), this));
 
-	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the console (0 for not limit)"), this));
-	auto max_console_lines_spinner = max_console_lines.makeSpinBox(0, 10000, this);
-	vbox->addWidget (max_console_lines_spinner);
+		vbox->addWidget(new QLabel(i18n("Maximum length of command history (0 for no limit)")));
+		auto max_history_length_spinner = RKSettingsModuleConsole::max_history_length.makeSpinBox(0, 10000, this);
+		vbox->addWidget(max_history_length_spinner);
 
-	vbox->addSpacing (2*RKStyle::spacingHint ());
+		vbox->addWidget(new QLabel(i18n("Maximum number of paragraphs/lines to display in the console (0 for not limit)")));
+		auto max_console_lines_spinner = RKSettingsModuleConsole::max_console_lines.makeSpinBox(0, 10000, this);
+		vbox->addWidget(max_console_lines_spinner);
 
-	auto pipe_user_commands_through_console_box = pipe_user_commands_through_console.makeCheckbox(i18n("Run commands from script editor through console"), this);
-	vbox->addWidget(pipe_user_commands_through_console_box);
+		vbox->addSpacing(2*RKStyle::spacingHint());
 
-	vbox->addWidget (new QLabel (i18n ("Also add those commands to console history"), this));
-	auto add_piped_commands_to_history_box = add_piped_commands_to_history.makeDropDown(RKConfigBase::LabelList(
-		{{(int) DontAdd, i18n("Do not add")}, {(int) AddSingleLine, i18n("Add only if single line")}, {(int) AlwaysAdd, i18n("Add all commands")}}
-	), this);
-	add_piped_commands_to_history_box->setEnabled(pipe_user_commands_through_console_box->isChecked());
-	connect(pipe_user_commands_through_console_box, &QCheckBox::stateChanged, add_piped_commands_to_history_box, [add_piped_commands_to_history_box](int state) {
-		add_piped_commands_to_history_box->setEnabled(state);
-	});
-	vbox->addWidget (add_piped_commands_to_history_box);
+		auto pipe_user_commands_through_console_box = RKSettingsModuleConsole::pipe_user_commands_through_console.makeCheckbox(i18n("Run commands from script editor through console"), this);
+		vbox->addWidget(pipe_user_commands_through_console_box);
 
-	vbox->addSpacing (2*RKStyle::spacingHint ());
+		vbox->addWidget(new QLabel(i18n("Also add those commands to console history")));
+		auto add_piped_commands_to_history_box = RKSettingsModuleConsole::add_piped_commands_to_history.makeDropDown(RKConfigBase::LabelList({
+			{(int) RKSettingsModuleConsole::DontAdd, i18n("Do not add")},
+			{(int) RKSettingsModuleConsole::AddSingleLine, i18n("Add only if single line")},
+			{(int) RKSettingsModuleConsole::AlwaysAdd, i18n("Add all commands")}
+		}), this);
+		add_piped_commands_to_history_box->setEnabled(pipe_user_commands_through_console_box->isChecked());
+		connect(pipe_user_commands_through_console_box, &QCheckBox::stateChanged, add_piped_commands_to_history_box, [add_piped_commands_to_history_box](int state) {
+			add_piped_commands_to_history_box->setEnabled(state);
+		});
+		vbox->addWidget(add_piped_commands_to_history_box);
 
-	vbox->addWidget (context_sensitive_history_by_default.makeCheckbox(i18n("Command history is context sensitive by default"), this));
+		vbox->addSpacing(2*RKStyle::spacingHint());
 
-	vbox->addStretch ();
+		vbox->addWidget(RKSettingsModuleConsole::context_sensitive_history_by_default.makeCheckbox(i18n("Command history is context sensitive by default"), this));
+
+		vbox->addStretch();
+	}
+	void applyChanges() override {
+		RK_TRACE(SETTINGS);
+		completion_settings_widget->applyChanges();
+	}
+private:
+	RKCodeCompletionSettingsWidget *completion_settings_widget;
+};
+
+RKSettingsModuleConsole::RKSettingsModuleConsole(QObject *parent) : RKSettingsModule(parent) {
+	RK_TRACE(SETTINGS);
+}
+
+QList<RKSettingsModuleWidget*> RKSettingsModuleConsole::createPages(QWidget *parent) {
+	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageConsole(parent, this) };
 }
 
 RKSettingsModuleConsole::~RKSettingsModuleConsole () {
@@ -123,22 +146,3 @@ void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
 	}
 	cg.sync ();
 }
-
-void RKSettingsModuleConsole::applyChanges () {
-	RK_TRACE (SETTINGS);
-
-	completion_settings_widget->applyChanges();
-}
-	
-QString RKSettingsModuleConsole::caption() const {
-	RK_TRACE(SETTINGS);
-
-	return(i18n("Console"));
-}
-
-QIcon RKSettingsModuleConsole::icon() const {
-	RK_TRACE(SETTINGS);
-
-	return RKStandardIcons::getIcon(RKStandardIcons::WindowConsole);
-}
-

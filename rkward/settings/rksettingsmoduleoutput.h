@@ -59,32 +59,21 @@ private:
 class RKSettingsModuleOutput : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleOutput (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleOutput ();
+	RKSettingsModuleOutput(QObject *parent);
+	~RKSettingsModuleOutput();
 
-	void applyChanges () override;
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("output");
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
 
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-
-	QString caption() const override;
-	QIcon icon() const override;
-
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };
 	static bool sharedDefaultOutput() { return shared_default_output; };
-public Q_SLOTS:
-	void boxChanged ();
 private:
-	QComboBox *graphics_type_box;
-	RKSpinBox *graphics_jpg_quality_box;
-	RKCarbonCopySettings *cc_settings;
-	GetFileNameWidget *custom_css_file_box;
-
+friend class RKSettingsPageOutput;
 	static RKConfigValue<bool> auto_show;
 	static RKConfigValue<bool> auto_raise;
 	static RKConfigValue<QString> graphics_type;

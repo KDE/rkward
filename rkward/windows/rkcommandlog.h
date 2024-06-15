@@ -48,7 +48,7 @@ public Q_SLOTS:
 /** clears the log_view-window */
 	void clearLog ();
 	void runSelection ();
-	void settingsChanged (RKSettings::SettingsPage page);
+	void settingsChanged();
 private:
 	void addInputNoCheck (RCommand *command);
 	void addOutputNoCheck (RCommand *command, ROutput *output);

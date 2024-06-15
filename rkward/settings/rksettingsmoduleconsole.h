@@ -23,13 +23,12 @@ Settings module for the console. Allows you to configure whether to store comman
 class RKSettingsModuleConsole : public RKSettingsModule {
 Q_OBJECT
 public:
-	RKSettingsModuleConsole (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleConsole ();
+	RKSettingsModuleConsole(QObject *parent);
+	~RKSettingsModuleConsole();
 
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-	void applyChanges () override;
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("console");
 
 	static bool saveHistory () { return save_history; };
 	static uint maxHistoryLength () { return max_history_length; };
@@ -51,12 +50,8 @@ public:
 
 	static QStringList loadCommandHistory ();
 	static void saveCommandHistory (const QStringList &list);
-
-	QString caption() const override;
-	QIcon icon() const override;
-
-	QUrl helpURL () override { return QUrl ("rkward://page/rkward_console#settings"); };
 private:
+friend class RKSettingsPageConsole;
 	static RKCodeCompletionSettings completion_settings;
 	static RKConfigValue<bool> save_history;
 	static RKConfigValue<uint> max_history_length;
@@ -66,8 +61,6 @@ private:
 	static RKConfigValue<bool> context_sensitive_history_by_default;
 	static RKConfigValue<bool> show_minimap;
 	static RKConfigValue<bool> word_wrap;
-
-	RKCodeCompletionSettingsWidget *completion_settings_widget;
 };
 
 #endif

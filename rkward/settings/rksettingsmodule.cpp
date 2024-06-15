@@ -1,6 +1,6 @@
 /*
 rksettingsmodule - This file is part of RKWard (https://rkward.kde.org). Created: Wed Jul 28 2004
-SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -19,18 +19,22 @@ SPDX-License-Identifier: GPL-2.0-or-later
 //static
 RCommandChain* RKSettingsModule::chain = nullptr;
 
-RKSettingsModule::RKSettingsModule(RKSettings *gui, QWidget *parent) : RKSettingsModuleWidget (parent, nullptr) {
-	connect(this, &RKSettingsModule::settingsChanged, gui, &RKSettings::enableApply);
+RKSettingsModule::RKSettingsModule(QObject *parent) : QObject(parent) {
+	RK_TRACE(SETTINGS);
 }
 
 RKSettingsModule::~RKSettingsModule() {
+	RK_TRACE(SETTINGS);
 }
 
-RKSettingsModuleWidget::RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module) : QWidget(parent), changed(false) {
-	if (parent_module) {
-		connect(this, &RKSettingsModuleWidget::settingsChanged, parent_module, &RKSettingsModuleWidget::change);
-		connect(parent_module, &RKSettingsModule::apply, this, &RKSettingsModuleWidget::doApply);
-	}
+RKSettingsModuleWidget::RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module, const RKSettingsModule::PageId pageid, const RKSettingsModule::PageId superpageid) :
+	QWidget(parent),
+	changed(false),
+	pageid(pageid),
+	superpageid(superpageid),
+	parent_module(parent_module)
+{
+	RK_TRACE(SETTINGS);
 }
 
 void RKSettingsModuleWidget::change() {

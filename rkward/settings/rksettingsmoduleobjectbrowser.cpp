@@ -28,24 +28,50 @@ RKConfigValue<bool> RKSettingsModuleObjectBrowser::workspace_settings[RKObjectLi
 RKConfigValue<bool> RKSettingsModuleObjectBrowser::varselector_settings[RKObjectListViewSettings::SettingsCount] { RKSettingsModuleObjectBrowser::workspace_settings[0],RKSettingsModuleObjectBrowser::workspace_settings[1],RKSettingsModuleObjectBrowser::workspace_settings[2],RKSettingsModuleObjectBrowser::workspace_settings[3]};
 RKConfigValue<QStringList> RKSettingsModuleObjectBrowser::getstructure_blacklist {"package blacklist", QStringList("GO")};
 
-RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
-	RK_TRACE (SETTINGS);
+class RKSettingsPageObjectBrowser : public RKSettingsModuleWidget {
+public:
+	RKSettingsPageObjectBrowser(QWidget* parent, RKSettingsModule* parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleObjectBrowser::page_id) {
+		RK_TRACE(SETTINGS);
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
+		setWindowTitle(i18n("Workspace"));
+		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowWorkspaceBrowser));
+		help_url = QUrl("rkward://page/rkward_workspace_browser#settings");
 
-	// Note: Up to RKWard 0.6.3, this settings module had a lot of additional checkboxes. Since 0.6.4, most settings are stored, implicitly,
-	//       i.e. the Workspace Browser tool window "remembers" its latest settings (and so does the Varselector, separately). This modules
-	//       is still responsible to storing / loading settings.
+		QVBoxLayout *layout = new QVBoxLayout(this);
 
-	blacklist_choser = new MultiStringSelector (i18n ("Never fetch the structure of these packages:"), this);
-	blacklist_choser->setValues (getstructure_blacklist);
-	connect (blacklist_choser, &MultiStringSelector::listChanged, this, &RKSettingsModuleObjectBrowser::listChanged);
-	connect (blacklist_choser, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleObjectBrowser::addBlackList);
-	layout->addWidget (blacklist_choser);
+		// Note: Up to RKWard 0.6.3, this settings module had a lot of additional checkboxes. Since 0.6.4, most settings are stored, implicitly,
+		//       i.e. the Workspace Browser tool window "remembers" its latest settings (and so does the Varselector, separately). This modules
+		//       is still responsible to storing / loading settings.
+
+		blacklist_choser = new MultiStringSelector(i18n("Never fetch the structure of these packages:"), this);
+		blacklist_choser->setValues(RKSettingsModuleObjectBrowser::getstructure_blacklist);
+		connect(blacklist_choser, &MultiStringSelector::listChanged, this, &RKSettingsPageObjectBrowser::change);
+		connect(blacklist_choser, &MultiStringSelector::getNewStrings, this, [this](QStringList *string_list) {
+			bool ok;
+			QString new_string = QInputDialog::getText(this, i18n("Add exclusion"), i18n("Add the name of the package that no structure should be fetched for"), QLineEdit::Normal, QString (), &ok);
+			if (ok) (*string_list).append(new_string);
+		});
+		layout->addWidget(blacklist_choser);
+	}
+	void applyChanges() {
+		RK_TRACE(SETTINGS);
+
+		RKSettingsModuleObjectBrowser::getstructure_blacklist = blacklist_choser->getValues();
+	}
+private:
+	MultiStringSelector *blacklist_choser;
+};
+
+RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser(QObject *parent) : RKSettingsModule(parent) {
+	RK_TRACE(SETTINGS);
 }
 
 RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
 	RK_TRACE (SETTINGS);
+}
+
+QList<RKSettingsModuleWidget*> RKSettingsModuleObjectBrowser::createPages(QWidget *parent) {
+	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageObjectBrowser(parent, this) };
 }
 
 //static
@@ -64,29 +90,6 @@ void RKSettingsModuleObjectBrowser::setDefaultForVarselector (RKObjectListViewSe
 bool RKSettingsModuleObjectBrowser::isPackageBlacklisted (const QString &package_name) {
 	RK_TRACE (SETTINGS);
 	return getstructure_blacklist.get().contains (package_name);
-}
-
-void RKSettingsModuleObjectBrowser::addBlackList (QStringList *string_list) {
-	RK_TRACE (SETTINGS);
-	bool ok;
-	QString new_string = QInputDialog::getText (this, i18n ("Add exclusion"), i18n ("Add the name of the package that no structure should be fetched for"), QLineEdit::Normal, QString (), &ok);
-	if (ok) (*string_list).append (new_string);
-}
-
-void RKSettingsModuleObjectBrowser::applyChanges () {
-	RK_TRACE (SETTINGS);
-
-	getstructure_blacklist = blacklist_choser->getValues();
-}
-
-QString RKSettingsModuleObjectBrowser::caption() const {
-	RK_TRACE(SETTINGS);
-	return(i18n("Workspace"));
-}
-
-QIcon RKSettingsModuleObjectBrowser::icon() const {
-	RK_TRACE(SETTINGS);
-	return RKStandardIcons::getIcon(RKStandardIcons::WindowWorkspaceBrowser);
 }
 
 void writeSettings (KConfigGroup &cg, bool *settings) {
@@ -111,15 +114,5 @@ void RKSettingsModuleObjectBrowser::syncConfig(KConfig *config, RKConfigBase::Co
 
 	syncSettings (cg.group("Tool window"), a, workspace_settings);
 	syncSettings (cg.group("Varselector"), a, varselector_settings);
-}
-
-void RKSettingsModuleObjectBrowser::boxChanged (int) {
-	RK_TRACE (SETTINGS);
-	change ();
-}
-
-void RKSettingsModuleObjectBrowser::listChanged () {
-	RK_TRACE (SETTINGS);
-	change ();
 }
 

@@ -309,7 +309,7 @@ void RKCaughtX11Window::commonInit (int device_number) {
 
 	error_dialog = new RKProgressControl(nullptr, i18n("An error occurred"), i18n("An error occurred"), RKProgressControl::DetailedError);
 	setPart (new RKCaughtX11WindowPart (this));
-	setMetaInfo (i18n ("Graphics Device Window"), QUrl ("rkward://page/rkward_plot_history"), RKSettings::PageX11);
+	setMetaInfo(i18n("Graphics Device Window"), QUrl("rkward://page/rkward_plot_history"), RKSettingsModuleGraphics::page_id);
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 	updateHistoryActions (0, 0, QStringList ());

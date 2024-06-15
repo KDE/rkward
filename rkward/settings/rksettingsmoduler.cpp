@@ -24,6 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QInputDialog>
 
 #include "rksettingsmodulegeneral.h"
+#include "rksettingsmoduleplugins.h"
 #include "../core/robject.h"
 #include "../dialogs/rksetupwizard.h"
 #include "../misc/multistringselector.h"
@@ -59,170 +60,170 @@ RKConfigValue<QString> RKSettingsModuleR::options_further {"further init command
 RKConfigValue<QStringList> RKSettingsModuleR::options_addpaths {"addsyspaths", QStringList()};
 RKConfigValue<QString> RKSettingsModuleR::options_r_binary {"user configured R binary", QString()};
 
-RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
-	RK_TRACE (SETTINGS);
+class RKSettingsPageR : public RKSettingsModuleWidget {
+public:
+	RKSettingsPageR(QWidget* parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleR::page_id) {
+		RK_TRACE(SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+		setWindowTitle(i18n("R-Backend"));
+		setWindowIcon(QIcon::fromTheme("emblem-system-symbolic"));
 
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
+		QVBoxLayout *main_vbox = new QVBoxLayout(this);
 
-	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged.")));
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
 
-	QGridLayout *grid = new QGridLayout ();
-	main_vbox->addLayout (grid);
-	int row = -1;
+		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged.")));
 
-	// options (warn)
-	grid->addWidget(new QLabel(i18n("Display warnings")), ++row, 0);
-	auto warn_input = options_warn.makeDropDown(RKConfigBase::LabelList(
-		{{-1, i18n("Suppress warnings")}, {0, i18n("Print warnings later (default)")}, {1, i18n("Print warnings immediately")}, {2, i18n ("Convert warnings to errors")}}
-	), this);
-	grid->addWidget(warn_input, row, 1);
+		QGridLayout *grid = new QGridLayout();
+		main_vbox->addLayout(grid);
+		int row = -1;
 
-	// options (OutDec)
-	grid->addWidget (new QLabel (i18n ("Decimal character (only for printing)"), this), ++row, 0);
-	outdec_input = new QLineEdit (options_outdec, this);
-	outdec_input->setMaxLength (1);
-	connect (outdec_input, &QLineEdit::textChanged, this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (outdec_input, row, 1);
+		// options (warn)
+		grid->addWidget(new QLabel(i18n("Display warnings")), ++row, 0);
+		auto warn_input = RKSettingsModuleR::options_warn.makeDropDown(RKConfigBase::LabelList(
+			{{-1, i18n("Suppress warnings")}, {0, i18n("Print warnings later (default)")}, {1, i18n("Print warnings immediately")}, {2, i18n ("Convert warnings to errors")}}
+		), this);
+		grid->addWidget(warn_input, row, 1);
 
-	// options (width)
-	grid->addWidget(new QLabel(i18n("Output width (characters)")), ++row, 0);
-	grid->addWidget(options_width.makeSpinBox(10, 10000, this), row, 1);
+		// options (OutDec)
+		grid->addWidget(new QLabel(i18n("Decimal character (only for printing)"), this), ++row, 0);
+		outdec_input = new QLineEdit(RKSettingsModuleR::options_outdec, this);
+		outdec_input->setMaxLength(1);
+		connect(outdec_input, &QLineEdit::textChanged, this, &RKSettingsPageR::change);
+		grid->addWidget(outdec_input, row, 1);
 
-	// options (max.print)
-	grid->addWidget(new QLabel(i18n("Maximum number of elements shown in print")), ++row, 0);
-	grid->addWidget(options_maxprint.makeSpinBox(100, INT_MAX, this), row, 1);
+		// options (width)
+		grid->addWidget(new QLabel(i18n("Output width (characters)")), ++row, 0);
+		grid->addWidget(RKSettingsModuleR::options_width.makeSpinBox(10, 10000, this), row, 1);
 
-	// options (warnings.length)
-	grid->addWidget(new QLabel(i18n("Maximum length of warnings/errors to print")), ++row, 0);
-	grid->addWidget(options_warningslength.makeSpinBox(100, 8192, this), row, 1);
+		// options (max.print)
+		grid->addWidget(new QLabel(i18n("Maximum number of elements shown in print")), ++row, 0);
+		grid->addWidget(RKSettingsModuleR::options_maxprint.makeSpinBox(100, INT_MAX, this), row, 1);
 
-	// options (keep.source)
-	grid->addWidget(new QLabel(i18n("Keep comments in functions")), ++row, 0);
-	auto keepsource_input = options_keepsource.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE (default)")}, {0, i18n("FALSE")}}), this);
-	grid->addWidget(keepsource_input, row, 1);
+		// options (warnings.length)
+		grid->addWidget(new QLabel(i18n("Maximum length of warnings/errors to print")), ++row, 0);
+		grid->addWidget(RKSettingsModuleR::options_warningslength.makeSpinBox(100, 8192, this), row, 1);
 
-	// options (keep.source.pkgs)
-	grid->addWidget(new QLabel(i18n("Keep comments in packages")), ++row, 0);
-	auto keepsourcepkgs_input = options_keepsourcepkgs.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE")}, {0, i18n("FALSE (default)")}}), this);
-	grid->addWidget(keepsourcepkgs_input, row, 1);
+		// options (keep.source)
+		grid->addWidget(new QLabel(i18n("Keep comments in functions")), ++row, 0);
+		auto keepsource_input = RKSettingsModuleR::options_keepsource.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE (default)")}, {0, i18n("FALSE")}}), this);
+		grid->addWidget(keepsource_input, row, 1);
 
-	// options (expressions)
-	grid->addWidget(new QLabel(i18n("Maximum level of nested expressions")), ++row, 0);
-	grid->addWidget(options_expressions.makeSpinBox(25, 500000, this), row, 1);
+		// options (keep.source.pkgs)
+		grid->addWidget(new QLabel(i18n("Keep comments in packages")), ++row, 0);
+		auto keepsourcepkgs_input = RKSettingsModuleR::options_keepsourcepkgs.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE")}, {0, i18n("FALSE (default)")}}), this);
+		grid->addWidget(keepsourcepkgs_input, row, 1);
 
-	// options (digits)
-	grid->addWidget(new QLabel(i18n("Default decimal precision in print ()")), ++row, 0);
-	grid->addWidget(options_digits.makeSpinBox(1, 22, this), row, 1);
+		// options (expressions)
+		grid->addWidget(new QLabel(i18n("Maximum level of nested expressions")), ++row, 0);
+		grid->addWidget(RKSettingsModuleR::options_expressions.makeSpinBox(25, 500000, this), row, 1);
 
-	// options (check.bounds)
-	grid->addWidget(new QLabel(i18n("Check vector bounds (warn)")), ++row, 0);
-	auto checkbounds_input = options_checkbounds.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE")}, {0, i18n("FALSE (default)")}}), this);
-	grid->addWidget(checkbounds_input, row, 1);
+		// options (digits)
+		grid->addWidget(new QLabel(i18n("Default decimal precision in print ()")), ++row, 0);
+		grid->addWidget(RKSettingsModuleR::options_digits.makeSpinBox(1, 22, this), row, 1);
 
-	grid->addWidget (new QLabel (i18n ("Editor command"), this), ++row, 0);
-	editor_input = new QComboBox (this);
-	editor_input->setEditable (true);
-	editor_input->addItem (builtin_editor);
-	if (options_editor != builtin_editor) {
-		editor_input->addItem (options_editor);
-		editor_input->setCurrentIndex (1);
+		// options (check.bounds)
+		grid->addWidget(new QLabel(i18n("Check vector bounds (warn)")), ++row, 0);
+		auto checkbounds_input = RKSettingsModuleR::options_checkbounds.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE")}, {0, i18n("FALSE (default)")}}), this);
+		grid->addWidget(checkbounds_input, row, 1);
+
+		grid->addWidget (new QLabel(i18n("Editor command"), this), ++row, 0);
+		editor_input = new QComboBox(this);
+		editor_input->setEditable(true);
+		editor_input->addItem(RKSettingsModuleR::builtin_editor);
+		if (RKSettingsModuleR::options_editor != RKSettingsModuleR::builtin_editor) {
+			editor_input->addItem(RKSettingsModuleR::options_editor);
+			editor_input->setCurrentIndex(1);
+		}
+		connect(editor_input, &QComboBox::editTextChanged, this, &RKSettingsPageR::change);
+		grid->addWidget(editor_input, row, 1);
+
+		grid->addWidget(new QLabel(i18n("Pager command"), this), ++row, 0);
+		pager_input = new QComboBox(this);
+		pager_input->setEditable(true);
+		pager_input->addItem(RKSettingsModuleR::builtin_editor);
+		if (RKSettingsModuleR::options_pager != RKSettingsModuleR::builtin_editor) {
+			pager_input->addItem(RKSettingsModuleR::options_pager);
+			pager_input->setCurrentIndex(1);
+		}
+		connect(pager_input, &QComboBox::editTextChanged, this, &RKSettingsPageR::change);
+		grid->addWidget(pager_input, row, 1);
+
+		grid->addWidget(new QLabel(i18n ("Further (option) commands to run in each session"), this), ++row, 0, 1, 2);
+		further_input = new QTextEdit(this);
+		further_input->setWordWrapMode(QTextOption::NoWrap);
+		further_input->setAcceptRichText(false);
+		further_input->setPlainText(RKSettingsModuleR::options_further);
+		connect(further_input, &QTextEdit::textChanged, this, &RKSettingsPageR::change);
+		grid->addWidget(further_input, ++row, 0, 1, 2);
+
+		main_vbox->addStretch();
+
+		addpaths_selector = new MultiStringSelector(i18n("Addition search paths for utilities used by R"), this);
+		addpaths_selector->setValues(RKSettingsModuleR::options_addpaths);
+		connect(addpaths_selector, &MultiStringSelector::listChanged, this, &RKSettingsPageR::change);
+		connect(addpaths_selector, &MultiStringSelector::getNewStrings, this, [this](QStringList* string_list) {
+			QDialog dialog(this);
+			dialog.setWindowTitle(i18n("Add System Path Directory"));
+			QVBoxLayout *layout = new QVBoxLayout(&dialog);
+			layout->addWidget (RKCommonFunctions::wordWrappedLabel(i18n("Specify or select directory to add to the system file path of the running R session")));
+
+			KUrlRequester *req = new KUrlRequester();
+			req->setMode(KFile::Directory);
+			layout->addWidget(req);
+
+			QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+			buttons->button(QDialogButtonBox::Ok)->setText(i18nc("Add directory to list", "Add"));
+			connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+			connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+			layout->addWidget(buttons);
+
+			if (dialog.exec() == QDialog::Accepted) {
+				if (!req->text().isEmpty()) (*string_list).append(req->text());
+			}
+		});
+		main_vbox->addWidget(addpaths_selector);
 	}
-	connect (editor_input, &QComboBox::editTextChanged, this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (editor_input, row, 1);
+	void applyChanges() {
+		RK_TRACE(SETTINGS);
 
-	grid->addWidget (new QLabel (i18n ("Pager command"), this), ++row, 0);
-	pager_input = new QComboBox (this);
-	pager_input->setEditable (true);
-	pager_input->addItem (builtin_editor);
-	if (options_pager != builtin_editor) {
-		pager_input->addItem (options_pager);
-		pager_input->setCurrentIndex (1);
+		RKSettingsModuleR::options_outdec = outdec_input->text();
+		RKSettingsModuleR::options_editor = editor_input->currentText();
+		RKSettingsModuleR::options_pager = pager_input->currentText();
+		RKSettingsModuleR::options_further = further_input->toPlainText();
+		// normalize system paths before adding
+		QStringList paths = addpaths_selector->getValues();
+		QStringList cleanpaths;
+		for (int i = 0; i < paths.count(); ++i) {
+			QString path = QDir::cleanPath(paths[i]);
+			if (!cleanpaths.contains(path)) cleanpaths.append(path);
+		}
+		RKSettingsModuleR::options_addpaths = cleanpaths;
+
+		// apply run time options in R
+		QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands();
+		for (QStringList::const_iterator it = commands.cbegin(); it != commands.cend(); ++it) {
+			RInterface::issueCommand(new RCommand(*it, RCommand::App), parentModule()->commandChain());
+		}
 	}
-	connect (pager_input, &QComboBox::editTextChanged, this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (pager_input, row, 1);
+private:
+	QLineEdit *outdec_input;
+	QComboBox *editor_input;
+	QComboBox *pager_input;
+	QTextEdit *further_input;
+	MultiStringSelector *addpaths_selector;
+};
 
-	grid->addWidget (new QLabel (i18n ("Further (option) commands to run in each session"), this), ++row, 0, 1, 2);
-	further_input = new QTextEdit (this);
-	further_input->setWordWrapMode (QTextOption::NoWrap);
-	further_input->setAcceptRichText (false);
-	further_input->setPlainText (options_further);
-	connect (further_input, &QTextEdit::textChanged, this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (further_input, ++row, 0, 1, 2);
-
-	main_vbox->addStretch ();
-
-	addpaths_selector = new MultiStringSelector (i18n ("Addition search paths for utilities used by R"), this);
-	addpaths_selector->setValues (options_addpaths);
-	connect (addpaths_selector, &MultiStringSelector::listChanged, this, &RKSettingsModuleR::settingChanged);
-	connect (addpaths_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleR::addPaths);
-	main_vbox->addWidget (addpaths_selector);
+RKSettingsModuleR::RKSettingsModuleR(QObject *parent) : RKSettingsModule(parent) {
+	RK_TRACE(SETTINGS);
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
 	RK_TRACE (SETTINGS);
 }
 
-void RKSettingsModuleR::settingChanged () {
-	RK_TRACE (SETTINGS);
-	change ();
-}
-
-QString RKSettingsModuleR::caption() const {
-	RK_TRACE(SETTINGS);
-	return(i18n("R-Backend"));
-}
-
-QIcon RKSettingsModuleR::icon() const {
-	RK_TRACE(SETTINGS);
-	return QIcon::fromTheme("emblem-system-symbolic");
-}
-
-void RKSettingsModuleR::applyChanges () {
-	RK_TRACE (SETTINGS);
-
-	options_outdec = outdec_input->text ();
-	options_editor = editor_input->currentText ();
-	options_pager = pager_input->currentText ();
-	options_further = further_input->toPlainText ();
-	// normalize system paths before adding
-	QStringList paths = addpaths_selector->getValues ();
-	QStringList cleanpaths;
-	for (int i = 0; i < paths.count(); ++i) {
-		QString path = QDir::cleanPath(paths[i]);
-		if (!cleanpaths.contains(path)) cleanpaths.append(path);
-	}
-	options_addpaths = cleanpaths;
-
-// apply run time options in R
-	QStringList commands = makeRRunTimeOptionCommands ();
-	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-		RInterface::issueCommand(new RCommand(*it, RCommand::App), commandChain ());
-	}
-}
-
-void RKSettingsModuleR::addPaths(QStringList* string_list) {
-	RK_TRACE (SETTINGS);
-
-	QDialog dialog (this);
-	dialog.setWindowTitle (i18n ("Add System Path Directory"));
-	QVBoxLayout *layout = new QVBoxLayout (&dialog);
-	layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Specify or select directory to add to the system file path of the running R session")));
-
-	KUrlRequester *req = new KUrlRequester ();
-	req->setMode (KFile::Directory);
-	layout->addWidget (req);
-
-	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	buttons->button(QDialogButtonBox::Ok)->setText (i18nc ("Add directory to list", "Add"));
-	connect (buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-	connect (buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-	layout->addWidget (buttons);
-
-	if (dialog.exec () == QDialog::Accepted) {
-		if (!req->text ().isEmpty ()) (*string_list).append (req->text ());
-	}
+QList<RKSettingsModuleWidget*> RKSettingsModuleR::createPages(QWidget *parent) {
+	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageR(parent, this) };
 }
 
 static QLatin1String RTrueFalse(bool val) {
@@ -312,65 +313,138 @@ RKConfigValue<QString> RKSettingsModuleRPackages::cran_mirror_url {"CRAN mirror 
 QStringList RKSettingsModuleRPackages::defaultliblocs;
 QString RKSettingsModuleRPackages::r_libs_user;
 
-RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
-	RK_TRACE (SETTINGS);
+class RKSettingsPageRPackages : public RKSettingsModuleWidget {
+public:
+	RKSettingsPageRPackages(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleRPackages::page_id, RKSettingsModulePlugins::addons_superpage_id) {
+		RK_TRACE(SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+		setWindowTitle(i18n("R-Packages"));
+		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::ObjectPackageEnvironment));
 
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
+		QVBoxLayout *main_vbox = new QVBoxLayout(this);
 
-	main_vbox->addWidget (new QLabel (i18n ("CRAN download mirror (leave empty to be prompted once each session):"), this));
-	QHBoxLayout* hbox = new QHBoxLayout ();
-	main_vbox->addLayout (hbox);
-	cran_mirror_input = new QLineEdit (cran_mirror_url, this);
-	if (cran_mirror_url == "@CRAN@") cran_mirror_input->clear ();
-	connect (cran_mirror_input, &QLineEdit::textChanged, this, &RKSettingsModuleRPackages::settingChanged);
-	hbox->addWidget (cran_mirror_input);
-	QPushButton* cran_mirror_button = new QPushButton (i18n ("Select mirror"), this);
-	connect (cran_mirror_button, &QPushButton::clicked, this, &RKSettingsModuleRPackages::selectCRANMirror);
-	hbox->addWidget (cran_mirror_button);
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
 
-	repository_selector = new MultiStringSelector (i18n ("Additional package repositories (where libraries are downloaded from)"), this);
-	repository_selector->setValues (package_repositories);
-	connect (repository_selector, &MultiStringSelector::listChanged, this, &RKSettingsModuleRPackages::settingChanged);
-	connect (repository_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleRPackages::addRepository);
-	main_vbox->addWidget (repository_selector);
+		main_vbox->addWidget(new QLabel(i18n("CRAN download mirror (leave empty to be prompted once each session):"), this));
+		QHBoxLayout* hbox = new QHBoxLayout();
+		main_vbox->addLayout(hbox);
+		cran_mirror_input = new QLineEdit(RKSettingsModuleRPackages::cran_mirror_url, this);
+		if (RKSettingsModuleRPackages::cran_mirror_url == "@CRAN@") cran_mirror_input->clear();
+		connect(cran_mirror_input, &QLineEdit::textChanged, this, &RKSettingsPageRPackages::change);
+		hbox->addWidget(cran_mirror_input);
+		QPushButton* cran_mirror_button = new QPushButton(i18n("Select mirror"), this);
+		connect(cran_mirror_button, &QPushButton::clicked, this, [this]() {
+			QString title = i18n("Select CRAN mirror");
+			RCommand* command = new RCommand("rk.select.CRAN.mirror()\n", RCommand::App | RCommand::GetStringVector, title);
+			connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+				if (command->succeeded()) {
+					RK_ASSERT(command->getDataLength() >= 1);
+					cran_mirror_input->setText(command->stringVector().value(0));
+				}
+			});
 
-	main_vbox->addWidget(archive_packages.makeCheckbox(i18n("Archive downloaded packages"), this));
+			RKProgressControl* control = new RKProgressControl(this, title, title, RKProgressControl::CancellableProgress);
+			control->addRCommand(command, true);
+			RInterface::issueCommand(command, parentModule()->commandChain());
+			control->doModal(true);
+		});
+		hbox->addWidget(cran_mirror_button);
 
-	auto source_packages_box = source_packages.makeCheckbox(i18n ("Build packages from source"), this);
+		repository_selector = new MultiStringSelector(i18n("Additional package repositories (where libraries are downloaded from)"), this);
+		repository_selector->setValues(RKSettingsModuleRPackages::package_repositories);
+		connect(repository_selector, &MultiStringSelector::listChanged, this, &RKSettingsPageRPackages::change);
+		connect(repository_selector, &MultiStringSelector::getNewStrings, this, [this](QStringList *string_list) {
+			bool ok;
+			QString new_string = QInputDialog::getText(this, i18n("Add repository"), i18n("Add URL of new repository"), QLineEdit::Normal, QString(), &ok);
+			if (ok) (*string_list).append(new_string);
+		});
+		main_vbox->addWidget(repository_selector);
+
+		main_vbox->addWidget(RKSettingsModuleRPackages::archive_packages.makeCheckbox(i18n("Archive downloaded packages"), this));
+
+		auto source_packages_box = RKSettingsModuleRPackages::source_packages.makeCheckbox(i18n("Build packages from source"), this);
 #if !(defined Q_OS_WIN || defined Q_OS_MACOS)
-	source_packages_box->setText(i18n("Build packages from source (not configurable on this platform)"));
-	source_packages_box->setChecked (true);
-	source_packages_box->setEnabled (false);
+		source_packages_box->setText(i18n("Build packages from source (not configurable on this platform)"));
+		source_packages_box->setChecked(true);
+		source_packages_box->setEnabled(false);
 #endif
-	RKCommonFunctions::setTips (QString ("<p>%1</p>").arg (i18n ("Installing packages from pre-compiled binaries (if available) is generally faster, and does not require an installation of development tools and libraries. On the other hand, building packages from source provides best compatibility.")), source_packages_box);
-	main_vbox->addWidget (source_packages_box);
+		RKCommonFunctions::setTips(QString("<p>%1</p>").arg(i18n("Installing packages from pre-compiled binaries (if available) is generally faster, and does not require an installation of development tools and libraries. On the other hand, building packages from source provides best compatibility.")), source_packages_box);
+		main_vbox->addWidget(source_packages_box);
 
-	hbox = new QHBoxLayout();
-	main_vbox->addLayout(hbox);
-	auto button = new QPushButton(i18n("Install from git"));
-	auto label = RKCommonFunctions::wordWrappedLabel(i18n("Some add-on packages are not available in the CRAN repository, but can be installed from development repositories. Use the button \"%1\", to install such packages, comfortably.", button->text()));
-	hbox->addWidget(label);
-	hbox->setStretchFactor(label, 2);
-	connect(button, &QPushButton::clicked, this, []() { RKComponentMap::getMap()->invokeComponent("rkward::install_from_git", QStringList()); });
-	hbox->addWidget(button);
+		hbox = new QHBoxLayout();
+		main_vbox->addLayout(hbox);
+		auto button = new QPushButton(i18n("Install from git"));
+		auto label = RKCommonFunctions::wordWrappedLabel(i18n("Some add-on packages are not available in the CRAN repository, but can be installed from development repositories. Use the button \"%1\", to install such packages, comfortably.", button->text()));
+		hbox->addWidget(label);
+		hbox->setStretchFactor(label, 2);
+		connect(button, &QPushButton::clicked, this, []() { RKComponentMap::getMap()->invokeComponent("rkward::install_from_git", QStringList()); });
+		hbox->addWidget(button);
 
-	main_vbox->addStretch ();
+		main_vbox->addStretch();
 
-	libloc_selector = new MultiStringSelector (i18n ("R Library locations (where libraries get installed to, locally)"), this);
-	libloc_selector->setValues (liblocs);
-	connect (libloc_selector, &MultiStringSelector::listChanged, this, &RKSettingsModuleRPackages::settingChanged);
-	connect (libloc_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleRPackages::addLibLoc);
-	main_vbox->addWidget (libloc_selector);
-	label = new QLabel (i18n ("Note: The startup defaults will always be used in addition to the locations you specify in this list"), this);
-	main_vbox->addWidget (label);
+		libloc_selector = new MultiStringSelector(i18n("R Library locations (where libraries get installed to, locally)"), this);
+		libloc_selector->setValues(RKSettingsModuleRPackages::liblocs);
+		connect(libloc_selector, &MultiStringSelector::listChanged, this, &RKSettingsPageRPackages::change);
+		connect(libloc_selector, &MultiStringSelector::getNewStrings, this, [this](QStringList *string_list) {
+			QDialog dialog(this);
+			dialog.setWindowTitle(i18n("Add R Library Directory"));
+			QVBoxLayout *layout = new QVBoxLayout(&dialog);
+			layout->addWidget(RKCommonFunctions::wordWrappedLabel(
+				i18n("Specify or select library location to add.\nNote that locations may contain a '%v', which will expand to the first "
+				     "two components of the R version number (e.g. to 3.5), automatically. Including this is recommended, because R packages "
+				     "compiled for one version of R will often fail to work correctly in a different version of R.")));
+			KUrlRequester *req = new KUrlRequester();
+			req->setText(QDir(RKSettingsModuleGeneral::filesPath()).absoluteFilePath("library/%v"));
+			req->setMode(KFile::Directory);
+			layout->addWidget(req);
 
-	main_vbox->addStretch ();
+			QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+			buttons->button(QDialogButtonBox::Ok)->setText(i18nc("Add file to list", "Add"));
+			connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+			connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+			layout->addWidget(buttons);
+
+			if (dialog.exec() == QDialog::Accepted) {
+				if (!req->text().isEmpty()) (*string_list).append(req->text());
+			}
+		});
+		main_vbox->addWidget(libloc_selector);
+		label = new QLabel(i18n("Note: The startup defaults will always be used in addition to the locations you specify in this list"), this);
+		main_vbox->addWidget(label);
+
+		main_vbox->addStretch();
+	}
+	void applyChanges() {
+		RK_TRACE(SETTINGS);
+
+		RKSettingsModuleRPackages::cran_mirror_url = cran_mirror_input->text();
+		if (RKSettingsModuleRPackages::cran_mirror_url.get().isEmpty ()) RKSettingsModuleRPackages::cran_mirror_url = "@CRAN@";
+
+		RKSettingsModuleRPackages::package_repositories = repository_selector->getValues();
+		RKSettingsModuleRPackages::liblocs = libloc_selector->getValues ();
+
+		// apply options in R
+		QStringList commands = RKSettingsModuleRPackages::makeRRunTimeOptionCommands();
+		for (QStringList::const_iterator it = commands.cbegin(); it != commands.cend(); ++it) {
+			RInterface::issueCommand(new RCommand(*it, RCommand::App), parentModule()->commandChain());
+		}
+	}
+private:
+	MultiStringSelector *libloc_selector;
+	MultiStringSelector *repository_selector;
+	QLineEdit* cran_mirror_input;
+};
+
+RKSettingsModuleRPackages::RKSettingsModuleRPackages(QObject *parent) : RKSettingsModule(parent) {
+	RK_TRACE(SETTINGS);
 }
 
 RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
 	RK_TRACE (SETTINGS);
+}
+
+QList<RKSettingsModuleWidget*> RKSettingsModuleRPackages::createPages(QWidget *parent) {
+	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageRPackages(parent, this) };
 }
 
 void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCommandChain *chain) {
@@ -403,72 +477,6 @@ QStringList RKSettingsModuleRPackages::libraryLocations () {
 QStringList RKSettingsModuleRPackages::addUserLibLocTo (const QStringList& liblocs) {
 	if (!liblocs.contains(userLibraryLocation ())) return (QStringList (userLibraryLocation ()) + liblocs);
 	return liblocs;
-}
-
-void RKSettingsModuleRPackages::settingChanged () {
-	RK_TRACE (SETTINGS);
-	change ();
-}
-
-void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
-	RK_TRACE (SETTINGS);
-
-	QDialog dialog (this);
-	dialog.setWindowTitle (i18n ("Add R Library Directory"));
-	QVBoxLayout *layout = new QVBoxLayout (&dialog);
-	layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Specify or select library location to add.\nNote that locations may contain a '%v', which will expand to the first "
-	                                  "two components of the R version number (e.g. to 3.5), automatically. Including this is recommended, because R packages "
-	                                  "compiled for one version of R will often fail to work correctly in a different version of R.")));
-
-	KUrlRequester *req = new KUrlRequester ();
-	req->setText (QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library/%v"));
-	req->setMode (KFile::Directory);
-	layout->addWidget (req);
-
-	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	buttons->button(QDialogButtonBox::Ok)->setText (i18nc ("Add file to list", "Add"));
-	connect (buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-	connect (buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-	layout->addWidget (buttons);
-
-	if (dialog.exec () == QDialog::Accepted) {
-		if (!req->text ().isEmpty ()) (*string_list).append (req->text ());
-	}
-}
-
-void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
-	RK_TRACE (SETTINGS);
-	bool ok;
-	QString new_string = QInputDialog::getText (this, i18n ("Add repository"), i18n ("Add URL of new repository"), QLineEdit::Normal, QString (), &ok);
-	if (ok) (*string_list).append (new_string);
-}
-
-QString RKSettingsModuleRPackages::caption() const {
-	RK_TRACE(SETTINGS);
-	return(i18n("R-Packages"));
-}
-
-QIcon RKSettingsModuleRPackages::icon() const {
-	RK_TRACE(SETTINGS);
-	return RKStandardIcons::getIcon(RKStandardIcons::ObjectPackageEnvironment);
-}
-
-void RKSettingsModuleRPackages::selectCRANMirror () {
-	RK_TRACE (SETTINGS);
-	QString title = i18n ("Select CRAN mirror");
-	
-	RCommand* command = new RCommand ("rk.select.CRAN.mirror()\n", RCommand::App | RCommand::GetStringVector, title);
-	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
-		if (command->succeeded()) {
-			RK_ASSERT(command->getDataLength() >= 1);
-			cran_mirror_input->setText(command->stringVector().value(0));
-		}
-	});
-
-	RKProgressControl* control = new RKProgressControl (this, title, title, RKProgressControl::CancellableProgress);
-	control->addRCommand (command, true);
-	RInterface::issueCommand (command, commandChain ());
-	control->doModal (true);
 }
 
 QString RKSettingsModuleRPackages::libLocsCommand () {
@@ -535,22 +543,6 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	list.append (libLocsCommand ());
 
 	return list;
-}
-
-void RKSettingsModuleRPackages::applyChanges () {
-	RK_TRACE (SETTINGS);
-
-	cran_mirror_url = cran_mirror_input->text ();
-	if (cran_mirror_url.get().isEmpty ()) cran_mirror_url = "@CRAN@";
-
-	package_repositories = repository_selector->getValues ();
-	liblocs = libloc_selector->getValues ();
-
-// apply options in R
-	QStringList commands = makeRRunTimeOptionCommands ();
-	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-		RInterface::issueCommand(new RCommand(*it, RCommand::App), commandChain());
-	}
 }
 
 void RKSettingsModuleRPackages::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {

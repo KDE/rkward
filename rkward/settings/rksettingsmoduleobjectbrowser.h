@@ -22,19 +22,12 @@ class MultiStringSelector;
 class RKSettingsModuleObjectBrowser : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleObjectBrowser ();
+	RKSettingsModuleObjectBrowser(QObject *parent);
+	~RKSettingsModuleObjectBrowser();
 
-/** applies current settings in this RKSettingsModule. This will only be called, if hasChanges () is true */
-	void applyChanges () override;
-
-/** @returns the caption ("Workspace Browser") */
-	QString caption() const override;
-	QIcon icon() const override;
-
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("browser");
 
 	static bool isDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };
 	static bool isDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting) { return varselector_settings[setting]; };
@@ -42,15 +35,8 @@ public:
 	static void setDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting, bool state);
 
 	static bool isPackageBlacklisted (const QString &package_name);
-
-	QUrl helpURL () override { return QUrl ("rkward://page/rkward_workspace_browser#settings"); };
-public Q_SLOTS:
-/** called when a checkbox has been changed. Signals change to RKSettings dialog to enable apply button */
-	void boxChanged (int);
-	void listChanged ();
-	void addBlackList (QStringList *string_list);
 private:
-	MultiStringSelector *blacklist_choser;
+friend class RKSettingsPageObjectBrowser;
 	static RKConfigValue<QStringList> getstructure_blacklist;
 
 	static RKConfigValue<bool> workspace_settings[RKObjectListViewSettings::SettingsCount];

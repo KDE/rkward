@@ -20,7 +20,7 @@ class RKSpinBox;
 class RKSettingsModuleGeneral : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent);
+	RKSettingsModuleGeneral(QObject *parent);
 	~RKSettingsModuleGeneral ();
 
 	enum WorkplaceSaveMode {	// don't change the int values of this enum, or you'll ruin users saved settings. Append new values at the end
@@ -42,13 +42,9 @@ public:
 		RKMDIFocusFollowsMouse=1
 	};
 
-	void applyChanges () override;
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-
-	QString caption() const override;
-	QIcon icon() const override;
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("general");
 
 /// returns the directory-name where the logfiles should reside
 	static QString &filesPath () { return files_path; };
@@ -93,10 +89,7 @@ public:
 	/** Returns true, if rkward seems to have started from a different path than on the previous run. */
 	static bool installationMoved () { return installation_moved; };
 private:
-	GetFileNameWidget *files_choser;
-	QButtonGroup *workplace_save_chooser;
-	GetFileNameWidget *initial_dir_custom_chooser;
-
+friend class RKSettingsPageGeneral;
 	static RKConfigValue<bool> autorestore_from_wd;
 	static QString files_path;
 /** since changing the files_path can not easily be done while in an active session, the setting should only take effect on the next start. This string stores a changed setting, while keeping the old one intact as long as RKWard is running */

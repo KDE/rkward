@@ -24,24 +24,18 @@ class QRadioButton;
 class RKSettingsModuleGraphics : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleGraphics ();
+	RKSettingsModuleGraphics(QObject *parent);
+	~RKSettingsModuleGraphics();
 	
-	void applyChanges () override;
-
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
 
 /** Configured to (attempt to) use KDE printing dialog? */
 	static bool kdePrintingEnabled () { return options_kde_printing; };
 
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-
-	QString caption() const override;
-	QIcon icon() const override;
-	QUrl helpURL () override { return QUrl ("rkward://page/rkward_plot_history#scd_settings"); };
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("graphics");
 
 	enum DefaultDevice {
 		RKDevice,
@@ -55,17 +49,8 @@ public:
 	};
 	
 	static bool plotHistoryEnabled () { return graphics_hist_enable; };
-public Q_SLOTS:
-	void boxChanged ();
 private:
-	void updateControls ();
-
-	QButtonGroup *default_device_group;
-	QLineEdit *default_device_other_edit;
-	QButtonGroup *replace_standard_devices_group;
-
-	QGroupBox *graphics_hist_box;
-
+friend class RKSettingsPageGraphics;
 	static RKConfigValue<DefaultDevice, int> default_device;
 	static RKConfigValue<QString> default_device_other;
 	static RKConfigValue<StandardDevicesMode, int> replace_standard_devices;

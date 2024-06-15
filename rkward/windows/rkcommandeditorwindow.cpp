@@ -201,7 +201,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	part->insertChildClient (m_view);
 	setPart (part);
 	fixupPartGUI ();
-	setMetaInfo (i18n ("Script Editor"), QUrl (), RKSettings::PageCommandEditor);
+	setMetaInfo(i18n("Script Editor"), QUrl(), RKSettingsModuleCommandEditor::page_id);
 	initializeActions (part->actionCollection ());
 	// The kate part is quite a beast to embed, when it comes to shortcuts. New ones get added, conflicting with ours.
 	// In this context we show no mercy, and rip out any conflicting shortcuts.

@@ -25,19 +25,15 @@ class RKSpinBox;
 class RKSettingsModulePlugins : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModulePlugins (RKSettings *gui, QWidget *parent);
-	~RKSettingsModulePlugins ();
-
-	void applyChanges () override;
+	RKSettingsModulePlugins(QObject *parent);
+	~RKSettingsModulePlugins();
 
 	enum PluginPrefs { PreferDialog=0, PreferRecommended=1, PreferWizard=2 };
 
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-
-	QString caption() const override;
-	QIcon icon() const override;
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("plugins");
+	static constexpr PageId addons_superpage_id = QLatin1String("addons");
 
 	/** @returns a list of active plugin maps */
 	static QStringList pluginMaps ();
@@ -95,7 +91,7 @@ public:
 		void saveToConfig(KConfigGroup &cg);
 		void readFromConfig(KConfigGroup &cg);
 	private:
-friend class RKSettingsModulePluginsModel;
+	friend class RKSettingsModulePluginsModel;
 		struct DummyListStruct {
 			bool active;
 			PluginMapInfoList list;
@@ -106,15 +102,11 @@ friend class RKSettingsModulePluginsModel;
 	/** Registers the plugin maps that are shipped with RKWard.
 	 * @param force_add All default maps are also activated, even if they were already known, and disabled by the user. */
 	static void registerDefaultPluginMaps (AddMode add_mode);
-public Q_SLOTS:
-	void settingChanged ();
-	void configurePluginmaps ();
 private:
-	QButtonGroup *button_group;
-
+friend class RKSettingsPagePlugins;
+friend class RKSettingsModulePluginsModel;
 	/** plugin maps which are not necessarily active, but have been encountered, before. @see plugin_maps */
 	static RKPluginMapList known_plugin_maps;
-friend class RKSettingsModulePluginsModel;
 	static RKPluginMapList knownPluginmaps() { return known_plugin_maps; };
 	static PluginMapStoredInfo parsePluginMapBasics(const QString &filename);
 

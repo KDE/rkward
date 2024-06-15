@@ -143,7 +143,7 @@ protected Q_SLOTS:
 	void clearStatusMessage ();
 protected:
 	void setPart (KParts::Part *p) { part = p; };
-	void setMetaInfo (const QString& generic_window_name, const QUrl& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
+	void setMetaInfo (const QString& generic_window_name, const QUrl& help_url, RKSettingsModule::PageId settings_page=RKSettingsModule::no_page_id);
 	void initializeActivationSignals ();
 	void paintEvent (QPaintEvent *e) override;
 	void changeEvent (QEvent *event) override;
@@ -179,7 +179,7 @@ friend class RKToolWindowBar;
 	QMap<QString, QString> global_context_properties;
 	QString generic_window_name;
 	QUrl help_url;
-	RKSettings::SettingsPage settings_page;
+	RKSettingsModule::PageId settings_page;
 	KXMLGUIClient* ui_buddy;
 	void showStatusMessageNow();
 	QTimer status_message_timer;

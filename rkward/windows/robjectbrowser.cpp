@@ -29,6 +29,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkspecialactions.h"
+#include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "rkworkplace.h"
 #include "../dataeditor/rkeditor.h"
 
@@ -51,7 +52,7 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
-	setMetaInfo (i18n ("R workspace browser"), QUrl ("rkward://page/rkward_workspace_browser"), RKSettings::PageObjectBrowser);
+	setMetaInfo(i18n("R workspace browser"), QUrl("rkward://page/rkward_workspace_browser"), RKSettingsModuleObjectBrowser::page_id);
 	initializeActivationSignals ();
 
 	setCaption (i18n ("R Workspace"));

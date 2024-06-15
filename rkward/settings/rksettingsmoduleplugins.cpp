@@ -28,6 +28,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/xmlhelper.h"
+#include "../windows/rkworkplace.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkloadlibsdialog.h"
 #include "rksettingsmodulegeneral.h"
@@ -41,67 +42,81 @@ RKConfigValue<bool> RKSettingsModulePlugins::show_code {"Code display default", 
 RKConfigValue<int> RKSettingsModulePlugins::code_size {"Code display size", 250};
 RKConfigValue<int> RKSettingsModulePlugins::side_preview_width {"Other preview size", 250};
 
-RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
-	RK_TRACE (SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
-	
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
-	
-	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?")));
+#include <QLabel>
 
+class RKSettingsPagePlugins : public RKSettingsModuleWidget {
+public:
+	RKSettingsPagePlugins(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModulePlugins::page_id, RKSettingsModulePlugins::addons_superpage_id) {
+		RK_TRACE(SETTINGS);
 
-	QGroupBox* button_box = new QGroupBox (this);
-	QVBoxLayout* group_layout = new QVBoxLayout (button_box);
-	button_group = new QButtonGroup (button_box);
+		setWindowTitle(i18n("RKWard Plugins"));
+		setWindowIcon(QIcon::fromTheme("plugins"));
 
-	QAbstractButton* button;
-	button = new QRadioButton (i18n ("Always prefer dialogs"), button_box);
-	group_layout->addWidget (button);
-	button_group->addButton (button, PreferDialog);
-	button = new QRadioButton (i18n ("Prefer recommended interface"), button_box);
-	group_layout->addWidget (button);
-	button_group->addButton (button, PreferRecommended);
-	button = new QRadioButton (i18n ("Always prefer wizards"), button_box);
-	group_layout->addWidget (button);
-	button_group->addButton (button, PreferWizard);
-	if ((button = button_group->button (interface_pref))) button->setChecked (true);
+		QVBoxLayout *main_vbox = new QVBoxLayout(this);
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
+		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?")));
 
-	connect (button_group, &QButtonGroup::idClicked, this, &RKSettingsModulePlugins::settingChanged);
-	main_vbox->addWidget (button_box);
+		QGroupBox* button_box = new QGroupBox(this);
+		QVBoxLayout* group_layout = new QVBoxLayout(button_box);
+		button_group = new QButtonGroup(button_box);
 
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
+		QAbstractButton* button;
+		button = new QRadioButton(i18n("Always prefer dialogs"), button_box);
+		group_layout->addWidget(button);
+		button_group->addButton(button, RKSettingsModulePlugins::PreferDialog);
+		button = new QRadioButton(i18n("Prefer recommended interface"), button_box);
+		group_layout->addWidget(button);
+		button_group->addButton(button, RKSettingsModulePlugins::PreferRecommended);
+		button = new QRadioButton(i18n("Always prefer wizards"), button_box);
+		group_layout->addWidget(button);
+		button_group->addButton(button, RKSettingsModulePlugins::PreferWizard);
+		if ((button = button_group->button(RKSettingsModulePlugins::interface_pref))) button->setChecked(true);
 
-	QPushButton *pluginmap_config_button = new QPushButton (i18n ("Configure Active Plugins"), this);
-	connect (pluginmap_config_button, &QPushButton::clicked, this, &RKSettingsModulePlugins::configurePluginmaps);
-	main_vbox->addWidget (pluginmap_config_button);
+		connect(button_group, &QButtonGroup::idClicked, this, &RKSettingsPagePlugins::change);
+		main_vbox->addWidget(button_box);
 
-	main_vbox->addStretch ();
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
+
+		QPushButton *pluginmap_config_button = new QPushButton(i18n("Configure Active Plugins"), this);
+		connect(pluginmap_config_button, &QPushButton::clicked, this, [this]() { RKLoadLibsDialog::showPluginmapConfig(this, parentModule()->commandChain()); });
+		main_vbox->addWidget(pluginmap_config_button);
+
+		main_vbox->addStretch();
+	}
+	void applyChanges() {
+		RK_TRACE(SETTINGS);
+
+		RKSettingsModulePlugins::interface_pref = static_cast<RKSettingsModulePlugins::PluginPrefs>(button_group->checkedId());
+	}
+private:
+	QButtonGroup *button_group;
+};
+
+class RKSettingsHeaderPage : public RKSettingsModuleWidget {
+public:
+	RKSettingsHeaderPage(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModulePlugins::addons_superpage_id) {
+		setWindowTitle(i18n("Add-ons"));
+		auto layout = new QVBoxLayout(this);
+		QLabel *l = new QLabel(i18n("<h1>Add-ons</h1><p>RKWard add-ons come in a variety of forms, each with their own configuration options:</p><h2>R packages</h2><p><a href=\"rkward://settings/rpackages\">Add-ons to the R language itself</a>. These are usually downloaded from \"CRAN\". Some of these add-on packages may additionally contain RKWard plugins.</p><h2>RKWard plugins</h2><p><a href=\"rkward://settings/plugins\">Graphical dialogs to R functionality</a>. These plugins are usually pre-installed with RKWard, or with an R package. However, they can be activated/deactivated to help keep the menus manageable. Note that it is relatively easy to <a href=\"https://api.kde.org/doc/rkwardplugins/\">create your own custom dialogs as plugins</a>!</p><h2>Kate plugins</h2><p><a href=\"rkward://settings/kateplugins\">Plugins developed for Kate / KTextEditor</a>. These provide shared functionality that is useful in the context of text editing and IDE applications. These plugins are usually found pre-installed on your system. You can configure to load the plugins that are useful to your own workflow.</p>"));
+		l->setWordWrap(true);
+		connect(l, &QLabel::linkActivated, [=](const QString &url) { RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(url)); });
+		layout->addWidget(l);
+		layout->addStretch();
+	}
+	void applyChanges() {};
+};
+
+RKSettingsModulePlugins::RKSettingsModulePlugins(QObject *parent) : RKSettingsModule(parent) {
+	RK_TRACE(SETTINGS);
 }
 
 RKSettingsModulePlugins::~RKSettingsModulePlugins() {
 	RK_TRACE (SETTINGS);
 }
 
-void RKSettingsModulePlugins::settingChanged () {
-	RK_TRACE (SETTINGS);
-	change ();
-}
-
-QString RKSettingsModulePlugins::caption() const {
-	RK_TRACE(SETTINGS);
-	return(i18n("RKWard Plugins"));
-}
-
-QIcon RKSettingsModulePlugins::icon() const {
-	RK_TRACE(SETTINGS);
-	return QIcon::fromTheme("plugins");
-}
-
-void RKSettingsModulePlugins::applyChanges () {
-	RK_TRACE (SETTINGS);
-
-	interface_pref = static_cast<PluginPrefs> (button_group->checkedId ());
+QList<RKSettingsModuleWidget*> RKSettingsModulePlugins::createPages(QWidget *parent) {
+	return QList<RKSettingsModuleWidget*>{ new RKSettingsHeaderPage(parent, this), new RKSettingsPagePlugins(parent, this) };
 }
 
 RKSettingsModulePlugins::RKPluginMapList RKSettingsModulePlugins::setPluginMaps(const RKPluginMapList &new_list) {
@@ -111,12 +126,6 @@ RKSettingsModulePlugins::RKPluginMapList RKSettingsModulePlugins::setPluginMaps(
 	known_plugin_maps.removeObsoleteMaps();
 	RKWardMainWindow::getMain()->initPlugins();
 	return known_plugin_maps;
-}
-
-void RKSettingsModulePlugins::configurePluginmaps () {
-	RK_TRACE (SETTINGS);
-
-	RKLoadLibsDialog::showPluginmapConfig (this, commandChain ());
 }
 
 void RKSettingsModulePlugins::RKPluginMapList::saveToConfig(KConfigGroup& cg) {

@@ -114,7 +114,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setCaption (i18n ("R Console"));
 	console_part = new RKConsolePart (this);
 	setPart (console_part);
-	setMetaInfo (shortCaption (), QUrl ("rkward://page/rkward_console"), RKSettings::PageConsole);
+	setMetaInfo(shortCaption(), QUrl("rkward://page/rkward_console"), RKSettingsModuleConsole::page_id);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
 	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [this](bool val) { view->setConfigValue("scrollbar-minimap", val); });

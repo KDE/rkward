@@ -108,112 +108,138 @@ bool RKSettingsModuleWatch::shouldRaiseWindow (RCommand *command) {
 	return true;
 }
 
-RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
-	RK_TRACE (SETTINGS);
+class RKSettingsPageWatch : public RKSettingsModuleWidget {
+public:
+	RKSettingsPageWatch(QWidget* parent, RKSettingsModule* parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleWatch::page_id) {
+		RK_TRACE(SETTINGS);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this);
+		setWindowTitle(i18n("Command log"));
+		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowCommandLog));
 
-	QLabel *label = RKCommonFunctions::wordWrappedLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."));
-	vbox->addWidget (label);
-	vbox->addSpacing (10);
+		QVBoxLayout *vbox = new QVBoxLayout(this);
+
+		QLabel *label = RKCommonFunctions::wordWrappedLabel(i18n("For now, settings only apply to new commands. All previous commands remain visible/invisible."));
+		vbox->addWidget(label);
+		vbox->addSpacing(10);
+		
+		QGridLayout *grid = new QGridLayout();
+		vbox->addLayout(grid);
+
+		label = RKCommonFunctions::wordWrappedLabel(i18n("always show command"));
+		grid->addWidget(label, 0, 1);
+		label = RKCommonFunctions::wordWrappedLabel(i18n("always show result"));
+		grid->addWidget(label, 0, 2);
+		label = RKCommonFunctions::wordWrappedLabel(i18n("show errors"));
+		grid->addWidget(label, 0, 3);
+		label = RKCommonFunctions::wordWrappedLabel(i18n("show/raise window"));
+		grid->addWidget(label, 0, 4);
+		
+		user_filter_boxes = addFilterSettings(grid, 1, i18n("User commands"), RKSettingsModuleWatch::user_filter);
+		plugin_filter_boxes = addFilterSettings(grid, 2, i18n("Plugin generated commands"), RKSettingsModuleWatch::plugin_filter);
+		app_filter_boxes = addFilterSettings(grid, 3, i18n("Application commands"), RKSettingsModuleWatch::app_filter);
+		sync_filter_boxes = addFilterSettings(grid, 4, i18n("Synchronization commands"), RKSettingsModuleWatch::sync_filter);
+
+		vbox->addSpacing(2*RKStyle::spacingHint());
+
+		vbox->addWidget(new QLabel(i18n("Maximum number of paragraphs/lines to display in the Command Log (0 for no limit)")));
+		vbox->addWidget(RKSettingsModuleWatch::max_log_lines.makeSpinBox(0, INT_MAX, this));
+
+		vbox->addStretch();
+
+		validateGUI();
+	}
+	void changedSetting(int) {
+		RK_TRACE(SETTINGS);
+		validateGUI();
+		change();
+	}
+	void validateGUI() {
+		RK_TRACE(SETTINGS);
+
+		user_filter_boxes.output->setEnabled(user_filter_boxes.input->isChecked());
+		plugin_filter_boxes.output->setEnabled(plugin_filter_boxes.input->isChecked());
+		app_filter_boxes.output->setEnabled(app_filter_boxes.input->isChecked());
+		sync_filter_boxes.output->setEnabled(sync_filter_boxes.input->isChecked());
+	}
+	void applyChanges() {
+		RK_TRACE(SETTINGS);
+
+		RKSettingsModuleWatch::user_filter = getFilterSettings(&user_filter_boxes);
+		RKSettingsModuleWatch::plugin_filter = getFilterSettings(&plugin_filter_boxes);
+		RKSettingsModuleWatch::app_filter = getFilterSettings(&app_filter_boxes);
+		RKSettingsModuleWatch::sync_filter = getFilterSettings(&sync_filter_boxes);
+	}
+private:
+	struct FilterBoxes {
+		QCheckBox *input;
+		QCheckBox *output;
+		QCheckBox *error;
+		QCheckBox *raise;
+	};
 	
-	QGridLayout *grid = new QGridLayout ();
-	vbox->addLayout (grid);
+	FilterBoxes plugin_filter_boxes;
+	FilterBoxes app_filter_boxes;
+	FilterBoxes sync_filter_boxes;
+	FilterBoxes user_filter_boxes;
 
-	label = RKCommonFunctions::wordWrappedLabel (i18n ("always show command"));
-	grid->addWidget (label, 0, 1);
-	label = RKCommonFunctions::wordWrappedLabel (i18n ("always show result"));
-	grid->addWidget (label, 0, 2);
-	label = RKCommonFunctions::wordWrappedLabel (i18n ("show errors"));
-	grid->addWidget (label, 0, 3);
-	label = RKCommonFunctions::wordWrappedLabel (i18n ("show/raise window"));
-	grid->addWidget (label, 0, 4);
-	
-	user_filter_boxes = addFilterSettings (this, grid, 1, i18n ("User commands"), user_filter);
-	plugin_filter_boxes = addFilterSettings (this, grid, 2, i18n ("Plugin generated commands"), plugin_filter);
-	app_filter_boxes = addFilterSettings (this, grid, 3, i18n ("Application commands"), app_filter);
-	sync_filter_boxes = addFilterSettings (this, grid, 4, i18n ("Synchronization commands"), sync_filter);
+	int getFilterSettings (FilterBoxes *boxes) {
+		RK_TRACE(SETTINGS);
 
-	vbox->addSpacing (2*RKStyle::spacingHint ());
+		int ret=0;
+		if (boxes->input->isChecked()) ret |= RKSettingsModuleWatch::ShowInput;
+		if (boxes->output->isChecked()) ret |= RKSettingsModuleWatch::ShowOutput;
+		if (boxes->error->isChecked()) ret |= RKSettingsModuleWatch::ShowError;
+		if (boxes->raise->isChecked()) ret |= RKSettingsModuleWatch::RaiseWindow;
+		return ret;
+	}
+	FilterBoxes addFilterSettings(QGridLayout *layout, int row, const QString &label, int state) {
+		RK_TRACE(SETTINGS);
 
-	vbox->addWidget(new QLabel(i18n("Maximum number of paragraphs/lines to display in the Command Log (0 for no limit)")));
-	vbox->addWidget(max_log_lines.makeSpinBox(0, INT_MAX, this));
+		FilterBoxes filter_boxes;
 
-	vbox->addStretch ();
+		layout->addWidget(new QLabel(label), row, 0);
 
-	validateGUI ();
+		filter_boxes.input = new QCheckBox();
+		filter_boxes.input->setChecked(state & RKSettingsModuleWatch::ShowInput);
+		connect(filter_boxes.input, &QCheckBox::stateChanged, this, &RKSettingsPageWatch::changedSetting);
+		layout->addWidget(filter_boxes.input, row, 1);
+
+		filter_boxes.output = new QCheckBox();
+		filter_boxes.output->setChecked(state & RKSettingsModuleWatch::ShowOutput);
+		connect(filter_boxes.output, &QCheckBox::stateChanged, this, &RKSettingsPageWatch::changedSetting);
+		layout->addWidget(filter_boxes.output, row, 2);
+
+		filter_boxes.error = new QCheckBox();
+		filter_boxes.error->setChecked(state & RKSettingsModuleWatch::ShowError);
+		connect(filter_boxes.error, &QCheckBox::stateChanged, this, &RKSettingsPageWatch::changedSetting);
+		layout->addWidget(filter_boxes.error, row, 3);
+
+		filter_boxes.raise = new QCheckBox();
+		filter_boxes.raise->setChecked(state & RKSettingsModuleWatch::RaiseWindow);
+		connect(filter_boxes.raise, &QCheckBox::stateChanged, this, &RKSettingsPageWatch::changedSetting);
+		layout->addWidget (filter_boxes.raise, row, 4);
+
+		return filter_boxes;
+	}
+};
+
+RKSettingsModuleWatch* RKSettingsModuleWatch::_instance = nullptr;
+RKSettingsModuleWatch::RKSettingsModuleWatch(QObject *parent) : RKSettingsModule(parent) {
+	RK_TRACE(SETTINGS);
+	_instance = this;
 }
 
-RKSettingsModuleWatch::~RKSettingsModuleWatch () {
-	RK_TRACE (SETTINGS);
-
-	delete user_filter_boxes;
-	delete plugin_filter_boxes;
-	delete app_filter_boxes;
-	delete sync_filter_boxes;
+RKSettingsModuleWatch::~RKSettingsModuleWatch() {
+	RK_TRACE(SETTINGS);
 }
 
-int RKSettingsModuleWatch::getFilterSettings (FilterBoxes *boxes) {
-	RK_TRACE (SETTINGS);
-
-	int ret=0;
-	if (boxes->input->isChecked ()) ret |= ShowInput;
-	if (boxes->output->isChecked ()) ret |= ShowOutput;
-	if (boxes->error->isChecked ()) ret |= ShowError;
-	if (boxes->raise->isChecked ()) ret |= RaiseWindow;
-	return ret;
-}
-
-RKSettingsModuleWatch::FilterBoxes *RKSettingsModuleWatch::addFilterSettings (QWidget *parent, QGridLayout *layout, int row, const QString &label, int state) {
-	RK_TRACE (SETTINGS);
-
-	FilterBoxes *filter_boxes = new FilterBoxes;
-	
-	layout->addWidget (new QLabel (label, parent), row, 0);
-	
-	filter_boxes->input = new QCheckBox (parent);
-	filter_boxes->input->setChecked (state & ShowInput);
-	connect (filter_boxes->input, &QCheckBox::stateChanged, this, &RKSettingsModuleWatch::changedSetting);
-	layout->addWidget (filter_boxes->input, row, 1);
-	
-	filter_boxes->output = new QCheckBox (parent);
-	filter_boxes->output->setChecked (state & ShowOutput);
-	connect (filter_boxes->output, &QCheckBox::stateChanged, this, &RKSettingsModuleWatch::changedSetting);
-	layout->addWidget (filter_boxes->output, row, 2);
-	
-	filter_boxes->error = new QCheckBox (parent);
-	filter_boxes->error->setChecked (state & ShowError);
-	connect (filter_boxes->error, &QCheckBox::stateChanged, this, &RKSettingsModuleWatch::changedSetting);
-	layout->addWidget (filter_boxes->error, row, 3);
-	
-	filter_boxes->raise = new QCheckBox (parent);
-	filter_boxes->raise->setChecked (state & RaiseWindow);
-	connect (filter_boxes->raise, &QCheckBox::stateChanged, this, &RKSettingsModuleWatch::changedSetting);
-	layout->addWidget (filter_boxes->raise, row, 4);
-	
-	return filter_boxes;
-}
-
-void RKSettingsModuleWatch::changedSetting (int) {
-	RK_TRACE (SETTINGS);
-
-	validateGUI ();
-
-	change ();
-}
-
-void RKSettingsModuleWatch::validateGUI () {
-	RK_TRACE (SETTINGS);
-
-	user_filter_boxes->output->setEnabled (user_filter_boxes->input->isChecked ());
-	plugin_filter_boxes->output->setEnabled (plugin_filter_boxes->input->isChecked ());
-	app_filter_boxes->output->setEnabled (app_filter_boxes->input->isChecked ());
-	sync_filter_boxes->output->setEnabled (sync_filter_boxes->input->isChecked ());
+QList<RKSettingsModuleWidget*> RKSettingsModuleWatch::createPages(QWidget *parent) {
+	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageWatch(parent, this) };
 }
 
 //static
 void RKSettingsModuleWatch::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 
 	KConfigGroup cg = config->group("RInterface Watch Settings");
 	user_filter.syncConfig(cg, a);
@@ -222,23 +248,3 @@ void RKSettingsModuleWatch::syncConfig(KConfig *config, RKConfigBase::ConfigSync
 	sync_filter.syncConfig(cg, a);
 	max_log_lines.syncConfig(cg, a);
 }
-
-void RKSettingsModuleWatch::applyChanges () {
-	RK_TRACE (SETTINGS);
-
-	user_filter = getFilterSettings (user_filter_boxes);
-	plugin_filter = getFilterSettings (plugin_filter_boxes);
-	app_filter = getFilterSettings (app_filter_boxes);
-	sync_filter = getFilterSettings (sync_filter_boxes);
-}
-	
-QString RKSettingsModuleWatch::caption() const {
-	RK_TRACE(SETTINGS);
-	return(i18n("Command log"));
-}
-
-QIcon RKSettingsModuleWatch::icon() const {
-	RK_TRACE(SETTINGS);
-	return RKStandardIcons::getIcon(RKStandardIcons::WindowCommandLog);
-}
-

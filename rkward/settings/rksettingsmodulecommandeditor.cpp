@@ -1,6 +1,6 @@
 /*
 rksettingsmodulecommandeditor - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 23 2007
-SPDX-FileCopyrightText: 2007-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -36,7 +36,7 @@ RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_keep { "Autosave kee
 RKConfigValue<int> RKSettingsModuleCommandEditor::autosave_interval {"Autosave interval", 5 };
 RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter { "Script file filter", "*.R *.S *.q *.Rhistory" };
 
-RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common) : RKSettingsModuleWidget(parent, module), settings(settings) {
+RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common) : RKSettingsModuleWidget(parent, module, RKSettingsModule::no_page_id), settings(settings) {
 	RK_TRACE (SETTINGS);
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 	main_vbox->setContentsMargins(0,0,0,0);
@@ -113,61 +113,101 @@ void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes(const QStringList& 
 	}
 }
 
-RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
-	RK_TRACE (SETTINGS);
-
-	QVBoxLayout* main_vbox = new QVBoxLayout (this);
-	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard")));
-	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
-
-	main_vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings, true));
-
-	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
-
-	QGroupBox *group = autosave_enabled_box = new QGroupBox (i18n ("Autosaves"), this);
-	autosave_enabled_box->setCheckable (true);
-	autosave_enabled_box->setChecked (autosave_enabled);
-	connect (autosave_enabled_box, &QGroupBox::toggled, this, &RKSettingsModule::change);
-	QFormLayout *form_layout = new QFormLayout (group);
-
-	form_layout->addRow(i18n("Autosave interval (minutes)"), autosave_interval.makeSpinBox(1, INT_MAX, this));
-
-	form_layout->addRow(autosave_keep.makeCheckbox(i18n("Keep autosave file after manual save"), this));
-
-	main_vbox->addWidget (group);
-
-	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
-
-	script_file_filter_box = new QLineEdit();
-	script_file_filter_box->setText(script_file_filter);
-	RKCommonFunctions::setTips(i18n("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box);
-	connect(script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsModule::change);
-	main_vbox->addWidget(new QLabel(i18n("R script file filters (separated by spaces)")));
-	main_vbox->addWidget(script_file_filter_box);
-
-	main_vbox->addStretch ();
-}
-
-RKSettingsModuleCommandEditor::~RKSettingsModuleCommandEditor () {
+RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor(QObject *parent) : RKSettingsModule(parent) {
 	RK_TRACE (SETTINGS);
 }
 
-QString RKSettingsModuleCommandEditor::caption() const {
+RKSettingsModuleCommandEditor::~RKSettingsModuleCommandEditor() {
+	RK_TRACE (SETTINGS);
+}
+
+class RKSettingsPageCommandEditor : public RKSettingsModuleWidget {
+public:
+	RKSettingsPageCommandEditor(QWidget* parent, RKSettingsModuleCommandEditor *parent_module) : 
+		RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleCommandEditor::page_id)
+	{
+		setWindowTitle(i18n("Script editor"));
+		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowCommandEditor));
+
+		QVBoxLayout* main_vbox = new QVBoxLayout(this);
+		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Settings marked with (*) do not take effect until you restart RKWard")));
+		main_vbox->addSpacing(2 * RKStyle::spacingHint());
+
+		main_vbox->addWidget(completion_settings_widget = new RKCodeCompletionSettingsWidget(this, parent_module, &parent_module->completion_settings, true));
+
+		main_vbox->addSpacing(2 * RKStyle::spacingHint());
+
+		QGroupBox *group = autosave_enabled_box = new QGroupBox(i18n("Autosaves"), this);
+		autosave_enabled_box->setCheckable(true);
+		autosave_enabled_box->setChecked(RKSettingsModuleCommandEditor::autosave_enabled);
+		connect(autosave_enabled_box, &QGroupBox::toggled, this, &RKSettingsPageCommandEditor::change);
+		QFormLayout *form_layout = new QFormLayout(group);
+
+		form_layout->addRow(i18n("Autosave interval (minutes)"), RKSettingsModuleCommandEditor::autosave_interval.makeSpinBox(1, INT_MAX, this));
+
+		form_layout->addRow(RKSettingsModuleCommandEditor::autosave_keep.makeCheckbox(i18n("Keep autosave file after manual save"), this));
+
+		main_vbox->addWidget(group);
+
+		main_vbox->addSpacing(2 * RKStyle::spacingHint ());
+
+		script_file_filter_box = new QLineEdit();
+		script_file_filter_box->setText(RKSettingsModuleCommandEditor::script_file_filter);
+		RKCommonFunctions::setTips(i18n("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box);
+		connect(script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsPageCommandEditor::change);
+		main_vbox->addWidget(new QLabel(i18n("R script file filters (separated by spaces)")));
+		main_vbox->addWidget(script_file_filter_box);
+
+		main_vbox->addStretch();
+	}
+	void applyChanges() {
+		RK_TRACE(SETTINGS);
+
+		completion_settings_widget->applyChanges();
+		RKSettingsModuleCommandEditor::autosave_enabled = autosave_enabled_box->isChecked();
+		RKSettingsModuleCommandEditor::script_file_filter = script_file_filter_box->text();
+	}
+private:
+	RKCodeCompletionSettingsWidget *completion_settings_widget;
+	QGroupBox* autosave_enabled_box;
+	QLineEdit* script_file_filter_box;
+};
+
+class RKTextEditorConfigPageWrapper : public RKSettingsModuleWidget {
+public:
+	RKTextEditorConfigPageWrapper(QWidget* parent, RKSettingsModule *parent_module, KTextEditor::ConfigPage* wrapped) :
+		RKSettingsModuleWidget(parent, parent_module, QLatin1String(("kate_" + wrapped->name()).toLatin1()), RKSettingsModuleCommandEditor::page_id),
+		page(wrapped)
+	{
+		RK_TRACE(SETTINGS);
+		setWindowTitle(page->name());
+		setWindowIcon(page->icon());
+		
+		auto vbox = new QVBoxLayout(this);
+		vbox->setContentsMargins(0,0,0,0);
+		vbox->addWidget(wrapped);
+		connect(wrapped, &KTextEditor::ConfigPage::changed, this, &RKTextEditorConfigPageWrapper::change);
+	}
+	void applyChanges() override {
+		page->apply();
+	}
+	QString longCaption() const override {
+		return page->fullName();
+	}
+private:
+	KTextEditor::ConfigPage* page;
+};
+
+QList<RKSettingsModuleWidget*> RKSettingsModuleCommandEditor::createPages(QWidget *parent) {
 	RK_TRACE(SETTINGS);
-	return(i18n("Script editor"));
-}
-
-QIcon RKSettingsModuleCommandEditor::icon() const {
-	RK_TRACE(SETTINGS);
-	return RKStandardIcons::getIcon(RKStandardIcons::WindowCommandEditor);
-}
-
-void RKSettingsModuleCommandEditor::applyChanges () {
-	RK_TRACE (SETTINGS);
-
-	completion_settings_widget->applyChanges ();
-	autosave_enabled = autosave_enabled_box->isChecked ();
-	script_file_filter = script_file_filter_box->text ();
+	QList<RKSettingsModuleWidget*> ret;
+	ret.append(new RKSettingsPageCommandEditor(parent, this));
+	auto ed = KTextEditor::Editor::instance();
+	int n = ed->configPages();
+	for (int i = 0; i < n; ++i) {
+		ret.append(new RKTextEditorConfigPageWrapper(parent, this, ed->configPage(i, parent)));
+	}
+	return ret;
 }
 
 QString completionTypeToConfigKey (int cat) {
@@ -203,46 +243,4 @@ bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &file
 		if (reg.match (filename).hasMatch()) return true;
 	}
 	return false;
-}
-
-
-QList<RKSettingsModuleKTextEditorConfigWrapper *> RKSettingsModuleCommandEditor::kateConfigPages(RKSettings* gui, QWidget* parent) {
-	RK_TRACE(SETTINGS);
-
-	QList<RKSettingsModuleKTextEditorConfigWrapper *> ret;
-	auto ed = KTextEditor::Editor::instance();
-	int n = ed->configPages();
-	for (int i = 0; i < n; ++i) {
-		ret.append(new RKSettingsModuleKTextEditorConfigWrapper(gui, parent, ed->configPage(i, parent)));
-	}
-	return ret;
-}
-
-
-RKSettingsModuleKTextEditorConfigWrapper::RKSettingsModuleKTextEditorConfigWrapper(RKSettings* gui, QWidget* parent, KTextEditor::ConfigPage* wrapped) : RKSettingsModule(gui, parent), page(wrapped) {
-	RK_TRACE(SETTINGS);
-	auto vbox = new QVBoxLayout(this);
-	vbox->setContentsMargins(0,0,0,0);
-	vbox->addWidget(wrapped);
-	connect(wrapped, &KTextEditor::ConfigPage::changed, this, &RKSettingsModuleKTextEditorConfigWrapper::change);
-}
-
-RKSettingsModuleKTextEditorConfigWrapper::~RKSettingsModuleKTextEditorConfigWrapper() {
-	RK_TRACE(SETTINGS);
-}
-
-void RKSettingsModuleKTextEditorConfigWrapper::applyChanges() {
-	page->apply();
-}
-
-QString RKSettingsModuleKTextEditorConfigWrapper::caption() const {
-	return page->name();
-}
-
-QString RKSettingsModuleKTextEditorConfigWrapper::longCaption() const {
-	return page->fullName();
-}
-
-QIcon RKSettingsModuleKTextEditorConfigWrapper::icon() const {
-	return page->icon();
 }

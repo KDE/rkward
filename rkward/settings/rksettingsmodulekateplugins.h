@@ -18,21 +18,16 @@ class QTreeWidget;
 */
 class RKSettingsModuleKatePlugins : public RKSettingsModule {
 public:
-	RKSettingsModuleKatePlugins(RKSettings *gui, QWidget *parent);
+	RKSettingsModuleKatePlugins(QObject *parent);
 	~RKSettingsModuleKatePlugins();
 
-	void applyChanges() override;
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive(QList<RKSetupWizardItem*>*) {};
-
-	QString caption() const override;
-	QIcon icon() const override;
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("kateplugins");
 
 	static QStringList pluginsToLoad() { return plugins_to_load; };
 private:
-	QTreeWidget *plugin_table;
-
+friend class RKSettingsPageKatePlugins;
 	static RKConfigValue<QStringList> plugins_to_load;
 };
 

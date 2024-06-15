@@ -422,7 +422,22 @@ private Q_SLOTS:
 			QCOMPARE(RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::HelpWindow).size(), 0);
 		});
 		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
-		waitForAllFinished(5000);  // priority_command_done must remain in scope until done
+		waitForAllFinished(5000);
+	}
+
+	void SettingsTest() {
+		// Another very basic test. Essentially we check, whether the settings dialog can be created.
+		QVERIFY(!RKSettings::settings_dialog);
+		RKWorkplace::mainWorkplace()->openAnyUrl(QUrl("rkward://settings/plugins"));
+		auto dialog = RKSettings::settings_dialog;
+		QVERIFY(dialog);
+
+		RKWorkplace::mainWorkplace()->openAnyUrl(QUrl("rkward://settings/graphics"));
+		QVERIFY(dialog == RKSettings::settings_dialog);  // shall be reused
+
+		dialog->close();
+		waitForAllFinished();
+		QVERIFY(!RKSettings::settings_dialog);
 	}
 
 	void ScriptWindowTest() {

@@ -415,7 +415,7 @@ void RKMDIWindow::setWindowStyleHint (const QString& hint) {
 	}
 }
 
-void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QUrl& _help_url, RKSettings::SettingsPage _settings_page) {
+void RKMDIWindow::setMetaInfo(const QString& _generic_window_name, const QUrl& _help_url, RKSettingsModule::PageId _settings_page) {
 	RK_TRACE (APP);
 
 	// only meant to be called once
@@ -428,7 +428,7 @@ void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QUrl& 
 		QAction *action = standardActionCollection()->addAction("window_help", this, &RKMDIWindow::showWindowHelp);
 		action->setText (i18n ("Help on %1", generic_window_name));
 	}
-	if (settings_page != RKSettings::NoPage) {
+	if (settings_page != RKSettingsModule::no_page_id) {
 		QAction *action = standardActionCollection()->addAction("window_configure", this, &RKMDIWindow::showWindowSettings);
 		action->setText (i18n ("Configure %1", generic_window_name));
 	}
@@ -444,8 +444,8 @@ void RKMDIWindow::showWindowHelp () {
 void RKMDIWindow::showWindowSettings () {
 	RK_TRACE (APP);
 
-	RK_ASSERT (settings_page != RKSettings::NoPage);
-	RKSettings::configureSettings (settings_page, this);
+	RK_ASSERT(settings_page != RKSettingsModule::no_page_id);
+	RKSettings::configureSettings(settings_page, this);
 }
 
 void RKMDIWindow::addUiBuddy(KXMLGUIClient* buddy) {

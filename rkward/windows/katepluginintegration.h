@@ -49,7 +49,7 @@ friend class KatePluginIntegrationWindow;
 	bool closeDocuments(const QList<KTextEditor::Document *> &documents);
 	KTextEditor::Plugin *plugin(const QString &name);
 private:
-friend class RKSettingsModuleKatePlugins;
+friend class RKSettingsPageKatePlugins;
 	KatePluginIntegrationWindow *window;  // For now, only one main window
 	KTextEditor::Application *app;
 /** Provides a hidden dummy view (created on the fly as needed), for plugins that assume there is always at least one view/document around. */

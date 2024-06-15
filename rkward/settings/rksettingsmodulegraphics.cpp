@@ -39,139 +39,152 @@ RKConfigValue<RKSettingsModuleGraphics::DefaultDevice, int> RKSettingsModuleGrap
 RKConfigValue<QString> RKSettingsModuleGraphics::default_device_other {"default_device_custom", QString("Cairo")};
 RKConfigValue<RKSettingsModuleGraphics::StandardDevicesMode, int> RKSettingsModuleGraphics::replace_standard_devices {"replace_device", ReplaceDevice};
 
-RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
-	RK_TRACE (SETTINGS);
+class RKSettingsPageGraphics : public RKSettingsModuleWidget {
+public:
+	RKSettingsPageGraphics(QWidget *parent, RKSettingsModule* parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleGraphics::page_id) {
+		RK_TRACE(SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+		setWindowTitle(i18n("Onscreen Graphics"));
+		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowX11));
+		help_url = QUrl("rkward://page/rkward_plot_history#scd_settings");
 
-	QHBoxLayout *h_layout1 = new QHBoxLayout();
-	main_vbox->addLayout (h_layout1);
-	QGroupBox *group = new QGroupBox (i18n ("Default graphics device"), this);
-	default_device_group = new QButtonGroup (this);
-	QVBoxLayout* group_layout = new QVBoxLayout (group);
-	QRadioButton *button = new QRadioButton (i18n ("RKWard native device"), group);
-	default_device_group->addButton (button, (int) RKDevice);
-	group_layout->addWidget (button);
-	button = new QRadioButton (i18n ("Platform default device"), group);
-	default_device_group->addButton (button, (int) PlatformDevice);
-	group_layout->addWidget (button);
-	button = new QRadioButton (i18n ("Other device:"), group);
-	default_device_group->addButton (button, (int) OtherDevice);
-	QHBoxLayout *h_layout = new QHBoxLayout ();
-	group_layout->addLayout (h_layout);
-	h_layout->addWidget (button);
-	default_device_other_edit = new QLineEdit (default_device_other, group);
-	h_layout->addWidget (default_device_other_edit);
-	button = static_cast<QRadioButton*> (default_device_group->button ((int) default_device));
-	if (button) button->setChecked (true);
-	RKCommonFunctions::setTips (i18n ("<p>The default device to be used for plotting, i.e. when new plot is created, while no graphics device is active (see <i>options(\"device\")</i>).</p>"
-	                                  "<p>The RKWard native device is the recommended choice for most users. This corresponds to the R command <i>RK()</i>.</p>"
-	                                  "<p>The 'Platform default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or <i>quartz()</i>, depending on the platform.</p>"
-	                                  "<p>You can also specify the name of a function such as <i>Cairo</i>.</p>"), group);
-	connect (default_device_group, &QButtonGroup::idClicked, this, &RKSettingsModuleGraphics::boxChanged);
-	connect (default_device_other_edit, &QLineEdit::textChanged, this, &RKSettingsModuleGraphics::boxChanged);
-	h_layout1->addWidget (group);
+		QVBoxLayout *main_vbox = new QVBoxLayout(this);
 
-	group = new QGroupBox (i18n ("Integration of R standard devices"), this);
-	replace_standard_devices_group = new QButtonGroup (this);
-	group_layout = new QVBoxLayout (group);
-	button = new QRadioButton (i18n ("Replace with RKWard device"), group);
-	replace_standard_devices_group->addButton (button, (int) ReplaceDevice);
-	group_layout->addWidget (button);
-	button = new QRadioButton (i18n ("Embed original device"), group);
-	replace_standard_devices_group->addButton (button, (int) EmbedDevice);
-	group_layout->addWidget (button);
+		QHBoxLayout *h_layout1 = new QHBoxLayout();
+		main_vbox->addLayout(h_layout1);
+		QGroupBox *group = new QGroupBox(i18n("Default graphics device"), this);
+		default_device_group = new QButtonGroup(this);
+		QVBoxLayout* group_layout = new QVBoxLayout(group);
+		QRadioButton *button = new QRadioButton(i18n("RKWard native device"), group);
+		default_device_group->addButton(button, (int) RKSettingsModuleGraphics::RKDevice);
+		group_layout->addWidget(button);
+		button = new QRadioButton(i18n("Platform default device"), group);
+		default_device_group->addButton(button, (int) RKSettingsModuleGraphics::PlatformDevice);
+		group_layout->addWidget(button);
+		button = new QRadioButton(i18n("Other device:"), group);
+		default_device_group->addButton(button, (int) RKSettingsModuleGraphics::OtherDevice);
+		QHBoxLayout *h_layout = new QHBoxLayout();
+		group_layout->addLayout(h_layout);
+		h_layout->addWidget(button);
+		default_device_other_edit = new QLineEdit(RKSettingsModuleGraphics::default_device_other, group);
+		h_layout->addWidget(default_device_other_edit);
+		button = static_cast<QRadioButton*>(default_device_group->button((int) RKSettingsModuleGraphics::default_device));
+		if (button) button->setChecked(true);
+		RKCommonFunctions::setTips(i18n("<p>The default device to be used for plotting, i.e. when new plot is created, while no graphics device is active (see <i>options(\"device\")</i>).</p>"
+		                                "<p>The RKWard native device is the recommended choice for most users. This corresponds to the R command <i>RK()</i>.</p>"
+		                                "<p>The 'Platform default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or <i>quartz()</i>, depending on the platform.</p>"
+		                                "<p>You can also specify the name of a function such as <i>Cairo</i>.</p>"), group);
+		connect(default_device_group, &QButtonGroup::idClicked, this, &RKSettingsPageGraphics::boxChanged);
+		connect(default_device_other_edit, &QLineEdit::textChanged, this, &RKSettingsPageGraphics::boxChanged);
+		h_layout1->addWidget(group);
+
+		group = new QGroupBox(i18n("Integration of R standard devices"), this);
+		replace_standard_devices_group = new QButtonGroup(this);
+		group_layout = new QVBoxLayout(group);
+		button = new QRadioButton(i18n("Replace with RKWard device"), group);
+		replace_standard_devices_group->addButton(button, (int) RKSettingsModuleGraphics::ReplaceDevice);
+		group_layout->addWidget(button);
+		button = new QRadioButton(i18n("Embed original device"), group);
+		replace_standard_devices_group->addButton(button, (int) RKSettingsModuleGraphics::EmbedDevice);
+		group_layout->addWidget(button);
 #ifdef Q_OS_MACOS
-	button->setEnabled (false);
+		button->setEnabled(false);
 #endif
-	button = new QRadioButton (i18n ("No device integration"), group);
-	replace_standard_devices_group->addButton (button, (int) LeaveDevice);
-	group_layout->addWidget (button);
-	button = static_cast<QRadioButton*> (replace_standard_devices_group->button ((int) replace_standard_devices));
-	if (button) button->setChecked (true);
-	RKCommonFunctions::setTips (i18n ("<p>Many scripts use calls to platform specific standard devices (<i>X11()</i>, <i>windows()</i>, <i>quartz()</i>), although any on-screen device "
-	                                  "could be used at these places. RKWard provides overloads for these standard device functions, which can change their behavior when used in "
-	                                  "user code:</p>"
-	                                  "<ul><li>The calls can be re-directed to the RKWard native device (<i>RK()</i>). Some, but not all function arguments will be matched, others will "
-	                                  "be ignored.</li>"
-	                                  "<li>The original platform specific devices can be used, but embedded into RKWard windows. This option is not available on MacOS X.</li>"
-	                                  "<li>The original platform specific devices can be used unchanged, without the addition of RKWard specific features.</li></ul>"
-	                                  "<p>Regardless of this setting, the original devices are always accessible as <i>grDevices::X11()</i>, etc.</p>"
-	                                  "<p>Using a device on a platform where it is not defined (e.g. <i>Windows()</i> on Mac OS X) will always fall back to the <i>RK()</i> device.</p>"), group);
-	connect (replace_standard_devices_group, &QButtonGroup::idClicked, this, &RKSettingsModuleGraphics::boxChanged);
-	h_layout1->addWidget (group);
+		button = new QRadioButton(i18n("No device integration"), group);
+		replace_standard_devices_group->addButton(button, (int) RKSettingsModuleGraphics::LeaveDevice);
+		group_layout->addWidget(button);
+		button = static_cast<QRadioButton*>(replace_standard_devices_group->button((int) RKSettingsModuleGraphics::replace_standard_devices));
+		if (button) button->setChecked(true);
+		RKCommonFunctions::setTips(i18n("<p>Many scripts use calls to platform specific standard devices (<i>X11()</i>, <i>windows()</i>, <i>quartz()</i>), although any on-screen device "
+		                                "could be used at these places. RKWard provides overloads for these standard device functions, which can change their behavior when used in "
+		                                "user code:</p>"
+		                                "<ul><li>The calls can be re-directed to the RKWard native device (<i>RK()</i>). Some, but not all function arguments will be matched, others will "
+		                                "be ignored.</li>"
+		                                "<li>The original platform specific devices can be used, but embedded into RKWard windows. This option is not available on MacOS X.</li>"
+		                                "<li>The original platform specific devices can be used unchanged, without the addition of RKWard specific features.</li></ul>"
+		                                "<p>Regardless of this setting, the original devices are always accessible as <i>grDevices::X11()</i>, etc.</p>"
+		                                "<p>Using a device on a platform where it is not defined (e.g. <i>Windows()</i> on Mac OS X) will always fall back to the <i>RK()</i> device.</p>"), group);
+		connect(replace_standard_devices_group, &QButtonGroup::idClicked, this, &RKSettingsPageGraphics::boxChanged);
+		h_layout1->addWidget(group);
 
-	group = new QGroupBox(i18n("Default window size (for RK(), or embedded device windows)"));
-	group_layout = new QVBoxLayout(group);
-	group_layout->addWidget(new QLabel(i18n("Default width (inches):")));
-	group_layout->addWidget(graphics_width.makeSpinBox(1, 100.0, this));
-	group_layout->addSpacing(2*RKStyle::spacingHint());
-	group_layout->addWidget(new QLabel(i18n("Default height (inches)")));
-	group_layout->addWidget(graphics_height.makeSpinBox(1, 100.0, this));
-	main_vbox->addWidget (group);
+		group = new QGroupBox(i18n("Default window size (for RK(), or embedded device windows)"));
+		group_layout = new QVBoxLayout(group);
+		group_layout->addWidget(new QLabel(i18n("Default width (inches):")));
+		group_layout->addWidget(RKSettingsModuleGraphics::graphics_width.makeSpinBox(1, 100.0, this));
+		group_layout->addSpacing(2*RKStyle::spacingHint());
+		group_layout->addWidget(new QLabel(i18n("Default height (inches)")));
+		group_layout->addWidget(RKSettingsModuleGraphics::graphics_height.makeSpinBox(1, 100.0, this));
+		main_vbox->addWidget(group);
 
-	main_vbox->addWidget(options_kde_printing.makeCheckbox(i18n("Use KDE printer dialog for printing devices (if available)"), this));
+		main_vbox->addWidget(RKSettingsModuleGraphics::options_kde_printing.makeCheckbox(i18n("Use KDE printer dialog for printing devices (if available)"), this));
 
-	graphics_hist_box = new QGroupBox (i18n ("Screen device history"), this);
-	graphics_hist_box->setCheckable (true);
-	graphics_hist_box->setChecked (graphics_hist_enable);
-	group_layout = new QVBoxLayout (graphics_hist_box);
-	connect (graphics_hist_box, &QGroupBox::toggled, this, &RKSettingsModuleGraphics::boxChanged);
-	h_layout = new QHBoxLayout ();
-	group_layout->addLayout (h_layout);
-	h_layout->addWidget (new QLabel (i18n ("Maximum number of recorded plots:"), graphics_hist_box));
-	h_layout->addWidget (graphics_hist_max_length.makeSpinBox(1, 200, this));
-	h_layout = new QHBoxLayout ();
-	group_layout->addLayout (h_layout);
-	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
-	h_layout->addWidget (graphics_hist_max_plotsize.makeSpinBox(4, 50000, this));
-	main_vbox->addWidget (graphics_hist_box);
+		graphics_hist_box = new QGroupBox(i18n("Screen device history"), this);
+		graphics_hist_box->setCheckable(true);
+		graphics_hist_box->setChecked(RKSettingsModuleGraphics::graphics_hist_enable);
+		group_layout = new QVBoxLayout(graphics_hist_box);
+		connect(graphics_hist_box, &QGroupBox::toggled, this, &RKSettingsPageGraphics::boxChanged);
+		h_layout = new QHBoxLayout();
+		group_layout->addLayout(h_layout);
+		h_layout->addWidget(new QLabel(i18n("Maximum number of recorded plots:"), graphics_hist_box));
+		h_layout->addWidget(RKSettingsModuleGraphics::graphics_hist_max_length.makeSpinBox(1, 200, this));
+		h_layout = new QHBoxLayout();
+		group_layout->addLayout(h_layout);
+		h_layout->addWidget(new QLabel(i18n("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
+		h_layout->addWidget(RKSettingsModuleGraphics::graphics_hist_max_plotsize.makeSpinBox(4, 50000, this));
+		main_vbox->addWidget(graphics_hist_box);
 
-	main_vbox->addStretch ();
-	updateControls ();
+		main_vbox->addStretch();
+		updateControls();
+	}
+	~RKSettingsPageGraphics() {
+		RK_TRACE(SETTINGS);
+	}
+	void updateControls() {
+		RK_TRACE(SETTINGS);
+		default_device_other_edit->setEnabled(default_device_group->checkedId () == (int) RKSettingsModuleGraphics::OtherDevice);
+		QRadioButton *button = static_cast<QRadioButton*>(replace_standard_devices_group->button((int) RKSettingsModuleGraphics::ReplaceDevice));
+		if (button) button->setEnabled(default_device_group->checkedId() != RKSettingsModuleGraphics::PlatformDevice);
+	}
+
+	void boxChanged() {
+		RK_TRACE(SETTINGS);
+
+		updateControls();
+		change();
+	}
+
+	void applyChanges() {
+		RK_TRACE(SETTINGS);
+
+		RKSettingsModuleGraphics::default_device = (RKSettingsModuleGraphics::DefaultDevice) default_device_group->checkedId();
+		RKSettingsModuleGraphics::default_device_other = default_device_other_edit->text();
+		RKSettingsModuleGraphics::replace_standard_devices = (RKSettingsModuleGraphics::StandardDevicesMode) replace_standard_devices_group->checkedId();
+
+		RKSettingsModuleGraphics::graphics_hist_enable = graphics_hist_box->isChecked();
+
+		QStringList commands = RKSettingsModuleGraphics::makeRRunTimeOptionCommands();
+		for (QStringList::const_iterator it = commands.cbegin(); it != commands.cend(); ++it) {
+			RInterface::issueCommand(new RCommand(*it, RCommand::App), parent_module->commandChain());
+		}
+	}
+private:
+	QButtonGroup *default_device_group;
+	QLineEdit *default_device_other_edit;
+	QButtonGroup *replace_standard_devices_group;
+
+	QGroupBox *graphics_hist_box;
+};
+
+RKSettingsModuleGraphics::RKSettingsModuleGraphics(QObject *parent) : RKSettingsModule(parent) {
+	RK_TRACE (SETTINGS);
 }
 
 RKSettingsModuleGraphics::~RKSettingsModuleGraphics() {
 	RK_TRACE (SETTINGS);
 }
 
-void RKSettingsModuleGraphics::updateControls () {
-	RK_TRACE (SETTINGS);
-	default_device_other_edit->setEnabled (default_device_group->checkedId () == (int) OtherDevice);
-	QRadioButton *button = static_cast<QRadioButton*> (replace_standard_devices_group->button ((int) ReplaceDevice));
-	if (button) button->setEnabled (default_device_group->checkedId () != PlatformDevice);
-}
-
-void RKSettingsModuleGraphics::boxChanged () {
-	RK_TRACE (SETTINGS);
-
-	updateControls ();
-	change ();
-}
-
-QString RKSettingsModuleGraphics::caption() const {
-	RK_TRACE(SETTINGS);
-	return(i18n("Onscreen Graphics"));
-}
-
-QIcon RKSettingsModuleGraphics::icon() const {
-	RK_TRACE(SETTINGS);
-	return RKStandardIcons::getIcon(RKStandardIcons::WindowX11);
-}
-
-void RKSettingsModuleGraphics::applyChanges () {
-	RK_TRACE (SETTINGS);
-
-	default_device = (DefaultDevice) default_device_group->checkedId ();
-	default_device_other = default_device_other_edit->text ();
-	replace_standard_devices = (StandardDevicesMode) replace_standard_devices_group->checkedId ();
-
-	graphics_hist_enable = graphics_hist_box->isChecked ();
-
-	QStringList commands = makeRRunTimeOptionCommands ();
-	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-		RInterface::issueCommand(new RCommand(*it, RCommand::App), commandChain ());
-	}
+QList<RKSettingsModuleWidget*> RKSettingsModuleGraphics::createPages(QWidget *parent) {
+	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageGraphics(parent, this) };
 }
 
 void RKSettingsModuleGraphics::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {

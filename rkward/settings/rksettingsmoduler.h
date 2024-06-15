@@ -26,16 +26,12 @@ Configure the R-backend
 class RKSettingsModuleR : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleR (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleR ();
+	RKSettingsModuleR(QObject *parent);
+	~RKSettingsModuleR();
 
-	void applyChanges () override;
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-
-	QString caption() const override;
-	QIcon icon() const override;
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	static constexpr PageId page_id = QLatin1String("rbackend");
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -45,17 +41,8 @@ public:
 
 	static int getDefaultWidth () { return options_width; };
 	static QString userConfiguredRBinary() { return options_r_binary; };
-public Q_SLOTS:
-	void settingChanged ();
-private Q_SLOTS:
-	void addPaths (QStringList *string_list);
 private:
-	QLineEdit *outdec_input;
-	QComboBox *editor_input;
-	QComboBox *pager_input;
-	QTextEdit *further_input;
-	MultiStringSelector *addpaths_selector;
-
+friend class RKSettingsPageR;
 	static RKConfigValue<QString> options_outdec;
 	static RKConfigValue<int> options_width;
 	static RKConfigValue<int> options_warn;
@@ -89,13 +76,13 @@ Configure packages and library paths
 class RKSettingsModuleRPackages : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleRPackages ();
+	RKSettingsModuleRPackages(QObject *parent);
+	~RKSettingsModuleRPackages();
 
-	void applyChanges () override;
-	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
-	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
-	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*);
+	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
+	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void validateSettingsInteractive (QList<RKSetupWizardItem*>*) override;
+	static constexpr PageId page_id = QLatin1String("rpackages");
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -110,21 +97,10 @@ public:
 
 /** returns the list of packages which are essential to rkward. This is hard-coded. */
 	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
-
-	QString caption() const override;
-	QIcon icon() const override;
-public Q_SLOTS:
-	void settingChanged ();
-	void addLibLoc (QStringList *string_list);
-	void addRepository (QStringList *string_list);
-	void selectCRANMirror ();
 private:
 friend class RKLoadLibsDialog;
+friend class RKSettingsPageRPackages;
 	static QString libLocsCommand ();
-
-	MultiStringSelector *libloc_selector;
-	MultiStringSelector *repository_selector;
-	QLineEdit* cran_mirror_input;
 
 	static RKConfigValue<QString> cran_mirror_url;
 	static RKConfigValue<QStringList> liblocs;

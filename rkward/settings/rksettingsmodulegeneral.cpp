@@ -52,87 +52,118 @@ bool RKSettingsModuleGeneral::installation_moved = false;
 QString RKSettingsModuleGeneral::previous_rkward_data_dir;
 RKConfigValue<int> RKSettingsModuleGeneral::num_recent_files { "Max number of recent files", 8 };
 
-RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
+
+class RKSettingsPageGeneral : public RKSettingsModuleWidget {
+public:
+	RKSettingsPageGeneral(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleGeneral::page_id) {
+		RK_TRACE(SETTINGS);
+
+		setWindowTitle(i18n("General"));
+		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
+
+		QVBoxLayout *main_vbox = new QVBoxLayout(this);
+		files_choser = new GetFileNameWidget(this, GetFileNameWidget::ExistingDirectory, true, i18n("Directory where rkward may store files (setting takes effect after restarting RKWard)"), QString(), RKSettingsModuleGeneral::new_files_path);
+		connect(files_choser, &GetFileNameWidget::locationChanged, this, &RKSettingsPageGeneral::change);
+		main_vbox->addWidget(files_choser);
+
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
+
+		auto group = new QGroupBox(i18n("Startup behavior"));
+		auto vbox = new QVBoxLayout(group);
+		vbox->addWidget(RKSettingsModuleGeneral::autorestore_from_wd.makeCheckbox(i18n("Load .RData-file from startup directory, if available (R option '--restore')"), this));
+		vbox->addWidget(RKSettingsModuleGeneral::show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
+
+		QGroupBox* group_box = new QGroupBox(i18n("Initial working directory"), this);
+		QHBoxLayout *hlayout = new QHBoxLayout(group_box);
+		auto initial_dir_chooser = RKSettingsModuleGeneral::initial_dir.makeDropDown(RKConfigBase::LabelList({
+			{RKSettingsModuleGeneral::CurrentDirectory, i18n("Do not change current directory on startup")},
+			{RKSettingsModuleGeneral::RKWardDirectory, i18n("RKWard files directory (as specified, above)")},
+			{RKSettingsModuleGeneral::UserHomeDirectory, i18n("User home directory")},
+			{RKSettingsModuleGeneral::LastUsedDirectory, i18n("Last used directory")},
+			{RKSettingsModuleGeneral::CustomDirectory, i18n("The following directory (please specify):")}
+		}), this);
+		hlayout->addWidget(initial_dir_chooser);
+		initial_dir_custom_chooser = new GetFileNameWidget(group_box, GetFileNameWidget::ExistingDirectory, true, QString(), i18n ("Initial working directory"), RKSettingsModuleGeneral::initial_dir_specification);
+		initial_dir_custom_chooser->setEnabled(RKSettingsModuleGeneral::initial_dir == RKSettingsModuleGeneral::CustomDirectory);
+		connect(initial_dir_custom_chooser, &GetFileNameWidget::locationChanged, this, &RKSettingsPageGeneral::change);
+		connect(initial_dir_chooser, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [initial_dir_chooser, this]() { this->initial_dir_custom_chooser->setEnabled(initial_dir_chooser->currentData()==RKSettingsModuleGeneral::CustomDirectory); });
+		hlayout->addWidget(initial_dir_custom_chooser);
+		RKCommonFunctions::setTips(i18n("<p>The initial working directory to use. Note that if you are loading a workspace on startup, and you have configured RKWard to change to the directory of loaded workspaces, that directory will take precedence.</p>"), group_box, initial_dir_chooser, initial_dir_custom_chooser);
+		vbox->addWidget(group_box);
+		main_vbox->addWidget(group);
+
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
+
+		auto num_recent_files_box = RKSettingsModuleGeneral::num_recent_files.makeSpinBox(1, INT_MAX, this);
+		RKCommonFunctions::setTips(i18n("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart(), num_recent_files_box, num_recent_files_box);
+		vbox->addWidget(new QLabel(i18n("Maximum number of recently used files to remember per category")));
+		vbox->addWidget(num_recent_files_box);
+
+		main_vbox->addSpacing(2*RKStyle::spacingHint ());
+
+		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("The workplace layout (i.e. which script-, data-, help-windows are open) may be saved (and loaded) per R workspace, or independent of the R workspace. Which do you prefer?")));
+
+		workplace_save_chooser = new QButtonGroup(this);
+		group_box = new QGroupBox(this);
+		QVBoxLayout *group_layout = new QVBoxLayout(group_box);
+
+		QAbstractButton* button;
+		button = new QRadioButton(i18n("Save/restore with R workspace, when saving/loading R workspace"), group_box);
+		group_layout->addWidget(button);
+		workplace_save_chooser->addButton(button, RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace);
+		button = new QRadioButton(i18n("Save/restore independent of R workspace (save at end of RKWard session, restore at next start)"), group_box);
+		group_layout->addWidget(button);
+		workplace_save_chooser->addButton(button, RKSettingsModuleGeneral::SaveWorkplaceWithSession);
+		button = new QRadioButton(i18n("Do not save/restore workplace layout"), group_box);
+		group_layout->addWidget(button);
+		workplace_save_chooser->addButton(button, RKSettingsModuleGeneral::DontSaveWorkplace);	
+		if ((button = workplace_save_chooser->button(RKSettingsModuleGeneral::workplace_save_mode))) button->setChecked(true);
+		connect(workplace_save_chooser, &QButtonGroup::idClicked, this, &RKSettingsPageGeneral::change);
+		main_vbox->addWidget(group_box);
+
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
+
+		main_vbox->addWidget(RKSettingsModuleGeneral::cd_to_workspace_dir_on_load.makeCheckbox(i18n("When loading a workspace, change to the corresponding directory."), this));
+
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
+
+		main_vbox->addWidget(new QLabel(i18n("Warn when editing objects with more than this number of fields (0 for no limit):")));
+		main_vbox->addWidget(RKSettingsModuleGeneral::warn_size_object_edit.makeSpinBox(0, INT_MAX, this));
+
+		main_vbox->addSpacing(2*RKStyle::spacingHint());
+
+		main_vbox->addWidget(new QLabel(i18n("MDI window focus behavior"), this));
+		auto mdi_focus_policy_chooser = RKSettingsModuleGeneral::mdi_focus_policy.makeDropDown(RKConfigBase::LabelList({
+			{RKSettingsModuleGeneral::RKMDIClickFocus, i18n("Click to focus")},
+			{RKSettingsModuleGeneral::RKMDIFocusFollowsMouse, i18n("Focus follows mouse")}
+	}	), this);
+		main_vbox->addWidget(mdi_focus_policy_chooser);
+
+		main_vbox->addStretch();
+	}
+	~RKSettingsPageGeneral() {};
+	void applyChanges() override {
+		RK_TRACE (SETTINGS);
+		RKSettingsModuleGeneral::new_files_path = files_choser->getLocation();
+		RKSettingsModuleGeneral::workplace_save_mode = static_cast<RKSettingsModuleGeneral::WorkplaceSaveMode>(workplace_save_chooser->checkedId());
+		RKSettingsModuleGeneral::initial_dir_specification = initial_dir_custom_chooser->getLocation();
+	}
+private:
+	GetFileNameWidget *files_choser;
+	QButtonGroup *workplace_save_chooser;
+	GetFileNameWidget *initial_dir_custom_chooser;
+};
+
+RKSettingsModuleGeneral::RKSettingsModuleGeneral(QObject *parent) : RKSettingsModule(parent) {
 	RK_TRACE (SETTINGS);
-
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
-	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, true, i18n ("Directory where rkward may store files (setting takes effect after restarting RKWard)"), QString (), new_files_path);
-	connect (files_choser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::change);
-	main_vbox->addWidget (files_choser);
-
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
-
-	auto group = new QGroupBox(i18n("Startup behavior"));
-	auto vbox = new QVBoxLayout(group);
-	vbox->addWidget(autorestore_from_wd.makeCheckbox(i18n("Load .RData-file from startup directory, if available (R option '--restore')"), this));
-	vbox->addWidget(show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
-
-	QGroupBox* group_box = new QGroupBox (i18n ("Initial working directory"), this);
-	QHBoxLayout *hlayout = new QHBoxLayout (group_box);
-	auto initial_dir_chooser = initial_dir.makeDropDown(RKConfigBase::LabelList(
-		{{CurrentDirectory, i18n("Do not change current directory on startup")}, {RKWardDirectory, i18n("RKWard files directory (as specified, above)")}, {UserHomeDirectory, i18n("User home directory")}, {LastUsedDirectory, i18n("Last used directory")}, {CustomDirectory, i18n("The following directory (please specify):")}}
-	), this);
-	hlayout->addWidget (initial_dir_chooser);
-	initial_dir_custom_chooser = new GetFileNameWidget (group_box, GetFileNameWidget::ExistingDirectory, true, QString(), i18n ("Initial working directory"), initial_dir_specification);
-	initial_dir_custom_chooser->setEnabled (initial_dir == CustomDirectory);
-	connect (initial_dir_custom_chooser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::change);
-	connect(initial_dir_chooser, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [initial_dir_chooser, this]() { this->initial_dir_custom_chooser->setEnabled(initial_dir_chooser->currentData()==CustomDirectory); });
-	hlayout->addWidget (initial_dir_custom_chooser);
-	RKCommonFunctions::setTips (i18n ("<p>The initial working directory to use. Note that if you are loading a workspace on startup, and you have configured RKWard to change to the directory of loaded workspaces, that directory will take precedence.</p>"), group_box, initial_dir_chooser, initial_dir_custom_chooser);
-	vbox->addWidget (group_box);
-	main_vbox->addWidget(group);
-
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
-
-	auto num_recent_files_box = num_recent_files.makeSpinBox(1, INT_MAX, this);
-	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, num_recent_files_box);
-	vbox->addWidget(new QLabel(i18n("Maximum number of recently used files to remember per category")));
-	vbox->addWidget(num_recent_files_box);
-
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
-
-	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The workplace layout (i.e. which script-, data-, help-windows are open) may be saved (and loaded) per R workspace, or independent of the R workspace. Which do you prefer?")));
-
-	workplace_save_chooser = new QButtonGroup (this);
-	group_box = new QGroupBox (this);
-	QVBoxLayout *group_layout = new QVBoxLayout(group_box);
-
-	QAbstractButton* button;
-	button = new QRadioButton (i18n ("Save/restore with R workspace, when saving/loading R workspace"), group_box);
-	group_layout->addWidget (button);
-	workplace_save_chooser->addButton (button, SaveWorkplaceWithWorkspace);
-	button = new QRadioButton (i18n ("Save/restore independent of R workspace (save at end of RKWard session, restore at next start)"), group_box);
-	group_layout->addWidget (button);
-	workplace_save_chooser->addButton (button, SaveWorkplaceWithSession);
-	button = new QRadioButton (i18n ("Do not save/restore workplace layout"), group_box);
-	group_layout->addWidget (button);
-	workplace_save_chooser->addButton (button, DontSaveWorkplace);	
-	if ((button = workplace_save_chooser->button (workplace_save_mode))) button->setChecked (true);
-	connect (workplace_save_chooser, &QButtonGroup::idClicked, this, &RKSettingsModuleGeneral::change);
-	main_vbox->addWidget (group_box);
-
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
-
-	main_vbox->addWidget(cd_to_workspace_dir_on_load.makeCheckbox(i18n("When loading a workspace, change to the corresponding directory."), this));
-
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
-
-	main_vbox->addWidget (new QLabel(i18n("Warn when editing objects with more than this number of fields (0 for no limit):")));
-	main_vbox->addWidget (warn_size_object_edit.makeSpinBox(0, INT_MAX, this));
-
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
-
-	main_vbox->addWidget(new QLabel(i18n("MDI window focus behavior"), this));
-	auto mdi_focus_policy_chooser = mdi_focus_policy.makeDropDown(RKConfigBase::LabelList(
-		{{RKMDIClickFocus, i18n("Click to focus")}, {RKMDIFocusFollowsMouse, i18n("Focus follows mouse")}}
-	), this);
-	main_vbox->addWidget(mdi_focus_policy_chooser);
-
-	main_vbox->addStretch ();
 }
 
 RKSettingsModuleGeneral::~RKSettingsModuleGeneral() {
 	RK_TRACE (SETTINGS);
+}
+
+QList<RKSettingsModuleWidget*> RKSettingsModuleGeneral::createPages(QWidget *parent) {
+	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageGeneral(parent, this) };
 }
 
 QString RKSettingsModuleGeneral::initialWorkingDirectory () {
@@ -140,23 +171,6 @@ QString RKSettingsModuleGeneral::initialWorkingDirectory () {
 	if (initial_dir == RKWardDirectory) return filesPath ();
 	if (initial_dir == UserHomeDirectory) return QDir::homePath ();
 	return initial_dir_specification;
-}
-
-QString RKSettingsModuleGeneral::caption() const {
-	RK_TRACE(SETTINGS);
-	return(i18n("General"));
-}
-
-QIcon RKSettingsModuleGeneral::icon() const {
-	RK_TRACE(SETTINGS);
-	return RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon);
-}
-
-void RKSettingsModuleGeneral::applyChanges () {
-	RK_TRACE (SETTINGS);
-	new_files_path = files_choser->getLocation ();
-	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->checkedId ());
-	initial_dir_specification = initial_dir_custom_chooser->getLocation ();
 }
 
 void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
