@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-06-12 06:04+0200\n"
+"PO-Revision-Date: 2024-06-16 07:09+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -480,6 +480,8 @@ msgid ""
 "Whether the first row of the file contains should be interpreted as column "
 "names"
 msgstr ""
+"უნდა იყოს თუ არა პირველი მწკრივი, რომელსაც ფაილი შეიცავს, აღქმული, როგორც "
+"სვეტის სახელები"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/import/import_csv.rkh:21
@@ -537,6 +539,8 @@ msgid ""
 "Show a preview of the imported data. At most the first 50 rows and columns "
 "will be shown."
 msgstr ""
+"შემოტანილი მონაცემების მინიატურის ჩვენება. ნაჩვენები იქნება მაქს. 50 მწკრივი "
+"და სვეტი."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Row names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:30
@@ -1532,6 +1536,7 @@ msgstr ""
 #, kde-format
 msgid "Convert '_' in Stata variable names to '.' in R names"
 msgstr ""
+"Stata-ის ცვლადის სახელებში არსებული '_'-ის R-ის სახელის '.'-ად გადაკეთება"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #: rkward/plugins/00saveload/import/import_xls.js:14
@@ -1555,7 +1560,7 @@ msgstr "Microsoft Exce-ის ცხრილის შემოტანა"
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:12
 #, kde-format
 msgid "Import a sheet of a Microsoft Excel file into a data frame."
-msgstr ""
+msgstr "Microsoft Excel-ის ფაილის ფურცლის შემოტანა მონაცემების ჩარჩოში."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <usage>
 #: rkward/plugins/00saveload/import/import_xls.rkh:12
@@ -1921,6 +1926,8 @@ msgid ""
 "WARNING: If the environment already exists, all objects inside it will be "
 "lost."
 msgstr ""
+"გაფრთხილება: თუ გარემო უკვე არსებობს, შიგნით მდებარე ყველა ობიექტი "
+"დაიკარგება."
 
 #. i18n: ectx: (Loaded from Source an R file)
 #: rkward/plugins/00saveload/import/source.js:27
@@ -2371,6 +2378,7 @@ msgstr "შეკუმშვის დონე. მაღალი მნი�
 #, kde-format
 msgid "For <i>xz</i> compression, only: Enable xz \"extreme\" compression."
 msgstr ""
+"მხოლოდ, <i>xz</i> შეკუმშვისთვის: xz-ის \"ექსტრემალური\" შეკუმშვის ჩართვა."
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="...">
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="...">
@@ -2602,7 +2610,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:42
 #, kde-format
 msgid "Use this value as the custom decimal point character."
-msgstr ""
+msgstr "ამ მნიშვნელობის გამოყენება მომხმარებლის წილადის სიმბოლოდ."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Field separator character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:45
@@ -2616,7 +2624,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:48
 #, kde-format
 msgid "Use this value as the custom field separator character."
-msgstr ""
+msgstr "ამ მნიშვნელობის გამოყენება მომხმარებლის ველის გამყოფ სიმბოლოდ."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Row names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:53

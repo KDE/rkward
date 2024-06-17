@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-05-10 16:20+0200\n"
+"PO-Revision-Date: 2024-06-10 11:35+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2047,6 +2047,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Questa pagina cercherà di coprire alcuni problemi comuni che potresti "
+"riscontrare durante l'utilizzo di RKward. Vedi anche <link href=\"https://"
+"rkward.kde.org/faq\">le domande frequenti in linea</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2083,12 +2086,13 @@ msgstr ""
 #, kde-format
 msgid "The R backend crashed or failed to start"
 msgstr ""
+"Il motore di R si è arrestato in modo anomalo o non è riuscito ad avviarsi"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Motore arrestato in modo anomalo"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2101,6 +2105,13 @@ msgid ""
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"A volte il motore di R potrebbe non avviarsi a causa di un problema di "
+"configurazione o d'installazione. Le cause più comuni sono percorsi "
+"modificati o un aggiornamento di R. Di solito, in questi casi, la finestra "
+"di configurazione viene visualizzata all'avvio di RKWard e ciò consente di "
+"selezionare un'installazione diversa di R. (Nota: ti verrà offerta una "
+"selezione delle installazioni trovate in percorsi comuni, ma puoi anche "
+"specificare manualmente un'installazione non rilevata.)"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2111,6 +2122,10 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"In molti casi, «basterà» selezionare una versione di R diversa da quella "
+"utilizzata in fase di compilazione. In caso di problemi, si consiglia "
+"comunque di utilizzare la stessa versione di R o una simile a quella "
+"disponibile durante la compilazione."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2121,18 +2136,24 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Puoi modificare manualmente il motore di R in qualsiasi momento, utilizzando "
+"Impostazioni->Verifica installazione. Assicurati di salvare i tuoi dati "
+"prima di cambiare il motore! È inoltre possibile utilizzare l'opzione della "
+"riga di comando --r-executable per avviare una sessione utilizzando "
+"un'installazione specifica di R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
 msgstr ""
+"Perché non dovrei utilizzare R integrato all'interno dell'AppImage di RKWard"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2145,6 +2166,13 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"AppImage include un'installazione di R per comodità, ma questa installazione "
+"non è e tecnicamente non può essere resa completamente funzionante. È "
+"importante sottolineare che generalmente non sarà possibile installare "
+"pacchetti di R (a parte quelli implementati esclusivamente in R). Inoltre, "
+"potresti riscontrare conflitti tra l'installazione di R all'interno di "
+"AppImage e i pacchetti di R installati a livello di sistema. Ciò potrebbe "
+"causare bug impercettibili e imprevisti."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33

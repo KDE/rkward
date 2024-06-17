@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-06-11 05:04+0200\n"
+"PO-Revision-Date: 2024-06-16 06:52+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3035,6 +3035,8 @@ msgstr ""
 msgid ""
 "Duplicate declaration of component id \"%1\" within pluginmap file \"%2\"."
 msgstr ""
+"გამეორებული აღწერა კომპონენტის ID-სთვის \"%1\" დამატებების რუკის ფაილში "
+"\"%2\"."
 
 #: rkward/plugin/rkcomponentmap.cpp:656
 #, kde-format
@@ -3751,7 +3753,7 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
 msgid "Expected connection token %1, but read connection token %2"
-msgstr ""
+msgstr "მოველოდი მიერთების კოდს %1, მაგრამ წავიკითხე მიერთების კოდი %2"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -5371,7 +5373,7 @@ msgstr "პეიჯერის ბრძანება"
 #: rkward/settings/rksettingsmoduler.cpp:146
 #, kde-format
 msgid "Further (option) commands to run in each session"
-msgstr ""
+msgstr "დამატებითი (არაავალდებულო) ბრძანებები, რომლებიც ყველა სესიაში გაეშვება"
 
 #: rkward/settings/rksettingsmoduler.cpp:156
 #, kde-format
@@ -5394,6 +5396,8 @@ msgid ""
 "Specify or select directory to add to the system file path of the running R "
 "session"
 msgstr ""
+"მიუთითეთ ან აირჩიეთ საქაღალდე გაშვებული R-ის სესიის სისტემური ფაილის ბილიკში "
+"დასამატებლად"
 
 #: rkward/settings/rksettingsmoduler.cpp:218
 #, kde-format
@@ -5405,6 +5409,8 @@ msgstr "დამატება"
 #, kde-format
 msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
+"CRAN-ის გადმოწერის სარკე (დატოვეთ ცარიელი, თუ გნებავთ, თითოეული სესიისთვის "
+"ცალ-ცალკე გკითხოთ):"
 
 #: rkward/settings/rksettingsmoduler.cpp:329
 #, kde-format
@@ -5457,6 +5463,7 @@ msgstr ""
 #, kde-format
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr ""
+"R-ის ბიბლიოთეკის მდებარეობები (სადაა დაყენებული ბიბლიოთეკები, ლოკალურად)"
 
 #: rkward/settings/rksettingsmoduler.cpp:366
 #, kde-format
@@ -5559,7 +5566,7 @@ msgstr "დატოვება"
 #: rkward/settings/rksettingsmoduler.cpp:603
 #, kde-format
 msgid "Keep this location (do not change anything)"
-msgstr ""
+msgstr "ამ მდებარეობის შენარჩუნება (არაფერი შეცვალო)"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:116
 #, kde-format
