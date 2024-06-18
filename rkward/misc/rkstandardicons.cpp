@@ -8,7 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkstandardicons.h"
 
 #include <QFileInfo>
-#include <BreezeIcons>
 
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
@@ -24,7 +23,6 @@ void RKStandardIcons::initIcons () {
 	RK_TRACE (APP);
 
 	RK_ASSERT (!instance);	// init only once
-	BreezeIcons::initIcons(); // install as fallback theme. Too many issues with missing icons, otherwise
 	instance = new RKStandardIcons ();
 	instance->doInitIcons ();
 }

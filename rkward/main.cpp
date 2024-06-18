@@ -52,6 +52,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifdef WITH_KCRASH
 #	include <KCrash>
 #endif
+#include <BreezeIcons>
 
 #include <QString>
 #include <QMutex>
@@ -145,6 +146,7 @@ int main (int argc, char *argv[]) {
 	scheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
 	scheme.setFlags(QWebEngineUrlScheme::LocalScheme|QWebEngineUrlScheme::LocalAccessAllowed);
 	QWebEngineUrlScheme::registerScheme(scheme);
+	BreezeIcons::initIcons(); // install as fallback theme. Too many issues with missing icons, otherwise
 	QApplication app(argc, argv);
 	KDSingleApplication app_singleton;
 #ifdef WITH_KCRASH
