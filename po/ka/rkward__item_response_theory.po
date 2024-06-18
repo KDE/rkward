@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-06-05 13:05+0200\n"
+"PO-Revision-Date: 2024-06-17 05:46+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1825,7 +1825,7 @@ msgstr "ობიექტების გამოყენება, მხო
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:32
 #, kde-format
 msgid "Split criterion for subject raw scores"
-msgstr ""
+msgstr "პირობის გაყოფა ობიექტის დაუმუშავებელი ქულებისთვის"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="Split criterion for subject raw scores"> <option label="...">
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <radio label="Split criterion for subject raw scores"> <option label="...">
@@ -1847,7 +1847,7 @@ msgstr "მნიშვნელობა"
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:39
 #, kde-format
 msgid "Use dichotomous vector to define groups"
-msgstr ""
+msgstr "დიქოტომიური ვექტორის გამოყენება ჯგუფების აღსაწერად"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <varslot label="...">
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <varslot label="...">
@@ -1925,19 +1925,19 @@ msgstr "პუნქტის პასუხები:"
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:23
 #, kde-format
 msgid "Must be a matrix or data.frame, including the items as columns."
-msgstr ""
+msgstr "უნდა იყოს მატრიცა, ან date.frame, ჩანაწერების სვეტების სახით ჩასმით."
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <spinbox label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:30
 #, kde-format
 msgid "Number of Bootstrap samples:"
-msgstr ""
+msgstr "ამოღებული სინჯების რაოდენობა:"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:31
 #, kde-format
 msgid "Compute standardized Cronbach's alpha"
-msgstr ""
+msgstr "სტანდარტიზებული კრონბახის ალფას გამოთვლა"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:32
@@ -1949,7 +1949,7 @@ msgstr "ნაკლული მნიშვნელობების გა�
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:33
 #, kde-format
 msgid "Compute Bootstrap confidence interval (CI)"
-msgstr ""
+msgstr "ამოღების ნდობის ინტერვალის (CI) გამოთვლა"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <spinbox label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:34
@@ -2003,13 +2003,13 @@ msgstr "შერჩევების რაოდენობა"
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:41
 #, no-c-format, kde-format
 msgid "Item-fit statistics (%1)"
-msgstr ""
+msgstr "ელემენტების შესაბამისობის სტატისტიკა (%1)"
 
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:45
 #, kde-format
 msgid "Alternative: Items do not fit the model"
-msgstr ""
+msgstr "ალტერნატიული: ჩანაწერები მოდელს არ ერგება"
 
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:46
@@ -2029,13 +2029,13 @@ msgstr "მონტე კარლოს შერჩევები:"
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:49
 #, kde-format
 msgid "Item-Fit Statistics and P-values:"
-msgstr ""
+msgstr "ელემენტების შესაბამისობის სტატისტიკა და P-მნიშვნელობები:"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:17
 #, kde-format
 msgid "Item-fit statistics for Rasch, LTM and 3PM"
-msgstr ""
+msgstr "ჩანაწერების შესაბამისობის სტატისტია რაშისთვის, LTM-სთვის და 3PM-სთვის"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <text>
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <text>
@@ -2061,7 +2061,7 @@ msgstr "კატეგორიების რაოდენობა"
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:34
 #, kde-format
 msgid "Summarize the ability estimates by"
-msgstr ""
+msgstr "დაახლოებითი შესაძლებელობების შეჯამების პირობა"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> [...] <dropdown label="Summarize the ability estimates by"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:35
@@ -2095,7 +2095,7 @@ msgstr "ხი-კვადრატის განაწილების დ
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:49
 #, kde-format
 msgid "Use Monte Carlo procedure to approximate distribution"
-msgstr ""
+msgstr "მონტე კარლოს პროცედურის გამოყენება დაახლოებითი განაწილებისთვის"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <spinbox label="...">
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <spinbox label="...">
@@ -2109,7 +2109,7 @@ msgstr "რეპლიკაციების რაოდენობა"
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:40
 #, no-c-format, kde-format
 msgid "Person-fit statistics (%1)"
-msgstr ""
+msgstr "პიროვნების შესაბამისობის სტატისტიკა (%1)"
 
 #. i18n: ectx: (Loaded from Person-fit statistics for Rasch, LTM and 3PM)
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:44
@@ -2123,7 +2123,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:20
 #, kde-format
 msgid "Person-fit statistics for Rasch, LTM and 3PM"
-msgstr ""
+msgstr "პიროვნების შესაბამისობის სტატისტია რაშისთვის, LTM-სთვის და 3PM-სთვის"
 
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <radio label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:29
@@ -2135,7 +2135,7 @@ msgstr "ალტერნატიული ჰიპოთეზა შეს�
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:30
 #, kde-format
 msgid "Inconsistent response pattern under the estimated model"
-msgstr ""
+msgstr "არამდგრადი პასუხის ნიმუში დაახლოების მოდელის ქვეშ"
 
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <radio label="Alternative hypothesis to test"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:31
@@ -2658,7 +2658,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:41
 #, kde-format
 msgid "Item information curve"
-msgstr ""
+msgstr "ჩანაწერის ინფორმაციის მრუდი"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="...">
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <frame label="...">
@@ -2706,7 +2706,7 @@ msgstr "ჩანაწერების სია (ყველას და�
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:53
 #, kde-format
 msgid "Range of latent variable values"
-msgstr ""
+msgstr "ლატენტური ცვლადის მნიშვნელობების შუალედი"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Range of person parameters"> <spinbox label="...">
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
