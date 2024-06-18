@@ -698,6 +698,9 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 	} else if (call == "showHTML") {
 		RK_ASSERT(arglist.size() == 1);
 		RKWorkplace::mainWorkplace()->openHelpWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath (), QUrl::AssumeLocalFile));
+	} else if (call == "showPDF") {
+		RK_ASSERT(arglist.size() == 1);
+		RKWorkplace::mainWorkplace()->openPDFWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath (), QUrl::AssumeLocalFile));
 	} else if (call == "select.list") {
 		QString title = arglist.value(0);
 		bool multiple = (arglist.value(1) == "multi");

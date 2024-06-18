@@ -133,6 +133,9 @@ public:
 /** Opens an HTML window / legacy output file
 @param url Ouput file to load. */
 	RKMDIWindow* openHTMLWindow(const QUrl &url);
+/** Opens a PDF viewer window
+@param url Ouput file to load. */
+	RKMDIWindow* openPDFWindow(const QUrl &url);
 
 	void newX11Window (QWindow* window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
@@ -201,7 +204,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Register a named area where to place MDI windows. For directing preview windows to a specific location. */
 	void registerNamedWindow (const QString& id, QObject *owner, QWidget* parent, RKMDIWindow *window=nullptr);
 /** Return the window in the specified named area (can be 0). */
-	RKMDIWindow *getNamedWindow (const QString& id);
+	template<typename T=RKMDIWindow> T* getNamedWindow (const QString& id);
 /** Make the next window to be created appear in a specific location (can be a named window). 
  *  @note It is the caller's responsibility to clear the override (by calling setWindowPlacementOverride ()) after the window in question has been created. */
 	void setWindowPlacementOverrides (const QString& placement=QString (), const QString& name=QString (), const QString& style=QString ());

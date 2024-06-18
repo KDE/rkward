@@ -16,7 +16,9 @@
 #' and \link{browseURL}, instead. These will call the respective RKWard functions
 #' by default, when run inside an RKWard session. (via \code{getOption("editor")},
 #' and \code{getOption("browser")}.
-#' 
+#'
+#' \code{rk.show.pdf} opens a PDF (or postscript) document in a viewer window inside RKWard.
+#'
 #' @param x an object to edit.
 #' @aliases rk.edit rk.edit.files rk.show.files rk.show.html
 #' @return All functions described on this page return \code{NULL},
@@ -95,4 +97,11 @@
 #' @rdname rk.edit
 "rk.show.html" <- function (url) {
 	.rk.call.async("showHTML", as.character(url));
+}
+
+#' @param url a URL to show.
+#' @export
+#' @rdname rk.edit
+"rk.show.pdf" <- function(url) {
+	.rk.call.async("showPDF", as.character(url));
 }

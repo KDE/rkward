@@ -1,3 +1,4 @@
+- Added: Ability to open PDF documents inside the RKWard window, and associated R function rk.show.pdf()
 - Fixed: Add breeze icons as a fallback on systems that use a different icon theme (fixes missing icons)
 - Added: Setup dialog includes setting to select a different R installation
 - Added: Command line option "--setup" to force (re-)initialization as if a new version of RKWard had been installed
