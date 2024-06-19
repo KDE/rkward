@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-04-16 06:31+0200\n"
+"PO-Revision-Date: 2024-06-18 06:18+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Gerogian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -550,7 +550,7 @@ msgstr ""
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:22
 #, kde-format
 msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
-msgstr ""
+msgstr "მიუთითეთ მომხმარებლის სახელი (მხოლოდ GitHub, GitLab და Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Repository")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:25
@@ -570,7 +570,7 @@ msgstr "შეიყვანეთ სრული URL რეპოზიტო
 msgid ""
 "If you want a certain commit, tag or branch for installation, define that "
 "here."
-msgstr ""
+msgstr "თუ გნებავთ კონკრეტული კომიტი, ჭდე ან ბრენჩი, ის აქ მიუთითეთ."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:34
@@ -578,7 +578,7 @@ msgstr ""
 msgid ""
 "If you want to install from a subdirectory of the repository, define that "
 "here."
-msgstr ""
+msgstr "თუ გნებავთ დაყენება რეპოზიტორიის ქვესაქაღალდიდან, ის აქ მიუთითეთ."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:38
@@ -587,6 +587,8 @@ msgid ""
 "To install from a private repository, set your personal access token (PAT, "
 "GitHub and GitLab only)."
 msgstr ""
+"თუ გნებავთ დაყენება კონფიდენციალური რეპოზიტორიიდან, დააყენეთ თქვენი პირადი "
+"წვდომის კოდი (მხოლოდ PAT, GitHub და GitLab)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:41
@@ -782,7 +784,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:18
 #, kde-format
 msgid "Select between grey and rainbow colors."
-msgstr ""
+msgstr "აირჩიეთ ნაცრისფერსა და ცისარტყელის ფერებს შორის."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Type")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:19

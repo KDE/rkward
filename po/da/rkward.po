@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-12 00:36+0000\n"
+"POT-Creation-Date: 2024-06-19 00:36+0000\n"
 "PO-Revision-Date: 2015-11-16 22:18+0100\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish\n"
@@ -1821,240 +1821,240 @@ msgstr ""
 msgid "No R packages to install"
 msgstr ""
 
-#: rkward/main.cpp:167
+#: rkward/main.cpp:169
 #, kde-format
 msgid "RKWard"
 msgstr "RKWard"
 
-#: rkward/main.cpp:167
+#: rkward/main.cpp:169
 #, kde-format
 msgid "Frontend to the R statistics language"
 msgstr "Brugerflade til R statistik sproget"
 
-#: rkward/main.cpp:167
+#: rkward/main.cpp:169
 #, kde-format
 msgid "(c) 2002 - 2022"
 msgstr ""
 
-#: rkward/main.cpp:168
+#: rkward/main.cpp:170
 #, kde-format
 msgid "Thomas Friedrichsmeier"
 msgstr ""
 
-#: rkward/main.cpp:168
+#: rkward/main.cpp:170
 #, kde-format
 msgid "Project leader / main developer"
 msgstr "Leder af projektet / hovedudvikler"
 
-#: rkward/main.cpp:169
+#: rkward/main.cpp:171
 #, kde-format
 msgid "Pierre Ecochard"
 msgstr ""
 
-#: rkward/main.cpp:169
+#: rkward/main.cpp:171
 #, kde-format
 msgid "C++ developer between 2004 and 2007"
 msgstr ""
 
-#: rkward/main.cpp:170
+#: rkward/main.cpp:172
 #, kde-format
 msgid "Prasenjit Kapat"
 msgstr ""
 
-#: rkward/main.cpp:170
+#: rkward/main.cpp:172
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
 msgstr ""
 
-#: rkward/main.cpp:171
+#: rkward/main.cpp:173
 #, kde-format
 msgid "Meik Michalke"
 msgstr ""
 
-#: rkward/main.cpp:171
+#: rkward/main.cpp:173
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
 msgstr ""
 
-#: rkward/main.cpp:172
+#: rkward/main.cpp:174
 #, kde-format
 msgid "Stefan Roediger"
 msgstr ""
 
-#: rkward/main.cpp:172
+#: rkward/main.cpp:174
 #, kde-format
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Mange plugins, forslag, marketing, oversættelser"
 
-#: rkward/main.cpp:173
+#: rkward/main.cpp:175
 #, kde-format
 msgid "Contributors in alphabetical order"
 msgstr "Bidragere i alfabetisk orden"
 
-#: rkward/main.cpp:174
+#: rkward/main.cpp:176
 #, kde-format
 msgid "Björn Balazs"
 msgstr ""
 
-#: rkward/main.cpp:174 rkward/main.cpp:176
+#: rkward/main.cpp:176 rkward/main.cpp:178
 #, kde-format
 msgid "Extensive usability feedback"
 msgstr ""
 
-#: rkward/main.cpp:175
+#: rkward/main.cpp:177
 #, kde-format
 msgid "Aaron Batty"
 msgstr ""
 
-#: rkward/main.cpp:175
+#: rkward/main.cpp:177
 #, kde-format
 msgid "Wealth of feedback, hardware donations"
 msgstr ""
 
-#: rkward/main.cpp:176
+#: rkward/main.cpp:178
 #, kde-format
 msgid "Jan Dittrich"
 msgstr ""
 
-#: rkward/main.cpp:177
+#: rkward/main.cpp:179
 #, kde-format
 msgid "Philippe Grosjean"
 msgstr ""
 
-#: rkward/main.cpp:177
+#: rkward/main.cpp:179
 #, kde-format
 msgid "Several helpful comments and discussions"
 msgstr "Flere hjælpsomme kommentarer og diskussioner"
 
-#: rkward/main.cpp:178
+#: rkward/main.cpp:180
 #, kde-format
 msgid "Adrien d'Hardemare"
 msgstr ""
 
-#: rkward/main.cpp:178
+#: rkward/main.cpp:180
 #, kde-format
 msgid "Plugins and patches"
 msgstr "Plugins og patches"
 
-#: rkward/main.cpp:179
+#: rkward/main.cpp:181
 #, kde-format
 msgid "Yves Jacolin"
 msgstr ""
 
-#: rkward/main.cpp:179
+#: rkward/main.cpp:181
 #, kde-format
 msgid "New website"
 msgstr "Ny hjemmeside"
 
-#: rkward/main.cpp:180
+#: rkward/main.cpp:182
 #, kde-format
 msgid "Germán Márquez Mejía"
 msgstr ""
 
-#: rkward/main.cpp:180
+#: rkward/main.cpp:182
 #, kde-format
 msgid "HP filter plugin, spanish translation"
 msgstr ""
 
-#: rkward/main.cpp:181
+#: rkward/main.cpp:183
 #, kde-format
 msgid "Marco Martin"
 msgstr ""
 
-#: rkward/main.cpp:181
+#: rkward/main.cpp:183
 #, kde-format
 msgid "A cool icon"
 msgstr "Et fedt ikon"
 
-#: rkward/main.cpp:182
+#: rkward/main.cpp:184
 #, kde-format
 msgid "Daniele Medri"
 msgstr ""
 
-#: rkward/main.cpp:182
+#: rkward/main.cpp:184
 #, kde-format
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "RKWard logo, mange forslag, hjælp med formuleringer"
 
-#: rkward/main.cpp:183
+#: rkward/main.cpp:185
 #, kde-format
 msgid "David Sibai"
 msgstr ""
 
-#: rkward/main.cpp:183
+#: rkward/main.cpp:185
 #, kde-format
 msgid "Several valuable comments, hints and patches"
 msgstr "Flere værdifulde kommentarer, tips og patches"
 
-#: rkward/main.cpp:184
+#: rkward/main.cpp:186
 #, kde-format
 msgid "Ilias Soumpasis"
 msgstr ""
 
-#: rkward/main.cpp:184
+#: rkward/main.cpp:186
 #, kde-format
 msgid "Translation, Suggestions, plugins"
 msgstr "Oversættelse, forslag, plugins"
 
-#: rkward/main.cpp:185
+#: rkward/main.cpp:187
 #, kde-format
 msgid "Ralf Tautenhahn"
 msgstr ""
 
-#: rkward/main.cpp:185
+#: rkward/main.cpp:187
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Mange kommentarer, hjælpsomme forslag og bugrapporter"
 
-#: rkward/main.cpp:186
+#: rkward/main.cpp:188
 #, kde-format
 msgid "Jannis Vajen"
 msgstr ""
 
-#: rkward/main.cpp:186
+#: rkward/main.cpp:188
 #, kde-format
 msgid "German Translation, bug reports"
 msgstr ""
 
-#: rkward/main.cpp:187
+#: rkward/main.cpp:189
 #, kde-format
 msgid "Roland Vollgraf"
 msgstr ""
 
-#: rkward/main.cpp:187
+#: rkward/main.cpp:189
 #, kde-format
 msgid "Some patches"
 msgstr "Nogle patches"
 
-#: rkward/main.cpp:188
+#: rkward/main.cpp:190
 #, kde-format
 msgid "Roy Qu"
 msgstr ""
 
-#: rkward/main.cpp:188
+#: rkward/main.cpp:190
 #, kde-format
 msgid "patches and helpful comments"
 msgstr ""
 
-#: rkward/main.cpp:189
+#: rkward/main.cpp:191
 #, fuzzy, kde-format
 #| msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgid "Many more people on rkward-devel@kde.org"
 msgstr "Mange flere på rkward-devel@lists.sourceforge.net"
 
-#: rkward/main.cpp:189
+#: rkward/main.cpp:191
 #, kde-format
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Undskyld hvis vi har glemt at sætte dig på listen. Venligst kontakt os for "
 "at blive tilføjet"
 
-#: rkward/main.cpp:190
+#: rkward/main.cpp:192
 #, kde-format
 msgid "How to cite:"
 msgstr ""
 
-#: rkward/main.cpp:190
+#: rkward/main.cpp:192
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
 msgstr ""
