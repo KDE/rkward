@@ -208,7 +208,7 @@ void RKFrontendTransmitter::run () {
 #endif
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../rbackend");	// for running directly from the build-test-dir
-	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../lib/libexec");
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/" + REL_PATH_TO_LIBEXEC); // as calculated from cmake
 #ifdef Q_OS_MACOS
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../Frameworks/libexec");  // For running from .dmg created by craft --package rkward
@@ -223,8 +223,7 @@ void RKFrontendTransmitter::run () {
 #if defined(RK_DLOPEN_LIBRSO)
 	/** NOTE: For a description of the rationale for this involved loading procedure rkapi.h ! */
 	QString backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath()); // for running directly from the build tree, but also covers windows
-	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + "/../lib"); // covers rkward in /usr[/local]/bin and lib in /usr/[/local]/lib
-	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath() + "/../lib"); // backend in /usr/lib/libexec and lib in /usr/lib-> regular install on Linux
+	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + "/" + REL_PATH_TO_LIB); // regular installation; rel path between bin and lib dir is calculated in cmake
 	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath()); // backend and lib both installed in libexec or similar
 #	if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);
