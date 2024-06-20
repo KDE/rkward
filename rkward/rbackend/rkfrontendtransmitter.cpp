@@ -224,7 +224,7 @@ void RKFrontendTransmitter::run () {
 	/** NOTE: For a description of the rationale for this involved loading procedure rkapi.h ! */
 	QString backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath()); // for running directly from the build tree, but also covers windows
 	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + "/../lib"); // covers rkward in /usr[/local]/bin and lib in /usr/[/local]/lib
-	                      // but also backend in /usr/lib/libexec and lib in /usr/lib-> regular install on Linux
+	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath() + "/../lib"); // backend in /usr/lib/libexec and lib in /usr/lib-> regular install on Linux
 	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath()); // backend and lib both installed in libexec or similar
 #	if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);
