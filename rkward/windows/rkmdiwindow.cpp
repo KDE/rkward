@@ -374,8 +374,13 @@ void RKMDIWindow::setStatusMessage(const QString& message, RCommand *command) {
 
 	if (command) connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
 	status_message = message;
-	// delay the actual show a bit. Often it's just a very brief "preview updating", that will just look like an annoying flicker
-	status_message_timer.start(250);
+	if (message.isEmpty()) {
+		status_message_timer.stop();
+		showStatusMessageNow();
+	} else {
+		// delay the actual show a bit. Often it's just a very brief "preview updating", that will just look like an annoying flicker
+		status_message_timer.start(500);
+	}
 }
 
 void RKMDIWindow::clearStatusMessage () {
