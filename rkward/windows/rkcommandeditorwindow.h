@@ -190,14 +190,6 @@ private:
 	QAction* action_no_preview;
 	QAction* action_preview_as_you_type;
 
-	enum PreviewMode {
-		NoPreview,
-		RMarkdownPreview,
-		RKOutputPreview,
-		GraphPreview,
-		ConsolePreview,
-	};
-
 	QAction* action_setwd_to_script;
 
 	QUrl previous_autosave_url;
@@ -208,6 +200,18 @@ private:
 
 	QString _id;
 	static QMap<QString, KTextEditor::Document*> unnamed_documents;
+
+	struct PreviewMode {
+		QIcon icon;
+		QString actionlabel;
+		QString previewlabel;
+		QString tooltip;
+		QString input_ext;
+		QString output_ext;
+		std::function<QString(const QString&, const QString&, const QString&)> command;
+	};
+	QList<PreviewMode> preview_mode_list;
+	void initPreviewModes();
 
 	RKXMLGUIPreviewArea *preview;
 	QTimer preview_timer;
