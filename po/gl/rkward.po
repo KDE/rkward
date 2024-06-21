@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-19 00:36+0000\n"
+"POT-Creation-Date: 2024-06-21 00:36+0000\n"
 "PO-Revision-Date: 2024-06-10 21:24+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -3751,14 +3751,14 @@ msgstr ""
 "Non foi posíbel atopar o executábel da infraestrutura. O máis probábel é que "
 "se trate dun problema da instalación."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:293
+#: rkward/rbackend/rkfrontendtransmitter.cpp:292
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Non foi posíbel iniciar o executábel da infraestrutura. A mensaxe de erro "
 "foi a seguinte: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:346
+#: rkward/rbackend/rkfrontendtransmitter.cpp:345
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3767,7 +3767,7 @@ msgstr ""
 "Erro durante o saúdo co proceso da infraestrutura. Esperábase «%1», pero "
 "recibiuse «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:349
+#: rkward/rbackend/rkfrontendtransmitter.cpp:348
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3779,21 +3779,21 @@ msgstr ""
 "«%2».\n"
 "Repare a instalación."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:383
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
 "Non foi posíbel iniciar o proceso da infraestrutura. Revise a instalación."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:384
+#: rkward/rbackend/rkfrontendtransmitter.cpp:383
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "O proceso da infraestrutura non puido iniciarse co código de saída %1 e a "
 "mensaxe «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:385
+#: rkward/rbackend/rkfrontendtransmitter.cpp:384
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""

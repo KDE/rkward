@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-19 00:36+0000\n"
+"POT-Creation-Date: 2024-06-21 00:36+0000\n"
 "PO-Revision-Date: 2024-06-10 07:15+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -3791,13 +3791,13 @@ msgstr ""
 "Не вдалося знайти виконуваний файл модуля. Ймовірно, це пов’язано із "
 "проблемами зі встановленими компонентами."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:293
+#: rkward/rbackend/rkfrontendtransmitter.cpp:292
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Не вдалося запустити виконуваний файл модуля. Повідомлення щодо помилки: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:346
+#: rkward/rbackend/rkfrontendtransmitter.cpp:345
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3806,7 +3806,7 @@ msgstr ""
 "Під час спроби встановлення зв’язку з процесом основного модуля сталася "
 "помилка. Мало бути отримано жетон «%1», отримано — «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:349
+#: rkward/rbackend/rkfrontendtransmitter.cpp:348
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3817,7 +3817,7 @@ msgstr ""
 "основного модуля. Оболонка має версію «%1», основний модуль — «%2».\n"
 "Будь ласка, виправте проблему зі встановленими компонентами."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:383
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3825,12 +3825,12 @@ msgstr ""
 "Не вдалося запустити процес модуля. Будь ласка, перевірте, чи встановлено "
 "усе належним чином."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:384
+#: rkward/rbackend/rkfrontendtransmitter.cpp:383
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Не вдалося запустити процес модуля. Код виходу %1, повідомлення: «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:385
+#: rkward/rbackend/rkfrontendtransmitter.cpp:384
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Процес модуля завершив роботу з кодом %1, повідомлення: «%2»."
