@@ -412,16 +412,18 @@ QString withCheckForPandoc(const QString &command, const QString &error_file) {
 		"<a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>."));
 	QString ret(
 		"if (!nzchar(Sys.which(\"pandoc\"))) {\n"
-		"	output <- rk.set.output.html.file(%1, silent=TRUE)\n"
-		"	rk.header(%3)\n"
-		"	rk.print(%4)\n"
-		"	rk.set.output.html.file(output, silent=TRUE)\n"
-		"	rk.show.html(%1)\n"
+		"	if(!file.exists(%1)) {\n"
+		"		output <- rk.set.output.html.file(%1, silent=TRUE)\n"
+		"		rk.header(%3)\n"
+		"		rk.print(%4)\n"
+		"		rk.set.output.html.file(output, silent=TRUE)\n"
+		"		rk.show.html(%1)\n"
+		"	}\n"
 		"} else {\n"
-		"%2\n"
+		"%2"
 		"}\n"
 	);
-	return ret.arg(error_file, command, header, message);
+	return ret.arg(RObject::rQuote(error_file), command, header, message);
 }
 
 void RKCommandEditorWindow::initPreviewModes() {
