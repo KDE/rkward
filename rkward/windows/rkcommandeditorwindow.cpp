@@ -429,13 +429,27 @@ QString withCheckForPandoc(const QString &command, const QString &error_file) {
 void RKCommandEditorWindow::initPreviewModes() {
 	RK_TRACE(COMMANDEDITOR);
 	preview_mode_list.append(PreviewMode{
-		QIcon::fromTheme("preview_math"), i18n("R Markdown"), i18n("Preview of rendered R Markdown"),
-		i18n("Preview the script as rendered from RMarkdown format (appropriate for .Rmd files)."),
+		QIcon::fromTheme("preview_math"), i18n("R Markdown (HTML)"), i18n("Preview of rendered R Markdown"),
+		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to HTML."),
 		QLatin1String(".Rmd"), QLatin1String(".html"),
 		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
 			auto command = QStringLiteral(
 				"	require(rmarkdown)\n"
-				"	rmarkdown::render (%1, output_format=\"html_document\", output_file=%2, quiet=TRUE)\n"
+				"	rmarkdown::render(%1, output_format=\"html_document\", output_file=%2, quiet=TRUE)\n"
+				"	rk.show.html(%2)\n"
+			).arg(RObject::rQuote(infile), RObject::rQuote(outfile));
+			return withCheckForPandoc(command, outfile + "._nopandoc_.html");
+		}
+	});
+	preview_mode_list.append(PreviewMode{
+		QIcon::fromTheme("preview_math"), i18n("R Markdown (PDF)"), i18n("Preview of rendered R Markdown"),
+		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to PDF."),
+		QLatin1String(".Rmd"), QLatin1String(".pdf"),
+		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
+			auto command = QStringLiteral(
+				"	require(rmarkdown)\n"
+				"	rmarkdown::render (%1, output_format=\"pdf_document\", output_file=%2, quiet=TRUE)\n"
+				"	rk.show.pdf(%2)\n"
 			).arg(RObject::rQuote(infile), RObject::rQuote(outfile));
 			return withCheckForPandoc(command, outfile + "._nopandoc_.html");
 		}
