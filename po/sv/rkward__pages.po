@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@gmail.com>, 2015, 2018, 2022.
+# SPDX-FileCopyrightText: 2015, 2018, 2022, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2022-08-03 09:22+0200\n"
+"PO-Revision-Date: 2024-06-21 08:11+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1311,15 +1311,7 @@ msgstr "Grafikgränssnittsversion stämmer inte"
 
 #. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
 #: rkward/pages/rkward_incompatible_version.rkh:17
-#, fuzzy, kde-format
-#| msgid ""
-#| "This is the most common kind of version incompatibility. The same advice "
-#| "applies as above, i.e. please install an updated version of RKWard. "
-#| "However, if no update appears to be immediately available, and you are "
-#| "desparate to continue working, set <link href=\"rkward://settings/graphics"
-#| "\">Settings->Onscreen Graphics</link>->\"Integration of R standard device"
-#| "\" to \"No integration\". Then you can use the vanille onscreen devices "
-#| "(X11() or Windows() or Quartz()), for plotting."
+#, kde-format
 msgid ""
 "This is the most common kind of version incompatibility. The same advice "
 "applies as above, i.e. please install an updated version of RKWard. However, "
@@ -1333,7 +1325,7 @@ msgstr ""
 "som ovan gäller (dvs. installera en uppdaterad version av RKWard). Om någon "
 "uppdatering dock inte verkar vara omedelbart tillgänglig, och du är "
 "fortsätta arbeta, ställ in <link href=\"rkward://settings/graphics"
-"\">Inställningar -> Grafik på bildskärmen</link> -> \"Integrering av R "
+"\">Inställningar -&gt; Grafik på bildskärmen</link> -&gt; \"Integrering av R "
 "standardenheter\" till \"Ingen integrering\". Sedan kan vanliga skärmenheter "
 "(X11(), Windows() eller Quartz()) användas för uppritning."
 
@@ -1526,19 +1518,7 @@ msgstr ""
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>Go to plot</b>: This provides a drop-down list of _all_ the plots "
-#| "stored in the history; giving an easily accessible \"jumping\" action. "
-#| "RKWard tries hard to identify the appropriate plot calls, but this is not "
-#| "always feasible. In such cases a further attempt is made to identify the "
-#| "<i>X label</i>, <i>Y label</i> and the <i>Main</i> titles of the plot and "
-#| "the displayed string looks like \"<b>X:</b> <i>xlab</i>; <b>Y:</b> "
-#| "<i>ylab</i>; <i>main</i>\". Sometimes even that is not possible "
-#| "(indicated by <b><Unknown></b>). Plots which are pending to be saved are "
-#| "indicated by <b><Unsaved plot></b>. The displayed strings are prepended "
-#| "with their corresponding position in the history. For the usual \"linear "
-#| "browsing\" see first / previous / next / last actions below."
+#, kde-format
 msgid ""
 "<b>Go to plot</b>: This provides a drop-down list of _all_ the plots stored "
 "in the history; giving an easily accessible \"jumping\" action. RKWard tries "
@@ -1559,10 +1539,10 @@ msgstr ""
 "identifiera diagrammets <i>x-beteckning</i>, <i>y-beteckning</i> och "
 "<i>huvudrubrik</i>. Den visade strängen ser ut som \"<b>X:</b> <i>x-"
 "beteckning</i>; <b>Y:</b> <i>y-beteckning</i>; <i>huvudrubrik</i>\". Ibland "
-"är inte ens det möjligt (anges av <b><Okänd></b>). Diagram som väntar på att "
-"sparas anges av <b><Osparat diagram></b>. De visade strängarna inleds med "
-"sin motsvarande position i historiken. För vanlig \"bläddra i ordning\", se "
-"åtgärderna första, föregående, nästa, och sista nedan."
+"är inte ens det möjligt (anges av <b>&lt;Okänd&gt;</b>). Diagram som väntar "
+"på att sparas anges av <b>&lt;Osparat diagram&gt;</b>. De visade strängarna "
+"inleds med sin motsvarande position i historiken. För vanlig \"bläddra i "
+"ordning\", se åtgärderna första, föregående, nästa, och sista nedan."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -2012,6 +1992,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Den här sidan försöker täcka några vanliga problem som du kan stöta på när "
+"du använder RKWard. Se även <link href=\"https://rkward.kde.org/faq"
+"\">Vanliga frågor på nätet</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2045,13 +2028,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "R-bakgrundsprogrammet kraschade eller kunde inte startas"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Kraschat bakgrundsprogram"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2064,6 +2047,12 @@ msgid ""
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"Ibland startas inte R-bakgrundsprogrammet på grund av ett inställnings- "
+"eller installationsproblem. Vanliga orsaker är ändrade sökvägar, eller en "
+"uppdatering av R. Vanligtvis visas inställningsdialogrutan när du startar "
+"RKWard i dessa fall, vilket gör det möjligt att välja en annan installation "
+"av R. (Obs: Du erbjuds ett urval av installationer som hittas med vanliga "
+"sökvägar, men du kan också ange en installation som inte upptäckts manuellt.)"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2074,6 +2063,10 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"I många fall kommer det \"bara fungera\" att välja en annan version av R än "
+"den som använts vid kompileringstillfället. Skulle du stöta på problem "
+"rekommenderas det dock att använda samma, eller en liknande version av R som "
+"var tillgänglig under kompileringen."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2084,18 +2077,23 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Du kan ändra R-bakgrundsprogrammet manuellt när som helst genom att använda "
+"Inställningar->Kontrollera installationen. Försäkra dig om att data har "
+"sparats innan du byter bakgrundsprogram. Du kan också använda "
+"kommandoradsalternativet --r-executable för att starta en session med en "
+"specifik installation av R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
-msgstr ""
+msgstr "Varför ska jag inte använda R som medföljer i RKWard AppImage?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2108,6 +2106,12 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"AppImage inkluderar en installation av R för enkelhetens skull, men "
+"installationen är inte, och kan tekniskt sett inte göras, fullt fungerande. "
+"Viktigt är att man i allmänhet inte kan installera R-paket (andra än de som "
+"implementeras enbart i R). Du kan också stöta på konflikter mellan R-"
+"installationen i AppImage och R-paket som är installerade på systemet. Det "
+"kan orsaka subtila och överraskande fel."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -2460,29 +2464,23 @@ msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "‎<link href=\"rkward://settings/addons\">Further add-on related settings "
-#| "(e.g., git/project integration)‎</link>"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)</link>&lrm;"
 msgstr ""
-"<link href=\"rkward://settings/addons\">Ytterligare tilläggsrelaterade "
-"inställningar (t.ex. git/project integration)</link>"
+"&lrm;<link href=\"rkward://settings/addons\">Ytterligare tilläggsrelaterade "
+"inställningar (t.ex. git/project integration)</link>&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "‎<link href=\"rkward://settings/general\">Startup options</link> "
-#| "(including this page)‎"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
 "(including this page)&lrm;"
 msgstr ""
-"<link href=\"rkward://settings/general\">Startalternativ</link> (inklusive "
-"den här sidan)"
+"&lrm;<link href=\"rkward://settings/general\">Startalternativ</link> "
+"(inklusive den här sidan)&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31

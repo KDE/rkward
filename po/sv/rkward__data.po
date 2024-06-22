@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@gmail.com>, 2015, 2016.
+# SPDX-FileCopyrightText: 2015, 2016, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2016-02-07 09:00+0100\n"
+"PO-Revision-Date: 2024-06-21 07:52+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -739,16 +739,13 @@ msgstr ""
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
 #: rkward/plugins/data/subset_dataframe.rkh:42
-#, fuzzy, kde-format
-#| msgid ""
-#| "Whether the minimum value is contained in the range to check against (i."
-#| "e. compare 'larger or equal (>=)')."
+#, kde-format
 msgid ""
 "Whether the minimum value is contained in the range to check against (i.e. "
 "compare 'larger or equal (&gt;=)')."
 msgstr ""
 "Om det minimala värdet ingår i intervallet som ska kontrolleras (dvs. jämför "
-"'större än eller lika med, >=')."
+"'större än eller lika med, ≥')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Maximum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:45
@@ -758,25 +755,17 @@ msgstr "Se ovan. Maximalt värde."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (<=)")
 #: rkward/plugins/data/subset_dataframe.rkh:48
-#, fuzzy, kde-format
-#| msgid ""
-#| "Whether the maximum value is contained in the range to check against (i."
-#| "e. compare 'smaller or equal (<=)')."
+#, kde-format
 msgid ""
 "Whether the maximum value is contained in the range to check against (i.e. "
 "compare 'smaller or equal (&lt;=)')."
 msgstr ""
 "Om det maximala värdet ingår i intervallet som ska kontrolleras (dvs. jämför "
-"'mindre än eller lika med, <=')."
+"'mindre än eller lika med, ≤')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:52
-#, fuzzy, kde-format
-#| msgid ""
-#| "You can also filter rows / cases by a custom R expression. If using this "
-#| "in combination with filtering by a column (see above), both conditions "
-#| "are combined by logical 'and' (&). Leave empty, if you do not want to "
-#| "filter on a custom expression."
+#, kde-format
 msgid ""
 "You can also filter rows / cases by a custom R expression. If using this in "
 "combination with filtering by a column (see above), both conditions are "
@@ -785,7 +774,7 @@ msgid ""
 msgstr ""
 "Det går också att filtrera rader eller fall med ett eget R-uttryck. Om det "
 "används i kombination med filtrering enligt en kolumn (se ovan), kombineras "
-"båda villkoren med logiskt 'och' (&). Lämna det tomt om du inte vill "
+"båda villkoren med logiskt 'och' (&amp;). Lämna det tomt om du inte vill "
 "filtrera med ett eget uttryck."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")

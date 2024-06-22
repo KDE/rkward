@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@gmail.com>, 2015, 2016, 2018, 2022.
+# SPDX-FileCopyrightText: 2015, 2016, 2018, 2022, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-04-26 20:21+0200\n"
+"PO-Revision-Date: 2024-06-21 07:54+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2005,15 +2005,7 @@ msgstr "Läs in en R-datafil."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
-#, fuzzy, kde-format
-#| msgid ""
-#| "Choose the R file to import. This would be a file created e.g. by saving "
-#| "the workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
-#| "\">save()</link> command, or the <link href=\"rkward://component/save_r\"/"
-#| "> plugin. The main difference to loading a workspace via Workspace->Open "
-#| "Workspace, is that the workspace is not cleaned, first, but rather merged "
-#| "with your existing workspace. If in doubt, use Workspace->Open Workspace, "
-#| "instead of this plugin."
+#, kde-format
 msgid ""
 "Choose the R file to import. This would be a file created e.g. by saving the "
 "workspace from RKWard, using the R <link href=\"rkward://rhelp/save"
@@ -2026,10 +2018,10 @@ msgstr ""
 "Välj R-fil att importera. Det skulle vara en fil skapad t.ex. genom att "
 "spara arbetsytan i RKWard, med R-kommandot <link href=\"rkward://rhelp/save"
 "\">save()</link>, eller insticksmodulen <link href=\"rkward://component/"
-"save_r\"/>. Huvudskillnaden mot att läsa in en arbetsyta via Arbetsyta -> "
+"save_r\"/>. Huvudskillnaden mot att läsa in en arbetsyta via Arbetsyta -&gt; "
 "Öppna arbetsyta är att arbetsytan inte rensas först, utan istället "
 "sammanfogas med den befintliga arbetsytan. Vid tveksamhet, använd Arbetsyta -"
-"> Öppna arbetsyta istället för den här insticksmodulen."
+"&gt; Öppna arbetsyta istället för den här insticksmodulen."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12

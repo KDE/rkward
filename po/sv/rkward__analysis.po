@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@gmail.com>, 2015, 2016, 2022.
+# SPDX-FileCopyrightText: 2015, 2016, 2022, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2022-06-05 16:29+0200\n"
+"PO-Revision-Date: 2024-06-21 07:51+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2548,19 +2548,15 @@ msgstr "Förväntad effekt för testen (1 minus typ II felsannolikhet)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:61
-#, fuzzy, kde-format
-#| msgid ""
-#| "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
-#| "reminder, this is (rows − 1)×(columns − 1) for a test of independence, "
-#| "and (cells − 1) for a test of goodness of fit."
+#, kde-format
 msgid ""
 "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
 "reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
 "independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
 "Visas bara för chi-två statistik: Förväntat antal frihetsgrader. Som "
-"påminnelse, är detta (rader − 1) × (kolumner − 1) för en oberoendetest, och "
-"(celler - 1) för en goodness of fit-test."
+"påminnelse, är detta (rader &minus; 1) &times; (kolumner &minus; 1) för en "
+"oberoendetest, och (celler &minus; 1) för en goodness of fit-test."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for numerator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:65
@@ -2602,12 +2598,7 @@ msgstr ""
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
-#, fuzzy, kde-format
-#| msgid ""
-#| "Minimum detectable effect size. Note that effect size specifications "
-#| "differ between the available methods. Be sure to read the note shown "
-#| "below the control.   As a reminder, for mapping between cohen's f and "
-#| "Eta² use f² = Eta² / (1 − Eta²)"
+#, kde-format
 msgid ""
 "Minimum detectable effect size. Note that effect size specifications differ "
 "between the available methods. Be sure to read the note shown below the "
@@ -2616,8 +2607,9 @@ msgid ""
 msgstr ""
 "Minimal detekterbar effektstorlek. Observera att specifikationen av "
 "effektstorleken skiljer sig mellan tillgängliga metoder. Försäkra dig om att "
-"läsa noten som visas under kontrollen. Som en påminnelse, använd f² = Eta² / "
-"(1 − Eta²) för avbildning mellan Cohens f och Eta²."
+"läsa noten som visas under kontrollen. Som en påminnelse, använd f&sup2; = "
+"Eta&sup2; / (1 &minus; Eta&sup2;) för omvandling mellan Cohens f och "
+"Eta&sup2;."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
@@ -2914,10 +2906,9 @@ msgstr "Frihetsgrader för täljare"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
-#, fuzzy, kde-format
-#| msgid "df <sub> num </sub> : k − 1"
+#, kde-format
 msgid "df <sub> num </sub> : k &minus; 1"
-msgstr "df <sub> num </sub> : k − 1"
+msgstr "df <sub> tälj </sub> : k &minus; 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2927,10 +2918,9 @@ msgstr "Frihetsgrader för nämnare"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
-#, fuzzy, kde-format
-#| msgid "df <sub> den </sub> : N − k"
+#, kde-format
 msgid "df <sub> den </sub> : N &minus; k"
-msgstr "df <sub> den </sub> : N − k"
+msgstr "df <sub> nämn </sub> : N &minus; k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185

@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@gmail.com>, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-21 00:36+0000\n"
-"PO-Revision-Date: 2023-07-31 11:13+0200\n"
+"PO-Revision-Date: 2024-06-21 08:04+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1004,8 +1004,7 @@ msgid "Discard changes?"
 msgstr "Kasta ändringar?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "Stäng inte"
@@ -1061,18 +1060,16 @@ msgstr ""
 "administratörsrättigheter (du blir tillfrågad om lösenordet)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Bli systemadministratör"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Uppdateringsbara paket"
+msgstr "Hoppa över paketen"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -1590,33 +1587,29 @@ msgid "<b>Select one:</b>"
 msgstr "<b>Välj en:</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:115
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show problem details"
-msgstr "Visa detaljinformation"
+msgstr "Visa detaljinformation om problemet"
 
 #: rkward/dialogs/rksetupwizard.cpp:128
 #, kde-format
 msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
-msgstr ""
+msgstr "RKWard använder för närvarande R-installation i <nobr>%1</nobr>."
 
 #: rkward/dialogs/rksetupwizard.cpp:135
-#, fuzzy, kde-format
-#| msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
+#, kde-format
 msgid "<b>R backend has failed to start.</b>"
-msgstr ""
-"<b>R-bakgrundsprogrammet har startat. Klicka på \"Nästa\" för att fortsätta."
-"</b>"
+msgstr "<b>R-bakgrundsprogrammet har misslyckats starta.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:137
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
-msgstr ""
+msgstr "<b>R-bakgrundsprogrammet har kraschat.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:144
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
-msgstr ""
+msgstr "<b>R version %1 startades med lyckat resultat.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:147
 #, kde-format
@@ -1627,6 +1620,10 @@ msgid ""
 "therefore recommended to select a system-installed version of R, instead, "
 "below.</p>"
 msgstr ""
+"<p>Du använder R-versionen som ingår i RKWard AppImage.</p><p>Versionen har "
+"flera tekniska begränsningar. Viktigt är att du inte kan installera de "
+"flesta R-tilläggspaket. I allmänhet rekommenderas därför att välja en "
+"systeminstallerad version av R nedan istället.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:161
 #, kde-format
@@ -1636,32 +1633,32 @@ msgstr "<b>Väntar på R-bakgrundsprogrammet...</b>"
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
 msgid "Use R at:"
-msgstr ""
+msgstr "Använd R i:"
 
 #: rkward/dialogs/rksetupwizard.cpp:184
 #, kde-format
 msgid "Select another R executable"
-msgstr ""
+msgstr "Välj en annan körbar R-fil"
 
 #: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
 msgid "Select R executable"
-msgstr ""
+msgstr "Välj körbar R-fil"
 
 #: rkward/dialogs/rksetupwizard.cpp:200
 #, kde-format
 msgid "Use R at %1"
-msgstr ""
+msgstr "Använd R i %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:203
 #, kde-format
 msgid "Attempt to restart R at %1"
-msgstr ""
+msgstr "Försöker starta om R i %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:204
 #, kde-format
 msgid "Keep current version (%1)"
-msgstr ""
+msgstr "Behåll nuvarande version (%1)"
 
 #: rkward/dialogs/rksetupwizard.cpp:236
 #, kde-format
@@ -1889,8 +1886,7 @@ msgstr ""
 "genom att använda k.import.legacy.output()."
 
 #: rkward/dialogs/rksetupwizard.cpp:383
-#, fuzzy, kde-format
-#| msgid "R-Backend"
+#, kde-format
 msgid "R Backend"
 msgstr "R-bakgrundsprogram"
 
@@ -2418,6 +2414,8 @@ msgid ""
 "Act as if the version of RKWard had changed (show setup wizard, and "
 "(re-)install rkward R package)."
 msgstr ""
+"Agera som om versionen av RKWard hade ändrats (visa installationsguiden och "
+"(åter)installera rkward R-paketet)."
 
 #: rkward/misc/rkcommandlineargs.cpp:39
 #, kde-format
@@ -3704,32 +3702,21 @@ msgid "Description"
 msgstr "Beskrivning"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:119
-#, fuzzy, kde-format
-#| msgid ""
-#| "RKWard failed to detect an R installation on this system. Either R is not "
-#| "installed, or not at one of the standard installation locations. You can "
-#| "use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', "
-#| "or supply an rkward.ini file to specify a non-standard location."
+#, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
 "RKWard misslyckades detektera en R-installation på systemet. Antingen är R "
-"inte installerat, eller så finns det inte på en av standardplatserna. Du kan "
-"använda kommandoradsväljaren '--r-executable <i>auto / sökväg-till-R</i>', "
-"eller tillhandahålla filen rkward.ini för att ange en annan plats."
+"inte installerat, eller så finns det inte på en av standardplatserna."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:126
-#, fuzzy, kde-format
-#| msgid ""
-#| "The R executable specified on the command line (%1) does not exist or is "
-#| "not executable."
+#, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
 "executable."
 msgstr ""
-"Körbart R-program angivet på kommandoraden (%1) finns inte eller är inte "
-"körbart."
+"Den inställda R-installationen i <b>%1</b> finns inte eller är inte körbar."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:218
 #, kde-format
@@ -4491,22 +4478,15 @@ msgid "Restart R Backend"
 msgstr "Starta om R-bakgrundsprogram"
 
 #: rkward/rkward.cpp:640
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>This feature is primarily targetted at advanced users working on "
-#| "scripts or packages. Please proceed with caution.</p><p><b>All unsaved "
-#| "data in this workspace will be lost!</b> All data editors, and graphics "
-#| "windows will be closed.</p><p>Are you sure you want to proceed?</p>"
+#, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
 "</b> All data editors, and graphics windows will be closed.</p><p>Are you "
 "sure you want to proceed?</p>"
 msgstr ""
-"<p>Funktionen är i huvudsak avsedd för avancerade användare som arbetar med "
-"skript eller paket. Fortsätt med försiktighet.</p><p><b>All osparad data på "
-"den här arbetsytan kommer att gå förlorad!</b> Alla dataeditorer och "
-"grafikfönster kommer att stängas.</p><p>Är du säker på att du vill fortsätta?"
-"</p>"
+"<p><b>Omstart av bakgrundsprogrammet gör att all osparad data på den här "
+"arbetsytan går förlorad!</b> Alla dataeditorer och grafikfönster kommer att "
+"stängas.</p><p>Är du säker på att du vill fortsätta?</p>"
 
 #: rkward/rkward.cpp:641
 #, kde-format
@@ -4605,6 +4585,8 @@ msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
+"R-bakgrundsprogram inte tillgängligt. Se <a href=\"rkward://page/"
+"rkward_trouble_shooting\">felsökning</a> för möjliga lösningar."
 
 #: rkward/rkward.cpp:1011
 #, kde-format
@@ -5345,15 +5327,7 @@ msgid "Other device:"
 msgstr "Annan enhet:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:67
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The default device to be used for plotting, i.e. when new plot is "
-#| "created, while no graphics device is active (see <i>options(\"device\")</"
-#| "i>).</p><p>The RKWard native device is the recommended choice for most "
-#| "users. This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform "
-#| "default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or "
-#| "<i>quartz()</i>, depending on the platform.</p><p>You can also specify "
-#| "the name of a function such as <i>cairoDevice</i>.</p>"
+#, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
 "created, while no graphics device is active (see <i>options(\"device\")</i>)."
@@ -5369,7 +5343,7 @@ msgstr ""
 "användare. Det motsvara R-kommandot <i>RK()</i>.</p><p>'Plattformens "
 "standardenhet' motsvara antingen <i>X11()</i>, <i>windows()</i> eller "
 "<i>quartz()</i>, beroende på plattform.</p><p>Du kan också ange namnet på en "
-"funktion, såsom <i>cairoDevice</i>.</p>"
+"funktion, såsom <i>Cairo</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
@@ -6680,7 +6654,7 @@ msgstr "Spara som"
 #: rkward/windows/rkhtmlwindow.cpp:603
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
-msgstr ""
+msgstr "RKWard utdatafilen %s finns inte (ännu)"
 
 #: rkward/windows/rkhtmlwindow.cpp:733
 #: rkward/windows/rktoplevelwindowgui.cpp:253
