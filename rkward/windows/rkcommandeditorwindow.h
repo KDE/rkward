@@ -160,6 +160,7 @@ private Q_SLOTS:
 /** document was saved. Update preview, if appropriate */
 	void documentSaved ();
 private:
+friend class RKWardCoreTest;
 	void urlChanged();
 	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;

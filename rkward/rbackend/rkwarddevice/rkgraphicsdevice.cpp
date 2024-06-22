@@ -212,10 +212,12 @@ RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double 
 }
 
 void RKGraphicsDevice::closeDevice (int devnum) {
-	RK_TRACE (GRAPHICS_DEVICE);
+	RK_TRACE(GRAPHICS_DEVICE);
 
-	RK_ASSERT (devices.contains (devnum));
-	devices.take (devnum)->deleteLater ();
+	RK_ASSERT(devices.contains (devnum));
+	auto dev = devices.take(devnum);
+	dev->deleteLater();
+	Q_EMIT dev->deviceClosed(devnum);
 }
 
 void RKGraphicsDevice::clear(const QBrush& brush) {

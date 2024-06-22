@@ -113,6 +113,7 @@ Q_SIGNALS:
 	void locatorDone (bool ok, double x, double y);
 	void newPageConfirmDone (bool accepted);
 	void captionChanged (const QString &caption);
+	void deviceClosed(int devnum);
 private Q_SLOTS:
 	void updateNow ();
 	void newPageDialogDone (int result);

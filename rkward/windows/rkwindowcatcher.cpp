@@ -282,6 +282,7 @@ RKCaughtX11Window::RKCaughtX11Window(RKGraphicsDevice* rkward_device, int device
 	xembed_container->layout ()->addWidget (rk_native_device->viewPort ());
 	connect (rkward_device, &RKGraphicsDevice::captionChanged, this, &RKCaughtX11Window::setCaption);
 	connect (rkward_device, &RKGraphicsDevice::goingInteractive, this, &RKCaughtX11Window::deviceInteractive);
+	connect(rkward_device, &RKGraphicsDevice::deviceClosed, this, [](int devnum) { RKWindowCatcher::instance()->killDevice(devnum); });
 	stop_interaction->setVisible (true);
 	stop_interaction->setEnabled (false);
 	setCaption (rkward_device->viewPort ()->windowTitle ());
@@ -382,7 +383,10 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 void RKCaughtX11Window::commonClose(bool in_destructor) {
 	RK_TRACE(MISC);
 
-	if (rk_native_device) rk_native_device->stopInteraction();
+	if (rk_native_device) {
+		rk_native_device->stopInteraction();
+		rk_native_device = nullptr;
+	}
 
 	QString status = i18n("Closing device (saving history)");
 	if (!(close_attempted || killed_in_r)) {

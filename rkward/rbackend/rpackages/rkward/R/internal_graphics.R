@@ -60,7 +60,11 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (!is.null (a)) {
 		if (a$devnum %in% dev.list ()) {
-			dev.off (a$devnum)
+			# It is actually important to fetch dev.off() from grDevices-environment, rather than just using dev.off().
+			# The latter may apparently be inlined to be the default version, which does not notify the frontend about the killed device.
+			# TODO: That actually signifies, our procedure of replacing dev.off() is hitting problems at last: We might miss that
+			#       call, if it is wrapped in packages.
+			grDevices::dev.off(a$devnum)
 		}
 		.rk.variables$.rk.preview.devices[[x]] <- NULL
 	}

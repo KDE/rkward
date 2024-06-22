@@ -239,7 +239,6 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 
 void RKWorkplace::setWindowNotManaged(RKMDIWindow* window) {
 	RK_TRACE (APP);
-	RK_ASSERT(window->state == RKMDIWindow::Attached);
 	window->state = RKMDIWindow::Detached;
 }
 
@@ -277,7 +276,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 			if (nw.window) {  // kill existing window (going to be replaced)
 				// TODO: this is not really elegant, yet, as it will change tab-placement (for attached windows), and discard / recreate container (for detached windows)
 				disconnect (nw.window, &QObject::destroyed, this, &RKWorkplace::namedWindowDestroyed);
-				nw.window->deleteLater ();
+				nw.window->close(RKMDIWindow::NoAskSaveModified);
 			}
 			nw.window = window;
 			connect (nw.window, &QObject::destroyed, this, &RKWorkplace::namedWindowDestroyed);
