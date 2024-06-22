@@ -854,7 +854,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			RKRBackendProtocolFrontend::setRequestCompleted (request);
 			return;
 		} else {
-			int result = dialog->exec ();
+			int result = RKWardMainWindow::suppressModalDialogsForTesting() ? QDialogButtonBox::Cancel : dialog->exec();
 			QString result_string;
 			if (result == QDialogButtonBox::Yes || result == QDialogButtonBox::Ok) result_string = "yes";
 			else if (result == QDialogButtonBox::No) result_string = "no";
