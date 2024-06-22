@@ -404,13 +404,13 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	if (file_save_as_action) file_save_as_action->setText (i18n ("Save Script As..."));
 }
 
-QString withCheckForPandoc(const QString &command, const QString &error_file) {
+QString withCheckForPandoc(const QString &command, const QString &outfile) {
 	const QString header = RObject::rQuote(i18n("Pandoc is not installed"));
 	const QString message = RObject::rQuote(i18n("The software <tt>pandoc</tt>, required to rendering R markdown files, is not installed, or not in the system path of "
 		"the running R session. You will need to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</a>.</br>"
 		"If it is installed, but cannot be found, try adding it to the system path of the running R session at "
 		"<a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>."));
-	QString ret(
+	QLatin1String ret(
 		"if (!nzchar(Sys.which(\"pandoc\"))) {\n"
 		"	if(!file.exists(%1)) {\n"
 		"		output <- rk.set.output.html.file(%1, silent=TRUE)\n"
@@ -423,7 +423,7 @@ QString withCheckForPandoc(const QString &command, const QString &error_file) {
 		"%2"
 		"}\n"
 	);
-	return ret.arg(RObject::rQuote(error_file), command, header, message);
+	return ret.arg(RObject::rQuote(outfile + "._nopandoc_.html"), command, header, message);
 }
 
 void RKCommandEditorWindow::initPreviewModes() {
@@ -438,7 +438,7 @@ void RKCommandEditorWindow::initPreviewModes() {
 				"	rmarkdown::render(%1, output_format=\"html_document\", output_file=%2, quiet=TRUE)\n"
 				"	rk.show.html(%2)\n"
 			).arg(RObject::rQuote(infile), RObject::rQuote(outfile));
-			return withCheckForPandoc(command, outfile + "._nopandoc_.html");
+			return withCheckForPandoc(command, outfile);
 		}
 	});
 	preview_mode_list.append(PreviewMode{
@@ -448,10 +448,10 @@ void RKCommandEditorWindow::initPreviewModes() {
 		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
 			auto command = QStringLiteral(
 				"	require(rmarkdown)\n"
-				"	rmarkdown::render (%1, output_format=\"pdf_document\", output_file=%2, quiet=TRUE)\n"
+				"	rmarkdown::render(%1, output_format=\"pdf_document\", output_file=%2, quiet=TRUE)\n"
 				"	rk.show.pdf(%2)\n"
 			).arg(RObject::rQuote(infile), RObject::rQuote(outfile));
-			return withCheckForPandoc(command, outfile + "._nopandoc_.html");
+			return withCheckForPandoc(command, outfile);
 		}
 	});
 	preview_mode_list.append(PreviewMode{
