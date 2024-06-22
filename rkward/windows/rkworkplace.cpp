@@ -369,20 +369,6 @@ void RKWorkplace::registerNamedWindow (const QString& id, QObject* owner, QWidge
 	if (window) connect (window, &QObject::destroyed, this, &RKWorkplace::namedWindowOwnerDestroyed);
 }
 
-template<typename T> T* RKWorkplace::getNamedWindow(const QString& id) {
-	RK_TRACE (APP);
-
-	if (id.isEmpty()) return nullptr;
-
-	for (int i = 0; i < named_windows.size (); ++i) {
-		if (named_windows[i].id == id) {
-			return dynamic_cast<T*>(named_windows[i].window);
-		}
-	}
-
-	return nullptr;
-}
-
 void RKWorkplace::namedWindowDestroyed (QObject* window) {
 	RK_TRACE (APP);
 

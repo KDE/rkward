@@ -1,6 +1,6 @@
 /*
 rkworkplace - This file is part of the RKWard project. Created: Thu Sep 21 2006
-SPDX-FileCopyrightText: 2006-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2006-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -204,7 +204,15 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Register a named area where to place MDI windows. For directing preview windows to a specific location. */
 	void registerNamedWindow (const QString& id, QObject *owner, QWidget* parent, RKMDIWindow *window=nullptr);
 /** Return the window in the specified named area (can be 0). */
-	template<typename T=RKMDIWindow> T* getNamedWindow (const QString& id);
+	template<typename T=RKMDIWindow> T* getNamedWindow (const QString& id) {
+		if (id.isEmpty()) return nullptr;
+		for (int i = 0; i < named_windows.size (); ++i) {
+			if (named_windows[i].id == id) {
+				return dynamic_cast<T*>(named_windows[i].window);
+			}
+		}
+		return nullptr;
+	}
 /** Make the next window to be created appear in a specific location (can be a named window). 
  *  @note It is the caller's responsibility to clear the override (by calling setWindowPlacementOverride ()) after the window in question has been created. */
 	void setWindowPlacementOverrides (const QString& placement=QString (), const QString& name=QString (), const QString& style=QString ());

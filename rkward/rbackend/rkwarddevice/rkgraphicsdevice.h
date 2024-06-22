@@ -1,6 +1,6 @@
 /*
-rkgraphicsdevice_backendtransmitter - This file is part of the RKWard project. Created: Mon Mar 18 2013
-SPDX-FileCopyrightText: 2013-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+rkgraphicsdevice - This file is part of the RKWard project. Created: Mon Mar 18 2013
+SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
