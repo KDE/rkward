@@ -103,6 +103,7 @@ void bogusCalls () {
 	new RKWorkplaceView(nullptr);
 	new RKEditObjectAgent(QStringList(), nullptr);
 	RKPrintAgent::printPostscript(QString(), false);
+	RKWorkplace::mainWorkplace()->getNamedWindow<RKMDIWindow>(QString());
 #endif
 }
 
