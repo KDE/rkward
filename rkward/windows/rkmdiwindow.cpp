@@ -334,7 +334,10 @@ void RKMDIWindow::showStatusMessageNow() {
 		status_popup_container = new QWidget (this);
 		if (!isType(RKMDIWindow::X11Window)) {
 			auto blayout = qobject_cast<QVBoxLayout*> (layout());
-			if (blayout) blayout->insertWidget(0, status_popup_container);
+			if (blayout) {
+				blayout->insertWidget(0, status_popup_container);
+				blayout->setStretch(1, 2); // main widget should get most space
+			}
 		}
 		QVBoxLayout *layout = new QVBoxLayout (status_popup_container);
 		layout->setContentsMargins (10, 10, 10, 10);
