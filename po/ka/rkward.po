@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-21 00:36+0000\n"
-"PO-Revision-Date: 2024-06-16 06:52+0200\n"
+"PO-Revision-Date: 2024-06-22 06:09+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3044,6 +3044,8 @@ msgid ""
 "Specified file '%1' for component id \"%2\" does not exist or is not "
 "readable. Ignoring."
 msgstr ""
+"მითითებული ფაილი '%1' კომპონენტისთვის ID-ით \"%2\" არ არსებობს ან წაკითხვადი "
+"არაა. გამოტოვება."
 
 #: rkward/plugin/rkcomponentmap.cpp:672
 #, kde-format
@@ -3112,7 +3114,7 @@ msgstr "ობიექტის სიგრძეა %1, მაგრამ �
 #: rkward/plugin/rkcomponentproperties.cpp:944
 #, kde-format
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
-msgstr ""
+msgstr "ეს ობიექტი, როგორც ჩანს, <i>%1</i>-ის არც ერთ კლასს არ მიეკუთვნება."
 
 #: rkward/plugin/rkcomponentproperties.cpp:951
 #, kde-format
