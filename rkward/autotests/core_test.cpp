@@ -434,13 +434,14 @@ private Q_SLOTS:
 		f.write("plot(1,1)\n"); // Using a plot(), here is interesting in that it a) allows a plot preview b) a plot will also be generated, and
 		                        // immediately discarded for R console previews, which used to be prone to crashing
 		f.close();
-		auto w = RKWorkplace::mainWorkplace()->openScriptEditor(QUrl::fromLocalFile(f.fileName()));
+		const auto w = RKWorkplace::mainWorkplace()->openScriptEditor(QUrl::fromLocalFile(f.fileName()));
+		QVERIFY(w != nullptr);
 		auto wins = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
 		QCOMPARE(wins.size(), 1);
 		auto win = qobject_cast<RKCommandEditorWindow*>(wins[0]);
 		QVERIFY(win == w);
 		// opening the same url again shall re-use the window
-		auto w2 = RKWorkplace::mainWorkplace()->openScriptEditor(QUrl::fromLocalFile(f.fileName()));
+		const auto w2 = RKWorkplace::mainWorkplace()->openScriptEditor(QUrl::fromLocalFile(f.fileName()));
 		QVERIFY(win == w2);
 
 		// pretty basic check: don't crash or assert on switching between previews
