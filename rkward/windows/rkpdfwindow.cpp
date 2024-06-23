@@ -45,6 +45,7 @@ void RKPDFWindow::openURL(const QUrl &url) {
 	RK_TRACE(APP);
 	if (valid) static_cast<KParts::ReadOnlyPart*>(getPart())->openUrl(url);
 	setWindowTitle(url.fileName());
+	Q_EMIT captionChanged(this);
 }
 
 QUrl RKPDFWindow::url() const {

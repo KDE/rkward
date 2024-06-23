@@ -480,8 +480,8 @@ RKMDIWindow* RKWorkplace::openPDFWindow(const QUrl &url) {
 		pw->openURL(url);
 	} else {
 		pw = new RKPDFWindow(view());
-		pw->openURL(url);  // needs to be before addwindow, or title won't show correctly
 		addWindow(pw);
+		pw->openURL(url);
 	}
 	return pw;
 }

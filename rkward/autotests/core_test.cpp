@@ -454,7 +454,7 @@ private Q_SLOTS:
 				a->trigger();  // NOTE: Using setChecked(true), here, would not emit the require QActionGroup::triggered() inside RKCommandEditorWindow
 				QVERIFY(a->isChecked());
 				win->doRenderPreview(); // don't wait for debounce timeout
-				waitForAllFinished();
+				waitForAllFinished(4000);
 				// TODO: check that a preview was actually generated
 			}
 		}
