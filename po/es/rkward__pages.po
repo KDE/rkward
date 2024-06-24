@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Automatically generated, 2014.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2014, 2015, 2018, 2019.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2022.
+# SPDX-FileCopyrightText: 2014, 2015, 2018, 2019, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2022, %Y.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2022-07-23 17:25+0200\n"
+"PO-Revision-Date: 2024-06-23 13:20+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1332,15 +1332,7 @@ msgstr "Incompatibilidad de versiones en el motor de gráficos"
 
 #. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
 #: rkward/pages/rkward_incompatible_version.rkh:17
-#, fuzzy, kde-format
-#| msgid ""
-#| "This is the most common kind of version incompatibility. The same advice "
-#| "applies as above, i.e. please install an updated version of RKWard. "
-#| "However, if no update appears to be immediately available, and you are "
-#| "desparate to continue working, set <link href=\"rkward://settings/graphics"
-#| "\">Settings->Onscreen Graphics</link>->\"Integration of R standard device"
-#| "\" to \"No integration\". Then you can use the vanille onscreen devices "
-#| "(X11() or Windows() or Quartz()), for plotting."
+#, kde-format
 msgid ""
 "This is the most common kind of version incompatibility. The same advice "
 "applies as above, i.e. please install an updated version of RKWard. However, "
@@ -1354,10 +1346,10 @@ msgstr ""
 "consejo comentado previamente aplica, instale una versión actualizada de "
 "RKWard. Sin embargo, si no hay ninguna actualización inmediatamente "
 "disponible, y necesita seguir trabajando, configure <link href=\"rkward://"
-"settings/graphics\">Preferencias->Gráficos de pantalla</link>->\"Integración "
-"del dispositivo estándar de R\" a \"Sin integración\". Entonces podrá usar "
-"los dispositivos de pantalla básicos como (X11() o Windows() or Quartz()), "
-"para dibujar."
+"settings/graphics\">Preferencias-&gt;Gráficos de pantalla</link>-&gt;"
+"\"Integración del dispositivo estándar de R\" a \"Sin integración\". "
+"Entonces podrá usar los dispositivos de pantalla básicos como (X11() o "
+"Windows() or Quartz()), para dibujar."
 
 #. i18n: ectx: (RKWard Output) <title>
 #: rkward/pages/rkward_output.rkh:8
@@ -1552,19 +1544,7 @@ msgstr ""
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>Go to plot</b>: This provides a drop-down list of _all_ the plots "
-#| "stored in the history; giving an easily accessible \"jumping\" action. "
-#| "RKWard tries hard to identify the appropriate plot calls, but this is not "
-#| "always feasible. In such cases a further attempt is made to identify the "
-#| "<i>X label</i>, <i>Y label</i> and the <i>Main</i> titles of the plot and "
-#| "the displayed string looks like \"<b>X:</b> <i>xlab</i>; <b>Y:</b> "
-#| "<i>ylab</i>; <i>main</i>\". Sometimes even that is not possible "
-#| "(indicated by <b><Unknown></b>). Plots which are pending to be saved are "
-#| "indicated by <b><Unsaved plot></b>. The displayed strings are prepended "
-#| "with their corresponding position in the history. For the usual \"linear "
-#| "browsing\" see first / previous / next / last actions below."
+#, kde-format
 msgid ""
 "<b>Go to plot</b>: This provides a drop-down list of _all_ the plots stored "
 "in the history; giving an easily accessible \"jumping\" action. RKWard tries "
@@ -1585,10 +1565,11 @@ msgstr ""
 "<i>etiquetas X</i>, <i>etiquetas Y</i> y el título <i>principal</i> del "
 "gráfico y las cadenas mostradas como «<b>X:</b> <i>etiquetax</i>; <b>Y:</b> "
 "<i>etiquetay</i>; <i>principal</i>». En algunos casos ni esto es posible "
-"(indicado por <b><Desconocido></b>). Los gráficos que aun no están guardados "
-"se indican con <b><Gráfico no salvado></b>. Las cadenas mostradas se añaden "
-"al inicio con su correspondiente posición en el historial. Para la "
-"«navegación lineal» vea las acciones primero / previo / último más abajo."
+"(indicado por <b>&lt;Desconocido&gt;</b>). Los gráficos que aun no están "
+"guardados se indican con <b>&lt;Gráfico no guardado&gt;</b>. Las cadenas "
+"mostradas se añaden al inicio con su correspondiente posición en el "
+"historial. Para la «navegación lineal» vea las acciones primero / previo / "
+"último más abajo."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -2137,7 +2118,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2508,29 +2489,23 @@ msgstr ""
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "‎<link href=\"rkward://settings/addons\">Further add-on related settings "
-#| "(e.g., git/project integration)‎</link>"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)</link>&lrm;"
 msgstr ""
-"<link href=\"rkward://settings/addons\">Preferencias adicionales de los "
-"complementos (p.e., integración con proyecto/git)</link>"
+"&lrm;<link href=\"rkward://settings/addons\">Preferencias adicionales de los "
+"complementos (p.e., integración con proyecto/git)</link>&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid ""
-#| "‎<link href=\"rkward://settings/general\">Startup options</link> "
-#| "(including this page)‎"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
 "(including this page)&lrm;"
 msgstr ""
-"<link href=\"rkward://settings/general\">Opciones de inicio</link> "
-"(incluyendo esta página)"
+"&lrm;<link href=\"rkward://settings/general\">Opciones de inicio</link> "
+"(incluyendo esta página)&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31

@@ -5,14 +5,14 @@
 # Mvillarino <mvillarino@dubmail.net>, 2005.
 # Mvillarino <mvillarino@users.sourceforge.net>, 2006.
 # Germán Márquez Mejía <manchito@users.sourceforge.net>, 2008,2009,2010.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2014, 2015, 2018, 2019.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2019, 2020, 2021, 2022.
+# SPDX-FileCopyrightText: 2014, 2015, 2018, 2019, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2019, 2020, 2021, 2022, %Y.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-21 00:36+0000\n"
-"PO-Revision-Date: 2022-10-08 17:07+0200\n"
+"PO-Revision-Date: 2024-06-23 13:22+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1026,8 +1026,7 @@ msgid "Discard changes?"
 msgstr "¿Descartar cambios?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "No cerrar"
@@ -1084,8 +1083,7 @@ msgstr ""
 "administrador (se le pedirá la contraseña)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Convertirse en root"
@@ -1915,8 +1913,7 @@ msgstr ""
 "momento, usando rk.import.legacy.output()"
 
 #: rkward/dialogs/rksetupwizard.cpp:383
-#, fuzzy, kde-format
-#| msgid "R-Backend"
+#, kde-format
 msgid "R Backend"
 msgstr "Motor R"
 
@@ -3749,21 +3746,13 @@ msgid "Description"
 msgstr "Descripción"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:119
-#, fuzzy, kde-format
-#| msgid ""
-#| "RKWard failed to detect an R installation on this system. Either R is not "
-#| "installed, or not at one of the standard installation locations. You can "
-#| "use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', "
-#| "or supply an rkward.ini file to specify a non-standard location."
+#, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
 "RKWard no pudo detectar una instalación de R en el sistema. O R no está "
-"instalado, o lo está en una localización no estándar. Puede usar el "
-"parámetro de la línea de órdenes '--r-executable <i>auto /RUTA_A_R</i>', o "
-"proporcionar un archivo rkward.ini para especificar una localización no "
-"estándar."
+"instalado, o lo está en una localización no estándar."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, fuzzy, kde-format
