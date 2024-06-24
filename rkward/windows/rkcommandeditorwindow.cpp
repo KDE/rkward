@@ -404,26 +404,38 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	if (file_save_as_action) file_save_as_action->setText (i18n ("Save Script As..."));
 }
 
-QString withCheckForPandoc(const QString &command, const QString &outfile) {
-	const QString header = RObject::rQuote(i18n("Pandoc is not installed"));
-	const QString message = RObject::rQuote(i18n("The software <tt>pandoc</tt>, required to rendering R markdown files, is not installed, or not in the system path of "
-		"the running R session. You will need to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</a>.</br>"
-		"If it is installed, but cannot be found, try adding it to the system path of the running R session at "
-		"<a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>."));
+struct SoftwareCheck {
+	const QString exe;
+	const QString header;
+	const QString message;
+};
+
+QString withCheckForSoftware(const QString &command, const SoftwareCheck check, const QString &outfile) {
 	QLatin1String ret(
-		"if (!nzchar(Sys.which(\"pandoc\"))) {\n"
-		"	if(!file.exists(%1)) {\n"
-		"		output <- rk.set.output.html.file(%1, silent=TRUE)\n"
+		"if (!nzchar(Sys.which(\"%1\"))) {\n"
+		"	if(!file.exists(%2)) {\n"
+		"		output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 		"		rk.header(%3)\n"
 		"		rk.print(%4)\n"
 		"		rk.set.output.html.file(output, silent=TRUE)\n"
-		"		rk.show.html(%1)\n"
+		"		rk.show.html(%2)\n"
 		"	}\n"
 		"} else {\n"
-		"%2"
+		"%5"
 		"}\n"
 	);
-	return ret.arg(RObject::rQuote(outfile + "._nopandoc_.html"), command, header, message);
+	return ret.arg(check.exe, RObject::rQuote(outfile + "._" + check.exe + "_.html"), RObject::rQuote(check.header), RObject::rQuote(check.message), command);
+};
+
+QString withCheckForPandoc(const QString &command, const QString &outfile) {
+	return withCheckForSoftware(command, {
+		"pandoc",
+		i18n("Pandoc is not installed"),
+		i18n("The software <tt>pandoc</tt>, required to rendering R markdown files, is not installed, or not in the system path of "
+		"the running R session. You will need to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</a>.</br>"
+		"If it is installed, but cannot be found, try adding it to the system path of the running R session at "
+		"<a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>.")
+	}, outfile);
 }
 
 void RKCommandEditorWindow::initPreviewModes() {
@@ -446,12 +458,15 @@ void RKCommandEditorWindow::initPreviewModes() {
 		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to PDF."),
 		QLatin1String(".Rmd"), QLatin1String(".pdf"),
 		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
+			auto pdflatex = SoftwareCheck{"pdflatex",
+				i18n("pdflatex is not installed"),
+				i18n("pdflatex is required for rendering PDF previews. The easiest way to install it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```")};
 			auto command = QStringLiteral(
 				"	require(rmarkdown)\n"
 				"	rmarkdown::render(%1, output_format=\"pdf_document\", output_file=%2, quiet=TRUE)\n"
 				"	rk.show.pdf(%2)\n"
 			).arg(RObject::rQuote(infile), RObject::rQuote(outfile));
-			return withCheckForPandoc(command, outfile);
+			return withCheckForPandoc(withCheckForSoftware(command, pdflatex, outfile), outfile);
 		}
 	});
 	preview_mode_list.append(PreviewMode{
