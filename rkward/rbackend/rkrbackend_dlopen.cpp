@@ -39,12 +39,14 @@ void *resolve_symb(void* dllinfo, const char* name) {
 auto loadlib(const char* name) {
 #if defined(Win32)
 	auto ret = LoadLibraryA(name);
-#elif defined(LM_ID_NEWLM) && !defined(__SANITIZE_ADDRESS__)
+#elif 0 && defined(LM_ID_NEWLM) && !defined(__SANITIZE_ADDRESS__)
+	// NOTE / TODO: with this, we get Cstack use too close to the limit when loading library(tcltk)
 	auto ret = dlmopen(LM_ID_NEWLM, name, RTLD_NOW | RTLD_LOCAL);
+#elif defined(RTLD_DEEPBIND) && !defined(__SANITIZE_ADDRESS__)
+	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL | RTLD_DEEPBIND);
 #else
 	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL);  // NOTE: RTLD_DEEPBIND causes undiagnosed runtime failure on Suse Tumbleweed around 05/24 (while it works, elsewhere)
 	                                                 //       possibly again due to address sanitization on the gitlab job?
-#warning dlmopen is not available on this platform, or disabled due to compiling with address_sanitizer
 #endif
 	if (!ret) {
 #ifdef Win32
