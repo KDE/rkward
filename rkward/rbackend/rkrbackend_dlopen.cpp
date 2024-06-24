@@ -41,12 +41,12 @@ auto loadlib(const char* name) {
 	auto ret = LoadLibraryA(name);
 #elif 0 && defined(LM_ID_NEWLM) && !defined(__SANITIZE_ADDRESS__)
 	// NOTE / TODO: with this, we get Cstack use too close to the limit when loading library(tcltk)
+	// This applies even when loading RK_BACKEND_LIB with dlmopen() and libR.so with plain dlopen(), or vice-versa
 	auto ret = dlmopen(LM_ID_NEWLM, name, RTLD_NOW | RTLD_LOCAL);
 #elif defined(RTLD_DEEPBIND) && !defined(__SANITIZE_ADDRESS__)
 	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL | RTLD_DEEPBIND);
 #else
-	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL);  // NOTE: RTLD_DEEPBIND causes undiagnosed runtime failure on Suse Tumbleweed around 05/24 (while it works, elsewhere)
-	                                                 //       possibly again due to address sanitization on the gitlab job?
+	auto ret = dlopen(name, RTLD_NOW | RTLD_LOCAL);  // NOTE: RTLD_DEEPBIND or dlmopen causs runtime failure with address sanitization
 #endif
 	if (!ret) {
 #ifdef Win32
