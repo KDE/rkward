@@ -1,6 +1,6 @@
 /*
 rwindowcatcher.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Wed May 4 2005
-SPDX-FileCopyrightText: 2005-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2005-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -29,6 +29,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkworkplace.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../rkward.h"
 #include "../debug.h"
 
 RKWindowCatcher *RKWindowCatcher::_instance = nullptr;
@@ -282,6 +283,7 @@ RKCaughtX11Window::RKCaughtX11Window(RKGraphicsDevice* rkward_device, int device
 	xembed_container->layout ()->addWidget (rk_native_device->viewPort ());
 	connect (rkward_device, &RKGraphicsDevice::captionChanged, this, &RKCaughtX11Window::setCaption);
 	connect (rkward_device, &RKGraphicsDevice::goingInteractive, this, &RKCaughtX11Window::deviceInteractive);
+	connect(rkward_device, &RKGraphicsDevice::deviceClosed, this, [](int devnum) { RKWindowCatcher::instance()->killDevice(devnum); });
 	stop_interaction->setVisible (true);
 	stop_interaction->setEnabled (false);
 	setCaption (rkward_device->viewPort ()->windowTitle ());
@@ -361,10 +363,12 @@ void RKCaughtX11Window::doEmbed () {
 	}
 
 	// try to be helpful when the window is too large to fit on screen
-	const QRect dims = window ()->frameGeometry ();
+	const QRect dims = window()->frameGeometry();
 	const QRect avail = window()->screen() ? window()->screen()->availableGeometry() : QApplication::primaryScreen()->availableGeometry();
-	if ((dims.width () > avail.width ()) || (dims.height () > avail.height ())) {
-		KMessageBox::information (this, i18n ("The current window appears too large to fit on the screen. If this happens regularly, you may want to adjust the default graphics window size in Settings->Configure RKWard->Onscreen Graphics."), i18n ("Large window"), "dont_ask_again_large_x11_window");
+	if ((dims.width() > avail.width()) || (dims.height() > avail.height())) {
+		if (!RKWardMainWindow::suppressModalDialogsForTesting()) {
+			KMessageBox::information(this, i18n("The current window appears too large to fit on the screen. If this happens regularly, you may want to adjust the default graphics window size in Settings->Configure RKWard->Onscreen Graphics."), i18n("Large window"), "dont_ask_again_large_x11_window");
+		}
 	}
 }
 
@@ -382,7 +386,10 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 void RKCaughtX11Window::commonClose(bool in_destructor) {
 	RK_TRACE(MISC);
 
-	if (rk_native_device) rk_native_device->stopInteraction();
+	if (rk_native_device) {
+		rk_native_device->stopInteraction();
+		rk_native_device = nullptr;
+	}
 
 	QString status = i18n("Closing device (saving history)");
 	if (!(close_attempted || killed_in_r)) {
@@ -391,7 +398,7 @@ void RKCaughtX11Window::commonClose(bool in_destructor) {
 		RInterface::issueCommand(c);
 		close_attempted = true;
 	} else {
-		if (in_destructor) return;
+		if (in_destructor || RKWardMainWindow::suppressModalDialogsForTesting()) return;
 		if (KMessageBox::questionTwoActions(this, i18n("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
 #if !defined Q_OS_WIN
 		+ i18n("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")

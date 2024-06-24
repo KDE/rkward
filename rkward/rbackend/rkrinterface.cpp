@@ -698,6 +698,9 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 	} else if (call == "showHTML") {
 		RK_ASSERT(arglist.size() == 1);
 		RKWorkplace::mainWorkplace()->openHelpWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath (), QUrl::AssumeLocalFile));
+	} else if (call == "showPDF") {
+		RK_ASSERT(arglist.size() == 1);
+		RKWorkplace::mainWorkplace()->openPDFWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath (), QUrl::AssumeLocalFile));
 	} else if (call == "select.list") {
 		QString title = arglist.value(0);
 		bool multiple = (arglist.value(1) == "multi");
@@ -851,7 +854,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			RKRBackendProtocolFrontend::setRequestCompleted (request);
 			return;
 		} else {
-			int result = dialog->exec ();
+			int result = RKWardMainWindow::suppressModalDialogsForTesting() ? QDialogButtonBox::Cancel : dialog->exec();
 			QString result_string;
 			if (result == QDialogButtonBox::Yes || result == QDialogButtonBox::Ok) result_string = "yes";
 			else if (result == QDialogButtonBox::No) result_string = "no";

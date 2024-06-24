@@ -370,27 +370,25 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
-	KActionMenu* actionmenu_preview = new KActionMenu (QIcon::fromTheme ("view-preview"), i18n ("Preview"), this);
+	KActionMenu* actionmenu_preview = new KActionMenu(QIcon::fromTheme("view-preview"), i18n("Preview"), this);
 	actionmenu_preview->setPopupMode(QToolButton::InstantPopup);
-	preview_modes = new QActionGroup (this);
-	actionmenu_preview->addAction (action_no_preview = new QAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("No preview"), preview_modes));
-	actionmenu_preview->addAction (new QAction (QIcon::fromTheme ("preview_math"), i18n ("R Markdown"), preview_modes));
-	actionmenu_preview->addAction (new QAction (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput), i18n ("RKWard Output"), preview_modes));
-	actionmenu_preview->addAction (new QAction (RKStandardIcons::getIcon (RKStandardIcons::WindowX11), i18n ("Plot"), preview_modes));
-	actionmenu_preview->addAction (new QAction (RKStandardIcons::getIcon (RKStandardIcons::WindowConsole), i18n ("R Console"), preview_modes));
-	QList<QAction*> preview_actions = preview_modes->actions ();
-	preview_actions[NoPreview]->setToolTip (i18n ("Disable preview"));
-	preview_actions[RMarkdownPreview]->setToolTip (i18n ("Preview the script as rendered from RMarkdown format (appropriate for .Rmd files)."));
-	preview_actions[ConsolePreview]->setToolTip (i18n ("Preview the script as if it was run in the interactive R Console"));
-	preview_actions[GraphPreview]->setToolTip (i18n ("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."));
-	preview_actions[OutputWindow]->setToolTip (i18n ("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."));
-	for (int i = 0; i < preview_actions.size (); ++i) {
-		preview_actions[i]->setCheckable (true);
-		preview_actions[i]->setWhatsThis(preview_actions[i]->toolTip ());
+	preview_modes = new QActionGroup(this);
+	action_no_preview = preview_modes->addAction(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete), i18n("No preview"));
+	action_no_preview->setToolTip(i18n("Disable preview"));
+	action_no_preview->setCheckable(true);
+	action_no_preview->setChecked(true);
+	actionmenu_preview->addAction(action_no_preview);
+	initPreviewModes();
+	for (int i = 0; i < preview_mode_list.size(); ++i) {
+		const PreviewMode &mode = preview_mode_list[i];
+		QAction *a = preview_modes->addAction(mode.icon, mode.actionlabel);
+		a->setWhatsThis(mode.tooltip);
+		a->setToolTip(mode.tooltip);
+		a->setCheckable(true);
+		actionmenu_preview->addAction(a);
 	}
-	action_no_preview->setChecked (true);
-	connect (preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
-	connect (preview_modes, &QActionGroup::triggered, this, &RKCommandEditorWindow::changePreviewMode);
+	connect(preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
+	connect(preview_modes, &QActionGroup::triggered, this, &RKCommandEditorWindow::changePreviewMode);
 
 	actionmenu_preview->addSeparator ();
 	action_preview_as_you_type = new QAction (QIcon::fromTheme ("input-keyboard"), i18nc ("Checkable action: the preview gets updated while typing", "Update as you type"), ac);
@@ -404,6 +402,125 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	if (file_save_action) file_save_action->setText (i18n ("Save Script..."));
 	file_save_as_action = findAction (m_view, "file_save_as");
 	if (file_save_as_action) file_save_as_action->setText (i18n ("Save Script As..."));
+}
+
+struct SoftwareCheck {
+	const QString exe;
+	const QString header;
+	const QString message;
+};
+
+QString withCheckForSoftware(const QString &command, const SoftwareCheck check, const QString &outfile) {
+	QLatin1String ret(
+		"if (!nzchar(Sys.which(\"%1\"))) {\n"
+		"	if(!file.exists(%2)) {\n"
+		"		output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+		"		rk.header(%3)\n"
+		"		rk.print(%4)\n"
+		"		rk.set.output.html.file(output, silent=TRUE)\n"
+		"		rk.show.html(%2)\n"
+		"	}\n"
+		"} else {\n"
+		"%5"
+		"}\n"
+	);
+	return ret.arg(check.exe, RObject::rQuote(outfile + "._" + check.exe + "_.html"), RObject::rQuote(check.header), RObject::rQuote(check.message), command);
+};
+
+QString withCheckForPandoc(const QString &command, const QString &outfile) {
+	return withCheckForSoftware(command, {
+		"pandoc",
+		i18n("Pandoc is not installed"),
+		i18n("The software <tt>pandoc</tt>, required to rendering R markdown files, is not installed, or not in the system path of "
+		"the running R session. You will need to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</a>.</br>"
+		"If it is installed, but cannot be found, try adding it to the system path of the running R session at "
+		"<a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>.")
+	}, outfile);
+}
+
+void RKCommandEditorWindow::initPreviewModes() {
+	RK_TRACE(COMMANDEDITOR);
+	preview_mode_list.append(PreviewMode{
+		QIcon::fromTheme("preview_math"), i18n("R Markdown (HTML)"), i18n("Preview of rendered R Markdown"),
+		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to HTML."),
+		QLatin1String(".Rmd"), QLatin1String(".html"),
+		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
+			auto command = QStringLiteral(
+				"	require(rmarkdown)\n"
+				"	rmarkdown::render(%1, output_format=\"html_document\", output_file=%2, quiet=TRUE)\n"
+				"	rk.show.html(%2)\n"
+			).arg(RObject::rQuote(infile), RObject::rQuote(outfile));
+			return withCheckForPandoc(command, outfile);
+		}
+	});
+	preview_mode_list.append(PreviewMode{
+		QIcon::fromTheme("preview_math"), i18n("R Markdown (PDF)"), i18n("Preview of rendered R Markdown"),
+		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to PDF."),
+		QLatin1String(".Rmd"), QLatin1String(".pdf"),
+		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
+			auto pdflatex = SoftwareCheck{"pdflatex",
+				i18n("pdflatex is not installed"),
+				i18n("pdflatex is required for rendering PDF previews. The easiest way to install it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```")};
+			auto command = QStringLiteral(
+				"	require(rmarkdown)\n"
+				"	rmarkdown::render(%1, output_format=\"pdf_document\", output_file=%2, quiet=TRUE)\n"
+				"	rk.show.pdf(%2)\n"
+			).arg(RObject::rQuote(infile), RObject::rQuote(outfile));
+			return withCheckForPandoc(withCheckForSoftware(command, pdflatex, outfile), outfile);
+		}
+	});
+	preview_mode_list.append(PreviewMode{
+		RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), i18n("RKWard Output"), i18n("Preview of generated RKWard output"),
+		i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."),
+		QLatin1String(".R"), QLatin1String(".html"),
+		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
+			auto command = QLatin1String("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+				"try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
+				"try(source(%1, local=TRUE))\n"
+				"rk.set.output.html.file(output, silent=TRUE)\n"
+				"rk.show.html(%2)\n");
+			return command.arg(RObject::rQuote(infile), RObject::rQuote(outfile));
+		}
+	});
+	preview_mode_list.append(PreviewMode{
+		RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), i18n("R Console"), i18n("Preview of script running in interactive R Console"),
+		i18n("Preview the script as if it was run in the interactive R Console"),
+		QLatin1String(".R"), QLatin1String(".html"),
+		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
+			auto command = QLatin1String("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+				"on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
+				"try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
+				"exprs <- expression(NULL)\n"
+				"rk.capture.output(suppress.messages=TRUE)\n"
+				"try({\n"
+				"    exprs <- parse (%1, keep.source=TRUE)\n"
+				"})\n"
+				".rk.cat.output(rk.end.capture.output(TRUE))\n"
+				"for (i in seq_len(length(exprs))) {\n"
+				"    rk.print.code(as.character(attr(exprs, \"srcref\")[[i]]))\n"
+				"    rk.capture.output(suppress.messages=TRUE)\n"
+				"    try({\n"
+				"        withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE)\n"
+				"    })\n"
+				"    .rk.cat.output(rk.end.capture.output(TRUE))\n"
+				"}\n"
+				"rk.set.output.html.file(output, silent=TRUE)\n"
+				"rk.show.html(%2)\n");
+			return command.arg(RObject::rQuote(infile), RObject::rQuote(outfile));
+		}
+	});
+	preview_mode_list.append(PreviewMode{
+		RKStandardIcons::getIcon(RKStandardIcons::WindowX11), i18n("Plot"), i18n("Preview of generated plot"),
+		i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."),
+		QLatin1String(".R"), QLatin1String(),
+		[](const QString& infile, const QString& /*outfile*/, const QString& preview_id) {
+			auto command = QLatin1String("olddev <- dev.cur()\n"
+				".rk.startPreviewDevice(%2)\n"
+				"try(source(%1, local=TRUE, print.eval=TRUE))\n"
+				"if (olddev != 1) dev.set(olddev)\n");
+			return command.arg(RObject::rQuote(infile), RObject::rQuote(preview_id));
+		}
+	});
 }
 
 void RKCommandEditorWindow::initBlocks () {
@@ -540,8 +657,8 @@ void RKCommandEditorWindow::changePreviewMode (QAction *mode) {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (mode != action_no_preview) {
-		if (!preview_dir) {  // triggered on change from no preview to some preview, but not between previews
-			if (KMessageBox::warningContinueCancel (this, i18n ("<p>The preview feature <b>tries</b> to avoid making any lasting changes to your workspace (technically, by making use of a <i>local()</i> evaluation environment). <b>However, there are cases where using the preview feature may cause unexpected side-effects</b>.</p><p>In particular, this is the case for scripts that contain explicit assignments to <i>globalenv()</i>, or to scripts that alter files on your filesystem. Further, attaching/detaching packages or package namespaces will affect the entire running R session.</p><p>Please keep this in mind when using the preview feature, and especially when using the feature on scripts originating from untrusted sources.</p>"), i18n ("Potential side-effects of previews"), KStandardGuiItem::cont (), KStandardGuiItem::cancel (), QStringLiteral ("preview_side_effects")) != KMessageBox::Continue) {
+		if (!(preview_dir || RKWardMainWindow::suppressModalDialogsForTesting())) {  // triggered on change from no preview to some preview, but not between previews
+			if (KMessageBox::warningContinueCancel(this, i18n("<p>The preview feature <b>tries</b> to avoid making any lasting changes to your workspace (technically, by making use of a <i>local()</i> evaluation environment). <b>However, there are cases where using the preview feature may cause unexpected side-effects</b>.</p><p>In particular, this is the case for scripts that contain explicit assignments to <i>globalenv()</i>, or to scripts that alter files on your filesystem. Further, attaching/detaching packages or package namespaces will affect the entire running R session.</p><p>Please keep this in mind when using the preview feature, and especially when using the feature on scripts originating from untrusted sources.</p>"), i18n ("Potential side-effects of previews"), KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("preview_side_effects")) != KMessageBox::Continue) {
 				discardPreview ();
 			}
 		}
@@ -823,17 +940,18 @@ void RKCommandEditorWindow::copyLinesToOutput () {
 void RKCommandEditorWindow::doRenderPreview () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (action_no_preview->isChecked ()) return;
-	if (!preview_manager->needsCommand ()) return;
-	int mode = preview_modes->actions ().indexOf (preview_modes->checkedAction ());
+	if (action_no_preview->isChecked()) return;
+	if (!preview_manager->needsCommand()) return;
+	int nmode = preview_modes->actions().indexOf(preview_modes->checkedAction());
+	const PreviewMode &mode = preview_mode_list.value(nmode-1);
 
 	if (!preview_dir) {
-		preview_dir = new QTemporaryDir ();
+		preview_dir = new QTemporaryDir();
 		preview_input_file = nullptr;
 	}
 	if (preview_input_file) {
 		// When switching between .Rmd and .R previews, discard input file
-		if ((mode == RMarkdownPreview) != (preview_input_file->fileName().endsWith (".Rmd"))) {
+		if (!preview_input_file->fileName().endsWith(mode.input_ext)) {
 			delete preview_input_file;
 			preview_input_file = nullptr;
 		} else {
@@ -841,94 +959,36 @@ void RKCommandEditorWindow::doRenderPreview () {
 		}
 	}
 	if (!preview_input_file) { // NOT an else!
-		if (m_doc->url ().isEmpty () || !m_doc->url ().isLocalFile ()) {
-			preview_input_file = new QFile (QDir (preview_dir->path()).absoluteFilePath (mode == RMarkdownPreview ? "script.Rmd" : "script.R"));
+		if (m_doc->url().isEmpty() || !m_doc->url().isLocalFile()) {
+			preview_input_file = new QFile(QDir(preview_dir->path()).absoluteFilePath("script" + mode.input_ext));
 		} else {
 			// If the file is already saved, save the preview input as a temp file in the same folder.
 			// esp. .Rmd files might try to include other files by relative path.
 			QString tempfiletemplate = m_doc->url().adjusted(QUrl::RemoveFilename).toLocalFile();
-			tempfiletemplate.append(".tmp_XXXXXX.rkward_preview.R");
-			if (mode == RMarkdownPreview) tempfiletemplate.append("md");
+			tempfiletemplate.append(".tmp_XXXXXX.rkward_preview" + mode.input_ext);
 			preview_input_file = new QTemporaryFile(tempfiletemplate);
 		}
 	}
 
-	QString output_file = QDir (preview_dir->path()).absoluteFilePath ("output.html");  // NOTE: not needed by all types of preview
+	QString output_file = QDir(preview_dir->path()).absoluteFilePath("output" + mode.output_ext);  // NOTE: not needed by all types of preview
 
-	if (mode != GraphPreview && !preview->findChild<RKMDIWindow*>()) {
+	if (!preview->findChild<RKMDIWindow*>()) {
 		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
-		RInterface::issueCommand (".rk.with.window.hints (rk.show.html(" + RObject::rQuote (output_file) + "), \"\", " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
+		RInterface::issueCommand(".rk.with.window.hints (rk.show.html(\"_nothing_.html\"), \"\", " + RObject::rQuote(preview_manager->previewId()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
 	}
 
-	RK_ASSERT (preview_input_file->open (QIODevice::WriteOnly));
-	QTextStream out (preview_input_file);
-	out.setEncoding (QStringConverter::Utf8);     // make sure that all characters can be saved, without nagging the user
-	out << m_doc->text ();
-	preview_input_file->close ();
+	RK_ASSERT(preview_input_file->open(QIODevice::WriteOnly));
+	QTextStream out(preview_input_file);
+	out.setEncoding(QStringConverter::Utf8); // make sure that all characters can be saved, without nagging the user
+	out << m_doc->text();
+	preview_input_file->close();
 
-	QString command;
-	if (mode == RMarkdownPreview) {
-		preview->setLabel (i18n ("Preview of rendered R Markdown"));
+	QString command = mode.command(preview_input_file->fileName(), output_file, preview_manager->previewId());
+	preview->setLabel(mode.previewlabel);
+	preview->show();
 
-		command = "if (!nzchar(Sys.which(\"pandoc\"))) {\n"
-		           "	output <- rk.set.output.html.file(%2, silent=TRUE)\n"
-		           "	rk.header (" + RObject::rQuote (i18n ("Pandoc is not installed")) + ")\n"
-		           "	rk.print (" + RObject::rQuote (i18n ("The software <tt>pandoc</tt>, required to rendering R markdown files, is not installed, or not in the system path of "
-		                         "the running R session. You will need to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</a>.</br>"
-		                         "If it is installed, but cannot be found, try adding it to the system path of the running R session at "
-		                         "<a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>.")) + ")\n"
-		           "	rk.set.output.html.file(output, silent=TRUE)\n"
-		           "} else {\n"
-		           "	require(rmarkdown)\n"
-		           "	rmarkdown::render (%1, output_format=\"html_document\", output_file=%2, quiet=TRUE)\n"
-		           "}\n"
-		           "rk.show.html(%2)\n";
-		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
-	} else if (mode == RKOutputPreview) {
-		preview->setLabel (i18n ("Preview of generated RKWard output"));
-		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
-		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
-		          "try(source(%1, local=TRUE))\n"
-		          "rk.set.output.html.file(output, silent=TRUE)\n"
-		          "rk.show.html(%2)\n";
-		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
-	} else if (mode == GraphPreview) {
-		preview->setLabel (i18n ("Preview of generated plot"));
-		command = "olddev <- dev.cur()\n"
-		          ".rk.startPreviewDevice(%2)\n"
-		          "try(source(%1, local=TRUE, print.eval=TRUE))\n"
-		          "if (olddev != 1) dev.set(olddev)\n";
-		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (preview_manager->previewId ()));
-	} else if (mode == ConsolePreview) {
-		preview->setLabel (i18n ("Preview of script running in interactive R Console"));
-		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
-		          "on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
-		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
-		          "exprs <- expression(NULL)\n"
-		          "rk.capture.output(suppress.messages=TRUE)\n"
-		          "try({\n"
-		          "    exprs <- parse (%1, keep.source=TRUE)\n"
-		          "})\n"
-		          ".rk.cat.output(rk.end.capture.output(TRUE))\n"
-		          "for (i in seq_len(length(exprs))) {\n"
-		          "    rk.print.code(as.character(attr(exprs, \"srcref\")[[i]]))\n"
-		          "    rk.capture.output(suppress.messages=TRUE)\n"
-		          "    try({\n"
-		          "        withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE)\n"
-		          "    })\n"
-		          "    .rk.cat.output(rk.end.capture.output(TRUE))\n"
-		          "}\n"
-		          "rk.set.output.html.file(output, silent=TRUE)\n"
-		          "rk.show.html(%2)\n";
-		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
-	} else {
-		RK_ASSERT (false);
-	}
-
-	preview->show ();
-
-	RCommand *rcommand = new RCommand (".rk.with.window.hints (local ({\n" + command + QStringLiteral ("}), \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App);
-	preview_manager->setCommand (rcommand);
+	RCommand *rcommand = new RCommand(".rk.with.window.hints(local({\n" + command + QStringLiteral("}), \"\", ") + RObject::rQuote(preview_manager->previewId()) + ", style=\"preview\")", RCommand::App);
+	preview_manager->setCommand(rcommand);
 }
 
 void RKCommandEditorWindow::runAll () {

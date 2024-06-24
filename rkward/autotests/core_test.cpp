@@ -12,6 +12,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDir>
 #include <QLoggingCategory>
 #include <QRegularExpression>
+#include <QTemporaryFile>
+#include <QActionGroup>
 
 #include <KAboutData>
 #include <KLocalizedString>
@@ -29,6 +31,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/renvironmentobject.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkcommandlineargs.h"
+#include "../misc/rkxmlguipreviewarea.h"
 
 QElapsedTimer _test_timer;
 
@@ -380,6 +383,13 @@ private Q_SLOTS:
 	}
 
 	void RKConsoleHistoryTest() {
+		QTemporaryFile oldhist;
+		QTemporaryFile emptyhist;
+		emptyhist.open();
+		emptyhist.close();
+		RInterface::issueCommand(new RCommand("savehistory(" + RObject::rQuote(oldhist.fileName()) + "); loadhistory(" + RObject::rQuote(emptyhist.fileName()) + ")", RCommand::App));
+		waitForAllFinished();
+
 #		define UNIQUE_STRING "unique_command_string"
 		auto console = RKConsole::mainConsole();
 		console->pipeUserCommand("if (FALSE) " UNIQUE_STRING "()");
@@ -389,6 +399,9 @@ private Q_SLOTS:
 		console->pipeUserCommand("timestamp(prefix=\"" UNIQUE_STRING "\")");
 		waitForAllFinished();
 		QCOMPARE(console->commandHistory().filter(UNIQUE_STRING).size(), 3);
+
+		RInterface::issueCommand(new RCommand("loadhistory(" + RObject::rQuote(oldhist.fileName()) + ")", RCommand::App));
+		waitForAllFinished();
 	}
 
 	void RKDeviceTest() {
@@ -410,6 +423,44 @@ private Q_SLOTS:
 		});
 		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
 		waitForAllFinished(5000);  // priority_command_done must remain in scope until done
+	}
+
+	void ScriptWindowTest() {
+		QCOMPARE(RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow).size(), 0);
+
+		// pretty basic check: don't crash or assert on opening script window
+		QTemporaryFile f;
+		f.open();
+		f.write("plot(1,1)\n"); // Using a plot(), here is interesting in that it a) allows a plot preview b) a plot will also be generated, and
+		                        // immediately discarded for R console previews, which used to be prone to crashing
+		f.close();
+		const auto w = RKWorkplace::mainWorkplace()->openScriptEditor(QUrl::fromLocalFile(f.fileName()));
+		QVERIFY(w != nullptr);
+		auto wins = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
+		QCOMPARE(wins.size(), 1);
+		auto win = qobject_cast<RKCommandEditorWindow*>(wins[0]);
+		QVERIFY(win == w);
+		// opening the same url again shall re-use the window
+		const auto w2 = RKWorkplace::mainWorkplace()->openScriptEditor(QUrl::fromLocalFile(f.fileName()));
+		QVERIFY(win == w2);
+
+		// pretty basic check: don't crash or assert on switching between previews
+		// NOTE: first action is "no preview"
+		auto actions = win->preview_modes->actions();
+		QVERIFY(actions.size() > 4);
+		for (int i = actions.size() - 1; i >= 0; --i) {
+			auto a = actions[i];
+			if (a->isCheckable()) {
+				qDebug("action %s", qPrintable(a->text()));
+				a->trigger();  // NOTE: Using setChecked(true), here, would not emit the require QActionGroup::triggered() inside RKCommandEditorWindow
+				QVERIFY(a->isChecked());
+				win->doRenderPreview(); // don't wait for debounce timeout
+				waitForAllFinished(4000);
+				// TODO: check that a preview was actually generated
+			}
+		}
+		win->close(RKMDIWindow::NoAskSaveModified);
+		waitForAllFinished();
 	}
 
 	void restartRBackend() {

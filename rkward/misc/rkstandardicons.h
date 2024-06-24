@@ -102,6 +102,7 @@ public:
 		WindowFileBrowser,
 		WindowDebugConsole,
 		WindowCallstackViewer,
+		WindowPDF,
 
 		StatusWaitingUpdating,
 

@@ -11,6 +11,7 @@ SET(windows_STAT_SRCS
 	rkdebugconsole.cpp
 	rkcallstackviewer.cpp
 	rkhtmlwindow.cpp
+	rkpdfwindow.cpp
 	rcontrolwindow.cpp
 	detachedwindowcontainer.cpp
 	rkmdiwindow.cpp

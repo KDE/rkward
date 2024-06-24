@@ -29,6 +29,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
 #include "rkhtmlwindow.h"
+#include "rkpdfwindow.h"
 #include "rkworkplaceview.h"
 #include "rktoolwindowbar.h"
 #include "rktoolwindowlist.h"
@@ -238,7 +239,6 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 
 void RKWorkplace::setWindowNotManaged(RKMDIWindow* window) {
 	RK_TRACE (APP);
-	RK_ASSERT(window->state == RKMDIWindow::Attached);
 	window->state = RKMDIWindow::Detached;
 }
 
@@ -276,7 +276,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 			if (nw.window) {  // kill existing window (going to be replaced)
 				// TODO: this is not really elegant, yet, as it will change tab-placement (for attached windows), and discard / recreate container (for detached windows)
 				disconnect (nw.window, &QObject::destroyed, this, &RKWorkplace::namedWindowDestroyed);
-				nw.window->deleteLater ();
+				nw.window->close(RKMDIWindow::NoAskSaveModified);
 			}
 			nw.window = window;
 			connect (nw.window, &QObject::destroyed, this, &RKWorkplace::namedWindowDestroyed);
@@ -369,18 +369,6 @@ void RKWorkplace::registerNamedWindow (const QString& id, QObject* owner, QWidge
 	if (window) connect (window, &QObject::destroyed, this, &RKWorkplace::namedWindowOwnerDestroyed);
 }
 
-RKMDIWindow* RKWorkplace::getNamedWindow (const QString& id) {
-	RK_TRACE (APP);
-
-	for (int i = 0; i < named_windows.size (); ++i) {
-		if (named_windows[i].id == id) {
-			return named_windows[i].window;
-		}
-	}
-
-	return nullptr;
-}
-
 void RKWorkplace::namedWindowDestroyed (QObject* window) {
 	RK_TRACE (APP);
 
@@ -433,6 +421,9 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 		if (mimetype.inherits ("text/html")) {
 			openHelpWindow (url, true);
 			return true;	// TODO
+		} else if (mimetype.inherits("application/pdf")) {
+			openPDFWindow(url);
+			return true;
 		}
 		QString lname = url.fileName().toLower();
 		if (lname.endsWith(QLatin1String(".rdata")) || lname.endsWith(QLatin1String(".rda"))) {
@@ -481,6 +472,20 @@ RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& enco
 	return (editor);
 }
 
+RKMDIWindow* RKWorkplace::openPDFWindow(const QUrl &url) {
+	RK_TRACE(APP);
+	auto pw = getNamedWindow<RKPDFWindow>(window_name_override);
+	// TODO: also match by url?
+	if (pw) {
+		pw->openURL(url);
+	} else {
+		pw = new RKPDFWindow(view());
+		addWindow(pw);
+		pw->openURL(url);
+	}
+	return pw;
+}
+
 RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	RK_TRACE (APP);
 
@@ -501,20 +506,12 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 		}
 	}
 	// if we're working with a window hint, try to _reuse_ the existing window, even if it did not get found, above
-	if (!window_name_override.isEmpty ()) {
-		for (int i = 0; i < named_windows.size (); ++i) {
-			if (named_windows[i].id == window_name_override) {
-				RKHTMLWindow *w = dynamic_cast<RKHTMLWindow*> (named_windows[i].window);
-				if (w) {
-					w->openURL (url);
-//					w->activate ();   // HACK: Keep preview windows from stealing focus
-					return w;
-				}
-				break;
-			}
-		}
+	auto w = getNamedWindow<RKHTMLWindow>(window_name_override);
+	if (w) {
+		w->openURL (url);
+//		w->activate ();   // HACK: Keep preview windows from stealing focus
+		return w;
 	}
-
 
 	RKHTMLWindow *hw = new RKHTMLWindow (view (), RKHTMLWindow::HTMLHelpWindow);
 	hw->openURL (url);
@@ -853,6 +850,9 @@ QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
 	} else if (win->isType (RKMDIWindow::HelpWindow)) {
 		type = "help";
 		specification = static_cast<RKHTMLWindow*> (win)->restorableUrl ().url ();
+	} else if (win->isType(RKMDIWindow::PDFWindow)) {
+		type = "pdf";
+		specification = static_cast<RKPDFWindow*>(win)->url().url();
 	} else if (win->isToolWindow ()) {
 		type = RKToolWindowList::idOfWindow (win);
 	} else if (win->isType (RKMDIWindow::ObjectWindow)) {
@@ -930,6 +930,8 @@ RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, const ItemSpecifica
 		win = RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(dir->workPath()));
 	} else if (spec.type == "help") {
 		win = wp->openHelpWindow (checkAdjustRestoredUrl (spec.specification, base), true);
+	} else if (spec.type == "pdf") {
+		win = wp->openPDFWindow(checkAdjustRestoredUrl(spec.specification, base));
 	} else if (spec.type == "object") {
 		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
 		if (object) win = wp->newObjectViewer (object);

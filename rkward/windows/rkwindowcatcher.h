@@ -114,7 +114,7 @@ public:
 	RKCaughtX11Window (QWindow* window_to_embed, int device_number);
 	RKCaughtX11Window (RKGraphicsDevice *rkward_device, int device_number);
 /** dtor */
-	~RKCaughtX11Window ();
+	~RKCaughtX11Window() override;
 
 /** reimplemented from RKMDIWindow to switch to fixed size mode, and disable the dynamic_size_action */
 	void prepareToBeAttached () override;

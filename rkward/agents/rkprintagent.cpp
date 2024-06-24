@@ -20,11 +20,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KPluginFactory>
 #include <kcoreaddons_version.h>
 
+#include "../windows/rkpdfwindow.h"
 #include "../rkward.h"
 
 #include "../debug.h"
-
-#define OKULAR_LIBRARY_NAME "kf6/parts/okularpart"
 
 RKPrintAgent::RKPrintAgent(const QString &file, KParts::ReadOnlyPart *provider, bool delete_file) : QObject(), file(file), provider(provider), delete_file(delete_file) {
 	RK_TRACE (APP);
@@ -51,17 +50,13 @@ void fallbackToGeneric(const QString &file, bool delete_file) {
 void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	RK_TRACE (APP)
 
-	const KPluginMetaData okularPart(QStringLiteral(OKULAR_LIBRARY_NAME));
-	const QVariantList args {"ViewerWidget"};
-	auto result = KPluginFactory::instantiatePlugin<KParts::ReadOnlyPart>(okularPart, nullptr, args);
-
-	if(!result) {
+	auto provider = RKPDFWindow::getOkularPart({"ViewerWidget"});
+	if(!provider) {
 		RK_DEBUG(APP, DL_WARNING, "No valid postscript provider was found");
 		fallbackToGeneric(file, delete_file);
 		return;
 	}
 
-	auto provider = result.plugin;
 	QAction *printaction = provider->action("print");
 	if (!printaction) printaction = provider->action("file_print");
 	if (!printaction) {

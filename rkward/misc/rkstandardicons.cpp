@@ -116,6 +116,7 @@ void RKStandardIcons::doInitIcons () {
 	icons[WindowFileBrowser] = QIcon::fromTheme("folder");
 	icons[WindowDebugConsole] = QIcon::fromTheme("view-process-system");
 	icons[WindowCallstackViewer] = QIcon::fromTheme("view-sort-ascending");
+	icons[WindowPDF] = QIcon::fromTheme("application-pdf");
 
 	// TODO: We really want an hourglass symbol, or similar, here.
 	icons[StatusWaitingUpdating] = QIcon::fromTheme ("system-search");
@@ -181,6 +182,7 @@ QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
 	if (window->isType (RKMDIWindow::FileBrowserWindow)) return getIcon (WindowFileBrowser);
 	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return getIcon (WindowDebugConsole);
 	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return getIcon (WindowCallstackViewer);
+	if (window->isType(RKMDIWindow::PDFWindow)) return getIcon(WindowPDF);
 	if (window->isType (RKMDIWindow::DebugMessageWindow)) return QIcon();
 
 	RK_ASSERT (false);

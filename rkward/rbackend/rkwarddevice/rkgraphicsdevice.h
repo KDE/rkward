@@ -1,6 +1,6 @@
 /*
-rkgraphicsdevice_backendtransmitter - This file is part of the RKWard project. Created: Mon Mar 18 2013
-SPDX-FileCopyrightText: 2013-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+rkgraphicsdevice - This file is part of the RKWard project. Created: Mon Mar 18 2013
+SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -113,6 +113,7 @@ Q_SIGNALS:
 	void locatorDone (bool ok, double x, double y);
 	void newPageConfirmDone (bool accepted);
 	void captionChanged (const QString &caption);
+	void deviceClosed(int devnum);
 private Q_SLOTS:
 	void updateNow ();
 	void newPageDialogDone (int result);

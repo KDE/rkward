@@ -41,6 +41,7 @@ public:
 		HelpWindow=1 << 3,
 		X11Window=1 << 4,
 		ObjectWindow=1 << 5,
+		PDFWindow=1 << 6,
 		ConsoleWindow=1 << 10,
 		CommandLogWindow=1 << 11,
 		WorkspaceBrowserWindow=1 << 12,
@@ -82,7 +83,7 @@ public:
 /** @returns A short caption (e.g. only the filename without the path). Default implementation simply calls QWidget::caption () */
 	virtual QString shortCaption ();
 /** @returns The corresponding KPart for this window */
-	KParts::Part *getPart () { return part; };
+	KParts::Part *getPart() const { return part; };
 /** Is this window attached (or detached)?
 @returns true if attached, false if detached */
 	bool isAttached () const { return (state == Attached); };
