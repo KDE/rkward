@@ -77,14 +77,14 @@ void RKStandardIcons::doInitIcons () {
 	icons[ActionExpandDown] = loadThemeIcon("arrow-right");
 	icons[ActionCollapseUp] = loadThemeIcon("arrow-down");
 
-	icons[ActionDocumentInfo] = loadThemeIcon("documentinfo.png");
-	icons[ActionFlagGreen] = loadThemeIcon("flag-green.png");
-	icons[ActionSnapshot] = loadThemeIcon("list-add.png");
-	icons[ActionListPlots] = loadThemeIcon("view-preview.png");
-	icons[ActionRemovePlot] = loadThemeIcon("list-remove.png");
-	icons[ActionWindowDuplicate] = loadThemeIcon("window-duplicate.png");
+	icons[ActionDocumentInfo] = loadThemeIcon("documentinfo");
+	icons[ActionFlagGreen] = loadThemeIcon("flag-green");
+	icons[ActionSnapshot] = loadThemeIcon("list-add");
+	icons[ActionListPlots] = loadThemeIcon("view-preview");
+	icons[ActionRemovePlot] = loadThemeIcon("list-remove");
+	icons[ActionWindowDuplicate] = loadThemeIcon("window-duplicate");
 
-	icons[ActionClear] = loadThemeIcon("edit-clear.png");
+	icons[ActionClear] = loadThemeIcon("edit-clear");
 	icons[ActionInterrupt] = loadThemeIcon("media-playback-stop");
 
 	icons[ActionDetachWindow] = loadThemeIcon("view-fullscreen");
