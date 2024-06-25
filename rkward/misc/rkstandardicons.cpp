@@ -27,110 +27,114 @@ void RKStandardIcons::initIcons () {
 	instance->doInitIcons ();
 }
 
+static QIcon loadThemeIcon(const QString &name) {
+	auto ret = QIcon::fromTheme(name);
+	if (ret.isNull()) RK_DEBUG(MISC, DL_ERROR, "Theme icon %s could not be loaded", qPrintable(name));
+	return ret;
+}
+
+static QIcon loadRKWardIcon(const QString &name) {
+	// base path for icons provided by rkward itself
+	auto ret = QIcon(QStringLiteral(":/rkward/icons/") + name);
+	if (ret.isNull()) RK_DEBUG(MISC, DL_ERROR, "Custom icon %s could not be loaded", qPrintable(name));
+	return ret;
+}
+
 // TODO: With number of items growing, we should probably use a lazy-loading approach, instead:
 //       if (!loaded[thing]) initIcon (thing);
 //       return icons[thing];
 void RKStandardIcons::doInitIcons () {
 	RK_TRACE (APP);
 
-	// base path for icons provided by rkward itself
-	QString rkward_icon_base = ":/rkward/icons/";
-
 	// actions
-	icons[ActionRunAll] = QIcon (rkward_icon_base + "run_all.png");
-	icons[ActionRunLine] = QIcon (rkward_icon_base + "run_line.png");
-	icons[ActionRunSelection] = QIcon (rkward_icon_base + "run_selection.png");
-	icons[ActionCDToScript] = QIcon::fromTheme("folder-txt");
+	icons[ActionRunAll] = loadRKWardIcon("run_all.png");
+	icons[ActionRunLine] = loadRKWardIcon("run_line.png");
+	icons[ActionRunSelection] = loadRKWardIcon("run_selection.png");
+	icons[ActionCDToScript] = loadThemeIcon("folder-txt");
 
-	icons[ActionConfigurePackages] = QIcon::fromTheme("utilities-file-archiver");
-	icons[ActionConfigureGeneric] = QIcon::fromTheme("configure");
-	icons[ActionSearch] = QIcon::fromTheme("edit-find");
+	icons[ActionConfigurePackages] = loadThemeIcon("utilities-file-archiver");
+	icons[ActionConfigureGeneric] = loadThemeIcon("configure");
+	icons[ActionSearch] = loadThemeIcon("edit-find");
 
-	icons[ActionDeleteRow] = QIcon::fromTheme("edit-delete");
-	icons[ActionInsertRow] = QIcon::fromTheme("list-add");
+	icons[ActionDeleteRow] = loadThemeIcon("edit-delete");
+	icons[ActionInsertRow] = loadThemeIcon("list-add");
 	icons[ActionDeleteVar] = icons[ActionDeleteRow];
 	icons[ActionInsertVar] = icons[ActionInsertRow];
-	icons[ActionPasteInsideTable] = QIcon (rkward_icon_base + "paste_inside_table.png");
-	icons[ActionPasteInsideSelection] = QIcon (rkward_icon_base + "paste_inside_selection.png");
+	icons[ActionPasteInsideTable] = loadRKWardIcon("paste_inside_table.png");
+	icons[ActionPasteInsideSelection] = loadRKWardIcon("paste_inside_selection.png");
 
 	icons[ActionDelete] = icons[ActionDeleteRow];
-	icons[ActionAddRight] = QIcon::fromTheme("arrow-right");
-	icons[ActionRemoveLeft] = QIcon::fromTheme("arrow-left");
+	icons[ActionAddRight] = loadThemeIcon("arrow-right");
+	icons[ActionRemoveLeft] = loadThemeIcon("arrow-left");
 
-	icons[ActionMoveLeft] = QIcon::fromTheme("go-previous");
-	icons[ActionMoveRight] = QIcon::fromTheme("go-next");
-	icons[ActionMoveFirst] = QIcon::fromTheme("go-first");
-	icons[ActionMoveLast] = QIcon::fromTheme("go-last");
-	icons[ActionMoveUp] = QIcon::fromTheme("go-up");
-	icons[ActionMoveDown] = QIcon::fromTheme("go-down");
+	icons[ActionMoveLeft] = loadThemeIcon("go-previous");
+	icons[ActionMoveRight] = loadThemeIcon("go-next");
+	icons[ActionMoveFirst] = loadThemeIcon("go-first");
+	icons[ActionMoveLast] = loadThemeIcon("go-last");
+	icons[ActionMoveUp] = loadThemeIcon("go-up");
+	icons[ActionMoveDown] = loadThemeIcon("go-down");
 
-	icons[ActionExpandDown] = QIcon::fromTheme("arrow-right");
-	icons[ActionCollapseUp] = QIcon::fromTheme("arrow-down");
+	icons[ActionExpandDown] = loadThemeIcon("arrow-right");
+	icons[ActionCollapseUp] = loadThemeIcon("arrow-down");
 
-	icons[ActionDocumentInfo] = QIcon::fromTheme("documentinfo.png");
-	icons[ActionFlagGreen] = QIcon::fromTheme("flag-green.png");
-	icons[ActionSnapshot] = QIcon::fromTheme("list-add.png");
-	icons[ActionListPlots] = QIcon::fromTheme("view-preview.png");
-	icons[ActionRemovePlot] = QIcon::fromTheme("list-remove.png");
-	icons[ActionWindowDuplicate] = QIcon::fromTheme("window-duplicate.png");
+	icons[ActionDocumentInfo] = loadThemeIcon("documentinfo.png");
+	icons[ActionFlagGreen] = loadThemeIcon("flag-green.png");
+	icons[ActionSnapshot] = loadThemeIcon("list-add.png");
+	icons[ActionListPlots] = loadThemeIcon("view-preview.png");
+	icons[ActionRemovePlot] = loadThemeIcon("list-remove.png");
+	icons[ActionWindowDuplicate] = loadThemeIcon("window-duplicate.png");
 
-	icons[ActionClear] = QIcon::fromTheme("edit-clear.png");
-	icons[ActionInterrupt] = QIcon::fromTheme("media-playback-stop");
+	icons[ActionClear] = loadThemeIcon("edit-clear.png");
+	icons[ActionInterrupt] = loadThemeIcon("media-playback-stop");
 
-	icons[ActionDetachWindow] = QIcon::fromTheme("view-fullscreen");
-	icons[ActionAttachWindow] = QIcon::fromTheme("view-restore");
+	icons[ActionDetachWindow] = loadThemeIcon("view-fullscreen");
+	icons[ActionAttachWindow] = loadThemeIcon("view-restore");
 
-	icons[ActionLock] = QIcon::fromTheme("object-locked");
-	icons[ActionUnlock] = QIcon::fromTheme("object-unlocked");
+	icons[ActionLock] = loadThemeIcon("object-locked");
+	icons[ActionUnlock] = loadThemeIcon("object-unlocked");
 
-	icons[ActionShowMenu] = QIcon::fromTheme ("application-menu");
-	if (icons[ActionShowMenu].isNull ()) icons[ActionShowMenu] = QIcon (rkward_icon_base + "menu.svg");  // fallback
+	icons[ActionShowMenu] = loadThemeIcon("application-menu");
+	if (icons[ActionShowMenu].isNull ()) icons[ActionShowMenu] = loadRKWardIcon("menu.svg");  // fallback
 
 	// objects
-	icons[ObjectList] = QIcon (rkward_icon_base + "list.png");
-	icons[ObjectFunction] = QIcon (rkward_icon_base + "function.png");
-	icons[ObjectEnvironment] = QIcon::fromTheme("konqueror");
+	icons[ObjectList] = loadRKWardIcon("list.png");
+	icons[ObjectFunction] = loadRKWardIcon("function.png");
+	icons[ObjectEnvironment] = loadThemeIcon("konqueror");
 	icons[ObjectPackageEnvironment] = icons[ActionConfigurePackages];
-	icons[ObjectMatrix] = QIcon (rkward_icon_base + "matrix.png");
-	icons[ObjectDataFrame] = QIcon::fromTheme("x-office-spreadsheet");
-	icons[ObjectDataNumeric] = QIcon (rkward_icon_base + "data-numeric.png");
-	icons[ObjectDataFactor] = QIcon (rkward_icon_base + "data-factor.png");
-	icons[ObjectDataCharacter] = QIcon::fromTheme("draw-text");
-	icons[ObjectDataLogical] = QIcon (rkward_icon_base + "data-logical.png");
-	icons[ObjectDataUnknown] = QIcon::fromTheme("unknown");
+	icons[ObjectMatrix] = loadRKWardIcon("matrix.png");
+	icons[ObjectDataFrame] = loadThemeIcon("x-office-spreadsheet");
+	icons[ObjectDataNumeric] = loadRKWardIcon("data-numeric.png");
+	icons[ObjectDataFactor] = loadRKWardIcon("data-factor.png");
+	icons[ObjectDataCharacter] = loadThemeIcon("draw-text");
+	icons[ObjectDataLogical] = loadRKWardIcon("data-logical.png");
+	icons[ObjectDataUnknown] = loadThemeIcon("unknown");
 	icons[ObjectDataOther] = icons[ActionDeleteRow];
-	icons[ObjectPseudo] = QIcon (rkward_icon_base + "s4_slots.png");
+	icons[ObjectPseudo] = loadRKWardIcon("s4_slots.png");
 
 	// windows
 	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
-	icons[WindowCommandEditor] = QIcon::fromTheme("text-x-makefile");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
-	icons[WindowOutput] = QIcon::fromTheme("applications-education");
-	icons[WindowHelp] = QIcon::fromTheme("help-contents");
-	icons[WindowX11] = QIcon::fromTheme("applications-graphics");
-	icons[WindowObject] = QIcon::fromTheme("zoom-original");
-	icons[WindowConsole] = QIcon::fromTheme("utilities-terminal");
-	icons[WindowCommandLog] = QIcon::fromTheme("format-justify-left");
-	icons[WindowWorkspaceBrowser] = QIcon::fromTheme("view-list-tree");
-	icons[WindowSearchHelp] = QIcon::fromTheme("help-contents");
-	icons[WindowPendingJobs] = QIcon::fromTheme("system-run");
-	icons[WindowFileBrowser] = QIcon::fromTheme("folder");
-	icons[WindowDebugConsole] = QIcon::fromTheme("view-process-system");
-	icons[WindowCallstackViewer] = QIcon::fromTheme("view-sort-ascending");
-	icons[WindowPDF] = QIcon::fromTheme("application-pdf");
+	icons[WindowCommandEditor] = loadThemeIcon("text-x-makefile");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
+	icons[WindowOutput] = loadThemeIcon("applications-education");
+	icons[WindowHelp] = loadThemeIcon("help-contents");
+	icons[WindowX11] = loadThemeIcon("applications-graphics");
+	icons[WindowObject] = loadThemeIcon("zoom-original");
+	icons[WindowConsole] = loadThemeIcon("utilities-terminal");
+	icons[WindowCommandLog] = loadThemeIcon("format-justify-left");
+	icons[WindowWorkspaceBrowser] = loadThemeIcon("view-list-tree");
+	icons[WindowSearchHelp] = loadThemeIcon("help-contents");
+	icons[WindowPendingJobs] = loadThemeIcon("system-run");
+	icons[WindowFileBrowser] = loadThemeIcon("folder");
+	icons[WindowDebugConsole] = loadThemeIcon("view-process-system");
+	icons[WindowCallstackViewer] = loadThemeIcon("view-sort-ascending");
+	icons[WindowPDF] = loadThemeIcon("application-pdf");
 
 	// TODO: We really want an hourglass symbol, or similar, here.
-	icons[StatusWaitingUpdating] = QIcon::fromTheme ("system-search");
+	icons[StatusWaitingUpdating] = loadThemeIcon("system-search");
 
-	icons[DocumentPDF] = QIcon::fromTheme("application-pdf");
+	icons[DocumentPDF] = loadThemeIcon("application-pdf");
 
 	// this used to be accessible as QApplication::windowIcon(), but apparently no longer since Qt5 (despite documentation)
-	icons[RKWardIcon] = QIcon(rkward_icon_base + "rkward.svgz");
-
-	RK_DO ({
-		for (int i = ActionRunAll; i < Last; ++i) {
-			if (icons[i].isNull ()) qDebug ("Icon %d could not be loaded", i);
-		}
-	}, MISC, DL_ERROR);
+	icons[RKWardIcon] = loadRKWardIcon("rkward.svgz");
 }
 
 QIcon RKStandardIcons::iconForObject (const RObject* object) {
