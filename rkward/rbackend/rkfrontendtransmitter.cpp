@@ -225,6 +225,9 @@ void RKFrontendTransmitter::run () {
 	QString backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath()); // for running directly from the build tree, but also covers windows
 	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + "/" + REL_PATH_TO_LIB); // regular installation; rel path between bin and lib dir is calculated in cmake
 	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath()); // backend and lib both installed in libexec or similar
+#	if defined(Q_OS_MACOS)
+	if (backend_lib.isEmpty()) backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + "/../Frameworks"); // MacOS bundle: rkward in /MacOS, lib in /Framweorks
+#	endif
 #	if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);
 #	else
