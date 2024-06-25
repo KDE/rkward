@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-21 00:36+0000\n"
+"POT-Creation-Date: 2024-06-25 00:36+0000\n"
 "PO-Revision-Date: 2024-06-22 06:09+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Error loading workspace"
 msgstr "სამუშაო სივრცის ჩატვირთვის შეცდომა"
 
-#: rkward/agents/rkprintagent.cpp:42
+#: rkward/agents/rkprintagent.cpp:41
 #, kde-format
 msgid ""
 "No service was found to provide a KDE print dialog for PostScript files. We "
@@ -74,7 +74,7 @@ msgstr ""
 "დაყენებულია).<br><br> იფიქრეთ, დააყენოთ 'okular' ან მოირგეთ RKWard, რომ არ "
 "სცადოს KDE-ის ბეჭდვის დიალოგით დაბეჭდვა."
 
-#: rkward/agents/rkprintagent.cpp:42
+#: rkward/agents/rkprintagent.cpp:41
 #, kde-format
 msgid "Unable to open KDE print dialog"
 msgstr "KDE-ის ბეჭდვის ფანჯრის გახსნის შეცდომა"
@@ -2605,7 +2605,7 @@ msgstr "<b>მზადაა</b>"
 msgid "Close"
 msgstr "დახურვა"
 
-#: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:399
+#: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Keep waiting"
 msgstr "ლოდინის გაგრძელება"
@@ -3674,27 +3674,27 @@ msgstr "ენის ცვლილება"
 msgid "Changing the locale was canceled by user"
 msgstr "ლოკალის შეცვლა გაუქმდა მომხმარებლის მიერ"
 
-#: rkward/rbackend/rkrinterface.cpp:774
+#: rkward/rbackend/rkrinterface.cpp:777
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "ჩაწერის დაწყების მცდელობა ჩაწერის მიმდინარეობისას. გამოტოვება."
 
-#: rkward/rbackend/rkrinterface.cpp:782
+#: rkward/rbackend/rkrinterface.cpp:785
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "ფაილის ჩასაწერად გახსნა შეუძლებელია. ბრძანებების ჩაწერა არ მოხდება"
 
-#: rkward/rbackend/rkrinterface.cpp:793
+#: rkward/rbackend/rkrinterface.cpp:796
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "შეცდომა: უცნობი მოთხოვნა '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:874
+#: rkward/rbackend/rkrinterface.cpp:877
 #, kde-format
 msgid "R backend requests information"
 msgstr "R უკანაბოლოს ინფორმაცია სჭირდება"
 
-#: rkward/rbackend/rkrinterface.cpp:896
+#: rkward/rbackend/rkrinterface.cpp:899
 #, kde-format
 msgid ""
 "\n"
@@ -3705,7 +3705,7 @@ msgid ""
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:897
+#: rkward/rbackend/rkrinterface.cpp:900
 #, kde-format
 msgid "R engine has died"
 msgstr "R-ის ძრავა გარდაიცვალა"
@@ -3715,31 +3715,31 @@ msgstr "R-ის ძრავა გარდაიცვალა"
 msgid "Graphics Device Number %1"
 msgstr "გრაფიკის მოწყობილობის ნომერი %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:592
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (აქტიური)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:596
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (არააქტიური)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:620
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:622
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:630
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:634
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:636
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "ვაჩვენო შემდეგი ნახაზი?"
@@ -3774,7 +3774,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "კომპონენტი 'katepart' აღმოჩენილი არაა"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:380
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:486
 #, kde-format
 msgid "R Console"
 msgstr "R -ის კონსოლი"
@@ -5786,58 +5786,16 @@ msgstr "გადახედვის გარეშე"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:377
 #, kde-format
-msgid "R Markdown"
-msgstr "R Markdown"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:378
-#, kde-format
-msgid "RKWard Output"
-msgstr "RKWard-ის გამოტანა"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:379
-#, kde-format
-msgid "Plot"
-msgstr "გრაფიკი"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:382
-#, kde-format
 msgid "Disable preview"
 msgstr "მინიატურების გამორთვა"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:383
-#, kde-format
-msgid ""
-"Preview the script as rendered from RMarkdown format (appropriate for .Rmd "
-"files)."
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:384
-#, kde-format
-msgid "Preview the script as if it was run in the interactive R Console"
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:385
-#, kde-format
-msgid ""
-"Preview any onscreen graphics produced by running this script. This preview "
-"will be empty, if there is no call to <i>plot()</i> or other graphics "
-"commands."
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:386
-#, kde-format
-msgid ""
-"Preview any output to the RKWard Output Window. This preview will be empty, "
-"if there is no call to <i>rk.print()</i> or other RKWard output commands."
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:396
+#: rkward/windows/rkcommandeditorwindow.cpp:394
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "განახლება კრეფისას"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:397
+#: rkward/windows/rkcommandeditorwindow.cpp:395
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -5845,33 +5803,135 @@ msgid ""
 "will be updated whenever you save the script, only."
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:404
+#: rkward/windows/rkcommandeditorwindow.cpp:402
 #, kde-format
 msgid "Save Script..."
 msgstr "სკრიპტის შენახვა..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:406
+#: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
 msgid "Save Script As..."
 msgstr "სკრიპტის შენახვა, როგორც..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:482
-#: rkward/windows/rkcommandeditorwindow.cpp:742
+#: rkward/windows/rkcommandeditorwindow.cpp:433
+#, kde-format
+msgid "Pandoc is not installed"
+msgstr "Pandoc დაყენებული არაა"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:434
+#, kde-format
+msgid ""
+"The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
+"installed, or not in the system path of the running R session. You will need "
+"to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</"
+"a>.</br>If it is installed, but cannot be found, try adding it to the system "
+"path of the running R session at <a href=\"rkward://settings/rbackend"
+"\">Settings->Configure RKward->R-backend</a>."
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:444
+#, fuzzy, kde-format
+#| msgid "R Markdown"
+msgid "R Markdown (HTML)"
+msgstr "R Markdown"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:444
+#: rkward/windows/rkcommandeditorwindow.cpp:457
+#, kde-format
+msgid "Preview of rendered R Markdown"
+msgstr "დარენდერებული R მარკდაუნის მინიატურა"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:445
+#, kde-format
+msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:457
+#, fuzzy, kde-format
+#| msgid "R Markdown"
+msgid "R Markdown (PDF)"
+msgstr "R Markdown"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:458
+#, kde-format
+msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:462
+#, fuzzy, kde-format
+#| msgid "Pandoc is not installed"
+msgid "pdflatex is not installed"
+msgstr "Pandoc დაყენებული არაა"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:463
+#, kde-format
+msgid ""
+"pdflatex is required for rendering PDF previews. The easiest way to install "
+"it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:473
+#, kde-format
+msgid "RKWard Output"
+msgstr "RKWard-ის გამოტანა"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:473
+#, kde-format
+msgid "Preview of generated RKWard output"
+msgstr "შექმნილი RKWard-ის გამოტანის მინიატურა"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:474
+#, kde-format
+msgid ""
+"Preview any output to the RKWard Output Window. This preview will be empty, "
+"if there is no call to <i>rk.print()</i> or other RKWard output commands."
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:486
+#, kde-format
+msgid "Preview of script running in interactive R Console"
+msgstr "ინტერაქტიურ R-ის კონსოლში გაშვებული სკრიპტის მინიატურა"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:487
+#, kde-format
+msgid "Preview the script as if it was run in the interactive R Console"
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:513
+#, kde-format
+msgid "Plot"
+msgstr "გრაფიკი"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:513
+#, kde-format
+msgid "Preview of generated plot"
+msgstr "შექმნილი ნახაზის მინიატურა"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:514
+#, kde-format
+msgid ""
+"Preview any onscreen graphics produced by running this script. This preview "
+"will be empty, if there is no call to <i>plot()</i> or other graphics "
+"commands."
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:599
+#: rkward/windows/rkcommandeditorwindow.cpp:859
 #, kde-format
 msgid " [modified]"
 msgstr " [შეცვლილი]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:489
+#: rkward/windows/rkcommandeditorwindow.cpp:606
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "დოკუმენტი \"%1\" შეიცვალა. მაინც დავხურო?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:489
+#: rkward/windows/rkcommandeditorwindow.cpp:606
 #, kde-format
 msgid "File not saved"
 msgstr "ფაილი არ შენახულა"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:544
+#: rkward/windows/rkcommandeditorwindow.cpp:661
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -5885,64 +5945,28 @@ msgid ""
 "when using the feature on scripts originating from untrusted sources.</p>"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:544
+#: rkward/windows/rkcommandeditorwindow.cpp:661
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "მინიატურების შესაძლო გვერდითი ეფექტები"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:667
+#: rkward/windows/rkcommandeditorwindow.cpp:784
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:741
+#: rkward/windows/rkcommandeditorwindow.cpp:858
 #, kde-format
 msgid "Unnamed"
 msgstr "უსახელო"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:871
-#, kde-format
-msgid "Preview of rendered R Markdown"
-msgstr "დარენდერებული R მარკდაუნის მინიატურა"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:875
-#, kde-format
-msgid "Pandoc is not installed"
-msgstr "Pandoc დაყენებული არაა"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:876
-#, kde-format
-msgid ""
-"The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
-"installed, or not in the system path of the running R session. You will need "
-"to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</"
-"a>.</br>If it is installed, but cannot be found, try adding it to the system "
-"path of the running R session at <a href=\"rkward://settings/rbackend"
-"\">Settings->Configure RKward->R-backend</a>."
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:888
-#, kde-format
-msgid "Preview of generated RKWard output"
-msgstr "შექმნილი RKWard-ის გამოტანის მინიატურა"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:896
-#, kde-format
-msgid "Preview of generated plot"
-msgstr "შექმნილი ნახაზის მინიატურა"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:903
-#, kde-format
-msgid "Preview of script running in interactive R Console"
-msgstr "ინტერაქტიურ R-ის კონსოლში გაშვებული სკრიპტის მინიატურა"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:997
+#: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (აქტიური)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1016
+#: rkward/windows/rkcommandeditorwindow.cpp:1076
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (გამოყენებულია)"
@@ -6356,15 +6380,20 @@ msgstr "R-ის დოკუმენტაცია '%1'-ის შესა�
 msgid "BROKEN REFERENCE"
 msgstr "დაფუჭებული მიმართვა"
 
-#: rkward/windows/rkmdiwindow.cpp:421
+#: rkward/windows/rkmdiwindow.cpp:429
 #, kde-format
 msgid "Help on %1"
 msgstr "დახმარება: %1"
 
-#: rkward/windows/rkmdiwindow.cpp:425
+#: rkward/windows/rkmdiwindow.cpp:433
 #, kde-format
 msgid "Configure %1"
 msgstr "%1-ის მორგება"
+
+#: rkward/windows/rkpdfwindow.cpp:35
+#, kde-format
+msgid "No PDF viewer component found"
+msgstr ""
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -6489,7 +6518,7 @@ msgid ""
 "script editor, you need to open a script editor window, and activate it."
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:132
+#: rkward/windows/rkwindowcatcher.cpp:133
 #, kde-format
 msgid ""
 "You have tried to embed a new R graphics device window in RKWard. However, "
@@ -6497,13 +6526,13 @@ msgid ""
 "https://rkward.kde.org/mac for more information."
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:132
-#: rkward/windows/rkwindowcatcher.cpp:134
+#: rkward/windows/rkwindowcatcher.cpp:133
+#: rkward/windows/rkwindowcatcher.cpp:135
 #, kde-format
 msgid "Could not embed R X11 window"
 msgstr "R X11 ფანჯრის ჩაშენება შეუძლებელია"
 
-#: rkward/windows/rkwindowcatcher.cpp:134
+#: rkward/windows/rkwindowcatcher.cpp:135
 #, kde-format
 msgid ""
 "You have tried to embed a new R graphics device window in RKWard. However, "
@@ -6513,17 +6542,17 @@ msgid ""
 "Graphics."
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:308
+#: rkward/windows/rkwindowcatcher.cpp:310
 #, kde-format
 msgid "An error occurred"
 msgstr "შეცდომა"
 
-#: rkward/windows/rkwindowcatcher.cpp:310
+#: rkward/windows/rkwindowcatcher.cpp:312
 #, kde-format
 msgid "Graphics Device Window"
 msgstr "გრაფიკის მოწყობილობის ფანჯარა"
 
-#: rkward/windows/rkwindowcatcher.cpp:367
+#: rkward/windows/rkwindowcatcher.cpp:370
 #, kde-format
 msgid ""
 "The current window appears too large to fit on the screen. If this happens "
@@ -6531,22 +6560,22 @@ msgid ""
 "Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:367
+#: rkward/windows/rkwindowcatcher.cpp:370
 #, kde-format
 msgid "Large window"
 msgstr "დიდი ფანჯარა"
 
-#: rkward/windows/rkwindowcatcher.cpp:387
+#: rkward/windows/rkwindowcatcher.cpp:394
 #, kde-format
 msgid "Closing device (saving history)"
 msgstr "მოწყობილობის დახურვა (ისტორიის შენახვა)"
 
-#: rkward/windows/rkwindowcatcher.cpp:389
+#: rkward/windows/rkwindowcatcher.cpp:396
 #, kde-format
 msgid "Shutting down device number %1"
 msgstr "ითიშება მოწყობილობა ნომრით %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:395
+#: rkward/windows/rkwindowcatcher.cpp:402
 #, kde-format
 msgid ""
 "<p>The graphics device is being closed, saving the last plot to the plot "
@@ -6555,230 +6584,230 @@ msgid ""
 "last plot may be missing from the plot history, if you do this.</p>"
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:397
+#: rkward/windows/rkwindowcatcher.cpp:404
 #, kde-format
 msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
 "close it manually in this case.</p>"
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:399
+#: rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Close immediately"
 msgstr "დაუყოვნებლივ დახურვა"
 
-#: rkward/windows/rkwindowcatcher.cpp:528
+#: rkward/windows/rkwindowcatcher.cpp:535
 #, kde-format
 msgid "Specify fixed size"
 msgstr "მიუთითეთ ფიქსირებული ზომა"
 
-#: rkward/windows/rkwindowcatcher.cpp:533
+#: rkward/windows/rkwindowcatcher.cpp:540
 #, kde-format
 msgid "Width"
 msgstr "სიგანე"
 
-#: rkward/windows/rkwindowcatcher.cpp:543
+#: rkward/windows/rkwindowcatcher.cpp:550
 #, kde-format
 msgid "Height"
 msgstr "სიმაღლე"
 
-#: rkward/windows/rkwindowcatcher.cpp:577
+#: rkward/windows/rkwindowcatcher.cpp:584
 #, kde-format
 msgid "Activate graphics device number %1"
 msgstr "გრაფიკის მოწყობილობის გააქტიურება ნომრით %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:583
+#: rkward/windows/rkwindowcatcher.cpp:590
 #, kde-format
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "გრაფიკის მოწყობილობის %1 შემცველობის გამოტანაში კოპირება"
 
-#: rkward/windows/rkwindowcatcher.cpp:591
+#: rkward/windows/rkwindowcatcher.cpp:598
 #, kde-format
 msgid "Print contents of graphics device number %1"
 msgstr "გრაფიკის მოწყობილობის %1 შემცველობის დაბეჭდვა"
 
-#: rkward/windows/rkwindowcatcher.cpp:599
+#: rkward/windows/rkwindowcatcher.cpp:606
 #, kde-format
 msgid "Specify R object"
 msgstr "მიუთითეთ R-ის ობიექტი"
 
-#: rkward/windows/rkwindowcatcher.cpp:603
+#: rkward/windows/rkwindowcatcher.cpp:610
 #, kde-format
 msgid "Specify the R object name, you want to save the graph to"
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:623
+#: rkward/windows/rkwindowcatcher.cpp:630
 #, kde-format
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:632
+#: rkward/windows/rkwindowcatcher.cpp:639
 #, kde-format
 msgid "Duplicate graphics device number %1"
 msgstr "გრაფიკის მოწყობილობის ნომრით %1 დუბლირება"
 
-#: rkward/windows/rkwindowcatcher.cpp:638
+#: rkward/windows/rkwindowcatcher.cpp:645
 #, kde-format
 msgid "Load next plot in device number %1"
 msgstr "შემდეგი ნახაზის ჩატვირთვა მოწყობილობაში ნომრით %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:639
-#: rkward/windows/rkwindowcatcher.cpp:647
-#: rkward/windows/rkwindowcatcher.cpp:655
-#: rkward/windows/rkwindowcatcher.cpp:663
-#: rkward/windows/rkwindowcatcher.cpp:671
+#: rkward/windows/rkwindowcatcher.cpp:646
+#: rkward/windows/rkwindowcatcher.cpp:654
+#: rkward/windows/rkwindowcatcher.cpp:662
+#: rkward/windows/rkwindowcatcher.cpp:670
+#: rkward/windows/rkwindowcatcher.cpp:678
 #, kde-format
 msgid "Loading plot from history"
 msgstr "ნახაზის ჩატვირთვა ისტორიიდან"
 
-#: rkward/windows/rkwindowcatcher.cpp:646
+#: rkward/windows/rkwindowcatcher.cpp:653
 #, kde-format
 msgid "Load previous plot in device number %1"
 msgstr "წინა ნახაზის ჩატვირთვა მოწყობილობაში ნომრით %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:654
+#: rkward/windows/rkwindowcatcher.cpp:661
 #, kde-format
 msgid "Load first plot in device number %1"
 msgstr "პირველი ნახაზის ჩატვირთვა მოწყობილობაში ნომრით %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:662
+#: rkward/windows/rkwindowcatcher.cpp:669
 #, kde-format
 msgid "Load last plot in device number %1"
 msgstr "ბოლო ნახაზის ჩატვირთვა მოწყობილობაში ნომრით %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:670
+#: rkward/windows/rkwindowcatcher.cpp:677
 #, kde-format
 msgid "Load plot %1 in device number %2"
 msgstr "ნახაზის %1 ჩატვირთვა მოწყობილობაში ნომრით %2"
 
-#: rkward/windows/rkwindowcatcher.cpp:678
+#: rkward/windows/rkwindowcatcher.cpp:685
 #, kde-format
 msgid "Append this plot to history (device number %1)"
 msgstr "ამ ნახაზის ისტორიის ბოლოში მიწერა (მოწყობილობის ნომერი %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:684
+#: rkward/windows/rkwindowcatcher.cpp:691
 #, kde-format
 msgid "Remove current plot from history (device number %1)"
 msgstr "მიმდინარე ნახაზის წაშლა ისტორიიდან (მოწყობილობის ნომერი %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:690
+#: rkward/windows/rkwindowcatcher.cpp:697
 #, kde-format
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
 
-#: rkward/windows/rkwindowcatcher.cpp:692
+#: rkward/windows/rkwindowcatcher.cpp:699
 #, kde-format
 msgid "Clear plot history"
 msgstr "ნახაზის ისტორიის გასუფთავება"
 
-#: rkward/windows/rkwindowcatcher.cpp:698
+#: rkward/windows/rkwindowcatcher.cpp:705
 #, kde-format
 msgid "Plot properties (device number %1)"
 msgstr "ნახაზის თვისებები (მოწყობილობის ნომერი %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:712
+#: rkward/windows/rkwindowcatcher.cpp:719
 #, kde-format
 msgid "<Unsaved plot>"
 msgstr "<შეუნახავი ნახაზი>"
 
-#: rkward/windows/rkwindowcatcher.cpp:739
+#: rkward/windows/rkwindowcatcher.cpp:746
 #, kde-format
 msgid "Draw area follows size of window"
 msgstr "ხაზვის ალაგი ფანჯრის ზომას მიჰყვება"
 
-#: rkward/windows/rkwindowcatcher.cpp:746
+#: rkward/windows/rkwindowcatcher.cpp:753
 #, kde-format
 msgid "Set fixed size 500x500"
 msgstr "ფიქსირებული ზომის დაყენება: 500x500"
 
-#: rkward/windows/rkwindowcatcher.cpp:749
+#: rkward/windows/rkwindowcatcher.cpp:756
 #, kde-format
 msgid "Set fixed size 1000x1000"
 msgstr "ფიქსირებული ზომის დაყენება: 1000x1000"
 
-#: rkward/windows/rkwindowcatcher.cpp:752
+#: rkward/windows/rkwindowcatcher.cpp:759
 #, kde-format
 msgid "Set fixed size 2000x2000"
 msgstr "ფიქსირებული ზომის დაყენება: 2000x2000"
 
-#: rkward/windows/rkwindowcatcher.cpp:755
+#: rkward/windows/rkwindowcatcher.cpp:762
 #, kde-format
 msgid "Set specified fixed size..."
 msgstr "მითითებული ფიქსირებული ზომის დაყენება..."
 
-#: rkward/windows/rkwindowcatcher.cpp:760
+#: rkward/windows/rkwindowcatcher.cpp:767
 #, kde-format
 msgid "Previous plot"
 msgstr "წინა ნახაზი"
 
-#: rkward/windows/rkwindowcatcher.cpp:765
+#: rkward/windows/rkwindowcatcher.cpp:772
 #, kde-format
 msgid "First plot"
 msgstr "პირველი ნახაზი"
 
-#: rkward/windows/rkwindowcatcher.cpp:770
+#: rkward/windows/rkwindowcatcher.cpp:777
 #, kde-format
 msgid "Next plot"
 msgstr "შემდეგი ნახაზი"
 
-#: rkward/windows/rkwindowcatcher.cpp:775
+#: rkward/windows/rkwindowcatcher.cpp:782
 #, kde-format
 msgid "Last plot"
 msgstr "ბოლო ნახაზი"
 
-#: rkward/windows/rkwindowcatcher.cpp:778
+#: rkward/windows/rkwindowcatcher.cpp:785
 #, kde-format
 msgid "Go to plot"
 msgstr "გადასვლა ნახაზზე"
 
-#: rkward/windows/rkwindowcatcher.cpp:787
+#: rkward/windows/rkwindowcatcher.cpp:794
 #, kde-format
 msgid "Append this plot"
 msgstr "ამ ნახაზის ბოლოში მიწერა"
 
-#: rkward/windows/rkwindowcatcher.cpp:792
+#: rkward/windows/rkwindowcatcher.cpp:799
 #, kde-format
 msgid "Remove this plot"
 msgstr "ამ ნახაზის წაშლა"
 
-#: rkward/windows/rkwindowcatcher.cpp:798
+#: rkward/windows/rkwindowcatcher.cpp:805
 #, kde-format
 msgid "Clear history"
 msgstr "ისტორიის გაწმენდა"
 
-#: rkward/windows/rkwindowcatcher.cpp:804
+#: rkward/windows/rkwindowcatcher.cpp:811
 #, kde-format
 msgid "Plot properties"
 msgstr "ნახაზის თვისებები"
 
-#: rkward/windows/rkwindowcatcher.cpp:809
+#: rkward/windows/rkwindowcatcher.cpp:816
 #, kde-format
 msgid "Make active"
 msgstr "გააქტიურება"
 
-#: rkward/windows/rkwindowcatcher.cpp:813
+#: rkward/windows/rkwindowcatcher.cpp:820
 #, kde-format
 msgid "Copy to output"
 msgstr "კოპირება გამოტანაში"
 
-#: rkward/windows/rkwindowcatcher.cpp:817
+#: rkward/windows/rkwindowcatcher.cpp:824
 #, kde-format
 msgid "Store as R object..."
 msgstr "შენახვა R-ის ობიექტად..."
 
-#: rkward/windows/rkwindowcatcher.cpp:819
+#: rkward/windows/rkwindowcatcher.cpp:826
 #, kde-format
 msgid "Duplicate"
 msgstr "დუბლიკაცია"
 
-#: rkward/windows/rkwindowcatcher.cpp:823
+#: rkward/windows/rkwindowcatcher.cpp:830
 #, kde-format
 msgid "Stop interaction"
 msgstr "ურთიერთქმედების შეწყვეტა"
 
-#: rkward/windows/rkworkplace.cpp:452
+#: rkward/windows/rkworkplace.cpp:443
 #, kde-format
 msgid ""
 "The url you are trying to open ('%1') is not a local file or the filetype is "
@@ -6786,17 +6815,17 @@ msgid ""
 "application?"
 msgstr ""
 
-#: rkward/windows/rkworkplace.cpp:452
+#: rkward/windows/rkworkplace.cpp:443
 #, kde-format
 msgid "Open in default application?"
 msgstr "გავხსნა ნაგულისხმევ აპლიკაციაში?"
 
-#: rkward/windows/rkworkplace.cpp:539
+#: rkward/windows/rkworkplace.cpp:536
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
 msgstr "გამოტანის ფაილის გახსნა ჩავარდა. შეცდომის შეტყობინება: '%1'"
 
-#: rkward/windows/rkworkplace.cpp:648
+#: rkward/windows/rkworkplace.cpp:645
 #, kde-format
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
@@ -6811,17 +6840,17 @@ msgid ""
 "Really edit object?"
 msgstr ""
 
-#: rkward/windows/rkworkplace.cpp:648
+#: rkward/windows/rkworkplace.cpp:645
 #, kde-format
 msgid "About to edit very large object"
 msgstr "აპირებთ ძალიან დიდი ობიექტის რედაქტირებას"
 
-#: rkward/windows/rkworkplace.cpp:981
+#: rkward/windows/rkworkplace.cpp:983
 #, kde-format
 msgid "Save Workplace layout"
 msgstr "სამუშაო ადგილის განლაგების შენახვა"
 
-#: rkward/windows/rkworkplace.cpp:990
+#: rkward/windows/rkworkplace.cpp:992
 #, kde-format
 msgid "Restore Workplace layout"
 msgstr "სამუშაო ადგილის განლაგების აღდგენა"

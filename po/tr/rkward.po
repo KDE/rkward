@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-21 00:36+0000\n"
+"POT-Creation-Date: 2024-06-25 00:36+0000\n"
 "PO-Revision-Date: 2024-06-10 10:35+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Error loading workspace"
 msgstr "Çalışma Alanı Yükleme Hatası"
 
-#: rkward/agents/rkprintagent.cpp:42
+#: rkward/agents/rkprintagent.cpp:41
 #, kde-format
 msgid ""
 "No service was found to provide a KDE print dialog for PostScript files. We "
@@ -78,7 +78,7 @@ msgstr ""
 "deneyeceğiz.<br><br>‘Okular’ı kurmayı düşünün veya RKWard’ı, KDE yazdırma "
 "iletişim kutusunu kullanarak yazdırmayı denemeyecek şekilde yapılandırın."
 
-#: rkward/agents/rkprintagent.cpp:42
+#: rkward/agents/rkprintagent.cpp:41
 #, kde-format
 msgid "Unable to open KDE print dialog"
 msgstr "KDE Yazdırma Hizmeti Açılamadı"
@@ -2815,7 +2815,7 @@ msgstr "<b>Tamamlandı</b>"
 msgid "Close"
 msgstr "Kapat"
 
-#: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:399
+#: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Keep waiting"
 msgstr "Beklemeyi Sürdür"
@@ -3948,27 +3948,27 @@ msgstr "Yerel Ayar Değişikliği"
 msgid "Changing the locale was canceled by user"
 msgstr "Yerel ayarları değiştirme, kullanıcı tarafından iptal edildi"
 
-#: rkward/rbackend/rkrinterface.cpp:774
+#: rkward/rbackend/rkrinterface.cpp:777
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "Komutları kaydederken kaydetmeyi başlatma deneniyor. Yok sayılıyor."
 
-#: rkward/rbackend/rkrinterface.cpp:782
+#: rkward/rbackend/rkrinterface.cpp:785
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Dosya, yazmak için açılamadı. Komutlar kaydedilmiyor"
 
-#: rkward/rbackend/rkrinterface.cpp:793
+#: rkward/rbackend/rkrinterface.cpp:796
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Hata: Tanımlanamayan istek “%1”"
 
-#: rkward/rbackend/rkrinterface.cpp:874
+#: rkward/rbackend/rkrinterface.cpp:877
 #, kde-format
 msgid "R backend requests information"
 msgstr "R arka ucu bilgi talep ediyor"
 
-#: rkward/rbackend/rkrinterface.cpp:896
+#: rkward/rbackend/rkrinterface.cpp:899
 #, kde-format
 msgid ""
 "\n"
@@ -3986,7 +3986,7 @@ msgstr ""
 "kaydetmek veya açık veri düzenleyicilerden veri kopyalamaktır. Bundan sonra "
 "RKWard’dan çıkın. Üzgünüm!"
 
-#: rkward/rbackend/rkrinterface.cpp:897
+#: rkward/rbackend/rkrinterface.cpp:900
 #, kde-format
 msgid "R engine has died"
 msgstr "R işletkesi öldü"
@@ -3996,19 +3996,19 @@ msgstr "R işletkesi öldü"
 msgid "Graphics Device Number %1"
 msgstr "Grafik Aygıtı Numarası %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:592
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Etkin)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:596
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (Etkin Değil)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:620
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:622
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4017,14 +4017,14 @@ msgstr ""
 "<h2>Noktaları Bulmak</h2><p>Noktayı/noktaları seçmek için farenin sol "
 "düğmesini kullanın. Durdurmak için başka bir fare düğmesine basın.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:630
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Sonraki grafiği görmek için Giriş’e basın veya iptal etmek için ‘İptal’e "
 "tıklayın.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:634
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:636
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Sonraki grafiği gösterelim mi?"
@@ -4064,7 +4064,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "‘katepart’ Bileşeni Bulunamadı"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:380
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:486
 #, kde-format
 msgid "R Console"
 msgstr "R Konsolu"
@@ -6232,66 +6232,16 @@ msgstr "Önizleme yok"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:377
 #, kde-format
-msgid "R Markdown"
-msgstr "R Markdown"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:378
-#, kde-format
-msgid "RKWard Output"
-msgstr "RKWard Çıktısı"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:379
-#, kde-format
-msgid "Plot"
-msgstr "Grafik"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:382
-#, kde-format
 msgid "Disable preview"
 msgstr "Önizlemeyi Devre Dışı Bırak"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:383
-#, kde-format
-msgid ""
-"Preview the script as rendered from RMarkdown format (appropriate for .Rmd "
-"files)."
-msgstr ""
-"Betiği, RMarkdown biçiminden (.Rmd dosyaları için uygun) sunulduğu gibi "
-"önizle"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:384
-#, kde-format
-msgid "Preview the script as if it was run in the interactive R Console"
-msgstr "Komut dosyasını etkileşimli R Konsolunda çalıştırılmış gibi önizle"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:385
-#, kde-format
-msgid ""
-"Preview any onscreen graphics produced by running this script. This preview "
-"will be empty, if there is no call to <i>plot()</i> or other graphics "
-"commands."
-msgstr ""
-"Bu betiği çalıştırarak üretilen tüm ekran grafiklerini önizleyin. <i>plot()</"
-"i> veya diğer grafik komutlarına çağrı yapılmadığı takdirde bu önizleme boş "
-"olacaktır."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:386
-#, kde-format
-msgid ""
-"Preview any output to the RKWard Output Window. This preview will be empty, "
-"if there is no call to <i>rk.print()</i> or other RKWard output commands."
-msgstr ""
-"Herhangi bir çıktıyı RKWard Çıkış Penceresinde önizleyin. <i>rk.print()</"
-"i>’e veya diğer RKWard çıktı komutlarına çağrı yapılmadığı takdirde bu "
-"önizleme boş olacaktır."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:396
+#: rkward/windows/rkcommandeditorwindow.cpp:394
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Yazarken Bul"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:397
+#: rkward/windows/rkcommandeditorwindow.cpp:395
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6302,33 +6252,157 @@ msgstr ""
 "önizleme güncellemesi tetiklenecektir. Bu seçenek devre dışı bırakıldığında, "
 "önizleme yalnızca betiği her kaydettiğinizde güncellenecektir."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:404
+#: rkward/windows/rkcommandeditorwindow.cpp:402
 #, kde-format
 msgid "Save Script..."
 msgstr "Betiği Kaydet…"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:406
+#: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
 msgid "Save Script As..."
 msgstr "Betiği Farklı Kaydet…"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:482
-#: rkward/windows/rkcommandeditorwindow.cpp:742
+#: rkward/windows/rkcommandeditorwindow.cpp:433
+#, kde-format
+msgid "Pandoc is not installed"
+msgstr "Pandoc kurulu değil"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:434
+#, kde-format
+msgid ""
+"The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
+"installed, or not in the system path of the running R session. You will need "
+"to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</"
+"a>.</br>If it is installed, but cannot be found, try adding it to the system "
+"path of the running R session at <a href=\"rkward://settings/rbackend"
+"\">Settings->Configure RKward->R-backend</a>."
+msgstr ""
+"R Markdown dosyalarını oluşturmak için gereken <tt>pandoc</tt> yazılımı "
+"kurulu değil veya çalışan R oturumunun sistem yolunda değil. <a href="
+"\"https://pandoc.org/\">https://pandoc.org/</a> adresinden pandoc’u kurmanız "
+"gerekir.</br>Kurulurysa; ancak bulunamıyorsa, <a href=\"rkward://settings/"
+"rbackend\">Ayarlar → RKward Uygulamasını Yapılandır → R Arka Ucu</a> "
+"konumuna gidip çalışan R oturumunun sistem yoluna eklemeyi deneyin."
+
+#: rkward/windows/rkcommandeditorwindow.cpp:444
+#, fuzzy, kde-format
+#| msgid "R Markdown"
+msgid "R Markdown (HTML)"
+msgstr "R Markdown"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:444
+#: rkward/windows/rkcommandeditorwindow.cpp:457
+#, kde-format
+msgid "Preview of rendered R Markdown"
+msgstr "Sunulan R Markdown’un önizlemesi"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:445
+#, fuzzy, kde-format
+#| msgid ""
+#| "Preview the script as rendered from RMarkdown format (appropriate for ."
+#| "Rmd files)."
+msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+msgstr ""
+"Betiği, RMarkdown biçiminden (.Rmd dosyaları için uygun) sunulduğu gibi "
+"önizle"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:457
+#, fuzzy, kde-format
+#| msgid "R Markdown"
+msgid "R Markdown (PDF)"
+msgstr "R Markdown"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:458
+#, fuzzy, kde-format
+#| msgid ""
+#| "Preview the script as rendered from RMarkdown format (appropriate for ."
+#| "Rmd files)."
+msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+msgstr ""
+"Betiği, RMarkdown biçiminden (.Rmd dosyaları için uygun) sunulduğu gibi "
+"önizle"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:462
+#, fuzzy, kde-format
+#| msgid "Pandoc is not installed"
+msgid "pdflatex is not installed"
+msgstr "Pandoc kurulu değil"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:463
+#, kde-format
+msgid ""
+"pdflatex is required for rendering PDF previews. The easiest way to install "
+"it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:473
+#, kde-format
+msgid "RKWard Output"
+msgstr "RKWard Çıktısı"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:473
+#, kde-format
+msgid "Preview of generated RKWard output"
+msgstr "Üretilen R çıktısının önizlemesi"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:474
+#, kde-format
+msgid ""
+"Preview any output to the RKWard Output Window. This preview will be empty, "
+"if there is no call to <i>rk.print()</i> or other RKWard output commands."
+msgstr ""
+"Herhangi bir çıktıyı RKWard Çıkış Penceresinde önizleyin. <i>rk.print()</"
+"i>’e veya diğer RKWard çıktı komutlarına çağrı yapılmadığı takdirde bu "
+"önizleme boş olacaktır."
+
+#: rkward/windows/rkcommandeditorwindow.cpp:486
+#, kde-format
+msgid "Preview of script running in interactive R Console"
+msgstr "Etkileşimli R konsolunda çalışan betiğin önizlemesi"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:487
+#, kde-format
+msgid "Preview the script as if it was run in the interactive R Console"
+msgstr "Komut dosyasını etkileşimli R Konsolunda çalıştırılmış gibi önizle"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:513
+#, kde-format
+msgid "Plot"
+msgstr "Grafik"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:513
+#, kde-format
+msgid "Preview of generated plot"
+msgstr "Üretilen grafiğin önizlemesi"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:514
+#, kde-format
+msgid ""
+"Preview any onscreen graphics produced by running this script. This preview "
+"will be empty, if there is no call to <i>plot()</i> or other graphics "
+"commands."
+msgstr ""
+"Bu betiği çalıştırarak üretilen tüm ekran grafiklerini önizleyin. <i>plot()</"
+"i> veya diğer grafik komutlarına çağrı yapılmadığı takdirde bu önizleme boş "
+"olacaktır."
+
+#: rkward/windows/rkcommandeditorwindow.cpp:599
+#: rkward/windows/rkcommandeditorwindow.cpp:859
 #, kde-format
 msgid " [modified]"
 msgstr " [değiştirildi]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:489
+#: rkward/windows/rkcommandeditorwindow.cpp:606
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "“%1” belgesi değiştirildi. Yine de kapatılsın mı?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:489
+#: rkward/windows/rkcommandeditorwindow.cpp:606
 #, kde-format
 msgid "File not saved"
 msgstr "Dosya Kaydedilmedi"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:544
+#: rkward/windows/rkcommandeditorwindow.cpp:661
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6352,12 +6426,12 @@ msgstr ""
 "bu özelliği güvenilmeyen kaynaklardan gelen betiklerde kullanırken lütfen "
 "bunu aklınızda bulundurun.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:544
+#: rkward/windows/rkcommandeditorwindow.cpp:661
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Önizlemelerin olası yan etkileri"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:667
+#: rkward/windows/rkcommandeditorwindow.cpp:784
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6365,59 +6439,17 @@ msgstr ""
 "“%1” betiğinin kendiliğinden kaydı oluşturulmaya çalışılırken bir hata "
 "oluştu:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:741
+#: rkward/windows/rkcommandeditorwindow.cpp:858
 #, kde-format
 msgid "Unnamed"
 msgstr "Adsız"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:871
-#, kde-format
-msgid "Preview of rendered R Markdown"
-msgstr "Sunulan R Markdown’un önizlemesi"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:875
-#, kde-format
-msgid "Pandoc is not installed"
-msgstr "Pandoc kurulu değil"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:876
-#, kde-format
-msgid ""
-"The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
-"installed, or not in the system path of the running R session. You will need "
-"to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</"
-"a>.</br>If it is installed, but cannot be found, try adding it to the system "
-"path of the running R session at <a href=\"rkward://settings/rbackend"
-"\">Settings->Configure RKward->R-backend</a>."
-msgstr ""
-"R Markdown dosyalarını oluşturmak için gereken <tt>pandoc</tt> yazılımı "
-"kurulu değil veya çalışan R oturumunun sistem yolunda değil. <a href="
-"\"https://pandoc.org/\">https://pandoc.org/</a> adresinden pandoc’u kurmanız "
-"gerekir.</br>Kurulurysa; ancak bulunamıyorsa, <a href=\"rkward://settings/"
-"rbackend\">Ayarlar → RKward Uygulamasını Yapılandır → R Arka Ucu</a> "
-"konumuna gidip çalışan R oturumunun sistem yoluna eklemeyi deneyin."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:888
-#, kde-format
-msgid "Preview of generated RKWard output"
-msgstr "Üretilen R çıktısının önizlemesi"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:896
-#, kde-format
-msgid "Preview of generated plot"
-msgstr "Üretilen grafiğin önizlemesi"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:903
-#, kde-format
-msgid "Preview of script running in interactive R Console"
-msgstr "Etkileşimli R konsolunda çalışan betiğin önizlemesi"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:997
+#: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (Etkin)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1016
+#: rkward/windows/rkcommandeditorwindow.cpp:1076
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Kullanılmıyor)"
@@ -6856,15 +6888,20 @@ msgstr "“%1” Üzerinde R Başvurusu"
 msgid "BROKEN REFERENCE"
 msgstr "BOZUK BAŞVURU"
 
-#: rkward/windows/rkmdiwindow.cpp:421
+#: rkward/windows/rkmdiwindow.cpp:429
 #, kde-format
 msgid "Help on %1"
 msgstr "%1 Üzerine Yardım"
 
-#: rkward/windows/rkmdiwindow.cpp:425
+#: rkward/windows/rkmdiwindow.cpp:433
 #, kde-format
 msgid "Configure %1"
 msgstr "Yapılandır: %1"
+
+#: rkward/windows/rkpdfwindow.cpp:35
+#, kde-format
+msgid "No PDF viewer component found"
+msgstr ""
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -7005,7 +7042,7 @@ msgstr ""
 "betik düzenleyicisinin içinde kullanmak için bir betik düzenleyicisi "
 "penceresi açmanız ve onu etkinleştirmeniz gerekir."
 
-#: rkward/windows/rkwindowcatcher.cpp:132
+#: rkward/windows/rkwindowcatcher.cpp:133
 #, kde-format
 msgid ""
 "You have tried to embed a new R graphics device window in RKWard. However, "
@@ -7016,13 +7053,13 @@ msgstr ""
 "bu, şu anda macOS’teki RKWard’ın bu yapısında desteklenmemektedir. Daha "
 "fazla bilgi için https://rkward.kde.org/mac adresine bakın."
 
-#: rkward/windows/rkwindowcatcher.cpp:132
-#: rkward/windows/rkwindowcatcher.cpp:134
+#: rkward/windows/rkwindowcatcher.cpp:133
+#: rkward/windows/rkwindowcatcher.cpp:135
 #, kde-format
 msgid "Could not embed R X11 window"
 msgstr "R X11 penceresi gömülemiyor"
 
-#: rkward/windows/rkwindowcatcher.cpp:134
+#: rkward/windows/rkwindowcatcher.cpp:135
 #, kde-format
 msgid ""
 "You have tried to embed a new R graphics device window in RKWard. However, "
@@ -7037,17 +7074,17 @@ msgstr ""
 "olarak bildirmeyi düşünün. Alternatif olarak, Ayarlar → RKWard Uygulamasını "
 "Yapılandır → Ekran Grafikleri’ni değiştirmek isteyebilirsiniz."
 
-#: rkward/windows/rkwindowcatcher.cpp:308
+#: rkward/windows/rkwindowcatcher.cpp:310
 #, kde-format
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
-#: rkward/windows/rkwindowcatcher.cpp:310
+#: rkward/windows/rkwindowcatcher.cpp:312
 #, kde-format
 msgid "Graphics Device Window"
 msgstr "Grafik Aygıtı Penceresi"
 
-#: rkward/windows/rkwindowcatcher.cpp:367
+#: rkward/windows/rkwindowcatcher.cpp:370
 #, kde-format
 msgid ""
 "The current window appears too large to fit on the screen. If this happens "
@@ -7058,22 +7095,22 @@ msgstr ""
 "olarak oluyorsa Ayarlar → RKWard Uygulamasını Yapılandır → Ekran Grafikleri "
 "bölümünden öntanımlı grafik penceresi boyutunu ayarlamak isteyebilirsiniz."
 
-#: rkward/windows/rkwindowcatcher.cpp:367
+#: rkward/windows/rkwindowcatcher.cpp:370
 #, kde-format
 msgid "Large window"
 msgstr "Pencere Büyük"
 
-#: rkward/windows/rkwindowcatcher.cpp:387
+#: rkward/windows/rkwindowcatcher.cpp:394
 #, kde-format
 msgid "Closing device (saving history)"
 msgstr "Aygıt kapatılıyor (geçmiş kaydediliyor)"
 
-#: rkward/windows/rkwindowcatcher.cpp:389
+#: rkward/windows/rkwindowcatcher.cpp:396
 #, kde-format
 msgid "Shutting down device number %1"
 msgstr "%1 numaralı aygıt kapatılıyor"
 
-#: rkward/windows/rkwindowcatcher.cpp:395
+#: rkward/windows/rkwindowcatcher.cpp:402
 #, kde-format
 msgid ""
 "<p>The graphics device is being closed, saving the last plot to the plot "
@@ -7086,7 +7123,7 @@ msgstr ""
 "aygıtını hemen kapatabilirsiniz. Ancak bunu yaparsanız son grafik çizimi "
 "geçmişinde eksik olabilir.</p>"
 
-#: rkward/windows/rkwindowcatcher.cpp:397
+#: rkward/windows/rkwindowcatcher.cpp:404
 #, kde-format
 msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
@@ -7095,106 +7132,106 @@ msgstr ""
 "<p>Not: X11’de gömülü pencere silinebilir ve bu durumda onu elle kapatmanız "
 "gerekecektir.</p>"
 
-#: rkward/windows/rkwindowcatcher.cpp:399
+#: rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Close immediately"
 msgstr "Anında Kapat"
 
-#: rkward/windows/rkwindowcatcher.cpp:528
+#: rkward/windows/rkwindowcatcher.cpp:535
 #, kde-format
 msgid "Specify fixed size"
 msgstr "Sabit Boyutu Belirt"
 
-#: rkward/windows/rkwindowcatcher.cpp:533
+#: rkward/windows/rkwindowcatcher.cpp:540
 #, kde-format
 msgid "Width"
 msgstr "Genişlik"
 
-#: rkward/windows/rkwindowcatcher.cpp:543
+#: rkward/windows/rkwindowcatcher.cpp:550
 #, kde-format
 msgid "Height"
 msgstr "Yükseklik"
 
-#: rkward/windows/rkwindowcatcher.cpp:577
+#: rkward/windows/rkwindowcatcher.cpp:584
 #, kde-format
 msgid "Activate graphics device number %1"
 msgstr "%1 numaralı grafik aygıtını etkinleştir"
 
-#: rkward/windows/rkwindowcatcher.cpp:583
+#: rkward/windows/rkwindowcatcher.cpp:590
 #, kde-format
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "%1 numaralı grafik aygıtının içeriğini çıktıya kopyala"
 
-#: rkward/windows/rkwindowcatcher.cpp:591
+#: rkward/windows/rkwindowcatcher.cpp:598
 #, kde-format
 msgid "Print contents of graphics device number %1"
 msgstr "%1 numaralı grafik aygıtının içeriğini yazdır"
 
-#: rkward/windows/rkwindowcatcher.cpp:599
+#: rkward/windows/rkwindowcatcher.cpp:606
 #, kde-format
 msgid "Specify R object"
 msgstr "R Nesnesi Belirt"
 
-#: rkward/windows/rkwindowcatcher.cpp:603
+#: rkward/windows/rkwindowcatcher.cpp:610
 #, kde-format
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "Grafiğin kaydedileceği R nesnesinin adını belirt"
 
-#: rkward/windows/rkwindowcatcher.cpp:623
+#: rkward/windows/rkwindowcatcher.cpp:630
 #, kde-format
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "%1 numaralı grafik aygıtının içeriğini “%2” nesnesine kaydet"
 
-#: rkward/windows/rkwindowcatcher.cpp:632
+#: rkward/windows/rkwindowcatcher.cpp:639
 #, kde-format
 msgid "Duplicate graphics device number %1"
 msgstr "%1 numaralı grafik aygıtını çoğalt"
 
-#: rkward/windows/rkwindowcatcher.cpp:638
+#: rkward/windows/rkwindowcatcher.cpp:645
 #, kde-format
 msgid "Load next plot in device number %1"
 msgstr "%1 numaralı aygıta sonraki grafiği yükle"
 
-#: rkward/windows/rkwindowcatcher.cpp:639
-#: rkward/windows/rkwindowcatcher.cpp:647
-#: rkward/windows/rkwindowcatcher.cpp:655
-#: rkward/windows/rkwindowcatcher.cpp:663
-#: rkward/windows/rkwindowcatcher.cpp:671
+#: rkward/windows/rkwindowcatcher.cpp:646
+#: rkward/windows/rkwindowcatcher.cpp:654
+#: rkward/windows/rkwindowcatcher.cpp:662
+#: rkward/windows/rkwindowcatcher.cpp:670
+#: rkward/windows/rkwindowcatcher.cpp:678
 #, kde-format
 msgid "Loading plot from history"
 msgstr "Grafik geçmişten yükleniyor"
 
-#: rkward/windows/rkwindowcatcher.cpp:646
+#: rkward/windows/rkwindowcatcher.cpp:653
 #, kde-format
 msgid "Load previous plot in device number %1"
 msgstr "%1 numaralı aygıta önceki grafiği yükle"
 
-#: rkward/windows/rkwindowcatcher.cpp:654
+#: rkward/windows/rkwindowcatcher.cpp:661
 #, kde-format
 msgid "Load first plot in device number %1"
 msgstr "%1 numaralı aygıta ilk grafiği yükle"
 
-#: rkward/windows/rkwindowcatcher.cpp:662
+#: rkward/windows/rkwindowcatcher.cpp:669
 #, kde-format
 msgid "Load last plot in device number %1"
 msgstr "%1 numaralı aygıta son grafiği yükle"
 
-#: rkward/windows/rkwindowcatcher.cpp:670
+#: rkward/windows/rkwindowcatcher.cpp:677
 #, kde-format
 msgid "Load plot %1 in device number %2"
 msgstr "%2 numaralı aygıta %1 grafiğini yükle"
 
-#: rkward/windows/rkwindowcatcher.cpp:678
+#: rkward/windows/rkwindowcatcher.cpp:685
 #, kde-format
 msgid "Append this plot to history (device number %1)"
 msgstr "Bu grafiği geçmişe ekle (aygıt numarası %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:684
+#: rkward/windows/rkwindowcatcher.cpp:691
 #, kde-format
 msgid "Remove current plot from history (device number %1)"
 msgstr "Bu grafiği geçmişten kaldır (aygıt numarası %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:690
+#: rkward/windows/rkwindowcatcher.cpp:697
 #, kde-format
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
@@ -7203,117 +7240,117 @@ msgstr ""
 "Bu, yalnızca bunun değil, tüm aygıt pencerelerinin grafik geçmişini "
 "temizleyecektir. Amacınız bu değilse aşağıdaki iptal düğmesine basın."
 
-#: rkward/windows/rkwindowcatcher.cpp:692
+#: rkward/windows/rkwindowcatcher.cpp:699
 #, kde-format
 msgid "Clear plot history"
 msgstr "Grafik geçmişini temizle"
 
-#: rkward/windows/rkwindowcatcher.cpp:698
+#: rkward/windows/rkwindowcatcher.cpp:705
 #, kde-format
 msgid "Plot properties (device number %1)"
 msgstr "Grafik özellikleri (aygıt numarası %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:712
+#: rkward/windows/rkwindowcatcher.cpp:719
 #, kde-format
 msgid "<Unsaved plot>"
 msgstr "<kaydedilmemiş grafik>"
 
-#: rkward/windows/rkwindowcatcher.cpp:739
+#: rkward/windows/rkwindowcatcher.cpp:746
 #, kde-format
 msgid "Draw area follows size of window"
 msgstr "Çizdirme alanı pencerenin büyüklüğünü izler"
 
-#: rkward/windows/rkwindowcatcher.cpp:746
+#: rkward/windows/rkwindowcatcher.cpp:753
 #, kde-format
 msgid "Set fixed size 500x500"
 msgstr "Büyüklüğü 500 × 500 Olarak Ayarla"
 
-#: rkward/windows/rkwindowcatcher.cpp:749
+#: rkward/windows/rkwindowcatcher.cpp:756
 #, kde-format
 msgid "Set fixed size 1000x1000"
 msgstr "Büyüklüğü 1000 × 1000 Olarak Ayarla"
 
-#: rkward/windows/rkwindowcatcher.cpp:752
+#: rkward/windows/rkwindowcatcher.cpp:759
 #, kde-format
 msgid "Set fixed size 2000x2000"
 msgstr "Büyüklüğü 2000 × 2000 Olarak Ayarla"
 
-#: rkward/windows/rkwindowcatcher.cpp:755
+#: rkward/windows/rkwindowcatcher.cpp:762
 #, kde-format
 msgid "Set specified fixed size..."
 msgstr "Belirtilen Büyüklüğü Ayarla…"
 
-#: rkward/windows/rkwindowcatcher.cpp:760
+#: rkward/windows/rkwindowcatcher.cpp:767
 #, kde-format
 msgid "Previous plot"
 msgstr "Önceki Grafik"
 
-#: rkward/windows/rkwindowcatcher.cpp:765
+#: rkward/windows/rkwindowcatcher.cpp:772
 #, kde-format
 msgid "First plot"
 msgstr "İlk Grafik"
 
-#: rkward/windows/rkwindowcatcher.cpp:770
+#: rkward/windows/rkwindowcatcher.cpp:777
 #, kde-format
 msgid "Next plot"
 msgstr "Sonraki Grafik"
 
-#: rkward/windows/rkwindowcatcher.cpp:775
+#: rkward/windows/rkwindowcatcher.cpp:782
 #, kde-format
 msgid "Last plot"
 msgstr "Son Grafik"
 
-#: rkward/windows/rkwindowcatcher.cpp:778
+#: rkward/windows/rkwindowcatcher.cpp:785
 #, kde-format
 msgid "Go to plot"
 msgstr "Grafiğe Git"
 
-#: rkward/windows/rkwindowcatcher.cpp:787
+#: rkward/windows/rkwindowcatcher.cpp:794
 #, kde-format
 msgid "Append this plot"
 msgstr "Bu Grafiği İliştir"
 
-#: rkward/windows/rkwindowcatcher.cpp:792
+#: rkward/windows/rkwindowcatcher.cpp:799
 #, kde-format
 msgid "Remove this plot"
 msgstr "Bu Grafiği Kaldır"
 
-#: rkward/windows/rkwindowcatcher.cpp:798
+#: rkward/windows/rkwindowcatcher.cpp:805
 #, kde-format
 msgid "Clear history"
 msgstr "Geçmişi Temizle"
 
-#: rkward/windows/rkwindowcatcher.cpp:804
+#: rkward/windows/rkwindowcatcher.cpp:811
 #, kde-format
 msgid "Plot properties"
 msgstr "Grafik Özellikleri"
 
-#: rkward/windows/rkwindowcatcher.cpp:809
+#: rkward/windows/rkwindowcatcher.cpp:816
 #, kde-format
 msgid "Make active"
 msgstr "Etkin Yap"
 
-#: rkward/windows/rkwindowcatcher.cpp:813
+#: rkward/windows/rkwindowcatcher.cpp:820
 #, kde-format
 msgid "Copy to output"
 msgstr "Çıktıya Kopyala"
 
-#: rkward/windows/rkwindowcatcher.cpp:817
+#: rkward/windows/rkwindowcatcher.cpp:824
 #, kde-format
 msgid "Store as R object..."
 msgstr "R Nesnesi Olarak Tut…"
 
-#: rkward/windows/rkwindowcatcher.cpp:819
+#: rkward/windows/rkwindowcatcher.cpp:826
 #, kde-format
 msgid "Duplicate"
 msgstr "Çoğalt"
 
-#: rkward/windows/rkwindowcatcher.cpp:823
+#: rkward/windows/rkwindowcatcher.cpp:830
 #, kde-format
 msgid "Stop interaction"
 msgstr "Etkileşimi Durdur"
 
-#: rkward/windows/rkworkplace.cpp:452
+#: rkward/windows/rkworkplace.cpp:443
 #, kde-format
 msgid ""
 "The url you are trying to open ('%1') is not a local file or the filetype is "
@@ -7323,17 +7360,17 @@ msgstr ""
 "Açmaya çalıştığınız URL (“%1”) yerel bir dosya değil veya dosya türü RKWard "
 "tarafından desteklenmiyor. URL’yi öntanımlı uygulamada açmak istiyor musunuz?"
 
-#: rkward/windows/rkworkplace.cpp:452
+#: rkward/windows/rkworkplace.cpp:443
 #, kde-format
 msgid "Open in default application?"
 msgstr "Öntanımlı Uygulama İle Aç?"
 
-#: rkward/windows/rkworkplace.cpp:539
+#: rkward/windows/rkworkplace.cpp:536
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
 msgstr "Çıktı dosyası açılamadı. Hata iletisi “%1” idi"
 
-#: rkward/windows/rkworkplace.cpp:648
+#: rkward/windows/rkworkplace.cpp:645
 #, kde-format
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
@@ -7358,17 +7395,17 @@ msgstr ""
 "Genel altında yapılandırabilirsiniz (veya tümüyle kapatabilirsiniz).\n"
 "Nesne gerçekten düzenlensin mi?"
 
-#: rkward/windows/rkworkplace.cpp:648
+#: rkward/windows/rkworkplace.cpp:645
 #, kde-format
 msgid "About to edit very large object"
 msgstr "Çok büyük bir nesneyi düzenlenmek üzere"
 
-#: rkward/windows/rkworkplace.cpp:981
+#: rkward/windows/rkworkplace.cpp:983
 #, kde-format
 msgid "Save Workplace layout"
 msgstr "Çalışma Alanı Yerleşimini Kaydet"
 
-#: rkward/windows/rkworkplace.cpp:990
+#: rkward/windows/rkworkplace.cpp:992
 #, kde-format
 msgid "Restore Workplace layout"
 msgstr "Çalışma Alanı Yerleşimini Geri Yükle"
