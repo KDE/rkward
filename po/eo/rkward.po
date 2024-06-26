@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:36+0000\n"
+"POT-Creation-Date: 2024-06-26 00:36+0000\n"
 "PO-Revision-Date: 2024-06-10 23:33+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
@@ -3724,12 +3724,12 @@ msgstr ""
 "La backend rulebla ne estis trovita. Ĉi tio verŝajne estos problemo kun via "
 "instalado."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:292
+#: rkward/rbackend/rkfrontendtransmitter.cpp:295
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "La backend rulebla ne povis esti komencita. Erarmesaĝo estis: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:345
+#: rkward/rbackend/rkfrontendtransmitter.cpp:348
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3738,7 +3738,7 @@ msgstr ""
 "Eraro dum manpremo kun malantaŭa procezo. Atendita ĵetono '%1', ricevita "
 "ĵetono '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:348
+#: rkward/rbackend/rkfrontendtransmitter.cpp:351
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3749,7 +3749,7 @@ msgstr ""
 "'%1' dum backend estas '%2'.\n"
 "Bonvolu ripari vian instaladon."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:385
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3757,12 +3757,12 @@ msgstr ""
 "La malantaŭa procezo ne povus esti komencita. Bonvolu kontroli vian "
 "instaladon."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:383
+#: rkward/rbackend/rkfrontendtransmitter.cpp:386
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "La malantaŭa procezo malsukcesis komenci kun elirkodo %1, mesaĝo: '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:384
+#: rkward/rbackend/rkfrontendtransmitter.cpp:387
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Funkcia procezo eliris kun kodo %1, mesaĝo: '%2'."

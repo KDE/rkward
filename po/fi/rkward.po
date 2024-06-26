@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:36+0000\n"
+"POT-Creation-Date: 2024-06-26 00:36+0000\n"
 "PO-Revision-Date: 2018-12-04 13:52+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3672,19 +3672,19 @@ msgid ""
 msgstr ""
 "Taustaosaohjelmaa ei löydetty. Ongelma on todennäköisesti asennuksessasi."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:292
+#: rkward/rbackend/rkfrontendtransmitter.cpp:295
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "Taustaosaohjelmaa ei saatu käynnistettyä. Virheilmoitus oli: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:345
+#: rkward/rbackend/rkfrontendtransmitter.cpp:348
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
 "token '%2'"
 msgstr "Virhe taustaosaohjelmaa käteltäessä. Odotettiin ”%1”, saatiin ”%2”"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:348
+#: rkward/rbackend/rkfrontendtransmitter.cpp:351
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3695,19 +3695,19 @@ msgstr ""
 "versio on ”%1” ja taustaosan ”%2”.\n"
 "Korjaa asennus."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:385
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Taustaosaprosessia ei saatu käynnistettyä. Tarkista asennuksesi."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:383
+#: rkward/rbackend/rkfrontendtransmitter.cpp:386
 #, fuzzy, kde-format
 #| msgid "The backend process failed to start with exit code %1."
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Taustaosaprosessin käynnistyi epäonnistui paluukoodilla %1."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:384
+#: rkward/rbackend/rkfrontendtransmitter.cpp:387
 #, fuzzy, kde-format
 #| msgid "Backend process has exited with code %1."
 msgid "Backend process has exited with code %1, message: '%2'."

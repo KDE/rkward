@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:36+0000\n"
+"POT-Creation-Date: 2024-06-26 00:36+0000\n"
 "PO-Revision-Date: 2021-10-26 13:50-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -3740,14 +3740,14 @@ msgstr ""
 "Não foi possível encontrar o executável da infraestrutura. Provavelmente "
 "isso é um problema com sua instalação."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:292
+#: rkward/rbackend/rkfrontendtransmitter.cpp:295
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Não foi possível iniciar o executável da infraestrutura. A mensagem de erro "
 "foi: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:345
+#: rkward/rbackend/rkfrontendtransmitter.cpp:348
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3756,7 +3756,7 @@ msgstr ""
 "Erro durante a comunicação inicial com o processo da infraestrutura. Era "
 "esperado o elemento '%1', mas foi recebido o '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:348
+#: rkward/rbackend/rkfrontendtransmitter.cpp:351
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3768,7 +3768,7 @@ msgstr ""
 "infraestrutura é a versão '%2'.\n"
 "Corrija sua instalação."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:385
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3776,7 +3776,7 @@ msgstr ""
 "Não foi possível iniciar o processo da infraestrutura. Verifique sua "
 "instalação."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:383
+#: rkward/rbackend/rkfrontendtransmitter.cpp:386
 #, fuzzy, kde-format
 #| msgid "The backend process failed to start with exit code %1."
 msgid "The backend process failed to start with exit code %1, message: '%2'."
@@ -3784,7 +3784,7 @@ msgstr ""
 "O processo da infraestrutura não conseguiu iniciar devido ao erro com o "
 "código %1."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:384
+#: rkward/rbackend/rkfrontendtransmitter.cpp:387
 #, fuzzy, kde-format
 #| msgid "Backend process has exited with code %1."
 msgid "Backend process has exited with code %1, message: '%2'."

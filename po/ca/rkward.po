@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:36+0000\n"
-"PO-Revision-Date: 2024-06-10 10:44+0200\n"
+"POT-Creation-Date: 2024-06-26 00:36+0000\n"
+"PO-Revision-Date: 2024-06-25 13:03+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -3806,13 +3806,13 @@ msgstr ""
 "No s'ha pogut trobar l'executable del dorsal. Probablement es tracta d'un "
 "problema amb la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:292
+#: rkward/rbackend/rkfrontendtransmitter.cpp:295
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "No s'ha pogut iniciar l'executable del dorsal. El missatge d'error és: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:345
+#: rkward/rbackend/rkfrontendtransmitter.cpp:348
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3821,7 +3821,7 @@ msgstr ""
 "Error durant la conformitat de connexió amb el procés del dorsal. S'esperava "
 "el testimoni «%1», i s'ha rebut el testimoni «%2»"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:348
+#: rkward/rbackend/rkfrontendtransmitter.cpp:351
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3832,21 +3832,21 @@ msgstr ""
 "dorsal. El frontal té la versió «%1» mentre que el dorsal té la «%2».\n"
 "Esmeneu la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:385
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
 "No s'ha pogut iniciar el dorsal. Si us plau, comproveu la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:383
+#: rkward/rbackend/rkfrontendtransmitter.cpp:386
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "El procés del dorsal ha fallat en iniciar-se amb el codi de sortida %1, "
 "missatge: «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:384
+#: rkward/rbackend/rkfrontendtransmitter.cpp:387
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "El procés del dorsal ha sortit amb el codi %1, missatge: «%2»."
@@ -6404,10 +6404,9 @@ msgstr ""
 "R</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (HTML)"
-msgstr "R Markdown"
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6416,43 +6415,37 @@ msgid "Preview of rendered R Markdown"
 msgstr "Vista prèvia de l'R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:445
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
-"Previsualitza l'script renderitzat des del format RMarkdown (apropiat per a "
-"fitxers .Rmd)."
+"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:457
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (PDF)"
-msgstr "R Markdown"
+msgstr "R Markdown (PDF)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
 msgstr ""
-"Previsualitza l'script renderitzat des del format RMarkdown (apropiat per a "
-"fitxers .Rmd)."
+"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a PDF."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:462
-#, fuzzy, kde-format
-#| msgid "Pandoc is not installed"
+#, kde-format
 msgid "pdflatex is not installed"
-msgstr "El Pandoc no està instal·lat"
+msgstr "El «pdflatex» no està instal·lat"
 
+# skip-rule: t-acc_obe
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
 msgid ""
 "pdflatex is required for rendering PDF previews. The easiest way to install "
 "it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
 msgstr ""
+"Es necessita el «pdflatex» per a renderitzar vistes prèvies de PDF. La "
+"manera més fàcil d'instal·lar-lo és executar <tt>install.packages(\"tinytex"
+"\"); install_tinytex()</tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:473
 #, kde-format
@@ -7024,7 +7017,7 @@ msgstr "Configura %1"
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "No s'ha trobat cap component de visualització de PDF"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:36+0000\n"
+"POT-Creation-Date: 2024-06-26 00:36+0000\n"
 "PO-Revision-Date: 2024-06-11 09:23+0200\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -3603,13 +3603,13 @@ msgstr ""
 "Nepodařilo se najít spustitelný soubor podpůrné vrstvy. Jedná se "
 "pravděpodobně o problém s vaší instalací."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:292
+#: rkward/rbackend/rkfrontendtransmitter.cpp:295
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Nepodařilo se spustit spustitelný soubor podpůrné vrstvy. Zpráva o chybě: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:345
+#: rkward/rbackend/rkfrontendtransmitter.cpp:348
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3618,7 +3618,7 @@ msgstr ""
 "Chyba při komunikaci s procesem podpůrné vrstvy. Očekáván symbol '%1', "
 "obdržen symbol '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:348
+#: rkward/rbackend/rkfrontendtransmitter.cpp:351
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3629,18 +3629,18 @@ msgstr ""
 "ve verzi '%1' zatímco jádro je ve verzi '%2'.\n"
 "Prosím, opravte svou instalaci."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:385
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Nepodařilo se spustit proces jádra. Prosím, prověřte svou instalaci."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:383
+#: rkward/rbackend/rkfrontendtransmitter.cpp:386
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:384
+#: rkward/rbackend/rkfrontendtransmitter.cpp:387
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
@@ -6043,10 +6043,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (HTML)"
-msgstr "R Markdown"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6060,10 +6059,9 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:457
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (PDF)"
-msgstr "R Markdown"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
 #, kde-format
@@ -6071,10 +6069,9 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:462
-#, fuzzy, kde-format
-#| msgid "Not installed"
+#, kde-format
 msgid "pdflatex is not installed"
-msgstr "Nenainstalováno"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
