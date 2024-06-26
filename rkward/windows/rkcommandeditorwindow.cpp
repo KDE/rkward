@@ -99,7 +99,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 
 	QUrl url = _url;
 	m_doc = nullptr;
-	preview_dir = nullptr;
+	preview_io = nullptr;
 	visible_to_kateplugins = flags & RKCommandEditorFlags::VisibleToKTextEditorPlugins;
 	if (visible_to_kateplugins) addUiBuddy(RKWardMainWindow::getMain()->katePluginIntegration()->mainWindow()->dynamicGuiClient());
 	bool use_r_highlighting = (flags & RKCommandEditorFlags::ForceRHighlighting) || (url.isEmpty() && (flags & RKCommandEditorFlags::DefaultToRHighlighting)) || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName ());
@@ -653,11 +653,67 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 	}
 }
 
+class RKScriptPreviewIO {
+	QUrl url;
+	int preview_mode;
+	QTemporaryDir out_dir;
+	QFile* infile;
+	QString extension;
+	RKScriptPreviewIO(const QString &extension, const QUrl &url) : url(url), preview_mode(-1), out_dir(), infile(nullptr), extension(extension) {
+		const auto pattern = QLatin1String(".tmp_rkward_preview");
+		if (url.isEmpty() || !url.isLocalFile()) {
+			// Not locally saved: save to tempdir
+			infile = new QFile(QDir(out_dir.path()).absoluteFilePath(pattern + extension));
+		} else {
+			// If the file is already saved, save the preview input as a temp file in the same folder.
+			// esp. .Rmd files might try to include other files by relative path.
+			QString tempfiletemplate = url.adjusted(QUrl::RemoveFilename).toLocalFile();
+			tempfiletemplate.append(pattern + QLatin1String("XXXXXX") + extension);
+			infile = new QTemporaryFile(tempfiletemplate);
+		}
+	}
+	void write(KTextEditor::Document *doc) {
+		RK_ASSERT(infile->open(QIODevice::WriteOnly));
+		QTextStream out(infile);
+		out.setEncoding(QStringConverter::Utf8); // make sure that all characters can be saved, without nagging the user
+		out << doc->text();
+		infile->close();
+	}
+public:
+	~RKScriptPreviewIO() {
+		infile->remove();
+		delete infile;
+	}
+	static RKScriptPreviewIO* init(RKScriptPreviewIO *previous, KTextEditor::Document *doc, int preview_mode, const QString &extension) {
+		// Whenever possible, we try to reuse an existing temporary file, because
+		// a) If build files do spill (as happens with rmarkdown::render()), it will not be quite as many
+		// b) Faster in some cases
+		if (previous && previous->preview_mode == preview_mode && previous->url == doc->url() && previous->extension == extension) {
+			// If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in QFile::open(WriteOnly).
+			previous->infile->remove();
+			previous->write(doc);
+			return previous;
+		}
+		delete previous;
+		auto ret = new RKScriptPreviewIO(extension, doc->url());
+		ret->url = doc->url();
+		ret->preview_mode = preview_mode;
+		ret->write(doc);
+		return ret;
+	}
+	QString outpath(const QString &filename) const {
+		return QDir(out_dir.path()).absoluteFilePath(filename);
+	}
+	QString inpath() const {
+		return infile->fileName();
+	}
+};
+
 void RKCommandEditorWindow::changePreviewMode (QAction *mode) {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (mode != action_no_preview) {
-		if (!(preview_dir || RKWardMainWindow::suppressModalDialogsForTesting())) {  // triggered on change from no preview to some preview, but not between previews
+		if (!(preview_io || RKWardMainWindow::suppressModalDialogsForTesting())) {  // triggered on change from no preview to some preview, but not between previews
 			if (KMessageBox::warningContinueCancel(this, i18n("<p>The preview feature <b>tries</b> to avoid making any lasting changes to your workspace (technically, by making use of a <i>local()</i> evaluation environment). <b>However, there are cases where using the preview feature may cause unexpected side-effects</b>.</p><p>In particular, this is the case for scripts that contain explicit assignments to <i>globalenv()</i>, or to scripts that alter files on your filesystem. Further, attaching/detaching packages or package namespaces will affect the entire running R session.</p><p>Please keep this in mind when using the preview feature, and especially when using the feature on scripts originating from untrusted sources.</p>"), i18n ("Potential side-effects of previews"), KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("preview_side_effects")) != KMessageBox::Continue) {
 				discardPreview ();
 			}
@@ -672,14 +728,12 @@ void RKCommandEditorWindow::changePreviewMode (QAction *mode) {
 void RKCommandEditorWindow::discardPreview () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (preview_dir) {
+	if (preview_io) {
 		preview->hide ();
 		preview_manager->setPreviewDisabled ();
 		RInterface::issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
-		delete preview_dir;
-		preview_dir = nullptr;
-		delete preview_input_file;
-		preview_input_file = nullptr;
+		delete preview_io;
+		preview_io = nullptr;
 	}
 	action_no_preview->setChecked (true);
 }
@@ -945,45 +999,13 @@ void RKCommandEditorWindow::doRenderPreview () {
 	int nmode = preview_modes->actions().indexOf(preview_modes->checkedAction());
 	const PreviewMode &mode = preview_mode_list.value(nmode-1);
 
-	if (!preview_dir) {
-		preview_dir = new QTemporaryDir();
-		preview_input_file = nullptr;
-	}
-	if (preview_input_file) {
-		// When switching between .Rmd and .R previews, discard input file
-		if (!preview_input_file->fileName().endsWith(mode.input_ext)) {
-			delete preview_input_file;
-			preview_input_file = nullptr;
-		} else {
-			preview_input_file->remove ();  // If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in open(WriteOnly), below.
-		}
-	}
-	if (!preview_input_file) { // NOT an else!
-		if (m_doc->url().isEmpty() || !m_doc->url().isLocalFile()) {
-			preview_input_file = new QFile(QDir(preview_dir->path()).absoluteFilePath("script" + mode.input_ext));
-		} else {
-			// If the file is already saved, save the preview input as a temp file in the same folder.
-			// esp. .Rmd files might try to include other files by relative path.
-			QString tempfiletemplate = m_doc->url().adjusted(QUrl::RemoveFilename).toLocalFile();
-			tempfiletemplate.append(".tmp_XXXXXX.rkward_preview" + mode.input_ext);
-			preview_input_file = new QTemporaryFile(tempfiletemplate);
-		}
-	}
-
-	QString output_file = QDir(preview_dir->path()).absoluteFilePath("output" + mode.output_ext);  // NOTE: not needed by all types of preview
-
 	if (!preview->findChild<RKMDIWindow*>()) {
 		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
 		RInterface::issueCommand(".rk.with.window.hints (rk.show.html(\"_nothing_.html\"), \"\", " + RObject::rQuote(preview_manager->previewId()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
 	}
 
-	RK_ASSERT(preview_input_file->open(QIODevice::WriteOnly));
-	QTextStream out(preview_input_file);
-	out.setEncoding(QStringConverter::Utf8); // make sure that all characters can be saved, without nagging the user
-	out << m_doc->text();
-	preview_input_file->close();
-
-	QString command = mode.command(preview_input_file->fileName(), output_file, preview_manager->previewId());
+	preview_io = RKScriptPreviewIO::init(preview_io, m_doc, nmode, mode.input_ext);
+	QString command = mode.command(preview_io->inpath(), preview_io->outpath("output" + mode.output_ext), preview_manager->previewId());
 	preview->setLabel(mode.previewlabel);
 	preview->show();
 
