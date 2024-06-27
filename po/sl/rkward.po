@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-26 00:36+0000\n"
-"PO-Revision-Date: 2024-06-10 07:31+0200\n"
+"POT-Creation-Date: 2024-06-27 00:36+0000\n"
+"PO-Revision-Date: 2024-06-26 12:04+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -6288,10 +6288,9 @@ msgstr ""
 "\">Nastavitve->Konfiguriraj RKward->R-zaledje</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (HTML)"
-msgstr "R Markdown"
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6300,36 +6299,26 @@ msgid "Preview of rendered R Markdown"
 msgstr "Predogled upodobljenega R markdowna"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:445
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
-"Predogled skripta, kot je upodobljen iz formata RMarkdown (primerno za "
-"datoteke .Rmd)."
+"Predogled skripta, kot je upodobljen iz formata RMarkdown (.Rmd) v HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:457
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (PDF)"
-msgstr "R Markdown"
+msgstr "R Markdown (PDF)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
 msgstr ""
-"Predogled skripta, kot je upodobljen iz formata RMarkdown (primerno za "
-"datoteke .Rmd)."
+"Predogled skripta, kot je upodobljen iz formata RMarkdown (.Rmd) v PDF."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:462
-#, fuzzy, kde-format
-#| msgid "Pandoc is not installed"
+#, kde-format
 msgid "pdflatex is not installed"
-msgstr "Pandoc ni nameščen"
+msgstr "pdflatex ni nameščen"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
@@ -6337,6 +6326,9 @@ msgid ""
 "pdflatex is required for rendering PDF previews. The easiest way to install "
 "it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
 msgstr ""
+"pdflatex je potreben za upodabljanje predogledov PDF. Najlažji način za "
+"namestitev je z zagonom <tt>install.packages(\"tinytex\"); "
+"install_tinytex()</tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:473
 #, kde-format
@@ -6389,7 +6381,7 @@ msgstr ""
 "ukazov."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:599
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid " [modified]"
 msgstr " [spremenjeno]"
@@ -6404,7 +6396,7 @@ msgstr "Dokument »%1« je bil spremenjen. Ali ga vseeno želite zapreti?"
 msgid "File not saved"
 msgstr "Datoteka ni shranjena"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6427,12 +6419,12 @@ msgstr ""
 "izvaja.</p><p>Upoštevajte to pri uporabi predogledne funkcije in zlasti pri "
 "uporabi funkcije v skriptih, ki izvirajo iz nezaupanja vrednih virov.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Potencialni stranski učinki predogledov"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:784
+#: rkward/windows/rkcommandeditorwindow.cpp:838
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6440,17 +6432,17 @@ msgstr ""
 "Pri ustvarjanju samodejnega shranjevanje datoteke skripta '%1' je prišlo do "
 "napake:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:912
 #, kde-format
 msgid "Unnamed"
 msgstr "Neimenovano"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1057
+#: rkward/windows/rkcommandeditorwindow.cpp:1079
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktivno)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1076
+#: rkward/windows/rkcommandeditorwindow.cpp:1098
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (neuporabljeno)"
@@ -6899,7 +6891,7 @@ msgstr "Prilagodi %1"
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "Ni najdene komponente pregledovalnika PDF"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

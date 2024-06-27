@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-26 00:36+0000\n"
+"POT-Creation-Date: 2024-06-27 00:36+0000\n"
 "PO-Revision-Date: 2024-06-25 19:13+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -6374,7 +6374,7 @@ msgstr ""
 "eller andra grafikkommandon."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:599
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid " [modified]"
 msgstr " [ändrat]"
@@ -6389,7 +6389,7 @@ msgstr "Dokumentet \"%1\" har ändrats. Stäng det ändå?"
 msgid "File not saved"
 msgstr "Filen har inte sparats"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6413,28 +6413,28 @@ msgstr ""
 "förhandsgranskningsfunktionen används, i synnerhet när funktionen används "
 "med skript som ursprungligen kommer från opålitliga källor.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Potentiella sidoeffekter av förhandsgranskningar"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:784
+#: rkward/windows/rkcommandeditorwindow.cpp:838
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "Ett fel uppstod vid försök att automatiskt spara skriptfilen '%1':"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:912
 #, kde-format
 msgid "Unnamed"
 msgstr "Namnlös"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1057
+#: rkward/windows/rkcommandeditorwindow.cpp:1079
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktiv)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1076
+#: rkward/windows/rkcommandeditorwindow.cpp:1098
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (oanvänd)"

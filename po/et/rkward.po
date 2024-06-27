@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-26 00:36+0000\n"
+"POT-Creation-Date: 2024-06-27 00:36+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -6335,7 +6335,7 @@ msgstr ""
 "käsku <i>plot()</i> või teisi graafikakäske, on eelvaatlus tühi."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:599
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid " [modified]"
 msgstr " [muudetud]"
@@ -6350,7 +6350,7 @@ msgstr "Dokumenti \"%1\" on muudetud. Kas ikkagi see sulgeda?"
 msgid "File not saved"
 msgstr "Faili ei ole salvestatud"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6373,28 +6373,28 @@ msgstr ""
 "eelvaatluse tarvitamisel meeles, eriti siis, kui kasutad seda skriptidega, "
 "mis on pärit ebausaldusväärsest allikast.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Eelvaatluse võimalikud kõrvalmõjud"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:784
+#: rkward/windows/rkcommandeditorwindow.cpp:838
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "Skriptifaili \"%1\" automaatsel salvestamisel tekkis tõrge:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:912
 #, kde-format
 msgid "Unnamed"
 msgstr "Nimeta"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1057
+#: rkward/windows/rkcommandeditorwindow.cpp:1079
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktiivne)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1076
+#: rkward/windows/rkcommandeditorwindow.cpp:1098
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (kasutamata)"

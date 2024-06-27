@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-26 00:36+0000\n"
-"PO-Revision-Date: 2024-06-11 09:23+0200\n"
+"POT-Creation-Date: 2024-06-27 00:36+0000\n"
+"PO-Revision-Date: 2024-06-26 15:09+0200\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6045,7 +6045,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #, kde-format
 msgid "R Markdown (HTML)"
-msgstr ""
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6061,7 +6061,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:457
 #, kde-format
 msgid "R Markdown (PDF)"
-msgstr ""
+msgstr "R Markdown (PDF)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
 #, kde-format
@@ -6071,7 +6071,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:462
 #, kde-format
 msgid "pdflatex is not installed"
-msgstr ""
+msgstr "pdflatex není nainstalován"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
@@ -6126,7 +6126,7 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:599
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid " [modified]"
 msgstr " [změněno]"
@@ -6141,7 +6141,7 @@ msgstr ""
 msgid "File not saved"
 msgstr "Soubor neuložen"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6155,28 +6155,28 @@ msgid ""
 "when using the feature on scripts originating from untrusted sources.</p>"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:784
+#: rkward/windows/rkcommandeditorwindow.cpp:838
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:912
 #, kde-format
 msgid "Unnamed"
 msgstr "Nepojmenované"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1057
+#: rkward/windows/rkcommandeditorwindow.cpp:1079
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (Aktivní)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1076
+#: rkward/windows/rkcommandeditorwindow.cpp:1098
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Nepoužito)"
@@ -6603,7 +6603,7 @@ msgstr "Nastavit %1"
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "Žádná komponenta prohlížeče PDF nebyla nalezena"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

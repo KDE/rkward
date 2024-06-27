@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-26 00:36+0000\n"
+"POT-Creation-Date: 2024-06-27 00:36+0000\n"
 "PO-Revision-Date: 2021-10-26 13:50-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -6421,7 +6421,7 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:599
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid " [modified]"
 msgstr " [modificado]"
@@ -6436,7 +6436,7 @@ msgstr "O documento \"%1\" foi modificado. Deseja fechá-lo mesmo assim?"
 msgid "File not saved"
 msgstr "O arquivo não foi salvo"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6450,12 +6450,12 @@ msgid ""
 "when using the feature on scripts originating from untrusted sources.</p>"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:784
+#: rkward/windows/rkcommandeditorwindow.cpp:838
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6463,17 +6463,17 @@ msgstr ""
 "Ocorreu um erro ao tentar criar um salvamento automático do arquivo do "
 "script '%1':"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:912
 #, kde-format
 msgid "Unnamed"
 msgstr "Sem nome"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1057
+#: rkward/windows/rkcommandeditorwindow.cpp:1079
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (ativo)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1076
+#: rkward/windows/rkcommandeditorwindow.cpp:1098
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (não usado)"

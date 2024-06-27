@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-26 00:36+0000\n"
-"PO-Revision-Date: 2024-06-10 11:36+0200\n"
+"POT-Creation-Date: 2024-06-27 00:36+0000\n"
+"PO-Revision-Date: 2024-06-25 14:28+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6370,10 +6370,9 @@ msgstr ""
 "di R</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (HTML)"
-msgstr "Markdown di R"
+msgstr "Markdown di R (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6382,36 +6381,28 @@ msgid "Preview of rendered R Markdown"
 msgstr "Anteprima del Markdown di R reso"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:445
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
-"Esegue l'anteprima dello script come se fosse reso dal formato RMarkdown "
-"(appropriato per i file .Rmd)."
+"Visualizza l'anteprima dello script come se fosse reso dal formato RMarkdown "
+"(.Rmd) in HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:457
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (PDF)"
-msgstr "Markdown di R"
+msgstr "Markdown di R (PDF)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
 msgstr ""
-"Esegue l'anteprima dello script come se fosse reso dal formato RMarkdown "
-"(appropriato per i file .Rmd)."
+"Visualizza l'anteprima dello script come reso dal formato RMarkdown (.Rmd) "
+"in PDF."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:462
-#, fuzzy, kde-format
-#| msgid "Pandoc is not installed"
+#, kde-format
 msgid "pdflatex is not installed"
-msgstr "Pandoc non è installato"
+msgstr "pdflatex non è installato"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
@@ -6419,6 +6410,9 @@ msgid ""
 "pdflatex is required for rendering PDF previews. The easiest way to install "
 "it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
 msgstr ""
+"pdflatex è richiesto per generare le anteprime PDF. Il modo più semplice per "
+"installarlo è eseguire <tt>install.packages(\"tinytex\"); install_tinytex()</"
+"tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:473
 #, kde-format
@@ -6474,7 +6468,7 @@ msgstr ""
 "grafici."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:599
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid " [modified]"
 msgstr " [modificato]"
@@ -6489,7 +6483,7 @@ msgstr "Il documento «%1» è stato modificato. Lo chiudo ugualmente?"
 msgid "File not saved"
 msgstr "File non salvato"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6513,12 +6507,12 @@ msgstr ""
 "presente quando usi la funzionalità di anteprima, specialmente se la usi da "
 "script che provengano da sorgenti non fidate.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Potenziali effetti collaterali dell'anteprima"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:784
+#: rkward/windows/rkcommandeditorwindow.cpp:838
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6526,17 +6520,17 @@ msgstr ""
 "Si è verificato un errore nel tentativo di creare un salvataggio automatico "
 "del file di script «%1»:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:912
 #, kde-format
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1057
+#: rkward/windows/rkcommandeditorwindow.cpp:1079
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (Attivo)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1076
+#: rkward/windows/rkcommandeditorwindow.cpp:1098
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Inutilizzato)"
@@ -6989,7 +6983,7 @@ msgstr "Configura %1"
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "Nessun componente per la visualizzazione dei PDF trovato"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
