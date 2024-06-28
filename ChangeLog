@@ -1,3 +1,4 @@
+- Fixed: Basic statistics would refuse to "overwrite file", even if saving to file was unchecked
 - Added: Ability to open PDF documents inside the RKWard window, and associated R function rk.show.pdf()
 - Fixed: Add breeze icons as a fallback on systems that use a different icon theme (fixes missing icons)
 - Added: Setup dialog includes setting to select a different R installation

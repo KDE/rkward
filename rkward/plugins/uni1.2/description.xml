@@ -8,6 +8,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 <document>
 	<code file="code.js"/>
 	<logic>
+		<connect client="file.enabled" governor="save_to_file.state" />
+
 		<connect client="constMad.enabled" governor="mad.state" />
 		<connect client="pourcent.enabled" governor="trim.state" />
 		<connect client="winsor.enabled" governor="huber.state" />

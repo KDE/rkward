@@ -1,6 +1,6 @@
 /*
 rkpluginbrowser - This file is part of RKWard (https://rkward.kde.org). Created: Sat Mar 10 2005
-SPDX-FileCopyrightText: 2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2005-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -30,7 +30,8 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	connect (selection, &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::textChanged);
 
 	setRequired (xml->getBoolAttribute (element, "required", true, DL_INFO));
-	connect (requirednessProperty (), &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::validateInput);
+	connect(requirednessProperty(), &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::validateInput);
+	connect(enablednessProperty(), &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::validateInput);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
