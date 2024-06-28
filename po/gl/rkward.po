@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-27 00:36+0000\n"
-"PO-Revision-Date: 2024-06-10 21:24+0200\n"
+"PO-Revision-Date: 2024-06-27 21:13+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6342,10 +6342,9 @@ msgstr ""
 "Infraestrutura de R</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (HTML)"
-msgstr "Markdown de R"
+msgstr "Markdown de R (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6354,36 +6353,28 @@ msgid "Preview of rendered R Markdown"
 msgstr "Vista previa de Markdown de R renderizado"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:445
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
-"Obter unha vista previa do guión como se renderiza en formato RMarkdown "
-"(axeitado para ficheiros .Rmd)."
+"Obter unha vista previa do guión como se renderiza de formato RMarkdown (."
+"Rmd) a HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:457
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (PDF)"
-msgstr "Markdown de R"
+msgstr "Markdown de R (PDF)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
 msgstr ""
-"Obter unha vista previa do guión como se renderiza en formato RMarkdown "
-"(axeitado para ficheiros .Rmd)."
+"Obter unha vista previa do guión como se renderiza de formato RMarkdown (."
+"Rmd) a PDF."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:462
-#, fuzzy, kde-format
-#| msgid "Pandoc is not installed"
+#, kde-format
 msgid "pdflatex is not installed"
-msgstr "Pandoc non está instalado"
+msgstr "pdflatex non está instalado"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
@@ -6391,6 +6382,9 @@ msgid ""
 "pdflatex is required for rendering PDF previews. The easiest way to install "
 "it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
 msgstr ""
+"pdflatex é necesario para renderizar vistas previas de PDF. A forma máis "
+"doada de instalalo é executar <tt>install.packages(\"tinytex\"); "
+"install_tinytex()</tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:473
 #, kde-format
@@ -6960,7 +6954,7 @@ msgstr "Configurar %1"
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "Non se atopou ningún compoñente de visor de PDF."
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
