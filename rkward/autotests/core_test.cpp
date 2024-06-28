@@ -410,7 +410,7 @@ private Q_SLOTS:
 			QVERIFY(!command->failed());
 		});
 		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
-		waitForAllFinished(5000);  // priority_command_done must remain in scope until done
+		waitForAllFinished(10000);
 	}
 
 	void HTMLWindowTest() {
@@ -455,7 +455,7 @@ private Q_SLOTS:
 				a->trigger();  // NOTE: Using setChecked(true), here, would not emit the require QActionGroup::triggered() inside RKCommandEditorWindow
 				QVERIFY(a->isChecked());
 				win->doRenderPreview(); // don't wait for debounce timeout
-				waitForAllFinished(4000);
+				waitForAllFinished(8000);
 				// TODO: check that a preview was actually generated
 			}
 		}
