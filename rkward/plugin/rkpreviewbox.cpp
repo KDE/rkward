@@ -8,7 +8,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qcheckbox.h>
+#include <QGroupBox>
 #include <qtimer.h>
 #include <QTextDocument>
 
@@ -47,14 +47,16 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	toggle_preview_box = new QCheckBox (xml->i18nStringAttribute (element, "label", i18n ("Preview"), DL_INFO), this);
-	vbox->addWidget (toggle_preview_box);
-	toggle_preview_box->setChecked (preview_active);
-	connect (toggle_preview_box, &QCheckBox::stateChanged, this, &RKPreviewBox::changedStateFromUi);
+	toggle_preview_box = new QGroupBox(xml->i18nStringAttribute(element, "label", i18n ("Preview"), DL_INFO), this);
+	toggle_preview_box->setCheckable(true);
+	toggle_preview_box->setAlignment(Qt::AlignLeft);
+	vbox->addWidget(toggle_preview_box);
+	toggle_preview_box->setChecked(preview_active);
+	connect(toggle_preview_box, &QGroupBox::toggled, this, &RKPreviewBox::changedStateFromUi);
 
 	// status label
-	status_label = RKCommonFunctions::wordWrappedLabel (QString ());
-	vbox->addWidget (status_label);
+	auto box_layout = new QVBoxLayout(toggle_preview_box);
+	box_layout->addWidget(manager->inlineStatusWidget());
 
 	// prepare placement
 	placement_command = ".rk.with.window.hints ({";
@@ -66,7 +68,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	if (placement == DockedPreview) {
 		RKStandardComponent *uicomp = topmostStandardComponent ();
 		if (uicomp) {
-			uicomp->addDockedPreview (state, toggle_preview_box->text (), manager->previewId ());
+			uicomp->addDockedPreview(state, toggle_preview_box->title(), manager);
 
 			if (preview_mode == OutputPreview) {
 				RInterface::issueCommand ("local ({\n"
@@ -158,10 +160,12 @@ void RKPreviewBox::changedStateFromUi () {
 void RKPreviewBox::tryPreview () {
 	RK_TRACE (PLUGIN);
 
-	if (isEnabled () && toggle_preview_box->isChecked ()) update_timer->start (10);
-	else killPreview ();
-
-	status_label->setText (manager->shortStatusLabel ());
+	if (isEnabled() && toggle_preview_box->isChecked()) {
+		update_timer->start(10);
+	} else {
+		killPreview();
+		manager->setPreviewDisabled();
+	}
 }
 
 void RKPreviewBox::tryPreviewNow () {

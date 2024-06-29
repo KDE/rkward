@@ -21,6 +21,7 @@ class RKStandardComponentStack;
 class ScriptBackend;
 class QTimer;
 class RKXMLGUIPreviewArea;
+class RKPreviewManager;
 
 /** The standard type of component (i.e. stand-alone), previously known as "plugin". This is the type of component described by an XML-file
 
@@ -74,7 +75,7 @@ public:
 /** Return the GUI-scripting handler (creating it, if needed) */
 	RKComponentScriptingProxy* scriptingProxy ();
 
-	RKXMLGUIPreviewArea *addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id = QString ());
+	RKXMLGUIPreviewArea *addDockedPreview(RKComponentPropertyBool *controller, const QString& label, RKPreviewManager *manager);
 Q_SIGNALS:
 	void standardInitializationComplete ();
 public Q_SLOTS:

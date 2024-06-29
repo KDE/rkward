@@ -185,8 +185,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	if (visible_to_kateplugins) {
 		Q_EMIT RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow()->viewCreated (m_view);
 	}
-	preview = new RKXMLGUIPreviewArea (QString(), this);
-	preview_manager = new RKPreviewManager (this);
+	preview_manager = new RKPreviewManager(this);
+	preview = new RKXMLGUIPreviewArea(QString(), this, preview_manager);
 	connect (preview_manager, &RKPreviewManager::statusChanged, this, [this]() { preview_timer.start (500); });
 	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {

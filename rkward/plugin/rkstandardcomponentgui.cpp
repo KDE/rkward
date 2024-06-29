@@ -143,7 +143,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 	if (!enslaved) {
 		// code display
-		RKXMLGUIPreviewArea *area = addDockedPreview (&code_display_visibility, i18n ("Code Preview"), QString (), true);
+		RKXMLGUIPreviewArea *area = addDockedPreview(&code_display_visibility, i18n("Code Preview"), nullptr, true);
 		code_display = new RKCommandEditorWindow(nullptr, QUrl(), QString(), RKCommandEditorFlags::DefaultToRHighlighting);
 		code_display->setReadOnly (true);
 		code_display_visibility.setBoolValue (!enslaved && RKSettingsModulePlugins::showCodeByDefault ());
@@ -269,10 +269,10 @@ void RKStandardComponentGUI::finalize () {
 	main_widget->updateGeometry ();
 }
 
-RKXMLGUIPreviewArea* RKStandardComponentGUI::addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id, bool bottom) {
+RKXMLGUIPreviewArea* RKStandardComponentGUI::addDockedPreview(RKComponentPropertyBool *controller, const QString& label, RKPreviewManager *manager, bool bottom) {
 	RK_TRACE (PLUGIN);
 
-	RKXMLGUIPreviewArea *area = new RKXMLGUIPreviewArea(label, nullptr);
+	RKXMLGUIPreviewArea *area = new RKXMLGUIPreviewArea(label, nullptr, manager);
 	PreviewArea parea;
 	parea.preview_area = area;
 	parea.widget = area;   // may be replaced by a wrapper in "finalize"
@@ -280,8 +280,8 @@ RKXMLGUIPreviewArea* RKStandardComponentGUI::addDockedPreview (RKComponentProper
 	parea.position = bottom ? Qt::Vertical : Qt::Horizontal;
 	previews.insert (0, parea);
 
-	if (!id.isEmpty ()) {
-		RKWorkplace::mainWorkplace ()->registerNamedWindow (id, this, area);
+	if (manager) {
+		RKWorkplace::mainWorkplace()->registerNamedWindow(manager->previewId(), this, area);
 	}
 	return area;
 };

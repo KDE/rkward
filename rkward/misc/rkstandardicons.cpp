@@ -95,6 +95,7 @@ void RKStandardIcons::doInitIcons () {
 
 	icons[ActionShowMenu] = loadThemeIcon("application-menu");
 	if (icons[ActionShowMenu].isNull ()) icons[ActionShowMenu] = loadRKWardIcon("menu.svg");  // fallback
+	icons[ActionClose] = loadThemeIcon("window-close");
 
 	// objects
 	icons[ObjectList] = loadRKWardIcon("list.png");

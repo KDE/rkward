@@ -75,7 +75,7 @@ public:
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
 	void showEvent (QShowEvent *e) override;
-	RKXMLGUIPreviewArea* addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id=QString (), bool bottom = false);
+	RKXMLGUIPreviewArea* addDockedPreview(RKComponentPropertyBool *controller, const QString& label, RKPreviewManager *manager, bool bottom = false);
 /** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
 	virtual void finalize ();
 public Q_SLOTS:

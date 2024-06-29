@@ -354,12 +354,12 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	Q_EMIT standardInitializationComplete();
 }
 
-RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview (RKComponentPropertyBool* controller, const QString& label, const QString &id) {
-	RK_TRACE (PLUGIN);
+RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview(RKComponentPropertyBool* controller, const QString& label, RKPreviewManager *manager) {
+	RK_TRACE(PLUGIN);
 
-	RK_ASSERT (gui);
+	RK_ASSERT(gui);
 	if (!gui) return nullptr;
-	return gui->addDockedPreview (controller, label, id);
+	return gui->addDockedPreview(controller, label, manager);
 }
 
 RKComponentBase::ComponentStatus RKStandardComponent::recursiveStatus () {

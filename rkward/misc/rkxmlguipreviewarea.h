@@ -21,12 +21,14 @@ class QLabel;
 class RKMDIWindow;
 class KXMLGUIBuilder;
 class KXMLGUIFactory;
+class RKPreviewStatusNote;
+class RKPreviewManager;
 
 class RKXMLGUIPreviewArea : public QWidget {
 	Q_OBJECT
 public:
-	RKXMLGUIPreviewArea (const QString &label, QWidget* parent);
-	~RKXMLGUIPreviewArea ();
+	RKXMLGUIPreviewArea(const QString &label, QWidget* parent, RKPreviewManager* manager);
+	~RKXMLGUIPreviewArea();
 	QString label() const;
 	void setLabel(const QString &label);
 	void setWindow(RKMDIWindow* window);
@@ -36,6 +38,7 @@ Q_SIGNALS:
 	void previewClosed (RKXMLGUIPreviewArea *preview);
 private:
 	QLabel *lab;
+	RKPreviewStatusNote *statusnote;
 	QMenu *menu;
 	QMenuBar *menubar;
 	QPointer<KParts::Part> current;
@@ -59,15 +62,16 @@ public:
 	/** Start the next preview update, as given by command. You must call needsCommand() first, to check whether the next command is
 	 *  ready to go. */
 	void setCommand (RCommand *command);
-	bool needsCommand () const { return !updating && (update_pending == UpdatePending); };
-	QString previewId () const { return id; };
-	QString shortStatusLabel () const;
+	bool needsCommand() const { return !updating && (update_pending == UpdatePending); };
+	QString previewId() const { return id; };
+	QWidget* inlineStatusWidget();
 Q_SIGNALS:
-	void statusChanged ();
+	void statusChanged(RKPreviewManager *);
 private Q_SLOTS:
 	void previewCommandDone (RCommand *command);
 private:
-	void setStatusMessage (const QString &);
+friend class RKPreviewStatusNote;
+	void updateStatusDisplay(const QString &warnings=QString());
 	enum {
 		NoUpdatePending,
 		NoUpdatePossible,
@@ -75,6 +79,7 @@ private:
 		UpdatePending
 	} update_pending;
 	bool updating;
+	bool current_preview_failed;
 	QString id;
 };
 

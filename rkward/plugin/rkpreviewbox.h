@@ -12,7 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkcomponentproperties.h"
 
-class QCheckBox;
+class QGroupBox;
 class QDomElement;
 class QLabel;
 class QTimer;
@@ -55,8 +55,7 @@ private:
 		DockedPreview
 	} placement;
 	QTimer *update_timer;
-	QCheckBox *toggle_preview_box;
-	QLabel *status_label;
+	QGroupBox *toggle_preview_box;
 	RKComponentPropertyCode *code_property;
 	QString idprop;
 	QString placement_command;

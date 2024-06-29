@@ -15,11 +15,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QDomElement>
+#include <QPainter>
+#include <QPen>
 
 #include <KXMLGUIFactory>
 #include <KXMLGUIBuilder>
 #include <KToolBar>
 #include <KLocalizedString>
+#include <KColorScheme>
+#include <KMessageWidget>
 
 #include "../windows/rkmdiwindow.h"
 #include "../windows/rkworkplace.h"
@@ -56,7 +60,7 @@ private:
 	QMenuBar *menubar;
 };
 
-RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent) : QWidget (parent) {
+RKXMLGUIPreviewArea::RKXMLGUIPreviewArea(const QString &label, QWidget* parent, RKPreviewManager *manager) : QWidget (parent) {
 	RK_TRACE (PLUGIN);
 
 	current = nullptr;
@@ -78,7 +82,7 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 	lab->setAlignment(Qt::AlignCenter);
 	QToolButton *tb = new QToolButton();
 	tb->setAutoRaise(true);
-	tb->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete));
+	tb->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionClose));
 	connect(tb, &QAbstractButton::clicked, this, [this]() { hide(); Q_EMIT previewClosed(this); });
 
 	QToolButton *menu_button = new QToolButton(this);
@@ -90,8 +94,9 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 	hl->addWidget(menu_button);
 	hl->addStretch();
 	hl->addWidget(lab);
-	hl->addWidget(tb);
+	if (manager) hl->addWidget(manager->inlineStatusWidget());
 	hl->addStretch();
+	hl->addWidget(tb);
 	internal_layout = new QVBoxLayout();
 	vl->addLayout(internal_layout);
 
@@ -177,9 +182,90 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 }
 
 
+
+/** Similar to KMessageWidget, but much smaller margins / spacings */
+class RKPreviewStatusNote : public QFrame {
+friend class RKPreviewManager;
+	RKPreviewStatusNote(RKPreviewManager *manager) :
+	QFrame(),
+	updating(i18nc("very short: Preview is updating", "updating")),
+	error(i18nc("very short: Error while generating preview", "error")),
+	ready(i18nc("very short: Preview is up to date", "ready")),
+	unavailable(i18nc("very short: Preview is not(yet) possible", "n/a")),
+	off(i18nc("very short: Preview is turned off", "off"))
+	{
+		QFontMetrics fm(font());
+		em = fm.horizontalAdvance('w');
+		auto l = new QVBoxLayout(this);
+		l->setContentsMargins(em,0,em,0);
+		lab = new QLabel();
+		l->addWidget(lab, 0, Qt::AlignHCenter);
+		setAutoFillBackground(false);
+		setFixedHeight(fm.height()+4);
+		int maxw = fm.horizontalAdvance(updating);
+		maxw = qMax(maxw, fm.horizontalAdvance(error));
+		maxw = qMax(maxw, fm.horizontalAdvance(ready));
+		maxw = qMax(maxw, fm.horizontalAdvance(unavailable));
+		maxw = qMax(maxw, fm.horizontalAdvance(off));
+		setFixedWidth(maxw+2*em+2);
+
+		connect(manager, &RKPreviewManager::statusChanged, this, [this](RKPreviewManager *m) {
+			if (m->update_pending == RKPreviewManager::NoUpdatePossible) {
+				lab->setText(unavailable);
+				setToolTip(i18n("The preview is current unavailable (you will need to make further selections)."));
+				setColors(QPalette::Disabled, KColorScheme::NegativeBackground, KColorScheme::NegativeText);
+			} else if (m->update_pending == RKPreviewManager::PreviewDisabled) {
+				lab->setText(off);
+				setToolTip(i18n("Preview is turned off."));
+				setColors(QPalette::Disabled, KColorScheme::NormalBackground, KColorScheme::NormalText);
+			} else if (m->updating || (m->update_pending == RKPreviewManager::UpdatePending)) {
+				lab->setText(updating);
+				setToolTip(i18n("Preview is currently being updated."));
+				setColors(QPalette::Active, KColorScheme::ActiveBackground, KColorScheme::ActiveText);
+			} else if (m->current_preview_failed) {
+				lab->setText(error);
+				setToolTip(i18n("The command to generate the preview has failed."));
+				setColors(QPalette::Active, KColorScheme::NegativeBackground, KColorScheme::NegativeText);
+			} else {
+				lab->setText(ready);
+				setToolTip(i18n("Preview is up to date."));
+				setColors(QPalette::Active, KColorScheme::PositiveBackground, KColorScheme::PositiveText);
+			}
+			update();
+		});
+	}
+	void paintEvent(QPaintEvent *event) {
+		QPainter painter(this);
+		painter.setRenderHint(QPainter::Antialiasing);
+		painter.setPen(pen);
+		painter.setBrush(brush);
+		const QRect innerRect = rect().marginsRemoved(QMargins() + 1);
+		painter.drawRoundedRect(innerRect, em, em);
+		QFrame::paintEvent(event);
+	}
+	const QString updating;
+	const QString error;
+	const QString ready;
+	const QString unavailable;
+	const QString off;
+	void setColors(QPalette::ColorGroup group, KColorScheme::BackgroundRole bg, KColorScheme::ForegroundRole fg) {
+		auto scheme = KColorScheme(group);
+		pen = QPen(scheme.foreground(fg).color());
+		brush = QBrush(scheme.background(bg));
+	}
+	QLabel *lab;
+	int em;
+	QBrush brush;
+	QPen pen;
+};
+
+QWidget* RKPreviewManager::inlineStatusWidget() {
+	return new RKPreviewStatusNote(this);
+}
+
 #include "../windows/rkworkplace.h"
 
-RKPreviewManager::RKPreviewManager(QObject* parent) : QObject (parent) {
+RKPreviewManager::RKPreviewManager(QObject* parent) : QObject (parent), current_preview_failed(false) {
 	RK_TRACE (PLUGIN);
 
 	update_pending = NoUpdatePending;
@@ -196,11 +282,12 @@ void RKPreviewManager::previewCommandDone (RCommand* command) {
 
 	updating = false;
 	if (update_pending == NoUpdatePossible) {
-		setNoPreviewAvailable ();
+		setNoPreviewAvailable();
 	} else {
-		QString warnings = command->warnings () + command->error ();
-		if (!warnings.isEmpty ()) warnings = QString("<b>%1</b>\n<pre>%2</pre>").arg(i18n("Warnings or Errors:"), warnings.toHtmlEscaped());
-		setStatusMessage (warnings);
+		QString warnings = command->warnings() + command->error();
+		if (!warnings.isEmpty()) warnings = QString("<b>%1</b>\n<pre>%2</pre>").arg(i18n("Warnings or Errors:"), warnings.toHtmlEscaped());
+		updateStatusDisplay(warnings);
+		current_preview_failed = command->failed();
 	}
 }
 
@@ -213,10 +300,10 @@ void RKPreviewManager::setCommand (RCommand* command) {
 	connect (command->notifier(), &RCommandNotifier::commandFinished, this, &RKPreviewManager::previewCommandDone);
 
 	// Send an empty dummy command first. This is to sync up with any commands that should have been run _before_ the preview (e.g. to set up the preview area, so that status labels can be shown)
-	RInterface::whenAllFinished(this, [this]() { setStatusMessage(shortStatusLabel()); });
+	RInterface::whenAllFinished(this, [this]() { updateStatusDisplay(); });
 
 	RInterface::issueCommand (command);
-	setStatusMessage (shortStatusLabel ());
+	updateStatusDisplay();
 }
 
 void RKPreviewManager::setUpdatePending () {
@@ -224,7 +311,7 @@ void RKPreviewManager::setUpdatePending () {
 	RK_TRACE (PLUGIN);
 
 	update_pending = UpdatePending;
-	setStatusMessage (shortStatusLabel ());
+	updateStatusDisplay();
 }
 
 void RKPreviewManager::setNoPreviewAvailable () {
@@ -232,7 +319,7 @@ void RKPreviewManager::setNoPreviewAvailable () {
 	RK_TRACE (PLUGIN);
 
 	update_pending = NoUpdatePossible;
-	setStatusMessage (shortStatusLabel ());
+	updateStatusDisplay();
 }
 
 void RKPreviewManager::setPreviewDisabled () {
@@ -240,28 +327,14 @@ void RKPreviewManager::setPreviewDisabled () {
 	RK_TRACE (PLUGIN);
 
 	update_pending = PreviewDisabled;
-	setStatusMessage (shortStatusLabel ());
+	updateStatusDisplay();
 }
 
-void RKPreviewManager::setStatusMessage (const QString& message) {
+void RKPreviewManager::updateStatusDisplay(const QString &warnings) {
 	RK_TRACE (PLUGIN);
 
-	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (id);
-	if (window) window->setStatusMessage (message);
+	RKMDIWindow *window = RKWorkplace::mainWorkplace()->getNamedWindow(id);
+	if (window) window->setStatusMessage(warnings);
 
-	Q_EMIT statusChanged();
-}
-
-QString RKPreviewManager::shortStatusLabel() const {
-//	RK_TRACE (PLUGIN);
-
-	if (update_pending == NoUpdatePossible) {
-		return (i18n ("Preview not (yet) possible"));
-	} else if (update_pending == PreviewDisabled) {
-		return (i18n ("Preview disabled"));
-	} else if (updating || (update_pending == UpdatePending)) {
-		return (i18n ("Preview updating"));
-	} else {
-		return (i18n ("Preview up to date"));
-	}
+	Q_EMIT statusChanged(this);
 }
