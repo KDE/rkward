@@ -125,7 +125,11 @@ public:
 		update();
 	}
 	void update() {
-		rinst_label->setText(i18n("RKWard is currently using the R installation at <nobr>%1</nobr>.", RKSessionVars::RBinary()));
+		if (RKSessionVars::RBinary().isEmpty()) {
+			rinst_label->setText(i18n("RKWard <b>failed to detect an R installation</b> on this system"));
+		} else {
+			rinst_label->setText(i18n("RKWard is currently using the R installation at <nobr>%1</nobr>.", RKSessionVars::RBinary()));
+		}
 		detail_button->hide();
 		if (RInterface::instance()->backendIsDead()) {
 			rstatus_icon->setPixmap(iconForStatus(RKSetupWizardItem::Error));
@@ -194,8 +198,10 @@ public:
 		}
 
 		r_installations = RKSessionVars::findRInstallations();
-		r_installations.removeAll(RKSessionVars::RBinary());
-		r_installations.prepend(RKSessionVars::RBinary());
+		if (!RKSessionVars::RBinary().isEmpty()) {
+			r_installations.removeAll(RKSessionVars::RBinary());
+			r_installations.prepend(RKSessionVars::RBinary());
+		}
 		for(int i = 0; i < r_installations.size(); ++i) {
 			addButton(i18n("Use R at %1", r_installations[i]), i);
 		}

@@ -154,8 +154,10 @@ void RKFrontendTransmitter::detectAndCheckRBinary() {
 			}
 			RK_DEBUG(APP, DL_DEBUG, "Using R as configured in config file %s", qPrintable (rkward_ini_file.absoluteFilePath ()));
 		} else {
-			RK_DEBUG(APP, DL_DEBUG, "Using R as configured at compile time");
-			r_exe = R_EXECUTABLE;
+			if (QFileInfo::exists(R_EXECUTABLE)) {
+				RK_DEBUG(APP, DL_DEBUG, "Using R as configured at compile time");
+				r_exe = R_EXECUTABLE;
+			}
 		}
 	}
 	if (r_exe.isEmpty()) {
