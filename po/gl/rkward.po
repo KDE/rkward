@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:36+0000\n"
+"POT-Creation-Date: 2024-06-29 00:36+0000\n"
 "PO-Revision-Date: 2024-06-27 21:13+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -2616,7 +2616,7 @@ msgstr "Cancelouse a selección de ficheiro"
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "Seguro que quere substituír o ficheiro existente «%1»?"
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:136
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:137
 #, kde-format
 msgid "Overwrite?"
 msgstr "Substituílo?"
@@ -3459,43 +3459,43 @@ msgstr "Non pode definir máis de %1 filas"
 msgid "This element is not valid for the following reason(s):"
 msgstr "Este elemento non é correcto polos seguintes motivos:"
 
-#: rkward/plugin/rkpluginbrowser.cpp:46
+#: rkward/plugin/rkpluginbrowser.cpp:47
 #, kde-format
 msgid "Enter filename"
 msgstr "Insira o nome do ficheiro"
 
-#: rkward/plugin/rkpluginbrowser.cpp:47
+#: rkward/plugin/rkpluginbrowser.cpp:48
 #, kde-format
 msgid "Select"
 msgstr "Seleccionar"
 
-#: rkward/plugin/rkpluginbrowser.cpp:123
+#: rkward/plugin/rkpluginbrowser.cpp:124
 #, kde-format
 msgid "The file or directory does not exist."
 msgstr "O ficheiro ou cartafol non existe."
 
-#: rkward/plugin/rkpluginbrowser.cpp:126
+#: rkward/plugin/rkpluginbrowser.cpp:127
 #, kde-format
 msgid "Only files (not directories) are acceptable, here."
 msgstr "Aquí só se permiten ficheiros (non directorios)."
 
-#: rkward/plugin/rkpluginbrowser.cpp:129
+#: rkward/plugin/rkpluginbrowser.cpp:130
 #, kde-format
 msgid "Only directories (not files) are acceptable, here."
 msgstr "Aquí só se permiten directorios (non ficheiros)."
 
-#: rkward/plugin/rkpluginbrowser.cpp:139
+#: rkward/plugin/rkpluginbrowser.cpp:140
 #, kde-format
 msgid "The specified file is not writable."
 msgstr "O ficheiro indicado non permite escritura."
 
-#: rkward/plugin/rkpluginbrowser.cpp:142
+#: rkward/plugin/rkpluginbrowser.cpp:143
 #, kde-format
 msgid "You have to specify a filename (not directory) to write to."
 msgstr ""
 "Ten que indicar un nome de ficheiro (non de directorio) no que escribir."
 
-#: rkward/plugin/rkpluginbrowser.cpp:148
+#: rkward/plugin/rkpluginbrowser.cpp:149
 #, kde-format
 msgid ""
 "<b>Note:</b> The given file already exists, and will be modified / "
@@ -3504,17 +3504,17 @@ msgstr ""
 "<b>Nota:</b> O ficheiro indicado xa existe, e modificarase ou "
 "sobrescribirase."
 
-#: rkward/plugin/rkpluginbrowser.cpp:156
+#: rkward/plugin/rkpluginbrowser.cpp:157
 #, kde-format
 msgid "Only local files are allowed, here."
 msgstr "Aquí só se permiten ficheiros locais."
 
-#: rkward/plugin/rkpluginbrowser.cpp:159
+#: rkward/plugin/rkpluginbrowser.cpp:160
 #, kde-format
 msgid "This url looks valid."
 msgstr "O URL parece correcto."
 
-#: rkward/plugin/rkpluginbrowser.cpp:164
+#: rkward/plugin/rkpluginbrowser.cpp:165
 #, kde-format
 msgid "The given filename / url is not valid."
 msgstr "O nome de ficheiro ou URL indicado non é correcto."

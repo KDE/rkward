@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
+"POT-Creation-Date: 2024-06-29 00:36+0000\n"
 "PO-Revision-Date: 2024-04-11 08:42+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -667,7 +667,7 @@ msgstr "менше"
 #: rkward/plugins/analysis/variances/F_test.xml:28
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:34
 #: rkward/plugins/plots/cor_graph.xml:22
-#: rkward/plugins/uni1.2/description.xml:123
+#: rkward/plugins/uni1.2/description.xml:125
 #, kde-format
 msgid "Options"
 msgstr "Параметри"
@@ -2010,7 +2010,7 @@ msgstr "p-значення"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Loaded from Chi-squared test for outlier)
 #: rkward/plugins/analysis/outliers/chisq_out_test.js:13
-#: rkward/plugins/uni1.2/code.js:36 rkward/plugins/uni1.2/description.xml:53
+#: rkward/plugins/uni1.2/code.js:36 rkward/plugins/uni1.2/description.xml:55
 #, kde-format
 msgid "Variance"
 msgstr "Дисперсія"
@@ -4584,7 +4584,7 @@ msgstr "добуток"
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:64
 #: rkward/plugins/descriptive/descriptive_statistics.js:80
-#: rkward/plugins/uni1.2/code.js:80 rkward/plugins/uni1.2/description.xml:84
+#: rkward/plugins/uni1.2/code.js:80 rkward/plugins/uni1.2/description.xml:86
 #, kde-format
 msgid "Median Absolute Deviation"
 msgstr "Медіана абсолютного відхилення"
@@ -4765,7 +4765,7 @@ msgstr "критерій групування:"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:23
-#: rkward/plugins/uni1.2/description.xml:36
+#: rkward/plugins/uni1.2/description.xml:38
 #, kde-format
 msgid "Save results to file"
 msgstr "Зберегти результати до файла"
@@ -4773,7 +4773,7 @@ msgstr "Зберегти результати до файла"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <browser label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <browser label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:24
-#: rkward/plugins/uni1.2/description.xml:37
+#: rkward/plugins/uni1.2/description.xml:39
 #, kde-format
 msgid "Name of the file"
 msgstr "Назва файла"
@@ -4789,8 +4789,8 @@ msgstr "Стандартне відхилення середнього"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> [...] <radio label="Initial value"> <option label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:30
-#: rkward/plugins/uni1.2/code.js:21 rkward/plugins/uni1.2/description.xml:47
-#: rkward/plugins/uni1.2/description.xml:116
+#: rkward/plugins/uni1.2/code.js:21 rkward/plugins/uni1.2/description.xml:49
+#: rkward/plugins/uni1.2/description.xml:118
 #, kde-format
 msgid "Mean"
 msgstr "Середнє"
@@ -4804,7 +4804,7 @@ msgstr "Обрізати середнє"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:33
-#: rkward/plugins/uni1.2/description.xml:48
+#: rkward/plugins/uni1.2/description.xml:50
 #, kde-format
 msgid "Geometric mean"
 msgstr "Середнє геометричне"
@@ -4812,7 +4812,7 @@ msgstr "Середнє геометричне"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:34
-#: rkward/plugins/uni1.2/description.xml:49
+#: rkward/plugins/uni1.2/description.xml:51
 #, kde-format
 msgid "Interquantile mean"
 msgstr "Міжквантильне середнє"
@@ -4820,7 +4820,7 @@ msgstr "Міжквантильне середнє"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:35
-#: rkward/plugins/uni1.2/description.xml:50
+#: rkward/plugins/uni1.2/description.xml:52
 #, kde-format
 msgid "Harmonic mean"
 msgstr "Середнє гармонійне"
@@ -4844,8 +4844,8 @@ msgstr "Медіана, MAD"
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="Median"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:44
 #: rkward/plugins/descriptive/descriptive_statistics.xml:45
-#: rkward/plugins/uni1.2/code.js:60 rkward/plugins/uni1.2/description.xml:71
-#: rkward/plugins/uni1.2/description.xml:115
+#: rkward/plugins/uni1.2/code.js:60 rkward/plugins/uni1.2/description.xml:73
+#: rkward/plugins/uni1.2/description.xml:117
 #, kde-format
 msgid "Median"
 msgstr "Медіана"
@@ -4865,7 +4865,7 @@ msgstr "MAD"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Dispersion"> <spinbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Median, MAD"> <frame label="Median Absolute Deviation (mad)"> <spinbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:49
-#: rkward/plugins/uni1.2/description.xml:85
+#: rkward/plugins/uni1.2/description.xml:87
 #, kde-format
 msgid "Constant"
 msgstr "Стала"
@@ -4921,7 +4921,7 @@ msgstr "добуток"
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="General"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:66
-#: rkward/plugins/uni1.2/description.xml:42
+#: rkward/plugins/uni1.2/description.xml:44
 #, kde-format
 msgid "Length and NAs"
 msgstr "Довжина і NA"
@@ -5086,14 +5086,14 @@ msgstr "св"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <checkbox label="...">
-#: rkward/plugins/uni1.2/code.js:42 rkward/plugins/uni1.2/description.xml:60
+#: rkward/plugins/uni1.2/code.js:42 rkward/plugins/uni1.2/description.xml:62
 #, kde-format
 msgid "Minimum"
 msgstr "Мінімум"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <checkbox label="...">
-#: rkward/plugins/uni1.2/code.js:45 rkward/plugins/uni1.2/description.xml:61
+#: rkward/plugins/uni1.2/code.js:45 rkward/plugins/uni1.2/description.xml:63
 #, kde-format
 msgid "Maximum"
 msgstr "Максимум"
@@ -5137,7 +5137,7 @@ msgstr "стійка статистика"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Robust mean"> <checkbox label="...">
-#: rkward/plugins/uni1.2/code.js:77 rkward/plugins/uni1.2/description.xml:90
+#: rkward/plugins/uni1.2/code.js:77 rkward/plugins/uni1.2/description.xml:92
 #, kde-format
 msgid "Trimmed Mean"
 msgstr "Обрізане середнє"
@@ -5211,175 +5211,175 @@ msgstr "S для засобу оцінки Губера"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <radio label="...">
-#: rkward/plugins/uni1.2/code.js:119 rkward/plugins/uni1.2/description.xml:114
+#: rkward/plugins/uni1.2/code.js:119 rkward/plugins/uni1.2/description.xml:116
 #, kde-format
 msgid "Initial value"
 msgstr "Початкове значення"
 
 #. i18n: ectx: (Basic statistics) <dialog label="...">
-#: rkward/plugins/uni1.2/description.xml:26
+#: rkward/plugins/uni1.2/description.xml:28
 #, kde-format
 msgid "Basic statistics"
 msgstr "Базова статистика"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
-#: rkward/plugins/uni1.2/description.xml:28
+#: rkward/plugins/uni1.2/description.xml:30
 #, kde-format
 msgid "Select variables"
 msgstr "Виберіть змінні"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <varslot label="...">
-#: rkward/plugins/uni1.2/description.xml:32
+#: rkward/plugins/uni1.2/description.xml:34
 #, kde-format
 msgid "Variable"
 msgstr "Змінна"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
-#: rkward/plugins/uni1.2/description.xml:39
+#: rkward/plugins/uni1.2/description.xml:41
 #, kde-format
 msgid "Statistics"
 msgstr "Статистика"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
-#: rkward/plugins/uni1.2/description.xml:40
+#: rkward/plugins/uni1.2/description.xml:42
 #, kde-format
 msgid "General"
 msgstr "Загальне"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
-#: rkward/plugins/uni1.2/description.xml:45
+#: rkward/plugins/uni1.2/description.xml:47
 #, kde-format
 msgid "Moments"
 msgstr "Моменти"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
-#: rkward/plugins/uni1.2/description.xml:54
+#: rkward/plugins/uni1.2/description.xml:56
 #, kde-format
 msgid "Sd"
 msgstr "СВ"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
-#: rkward/plugins/uni1.2/description.xml:57
+#: rkward/plugins/uni1.2/description.xml:59
 #, kde-format
 msgid "extrema"
 msgstr "екстремуми"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <spinbox label="...">
-#: rkward/plugins/uni1.2/description.xml:64
+#: rkward/plugins/uni1.2/description.xml:66
 #, kde-format
 msgid "Number of minimum values displayed"
 msgstr "Кількість показаних мінімальних значень"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <spinbox label="...">
-#: rkward/plugins/uni1.2/description.xml:65
+#: rkward/plugins/uni1.2/description.xml:67
 #, kde-format
 msgid "Number of maximum values displayed"
 msgstr "Кількість показаних максимальних значень"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
-#: rkward/plugins/uni1.2/description.xml:69
+#: rkward/plugins/uni1.2/description.xml:71
 #, kde-format
 msgid "Quantile"
 msgstr "Квантиль"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <checkbox label="...">
-#: rkward/plugins/uni1.2/description.xml:72
+#: rkward/plugins/uni1.2/description.xml:74
 #, kde-format
 msgid "Interquartile Range"
 msgstr "Міжквартильний діапазон"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <checkbox label="...">
-#: rkward/plugins/uni1.2/description.xml:73
+#: rkward/plugins/uni1.2/description.xml:75
 #, kde-format
 msgid "Quartile"
 msgstr "Квартиль"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <spinbox label="...">
-#: rkward/plugins/uni1.2/description.xml:76
+#: rkward/plugins/uni1.2/description.xml:78
 #, kde-format
 msgid "Other (eg : for deciles, enter 10)"
 msgstr "Інше (приклад: для децилів введіть 10)"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
-#: rkward/plugins/uni1.2/description.xml:80
+#: rkward/plugins/uni1.2/description.xml:82
 #, kde-format
 msgid "Robust statistics"
 msgstr "Стійка статистика"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="...">
-#: rkward/plugins/uni1.2/description.xml:82
+#: rkward/plugins/uni1.2/description.xml:84
 #, kde-format
 msgid "Dispersion"
 msgstr "Розсіювання"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="...">
-#: rkward/plugins/uni1.2/description.xml:88
+#: rkward/plugins/uni1.2/description.xml:90
 #, kde-format
 msgid "Robust mean"
 msgstr "Стійке середнє"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Robust mean"> <spinbox label="...">
-#: rkward/plugins/uni1.2/description.xml:91
+#: rkward/plugins/uni1.2/description.xml:93
 #, kde-format
 msgid "Percentage of trimmed values"
 msgstr "Відсоток обрізаних значень"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="...">
-#: rkward/plugins/uni1.2/description.xml:94
+#: rkward/plugins/uni1.2/description.xml:96
 #, kde-format
 msgid "M-Estimator"
 msgstr "Засіб оцінки M"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <checkbox label="...">
-#: rkward/plugins/uni1.2/description.xml:96
+#: rkward/plugins/uni1.2/description.xml:98
 #, kde-format
 msgid "Huber -M estimator (Require MASS Library)"
 msgstr "Засіб оцінки -M Губера (потребує бібліотеки MASS)"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <spinbox label="...">
-#: rkward/plugins/uni1.2/description.xml:97
+#: rkward/plugins/uni1.2/description.xml:99
 #, kde-format
 msgid "Winsorize at 'k' sd"
 msgstr "Вінсорізувати за k-им СВ"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <checkbox label="...">
-#: rkward/plugins/uni1.2/description.xml:101
+#: rkward/plugins/uni1.2/description.xml:103
 #, kde-format
 msgid "Custom Mu value"
 msgstr "Нетипове значення μ"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <input label="...">
-#: rkward/plugins/uni1.2/description.xml:102
+#: rkward/plugins/uni1.2/description.xml:104
 #, kde-format
 msgid "Enter your value"
 msgstr "Введіть ваше значення"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <checkbox label="...">
-#: rkward/plugins/uni1.2/description.xml:105
+#: rkward/plugins/uni1.2/description.xml:107
 #, kde-format
 msgid "Custom s value"
 msgstr "Нетипове значення s"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <input label="...">
-#: rkward/plugins/uni1.2/description.xml:106
+#: rkward/plugins/uni1.2/description.xml:108
 #, kde-format
 msgid "S value"
 msgstr "Значення s"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <spinbox label="...">
-#: rkward/plugins/uni1.2/description.xml:111
+#: rkward/plugins/uni1.2/description.xml:113
 #, kde-format
 msgid "Tolerance"
 msgstr "Допуск"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Options"> <checkbox label="...">
-#: rkward/plugins/uni1.2/description.xml:124
+#: rkward/plugins/uni1.2/description.xml:126
 #, kde-format
 msgid "Omit missing values"
 msgstr "Не брати до уваги пропущені значення"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Options"> <saveobject label="...">
-#: rkward/plugins/uni1.2/description.xml:125
+#: rkward/plugins/uni1.2/description.xml:127
 #, kde-format
 msgid "Store results"
 msgstr "Зберегти результати"

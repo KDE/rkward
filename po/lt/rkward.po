@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:36+0000\n"
+"POT-Creation-Date: 2024-06-29 00:36+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -2422,7 +2422,7 @@ msgstr ""
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr ""
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:136
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:137
 #, kde-format
 msgid "Overwrite?"
 msgstr "Perrašyti?"
@@ -3255,61 +3255,61 @@ msgstr ""
 msgid "This element is not valid for the following reason(s):"
 msgstr ""
 
-#: rkward/plugin/rkpluginbrowser.cpp:46
+#: rkward/plugin/rkpluginbrowser.cpp:47
 #, kde-format
 msgid "Enter filename"
 msgstr "Įrašykite failo pavadinimą"
 
-#: rkward/plugin/rkpluginbrowser.cpp:47
+#: rkward/plugin/rkpluginbrowser.cpp:48
 #, kde-format
 msgid "Select"
 msgstr "Pasirinkite"
 
-#: rkward/plugin/rkpluginbrowser.cpp:123
+#: rkward/plugin/rkpluginbrowser.cpp:124
 #, kde-format
 msgid "The file or directory does not exist."
 msgstr ""
 
-#: rkward/plugin/rkpluginbrowser.cpp:126
+#: rkward/plugin/rkpluginbrowser.cpp:127
 #, kde-format
 msgid "Only files (not directories) are acceptable, here."
 msgstr ""
 
-#: rkward/plugin/rkpluginbrowser.cpp:129
+#: rkward/plugin/rkpluginbrowser.cpp:130
 #, kde-format
 msgid "Only directories (not files) are acceptable, here."
 msgstr ""
 
-#: rkward/plugin/rkpluginbrowser.cpp:139
+#: rkward/plugin/rkpluginbrowser.cpp:140
 #, fuzzy, kde-format
 #| msgid "Set specified fixed size..."
 msgid "The specified file is not writable."
 msgstr "Nustatyti konkretų paveiksliuko dydį..."
 
-#: rkward/plugin/rkpluginbrowser.cpp:142
+#: rkward/plugin/rkpluginbrowser.cpp:143
 #, kde-format
 msgid "You have to specify a filename (not directory) to write to."
 msgstr ""
 
-#: rkward/plugin/rkpluginbrowser.cpp:148
+#: rkward/plugin/rkpluginbrowser.cpp:149
 #, kde-format
 msgid ""
 "<b>Note:</b> The given file already exists, and will be modified / "
 "overwritten."
 msgstr ""
 
-#: rkward/plugin/rkpluginbrowser.cpp:156
+#: rkward/plugin/rkpluginbrowser.cpp:157
 #, fuzzy, kde-format
 #| msgid "This value is not allowed, here"
 msgid "Only local files are allowed, here."
 msgstr "Tokia reikšmė čia neleistina"
 
-#: rkward/plugin/rkpluginbrowser.cpp:159
+#: rkward/plugin/rkpluginbrowser.cpp:160
 #, kde-format
 msgid "This url looks valid."
 msgstr ""
 
-#: rkward/plugin/rkpluginbrowser.cpp:164
+#: rkward/plugin/rkpluginbrowser.cpp:165
 #, kde-format
 msgid "The given filename / url is not valid."
 msgstr ""

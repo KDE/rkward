@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:36+0000\n"
-"PO-Revision-Date: 2024-06-10 23:33+0200\n"
+"POT-Creation-Date: 2024-06-29 00:36+0000\n"
+"PO-Revision-Date: 2024-06-28 16:51+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -2595,7 +2595,7 @@ msgstr "Dosierelekto nuligita"
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "Ĉu vi certas, ke vi volas anstataŭigi la ekzistantan dosieron '%1'?"
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:136
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:137
 #, kde-format
 msgid "Overwrite?"
 msgstr "Ĉu anstataŭigi?"
@@ -3434,42 +3434,42 @@ msgstr "Maksimume %1 vicoj povas esti difinitaj"
 msgid "This element is not valid for the following reason(s):"
 msgstr "Ĉi tiu elemento ne validas pro la jena(j) kialo(j):"
 
-#: rkward/plugin/rkpluginbrowser.cpp:46
+#: rkward/plugin/rkpluginbrowser.cpp:47
 #, kde-format
 msgid "Enter filename"
 msgstr "Enigi dosiernomon"
 
-#: rkward/plugin/rkpluginbrowser.cpp:47
+#: rkward/plugin/rkpluginbrowser.cpp:48
 #, kde-format
 msgid "Select"
 msgstr "Elekti"
 
-#: rkward/plugin/rkpluginbrowser.cpp:123
+#: rkward/plugin/rkpluginbrowser.cpp:124
 #, kde-format
 msgid "The file or directory does not exist."
 msgstr "La dosiero aŭ dosierujo ne ekzistas."
 
-#: rkward/plugin/rkpluginbrowser.cpp:126
+#: rkward/plugin/rkpluginbrowser.cpp:127
 #, kde-format
 msgid "Only files (not directories) are acceptable, here."
 msgstr "Nur dosieroj (ne dosierujoj) estas akcepteblaj ĉi tie."
 
-#: rkward/plugin/rkpluginbrowser.cpp:129
+#: rkward/plugin/rkpluginbrowser.cpp:130
 #, kde-format
 msgid "Only directories (not files) are acceptable, here."
 msgstr "Nur dosierujoj (ne dosieroj) estas akcepteblaj ĉi tie."
 
-#: rkward/plugin/rkpluginbrowser.cpp:139
+#: rkward/plugin/rkpluginbrowser.cpp:140
 #, kde-format
 msgid "The specified file is not writable."
 msgstr "La specifita dosiero ne estas skribebla."
 
-#: rkward/plugin/rkpluginbrowser.cpp:142
+#: rkward/plugin/rkpluginbrowser.cpp:143
 #, kde-format
 msgid "You have to specify a filename (not directory) to write to."
 msgstr "Vi devas specifi dosiernomon (ne dosierujon) por skribi."
 
-#: rkward/plugin/rkpluginbrowser.cpp:148
+#: rkward/plugin/rkpluginbrowser.cpp:149
 #, kde-format
 msgid ""
 "<b>Note:</b> The given file already exists, and will be modified / "
@@ -3477,17 +3477,17 @@ msgid ""
 msgstr ""
 "<b>Noto:</b> La donita dosiero jam ekzistas, kaj estos modifita/anstataŭita."
 
-#: rkward/plugin/rkpluginbrowser.cpp:156
+#: rkward/plugin/rkpluginbrowser.cpp:157
 #, kde-format
 msgid "Only local files are allowed, here."
 msgstr "Nur lokaj dosieroj estas permesitaj ĉi tie."
 
-#: rkward/plugin/rkpluginbrowser.cpp:159
+#: rkward/plugin/rkpluginbrowser.cpp:160
 #, kde-format
 msgid "This url looks valid."
 msgstr "Ĉi tiu URL aspektas valida."
 
-#: rkward/plugin/rkpluginbrowser.cpp:164
+#: rkward/plugin/rkpluginbrowser.cpp:165
 #, kde-format
 msgid "The given filename / url is not valid."
 msgstr "La donita dosiernomo/url ne validas."
@@ -6267,10 +6267,9 @@ msgstr ""
 "\">Agordoj->Agordu RKward->R-backend</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (HTML)"
-msgstr "R Markdown"
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6279,36 +6278,26 @@ msgid "Preview of rendered R Markdown"
 msgstr "Antaŭrigardo de bildigita R-Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:445
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
-"Antaŭrigardu la skripton kiel bilditan el RMarkdown-formato (taŭga por .Rmd-"
-"dosieroj)."
+"Antaŭrigardu la skripton kiel bildigita el RMarkdown-formato (.Rmd) al HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:457
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (PDF)"
-msgstr "R Markdown"
+msgstr "R Markdown (PDF)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
 msgstr ""
-"Antaŭrigardu la skripton kiel bilditan el RMarkdown-formato (taŭga por .Rmd-"
-"dosieroj)."
+"Antaŭrigardu la skripton kiel bildigita el RMarkdown-formato (.Rmd) al PDF."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:462
-#, fuzzy, kde-format
-#| msgid "Pandoc is not installed"
+#, kde-format
 msgid "pdflatex is not installed"
-msgstr "Pandoc ne estas instalita"
+msgstr "pdflatex ne estas instalita"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
@@ -6316,6 +6305,9 @@ msgid ""
 "pdflatex is required for rendering PDF previews. The easiest way to install "
 "it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
 msgstr ""
+"pdflatex estas postulata por bildigi PDF-antaŭprezentojn. La plej facila "
+"maniero instali ĝin estas ruli <tt>install.packages(\"tinytex\"); "
+"install_tinytex()</tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:473
 #, kde-format
@@ -6880,7 +6872,7 @@ msgstr "Agordi %1"
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "Ne trovis PDF-antaŭrigardan komponenton"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -7505,56 +7497,3 @@ msgstr "Enigu la novan nomon"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Vidi en redaktilo (nurlegebla)"
-
-#~ msgid ""
-#~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
-#~ "now), the function call tip feature would crash, and has been disabled in "
-#~ "this session. To enable the call tip, install any other (earlier or "
-#~ "later) version of (lib|kf5)ktexteditor."
-#~ msgstr ""
-#~ "Pro cimo en versio 5.92.0 de ktexteditor (la versio uzata, nun), la "
-#~ "funkcio voko-konsileto paneis, kaj estis malŝaltita en ĉi tiu seanco. Por "
-#~ "ebligi la alvokonsileton, instalu ajnan alian (antaŭan aŭ postan) version "
-#~ "de (lib|kf5)ktexteditor."
-
-#~ msgid "Incompatible version of ktexteditor"
-#~ msgstr "Nekongrua versio de ktexteditor"
-
-#~ msgid ""
-#~ "<p>The setup assistant has been invoked, automatically, because a problem "
-#~ "has been detected in your setup.</p>"
-#~ msgstr ""
-#~ "<p>La agorda asistanto estas aŭtomate alvokita ĉar problemo estis "
-#~ "detektita en via agordo.</p>"
-
-#~ msgid ""
-#~ "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
-#~ msgstr ""
-#~ "<b>R-backend paneis. Alklaku \"Nuligi\" por eliri agordan asistanton.</b>"
-
-#~ msgid "Unable to detect R installation"
-#~ msgstr "Ne eblas detekti R-instaladon"
-
-#~ msgid "Specified R executable does not exist"
-#~ msgstr "Specifita R rulebla ne ekzistas"
-
-#~ msgid ""
-#~ "The R executable (%1) specified in the rkward.ini file (%2) does not "
-#~ "exist or is not executable."
-#~ msgstr ""
-#~ "La rulebla R (%1) specifita en la dosiero rkward.ini (%2) ne ekzistas aŭ "
-#~ "ne estas plenumebla."
-
-#~ msgid ""
-#~ "The R executable specified at compile time (%1) does not exist or is not "
-#~ "executable. Probably the installation of R has moved. You can use the "
-#~ "command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or "
-#~ "supply an rkward.ini file to specify the new location."
-#~ msgstr ""
-#~ "La rulebla R specifita je kompiltempo (%1) ne ekzistas aŭ ne estas "
-#~ "plenumebla. Verŝajne la instalado de R moviĝis. Vi povas uzi la "
-#~ "komandlinian parametron '--r-executable <i>auto / PATH_TO_R</i>', aŭ "
-#~ "provizi dosieron rkward.ini por specifi la novan lokon."
-
-#~ msgid "Unrecognized call '%1'"
-#~ msgstr "Nerekonita voko '%1'"

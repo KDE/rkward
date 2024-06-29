@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-27 00:36+0000\n"
+"POT-Creation-Date: 2024-06-29 00:36+0000\n"
 "PO-Revision-Date: 2024-06-25 12:16+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -2623,7 +2623,7 @@ msgstr "Bestandsselectie geannuleerd"
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "Wilt u echt het bestaande bestand '%1' overschrijven?"
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:136
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:137
 #, kde-format
 msgid "Overwrite?"
 msgstr "Overschrijven?"
@@ -3471,42 +3471,42 @@ msgstr "Hoogstens %1 rijen mogen worden gedefinieerd"
 msgid "This element is not valid for the following reason(s):"
 msgstr "Dit element is ongeldig omdat: "
 
-#: rkward/plugin/rkpluginbrowser.cpp:46
+#: rkward/plugin/rkpluginbrowser.cpp:47
 #, kde-format
 msgid "Enter filename"
 msgstr "Bestandsnaam invoeren"
 
-#: rkward/plugin/rkpluginbrowser.cpp:47
+#: rkward/plugin/rkpluginbrowser.cpp:48
 #, kde-format
 msgid "Select"
 msgstr "Selecteren"
 
-#: rkward/plugin/rkpluginbrowser.cpp:123
+#: rkward/plugin/rkpluginbrowser.cpp:124
 #, kde-format
 msgid "The file or directory does not exist."
 msgstr "Bestand of map bestaat niet."
 
-#: rkward/plugin/rkpluginbrowser.cpp:126
+#: rkward/plugin/rkpluginbrowser.cpp:127
 #, kde-format
 msgid "Only files (not directories) are acceptable, here."
 msgstr "Alleen bestanden (geen mappen) zijn hier toegestaan."
 
-#: rkward/plugin/rkpluginbrowser.cpp:129
+#: rkward/plugin/rkpluginbrowser.cpp:130
 #, kde-format
 msgid "Only directories (not files) are acceptable, here."
 msgstr "Alleen mappen (geen bestanden) zijn hier toegestaan.A"
 
-#: rkward/plugin/rkpluginbrowser.cpp:139
+#: rkward/plugin/rkpluginbrowser.cpp:140
 #, kde-format
 msgid "The specified file is not writable."
 msgstr "Opgegeven bestand is niet 'writable'."
 
-#: rkward/plugin/rkpluginbrowser.cpp:142
+#: rkward/plugin/rkpluginbrowser.cpp:143
 #, kde-format
 msgid "You have to specify a filename (not directory) to write to."
 msgstr "U moet een bestandsnaam (geen map) opgeven waarin te schrijven."
 
-#: rkward/plugin/rkpluginbrowser.cpp:148
+#: rkward/plugin/rkpluginbrowser.cpp:149
 #, kde-format
 msgid ""
 "<b>Note:</b> The given file already exists, and will be modified / "
@@ -3515,17 +3515,17 @@ msgstr ""
 "<b>Let op:</b> Het opgegeven bestand bestaat al, en zal worden gewijzigd / "
 "overschreven."
 
-#: rkward/plugin/rkpluginbrowser.cpp:156
+#: rkward/plugin/rkpluginbrowser.cpp:157
 #, kde-format
 msgid "Only local files are allowed, here."
 msgstr "Alleen lokale bestanden zijn hier toegestaan."
 
-#: rkward/plugin/rkpluginbrowser.cpp:159
+#: rkward/plugin/rkpluginbrowser.cpp:160
 #, kde-format
 msgid "This url looks valid."
 msgstr "Deze url ziet er goed uit."
 
-#: rkward/plugin/rkpluginbrowser.cpp:164
+#: rkward/plugin/rkpluginbrowser.cpp:165
 #, kde-format
 msgid "The given filename / url is not valid."
 msgstr "De opgegeven bestandsnaam / url is niet geldig."
