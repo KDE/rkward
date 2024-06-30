@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-29 00:36+0000\n"
+"POT-Creation-Date: 2024-06-30 00:36+0000\n"
 "PO-Revision-Date: 2024-06-26 12:04+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1602,27 +1602,33 @@ msgstr "<b>Izberite eno:</b>"
 msgid "Show problem details"
 msgstr "Pokaži podrobnosti težave"
 
-#: rkward/dialogs/rksetupwizard.cpp:128
+#: rkward/dialogs/rksetupwizard.cpp:129
+#, fuzzy, kde-format
+#| msgid "Unable to detect R installation"
+msgid "RKWard <b>failed to detect an R installation</b> on this system"
+msgstr "Namestitve R ni mogoče zaznati"
+
+#: rkward/dialogs/rksetupwizard.cpp:131
 #, kde-format
 msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
 msgstr "RKWard trenutno uporablja namestitev R na <nobr>%1</nobr>."
 
-#: rkward/dialogs/rksetupwizard.cpp:135
+#: rkward/dialogs/rksetupwizard.cpp:139
 #, kde-format
 msgid "<b>R backend has failed to start.</b>"
 msgstr "<b>Zaledje R se ni uspelo zagnati.</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:137
+#: rkward/dialogs/rksetupwizard.cpp:141
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
 msgstr "<b>Zaledje R se je sesulo.</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:144
+#: rkward/dialogs/rksetupwizard.cpp:148
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
 msgstr "<b>Različica R %1 se je uspešno zagnala.</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:147
+#: rkward/dialogs/rksetupwizard.cpp:151
 #, kde-format
 msgid ""
 "<p>You are using the R version bundled inside the RKWard AppImage.</"
@@ -1636,57 +1642,57 @@ msgstr ""
 "namestiti večine R dodatnih paketov. Na splošno je zato priporočljivo, da "
 "namesto te izberete sistemsko nameščeno različico R spodaj.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:161
+#: rkward/dialogs/rksetupwizard.cpp:165
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
 msgstr "<b>Čakanje na zaledje R...</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:182
+#: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
 msgid "Use R at:"
 msgstr "Uporabi R na:"
 
-#: rkward/dialogs/rksetupwizard.cpp:184
+#: rkward/dialogs/rksetupwizard.cpp:188
 #, kde-format
 msgid "Select another R executable"
 msgstr "Izberi drugo izvršljivo datoteko R"
 
-#: rkward/dialogs/rksetupwizard.cpp:186
+#: rkward/dialogs/rksetupwizard.cpp:190
 #, kde-format
 msgid "Select R executable"
 msgstr "Izberi izvedljivo datoteko R"
 
-#: rkward/dialogs/rksetupwizard.cpp:200
+#: rkward/dialogs/rksetupwizard.cpp:206
 #, kde-format
 msgid "Use R at %1"
 msgstr "Uporabi R na %1"
 
-#: rkward/dialogs/rksetupwizard.cpp:203
+#: rkward/dialogs/rksetupwizard.cpp:209
 #, kde-format
 msgid "Attempt to restart R at %1"
 msgstr "Poskusi znova zagnati R na %1"
 
-#: rkward/dialogs/rksetupwizard.cpp:204
+#: rkward/dialogs/rksetupwizard.cpp:210
 #, kde-format
 msgid "Keep current version (%1)"
 msgstr "Ohrani trenutno različico (%1)"
 
-#: rkward/dialogs/rksetupwizard.cpp:236
+#: rkward/dialogs/rksetupwizard.cpp:242
 #, kde-format
 msgid "No action needed."
 msgstr "Ni treba ukrepati."
 
-#: rkward/dialogs/rksetupwizard.cpp:271
+#: rkward/dialogs/rksetupwizard.cpp:277
 #, kde-format
 msgid "Not installed"
 msgstr "Ni nameščeno"
 
-#: rkward/dialogs/rksetupwizard.cpp:272 rkward/dialogs/rksetupwizard.cpp:283
+#: rkward/dialogs/rksetupwizard.cpp:278 rkward/dialogs/rksetupwizard.cpp:289
 #, kde-format
 msgid "Install %1"
 msgstr "Namesti %1"
 
-#: rkward/dialogs/rksetupwizard.cpp:272
+#: rkward/dialogs/rksetupwizard.cpp:278
 #, kde-format
 msgid ""
 "(Attempt to) install the package %1 and its dependencies for this version of "
@@ -1695,13 +1701,13 @@ msgstr ""
 "(Poskus) namestitve paketa %1 in njegovih odvisnosti za to različico R. V "
 "večini primerov je za to potrebna delujoča internetna povezava."
 
-#: rkward/dialogs/rksetupwizard.cpp:273 rkward/dialogs/rksetupwizard.cpp:284
-#: rkward/dialogs/rksetupwizard.cpp:344
+#: rkward/dialogs/rksetupwizard.cpp:279 rkward/dialogs/rksetupwizard.cpp:290
+#: rkward/dialogs/rksetupwizard.cpp:350
 #, kde-format
 msgid "No change"
 msgstr "Brez spremembe"
 
-#: rkward/dialogs/rksetupwizard.cpp:273
+#: rkward/dialogs/rksetupwizard.cpp:279
 #, kde-format
 msgid ""
 "Proceed without the package. You will again be given the option to install "
@@ -1710,12 +1716,12 @@ msgstr ""
 "Nadaljujte brez paketa. Ponovno boste dobili možnost namestitve paketa, ko "
 "bo paket nujno potreben."
 
-#: rkward/dialogs/rksetupwizard.cpp:275 rkward/dialogs/rksetupwizard.cpp:295
+#: rkward/dialogs/rksetupwizard.cpp:281 rkward/dialogs/rksetupwizard.cpp:301
 #, kde-format
 msgid "Installed"
 msgstr "Nameščeno"
 
-#: rkward/dialogs/rksetupwizard.cpp:283
+#: rkward/dialogs/rksetupwizard.cpp:289
 #, kde-format
 msgid ""
 "Mark %1 for installation (actual installation is not yet supported, but you "
@@ -1726,22 +1732,22 @@ msgstr ""
 "pozvani s povezavo do strani za prenos na zadnji strani tega pogovornega "
 "okna)"
 
-#: rkward/dialogs/rksetupwizard.cpp:284
+#: rkward/dialogs/rksetupwizard.cpp:290
 #, kde-format
 msgid "Proceed without %1. You will be missing some functionality."
 msgstr "Nadaljujte brez %1. Nekaj funkcionalnosti bo manjkalo."
 
-#: rkward/dialogs/rksetupwizard.cpp:292
+#: rkward/dialogs/rksetupwizard.cpp:298
 #, kde-format
 msgid "Not found"
 msgstr "Ni zadetkov"
 
-#: rkward/dialogs/rksetupwizard.cpp:306
+#: rkward/dialogs/rksetupwizard.cpp:312
 #, kde-format
 msgid "RKWard Setup Assistant"
 msgstr "Pomočnik za nastavitev RKWard"
 
-#: rkward/dialogs/rksetupwizard.cpp:308
+#: rkward/dialogs/rksetupwizard.cpp:314
 #, kde-format
 msgid ""
 "<p>This dialog will guide you through a quick check of the basic setup of "
@@ -1750,7 +1756,7 @@ msgstr ""
 "<p>To pogovorno okno vas bo vodilo skozi hitro preverjanje osnovne "
 "nastavitve zahtevanih (ali priporočenih) komponent.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:310
+#: rkward/dialogs/rksetupwizard.cpp:316
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
@@ -1759,7 +1765,7 @@ msgstr ""
 "<p>Pomočnik za namestitev je bil samodejno poklican, ker je bila odkrita "
 "nova različica programa RKWard.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:313
+#: rkward/dialogs/rksetupwizard.cpp:319
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
@@ -1768,27 +1774,27 @@ msgstr ""
 "<p>Pomočnik za namestitev je bil samodejno poklican, ker je bila odkrita "
 "nova različica R.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:326
+#: rkward/dialogs/rksetupwizard.cpp:332
 #, kde-format
 msgid "Basic installation"
 msgstr "Osnovna namestitev"
 
-#: rkward/dialogs/rksetupwizard.cpp:328
+#: rkward/dialogs/rksetupwizard.cpp:334
 #, kde-format
 msgid "Installation directory"
 msgstr "Namestitvena mapa"
 
-#: rkward/dialogs/rksetupwizard.cpp:330
+#: rkward/dialogs/rksetupwizard.cpp:336
 #, kde-format
 msgid "Not found."
 msgstr "Ni zadetkov."
 
-#: rkward/dialogs/rksetupwizard.cpp:332
+#: rkward/dialogs/rksetupwizard.cpp:338
 #, kde-format
 msgid "Reinstallation required"
 msgstr "Potrebna je ponovna namestitev"
 
-#: rkward/dialogs/rksetupwizard.cpp:332
+#: rkward/dialogs/rksetupwizard.cpp:338
 #, kde-format
 msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
@@ -1796,48 +1802,48 @@ msgid ""
 msgstr ""
 "Te težave ni mogoče odpraviti samodejno. Morali boste znova namestiti RKWard."
 
-#: rkward/dialogs/rksetupwizard.cpp:335 rkward/dialogs/rksetupwizard.cpp:348
-#: rkward/dialogs/rksetupwizard.cpp:372
+#: rkward/dialogs/rksetupwizard.cpp:341 rkward/dialogs/rksetupwizard.cpp:354
+#: rkward/dialogs/rksetupwizard.cpp:378
 #, kde-format
 msgid "Found."
 msgstr "Najdeno."
 
-#: rkward/dialogs/rksetupwizard.cpp:339
+#: rkward/dialogs/rksetupwizard.cpp:345
 #, kde-format
 msgid "RKWard plugins"
 msgstr "Vtičniki RKWard"
 
-#: rkward/dialogs/rksetupwizard.cpp:341
+#: rkward/dialogs/rksetupwizard.cpp:347
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr "<p>Vtičniki niso omogočeni. To verjetno ni načrtno.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:342
+#: rkward/dialogs/rksetupwizard.cpp:348
 #, kde-format
 msgid "None selected"
 msgstr "Nič ni izbrano"
 
-#: rkward/dialogs/rksetupwizard.cpp:343
+#: rkward/dialogs/rksetupwizard.cpp:349
 #, kde-format
 msgid "Restore defaults"
 msgstr "Obnovi privzete nastavitve"
 
-#: rkward/dialogs/rksetupwizard.cpp:343
+#: rkward/dialogs/rksetupwizard.cpp:349
 #, kde-format
 msgid "Enable the default plugins"
 msgstr "Omogoči privzete vtičnike"
 
-#: rkward/dialogs/rksetupwizard.cpp:344
+#: rkward/dialogs/rksetupwizard.cpp:350
 #, kde-format
 msgid "Proceed without plugins"
 msgstr "Nadaljuj brez vtičnikov"
 
-#: rkward/dialogs/rksetupwizard.cpp:352
+#: rkward/dialogs/rksetupwizard.cpp:358
 #, kde-format
 msgid "Kate plugins"
 msgstr "Vtičniki Kate"
 
-#: rkward/dialogs/rksetupwizard.cpp:355
+#: rkward/dialogs/rksetupwizard.cpp:361
 #, kde-format
 msgid ""
 "<p>Important functionality in RKWard is provided by kate plugins. It looks "
@@ -1848,12 +1854,12 @@ msgstr ""
 "da noben ni nameščen na tem sistemu. Na Linux/BSD se to običajno lahko "
 "popravi z namestitvijo kate.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:356
+#: rkward/dialogs/rksetupwizard.cpp:362
 #, kde-format
 msgid "None found"
 msgstr "Ni zadetkov"
 
-#: rkward/dialogs/rksetupwizard.cpp:359
+#: rkward/dialogs/rksetupwizard.cpp:365
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
@@ -1862,32 +1868,32 @@ msgstr[1] "Najdena vtičnika %1."
 msgstr[2] "Najdeni vtičniki %1."
 msgstr[3] "Najdenih vtičnikov %1."
 
-#: rkward/dialogs/rksetupwizard.cpp:364
+#: rkward/dialogs/rksetupwizard.cpp:370
 #, kde-format
 msgid "Pre 0.7.3 output file"
 msgstr "Izhodna datoteka pred 0.7.3"
 
-#: rkward/dialogs/rksetupwizard.cpp:367
+#: rkward/dialogs/rksetupwizard.cpp:373
 #, kde-format
 msgid "Exists"
 msgstr "Obstaja"
 
-#: rkward/dialogs/rksetupwizard.cpp:369
+#: rkward/dialogs/rksetupwizard.cpp:375
 #, kde-format
 msgid "Import"
 msgstr "Uvozi"
 
-#: rkward/dialogs/rksetupwizard.cpp:369
+#: rkward/dialogs/rksetupwizard.cpp:375
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
 msgstr "Uvozite v sejo, tako da lahko shranite v novi izhodni obliki."
 
-#: rkward/dialogs/rksetupwizard.cpp:370
+#: rkward/dialogs/rksetupwizard.cpp:376
 #, kde-format
 msgid "No action"
 msgstr "Brez dejanj"
 
-#: rkward/dialogs/rksetupwizard.cpp:370
+#: rkward/dialogs/rksetupwizard.cpp:376
 #, kde-format
 msgid ""
 "Ignore (and keep) the file. You can import it manually, at any time, using "
@@ -1896,17 +1902,17 @@ msgstr ""
 "Prezri (in obdrži) datoteko. Lahko jo uvozite ročno, kadar koli, z uporabo "
 "rk.import.legacy.output()"
 
-#: rkward/dialogs/rksetupwizard.cpp:383
+#: rkward/dialogs/rksetupwizard.cpp:389
 #, kde-format
 msgid "R Backend"
 msgstr "Zaledje R"
 
-#: rkward/dialogs/rksetupwizard.cpp:428
+#: rkward/dialogs/rksetupwizard.cpp:434
 #, kde-format
 msgid "R Packages"
 msgstr "Paketi R"
 
-#: rkward/dialogs/rksetupwizard.cpp:430
+#: rkward/dialogs/rksetupwizard.cpp:436
 #, kde-format
 msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
@@ -1915,7 +1921,7 @@ msgstr ""
 "Paket R2HTML uporabljajo skoraj vse izhodne funkcije RKWard in je zato "
 "obvezen."
 
-#: rkward/dialogs/rksetupwizard.cpp:431
+#: rkward/dialogs/rksetupwizard.cpp:437
 #, kde-format
 msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
@@ -1924,12 +1930,12 @@ msgstr ""
 "Paket rmarkdown je potreben za upodobitev datoteke .Rmd (vključno z "
 "upodobitvijo predogleda), ki je neobvezna, a priporočena funkcija."
 
-#: rkward/dialogs/rksetupwizard.cpp:436
+#: rkward/dialogs/rksetupwizard.cpp:442
 #, kde-format
 msgid "External software"
 msgstr "Zunanja programska oprema"
 
-#: rkward/dialogs/rksetupwizard.cpp:438
+#: rkward/dialogs/rksetupwizard.cpp:444
 #, kde-format
 msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
@@ -1938,7 +1944,7 @@ msgstr ""
 "Programska oprema pandoc je potrebna za upodabljanje (ali predogled) R "
 "markdown (. Rmd) datoteke. To je neobvezno, a priporočeno."
 
-#: rkward/dialogs/rksetupwizard.cpp:439
+#: rkward/dialogs/rksetupwizard.cpp:445
 #, kde-format
 msgid ""
 "The kbibtex software is useful for managing citations while writing "
@@ -1947,12 +1953,12 @@ msgstr ""
 "Programska oprema kbibtex je uporabna za upravljanje citatov med pisanjem "
 "člankov. Integrira se v RKWard preko kate vtičnika za predogled dokumentov."
 
-#: rkward/dialogs/rksetupwizard.cpp:444
+#: rkward/dialogs/rksetupwizard.cpp:450
 #, kde-format
 msgid "Summary of the next steps"
 msgstr "Povzetek naslednjih korakov"
 
-#: rkward/dialogs/rksetupwizard.cpp:461
+#: rkward/dialogs/rksetupwizard.cpp:467
 #, kde-format
 msgid ""
 "<h1>Reinstallation required</h1><p>Your installation of RKWard is broken, "
@@ -1962,12 +1968,12 @@ msgstr ""
 "pokvarjena in je ni mogoče samodejno odpraviti. Morali boste znova namestiti "
 "RKWard!</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:464
+#: rkward/dialogs/rksetupwizard.cpp:470
 #, kde-format
 msgid "<h2>Software to install</h2>"
 msgstr "<h2>Programska oprema za namestitev</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:474
+#: rkward/dialogs/rksetupwizard.cpp:480
 #, kde-format
 msgid ""
 "<p>The following software is recommended for installation, but automatic "
@@ -1978,17 +1984,17 @@ msgstr ""
 "namestitev (še) ni podprta. Kliknite na povezave, spodaj, za prenos "
 "informacij:</p><li>%1</li>"
 
-#: rkward/dialogs/rksetupwizard.cpp:476
+#: rkward/dialogs/rksetupwizard.cpp:482
 #, kde-format
 msgid "No software to install"
 msgstr "Ni programske opreme za namestitev"
 
-#: rkward/dialogs/rksetupwizard.cpp:478
+#: rkward/dialogs/rksetupwizard.cpp:484
 #, kde-format
 msgid "<h2>R packages to install</h2>"
 msgstr "<h2>R-paketi za namestitev</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:480
+#: rkward/dialogs/rksetupwizard.cpp:486
 #, kde-format
 msgid ""
 "<p>%1 R packages are marked for installation. The R package installation "
@@ -1999,7 +2005,7 @@ msgstr ""
 "paketa R se bo začelo, ko pritisnete Dokončaj. Morda boste pozvani, da "
 "izberete zrcalni strežnik za prenos.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:482
+#: rkward/dialogs/rksetupwizard.cpp:488
 #, kde-format
 msgid "No R packages to install"
 msgstr "Ni R-paketov za namestitev"
@@ -3046,30 +3052,72 @@ msgstr "[Ni zaznane tipkovnice]"
 msgid "Search online"
 msgstr "Išči v omrežju"
 
-#: rkward/misc/rkxmlguipreviewarea.cpp:202
+#: rkward/misc/rkxmlguipreviewarea.cpp:191
+#, fuzzy, kde-format
+#| msgid "Preview updating"
+msgctxt "very short: Preview is updating"
+msgid "updating"
+msgstr "Posodabljanje predogleda"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:192
+#, fuzzy, kde-format
+#| msgid "show errors"
+msgctxt "very short: Error while generating preview"
+msgid "error"
+msgstr "pokaži napake"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:193
+#, fuzzy, kde-format
+#| msgid "Ready"
+msgctxt "very short: Preview is up to date"
+msgid "ready"
+msgstr "Pripravljeni"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:194
+#, kde-format
+msgctxt "very short: Preview is not(yet) possible"
+msgid "n/a"
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:195
+#, kde-format
+msgctxt "very short: Preview is turned off"
+msgid "off"
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:215
+#, kde-format
+msgid ""
+"The preview is current unavailable (you will need to make further "
+"selections)."
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:219
+#, fuzzy, kde-format
+#| msgid "Preview disabled"
+msgid "Preview is turned off."
+msgstr "Predogled je onemogočen"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:223
+#, kde-format
+msgid "Preview is currently being updated."
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:227
+#, kde-format
+msgid "The command to generate the preview has failed."
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:231
+#, fuzzy, kde-format
+#| msgid "Preview up to date"
+msgid "Preview is up to date."
+msgstr "Predogled je osvežen"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
 msgid "Warnings or Errors:"
 msgstr "Opozorila ali napake:"
-
-#: rkward/misc/rkxmlguipreviewarea.cpp:259
-#, kde-format
-msgid "Preview not (yet) possible"
-msgstr "Predogled (še) ni možen"
-
-#: rkward/misc/rkxmlguipreviewarea.cpp:261
-#, kde-format
-msgid "Preview disabled"
-msgstr "Predogled je onemogočen"
-
-#: rkward/misc/rkxmlguipreviewarea.cpp:263
-#, kde-format
-msgid "Preview updating"
-msgstr "Posodabljanje predogleda"
-
-#: rkward/misc/rkxmlguipreviewarea.cpp:265
-#, kde-format
-msgid "Preview up to date"
-msgstr "Predogled je osvežen"
 
 #: rkward/misc/xmlhelper.cpp:54
 #, kde-format
@@ -3735,7 +3783,7 @@ msgid ""
 msgstr ""
 "Konfigurirana namestitev R na <b>%1</b> ne obstaja ali pa ni izvršljiva."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:218
+#: rkward/rbackend/rkfrontendtransmitter.cpp:220
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3744,14 +3792,14 @@ msgstr ""
 "Zaledne izvajalne datoteke ni bilo mogoče najti. To je lahko težava "
 "namestitve."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:295
+#: rkward/rbackend/rkfrontendtransmitter.cpp:297
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Zaledne izvajalne datoteke ni bilo mogoče zagnati. Sporočilo o napaki je "
 "bilo: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:348
+#: rkward/rbackend/rkfrontendtransmitter.cpp:350
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3760,7 +3808,7 @@ msgstr ""
 "Napaka med rokovanjem z zalednim postopkom. Pričakovani žeton '%1', prejeti "
 "žeton '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:351
+#: rkward/rbackend/rkfrontendtransmitter.cpp:353
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3771,18 +3819,18 @@ msgstr ""
 "'%1' medtem ko je zaledna '%2'.\n"
 "Popravite namestitev."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:385
+#: rkward/rbackend/rkfrontendtransmitter.cpp:387
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Zalednega procesa ni bilo mogoče zagnati. Preverite namestitev."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:386
+#: rkward/rbackend/rkfrontendtransmitter.cpp:388
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Zaledni proces se ni uspel zagnati z izhodno kodo %1, sporočilo: %2."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:387
+#: rkward/rbackend/rkfrontendtransmitter.cpp:389
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Zaledni proces se je končal s kodo %1, sporočilo: '%2'."
@@ -7519,6 +7567,9 @@ msgstr "Vnesite novo ime"
 msgid "View in editor (read-only)"
 msgstr "Ogled v urejevalniku (samo za branje)"
 
+#~ msgid "Preview not (yet) possible"
+#~ msgstr "Predogled (še) ni možen"
+
 #~ msgid ""
 #~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
 #~ "now), the function call tip feature would crash, and has been disabled in "
@@ -7545,9 +7596,6 @@ msgstr "Ogled v urejevalniku (samo za branje)"
 #~ msgstr ""
 #~ "<b>Zaledje R se je sesulo. Kliknite »Prekliči«, da zapustite pomočnika za "
 #~ "namestitev.</b>"
-
-#~ msgid "Unable to detect R installation"
-#~ msgstr "Namestitve R ni mogoče zaznati"
 
 #~ msgid "Specified R executable does not exist"
 #~ msgstr "Določena izvajalna datoteka R ne obstaja"
@@ -7598,9 +7646,6 @@ msgstr "Ogled v urejevalniku (samo za branje)"
 
 #~ msgid "Click \"Update\" to fetch information"
 #~ msgstr "Kliknite »Posodobi« za pridobivanje informacij"
-
-#~ msgid "Ready"
-#~ msgstr "Pripravljeni"
 
 #~ msgid "Next"
 #~ msgstr "Naprej"

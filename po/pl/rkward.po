@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-29 00:36+0000\n"
+"POT-Creation-Date: 2024-06-30 00:36+0000\n"
 "PO-Revision-Date: 2024-04-28 12:35+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -1601,28 +1601,34 @@ msgstr "<b>Wybierz jakiś:</b>"
 msgid "Show problem details"
 msgstr "Pokaż szczegóły"
 
-#: rkward/dialogs/rksetupwizard.cpp:128
+#: rkward/dialogs/rksetupwizard.cpp:129
+#, fuzzy, kde-format
+#| msgid "Unable to detect R installation"
+msgid "RKWard <b>failed to detect an R installation</b> on this system"
+msgstr "Nie można wykryć instalacji R"
+
+#: rkward/dialogs/rksetupwizard.cpp:131
 #, kde-format
 msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:135
+#: rkward/dialogs/rksetupwizard.cpp:139
 #, fuzzy, kde-format
 #| msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
 msgid "<b>R backend has failed to start.</b>"
 msgstr "<b>Uruchomił się silnik R. Naciśnij \"Dalej\", aby przejść dalej.</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:137
+#: rkward/dialogs/rksetupwizard.cpp:141
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:144
+#: rkward/dialogs/rksetupwizard.cpp:148
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:147
+#: rkward/dialogs/rksetupwizard.cpp:151
 #, kde-format
 msgid ""
 "<p>You are using the R version bundled inside the RKWard AppImage.</"
@@ -1632,57 +1638,57 @@ msgid ""
 "below.</p>"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:161
+#: rkward/dialogs/rksetupwizard.cpp:165
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
 msgstr "<b>Oczekiwanie na silnik R...</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:182
+#: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
 msgid "Use R at:"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:184
+#: rkward/dialogs/rksetupwizard.cpp:188
 #, kde-format
 msgid "Select another R executable"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:186
+#: rkward/dialogs/rksetupwizard.cpp:190
 #, kde-format
 msgid "Select R executable"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:200
+#: rkward/dialogs/rksetupwizard.cpp:206
 #, kde-format
 msgid "Use R at %1"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:203
+#: rkward/dialogs/rksetupwizard.cpp:209
 #, kde-format
 msgid "Attempt to restart R at %1"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:204
+#: rkward/dialogs/rksetupwizard.cpp:210
 #, kde-format
 msgid "Keep current version (%1)"
 msgstr ""
 
-#: rkward/dialogs/rksetupwizard.cpp:236
+#: rkward/dialogs/rksetupwizard.cpp:242
 #, kde-format
 msgid "No action needed."
 msgstr "Nie wymagane jest żadne działanie."
 
-#: rkward/dialogs/rksetupwizard.cpp:271
+#: rkward/dialogs/rksetupwizard.cpp:277
 #, kde-format
 msgid "Not installed"
 msgstr "Niewgrane"
 
-#: rkward/dialogs/rksetupwizard.cpp:272 rkward/dialogs/rksetupwizard.cpp:283
+#: rkward/dialogs/rksetupwizard.cpp:278 rkward/dialogs/rksetupwizard.cpp:289
 #, kde-format
 msgid "Install %1"
 msgstr "Wgraj %1"
 
-#: rkward/dialogs/rksetupwizard.cpp:272
+#: rkward/dialogs/rksetupwizard.cpp:278
 #, kde-format
 msgid ""
 "(Attempt to) install the package %1 and its dependencies for this version of "
@@ -1691,13 +1697,13 @@ msgstr ""
 "(Próba) wgrania pakietu %1 i jego zależności dla tej wersji R. W większości "
 "przypadków wymaga to działającego połączenia sieciowego."
 
-#: rkward/dialogs/rksetupwizard.cpp:273 rkward/dialogs/rksetupwizard.cpp:284
-#: rkward/dialogs/rksetupwizard.cpp:344
+#: rkward/dialogs/rksetupwizard.cpp:279 rkward/dialogs/rksetupwizard.cpp:290
+#: rkward/dialogs/rksetupwizard.cpp:350
 #, kde-format
 msgid "No change"
 msgstr "Bez zmian"
 
-#: rkward/dialogs/rksetupwizard.cpp:273
+#: rkward/dialogs/rksetupwizard.cpp:279
 #, kde-format
 msgid ""
 "Proceed without the package. You will again be given the option to install "
@@ -1706,12 +1712,12 @@ msgstr ""
 "Przejdź dalej bez pakietu. W późniejszym czasie dostaniesz kolejną możliwość "
 "wgrania pakietu, gdy będzie potrzebny."
 
-#: rkward/dialogs/rksetupwizard.cpp:275 rkward/dialogs/rksetupwizard.cpp:295
+#: rkward/dialogs/rksetupwizard.cpp:281 rkward/dialogs/rksetupwizard.cpp:301
 #, kde-format
 msgid "Installed"
 msgstr "Wgrane"
 
-#: rkward/dialogs/rksetupwizard.cpp:283
+#: rkward/dialogs/rksetupwizard.cpp:289
 #, kde-format
 msgid ""
 "Mark %1 for installation (actual installation is not yet supported, but you "
@@ -1721,22 +1727,22 @@ msgstr ""
 "Oznacz %1 do wgrania (nie nastąpi rzeczywiste wgrywanie, lecz dostaniesz "
 "odnośnik do wgrywania na ostatniej stronie tego okna)"
 
-#: rkward/dialogs/rksetupwizard.cpp:284
+#: rkward/dialogs/rksetupwizard.cpp:290
 #, kde-format
 msgid "Proceed without %1. You will be missing some functionality."
 msgstr "Przejdź dalej bez %1. Będzie ci brakować pewnych możliwości."
 
-#: rkward/dialogs/rksetupwizard.cpp:292
+#: rkward/dialogs/rksetupwizard.cpp:298
 #, kde-format
 msgid "Not found"
 msgstr "Nie znaleziono"
 
-#: rkward/dialogs/rksetupwizard.cpp:306
+#: rkward/dialogs/rksetupwizard.cpp:312
 #, kde-format
 msgid "RKWard Setup Assistant"
 msgstr "Pomocnik ustawień RKWard"
 
-#: rkward/dialogs/rksetupwizard.cpp:308
+#: rkward/dialogs/rksetupwizard.cpp:314
 #, kde-format
 msgid ""
 "<p>This dialog will guide you through a quick check of the basic setup of "
@@ -1745,7 +1751,7 @@ msgstr ""
 "<p>To okno przeprowadzi cię przez szybkie sprawdzenie wymaganych (lub "
 "zalecanych) składników.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:310
+#: rkward/dialogs/rksetupwizard.cpp:316
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
@@ -1754,7 +1760,7 @@ msgstr ""
 "<p>Samoczynnie wywołano pomocnika ustawień, bo wykryta została nowa wersja "
 "RKWard.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:313
+#: rkward/dialogs/rksetupwizard.cpp:319
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
@@ -1763,27 +1769,27 @@ msgstr ""
 "<p>Samoczynnie wywołano pomocnika ustawień, bo wykryta została nowa wersja R."
 "</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:326
+#: rkward/dialogs/rksetupwizard.cpp:332
 #, kde-format
 msgid "Basic installation"
 msgstr "Podstawowe wgrywanie"
 
-#: rkward/dialogs/rksetupwizard.cpp:328
+#: rkward/dialogs/rksetupwizard.cpp:334
 #, kde-format
 msgid "Installation directory"
 msgstr "Katalog wgrywania"
 
-#: rkward/dialogs/rksetupwizard.cpp:330
+#: rkward/dialogs/rksetupwizard.cpp:336
 #, kde-format
 msgid "Not found."
 msgstr "Nie znaleziono."
 
-#: rkward/dialogs/rksetupwizard.cpp:332
+#: rkward/dialogs/rksetupwizard.cpp:338
 #, kde-format
 msgid "Reinstallation required"
 msgstr "Wymagane ponowne wgranie"
 
-#: rkward/dialogs/rksetupwizard.cpp:332
+#: rkward/dialogs/rksetupwizard.cpp:338
 #, kde-format
 msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
@@ -1792,49 +1798,49 @@ msgstr ""
 "Nie można naprawić tego kłopotu samoczynnie. Będziesz musiał ponownie wgrać "
 "RKWard."
 
-#: rkward/dialogs/rksetupwizard.cpp:335 rkward/dialogs/rksetupwizard.cpp:348
-#: rkward/dialogs/rksetupwizard.cpp:372
+#: rkward/dialogs/rksetupwizard.cpp:341 rkward/dialogs/rksetupwizard.cpp:354
+#: rkward/dialogs/rksetupwizard.cpp:378
 #, kde-format
 msgid "Found."
 msgstr "Znaleziono."
 
-#: rkward/dialogs/rksetupwizard.cpp:339
+#: rkward/dialogs/rksetupwizard.cpp:345
 #, kde-format
 msgid "RKWard plugins"
 msgstr "Wtyczki RKWard"
 
-#: rkward/dialogs/rksetupwizard.cpp:341
+#: rkward/dialogs/rksetupwizard.cpp:347
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr ""
 "<p>Nie włączono żadnych wtyczek. Nie jest to prawdopodobnie potrzebne.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:342
+#: rkward/dialogs/rksetupwizard.cpp:348
 #, kde-format
 msgid "None selected"
 msgstr "Nie zaznaczono niczego"
 
-#: rkward/dialogs/rksetupwizard.cpp:343
+#: rkward/dialogs/rksetupwizard.cpp:349
 #, kde-format
 msgid "Restore defaults"
 msgstr "Przywróć domyślne"
 
-#: rkward/dialogs/rksetupwizard.cpp:343
+#: rkward/dialogs/rksetupwizard.cpp:349
 #, kde-format
 msgid "Enable the default plugins"
 msgstr "Włącz domyślne wtyczki"
 
-#: rkward/dialogs/rksetupwizard.cpp:344
+#: rkward/dialogs/rksetupwizard.cpp:350
 #, kde-format
 msgid "Proceed without plugins"
 msgstr "Przejdź dalej bez wtyczek"
 
-#: rkward/dialogs/rksetupwizard.cpp:352
+#: rkward/dialogs/rksetupwizard.cpp:358
 #, kde-format
 msgid "Kate plugins"
 msgstr "Wtyczki Kate"
 
-#: rkward/dialogs/rksetupwizard.cpp:355
+#: rkward/dialogs/rksetupwizard.cpp:361
 #, kde-format
 msgid ""
 "<p>Important functionality in RKWard is provided by kate plugins. It looks "
@@ -1845,12 +1851,12 @@ msgstr ""
 "Wygląda na to, że nie masz wgranej żadnej na swoim systemie. Na Linuksie/BSD "
 "wystarczy zazwyczaj wgrać Kate.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:356
+#: rkward/dialogs/rksetupwizard.cpp:362
 #, kde-format
 msgid "None found"
 msgstr "Nie znaleziono niczego"
 
-#: rkward/dialogs/rksetupwizard.cpp:359
+#: rkward/dialogs/rksetupwizard.cpp:365
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
@@ -1858,34 +1864,34 @@ msgstr[0] "Znaleziono %1 wtyczkę."
 msgstr[1] "Znaleziono %1 wtyczki."
 msgstr[2] "Znaleziono %1 wtyczek."
 
-#: rkward/dialogs/rksetupwizard.cpp:364
+#: rkward/dialogs/rksetupwizard.cpp:370
 #, kde-format
 msgid "Pre 0.7.3 output file"
 msgstr "Plik wyjściowy przed 0.7.3"
 
-#: rkward/dialogs/rksetupwizard.cpp:367
+#: rkward/dialogs/rksetupwizard.cpp:373
 #, kde-format
 msgid "Exists"
 msgstr "Istnieje"
 
-#: rkward/dialogs/rksetupwizard.cpp:369
+#: rkward/dialogs/rksetupwizard.cpp:375
 #, kde-format
 msgid "Import"
 msgstr "Importuj"
 
-#: rkward/dialogs/rksetupwizard.cpp:369
+#: rkward/dialogs/rksetupwizard.cpp:375
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
 msgstr ""
 "Zaimportuj do posiedzenia tak, aby można było zapisać w nowym formacie "
 "wyjściowym."
 
-#: rkward/dialogs/rksetupwizard.cpp:370
+#: rkward/dialogs/rksetupwizard.cpp:376
 #, kde-format
 msgid "No action"
 msgstr "Brak działania"
 
-#: rkward/dialogs/rksetupwizard.cpp:370
+#: rkward/dialogs/rksetupwizard.cpp:376
 #, kde-format
 msgid ""
 "Ignore (and keep) the file. You can import it manually, at any time, using "
@@ -1894,18 +1900,18 @@ msgstr ""
 "Pomiń (i zachowaj) plik. Możesz go zaimportować ręcznie, w dowolnym czasie, "
 "używając rk.import.legacy.output()"
 
-#: rkward/dialogs/rksetupwizard.cpp:383
+#: rkward/dialogs/rksetupwizard.cpp:389
 #, fuzzy, kde-format
 #| msgid "R-Backend"
 msgid "R Backend"
 msgstr "Silnik R"
 
-#: rkward/dialogs/rksetupwizard.cpp:428
+#: rkward/dialogs/rksetupwizard.cpp:434
 #, kde-format
 msgid "R Packages"
 msgstr "Pakiety R"
 
-#: rkward/dialogs/rksetupwizard.cpp:430
+#: rkward/dialogs/rksetupwizard.cpp:436
 #, kde-format
 msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
@@ -1914,7 +1920,7 @@ msgstr ""
 "Pakiet R2HTML jest używany przez niemal każdą funkcję dającą jakikolwiek "
 "wynik w RKWard i przez to jest wymagana."
 
-#: rkward/dialogs/rksetupwizard.cpp:431
+#: rkward/dialogs/rksetupwizard.cpp:437
 #, kde-format
 msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
@@ -1923,12 +1929,12 @@ msgstr ""
 "Pakiet rmarkdown jest wymagany do wyświetlania plików .Rmd (włączając w to "
 "wyświetlanie podglądu), co jest niewymaganą, lecz zalecaną możliwością."
 
-#: rkward/dialogs/rksetupwizard.cpp:436
+#: rkward/dialogs/rksetupwizard.cpp:442
 #, kde-format
 msgid "External software"
 msgstr "Oprogramowanie zewnętrzne"
 
-#: rkward/dialogs/rksetupwizard.cpp:438
+#: rkward/dialogs/rksetupwizard.cpp:444
 #, kde-format
 msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
@@ -1937,7 +1943,7 @@ msgstr ""
 "Program pandoc jest wymagany do wyświetlania (lub podglądu) plików R "
 "markdown (.Rmd). Jest to niewymagane, lecz zalecane."
 
-#: rkward/dialogs/rksetupwizard.cpp:439
+#: rkward/dialogs/rksetupwizard.cpp:445
 #, kde-format
 msgid ""
 "The kbibtex software is useful for managing citations while writing "
@@ -1946,12 +1952,12 @@ msgstr ""
 "Program KBibTex pomaga zarządzać cytowaniami przy pisaniu artykułów. W "
 "RKWard dostępny jest poprzez wtyczkę Kate o nazwie Podgląd Dokumentu."
 
-#: rkward/dialogs/rksetupwizard.cpp:444
+#: rkward/dialogs/rksetupwizard.cpp:450
 #, kde-format
 msgid "Summary of the next steps"
 msgstr "Podsumowanie następnych kroków"
 
-#: rkward/dialogs/rksetupwizard.cpp:461
+#: rkward/dialogs/rksetupwizard.cpp:467
 #, kde-format
 msgid ""
 "<h1>Reinstallation required</h1><p>Your installation of RKWard is broken, "
@@ -1961,12 +1967,12 @@ msgstr ""
 "i nie można jej naprawić samoczynnie. Będziesz musiał ponownie wgrać RKWard!"
 "</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:464
+#: rkward/dialogs/rksetupwizard.cpp:470
 #, kde-format
 msgid "<h2>Software to install</h2>"
 msgstr "<h2>Oprogramowanie do wgrania</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:474
+#: rkward/dialogs/rksetupwizard.cpp:480
 #, kde-format
 msgid ""
 "<p>The following software is recommended for installation, but automatic "
@@ -1977,17 +1983,17 @@ msgstr ""
 "wgrywanie nie jest (jeszcze) obsługiwane. Naciśnij na odnośnik poniżej, aby "
 "dowiedzieć się szczegółów:</p><li>%1</li>"
 
-#: rkward/dialogs/rksetupwizard.cpp:476
+#: rkward/dialogs/rksetupwizard.cpp:482
 #, kde-format
 msgid "No software to install"
 msgstr "Brak oprogramowania do wgrania"
 
-#: rkward/dialogs/rksetupwizard.cpp:478
+#: rkward/dialogs/rksetupwizard.cpp:484
 #, kde-format
 msgid "<h2>R packages to install</h2>"
 msgstr "<h2>Pakietów R do wgrania</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:480
+#: rkward/dialogs/rksetupwizard.cpp:486
 #, kde-format
 msgid ""
 "<p>%1 R packages are marked for installation. The R package installation "
@@ -1998,7 +2004,7 @@ msgstr ""
 "pakietów R, gdy naciśniesz Zakończ. Może pojawić się pytanie o wybranie "
 "serwera lustrzanego.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:482
+#: rkward/dialogs/rksetupwizard.cpp:488
 #, kde-format
 msgid "No R packages to install"
 msgstr "Brak pakietów R do wgrania"
@@ -3052,30 +3058,73 @@ msgstr "[Nie wykryto słowa kluczowego]"
 msgid "Search online"
 msgstr "Szukaj w sieci"
 
-#: rkward/misc/rkxmlguipreviewarea.cpp:202
+#: rkward/misc/rkxmlguipreviewarea.cpp:191
+#, fuzzy, kde-format
+#| msgid "Preview updating"
+msgctxt "very short: Preview is updating"
+msgid "updating"
+msgstr "Podgląd uaktualnia się"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:192
+#, fuzzy, kde-format
+#| msgid "show errors"
+msgctxt "very short: Error while generating preview"
+msgid "error"
+msgstr "pokaż błędy"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:193
+#, fuzzy, kde-format
+#| msgid "Ready"
+msgctxt "very short: Preview is up to date"
+msgid "ready"
+msgstr "Gotowe"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:194
+#, kde-format
+msgctxt "very short: Preview is not(yet) possible"
+msgid "n/a"
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:195
+#, kde-format
+msgctxt "very short: Preview is turned off"
+msgid "off"
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:215
+#, kde-format
+msgid ""
+"The preview is current unavailable (you will need to make further "
+"selections)."
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:219
+#, fuzzy, kde-format
+#| msgid "Preview disabled"
+msgid "Preview is turned off."
+msgstr "Podgląd wyłączony"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:223
+#, fuzzy, kde-format
+#| msgid "Preview not (currently) possible"
+msgid "Preview is currently being updated."
+msgstr "Podgląd (obecnie) niemożliwy"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:227
+#, kde-format
+msgid "The command to generate the preview has failed."
+msgstr ""
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:231
+#, fuzzy, kde-format
+#| msgid "Preview up to date"
+msgid "Preview is up to date."
+msgstr "Podgląd aktualny"
+
+#: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
 msgid "Warnings or Errors:"
 msgstr "Ostrzeżenie lub błędy:"
-
-#: rkward/misc/rkxmlguipreviewarea.cpp:259
-#, kde-format
-msgid "Preview not (yet) possible"
-msgstr "Podgląd (jeszcze) niedostępny"
-
-#: rkward/misc/rkxmlguipreviewarea.cpp:261
-#, kde-format
-msgid "Preview disabled"
-msgstr "Podgląd wyłączony"
-
-#: rkward/misc/rkxmlguipreviewarea.cpp:263
-#, kde-format
-msgid "Preview updating"
-msgstr "Podgląd uaktualnia się"
-
-#: rkward/misc/rkxmlguipreviewarea.cpp:265
-#, kde-format
-msgid "Preview up to date"
-msgstr "Podgląd aktualny"
 
 #: rkward/misc/xmlhelper.cpp:54
 #, kde-format
@@ -3749,7 +3798,7 @@ msgstr ""
 "Plik wykonywalny R w wierszu poleceń (%1) nie istnieje lub jest "
 "niewykonywalny."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:218
+#: rkward/rbackend/rkfrontendtransmitter.cpp:220
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3758,12 +3807,12 @@ msgstr ""
 "Nie można znaleźć pliku wykonywalnego silnika. Najprawdopodobniej jest to "
 "problem z twoją instalacją."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:295
+#: rkward/rbackend/rkfrontendtransmitter.cpp:297
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "Nie można uruchomić pliku wykonywalnego silnik. Wiadomość błędu: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:348
+#: rkward/rbackend/rkfrontendtransmitter.cpp:350
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3772,7 +3821,7 @@ msgstr ""
 "Błąd przy powitaniu z procesem silnika. Oczekiwano tokena '%1', otrzymano "
 "tokena '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:351
+#: rkward/rbackend/rkfrontendtransmitter.cpp:353
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3783,21 +3832,21 @@ msgstr ""
 "wersji '%1' podczas gdy silnik jest w wersji '%2'.\n"
 "Proszę naprawić swoją instalację."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:385
+#: rkward/rbackend/rkfrontendtransmitter.cpp:387
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
 "Nie można uruchomić procesu silnika. Proszę sprawdzić swoją instalację."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:386
+#: rkward/rbackend/rkfrontendtransmitter.cpp:388
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "Nie udało się uruchomić procesu silnika, a kod wyjścia to %1, wiadomość: "
 "'%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:387
+#: rkward/rbackend/rkfrontendtransmitter.cpp:389
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Proces silnika wyszedł z kodem %1, wiadomość: '%2'."
@@ -7570,6 +7619,9 @@ msgstr "Wprowadź nową nazwę"
 msgid "View in editor (read-only)"
 msgstr "Zobacz w edytorze (tylko-do-odczytu)"
 
+#~ msgid "Preview not (yet) possible"
+#~ msgstr "Podgląd (jeszcze) niedostępny"
+
 #~ msgid ""
 #~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
 #~ "now), the function call tip feature would crash, and has been disabled in "
@@ -7596,9 +7648,6 @@ msgstr "Zobacz w edytorze (tylko-do-odczytu)"
 #~ msgstr ""
 #~ "<b>Silnik R wysypał się. Naciśnij \"Anuluj\", aby wyjść z pomocnika "
 #~ "ustawień.</b>"
-
-#~ msgid "Unable to detect R installation"
-#~ msgstr "Nie można wykryć instalacji R"
 
 #~ msgid "Specified R executable does not exist"
 #~ msgstr "Podany plik wykonywalny R nie istnieje"
@@ -7651,9 +7700,6 @@ msgstr "Zobacz w edytorze (tylko-do-odczytu)"
 
 #~ msgid "Click \"Update\" to fetch information"
 #~ msgstr "Naciśnij \"Uaktualnij\", aby pobrać informacje"
-
-#~ msgid "Ready"
-#~ msgstr "Gotowe"
 
 #~ msgid "Next"
 #~ msgstr "Następny"
@@ -7833,9 +7879,6 @@ msgstr "Zobacz w edytorze (tylko-do-odczytu)"
 
 #~ msgid "row names"
 #~ msgstr "nazwy wierszy"
-
-#~ msgid "Preview not (currently) possible"
-#~ msgstr "Podgląd (obecnie) niemożliwy"
 
 #~ msgid "File format:"
 #~ msgstr "Format pliku:"

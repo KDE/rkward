@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-06-23 13:20+0100\n"
+"PO-Revision-Date: 2024-06-29 22:05+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -2032,6 +2032,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Esta página intentará cubrir algunos problemas comunes que puede encontrar "
+"al usar RKWard. Consulte también las <link href=\"https://rkward.kde.org/faq"
+"\">preguntas frecuentes en línea</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2068,13 +2071,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "El motor de R ha fallado o no se ha podido iniciar."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "El motor ha fallado"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2087,6 +2090,13 @@ msgid ""
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"A veces el motor de R fallará durante el inicio debido a un problema de "
+"configuración o de instalación. Las causas comunes son rutas modificadas o "
+"una actualización de R. Por lo general, en estos casos, el diálogo de "
+"configuración se muestra al iniciar RKWard, permitiendo seleccionar una "
+"instalación de R diferente. Nota: se le mostrará una selección de las "
+"instalaciones encontradas en las rutas comunes, aunque también puede "
+"especificar una instalación no detectada de forma manual."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2097,6 +2107,10 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"En muchos casos, «funcionará» la selección de una versión de R distinta a la "
+"que se usó a la hora de compilar. Si esto ocasionara problemas, se le "
+"aconseja que use la misma versión de R u otra similar a la que estaba "
+"disponible durante la compilación."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2107,12 +2121,18 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Puede cambiar el motor de R de forma manual en cualquier momento usando "
+"Preferencias->Comprobar la instalación. Asegúrese de guardar sus datos antes "
+"de cambiar el motor. También puede usar la opción de la línea de órdenes «--"
+"r-executable» para iniciar una sesión que use una determinada instalación de "
+"R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
 msgstr ""
+"¿Por qué no debería usar el R incluido dentro de la AppImage de RKWard?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2131,6 +2151,13 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"La AppImage incluye una instalación de R por conveniencia, aunque esta "
+"instalación no es, y técnicamente no puede ser, completamente funcional. Es "
+"importante destacar que, por lo general, no podrá instalar paquetes de R "
+"(aparte de los implementados exclusivamente en R). Además, puede encontrarse "
+"con conflictos entre la instalación de R incluida en la AppImage y los "
+"paquetes de R que están instalados en el sistema. Esto puede provocar "
+"errores sutiles y sorprendentes."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
