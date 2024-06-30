@@ -367,19 +367,22 @@ private Q_SLOTS:
 	}
 
 	void priorityCommandTest() {
-		bool priority_command_done = false;
-		runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+		for (int i = 0; i < 50; ++i) { // this test is prone to race-conditions. Run repeatedly to catch increase detection likelihood
+			bool priority_command_done = false;
+			runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+				QVERIFY(priority_command_done);
+				QVERIFY(command->failed());
+				QVERIFY(command->wasCanceled());
+			});
+			auto priority_command = new RCommand("cat(\"something\\n\")", RCommand::PriorityCommand | RCommand::App);
+			runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
+				priority_command_done = true;
+				RInterface::instance()->cancelAll();
+			});
+			waitForAllFinished(); // NOTE: timeout, here, is an important additional check, whether command was really interrupted
 			QVERIFY(priority_command_done);
-			QVERIFY(command->failed());
-			QVERIFY(command->wasCanceled());
-		});
-		auto priority_command = new RCommand("cat(\"something\\n\")", RCommand::PriorityCommand | RCommand::App);
-		runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
-			priority_command_done = true;
-			RInterface::instance()->cancelAll();
-		});
-		waitForAllFinished();
-		waitForAllFinished(4000);  // priority_command_done must remain in scope until done (even if interrupting fails for some reason)
+		}
+		waitForAllFinished(5000); // increase chances of not crashing in case of test failure
 	}
 
 	void RKConsoleHistoryTest() {
