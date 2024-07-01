@@ -7,13 +7,13 @@
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
 # Josep Roca <pep.roca@gmail.com>, 2007, 2010, 2012.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2019, 2020, 2022.
-# Josep M. Ferrer <txemaq@gmail.com>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:36+0000\n"
-"PO-Revision-Date: 2024-06-25 13:03+0200\n"
+"POT-Creation-Date: 2024-07-01 00:36+0000\n"
+"PO-Revision-Date: 2024-06-30 10:01+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.05.1\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -1617,10 +1617,11 @@ msgid "Show problem details"
 msgstr "Mostra els detalls del problema"
 
 #: rkward/dialogs/rksetupwizard.cpp:129
-#, fuzzy, kde-format
-#| msgid "Unable to detect R installation"
+#, kde-format
 msgid "RKWard <b>failed to detect an R installation</b> on this system"
-msgstr "No s'ha pogut detectar la instal·lació de l'R"
+msgstr ""
+"El RKWard <b>ha fallat en detectar una instal·lació de l'R</b> en aquest "
+"sistema"
 
 #: rkward/dialogs/rksetupwizard.cpp:131
 #, kde-format
@@ -3094,36 +3095,34 @@ msgid "Search online"
 msgstr "Cerca en línia"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:191
-#, fuzzy, kde-format
-#| msgid "Preview updating"
+#, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr "S'està actualitzant la vista prèvia"
+msgstr "s'està actualitzant"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
-#, fuzzy, kde-format
-#| msgid "show errors"
+#, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr "Mostra els errors"
+msgstr "error"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr ""
+msgstr "preparat"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "n/d"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:195
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "inactiu"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:215
 #, kde-format
@@ -3131,28 +3130,28 @@ msgid ""
 "The preview is current unavailable (you will need to make further "
 "selections)."
 msgstr ""
+"Actualment, la vista prèvia no està disponible (cal fer seleccions "
+"addicionals)."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:219
-#, fuzzy, kde-format
-#| msgid "Preview disabled"
+#, kde-format
 msgid "Preview is turned off."
-msgstr "Vista prèvia desactivada"
+msgstr "La vista prèvia està desactivada."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:223
 #, kde-format
 msgid "Preview is currently being updated."
-msgstr ""
+msgstr "Actualment, la vista prèvia s'està actualitzant."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:227
 #, kde-format
 msgid "The command to generate the preview has failed."
-msgstr ""
+msgstr "L'ordre per ha generar la vista prèvia ha fallat."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:231
-#, fuzzy, kde-format
-#| msgid "Preview up to date"
+#, kde-format
 msgid "Preview is up to date."
-msgstr "Vista prèvia actualitzada"
+msgstr "La vista prèvia està actualitzada."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
@@ -4115,19 +4114,19 @@ msgstr "El motor R s'ha aturat"
 msgid "Graphics Device Number %1"
 msgstr "Dispositiu gràfic número %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:595
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Activa)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:596
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:597
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (Inactiva)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:622
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:623
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4136,14 +4135,14 @@ msgstr ""
 "<h2>Punt/s d'ubicació</h2><p>Useu el botó esquerre del ratolí per a "
 "seleccionar punt/s. Qualsevol altre botó per a parar.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:633
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Premeu Retorn per a veure el diagrama següent, o feu clic a «Cancel·la» "
 "per a interrompre.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:636
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:637
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "D'acord en mostrar el diagrama següent?"

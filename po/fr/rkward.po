@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:36+0000\n"
-"PO-Revision-Date: 2024-06-11 09:16+0200\n"
+"POT-Creation-Date: 2024-07-01 00:36+0000\n"
+"PO-Revision-Date: 2024-06-29 17:45+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -4156,19 +4156,19 @@ msgstr "Le moteur de R s'est arrêté."
 msgid "Graphics Device Number %1"
 msgstr "Numéro du périphérique graphique %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:595
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (actif)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:596
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:597
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (inactif)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:622
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:623
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4178,14 +4178,14 @@ msgstr ""
 "pour sélectionner un ou des points et tout autre bouton de la souris pour "
 "arrêter. </p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:633
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Veuillez appuyer sur « Entrée » pour afficher le prochain trajet ou "
 "cliquer sur « Annuler » pour tout abandonner.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:636
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:637
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Ok pour afficher le prochain tracé ?"
@@ -6519,10 +6519,9 @@ msgstr ""
 "\">Configuration / Configurer RKWard / Moteur de R</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (HTML)"
-msgstr "Markdown de R"
+msgstr "Markdown de R (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6531,36 +6530,28 @@ msgid "Preview of rendered R Markdown"
 msgstr "Aperçu du langage de rendu « Markdown » de R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:445
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
-"Faire un aperçu pour le script comme rendu à partir du format R-Markdown "
-"(Approprié pour les fichiers « .Rmd »)."
+"Afficher un aperçu pour le script comme rendu à partir du format "
+"« Markdown » pour R (.Rmd) vers le format « HTML »."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:457
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (PDF)"
-msgstr "Markdown de R"
+msgstr "Markdown de R (PDF)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
 msgstr ""
-"Faire un aperçu pour le script comme rendu à partir du format R-Markdown "
-"(Approprié pour les fichiers « .Rmd »)."
+"Afficher un aperçu pour le script comme rendu à partir du format "
+"« Markdown » pour R (.Rmd) vers le format « PDF »"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:462
-#, fuzzy, kde-format
-#| msgid "Pandoc is not installed"
+#, kde-format
 msgid "pdflatex is not installed"
-msgstr "Le paquet « pandoc » n'est pas installé"
+msgstr "Le paquet « pdflatex » n'est pas installé."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
@@ -6568,6 +6559,9 @@ msgid ""
 "pdflatex is required for rendering PDF previews. The easiest way to install "
 "it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
 msgstr ""
+"Le paquet « pdflatex » est nécessaire pour effectuer le rendu des aperçus en "
+"format « PDF ». Le moyen le plus simple de l'installer est d'exécuter "
+"<tt>install.packages(\"tinytex\") ; install_tinytex()</tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:473
 #, kde-format
@@ -7145,6 +7139,7 @@ msgstr "Configurer %1"
 #, kde-format
 msgid "No PDF viewer component found"
 msgstr ""
+"Il a été impossible de trouver un composant d'affichage de format « PDF »."
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

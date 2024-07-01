@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:36+0000\n"
+"POT-Creation-Date: 2024-07-01 00:36+0000\n"
 "PO-Revision-Date: 2024-06-27 21:13+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -4067,19 +4067,19 @@ msgstr "O motor de R quebrou"
 msgid "Graphics Device Number %1"
 msgstr "Dispositivo de gráficos número %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:595
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (activo)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:596
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:597
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (inactivo)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:622
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:623
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4088,14 +4088,14 @@ msgstr ""
 "<h2>Atopar puntos</h2> <p>Use o botón esquerdo do rato para seleccionar "
 "puntos. Use calquera outro botón para deter a selección.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:633
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Prema Intro para ver a seguinte gráfica, ou prema «Cancelar» para "
 "interromper.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:636
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:637
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Quere amosar a seguinte gráfica?"

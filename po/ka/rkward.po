@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:36+0000\n"
-"PO-Revision-Date: 2024-06-25 05:23+0200\n"
+"POT-Creation-Date: 2024-07-01 00:36+0000\n"
+"PO-Revision-Date: 2024-06-30 07:31+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1474,10 +1474,9 @@ msgid "Show problem details"
 msgstr "პრობლემის დეტალების ჩვენება"
 
 #: rkward/dialogs/rksetupwizard.cpp:129
-#, fuzzy, kde-format
-#| msgid "Unable to detect R installation"
+#, kde-format
 msgid "RKWard <b>failed to detect an R installation</b> on this system"
-msgstr "R-ის ფაილები აღმოჩენილი არაა"
+msgstr "RKWard-მა ამ სისტემაზე <b> დაყენებული R-ის ვერსია ვერ იპოვა</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:131
 #, kde-format
@@ -2843,36 +2842,34 @@ msgid "Search online"
 msgstr "ონლაინ ძებნა"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:191
-#, fuzzy, kde-format
-#| msgid "Preview updating"
+#, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr "მიმდინარეობს მინიატურის განახლება"
+msgstr "მიმდინარეობს განახლება"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
-#, fuzzy, kde-format
-#| msgid "show errors"
+#, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr "შეცდომების ჩვენება"
+msgstr "შეცდომა"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr ""
+msgstr "მზადაა"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "მიუწვდომელია"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:195
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "გამორთვა"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:215
 #, kde-format
@@ -2882,26 +2879,24 @@ msgid ""
 msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:219
-#, fuzzy, kde-format
-#| msgid "Preview disabled"
+#, kde-format
 msgid "Preview is turned off."
-msgstr "მინიატურა გათიშულია"
+msgstr "მინიატურა გათიშულია."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:223
 #, kde-format
 msgid "Preview is currently being updated."
-msgstr ""
+msgstr "მიმდინარეობს მინიატურის განახლება."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:227
 #, kde-format
 msgid "The command to generate the preview has failed."
-msgstr ""
+msgstr "მინიატურის გენერაციის ბრძანება ჩავარდა."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:231
-#, fuzzy, kde-format
-#| msgid "Preview up to date"
+#, kde-format
 msgid "Preview is up to date."
-msgstr "მინიატურა განახლებულია"
+msgstr "მინიატურა განახლებულია."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
@@ -3762,31 +3757,31 @@ msgstr "R-ის ძრავა გარდაიცვალა"
 msgid "Graphics Device Number %1"
 msgstr "გრაფიკის მოწყობილობის ნომერი %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:595
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (აქტიური)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:596
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:597
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (არააქტიური)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:622
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:623
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:633
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:636
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:637
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "ვაჩვენო შემდეგი ნახაზი?"

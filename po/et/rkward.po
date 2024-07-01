@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:36+0000\n"
+"POT-Creation-Date: 2024-07-01 00:36+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -3969,19 +3969,19 @@ msgstr "R-i mootor suri"
 msgid "Graphics Device Number %1"
 msgstr "Graafikaseade number %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:595
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (aktiivne)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:596
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:597
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (mitteaktiivne)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:622
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:623
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -3990,14 +3990,14 @@ msgstr ""
 "<h2>Punkti(de) leidmine</h2><p>Hiire vasaku nupuga saab punkte valida. "
 "Teised nupud peatavad selle tegevuse.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:633
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Enteri vajutamisel näeb järgmist diagrammi, klõps nupule \"Loobu\" "
 "katkestab.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:636
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:637
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Kas näidata järgmist diagrammi?"

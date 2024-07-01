@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-06-09 06:15+0200\n"
+"PO-Revision-Date: 2024-06-30 06:04+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
-"Language-Team: Esperanto <kde-i18n-eo.org>\n"
+"Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2040,6 +2040,12 @@ msgid ""
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"Foje la R-backend malsukcesos komenci pro agorda aŭ instala problemo. Oftaj "
+"kaŭzoj estas ŝanĝitaj vojoj, aŭ ĝisdatigo al R. Kutime, en ĉi tiuj kazoj, la "
+"agorda dialogo estas montrita dum lanĉado de RKWard, kaj tio ebligas elekti "
+"malsaman instaladon de R. (Rimarku: Al vi estos ofertita elekto de "
+"instalaĵoj trovitaj en kutimaj vojoj, sed vi ankaŭ povas specifi ne-"
+"detektitan instalon, permane.)"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2050,6 +2056,10 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"En multaj kazoj, simple funkcios elekti version de R krom tio, kio estis "
+"uzata dum kompilo. Kaze ke vi renkontu problemojn, estas konsilinde uzi la "
+"saman aŭ similan version de R al tio, kio estis disponebla dum kompilo, "
+"tamen."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2060,18 +2070,22 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Vi povas permane ŝanĝi la R-backend iam ajn, uzante Agordojn-> Kontroli "
+"instaladon. Nepre konservu viajn datumojn antaŭ ol ŝanĝi la backend! Vi "
+"ankaŭ povas uzi la komandlinian opcion --r-executable por komenci seancon "
+"uzante specifan instaladon de R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
-msgstr ""
+msgstr "Kial mi ne uzu R kunpakita ene de la RKWard-AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2084,6 +2098,12 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"La AppImage inkluzivas instaladon de R por oportuno, sed ĉi tiu instalaĵo ne "
+"estas kaj teknike ne povas fariĝi plene funkcia. Grave, vi ĝenerale ne povos "
+"instali R-pakaĵojn (krom tiuj efektivigitaj pure en R). Plue, vi povus "
+"renkonti konfliktojn inter la R-instalaĵo ene de la AppImage kaj R-pakaĵoj "
+"kiuj estas instalitaj tutsisteme. Ĉi tio povas kaŭzi subtilajn kaj "
+"surprizajn cimojn."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -2755,16 +2775,3 @@ msgstr ""
 "rimedojn kaj igi RKWard neresponda. Pako \"GO\" estas unu tia pakaĵo, kaj "
 "estas \"nigralisto\" defaŭlte. Se vi rimarkas, ke ŝargo de pakaĵo daŭras "
 "treege, vi povas konsideri aldoni ĝin al ĉi tiu listo."
-
-#~ msgid ""
-#~ "RKWard is far from complete and certainly there are many issues that need "
-#~ "to be fixed. However, some of the things you notice are not due to the "
-#~ "nature of RKWard but R or something else. This section will try to cover "
-#~ "some common issues. See also <link href=\"https://rkward.kde.org/faq"
-#~ "\">the online FAQ</link>."
-#~ msgstr ""
-#~ "RKWard estas malproksima de kompleta kaj certe estas multaj problemoj, "
-#~ "kiuj devas esti riparitaj. Tamen, iuj el la aferoj, kiujn vi rimarkas, ne "
-#~ "estas pro la naturo de RKWard sed R aŭ io alia. Ĉi tiu sekcio provos "
-#~ "kovri iujn oftajn problemojn. Vidu ankaŭ <link href=\"https://rkward.kde."
-#~ "org/faq\">la interretan Oftaj Demandoj</link>."

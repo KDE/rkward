@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:36+0000\n"
-"PO-Revision-Date: 2024-06-25 12:16+0200\n"
+"POT-Creation-Date: 2024-07-01 00:36+0000\n"
+"PO-Revision-Date: 2024-06-30 20:53+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -1603,10 +1603,9 @@ msgid "Show problem details"
 msgstr "Details van probleem tonen"
 
 #: rkward/dialogs/rksetupwizard.cpp:129
-#, fuzzy, kde-format
-#| msgid "Unable to detect R installation"
+#, kde-format
 msgid "RKWard <b>failed to detect an R installation</b> on this system"
-msgstr "Kan geen geïnstalleerde R vinden"
+msgstr "RKWard <b>er is geen R-installatie gedetecteerd</b> op dit systeem"
 
 #: rkward/dialogs/rksetupwizard.cpp:131
 #, kde-format
@@ -3062,67 +3061,61 @@ msgid "Search online"
 msgstr "Online zoeken"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:191
-#, fuzzy, kde-format
-#| msgid "Preview updating"
+#, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr "Voorbeeld wordt bijgewerkt"
+msgstr "bezig met bijwerken"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
-#, fuzzy, kde-format
-#| msgid "show errors"
+#, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr "fouten tonen"
+msgstr "fout"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
-#, fuzzy, kde-format
-#| msgid "Ready"
+#, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr "Gereed"
+msgstr "gereed"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "n/b"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:195
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "uit"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:215
 #, kde-format
 msgid ""
 "The preview is current unavailable (you will need to make further "
 "selections)."
-msgstr ""
+msgstr "Het voorbeeld is nu niet beschikbaar (u moet verdere selecties maken)."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:219
-#, fuzzy, kde-format
-#| msgid "Preview disabled"
+#, kde-format
 msgid "Preview is turned off."
-msgstr "Voorbeeld uitgezet"
+msgstr "Voorbeeld is uitgezet."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:223
-#, fuzzy, kde-format
-#| msgid "Preview not (currently) possible"
+#, kde-format
 msgid "Preview is currently being updated."
-msgstr "Voorbeeld (thans) niet mogelijk"
+msgstr "Voorbeeld wordt nu bijgewerkt."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:227
 #, kde-format
 msgid "The command to generate the preview has failed."
-msgstr ""
+msgstr "Het commando om het voorbeeld te genereren is mislukt."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:231
-#, fuzzy, kde-format
-#| msgid "Preview up to date"
+#, kde-format
 msgid "Preview is up to date."
-msgstr "Voorbeeld bijgewerkt"
+msgstr "Voorbeeld bijgewerkt."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
@@ -4072,19 +4065,19 @@ msgstr "Het programma R is gestopt"
 msgid "Graphics Device Number %1"
 msgstr "Grafisch apparaat nummer %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:594
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:595
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Actief)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:596
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:597
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (Inactief)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:622
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:623
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4093,14 +4086,14 @@ msgstr ""
 "<h2>Punt(en) lokaliseren </h2><p>Punt(en) kunt u selecteren met de linker "
 "muisknop. Stoppen doet u met elke andere muisknop.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:633
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Drukken op Enter toont volgende plot, klikken op 'Annuleren' breekt af.</"
 "p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:636
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:637
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Volgende plot tonen?"
