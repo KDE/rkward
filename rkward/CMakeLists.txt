@@ -71,6 +71,10 @@ IF(APPLE)
 		${RKWARD_INFOPLIST_TEMPLATE}
 		${RKWARD_INFOPLIST_FILE}
 		@ONLY)
+	ADD_CUSTOM_COMMAND(TARGET rkward POST_BUILD
+	COMMAND codesign -d --force --options runtime --verbose=4 -s - --entitlements "${CMAKE_CURRENT_SOURCE_DIR}/qwebengine.entitlements" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/rkward.rbackend
+	WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+	COMMENT "Adding entitlments required for QWebEngine")
 ENDIF(APPLE)
 
 ########### install files ###############
