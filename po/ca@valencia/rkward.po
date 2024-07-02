@@ -7,13 +7,13 @@
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
 # Josep Roca <pep.roca@gmail.com>, 2007, 2010, 2012.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2019, 2020, 2022.
-# Josep M. Ferrer <txemaq@gmail.com>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-01 00:36+0000\n"
-"PO-Revision-Date: 2024-06-10 10:44+0200\n"
+"PO-Revision-Date: 2024-06-30 10:01+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.05.1\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -1618,6 +1618,7 @@ msgstr "Mostra els detalls del problema"
 #, kde-format
 msgid "RKWard <b>failed to detect an R installation</b> on this system"
 msgstr ""
+"RKWard <b>ha fallat en detectar una instal·lació d'R</b> en este sistema"
 
 #: rkward/dialogs/rksetupwizard.cpp:131
 #, kde-format
@@ -3090,36 +3091,34 @@ msgid "Search online"
 msgstr "Busca en línia"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:191
-#, fuzzy, kde-format
-#| msgid "Preview updating"
+#, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr "S'està actualitzant la vista prèvia"
+msgstr "s'està actualitzant"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
-#, fuzzy, kde-format
-#| msgid "show errors"
+#, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr "Mostra els errors"
+msgstr "error"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr ""
+msgstr "preparat"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "n/d"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:195
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "inactiu"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:215
 #, kde-format
@@ -3127,28 +3126,28 @@ msgid ""
 "The preview is current unavailable (you will need to make further "
 "selections)."
 msgstr ""
+"Actualment, la vista prèvia no està disponible (cal fer seleccions "
+"addicionals)."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:219
-#, fuzzy, kde-format
-#| msgid "Preview disabled"
+#, kde-format
 msgid "Preview is turned off."
-msgstr "Vista prèvia desactivada"
+msgstr "La vista prèvia està desactivada."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:223
 #, kde-format
 msgid "Preview is currently being updated."
-msgstr ""
+msgstr "Actualment, la vista prèvia s'està actualitzant."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:227
 #, kde-format
 msgid "The command to generate the preview has failed."
-msgstr ""
+msgstr "L'ordre per ha generar la vista prèvia ha fallat."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:231
-#, fuzzy, kde-format
-#| msgid "Preview up to date"
+#, kde-format
 msgid "Preview is up to date."
-msgstr "Vista prèvia actualitzada"
+msgstr "La vista prèvia està actualitzada."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
@@ -6445,10 +6444,9 @@ msgstr ""
 "R</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (HTML)"
-msgstr "R Markdown"
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:444
 #: rkward/windows/rkcommandeditorwindow.cpp:457
@@ -6457,43 +6455,37 @@ msgid "Preview of rendered R Markdown"
 msgstr "Vista prèvia d'R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:445
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
-"Previsualitza l'script renderitzat des del format RMarkdown (apropiat per a "
-"fitxers .Rmd)."
+"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:457
-#, fuzzy, kde-format
-#| msgid "R Markdown"
+#, kde-format
 msgid "R Markdown (PDF)"
-msgstr "R Markdown"
+msgstr "R Markdown (PDF)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:458
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview the script as rendered from RMarkdown format (appropriate for ."
-#| "Rmd files)."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
 msgstr ""
-"Previsualitza l'script renderitzat des del format RMarkdown (apropiat per a "
-"fitxers .Rmd)."
+"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a PDF."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:462
-#, fuzzy, kde-format
-#| msgid "Pandoc is not installed"
+#, kde-format
 msgid "pdflatex is not installed"
-msgstr "Pandoc no està instal·lat"
+msgstr "«pdflatex» no està instal·lat"
 
+# skip-rule: t-acc_obe
 #: rkward/windows/rkcommandeditorwindow.cpp:463
 #, kde-format
 msgid ""
 "pdflatex is required for rendering PDF previews. The easiest way to install "
 "it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
 msgstr ""
+"Es necessita «pdflatex» per a renderitzar vistes prèvies de PDF. La manera "
+"més fàcil d'instal·lar-lo és executar <tt>install.packages(\"tinytex\"); "
+"install_tinytex()</tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:473
 #, kde-format
@@ -7065,7 +7057,7 @@ msgstr "Configura %1"
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "No s'ha trobat cap component de visualització de PDF"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -7695,21 +7687,3 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure en l'editor (només lectura)"
-
-#~ msgid "Preview not (yet) possible"
-#~ msgstr "Encara no és possible la vista prèvia"
-
-#~ msgid ""
-#~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
-#~ "now), the function call tip feature would crash, and has been disabled in "
-#~ "this session. To enable the call tip, install any other (earlier or "
-#~ "later) version of (lib|kf5)ktexteditor."
-#~ msgstr ""
-#~ "A causa d'un error en la versió 5.92.0 de KTextEditor (la versió en ús, "
-#~ "en este moment), la crida a la funció de característica de consell podria "
-#~ "fallar, i s'ha desactivat en esta sessió. Per a activar la punta de "
-#~ "tocada, instal·leu qualsevol altra versió (anterior o posterior) de «(lib|"
-#~ "kf5)ktexteditor»."
-
-#~ msgid "Incompatible version of ktexteditor"
-#~ msgstr "Versió incompatible de KTextEditor"

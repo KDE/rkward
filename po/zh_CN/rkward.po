@@ -2743,18 +2743,16 @@ msgid "Search online"
 msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:191
-#, fuzzy, kde-format
-#| msgid "Quoting"
+#, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr "引用"
+msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
-#, fuzzy, kde-format
-#| msgid "show errors"
+#, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr "显示错误"
+msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format

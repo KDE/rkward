@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-01 00:36+0000\n"
-"PO-Revision-Date: 2024-06-25 09:45+0200\n"
+"PO-Revision-Date: 2024-07-01 11:17+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2742,18 +2742,16 @@ msgid "Search online"
 msgstr "Cerca  in linea"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:191
-#, fuzzy, kde-format
-#| msgid "Quoting"
+#, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr "Citar"
+msgstr "actualisante"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
-#, fuzzy, kde-format
-#| msgid "show errors"
+#, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr "Monstra Errores"
+msgstr "error"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format
@@ -2781,10 +2779,9 @@ msgid ""
 msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:219
-#, fuzzy, kde-format
-#| msgid "Preview disabled"
+#, kde-format
 msgid "Preview is turned off."
-msgstr "Vista preliminar dishabilitate"
+msgstr "Vista preliminar es dishabilitate"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:223
 #, kde-format
@@ -2797,10 +2794,9 @@ msgid "The command to generate the preview has failed."
 msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:231
-#, fuzzy, kde-format
-#| msgid "Preview disabled"
+#, kde-format
 msgid "Preview is up to date."
-msgstr "Vista preliminar dishabilitate"
+msgstr "Vista preliminar es actualisate."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
