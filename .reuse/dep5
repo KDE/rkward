@@ -36,7 +36,6 @@ Files:
   rkward/rkward_windows_icon.rc
   rkward/rkward.protocol
   rkward/rbackend/rkward.rbackend.entitlements
-  rkward/qwebengine.entitlements
 Comment: Assorted source files that cannot (easily) contain SPDX licence headers
 Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 Contributor: The RKWard Team <rkward-devel@kde.org>
