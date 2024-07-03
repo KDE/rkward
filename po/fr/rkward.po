@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-01 00:36+0000\n"
-"PO-Revision-Date: 2024-06-29 17:45+0200\n"
+"PO-Revision-Date: 2024-07-01 11:22+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -1640,10 +1640,11 @@ msgid "Show problem details"
 msgstr "Afficher les détails du problème"
 
 #: rkward/dialogs/rksetupwizard.cpp:129
-#, fuzzy, kde-format
-#| msgid "Unable to detect R installation"
+#, kde-format
 msgid "RKWard <b>failed to detect an R installation</b> on this system"
-msgstr "Impossible de détecter une installation de R"
+msgstr ""
+"Il a été <b>impossible pour RKWard de détecter une installation de R</b> sur "
+"ce système."
 
 #: rkward/dialogs/rksetupwizard.cpp:131
 #, kde-format
@@ -3121,37 +3122,34 @@ msgid "Search online"
 msgstr "Rechercher en ligne"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:191
-#, fuzzy, kde-format
-#| msgid "Preview updating"
+#, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr "Afficher un aperçu de la mise à jour"
+msgstr "mise à jour en cours"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
-#, fuzzy, kde-format
-#| msgid "show errors"
+#, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr "Afficher les erreurs"
+msgstr "erreur"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
-#, fuzzy, kde-format
-#| msgid "Ready"
+#, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr "Prêt"
+msgstr "prêt"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "n / a"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:195
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "désactivé"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:215
 #, kde-format
@@ -3159,28 +3157,28 @@ msgid ""
 "The preview is current unavailable (you will need to make further "
 "selections)."
 msgstr ""
+"L'aperçu est actuellement indisponible (vous devrez faire d'autres "
+"sélections)."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:219
-#, fuzzy, kde-format
-#| msgid "Preview disabled"
+#, kde-format
 msgid "Preview is turned off."
-msgstr "Aperçu désactivé"
+msgstr "L'aperçu est désactivé."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:223
-#, fuzzy, kde-format
+#, kde-format
 msgid "Preview is currently being updated."
-msgstr "Aperçu non disponible (actuellement)"
+msgstr "L'aperçu est actuellement en cours de mise à jour."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:227
 #, kde-format
 msgid "The command to generate the preview has failed."
-msgstr ""
+msgstr "La commande pour générer l'aperçu a échoué."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:231
-#, fuzzy, kde-format
-#| msgid "Preview up to date"
+#, kde-format
 msgid "Preview is up to date."
-msgstr "Aperçu à jour"
+msgstr "L'aperçu est à jour."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
