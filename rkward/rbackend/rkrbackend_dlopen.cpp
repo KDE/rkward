@@ -98,8 +98,8 @@ int main(int argc, char *argv[]) {
 #elif defined(__APPLE__)
 	// libR.dylib is not always correctly linked against libRlapack.dylib, even where needed.
 	// let's try to preload it into the global namespace
-	dlopen("libRlapack.dylib", RTLD_NOW | RTLD_GLOBAL);
-	dlopen("libRblas.dylib", RTLD_NOW | RTLD_GLOBAL);
+	dlopen("libRlapack.dylib", RTLD_LAZY | RTLD_GLOBAL);
+	dlopen("libRblas.dylib", RTLD_LAZY | RTLD_GLOBAL);
 	auto r_dllinfo = loadlib("libR.dylib");
 #else
 	auto r_dllinfo = loadlib("libR.so");
