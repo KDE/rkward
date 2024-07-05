@@ -437,10 +437,6 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			// initialize output file
 			RKOutputDirectory::getCurrentOutput(chain);
 
-#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
-			// On MacOS and Windows, the backend is started with different working directories set, for hackish reasons (see rkfrontendtransmitter.cpp). Fix that, here.
-			runStartupCommand(new RCommand("setwd (" + RKRSharedFunctionality::quote(QDir::currentPath()) + ")\n", RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
-#endif
 			// Workaround for https://bugs.kde.org/show_bug.cgi?id=421958
 			if (RKSessionVars::compareRVersion("4.0.0") < 1 && RKSessionVars::compareRVersion("4.0.1") > 0) {
 				runStartupCommand(new RCommand("if(compiler::enableJIT(-1) > 2) compiler::enableJIT(2)\n", RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
@@ -456,6 +452,14 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			RK_ASSERT (command->getDataLength () == 1);
 			RKSettingsModuleR::help_base_url = command->stringVector ().value (0);
 		});
+
+		QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory();
+		cd_to = QDir::currentPath();
+		if (cd_to.isEmpty()) { // we must be in a non-existent dir. The backend will know better...
+			RInterface::issueCommand(new RCommand("setwd(\".\")\n", RCommand::App | RCommand::Sync), chain);
+		} else {
+			RInterface::issueCommand(new RCommand("setwd(" + RObject::rQuote(cd_to) + ")\n", RCommand::App | RCommand::Sync), chain);
+		}
 	} else {
 		processRBackendRequest (request);
 	}
@@ -666,7 +670,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		RK_ASSERT(arglist.count () == 1);
 		RKOutputWindowManager::self()->setCurrentOutputPath(arglist.value(0));
 	} else if (call == "wdChange") {
-		// in case of separate processes, apply new working directory in frontend, too.
+		// apply new working directory in frontend, too.
 		QDir::setCurrent(arglist.value(0));
 		Q_EMIT backendWorkdirChanged();
 	} else if (call == "highlightRCode") {

@@ -255,12 +255,6 @@ void RKWardMainWindow::doPostInit () {
 		open_urls[i] = url.url ();
 	}
 
-	QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory ();
-	if (!cd_to.isEmpty ()) {
-		RInterface::issueCommand ("setwd (" + RObject::rQuote (cd_to) + ")\n", RCommand::App);
-		QDir::setCurrent (cd_to);
-	}
-
 	if (!open_urls.isEmpty()) {
 		// this is also done when there are no urls specified on the command line. But in that case _after_ loading any workspace, so
 		// the help window will be on top
@@ -288,7 +282,6 @@ void RKWardMainWindow::doPostInit () {
 	if (!evaluate_code.isEmpty ()) RKConsole::pipeUserCommand (evaluate_code);
 
 	updateCWD ();
-	connect (RInterface::instance(), &RInterface::backendWorkdirChanged, this, &RKWardMainWindow::updateCWD);
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
@@ -400,6 +393,7 @@ void RKWardMainWindow::startR () {
 	RInterface::create();
 	Q_EMIT backendCreated();
 	connect(RInterface::instance(), &RInterface::backendStatusChanged, this, &RKWardMainWindow::setRStatus);
+	connect(RInterface::instance(), &RInterface::backendWorkdirChanged, this, &RKWardMainWindow::updateCWD);
 	RObjectList::init();
 
 	RObjectBrowser::mainBrowser ()->unlock ();

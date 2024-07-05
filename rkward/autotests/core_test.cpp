@@ -464,6 +464,7 @@ private Q_SLOTS:
 	}
 
 	void restartRBackend() {
+		RInterface::issueCommand(new RCommand("setwd(tempdir())", RCommand::User)); // retart used to fail, if in non-existant directory
 		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
 		waitForAllFinished();
 		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));

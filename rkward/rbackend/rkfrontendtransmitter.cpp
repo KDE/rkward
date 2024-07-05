@@ -234,7 +234,7 @@ void RKFrontendTransmitter::run () {
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);
 #	else
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + QFileInfo(backend_lib).fileName());
-	QTemporaryDir rkward_only_dir("rkward_only");
+	QTemporaryDir rkward_only_dir(QDir::tempPath() + "/rkward_only");
 	QFile(QFileInfo(backend_lib).absolutePath()).link(rkward_only_dir.filePath("_rkward_only_dlpath"));
 	env.append(QStringLiteral("RK_ADD_LDPATH=./_rkward_only_dlpath"));
 	env.append(QStringLiteral("RK_LD_CWD=") + rkward_only_dir.path());
@@ -242,9 +242,12 @@ void RKFrontendTransmitter::run () {
 #endif
 	backend->setEnvironment(env);
 
-#ifdef Q_OS_WIN
-	// Needed for paths with spaces. R CMD is too simple to deal with those, even if we provide proper quoting.
-	// So rather we need to work from a relative path with all spaces eliminated
+#ifndef Q_OS_MACOS
+	// Needed on for paths with spaces. R CMD is too simple to deal with those, even if we provide proper quoting.
+	// So rather we need to work from a relative path with all spaces eliminated.
+	// However, also, we might start in directory that no longer exists, or will cease to exist, in a second
+	// (e.g. the tempdir() of the previous R session). So we set something known to exist, here.
+	// On MacOS, we cd to R_HOME, instead, below
 	QFileInfo bfi(backend_executable);
 	backend->setWorkingDirectory(bfi.absolutePath());
 	args.append(bfi.fileName());
