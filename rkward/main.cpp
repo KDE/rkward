@@ -144,8 +144,8 @@ int main (int argc, char *argv[]) {
 #if defined(Q_OS_MACOS)
 	// TODO: This is just a hackish workaround. See https://invent.kde.org/education/rkward/-/issues/28
 	const char* chromiumflags = "QTWEBENGINE_CHROMIUM_FLAGS";
-	if (!qEnvironmentVariableIsSet(chromiumflags)) {)
-		qputenv(chromimumflags, "--no-sandbox --single-process --enable-features=NetworkServiceInProcess");
+	if (!qEnvironmentVariableIsSet(chromiumflags)) {
+		qputenv(chromiumflags, "--no-sandbox --single-process --enable-features=NetworkServiceInProcess");
 	}
 #endif
 	// annoyingly, QWebEngineUrlSchemes have to be registered before creating the app.
