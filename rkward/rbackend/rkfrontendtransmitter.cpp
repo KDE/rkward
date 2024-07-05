@@ -250,7 +250,11 @@ void RKFrontendTransmitter::run () {
 	// On MacOS, we cd to R_HOME, instead, below
 	QFileInfo bfi(backend_executable);
 	backend->setWorkingDirectory(bfi.absolutePath());
+#	ifdef Q_OS_WIN
 	args.append(bfi.fileName());
+#	else
+	args.append("./" + bfi.fileName());
+#	endif
 #else
 	args.append(backend_executable);
 #endif
