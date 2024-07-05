@@ -143,7 +143,7 @@ int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
 #if defined(Q_OS_MACOS)
 	// TODO: This is just a hackish workaround. See https://invent.kde.org/education/rkward/-/issues/28
-	auto chromiumflags = QStringLiteral("QTWEBENGINE_CHROMIUM_FLAGS");
+	const char* chromiumflags = "QTWEBENGINE_CHROMIUM_FLAGS";
 	if (!qEnvironmentVariableIsSet(chromiumflags)) {)
 		qputenv(chromimumflags, "--no-sandbox --single-process --enable-features=NetworkServiceInProcess");
 	}
