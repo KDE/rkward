@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-01-30 11:53+0100\n"
+"PO-Revision-Date: 2024-07-05 19:05+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -748,7 +748,7 @@ msgstr "Mostra els detalls"
 #: rkward/dialogs/rkerrordialog.cpp:105
 #, kde-format
 msgid "Report As Bug"
-msgstr "Informa d'un error"
+msgstr "Informeu d'un error"
 
 #: rkward/dialogs/rkerrordialog.cpp:115
 #, kde-format
