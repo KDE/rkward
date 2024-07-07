@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2023-02-03 17:04+0100\n"
+"PO-Revision-Date: 2024-07-06 19:22+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,6 +34,8 @@ msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
+"ობიექტის '%1' ჩასასწორებლად გახსნა შეუძლებელია. ის ან არ არსებობს, ან RKWard-"
+"ს ამ ტიპის ობიექტის ჩასწორების მხარდაჭერა ჯერ არ გააჩნია."
 
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
@@ -51,6 +53,8 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
+"გახსნის შეცდომა ფაილისთვის '%1':\n"
+"%2"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -65,6 +69,10 @@ msgid ""
 "<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
 "print using a KDE print dialog."
 msgstr ""
+"PostScript-ის ფაილებისთვის KDE-ის ბეჭდვის დიალოგის მომწოდებელი სერვისი "
+"აღმოჩენილი არაა. ვცდით გავხსნათ ზოგადი PostScript-ის პროგრამით (თუ "
+"დაყენებულია).<br><br> იფიქრეთ, დააყენოთ 'okular' ან მოირგეთ RKWard, რომ არ "
+"სცადოს KDE-ის ბეჭდვის დიალოგით დაბეჭდვა."
 
 #: rkward/agents/rkprintagent.cpp:82
 #, kde-format
@@ -77,6 +85,8 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
+"ველოდები დარჩენილი R-ის ბრძანებების დასრულებას. დაუყოვნებლივ გასასვლელად "
+"დააჭირეთ გაუქმებას (გაფრთხილება: ამან შეიძლება მონაცემების კარგვა გამოიწვიოს)"
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
@@ -95,6 +105,8 @@ msgid ""
 "A file named \"%1\" already exists, and will be overwritten when saving to "
 "\"%2\". Are you sure you want to overwrite it?"
 msgstr ""
+"ფაილი სახელით \"%1\" უკვე არსებობს და თავზე გადაეწერება, როცა \"%2\"-ში "
+"შევინახავთ. მართლა გნებავთ, გადააწეროთ ფაილს თავზე?"
 
 #: rkward/agents/rksaveagent.cpp:53
 #, kde-format
@@ -102,6 +114,8 @@ msgid ""
 "Files named \"%1\" and \"%2\" already exist, and will both be overwritten. "
 "Are you sure you want to overwrite them?"
 msgstr ""
+"ფაილები სახელით \"%1\" და \"%2\" უკვე არსებობს და ორივეს თავზე გადაეწერება. "
+"მართლა გნებავთ, თავზე გადააწეროთ ამ ფაილებს?"
 
 #: rkward/agents/rksaveagent.cpp:56
 #, kde-format
@@ -111,7 +125,7 @@ msgstr "ჩავანაცვლო ფაილი?"
 #: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:880
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
-msgstr ""
+msgstr "R სამუშაო სივრცის ფაილები [%1](%1);;ყველა ფაილი [*](*)"
 
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
@@ -120,6 +134,9 @@ msgid ""
 "time, on a regular sized workspace, this may be due to other commands still "
 "pending completion in the R backend."
 msgstr ""
+"მიმდინარეობს სამუშაო სივრცის შენახვა. <b>მინიშნება:</b> თუ ამას საეჭვოდ დიდი "
+"დრო დასჭირდა ჩვეულებრივი ზომის სამუშაო სივრცეზე, შეიძლება, R-ის უკანაბოლოში "
+"ბრძანებები ჯერ კიდევ არ დასრულებულა."
 
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
@@ -137,6 +154,7 @@ msgid ""
 "An error occurred while trying to save the workspace. You data was <b>not</"
 "b> saved."
 msgstr ""
+"შეცდომა სამუშაო სივრცის შენახვისას. თქვენი მონაცემები <b>არ</b> შენახულა."
 
 #: rkward/agents/showedittextfileagent.cpp:30
 #: rkward/misc/rkprogresscontrol.cpp:361
@@ -151,6 +169,8 @@ msgid ""
 "A command running in the R-engine wants you to see the following file(s):"
 "<ul><li>"
 msgstr ""
+"ბრძანებას, რომელიც R-ის ძრავშია გაშვებული, სურს, რომ თქვენ იხილოთ შემდეგი "
+"ფაილ(ებ)-ი: <ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:82
 #, kde-format
@@ -164,6 +184,10 @@ msgid ""
 "Please look at these files, edit them as appropriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.<ul><li>"
 msgstr ""
+"ბრძანებას, რომელიც R-ის ძრავშია გაშვებული, სურს, რომ თქვენ ჩაასწოროთ შემდეგი "
+"ფაილ(ებ)-ი. გადახედეთ ამ ფაილებს, ჩაასწორეთ, როგორც სწორი გგონიათ და "
+"შეინახეთ ისინი. როცა დაასრულებთ, გასაგრძელებლად, დააწექით ღილაკს 'მზადაა', "
+"ან დახურეთ ეს დიალოგი.<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:86
 #, kde-format
@@ -177,6 +201,10 @@ msgid ""
 "created or imported, in contrast to data contained in a loaded R package. "
 "Technically, this corresponds to the <i>.GlobalEnv</i> environment."
 msgstr ""
+"ეს სექცია თქვენს \"სამუშაო\" სივრცეში არსებულ მონაცემებს შეიცავს. ეს ის "
+"მონაცემებია, რომელიც თქვენ შექმენით ან შემოიტანეთ, ჩატვირთული R-ის "
+"პაკეტებისგან განსხვავებით. ტექნიკურად, ეს შეესაბამება <i>.GlobalEnv</i> "
+"გარემოს."
 
 #: rkward/core/renvironmentobject.cpp:113
 #, kde-format
@@ -186,6 +214,10 @@ msgid ""
 "Should this situation constitute a regular use case for your work, please "
 "let us know at rkward-devel@kde.org, so we can consider possible solutions."
 msgstr ""
+"თქვენი სამუშაო სივრცე 10.000-ზე მეტ ზედა დონის ობექტს შეიცავს. RKWard "
+"ამნაირი სიტუაციებისთვის ოპტიმიზებული არა და შეიძლება, R-ის ბრძანებებს შორის "
+"დაყოვნებები შეამჩნიოთ. თუ ეს სიტუაცია ჩვეულებრივი მუშაობის დროს მოხდა, "
+"მოგვწერეთ ელფოსტაზე rkward-devel@kde.org და ვცდით, დაგეხმაროთ."
 
 #: rkward/core/renvironmentobject.cpp:113
 #, kde-format
@@ -198,6 +230,8 @@ msgid ""
 "The object '%1' was removed from workspace or changed to a different type of "
 "object, but is currently opened for editing. Do you want to restore it?"
 msgstr ""
+"ობიექტი '%1' წაშლილია სამუშაო სივრციდან ან შეიცვალა სხვა ტიპის ობიექტზე, "
+"მაგრამ ამჟამად ღიაა რედაქტირებისთვის. გნებავთ, აღადგინოთ ის?"
 
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
@@ -211,6 +245,8 @@ msgid ""
 "for editing, it will be removed in the editor, too. There's no way to get it "
 "back."
 msgstr ""
+"მართლა გნებავთ, წაშალოთ ობიექტი '%1'? ობიექტი ამჟამად გახსნილია "
+"რედაქტირებისთვის. ის რედაქტორიდანაც წაიშლება და ვეღარ დააბრუნებთ."
 
 #: rkward/core/rkmodificationtracker.cpp:75
 #: rkward/core/rkmodificationtracker.cpp:80
@@ -222,7 +258,7 @@ msgstr "წავშალო ობიექტი?"
 #, kde-format
 msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
-msgstr ""
+msgstr "მართლა გნებავთ, წაშალოთ ობიექტი '%1'? ეს ქმედება შეუქცევადია."
 
 #: rkward/core/rkmodificationtracker.cpp:351
 #: rkward/dataeditor/rkvareditmodel.cpp:679
@@ -270,6 +306,9 @@ msgid ""
 "to list namespaces which are loaded, but not attached to a package on the "
 "search path. These are typically 'imported' namespaces."
 msgstr ""
+"ეს სპეციალური ობიექტი არ არსებობს R-ში. ის გამოიყენება აქ ჩატვირთული "
+"სახელების სივრცის სისთვის, მაგრამ მიმაგრებული არაა პაკეტზე, რომელიც ძებნის "
+"ბილიკზე იმყოფება. ეენი, ჩვეულებრივ, 'შემოტანილი' სახელის სივრცეებია."
 
 #: rkward/core/rkrownames.cpp:101
 #, kde-format
@@ -379,6 +418,8 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
+"პაკეტის %1 გამოტვირთვა არ მომხდარა, რადგან ის აუცილებელია RKWard-ის "
+"მუშაობისთვის. თუ ეს მართლა გნებავთ, გააკეთოთ ეს R-ის კონსოლიდან შეგიძლიათ."
 
 #: rkward/core/robjectlist.cpp:90
 #, kde-format
@@ -390,6 +431,7 @@ msgstr "პაკეტი %1 ჩატვირთული არაა"
 #, kde-format
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
+"მითითებული სახელი უკვე გამოიყენება ან არასწორია. სახელი გადაერქვა %1-ზე"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:51
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
@@ -411,17 +453,17 @@ msgstr "&ჩასწორება"
 #: rkward/dataeditor/rkvareditmodel.cpp:550
 #, kde-format
 msgid "Type on these fields to add new columns"
-msgstr ""
+msgstr "ამ ველების ტიპი ახალი სვეტების დასამატებლად"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:274
 #, kde-format
 msgid "Type on these fields to add new rows"
-msgstr ""
+msgstr "ამ ველების ტიპი ახალი მწკრივების დასამატებლად"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:293 rkward/plugin/rkmatrixinput.cpp:518
 #, kde-format
 msgid "This value is not allowed, here"
-msgstr ""
+msgstr "ეს მნიშვნელობა აქ დაშვებული არაა"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:361
 #, kde-format
@@ -436,7 +478,7 @@ msgstr "მწკრივის სახელები"
 #: rkward/dataeditor/rkvareditmodel.cpp:367
 #, kde-format
 msgid "This column contains one or more invalid fields"
-msgstr ""
+msgstr "ეს სვეტი ერთ ან მეტ არასწორ ველს შეიცავს"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
@@ -451,12 +493,12 @@ msgstr "დონეები"
 #: rkward/dataeditor/rkvareditmodel.cpp:686
 #, kde-format
 msgid "Edit these fields to rename variables."
-msgstr ""
+msgstr "ჩაასწორეთ ეს ველები ცვლადების სახელის გადასარქმევად."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:687
 #, kde-format
 msgid "A descriptive label for each column (optional)."
-msgstr ""
+msgstr "აღწერის ჭდე თითოეული სვეტისთვის (არასავალდებულო)."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:688
 #, kde-format
@@ -466,12 +508,12 @@ msgstr "მონაცემების ტიპი."
 #: rkward/dataeditor/rkvareditmodel.cpp:689
 #, kde-format
 msgid "Double click on these fields to customize data display."
-msgstr ""
+msgstr "ორმაგი წკაპი ამ ველებზე მონაცემების ჩვენების მოსარგებად."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:690
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
-msgstr ""
+msgstr "ორმაგი წკაპი ამ ველებზე ფაქტორის დონეების ჩასასწორებლად."
 
 #: rkward/dataeditor/twintable.cpp:99
 #, kde-format
@@ -499,6 +541,8 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
 msgstr ""
+"ჩასვამს ბუფერის შემცველობას მიმდინარე მდებარეობაზე, მაგრამ არა ცხრილის "
+"საზღვრებს მიღმა"
 
 #: rkward/dataeditor/twintable.cpp:112
 #, kde-format
@@ -511,6 +555,8 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
 msgstr ""
+"ჩასვამს ბუფერის შემცველობას მიმდინარე მდებარეობაზე, მაგრამ არა მიმდინარე "
+"მონიშნულის საზღვრებს მიღმა"
 
 #: rkward/dataeditor/twintable.cpp:131
 #, kde-format
@@ -532,6 +578,7 @@ msgstr "ჩაკეტვა"
 #, kde-format
 msgid "Disable editing (to prevent accidental modification of data)"
 msgstr ""
+"ჩასწორების გაუქმება (მონაცემების შემთხვევით შეცვლის თავიდან ასაცილებლად)"
 
 #: rkward/dataeditor/twintable.cpp:144
 #, kde-format
@@ -551,7 +598,7 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:208
 #, kde-format
 msgid "Duplicate columns detected"
-msgstr ""
+msgstr "აღმოჩენილია განმეორებადი სვეტები"
 
 #: rkward/dataeditor/twintable.cpp:217
 #, kde-format
@@ -561,7 +608,7 @@ msgstr "%1 [მხოლოდ-წაკითხვადი]"
 #: rkward/dataeditor/twintable.cpp:262
 #, kde-format
 msgid "Insert new variable left"
-msgstr ""
+msgstr "ახალი ცვლადის ჩასმა მარცხნივ"
 
 #: rkward/dataeditor/twintable.cpp:265
 #, kde-format
@@ -571,12 +618,12 @@ msgstr "ამ ცვლადის წაშლა"
 #: rkward/dataeditor/twintable.cpp:276
 #, kde-format
 msgid "Insert new case above (at %1)"
-msgstr ""
+msgstr "ახალი შემთხვევის ჩასმა ზემოთ (%1-ზე)"
 
 #: rkward/dataeditor/twintable.cpp:285
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
-msgstr ""
+msgstr "მონიშნული (%1-%2) მწკრივების წაშლა"
 
 #: rkward/dataeditor/twintable.cpp:291
 #, kde-format
@@ -591,7 +638,7 @@ msgstr "ბაფერის შემცველობის ჩასმა.
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
 msgid "Reporting bugs in RKWard"
-msgstr ""
+msgstr "RKWard-ის შეცდომების ანგარიში"
 
 #: rkward/dialogs/rkerrordialog.cpp:45
 #, kde-format
@@ -624,7 +671,7 @@ msgstr "პრობლემის შეტყობინება"
 #: rkward/dialogs/rkerrordialog.cpp:73
 #, kde-format
 msgid "Forwarding you to the KDE bugtracking system"
-msgstr ""
+msgstr "გადაგამისამართებთ KDE-ის შეცდომების ტრეკინგის სისტემაზე"
 
 #: rkward/dialogs/rkerrordialog.cpp:74
 #, kde-format
@@ -633,6 +680,9 @@ msgid ""
 "continue to see this page for more than a few seconds (e.g. if JavaScript is "
 "disabled), please click \"Proceed\", below."
 msgstr ""
+"ახლა KDE-ის შეცდომების ტრეკინგის სისტემაზე გადაგამისამართებთ. თუ ამ გვერდს "
+"რამდენიმე წამზე მეტი ხედავთ (მაგ: თუ JavaScript გათიშულია), დააწკაპუნეთ "
+"დაბლა ღილაკზე \"გაგრძელება\"."
 
 #: rkward/dialogs/rkerrordialog.cpp:80
 #, kde-format
@@ -661,6 +711,9 @@ msgid ""
 "Please fill in the missing bits *in English*.\n"
 "\n"
 msgstr ""
+"---პრობლემის აღწერა---\n"
+"შეავსეთ ნაკლული ველები *ინგლისურად*.\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:126
 #, kde-format
@@ -669,6 +722,9 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"მოგვეცით პრობლემის მოკლე აღწერა:\n"
+"###შეავსეთ###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:128
 #, kde-format
@@ -732,6 +788,9 @@ msgid ""
 "In case the backend has died or hung up, you may want to press 'Cancel' to "
 "skip this step."
 msgstr ""
+"მოითმინეთ, სანამ თქვენი გარემოს ინფორმაციის შეგროვება ხდება.\n"
+"იმ შემთხვევაში, თუ უკანაბოლო მოკვდა ან დაეკიდა, ამ ნაბიჯის გამოსატოვებლად "
+"დააწექით ღილაკს 'გაუქმება'."
 
 #: rkward/dialogs/rkerrordialog.cpp:146
 #, kde-format
@@ -741,7 +800,7 @@ msgstr "მორგების ინფორმაციის მოგრ�
 #: rkward/dialogs/rkimportdialog.cpp:29
 #, kde-format
 msgid "Import Data Assistant"
-msgstr ""
+msgstr "მონაცემების შემოტანის დამხმარე"
 
 #: rkward/dialogs/rkimportdialog.cpp:54
 #, kde-format
@@ -761,7 +820,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:70
 #, kde-format
 msgid "None of the above / try another method"
-msgstr ""
+msgstr "არცერთი / სხვა მეთოდი"
 
 #: rkward/dialogs/rkimportdialog.cpp:76
 #, kde-format
@@ -786,7 +845,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:91
 #, kde-format
 msgid "Use 'rio'-based importer"
-msgstr ""
+msgstr "'rio'-ზე დაფუძნებული შემომტანის გამოყენება"
 
 #: rkward/dialogs/rkimportdialog.cpp:95 rkward/dialogs/rkimportdialog.cpp:113
 #, kde-format
@@ -796,7 +855,7 @@ msgstr "სხვა მეთოდი სცადეთ"
 #: rkward/dialogs/rkimportdialog.cpp:101
 #, kde-format
 msgid "Generic 'rio'-based importer"
-msgstr ""
+msgstr "ზოგადი 'rio'-ზე დაფუძნებული შემომტანის გამოყენება"
 
 #: rkward/dialogs/rkimportdialog.cpp:105
 #, kde-format
@@ -821,7 +880,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:125
 #, kde-format
 msgid "Start import dialog"
-msgstr ""
+msgstr "შემოტანის დაწყების დიალოგი"
 
 #: rkward/dialogs/rkimportdialog.cpp:129
 #, kde-format
@@ -845,22 +904,22 @@ msgstr "პაკეტების მორგება"
 #: rkward/dialogs/rkloadlibsdialog.cpp:60
 #, kde-format
 msgid "Load / Unload R packages"
-msgstr ""
+msgstr "R-ის პაკეტების ჩატვირთვა/გამოტვირთვა"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:64
 #, kde-format
 msgid "Install / Update / Remove R packages"
-msgstr ""
+msgstr "R-ის პაკეტების დაყენება / განახლება / წაშლა"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:66
 #, kde-format
 msgid "Manage RKWard Plugins"
-msgstr ""
+msgstr "RKWard-ის დამატებების მართვა"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:95
 #, kde-format
 msgid "Closing will discard pending changes. Are you sure?"
-msgstr ""
+msgstr "დახურვა დარჩენილ ცვლილებებს მოაცილებს. დარწმუნებული ბრძანდებით?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:95
 #, kde-format
@@ -872,7 +931,7 @@ msgstr "გავაუქმო ცვლილებები?"
 #: rkward/dialogs/rkloadlibsdialog.cpp:207
 #, kde-format
 msgid "Package %1 at %2"
-msgstr ""
+msgstr "პაკეტი %1 მისამართზე %2"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:182
 #, kde-format
@@ -886,7 +945,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:182
 #, kde-format
 msgid "Not removing certain packages"
-msgstr ""
+msgstr "ზოგიერთი პაკეტი არ წაიშლება"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:188
 #, kde-format
@@ -894,6 +953,8 @@ msgid ""
 "Your current user permissions do not allow removing the following packages. "
 "These will be skipped."
 msgstr ""
+"თქვენი მიმდინარე მომხმარებლის წვდომები არასაკმარისია შემდეგი პაკეტების "
+"წასაშლელად. ეს პაკეტები გამოტოვებული იქნება."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:188
 #: rkward/dialogs/rkloadlibsdialog.cpp:191
@@ -908,6 +969,9 @@ msgid ""
 "Do you want to skip these packages, or do you want to proceed with "
 "administrator privileges (you will be prompted for the password)?"
 msgstr ""
+"თქვენი მიმდინარე მომხმარებლის წვდომები არასაკმარისია შემდეგი პაკეტების "
+"წასაშლელად. გნებავთ, გამოტოვოთ ეს პაკეტები, თუ გნებავთ, გადახვიდეთ "
+"ადმინისტრატორის პრივილეგიებზე, რო მაინც წაშალოთ ისინი (პაროლს გკითხავთ)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:213
 #, kde-format
@@ -915,6 +979,8 @@ msgid ""
 "You are about to remove the following packages. Are you sure you want to "
 "proceed?"
 msgstr ""
+"აპირებთ, წაშალოთ შემდეგი პაკეტები. დარწმუნებული ბრძანდებით, რომ გნებავთ, "
+"გააგრძელოთ?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:213
 #, kde-format
@@ -924,7 +990,7 @@ msgstr "პაკეტები ახლა წაიშლება"
 #: rkward/dialogs/rkloadlibsdialog.cpp:216
 #, kde-format
 msgid "Please stand by while removing selected packages"
-msgstr ""
+msgstr "მოითმინეთ. მიმდინარეობს არჩეული პაკეტების წაშლა"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:216
 #, kde-format
@@ -934,7 +1000,7 @@ msgstr "პაკეტების წაშლა"
 #: rkward/dialogs/rkloadlibsdialog.cpp:243
 #, kde-format
 msgid "Selected library location not writable"
-msgstr ""
+msgstr "არჩეული ბიბლიოთეკის მდებარეობა ჩაწერადი არაა"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:244
 #, kde-format
@@ -944,6 +1010,10 @@ msgid ""
 "instead (you can also press \"Cancel\" and use the \"Configure Repositories"
 "\"-button to set up a different directory)?</p>"
 msgstr ""
+"<p>საქაღალდე, რომელიც დასაყენებლად (%1) აირჩიეთ, თქვენი მიმდინარე "
+"მომხმარებლის წვდომებით ჩაწერადი არაა</p><p> გნებავთ, %2-ში დააყენოთ(ასევე "
+"შეგიძლიათ დააწვეთ \"გაუქმებას\" და გამოიყენოთ \"რეპოზიტორიების მორგების\" "
+"ღილაკი, რომ სხვა საქაღალდე მიუთითოთ)?</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:247
 #, kde-format
@@ -958,7 +1028,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:253
 #, kde-format
 msgid "Install to %1"
-msgstr ""
+msgstr "დაყენება მისამართზე %1"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:252
 #, kde-format
@@ -971,12 +1041,12 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:253
 #, kde-format
 msgid "Become root"
-msgstr ""
+msgstr "Root-ზე გადართვა"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:271
 #, kde-format
 msgid "Please stand by while installing selected packages"
-msgstr ""
+msgstr "მოითმინეთ. მიმდინარეობს არჩეული პაკეტების დაყენება"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:271
 #, kde-format
@@ -989,6 +1059,8 @@ msgid ""
 "Neither kdesu nor kdesudo could be found. To install as root, please install "
 "one of these packages."
 msgstr ""
+"პროგრამები kdesu და kdesudo აღმოჩენილი არაა. root მომხმარებლით დასაყენებლად "
+"ამ პროგრამებიდან ერთ-ერთი გჭირდებათ."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:292
 #, kde-format
@@ -1042,6 +1114,8 @@ msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
 msgstr ""
+"შეცდომა პაკეტების ჩატვირთვა / გამოტვირთვისას. დეტალებისთვის იხილეთ "
+"ტრანსკრიპტი ქვემოთ"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:582
 #, kde-format
@@ -1051,7 +1125,7 @@ msgstr "ყველა განახლების მონიშვნა"
 #: rkward/dialogs/rkloadlibsdialog.cpp:644
 #, kde-format
 msgid "Show only packages matching:"
-msgstr ""
+msgstr "აჩვენე, მხოლოდ, პაკეტები, რომლებიც ემთხვევა:"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:646
 #, kde-format
@@ -1063,7 +1137,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:650
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
-msgstr ""
+msgstr "მხოლოდ, RKWard-ის დიალოგების მომწოდებელი პაკეტების ჩვენება"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:651
 #, kde-format
@@ -1076,7 +1150,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:661
 #, kde-format
 msgid "Install packages to:"
-msgstr ""
+msgstr "პაკეტების დაყენება მისამართზე:"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:665
 #, kde-format
@@ -1103,11 +1177,13 @@ msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories.<br>Click this to add more sources."
 msgstr ""
+"ბევრი პაკეტი ხელმისაწვდომია CRAN-ზე (Comprehensive R Archive Network) და "
+"სხვა რეპოზიტორიებში.<br>დააწკაპუნეთ მეტი წყაროს დასამატებლად."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:701
 #, kde-format
 msgid "<b>Install %1 packages (plus dependencies), remove %2 packages</b>"
-msgstr ""
+msgstr "<b>%1 პაკეტის (პლუს დამოკიდებულებები) დაყენება, %2 პაკეტის წაშლა</b>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:771
 #, kde-format
@@ -1156,7 +1232,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:946
 #, kde-format
 msgid "<p>The name of the package.</p>"
-msgstr ""
+msgstr "<p>პაკეტის სახელი.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:947
 #, kde-format
@@ -1168,12 +1244,12 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:948
 #, kde-format
 msgid "<p>Installed and / or available version of the package</p>"
-msgstr ""
+msgstr "<p>პაკეტის დაყენებული და / ან ხელმისაწვდომი ვერსია</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:949
 #, kde-format
 msgid "<p>Location where the package is installed / available</p>"
-msgstr ""
+msgstr "<p>მდებარეობა, სადაც პაკეტი დაყენებული / ხელმისაწვდომია</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:972
 #, kde-format
@@ -1198,6 +1274,8 @@ msgid ""
 "Packages which are available for installation, but which are not currently "
 "installed."
 msgstr ""
+"პაკეტები, რომლებიც ხელმისაწვდომია დასაყენებლად, მაგრამ ამჟამად დაყენებული "
+"არაა."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:979
 #, kde-format
@@ -1210,6 +1288,8 @@ msgid ""
 "Packages which are installed locally. Note that updates may be available for "
 "these packages."
 msgstr ""
+"პაკეტები, რომლებიც ლოკალურადაა დაყენებული. დაიმახსოვრეთ, რომ ამ "
+"პაკეტებისთვის, შეიძლება, განახლებები ხელმისაწვდომი არ იყოს."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1008
 #, kde-format
@@ -1225,7 +1305,7 @@ msgstr "წაშლა"
 #: rkward/dialogs/rkloadlibsdialog.cpp:1196
 #, kde-format
 msgid "Installed plugin groups (.pluginmap files)"
-msgstr ""
+msgstr "დაყენებული დამატების ჯგუფები (.pluginmap ფაილები)"
 
 #: rkward/dialogs/rkreadlinedialog.cpp:43
 #, kde-format
@@ -1235,7 +1315,7 @@ msgstr "კონტექსტი:"
 #: rkward/dialogs/rkrecoverdialog.cpp:34
 #, kde-format
 msgid "Crash recovery file detected"
-msgstr ""
+msgstr "აღმოჩენილია ავარიიდან აღდგენის ფაილი"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:38
 #, kde-format
@@ -1251,8 +1331,9 @@ msgid "<p>A workspace recovery file exists, dating from <i>%2</i>.</p>"
 msgid_plural ""
 "<p>%1 workspace recovery files exist, the most recent one of which dates "
 "from <i>%2</i>.</p>"
-msgstr[0] ""
+msgstr[0] "<p>სამუშაო სივრცის აღდგენის ფაილი არსებობს. თარიღით <i>%2</i>.</p>"
 msgstr[1] ""
+"<p>%1 სამუშაო სივრცის აღდგენის ფაილი არსებობს.უახლესია თარიღით <i>%2</i>.</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:40
 #, kde-format
@@ -1269,7 +1350,7 @@ msgstr "აღდგენა"
 #: rkward/dialogs/rkrecoverdialog.cpp:45
 #, kde-format
 msgid "Saves the recovery file(s), and opens it (or the most recent one)"
-msgstr ""
+msgstr "შეინახავს აღდგენის ფაილებს და გახსნის მათ (ან ყველაზე ახლებს)"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:46
 #, kde-format
@@ -1280,6 +1361,7 @@ msgstr "მომავლისთვის შენახვა"
 #, kde-format
 msgid "Saves the recovery file(s) for later use, but does not open it"
 msgstr ""
+"შეინახავს აღდგენის ფაილებს მოგვიანებით გამოსაყენებლად, მაგრამ არ ხსნის მათ"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:48 rkward/windows/robjectbrowser.cpp:125
 #, kde-format
@@ -1289,7 +1371,7 @@ msgstr "წაშლა"
 #: rkward/dialogs/rkrecoverdialog.cpp:49
 #, kde-format
 msgid "Deletes the recovery file(s)"
-msgstr ""
+msgstr "წაშლის აღდგენის ფაილ(ებ)-ს"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:61
 #, kde-format
@@ -1300,12 +1382,15 @@ msgid_plural ""
 "You are about to delete %1 recovery files (the most recent one is %2). There "
 "will be no way to bring them back. Really delete them?"
 msgstr[0] ""
+"აპირებთ, წაშალოთ აღდგენის ფაილი %2. ქმედება შეუქცევადია. მართლა წავშალო?"
 msgstr[1] ""
+"აპირებთ, წაშალოთ %1 აღდგენის ფაილი (უახლესი ფაილია %2). ქმედება შეუქცევადია. "
+"მართლა წავშალო?"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:61
 #, kde-format
 msgid "Really delete recovery file(s)?"
-msgstr ""
+msgstr "მართლა წავშალო აღდგენის ფაილ(ებ)-ი?"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:64
 #, kde-format
@@ -1317,17 +1402,17 @@ msgstr "შეცვლილის შენახვა"
 msgid ""
 "The following items have been modified. Do you want to save them before "
 "closing?"
-msgstr ""
+msgstr "შემდეგი ელემენტები შეიცვალა. გნებავთ მათი შენახვა დახურვამდე?"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:77
 #, kde-format
 msgid "R Workspace (Data and Functions)"
-msgstr ""
+msgstr "R-ის სამუშაო სივრცე (მონაცემები და ფუნქციები)"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:80
 #, kde-format
 msgid "[Not saved]"
-msgstr ""
+msgstr "[შენახული არაა]"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:88
 #, kde-format
@@ -1358,7 +1443,7 @@ msgstr "არ დახურო"
 #: rkward/dialogs/rkselectlistdialog.cpp:39
 #, kde-format
 msgid "<b>Select one or more:</b>"
-msgstr ""
+msgstr "<b>აირჩიეთ ერთი ან მეტი:</b>"
 
 #: rkward/dialogs/rkselectlistdialog.cpp:40
 #, kde-format
@@ -1368,7 +1453,7 @@ msgstr "<b>არჩიეთ ერთ-ერთი:</b>"
 #: rkward/dialogs/rksetupwizard.cpp:53
 #, kde-format
 msgid "No action needed."
-msgstr ""
+msgstr "გაკეთება არფრის გჭირდებათ."
 
 #: rkward/dialogs/rksetupwizard.cpp:88
 #, kde-format
@@ -1416,7 +1501,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:101
 #, kde-format
 msgid "Proceed without %1. You will be missing some functionality."
-msgstr ""
+msgstr "ვმუშაობ %1-ის გარეშე. ფუნქციონალის ნაწილმა, შეიძლება, არ იმუშაოს."
 
 #: rkward/dialogs/rksetupwizard.cpp:109
 #, kde-format
@@ -1454,7 +1539,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:133
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
-msgstr ""
+msgstr "<b>R უკანაბოლოს მოლოდინი...</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:135
 #, kde-format
@@ -1482,6 +1567,8 @@ msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
 "RKWard."
 msgstr ""
+"პრობლეების ავტომატურად შესწორება შეუძლებელია. მოგიწევთ, თავიდან დააყენოთ "
+"RKWard."
 
 #: rkward/dialogs/rksetupwizard.cpp:148 rkward/dialogs/rksetupwizard.cpp:161
 #: rkward/dialogs/rksetupwizard.cpp:185
@@ -1497,7 +1584,7 @@ msgstr "RKWard -ის დამატებები"
 #: rkward/dialogs/rksetupwizard.cpp:154
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
-msgstr ""
+msgstr "<p>ჩართული დამატებების გარეშე. ეს ალბათ შემთხვევითაა.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:155
 #, kde-format
@@ -1541,13 +1628,13 @@ msgstr "არაფერია ნაპოვნი"
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ნაპოვნია %1 დამატება."
+msgstr[1] "ნაპოვნია %1 დამატება."
 
 #: rkward/dialogs/rksetupwizard.cpp:177
 #, kde-format
 msgid "Pre 0.7.3 output file"
-msgstr ""
+msgstr "0.7.3-ზე უფრო ძველი ფორმატის ფაილი"
 
 #: rkward/dialogs/rksetupwizard.cpp:180
 #, kde-format
@@ -1562,7 +1649,7 @@ msgstr "შემოტანა"
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
-msgstr ""
+msgstr "შემოიტანეთ სესიაში, რომ ახალი გამოტანის ფორმატში შენახვა შეძლოთ."
 
 #: rkward/dialogs/rksetupwizard.cpp:183
 #, kde-format
@@ -1579,17 +1666,20 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:194
 #, kde-format
 msgid "Basic installation"
-msgstr ""
+msgstr "ძირითადი დაყენება"
 
 #: rkward/dialogs/rksetupwizard.cpp:205
 #, kde-format
 msgid "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
 msgstr ""
+"<b>R უკანაბოლო ავარიულად დასრულდა. დააწკაპუნეთ \"გაუქმებას\", რომ მორგების "
+"დამხმარიდან გახვიდეთ.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:213
 #, kde-format
 msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
 msgstr ""
+"<b>R უკანაბოლო გაეშვა. გასაგრძელებლად დააწკაპუნეთ ღილაკზე \"შემდეგი\".</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:220
 #, kde-format
@@ -1597,6 +1687,8 @@ msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
 "required."
 msgstr ""
+"R2HTML პაკეტი თითქმის ყველა RKWard-ს გამოტანის ფუნქციის მიერ გამოიყენება, "
+"ამიტომ მისი ქონა აუცილებელია."
 
 #: rkward/dialogs/rksetupwizard.cpp:221
 #, kde-format
@@ -1604,6 +1696,8 @@ msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
 "preview rendering), which is an optional but recommended feature."
 msgstr ""
+"პაკეტი rmarkdown .Rmd ფაილებს რენდერისთვისაა აუცილებელი (მინიატურის რენდერის "
+"ჩათვლით). რაც არასავალდებულო, მაგრამ რეკომენდებული ფუნქციაა."
 
 #: rkward/dialogs/rksetupwizard.cpp:224
 #, kde-format
@@ -1616,6 +1710,8 @@ msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
 "Rmd) files. This is optional but recommended."
 msgstr ""
+"პროგრამა pandoc R-ის მარკდაუნის (.Rmd) ფაილების რენდერისთვის (ან "
+"მინიატურისთვის) გამოიყენება. ეს არასავალდებულო, მაგრამ რეკომენდებულია."
 
 #: rkward/dialogs/rksetupwizard.cpp:230
 #, kde-format
@@ -1632,7 +1728,7 @@ msgstr "გარე პროგრამები"
 #: rkward/dialogs/rksetupwizard.cpp:240
 #, kde-format
 msgid "Summary of the next steps"
-msgstr ""
+msgstr "შემდეგი ნაბიჯების შეჯამება"
 
 #: rkward/dialogs/rksetupwizard.cpp:261
 #, kde-format
@@ -1644,7 +1740,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:264
 #, kde-format
 msgid "<h2>Software to install</h2>"
-msgstr ""
+msgstr "<h2>დასაყენებელი პროგრამები</h2>"
 
 #: rkward/dialogs/rksetupwizard.cpp:274
 #, kde-format
@@ -1657,12 +1753,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:276
 #, kde-format
 msgid "No software to install"
-msgstr ""
+msgstr "პროგრამები დასაყენებელი არ აქვთ"
 
 #: rkward/dialogs/rksetupwizard.cpp:278
 #, kde-format
 msgid "<h2>R packages to install</h2>"
-msgstr ""
+msgstr "<h2>R-ის დასაყენებელი პაკეტები</h2>"
 
 #: rkward/dialogs/rksetupwizard.cpp:280
 #, kde-format
@@ -1675,12 +1771,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:282
 #, kde-format
 msgid "No R packages to install"
-msgstr ""
+msgstr "R-ის პაკეტები დასაყენებელი არაა"
 
 #: rkward/main.cpp:208
 #, kde-format
 msgid "Unable to detect R installation"
-msgstr ""
+msgstr "R-ის ფაილები აღმოჩენილი არაა"
 
 #: rkward/main.cpp:208
 #, kde-format
@@ -1694,7 +1790,7 @@ msgstr ""
 #: rkward/main.cpp:221
 #, kde-format
 msgid "Specified R executable does not exist"
-msgstr ""
+msgstr "R-ის მითითებული გამშვები ფაილი არ არსებობს"
 
 #: rkward/main.cpp:260
 #, kde-format
@@ -1704,7 +1800,7 @@ msgstr "RKWard"
 #: rkward/main.cpp:260
 #, kde-format
 msgid "Frontend to the R statistics language"
-msgstr ""
+msgstr "წინაბოლო სტატისტიკის ენა R-ისთვის"
 
 #: rkward/main.cpp:260
 #, kde-format
@@ -1719,7 +1815,7 @@ msgstr "Thomas Friedrichsmeier"
 #: rkward/main.cpp:261
 #, kde-format
 msgid "Project leader / main developer"
-msgstr ""
+msgstr "პროექტის ლიდერი / მტავარი პროგრამისტი"
 
 #: rkward/main.cpp:262
 #, kde-format
@@ -1729,7 +1825,7 @@ msgstr "Pierre Ecochard"
 #: rkward/main.cpp:262
 #, kde-format
 msgid "C++ developer between 2004 and 2007"
-msgstr ""
+msgstr "C++ პროგრამისტი 2004-სა და 2007-ს შორის"
 
 #: rkward/main.cpp:263
 #, kde-format
@@ -1739,7 +1835,7 @@ msgstr "Prasenjit Kapat"
 #: rkward/main.cpp:263
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
-msgstr ""
+msgstr "ბევრი დამატება, რჩევები, ნახაზის ისტორიის თვისება"
 
 #: rkward/main.cpp:264
 #, kde-format
@@ -1749,7 +1845,7 @@ msgstr "Meik Michalke"
 #: rkward/main.cpp:264
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
-msgstr ""
+msgstr "ბევრი დამატება, რჩევები, rkwadddev პაკეტი"
 
 #: rkward/main.cpp:265
 #, kde-format
@@ -1759,12 +1855,12 @@ msgstr "Stefan Roediger"
 #: rkward/main.cpp:265
 #, kde-format
 msgid "Many plugins, suggestions, marketing, translations"
-msgstr ""
+msgstr "ბევრი დამატება, რჩევები, მარკეტინგი, თარგმანები"
 
 #: rkward/main.cpp:266
 #, kde-format
 msgid "Contributors in alphabetical order"
-msgstr ""
+msgstr "მოხალისეები ანბანით"
 
 #: rkward/main.cpp:267
 #, kde-format
@@ -1774,7 +1870,7 @@ msgstr "Björn Balazs"
 #: rkward/main.cpp:267 rkward/main.cpp:269
 #, kde-format
 msgid "Extensive usability feedback"
-msgstr ""
+msgstr "ფართო გამოყენებადობის გამოხმაურება"
 
 #: rkward/main.cpp:268
 #, kde-format
@@ -1784,7 +1880,7 @@ msgstr "Aaron Batty"
 #: rkward/main.cpp:268
 #, kde-format
 msgid "Wealth of feedback, hardware donations"
-msgstr ""
+msgstr "მდიდარი უკუკავშირი, აპარატურის შემოწირულობა"
 
 #: rkward/main.cpp:269
 #, kde-format
@@ -1799,7 +1895,7 @@ msgstr "Philippe Grosjean"
 #: rkward/main.cpp:270
 #, kde-format
 msgid "Several helpful comments and discussions"
-msgstr ""
+msgstr "რამდენიმე სასარგებლო კომენტარი და დისკუსია"
 
 #: rkward/main.cpp:271
 #, kde-format
@@ -1809,7 +1905,7 @@ msgstr "Adrien d'Hardemare"
 #: rkward/main.cpp:271
 #, kde-format
 msgid "Plugins and patches"
-msgstr ""
+msgstr "დამატებები და პაჩები"
 
 #: rkward/main.cpp:272
 #, kde-format
@@ -1819,7 +1915,7 @@ msgstr "Yves Jacolin"
 #: rkward/main.cpp:272
 #, kde-format
 msgid "New website"
-msgstr ""
+msgstr "ახალი ვებგვერდი"
 
 #: rkward/main.cpp:273
 #, kde-format
@@ -1829,7 +1925,7 @@ msgstr "Germán Márquez Mejía"
 #: rkward/main.cpp:273
 #, kde-format
 msgid "HP filter plugin, spanish translation"
-msgstr ""
+msgstr "HP ფილტრის დამატება, ესპანური თარგმანი"
 
 #: rkward/main.cpp:274
 #, kde-format
@@ -1839,7 +1935,7 @@ msgstr "Marco Martin"
 #: rkward/main.cpp:274
 #, kde-format
 msgid "A cool icon"
-msgstr ""
+msgstr "საკაიფო ხატულა"
 
 #: rkward/main.cpp:275
 #, kde-format
@@ -1849,7 +1945,7 @@ msgstr "Daniele Medri"
 #: rkward/main.cpp:275
 #, kde-format
 msgid "RKWard logo, many suggestions, help on wording"
-msgstr ""
+msgstr "RKWard-ის ლოგო, ბევრი რჩევა, დახმარება სიტყვათაწყობაზე"
 
 #: rkward/main.cpp:276
 #, kde-format
@@ -1859,7 +1955,7 @@ msgstr "David Sibai"
 #: rkward/main.cpp:276
 #, kde-format
 msgid "Several valuable comments, hints and patches"
-msgstr ""
+msgstr "რამდენიმე ძვირფასი კომენტარი, მინიშნება და პაჩი"
 
 #: rkward/main.cpp:277
 #, kde-format
@@ -1869,7 +1965,7 @@ msgstr "Ilias Soumpasis"
 #: rkward/main.cpp:277
 #, kde-format
 msgid "Translation, Suggestions, plugins"
-msgstr ""
+msgstr "თარგმანი, რჩევები, დამატებები"
 
 #: rkward/main.cpp:278
 #, kde-format
@@ -1879,7 +1975,7 @@ msgstr "Ralf Tautenhahn"
 #: rkward/main.cpp:278
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
-msgstr ""
+msgstr "ბევრი კომენტარი, სასარგებლო რჩევები და შეცდომის ანგარიშები"
 
 #: rkward/main.cpp:279
 #, kde-format
@@ -1889,7 +1985,7 @@ msgstr "Jannis Vajen"
 #: rkward/main.cpp:279
 #, kde-format
 msgid "German Translation, bug reports"
-msgstr ""
+msgstr "გერმანული თარგმანი, შეცდომები"
 
 #: rkward/main.cpp:280
 #, kde-format
@@ -1899,7 +1995,7 @@ msgstr "Roland Vollgraf"
 #: rkward/main.cpp:280
 #, kde-format
 msgid "Some patches"
-msgstr ""
+msgstr "პაჩები"
 
 #: rkward/main.cpp:281
 #, kde-format
@@ -1909,27 +2005,27 @@ msgstr "Roy Qu"
 #: rkward/main.cpp:281
 #, kde-format
 msgid "patches and helpful comments"
-msgstr ""
+msgstr "პაჩები და სასარგებლო კომენტარები"
 
 #: rkward/main.cpp:282
 #, kde-format
 msgid "Many more people on rkward-devel@kde.org"
-msgstr ""
+msgstr "და კიდევ მეტი ხალხი მისამართზე rkward-devel@kde.org"
 
 #: rkward/main.cpp:282
 #, kde-format
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
-msgstr ""
+msgstr "ბოდიში, თუ დამავიწყდი. დაგვიკავშირდით და დაგამატებთ"
 
 #: rkward/main.cpp:283
 #, kde-format
 msgid "How to cite:"
-msgstr ""
+msgstr "როგორ დავაციტირო:"
 
 #: rkward/main.cpp:283
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
-msgstr ""
+msgstr "გადამოწმებული სტატია სტატისტიკური პროგრამების ჟურნალში"
 
 #: rkward/main.cpp:289
 #, kde-format
@@ -1941,17 +2037,17 @@ msgstr ""
 #: rkward/main.cpp:290
 #, kde-format
 msgid "Verbosity of debug messages (0-5)"
-msgstr ""
+msgstr "დიაგნოსტიკური შეტყობინებების გამართვის დონე (0-5)"
 
 #: rkward/main.cpp:291
 #, kde-format
 msgid "Mask for components to debug (see debug.h)"
-msgstr ""
+msgstr "გასამართი კომპონენტების ნიღაბი (იხ. debug.h)"
 
 #: rkward/main.cpp:292
 #, kde-format
 msgid "Where to send debug message (file|terminal)"
-msgstr ""
+msgstr "სად გავაგზავნო გამართვის შეტყოვინება (ფაილი|ტერმინალი)"
 
 #: rkward/main.cpp:293
 #, kde-format
@@ -1974,6 +2070,9 @@ msgid ""
 "reused, only the file arguments will be interpreted, all other options will "
 "be ignored."
 msgstr ""
+"RKWard-ის გაშვებული ასლის (თუ ხელმისაწვდომია) გამოყენება. თუ გამოიყენება "
+"უკვე გაშვებული ასლი, მოხდება, მხოლოდ, ფაილის არგუმენტების დამუშავება. ყველა "
+"სხვა პარამეტრი გამოტოვებული იქნება."
 
 #: rkward/main.cpp:296
 #, kde-format
@@ -1981,6 +2080,8 @@ msgid ""
 "Behaves like --reuse, if any file arguments are also given, starts a new "
 "instance, otherwise. Intended for use in the .desktop file."
 msgstr ""
+"იქცევა ისე, როგორც --reuse. თუ ასევე მითითებულია ფაილის არგუმენტებიც, "
+"გაუშვებს ახალ ასლს. განკუთვნილია .desktop ფალში გამოსაყენებლად."
 
 #: rkward/main.cpp:297
 #, kde-format
@@ -2010,6 +2111,8 @@ msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
 "executable."
 msgstr ""
+"R-ის გამშვები ფაილი, რომელიც ბრძანების სტრიქონშია (%1) მითითებული, არ "
+"არსებობს, ან გაშვებადი არაა."
 
 #: rkward/main.cpp:396
 #, kde-format
@@ -2017,6 +2120,8 @@ msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
 "or is not executable."
 msgstr ""
+"R-ის გამშვები ფაილი (%1), რომელიც rkward.ini ფაილშია მითითებული (%2) არ "
+"არსებობს, ან გაშვებადი არაა."
 
 #: rkward/main.cpp:401
 #, kde-format
@@ -2030,7 +2135,7 @@ msgstr ""
 #: rkward/misc/celleditor.cpp:49
 #, kde-format
 msgid "[Omitted %1 more factor levels]"
-msgstr ""
+msgstr "[ამოღებულია კიდევ %1 ფაქტორის დონე]"
 
 #: rkward/misc/editformatdialog.cpp:32
 #, kde-format
@@ -2055,7 +2160,7 @@ msgstr "მარჯვენა"
 #: rkward/misc/editformatdialog.cpp:46
 #, kde-format
 msgid "Decimal Places"
-msgstr ""
+msgstr "ციფრები მძიმის შემდეგ"
 
 #: rkward/misc/editformatdialog.cpp:49
 #, kde-format
@@ -2065,22 +2170,22 @@ msgstr "ნაგულისხმები პარამეტრი"
 #: rkward/misc/editformatdialog.cpp:51
 #, kde-format
 msgid "As required"
-msgstr ""
+msgstr "საჭიროებისამებრ"
 
 #: rkward/misc/editformatdialog.cpp:53
 #, kde-format
 msgid "Fixed precision:"
-msgstr ""
+msgstr "ფიქსირებული სიზუსტე:"
 
 #: rkward/misc/editformatdialog.cpp:72
 #, kde-format
 msgid "Formatting options for '%1'"
-msgstr ""
+msgstr "დაფორმატების პარამეტრები '%1'-სთვის"
 
 #: rkward/misc/editlabelsdialog.cpp:204
 #, kde-format
 msgid "Levels / Value labels for '%1'"
-msgstr ""
+msgstr "დონეები / მნიშვნელობის ჭდეები '%1'-სთვის"
 
 #: rkward/misc/editlabelsdialog.cpp:207
 #, kde-format
@@ -2113,12 +2218,12 @@ msgstr "ქვემოთ"
 #: rkward/misc/rkaccordiontable.cpp:85
 #, kde-format
 msgid "Click to add new row"
-msgstr ""
+msgstr "წკაპი ახალი მწკრივის დასამატებლად"
 
 #: rkward/misc/rkaccordiontable.cpp:441
 #, kde-format
 msgid "Remove this row / element"
-msgstr ""
+msgstr "ამ მწკრივის / ელემენტის წაშლა"
 
 #: rkward/misc/rkcommonfunctions.cpp:249
 #, kde-format
@@ -2145,12 +2250,12 @@ msgstr ""
 #: rkward/misc/rkfindbar.cpp:58
 #, kde-format
 msgid "Search backwards (previous occurrence of search term)"
-msgstr ""
+msgstr "ძებნა უკან (საძებნი ელემენტის წინა გამოჩენა)"
 
 #: rkward/misc/rkfindbar.cpp:64
 #, kde-format
 msgid "Search forward (next occurrence of search term)"
-msgstr ""
+msgstr "ძებნა წინ (საძებნი ელემენტის შემდეგი გამოჩენა)"
 
 #: rkward/misc/rkfindbar.cpp:94
 #, kde-format
@@ -2170,17 +2275,17 @@ msgstr "ყველა დამთხვევის გამოკვეთ�
 #: rkward/misc/rkobjectlistview.cpp:51
 #, kde-format
 msgid "Other Environments"
-msgstr ""
+msgstr "სხვა გარემოები"
 
 #: rkward/misc/rkobjectlistview.cpp:53
 #, kde-format
 msgid "My Workspace"
-msgstr ""
+msgstr "ჩემი სამუშაო სივრცე"
 
 #: rkward/misc/rkobjectlistview.cpp:54
 #, kde-format
 msgid "My Workspace (no objects matching filter)"
-msgstr ""
+msgstr "ჩემი სამუშაო სივრცე (ფილტრს ობიექტები არ ემთხვევა)"
 
 #: rkward/misc/rkobjectlistview.cpp:210 rkward/misc/rkobjectlistview.cpp:306
 #, kde-format
@@ -2191,17 +2296,17 @@ msgstr "დამალული ფაილების ჩვენება"
 #, kde-format
 msgctxt "Fields==columns in tree view"
 msgid "Fields to search in"
-msgstr ""
+msgstr "მოსაძებნი ველები"
 
 #: rkward/misc/rkobjectlistview.cpp:282
 #, kde-format
 msgid "Top level objects, only"
-msgstr ""
+msgstr "მხოლოდ, უმაღლესი დონის ობიექტები"
 
 #: rkward/misc/rkobjectlistview.cpp:283
 #, kde-format
 msgid "Top level objects, and direct children"
-msgstr ""
+msgstr "უმაღლესი დონის ობიექტები და პირდაპირი შვლები"
 
 #: rkward/misc/rkobjectlistview.cpp:284
 #, kde-format
@@ -2221,12 +2326,12 @@ msgstr "ყველა ობიექტის ჩვენება"
 #: rkward/misc/rkobjectlistview.cpp:294
 #, kde-format
 msgid "Show functions, only"
-msgstr ""
+msgstr "მხოლოდ, ფუნქციების ჩვენება"
 
 #: rkward/misc/rkobjectlistview.cpp:295
 #, kde-format
 msgid "Show objects excluding functions"
-msgstr ""
+msgstr "ყველა ობიექტის ჩვენება, ფუნქციების გარდა"
 
 #: rkward/misc/rkobjectlistview.cpp:296
 #, kde-format
@@ -2249,7 +2354,7 @@ msgstr "ფილტრების ჩამოყრა"
 #: rkward/misc/rkobjectlistview.cpp:316
 #, kde-format
 msgid "Discards the current object search filters"
-msgstr ""
+msgstr "მოაცილებს მიმდნარე ობიექტის ძებნის ფილტრებს"
 
 #: rkward/misc/rkobjectlistview.cpp:478
 #, kde-format
@@ -2259,27 +2364,28 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:135
 #, kde-format
 msgid "Select destination file name"
-msgstr ""
+msgstr "აირჩიეთ სამიზნე ფაილის სახელი"
 
 #: rkward/misc/rkoutputdirectory.cpp:137
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko)"
-msgstr ""
+msgstr "RKWard გამოტანის ფაილები [*.rko](*.rko)"
 
 #: rkward/misc/rkoutputdirectory.cpp:137
 #, kde-format
 msgid "All Files [*](*)"
-msgstr ""
+msgstr "ყველა ფაილი [*](*)"
 
 #: rkward/misc/rkoutputdirectory.cpp:142
 #, kde-format
 msgid "File selection canceled"
-msgstr ""
+msgstr "ფაილის არჩევანი გაუქმებულია"
 
 #: rkward/misc/rkoutputdirectory.cpp:151
 #, kde-format
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr ""
+"დარწმუნებული ბრძანდებით, რომ გნებავთ, თავზე გადააწეროთ არსებულ ფაილს '%1'?"
 
 #: rkward/misc/rkoutputdirectory.cpp:152 rkward/plugin/rkpluginbrowser.cpp:136
 #, kde-format
@@ -2294,42 +2400,42 @@ msgstr "გააუქმა მომხმარებელმა"
 #: rkward/misc/rkoutputdirectory.cpp:156
 #, kde-format
 msgid "Not overwriting existing file"
-msgstr ""
+msgstr "არსებულ ფაილს თავზე არ გადაეწერება"
 
 #: rkward/misc/rkoutputdirectory.cpp:179
 #, kde-format
 msgid "Error while writing temporary output archive %1"
-msgstr ""
+msgstr "შეცდომა დროებით გამოტანის არქივში %1 ჩაწერისას"
 
 #: rkward/misc/rkoutputdirectory.cpp:183
 #, kde-format
 msgid "Failure to remove existing file %1. Missing permissions?"
-msgstr ""
+msgstr "არსებული ფაილის %1 წაშლა ჩავარდა. უფლებები გაქვთ?"
 
 #: rkward/misc/rkoutputdirectory.cpp:188
 #, kde-format
 msgid "Failure while copying output archive to %1"
-msgstr ""
+msgstr "შეცდომა გამოტანილი არქივის %1-ში კოპირებისას"
 
 #: rkward/misc/rkoutputdirectory.cpp:200
 #, kde-format
 msgid "The path %1 does not exist or is not a file."
-msgstr ""
+msgstr "ბილიკი %1 არ არსებობს ან ფაილი არაა."
 
 #: rkward/misc/rkoutputdirectory.cpp:211
 #, kde-format
 msgid "Failure to open %1. Not an rkward output file?"
-msgstr ""
+msgstr "%1-ის გახსნის შეცდომა. არ წარმოადგენს rkward-ის ფაილს?"
 
 #: rkward/misc/rkoutputdirectory.cpp:224
 #, kde-format
 msgid "Output directory %1 is already in use."
-msgstr ""
+msgstr "გამოტანის საქაღალდე %1 უკვე გამოიყენება."
 
 #: rkward/misc/rkoutputdirectory.cpp:234
 #, kde-format
 msgid "Output had no modifications. Nothing reverted."
-msgstr ""
+msgstr "გამოტანას ცვლილებები არ შეხებია. არაფერი დაბრუნებულა."
 
 #: rkward/misc/rkoutputdirectory.cpp:237
 #, kde-format
@@ -2348,7 +2454,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:245
 #, kde-format
 msgid "User canceled."
-msgstr ""
+msgstr "გააუქმა მომხმარებელმა."
 
 #: rkward/misc/rkoutputdirectory.cpp:289
 #, kde-format
@@ -2360,17 +2466,17 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:294
 #, kde-format
 msgid "Output is not empty. Not clearing it."
-msgstr ""
+msgstr "გამოტანა ცარიელი არაა. ის არ გასუფთავდება."
 
 #: rkward/misc/rkoutputdirectory.cpp:327
 #, kde-format
 msgid "[Unnamed]"
-msgstr ""
+msgstr "[უსახელო]"
 
 #: rkward/misc/rkoutputdirectory.cpp:335
 #, kde-format
 msgid "Output has been modified. Not closing it."
-msgstr ""
+msgstr "გამოტანა შეიცვალა. ის არ დაიხურება."
 
 #: rkward/misc/rkoutputdirectory.cpp:338
 #, kde-format
@@ -2382,27 +2488,27 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:338
 #, kde-format
 msgid "Discard unsaved changes?"
-msgstr ""
+msgstr "მოვაცილო შეუნახავი ცვლილებები?"
 
 #: rkward/misc/rkoutputdirectory.cpp:428
 #, kde-format
 msgid "New empty output directory has been created, automatically"
-msgstr ""
+msgstr "ახალი ცარიელი გამოტანის საქაღალდე ავტომატურად შეიქმნა"
 
 #: rkward/misc/rkoutputdirectory.cpp:445
 #, kde-format
 msgid "Output has been activated, automatically"
-msgstr ""
+msgstr "გამოტანა ავტომატურაად გააქტიურდა"
 
 #: rkward/misc/rkoutputdirectory.cpp:512
 #, kde-format
 msgid "Output '%1' is already loaded in this session. Cannot create it."
-msgstr ""
+msgstr "გამოტანა '%1' უვე ჩატვირთულია ამ სესიაში. მისი შექმნა შეუძლებელია."
 
 #: rkward/misc/rkoutputdirectory.cpp:513
 #, kde-format
 msgid "A file named '%1' already exists. Cannot create it."
-msgstr ""
+msgstr "ფაილი სახელით '%1' უკვე არსებობს. მისი შექმნა შეუძლებელია."
 
 #: rkward/misc/rkoutputdirectory.cpp:524
 #, kde-format
@@ -2412,12 +2518,12 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:564
 #, kde-format
 msgid "The output identified by '%1' is not loaded in this session."
-msgstr ""
+msgstr "'%1'-ის მიერ იდენტიფიცირებული გამოტანა ამ სესიაში ჩატვირთული არაა."
 
 #: rkward/misc/rkoutputdirectory.cpp:593
 #, kde-format
 msgid "Unhandled output command '%1'"
-msgstr ""
+msgstr "დაუმუშავებელი გამოტანის ბრძანება '%1'"
 
 #: rkward/misc/rkprogresscontrol.cpp:245
 #, kde-format
@@ -2439,12 +2545,12 @@ msgstr "გამოტანა:"
 #: rkward/misc/rkprogresscontrol.cpp:261
 #, kde-format
 msgid "Errors / Warnings"
-msgstr ""
+msgstr "შეცდომები / გაფრთხილებები"
 
 #: rkward/misc/rkprogresscontrol.cpp:262
 #, kde-format
 msgid "Errors / Warnings:"
-msgstr ""
+msgstr "შეცდომები / გაფრთხილებები:"
 
 #: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:415
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
@@ -2456,12 +2562,12 @@ msgstr "გაუქმება"
 #: rkward/misc/rkprogresscontrol.cpp:482
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
-msgstr ""
+msgstr "<b>აღმოჩენილია შეცდომა</b> (დეტალები იხილეთ ქვემოთ)"
 
 #: rkward/misc/rkprogresscontrol.cpp:482
 #, kde-format
 msgid "<b>Done</b>"
-msgstr ""
+msgstr "<b>მზადაა</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:485
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
@@ -2473,12 +2579,14 @@ msgstr "დახურვა"
 #: rkward/misc/rkprogresscontrol.cpp:533 rkward/windows/rkwindowcatcher.cpp:383
 #, kde-format
 msgid "Keep waiting"
-msgstr ""
+msgstr "ლოდინის გაგრძელება"
 
 #: rkward/misc/rkprogresscontrol.cpp:533
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
+"ამ ფანჯრის დახურვა მიმდინარე ოპერაციის გაუქმებას გამოიწვევს. დარწმუნებული "
+"ბრძანდებით?"
 
 #: rkward/misc/rkprogresscontrol.cpp:533
 #, kde-format
@@ -2488,12 +2596,12 @@ msgstr "ოპერაციის გაუქმება"
 #: rkward/misc/rkprogresscontrol.cpp:533
 #, kde-format
 msgid "Cancel && Close"
-msgstr ""
+msgstr "გაუქმება && დახურვა"
 
 #: rkward/misc/rkprogresscontrol.cpp:545
 #, kde-format
 msgid "An operation is still running, please wait."
-msgstr ""
+msgstr "ოპერაცია ჯერ კიდევ გაშვებულია. მოითმინეთ."
 
 #: rkward/misc/rksaveobjectchooser.cpp:44
 #, kde-format
@@ -2508,22 +2616,22 @@ msgstr "თავზე გადაწერა"
 #: rkward/misc/rksaveobjectchooser.cpp:56
 #, kde-format
 msgid "The given object name already exists"
-msgstr ""
+msgstr "მითითებული ობიექტის სახელი უკვე არსებობს"
 
 #: rkward/misc/rksaveobjectchooser.cpp:88
 #, kde-format
 msgid "Parent object: %1"
-msgstr ""
+msgstr "მშობელი ობიექტი: %1"
 
 #: rkward/misc/rksaveobjectchooser.cpp:98
 #, kde-format
 msgid "Select parent object"
-msgstr ""
+msgstr "მშობელი ობიექტის გაშვება"
 
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr ""
+msgstr "სპეციალური ჩასმა..."
 
 #: rkward/misc/rkspecialactions.cpp:64
 #, kde-format
@@ -2533,12 +2641,12 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:81
 #, kde-format
 msgid "Paste Mode"
-msgstr ""
+msgstr "ჩასმის რეჟიმი"
 
 #: rkward/misc/rkspecialactions.cpp:84
 #, kde-format
 msgid "Single string"
-msgstr ""
+msgstr "ერთი სტრიქონი"
 
 #: rkward/misc/rkspecialactions.cpp:87
 #, kde-format
@@ -2568,12 +2676,12 @@ msgstr "მძიმე"
 #: rkward/misc/rkspecialactions.cpp:114
 #, kde-format
 msgid "Single space"
-msgstr ""
+msgstr "ერთი სივრცე"
 
 #: rkward/misc/rkspecialactions.cpp:117
 #, kde-format
 msgid "Any whitespace"
-msgstr ""
+msgstr "ნებისმიერი ჰარე"
 
 #: rkward/misc/rkspecialactions.cpp:121
 #, kde-format
@@ -2588,7 +2696,7 @@ msgstr "ციტირება"
 #: rkward/misc/rkspecialactions.cpp:137
 #, kde-format
 msgid "Do not quote values"
-msgstr ""
+msgstr "მნიშვნელობები არ დაციტირდება"
 
 #: rkward/misc/rkspecialactions.cpp:140
 #, kde-format
@@ -2598,7 +2706,7 @@ msgstr "ავტომატური"
 #: rkward/misc/rkspecialactions.cpp:144
 #, kde-format
 msgid "Quote all values"
-msgstr ""
+msgstr "ყველა მნიშვნელობის ციტირება"
 
 #: rkward/misc/rkspecialactions.cpp:151
 #, kde-format
@@ -2608,12 +2716,12 @@ msgstr "ჭდეები"
 #: rkward/misc/rkspecialactions.cpp:153
 #, kde-format
 msgid "First row contains labels"
-msgstr ""
+msgstr "პირველი მწკრივი ველის სახელებს შეიცავს"
 
 #: rkward/misc/rkspecialactions.cpp:155
 #, kde-format
 msgid "First column contains labels"
-msgstr ""
+msgstr "პირველი სვეტი ველის სახელებს შეიცავს"
 
 #: rkward/misc/rkspecialactions.cpp:160
 #, kde-format
@@ -2623,22 +2731,22 @@ msgstr "გარდაქმნები"
 #: rkward/misc/rkspecialactions.cpp:162
 #, kde-format
 msgid "Reverse horizontally"
-msgstr ""
+msgstr "რევერსი ჰორიზონტალურად"
 
 #: rkward/misc/rkspecialactions.cpp:164
 #, kde-format
 msgid "Reverse vertically"
-msgstr ""
+msgstr "რევერსი ვერტიკალურად"
 
 #: rkward/misc/rkspecialactions.cpp:166
 #, kde-format
 msgid "Flip rows/columns"
-msgstr ""
+msgstr "მწკრივებისა და სვეტების ადგილების მიმოცვლა"
 
 #: rkward/misc/rkspecialactions.cpp:168
 #, kde-format
 msgid "Insert NAs where needed"
-msgstr ""
+msgstr "NA-ების ჩასმა, სადაც წაჭიროა"
 
 #: rkward/misc/rkspecialactions.cpp:308
 #, kde-format
@@ -2650,7 +2758,7 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:309
 #, kde-format
 msgid "Pasting object from clipboard data failed."
-msgstr ""
+msgstr "მიმოცვლის ბუფერიდან მონაცემების ჩასმა ჩავარდა."
 
 #: rkward/misc/rkspecialactions.cpp:309
 #, kde-format
@@ -2660,12 +2768,12 @@ msgstr "ჩასმის შეცდომა"
 #: rkward/misc/rkstandardactions.cpp:27
 #, kde-format
 msgid "Copy lines to output"
-msgstr ""
+msgstr "ხაზის კოპირება გამოტანაში"
 
 #: rkward/misc/rkstandardactions.cpp:46
 #, kde-format
 msgid "Run line / selection"
-msgstr ""
+msgstr "ხაზის / მონიშნულის გაშვება"
 
 #: rkward/misc/rkstandardactions.cpp:47
 #, kde-format
@@ -2687,12 +2795,12 @@ msgstr "ყველას გაშვება"
 #: rkward/misc/rkstandardactions.cpp:75
 #, kde-format
 msgid "&Function reference"
-msgstr ""
+msgstr "&ფუნქციების სახელმძღვანელო"
 
 #: rkward/misc/rkstandardactions.cpp:131
 #, kde-format
 msgid "[No keyword detected]"
-msgstr ""
+msgstr "[საკვანძო სიტყვების გარეშე]"
 
 #: rkward/misc/rkstandardactions.cpp:165
 #, kde-format
@@ -2702,12 +2810,12 @@ msgstr "ონლაინ ძებნა"
 #: rkward/misc/rkxmlguipreviewarea.cpp:202
 #, kde-format
 msgid "Warnings or Errors:"
-msgstr ""
+msgstr "გაფრთხილებები ან შეცდომები:"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:259
 #, kde-format
 msgid "Preview not (yet) possible"
-msgstr ""
+msgstr "მინიატურა (ჯერ) შეუძლებელია"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:261
 #, kde-format
@@ -2717,12 +2825,12 @@ msgstr "მინიატურა გათიშულია"
 #: rkward/misc/rkxmlguipreviewarea.cpp:263
 #, kde-format
 msgid "Preview updating"
-msgstr ""
+msgstr "მიმდინარეობს მინიატურის განახლება"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:265
 #, kde-format
 msgid "Preview up to date"
-msgstr ""
+msgstr "მინიატურა განახლებულია"
 
 #: rkward/misc/xmlhelper.cpp:41
 #, kde-format
@@ -2739,47 +2847,51 @@ msgstr ""
 #: rkward/misc/xmlhelper.cpp:160
 #, kde-format
 msgid "Trying to retrieve children of invalid element"
-msgstr ""
+msgstr "არასწორი ელემენტის შვილების მიღების მცდელობა"
 
 #: rkward/misc/xmlhelper.cpp:171
 #, kde-format
 msgid "Expected exactly one element '%1' but found %2"
-msgstr ""
+msgstr "მოველოდი მხოლოდ ერთ ელემენტს, '%1. აღმოჩენილია %2"
 
 #: rkward/misc/xmlhelper.cpp:225 rkward/misc/xmlhelper.cpp:237
 #, kde-format
 msgid "'%1'-attribute not given. Assuming '%2'"
-msgstr ""
+msgstr "'%1' ატრიბუტი მითითებული არაა. ჩაითვლება '%2'"
 
 #: rkward/misc/xmlhelper.cpp:260
 #, kde-format
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
 msgstr ""
+"დაუშვებელი ატრიბუტის მნიშვნელობა. დაშვებული მნიშვნელობებია ერთ-ერთი '%1'-დან "
+"და, მხოლოდ."
 
 #: rkward/misc/xmlhelper.cpp:274
 #, kde-format
 msgid "Illegal attribute value. Only integer numbers are allowed."
-msgstr ""
+msgstr "დაუშვებელი ატრიბუტის მნიშვნელობა. დაშვებულია მხოლოდ მთელი რიცხვები."
 
 #: rkward/misc/xmlhelper.cpp:290
 #, kde-format
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr ""
+msgstr "დაუშვებელი ატრიბუტის მნიშვნელობა. დაშვებულია მხოლოდ ნამდვილი რიცხვები."
 
 #: rkward/misc/xmlhelper.cpp:308
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
+"დაუშვებელი ატრიბუტის მნიშვნელობა. დაშვებული მნიშვნელობებია, მხოლოდ, '%1' ან "
+"'%2'."
 
 #: rkward/misc/xmlhelper.cpp:340
 #, kde-format
 msgid "Trying to retrieve contents of invalid element"
-msgstr ""
+msgstr "არასწორი ელემენტის შემცველობის მიღების შეცდომა"
 
 #: rkward/misc/xmlhelper.cpp:381
 #, kde-format
 msgid "XML-parsing '%1' "
-msgstr ""
+msgstr "XML-დამუშავება '%1' "
 
 #: rkward/plugin/rkcheckbox.cpp:64
 #, kde-format
@@ -2794,7 +2906,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmap.cpp:266 rkward/plugin/rkcomponentmap.cpp:646
 #, kde-format
 msgid "(no label)"
-msgstr ""
+msgstr "(ჭდის გარეშე)"
 
 #: rkward/plugin/rkcomponentmap.cpp:463
 #, kde-format
@@ -2807,7 +2919,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmap.cpp:465
 #, kde-format
 msgid "No such plugin"
-msgstr ""
+msgstr "ასეთი დამატება არ არსებობს"
 
 #: rkward/plugin/rkcomponentmap.cpp:475
 #, kde-format
@@ -2820,7 +2932,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmap.cpp:477
 #, kde-format
 msgid "Bad serialization format"
-msgstr ""
+msgstr "არასწორი სერიალიზაციის ფორმატი"
 
 #: rkward/plugin/rkcomponentmap.cpp:500
 #, kde-format
@@ -2828,6 +2940,8 @@ msgid ""
 "\n"
 "The plugin has crashed."
 msgstr ""
+"\n"
+"დამატება ავარიულად დასრულდა."
 
 #: rkward/plugin/rkcomponentmap.cpp:508
 #, kde-format
@@ -2839,7 +2953,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentmap.cpp:511
 #, kde-format
 msgid "Not all settings applied"
-msgstr ""
+msgstr "ყველა პარამეტრი არ გადატარებულა"
 
 #: rkward/plugin/rkcomponentmap.cpp:524
 #, kde-format
@@ -2847,29 +2961,36 @@ msgid ""
 "\n"
 "The plugin could not be auto-submitted with these settings."
 msgstr ""
+"\n"
+"დამატების ავტოგადაცემა შეუძლებელია ამ პარამეტრებით."
 
 #: rkward/plugin/rkcomponentmap.cpp:526
 #, kde-format
 msgid "Could not submit"
-msgstr ""
+msgstr "გადაცემა შეუძლებელია"
 
 #: rkward/plugin/rkcomponentmap.cpp:567
 #, kde-format
 msgid ""
 "Could not open plugin map file %1. (Is not readable, or failed to parse)"
 msgstr ""
+"ვერ გავხსენი დამატებების ასახვის ფაილი %1. (ის წაკითხვადი არაა, ან მისი "
+"დამუშავება ჩავარდა)"
 
 #: rkward/plugin/rkcomponentmap.cpp:582
 #, kde-format
 msgid ""
 "Skipping plugin map file '%1': Not compatible with this version of RKWard"
 msgstr ""
+"დამატების ასახვის ფაილის '%1' გამოტოვება: RKWard-ის ამ ვერსიასთან თავსებადი "
+"არაა"
 
 #: rkward/plugin/rkcomponentmap.cpp:597
 #, kde-format
 msgid ""
 "Specified required file '%1' does not exist or is not readable. Ignoring."
 msgstr ""
+"მითითებული აუცილებელი ფაილი '%1' არ არსებობს, ან წაკითხვადი არაა. გამოტოვება."
 
 #: rkward/plugin/rkcomponentmap.cpp:615
 #, kde-format
@@ -2877,12 +2998,16 @@ msgid ""
 "Could not resolve specified required pluginmap '%1'. You may have to install "
 "additional packages."
 msgstr ""
+"ვერ ამოვხსენი მითითებული აუცილებელი დამატებების ასახვა '%1'. შეიძლება, "
+"დამატებითი პაკეტების დაყენება გჭირდებათ."
 
 #: rkward/plugin/rkcomponentmap.cpp:649
 #, kde-format
 msgid ""
 "Duplicate declaration of component id \"%1\" within pluginmap file \"%2\"."
 msgstr ""
+"გამეორებული აღწერა კომპონენტის ID-სთვის \"%1\" დამატებების რუკის ფაილში "
+"\"%2\"."
 
 #: rkward/plugin/rkcomponentmap.cpp:655
 #, kde-format
@@ -2890,6 +3015,8 @@ msgid ""
 "Specified file '%1' for component id \"%2\" does not exist or is not "
 "readable. Ignoring."
 msgstr ""
+"მითითებული ფაილი '%1' კომპონენტისთვის ID-ით \"%2\" არ არსებობს ან წაკითხვადი "
+"არაა. გამოტოვება."
 
 #: rkward/plugin/rkcomponentmap.cpp:671
 #, kde-format
@@ -2932,32 +3059,33 @@ msgstr "მთარგმნელები:"
 #: rkward/plugin/rkcomponentmeta.cpp:197
 #, kde-format
 msgid "RKWard plugin map"
-msgstr ""
+msgstr "RKWard-ის დამატებების რუკა"
 
 #: rkward/plugin/rkcomponentmeta.cpp:198
 #, kde-format
 msgid "R package"
-msgstr ""
+msgstr "R-ის პაკეტი"
 
 #: rkward/plugin/rkcomponentproperties.cpp:933
 #, kde-format
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
 msgstr ""
+"ობიექტს გააჩნია %1 განზომილება, მაგრამ მოველოდი მხოლოდ %2 განზომილებას."
 
 #: rkward/plugin/rkcomponentproperties.cpp:936
 #, kde-format
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
-msgstr ""
+msgstr "ობიექტის სიგრძეა %1, მაგრამ მინიმალურ სიგრძეს %2 მოველოდი."
 
 #: rkward/plugin/rkcomponentproperties.cpp:937
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
-msgstr ""
+msgstr "ობიექტის სიგრძეა %1, მაგრამ მაქსიმალურ სიგრძეს %2 მოველოდი."
 
 #: rkward/plugin/rkcomponentproperties.cpp:949
 #, kde-format
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
-msgstr ""
+msgstr "ეს ობიექტი, როგორც ჩანს, <i>%1</i>-ის არც ერთ კლასს არ მიეკუთვნება."
 
 #: rkward/plugin/rkcomponentproperties.cpp:956
 #, kde-format
@@ -2969,12 +3097,12 @@ msgstr ""
 #: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:35
 #, kde-format
 msgid "Select one:"
-msgstr ""
+msgstr "აირჩიეთ ერთი:"
 
 #: rkward/plugin/rkformula.cpp:58
 #, kde-format
 msgid "Specify model"
-msgstr ""
+msgstr "მიუთითეთ მოდელი"
 
 #: rkward/plugin/rkformula.cpp:63
 #, kde-format
@@ -2984,12 +3112,12 @@ msgstr "სრული მოდელი"
 #: rkward/plugin/rkformula.cpp:65
 #, kde-format
 msgid "Main Effects only"
-msgstr ""
+msgstr "მხოლოდ, მთავარი ეფექტები"
 
 #: rkward/plugin/rkformula.cpp:67
 #, kde-format
 msgid "Custom Model:"
-msgstr ""
+msgstr "მომხმარებლის მოდელი:"
 
 #: rkward/plugin/rkformula.cpp:93
 #, kde-format
@@ -3019,62 +3147,62 @@ msgstr "შეიყვანეთ მონაცემები:"
 #: rkward/plugin/rkmatrixinput.cpp:506
 #, kde-format
 msgid "Type on these cells to expand the table"
-msgstr ""
+msgstr "აკრიფეთ ამ უჯრედებზე ცხრილის გასაფართოვებლად"
 
 #: rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
 msgid "Empty values are not allowed"
-msgstr ""
+msgstr "ცარიელი მნიშვნელობები დაშვებული არაა"
 
 #: rkward/plugin/rkmatrixinput.cpp:541
 #, kde-format
 msgid "This column contains illegal values in some of its cells"
-msgstr ""
+msgstr "ეს სვეტი თავის ზოგიერთ უჯრედში დაუშვებელ მნიშვნელობას შეუიცავს"
 
 #: rkward/plugin/rkoptionset.cpp:52
 #, kde-format
 msgid "Updating status, please wait"
-msgstr ""
+msgstr "სტატუსის განახლება. მოითმინეთ"
 
 #: rkward/plugin/rkoptionset.cpp:811
 #, kde-format
 msgid "This row has not yet been processed."
-msgstr ""
+msgstr "ეს მწკრივი ჯერ არ დამუშავებულა."
 
 #: rkward/plugin/rkoptionset.cpp:812
 #, kde-format
 msgid "This row contains invalid settings."
-msgstr ""
+msgstr "ეს მწირივი არასწორ პარამეტრებს შეიცავს."
 
 #: rkward/plugin/rkoptionset.cpp:832
 #, kde-format
 msgid "Please wait while settings are being processed"
-msgstr ""
+msgstr "მოითმინეთ. მიმდინარეობ თქვენი პარამეტრების დამუშავება"
 
 #: rkward/plugin/rkoptionset.cpp:835
 #, kde-format
 msgid "One or more rows contain invalid settings."
-msgstr ""
+msgstr "ერთი ან მეტი სვეტი არასწორ პარამეტრებს შეიცავს."
 
 #: rkward/plugin/rkoptionset.cpp:836
 #, kde-format
 msgid "At least %1 rows have to be defined (if any)"
-msgstr ""
+msgstr "აუცილებელია, სულ ცოტა, %1 მწკრივის აღწერა (თუ საერთოდ იზამთ)"
 
 #: rkward/plugin/rkoptionset.cpp:837
 #, kde-format
 msgid "At least %1 rows have to be defined"
-msgstr ""
+msgstr "აუცილებელია, სულ ცოტა, %1 მწკრივის აღწერა"
 
 #: rkward/plugin/rkoptionset.cpp:838
 #, kde-format
 msgid "At most %1 rows may be defined"
-msgstr ""
+msgstr "მაქსიმუმ, შესაძლებელია %1 მწკრივის აღწერა"
 
 #: rkward/plugin/rkoptionset.cpp:839
 #, kde-format
 msgid "This element is not valid for the following reason(s):"
-msgstr ""
+msgstr "ეს ელემენტი არასწორია შემდეგი მიზეზ(ებ)-ით:"
 
 #: rkward/plugin/rkpluginbrowser.cpp:46
 #, kde-format
@@ -3089,27 +3217,27 @@ msgstr "აირჩიეთ"
 #: rkward/plugin/rkpluginbrowser.cpp:123
 #, kde-format
 msgid "The file or directory does not exist."
-msgstr ""
+msgstr "ფაილი ან საქაღალდე არ არსებობს."
 
 #: rkward/plugin/rkpluginbrowser.cpp:126
 #, kde-format
 msgid "Only files (not directories) are acceptable, here."
-msgstr ""
+msgstr "აქ, მხოლოდ ფაილებია (არა საქაღალდეები) მისაღები."
 
 #: rkward/plugin/rkpluginbrowser.cpp:129
 #, kde-format
 msgid "Only directories (not files) are acceptable, here."
-msgstr ""
+msgstr "აქ, მხოლოდ, საქაღალდეებია (არა ფაილები) მისაღები."
 
 #: rkward/plugin/rkpluginbrowser.cpp:139
 #, kde-format
 msgid "The specified file is not writable."
-msgstr ""
+msgstr "მითითებული ფაილი ჩაწერადი არაა."
 
 #: rkward/plugin/rkpluginbrowser.cpp:142
 #, kde-format
 msgid "You have to specify a filename (not directory) to write to."
-msgstr ""
+msgstr "უნდა მიუთითოთ ჩასაწერი ფაილის სახელი (და არა საქაღალდის)."
 
 #: rkward/plugin/rkpluginbrowser.cpp:148
 #, kde-format
@@ -3121,17 +3249,17 @@ msgstr ""
 #: rkward/plugin/rkpluginbrowser.cpp:156
 #, kde-format
 msgid "Only local files are allowed, here."
-msgstr ""
+msgstr "აქ, მხოლოდ, ლოკალური ფაილებია მხარდაჭერილი."
 
 #: rkward/plugin/rkpluginbrowser.cpp:159
 #, kde-format
 msgid "This url looks valid."
-msgstr ""
+msgstr "ეს url სწორს წააგავს."
 
 #: rkward/plugin/rkpluginbrowser.cpp:164
 #, kde-format
 msgid "The given filename / url is not valid."
-msgstr ""
+msgstr "მითითებული ფაილის სახელი / ბმული სწორი არაა."
 
 #: rkward/plugin/rkpluginsaveobject.cpp:29
 #, kde-format
@@ -3164,7 +3292,7 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponent.cpp:89
 #, kde-format
 msgid "Could not create plugin"
-msgstr ""
+msgstr "დამატების შექმნა შეუძლებელია"
 
 #: rkward/plugin/rkstandardcomponent.cpp:675
 #, kde-format
@@ -3175,7 +3303,7 @@ msgstr "პარამეტრები"
 #: rkward/plugin/rkstandardcomponentgui.cpp:215
 #, kde-format
 msgid "Code Preview"
-msgstr ""
+msgstr "კოდის მინიატურა"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:184
 #: rkward/plugin/rkstandardcomponentgui.cpp:605
@@ -3197,7 +3325,7 @@ msgstr "დახმარება"
 #: rkward/plugin/rkstandardcomponentgui.cpp:204
 #, kde-format
 msgid "Use Wizard"
-msgstr ""
+msgstr "ოსტატის გამოყენება"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:323
 #, kde-format
@@ -3207,7 +3335,7 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponentgui.cpp:448
 #, kde-format
 msgid "Processing. Please wait"
-msgstr ""
+msgstr "დამუშავება. მოითმინეთ"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:525
 #, kde-format
@@ -3238,17 +3366,17 @@ msgstr "< უკან"
 #: rkward/plugin/rkstandardcomponentgui.cpp:613
 #, kde-format
 msgid "Use Dialog"
-msgstr ""
+msgstr "დიალოგის გამოყენება"
 
 #: rkward/plugin/rkvarselector.cpp:48
 #, kde-format
 msgid "Select Variable(s)"
-msgstr ""
+msgstr "აირჩიეთ ცვლად(ებ)-ი"
 
 #: rkward/plugin/rkvarselector.cpp:62
 #, kde-format
 msgid "Show all environments"
-msgstr ""
+msgstr "ყველა გარემოს ჩვენება"
 
 #: rkward/plugin/rkvarselector.cpp:64
 #, kde-format
@@ -3261,7 +3389,7 @@ msgstr ""
 #: rkward/plugin/rkvarselector.cpp:71
 #, kde-format
 msgid "Show filter options"
-msgstr ""
+msgstr "ფილტრის პარამეტრების ჩვენება"
 
 #: rkward/plugin/rkvarselector.cpp:127
 #, kde-format
@@ -3313,7 +3441,7 @@ msgstr "მოლოდინი"
 #: rkward/rbackend/rcommandstack.cpp:286
 #, kde-format
 msgid "Command Stack"
-msgstr ""
+msgstr "ბრძანების სტეკი"
 
 #: rkward/rbackend/rcommandstack.cpp:312
 #, kde-format
@@ -3358,21 +3486,22 @@ msgstr ""
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
+"უკანაბოლოს პროცესის გაშვება შეუძლებელია. შეამოწმეთ თქვენი პროგრამის ფაილები."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:260
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
-msgstr ""
+msgstr "უკანაბოლოს პროცესის გაშვება ჩავარდა კოდით %1, შეტყობინება '%2'."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:261
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
-msgstr ""
+msgstr "უკანაბოლოს პროცესი დასრულდა კოდით %1, შეტყობინებით: '%2'."
 
 #: rkward/rbackend/rkrbackend.cpp:572
 #, kde-format
 msgid "The R engine has shut down with status: %1"
-msgstr ""
+msgstr "R-ის ძრავა გაითიშა სტატუსით: %1"
 
 #: rkward/rbackend/rkrbackend.cpp:593
 #, kde-format
@@ -3380,16 +3509,18 @@ msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
+"R-ის ძრავამ აღმოაჩინა ფატალური შეცდომა:\n"
+"%1"
 
 #: rkward/rbackend/rkrbackend.cpp:763
 #, kde-format
 msgid "Message from the R backend"
-msgstr ""
+msgstr "შეტყობინება R უკანაბოლოდან"
 
 #: rkward/rbackend/rkrbackend.cpp:771
 #, kde-format
 msgid "Question from the R backend"
-msgstr ""
+msgstr "კითხვა R უკანაბოლოდან"
 
 #: rkward/rbackend/rkrbackend.cpp:1732
 #, kde-format
@@ -3417,7 +3548,7 @@ msgstr ""
 #: rkward/rbackend/rkrbackend.cpp:1793
 #, kde-format
 msgid "Graphics version mismatch"
-msgstr ""
+msgstr "გრაფიკის ვერსია არ ემთხვევა"
 
 #: rkward/rbackend/rkrbackend.cpp:1793
 #, kde-format
@@ -3435,7 +3566,7 @@ msgstr "დიახ"
 #: rkward/rbackend/rkrinterface.cpp:86
 #, kde-format
 msgid "R Startup"
-msgstr ""
+msgstr "R-ის გაშვება"
 
 #: rkward/rbackend/rkrinterface.cpp:89
 #, kde-format
@@ -3483,22 +3614,22 @@ msgstr "ენის ცვლილება"
 #: rkward/rbackend/rkrinterface.cpp:597
 #, kde-format
 msgid "Changing the locale was canceled by user"
-msgstr ""
+msgstr "ლოკალის შეცვლა გაუქმდა მომხმარებლის მიერ"
 
 #: rkward/rbackend/rkrinterface.cpp:700
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
-msgstr ""
+msgstr "ჩაწერის დაწყების მცდელობა ჩაწერის მიმდინარეობისას. გამოტოვება."
 
 #: rkward/rbackend/rkrinterface.cpp:708
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
-msgstr ""
+msgstr "ფაილის ჩასაწერად გახსნა შეუძლებელია. ბრძანებების ჩაწერა არ მოხდება"
 
 #: rkward/rbackend/rkrinterface.cpp:719
 #, kde-format
 msgid "Error: unrecognized request '%1'"
-msgstr ""
+msgstr "შეცდომა: უცნობი მოთხოვნა '%1'"
 
 #: rkward/rbackend/rkrinterface.cpp:792
 #, kde-format
@@ -3512,17 +3643,17 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:792
 #, kde-format
 msgid "Require package '%1'"
-msgstr ""
+msgstr "საჭიროა პაკეტი '%1'"
 
 #: rkward/rbackend/rkrinterface.cpp:812
 #, kde-format
 msgid "Unrecognized call '%1'"
-msgstr ""
+msgstr "უცნობი გამოძახება '%1'"
 
 #: rkward/rbackend/rkrinterface.cpp:892
 #, kde-format
 msgid "R backend requests information"
-msgstr ""
+msgstr "R უკანაბოლოს ინფორმაცია სჭირდება"
 
 #: rkward/rbackend/rkrinterface.cpp:911
 #, kde-format
@@ -3538,12 +3669,12 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:912
 #, kde-format
 msgid "R engine has died"
-msgstr ""
+msgstr "R-ის ძრავა გარდაიცვალა"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:206
 #, kde-format
 msgid "Graphics Device Number %1"
-msgstr ""
+msgstr "გრაფიკის მოწყობილობის ნომერი %1"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:590
 #, kde-format
@@ -3572,7 +3703,7 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
 #, kde-format
 msgid "Ok to show next plot?"
-msgstr ""
+msgstr "ვაჩვენო შემდეგი ნახაზი?"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -3585,12 +3716,12 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
 msgid "Expected connection token %1, but read connection token %2"
-msgstr ""
+msgstr "მოველოდი მიერთების კოდს %1, მაგრამ წავიკითხე მიერთების კოდი %2"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
 msgid "Error while connection graphics backend"
-msgstr ""
+msgstr "გრაფიკულ უკანაბოლოსთან დაკავშირების შეცდომა"
 
 #: rkward/rkconsole.cpp:91
 #, kde-format
@@ -3602,7 +3733,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:91
 #, kde-format
 msgid "'katepart' component could not be found"
-msgstr ""
+msgstr "კომპონენტი 'katepart' აღმოჩენილი არაა"
 
 #: rkward/rkconsole.cpp:132 rkward/windows/rkcommandeditorwindow.cpp:408
 #, kde-format
@@ -3612,12 +3743,12 @@ msgstr "R -ის კონსოლი"
 #: rkward/rkconsole.cpp:140
 #, kde-format
 msgid "Scrollbar minimap"
-msgstr ""
+msgstr "ჩოჩიის მინირუკა"
 
 #: rkward/rkconsole.cpp:142
 #, kde-format
 msgid "Dynamic word wrap"
-msgstr ""
+msgstr "სიტყვების დინამიკური გადატანა"
 
 #: rkward/rkconsole.cpp:499
 #, kde-format
@@ -3627,27 +3758,27 @@ msgstr "სინტაქსური შეცდომა\n"
 #: rkward/rkconsole.cpp:709
 #, kde-format
 msgid "Select command history file to load"
-msgstr ""
+msgstr "აირჩიეთ ჩასატვირთი ბრძანებების ისტორიის ფაილი"
 
 #: rkward/rkconsole.cpp:709
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
-msgstr ""
+msgstr "R-ის ისტორიის ფაილები [*.Rhistory](*.Rhistory);;ყველა ფაილი [*](*)"
 
 #: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "Select filename to save command history"
-msgstr ""
+msgstr "არჩიეთ ფაილის სახელი ბრძანებების ისტორიის შესანახად"
 
 #: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
-msgstr ""
+msgstr "R-ის ისტორიის ფაილები [*.Rhistory] (*.Rhistory);;ყველა ფაილი [*] (*)"
 
 #: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Interrupt running command"
-msgstr ""
+msgstr "გაშვებული ბრძანების შეწყვეტა"
 
 #: rkward/rkconsole.cpp:874
 #, kde-format
@@ -3696,7 +3827,7 @@ msgstr "მიმატება"
 #: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "Reset, then submit"
-msgstr ""
+msgstr "ჩამოყრა, შემდეგ გადაცემა"
 
 #. i18n: ectx: Menu (file)
 #: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
@@ -3745,7 +3876,7 @@ msgstr ""
 #: rkward/rkward.cpp:304
 #, kde-format
 msgid "A note on external links"
-msgstr ""
+msgstr "შენიშვნა გარე ბმულებზე"
 
 #: rkward/rkward.cpp:316
 #, kde-format
@@ -3777,7 +3908,7 @@ msgstr ""
 #: rkward/rkward.cpp:354 rkward/rkward.cpp:358
 #, kde-format
 msgid "Failed to load some plugin maps"
-msgstr ""
+msgstr "ზოგიერთი დამატების რუკის ჩატვირთვა ჩავარდა"
 
 #: rkward/rkward.cpp:358
 #, kde-format
@@ -3799,7 +3930,7 @@ msgstr ""
 #: rkward/rkward.cpp:414
 #, kde-format
 msgid "Carbon Copy Settings"
-msgstr ""
+msgstr "კოპირების მორგება"
 
 #: rkward/rkward.cpp:432 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
 #, kde-format
@@ -3819,7 +3950,7 @@ msgstr "დარჩენილი დავალებები"
 #: rkward/rkward.cpp:457
 #, kde-format
 msgid "Debugger Frames"
-msgstr ""
+msgstr "გამართვის ჩარჩოები"
 
 #: rkward/rkward.cpp:462
 #, kde-format
@@ -3829,17 +3960,17 @@ msgstr "გამმართველის კონსოლი"
 #: rkward/rkward.cpp:466
 #, kde-format
 msgid "RKWard Debug Messages"
-msgstr ""
+msgstr "RKWard-ის გამართვის შეტყობინებები"
 
 #: rkward/rkward.cpp:478
 #, kde-format
 msgid "Dataset"
-msgstr ""
+msgstr "მონაცემების სეტი"
 
 #: rkward/rkward.cpp:480
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
-msgstr ""
+msgstr "შექმნის ახალ ცარიელ მონაცემების სეტს და გახსნს მას რედაქტირებისთვის"
 
 #: rkward/rkward.cpp:483
 #, kde-format
@@ -3854,7 +3985,7 @@ msgstr "გამოტანილი დოკუმენტი"
 #: rkward/rkward.cpp:489
 #, kde-format
 msgid "Creates and activates a new output document"
-msgstr ""
+msgstr "შექმნის და გაააქტიურებს ახალ გამოტანის დოკუმენტს"
 
 #: rkward/rkward.cpp:494
 #, kde-format
@@ -3864,7 +3995,7 @@ msgstr "R სკრიპტის ფაილის გახსნა..."
 #: rkward/rkward.cpp:498
 #, kde-format
 msgid "Open RKWard Output File..."
-msgstr ""
+msgstr "RKWard-ის გამოტანის ფაილის გახსნა..."
 
 #: rkward/rkward.cpp:502
 #, kde-format
@@ -3874,7 +4005,7 @@ msgstr "ნებისმიერი ფაილის გახსნა....
 #: rkward/rkward.cpp:507
 #, kde-format
 msgid "Open Recent R Script File"
-msgstr ""
+msgstr "უახლესი R-ის სკრიპტის ფაილის გახსნა"
 
 #: rkward/rkward.cpp:511
 #, kde-format
@@ -3890,17 +4021,17 @@ msgstr ""
 #: rkward/rkward.cpp:516
 #, kde-format
 msgid "Open Workspace..."
-msgstr ""
+msgstr "სამუშაო სივრცის გახსნა..."
 
 #: rkward/rkward.cpp:518
 #, kde-format
 msgid "Opens an existing document"
-msgstr ""
+msgstr "არსებული დოკუმენტის გახსნა"
 
 #: rkward/rkward.cpp:523
 #, kde-format
 msgid "Open Recent Workspace"
-msgstr ""
+msgstr "უახლესი სამუშაო სივრცის გახსნა"
 
 #: rkward/rkward.cpp:524
 #, kde-format
@@ -3910,22 +4041,22 @@ msgstr "ამჟამად გამოყენებული ფაილ�
 #: rkward/rkward.cpp:527
 #, kde-format
 msgid "Save Workspace"
-msgstr ""
+msgstr "სამუშაო სივრცის შენახვა"
 
 #: rkward/rkward.cpp:529
 #, kde-format
 msgid "Saves the actual document"
-msgstr ""
+msgstr "მიმდინარე დოკუმენტის შენახვა"
 
 #: rkward/rkward.cpp:533
 #, kde-format
 msgid "Save Workspace As"
-msgstr ""
+msgstr "სამუშაო სივრცის შენახვა, როგორც"
 
 #: rkward/rkward.cpp:534
 #, kde-format
 msgid "Saves the actual document as..."
-msgstr ""
+msgstr "მიმდინარე დოკუმენტის შენახვა, როგორც..."
 
 #: rkward/rkward.cpp:537
 #, kde-format
@@ -3935,27 +4066,27 @@ msgstr "აპლიკაციიდან გასვლა"
 #: rkward/rkward.cpp:540
 #, kde-format
 msgid "Interrupt all commands"
-msgstr ""
+msgstr "ყველა ბრძანების შეწყვეტა"
 
 #: rkward/rkward.cpp:546
 #, kde-format
 msgid "CC commands to output..."
-msgstr ""
+msgstr "ბრძანებების კოპირება გამოტანაში..."
 
 #: rkward/rkward.cpp:550 rkward/rkward.cpp:554
 #, kde-format
 msgid "Manage R packages and plugins..."
-msgstr ""
+msgstr "R-ის პაკეტებისა და დამატებების მართვა..."
 
 #: rkward/rkward.cpp:561
 #, kde-format
 msgid "Close All Data"
-msgstr ""
+msgstr "ყველა მონაცემის დახურვა"
 
 #: rkward/rkward.cpp:562
 #, kde-format
 msgid "Closes all open data editors"
-msgstr ""
+msgstr "დახურავს ყველა ღია მონაცემების რედაქტორს"
 
 #: rkward/rkward.cpp:567
 #, kde-format
@@ -3971,12 +4102,12 @@ msgstr "მოძრობა"
 #: rkward/rkward.cpp:575
 #, kde-format
 msgid "Check installation"
-msgstr ""
+msgstr "დაყენებული ფაილების შემოწმება"
 
 #: rkward/rkward.cpp:579
 #, kde-format
 msgid "[No actions available for current view]"
-msgstr ""
+msgstr "[მიმდინარე ხედისთვის ქმედებები ხელმისაწვდომი არაა]"
 
 #: rkward/rkward.cpp:586
 #, kde-format
@@ -3996,7 +4127,7 @@ msgstr "შენახვა..."
 #: rkward/rkward.cpp:629
 #, kde-format
 msgid "Restart R Backend"
-msgstr ""
+msgstr "R უკანაბოლოს გადატვირთვა"
 
 #: rkward/rkward.cpp:631
 #, kde-format
@@ -4023,12 +4154,12 @@ msgstr ""
 #: rkward/rkward.cpp:637
 #, kde-format
 msgid "R commands still pending"
-msgstr ""
+msgstr "R-ის ბრძანებები ჯერ კიდევ რიგშია"
 
 #: rkward/rkward.cpp:637
 #, kde-format
 msgid "Force restart now"
-msgstr ""
+msgstr "ძალით გადატვირთვა ახლავე"
 
 #: rkward/rkward.cpp:637
 #, kde-format
@@ -4038,7 +4169,7 @@ msgstr "თავიდან შემოწმება"
 #: rkward/rkward.cpp:637
 #, kde-format
 msgid "Cancel restarting"
-msgstr ""
+msgstr "გადატვირთვის გაუქმება"
 
 #: rkward/rkward.cpp:775
 #, kde-format
@@ -4048,7 +4179,7 @@ msgstr ""
 #: rkward/rkward.cpp:793 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
 msgid "Configure R backend"
-msgstr ""
+msgstr "R-ის უკანაბოლოს მორგება"
 
 #: rkward/rkward.cpp:847
 #, kde-format
@@ -4058,42 +4189,42 @@ msgstr "გასვლა..."
 #: rkward/rkward.cpp:865
 #, kde-format
 msgid "New dataset"
-msgstr ""
+msgstr "ახალი მონაცემების სეტი"
 
 #: rkward/rkward.cpp:865
 #, kde-format
 msgid "Enter name for the new dataset"
-msgstr ""
+msgstr "შეიყვანეთ ახალი მონაცემების სეტის სახელი"
 
 #: rkward/rkward.cpp:877
 #, kde-format
 msgid "Opening workspace..."
-msgstr ""
+msgstr "სამუშაო სივრცის გახსნა..."
 
 #: rkward/rkward.cpp:880
 #, kde-format
 msgid "Select workspace to open..."
-msgstr ""
+msgstr "აირჩიეთ გასახსნელი სამუშაო სივრცეები..."
 
 #: rkward/rkward.cpp:960
 #, kde-format
 msgid "The <b>R</b> engine is busy."
-msgstr ""
+msgstr "<b>R</b>-ის ძრავა დაკავებულია."
 
 #: rkward/rkward.cpp:964
 #, kde-format
 msgid "The <b>R</b> engine is idle."
-msgstr ""
+msgstr "<b>R</b>-ის ძრავა უქმედაა."
 
 #: rkward/rkward.cpp:968
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
-msgstr ""
+msgstr "მიმდინარეობს <b>R</b>-ის ძრავის სამუშაოდ მომზადება."
 
 #: rkward/rkward.cpp:971
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
-msgstr ""
+msgstr "<b>R</b>-ის ძრავა ხელმიუწვდომელია."
 
 #: rkward/rkward.cpp:997
 #, kde-format
@@ -4108,17 +4239,17 @@ msgstr "გახსნის რეჟიმი:"
 #: rkward/rkward.cpp:1003
 #, kde-format
 msgid "Guess file type, automatically"
-msgstr ""
+msgstr "ფაილის ტიპის ავტომატური ამოცნობა"
 
 #: rkward/rkward.cpp:1003
 #, kde-format
 msgid "Open as text / script file"
-msgstr ""
+msgstr "ტექსტური / სკრიპტის ფაილის გახსნა"
 
 #: rkward/rkward.cpp:1003
 #, kde-format
 msgid "Open as text file and force R highlighting"
-msgstr ""
+msgstr "ტექსტური ფაილის სახით გახსნა და R-ის ტექსტის გამოკვეთა"
 
 #: rkward/rkward.cpp:1040
 #, kde-format
@@ -4128,17 +4259,17 @@ msgstr ""
 #: rkward/rkward.cpp:1040
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
-msgstr ""
+msgstr "RKWard-ის გამოტანის ფაილები [*.rko](*.rko);;ყველა ფაილი [*](*)"
 
 #: rkward/rkward.cpp:1049
 #, kde-format
 msgid "Open script file(s)"
-msgstr ""
+msgstr "სკრიპტის ფაილ(ებ)-ის გახსნა"
 
 #: rkward/rkward.cpp:1063
 #, kde-format
 msgid "[Unnamed Workspace]"
-msgstr ""
+msgstr "[უსახელო სამუშაო სივრცე]"
 
 #. i18n: ectx: Menu (new_data)
 #: rkward/rkwardui.rc:13
@@ -4219,17 +4350,17 @@ msgstr "str (x)"
 #: rkward/robjectviewer.cpp:79
 #, kde-format
 msgid "<b>Object was deleted</b>"
-msgstr ""
+msgstr "<b>ობიექტი წაიშალა</b>"
 
 #: rkward/robjectviewer.cpp:122
 #, kde-format
 msgid "Object Viewer: %1"
-msgstr ""
+msgstr "ობიექტის დათვალიერება: %1"
 
 #: rkward/robjectviewer.cpp:126
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
-msgstr ""
+msgstr "ობიექტი შეიცვალა. შეიძლება, საჭიროა დააწკაპუნოთ 'განახლებაზე'"
 
 #: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:110
 #, kde-format
@@ -4239,7 +4370,7 @@ msgstr "განახლება"
 #: rkward/robjectviewer.cpp:211
 #, kde-format
 msgid "Fetching information"
-msgstr ""
+msgstr "ინფორმაციის გამოთხოვა"
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:139
 #, kde-format
@@ -4247,6 +4378,8 @@ msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
 msgstr ""
+"QtScript-backend-მა გადმოგვცა შეცდომა:\n"
+"%1"
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:139
 #, kde-format
@@ -4260,6 +4393,9 @@ msgid ""
 "Backtrace:\n"
 "%4"
 msgstr ""
+"სკრიპტის შეცდომა ფაილში %1, ხაზზე %2: %3\n"
+"უკუტრეისი:\n"
+"%4"
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:275
 #, kde-format
@@ -4267,22 +4403,24 @@ msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
 msgstr ""
+"ფაილი \"%1\" (რომელიც სჭირდება \"%2\"-ს) აღმოჩენილი არაა. შეამოწმეთ თქვენი "
+"პროგრამის ფაილები."
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:54
 #: rkward/scriptbackends/rkcomponentscripting.cpp:56
 #, kde-format
 msgid "Error opening script file %1"
-msgstr ""
+msgstr "სკრიპტის ფაილის (%1) გახსნის შეცდომა"
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
 msgid "inlined code"
-msgstr ""
+msgstr "ხაზშივე ჩასმული კოდი"
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
 msgid "Script Error at '%1' line %2: %3\n"
-msgstr ""
+msgstr "სკრიპტის შეცდომა ფაილში '%1' ხაზზე %2: %3\n"
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:88
 #, kde-format
@@ -4294,17 +4432,17 @@ msgstr ""
 #: rkward/scriptbackends/scriptbackend.cpp:83
 #, kde-format
 msgid "## Prepare\n"
-msgstr ""
+msgstr "## მომზადება\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:86
 #, kde-format
 msgid "## Compute\n"
-msgstr ""
+msgstr "## გამოთვლა\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:89
 #, kde-format
 msgid "## Print result\n"
-msgstr ""
+msgstr "## შედეგის დაბეჭდვა\n"
 
 #: rkward/settings/rksettings.cpp:93
 #, kde-format
@@ -4339,17 +4477,17 @@ msgstr "დამატებები"
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:44
 #, kde-format
 msgid "Code Completion / Code Hints"
-msgstr ""
+msgstr "კოდის დასრულება / კოდის მინიშნებები"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
 msgid "Function call tip"
-msgstr ""
+msgstr "მინიშნება ფუნქციის გამოძახების შესახებ"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
 msgid "Function argument completion"
-msgstr ""
+msgstr "ფუნქციის არგუმენტის დასრულება"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
@@ -4369,22 +4507,22 @@ msgstr "სიტყვების ავტომატური დასრ�
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
 msgid "Mouseover object info"
-msgstr ""
+msgstr "თაგუნას გადატარებისას ინფორმაციის ჩვენება"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:51
 #, kde-format
 msgid "Start code completions/hints, automatically"
-msgstr ""
+msgstr "კოდის დასრულებების/მინიშნებების ავტომატური დაწყება"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:59
 #, kde-format
 msgid "Minimum number of characters"
-msgstr ""
+msgstr "მინიმალური სიმბოლოების რაოდენობა"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:62
 #, kde-format
 msgid "Timeout (milliseconds)"
-msgstr ""
+msgstr "მოლოდინის ვადა (მილიწამი)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:64
 #, kde-format
@@ -4403,17 +4541,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:71
 #, kde-format
 msgid "Tab key invokes code completion"
-msgstr ""
+msgstr "ღილაკი Tab კოდის დასრულებას გამოიწვევს"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
 #, kde-format
 msgid "Up/down cursor keys"
-msgstr ""
+msgstr "კურსორი ზემოთ/ქვემოთ ღილაკები"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
 #, kde-format
 msgid "Alt+Up/down cursor keys"
-msgstr ""
+msgstr "Alt + კურსორი ზემოთ/ქვემოთ ღილაკები"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:76
 #, kde-format
@@ -4427,17 +4565,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:77
 #, kde-format
 msgid "Keyboard navigation of completion items"
-msgstr ""
+msgstr "კლავიატურით ნავიგაციის ან დასრულების ელემენტები"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:81
 #, kde-format
 msgid "'$'-operator (list$member)"
-msgstr ""
+msgstr "'$'-ოპერატორი (სია$წევრი)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:81
 #, kde-format
 msgid "'[['-operator (list[[\"member\"]])"
-msgstr ""
+msgstr "'[['-ოპერატორი (სია[[\"წევრი\"]])"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:83
 #, kde-format
@@ -4445,17 +4583,17 @@ msgctxt ""
 "Note: list() and data.frame() are programming terms in R, and should not be "
 "translated, here"
 msgid "Operator for access to members of list() and data.frame() objects"
-msgstr ""
+msgstr "ოპერატორი list() და data.frames() ობიექტების წევრებთან წვდომისთვის"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:86
 #, kde-format
 msgid "'@'-operator (object@member)"
-msgstr ""
+msgstr "'@'-ოპერატორი (ობიექტი@წევრი)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:86
 #, kde-format
 msgid "'slot()'-function (slot(object, member))"
-msgstr ""
+msgstr "'slot()'-ფუნქცია (სლოტი(ობიექტი, წევრი))"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:88
 #, kde-format
@@ -4463,17 +4601,17 @@ msgctxt ""
 "Note: S4-slot() is a programming term in R, and should not be translated, "
 "here"
 msgid "Operator for access to S4-slot()s"
-msgstr ""
+msgstr "ოპერატორი S4-slot()-ებთან წვდომისთვის"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
 msgid "For masked objects, only"
-msgstr ""
+msgstr "მხოლოდ, შენიღბული ობიექტებისთვის"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
 msgid "For objects outside of <i>.GlobalEnv</i>, only"
-msgstr ""
+msgstr "მხოლოდ, <i>.GlobalEnv</i>-ის გარეთ არსებული ობიექტებისთვის"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
@@ -4483,12 +4621,13 @@ msgstr "ყოველთვის"
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:93
 #, kde-format
 msgid "Include environment for objects on the search path:"
-msgstr ""
+msgstr "გარემოს ჩასმა ობიექტებისთვის საძებნ ბილიკზე:"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:96
 #, kde-format
 msgid "Offer completions in all file types (not just R scripts)"
 msgstr ""
+"დასრულების შეთავაზება ყველა ფაილის ტიპისთვის (არა მხოლოდ R-ის სკრიპტებში)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:98
 #, kde-format
@@ -4501,21 +4640,23 @@ msgstr ""
 #, kde-format
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
 msgstr ""
+"პარამეტრები, რომლებიც მონიშნულია ვარსკვლავით (*) ძალაში RKWard-ის "
+"გადატვირთვამდე არ შევა"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:127
 #, kde-format
 msgid "Autosaves"
-msgstr ""
+msgstr "ავტოშენახვები"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:133
 #, kde-format
 msgid "Autosave interval (minutes)"
-msgstr ""
+msgstr "ავტომატური შენახვის ინტერვალი (წუთები)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:135
 #, kde-format
 msgid "Keep autosave file after manual save"
-msgstr ""
+msgstr "ავტოშენახვის ფალის შენარჩუნება ხელით შენახვის შემდეგ"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:143
 #, kde-format
@@ -4529,7 +4670,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:145
 #, kde-format
 msgid "R script file filters (separated by spaces)"
-msgstr ""
+msgstr "R-ის სკრიპტის ფაილის ფილტრები (გამოყოფილი ჰარეებით)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:157
 #, kde-format
@@ -4539,12 +4680,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:45
 #, kde-format
 msgid "Load/Save command history"
-msgstr ""
+msgstr "ბრძანებების ისტორიის ჩატვირთვა/შენახვა"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:47
 #, kde-format
 msgid "Maximum length of command history (0 for no limit)"
-msgstr ""
+msgstr "ბრძანებების ისტორიის მაქსიმალური სიგრძე (0 შეუზღუდავი)"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:51
 #, kde-format
@@ -4556,12 +4697,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:57
 #, kde-format
 msgid "Run commands from script editor through console"
-msgstr ""
+msgstr "სკრიპტის რედაქტორიდან ბრძანებების კონსოლით გაშვება"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:60
 #, kde-format
 msgid "Also add those commands to console history"
-msgstr ""
+msgstr "ამ ბრძანებების კონსოლის ისტორიაშიც ჩამატება"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
@@ -4571,17 +4712,17 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
 msgid "Add only if single line"
-msgstr ""
+msgstr "დაამატე, მხოლოდ, თუ ერთი ხაზია"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
 msgid "Add all commands"
-msgstr ""
+msgstr "ყველა ბრძანდების დამატება"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:70
 #, kde-format
 msgid "Command history is context sensitive by default"
-msgstr ""
+msgstr "ბრძანებების ისტორია ნაგულისხმევად კონტექსტის მიხედვითაა"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:134
 #, kde-format
@@ -4599,12 +4740,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduledebug.cpp:37
 #, kde-format
 msgid "Debug level"
-msgstr ""
+msgstr "გამართვის დონე"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:47
 #, kde-format
 msgid "Debug flags"
-msgstr ""
+msgstr "გამართვის ალმები"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:73
 #, kde-format
@@ -4614,7 +4755,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduledebug.cpp:83
 #, kde-format
 msgid "<i>Note:</i> Debug output is written to %1"
-msgstr ""
+msgstr "<i>შენიშვნა:</i> გამართვის ინფორმაცია ჩაიწერა ფაილში %1"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:100
 #, kde-format
@@ -4631,7 +4772,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:67
 #, kde-format
 msgid "Startup behavior"
-msgstr ""
+msgstr "გაშვების ქცევა"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:69
 #, kde-format
@@ -4642,38 +4783,38 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
 msgid "Show RKWard Help on Startup"
-msgstr ""
+msgstr "გაშვებისას RKWard-ის დახმარების ჩვენება"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:72
 #: rkward/settings/rksettingsmodulegeneral.cpp:78
 #, kde-format
 msgid "Initial working directory"
-msgstr ""
+msgstr "საწყისი სამუშაო საქაღალდე"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
 msgid "Do not change current directory on startup"
-msgstr ""
+msgstr "გაშვებისას მიმდინარე საქაღალდე არ შეიცვლება"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
-msgstr ""
+msgstr "RWkard-ის ფაილების საქაღალდე (როგორც ზემოთაა მითითებული)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
 msgid "User home directory"
-msgstr ""
+msgstr "მომხმარებლის საწყისის საქაღალდე"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
 msgid "Last used directory"
-msgstr ""
+msgstr "ბოლოს გამოყენებული საქაღალდე"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
 msgid "The following directory (please specify):"
-msgstr ""
+msgstr "შემდეგი საქაღალდე (გთხოვთ, მიუთითოთ):"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:83
 #, kde-format
@@ -4718,7 +4859,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Do not save/restore workplace layout"
-msgstr ""
+msgstr "სამუშაო სივრცის განლაგების შენახვა/აღდგენა არ მოხდება"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:118
 #, kde-format
@@ -4735,7 +4876,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "MDI window focus behavior"
-msgstr ""
+msgstr "MDI ფანჯრის ფოკუსის ქცევა"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
@@ -4755,22 +4896,22 @@ msgstr "ძირითადი"
 #: rkward/settings/rksettingsmodulegraphics.cpp:50
 #, kde-format
 msgid "Default graphics device"
-msgstr ""
+msgstr "ნაგულისხმები გრაფიკის გაფართოება"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:53
 #, kde-format
 msgid "RKWard native device"
-msgstr ""
+msgstr "RKWard-ის საკუთარი მოწყობილობა"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:56
 #, kde-format
 msgid "Platform default device"
-msgstr ""
+msgstr "პლატფორმის ნაგულისხმევი მოწყობილობა"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:59
 #, kde-format
 msgid "Other device:"
-msgstr ""
+msgstr "სხვა მოწყობილობა:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:68
 #, kde-format
@@ -4787,22 +4928,22 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:76
 #, kde-format
 msgid "Integration of R standard devices"
-msgstr ""
+msgstr "R-ის სტანდარტული მოწყობილობების ინტეგრაცია"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:79
 #, kde-format
 msgid "Replace with RKWard device"
-msgstr ""
+msgstr "ჩანაცვლება RKWard-ის მოწყობილობით"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:82
 #, kde-format
 msgid "Embed original device"
-msgstr ""
+msgstr "ორიგინალური მოწყობილობის ჩაშენება"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:88
 #, kde-format
 msgid "No device integration"
-msgstr ""
+msgstr "მოწყობილობის ჩაშენების გარეშე"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:93
 #, kde-format
@@ -4831,37 +4972,39 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:107
 #, kde-format
 msgid "Default width (inches):"
-msgstr ""
+msgstr "ნაგულისხმევი სიგანე (დუიმი):"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:110
 #, kde-format
 msgid "Default height (inches)"
-msgstr ""
+msgstr "ნაგულისხმევი სიმაღლე (დუიმი)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:114
 #, kde-format
 msgid "Use KDE printer dialog for printing devices (if available)"
 msgstr ""
+"საბეჭდი მოწყობილობებისთვის KDE-ის პრინტერის დიალოგის ჩვენება (თუ "
+"ხელმისაწვდომა)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:116
 #, kde-format
 msgid "Screen device history"
-msgstr ""
+msgstr "გამოტანის მოწყობილობის ჟურნალი"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:123
 #, kde-format
 msgid "Maximum number of recorded plots:"
-msgstr ""
+msgstr "ჩაწერილი ნახაზების მაქსიმალური რაოდენობა:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:127
 #, kde-format
 msgid "Maximum size of a single recorded plot (in KB):"
-msgstr ""
+msgstr "ერთი ჩაწერილი ნახაზის მაქსიმალური ზომა (კბ-ში)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:155
 #, kde-format
 msgid "Onscreen Graphics"
-msgstr ""
+msgstr "გრაფიკა ეკრანზე"
 
 #: rkward/settings/rksettingsmodulekateplugins.cpp:36
 #, kde-format
@@ -4877,17 +5020,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulekateplugins.cpp:96
 #, kde-format
 msgid "Kate Plugins"
-msgstr ""
+msgstr "Kate-ის დამატებები"
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:40
 #, kde-format
 msgid "Never fetch the structure of these packages:"
-msgstr ""
+msgstr "არასდროს გამოითხოვო სტრუქტურა ამ პაკეტებისთვის:"
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:72
 #, kde-format
 msgid "Add exclusion"
-msgstr ""
+msgstr "გამორიცხვის დამატება"
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:72
 #, kde-format
@@ -4897,42 +5040,42 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:41
 #, kde-format
 msgid "Carbon copy commands to output"
-msgstr ""
+msgstr "ბრძანებების ზუსტი ასლი გამოტანაზე"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:47
 #, kde-format
 msgid "Commands entered in the console"
-msgstr ""
+msgstr "კონსოლში შეყვანილი ბრძანებები"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:48
 #, kde-format
 msgid "Commands run via the 'Run' menu"
-msgstr ""
+msgstr "'გაშვების' მენიუდან გაშვებული ბრძანებები"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:49
 #, kde-format
 msgid "Commands originating from dialogs and plugins"
-msgstr ""
+msgstr "დიალოგებიდან და დამატებებიდან გაშვებული ბრძანებები"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:50
 #, kde-format
 msgid "Also carbon copy the command output"
-msgstr ""
+msgstr "ასევე დაკოპირება ბრძანების გამოტანაც"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:119
 #, kde-format
 msgid "Output Window options"
-msgstr ""
+msgstr "გამოტანის ფანჯრის მორგება"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:121
 #, kde-format
 msgid "show window on new output"
-msgstr ""
+msgstr "ფანჯრის ჩვენება ახალი გამოტანისას"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:123
 #, kde-format
 msgid "raise window on new output"
-msgstr ""
+msgstr "ფანჯრის ამოწევა ახალი გამოტანისას"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:130
 #, kde-format
@@ -4993,7 +5136,7 @@ msgstr "JPG"
 #: rkward/settings/rksettingsmoduleoutput.cpp:151
 #, kde-format
 msgid "JPG quality"
-msgstr ""
+msgstr "JPG ფაილები"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:158
 #, kde-format
@@ -5016,28 +5159,28 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:60
 #, kde-format
 msgid "Always prefer dialogs"
-msgstr ""
+msgstr "ყოველთვის მირჩევნია დიალოგები"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:63
 #, kde-format
 msgid "Prefer recommended interface"
-msgstr ""
+msgstr "მირჩევნია რეკომენდებული ინტერფესი"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:66
 #, kde-format
 msgid "Always prefer wizards"
-msgstr ""
+msgstr "ყოველთვის მირჩევნია ოსტატები"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:76
 #, kde-format
 msgid "Configure Active Plugins"
-msgstr ""
+msgstr "აქტიური დამატებების მორგება"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:94
 #: rkward/windows/rktoplevelwindowgui.cpp:153
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "RKWard-ის დამატებები"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:471
 #: rkward/windows/rkhtmlwindow.cpp:1257
@@ -5058,7 +5201,7 @@ msgstr "ჩატვირთულია"
 #: rkward/settings/rksettingsmoduleplugins.cpp:499
 #, kde-format
 msgid "Quirky"
-msgstr ""
+msgstr "საკვირველი"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:523
 #, kde-format
@@ -5073,7 +5216,7 @@ msgstr "ID"
 #: rkward/settings/rksettingsmoduleplugins.cpp:552
 #, kde-format
 msgid "Select .pluginmap-file"
-msgstr ""
+msgstr "აირჩიეთ ფაილი .pluginmap"
 
 #: rkward/settings/rksettingsmoduler.cpp:68
 #, kde-format
@@ -5095,47 +5238,47 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:77
 #, kde-format
 msgid "Print warnings later (default)"
-msgstr ""
+msgstr "გაფრთხილებების მოგვიანებით გამოტანა (ნაგულისხმევი)"
 
 #: rkward/settings/rksettingsmoduler.cpp:77
 #, kde-format
 msgid "Print warnings immediately"
-msgstr ""
+msgstr "გაფრთხილებების დაუყოვნებლივი გამოტანა"
 
 #: rkward/settings/rksettingsmoduler.cpp:77
 #, kde-format
 msgid "Convert warnings to errors"
-msgstr ""
+msgstr "გაფრთხილებების გარდაქმნა შეცდომებად"
 
 #: rkward/settings/rksettingsmoduler.cpp:82
 #, kde-format
 msgid "Decimal character (only for printing)"
-msgstr ""
+msgstr "წილადის სიმბოლო (მხოლოდ, დასაბეჭდად)"
 
 #: rkward/settings/rksettingsmoduler.cpp:89
 #, kde-format
 msgid "Output width (characters)"
-msgstr ""
+msgstr "გამოტანის სიგანე (სიმბოლოებში)"
 
 #: rkward/settings/rksettingsmoduler.cpp:93
 #, kde-format
 msgid "Maximum number of elements shown in print"
-msgstr ""
+msgstr "ბეჭდვისას ნაჩვენები ელემენტების მაქსიმალური რაოდენობა"
 
 #: rkward/settings/rksettingsmoduler.cpp:97
 #, kde-format
 msgid "Maximum length of warnings/errors to print"
-msgstr ""
+msgstr "დასაბეჭდი გაფრთხილებების/შეცდომების მაქსიმალური სიგრძე"
 
 #: rkward/settings/rksettingsmoduler.cpp:101
 #, kde-format
 msgid "Keep comments in functions"
-msgstr ""
+msgstr "ფუნქციის კომენტარების შენარჩუნება"
 
 #: rkward/settings/rksettingsmoduler.cpp:102
 #, kde-format
 msgid "TRUE (default)"
-msgstr ""
+msgstr "ჭეშმარიტი (ნაგულისხმევი)"
 
 #: rkward/settings/rksettingsmoduler.cpp:102
 #, kde-format
@@ -5145,7 +5288,7 @@ msgstr "FALSE"
 #: rkward/settings/rksettingsmoduler.cpp:106
 #, kde-format
 msgid "Keep comments in packages"
-msgstr ""
+msgstr "პაკეტების კომენტარების შენარჩუნება"
 
 #: rkward/settings/rksettingsmoduler.cpp:107
 #: rkward/settings/rksettingsmoduler.cpp:120
@@ -5157,52 +5300,52 @@ msgstr "TRUE"
 #: rkward/settings/rksettingsmoduler.cpp:120
 #, kde-format
 msgid "FALSE (default)"
-msgstr ""
+msgstr "ცრუ (ნაგულისხმევი)"
 
 #: rkward/settings/rksettingsmoduler.cpp:111
 #, kde-format
 msgid "Maximum level of nested expressions"
-msgstr ""
+msgstr "გამოსახულებების ერთმანეთში ჩალაგების მაქსიმალური დონე"
 
 #: rkward/settings/rksettingsmoduler.cpp:115
 #, kde-format
 msgid "Default decimal precision in print ()"
-msgstr ""
+msgstr "ნაგულისხმევი წილადის სიზუსტე ბეჭდვისას ()"
 
 #: rkward/settings/rksettingsmoduler.cpp:119
 #, kde-format
 msgid "Check vector bounds (warn)"
-msgstr ""
+msgstr "შეამოწმეთ ვექტორის საზღვრები (გაფრთხ)"
 
 #: rkward/settings/rksettingsmoduler.cpp:123
 #, kde-format
 msgid "Editor command"
-msgstr ""
+msgstr "რედაქტორის ბრძანება"
 
 #: rkward/settings/rksettingsmoduler.cpp:134
 #, kde-format
 msgid "Pager command"
-msgstr ""
+msgstr "პეიჯერის ბრძანება"
 
 #: rkward/settings/rksettingsmoduler.cpp:145
 #, kde-format
 msgid "Further (option) commands to run in each session"
-msgstr ""
+msgstr "დამატებითი (არაავალდებულო) ბრძანებები, რომლებიც ყველა სესიაში გაეშვება"
 
 #: rkward/settings/rksettingsmoduler.cpp:155
 #, kde-format
 msgid "Addition search paths for utilities used by R"
-msgstr ""
+msgstr "დამატებითი ძებნის ბილიკები R-ის მიერ გამოყენებული პროგრამებისთვის"
 
 #: rkward/settings/rksettingsmoduler.cpp:173
 #, kde-format
 msgid "R-Backend"
-msgstr ""
+msgstr "R-უკანაბოლო"
 
 #: rkward/settings/rksettingsmoduler.cpp:208
 #, kde-format
 msgid "Add System Path Directory"
-msgstr ""
+msgstr "სისტემური ბილიკის საქაღალდის დამატება"
 
 #: rkward/settings/rksettingsmoduler.cpp:210
 #, kde-format
@@ -5210,6 +5353,8 @@ msgid ""
 "Specify or select directory to add to the system file path of the running R "
 "session"
 msgstr ""
+"მიუთითეთ ან აირჩიეთ საქაღალდე გაშვებული R-ის სესიის სისტემური ფაილის ბილიკში "
+"დასამატებლად"
 
 #: rkward/settings/rksettingsmoduler.cpp:217
 #, kde-format
@@ -5221,6 +5366,8 @@ msgstr "დამატება"
 #, kde-format
 msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
+"CRAN-ის გადმოწერის სარკე (დატოვეთ ცარიელი, თუ გნებავთ, თითოეული სესიისთვის "
+"ცალ-ცალკე გკითხოთ):"
 
 #: rkward/settings/rksettingsmoduler.cpp:327
 #, kde-format
@@ -5235,17 +5382,17 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:337
 #, kde-format
 msgid "Archive downloaded packages"
-msgstr ""
+msgstr "გადმოწერილი პაკეტების დაარქივება"
 
 #: rkward/settings/rksettingsmoduler.cpp:339
 #, kde-format
 msgid "Build packages from source"
-msgstr ""
+msgstr "პაკეტების წყაროდან აგება"
 
 #: rkward/settings/rksettingsmoduler.cpp:341
 #, kde-format
 msgid "Build packages from source (not configurable on this platform)"
-msgstr ""
+msgstr "პაკეტების წყაროდან აგება (ამ პლატფორმაზე მორგებადი არაა)"
 
 #: rkward/settings/rksettingsmoduler.cpp:345
 #, kde-format
@@ -5259,7 +5406,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:350
 #, kde-format
 msgid "Install from git"
-msgstr ""
+msgstr "დაყენება git-დან"
 
 #: rkward/settings/rksettingsmoduler.cpp:351
 #, kde-format
@@ -5273,6 +5420,7 @@ msgstr ""
 #, kde-format
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr ""
+"R-ის ბიბლიოთეკის მდებარეობები (სადაა დაყენებული ბიბლიოთეკები, ლოკალურად)"
 
 #: rkward/settings/rksettingsmoduler.cpp:364
 #, kde-format
@@ -5284,7 +5432,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:415
 #, kde-format
 msgid "Add R Library Directory"
-msgstr ""
+msgstr "R-ის ბიბლიოთეკის საქაღალდის დამატება"
 
 #: rkward/settings/rksettingsmoduler.cpp:417
 #, kde-format
@@ -5305,27 +5453,27 @@ msgstr "დამატება"
 #: rkward/settings/rksettingsmoduler.cpp:440
 #, kde-format
 msgid "Add repository"
-msgstr ""
+msgstr "რეპოზიტორიის დამატება"
 
 #: rkward/settings/rksettingsmoduler.cpp:440
 #, kde-format
 msgid "Add URL of new repository"
-msgstr ""
+msgstr "ახალი რეპოზიტორიის URL-ის დამატება"
 
 #: rkward/settings/rksettingsmoduler.cpp:446
 #, kde-format
 msgid "R-Packages"
-msgstr ""
+msgstr "R-ის პაკეტები"
 
 #: rkward/settings/rksettingsmoduler.cpp:456
 #, kde-format
 msgid "Select CRAN mirror"
-msgstr ""
+msgstr "აირჩიეთ CPAN-ის სარკე"
 
 #: rkward/settings/rksettingsmoduler.cpp:583
 #, kde-format
 msgid "Unversioned library location"
-msgstr ""
+msgstr "უვერსიო ბიბლიოთეკის მდებარეობა"
 
 #: rkward/settings/rksettingsmoduler.cpp:583
 #, kde-format
@@ -5375,7 +5523,7 @@ msgstr "დატოვება"
 #: rkward/settings/rksettingsmoduler.cpp:601
 #, kde-format
 msgid "Keep this location (do not change anything)"
-msgstr ""
+msgstr "ამ მდებარეობის შენარჩუნება (არაფერი შეცვალო)"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:116
 #, kde-format
@@ -5387,12 +5535,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulewatch.cpp:123
 #, kde-format
 msgid "always show command"
-msgstr ""
+msgstr "ყოველთვის მაჩვენე ბრძანება"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:125
 #, kde-format
 msgid "always show result"
-msgstr ""
+msgstr "ყოველთვის მაჩვენე შედეგი"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:127
 #, kde-format
@@ -5402,17 +5550,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulewatch.cpp:129
 #, kde-format
 msgid "show/raise window"
-msgstr ""
+msgstr "ფანჯრის ჩვენება/აწევა"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
 msgid "User commands"
-msgstr ""
+msgstr "მომხმარებლის ბრძანებები"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:133
 #, kde-format
 msgid "Plugin generated commands"
-msgstr ""
+msgstr "დამატების მიერ გენერირებული ბრძანებები"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:134
 #, kde-format
@@ -5422,7 +5570,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulewatch.cpp:135
 #, kde-format
 msgid "Synchronization commands"
-msgstr ""
+msgstr "სინქრონიზაციის ბრძანებები"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:139
 #, kde-format
@@ -5435,12 +5583,12 @@ msgstr ""
 #: rkward/windows/rkcommandlog.cpp:44
 #, kde-format
 msgid "Command log"
-msgstr ""
+msgstr "ბრძანების ჟურნალი"
 
 #: rkward/windows/detachedwindowcontainer.cpp:36
 #, kde-format
 msgid "Attach to main window"
-msgstr ""
+msgstr "მიბმა მთავარ ფანჯარაზე"
 
 #. i18n: ectx: Menu (device)
 #: rkward/windows/detachedwindowcontainer.rc:13
@@ -5468,13 +5616,13 @@ msgstr "&ფანჯარა"
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
-msgstr ""
+msgstr "მიმდინარე სკრიპტში"
 
 #: rkward/windows/katepluginintegration.cpp:608
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
-msgstr ""
+msgstr "ღია სკრიპტებში"
 
 #: rkward/windows/rcontrolwindow.cpp:45 rkward/windows/rcontrolwindow.cpp:131
 #, kde-format
@@ -5484,7 +5632,7 @@ msgstr "გაშვების შეჩერება"
 #: rkward/windows/rcontrolwindow.cpp:50
 #, kde-format
 msgid "Cancel selected commands"
-msgstr ""
+msgstr "მონიშნული ბრძანებების შეწყვეტა"
 
 #: rkward/windows/rcontrolwindow.cpp:122
 #, kde-format
@@ -5497,23 +5645,23 @@ msgstr ""
 #: rkward/windows/rcontrolwindow.cpp:122
 #, kde-format
 msgid "Some commands not cancelled"
-msgstr ""
+msgstr "ზოგიერთი ბრძანება არ შეწყვეტილა"
 
 #: rkward/windows/rcontrolwindow.cpp:135
 #, kde-format
 msgid "Resume execution"
-msgstr ""
+msgstr "შესრულების გაგრძელება"
 
 #: rkward/windows/rkcallstackviewer.cpp:89
 #, kde-format
 msgid "<b>Active calls</b>"
-msgstr ""
+msgstr "<b>აქტიური გამოძახებები</b>"
 
 #: rkward/windows/rkcallstackviewer.cpp:117
 #: rkward/windows/rkdebugconsole.cpp:94
 #, kde-format
 msgid "Not in a debugger context"
-msgstr ""
+msgstr "გამმართველის კონტექსტში არაა"
 
 #: rkward/windows/rkcallstackviewer.cpp:136
 #, kde-format
@@ -5533,17 +5681,17 @@ msgstr ""
 #: rkward/windows/rkcodecompletion.cpp:61
 #, kde-format
 msgid "Incompatible version of ktexteditor"
-msgstr ""
+msgstr "Ktexteditor-ის შეუთავსებელი ვერსა"
 
 #: rkward/windows/rkcodecompletion.cpp:695
 #, kde-format
 msgid "Objects on search path"
-msgstr ""
+msgstr "ობიექტები ძებნის ბილიკზე"
 
 #: rkward/windows/rkcodecompletion.cpp:787
 #, kde-format
 msgid "Function calls"
-msgstr ""
+msgstr "ფუნქციის გამოგონებები"
 
 #: rkward/windows/rkcodecompletion.cpp:886
 #, kde-format
@@ -5553,17 +5701,17 @@ msgstr ""
 #: rkward/windows/rkcodecompletion.cpp:1003
 #, kde-format
 msgid "Local file names"
-msgstr ""
+msgstr "ლოკალური ფაილის სახელები"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:173
 #, kde-format
 msgid "Unable to open \"%1\""
-msgstr ""
+msgstr "\"%1\"-ის გახსნა შეუძლებელია"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:173
 #, kde-format
 msgid "Could not open command file"
-msgstr ""
+msgstr "ბრძანების ფაილის გახსნა შეუძლებელია"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:215
 #, kde-format
@@ -5573,32 +5721,32 @@ msgstr "სკრიპტის რედაქტორი"
 #: rkward/windows/rkcommandeditorwindow.cpp:369
 #, kde-format
 msgid "Insert line break and run"
-msgstr ""
+msgstr "ხაზის დასრულების ჩასმა და გაშვება"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
 msgid "Run block"
-msgstr ""
+msgstr "ბლოკის გაშვება"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:384
 #, kde-format
 msgid "Mark selection as block"
-msgstr ""
+msgstr "მონიშნულის ბლოკად დანიშვნა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:387
 #, kde-format
 msgid "Unmark block"
-msgstr ""
+msgstr "ბლოკის დანიშვნის მოხსნა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:392
 #, kde-format
 msgid "CD to script directory"
-msgstr ""
+msgstr "სკრიპტის საქაღალდში გადასვლა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:393
 #, kde-format
 msgid "Change the working directory to the directory of this script"
-msgstr ""
+msgstr "სამუშაო საქაღალდის შეცვლა სკრიპტის საქაღალდეზე"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
@@ -5613,7 +5761,7 @@ msgstr "R Markdown"
 #: rkward/windows/rkcommandeditorwindow.cpp:406
 #, kde-format
 msgid "RKWard Output"
-msgstr ""
+msgstr "RKWard-ის გამოტანა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:407
 #, kde-format
@@ -5623,7 +5771,7 @@ msgstr "გრაფიკი"
 #: rkward/windows/rkcommandeditorwindow.cpp:410
 #, kde-format
 msgid "Disable preview"
-msgstr ""
+msgstr "მინიატურების გამორთვა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -5656,7 +5804,7 @@ msgstr ""
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
-msgstr ""
+msgstr "განახლება კრეფისას"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:425
 #, kde-format
@@ -5669,7 +5817,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:432
 #, kde-format
 msgid "Save Script..."
-msgstr ""
+msgstr "სკრიპტის შენახვა..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:434
 #, kde-format
@@ -5680,12 +5828,12 @@ msgstr "სკრიპტის შენახვა, როგორც..."
 #: rkward/windows/rkcommandeditorwindow.cpp:780
 #, kde-format
 msgid " [modified]"
-msgstr ""
+msgstr " [შეცვლილი]"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:521
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
+msgstr "დოკუმენტი \"%1\" შეიცვალა. მაინც დავხურო?"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:521
 #, kde-format
@@ -5709,7 +5857,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:576
 #, kde-format
 msgid "Potential side-effects of previews"
-msgstr ""
+msgstr "მინიატურების შესაძლო გვერდითი ეფექტები"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:699
 #, kde-format
@@ -5725,12 +5873,12 @@ msgstr "უსახელო"
 #: rkward/windows/rkcommandeditorwindow.cpp:909
 #, kde-format
 msgid "Preview of rendered R Markdown"
-msgstr ""
+msgstr "დარენდერებული R მარკდაუნის მინიატურა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid "Pandoc is not installed"
-msgstr ""
+msgstr "Pandoc დაყენებული არაა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:914
 #, kde-format
@@ -5746,17 +5894,17 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:926
 #, kde-format
 msgid "Preview of generated RKWard output"
-msgstr ""
+msgstr "შექმნილი RKWard-ის გამოტანის მინიატურა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:934
 #, kde-format
 msgid "Preview of generated plot"
-msgstr ""
+msgstr "შექმნილი ნახაზის მინიატურა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:941
 #, kde-format
 msgid "Preview of script running in interactive R Console"
-msgstr ""
+msgstr "ინტერაქტიურ R-ის კონსოლში გაშვებული სკრიპტის მინიატურა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
@@ -5766,28 +5914,28 @@ msgstr "%1 (აქტიური)"
 #: rkward/windows/rkcommandeditorwindow.cpp:1077
 #, kde-format
 msgid "%1 (Unused)"
-msgstr ""
+msgstr "%1 (გამოყენებულია)"
 
 #. i18n: ectx: Menu (tools)
 #: rkward/windows/rkcommandeditorwindowpart.rc:11
 #, kde-format
 msgid "&Tools Move"
-msgstr ""
+msgstr "&ხელსაწყოები"
 
 #: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
 msgid "Incomplete statement.\n"
-msgstr ""
+msgstr "არასწორი პირობა.\n"
 
 #: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
-msgstr ""
+msgstr "სინტაქსის შეცდომა.\n"
 
 #: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
 msgid "An unspecified error occurred while running the command.\n"
-msgstr ""
+msgstr "მიუთითებელი შეცდომა ბრძანების გაშვებისას.\n"
 
 #: rkward/windows/rkcommandlog.cpp:302
 #, kde-format
@@ -5797,7 +5945,7 @@ msgstr "კონფიგურირება"
 #: rkward/windows/rkdebugconsole.cpp:44
 #, kde-format
 msgid "Next (step over)"
-msgstr ""
+msgstr "შემდეგი (გადაბიჯება)"
 
 #: rkward/windows/rkdebugconsole.cpp:44
 #, kde-format
@@ -5807,7 +5955,7 @@ msgstr ""
 #: rkward/windows/rkdebugconsole.cpp:45
 #, kde-format
 msgid "Next (step into)"
-msgstr ""
+msgstr "შემდეგი (შებიჯება)"
 
 #: rkward/windows/rkdebugconsole.cpp:45
 #, kde-format
@@ -5831,12 +5979,12 @@ msgstr ""
 #: rkward/windows/rkdebugconsole.cpp:51
 #, kde-format
 msgid "Finish current"
-msgstr ""
+msgstr "მიმდინარის დასრულება"
 
 #: rkward/windows/rkdebugconsole.cpp:51
 #, kde-format
 msgid "Finish current loop or function."
-msgstr ""
+msgstr "მიმდინარე მარყუჟის ან ფუნქციის დასრულება."
 
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
@@ -5846,7 +5994,7 @@ msgstr "გაგრძელება"
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Continue evaluation."
-msgstr ""
+msgstr "დამუშავების გაგრძელება."
 
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
@@ -5874,12 +6022,12 @@ msgstr ""
 #: rkward/windows/rkdebugmessagewindow.cpp:71
 #, kde-format
 msgid "About this window"
-msgstr ""
+msgstr "ამ ფანჯრის შესახებ"
 
 #: rkward/windows/rkfilebrowser.cpp:122
 #, kde-format
 msgid "Working directory"
-msgstr ""
+msgstr "სამუშაო საქაღალდე"
 
 #: rkward/windows/rkfilebrowser.cpp:140 rkward/windows/robjectbrowser.cpp:119
 #, kde-format
@@ -5914,7 +6062,7 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:81
 #, kde-format
 msgid "All but keywords"
-msgstr ""
+msgstr "ყველა, საკვანძო სიტყვების გარდა"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:82
 #, kde-format
@@ -5934,7 +6082,7 @@ msgstr "დიდი და პატარა ასოების გან�
 #: rkward/windows/rkhelpsearchwindow.cpp:101
 #, kde-format
 msgid "Fuzzy matching"
-msgstr ""
+msgstr "ბუნდოვანი დამთხვევა"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:105
 #, kde-format
@@ -5944,12 +6092,12 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:120
 #, kde-format
 msgid "Help search"
-msgstr ""
+msgstr "დახმარების ძებნა"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:157
 #, kde-format
 msgid "Find HTML help for %1"
-msgstr ""
+msgstr "HTML დახმარების მოძებნა %1-სთვის"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:160
 #, kde-format
@@ -5967,12 +6115,12 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:235
 #, kde-format
 msgid "All installed packages"
-msgstr ""
+msgstr "ყველა დაყენებული პაკეტი"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:236
 #, kde-format
 msgid "All loaded packages"
-msgstr ""
+msgstr "ყველა ჩატვირთული პაკეტი"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:324
 #, kde-format
@@ -5998,7 +6146,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:839
 #, kde-format
 msgid "Output %1"
-msgstr ""
+msgstr "%1-ის გამოტანა"
 
 #: rkward/windows/rkhtmlwindow.cpp:894
 #, kde-format
@@ -6008,7 +6156,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:896
 #, kde-format
 msgid "&Refresh Output"
-msgstr ""
+msgstr "&გამოტანის განახლება"
 
 #: rkward/windows/rkhtmlwindow.cpp:924
 #, kde-format
@@ -6020,7 +6168,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:926
 #, kde-format
 msgid "Page does not exist or is broken"
-msgstr ""
+msgstr "გვერდი არ არსებობს ან გაფუჭებულია"
 
 #: rkward/windows/rkhtmlwindow.cpp:943
 #, kde-format
@@ -6032,12 +6180,12 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:943
 #, kde-format
 msgid "Flush output?"
-msgstr ""
+msgstr "მოვაცილო გამოტანა?"
 
 #: rkward/windows/rkhtmlwindow.cpp:948
 #, kde-format
 msgid "Flushing output"
-msgstr ""
+msgstr "გამოტანის მოცილება"
 
 #: rkward/windows/rkhtmlwindow.cpp:990
 #, kde-format
@@ -6052,7 +6200,7 @@ msgstr "დაპატარავება"
 #: rkward/windows/rkhtmlwindow.cpp:996
 #, kde-format
 msgid "Default &Encoding"
-msgstr ""
+msgstr "ნაგულისხმევი კოდირ&ება"
 
 #: rkward/windows/rkhtmlwindow.cpp:997
 #, kde-format
@@ -6064,47 +6212,47 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1006
 #, kde-format
 msgid "Export Page as HTML"
-msgstr ""
+msgstr "გვერდის HTML გვერდის სახით გატანა"
 
 #: rkward/windows/rkhtmlwindow.cpp:1020
 #, kde-format
 msgid "Save Output"
-msgstr ""
+msgstr "გამოტანის შენახვა"
 
 #: rkward/windows/rkhtmlwindow.cpp:1022
 #, kde-format
 msgid "Save Output As"
-msgstr ""
+msgstr "გამოტანის შენახვა, როგორც"
 
 #: rkward/windows/rkhtmlwindow.cpp:1025
 #, kde-format
 msgid "&Clear Output"
-msgstr ""
+msgstr "&გამოტანის გასუფთავება"
 
 #: rkward/windows/rkhtmlwindow.cpp:1031
 #, kde-format
 msgid "&Revert to last saved state"
-msgstr ""
+msgstr "ბოლო შენახულ ვერსიაზე დაბ&რუნება"
 
 #: rkward/windows/rkhtmlwindow.cpp:1035
 #, kde-format
 msgid "Set Output as &Active"
-msgstr ""
+msgstr "გამოტანის &აქტიურად დაყენება"
 
 #: rkward/windows/rkhtmlwindow.cpp:1037
 #, kde-format
 msgid "Set this output as the file to append output to."
-msgstr ""
+msgstr "გამოტანის ამ ფაილისთვის ბოლოში მიწერის დაყენება."
 
 #: rkward/windows/rkhtmlwindow.cpp:1059
 #, kde-format
 msgid "Print output"
-msgstr ""
+msgstr "გამოტანის დაბეჭდვა"
 
 #: rkward/windows/rkhtmlwindow.cpp:1067
 #, kde-format
 msgid "Print page"
-msgstr ""
+msgstr "გვერდის დაბეჭდვა"
 
 #: rkward/windows/rkhtmlwindow.cpp:1124
 #, kde-format
@@ -6122,7 +6270,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1142
 #, kde-format
 msgid "Use %1 now"
-msgstr ""
+msgstr "%1-ის გამოყენება ახლა"
 
 #: rkward/windows/rkhtmlwindow.cpp:1159
 #, kde-format
@@ -6137,7 +6285,7 @@ msgstr "გამოყენება"
 #: rkward/windows/rkhtmlwindow.cpp:1193
 #, kde-format
 msgid "Choose another file"
-msgstr ""
+msgstr "აირჩიეთ სხვა ფაილი"
 
 #: rkward/windows/rkhtmlwindow.cpp:1215
 #, kde-format
@@ -6147,7 +6295,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1240
 #, kde-format
 msgid "Related functions and pages"
-msgstr ""
+msgstr "მსგავსი ფუნქციები დდა გვერდები"
 
 #: rkward/windows/rkhtmlwindow.cpp:1248
 #, kde-format
@@ -6162,22 +6310,22 @@ msgstr "შესახებ"
 #: rkward/windows/rkhtmlwindow.cpp:1278
 #, kde-format
 msgid "<h1>On this page:</h1>"
-msgstr ""
+msgstr "<h1>ამ გვერდზე:</h1>"
 
 #: rkward/windows/rkhtmlwindow.cpp:1301
 #, kde-format
 msgid "Unnamed GUI element"
-msgstr ""
+msgstr "უსახელი ინტერფეისის ელემენტი"
 
 #: rkward/windows/rkhtmlwindow.cpp:1375
 #, kde-format
 msgid "R Reference on '%1'"
-msgstr ""
+msgstr "R-ის დოკუმენტაცია '%1'-ის შესახებ"
 
 #: rkward/windows/rkhtmlwindow.cpp:1386
 #, kde-format
 msgid "BROKEN REFERENCE"
-msgstr ""
+msgstr "დაფუჭებული მიმართვა"
 
 #: rkward/windows/rkmdiwindow.cpp:433
 #, kde-format
@@ -6192,7 +6340,7 @@ msgstr "%1-ის მორგება"
 #: rkward/windows/rktexthints.cpp:38
 #, kde-format
 msgid "The name <i>%1</i> might refer to:<br>"
-msgstr ""
+msgstr "სახელი <i>%1</i> ალბათ მიუთითებდა:<br>"
 
 #: rkward/windows/rktoolwindowbar.cpp:299
 #, kde-format
@@ -6227,7 +6375,7 @@ msgstr "ქვედა პანელი"
 #: rkward/windows/rktoolwindowbar.cpp:307
 #, kde-format
 msgid "Not shown in sidebar"
-msgstr ""
+msgstr "გვერდით ზოლში ნაჩვენები არაა"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:57
 #, kde-format
@@ -6237,22 +6385,22 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format
 msgid "Search R Help"
-msgstr ""
+msgstr "ძებნა R-ის დახმარებაში"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:61
 #, kde-format
 msgid "RKWard Dashboard and Help"
-msgstr ""
+msgstr "RKWard სამუშაო მაგიდა და დახმარება"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
 msgid "Shows the R help index"
-msgstr ""
+msgstr "აჩვენებს R-ის დახმარების სარჩევს"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:69
 #, kde-format
 msgid "Shows/raises the R Help Search window"
-msgstr ""
+msgstr "R-ის დახმარების ძებნის ფანჯრის ჩვენება/ამოწევა"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:70
 #, kde-format
@@ -6273,7 +6421,7 @@ msgstr "შემდეგი ფანჯარა"
 #: rkward/windows/rktoplevelwindowgui.cpp:84
 #, kde-format
 msgid "Activate Document view"
-msgstr ""
+msgstr "დოკუმენტის ხედის გააქტიურება"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:88
 #, kde-format
@@ -6288,7 +6436,7 @@ msgstr "ფერების სქემა"
 #: rkward/windows/rktoplevelwindowgui.cpp:133
 #, kde-format
 msgid "Show/Hide %1"
-msgstr ""
+msgstr "%1-ის ჩვენება/დამალვა"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:147
 #, kde-format
@@ -6329,7 +6477,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:126
 #, kde-format
 msgid "Could not embed R X11 window"
-msgstr ""
+msgstr "R X11 ფანჯრის ჩაშენება შეუძლებელია"
 
 #: rkward/windows/rkwindowcatcher.cpp:126
 #, kde-format
@@ -6349,7 +6497,7 @@ msgstr "შეცდომა"
 #: rkward/windows/rkwindowcatcher.cpp:296
 #, kde-format
 msgid "Graphics Device Window"
-msgstr ""
+msgstr "გრაფიკის მოწყობილობის ფანჯარა"
 
 #: rkward/windows/rkwindowcatcher.cpp:351
 #, kde-format
@@ -6362,17 +6510,17 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:351
 #, kde-format
 msgid "Large window"
-msgstr ""
+msgstr "დიდი ფანჯარა"
 
 #: rkward/windows/rkwindowcatcher.cpp:371
 #, kde-format
 msgid "Closing device (saving history)"
-msgstr ""
+msgstr "მოწყობილობის დახურვა (ისტორიის შენახვა)"
 
 #: rkward/windows/rkwindowcatcher.cpp:373
 #, kde-format
 msgid "Shutting down device number %1"
-msgstr ""
+msgstr "ითიშება მოწყობილობა ნომრით %1"
 
 #: rkward/windows/rkwindowcatcher.cpp:379
 #, kde-format
@@ -6393,12 +6541,12 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:383
 #, kde-format
 msgid "Close immediately"
-msgstr ""
+msgstr "დაუყოვნებლივ დახურვა"
 
 #: rkward/windows/rkwindowcatcher.cpp:512
 #, kde-format
 msgid "Specify fixed size"
-msgstr ""
+msgstr "მიუთითეთ ფიქსირებული ზომა"
 
 #: rkward/windows/rkwindowcatcher.cpp:517
 #, kde-format
@@ -6413,22 +6561,22 @@ msgstr "სიმაღლე"
 #: rkward/windows/rkwindowcatcher.cpp:561
 #, kde-format
 msgid "Activate graphics device number %1"
-msgstr ""
+msgstr "გრაფიკის მოწყობილობის გააქტიურება ნომრით %1"
 
 #: rkward/windows/rkwindowcatcher.cpp:567
 #, kde-format
 msgid "Copy contents of graphics device number %1 to output"
-msgstr ""
+msgstr "გრაფიკის მოწყობილობის %1 შემცველობის გამოტანაში კოპირება"
 
 #: rkward/windows/rkwindowcatcher.cpp:575
 #, kde-format
 msgid "Print contents of graphics device number %1"
-msgstr ""
+msgstr "გრაფიკის მოწყობილობის %1 შემცველობის დაბეჭდვა"
 
 #: rkward/windows/rkwindowcatcher.cpp:583
 #, kde-format
 msgid "Specify R object"
-msgstr ""
+msgstr "მიუთითეთ R-ის ობიექტი"
 
 #: rkward/windows/rkwindowcatcher.cpp:587
 #, kde-format
@@ -6443,12 +6591,12 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:616
 #, kde-format
 msgid "Duplicate graphics device number %1"
-msgstr ""
+msgstr "გრაფიკის მოწყობილობის ნომრით %1 დუბლირება"
 
 #: rkward/windows/rkwindowcatcher.cpp:622
 #, kde-format
 msgid "Load next plot in device number %1"
-msgstr ""
+msgstr "შემდეგი ნახაზის ჩატვირთვა მოწყობილობაში ნომრით %1"
 
 #: rkward/windows/rkwindowcatcher.cpp:623
 #: rkward/windows/rkwindowcatcher.cpp:631
@@ -6457,37 +6605,37 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:655
 #, kde-format
 msgid "Loading plot from history"
-msgstr ""
+msgstr "ნახაზის ჩატვირთვა ისტორიიდან"
 
 #: rkward/windows/rkwindowcatcher.cpp:630
 #, kde-format
 msgid "Load previous plot in device number %1"
-msgstr ""
+msgstr "წინა ნახაზის ჩატვირთვა მოწყობილობაში ნომრით %1"
 
 #: rkward/windows/rkwindowcatcher.cpp:638
 #, kde-format
 msgid "Load first plot in device number %1"
-msgstr ""
+msgstr "პირველი ნახაზის ჩატვირთვა მოწყობილობაში ნომრით %1"
 
 #: rkward/windows/rkwindowcatcher.cpp:646
 #, kde-format
 msgid "Load last plot in device number %1"
-msgstr ""
+msgstr "ბოლო ნახაზის ჩატვირთვა მოწყობილობაში ნომრით %1"
 
 #: rkward/windows/rkwindowcatcher.cpp:654
 #, kde-format
 msgid "Load plot %1 in device number %2"
-msgstr ""
+msgstr "ნახაზის %1 ჩატვირთვა მოწყობილობაში ნომრით %2"
 
 #: rkward/windows/rkwindowcatcher.cpp:662
 #, kde-format
 msgid "Append this plot to history (device number %1)"
-msgstr ""
+msgstr "ამ ნახაზის ისტორიის ბოლოში მიწერა (მოწყობილობის ნომერი %1)"
 
 #: rkward/windows/rkwindowcatcher.cpp:668
 #, kde-format
 msgid "Remove current plot from history (device number %1)"
-msgstr ""
+msgstr "მიმდინარე ნახაზის წაშლა ისტორიიდან (მოწყობილობის ნომერი %1)"
 
 #: rkward/windows/rkwindowcatcher.cpp:674
 #, kde-format
@@ -6499,77 +6647,77 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:676
 #, kde-format
 msgid "Clear plot history"
-msgstr ""
+msgstr "ნახაზის ისტორიის გასუფთავება"
 
 #: rkward/windows/rkwindowcatcher.cpp:682
 #, kde-format
 msgid "Plot properties (device number %1)"
-msgstr ""
+msgstr "ნახაზის თვისებები (მოწყობილობის ნომერი %1)"
 
 #: rkward/windows/rkwindowcatcher.cpp:696
 #, kde-format
 msgid "<Unsaved plot>"
-msgstr ""
+msgstr "<შეუნახავი ნახაზი>"
 
 #: rkward/windows/rkwindowcatcher.cpp:723
 #, kde-format
 msgid "Draw area follows size of window"
-msgstr ""
+msgstr "ხაზვის ალაგი ფანჯრის ზომას მიჰყვება"
 
 #: rkward/windows/rkwindowcatcher.cpp:730
 #, kde-format
 msgid "Set fixed size 500x500"
-msgstr ""
+msgstr "ფიქსირებული ზომის დაყენება: 500x500"
 
 #: rkward/windows/rkwindowcatcher.cpp:733
 #, kde-format
 msgid "Set fixed size 1000x1000"
-msgstr ""
+msgstr "ფიქსირებული ზომის დაყენება: 1000x1000"
 
 #: rkward/windows/rkwindowcatcher.cpp:736
 #, kde-format
 msgid "Set fixed size 2000x2000"
-msgstr ""
+msgstr "ფიქსირებული ზომის დაყენება: 2000x2000"
 
 #: rkward/windows/rkwindowcatcher.cpp:739
 #, kde-format
 msgid "Set specified fixed size..."
-msgstr ""
+msgstr "მითითებული ფიქსირებული ზომის დაყენება..."
 
 #: rkward/windows/rkwindowcatcher.cpp:744
 #, kde-format
 msgid "Previous plot"
-msgstr ""
+msgstr "წინა ნახაზი"
 
 #: rkward/windows/rkwindowcatcher.cpp:749
 #, kde-format
 msgid "First plot"
-msgstr ""
+msgstr "პირველი ნახაზი"
 
 #: rkward/windows/rkwindowcatcher.cpp:754
 #, kde-format
 msgid "Next plot"
-msgstr ""
+msgstr "შემდეგი ნახაზი"
 
 #: rkward/windows/rkwindowcatcher.cpp:759
 #, kde-format
 msgid "Last plot"
-msgstr ""
+msgstr "ბოლო ნახაზი"
 
 #: rkward/windows/rkwindowcatcher.cpp:762
 #, kde-format
 msgid "Go to plot"
-msgstr ""
+msgstr "გადასვლა ნახაზზე"
 
 #: rkward/windows/rkwindowcatcher.cpp:771
 #, kde-format
 msgid "Append this plot"
-msgstr ""
+msgstr "ამ ნახაზის ბოლოში მიწერა"
 
 #: rkward/windows/rkwindowcatcher.cpp:776
 #, kde-format
 msgid "Remove this plot"
-msgstr ""
+msgstr "ამ ნახაზის წაშლა"
 
 #: rkward/windows/rkwindowcatcher.cpp:782
 #, kde-format
@@ -6579,22 +6727,22 @@ msgstr "ისტორიის გაწმენდა"
 #: rkward/windows/rkwindowcatcher.cpp:788
 #, kde-format
 msgid "Plot properties"
-msgstr ""
+msgstr "ნახაზის თვისებები"
 
 #: rkward/windows/rkwindowcatcher.cpp:793
 #, kde-format
 msgid "Make active"
-msgstr ""
+msgstr "გააქტიურება"
 
 #: rkward/windows/rkwindowcatcher.cpp:797
 #, kde-format
 msgid "Copy to output"
-msgstr ""
+msgstr "კოპირება გამოტანაში"
 
 #: rkward/windows/rkwindowcatcher.cpp:801
 #, kde-format
 msgid "Store as R object..."
-msgstr ""
+msgstr "შენახვა R-ის ობიექტად..."
 
 #: rkward/windows/rkwindowcatcher.cpp:803
 #, kde-format
@@ -6604,7 +6752,7 @@ msgstr "დუბლიკაცია"
 #: rkward/windows/rkwindowcatcher.cpp:807
 #, kde-format
 msgid "Stop interaction"
-msgstr ""
+msgstr "ურთიერთქმედების შეწყვეტა"
 
 #: rkward/windows/rkworkplace.cpp:452
 #, kde-format
@@ -6617,12 +6765,12 @@ msgstr ""
 #: rkward/windows/rkworkplace.cpp:452
 #, kde-format
 msgid "Open in default application?"
-msgstr ""
+msgstr "გავხსნა ნაგულისხმევ აპლიკაციაში?"
 
 #: rkward/windows/rkworkplace.cpp:539
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
-msgstr ""
+msgstr "გამოტანის ფაილის გახსნა ჩავარდა. შეცდომის შეტყობინება: '%1'"
 
 #: rkward/windows/rkworkplace.cpp:647
 #, kde-format
@@ -6642,17 +6790,17 @@ msgstr ""
 #: rkward/windows/rkworkplace.cpp:647
 #, kde-format
 msgid "About to edit very large object"
-msgstr ""
+msgstr "აპირებთ ძალიან დიდი ობიექტის რედაქტირებას"
 
 #: rkward/windows/rkworkplace.cpp:980
 #, kde-format
 msgid "Save Workplace layout"
-msgstr ""
+msgstr "სამუშაო ადგილის განლაგების შენახვა"
 
 #: rkward/windows/rkworkplace.cpp:989
 #, kde-format
 msgid "Restore Workplace layout"
-msgstr ""
+msgstr "სამუშაო ადგილის განლაგების აღდგენა"
 
 #: rkward/windows/rkworkplaceview.cpp:61
 #, kde-format
@@ -6662,12 +6810,12 @@ msgstr "ყველას დახურვა"
 #: rkward/windows/rkworkplaceview.cpp:238
 #, kde-format
 msgid "Window Left"
-msgstr ""
+msgstr "მარცხენა ფანჯარა"
 
 #: rkward/windows/rkworkplaceview.cpp:242
 #, kde-format
 msgid "Window Right"
-msgstr ""
+msgstr "მარჯვენა ფანჯარა"
 
 #: rkward/windows/rkworkplaceview.cpp:248
 #, kde-format
@@ -6677,7 +6825,7 @@ msgstr "&ვერტიკალურად გაყოფა"
 #: rkward/windows/rkworkplaceview.cpp:251
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
-msgstr ""
+msgstr "მიმდინარე აქტიური ხედის შვეულად, ორ ხედად გაყოფა."
 
 #: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
@@ -6692,12 +6840,12 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:54
 #, kde-format
 msgid "R workspace browser"
-msgstr ""
+msgstr "R-ის სამუშაო სივრცის ბრაუზერი"
 
 #: rkward/windows/robjectbrowser.cpp:57
 #, kde-format
 msgid "R Workspace"
-msgstr ""
+msgstr "R-ის სამუშაო სივრცე"
 
 #: rkward/windows/robjectbrowser.cpp:115 rkward/windows/robjectbrowser.cpp:254
 #, kde-format
@@ -6712,27 +6860,27 @@ msgstr "ხედი"
 #: rkward/windows/robjectbrowser.cpp:121
 #, kde-format
 msgid "Copy to new symbol"
-msgstr ""
+msgstr "კოპირება ახალ სიმბოლოში"
 
 #: rkward/windows/robjectbrowser.cpp:123
 #, kde-format
 msgid "Copy to .GlobalEnv"
-msgstr ""
+msgstr "კოპირება ფაილში .GlobalEnv"
 
 #: rkward/windows/robjectbrowser.cpp:127
 #, kde-format
 msgid "New object from clipboard"
-msgstr ""
+msgstr "ახალი ობიექტი ბუფერიდან"
 
 #: rkward/windows/robjectbrowser.cpp:129
 #, kde-format
 msgid "Unload Package"
-msgstr ""
+msgstr "პაკეტის გამოტვირთვა"
 
 #: rkward/windows/robjectbrowser.cpp:131
 #, kde-format
 msgid "Load / Unload Packages"
-msgstr ""
+msgstr "პაკეტების ჩატვირთვა/გამოტვირთვა"
 
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
@@ -6742,7 +6890,7 @@ msgstr "ობიექტის კოპირება"
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
 msgid "Enter the name to copy to"
-msgstr ""
+msgstr "შეიყვანეთ სახელი დასაკოპირებლად"
 
 #: rkward/windows/robjectbrowser.cpp:201
 #, kde-format
@@ -6750,11 +6898,13 @@ msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as "
 "'%2' instead."
 msgstr ""
+"ობიექტი სახელით '%1' GlobalEnv-ში უკვე არსებობს. სამაგიეროდ შევქმენი ასლი, "
+"როგორც '%2'."
 
 #: rkward/windows/robjectbrowser.cpp:201
 #, kde-format
 msgid "Name already in use"
-msgstr ""
+msgstr "სახელი უკვე გამოიყენება"
 
 #: rkward/windows/robjectbrowser.cpp:231
 #, kde-format
@@ -6769,4 +6919,4 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:254
 #, kde-format
 msgid "View in editor (read-only)"
-msgstr ""
+msgstr "რედაქტორში გახსნა (მხოლოდ-წაკითხვადი)"
