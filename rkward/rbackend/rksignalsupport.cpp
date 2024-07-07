@@ -95,7 +95,7 @@ namespace RKSignalSupportPrivate {
 		}
 #endif
 
-		RK_ASSERT (false);	// had not handler? Could conceivably happen, but should not.
+		RK_DEBUG(RBACKEND, DL_ERROR, "Got unhandled signal %d", signum);
 
 		signal (signum, SIG_DFL);
 		raise (signum);
