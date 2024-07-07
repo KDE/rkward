@@ -489,11 +489,6 @@ RKMDIWindow* RKWorkplace::openPDFWindow(const QUrl &url) {
 RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	RK_TRACE (APP);
 
-	if (url.isEmpty ()) {
-		RK_ASSERT (false);
-		return nullptr;
-	}
-
 	if (only_once) {
 		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
 		for (int i = 0; i < help_windows.size (); ++i) {
@@ -514,7 +509,7 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	}
 
 	RKHTMLWindow *hw = new RKHTMLWindow (view (), RKHTMLWindow::HTMLHelpWindow);
-	hw->openURL (url);
+	if (!url.isEmpty()) hw->openURL (url);
 	addWindow (hw);
 	return (hw);
 }
@@ -929,7 +924,8 @@ RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, const ItemSpecifica
 		if (spec.type.endsWith(".active")) dir->activate();
 		win = RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(dir->workPath()));
 	} else if (spec.type == "help") {
-		win = wp->openHelpWindow (checkAdjustRestoredUrl (spec.specification, base), true);
+		auto url = checkAdjustRestoredUrl (spec.specification, base);
+		if (!url.isEmpty()) win = wp->openHelpWindow(url, true);
 	} else if (spec.type == "pdf") {
 		win = wp->openPDFWindow(checkAdjustRestoredUrl(spec.specification, base));
 	} else if (spec.type == "object") {

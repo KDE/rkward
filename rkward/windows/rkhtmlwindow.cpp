@@ -551,6 +551,11 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 	return false;
 }
 
+void RKHTMLWindow::setContent(const QString &content) {
+	RK_TRACE(APP);
+	page->setHtmlWrapper(content, QUrl());
+}
+
 bool RKHTMLWindow::openURL (const QUrl &url) {
 	RK_TRACE (APP);
 

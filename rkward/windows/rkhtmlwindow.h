@@ -59,6 +59,8 @@ public:
 	~RKHTMLWindow ();
 /** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
 	bool openURL (const QUrl &url);
+/** Show the given content, assuming HTML mimetype. */
+	void setContent(const QString &content);
 /** takes care of special handling, if the url is an rkward://-url. Does nothing and returns false, otherwise.
  *  If window is not 0, and the url is a help window, open it, there (otherwise in a new window).
  *  TODO: move to RKWorkplace? As this can really open a bunch of different things, although generally _from_ an html window.

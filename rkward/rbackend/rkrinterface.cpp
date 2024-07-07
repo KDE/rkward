@@ -700,8 +700,12 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 	} else if (call == "updateInstalledPackagesList") {
 		RKSessionVars::instance ()->setInstalledPackages(arglist);
 	} else if (call == "showHTML") {
-		RK_ASSERT(arglist.size() == 1);
-		RKWorkplace::mainWorkplace()->openHelpWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath (), QUrl::AssumeLocalFile));
+		if (arglist.size() == 1)	RKWorkplace::mainWorkplace()->openHelpWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath(), QUrl::AssumeLocalFile));
+		else {
+			auto win = qobject_cast<RKHTMLWindow*>(RKWorkplace::mainWorkplace()->openHelpWindow(QUrl()));
+			RK_ASSERT(win);
+			win->setContent(arglist.value(1));
+		}
 	} else if (call == "showPDF") {
 		RK_ASSERT(arglist.size() == 1);
 		RKWorkplace::mainWorkplace()->openPDFWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath (), QUrl::AssumeLocalFile));

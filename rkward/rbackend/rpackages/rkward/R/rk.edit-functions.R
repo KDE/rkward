@@ -17,6 +17,11 @@
 #' by default, when run inside an RKWard session. (via \code{getOption("editor")},
 #' and \code{getOption("browser")}.
 #'
+#' \code{rk.show.html} with \code{content}-argument, insed of \code{url}-argument, will
+#' show the given HTML string. This is mostly useful for plugins, where it may be
+#' desirable to show an error-message at the place where usually an HTML-file would
+#' be shown.
+#'
 #' \code{rk.show.pdf} opens a PDF (or postscript) document in a viewer window inside RKWard.
 #'
 #' @param x an object to edit.
@@ -95,8 +100,10 @@
 #' @param url a URL to show.
 #' @export
 #' @rdname rk.edit
-"rk.show.html" <- function (url) {
-	.rk.call.async("showHTML", as.character(url));
+"rk.show.html" <- function(url, content) {
+	if (missing(url) == missing(content)) stop("Exactly one of 'url' or 'content' must be specified.")
+	if (missing(url)) .rk.call.async("showHTML", c("", as.character(content)))
+	else .rk.call.async("showHTML", as.character(url))
 }
 
 #' @param url a URL to show.
