@@ -541,7 +541,7 @@ class RKScriptPreviewIO {
 	QFile* infile;
 	QString extension;
 	RKScriptPreviewIO(const QString &extension, const QUrl &url) : url(url), preview_mode(-1), out_dir(), infile(nullptr), extension(extension) {
-		const auto pattern = QLatin1String(".tmp_rkward_preview");
+		const auto pattern = QLatin1String("tmp_rkward_preview");
 		if (url.isEmpty() || !url.isLocalFile()) {
 			// Not locally saved: save to tempdir
 			infile = new QFile(QDir(out_dir.path()).absoluteFilePath(pattern + extension));
