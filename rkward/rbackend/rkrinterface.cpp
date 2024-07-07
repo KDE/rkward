@@ -646,9 +646,11 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		new RKEditObjectAgent (arglist, in_chain);
 	} else if (call == "require") {
 		RK_ASSERT (!arglist.isEmpty());
-		QString lib_name = arglist.value(0);
-		KMessageBox::information(nullptr, i18n("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n("Require package '%1'", lib_name));
-		RKLoadLibsDialog::showInstallPackagesModal(nullptr, in_chain, QStringList(lib_name));
+		if (!RKWardMainWindow::suppressModalDialogsForTesting()) {
+			QString lib_name = arglist.value(0);
+			KMessageBox::information(nullptr, i18n("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n("Require package '%1'", lib_name));
+			RKLoadLibsDialog::showInstallPackagesModal(nullptr, in_chain, QStringList(lib_name));
+		}
 	} else if (call == "doPlugin") {
 		if (arglist.count () >= 2) {
 			QString message;
@@ -700,7 +702,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 	} else if (call == "updateInstalledPackagesList") {
 		RKSessionVars::instance ()->setInstalledPackages(arglist);
 	} else if (call == "showHTML") {
-		if (arglist.size() == 1)	RKWorkplace::mainWorkplace()->openHelpWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath(), QUrl::AssumeLocalFile));
+		if (arglist.size() == 1) RKWorkplace::mainWorkplace()->openHelpWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath(), QUrl::AssumeLocalFile));
 		else {
 			auto win = qobject_cast<RKHTMLWindow*>(RKWorkplace::mainWorkplace()->openHelpWindow(QUrl()));
 			RK_ASSERT(win);

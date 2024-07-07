@@ -73,7 +73,7 @@ class RKWardCoreTest: public QObject {
 		connect(command->notifier(), &RCommandNotifier::commandFinished, this, [_done, callback](RCommand *command) { *_done = true; callback(command); });
 		RInterface::issueCommand(command, chain);
 		while (!done && (t.elapsed() < timeoutms)) {
-			qApp->processEvents();
+			qApp->processEvents(QEventLoop::AllEvents, 500);
 		}
 		if (!done) {
 			testLog("Command timed out: %s", qPrintable(ccopy));
@@ -346,7 +346,7 @@ private Q_SLOTS:
 				QElapsedTimer t;
 				t.start();
 				while (commands_out <= i) {
-					qApp->processEvents();
+					qApp->processEvents(QEventLoop::AllEvents, 500);
 					if (t.elapsed() > 10000) {
 						testLog("Timeout waiting for backend");
 						listBackendLog();
@@ -474,7 +474,7 @@ private Q_SLOTS:
 		QElapsedTimer t;
 		t.start();
 		while (oldiface) {  // action may be delayed until next event processing
-			qApp->processEvents();
+			qApp->processEvents(QEventLoop::AllEvents, 500);
 			if (t.elapsed() > 30000) {
 				testLog("Backend shutdown timed out");
 				auto m = QApplication::activeModalWidget();

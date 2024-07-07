@@ -503,13 +503,13 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	// if we're working with a window hint, try to _reuse_ the existing window, even if it did not get found, above
 	auto w = getNamedWindow<RKHTMLWindow>(window_name_override);
 	if (w) {
-		w->openURL (url);
+		if (!url.isEmpty()) w->openURL(url);
 //		w->activate ();   // HACK: Keep preview windows from stealing focus
 		return w;
 	}
 
 	RKHTMLWindow *hw = new RKHTMLWindow (view (), RKHTMLWindow::HTMLHelpWindow);
-	if (!url.isEmpty()) hw->openURL (url);
+	if (!url.isEmpty()) hw->openURL(url);
 	addWindow (hw);
 	return (hw);
 }
