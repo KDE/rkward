@@ -670,37 +670,37 @@ void RKCommandEditorWindow::initPreviewModes() {
 	preview_mode_list.append(PreviewMode{
 		QIcon::fromTheme("preview_math"), i18n("R Markdown (HTML)"), i18n("Preview of rendered R Markdown"),
 		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to HTML."),
-		QLatin1String(".Rmd"), QLatin1String(".html"),
-		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
-			return RmarkDownRender(infile, QFileInfo(outfile).absolutePath(), "output_format=\"html_document\", ");
+		QLatin1String(".Rmd"),
+		[](const QString& infile, const QString& outdir, const QString& /*preview_id*/) {
+			return RmarkDownRender(infile, outdir, "output_format=\"html_document\", ");
 		}
 	});
 	preview_mode_list.append(PreviewMode{
 		QIcon::fromTheme("preview_math"), i18n("R Markdown (auto)"), i18n("Preview of rendered R Markdown"),
 		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to the format specified in the document header."),
-		QLatin1String(".Rmd"), QLatin1String(".pdf"),
-		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
-			return RmarkDownRender(infile, QFileInfo(outfile).absolutePath(), QString());
+		QLatin1String(".Rmd"),
+		[](const QString& infile, const QString& outdir, const QString& /*preview_id*/) {
+			return RmarkDownRender(infile, outdir, QString());
 		}
 	});
 	preview_mode_list.append(PreviewMode{
 		RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), i18n("RKWard Output"), i18n("Preview of generated RKWard output"),
 		i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."),
-		QLatin1String(".R"), QLatin1String(".html"),
-		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
+		QLatin1String(".R"),
+		[](const QString& infile, const QString& outdir, const QString& /*preview_id*/) {
 			auto command = QLatin1String("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 				"try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
 				"try(source(%1, local=TRUE))\n"
 				"rk.set.output.html.file(output, silent=TRUE)\n"
 				"rk.show.html(%2)\n");
-			return command.arg(RObject::rQuote(infile), RObject::rQuote(outfile));
+			return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + QLatin1String("/output.html")));
 		}
 	});
 	preview_mode_list.append(PreviewMode{
 		RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), i18n("R Console"), i18n("Preview of script running in interactive R Console"),
 		i18n("Preview the script as if it was run in the interactive R Console"),
-		QLatin1String(".R"), QLatin1String(".html"),
-		[](const QString& infile, const QString& outfile, const QString& /*preview_id*/) {
+		QLatin1String(".R"),
+		[](const QString& infile, const QString& outdir, const QString& /*preview_id*/) {
 			auto command = QLatin1String("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 				"on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
 				"try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
@@ -720,14 +720,14 @@ void RKCommandEditorWindow::initPreviewModes() {
 				"}\n"
 				"rk.set.output.html.file(output, silent=TRUE)\n"
 				"rk.show.html(%2)\n");
-			return command.arg(RObject::rQuote(infile), RObject::rQuote(outfile));
+			return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + QLatin1String("/output.html")));
 		}
 	});
 	preview_mode_list.append(PreviewMode{
 		RKStandardIcons::getIcon(RKStandardIcons::WindowX11), i18n("Plot"), i18n("Preview of generated plot"),
 		i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."),
-		QLatin1String(".R"), QLatin1String(),
-		[](const QString& infile, const QString& /*outfile*/, const QString& preview_id) {
+		QLatin1String(".R"),
+		[](const QString& infile, const QString& /*outdir*/, const QString& preview_id) {
 			auto command = QLatin1String("olddev <- dev.cur()\n"
 				".rk.startPreviewDevice(%2)\n"
 				"try(source(%1, local=TRUE, print.eval=TRUE))\n"
@@ -751,7 +751,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 	}
 
 	preview_io = RKScriptPreviewIO::init(preview_io, m_doc, nmode, mode.input_ext);
-	QString command = mode.command(preview_io->inpath(), preview_io->outpath("output" + mode.output_ext), preview_manager->previewId());
+	QString command = mode.command(preview_io->inpath(), preview_io->outpath(""), preview_manager->previewId());
 	preview->setLabel(mode.previewlabel);
 	preview->show();
 

@@ -207,7 +207,6 @@ friend class RKWardCoreTest;
 		QString previewlabel;
 		QString tooltip;
 		QString input_ext;
-		QString output_ext;
 		std::function<QString(const QString&, const QString&, const QString&)> command;
 	};
 	QList<PreviewMode> preview_mode_list;
