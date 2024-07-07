@@ -286,8 +286,8 @@ void RKPreviewManager::previewCommandDone (RCommand* command) {
 	} else {
 		QString warnings = command->warnings() + command->error();
 		if (!warnings.isEmpty()) warnings = QString("<b>%1</b>\n<pre>%2</pre>").arg(i18n("Warnings or Errors:"), warnings.toHtmlEscaped());
-		updateStatusDisplay(warnings);
 		current_preview_failed = command->failed();
+		updateStatusDisplay(warnings);
 	}
 }
 

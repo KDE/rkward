@@ -625,7 +625,7 @@ QString RmarkDownRender(const QString &infile, const QString &outdir, const QStr
 	".check.for.software <- function(command, message) {\n"
 	"	output <- ''\n"
 	"	for (i in 1:length(command)) {\n"
-	"		if (!nzchar(Sys.which(command[i]))) output <- paste0(output, '<h2>%1</h2><p>', message[i], '</p>\n')\n"
+	"		if (!nzchar(Sys.which(command[i]))) output <- paste0(output, '<h2>', %1, '</h2><p>', message[i], '</p>\n')\n"
 	"	}\n"
 	"	output\n"
 	"}\n"
@@ -635,7 +635,7 @@ QString RmarkDownRender(const QString &infile, const QString &outdir, const QStr
 	"})\n"
 	"if (inherits(res, 'try-error')) {\n"
 	"	msg <- attr(res, 'condition')$message\n"
-	"	out <- '<h1>%2</h1>'\n"
+	"	out <- paste0('<h1>', %2, '</h1>')\n"
 	"	if (length(grep('pandoc', msg))) {\n"
 	"		out <- paste0(out, .check.for.software('pandoc', %3))\n"
 	"	}\n"
@@ -643,6 +643,7 @@ QString RmarkDownRender(const QString &infile, const QString &outdir, const QStr
 	"		out <- paste0(out, .check.for.software('pdflatex', %4))\n"
 	"	}\n"
 	"	rk.show.html(content=out)\n"
+	"	stop('%2')\n" // make sure, the status display sees this as an error
 	"} else {\n"
 	"	if (endsWith(toupper(res), '.PDF')) {\n"
 	"		rk.show.pdf(res)\n"
@@ -652,8 +653,8 @@ QString RmarkDownRender(const QString &infile, const QString &outdir, const QStr
 	"		rk.show.html(content=paste0(%5, '<p><a href=\"', res, '\">', res, '</a></p>'))\n"
 	"	}\n"
 	"}\n").arg(
-		i18nc("Caption: Some software is missing.", "Missing software"),
-		i18n("Rendering the preview failed"),
+		RObject::rQuote(i18nc("Caption: Some software is missing.", "Missing software")),
+		RObject::rQuote(i18n("Rendering the preview failed")),
 		RObject::rQuote(i18n("The software <tt>pandoc</tt>, required to rendering R markdown files, is not installed, or not in the system path of the running "
 		"R session. You will need to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</a>.</br>If it is installed, but cannot be found, "
 		"try adding it to the system path of the running R session at <a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>.")),
