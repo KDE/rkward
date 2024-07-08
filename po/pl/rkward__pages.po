@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-05-12 08:38+0200\n"
+"PO-Revision-Date: 2024-07-06 11:52+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1994,6 +1995,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Ta strona spróbuje omówić najczęstsze kłopoty, które można napotkać podczas "
+"używania RKWard. Zajrzyj także na stronę <link href=\"https://rkward.kde.org/"
+"faq\">najczęściej zadawanych pytań w sieci</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2027,13 +2031,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "Silnik R wysypał się lub nie udało mu się uruchomić"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Wysypany silnik"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2046,6 +2050,12 @@ msgid ""
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"Czasami silnika R nie będzie dało się uruchomić ze względu na np. "
+"ustawienia, czy nowe wersje. Częstym powodem jest zmiana ścieżek lub "
+"uaktualnienie R. W takich przypadkach, zazwyczaj pojawia się okno ustawień "
+"przy pierwszym uruchomieniu RKWard, które umożliwia wybranie innego silnika "
+"R. (Pamiętaj: Będzie można wybrać silniki z dobrze znanych ścieżek, jednak "
+"nie przeszkadza to we wskazaniu silnika z własnej ścieżki.)"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2056,6 +2066,9 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"W wielu przypadkach, wystarczy wybrać wersję silnika R inną niż ta użyta "
+"przy budowaniu. W razie kłopotów, zalecane jest użycie tej samej lub "
+"podobnej wersji R do tej, która została użyta przy budowaniu."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2066,18 +2079,22 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Można ręcznie zmienić silnik R w każdej chwili, przy użyciu Ustawienia-"
+">Sprawdź silnik. Upewnij się, że wszystkie dane zostały zapisane, przed "
+"zmienieniem silnika! Można także użyć ustawienia z wiersza poleceń --r-"
+"executable, aby rozpocząć posiedzenie z użyciem wskazanego silnika R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
-msgstr ""
+msgstr "Dlaczego używanie R dołączonego do AppImage RKWard jest niezalecane"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2090,6 +2107,11 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"AppImage dla wygody zawiera silnik R, lecz technicznie nie może on zapewnić "
+"wszystkich swoich możliwości. Najważniejsza z nich to, że nie będzie można "
+"wgrywać pakietów R (innych niż te z czystego R). Silnik R z AppImage może "
+"także wchodzić w drogę silnikowi R z systemu i na odwrót. Może to powodować "
+"drobne i niespodziewane błędy."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33

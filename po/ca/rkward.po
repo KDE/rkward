@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-06 00:36+0000\n"
+"POT-Creation-Date: 2024-07-08 00:36+0000\n"
 "PO-Revision-Date: 2024-07-05 19:24+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2043,8 +2043,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Frontal per al llenguatge estadístic R"
 
 #: rkward/main.cpp:176
-#, kde-format
-msgid "(c) 2002 - 2022"
+#, fuzzy, kde-format
+#| msgid "(c) 2002 - 2022"
+msgid "(c) 2002 - 2024"
 msgstr "(c) 2002 - 2022"
 
 #: rkward/main.cpp:177
@@ -2521,7 +2522,7 @@ msgstr "Cerca endavant (ocurrència següent del terme de cerca)"
 msgid "Match case"
 msgstr "Coincidència de majúscules"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:936
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:941
 #, kde-format
 msgid "Find as you type"
 msgstr "Cerca en teclejar"
@@ -4009,7 +4010,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "S'ha produït un error en iniciar l'R"
 
-#: rkward/rbackend/rkrinterface.cpp:650
+#: rkward/rbackend/rkrinterface.cpp:651
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -4021,17 +4022,17 @@ msgstr ""
 "paquet no està instal·lat. Ara s'obrirà l'eina de gestió de paquets, a fi "
 "que pugueu intentar localitzar i instal·lar aquest paquet."
 
-#: rkward/rbackend/rkrinterface.cpp:650
+#: rkward/rbackend/rkrinterface.cpp:651
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Requereix el paquet «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:681
+#: rkward/rbackend/rkrinterface.cpp:683
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "S'ha cancel·lat la sortida"
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:685
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -4055,40 +4056,40 @@ msgstr ""
 "versions posteriors del RKWard). En aquest cas, ara seleccioneu «Cancel·la», "
 "i després tanqueu les finestres de dades, deseu i torneu a intentar-ho."
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:685
 #, kde-format
 msgid "Locale change"
 msgstr "Canvia la configuració regional"
 
-#: rkward/rbackend/rkrinterface.cpp:684
+#: rkward/rbackend/rkrinterface.cpp:686
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "L'usuari ha cancel·lat el canvi de la configuració regional"
 
-#: rkward/rbackend/rkrinterface.cpp:781
+#: rkward/rbackend/rkrinterface.cpp:787
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 "Intenta començar l'enregistrament, mentre que ja està enregistrant les "
 "ordres. S'ignora."
 
-#: rkward/rbackend/rkrinterface.cpp:789
+#: rkward/rbackend/rkrinterface.cpp:795
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr ""
 "No s'ha pogut obrir el fitxer per a escriptura. No s'enregistraran les ordres"
 
-#: rkward/rbackend/rkrinterface.cpp:800
+#: rkward/rbackend/rkrinterface.cpp:806
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Error: sol·licitud no reconeguda «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:881
+#: rkward/rbackend/rkrinterface.cpp:887
 #, kde-format
 msgid "R backend requests information"
 msgstr "El dorsal R sol·licita informació"
 
-#: rkward/rbackend/rkrinterface.cpp:903
+#: rkward/rbackend/rkrinterface.cpp:909
 #, kde-format
 msgid ""
 "\n"
@@ -4105,7 +4106,7 @@ msgstr ""
 "Malgrat això, podreu desar qualsevol fitxer d'ordres obert, la sortida, o "
 "copiar dades dels editors de dades oberts. Sortiu del RKWard després d'això."
 
-#: rkward/rbackend/rkrinterface.cpp:904
+#: rkward/rbackend/rkrinterface.cpp:910
 #, kde-format
 msgid "R engine has died"
 msgstr "El motor R s'ha aturat"
@@ -4186,7 +4187,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "No s'ha pogut trobar el component «katepart»"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:486
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
 msgid "R Console"
 msgstr "Consola de l'R"
@@ -5794,7 +5795,7 @@ msgid "RKWard Plugins"
 msgstr "Connectors del RKWard"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:473
-#: rkward/windows/rkhtmlwindow.cpp:1153
+#: rkward/windows/rkhtmlwindow.cpp:1158
 #, kde-format
 msgid "Dependencies"
 msgstr "Dependències"
@@ -6427,143 +6428,23 @@ msgstr "Desa l'script..."
 msgid "Save Script As..."
 msgstr "Desa l'script com a..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:433
-#, kde-format
-msgid "Pandoc is not installed"
-msgstr "El Pandoc no està instal·lat"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:434
-#, kde-format
-msgid ""
-"The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
-"installed, or not in the system path of the running R session. You will need "
-"to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</"
-"a>.</br>If it is installed, but cannot be found, try adding it to the system "
-"path of the running R session at <a href=\"rkward://settings/rbackend"
-"\">Settings->Configure RKward->R-backend</a>."
-msgstr ""
-"El programari <tt>pandoc</tt>, requerit per a representar els fitxers R "
-"Markdown, no està instal·lat, o no està en el camí del sistema de la sessió "
-"R en execució. Caldrà instal·lar el «pandoc» des de <a href=\"https://pandoc."
-"org/\">https://pandoc.org/</a>.</br>Si està instal·lat però no s'ha trobat, "
-"intenteu afegir-lo al camí del sistema de la sessió R en execució des d'<a "
-"href=\"rkward://settings/rbackend\">Arranjament->Configura el RKward->Dorsal "
-"R</a>."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:444
-#, kde-format
-msgid "R Markdown (HTML)"
-msgstr "R Markdown (HTML)"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:444
-#: rkward/windows/rkcommandeditorwindow.cpp:457
-#, kde-format
-msgid "Preview of rendered R Markdown"
-msgstr "Vista prèvia de l'R Markdown"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:445
-#, kde-format
-msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
-msgstr ""
-"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a HTML."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:457
-#, kde-format
-msgid "R Markdown (PDF)"
-msgstr "R Markdown (PDF)"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:458
-#, kde-format
-msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
-msgstr ""
-"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a PDF."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:462
-#, kde-format
-msgid "pdflatex is not installed"
-msgstr "El «pdflatex» no està instal·lat"
-
-# skip-rule: t-acc_obe
-#: rkward/windows/rkcommandeditorwindow.cpp:463
-#, kde-format
-msgid ""
-"pdflatex is required for rendering PDF previews. The easiest way to install "
-"it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
-msgstr ""
-"Es necessita el «pdflatex» per a renderitzar vistes prèvies de PDF. La "
-"manera més fàcil d'instal·lar-lo és executar <tt>install.packages(\"tinytex"
-"\"); install_tinytex()</tt>```"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:473
-#, kde-format
-msgid "RKWard Output"
-msgstr "Sortida del RKWard"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:473
-#, kde-format
-msgid "Preview of generated RKWard output"
-msgstr "Vista prèvia de la sortida RKWard generada"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:474
-#, kde-format
-msgid ""
-"Preview any output to the RKWard Output Window. This preview will be empty, "
-"if there is no call to <i>rk.print()</i> or other RKWard output commands."
-msgstr ""
-"Previsualitza qualsevol sortida a la finestra de sortida del RKWard. Aquesta "
-"vista prèvia estarà buida, si no hi ha cap crida a la <i>rk.print()</i> o "
-"altres ordres de sortida del RKWard."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:486
-#, kde-format
-msgid "Preview of script running in interactive R Console"
-msgstr "Vista prèvia de l'script executant-se en una consola R interactiva"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:487
-#, kde-format
-msgid "Preview the script as if it was run in the interactive R Console"
-msgstr ""
-"Vista prèvia de l'script com si s'hagués executat en una consola R "
-"interactiva"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:513
-#, kde-format
-msgid "Plot"
-msgstr "Diagrama"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:513
-#, kde-format
-msgid "Preview of generated plot"
-msgstr "Vista prèvia del diagrama generat"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:514
-#, kde-format
-msgid ""
-"Preview any onscreen graphics produced by running this script. This preview "
-"will be empty, if there is no call to <i>plot()</i> or other graphics "
-"commands."
-msgstr ""
-"Previsualitza qualsevol gràfic a la pantalla produït per l'execució d'aquest "
-"script. Aquesta vista prèvia estarà buida, si no hi ha cap crida a "
-"<i>plot()</i> o altres ordres de gràfics."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:599
-#: rkward/windows/rkcommandeditorwindow.cpp:913
+#: rkward/windows/rkcommandeditorwindow.cpp:480
+#: rkward/windows/rkcommandeditorwindow.cpp:935
 #, kde-format
 msgid " [modified]"
 msgstr " [modificat]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:606
+#: rkward/windows/rkcommandeditorwindow.cpp:487
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "El document «%1» ha estat modificat. Segur que el voleu tancar?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:606
+#: rkward/windows/rkcommandeditorwindow.cpp:487
 #, kde-format
 msgid "File not saved"
 msgstr "El fitxer no s'ha desat"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:717
+#: rkward/windows/rkcommandeditorwindow.cpp:598
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6588,12 +6469,153 @@ msgstr ""
 "especialment en usar la funcionalitat en scripts originats des de fonts no "
 "confiables.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:717
+#: rkward/windows/rkcommandeditorwindow.cpp:598
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Efectes col·laterals de les vistes prèvies"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:838
+#: rkward/windows/rkcommandeditorwindow.cpp:656
+#, fuzzy, kde-format
+#| msgid "External software"
+msgctxt "Caption: Some software is missing."
+msgid "Missing software"
+msgstr "Programari extern"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:657
+#, fuzzy, kde-format
+#| msgid "The command to generate the preview has failed."
+msgid "Rendering the preview failed"
+msgstr "L'ordre per ha generar la vista prèvia ha fallat."
+
+#: rkward/windows/rkcommandeditorwindow.cpp:658
+#, kde-format
+msgid ""
+"The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
+"installed, or not in the system path of the running R session. You will need "
+"to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</"
+"a>.</br>If it is installed, but cannot be found, try adding it to the system "
+"path of the running R session at <a href=\"rkward://settings/rbackend"
+"\">Settings->Configure RKward->R-backend</a>."
+msgstr ""
+"El programari <tt>pandoc</tt>, requerit per a representar els fitxers R "
+"Markdown, no està instal·lat, o no està en el camí del sistema de la sessió "
+"R en execució. Caldrà instal·lar el «pandoc» des de <a href=\"https://pandoc."
+"org/\">https://pandoc.org/</a>.</br>Si està instal·lat però no s'ha trobat, "
+"intenteu afegir-lo al camí del sistema de la sessió R en execució des d'<a "
+"href=\"rkward://settings/rbackend\">Arranjament->Configura el RKward->Dorsal "
+"R</a>."
+
+# skip-rule: t-acc_obe
+#: rkward/windows/rkcommandeditorwindow.cpp:661
+#, fuzzy, kde-format
+#| msgid ""
+#| "pdflatex is required for rendering PDF previews. The easiest way to "
+#| "install it is by running <tt>install.packages(\"tinytex\"); "
+#| "install_tinytex()</tt>```"
+msgid ""
+"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
+"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
+"library(\"tinytex\"); install_tinytex()</tt>"
+msgstr ""
+"Es necessita el «pdflatex» per a renderitzar vistes prèvies de PDF. La "
+"manera més fàcil d'instal·lar-lo és executar <tt>install.packages(\"tinytex"
+"\"); install_tinytex()</tt>```"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:662
+#, kde-format
+msgid ""
+"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
+"output format is neither HTML, nor PDF. You can try opening it in an "
+"external application, using the link, below, or you can change the preview "
+"mode to 'R Markdown (HTML)'.</p>"
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:672
+#, kde-format
+msgid "R Markdown (HTML)"
+msgstr "R Markdown (HTML)"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:672
+#: rkward/windows/rkcommandeditorwindow.cpp:680
+#, kde-format
+msgid "Preview of rendered R Markdown"
+msgstr "Vista prèvia de l'R Markdown"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:673
+#, kde-format
+msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+msgstr ""
+"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a HTML."
+
+#: rkward/windows/rkcommandeditorwindow.cpp:680
+#, fuzzy, kde-format
+#| msgid "R Markdown (PDF)"
+msgid "R Markdown (auto)"
+msgstr "R Markdown (PDF)"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:681
+#, fuzzy, kde-format
+#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+msgid ""
+"Preview the script as rendered from RMarkdown format (.Rmd) to the format "
+"specified in the document header."
+msgstr ""
+"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a PDF."
+
+#: rkward/windows/rkcommandeditorwindow.cpp:688
+#, kde-format
+msgid "RKWard Output"
+msgstr "Sortida del RKWard"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:688
+#, kde-format
+msgid "Preview of generated RKWard output"
+msgstr "Vista prèvia de la sortida RKWard generada"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:689
+#, kde-format
+msgid ""
+"Preview any output to the RKWard Output Window. This preview will be empty, "
+"if there is no call to <i>rk.print()</i> or other RKWard output commands."
+msgstr ""
+"Previsualitza qualsevol sortida a la finestra de sortida del RKWard. Aquesta "
+"vista prèvia estarà buida, si no hi ha cap crida a la <i>rk.print()</i> o "
+"altres ordres de sortida del RKWard."
+
+#: rkward/windows/rkcommandeditorwindow.cpp:701
+#, kde-format
+msgid "Preview of script running in interactive R Console"
+msgstr "Vista prèvia de l'script executant-se en una consola R interactiva"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:702
+#, kde-format
+msgid "Preview the script as if it was run in the interactive R Console"
+msgstr ""
+"Vista prèvia de l'script com si s'hagués executat en una consola R "
+"interactiva"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:728
+#, kde-format
+msgid "Plot"
+msgstr "Diagrama"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:728
+#, kde-format
+msgid "Preview of generated plot"
+msgstr "Vista prèvia del diagrama generat"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:729
+#, kde-format
+msgid ""
+"Preview any onscreen graphics produced by running this script. This preview "
+"will be empty, if there is no call to <i>plot()</i> or other graphics "
+"commands."
+msgstr ""
+"Previsualitza qualsevol gràfic a la pantalla produït per l'execució d'aquest "
+"script. Aquesta vista prèvia estarà buida, si no hi ha cap crida a "
+"<i>plot()</i> o altres ordres de gràfics."
+
+#: rkward/windows/rkcommandeditorwindow.cpp:860
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6601,7 +6623,7 @@ msgstr ""
 "S'ha produït un error en intentar crear un desament automàtic del fitxer de "
 "script «%1»:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:912
+#: rkward/windows/rkcommandeditorwindow.cpp:934
 #, kde-format
 msgid "Unnamed"
 msgstr "Sense nom"
@@ -6855,38 +6877,38 @@ msgstr "Paquet"
 msgid "Save as"
 msgstr "Desa com a"
 
-#: rkward/windows/rkhtmlwindow.cpp:603
+#: rkward/windows/rkhtmlwindow.cpp:608
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "El fitxer de sortida %s del RKWard (encara) no existeix"
 
-#: rkward/windows/rkhtmlwindow.cpp:733
+#: rkward/windows/rkhtmlwindow.cpp:738
 #: rkward/windows/rktoplevelwindowgui.cpp:253
 #, kde-format
 msgid "[Active]"
 msgstr "[Actiu]"
 
-#: rkward/windows/rkhtmlwindow.cpp:744
+#: rkward/windows/rkhtmlwindow.cpp:749
 #, kde-format
 msgid "Output %1"
 msgstr "Sortida de %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:798
+#: rkward/windows/rkhtmlwindow.cpp:803
 #, kde-format
 msgid "Output Window"
 msgstr "Finestra de la sortida"
 
-#: rkward/windows/rkhtmlwindow.cpp:800
+#: rkward/windows/rkhtmlwindow.cpp:805
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Actualitza la sortida"
 
-#: rkward/windows/rkhtmlwindow.cpp:826
+#: rkward/windows/rkhtmlwindow.cpp:831
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "La pàgina no existeix o està trencada"
 
-#: rkward/windows/rkhtmlwindow.cpp:838
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6895,32 +6917,32 @@ msgstr ""
 "Esteu segur que voleu netejar la sortida? Això també eliminarà tots els "
 "fitxers d'imatge usats en la sortida. No es podrà restaurar."
 
-#: rkward/windows/rkhtmlwindow.cpp:838
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid "Flush output?"
 msgstr "Netejo la sortida?"
 
-#: rkward/windows/rkhtmlwindow.cpp:843
+#: rkward/windows/rkhtmlwindow.cpp:848
 #, kde-format
 msgid "Flushing output"
 msgstr "S'està netejant la sortida"
 
-#: rkward/windows/rkhtmlwindow.cpp:885
+#: rkward/windows/rkhtmlwindow.cpp:890
 #, kde-format
 msgid "Zoom In"
 msgstr "Amplia"
 
-#: rkward/windows/rkhtmlwindow.cpp:887
+#: rkward/windows/rkhtmlwindow.cpp:892
 #, kde-format
 msgid "Zoom Out"
 msgstr "Redueix"
 
-#: rkward/windows/rkhtmlwindow.cpp:891
+#: rkward/windows/rkhtmlwindow.cpp:896
 #, kde-format
 msgid "Default &Encoding"
 msgstr "Codificació per &omissió"
 
-#: rkward/windows/rkhtmlwindow.cpp:892
+#: rkward/windows/rkhtmlwindow.cpp:897
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6929,58 +6951,58 @@ msgstr ""
 "Defineix la codificació a assumir en cas que no s'hagi definit cap "
 "codificació explícita a la pàgina a les capçaleres HTTP."
 
-#: rkward/windows/rkhtmlwindow.cpp:902
+#: rkward/windows/rkhtmlwindow.cpp:907
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Exporta la pàgina com a HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:916
+#: rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "Save Output"
 msgstr "Desa la sortida"
 
-#: rkward/windows/rkhtmlwindow.cpp:918
+#: rkward/windows/rkhtmlwindow.cpp:923
 #, kde-format
 msgid "Save Output As"
 msgstr "Desa la sortida com a"
 
-#: rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/windows/rkhtmlwindow.cpp:926
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Neteja la sortida"
 
-#: rkward/windows/rkhtmlwindow.cpp:927
+#: rkward/windows/rkhtmlwindow.cpp:932
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Retorna al darrer estat desat"
 
-#: rkward/windows/rkhtmlwindow.cpp:931
+#: rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Desa la sortida com a &activa"
 
-#: rkward/windows/rkhtmlwindow.cpp:933
+#: rkward/windows/rkhtmlwindow.cpp:938
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Estableix aquesta sortida com a fitxer al qual afegir la sortida."
 
-#: rkward/windows/rkhtmlwindow.cpp:955
+#: rkward/windows/rkhtmlwindow.cpp:960
 #, kde-format
 msgid "Print output"
 msgstr "Imprimeix la sortida"
 
-#: rkward/windows/rkhtmlwindow.cpp:963
+#: rkward/windows/rkhtmlwindow.cpp:968
 #, kde-format
 msgid "Print page"
 msgstr "Imprimeix la pàgina"
 
-#: rkward/windows/rkhtmlwindow.cpp:1020
+#: rkward/windows/rkhtmlwindow.cpp:1025
 #, kde-format
 msgid "No Title"
 msgstr "Sense títol"
 
 # ??? Per revisar : Núria
-#: rkward/windows/rkhtmlwindow.cpp:1033
+#: rkward/windows/rkhtmlwindow.cpp:1038
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6991,62 +7013,62 @@ msgstr ""
 "<p>La pàgina d'ajuda per a aquest component encara no s'ha escrit (o està "
 "incompleta). Considereu contribuir-hi.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1038
+#: rkward/windows/rkhtmlwindow.cpp:1043
 #, kde-format
 msgid "Use %1 now"
 msgstr "Usa %1 ara"
 
-#: rkward/windows/rkhtmlwindow.cpp:1055
+#: rkward/windows/rkhtmlwindow.cpp:1060
 #, kde-format
 msgid "Summary"
 msgstr "Resum"
 
-#: rkward/windows/rkhtmlwindow.cpp:1062
+#: rkward/windows/rkhtmlwindow.cpp:1067
 #, kde-format
 msgid "Usage"
 msgstr "Ús"
 
-#: rkward/windows/rkhtmlwindow.cpp:1089
+#: rkward/windows/rkhtmlwindow.cpp:1094
 #, kde-format
 msgid "Choose another file"
 msgstr "Trieu un altre fitxer"
 
-#: rkward/windows/rkhtmlwindow.cpp:1111
+#: rkward/windows/rkhtmlwindow.cpp:1116
 #, kde-format
 msgid "GUI settings"
 msgstr "Arranjament de la IGU"
 
-#: rkward/windows/rkhtmlwindow.cpp:1136
+#: rkward/windows/rkhtmlwindow.cpp:1141
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Funcions relacionades i pàgines"
 
-#: rkward/windows/rkhtmlwindow.cpp:1144
+#: rkward/windows/rkhtmlwindow.cpp:1149
 #, kde-format
 msgid "Technical details"
 msgstr "Detalls tècnics"
 
-#: rkward/windows/rkhtmlwindow.cpp:1167
+#: rkward/windows/rkhtmlwindow.cpp:1172
 #, kde-format
 msgid "About"
 msgstr "Quant a"
 
-#: rkward/windows/rkhtmlwindow.cpp:1174
+#: rkward/windows/rkhtmlwindow.cpp:1179
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>En aquesta pàgina:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1197
+#: rkward/windows/rkhtmlwindow.cpp:1202
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Element de la IGU sense nom"
 
-#: rkward/windows/rkhtmlwindow.cpp:1271
+#: rkward/windows/rkhtmlwindow.cpp:1276
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Ajuda de l'R sobre «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1282
+#: rkward/windows/rkhtmlwindow.cpp:1287
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "REFERÈNCIA TRENCADA"
@@ -7531,14 +7553,14 @@ msgstr ""
 msgid "Open in default application?"
 msgstr "L'obro en l'aplicació per omissió?"
 
-#: rkward/windows/rkworkplace.cpp:536
+#: rkward/windows/rkworkplace.cpp:531
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
 msgstr ""
 "Ha fallat en obrir el fitxer de sortida. El missatge d'error ha estat «%1»"
 
 # skip-rule: apps-edu_means
-#: rkward/windows/rkworkplace.cpp:645
+#: rkward/windows/rkworkplace.cpp:640
 #, kde-format
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
@@ -7563,17 +7585,17 @@ msgstr ""
 "desactivar-lo del tot) a «Arranjament -> Configura el RKWard -> General».\n"
 "Edito l'objecte?"
 
-#: rkward/windows/rkworkplace.cpp:645
+#: rkward/windows/rkworkplace.cpp:640
 #, kde-format
 msgid "About to edit very large object"
 msgstr "Quant a editar objectes molt grans"
 
-#: rkward/windows/rkworkplace.cpp:983
+#: rkward/windows/rkworkplace.cpp:979
 #, kde-format
 msgid "Save Workplace layout"
 msgstr "Desa la disposició de l'espai de treball"
 
-#: rkward/windows/rkworkplace.cpp:992
+#: rkward/windows/rkworkplace.cpp:988
 #, kde-format
 msgid "Restore Workplace layout"
 msgstr "Restableix la disposició de l'espai de treball"
@@ -7696,6 +7718,12 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure a l'editor (només lectura)"
+
+#~ msgid "Pandoc is not installed"
+#~ msgstr "El Pandoc no està instal·lat"
+
+#~ msgid "pdflatex is not installed"
+#~ msgstr "El «pdflatex» no està instal·lat"
 
 #~ msgid "Preview not (yet) possible"
 #~ msgstr "Encara no és possible la vista prèvia"
