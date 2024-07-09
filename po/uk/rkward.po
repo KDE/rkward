@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-08 00:36+0000\n"
-"PO-Revision-Date: 2024-06-30 09:45+0300\n"
+"PO-Revision-Date: 2024-07-08 09:43+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -2054,10 +2054,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Графічна оболонка до мови статистичних обчислень R"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "© 2002–2022"
+msgstr "© 2002–2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -6445,19 +6444,15 @@ msgid "Potential side-effects of previews"
 msgstr "Потенційні побіжні ефекти попереднього перегляду"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:656
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "Зовнішнє програмне забезпечення"
+msgstr "Не вистачає програмного забезпечення"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:657
-#, fuzzy, kde-format
-#| msgid "The command to generate the preview has failed."
+#, kde-format
 msgid "Rendering the preview failed"
-msgstr ""
-"Спроба виконати команду для створення даних попереднього перегляду зазнала "
-"невдачі."
+msgstr "Не вдалося створити зображення попереднього перегляду"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:658
 #, kde-format
@@ -6479,19 +6474,15 @@ msgstr ""
 "RKward → R-модуль</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:661
-#, fuzzy, kde-format
-#| msgid ""
-#| "pdflatex is required for rendering PDF previews. The easiest way to "
-#| "install it is by running <tt>install.packages(\"tinytex\"); "
-#| "install_tinytex()</tt>```"
+#, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"Для обробки зображення PDF потрібен pdflatex. Найпростішими способом "
+"Для обробки зображення PDF потрібен <tt>pdflatex<tt>. Найпростішими способом "
 "встановити відповідну програму є запуск <tt>install.packages(\"tinytex\"); "
-"install_tinytex()</tt>```"
+"library(\"tinytex\"); install_tinytex()</tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:662
 #, kde-format
@@ -6501,6 +6492,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>Непідтримуваний формат</h1><p>Попередній перегляд тут не можна показати, "
+"оскільки формат результатів є відмінним від HTML або PDF. Ви можете відкрити "
+"дані у зовнішній програмі за допомогою наведеного нижче посилання або "
+"змінити режим попереднього перегляду на «Розмітка R (HTML)».</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:672
 #, kde-format
@@ -6521,20 +6516,18 @@ msgstr ""
 "формату HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:680
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "Розмітка R (PDF)"
+msgstr "Розмітка R (авто)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:681
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+#, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 "specified in the document header."
 msgstr ""
-"Попередній перегляд скрипту на основі обробки формату RMarkdown до формату "
-"PDF."
+"Попередній перегляд скрипту на основі обробки формату RMarkdown до формату, "
+"який вказано у заголовку документа."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format

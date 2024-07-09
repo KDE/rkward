@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-08 00:36+0000\n"
-"PO-Revision-Date: 2024-06-30 11:06+0200\n"
+"PO-Revision-Date: 2024-07-08 07:19+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -2020,10 +2020,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Začelje za statistični jezik R"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "(c) 2002 - 2022"
+msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -6353,17 +6352,15 @@ msgid "Potential side-effects of previews"
 msgstr "Potencialni stranski učinki predogledov"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:656
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "Zunanja programska oprema"
+msgstr "Manjkajoča programska oprema"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:657
-#, fuzzy, kde-format
-#| msgid "The command to generate the preview has failed."
+#, kde-format
 msgid "Rendering the preview failed"
-msgstr "Ukaz za ustvarjanje predogleda ni uspel."
+msgstr "Ustvarjanje predogleda ni uspelo."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:658
 #, kde-format
@@ -6383,19 +6380,15 @@ msgstr ""
 "\">Nastavitve->Konfiguriraj RKward->R-zaledje</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:661
-#, fuzzy, kde-format
-#| msgid ""
-#| "pdflatex is required for rendering PDF previews. The easiest way to "
-#| "install it is by running <tt>install.packages(\"tinytex\"); "
-#| "install_tinytex()</tt>```"
+#, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"pdflatex je potreben za upodabljanje predogledov PDF. Najlažji način za "
-"namestitev je z zagonom <tt>install.packages(\"tinytex\"); "
-"install_tinytex()</tt>```"
+"Programska oprema <tt>pdflatex</tt> je potrebna za upodabljanje predogledov "
+"PDF. Najlažji način za namestitev je z zagonom <tt>install.packages(\"tinytex"
+"\"); install_tinytex()</tt>```"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:662
 #, kde-format
@@ -6405,6 +6398,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>Nepodprta oblika</h1><p>Tukaj ni mogoče prikazati predogleda, ker "
+"izhodna oblika ni niti HTML niti PDF. Lahko jo poskusite odpreti v zunanji "
+"aplikaciji s spodnjo povezavo ali pa način predogleda spremenite v »R "
+"Markdown (HTML)«.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:672
 #, kde-format
@@ -6424,19 +6421,18 @@ msgstr ""
 "Predogled skripta, kot je upodobljen iz formata RMarkdown (.Rmd) v HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:680
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "R Markdown (PDF)"
+msgstr "R Markdown (samodejno)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:681
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+#, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 "specified in the document header."
 msgstr ""
-"Predogled skripta, kot je upodobljen iz formata RMarkdown (.Rmd) v PDF."
+"Predogled skripta, kot je upodobljen iz formata RMarkdown (.Rmd) v format "
+"določen v glavi dokumenta."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format

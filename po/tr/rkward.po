@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-08 00:36+0000\n"
-"PO-Revision-Date: 2024-06-30 18:08+0300\n"
+"PO-Revision-Date: 2024-07-08 14:23+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2020,10 +2020,9 @@ msgid "Frontend to the R statistics language"
 msgstr "R istatistik dili için ön uç"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "(c) 2002–2022"
+msgstr "© 2002–2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -6350,17 +6349,15 @@ msgid "Potential side-effects of previews"
 msgstr "Önizlemelerin olası yan etkileri"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:656
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "Dış yazılımlar"
+msgstr "Yazılımlar eksik"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:657
-#, fuzzy, kde-format
-#| msgid "The command to generate the preview has failed."
+#, kde-format
 msgid "Rendering the preview failed"
-msgstr "Önizleme üretme komutu başarısız oldu."
+msgstr "Önizleme sunulamadı"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:658
 #, kde-format
@@ -6380,18 +6377,15 @@ msgstr ""
 "konumuna gidip çalışan R oturumunun sistem yoluna eklemeyi deneyin."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:661
-#, fuzzy, kde-format
-#| msgid ""
-#| "pdflatex is required for rendering PDF previews. The easiest way to "
-#| "install it is by running <tt>install.packages(\"tinytex\"); "
-#| "install_tinytex()</tt>```"
+#, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"PDF önizlemelerini sunmak için pdflatex gereklidir. Kurmanın en kolay yolu "
-"<tt>install.packages(\"tinytex\"); install_tinytex()</tt>``` komutudur."
+"PDF önizlemelerini sunmak için <tt>pdflatex</tt> yazılımı gereklidir. "
+"Kurmanın en kolay yolu <tt>install.packages(\"tinytex\"); library(\"tinytex"
+"\"); install_tinytex()</tt> komutudur."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:662
 #, kde-format
@@ -6401,6 +6395,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>Desteklenmeyen biçim</h1><p>Önizleme burada gösterilemiyor; çünkü çıktı "
+"biçimi ne HTML ne de PDF. Aşağıdaki bağlantıyı kullanarak dış bir uygulamada "
+"açmayı deneyebilirsiniz veya önizleme kipini “R Markdown (HTML)” olarak "
+"değiştirebilirsiniz.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:672
 #, kde-format
@@ -6419,18 +6417,18 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr "Betiği, RMarkdown biçiminden (.Rmd) HTML’ye önizleyin."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:680
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "R Markdown (PDF)"
+msgstr "R Markdown (Kendiliğinden)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:681
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+#, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 "specified in the document header."
-msgstr "Betiği, RMarkdown biçiminden (.Rmd) PDF’ye önizleyin."
+msgstr ""
+"Betiği RMarkdown Biçiminden (.rmd) belge üstbilgisinde belirtilen biçime "
+"önizleyin."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format

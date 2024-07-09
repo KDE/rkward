@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-08 00:36+0000\n"
-"PO-Revision-Date: 2024-07-02 21:56+0200\n"
+"PO-Revision-Date: 2024-07-08 17:12+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -2009,10 +2009,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Gränssnitt för statistikspråket R"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "© 2002 - 2022"
+msgstr "© 2002 - 2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -6346,17 +6345,15 @@ msgid "Potential side-effects of previews"
 msgstr "Potentiella sidoeffekter av förhandsgranskningar"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:656
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "Extern programvara"
+msgstr "Saknar programvara"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:657
-#, fuzzy, kde-format
-#| msgid "The command to generate the preview has failed."
+#, kde-format
 msgid "Rendering the preview failed"
-msgstr "Kommandot för att generera förhandsgranskningen har misslyckats."
+msgstr "Återgivning av förhandsgranskningen misslyckades"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:658
 #, kde-format
@@ -6376,19 +6373,16 @@ msgstr ""
 "settings/rbackend\">Inställningar -> Anpassa RKward -> R-gränssnitt</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:661
-#, fuzzy, kde-format
-#| msgid ""
-#| "pdflatex is required for rendering PDF previews. The easiest way to "
-#| "install it is by running <tt>install.packages(\"tinytex\"); "
-#| "install_tinytex()</tt>```"
+#, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"pdflatex är nödvändigt för att återge PDF-förhandsgranskningar. Det enklaste "
-"sättet att installera det är att köra <tt>install.packages(\"tinytex\"); "
-"install_tinytex()</tt>```"
+"Programvaran <tt>pdflatex<tt> är nödvändigt för att återge PDF-"
+"förhandsgranskningar. Det enklaste sättet att installera det är att köra "
+"<tt>install.packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</"
+"tt>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:662
 #, kde-format
@@ -6398,6 +6392,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>Format som inte stöds</h1><p>Förhandsgranskningen kan inte visas här, "
+"eftersom utdataformatet varken är HTML eller PDF. Du kan prova att öppna den "
+"i ett externt program, genom att använda länken nedan, eller så kan du ändra "
+"förhandsgranskningsläget till 'R Markdown (HTML)'.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:672
 #, kde-format
@@ -6418,19 +6416,18 @@ msgstr ""
 "HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:680
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "R Markdown (PDF)"
+msgstr "R Markdown (automatisk)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:681
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+#, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 "specified in the document header."
 msgstr ""
-"Förhandsgranska skriptet som återgivet från RMarkdown-format (.Rmd) till PDF."
+"Förhandsgranska skriptet som återgivet från RMarkdown-format (.Rmd) till "
+"formatet angivet i dokumenthuvudet."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format

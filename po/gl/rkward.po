@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-08 00:36+0000\n"
-"PO-Revision-Date: 2024-07-02 17:55+0200\n"
+"PO-Revision-Date: 2024-07-08 18:30+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2018,10 +2018,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Interface para a linguaxe de estatísticas R"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "© 2002-2022"
+msgstr "© 2002-2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -6409,17 +6408,15 @@ msgid "Potential side-effects of previews"
 msgstr "Efectos secundarios potenciais das vistas previas"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:656
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "Soporte lóxico externo"
+msgstr "Falta soporte lóxico"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:657
-#, fuzzy, kde-format
-#| msgid "The command to generate the preview has failed."
+#, kde-format
 msgid "Rendering the preview failed"
-msgstr "A orde para xerar a vista previa fallou."
+msgstr "Non foi posíbel renderizar a vista previa."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:658
 #, kde-format
@@ -6440,19 +6437,15 @@ msgstr ""
 "Infraestrutura de R</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:661
-#, fuzzy, kde-format
-#| msgid ""
-#| "pdflatex is required for rendering PDF previews. The easiest way to "
-#| "install it is by running <tt>install.packages(\"tinytex\"); "
-#| "install_tinytex()</tt>```"
+#, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"pdflatex é necesario para renderizar vistas previas de PDF. A forma máis "
-"doada de instalalo é executar <tt>install.packages(\"tinytex\"); "
-"install_tinytex()</tt>```"
+"O paquete <tt>pdflatex</tt> é necesario para renderizar vistas previas de "
+"PDF. A forma máis doada de instalalo é executar <tt>install."
+"packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:662
 #, kde-format
@@ -6462,6 +6455,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>Formato incompatíbel</h1><p>Non é posíbel amosar a vista previa aquí "
+"porque o formato de saída non é nin HTML nin PDF. Pode intentar abrilo nunha "
+"aplicación externa coa seguinte ligazón, ou cambiar o modo de vista previa a "
+"«Markdown de R (HTML)».</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:672
 #, kde-format
@@ -6482,20 +6479,18 @@ msgstr ""
 "Rmd) a HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:680
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "Markdown de R (PDF)"
+msgstr "Markdown de R (automático)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:681
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+#, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 "specified in the document header."
 msgstr ""
 "Obter unha vista previa do guión como se renderiza de formato RMarkdown (."
-"Rmd) a PDF."
+"Rmd) ao formato indicado na cabeceira do documento."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format

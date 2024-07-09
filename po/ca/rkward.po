@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-08 00:36+0000\n"
-"PO-Revision-Date: 2024-07-05 19:24+0200\n"
+"PO-Revision-Date: 2024-07-08 10:15+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2043,10 +2043,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Frontal per al llenguatge estadístic R"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "(c) 2002 - 2022"
+msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -6475,17 +6474,15 @@ msgid "Potential side-effects of previews"
 msgstr "Efectes col·laterals de les vistes prèvies"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:656
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "Programari extern"
+msgstr "Manca programari"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:657
-#, fuzzy, kde-format
-#| msgid "The command to generate the preview has failed."
+#, kde-format
 msgid "Rendering the preview failed"
-msgstr "L'ordre per ha generar la vista prèvia ha fallat."
+msgstr "Ha fallat la generació de la vista prèvia"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:658
 #, kde-format
@@ -6507,19 +6504,15 @@ msgstr ""
 
 # skip-rule: t-acc_obe
 #: rkward/windows/rkcommandeditorwindow.cpp:661
-#, fuzzy, kde-format
-#| msgid ""
-#| "pdflatex is required for rendering PDF previews. The easiest way to "
-#| "install it is by running <tt>install.packages(\"tinytex\"); "
-#| "install_tinytex()</tt>```"
+#, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"Es necessita el «pdflatex» per a renderitzar vistes prèvies de PDF. La "
-"manera més fàcil d'instal·lar-lo és executar <tt>install.packages(\"tinytex"
-"\"); install_tinytex()</tt>```"
+"Es necessita el programari <tt>pdflatex</tt> per a renderitzar vistes "
+"prèvies de PDF. La manera més fàcil d'instal·lar-lo és executar <tt>install."
+"packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:662
 #, kde-format
@@ -6529,6 +6522,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>Format no admès</h1><p>La vista prèvia no es pot mostrar aquí, perquè el "
+"format de sortida no és ni HTML ni PDF. Podeu intentar obrir-lo en una "
+"aplicació externa, utilitzant l'enllaç, a sota, o podeu canviar el mode de "
+"vista prèvia a «R Markdown (HTML)».</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:672
 #, kde-format
@@ -6548,19 +6545,18 @@ msgstr ""
 "Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:680
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "R Markdown (PDF)"
+msgstr "R Markdown (automàtic)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:681
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+#, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 "specified in the document header."
 msgstr ""
-"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a PDF."
+"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) al format "
+"especificat a la capçalera del document."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format

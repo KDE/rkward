@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-08 00:36+0000\n"
-"PO-Revision-Date: 2024-06-30 07:31+0200\n"
+"PO-Revision-Date: 2024-07-08 05:54+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1359,6 +1359,8 @@ msgid ""
 "<p>Do you want to open this file, now, save it for later (as <i>%1</i>), or "
 "discard it?</p>"
 msgstr ""
+"<p>გნებავთ, გახსნათ ეს ფაილი, შეინახოთ ის მოგვიანებით სამუშაოდ (როგორც <i>"
+"%1</i>), თუ მოვაშორო ის?</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:43
 #, kde-format
@@ -1857,10 +1859,9 @@ msgid "Frontend to the R statistics language"
 msgstr "წინაბოლო სტატისტიკის ენა R-ისთვის"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "(c) 2002 - 2022"
+msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -2266,6 +2267,8 @@ msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
 "</p>"
 msgstr ""
+"<p><em>შენიშვნა:</em> ეს პარამეტრი ძალაში RKWard-ის გადატვირთვამდე არ შევა.</"
+"p>"
 
 #: rkward/misc/rkdynamicsearchline.cpp:24
 #, kde-format
@@ -4099,6 +4102,8 @@ msgstr "შემოტანის დამხმარე"
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr ""
+"დამხმარე სხვადასხვა ფორმატებიდან მონაცემების შემოტანის საუკეთესო მეთოდის "
+"საპოვნელად"
 
 #: rkward/rkward.cpp:519
 #, kde-format
@@ -4952,7 +4957,7 @@ msgstr "სამუშაო სივრცის განლაგები�
 #: rkward/settings/rksettingsmodulegeneral.cpp:116
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
-msgstr ""
+msgstr "სამუშაო სივრცის ჩატვირთვისას შესაბამის საქაღალდეში გადასვლა."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:120
 #, kde-format
@@ -4960,6 +4965,8 @@ msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
 msgstr ""
+"გაფრთხილება ამ რაოდენობის ველების (0 ლიმიტის მოსახსნელად) ველის მქონე "
+"ობიექტების ჩასწორებისას:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:125
 #, kde-format
@@ -5056,6 +5063,8 @@ msgstr ""
 #, kde-format
 msgid "Default window size (for RK(), or embedded device windows)"
 msgstr ""
+"ნაგულისხმევი ფანჯრის ზომა (RK()_სთვის ან ჩაშენებული მოწყობილობის "
+"ფანჯრებისთვის)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:106
 #, kde-format
@@ -5176,6 +5185,7 @@ msgstr ""
 #, kde-format
 msgid "CSS file to use for output (leave empty for default)"
 msgstr ""
+"CSS ფაილი გამოტანაზე გადასატარებლად (ნაგულისხმევისთვის ცარიელი დატოვეთ)"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:134
 #, kde-format
@@ -5892,17 +5902,15 @@ msgid "Potential side-effects of previews"
 msgstr "მინიატურების შესაძლო გვერდითი ეფექტები"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:656
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "გარე პროგრამები"
+msgstr "ნაკლული პროგრამები"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:657
-#, fuzzy, kde-format
-#| msgid "The command to generate the preview has failed."
+#, kde-format
 msgid "Rendering the preview failed"
-msgstr "მინიატურის გენერაციის ბრძანება ჩავარდა."
+msgstr "მინიატურის გენერაცია ჩავარდა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:658
 #, kde-format
@@ -5949,10 +5957,9 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:680
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "R Markdown (PDF)"
+msgstr "R Markdown (ავტო)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:681
 #, kde-format
@@ -5986,7 +5993,7 @@ msgstr "ინტერაქტიურ R-ის კონსოლში გ�
 #: rkward/windows/rkcommandeditorwindow.cpp:702
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
-msgstr ""
+msgstr "სკრიპტის მინიატურა, თითქოს ის R-ის ინტერაქტიურ კონსოლში გაეშვა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6449,7 +6456,7 @@ msgstr "%1-ის მორგება"
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "PDF-ის გამხსნელი კომპონენტი აღმოჩენილი არაა"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
