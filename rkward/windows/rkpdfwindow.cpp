@@ -43,7 +43,21 @@ RKPDFWindow::~RKPDFWindow() {
 
 void RKPDFWindow::openURL(const QUrl &url) {
 	RK_TRACE(APP);
-	if (valid) static_cast<KParts::ReadOnlyPart*>(getPart())->openUrl(url);
+	if (valid) {
+		auto p = static_cast<KParts::ReadOnlyPart*>(getPart());
+		if (url == p->url()) {
+			// If reloading existing file, use reload mechanism, in order to keep scroll position
+			// NOTE: Okular part appears to auto-reload local files, anyway, but I'd like not to rely on thie behavior
+			// NOTE: I tried KParts::NavigationExtension / KParts::OpenUrlArguments for a reload saving scroll position, but somehow
+			//       that did not work, reliably (possibly a race condition with the auto-reload, above).
+			auto reload = p->action("file_reload");
+			if (reload) {
+				reload->trigger();
+				return;
+			}
+		}
+		p->openUrl(url);  // no "reload" action found or navigating to differen url
+	}
 	setWindowTitle(url.fileName());
 	Q_EMIT captionChanged(this);
 }
