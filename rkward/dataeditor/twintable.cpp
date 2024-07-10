@@ -1,6 +1,6 @@
 /*
 twintable.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 29 2002
-SPDX-FileCopyrightText: 2002-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -168,10 +168,11 @@ void TwinTable::initActions () {
 void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	RK_TRACE (EDITOR);
 
+	auto problems = model->problems();
 	datamodel = model;
 	main_object = object;
-	action_enable_editing->setEnabled (object->canWrite ());
-	action_tb_unlock_editing->setEnabled (object->canWrite ());
+	action_enable_editing->setEnabled(object->canWrite() && problems.isEmpty());
+	action_tb_unlock_editing->setEnabled(object->canWrite() && problems.isEmpty());
 	dataview->setRKModel (model);
 	metaview->setRKModel (model->getMetaModel ());
 	model->setEditor (this);
@@ -188,6 +189,10 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	listenForObject (object);
 	objectMetaChanged (object);
 	connect (model, &RKVarEditModel::hasDuplicates, this, &TwinTable::containsDuplicates);
+
+	if (!problems.isEmpty()) {
+		KMessageBox::detailedError(this, i18n("The object's internal structure does not confrom to a regular <tt>data.frame</tt>. Editing has been disabled, and some columns may not be shown. It may be possible to convert this object to a regular <tt>data.frame</tt> using <tt>as.data.frame()</tt>."), problems.join("\n"), i18n("Problem detected"));
+	}
 }
 
 void TwinTable::setWindowStyleHint (const QString& hint) {

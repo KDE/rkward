@@ -1,6 +1,6 @@
 /*
 rkvareditmodel - This file is part of RKWard (https://rkward.kde.org). Created: Mon Nov 05 2007
-SPDX-FileCopyrightText: 2007-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -278,7 +278,10 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 
 	// a normal cell
 	RKVariable *var = objects[col];
-	RK_ASSERT (var);
+	if (!var) {
+		RK_ASSERT(var);
+		return QVariant();
+	}
 
 	if (role == Qt::EditRole) return var->getText (row, false);
 
@@ -553,7 +556,10 @@ QVariant RKVarEditMetaModel::data (const QModelIndex& index, int role) const {
 
 	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) {
 		RKVariable *var = data_model->objects[col];
-		RK_ASSERT (var);
+		if (!var) {
+			RK_ASSERT(var);
+			return QVariant();
+		}
 
 		if (row == NameRow) return var->getShortName ();
 		if (row == LabelRow) return var->getLabel ();
@@ -826,9 +832,12 @@ void RKVarEditDataFrameModel::init (RContainerObject* dataframe) {
 
 	for (int i = 0; i < dataframe->numChildren (); ++i) {
 		RObject* obj = dataframe->findChildByIndex (i);
-		RK_ASSERT (obj);
-		RK_ASSERT (obj->isVariable ());
-		addObject (i, static_cast<RKVariable*> (obj));
+		RK_ASSERT(obj);
+		if (obj->isVariable()) {
+			addObject(i, static_cast<RKVariable*>(obj));
+		} else {
+			problem_details.append(i18n("Object '%1' is not a vector", obj->getShortName()));
+		}
 	}
 	rownames = dataframe->rowNames ();
 	addObject (0, rownames);

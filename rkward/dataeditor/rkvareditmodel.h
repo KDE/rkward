@@ -82,6 +82,7 @@ public:
 	void objectDataChanged (RObject* object, const RObject::ChangeSet *changes) override;
 
 	RKVariable* getObject (int index) const;
+	QStringList problems() const { return problem_details; };
 Q_SIGNALS:
 	void modelDepleted ();
 	void hasDuplicates (const QStringList& dupes);
@@ -94,6 +95,7 @@ private:
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;
+	QStringList problem_details;
 	RKRowNames *rownames;
 
 	/** very simple convenience function to return the number of true cols + trailing cols */

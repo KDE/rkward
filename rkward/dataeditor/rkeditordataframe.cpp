@@ -22,9 +22,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-// warning! numbers above GET_DATA_OFFSET are used to determine, which row, the data should go to!
-#define GET_DATA_OFFSET 10
-
 RKEditorDataFrame::RKEditorDataFrame (RContainerObject* object, QWidget *parent) : TwinTable (parent) {
 	RK_TRACE (EDITOR);
 
