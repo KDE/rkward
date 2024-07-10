@@ -59,6 +59,9 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	connect (overwrite_confirm, &QCheckBox::toggled, this, &RKPluginBrowser::validateInput);
 	vbox->addWidget (overwrite_confirm);
 	overwrite_confirm->setVisible (mode == GetFileNameWidget::SaveFile);
+	auto overwrite_prop = new RKComponentPropertyBool(this, true);
+	addChild("overwrite", overwrite_prop);
+	connect(overwrite_confirm, &QCheckBox::toggled, overwrite_prop, [overwrite_prop](bool checked) { if (checked != overwrite_prop->boolValue()) overwrite_prop->setBoolValue(checked); });
 
 	validation_timer.setSingleShot (true);
 	connect (&validation_timer, &QTimer::timeout, this, &RKPluginBrowser::validateInput);

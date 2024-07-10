@@ -3891,6 +3891,10 @@ Attributes:
 	<term>selection</term>
 	<listitem><para>Current text (selected file name) in the browser (string)</para></listitem>
 	</varlistentry>
+	<varlistentry>
+	<term><parameter>overwrite</parameter></term>
+	<listitem><para>Whether the "overwrite" option is checked (boolean, read-only, i.e. you can read the state of the checkbox, but not change it, programatically)</para></listitem>
+	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
 
