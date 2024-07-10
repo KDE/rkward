@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-08 00:36+0000\n"
-"PO-Revision-Date: 2024-07-03 16:20+0200\n"
+"PO-Revision-Date: 2024-07-09 16:33+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1932,10 +1932,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Rozhraní pro statistický jazyk R"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "(c) 2002 - 2022"
+msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -6105,16 +6104,15 @@ msgid "Potential side-effects of previews"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:656
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "Podpůrný software"
+msgstr "Chybějící software"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:657
 #, kde-format
 msgid "Rendering the preview failed"
-msgstr ""
+msgstr "Vykreslování náhledu selhalo"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:658
 #, kde-format
@@ -6161,10 +6159,9 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:680
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "R Markdown (PDF)"
+msgstr "R Markdown (automaticky)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:681
 #, kde-format
@@ -7241,6 +7238,3 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
-
-#~ msgid "pdflatex is not installed"
-#~ msgstr "pdflatex není nainstalován"
