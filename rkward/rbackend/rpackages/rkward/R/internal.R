@@ -11,7 +11,7 @@
 # this function shall test if the rkward package was loaded in a running RKWard session
 #' @export
 .rk.inside.rkward.session <- function(warn = FALSE){
-	inside.rkward <- is.loaded("rk.do.generic.request")
+	inside.rkward <- is.loaded("rk.call")
 	if(isTRUE(warn) & !isTRUE(inside.rkward)){
 		warning("You've loaded the package 'rkward', but RKWard doesn't appear to be running. If this causes trouble, try detach(\"package:rkward\").",
 		call. = FALSE)

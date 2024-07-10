@@ -9,15 +9,14 @@
 #' @export
 ".rk.getHelpBaseUrl" <- function () {
 	port <- NA
-	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
+	try ({
+		port <- tools::startDynamicHelp ()
+	})
+	if (is.na (port)) {
 		try ({
-			port <- tools::startDynamicHelp ()
+			port <- tools:::httpdPort
+			if (is.function(port)) port <- port()
 		})
-		if (is.na (port)) {
-			try ({
-				port <- tools:::httpdPort
-			})
-		}
 	}
 	if (is.na (port)) {
 		return (paste ("file://", R.home (), sep=""))

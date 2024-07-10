@@ -418,7 +418,7 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 	if (!force_external) {
 	// NOTE: Currently a known mimetype implies that the URL is local or served from the local machine.
 	// Thus, external web pages are *not* opened, here. Which is the behavior we want, although the implementation is ugly
-		if (mimetype.inherits ("text/html")) {
+		if (mimetype.inherits("text/html") || url.scheme().toLower().startsWith(QLatin1String("help"))) {
 			openHelpWindow (url, true);
 			return true;	// TODO
 		} else if (mimetype.inherits("application/pdf")) {

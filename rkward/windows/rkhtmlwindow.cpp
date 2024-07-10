@@ -211,6 +211,7 @@ class RKWebEngineKIOForwarder : public QWebEngineUrlSchemeHandler {
 public:
 	explicit RKWebEngineKIOForwarder(QObject *parent) : QWebEngineUrlSchemeHandler(parent) {}
 	void requestStarted (QWebEngineUrlRequestJob *request) override {
+		RK_DEBUG(APP, DL_DEBUG, "new KIO request to %s", qPrintable(request->requestUrl().url()));
 		KIO::StoredTransferJob *job = KIO::storedGet(request->requestUrl (), KIO::NoReload, KIO::HideProgressInfo);
 		connect (job, &KIO::StoredTransferJob::result, this, [this, job](){ kioJobFinished(job); });
 		jobs.insert (job, request);
@@ -877,13 +878,11 @@ void RKHTMLWindowPart::initActions () {
 	window->page->action (RKWebPage::Forward)->setVisible (false);
 	// For now we won't bother with this one: Does not behave well, in particular (but not only) WRT to rkward://-links
 	window->page->action (RKWebPage::DownloadLinkToDisk)->setVisible (false);
-#ifndef NO_QT_WEBENGINE
 	// Not really useful for us, and cannot easily be made to work, as all new pages go through RKWorkplace::openAnyUrl()
 	window->page->action (RKWebPage::ViewSource)->setVisible (false);
 	// Well, technically, all our windows are tabs, but we're calling them "window".
 	// At any rate, we don't need both "open link in new tab" and "open link in new window".
 	window->page->action (RKWebPage::OpenLinkInNewTab)->setVisible (false);
-#endif
 
 	// common actions
 	actionCollection()->addAction(KStandardAction::Copy, "copy", window->view->pageAction(RKWebPage::Copy), &QAction::trigger);
