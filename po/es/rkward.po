@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-08 00:36+0000\n"
+"POT-Creation-Date: 2024-07-11 00:36+0000\n"
 "PO-Revision-Date: 2024-06-29 22:21+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -278,7 +278,7 @@ msgstr ""
 "deshacer."
 
 #: rkward/core/rkmodificationtracker.cpp:351
-#: rkward/dataeditor/rkvareditmodel.cpp:679
+#: rkward/dataeditor/rkvareditmodel.cpp:685
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:365
 #: rkward/dialogs/rkloadlibsdialog.cpp:953 rkward/misc/rkobjectlistview.cpp:267
@@ -289,7 +289,7 @@ msgid "Name"
 msgstr "Nombre"
 
 #: rkward/core/rkmodificationtracker.cpp:352
-#: rkward/dataeditor/rkvareditmodel.cpp:680
+#: rkward/dataeditor/rkvareditmodel.cpp:686
 #: rkward/misc/editlabelsdialog.cpp:196 rkward/misc/rkobjectlistview.cpp:212
 #: rkward/misc/rkobjectlistview.cpp:269
 #, kde-format
@@ -297,7 +297,7 @@ msgid "Label"
 msgstr "Etiqueta"
 
 #: rkward/core/rkmodificationtracker.cpp:353
-#: rkward/dataeditor/rkvareditmodel.cpp:681
+#: rkward/dataeditor/rkvareditmodel.cpp:687
 #: rkward/misc/rkobjectlistview.cpp:211 rkward/rbackend/rcommandstack.cpp:313
 #: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
@@ -457,7 +457,7 @@ msgstr ""
 msgid "Package %1 appears not to have been loaded"
 msgstr "Parece que el paquete %1 no se ha cargado"
 
-#: rkward/dataeditor/rkeditordataframe.cpp:51
+#: rkward/dataeditor/rkeditordataframe.cpp:48
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
 #, kde-format
 msgid "The name you specified was already in use or not valid. Renamed to %1"
@@ -465,7 +465,7 @@ msgstr ""
 "El nombre que ha indicado está en uso o no es válido. Se ha cambiado el "
 "nombre a %1"
 
-#: rkward/dataeditor/rkeditordataframe.cpp:51
+#: rkward/dataeditor/rkeditordataframe.cpp:48
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
 #, kde-format
 msgid "Invalid Name"
@@ -482,7 +482,7 @@ msgid "&Edit"
 msgstr "&Editar"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
-#: rkward/dataeditor/rkvareditmodel.cpp:550
+#: rkward/dataeditor/rkvareditmodel.cpp:553
 #, kde-format
 msgid "Type on these fields to add new columns"
 msgstr "Escriba en estos campos para añadir nuevas columnas"
@@ -492,61 +492,66 @@ msgstr "Escriba en estos campos para añadir nuevas columnas"
 msgid "Type on these fields to add new rows"
 msgstr "Escriba en estos campos para añadir nuevas filas"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:293 rkward/plugin/rkmatrixinput.cpp:517
+#: rkward/dataeditor/rkvareditmodel.cpp:296 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
 msgid "This value is not allowed, here"
 msgstr "Aquí no se permite este valor"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:361
+#: rkward/dataeditor/rkvareditmodel.cpp:364
 #, kde-format
 msgid "#New Variable#"
 msgstr "#Nueva variable#"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:362
+#: rkward/dataeditor/rkvareditmodel.cpp:365
 #, kde-format
 msgid "Row names"
 msgstr "Nombres de fila"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:367
+#: rkward/dataeditor/rkvareditmodel.cpp:370
 #, kde-format
 msgid "This column contains one or more invalid fields"
 msgstr "Esta columna contiene uno o más campos no válidos"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:682
+#: rkward/dataeditor/rkvareditmodel.cpp:688
 #, kde-format
 msgid "Format"
 msgstr "Formato"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:683
+#: rkward/dataeditor/rkvareditmodel.cpp:689
 #, kde-format
 msgid "Levels"
 msgstr "Niveles"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:686
+#: rkward/dataeditor/rkvareditmodel.cpp:692
 #, kde-format
 msgid "Edit these fields to rename variables."
 msgstr "Edite estos campos para cambiar nombres de variables."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:687
+#: rkward/dataeditor/rkvareditmodel.cpp:693
 #, kde-format
 msgid "A descriptive label for each column (optional)."
 msgstr "Una etiqueta descriptiva para cada columna (opcional)."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:688
+#: rkward/dataeditor/rkvareditmodel.cpp:694
 #, kde-format
 msgid "Type of data."
 msgstr "Tipo de datos."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:689
+#: rkward/dataeditor/rkvareditmodel.cpp:695
 #, kde-format
 msgid "Double click on these fields to customize data display."
 msgstr ""
 "Haga doble clic sobre estos campos para ajustar la presentación de los datos."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:690
+#: rkward/dataeditor/rkvareditmodel.cpp:696
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
 msgstr "Haga doble clic sobre estos campos para editar los niveles de factor."
+
+#: rkward/dataeditor/rkvareditmodel.cpp:839
+#, kde-format
+msgid "Object '%1' is not a vector"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:100
 #, kde-format
@@ -619,7 +624,22 @@ msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
 msgstr "Desbloquear"
 
-#: rkward/dataeditor/twintable.cpp:209
+#: rkward/dataeditor/twintable.cpp:194
+#, kde-format
+msgid ""
+"The object's internal structure does not confrom to a regular <tt>data."
+"frame</tt>. Editing has been disabled, and some columns may not be shown. It "
+"may be possible to convert this object to a regular <tt>data.frame</tt> "
+"using <tt>as.data.frame()</tt>."
+msgstr ""
+
+#: rkward/dataeditor/twintable.cpp:194
+#, fuzzy, kde-format
+#| msgid "None selected"
+msgid "Problem detected"
+msgstr "Ninguno seleccionado"
+
+#: rkward/dataeditor/twintable.cpp:214
 #, kde-format
 msgid ""
 "The editor '%1' contains the following duplicate columns. Editing this table "
@@ -632,42 +652,42 @@ msgstr ""
 "activar la edición si sabe lo que está haciendo, pero se le recomienda con "
 "insistencia que primero repare la tabla o respalde sus datos."
 
-#: rkward/dataeditor/twintable.cpp:209
+#: rkward/dataeditor/twintable.cpp:214
 #, kde-format
 msgid "Duplicate columns detected"
 msgstr "Se han detectado columnas duplicadas"
 
-#: rkward/dataeditor/twintable.cpp:218
+#: rkward/dataeditor/twintable.cpp:223
 #, kde-format
 msgid "%1 [read-only]"
 msgstr "%1 [solo lectura]"
 
-#: rkward/dataeditor/twintable.cpp:263
+#: rkward/dataeditor/twintable.cpp:268
 #, kde-format
 msgid "Insert new variable left"
 msgstr "Insertar nueva variable a la izquierda"
 
-#: rkward/dataeditor/twintable.cpp:266
+#: rkward/dataeditor/twintable.cpp:271
 #, kde-format
 msgid "Delete this variable"
 msgstr "Borrar esta variable"
 
-#: rkward/dataeditor/twintable.cpp:277
+#: rkward/dataeditor/twintable.cpp:282
 #, kde-format
 msgid "Insert new case above (at %1)"
 msgstr "Insertar nuevo caso por encima (en %1)"
 
-#: rkward/dataeditor/twintable.cpp:286
+#: rkward/dataeditor/twintable.cpp:291
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
 msgstr "Borrar las filas marcadas (%1-%2)"
 
-#: rkward/dataeditor/twintable.cpp:292
+#: rkward/dataeditor/twintable.cpp:297
 #, kde-format
 msgid "Delete this row (%1)"
 msgstr "Borrar esta fila (%1)"
 
-#: rkward/dataeditor/twintable.cpp:414
+#: rkward/dataeditor/twintable.cpp:419
 #, kde-format
 msgid "Inserting clipboard contents..."
 msgstr "Insertando el contenido del portapapeles..."
@@ -2512,7 +2532,7 @@ msgstr "Buscar hacia adelanta (la siguiente coincidencia del término buscado)"
 msgid "Match case"
 msgstr "Coincidir mayúsculas"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:941
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:940
 #, kde-format
 msgid "Find as you type"
 msgstr "Buscar al teclear"
@@ -2646,7 +2666,7 @@ msgstr "Selección de archivos cancelada"
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "¿Está seguro de sobrescribir el archivo existente «%1»?"
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:137
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:140
 #, kde-format
 msgid "Overwrite?"
 msgstr "¿Sobrescribir?"
@@ -3542,32 +3562,32 @@ msgstr "Introducir nombre de archivo"
 msgid "Select"
 msgstr "Seleccionar"
 
-#: rkward/plugin/rkpluginbrowser.cpp:124
+#: rkward/plugin/rkpluginbrowser.cpp:127
 #, kde-format
 msgid "The file or directory does not exist."
 msgstr "El archivo o directorio no existe."
 
-#: rkward/plugin/rkpluginbrowser.cpp:127
+#: rkward/plugin/rkpluginbrowser.cpp:130
 #, kde-format
 msgid "Only files (not directories) are acceptable, here."
 msgstr "Aquí solo se aceptan archivos (no directorios)."
 
-#: rkward/plugin/rkpluginbrowser.cpp:130
+#: rkward/plugin/rkpluginbrowser.cpp:133
 #, kde-format
 msgid "Only directories (not files) are acceptable, here."
 msgstr "Aquí solo se aceptan directorios (no archivos)."
 
-#: rkward/plugin/rkpluginbrowser.cpp:140
+#: rkward/plugin/rkpluginbrowser.cpp:143
 #, kde-format
 msgid "The specified file is not writable."
 msgstr "El archivo indicado no permite escribir en él."
 
-#: rkward/plugin/rkpluginbrowser.cpp:143
+#: rkward/plugin/rkpluginbrowser.cpp:146
 #, kde-format
 msgid "You have to specify a filename (not directory) to write to."
 msgstr "Debe indicar un archivo donde escribir (no un directorio)."
 
-#: rkward/plugin/rkpluginbrowser.cpp:149
+#: rkward/plugin/rkpluginbrowser.cpp:152
 #, kde-format
 msgid ""
 "<b>Note:</b> The given file already exists, and will be modified / "
@@ -3576,17 +3596,17 @@ msgstr ""
 "<b>Nota:</b> El archivo indicado ya existe y se modificará o se "
 "sobrescribirá."
 
-#: rkward/plugin/rkpluginbrowser.cpp:157
+#: rkward/plugin/rkpluginbrowser.cpp:160
 #, kde-format
 msgid "Only local files are allowed, here."
 msgstr "Aquí solo se permiten archivos locales."
 
-#: rkward/plugin/rkpluginbrowser.cpp:160
+#: rkward/plugin/rkpluginbrowser.cpp:163
 #, kde-format
 msgid "This url looks valid."
 msgstr "Esta URL parece válida."
 
-#: rkward/plugin/rkpluginbrowser.cpp:165
+#: rkward/plugin/rkpluginbrowser.cpp:168
 #, kde-format
 msgid "The given filename / url is not valid."
 msgstr "El nombre de archivo o URL indicado no es válido."
@@ -5760,7 +5780,7 @@ msgid "RKWard Plugins"
 msgstr "Complementos de RKWard"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:473
-#: rkward/windows/rkhtmlwindow.cpp:1158
+#: rkward/windows/rkhtmlwindow.cpp:1157
 #, kde-format
 msgid "Dependencies"
 msgstr "Dependencias"
@@ -6831,43 +6851,43 @@ msgstr "Campo"
 msgid "Package"
 msgstr "Paquete"
 
-#: rkward/windows/rkhtmlwindow.cpp:301
+#: rkward/windows/rkhtmlwindow.cpp:302
 #, kde-format
 msgid "Save as"
 msgstr "Guardar como"
 
-#: rkward/windows/rkhtmlwindow.cpp:608
+#: rkward/windows/rkhtmlwindow.cpp:609
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "El archivo de salida de RKWard %s (todavía) no existe"
 
-#: rkward/windows/rkhtmlwindow.cpp:738
+#: rkward/windows/rkhtmlwindow.cpp:739
 #: rkward/windows/rktoplevelwindowgui.cpp:253
 #, kde-format
 msgid "[Active]"
 msgstr "[Activo]"
 
-#: rkward/windows/rkhtmlwindow.cpp:749
+#: rkward/windows/rkhtmlwindow.cpp:750
 #, kde-format
 msgid "Output %1"
 msgstr "Salida %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:803
+#: rkward/windows/rkhtmlwindow.cpp:804
 #, kde-format
 msgid "Output Window"
 msgstr "Ventana de salida"
 
-#: rkward/windows/rkhtmlwindow.cpp:805
+#: rkward/windows/rkhtmlwindow.cpp:806
 #, kde-format
 msgid "&Refresh Output"
 msgstr "Actualiza&r salida"
 
-#: rkward/windows/rkhtmlwindow.cpp:831
+#: rkward/windows/rkhtmlwindow.cpp:832
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "La página no existe o está dañada"
 
-#: rkward/windows/rkhtmlwindow.cpp:843
+#: rkward/windows/rkhtmlwindow.cpp:844
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6876,32 +6896,32 @@ msgstr ""
 "¿De verdad quiere limpiar la salida? Esto también eliminará todos los "
 "archivos de imágenes usados en la salida. No será posible restaurarlos."
 
-#: rkward/windows/rkhtmlwindow.cpp:843
+#: rkward/windows/rkhtmlwindow.cpp:844
 #, kde-format
 msgid "Flush output?"
 msgstr "¿Vaciar la salida?"
 
-#: rkward/windows/rkhtmlwindow.cpp:848
+#: rkward/windows/rkhtmlwindow.cpp:849
 #, kde-format
 msgid "Flushing output"
 msgstr "Vaciando la salida"
 
-#: rkward/windows/rkhtmlwindow.cpp:890
+#: rkward/windows/rkhtmlwindow.cpp:889
 #, kde-format
 msgid "Zoom In"
 msgstr "Acercarse"
 
-#: rkward/windows/rkhtmlwindow.cpp:892
+#: rkward/windows/rkhtmlwindow.cpp:891
 #, kde-format
 msgid "Zoom Out"
 msgstr "Alejarse"
 
-#: rkward/windows/rkhtmlwindow.cpp:896
+#: rkward/windows/rkhtmlwindow.cpp:895
 #, kde-format
 msgid "Default &Encoding"
 msgstr "&Codificación por omisión"
 
-#: rkward/windows/rkhtmlwindow.cpp:897
+#: rkward/windows/rkhtmlwindow.cpp:896
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6910,57 +6930,57 @@ msgstr ""
 "Establecer la codificación a usar en caso de no se haya establecido ninguna "
 "codificación en la página o en las cabeceras HTTP."
 
-#: rkward/windows/rkhtmlwindow.cpp:907
+#: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Exportar página como HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/windows/rkhtmlwindow.cpp:920
 #, kde-format
 msgid "Save Output"
 msgstr "Guardar salida"
 
-#: rkward/windows/rkhtmlwindow.cpp:923
+#: rkward/windows/rkhtmlwindow.cpp:922
 #, kde-format
 msgid "Save Output As"
 msgstr "Guardar salida como"
 
-#: rkward/windows/rkhtmlwindow.cpp:926
+#: rkward/windows/rkhtmlwindow.cpp:925
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Limpiar salida"
 
-#: rkward/windows/rkhtmlwindow.cpp:932
+#: rkward/windows/rkhtmlwindow.cpp:931
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Revertir al último estado guardado"
 
-#: rkward/windows/rkhtmlwindow.cpp:936
+#: rkward/windows/rkhtmlwindow.cpp:935
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Establecer salida como &activa"
 
-#: rkward/windows/rkhtmlwindow.cpp:938
+#: rkward/windows/rkhtmlwindow.cpp:937
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Establecer esta salida como el archivo en el que añadir la salida."
 
-#: rkward/windows/rkhtmlwindow.cpp:960
+#: rkward/windows/rkhtmlwindow.cpp:959
 #, kde-format
 msgid "Print output"
 msgstr "Imprimir salida"
 
-#: rkward/windows/rkhtmlwindow.cpp:968
+#: rkward/windows/rkhtmlwindow.cpp:967
 #, kde-format
 msgid "Print page"
 msgstr "Imprimir página"
 
-#: rkward/windows/rkhtmlwindow.cpp:1025
+#: rkward/windows/rkhtmlwindow.cpp:1024
 #, kde-format
 msgid "No Title"
 msgstr "Sin título"
 
-#: rkward/windows/rkhtmlwindow.cpp:1038
+#: rkward/windows/rkhtmlwindow.cpp:1037
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6971,62 +6991,62 @@ msgstr ""
 "<p>La página de ayuda para este componente no se ha escrito aún (o está "
 "dañada). Por favor contemple la posibilidad de contribuir a ella.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1043
+#: rkward/windows/rkhtmlwindow.cpp:1042
 #, kde-format
 msgid "Use %1 now"
 msgstr "Usar %1 ahora"
 
-#: rkward/windows/rkhtmlwindow.cpp:1060
+#: rkward/windows/rkhtmlwindow.cpp:1059
 #, kde-format
 msgid "Summary"
 msgstr "Resumen"
 
-#: rkward/windows/rkhtmlwindow.cpp:1067
+#: rkward/windows/rkhtmlwindow.cpp:1066
 #, kde-format
 msgid "Usage"
 msgstr "Uso"
 
-#: rkward/windows/rkhtmlwindow.cpp:1094
+#: rkward/windows/rkhtmlwindow.cpp:1093
 #, kde-format
 msgid "Choose another file"
 msgstr "Elegir otro archivo"
 
-#: rkward/windows/rkhtmlwindow.cpp:1116
+#: rkward/windows/rkhtmlwindow.cpp:1115
 #, kde-format
 msgid "GUI settings"
 msgstr "Configuración de la interfaz gráfica de usuario"
 
-#: rkward/windows/rkhtmlwindow.cpp:1141
+#: rkward/windows/rkhtmlwindow.cpp:1140
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Funciones y páginas relacionadas"
 
-#: rkward/windows/rkhtmlwindow.cpp:1149
+#: rkward/windows/rkhtmlwindow.cpp:1148
 #, kde-format
 msgid "Technical details"
 msgstr "Detalles técnicos"
 
-#: rkward/windows/rkhtmlwindow.cpp:1172
+#: rkward/windows/rkhtmlwindow.cpp:1171
 #, kde-format
 msgid "About"
 msgstr "Acerca de"
 
-#: rkward/windows/rkhtmlwindow.cpp:1179
+#: rkward/windows/rkhtmlwindow.cpp:1178
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>En esta página:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1202
+#: rkward/windows/rkhtmlwindow.cpp:1201
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Elemento de la interfaz gráfica de usuario sin nombre"
 
-#: rkward/windows/rkhtmlwindow.cpp:1276
+#: rkward/windows/rkhtmlwindow.cpp:1275
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Referencia de R para «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1287
+#: rkward/windows/rkhtmlwindow.cpp:1286
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "REFERENCIA DAÑADA"
