@@ -19,7 +19,7 @@ local({
   #######################
   ## these are the values you probably need to update
   #######################
-  package.version <- "0.7.1"
+  package.version <- "0.8.0"
 
   # this should point to the "rkward" root directory of the R package
   package.sources <- file.path("/PathTo","git","rkward","rkward","rbackend","rpackages","rkward")
@@ -39,7 +39,7 @@ local({
     # it will overwrite the docs, so be careful with svn commits
     # until the docs are fully tagged!
         "roxy",           # roxygenize the docs
-        "cite",           # update CITATION file
+  #       "cite",           # update CITATION file
   #       "doc",            # update pdf documentation
   #       "cl2news",        # convert ChangeLog into NEWS.Rd
   #       "cleanRd",        # linebreaks for >90 chars in *.Rd
@@ -67,18 +67,18 @@ local({
     Package="rkward",
     Type="Package",
     Title="Provides functions related to the RKWard GUI",
-    Author="Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de> and the RKWard Team <rkward-devel@kde.org>",
-    AuthorsR="c(person(given=\"Thomas\", family=\"Friedrichsmeier\", email=\"thomas.friedrichsmeier@ruhr-uni-bochum.de\",
+    Author="Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net> and the RKWard Team <rkward-devel@kde.org>",
+    AuthorsR="c(person(given=\"Thomas\", family=\"Friedrichsmeier\", email=\"thomas.friedrichsmeier@kdemail.net\",
         role=c(\"aut\")),
       person(given=\"the RKWard\", family=\"team\", email=\"rkward-devel@kde.org\",
-        role=c(\"cre\",\"ctb\")))",
+        role=c(\"cre\",\"aut\")))",
     Maintainer="RKWard-devel mailing list <rkward-devel@kde.org>",
     ## TODO: check dependencies
     Depends="R (>= 2.9.0),methods",
-    #Suggests="testthat,knitr,rmarkdown",
+    Suggests="Cairo,googleVis,htmlwidgets,lattice,R2HTML",
     #VignetteBuilder="knitr",
     Description="This package contains functions which are useful in combination with the RKWard GUI. Many of these
-      functions only needed for the internal communication between RKWard and R, but some are also useful in user scripts.",
+      functions are only needed for the internal communication between RKWard and R, but some are also useful in user scripts.",
     License="GPL (>= 2)",
     Encoding="UTF-8",
     LazyLoad="yes",
@@ -105,4 +105,19 @@ local({
       #privacy.policy="https://rkward.kde.org/..."
     )
   )
+  # add additional note to package file
+  package_note <- paste0(
+    "# - This file is part of the RKWard project (https://rkward.kde.org).\n",
+    "# SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>\n",
+    "# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>\n",
+    "# SPDX-License-Identifier: GPL-2.0-or-later"
+  )
+  sandbox_path <- sandbox.status()
+  if(identical(sandbox_path, "")){
+    package_file <- file.path(package.sources, "R", "rkward-package.R")
+  } else {
+    package_file <- file.path(sandbox_path, "src", "rkward", "R", "rkward-package.R")
+  }
+  package_file_orig <- readLines(package_file)
+  cat(package_note, package_file_orig, file=package_file, sep = "\n")
 })
