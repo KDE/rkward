@@ -191,7 +191,7 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	connect (model, &RKVarEditModel::hasDuplicates, this, &TwinTable::containsDuplicates);
 
 	if (!problems.isEmpty()) {
-		KMessageBox::detailedError(this, i18n("The object's internal structure does not confrom to a regular <tt>data.frame</tt>. Editing has been disabled, and some columns may not be shown. It may be possible to convert this object to a regular <tt>data.frame</tt> using <tt>as.data.frame()</tt>."), problems.join("\n"), i18n("Problem detected"));
+		KMessageBox::detailedError(this, i18n("The object's internal structure does not conform to a regular <tt>data.frame</tt>. Editing has been disabled, and some columns may not be shown. It may be possible to convert this object to a regular <tt>data.frame</tt> using <tt>as.data.frame()</tt>."), problems.join("\n"), i18n("Problem detected"));
 	}
 }
 
