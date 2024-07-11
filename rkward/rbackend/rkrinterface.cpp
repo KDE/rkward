@@ -455,11 +455,8 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 		QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory();
 		if (cd_to.isEmpty()) cd_to = QDir::currentPath();
-		if (cd_to.isEmpty()) { // we must be in a non-existent dir. The backend will know better...
-			RInterface::issueCommand(new RCommand("setwd(\".\")\n", RCommand::App | RCommand::Sync), chain);
-		} else {
-			RInterface::issueCommand(new RCommand("setwd(" + RObject::rQuote(cd_to) + ")\n", RCommand::App | RCommand::Sync), chain);
-		}
+		if (cd_to.isEmpty()) cd_to = QLatin1String("."); // we must be in a non-existent dir. cd'ing to "." will cause us to sync with the backend
+		RInterface::issueCommand(new RCommand("setwd(" + RObject::rQuote(cd_to) + ")\n", RCommand::App | RCommand::Sync), chain);
 	} else {
 		processRBackendRequest (request);
 	}
