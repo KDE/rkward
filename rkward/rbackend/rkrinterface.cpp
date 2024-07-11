@@ -454,7 +454,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		});
 
 		QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory();
-		cd_to = QDir::currentPath();
+		if (cd_to.isEmpty()) cd_to = QDir::currentPath();
 		if (cd_to.isEmpty()) { // we must be in a non-existent dir. The backend will know better...
 			RInterface::issueCommand(new RCommand("setwd(\".\")\n", RCommand::App | RCommand::Sync), chain);
 		} else {
