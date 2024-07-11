@@ -5,6 +5,7 @@
 \alias{rk.edit.files}
 \alias{rk.show.files}
 \alias{rk.show.html}
+\alias{rk.show.pdf}
 \title{Edit / show an object / file}
 \usage{
 rk.edit(x)
@@ -20,7 +21,9 @@ rk.show.files(
   delete = delete.file
 )
 
-rk.show.html(url)
+rk.show.html(url, content)
+
+rk.show.pdf(url)
 }
 \arguments{
 \item{x}{an object to edit.}
@@ -63,6 +66,13 @@ recommended to use \link{edit}, \link{file.edit}, \link{file.show},
 and \link{browseURL}, instead. These will call the respective RKWard functions
 by default, when run inside an RKWard session. (via \code{getOption("editor")},
 and \code{getOption("browser")}.
+
+\code{rk.show.html} with \code{content}-argument, insed of \code{url}-argument, will
+show the given HTML string. This is mostly useful for plugins, where it may be
+desirable to show an error-message at the place where usually an HTML-file would
+be shown.
+
+\code{rk.show.pdf} opens a PDF (or postscript) document in a viewer window inside RKWard.
 }
 \examples{
 \dontrun{

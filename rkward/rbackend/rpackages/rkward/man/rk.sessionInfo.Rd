@@ -18,6 +18,9 @@ in RKWard.
 \details{
 Typically, when reporting a bug, you should use \code{Help->Report Bug...}
 from the menu. Internally, this will call \code{rk.sessionInfo()}.
+
+The returned information is untranslated, deliberately, as it is meant for
+pasting into the bug tracker.
 }
 \examples{
 \dontrun{

@@ -13,8 +13,8 @@ The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab rkward\cr
 Type: \tab Package\cr
-Version: \tab 0.7.1\cr
-Date: \tab 2018-10-11\cr
+Version: \tab 0.8.0\cr
+Date: \tab 2024-07-11\cr
 Depends: \tab R (>= 2.9.0),methods\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 2)\cr
