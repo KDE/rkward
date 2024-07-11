@@ -55,11 +55,11 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 	vbox->addWidget (selector);
 
-	overwrite_confirm = new QCheckBox (this);
+	overwrite_confirm = new QCheckBox(i18n("Overwrite?"));
 	connect (overwrite_confirm, &QCheckBox::toggled, this, &RKPluginBrowser::validateInput);
 	vbox->addWidget (overwrite_confirm);
 	overwrite_confirm->setVisible (mode == GetFileNameWidget::SaveFile);
-	auto overwrite_prop = new RKComponentPropertyBool(this, true);
+	auto overwrite_prop = new RKComponentPropertyBool(this, false, false);
 	addChild("overwrite", overwrite_prop);
 	connect(overwrite_confirm, &QCheckBox::toggled, overwrite_prop, [overwrite_prop](bool checked) { if (checked != overwrite_prop->boolValue()) overwrite_prop->setBoolValue(checked); });
 
