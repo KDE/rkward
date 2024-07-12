@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-11 00:36+0000\n"
-"PO-Revision-Date: 2024-07-08 10:15+0200\n"
+"POT-Creation-Date: 2024-07-12 00:36+0000\n"
+"PO-Revision-Date: 2024-07-11 08:48+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -551,7 +551,7 @@ msgstr ""
 #: rkward/dataeditor/rkvareditmodel.cpp:839
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "L'objecte «%1» no és un vector"
 
 #: rkward/dataeditor/twintable.cpp:100
 #, kde-format
@@ -625,19 +625,27 @@ msgid "Unlock"
 msgstr "Desbloqueja"
 
 #: rkward/dataeditor/twintable.cpp:194
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The object's internal structure does not confrom to a regular <tt>data."
+#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
+#| "It may be possible to convert this object to a regular <tt>data.frame</"
+#| "tt> using <tt>as.data.frame()</tt>."
 msgid ""
-"The object's internal structure does not confrom to a regular <tt>data."
+"The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing has been disabled, and some columns may not be shown. It "
 "may be possible to convert this object to a regular <tt>data.frame</tt> "
 "using <tt>as.data.frame()</tt>."
 msgstr ""
+"L'estructura interna de l'objecte no s'ajusta a un <tt>data.frame</tt> "
+"normal. S'ha desactivat l'edició i és possible que no es mostrin algunes "
+"columnes. És possible convertir aquest objecte en un <tt>data.frame</tt> "
+"normal utilitzant <tt>as.data.frame()</tt>."
 
 #: rkward/dataeditor/twintable.cpp:194
-#, fuzzy, kde-format
-#| msgid "None selected"
+#, kde-format
 msgid "Problem detected"
-msgstr "Res seleccionat"
+msgstr "S'ha detectat un problema"
 
 #: rkward/dataeditor/twintable.cpp:214
 #, kde-format
@@ -2675,7 +2683,8 @@ msgstr "S'ha cancel·lat la selecció de fitxer"
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "Segur que voleu sobreescriure el fitxer existent «%1»?"
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:140
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:58
+#: rkward/plugin/rkpluginbrowser.cpp:140
 #, kde-format
 msgid "Overwrite?"
 msgstr "Sobreescric?"
@@ -4029,7 +4038,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "S'ha produït un error en iniciar l'R"
 
-#: rkward/rbackend/rkrinterface.cpp:651
+#: rkward/rbackend/rkrinterface.cpp:648
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -4041,17 +4050,17 @@ msgstr ""
 "paquet no està instal·lat. Ara s'obrirà l'eina de gestió de paquets, a fi "
 "que pugueu intentar localitzar i instal·lar aquest paquet."
 
-#: rkward/rbackend/rkrinterface.cpp:651
+#: rkward/rbackend/rkrinterface.cpp:648
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Requereix el paquet «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:680
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "S'ha cancel·lat la sortida"
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -4075,40 +4084,40 @@ msgstr ""
 "versions posteriors del RKWard). En aquest cas, ara seleccioneu «Cancel·la», "
 "i després tanqueu les finestres de dades, deseu i torneu a intentar-ho."
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid "Locale change"
 msgstr "Canvia la configuració regional"
 
-#: rkward/rbackend/rkrinterface.cpp:686
+#: rkward/rbackend/rkrinterface.cpp:683
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "L'usuari ha cancel·lat el canvi de la configuració regional"
 
-#: rkward/rbackend/rkrinterface.cpp:787
+#: rkward/rbackend/rkrinterface.cpp:784
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 "Intenta començar l'enregistrament, mentre que ja està enregistrant les "
 "ordres. S'ignora."
 
-#: rkward/rbackend/rkrinterface.cpp:795
+#: rkward/rbackend/rkrinterface.cpp:792
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr ""
 "No s'ha pogut obrir el fitxer per a escriptura. No s'enregistraran les ordres"
 
-#: rkward/rbackend/rkrinterface.cpp:806
+#: rkward/rbackend/rkrinterface.cpp:803
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Error: sol·licitud no reconeguda «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:887
+#: rkward/rbackend/rkrinterface.cpp:884
 #, kde-format
 msgid "R backend requests information"
 msgstr "El dorsal R sol·licita informació"
 
-#: rkward/rbackend/rkrinterface.cpp:909
+#: rkward/rbackend/rkrinterface.cpp:906
 #, kde-format
 msgid ""
 "\n"
@@ -4125,7 +4134,7 @@ msgstr ""
 "Malgrat això, podreu desar qualsevol fitxer d'ordres obert, la sortida, o "
 "copiar dades dels editors de dades oberts. Sortiu del RKWard després d'això."
 
-#: rkward/rbackend/rkrinterface.cpp:910
+#: rkward/rbackend/rkrinterface.cpp:907
 #, kde-format
 msgid "R engine has died"
 msgstr "El motor R s'ha aturat"

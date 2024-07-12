@@ -33,9 +33,9 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 </affiliation>
 </author>
 <date
->2023-11-30</date>
+>2024-05-26</date>
 <releaseinfo
->RKWard 0.7.5</releaseinfo>
+>RKWard 0.8.0</releaseinfo>
 <productname
 >KDE Applications</productname>
 </refentryinfo>
@@ -220,7 +220,9 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 >vaak</emphasis
 > goed werkt met nieuwe versies van R, het <emphasis
 >soms</emphasis
-> voor die versie opnieuw moet worden gecompileerd, of er helemaal niet compatibel mee is.</para
+> voor die versie opnieuw moet worden gecompileerd, of er helemaal niet compatibel mee is.</para>
+<para
+>Deze optie wijzigt de installatie van R slechts voor de huidige sessie, niet permanent.</para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -258,7 +260,19 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 >rkward://runplugin/...</replaceable
 >),  waarschuwen dat  &URL;s <emphasis
 >mogelijk kunnen</emphasis
-> worden gebruikt voor het starten van kwaadaardige code op uw systeem. Deze waarschuwing is vooral van toepassing voor links gevonden op niet vertrouwde websites, of andere niet vertrouwde externe bronnen. Indien u &rkward; lokaal wilt scripten kunt u deze waarschuwing uitzetten door de toevoeging  --nowarn-external aan de opdrachtregel.</para
+> worden gebruikt voor het starten van kwaadaardige code op uw systeem. Deze waarschuwing is vooral van toepassing voor links gevonden op niet vertrouwde websites, of andere niet vertrouwde externe bronnen. Indien u &rkward; lokaal wilt scripten kunt u deze waarschuwing uitzetten door de toevoeging  --nowarn-external aan de opdrachtregel.</para>
+<para
+>(Indien gebruikt in combinatie met --reuse, dan zullen *beide* commando's in kwestie opgeroepen moeten worden met --nowarn-external, om de waarschuwing te onderdrukken.)</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--setup</option
+></term>
+<listitem
+><para
+>Acteert alsof een nieuwe versie van RKWard is geïnstalleerd, belangrijk is het opnieuw installeren van het R ondersteuningspakket en het tonen van de assistent voor opzetten. Deze functie is het meest gericht op ontwikkelaars end testers.</para
 ></listitem>
 </varlistentry>
 <varlistentry>

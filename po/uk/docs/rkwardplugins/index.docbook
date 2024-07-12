@@ -7064,13 +7064,23 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;browser&gt;</term>
 <listitem
 ><para
->Типовою властивістю є «selection» <variablelist
-> <varlistentry>
+>Типовою властивістю є «selection» <variablelist>
+	<varlistentry>
 	<term
 >selection</term>
 	<listitem
 ><para
 >Поточний текст (назва позначеного файла) у навігаторі файловою системою (string)</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term
+><parameter
+>overwrite</parameter
+></term>
+	<listitem
+><para
+>Визначає, чи позначено пункт «перезапис» (булеве значення, лише читання, тобто ви можете лише програмно читати стан позначення, але не змінювати його)</para
 ></listitem>
 	</varlistentry>
 	</variablelist

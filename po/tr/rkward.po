@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-11 00:36+0000\n"
-"PO-Revision-Date: 2024-07-08 14:23+0300\n"
+"POT-Creation-Date: 2024-07-12 00:36+0000\n"
+"PO-Revision-Date: 2024-07-11 14:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -44,7 +44,7 @@ msgstr ""
 #: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
 msgid "Cannot edit '%1'"
-msgstr "“%1” Düzenlenemiyor"
+msgstr "“%1” düzenlenemiyor"
 
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
@@ -542,7 +542,7 @@ msgstr "Etken düzeylerini düzenlemek için bu alanlara çift tıklayın."
 #: rkward/dataeditor/rkvareditmodel.cpp:839
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "“%1” nesnesi bir vektör değil"
 
 #: rkward/dataeditor/twintable.cpp:100
 #, kde-format
@@ -617,19 +617,27 @@ msgid "Unlock"
 msgstr "Kilidi Aç"
 
 #: rkward/dataeditor/twintable.cpp:194
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The object's internal structure does not confrom to a regular <tt>data."
+#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
+#| "It may be possible to convert this object to a regular <tt>data.frame</"
+#| "tt> using <tt>as.data.frame()</tt>."
 msgid ""
-"The object's internal structure does not confrom to a regular <tt>data."
+"The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing has been disabled, and some columns may not be shown. It "
 "may be possible to convert this object to a regular <tt>data.frame</tt> "
 "using <tt>as.data.frame()</tt>."
 msgstr ""
+"Nesnenin iç yapısı bir düzenli <tt>data.frame</tt> yapısına uymuyor. "
+"Düzenleme devre dışı bırakıldı ve bazı sütunlar gösterilmeyebilir. <tt>as."
+"data.frame()</tt> kullanarak bu nesneyi düzenli bir <tt>data.frame</tt>’e "
+"dönüştürmek olanaklı olabilir."
 
 #: rkward/dataeditor/twintable.cpp:194
-#, fuzzy, kde-format
-#| msgid "None selected"
+#, kde-format
 msgid "Problem detected"
-msgstr "Seçili yok"
+msgstr "Sorun algılandı"
 
 #: rkward/dataeditor/twintable.cpp:214
 #, kde-format
@@ -2641,7 +2649,8 @@ msgstr "Dosya seçimi iptal edildi"
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "Var olan “%1” dosyasının üzerine yazmak istediğinizden emin misiniz?"
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:140
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:58
+#: rkward/plugin/rkpluginbrowser.cpp:140
 #, kde-format
 msgid "Overwrite?"
 msgstr "Üzerine Yazılsın mı?"
@@ -3953,7 +3962,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "R başlatılırken hata"
 
-#: rkward/rbackend/rkrinterface.cpp:651
+#: rkward/rbackend/rkrinterface.cpp:648
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3965,17 +3974,17 @@ msgstr ""
 "paketine gereksinimi olduğunu belirtti. Paket yönetim aracını açacağız ve "
 "orada gerekli paketi bulup kurmayı deneyebilirsiniz."
 
-#: rkward/rbackend/rkrinterface.cpp:651
+#: rkward/rbackend/rkrinterface.cpp:648
 #, kde-format
 msgid "Require package '%1'"
 msgstr "“%1” Paketi Gerekli"
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:680
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "Çıkış iptal edildi"
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3999,37 +4008,37 @@ msgstr ""
 "“İptal”i seçin, ardından veri pencerelerini kapatın, kaydedin ve yeniden "
 "deneyin."
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid "Locale change"
 msgstr "Yerel Ayar Değişikliği"
 
-#: rkward/rbackend/rkrinterface.cpp:686
+#: rkward/rbackend/rkrinterface.cpp:683
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "Yerel ayarları değiştirme, kullanıcı tarafından iptal edildi"
 
-#: rkward/rbackend/rkrinterface.cpp:787
+#: rkward/rbackend/rkrinterface.cpp:784
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "Komutları kaydederken kaydetmeyi başlatma deneniyor. Yok sayılıyor."
 
-#: rkward/rbackend/rkrinterface.cpp:795
+#: rkward/rbackend/rkrinterface.cpp:792
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Dosya, yazmak için açılamadı. Komutlar kaydedilmiyor"
 
-#: rkward/rbackend/rkrinterface.cpp:806
+#: rkward/rbackend/rkrinterface.cpp:803
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Hata: Tanımlanamayan istek “%1”"
 
-#: rkward/rbackend/rkrinterface.cpp:887
+#: rkward/rbackend/rkrinterface.cpp:884
 #, kde-format
 msgid "R backend requests information"
 msgstr "R arka ucu bilgi talep ediyor"
 
-#: rkward/rbackend/rkrinterface.cpp:909
+#: rkward/rbackend/rkrinterface.cpp:906
 #, kde-format
 msgid ""
 "\n"
@@ -4047,7 +4056,7 @@ msgstr ""
 "kaydetmek veya açık veri düzenleyicilerden veri kopyalamaktır. Bundan sonra "
 "RKWard’dan çıkın. Üzgünüm!"
 
-#: rkward/rbackend/rkrinterface.cpp:910
+#: rkward/rbackend/rkrinterface.cpp:907
 #, kde-format
 msgid "R engine has died"
 msgstr "R işletkesi öldü"

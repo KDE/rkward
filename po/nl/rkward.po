@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-11 00:36+0000\n"
-"PO-Revision-Date: 2024-07-08 16:21+0200\n"
+"POT-Creation-Date: 2024-07-12 00:36+0000\n"
+"PO-Revision-Date: 2024-07-11 10:04+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -538,7 +538,7 @@ msgstr "Dubbelklik op deze velden voor het wijzigen van factor levels."
 #: rkward/dataeditor/rkvareditmodel.cpp:839
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "Object '%1' is geen vector"
 
 #: rkward/dataeditor/twintable.cpp:100
 #, kde-format
@@ -611,19 +611,28 @@ msgid "Unlock"
 msgstr "Ontgrendelen"
 
 #: rkward/dataeditor/twintable.cpp:194
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The object's internal structure does not confrom to a regular <tt>data."
+#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
+#| "It may be possible to convert this object to a regular <tt>data.frame</"
+#| "tt> using <tt>as.data.frame()</tt>."
 msgid ""
-"The object's internal structure does not confrom to a regular <tt>data."
+"The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing has been disabled, and some columns may not be shown. It "
 "may be possible to convert this object to a regular <tt>data.frame</tt> "
 "using <tt>as.data.frame()</tt>."
 msgstr ""
+"De interne structuur van het object komt niet overeen met een regulier "
+"<tt>data.frame</tt>. Bewerken is uitgeschakeld en sommige kolommen kunnen "
+"niet getoond worden. Het is misschien mogelijk dit object te converteren "
+"naar een regulier <tt>data.frame</tt> met gebruik van <tt>as.data.frame()</"
+"tt>."
 
 #: rkward/dataeditor/twintable.cpp:194
-#, fuzzy, kde-format
-#| msgid "None selected"
+#, kde-format
 msgid "Problem detected"
-msgstr "Geen geselecteerd"
+msgstr "Probleem gedetecteerd"
 
 #: rkward/dataeditor/twintable.cpp:214
 #, kde-format
@@ -2648,7 +2657,8 @@ msgstr "Bestandsselectie geannuleerd"
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "Wilt u echt het bestaande bestand '%1' overschrijven?"
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:140
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:58
+#: rkward/plugin/rkpluginbrowser.cpp:140
 #, kde-format
 msgid "Overwrite?"
 msgstr "Overschrijven?"
@@ -3976,7 +3986,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "Fout bij het starten van R"
 
-#: rkward/rbackend/rkrinterface.cpp:651
+#: rkward/rbackend/rkrinterface.cpp:648
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3988,17 +3998,17 @@ msgstr ""
 "pakket '%1' nodig is, dat nu niet is geïnstalleerd. Het pakketbeheer zal "
 "worden gestart, waarin u het gewenste pakket kunt zoeken en installeren."
 
-#: rkward/rbackend/rkrinterface.cpp:651
+#: rkward/rbackend/rkrinterface.cpp:648
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Pakket '%1' is vereist"
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:680
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "Afsluiten is geannuleerd"
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -4023,40 +4033,40 @@ msgstr ""
 "dat geval, kiest u nu 'Annuleren', daarna sluit u de vensters met gegevens, "
 "slaat u op, en probeert u het nog een keer."
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid "Locale change"
 msgstr "Wijziging lokaliteit (taal)"
 
-#: rkward/rbackend/rkrinterface.cpp:686
+#: rkward/rbackend/rkrinterface.cpp:683
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "Taalgegevens wijzigen door gebruiker geannuleerd"
 
-#: rkward/rbackend/rkrinterface.cpp:787
+#: rkward/rbackend/rkrinterface.cpp:784
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 "Poging tot opnemen terwijl opdrachten reeds worden opgenomen. Wordt "
 "genegeerd."
 
-#: rkward/rbackend/rkrinterface.cpp:795
+#: rkward/rbackend/rkrinterface.cpp:792
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr ""
 "Kon bestand niet openen voor schrijven.  Opdrachten worden niet opgeslagen"
 
-#: rkward/rbackend/rkrinterface.cpp:806
+#: rkward/rbackend/rkrinterface.cpp:803
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Fout: onbegrepen verzoek '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:887
+#: rkward/rbackend/rkrinterface.cpp:884
 #, kde-format
 msgid "R backend requests information"
 msgstr "Informatie nodig voor R-backend"
 
-#: rkward/rbackend/rkrinterface.cpp:909
+#: rkward/rbackend/rkrinterface.cpp:906
 #, kde-format
 msgid ""
 "\n"
@@ -4075,7 +4085,7 @@ msgstr ""
 "bewerkingsprogramma's voor gegevens (data editors). Sluit RKWard daarna af. "
 "Excuus!"
 
-#: rkward/rbackend/rkrinterface.cpp:910
+#: rkward/rbackend/rkrinterface.cpp:907
 #, kde-format
 msgid "R engine has died"
 msgstr "Het programma R is gestopt"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-11 00:36+0000\n"
+"POT-Creation-Date: 2024-07-12 00:36+0000\n"
 "PO-Revision-Date: 2024-07-06 11:42+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -614,7 +614,7 @@ msgstr "Odblokuj"
 #: rkward/dataeditor/twintable.cpp:194
 #, kde-format
 msgid ""
-"The object's internal structure does not confrom to a regular <tt>data."
+"The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing has been disabled, and some columns may not be shown. It "
 "may be possible to convert this object to a regular <tt>data.frame</tt> "
 "using <tt>as.data.frame()</tt>."
@@ -2649,7 +2649,8 @@ msgstr "Anulowano wybór pliku"
 msgid "Are you sure you want to overwrite the existing file '%1'?"
 msgstr "Czy chcesz zastąpić istniejący plik '%1'?"
 
-#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:140
+#: rkward/misc/rkoutputdirectory.cpp:147 rkward/plugin/rkpluginbrowser.cpp:58
+#: rkward/plugin/rkpluginbrowser.cpp:140
 #, kde-format
 msgid "Overwrite?"
 msgstr "Zastąpić?"
@@ -3969,7 +3970,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "Błąd uruchamiania R"
 
-#: rkward/rbackend/rkrinterface.cpp:651
+#: rkward/rbackend/rkrinterface.cpp:648
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3981,17 +3982,17 @@ msgstr ""
 "'%1', który nie jest obecnie wgrany. Teraz otworzy się narzędzie zarządzania "
 "pakietami i tam możesz spróbować namierzyć i wgrać potrzebny pakiet."
 
-#: rkward/rbackend/rkrinterface.cpp:651
+#: rkward/rbackend/rkrinterface.cpp:648
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Potrzebny pakiet '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:680
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "Anulowano zakończenie"
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -4015,39 +4016,39 @@ msgstr ""
 "samoczynnie wykrywane w przyszłych wersjach RKWard). W tym przypadku, proszę "
 "wybrać 'Anuluj', następnie zamknij okna danych, zapisz i ponów."
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid "Locale change"
 msgstr "Zmiana ustawień regionalnych"
 
-#: rkward/rbackend/rkrinterface.cpp:686
+#: rkward/rbackend/rkrinterface.cpp:683
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "Zmiana języka została przerwana przez użytkownika"
 
-#: rkward/rbackend/rkrinterface.cpp:787
+#: rkward/rbackend/rkrinterface.cpp:784
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 "Próbowano rozpocząć nagrywanie, gdy nagrywanie poleceń jest w trakcie. "
 "Zlekceważono."
 
-#: rkward/rbackend/rkrinterface.cpp:795
+#: rkward/rbackend/rkrinterface.cpp:792
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Nie można otworzyć pliku do zapisu. Polecenia nie będą zapisywane"
 
-#: rkward/rbackend/rkrinterface.cpp:806
+#: rkward/rbackend/rkrinterface.cpp:803
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Błąd: nierozpoznane żądanie '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:887
+#: rkward/rbackend/rkrinterface.cpp:884
 #, kde-format
 msgid "R backend requests information"
 msgstr "Silnik R żąda informacji"
 
-#: rkward/rbackend/rkrinterface.cpp:909
+#: rkward/rbackend/rkrinterface.cpp:906
 #, kde-format
 msgid ""
 "\n"
@@ -4065,7 +4066,7 @@ msgstr ""
 "otwarte pliki poleceń, wyniku lub nawet skopiować dane z otwartych edytorów "
 "danych. Po tym zakończ RKWard. Przepraszamy!"
 
-#: rkward/rbackend/rkrinterface.cpp:910
+#: rkward/rbackend/rkrinterface.cpp:907
 #, kde-format
 msgid "R engine has died"
 msgstr "Silnik R wyłączył się"

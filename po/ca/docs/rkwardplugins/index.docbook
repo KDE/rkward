@@ -6948,13 +6948,23 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;browser&gt;</term>
 <listitem
 ><para
->La propietat predeterminada és "selection" <variablelist
-> <varlistentry>
+>La propietat predeterminada és "selection" <variablelist>
+	<varlistentry>
 	<term
 >selection</term>
 	<listitem
 ><para
 >Text actual (nom de fitxer seleccionat) al navegador (cadena)</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term
+><parameter
+>overwrite</parameter
+></term>
+	<listitem
+><para
+>Si l'opció «overwrite» està marcada (booleana, només lectura, és a dir, per programa es pot llegir l'estat de la casella de selecció, però no canviar-la)</para
 ></listitem>
 	</varlistentry>
 	</variablelist

@@ -7052,13 +7052,23 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Macht", id.name="macht", i18n=FALSE)
 >&lt;browser&gt;   (bladerprogramma)</term>
 <listitem
 ><para
->Standaard eigenschap is "selection"  <variablelist
-> <varlistentry>
+>Standaard eigenschap is "selection"  <variablelist>
+	<varlistentry>
 	<term
 >selection  (selectie)</term>
 	<listitem
 ><para
 >Huidige tekst (geselecteerde bestandsnaam) in de browser (string)</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term
+><parameter
+>overschrijven</parameter
+></term>
+	<listitem
+><para
+>Of de optie "overschrijven" is geactiveerd (boolean, allen-lezen, d.w.z. u kunt de status van het keuzevakje lezen, maar het niet wijzigen, programmatisch)</para
 ></listitem>
 	</varlistentry>
 	</variablelist
