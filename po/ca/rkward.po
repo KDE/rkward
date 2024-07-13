@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-12 00:36+0000\n"
-"PO-Revision-Date: 2024-07-11 08:48+0200\n"
+"PO-Revision-Date: 2024-07-12 09:03+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.05.2\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -625,12 +625,7 @@ msgid "Unlock"
 msgstr "Desbloqueja"
 
 #: rkward/dataeditor/twintable.cpp:194
-#, fuzzy, kde-format
-#| msgid ""
-#| "The object's internal structure does not confrom to a regular <tt>data."
-#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
-#| "It may be possible to convert this object to a regular <tt>data.frame</"
-#| "tt> using <tt>as.data.frame()</tt>."
+#, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing has been disabled, and some columns may not be shown. It "

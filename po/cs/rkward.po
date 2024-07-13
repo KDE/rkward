@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-12 00:36+0000\n"
-"PO-Revision-Date: 2024-07-09 16:33+0200\n"
+"PO-Revision-Date: 2024-07-12 11:50+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -512,7 +512,7 @@ msgstr "Dvakrát klikněte na tato pole pro upravení úrovní faktorů."
 #: rkward/dataeditor/rkvareditmodel.cpp:839
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "Objekt '%1' není vektor"
 
 #: rkward/dataeditor/twintable.cpp:100
 #, kde-format
@@ -591,10 +591,9 @@ msgid ""
 msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:194
-#, fuzzy, kde-format
-#| msgid "None selected"
+#, kde-format
 msgid "Problem detected"
-msgstr "Nic nevybráno"
+msgstr "Byl zjištěn problém"
 
 #: rkward/dataeditor/twintable.cpp:214
 #, kde-format

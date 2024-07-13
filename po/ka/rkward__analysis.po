@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2024-06-11 05:32+0200\n"
+"PO-Revision-Date: 2024-07-12 13:54+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -441,7 +441,7 @@ msgstr ""
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.rkh:22
 #, kde-format
 msgid "Defines whether an exact p-value should be computed."
-msgstr ""
+msgstr "აღწერს, გამოითვლება თუ არა ზუსტი p-მნიშვნელობა."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "Compute confidence interval")
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "compute confidence interval")

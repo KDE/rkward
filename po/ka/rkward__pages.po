@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-06-11 05:05+0200\n"
+"PO-Revision-Date: 2024-07-12 13:50+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -61,6 +61,10 @@ msgid ""
 "additional R functions that you can use in scripts, or in the interactive R "
 "console."
 msgstr ""
+"<strong>R-ის პაკეტები</strog> გთავაზობთ აურაცხელი რაოდენობის მონაცემის "
+"ალგორითმებს და ხელსაწყოებს. ეს ფუნქციონალი (ძირითადად) დაყოფილია დამატებითი "
+"R-ის ფუნქციების სახით, რომლებიც შეგიძლიათ, სკრიპტებში გამოიყენოთ, ან "
+"ინტერაქტიურ R-ის კონსოლში."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -108,6 +112,10 @@ msgid ""
 "dialog to search, install and/or load packages (Settings->Manage R packages "
 "and plugins)."
 msgstr ""
+"R პაკეტების მართვის რეგულარული R ბრძანების სტრიქონის ინსტრუმენტების გარდა "
+"(იხ. < link href=\"rkward://rhelp/install.packages\"/>), RKWard გთავაზობთ "
+"გრაფიკულ დიალოგს პაკეტების მოსაძებნად, დასაყენებლად და/ან ჩატვირთვისთვის "
+"(მორგება->R პაკეტებისა და დამატებების მართვა)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -118,6 +126,11 @@ msgid ""
 "source is fully automated, you may still have to install additional "
 "libraries or other software for the compilation."
 msgstr ""
+"გაითვალისწინეთ, რომ სტანდარტულად, R პაკეტები ვრცელდება, როგორც კომპილირებული "
+"ბინარული ფაილები Windows-სა და MacOS-ზე, მაგრამ არა Linux-ზე. მიუხედავად "
+"იმისა, რომ ამ უკანასკნელისთვის, წყაროდან დაყენება სრულად ავტომატიზებულია, "
+"შეიძლება კვლავ მოგიწიოთ კომპილაციისთვის დამატებითი ბიბლიოთეკების ან სხვა "
+"პროგრამული უზრუნველყოფის დაყენება."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:32
@@ -157,6 +170,13 @@ msgid ""
 "plugins</link>), and check the option \"Show only packages providing RKWard "
 "dialogs\"."
 msgstr ""
+"RKWard-ის დამატებების დაყენება შეიძლება სხვადასხვა წყაროდან, მაგრამ "
+"დამატებების პაკეტების გავრცელება ჩვეულებრივ R პაკეტების საშუალებით ხდება. R "
+"პაკეტების მოსაძებნად, რომლებიც უზრუნველყოფენ RKWard გრაფიკულ დიალოგებს, "
+"გამოიყენეთ ჩვეულებრივი დიალოგი (<link href=\"rkward://actions/"
+"rpackage_install\">მორგება->R-ის პაკეტებისა და დამატებების მართვა</link>) და "
+"ჩართეთ პარამეტრი \"მხოლოდ, იმ პაკეტების ჩვენება, რომლებსაც RKWard-ის "
+"დიალოგები აქვთ\"."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -1414,6 +1434,7 @@ msgstr "RKWard-ის ნაგულისხმევი მალსახმ
 #, kde-format
 msgid "To point out some of the less discoverable or more important shortcuts:"
 msgstr ""
+"რომ მიგითითოთ ზოგიერთ ნაკლებად აღმოჩენად ან უფრო მნიშვნელოვან მალსახმობებზე:"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1422,6 +1443,8 @@ msgid ""
 "To cycle between document / tool windows inside RKWard, use Ctrl+Tab and Ctrl"
 "+Shift+Tab"
 msgstr ""
+"ხტუნვა დოკუმენტის / ხელსაწყოს ფანჯრებს შორის RKWard-ის შიგნით Ctrk+Tab და "
+"Ctrl+Shift+Tab ღილაკებით ხდება"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1700,6 +1723,8 @@ msgid ""
 "RKWard claims to take care of seamless integration with an office-suite. Why "
 "is there no native option to save it as an office file?"
 msgstr ""
+"RKWard ამტკიცებს, რომ საოფისე პროგრამების პაკეტში ინტეგრაციას თვითონ "
+"მიხედავს. რატომ არ არსებობს საშუალება, ის ოფისის ფაილის სახით შევინახოთ?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
@@ -2009,6 +2034,10 @@ msgid ""
 "the left of the object name. Clicking on this will expand the view to show "
 "all the children of the object."
 msgstr ""
+"დაიმახსოვრეთ, რომ ობიექტები იერარქიულადაა დალაგებული. ანუ, ობიექტის ზოგიერთი "
+"ტიპი თავის \"შვილ\" ობიექტებს შეიცავს. ეს ობიექტის სახელის მარცხნივ \"+\" "
+"სიმბოლოთი შეგიძლიათ, შეამჩნიოთ. მასზე დაწკაპუნება ობიექტის ყველა შვილს "
+"ჩამოშლის."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2017,6 +2046,8 @@ msgid ""
 "Hovering the mouse pointer over an object will show a short summary of the "
 "objects' basic properties."
 msgstr ""
+"თაგუნას კურსორის ობიექტი ზემოთ გაჩერებით ნაჩვენები იქნება ობიექტის საბაზისო "
+"თვისებების შეჯამება."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2027,6 +2058,10 @@ msgid ""
 "some types of objects. The most important actions for objects in package "
 "environments:"
 msgstr ""
+"რამდენიმე ქმედება ხელმისაწვდომია კონტექსტური მენიუდან (მარჯვენა ღილაკის "
+"დაკაპუნება ერთ-ერთ ობიექტზე). მაგრამ ზოგიერთი ეს ქმედება, მხოლოდ, ზოგიერთ "
+"ტიპის ობიექტისთვისაა ხელმისაწვდომი. ობიექტების ყველაზე მნიშვნელოვანი "
+"ქმედებები პაკეტის გარემოებში:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2035,6 +2070,8 @@ msgid ""
 "<b>Search Help</b>: This will try to locate and show a relevant R help page "
 "on the object."
 msgstr ""
+"<b>ძებნა დახმარებაში</b>: ეს სცდის, მოძებნოს და აჩვენოს შესაბამისი R-ის "
+"დახმარების გვერდი ობიექტის შესახებ."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2069,6 +2106,8 @@ msgid ""
 "<b>Edit</b>: Open the object in a data editor. Currently editing is only "
 "supported for data.frames."
 msgstr ""
+"<b>ჩასწორება</b>: ობიექტის გახსნა მონაცემების რედაქტორში. ამჟამად ჩასწორება, "
+"მხოლოდ, data.frames-ისთვისაა ხელმისაწვდომი."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30

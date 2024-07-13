@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-12 00:36+0000\n"
-"PO-Revision-Date: 2024-07-11 14:57+0300\n"
+"PO-Revision-Date: 2024-07-12 13:09+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -617,12 +617,7 @@ msgid "Unlock"
 msgstr "Kilidi Aç"
 
 #: rkward/dataeditor/twintable.cpp:194
-#, fuzzy, kde-format
-#| msgid ""
-#| "The object's internal structure does not confrom to a regular <tt>data."
-#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
-#| "It may be possible to convert this object to a regular <tt>data.frame</"
-#| "tt> using <tt>as.data.frame()</tt>."
+#, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing has been disabled, and some columns may not be shown. It "

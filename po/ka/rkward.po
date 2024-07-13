@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-12 00:36+0000\n"
-"PO-Revision-Date: 2024-07-11 06:10+0200\n"
+"PO-Revision-Date: 2024-07-12 13:53+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -810,6 +810,11 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"RKWard ბევრი სხვადასხვა პაკეტის სახითაა ხელმისაწვდომი და ხანდახან პრობლემები "
+"დაყენების ერთ კონკრეტულ მეთოდს აქვს ხოლმე. როგორ დააყენეთ RKWard (რომელი "
+"ფაილები გადმოწერეთ)?\n"
+"### შეავსეთ###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:145
 #, kde-format
@@ -839,6 +844,9 @@ msgid ""
 "generally provide the most options. Is the file you wish to import in one of "
 "the following formats?"
 msgstr ""
+"ზოგიერთი ფორმატისთვის RKWard-ს საკუთარი შემოტანის დიალოგები აქვს და როგორც "
+"წესი, ისინი პარამეტრების უმრავლესობას შეიცავენ. არის თუ არა ფაილი, რომლი "
+"შემოტანასაც ცდილობთ, ერთ-ერთი ამ ფორმატთაგანში?"
 
 #: rkward/dialogs/rkimportdialog.cpp:56
 #, kde-format
@@ -846,6 +854,8 @@ msgid ""
 "RKWard comes with several import dialogs, but none seem to be loaded, at "
 "present. Check your settings."
 msgstr ""
+"RKward-ს რამდენიმე შემოტანის დიალოგი მოჰყვება, მაგრამ, როგორც ჩანს, ამჟამად "
+"ჩატვირთული არცერთია. შეამოწმეთ თქვენი პარამეტრები."
 
 #: rkward/dialogs/rkimportdialog.cpp:70
 #, kde-format
@@ -871,6 +881,8 @@ msgid ""
 "The generic import plugin (shipped with RKWard) is not presently loaded. "
 "Check your settings."
 msgstr ""
+"ზოგადი შემოტანის დამატება (მოჰყება RKWard-ს) ამჟამად ჩატვირთული არაა. "
+"შეამოწმეთ თქვენი პარამეტრები."
 
 #: rkward/dialogs/rkimportdialog.cpp:91
 #, kde-format
