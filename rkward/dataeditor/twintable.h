@@ -22,6 +22,7 @@ class RKVarEditModel;
 class QActionGroup;
 class QAction;
 class QSplitter;
+class KMessageWidget;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -64,8 +65,8 @@ public Q_SLOTS:
 	void pasteToTable();
 /** paste the clipboard into the table, but not beyond selection boundaries	*/
 	void pasteToSelection();
-/** connected to RKVarEditModel::hasDuplicates() */
-	void containsDuplicates (const QStringList& dupes);
+/** connected to RKVarEditModel::hasProblems() */
+	void hasProblems();
 private:
 	int meta_header_anchor_section;
 /** read-write */
@@ -83,6 +84,7 @@ protected:
 /** Returns the active Table (of the two members), 0 if no table active */
 	TwinTableMember *activeTable ();
 
+	KMessageWidget* problems_note;
 	TwinTableMember* metaview;
 	TwinTableMember* dataview;
 

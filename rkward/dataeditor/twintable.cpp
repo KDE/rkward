@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 #include <kmessagebox.h>
+#include <KMessageWidget>
 #include <ktoggleaction.h>
 
 #include <qvariant.h>
@@ -31,13 +32,19 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (RObjectListener::Other), KXMLGUIClient () {
+TwinTable::TwinTable (QWidget *parent) :
+	RKEditor(parent),
+	RObjectListener(RObjectListener::Other),
+	KXMLGUIClient(),
+	datamodel(nullptr),
+	problems_note(nullptr),
+	main_object(nullptr)
+{
 	RK_TRACE (EDITOR);
 
-	main_object = nullptr;
-
+	// NOTE: Must have an outer QVBoxLayout! Assumed in hasProblems()
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	layout->setContentsMargins (0, 0, 0, 0);
+	layout->setContentsMargins(0, 0, 0, 0);
 	
 	splitter = new QSplitter (this);
 	splitter->setOrientation (Qt::Vertical);
@@ -188,11 +195,8 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	addNotificationType (RObjectListener::MetaChanged);
 	listenForObject (object);
 	objectMetaChanged (object);
-	connect (model, &RKVarEditModel::hasDuplicates, this, &TwinTable::containsDuplicates);
-
-	if (!problems.isEmpty()) {
-		KMessageBox::detailedError(this, i18n("The object's internal structure does not conform to a regular <tt>data.frame</tt>. Editing has been disabled, and some columns may not be shown. It may be possible to convert this object to a regular <tt>data.frame</tt> using <tt>as.data.frame()</tt>."), problems.join("\n"), i18n("Problem detected"));
-	}
+	connect (model, &RKVarEditModel::hasProblems, this, &TwinTable::hasProblems);
+	if (!problems.isEmpty()) hasProblems();
 }
 
 void TwinTable::setWindowStyleHint (const QString& hint) {
@@ -207,12 +211,24 @@ void TwinTable::setWindowStyleHint (const QString& hint) {
 	RKMDIWindow::setWindowStyleHint (hint);
 }
 
-void TwinTable::containsDuplicates (const QStringList& dupes) {
+void TwinTable::hasProblems() {
 	RK_TRACE (EDITOR);
 
-	if (!rw) return;
-	KMessageBox::informationList (this, i18n ("The editor '%1' contains the following duplicate columns. Editing this table may not be safe, and has been disabled. You may re-enable editing if you know what you are doing, but you are strongly advised to fix the table, and/or backup your data, first.", windowTitle ()), dupes, i18n ("Duplicate columns detected"));
-	enableEditing (false);
+	if (!problems_note) {
+		const QString &msg = i18n("The object's internal structure does not conform to a regular <tt>data.frame</tt>. Editing this table may not be safe, and has been disabled. Some columns may not be shown.");
+		problems_note = new KMessageWidget(msg);
+		problems_note->setMessageType(KMessageWidget::Error);
+		static_cast<QVBoxLayout*>(layout())->insertWidget(0, problems_note);
+		auto a = new QAction(problems_note);
+		a->setText(i18n("Show details"));
+		problems_note->addAction(a);
+		connect(a, &QAction::triggered, datamodel, [this, msg]() {
+			// NOTE: Not caching the problems in the lambda, as additional problem may yet be detected
+			KMessageBox::detailedError(this, msg + "<br/>" + i18n("It may be possible to convert this object to a regular <tt>data.frame</tt> using <tt>as.data.frame()</tt>."), datamodel->problems().join("\n"), i18n("Problem detected"));
+		});
+	}
+	problems_note->animatedShow();
+	enableEditing(false);
 }
 
 void TwinTable::objectMetaChanged (RObject* changed) {
@@ -480,27 +496,31 @@ void TwinTable::flushEdit () {
 void TwinTable::enableEditing (bool on) {
 	RK_TRACE (EDITOR);
 
-	flushEdit ();
-
-	rw = main_object ? on && main_object->canWrite () : on;  // NOTE: File->New->Dataset creates an Editor window, first, then sets the object to edit afterwards (TODO which looks like silly design)
+	flushEdit();
+	// NOTE: File->New->Dataset creates an Editor window, first, then sets the object to edit afterwards (TODO which looks like silly design)
+	bool prevent_edit = (main_object && !main_object->canWrite()) || (datamodel && !datamodel->problems().isEmpty());
+	rw = on && !prevent_edit;
 	metaview->rw = rw;
 	dataview->rw = rw;
 
-	QPalette palette = metaview->palette ();
-	if (on) palette.setColor (QPalette::Base, QApplication::palette ().color (QPalette::Active, QPalette::Base));
-	else palette.setColor (QPalette::Base, QApplication::palette ().color (QPalette::Disabled, QPalette::Base));
-	metaview->setPalette (palette);
-	dataview->setPalette (palette);
+	QPalette palette = metaview->palette();
+	if (rw) palette.setColor(QPalette::Base, QApplication::palette().color(QPalette::Active, QPalette::Base));
+	else palette.setColor(QPalette::Base, QApplication::palette().color(QPalette::Disabled, QPalette::Base));
+	metaview->setPalette(palette);
+	dataview->setPalette(palette);
 
 	QAbstractItemView::EditTriggers triggers = QAbstractItemView::NoEditTriggers;
 	if (rw) triggers = QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::AnyKeyPressed;
 	metaview->setEditTriggers (triggers);
 	dataview->setEditTriggers (triggers);
 
-	edit_actions->setEnabled (rw);
-	action_enable_editing->setChecked (rw);
-	action_tb_lock_editing->setChecked (!rw);
-	action_tb_unlock_editing->setChecked (rw);
+	edit_actions->setEnabled(rw);
+	action_enable_editing->setChecked(rw);
+	action_enable_editing->setEnabled(!prevent_edit);
+	action_tb_lock_editing->setChecked(!rw);
+	action_tb_lock_editing->setEnabled(!prevent_edit);
+	action_tb_unlock_editing->setChecked(rw);
+	action_tb_unlock_editing->setEnabled(!prevent_edit);
 
 	if (main_object) objectMetaChanged (main_object);	// update_caption;
 }

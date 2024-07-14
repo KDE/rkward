@@ -85,9 +85,8 @@ public:
 	QStringList problems() const { return problem_details; };
 Q_SIGNALS:
 	void modelDepleted ();
-	void hasDuplicates (const QStringList& dupes);
+	void hasProblems();
 private Q_SLOTS:
-	void checkDuplicatesNow ();
 	void doResetNow ();
 private:
 	bool reset_scheduled;
@@ -97,6 +96,7 @@ friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;
 	QStringList problem_details;
 	RKRowNames *rownames;
+	void addProblem(const QString &desc);
 
 	/** very simple convenience function to return the number of true cols + trailing cols */
 	int apparentCols () const { return (trueCols () + trailing_cols); };
@@ -111,10 +111,6 @@ friend class RKVarEditMetaModel;
 
 	virtual void doInsertRowsInBackend (int row, int count);
 	virtual void doRemoveRowsInBackend (int row, int count);
-
-	/** Check whether there are any duplicate names in the model. Actual check is delayed until the next iteration of the event loop. If a duplicate is found, hasDuplicates(const QStringList&) is emitted. */
-	void checkDuplicates ();
-	bool duplicate_check_triggered;
 
 	int trailing_rows;
 	int trailing_cols;

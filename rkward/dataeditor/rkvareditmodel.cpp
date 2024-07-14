@@ -28,7 +28,6 @@ RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), 
 	edit_blocks = 0;
 	rownames = nullptr;
 	header_locked = false;
-	duplicate_check_triggered = false;
 	reset_scheduled = false;
 
 	addNotificationType (RObjectListener::ObjectRemoved);
@@ -66,7 +65,23 @@ void RKVarEditModel::addObject (int index, RKVariable* object) {
 	if (meta_model) meta_model->endAddDataObject ();
 	endInsertColumns ();
 
-	checkDuplicates ();
+	auto name = object->getShortName();
+	if (index >= var_col_offset) {
+		for (int i = var_col_offset; i < objects.size(); ++i) {
+			if (i == index) continue;
+			if (objects[i]->getShortName() == name) {
+				addProblem(i18n("Duplicate column name '%1'", name));
+			}
+		}
+	}
+}
+
+void RKVarEditModel::addProblem(const QString &prob) {
+	RK_TRACE(EDITOR);
+	if (problem_details.isEmpty()) {
+		Q_EMIT hasProblems();
+	}
+	problem_details.append(prob);
 }
 
 void RKVarEditModel::objectRemoved (RObject* object) {
@@ -86,35 +101,6 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	endRemoveColumns ();
 
 	if (objects.size () <= var_col_offset) Q_EMIT modelDepleted();	// editor may or may want to auto-destruct
-}
-
-void RKVarEditModel::checkDuplicates () {
-	RK_TRACE (EDITOR);
-
-	if (duplicate_check_triggered) return;
-	duplicate_check_triggered = true;
-	QTimer::singleShot(0, this, &RKVarEditModel::checkDuplicatesNow);
-}
-
-void RKVarEditModel::checkDuplicatesNow () {
-	RK_TRACE (EDITOR);
-
-	duplicate_check_triggered = false;
-
-	QStringList dupes;
-	for (int i = var_col_offset; i < objects.size (); ++i) {
-		QString name = objects[i]->getShortName ();
-		for (int j = i+1; j < objects.size (); ++j) {
-			if (objects[j]->getShortName () == name) {
-				if (objects[i]->getFullName () == objects[j]->getFullName ()) {
-					dupes.append (objects[i]->getFullName ());
-					j = objects.size ();		// break
-				}
-			}
-		}
-	}
-
-	if (!dupes.isEmpty ()) Q_EMIT hasDuplicates(dupes);
 }
 
 void RKVarEditModel::objectMetaChanged (RObject* changed) {
@@ -836,7 +822,7 @@ void RKVarEditDataFrameModel::init (RContainerObject* dataframe) {
 		if (obj->isVariable()) {
 			addObject(i, static_cast<RKVariable*>(obj));
 		} else {
-			problem_details.append(i18n("Object '%1' is not a vector", obj->getShortName()));
+			addProblem(i18n("Object '%1' is not a vector", obj->getShortName()));
 		}
 	}
 	rownames = dataframe->rowNames ();

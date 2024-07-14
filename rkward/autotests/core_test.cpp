@@ -463,6 +463,14 @@ private Q_SLOTS:
 		waitForAllFinished();
 	}
 
+	void dataEditorTest() {
+		// Create a quirky data.frame, intentionally. Goal is not to crash ;-)
+		RInterface::issueCommand(new RCommand("df <- data.frame('a'=letters, 'a'=letters, 'b'=letters, check.names=FALSE); df[[2, 'b']] <- list('x')", RCommand::User));
+		RInterface::issueCommand(new RCommand("rk.edit(df)", RCommand::User));
+		waitForAllFinished();
+		RKWardMainWindow::getMain()->slotCloseAllEditors();
+	}
+
 	void restartRBackend() {
 		RInterface::issueCommand(new RCommand("setwd(tempdir())", RCommand::User)); // retart used to fail, if in non-existant directory
 		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
