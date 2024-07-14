@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-12 00:36+0000\n"
-"PO-Revision-Date: 2024-07-12 22:08+0200\n"
+"PO-Revision-Date: 2024-07-13 10:51+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -534,7 +534,7 @@ msgstr "Duoble alklaku ĉi tiujn kampojn por redakti faktorajn nivelojn."
 #: rkward/dataeditor/rkvareditmodel.cpp:839
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "Objekto '%1' ne estas vektoro"
 
 #: rkward/dataeditor/twintable.cpp:100
 #, kde-format
@@ -614,6 +614,10 @@ msgid ""
 "may be possible to convert this object to a regular <tt>data.frame</tt> "
 "using <tt>as.data.frame()</tt>."
 msgstr ""
+"La interna strukturo de la objekto ne konformas al regula <tt>data.frame</"
+"tt>. Redaktado estas malŝaltita, kaj iuj kolumnoj eble ne montriĝas. Eble "
+"eblas konverti ĉi tiun objekton al regula <tt>data.frame</tt> uzante <tt>as."
+"data.frame()</tt>."
 
 #: rkward/dataeditor/twintable.cpp:194
 #, kde-format
@@ -6398,6 +6402,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>Nesubtenata formato</h1><p>La antaŭrigardo ne povas esti montrita ĉi tie "
+"ĉar la eligoformato estas nek HTML, nek PDF. Vi povas provi malfermi ĝin en "
+"ekstera aplikaĵo, uzante la suban ligilon, aŭ vi povas ŝanĝi la "
+"antaŭrigardan reĝimon al 'R Markdown (HTML)'.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:672
 #, kde-format
