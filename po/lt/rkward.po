@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-12 00:36+0000\n"
+"POT-Creation-Date: 2024-07-15 00:36+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -247,7 +247,7 @@ msgid ""
 msgstr "Tikrai pašalinti objektą „%1“? Jis bus pašalintas negrįžtamai."
 
 #: rkward/core/rkmodificationtracker.cpp:351
-#: rkward/dataeditor/rkvareditmodel.cpp:685
+#: rkward/dataeditor/rkvareditmodel.cpp:671
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:365
 #: rkward/dialogs/rkloadlibsdialog.cpp:953 rkward/misc/rkobjectlistview.cpp:267
@@ -258,7 +258,7 @@ msgid "Name"
 msgstr "Vardas"
 
 #: rkward/core/rkmodificationtracker.cpp:352
-#: rkward/dataeditor/rkvareditmodel.cpp:686
+#: rkward/dataeditor/rkvareditmodel.cpp:672
 #: rkward/misc/editlabelsdialog.cpp:196 rkward/misc/rkobjectlistview.cpp:212
 #: rkward/misc/rkobjectlistview.cpp:269
 #, kde-format
@@ -266,7 +266,7 @@ msgid "Label"
 msgstr "Etiketė"
 
 #: rkward/core/rkmodificationtracker.cpp:353
-#: rkward/dataeditor/rkvareditmodel.cpp:687
+#: rkward/dataeditor/rkvareditmodel.cpp:673
 #: rkward/misc/rkobjectlistview.cpp:211 rkward/rbackend/rcommandstack.cpp:313
 #: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
@@ -441,207 +441,209 @@ msgstr "Netinkamas vardas"
 msgid "&Edit"
 msgstr "&Keisti"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:273
-#: rkward/dataeditor/rkvareditmodel.cpp:553
+#: rkward/dataeditor/rkvareditmodel.cpp:73
+#, kde-format
+msgid "Duplicate column name '%1'"
+msgstr ""
+
+#: rkward/dataeditor/rkvareditmodel.cpp:259
+#: rkward/dataeditor/rkvareditmodel.cpp:539
 #, kde-format
 msgid "Type on these fields to add new columns"
 msgstr ""
 "Norėdami pridėti naujus stulpelius, tiesiog rašykite šiuose laukeliuose"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:274
+#: rkward/dataeditor/rkvareditmodel.cpp:260
 #, kde-format
 msgid "Type on these fields to add new rows"
 msgstr "Norėdami pridėti naujas eilutes, tiesiog rašykite šiuose laukeliuose"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:296 rkward/plugin/rkmatrixinput.cpp:517
+#: rkward/dataeditor/rkvareditmodel.cpp:282 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
 msgid "This value is not allowed, here"
 msgstr "Tokia reikšmė čia neleistina"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:364
+#: rkward/dataeditor/rkvareditmodel.cpp:350
 #, kde-format
 msgid "#New Variable#"
 msgstr "# Naujas kintamasis #"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:365
+#: rkward/dataeditor/rkvareditmodel.cpp:351
 #, kde-format
 msgid "Row names"
 msgstr "Eilučių pavadinimai"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:370
+#: rkward/dataeditor/rkvareditmodel.cpp:356
 #, kde-format
 msgid "This column contains one or more invalid fields"
 msgstr "Stulpelyje yra bent vienas netinkamas laukas"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:688
+#: rkward/dataeditor/rkvareditmodel.cpp:674
 #, kde-format
 msgid "Format"
 msgstr "Formatas"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:689
+#: rkward/dataeditor/rkvareditmodel.cpp:675
 #, kde-format
 msgid "Levels"
 msgstr "Lygiai"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:692
+#: rkward/dataeditor/rkvareditmodel.cpp:678
 #, kde-format
 msgid "Edit these fields to rename variables."
 msgstr ""
 
-#: rkward/dataeditor/rkvareditmodel.cpp:693
+#: rkward/dataeditor/rkvareditmodel.cpp:679
 #, kde-format
 msgid "A descriptive label for each column (optional)."
 msgstr ""
 
-#: rkward/dataeditor/rkvareditmodel.cpp:694
+#: rkward/dataeditor/rkvareditmodel.cpp:680
 #, kde-format
 msgid "Type of data."
 msgstr "Duomenų tipas."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:695
+#: rkward/dataeditor/rkvareditmodel.cpp:681
 #, kde-format
 msgid "Double click on these fields to customize data display."
 msgstr ""
 
-#: rkward/dataeditor/rkvareditmodel.cpp:696
+#: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
 msgstr ""
 
-#: rkward/dataeditor/rkvareditmodel.cpp:839
+#: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
 msgid "Object '%1' is not a vector"
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:100
+#: rkward/dataeditor/twintable.cpp:107
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
 msgstr "Iškirpti pažymėtą sritį ir ją laikyti iškarpinėje"
 
-#: rkward/dataeditor/twintable.cpp:102
+#: rkward/dataeditor/twintable.cpp:109
 #, kde-format
 msgid "Copies the selected section to the clipboard"
 msgstr "Nukopijuoti pažymėtą sritį į iškarpinę"
 
-#: rkward/dataeditor/twintable.cpp:105
+#: rkward/dataeditor/twintable.cpp:112
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:108
+#: rkward/dataeditor/twintable.cpp:115
 #, kde-format
 msgid "Paste inside table"
 msgstr "Įdėti į lentelę"
 
-#: rkward/dataeditor/twintable.cpp:110
+#: rkward/dataeditor/twintable.cpp:117
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:113
+#: rkward/dataeditor/twintable.cpp:120
 #, kde-format
 msgid "Paste inside selection"
 msgstr "Įdėti į pažymėtą sritį"
 
-#: rkward/dataeditor/twintable.cpp:115
+#: rkward/dataeditor/twintable.cpp:122
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:132
+#: rkward/dataeditor/twintable.cpp:139
 #, fuzzy, kde-format
 #| msgid "Show All Environments"
 msgid "Show / Edit row names"
 msgstr "Rodyti visas aplinkas"
 
-#: rkward/dataeditor/twintable.cpp:135 rkward/dataeditor/twintable.cpp:148
+#: rkward/dataeditor/twintable.cpp:142 rkward/dataeditor/twintable.cpp:155
 #, fuzzy, kde-format
 #| msgid "Enable code completion"
 msgid "Enable editing"
 msgstr "Įgalinti kodo užbaigimą"
 
-#: rkward/dataeditor/twintable.cpp:140
+#: rkward/dataeditor/twintable.cpp:147
 #, kde-format
 msgctxt "verb: switch to read-only state. Make this short."
 msgid "Lock"
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:143
+#: rkward/dataeditor/twintable.cpp:150
 #, kde-format
 msgid "Disable editing (to prevent accidental modification of data)"
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:145
+#: rkward/dataeditor/twintable.cpp:152
 #, fuzzy, kde-format
 #| msgid "Unload"
 msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
 msgstr "Iškelti"
 
-#: rkward/dataeditor/twintable.cpp:194
+#: rkward/dataeditor/twintable.cpp:218
 #, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
-"frame</tt>. Editing has been disabled, and some columns may not be shown. It "
-"may be possible to convert this object to a regular <tt>data.frame</tt> "
-"using <tt>as.data.frame()</tt>."
+"frame</tt>. Editing this table may not be safe, and has been disabled. Some "
+"columns may not be shown."
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:194
+#: rkward/dataeditor/twintable.cpp:223
+#, fuzzy, kde-format
+#| msgid "Show Fields"
+msgid "Show details"
+msgstr "Rodyti laukelius"
+
+#: rkward/dataeditor/twintable.cpp:227
+#, kde-format
+msgid ""
+"You may want to create an editable subset using Data->Subset data.frame."
+msgstr ""
+
+#: rkward/dataeditor/twintable.cpp:227
 #, fuzzy, kde-format
 #| msgid "Run selection"
 msgid "Problem detected"
 msgstr "Vykdyti pažymėtą sritį"
 
-#: rkward/dataeditor/twintable.cpp:214
-#, kde-format
-msgid ""
-"The editor '%1' contains the following duplicate columns. Editing this table "
-"may not be safe, and has been disabled. You may re-enable editing if you "
-"know what you are doing, but you are strongly advised to fix the table, and/"
-"or backup your data, first."
-msgstr ""
-
-#: rkward/dataeditor/twintable.cpp:214
-#, kde-format
-msgid "Duplicate columns detected"
-msgstr ""
-
-#: rkward/dataeditor/twintable.cpp:223
+#: rkward/dataeditor/twintable.cpp:239
 #, kde-format
 msgid "%1 [read-only]"
 msgstr "%1 [tik skaitomas]"
 
-#: rkward/dataeditor/twintable.cpp:268
+#: rkward/dataeditor/twintable.cpp:284
 #, kde-format
 msgid "Insert new variable left"
 msgstr "Naują kintamąjį įterpti kairėje"
 
-#: rkward/dataeditor/twintable.cpp:271
+#: rkward/dataeditor/twintable.cpp:287
 #, kde-format
 msgid "Delete this variable"
 msgstr "Pašalinti šį kintamąjį"
 
-#: rkward/dataeditor/twintable.cpp:282
+#: rkward/dataeditor/twintable.cpp:298
 #, kde-format
 msgid "Insert new case above (at %1)"
 msgstr "Įterpti naują atvejį aukščiau (ties %1 eilute)"
 
-#: rkward/dataeditor/twintable.cpp:291
+#: rkward/dataeditor/twintable.cpp:307
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
 msgstr "Pašalinti pažymėtas eilutes (%1-%2)"
 
-#: rkward/dataeditor/twintable.cpp:297
+#: rkward/dataeditor/twintable.cpp:313
 #, kde-format
 msgid "Delete this row (%1)"
 msgstr "Pašalinti šią eilutę (%1)"
 
-#: rkward/dataeditor/twintable.cpp:419
+#: rkward/dataeditor/twintable.cpp:435
 #, kde-format
 msgid "Inserting clipboard contents..."
 msgstr "Įdedamas iškarpinės turinys..."

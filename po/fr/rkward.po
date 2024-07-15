@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-12 00:36+0000\n"
+"POT-Creation-Date: 2024-07-15 00:36+0000\n"
 "PO-Revision-Date: 2024-07-09 12:51+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -273,7 +273,7 @@ msgstr ""
 "en arrière."
 
 #: rkward/core/rkmodificationtracker.cpp:351
-#: rkward/dataeditor/rkvareditmodel.cpp:685
+#: rkward/dataeditor/rkvareditmodel.cpp:671
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:365
 #: rkward/dialogs/rkloadlibsdialog.cpp:953 rkward/misc/rkobjectlistview.cpp:267
@@ -284,7 +284,7 @@ msgid "Name"
 msgstr "Nom"
 
 #: rkward/core/rkmodificationtracker.cpp:352
-#: rkward/dataeditor/rkvareditmodel.cpp:686
+#: rkward/dataeditor/rkvareditmodel.cpp:672
 #: rkward/misc/editlabelsdialog.cpp:196 rkward/misc/rkobjectlistview.cpp:212
 #: rkward/misc/rkobjectlistview.cpp:269
 #, kde-format
@@ -292,7 +292,7 @@ msgid "Label"
 msgstr "Étiquette"
 
 #: rkward/core/rkmodificationtracker.cpp:353
-#: rkward/dataeditor/rkvareditmodel.cpp:687
+#: rkward/dataeditor/rkvareditmodel.cpp:673
 #: rkward/misc/rkobjectlistview.cpp:211 rkward/rbackend/rcommandstack.cpp:313
 #: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
@@ -475,99 +475,105 @@ msgstr "Nom incorrect"
 msgid "&Edit"
 msgstr "&Édition"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:273
-#: rkward/dataeditor/rkvareditmodel.cpp:553
+#: rkward/dataeditor/rkvareditmodel.cpp:73
+#, fuzzy, kde-format
+#| msgid "Duplicate columns detected"
+msgid "Duplicate column name '%1'"
+msgstr "Détection de colonnes dupliquées"
+
+#: rkward/dataeditor/rkvareditmodel.cpp:259
+#: rkward/dataeditor/rkvareditmodel.cpp:539
 #, kde-format
 msgid "Type on these fields to add new columns"
 msgstr "Saisir dans ces champs pour ajouter de nouvelles colonnes"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:274
+#: rkward/dataeditor/rkvareditmodel.cpp:260
 #, kde-format
 msgid "Type on these fields to add new rows"
 msgstr "Saisissez dans ces champs pour ajouter de nouvelles lignes"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:296 rkward/plugin/rkmatrixinput.cpp:517
+#: rkward/dataeditor/rkvareditmodel.cpp:282 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
 msgid "This value is not allowed, here"
 msgstr "Cette valeur n'est pas autorisée ici"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:364
+#: rkward/dataeditor/rkvareditmodel.cpp:350
 #, kde-format
 msgid "#New Variable#"
 msgstr "#Nouvelle variable#"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:365
+#: rkward/dataeditor/rkvareditmodel.cpp:351
 #, kde-format
 msgid "Row names"
 msgstr "Noms des lignes"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:370
+#: rkward/dataeditor/rkvareditmodel.cpp:356
 #, kde-format
 msgid "This column contains one or more invalid fields"
 msgstr "Cette colonne contient un ou plusieurs champs non valables."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:688
+#: rkward/dataeditor/rkvareditmodel.cpp:674
 #, kde-format
 msgid "Format"
 msgstr "Formater"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:689
+#: rkward/dataeditor/rkvareditmodel.cpp:675
 #, kde-format
 msgid "Levels"
 msgstr "Niveaux"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:692
+#: rkward/dataeditor/rkvareditmodel.cpp:678
 #, kde-format
 msgid "Edit these fields to rename variables."
 msgstr "Modifier ces champs pour renommer les variables."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:693
+#: rkward/dataeditor/rkvareditmodel.cpp:679
 #, kde-format
 msgid "A descriptive label for each column (optional)."
 msgstr "Un libellé de description pour chaque colonne (facultatif)."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:694
+#: rkward/dataeditor/rkvareditmodel.cpp:680
 #, kde-format
 msgid "Type of data."
 msgstr "Type de données"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:695
+#: rkward/dataeditor/rkvareditmodel.cpp:681
 #, kde-format
 msgid "Double click on these fields to customize data display."
 msgstr ""
 "Double-cliquez sur ces champs pour personnaliser l'affichage des données."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:696
+#: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
 msgstr "Double-cliquez sur ces champs pour éditer les niveaux de facteurs."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:839
+#: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
 msgid "Object '%1' is not a vector"
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:100
+#: rkward/dataeditor/twintable.cpp:107
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
 msgstr "Coupe la sélection et la place dans le presse-papiers"
 
-#: rkward/dataeditor/twintable.cpp:102
+#: rkward/dataeditor/twintable.cpp:109
 #, kde-format
 msgid "Copies the selected section to the clipboard"
 msgstr "Copie la sélection dans le presse-papiers"
 
-#: rkward/dataeditor/twintable.cpp:105
+#: rkward/dataeditor/twintable.cpp:112
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
 msgstr "Colle le contenu du presse-papiers à la position actuelle"
 
-#: rkward/dataeditor/twintable.cpp:108
+#: rkward/dataeditor/twintable.cpp:115
 #, kde-format
 msgid "Paste inside table"
 msgstr "Coller à l'intérieur d'une table"
 
-#: rkward/dataeditor/twintable.cpp:110
+#: rkward/dataeditor/twintable.cpp:117
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
@@ -576,12 +582,12 @@ msgstr ""
 "Colle le contenu du presse-papier à la position actuelle du curseur mais pas "
 "au-delà des limites de la table."
 
-#: rkward/dataeditor/twintable.cpp:113
+#: rkward/dataeditor/twintable.cpp:120
 #, kde-format
 msgid "Paste inside selection"
 msgstr "Coller à l'intérieur de la sélection"
 
-#: rkward/dataeditor/twintable.cpp:115
+#: rkward/dataeditor/twintable.cpp:122
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
@@ -590,100 +596,92 @@ msgstr ""
 "Colle le contenu du presse-papiers à la position actuelle, mais pas au-delà "
 "des limites de la sélection actuelle."
 
-#: rkward/dataeditor/twintable.cpp:132
+#: rkward/dataeditor/twintable.cpp:139
 #, kde-format
 msgid "Show / Edit row names"
 msgstr "Afficher / Modifier les noms de lignes"
 
-#: rkward/dataeditor/twintable.cpp:135 rkward/dataeditor/twintable.cpp:148
+#: rkward/dataeditor/twintable.cpp:142 rkward/dataeditor/twintable.cpp:155
 #, kde-format
 msgid "Enable editing"
 msgstr "Activer la modification"
 
-#: rkward/dataeditor/twintable.cpp:140
+#: rkward/dataeditor/twintable.cpp:147
 #, kde-format
 msgctxt "verb: switch to read-only state. Make this short."
 msgid "Lock"
 msgstr "Verrouiller"
 
-#: rkward/dataeditor/twintable.cpp:143
+#: rkward/dataeditor/twintable.cpp:150
 #, kde-format
 msgid "Disable editing (to prevent accidental modification of data)"
 msgstr ""
 "Désactiver la modification (Pour prévenir une modification accidentelle des "
 "données)"
 
-#: rkward/dataeditor/twintable.cpp:145
+#: rkward/dataeditor/twintable.cpp:152
 #, kde-format
 msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
 msgstr "Déverrouiller"
 
-#: rkward/dataeditor/twintable.cpp:194
+#: rkward/dataeditor/twintable.cpp:218
 #, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
-"frame</tt>. Editing has been disabled, and some columns may not be shown. It "
-"may be possible to convert this object to a regular <tt>data.frame</tt> "
-"using <tt>as.data.frame()</tt>."
+"frame</tt>. Editing this table may not be safe, and has been disabled. Some "
+"columns may not be shown."
 msgstr ""
 
-#: rkward/dataeditor/twintable.cpp:194
+#: rkward/dataeditor/twintable.cpp:223
+#, fuzzy, kde-format
+#| msgid "Show Details"
+msgid "Show details"
+msgstr "Afficher les détails"
+
+#: rkward/dataeditor/twintable.cpp:227
+#, kde-format
+msgid ""
+"You may want to create an editable subset using Data->Subset data.frame."
+msgstr ""
+
+#: rkward/dataeditor/twintable.cpp:227
 #, fuzzy, kde-format
 #| msgid "None selected"
 msgid "Problem detected"
 msgstr "Aucune sélection"
 
-#: rkward/dataeditor/twintable.cpp:214
-#, kde-format
-msgid ""
-"The editor '%1' contains the following duplicate columns. Editing this table "
-"may not be safe, and has been disabled. You may re-enable editing if you "
-"know what you are doing, but you are strongly advised to fix the table, and/"
-"or backup your data, first."
-msgstr ""
-"L'éditeur « %1 » contient des duplicatas pour les colonnes suivantes. La "
-"modification de cette table pourrait ne pas être sûre et a été désactivée. "
-"Vous devriez ré-activer la modification si vous savez ce que vous faites. "
-"Mais, il vous est fortement conseillé de corriger la table et /ou tout "
-"d'abord, de sauvegarder vos données."
-
-#: rkward/dataeditor/twintable.cpp:214
-#, kde-format
-msgid "Duplicate columns detected"
-msgstr "Détection de colonnes dupliquées"
-
-#: rkward/dataeditor/twintable.cpp:223
+#: rkward/dataeditor/twintable.cpp:239
 #, kde-format
 msgid "%1 [read-only]"
 msgstr "%1 [lecture seule]"
 
-#: rkward/dataeditor/twintable.cpp:268
+#: rkward/dataeditor/twintable.cpp:284
 #, kde-format
 msgid "Insert new variable left"
 msgstr "Insérer la nouvelle variable à gauche"
 
-#: rkward/dataeditor/twintable.cpp:271
+#: rkward/dataeditor/twintable.cpp:287
 #, kde-format
 msgid "Delete this variable"
 msgstr "Supprimer cette variable"
 
-#: rkward/dataeditor/twintable.cpp:282
+#: rkward/dataeditor/twintable.cpp:298
 #, kde-format
 msgid "Insert new case above (at %1)"
 msgstr "Insérer un nouvelle case ci-dessus (à %1)"
 
-#: rkward/dataeditor/twintable.cpp:291
+#: rkward/dataeditor/twintable.cpp:307
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
 msgstr "Suppression des lignes marquées (%1 - %2)"
 
-#: rkward/dataeditor/twintable.cpp:297
+#: rkward/dataeditor/twintable.cpp:313
 #, kde-format
 msgid "Delete this row (%1)"
 msgstr "Supprimer cette ligne (%1)"
 
-#: rkward/dataeditor/twintable.cpp:419
+#: rkward/dataeditor/twintable.cpp:435
 #, kde-format
 msgid "Inserting clipboard contents..."
 msgstr "Insertion du contenu du presse-papiers..."
@@ -7815,6 +7813,18 @@ msgstr "Saisissez un nouveau nom"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Affichage dans l'éditeur (Lecture seule)"
+
+#~ msgid ""
+#~ "The editor '%1' contains the following duplicate columns. Editing this "
+#~ "table may not be safe, and has been disabled. You may re-enable editing "
+#~ "if you know what you are doing, but you are strongly advised to fix the "
+#~ "table, and/or backup your data, first."
+#~ msgstr ""
+#~ "L'éditeur « %1 » contient des duplicatas pour les colonnes suivantes. La "
+#~ "modification de cette table pourrait ne pas être sûre et a été "
+#~ "désactivée. Vous devriez ré-activer la modification si vous savez ce que "
+#~ "vous faites. Mais, il vous est fortement conseillé de corriger la table "
+#~ "et /ou tout d'abord, de sauvegarder vos données."
 
 #~ msgid "Pandoc is not installed"
 #~ msgstr "Le paquet « pandoc » n'est pas installé"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-12 00:36+0000\n"
+"POT-Creation-Date: 2024-07-15 00:36+0000\n"
 "PO-Revision-Date: 2024-07-12 20:49+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -267,7 +267,7 @@ msgstr ""
 "det."
 
 #: rkward/core/rkmodificationtracker.cpp:351
-#: rkward/dataeditor/rkvareditmodel.cpp:685
+#: rkward/dataeditor/rkvareditmodel.cpp:671
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:365
 #: rkward/dialogs/rkloadlibsdialog.cpp:953 rkward/misc/rkobjectlistview.cpp:267
@@ -278,7 +278,7 @@ msgid "Name"
 msgstr "Namn"
 
 #: rkward/core/rkmodificationtracker.cpp:352
-#: rkward/dataeditor/rkvareditmodel.cpp:686
+#: rkward/dataeditor/rkvareditmodel.cpp:672
 #: rkward/misc/editlabelsdialog.cpp:196 rkward/misc/rkobjectlistview.cpp:212
 #: rkward/misc/rkobjectlistview.cpp:269
 #, kde-format
@@ -286,7 +286,7 @@ msgid "Label"
 msgstr "Beteckning"
 
 #: rkward/core/rkmodificationtracker.cpp:353
-#: rkward/dataeditor/rkvareditmodel.cpp:687
+#: rkward/dataeditor/rkvareditmodel.cpp:673
 #: rkward/misc/rkobjectlistview.cpp:211 rkward/rbackend/rcommandstack.cpp:313
 #: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
@@ -466,98 +466,104 @@ msgstr "Ogiltigt namn"
 msgid "&Edit"
 msgstr "&Redigera"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:273
-#: rkward/dataeditor/rkvareditmodel.cpp:553
+#: rkward/dataeditor/rkvareditmodel.cpp:73
+#, fuzzy, kde-format
+#| msgid "Duplicate columns detected"
+msgid "Duplicate column name '%1'"
+msgstr "Duplicerade kolumner detekterade"
+
+#: rkward/dataeditor/rkvareditmodel.cpp:259
+#: rkward/dataeditor/rkvareditmodel.cpp:539
 #, kde-format
 msgid "Type on these fields to add new columns"
 msgstr "Skriv i dessa fält för att lägga till nya kolumner"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:274
+#: rkward/dataeditor/rkvareditmodel.cpp:260
 #, kde-format
 msgid "Type on these fields to add new rows"
 msgstr "Skriv i dessa fält för att lägga till nya rader"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:296 rkward/plugin/rkmatrixinput.cpp:517
+#: rkward/dataeditor/rkvareditmodel.cpp:282 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
 msgid "This value is not allowed, here"
 msgstr "Värdet tillåts inte här"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:364
+#: rkward/dataeditor/rkvareditmodel.cpp:350
 #, kde-format
 msgid "#New Variable#"
 msgstr "#Ny variabel#"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:365
+#: rkward/dataeditor/rkvareditmodel.cpp:351
 #, kde-format
 msgid "Row names"
 msgstr "Radnamn"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:370
+#: rkward/dataeditor/rkvareditmodel.cpp:356
 #, kde-format
 msgid "This column contains one or more invalid fields"
 msgstr "Kolumnen innehåller ett eller flera ogiltiga fält"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:688
+#: rkward/dataeditor/rkvareditmodel.cpp:674
 #, kde-format
 msgid "Format"
 msgstr "Format"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:689
+#: rkward/dataeditor/rkvareditmodel.cpp:675
 #, kde-format
 msgid "Levels"
 msgstr "Nivåer"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:692
+#: rkward/dataeditor/rkvareditmodel.cpp:678
 #, kde-format
 msgid "Edit these fields to rename variables."
 msgstr "Redigera fälten för att byta namn på variablerna."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:693
+#: rkward/dataeditor/rkvareditmodel.cpp:679
 #, kde-format
 msgid "A descriptive label for each column (optional)."
 msgstr "En beskrivande beteckning för varje kolumn (valfri)."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:694
+#: rkward/dataeditor/rkvareditmodel.cpp:680
 #, kde-format
 msgid "Type of data."
 msgstr "Typ av data."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:695
+#: rkward/dataeditor/rkvareditmodel.cpp:681
 #, kde-format
 msgid "Double click on these fields to customize data display."
 msgstr "Dubbelklicka på fälten för att anpassa datavisningen."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:696
+#: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
 msgstr "Dubbelklicka på fälten för att redigera faktoriseringsnivåer."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:839
+#: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
 msgid "Object '%1' is not a vector"
 msgstr "Objektet '%1' är inte en vektor"
 
-#: rkward/dataeditor/twintable.cpp:100
+#: rkward/dataeditor/twintable.cpp:107
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
 msgstr "Klipper ut markerat avsnitt och placerar den på klippbordet"
 
-#: rkward/dataeditor/twintable.cpp:102
+#: rkward/dataeditor/twintable.cpp:109
 #, kde-format
 msgid "Copies the selected section to the clipboard"
 msgstr "Kopierar markerat avsnitt till klippbordet"
 
-#: rkward/dataeditor/twintable.cpp:105
+#: rkward/dataeditor/twintable.cpp:112
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
 msgstr "Klistrar in klippbordets innehåll på aktuell position"
 
-#: rkward/dataeditor/twintable.cpp:108
+#: rkward/dataeditor/twintable.cpp:115
 #, kde-format
 msgid "Paste inside table"
 msgstr "Klistra in inne i tabell"
 
-#: rkward/dataeditor/twintable.cpp:110
+#: rkward/dataeditor/twintable.cpp:117
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
@@ -566,12 +572,12 @@ msgstr ""
 "Klistrar in klippbordets innehåll på nuvarande position, men inte förbi "
 "tabellens gränser"
 
-#: rkward/dataeditor/twintable.cpp:113
+#: rkward/dataeditor/twintable.cpp:120
 #, kde-format
 msgid "Paste inside selection"
 msgstr "Klistra in inne i markering"
 
-#: rkward/dataeditor/twintable.cpp:115
+#: rkward/dataeditor/twintable.cpp:122
 #, kde-format
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
@@ -580,100 +586,98 @@ msgstr ""
 "Klistrar in klippbordets innehåll på nuvarande position, men inte förbi "
 "nuvarande markerings gränser"
 
-#: rkward/dataeditor/twintable.cpp:132
+#: rkward/dataeditor/twintable.cpp:139
 #, kde-format
 msgid "Show / Edit row names"
 msgstr "Visa och redigera radnamn"
 
-#: rkward/dataeditor/twintable.cpp:135 rkward/dataeditor/twintable.cpp:148
+#: rkward/dataeditor/twintable.cpp:142 rkward/dataeditor/twintable.cpp:155
 #, kde-format
 msgid "Enable editing"
 msgstr "Aktivera redigering"
 
-#: rkward/dataeditor/twintable.cpp:140
+#: rkward/dataeditor/twintable.cpp:147
 #, kde-format
 msgctxt "verb: switch to read-only state. Make this short."
 msgid "Lock"
 msgstr "Lås"
 
-#: rkward/dataeditor/twintable.cpp:143
+#: rkward/dataeditor/twintable.cpp:150
 #, kde-format
 msgid "Disable editing (to prevent accidental modification of data)"
 msgstr "Inaktivera redigering (för att förhindra oavsiktlig ändring av data)"
 
-#: rkward/dataeditor/twintable.cpp:145
+#: rkward/dataeditor/twintable.cpp:152
 #, kde-format
 msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
 msgstr "Lås upp"
 
-#: rkward/dataeditor/twintable.cpp:194
-#, kde-format
+#: rkward/dataeditor/twintable.cpp:218
+#, fuzzy, kde-format
+#| msgid ""
+#| "The object's internal structure does not conform to a regular <tt>data."
+#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
+#| "It may be possible to convert this object to a regular <tt>data.frame</"
+#| "tt> using <tt>as.data.frame()</tt>."
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
-"frame</tt>. Editing has been disabled, and some columns may not be shown. It "
-"may be possible to convert this object to a regular <tt>data.frame</tt> "
-"using <tt>as.data.frame()</tt>."
+"frame</tt>. Editing this table may not be safe, and has been disabled. Some "
+"columns may not be shown."
 msgstr ""
 "Objektets interna struktur överensstämmer inte med en vanlig <tt>data.frame</"
 "tt>. Redigering har inaktiverats och vissa kolumner kanske inte visas. Det "
 "kan vara möjligt att konvertera objektet till en vanlig <tt>data.frame</tt> "
 "med <tt>as.data.frame()</tt>."
 
-#: rkward/dataeditor/twintable.cpp:194
+#: rkward/dataeditor/twintable.cpp:223
+#, fuzzy, kde-format
+#| msgid "Show Details"
+msgid "Show details"
+msgstr "Visa detaljinformation"
+
+#: rkward/dataeditor/twintable.cpp:227
+#, kde-format
+msgid ""
+"You may want to create an editable subset using Data->Subset data.frame."
+msgstr ""
+
+#: rkward/dataeditor/twintable.cpp:227
 #, kde-format
 msgid "Problem detected"
 msgstr "Problem detekterat"
 
-#: rkward/dataeditor/twintable.cpp:214
-#, kde-format
-msgid ""
-"The editor '%1' contains the following duplicate columns. Editing this table "
-"may not be safe, and has been disabled. You may re-enable editing if you "
-"know what you are doing, but you are strongly advised to fix the table, and/"
-"or backup your data, first."
-msgstr ""
-"Editorn '%1' innehåller följande duplicerade kolumner. Redigering av "
-"tabellen kanske inte är säker, och har inaktiverats. Du kan aktivera "
-"redigering igen om du vet vad du gör, men du uppmanas att först rätta "
-"tabellen och/eller säkerhetskopiera data."
-
-#: rkward/dataeditor/twintable.cpp:214
-#, kde-format
-msgid "Duplicate columns detected"
-msgstr "Duplicerade kolumner detekterade"
-
-#: rkward/dataeditor/twintable.cpp:223
+#: rkward/dataeditor/twintable.cpp:239
 #, kde-format
 msgid "%1 [read-only]"
 msgstr "%1 [skrivskyddad]"
 
-#: rkward/dataeditor/twintable.cpp:268
+#: rkward/dataeditor/twintable.cpp:284
 #, kde-format
 msgid "Insert new variable left"
 msgstr "Infoga ny variabel till vänster"
 
-#: rkward/dataeditor/twintable.cpp:271
+#: rkward/dataeditor/twintable.cpp:287
 #, kde-format
 msgid "Delete this variable"
 msgstr "Ta bort variabeln"
 
-#: rkward/dataeditor/twintable.cpp:282
+#: rkward/dataeditor/twintable.cpp:298
 #, kde-format
 msgid "Insert new case above (at %1)"
 msgstr "Infoga nytt fall ovanför (vid %1)"
 
-#: rkward/dataeditor/twintable.cpp:291
+#: rkward/dataeditor/twintable.cpp:307
 #, kde-format
 msgid "Delete marked rows (%1-%2)"
 msgstr "Ta bort markerade rader (%1 - %2)"
 
-#: rkward/dataeditor/twintable.cpp:297
+#: rkward/dataeditor/twintable.cpp:313
 #, kde-format
 msgid "Delete this row (%1)"
 msgstr "Ta bort raden (%1)"
 
-#: rkward/dataeditor/twintable.cpp:419
+#: rkward/dataeditor/twintable.cpp:435
 #, kde-format
 msgid "Inserting clipboard contents..."
 msgstr "Infogar klippbordets innehåll..."
@@ -7596,6 +7600,17 @@ msgstr "Ange det nya namnet"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Visa i editor (skrivskyddade)"
+
+#~ msgid ""
+#~ "The editor '%1' contains the following duplicate columns. Editing this "
+#~ "table may not be safe, and has been disabled. You may re-enable editing "
+#~ "if you know what you are doing, but you are strongly advised to fix the "
+#~ "table, and/or backup your data, first."
+#~ msgstr ""
+#~ "Editorn '%1' innehåller följande duplicerade kolumner. Redigering av "
+#~ "tabellen kanske inte är säker, och har inaktiverats. Du kan aktivera "
+#~ "redigering igen om du vet vad du gör, men du uppmanas att först rätta "
+#~ "tabellen och/eller säkerhetskopiera data."
 
 #~ msgid "Pandoc is not installed"
 #~ msgstr "Pandoc är inte installerat"
