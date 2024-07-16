@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-07-12 08:35+0300\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian\n"
+"PO-Revision-Date: 2024-07-15 08:51+0300\n"
+"Last-Translator: Fracture dept <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -473,10 +473,9 @@ msgid "&Edit"
 msgstr "З&міни"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Виявлено дублікати стовпчиків"
+msgstr "Дублювання назви стовпчика «%1»"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -620,25 +619,18 @@ msgid "Unlock"
 msgstr "Розблок."
 
 #: rkward/dataeditor/twintable.cpp:218
-#, fuzzy, kde-format
-#| msgid ""
-#| "The object's internal structure does not conform to a regular <tt>data."
-#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
-#| "It may be possible to convert this object to a regular <tt>data.frame</"
-#| "tt> using <tt>as.data.frame()</tt>."
+#, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing this table may not be safe, and has been disabled. Some "
 "columns may not be shown."
 msgstr ""
 "Внутрішня структура об'єкта не відповідає звичайному <tt>data.frame</tt>. "
-"Редагування було вимкнено, а деякі стовпчики може бути не показано. Можливо, "
-"цей об'єкт можна перетворити на звичайний <tt>data.frame</tt> за допомогою "
-"<tt>as.data.frame()</tt>."
+"Редагування цієї таблиці може бути ризикованим,тому його було вимкнено. "
+"Деякі стовпчики може бути не показано."
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
 msgstr "Показати подробиці"
 
@@ -647,6 +639,8 @@ msgstr "Показати подробиці"
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
+"Ви можете створити придатну до редагування підмножину даних за допомогою "
+"пункту меню Дані->Підмножина data.frame."
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format

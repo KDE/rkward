@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-07-12 13:53+0200\n"
+"PO-Revision-Date: 2024-07-15 05:32+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -450,10 +450,9 @@ msgid "&Edit"
 msgstr "&ჩასწორება"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "აღმოჩენილია განმეორებადი სვეტები"
+msgstr "განმეორებადი სვეტის სახელი '%1'"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -606,8 +605,7 @@ msgid ""
 msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
 msgstr "დეტალების ჩვენება"
 
@@ -2614,6 +2612,8 @@ msgstr "დაუმუშავებელი გამოტანის ბ�
 msgid ""
 "<b>There have been errors and / or warnings. See below for a transcript</b>"
 msgstr ""
+"<b>აღმოჩენილია შეცდომები ან / და გაფრთხილებები. ტრანსკრიფციისთვის ქვემოთ "
+"ჩახედეთ</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:258
 #: rkward/settings/rksettingsmoduleoutput.cpp:187
@@ -2838,6 +2838,8 @@ msgid ""
 "Command failed to parse. Try using <i>Edit->Paste special...</i> in the R "
 "Console window for better diagnostics."
 msgstr ""
+"ბრძანების დამუშავება ჩავარდა. უკეთესი დიაგნოსტიკისთვის R-ის კონსოლის "
+"ფანჯარაში <i>ჩასწორება->სპეციალური ჩასმა...</i> სცადეთ."
 
 #: rkward/misc/rkspecialactions.cpp:314
 #, kde-format
@@ -3149,6 +3151,7 @@ msgid ""
 "Component '%1' is not available in a version compatible with this version of "
 "RKWard"
 msgstr ""
+"კომპონენტი '%1' ამ ვერსიის RKWard-თან არსებული ვერსიით ხელმისაწვდომი არაა"
 
 #: rkward/plugin/rkcomponentmeta.cpp:40
 #, kde-format
@@ -3218,6 +3221,7 @@ msgid ""
 "This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</"
 "i>."
 msgstr ""
+"ამ ობიექტის მონაცემების ტიპია <i>%1</i>, როცა მოსალოდნელი ტიპებია <i>%2</i>."
 
 #: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:34
 #, kde-format
@@ -3833,7 +3837,7 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:633
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
-msgstr ""
+msgstr "<p>Enter შემდეგი ნახაზის სანახავად, ან 'გაუქმება' შესაწყვეტად.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:637
 #, kde-format
@@ -4670,7 +4674,7 @@ msgstr "მოლოდინის ვადა (მილიწამი)"
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:64
 #, kde-format
 msgid "(Attempt to) start completion whenever the cursor position changes"
-msgstr ""
+msgstr "დასრულების (მცდელობის) დაწყება, როგორც კი კურსორი მდებარეობას შეიცვლის"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:70
 #, kde-format
@@ -4836,6 +4840,7 @@ msgid ""
 "Maximum number of paragraphs/lines to display in the console (0 for not "
 "limit)"
 msgstr ""
+"კონსოლში ნაჩვენები აბზაცების/ხაზების მაქსიმალური რაოდენობა (0 უსაზღვროსთვის)"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:57
 #, kde-format
@@ -4978,6 +4983,7 @@ msgstr ""
 #, kde-format
 msgid "Maximum number of recently used files to remember per category"
 msgstr ""
+"თითოეული კატეგორიისთვის დამახსოვრებული უახლესი ფაილების მაქსიმალური რაოდენობა"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
 #, kde-format
@@ -4991,6 +4997,8 @@ msgstr ""
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
+"R-ის სამუშაო სივრცით შენახვა აღდგენა R-ის სამუშაო სივრცის შენახვა/"
+"ჩატვირთვისას"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:104
 #, kde-format

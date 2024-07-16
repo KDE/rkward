@@ -413,10 +413,9 @@ msgid "&Edit"
 msgstr "编辑(&E)"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "检测到重复列"
+msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -564,10 +563,9 @@ msgid ""
 msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
-msgstr "显示细节"
+msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format

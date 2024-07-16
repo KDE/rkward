@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2024-07-12 13:54+0200\n"
+"PO-Revision-Date: 2024-07-15 05:33+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -795,14 +795,14 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "Keep track of all transformations"
-msgstr ""
+msgstr "ყველა გარდაქმნის თვალყურის დევნება"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:64
 #, kde-format
 msgctxt "R code comment"
 msgid "Finally combine the actual data"
-msgstr ""
+msgstr "მიმდინარე მონაცემების საბოლოო შეკრება"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:68
@@ -1680,7 +1680,7 @@ msgstr "სტატისტიკური მომენტი"
 #: rkward/plugins/analysis/moments/moment.rkh:8
 #, kde-format
 msgid "This test computes the sample moment of specified order."
-msgstr ""
+msgstr "ეს შემოწმება გამოთვლის მითითებული მიმდევრობის სინჯის მომენტს."
 
 #. i18n: ectx: (Loaded from sample moment) <usage>
 #: rkward/plugins/analysis/moments/moment.rkh:12
@@ -2038,7 +2038,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:21
 #, kde-format
 msgid "Should the test be treated as two-sided (default)?"
-msgstr ""
+msgstr "უნდა იყოს თუ არა ეს შემოწმება აღქმული, როგორც ორმხრივი(ნაგულიხმევი)?"
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Opposite")
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "Opposite")
@@ -2891,7 +2891,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.rkh:22
 #, kde-format
 msgid "Show an analysis of variance table."
-msgstr ""
+msgstr "დისპერსიული ცხრილის ანალიზის ჩვენება."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Save full fitted model")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:24
@@ -3064,7 +3064,7 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.rkh:19
 #, kde-format
 msgid "A numeric vector for the first variable"
-msgstr ""
+msgstr "რიცხვითი ვექტორი პირველი ცვლადისთვის"
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "against")
 #: rkward/plugins/analysis/t_test.rkh:20
@@ -3092,7 +3092,7 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.rkh:23
 #, kde-format
 msgid "Alternative hypothesis (H1) of the test."
-msgstr ""
+msgstr "შემოწმების ალტერნატიული ჰიპოთეზა (H1)."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "Show Confidence Interval")
 #: rkward/plugins/analysis/t_test.rkh:25
@@ -3122,7 +3122,7 @@ msgstr "დამოუკიდებელი შერჩევები"
 #: rkward/plugins/analysis/t_test.xml:37
 #, kde-format
 msgid "assume equal variances"
-msgstr ""
+msgstr "ტოლი დისპერსიების ჩათვლა"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/analysis/t_test.xml:49
@@ -3792,7 +3792,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/bartlett_test.xml:11
 #, kde-format
 msgid "Bartlett Test of Homogeneity of Variances"
-msgstr ""
+msgstr "ბართლეტი შემოწმება დისპერსიის ჰომოგენურობისთვის"
 
 #. i18n: ectx: (Fligner-Killeen Test of Homogeneity of Variances) <dialog label="Fligner-Killeen Test of Homogeneity of Variances"> <varslot label="...">
 #. i18n: ectx: (Bartlett Test of Homogeneity of Variances) <dialog label="Bartlett Test of Homogeneity of Variances"> <varslot label="...">
@@ -3901,7 +3901,7 @@ msgstr "ნდობის დონე"
 #: rkward/plugins/analysis/variances/fligner_test.js:24
 #, kde-format
 msgid "Fligner-Killeen:med X^2 test statistic"
-msgstr ""
+msgstr "ფლიგნერ-კილინის შემოწმება:med X^2"
 
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances) <summary>
 #: rkward/plugins/analysis/variances/fligner_test.rkh:8
@@ -3983,7 +3983,7 @@ msgstr "უწყვეტობის შესწორება p-მნი�
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
 #, kde-format
 msgid "Location Shift"
-msgstr ""
+msgstr "წანაცვლების კოეფიციენტი"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
@@ -4007,7 +4007,7 @@ msgstr "განსხვავების ნდობის ინტერ�
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
 #, kde-format
 msgid "Difference in Location"
-msgstr ""
+msgstr "გადაადგილების სხვაობა"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <summary>
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:8
@@ -4153,21 +4153,21 @@ msgstr "უწყვეტობის შესწორების გად�
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:50
 #, kde-format
 msgid "Allow ties"
-msgstr ""
+msgstr "შეკვრის დაშვება"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:18
 #, kde-format
 msgctxt "R code comment"
 msgid "Split each input variable by grouping factor(s)"
-msgstr ""
+msgstr "თითოეული შესაყვანი ცვლადის დაყოფა დაჯგუფები ფაქტორებით"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:20
 #, kde-format
 msgctxt "R code comment"
 msgid "Convert nested list into flat list"
-msgstr ""
+msgstr "ერთმანეთში ჩალაგებული სიის გადაყვანა ბრტყელ სიაში"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:23
@@ -4772,7 +4772,7 @@ msgstr "წაკვეთილი საშუალო"
 #: rkward/plugins/uni1.2/code.js:84
 #, kde-format
 msgid "Location Estimate"
-msgstr ""
+msgstr "მდებარეობის შეფასება"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:84
@@ -4803,13 +4803,13 @@ msgstr "ცალმხრივი სტატისტიკა"
 #: rkward/plugins/uni1.2/code.js:105
 #, kde-format
 msgid "Proportion of trimmed values for trimmed mean"
-msgstr ""
+msgstr "წაკვეთილი მნიშვნელობების პროპორცია წაკვეთილი საშუალოსთვის"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:108
 #, kde-format
 msgid "Constant for the MAD estimation"
-msgstr ""
+msgstr "მუდმივა MAD შეფასებისთვის"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:111
