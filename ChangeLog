@@ -1,5 +1,7 @@
+--- Version 0.8.0 - Jul-28-2024
 - Fixed: Crash when trying to edit a data.frame containing columns that are not vectors
 - Fixed: Basic statistics would refuse to "overwrite file", even if saving to file was unchecked
+- Changed: Status indicator for preview windows (updating/ready) is less obstrusive
 - Added: Ability to open PDF documents inside the RKWard window, and associated R function rk.show.pdf()
 - Fixed: Add breeze icons as a fallback on systems that use a different icon theme (fixes missing icons)
 - Added: Setup dialog includes setting to select a different R installation
@@ -9,11 +11,11 @@
            This allows more flexibility on which R version to use at runtime, esp. in the context of AppImage binaries
 - Fixed: References to the package cairoDevice (removed on CRAN) have been replaced with Cairo
 - Fixed: Creating new output window from the UI would sometimes show empty window
-
 - Fixed: Better support for running from non-standard paths on Linux (e.g. user-local installation in home dir)
 - Fixed: Added REUSE license information where missing
 - Fixed: Handling of carriage returns in R Console window (used in progress bars, importantly)
 - Fixed: Crash when renaming top level object from context menu
+- Changed: First version to be based on Qt6/KF6
 
 --- Version 0.7.5 - Oct-24-2022
 - Fixed: Backend failed to start when installed in a path with spaces on Windows volumes without 8.3 support
