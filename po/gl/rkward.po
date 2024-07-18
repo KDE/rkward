@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-07-12 17:56+0200\n"
+"PO-Revision-Date: 2024-07-15 22:50+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -466,10 +466,9 @@ msgid "&Edit"
 msgstr "&Editar"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Detectáronse columnas duplicadas"
+msgstr "Nome de columna duplicado «%1»"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -617,25 +616,18 @@ msgid "Unlock"
 msgstr "Desbloquear"
 
 #: rkward/dataeditor/twintable.cpp:218
-#, fuzzy, kde-format
-#| msgid ""
-#| "The object's internal structure does not conform to a regular <tt>data."
-#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
-#| "It may be possible to convert this object to a regular <tt>data.frame</"
-#| "tt> using <tt>as.data.frame()</tt>."
+#, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing this table may not be safe, and has been disabled. Some "
 "columns may not be shown."
 msgstr ""
 "A estrutura interna do obxecto non se corresponde cun <tt>data.frame</tt> "
-"normal. Desactivouse a edición, e pode que non se amosen algunhas columnas. "
-"Quizais poida converter o obxecto nun <tt>data.frame</tt> normal con <tt>as."
-"data.frame()</tt>."
+"normal. Editar esta táboa podería non ser seguro, así que se desactivou. "
+"Pode que non se amosen algunhas columnas."
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
 msgstr "Amosar os detalles"
 
@@ -644,6 +636,8 @@ msgstr "Amosar os detalles"
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
+"Quizais lle interese crear un subconxunto editábel con «Datos → Subconxunto "
+"data.frame»."
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format

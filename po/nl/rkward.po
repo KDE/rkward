@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-07-12 10:48+0200\n"
+"PO-Revision-Date: 2024-07-15 13:16+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -470,10 +470,9 @@ msgid "&Edit"
 msgstr "Be&werken"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Dubbele kolommen aangetroffen"
+msgstr "Gedupliceerde kolomnaam '%1'"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -617,26 +616,18 @@ msgid "Unlock"
 msgstr "Ontgrendelen"
 
 #: rkward/dataeditor/twintable.cpp:218
-#, fuzzy, kde-format
-#| msgid ""
-#| "The object's internal structure does not conform to a regular <tt>data."
-#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
-#| "It may be possible to convert this object to a regular <tt>data.frame</"
-#| "tt> using <tt>as.data.frame()</tt>."
+#, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing this table may not be safe, and has been disabled. Some "
 "columns may not be shown."
 msgstr ""
 "De interne structuur van het object komt niet overeen met een regulier "
-"<tt>data.frame</tt>. Bewerken is uitgeschakeld en sommige kolommen kunnen "
-"niet getoond worden. Het is misschien mogelijk dit object te converteren "
-"naar een regulier <tt>data.frame</tt> met gebruik van <tt>as.data.frame()</"
-"tt>."
+"<tt>data.frame</tt>. Deze tabel bewerken kan niet veilig zijn en is "
+"uitgeschakeld. Sommige kolommen kunnen niet getoond worden."
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
 msgstr "Details tonen"
 
@@ -645,6 +636,8 @@ msgstr "Details tonen"
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
+"U kunt misschien een bewerkbare subset aanmaken met Gegevens->Subset data."
+"frame."
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format

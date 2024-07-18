@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-07-12 13:09+0300\n"
+"PO-Revision-Date: 2024-07-15 12:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -474,10 +474,9 @@ msgid "&Edit"
 msgstr "Dü&zen"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Yinelenen Sütunlar Algılandı"
+msgstr "“%1” sütun adını çoğalt"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -623,33 +622,28 @@ msgid "Unlock"
 msgstr "Kilidi Aç"
 
 #: rkward/dataeditor/twintable.cpp:218
-#, fuzzy, kde-format
-#| msgid ""
-#| "The object's internal structure does not conform to a regular <tt>data."
-#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
-#| "It may be possible to convert this object to a regular <tt>data.frame</"
-#| "tt> using <tt>as.data.frame()</tt>."
+#, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing this table may not be safe, and has been disabled. Some "
 "columns may not be shown."
 msgstr ""
-"Nesnenin iç yapısı bir düzenli <tt>data.frame</tt> yapısına uymuyor. "
-"Düzenleme devre dışı bırakıldı ve bazı sütunlar gösterilmeyebilir. <tt>as."
-"data.frame()</tt> kullanarak bu nesneyi düzenli bir <tt>data.frame</tt>’e "
-"dönüştürmek olanaklı olabilir."
+"Nesnenin iç yapısı bir düzenli <tt>data.frame</tt> yapısına uymuyor. Bu "
+"tabloyu düzenlemek güvenli olmayabilir ve devre dışı bırakılmıştır. Bazı "
+"sütunlar gösterilmeyebilir."
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
-msgstr "Ayrıntıları Göster"
+msgstr "Ayrıntıları göster"
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
+"“Veri → data.frame’i alt kümele” kullanarak bir düzenlenebilir alt küme "
+"oluşturmak isteyebilirsiniz."
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format

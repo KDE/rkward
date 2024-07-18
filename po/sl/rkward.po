@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-07-12 06:55+0200\n"
+"PO-Revision-Date: 2024-07-15 07:04+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -468,10 +468,9 @@ msgid "&Edit"
 msgstr "&Urejanje"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Zaznani podvojeni stolpci"
+msgstr "Zaznan podvojen stolpec '%1'"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -614,33 +613,28 @@ msgid "Unlock"
 msgstr "Odkleni"
 
 #: rkward/dataeditor/twintable.cpp:218
-#, fuzzy, kde-format
-#| msgid ""
-#| "The object's internal structure does not conform to a regular <tt>data."
-#| "frame</tt>. Editing has been disabled, and some columns may not be shown. "
-#| "It may be possible to convert this object to a regular <tt>data.frame</"
-#| "tt> using <tt>as.data.frame()</tt>."
+#, kde-format
 msgid ""
 "The object's internal structure does not conform to a regular <tt>data."
 "frame</tt>. Editing this table may not be safe, and has been disabled. Some "
 "columns may not be shown."
 msgstr ""
 "Notranja struktura predmeta se ne sklada z regularnim <tt>data.frame</tt>. "
-"Urejanje je onemogočeno in nekateri stolpci morda ne bodo prikazani. Morda "
-"je mogoče ta predmet pretvoriti v običajni <tt>data.frame</tt> z uporabo "
-"<tt>as.data.frame()</tt>."
+"Urejanje te tabele morda ni varno in je onemogočeno. Nekateri stolpci morda "
+"ne bodo prikazani."
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
-msgstr "Pokaži podrobnosti"
+msgstr "Prikaži podrobnosti"
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
+"Morda bi želeli ustvariti podmnožico, ki jo je mogoče urejati, z uporabo "
+"Data->Subset data.frame."
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format
