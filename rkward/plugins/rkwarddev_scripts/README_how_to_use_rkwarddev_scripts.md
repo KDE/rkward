@@ -1,6 +1,6 @@
 ## How to update plugins using rkwarddev scripts
 
-Here's a quick-and-dirty summary what you whould do after you changed one of these scripts according to your needs. We'll not go into details about `rkwarddev` in general, as that is covered in both the _Introduction to Writing Plugins for RKWard_ and the vignette in the `rkwarddev` package.
+Here's a quick-and-dirty summary what you would do after you changed one of these scripts according to your needs. We'll not go into details about `rkwarddev` in general, as that is covered in both the _Introduction to Writing Plugins for RKWard_ and the vignette in the `rkwarddev` package.
 
 ### Generally expected behaviour
 
