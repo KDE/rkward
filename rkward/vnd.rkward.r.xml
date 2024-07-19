@@ -7,6 +7,35 @@ SPDX-License-Identifier: GPL-2.0-or-later
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="text/r">
     <comment>R source file</comment>
+    <comment xml:lang="ca">Fitxer de codi font en R</comment>
+    <comment xml:lang="ca@valencia">Fitxer de codi font en R</comment>
+    <comment xml:lang="cs">Zdrojový soubor R</comment>
+    <comment xml:lang="de">R-Quelldatei</comment>
+    <comment xml:lang="en_GB">R source file</comment>
+    <comment xml:lang="eo">R-fontkoda dosiero</comment>
+    <comment xml:lang="es">fileArchivo fuente de R</comment>
+    <comment xml:lang="eu">R sorburu fitxategia</comment>
+    <comment xml:lang="fi">R-lähdetiedosto</comment>
+    <comment xml:lang="fr">Fichier source « R »</comment>
+    <comment xml:lang="gl">Ficheiro de código R.</comment>
+    <comment xml:lang="he">קובץ מקור בשפת R</comment>
+    <comment xml:lang="ia">File fonte de R</comment>
+    <comment xml:lang="it">File sorgente di R</comment>
+    <comment xml:lang="ka">R-ის წყაროს ფაილი</comment>
+    <comment xml:lang="ko">R 소스 파일</comment>
+    <comment xml:lang="lt">R šaltinio failas</comment>
+    <comment xml:lang="nl">Bronbestand R</comment>
+    <comment xml:lang="nn">R-kjeldefil</comment>
+    <comment xml:lang="pl">Plik źródłowy R</comment>
+    <comment xml:lang="pt">Ficheiro de código em R</comment>
+    <comment xml:lang="pt_BR">Arquivo de código do R</comment>
+    <comment xml:lang="sk">Zdrojový súbor R</comment>
+    <comment xml:lang="sl">R izvorni program</comment>
+    <comment xml:lang="sv">R-källkodsfil</comment>
+    <comment xml:lang="tr">R kaynağı dosyası</comment>
+    <comment xml:lang="uk">файл коду R</comment>
+    <comment xml:lang="zh_CN">R 源代码文件</comment>
+    <comment xml:lang="zh_TW">R 原始碼檔案</comment>
     <acronym>R</acronym>
     <expanded-acronym>R programming language</expanded-acronym>
     <generic-icon name="text-x-generic"/>
@@ -16,6 +45,35 @@ SPDX-License-Identifier: GPL-2.0-or-later
   </mime-type>
   <mime-type type="application/rdata">
     <comment>R data/workspace file</comment>
+    <comment xml:lang="ca">Fitxer de dades/espai de treball de l'R</comment>
+    <comment xml:lang="ca@valencia">Fitxer de dades/espai de treball d'R</comment>
+    <comment xml:lang="cs">Soubor pracovní plochy/dat R</comment>
+    <comment xml:lang="de">R-Datendatei/Arbeitsbereichdatei</comment>
+    <comment xml:lang="en_GB">R data/workspace file</comment>
+    <comment xml:lang="eo">R-daten/laborspaca dosiero</comment>
+    <comment xml:lang="es">Archivo de datos o de espacio de trabajo de R</comment>
+    <comment xml:lang="eu">R datu/langune fitxategia</comment>
+    <comment xml:lang="fi">R-data/työtilatiedosto</comment>
+    <comment xml:lang="fr">Fichier de données ou d'espace de travail « R »</comment>
+    <comment xml:lang="gl">Ficheiro de dato ou espazo de traballo de R.</comment>
+    <comment xml:lang="he">קובץ סביבת עבודה/נתונים של R</comment>
+    <comment xml:lang="ia">File de datos/spatio de labor de R</comment>
+    <comment xml:lang="it">File di dati/spazio di lavoro di R</comment>
+    <comment xml:lang="ka">R-ის მონაცემების/სამუშა სივრცის ფაილი</comment>
+    <comment xml:lang="ko">R 데이터/작업 공간 파일</comment>
+    <comment xml:lang="lt">R duomenų/darbo aplinkos failas</comment>
+    <comment xml:lang="nl">Gegevens/werkruimtebestand R</comment>
+    <comment xml:lang="nn">R-data-/arbeidsområde-fil</comment>
+    <comment xml:lang="pl">Plik danych/przestrzeni pracy R</comment>
+    <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
+    <comment xml:lang="pt_BR">Arquivo de dados/espaço de trabalho do R</comment>
+    <comment xml:lang="sk">Súbor údajov/pracovnej plochy R</comment>
+    <comment xml:lang="sl">R datoteka data/workspace</comment>
+    <comment xml:lang="sv">R-datafil/arbetsrymdsfil</comment>
+    <comment xml:lang="tr">R veri/çalışma sayfası dosyası</comment>
+    <comment xml:lang="uk">файл даних/робочого простору R</comment>
+    <comment xml:lang="zh_CN">R 数据/工作区文件</comment>
+    <comment xml:lang="zh_TW">R 資料/工作區檔案</comment>
     <acronym>RData</acronym>
     <expanded-acronym>R data/workspace file</expanded-acronym>
     <generic-icon name="package-x-generic"/>
