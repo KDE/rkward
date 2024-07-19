@@ -21,8 +21,8 @@ configuration for the Command Editor windows
 class RKSettingsModuleDebug : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleDebug(QObject *parent);
-	~RKSettingsModuleDebug();
+	explicit RKSettingsModuleDebug(QObject *parent);
+	~RKSettingsModuleDebug() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;

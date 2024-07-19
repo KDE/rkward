@@ -22,8 +22,8 @@ class MultiStringSelector;
 class RKSettingsModuleObjectBrowser : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleObjectBrowser(QObject *parent);
-	~RKSettingsModuleObjectBrowser();
+	explicit RKSettingsModuleObjectBrowser(QObject *parent);
+	~RKSettingsModuleObjectBrowser() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;

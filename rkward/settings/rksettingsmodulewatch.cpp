@@ -161,7 +161,7 @@ public:
 		app_filter_boxes.output->setEnabled(app_filter_boxes.input->isChecked());
 		sync_filter_boxes.output->setEnabled(sync_filter_boxes.input->isChecked());
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		RKSettingsModuleWatch::user_filter = getFilterSettings(&user_filter_boxes);

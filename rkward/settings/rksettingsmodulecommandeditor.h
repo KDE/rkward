@@ -84,8 +84,8 @@ configuration for the Command Editor windows
 class RKSettingsModuleCommandEditor : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleCommandEditor(QObject *parent);
-	~RKSettingsModuleCommandEditor();
+	explicit RKSettingsModuleCommandEditor(QObject *parent);
+	~RKSettingsModuleCommandEditor() override;
 	
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;

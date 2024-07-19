@@ -84,7 +84,7 @@ public:
 
 		main_vbox->addStretch();
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		RKSettingsModulePlugins::interface_pref = static_cast<RKSettingsModulePlugins::PluginPrefs>(button_group->checkedId());
@@ -104,7 +104,7 @@ public:
 		layout->addWidget(l);
 		layout->addStretch();
 	}
-	void applyChanges() {};
+	void applyChanges() override {};
 };
 
 RKSettingsModulePlugins::RKSettingsModulePlugins(QObject *parent) : RKSettingsModule(parent) {

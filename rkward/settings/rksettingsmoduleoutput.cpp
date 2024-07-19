@@ -181,7 +181,7 @@ public:
 		change();
 		graphics_jpg_quality_box->setEnabled(graphics_type_box->itemData(graphics_type_box->currentIndex()).toString() == "\"JPG\"");
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 		RKSettingsModuleOutput::custom_css_file = custom_css_file_box->getLocation();
 		RKSettingsModuleOutput::graphics_type = graphics_type_box->itemData(graphics_type_box->currentIndex()).toString();

@@ -20,8 +20,8 @@ class RKSpinBox;
 class RKSettingsModuleGeneral : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleGeneral(QObject *parent);
-	~RKSettingsModuleGeneral ();
+	explicit RKSettingsModuleGeneral(QObject *parent);
+	~RKSettingsModuleGeneral() override;
 
 	enum WorkplaceSaveMode {	// don't change the int values of this enum, or you'll ruin users saved settings. Append new values at the end
 		SaveWorkplaceWithWorkspace=0,

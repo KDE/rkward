@@ -102,11 +102,11 @@ void RKSettings::initDialogPages() {
 
 KPageWidgetItem* RKSettings::findPage(const RKSettingsModule::PageId id) const {
 	RK_TRACE (SETTINGS);
-	for (auto it = pages.constBegin(); it != pages.constEnd(); ++it) {
-		if (static_cast<RKSettingsModuleWidget*>((*it)->widget())->pageid == id) return *it;
-	}
-	RK_ASSERT(false);
-	return nullptr;
+	auto it = std::find_if(pages.constBegin(), pages.constEnd(), [id](KPageWidgetItem* p) {
+		return (static_cast<RKSettingsModuleWidget*>(p->widget())->pageid == id);
+	});
+	RK_ASSERT(it != pages.constEnd());
+	return *it;
 }
 
 void RKSettings::pageChange (KPageWidgetItem *current, KPageWidgetItem *) {

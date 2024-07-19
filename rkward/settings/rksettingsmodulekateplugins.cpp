@@ -66,7 +66,7 @@ public:
 
 		connect(plugin_table, &QTreeWidget::itemChanged, this, &RKSettingsPageKatePlugins::change);
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		QStringList p;

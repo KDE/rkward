@@ -53,7 +53,7 @@ public:
 		});
 		layout->addWidget(blacklist_choser);
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		RKSettingsModuleObjectBrowser::getstructure_blacklist = blacklist_choser->getValues();

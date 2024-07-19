@@ -23,14 +23,12 @@ class RKSettingsModuleWatch : public RKSettingsModule
 {
 Q_OBJECT
 public:
-	RKSettingsModuleWatch(QObject *parent);
-	~RKSettingsModuleWatch();
+	explicit RKSettingsModuleWatch(QObject *parent);
+	~RKSettingsModuleWatch() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
 	static constexpr PageId page_id = QLatin1String("commandlog");
-
-	void validateGUI ();
 
 	static bool shouldShowInput (RCommand *command);
 	static bool shouldShowOutput (RCommand *command);

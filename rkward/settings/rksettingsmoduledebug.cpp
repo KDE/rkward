@@ -88,7 +88,7 @@ public:
 			main_vbox->addStretch();
 		}
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		RK_Debug::RK_Debug_Level = DL_FATAL - debug_level_box->intValue();

@@ -160,7 +160,7 @@ public:
 
 		main_vbox->addStretch();
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		completion_settings_widget->applyChanges();

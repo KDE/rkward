@@ -24,8 +24,8 @@ class QRadioButton;
 class RKSettingsModuleGraphics : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleGraphics(QObject *parent);
-	~RKSettingsModuleGraphics();
+	explicit RKSettingsModuleGraphics(QObject *parent);
+	~RKSettingsModuleGraphics() override;
 	
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();

@@ -59,8 +59,8 @@ private:
 class RKSettingsModuleOutput : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleOutput(QObject *parent);
-	~RKSettingsModuleOutput();
+	explicit RKSettingsModuleOutput(QObject *parent);
+	~RKSettingsModuleOutput() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;

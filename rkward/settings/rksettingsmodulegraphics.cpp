@@ -153,7 +153,7 @@ public:
 		change();
 	}
 
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		RKSettingsModuleGraphics::default_device = (RKSettingsModuleGraphics::DefaultDevice) default_device_group->checkedId();

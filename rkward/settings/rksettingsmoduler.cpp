@@ -184,7 +184,7 @@ public:
 		});
 		main_vbox->addWidget(addpaths_selector);
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		RKSettingsModuleR::options_outdec = outdec_input->text();
@@ -414,7 +414,7 @@ public:
 
 		main_vbox->addStretch();
 	}
-	void applyChanges() {
+	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
 		RKSettingsModuleRPackages::cran_mirror_url = cran_mirror_input->text();

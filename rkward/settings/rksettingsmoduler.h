@@ -26,8 +26,8 @@ Configure the R-backend
 class RKSettingsModuleR : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleR(QObject *parent);
-	~RKSettingsModuleR();
+	explicit RKSettingsModuleR(QObject *parent);
+	~RKSettingsModuleR() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
@@ -76,8 +76,8 @@ Configure packages and library paths
 class RKSettingsModuleRPackages : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModuleRPackages(QObject *parent);
-	~RKSettingsModuleRPackages();
+	explicit RKSettingsModuleRPackages(QObject *parent);
+	~RKSettingsModuleRPackages() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;

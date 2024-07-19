@@ -25,8 +25,8 @@ class RKSpinBox;
 class RKSettingsModulePlugins : public RKSettingsModule {
 	Q_OBJECT
 public:
-	RKSettingsModulePlugins(QObject *parent);
-	~RKSettingsModulePlugins();
+	explicit RKSettingsModulePlugins(QObject *parent);
+	~RKSettingsModulePlugins() override;
 
 	enum PluginPrefs { PreferDialog=0, PreferRecommended=1, PreferWizard=2 };
 

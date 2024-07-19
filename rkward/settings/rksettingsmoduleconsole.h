@@ -23,8 +23,8 @@ Settings module for the console. Allows you to configure whether to store comman
 class RKSettingsModuleConsole : public RKSettingsModule {
 Q_OBJECT
 public:
-	RKSettingsModuleConsole(QObject *parent);
-	~RKSettingsModuleConsole();
+	explicit RKSettingsModuleConsole(QObject *parent);
+	~RKSettingsModuleConsole() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;

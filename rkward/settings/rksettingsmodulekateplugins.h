@@ -18,8 +18,8 @@ class QTreeWidget;
 */
 class RKSettingsModuleKatePlugins : public RKSettingsModule {
 public:
-	RKSettingsModuleKatePlugins(QObject *parent);
-	~RKSettingsModuleKatePlugins();
+	explicit RKSettingsModuleKatePlugins(QObject *parent);
+	~RKSettingsModuleKatePlugins() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
