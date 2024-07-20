@@ -173,30 +173,33 @@ private:
 	QLineEdit* script_file_filter_box;
 };
 
-class RKTextEditorConfigPageWrapper : public RKSettingsModuleWidget {
-public:
-	RKTextEditorConfigPageWrapper(QWidget* parent, RKSettingsModule *parent_module, KTextEditor::ConfigPage* wrapped) :
-		RKSettingsModuleWidget(parent, parent_module, QLatin1String(("kate_" + wrapped->name()).toLatin1()), RKSettingsModuleCommandEditor::page_id),
-		page(wrapped)
-	{
-		RK_TRACE(SETTINGS);
-		setWindowTitle(page->name());
-		setWindowIcon(page->icon());
-		
-		auto vbox = new QVBoxLayout(this);
-		vbox->setContentsMargins(0,0,0,0);
-		vbox->addWidget(wrapped);
-		connect(wrapped, &KTextEditor::ConfigPage::changed, this, &RKTextEditorConfigPageWrapper::change);
-	}
-	void applyChanges() override {
-		page->apply();
-	}
-	QString longCaption() const override {
-		return page->fullName();
-	}
-private:
-	KTextEditor::ConfigPage* page;
-};
+RKTextEditorConfigPageWrapper::RKTextEditorConfigPageWrapper(QWidget* parent, RKSettingsModule *parent_module, RKSettingsModule::PageId superpage, KTextEditor::ConfigPage* wrapped) :
+	RKSettingsModuleWidget(parent, parent_module, QLatin1String(("kate_" + wrapped->name()).toLatin1()), superpage),
+	page(wrapped)
+{
+	RK_TRACE(SETTINGS);
+	setWindowTitle(page->name());
+	setWindowIcon(page->icon());
+
+	auto vbox = new QVBoxLayout(this);
+	vbox->setContentsMargins(0,0,0,0);
+	vbox->addWidget(wrapped);
+	connect(wrapped, &KTextEditor::ConfigPage::changed, this, &RKTextEditorConfigPageWrapper::change);
+}
+
+RKTextEditorConfigPageWrapper::~RKTextEditorConfigPageWrapper() {
+	RK_TRACE(SETTINGS);
+	delete page;
+}
+
+void RKTextEditorConfigPageWrapper::applyChanges() {
+	RK_TRACE(SETTINGS);
+	page->apply();
+}
+
+QString RKTextEditorConfigPageWrapper::longCaption() const {
+	return page->fullName();
+}
 
 QList<RKSettingsModuleWidget*> RKSettingsModuleCommandEditor::createPages(QWidget *parent) {
 	RK_TRACE(SETTINGS);
@@ -205,7 +208,7 @@ QList<RKSettingsModuleWidget*> RKSettingsModuleCommandEditor::createPages(QWidge
 	auto ed = KTextEditor::Editor::instance();
 	int n = ed->configPages();
 	for (int i = 0; i < n; ++i) {
-		ret.append(new RKTextEditorConfigPageWrapper(parent, this, ed->configPage(i, parent)));
+		ret.append(new RKTextEditorConfigPageWrapper(parent, this, RKSettingsModuleCommandEditor::page_id, ed->configPage(i, parent)));
 	}
 	return ret;
 }

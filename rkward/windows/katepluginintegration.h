@@ -1,6 +1,6 @@
 /*
 katepluginintegration - This file is part of the RKWard project. Created: Mon Jun 12 2017
-SPDX-FileCopyrightText: 2017-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2017-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -50,6 +50,8 @@ friend class KatePluginIntegrationWindow;
 	KTextEditor::Plugin *plugin(const QString &name);
 private:
 friend class RKSettingsPageKatePlugins;
+friend class RKSettingsModuleKatePlugins;
+	QList<KTextEditor::Plugin*> loadedPlugins() const;
 	KatePluginIntegrationWindow *window;  // For now, only one main window
 	KTextEditor::Application *app;
 /** Provides a hidden dummy view (created on the fly as needed), for plugins that assume there is always at least one view/document around. */

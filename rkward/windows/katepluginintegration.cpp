@@ -1,6 +1,6 @@
 /*
 katepluginintegration - This file is part of RKWard (https://rkward.kde.org). Created: Mon Jun 12 2017
-SPDX-FileCopyrightText: 2017-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2017-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -237,8 +237,17 @@ void KatePluginIntegrationApp::unloadPlugin(const QString &identifier) {
 	info.plugin = nullptr;
 }
 
+QList<KTextEditor::Plugin*> KatePluginIntegrationApp::loadedPlugins() const {
+	RK_TRACE(APP);
+	QList<KTextEditor::Plugin*> ret;
+	for (auto it = known_plugins.constBegin(); it != known_plugins.constEnd(); ++it) {
+		if ((*it).plugin) ret.append((*it).plugin);
+	}
+	return ret;
+}
+
 void KatePluginIntegrationApp::saveConfigAndUnload() {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
 	for (auto it = known_plugins.constBegin(); it != known_plugins.constEnd(); ++it) {
 		unloadPlugin(it.key());

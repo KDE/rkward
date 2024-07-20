@@ -111,4 +111,14 @@ friend class RKSettingsPageCommandEditor;
 	static RKConfigValue<QString> script_file_filter;
 };
 
+class RKTextEditorConfigPageWrapper : public RKSettingsModuleWidget {
+public:
+	RKTextEditorConfigPageWrapper(QWidget* parent, RKSettingsModule *parent_module, RKSettingsModule::PageId superpage, KTextEditor::ConfigPage* wrapped);
+	~RKTextEditorConfigPageWrapper() override;
+	void applyChanges() override;
+	QString longCaption() const override;
+private:
+	KTextEditor::ConfigPage* page;
+};
+
 #endif

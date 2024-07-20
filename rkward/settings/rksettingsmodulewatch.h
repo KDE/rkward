@@ -1,6 +1,6 @@
 /*
 rksettingsmodulewatch - This file is part of the RKWard project. Created: Thu Aug 26 2004
-SPDX-FileCopyrightText: 2004-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */

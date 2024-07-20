@@ -1,6 +1,6 @@
 /*
 rksettingsmodulekateplugins - This file is part of RKWard (https://rkward.kde.org). Created: Thu Mar 26 2010
-SPDX-FileCopyrightText: 2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2020-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -10,14 +10,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QTreeWidget>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QIcon>
 
 #include <KPluginMetaData>
 #include <KLocalizedString>
 #include <KConfigGroup>
 #include <KConfig>
-#include <QIcon>
+#include <KTextEditor/Plugin>
 
 #include "rksettingsmoduleplugins.h"
+#include "rksettingsmodulecommandeditor.h"
 #include "../windows/katepluginintegration.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../rkward.h"
@@ -92,8 +94,17 @@ RKSettingsModuleKatePlugins::~RKSettingsModuleKatePlugins() {
 }
 
 QList<RKSettingsModuleWidget*> RKSettingsModuleKatePlugins::createPages(QWidget *parent) {
-// TODO: add the plugin config pages
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageKatePlugins(parent, this) };
+	RK_TRACE(SETTINGS);
+
+	QList<RKSettingsModuleWidget*> ret { new RKSettingsPageKatePlugins(parent, this) };
+	auto loaded_plugins = RKWardMainWindow::getMain()->katePluginIntegration()->loadedPlugins();
+	for (auto it = loaded_plugins.constBegin(); it != loaded_plugins.constEnd(); ++it) {
+		auto p = *it;
+		for (int i = 0; i < p->configPages(); ++i) {
+			ret.append(new RKTextEditorConfigPageWrapper(parent, this, RKSettingsModuleKatePlugins::page_id, p->configPage(i, nullptr)));
+		}
+	}
+	return ret;
 }
 
 void RKSettingsModuleKatePlugins::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
