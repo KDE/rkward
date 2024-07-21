@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2022-10-09 10:16+0200\n"
+"PO-Revision-Date: 2024-07-20 08:57+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -622,7 +622,7 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:208
 #, kde-format
 msgid "Duplicate columns detected"
-msgstr "Wykryto podwójnie występujące kolumny"
+msgstr "Wykryto powielone kolumny"
 
 #: rkward/dataeditor/twintable.cpp:217
 #, kde-format
@@ -3310,7 +3310,7 @@ msgstr "Obiekt ma długość %1, lecz najmniejszą oczekiwaną długością jes
 #: rkward/plugin/rkcomponentproperties.cpp:937
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
-msgstr "Obiekt ma długość %1, lecz największą oczekiwaną długością jest %2."
+msgstr "Obiekt ma długość %1, lecz największą oczekiwaną długością jest %2."
 
 #: rkward/plugin/rkcomponentproperties.cpp:949
 #, kde-format
