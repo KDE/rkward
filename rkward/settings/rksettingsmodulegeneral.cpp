@@ -25,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommandlineargs.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstyle.h"
+#include "rksettings.h"
 
 #include "../version.h"
 #include "../debug.h"
@@ -162,8 +163,8 @@ RKSettingsModuleGeneral::~RKSettingsModuleGeneral() {
 	RK_TRACE (SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleGeneral::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageGeneral(parent, this) };
+void RKSettingsModuleGeneral::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsPageGeneral(parent, this));
 }
 
 QString RKSettingsModuleGeneral::initialWorkingDirectory () {

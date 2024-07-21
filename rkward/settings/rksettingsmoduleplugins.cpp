@@ -32,6 +32,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkloadlibsdialog.h"
 #include "rksettingsmodulegeneral.h"
+#include "rksettings.h"
 
 #include "../debug.h"
 
@@ -115,8 +116,9 @@ RKSettingsModulePlugins::~RKSettingsModulePlugins() {
 	RK_TRACE (SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModulePlugins::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsHeaderPage(parent, this), new RKSettingsPagePlugins(parent, this) };
+void RKSettingsModulePlugins::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsHeaderPage(parent, this));
+	parent->addSettingsPage(new RKSettingsPagePlugins(parent, this));
 }
 
 RKSettingsModulePlugins::RKPluginMapList RKSettingsModulePlugins::setPluginMaps(const RKPluginMapList &new_list) {

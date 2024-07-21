@@ -79,25 +79,27 @@ void RKSettings::initDialogPages() {
 	RK_ASSERT(pages.isEmpty());
 
 	for (auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
-		auto pagewidgets = (*it)->createPages(this);
-		for (auto pit = pagewidgets.constBegin(); pit != pagewidgets.constEnd(); ++pit) {
-			auto widget = *pit;
-			RK_ASSERT(widget->pageid != RKSettingsModule::no_page_id); // all toplevel pages shall have an id
-			auto superp = widget->superpageid;
-			KPageWidgetItem *page;
-			if (superp.isEmpty()) {
-				page = addPage(widget, widget->windowTitle());
-			} else {
-				auto superpage = findPage(superp);
-				RK_ASSERT(superpage);
-				page = addSubPage(superpage, widget, widget->windowTitle());
-			}
-			page->setHeader(widget->longCaption());
-			page->setIcon(widget->windowIcon());
-			connect(widget, &RKSettingsModuleWidget::settingsChanged, this, [this]() { button(QDialogButtonBox::Apply)->setEnabled(true); });
-			pages.append(page);
-		}
+		(*it)->createPages(this);
 	}
+}
+
+void RKSettings::addSettingsPage(RKSettingsModuleWidget *widget) {
+	RK_TRACE(SETTINGS);
+
+	RK_ASSERT(widget->pageid != RKSettingsModule::no_page_id); // all toplevel pages shall have an id
+	auto superp = widget->superpageid;
+	KPageWidgetItem *page;
+	if (superp.isEmpty()) {
+		page = addPage(widget, widget->windowTitle());
+	} else {
+		auto superpage = findPage(superp);
+		RK_ASSERT(superpage);
+		page = addSubPage(superpage, widget, widget->windowTitle());
+	}
+	page->setHeader(widget->longCaption());
+	page->setIcon(widget->windowIcon());
+	connect(widget, &RKSettingsModuleWidget::settingsChanged, this, [this]() { button(QDialogButtonBox::Apply)->setEnabled(true); });
+	pages.append(page);
 }
 
 KPageWidgetItem* RKSettings::findPage(const RKSettingsModule::PageId id) const {
@@ -139,19 +141,46 @@ void RKSettings::helpClicked () {
 void RKSettings::applyAll() {
 	RK_TRACE (SETTINGS);
 
+	// NOTE: This is shoddy design, but also kind of difficult: While applying the changes of the kate plugin page, pages may be added/removed
+	//       to this very dialog. I.e. while looping over the pages, they'd get modified (and even deleted!). Can't have that, so for now, we
+	//       special-case the kate plugins page, and handle it last.
+	auto kate_plugin_page = findPage(RKSettingsModuleKatePlugins::page_id);
+	RK_ASSERT(kate_plugin_page);
 	QSet<RKSettingsModule*> changed_modules;
 	for (auto it = pages.constBegin(); it != pages.constEnd(); ++it) {
+		if ((*it) == kate_plugin_page) continue;
 		auto w = static_cast<RKSettingsModuleWidget*>((*it)->widget());
 		if (w->hasChanges()) {
 			w->doApply();
 			changed_modules.insert(w->parentModule());
 		}
 	}
+	auto kateconfig = static_cast<RKSettingsModuleWidget*>(kate_plugin_page->widget());
+	if (kateconfig->hasChanges()) {
+		kateconfig->doApply();
+		changed_modules.insert(kateconfig->parentModule());
+	}
+
 	for (auto it = changed_modules.constBegin(); it != changed_modules.constEnd(); ++it) {
 		(*it)->syncConfig(KSharedConfig::openConfig().data(), RKConfigBase::SaveConfig);
 		Q_EMIT (*it)->settingsChanged();
 	}
 	button(QDialogButtonBox::Apply)->setEnabled(false);
+}
+
+void RKSettings::removeSettingsPage(RKSettingsModuleWidget *which) {
+	RK_TRACE(SETTINGS);
+
+	auto it = std::find_if(pages.constBegin(), pages.constEnd(), [which](KPageWidgetItem* p) {
+		return (p->widget() == which);
+	});
+	RK_ASSERT(it != pages.constEnd());
+	if (it != pages.constEnd()) {
+		auto pi = *it;
+		pages.removeAll(pi);
+		(pi)->deleteLater();
+		KPageDialog::removePage(pi);
+	}
 }
 
 void RKSettings::loadSettings(KConfig *config) {

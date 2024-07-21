@@ -12,7 +12,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qtextedit.h>
 
 #include "rkmdiwindow.h"
-#include "../settings/rksettings.h"
 #include "../rbackend/rcommand.h"
 
 class RKCommandLogView;

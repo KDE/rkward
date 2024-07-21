@@ -26,6 +26,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkstandardicons.h"
 #include "../core/robject.h"
 #include "../misc/rkstyle.h"
+#include "rksettings.h"
 
 #include "../debug.h"
 
@@ -201,16 +202,14 @@ QString RKTextEditorConfigPageWrapper::longCaption() const {
 	return page->fullName();
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleCommandEditor::createPages(QWidget *parent) {
+void RKSettingsModuleCommandEditor::createPages(RKSettings *parent) {
 	RK_TRACE(SETTINGS);
-	QList<RKSettingsModuleWidget*> ret;
-	ret.append(new RKSettingsPageCommandEditor(parent, this));
+	parent->addSettingsPage(new RKSettingsPageCommandEditor(parent, this));
 	auto ed = KTextEditor::Editor::instance();
 	int n = ed->configPages();
 	for (int i = 0; i < n; ++i) {
-		ret.append(new RKTextEditorConfigPageWrapper(parent, this, RKSettingsModuleCommandEditor::page_id, ed->configPage(i, parent)));
+		parent->addSettingsPage(new RKTextEditorConfigPageWrapper(parent, this, RKSettingsModuleCommandEditor::page_id, ed->configPage(i, parent)));
 	}
-	return ret;
 }
 
 QString completionTypeToConfigKey (int cat) {

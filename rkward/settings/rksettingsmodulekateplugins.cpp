@@ -17,9 +17,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KConfigGroup>
 #include <KConfig>
 #include <KTextEditor/Plugin>
+#include <KTextEditor/Editor>
+#include <KTextEditor/Application>
 
 #include "rksettingsmoduleplugins.h"
 #include "rksettingsmodulecommandeditor.h"
+#include "rksettings.h"
 #include "../windows/katepluginintegration.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../rkward.h"
@@ -75,7 +78,7 @@ public:
 		for (int i = plugin_table->topLevelItemCount() - 1; i >= 0; --i) {
 			QTreeWidgetItem *item = plugin_table->topLevelItem(i);
 			if (item->checkState(0) == Qt::Checked) {
-				p.append (item->data(1, Qt::UserRole).toString());
+				p.append(item->data(1, Qt::UserRole).toString());
 			}
 		}
 		RKSettingsModuleKatePlugins::plugins_to_load = p;
@@ -93,18 +96,33 @@ RKSettingsModuleKatePlugins::~RKSettingsModuleKatePlugins() {
 	RK_TRACE(SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleKatePlugins::createPages(QWidget *parent) {
+void RKSettingsModuleKatePlugins::addPluginSettingsPages(RKSettings *parent, KTextEditor::Plugin *plugin) {
 	RK_TRACE(SETTINGS);
 
-	QList<RKSettingsModuleWidget*> ret { new RKSettingsPageKatePlugins(parent, this) };
+	for (int i = 0; i < plugin->configPages(); ++i) {
+		auto _page = plugin->configPage(i, nullptr);
+		auto page = new RKTextEditorConfigPageWrapper(parent, this, RKSettingsModuleKatePlugins::page_id, _page);
+		parent->addSettingsPage(page);
+		connect(KTextEditor::Editor::instance()->application(), &KTextEditor::Application::pluginDeleted, page, [parent, plugin, page](QString, const KTextEditor::Plugin *plug) {
+			if (plug == plugin) parent->removeSettingsPage(page);
+			// NOTE: The page will be deleted, above, thus also removing this connection
+		});
+	}
+}
+
+void RKSettingsModuleKatePlugins::createPages(RKSettings *parent) {
+	RK_TRACE(SETTINGS);
+
+	parent->addSettingsPage(new RKSettingsPageKatePlugins(parent, this));
+
 	auto loaded_plugins = RKWardMainWindow::getMain()->katePluginIntegration()->loadedPlugins();
 	for (auto it = loaded_plugins.constBegin(); it != loaded_plugins.constEnd(); ++it) {
-		auto p = *it;
-		for (int i = 0; i < p->configPages(); ++i) {
-			ret.append(new RKTextEditorConfigPageWrapper(parent, this, RKSettingsModuleKatePlugins::page_id, p->configPage(i, nullptr)));
-		}
+		addPluginSettingsPages(parent, *it);
 	}
-	return ret;
+	// any future plugins loaded during the lifetime of the settings dialog
+	connect(KTextEditor::Editor::instance()->application(), &KTextEditor::Application::pluginCreated, parent, [this, parent](QString, KTextEditor::Plugin *plugin) {
+		addPluginSettingsPages(parent, plugin);
+	});
 }
 
 void RKSettingsModuleKatePlugins::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {

@@ -43,7 +43,7 @@ public:
 	};
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("general");
 
 /// returns the directory-name where the logfiles should reside

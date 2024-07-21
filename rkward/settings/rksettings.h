@@ -35,6 +35,7 @@ public:
 	static QList<RKSetupWizardItem*> validateSettingsInteractive ();
 
 	void enableApply ();
+	void addSettingsPage(RKSettingsModuleWidget *which);
 public Q_SLOTS:
 	void pageChange (KPageWidgetItem *current, KPageWidgetItem *before);
 protected:
@@ -53,6 +54,10 @@ friend class RKWardCoreTest;
 	KPageWidgetItem *findPage(const RKSettingsModule::PageId id) const;
 
 	static RKSettings *settings_dialog;
+
+friend class RKSettingsModuleKatePlugins;
+	/** dynamically remove the given page from the dialog (for pages provided by plugins, which might get unloaded) */
+	void removeSettingsPage(RKSettingsModuleWidget *which);
 };
 
 #endif

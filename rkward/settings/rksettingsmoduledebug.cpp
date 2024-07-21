@@ -21,6 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstyle.h"
+#include "rksettings.h"
 
 #include "../debug.h"
 
@@ -114,8 +115,8 @@ RKSettingsModuleDebug::~RKSettingsModuleDebug () {
 	RK_TRACE (SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleDebug::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageDebug(parent, this) };
+void RKSettingsModuleDebug::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsPageDebug(parent, this));
 }
 
 void RKSettingsModuleDebug::syncConfig(KConfig*, RKConfigBase::ConfigSyncAction) {

@@ -233,8 +233,8 @@ RKSettingsModuleWatch::~RKSettingsModuleWatch() {
 	RK_TRACE(SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleWatch::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageWatch(parent, this) };
+void RKSettingsModuleWatch::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsPageWatch(parent, this));
 }
 
 //static

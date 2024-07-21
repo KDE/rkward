@@ -34,7 +34,7 @@ public:
 	static bool kdePrintingEnabled () { return options_kde_printing; };
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("graphics");
 
 	enum DefaultDevice {

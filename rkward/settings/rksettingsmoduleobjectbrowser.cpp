@@ -70,8 +70,8 @@ RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
 	RK_TRACE (SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleObjectBrowser::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageObjectBrowser(parent, this) };
+void RKSettingsModuleObjectBrowser::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsPageObjectBrowser(parent, this));;
 }
 
 //static

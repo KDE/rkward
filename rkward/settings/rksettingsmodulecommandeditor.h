@@ -88,7 +88,7 @@ public:
 	~RKSettingsModuleCommandEditor() override;
 	
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 
 	static const RKCodeCompletionSettings* completionSettings() { return &completion_settings; };
 

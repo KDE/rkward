@@ -26,7 +26,7 @@ public:
 	~RKSettingsModuleObjectBrowser() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("browser");
 
 	static bool isDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };

@@ -28,6 +28,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rktoolwindowbar.h"
 #include "rktoolwindowlist.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettings.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguisyncer.h"
 #include "../rbackend/rcommand.h"

@@ -30,7 +30,7 @@ public:
 	~RKSettingsModuleR() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("rbackend");
 
 /** generate the commands needed to set the R run time options */
@@ -80,7 +80,7 @@ public:
 	~RKSettingsModuleRPackages() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	void validateSettingsInteractive (QList<RKSetupWizardItem*>*) override;
 	static constexpr PageId page_id = QLatin1String("rpackages");
 

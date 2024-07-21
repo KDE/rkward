@@ -27,7 +27,7 @@ public:
 	~RKSettingsModuleWatch() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("commandlog");
 
 	static bool shouldShowInput (RCommand *command);

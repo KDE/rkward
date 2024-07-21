@@ -31,7 +31,7 @@ public:
 	enum PluginPrefs { PreferDialog=0, PreferRecommended=1, PreferWizard=2 };
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("plugins");
 	static constexpr PageId addons_superpage_id = QLatin1String("addons");
 

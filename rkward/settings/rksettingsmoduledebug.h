@@ -25,7 +25,7 @@ public:
 	~RKSettingsModuleDebug() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("debug");
 
 	// static members are declared in debug.h and defined in main.cpp

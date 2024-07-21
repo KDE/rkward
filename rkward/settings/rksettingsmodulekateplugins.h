@@ -12,6 +12,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QStringList>
 
 class QTreeWidget;
+namespace KTextEditor {
+	class Plugin;
+}
 
 /** The settings-module for kate plugin specific settings
 @author Thomas Friedrichsmeier
@@ -22,11 +25,12 @@ public:
 	~RKSettingsModuleKatePlugins() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("kateplugins");
 
 	static QStringList pluginsToLoad() { return plugins_to_load; };
 private:
+	void addPluginSettingsPages(RKSettings *parent, KTextEditor::Plugin *plugin);
 friend class RKSettingsPageKatePlugins;
 	static RKConfigValue<QStringList> plugins_to_load;
 };

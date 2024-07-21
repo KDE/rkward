@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <KParts/Part>
 
-#include "../settings/rksettings.h"
+#include "../settings/rksettingsmodule.h"
 
 class QEvent;
 class QPaintEvent;

@@ -32,6 +32,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkcommandlineargs.h"
 #include "../misc/rkxmlguipreviewarea.h"
+#include "../settings/rksettings.h"
+#include "../settings/rksettingsmodulekateplugins.h"
+#include "../windows/katepluginintegration.h"
 
 QElapsedTimer _test_timer;
 
@@ -434,6 +437,17 @@ private Q_SLOTS:
 
 		RKWorkplace::mainWorkplace()->openAnyUrl(QUrl("rkward://settings/graphics"));
 		QVERIFY(dialog == RKSettings::settings_dialog);  // shall be reused
+
+		// Load and unload a bunch of plugins (settings dialog will be modified, but of course, also plugin loading/unloading is given another round
+		// of testing.
+		auto plugins = RKSettingsModuleKatePlugins::pluginsToLoad();
+		QVERIFY(!plugins.isEmpty());
+		for (int i = 0; i < plugins.size(); ++i) {
+			auto plugins_b = plugins;
+			plugins_b.removeAt(i);
+			RKWardMainWindow::getMain()->katePluginIntegration()->loadPlugins(plugins_b);
+			dialog->applyAll(); // to assertain there are no dead pointers in the dialog's internal bookkeeping
+		}
 
 		dialog->close();
 		waitForAllFinished();

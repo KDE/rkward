@@ -146,7 +146,7 @@ be inserted into this chain. It's safe to use this unconditionally, as if there 
 Q_SIGNALS:
 	void settingsChanged();
 protected:
-	virtual QList<RKSettingsModuleWidget*> createPages(QWidget *parent) = 0;
+	virtual void createPages(RKSettings *parent) = 0;
 private:
 friend class RKSettings;
 	static RCommandChain *chain;

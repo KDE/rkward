@@ -36,6 +36,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rksessionvars.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../misc/rkstyle.h"
+#include "rksettings.h"
 
 #include "../debug.h"
 
@@ -222,8 +223,8 @@ RKSettingsModuleR::~RKSettingsModuleR() {
 	RK_TRACE (SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleR::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageR(parent, this) };
+void RKSettingsModuleR::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsPageR(parent, this));
 }
 
 static QLatin1String RTrueFalse(bool val) {
@@ -443,8 +444,8 @@ RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
 	RK_TRACE (SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleRPackages::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageRPackages(parent, this) };
+void RKSettingsModuleRPackages::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsPageRPackages(parent, this));
 }
 
 void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCommandChain *chain) {

@@ -23,6 +23,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkspinbox.h"
 #include "../misc/rkstandardicons.h"
 #include "../rbackend/rkrinterface.h"
+#include "rksettings.h"
 #include "../debug.h"
 
 // static members
@@ -208,8 +209,8 @@ RKSettingsModuleOutput::~RKSettingsModuleOutput() {
 	RK_TRACE (SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleOutput::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageOutput(parent, this) };
+void RKSettingsModuleOutput::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsPageOutput(parent, this));
 }
 
 void RKSettingsModuleOutput::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {

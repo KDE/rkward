@@ -26,6 +26,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
 #include "../core/robject.h"
+#include "rksettings.h"
 #include "../debug.h"
 
 // static members
@@ -183,8 +184,8 @@ RKSettingsModuleGraphics::~RKSettingsModuleGraphics() {
 	RK_TRACE (SETTINGS);
 }
 
-QList<RKSettingsModuleWidget*> RKSettingsModuleGraphics::createPages(QWidget *parent) {
-	return QList<RKSettingsModuleWidget*>{ new RKSettingsPageGraphics(parent, this) };
+void RKSettingsModuleGraphics::createPages(RKSettings *parent) {
+	parent->addSettingsPage(new RKSettingsPageGraphics(parent, this));
 }
 
 void RKSettingsModuleGraphics::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {

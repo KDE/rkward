@@ -63,7 +63,7 @@ public:
 	~RKSettingsModuleOutput() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
-	QList<RKSettingsModuleWidget*> createPages(QWidget *parent) override;
+	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("output");
 
 /** generate the commands needed to set the R run time options */

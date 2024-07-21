@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkrbackendprotocol_frontend.h"
 #include "../rkward.h"
 #include "../rkconsole.h"
+#include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduleoutput.h"

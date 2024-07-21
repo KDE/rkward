@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../rbackend/rkrinterface.h"
 #include "../rkconsole.h"
+#include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulewatch.h"
 #include "../misc/rkstandardactions.h"
 #include "rkcommandeditorwindow.h"
