@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QRegularExpression>
 #include <QTemporaryFile>
 #include <QActionGroup>
+#include <QStandardPaths>
 
 #include <KAboutData>
 #include <KLocalizedString>
@@ -159,6 +160,7 @@ private Q_SLOTS:
 
 	void initTestCase() {
 		_test_timer.start();
+		QStandardPaths::setTestModeEnabled(true);
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
 		// qputenv("QT_LOGGING_RULES", "qt.qpa.windows.debug=true");  // Deliberately overwriting the rules set in the CI, as we are producing too much output, otherwise  -- TODO: does not appear to have any effect
 		KLocalizedString::setApplicationDomain("rkward");

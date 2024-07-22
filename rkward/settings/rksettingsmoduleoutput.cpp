@@ -34,8 +34,9 @@ RKConfigValue<bool> RKCarbonCopySettings::cc_app_plugin_commands {"CC app/plugin
 RKConfigValue<bool> RKCarbonCopySettings::cc_command_output {"CC command output", true};
 
 // TODO: Multiple instances of this are allowed to exist, simultaneously, and they are not kept in sync.
-//       Idea for a generic solution: RKSettingsModule could emit a signal, when changes got synced (form UI),
+//       Idea for a generic solution: RKSettingsModule could emit a signal, when changes got synced (from UI),
 //       and RKConfigValue-created controls could listen to that, and update if needed.
+//       Module would be set to RKSettingsModuleOutput, in this case.
 RKCarbonCopySettings::RKCarbonCopySettings(QWidget* parent, RKSettingsModuleWidget* page)
     : RKSettingsModuleWidget(parent, nullptr, RKSettingsModule::no_page_id) {
 	RK_TRACE(SETTINGS);
