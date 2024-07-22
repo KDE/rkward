@@ -26,8 +26,8 @@ and a widget to configure the settings.
 class RKCarbonCopySettings : public RKSettingsModuleWidget {
 	Q_OBJECT
 public:
-	explicit RKCarbonCopySettings (QWidget* parent, RKSettingsModule* module);
-	~RKCarbonCopySettings ();
+	explicit RKCarbonCopySettings(QWidget* parent, RKSettingsModuleWidget* page);
+	~RKCarbonCopySettings();
 
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 
@@ -38,13 +38,6 @@ public Q_SLOTS:
 private:
 	// There can be multiple instances of this widget, which need to be kept in sync.
 	static QList<RKCarbonCopySettings*> instances;
-	void update ();
-
-	QGroupBox *cc_globally_enabled_box;
-	QCheckBox *cc_console_commands_box;
-	QCheckBox *cc_script_commands_box;
-	QCheckBox *cc_app_plugin_commands_box;
-	QCheckBox *cc_command_output_box;
 
 	static RKConfigValue<bool> cc_globally_enabled;
 	static RKConfigValue<bool> cc_console_commands;

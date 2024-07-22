@@ -412,6 +412,7 @@ void RKWardMainWindow::slotCancelAllCommands () {
 void RKWardMainWindow::configureCarbonCopy () {
 	RK_TRACE (APP);
 
+	// TODO: This is currently known not to stay in sync with the main settings dialog, if both are active at the same time
 	QDialog *dialog = new QDialog ();
 	dialog->setWindowTitle (i18n ("Carbon Copy Settings"));
 	QVBoxLayout *layout = new QVBoxLayout (dialog);
@@ -420,8 +421,8 @@ void RKWardMainWindow::configureCarbonCopy () {
 
 	RKDialogButtonBox *box = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel, dialog);
 	dialog->setAttribute (Qt::WA_DeleteOnClose);
-	connect (dialog, &QDialog::accepted, settings, &RKCarbonCopySettings::applyChanges);
-	connect (box->button (QDialogButtonBox::Apply), &QPushButton::clicked, settings, &RKCarbonCopySettings::applyChanges);
+	connect(dialog, &QDialog::accepted, settings, &RKCarbonCopySettings::doApply);
+	connect(box->button(QDialogButtonBox::Apply), &QPushButton::clicked, settings, &RKCarbonCopySettings::doApply);
 	layout->addWidget (box);
 
 	dialog->show ();

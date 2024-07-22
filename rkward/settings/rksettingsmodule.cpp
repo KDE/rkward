@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkspinbox.h"
 
 #include <QCheckBox>
+#include <QGroupBox>
 #include <QComboBox>
 
 #include <functional>
@@ -51,6 +52,17 @@ QCheckBox* RKConfigValue<bool, bool>::makeCheckbox(const QString& label, RKSetti
 	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->isChecked(); });
 	return ret;
 }
+
+template<>
+QGroupBox* RKConfigValue<bool, bool>::makeCheckableGroupBox(const QString& label, RKSettingsModuleWidget* module) {
+	QGroupBox *ret = new QGroupBox(label);
+	ret->setCheckable(true);
+	ret->setChecked(value);
+	QObject::connect(ret, &QGroupBox::toggled, module, &RKSettingsModuleWidget::change);
+	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->isChecked(); });
+	return ret;
+}
+
 
 template<>
 QAction* RKConfigValue<bool, bool>::makeAction(QObject *parent, const QString &label, std::function<void(bool)> handler) {

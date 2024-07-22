@@ -119,18 +119,15 @@ public:
 
 		main_vbox->addWidget(RKSettingsModuleGraphics::options_kde_printing.makeCheckbox(i18n("Use KDE printer dialog for printing devices (if available)"), this));
 
-		graphics_hist_box = new QGroupBox(i18n("Screen device history"), this);
-		graphics_hist_box->setCheckable(true);
-		graphics_hist_box->setChecked(RKSettingsModuleGraphics::graphics_hist_enable);
+		auto graphics_hist_box = RKSettingsModuleGraphics::graphics_hist_enable.makeCheckableGroupBox(i18n("Screen device history"), this);
 		group_layout = new QVBoxLayout(graphics_hist_box);
-		connect(graphics_hist_box, &QGroupBox::toggled, this, &RKSettingsPageGraphics::boxChanged);
 		h_layout = new QHBoxLayout();
 		group_layout->addLayout(h_layout);
-		h_layout->addWidget(new QLabel(i18n("Maximum number of recorded plots:"), graphics_hist_box));
+		h_layout->addWidget(new QLabel(i18n("Maximum number of recorded plots:")));
 		h_layout->addWidget(RKSettingsModuleGraphics::graphics_hist_max_length.makeSpinBox(1, 200, this));
 		h_layout = new QHBoxLayout();
 		group_layout->addLayout(h_layout);
-		h_layout->addWidget(new QLabel(i18n("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
+		h_layout->addWidget(new QLabel(i18n("Maximum size of a single recorded plot (in KB):")));
 		h_layout->addWidget(RKSettingsModuleGraphics::graphics_hist_max_plotsize.makeSpinBox(4, 50000, this));
 		main_vbox->addWidget(graphics_hist_box);
 
@@ -161,8 +158,6 @@ public:
 		RKSettingsModuleGraphics::default_device_other = default_device_other_edit->text();
 		RKSettingsModuleGraphics::replace_standard_devices = (RKSettingsModuleGraphics::StandardDevicesMode) replace_standard_devices_group->checkedId();
 
-		RKSettingsModuleGraphics::graphics_hist_enable = graphics_hist_box->isChecked();
-
 		QStringList commands = RKSettingsModuleGraphics::makeRRunTimeOptionCommands();
 		for (QStringList::const_iterator it = commands.cbegin(); it != commands.cend(); ++it) {
 			RInterface::issueCommand(new RCommand(*it, RCommand::App), parent_module->commandChain());
@@ -172,8 +167,6 @@ private:
 	QButtonGroup *default_device_group;
 	QLineEdit *default_device_other_edit;
 	QButtonGroup *replace_standard_devices_group;
-
-	QGroupBox *graphics_hist_box;
 };
 
 RKSettingsModuleGraphics::RKSettingsModuleGraphics(QObject *parent) : RKSettingsModule(parent) {

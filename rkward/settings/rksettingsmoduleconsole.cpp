@@ -47,7 +47,7 @@ public:
 
 		QVBoxLayout *vbox = new QVBoxLayout(this);
 
-		vbox->addWidget(completion_settings_widget = new RKCodeCompletionSettingsWidget(this, parentModule(), &RKSettingsModuleConsole::completion_settings, false));
+		vbox->addWidget(completion_settings_widget = new RKCodeCompletionSettingsWidget(this, &RKSettingsModuleConsole::completion_settings, false));
 
 		vbox->addWidget(RKSettingsModuleConsole::save_history.makeCheckbox(i18n("Load/Save command history"), this));
 
@@ -84,7 +84,7 @@ public:
 	}
 	void applyChanges() override {
 		RK_TRACE(SETTINGS);
-		completion_settings_widget->applyChanges();
+		// All settings are RKConfigValue-based
 	}
 private:
 	RKCodeCompletionSettingsWidget *completion_settings_widget;

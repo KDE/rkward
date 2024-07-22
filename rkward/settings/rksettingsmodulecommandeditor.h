@@ -10,13 +10,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rksettingsmodule.h"
 #include "../core/robject.h"
 
-class RKSpinBox;
-class QLineEdit;
-class QGroupBox;
-class QComboBox;
 class QGridLayout;
 namespace KTextEditor { class ConfigPage; }
-
 class RKCodeCompletionSettingsWidget;
 class RKCodeCompletionSettings {
 public:
@@ -63,17 +58,15 @@ friend class RKSettingsModuleConsole;
 	RKConfigGroup group {"Completion", { &dummyoptions, &auto_completion_enabled, &auto_completion_min_chars, &auto_completion_timeout, &auto_completion_cursor_activated, &tabkey_invokes_completion, &cursor_navigates_completions, &completion_options, &completion_all_filetypes }};
 };
 
-class RKCodeCompletionSettingsWidget : public RKSettingsModuleWidget {
+class RKCodeCompletionSettingsWidget : public QWidget {
 public:
-	RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common);
+	RKCodeCompletionSettingsWidget(RKSettingsModuleWidget *parent, RKCodeCompletionSettings *settings, bool show_common);
 	~RKCodeCompletionSettingsWidget() {};
-	void applyChanges() override;
 private:
 	void makeCompletionTypeBoxes (const QStringList& labels, QGridLayout* layout);
 
-	QGroupBox* auto_completion_enabled_box;
-
 	RKCodeCompletionSettings *settings;
+	RKSettingsModuleWidget *parentwidget;
 };
 
 /**

@@ -37,79 +37,88 @@ RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_keep { "Autosave kee
 RKConfigValue<int> RKSettingsModuleCommandEditor::autosave_interval {"Autosave interval", 5 };
 RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter { "Script file filter", "*.R *.S *.q *.Rhistory" };
 
-RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common) : RKSettingsModuleWidget(parent, module, RKSettingsModule::no_page_id), settings(settings) {
-	RK_TRACE (SETTINGS);
-	QVBoxLayout* main_vbox = new QVBoxLayout (this);
-	main_vbox->setContentsMargins(0,0,0,0);
+RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(RKSettingsModuleWidget* parent, RKCodeCompletionSettings* settings, bool show_common)
+    : QWidget(parent), settings(settings), parentwidget(parent) {
+	RK_TRACE(SETTINGS);
 
-	QGroupBox* group = new QGroupBox (i18n ("Code Completion / Code Hints"), this);
-	QVBoxLayout* box_layout = new QVBoxLayout (group);
+	QVBoxLayout* main_vbox = new QVBoxLayout(this);
+	main_vbox->setContentsMargins(0, 0, 0, 0);
 
-	QGridLayout *g_layout = new QGridLayout ();
-	box_layout->addLayout (g_layout);
-	makeCompletionTypeBoxes (QStringList () << i18n ("Function call tip") << i18n ("Function argument completion") << i18n ("Object name completion") << i18n ("Filename completion") << i18n ("Auto word completion") << i18n("Mouseover object info"), g_layout);
+	QGroupBox* group = new QGroupBox(i18n("Code Completion / Code Hints"));
+	QVBoxLayout* box_layout = new QVBoxLayout(group);
 
-	auto_completion_enabled_box = new QGroupBox (i18n ("Start code completions/hints, automatically"), group);
-	auto_completion_enabled_box->setCheckable (true);
-	auto_completion_enabled_box->setChecked (settings->auto_completion_enabled);
-	connect (auto_completion_enabled_box, &QGroupBox::toggled, this, &RKCodeCompletionSettingsWidget::change);
-	box_layout->addWidget (auto_completion_enabled_box);
+	QGridLayout* g_layout = new QGridLayout();
+	box_layout->addLayout(g_layout);
+	makeCompletionTypeBoxes(QStringList{i18n("Function call tip"), i18n("Function argument completion"), i18n("Object name completion"),
+	                                    i18n("Filename completion"), i18n("Auto word completion"), i18n("Mouseover object info")},
+	                        g_layout);
 
-	QFormLayout* form_layout = new QFormLayout (auto_completion_enabled_box);
-	auto auto_completion_min_chars_box = settings->auto_completion_min_chars.makeSpinBox(1, INT_MAX, this);
-	form_layout->addRow (i18n("Minimum number of characters"), auto_completion_min_chars_box);
+	auto auto_completion_enabled_box = settings->auto_completion_enabled.makeCheckableGroupBox(i18n("Start code completions/hints, automatically"), parent);
+	box_layout->addWidget(auto_completion_enabled_box);
 
-	auto auto_completion_timeout_box = settings->auto_completion_timeout.makeSpinBox(0, INT_MAX, this);
-	form_layout->addRow (i18n ("Timeout (milliseconds)"), auto_completion_timeout_box);
+	QFormLayout* form_layout = new QFormLayout(auto_completion_enabled_box);
+	auto auto_completion_min_chars_box = settings->auto_completion_min_chars.makeSpinBox(1, INT_MAX, parent);
+	form_layout->addRow(i18n("Minimum number of characters"), auto_completion_min_chars_box);
 
-	form_layout->addRow(i18n("(Attempt to) start completion whenever the cursor position changes"), settings->auto_completion_cursor_activated.makeCheckbox(QString(), this));
+	auto auto_completion_timeout_box = settings->auto_completion_timeout.makeSpinBox(0, INT_MAX, parent);
+	form_layout->addRow(i18n("Timeout (milliseconds)"), auto_completion_timeout_box);
 
-	form_layout = new QFormLayout ();
-	box_layout->addLayout (form_layout);
+	form_layout->addRow(i18n("(Attempt to) start completion whenever the cursor position changes"),
+	                    settings->auto_completion_cursor_activated.makeCheckbox(QString(), parent));
 
-	auto tabkey_invokes_completion_box = settings->tabkey_invokes_completion.makeCheckbox(QString(), this);
-	RKCommonFunctions::setTips(i18n("Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, pressing the Tab key, while completions are shown, performs partial completion (if possible), independent of this setting."), tabkey_invokes_completion_box);
+	form_layout = new QFormLayout();
+	box_layout->addLayout(form_layout);
+
+	auto tabkey_invokes_completion_box = settings->tabkey_invokes_completion.makeCheckbox(QString(), parent);
+	RKCommonFunctions::setTips(
+	    i18n("Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, pressing the Tab key, "
+	         "while completions are shown, performs partial completion (if possible), independent of this setting."),
+	    tabkey_invokes_completion_box);
 	form_layout->addRow(i18n("Tab key invokes code completion"), tabkey_invokes_completion_box);
 
-	auto cursor_navigates_completions_box = settings->cursor_navigates_completions.makeDropDown(RKConfigBase::LabelList(
-		{{1, i18n("Up/down cursor keys")}, {0, i18n("Alt+Up/down cursor keys")}}
-	), this);
-	RKCommonFunctions::setTips (i18n ("If you wish to avoid ambiguity between navigation completion options and navigating the document, you can set the behavior such that completion items are navigate using Alt+up / Alt+down, instead of just the up/down cursor keys."), cursor_navigates_completions_box);
-	form_layout->addRow (i18n ("Keyboard navigation of completion items"), cursor_navigates_completions_box);
+	auto cursor_navigates_completions_box = settings->cursor_navigates_completions.makeDropDown(
+	    RKConfigBase::LabelList({{1, i18n("Up/down cursor keys")}, {0, i18n("Alt+Up/down cursor keys")}}), parent);
+	RKCommonFunctions::setTips(i18n("If you wish to avoid ambiguity between navigation completion options and navigating the document, you can set the "
+	                                "behavior such that completion items are navigate using Alt+up / Alt+down, instead of just the up/down cursor keys."),
+	                           cursor_navigates_completions_box);
+	form_layout->addRow(i18n("Keyboard navigation of completion items"), cursor_navigates_completions_box);
 
 	if (show_common) {
-		auto completion_list_member_operator_box = settings->completion_options.makeDropDown(RKConfigBase::LabelList(
-			{{RObject::DollarExpansion, i18n("'$'-operator (list$member)")}, {0, i18n("'[['-operator (list[[\"member\"]])")}}
-		), this, RObject::DollarExpansion);
-		form_layout->addRow (i18nc ("Note: list() and data.frame() are programming terms in R, and should not be translated, here", "Operator for access to members of list() and data.frame() objects"), completion_list_member_operator_box);
+		auto completion_list_member_operator_box = settings->completion_options.makeDropDown(
+		    RKConfigBase::LabelList({{RObject::DollarExpansion, i18n("'$'-operator (list$member)")}, {0, i18n("'[['-operator (list[[\"member\"]])")}}), parent,
+		    RObject::DollarExpansion);
+		form_layout->addRow(i18nc("Note: list() and data.frame() are programming terms in R, and should not be translated, here",
+		                          "Operator for access to members of list() and data.frame() objects"),
+		                    completion_list_member_operator_box);
 
-		auto completion_slot_operator_box = settings->completion_options.makeDropDown(RKConfigBase::LabelList(
-			{{0, i18n("'@'-operator (object@member)")}, {RObject::ExplicitSlotsExpansion, i18n("'slot()'-function (slot(object, member))")}}
-		), this, RObject::ExplicitSlotsExpansion);
-		form_layout->addRow (i18nc ("Note: S4-slot() is a programming term in R, and should not be translated, here", "Operator for access to S4-slot()s"), completion_slot_operator_box);
+		auto completion_slot_operator_box = settings->completion_options.makeDropDown(
+		    RKConfigBase::LabelList(
+		        {{0, i18n("'@'-operator (object@member)")}, {RObject::ExplicitSlotsExpansion, i18n("'slot()'-function (slot(object, member))")}}),
+		    parent, RObject::ExplicitSlotsExpansion);
+		form_layout->addRow(i18nc("Note: S4-slot() is a programming term in R, and should not be translated, here", "Operator for access to S4-slot()s"),
+		                    completion_slot_operator_box);
 
-		auto completion_object_qualification_box = settings->completion_options.makeDropDown(RKConfigBase::LabelList(
-			{{RObject::IncludeEnvirIfMasked, i18n("For masked objects, only")}, {RObject::IncludeEnvirIfNotGlobalEnv, i18n("For objects outside of <i>.GlobalEnv</i>, only")}, {RObject::IncludeEnvirIfNotGlobalEnv | RObject::IncludeEnvirForGlobalEnv, i18n("Always")}}
-		), this, RObject::IncludeEnvirIfNotGlobalEnv | RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfMasked);
-		form_layout->addRow (i18n ("Include environment for objects on the search path:"), completion_object_qualification_box);
+		auto completion_object_qualification_box = settings->completion_options.makeDropDown(
+		    RKConfigBase::LabelList({{RObject::IncludeEnvirIfMasked, i18n("For masked objects, only")},
+		                             {RObject::IncludeEnvirIfNotGlobalEnv, i18n("For objects outside of <i>.GlobalEnv</i>, only")},
+		                             {RObject::IncludeEnvirIfNotGlobalEnv | RObject::IncludeEnvirForGlobalEnv, i18n("Always")}}),
+		    parent, RObject::IncludeEnvirIfNotGlobalEnv | RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfMasked);
+		form_layout->addRow(i18n("Include environment for objects on the search path:"), completion_object_qualification_box);
 
-		auto completion_all_filetypes = settings->completion_all_filetypes.makeCheckbox(QString(), this);
+		auto completion_all_filetypes = settings->completion_all_filetypes.makeCheckbox(QString(), parent);
 		form_layout->addRow(i18n("Offer completions in all file types (not just R scripts)"), completion_all_filetypes);
 	} else {
-		box_layout->addWidget(RKCommonFunctions::linkedWrappedLabel(i18n("<b>Note: </b>Additional (common) completion options are available at the <a href=\"rkward://settings/editor\">script editor settings</a>")));
+		box_layout->addWidget(RKCommonFunctions::linkedWrappedLabel(
+		    i18n("<b>Note: </b>Additional (common) completion options are available at the <a href=\"rkward://settings/editor\">script editor settings</a>")));
 	}
 
 	main_vbox->addWidget(group);
 }
 
-void RKCodeCompletionSettingsWidget::applyChanges() {
-	settings->auto_completion_enabled = auto_completion_enabled_box->isChecked ();
-}
-
 void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes(const QStringList& labels, QGridLayout* layout) {
 	RK_ASSERT(labels.count() == RKCodeCompletionSettings::N_COMPLETION_CATEGORIES);
 	for (int i = 0; i < RKCodeCompletionSettings::N_COMPLETION_CATEGORIES; ++i) {
-		auto *box = settings->completion_type_enabled[i].makeCheckbox(labels[i], this);
+		auto* box = settings->completion_type_enabled[i].makeCheckbox(labels[i], parentwidget);
 		layout->addWidget(box, i / 2, i % 2);
 	}
 }
@@ -134,14 +143,11 @@ public:
 		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Settings marked with (*) do not take effect until you restart RKWard")));
 		main_vbox->addSpacing(2 * RKStyle::spacingHint());
 
-		main_vbox->addWidget(completion_settings_widget = new RKCodeCompletionSettingsWidget(this, parent_module, &parent_module->completion_settings, true));
+		main_vbox->addWidget(completion_settings_widget = new RKCodeCompletionSettingsWidget(this, &RKSettingsModuleCommandEditor::completion_settings, true));
 
 		main_vbox->addSpacing(2 * RKStyle::spacingHint());
 
-		QGroupBox *group = autosave_enabled_box = new QGroupBox(i18n("Autosaves"), this);
-		autosave_enabled_box->setCheckable(true);
-		autosave_enabled_box->setChecked(RKSettingsModuleCommandEditor::autosave_enabled);
-		connect(autosave_enabled_box, &QGroupBox::toggled, this, &RKSettingsPageCommandEditor::change);
+		QGroupBox *group = RKSettingsModuleCommandEditor::autosave_enabled.makeCheckableGroupBox(i18n("Autosaves"), this);
 		QFormLayout *form_layout = new QFormLayout(group);
 
 		form_layout->addRow(i18n("Autosave interval (minutes)"), RKSettingsModuleCommandEditor::autosave_interval.makeSpinBox(1, INT_MAX, this));
@@ -164,13 +170,10 @@ public:
 	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
-		completion_settings_widget->applyChanges();
-		RKSettingsModuleCommandEditor::autosave_enabled = autosave_enabled_box->isChecked();
 		RKSettingsModuleCommandEditor::script_file_filter = script_file_filter_box->text();
 	}
 private:
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
-	QGroupBox* autosave_enabled_box;
 	QLineEdit* script_file_filter_box;
 };
 

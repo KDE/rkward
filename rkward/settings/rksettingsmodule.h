@@ -18,6 +18,7 @@ class RKSettings;
 class RCommandChain;
 class QCheckBox;
 class QComboBox;
+class QGroupBox;
 class RKSettingsModule;
 class RKSettingsModuleWidget;
 class RKSetupWizardItem;
@@ -76,6 +77,8 @@ public:
 
 /** Only for bool values: convenience function to create a fully connected checkbox for this option */
 	QCheckBox* makeCheckbox(const QString& label, RKSettingsModuleWidget* module);
+/** Only for bool values: convenience function to create a fully connected checkable groupbox for this option */
+	QGroupBox* makeCheckableGroupBox(const QString& label, RKSettingsModuleWidget* module);
 /** Currently only for boolean or int options: Make a dropdown selector (QComboBox). If bit_flag_mask is set, the selector operates on (part of) an OR-able set of flags, instead of
  *  plain values. */
 	QComboBox* makeDropDown(const LabelList &entries, RKSettingsModuleWidget* _module, int bit_flag_mask = 0) {
@@ -166,6 +169,11 @@ public:
 	bool hasChanges() const { return changed; };
 	virtual QString longCaption() const { return windowTitle(); };
 	RKSettingsModule* parentModule() const { return parent_module; };
+	void doApply() {
+		Q_EMIT apply();
+		applyChanges();
+		changed = false;
+	}
 Q_SIGNALS:
 	void settingsChanged();
 	void apply();
@@ -173,11 +181,6 @@ protected:
 	QUrl helpURL() { return help_url; };
 	bool changed;
 /** temporary indirection until applyChanges() has been obsolete, everywhere */
-	void doApply() {
-		Q_EMIT apply();
-		applyChanges();
-		changed = false;
-	}
 friend class RKSettings;
 	const RKSettingsModule::PageId pageid;
 	const RKSettingsModule::PageId superpageid;

@@ -32,42 +32,33 @@ RKConfigValue<bool> RKCarbonCopySettings::cc_console_commands {"CC console comma
 RKConfigValue<bool> RKCarbonCopySettings::cc_script_commands {"CC script commands", false};
 RKConfigValue<bool> RKCarbonCopySettings::cc_app_plugin_commands {"CC app/plugin commands", false};
 RKConfigValue<bool> RKCarbonCopySettings::cc_command_output {"CC command output", true};
-QList<RKCarbonCopySettings*> RKCarbonCopySettings::instances;
 
-RKCarbonCopySettings::RKCarbonCopySettings(QWidget* parent, RKSettingsModule* module) : RKSettingsModuleWidget(parent, module, RKSettingsModule::no_page_id) {
-	RK_TRACE (SETTINGS);
+// TODO: Multiple instances of this are allowed to exist, simultaneously, and they are not kept in sync.
+//       Idea for a generic solution: RKSettingsModule could emit a signal, when changes got synced (form UI),
+//       and RKConfigValue-created controls could listen to that, and update if needed.
+RKCarbonCopySettings::RKCarbonCopySettings(QWidget* parent, RKSettingsModuleWidget* page)
+    : RKSettingsModuleWidget(parent, nullptr, RKSettingsModule::no_page_id) {
+	RK_TRACE(SETTINGS);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
-	main_vbox->setContentsMargins (0, 0, 0, 0);
-	cc_globally_enabled_box = new QGroupBox (i18n ("Carbon copy commands to output"), this);
-	cc_globally_enabled_box->setCheckable (true);
-	connect (cc_globally_enabled_box, &QGroupBox::clicked, this, &RKCarbonCopySettings::change);
-	main_vbox->addWidget (cc_globally_enabled_box);
+	QVBoxLayout* main_vbox = new QVBoxLayout(this);
+	main_vbox->setContentsMargins(0, 0, 0, 0);
+	auto cc_globally_enabled_box = cc_globally_enabled.makeCheckableGroupBox(i18n("Carbon copy commands to output"), this);
+	main_vbox->addWidget(cc_globally_enabled_box);
 
-	QVBoxLayout *group_layout = new QVBoxLayout (cc_globally_enabled_box);
-	group_layout->addWidget(cc_console_commands_box = cc_console_commands.makeCheckbox(i18n("Commands entered in the console"), this));
-	group_layout->addWidget(cc_script_commands_box = cc_script_commands.makeCheckbox(i18n("Commands run via the 'Run' menu"), this));
-	group_layout->addWidget(cc_app_plugin_commands_box = cc_app_plugin_commands.makeCheckbox(i18n("Commands originating from dialogs and plugins"), this));
-	group_layout->addWidget(cc_command_output_box = cc_command_output.makeCheckbox(i18n("Also carbon copy the command output"), this));
+	QVBoxLayout* group_layout = new QVBoxLayout(cc_globally_enabled_box);
+	group_layout->addWidget(cc_console_commands.makeCheckbox(i18n("Commands entered in the console"), this));
+	group_layout->addWidget(cc_script_commands.makeCheckbox(i18n("Commands run via the 'Run' menu"), this));
+	group_layout->addWidget(cc_app_plugin_commands.makeCheckbox(i18n("Commands originating from dialogs and plugins"), this));
+	group_layout->addWidget(cc_command_output.makeCheckbox(i18n("Also carbon copy the command output"), this));
 
-	update ();
-	instances.append (this);
+	if (page) {
+		connect(page, &RKSettingsModuleWidget::apply, this, &RKSettingsModuleWidget::doApply);
+		connect(this, &RKSettingsModuleWidget::settingsChanged, page, &RKSettingsModuleWidget::change);
+	}
 }
 
-RKCarbonCopySettings::~RKCarbonCopySettings () {
+RKCarbonCopySettings::~RKCarbonCopySettings() {
 	RK_TRACE (SETTINGS);
-
-	instances.removeAll (this);
-}
-
-void RKCarbonCopySettings::update() {
-	RK_TRACE (SETTINGS);
-
-	cc_globally_enabled_box->setChecked (cc_globally_enabled);
-	cc_console_commands_box->setChecked (cc_console_commands);
-	cc_script_commands_box->setChecked (cc_script_commands);
-	cc_app_plugin_commands_box->setChecked (cc_app_plugin_commands);
-	cc_command_output_box->setChecked (cc_command_output);
 }
 
 void RKCarbonCopySettings::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
@@ -93,13 +84,7 @@ bool RKCarbonCopySettings::shouldCarbonCopyCommand (const RCommand *command) {
 }
 
 void RKCarbonCopySettings::applyChanges() {
-	RK_TRACE (SETTINGS);
-
-	cc_globally_enabled = cc_globally_enabled_box->isChecked ();
-
-	for (RKCarbonCopySettings *sibling : std::as_const(instances)) {
-		if (sibling != this) sibling->update ();
-	}
+	// All RKConfigValue-based
 }
 
 // static members
@@ -172,7 +157,7 @@ public:
 
 		main_vbox->addWidget(group);
 
-		cc_settings = new RKCarbonCopySettings(this, parent_module);
+		cc_settings = new RKCarbonCopySettings(this, this);
 		main_vbox->addWidget(cc_settings);
 
 		main_vbox->addStretch();
