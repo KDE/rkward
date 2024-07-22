@@ -72,7 +72,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rbackend/rksessionvars.h"
 #include "windows/rkdebugmessagewindow.h"
 #include "misc/rkcommonfunctions.h"
-#include "../3rdparty/KDSingleApplication/kdsingleapplication.h"
+#include "kdsingleapplication.h"
 #include "misc/rkcommandlineargs.h"
 
 #ifdef Q_OS_WIN

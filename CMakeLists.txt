@@ -26,6 +26,15 @@ FIND_PACKAGE(Qt6 6.6 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Qml Pri
 FIND_PACKAGE(KF6 6.0.0 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive BreezeIcons OPTIONAL_COMPONENTS Crash)
 FIND_PACKAGE(Gettext REQUIRED)
 
+FIND_PACKAGE(KDSingleApplication-qt6 1.1.0 QUIET)
+if(KDSingleApplication-qt6_FOUND)
+  message(STATUS "Using system KDSingleApplication")
+else()
+  message(STATUS "Using bundled KDSingleApplication")
+  add_subdirectory(3rdparty/KDSingleApplication)
+  add_definitions(-DKDSINGLEAPPLICATION_STATIC_BUILD)
+endif()
+
 IF(FORCE_PRETTY_MAKEFILE)
 	SET(CMAKE_VERBOSE_MAKEFILE OFF)
 ENDIF(FORCE_PRETTY_MAKEFILE)
@@ -37,7 +46,6 @@ remove_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove to compley to KDECompi
 #uncomment the line below to save ~250-350kB in object size
 #ADD_DEFINITIONS(-DRKWARD_NO_TRACE)
 
-ADD_SUBDIRECTORY(3rdparty/KDSingleApplication)
 ADD_SUBDIRECTORY(rkward)
 ADD_SUBDIRECTORY(doc)
 ADD_SUBDIRECTORY(tests)
