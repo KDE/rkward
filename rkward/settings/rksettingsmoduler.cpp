@@ -88,9 +88,8 @@ public:
 
 		// options (OutDec)
 		grid->addWidget(new QLabel(i18n("Decimal character (only for printing)"), this), ++row, 0);
-		outdec_input = new QLineEdit(RKSettingsModuleR::options_outdec, this);
+		auto outdec_input = RKSettingsModuleR::options_outdec.makeLineEdit(this);
 		outdec_input->setMaxLength(1);
-		connect(outdec_input, &QLineEdit::textChanged, this, &RKSettingsPageR::change);
 		grid->addWidget(outdec_input, row, 1);
 
 		// options (width)
@@ -188,7 +187,6 @@ public:
 	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
-		RKSettingsModuleR::options_outdec = outdec_input->text();
 		RKSettingsModuleR::options_editor = editor_input->currentText();
 		RKSettingsModuleR::options_pager = pager_input->currentText();
 		RKSettingsModuleR::options_further = further_input->toPlainText();
@@ -208,7 +206,6 @@ public:
 		}
 	}
 private:
-	QLineEdit *outdec_input;
 	QComboBox *editor_input;
 	QComboBox *pager_input;
 	QTextEdit *further_input;
@@ -329,15 +326,14 @@ public:
 		main_vbox->addWidget(new QLabel(i18n("CRAN download mirror (leave empty to be prompted once each session):"), this));
 		QHBoxLayout* hbox = new QHBoxLayout();
 		main_vbox->addLayout(hbox);
-		cran_mirror_input = new QLineEdit(RKSettingsModuleRPackages::cran_mirror_url, this);
+		auto cran_mirror_input = RKSettingsModuleRPackages::cran_mirror_url.makeLineEdit(this);
 		if (RKSettingsModuleRPackages::cran_mirror_url == "@CRAN@") cran_mirror_input->clear();
-		connect(cran_mirror_input, &QLineEdit::textChanged, this, &RKSettingsPageRPackages::change);
 		hbox->addWidget(cran_mirror_input);
 		QPushButton* cran_mirror_button = new QPushButton(i18n("Select mirror"), this);
-		connect(cran_mirror_button, &QPushButton::clicked, this, [this]() {
+		connect(cran_mirror_button, &QPushButton::clicked, this, [this, cran_mirror_input]() {
 			QString title = i18n("Select CRAN mirror");
 			RCommand* command = new RCommand("rk.select.CRAN.mirror()\n", RCommand::App | RCommand::GetStringVector, title);
-			connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+			connect(command->notifier(), &RCommandNotifier::commandFinished, cran_mirror_input, [cran_mirror_input](RCommand *command) {
 				if (command->succeeded()) {
 					RK_ASSERT(command->getDataLength() >= 1);
 					cran_mirror_input->setText(command->stringVector().value(0));
@@ -418,7 +414,6 @@ public:
 	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
-		RKSettingsModuleRPackages::cran_mirror_url = cran_mirror_input->text();
 		if (RKSettingsModuleRPackages::cran_mirror_url.get().isEmpty ()) RKSettingsModuleRPackages::cran_mirror_url = "@CRAN@";
 
 		RKSettingsModuleRPackages::package_repositories = repository_selector->getValues();
@@ -433,7 +428,6 @@ public:
 private:
 	MultiStringSelector *libloc_selector;
 	MultiStringSelector *repository_selector;
-	QLineEdit* cran_mirror_input;
 };
 
 RKSettingsModuleRPackages::RKSettingsModuleRPackages(QObject *parent) : RKSettingsModule(parent) {

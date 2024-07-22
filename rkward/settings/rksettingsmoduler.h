@@ -12,12 +12,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qstring.h>
 #include <qstringlist.h>
 
-class QComboBox;
-class QLineEdit;
-class MultiStringSelector;
-class QSpinBox;
-class QTextEdit;
-
 /**
 Configure the R-backend
 

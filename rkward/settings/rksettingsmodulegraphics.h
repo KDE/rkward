@@ -11,13 +11,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QStringList>
 
-class QLineEdit;
-class QGroupBox;
-class RKSpinBox;
-class QSpinBox;
-class QButtonGroup;
-class QRadioButton;
-
 /**
 @author Thomas Friedrichsmeier
 */

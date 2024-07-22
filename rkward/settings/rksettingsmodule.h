@@ -24,6 +24,7 @@ class RKSettingsModuleWidget;
 class RKSetupWizardItem;
 class RKSpinBox;
 class QAction;
+class QLineEdit;
 
 /** Base class for RKWard config settings.
  *
@@ -89,6 +90,8 @@ public:
 			return makeDropDownHelper(entries, _module, (std::is_same<STORAGE_T, bool>::value && value) ? 1 : (int) value, [this](int val){this->value = (T) val;});
 		}
 	}
+/** Only for QString values: Create a fully connected QLineEdit for this option */
+	QLineEdit* makeLineEdit(RKSettingsModuleWidget* module);
 	RKSpinBox* makeSpinBox(T min, T max, RKSettingsModuleWidget* _module);
 /** For settings to be used outside the settings dialog: Create an appropriate action connected to this value. Call @param handler with the new value, whenever the action is triggered,
  *  and - for convenience - once while creating the action (for intialization) */

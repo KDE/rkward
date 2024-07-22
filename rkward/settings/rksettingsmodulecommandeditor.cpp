@@ -158,23 +158,18 @@ public:
 
 		main_vbox->addSpacing(2 * RKStyle::spacingHint ());
 
-		script_file_filter_box = new QLineEdit();
-		script_file_filter_box->setText(RKSettingsModuleCommandEditor::script_file_filter);
+		auto script_file_filter_box = RKSettingsModuleCommandEditor::script_file_filter.makeLineEdit(this);
 		RKCommonFunctions::setTips(i18n("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box);
-		connect(script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsPageCommandEditor::change);
 		main_vbox->addWidget(new QLabel(i18n("R script file filters (separated by spaces)")));
 		main_vbox->addWidget(script_file_filter_box);
 
 		main_vbox->addStretch();
 	}
 	void applyChanges() override {
-		RK_TRACE(SETTINGS);
-
-		RKSettingsModuleCommandEditor::script_file_filter = script_file_filter_box->text();
+		// All settings based on RKConfigValue
 	}
 private:
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
-	QLineEdit* script_file_filter_box;
 };
 
 RKTextEditorConfigPageWrapper::RKTextEditorConfigPageWrapper(QWidget* parent, RKSettingsModule *parent_module, RKSettingsModule::PageId superpage, KTextEditor::ConfigPage* wrapped) :

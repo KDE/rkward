@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QComboBox>
+#include <QLineEdit>
 
 #include <functional>
 
@@ -99,6 +100,15 @@ RKSpinBox* RKConfigValue<uint, uint>::makeSpinBox(uint min, uint max, RKSettings
 	ret->setIntMode(min, max, value);
 	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
 	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->intValue(); });
+	return ret;
+}
+
+template<>
+QLineEdit* RKConfigValue<QString, QString>::makeLineEdit(RKSettingsModuleWidget* module) {
+	QLineEdit* ret = new QLineEdit();
+	ret->setText(value);
+	QObject::connect(ret, &QLineEdit::textChanged, module, &RKSettingsModuleWidget::change);
+	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->text(); });
 	return ret;
 }
 
