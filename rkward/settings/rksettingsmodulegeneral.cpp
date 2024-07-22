@@ -14,9 +14,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qdir.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
-#include <qbuttongroup.h>
-#include <qgroupbox.h>
-#include <qradiobutton.h>
 #include <QVBoxLayout>
 
 #include "../misc/getfilenamewidget.h"
@@ -25,6 +22,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommandlineargs.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstyle.h"
+#include "../misc/rkradiogroup.h"
 #include "rksettings.h"
 
 #include "../version.h"
@@ -104,23 +102,14 @@ public:
 
 		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("The workplace layout (i.e. which script-, data-, help-windows are open) may be saved (and loaded) per R workspace, or independent of the R workspace. Which do you prefer?")));
 
-		workplace_save_chooser = new QButtonGroup(this);
-		group_box = new QGroupBox(this);
-		QVBoxLayout *group_layout = new QVBoxLayout(group_box);
-
-		QAbstractButton* button;
-		button = new QRadioButton(i18n("Save/restore with R workspace, when saving/loading R workspace"), group_box);
-		group_layout->addWidget(button);
-		workplace_save_chooser->addButton(button, RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace);
-		button = new QRadioButton(i18n("Save/restore independent of R workspace (save at end of RKWard session, restore at next start)"), group_box);
-		group_layout->addWidget(button);
-		workplace_save_chooser->addButton(button, RKSettingsModuleGeneral::SaveWorkplaceWithSession);
-		button = new QRadioButton(i18n("Do not save/restore workplace layout"), group_box);
-		group_layout->addWidget(button);
-		workplace_save_chooser->addButton(button, RKSettingsModuleGeneral::DontSaveWorkplace);	
-		if ((button = workplace_save_chooser->button(RKSettingsModuleGeneral::workplace_save_mode))) button->setChecked(true);
+		auto radio_box = new RKRadioGroup();
+		workplace_save_chooser = radio_box->group();
+		radio_box->addButton(i18n("Save/restore with R workspace, when saving/loading R workspace"), RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace);
+		radio_box->addButton(i18n("Save/restore independent of R workspace (save at end of RKWard session, restore at next start)"), RKSettingsModuleGeneral::SaveWorkplaceWithSession);
+		radio_box->addButton(i18n("Do not save/restore workplace layout"), RKSettingsModuleGeneral::DontSaveWorkplace);
+		radio_box->setButtonChecked(RKSettingsModuleGeneral::workplace_save_mode, true);
 		connect(workplace_save_chooser, &QButtonGroup::idClicked, this, &RKSettingsPageGeneral::change);
-		main_vbox->addWidget(group_box);
+		main_vbox->addWidget(radio_box);
 
 		main_vbox->addSpacing(2*RKStyle::spacingHint());
 

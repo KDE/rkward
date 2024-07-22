@@ -1,6 +1,6 @@
 /*
 rkimportdialog - This file is part of RKWard (https://rkward.kde.org). Created: Tue Jan 30 2007
-SPDX-FileCopyrightText: 2007-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -9,9 +9,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QLabel>
 #include <QVBoxLayout>
-#include <QGroupBox>
-#include <QRadioButton>
-#include <QButtonGroup>
 
 #include <KLocalizedString>
 #include <KMessageWidget>
@@ -20,6 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../plugin/rkcomponentcontext.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspecialactions.h"
+#include "../misc/rkradiogroup.h"
 
 #include "../debug.h"
 
@@ -58,19 +56,13 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 		w->setWordWrap(true);
 		layout->addWidget(w);
 	}
-	QGroupBox *box = new QGroupBox();
+	auto box = new RKRadioGroup();
 	layout->addWidget(box);
-	select_format_group = new QButtonGroup(this);
-	QVBoxLayout *sublayout = new QVBoxLayout(box);
+	select_format_group = box->group();
 	for (int i = 0; i < filters.size(); ++i) {
-		auto *button = new QRadioButton(filters[i]);
-		sublayout->addWidget(button);
-		select_format_group->addButton(button, i);
+		box->addButton(filters[i], i);
 	}
-	auto *button = new QRadioButton(i18n("None of the above / try another method"));
-	sublayout->addWidget(button);
-	select_format_group->addButton(button);
-	button->setChecked(true);
+	box->addButton(i18n("None of the above / try another method"))->setChecked(true);
 	connect(select_format_group, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled), this, &RKImportDialog::updateState);
 	layout->addStretch();
 	select_format = addPage(page, i18n("Select format"));
@@ -84,18 +76,11 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 		w->setWordWrap(true);
 		layout->addWidget(w);
 	}
-	box = new QGroupBox();
+	box = new RKRadioGroup();
 	layout->addWidget(box);
-	select_rio_group = new QButtonGroup(this);
-	sublayout = new QVBoxLayout(box);
-	button = new QRadioButton(i18n("Use 'rio'-based importer"));
-	button->setEnabled(rio_handle != nullptr);
-	sublayout->addWidget(button);
-	select_rio_group->addButton(button, 0);
-	button = new QRadioButton(i18n("Try another method"));
-	sublayout->addWidget(button);
-	select_rio_group->addButton(button);
-	button->setChecked(true);
+	select_rio_group = box->group();
+	box->addButton(i18n("Use 'rio'-based importer"), 0)->setEnabled(rio_handle != nullptr);
+	box->addButton(i18n("Try another method"))->setChecked(true);
 	connect(select_rio_group, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled), this, &RKImportDialog::updateState);
 	layout->addStretch();
 	select_rio = addPage(page, i18n("Generic 'rio'-based importer"));
@@ -103,17 +88,11 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 	page = new QWidget();
 	layout = new QVBoxLayout(page);
 	layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("If your data is moderate in size, and you can open/view it in another application on your system, importing it from clipboard (copy and paste) may be viable.")));
-	box = new QGroupBox();
+	box = new RKRadioGroup();
 	layout->addWidget(box);
-	select_clipboard_group = new QButtonGroup(this);
-	sublayout = new QVBoxLayout(box);
-	button = new QRadioButton(i18n("Import from clipboard"));
-	sublayout->addWidget(button);
-	select_clipboard_group->addButton(button, 0);
-	button = new QRadioButton(i18n("Try another method"));
-	sublayout->addWidget(button);
-	select_clipboard_group->addButton(button);
-	button->setChecked(true);
+	select_clipboard_group = box->group();
+	box->addButton(i18n("Import from clipboard"), 0);
+	box->addButton(i18n("Try another method"))->setChecked(true);
 	connect(select_clipboard_group, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled), this, &RKImportDialog::updateState);
 	layout->addStretch();
 	select_clipboard = addPage(page, i18n("Import from clipboard"));

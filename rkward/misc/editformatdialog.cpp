@@ -6,9 +6,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "editformatdialog.h"
 
-#include <QButtonGroup>
-#include <QGroupBox>
-#include <qradiobutton.h>
 #include <qspinbox.h>
 #include <qstringlist.h>
 #include <QVBoxLayout>
@@ -20,6 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../core/rkvariable.h"
 #include "../misc/rkdialogbuttonbox.h"
+#include "../misc/rkradiogroup.h"
 
 #include "../debug.h"
 
@@ -28,35 +26,21 @@ EditFormatDialog::EditFormatDialog (QWidget *parent) : QDialog (parent) {
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 
-	alignment_group = new QButtonGroup (this);
-	QGroupBox* alignment_box = new QGroupBox (i18n ("Alignment"), this);
-	layout->addWidget (alignment_box);
-	QVBoxLayout* group_layout = new QVBoxLayout (alignment_box);
-	group_layout->setContentsMargins (0, 0, 0, 0);
-	QRadioButton* button;
-	alignment_group->addButton (button = new QRadioButton (i18n ("Default"), alignment_box), (int) RKVariable::FormattingOptions::AlignDefault);
-	group_layout->addWidget (button);
-	alignment_group->addButton (button = new QRadioButton (i18n ("Left"), alignment_box), (int) RKVariable::FormattingOptions::AlignLeft);
-	group_layout->addWidget (button);
-	alignment_group->addButton (button = new QRadioButton (i18n ("Right"), alignment_box), (int) RKVariable::FormattingOptions::AlignRight);
-	group_layout->addWidget (button);
-	alignment_group->button ((int) RKVariable::FormattingOptions::AlignDefault)->setChecked (true);
+	auto alignment_box = new RKRadioGroup(i18n ("Alignment"));
+	alignment_group = alignment_box->group();
+	layout->addWidget(alignment_box);
+	alignment_box->addButton(i18n("Default"), (int) RKVariable::FormattingOptions::AlignDefault)->setChecked(true);
+	alignment_box->addButton(i18n("Left"), (int) RKVariable::FormattingOptions::AlignLeft);
+	alignment_box->addButton(i18n("Right"), (int) RKVariable::FormattingOptions::AlignRight);
 
-	precision_group = new QButtonGroup (this);
-	QGroupBox* precision_box = new QGroupBox (i18n ("Decimal Places"), this);
-	layout->addWidget (precision_box);
-	group_layout = new QVBoxLayout (precision_box);
-	precision_group->addButton (button = new QRadioButton (i18n ("Default setting"), precision_box), (int) RKVariable::FormattingOptions::PrecisionDefault);
-	group_layout->addWidget (button);
-	precision_group->addButton (button = new QRadioButton (i18n ("As required"), precision_box), (int) RKVariable::FormattingOptions::PrecisionRequired);
-	group_layout->addWidget (button);
-	precision_group->addButton (button = new QRadioButton (i18n ("Fixed precision:"), precision_box), (int) RKVariable::FormattingOptions::PrecisionFixed);
-	group_layout->addWidget (button);
-	precision_field = new QSpinBox (precision_box);
-	precision_field->setRange (0, 10);
-	connect (precision_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &EditFormatDialog::precisionFieldChanged);
-	group_layout->addWidget (precision_field);
-	precision_group->button ((int) RKVariable::FormattingOptions::PrecisionDefault)->setChecked (true);
+	auto precision_box = new RKRadioGroup(i18n("Decimal Places"));
+	precision_group = precision_box->group();
+	layout->addWidget(precision_box);
+	precision_box->addButton(i18n("Default setting"), (int) RKVariable::FormattingOptions::PrecisionDefault);
+	precision_box->addButton(i18n("As required"), (int) RKVariable::FormattingOptions::PrecisionRequired);
+	precision_field = new QSpinBox();
+	precision_field->setRange(0, 10);
+	precision_box->addButton(i18n("Fixed precision:"), (int) RKVariable::FormattingOptions::PrecisionFixed, precision_field);
 
 	RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 	layout->addWidget (buttons);
@@ -92,13 +76,6 @@ void EditFormatDialog::accept () {
 
 	QDialog::accept ();
 }
-
-void EditFormatDialog::precisionFieldChanged (int) {
-	RK_TRACE (EDITOR);
-
-	precision_group->button ((int) RKVariable::FormattingOptions::PrecisionFixed)->setChecked (true);
-}
-
 
 ///////////// EditFormatDialogProxy ////////////////////
 

@@ -22,8 +22,6 @@ Allows editing of format-attributes for an RKVariable
 */
 class EditFormatDialog : public QDialog {
 	Q_OBJECT
-public Q_SLOTS:
-	void precisionFieldChanged (int);
 protected:
 /** reimplemented to make the newly selected options available */
 	void accept () override;

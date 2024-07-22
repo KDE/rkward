@@ -13,9 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qgroupbox.h>
 #include <qcheckbox.h>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -28,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/xmlhelper.h"
+#include "../misc/rkradiogroup.h"
 #include "../windows/rkworkplace.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkloadlibsdialog.h"
@@ -58,22 +56,12 @@ public:
 		main_vbox->addSpacing(2*RKStyle::spacingHint());
 		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?")));
 
-		QGroupBox* button_box = new QGroupBox(this);
-		QVBoxLayout* group_layout = new QVBoxLayout(button_box);
-		button_group = new QButtonGroup(button_box);
-
-		QAbstractButton* button;
-		button = new QRadioButton(i18n("Always prefer dialogs"), button_box);
-		group_layout->addWidget(button);
-		button_group->addButton(button, RKSettingsModulePlugins::PreferDialog);
-		button = new QRadioButton(i18n("Prefer recommended interface"), button_box);
-		group_layout->addWidget(button);
-		button_group->addButton(button, RKSettingsModulePlugins::PreferRecommended);
-		button = new QRadioButton(i18n("Always prefer wizards"), button_box);
-		group_layout->addWidget(button);
-		button_group->addButton(button, RKSettingsModulePlugins::PreferWizard);
-		if ((button = button_group->button(RKSettingsModulePlugins::interface_pref))) button->setChecked(true);
-
+		auto button_box = new RKRadioGroup();
+		button_group = button_box->group();
+		button_box->addButton(i18n("Always prefer dialogs"), RKSettingsModulePlugins::PreferDialog);
+		button_box->addButton(i18n("Prefer recommended interface"), RKSettingsModulePlugins::PreferRecommended);
+		button_box->addButton(i18n("Always prefer wizards"), RKSettingsModulePlugins::PreferWizard);
+		button_box->setButtonChecked(RKSettingsModulePlugins::interface_pref, true);
 		connect(button_group, &QButtonGroup::idClicked, this, &RKSettingsPagePlugins::change);
 		main_vbox->addWidget(button_box);
 

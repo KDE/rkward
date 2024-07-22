@@ -34,6 +34,7 @@ SET(misc_STAT_SRCS
    rkoutputdirectory.cpp
    rkstyle.cpp
    rkparsedversion.cpp
+   rkradiogroup.cpp
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})

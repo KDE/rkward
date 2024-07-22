@@ -45,9 +45,6 @@ void RKPasteSpecialAction::doSpecialPaste() {
 }
 
 #include <QCheckBox>
-#include <QRadioButton>
-#include <QButtonGroup>
-#include <QGroupBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLineEdit>
@@ -62,6 +59,7 @@ void RKPasteSpecialAction::doSpecialPaste() {
 #include "rksaveobjectchooser.h"
 #include "../rbackend/rkrinterface.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../misc/rkradiogroup.h"
 
 RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : QDialog(parent) {
 	RK_TRACE (MISC);
@@ -77,103 +75,64 @@ RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : Q
 	QHBoxLayout *rowlayout = new QHBoxLayout ();
 	pagelayout->addLayout (rowlayout);
 
-	QGroupBox* box;
-	QVBoxLayout* group_layout;
-	QHBoxLayout* h_layout;
-	QRadioButton* rbutton;
-
 	// Mode box
-	box = new QGroupBox (i18n ("Paste Mode"), this);
-	group_layout = new QVBoxLayout (box);
-	dimensionality_group = new QButtonGroup (box);
-	rbutton = new QRadioButton (i18n ("Single string"), box);
-	dimensionality_group->addButton (rbutton, DimSingleString);
-	group_layout->addWidget (rbutton);
-	rbutton = new QRadioButton (i18n ("Vector"), box);
-	dimensionality_group->addButton (rbutton, DimVector);
-	group_layout->addWidget (rbutton);
-	rbutton = new QRadioButton (i18n ("Matrix"), box);
-	dimensionality_group->addButton (rbutton, DimMatrix);
-	group_layout->addWidget (rbutton);
-	rbutton = new QRadioButton (i18n ("data.frame"), box);
-	dimensionality_group->addButton (rbutton, DimDataFrame);
-	rbutton->setChecked (true);
-	group_layout->addWidget (rbutton);
+	auto box = new RKRadioGroup(i18n("Paste Mode"));
+	dimensionality_group = box->group();
+	box->addButton(i18n("Single string"), DimSingleString);
+	box->addButton(i18n("Vector"), DimVector);
+	box->addButton(i18n("Matrix"), DimMatrix);
+	box->addButton(i18n("data.frame"), DimDataFrame)->setChecked(true);;
 	connect (dimensionality_group, &QButtonGroup::idClicked, this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget (box);
 
 	const QMimeData* clipdata = QApplication::clipboard ()->mimeData ();
 
 	// Separator box
-	box = new QGroupBox (i18n ("Field Separator"), this);
-	group_layout = new QVBoxLayout (box);
-	separator_group = new QButtonGroup (box);
-	rbutton = new QRadioButton (i18n ("Tab"), box);
-	separator_group->addButton (rbutton, SepTab);
-	group_layout->addWidget (rbutton);
-	rbutton->setChecked (true);		// tab-separated is a reasonable fallback guess
-	rbutton = new QRadioButton (i18n ("Comma"), box);
-	separator_group->addButton (rbutton, SepComma);
-	group_layout->addWidget (rbutton);
-	if (clipdata->hasFormat ("text/comma-separated-values")) rbutton->setChecked (true);
-	rbutton = new QRadioButton (i18n ("Single space"), box);
-	separator_group->addButton (rbutton, SepSpace);
-	group_layout->addWidget (rbutton);
-	rbutton = new QRadioButton (i18n ("Any whitespace"), box);
-	separator_group->addButton (rbutton, SepWhitespace);
-	group_layout->addWidget (rbutton);
-	h_layout = new QHBoxLayout ();
-	rbutton = new QRadioButton (i18n ("Other:"), box);
-	separator_group->addButton (rbutton, SepCustom);
-	h_layout->addWidget (rbutton);
-	separator_freefield = new QLineEdit (";", box);
-	h_layout->addWidget (separator_freefield);
-	group_layout->addLayout (h_layout);
-	connect (separator_group, &QButtonGroup::idClicked, this, &RKPasteSpecialDialog::updateState);
-	rowlayout->addWidget (box);
+	box = new RKRadioGroup(i18n("Field Separator"));
+	separator_group = box->group();
+	box->addButton(i18n("Tab"), SepTab)->setChecked(true); // tab-separated is a reasonable fallback guess
+	box->addButton(i18n("Comma"), SepComma)->setChecked(clipdata->hasFormat ("text/comma-separated-values"));
+	box->addButton(i18n("Single space"), SepSpace);
+	box->addButton(i18n("Any whitespace"), SepWhitespace);
+	separator_freefield = new QLineEdit(";", box);
+	box->addButton(i18n("Other:"), SepCustom, separator_freefield, QBoxLayout::LeftToRight);
+	connect(separator_group, &QButtonGroup::idClicked, this, &RKPasteSpecialDialog::updateState);
+	rowlayout->addWidget(box);
 
 	rowlayout = new QHBoxLayout;
 	pagelayout->addLayout (rowlayout);
 
 	// Quoting box
-	box = new QGroupBox (i18n ("Quoting"), this);
-	group_layout = new QVBoxLayout (box);
-	quoting_group = new QButtonGroup (box);
-	rbutton = new QRadioButton (i18n ("Do not quote values"), box);
-	quoting_group->addButton (rbutton, QuoteNone);
-	group_layout->addWidget (rbutton);
-	rbutton = new QRadioButton (i18n ("Automatic"), box);
-	rbutton->setChecked (true);
-	quoting_group->addButton (rbutton, QuoteAuto);
-	group_layout->addWidget (rbutton);
-	rbutton = new QRadioButton (i18n ("Quote all values"), box);
-	quoting_group->addButton (rbutton, QuoteAll);
-	group_layout->addWidget (rbutton);
-	connect (quoting_group, &QButtonGroup::idClicked, this, &RKPasteSpecialDialog::updateState);
-	rowlayout->addWidget (box);
-
-	// Labels
-	box = new QGroupBox(i18n("Labels"), this);
-	group_layout = new QVBoxLayout (box);
-	names_box = new QCheckBox(i18n("First row contains labels"), box);
-	group_layout->addWidget(names_box);
-	rownames_box = new QCheckBox(i18n("First column contains labels"), box);
-	group_layout->addWidget(rownames_box);
+	box = new RKRadioGroup(i18n("Quoting"));
+	quoting_group = box->group();
+	box->addButton(i18n("Do not quote values"), QuoteNone);
+	box->addButton(i18n("Automatic"), QuoteAuto)->setChecked(true);
+	box->addButton(i18n("Quote all values"), QuoteAll);
+	connect(quoting_group, &QButtonGroup::idClicked, this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget(box);
 
+	// Labels
+	auto gbox = new QGroupBox(i18n("Labels"));
+	auto group_layout = new QVBoxLayout(gbox);
+	names_box = new QCheckBox(i18n("First row contains labels"));
+	group_layout->addWidget(names_box);
+	rownames_box = new QCheckBox(i18n("First column contains labels"));
+	group_layout->addWidget(rownames_box);
+	rowlayout->addWidget(gbox);
+
 	// further controls
-	box = new QGroupBox (i18n ("Transformations"), this);
-	group_layout = new QVBoxLayout (box);
-	reverse_h_box = new QCheckBox (i18n ("Reverse horizontally"), box);
-	group_layout->addWidget (reverse_h_box);
-	reverse_v_box = new QCheckBox (i18n ("Reverse vertically"), box);
-	group_layout->addWidget (reverse_v_box);
-	transpose_box = new QCheckBox (i18n ("Flip rows/columns"), box);
-	group_layout->addWidget (transpose_box);
-	insert_nas_box = new QCheckBox (i18n ("Insert NAs where needed"), box);
-	insert_nas_box->setChecked (true);
-	group_layout->addWidget (insert_nas_box);
-	rowlayout->addWidget (box);
+	gbox = new QGroupBox(i18n("Transformations"));
+	group_layout = new QVBoxLayout(gbox);
+	reverse_h_box = new QCheckBox(i18n("Reverse horizontally"));
+	group_layout->addWidget(reverse_h_box);
+	reverse_v_box = new QCheckBox(i18n("Reverse vertically"));
+	group_layout->addWidget(reverse_v_box);
+	transpose_box = new QCheckBox(i18n("Flip rows/columns"));
+	group_layout->addWidget(transpose_box);
+	insert_nas_box = new QCheckBox(i18n("Insert NAs where needed"));
+	insert_nas_box->setChecked(true);
+	group_layout->addWidget(insert_nas_box);
+	rowlayout->addWidget(box);
 
 	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 	ok_button = buttons->button(QDialogButtonBox::Ok);
@@ -201,7 +160,6 @@ void RKPasteSpecialDialog::updateState () {
 	names_box->setEnabled(dimensionality == DimDataFrame);
 	rownames_box->setEnabled(dimensionality == DimDataFrame);
 
-	separator_freefield->setEnabled ((dimensionality != DimSingleString) && (separator_group->checkedId () == SepCustom));
 	ok_button->setEnabled((objectname == nullptr) || objectname->isOk());
 }
 

@@ -560,9 +560,6 @@ void RKSettingsModuleRPackages::syncConfig(KConfig *config, RKConfigBase::Config
 	}
 }
 
-#include <QGroupBox>
-#include <QRadioButton>
-
 void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSetupWizardItem*>* items) {
 	RK_TRACE (SETTINGS);
 

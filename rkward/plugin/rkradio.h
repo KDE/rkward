@@ -1,6 +1,6 @@
 /*
 rkradio.h - This file is part of the RKWard project. Created: Thu Nov 7 2002
-SPDX-FileCopyrightText: 2002-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -10,8 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkabstractoptionselector.h"
 
-class QButtonGroup;
-class QGroupBox;
+class RKRadioGroup;
 
 /** This RKPluginWidget provides a group of radio-buttons for use in plugins.
 @author Thomas Friedrichsmeier
@@ -28,8 +27,7 @@ protected:
 	void setItemEnabledInGUI (int id, bool enabled) override;
 	QStringList getUiLabelPair () const override;
 private:
-	QButtonGroup* group;
-	QGroupBox* group_box;
+	RKRadioGroup* group_box;
 };
 
 #endif
