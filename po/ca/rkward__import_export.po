@@ -3291,6 +3291,3 @@ msgstr "Espai de treball"
 msgctxt "Author name"
 msgid "RKWard Team"
 msgstr "Equip del RKWard"
-
-#~ msgid "Genneric data import"
-#~ msgstr "Importació genèrica de dades"
