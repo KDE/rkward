@@ -181,7 +181,7 @@ void RKComponentScriptingProxy::scriptRCommandFinished (RCommand* command) {
 	RK_ASSERT (!callback.isNull ());
 
 	if (command->wasCanceled ()) return;
-	if (command->failed ()) RK_DEBUG (PHP, DL_ERROR, "Plugin script R command %s failed. Full output wsa %s", qPrintable (command->command ()), qPrintable (command->fullOutput ()));
+	if (command->failed ()) RK_DEBUG (PHP, DL_ERROR, "Plugin script R command %s failed. Full output was %s", qPrintable (command->command ()), qPrintable (command->fullOutput ()));
 
 	QJSValueList args;
 	args.append (marshall (&engine, command));
