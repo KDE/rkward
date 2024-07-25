@@ -31,4 +31,4 @@ Collate:
     'rkwardtests-internal.R'
     'rkwardtests-package.R'
     'show-method.R'
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
