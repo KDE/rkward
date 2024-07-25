@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-07-09 12:51+0200\n"
+"PO-Revision-Date: 2024-07-16 11:42+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -476,10 +476,9 @@ msgid "&Edit"
 msgstr "&Édition"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Détection de colonnes dupliquées"
+msgstr "Nom « %1 » de la colonne dupliquée"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -551,7 +550,7 @@ msgstr "Double-cliquez sur ces champs pour éditer les niveaux de facteurs."
 #: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "L'objet « %1 » n'est pas un vecteur."
 
 #: rkward/dataeditor/twintable.cpp:107
 #, kde-format
@@ -632,10 +631,12 @@ msgid ""
 "frame</tt>. Editing this table may not be safe, and has been disabled. Some "
 "columns may not be shown."
 msgstr ""
+"La structure interne de l'objet n'est pas conforme à un structure <tt>data."
+"frame</tt> classique. La modification de cette table pourrait être non sûre "
+"et a été désactivée. Certaines colonnes peuvent ne pas être affichées."
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
 msgstr "Afficher les détails"
 
@@ -644,12 +645,13 @@ msgstr "Afficher les détails"
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
+"Vous pourriez vouloir créer un sous-ensemble modifiable à l'aide de « Data-"
+">Subset data.frame »."
 
 #: rkward/dataeditor/twintable.cpp:227
-#, fuzzy, kde-format
-#| msgid "None selected"
+#, kde-format
 msgid "Problem detected"
-msgstr "Aucune sélection"
+msgstr "Un problème a été détecté."
 
 #: rkward/dataeditor/twintable.cpp:239
 #, kde-format
