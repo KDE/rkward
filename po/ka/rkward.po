@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-23 00:36+0000\n"
+"POT-Creation-Date: 2024-07-28 00:37+0000\n"
 "PO-Revision-Date: 2024-07-15 05:32+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -350,7 +350,7 @@ msgstr "მონაცემების სახელი"
 msgid "Array"
 msgstr "მასივი"
 
-#: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:95
+#: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:83
 #, kde-format
 msgid "Matrix"
 msgstr "Matrix"
@@ -833,12 +833,12 @@ msgstr ""
 msgid "Gathering setup information"
 msgstr "მორგების ინფორმაციის მოგროვება"
 
-#: rkward/dialogs/rkimportdialog.cpp:29
+#: rkward/dialogs/rkimportdialog.cpp:27
 #, kde-format
 msgid "Import Data Assistant"
 msgstr "მონაცემების შემოტანის დამხმარე"
 
-#: rkward/dialogs/rkimportdialog.cpp:54
+#: rkward/dialogs/rkimportdialog.cpp:52
 #, kde-format
 msgid ""
 "For certain formats, RKWard provides specialized import dialogs, and those "
@@ -849,7 +849,7 @@ msgstr ""
 "წესი, ისინი პარამეტრების უმრავლესობას შეიცავენ. არის თუ არა ფაილი, რომლი "
 "შემოტანასაც ცდილობთ, ერთ-ერთი ამ ფორმატთაგანში?"
 
-#: rkward/dialogs/rkimportdialog.cpp:56
+#: rkward/dialogs/rkimportdialog.cpp:54
 #, kde-format
 msgid ""
 "RKWard comes with several import dialogs, but none seem to be loaded, at "
@@ -858,17 +858,17 @@ msgstr ""
 "RKward-ს რამდენიმე შემოტანის დიალოგი მოჰყვება, მაგრამ, როგორც ჩანს, ამჟამად "
 "ჩატვირთული არცერთია. შეამოწმეთ თქვენი პარამეტრები."
 
-#: rkward/dialogs/rkimportdialog.cpp:70
+#: rkward/dialogs/rkimportdialog.cpp:65
 #, kde-format
 msgid "None of the above / try another method"
 msgstr "არცერთი / სხვა მეთოდი"
 
-#: rkward/dialogs/rkimportdialog.cpp:76
+#: rkward/dialogs/rkimportdialog.cpp:68
 #, kde-format
 msgid "Select format"
 msgstr "აირჩიეთ ფორმატი"
 
-#: rkward/dialogs/rkimportdialog.cpp:80
+#: rkward/dialogs/rkimportdialog.cpp:72
 #, kde-format
 msgid ""
 "The 'rio' package offers generic support for importing many different file "
@@ -876,7 +876,7 @@ msgid ""
 "will be prompted for missing packages). Do you want to give that a try?"
 msgstr ""
 
-#: rkward/dialogs/rkimportdialog.cpp:82
+#: rkward/dialogs/rkimportdialog.cpp:74
 #, kde-format
 msgid ""
 "The generic import plugin (shipped with RKWard) is not presently loaded. "
@@ -885,22 +885,22 @@ msgstr ""
 "ზოგადი შემოტანის დამატება (მოჰყება RKWard-ს) ამჟამად ჩატვირთული არაა. "
 "შეამოწმეთ თქვენი პარამეტრები."
 
-#: rkward/dialogs/rkimportdialog.cpp:91
+#: rkward/dialogs/rkimportdialog.cpp:82
 #, kde-format
 msgid "Use 'rio'-based importer"
 msgstr "'rio'-ზე დაფუძნებული შემომტანის გამოყენება"
 
-#: rkward/dialogs/rkimportdialog.cpp:95 rkward/dialogs/rkimportdialog.cpp:113
+#: rkward/dialogs/rkimportdialog.cpp:83 rkward/dialogs/rkimportdialog.cpp:95
 #, kde-format
 msgid "Try another method"
 msgstr "სხვა მეთოდი სცადეთ"
 
-#: rkward/dialogs/rkimportdialog.cpp:101
+#: rkward/dialogs/rkimportdialog.cpp:86
 #, kde-format
 msgid "Generic 'rio'-based importer"
 msgstr "ზოგადი 'rio'-ზე დაფუძნებული შემომტანის გამოყენება"
 
-#: rkward/dialogs/rkimportdialog.cpp:105
+#: rkward/dialogs/rkimportdialog.cpp:90
 #, kde-format
 msgid ""
 "If your data is moderate in size, and you can open/view it in another "
@@ -908,24 +908,24 @@ msgid ""
 "be viable."
 msgstr ""
 
-#: rkward/dialogs/rkimportdialog.cpp:110 rkward/dialogs/rkimportdialog.cpp:119
+#: rkward/dialogs/rkimportdialog.cpp:94 rkward/dialogs/rkimportdialog.cpp:98
 #, kde-format
 msgid "Import from clipboard"
 msgstr "გაცვლის ბუფერიდან შემოტანა"
 
-#: rkward/dialogs/rkimportdialog.cpp:123
+#: rkward/dialogs/rkimportdialog.cpp:102
 #, kde-format
 msgid ""
 "<b>Ready to go</b><p>Click \"Finish\" to start the selected import dialog, "
 "or \"Back\" to explore other options.</p>"
 msgstr ""
 
-#: rkward/dialogs/rkimportdialog.cpp:125
+#: rkward/dialogs/rkimportdialog.cpp:104
 #, kde-format
 msgid "Start import dialog"
 msgstr "შემოტანის დაწყების დიალოგი"
 
-#: rkward/dialogs/rkimportdialog.cpp:129
+#: rkward/dialogs/rkimportdialog.cpp:108
 #, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
@@ -934,7 +934,7 @@ msgid ""
 "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgstr ""
 
-#: rkward/dialogs/rkimportdialog.cpp:131
+#: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
 msgid "No import method found"
 msgstr "შემოტანის მეთოდი ვერ ვიპოვე"
@@ -1135,7 +1135,7 @@ msgstr "დაყენებული პაკეტები"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:954
-#: rkward/settings/rksettingsmoduleplugins.cpp:538
+#: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
 #: rkward/windows/rkhelpsearchwindow.cpp:325
 #, kde-format
@@ -1271,7 +1271,7 @@ msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:952
 #: rkward/rbackend/rcommandstack.cpp:314
-#: rkward/settings/rksettingsmoduleplugins.cpp:539
+#: rkward/settings/rksettingsmoduleplugins.cpp:527
 #, kde-format
 msgid "Status"
 msgstr "სტატუსი"
@@ -2131,47 +2131,47 @@ msgstr "გადამოწმებული სტატია სტატ�
 msgid "[Omitted %1 more factor levels]"
 msgstr "[ამოღებულია კიდევ %1 ფაქტორის დონე]"
 
-#: rkward/misc/editformatdialog.cpp:32
+#: rkward/misc/editformatdialog.cpp:29
 #, kde-format
 msgid "Alignment"
 msgstr "სწორება"
 
-#: rkward/misc/editformatdialog.cpp:37
+#: rkward/misc/editformatdialog.cpp:32
 #, kde-format
 msgid "Default"
 msgstr "ნაგულისხმები"
 
-#: rkward/misc/editformatdialog.cpp:39
+#: rkward/misc/editformatdialog.cpp:33
 #, kde-format
 msgid "Left"
 msgstr "მარცხენა"
 
-#: rkward/misc/editformatdialog.cpp:41
+#: rkward/misc/editformatdialog.cpp:34
 #, kde-format
 msgid "Right"
 msgstr "მარჯვენა"
 
-#: rkward/misc/editformatdialog.cpp:46
+#: rkward/misc/editformatdialog.cpp:36
 #, kde-format
 msgid "Decimal Places"
 msgstr "წილადის ნიშნები"
 
-#: rkward/misc/editformatdialog.cpp:49
+#: rkward/misc/editformatdialog.cpp:39
 #, kde-format
 msgid "Default setting"
 msgstr "ნაგულისხმები პარამეტრი"
 
-#: rkward/misc/editformatdialog.cpp:51
+#: rkward/misc/editformatdialog.cpp:40
 #, kde-format
 msgid "As required"
 msgstr "საჭიროებისამებრ"
 
-#: rkward/misc/editformatdialog.cpp:53
+#: rkward/misc/editformatdialog.cpp:43
 #, kde-format
 msgid "Fixed precision:"
 msgstr "ფიქსირებული სიზუსტე:"
 
-#: rkward/misc/editformatdialog.cpp:72
+#: rkward/misc/editformatdialog.cpp:56
 #, kde-format
 msgid "Formatting options for '%1'"
 msgstr "დაფორმატების პარამეტრები '%1'-სთვის"
@@ -2717,122 +2717,122 @@ msgstr "მშობელი ობიექტის გაშვება"
 msgid "Paste special..."
 msgstr "სპეციალური ჩასმა..."
 
-#: rkward/misc/rkspecialactions.cpp:69
+#: rkward/misc/rkspecialactions.cpp:67
 #, kde-format
 msgid "Paste Special..."
 msgstr "სპეციალური ჩასმა..."
 
-#: rkward/misc/rkspecialactions.cpp:86
+#: rkward/misc/rkspecialactions.cpp:79
 #, kde-format
 msgid "Paste Mode"
 msgstr "ჩასმის რეჟიმი"
 
-#: rkward/misc/rkspecialactions.cpp:89
+#: rkward/misc/rkspecialactions.cpp:81
 #, kde-format
 msgid "Single string"
 msgstr "ერთი სტრიქონი"
 
-#: rkward/misc/rkspecialactions.cpp:92
+#: rkward/misc/rkspecialactions.cpp:82
 #, kde-format
 msgid "Vector"
 msgstr "ვექტორი"
 
-#: rkward/misc/rkspecialactions.cpp:98
+#: rkward/misc/rkspecialactions.cpp:84
 #, kde-format
 msgid "data.frame"
 msgstr "data.frame"
 
-#: rkward/misc/rkspecialactions.cpp:108
+#: rkward/misc/rkspecialactions.cpp:91
 #, kde-format
 msgid "Field Separator"
 msgstr "ველის გამყოფი"
 
-#: rkward/misc/rkspecialactions.cpp:111
+#: rkward/misc/rkspecialactions.cpp:93
 #, kde-format
 msgid "Tab"
 msgstr "Tab"
 
-#: rkward/misc/rkspecialactions.cpp:115
+#: rkward/misc/rkspecialactions.cpp:94
 #, kde-format
 msgid "Comma"
 msgstr "მძიმე"
 
-#: rkward/misc/rkspecialactions.cpp:119
+#: rkward/misc/rkspecialactions.cpp:95
 #, kde-format
 msgid "Single space"
 msgstr "ერთი სივრცე"
 
-#: rkward/misc/rkspecialactions.cpp:122
+#: rkward/misc/rkspecialactions.cpp:96
 #, kde-format
 msgid "Any whitespace"
 msgstr "ნებისმიერი ჰარე"
 
-#: rkward/misc/rkspecialactions.cpp:126
+#: rkward/misc/rkspecialactions.cpp:98
 #, kde-format
 msgid "Other:"
 msgstr "სხვა:"
 
-#: rkward/misc/rkspecialactions.cpp:139
+#: rkward/misc/rkspecialactions.cpp:106
 #, kde-format
 msgid "Quoting"
 msgstr "ციტირება"
 
-#: rkward/misc/rkspecialactions.cpp:142
+#: rkward/misc/rkspecialactions.cpp:108
 #, kde-format
 msgid "Do not quote values"
 msgstr "მნიშვნელობები არ დაციტირდება"
 
-#: rkward/misc/rkspecialactions.cpp:145
+#: rkward/misc/rkspecialactions.cpp:109
 #, kde-format
 msgid "Automatic"
 msgstr "ავტომატური"
 
-#: rkward/misc/rkspecialactions.cpp:149
+#: rkward/misc/rkspecialactions.cpp:110
 #, kde-format
 msgid "Quote all values"
 msgstr "ყველა მნიშვნელობის ციტირება"
 
-#: rkward/misc/rkspecialactions.cpp:156
+#: rkward/misc/rkspecialactions.cpp:115
 #, kde-format
 msgid "Labels"
 msgstr "ჭდეები"
 
-#: rkward/misc/rkspecialactions.cpp:158
+#: rkward/misc/rkspecialactions.cpp:117
 #, kde-format
 msgid "First row contains labels"
 msgstr "პირველი მწკრივი ველის სახელებს შეიცავს"
 
-#: rkward/misc/rkspecialactions.cpp:160
+#: rkward/misc/rkspecialactions.cpp:119
 #, kde-format
 msgid "First column contains labels"
 msgstr "პირველი სვეტი ველის სახელებს შეიცავს"
 
-#: rkward/misc/rkspecialactions.cpp:165
+#: rkward/misc/rkspecialactions.cpp:124
 #, kde-format
 msgid "Transformations"
 msgstr "გარდაქმნები"
 
-#: rkward/misc/rkspecialactions.cpp:167
+#: rkward/misc/rkspecialactions.cpp:126
 #, kde-format
 msgid "Reverse horizontally"
 msgstr "რევერსი ჰორიზონტალურად"
 
-#: rkward/misc/rkspecialactions.cpp:169
+#: rkward/misc/rkspecialactions.cpp:128
 #, kde-format
 msgid "Reverse vertically"
 msgstr "რევერსი ვერტიკალურად"
 
-#: rkward/misc/rkspecialactions.cpp:171
+#: rkward/misc/rkspecialactions.cpp:130
 #, kde-format
 msgid "Flip rows/columns"
 msgstr "მწკრივებისა და სვეტების ადგილების მიმოცვლა"
 
-#: rkward/misc/rkspecialactions.cpp:173
+#: rkward/misc/rkspecialactions.cpp:132
 #, kde-format
 msgid "Insert NAs where needed"
 msgstr "NA-ების ჩასმა, სადაც წაჭიროა"
 
-#: rkward/misc/rkspecialactions.cpp:313
+#: rkward/misc/rkspecialactions.cpp:271
 #, kde-format
 msgid ""
 "Command failed to parse. Try using <i>Edit->Paste special...</i> in the R "
@@ -2841,12 +2841,12 @@ msgstr ""
 "ბრძანების დამუშავება ჩავარდა. უკეთესი დიაგნოსტიკისთვის R-ის კონსოლის "
 "ფანჯარაში <i>ჩასწორება->სპეციალური ჩასმა...</i> სცადეთ."
 
-#: rkward/misc/rkspecialactions.cpp:314
+#: rkward/misc/rkspecialactions.cpp:272
 #, kde-format
 msgid "Pasting object from clipboard data failed."
 msgstr "მიმოცვლის ბუფერიდან მონაცემების ჩასმა ჩავარდა."
 
-#: rkward/misc/rkspecialactions.cpp:314
+#: rkward/misc/rkspecialactions.cpp:272
 #, kde-format
 msgid "Paste failed"
 msgstr "ჩასმის შეცდომა"
@@ -3223,7 +3223,7 @@ msgid ""
 msgstr ""
 "ამ ობიექტის მონაცემების ტიპია <i>%1</i>, როცა მოსალოდნელი ტიპებია <i>%2</i>."
 
-#: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:34
+#: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:32
 #, kde-format
 msgid "Select one:"
 msgstr "აირჩიეთ ერთი:"
@@ -4885,66 +4885,66 @@ msgstr "ბრძანების მოლოდინის ვადა"
 msgid "<i>Note:</i> Debug output is written to %1"
 msgstr "<i>შენიშვნა:</i> გამართვის ინფორმაცია ჩაიწერა ფაილში %1"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:62
+#: rkward/settings/rksettingsmodulegeneral.cpp:60
 #, kde-format
 msgid "General"
 msgstr "ძირითადი"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:66
+#: rkward/settings/rksettingsmodulegeneral.cpp:64
 #, kde-format
 msgid ""
 "Directory where rkward may store files (setting takes effect after "
 "restarting RKWard)"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:72
+#: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
 msgid "Startup behavior"
 msgstr "გაშვების ქცევა"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:74
+#: rkward/settings/rksettingsmodulegeneral.cpp:72
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:73
 #, kde-format
 msgid "Show RKWard Help on Startup"
 msgstr "გაშვებისას RKWard-ის დახმარების ჩვენება"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:77
-#: rkward/settings/rksettingsmodulegeneral.cpp:87
+#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:85
 #, kde-format
 msgid "Initial working directory"
 msgstr "საწყისი სამუშაო საქაღალდე"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:80
+#: rkward/settings/rksettingsmodulegeneral.cpp:78
 #, kde-format
 msgid "Do not change current directory on startup"
 msgstr "გაშვებისას მიმდინარე საქაღალდე არ შეიცვლება"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:81
+#: rkward/settings/rksettingsmodulegeneral.cpp:79
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
 msgstr "RWkard-ის ფაილების საქაღალდე (როგორც ზემოთაა მითითებული)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:82
+#: rkward/settings/rksettingsmodulegeneral.cpp:80
 #, kde-format
 msgid "User home directory"
 msgstr "მომხმარებლის საწყისის საქაღალდე"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:83
+#: rkward/settings/rksettingsmodulegeneral.cpp:81
 #, kde-format
 msgid "Last used directory"
 msgstr "ბოლოს გამოყენებული საქაღალდე"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:84
+#: rkward/settings/rksettingsmodulegeneral.cpp:82
 #, kde-format
 msgid "The following directory (please specify):"
 msgstr "შემდეგი საქაღალდე (გთხოვთ, მიუთითოთ):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:92
+#: rkward/settings/rksettingsmodulegeneral.cpp:90
 #, kde-format
 msgid ""
 "<p>The initial working directory to use. Note that if you are loading a "
@@ -4952,20 +4952,20 @@ msgid ""
 "directory of loaded workspaces, that directory will take precedence.</p>"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:99
+#: rkward/settings/rksettingsmodulegeneral.cpp:97
 #, kde-format
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
 "menu).</p>"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:100
+#: rkward/settings/rksettingsmodulegeneral.cpp:98
 #, kde-format
 msgid "Maximum number of recently used files to remember per category"
 msgstr ""
 "თითოეული კატეგორიისთვის დამახსოვრებული უახლესი ფაილების მაქსიმალური რაოდენობა"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:105
+#: rkward/settings/rksettingsmodulegeneral.cpp:103
 #, kde-format
 msgid ""
 "The workplace layout (i.e. which script-, data-, help-windows are open) may "
@@ -4973,31 +4973,31 @@ msgid ""
 "Which do you prefer?"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:112
+#: rkward/settings/rksettingsmodulegeneral.cpp:107
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
 "R-ის სამუშაო სივრცით შენახვა აღდგენა R-ის სამუშაო სივრცის შენახვა/"
 "ჩატვირთვისას"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:115
+#: rkward/settings/rksettingsmodulegeneral.cpp:108
 #, kde-format
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
 "restore at next start)"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:118
+#: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Do not save/restore workplace layout"
 msgstr "სამუშაო სივრცის განლაგების შენახვა/აღდგენა არ მოხდება"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:127
+#: rkward/settings/rksettingsmodulegeneral.cpp:116
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr "სამუშაო სივრცის ჩატვირთვისას შესაბამის საქაღალდეში გადასვლა."
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:131
+#: rkward/settings/rksettingsmodulegeneral.cpp:120
 #, kde-format
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
@@ -5006,47 +5006,42 @@ msgstr ""
 "გაფრთხილება ამ რაოდენობის ველების (0 ლიმიტის მოსახსნელად) ველის მქონე "
 "ობიექტების ჩასწორებისას:"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:136
+#: rkward/settings/rksettingsmodulegeneral.cpp:125
 #, kde-format
 msgid "MDI window focus behavior"
 msgstr "MDI ფანჯრის ფოკუსის ქცევა"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:138
+#: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "Click to focus"
 msgstr "წკაპი ფოკუსისთვის"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:139
+#: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Focus follows mouse"
 msgstr "ფოკუსი მიყვება თაგუნას"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:48
+#: rkward/settings/rksettingsmodulegraphics.cpp:46
 #, kde-format
 msgid "Onscreen Graphics"
 msgstr "გრაფიკა ეკრანზე"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:56
+#: rkward/settings/rksettingsmodulegraphics.cpp:54
 #, kde-format
 msgid "Default graphics device"
 msgstr "ნაგულისხმები გრაფიკის გაფართოება"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:59
+#: rkward/settings/rksettingsmodulegraphics.cpp:56
 #, kde-format
 msgid "RKWard native device"
 msgstr "RKWard-ის საკუთარი მოწყობილობა"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:62
+#: rkward/settings/rksettingsmodulegraphics.cpp:57
 #, kde-format
 msgid "Platform default device"
 msgstr "პლატფორმის ნაგულისხმევი მოწყობილობა"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:65
-#, kde-format
-msgid "Other device:"
-msgstr "სხვა მოწყობილობა:"
-
-#: rkward/settings/rksettingsmodulegraphics.cpp:72
+#: rkward/settings/rksettingsmodulegraphics.cpp:59
 #, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
@@ -5058,27 +5053,33 @@ msgid ""
 "name of a function such as <i>Cairo</i>.</p>"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:85
+#: rkward/settings/rksettingsmodulegraphics.cpp:63
+#, kde-format
+msgid "Other device:"
+msgstr "სხვა მოწყობილობა:"
+
+#: rkward/settings/rksettingsmodulegraphics.cpp:68
 #, kde-format
 msgid "Integration of R standard devices"
 msgstr "R-ის სტანდარტული მოწყობილობების ინტეგრაცია"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:88
+#: rkward/settings/rksettingsmodulegraphics.cpp:70
 #, kde-format
 msgid "Replace with RKWard device"
 msgstr "ჩანაცვლება RKWard-ის მოწყობილობით"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:91
+#: rkward/settings/rksettingsmodulegraphics.cpp:72
+#: rkward/settings/rksettingsmodulegraphics.cpp:74
 #, kde-format
 msgid "Embed original device"
 msgstr "ორიგინალური მოწყობილობის ჩაშენება"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:97
+#: rkward/settings/rksettingsmodulegraphics.cpp:76
 #, kde-format
 msgid "No device integration"
 msgstr "მოწყობილობის ჩაშენების გარეშე"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:102
+#: rkward/settings/rksettingsmodulegraphics.cpp:78
 #, kde-format
 msgid ""
 "<p>Many scripts use calls to platform specific standard devices (<i>X11()</"
@@ -5097,41 +5098,41 @@ msgid ""
 "device.</p>"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:114
+#: rkward/settings/rksettingsmodulegraphics.cpp:90
 #, kde-format
 msgid "Default window size (for RK(), or embedded device windows)"
 msgstr ""
 "ნაგულისხმევი ფანჯრის ზომა (RK()_სთვის ან ჩაშენებული მოწყობილობის "
 "ფანჯრებისთვის)"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:116
+#: rkward/settings/rksettingsmodulegraphics.cpp:92
 #, kde-format
 msgid "Default width (inches):"
 msgstr "ნაგულისხმევი სიგანე (დუიმი):"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:119
+#: rkward/settings/rksettingsmodulegraphics.cpp:95
 #, kde-format
 msgid "Default height (inches)"
 msgstr "ნაგულისხმევი სიმაღლე (დუიმი)"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:123
+#: rkward/settings/rksettingsmodulegraphics.cpp:99
 #, kde-format
 msgid "Use KDE printer dialog for printing devices (if available)"
 msgstr ""
 "საბეჭდი მოწყობილობებისთვის KDE-ის პრინტერის დიალოგის ჩვენება (თუ "
 "ხელმისაწვდომა)"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:125
+#: rkward/settings/rksettingsmodulegraphics.cpp:101
 #, kde-format
 msgid "Screen device history"
 msgstr "გამოტანის მოწყობილობის ჟურნალი"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:129
+#: rkward/settings/rksettingsmodulegraphics.cpp:105
 #, kde-format
 msgid "Maximum number of recorded plots:"
 msgstr "ჩაწერილი ნახაზების მაქსიმალური რაოდენობა:"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:133
+#: rkward/settings/rksettingsmodulegraphics.cpp:109
 #, kde-format
 msgid "Maximum size of a single recorded plot (in KB):"
 msgstr "ერთი ჩაწერილი ნახაზის მაქსიმალური ზომა (კბ-ში)"
@@ -5279,13 +5280,13 @@ msgstr "სიგანე:"
 msgid "Height:"
 msgstr "სიმაღლე:"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:54
+#: rkward/settings/rksettingsmoduleplugins.cpp:52
 #: rkward/windows/rktoplevelwindowgui.cpp:151
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "RKWard-ის დამატებები"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:59
+#: rkward/settings/rksettingsmoduleplugins.cpp:57
 #, kde-format
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
@@ -5293,32 +5294,32 @@ msgid ""
 "presentation do you prefer?"
 msgstr ""
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:66
+#: rkward/settings/rksettingsmoduleplugins.cpp:61
 #, kde-format
 msgid "Always prefer dialogs"
 msgstr "ყოველთვის მირჩევნია დიალოგები"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:69
+#: rkward/settings/rksettingsmoduleplugins.cpp:62
 #, kde-format
 msgid "Prefer recommended interface"
 msgstr "მირჩევნია რეკომენდებული ინტერფესი"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:72
+#: rkward/settings/rksettingsmoduleplugins.cpp:63
 #, kde-format
 msgid "Always prefer wizards"
 msgstr "ყოველთვის მირჩევნია ოსტატები"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:82
+#: rkward/settings/rksettingsmoduleplugins.cpp:70
 #, kde-format
 msgid "Configure Active Plugins"
 msgstr "აქტიური დამატებების მორგება"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:100
+#: rkward/settings/rksettingsmoduleplugins.cpp:88
 #, kde-format
 msgid "Add-ons"
 msgstr "დამატებები"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:102
+#: rkward/settings/rksettingsmoduleplugins.cpp:90
 #, kde-format
 msgid ""
 "<h1>Add-ons</h1><p>RKWard add-ons come in a variety of forms, each with "
@@ -5338,38 +5339,38 @@ msgid ""
 "that are useful to your own workflow.</p>"
 msgstr ""
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:484
+#: rkward/settings/rksettingsmoduleplugins.cpp:472
 #: rkward/windows/rkhtmlwindow.cpp:1157
 #, kde-format
 msgid "Dependencies"
 msgstr "დამოკიდებულებები"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:507
+#: rkward/settings/rksettingsmoduleplugins.cpp:495
 #, kde-format
 msgid "Broken"
 msgstr "გაფუჭებული"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:509
+#: rkward/settings/rksettingsmoduleplugins.cpp:497
 #, kde-format
 msgid "Loaded"
 msgstr "ჩატვირთულია"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:512
+#: rkward/settings/rksettingsmoduleplugins.cpp:500
 #, kde-format
 msgid "Quirky"
 msgstr "საკვირველი"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:536
+#: rkward/settings/rksettingsmoduleplugins.cpp:524
 #, kde-format
 msgid "Active"
 msgstr "აქტიური"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:537
+#: rkward/settings/rksettingsmoduleplugins.cpp:525
 #, kde-format
 msgid "ID"
 msgstr "ID"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:565
+#: rkward/settings/rksettingsmoduleplugins.cpp:553
 #, kde-format
 msgid "Select .pluginmap-file"
 msgstr "აირჩიეთ ფაილი .pluginmap"
@@ -5626,12 +5627,12 @@ msgid ""
 "you specify in this list"
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:572
+#: rkward/settings/rksettingsmoduler.cpp:569
 #, kde-format
 msgid "Unversioned library location"
 msgstr "უვერსიო ბიბლიოთეკის მდებარეობა"
 
-#: rkward/settings/rksettingsmoduler.cpp:572
+#: rkward/settings/rksettingsmoduler.cpp:569
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -5643,13 +5644,13 @@ msgid ""
 "for an incompatible version of R."
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:577
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "გადარქმევა"
 
-#: rkward/settings/rksettingsmoduler.cpp:577
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -5657,26 +5658,26 @@ msgid ""
 "of R)."
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:585
+#: rkward/settings/rksettingsmoduler.cpp:582
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "წაშლა"
 
-#: rkward/settings/rksettingsmoduler.cpp:585
+#: rkward/settings/rksettingsmoduler.cpp:582
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
 "disk). You will have to re-install any packages that you want to keep."
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:590
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "დატოვება"
 
-#: rkward/settings/rksettingsmoduler.cpp:590
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "ამ მდებარეობის შენარჩუნება (არაფერი შეცვალო)"

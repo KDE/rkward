@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-23 00:36+0000\n"
+"POT-Creation-Date: 2024-07-28 00:37+0000\n"
 "PO-Revision-Date: 2024-07-15 22:50+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -352,7 +352,7 @@ msgstr "Marco de datos"
 msgid "Array"
 msgstr "Matriz"
 
-#: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:95
+#: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:83
 #, kde-format
 msgid "Matrix"
 msgstr "Matriz"
@@ -885,12 +885,12 @@ msgstr ""
 msgid "Gathering setup information"
 msgstr "Recollendo información sobre a configuración"
 
-#: rkward/dialogs/rkimportdialog.cpp:29
+#: rkward/dialogs/rkimportdialog.cpp:27
 #, kde-format
 msgid "Import Data Assistant"
 msgstr "Asistente de importación de datos"
 
-#: rkward/dialogs/rkimportdialog.cpp:54
+#: rkward/dialogs/rkimportdialog.cpp:52
 #, kde-format
 msgid ""
 "For certain formats, RKWard provides specialized import dialogs, and those "
@@ -901,7 +901,7 @@ msgstr ""
 "fornecer a maioría das opcións. Ten o ficheiro que quere abrir algún dos "
 "seguintes formatos?"
 
-#: rkward/dialogs/rkimportdialog.cpp:56
+#: rkward/dialogs/rkimportdialog.cpp:54
 #, kde-format
 msgid ""
 "RKWard comes with several import dialogs, but none seem to be loaded, at "
@@ -910,17 +910,17 @@ msgstr ""
 "RKWard inclúe varios diálogos de importación, pero non parece que ningún "
 "estea cargado neste momento. Revise a configuración."
 
-#: rkward/dialogs/rkimportdialog.cpp:70
+#: rkward/dialogs/rkimportdialog.cpp:65
 #, kde-format
 msgid "None of the above / try another method"
 msgstr "Ningún deles / Probar outro método"
 
-#: rkward/dialogs/rkimportdialog.cpp:76
+#: rkward/dialogs/rkimportdialog.cpp:68
 #, kde-format
 msgid "Select format"
 msgstr "Seleccionar o formato"
 
-#: rkward/dialogs/rkimportdialog.cpp:80
+#: rkward/dialogs/rkimportdialog.cpp:72
 #, kde-format
 msgid ""
 "The 'rio' package offers generic support for importing many different file "
@@ -932,7 +932,7 @@ msgstr ""
 "paquetes adicionais de R (indicaráselle os paquetes que faltan). Quere "
 "probalo?"
 
-#: rkward/dialogs/rkimportdialog.cpp:82
+#: rkward/dialogs/rkimportdialog.cpp:74
 #, kde-format
 msgid ""
 "The generic import plugin (shipped with RKWard) is not presently loaded. "
@@ -941,22 +941,22 @@ msgstr ""
 "O complemento de importación xenérico (que RKWard inclúe) non está cargado. "
 "Revise a configuración."
 
-#: rkward/dialogs/rkimportdialog.cpp:91
+#: rkward/dialogs/rkimportdialog.cpp:82
 #, kde-format
 msgid "Use 'rio'-based importer"
 msgstr "Usar o importador baseado en «rio»"
 
-#: rkward/dialogs/rkimportdialog.cpp:95 rkward/dialogs/rkimportdialog.cpp:113
+#: rkward/dialogs/rkimportdialog.cpp:83 rkward/dialogs/rkimportdialog.cpp:95
 #, kde-format
 msgid "Try another method"
 msgstr "Probar outro método"
 
-#: rkward/dialogs/rkimportdialog.cpp:101
+#: rkward/dialogs/rkimportdialog.cpp:86
 #, kde-format
 msgid "Generic 'rio'-based importer"
 msgstr "Importador xenérico baseado en «rio»"
 
-#: rkward/dialogs/rkimportdialog.cpp:105
+#: rkward/dialogs/rkimportdialog.cpp:90
 #, kde-format
 msgid ""
 "If your data is moderate in size, and you can open/view it in another "
@@ -967,12 +967,12 @@ msgstr ""
 "aplicación do sistema , importalos do portapapeis (copiar e pegar) podería "
 "ser unha opción viable."
 
-#: rkward/dialogs/rkimportdialog.cpp:110 rkward/dialogs/rkimportdialog.cpp:119
+#: rkward/dialogs/rkimportdialog.cpp:94 rkward/dialogs/rkimportdialog.cpp:98
 #, kde-format
 msgid "Import from clipboard"
 msgstr "Importar do portapapeis"
 
-#: rkward/dialogs/rkimportdialog.cpp:123
+#: rkward/dialogs/rkimportdialog.cpp:102
 #, kde-format
 msgid ""
 "<b>Ready to go</b><p>Click \"Finish\" to start the selected import dialog, "
@@ -981,12 +981,12 @@ msgstr ""
 "<b>Listo</b><p>Prema «Rematar» para iniciar o diálogo de importación "
 "seleccionado ou «Volver» para explorar outras opcións.</p>"
 
-#: rkward/dialogs/rkimportdialog.cpp:125
+#: rkward/dialogs/rkimportdialog.cpp:104
 #, kde-format
 msgid "Start import dialog"
 msgstr "Iniciar o diálogo de importación"
 
-#: rkward/dialogs/rkimportdialog.cpp:129
+#: rkward/dialogs/rkimportdialog.cpp:108
 #, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
@@ -999,7 +999,7 @@ msgstr ""
 "importación adicionais</li><li>Gardar os datos nun formato distinto coa "
 "aplicación orixinal</li><li>Pedir consello en rkward-users@kde.org</li></ul>"
 
-#: rkward/dialogs/rkimportdialog.cpp:131
+#: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
 msgid "No import method found"
 msgstr "Non se atopou un método de importación"
@@ -1208,7 +1208,7 @@ msgstr "Paquetes instalados"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:954
-#: rkward/settings/rksettingsmoduleplugins.cpp:538
+#: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
 #: rkward/windows/rkhelpsearchwindow.cpp:325
 #, kde-format
@@ -1360,7 +1360,7 @@ msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:952
 #: rkward/rbackend/rcommandstack.cpp:314
-#: rkward/settings/rksettingsmoduleplugins.cpp:539
+#: rkward/settings/rksettingsmoduleplugins.cpp:527
 #, kde-format
 msgid "Status"
 msgstr "Estado"
@@ -2272,47 +2272,47 @@ msgstr "Artigo revisado por pares no Journal of Statistical Software"
 msgid "[Omitted %1 more factor levels]"
 msgstr "[Omitíronse %1 niveis de factores máis]"
 
-#: rkward/misc/editformatdialog.cpp:32
+#: rkward/misc/editformatdialog.cpp:29
 #, kde-format
 msgid "Alignment"
 msgstr "Aliñamento"
 
-#: rkward/misc/editformatdialog.cpp:37
+#: rkward/misc/editformatdialog.cpp:32
 #, kde-format
 msgid "Default"
 msgstr "Predeterminado"
 
-#: rkward/misc/editformatdialog.cpp:39
+#: rkward/misc/editformatdialog.cpp:33
 #, kde-format
 msgid "Left"
 msgstr "Esquerda"
 
-#: rkward/misc/editformatdialog.cpp:41
+#: rkward/misc/editformatdialog.cpp:34
 #, kde-format
 msgid "Right"
 msgstr "Dereita"
 
-#: rkward/misc/editformatdialog.cpp:46
+#: rkward/misc/editformatdialog.cpp:36
 #, kde-format
 msgid "Decimal Places"
 msgstr "Díxitos decimais"
 
-#: rkward/misc/editformatdialog.cpp:49
+#: rkward/misc/editformatdialog.cpp:39
 #, kde-format
 msgid "Default setting"
 msgstr "Configuración predeterminada"
 
-#: rkward/misc/editformatdialog.cpp:51
+#: rkward/misc/editformatdialog.cpp:40
 #, kde-format
 msgid "As required"
 msgstr "Como sexa necesario"
 
-#: rkward/misc/editformatdialog.cpp:53
+#: rkward/misc/editformatdialog.cpp:43
 #, kde-format
 msgid "Fixed precision:"
 msgstr "Precisión fixa:"
 
-#: rkward/misc/editformatdialog.cpp:72
+#: rkward/misc/editformatdialog.cpp:56
 #, kde-format
 msgid "Formatting options for '%1'"
 msgstr "Opcións de formato para «%1»"
@@ -2896,122 +2896,122 @@ msgstr "Seleccionar o obxecto pai"
 msgid "Paste special..."
 msgstr "Pegado especial…"
 
-#: rkward/misc/rkspecialactions.cpp:69
+#: rkward/misc/rkspecialactions.cpp:67
 #, kde-format
 msgid "Paste Special..."
 msgstr "Pegar especial…"
 
-#: rkward/misc/rkspecialactions.cpp:86
+#: rkward/misc/rkspecialactions.cpp:79
 #, kde-format
 msgid "Paste Mode"
 msgstr "Modo de pegar"
 
-#: rkward/misc/rkspecialactions.cpp:89
+#: rkward/misc/rkspecialactions.cpp:81
 #, kde-format
 msgid "Single string"
 msgstr "Cadea única"
 
-#: rkward/misc/rkspecialactions.cpp:92
+#: rkward/misc/rkspecialactions.cpp:82
 #, kde-format
 msgid "Vector"
 msgstr "Vector"
 
-#: rkward/misc/rkspecialactions.cpp:98
+#: rkward/misc/rkspecialactions.cpp:84
 #, kde-format
 msgid "data.frame"
 msgstr "data.frame"
 
-#: rkward/misc/rkspecialactions.cpp:108
+#: rkward/misc/rkspecialactions.cpp:91
 #, kde-format
 msgid "Field Separator"
 msgstr "Separador de campos"
 
-#: rkward/misc/rkspecialactions.cpp:111
+#: rkward/misc/rkspecialactions.cpp:93
 #, kde-format
 msgid "Tab"
 msgstr "Tabulación"
 
-#: rkward/misc/rkspecialactions.cpp:115
+#: rkward/misc/rkspecialactions.cpp:94
 #, kde-format
 msgid "Comma"
 msgstr "Coma"
 
-#: rkward/misc/rkspecialactions.cpp:119
+#: rkward/misc/rkspecialactions.cpp:95
 #, kde-format
 msgid "Single space"
 msgstr "Espazo único"
 
-#: rkward/misc/rkspecialactions.cpp:122
+#: rkward/misc/rkspecialactions.cpp:96
 #, kde-format
 msgid "Any whitespace"
 msgstr "Calquera espazo en branco"
 
-#: rkward/misc/rkspecialactions.cpp:126
+#: rkward/misc/rkspecialactions.cpp:98
 #, kde-format
 msgid "Other:"
 msgstr "Outro:"
 
-#: rkward/misc/rkspecialactions.cpp:139
+#: rkward/misc/rkspecialactions.cpp:106
 #, kde-format
 msgid "Quoting"
 msgstr "Comiñas"
 
-#: rkward/misc/rkspecialactions.cpp:142
+#: rkward/misc/rkspecialactions.cpp:108
 #, kde-format
 msgid "Do not quote values"
 msgstr "Non poñer os valores entre comiñas"
 
-#: rkward/misc/rkspecialactions.cpp:145
+#: rkward/misc/rkspecialactions.cpp:109
 #, kde-format
 msgid "Automatic"
 msgstr "Automático"
 
-#: rkward/misc/rkspecialactions.cpp:149
+#: rkward/misc/rkspecialactions.cpp:110
 #, kde-format
 msgid "Quote all values"
 msgstr "Poñer todos os valores entre comiñas"
 
-#: rkward/misc/rkspecialactions.cpp:156
+#: rkward/misc/rkspecialactions.cpp:115
 #, kde-format
 msgid "Labels"
 msgstr "Etiquetas"
 
-#: rkward/misc/rkspecialactions.cpp:158
+#: rkward/misc/rkspecialactions.cpp:117
 #, kde-format
 msgid "First row contains labels"
 msgstr "A primeira fila contén as etiquetas"
 
-#: rkward/misc/rkspecialactions.cpp:160
+#: rkward/misc/rkspecialactions.cpp:119
 #, kde-format
 msgid "First column contains labels"
 msgstr "A primeira columna contén as etiquetas"
 
-#: rkward/misc/rkspecialactions.cpp:165
+#: rkward/misc/rkspecialactions.cpp:124
 #, kde-format
 msgid "Transformations"
 msgstr "Transformacións"
 
-#: rkward/misc/rkspecialactions.cpp:167
+#: rkward/misc/rkspecialactions.cpp:126
 #, kde-format
 msgid "Reverse horizontally"
 msgstr "Inverter horizontalmente"
 
-#: rkward/misc/rkspecialactions.cpp:169
+#: rkward/misc/rkspecialactions.cpp:128
 #, kde-format
 msgid "Reverse vertically"
 msgstr "Inverter verticalmente"
 
-#: rkward/misc/rkspecialactions.cpp:171
+#: rkward/misc/rkspecialactions.cpp:130
 #, kde-format
 msgid "Flip rows/columns"
 msgstr "Inverter as filas e columnas"
 
-#: rkward/misc/rkspecialactions.cpp:173
+#: rkward/misc/rkspecialactions.cpp:132
 #, kde-format
 msgid "Insert NAs where needed"
 msgstr "Inserir N/S onde corresponda"
 
-#: rkward/misc/rkspecialactions.cpp:313
+#: rkward/misc/rkspecialactions.cpp:271
 #, kde-format
 msgid ""
 "Command failed to parse. Try using <i>Edit->Paste special...</i> in the R "
@@ -3020,12 +3020,12 @@ msgstr ""
 "Non foi posíbel analizar a orde. Probe a usar <i>Editar → Pegar especial…</"
 "i> na xanela da consola de R para un mellor diagnóstico."
 
-#: rkward/misc/rkspecialactions.cpp:314
+#: rkward/misc/rkspecialactions.cpp:272
 #, kde-format
 msgid "Pasting object from clipboard data failed."
 msgstr "Non foi posíbel pegar o obxecto a partir dos datos do portapapeis"
 
-#: rkward/misc/rkspecialactions.cpp:314
+#: rkward/misc/rkspecialactions.cpp:272
 #, kde-format
 msgid "Paste failed"
 msgstr "Non foi posíbel pegar"
@@ -3414,7 +3414,7 @@ msgstr ""
 "O tipo de datos deste obxecto é <i>%1</i>, pero os tipos esperados son <i>"
 "%2</i>."
 
-#: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:34
+#: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:32
 #, kde-format
 msgid "Select one:"
 msgstr "Seleccione un:"
@@ -5225,12 +5225,12 @@ msgstr "Límite de tempo da orde"
 msgid "<i>Note:</i> Debug output is written to %1"
 msgstr "<i>Nota:</i> a saída de depuración escríbese en %1"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:62
+#: rkward/settings/rksettingsmodulegeneral.cpp:60
 #, kde-format
 msgid "General"
 msgstr "Xeral"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:66
+#: rkward/settings/rksettingsmodulegeneral.cpp:64
 #, kde-format
 msgid ""
 "Directory where rkward may store files (setting takes effect after "
@@ -5239,12 +5239,12 @@ msgstr ""
 "Directorio no que RKWard pode almacenar ficheiros (a opción xurde efecto "
 "tras reiniciar RKWard)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:72
+#: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
 msgid "Startup behavior"
 msgstr "Comportamento no inicio"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:74
+#: rkward/settings/rksettingsmodulegeneral.cpp:72
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
@@ -5252,43 +5252,43 @@ msgstr ""
 "Cargar o ficheiro .RData do cartafol de inicio, se está dispoñíbel (opción "
 "«--restore» de R)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:73
 #, kde-format
 msgid "Show RKWard Help on Startup"
 msgstr "Amosar a axuda de RKWard no inicio"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:77
-#: rkward/settings/rksettingsmodulegeneral.cpp:87
+#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#: rkward/settings/rksettingsmodulegeneral.cpp:85
 #, kde-format
 msgid "Initial working directory"
 msgstr "Cartafol de traballo inicial"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:80
+#: rkward/settings/rksettingsmodulegeneral.cpp:78
 #, kde-format
 msgid "Do not change current directory on startup"
 msgstr "Non cambiar o directorio actual no inicio"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:81
+#: rkward/settings/rksettingsmodulegeneral.cpp:79
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
 msgstr "Directorio dos ficheiros de RKWard (como se indica enriba)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:82
+#: rkward/settings/rksettingsmodulegeneral.cpp:80
 #, kde-format
 msgid "User home directory"
 msgstr "Directorio persoal do usuario"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:83
+#: rkward/settings/rksettingsmodulegeneral.cpp:81
 #, kde-format
 msgid "Last used directory"
 msgstr "Último directorio usado"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:84
+#: rkward/settings/rksettingsmodulegeneral.cpp:82
 #, kde-format
 msgid "The following directory (please specify):"
 msgstr "O seguinte directorio (indíqueo):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:92
+#: rkward/settings/rksettingsmodulegeneral.cpp:90
 #, kde-format
 msgid ""
 "<p>The initial working directory to use. Note that if you are loading a "
@@ -5300,7 +5300,7 @@ msgstr ""
 "directorio dos espazos de traballo cargados, dito directorio terá "
 "precedencia.</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:99
+#: rkward/settings/rksettingsmodulegeneral.cpp:97
 #, kde-format
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
@@ -5309,13 +5309,13 @@ msgstr ""
 "<p>O número de ficheiros recentes para lembrar (no menú «Abrir un ficheiro "
 "de scripting de R recente»).</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:100
+#: rkward/settings/rksettingsmodulegeneral.cpp:98
 #, kde-format
 msgid "Maximum number of recently used files to remember per category"
 msgstr ""
 "Número máximo de ficheiros usados recentemente para lembrar por categoría"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:105
+#: rkward/settings/rksettingsmodulegeneral.cpp:103
 #, kde-format
 msgid ""
 "The workplace layout (i.e. which script-, data-, help-windows are open) may "
@@ -5327,12 +5327,12 @@ msgstr ""
 "de traballo de R, ou de maneira independente do espazo de traballo. Como "
 "prefire facelo?"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:112
+#: rkward/settings/rksettingsmodulegeneral.cpp:107
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr "Gardar e restaurar co espazo de traballo de R ao gardalo e cargalo"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:115
+#: rkward/settings/rksettingsmodulegeneral.cpp:108
 #, kde-format
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
@@ -5341,17 +5341,17 @@ msgstr ""
 "Gardar e restaurar de maneira independente do espazo de traballo de R "
 "(gardar ao final da sesión de RKWard, e restaurar no seguinte inicio)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:118
+#: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Do not save/restore workplace layout"
 msgstr "Non gardar nin restaurar a disposición do lugar de traballo"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:127
+#: rkward/settings/rksettingsmodulegeneral.cpp:116
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr "Ao cargar un espazo de traballo, cambiar ao directorio correspondente."
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:131
+#: rkward/settings/rksettingsmodulegeneral.cpp:120
 #, kde-format
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
@@ -5360,48 +5360,43 @@ msgstr ""
 "Avisar ao editar obxectos cun número de campos superior a este (0 para non "
 "limitar):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:136
+#: rkward/settings/rksettingsmodulegeneral.cpp:125
 #, kde-format
 msgid "MDI window focus behavior"
 msgstr "Comportamento do foco das xanelas MDI"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:138
+#: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "Click to focus"
 msgstr "Premer para enfocar"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:139
+#: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Focus follows mouse"
 msgstr "O foco segue ao rato"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:48
+#: rkward/settings/rksettingsmodulegraphics.cpp:46
 #, kde-format
 msgid "Onscreen Graphics"
 msgstr "Gráficos na pantalla"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:56
+#: rkward/settings/rksettingsmodulegraphics.cpp:54
 #, kde-format
 msgid "Default graphics device"
 msgstr "Dispositivo predeterminado de gráficos"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:59
+#: rkward/settings/rksettingsmodulegraphics.cpp:56
 #, kde-format
 msgid "RKWard native device"
 msgstr "Dispositivo nativo de RKWard"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:62
+#: rkward/settings/rksettingsmodulegraphics.cpp:57
 #, kde-format
 msgid "Platform default device"
 msgstr "Dispositivo predeterminado da plataforma"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:65
-#, kde-format
-msgid "Other device:"
-msgstr "Outro dispositivo:"
-
 # skip-rule: trasno-window
-#: rkward/settings/rksettingsmodulegraphics.cpp:72
+#: rkward/settings/rksettingsmodulegraphics.cpp:59
 #, kde-format
 msgid ""
 "<p>The default device to be used for plotting, i.e. when new plot is "
@@ -5421,27 +5416,33 @@ msgstr ""
 "a plataforma).</p> <p>Tamén pode indicar o nome dunha función, como por "
 "exemplo <i>Cairo</i>.</p>"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:85
+#: rkward/settings/rksettingsmodulegraphics.cpp:63
+#, kde-format
+msgid "Other device:"
+msgstr "Outro dispositivo:"
+
+#: rkward/settings/rksettingsmodulegraphics.cpp:68
 #, kde-format
 msgid "Integration of R standard devices"
 msgstr "Integración dos dispositivos estándar de R"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:88
+#: rkward/settings/rksettingsmodulegraphics.cpp:70
 #, kde-format
 msgid "Replace with RKWard device"
 msgstr "Substituír polo dispositivo de RKWard"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:91
+#: rkward/settings/rksettingsmodulegraphics.cpp:72
+#: rkward/settings/rksettingsmodulegraphics.cpp:74
 #, kde-format
 msgid "Embed original device"
 msgstr "Incrustar o dispositivo orixinal"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:97
+#: rkward/settings/rksettingsmodulegraphics.cpp:76
 #, kde-format
 msgid "No device integration"
 msgstr "Sen integración do dispositivo"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:102
+#: rkward/settings/rksettingsmodulegraphics.cpp:78
 #, kde-format
 msgid ""
 "<p>Many scripts use calls to platform specific standard devices (<i>X11()</"
@@ -5476,41 +5477,41 @@ msgstr ""
 "non está definido (por exemplo, cando se use <i>Windows()</i> en OS X) "
 "sempre se usará o dispositivo <i>RK()</i> no seu lugar.</p>"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:114
+#: rkward/settings/rksettingsmodulegraphics.cpp:90
 #, kde-format
 msgid "Default window size (for RK(), or embedded device windows)"
 msgstr ""
 "Tamaño predeterminado da xanela (para RK() ou para xanelas de dispositivo "
 "incrustadas)"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:116
+#: rkward/settings/rksettingsmodulegraphics.cpp:92
 #, kde-format
 msgid "Default width (inches):"
 msgstr "Anchura predeterminada (polgadas):"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:119
+#: rkward/settings/rksettingsmodulegraphics.cpp:95
 #, kde-format
 msgid "Default height (inches)"
 msgstr "Altura predeterminada (polgadas):"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:123
+#: rkward/settings/rksettingsmodulegraphics.cpp:99
 #, kde-format
 msgid "Use KDE printer dialog for printing devices (if available)"
 msgstr ""
 "Usar o diálogo de impresión de KDE para os dispositivos de impresión (se "
 "está dispoñíbel)"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:125
+#: rkward/settings/rksettingsmodulegraphics.cpp:101
 #, kde-format
 msgid "Screen device history"
 msgstr "Historial dos dispositivos de pantalla"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:129
+#: rkward/settings/rksettingsmodulegraphics.cpp:105
 #, kde-format
 msgid "Maximum number of recorded plots:"
 msgstr "Número máximo de gráficas gardadas:"
 
-#: rkward/settings/rksettingsmodulegraphics.cpp:133
+#: rkward/settings/rksettingsmodulegraphics.cpp:109
 #, kde-format
 msgid "Maximum size of a single recorded plot (in KB):"
 msgstr "Tamaño máximo de cada gráfica gardada (en KB):"
@@ -5673,13 +5674,13 @@ msgstr "Anchura:"
 msgid "Height:"
 msgstr "Altura:"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:54
+#: rkward/settings/rksettingsmoduleplugins.cpp:52
 #: rkward/windows/rktoplevelwindowgui.cpp:151
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "Complementos de RKWard"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:59
+#: rkward/settings/rksettingsmoduleplugins.cpp:57
 #, kde-format
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
@@ -5690,32 +5691,32 @@ msgstr ""
 "asistente e outra de diálogo tradicional. Cando os dous tipos estean "
 "dispoñíbels, cal deles quere usar?"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:66
+#: rkward/settings/rksettingsmoduleplugins.cpp:61
 #, kde-format
 msgid "Always prefer dialogs"
 msgstr "Preferir sempre os diálogos"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:69
+#: rkward/settings/rksettingsmoduleplugins.cpp:62
 #, kde-format
 msgid "Prefer recommended interface"
 msgstr "Preferir sempre a interface recomendada"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:72
+#: rkward/settings/rksettingsmoduleplugins.cpp:63
 #, kde-format
 msgid "Always prefer wizards"
 msgstr "Preferir sempre os asistentes"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:82
+#: rkward/settings/rksettingsmoduleplugins.cpp:70
 #, kde-format
 msgid "Configure Active Plugins"
 msgstr "Configurar os complementos activos"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:100
+#: rkward/settings/rksettingsmoduleplugins.cpp:88
 #, kde-format
 msgid "Add-ons"
 msgstr "Complementos"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:102
+#: rkward/settings/rksettingsmoduleplugins.cpp:90
 #, kde-format
 msgid ""
 "<h1>Add-ons</h1><p>RKWard add-ons come in a variety of forms, each with "
@@ -5751,38 +5752,38 @@ msgstr ""
 "adoitan vir instalados co sistema. Pode configurar a carga dos complementos "
 "que sexan útiles para a súa forma de traballar.</p>"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:484
+#: rkward/settings/rksettingsmoduleplugins.cpp:472
 #: rkward/windows/rkhtmlwindow.cpp:1157
 #, kde-format
 msgid "Dependencies"
 msgstr "Dependencias"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:507
+#: rkward/settings/rksettingsmoduleplugins.cpp:495
 #, kde-format
 msgid "Broken"
 msgstr "Estragado"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:509
+#: rkward/settings/rksettingsmoduleplugins.cpp:497
 #, kde-format
 msgid "Loaded"
 msgstr "Cargado"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:512
+#: rkward/settings/rksettingsmoduleplugins.cpp:500
 #, kde-format
 msgid "Quirky"
 msgstr "Inestábel"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:536
+#: rkward/settings/rksettingsmoduleplugins.cpp:524
 #, kde-format
 msgid "Active"
 msgstr "Activo"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:537
+#: rkward/settings/rksettingsmoduleplugins.cpp:525
 #, kde-format
 msgid "ID"
 msgstr "Identificador"
 
-#: rkward/settings/rksettingsmoduleplugins.cpp:565
+#: rkward/settings/rksettingsmoduleplugins.cpp:553
 #, kde-format
 msgid "Select .pluginmap-file"
 msgstr "Seleccione un ficheiro .pluginmap"
@@ -6059,12 +6060,12 @@ msgstr ""
 "Nota: Os valores predeterminados de inicio sempre se usarán xunto coas rutas "
 "que indique nesta lista"
 
-#: rkward/settings/rksettingsmoduler.cpp:572
+#: rkward/settings/rksettingsmoduler.cpp:569
 #, kde-format
 msgid "Unversioned library location"
 msgstr "Lugar de biblioteca sen versión"
 
-#: rkward/settings/rksettingsmoduler.cpp:572
+#: rkward/settings/rksettingsmoduler.cpp:569
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -6084,13 +6085,13 @@ msgstr ""
 "protección contra o uso de paquetes construídos para unha versión "
 "incompatíbel de R."
 
-#: rkward/settings/rksettingsmoduler.cpp:577
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Renomear"
 
-#: rkward/settings/rksettingsmoduler.cpp:577
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -6101,13 +6102,13 @@ msgstr ""
 "R. Os paquetes seguirán funcionando (se son compatíbeis con esta versión de "
 "R)."
 
-#: rkward/settings/rksettingsmoduler.cpp:585
+#: rkward/settings/rksettingsmoduler.cpp:582
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Retirar"
 
-#: rkward/settings/rksettingsmoduler.cpp:585
+#: rkward/settings/rksettingsmoduler.cpp:582
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
@@ -6116,13 +6117,13 @@ msgstr ""
 "Retirar este lugar da configuración (non se eliminará no disco). Terá que "
 "instalar calquera paquete que queira conservar."
 
-#: rkward/settings/rksettingsmoduler.cpp:590
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "Manter"
 
-#: rkward/settings/rksettingsmoduler.cpp:590
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "Manter este lugar (non cambiar nadas)"
