@@ -306,6 +306,34 @@ private Q_SLOTS:
 		cleanGlobalenv();
 	}
 
+	void userCommandTest() {
+		// Two commands submitted on one user line should both be run
+		runCommandWithTimeout(new RCommand("print('first'); print('second')", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(!command->failed());
+			QVERIFY(command->fullOutput().contains("first"));
+			QVERIFY(command->fullOutput().contains("second"));
+		});
+		// Also, of course for commands on separate lines:
+		runCommandWithTimeout(new RCommand("print('first')\nprint('second')", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(!command->failed());
+			QVERIFY(command->fullOutput().contains("first"));
+			QVERIFY(command->fullOutput().contains("second"));
+		});
+		// or multi-line commands:
+		runCommandWithTimeout(new RCommand("{ print('first')\nprint('second') }", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(!command->failed());
+			QVERIFY(command->fullOutput().contains("first"));
+			QVERIFY(command->fullOutput().contains("second"));
+		});
+		// However, if a partial command fails, the next part should not get parsed:
+		runCommandWithTimeout(new RCommand("stop('first'); print('second')", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QVERIFY(command->fullOutput().contains("first"));
+			QVERIFY(!command->fullOutput().contains("second"));
+		});
+		// TODO: verify that calls to readline() and browser() are handled, correctly
+	}
+
 	void commandOrderAndOutputTest() {
 		// commands shall run in the order 1, 3, 2, 5, 4, but also, of course, all different types of output shall be captured
 		QStringList output;

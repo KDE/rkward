@@ -228,7 +228,6 @@ IMPORT_R_API(Rf_GetOption);
 IMPORT_R_API(Rf_GetOption1);
 IMPORT_R_API(Rf_KillAllDevices);
 IMPORT_R_API(Rf_ScalarInteger);
-IMPORT_R_API(Rf_addTaskCallback);
 IMPORT_R_API(Rf_allocList);
 IMPORT_R_API(Rf_allocVector);
 IMPORT_R_API(Rf_asChar);

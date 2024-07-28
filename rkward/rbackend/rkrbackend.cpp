@@ -133,38 +133,6 @@ void RKRBackend::clearPendingInterrupt () {
 extern SEXP RKWard_RData_Tag;
 
 // ############## R Standard callback overrides BEGIN ####################
-Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible, void *) {
-	RK_TRACE (RBACKEND);
-	Q_UNUSED (expr);
-	Q_UNUSED (value);
-	Q_UNUSED (visible);
-
-	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context)) {		// Yes, toplevel-handlers _do_ get called in a browser context!
-		RK_ASSERT (RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning);
-		if (succeeded) {
-			RKRBackend::repl_status.user_command_successful_up_to = RKRBackend::repl_status.user_command_parsed_up_to;
-			if (RKRBackend::repl_status.user_command_completely_transmitted) {
-				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-				RKRBackend::this_pointer->commandFinished ();
-			} else RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
-		} else {
-			// well, this point of code is never reached with R up to 2.12.0. Instead failed user commands are handled in doError().
-			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
-		}
-	}
-	
-	return (Rboolean) true;
-}
-
-void RKInsertToplevelStatementFinishedCallback (void *) {
-	RK_TRACE (RBACKEND);
-
-	if (RKRBackend::this_pointer->r_running) {
-		int pos;
-		RFn::Rf_addTaskCallback(&RKToplevelStatementFinishedCallback, nullptr, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
-	}
-}
-
 void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 	RK_TRACE (RBACKEND);
 
@@ -284,7 +252,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				// This can mean three different things:
 				// 1) User called readline ()
 				// 2) User called browser ()
-				// 3) R jumped us back to toplevel behind our backs.
+				// 3) The user command has finished (successfully or not)
 				// Let's find out, which one it is.
 				if (hist && (RKRBackend::default_global_context != ROb(R_GlobalContext))) {
 					break;	// this looks like a call to browser(). Will be handled below.
@@ -296,13 +264,13 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					n_frames = dummy->intVector ().at (0);
 				}
 				// What the ??? Why does this simple version always return 0?
-				//int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (RFn::Rf_install ("sys.nframe"), ROb(R_GlobalEnv)));
+				//int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (RFn::Rf_install ("sys.nframe"), ROb(R_GlobalEnv);
 				if (n_frames < 1) {
-					// No active frames? This can't be a call to readline(), then, so probably R jumped us back to toplevel, behind our backs.
-					// For safety, let's reset and start over.
-					RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
-					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-					RFn::Rf_error("");	// to discard the buffer
+					// No active frames? This can't be a call to readline(), so the previous command must have finished.
+					if (RKRBackend::repl_status.user_command_completely_transmitted) {
+						RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
+						RKRBackend::this_pointer->commandFinished ();
+					} else RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
 				} else {
 					// A call to readline(). Will be handled below
 					break;
@@ -1108,7 +1076,6 @@ bool RKRBackend::startR () {
 	RFn::R_registerRoutines(RFn::R_getEmbeddingDllInfo(), nullptr, callMethods, nullptr, nullptr);
 
 	connectCallbacks();
-	RKInsertToplevelStatementFinishedCallback(nullptr);
 	RKREventLoop::setRKEventHandler(doPendingPriorityCommands);
 	default_global_context = ROb(R_GlobalContext);
 #ifdef Q_OS_WIN
