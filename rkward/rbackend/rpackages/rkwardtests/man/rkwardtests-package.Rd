@@ -23,6 +23,13 @@ LazyLoad: \tab yes\cr
 URL: \tab https://rkward.kde.org\cr
 }
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://rkward.kde.org}
+}
+
+}
 \author{
 Thomas Friedrichsmeier, Meik Michalke
 }

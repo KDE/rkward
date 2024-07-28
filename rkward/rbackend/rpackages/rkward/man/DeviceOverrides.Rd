@@ -90,8 +90,8 @@ quartz(
 \item{pointsize}{the default pointsize to be used.  Defaults to \code{12}.}
 
 \item{gamma}{gamma correction fudge factor.
-    Colours in R are \abbr{sRGB};  if your monitor does not conform to
-    \abbr{sRGB}, you might be able to improve things by tweaking this
+    Colours in R are sRGB;  if your monitor does not conform to
+    sRGB, you might be able to improve things by tweaking this
     parameter to apply additional gamma correction to the RGB channels.
     By default 1 (no additional gamma correction).}
 
@@ -123,7 +123,7 @@ quartz(
 \item{title}{character string, up to 100 bytes.  With the default,
     \code{""}, a suitable title is created internally.  A C-style format
     for an integer will be substituted by the device number (see the
-    \code{file} argument of \code{\link{df}} for further
+    \code{file} argument to \code{\link[grDevices]{postscript}} for further
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
 
