@@ -1,3 +1,7 @@
+--- Version 0.8.1 - UNRELEASED
+- Internal: Various code cleanups
+- Added: Configuration pages for loaded kate plugins are integrated into the settings dialog
+
 --- Version 0.8.0 - Jul-28-2024
 - Fixed: Crash when trying to edit a data.frame containing columns that are not vectors
 - Fixed: Basic statistics would refuse to "overwrite file", even if saving to file was unchecked
