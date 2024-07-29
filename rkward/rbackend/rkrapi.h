@@ -323,7 +323,7 @@ IMPORT_R_API(ptr_R_WriteConsoleEx);
 
 IMPORT_R_API(R_InputHandlers);
 IMPORT_R_API(R_PolledEvents);
-IMPORT_R_API(R_checkActivityEx);
+IMPORT_R_API(R_checkActivity);
 IMPORT_R_API(R_runHandlers);
 IMPORT_R_API(addInputHandler);
 
