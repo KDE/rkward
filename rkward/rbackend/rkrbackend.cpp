@@ -1027,7 +1027,7 @@ bool RKRBackend::startR () {
 	too_late_to_interrupt = false;
 	r_running = true;
 	int argc = 3;
-	char* argv[3] = { qstrdup ("--slave"), qstrdup ("--no-save"), qstrdup ("--no-restore") };
+	char* argv[3] = { qstrdup ("rkward"), qstrdup ("--no-save"), qstrdup ("--no-restore") };
 	RFn::Rf_initialize_R(argc, argv);
 
 #ifdef Q_OS_WIN

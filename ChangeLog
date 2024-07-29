@@ -1,4 +1,5 @@
 --- Version 0.8.1 - UNRELEASED
+- Fixed: commandArgs() would show incorrect options
 - Internal: Various code cleanups
 - Added: Configuration pages for loaded kate plugins are integrated into the settings dialog
 
