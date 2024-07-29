@@ -536,16 +536,12 @@ void RKConsole::rawWriteLine(const QString& line, QChar line_end) {
 void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 	RK_TRACE (APP);
 
-	int first_line = doc->lines () -1;
-	QString popped_line;
-	// TODO: rewrite utilizing output_cursor;
 	if (!command) {
 		// spontanteous R output, to be inserted _above_ the current command
-		// as a shortcut, we pop the last line, and reinsert in, later
-		popped_line = doc->line(doc->lines() - 1);
-		doc->removeLine(doc->lines() - 1);
+		output_cursor = KTextEditor::Cursor(doc->lines()-2, doc->lineLength(doc->lines()-2));
 	}
 
+	int first_line = output_cursor.line();;
 	// split by and handle carriage returns (important for progress bars)
 	const QString out = output->output;
 	int string_pos = -1;
@@ -560,7 +556,7 @@ void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 	}
 	if (start_pos < end_pos) rawWriteLine(out.mid(start_pos, string_pos - start_pos + 1), ' ');
 
-	int end_line = doc->lines () -1;
+	int end_line = output_cursor.line();
 	if (output->type != ROutput::Output || (!command)) {
 		for (int line = first_line; line < end_line; ++line) {
 			doc->addMark (line, command ? KTextEditor::Document::BreakpointActive : KTextEditor::Document::BreakpointDisabled);
@@ -577,10 +573,6 @@ void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 			output_cursor.setLine(output_cursor.line() - c + RKSettingsModuleConsole::maxConsoleLines());
 			view->setUpdatesEnabled (true);
 		}
-	}
-
-	if (!command) {
-		doc->insertLine(doc->lines(), popped_line);
 	}
 
 	cursorAtTheEnd ();
