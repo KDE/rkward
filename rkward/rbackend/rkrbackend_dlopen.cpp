@@ -61,9 +61,15 @@ auto loadlib(const char* name) {
 
 #if !(defined(Win32) || defined(__APPLE__))
 auto loadGlib(unsigned int *version) {
+	*version = 0;
 	auto glib = dlopen("libglib-2.0.so", RTLD_LAZY | RTLD_LOCAL);
-	auto glib_verp = static_cast<unsigned int *>(resolve_symb(glib, "glib_minor_version"));
-	*version = glib_verp ? (*glib_verp) : 0;
+	if (glib) {
+		dlerror();
+		auto glib_verp = static_cast<unsigned int *>(resolve_symb(glib, "glib_minor_version")); // Major version is always "2"
+		if (glib_verp && !dlerror()) {
+			*version = *glib_verp;
+		}
+	}
 	return glib;
 }
 
