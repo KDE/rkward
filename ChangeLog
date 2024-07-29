@@ -1,4 +1,5 @@
 --- Version 0.8.1 - UNRELEASED
+- Fixed: Adjustments to changes in R devel (for compatibility with the future R 4.5.x)
 - Fixed: Potential crash on "spontaneous" R output (originating from event handlers such as tcl)
 - Fixed: commandArgs() would show incorrect options
 - Internal: Various code cleanups
