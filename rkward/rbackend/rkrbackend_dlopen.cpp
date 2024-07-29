@@ -59,10 +59,40 @@ auto loadlib(const char* name) {
 	return ret;
 }
 
-int main(int argc, char *argv[]) {
-// TODO: Take lib name from CMake?
+#if !(defined(Win32) || defined(__APPLE__))
+auto loadGlib(unsigned int *version) {
+	auto glib = dlopen("libglib-2.0.so", RTLD_LAZY | RTLD_LOCAL);
+	auto glib_verp = static_cast<unsigned int *>(resolve_symb(glib, "glib_minor_version"));
+	*version = glib_verp ? (*glib_verp) : 0;
+	return glib;
+}
+
+/** The backendlib is indirectly linked against libglib-2, so this is also included in the AppImage.
+ *  Certain R libraries, including grDevices.so and cairo.so also link against libglib, in this case the system version.
+ *  This may fail, if the bundle contains a lower version, and this is loaded, first (or vice versa).
+ *  To mitigate the mess, we try to find out, which version appears to be newer, and preload that before our backendlib. */
+void preloadBetterGlib(const char *cd_to) {
+	unsigned int glib1_ver, glib2_ver;
+	auto glib1 = loadGlib(&glib1_ver);
+	dlclose(glib1);
+
+	auto cd = std::filesystem::current_path();
+	if (cd_to && cd_to[0]) {
+		std::filesystem::current_path(cd_to);
+	}
+	auto glib2 = loadGlib(&glib2_ver);
+	std::filesystem::current_path(cd);
+
+	if (glib1_ver >= glib2_ver) {
+		dlclose(glib2);
+		loadGlib(&glib1_ver);
+	}
+}
+#endif
 
 /** NOTE: For a description of the rationale for this involved loading procedure rkapi.h ! */
+int main(int argc, char *argv[]) {
+// TODO: Take lib name from CMake?
 	if (argc > 10) {
 		fprintf(stderr, "Too many args\n"); // and I'm lazy
 		exit(99);
@@ -93,6 +123,8 @@ int main(int argc, char *argv[]) {
 		exit(99);
 	}
 
+	char* c_rk_ld_cwd = getenv("RK_LD_CWD");
+
 #if defined(Win32)
 	auto r_dllinfo = loadlib("R.dll");
 #elif defined(__APPLE__)
@@ -103,9 +135,9 @@ int main(int argc, char *argv[]) {
 	auto r_dllinfo = loadlib("libR.dylib");
 #else
 	auto r_dllinfo = loadlib("libR.so");
+	preloadBetterGlib(c_rk_ld_cwd);
 #endif
 
-	char* c_rk_ld_cwd = getenv("RK_LD_CWD");
 	auto cd = std::filesystem::current_path();
 	if (c_rk_ld_cwd && c_rk_ld_cwd[0]) {
 		std::filesystem::current_path(c_rk_ld_cwd);
