@@ -25,9 +25,9 @@ static void processX11EventsWorker (void *) {
 #ifndef Q_OS_WIN
 	for (;;) {
 		fd_set *what;
-		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, RK_doIntr);
-		R_runHandlers(R_InputHandlers, what);
-		if (what == NULL) break;
+		what = RFn::R_checkActivity(ROb(R_wait_usec) > 0 ? ROb(R_wait_usec) : 50, 1);
+		RFn::R_runHandlers(ROb(R_InputHandlers), what);
+		if (!what) break;
 	}
 	/* This seems to be needed to make Rcmdr react to events. Has this always been the case? It was commented out for a long time, without anybody noticing. */
 	R_PolledEvents ();
