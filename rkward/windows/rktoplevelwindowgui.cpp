@@ -36,7 +36,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkhelpsearchwindow.h"
 #include "../windows/rkmdiwindow.h"
 #include "../misc/rkstandardicons.h"
-#include "../misc/rkprogresscontrol.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkerrordialog.h"
