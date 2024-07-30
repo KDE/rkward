@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-06-16 07:09+0200\n"
+"PO-Revision-Date: 2024-07-29 05:16+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -636,7 +636,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Should leading and trailing white space be removed from character fields?"
-msgstr ""
+msgstr "უნდა წაიშალოს პირველი და ბოლო თეთრი ჰარეები სიმბოლოს ველებიდან?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Convert character columns to factors")
 #: rkward/plugins/00saveload/import/import_csv.rkh:45
@@ -1358,6 +1358,8 @@ msgid ""
 "Maximum number of factor levels to use (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
+"ფაქტორის დონეების მაქსიმალური რაოდენობა (იხ <link href=\"rkward://rhelp/read."
+"spss\"/>)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Trim white space")
 #: rkward/plugins/00saveload/import/import_spss.rkh:29
@@ -1444,12 +1446,14 @@ msgid ""
 "The filename of the file to import. This may also be a URL (http://, http:// "
 "and ftp:// are supported)."
 msgstr ""
+"შემოსატანი ფაილის სახელი. ასევე, შეიძლება, წარმოადგენდეს URL-ს: http://, "
+"https:// ან ftp://."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Edit Object")
 #: rkward/plugins/00saveload/import/import_stata.rkh:23
 #, kde-format
 msgid "Whether the object should be opened for editing after it was imported."
-msgstr ""
+msgstr "გახსნება თუ არა ობიექტი ჩასასწორებლად მისი შემოტანის შემდეგ."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert Stata dates to 'Date' class")
 #: rkward/plugins/00saveload/import/import_stata.rkh:25
@@ -1458,6 +1462,8 @@ msgid ""
 "Convert Stata dates to R 'Date' class (see <link href=\"rkward://rhelp/read."
 "dta\"/>, <link href=\"rkward://rhelp/Dates\"/>)."
 msgstr ""
+"Stata-ის მონაცემების გადაყვანა dates R-ის 'Date' კლასში (იხ <link href="
+"\"rkward://rhelp/read.dta\"/>, <link href=\"rkward://rhelp/Dates\"/>)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Use Stata value labels to create factors?")
 #: rkward/plugins/00saveload/import/import_stata.rkh:26
@@ -1466,6 +1472,8 @@ msgid ""
 "R uses value labels only for factors. Should Stata variable with value "
 "labels be converted to factors?"
 msgstr ""
+"R მნიშვნელობის ჭდეებს, მხოლოდ, ფაქტორებისთვის იყენებთ. გადავიყვანო Stata-ის "
+"ცვლადები, რომლებსაც მნიშვნელობის ჭდე აქვთ, ფაქტებში?"
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "For version 8 or later, store information about different types of missing data?")
 #: rkward/plugins/00saveload/import/import_stata.rkh:27
@@ -1492,6 +1500,8 @@ msgid ""
 "Preview imported data. Only the first 50 rows and columns are shown, for "
 "performance reasons."
 msgstr ""
+"შემოსატანი მონაცემების მინიატურა. წარმადობის გამო ნაჩვენებია, მხოლოდ, 50 "
+"მწკრივი და სვეტი."
 
 #. i18n: ectx: (Import STATA file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:18
@@ -1530,6 +1540,8 @@ msgid ""
 "For version 8 or later, store information about different types of missing "
 "data?"
 msgstr ""
+"ვერსიებისთვის 8 და ზემოთ, შევინახო ინფორმაცია ნაკლული მონაცემების სხვადასხვა "
+"ტიპების შესახებ?"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:32
@@ -1545,6 +1557,8 @@ msgid ""
 "Preview not available, because package gdata is not installed or cannot be "
 "loaded."
 msgstr ""
+"მინიატურა ხელმისაწვდომი არა, რადგან პაკეტი gdata დაყენებული არაა, ან მისი "
+"ჩატვირთვა შეუძლებელია."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="...">
@@ -1661,6 +1675,8 @@ msgid ""
 "Preview not available, because package XLConnect is not installed or cannot "
 "be loaded."
 msgstr ""
+"მინიატურა ხელმისაწვდომი არა, რადგან პაკეტი XLConnect დაყენებული არაა, ან "
+"მისი ჩატვირთვა შეუძლებელია."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <usage>
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:16
@@ -1714,6 +1730,8 @@ msgid ""
 "First column of data to import within the sheet. See <label id=\"startrow\"/"
 ">, above."
 msgstr ""
+"მონაცემების პირველი სვეტი, რომელიც ფურცელზე იქნება შემოტანილი იხილეთ <label "
+"id=\"startnow\"/> ზემოთ."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Row")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:37
@@ -1722,6 +1740,8 @@ msgid ""
 "Last row of data to import within the sheet. See <label id=\"startrow\"/>, "
 "above."
 msgstr ""
+"მონაცემების ბოლო მწკრივი, რომელიც ფურცელზე იქნება შემოტანილი იხილეთ <label "
+"id=\"startnow\"/> ზემოთ."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:38
@@ -1730,6 +1750,8 @@ msgid ""
 "Last column of data to import within the sheet. See <label id=\"startrow\"/"
 ">, above."
 msgstr ""
+"მონაცემების ბოლო სვეტი, რომელიც ფურცელზე იქნება შემოტანილი იხილეთ <label id="
+"\"startnow\"/> ზემოთ."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:39
@@ -1746,6 +1768,8 @@ msgid ""
 "If checked, empty leading and trailing rows will be omitted from the "
 "imported data."
 msgstr ""
+"თუ ჩართულია, ცარიელი პირველი და ბოლო მწკრივები შემოღებული მონაცემებიდან "
+"ამოღებული იქნება."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing columns")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:41
@@ -1754,6 +1778,8 @@ msgid ""
 "If checked, empty leading and trailing columns will be omitted from the "
 "imported data."
 msgstr ""
+"თუ ჩართულია, ცარიელი პირველი და ბოლო სვეტები შემოღებული მონაცემებიდან "
+"ამოღებული იქნება."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column classes (empty for automatic)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:42
@@ -2637,6 +2663,8 @@ msgstr "აირჩიეთ, როგორ მოუვლით მწკ�
 #, kde-format
 msgid "Select a character vector to use for custom row names."
 msgstr ""
+"აირჩიეთ სიმბოლოს ვექტორი, რომელსაც მორგებული მწკრივის სახებისთვის "
+"გამოვიყენებ."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:60
@@ -2651,6 +2679,7 @@ msgstr ""
 #, kde-format
 msgid "Select a character vector to use for custom column names."
 msgstr ""
+"აირჩიეთ სიმბოლოს ვექტორი, რომელსაც მორგებული სვეტის სახებისთვის გამოვიყენებ."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:68
@@ -2659,6 +2688,8 @@ msgid ""
 "If the default character encoding doesn't work for you, you can set a "
 "specific one here."
 msgstr ""
+"თუ ნაგულისხმევი სიმბოლოების კოდირება თქვენთვის არ მუშაობს, სასურველი აქ "
+"შეგიძლიათ დააყენოთ."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Custom encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:71
@@ -2667,6 +2698,8 @@ msgid ""
 "Use this field to set a custom encoding, in case the dropdown menu doesn't "
 "list the one you need."
 msgstr ""
+"გამოიყენეთ ეს ველი მორგებული კოდირების დასაყენებლად იმ შემთხვევაში, თუ "
+"კონტექსტური მენიუ არ შეიცავს იმას, რაც თქვენ გჭირდებათ."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Quote all strings")
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
