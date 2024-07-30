@@ -247,8 +247,8 @@ SEXP RKD_AdjustSize(SEXP _devnum, SEXP _id) {
 	pDevDesc dev = gdev->dev;
 	// This is called from rkward:::RK.resize(), which in turn may be out of sync with R's device list. Before doing anything,
 	// double check that this is really the device we think it is.
-	if (dev->activate != RKD_Activate) RFn::Rf_error("Not an RKWard device", devnum);
-	if (static_cast<RKGraphicsDeviceDesc*>(dev->deviceSpecific)->id != id) RFn::Rf_error("Graphics device mismatch", devnum);
+	if (dev->activate != RKD_Activate) RFn::Rf_error("Not an RKWard device %d", devnum);
+	if (static_cast<RKGraphicsDeviceDesc*>(dev->deviceSpecific)->id != id) RFn::Rf_error("Graphics device mismatch %d", devnum);
 
 	{
 		RKGraphicsDataStreamWriteGuard wguard;

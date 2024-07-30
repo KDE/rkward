@@ -88,7 +88,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		setvbuf(stdout, nullptr, _IONBF, 0);
 		setvbuf(stderr, nullptr, _IONBF, 0);
 
-		RK_Debug::RK_Debug_Flags = RBACKEND;
+		RK_Debug::RK_Debug_Flags = RBACKEND | GRAPHICS_DEVICE;
 		if (RK_Debug::setupLogFile (QDir::tempPath () + "/rkward.rbackend")) qInstallMessageHandler (RKDebugMessageOutput);
 
 		QString servername, rkd_server_name;

@@ -964,6 +964,10 @@ void RKWardMainWindow::setRStatus (int status) {
 		if (rstatus_message) rstatus_message->hide();
 		setIndictatorColor(statusbar_r_status, KColorScheme::NeutralText, KColorScheme::NeutralBackground);
 		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is being initialized."));
+		if (rstatus_message) {
+			delete rstatus_message;
+			rstatus_message = nullptr;
+		}
 	} else {
 		setIndictatorColor(statusbar_r_status, KColorScheme::NegativeText, KColorScheme::NegativeBackground);
 		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is unavailable."));

@@ -34,6 +34,7 @@ struct RKGraphicsDeviceDesc {
 };
 
 #include "rkgraphicsdevice_stubs.cpp"
+static SEXP RKD_capabilities(SEXP capabilities);
 
 // No, I do not really understand what this is for.
 // Mostly trying to mimick the X11 device's behavior, here.
@@ -192,8 +193,9 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->holdflush = RKD_HoldFlush;
 
 #if R_VERSION >= R_Version (4, 1, 0)
+	static_assert(RKD_RGE_VERSION >= 13);
 	// NOTE: We need both a compiletime and a runtime check, in order to support running with an R older than what was used at compile time
-	if (RFn::R_GE_getVersion() >=  15) {
+	if (RFn::R_GE_getVersion() >=  13) {
 		// patterns and gradients
 		dev->setPattern = RKD_SetPattern;
 		dev->releasePattern = RKD_ReleasePattern;
@@ -204,12 +206,15 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 		dev->setMask = RKD_SetMask;
 		dev->releaseMask = RKD_ReleaseMask;
 		dev->deviceVersion = qMin(qMin(15, R_GE_version), RFn::R_GE_getVersion());
-		dev->deviceClip = TRUE; // for now
+		if (RFn::R_GE_getVersion() >=  14) {
+			dev->deviceClip = TRUE; // for now
+		}
 	}
 #endif
 
 #if R_VERSION >= R_Version (4, 2, 0)
-	if (RFn::R_GE_getVersion() >=  16) {
+	static_assert(RKD_RGE_VERSION >= 15);
+	if (RFn::R_GE_getVersion() >=  15) {
 		// groups
 		dev->defineGroup = RKD_DefineGroup;
 		dev->useGroup = RKD_UseGroup;
@@ -219,7 +224,71 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 		dev->stroke = RKD_Stroke;
 		dev->fill = RKD_Fill;
 		dev->fillStroke = RKD_FillStroke;
+		dev->capabilities = RKD_capabilities;
 	}
 #endif
+
+	// NOTE: When extending support don't forget to adjust dev->devicVersion, above!
+
 	return true;
 }
+
+#if R_VERSION >= R_Version (4, 2, 0)
+static void setCapabilityStruct(SEXP capabilities, int category, std::initializer_list<int> values) {
+	SEXP sub;
+	RFn::Rf_protect(sub = RFn::Rf_allocVector(INTSXP, values.size()));
+	int i = 0;
+	for (auto it = values.begin(); it != values.end(); ++i, ++it) {
+		RFn::INTEGER(sub)[i] = *it;
+	}
+	RFn::SET_VECTOR_ELT(capabilities, category, sub);
+	RFn::Rf_unprotect(1);
+}
+
+static SEXP RKD_capabilities(SEXP capabilities) {
+	RK_TRACE(GRAPHICS_DEVICE);
+
+	setCapabilityStruct(capabilities, R_GE_capability_patterns, {
+		R_GE_linearGradientPattern,
+		R_GE_radialGradientPattern,
+		R_GE_tilingPattern
+	});
+	setCapabilityStruct(capabilities, R_GE_capability_clippingPaths, { 1 });
+	setCapabilityStruct(capabilities, R_GE_capability_masks, { R_GE_luminanceMask });
+	setCapabilityStruct(capabilities, R_GE_capability_compositing, {
+		R_GE_compositeMultiply,
+		R_GE_compositeScreen,
+		R_GE_compositeOverlay,
+		R_GE_compositeDarken,
+		R_GE_compositeLighten,
+		R_GE_compositeColorDodge,
+		R_GE_compositeColorBurn,
+		R_GE_compositeHardLight,
+		R_GE_compositeSoftLight,
+		R_GE_compositeDifference,
+		R_GE_compositeExclusion,
+		R_GE_compositeClear,
+		R_GE_compositeSource,
+		R_GE_compositeOver,
+		R_GE_compositeIn,
+		R_GE_compositeOut,
+		R_GE_compositeAtop,
+		R_GE_compositeDest,
+		R_GE_compositeDestOver,
+		R_GE_compositeDestIn,
+		R_GE_compositeDestOut,
+		R_GE_compositeDestAtop,
+		R_GE_compositeXor,
+		R_GE_compositeAdd,
+		//R_GE_compositeSaturate // not supported in QPainter
+	});
+	setCapabilityStruct(capabilities, R_GE_capability_transformations, { 1 });
+	setCapabilityStruct(capabilities, R_GE_capability_paths, { 1 });
+/*
+#if RKD_RGE_VERSION >= 16  // R >= 4.3.0
+	setCapabilityStruct(capabilities, R_GE_capability_glyphs, { 1 });
+#endif
+*/
+	return capabilities;
+}
+#endif
