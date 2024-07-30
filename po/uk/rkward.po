@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-28 00:37+0000\n"
+"POT-Creation-Date: 2024-07-30 00:38+0000\n"
 "PO-Revision-Date: 2024-07-15 08:51+0300\n"
 "Last-Translator: Fracture dept <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -3903,12 +3903,12 @@ msgstr "Не вдалося запустити процес модуля. Код
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Процес модуля завершив роботу з кодом %1, повідомлення: «%2»."
 
-#: rkward/rbackend/rkrbackend.cpp:530
+#: rkward/rbackend/rkrbackend.cpp:498
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "Роботу рушія R було завершено з таким повідомленням щодо стану: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:551
+#: rkward/rbackend/rkrbackend.cpp:519
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3917,17 +3917,17 @@ msgstr ""
 "У рушії R сталася критична помилка:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:721
+#: rkward/rbackend/rkrbackend.cpp:689
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Повідомлення від основного модуля R"
 
-#: rkward/rbackend/rkrbackend.cpp:729
+#: rkward/rbackend/rkrbackend.cpp:697
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Запитання від основного модуля R"
 
-#: rkward/rbackend/rkrbackend.cpp:1631
+#: rkward/rbackend/rkrbackend.cpp:1598
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3949,7 +3949,7 @@ msgstr ""
 "Довідкові матеріали, які допоможуть в усуванні негараздів, можна знайти <a "
 "href=\"https://rkward.kde.org/compiling\">тут</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1635
+#: rkward/rbackend/rkrbackend.cpp:1602
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3965,12 +3965,12 @@ msgstr ""
 "негараздів, можна знайти <a href=\"https://rkward.kde.org/compiling\">тут</"
 "a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1692
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Невідповідність версії графіки"
 
-#: rkward/rbackend/rkrbackend.cpp:1692
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3981,7 +3981,7 @@ msgstr ""
 "збирання програми.<br><a href=\"rkward://page/rkward_incompatible_version"
 "\">Додаткові відомості</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1692
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Ok"
 msgstr "Гаразд"
@@ -4209,57 +4209,57 @@ msgstr "Динамічне перенесення рядків"
 msgid "Syntax error\n"
 msgstr "Синтаксична помилка\n"
 
-#: rkward/rkconsole.cpp:688
+#: rkward/rkconsole.cpp:680
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Виберіть файл журналу команд, який слід завантажити"
 
-#: rkward/rkconsole.cpp:688
+#: rkward/rkconsole.cpp:680
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "файли журналу R [*.Rhistory](*.Rhistory);;усі файли [*](*)"
 
-#: rkward/rkconsole.cpp:721
+#: rkward/rkconsole.cpp:713
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Виберіть назву файла журналу команд"
 
-#: rkward/rkconsole.cpp:721
+#: rkward/rkconsole.cpp:713
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "файли журналу R [*.Rhistory] (*.Rhistory);;усі файли [*] (*)"
 
-#: rkward/rkconsole.cpp:846
+#: rkward/rkconsole.cpp:838
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Перервати команду, що виконується"
 
-#: rkward/rkconsole.cpp:853
+#: rkward/rkconsole.cpp:845
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Копіювати позначене без обробки"
 
-#: rkward/rkconsole.cpp:856
+#: rkward/rkconsole.cpp:848
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Копіювати лише команди"
 
-#: rkward/rkconsole.cpp:863
+#: rkward/rkconsole.cpp:855
 #, kde-format
 msgid "Print Console"
 msgstr "Консоль друку"
 
-#: rkward/rkconsole.cpp:869
+#: rkward/rkconsole.cpp:861
 #, kde-format
 msgid "Import command history..."
 msgstr "Імпортувати журнал команд…"
 
-#: rkward/rkconsole.cpp:871
+#: rkward/rkconsole.cpp:863
 #, kde-format
 msgid "Export command history..."
 msgstr "Експортувати журнал команд…"
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:882
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4273,17 +4273,17 @@ msgstr ""
 "виконання команд? Натисніть кнопку «Скасувати», якщо ви не хочете виконувати "
 "команду редагування зараз."
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "R Console is busy"
 msgstr "У консолі R виконується завдання"
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "Append"
 msgstr "Дописати"
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Скасувати, потім надіслати"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-28 00:37+0000\n"
+"POT-Creation-Date: 2024-07-30 00:38+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -3651,12 +3651,12 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:530
+#: rkward/rbackend/rkrbackend.cpp:498
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R variklis sustojo būsenoje %1"
 
-#: rkward/rbackend/rkrbackend.cpp:551
+#: rkward/rbackend/rkrbackend.cpp:519
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3665,17 +3665,17 @@ msgstr ""
 "R variklis patyrė lemtingą klaidą:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:721
+#: rkward/rbackend/rkrbackend.cpp:689
 #, kde-format
 msgid "Message from the R backend"
 msgstr "R variklio pranešimas"
 
-#: rkward/rbackend/rkrbackend.cpp:729
+#: rkward/rbackend/rkrbackend.cpp:697
 #, kde-format
 msgid "Question from the R backend"
 msgstr "R variklio klausimas"
 
-#: rkward/rbackend/rkrbackend.cpp:1631
+#: rkward/rbackend/rkrbackend.cpp:1598
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3703,7 +3703,7 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1635
+#: rkward/rbackend/rkrbackend.cpp:1602
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3728,12 +3728,12 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1692
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1692
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3741,7 +3741,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1692
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -3941,57 +3941,57 @@ msgstr ""
 msgid "Syntax error\n"
 msgstr "Sintaksės klaida\n"
 
-#: rkward/rkconsole.cpp:688
+#: rkward/rkconsole.cpp:680
 #, kde-format
 msgid "Select command history file to load"
 msgstr ""
 
-#: rkward/rkconsole.cpp:688
+#: rkward/rkconsole.cpp:680
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr ""
 
-#: rkward/rkconsole.cpp:721
+#: rkward/rkconsole.cpp:713
 #, kde-format
 msgid "Select filename to save command history"
 msgstr ""
 
-#: rkward/rkconsole.cpp:721
+#: rkward/rkconsole.cpp:713
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr ""
 
-#: rkward/rkconsole.cpp:846
+#: rkward/rkconsole.cpp:838
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Pertraukti vykdomą komandą"
 
-#: rkward/rkconsole.cpp:853
+#: rkward/rkconsole.cpp:845
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopijuoti pažodžiui"
 
-#: rkward/rkconsole.cpp:856
+#: rkward/rkconsole.cpp:848
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopijuoti tik komandas"
 
-#: rkward/rkconsole.cpp:863
+#: rkward/rkconsole.cpp:855
 #, kde-format
 msgid "Print Console"
 msgstr "Spausdinti konsolę"
 
-#: rkward/rkconsole.cpp:869
+#: rkward/rkconsole.cpp:861
 #, kde-format
 msgid "Import command history..."
 msgstr "Importuoti komandas..."
 
-#: rkward/rkconsole.cpp:871
+#: rkward/rkconsole.cpp:863
 #, kde-format
 msgid "Export command history..."
 msgstr "Eksportuoti komandas..."
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:882
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4000,17 +4000,17 @@ msgid ""
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "R Console is busy"
 msgstr "R konsolė užimta"
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "Append"
 msgstr "Papildyti"
 
-#: rkward/rkconsole.cpp:890
+#: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "Reset, then submit"
 msgstr ""
