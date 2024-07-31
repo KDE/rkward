@@ -562,6 +562,13 @@ class RKScriptPreviewIO {
 	}
 public:
 	~RKScriptPreviewIO() {
+		{
+			// rkmarkdown::render() leaves these directories lying around, even if clean=TRUE. interemdiates_dir does not seem to have an effect. (07/2024)
+			// the name should be unique enough, though, so let's clean them
+			auto fi = QFileInfo(*infile);
+			auto known_temp_path = fi.absolutePath() + '/' + fi.baseName() + QLatin1String("_cache");
+			QDir(known_temp_path).removeRecursively();
+		}
 		infile->remove();
 		delete infile;
 	}
