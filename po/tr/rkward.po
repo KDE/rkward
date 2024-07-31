@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:38+0000\n"
 "PO-Revision-Date: 2024-07-15 12:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -4648,12 +4648,12 @@ msgstr "<b>R</b> işletkesi boşta."
 msgid "The <b>R</b> engine is being initialized."
 msgstr "<b>R</b> işletkesi başlatılıyor."
 
-#: rkward/rkward.cpp:969
+#: rkward/rkward.cpp:973
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr "<b>R</b> işletkesi kullanılamıyor."
 
-#: rkward/rkward.cpp:975
+#: rkward/rkward.cpp:979
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
@@ -4662,47 +4662,47 @@ msgstr ""
 "R işletkesi kullanılamıyor. Olası çözümler için <a href=\"rkward://page/"
 "rkward_trouble_shooting\">tanılama</a> bölümüne bakın."
 
-#: rkward/rkward.cpp:1005
+#: rkward/rkward.cpp:1009
 #, kde-format
 msgid "Open"
 msgstr "Aç"
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1013
 #, kde-format
 msgid "Opening mode:"
 msgstr "Açma kipi:"
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Dosya türünü kendiliğinden tahmin et"
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Metin/betik dosyası olarak aç"
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Metin dosyası olarak aç ve R vurgulamasını zorla"
 
-#: rkward/rkward.cpp:1048
+#: rkward/rkward.cpp:1052
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Açılacak RKWard çıktı dosyasını seç…"
 
-#: rkward/rkward.cpp:1048
+#: rkward/rkward.cpp:1052
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "RKWard çıktı dosyaları [*.rko](*.rko);;Tüm dosyalar [*](*)"
 
-#: rkward/rkward.cpp:1057
+#: rkward/rkward.cpp:1061
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Betik dosyaları aç"
 
-#: rkward/rkward.cpp:1071
+#: rkward/rkward.cpp:1075
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Adsız Çalışma Alanı]"
@@ -5626,7 +5626,7 @@ msgid "Height:"
 msgstr "Yükseklik:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:52
-#: rkward/windows/rktoplevelwindowgui.cpp:151
+#: rkward/windows/rktoplevelwindowgui.cpp:150
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "RKWard Eklentileri"
@@ -6770,7 +6770,7 @@ msgid "RKWard output file %s does not (yet) exist"
 msgstr "RKWard çıktı dosyası %s (henüz) yok"
 
 #: rkward/windows/rkhtmlwindow.cpp:739
-#: rkward/windows/rktoplevelwindowgui.cpp:253
+#: rkward/windows/rktoplevelwindowgui.cpp:252
 #, kde-format
 msgid "[Active]"
 msgstr "[Etkin]"
@@ -7015,32 +7015,32 @@ msgstr "Alt Kenar Çubuğu"
 msgid "Not shown in sidebar"
 msgstr "Kenar çubuğunda gösterilmiyor"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:57
+#: rkward/windows/rktoplevelwindowgui.cpp:56
 #, kde-format
 msgid "Help on R"
 msgstr "R Üzerine Yardım"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:59
+#: rkward/windows/rktoplevelwindowgui.cpp:58
 #, kde-format
 msgid "Search R Help"
 msgstr "R Yardımında Ara"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:61
+#: rkward/windows/rktoplevelwindowgui.cpp:60
 #, kde-format
 msgid "RKWard Dashboard and Help"
 msgstr "RKWard Gösterge Tablosu ve Yardımı"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:68
+#: rkward/windows/rktoplevelwindowgui.cpp:67
 #, kde-format
 msgid "Shows the R help index"
 msgstr "R yardım indeksini gösterir"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:69
+#: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
 msgid "Shows/raises the R Help Search window"
 msgstr "R yardım arama penceresini gösterir/yükseltir"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:70
+#: rkward/windows/rktoplevelwindowgui.cpp:69
 #, kde-format
 msgid ""
 "Show the RKWard dashboard with links to important settings and documentation"
@@ -7048,32 +7048,32 @@ msgstr ""
 "Önemli ayarlara ve belgelere bağlantılar içeren RKWard gösterge tablosunu "
 "göster"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:75
+#: rkward/windows/rktoplevelwindowgui.cpp:74
 #, kde-format
 msgid "Previous Window"
 msgstr "Önceki Pencere"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:79
+#: rkward/windows/rktoplevelwindowgui.cpp:78
 #, kde-format
 msgid "Next Window"
 msgstr "Sonraki Pencere"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:84
+#: rkward/windows/rktoplevelwindowgui.cpp:83
 #, kde-format
 msgid "Activate Document view"
 msgstr "Belge Görünümünü Etkinleştir"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:88
+#: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
 msgid "Show Output"
 msgstr "Çıktıyı Göster"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:131
+#: rkward/windows/rktoplevelwindowgui.cpp:130
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Göster/Gizle: %1"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:144
+#: rkward/windows/rktoplevelwindowgui.cpp:143
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -7091,13 +7091,13 @@ msgstr ""
 "düzenleyicisinin içinde kullanmak için bir betik düzenleyicisi penceresi "
 "açmanız ve onu etkinleştirmeniz gerekir."
 
-#: rkward/windows/rktoplevelwindowgui.cpp:144
-#: rkward/windows/rktoplevelwindowgui.cpp:158
+#: rkward/windows/rktoplevelwindowgui.cpp:143
+#: rkward/windows/rktoplevelwindowgui.cpp:157
 #, kde-format
 msgid "Note"
 msgstr "Not"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:158
+#: rkward/windows/rktoplevelwindowgui.cpp:157
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "

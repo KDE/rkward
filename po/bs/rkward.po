@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kde4.14\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:38+0000\n"
 "PO-Revision-Date: 2015-02-22 23:06+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian\n"
@@ -4205,59 +4205,59 @@ msgstr ""
 msgid "The <b>R</b> engine is being initialized."
 msgstr ""
 
-#: rkward/rkward.cpp:969
+#: rkward/rkward.cpp:973
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr ""
 
-#: rkward/rkward.cpp:975
+#: rkward/rkward.cpp:979
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
 
-#: rkward/rkward.cpp:1005
+#: rkward/rkward.cpp:1009
 #, fuzzy, kde-format
 msgid "Open"
 msgstr "Otvori..."
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1013
 #, kde-format
 msgid "Opening mode:"
 msgstr ""
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr ""
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, fuzzy, kde-format
 msgid "Open as text / script file"
 msgstr "Otvaranje datoteke skripte"
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr ""
 
-#: rkward/rkward.cpp:1048
+#: rkward/rkward.cpp:1052
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr ""
 
-#: rkward/rkward.cpp:1048
+#: rkward/rkward.cpp:1052
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr ""
 
-#: rkward/rkward.cpp:1057
+#: rkward/rkward.cpp:1061
 #, fuzzy, kde-format
 msgid "Open script file(s)"
 msgstr "Otvaranje datoteke skripte"
 
-#: rkward/rkward.cpp:1071
+#: rkward/rkward.cpp:1075
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr ""
@@ -5104,7 +5104,7 @@ msgid "Height:"
 msgstr "Visina:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:52
-#: rkward/windows/rktoplevelwindowgui.cpp:151
+#: rkward/windows/rktoplevelwindowgui.cpp:150
 #, kde-format
 msgid "RKWard Plugins"
 msgstr ""
@@ -6139,7 +6139,7 @@ msgid "RKWard output file %s does not (yet) exist"
 msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:739
-#: rkward/windows/rktoplevelwindowgui.cpp:253
+#: rkward/windows/rktoplevelwindowgui.cpp:252
 #, fuzzy, kde-format
 msgid "[Active]"
 msgstr "Aktivan"
@@ -6376,63 +6376,63 @@ msgstr "donju bočnu traku"
 msgid "Not shown in sidebar"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:57
+#: rkward/windows/rktoplevelwindowgui.cpp:56
 #, fuzzy, kde-format
 msgid "Help on R"
 msgstr "Pomoć za: %1"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:59
+#: rkward/windows/rktoplevelwindowgui.cpp:58
 #, kde-format
 msgid "Search R Help"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:61
+#: rkward/windows/rktoplevelwindowgui.cpp:60
 #, kde-format
 msgid "RKWard Dashboard and Help"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:68
+#: rkward/windows/rktoplevelwindowgui.cpp:67
 #, kde-format
 msgid "Shows the R help index"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:69
+#: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
 msgid "Shows/raises the R Help Search window"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:70
+#: rkward/windows/rktoplevelwindowgui.cpp:69
 #, kde-format
 msgid ""
 "Show the RKWard dashboard with links to important settings and documentation"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:75
+#: rkward/windows/rktoplevelwindowgui.cpp:74
 #, fuzzy, kde-format
 msgid "Previous Window"
 msgstr "&Prethodni prozor"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:79
+#: rkward/windows/rktoplevelwindowgui.cpp:78
 #, fuzzy, kde-format
 msgid "Next Window"
 msgstr "&Sljedeći prozor"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:84
+#: rkward/windows/rktoplevelwindowgui.cpp:83
 #, kde-format
 msgid "Activate Document view"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:88
+#: rkward/windows/rktoplevelwindowgui.cpp:87
 #, fuzzy, kde-format
 msgid "Show Output"
 msgstr "Prikaži izlaz"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:131
+#: rkward/windows/rktoplevelwindowgui.cpp:130
 #, fuzzy, kde-format
 msgid "Show/Hide %1"
 msgstr "Prikaži / sakrij"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:144
+#: rkward/windows/rktoplevelwindowgui.cpp:143
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -6443,13 +6443,13 @@ msgid ""
 "the script editor, you need to open a script editor window, and activate it."
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:144
-#: rkward/windows/rktoplevelwindowgui.cpp:158
+#: rkward/windows/rktoplevelwindowgui.cpp:143
+#: rkward/windows/rktoplevelwindowgui.cpp:157
 #, fuzzy, kde-format
 msgid "Note"
 msgstr "Bilješka"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:158
+#: rkward/windows/rktoplevelwindowgui.cpp:157
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:38+0000\n"
+"POT-Creation-Date: 2024-07-31 00:38+0000\n"
 "PO-Revision-Date: 2024-07-16 03:22+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -4705,12 +4705,12 @@ msgstr "Il motore di <b>R</b> è inattivo."
 msgid "The <b>R</b> engine is being initialized."
 msgstr "Il motore di <b>R</b> sta per essere inizializzato."
 
-#: rkward/rkward.cpp:969
+#: rkward/rkward.cpp:973
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr "Il motore di <b>R</b> non è disponibile."
 
-#: rkward/rkward.cpp:975
+#: rkward/rkward.cpp:979
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
@@ -4720,47 +4720,47 @@ msgstr ""
 "rkward_trouble_shooting\">risoluzione dei problemi</a> per possibili "
 "soluzioni."
 
-#: rkward/rkward.cpp:1005
+#: rkward/rkward.cpp:1009
 #, kde-format
 msgid "Open"
 msgstr "Apri"
 
-#: rkward/rkward.cpp:1009
+#: rkward/rkward.cpp:1013
 #, kde-format
 msgid "Opening mode:"
 msgstr "Modalità di apertura:"
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Individua il tipo di file, automaticamente"
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Apri come file di testo / script"
 
-#: rkward/rkward.cpp:1011
+#: rkward/rkward.cpp:1015
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Apri come file di testo e forza l'evidenziazione di R"
 
-#: rkward/rkward.cpp:1048
+#: rkward/rkward.cpp:1052
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Seleziona il file di uscita di RKWard da aprire..."
 
-#: rkward/rkward.cpp:1048
+#: rkward/rkward.cpp:1052
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "File di uscita di RKWard [*.rko](*.rko);;Tutti i file [*](*)"
 
-#: rkward/rkward.cpp:1057
+#: rkward/rkward.cpp:1061
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Apri file di script"
 
-#: rkward/rkward.cpp:1071
+#: rkward/rkward.cpp:1075
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[spazio di lavoro senza nome]"
@@ -5705,7 +5705,7 @@ msgid "Height:"
 msgstr "Altezza:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:52
-#: rkward/windows/rktoplevelwindowgui.cpp:151
+#: rkward/windows/rktoplevelwindowgui.cpp:150
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "Estensioni di RKWard"
@@ -6866,7 +6866,7 @@ msgid "RKWard output file %s does not (yet) exist"
 msgstr "Il file di uscita di RKward %s non esiste (ancora)."
 
 #: rkward/windows/rkhtmlwindow.cpp:739
-#: rkward/windows/rktoplevelwindowgui.cpp:253
+#: rkward/windows/rktoplevelwindowgui.cpp:252
 #, kde-format
 msgid "[Active]"
 msgstr "[Attivo]"
@@ -7111,32 +7111,32 @@ msgstr "Barra inferiore"
 msgid "Not shown in sidebar"
 msgstr "Non mostrare nella barra laterale"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:57
+#: rkward/windows/rktoplevelwindowgui.cpp:56
 #, kde-format
 msgid "Help on R"
 msgstr "Aiuto su R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:59
+#: rkward/windows/rktoplevelwindowgui.cpp:58
 #, kde-format
 msgid "Search R Help"
 msgstr "Cerca nell'aiuto di R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:61
+#: rkward/windows/rktoplevelwindowgui.cpp:60
 #, kde-format
 msgid "RKWard Dashboard and Help"
 msgstr "Cruscotto e guida di RKWard"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:68
+#: rkward/windows/rktoplevelwindowgui.cpp:67
 #, kde-format
 msgid "Shows the R help index"
 msgstr "Mostra l'indice dell'aiuto su R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:69
+#: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
 msgid "Shows/raises the R Help Search window"
 msgstr "Mostra/nasconde la finestra di ricerca nell'aiuto su R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:70
+#: rkward/windows/rktoplevelwindowgui.cpp:69
 #, kde-format
 msgid ""
 "Show the RKWard dashboard with links to important settings and documentation"
@@ -7144,32 +7144,32 @@ msgstr ""
 "Mostra il cruscotto di RKWard con collegamenti a impostazioni e "
 "documentazione importanti"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:75
+#: rkward/windows/rktoplevelwindowgui.cpp:74
 #, kde-format
 msgid "Previous Window"
 msgstr "Finestra precedente"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:79
+#: rkward/windows/rktoplevelwindowgui.cpp:78
 #, kde-format
 msgid "Next Window"
 msgstr "Finestra successiva"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:84
+#: rkward/windows/rktoplevelwindowgui.cpp:83
 #, kde-format
 msgid "Activate Document view"
 msgstr "Attiva la vista del documento"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:88
+#: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
 msgid "Show Output"
 msgstr "Mostra l'uscita"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:131
+#: rkward/windows/rktoplevelwindowgui.cpp:130
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Mostra/nascondi %1"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:144
+#: rkward/windows/rktoplevelwindowgui.cpp:143
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -7187,13 +7187,13 @@ msgstr ""
 "esempio all'interno dell'editor di script, devi aprire la finestra "
 "dell'editor di script ed attivarla."
 
-#: rkward/windows/rktoplevelwindowgui.cpp:144
-#: rkward/windows/rktoplevelwindowgui.cpp:158
+#: rkward/windows/rktoplevelwindowgui.cpp:143
+#: rkward/windows/rktoplevelwindowgui.cpp:157
 #, kde-format
 msgid "Note"
 msgstr "Nota"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:158
+#: rkward/windows/rktoplevelwindowgui.cpp:157
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
