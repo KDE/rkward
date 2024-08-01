@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:38+0000\n"
+"POT-Creation-Date: 2024-08-01 00:38+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -4056,7 +4056,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "Komponenti \"katepart\" ei leitud"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:701
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:708
 #, kde-format
 msgid "R Console"
 msgstr "R-i konsool"
@@ -4572,7 +4572,7 @@ msgstr "<b>R-i</b> mootor on hõivatud."
 msgid "The <b>R</b> engine is idle."
 msgstr "<b>R-i</b> mootor on jõude."
 
-#: rkward/rkward.cpp:966
+#: rkward/rkward.cpp:970
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "<b>R-i</b> mootor käivitatakse."
@@ -6282,7 +6282,7 @@ msgid "Save Script As..."
 msgstr "Salvesta skript kui ..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:480
-#: rkward/windows/rkcommandeditorwindow.cpp:935
+#: rkward/windows/rkcommandeditorwindow.cpp:942
 #, kde-format
 msgid " [modified]"
 msgstr " [muudetud]"
@@ -6297,7 +6297,7 @@ msgstr "Dokumenti \"%1\" on muudetud. Kas ikkagi see sulgeda?"
 msgid "File not saved"
 msgstr "Faili ei ole salvestatud"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:598
+#: rkward/windows/rkcommandeditorwindow.cpp:605
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6320,23 +6320,23 @@ msgstr ""
 "eelvaatluse tarvitamisel meeles, eriti siis, kui kasutad seda skriptidega, "
 "mis on pärit ebausaldusväärsest allikast.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:598
+#: rkward/windows/rkcommandeditorwindow.cpp:605
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Eelvaatluse võimalikud kõrvalmõjud"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:656
+#: rkward/windows/rkcommandeditorwindow.cpp:663
 #, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:657
+#: rkward/windows/rkcommandeditorwindow.cpp:664
 #, kde-format
 msgid "Rendering the preview failed"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:658
+#: rkward/windows/rkcommandeditorwindow.cpp:665
 #, kde-format
 msgid ""
 "The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
@@ -6353,7 +6353,7 @@ msgstr ""
 "töötava R-i seansid süsteemsele otsinguteele (<a href=\"rkward://settings/"
 "rbackend\">Seadistused->RKWardi seadistamine-> R-i taustaprogramm</a>."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:661
+#: rkward/windows/rkcommandeditorwindow.cpp:668
 #, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
@@ -6361,7 +6361,7 @@ msgid ""
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:662
+#: rkward/windows/rkcommandeditorwindow.cpp:669
 #, kde-format
 msgid ""
 "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
@@ -6370,19 +6370,19 @@ msgid ""
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:672
+#: rkward/windows/rkcommandeditorwindow.cpp:679
 #, fuzzy, kde-format
 #| msgid "R Markdown"
 msgid "R Markdown (HTML)"
 msgstr "R-i Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:672
-#: rkward/windows/rkcommandeditorwindow.cpp:680
+#: rkward/windows/rkcommandeditorwindow.cpp:679
+#: rkward/windows/rkcommandeditorwindow.cpp:687
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "R-i Markdowni renderdatud eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:673
+#: rkward/windows/rkcommandeditorwindow.cpp:680
 #, fuzzy, kde-format
 #| msgid ""
 #| "Preview the script as rendered from RMarkdown format (appropriate for ."
@@ -6392,13 +6392,13 @@ msgstr ""
 "Skripti eelvaatlus renderdatuna RMarkdowni vormingust (sobilik .Rmd-"
 "failidele)."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:680
+#: rkward/windows/rkcommandeditorwindow.cpp:687
 #, fuzzy, kde-format
 #| msgid "R Markdown"
 msgid "R Markdown (auto)"
 msgstr "R-i Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:681
+#: rkward/windows/rkcommandeditorwindow.cpp:688
 #, fuzzy, kde-format
 #| msgid ""
 #| "Preview the script as rendered from RMarkdown format (appropriate for ."
@@ -6410,17 +6410,17 @@ msgstr ""
 "Skripti eelvaatlus renderdatuna RMarkdowni vormingust (sobilik .Rmd-"
 "failidele)."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:688
+#: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
 msgid "RKWard Output"
 msgstr "RKWardi väljund"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:688
+#: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Genereeritud RKWardi väljundi eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:689
+#: rkward/windows/rkcommandeditorwindow.cpp:696
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6429,27 +6429,27 @@ msgstr ""
 "Kogu RKWardi väljundiakna väljundi eelvaatlus. Kui väljakutses pole käsku "
 "<i>rk.print()</i> ega teisi RKWardi väljundikäske, on eelvaatlus tühi."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:701
+#: rkward/windows/rkcommandeditorwindow.cpp:708
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Interaktiivses R-i konsoolis töötava skripti eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:702
+#: rkward/windows/rkcommandeditorwindow.cpp:709
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "Skripti eelvaatlus, nagu see töötas interaktiivses R-i konsoolis"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:728
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Plot"
 msgstr "Diagramm"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:728
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Genereeritud diagrammi eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:729
+#: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6459,23 +6459,23 @@ msgstr ""
 "Skripti töötamisel loodud ekraanigraafika eelvaatlus. Kui väljakutses polnud "
 "käsku <i>plot()</i> või teisi graafikakäske, on eelvaatlus tühi."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:860
+#: rkward/windows/rkcommandeditorwindow.cpp:867
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "Skriptifaili \"%1\" automaatsel salvestamisel tekkis tõrge:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:934
+#: rkward/windows/rkcommandeditorwindow.cpp:941
 #, kde-format
 msgid "Unnamed"
 msgstr "Nimeta"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1079
+#: rkward/windows/rkcommandeditorwindow.cpp:1086
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktiivne)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1098
+#: rkward/windows/rkcommandeditorwindow.cpp:1105
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (kasutamata)"
