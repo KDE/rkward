@@ -63,6 +63,9 @@ auto loadlib(const char* name) {
 auto loadGlib(unsigned int *version) {
 	*version = 0;
 	auto glib = dlopen("libglib-2.0.so", RTLD_LAZY | RTLD_LOCAL);
+	if (!glib) {
+		glib = dlopen("libglib-2.0.so.0", RTLD_LAZY | RTLD_LOCAL); // some systems appear to lack the link
+	}
 	if (glib) {
 		dlerror();
 		auto glib_verp = static_cast<unsigned int *>(resolve_symb(glib, "glib_minor_version")); // Major version is always "2"
