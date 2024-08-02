@@ -37,6 +37,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkmessagecatalog.h"
 #include "../misc/rkoutputdirectory.h"
+#include "../misc/rkprogresscontrol.h"
 #include "rksessionvars.h"
 #include "../windows/rkwindowcatcher.h"
 
@@ -800,6 +801,12 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		RKDebugHandler::instance ()->endDebug();
 	} else if (call == "switchLanguage") {
 		RKMessageCatalog::switchLanguage(arglist.value(0));
+	} else if (call == "with.progress") {
+		auto dialog = new RKProgressControl(this, arglist.value(0), QString(), RKProgressControl::CancellableProgress | RKProgressControl::OutputShownByDefault);
+		auto command = new RCommand("rkward:::.rk.with.progress.eval()", RCommand::App);
+		dialog->addRCommand(command, true);
+		issueCommand(command, in_chain);
+		dialog->doNonModal(true);
 	} else {
 		return GenericRRequestResult::makeError(i18n("Error: unrecognized request '%1'", call));
 	}

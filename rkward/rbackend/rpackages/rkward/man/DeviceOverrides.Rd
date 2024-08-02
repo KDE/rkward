@@ -131,7 +131,7 @@ quartz(
     \code{"nbcairo"} or \code{"dbcairo"}.  Only the first will be
     available if the system was compiled without support for
     cairographics.  The default is \code{"cairo"} where \R was built
-    using \code{pangocairo} (often not the case on macOS), otherwise
+    using \code{pangocairo} (so not usually on macOS), otherwise
     \code{"Xlib"}.}
 
 \item{antialias}{for cairo types, the type of anti-aliasing (if any)
