@@ -1,4 +1,5 @@
 --- Version 0.8.1 - UNRELEASED
+- Fixed: Potential library conflicts on systems shipping a more recent version of libglib2 than included in the AppImage
 - Fixed: Implement capbilities report for RK() device (may fix graphics limitation, but also potential crashes with R >= 4.2.0)
 - Fixed: Adjustments to changes in R devel (for compatibility with the future R 4.5.x)
 - Fixed: Potential crash on "spontaneous" R output (originating from event handlers such as tcl)
