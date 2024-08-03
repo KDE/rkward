@@ -383,8 +383,13 @@ static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* de
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER (RKDMetricInfo, dev);
 		QChar unichar;
-		if (c < 0) unichar = QChar (-c);
-		else {		// correct?! Do we get utf8, here?
+		if (c < 0) {
+			char32_t inbuf[2];
+			inbuf[0] = -c;
+			inbuf[1] = 0;
+			QString dummy = QString::fromUcs4(inbuf);
+			if (!dummy.isEmpty ()) unichar = dummy.at (0);
+		} else {		// correct?! Do we get utf8, here?
 			int inbuf[2];
 			inbuf[0] = c;
 			inbuf[1] = 0;
