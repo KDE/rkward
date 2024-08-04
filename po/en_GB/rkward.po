@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-01 00:38+0000\n"
-"PO-Revision-Date: 2024-07-05 13:58+0100\n"
+"PO-Revision-Date: 2024-08-03 12:50+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -461,10 +461,9 @@ msgid "&Edit"
 msgstr "&Edit"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Duplicate columns detected"
+msgstr "Duplicate column name '%1'"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -535,7 +534,7 @@ msgstr "Double click on these fields to edit factor levels."
 #: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "Object '%1' is not a vector"
 
 #: rkward/dataeditor/twintable.cpp:107
 #, kde-format
@@ -614,24 +613,26 @@ msgid ""
 "frame</tt>. Editing this table may not be safe, and has been disabled. Some "
 "columns may not be shown."
 msgstr ""
+"The object's internal structure does not conform to a regular <tt>data."
+"frame</tt>. Editing this table may not be safe, and has been disabled. Some "
+"columns may not be shown."
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
-msgstr "Show Details"
+msgstr "Show details"
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
+"You may want to create an editable subset using Data->Subset data.frame."
 
 #: rkward/dataeditor/twintable.cpp:227
-#, fuzzy, kde-format
-#| msgid "None selected"
+#, kde-format
 msgid "Problem detected"
-msgstr "None selected"
+msgstr "Problem detected"
 
 #: rkward/dataeditor/twintable.cpp:239
 #, kde-format
@@ -2024,10 +2025,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Frontend to the R statistics language"
 
 #: rkward/main.cpp:176
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "(c) 2002 - 2022"
+msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:177
 #, kde-format
@@ -6350,17 +6350,15 @@ msgid "Potential side-effects of previews"
 msgstr "Potential side-effects of previews"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:663
-#, fuzzy, kde-format
-#| msgid "External software"
+#, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr "External software"
+msgstr "Missing software"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:664
-#, fuzzy, kde-format
-#| msgid "The command to generate the preview has failed."
+#, kde-format
 msgid "Rendering the preview failed"
-msgstr "The command to generate the preview has failed."
+msgstr "Rendering the preview failed"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:665
 #, kde-format
@@ -6380,18 +6378,15 @@ msgstr ""
 "\">Settings->Configure RKward->R-backend</a>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:668
-#, fuzzy, kde-format
-#| msgid ""
-#| "pdflatex is required for rendering PDF previews. The easiest way to "
-#| "install it is by running <tt>install.packages(\"tinytex\"); "
-#| "install_tinytex()</tt>```"
+#, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"pdflatex is required for rendering PDF previews. The easiest way to install "
-"it is by running <tt>install.packages(\"tinytex\"); install_tinytex()</tt>```"
+"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
+"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
+"library(\"tinytex\"); install_tinytex()</tt>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:669
 #, kde-format
@@ -6401,6 +6396,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
+"output format is neither HTML, nor PDF. You can try opening it in an "
+"external application, using the link, below, or you can change the preview "
+"mode to 'R Markdown (HTML)'.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:679
 #, kde-format
@@ -6419,18 +6418,18 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:687
-#, fuzzy, kde-format
-#| msgid "R Markdown (PDF)"
+#, kde-format
 msgid "R Markdown (auto)"
-msgstr "R Markdown (PDF)"
+msgstr "R Markdown (auto)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:688
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+#, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 "specified in the document header."
-msgstr "Preview the script as rendered from RMarkdown format (.Rmd) to PDF."
+msgstr ""
+"Preview the script as rendered from RMarkdown format (.Rmd) to the format "
+"specified in the document header."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
