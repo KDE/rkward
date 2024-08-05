@@ -209,6 +209,30 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <project_group>KDE</project_group>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="0.8.0" date="2024-07-28">
+      <artifacts>
+        <artifact type="binary" platform="x86_64-linux-any">
+          <location>https://download.kde.org/stable/rkward/0.8.0/rkward-0.8.0-x86_64.AppImage</location>
+          <checksum type="sha256">a481856b495dbc692e0947c51f4d161c9f2b8620c382432a7674dfd52d0dac6a</checksum>
+          <size type="download">390853824</size>
+        </artifact>
+        <artifact type="binary" platform="x86_64-windows-msvc">
+          <location>https://download.kde.org/stable/rkward/0.8.0/rkward-0.8.0-x86_64.exe</location>
+          <checksum type="sha256">4516078901cb26f9b8807c9235ad823355514fb856b37e5dd02687eb581b7b58</checksum>
+          <size type="download">302091656</size>
+        </artifact>
+        <artifact type="binary" platform="x86_64-macos-any">
+          <location>https://download.kde.org/stable/rkward/0.8.0/rkward-0.8.0-x86_64.dmg</location>
+          <checksum type="sha256">fa0163967356beb2f7ac3670fc0df21f576081e1843a5e2667c157f98407cfa2</checksum>
+          <size type="download">339212054</size>
+        </artifact>
+        <artifact type="source">
+          <location>https://download.kde.org/stable/rkward/0.8.0/rkward-0.8.0.tar.gz</location>
+          <checksum type="sha256">179763b08cb7a15c594e4798d26ff212f43ff62befc27b8ba840df00b8debbd2</checksum>
+          <size type="download">8614382</size>
+        </artifact>
+      </artifacts>
+    </release>
     <release version="0.7.4" date="2022-05-30">
       <artifacts>
         <artifact type="binary" platform="x86_64-windows-msvc">
