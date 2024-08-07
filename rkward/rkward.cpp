@@ -58,6 +58,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "misc/rkcommonfunctions.h"
 #include "misc/rkxmlguisyncer.h"
 #include "misc/rkdialogbuttonbox.h"
+#include "misc/rkrapimenu.h"
 #include "misc/rkstyle.h"
 #include "dialogs/rkloadlibsdialog.h"
 #include "dialogs/rkimportdialog.h"
@@ -155,6 +156,7 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	setXMLFile ("rkwardui.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	insertChildClient (katePluginIntegration ()->mainWindow ());
+	insertChildClient(rapimenu = new RKRApiMenu());
 	createShellGUI (true);
 	// This is pretty convoluted, but while loading plugins the katePluginIntegration-client may gain new actions and thus needs
 	// to be reloaded. We cannot - currently, KF5.65 - delay loading the UI defintion(s), because plugins rely on it having a GUI factory.
@@ -194,6 +196,8 @@ RKWardMainWindow::~RKWardMainWindow() {
 	factory ()->removeClient (RKComponentMap::getMap ());
 	delete RKComponentMap::getMap ();
 	delete RKStyle::_view_scheme;
+	factory()->removeClient(rapimenu);
+	delete rapimenu;
 }
 
 KatePluginIntegrationApp* RKWardMainWindow::katePluginIntegration () {

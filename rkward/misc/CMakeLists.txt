@@ -35,6 +35,7 @@ SET(misc_STAT_SRCS
    rkstyle.cpp
    rkparsedversion.cpp
    rkradiogroup.cpp
+   rkrapimenu.cpp
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})

@@ -20,6 +20,7 @@ class RKTopLevelWindowGUI;
 class KSqueezedTextLabel;
 class QAction;
 class KatePluginIntegrationApp;
+class RKRApiMenu;
 
 /**
 The main class of rkward. This is where all strings are tied together, controls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
@@ -124,6 +125,7 @@ public Q_SLOTS:
 /** Trigger restart of backend. Does not wait for restart to actually complete.
  *  Return true, if restart was triggered, false if restart has been cancelled */
 	bool triggerBackendRestart(bool promptsave=true);
+	RKRApiMenu* rApiMenu() { return rapimenu; };
 private Q_SLOTS:
 	void partChanged (KParts::Part *new_part);
 private:
@@ -189,6 +191,7 @@ private:
 
 	KatePluginIntegrationApp *katepluginintegration;
 	KXMLGUIClient *active_ui_buddy;
+	RKRApiMenu *rapimenu;
 friend class RKWardCoreTest;
 	bool testmode_suppress_dialogs;
 public:

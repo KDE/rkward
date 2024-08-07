@@ -37,6 +37,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkmessagecatalog.h"
 #include "../misc/rkoutputdirectory.h"
+#include "../misc/rkrapimenu.h"
 #include "rksessionvars.h"
 #include "../windows/rkwindowcatcher.h"
 
@@ -47,8 +48,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 
 #include <QDir>
-#include <QDomElement>
-#include <QDomDocument>
 #include <stdlib.h>
 #include <QFileDialog>
 #include <QApplication>
@@ -801,31 +800,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 	} else if (call == "switchLanguage") {
 		RKMessageCatalog::switchLanguage(arglist.value(0));
 	} else if (call == "menuupdate") {
-		QDomDocument doc;
-		std::function<void(QDomDocument &, QDomElement, const QVariantList &)> makeXml;
-		makeXml = [&makeXml](QDomDocument &doc, QDomElement e, const QVariantList &l) {
-			const auto id = l.value(0).toString();
-			const auto children = l.value(1).toList();
-			const auto label = l.value(2).toString();
-			const auto callable = l.value(3).toList().value(0).toBool();
-			auto s = doc.createElement(callable ? "Action" : "Menu");
-			s.setAttribute("name", id);
-			auto t = doc.createElement("Text");
-			t.appendChild(doc.createTextNode(label));
-			s.appendChild(t);
-			for (auto it = children.constBegin(); it != children.constEnd(); ++it) {
-				RK_ASSERT(!callable);
-				makeXml(doc, s, (*it).toList());
-			}
-			e.appendChild(s);
-		};
-		auto r = doc.createElement("kpartgui");
-		r.setAttribute("name", "rapi_menu");  // TODO: version attribute
-		auto mb = doc.createElement("MenuBar");
-		makeXml(doc, mb, args.toList());
-		r.appendChild(mb);
-		doc.appendChild(r);
-		qDebug("%s", qPrintable(doc.toString()));
+		RKWardMainWindow::getMain()->rApiMenu()->updateFromR(args.toList());
 	} else {
 		return GenericRRequestResult::makeError(i18n("Error: unrecognized request '%1'", call));
 	}

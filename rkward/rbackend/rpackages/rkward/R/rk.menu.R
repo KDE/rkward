@@ -29,7 +29,8 @@
 #'
 #' @param func Function to call for leaf item
 #'
-#' @returns \code{rk.menu()} and \code{$item()} return a handle. \code{call()} passes on the return value of the associated function. The other methods return \code{NULL}
+#' @returns \code{rk.menu()} and \code{$item()} return a handle. \code{$define() returns the handle it was given (to allow command chaining)}.
+#'          \code{call()} passes on the return value of the associated function. The other methods return \code{NULL}
 #'
 #' @import methods
 #' @export rk.menu
@@ -59,7 +60,7 @@ rk.menu <- setRefClass("rk.menu",
 			x$fun <- func
 		}
 		.rk.call.async("menuupdate", rk.menu()$.list())
-		invisible(NULL)
+		invisible(rk.menu(path=path))
 	},
 	call=function() {
 		"Call the function associated with this menu item"
@@ -69,7 +70,8 @@ rk.menu <- setRefClass("rk.menu",
 	remove=function() {
 		"Remove any registered menu entry at this path from the menu"
 		parent <- rk.menu(path=path[1:length(path)-1])$.retrieve(FALSE)
-		rm(list=path[length(path)], envir=parent$children)
+		parent$children[[path[length(path)]]] <- NULL
+		.rk.call.async("menuupdate", rk.menu()$.list())
 		invisible(NULL)
 	},
 	enable=function(enable=TRUE, show=TRUE) {
