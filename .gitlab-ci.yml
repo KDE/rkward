@@ -14,3 +14,32 @@ include:
       - /gitlab-templates/craft-windows-x86-64-qt6.yml
       - /gitlab-templates/craft-macos-arm64-qt6.yml
       - /gitlab-templates/craft-macos-x86-64-qt6.yml
+
+# setup mostly copied from okular, removing some extras
+build_clazy:
+  stage: build
+  image: invent-registry.kde.org/sysadmin/ci-images/suse-qt67:latest
+  tags:
+    - Linux
+  interruptible: true
+  before_script:
+    - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/sysadmin/repo-metadata.git ci-utilities/repo-metadata/ --depth=1
+  only:
+    - merge_requests
+  variables:
+    KDECI_CC_CACHE: /mnt/caches/suse-qt6.7/
+    KDECI_CACHE_PATH: /mnt/artifacts/suse-qq6.7/
+    KDECI_GITLAB_SERVER: https://invent.kde.org/
+    KDECI_PACKAGE_PROJECT: teams/ci-artifacts/suse-qt6.7
+    #CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch
+    CXXFLAGS: -Werror -Wno-deprecated-declarations
+    CC: clang
+    CXX: clazy
+  script:
+    - git config --global --add safe.directory $CI_PROJECT_DIR
+    - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt6/Shared --only-setup-environment
+    - mkdir -p /tmp/rkward_build
+    - cd /tmp/rkward_build
+    - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install $CI_PROJECT_DIR
+    - CLAZY_IGNORE_DIRS="3rdparty" ninja -k 0
