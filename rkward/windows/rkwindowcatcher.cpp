@@ -307,7 +307,7 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	RK_ASSERT (!device_windows.contains (device_number));
 	device_windows.insert (device_number, this);
 
-	error_dialog = new RKProgressControl(nullptr, i18n("An error occurred"), i18n("An error occurred"), RKProgressControl::DetailedError);
+	error_dialog = new RKProgressControl(nullptr, i18n("An error occurred"), i18n("An error occurred"), RKProgressControl::ErrorsOnly);
 	setPart (new RKCaughtX11WindowPart (this));
 	setMetaInfo(i18n("Graphics Device Window"), QUrl("rkward://page/rkward_plot_history"), RKSettingsModuleGraphics::page_id);
 	initializeActivationSignals ();

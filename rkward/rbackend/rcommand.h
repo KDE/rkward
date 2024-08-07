@@ -44,6 +44,8 @@ friend class RCommandStackModel;
 /** this struct is used to store the R output to an RCommand. The RCommand basically keeps a list of ROutputString (s). The difference to a normal
 QString is, that additionally we store information on whether the output was "normal", "warning", or an "error". */
 struct ROutput {
+	ROutput(const ROutput &other) : type(other.type), output(other.output) {};
+	ROutput() : type(NoOutput) {};
 	enum ROutputType {
 		NoOutput,		/**< No output. Rarely used. */
 		Output,			/**< normal output */

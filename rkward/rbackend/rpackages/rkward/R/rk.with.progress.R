@@ -52,5 +52,8 @@ rk.with.progress <- function(expr, text="") {
 		expr=eval(.rk.variables$with.progress.expr, .rk.variables$with.progress.env),
 		error=function(e) { .rk.variables$with.progress.err <- e }
 	)
+	# NOTE we need to signal any error both here (to inform the frontend), and in rk.with.progress() (to relay the failure)
+	#      it is a known (but thought-to-be-acceptable) problem that this results in duplicate printing of the error message
+	if (!is.null(.rk.variables$with.progress.err)) stop(.rk.variables$with.progress.err)
 	invisible(NULL)
 }

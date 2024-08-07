@@ -1,6 +1,6 @@
 /*
 rkprogresscontol - This file is part of the RKWard project. Created: Sun Sep 10 2006
-SPDX-FileCopyrightText: 2006-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2006-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -41,22 +41,18 @@ public:
 
 /** These flags control the mode of operation. Generally you will use on of the predefined sets (StandardCancel, StandardError, DetailedError, StandardProgress, or CancellableProgress) */
 	enum RKProgressControlFlags {
-		AllowCancel=1,			 			/**< Show a cancel button. When the cancel button is pressed or the dialog is closed, the signal cancelled () is emitted, and (if invoked that way) doModal returns QDialog::rejected */
-		AutoCancelCommands=1024, 	/**< if the user cancels the dialog, automatically cancel all commands previously added via addRCommand () (and not yet finished. Only meaningful if AllowCancel is set as well */
-		IncludeErrorOutput=2,			/**< Include erros output in the output shown */
-		IncludeRegularOutput=4,		/**< Include regular (no error) output in the output shown */
-		RaiseOnError=16,					/**< dialog is shown/raised, when there are errors. Only meaningful, if IncludeErrorOutput is set as well */
-		RaiseOnRegularOutput=32,	/**< dialog is also shown/raised, when there is new regular output. Only meaningful, if IncludeRegularOutput is set as well  */
-		OutputShownByDefault=64,	/**< the textfield with the output is shown by default, not only when requested by the user. Requires at least one of IncludeErrorOutput or IncludeRegularOutput */
-		OutputSwitchable=128,		/**< the textfield with the output can be shown/hidden by the user */
-		ShowAtOnce=256,				/**< dialog is shown at once, instead of only when there is an error/output */
-		PreventClose=512,				/**< do not accept close events */
-		StandardError=IncludeErrorOutput | RaiseOnError | OutputShownByDefault,
-		DetailedError=StandardError | IncludeRegularOutput,
-		StandardProgress=DetailedError | OutputSwitchable | RaiseOnRegularOutput,
-		CancellableProgress=(StandardProgress | AllowCancel | AutoCancelCommands | PreventClose | ShowAtOnce) - (RaiseOnRegularOutput | OutputShownByDefault),
-		CancellableNoProgress=CancellableProgress - OutputSwitchable,
-		SimpleSplash=(StandardProgress | PreventClose | ShowAtOnce) - (RaiseOnRegularOutput | OutputShownByDefault | OutputSwitchable)
+		AllowCancel=1,             /**< Show a cancel button. When the cancel button is pressed or the dialog is closed, the signal cancelled () is emitted, and (if invoked that way) doModal returns QDialog::rejected */
+		AutoCancelCommands=1024,   /**< if the user cancels the dialog, automatically cancel all commands previously added via addRCommand () (and not yet finished. Only meaningful if AllowCancel is set as well */
+		ShowOutput=2,              /**< Shown comand output */
+		RaiseOnOutput=4,           /**< dialog is shown/raised, when there is new output (needs ShowOutput) */
+		OutputShownByDefault=32,   /**< the textfield with the output is shown by default, not only when requested by the user. Requires ShowOutput */
+		ShowAtOnce=256,            /**< dialog is shown at once, instead of only when there is an error/output */
+		PreventClose=512,          /**< do not accept close events */
+		StandardProgress=ShowOutput | OutputShownByDefault | RaiseOnOutput | ShowAtOnce,
+		ErrorsOnly=StandardProgress - ShowAtOnce,
+		CancellableProgress=(StandardProgress | AllowCancel | AutoCancelCommands | PreventClose | ShowAtOnce) - (OutputShownByDefault),
+		CancellableNoProgress=CancellableProgress - ShowOutput,
+		SimpleSplash=(StandardProgress | PreventClose | ShowAtOnce) - (RaiseOnOutput | OutputShownByDefault)
 	};
 
 /** show the dialog modal. This will always show the dialog right away
@@ -78,9 +74,6 @@ public Q_SLOTS:
 	void dialogDestroyed ();
 /** the corresponding action has finished. If there have been no errors, the dialog is also closed. Otherwise, the text of the "cancel" button is changed to "finished". */
 	void done ();
-	void newError (const QString &error);
-/** usually you will call newError instead. However, if in case of an error, you also want to show the regular output, use this function to add output. The output is added to the internal error_log, but the dialog is not shown until you call newError (). */
-	void newOutput (const QString &output);
 private:
 	void createDialog ();
 
