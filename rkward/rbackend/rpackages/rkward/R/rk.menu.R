@@ -18,7 +18,8 @@
 #'              associated R function.
 #'
 #'              Adding/removing menu items is a fairly computation heavy exercise, internally, and is handled asynchronously, in the frontend. Should you need
-#'              to remove and re-add certainly elements, frequently, hiding them will be more efficient (see \code{$enable()}).
+#'              to remove and re-add certainly elements, frequently, hiding them will be more efficient (see \code{$enable()}). Note: A disabled menu item
+#'              can still be called programmatically, using \code{$call()}
 #'
 #'              This interface is still somewhat experimental, and currently kept to a minimal set of functions, deliberately. Please don't hesistate to give
 #'              us feedback on what you would like to see added. Only items defined using this mechanism can be manipulated / removed.

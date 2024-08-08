@@ -16,8 +16,13 @@ public:
 	RKRApiMenu();
 	~RKRApiMenu() override;
 	void updateFromR(const QVariantList &rep);
+	void enableAction(const QStringList &path, bool enable, bool show);
+	/** mostly for testing: Lookup action by path */
+	QAction* actionByPath(const QStringList &path);
 private:
 	void makeXML(QDomDocument &doc, QDomElement e, const QVariantList &l, const QString &path, QStringList *actionlist);
+	QVariantList rep;
+	void commit();
 };
 
 #endif

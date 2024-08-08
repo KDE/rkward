@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDomElement>
 #include <QDomDocument>
 #include <QAction>
+#include <QTimer>
 
 #include <KActionCollection>
 #include <KXMLGUIFactory>
@@ -68,7 +69,8 @@ void RKRApiMenu::makeXML(QDomDocument &doc, QDomElement e, const QVariantList &l
 	}
 }
 
-void RKRApiMenu::updateFromR(const QVariantList &rep) {
+void RKRApiMenu::commit() {
+	if (rep.isEmpty()) return;
 	RK_TRACE(MISC);
 
 	auto f = RKWardMainWindow::getMain()->factory();
@@ -95,4 +97,27 @@ void RKRApiMenu::updateFromR(const QVariantList &rep) {
 	}
 
 	f->addClient(this);
+	rep = QVariantList();
+}
+
+void RKRApiMenu::updateFromR(const QVariantList &_rep) {
+	RK_TRACE(MISC);
+
+	// Actual update is done debounced
+	if (rep.isEmpty()) QTimer::singleShot(100, factory(), [this](){ commit(); });
+	rep = _rep;
+}
+
+QAction *RKRApiMenu::actionByPath(const QStringList &path) {
+	commit(); // force commit before lookup
+	return action(path.join(','));
+}
+
+void RKRApiMenu::enableAction(const QStringList &path, bool enable, bool show) {
+	RK_TRACE(MISC);
+	auto a = actionByPath(path);
+	if (a) {
+		a->setEnabled(enable);
+		a->setVisible(show);
+	}
 }

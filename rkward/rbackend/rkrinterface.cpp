@@ -801,6 +801,11 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		RKMessageCatalog::switchLanguage(arglist.value(0));
 	} else if (call == "menuupdate") {
 		RKWardMainWindow::getMain()->rApiMenu()->updateFromR(args.toList());
+	} else if (call == "menuenable") {
+		auto path = args.toList().value(0).toStringList();
+		auto enable = args.toList().value(1).toList().value(0).toBool(); // NOTE: bool value is a vector of ints, in R, therefore the toList(), first
+		auto show = args.toList().value(2).toList().value(0).toBool();
+		RKWardMainWindow::getMain()->rApiMenu()->enableAction(path, enable, show);
 	} else {
 		return GenericRRequestResult::makeError(i18n("Error: unrecognized request '%1'", call));
 	}
