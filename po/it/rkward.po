@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-01 00:38+0000\n"
+"POT-Creation-Date: 2024-08-09 00:37+0000\n"
 "PO-Revision-Date: 2024-07-16 03:22+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -166,7 +166,7 @@ msgstr ""
 "I tuoi dati <b>non</b> sono stati salvati."
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:361
+#: rkward/misc/rkprogresscontrol.cpp:328
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2814,79 +2814,76 @@ msgstr "L'uscita identificata da «%1» non è caricata in questa sessione."
 msgid "Unhandled output command '%1'"
 msgstr "Comando di uscita non gestito «%1»"
 
-#: rkward/misc/rkprogresscontrol.cpp:245
-#, kde-format
+#: rkward/misc/rkprogresscontrol.cpp:216
+#, fuzzy, kde-format
+#| msgid ""
+#| "There has been an error while trying to load / unload packages. See "
+#| "transcript below for details"
 msgid ""
-"<b>There have been errors and / or warnings. See below for a transcript</b>"
-msgstr "<b>Ci sono stati errori o avvisi. Per una trascrizione vedi sotto</b>"
+"<b>There has been an error while running the command. See below for output "
+"details</b>"
+msgstr ""
+"C'è stato un errore nel tentativo di caricare o di scaricare i pacchetti. "
+"Per i dettagli vedi la trascrizione qui sotto"
 
-#: rkward/misc/rkprogresscontrol.cpp:258
+#: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "Output"
 
-#: rkward/misc/rkprogresscontrol.cpp:259
+#: rkward/misc/rkprogresscontrol.cpp:241
+#: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
-msgid "Output:"
-msgstr "Output:"
+msgid "Show Output"
+msgstr "Mostra l'uscita"
 
-#: rkward/misc/rkprogresscontrol.cpp:261
-#, kde-format
-msgid "Errors / Warnings"
-msgstr "Errori o avvisi"
-
-#: rkward/misc/rkprogresscontrol.cpp:262
-#, kde-format
-msgid "Errors / Warnings:"
-msgstr "Errori o avvisi:"
-
-#: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:417
+#: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
 msgstr "Annulla"
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>Si è verificato un errore</b> (vedi i dettagli di seguito)"
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>Completato</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:488
+#: rkward/misc/rkprogresscontrol.cpp:455
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Chiudi"
 
-#: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:406
+#: rkward/misc/rkprogresscontrol.cpp:492 rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Keep waiting"
 msgstr "Continua ad aspettare"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 "La chiusura di questa finestra annullerà l'operazione in corso. Sei sicuro?"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel operation"
 msgstr "Annulla l'operazione"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel && Close"
 msgstr "Annulla e chiudi"
 
-#: rkward/misc/rkprogresscontrol.cpp:537
+#: rkward/misc/rkprogresscontrol.cpp:504
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "Un'operazione è ancora in corso, attendi."
@@ -3972,12 +3969,12 @@ msgstr ""
 msgid "Ok"
 msgstr "Ok"
 
-#: rkward/rbackend/rkrinterface.cpp:89
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid "R Startup"
 msgstr "Avvio di R"
 
-#: rkward/rbackend/rkrinterface.cpp:91
+#: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -3987,7 +3984,7 @@ msgstr ""
 "RKWard. Probabilmente RKWard non funzionerà correttamente. Controlla la tua "
 "installazione.</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:93
+#: rkward/rbackend/rkrinterface.cpp:94
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
@@ -3996,12 +3993,12 @@ msgstr ""
 "<p>C'è stato un problema nell'avvio del motore di R. Si sono verificati i "
 "seguenti errori:</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:95
+#: rkward/rbackend/rkrinterface.cpp:96
 #, kde-format
 msgid "Error starting R"
 msgstr "Errore durante l'avvio di R"
 
-#: rkward/rbackend/rkrinterface.cpp:649
+#: rkward/rbackend/rkrinterface.cpp:650
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -4014,17 +4011,17 @@ msgstr ""
 "strumento di gestione dei pacchetti, con cui potrai localizzare ed "
 "installare il pacchetto richiesto."
 
-#: rkward/rbackend/rkrinterface.cpp:649
+#: rkward/rbackend/rkrinterface.cpp:650
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Richiede il pacchetto «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:681
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "L'uscita è stata annullata"
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:684
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -4048,41 +4045,41 @@ msgstr ""
 "versioni future di RKWard). In questo caso scegli ora «Annulla» e chiudi le "
 "finestre dei dati, salva e riprova."
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:684
 #, kde-format
 msgid "Locale change"
 msgstr "Cambiamento di localizzazione"
 
-#: rkward/rbackend/rkrinterface.cpp:684
+#: rkward/rbackend/rkrinterface.cpp:685
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "La modifica della localizzazione è stata annullata dall'utente"
 
-#: rkward/rbackend/rkrinterface.cpp:785
+#: rkward/rbackend/rkrinterface.cpp:786
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 "Tentativo di avviare la registrazione, mentre si stanno già registrando i "
 "comandi. Ignorato."
 
-#: rkward/rbackend/rkrinterface.cpp:793
+#: rkward/rbackend/rkrinterface.cpp:794
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr ""
 "Impossibile aprire il file per la scrittura. Nessuna registrazione dei "
 "comandi"
 
-#: rkward/rbackend/rkrinterface.cpp:804
+#: rkward/rbackend/rkrinterface.cpp:811
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Errore: richiesta non riconosciuta «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:885
+#: rkward/rbackend/rkrinterface.cpp:892
 #, kde-format
 msgid "R backend requests information"
 msgstr "Il motore di R richiede delle informazioni"
 
-#: rkward/rbackend/rkrinterface.cpp:907
+#: rkward/rbackend/rkrinterface.cpp:914
 #, kde-format
 msgid ""
 "\n"
@@ -4100,7 +4097,7 @@ msgstr ""
 "aperto, l'output, oppure copiare i dati dagli editor aperti. Infine chiudi "
 "RKWard. Ci dispiace!"
 
-#: rkward/rbackend/rkrinterface.cpp:908
+#: rkward/rbackend/rkrinterface.cpp:915
 #, kde-format
 msgid "R engine has died"
 msgstr "Il motore di R è terminato inaspettatamente"
@@ -7159,11 +7156,6 @@ msgstr "Finestra successiva"
 msgid "Activate Document view"
 msgstr "Attiva la vista del documento"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:87
-#, kde-format
-msgid "Show Output"
-msgstr "Mostra l'uscita"
-
 #: rkward/windows/rktoplevelwindowgui.cpp:130
 #, kde-format
 msgid "Show/Hide %1"
@@ -7703,6 +7695,21 @@ msgstr "Inserisci il nuovo nome"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Visualizza nell'editor (sola lettura)"
+
+#~ msgid ""
+#~ "<b>There have been errors and / or warnings. See below for a transcript</"
+#~ "b>"
+#~ msgstr ""
+#~ "<b>Ci sono stati errori o avvisi. Per una trascrizione vedi sotto</b>"
+
+#~ msgid "Output:"
+#~ msgstr "Output:"
+
+#~ msgid "Errors / Warnings"
+#~ msgstr "Errori o avvisi"
+
+#~ msgid "Errors / Warnings:"
+#~ msgstr "Errori o avvisi:"
 
 #~ msgid ""
 #~ "The editor '%1' contains the following duplicate columns. Editing this "

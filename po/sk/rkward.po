@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-01 00:38+0000\n"
+"POT-Creation-Date: 2024-08-09 00:37+0000\n"
 "PO-Revision-Date: 2023-12-17 14:57+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -139,7 +139,7 @@ msgid ""
 msgstr ""
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:361
+#: rkward/misc/rkprogresscontrol.cpp:328
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2511,79 +2511,72 @@ msgstr ""
 msgid "Unhandled output command '%1'"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:245
+#: rkward/misc/rkprogresscontrol.cpp:216
 #, kde-format
 msgid ""
-"<b>There have been errors and / or warnings. See below for a transcript</b>"
+"<b>There has been an error while running the command. See below for output "
+"details</b>"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:258
+#: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "Výstup"
 
-#: rkward/misc/rkprogresscontrol.cpp:259
-#, kde-format
-msgid "Output:"
-msgstr "Výstup:"
+#: rkward/misc/rkprogresscontrol.cpp:241
+#: rkward/windows/rktoplevelwindowgui.cpp:87
+#, fuzzy, kde-format
+#| msgid "Show &Output"
+msgid "Show Output"
+msgstr "Zobraziť výstup"
 
-#: rkward/misc/rkprogresscontrol.cpp:261
-#, kde-format
-msgid "Errors / Warnings"
-msgstr ""
-
-#: rkward/misc/rkprogresscontrol.cpp:262
-#, kde-format
-msgid "Errors / Warnings:"
-msgstr ""
-
-#: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:417
+#: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:452
 #, fuzzy, kde-format
 msgid "<b>Done</b>"
 msgstr "Hotovo"
 
-#: rkward/misc/rkprogresscontrol.cpp:488
+#: rkward/misc/rkprogresscontrol.cpp:455
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Zavrieť"
 
-#: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:406
+#: rkward/misc/rkprogresscontrol.cpp:492 rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Keep waiting"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, fuzzy, kde-format
 msgid "Cancel operation"
 msgstr "Zrušiť operáciu"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, fuzzy, kde-format
 #| msgid "Canceled"
 msgid "Cancel && Close"
 msgstr "Zrušené"
 
-#: rkward/misc/rkprogresscontrol.cpp:537
+#: rkward/misc/rkprogresscontrol.cpp:504
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr ""
@@ -3585,31 +3578,31 @@ msgstr ""
 msgid "Ok"
 msgstr "Ok"
 
-#: rkward/rbackend/rkrinterface.cpp:89
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid "R Startup"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:91
+#: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:93
+#: rkward/rbackend/rkrinterface.cpp:94
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:95
+#: rkward/rbackend/rkrinterface.cpp:96
 #, kde-format
 msgid "Error starting R"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:649
+#: rkward/rbackend/rkrinterface.cpp:650
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3618,17 +3611,17 @@ msgid ""
 "needed package."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:649
+#: rkward/rbackend/rkrinterface.cpp:650
 #, kde-format
 msgid "Require package '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:681
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid "Quitting was canceled"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:684
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3642,38 +3635,38 @@ msgid ""
 "windows, save, and retry."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:684
 #, kde-format
 msgid "Locale change"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:684
+#: rkward/rbackend/rkrinterface.cpp:685
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:785
+#: rkward/rbackend/rkrinterface.cpp:786
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:793
+#: rkward/rbackend/rkrinterface.cpp:794
 #, fuzzy, kde-format
 #| msgid "Could not open file %1 for reading"
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Nepodarilo sa otvoriť súbor %1 na čítanie"
 
-#: rkward/rbackend/rkrinterface.cpp:804
+#: rkward/rbackend/rkrinterface.cpp:811
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:885
+#: rkward/rbackend/rkrinterface.cpp:892
 #, kde-format
 msgid "R backend requests information"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:907
+#: rkward/rbackend/rkrinterface.cpp:914
 #, kde-format
 msgid ""
 "\n"
@@ -3684,7 +3677,7 @@ msgid ""
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:908
+#: rkward/rbackend/rkrinterface.cpp:915
 #, kde-format
 msgid "R engine has died"
 msgstr ""
@@ -6480,12 +6473,6 @@ msgstr "Nasledujúce okno"
 msgid "Activate Document view"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:87
-#, fuzzy, kde-format
-#| msgid "Show &Output"
-msgid "Show Output"
-msgstr "Zobraziť výstup"
-
 #: rkward/windows/rktoplevelwindowgui.cpp:130
 #, kde-format
 msgid "Show/Hide %1"
@@ -6972,6 +6959,9 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
+
+#~ msgid "Output:"
+#~ msgstr "Výstup:"
 
 #, fuzzy
 #~| msgid "Install"
