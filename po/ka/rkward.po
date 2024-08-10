@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-01 00:38+0000\n"
+"POT-Creation-Date: 2024-08-09 00:37+0000\n"
 "PO-Revision-Date: 2024-07-15 05:32+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -157,7 +157,7 @@ msgstr ""
 "შეცდომა სამუშაო სივრცის შენახვისას. თქვენი მონაცემები <b>არ</b> შენახულა."
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:361
+#: rkward/misc/rkprogresscontrol.cpp:328
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2607,82 +2607,77 @@ msgstr "'%1'-ის მიერ იდენტიფიცირებულ�
 msgid "Unhandled output command '%1'"
 msgstr "დაუმუშავებელი გამოტანის ბრძანება '%1'"
 
-#: rkward/misc/rkprogresscontrol.cpp:245
-#, kde-format
+#: rkward/misc/rkprogresscontrol.cpp:216
+#, fuzzy, kde-format
+#| msgid ""
+#| "There has been an error while trying to load / unload packages. See "
+#| "transcript below for details"
 msgid ""
-"<b>There have been errors and / or warnings. See below for a transcript</b>"
+"<b>There has been an error while running the command. See below for output "
+"details</b>"
 msgstr ""
-"<b>აღმოჩენილია შეცდომები ან / და გაფრთხილებები. ტრანსკრიფციისთვის ქვემოთ "
-"ჩახედეთ</b>"
+"შეცდომა პაკეტების ჩატვირთვა / გამოტვირთვისას. დეტალებისთვის იხილეთ "
+"ტრანსკრიპტი ქვემოთ"
 
-#: rkward/misc/rkprogresscontrol.cpp:258
+#: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "გამოტანა"
 
-#: rkward/misc/rkprogresscontrol.cpp:259
+#: rkward/misc/rkprogresscontrol.cpp:241
+#: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
-msgid "Output:"
-msgstr "გამოტანა:"
+msgid "Show Output"
+msgstr "გამოტანის ჩვენება"
 
-#: rkward/misc/rkprogresscontrol.cpp:261
-#, kde-format
-msgid "Errors / Warnings"
-msgstr "შეცდომები / გაფრთხილებები"
-
-#: rkward/misc/rkprogresscontrol.cpp:262
-#, kde-format
-msgid "Errors / Warnings:"
-msgstr "შეცდომები / გაფრთხილებები:"
-
-#: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:417
+#: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
 msgstr "გაუქმება"
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>აღმოჩენილია შეცდომა</b> (დეტალები იხილეთ ქვემოთ)"
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>მზადაა</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:488
+#: rkward/misc/rkprogresscontrol.cpp:455
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "დახურვა"
 
-#: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:406
+#: rkward/misc/rkprogresscontrol.cpp:492 rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Keep waiting"
 msgstr "ლოდინის გაგრძელება"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 "ამ ფანჯრის დახურვა მიმდინარე ოპერაციის გაუქმებას გამოიწვევს. დარწმუნებული "
 "ბრძანდებით?"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel operation"
 msgstr "ოპერაციის გაუქმება"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel && Close"
 msgstr "გაუქმება && დახურვა"
 
-#: rkward/misc/rkprogresscontrol.cpp:537
+#: rkward/misc/rkprogresscontrol.cpp:504
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "ოპერაცია ჯერ კიდევ გაშვებულია. მოითმინეთ."
@@ -3707,31 +3702,31 @@ msgstr ""
 msgid "Ok"
 msgstr "დიახ"
 
-#: rkward/rbackend/rkrinterface.cpp:89
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid "R Startup"
 msgstr "R-ის გაშვება"
 
-#: rkward/rbackend/rkrinterface.cpp:91
+#: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:93
+#: rkward/rbackend/rkrinterface.cpp:94
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:95
+#: rkward/rbackend/rkrinterface.cpp:96
 #, kde-format
 msgid "Error starting R"
 msgstr "R-ის გაშვების შეცდომა"
 
-#: rkward/rbackend/rkrinterface.cpp:649
+#: rkward/rbackend/rkrinterface.cpp:650
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3740,17 +3735,17 @@ msgid ""
 "needed package."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:649
+#: rkward/rbackend/rkrinterface.cpp:650
 #, kde-format
 msgid "Require package '%1'"
 msgstr "საჭიროა პაკეტი '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:681
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "გასვლა გაუქმდა"
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:684
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3764,37 +3759,37 @@ msgid ""
 "windows, save, and retry."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:684
 #, kde-format
 msgid "Locale change"
 msgstr "ენის ცვლილება"
 
-#: rkward/rbackend/rkrinterface.cpp:684
+#: rkward/rbackend/rkrinterface.cpp:685
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "ლოკალის შეცვლა გაუქმდა მომხმარებლის მიერ"
 
-#: rkward/rbackend/rkrinterface.cpp:785
+#: rkward/rbackend/rkrinterface.cpp:786
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "ჩაწერის დაწყების მცდელობა ჩაწერის მიმდინარეობისას. გამოტოვება."
 
-#: rkward/rbackend/rkrinterface.cpp:793
+#: rkward/rbackend/rkrinterface.cpp:794
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "ფაილის ჩასაწერად გახსნა შეუძლებელია. ბრძანებების ჩაწერა არ მოხდება"
 
-#: rkward/rbackend/rkrinterface.cpp:804
+#: rkward/rbackend/rkrinterface.cpp:811
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "შეცდომა: უცნობი მოთხოვნა '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:885
+#: rkward/rbackend/rkrinterface.cpp:892
 #, kde-format
 msgid "R backend requests information"
 msgstr "R უკანაბოლოს ინფორმაცია სჭირდება"
 
-#: rkward/rbackend/rkrinterface.cpp:907
+#: rkward/rbackend/rkrinterface.cpp:914
 #, kde-format
 msgid ""
 "\n"
@@ -3805,7 +3800,7 @@ msgid ""
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:908
+#: rkward/rbackend/rkrinterface.cpp:915
 #, kde-format
 msgid "R engine has died"
 msgstr "R-ის ძრავა გარდაიცვალა"
@@ -6606,11 +6601,6 @@ msgstr "შემდეგი ფანჯარა"
 msgid "Activate Document view"
 msgstr "დოკუმენტის ხედის გააქტიურება"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:87
-#, kde-format
-msgid "Show Output"
-msgstr "გამოტანის ჩვენება"
-
 #: rkward/windows/rktoplevelwindowgui.cpp:130
 #, kde-format
 msgid "Show/Hide %1"
@@ -7101,6 +7091,22 @@ msgstr "შეიყვანეთ ახალი სახელი"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "რედაქტორში გახსნა (მხოლოდ-წაკითხვადი)"
+
+#~ msgid ""
+#~ "<b>There have been errors and / or warnings. See below for a transcript</"
+#~ "b>"
+#~ msgstr ""
+#~ "<b>აღმოჩენილია შეცდომები ან / და გაფრთხილებები. ტრანსკრიფციისთვის ქვემოთ "
+#~ "ჩახედეთ</b>"
+
+#~ msgid "Output:"
+#~ msgstr "გამოტანა:"
+
+#~ msgid "Errors / Warnings"
+#~ msgstr "შეცდომები / გაფრთხილებები"
+
+#~ msgid "Errors / Warnings:"
+#~ msgstr "შეცდომები / გაფრთხილებები:"
 
 #~ msgid "Pandoc is not installed"
 #~ msgstr "Pandoc დაყენებული არაა"

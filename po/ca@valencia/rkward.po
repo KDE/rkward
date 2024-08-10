@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-09 00:37+0000\n"
-"PO-Revision-Date: 2024-07-15 08:43+0200\n"
+"PO-Revision-Date: 2024-08-09 12:18+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2821,16 +2821,13 @@ msgid "Unhandled output command '%1'"
 msgstr "Ordre d'eixida no gestionada «%1»"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"S'ha produït un error en intentar carregar/descarregar els paquets. Reviseu "
-"la transcripció d'ací davall per a més detalls"
+"<b>S'ha produït un error en executar l'ordre. Vegeu davall els detalls de "
+"l'eixida</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
@@ -7718,19 +7715,3 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure en l'editor (només lectura)"
-
-#~ msgid ""
-#~ "<b>There have been errors and / or warnings. See below for a transcript</"
-#~ "b>"
-#~ msgstr ""
-#~ "<b>S'han produït errors i / o avisos. A davall es mostra una transcripció "
-#~ "dels missatges</b>"
-
-#~ msgid "Output:"
-#~ msgstr "Eixida:"
-
-#~ msgid "Errors / Warnings"
-#~ msgstr "Errors / Avisos"
-
-#~ msgid "Errors / Warnings:"
-#~ msgstr "Errors / Avisos:"

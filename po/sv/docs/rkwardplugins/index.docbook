@@ -18,6 +18,12 @@
   <!-- Do not define any other entities; instead, use the entities
        from kde-genent.entities and $LANG/user.entities. -->
 ]>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: by Meik Michalke <meik.michalke@hhu.de>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
+-->
 
 <book lang="&language;">
 
@@ -64,7 +70,7 @@ as Authors, publish date, the abstract, and Keywords -->
 > <affiliation
 ><address
 ><email
->stefan.asserhall@bredband.net</email
+>stefan.asserhall@gmail.com</email
 ></address
 ></affiliation
 > <contrib
@@ -8448,7 +8454,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >Licens</title>
 <para
 >Översättning Stefan Asserhäll <email
->stefan.asserhall@bredband.net</email
+>stefan.asserhall@gmail.com</email
 ></para
 > 
 &underFDL;
