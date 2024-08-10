@@ -29,43 +29,72 @@ RKRApiMenu::~RKRApiMenu() {
 	RK_TRACE(MISC);
 }
 
-void RKRApiMenu::makeXML(QDomDocument &doc, QDomElement e, const QVariantList &l, const QString &path, QStringList *actionlist) {
-	const auto id = l.value(0).toString();
+static QString getId(const QVariantList &l) {
+	return l.value(0).toString();
+}
+
+static QVariantList getChildlist(const QVariantList &l) {
+	return l.value(1).toList();
+}
+
+static QString getLabel(const QVariantList &l) {
+	return l.value(2).toString();
+}
+
+static bool getCallable(const QVariantList &l) {
+	return l.value(3).toList().value(0).toBool();
+}
+
+static QDomElement addChildElement(QDomNode &parent, const QString &tagname, const QString &nameattribute) {
+	QDomDocument doc = parent.isDocument() ? parent.toDocument() : parent.ownerDocument();
+	auto ret = doc.createElement(tagname);
+	if (!nameattribute.isNull()) ret.setAttribute(QStringLiteral("name"), nameattribute);
+	parent.appendChild(ret);
+	return ret;
+}
+
+void RKRApiMenu::makeAction(QDomElement e, const QString &full_id, const QString &label, QStringList *actionlist) {
+	auto s = addChildElement(e, QStringLiteral("Action"), full_id);
+	auto t = addChildElement(s, QStringLiteral("Text"), QString());
+	t.appendChild(s.ownerDocument().createTextNode(label));
+
+	auto a = action(full_id);
+	if (!a) {
+		a = new QAction();
+		a->setObjectName(full_id);
+		actionCollection()->addAction(full_id, a);
+		QObject::connect(a, &QAction::triggered, a, [full_id]() {
+			QString path;
+			auto segments = full_id.split(',');
+			for (int i = 0; i < segments.size(); ++i) {
+				if (i) path += ',';
+				path += RObject::rQuote(segments[i]);
+			}
+			RInterface::issueCommand(new RCommand("rk.menu()$item(" + path + ")$call()", RCommand::App));
+		});
+	}
+	a->setText(label);
+	actionlist->append(full_id);
+}
+
+void RKRApiMenu::makeXML(QDomElement e, const QVariantList &l, const QString &path, QStringList *actionlist) {
+	const auto id = getId(l);
 	const QString full_id = path.isEmpty() ? id : path + ',' + id;
-	const auto children = l.value(1).toList();
-	const auto label = l.value(2).toString();
-	const auto callable = l.value(3).toList().value(0).toBool();
-	auto s = doc.createElement(callable ? "Action" : "Menu");
-	s.setAttribute("name", callable ? full_id : id);
-	if (!label.isEmpty()) {
-		auto t = doc.createElement("Text");
-		t.appendChild(doc.createTextNode(label));
-		s.appendChild(t);
-	}
-	for (auto it = children.constBegin(); it != children.constEnd(); ++it) {
-		RK_ASSERT(!callable);
-		makeXML(doc, s, (*it).toList(), full_id, actionlist);
-	}
-	e.appendChild(s);
+	const auto label = getLabel(l);
+	const auto callable = getCallable(l);
 
 	if (callable) {
-		auto a = action(full_id);
-		if (!a) {
-			a = new QAction();
-			a->setObjectName(full_id);
-			actionCollection()->addAction(full_id, a);
-			QObject::connect(a, &QAction::triggered, a, [full_id]() {
-				QString path;
-				auto segments = full_id.split(',');
-				for (int i = 0; i < segments.size(); ++i) {
-					if (i) path += ',';
-					path += RObject::rQuote(segments[i]);
-				}
-				RInterface::issueCommand(new RCommand("rk.menu()$item(" + path + ")$call()", RCommand::App));
-			});
+		makeAction(e, full_id, label, actionlist);
+	} else {
+		auto s = addChildElement(e, QStringLiteral("Menu"), id);
+		if (!label.isEmpty()) {
+			auto t = addChildElement(s, QStringLiteral("Text"), QString());
+			t.appendChild(s.ownerDocument().createTextNode(label));
 		}
-		a->setText(label);
-		actionlist->append(full_id);
+		const auto children = getChildlist(l);
+		for (auto it = children.constBegin(); it != children.constEnd(); ++it) {
+			makeXML(s, (*it).toList(), full_id, actionlist);
+		}
 	}
 }
 
@@ -73,19 +102,27 @@ void RKRApiMenu::commit() {
 	if (rep.isEmpty()) return;
 	RK_TRACE(MISC);
 
+	QStringList actionlist;
+	QDomDocument doc("kpartgui");
+	auto r = addChildElement(doc, QStringLiteral("kpartgui"), QStringLiteral("rapi_menu"));
+	auto mb = addChildElement(r,  QStringLiteral("MenuBar"), QString());
+	const auto menus = getChildlist(rep);
+	for (auto it = menus.constBegin(); it != menus.constEnd(); ++it) {
+		auto menu = (*it).toList();
+		if (getId((*it).toList()) == "toolbar") {
+			auto tb = addChildElement(r, QStringLiteral("ToolBar"), QStringLiteral("mainToolBar"));
+			const auto tb_children = getChildlist(menu);
+			for (auto tbit : tb_children) {
+				makeXML(tb, tbit.toList(), QStringLiteral("toolbar"), &actionlist);
+			}
+		} else {
+			makeXML(mb, menu, QString(), &actionlist);
+		}
+	}
+
 	auto f = RKWardMainWindow::getMain()->factory();
 	f->removeClient(this);
-	QStringList actionlist;
-	QDomDocument doc;
-	auto menus = rep.value(1).toList();
-	auto r = doc.createElement("kpartgui");
-	r.setAttribute("name", "rapi_menu");  // TODO: version attribute
-	auto mb = doc.createElement("MenuBar");
-	for (auto it = menus.constBegin(); it != menus.constEnd(); ++it) {
-		makeXML(doc, mb, (*it).toList(), QString(), &actionlist);
-	}
-	r.appendChild(mb);
-	doc.appendChild(r);
+	qDebug("%s", qPrintable(doc.toString()));
 	setXMLGUIBuildDocument(doc);
 
 	// delete any actions that are no longer around

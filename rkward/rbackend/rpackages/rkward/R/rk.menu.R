@@ -12,13 +12,15 @@
 #'
 #'              The reference class \code{rk.menu()} creates a handle for a menu item (which may either represent a submenu, or an action/leaf item). Handles
 #'              are identified by their "path", with is a character vector, with each element identifying a level of the menu-hierarchy. (Sub-)handles can be
-#'              created using the \code{$item()} method.
+#'              created using the \code{$item()} method. The special string "toolbar", when used as the first item in the path places child
+#'              items in the toolbar (nesting into submenus inside a toolbar is not currently supported).
 #'
 #'              To actually create a menu entry for a handle, the method \code{$define} needs to be called, specifying a label, and - for leaf items - and
-#'              associated R function.
+#'              associated R function. It is recommended that specified functions have an ignored \code{...} parameter. This will be unused, currently, but
+#'              might be useful for compatibility with future expansions.
 #'
 #'              Adding/removing menu items is a fairly computation heavy exercise, internally, and is handled asynchronously, in the frontend. Should you need
-#'              to remove and re-add certainly elements, frequently, hiding them will be more efficient (see \code{$enable()}). Note: A disabled menu item
+#'              to remove and re-add certain elements, frequently, hiding them will be more efficient (see \code{$enable()}). Note: A disabled menu item
 #'              can still be called programmatically, using \code{$call()}
 #'
 #'              This interface is still somewhat experimental, and currently kept to a minimal set of functions, deliberately. Please don't hesistate to give
@@ -38,13 +40,19 @@
 #'
 #' @examples
 #' \dontrun{
-#' x <- rk.menu()$item("analysis")                          # handle to the predefined analysis menu
-#' sub <- x$item("my_functions")$define("My Functions")     # create submenu
-#' a <- rk.menu()$item("analysis", "my_functions", "yeah")  # handle to an item in that submenu
-#' a <- sub$item("yeah")                                    # alternative variant for retrieving the above handle
-#' a$define("Print Yeah", function() { rk.print("Yeah!") }) # define leaf item
-#' a$call()                                                 # invoke, programmatically
-#' sub$remove()                                             # remove submenu, including the "yeah" action
+#' x <- rk.menu()$item("analysis")                             # handle to the predefined analysis menu
+#' sub <- x$item("my_functions")$define("My Functions")        # create submenu
+#' a <- rk.menu()$item("analysis", "my_functions", "yeah")     # handle to an item in that submenu
+#' a <- sub$item("yeah")                                       # alternative variant for retrieving the above handle
+#' a$define("Print Yeah", function(...) { rk.print("Yeah!") }) # define leaf item
+#' a$call()                                                    # invoke, programmatically
+#'
+#' # Create toolbar button. We use chaining, here to write everything in one statement
+#' btn <- rk.menu()$item("toolbar", "my_button")$define("Show", function(...) { rk.show.message("Clicked") })
+#'
+#' # clean up
+#' sub$remove()                                                # remove submenu, including the "yeah" action
+#' btn$remove()                                                # remove the toolbar button
 #' }
 rk.menu <- setRefClass("rk.menu",
 	fields=list(path="character"),  # for future expansion: context="character" for x11 / script / data functions

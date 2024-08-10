@@ -20,7 +20,8 @@ public:
 	/** mostly for testing: Lookup action by path */
 	QAction* actionByPath(const QStringList &path);
 private:
-	void makeXML(QDomDocument &doc, QDomElement e, const QVariantList &l, const QString &path, QStringList *actionlist);
+	void makeXML(QDomElement e, const QVariantList &l, const QString &path, QStringList *actionlist);
+	void makeAction(QDomElement e, const QString &id, const QString &label, QStringList *actionlist);
 	QVariantList rep;
 	void commit();
 };
