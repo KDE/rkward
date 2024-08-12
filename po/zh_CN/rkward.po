@@ -6894,12 +6894,3 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
-
-#~ msgid "Output:"
-#~ msgstr "输出："
-
-#~ msgid "Errors / Warnings"
-#~ msgstr "错误 / 警告"
-
-#~ msgid "Errors / Warnings:"
-#~ msgstr "错误 / 警告："
