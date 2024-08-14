@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-11 00:37+0000\n"
-"PO-Revision-Date: 2024-07-20 18:29+0200\n"
+"PO-Revision-Date: 2024-08-10 18:13+0200\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -2813,16 +2813,13 @@ msgid "Unhandled output command '%1'"
 msgstr "Salida de la órden no manejada «%1»"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"Ha ocurrido un error al intentar cargar o descartar paquetes. Consulte el "
-"informe inferior para más detalles"
+"<b>Ha ocurrido un error al ejecutar la orden. Consulte más abajo para "
+"detalles de la salida</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
@@ -7682,18 +7679,3 @@ msgstr "Introducir el nuevo nombre"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Mostrar en el editor (solo-lectura)"
-
-#~ msgid ""
-#~ "<b>There have been errors and / or warnings. See below for a transcript</"
-#~ "b>"
-#~ msgstr ""
-#~ "<b>Se han encontrado errores o avisos. Consulte el informe inferior</b>"
-
-#~ msgid "Output:"
-#~ msgstr "Salida:"
-
-#~ msgid "Errors / Warnings"
-#~ msgstr "Errores o avisos"
-
-#~ msgid "Errors / Warnings:"
-#~ msgstr "Errores o avisos:"
