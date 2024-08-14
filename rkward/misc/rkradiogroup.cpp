@@ -23,7 +23,6 @@ public:
 		const auto children = controlled->findChildren<QWidget*>();
 		for (auto child : children) child->installEventFilter(this);  // need to receive clicks on all child widgets!
 		controlled->setEnabled(isChecked());
-		// TODO (see EditFormatDialog: it may also make sense the other way around: if the associated widget is clicked, set this button as active)
 		connect(this, &QAbstractButton::toggled, controlled, &QWidget::setEnabled);
 	}
 private:
