@@ -67,10 +67,12 @@ void RKGraphicsDevice::beginPainter() {
 	if(!painter.isActive()) {
 		if (contexts.isEmpty()) {
 			painter.begin(&area);  // plain old painting on the canvas itself
+			painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 			recording_path = false;
 		} else {
 			auto &c = contexts.last();
 			painter.begin(&(c.surface));
+			painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 			painter.setTransform(c.transform);
 		}
 	}
@@ -503,11 +505,20 @@ void RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &f
 	RK_TRACE(GRAPHICS_DEVICE);
 	RK_ASSERT(points.size() == glyphs.size());
 
+	// TODO Do we need to adjust size?
+	// R has this is Cairo_Glyph:
+	/* Text size (in "points") MUST match the scale of the glyph
+	* location (in "bigpts").  The latter depends on device dpi.
+	*/
+	//cairo_set_font_size(xd->cc, size / (72*dd->ipr[0]));
+	size = size / 72 * 96;
 	QRawFont rfnt;
 	if (index == 0) {
 		rfnt = QRawFont(font, size);
 	}
 	if (!rfnt.isValid()) {
+qDebug("invalid font %s, %d", qPrintable(font), index);
+// TODO create warning, somewhere
 		QFont fnt(family, size, weight);
 		fnt.setStyle(style);
 		rfnt = QRawFont::fromFont(fnt);
@@ -539,14 +550,10 @@ void RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &f
 	}
 
 	if (current_mask) initMaskedDraw();
-	// While QPainter can draw a whole QGlyphRun at once, it cannot do so with rotation of the individual glyphs (Qt 6.7)
-	// Here we opt for the easy way, and always draw glyphs one by one.
-	for (int i = 0; i < glyphs.size(); ++i) {
-		painter.save();
-		painter.setPen(QPen(col));
-		painter.drawPath(path);
-		painter.restore();  // undo rotation / translation
-	}
+	painter.save();
+	painter.setRenderHint(QPainter::Antialiasing); // TODO
+	painter.fillPath(path, col);
+	painter.restore();
 	if (current_mask) commitMaskedDraw();
 
 	triggerUpdate();
