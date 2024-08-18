@@ -1,6 +1,6 @@
 /*
 rkgraphicsdevice_frontendtransmitter - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 18 2013
-SPDX-FileCopyrightText: 2013-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -205,15 +205,19 @@ static QFont readFont (QDataStream &instream) {
 	return ret;
 }
 
-static QVector<QPointF> readPoints (QDataStream &instream) {
+static QPointF readPoint(QDataStream &instream) {
+	double x, y;
+	instream >> x >> y;
+	return(QPointF(x, y));
+}
+
+static QVector<QPointF> readPoints(QDataStream &instream) {
 	quint32 n;
 	instream >> n;
 	QVector<QPointF> points;
-	points.reserve (n);
+	points.reserve(n);
 	for (quint32 i = 0; i < n; ++i) {
-		double x, y;
-		instream >> x >> y;
-		points.append (QPointF (x, y));
+		points.append(readPoint(instream));
 	}
 	return points;
 }
@@ -449,6 +453,26 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 				matrix = QTransform(m[0], m[3], m[1], m[4], m[2], m[5]);
 			}
 			device->useGroup(index, matrix);
+		} else if (opcode == RKDGlyph) {
+			QString font, family;
+			quint8 index, style;
+			quint32 weight;
+			double rot, size;
+			QColor col = readColor(streamer.instream);
+			streamer.instream >> font >> index >> family >> weight >> style >> size >> rot;
+			quint32 n;
+			streamer.instream >> n;
+			QVector<QPointF> points;
+			QVector<quint32> glyphs;
+			points.reserve(n);
+			glyphs.reserve(n);
+			for (int i = 0; i < n; ++i) {
+				qint32 glyphi;
+				points.append(readPoint(streamer.instream));
+				streamer.instream >> glyphi;
+				glyphs.append(glyphi);
+			}
+			device->glyph(font, index, family, weight, static_cast<QFont::Style>(style), size, col, rot, points, glyphs);
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();

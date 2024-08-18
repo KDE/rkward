@@ -350,6 +350,14 @@ IMPORT_R_API(R_GE_clipPathFillRule);
 IMPORT_R_API(R_GE_maskType);
 #endif
 
+#if R_VERSION >= R_Version(4, 3, 0)
+IMPORT_R_API(R_GE_glyphFontWeight);
+IMPORT_R_API(R_GE_glyphFontStyle);
+IMPORT_R_API(R_GE_glyphFontFile);
+IMPORT_R_API(R_GE_glyphFontIndex);
+IMPORT_R_API(R_GE_glyphFontFamily);
+#endif
+
 public:
 	static void init(void* libr_dll_handle, void* (*dlsym_fun)(void*, const char*));
 };

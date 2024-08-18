@@ -193,7 +193,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->holdflush = RKD_HoldFlush;
 
 #if R_VERSION >= R_Version (4, 1, 0)
-	static_assert(RKD_RGE_VERSION >= 13);
+	static_assert(R_GE_version >= 13);
 	// NOTE: We need both a compiletime and a runtime check, in order to support running with an R older than what was used at compile time
 	if (RFn::R_GE_getVersion() >=  13) {
 		// patterns and gradients
@@ -205,7 +205,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 		// masks
 		dev->setMask = RKD_SetMask;
 		dev->releaseMask = RKD_ReleaseMask;
-		dev->deviceVersion = qMin(qMin(15, R_GE_version), RFn::R_GE_getVersion());
+		dev->deviceVersion = qMin(qMin(16, R_GE_version), RFn::R_GE_getVersion());
 		if (RFn::R_GE_getVersion() >=  14) {
 			dev->deviceClip = TRUE; // for now
 		}
@@ -213,7 +213,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 #endif
 
 #if R_VERSION >= R_Version (4, 2, 0)
-	static_assert(RKD_RGE_VERSION >= 15);
+	static_assert(R_GE_version >= 15);
 	if (RFn::R_GE_getVersion() >=  15) {
 		// groups
 		dev->defineGroup = RKD_DefineGroup;
@@ -225,6 +225,14 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 		dev->fill = RKD_Fill;
 		dev->fillStroke = RKD_FillStroke;
 		dev->capabilities = RKD_capabilities;
+	}
+#endif
+
+#if R_VERSION >= R_Version (4, 3, 0)
+	static_assert(R_GE_version >= 16);
+	if (RFn::R_GE_getVersion() >=  16) {
+		// glyhp
+		dev->glyph = RKD_Glyph;
 	}
 #endif
 
@@ -284,11 +292,13 @@ static SEXP RKD_capabilities(SEXP capabilities) {
 	});
 	setCapabilityStruct(capabilities, R_GE_capability_transformations, { 1 });
 	setCapabilityStruct(capabilities, R_GE_capability_paths, { 1 });
-/*
-#if RKD_RGE_VERSION >= 16  // R >= 4.3.0
-	setCapabilityStruct(capabilities, R_GE_capability_glyphs, { 1 });
+
+#if R_GE_version >= 16  // R >= 4.3.0
+	if (RFn::R_GE_getVersion() >=  16) {
+		setCapabilityStruct(capabilities, R_GE_capability_glyphs, { 1 });
+	}
 #endif
-*/
+
 	return capabilities;
 }
 #endif

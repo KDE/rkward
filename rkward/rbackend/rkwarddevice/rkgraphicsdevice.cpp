@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDialog>
 #include <QTransform>
 #include <QFontMetricsF>
+#include <QRawFont>
 
 #include <KLocalizedString>
 #include <sys/stat.h>
@@ -493,6 +494,59 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 	painter.drawText(-(hadj * size.width()), 0, text);
 //	painter.drawRect(painter.fontMetrics().boundingRect(text));  // for debugging
 	painter.restore();  // undo rotation / translation
+	if (current_mask) commitMaskedDraw();
+
+	triggerUpdate();
+}
+
+void RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, QVector<QPointF> points, QVector<quint32> glyphs) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	RK_ASSERT(points.size() == glyphs.size());
+
+	QRawFont rfnt;
+	if (index == 0) {
+		rfnt = QRawFont(font, size);
+	}
+	if (!rfnt.isValid()) {
+		QFont fnt(family, size, weight);
+		fnt.setStyle(style);
+		rfnt = QRawFont::fromFont(fnt);
+	}
+	// TODO Do we need to adjust size?
+	// R has this is Cairo_Glyph:
+	/* Text size (in "points") MUST match the scale of the glyph
+	* location (in "bigpts").  The latter depends on device dpi.
+	*/
+	//cairo_set_font_size(xd->cc, size / (72*dd->ipr[0]));
+
+	// Qt API (6.7) is a little inconsistent in this niche. There is a QGlyphRun, for painting several glyphs at once,
+	// but this cannot procude a QPainterPath. Further, QGlyphRun does not support R's requirement that glyph can be
+	// drawn with rotation, which would necessitate transforming all postions.
+	// For simplicity of code, what we do is to always create painter paths, assembled from individual glyphs.
+	QPainterPath path;
+	for (int i = 0; i < glyphs.size(); ++i) {
+		QPainterPath sub = rfnt.pathForGlyph(glyphs[i]);
+		QTransform trans;
+		auto p = points[i];
+		trans.translate(p.x(), p.y());
+		trans.rotate(-rot);
+		path.addPath(trans.map(sub));
+	}
+
+	if (recording_path) {
+		recorded_path.addPath(path);
+		return;
+	}
+
+	if (current_mask) initMaskedDraw();
+	// While QPainter can draw a whole QGlyphRun at once, it cannot do so with rotation of the individual glyphs (Qt 6.7)
+	// Here we opt for the easy way, and always draw glyphs one by one.
+	for (int i = 0; i < glyphs.size(); ++i) {
+		painter.save();
+		painter.setPen(QPen(col));
+		painter.drawPath(path);
+		painter.restore();  // undo rotation / translation
+	}
 	if (current_mask) commitMaskedDraw();
 
 	triggerUpdate();
