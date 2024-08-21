@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:36+0000\n"
-"PO-Revision-Date: 2024-08-14 09:15+0200\n"
+"PO-Revision-Date: 2024-08-15 17:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -21,12 +21,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pavel Fric"
+msgstr "Pavel Fric, Vít Pelčák"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pavelfric@seznam.cz"
+msgstr "pavelfric@seznam.cz, vit@pelcak.org"
 
 #: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
@@ -1618,7 +1618,7 @@ msgstr "Použít R v %1"
 #: rkward/dialogs/rksetupwizard.cpp:199
 #, kde-format
 msgid "Use R at:"
-msgstr ""
+msgstr "Použít R v:"
 
 #: rkward/dialogs/rksetupwizard.cpp:202
 #, kde-format
@@ -2723,7 +2723,7 @@ msgstr ""
 #: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel operation"
-msgstr ""
+msgstr "Zrušit operaci"
 
 #: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
@@ -2957,19 +2957,19 @@ msgstr "chyba"
 #, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr ""
+msgstr "připraven"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "nedostupné"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:195
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "vypnuto"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:215
 #, kde-format
@@ -3975,7 +3975,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:122
 #, kde-format
 msgid "Dynamic word wrap"
-msgstr ""
+msgstr "Dynamické zalamování slov"
 
 #: rkward/rkconsole.cpp:480
 #, kde-format
@@ -4727,7 +4727,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:53
 #, kde-format
 msgid "Auto word completion"
-msgstr ""
+msgstr "Automatické doplnění slov"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:53
 #, kde-format
@@ -5525,7 +5525,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:69
 #, kde-format
 msgid "R-Backend"
-msgstr ""
+msgstr "Podpůrná vrstva R"
 
 #: rkward/settings/rksettingsmoduler.cpp:76
 #, kde-format
@@ -5537,7 +5537,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:83
 #, kde-format
 msgid "Display warnings"
-msgstr ""
+msgstr "Zobrazit varování"
 
 #: rkward/settings/rksettingsmoduler.cpp:85
 #, kde-format
@@ -5994,7 +5994,7 @@ msgstr ""
 #: rkward/windows/rkcodecompletion.cpp:859
 #, kde-format
 msgid "Function arguments"
-msgstr ""
+msgstr "Argumenty funkce"
 
 #: rkward/windows/rkcodecompletion.cpp:976
 #, kde-format
@@ -6049,7 +6049,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
 msgid "No preview"
-msgstr ""
+msgstr "Žádný náhled"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:377
 #, kde-format
