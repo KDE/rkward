@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:36+0000\n"
-"PO-Revision-Date: 2024-07-20 17:03+0200\n"
+"PO-Revision-Date: 2024-08-22 17:49+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -2767,16 +2767,12 @@ msgid "Unhandled output command '%1'"
 msgstr "Netraktita eliga komando '%1'"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"Okazis eraro dum provo ŝargi/malŝargi pakaĵojn. Vidu transskribaĵon malsupre "
-"por detaloj"
+"<b>Okazis eraro dum rulo de la komando. Vidu malsupre pri eligaj detaloj</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
@@ -7571,17 +7567,3 @@ msgstr "Enigu la novan nomon"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Vidi en redaktilo (nurlegebla)"
-
-#~ msgid ""
-#~ "<b>There have been errors and / or warnings. See below for a transcript</"
-#~ "b>"
-#~ msgstr "<b>Estis eraroj kaj/aŭ avertoj. Vidu malsupre por transskribo</b>"
-
-#~ msgid "Output:"
-#~ msgstr "Eligo:"
-
-#~ msgid "Errors / Warnings"
-#~ msgstr "Eraroj / Avertoj"
-
-#~ msgid "Errors / Warnings:"
-#~ msgstr "Eraroj/Avertoj:"
