@@ -1,0 +1,60 @@
+<!DOCTYPE rkhelp >
+<document>
+  <!--
+    this code was generated using the rkwarddev package.
+  perhaps don't make changes here, but in the rkwarddev script instead!
+  
+  look for a file called: $SRC/inst/rkward/rkwarddev_rk.download_appimage_plugin_script.R
+  -->
+  <title>
+    Download AppImage
+  </title>
+  <summary>
+    Adds a dialog to install or update an AppImage of RKWard
+  </summary>
+  <usage>
+  </usage>
+  <!--
+    <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+      EDIT OR DELETE ME
+    </section>
+  -->
+  <settings>
+    <caption id="tab_File" />
+    <caption id="frm_txtPAIYRFR" />
+    <caption id="frm_brwsrlbSAI" />
+    <setting id="aiu_file">
+      Select a target file to save the AppImage to.
+    </setting>
+    <setting id="noLoadMsg">
+    </setting>
+    <caption id="tab_Source" />
+    <setting id="aiu_url">
+      URL to look for the AppImage files.
+    </setting>
+    <setting id="aiu_pattern">
+      Regular expression to find links to the AppImage in the HTML code of the URL.
+    </setting>
+    <caption id="tab_Download" />
+    <setting id="aiu_method">
+      The method to use by download.file().
+    </setting>
+    <setting id="aiu_cacheok">
+      Is a server-side cached value acceptable? Disabling this is useful for ‘⁠http://⁠’ and ‘⁠https://⁠’ URLs. It will attempt to get a copy directly from the site rather than from an intermediate cache.
+    </setting>
+    <setting id="aiu_timeout">
+      The number of seconds allowed to try downloading the AppImage.
+    </setting>
+  </settings>
+  <!--
+    <related>
+      <ul>
+        <li>
+          <link href="rkward://rhelp/..." />
+        </li>
+      </ul>
+    </related>
+  -->
+  <technical>
+  </technical>
+</document>

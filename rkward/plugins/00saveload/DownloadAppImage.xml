@@ -1,0 +1,78 @@
+<!DOCTYPE rkplugin >
+<document>
+  <!--
+    this code was generated using the rkwarddev package.
+  perhaps don't make changes here, but in the rkwarddev script instead!
+  
+  look for a file called: $SRC/inst/rkward/rkwarddev_rk.download_appimage_plugin_script.R
+  -->
+  <code file="DownloadAppImage.js" />
+  <help file="DownloadAppImage.rkh" />
+  <!--
+    <dependencies>
+    </dependencies>
+  -->
+  <logic>
+    <script>
+      <![CDATA[
+        doRCommand('Sys.getenv("APPIMAGE")', "commandFinished");
+        commandFinished = function (result, id) {
+          if (result != "") {
+            gui.setValue("aiu_file.selection", result);
+            return;
+          }
+        }
+      ]]>
+    </script>
+  </logic>
+  <dialog label="Download AppImage">
+    <tabbook id="tbbk_AppImage" label="AppImage">
+      <tab label="File" id="tab_File">
+        <row id="row_cPAIYRFRPA">
+          <column id="clm_fPAIYRFRPA">
+            <frame id="frm_txtPAIYRFR">
+              <text id="aiu_file_warning" type="warning">
+                Please note that downloading the AppImage file might take a while. Your R session can be occpied for some minutes once you submit. For a live feedback of the download progress, please run the
+                <code>
+                  rk.download_appimage()
+                </code>
+                call in the R console manually.
+              </text>
+            </frame>
+            <frame id="frm_brwsrlbSAI">
+              <browser label="Save to" type="savefile" id="aiu_file" filter="*.AppImage" />
+            </frame>
+            <stretch />
+            <checkbox id="noLoadMsg" label="Suppress package loading messages" value="true" checked="true" />
+          </column>
+        </row>
+      </tab>
+      <tab label="Source" id="tab_Source">
+        <row id="row_cURLP8664A">
+          <column id="clm_iURLP8664A">
+            <input label="URL" id="aiu_url" initial="https://cdn.kde.org/ci-builds/education/rkward/master/linux" required="true" />
+            <input label="Pattern" id="aiu_pattern" initial="rkward-master.*linux-gcc-x86_64\\.AppImage" required="true" />
+            <stretch />
+          </column>
+        </row>
+      </tab>
+      <tab label="Download" id="tab_Download">
+        <row id="row_cDWAT40040">
+          <column id="clm_dDWAT40040">
+            <dropdown id="aiu_method" label="Download method">
+              <option label="auto" value="auto" checked="true" />
+              <option label="internal" value="internal" />
+              <option label="libcurl" value="libcurl" />
+              <option label="wget" value="wget" />
+              <option label="curl" value="curl" />
+              <option label="wininet (Windows only)" value="wininet" />
+            </dropdown>
+            <checkbox id="aiu_cacheok" label="Allow cached files" value="true" />
+            <spinbox label="Timeout" id="aiu_timeout" initial="400" min="400" type="integer" />
+            <stretch />
+          </column>
+        </row>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>
