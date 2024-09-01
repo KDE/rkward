@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-04-21 09:42+0200\n"
+"PO-Revision-Date: 2024-08-31 14:04+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -270,7 +270,7 @@ msgstr "Outro:"
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:41
 #, kde-format
 msgid "Custom statistic (as function of x)"
-msgstr "Estaísticas personalizadas (como función de x)"
+msgstr "Estatísticas personalizadas (como función de x)"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:43
@@ -856,7 +856,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:18
 #, kde-format
 msgid "Select between grey and rainbow colors."
-msgstr "Seleccione entre gris e cores do arco da bella."
+msgstr "Seleccione entre gris e cores do arco da vella."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Type")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:19
@@ -945,7 +945,7 @@ msgid ""
 "<i>code.preprocess</i>: Provides a summary of parameters to be used in a "
 "call to <b>rk.header()</b>, if you have a use for it."
 msgstr ""
-"<i>code.preprocess</i>: Fornece un resumo dos parametros para usar ao chamar "
+"<i>code.preprocess</i>: Fornece un resumo dos parámetros para usar ao chamar "
 "a <b>rk.header()</b>, se lle serve de algo."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -2242,7 +2242,7 @@ msgid ""
 "to <b>plot.default</b> respectively. For automatic evaluation of the limits, "
 "leave these blank."
 msgstr ""
-"Os límites dos eixos X e Y. Trátase dos argumentos <i>xlim</i> e <i>ylim</i> "
+"Os límites dos eixes X e Y. Trátase dos argumentos <i>xlim</i> e <i>ylim</i> "
 "de <b>plot.default</b>, respectivamente. Déixeos en branco para que os "
 "límites se avalíen automaticamente."
 
@@ -2288,8 +2288,8 @@ msgstr ""
 "Marque esta opción para engadir unha grade á gráfica actual. Consulte <link "
 "href=\"rkward://component/x11grid\"/> para información sobre varias opcións "
 "de grade. Teña en conta que estas opcións non son para <b>plot.default</b>, "
-"senón para a función <b>grid</b>. Para que isto funcione, o complemento "
-"incrustante debe realizalo internamente."
+"senón para a función <b>grid</b>. Para que isto funcione, o complemento de "
+"incrustación debe realizalo internamente."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2529,7 +2529,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:88
 #, kde-format
 msgid "Interpret this label as literal (quoted) string"
-msgstr "Interpretar esta etiqueta como cadea literal (entrecomiñada)"
+msgstr "Interpretar esta etiqueta como cadea literal (entre comiñas)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:86
@@ -2579,13 +2579,13 @@ msgstr "Dereita"
 #: rkward/plugins/distributions/../plots/plot_options.xml:99
 #, kde-format
 msgid "Axes"
-msgstr "Eixos"
+msgstr "Eixes"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:101
 #, kde-format
 msgid "Axis types"
-msgstr "Tipos de eixos"
+msgstr "Tipos de eixes"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:103
@@ -2633,7 +2633,7 @@ msgstr "Lenda do eixo Y"
 #: rkward/plugins/distributions/../plots/plot_options.xml:116
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
-msgstr "Interpretar estas etiquetas como cadeas literais (entrecomiñadas)?"
+msgstr "Interpretar estas etiquetas como cadeas literais (entre comiñas)?"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:118
@@ -2678,7 +2678,7 @@ msgstr "Valor máximo de Y"
 #: rkward/plugins/distributions/../plots/plot_options.xml:132
 #, kde-format
 msgid "Axis Annotations"
-msgstr "Anotacións dos eixos"
+msgstr "Anotacións dos eixes"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <dropdown label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:133

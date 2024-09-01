@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-31 00:36+0000\n"
-"PO-Revision-Date: 2024-08-30 06:56+0200\n"
+"PO-Revision-Date: 2024-08-31 08:53+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -115,12 +115,7 @@ msgstr "Fil"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="File"> <text>
 #: rkward/plugins/00saveload/DownloadAppImage.xml:39
-#, fuzzy, kde-format
-#| msgid ""
-#| "Please note that downloading the AppImage file might take a while. Your R "
-#| "session can be occpied for some minutes once you submit. For a live "
-#| "feedback of the download progress, please run the <code> rk."
-#| "download_appimage() </code> call in the R console manually."
+#, kde-format
 msgid ""
 "Please note that downloading the AppImage file might take a while. Your R "
 "session can be occupied for some minutes once you submit. For a live "

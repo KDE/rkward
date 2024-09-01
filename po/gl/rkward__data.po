@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-21 10:16+0200\n"
+"PO-Revision-Date: 2024-08-31 14:05+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -193,7 +193,7 @@ msgstr ""
 #, kde-format
 msgid "Pick a name (and optionally a container) for the recoded data."
 msgstr ""
-"Escolla un nome (eopcionalmente un contedor) para os datos coa nova "
+"Escolla un nome (opcionalmente un contedor) para os datos coa nova "
 "codificación."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Data type after recoding")
@@ -282,7 +282,7 @@ msgid ""
 "\"/> and <link href=\"rkward://component/rkward/multi_input\"/> embeddable "
 "plugins."
 msgstr ""
-"Este complemento usa os complementos incluíbeis <link href=\"rkward://"
+"Este complemento usa os complementos incrustábeis <link href=\"rkward://"
 "component/rkward/level_select\"/> e <link href=\"rkward://component/rkward/"
 "multi_input\"/>."
 
@@ -612,7 +612,7 @@ msgstr "Tipo de orde"
 #: rkward/plugins/data/sort.xml:74
 #, kde-format
 msgid "Sort as is"
-msgstr "Ordenar tal cual"
+msgstr "Ordenar tal cal"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
 #: rkward/plugins/data/sort.xml:75
@@ -636,7 +636,7 @@ msgstr "Ordenar usando unha función personalizada:"
 #: rkward/plugins/data/sort.xml:79
 #, kde-format
 msgid "Function(_X_) to use for sorting"
-msgstr "Funcion(_X_) para usar para ordenar"
+msgstr "Función(_X_) para usar para ordenar"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <checkbox label="...">
 #: rkward/plugins/data/sort.xml:93
@@ -705,8 +705,8 @@ msgid ""
 "on. Leave empty, if you do not want to filter on a column."
 msgstr ""
 "Seleccione unha columna do data.frame indicando as condicións polas que "
-"fitrar os casos. Deixe o campo baleiro se non quere filtrar polo valor dunha "
-"columna."
+"filtrar os casos. Deixe o campo baleiro se non quere filtrar polo valor "
+"dunha columna."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Keep cases matching rule")
 #: rkward/plugins/data/subset_dataframe.rkh:33
@@ -857,7 +857,7 @@ msgstr "Filtrar por variábel"
 #: rkward/plugins/data/subset_dataframe.xml:100
 #, kde-format
 msgid "Keep cases matching rule"
-msgstr "Manter os casos que cumprar a regra"
+msgstr "Manter os casos que cumpran a regra"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
 #: rkward/plugins/data/subset_dataframe.xml:84
