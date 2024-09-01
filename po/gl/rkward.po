@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-07-15 22:50+0200\n"
+"PO-Revision-Date: 2024-08-31 14:07+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -402,7 +402,7 @@ msgid ""
 msgstr ""
 "O paquete «%1» (probabelmente acaba de cargalo) está na lista de paquetes "
 "dos que non está permitido obter información da súa estrutura. O que isto "
-"quere dicir na práctica é que os obxectos do paquete non aparecenar no "
+"quere dicir na práctica é que os obxectos do paquete non aparecerán no "
 "navegador de obxectos, e que as funcionalidades de completación automática e "
 "consellos sobre argumentos de funcións non estarán dispoñíbeis para os "
 "obxectos do paquete.\n"
@@ -2462,7 +2462,7 @@ msgid ""
 "loading several things, you should specify the workspace, first."
 msgstr ""
 "Ficheiro ou ficheiros para abrir, normalmente un espazo de traballo ou un "
-"ficheiro de scripting de R. Ao cargar varias cousas, debería indicar o "
+"ficheiro de guionización de R. Ao cargar varias cousas, debería indicar o "
 "espazo de traballo o primeiro."
 
 #: rkward/misc/rkcommonfunctions.cpp:243
@@ -3319,7 +3319,7 @@ msgstr ""
 msgid ""
 "Duplicate declaration of component id \"%1\" within pluginmap file \"%2\"."
 msgstr ""
-"Declaración duplicada do compoñende con identificador «%1» no ficheiro de "
+"Declaración duplicada do compoñente con identificador «%1» no ficheiro de "
 "grupo de complementos «%2»."
 
 #: rkward/plugin/rkcomponentmap.cpp:656
@@ -3612,7 +3612,7 @@ msgid ""
 "('%1'). Please refer to stdout for details."
 msgstr ""
 "Produciuse un erro ao intentar analizar a descrición do complemento («%1»). "
-"Consulte a saída estándar para máis information."
+"Consulte a saída estándar para máis información."
 
 #: rkward/plugin/rkstandardcomponent.cpp:87
 #, kde-format
@@ -4234,10 +4234,10 @@ msgid ""
 "want to append it to the command in the console, or do you want to reset the "
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
-"Configurou RKWard para canalizar as ordes do editor de scripting a través da "
-"consola de R. Porén, nestes intres hai outra orde activa na consola. Quere "
-"engadir a nova orde ao final da orde da consola, ou prefire reiniciar a "
-"consola primeiro? Prema «Cancelar» se non quere executar a nova orde aínda."
+"Configurou RKWard para canalizar as ordes do editor de guionización a través "
+"da consola de R. Porén, nestes intres hai outra orde activa na consola. "
+"Quere engadir a nova orde ao final da orde da consola, ou prefire reiniciar "
+"a consola primeiro? Prema «Cancelar» se non quere executar a nova orde aínda."
 
 #: rkward/rkconsole.cpp:890
 #, kde-format
@@ -4441,7 +4441,7 @@ msgstr "Crea e activa un novo documento de saída"
 #: rkward/rkward.cpp:497
 #, kde-format
 msgid "Open R Script File..."
-msgstr "Abrir un ficheiro de scripting de R…"
+msgstr "Abrir un ficheiro de guionización de R…"
 
 #: rkward/rkward.cpp:501
 #, kde-format
@@ -4456,7 +4456,7 @@ msgstr "Abrir calquera ficheiro…"
 #: rkward/rkward.cpp:510
 #, kde-format
 msgid "Open Recent R Script File"
-msgstr "Abrir un ficheiro de scripting de R recente"
+msgstr "Abrir un ficheiro de guionización de R recente"
 
 #: rkward/rkward.cpp:514
 #, kde-format
@@ -4529,7 +4529,7 @@ msgstr "Copiar as ordes na saída…"
 #: rkward/rkward.cpp:553 rkward/rkward.cpp:557
 #, kde-format
 msgid "Manage R packages and plugins..."
-msgstr "Xestionar os paqueres e complementos de R…"
+msgstr "Xestionar os paquetes e complementos de R…"
 
 #: rkward/rkward.cpp:564
 #, kde-format
@@ -4731,7 +4731,7 @@ msgstr "Ficheiros de saída de RKWard [*.rko](*.rko);;Todos os ficheiros [*](*)"
 #: rkward/rkward.cpp:1057
 #, kde-format
 msgid "Open script file(s)"
-msgstr "Abrir os ficheiros de scripting"
+msgstr "Abrir os ficheiros de guionización"
 
 #: rkward/rkward.cpp:1071
 #, kde-format
@@ -4877,7 +4877,7 @@ msgstr ""
 #: rkward/scriptbackends/rkcomponentscripting.cpp:56
 #, kde-format
 msgid "Error opening script file %1"
-msgstr "Produciuse un erro ao abrir o ficheiro de scripting %1"
+msgstr "Produciuse un erro ao abrir o ficheiro de guionización %1"
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
@@ -4887,7 +4887,7 @@ msgstr "código inserido en liña"
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
 msgid "Script Error at '%1' line %2: %3\n"
-msgstr "Erro de scripting en «%1», liña %2: %3\n"
+msgstr "Erro de guionización en «%1», liña %2: %3\n"
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:88
 #, kde-format
@@ -5162,14 +5162,14 @@ msgid ""
 "insensitive.</p>"
 msgstr ""
 "<p>Unha lista de filtros (extensións de ficheiro) para tratar como ficheiros "
-"de scripting de R. E o que é aínda máis importante, os ficheiros que "
+"de guionización de R. E o que é aínda máis importante, os ficheiros que "
 "coincidan con algún destes filtros ábrense sempre co realce de sintaxe de R."
 "</p> <p>Os filtros non distinguen maiúsculas.</p>"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:145
 #, kde-format
 msgid "R script file filters (separated by spaces)"
-msgstr "Filtros de ficheiro de scripting de R (separados por espazos)"
+msgstr "Filtros de ficheiro de guionización de R (separados por espazos)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:157
 #, kde-format
@@ -5198,7 +5198,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:57
 #, kde-format
 msgid "Run commands from script editor through console"
-msgstr "Executar as ordes do editor de scripting a través da consola"
+msgstr "Executar as ordes do editor de guionización a través da consola"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:60
 #, kde-format
@@ -5238,7 +5238,7 @@ msgid ""
 "and will not be saved."
 msgstr ""
 "<b>Estas opcións son só para depuración.</b> Poden deixarse como están sen "
-"problemas. Ademaism as opcións só terán efecto sobre a sesión actual, non se "
+"problemas. Ademais as opcións só terán efecto sobre a sesión actual, non se "
 "gardarán."
 
 #: rkward/settings/rksettingsmoduledebug.cpp:36
@@ -5343,7 +5343,7 @@ msgid ""
 "menu).</p>"
 msgstr ""
 "<p>O número de ficheiros recentes para lembrar (no menú «Abrir un ficheiro "
-"de scripting de R recente»).</p>"
+"de guionización de R recente»).</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:89
 #, kde-format
@@ -5358,7 +5358,7 @@ msgid ""
 "be saved (and loaded) per R workspace, or independent of the R workspace. "
 "Which do you prefer?"
 msgstr ""
-"A disposición do lugar de traballo (é dicir, que xanelas de scripting, de "
+"A disposición do lugar de traballo (é dicir, que xanelas de guionización, de "
 "datos e de axuda están abertas) pode gardarse (e cargarse) segundo o espazo "
 "de traballo de R, ou de maneira independente do espazo de traballo. Como "
 "prefire facelo?"
@@ -5495,7 +5495,7 @@ msgid ""
 "<i>Windows()</i> on Mac OS X) will always fall back to the <i>RK()</i> "
 "device.</p>"
 msgstr ""
-"<p>Moitos ficheiros de scripting usan chamadas a dispositivos estándar "
+"<p>Moitos ficheiros de guionización usan chamadas a dispositivos estándar "
 "específicos de plataforma (<i>X11()</i>, <i>windows()</i> e <i>quartz()</"
 "i>), aínda que no seu lugar podería usarse calquera dispositivo de pantalla. "
 "RKWard fornece substitutos para estas funcións de dispositivo estándar, que "
@@ -5723,7 +5723,7 @@ msgid ""
 msgstr ""
 "Hai algúns complementos dispoñíbeis con dos tipos de interface, unha de tipo "
 "asistente e outra de diálogo tradicional. Cando os dous tipos estean "
-"dispoñíbels, cal deles quere usar?"
+"dispoñíbeis, cal deles quere usar?"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:59
 #, kde-format
@@ -5809,7 +5809,7 @@ msgstr "Suprimir os avisos"
 #: rkward/settings/rksettingsmoduler.cpp:78
 #, kde-format
 msgid "Print warnings later (default)"
-msgstr "Imprimir os ávisos máis tarde (predeterminado)"
+msgstr "Imprimir os avisos máis tarde (predeterminado)"
 
 #: rkward/settings/rksettingsmoduler.cpp:78
 #, kde-format
@@ -6015,7 +6015,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:417
 #, kde-format
 msgid "Add R Library Directory"
-msgstr "Engador un directorio de bibliotecas de R"
+msgstr "Engadir un directorio de bibliotecas de R"
 
 #: rkward/settings/rksettingsmoduler.cpp:419
 #, kde-format
@@ -6338,13 +6338,13 @@ msgstr "Desmarcar o bloque"
 #: rkward/windows/rkcommandeditorwindow.cpp:368
 #, kde-format
 msgid "CD to script directory"
-msgstr "Entrar no directorio do ficheiro de scripting"
+msgstr "Entrar no directorio do ficheiro de guionización"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:369
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr ""
-"Cambiar o cartafol de traballo ao directorio deste ficheiro de scripting"
+"Cambiar o cartafol de traballo ao directorio deste ficheiro de guionización"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
@@ -6573,7 +6573,7 @@ msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
 "Produciuse un erro ao intentar crear un gradado automático do ficheiro de "
-"scripting «%1»:"
+"guionización «%1»:"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:934
 #, kde-format
@@ -6650,7 +6650,7 @@ msgid ""
 "in the caller. In these cases, the behavior is identical to 'Continue'.</p>"
 msgstr ""
 "<p>Continuar ata chegar ao autor da chamada a esta función (a non ser que "
-"antes se chegue a outra intrución de depuración).</p> <p><b>Nota:</b> "
+"antes se chegue a outra instrución de depuración).</p> <p><b>Nota:</b> "
 "Nalgúns casos nunca se chega á función que realiza a chamada porque a "
 "chamada era o último paso de dita función. Nestes casos, o comportamento é o "
 "mesmo que o de «Continuar».</p>"
@@ -7151,8 +7151,8 @@ msgstr ""
 "momento.\n"
 "\n"
 "Polo tanto, se quere configurar os atallos de teclado para usar, por "
-"exemplo, dentro do editor de scripting, ten que abrir a xanela do editor de "
-"scripting e activala."
+"exemplo, dentro do editor de guionización, ten que abrir a xanela do editor "
+"de guionización e activala."
 
 #: rkward/windows/rktoplevelwindowgui.cpp:144
 #: rkward/windows/rktoplevelwindowgui.cpp:158
@@ -7174,8 +7174,8 @@ msgstr ""
 "momento.\n"
 "\n"
 "Polo tanto, se quere configurar os botóns da barra de ferramentas de, por "
-"exemplo, o editor de scripting, ten que abrir a xanela do editor de "
-"scripting e activala."
+"exemplo, o editor de guionización, ten que abrir a xanela do editor de "
+"guionización e activala."
 
 #: rkward/windows/rkwindowcatcher.cpp:133
 #, kde-format

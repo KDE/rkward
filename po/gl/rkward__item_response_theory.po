@@ -1,21 +1,22 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-#
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016.
-# Adrian Chaves <adrian@chaves.io>, 2018, 2019.
+# SPDX-FileCopyrightText: 2018, 2019, 2024 Adrian Chaves <adrian@chaves.io>
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2019-03-02 21:34+0100\n"
+"PO-Revision-Date: 2024-08-31 14:01+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -982,7 +983,7 @@ msgid ""
 "Used in the central difference approximation that approximates the hessian. "
 "Defaults to 1e-03."
 msgstr ""
-"Usado na aproximación de diferenza central que aproxima a hessiana. O valor "
+"Usado na aproximación de diferenza central que aproxima a de Hesse. O valor "
 "predeterminado é 1e-03."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <technical>
@@ -1658,7 +1659,7 @@ msgstr "Lista de valores iniciais:"
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:78
 #, kde-format
 msgid "Numerical derivative algorithm to approximate Hessian matrix:"
-msgstr "Algoritmo derivativo numérico para aproximar a matriz hessiana:"
+msgstr "Algoritmo derivativo numérico para aproximar a matriz de Hesse:"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Numerical derivative algorithm to approximate Hessian matrix:"> <option label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:79
@@ -1721,7 +1722,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:31
 #, kde-format
 msgid "If checked the Hessian matrix is computed."
-msgstr "Se se marca se calcula a matriz hessiana."
+msgstr "Se se marca se calcula a matriz de Hesse."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="..."> (refers to element labelled "Number of digits to abbreviate item names:")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:51
@@ -1754,7 +1755,7 @@ msgstr "Asumir parámetros de discriminación iguais en todos os elementos"
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:46
 #, kde-format
 msgid "Compute Hessian matrix"
-msgstr "Calcular a matriz hessiana"
+msgstr "Calcular a matriz de Hesse"
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <spinbox label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:65
@@ -2312,7 +2313,7 @@ msgstr "Padrón de resposta inconsistente co modelo estimado"
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:31
 #, kde-format
 msgid "More consistent response pattern than the model predicts"
-msgstr "Padrón de resposta máis consistente do que predi o modelo"
+msgstr "Padrón de resposta máis consistente do que predí o modelo"
 
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <radio label="Alternative hypothesis to test"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:32
@@ -2377,21 +2378,21 @@ msgid ""
 "substantially larger than the second eigenvalue of data under the assumed "
 "IRT model</em>"
 msgstr ""
-"Hipótese alternativa: <em>O segundo autovalor dos datos observados é "
-"substancialmente maior que o segundo autovalor dos datos no modelo de IRT "
+"Hipótese alternativa: <em>O segundo valor propio dos datos observados é "
+"substancialmente maior que o segundo valor propio dos datos no modelo de IRT "
 "asumido</em>"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:34
 #, kde-format
 msgid "Second eigenvalue in the observed data:"
-msgstr "O segundo autovalor nos datos observados:"
+msgstr "O segundo valor propio nos datos observados:"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:35
 #, kde-format
 msgid "Average of second eigenvalues in Monte Carlo samples:"
-msgstr "Media de segundos autovalores nas mostras de Monte Carlo:"
+msgstr "Media de segundos valores propios nas mostras de Monte Carlo:"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:37
