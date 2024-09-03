@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2024-04-12 15:14+0200\n"
+"PO-Revision-Date: 2024-09-01 22:16+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -2598,7 +2598,7 @@ msgid ""
 "effect size as Cohen's f, or as Eta squared."
 msgstr ""
 "Affiché uniquement lorsque cela est applicable. Vous permet de choisir de "
-"spécifier la taille de l'effet comme f de Cohen ou Eta au carré."
+"spécifier la taille de l'effet comme f de Cohen ou Êta au carré."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Parameter to determine")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:52
@@ -2895,7 +2895,7 @@ msgstr "F de Cohen"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:141
 #, kde-format
 msgid "Eta squared"
-msgstr "Eta au carré"
+msgstr "Êta au carré"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:150
@@ -3056,7 +3056,7 @@ msgstr "La mesure pour la méthode sélectionnée est le <b>f de Cohen</b>."
 #, kde-format
 msgid "Measure for selected method is <b> Eta <sup> 2 </sup> </b>"
 msgstr ""
-"La mesure pour la méthode sélectionnée est <b> Eta <sup> 2 </sup> </b>."
+"La mesure pour la méthode sélectionnée est <b> Êta <sup> 2 </sup> </b>."
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:235
@@ -5023,7 +5023,7 @@ msgid ""
 msgstr ""
 "Tracé de la matrice de corrélation. En haut, la valeur (absolue) de la "
 "corrélation est présentée, ainsi que le résultat de « cor.test » sous forme "
-"d'étoiles. En bas, les nuages de points bivariés sont tracés avec une ligne "
+"d'étoiles. En bas, les nuages de points bi-variés sont tracés avec une ligne "
 "ajustée. Le graphique et le code peuvent être trouvés à <link href=\"http://"
 "addictedtor.free.fr/graphiques/RGraphGallery.php?graph=137\">Galerie "
 "graphique de R (137) Matrice de corrélation</link>, d'où ils ont été adaptés "
@@ -5079,8 +5079,8 @@ msgstr ""
 "corrélation entre chaque paire de variables est calculée en utilisant toutes "
 "les paires complètes d'observations sur ces variables. Il peut en résulter "
 "des matrices de covariance ou de corrélation qui ne sont pas semi-définies "
-"positives. La valeur « pairwise » ne fonctionne qu'avec la méthode "
-"« pearson » pour la variance et la covariance."
+"positives. La valeur « pairwise » ne fonctionne qu'avec la méthode de "
+"Pearson pour la variance et la covariance."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Precision (digits)")
 #: rkward/plugins/plots/cor_graph.rkh:22
