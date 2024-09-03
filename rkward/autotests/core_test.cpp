@@ -534,8 +534,8 @@ private Q_SLOTS:
 	void rkMenuTest() {
 		const QStringList actionpath {"analysis", "myaction"};
 		RInterface::issueCommand(new RCommand("a <- rk.menu()", RCommand::App));
-		for (int i = 0; i < actionpath.size(); ++i) {
-			RInterface::issueCommand(new RCommand("a <- a$item(" + RObject::rQuote(actionpath[i]) + ")", RCommand::App));
+		for (const auto &segment : actionpath) {
+			RInterface::issueCommand(new RCommand("a <- a$item(" + RObject::rQuote(segment) + ")", RCommand::App));
 		}
 		RInterface::issueCommand(new RCommand("a$define('My Label', function() assign('x', 'actionval', envir=globalenv()))", RCommand::User));
 		waitForAllFinished();

@@ -92,8 +92,8 @@ void RKRApiMenu::makeXML(QDomElement e, const QVariantList &l, const QString &pa
 			t.appendChild(s.ownerDocument().createTextNode(label));
 		}
 		const auto children = getChildlist(l);
-		for (auto it = children.constBegin(); it != children.constEnd(); ++it) {
-			makeXML(s, (*it).toList(), full_id, actionlist);
+		for (const auto &child : children) {
+			makeXML(s, child.toList(), full_id, actionlist);
 		}
 	}
 }
@@ -107,16 +107,16 @@ void RKRApiMenu::commit() {
 	auto r = addChildElement(doc, QStringLiteral("kpartgui"), QStringLiteral("rapi_menu"));
 	auto mb = addChildElement(r,  QStringLiteral("MenuBar"), QString());
 	const auto menus = getChildlist(rep);
-	for (auto it = menus.constBegin(); it != menus.constEnd(); ++it) {
-		auto menu = (*it).toList();
-		if (getId((*it).toList()) == "toolbar") {
+	for (const auto &menu : menus) {
+		const auto menuList = menu.toList();
+		if (getId(menuList) == "toolbar") {
 			auto tb = addChildElement(r, QStringLiteral("ToolBar"), QStringLiteral("mainToolBar"));
-			const auto tb_children = getChildlist(menu);
-			for (auto tbit : tb_children) {
+			const auto tb_children = getChildlist(menuList);
+			for (const auto &tbit : tb_children) {
 				makeXML(tb, tbit.toList(), QStringLiteral("toolbar"), &actionlist);
 			}
 		} else {
-			makeXML(mb, menu, QString(), &actionlist);
+			makeXML(mb, menuList, QString(), &actionlist);
 		}
 	}
 
@@ -126,10 +126,10 @@ void RKRApiMenu::commit() {
 	setXMLGUIBuildDocument(doc);
 
 	// delete any actions that are no longer around
-	auto all_actions = actionCollection()->actions();
-	for (int i = 0; i < all_actions.size(); ++i) {
-		if (!actionlist.contains(all_actions[i]->objectName())) {
-			delete (actionCollection()->takeAction(all_actions[i]));
+	const auto actions = actionCollection()->actions();
+	for (const auto &action : actions) {
+		if (!actionlist.contains(action->objectName())) {
+			delete actionCollection()->takeAction(action);
 		}
 	}
 
