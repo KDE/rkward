@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-07-28 05:52+0200\n"
+"PO-Revision-Date: 2024-09-03 08:08+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2306,49 +2306,49 @@ msgstr "ქულების მქონე პასუხის მოდე
 #: rkward/plugins/irt.pluginmap:30
 #, kde-format
 msgid "Rating scale model fit"
-msgstr ""
+msgstr "რეიტინგის მასშტაბის მოდელის ჩატევა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:31
 #, kde-format
 msgid "Partial credit model fit"
-msgstr ""
+msgstr "ნაწილობრივი კრედიტის მოდელის ჩატევა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:32
 #, kde-format
 msgid "Generalized partial credit model fit"
-msgstr ""
+msgstr "გასაშუალოვებული ნაწილობრივი კრედიტის მოდელის ჩატევა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:33
 #, kde-format
 msgid "Linear rating scale model fit"
-msgstr ""
+msgstr "წრფივი რეიტინგის მასშტაბის მოდელის ჩატევა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:34
 #, kde-format
 msgid "Linear partial credit model fit"
-msgstr ""
+msgstr "წრფივი ნაწილობრივი კრედიტის მოდელის ჩატევა"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:38
 #, kde-format
 msgid "Goodness of Fit (Rasch)"
-msgstr ""
+msgstr "თანხმობის კრიტერიუმი (რაშის მოდელი)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:40
 #, kde-format
 msgid "Item-fit statistics (Rasch, LTM, 3PM)"
-msgstr ""
+msgstr "ჩანაწერების შესაბამისობის სტატისტიკა (რაში, LTM, 3PM)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:41
 #, kde-format
 msgid "Person-fit statistics (Rasch, LTM, 3PM)"
-msgstr ""
+msgstr "პიროვნების შესაბამისობის სტატისტიკა (რაში, LTM, 3PM)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:42
@@ -2447,7 +2447,7 @@ msgstr "ორპარამეტრიანი ლოგისტიკი�
 #, kde-format
 msgctxt "R code comment"
 msgid "two steps are needed to plot standard error curves"
-msgstr ""
+msgstr "სტანდარტული შეცდომის მრუდების დასახაზად ორი ნაბიჯია საჭირო"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2460,7 +2460,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "first some values are generated..."
-msgstr ""
+msgstr "ჯერ მიმდინარეობს რამდენიმე მნიშვნელობის გენერაცია..."
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2473,7 +2473,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "... and then they're used to plot the curves:"
-msgstr ""
+msgstr "... და შემდეგ ისინი მრუდების დასახაზად გამოიყენება:"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2646,7 +2646,7 @@ msgstr "ჩანაწერის დახატვის ტიპი"
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:40
 #, kde-format
 msgid "Item characteristic curve"
-msgstr ""
+msgstr "ჩანაწერის მახასიათებლების მრუდი"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
@@ -2842,7 +2842,7 @@ msgstr "რაშის მოდელის დახატვა"
 #: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:19
 #, kde-format
 msgid "Plotting fitted Rasch model"
-msgstr ""
+msgstr "ვხატავ აპროქსიმირებულ რაშის მოდელს"
 
 #. i18n: ectx: (Loaded from Plotting fitted 3PL model)
 #: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:79
@@ -2866,13 +2866,13 @@ msgstr "ობიექტების გამოყენება, მხო
 #: rkward/plugins/plots/irt/polytomous/plot_grm.js:87
 #, kde-format
 msgid "Graded response model plot"
-msgstr ""
+msgstr "ქულების მქონე პასუხის მოდელის ნახაზი"
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="...">
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:19
 #, kde-format
 msgid "Plotting fitted graded response model"
-msgstr ""
+msgstr "ქულების მქონე პასუხის მოდელის ნახაზი"
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Model"> <text>
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:26
@@ -2884,13 +2884,13 @@ msgstr "ობიექტების გამოყენება, მხო
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:42
 #, kde-format
 msgid "Item operation characteristic curve"
-msgstr ""
+msgstr "ჩანაწერის მახასიათებლების მრუდი"
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:43
 #, kde-format
 msgid "Item operation characteristic curve (inverse)"
-msgstr ""
+msgstr "ჩანაწერის მახასიათებლების მრუდი (ინვერსია)"
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <frame label="Optional item selection"> <spinbox label="...">
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:47

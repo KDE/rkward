@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-05-01 05:46+0200\n"
+"PO-Revision-Date: 2024-09-03 13:21+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -731,6 +731,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability, here."
 msgstr ""
+"წარმატების ალბათობა თითოეულ გამოცდაში. დაიმახსოვრეთ, რომ ამ პარამეტრზე <b>არ "
+"მოქმედებს</b> პარამეტრი \"ალბათობების ჟურნალი\", ანუ, პირდაპირ ალბათობა აქ "
+"მიუთითეთ."
 
 #. i18n: ectx: (Binomial probabilities, quantiles, densities)
 #: rkward/plugins/distributions/binomial.xml:13
@@ -739,6 +742,8 @@ msgid ""
 "Quantiles can be interpreted as number of successes in the given number of "
 "trials."
 msgstr ""
+"კვანტილები შეიძლება გაიგოთ, როგორც წარმატების რაოდენობები მითითებული "
+"რაოდენობის შემოწმებებში."
 
 #. i18n: ectx: (Binomial probabilities, quantiles, densities) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/binomial.xml:18
@@ -1052,6 +1057,9 @@ msgid ""
 "CLT and a choice of function. The function specific options are provided in "
 "different tabs."
 msgstr ""
+"აირჩიეთ <label id=\"dist_name\"/> პარამეტრები, სინჯის ზომა, რომელიც CLT-ს "
+"სჭირდება და ფუნქციის არჩევანი. ფუნქციის შესაბამისი პარამეტრები სხვა "
+"ჩანართებშია მოწოდებული."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for Average")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for Average")
@@ -1341,6 +1349,8 @@ msgid ""
 "See the help on the <link href=\"rkward://component/plot_stepfun_options\"/> "
 "plugin. The 'Add to current plot' option is unavailable."
 msgstr ""
+"იხილეთ დახმარება <link href=\"rkward://component/plot_stepfun_options\"/> "
+"დამატებისთვის. არჩევანი 'მიმდინარე ნახაზზე დამატება' ხელმიუწვდომელია."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <related>
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <related>

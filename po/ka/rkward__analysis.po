@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2024-07-15 05:33+0200\n"
+"PO-Revision-Date: 2024-09-03 09:25+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -833,7 +833,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "polyserial expects x to be numeric"
-msgstr ""
+msgstr "პოლისერიალს x რიცხვითი სჭირდება"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:131
@@ -846,6 +846,7 @@ msgstr "კოეფიციენტი"
 #, kde-format
 msgid "Standard errors, test of bivariate normality and sample size"
 msgstr ""
+"სტანდარტული შეცდომები, ბივარიაციული ნორმალურობის შემოწმება და სინჯის ზომა"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:137
@@ -857,7 +858,7 @@ msgstr "p-მნიშვნელობები და შერჩევი�
 #: rkward/plugins/analysis/corr_matrix.js:143
 #, kde-format
 msgid "Variables treated as numeric ranks"
-msgstr ""
+msgstr "რიცხვით რანგებად აღქმული ცვლადები"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:145
@@ -1238,13 +1239,13 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.rkh:22
 #, kde-format
 msgid "Should a chisquare test be performed (for each pair)?"
-msgstr ""
+msgstr "უნდა ჩატარდეს თუ არა ხიკვადრატის შემოწმება (თითოეული წყვილისთვის)?"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Draw Barplot")
 #: rkward/plugins/analysis/crosstab.rkh:23
 #, kde-format
 msgid "Should a barplot be produced (for each pair)?"
-msgstr ""
+msgstr "უნდა შეიქმნას თუ არა გრაფიკი (თითოეული წყვილისთვის)?"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting>
 #: rkward/plugins/analysis/crosstab.rkh:24
