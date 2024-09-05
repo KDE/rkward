@@ -4,17 +4,17 @@ msgstr ""
 "Project-Id-Version: rkward__import_export\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2023-10-30 10:09+0100\n"
-"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"PO-Revision-Date: 2024-09-03 21:05+0200\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
-"X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
+"X-Environment: kde\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -1871,7 +1871,7 @@ msgid ""
 msgstr ""
 "Un index numérique ou un nom / étiquette de la colonne contenant les noms de "
 "lignes. Si vous spécifiez un nom ici, veuillez vous assurer de le mettre "
-"entre quotes. Si vous laissez ce champ vide, les noms de ligne seront "
+"entre guillemets. Si vous laissez ce champ vide, les noms de ligne seront "
 "automatiquement associés (numéros de ligne)."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Row")
@@ -2509,7 +2509,7 @@ msgstr "PDF"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:85
 #, kde-format
 msgid "PowerPoint"
-msgstr "Powerpoint"
+msgstr "PowerPoint"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:86
@@ -2615,7 +2615,8 @@ msgstr "Emplacement vers lequel enregistrer."
 #: rkward/plugins/00saveload/save/save.rkh:18
 #, kde-format
 msgid "Write an ascii, rather than binary representation of the object(s)."
-msgstr "Écrire un ou des objets en représentation ascii plutôt qu'en binaire."
+msgstr ""
+"Écrire un ou des objets en représentation en code ASCII plutôt qu'en binaire."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression")
 #: rkward/plugins/00saveload/save/save.rkh:19
@@ -2969,7 +2970,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
 #, kde-format
 msgid "Check this to have all string values quoted."
-msgstr "Cochez ceci pour avoir toutes les valeurs de chaînes entre quotes."
+msgstr "Cochez ceci pour avoir toutes les valeurs de chaînes entre guillemets."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Handling double quote characters")
 #: rkward/plugins/00saveload/save/write_csv.rkh:78
