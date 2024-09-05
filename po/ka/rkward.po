@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:36+0000\n"
-"PO-Revision-Date: 2024-08-11 06:51+0200\n"
+"PO-Revision-Date: 2024-09-04 05:25+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -4914,6 +4914,8 @@ msgid ""
 "Directory where rkward may store files (setting takes effect after "
 "restarting RKWard)"
 msgstr ""
+"საქაღალდე, სადაც rkward-ს ფაილების შენახვა შეუძლია (ამ პარამეტრის ცვლილება, "
+"მხოლოდ, RKWard-ის გადატვირთვის შემდეგ შევა ძალაში)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
@@ -4978,6 +4980,8 @@ msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
 "menu).</p>"
 msgstr ""
+"<p>უახლესი ფაილების რაოდენობა დასამახსოვრებლად (ფაილის მენიუში 'უახლესი R-ის "
+"სკრიპტის გახნა).</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:98
 #, kde-format

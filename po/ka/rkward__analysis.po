@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2024-09-03 09:25+0200\n"
+"PO-Revision-Date: 2024-09-04 08:15+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -449,7 +449,7 @@ msgstr "აღწერს, გამოითვლება თუ არა �
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.rkh:23
 #, kde-format
 msgid "Check this if you want the confidence interval to be computed."
-msgstr ""
+msgstr "ჩართეთ, თუ გნებავთ ამ ნდობის ინტერვალის გამოთვლა."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "confidence level")
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "confidence level")
@@ -458,7 +458,7 @@ msgstr ""
 #, no-c-format, kde-format
 msgid ""
 "Here you can define the confidence level of the interval (95% is typical)."
-msgstr ""
+msgstr "აქ შეგიძლიათ განსაზღვროთ ნდობის დონე ინტერვალისთვის (ჩვეულებრივ 95%)."
 
 #. i18n: ectx: (Ansari-Bradley two-sample exact test) <dialog label="...">
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.xml:15
@@ -1435,7 +1435,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
 #, kde-format
 msgid "Choose one or more objects to be crosstabulated."
-msgstr ""
+msgstr "აირჩიეთ ერთი ან მეტი ობიექტი კროსტაბულაციისთვის."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
@@ -1629,6 +1629,8 @@ msgstr "ანსკომბე-კლინის ტექსტი ექს
 msgid ""
 "This test performs the Anscombe-Glynn test of kurtosis for normal samples."
 msgstr ""
+"ეს შემოწმება მოახდენს ექსცესის ანსკომბი-გლინის შემოწმებას ნორმალური "
+"სინჯებისთვის."
 
 #. i18n: ectx: (Loaded from Anscombe-Glynn test of kurtosis) <usage>
 #: rkward/plugins/analysis/moments/anscombe_test.rkh:12

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-06-12 06:03+0200\n"
+"PO-Revision-Date: 2024-09-04 05:23+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -178,6 +178,8 @@ msgid ""
 "barplot is a bit picky about attributes, so we need to convert to vector or "
 "matrix explicitly"
 msgstr ""
+"barplot ცოტა პრეტენზიულია ატრიბუტები მიმართ, მაგრამ ჩვენ ვექტორის ან "
+"მატრიცის აშკარა გადაყვანა გვჭირდება"
 
 #. i18n: ectx: (Loaded from Barplot) <summary>
 #: rkward/plugins/plots/barplot.rkh:8
@@ -193,6 +195,8 @@ msgid ""
 "Choose a matrix, vector or a factor to be plotted. Further options are "
 "available on the second tab."
 msgstr ""
+"აირჩიეთ მატრიცა, ვექტორი ან ფაქტორი დასახაზად. მეტი პარამეტრი მეორე "
+"ჩანართზეა ხელმისაწვდომი."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
@@ -215,6 +219,8 @@ msgid ""
 "If your data is already suitable for plotting, directly, specify it here. "
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
+"თუ თქვენი მონაცემები უკვე მზადაა, პირდაპირ დაიხაზოს, ის აქ მიუთითეთ. თუ არა, "
+"დატოვეთ ეს ცარიელი და ჩართეთ \"ტაბულაციის\" პარამეტრი ზემოთ."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Limit number of groups")
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Limit number of groups")
@@ -429,14 +435,14 @@ msgstr "სინჯის დაყოფა ცვლადების და
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust width and position of boxes to achieve dodging"
-msgstr ""
+msgstr "გაასწორეთ ველების სიგანე და მდებარეობა, რომ თავიდან აცილებას მიაღწოთ"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:45
 #, kde-format
 msgctxt "R code comment"
 msgid "convert single sample variables to list"
-msgstr ""
+msgstr "ერთი სინჯი ცვლადების სიად გარდაქმნა"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #. i18n: ectx: (Boxplot) <dialog label="...">
@@ -510,6 +516,8 @@ msgid ""
 "calculates the mean for all data and adds a point at the corresponding "
 "position"
 msgstr ""
+"გამოითვლის საშუალოს ყველა მონაცემისთვის და დაამატებს წერტილს შესაბამის "
+"მდებარეობაზე"
 
 #. i18n: ectx: (Loaded from Boxplot) <summary>
 #: rkward/plugins/plots/box_plot.rkh:8
@@ -533,12 +541,17 @@ msgid ""
 "vectors, or a single outcome variable split by one or more grouping "
 "variables."
 msgstr ""
+"აირჩიეთ ფორმატი თქვენი მონაცემებისთვის. შეიძლება იყოს ცალ-ცალკე რიცხვითი "
+"ვექტორები, ან ერთი გამოსავალი ცვლადი, რომელიც ერთი ან მეტი დაჯგუფების "
+"ცვლადებითაა დაყოფილი."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:19
 #, kde-format
 msgid "For separate variables mode: Select one or more numerical vectors."
 msgstr ""
+"რეჟიმი განსხვავებული ცვლადები რეჟიმისთვის: აირჩიეთ ერთი ან მეტი რიცხვითი "
+"ვექტორი."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Outcome variable:")
 #: rkward/plugins/plots/box_plot.rkh:20
@@ -938,6 +951,8 @@ msgid ""
 "Smoothing kernel to use. See <link href=\"rkward://rhelp/density\"/> for "
 "details on the available kernels."
 msgstr ""
+"მოგლუვების ბირთვი გამოსაყენებლად. ხელმისაწვდომი ბირთვების სანახავად იხილეთ "
+"<link href=\"rkward://rhelp/density\"/>."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Bandwidth")
 #: rkward/plugins/plots/density_plot.rkh:25
@@ -954,7 +969,7 @@ msgstr ""
 #: rkward/plugins/plots/histogram.rkh:23
 #, kde-format
 msgid "Factor to adjust the bandwidth by."
-msgstr ""
+msgstr "ფაქტორი, რომლითაც გამტარობა გასწორდება."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Remove Missing Values")
 #: rkward/plugins/plots/density_plot.rkh:27
@@ -1328,12 +1343,14 @@ msgid ""
 "Options to change the look of the ECDF plot itself. Refer to <link href="
 "\"rkward://component/plot_stepfun_options\"/> for details."
 msgstr ""
+"პარამეტრები ECDF გრაფიკის გარეგნობის შესაცვლელად. დეტალებისთვის იხილეთ <link "
+"href=\"rkward://component/plot_stepfun_options\"/>."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Draw Theoretical Normal Distribution")
 #: rkward/plugins/plots/ecdf_plot.rkh:20
 #, kde-format
 msgid "Should a theoretical normal distribution curve be added to the plot?"
-msgstr ""
+msgstr "უნდა დაემატოს თუ არა თეორიული ნორმალური განაწილება გრაფიკს?"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Adjust to mean and sd of data")
 #: rkward/plugins/plots/ecdf_plot.rkh:21
@@ -1381,6 +1398,8 @@ msgid ""
 "Further generic plot options. Refer to <link href=\"rkward://component/"
 "plot_options\"/> for details."
 msgstr ""
+"მეტი ზოგადი ნახაზის პარამეტრები. დეტალებისთვის იხილეთ <link href=\"rkward://"
+"component/plot_options\"/>."
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:28
@@ -1424,7 +1443,7 @@ msgstr "თეორიული ნორმალური განაწი�
 #: rkward/plugins/plots/ecdf_plot.xml:47
 #, kde-format
 msgid "Adjust to mean and sd of data"
-msgstr ""
+msgstr "მონაცემების საშუალოზე და sd-ზე სწორება"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <checkbox label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:51
@@ -1483,6 +1502,8 @@ msgid ""
 "Options concerning the calculation and look of the histogram. Refer to <link "
 "href=\"rkward://component/histogram_options\"/> for details."
 msgstr ""
+"ჰისტოგრამის გამოთვლისა და გარეგნობის პარამეტრები. დეტალებისთვის იხილეთ <link "
+"href=\"rkward://component/histogram_options\"/>."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Plot Density curve")
 #: rkward/plugins/plots/histogram.rkh:20
@@ -1505,6 +1526,8 @@ msgid ""
 "The smoothing bandwidth used to calculate the density estimate. See <link "
 "href=\"rkward://rhelp/density\"/> for details."
 msgstr ""
+"მომრგვალებული გამტარობა დაახლოებითი სიმკვრივის გამოსათვლელად. დეტალებისთვის "
+"იხილეთ <link href=\"rkward://rhelp/density\"/>."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Remove Missing Values")
 #: rkward/plugins/plots/histogram.rkh:24
@@ -1512,12 +1535,14 @@ msgstr ""
 msgid ""
 "Remove missing values? If not checked, missing values will cause an error."
 msgstr ""
+"წავშალო ნაკლული მნიშვნელობები? თუ ჩართული არაა, მიუთითებელ მნიშვნელობებს "
+"შეცდომის გამოწვევა შეუძლიათ."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "resolution")
 #: rkward/plugins/plots/histogram.rkh:25
 #, kde-format
 msgid "Number of equally spaced points to estimate the density at."
-msgstr ""
+msgstr "თანასწორად დაშორებული წერტილები რაოდენობა სიმკვრივის გასაზომად."
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Variable(s)"> <embed label="...">
 #: rkward/plugins/plots/histogram.xml:41
@@ -1573,7 +1598,7 @@ msgstr "პარეტოს დიაგრამა"
 #: rkward/plugins/plots/pareto.rkh:8
 #, kde-format
 msgid "Creates a pareto chart, and (optionally) prints the values."
-msgstr ""
+msgstr "შექმნის პარეტოს გრაფიკს და (არაავალდებულო) მნიშვნელობებს დაბეჭდავს."
 
 #. i18n: ectx: (Loaded from Pareto chart) <usage>
 #: rkward/plugins/plots/pareto.rkh:12
@@ -1608,6 +1633,8 @@ msgid ""
 "Further options for the plot. Refer to <link href=\"rkward://component/"
 "plot_options\"/> for details."
 msgstr ""
+"მეტი პარამეტრი ნახაზისთვის. დეტალებისთვის იხილეთ <link href=\"rkward://"
+"component/plot_options\"/>."
 
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/pareto.xml:37
@@ -1796,7 +1823,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Choose the X and Y variables and customize the options to draw the plot."
-msgstr ""
+msgstr "აირჩიეთ X და Y ცვლადები და მოირგეთ პარამეტრები ნახაზის დასახატად."
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
@@ -2159,7 +2186,7 @@ msgstr "რბილად დახაზვა"
 #: rkward/plugins/plots/scatterplot_matrix.xml:32
 #, kde-format
 msgid "Plot data concentration ellipses"
-msgstr ""
+msgstr "მონცემის კონცენტრაციის ოვალების დახატვა"
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <summary>
 #: rkward/plugins/plots/stem.rkh:8
@@ -2190,6 +2217,8 @@ msgid ""
 "This controls the length of the plot. A scale of 2 will make the plot "
 "roughly twice as long as the default."
 msgstr ""
+"აკონტროლებს ნახაზის სიგრძეს. თუ მასშტაბი 2-ის ტოლია, ეს ნახაზს დაახლოებით "
+"ორჯერ დააგრძელებს ნაგულისხმევთან შედარებით."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot width")
 #: rkward/plugins/plots/stem.rkh:21

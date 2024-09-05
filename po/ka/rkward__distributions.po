@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-09-03 13:21+0200\n"
+"PO-Revision-Date: 2024-09-04 08:11+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2746,6 +2746,8 @@ msgid ""
 "When calculating densities or probabilities, specify the number of evenly "
 "spaces quantiles to show. Alternatively, use the setting above."
 msgstr ""
+"სიმკვრივეების და ალბათობების გამოთვლისას მიუთითეთ საჩვენებელი თანაბარი "
+"სივრცის კვანტილების რაოდენობა. ან გამოიყენეთ პარამეტრი ზემოთ."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
@@ -2773,6 +2775,8 @@ msgid ""
 "When calculating densities or probabilities, specify one or more quantiles. "
 "Alternatively, leave this empty to use the setting above, instead."
 msgstr ""
+"სიმკვრივეების და ალბათობების გამოთვლისას მიუთითეთ ერთი ან მეტი კვანტილი. ან "
+"დატოვეთ ეს ცარიელი და გამოიყენეთ პარამეტრი ზემოთ."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Number of probabilities")
@@ -2801,6 +2805,8 @@ msgid ""
 "probabilities (optionally logarithmic) to show. Alternatively, use the "
 "setting below."
 msgstr ""
+"კვანტილების გამოთვლისას მიუთითეთ საჩვენებელი თანაბარი სივრცის ალბათობების "
+"(არასავალდებულოდ, ლოგარითმული) რაოდენობა. ან გამოიყენეთ პარამეტრი ქვემოთ."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
@@ -2829,6 +2835,9 @@ msgid ""
 "logarithmic (see below). If this setting is left empty, the setting above is "
 "used, instead."
 msgstr ""
+"კვანტილების გამოთვლისას, მიუთითეთ ერთი ან მეტი ალბათობა, არასავალდებულოდ "
+"ლოგარითმული (იხ. ქვემოთ). თუ ეს პარამეტრი ცარიელია, გამოიყენება ამის ზემოთა "
+"პარამეტრი."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
@@ -2856,6 +2865,8 @@ msgid ""
 "When calculating probabilities, return these as log (p). When specifying "
 "probabilities, these are supplied as log (p)."
 msgstr ""
+"ალბათობების გამოთვლისას, მათი log(p)-ის სახით დაბრუნება. როცა მიუთითებთ "
+"ალბათობებს, ისინი log(p)-ის სახით მიეთითება."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Logarithmic densities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Logarithmic densities")
@@ -5037,6 +5048,7 @@ msgstr ""
 #, kde-format
 msgid "Number of independent observations whose range to consider."
 msgstr ""
+"დამოუკიდებელი დაკვირვებების რიცხვი, ვისი შუალედიც გათვალისწინებული იქნება."
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <settings> <setting> (refers to element labelled "Degrees of freedom for standard deviation estimate")
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <settings> <setting> (refers to element labelled "Degrees of freedom for standard deviation estimate")

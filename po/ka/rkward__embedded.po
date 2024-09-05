@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-06-18 06:18+0200\n"
+"PO-Revision-Date: 2024-09-04 06:19+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Gerogian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -48,6 +48,8 @@ msgid ""
 "Generic plugin to limit a single numeric vector to the n largest / smallest "
 "values. This plugin is designed to be embedded into other plugins."
 msgstr ""
+"ზოგადი დამატება ერთი რიცხვი ვექტორის n უდიდეს / უმცირეს მნიშვნელობებზე "
+"შესაზღუდად. ეს დამატება სხვა დამატებებში ჩასაშენებლადაა განკუთვნილი."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <usage>
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:12
@@ -56,6 +58,8 @@ msgid ""
 "Specify the desired length cutoff and sorting. Note that the result is "
 "always sorted, with the sum of remainder values appended at the end."
 msgstr ""
+"მიუთითეთ სასურველი სიგრძის მოჭრა და დალაგება. დაიმახსოვრეთ, რომ შედეგი "
+"ყოველთვის დალაგებულია და დარჩენილი მნიშვნელობების ჯამი ბოლოში მიეწერება."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Limit")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:17
@@ -64,6 +68,8 @@ msgid ""
 "Maximum number of regular groups to display. One additional group \"others\" "
 "will be displayed, if appropriate."
 msgstr ""
+"საჩვენებელი რეგულარული ჯგუფების მაქსიმალური რაოდენობა. თუ საჭიროა, "
+"გამოჩნდება ერთი დამატებითი ჯგუფი 'სხვები'."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:18
@@ -72,6 +78,8 @@ msgid ""
 "Should the largest or the lowest values be kept? For most purposes, you will "
 "want to keep the largest values."
 msgstr ""
+"უნდა შენარჩუნდეს უდიდესი თუ უმცირესი მნიშვნელობები? ძირითადად, უდიდესი "
+"მნიშვნელობებია მნიშვნელოვანი."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Add remainder category")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:19
@@ -80,12 +88,14 @@ msgid ""
 "Should a category be added for the remaining value (those which have been "
 "cut off)? Note: This will always be appended to the end of the vector."
 msgstr ""
+"უნდა დაემატოს თუ არა დარჩენილ მნიშვნელობას (რომლებიც ამოიჭრა) კატეგორია? "
+"შენიშვნა: ეს ყოველთვის მიეწერება ვექტორის ბოლოში."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
 #, kde-format
 msgid "Statistic to use for summarizing the cut off values."
-msgstr ""
+msgstr "სტატისტიკა ამოჭრილი მნიშვნელობების შეჯამებისთვის."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Custom statistic (as function of x)")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:21
@@ -94,6 +104,8 @@ msgid ""
 "If you chose to use a custom statistic for summarizing the cut off values, "
 "specify it, here, as a function of <em>x</em>."
 msgstr ""
+"თუ აირჩევთ მორგებული სტატისტიკის გამოყენებას ამოჭრილი მნიშვნელობების "
+"დასაჯამებლად, ის აქ მიუთითეთ, როგორც <em>x</em>-ის ფუნქცია."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Remainder category label")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:22
@@ -102,6 +114,8 @@ msgid ""
 "Label to use for the \"others\" category. Note: If your data is not labeled, "
 "emptying this field will sometimes be preferable."
 msgstr ""
+"ჭდე კატეგორიისთვის 'სხვები'.შენიშვნა: თუ თქვენს მონაცემებს ჭდეები არ აქვთ, "
+"ხანდახან სჯობს, ეს ველი ცარიელი იყოს."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -153,6 +167,7 @@ msgid ""
 "<i>invar</i>: Symbol name of the input variable to be limited. Defaults to "
 "'x'."
 msgstr ""
+"<i>invar</i>: შესაზღუდი შეყვანის ცვლადის სიმბოლოს სახელი. ნაგულისხმევია 'x'."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -272,6 +287,8 @@ msgid ""
 "Generic tabulation plugin (single outcome vector). This plugin is designed "
 "to be embedded into other plugins."
 msgstr ""
+"ზოგადი ტაბულაციის დამატება (ერთი გამოსავალი ვექტორი). ეს დამატება სხვა "
+"დამატებებში ჩასაშენებლადაა განკუთვნილი."
 
 #. i18n: ectx: (Loaded from Tabulate) <usage>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:12
@@ -755,7 +772,7 @@ msgstr "ცარიელია"
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust the range so that the labels will fit"
-msgstr ""
+msgstr "შუალედის გასწორება, რომ ჭდეები ჩაეტიოს"
 
 #. i18n: ectx: (Loaded from Barplot Options) <summary>
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:8
@@ -1645,6 +1662,7 @@ msgstr ""
 msgid ""
 "The following external tags are provided for use in the embedding plugin."
 msgstr ""
+"ჩაშენების დამატებასთან გამოსაყენებლად ხელმისაწვდომია შემდეგი გარე ჭდეები."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
