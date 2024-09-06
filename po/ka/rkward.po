@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:36+0000\n"
-"PO-Revision-Date: 2024-09-04 05:25+0200\n"
+"PO-Revision-Date: 2024-09-05 05:46+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -398,6 +398,13 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
+"პაკეტი '%1' (ალბათ, ის ახლახან ჩატვირთეთ) ამჟამად შავ სიაშია სტრუქტურის "
+"ინფორმაცის მისაღებად. პრაქტიკულად ეს ნიშნავს, რომ ამ პაკეტის ობიექტები "
+"ობიექტების ბრაუზერში არ გამოჩნდება და ობიექის სახელის დაბრუნება ან ფუნქციის "
+"არგუმენტი მინიშნება ამ პაკეტის ობიექტებისთვის არ იმუშავებს.\n"
+"პაკეტები, ჩვეულებრივ, შავ სიაშია, თუ ისინი დიდი რაოდენობის მონაცემებს "
+"შეიცავენ, რომლის ჩატვირთვასაც დიდი დრო დასჭირებოდა. პაკეტების სიიდან "
+"მოსაცილებლად იხილეთ მენიუ მორგება->RKWard-ის მორგება->სამუშაო სივრცე."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -411,6 +418,10 @@ msgid ""
 "your \"workspace\". Most importantly, this includes loaded packages, but "
 "also objects added to R's <i>search()<i>-path using <i>attach()</i>."
 msgstr ""
+"ეს სექცია შეიცავს გარემოებს, რომლებიც <i>.GlobalEnv</i>-ის / თქვენი "
+"\"სამუშაო სივრცის\" ნაწილი არაა. ეს შეიცავს არა მხოლოდ ჩატვირთულ პაკეტებს, "
+"არამედ ობიექტებსაც, რომლებიც  R-ის <i>search()<i>-ბილიკზე დაემატა, "
+"<i>attach()</i>-ის გამოყენებით."
 
 #: rkward/core/robjectlist.cpp:87
 #, kde-format
@@ -796,6 +807,10 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"თუ შესაბამისია: როცა აკეთებთ იგივე რამეს R-ის სესიაში RKWard-ის გარეთ, "
+"ხედავთ იგივე პრობლემას?\n"
+"###შეავსეთ###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:132
 #, kde-format
@@ -806,6 +821,11 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"გაქვთ კიდევ ინფორმაცია, რომელიც შეიძლება, ამ პრობლემის მიგნებაში "
+"დაგვეხმაროთ? უფრო ზუსტად, თუ ეს შესაძლებელია, შეგიძლიათ სინჯი მონაცემები და "
+"მაგალით R-ის კოდ გამოგვიგზავნოთ, რომ პრობლემის ნახვა ჩვენც შევძლოთ?\n"
+"###შეავსეთ, გეთაყვა###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:133
 #, kde-format
@@ -880,6 +900,9 @@ msgid ""
 "formats, but requires a number of additional R packages to be installed (you "
 "will be prompted for missing packages). Do you want to give that a try?"
 msgstr ""
+"პაკეტი 'rio' გთავაზობთ ბევრი სხვადასხვა ფაილის ფორმატის შემოტანას, მაგრამ "
+"სჭირდება ბევრი დამატებითი R-ის პაკეტის დაყენება (გკითხავთ ნაკლული პაკეტების "
+"შესახებ). ცდით?"
 
 #: rkward/dialogs/rkimportdialog.cpp:74
 #, kde-format
@@ -912,6 +935,8 @@ msgid ""
 "application on your system, importing it from clipboard (copy and paste) may "
 "be viable."
 msgstr ""
+"თუ თქვენი მონაცემები საშუალო ზომისაა, შეგიძლიათ, ის გახსნათ/ნახოთ სხვა "
+"აპლიკაციაში თქვენს სისტემაზე და შემოიტანოთ ბუფერიდან (დააკოპირეთ და ჩასვით)."
 
 #: rkward/dialogs/rkimportdialog.cpp:94 rkward/dialogs/rkimportdialog.cpp:98
 #, kde-format
@@ -924,6 +949,8 @@ msgid ""
 "<b>Ready to go</b><p>Click \"Finish\" to start the selected import dialog, "
 "or \"Back\" to explore other options.</p>"
 msgstr ""
+"<b>ყველაფერი მზადაა</b><p>დააწკაპუნეთ \"დასრულებას\", რომ გაუშვათ მონიშნული "
+"შემოტანის დიალოგი, ან \"უკან\", რომ დამატებით პარამეტრებზე დაბრუნდეთ.</p>"
 
 #: rkward/dialogs/rkimportdialog.cpp:104
 #, kde-format
@@ -938,6 +965,10 @@ msgid ""
 "li><li>Save your data to a different format in the original application</"
 "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgstr ""
+"ამჟამად სხვა შემოტანის მეთოდები ხელმისაწვდომი არაა. რა შეგიძლიათ, ქნათ: "
+"<ul><li>შეამოწმეთ დამატებითი შემოტანის დამატებების ხელმისაწვდომობა</"
+"li><li>შეინახეთ მონაცემების სხვა ფორმატში ორიგინალ აპლიკაციაში</"
+"li><li>გვკითხეთ რჩევა ელფოსტაზე rkward-users@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -995,6 +1026,9 @@ msgid ""
 "sure, that you want to remove these packages, please do so on the R command "
 "line."
 msgstr ""
+"შემდეგი პაკეტები, რომლებიც წასაშლელად არჩიეთ, RKWard-ის მუშაობას სჭირდება და "
+"არ წაიშლება. თუ აბსოლუტურად დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ ეს "
+"პაკეტები, ეს R-ის ბრძანების სტრიქონიდან ქენით."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
@@ -1199,6 +1233,8 @@ msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
 "matching a filter string.</p>"
 msgstr ""
+"<p>შეგიძლიათ, შეზღუდოთ პაკეტები, რომლებიც სიაშია ნაჩვენები სახელებზე ან "
+"სათაურებზე, რომლებიც ფილტრის სტრიქონს ემთხვევა.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:654
 #, kde-format

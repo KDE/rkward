@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-09-04 06:19+0200\n"
+"PO-Revision-Date: 2024-09-05 06:02+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Gerogian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -561,7 +561,7 @@ msgstr "დაყენება git-ის შედეგებიდან"
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:18
 #, kde-format
 msgid "Set the location where the package resides that you want to install."
-msgstr ""
+msgstr "დააყენეთ მდებარეობა პაკეტისთვის, რომლის დაყენებაც გნებავთ."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:22
@@ -613,6 +613,8 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the user name (Bitbucket only)."
 msgstr ""
+"პირადი რეპოზიტორიიდან დააწყენებლად, დააყენეთ მომხმარებლის სახელი (მხოლოდ "
+"Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:44
@@ -620,6 +622,7 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the password (Bitbucket only)."
 msgstr ""
+"პირადი რეპოზიტორიიდან დააწყენებლად, დააყენეთ პაროლი (მხოლოდ Bitbucket)."
 
 #. i18n: ectx: (Install from git/svn) <dialog label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:30
@@ -816,7 +819,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:20
 #, kde-format
 msgid "Select if you want to display bar values (labels)."
-msgstr ""
+msgstr "აირჩიეთ, გნებავთ თუ არა ზოლის მნიშვნელობების (ჭდეების) ჩვენება."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21

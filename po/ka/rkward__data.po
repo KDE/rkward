@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-07-23 05:33+0200\n"
+"PO-Revision-Date: 2024-09-05 07:15+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -154,6 +154,10 @@ msgid ""
 "to recode vectors that are coded numerically, but this only makes sense for "
 "numeric vectors with only a limited number of unique values."
 msgstr ""
+"საშუალებას გაძლევთ კატეგორიული მონაცემების მქონე ვექტორის რეკოდირების. ეს "
+"დამატება ასევე საშუალებას გაძლევთ იმ ვექტორების რეკოდირების, რომლებიც "
+"კოდირებულია რიცხვად, მაგრამ, ამას, მხოლოდ, რიცხვით ვექტორებისთვის აქვს აზრი, "
+"უნიკალური მნიშვნელობების შეზღუდული რაოდენობით."
 
 #. i18n: ectx: (Recode categorical data) <usage>
 #: rkward/plugins/data/recode_categorical.rkh:15
@@ -163,6 +167,9 @@ msgid ""
 "storage mode of the resulting data. Then, on the second tab, specify the "
 "recodings to make."
 msgstr ""
+"აირჩიეთ ვექტორი რეკოდირებისთვის და სად მოხდება რეკოდირებული მონაცემების "
+"დამახსოვრება. აირჩიეთ საცავის რეჟიმი მიღებული მონაცემებისთვის. შემდეგ კი, "
+"მეორე ჩანართზე, მიუთითეთ, რისი რეკოდირება გსურთ."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Select variable to recode")
 #: rkward/plugins/data/recode_categorical.rkh:21
@@ -177,6 +184,8 @@ msgid ""
 "Select whether to overwrite/replace the input vector with the recoded data, "
 "or save to a different vector."
 msgstr ""
+"აირჩეთ, მოხდება თავზე გადაწერა/ჩანაცვლება შეყვანილი ვექტორის რეკოდირებული "
+"მონაცემებით, თუ შენახვა სხვა ვექტორში მოხდება."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Object to save to")
 #: rkward/plugins/data/recode_categorical.rkh:27
@@ -199,6 +208,8 @@ msgid ""
 "values. The preview is limited to the first 500 rows of data, for "
 "performance reasons."
 msgstr ""
+"რეკოდინგის მინიატურის ჩვენება ორსვეტიანი ცხრილის სახით ძველი და ახალი "
+"მნიშვნელობებისთვის. მინიატურა პირველ 500 მწკრივზეა შეზღუდული წარმადობის გამო."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Recodings")
 #: rkward/plugins/data/recode_categorical.rkh:37
@@ -209,6 +220,10 @@ msgid ""
 "recodings, click the \"remove/x\"-button. For each recoding, select the "
 "following:"
 msgstr ""
+"ამ ჩანართის ზედა ნახევარი საშუალება გაძლევთ, ინდივიდუალური შეყვანის "
+"მნიშვნელობები რეკოდინგი მიუთითოთ. მეტი რეკოდინგის დასამატებლად, დააწექით "
+"\"დამატება/+\" ღილაკს. რეკოდინგების წაწაშლელად კი \"წაშლა/x\" ღილაკს. "
+"თითოეული რეკოდინგისთვის აირჩიეთ შემდეგი:"
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Old values")
 #: rkward/plugins/data/recode_categorical.rkh:41
@@ -443,6 +458,8 @@ msgid ""
 "The object to sort. If a data.frame editor window is currently active, the "
 "corresponding object name will be filled in as a default."
 msgstr ""
+"დასალაგებელი ობიექტი. თუ data.frame-ის რედაქტორის ფანჯარა ამჟამად აქტიურია, "
+"შესაბამისი ობიექტის სახელი ნაგულისხმევად შეივსება."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort by")
 #: rkward/plugins/data/sort.rkh:18
@@ -478,6 +495,8 @@ msgid ""
 "Show a preview of the sorted data. The preview is limited to 200 rows and 50 "
 "columns of data, for performance reasons."
 msgstr ""
+"დალაგებულ მონაცემების მინიატურის ჩვენება. მინიატურა შეზღუდულია მონაცემების "
+"200 მწკრივზე და 50 სვეტზე, წარმადობის მიზეზებით."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort order")
 #: rkward/plugins/data/sort.rkh:24
@@ -492,6 +511,9 @@ msgid ""
 "Allows to apply conversions, which may affect sort order (when sorting data."
 "frames, this option is available for each column to sort by)."
 msgstr ""
+"საშუალებას გაძლევთ, გადაატაროთ გადაყვანები, რომლებსაც შეუძლიათ, დალაგების "
+"მიმდევრობები შეცვალონ (როცა მიმდინარეობს data.frames-ის დალაგება, ეს "
+"პარამეტრი თითოეული სვეტისთვისაა ხელმისაწვდომი)."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Order")
 #: rkward/plugins/data/sort.rkh:26
@@ -500,6 +522,8 @@ msgid ""
 "When sorting data.frames, this option allows to reverse the global sort "
 "order for individual columns."
 msgstr ""
+"როცა მიმდინარეობს data.frames_ის დამატება, ეს პარამეტრი ინდივიდუალური "
+"სვეტებისთვის გლობალური დალაგების მიმდევრობის შებრუნების საშუალებას გაძლევთ."
 
 #. i18n: ectx: (Loaded from Sort data) <related>
 #: rkward/plugins/data/sort.rkh:28
@@ -653,6 +677,8 @@ msgid ""
 "Select a column of the data.frame specifying the condition to filter cases "
 "on. Leave empty, if you do not want to filter on a column."
 msgstr ""
+"აირჩიეთ data.frame-ის სვეტი, რომელიც შემთხვევების გასაფილტრ პირობას "
+"შეიცავენ. დატოვეთ ცარიელი, თუ სვეტებზე ფილტრის დადება არ გნებავთ."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Keep cases matching rule")
 #: rkward/plugins/data/subset_dataframe.rkh:33
@@ -661,6 +687,8 @@ msgid ""
 "Select the type of condition. Note that depending on the type of the filter "
 "variable, different options are available"
 msgstr ""
+"აირჩიეთ პირობის ტიპი. დამახსოვრეთ, რომ ფილტრის ცვლადის ტიპზე "
+"დამოკიდებულებით, ხელმისაწვდომია სხვადასხვა პარამეტრები"
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Value (pasted as-is, use proper quoting!)")
 #: rkward/plugins/data/subset_dataframe.rkh:36
@@ -691,6 +719,8 @@ msgid ""
 "Whether the minimum value is contained in the range to check against (i.e. "
 "compare 'larger or equal (&gt;=)')."
 msgstr ""
+"შეიცავს თუ არა შუალედი მინიმალურ მნიშვნელობას, რომელთანაც შედარება მოხდება "
+"(ანუ, შედარება 'მეტია ან ტოლია (&gt;=)')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Maximum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:45
@@ -705,6 +735,8 @@ msgid ""
 "Whether the maximum value is contained in the range to check against (i.e. "
 "compare 'smaller or equal (&lt;=)')."
 msgstr ""
+"შეიცავს თუ არა შუალედი მაქსიმალურ მნიშვნელობას, რომელთანაც შედარება მოხდება "
+"(ანუ, შედარება 'ნაკლებია ან ტოლია (&lt;=)')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:52
