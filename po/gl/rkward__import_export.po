@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-04-21 09:58+0200\n"
+"POT-Creation-Date: 2024-08-31 00:36+0000\n"
+"PO-Revision-Date: 2024-09-02 17:55+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -27,6 +27,198 @@ msgstr "Adrian Chaves (Gallaecio)"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "adrian@chaves.io"
+
+#. i18n: ectx: (Loaded from Download AppImage)
+#: rkward/plugins/00saveload/DownloadAppImage.js:51
+#, kde-format
+msgid "Download AppImage results"
+msgstr "Resultados da descarga de AppImage"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Download AppImage) <title>
+#. i18n: ectx: (Download AppImage) <dialog label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.rkh:14
+#: rkward/plugins/00saveload/DownloadAppImage.xml:33
+#: rkward/plugins/import_export.pluginmap:54
+#, kde-format
+msgid "Download AppImage"
+msgstr "Descarga de AppImage"
+
+#. i18n: ectx: (Download AppImage) <summary>
+#: rkward/plugins/00saveload/DownloadAppImage.rkh:17
+#, kde-format
+msgid "Adds a dialog to install or update an AppImage of RKWard"
+msgstr "Engade un diálogo para instalar ou anovar a AppImage de RKWard."
+
+#. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Save to")
+#: rkward/plugins/00saveload/DownloadAppImage.rkh:31
+#, kde-format
+msgid "Select a target file to save the AppImage to."
+msgstr "Seleccionar o ficheiro onde gardar a AppImage."
+
+#. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "URL")
+#: rkward/plugins/00saveload/DownloadAppImage.rkh:37
+#, kde-format
+msgid "URL to look for the AppImage files."
+msgstr "URL onde buscar os ficheiros de AppImage."
+
+#. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Pattern")
+#: rkward/plugins/00saveload/DownloadAppImage.rkh:40
+#, kde-format
+msgid ""
+"Regular expression to find links to the AppImage in the HTML code of the URL."
+msgstr ""
+"Expresión regular para atopar ligazóns á AppImage no código HTML do URL."
+
+#. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Download method")
+#: rkward/plugins/00saveload/DownloadAppImage.rkh:44
+#, kde-format
+msgid "The method to use by download.file()."
+msgstr "O método que download.file() debe usar."
+
+#. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Allow cached files")
+#: rkward/plugins/00saveload/DownloadAppImage.rkh:47
+#, kde-format
+msgid ""
+"Is a server-side cached value acceptable? Disabling this is useful for "
+"‘⁠http://⁠’ and ‘⁠https://⁠’ URLs. It will attempt to get a copy directly from "
+"the site rather than from an intermediate cache."
+msgstr ""
+"É aceptábel un valor da caché do servidor? Desactivar isto é útil para URL "
+"que comezan por «http://» ou «https://». Intentará obter unha copia "
+"directamente do sitio en vez de dunha caché intermediaria."
+
+#. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Timeout")
+#: rkward/plugins/00saveload/DownloadAppImage.rkh:50
+#, kde-format
+msgid "The number of seconds allowed to try downloading the AppImage."
+msgstr "Número máximo de segundos que permitir para a descarga da AppImage."
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:34
+#, kde-format
+msgid "AppImage"
+msgstr "AppImage"
+
+#. i18n: ectx: (Loaded from Export Table / CSV files)
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:35
+#: rkward/plugins/00saveload/save/write_csv.js:110
+#: rkward/plugins/import_export.pluginmap:58
+#, kde-format
+msgid "File"
+msgstr "Ficheiro"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="File"> <text>
+#: rkward/plugins/00saveload/DownloadAppImage.xml:39
+#, kde-format
+msgid ""
+"Please note that downloading the AppImage file might take a while. Your R "
+"session can be occupied for some minutes once you submit. For a live "
+"feedback of the download progress, please run the <code> rk."
+"download_appimage() </code> call in the R console manually."
+msgstr ""
+"Teña en conta que descargar o ficheiro de AppImage pode levar un tempo. Unha "
+"vez remita isto, a súa sesión de R pode quedar ocupada durante varios "
+"minutos. Para obter información de progreso da descarga, execute manualmente "
+"a chamada <code> rk.download_appimage() </code> na consola de R."
+
+#. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="...">
+#. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="...">
+#. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <browser label="...">
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="File"> <browser label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:48
+#: rkward/plugins/00saveload/save/ExportRMarkdown.xml:91
+#: rkward/plugins/00saveload/save/save.xml:43
+#: rkward/plugins/00saveload/save/write_csv.xml:60
+#, kde-format
+msgid "Save to"
+msgstr "Gardar en"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="File"> <checkbox label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:51
+#, kde-format
+msgid "Suppress package loading messages"
+msgstr "Suprimir as mensaxes de carga de paquetes."
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:55
+#, kde-format
+msgid "Source"
+msgstr "Orixe"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Source"> <input label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:58
+#, kde-format
+msgid "URL"
+msgstr "URL"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Source"> <input label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:59
+#, kde-format
+msgid "Pattern"
+msgstr "Padrón"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:64
+#, kde-format
+msgid "Download"
+msgstr "Descargar"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <dropdown label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:67
+#, kde-format
+msgid "Download method"
+msgstr "Método de descarga"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:68
+#, kde-format
+msgid "auto"
+msgstr "automático"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:69
+#, kde-format
+msgid "internal"
+msgstr "interno"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:70
+#, kde-format
+msgid "libcurl"
+msgstr "libcurl"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:71
+#, kde-format
+msgid "wget"
+msgstr "wget"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:72
+#, kde-format
+msgid "curl"
+msgstr "curl"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:73
+#, kde-format
+msgid "wininet (Windows only)"
+msgstr "wininet (só en Windows)"
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <checkbox label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:75
+#, kde-format
+msgid "Allow cached files"
+msgstr "Permitir ficheiros de caché."
+
+#. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <spinbox label="...">
+#: rkward/plugins/00saveload/DownloadAppImage.xml:76
+#, kde-format
+msgid "Timeout"
+msgstr "Tempo límite"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="...">
@@ -2496,16 +2688,6 @@ msgstr "Palabra"
 msgid "Save as"
 msgstr "Gardar como"
 
-#. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="...">
-#. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="...">
-#. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <browser label="...">
-#: rkward/plugins/00saveload/save/ExportRMarkdown.xml:91
-#: rkward/plugins/00saveload/save/save.xml:43
-#: rkward/plugins/00saveload/save/write_csv.xml:60
-#, kde-format
-msgid "Save to"
-msgstr "Gardar en"
-
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:96
 #, kde-format
@@ -2764,14 +2946,6 @@ msgstr "Amecer a un ficheiro existente"
 #, kde-format
 msgid "Export Table / CSV files"
 msgstr "Exportar ficheiros de táboas ou CSV"
-
-#. i18n: ectx: (Loaded from Export Table / CSV files)
-#. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/00saveload/save/write_csv.js:110
-#: rkward/plugins/import_export.pluginmap:57
-#, kde-format
-msgid "File"
-msgstr "Ficheiro"
 
 #. i18n: ectx: (Export Table / CSV files) <summary>
 #: rkward/plugins/00saveload/save/write_csv.rkh:13
@@ -3265,26 +3439,26 @@ msgstr "Definir o cartafol de traballo"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #. i18n: ectx: <context> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:58
-#: rkward/plugins/import_export.pluginmap:84
+#: rkward/plugins/import_export.pluginmap:59
+#: rkward/plugins/import_export.pluginmap:86
 #, kde-format
 msgid "Import"
 msgstr "Importar"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="Import"> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:59
+#: rkward/plugins/import_export.pluginmap:60
 #, kde-format
 msgid "Import format"
 msgstr "Formato de importación"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:70
+#: rkward/plugins/import_export.pluginmap:71
 #, kde-format
 msgid "Export"
 msgstr "Exportar"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:78
+#: rkward/plugins/import_export.pluginmap:80
 #, kde-format
 msgid "Workspace"
 msgstr "Espazo de traballo"

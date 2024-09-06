@@ -1,6 +1,7 @@
 --- Version 0.8.1 - UNRELEASED
 - Fixed: antialising=FALSE was ignored in RK() device
 - Added: Impoement glyph()-functionality in RK() device
+- Fixed: Abnormal exit on Windows while trying to launch gpgpme (triggered from PDF previews)
 - Fixed: Failure to paint symbols in onscreen device, under some circumstances
 - Fixed: Potential library conflicts on systems shipping a more recent version of libglib2 than included in the AppImage
 - Fixed: Implement capbilities report for RK() device (may fix graphics limitation, but also potential crashes with R >= 4.2.0)
