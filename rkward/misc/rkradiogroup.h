@@ -22,6 +22,7 @@ public:
 	~RKRadioGroup() override;
 
 	QRadioButton* addButton(const QString &label, int id = -1);
+	/** NOTE: the group, but not the associated button assumes ownership over controlled! */
 	QRadioButton* addButton(const QString &label, int id, QWidget* controlled, QBoxLayout::Direction dir=QBoxLayout::TopToBottom);
 	QRadioButton* addButton(const QString &label, QWidget* controlled, QBoxLayout::Direction dir=QBoxLayout::TopToBottom) {
 		return addButton(label, -1, controlled, dir);
@@ -30,12 +31,9 @@ public:
 	 *  @return false, if there is no such button, true otherwise. */
 	bool setButtonChecked(int id, bool checked);
 	QButtonGroup* group() const { return _group; };
-protected:
-	bool eventFilter(QObject *obj, QEvent *ev) override;
 private:
 	QButtonGroup *_group;
 	QBoxLayout *_layout;
-	static constexpr const char property[] = "_rkradiogroup_";
 };
 
 #endif

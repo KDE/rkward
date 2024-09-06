@@ -33,9 +33,9 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 </affiliation>
 </author>
 <date
->30/11/2023</date>
+>26/5/2024</date>
 <releaseinfo
->RKWard 0.7.5</releaseinfo>
+>RKWard 0.8.0</releaseinfo>
 <productname
 >KDE Applications</productname>
 </refentryinfo>
@@ -220,7 +220,9 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 >spesso</emphasis
 > con le versioni più recenti di R, <emphasis
 >a volte</emphasis
-> dovrà essere ricompilato per quella versione, oppure potrebbe essere essere del tutto incompatibile.</para
+> dovrà essere ricompilato per quella versione, oppure potrebbe essere essere del tutto incompatibile.</para>
+<para
+>Questa opzione modifica l'installazione di R solo per la sessione attuale, non in modo persistente.</para
 ></listitem>
 </varlistentry>
 <varlistentry>
@@ -260,7 +262,19 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 >rkward://runplugin/...</replaceable
 >), &rkward; mostrerà un avviso che tale &URL; <emphasis
 >potrebbe</emphasis
-> essere usato per innescare azioni dannose sul tuo sistema. Questo avviso si applica specificamente ai collegamenti presenti su siti web non attendibili o altre fonti esterne non attendibili. Se si desidera creare script di &rkward; localmente, è possibile evitare questo avviso aggiungendo --nowarn-external alla riga di comando.</para
+> essere usato per innescare azioni dannose sul tuo sistema. Questo avviso si applica specificamente ai collegamenti presenti su siti web non attendibili o altre fonti esterne non attendibili. Se si desidera creare script di &rkward; localmente, è possibile evitare questo avviso aggiungendo --nowarn-external alla riga di comando.</para>
+<para
+>(Se usato in combinazione con --reuse, allora *entrambi* i comandi in questione dovranno essere invocati con --nowarn-external, per sopprimere l'avviso.)</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--setup</option
+></term>
+<listitem
+><para
+>Agisci come se fosse stata installata una nuova versione di RKWard, reinstallando soprattutto il pacchetto di supporto di R e mostrando la procedura guidata di installazione. Questa funzionalità è rivolta principalmente a sviluppatori e tester.</para
 ></listitem>
 </varlistentry>
 <varlistentry>

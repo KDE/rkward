@@ -156,9 +156,6 @@ int main (int argc, char *argv[]) {
 	BreezeIcons::initIcons(); // install as fallback theme. Too many issues with missing icons, otherwise
 	QApplication app(argc, argv);
 	KDSingleApplication app_singleton;
-#ifdef WITH_KCRASH
-	KCrash::setDrKonqiEnabled (true);
-#endif
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
 	// Follow the example of kate, and use breeze theme on Windows and Mac, which appears to work best
 	QApplication::setStyle(QStringLiteral("breeze"));
@@ -198,6 +195,10 @@ int main (int argc, char *argv[]) {
 	aboutData.addCredit (i18n ("Many more people on rkward-devel@kde.org"), i18n ("Sorry, if we forgot to list you. Please contact us to get added"));
 	aboutData.setOtherText(QString("<p><b>%1</b></p><ul><li><a href=\"https://www.jstatsoft.org/article/view/v049i09\">%2</a></li><li>Friedrichsmeier, T. &amp; the RKWard Team (%3). RKWard: %4. Version %5. %6</li></ul>").arg(i18n("How to cite:"), i18n("Peer-reviewed article in the Journal of Statistical Software"), aboutData.copyrightStatement().right(4), aboutData.shortDescription(), aboutData.version(), aboutData.homepage()));
 	KAboutData::setApplicationData (aboutData);
+#ifdef WITH_KCRASH
+	KCrash::setDrKonqiEnabled(true);
+	KCrash::initialize();
+#endif
 
 	RKCommandLineArgs args(&aboutData, &app);
 

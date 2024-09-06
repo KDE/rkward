@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-01 00:38+0000\n"
-"PO-Revision-Date: 2024-07-15 12:57+0300\n"
+"POT-Creation-Date: 2024-08-17 00:36+0000\n"
+"PO-Revision-Date: 2024-08-09 14:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.07.70\n"
+"X-Generator: Lokalize 24.11.70\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -165,7 +165,7 @@ msgstr ""
 "<b>kaydedilmedi</b>."
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:361
+#: rkward/misc/rkprogresscontrol.cpp:328
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -1618,37 +1618,37 @@ msgstr "<b>Birini veya daha fazlasını seçin:</b>"
 msgid "<b>Select one:</b>"
 msgstr "<b>Birini seçin:</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:115
+#: rkward/dialogs/rksetupwizard.cpp:113
 #, kde-format
 msgid "Show problem details"
 msgstr "Sorun ayrıntılarını göster"
 
-#: rkward/dialogs/rksetupwizard.cpp:129
+#: rkward/dialogs/rksetupwizard.cpp:127
 #, kde-format
 msgid "RKWard <b>failed to detect an R installation</b> on this system"
 msgstr "RKWard, bu sistemde bir <b>R kurulumu algılayamadı</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:131
+#: rkward/dialogs/rksetupwizard.cpp:129
 #, kde-format
 msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
 msgstr "RKWard şu anda <nobr>%1</nobr> konumundaki R kurulumunu kullanıyor."
 
-#: rkward/dialogs/rksetupwizard.cpp:139
+#: rkward/dialogs/rksetupwizard.cpp:137
 #, kde-format
 msgid "<b>R backend has failed to start.</b>"
 msgstr "<b>R arka ucu başlatılamadı.</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:141
+#: rkward/dialogs/rksetupwizard.cpp:139
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
 msgstr "<b>R arka ucu çöktü.</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:148
+#: rkward/dialogs/rksetupwizard.cpp:146
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
 msgstr "<b>R sürüm %1, başarıyla başlatıldı.</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:151
+#: rkward/dialogs/rksetupwizard.cpp:149
 #, kde-format
 msgid ""
 "<p>You are using the R version bundled inside the RKWard AppImage.</"
@@ -1662,57 +1662,57 @@ msgstr ""
 "çoğu R eklentisi paketlerini kuramayacaksınız. Genelde bunun yerine, sistem "
 "geneline kurulu bir R kurulumunu seçmeniz önerilir.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:165
+#: rkward/dialogs/rksetupwizard.cpp:163
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
 msgstr "<b>R arka ucu bekleniyor…</b>"
 
-#: rkward/dialogs/rksetupwizard.cpp:186
-#, kde-format
-msgid "Use R at:"
-msgstr "Şuradaki R’yi kullan:"
-
-#: rkward/dialogs/rksetupwizard.cpp:188
+#: rkward/dialogs/rksetupwizard.cpp:180
 #, kde-format
 msgid "Select another R executable"
 msgstr "Başka bir R yürütülebiliri seç"
 
-#: rkward/dialogs/rksetupwizard.cpp:190
+#: rkward/dialogs/rksetupwizard.cpp:181
 #, kde-format
 msgid "Select R executable"
 msgstr "R Yürütülebiliri Seç"
 
-#: rkward/dialogs/rksetupwizard.cpp:206
+#: rkward/dialogs/rksetupwizard.cpp:197
 #, kde-format
 msgid "Use R at %1"
 msgstr "%1 konumundaki R’yi kullan"
 
-#: rkward/dialogs/rksetupwizard.cpp:209
+#: rkward/dialogs/rksetupwizard.cpp:199
+#, kde-format
+msgid "Use R at:"
+msgstr "Şuradaki R’yi kullan:"
+
+#: rkward/dialogs/rksetupwizard.cpp:202
 #, kde-format
 msgid "Attempt to restart R at %1"
 msgstr "%1 konumundaki R’yi yeniden başlatmayı dene"
 
-#: rkward/dialogs/rksetupwizard.cpp:210
+#: rkward/dialogs/rksetupwizard.cpp:203
 #, kde-format
 msgid "Keep current version (%1)"
 msgstr "Geçerli sürümü tut (%1)"
 
-#: rkward/dialogs/rksetupwizard.cpp:242
+#: rkward/dialogs/rksetupwizard.cpp:227
 #, kde-format
 msgid "No action needed."
 msgstr "Gereken eylem yok."
 
-#: rkward/dialogs/rksetupwizard.cpp:277
+#: rkward/dialogs/rksetupwizard.cpp:262
 #, kde-format
 msgid "Not installed"
 msgstr "Kurulu değil"
 
-#: rkward/dialogs/rksetupwizard.cpp:278 rkward/dialogs/rksetupwizard.cpp:289
+#: rkward/dialogs/rksetupwizard.cpp:263 rkward/dialogs/rksetupwizard.cpp:274
 #, kde-format
 msgid "Install %1"
 msgstr "Kur: %1"
 
-#: rkward/dialogs/rksetupwizard.cpp:278
+#: rkward/dialogs/rksetupwizard.cpp:263
 #, kde-format
 msgid ""
 "(Attempt to) install the package %1 and its dependencies for this version of "
@@ -1721,13 +1721,13 @@ msgstr ""
 "R’nin bu sürümü için %1 paketini ve bağımlılıklarını kurmayı deneyin. Çoğu "
 "durumda, bunun için çalışan bir internet bağlantısı gerekir."
 
-#: rkward/dialogs/rksetupwizard.cpp:279 rkward/dialogs/rksetupwizard.cpp:290
-#: rkward/dialogs/rksetupwizard.cpp:350
+#: rkward/dialogs/rksetupwizard.cpp:264 rkward/dialogs/rksetupwizard.cpp:275
+#: rkward/dialogs/rksetupwizard.cpp:335
 #, kde-format
 msgid "No change"
 msgstr "Değişiklik yok"
 
-#: rkward/dialogs/rksetupwizard.cpp:279
+#: rkward/dialogs/rksetupwizard.cpp:264
 #, kde-format
 msgid ""
 "Proceed without the package. You will again be given the option to install "
@@ -1736,12 +1736,12 @@ msgstr ""
 "Paket olmadan sürdürün. Pakete gereksinim duyulduğunda size paketi yeniden "
 "kurma seçeneği sunulacak."
 
-#: rkward/dialogs/rksetupwizard.cpp:281 rkward/dialogs/rksetupwizard.cpp:301
+#: rkward/dialogs/rksetupwizard.cpp:266 rkward/dialogs/rksetupwizard.cpp:286
 #, kde-format
 msgid "Installed"
 msgstr "Kurulu"
 
-#: rkward/dialogs/rksetupwizard.cpp:289
+#: rkward/dialogs/rksetupwizard.cpp:274
 #, kde-format
 msgid ""
 "Mark %1 for installation (actual installation is not yet supported, but you "
@@ -1752,22 +1752,22 @@ msgstr ""
 "ancak bu iletişim kutusunun son sayfasında bir indirme sayfasına yönlendiren "
 "bir bağlantı sağlanacaktır)"
 
-#: rkward/dialogs/rksetupwizard.cpp:290
+#: rkward/dialogs/rksetupwizard.cpp:275
 #, kde-format
 msgid "Proceed without %1. You will be missing some functionality."
 msgstr "%1 olmadan sürdürün. Bazı işlevsellikler kullanılamayacaktır."
 
-#: rkward/dialogs/rksetupwizard.cpp:298
+#: rkward/dialogs/rksetupwizard.cpp:283
 #, kde-format
 msgid "Not found"
 msgstr "Bulunamadı"
 
-#: rkward/dialogs/rksetupwizard.cpp:312
+#: rkward/dialogs/rksetupwizard.cpp:297
 #, kde-format
 msgid "RKWard Setup Assistant"
 msgstr "RKWard Kurulum Yardımcısı"
 
-#: rkward/dialogs/rksetupwizard.cpp:314
+#: rkward/dialogs/rksetupwizard.cpp:299
 #, kde-format
 msgid ""
 "<p>This dialog will guide you through a quick check of the basic setup of "
@@ -1776,7 +1776,7 @@ msgstr ""
 "<p>Bu iletişim kutusu, gerekli (veya önerilen) bileşenlerin temel "
 "kurulumunun hızlı bir şekilde denetlenmesinde size yol gösterecektir.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:316
+#: rkward/dialogs/rksetupwizard.cpp:301
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
@@ -1785,7 +1785,7 @@ msgstr ""
 "<p>RKWard’ın yeni bir sürümü algılandığından kurulum yardımcısı "
 "kendiliğinden çağrıldı.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:319
+#: rkward/dialogs/rksetupwizard.cpp:304
 #, kde-format
 msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
@@ -1794,27 +1794,27 @@ msgstr ""
 "<p>R’nin yeni bir sürümü algılandığından kurulum yardımcısı kendiliğinden "
 "çağrıldı.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:332
+#: rkward/dialogs/rksetupwizard.cpp:317
 #, kde-format
 msgid "Basic installation"
 msgstr "Temel kurulum"
 
-#: rkward/dialogs/rksetupwizard.cpp:334
+#: rkward/dialogs/rksetupwizard.cpp:319
 #, kde-format
 msgid "Installation directory"
 msgstr "Kurulum dizini"
 
-#: rkward/dialogs/rksetupwizard.cpp:336
+#: rkward/dialogs/rksetupwizard.cpp:321
 #, kde-format
 msgid "Not found."
 msgstr "Bulunamadı"
 
-#: rkward/dialogs/rksetupwizard.cpp:338
+#: rkward/dialogs/rksetupwizard.cpp:323
 #, kde-format
 msgid "Reinstallation required"
 msgstr "Yeniden kurulum gerekiyor"
 
-#: rkward/dialogs/rksetupwizard.cpp:338
+#: rkward/dialogs/rksetupwizard.cpp:323
 #, kde-format
 msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
@@ -1822,50 +1822,50 @@ msgid ""
 msgstr ""
 "Bu sorun kendiliğinden düzeltilemiyor. RKWard’ı yeniden kurmanız gerekecek."
 
-#: rkward/dialogs/rksetupwizard.cpp:341 rkward/dialogs/rksetupwizard.cpp:354
-#: rkward/dialogs/rksetupwizard.cpp:378
+#: rkward/dialogs/rksetupwizard.cpp:326 rkward/dialogs/rksetupwizard.cpp:339
+#: rkward/dialogs/rksetupwizard.cpp:363
 #, kde-format
 msgid "Found."
 msgstr "Bulundu"
 
-#: rkward/dialogs/rksetupwizard.cpp:345
+#: rkward/dialogs/rksetupwizard.cpp:330
 #, kde-format
 msgid "RKWard plugins"
 msgstr "RKWard eklentileri"
 
-#: rkward/dialogs/rksetupwizard.cpp:347
+#: rkward/dialogs/rksetupwizard.cpp:332
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr ""
 "<p>Hiçbir eklenti etkin değil. Bu, büyük olasılıkla amaçlanan bir şey "
 "değildi.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:348
+#: rkward/dialogs/rksetupwizard.cpp:333
 #, kde-format
 msgid "None selected"
 msgstr "Seçili yok"
 
-#: rkward/dialogs/rksetupwizard.cpp:349
+#: rkward/dialogs/rksetupwizard.cpp:334
 #, kde-format
 msgid "Restore defaults"
 msgstr "Öntanımlıları geri yükle"
 
-#: rkward/dialogs/rksetupwizard.cpp:349
+#: rkward/dialogs/rksetupwizard.cpp:334
 #, kde-format
 msgid "Enable the default plugins"
 msgstr "Öntanımlı eklentileri etkinleştirin"
 
-#: rkward/dialogs/rksetupwizard.cpp:350
+#: rkward/dialogs/rksetupwizard.cpp:335
 #, kde-format
 msgid "Proceed without plugins"
 msgstr "Eklentiler olmadan sürdür"
 
-#: rkward/dialogs/rksetupwizard.cpp:358
+#: rkward/dialogs/rksetupwizard.cpp:343
 #, kde-format
 msgid "Kate plugins"
 msgstr "Kate eklentileri"
 
-#: rkward/dialogs/rksetupwizard.cpp:361
+#: rkward/dialogs/rksetupwizard.cpp:346
 #, kde-format
 msgid ""
 "<p>Important functionality in RKWard is provided by kate plugins. It looks "
@@ -1876,44 +1876,44 @@ msgstr ""
 "sağlanır. Bu sistemde hiçbiri kurulu değil gibi görünüyor. Bunu genellikle "
 "Linux/BSD’de Kate’i kurarak düzeltebilirsiniz.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:362
+#: rkward/dialogs/rksetupwizard.cpp:347
 #, kde-format
 msgid "None found"
 msgstr "Bir şey bulunamadı"
 
-#: rkward/dialogs/rksetupwizard.cpp:365
+#: rkward/dialogs/rksetupwizard.cpp:350
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
 msgstr[0] "%1 eklenti bulundu."
 msgstr[1] "%1 eklenti bulundu."
 
-#: rkward/dialogs/rksetupwizard.cpp:370
+#: rkward/dialogs/rksetupwizard.cpp:355
 #, kde-format
 msgid "Pre 0.7.3 output file"
 msgstr "0.7.3 öncesi çıktı dosyası"
 
-#: rkward/dialogs/rksetupwizard.cpp:373
+#: rkward/dialogs/rksetupwizard.cpp:358
 #, kde-format
 msgid "Exists"
 msgstr "Var"
 
-#: rkward/dialogs/rksetupwizard.cpp:375
+#: rkward/dialogs/rksetupwizard.cpp:360
 #, kde-format
 msgid "Import"
 msgstr "İçe aktar"
 
-#: rkward/dialogs/rksetupwizard.cpp:375
+#: rkward/dialogs/rksetupwizard.cpp:360
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
 msgstr "Oturuma içe aktarın, böylece yeni çıktı biçiminde kaydedebilirsiniz."
 
-#: rkward/dialogs/rksetupwizard.cpp:376
+#: rkward/dialogs/rksetupwizard.cpp:361
 #, kde-format
 msgid "No action"
 msgstr "Eylem yok"
 
-#: rkward/dialogs/rksetupwizard.cpp:376
+#: rkward/dialogs/rksetupwizard.cpp:361
 #, kde-format
 msgid ""
 "Ignore (and keep) the file. You can import it manually, at any time, using "
@@ -1922,17 +1922,17 @@ msgstr ""
 "Dosyayı yok sayın (ve tutun). İstediğiniz zaman rk.import.legacy.output() "
 "ögesini kullanarak elle içe aktarabilirsiniz."
 
-#: rkward/dialogs/rksetupwizard.cpp:389
+#: rkward/dialogs/rksetupwizard.cpp:374
 #, kde-format
 msgid "R Backend"
 msgstr "R Arka Ucu"
 
-#: rkward/dialogs/rksetupwizard.cpp:434
+#: rkward/dialogs/rksetupwizard.cpp:419
 #, kde-format
 msgid "R Packages"
 msgstr "R Paketleri"
 
-#: rkward/dialogs/rksetupwizard.cpp:436
+#: rkward/dialogs/rksetupwizard.cpp:421
 #, kde-format
 msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
@@ -1941,7 +1941,7 @@ msgstr ""
 "R2HTML paketi neredeyse tüm RKWard çıktı işlevleri tarafından kullanılır ve "
 "bu nedenle gereklidir."
 
-#: rkward/dialogs/rksetupwizard.cpp:437
+#: rkward/dialogs/rksetupwizard.cpp:422
 #, kde-format
 msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
@@ -1950,12 +1950,12 @@ msgstr ""
 "İsteğe bağlı; ancak önerilen bir özellik olan .Rmd dosyalarının (önizleme "
 "oluşturma dahil) sunulabilmesi için rmarkdown paketi gereklidir."
 
-#: rkward/dialogs/rksetupwizard.cpp:442
+#: rkward/dialogs/rksetupwizard.cpp:427
 #, kde-format
 msgid "External software"
 msgstr "Dış yazılımlar"
 
-#: rkward/dialogs/rksetupwizard.cpp:444
+#: rkward/dialogs/rksetupwizard.cpp:429
 #, kde-format
 msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
@@ -1964,7 +1964,7 @@ msgstr ""
 "R markdown (.Rmd) dosyalarını oluşturmak (veya önizlemek) için pandoc "
 "yazılımı gereklidir. Bu isteğe bağlıdır; ancak önerilir."
 
-#: rkward/dialogs/rksetupwizard.cpp:445
+#: rkward/dialogs/rksetupwizard.cpp:430
 #, kde-format
 msgid ""
 "The kbibtex software is useful for managing citations while writing "
@@ -1973,12 +1973,12 @@ msgstr ""
 "kbibtex yazılımı, makale yazarken atıfları yönetmek için kullanışlıdır. Kate "
 "Belge Önizleme eklentisi aracılığıyla RKWard ile tümleşir"
 
-#: rkward/dialogs/rksetupwizard.cpp:450
+#: rkward/dialogs/rksetupwizard.cpp:435
 #, kde-format
 msgid "Summary of the next steps"
 msgstr "Sonraki adımların özeti"
 
-#: rkward/dialogs/rksetupwizard.cpp:467
+#: rkward/dialogs/rksetupwizard.cpp:452
 #, kde-format
 msgid ""
 "<h1>Reinstallation required</h1><p>Your installation of RKWard is broken, "
@@ -1987,12 +1987,12 @@ msgstr ""
 "<h1>Yeniden kurulum gerekiyor</h1><p>RKWard kurulumunuz bozuk ve "
 "kendiliğinden düzeltilemiyor. RKWard’ı yeniden kurmanız gerekecek!</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:470
+#: rkward/dialogs/rksetupwizard.cpp:455
 #, kde-format
 msgid "<h2>Software to install</h2>"
 msgstr "<h2>Kurulacak yazılımlar</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:480
+#: rkward/dialogs/rksetupwizard.cpp:465
 #, kde-format
 msgid ""
 "<p>The following software is recommended for installation, but automatic "
@@ -2003,17 +2003,17 @@ msgstr ""
 "(henüz) desteklenmemektedir. İndirme bilgisi için aşağıdaki bağlantılara "
 "tıklayın:</p><li>%1</li>"
 
-#: rkward/dialogs/rksetupwizard.cpp:482
+#: rkward/dialogs/rksetupwizard.cpp:467
 #, kde-format
 msgid "No software to install"
 msgstr "Kurulacak yazılım yok"
 
-#: rkward/dialogs/rksetupwizard.cpp:484
+#: rkward/dialogs/rksetupwizard.cpp:469
 #, kde-format
 msgid "<h2>R packages to install</h2>"
 msgstr "<h2>Kurulacak R paketleri</h2>"
 
-#: rkward/dialogs/rksetupwizard.cpp:486
+#: rkward/dialogs/rksetupwizard.cpp:471
 #, kde-format
 msgid ""
 "<p>%1 R packages are marked for installation. The R package installation "
@@ -2024,244 +2024,244 @@ msgstr ""
 "kurulum iletişim kutusu başlatılacaktır. Bir indirme yansısı seçmeniz "
 "istenebilir.</p>"
 
-#: rkward/dialogs/rksetupwizard.cpp:488
+#: rkward/dialogs/rksetupwizard.cpp:473
 #, kde-format
 msgid "No R packages to install"
 msgstr "Kurulacak R paketi yok"
 
-#: rkward/main.cpp:176
+#: rkward/main.cpp:173
 #, kde-format
 msgid "RKWard"
 msgstr "RKWard"
 
-#: rkward/main.cpp:176
+#: rkward/main.cpp:173
 #, kde-format
 msgid "Frontend to the R statistics language"
 msgstr "R istatistik dili için ön uç"
 
-#: rkward/main.cpp:176
+#: rkward/main.cpp:173
 #, kde-format
 msgid "(c) 2002 - 2024"
 msgstr "© 2002–2024"
 
-#: rkward/main.cpp:177
+#: rkward/main.cpp:174
 #, kde-format
 msgid "Thomas Friedrichsmeier"
 msgstr "Thomas Friedrichsmeier"
 
-#: rkward/main.cpp:177
+#: rkward/main.cpp:174
 #, kde-format
 msgid "Project leader / main developer"
 msgstr "Proje lideri, ana geliştirici"
 
-#: rkward/main.cpp:178
+#: rkward/main.cpp:175
 #, kde-format
 msgid "Pierre Ecochard"
 msgstr "Pierre Ecochard"
 
-#: rkward/main.cpp:178
+#: rkward/main.cpp:175
 #, kde-format
 msgid "C++ developer between 2004 and 2007"
 msgstr "2004 ve 2007 yılları arası C++ geliştiricisi"
 
-#: rkward/main.cpp:179
+#: rkward/main.cpp:176
 #, kde-format
 msgid "Prasenjit Kapat"
 msgstr "Prasenjit Kapat"
 
-#: rkward/main.cpp:179
+#: rkward/main.cpp:176
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
 msgstr "Birçok eklenti, öneriler, grafik geçmişi özelliği"
 
-#: rkward/main.cpp:180
+#: rkward/main.cpp:177
 #, kde-format
 msgid "Meik Michalke"
 msgstr "Meik Michalke"
 
-#: rkward/main.cpp:180
+#: rkward/main.cpp:177
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
 msgstr "Birçok eklenti, öneriler, rkwarddev paketi"
 
-#: rkward/main.cpp:181
+#: rkward/main.cpp:178
 #, kde-format
 msgid "Stefan Roediger"
 msgstr "Stefan Rödiger"
 
-#: rkward/main.cpp:181
+#: rkward/main.cpp:178
 #, kde-format
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Çeşitli eklentiler, öneriler ve tanıtım, yerelleştirme"
 
-#: rkward/main.cpp:182
+#: rkward/main.cpp:179
 #, kde-format
 msgid "Contributors in alphabetical order"
 msgstr "Katkıda bulunanların abecesel sıralı listesi"
 
-#: rkward/main.cpp:183
+#: rkward/main.cpp:180
 #, kde-format
 msgid "Björn Balazs"
 msgstr "Björn Balazs"
 
-#: rkward/main.cpp:183 rkward/main.cpp:185
+#: rkward/main.cpp:180 rkward/main.cpp:182
 #, kde-format
 msgid "Extensive usability feedback"
 msgstr "Kapsamlı kullanılabilirlik geri bildirimi"
 
-#: rkward/main.cpp:184
+#: rkward/main.cpp:181
 #, kde-format
 msgid "Aaron Batty"
 msgstr "Aaron Batty"
 
-#: rkward/main.cpp:184
+#: rkward/main.cpp:181
 #, kde-format
 msgid "Wealth of feedback, hardware donations"
 msgstr "Birçok geri bildirim, donanım bağışları"
 
-#: rkward/main.cpp:185
+#: rkward/main.cpp:182
 #, kde-format
 msgid "Jan Dittrich"
 msgstr "Jan Dittrich"
 
-#: rkward/main.cpp:186
+#: rkward/main.cpp:183
 #, kde-format
 msgid "Philippe Grosjean"
 msgstr "Philippe Grosjean"
 
-#: rkward/main.cpp:186
+#: rkward/main.cpp:183
 #, kde-format
 msgid "Several helpful comments and discussions"
 msgstr "Çeşitli yardımcı yorumlar ve tartışmalar"
 
-#: rkward/main.cpp:187
+#: rkward/main.cpp:184
 #, kde-format
 msgid "Adrien d'Hardemare"
 msgstr "Adrien d’Hardemare"
 
-#: rkward/main.cpp:187
+#: rkward/main.cpp:184
 #, kde-format
 msgid "Plugins and patches"
 msgstr "Eklentiler ve yamalar"
 
-#: rkward/main.cpp:188
+#: rkward/main.cpp:185
 #, kde-format
 msgid "Yves Jacolin"
 msgstr "Yves Jacolin"
 
-#: rkward/main.cpp:188
+#: rkward/main.cpp:185
 #, kde-format
 msgid "New website"
 msgstr "Yeni web sayfası"
 
-#: rkward/main.cpp:189
+#: rkward/main.cpp:186
 #, kde-format
 msgid "Germán Márquez Mejía"
 msgstr "Germán Márquez Mejía"
 
-#: rkward/main.cpp:189
+#: rkward/main.cpp:186
 #, kde-format
 msgid "HP filter plugin, spanish translation"
 msgstr "HP süzgeci eklentisi, İspanyolca çeviri"
 
-#: rkward/main.cpp:190
+#: rkward/main.cpp:187
 #, kde-format
 msgid "Marco Martin"
 msgstr "Marco Martin"
 
-#: rkward/main.cpp:190
+#: rkward/main.cpp:187
 #, kde-format
 msgid "A cool icon"
 msgstr "Havalı bir simge"
 
-#: rkward/main.cpp:191
+#: rkward/main.cpp:188
 #, kde-format
 msgid "Daniele Medri"
 msgstr "Daniele Medri"
 
-#: rkward/main.cpp:191
+#: rkward/main.cpp:188
 #, kde-format
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "RKward logosu, birçok öneri, üslup üzerine yardım"
 
-#: rkward/main.cpp:192
+#: rkward/main.cpp:189
 #, kde-format
 msgid "David Sibai"
 msgstr "David Sibai"
 
-#: rkward/main.cpp:192
+#: rkward/main.cpp:189
 #, kde-format
 msgid "Several valuable comments, hints and patches"
 msgstr "Çeşitli değerli yorumlar, ipuçları ve yamalar"
 
-#: rkward/main.cpp:193
+#: rkward/main.cpp:190
 #, kde-format
 msgid "Ilias Soumpasis"
 msgstr "Ilias Soumpasis"
 
-#: rkward/main.cpp:193
+#: rkward/main.cpp:190
 #, kde-format
 msgid "Translation, Suggestions, plugins"
 msgstr "Çeviri, öneriler, eklentiler"
 
-#: rkward/main.cpp:194
+#: rkward/main.cpp:191
 #, kde-format
 msgid "Ralf Tautenhahn"
 msgstr "Ralf Tautenhahn"
 
-#: rkward/main.cpp:194
+#: rkward/main.cpp:191
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Birçok yorum, yararlı öneriler ve hata bildirimleri"
 
-#: rkward/main.cpp:195
+#: rkward/main.cpp:192
 #, kde-format
 msgid "Jannis Vajen"
 msgstr "Jannis Vajen"
 
-#: rkward/main.cpp:195
+#: rkward/main.cpp:192
 #, kde-format
 msgid "German Translation, bug reports"
 msgstr "Almanca çeviri, hata raporları"
 
-#: rkward/main.cpp:196
+#: rkward/main.cpp:193
 #, kde-format
 msgid "Roland Vollgraf"
 msgstr "Roland Vollgraf"
 
-#: rkward/main.cpp:196
+#: rkward/main.cpp:193
 #, kde-format
 msgid "Some patches"
 msgstr "Birkaç yama"
 
-#: rkward/main.cpp:197
+#: rkward/main.cpp:194
 #, kde-format
 msgid "Roy Qu"
 msgstr "Roy Qu"
 
-#: rkward/main.cpp:197
+#: rkward/main.cpp:194
 #, kde-format
 msgid "patches and helpful comments"
 msgstr "Yamalar ve yararlı yorumlar"
 
-#: rkward/main.cpp:198
+#: rkward/main.cpp:195
 #, kde-format
 msgid "Many more people on rkward-devel@kde.org"
 msgstr "rkward-devel@kde.org posta listesindeki birçok kişi"
 
-#: rkward/main.cpp:198
+#: rkward/main.cpp:195
 #, kde-format
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Sizi listelemeyi unuttuysak özür dileriz. Eklenmek için lütfen bizimle "
 "iletişime geçin"
 
-#: rkward/main.cpp:199
+#: rkward/main.cpp:196
 #, kde-format
 msgid "How to cite:"
 msgstr "Nasıl atıf yapılır:"
 
-#: rkward/main.cpp:199
+#: rkward/main.cpp:196
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
 msgstr "Journal of Statistical Software’de hakemli makale"
@@ -2789,78 +2789,72 @@ msgstr "“%1” tarafından tanımlanan çıktı bu oturumda yüklü değil."
 msgid "Unhandled output command '%1'"
 msgstr "İşlenmeyen çıktı komutu “%1”"
 
-#: rkward/misc/rkprogresscontrol.cpp:245
+#: rkward/misc/rkprogresscontrol.cpp:216
 #, kde-format
 msgid ""
-"<b>There have been errors and / or warnings. See below for a transcript</b>"
-msgstr "<b>Hatalar ve/veya uyarılar oluştu. Yazıdökümü için aşağıya bakın</b>"
+"<b>There has been an error while running the command. See below for output "
+"details</b>"
+msgstr ""
+"<b>Komutu çalıştırırken bir hata oluştu. Çıktı ayrıntıları için aşağıya "
+"bakın.</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:258
+#: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "Çıktı"
 
-#: rkward/misc/rkprogresscontrol.cpp:259
+#: rkward/misc/rkprogresscontrol.cpp:241
+#: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
-msgid "Output:"
-msgstr "Çıktı:"
+msgid "Show Output"
+msgstr "Çıktıyı Göster"
 
-#: rkward/misc/rkprogresscontrol.cpp:261
-#, kde-format
-msgid "Errors / Warnings"
-msgstr "Hatalar/Uyarılar"
-
-#: rkward/misc/rkprogresscontrol.cpp:262
-#, kde-format
-msgid "Errors / Warnings:"
-msgstr "Hatalar/Uyarılar:"
-
-#: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:417
+#: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
 msgstr "İptal"
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>Bir hata oluştu</b> (ayrıntılar için aşağıya bakın)"
 
-#: rkward/misc/rkprogresscontrol.cpp:485
+#: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>Tamamlandı</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:488
+#: rkward/misc/rkprogresscontrol.cpp:455
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Kapat"
 
-#: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:406
+#: rkward/misc/rkprogresscontrol.cpp:492 rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Keep waiting"
 msgstr "Beklemeyi Sürdür"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr "Bu pencereyi kapatmak geçerli işlemi iptal edecek. Emin misiniz?"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel operation"
 msgstr "İşlemi İptal Et"
 
-#: rkward/misc/rkprogresscontrol.cpp:525
+#: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel && Close"
 msgstr "İptal Et ve Kapat"
 
-#: rkward/misc/rkprogresscontrol.cpp:537
+#: rkward/misc/rkprogresscontrol.cpp:504
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "Bir işlem hâlâ sürüyor, lütfen bekleyin."
@@ -3926,12 +3920,12 @@ msgstr ""
 msgid "Ok"
 msgstr "Tamam"
 
-#: rkward/rbackend/rkrinterface.cpp:89
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid "R Startup"
 msgstr "R Başlangıcı"
 
-#: rkward/rbackend/rkrinterface.cpp:91
+#: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -3941,7 +3935,7 @@ msgstr ""
 "Büyük olasılıkla RKWard düzgün çalışmayacaktır. Lütfen kurulumunuzu "
 "denetleyin.</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:93
+#: rkward/rbackend/rkrinterface.cpp:94
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
@@ -3949,12 +3943,12 @@ msgid ""
 msgstr ""
 "<p>R arka ucu başlatırken bir sorun vardı. Aşağıdaki hatalar oluştu:</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:95
+#: rkward/rbackend/rkrinterface.cpp:96
 #, kde-format
 msgid "Error starting R"
 msgstr "R başlatılırken hata"
 
-#: rkward/rbackend/rkrinterface.cpp:649
+#: rkward/rbackend/rkrinterface.cpp:650
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3966,17 +3960,17 @@ msgstr ""
 "paketine gereksinimi olduğunu belirtti. Paket yönetim aracını açacağız ve "
 "orada gerekli paketi bulup kurmayı deneyebilirsiniz."
 
-#: rkward/rbackend/rkrinterface.cpp:649
+#: rkward/rbackend/rkrinterface.cpp:650
 #, kde-format
 msgid "Require package '%1'"
 msgstr "“%1” Paketi Gerekli"
 
-#: rkward/rbackend/rkrinterface.cpp:681
+#: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "Çıkış iptal edildi"
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:684
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -4000,37 +3994,37 @@ msgstr ""
 "“İptal”i seçin, ardından veri pencerelerini kapatın, kaydedin ve yeniden "
 "deneyin."
 
-#: rkward/rbackend/rkrinterface.cpp:683
+#: rkward/rbackend/rkrinterface.cpp:684
 #, kde-format
 msgid "Locale change"
 msgstr "Yerel Ayar Değişikliği"
 
-#: rkward/rbackend/rkrinterface.cpp:684
+#: rkward/rbackend/rkrinterface.cpp:685
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "Yerel ayarları değiştirme, kullanıcı tarafından iptal edildi"
 
-#: rkward/rbackend/rkrinterface.cpp:785
+#: rkward/rbackend/rkrinterface.cpp:786
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "Komutları kaydederken kaydetmeyi başlatma deneniyor. Yok sayılıyor."
 
-#: rkward/rbackend/rkrinterface.cpp:793
+#: rkward/rbackend/rkrinterface.cpp:794
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Dosya, yazmak için açılamadı. Komutlar kaydedilmiyor"
 
-#: rkward/rbackend/rkrinterface.cpp:804
+#: rkward/rbackend/rkrinterface.cpp:811
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Hata: Tanımlanamayan istek “%1”"
 
-#: rkward/rbackend/rkrinterface.cpp:885
+#: rkward/rbackend/rkrinterface.cpp:892
 #, kde-format
 msgid "R backend requests information"
 msgstr "R arka ucu bilgi talep ediyor"
 
-#: rkward/rbackend/rkrinterface.cpp:907
+#: rkward/rbackend/rkrinterface.cpp:914
 #, kde-format
 msgid ""
 "\n"
@@ -4048,7 +4042,7 @@ msgstr ""
 "kaydetmek veya açık veri düzenleyicilerden veri kopyalamaktır. Bundan sonra "
 "RKWard’dan çıkın. Üzgünüm!"
 
-#: rkward/rbackend/rkrinterface.cpp:908
+#: rkward/rbackend/rkrinterface.cpp:915
 #, kde-format
 msgid "R engine has died"
 msgstr "R işletkesi öldü"
@@ -7063,11 +7057,6 @@ msgstr "Sonraki Pencere"
 msgid "Activate Document view"
 msgstr "Belge Görünümünü Etkinleştir"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:87
-#, kde-format
-msgid "Show Output"
-msgstr "Çıktıyı Göster"
-
 #: rkward/windows/rktoplevelwindowgui.cpp:130
 #, kde-format
 msgid "Show/Hide %1"
@@ -7600,6 +7589,21 @@ msgstr "Yeni adı girin"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Düzenleyicide görüntüle (saltokunur)"
+
+#~ msgid ""
+#~ "<b>There have been errors and / or warnings. See below for a transcript</"
+#~ "b>"
+#~ msgstr ""
+#~ "<b>Hatalar ve/veya uyarılar oluştu. Yazıdökümü için aşağıya bakın</b>"
+
+#~ msgid "Output:"
+#~ msgstr "Çıktı:"
+
+#~ msgid "Errors / Warnings"
+#~ msgstr "Hatalar/Uyarılar"
+
+#~ msgid "Errors / Warnings:"
+#~ msgstr "Hatalar/Uyarılar:"
 
 #~ msgid ""
 #~ "The editor '%1' contains the following duplicate columns. Editing this "

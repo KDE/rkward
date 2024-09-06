@@ -40,6 +40,7 @@ Collate:
     'rk.sessionInfo.R'
     'rk.sync-functions.R'
     'rk.utility-functions.R'
+    'rk.with.progress.R'
     'rk.workspace-functions.R'
     'rkward-package.R'
     'ver.R'

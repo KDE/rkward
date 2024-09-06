@@ -18,9 +18,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QTimer>
 #include <QFileInfo>
 #include <QStandardPaths>
-#include <QRadioButton>
-#include <QGroupBox>
-#include <QButtonGroup>
 
 #include <KLocalizedString>
 #include <KUrlRequester>
@@ -32,6 +29,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkcommandlineargs.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkradiogroup.h"
 #include "../dialogs/rkloadlibsdialog.h"
 #include "../windows/katepluginintegration.h"
 #include "../rbackend/rksessionvars.h"
@@ -175,26 +173,19 @@ private:
 	RInterface::BackendError backend_error;
 };
 
-class RBackendSelectionWidget : public QGroupBox {
+class RBackendSelectionWidget : public RKRadioGroup {
 public:
-	RBackendSelectionWidget(QWidget *parent) : QGroupBox(parent) {
-		group = new QButtonGroup(this);
-		auto l = new QVBoxLayout(this);
-		bl = new QVBoxLayout();
-		l->addLayout(bl);
-
-		auto button = new QRadioButton(i18n("Use R at:")); l->addWidget(button); group->addButton(button, -1);
-		req = new KUrlRequester(); l->addWidget(req);
+	RBackendSelectionWidget(QWidget *parent) : RKRadioGroup(parent) {
+		req = new KUrlRequester();
 		req->setPlaceholderText(i18n("Select another R executable"));
-		req->setEnabled(false);
 		req->setWindowTitle(i18n("Select R executable"));
-		connect(button, &QAbstractButton::toggled, req, &QWidget::setEnabled);
 	}
 
 	void updateOptions() {
 		// clear previous buttons, if any
-		for (int i = 0; i < r_installations.size(); ++i) {
-			delete (group->button(i));
+		const auto buttons = group()->buttons();
+		for (auto button : buttons) {
+			delete button;
 		}
 
 		r_installations = RKSessionVars::findRInstallations();
@@ -205,29 +196,23 @@ public:
 		for(int i = 0; i < r_installations.size(); ++i) {
 			addButton(i18n("Use R at %1", r_installations[i]), i);
 		}
-		auto button = group->button(0);
-		if (RInterface::instance()->backendIsDead()) button->setText(i18n("Attempt to restart R at %1", RKSessionVars::RBinary()));
-		else button->setText(i18n("Keep current version (%1)", RKSessionVars::RBinary()));
+		addButton(i18n("Use R at:"), -1, req);
+
+		auto button0 = group()->button(0);
+		if (RInterface::instance()->backendIsDead()) button0->setText(i18n("Attempt to restart R at %1", RKSessionVars::RBinary()));
+		else button0->setText(i18n("Keep current version (%1)", RKSessionVars::RBinary()));
 		if (RKSessionVars::isPathInAppImage(RKSessionVars::RBinary()) && (r_installations.size() > 1)) {
-			group->button(1)->setChecked(true);
+			setButtonChecked(1, true);
 		} else {
-			button->setChecked(true);
+			button0->setChecked(true);
 		}
 	}
-	QRadioButton *addButton(const QString &text, int index) {
-		auto button = new QRadioButton(text);
-		bl->addWidget(button);
-		group->addButton(button, index);
-		return button;
-	}
 	QString selectedOpt() {
-		int index = group->checkedId();
+		int index = group()->checkedId();
 		if (index >= 0) return r_installations[index];
 		return req->text();
 	}
-	QButtonGroup *group;
 private:
-	QVBoxLayout *bl;
 	QStringList r_installations;
 	KUrlRequester *req;
 };
@@ -409,7 +394,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 			setValid(pageref, true);
 
 			next_callbacks.insert(pageref, [select, pageref, this]() -> bool {
-				bool restart_needed = (select->group->checkedId() != 0) || RInterface::instance()->backendIsDead();
+				bool restart_needed = (select->group()->checkedId() != 0) || RInterface::instance()->backendIsDead();
 				if (restart_needed) {
 					RKSessionVars::r_binary = select->selectedOpt();
 					RKCommandLineArgs::instance->set(RKCommandLineArgs::Setup, QVariant(true));

@@ -35,6 +35,7 @@ public:
 public:
 	void addOutput (const ROutput *output);
 	void finished ();
+	void indicateError();
 protected:
 	void closeEvent (QCloseEvent *e) override;
 	void scrollDown ();
@@ -108,54 +109,22 @@ void RKProgressControl::doNonModal (bool autodelete) {
 	}
 }
 
-void RKProgressControl::newError (const QString &error) {
-	RK_TRACE (MISC);
-
-	if (!(mode & IncludeErrorOutput)) return;
-
-	ROutput outputc;
-	outputc.type = ROutput::Error;
-	outputc.output = error;
-
-	output_log.append (outputc);
-
-	if (mode & RaiseOnError) {
-		if (!dialog) createDialog ();
-		dialog->raise ();
-	}
-	if (dialog) dialog->addOutput (&outputc);
-}
-
-void RKProgressControl::newOutput (const QString &output) {
-	RK_TRACE (MISC);
-
-	if (!(mode & IncludeRegularOutput)) return;
-
-	ROutput outputc;
-	outputc.type = ROutput::Output;
-	outputc.output = output;
-
-	output_log.append (outputc);
-
-	if (mode & RaiseOnRegularOutput) {
-		if (!dialog) createDialog ();
-		dialog->raise ();
-	}
-	if (dialog) dialog->addOutput (&outputc);
-}
-
 void RKProgressControl::addRCommand (RCommand *command, bool done_when_finished) {
 	RK_TRACE (MISC);
 	RK_ASSERT (command);
 
 	outstanding_commands.append(command);
-	connect(command->notifier(), &RCommandNotifier::commandOutput, this, QOverload<RCommand*, const ROutput*>::of(&RKProgressControl::newOutput));
-	if (done_when_finished) {
-		command->whenFinished(this, [this](RCommand* command) {
-			outstanding_commands.removeAll(command);
-			done();
-		});
-	}
+	connect(command->notifier(), &RCommandNotifier::commandOutput, this, &RKProgressControl::newOutput);
+	command->whenFinished(this, [this, done_when_finished](RCommand* command) {
+qDebug("finished");
+		if (command->failed()) {
+qDebug("failed");
+			if (!dialog) createDialog();
+			dialog->indicateError();
+		}
+		outstanding_commands.removeAll(command);
+		if (done_when_finished) done();
+	});
 }
 
 void RKProgressControl::dialogDestroyed () {
@@ -202,11 +171,13 @@ void RKProgressControl::newOutput (RCommand *, const ROutput *output) {
 	RK_TRACE (MISC);
 	RK_ASSERT (output);
 
-	if (output->type == ROutput::Output) {
-		newOutput (output->output);
-	} else {
-		newError (output->output);
+	const ROutput outputc(*output);
+	output_log.append(outputc);
+	if (mode & RaiseOnOutput) {
+		if (!dialog) createDialog();
+		dialog->raise();
 	}
+	if (dialog) dialog->addOutput(output);
 }
 
 QString RKProgressControl::fullCommandOutput() {
@@ -242,27 +213,18 @@ RKProgressControlDialog::RKProgressControlDialog(const QString &text, const QStr
 
 	mainboxlayout->addWidget (RKCommonFunctions::linkedWrappedLabel (text));
 
-	error_indicator = new QLabel (i18n ("<b>There have been errors and / or warnings. See below for a transcript</b>"), mainbox);
-	QPalette palette = error_indicator->palette ();
-	palette.setColor (error_indicator->foregroundRole (), QColor (255, 0, 0));
-	error_indicator->setPalette (palette);
-	error_indicator->hide ();
-	mainboxlayout->addWidget (error_indicator);
+	error_indicator = new QLabel(i18n("<b>There has been an error while running the command. See below for output details</b>"), mainbox);
+	QPalette palette = error_indicator->palette();
+	palette.setColor(error_indicator->foregroundRole(), QColor(255, 0, 0));
+	error_indicator->setPalette(palette);
+	error_indicator->hide();
+	mainboxlayout->addWidget(error_indicator);
 
 	detailsbox = new QWidget (this);
 	QVBoxLayout *detailsboxlayout = new QVBoxLayout (detailsbox);
 	detailsboxlayout->setContentsMargins (0, 0, 0, 0);
 
-	QString ocaption;
-	if (mode_flags & RKProgressControl::IncludeRegularOutput) {
-		output_button_text = i18n ("Output");
-		ocaption = i18n ("Output:");
-	} else {
-		output_button_text = i18n ("Errors / Warnings");
-		ocaption = i18n ("Errors / Warnings:");
-	}
-	QLabel* label = new QLabel (ocaption, detailsbox);
-	detailsboxlayout->addWidget (label);
+	detailsboxlayout->addWidget(new QLabel(i18n("Output")));
 
 	output_text = new QTextEdit (detailsbox);
 	output_text->setReadOnly (true);
@@ -275,8 +237,8 @@ RKProgressControlDialog::RKProgressControlDialog(const QString &text, const QStr
 
 	buttons = new QDialogButtonBox (QDialogButtonBox::Cancel, this);
 	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
-	if (mode_flags & RKProgressControl::OutputSwitchable) {
-		QPushButton* button = buttons->addButton (output_button_text, QDialogButtonBox::HelpRole);
+	if ((mode_flags & RKProgressControl::ShowOutput) && !(mode_flags & RKProgressControl::OutputShownByDefault)) {
+		QPushButton* button = buttons->addButton(i18n("Show Output"), QDialogButtonBox::HelpRole);
 		connect (button, &QPushButton::clicked, this, &RKProgressControlDialog::toggleDetails);
 	}
 	if (mode_flags & RKProgressControl::AllowCancel) buttons->button (QDialogButtonBox::Cancel)->setText (i18n ("Cancel"));
@@ -298,6 +260,12 @@ RKProgressControlDialog::~RKProgressControlDialog () {
 	RK_TRACE (MISC);
 }
 
+void RKProgressControlDialog::indicateError() {
+	RK_TRACE(MISC);
+	raise();
+	error_indicator->show();
+}
+
 void RKProgressControlDialog::addOutput (const ROutput *output) {
 	RK_TRACE (MISC);
 
@@ -317,7 +285,6 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 		} else {
 			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
 			if (!detailsbox->isVisible ()) toggleDetails ();
-			error_indicator->show ();
 		}
 	}
 

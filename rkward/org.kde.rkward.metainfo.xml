@@ -34,6 +34,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <name xml:lang="tr">RKWard</name>
   <name xml:lang="uk">RKWard</name>
   <name xml:lang="x-test">xxRKWardxx</name>
+  <name xml:lang="zh-TW">RKWard</name>
   <summary>KDE frontend to the R statistics language</summary>
   <summary xml:lang="ca">Frontal del KDE per al llenguatge estadístic R</summary>
   <summary xml:lang="ca-valencia">Frontal de KDE per al llenguatge estadístic R</summary>
@@ -60,6 +61,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <summary xml:lang="tr">R istatistik dili için KDE ön yüzü</summary>
   <summary xml:lang="uk">Оболонка KDE до мови для статичних обчислень R</summary>
   <summary xml:lang="x-test">xxKDE frontend to the R statistics languagexx</summary>
+  <summary xml:lang="zh-TW">KDE 的 R 統計語言前端</summary>
   <description>
     <p>
       RKWard aims to become an easy to use, transparent frontend to R,
@@ -121,6 +123,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="tr">Veri düzenleyicisi, nesne tarayıcısı, etkileşimli R konsolu ve diğer araç pencereleri ile ana pencere.</caption>
       <caption xml:lang="uk">Головне вікно з редактором даних, навігатором об'єктів, інтерактивною консоллю R та іншими панелями інструментів.</caption>
       <caption xml:lang="x-test">xxMain window, with data editor, object browser, interactive R console, and further tool windows.xx</caption>
+      <caption xml:lang="zh-TW">主視窗，包含資料編輯器、物件瀏覽器、互動式 R 主控台，以及其他工具視窗。</caption>
       <image>https://cdn.kde.org/screenshots/rkward/main_window.png</image>
     </screenshot>
     <screenshot type="default">
@@ -148,6 +151,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="tr">Önizleme etkinken betik düzenleyicisi</caption>
       <caption xml:lang="uk">Редактор скриптів із активним попереднім переглядом</caption>
       <caption xml:lang="x-test">xxScript editor with active previewxx</caption>
+      <caption xml:lang="zh-TW">文稿編輯器與作用中的預覽</caption>
       <image>https://cdn.kde.org/screenshots/rkward/script_preview.png</image>
     </screenshot>
     <screenshot type="default">
@@ -175,6 +179,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="tr">RKWard’da veri ile çalışma</caption>
       <caption xml:lang="uk">Робота з даними у RKWard</caption>
       <caption xml:lang="x-test">xxWorking with data in RKWardxx</caption>
+      <caption xml:lang="zh-TW">在 RKWard 中處理資料</caption>
       <image>https://rkward.kde.org/assets/img/EditorDataFrame.png</image>
     </screenshot>
     <screenshot type="default">
@@ -200,6 +205,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="tr">Nesneleri ada göre arama, yardım sayfalarını arama ve uygulama içi yardım görüntüleyicisi</caption>
       <caption xml:lang="uk">Пошук об'єктів за назвою, пошук сторінок довідки та вбудована панель перегляду довідки</caption>
       <caption xml:lang="x-test">xxSearching objects by name, searching for help pages, and in-app help viewerxx</caption>
+      <caption xml:lang="zh-TW">依名稱搜尋物件、搜尋說明頁面、應用程式內的說明檢視器</caption>
       <image>https://cdn.kde.org/screenshots/rkward/object_and_help_search.png</image>
     </screenshot>
   </screenshots>

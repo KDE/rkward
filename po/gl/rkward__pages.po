@@ -1,22 +1,22 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
-# SPDX-FileCopyrightText: 2023 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2023-11-18 16:22+0100\n"
+"PO-Revision-Date: 2024-08-31 14:39+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.2\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -61,6 +61,10 @@ msgid ""
 "additional R functions that you can use in scripts, or in the interactive R "
 "console."
 msgstr ""
+"Os <strong>paquetes de R</strong> ofrecen unha cantidade inmensa de "
+"algoritmos e ferramentas de datos. Esta funcionalidade fornécese "
+"(principalmente) mediante funcións adicionais de R que pode usar en guións "
+"ou na consola interactiva de R."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -72,6 +76,11 @@ msgid ""
 "activated by default. It can further be extended with custom scripts, or "
 "color-schemes."
 msgstr ""
+"<strong>Complementos de Kate</strong>: Kate é o motor tras o editor de "
+"guións de RKWard. Inclúe potentes funcionalidades complementarias, moitas "
+"das cales deberían vir pre-instaladas con RKWard. Porén, dado o gran número "
+"delas, non todas están activadas de maneira predeterminada. Pode estenderse "
+"a maiores con guións personalizados ou esquemas de coros."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -82,6 +91,10 @@ msgid ""
 "mostly implemented as plugin-ins in RKWard. Many such plugins are available "
 "for download, separately."
 msgstr ""
+"<strong>Complementos de RKWard</strong>: Se busca un diálogo gráfico que lle "
+"axude a importar, converter, analizar ou visualizar datos, eses diálogos "
+"están implementados principalmente como complementos en RKWard. Moitos deses "
+"complementos poden descargarse por separado."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -89,14 +102,13 @@ msgstr ""
 msgid ""
 "The following sections deal with these, in turn, showing you how to find / "
 "install, what you need."
-msgstr ""
+msgstr "As seguintes seccións indican como atopalos e instalalos."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:24
-#, fuzzy, kde-format
-#| msgid "Missing packages"
+#, kde-format
 msgid "R packages"
-msgstr "Faltan paquetes"
+msgstr "Paquetes de R"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -107,6 +119,10 @@ msgid ""
 "dialog to search, install and/or load packages (Settings->Manage R packages "
 "and plugins)."
 msgstr ""
+"Ademais das ferramentas da liña de ordes normais de R para xestionar "
+"paquetes de R (consulte <link href=\"rkward://rhelp/install.packages\"/>), "
+"RKWard fornece un diálogo gráfico para buscar, instalar e cargar paquetes "
+"(Configuración → Xestionar os paquetes e complementos de R)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -117,12 +133,17 @@ msgid ""
 "source is fully automated, you may still have to install additional "
 "libraries or other software for the compilation."
 msgstr ""
+"Teña en conta que, de maneira predeterminada, os paquetes de R distribúense "
+"como ficheiros binarios compilados en Windows e macOS, pero non en Linux. "
+"Aínda que para este último a instalación a partir do código fonte está "
+"completamente automatizada, pode que aínda así teña que instalar bibliotecas "
+"adicionais ou outros programas necesarios para a compilación."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:32
 #, kde-format
 msgid "Kate Add-ons"
-msgstr ""
+msgstr "Complementos de Kate"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
 #: rkward/pages/rkward_addons.rkh:32
@@ -138,12 +159,22 @@ msgid ""
 ">Addons</link>. Addons shown in bold have been reported to be useful and "
 "work well in RKWard, but feel free to explore the others, too."
 msgstr ""
+"<link href=\"https://kate.kde.org\">Kate</link> é un editor de texto moi "
+"potente que usa o mesmo compoñente de edición que usa RKWard. Tamén inclúe "
+"varios complementos, por exemplo para crear fragmentos de código ou para "
+"xestionar proxectos dun repositorio de Git. Algúns destes complementos, como "
+"a ferramenta de navegación de trazas de C++, non teñen moito sentido no "
+"contexto de RKWard, pero moitos outros si. Para explorar as opcións "
+"dispoñíbeis, asegúrese de que ten Kate instalada, e abra <link href="
+"\"rkward://settings/addons\">Configuración → Complementos</link>. Os "
+"complementos que se amosan en letra grosa considéranse útiles e funcionais "
+"en RKWard, pero pode explorar tamén outros complementos."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:39
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "Complementos de RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -156,6 +187,12 @@ msgid ""
 "plugins</link>), and check the option \"Show only packages providing RKWard "
 "dialogs\"."
 msgstr ""
+"Os complementos de RKWard poden instalarse de varias fontes, pero adoitan "
+"distribuírse mediante paquetes de R. Para buscar paquetes de R que forneces "
+"diálogos gráficos de RKWard, use o diálogo normal (<link href=\"rkward://"
+"actions/rpackage_install\">Configuración → Xestionar paquetes e complementos "
+"de R</link>), e marque a opción «Amosar só os paquetes que fornecen diálogos "
+"de RKWard»."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -171,12 +208,22 @@ msgid ""
 "text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
 "link> (pre-initialized for installation of rk.Teaching)."
 msgstr ""
+"Non todos os complementos de RKWard que se empaquetan así son visíbeis no "
+"diálogo de instalación de paquetes de R, xa que (aínda) non se aloxan nos "
+"repositorios principais. Un exemplo destacábel no momento de escribir estas "
+"liñas é o extenso conxunto de complementos de <link href=\"https://github."
+"com/rkward-community/rk.Teaching\">rk.Teaching</link>. Moitos están aloxados "
+"en plataformas como github.com, e poden instalarse con poucas premas sempre "
+"que se coñeza o URL do repositorio mediante <link href=\"rkward://runplugin/"
+"rkward::install_from_git/fullURL.text=https://github.com/rkward-community/rk."
+"Teaching.git\">este diálogo</link> (preparado para a instalación de rk."
+"Teaching)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Creating your own RKWard Plugins"
-msgstr ""
+msgstr "Crear os seus propios complementos de RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -186,18 +233,7 @@ msgstr "Segue botando algo en falta?"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
-#, fuzzy, kde-format
-#| msgid ""
-#| "Check out the <link href=\"help:/rkwardplugins/index.html\">Introduction "
-#| "to Writing Plugins for RKWard</link> (<link href=\"http://api.kde.org/doc/"
-#| "rkwardplugins/\">most recent version online</link>) to learn how easy it "
-#| "is to enhance RKWard with your custom dialogs. And if you like, how to "
-#| "share your work with the community of RKWard users. See the <link href="
-#| "\"rkward://rhelp/rkward-package\">rkward package overview</link> for "
-#| "RKWard specific function for development and scripting. As another way of "
-#| "contributing, consider supporting the development of RKWard with money. "
-#| "One easy way to give a small amount is <a href=\"http://flattr.com/"
-#| "thing/1092073/RKWard\">donating via <i>Flattr</i></a>."
+#, kde-format
 msgid ""
 "Check out the <link href=\"help:/rkwardplugins/index.html\">Introduction to "
 "Writing Plugins for RKWard</link> (<link href=\"https://rkward.kde.org/doc/"
@@ -208,16 +244,13 @@ msgid ""
 "function for development and scripting."
 msgstr ""
 "Consulte a <link href=\"help:/rkwardplugins/index.html\">Introdución sobre "
-"como escribir complementos para RKWard</link> (<link href=\"http://api.kde."
-"org/doc/rkwardplugins/\">versión máis recente en Internet</link>) para "
+"como escribir complementos para RKWard</link> (<link href=\"https://rkward."
+"kde.org/doc/rkwardplugins/\">versión máis recente en Internet</link>) para "
 "aprender o fácil que é mellorar RKWard con diálogos personalizados. E se lle "
 "interesa, como compartir o seu traballo coa comunidade de usuarios de "
 "RKWard. Consulte na <link href=\"rkward://rhelp/rkward-package\">Introdución "
 "aos paquetes de RKWard</link> as funcións de desenvolvemento e scripting "
-"específicas de RKWard. Tamén pode contribuír cartos para apoiar o "
-"desenvolvemento de RKWard. Unha forma doada de contribuír unha cantidade "
-"pequena é mediante unha doazón <a href=\"http://flattr.com/thing/1092073/"
-"RKWard\">a través de <i>Flattr</i></a>."
+"específicas de RKWard."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -272,7 +305,7 @@ msgid ""
 msgstr ""
 "A consola está pensada para un uso interactivo e para ordes pequenas. Para "
 "editar ordes ou scripts complexos, é moito máis cómodo usar o editor de "
-"ficheiros de scripting («Ficheiro → Novo → Ficheiro de scripting»)."
+"ficheiros de guionización («Ficheiro → Novo → Ficheiro de guionización»)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -421,7 +454,7 @@ msgid ""
 msgstr ""
 "Tamén pode buscar no historial de ordes liñas que comecen por un texto "
 "indicado. Para usar esta funcionalidade, insira (por exemplo) «print» na "
-"consola. A continuación use Maiús+Arriba ou Maiús+Abaixo. Poderá ver quesó "
+"consola. A continuación use Maiús+Arriba ou Maiús+Abaixo. Poderá ver que só "
 "se amosarán as liñas de ordes recentes que comecen por «print»."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
@@ -588,13 +621,7 @@ msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>Command history is context sensitive by default</b>: If this is "
-#| "checked, the context sensitive mode of navigating the <link href="
-#| "\"#command_history\">command history</link> is the default, i.e. "
-#| "available with Up/Down without Shift. Else the key binding for this is "
-#| "Shift+Up/Down."
+#, kde-format
 msgid ""
 "<b>Command history is context-sensitive by default</b>: If this is checked, "
 "the context-sensitive mode of navigating the <link href=\"#command_history"
@@ -798,7 +825,7 @@ msgstr ""
 "baséase en xerar ese código por vostede, e a continuación executalo dentro "
 "de R. Máis adiante, cando estea máis afeito a R e teña necesidades especiais "
 "que RKWard non satisfaga ou queira automatizar tarefas repetitivas, pode "
-"usar a sintax de R para, literalmente, programas as súas análises. Teña en "
+"usar a sintaxe de R para, literalmente, programas as súas análises. Teña en "
 "conta que o código se divide en tres seccións: «Preprocesar» para cargar as "
 "bibliotecas necesarias ou para definir funcións de asistencia, «Calcular» "
 "para realizar os cálculos, e «Impresión» para xerar a saída na xanela da "
@@ -862,8 +889,8 @@ msgid ""
 "Briefly explains the main components of RKWard, assuming the user is already "
 "familiar with basic concepts of R."
 msgstr ""
-"Explica brevemente os compoñentes principais de R, partindo de que o usuario "
-"xa está damiliarizado cos conceptos básicos de R."
+"Explica brevemente os compoñentes principais de R, partindo de que a persoa "
+"usuaria xa está familiarizada cos conceptos básicos de R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -957,8 +984,8 @@ msgstr ""
 "Escribir scripts nun ficheiro adoita ser máis cómodo que escribilos "
 "directamente na consola. Para abrir un novo editor de guións (con realce de "
 "sintaxe e moitas outras funcionalidades), seleccione «Ficheiro → Novo → "
-"Ficheiro de scripting», ou abra un ficheiro de scripting existente mediante "
-"«Ficheiro → Abrir un ficheiro de scripting de R»."
+"Ficheiro de guionización», ou abra un ficheiro de guionización existente "
+"mediante «Ficheiro → Abrir un ficheiro de guionización de R»."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -1041,14 +1068,7 @@ msgstr "Axuda de R"
 
 #. i18n: ectx: (RKWard for R Users) <section title="R Help">
 #: rkward/pages/rkward_for_r_users.rkh:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "By default R help pages are shown as HTML, inside RKWard. You can invoke "
-#| "the help in the usual way by running e.g. \"?print\" or \"help (print)\" "
-#| "or \"help.start ()\" in the console. Additionally, there is a tool window "
-#| "to search your installed R help pages. This is accessible using a button "
-#| "located at the bottom of the window (next to the console button). To view "
-#| "a help page found using this tool, double click on it."
+#, kde-format
 msgid ""
 "By default R help pages are shown as HTML, inside RKWard. You can invoke the "
 "help in the usual way by running e.g. \"?print\" or \"help (print)\" or "
@@ -1057,7 +1077,7 @@ msgid ""
 "located at the bottom of the window (next to the console button). To view a "
 "help page found using this tool, double-click on it."
 msgstr ""
-"As páxinas de axuda de R móstranse de maneira predeterminada como HTML, "
+"As páxinas de axuda de R amósanse de maneira predeterminada como HTML, "
 "dentro de RKWard. Pode abrir a axuda como se adoita facer en R, executando "
 "na consola por exemplo «?print», «help (print)», ou «help.start ()». "
 "Ademais, existe unha xanela de ferramenta para buscar nas páxinas da axuda "
@@ -1130,13 +1150,7 @@ msgstr "Editar datos"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
-#, fuzzy, kde-format
-#| msgid ""
-#| "RKWard provides a built-in editor for data.frames. In fact, you can edit "
-#| "many data.frames at the same time, and even while running lengthy "
-#| "calculations. Still the data is stored as a regular data.frame in R. To "
-#| "explore the data editor, either choose File->New->Dataset, or right click "
-#| "a data.frame in the Workspace browser, and choose Edit from the menu."
+#, kde-format
 msgid ""
 "RKWard provides a built-in editor for data.frames. In fact, you can edit "
 "many data.frames at the same time, and even while running lengthy "
@@ -1257,7 +1271,7 @@ msgstr ""
 #: rkward/pages/rkward_incompatible_version.rkh:8
 #, kde-format
 msgid "Version incompatibilities"
-msgstr ""
+msgstr "Incompatibilidades de versións"
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -1269,6 +1283,11 @@ msgid ""
 "Quite often, this does not actually have to be a <i>new</i> version, but "
 "simply one that was compiled against your new version of R."
 msgstr ""
+"Aínda que RKWard intenta ser compatíbel cun gran número de versións "
+"distintas de R, ás veces unha nova versión de R pode non ser compatíbel con "
+"RKWard sen cambios. Neses casos terá que instalar unha nova versión de "
+"RKWard. A miúdo non se tratará dunha versión <i>nova</i>, senón dunha "
+"compilada para a nova versión de R."
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -1278,28 +1297,27 @@ msgid ""
 "distribution, but no updated package is available, please contact your "
 "distribution maintainer or file a bug report, there."
 msgstr ""
+"Se instalou RKWard co xestor de paquetes da súa distribución de Linux, pero "
+"non hai un paquete actualizado dispoñíbel, contacte co equipo de mantemento "
+"da distribución ou remítalle un informe de fallo."
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
-#, fuzzy, kde-format
-#| msgid ""
-#| "For more general information on RKWard, who writes it, how to help, "
-#| "further questions, etc. refer to <link href=\"http://rkward.kde.org/"
-#| "\">the project homepage</link>."
+#, kde-format
 msgid ""
 "For more information about available versions, and more troubleshooting "
 "information, see <link href=\"https://rkward.kde.org\">the project homepage</"
 "link>."
 msgstr ""
-"Para información máis xeral sobre RKWard, quen a escribe, como axudar, "
-"preguntas adicionais, etc. visite o <link href=\"http://rkward.kde.org/"
-"\">sitio web do proxecto</link>."
+"Para máis información sobre as versións dispoñíbeis e información de "
+"resolución de problemas, consulte a <link href=\"https://rkward.kde.org"
+"\">páxina principal do proxecto</link>."
 
 #. i18n: ectx: (Version incompatibilities) <section title="...">
 #: rkward/pages/rkward_incompatible_version.rkh:17
 #, kde-format
 msgid "Graphics Engine Version Mismatch"
-msgstr ""
+msgstr "Conflito de versión do motor gráfico"
 
 #. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
 #: rkward/pages/rkward_incompatible_version.rkh:17
@@ -1313,6 +1331,14 @@ msgid ""
 "integration\". Then you can use the vanille onscreen devices (X11() or "
 "Windows() or Quartz()), for plotting."
 msgstr ""
+"Esta é a forma máis común de incompatibilidade de versións. A recomendación "
+"é a mesma que a anterior, instalar unha versión actualizada de RKWard. "
+"Porén, se non parece haber unha actualización dispoñíbel inmediatamente, e "
+"necesita continuar traballando, defina <link href=\"rkward://settings/"
+"graphics\">Configuración → Gráficos en pantalla</link> → «Integración do "
+"dispositivo estándar de R» como «Sen integración». Entón poderá usar os "
+"dispositivos de pantalla estándar (X11() ou Windows() ou Quartz()) para os "
+"gráficos."
 
 #. i18n: ectx: (RKWard Output) <title>
 #: rkward/pages/rkward_output.rkh:8
@@ -1331,6 +1357,13 @@ msgid ""
 "link>), this output file may or may not be shared across different "
 "workspaces."
 msgstr ""
+"A xanela de saída de RKWard ou, de maneira máis xeneralizada, os ficheiros "
+"de saída de RKWard (.rko) , están pensados como unha forma doada de "
+"rexistrar o traballo nos seus datos. De maneira predeterminada, sempre hai "
+"dispoñíbel un ficheiro de saída. Segundo a súa configuración (<link href="
+"\"rkward://settings/output\">Configuración → Configurar RKWard → Saída</"
+"link>) este ficheiro de saída podería ou non compartirse con distintos "
+"espazos de traballo."
 
 #. i18n: ectx: (RKWard Output) <summary>
 #: rkward/pages/rkward_output.rkh:9
@@ -1341,12 +1374,16 @@ msgid ""
 "output window does not discard the modifications, but on closing RKWard you "
 "will be prompted to save (or discard) any pending changes."
 msgstr ""
+"A saída de RKWard pode gardarse e abrirse e ficheiros normais. Para dirixir "
+"a saída a un ficheiro de saída concreto, terá que “activala”. Pechar unha "
+"xanela de saída non descarta as modificación, pero ao pechar RKWard "
+"preguntaráselle se quere gardar (ou descartar) os cambios pendentes."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:16
 #, kde-format
 msgid "Producing RKWard output from R"
-msgstr ""
+msgstr "Producir saída de RKWard desde R"
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:16
@@ -1355,6 +1392,9 @@ msgid ""
 "To write to the active RKWard output file from custom R code, refer to <link "
 "href=\"rkward://rhelp/rk.print\"/>, and the functions linked from there."
 msgstr ""
+"Para escribir no ficheiro de saída activo de RKWard desde código "
+"personalizado de R, consulte <link href=\"rkward://rhelp/rk.print\"/> e as "
+"funcións ligadas desde aí."
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:16
@@ -1363,6 +1403,8 @@ msgid ""
 "To load / save / switch between output files, etc., refer to <link href="
 "\"rkward://rhelp/rk.output\"/>."
 msgstr ""
+"Para cargar, gardar ou cambiar os ficheiros de saída, consulte <link href="
+"\"rkward://rhelp/rk.output\"/>."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:22
@@ -1372,12 +1414,7 @@ msgstr "Usar a saída nunha suite de oficina"
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
-#, fuzzy, kde-format
-#| msgid ""
-#| "The easiest way to get output into your office suite, is to first select "
-#| "the relevant portions, copy them (Edit->Copy), then paste them. This "
-#| "works well, at least in OpenOffice. You can also drag and drop images "
-#| "from the output to an OpenOffice document."
+#, kde-format
 msgid ""
 "The easiest way to get output into your office suite, is to first select the "
 "relevant portions, copy them (Edit->Copy), then paste them. This works well, "
@@ -1386,8 +1423,8 @@ msgid ""
 msgstr ""
 "A forma máis doada de pasar a saída a unha suite de oficina consiste en "
 "seleccionar as porcións relevantes, copialas («Editar → Copiar»), e pegalas. "
-"Isto funciona ben, polo menos en OpenOffice. Tamén pode arrastrar e soltar "
-"imaxes da saída a un documento de OpenOffice."
+"Isto funciona ben, polo menos en OpenOffice ou LibreOffice. Tamén pode "
+"arrastrar e soltar imaxes da saída a un documento de OpenOffice."
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
@@ -1399,12 +1436,18 @@ msgid ""
 "retrieve the files from the \".rkward\" of your home directory (location "
 "configurable in Settings->Configure RKWard->General)."
 msgstr ""
+"Internamente, os ficheiros de saída de RKWard baséanse actualmente "
+"simplemente en HTML. Se necesita acceso aos ficheiros HTML en cru e imaxes, "
+"un ficheiro .rko non é máis que un arquivo ZIP dun cartafol. Pode "
+"descomprimilo con ferramentas estándar, ou abrilo en RKWard e obter os "
+"ficheiros do «.rkward» do seu cartafol persoal (a localización pode "
+"configurarse en «Configuración → Configurar RKWard → Xeral)."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:28
 #, kde-format
 msgid "RKWard output vs. R Markdown"
-msgstr ""
+msgstr "A saída de RKWard e o Markdown de R"
 
 #. i18n: ectx: (RKWard Output) <section title="RKWard output vs. R Markdown">
 #: rkward/pages/rkward_output.rkh:28
@@ -1415,6 +1458,11 @@ msgid ""
 "great for writing interactive \"reports\", the RKWard Output is very easy to "
 "use for ad-hoc documentation while exploring your data."
 msgstr ""
+"RKWard tamén lle axuda a escribir documentos de RMarkdown (Rmd). "
+"Concretamente, hai unha funcionalidade de vista previa moi potente para "
+"guións .Rmd. Aínda que RMarkdown é xenial para escribir “informes” "
+"interactivos, a saída de RKWard é moi doada de usar para documentación "
+"improvisada mentres explora os seus datos."
 
 #. i18n: ectx: (Screen device history) <title>
 #: rkward/pages/rkward_plot_history.rkh:8
@@ -1484,19 +1532,7 @@ msgstr ""
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>Go to plot</b>: This provides a drop down list of _all_ the plots "
-#| "stored in the history; giving an easily accessible \"jumping\" action. "
-#| "RKWard tries hard to identify the appropriate plot calls, but this is not "
-#| "always feasible. In such cases a further attempt is made to identify the "
-#| "<i>X label</i>, <i>Y label</i> and the <i>Main</i> titles of the plot and "
-#| "the displayed string looks like \"<b>X:</b> <i>xlab</i>; <b>Y:</b> "
-#| "<i>ylab</i>; <i>main</i>\". Sometimes even that is not possible "
-#| "(indicated by <b><Unknown></b>). Plots which are pending to be saved are "
-#| "indicated by <b><Unsaved plot></b>. The displayed strings are prepended "
-#| "with their corresponding position in the history. For the usual \"linear "
-#| "browsing\" see first / previous / next / last actions below."
+#, kde-format
 msgid ""
 "<b>Go to plot</b>: This provides a drop-down list of _all_ the plots stored "
 "in the history; giving an easily accessible \"jumping\" action. RKWard tries "
@@ -1515,11 +1551,11 @@ msgstr ""
 "gráfica a outra. RKWard intenta identificar as chamadas de gráfica "
 "axeitadas, pero non sempre é posíbel. Nos casos nos que non é posíbel, "
 "inténtase identificar os títulos da <i>etiqueta X</i>, da <i>etiqueta Y</i> "
-"e da <i>Principal</i> da gráfica e a cadea que se mostra ten o seguinte "
+"e da <i>Principal</i> da gráfica e a cadea que se amosa ten o seguinte "
 "aspecto: «<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; <i>main</i>». Ás "
-"veces nin sequera iso é posíbel (indícase con <b><Descoñecido></b>). As "
-"gráficas que están pendentes de gardar indícanse con <b><Gráfica sen "
-"gardar></b>. As cadeas que se mostran están preparadas coa súa posición "
+"veces nin sequera iso é posíbel (indícase con <b>&lt;Descoñecido&gt;</b>). "
+"As gráficas que están pendentes de gardar indícanse con <b>&lt;Gráfica sen "
+"gardar&gt;</b>. As cadeas que se amosan están preparadas coa súa posición "
 "correspondente no historial. Para a «navegación lineal» habitual, use as "
 "accións de primeira, anterior, seguinte e última descritas a continuación."
 
@@ -1624,17 +1660,7 @@ msgstr ""
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>Screen device history</b>: Enables / disables the recording of plots "
-#| "globally. You can toggle this from within a running RKWard session which "
-#| "will affect all currently open and future screen devices. When unchecked, "
-#| "RKWard will not store any further plots in the history; although, the "
-#| "ones already stored are not lost! You can access the stored plots by re-"
-#| "enabling this. When toggling this, RKWard tries to save any unsaved "
-#| "plots, but be careful especially when the maximum history length is small "
-#| "(see below). You may want to disable this when the implemented history "
-#| "behavior seems non-intuitive or when dealing with large plots."
+#, kde-format
 msgid ""
 "<b>Screen device history</b>: Enables / disables the recording of plots "
 "globally. You can toggle this from within a running RKWard session, which "
@@ -1675,7 +1701,7 @@ msgstr ""
 "poden almacenarse no historial. Cando se acada o límite, as gráficas do "
 "principio do historial van retirándose dunha nunha. Cando iso ocorre, "
 "amósase un diálogo de aviso. Teña coidado cando configure un límite inferior "
-"ao númro de gráficas xa almacenadas no historial, pois nese caso retirarase "
+"ao número de gráficas xa almacenadas no historial, pois nese caso retirarase "
 "un número axeitado de gráficas do comezo do historial."
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
@@ -1816,6 +1842,13 @@ msgid ""
 "function or something in the menus, but do not want to go through each menu "
 "individually to find it."
 msgstr ""
+"Outra posibilidade é usar a pantalla frontal. O menú da pantalla frontal é "
+"un campo de busca que permite buscas aproximadas nos menús. A pantalla "
+"frontal introduciuse en aplicacións actuais de KDE e polo tanto non está "
+"dispoñíbel en versións anteriores de RKWard. A pantalla frontal pode abrirse "
+"con Ctrl+Alt+I. É especialmente útil se busca unha función, o atallo dunha "
+"función, ou algo nos menús, pero non quere navegar por cada menú manualmente "
+"para atopalo."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1832,7 +1865,7 @@ msgstr ""
 "Configurar os atallos». Por motivos técnicos só se listan os atallos dos "
 "compoñentes que estean activos no momento. Iso implica, por exemplo, que se "
 "quere editar os atallos do editor de datos, primeiro debe abrir o editor de "
-"datos, e a continuación selecciónar «Configuración → Configurar os atallos». "
+"datos, e a continuación seleccionar «Configuración → Configurar os atallos». "
 "A meirande parte dos atallos para o editor de guións xestiónanse por "
 "separado, en «Configuración → Configurar o editor → Atallos»."
 
@@ -1968,10 +2001,9 @@ msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <title>
 #: rkward/pages/rkward_trouble_shooting.rkh:8
-#, fuzzy, kde-format
-#| msgid "Trouble Shooting"
+#, kde-format
 msgid "Trouble Shooting / FAQ"
-msgstr "Solución de problemas"
+msgstr "Solución de problemas e preguntas frecuentes"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <summary>
 #: rkward/pages/rkward_trouble_shooting.rkh:9
@@ -1981,6 +2013,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Esta páxina intenta tocar problemas comúns que pode atopar ao usar RKWard. "
+"Consulte tamén <link href=\"https://rkward.kde.org/faq\">as preguntas "
+"frecuentes en Internet</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2015,13 +2050,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "O motor de R quebrou ou non deu iniciado"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Motor quebrado"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2034,6 +2069,13 @@ msgid ""
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"Ás veces o motor de R non dá iniciado por un problema de configuración ou de "
+"instalación. Entre as causas comúns están os cambios de rutas e as "
+"actualizacións de R. Normalmente, nestes casos, o diálogo de configuración "
+"amósase ao iniciar RKWard, e isto permite seleccionar unha instalación "
+"distinta de R. Nota: Ofreceráselle unha selección de instalacións que se "
+"atopasen en rutas comúns, pero tamén pode indicar manualmente unha "
+"instalación non detectada."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2044,6 +2086,10 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"En moitos casos, seleccionar unha versión de R distinta da usada durante a "
+"compilación funcionará. Pero se ten problemas, recoméndase usar a mesma "
+"versión de R que estaba dispoñíbel durante a compilación, ou polo menos unha "
+"similar."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2054,18 +2100,22 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Pode cambiar manualmente o motor de R en calquera momento desde "
+"«Configuración → Comprobar a instalación». Asegúrese de gardar os seus datos "
+"antes de cambiar de motor! Tamén pode usar a opción --r-executable da liña "
+"de ordes para iniciar unha sesión cunha instalación específica de R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
-msgstr ""
+msgstr "Por que non debería usar o R empaquetado coa AppImage de RKWard?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2078,6 +2128,12 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"A AppImage inclúe unha instalación de R por comodidade, pero a instalación "
+"non pode funcionar completamente por motivos técnicos. O máis importante é "
+"que, polo xeral, non poderá instalar paquetes de R (salvo os que estean "
+"implementados puramente en R). Ademais, pode ter conflitos entre a "
+"instalación de R de AppImage e os paquetes de R instalados no sistema. Isto "
+"pode causar fallos sutís e sorprendentes."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -2105,7 +2161,7 @@ msgid ""
 "at the little box on the right bottom corner of RKWard. If it is green you "
 "can go ahead."
 msgstr ""
-"Iso ocorre poque RKWard iníciase primeiro e R iníciase posteriormente, en "
+"Iso ocorre porque RKWard iníciase primeiro e R iníciase posteriormente, en "
 "segundo plano. Dependendo da potencia de procesamento do seu equipo, iniciar "
 "R pode levar un anaco. En calquera caso, sempre pode comprobar o estado de R "
 "desde RKWard. Non ten máis que observar a caixa pequena que hai na esquina "
@@ -2142,14 +2198,7 @@ msgstr "Faltan paquetes"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "RKWard has basically all the functionality which comes with the standard "
-#| "packages of R. But RKWard is at the same time rather extensible. Many "
-#| "developers made use of this and thus some of the procedures in RKWard "
-#| "depend on \"external\" packages (obtained from <link href=\"http://cran.r-"
-#| "project.org/\">The Comprehensive R Archive Network (CRAN)</link>) to "
-#| "perform a task."
+#, kde-format
 msgid ""
 "RKWard has basically all the functionality, which comes with the standard "
 "packages of R. But RKWard is at the same time rather extensible. Many "
@@ -2166,15 +2215,7 @@ msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "Here is an example. All tests related to <link href=\"rkward://rhelp/"
-#| "moments\">skewness</link> and <link href=\"rkward://rhelp/moments"
-#| "\">kurtosis</link> (which you would certainly expect to be shipped as a "
-#| "base package of R) are performed from an external package. If you read "
-#| "this the first time or restarted RKWard after you installed it and try to "
-#| "follow the link you will be out of luck. First you need to run a test "
-#| "from Analysis->Moment in order to achieve this."
+#, kde-format
 msgid ""
 "Here is an example. All tests related to <link href=\"rkward://rhelp/moments"
 "\">skewness</link> and <link href=\"rkward://rhelp/moments\">kurtosis</link> "
@@ -2193,13 +2234,7 @@ msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "Typically you would call them from R via <link href=\"rkward://rhelp/"
-#| "update.packages\">update.packages</link> and <link href=\"rkward://rhelp/"
-#| "library\">library</link> to achieve this. But RKWard simplifies this for "
-#| "you. You'll be guided through the install procedure for the required "
-#| "package. Please note you need root privileges in certain situations."
+#, kde-format
 msgid ""
 "Typically, you would call them from R via <link href=\"rkward://rhelp/update."
 "packages\">update.packages</link> and <link href=\"rkward://rhelp/library"
@@ -2215,17 +2250,14 @@ msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
-#, fuzzy, kde-format
-#| msgid ""
-#| "RKWard claims to take care of seamless integration with an office-suite. "
-#| "Why is there no option to save it as an office file?"
+#, kde-format
 msgid ""
 "RKWard claims to take care of seamless integration with an office-suite. Why "
 "is there no native option to save it as an office file?"
 msgstr ""
 "RKWard afirma integrarse de maneira transparente con software de oficina. "
-"Por que non existe ningunha opción para gardar nun formato de ficheiro "
-"correspondente?"
+"Por que non existe ningunha opción nativa para gardar nun formato de "
+"ficheiro correspondente?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
@@ -2235,12 +2267,7 @@ msgstr "Integración de RKWard con software de oficina"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
-#, fuzzy, kde-format
-#| msgid ""
-#| "We agree that RKWard is still very lacking when it comes to office "
-#| "integration, and \"seamless\" integration is still far away. Refer to "
-#| "<link href=\"rkward://page/rkward_output\"/> for information on how to "
-#| "accomplish the most important things right now."
+#, kde-format
 msgid ""
 "We agree that RKWard is still very lacking when it comes to office "
 "integration, and \"seamless\" integration is still far away. Refer to <link "
@@ -2250,11 +2277,14 @@ msgid ""
 "document or Office document, among others. Current RKWard versions support "
 "this in principle in the export menu."
 msgstr ""
-"Estamos de acordo en que RKWard aínda non está moi completo non que respecta "
-"á integración con software de oficina, e estamos aínda lonxe dunha "
+"Estamos de acordo en que RKWard aínda non está moi completo no que respecta "
+"á integración con programas de oficina, e estamos aínda lonxe dunha "
 "«integración transparente». En <link href=\"rkward://page/rkward_output\"/> "
 "hai información sobre como conseguir as cousas máis importantes nestes "
-"momentos."
+"momentos. De momento, pode realizar análises en documentos de RMarkdown, que "
+"poden gardarse como PDF, TeX ou documentos de Office, entre outros formatos. "
+"As versións actuais de RKWard permiten isto en principio desde o menú de "
+"exportar."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
@@ -2270,14 +2300,7 @@ msgstr "Que significa «RKWard»?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
-#, fuzzy, kde-format
-#| msgid ""
-#| "Yes, it's a very odd name. ;) However, R comes obviously from the <link "
-#| "href=\"http://www.r-project.org/\">R-language</link> which is the "
-#| "statistical basis of RKWard. K is derived from <link href=\"http://kde."
-#| "org/\">KDE</link> which delivered the basic GUI technologies for RKWard. "
-#| "And <link href=\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's "
-#| "another story."
+#, kde-format
 msgid ""
 "Yes, it's a very odd name. ;) However, R comes obviously from the <link href="
 "\"http://www.r-project.org/\">R-language</link>, which is the statistical "
@@ -2288,7 +2311,7 @@ msgstr ""
 "Si, é un nome algo raro. ;) Obviamente, o R ven da <link href=\"http://www.r-"
 "project.org/\">linguaxe R</link>, que é a base estatística de RKWard. O K "
 "ven de <link href=\"http://kde.org/\">KDE</link>, que forneceu as "
-"tecnoloxías básicas de interface que usa RKWard. E<link href=\"http://en."
+"tecnoloxías básicas de interface que usa RKWard. E <link href=\"http://en."
 "wikipedia.org/wiki/Ward\">Ward</link>? Iso xa é outra historia."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
@@ -2305,14 +2328,7 @@ msgstr "RKWard parece quedar colgado"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
-#, fuzzy, kde-format
-#| msgid ""
-#| "This depends. Some test and plots just need some time if you have huge "
-#| "amounts of data or sophisticated calculations. Therefore patience is "
-#| "sometimes needed. In any case you can check the state of R within RKWard. "
-#| "Just look at the little box on the right bottom corner of RKWard. Red "
-#| "means there is still something to calculate or plot. If it's green, R is "
-#| "done calculating."
+#, kde-format
 msgid ""
 "This depends. Some test and plots just need some time if you have huge "
 "amounts of data or sophisticated calculations. Therefore patience is "
@@ -2325,8 +2341,8 @@ msgstr ""
 "utilizan cantidades inmensas de datos ou cálculos sofisticados. Polo tanto, "
 "ás veces necesítase paciencia. Pero pode comprobar o estado de R dentro de "
 "RKWard. Simplemente consulte a caixa pequena da esquina inferior dereita de "
-"RKWard. Se está vermella, aínda hai algo que calcular ou representar. Se "
-"está verde, os cálculos remataron."
+"RKWard. Se está vermella, aínda hai algo que calcular ou representar. Se se "
+"volve verde, os cálculos remataron."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
@@ -2347,14 +2363,7 @@ msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
-#, fuzzy, kde-format
-#| msgid ""
-#| "Therefore it's important you know the test. Moreover it's very important "
-#| "to save the workspace and other sections you worked on before you do such "
-#| "operations. There is currently no recovery functionality within RKWard in "
-#| "case of a crash! You can find build-in tests from R to address this "
-#| "memory issue (see: <link href=\"rkward://rhelp/mem.limits\"/>, and <link "
-#| "href=\"rkward://rhelp/memory.limit\"/>)."
+#, kde-format
 msgid ""
 "Therefore, it is important you know the test. Moreover, it's very important "
 "to save the workspace and other sections you worked on before you do such "
@@ -2429,44 +2438,44 @@ msgstr "Benvido a RKWard"
 #: rkward/pages/rkward_welcome.rkh:10
 #, kde-format
 msgid "My recent script files"
-msgstr ""
+msgstr "Ficheiros de guións recentes"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:12
 #, kde-format
 msgid "My recent workspaces"
-msgstr ""
+msgstr "Espazos de traballo recentes"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:14
 #, kde-format
 msgid "My recent output files"
-msgstr ""
+msgstr "Ficheiros de saída recentes"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "Import or enter data"
-msgstr ""
+msgstr "Importar ou introducir datos"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/new_data_frame\">Enter new data</link>"
 msgstr ""
+"<link href=\"rkward://actions/new_data_frame\">Introducir novos datos</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/import_assistant\">Import data</link>"
-msgstr ""
+msgstr "<link href=\"rkward://actions/import_assistant\">Importar datos</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid "Configurable Settings"
+#, kde-format
 msgid "Useful settings"
-msgstr "Opcións configurábeis"
+msgstr "Opcións útiles"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -2475,45 +2484,44 @@ msgid ""
 "<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
 "packages</link>"
 msgstr ""
+"<link href=\"rkward://actions/rpackage_install\">Instalar R e paquetes de "
+"RKWard</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid "<link href=\"rkward://rhelp/lattice.options\"/> (needs lattice)"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)</link>&lrm;"
-msgstr "<link href=\"rkward://rhelp/lattice.options\"/> (require lattice)"
+msgstr ""
+"&lrm;<link href=\"rkward://settings/addons\">Opcións adicionais relacionadas "
+"con complementos (p. ex. integración con Git ou con proxectos)</link>&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
-#, fuzzy, kde-format
-#| msgid "<link href=\"rkward://rhelp/lattice.options\"/> (needs lattice)"
+#, kde-format
 msgid ""
 "&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
 "(including this page)&lrm;"
-msgstr "<link href=\"rkward://rhelp/lattice.options\"/> (require lattice)"
+msgstr ""
+"&lrm;<link href=\"rkward://settings/general\">Opcións de inicio</link> "
+"(incluída esta páxina)&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31
 #, kde-format
 msgid "Documentation starting points"
-msgstr ""
+msgstr "Puntos iniciais da documentación"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Documentation starting points">
 #: rkward/pages/rkward_welcome.rkh:31
-#, fuzzy, kde-format
-#| msgid ""
-#| "For more general information on RKWard, who writes it, how to help, "
-#| "further questions, etc. refer to <link href=\"http://rkward.kde.org/"
-#| "\">the project homepage</link>."
+#, kde-format
 msgid ""
 "External links: <link href=\"https://rkward.kde.org/\">project homepage</"
 "link>"
 msgstr ""
-"Para información máis xeral sobre RKWard, quen a escribe, como axudar, "
-"preguntas adicionais, etc. visite o <link href=\"http://rkward.kde.org/"
-"\">sitio web do proxecto</link>."
+"Ligazóns externas: <link href=\"https://rkward.kde.org/\">páxina web do "
+"proxecto</link>"
 
 #. i18n: ectx: (Workspace Browser) <title>
 #: rkward/pages/rkward_workspace_browser.rkh:8
@@ -2798,7 +2806,7 @@ msgid ""
 "exceedingly long, you may consider adding it to this list."
 msgstr ""
 "<b>Non obter nunca a estrutura destes paquetes</b>: Algúns paquetes de R "
-"(poucos) conteñen <b>moitísimos</b> obxectos pequenos (deceas de miles). No "
+"(poucos) conteñen <b>moitísimos</b> obxectos pequenos (decenas de miles). No "
 "peor dos casos, intentar obter información da súa estrutura (é dicir, obter "
 "a información para amosar no navegador do espazo de traballo) pode consumir "
 "unha morea de recursos e facer que RKWard deixe de responder. Un exemplo é o "

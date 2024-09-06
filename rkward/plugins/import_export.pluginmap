@@ -51,6 +51,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<component type="standard" id="import_generic_rio" file="import/import_generic_rio.xml" label="Generic import (rio-based)" />
 
 		<component type="standard" id="setworkdir" file="setworkdir.xml" label="Set Working Directory" />
+		<component id="cmp_DownloadAppImgDwnldAppImg" label="Download AppImage" type="standard" file="DownloadAppImage.xml"></component>
 	</components>
 
 	<hierarchy>
@@ -74,6 +75,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 				<entry component="save_rmarkdown" />
 				<entry component="save_skeleton" />
 			</menu>
+			<entry component="cmp_DownloadAppImgDwnldAppImg" />
 		</menu>
 		<menu id="workspace" label="Workspace">
 			<entry component="setworkdir" />
