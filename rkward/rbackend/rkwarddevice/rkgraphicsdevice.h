@@ -162,6 +162,8 @@ private:
 	PaintContext popContext();
 	void initMaskedDraw();
 	void commitMaskedDraw();
+
+	bool antialias;
 };
 
 #endif

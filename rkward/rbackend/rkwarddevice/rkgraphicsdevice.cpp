@@ -28,14 +28,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 QHash<int, RKGraphicsDevice*> RKGraphicsDevice::devices;
 
-RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &title, bool antialias) : 
-		QObject (),
+RKGraphicsDevice::RKGraphicsDevice(double width, double height, const QString &title, bool antialias) :
+		QObject(),
 #ifdef USE_QIMAGE_BUFFER
-		area (qAbs (width) + 1, qAbs (height) + 1, QImage::Format_ARGB32),
+		area(qAbs(width) + 1, qAbs(height) + 1, QImage::Format_ARGB32),
 #else
-		area (qAbs (width) + 1, qAbs (height) + 1),
+		area(qAbs(width) + 1, qAbs(height) + 1),
 #endif
-		base_title (title) {
+		base_title(title),
+		antialias(antialias) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	interaction_opcode = -1;
@@ -52,7 +53,6 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	updatetimer.setSingleShot (true);
 	beginPainter();
 	clear ();
-	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	setActive (true);	// sets window title
 }
 
@@ -67,12 +67,12 @@ void RKGraphicsDevice::beginPainter() {
 	if(!painter.isActive()) {
 		if (contexts.isEmpty()) {
 			painter.begin(&area);  // plain old painting on the canvas itself
-			painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+			if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 			recording_path = false;
 		} else {
 			auto &c = contexts.last();
 			painter.begin(&(c.surface));
-			painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+			if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 			painter.setTransform(c.transform);
 		}
 	}
@@ -537,10 +537,7 @@ qDebug("invalid font %s, %d", qPrintable(font), index);
 	}
 
 	if (current_mask) initMaskedDraw();
-	painter.save();
-	painter.setRenderHint(QPainter::Antialiasing); // TODO
 	painter.fillPath(path, col);
-	painter.restore();
 	if (current_mask) commitMaskedDraw();
 
 	triggerUpdate();
