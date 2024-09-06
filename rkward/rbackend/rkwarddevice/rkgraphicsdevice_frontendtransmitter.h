@@ -39,6 +39,7 @@ private:
 	QIODevice *connection;
 	QLocalServer *local_server;
 	RKAsyncDataStreamHelper<RKGraphicsDeviceTransmittionLengthType> streamer;
+	double dpix, dpiy;
 };
 
 #endif

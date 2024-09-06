@@ -180,7 +180,7 @@ public:
 #define WRITE_FONT(dev) \
 	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
 
-static void RKD_QueryResolution (int *dpix, int *dpiy) {
+static void RKD_QueryResolution (double *dpix, double *dpiy) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
@@ -188,7 +188,7 @@ static void RKD_QueryResolution (int *dpix, int *dpiy) {
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
-		qint32 _dpix, _dpiy;
+		qreal _dpix, _dpiy;
 		RKD_IN_STREAM >> _dpix >> _dpiy;
 		*dpix = _dpix; *dpiy = _dpiy;
 	}

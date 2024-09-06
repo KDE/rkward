@@ -23,7 +23,7 @@ struct RKGraphicsDeviceDesc {
 	int devnum;
 	quint32 id;
 	double width, height;
-	int dpix, dpiy;
+	double dpix, dpiy;
 	QString getFontFamily (bool symbolfont) const {
 		if (symbolfont) return default_symbol_family;
 		return default_family;
@@ -36,9 +36,9 @@ struct RKGraphicsDeviceDesc {
 #include "rkgraphicsdevice_stubs.cpp"
 static SEXP RKD_capabilities(SEXP capabilities);
 
-// No, I do not really understand what this is for.
-// Mostly trying to mimick the X11 device's behavior, here.
-#define RKGD_DPI 72.0
+// Fallback resolution for onscreen devices (as used by R itself)
+// Several functions pass sizes assuming 72DPI resolution, too.
+#define RKGD_DEFAULT_DPI 72.0
 
 void RKStartGraphicsDevice (double width, double height, double pointsize, const QStringList &family, rcolor bg, const char* title, bool antialias) {
 	static quint32 id = 0;
@@ -101,8 +101,8 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	default_family = family.value (0, "Helvetica");
 	default_symbol_family = family.value (0, "Symbol");
 	RKD_QueryResolution (&dpix, &dpiy);
-	if (dpix <= 1) dpix = RKGD_DPI;
-	if (dpiy <= 1) dpiy = RKGD_DPI;
+	if (dpix <= 1) dpix = RKGD_DEFAULT_DPI;
+	if (dpiy <= 1) dpiy = RKGD_DEFAULT_DPI;
 	width *= dpix;
 	height *= dpiy;
 //	Rprintf ("dpi: %d * %d, dims: %f * %f\n", dpix, dpiy, width, height);
@@ -127,8 +127,8 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->right  = dev->clipRight  = width;
 	dev->bottom = dev->clipBottom = height;
 	dev->top    = dev->clipTop    = 0;
-	dev->cra[0] = 0.9 * pointsize * (dpix / RKGD_DPI);
-	dev->cra[1] = 1.2 * pointsize * (dpiy / RKGD_DPI);
+	dev->cra[0] = 0.9 * pointsize * (dpix / RKGD_DEFAULT_DPI);
+	dev->cra[1] = 1.2 * pointsize * (dpiy / RKGD_DEFAULT_DPI);
 	dev->xCharOffset = 0.4900;
 	dev->yCharOffset = 0.3333;
 	dev->yLineBias = 0.2;

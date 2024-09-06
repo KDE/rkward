@@ -505,13 +505,6 @@ void RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &f
 	RK_TRACE(GRAPHICS_DEVICE);
 	RK_ASSERT(points.size() == glyphs.size());
 
-	// TODO Do we need to adjust size?
-	// R has this is Cairo_Glyph:
-	/* Text size (in "points") MUST match the scale of the glyph
-	* location (in "bigpts").  The latter depends on device dpi.
-	*/
-	//cairo_set_font_size(xd->cc, size / (72*dd->ipr[0]));
-	size = size / 72 * 96;
 	QRawFont rfnt;
 	if (index == 0) {
 		rfnt = QRawFont(font, size);
@@ -523,12 +516,6 @@ qDebug("invalid font %s, %d", qPrintable(font), index);
 		fnt.setStyle(style);
 		rfnt = QRawFont::fromFont(fnt);
 	}
-	// TODO Do we need to adjust size?
-	// R has this is Cairo_Glyph:
-	/* Text size (in "points") MUST match the scale of the glyph
-	* location (in "bigpts").  The latter depends on device dpi.
-	*/
-	//cairo_set_font_size(xd->cc, size / (72*dd->ipr[0]));
 
 	// Qt API (6.7) is a little inconsistent in this niche. There is a QGlyphRun, for painting several glyphs at once,
 	// but this cannot procude a QPainterPath. Further, QGlyphRun does not support R's requirement that glyph can be
