@@ -245,7 +245,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	connect (m_doc, &KTextEditor::Document::documentSavedOrUploaded, this, &RKCommandEditorWindow::documentSaved);
 	layout->addWidget(preview_splitter);
 
-	setGlobalContextProperty("current_filename", m_doc->url().url());
 	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::urlChanged);
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 #ifdef __GNUC__

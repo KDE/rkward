@@ -16,8 +16,7 @@
 #'              items in the toolbar (nesting into submenus inside a toolbar is not currently supported).
 #'
 #'              To actually create a menu entry for a handle, the method \code{$define} needs to be called, specifying a label, and - for leaf items - and
-#'              associated R function. It is recommended that specified functions have an ignored \code{...} parameter. This will be unused, currently, but
-#'              might be useful for compatibility with future expansions.
+#'              associated R function.
 #'
 #'              Adding/removing menu items is a fairly computation heavy exercise, internally, and is handled asynchronously, in the frontend. Should you need
 #'              to remove and re-add certain elements, frequently, hiding them will be more efficient (see \code{$enable()}). Note: A disabled menu item
@@ -30,10 +29,25 @@
 #'
 #' @param label Label of the menu entry (character)
 #'
-#' @param func Function to call for leaf item
+#' @param func Function to call for leaf item. Depending on the context, this function will be called with certain named arguments, which you may or may not
+#'             want to handle (see section Details). It is strongly recommended for this R function to include an \code{...} parameter (generally unused),
+#'             for compatibility with future expansions. 
 #'
 #' @returns \code{rk.menu()} and \code{$item()} return a handle. \code{$define() returns the handle it was given (to allow command chaining)}.
 #'          \code{call()} passes on the return value of the associated function. The other methods return \code{NULL}
+#'
+#' @details The R function associated with a menu item will be called with the following (named, not positional) parameters:
+#'          \itemize{
+#'              \item \code{current_filename}: Specified if, and only if a script editor window is currently active: The filename of that script.
+#'              \item \code{current_object}: Specified if, and only if a data editor/viewer window is currently active: The R object being edited/views.
+#'                    To refer to the "name" of this object, use \code{deparse(substitute(current_object))} (see also \code{\link{rk.get.description}).
+#'                    Similarly, it is possible to assign to the given object using \code{eval(substitute(current_object <- value), envir=globalenv())}.
+#'                    It is strongly recommended, however, not to modify data, without asking for explicit confirmation by the user, first (see
+#'                    \code{\link{rk.ask.question}}).
+#'              \item \code{current_dataframe}: Identical to \code{current_object}, but provided only, if the current object is a \code{data.frame}.
+#'              \item \code{...}: To swallow unused argumens, and for compatibility with future extensions, you function should always accept a
+#'                    \code{...}-parameter.
+#'          }
 #'
 #' @import methods
 #' @export rk.menu
@@ -61,7 +75,7 @@ rk.menu <- setRefClass("rk.menu",
 		rk.menu(path=c(path, ...))
 	},
 	define=function(label, func) {
-		"(Re-)define the menu item at this path. If call is specified, this become a leaf item, associated with the given function, otherwise, a submenu is created."
+		"(Re-)define the menu item at this path. If call is specified, this becomes a leaf item, associated with the given function, otherwise, a submenu is created."
 		x <- .retrieve(TRUE)
 		x$label <- label
 		if (!missing(func)) {
@@ -71,10 +85,10 @@ rk.menu <- setRefClass("rk.menu",
 		.rk.call.async("menuupdate", rk.menu()$.list())
 		invisible(rk.menu(path=path))
 	},
-	call=function() {
+	call=function(...) {
 		"Call the function associated with this menu item"
 		x <- .retrieve(FALSE)
-		x$fun()
+		x$fun(...)
 	},
 	remove=function() {
 		"Remove any registered menu entry at this path from the menu"

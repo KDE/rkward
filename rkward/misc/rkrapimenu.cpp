@@ -17,6 +17,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../rbackend/rkrinterface.h"
 #include "../core/robject.h"
+#include "../windows/rkworkplace.h"
+#include "../windows/rkmdiwindow.h"
 #include "../rkward.h"
 
 #include "../debug.h"
@@ -55,8 +57,6 @@ static QDomElement addChildElement(QDomNode &parent, const QString &tagname, con
 
 void RKRApiMenu::makeAction(QDomElement e, const QString &full_id, const QString &label, QStringList *actionlist) {
 	auto s = addChildElement(e, QStringLiteral("Action"), full_id);
-	auto t = addChildElement(s, QStringLiteral("Text"), QString());
-	t.appendChild(s.ownerDocument().createTextNode(label));
 
 	auto a = action(full_id);
 	if (!a) {
@@ -70,7 +70,21 @@ void RKRApiMenu::makeAction(QDomElement e, const QString &full_id, const QString
 				if (i) path += ',';
 				path += RObject::rQuote(segments[i]);
 			}
-			RInterface::issueCommand(new RCommand("rk.menu()$item(" + path + ")$call()", RCommand::App));
+
+			QStringList args;
+			RKMDIWindow *w = RKWorkplace::mainWorkplace()->activeWindow(RKMDIWindow::AnyWindowState);
+			if (w) {
+				const auto props = w->globalContextProperties();
+				for (const auto [key,value] : props.asKeyValueRange()) {
+					if (key == "current_object" || key == "current_dataframe") { // TODO: find cleaner solution than this special casing
+						args.append(key + '=' + value);
+					} else {
+						args.append(key + '=' + RObject::rQuote(value));
+					}
+				}
+			}
+
+			RInterface::issueCommand(new RCommand("rk.menu()$item(" + path + ")$call(" + args.join(',') + ')', RCommand::App));
 		});
 	}
 	a->setText(label);

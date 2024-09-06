@@ -30,7 +30,8 @@ RKEditorDataFrame::RKEditorDataFrame (RContainerObject* object, QWidget *parent)
 	RK_ASSERT (!object->isPending ());
 	RKEditor::object = object;
 	RK_ASSERT (object->isDataFrame ());
-	setGlobalContextProperty ("current_object", object->getFullName());
+	setGlobalContextProperty("current_object", object->getFullName());
+	setGlobalContextProperty("current_dataframe", object->getFullName());
 
 	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (object, this);
 	initTable (model, object);

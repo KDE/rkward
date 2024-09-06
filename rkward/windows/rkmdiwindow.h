@@ -120,8 +120,8 @@ is simply busy (e.g. when saving the current plot to history). */
 	bool isActiveInsideToplevelWindow ();
 /** Returns a pointer to an action collection suitable to place RKStandardAction in. This collection (and the corresponding KXMLGUIClient) is created on the fly. */
 	KActionCollection *standardActionCollection ();
-/** plugin-accessible properties of this object in the global context. Currently used only by RKEditorDataFrame to give information on the currently active data.frame. NOTE: ATM, you cannot set arbitrary properties. Only those supported in RKStandardComponent will have an effect. */
-	QString globalContextProperty (const QString& property) { return global_context_properties.value (property); };
+/** plugin-accessible properties of this object in the global context, if any (currently: current_filename, current_dataframe, current_object. */
+	QMap<QString, QString> globalContextProperties() { return global_context_properties; };
 /** @returns the save action applicable for this window (if any). Will be plugged into the save dropdown */
 	QAction* fileSaveAction () { return file_save_action; };
 /** @returns the save as action applicable for this window (if any). Will be plugged into the save dropdown */

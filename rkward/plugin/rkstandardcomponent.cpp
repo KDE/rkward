@@ -64,21 +64,21 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	addChild ("code", code = new RKComponentPropertyCode (this, true));		// do not change this name!
 	code->setInternal (true);
 
-	RKComponentPropertyRObjects *current_object_property = new RKComponentPropertyRObjects (this, false);
-	RKComponentPropertyRObjects *current_dataframe_property = new RKComponentPropertyRObjects (this, false);
-	RKComponentPropertyBase *current_filename_property = new RKComponentPropertyBase (this, false);
-	current_object_property->setInternal(true);
-	current_dataframe_property->setInternal(true);
-	current_filename_property->setInternal(true);
-	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::AnyWindowState);
+	RKMDIWindow *w = RKWorkplace::mainWorkplace()->activeWindow(RKMDIWindow::AnyWindowState);
 	if (w) {
-		current_object_property->setValue (w->globalContextProperty ("current_object"));
-		current_filename_property->setValue (w->globalContextProperty ("current_filename"));
+		const auto props = w->globalContextProperties();
+		for (const auto [key, value] : props.asKeyValueRange()) {
+			RKComponentPropertyBase *prop;
+			if (key == "current_object" || key == "current_dataframe") { // TODO: find cleaner solution than this special casing
+				prop = new RKComponentPropertyRObjects(this, false);
+			} else {
+				prop = new RKComponentPropertyBase(this, false);
+			}
+			prop->setInternal(true);
+			prop->setValue(value);
+			addChild(key, prop);
+		}
 	}
-	if (current_object_property->objectValue () && current_object_property->objectValue ()->isDataFrame ()) current_dataframe_property->setObjectValue (current_object_property->objectValue ());
-	addChild ("current_object", current_object_property);
-	addChild ("current_dataframe", current_dataframe_property);
-	addChild ("current_filename", current_filename_property);
 
 	// open the main description file for parsing
 	XMLHelper* xml = getXmlHelper ();
