@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:36+0000\n"
-"PO-Revision-Date: 2024-09-05 05:46+0200\n"
+"PO-Revision-Date: 2024-09-06 10:17+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1123,6 +1123,10 @@ msgid ""
 "permissions of '%1'. Sorry, automatic switching to Administrator is not yet "
 "supported in RKWard on Windows.</p>"
 msgstr ""
+"<p>ან, თუ ამ კომპიუტერზე ადმინისტრატორის წვდომა გაქვთ, შეგიძლიათ, გამოიყენოთ "
+"ის, რომ დააყენოთ პაკეტები, ან შეგიძლიათ, '%1'-ის წვდომები შეცვალოთ. "
+"უკაცრავად, ადმინისტრატორზე ავტომატური გადართვა RKWard-ში Windows-ზე ჯერ "
+"მხარდაჭერილი არაა.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:247
 #: rkward/dialogs/rkloadlibsdialog.cpp:251
@@ -1137,6 +1141,8 @@ msgid ""
 "to install the packages as root (you'll be prompted for the root password).</"
 "p>"
 msgstr ""
+"<p>ან, თუ ამ მანქანაზე ადმინისტრატორი ბრძანდებით, შეგიძლიათ, ეს პაკეტები "
+"root-ით დააყენოთ (root-ის პაროლს გკითხავთ).</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:251
 #, kde-format
@@ -1248,6 +1254,9 @@ msgid ""
 "provide a graphical user-interface in addition to R functions. Check this "
 "box to show only such packages.</p>"
 msgstr ""
+"<p>ზოგიერთი, მაგრამ არა ყველა R-ის პაკეტი RKWard-ის დამატებებთან ერთად "
+"მოდის. ეს ნიშნავს, რომ ისინი R-ის ფუნქციებთან ერთად გრაფიკულ ინტერფეისსაც "
+"გთავაზობთ. დასვით ეს თოლია, რომ, მხოლოდ, ასეთი პაკეტები გაჩვენოთ.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:676
 #, kde-format
@@ -1267,6 +1276,9 @@ msgid ""
 "functionality. Check this option to include such additional suggested "
 "packages."
 msgstr ""
+"ზოგიერთი პაკეტი 'გირჩევთ' დამატებულ პაკეტებს, რომლების დაყენებაც სავალდებულო "
+"არაა, მაგრამ ისინი, შეიძლება, დამატებით ფუნქციონალს გთავაზობდეთ. ჩართეთ ეს "
+"პარამეტრი, რომ ასეთი დამატებითი პაკეტების დაყენებაც მოხდეს."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
@@ -1295,6 +1307,9 @@ msgid ""
 "maybe you need to add additional repositories via the \"Configure "
 "Repositories\" button."
 msgstr ""
+"შემდეგი პაკეტები, მოთხოვნილი უკანაბოლოს მიერ, აღმოჩენილი არაა პაკეტის "
+"რეპოზიტორიებში: \"%1\". შეიძლება, სახელი არასწორად წერია, ან გჭირდებათ, "
+"დამატებითი რეპოზიტორიები დაამატოთ \"რეპოზიტორიების მორგების\" ღილაკით."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
@@ -1309,6 +1324,10 @@ msgid ""
 "may take some time, esp. if one or more repositories are temporarily "
 "unavailable.</p>"
 msgstr ""
+"<p>მოითმინეთ, გეთაყვა. მიმდინარეობს დაყენებული და ხელმისაწვდომი პაკეტების "
+"ძებნა.</p><p><strong>შენიშვნა:</strong> ამას მუშა ინტერნეტკავშირი და საკმაო "
+"დრო სჭირდება. განსაკუთრებით, თუ ერთი ან მეტი რეპოზიტორია დროებით "
+"ხელმისაწვდომი არაა.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:952
 #: rkward/rbackend/rcommandstack.cpp:314
@@ -1323,6 +1342,8 @@ msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
 msgstr ""
+"<p>პაკეტები, რომლებიც RKWard-ის ხატულისაა დანიშნული ამ სვეტში, RKWard-ის "
+"ფუნქციონალს აფართოებს, ჩვეულებრივ, დამატებითი დიალოგებით.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:960
 #, kde-format
@@ -1330,6 +1351,8 @@ msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
+"<p>შეგიძლიათ მონიშნოთ პაკეტები დაყენება / წასაშლელად თოლიების დასმით / "
+"მოხსნით შესაბამის ველებში ამ სვეტში.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
@@ -1342,6 +1365,8 @@ msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
 "packages in non-local repositories.</p>"
 msgstr ""
+"<p>აღმწერი სათაური ამ პაკეტისთვის. ამჟამად ხელმისაწვდომი არაა არალოკალური "
+"რეპოზიტორიებისთვის.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:963
 #, kde-format
@@ -1364,6 +1389,8 @@ msgid ""
 "Packages for which an update is available. This may include packages which "
 "were merely built against a newer version of R."
 msgstr ""
+"პაკეტები, რომლებისთვისაც ხელმისაწვდომია განახლებები. ეს, შეიძლება, შეიცავდეს "
+"პაკეტებს, რომლებიც R-ის უფრო ახალი ვერსიისთვისაა განკუთვნილი."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:991
 #, kde-format
@@ -1426,6 +1453,9 @@ msgid ""
 "However, not everything is lost, and with a bit of luck, your data has been "
 "saved in time.</p>"
 msgstr ""
+"<p>როგორც ჩანს, ახლახან, RKWard ავარიულად დასრულდა. ჩვენ ვწუხვართ ამ ფაქტზე. "
+"მაგრამ, ყველაფერი დაკარგული არაა და ოდნავი იღბალი თუ გაქვთ, თქვენი "
+"მონაცემები დროზე შეინახეთ.</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:38
 #, kde-format
@@ -1650,6 +1680,8 @@ msgid ""
 "(Attempt to) install the package %1 and its dependencies for this version of "
 "R. In most cases, this requires a working internet connection."
 msgstr ""
+"პაკეტის %1 და მისი დამოკიდებულებების დაყენება (დაყენების მცდელობა) R-ის ამ "
+"ვერსიისთვის, ძირითად შემთხვევაში, მუშა ინტერნეტკავშირს მოითხოვს."
 
 #: rkward/dialogs/rksetupwizard.cpp:264 rkward/dialogs/rksetupwizard.cpp:275
 #: rkward/dialogs/rksetupwizard.cpp:335
@@ -1663,6 +1695,8 @@ msgid ""
 "Proceed without the package. You will again be given the option to install "
 "the package, when the package is needed."
 msgstr ""
+"გაგრძელება პაკეტის გარეშე. არჩევანს, რომ პაკეტი დააყენოთ, კიდევ მოგცემთ, "
+"როცა პაკეტი საჭირო იქნება."
 
 #: rkward/dialogs/rksetupwizard.cpp:266 rkward/dialogs/rksetupwizard.cpp:286
 #, kde-format
@@ -1676,6 +1710,8 @@ msgid ""
 "will be prompted with a link to a download page at the last page of this "
 "dialog)"
 msgstr ""
+"მონიშნეთ %1 დასაყენებლად (დაყენება ჯერ მხარდაჭერილი არაა, მაგრამ გაჩვენებთ "
+"ბმულს გადმოწერის გვერდზე ამ დიალოგის ბოლო გვერდზე)"
 
 #: rkward/dialogs/rksetupwizard.cpp:275
 #, kde-format
@@ -1698,6 +1734,8 @@ msgid ""
 "<p>This dialog will guide you through a quick check of the basic setup of "
 "the required (or recommended) components.</p>"
 msgstr ""
+"<p>ეს დიალოგი გაგიძღვებათ სწრაფ შემოწმებაზე საბაზისო სისტემაში აუცილებელი "
+"(ან რეკომენდებული) კომპონენტების ქონაზე.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:301
 #, kde-format
@@ -1705,6 +1743,8 @@ msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of RKWard has been detected.</p>"
 msgstr ""
+"<p>მორგების დამხმარე ავტომატურად გაეშვა, რადგან აღმოჩენილია RKWard-ის ახალი "
+"ვერსია.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:304
 #, kde-format
@@ -1712,6 +1752,8 @@ msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of R has been detected.</p>"
 msgstr ""
+"<p>მორგების დამხმარე ავტომატურად გაეშვა, რადგან აღმოჩენილია R-ის ახალი "
+"ვერსია.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:317
 #, kde-format
@@ -1790,6 +1832,9 @@ msgid ""
 "like none are installed on this system. On Linux/BSD, this can usually be "
 "fixed by installing kate.</p>"
 msgstr ""
+"<p>RKWard-ის ფუნქციონალის მნიშვნელოვანი ნაწილი kate-ის დამატებების სახითაა "
+"წარმოდგენილი. როგორც ჩანს, ამ სისტემაზე, ისინი, დაყენებული არაა. Linux/BSD-"
+"ზე ეს, ჩვეულებრივ, kate-ის დაყენებით სწორდება.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:347
 #, kde-format
@@ -2275,6 +2320,8 @@ msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
 "evaluate the given R code."
 msgstr ""
+"მითითებული R-ის კოდის გადათვლა გაშვების (და მითითებული სამუშაო სივრცის "
+"ჩასატვირთად, თუ ეს საჭიროა) შემდეგ."
 
 #: rkward/misc/rkcommandlineargs.cpp:29
 #, kde-format
@@ -2304,6 +2351,8 @@ msgid ""
 "Use specified R installation, instead of the one configured at compile time "
 "(note: rkward R library must be installed to that installation of R)"
 msgstr ""
+"R-ის მითითებული ვერსიის გამოყენება კომპილაციის დროს მითითებულის მაგიერ "
+"(შენიშვნა: R-ის ამ ვერსიას rkward-ის R-ის ბიბლიოთეკა უნდა ჰქონდეს დაყენებული)"
 
 #: rkward/misc/rkcommandlineargs.cpp:34
 #, kde-format

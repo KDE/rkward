@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-09-04 05:10+0200\n"
+"PO-Revision-Date: 2024-09-06 10:20+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -239,6 +239,9 @@ msgid ""
 "Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</"
 "b>. Sets the quality for JPEG exporting. The default quality is 75."
 msgstr ""
+"ხელმისაწვდომია, მხოლოდ, ფორმატისთვის JPEG. ეს <i>ხარისხის</i> პარამეტრია "
+"<b>jpeg</b>-სთვის. აყენებს ხარისხის JPEG-ში გატანისთვის. ნაგულისხმევი "
+"ხარისხია 75."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Paper Size")
 #: rkward/plugins/x11device/export.rkh:38
@@ -290,6 +293,11 @@ msgid ""
 "leave this as 'Default', the default encoding (ISOLatin1) will be used. See "
 "the R reference on postscript for more details."
 msgstr ""
+"ეს <i>კოდირების</i> პარამეტრია <b>postscript</b>-სთვის. დარწმუდით, რომ "
+"აირჩიოთ კოდირება, რომელიც თავსებადია არჩეული ფონტის ოჯახთან. თუ დარწმუნებული "
+"არ ბრძანდებით, დატოვეთ ის 'ნაგულისხმევზე' და გამოყენებული იქნება "
+"ნაგულისხმევი კოდირება (ISOLatin1). მეტი დეტალებისთვის იხილეთ R-ის "
+"დოკუმენტაცია postscript-ის შესახებ."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Default Title")
 #: rkward/plugins/x11device/export.rkh:43

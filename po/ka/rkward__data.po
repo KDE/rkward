@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-09-05 07:15+0200\n"
+"PO-Revision-Date: 2024-09-06 05:18+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -235,6 +235,11 @@ msgid ""
 "several input values are to be replaced with one output value, you can "
 "select them all at once."
 msgstr ""
+"თითოეულ ჩასატარებელი რეკოდინგისთვის ჯერ აირჩიეთ ძველი მნიშვნელობები. ეს "
+"შეიძლება იყოს ან NA/ნაკლული, ან აირჩიეთ სხვა არა-NA მნიშვნელობები მარცხენა "
+"მხარეს და დაამატეთ ისინი რეკოდინგის მნიშვნელობებს ისრის ღილაკზე "
+"დაწკაპუნებით. თუ ჩასანაცვლებელია ერთზე ეტი შეყვანის მნიშვნელობა, ისინი, "
+"ერთად შეგიძლიათ, აირჩიოთ."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "New value")
 #: rkward/plugins/data/recode_categorical.rkh:46
@@ -243,6 +248,8 @@ msgid ""
 "Enter the new value (or set it to be NA). For factors and character vectors, "
 "values will be quoted, automatically."
 msgstr ""
+"შეიყვანეთ ახალი მნიშვნელობა (ან, დააყენეთ ის NA-ზე). ფაქტორებისა და სიმბოლოს "
+"ვექტორებისთვის მნიშვნელობები ბრჭყალებში ავტომატურად ჩაისმება."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Any other values")
 #: rkward/plugins/data/recode_categorical.rkh:49
@@ -252,6 +259,9 @@ msgid ""
 "can either be left unchanged (\"Copy\"), or can be replaced with a specific "
 "value or NA."
 msgstr ""
+"ყველა შეყვანილი მნიშვნელობისთვის (NA-ების ჩათვლით), რომლისთვის რეკოდინგი "
+"მითითებული არაა ზემოთ, შეგიძლიათ, შეუცვლელად დატოვოთ (\"კოპირება\"), "
+"ჩაანაცვლოთ სასურველი მნიშვნელობით ან NA-ით."
 
 #. i18n: ectx: (Recode categorical data) <related>
 #: rkward/plugins/data/recode_categorical.rkh:54
@@ -450,6 +460,9 @@ msgid ""
 "sort by. By default the object to be sorted is replaced with the sorted "
 "variant, but you can also specify to save to a separate object."
 msgstr ""
+"აირჩიეთ დასალაგებელი ობიექტი. data.frames-სთვის ასევე მიუთითეთ, რომელი "
+"სვეტით მოხდება დალაგება. ნაგულისხმევად დასალაგებელი ვარიანტი დალაგებულით "
+"ჩანაცვლდება, მაგრამ, თუ გსურთ, სხვა ობიექტში შენახვაც შეგიძლიათ, მიუთითოთ."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to be sorted")
 #: rkward/plugins/data/sort.rkh:17
@@ -477,6 +490,9 @@ msgid ""
 "the sorted variant. If, instead, you want to keep the unsorted object, "
 "choose \"Another object\" to save the sorted object, separately."
 msgstr ""
+"აირჩიეთ \"იგივე ობიექტი\" (ნაგულისხმევი) რომ დასალაგებელი ვარიანტი "
+"დალაგებულით ჩანაცვლდეს. თუ გნებავთ, შეინარჩუნოთ დაულაგებელ ობიექტიც, აირჩიეთ "
+"\"სხვა ობიექტი\", რომ დალაგებული ობიექტი სხვა სახელით შეინახოთ."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to save to")
 #: rkward/plugins/data/sort.rkh:20
@@ -655,6 +671,9 @@ msgid ""
 "cases, and / or columns. A data.frame containing only the specified subset "
 "is saved to your workspace."
 msgstr ""
+"აირჩიეთ data.frame ქვესეტისთვის. შემდეგ მიუთითეთ წესები მწკრივების / "
+"შემთხვევების ან / და სვეტების მიხედვით გასაფილტრად. data.frame, რომელიც, "
+"მხოლოდ მითითებულ ქვესეტს შეიცავს, იქნება შენახული თქვენს სამუშაო სივრცეში."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Data (data.frame)")
 #: rkward/plugins/data/subset_dataframe.rkh:23
@@ -669,6 +688,8 @@ msgid ""
 "Preview the resulting subset. Note that the preview is limited to the first "
 "500 rows and 100 columns, for performance reasons."
 msgstr ""
+"მიღებული ქვესეტის მინიატურა. დაიმახსოვრეთ, რომ მინიატურა შეზღუდულია პირველი "
+"500 მწკრივით და 100 სვეტით წარმადობით მიზეზთა გამო."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Filter by variable")
 #: rkward/plugins/data/subset_dataframe.rkh:30
@@ -700,6 +721,12 @@ msgid ""
 "column of the data.frame. However, if you want to compare to fixed strings, "
 "you will have to make sure to quote these. E.g. 'c (\"City A\", \"City B\")'."
 msgstr ""
+"მნიშვნელობა, რომელსაც გნებავთ, შეადაროთ (პირობებით უდრის / არ უდრის ან ერთ-"
+"ერთია / ერთ-ერთი არაა). დაიმახსოვრეთ, რომ ეს R-ის კოდის მსგავსად, "
+"დაუმუშავებლად ჩაისმება. ეს ნიშნავს, რომ შეგიძლიათ მიუთითოთ ნებისმიერი R-ის "
+"სწორი გამოსახულება data.frame_ის სხვა სვეტის სახელის ჩათვლით. მაგრამ, თუ "
+"ფიქსირებული სტრიქონების შედარება გსურთ, დარწმუნდით, რომ მათ ბრჭყალებში "
+"ჩასვამთ. მაგ: 'c (\"City A\". \"City B\")'."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Minimum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:39
@@ -711,6 +738,12 @@ msgid ""
 "pasted as R code, verbatim. This means, you can specify any valid R "
 "expression, including the name of another column of the data.frame."
 msgstr ""
+"შუალედებთან შედარებისას (შედარების ტიპებია მათ შუაშია / არაა მათ შუაში). "
+"შეგიძლიათ მინიმალური და მაქსიმალური მნიშვნელობების მითითება. თუ რომელიმე "
+"მითითებული არაა, ან ჩართულია მხოლოდ ერთი (ანუ, მეტია / ნაკლებია). "
+"დაიმახსოვრეთ, რომ ეს R-ის კოდის სახით ჩაისმება, რაც ნიშნავს, რომ შეგიძლიათ R-"
+"ის ნებისმიერი სწორი გამოსახულების მითითება, data.frame-ის სხვა სვეტის "
+"სახელის ჩათვლით."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
 #: rkward/plugins/data/subset_dataframe.rkh:42
@@ -747,6 +780,10 @@ msgid ""
 "combined by logical 'and' (&amp;). Leave empty, if you do not want to filter "
 "on a custom expression."
 msgstr ""
+"გაფილტვრა ასევე მწკრივების / შემთხვევების მიხედვითაც შეგიძლიათ, საკუთარი R-"
+"ის გამოსახულებით. თუ ამას სვეტით (იხ. ზემოთ) გაფილტვრასთან ერთად იყენებთ, "
+"ორივე პირობა ლოგიკური 'და'-ით (&amp;) ხდება. დატოვეთ ცარიელი, თუ თქვენი "
+"გამოსახულებით გაფილტვრა არ გნებავთ."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")
 #: rkward/plugins/data/subset_dataframe.rkh:56

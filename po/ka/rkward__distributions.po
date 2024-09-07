@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-09-04 08:11+0200\n"
+"PO-Revision-Date: 2024-09-06 09:49+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2719,6 +2719,8 @@ msgid ""
 "Specify the quantity to be calculated (probabilities, densities, or "
 "quantiles), and the quantity given (probabilities or quantiles)"
 msgstr ""
+"მიუთითეთ გამოსათვლელი რაოდენობა (ალბათობები, სიმკვრივეები, ან კვანტილები) და "
+"მითითებული რაოდენობები (ალბათობები ან კვანტილები)"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Number of quantiles")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Number of quantiles")
@@ -2919,6 +2921,8 @@ msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
 "probabilities are P[X &gt; x]"
 msgstr ""
+"თუ ჩართულია (ნაგულისხმევად: კი) ალბათობებია P[X ≤ x]. წინააღმდეგ შემთხვევაში "
+"(ზედა მხარე) ალბათობებია P[X &gt; x]"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting>
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting>
@@ -4476,7 +4480,7 @@ msgstr "განაწილების ფუნქცია"
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:57
 #, kde-format
 msgid "Number of observations (points) for constructing the plot (n)."
-msgstr ""
+msgstr "დაკვირვებების (წერტილების) რაოდენობა გრაფიკის ასაგებად (n)."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower quantile")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower quantile")
@@ -4567,6 +4571,9 @@ msgid ""
 "be evaluated at 'n' equally spaced points between the lower quantile and the "
 "upper quantile (inclusive of end points)."
 msgstr ""
+"დასახაზი ფუნქციის უდიდესი მნიშვნელობა. ფუნქცია გამოითვლება 'n' თანაბრად "
+"დაშორებულ წერტილებში ქვედა კვანტილსა და ზედა კვანტილს შორის (ბოლო წერტილების "
+"ჩათვლით)."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Upper quantile")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Upper quantile")
@@ -5059,6 +5066,8 @@ msgid ""
 "Degrees of freedom for the (independent sample) estimate of standard "
 "deviation."
 msgstr ""
+"თავისუფლების ხარისხი (დამოუკიდებელი სინჯის) სტანდარტული გადახრის "
+"შეფასებისთვის."
 
 #. i18n: ectx: (Studentized Range (Tukey) distribution calculator) <snippets> <snippet> <spinbox label="...">
 #. i18n: ectx: (Plot Studentized Range (Tukey) probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -5074,7 +5083,7 @@ msgstr "დაკვირვებების რაოდენობა"
 #: rkward/plugins/distributions/tukey.xml:17
 #, kde-format
 msgid "Degrees of freedom for standard deviation estimate"
-msgstr ""
+msgstr "თავისუფლების ხარისხი სტანდარტული გადახრის შეფასებისთვის"
 
 #. i18n: ectx: (Plot Studentized Range (Tukey) probabilities) <dialog label="...">
 #: rkward/plugins/distributions/plot_tukey_distribution.xml:32
@@ -5202,7 +5211,7 @@ msgstr ""
 #: rkward/plugins/distributions/poisson.rkh:19
 #, kde-format
 msgid "The expected (mean) number of events in the region of interest."
-msgstr ""
+msgstr "მოვლენების მოსალოდნელი (საშუალო) რაოდენობა საინტერესო რეგიონში."
 
 #. i18n: ectx: (Poisson distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/poisson.xml:18
@@ -5323,6 +5332,8 @@ msgid ""
 "This plugin calculates a Jarque-Bera chi-squared statistic for a variable x "
 "and tests against the null hypothesis of normality."
 msgstr ""
+"ეს დამატება ჟაკ-ბერას ხი-კვადრატის სტატისტიკას ითვლი ცვლადისთვის x და "
+"ამოწმებს ნორმალურობის ნულ ჰიპოთეზასთან."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <usage>
 #: rkward/plugins/distributions/tests/jb_test.rkh:12
@@ -5359,6 +5370,8 @@ msgid ""
 "Select if you want to include the number of observations and NAs in the "
 "output. (Default: YES)"
 msgstr ""
+"აირჩიეთ, თუ გნებავთ დაკვირვებებისა და NA-ების რაოდენობების გამოტანა. "
+"(ნაგულისხმევი: დიახ)"
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "Exclude NAs")
 #: rkward/plugins/distributions/tests/jb_test.rkh:23
@@ -5548,6 +5561,8 @@ msgid ""
 "the number of pairs from sample x and y, for which y[j] is not greater than "
 "x[i]."
 msgstr ""
+"კვანტილები ვილკოქსონის რანგის ჯამი სტატისტიკის მნიშვნელობას შეესაბამება, ანუ "
+"რიცხვების წყვილი სინჯიდან x და y, რომლისთვისაც y[j] x[i]-ზე მეტი არაა."
 
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <settings> <setting> (refers to element labelled "m (Numbers of observations in the first sample)")
 #. i18n: ectx: (Wilcoxon Rank Sum distribution calculator) <snippets> <snippet> <spinbox label="...">
