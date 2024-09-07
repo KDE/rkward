@@ -24,8 +24,8 @@ int do_main(int, char**, void*, void* (*)(void*, const char*));
 class RKRBackendProtocolBackend {
 public:
 	static bool inRThread ();
-	static QString dataDir () { return _instance->data_dir; };
-	static QString rkdServerName () { return _instance->rkd_server_name; };
+	static const QString& dataDir () { return _instance->data_dir; };
+	static const QString& rkdServerName () { return _instance->rkd_server_name; };
 	static QString backendDebugFile ();
 	static void doExit();
 

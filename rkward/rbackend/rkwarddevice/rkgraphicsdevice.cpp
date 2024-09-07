@@ -501,7 +501,7 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 	triggerUpdate();
 }
 
-QString RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, QVector<QPointF> points, QVector<quint32> glyphs) {
+QString RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, const QVector<QPointF>& points, const QVector<quint32>& glyphs) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RK_ASSERT(points.size() == glyphs.size());
 

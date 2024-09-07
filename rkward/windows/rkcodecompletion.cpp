@@ -301,7 +301,8 @@ void RKCompletionManager::updateVisibility () {
 void RKCompletionManager::modelGainedLateData(RKCompletionModelBase* model) {
 	RK_TRACE (COMMANDEDITOR);
 
-	RK_ASSERT(started_models.removeAll(model)); // should have been started before, thus be in the list
+	bool removed = started_models.removeAll(model);
+	RK_ASSERT(removed); // should have been started before, thus be in the list
 	startModel(model, true, model->completionRange(view(), view()->cursorPosition()));
 }
 
