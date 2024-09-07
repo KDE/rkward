@@ -563,7 +563,7 @@ void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 			plugin_maps.ordered_ids.insert(above_row, inf.id);
 		}
 	}
-	endInsertRows ();
+	endResetModel();
 }
 
 void RKSettingsModulePluginsModel::swapRows (int rowa, int rowb) {

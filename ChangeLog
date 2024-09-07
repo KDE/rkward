@@ -1,4 +1,5 @@
 --- Version 0.8.1 - UNRELEASED
+- Fixed: Crash when manually adding plugin maps via "Manage R packages and pluigns"
 - Fixed: Abnormal exit on Windows while trying to launch gpgpme (triggered from PDF previews)
 - Fixed: Failure to paint symbols in onscreen device, under some circumstances
 - Fixed: Potential library conflicts on systems shipping a more recent version of libglib2 than included in the AppImage
