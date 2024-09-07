@@ -67,6 +67,7 @@ public:
 	QString getFilename () const { return plugin_map->makeFileName (filename); };
 	QString getLabel () const { return label; };
 	QString getPluginmapFilename () const;
+	bool isNull() const { return filename.isNull(); };
 
 	RKStandardComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
 

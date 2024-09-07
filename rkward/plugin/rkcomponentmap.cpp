@@ -83,8 +83,9 @@ void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu, const QSt
 			Entry *entry = group->entries[j];
 			if (!entry->is_menu) {
 				RKComponentHandle* handle = RKComponentMap::getComponentHandle (entry->id);
-				if (!handle) {
-					RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", qPrintable (entry->id));
+				if (!handle || handle->isNull()) {
+					// HACK: handle->isNull() signifies optional component. Do not warn (but do no place in menu, either).
+					if (!handle) RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", qPrintable (entry->id));
 					delete (group->entries.takeAt (j));
 					--j;
 					continue;
@@ -637,7 +638,14 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		if (!cdependencies.isNull ()) {
 			if (!RKComponentDependency::isRKWardVersionCompatible (cdependencies)) {
 				RK_DEBUG (PLUGIN, DL_INFO, "Skipping component '%1': Not compatible with this version of RKWard", qPrintable (id));
-				if (!xml.getBoolAttribute((*it), "optional", false, DL_INFO)) depfailed_local_components.insert(id);
+				if (xml.getBoolAttribute((*it), "optional", false, DL_INFO)) {
+					// HACK: Unavailable optional components are represented by a null handle, which will then be ignored while
+					//       creating menu entries
+					RKComponentHandle *handle = new RKComponentHandle(pluginmap_file_desc, QString(), QString());
+					components.insert(id, handle);
+				} else {
+					depfailed_local_components.insert(id);
+				}
 				continue;
 			}
 		}
@@ -837,6 +845,8 @@ QString RKComponentHandle::getPluginmapFilename () const {
 
 RKComponentAboutData RKComponentHandle::getAboutData () {
 	RK_TRACE (PLUGIN);
+
+	if (isNull()) return RKComponentAboutData();
 
 	// NOTE: In order to determine the message catalog to use, we have to open the pluginmap file...
 	XMLHelper pluginmap_xml (getPluginmapFilename ());
