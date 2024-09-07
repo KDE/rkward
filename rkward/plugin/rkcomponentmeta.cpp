@@ -1,6 +1,6 @@
 /*
 rkcomponentmeta - This file is part of RKWard (https://rkward.kde.org). Created: Wed Jan 09 2013
-SPDX-FileCopyrightText: 2013-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -15,12 +15,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-QLatin1String rkward_min_version_tag ("rkward_min_version");
-QLatin1String rkward_max_version_tag ("rkward_max_version");
-QLatin1String R_min_version_tag ("R_min_version");
-QLatin1String R_max_version_tag ("R_max_version");
-QLatin1String any_min_version_tag ("min_version");
-QLatin1String any_max_version_tag ("max_version");
+static QLatin1String rkward_min_version_tag("rkward_min_version");
+static QLatin1String rkward_max_version_tag("rkward_max_version");
+static QLatin1String R_min_version_tag("R_min_version");
+static QLatin1String R_max_version_tag("R_max_version");
+static QLatin1String any_min_version_tag("min_version");
+static QLatin1String any_max_version_tag("max_version");
+static QLatin1String platforms_tag("platforms");
 
 RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml) {
 	RK_TRACE (PLUGIN);
@@ -111,11 +112,24 @@ QString RKComponentAboutData::toHtml () const {
 bool RKComponentDependency::isRKWardVersionCompatible (const QDomElement& e) {
 	RK_TRACE (PLUGIN);
 
-	if (e.hasAttribute (rkward_min_version_tag)) {
-		if (RKSessionVars::compareRKWardVersion (e.attribute (rkward_min_version_tag)) > 0) return false;
+	if (e.hasAttribute(rkward_min_version_tag)) {
+		if (RKSessionVars::compareRKWardVersion(e.attribute(rkward_min_version_tag)) > 0) return false;
 	}
-	if (e.hasAttribute (rkward_max_version_tag)) {
-		if (RKSessionVars::compareRKWardVersion (e.attribute (rkward_max_version_tag)) < 0) return false;
+	if (e.hasAttribute(rkward_max_version_tag)) {
+		if (RKSessionVars::compareRKWardVersion(e.attribute(rkward_max_version_tag)) < 0) return false;
+	}
+	if (e.hasAttribute(platforms_tag)) {
+		auto platforms = e.attribute(platforms_tag).split(':');
+#if defined(Q_OS_WIN)
+		if (platforms.contains(QLatin1String("windows"))) return true;
+#elif defined(Q_OS_MACOS)
+		if (platforms.contains(QLatin1String("macos"))) return true;
+#elif defined(Q_OS_UNIX) // NOTE: order matters. Q_OS_UNIX is also defined on mac, but we do not want to count that as "unix", here.
+		if (platforms.contains(QLatin1String("unix"))) return true;
+#else
+		static_assert(false, "Undefined platform");
+#endif
+		return false;
 	}
 
 	return true;

@@ -50,7 +50,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 
 <copyright>
-<year>2006-2022</year>
+<year>2006-2024</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -58,8 +58,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2022-04-24</date>
-<releaseinfo>0.7.4</releaseinfo>
+<date>2024-09-07</date>
+<releaseinfo>0.8.1</releaseinfo>
 
 <abstract>
 <para>
@@ -4110,6 +4110,11 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	<term>R_min_version, R_max_version</term>
 	<listitem><para>Minimum and maximum allowed version of &R;. Version specifications may <emphasis>not</emphasis> include non-numeric suffixes, like "0.5.7z-devel1". The &R; version dependency will be shown on the plugins' help pages, but does not have any direct effect, as of &rkward; 0.6.1. <link linkend="sect_dependencies_r_version">More information</link>. Optional; if not specified, no minimum / maximum version of &R; will be required.</para></listitem>
 	</varlistentry>
+	<varlistentry>
+	<term>platforms</term>
+	<listitem><para>Platforms where this plugin is available. Supported values are <replaceable>"unix"</replaceable>, <replaceable>"windows"</replaceable>, <replaceable>"macos"</replaceable>, <replaceable>"any"</replaceable>, and colon separated combinations (e.g. <replaceable>"unix:macos"</replaceable>). <replaceable>"unix"</replaceable> includes any Linux and BSD variants but <emphasis>not></emphasis> MacOS.
+	If your plugin is not platform dependent, just omit this attribute.</para></listitem>
+	</varlistentry>
 	</variablelist>
 <para>Child elements:</para>
 	<variablelist>
@@ -4242,6 +4247,12 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	<varlistentry>
 	<term>label</term>
 	<listitem><para>The label for this component, when placed in the menu hierarchy.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>optional</term>
+	<listitem><para>Only meaningful for components with defined <link linkend="chapter_dependencies">dependencies</link>: Usually, it is considered a reportable error, if a component is not compatible with
+	this version if of RKWard. However, if the component really is not needed in the current environment, setting this attribute to <replaceable>"true"</replaceable>
+	suppresses any warning (<replaceable>"false"</replaceable>  by default).</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>

@@ -637,7 +637,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		if (!cdependencies.isNull ()) {
 			if (!RKComponentDependency::isRKWardVersionCompatible (cdependencies)) {
 				RK_DEBUG (PLUGIN, DL_INFO, "Skipping component '%1': Not compatible with this version of RKWard", qPrintable (id));
-				depfailed_local_components.insert (id);
+				if (!xml.getBoolAttribute((*it), "optional", false, DL_INFO)) depfailed_local_components.insert(id);
 				continue;
 			}
 		}
