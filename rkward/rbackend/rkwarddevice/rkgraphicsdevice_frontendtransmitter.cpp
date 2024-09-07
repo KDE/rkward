@@ -1,6 +1,6 @@
 /*
 rkgraphicsdevice_frontendtransmitter - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 18 2013
-SPDX-FileCopyrightText: 2013-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -25,8 +25,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../../debug.h"
 
-double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72.0/96;
-RKGraphicsDeviceFrontendTransmitter::RKGraphicsDeviceFrontendTransmitter () : QObject () {
+double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72.0/96; // NOTE: reinitialized more appropriately, later
+RKGraphicsDeviceFrontendTransmitter::RKGraphicsDeviceFrontendTransmitter() : QObject(), dpix(0), dpiy(0) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	connection = nullptr;
@@ -205,15 +205,19 @@ static QFont readFont (QDataStream &instream) {
 	return ret;
 }
 
-static QVector<QPointF> readPoints (QDataStream &instream) {
+static QPointF readPoint(QDataStream &instream) {
+	double x, y;
+	instream >> x >> y;
+	return(QPointF(x, y));
+}
+
+static QVector<QPointF> readPoints(QDataStream &instream) {
 	quint32 n;
 	instream >> n;
 	QVector<QPointF> points;
-	points.reserve (n);
+	points.reserve(n);
 	for (quint32 i = 0; i < n; ++i) {
-		double x, y;
-		instream >> x >> y;
-		points.append (QPointF (x, y));
+		points.append(readPoint(instream));
 	}
 	return points;
 }
@@ -250,12 +254,17 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation canceled");
 					Q_EMIT stopInteraction();
 				} else if (opcode == RKDQueryResolution) {
-					auto screen = QGuiApplication::primaryScreen();
-					streamer.outstream << (qint32) screen->logicalDotsPerInchX() << (qint32) screen->logicalDotsPerInchY();
-					RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "DPI for device %d: %d by %d", devnum+1, screen->logicalDotsPerInchX(), screen->logicalDotsPerInchY());
+					if (dpix < 1) {
+						auto screen = QGuiApplication::primaryScreen();
+						dpix = screen->logicalDotsPerInchX();
+						dpiy = screen->logicalDotsPerInchY();
+					}
+					streamer.outstream << (qreal) dpix << (qreal) dpiy;
+					RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "DPI for device %d: %d by %d", devnum+1, (int) dpix, (int) dpiy);
 					streamer.writeOutBuffer ();
 					// Actually, this is only needed once, but where to put it...
-					RKGraphicsDeviceFrontendTransmitter::lwdscale = ((double) screen->logicalDotsPerInchX()) / 96;   // taken from devX11.c
+					// The 96 is taken from devX11.c, where it is hardcoded (historical reasons?)
+					RKGraphicsDeviceFrontendTransmitter::lwdscale = dpix / 96;
 				} else {
 					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skipping.", opcode, devnum+1);
 					sendDummyReply (opcode);
@@ -449,6 +458,30 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 				matrix = QTransform(m[0], m[3], m[1], m[4], m[2], m[5]);
 			}
 			device->useGroup(index, matrix);
+		} else if (opcode == RKDGlyph) {
+			QString font, family;
+			quint8 index, style;
+			quint32 weight;
+			double rot, size;
+			QColor col = readColor(streamer.instream);
+			streamer.instream >> font >> index >> family >> weight >> style >> size >> rot;
+			quint32 n;
+			streamer.instream >> n;
+			QVector<QPointF> points;
+			QVector<quint32> glyphs;
+			points.reserve(n);
+			glyphs.reserve(n);
+			for (decltype(n) i = 0; i < n; ++i) {
+				qint32 glyphi;
+				points.append(readPoint(streamer.instream));
+				streamer.instream >> glyphi;
+				glyphs.append(glyphi);
+			}
+			// NOTE: contrary to other font sizes, size here is given in device independent "bigpts" (1 inch / 72), which need to be scaled to resolution
+			size = size * (dpix / 72.0);
+			QString ret = device->glyph(font, index, family, weight, static_cast<QFont::Style>(style), size, col, rot, points, glyphs);
+			streamer.outstream << ret;
+			streamer.writeOutBuffer();
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();

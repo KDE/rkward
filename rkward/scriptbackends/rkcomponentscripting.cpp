@@ -144,8 +144,8 @@ QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QS
 	return (QVariant (com.command->id ()));
 }
 
-static QJSValue marshall (QJSEngine *engine, RData *data) {
-	RK_TRACE (PHP);
+static QJSValue marshall(QJSEngine *engine, const RData *data) {
+	RK_TRACE(PHP);
 
 	if (data->getDataType() == RData::StringVector) {
 		return (rkJSMakeArray(engine, data->stringVector()));
@@ -157,13 +157,13 @@ static QJSValue marshall (QJSEngine *engine, RData *data) {
 		const RData::RDataStorage& rs = data->structureVector();
 		QJSValue ret = engine->newArray (rs.size ());
 		for (int i = 0; i < rs.size (); ++i) {
-			ret.setProperty (i, marshall (engine, rs[i]));
+			ret.setProperty(i, marshall(engine, rs[i]));
 		}
 		return ret;
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 	}
-	return QJSValue ();
+	return QJSValue();
 }
 
 void RKComponentScriptingProxy::scriptRCommandFinished (RCommand* command) {

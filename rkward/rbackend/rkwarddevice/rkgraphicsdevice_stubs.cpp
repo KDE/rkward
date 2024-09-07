@@ -10,7 +10,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
  * It is meant to be included, there. */
 
 #define RKD_BACKEND_CODE
-#define RKD_RGE_VERSION R_GE_version
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "rkgraphicsdevice_backendtransmitter.h"
 #include "../rkrbackend.h"
@@ -181,7 +180,7 @@ public:
 #define WRITE_FONT(dev) \
 	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
 
-static void RKD_QueryResolution (int *dpix, int *dpiy) {
+static void RKD_QueryResolution (double *dpix, double *dpiy) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
@@ -189,7 +188,7 @@ static void RKD_QueryResolution (int *dpix, int *dpiy) {
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
-		qint32 _dpix, _dpiy;
+		qreal _dpix, _dpiy;
 		RKD_IN_STREAM >> _dpix >> _dpiy;
 		*dpix = _dpix; *dpiy = _dpiy;
 	}
@@ -933,5 +932,35 @@ void RKD_Fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
 
 void RKD_FillStroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
 	doFillAndOrStroke(path, gc, dev, true, rule, true);
+}
+#endif
+
+#if R_VERSION >= R_Version(4,3,0)
+void RKD_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, double size, int colour, double rot, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard guard;
+		WRITE_HEADER(RKDGlyph, dev);
+
+		QString qfont = QString(RFn::R_GE_glyphFontFile(font));
+		quint8 index = RFn::R_GE_glyphFontIndex(font);
+		QString family = QString(RFn::R_GE_glyphFontFamily(font));
+		quint32 weight = RFn::R_GE_glyphFontWeight(font);
+		quint8 style = mapTextStyle(RFn::R_GE_glyphFontStyle(font));
+		// NOTE: family, weight, and style are used as fallback, if font(-file), and index don't work
+
+		WRITE_COLOR_BYTES(colour);
+		RKD_OUT_STREAM << qfont << index << family << weight << style << size << rot << (quint32) n;
+		for (int i = 0; i < n; ++i) {
+			RKD_OUT_STREAM << x[i] << y[i] << (quint32) glyphs[i];
+		}
+	}
+
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		QString warning;
+		RKD_IN_STREAM >> warning;
+		if (!warning.isEmpty()) RFn::Rf_warning("%s", qPrintable(warning));
+	}
 }
 #endif

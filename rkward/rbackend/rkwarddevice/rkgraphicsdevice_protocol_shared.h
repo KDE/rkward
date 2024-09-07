@@ -107,6 +107,7 @@ enum RKDOpcodes {
 	RKDEndRecordMask,
 	RKDDefineGroupEnd,
 	RKDClose,             // 115
+	RKDGlyph,
 
 	// Protocol operations
 	RKDCancel              = 200
@@ -150,7 +151,7 @@ enum RKDEventCodes {
 #define MapEnum(Rval,Ival,Qval) case Ival: static_assert(Ival == (int) Qval, "Enum mismatch"); return Qval;
 #define MapDefault(Message,Ival,Qval) return Qval;
 #define RKD_IN_FRONTEND true
-#define RKD_RGE_VERSION 99999
+#define R_GE_version 99999 // always support latest features in frontend. Backend may or may not use them
 #endif
 
 static inline quint8 mapLineEndStyle(quint8 from) {
@@ -174,7 +175,7 @@ static inline quint8 mapLineJoinStyle(quint8 from) {
 	MapDefault({}, 0x00, Qt::MiterJoin);
 }
 
-#if RKD_RGE_VERSION >= 15
+#if R_GE_version >= 15
 static inline int mapCompositionModeEnum(int from) {
 	if (RKD_IN_FRONTEND) return from;
 	switch(from) {
@@ -215,6 +216,18 @@ static inline quint8 mapFillRule(quint8 from) {
 		MapEnum(R_GE_nonZeroWindingRule, 1, Qt::WindingFill);
 	}
 	MapDefault({}, 0x00, Qt::OddEvenFill);
+}
+#endif
+
+#if R_GE_version >= 16
+static inline quint8 mapTextStyle(quint8 from) {
+	if (RKD_IN_FRONTEND) return from;
+	switch(from) {
+		MapEnum(R_GE_text_style_normal, 0, QFont::StyleNormal);
+		MapEnum(R_GE_text_style_italic, 1, QFont::StyleItalic);
+		MapEnum(R_GE_text_style_oblique, 2, QFont::StyleOblique);
+	}
+	MapDefault({}, 0x00, QFont::StyleNormal);
 }
 #endif
 

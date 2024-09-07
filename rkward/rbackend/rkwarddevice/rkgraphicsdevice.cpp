@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDialog>
 #include <QTransform>
 #include <QFontMetricsF>
+#include <QRawFont>
 
 #include <KLocalizedString>
 #include <sys/stat.h>
@@ -27,14 +28,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 QHash<int, RKGraphicsDevice*> RKGraphicsDevice::devices;
 
-RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &title, bool antialias) : 
-		QObject (),
+RKGraphicsDevice::RKGraphicsDevice(double width, double height, const QString &title, bool antialias) :
+		QObject(),
 #ifdef USE_QIMAGE_BUFFER
-		area (qAbs (width) + 1, qAbs (height) + 1, QImage::Format_ARGB32),
+		area(qAbs(width) + 1, qAbs(height) + 1, QImage::Format_ARGB32),
 #else
-		area (qAbs (width) + 1, qAbs (height) + 1),
+		area(qAbs(width) + 1, qAbs(height) + 1),
 #endif
-		base_title (title) {
+		base_title(title),
+		antialias(antialias) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	interaction_opcode = -1;
@@ -51,7 +53,6 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	updatetimer.setSingleShot (true);
 	beginPainter();
 	clear ();
-	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	setActive (true);	// sets window title
 }
 
@@ -66,10 +67,12 @@ void RKGraphicsDevice::beginPainter() {
 	if(!painter.isActive()) {
 		if (contexts.isEmpty()) {
 			painter.begin(&area);  // plain old painting on the canvas itself
+			if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 			recording_path = false;
 		} else {
 			auto &c = contexts.last();
 			painter.begin(&(c.surface));
+			if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 			painter.setTransform(c.transform);
 		}
 	}
@@ -496,6 +499,56 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 	if (current_mask) commitMaskedDraw();
 
 	triggerUpdate();
+}
+
+QString RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, const QVector<QPointF>& points, const QVector<quint32>& glyphs) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	RK_ASSERT(points.size() == glyphs.size());
+
+	QRawFont rfnt;
+	QString ret;
+	if (index == 0) {
+		rfnt = QRawFont(font, size);
+	}
+	if (!rfnt.isValid()) {
+		if (index != 0) {
+			// NOTE: This is currently the only graphics operation that may return a warning message.
+			//       If warnings were handled some other way, it might not have to be synchronous, but the real-life performance impact
+			//       is thought to be neglegible. (Measured around 7% on the grid-library glyphs test case.)
+			ret = QStringLiteral("Using font index != 0 is not supported in RK() device.");
+		} else {
+			ret = QStringLiteral("Invalid font '%1'.").arg(font);
+		}
+		QFont fnt(family, size, weight);
+		fnt.setStyle(style);
+		rfnt = QRawFont::fromFont(fnt);
+	}
+
+	// Qt API (6.7) is a little inconsistent in this niche. There is a QGlyphRun, for painting several glyphs at once,
+	// but this cannot procude a QPainterPath. Further, QGlyphRun does not support R's requirement that glyph can be
+	// drawn with rotation, which would necessitate transforming all postions.
+	// For simplicity of code, what we do is to always create painter paths, assembled from individual glyphs.
+	QPainterPath path;
+	for (int i = 0; i < glyphs.size(); ++i) {
+		QPainterPath sub = rfnt.pathForGlyph(glyphs[i]);
+		QTransform trans;
+		auto p = points[i];
+		trans.translate(p.x(), p.y());
+		trans.rotate(-rot);
+		path.addPath(trans.map(sub));
+	}
+
+	if (recording_path) {
+		recorded_path.addPath(path);
+		return ret;
+	}
+
+	if (current_mask) initMaskedDraw();
+	painter.fillPath(path, col);
+	if (current_mask) commitMaskedDraw();
+
+	triggerUpdate();
+	return ret;
 }
 
 void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* ascent, double* descent, double* width) {

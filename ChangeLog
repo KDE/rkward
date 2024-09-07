@@ -1,4 +1,6 @@
 --- Version 0.8.1 - UNRELEASED
+- Fixed: antialising=FALSE was ignored in RK() device
+- Added: Impoement glyph()-functionality in RK() device
 - Fixed: Crash when manually adding plugin maps via "Manage R packages and pluigns"
 - Fixed: Abnormal exit on Windows while trying to launch gpgpme (triggered from PDF previews)
 - Fixed: Failure to paint symbols in onscreen device, under some circumstances

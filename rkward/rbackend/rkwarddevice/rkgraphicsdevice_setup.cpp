@@ -23,7 +23,7 @@ struct RKGraphicsDeviceDesc {
 	int devnum;
 	quint32 id;
 	double width, height;
-	int dpix, dpiy;
+	double dpix, dpiy;
 	QString getFontFamily (bool symbolfont) const {
 		if (symbolfont) return default_symbol_family;
 		return default_family;
@@ -36,9 +36,9 @@ struct RKGraphicsDeviceDesc {
 #include "rkgraphicsdevice_stubs.cpp"
 static SEXP RKD_capabilities(SEXP capabilities);
 
-// No, I do not really understand what this is for.
-// Mostly trying to mimick the X11 device's behavior, here.
-#define RKGD_DPI 72.0
+// Fallback resolution for onscreen devices (as used by R itself)
+// Several functions pass sizes assuming 72DPI resolution, too.
+#define RKGD_DEFAULT_DPI 72.0
 
 void RKStartGraphicsDevice (double width, double height, double pointsize, const QStringList &family, rcolor bg, const char* title, bool antialias) {
 	static quint32 id = 0;
@@ -101,8 +101,8 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	default_family = family.value (0, "Helvetica");
 	default_symbol_family = family.value (0, "Symbol");
 	RKD_QueryResolution (&dpix, &dpiy);
-	if (dpix <= 1) dpix = RKGD_DPI;
-	if (dpiy <= 1) dpiy = RKGD_DPI;
+	if (dpix <= 1) dpix = RKGD_DEFAULT_DPI;
+	if (dpiy <= 1) dpiy = RKGD_DEFAULT_DPI;
 	width *= dpix;
 	height *= dpiy;
 //	Rprintf ("dpi: %d * %d, dims: %f * %f\n", dpix, dpiy, width, height);
@@ -127,8 +127,8 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->right  = dev->clipRight  = width;
 	dev->bottom = dev->clipBottom = height;
 	dev->top    = dev->clipTop    = 0;
-	dev->cra[0] = 0.9 * pointsize * (dpix / RKGD_DPI);
-	dev->cra[1] = 1.2 * pointsize * (dpiy / RKGD_DPI);
+	dev->cra[0] = 0.9 * pointsize * (dpix / RKGD_DEFAULT_DPI);
+	dev->cra[1] = 1.2 * pointsize * (dpiy / RKGD_DEFAULT_DPI);
 	dev->xCharOffset = 0.4900;
 	dev->yCharOffset = 0.3333;
 	dev->yLineBias = 0.2;
@@ -193,7 +193,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->holdflush = RKD_HoldFlush;
 
 #if R_VERSION >= R_Version (4, 1, 0)
-	static_assert(RKD_RGE_VERSION >= 13);
+	static_assert(R_GE_version >= 13);
 	// NOTE: We need both a compiletime and a runtime check, in order to support running with an R older than what was used at compile time
 	if (RFn::R_GE_getVersion() >=  13) {
 		// patterns and gradients
@@ -205,7 +205,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 		// masks
 		dev->setMask = RKD_SetMask;
 		dev->releaseMask = RKD_ReleaseMask;
-		dev->deviceVersion = qMin(qMin(15, R_GE_version), RFn::R_GE_getVersion());
+		dev->deviceVersion = qMin(qMin(16, R_GE_version), RFn::R_GE_getVersion());
 		if (RFn::R_GE_getVersion() >=  14) {
 			dev->deviceClip = TRUE; // for now
 		}
@@ -213,7 +213,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 #endif
 
 #if R_VERSION >= R_Version (4, 2, 0)
-	static_assert(RKD_RGE_VERSION >= 15);
+	static_assert(R_GE_version >= 15);
 	if (RFn::R_GE_getVersion() >=  15) {
 		// groups
 		dev->defineGroup = RKD_DefineGroup;
@@ -225,6 +225,14 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 		dev->fill = RKD_Fill;
 		dev->fillStroke = RKD_FillStroke;
 		dev->capabilities = RKD_capabilities;
+	}
+#endif
+
+#if R_VERSION >= R_Version (4, 3, 0)
+	static_assert(R_GE_version >= 16);
+	if (RFn::R_GE_getVersion() >=  16) {
+		// glyhp
+		dev->glyph = RKD_Glyph;
 	}
 #endif
 
@@ -284,11 +292,13 @@ static SEXP RKD_capabilities(SEXP capabilities) {
 	});
 	setCapabilityStruct(capabilities, R_GE_capability_transformations, { 1 });
 	setCapabilityStruct(capabilities, R_GE_capability_paths, { 1 });
-/*
-#if RKD_RGE_VERSION >= 16  // R >= 4.3.0
-	setCapabilityStruct(capabilities, R_GE_capability_glyphs, { 1 });
+
+#if R_GE_version >= 16  // R >= 4.3.0
+	if (RFn::R_GE_getVersion() >=  16) {
+		setCapabilityStruct(capabilities, R_GE_capability_glyphs, { 1 });
+	}
 #endif
-*/
+
 	return capabilities;
 }
 #endif
