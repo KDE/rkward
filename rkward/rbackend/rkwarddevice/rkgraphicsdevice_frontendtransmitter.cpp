@@ -479,7 +479,9 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			}
 			// NOTE: contrary to other font sizes, size here is given in device independent "bigpts" (1 inch / 72), which need to be scaled to resolution
 			size = size * (dpix / 72.0);
-			device->glyph(font, index, family, weight, static_cast<QFont::Style>(style), size, col, rot, points, glyphs);
+			QString ret = device->glyph(font, index, family, weight, static_cast<QFont::Style>(style), size, col, rot, points, glyphs);
+			streamer.outstream << ret;
+			streamer.writeOutBuffer();
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();

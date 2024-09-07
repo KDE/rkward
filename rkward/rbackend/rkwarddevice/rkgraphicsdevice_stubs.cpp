@@ -938,20 +938,29 @@ void RKD_FillStroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
 #if R_VERSION >= R_Version(4,3,0)
 void RKD_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, double size, int colour, double rot, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER(RKDGlyph, dev);
+	{
+		RKGraphicsDataStreamWriteGuard guard;
+		WRITE_HEADER(RKDGlyph, dev);
 
-	QString qfont = QString(RFn::R_GE_glyphFontFile(font));
-	quint8 index = RFn::R_GE_glyphFontIndex(font);
-	QString family = QString(RFn::R_GE_glyphFontFamily(font));
-	quint32 weight = RFn::R_GE_glyphFontWeight(font);
-	quint8 style = mapTextStyle(RFn::R_GE_glyphFontStyle(font));
-	// NOTE: family, weight, and style are used as fallback, if font(-file), and index don't work
+		QString qfont = QString(RFn::R_GE_glyphFontFile(font));
+		quint8 index = RFn::R_GE_glyphFontIndex(font);
+		QString family = QString(RFn::R_GE_glyphFontFamily(font));
+		quint32 weight = RFn::R_GE_glyphFontWeight(font);
+		quint8 style = mapTextStyle(RFn::R_GE_glyphFontStyle(font));
+		// NOTE: family, weight, and style are used as fallback, if font(-file), and index don't work
 
-	WRITE_COLOR_BYTES(colour);
-	RKD_OUT_STREAM << qfont << index << family << weight << style << size << rot << (quint32) n;
-	for (int i = 0; i < n; ++i) {
-		RKD_OUT_STREAM << x[i] << y[i] << (quint32) glyphs[i];
+		WRITE_COLOR_BYTES(colour);
+		RKD_OUT_STREAM << qfont << index << family << weight << style << size << rot << (quint32) n;
+		for (int i = 0; i < n; ++i) {
+			RKD_OUT_STREAM << x[i] << y[i] << (quint32) glyphs[i];
+		}
+	}
+
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		QString warning;
+		RKD_IN_STREAM >> warning;
+		if (!warning.isEmpty()) RFn::Rf_warning("%s", qPrintable(warning));
 	}
 }
 #endif

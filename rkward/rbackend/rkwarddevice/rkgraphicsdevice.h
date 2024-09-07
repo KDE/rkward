@@ -51,7 +51,7 @@ public:
 	void rect (const QRectF& rec, const QPen& pen, const QBrush& brush);
 	QSizeF strSize (const QString &text, const QFont& font);
 	void text (double x, double y, const QString &text, double rot, double hadj, const QColor& col, const QFont& font);
-	void glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, QVector<QPointF> points, QVector<quint32> glyphs);
+	QString glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, QVector<QPointF> points, QVector<quint32> glyphs);
 	void metricInfo (const QChar& c, const QFont& font, double *ascent, double *descent, double *width);
 	void setClip (const QRectF& new_clip);
 	void polygon (const QPolygonF& pol, const QPen& pen, const QBrush &brush);

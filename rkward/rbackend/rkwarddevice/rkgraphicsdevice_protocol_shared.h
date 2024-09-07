@@ -89,7 +89,6 @@ enum RKDOpcodes {
 	RKDDefineGroupBegin,
 	RKDDefineGroupStep2,
 	RKDUseGroup,           // 25
-	RKDGlyph,
 
 	// Synchronous operations
 	RKDFetchNextEvent      = 100,
@@ -108,6 +107,7 @@ enum RKDOpcodes {
 	RKDEndRecordMask,
 	RKDDefineGroupEnd,
 	RKDClose,             // 115
+	RKDGlyph,
 
 	// Protocol operations
 	RKDCancel              = 200

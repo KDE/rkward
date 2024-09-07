@@ -501,17 +501,24 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 	triggerUpdate();
 }
 
-void RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, QVector<QPointF> points, QVector<quint32> glyphs) {
+QString RKGraphicsDevice::glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, QVector<QPointF> points, QVector<quint32> glyphs) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RK_ASSERT(points.size() == glyphs.size());
 
 	QRawFont rfnt;
+	QString ret;
 	if (index == 0) {
 		rfnt = QRawFont(font, size);
 	}
 	if (!rfnt.isValid()) {
-qDebug("invalid font %s, %d", qPrintable(font), index);
-// TODO create warning, somewhere
+		if (index != 0) {
+			// NOTE: This is currently the only graphics operation that may return a warning message.
+			//       If warnings were handled some other way, it might not have to be synchronous, but the real-life performance impact
+			//       is thought to be neglegible. (Measured around 7% on the grid-library glyphs test case.)
+			ret = QStringLiteral("Using font index != 0 is not supported in RK() device.");
+		} else {
+			ret = QStringLiteral("Invalid font '%1'.").arg(font);
+		}
 		QFont fnt(family, size, weight);
 		fnt.setStyle(style);
 		rfnt = QRawFont::fromFont(fnt);
@@ -533,7 +540,7 @@ qDebug("invalid font %s, %d", qPrintable(font), index);
 
 	if (recording_path) {
 		recorded_path.addPath(path);
-		return;
+		return ret;
 	}
 
 	if (current_mask) initMaskedDraw();
@@ -541,6 +548,7 @@ qDebug("invalid font %s, %d", qPrintable(font), index);
 	if (current_mask) commitMaskedDraw();
 
 	triggerUpdate();
+	return ret;
 }
 
 void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* ascent, double* descent, double* width) {
