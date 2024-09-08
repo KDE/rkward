@@ -1,4 +1,5 @@
 --- Version 0.8.1 - UNRELEASED
+- Added: Allow to register custom R functions in the menu (rk.menu())
 - Added: Plugin to facilitate download of latest AppImage (Linux only)
 - Added: Allow to limit plugins to certain platforms
 - Fixed: antialising=FALSE was ignored in RK() device
