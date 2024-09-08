@@ -26,7 +26,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
   -->
   <settings>
     <caption id="tab_File" />
-    <caption id="frm_txtPAIYRFR" />
     <caption id="frm_brwsrlbSAI" />
     <setting id="aiu_file">
       Select a target file to save the AppImage to.

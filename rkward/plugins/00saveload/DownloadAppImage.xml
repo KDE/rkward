@@ -35,15 +35,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <tab label="File" id="tab_File">
         <row id="row_cPAIYRFRPA">
           <column id="clm_fPAIYRFRPA">
-            <frame id="frm_txtPAIYRFR">
-              <text id="aiu_file_warning" type="warning">
-                Please note that downloading the AppImage file might take a while. Your R session can be occupied for some minutes once you submit. For a live feedback of the download progress, please run the
-                <code>
-                  rk.download_appimage()
-                </code>
-                call in the R console manually.
-              </text>
-            </frame>
             <frame id="frm_brwsrlbSAI">
               <browser label="Save to" type="savefile" id="aiu_file" filter="*.AppImage" />
             </frame>

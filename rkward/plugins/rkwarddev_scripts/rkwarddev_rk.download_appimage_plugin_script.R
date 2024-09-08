@@ -73,13 +73,6 @@ noLoadMsg <- rk.XML.cbox(
 tab_file <- rk.XML.row(
   rk.XML.col(
     rk.XML.frame(
-      rk.XML.text(
-        "Please note that downloading the AppImage file might take a while. Your R session can be occpied for some minutes once you submit. For a live feedback of the download progress, please run the <code>rk.download_appimage()</code> call in the R console manually.",
-        type="warning",
-        id.name="aiu_file_warning"
-      )
-    ),
-    rk.XML.frame(
       aiu_file
     ),
     rk.XML.stretch(),
