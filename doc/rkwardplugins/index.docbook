@@ -4112,7 +4112,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</varlistentry>
 	<varlistentry>
 	<term>platforms</term>
-	<listitem><para>Platforms where this plugin is available. Supported values are <replaceable>"unix"</replaceable>, <replaceable>"windows"</replaceable>, <replaceable>"macos"</replaceable>, <replaceable>"any"</replaceable>, and colon separated combinations (e.g. <replaceable>"unix:macos"</replaceable>). <replaceable>"unix"</replaceable> includes any Linux and BSD variants but <emphasis>not></emphasis> MacOS.
+	<listitem><para>Platforms where this plugin is available. Supported values are <replaceable>"unix"</replaceable>, <replaceable>"windows"</replaceable>, <replaceable>"macos"</replaceable>, <replaceable>"any"</replaceable>, and colon separated combinations (e.g. <replaceable>"unix:macos"</replaceable>). <replaceable>"unix"</replaceable> includes any Linux and BSD variants but <emphasis>not</emphasis> MacOS.
 	If your plugin is not platform dependent, just omit this attribute.</para></listitem>
 	</varlistentry>
 	</variablelist>
@@ -4251,7 +4251,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	<varlistentry>
 	<term>optional</term>
 	<listitem><para>Only meaningful for components with defined <link linkend="chapter_dependencies">dependencies</link>: Usually, it is considered a reportable error, if a component is not compatible with
-	this version if of RKWard. However, if the component really is not needed in the current environment, setting this attribute to <replaceable>"true"</replaceable>
+	this version of RKWard. However, if the component really is not needed in the current environment, setting this attribute to <replaceable>"true"</replaceable>
 	suppresses any warning (<replaceable>"false"</replaceable>  by default).</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
