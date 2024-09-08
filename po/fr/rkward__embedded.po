@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: rkward__embedded\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-04-12 15:07+0200\n"
+"PO-Revision-Date: 2024-09-06 16:39+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -1831,7 +1831,7 @@ msgid ""
 "being plotted. This is used in the 'Integer numbers' option for breaks."
 msgstr ""
 "<i>varname</i> : pour établir un lien avec le nom de la variable pour "
-"laquelle l'histogramme est est tracé. Il est utilisé dans l'option « Nombres "
+"laquelle l'histogramme est tracé. Il est utilisé dans l'option « Nombres "
 "entiers » pour les points d'arrêts."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
@@ -2140,8 +2140,8 @@ msgid ""
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
 "Si cette case est cochée, le titre <i>main</i> sera utilisé de manière "
-"littérale (avec des quotes). Sinon, il sera interprété comme une déclaration "
-"de R."
+"littérale (Avec des guillemets). Sinon, il sera interprété comme une "
+"déclaration de R."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Sub-title (at bottom). Leave empty for default title")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:20
@@ -2152,7 +2152,7 @@ msgid ""
 msgstr ""
 "C'est l'argument <i>secondaire</i> de « plot.default ». Veuillez consulter "
 "la référence de R sur <b>plot.default</b>. Pour obtenir un saut de ligne "
-"(dans une chaîne entre guillemets), veuillez saisir « \\n »."
+"(Dans une chaîne entre guillemets), veuillez saisir « \\n »."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:21
@@ -2162,8 +2162,8 @@ msgid ""
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
 "Si cette case est cochée, le titre <i>secondaire</i> sera utilisé de manière "
-"littérale (avec des quotes). Sinon, il sera interprété comme une déclaration "
-"de R."
+"littérale (Avec des guillemets). Sinon, il sera interprété comme une "
+"déclaration de R."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Custom margins")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:22
@@ -2258,8 +2258,8 @@ msgstr ""
 "Les étiquettes des axes X et Y. Ce sont les arguments <i>xlab</i> et "
 "<i>ylab</i> de <b>plot.default</b>, respectivement. Les cases à cocher "
 "permettent d'activer ou de désactiver l'évaluation des étiquettes en tant "
-"que chaînes littérales (avec quotes). Pour obtenir un saut de ligne (dans "
-"une chaîne entre guillemets), saisissez « \\n »."
+"que chaînes littérales (Avec guillemets). Pour obtenir un saut de ligne "
+"(dans une chaîne entre guillemets), saisissez « \\n »."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:35
@@ -2378,8 +2378,8 @@ msgstr ""
 "<i>default_main</i> : une chaîne de caractères spécifiant l'argument "
 "<i>main</i> à <b>plot.default</b>. Par défaut, c'est «  », ce qui signifie "
 "que le titre principal généré par la fonction de traçage est utilisé. "
-"Remarque : la valeur par défaut est toujours utilisée sans quote. Si vous "
-"voulez spécifier une chaîne littérale, ajoutez des guillemets, "
+"Remarque : la valeur par défaut est toujours utilisée sans guillemet. Si "
+"vous voulez spécifier une chaîne littérale, ajoutez des guillemets, "
 "explicitement, comme « &amp;<i>quote;</i> »."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -3098,11 +3098,11 @@ msgid ""
 msgstr ""
 "Divers paramètres pour la <b>grille</b>. Pour une description détaillée des "
 "différents paramètres, veuillez consulter la référence R concernant "
-"« grid ». Remarque : cela ne fonctionne que lorsque les fonctions graphiques "
-"standards (traditionnelles en S) (Se référer à library(help=\"graphics\")) "
-"sont utilisées pour construire le tracé. Cela ne fonctionne pas pour les "
-"périphériques graphiques de type « Trellis » (Veuillez consulter <link href="
-"\"rkward://rhelp/Lattice\"/> pour plus d'informations)."
+"« grille ». Remarque : cela ne fonctionne que lorsque les fonctions "
+"graphiques standards (traditionnelles en S) (Se référer à library(help="
+"\"graphics\")) sont utilisées pour construire le tracé. Cela ne fonctionne "
+"pas pour les périphériques graphiques de type « Trellis » (Veuillez "
+"consulter <link href=\"rkward://rhelp/Lattice\"/> pour plus d'informations)."
 
 #. i18n: ectx: (Loaded from Grid options) <usage>
 #: rkward/plugins/distributions/../x11device/grid.rkh:11
