@@ -33,6 +33,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkcommandlineargs.h"
 #include "../misc/rkxmlguipreviewarea.h"
+#include "../misc/rkrapimenu.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulekateplugins.h"
 #include "../windows/katepluginintegration.h"
@@ -528,6 +529,35 @@ private Q_SLOTS:
 		RInterface::issueCommand(new RCommand("rk.edit(df)", RCommand::User));
 		waitForAllFinished();
 		RKWardMainWindow::getMain()->slotCloseAllEditors();
+	}
+
+	void rkMenuTest() {
+		const QStringList actionpath {"analysis", "myaction"};
+		RInterface::issueCommand(new RCommand("a <- rk.menu()", RCommand::App));
+		for (const auto &segment : actionpath) {
+			RInterface::issueCommand(new RCommand("a <- a$item(" + RObject::rQuote(segment) + ")", RCommand::App));
+		}
+		RInterface::issueCommand(new RCommand("a$define('My Label', function() assign('x', 'actionval', envir=globalenv()))", RCommand::User));
+		waitForAllFinished();
+		auto m = RKWardMainWindow::getMain()->rApiMenu();
+		auto a = m->actionByPath(actionpath);
+		QVERIFY(a);
+		QVERIFY(a && a->text()=="My Label");
+		QVERIFY(a && a->isEnabled());
+		if (a) a->trigger();
+		RInterface::issueCommand(new RCommand("a$enable(FALSE)", RCommand::User));
+		runCommandAsync(new RCommand("stopifnot(x == 'actionval')", RCommand::App), nullptr, [](RCommand *c) {
+			QVERIFY(c->succeeded());
+		});
+		waitForAllFinished();
+		auto b = m->actionByPath(actionpath);
+		QVERIFY(b);
+		QVERIFY(b == a); // existing action should have been reused
+		QVERIFY(b && (!b->isEnabled()));
+		RInterface::issueCommand(new RCommand("a$remove()", RCommand::App));
+		RInterface::issueCommand(new RCommand("rm(x)", RCommand::App));
+		waitForAllFinished();
+		QVERIFY(!m->actionByPath(actionpath));
 	}
 
 	void restartRBackend() {
