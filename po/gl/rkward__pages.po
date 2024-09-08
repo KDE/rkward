@@ -2337,12 +2337,12 @@ msgid ""
 "there is still something to calculate or plot. If it turns green, R is done "
 "calculating."
 msgstr ""
-"Depende. Algunhas probas e gráficas simplemente necesitan un tempo se "
-"utilizan cantidades inmensas de datos ou cálculos sofisticados. Polo tanto, "
-"ás veces necesítase paciencia. Pero pode comprobar o estado de R dentro de "
-"RKWard. Simplemente consulte a caixa pequena da esquina inferior dereita de "
-"RKWard. Se está vermella, aínda hai algo que calcular ou representar. Se se "
-"volve verde, os cálculos remataron."
+"Depende. Algunhas probas e gráficas simplemente necesitan un tempo se usan "
+"cantidades inmensas de datos ou cálculos sofisticados. Polo tanto, ás veces "
+"necesítase paciencia. Pero pode comprobar o estado de R dentro de RKWard. "
+"Simplemente consulte a caixa pequena da esquina inferior dereita de RKWard. "
+"Se está vermella, aínda hai algo que calcular ou representar. Se se volve "
+"verde, os cálculos remataron."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51

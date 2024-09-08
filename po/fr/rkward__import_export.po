@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__import_export\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-31 00:36+0000\n"
+"POT-Creation-Date: 2024-09-08 00:36+0000\n"
 "PO-Revision-Date: 2024-09-03 21:05+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -112,7 +112,7 @@ msgstr "AppImage"
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:35
 #: rkward/plugins/00saveload/save/write_csv.js:110
-#: rkward/plugins/import_export.pluginmap:58
+#: rkward/plugins/import_export.pluginmap:60
 #, kde-format
 msgid "File"
 msgstr "Fichier"
@@ -3492,26 +3492,26 @@ msgstr "Définir le dossier de travail"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #. i18n: ectx: <context> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:59
-#: rkward/plugins/import_export.pluginmap:86
+#: rkward/plugins/import_export.pluginmap:61
+#: rkward/plugins/import_export.pluginmap:88
 #, kde-format
 msgid "Import"
 msgstr "Importer"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="Import"> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:60
+#: rkward/plugins/import_export.pluginmap:62
 #, kde-format
 msgid "Import format"
 msgstr "Format d'importation"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:71
+#: rkward/plugins/import_export.pluginmap:73
 #, kde-format
 msgid "Export"
 msgstr "Exporter"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:80
+#: rkward/plugins/import_export.pluginmap:82
 #, kde-format
 msgid "Workspace"
 msgstr "Espace de travail"

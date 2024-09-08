@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-31 00:36+0000\n"
+"POT-Creation-Date: 2024-09-08 00:36+0000\n"
 "PO-Revision-Date: 2024-08-31 09:09+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -106,7 +106,7 @@ msgstr "AppImage"
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:35
 #: rkward/plugins/00saveload/save/write_csv.js:110
-#: rkward/plugins/import_export.pluginmap:58
+#: rkward/plugins/import_export.pluginmap:60
 #, kde-format
 msgid "File"
 msgstr "Datoteka"
@@ -3403,26 +3403,26 @@ msgstr "Nastavi delovno mapo"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #. i18n: ectx: <context> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:59
-#: rkward/plugins/import_export.pluginmap:86
+#: rkward/plugins/import_export.pluginmap:61
+#: rkward/plugins/import_export.pluginmap:88
 #, kde-format
 msgid "Import"
 msgstr "Uvozi"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="Import"> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:60
+#: rkward/plugins/import_export.pluginmap:62
 #, kde-format
 msgid "Import format"
 msgstr "Oblika uvoza"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:71
+#: rkward/plugins/import_export.pluginmap:73
 #, kde-format
 msgid "Export"
 msgstr "Izvozi"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/import_export.pluginmap:80
+#: rkward/plugins/import_export.pluginmap:82
 #, kde-format
 msgid "Workspace"
 msgstr "Delovna površina"
