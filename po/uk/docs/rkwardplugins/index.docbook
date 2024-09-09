@@ -83,7 +83,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <copyright>
 <year
->2006-2022</year>
+>2006-2024</year>
 <holder
 >Thomas Friedrichsmeier</holder>
 </copyright>
@@ -94,9 +94,9 @@ as Authors, publish date, the abstract, and Keywords -->
 >&FDLNotice;</legalnotice>
 
 <date
->24 квітня 2022 року</date>
+>7 вересня 2024 року</date>
 <releaseinfo
->0.7.4</releaseinfo>
+>0.8.1</releaseinfo>
 
 <abstract>
 <para
@@ -7480,6 +7480,28 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >. Необов’язковий, якщо не вказано, вимог щодо мінімальної і максимальної версій &R; не висуватиметься.</para
 ></listitem>
 	</varlistentry>
+	<varlistentry>
+	<term
+>platforms</term>
+	<listitem
+><para
+>Платформи, на яких доступний цей додаток. Підтримувані значення: <replaceable
+>"unix"</replaceable
+>, <replaceable
+>"windows"</replaceable
+>, <replaceable
+>"macos"</replaceable
+>, <replaceable
+>"any"</replaceable
+> і усі відокремлені двокрапкою комбінації цих значень (приклад: <replaceable
+>"unix:macos"</replaceable
+>). <replaceable
+>"unix"</replaceable
+> стосується усіх варіантів Linux і BSD, але <emphasis
+>не</emphasis
+> MacOS. Якщо ваш додаток не є залежним від платформи, просто не вказуйте цей атрибут.</para
+></listitem>
+	</varlistentry>
 	</variablelist>
 <para
 >Дочірні елементи:</para>
@@ -7729,6 +7751,20 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 	<listitem
 ><para
 >Мітка для цього компонента, яка використовується для розташування компонента у ієрархії меню.</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term
+>optional</term>
+	<listitem
+><para
+>Стосується лише компонентів із визначеними <link linkend="chapter_dependencies"
+>залежностями</link
+>: зазвичай, вважається помилкою, яка варта звітування, якщо компонент не є сумісним із цією версією RKWard. Втім, якщо компонент справді не потрібен у поточному середовищі, встановлення для цього атрибута значення <replaceable
+>"true"</replaceable
+> придушує будь-які попередження (типовим значенням є <replaceable
+>"false"</replaceable
+>).</para
 ></listitem>
 	</varlistentry>
 	</variablelist

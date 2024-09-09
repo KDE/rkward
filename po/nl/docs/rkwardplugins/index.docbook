@@ -69,7 +69,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <copyright>
 <year
->2006-2022</year>
+>2006-2024</year>
 <holder
 >Thomas Friedrichsmeier</holder>
 </copyright>
@@ -80,9 +80,9 @@ as Authors, publish date, the abstract, and Keywords -->
 >&FDLNotice;</legalnotice>
 
 <date
->2022-04-24</date>
+>2024-09-07</date>
 <releaseinfo
->0.7.4</releaseinfo>
+>0.8.1</releaseinfo>
 
 <abstract>
 <para
@@ -7468,6 +7468,28 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Macht", id.name="macht", i18n=FALSE)
 >. Optioneel; indien niet opgegeven, zijn er geen minimum / maximum versies  vereist van &R;.</para
 ></listitem>
 	</varlistentry>
+	<varlistentry>
+	<term
+>platformen</term>
+	<listitem
+><para
+>Platforms where this plugin is available. Supported values are <replaceable
+>"unix"</replaceable
+>, <replaceable
+>"windows"</replaceable
+>, <replaceable
+>"macos"</replaceable
+>, <replaceable
+>"any"</replaceable
+>, and colon separated combinations (e.g. <replaceable
+>"unix:macos"</replaceable
+>). <replaceable
+>"unix"</replaceable
+> includes any Linux and BSD variants but <emphasis
+>not</emphasis
+> MacOS. If your plugin is not platform dependent, just omit this attribute.</para
+></listitem>
+	</varlistentry>
 	</variablelist>
 <para
 >Child elementen: (een child is een voortzetting van een parent. Dit soort  termen zijn algemeen in een moderne computertaal)</para>
@@ -7717,6 +7739,20 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Macht", id.name="macht", i18n=FALSE)
 	<listitem
 ><para
 >De naam voor deze component, wanneer die in de menu-hiërarchie wordt geplaatst.</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term
+>optioneel</term>
+	<listitem
+><para
+>Only meaningful for components with defined <link linkend="chapter_dependencies"
+>dependencies</link
+>: Usually, it is considered a reportable error, if a component is not compatible with this version of RKWard. However, if the component really is not needed in the current environment, setting this attribute to <replaceable
+>"true"</replaceable
+> suppresses any warning (<replaceable
+>"false"</replaceable
+> by default).</para
 ></listitem>
 	</varlistentry>
 	</variablelist
