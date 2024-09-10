@@ -7473,21 +7473,21 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Macht", id.name="macht", i18n=FALSE)
 >platformen</term>
 	<listitem
 ><para
->Platforms where this plugin is available. Supported values are <replaceable
+>Platformen waar deze plug-in beschikbaar is. Ondersteunde waarden zijn <replaceable
 >"unix"</replaceable
 >, <replaceable
 >"windows"</replaceable
 >, <replaceable
 >"macos"</replaceable
 >, <replaceable
->"any"</replaceable
->, and colon separated combinations (e.g. <replaceable
+>"elke"</replaceable
+> en dubbelepunt-gescheiden combinaties (bijv. <replaceable
 >"unix:macos"</replaceable
 >). <replaceable
 >"unix"</replaceable
-> includes any Linux and BSD variants but <emphasis
->not</emphasis
-> MacOS. If your plugin is not platform dependent, just omit this attribute.</para
+> omvat elke Linux en BSD variant maar <emphasis
+>niet</emphasis
+> MacOS. Als uw plug-in niet afhankelijk is van een platform, laat dan dit attribuut weg.</para
 ></listitem>
 	</varlistentry>
 	</variablelist>
@@ -7746,13 +7746,13 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Macht", id.name="macht", i18n=FALSE)
 >optioneel</term>
 	<listitem
 ><para
->Only meaningful for components with defined <link linkend="chapter_dependencies"
->dependencies</link
->: Usually, it is considered a reportable error, if a component is not compatible with this version of RKWard. However, if the component really is not needed in the current environment, setting this attribute to <replaceable
+>Alleen van betekenis voor componenten met gedefinieerde <link linkend="chapter_dependencies"
+>afhankelijkheden</link
+>: gewoonlijk wordt het als een te rapporteren fout beschouwd, als een component niet compatibel is met deze versie van RKWard. Als de component echter echt niet nodig is in de huidige omgeving, is het instellen van dit attribuut op <replaceable
 >"true"</replaceable
-> suppresses any warning (<replaceable
+> het onderdrukken van elke waarschuwing (<replaceable
 >"false"</replaceable
-> by default).</para
+> is standaard).</para
 ></listitem>
 	</varlistentry>
 	</variablelist

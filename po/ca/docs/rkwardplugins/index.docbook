@@ -7369,7 +7369,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >plataformes</term>
 	<listitem
 ><para
->Platforms where this plugin is available. Supported values are <replaceable
+>Plataformes a on és disponible aquest connector. Els valors admesos són <replaceable
 >"unix"</replaceable
 >, <replaceable
 >"windows"</replaceable
@@ -7377,13 +7377,13 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >"macos"</replaceable
 >, <replaceable
 >"any"</replaceable
->, and colon separated combinations (e.g. <replaceable
+> i combinacions separades per dos punts (p. ex. <replaceable
 >"unix:macos"</replaceable
 >). <replaceable
 >"unix"</replaceable
-> includes any Linux and BSD variants but <emphasis
->not</emphasis
-> MacOS. If your plugin is not platform dependent, just omit this attribute.</para
+> inclou totes les variants del Linux i del BSD, però <emphasis
+>no</emphasis
+> MacOS. Si el connector no és dependent de la plataforma, ometeu aquest atribut.</para
 ></listitem>
 	</varlistentry>
 	</variablelist>
@@ -7642,13 +7642,13 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >opcional</term>
 	<listitem
 ><para
->Only meaningful for components with defined <link linkend="chapter_dependencies"
->dependencies</link
->: Usually, it is considered a reportable error, if a component is not compatible with this version of RKWard. However, if the component really is not needed in the current environment, setting this attribute to <replaceable
+>Només és significatiu per als components amb <link linkend="chapter_dependencies"
+>dependències</link
+> definides: normalment, està considerat com a error que s'informa, si un component no és compatible amb aquesta versió del RKWard. Tanmateix, si el component no és realment necessari a l'entorn actual, definint aquest atribut a <replaceable
 >"true"</replaceable
-> suppresses any warning (<replaceable
+> suprimeix qualsevol error (valor predeterminat <replaceable
 >"false"</replaceable
-> by default).</para
+>).</para
 ></listitem>
 	</varlistentry>
 	</variablelist
