@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2024-07-15 05:33+0200\n"
+"PO-Revision-Date: 2024-09-13 06:27+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -449,7 +449,7 @@ msgstr "აღწერს, გამოითვლება თუ არა �
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.rkh:23
 #, kde-format
 msgid "Check this if you want the confidence interval to be computed."
-msgstr ""
+msgstr "ჩართეთ, თუ გნებავთ ამ ნდობის ინტერვალის გამოთვლა."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "confidence level")
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "confidence level")
@@ -458,7 +458,7 @@ msgstr ""
 #, no-c-format, kde-format
 msgid ""
 "Here you can define the confidence level of the interval (95% is typical)."
-msgstr ""
+msgstr "აქ შეგიძლიათ განსაზღვროთ ნდობის დონე ინტერვალისთვის (ჩვეულებრივ 95%)."
 
 #. i18n: ectx: (Ansari-Bradley two-sample exact test) <dialog label="...">
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.xml:15
@@ -772,14 +772,14 @@ msgstr "ნდობის ინტერვალის გამოთვლ�
 #, kde-format
 msgctxt "R code comment"
 msgid "cor requires all objects to be inside the same data.frame."
-msgstr ""
+msgstr "ყველა ობიექტის იგივე data.frame-ში არსებობა cor-ის მოთხოვნაა."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:49
 #, kde-format
 msgctxt "R code comment"
 msgid "Here we construct such a temporary frame from the input variables"
-msgstr ""
+msgstr "აქ ვაწყობთ დროებით კადრს შეყვანილი ცვლადებისგან"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:52
@@ -833,7 +833,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "polyserial expects x to be numeric"
-msgstr ""
+msgstr "პოლისერიალს x რიცხვითი სჭირდება"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:131
@@ -846,6 +846,7 @@ msgstr "კოეფიციენტი"
 #, kde-format
 msgid "Standard errors, test of bivariate normality and sample size"
 msgstr ""
+"სტანდარტული შეცდომები, ბივარიაციული ნორმალურობის შემოწმება და სინჯის ზომა"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:137
@@ -857,7 +858,7 @@ msgstr "p-მნიშვნელობები და შერჩევი�
 #: rkward/plugins/analysis/corr_matrix.js:143
 #, kde-format
 msgid "Variables treated as numeric ranks"
-msgstr ""
+msgstr "რიცხვით რანგებად აღქმული ცვლადები"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:145
@@ -884,6 +885,8 @@ msgstr "მინიჭებული რანგი"
 msgid ""
 "Calculate a correlation matrix given a number of numerical input vectors."
 msgstr ""
+"კორელაციის მატრიცის გამოთვლა მითითებული რაოდენობის რიცხვითი შეყვანის "
+"ვექტორებით."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <usage>
 #: rkward/plugins/analysis/corr_matrix.rkh:12
@@ -1238,13 +1241,13 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.rkh:22
 #, kde-format
 msgid "Should a chisquare test be performed (for each pair)?"
-msgstr ""
+msgstr "უნდა ჩატარდეს თუ არა ხიკვადრატის შემოწმება (თითოეული წყვილისთვის)?"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Draw Barplot")
 #: rkward/plugins/analysis/crosstab.rkh:23
 #, kde-format
 msgid "Should a barplot be produced (for each pair)?"
-msgstr ""
+msgstr "უნდა შეიქმნას თუ არა გრაფიკი (თითოეული წყვილისთვის)?"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting>
 #: rkward/plugins/analysis/crosstab.rkh:24
@@ -1283,6 +1286,7 @@ msgid ""
 "Calculate and show the proportion (in %) of each cell's count of overall "
 "total count."
 msgstr ""
+"გამოთვლა და ჩვენება პროპორციისა (%-ში) თითოეული უჯრედის ჯამისა მთლიან ჯამში."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Method of computing p-value")
 #: rkward/plugins/analysis/crosstab.rkh:33
@@ -1311,6 +1315,8 @@ msgid ""
 "Various options controlling the look of the generated barplot(s). See <link "
 "href=\"rkward://component/barplot_embed\"/>"
 msgstr ""
+"სხვადასხვა პარამეტრები გენერირებული სვეტოვანი გრაფიკის გარეგნობის "
+"სამართავად. იხილეთ <link href=\"rkward://component/barplot_embed\"/>"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/analysis/crosstab.xml:24
@@ -1434,7 +1440,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
 #, kde-format
 msgid "Choose one or more objects to be crosstabulated."
-msgstr ""
+msgstr "აირჩიეთ ერთი ან მეტი ობიექტი კროსტაბულაციისთვის."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
@@ -1628,6 +1634,8 @@ msgstr "ანსკომბე-კლინის ტექსტი ექს
 msgid ""
 "This test performs the Anscombe-Glynn test of kurtosis for normal samples."
 msgstr ""
+"ეს შემოწმება მოახდენს ექსცესის ანსკომბი-გლინის შემოწმებას ნორმალური "
+"სინჯებისთვის."
 
 #. i18n: ectx: (Loaded from Anscombe-Glynn test of kurtosis) <usage>
 #: rkward/plugins/analysis/moments/anscombe_test.rkh:12
@@ -2170,13 +2178,13 @@ msgstr "10 (შემოწმება ერთი ამოვარდნი
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:27
 #, kde-format
 msgid "11 (test for two outliers on opposite tails)"
-msgstr ""
+msgstr "11 (შემოწმება ორ ამოვარდნაზე საპირისპირო მიმართულებით)"
 
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> [...] <radio label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:28
 #, kde-format
 msgid "20 (test for two outliers on one tail)"
-msgstr ""
+msgstr "20 (შემოწმება ორ ამოვარდნაზე ერთი მიმართულებით)"
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean)
 #: rkward/plugins/analysis/outliers/outlier.js:15
@@ -2903,13 +2911,13 @@ msgstr "სრულად აპროქსიმირებული მო�
 #: rkward/plugins/analysis/regression/linear_regression.rkh:25
 #, kde-format
 msgid "Extract and save predicted values from the model."
-msgstr ""
+msgstr "მოდელიდან გამოცნობილი ნაშთების გამოღება და შენახვა."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Save residuals")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:26
 #, kde-format
 msgid "Extract and save residuals from the model."
-msgstr ""
+msgstr "მოდელიდან ნაშთების გამოღება და შენახვა."
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:11
@@ -3042,6 +3050,7 @@ msgstr "თავისუფლების ხარისხები"
 #, kde-format
 msgid "t-Test (two variable paired or independent samples, or one variable)."
 msgstr ""
+"t-შემოწმება (ორი ცვლადი დაწყვილებული ან დამოუკიდებელი სინჯი, ან ერთი ცვლადი)."
 
 #. i18n: ectx: (Loaded from t-Test) <usage>
 #: rkward/plugins/analysis/t_test.rkh:12
@@ -3213,7 +3222,7 @@ msgstr "შემოწმებისთვის გამოყენებ�
 #: rkward/plugins/analysis/TESTS/mood_test.xml:11
 #, kde-format
 msgid "Mood Two-Sample Test of Scale"
-msgstr ""
+msgstr "მუდის ორშერჩევიანი ზუსტი შემოწმება მასშტაბისთვის"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests)
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
@@ -4307,7 +4316,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
 #, kde-format
 msgid "Select one or more numeric vectors to analyse"
-msgstr ""
+msgstr "აირჩიეთ ერთი ან მეტი რიცხვითი ვექტორი ანალიზისთვის"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "group by:")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:22
@@ -4342,7 +4351,7 @@ msgstr "გამოვთვალო გეომეტრიული სა�
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:27
 #, kde-format
 msgid "Should the interquantile mean value be computed?"
-msgstr ""
+msgstr "უნდა გამოითვალოს ინტერკვანტილური საშუალო მნიშვნელობა, თუ არა?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Standard deviation")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:28
@@ -4369,7 +4378,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:32
 #, kde-format
 msgid "Scale factor to use when computing the median absolute deviation"
-msgstr ""
+msgstr "მასშტაბის კოეფიციენტი მედიანური აბსოლუტური აცდენის გამოთვლისას"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Treatment of even sample sizes")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:33
@@ -4827,13 +4836,13 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:114
 #, kde-format
 msgid "Mu for Huber estimator"
-msgstr ""
+msgstr "მიუ ჰაბერის შემფასებლისთვის"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:117
 #, kde-format
 msgid "S for Huber estimator"
-msgstr ""
+msgstr "S ჰაბერის შემფასებლისთვის"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <radio label="...">
@@ -4960,7 +4969,7 @@ msgstr "M-ის შეფასების საშუალება"
 #: rkward/plugins/uni1.2/description.xml:98
 #, kde-format
 msgid "Huber -M estimator (Require MASS Library)"
-msgstr ""
+msgstr "ჰუბერის -M შემფასებელი (სჭირდება ბიბლიოთეკა MASS)"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:99

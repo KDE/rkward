@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-06-18 06:18+0200\n"
+"PO-Revision-Date: 2024-09-13 06:27+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Gerogian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -48,6 +48,8 @@ msgid ""
 "Generic plugin to limit a single numeric vector to the n largest / smallest "
 "values. This plugin is designed to be embedded into other plugins."
 msgstr ""
+"ზოგადი დამატება ერთი რიცხვი ვექტორის n უდიდეს / უმცირეს მნიშვნელობებზე "
+"შესაზღუდად. ეს დამატება სხვა დამატებებში ჩასაშენებლადაა განკუთვნილი."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <usage>
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:12
@@ -56,6 +58,8 @@ msgid ""
 "Specify the desired length cutoff and sorting. Note that the result is "
 "always sorted, with the sum of remainder values appended at the end."
 msgstr ""
+"მიუთითეთ სასურველი სიგრძის მოჭრა და დალაგება. დაიმახსოვრეთ, რომ შედეგი "
+"ყოველთვის დალაგებულია და დარჩენილი მნიშვნელობების ჯამი ბოლოში მიეწერება."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Limit")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:17
@@ -64,6 +68,8 @@ msgid ""
 "Maximum number of regular groups to display. One additional group \"others\" "
 "will be displayed, if appropriate."
 msgstr ""
+"საჩვენებელი რეგულარული ჯგუფების მაქსიმალური რაოდენობა. თუ საჭიროა, "
+"გამოჩნდება ერთი დამატებითი ჯგუფი 'სხვები'."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:18
@@ -72,6 +78,8 @@ msgid ""
 "Should the largest or the lowest values be kept? For most purposes, you will "
 "want to keep the largest values."
 msgstr ""
+"უნდა შენარჩუნდეს უდიდესი თუ უმცირესი მნიშვნელობები? ძირითადად, უდიდესი "
+"მნიშვნელობებია მნიშვნელოვანი."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Add remainder category")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:19
@@ -80,12 +88,14 @@ msgid ""
 "Should a category be added for the remaining value (those which have been "
 "cut off)? Note: This will always be appended to the end of the vector."
 msgstr ""
+"უნდა დაემატოს თუ არა დარჩენილ მნიშვნელობას (რომლებიც ამოიჭრა) კატეგორია? "
+"შენიშვნა: ეს ყოველთვის მიეწერება ვექტორის ბოლოში."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
 #, kde-format
 msgid "Statistic to use for summarizing the cut off values."
-msgstr ""
+msgstr "სტატისტიკა ამოჭრილი მნიშვნელობების შეჯამებისთვის."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Custom statistic (as function of x)")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:21
@@ -94,6 +104,8 @@ msgid ""
 "If you chose to use a custom statistic for summarizing the cut off values, "
 "specify it, here, as a function of <em>x</em>."
 msgstr ""
+"თუ აირჩევთ მორგებული სტატისტიკის გამოყენებას ამოჭრილი მნიშვნელობების "
+"დასაჯამებლად, ის აქ მიუთითეთ, როგორც <em>x</em>-ის ფუნქცია."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Remainder category label")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:22
@@ -102,6 +114,8 @@ msgid ""
 "Label to use for the \"others\" category. Note: If your data is not labeled, "
 "emptying this field will sometimes be preferable."
 msgstr ""
+"ჭდე კატეგორიისთვის 'სხვები'.შენიშვნა: თუ თქვენს მონაცემებს ჭდეები არ აქვთ, "
+"ხანდახან სჯობს, ეს ველი ცარიელი იყოს."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -153,6 +167,7 @@ msgid ""
 "<i>invar</i>: Symbol name of the input variable to be limited. Defaults to "
 "'x'."
 msgstr ""
+"<i>invar</i>: შესაზღუდი შეყვანის ცვლადის სიმბოლოს სახელი. ნაგულისხმევია 'x'."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -272,6 +287,8 @@ msgid ""
 "Generic tabulation plugin (single outcome vector). This plugin is designed "
 "to be embedded into other plugins."
 msgstr ""
+"ზოგადი ტაბულაციის დამატება (ერთი გამოსავალი ვექტორი). ეს დამატება სხვა "
+"დამატებებში ჩასაშენებლადაა განკუთვნილი."
 
 #. i18n: ectx: (Loaded from Tabulate) <usage>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:12
@@ -296,6 +313,8 @@ msgid ""
 "Type of tabulation / statistic to compute. This can be frequency of "
 "occurrence, or a function of a separate vector."
 msgstr ""
+"შეიყვანეთ გამოსათვლელ ტაბულაცია / სტატისტიკა. შეიძლება იყოს მოხდენის სიხშირე "
+"ან ცალკე ვექტორის ფუნქცია."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Values")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:19
@@ -304,6 +323,8 @@ msgid ""
 "When computing a statistic other than frequency, specify the vector "
 "containing the underlying data, here."
 msgstr ""
+"სიხშირის მაგიერ სტატისტიკის გამოთვლისას აქ მიუთითეთ ვექტორი, რომელიც საჭირო "
+"მონაცემებს შეიცავს."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Custom statistic")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:20
@@ -328,6 +349,8 @@ msgid ""
 "<link href=\"rkward://component/crosstab_multi\"/> for tabulation of "
 "frequencies across many variables."
 msgstr ""
+"<link href=\"rkward://component/crosstab_multi\"/> სიხშირეების "
+"ტაბულაციისთვის ბევრ ცვლადზე."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -544,7 +567,7 @@ msgstr "დაყენება git-ის შედეგებიდან"
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:18
 #, kde-format
 msgid "Set the location where the package resides that you want to install."
-msgstr ""
+msgstr "დააყენეთ მდებარეობა პაკეტისთვის, რომლის დაყენებაც გნებავთ."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:22
@@ -596,6 +619,8 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the user name (Bitbucket only)."
 msgstr ""
+"პირადი რეპოზიტორიიდან დააწყენებლად, დააყენეთ მომხმარებლის სახელი (მხოლოდ "
+"Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:44
@@ -603,6 +628,7 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the password (Bitbucket only)."
 msgstr ""
+"პირადი რეპოზიტორიიდან დააწყენებლად, დააყენეთ პაროლი (მხოლოდ Bitbucket)."
 
 #. i18n: ectx: (Install from git/svn) <dialog label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:30
@@ -755,13 +781,13 @@ msgstr "ცარიელია"
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust the range so that the labels will fit"
-msgstr ""
+msgstr "შუალედის გასწორება, რომ ჭდეები ჩაეტიოს"
 
 #. i18n: ectx: (Loaded from Barplot Options) <summary>
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:8
 #, kde-format
 msgid "Options applicable to bar plots"
-msgstr ""
+msgstr "სვეტოვანი დიაგრამების შესაბამისი პარამეტრები"
 
 #. i18n: ectx: (Loaded from Barplot Options) <usage>
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:12
@@ -799,7 +825,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:20
 #, kde-format
 msgid "Select if you want to display bar values (labels)."
-msgstr ""
+msgstr "აირჩიეთ, გნებავთ თუ არა ზოლის მნიშვნელობების (ჭდეების) ჩვენება."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
@@ -808,6 +834,8 @@ msgid ""
 "If you have selected to display bar values (labels) you can select where "
 "should they be displayed:"
 msgstr ""
+"თუ არჩიეთ სვეტის (ჭდეების) მნიშვნელობების ჩვენება, აქ შეგიძლიათ აირჩიოთ, სად "
+"იქნება ისინი ნაჩვენები:"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
@@ -871,6 +899,7 @@ msgstr ""
 msgid ""
 "<i>code.printout</i>: The actual commands needed to construct the barplot."
 msgstr ""
+"<i>code.printout</i>: სვეტოვანი დიაგრამების ასაშენებლად საჭირო ბრძანებები."
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:22
@@ -1500,6 +1529,8 @@ msgid ""
 "This plugin provides various options for <b>hist</b> or <b>plot.histogram</"
 "b>."
 msgstr ""
+"ეს დამატება <b>hist</b>-სთვის ან <b>plot.histogram</b>-სთვის დამატებით "
+"პარამეტრებს შეიცავს."
 
 #. i18n: ectx: (Loaded from Default histogram options) <usage>
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:11
@@ -1645,6 +1676,7 @@ msgstr ""
 msgid ""
 "The following external tags are provided for use in the embedding plugin."
 msgstr ""
+"ჩაშენების დამატებასთან გამოსაყენებლად ხელმისაწვდომია შემდეგი გარე ჭდეები."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
@@ -1947,6 +1979,7 @@ msgstr ""
 #, kde-format
 msgid "Set or change the various graphical parameters to the plot function."
 msgstr ""
+"დააყენეთ ან შეცვალეთ სხვადასხვა გრაფიკული პარამეტრები გრაფიკის ფუნქციისთვის."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Main title (on top). Leave empty for default title")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:18
@@ -1990,25 +2023,25 @@ msgstr "ჩართეთ ეს პარამეტრი, თუ გნე�
 #: rkward/plugins/distributions/../plots/plot_options.rkh:23
 #, kde-format
 msgid "Size of top margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "ზედა მინდვრის ზომა. ზომა მითითებულია (დაახლ) ხაზის სიმაღლეებით."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Bottom")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:24
 #, kde-format
 msgid "Size of bottom margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "ქვედა მინდვრის ზომა. ზომა მითითებულია (დაახლ) ხაზის სიმაღლეებით."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Left")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:25
 #, kde-format
 msgid "Size of left margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "მარცხენა მინდვრის ზომა. ზომა მითითებულია (დაახლ) ხაზის სიმაღლეებით."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Right")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:26
 #, kde-format
 msgid "Size of right margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "მარჯვენა მინდვრის ზომა. ზომა მითითებულია (დაახლ) ხაზის სიმაღლეებით."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw X axis")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:29
@@ -2084,7 +2117,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.rkh:43
 #, kde-format
 msgid "This is the <i>asp</i> argument to <b>plot.default</b>."
-msgstr ""
+msgstr "ეს <i>asp</i> არგუმენტია <b>plot.default</b>-სთვის."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Add Grid to the plot")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:46
@@ -2259,6 +2292,8 @@ msgid ""
 "In order to allow flexible use, the generated options are separated into "
 "different sections:"
 msgstr ""
+"იმისათვის, რომ გამოყენება გაგიადვილოთ, შექმნილი პარამეტრები გაიყოფა "
+"სხვადასხვა სექციებად:"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-04-14 14:35+0200\n"
+"PO-Revision-Date: 2024-09-13 06:28+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -124,6 +124,11 @@ msgid ""
 "<i>file</i> parameter to dev.print. For exporting via ghostscript provide a "
 "suitable extension."
 msgstr ""
+"ფაილის სახელი, სადაც შენახვა მოხდება. ნაგულისხმევად ფაილი შეინახება "
+"საქაღალდეში, საიდანაც RkWard გაეშვა, რომელიც მომხმარებლის ძირითადი "
+"საქაღალდეა, როცა მას K-მენიუდან უშვებთ. გადაამოწმეთ ფაილის გაფართოება. ეს "
+"dev.print-ის <i>file</i> პარამეტრია. ghostscript-ით გასატანად მიუთითეთ "
+"შესაბამისი გაფართოება."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic File extension")
 #: rkward/plugins/x11device/export.rkh:20
@@ -135,6 +140,12 @@ msgid ""
 "relevant extension is appended to the filename above to construct the full "
 "filename. This option is disabled for exporting via ghostscript."
 msgstr ""
+"ჩართეთ ეს თოლია, რომ RKWard-მა ფაილის გაფართოება ავტომატურად დაადგინოს. თუ "
+"ფაილის სახელი, რომელიც მითითებულია 'ფაილის სახელის' ველში, უკვე აქვს "
+"შესაბამისი გაფართოება, მაშინ არაფერ ხდება, რაც ნიშნავს, რომ გამოყენებული "
+"იქნება მითითებული გაფართოება. წინააღმდეგ შემთხვევაში ფაილის სახელს ბოლოში "
+"შესაბამისი გაფართოება მიეწერება. ეს პარამეტრი გათიშულია ghostscript-ის "
+"გატანისას."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Output format")
 #: rkward/plugins/x11device/export.rkh:21
@@ -145,6 +156,10 @@ msgid ""
 "is chosen then the output format of the ghostscript device will need to be "
 "provided (see below under 'Ghostscript specific options')."
 msgstr ""
+"არჩიეთ, გამოყენებული ქნება თუ არა postscript, pdf, svg, png ან jpeg ფაილი ამ "
+"ფაილის გატანისას. ეს <i>მოწყობილობის</i> პარამეტრია dev.print-სთვის. თუ "
+"არჩეულია 'via Ghostscript', მაშინ გამოტანის მოწყობილობა ხელით უნდა "
+"შეიყვანოთ. (იხ. ქვემოთ: 'Ghostscript-ის პარამეტრები')."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "EPS compatible")
 #: rkward/plugins/x11device/export.rkh:22
@@ -203,7 +218,7 @@ msgstr ""
 msgid ""
 "This is the <i>height</i> parameter to the exporting function. Similar to "
 "'Width'."
-msgstr ""
+msgstr "ეს გატანის ფუნქციის <i>სიმაღლის</i> პარამეტრია.წააგავს 'სიგანეს'."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Point size")
 #: rkward/plugins/x11device/export.rkh:33
@@ -229,6 +244,9 @@ msgid ""
 "Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</"
 "b>. Sets the quality for JPEG exporting. The default quality is 75."
 msgstr ""
+"ხელმისაწვდომია, მხოლოდ, ფორმატისთვის JPEG. ეს <i>ხარისხის</i> პარამეტრია "
+"<b>jpeg</b>-სთვის. აყენებს ხარისხის JPEG-ში გატანისთვის. ნაგულისხმევი "
+"ხარისხია 75."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Paper Size")
 #: rkward/plugins/x11device/export.rkh:38
@@ -247,6 +265,8 @@ msgid ""
 "Uncheck this for NOT centering the image on the page. This is the "
 "<i>pagecentre</i> parameter."
 msgstr ""
+"გამორთთ ეს, თუ არ გნებავთ, გამოსახულება გვერდის ცენტრზე გასწორდეს. ეს "
+"<i>pagecentre</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Horizontal (ps/gs)")
 #: rkward/plugins/x11device/export.rkh:40
@@ -255,6 +275,8 @@ msgid ""
 "Available only for Postscript/Ghostscript exporting, this is the "
 "<i>horizontal</i> parameter."
 msgstr ""
+"ხელმისაწვდომია, მხოლოდ, Postscript/Ghostscript-ში გატანისას. ეს "
+"<i>ჰორიზონტალური</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font family")
 #: rkward/plugins/x11device/export.rkh:41
@@ -276,6 +298,11 @@ msgid ""
 "leave this as 'Default', the default encoding (ISOLatin1) will be used. See "
 "the R reference on postscript for more details."
 msgstr ""
+"ეს <i>კოდირების</i> პარამეტრია <b>postscript</b>-სთვის. დარწმუდით, რომ "
+"აირჩიოთ კოდირება, რომელიც თავსებადია არჩეული ფონტის ოჯახთან. თუ დარწმუნებული "
+"არ ბრძანდებით, დატოვეთ ის 'ნაგულისხმევზე' და გამოყენებული იქნება "
+"ნაგულისხმევი კოდირება (ISOLatin1). მეტი დეტალებისთვის იხილეთ R-ის "
+"დოკუმენტაცია postscript-ის შესახებ."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Default Title")
 #: rkward/plugins/x11device/export.rkh:43
@@ -285,6 +312,9 @@ msgid ""
 "this is not displayed on the plot, but rather it is embedded inside the "
 "graphics file. This is the <i>title</i> parameter to <b>postscript</b>."
 msgstr ""
+"გამორთეთ ეს თოლია, რომ გრაფიკულ ფაილში სათაური ხელით მიუთითოთ. დაიმახსოვრეთ, "
+"რომ ეს გრაფიკზე კი არაა ნაჩვენები, არამედ ჩაშენებულია გრაფიკული ფაილის "
+"შიგნით.  ეს <b>ghostscript</b>-ის <i>სათაურის</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "GS Output device")
 #: rkward/plugins/x11device/export.rkh:46
@@ -294,6 +324,9 @@ msgid ""
 "supported by ghostscript. Select \"Other\" and see the option below to use "
 "these formats."
 msgstr ""
+"ფაილის ფორმატი. ჩამოთვლილია, ყველაზე გავრცელებული ფორმატები, მაგრამ "
+"ghostscript-ს კიდევ უფრო მეტს მხარდაჭერა აქვს. ამ ფორმატების სანახავად "
+"აირჩიეთ 'სხვა' და იხილეთ არჩევანი ქვემოთ."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Other Ghostscript device")
 #: rkward/plugins/x11device/export.rkh:47
@@ -303,6 +336,9 @@ msgid ""
 "identifier as used by ghostscript. Running \"ghostscript --help\" (or \"gs --"
 "help\") in a terminal should give a list of available devices."
 msgstr ""
+"აირჩიეთ \"სხვა\" ქვემოთ, რომ ეს პარამეტრი გამოიყენოთ. მიუთითეთ "
+"ghostscript_ის მიერ გამოყენებული მოწყობილობის იდენტიფიკატორი. ხელმისაწვდომი "
+"მოწყობილობების სიის მისაღებად გაუშვით 'ghostscript --help' (ან 'gs --help')."
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="...">
 #: rkward/plugins/x11device/export.xml:63
@@ -580,7 +616,7 @@ msgstr "მონო"
 #: rkward/plugins/x11device/export.xml:143
 #, kde-format
 msgid "New Century Schoolbook"
-msgstr ""
+msgstr "ახალი საუკუნის სასკოლო წიგნი"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:144

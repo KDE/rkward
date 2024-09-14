@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-07-29 05:16+0200\n"
+"PO-Revision-Date: 2024-09-13 06:26+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -390,6 +390,9 @@ msgid ""
 "probably uses a different locale than your R session. In this case, check "
 "this option, and specify the correct character encoding below."
 msgstr ""
+"თუ სპეციალური სიმბოლო (მაგალითად, უმლაუტები) სწორად არ ჩანს, მონაცემების "
+"ფაილს, ალბათ, R-ის თქვენი სესიისგან განსხვავებული ლოკალი გააჩნია. ამ "
+"შემთხვევაში ჩართეთ ეს პარამეტრი და ქვემოთ სწორი კოდირება მიუთითეთ."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
@@ -405,6 +408,8 @@ msgid ""
 "Select character encoding to convert from. The option above needs to be "
 "checked, for this to be enabled."
 msgstr ""
+"აირჩიეთ სიმბოლოების კოდირება, საიდანაც გადაყვანა მოხდება. იმისათვის, რომ ეს "
+"ჩართოთ, ზედა თოლია უნდა დასვათ."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
@@ -421,6 +426,10 @@ msgid ""
 "Note that the available encodings may differ from platform to platform. See "
 "<link href=\"rkward://rhelp/iconvlist\"/> for a list of available encodings."
 msgstr ""
+"თუ ზემოთ ჩამოთვლილი კოდირებებიდან არც-ერთი ემთხვევა, კოდირება აქ შეგიძლიათ, "
+"მიუთითოთ. დაიმახსოვრეთ, რომ ხელმისაწვდომი კოდირებები პლატფორმიდან "
+"პლატფორმამდე იცვლება. იხილეთ <link href=\"rkward://rhelp/iconvlist\"/> "
+"ხელმისაწვდომი კოდირებების სია."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data)
 #: rkward/plugins/00saveload/import/import_csv.js:46
@@ -442,6 +451,8 @@ msgid ""
 "Import Comma Separated Value files (other delimiters besides comma are "
 "supported)."
 msgstr ""
+"მძიმით გამოყოფილი მნიშვნელობების შემცველი ფაილების შემოტანა (მძიმის გარდა "
+"მხარდაჭერილია სხვა გამყოფებიც)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <usage>
 #: rkward/plugins/00saveload/import/import_csv.rkh:12
@@ -450,6 +461,8 @@ msgid ""
 "Choose the CSV file to import. An R object containing the data will be "
 "created. See <link href=\"rkward://rhelp/read.table\"/>."
 msgstr ""
+"აირჩიეთ შემოსატანი CSV ფაილი. შექმნება ამ მონაცემების შემცველი R-ის ობიექტი. "
+"იხილეთ <link href=\"rkward://rhelp/read.table\"/>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "File name")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "File name")
@@ -472,6 +485,9 @@ msgid ""
 "affects several of the other settings, importantly <i><label id=\"dec\"/></"
 "i> and <i><label id=\"sep\"/></i>."
 msgstr ""
+"აირჩიეთ ერთ-ერთი წინასწარ აღწერილებდან (გავრცელებული ფორმატები). ამ "
+"პარამეტრს რამდენიმე სხვა პარამეტრზე აქვს გავლენა. მნიშვნელოვანია <i><label "
+"id=\"dec\"/></i> და <i><label id=\"sep\"/></i>."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:20
@@ -520,6 +536,8 @@ msgid ""
 "The name of an R object to store the imported data in. If you choose an "
 "existing symbol name, you will be prompted, whether to overwrite this object."
 msgstr ""
+"R-ის ობიექტი, რომელშიც შემოტანილი მონაცემების დამახსოვრება მოხდება. თუ "
+"აირჩევთ არსებული სიმბოლოს სახელს, გკითხავთ, გადავაწერო თუ არა ამ ობიექტს."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Open imported data for editing")
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Open imported data for editing")
@@ -550,6 +568,9 @@ msgid ""
 "can specify a single column containing the row names (typically the first). "
 "Or you can provide a character vector of names."
 msgstr ""
+"როგორ განსაზღვროთ მწკრივის სახელები? მწკრივები , ან შეიძლება, დაინომროს 1.."
+"n, ან შეგიძლიათ, მიუთითოთ სვეტი, რომელიც მწკრივის სახელებს შეიცავს (როგორც "
+"წესი, პირველი). ან შეგიძლიათ, სახელების სიმბოლო ვექტორი შეიყვანოთ."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column number or variable name")
 #: rkward/plugins/00saveload/import/import_csv.rkh:31
@@ -558,6 +579,9 @@ msgid ""
 "See above. The column containing the row names, given either as a number, or "
 "as a column name (in the latter case, make sure to quote the name)"
 msgstr ""
+"იხ ზემოთ. სვეტი, რომელიც შეიცავს მწკრივის სახელებს, რომლებიც შეყვანილია, "
+"როგორც ან რიცხვი, ან სვეტის სახელი (უკანასკნელ შემთხვევაში, დარწმუნდით, რომ "
+"სახელი ბრჭყალებში ჩასვით)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of row names (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:32
@@ -567,6 +591,9 @@ msgid ""
 "\"), but you can also specify the name of an R object containing the names "
 "to use)"
 msgstr ""
+"იხ. ზემოთ. მწკრივის სახელების ვექტორი (მაგ: c (\"row1\", \"row2\",..., \"rown"
+"\"). ასევე შეგიძლიათ მიუთითოთ R-ის ობიექტის სახელი, რომელიც გამოსაყენებელ "
+"სახელებს შეიცავს)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:33
@@ -575,6 +602,8 @@ msgid ""
 "Use automatic column names (possibly read from first row of file), or use "
 "manually specified names?"
 msgstr ""
+"გამოვიყენო ავტომატური სვეტის სახელები (ალბათ წაკითხული ფაილის პირველი "
+"მწკრივიდან), თუ ხელით მითითებული სახელები?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of column names (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:34
@@ -584,6 +613,9 @@ msgid ""
 "\"col2\", ..., \"coln\"), but you can also specify the name of an R object "
 "containing the names to use)"
 msgstr ""
+"იხილეთ ზემოთ. მიუთითეთ სტრიქონის ვექტორი სვეტს სახელებისთვის (მაგ: c "
+"(\"col1\", \"col2\", …\"coln\"), მაგრამ ასევე შეგიძლიათ მიუთითოთ R-ის "
+"ობიექტი, რომელიც საჭირო სახელებს შეიცვს)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Check syntax of column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:35
@@ -605,6 +637,7 @@ msgid ""
 "See above. Specify a character vector with the names of the classes to use "
 "for each column."
 msgstr ""
+"იხ. მაღლა. მიუთითეთ სიმბოლოს ვექტორი კლასების სახელებით, თითოეული სვეტისთვის."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip trailing fields")
 #: rkward/plugins/00saveload/import/import_csv.rkh:38
@@ -614,6 +647,9 @@ msgid ""
 "five rows of input) be skipped? See parameter flush in <link href=\"rkward://"
 "rhelp/read.table\"/>."
 msgstr ""
+"უნდა იყოს თუ არა დამატებითი სვეტები (არა ზემოთ მითითებულები და არა "
+"შეყვანიდან პირველი ხუთი მწკრივი) გამოტოვებული? იხილეთ პარამეტრი flush ბმულზე "
+"<link href=\"rkward://rhelp/read.table\"/>."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Pad rows if unequal length")
 #: rkward/plugins/00saveload/import/import_csv.rkh:39
@@ -622,6 +658,8 @@ msgid ""
 "If checked, and the rows have differing length, they will be padded with "
 "empty values in the imported data."
 msgstr ""
+"თუ ჩართულია და მწკრივებს სხვადასხვა იგრძე აქვთ, ისინი შევსებული იქნება "
+"ცარიელი მნიშვნელობებით შემოტანილ მონაცემებში."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Allow escaped characters")
 #: rkward/plugins/00saveload/import/import_csv.rkh:43
@@ -630,6 +668,9 @@ msgid ""
 "Should a backslash ('\\') followed by a character be treated as an escaped "
 "character? Otherwise the sequence is read literally."
 msgstr ""
+"უნდა იყოს თუ არა უკუღმა დახრილი ხაზი ('\\'), რომელსაც სიმბოლო მოჰყვება, "
+"აღქმული, როგორც სპეციალური სიმბოლო? წინააღმდეგ შემთხვევაში ეს მიმდევრობა "
+"როგორც ჩანს, ისე იქნება წაკითხული."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Strip leading and trailing whitespace")
 #: rkward/plugins/00saveload/import/import_csv.rkh:44
@@ -645,6 +686,8 @@ msgid ""
 "Should columns containing character data be converted to factors in R, or "
 "should they be read as character vectors?"
 msgstr ""
+"უნდა იყოს თუ არა სვეტები, რომლებიც სტრიქონი მონაცემებს შეიცავენ, გადაყვანილი "
+"ფაქტორებში R-ში თუ წავიკითხო ისინი, როგორც სიმბოლოს ვექტორები?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Missing value string")
 #: rkward/plugins/00saveload/import/import_csv.rkh:46
@@ -653,6 +696,8 @@ msgid ""
 "How are missing values (NAs) written in the file to be imported? (Blank "
 "fields are also interpreted as NAs in columns that are not strings.)"
 msgstr ""
+"როგორ მოხდება ნაკლული მნიშვნელობების (NA-ების) შემოტანა ფაილიდან? (ცარიელი "
+"ველები ასევე იქნება გადაყვანილი, როგორც NA სვეტებში, რომლებიც სტრიქონი არაა.)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "String delimiter")
 #: rkward/plugins/00saveload/import/import_csv.rkh:47
@@ -668,6 +713,10 @@ msgid ""
 "use, here. Simply enter all character to use (without spaces or comma, e.g. "
 "\"'@ to use \", ', and @ as string delimiters)."
 msgstr ""
+"თუ ზემოთ \"სხვა\" აირჩიეთ, შეგიძლიათ, ციტირებისთვის გამოყენებული სიმბოლო აქ "
+"შეიყვანოთ. უბრალოდ შეიყვანეთ ყველა სიმბოლო, რომლის გამოყენებაც გნებავთ "
+"(გამოტოვებების და მძიმეების გარეშე. მაგ: \"'@ რომ გამოიყენოთ \", ', და @ "
+"სტრიქონის გამყოფებად)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip x lines at the start of the file")
 #: rkward/plugins/00saveload/import/import_csv.rkh:50
@@ -676,6 +725,8 @@ msgid ""
 "This many rows will be skipped at the start of the file. Use, for instance, "
 "if the file contains a text header."
 msgstr ""
+"რამდენი რიგი იქნება გამოტოვებული ფაილის დასაწყისში. გამოიყენეთ, მაგალითად, "
+"თუ ფაილი ტექსტურ თავსართს შეიცავს."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Max number of lines to read (-1 for no limit)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:51
@@ -690,6 +741,8 @@ msgid ""
 "If you enter a single character, here, everything after that character in a "
 "line will be ignored. Leave blank to disable detection of comments."
 msgstr ""
+"თუ შეიყვანეთ ერთ სიმბოლოს, ყველაფერი, რაც ამ სიმბოლოს შემდეგ მოდის ხაზში, "
+"გამოტოვებული იქნება. დატოვეთ ცარიელი, რომ კომენტარების ამოცნობა გამოტოვოთ."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip blank lines")
 #: rkward/plugins/00saveload/import/import_csv.rkh:53
@@ -1214,6 +1267,11 @@ msgid ""
 "usually be preferable, as it will provide more specific options, and with "
 "less packages to install."
 msgstr ""
+"შემოიტანეთ სხვადასხვა ფორმატი. ეს ზოგადი მიდგომაა R-ის პაკეტის, 'rio'-ზე "
+"დაყრდნობით, რომელიც, თავის მხრივ, სხვა პაკეტებზეა დამოკიდებული. თუ არსებობს "
+"ცალკე დამატება ფორმატისთვის, რომლის შემოტანაც გნებავთ, ჩვეულებრივ, ის "
+"დამატება უნდა გამოიყენოთ, რადგან მას მეტი პარამეტრების მხარდაჭერა ექნება და "
+"ნაკლები პაკეტის დაყენება მოგიწევთ."
 
 #. i18n: ectx: (Loaded from Generic data import) <usage>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:16
@@ -1222,6 +1280,8 @@ msgid ""
 "Select the data file to import. An R object containing the data will be "
 "created. This will usually be a data.frame, or a list."
 msgstr ""
+"აირჩიეთ შემოსატანი მონაცემების ფაილი. შეიქმნება R-ის ობიექტი, რომელიც ამ "
+"მონაცემებს შეიცავს. ეს, ჩვეულებრივ, data.frame, ან სიაა."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Edit Object")
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Edit Object")
@@ -1233,6 +1293,9 @@ msgid ""
 "Currently, this is only possible, if the object is saved as a data.frame "
 "(see next option)."
 msgstr ""
+"მოხდება თუ არა ობიექტის გახსნა ჩასწორებისთვის მისი შემოტანის შემდეგ. ამჟამად "
+"ეს, მხოლოდ, მაშინაა შესაძლებელი, თუ ობიექტი data.frame-ის სახით იქნება "
+"შენახული (იხ. შემდეგი პარამეტრი)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import a list of all datasets")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:25
@@ -1241,6 +1304,9 @@ msgid ""
 "Some data files may contain more than one set of data (e.g. several sheets "
 "inside one excel file). Check this option to import all datasets as a list."
 msgstr ""
+"ზოგიერთი მონაცემების ფაილი, შეიძლება, ერთზე მეტ მონაცემების ნაკრებს "
+"შეიცავდეს (მაგ: რამდენიმე ფურცელი Excel-ის ფაილში). ჩართეთ ეს პარამეტრი, რომ "
+"მონაცემების ნაკრებები სიის სახით იქნეს შემოტანილი."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import specific sub-set")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:26
@@ -1249,6 +1315,8 @@ msgid ""
 "For datasets containing more than one set of data, specify which set to "
 "import (this will usually be a name or a number)."
 msgstr ""
+"მონაცემების ნაკრებისთვის, რომლებიც ერთზე მეტ მონაცემების ნაკრებს შეიცავენ, "
+"მიუთითეთ, რომლის შემოტანა გნებავთ (ეს, ჩვეულებრივ, სახელი ან ნომერია)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:27
@@ -1258,6 +1326,9 @@ msgid ""
 "performance reasons (and only the first dataset in case of multiple sets in "
 "the file)."
 msgstr ""
+"შემოტანილი მონაცემების მინიატურა. წარმადობის მიზნით ნაჩვენებია, მხოლოდ, "
+"პირველი 50 მწკრივი და სვეტი.(და, მხოლოდ, პირველი მონაცემების ნაკრები, თუ "
+"ფაილში ის ერთზე მეტია)."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <checkbox label="...">
@@ -1323,6 +1394,14 @@ msgid ""
 "<link href=\"http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf\">R News "
 "4/1 p30-31</link>."
 msgstr ""
+"აირჩიეთ SPSS მონაცემების ფაილი შემოსატანად. ჩვეულებრივ, ეს ფაილები '*.sav'-"
+"ით სრულდება. შეიქმნება R-ის ობიექტი, რომელიც SPSS-ის მონაცემებს შეიცავს. ეს "
+"შეიძლება იყოს data.frame, ან სია. გექნებათ რამდენიმე პარამეტრი ჭდეებთან და "
+"სიმბოლოების კოდირებასთან სამუშაოდ. იხ <link href=\"rkward://rhelp/read.spss"
+"\"/>. მონაცემების გარდა SPSS-ის სხვა ფაილები (ანუ *.por, *.jnl, *.cht, *."
+"spo, *.sps) მხარდაჭერილი არაა. თარიღებთან/დროსთან სამუშაოდ იხილეთ ბმული "
+"<link href=\"http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf\">R News "
+"4/1 p30-31</link>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Import as a data.frame")
 #: rkward/plugins/00saveload/import/import_spss.rkh:24
@@ -1331,6 +1410,9 @@ msgid ""
 "Whether to save the data as a data.frame. The alternative is saving as a "
 "list (useful, if the columns in your SPSS data have different lengths)"
 msgstr ""
+"შეინახება თუ არა მონაცემები data.frame-ის სახით. ალტერნატივაა შეინახოთ სიის "
+"სახით (სასარგებლოა, თუ თქვენი SPSS-ის მონაცემებში სვეტებს სხვადასხვა "
+"სიგრძეები გააჩნია)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Convert Variable labels to RKWard format")
 #: rkward/plugins/00saveload/import/import_spss.rkh:26
@@ -1342,6 +1424,11 @@ msgid ""
 "as an attribute \"variable.labels\" (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
+"RKWard-ს შეუძლია, SPSS-ის მსგავსი ცვლადის ჭდეები აჩვენოს. ჩართეთ ეს "
+"პარამეტრი, თუ გნებავთ SPSS-ის ცვლადის ჭდეების RKWard_ის ფორმატში გადაყვანა. "
+"თუ ამ პარამეტრს არ შეეხებით, SPSS-ის ცვლადის ჭდეები ხელმისაწვდომი მაინც "
+"იქნება, ატრიბუტით \"variable.labels\" (იხ: <link href=\"rkward://rhelp/read."
+"spss\"/>)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Use value labels")
 #: rkward/plugins/00saveload/import/import_spss.rkh:27
@@ -1350,6 +1437,8 @@ msgid ""
 "Should SPSS variables with value labels be converted to R factors with those "
 "levels?"
 msgstr ""
+"უნდა მოხდეს მნიშვნელობის ჭდეების მქონე SPSS-ის ცვლადების გადაყვანა R-ის "
+"ფაქტორებში ამ დონებით?"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Maximum number of labels per object")
 #: rkward/plugins/00saveload/import/import_spss.rkh:28
@@ -1375,6 +1464,9 @@ msgid ""
 "performance reasons. Internally, the preview uses a data.frame, even if "
 "<label id=\"data_frame\"/> is not checked."
 msgstr ""
+"შემოტანილი მონაცემების მინიატურა. წარმადობის მიზეზებით ნაჩვენებია, მხოლოდ, "
+"პირველი 50 სვეტი და მწკრივი. შიდა მხრიდან მინიატურა data.frame-ს იყენებს იმ "
+"შემთხვევაშიც კი, თუ <label id=\"data.frame\"/> ჩართული არაა."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:24
@@ -1438,6 +1530,10 @@ msgid ""
 "dta'. An R object containing the STATA data will be created. STATA files "
 "other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported."
 msgstr ""
+"აირჩიეთ შემოსატანი STATA მონაცემების ფაილი. ჩვეულებრივ ეს ფაილები '*.dta'-ით "
+"სრულდება. შეიქმნება R-ის ობიექტი, რომელიც STATA-ის მონაცემებს შეიცავს. "
+"მონაცემების ფაილების გარდა STATA-ის სხვა ფაილები (ანუ *.log, *.smcl, *.do, *."
+"ado) მხარდაჭერილი არაა."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/import_stata.rkh:21
@@ -1483,6 +1579,9 @@ msgid ""
 "values. If this option is set, this information is stored in an attribute of "
 "the imported data. See <link href=\"rkward://rhelp/read.dta\"/> for details."
 msgstr ""
+"Stata ვერსია 8 და ზემოთ ანსხვავებს ნაკლული მნიშვნელობების სხვადასხვა ტიპებს. "
+"თუ ეს პარამეტრი დაყენებულია, ეს ინფორმაცია შემოტანილი მონაცემების ატრიბუტში "
+"ჩაიწერება. დეტალებისთვის იხილეთ <link ref=\"rkward://rhelp/read.dta\"/>."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert '_' in Stata variable names to '.' in R names")
 #: rkward/plugins/00saveload/import/import_stata.rkh:28
@@ -1492,6 +1591,9 @@ msgid ""
 "problems in some (rare) situations. Should underscore characters be "
 "converted to dots ('.')?"
 msgstr ""
+"ქვედა ტირე ('_'), ჩვეულებრივ, R-ის ცვლადების სახელებში არ გამოიყენება და "
+"შეიძლება (იშვიათად) პრობლემები გამოიწვიოს. გადავაკეთო ქვედა ტირეები "
+"წერტილებად ('.')?"
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_stata.rkh:29
@@ -1587,6 +1689,12 @@ msgid ""
 "you may want to try the Java-based alternative <link href=\"rkward://"
 "component/import_xls_xlconnect\"/>."
 msgstr ""
+"აირჩიეთ Microsoft Excel-ის ფაილი, რომლიდანაც ფურცლის შემოტანა გნებავთ. "
+"შეიქმნება R-ის ობიექტი, რომელიც ამ მონაცემებს შეიცავს. Excel-ის ფურცლების "
+"შემოტანის ეს მეთოდი R-ის პაკეტს, სახელად \"gdata\" ეყრდნობა და მუშა Perl-ის "
+"გარემო სჭირდება. იმ შემთხვევაში, თუ ამან თქვენს სისტემაზე არ იმუშავა, ან "
+"შედეგები მოსალოდნელს არ დაემთხვა, შეგიძლიათ, Java-ზე დაწერილი ვარიანტი "
+"გამოიყენოთ <link href=\"rkward://component/import_xls_xlconnect\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Name or number of sheet")
 #: rkward/plugins/00saveload/import/import_xls.rkh:22
@@ -1688,6 +1796,11 @@ msgid ""
 "case this does not work on your system, you may want to try the Perl-based "
 "alternative <link href=\"rkward://component/import_xls\"/>."
 msgstr ""
+"აირჩიეთ Microsoft Excel-ის ფაილი, რომლიდანაც ფურცლის შემოტანა გნებავთ. "
+"შეიქმნება ამ მონაცემების შემცველი R-ის ობიექტი. Excel-ს ფაილების შემოტანის "
+"ეს მეთოდი R-ის პაკეტს, \"XLconnect\" ეყრდნობა და მუშა Java სჭირდება. იმ "
+"შემთხვევაში, თუ ამან თქვენს სისტემაზე არ იმუშავა, სცადეთ Perl-ზე დაწერილი "
+"ალტერნატივა ბმულზე <link href=\"rkward://component/import_xls\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of sheet")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:24
@@ -1696,6 +1809,8 @@ msgid ""
 "Numeric index or name/label of the sheet to import from the file. If you "
 "specify a name, here, make sure to quote it."
 msgstr ""
+"რიცხვითი ინდექსი ან სახელი/ჭდე ფურცლის, რომლის შემოტანაც ფაილიდან გნებავთ. "
+"თუ სახელს მიუთითებთ, დარწმუნდით, რომ ბრჭყალებში ჩასვით."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:25
@@ -1704,6 +1819,8 @@ msgid ""
 "Whether the first row of data should be used as column headers. "
 "Alternatively, columns are named, automatically (by index)."
 msgstr ""
+"უნდა იყოს თუ არა მონაცემების პირველი მწკრივი აღქმული, როგორც სვეტის სათაური. "
+"ან სვეტები ავტომატურად დაინომრება (ინდექსის მიხედვით)."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of column with row names (if any)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:26
@@ -1713,6 +1830,9 @@ msgid ""
 "specify a name, here, make sure to quote it. If you leave this field empty, "
 "row-names will be assigned automatically (row numbers)"
 msgstr ""
+"რიცხვითი ინდექსი ან სახელი/ჭდე სვეტისა, რომელიც მწკრივის სახელებს შეიცავს. "
+"თუ სახელის მითითებას აპირებთ, ის ბრჭყალებში უნდა ჩასვათ. თუ ამ ველს ცარიელს "
+"დატოვებთ, მწკრივის სახელები ავტომატურად იქნება მინიჭებული"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Row")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:33
@@ -1722,6 +1842,9 @@ msgid ""
 "the start row will be determined, automatically. Alternatively, you can "
 "specify a range in spreadsheet notation, below."
 msgstr ""
+"ფურცელზე არსებული მონაცემების პირველი მწკრივი შემოსატანად. თუ დარჩება 0-ზე "
+"(ნაგულისხმევი) მწკრივის დასაწყისის დადგენა ავტომატურად მოხდება. ან, თუ "
+"გნებავთ, ქვემოთ შეგიძლიათ, ელცხრილის ნოტაციის შუალედი მიუთითოთ."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:35
@@ -1760,6 +1883,7 @@ msgid ""
 "Specify the range to import within the sheet in spreadsheet notation (e.g. "
 "\"A10:B20\")."
 msgstr ""
+"მიუთითეთ შემოსატანი შუალედი ელცხრილის ნოტაციის ფურცელში (მაგ: \"A10:B20\")."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing rows")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:40
@@ -1792,6 +1916,13 @@ msgid ""
 "this control empty, entirely. Also note that most common type conversions "
 "can also be done <i>after</i> the data has been imported."
 msgstr ""
+"საშუალებას გაძლევთ, გადაფაროთ ავტომატური მონაცემების ტიპის დადგენა. მიუთითეთ "
+"R-ის მონაცემების ტიპები, როგორიცაა \"character\" ან \"numeric\". ნებისმიერი "
+"ცვლილება, რომელსაც აქ შეიტანთ, <b>ყველა</b> შემოტანილ სვეტს (მოხდება "
+"სპეციფიკაციის თავიდან გადატარება, თუ საჭიროა) შეეხება. ავტომატური "
+"მონაცემების ტიპის დადგენისთვის ეს კონტროლი სრულად ცარიელი დატოვეთ. ასევე "
+"დაიმახსოვრეთ, რომ გადაყვანის ყველაზე გავრცელებული ტიპის გადაყვანების "
+"შესრულება მონაცემების შემოტანის <i>შემდეგაც</i> შეგიძლიათ."
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:22
@@ -1902,6 +2033,9 @@ msgid ""
 "will be overwritten, if the loaded workspace contains objects of the same "
 "names."
 msgstr ""
+"დარწმუნდით, რომ ამ დამატების გამოყენებამდე თქვენი სამუშაო სივრცე შეინახეთ, "
+"რადგან ყველა თქვენი ცვლადი ჩანაცვლდება, თუ ჩასატვირთი სამუშაო სივრცე იგივე "
+"სახელის მქონე ობიექტებს შეიცავს."
 
 #. i18n: ectx: (Loaded from Load an R data file) <settings> <setting> (refers to element labelled "R data file to load")
 #: rkward/plugins/00saveload/import/load_data.rkh:19
@@ -1918,6 +2052,10 @@ msgid ""
 "not yet exist, it will be created. If it already exists, it will be "
 "overwritten completely, i.e. deleting all objects inside it!"
 msgstr ""
+"ჩართეთ ეს პარამეტრი (და მიუთითეთ გარემო), რომ მონაცემები .GlobalEnv-ის გარდა "
+"სხვა გარემოში ჩატვირთოთ. თუ მითითებული გარემო არ არსებობს, ის შეიქმნება. თუ "
+"ის უკვე არსებობს, ის მთლიანად ჩანაცვლდება, ან შიგნით არსებული ყველა ობიექტი "
+"წაიშლება!"
 
 #. i18n: ectx: (Load an R data file) <dialog label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:14
@@ -1938,6 +2076,8 @@ msgid ""
 "WARNING: This may overwrite existing objects in .GlobalEnv. Be sure to save "
 "your workspace, first."
 msgstr ""
+"გაფრთხილება: ამან, შეიძლება, .GlobalEnv-ში არსებულ ობიექტებს თავზე "
+"გადააწეროს. დარწმუნდით, რომ ჯერ თქვენი სამუშაო სივრცე შეინახეთ."
 
 #. i18n: ectx: (Load an R data file) <dialog label="Load an R data file"> <saveobject label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:17
@@ -1975,6 +2115,9 @@ msgid ""
 "of R statements, which are then evaluated (see <link href=\"rkward://rhelp/"
 "source\"/>)."
 msgstr ""
+"აირჩიეთ ჩასატვირთი ფაილი. ეს ფაილი ჩატვირთული და აღქმული იქნება როგორც R-ის "
+"პროცედურების სკრიპტი, რომელიც შემდეგ სრულდება (იხ <link href=\"rkward://"
+"rhelp/source\"/>)."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/source.rkh:18
@@ -1990,6 +2133,9 @@ msgid ""
 "source file. This may be needed, if the source file refers to further files "
 "using relative paths."
 msgstr ""
+"თუ ჩართულია, სამუშაო საქაღალდე წყარო ფაილის საქაღალდეზე შეიცვლება. ეს "
+"შეიძლება დაგჭირდეთ, თუ წყარო ფაილი სხვა ფაილებს ფარდობითი ბილიკებით "
+"მიმართავს."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Run in a local environment")
 #: rkward/plugins/00saveload/import/source.rkh:20
@@ -2001,6 +2147,10 @@ msgid ""
 "create new objects (in contrast to just producing printed output), it will "
 "have to be run in the global environment."
 msgstr ""
+"თუ ჩართულია, წყარო ფაილის ინტერპრეტაცია გლობალური მაგიერ ლოკალურ გარემოში "
+"ხდება. ეს უფრო დაცულია, რადგან არსებული ობიექტების ჩანაცვლება არ მოხდება. "
+"სხვა მხრივ, თუ წყარო ფაილის დანიშნულება ახალი ობიექტების შექმნაა (უბრალოდ "
+"შედეგების გამოტანისგან განსხვავებით), ის გლობალურ გარემოში უნდა გაეშვას."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Echo source statements")
 #: rkward/plugins/00saveload/import/source.rkh:22
@@ -2008,6 +2158,8 @@ msgstr ""
 msgid ""
 "Should each source statement be echoed after parsing, and before evaluation?"
 msgstr ""
+"უნდა მოხდეს თუ არა თითოეული წყარო პროცედურის ეკრანზე გამოტანა დამუშავების "
+"შემდეგ, შემოწმებამდე?"
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Prompt for echoed lines (empty for default)")
 #: rkward/plugins/00saveload/import/source.rkh:23
@@ -2016,6 +2168,8 @@ msgid ""
 "What should be printed at the start of each echoed source line (to "
 "differentiate it from the output)? Leave empty for the default."
 msgstr ""
+"რა უნდა დაიბეჭდოს თითოეული გამოტანილი წყარო ხაზის დასაწყისში? (რომ "
+"განასხვაოთ გამოტანილი ინფორმაციისგან)? დატოვეთ ცარიელი ნაგულისხმევისთვის."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Maximal length of echoed statements")
 #: rkward/plugins/00saveload/import/source.rkh:24
@@ -2036,6 +2190,8 @@ msgid ""
 "Print the result of each single evaluation (instead of just the final "
 "result)."
 msgstr ""
+"ერთი გადავლის შედეგის გამოტანა (მხოლოდ, საბოლოო პასუხის ჩვენებისგან "
+"განსხვავებით)."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Source an R file) <dialog label="...">
@@ -2127,6 +2283,10 @@ msgid ""
 "defined via output_format will be used, see the documentation on rmarkdown::"
 "render()."
 msgstr ""
+"აირჩიეთ გატანილი ფაილები სამიზნე ფორმატი. თუ აირჩევთ ან \"დოკუმენტში "
+"აღწერილი ყველა ფორმატს\" ან \"დოკუმენტში აღწერილ პირველ ფორმატს\", "
+"გამოყენებული იქნება output_format-ით არჩეული ფორმატები. იხილეთ დოკუმენტაცია "
+"rmarkdown::render()-ის შესახებ."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save as")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:27
@@ -2141,6 +2301,8 @@ msgid ""
 "Choose the target directory to export to, file names are automatically "
 "generated according to the formats defined in the document."
 msgstr ""
+"აირჩიეთ გასატანი საქაღალდე. ფაილის სახელები ავტომატურად შეიქმნება დოკუმენტში "
+"აღწერილი ფორმატების მიხედვით."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Markdown version")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:34
@@ -2152,6 +2314,11 @@ msgid ""
 "between various output formats. But be aware that some formats may require "
 "special configuration or templates to produce proper results."
 msgstr ""
+"აყენებს მარკდაუნის ვერსიას. ძველი, v1 დოკუმენტები, მხოლოდ, HTML ფორმატში "
+"დარენდერდება, markdown პაკეტით. თუ პრობლემები გაქვთ, დატოვეთ ის უფრო ახალ v2-"
+"ზე. ამ დოკუმენტების რენდერი pandoc-ით ხდება, რომელიც საშუალება გაძლევთ, "
+"გამოტანი ფორმატი აირჩიოთ. მაგრამ იცოდეთ, რომ ზოგიერთ ფორმატს სპეციალური "
+"კონფიგურაცია ან ნიმუშები სჭირდება სწორი შედეგების გამოსატანად."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Export RMarkdown) <about name="...">
@@ -2169,7 +2336,7 @@ msgstr "RMarkdow-ის გატანა"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:16
 #, kde-format
 msgid "RKWard GUI to export RMarkdown documents in various formats"
-msgstr ""
+msgstr "'RKWard GUI' RMarkdown-ის დოკუმენტის სხვადასხვა ფორმატებში გასატანად"
 
 #. i18n: ectx: (Export RMarkdown) <about> <author given="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:17
@@ -2354,6 +2521,9 @@ msgid ""
 "Save one or more selected R objects to a file. <b>Note:</b> Use <i>Workspace-"
 ">Save Workspace</i> for saving the complete workspace."
 msgstr ""
+"ერთი ან მეტი მონიშნული R-ის ობიექტის ფაილში შენახვა. <b>შენიშვნა:</b> "
+"გამოიყენეთ მენიუ <i>სამუშაო სივრცე->სამუშაო სივრცის შენახვა</i> მთელი "
+"სამუშაო სივრცის შესანახად."
 
 #. i18n: ectx: (Loaded from Save R objects) <usage>
 #: rkward/plugins/00saveload/save/save.rkh:12
@@ -2362,6 +2532,9 @@ msgid ""
 "Select the objects to save, and a filename to save to. Created data files "
 "can be loaded using <link href=\"rkward://component/load_r_object\"/>."
 msgstr ""
+"აირჩიეთ შესანახი ობიექტები და ფაილის სახელი. შექმნილი მონაცემი ფაილების "
+"ჩატვირთვა შეგიძლიათ ბრძანებით <link href=\"rkward://component/load_r_object"
+"\"/>."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Object")
 #: rkward/plugins/00saveload/save/save.rkh:16
@@ -2590,6 +2763,10 @@ msgid ""
 "to save to. All other options allow you to define the file format, handling "
 "of column and row names as well as special character handling."
 msgstr ""
+"აირჩიეთ ტაბულარული მონაცემების ობიექტი (მაგალითად data.frame ან მატრიცა) და "
+"აირჩიეთ ფაილი, რომლშიც შენახვაც გნებავთ. სხვა ყველა პარამეტრი საშუალებას "
+"გაძლევთ, აღწეროთ ფაილის ფორმატი, სვეტებისა და მწკრივების სახელების აღწერა და "
+"სპეციალურ სიმბოლოებთან მუშაობის წესები."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Data")
 #: rkward/plugins/00saveload/save/write_csv.rkh:25
@@ -2598,6 +2775,8 @@ msgid ""
 "Select a data object to export. Valid data types are array, data.frame, "
 "matrix, character, numeric, and integer."
 msgstr ""
+"აირჩიეთ მონაცემის ობიექტი გასატანად. სწორი მონაცემების ტიპებია array, data."
+"frame, matrix, character, numeric და integer."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:29
@@ -2606,6 +2785,8 @@ msgid ""
 "The file to save to. Existing files will be overwritten, unless the append "
 "option is checked."
 msgstr ""
+"ფაილი, რომელშიც შევინახო. არსებულ ფაილებს ზედ გადაეწერება, თუ ჩართული არაა "
+"ბოლოში მიწერა."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Append to file (if it exists)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:32
@@ -2614,6 +2795,8 @@ msgid ""
 "Should existing files be overwritten or the data appended? If this is greyed "
 "out, the selected preset sets this for you."
 msgstr ""
+"უნდა გადაეწეროს ზედ არსებულ ფაილებს თუ ბოლოში მიეწეროს? თუ ეს ნაცრისფერია, "
+"ეს არჩეულმა პრესეტმა დააყენა."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File format")
 #: rkward/plugins/00saveload/save/write_csv.rkh:35
@@ -2623,6 +2806,9 @@ msgid ""
 "options (like field separator and decimal point) with reasonable defaults. "
 "Use the custom format if you need more control."
 msgstr ""
+"აირჩიეთ აქ ერთ-ერთი ნაგულისხმევი ფაილის ფორმატებიდან. ისინი რამდენიმე "
+"პარამეტრს დააყენებენ (მაგ: ველების გამყოფს და ათობითის წერტილს). თუ მეტი "
+"კონტროლი გჭირდებათ, თქვენი ფორმატი გამოიყენეთ."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:39
@@ -2631,6 +2817,8 @@ msgid ""
 "Specify the desired decimal point character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
+"მიუთითეთ სასურველი ათობითი წერტილის სიმბოლო. თუ ეს ნაცრისფერია, ეს თქვენმა "
+"არჩეულმა პრესეტმა დააყენა."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:42
@@ -2645,6 +2833,8 @@ msgid ""
 "Specify the desired field separator character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
+"მიუთითეთ სასურველი ველის გამყოფი სიმბოლო. თუ ეს ნაცრისფერია, ეს თქვენმა "
+"არჩეულმა პრესეტმა დააყენა."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:48
@@ -2673,6 +2863,8 @@ msgid ""
 "Decide how to deal with column names. If this is greyed out, the selected "
 "preset sets this for you."
 msgstr ""
+"აირჩიეთ, როგორ მოვექცეთ სვეტის სახელებს. თუ ეს ნაცრისფერია, ეს თქვენმა "
+"არჩეულმა პრესეტმა დააყენა."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:63
@@ -2715,6 +2907,9 @@ msgid ""
 "escaped or double quoted. If this is greyed out, the selected preset sets "
 "this for you."
 msgstr ""
+"აკონტროლებს, როგორ აღიქმება არსებული ბრჭყალები მნიშვნელობებში -- ისინი "
+"შეიძლება, სპეციალურ სიმბოლოდ იქცნენ, ან ორმაგ ბრჭყალებში ჩაისვან. თუ ეს "
+"ნაცრისფერია, ამას არჩეული პრესეტი აყენებს."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Character for missing values")
 #: rkward/plugins/00saveload/save/write_csv.rkh:81
@@ -2730,6 +2925,9 @@ msgid ""
 "operating systems, changing this option might help in case you run into "
 "problems when exchanging files with other people."
 msgstr ""
+"დააყენეთ სიმბოლო, რომელიც ხაზის ბოლოს (EOL) მიუთითებს. განსხვავებულია "
+"სხვადასხვა ოპერაციულ სისტემებში. ამ პარამეტრის შეცვლამ შეიძლება გიშველოთ იმ "
+"შემთხვევაში, თუ სხვებთან ფაილების გაზიარების პრობლემებს შეეჩეხეთ."
 
 #. i18n: ectx: (Export Table / CSV files) <related>
 #: rkward/plugins/00saveload/save/write_csv.rkh:88
@@ -2918,6 +3116,8 @@ msgid ""
 "Choose a directory to set/change the working directory for R. The R function "
 "<b>setwd</b> is used to do the job."
 msgstr ""
+"აირჩიეთ საქაღალდე, რომ R-ის სამუშაო საქაღალდე შეცვალოთ/დააყენოთ. ამისთვის "
+"გამოიყენება R-ის ფუნქცია <b>setwd</b>."
 
 #. i18n: ectx: (Set the working directory) <dialog label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:10
@@ -2944,6 +3144,8 @@ msgid ""
 "Plugins for reading and writing data in various formats. Part of the "
 "official RKWard distribution"
 msgstr ""
+"დამატებები მონაცემების სხვადასხვა ფორმატებში ჩასაწერად და წასაკითხად. RKWard-"
+"ის ოფიციალური დისტრიბუტივის ნაწილი"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:24
