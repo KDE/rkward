@@ -16,8 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -983,8 +983,7 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Γίνετε υπερχρήστης"
@@ -1741,10 +1740,9 @@ msgid "Exists"
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgid "Import"
-msgstr "&Εισαγωγή"
+msgstr "Εισαγωγή"
 
 #: rkward/dialogs/rksetupwizard.cpp:360
 #, kde-format
@@ -2614,10 +2612,9 @@ msgstr "Παράθυρο αποτελεσμάτων"
 
 #: rkward/misc/rkprogresscontrol.cpp:241
 #: rkward/windows/rktoplevelwindowgui.cpp:87
-#, fuzzy, kde-format
-#| msgid "Show &Output"
+#, kde-format
 msgid "Show Output"
-msgstr "Προβολή &Παραθύρου αποτελεσμάτων"
+msgstr "Προβολή Παραθύρου αποτελεσμάτων"
 
 #: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
@@ -2894,11 +2891,10 @@ msgid "error"
 msgstr "προβολή σφαλμάτων"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
-#, fuzzy, kde-format
-#| msgid "Ready"
+#, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr "Έτοιμο"
+msgstr "έτοιμο"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
@@ -3807,8 +3803,7 @@ msgid "Graphics Device Number %1"
 msgstr ""
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:648
-#, fuzzy, kde-format
-#| msgid "%1 (Active)"
+#, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Ενεργό)"
@@ -5530,8 +5525,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:176
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "Add directory to list"
 msgid "Add"
 msgstr "Προσθήκη"
@@ -5630,8 +5624,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:399
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "Add file to list"
 msgid "Add"
 msgstr "Προσθήκη"
@@ -5664,8 +5657,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:574
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Μετονομασία"
@@ -5679,8 +5671,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:582
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Αφαίρεση"
@@ -6248,10 +6239,9 @@ msgid "Rename"
 msgstr "Μετονομασία"
 
 #: rkward/windows/rkfilebrowser.cpp:155
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgid "Rename..."
-msgstr "Μετονομασία"
+msgstr "Μετονομασία..."
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
@@ -7038,8 +7028,7 @@ msgid "Restore Workplace layout"
 msgstr "Ανάκτηση διάταξης χώρου εργασίας"
 
 #: rkward/windows/rkworkplaceview.cpp:62
-#, fuzzy, kde-format
-#| msgid "Close All"
+#, kde-format
 msgid "Close all"
 msgstr "Κλείσιμο όλων"
 
