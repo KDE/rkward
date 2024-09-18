@@ -48,10 +48,9 @@ msgid "Cannot edit '%1'"
 msgstr "Δεν μπορεί να γίνει επεξεργασία του '%1'"
 
 #: rkward/agents/rkloadagent.cpp:32
-#, fuzzy, kde-format
-#| msgid "Loading Workspace ..."
+#, kde-format
 msgid "Loading Workspace..."
-msgstr "Φόρτωση χώρου εργασίας ..."
+msgstr "Φόρτωση χώρου εργασίας..."
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -2424,10 +2423,9 @@ msgid "RKWard Output Files [*.rko](*.rko)"
 msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:132
-#, fuzzy, kde-format
-#| msgid "All Files"
+#, kde-format
 msgid "All Files [*](*)"
-msgstr "Όλα τα αρχεία"
+msgstr "Όλα τα αρχεία [*](*)"
 
 #: rkward/misc/rkoutputdirectory.cpp:137
 #, kde-format
@@ -2525,10 +2523,9 @@ msgid "Output is not empty. Not clearing it."
 msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:322
-#, fuzzy, kde-format
-#| msgid "Unnamed"
+#, kde-format
 msgid "[Unnamed]"
-msgstr "Ανώνυμο"
+msgstr "[Ανώνυμο]"
 
 #: rkward/misc/rkoutputdirectory.cpp:330
 #, kde-format
@@ -2671,10 +2668,9 @@ msgid "Change"
 msgstr ""
 
 #: rkward/misc/rksaveobjectchooser.cpp:54
-#, fuzzy, kde-format
-#| msgid "Overwrite?"
+#, kde-format
 msgid "Overwrite"
-msgstr "Αντικατάσταση;"
+msgstr "Αντικατάσταση"
 
 #: rkward/misc/rksaveobjectchooser.cpp:56
 #, fuzzy, kde-format
@@ -4491,10 +4487,9 @@ msgid "str (x)"
 msgstr ""
 
 #: rkward/robjectviewer.cpp:79
-#, fuzzy, kde-format
-#| msgid "<b>Object was deleted!</b>"
+#, kde-format
 msgid "<b>Object was deleted</b>"
-msgstr "<b>Το αντικείμενο έχει διαγραφεί!</b>"
+msgstr "<b>Το αντικείμενο έχει διαγραφεί</b>"
 
 #: rkward/robjectviewer.cpp:122
 #, kde-format
