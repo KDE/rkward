@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2024-04-14 00:04+0100\n"
+"PO-Revision-Date: 2024-09-18 19:03+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -32,7 +32,7 @@ msgstr "olivermkellogg@gmail.com"
 #: rkward/plugins/00saveload/DownloadAppImage.js:51
 #, kde-format
 msgid "Download AppImage results"
-msgstr ""
+msgstr "Elŝuti AppImage-rezultojn"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Download AppImage) <title>
@@ -42,25 +42,25 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:54
 #, kde-format
 msgid "Download AppImage"
-msgstr ""
+msgstr "Elŝuti AppImage"
 
 #. i18n: ectx: (Download AppImage) <summary>
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:17
 #, kde-format
 msgid "Adds a dialog to install or update an AppImage of RKWard"
-msgstr ""
+msgstr "Aldonas dialogon por instali aŭ ĝisdatigi iun AppImage de RKWard"
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:29
 #, kde-format
 msgid "Select a target file to save the AppImage to."
-msgstr ""
+msgstr "Elektu celdosieron al kiu konservi la AppImage."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "URL")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:35
 #, kde-format
 msgid "URL to look for the AppImage files."
-msgstr ""
+msgstr "URL en kiu rigardi pri AppImage-dosieroj."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Pattern")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:38
@@ -94,7 +94,7 @@ msgstr ""
 #: rkward/plugins/00saveload/DownloadAppImage.xml:34
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Loaded from Export Table / CSV files)
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
@@ -122,87 +122,85 @@ msgstr "Konservi al"
 #: rkward/plugins/00saveload/DownloadAppImage.xml:42
 #, kde-format
 msgid "Suppress package loading messages"
-msgstr ""
+msgstr "Subpremi mesaĝojn de pakŝargado"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:46
-#, fuzzy, kde-format
-#| msgid "Source R file"
+#, kde-format
 msgid "Source"
-msgstr "Fonta R-dosiero"
+msgstr "Fonto"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Source"> <input label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:49
 #, kde-format
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Source"> <input label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:50
 #, kde-format
 msgid "Pattern"
-msgstr ""
+msgstr "Ŝablono"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:55
 #, kde-format
 msgid "Download"
-msgstr ""
+msgstr "Elŝuti"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <dropdown label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:58
 #, kde-format
 msgid "Download method"
-msgstr ""
+msgstr "Elŝuta metodo"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:59
 #, kde-format
 msgid "auto"
-msgstr ""
+msgstr "aŭtomata"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:60
 #, kde-format
 msgid "internal"
-msgstr ""
+msgstr "interna"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:61
 #, kde-format
 msgid "libcurl"
-msgstr ""
+msgstr "libcurl"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:62
 #, kde-format
 msgid "wget"
-msgstr ""
+msgstr "wget"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:63
 #, kde-format
 msgid "curl"
-msgstr ""
+msgstr "curl"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:64
 #, kde-format
 msgid "wininet (Windows only)"
-msgstr ""
+msgstr "wininet (nur Vindozo)"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <checkbox label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:66
-#, fuzzy, kde-format
-#| msgid "Allow escaped characters"
+#, kde-format
 msgid "Allow cached files"
-msgstr "Permesu eskapitajn signojn"
+msgstr "Permesi kaŝmemoritajn dosierojn"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <spinbox label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:67
 #, kde-format
 msgid "Timeout"
-msgstr ""
+msgstr "Eltempiĝo"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="...">
@@ -3418,4 +3416,4 @@ msgstr "Laborspaco"
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr "RKWard Teamo"
+msgstr "RKWard-Teamo"
