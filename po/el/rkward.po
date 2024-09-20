@@ -3,20 +3,21 @@
 # This file is put in the public domain.
 #
 # Ilias Soumpasis <nono.231@gmail.com>, 2006, 2007, 2008, 2009.
+# SPDX-FileCopyrightText: 2024 Antonis Geralis <capoiosct@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2012-10-09 04:02+0000\n"
-"Last-Translator: Giannis Katsampirhs <juankatsampirhs@gmail.com>\n"
-"Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
+"PO-Revision-Date: 2024-09-19 22:25+0300\n"
+"Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Generator: Lokalize 24.08.1\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -450,12 +451,12 @@ msgstr ""
 #: rkward/dataeditor/rkvareditmodel.cpp:539
 #, kde-format
 msgid "Type on these fields to add new columns"
-msgstr "Πληκτρολογίστε σε αυτά τα πεδία για να προσθέσετε νέες στήλες"
+msgstr "Πληκτρολογήστε σε αυτά τα πεδία για να προσθέσετε νέες στήλες"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:260
 #, kde-format
 msgid "Type on these fields to add new rows"
-msgstr "Πληκτρολογίστε σε αυτά τα πεδία για να προσθέσετε νέες γραμμές"
+msgstr "Πληκτρολογήστε σε αυτά τα πεδία για να προσθέσετε νέες γραμμές"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:282 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
@@ -1060,7 +1061,7 @@ msgstr "Γίνετε υπερχρήστης"
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Please stand by while installing selected packages"
-msgstr "Παρακαλώ πριμένετε όσο εγκαθίστανται τα επιλεγμένα πακέτα"
+msgstr "Παρακαλώ περιμένετε όσο εγκαθίστανται τα επιλεγμένα πακέτα"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
@@ -4499,7 +4500,7 @@ msgstr "Προβολέας αντικειμένων: %1"
 #: rkward/robjectviewer.cpp:126
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
-msgstr "Το αντικείμενο έχει αλλάξει. Ισως να θέλετε να πατήσετε  \"Ανανέωση\""
+msgstr "Το αντικείμενο έχει αλλάξει. Ίσως να θέλετε να πατήσετε \"Ανανέωση\""
 
 #: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:111
 #, kde-format
@@ -4507,10 +4508,9 @@ msgid "Update"
 msgstr "Ενημέρωση"
 
 #: rkward/robjectviewer.cpp:211
-#, fuzzy, kde-format
-#| msgid "Fetching information. Please wait."
+#, kde-format
 msgid "Fetching information"
-msgstr "Ανάκτηση πληροφοριών. Παρακαλώ περιμένετε."
+msgstr "Ανάκτηση πληροφοριών"
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:139
 #, kde-format
@@ -4994,7 +4994,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Do not save/restore workplace layout"
-msgstr "Μη αποθήκευση/ανάκτηση της διάταξης χώρου εργασίαςτου RKWard"
+msgstr "Μη αποθήκευση/ανάκτηση της διάταξης χώρου εργασίας του RKWard"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:116
 #, kde-format
@@ -5018,7 +5018,7 @@ msgstr "Συμπεριφορά εστίασης παραθύρου εργασί�
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "Click to focus"
-msgstr "Κλίκ για εστίαση"
+msgstr "Κλικ για εστίαση"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
@@ -5437,7 +5437,7 @@ msgstr "Μέγιστος αριθμός εμφάνισης στοιχείων σ
 #: rkward/settings/rksettingsmoduler.cpp:104
 #, kde-format
 msgid "Maximum length of warnings/errors to print"
-msgstr "Μέγιστο μήκος προειδοποιήσεων/λάθών στην εμφάνιση"
+msgstr "Μέγιστο μήκος προειδοποιήσεων/λαθών στην εμφάνιση"
 
 #: rkward/settings/rksettingsmoduler.cpp:108
 #, kde-format
@@ -5563,7 +5563,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:360
 #, kde-format
 msgid "Archive downloaded packages"
-msgstr "Αρχικοποίηση μεταφορτομένων πακέτων"
+msgstr "Αρχικοποίηση μεταφορτωμένων πακέτων"
 
 #: rkward/settings/rksettingsmoduler.cpp:362
 #, kde-format
@@ -5701,7 +5701,7 @@ msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
 "visible/invisible."
 msgstr ""
-"Από τώρα οι ρυθμίσεις έχουν εφαρμογή μόνο στιςκαινούριες εντολές. Όλες οι "
+"Από τώρα οι ρυθμίσεις έχουν εφαρμογή μόνο στις καινούριες εντολές. Όλες οι "
 "προηγούμενες εντολές παραμένουν ορατές/αόρατες."
 
 #: rkward/settings/rksettingsmodulewatch.cpp:128
@@ -6973,7 +6973,7 @@ msgstr ""
 #: rkward/windows/rkworkplace.cpp:443
 #, kde-format
 msgid "Open in default application?"
-msgstr "Άνοιγμα με·την·προεπιλεγμένη·εφαρμογή;"
+msgstr "Άνοιγμα με την προεπιλεγμένη εφαρμογή;"
 
 #: rkward/windows/rkworkplace.cpp:531
 #, kde-format
