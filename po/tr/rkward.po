@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-04-30 00:24+0300\n"
+"PO-Revision-Date: 2024-09-23 15:28+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.07.70\n"
+"X-Generator: Lokalize 24.11.70\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -1969,7 +1969,7 @@ msgstr "R istatistik dili için ön uç"
 #: rkward/main.cpp:260
 #, kde-format
 msgid "(c) 2002 - 2022"
-msgstr "(c) 2002–2022"
+msgstr "© 2002–2022"
 
 #: rkward/main.cpp:261
 #, kde-format
@@ -3252,7 +3252,7 @@ msgstr "Belirtilmemiş"
 #: rkward/plugin/rkcomponentmeta.cpp:80
 #, kde-format
 msgid "Copyright (c): %1"
-msgstr "Telif hakkı (c): %1"
+msgstr "Telif hakkı ©: %1"
 
 #: rkward/plugin/rkcomponentmeta.cpp:81
 #, kde-format
