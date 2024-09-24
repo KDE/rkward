@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2024-08-09 14:01+0300\n"
+"PO-Revision-Date: 2024-09-23 15:13+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3335,7 +3335,7 @@ msgstr "Belirtilmemiş"
 #: rkward/plugin/rkcomponentmeta.cpp:80
 #, kde-format
 msgid "Copyright (c): %1"
-msgstr "Telif hakkı (c): %1"
+msgstr "Telif hakkı: %1"
 
 #: rkward/plugin/rkcomponentmeta.cpp:81
 #, kde-format
