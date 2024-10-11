@@ -6067,7 +6067,7 @@ msgstr "软件包："
 #: rkward/windows/rkhelpsearchwindow.cpp:99
 #, kde-format
 msgid "Case sensitive"
-msgstr "不区分大小写"
+msgstr "区分大小写"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:101
 #, kde-format
