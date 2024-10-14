@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2024-04-14 12:56+0200\n"
+"PO-Revision-Date: 2024-10-13 19:14+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -71,6 +71,11 @@ msgid ""
 "<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
 "print using a KDE print dialog."
 msgstr ""
+"Ez du aurkitu PostScript fitxategietarako KDE inprimaketa elkarrizketa-"
+"koadrorik. Horren ordez, PostScript (baldin badago) erakusle generiko bat "
+"irekitzen saiatuko gara.<br><br>'okular' instalatzeko aukera hausnartu, edo "
+"konfiguratu RKWard, inprimatzeko, KDE inprimatzeko elkarrizketa-koadroa "
+"erabili ez dezan."
 
 #: rkward/agents/rkprintagent.cpp:41
 #, kde-format
@@ -134,6 +139,9 @@ msgid ""
 "time, on a regular sized workspace, this may be due to other commands still "
 "pending completion in the R backend."
 msgstr ""
+"Langunea gordetzen ari da. <b>Iradokizuna:</b> Horrek, neurri arrunteko "
+"langune batean, ezohiko denbora luzea hartuko balu, izan daiteke R "
+"bizkarraldekoan osatzeko zain dauden beste komando batzuen eragina izatea."
 
 #: rkward/agents/rksaveagent.cpp:82
 #, kde-format
@@ -199,6 +207,9 @@ msgid ""
 "created or imported, in contrast to data contained in a loaded R package. "
 "Technically, this corresponds to the <i>.GlobalEnv</i> environment."
 msgstr ""
+"Atal honek zure \"languneko\" datuak ditu. Zamatutako R pakete bateko datuak "
+"izan ordez, zuk sortutako edo inportatutako datuak dira. Hau, teknikoki, <i>."
+"GlobalEnv</i> inguruneari dagokio."
 
 #: rkward/core/renvironmentobject.cpp:113
 #, kde-format
@@ -208,11 +219,15 @@ msgid ""
 "Should this situation constitute a regular use case for your work, please "
 "let us know at rkward-devel@kde.org, so we can consider possible solutions."
 msgstr ""
+"Zure languneak goi mailako 10.000 objektu baino gehiago ditu. RKWard ez dago "
+"egoera horretarako optimizatuta, eta R komandoen artean atzerapena nabari "
+"dezakezu. Zure lanean, hori, ohiko egoera balitz, mesedez, rkward-devel@kde."
+"org bidez jakinarazi iezaguzu, irtenbide posibleak azter ditzagun."
 
 #: rkward/core/renvironmentobject.cpp:113
 #, kde-format
 msgid "Many objects in workspace"
-msgstr ""
+msgstr "Langunean objektu asko"
 
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
@@ -220,6 +235,8 @@ msgid ""
 "The object '%1' was removed from workspace or changed to a different type of "
 "object, but is currently opened for editing. Do you want to restore it?"
 msgstr ""
+"'%1' objektua langunetik kendu da edo objektu mota ezberdin batera aldatu "
+"da, baina oraindik editatzeko irekita dago. Hura lehengoratu nahi duzu?"
 
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
@@ -233,6 +250,8 @@ msgid ""
 "for editing, it will be removed in the editor, too. There's no way to get it "
 "back."
 msgstr ""
+"'%1' objektua benetan kendu nahi duzu? Objektua une honetan editatzeko "
+"irekita dago, editorean ere kenduko da. Ez dago hura berreskuratzeko erarik."
 
 #: rkward/core/rkmodificationtracker.cpp:75
 #: rkward/core/rkmodificationtracker.cpp:80
@@ -245,6 +264,7 @@ msgstr "Objektua kendu?"
 msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
+"'%1' objektua benetan kendu nahi duzu? Ez dago hura berreskuratzeko erarik."
 
 #: rkward/core/rkmodificationtracker.cpp:351
 #: rkward/dataeditor/rkvareditmodel.cpp:671
@@ -292,6 +312,9 @@ msgid ""
 "to list namespaces which are loaded, but not attached to a package on the "
 "search path. These are typically 'imported' namespaces."
 msgstr ""
+"Objektu berezi hau ez da R-en inon existitzen. Hemen, zamatzen diren baina "
+"bilaketa bide-izenean pakete bati atxikita ez dauden izen-eremuak "
+"zerrendatzeko erabiltzen da. 'Inportatutako\" izen-eremuak izan ohi dira."
 
 #: rkward/core/rkrownames.cpp:101
 #, kde-format
@@ -301,7 +324,7 @@ msgstr "errenkada.berria"
 #: rkward/core/robject.cpp:161
 #, kde-format
 msgid "Full location:"
-msgstr ""
+msgstr "Kokapen osoa:"
 
 #: rkward/core/robject.cpp:163
 #, kde-format
@@ -329,9 +352,9 @@ msgid "Data frame"
 msgstr "Datu-markoa"
 
 #: rkward/core/robject.cpp:172
-#, kde-format
+#, fuzzy, kde-format
 msgid "Array"
-msgstr ""
+msgstr "Taula"
 
 #: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:83
 #, kde-format
@@ -381,11 +404,19 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
+"'%1' paketea (seguru asko oraintxe zamatu duzu) egitura informazioa "
+"eskuratzeko, une honetan, zerrenda beltzean dago. Praktikan, horrek esan "
+"nahi du, pakete hori ez dela objektu-arakatzailean agertuko, eta pakete "
+"horretako objektuetarako ez dela objektu-izenen osatzea edo funtzio "
+"argumentuen iradokizunik emango.\n"
+"Paketeak zerrenda beltzean egongo dira, zamatzeko luzeegi hartuko lukeen "
+"datu kopuru itzelak dituztenean. Paketea zerrendatik ateratzeko, bisitatu  "
+"Ezarpenak->Konfiguratu RKWard->Langunea."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
 msgid "Package blacklisted"
-msgstr ""
+msgstr "Paketea zerrenda beltzean"
 
 #: rkward/core/robjectlist.cpp:75
 #, kde-format
@@ -405,7 +436,7 @@ msgstr ""
 #: rkward/core/robjectlist.cpp:90
 #, kde-format
 msgid "Package %1 appears not to have been loaded"
-msgstr ""
+msgstr "Ematen du %1 paketea ez dela zamatu"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:49
 #: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:236
@@ -432,41 +463,40 @@ msgid "&Edit"
 msgstr "&Editatu"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Bikoiztutako zutabeak antzeman dira"
+msgstr "Bikoiztutako zutabe-izena '%1'"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
 #, kde-format
 msgid "Type on these fields to add new columns"
-msgstr ""
+msgstr "Tekleatu eremu hauetan zutabe berriak gehitzeko"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:260
 #, kde-format
 msgid "Type on these fields to add new rows"
-msgstr ""
+msgstr "Tekleatu eremu hauetan errenkada berriak gehitzeko"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:282 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
 msgid "This value is not allowed, here"
-msgstr ""
+msgstr "Balio hori ez dago hemen baimenduta"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:350
 #, kde-format
 msgid "#New Variable#"
-msgstr ""
+msgstr "#Aldagai berria#"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:351
 #, kde-format
 msgid "Row names"
-msgstr ""
+msgstr "Errenkada-izenak"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:356
 #, kde-format
 msgid "This column contains one or more invalid fields"
-msgstr ""
+msgstr "Zutabe honek eremu baliogabe bat edo gehiago ditu"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:674
 #, kde-format
@@ -476,27 +506,27 @@ msgstr "Formatua"
 #: rkward/dataeditor/rkvareditmodel.cpp:675
 #, kde-format
 msgid "Levels"
-msgstr ""
+msgstr "Mailak"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:678
 #, kde-format
 msgid "Edit these fields to rename variables."
-msgstr ""
+msgstr "Editatu eremu hauek aldagaiak berrizendatzeko."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:679
 #, kde-format
 msgid "A descriptive label for each column (optional)."
-msgstr ""
+msgstr "Zutabe bakoitzerako etiketa deskribatzaile bat (aukerakoa)."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:680
 #, kde-format
 msgid "Type of data."
-msgstr ""
+msgstr "Datu-mota."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:681
 #, kde-format
 msgid "Double click on these fields to customize data display."
-msgstr ""
+msgstr "Egin klik bikoitza eremu hauetan azaldutako datuak neurrira ipintzeko."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
@@ -506,27 +536,27 @@ msgstr ""
 #: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "'%1' objektua ez da bektore bat"
 
 #: rkward/dataeditor/twintable.cpp:107
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
-msgstr ""
+msgstr "Hautatutako atala moztu eta arbelean itsasten du"
 
 #: rkward/dataeditor/twintable.cpp:109
 #, kde-format
 msgid "Copies the selected section to the clipboard"
-msgstr ""
+msgstr "Hautatutako atala arbelean kopiatzen du"
 
 #: rkward/dataeditor/twintable.cpp:112
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
-msgstr ""
+msgstr "Arbelaren edukia uneko kokalekuan itsasten du"
 
 #: rkward/dataeditor/twintable.cpp:115
 #, kde-format
 msgid "Paste inside table"
-msgstr ""
+msgstr "Itsatsi taula barruan"
 
 #: rkward/dataeditor/twintable.cpp:117
 #, kde-format
@@ -534,11 +564,12 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
 msgstr ""
+"Arbelaren edukia uneko kokalekuan itsasten du, baina ez taularen mugetatik at"
 
 #: rkward/dataeditor/twintable.cpp:120
 #, kde-format
 msgid "Paste inside selection"
-msgstr ""
+msgstr "Itsatsi hautapenaren barruan"
 
 #: rkward/dataeditor/twintable.cpp:122
 #, kde-format
@@ -546,27 +577,29 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
 msgstr ""
+"Arbelaren edukia uneko kokalekuan itsasten du, baina ez uneko hautapenaren "
+"mugetatik at"
 
 #: rkward/dataeditor/twintable.cpp:139
 #, kde-format
 msgid "Show / Edit row names"
-msgstr ""
+msgstr "Erakutsi / Editatu errenkada-izenak"
 
 #: rkward/dataeditor/twintable.cpp:142 rkward/dataeditor/twintable.cpp:155
 #, kde-format
 msgid "Enable editing"
-msgstr ""
+msgstr "Gaitu editatzea"
 
 #: rkward/dataeditor/twintable.cpp:147
 #, kde-format
 msgctxt "verb: switch to read-only state. Make this short."
 msgid "Lock"
-msgstr ""
+msgstr "Giltzatu"
 
 #: rkward/dataeditor/twintable.cpp:150
 #, kde-format
 msgid "Disable editing (to prevent accidental modification of data)"
-msgstr ""
+msgstr "Ezgaitu editatzea (datuen nahi gabeko aldaketak saihesteko)"
 
 #: rkward/dataeditor/twintable.cpp:152
 #, kde-format
@@ -583,8 +616,7 @@ msgid ""
 msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show details"
 msgstr "Erakutsi xehetasunak"
 
@@ -593,12 +625,13 @@ msgstr "Erakutsi xehetasunak"
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
+"Baliteke  Datuak->Azpimultzo data.frame  erabiliz azpimultzo editagarri bat "
+"sortu nahi izatea."
 
 #: rkward/dataeditor/twintable.cpp:227
-#, fuzzy, kde-format
-#| msgid "None selected"
+#, kde-format
 msgid "Problem detected"
-msgstr "Ez da batere hautatu"
+msgstr "Arazoa antzeman du"
 
 #: rkward/dataeditor/twintable.cpp:239
 #, kde-format
@@ -666,12 +699,12 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:57
 #, kde-format
 msgid "Report issue"
-msgstr ""
+msgstr "Eman arazoaren berri"
 
 #: rkward/dialogs/rkerrordialog.cpp:72
 #, kde-format
 msgid "Forwarding you to the KDE bugtracking system"
-msgstr ""
+msgstr "Zu KDEren akatsen jarraipenerako sistemara birbideratzen"
 
 #: rkward/dialogs/rkerrordialog.cpp:73
 #, kde-format
@@ -684,7 +717,7 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:79
 #, kde-format
 msgid "Proceed"
-msgstr ""
+msgstr "Jarraitu"
 
 #: rkward/dialogs/rkerrordialog.cpp:102
 #, kde-format
@@ -694,12 +727,12 @@ msgstr "Erakutsi xehetasunak"
 #: rkward/dialogs/rkerrordialog.cpp:104
 #, kde-format
 msgid "Report As Bug"
-msgstr ""
+msgstr "Akats gisa jakinarazi"
 
 #: rkward/dialogs/rkerrordialog.cpp:114
 #, kde-format
 msgid "Message code: %1\n"
-msgstr ""
+msgstr "Mezuaren kodea: %1\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:123
 #, kde-format
@@ -708,6 +741,9 @@ msgid ""
 "Please fill in the missing bits *in English*.\n"
 "\n"
 msgstr ""
+"---Arazoaren deskribapena---\n"
+"Mesedez, bete falta diren puskak *ingelesez*.\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:125
 #, kde-format
@@ -716,6 +752,9 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Mesedez, arazoa labur-labur azaldu:\n"
+"###Bete ezazu, mesedez###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:127
 #, kde-format
@@ -788,7 +827,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:27
 #, kde-format
 msgid "Import Data Assistant"
-msgstr ""
+msgstr "Datuak inportatzeko laguntzailea"
 
 #: rkward/dialogs/rkimportdialog.cpp:52
 #, kde-format
@@ -808,12 +847,12 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:65
 #, kde-format
 msgid "None of the above / try another method"
-msgstr ""
+msgstr "Gaineko bat ere ez / probatu beste metodo bat"
 
 #: rkward/dialogs/rkimportdialog.cpp:68
 #, kde-format
 msgid "Select format"
-msgstr ""
+msgstr "Hautatu formatua"
 
 #: rkward/dialogs/rkimportdialog.cpp:72
 #, kde-format
@@ -833,17 +872,17 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:82
 #, kde-format
 msgid "Use 'rio'-based importer"
-msgstr ""
+msgstr "Erabili 'rio'-oinarri duen inportatzailea"
 
 #: rkward/dialogs/rkimportdialog.cpp:83 rkward/dialogs/rkimportdialog.cpp:95
 #, kde-format
 msgid "Try another method"
-msgstr ""
+msgstr "Probatu beste metodo bat"
 
 #: rkward/dialogs/rkimportdialog.cpp:86
 #, kde-format
 msgid "Generic 'rio'-based importer"
-msgstr ""
+msgstr "'rio'-oinarri duen inportatzaile generikoa"
 
 #: rkward/dialogs/rkimportdialog.cpp:90
 #, kde-format
@@ -856,7 +895,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:94 rkward/dialogs/rkimportdialog.cpp:98
 #, kde-format
 msgid "Import from clipboard"
-msgstr ""
+msgstr "Inportatu arbeletik"
 
 #: rkward/dialogs/rkimportdialog.cpp:102
 #, kde-format
@@ -868,7 +907,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:104
 #, kde-format
 msgid "Start import dialog"
-msgstr ""
+msgstr "Abiatu inportatzeko elkarrizketa-koadroa"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
 #, kde-format
@@ -882,32 +921,32 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
 msgid "No import method found"
-msgstr ""
+msgstr "Ez da inportatzeko metodorik aurkitu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:50
 #, kde-format
 msgid "Configure Packages"
-msgstr ""
+msgstr "Konfiguratu paketeak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:58
 #, kde-format
 msgid "Load / Unload R packages"
-msgstr ""
+msgstr "R paketeak Zamatu / Zama hustu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:62
 #, kde-format
 msgid "Install / Update / Remove R packages"
-msgstr ""
+msgstr "R paketeak Instalatu / Eguneratu / Kendu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:64
 #, kde-format
 msgid "Manage RKWard Plugins"
-msgstr ""
+msgstr "Kudeatu RKWard pluginak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Closing will discard pending changes. Are you sure?"
-msgstr ""
+msgstr "Ixtean zain dauden aldaketak baztertuko dira. Ziur zaude?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
@@ -918,14 +957,14 @@ msgstr "Aldaketak baztertu?"
 #, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr ""
+msgstr "Ez itxi"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
 #: rkward/dialogs/rkloadlibsdialog.cpp:205
 #, kde-format
 msgid "Package %1 at %2"
-msgstr ""
+msgstr "%1 paketea %2(e)an"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
@@ -966,25 +1005,25 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Become root"
-msgstr ""
+msgstr "«root» bilakatu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr ""
+msgstr "Saltatu pakete hauek"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
 msgid ""
 "You are about to remove the following packages. Are you sure you want to "
 "proceed?"
-msgstr ""
+msgstr "Ondoko paketeak kentzear zaude. Ziur zaude jarraitu nahi duzula?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
 msgid "About to remove packages"
-msgstr ""
+msgstr "Paketeak kentzear"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
@@ -994,7 +1033,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
 msgid "Removing packages"
-msgstr ""
+msgstr "Paketeak kentzen"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:241
 #, kde-format
@@ -1023,7 +1062,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:251
 #, kde-format
 msgid "Install to %1"
-msgstr ""
+msgstr "Instalatu %1(e)an"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:250
 #, kde-format
@@ -1036,17 +1075,17 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:251
 #, kde-format
 msgid "Become root"
-msgstr ""
+msgstr "«root» bilakatu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Please stand by while installing selected packages"
-msgstr ""
+msgstr "Mesedez, itxoin hautatutako paketeak instalatu bitartean"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Installing packages"
-msgstr ""
+msgstr "Paketeak instalatzen"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
@@ -1058,12 +1097,12 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
 msgid "kdesu not found"
-msgstr ""
+msgstr "Ez da «kdesu» aurkitu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:347
 #, kde-format
 msgid "Installed packages"
-msgstr ""
+msgstr "Instalatutako paketeak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:349
 #: rkward/dialogs/rkloadlibsdialog.cpp:954
@@ -1094,12 +1133,12 @@ msgstr "Zamatu"
 #: rkward/dialogs/rkloadlibsdialog.cpp:356
 #, kde-format
 msgid "Unload"
-msgstr ""
+msgstr "Zama kendu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:363
 #, kde-format
 msgid "Loaded packages"
-msgstr ""
+msgstr "Zamatutako paketeak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:500
 #, kde-format
@@ -1111,7 +1150,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:579
 #, kde-format
 msgid "Select all updates"
-msgstr ""
+msgstr "Hautatu eguneratze guztiak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:648
 #, kde-format
@@ -1160,7 +1199,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
 msgid "Configure Repositories"
-msgstr ""
+msgstr "Konfiguratu gordetegiak"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:692
 #, kde-format
@@ -1186,7 +1225,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
 msgid "Package not available"
-msgstr ""
+msgstr "Paketea ez dago erabilgarri"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:891
 #, kde-format
@@ -1221,7 +1260,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
 msgid "<p>The name of the package.</p>"
-msgstr ""
+msgstr "<p>Paketearen izena.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:962
 #, kde-format
@@ -1333,7 +1372,7 @@ msgstr ""
 #: rkward/dialogs/rkrecoverdialog.cpp:43
 #, kde-format
 msgid "Recover"
-msgstr ""
+msgstr "Berreskuratu"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:44
 #, kde-format
@@ -1343,7 +1382,7 @@ msgstr ""
 #: rkward/dialogs/rkrecoverdialog.cpp:45
 #, kde-format
 msgid "Save for later"
-msgstr ""
+msgstr "Gorde geroko"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:46
 #, kde-format
@@ -1435,10 +1474,9 @@ msgid "<b>Select one:</b>"
 msgstr "<b>Hautatu bat:</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:113
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgid "Show problem details"
-msgstr "Erakutsi xehetasunak"
+msgstr "Erakutsi arazoaren xehetasunak"
 
 #: rkward/dialogs/rksetupwizard.cpp:127
 #, kde-format
@@ -1451,10 +1489,9 @@ msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:137
-#, fuzzy, kde-format
-#| msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
+#, kde-format
 msgid "<b>R backend has failed to start.</b>"
-msgstr "<b>R bizkarraldekoa abiatu da. \"Hurrengoa\" klikatu jarraitzeko.</b>"
+msgstr "<b>R bizkarraldekoa abiatzea huts egin du.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:139
 #, kde-format
@@ -1537,7 +1574,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:335
 #, kde-format
 msgid "No change"
-msgstr ""
+msgstr "Aldaketarik ez"
 
 #: rkward/dialogs/rksetupwizard.cpp:264
 #, kde-format
@@ -1690,7 +1727,7 @@ msgid "Pre 0.7.3 output file"
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:358
-#, fuzzy, kde-format
+#, kde-format
 msgid "Exists"
 msgstr "Dago"
 
@@ -1719,10 +1756,9 @@ msgstr ""
 "import.legacy.output() erabiliz"
 
 #: rkward/dialogs/rksetupwizard.cpp:374
-#, fuzzy, kde-format
-#| msgid "< Back"
+#, kde-format
 msgid "R Backend"
-msgstr "< Atzera"
+msgstr "R Bizkarraldekoa"
 
 #: rkward/dialogs/rksetupwizard.cpp:419
 #, kde-format
@@ -1823,10 +1859,9 @@ msgid "Frontend to the R statistics language"
 msgstr ""
 
 #: rkward/main.cpp:173
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2022"
+#, kde-format
 msgid "(c) 2002 - 2024"
-msgstr "(c) 2002 - 2022"
+msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:174
 #, kde-format
@@ -1886,7 +1921,7 @@ msgstr ""
 #: rkward/main.cpp:180
 #, kde-format
 msgid "Björn Balazs"
-msgstr ""
+msgstr "Björn Balazs"
 
 #: rkward/main.cpp:180 rkward/main.cpp:182
 #, kde-format
@@ -1976,7 +2011,7 @@ msgstr ""
 #: rkward/main.cpp:189
 #, kde-format
 msgid "Several valuable comments, hints and patches"
-msgstr ""
+msgstr "Hainbat iruzkin baliotsu, iradokizunak eta adabakiak"
 
 #: rkward/main.cpp:190
 #, kde-format
@@ -2081,7 +2116,7 @@ msgstr ""
 #: rkward/misc/editformatdialog.cpp:39
 #, kde-format
 msgid "Default setting"
-msgstr ""
+msgstr "Ezarpen lehenetsiak"
 
 #: rkward/misc/editformatdialog.cpp:40
 #, kde-format
@@ -2256,17 +2291,17 @@ msgstr ""
 #: rkward/misc/rkfindbar.cpp:89
 #, kde-format
 msgid "Match case"
-msgstr ""
+msgstr "Bereizi maiuskulak"
 
 #: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:940
 #, kde-format
 msgid "Find as you type"
-msgstr ""
+msgstr "Aurkitu tekleatu ahala"
 
 #: rkward/misc/rkfindbar.cpp:94
 #, kde-format
 msgid "Highlight all matches"
-msgstr ""
+msgstr "Nabarmendu bat-etortze guztiak"
 
 #: rkward/misc/rkobjectlistview.cpp:51
 #, kde-format
@@ -2345,27 +2380,27 @@ msgctxt ""
 "English string. Simply 'Clear'/'Reset' should be good enough to understand "
 "the function."
 msgid "Reset filters"
-msgstr ""
+msgstr "Iragazkiak berrezarri"
 
 #: rkward/misc/rkobjectlistview.cpp:316
 #, kde-format
 msgid "Discards the current object search filters"
-msgstr ""
+msgstr "Uneko objektuaren bilaketa-iragazkiak baztertzen ditu"
 
 #: rkward/misc/rkobjectlistview.cpp:478
 #, kde-format
 msgid "Show Fields"
-msgstr ""
+msgstr "Erakutsi eremuak"
 
 #: rkward/misc/rkoutputdirectory.cpp:130
 #, kde-format
 msgid "Select destination file name"
-msgstr ""
+msgstr "Hautatu jomugaren fitxategi-izena"
 
 #: rkward/misc/rkoutputdirectory.cpp:132
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko)"
-msgstr ""
+msgstr "RKWard Irteera-fitxategiak [*.rko](*.rko)"
 
 #: rkward/misc/rkoutputdirectory.cpp:132
 #, kde-format
@@ -2450,7 +2485,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:240
 #, kde-format
 msgid "User canceled."
-msgstr ""
+msgstr "Erabiltzaileak bertan behera utzi du."
 
 #: rkward/misc/rkoutputdirectory.cpp:284
 #, kde-format
@@ -2538,7 +2573,7 @@ msgstr "Irteera"
 #: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
 msgid "Show Output"
-msgstr ""
+msgstr "Erakutsi Irteera"
 
 #: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
@@ -2550,12 +2585,12 @@ msgstr "Utzi"
 #: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
-msgstr ""
+msgstr "<b>Errore bat gertatu da</b> (begiratu behean xehetasunetarako)"
 
 #: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>Done</b>"
-msgstr ""
+msgstr "<b>Eginda</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:455
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
@@ -2567,27 +2602,27 @@ msgstr "Itxi"
 #: rkward/misc/rkprogresscontrol.cpp:492 rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Keep waiting"
-msgstr ""
+msgstr "Itxoiten jarraitu"
 
 #: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
-msgstr ""
+msgstr "Leihoa ixteak uneko eragiketa bertan behera utziko du. Ziur zaude?"
 
 #: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel operation"
-msgstr ""
+msgstr "Eragiketa bertan behera utzi"
 
 #: rkward/misc/rkprogresscontrol.cpp:492
 #, kde-format
 msgid "Cancel && Close"
-msgstr ""
+msgstr "Utzi e&ta Itxi"
 
 #: rkward/misc/rkprogresscontrol.cpp:504
 #, kde-format
 msgid "An operation is still running, please wait."
-msgstr ""
+msgstr "Oraindik eragiketa bat egiten ari da, itxoin mesedez."
 
 #: rkward/misc/rksaveobjectchooser.cpp:44
 #, kde-format
@@ -2597,47 +2632,47 @@ msgstr "Aldatu"
 #: rkward/misc/rksaveobjectchooser.cpp:54
 #, kde-format
 msgid "Overwrite"
-msgstr ""
+msgstr "Gainidatzi"
 
 #: rkward/misc/rksaveobjectchooser.cpp:56
 #, kde-format
 msgid "The given object name already exists"
-msgstr ""
+msgstr "Emandako objektu-izena jada existitzen da"
 
 #: rkward/misc/rksaveobjectchooser.cpp:88
 #, kde-format
 msgid "Parent object: %1"
-msgstr ""
+msgstr "Guraso objektua: %1"
 
 #: rkward/misc/rksaveobjectchooser.cpp:98
 #, kde-format
 msgid "Select parent object"
-msgstr ""
+msgstr "Hautatu guraso objektua"
 
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr ""
+msgstr "Itsaste berezia..."
 
 #: rkward/misc/rkspecialactions.cpp:67
 #, kde-format
 msgid "Paste Special..."
-msgstr ""
+msgstr "Itsaste berezia..."
 
 #: rkward/misc/rkspecialactions.cpp:79
 #, kde-format
 msgid "Paste Mode"
-msgstr ""
+msgstr "Itsaste modua"
 
 #: rkward/misc/rkspecialactions.cpp:81
 #, kde-format
 msgid "Single string"
-msgstr ""
+msgstr "Kate bakarra"
 
 #: rkward/misc/rkspecialactions.cpp:82
 #, kde-format
 msgid "Vector"
-msgstr ""
+msgstr "Bektorea"
 
 #: rkward/misc/rkspecialactions.cpp:84
 #, kde-format
@@ -2749,7 +2784,7 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:272
 #, kde-format
 msgid "Paste failed"
-msgstr ""
+msgstr "Itsastea huts egin du"
 
 #: rkward/misc/rkstandardactions.cpp:27
 #, kde-format
@@ -2791,38 +2826,37 @@ msgstr ""
 #: rkward/misc/rkstandardactions.cpp:171
 #, kde-format
 msgid "Search online"
-msgstr ""
+msgstr "Bilatu lerroan"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:191
-#, fuzzy, kde-format
-#| msgid "Quoting"
+#, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr "Aipua"
+msgstr "eguneratzen"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
 #, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr ""
+msgstr "errorea"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr ""
+msgstr "prest"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "e/e"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:195
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "itzalita"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:215
 #, kde-format
@@ -2849,17 +2883,17 @@ msgstr ""
 #: rkward/misc/rkxmlguipreviewarea.cpp:231
 #, kde-format
 msgid "Preview is up to date."
-msgstr ""
+msgstr "Aurreikuspegia egunean dago."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
 msgid "Warnings or Errors:"
-msgstr ""
+msgstr "Abisuak edo Erroreak:"
 
 #: rkward/misc/xmlhelper.cpp:54
 #, kde-format
 msgid "Could not open file %1 for reading"
-msgstr ""
+msgstr "Ezin izan du '%1' fitxategia irakurtzeko ireki"
 
 #: rkward/misc/xmlhelper.cpp:59
 #, kde-format
@@ -3130,7 +3164,7 @@ msgstr ""
 #: rkward/plugin/rkformula.cpp:92
 #, kde-format
 msgid "Main effects"
-msgstr ""
+msgstr "Efektu nagusiak"
 
 #: rkward/plugin/rkformula.cpp:97
 #, kde-format
@@ -3140,7 +3174,7 @@ msgstr "Maila"
 #: rkward/plugin/rkformula.cpp:97
 #, kde-format
 msgid "Term"
-msgstr ""
+msgstr "Terminoa"
 
 #: rkward/plugin/rkinput.cpp:41
 #, kde-format
@@ -3150,7 +3184,7 @@ msgstr ""
 #: rkward/plugin/rkmatrixinput.cpp:35
 #, kde-format
 msgid "Enter data:"
-msgstr ""
+msgstr "Sartu datuak:"
 
 #: rkward/plugin/rkmatrixinput.cpp:505
 #, kde-format
@@ -3272,7 +3306,7 @@ msgstr ""
 #: rkward/plugin/rkpluginsaveobject.cpp:29
 #, kde-format
 msgid "Save to:"
-msgstr ""
+msgstr "Gorde hemen:"
 
 #: rkward/plugin/rkpluginsaveobject.cpp:30
 #, kde-format
@@ -3317,12 +3351,12 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponentgui.cpp:605
 #, kde-format
 msgid "Submit"
-msgstr ""
+msgstr "Bidali"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:192
 #, kde-format
 msgid "Auto close"
-msgstr ""
+msgstr "Itxi automatikoki"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:198
 #: rkward/plugin/rkstandardcomponentgui.cpp:497
@@ -3333,17 +3367,17 @@ msgstr "Laguntza"
 #: rkward/plugin/rkstandardcomponentgui.cpp:204
 #, kde-format
 msgid "Use Wizard"
-msgstr ""
+msgstr "Erabili Morroia"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:323
 #, kde-format
 msgid "Run again"
-msgstr ""
+msgstr "Berriro exekutatu"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:448
 #, kde-format
 msgid "Processing. Please wait"
-msgstr ""
+msgstr "Prozesatzen, itxoin mesedez"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:525
 #, kde-format
@@ -3412,9 +3446,9 @@ msgstr ""
 "Tolestu erro mailako objektu denak (ezkutatu «data.frame»tako zutabeak)"
 
 #: rkward/plugin/rkvarslot.cpp:37
-#, fuzzy, kde-format
+#, kde-format
 msgid "Variable:"
-msgstr "Aldagaia"
+msgstr "Aldagaia:"
 
 #: rkward/plugin/rkvarslot.cpp:157
 #, kde-format
@@ -3424,43 +3458,43 @@ msgid ""
 msgstr ""
 
 #: rkward/rbackend/rcommandstack.cpp:268
-#, fuzzy, kde-format
+#, kde-format
 msgid "Running"
-msgstr "Martxan"
+msgstr "Exekutatzen"
 
 #: rkward/rbackend/rcommandstack.cpp:271
 #, kde-format
 msgid "Canceled"
-msgstr ""
+msgstr "Bertan behera utzi da"
 
 #: rkward/rbackend/rcommandstack.cpp:280
 #, kde-format
 msgid "Command Chain"
-msgstr ""
+msgstr "Komando-katea"
 
 #: rkward/rbackend/rcommandstack.cpp:282
-#, fuzzy, kde-format
+#, kde-format
 msgid "Closed"
 msgstr "Itxita"
 
 #: rkward/rbackend/rcommandstack.cpp:283
 #, kde-format
 msgid "Waiting"
-msgstr ""
+msgstr "Itxoiten"
 
 #: rkward/rbackend/rcommandstack.cpp:286
 #, kde-format
 msgid "Command Stack"
-msgstr ""
+msgstr "Komando-pila"
 
 #: rkward/rbackend/rcommandstack.cpp:312
-#, fuzzy, kde-format
+#, kde-format
 msgid "Command"
 msgstr "Komandoa"
 
 #: rkward/rbackend/rcommandstack.cpp:315
 #: rkward/settings/rksettingsmodulekateplugins.cpp:52
-#, fuzzy, kde-format
+#, kde-format
 msgid "Description"
 msgstr "Deskribapena"
 
@@ -3580,7 +3614,7 @@ msgid ""
 msgstr ""
 
 #: rkward/rbackend/rkrbackend.cpp:1659
-#, fuzzy, kde-format
+#, kde-format
 msgid "Ok"
 msgstr "Ados"
 
@@ -3690,19 +3724,19 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:211
 #, kde-format
 msgid "Graphics Device Number %1"
-msgstr ""
+msgstr "Gailu grafikoaren zenbakia %1"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:648
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
-msgstr "Aktibo"
+msgstr "%1 (Aktibo)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:650
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
-msgstr "Inaktibo"
+msgstr "%1 (Inaktibo)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:676
 #, kde-format
@@ -3749,22 +3783,22 @@ msgstr ""
 #: rkward/rkconsole.cpp:71
 #, kde-format
 msgid "'katepart' component could not be found"
-msgstr ""
+msgstr "Ezin izan du 'katepart' osagaia aurkitu"
 
 #: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:707
 #, kde-format
 msgid "R Console"
-msgstr ""
+msgstr "R Kontsola"
 
 #: rkward/rkconsole.cpp:120
 #, kde-format
 msgid "Scrollbar minimap"
-msgstr ""
+msgstr "Kiribiltze-barrako mapa-txikia"
 
 #: rkward/rkconsole.cpp:122
-#, fuzzy, kde-format
+#, kde-format
 msgid "Dynamic word wrap"
-msgstr "Itzulbira dinamikoa:"
+msgstr "Itzulbiratze dinamikoa"
 
 #: rkward/rkconsole.cpp:480
 #, kde-format
@@ -3833,17 +3867,17 @@ msgstr ""
 #: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "R Console is busy"
-msgstr ""
+msgstr "R Kontsola lanpetuta dago"
 
 #: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "Append"
-msgstr ""
+msgstr "Erantsi"
 
 #: rkward/rkconsole.cpp:882
 #, kde-format
 msgid "Reset, then submit"
-msgstr ""
+msgstr "Berrezarri, gero bidali"
 
 #. i18n: ectx: Menu (file)
 #: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
@@ -3851,7 +3885,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindowpart.rc:9
 #: rkward/windows/rkhelpwindow.rc:9 rkward/windows/rkoutputwindow.rc:9
 #: rkward/windows/rkstandardactions.rc:12
-#, fuzzy, kde-format
+#, kde-format
 msgid "&File"
 msgstr "&Fitxategia"
 
@@ -3860,7 +3894,7 @@ msgstr "&Fitxategia"
 #: rkward/windows/detachedwindowcontainer.rc:29
 #: rkward/windows/rkcatchedx11windowpart.rc:34
 #: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
-#, fuzzy, kde-format
+#, kde-format
 msgid "&View"
 msgstr "&Ikuspegia"
 
@@ -3870,9 +3904,9 @@ msgstr "&Ikuspegia"
 #: rkward/windows/rkcommandeditorwindowpart.rc:17
 #: rkward/windows/rkcommandeditorwindowpart.rc:38
 #: rkward/windows/rkstandardactions.rc:18
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Run"
-msgstr "Exekutatu"
+msgstr "E&xekutatu"
 
 #: rkward/rkward.cpp:307
 #, kde-format
@@ -3946,22 +3980,22 @@ msgstr ""
 #: rkward/rkward.cpp:424
 #, kde-format
 msgid "Carbon Copy Settings"
-msgstr ""
+msgstr "Kalko-kopia ezarpenak"
 
 #: rkward/rkward.cpp:442 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
 #, kde-format
 msgid "Workspace"
-msgstr ""
+msgstr "Langunea"
 
 #: rkward/rkward.cpp:451
-#, fuzzy, kde-format
+#, kde-format
 msgid "Files"
-msgstr "%1 fitxategi"
+msgstr "Fitxategiak"
 
 #: rkward/rkward.cpp:455
 #, kde-format
 msgid "Pending Jobs"
-msgstr ""
+msgstr "Zain dauden lanak"
 
 #: rkward/rkward.cpp:467
 #, kde-format
@@ -3976,12 +4010,12 @@ msgstr ""
 #: rkward/rkward.cpp:476
 #, kde-format
 msgid "RKWard Debug Messages"
-msgstr ""
+msgstr "RKWard Arazte-mezuak"
 
 #: rkward/rkward.cpp:488
 #, kde-format
 msgid "Dataset"
-msgstr ""
+msgstr "Datu-multzoa"
 
 #: rkward/rkward.cpp:490
 #, kde-format
@@ -4052,32 +4086,32 @@ msgstr ""
 #: rkward/rkward.cpp:534
 #, kde-format
 msgid "Opens a recently used file"
-msgstr ""
+msgstr "Berriki erabilitako fitxategi bat irekitzen du"
 
 #: rkward/rkward.cpp:537
 #, kde-format
 msgid "Save Workspace"
-msgstr ""
+msgstr "Gorde Langunea"
 
 #: rkward/rkward.cpp:539
 #, kde-format
 msgid "Saves the actual document"
-msgstr ""
+msgstr "Benetako dokumentua gordetzen du"
 
 #: rkward/rkward.cpp:543
 #, kde-format
 msgid "Save Workspace As"
-msgstr ""
+msgstr "Gorde Langunea honela"
 
 #: rkward/rkward.cpp:544
 #, kde-format
 msgid "Saves the actual document as..."
-msgstr ""
+msgstr "Benetako dokumentua honela... gordetzen du"
 
 #: rkward/rkward.cpp:547
 #, kde-format
 msgid "Quits the application"
-msgstr ""
+msgstr "Aplikaziotik irteten da"
 
 #: rkward/rkward.cpp:550
 #, kde-format
@@ -4097,46 +4131,46 @@ msgstr ""
 #: rkward/rkward.cpp:571
 #, kde-format
 msgid "Close All Data"
-msgstr ""
+msgstr "Itxi datu guztiak"
 
 #: rkward/rkward.cpp:572
 #, kde-format
 msgid "Closes all open data editors"
-msgstr ""
+msgstr "Irekitako datu-editore denak ixten ditu"
 
 #: rkward/rkward.cpp:577
-#, fuzzy, kde-format
+#, kde-format
 msgid "Close All"
 msgstr "Itxi dena"
 
 #: rkward/rkward.cpp:581 rkward/windows/rktoolwindowbar.cpp:302
 #: rkward/windows/rkworkplaceview.cpp:97
-#, fuzzy, kde-format
+#, kde-format
 msgid "Detach"
 msgstr "Bereizi"
 
 #: rkward/rkward.cpp:585
 #, kde-format
 msgid "Check installation"
-msgstr ""
+msgstr "Ikuskatu instalazioa"
 
 #: rkward/rkward.cpp:589
 #, kde-format
 msgid "[No actions available for current view]"
-msgstr ""
+msgstr "[Uneko ikuspegirako ekintza erabilgarririk ez]"
 
 #: rkward/rkward.cpp:596
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open..."
 msgstr "Ireki..."
 
 #: rkward/rkward.cpp:610
-#, fuzzy, kde-format
+#, kde-format
 msgid "Create..."
-msgstr "Sortu"
+msgstr "Sortu..."
 
 #: rkward/rkward.cpp:617
-#, fuzzy, kde-format
+#, kde-format
 msgid "Save..."
 msgstr "Gorde..."
 
@@ -4179,7 +4213,7 @@ msgstr ""
 #: rkward/rkward.cpp:650
 #, kde-format
 msgid "Check again"
-msgstr ""
+msgstr "Egiaztatu berriro"
 
 #: rkward/rkward.cpp:650
 #, kde-format
@@ -4199,7 +4233,7 @@ msgstr ""
 #: rkward/rkward.cpp:860
 #, kde-format
 msgid "Exiting..."
-msgstr ""
+msgstr "Irteten..."
 
 #: rkward/rkward.cpp:878
 #, kde-format
@@ -4249,7 +4283,7 @@ msgid ""
 msgstr ""
 
 #: rkward/rkward.cpp:1016
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open"
 msgstr "Ireki"
 
@@ -4295,7 +4329,7 @@ msgstr ""
 
 #. i18n: ectx: Menu (new_data)
 #: rkward/rkwardui.rc:13
-#, fuzzy, kde-format
+#, kde-format
 msgid "&New"
 msgstr "&Berria"
 
@@ -4307,27 +4341,27 @@ msgstr ""
 
 #. i18n: ectx: Menu (import)
 #: rkward/rkwardui.rc:25
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Import"
-msgstr "Inportatu..."
+msgstr "&Inportatu"
 
 #. i18n: ectx: Menu (export)
 #: rkward/rkwardui.rc:30
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Export"
-msgstr "Esportatu"
+msgstr "&Esportatu"
 
 #. i18n: ectx: Menu (workspace)
 #: rkward/rkwardui.rc:36
 #, kde-format
 msgid "&Workspace"
-msgstr ""
+msgstr "&Langunea"
 
 #. i18n: ectx: Menu (window)
 #: rkward/rkwardui.rc:75
 #, kde-format
 msgid "&Windows"
-msgstr ""
+msgstr "&Leihoak"
 
 #. i18n: ectx: Menu (window_activate)
 #: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
@@ -4335,14 +4369,14 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.rc:15
 #, kde-format
 msgid "&Activate"
-msgstr ""
+msgstr "&Aktibatu"
 
 #. i18n: ectx: Menu (settings)
 #: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
 #: rkward/windows/rkcommandeditorwindowpart.rc:23
 #: rkward/windows/rkcommandlogpart.rc:14 rkward/windows/rkstandardactions.rc:28
 #: rkward/windows/rktoplevelwindowgui.rc:26
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Settings"
 msgstr "E&zarpenak"
 
@@ -4350,7 +4384,7 @@ msgstr "E&zarpenak"
 #: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
 #: rkward/windows/rkstandardactions.rc:24
 #: rkward/windows/rktoplevelwindowgui.rc:33
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Help"
 msgstr "&Laguntza"
 
@@ -4385,7 +4419,7 @@ msgid "The object was changed. You may want to click \"Update\""
 msgstr ""
 
 #: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:111
-#, fuzzy, kde-format
+#, kde-format
 msgid "Update"
 msgstr "Eguneratu"
 
@@ -4460,14 +4494,14 @@ msgid "## Print result\n"
 msgstr ""
 
 #: rkward/settings/rksettings.cpp:58
-#, fuzzy, kde-format
+#, kde-format
 msgid "Settings"
 msgstr "Ezarpenak"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:47
 #, kde-format
 msgid "Code Completion / Code Hints"
-msgstr ""
+msgstr "Kode-osatzea / Kode-iradokizunak"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:52
 #, kde-format
@@ -4490,9 +4524,9 @@ msgid "Filename completion"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:53
-#, fuzzy, kde-format
+#, kde-format
 msgid "Auto word completion"
-msgstr "Hitz-osatze a&utomatikoa"
+msgstr "Hitz-osatze automatikoa"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:53
 #, kde-format
@@ -4502,17 +4536,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:56
 #, kde-format
 msgid "Start code completions/hints, automatically"
-msgstr ""
+msgstr "Abiatu kode-osatzea/iradokizunak, automatikoki"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:61
 #, kde-format
 msgid "Minimum number of characters"
-msgstr ""
+msgstr "Gutxieneko karaktere kopurua"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:64
 #, kde-format
 msgid "Timeout (milliseconds)"
-msgstr ""
+msgstr "Denbora-muga (milisegundo)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:66
 #, kde-format
@@ -4596,17 +4630,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:102
 #, kde-format
 msgid "For masked objects, only"
-msgstr ""
+msgstr "Maskaratutako objektuetarako bakarrik"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:103
 #, kde-format
 msgid "For objects outside of <i>.GlobalEnv</i>, only"
-msgstr ""
+msgstr "<i>.GlobalEnv</i>(e)tik kanpoko objektuetarako bakarrik"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:104
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "Beti"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:106
 #, kde-format
@@ -4616,7 +4650,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:109
 #, kde-format
 msgid "Offer completions in all file types (not just R scripts)"
-msgstr ""
+msgstr "Fitxategi-mota guztietan osatzea eskaini (ez R gidoietan bakarrik)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:112
 #, kde-format
@@ -4624,31 +4658,35 @@ msgid ""
 "<b>Note: </b>Additional (common) completion options are available at the <a "
 "href=\"rkward://settings/editor\">script editor settings</a>"
 msgstr ""
+"<b>Oharra: </b>(ohiko) Betetze aukera gehigarriak erabilgarri daude <a href="
+"\"rkward://settings/editor\">gidoi editore ezarpenetan</a>"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:139
 #, kde-format
 msgid "Script editor"
-msgstr ""
+msgstr "Gidoi editorea"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:143
 #, kde-format
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
 msgstr ""
+"(*) bidez markatutako ezarpenak ez dira indarrean sartzen RKWard berrabiatu "
+"arte"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:150
 #, kde-format
 msgid "Autosaves"
-msgstr ""
+msgstr "Automatikoki gordetzen du"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:153
 #, kde-format
 msgid "Autosave interval (minutes)"
-msgstr ""
+msgstr "Automatikoki gordetzeko bitartea (minutu)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:155
 #, kde-format
 msgid "Keep autosave file after manual save"
-msgstr ""
+msgstr "Mantendu automatikoki gordetzeko fitxategia eskuz gorde ondoren"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:162
 #, kde-format
@@ -4667,17 +4705,17 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:44
 #, kde-format
 msgid "Console"
-msgstr ""
+msgstr "Kontsola"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:52
 #, kde-format
 msgid "Load/Save command history"
-msgstr ""
+msgstr "Zamatu/Gorde komandoen historia"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:54
 #, kde-format
 msgid "Maximum length of command history (0 for no limit)"
-msgstr ""
+msgstr "Komandoen historiaren gehienezko luzera (0 mugagaberako)"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:58
 #, kde-format
@@ -4689,12 +4727,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:64
 #, kde-format
 msgid "Run commands from script editor through console"
-msgstr ""
+msgstr "Gidoi editoreko komandoak kontsolaren bidez exekutatu"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:67
 #, kde-format
 msgid "Also add those commands to console history"
-msgstr ""
+msgstr "Komando horiek ere kontsolaren historiara gehitu"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:69
 #, kde-format
@@ -4704,17 +4742,17 @@ msgstr "Ez gehitu"
 #: rkward/settings/rksettingsmoduleconsole.cpp:70
 #, kde-format
 msgid "Add only if single line"
-msgstr ""
+msgstr "Gehitu lerro bakarrekoak soilik"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:71
 #, kde-format
 msgid "Add all commands"
-msgstr ""
+msgstr "Gehitu komando guztiak"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:81
 #, kde-format
 msgid "Command history is context sensitive by default"
-msgstr ""
+msgstr "Komandoen historia era lehenetsian testuinguruarekiko sentibera da"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:33
 #, kde-format
@@ -4728,26 +4766,29 @@ msgid ""
 "them untouched. Also, these settings will only apply to the current session, "
 "and will not be saved."
 msgstr ""
+"<b>Ezarpen horiek, bakarrik, arazketa-helburuetarako dira.</b> Haiek ukitu "
+"gabe uztea segurua da. Gainera, ezarpen horiek, bakarrik, uneko saioari "
+"ezarriko zaizkio eta ez dira gordeko."
 
 #: rkward/settings/rksettingsmoduledebug.cpp:41
 #, kde-format
 msgid "Debug level"
-msgstr ""
+msgstr "Arazte maila"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:51
 #, kde-format
 msgid "Debug flags"
-msgstr ""
+msgstr "Arazte banderak"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:77
 #, kde-format
 msgid "Command timeout"
-msgstr ""
+msgstr "Komandoaren denbora-muga"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:87
 #, kde-format
 msgid "<i>Note:</i> Debug output is written to %1"
-msgstr ""
+msgstr "<i>Oharra:</i> Arazte-irteera %1(e)an idazten da"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:60
 #, kde-format
@@ -4760,11 +4801,13 @@ msgid ""
 "Directory where rkward may store files (setting takes effect after "
 "restarting RKWard)"
 msgstr ""
+"RKWard-ek fitxategiak gorde ditzakeen direktorioa (Ezarpena RKWard "
+"berrabiatu ondoren sartzen da indarrean)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
 msgid "Startup behavior"
-msgstr ""
+msgstr "Abioko jokabidea"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:72
 #, kde-format
@@ -4873,12 +4916,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "Click to focus"
-msgstr ""
+msgstr "Klik egin fokua emateko"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Focus follows mouse"
-msgstr ""
+msgstr "Fokuak saguari jarraitzen dio"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:46
 #, kde-format
@@ -4888,7 +4931,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:54
 #, kde-format
 msgid "Default graphics device"
-msgstr ""
+msgstr "Gailu grafiko lehenetsia"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:56
 #, kde-format
@@ -4915,7 +4958,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:63
 #, kde-format
 msgid "Other device:"
-msgstr ""
+msgstr "Beste gailu batzuk:"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:68
 #, kde-format
@@ -4995,7 +5038,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulekateplugins.cpp:39
 #, kde-format
 msgid "Kate Plugins"
-msgstr ""
+msgstr "Kate pluginak"
 
 #: rkward/settings/rksettingsmodulekateplugins.cpp:47
 #, kde-format
@@ -5061,7 +5104,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:115
 #, kde-format
 msgid "raise window on new output"
-msgstr ""
+msgstr "Irteera berriarekin leihoa altxatu"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:124
 #, kde-format
@@ -5097,7 +5140,7 @@ msgstr "Grafikoak"
 #: rkward/settings/rksettingsmoduleoutput.cpp:135
 #, kde-format
 msgid "File format"
-msgstr ""
+msgstr "Fitxategiaren formatua"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:137
 #, kde-format
@@ -5138,7 +5181,7 @@ msgstr "Altuera:"
 #: rkward/windows/rktoplevelwindowgui.cpp:150
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "RKWard pluginak"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:57
 #, kde-format
@@ -5171,7 +5214,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleplugins.cpp:88
 #, kde-format
 msgid "Add-ons"
-msgstr ""
+msgstr "Gehigarriak"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:90
 #, kde-format
@@ -5197,17 +5240,17 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1157
 #, kde-format
 msgid "Dependencies"
-msgstr ""
+msgstr "Mendekotasunak"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:495
 #, kde-format
 msgid "Broken"
-msgstr ""
+msgstr "Hautsita"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:497
 #, kde-format
 msgid "Loaded"
-msgstr ""
+msgstr "Zamatuta"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:500
 #, kde-format
@@ -5336,7 +5379,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:130
 #, kde-format
 msgid "Editor command"
-msgstr ""
+msgstr "Editore komandoa"
 
 #: rkward/settings/rksettingsmoduler.cpp:141
 #, kde-format
@@ -5374,7 +5417,7 @@ msgstr "Gehitu"
 #: rkward/settings/rksettingsmoduler.cpp:319
 #, kde-format
 msgid "R-Packages"
-msgstr ""
+msgstr "R-Paketeak"
 
 #: rkward/settings/rksettingsmoduler.cpp:326
 #, kde-format
@@ -5399,7 +5442,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:355
 #, kde-format
 msgid "Add repository"
-msgstr ""
+msgstr "Gehitu gordetegia"
 
 #: rkward/settings/rksettingsmoduler.cpp:355
 #, kde-format
@@ -5547,27 +5590,27 @@ msgstr ""
 #: rkward/settings/rksettingsmodulewatch.cpp:128
 #, kde-format
 msgid "always show command"
-msgstr ""
+msgstr "komandoa beti erakutsi"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:130
 #, kde-format
 msgid "always show result"
-msgstr ""
+msgstr "emaitzak beti erakutsi"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
 msgid "show errors"
-msgstr ""
+msgstr "erroreak erakutsi"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:134
 #, kde-format
 msgid "show/raise window"
-msgstr ""
+msgstr "Leihoa erakutsi/altxatu"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:137
 #, kde-format
 msgid "User commands"
-msgstr ""
+msgstr "Erabiltzailearen komandoak"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:138
 #, kde-format
@@ -5693,22 +5736,22 @@ msgstr ""
 #: rkward/windows/rkcodecompletion.cpp:977
 #, kde-format
 msgid "Local file names"
-msgstr ""
+msgstr "Fitxategi-izen lokalak"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:164
 #, kde-format
 msgid "Unable to open \"%1\""
-msgstr ""
+msgstr "Ezin du \"%1\" ireki"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:164
 #, kde-format
 msgid "Could not open command file"
-msgstr ""
+msgstr "Ezin izan du komando-fitxategia ireki"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:204
 #, kde-format
 msgid "Script Editor"
-msgstr ""
+msgstr "Gidoi editorea"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:348
 #, kde-format
@@ -5901,12 +5944,12 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:708
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
-msgstr ""
+msgstr "Gidoia aurreikusi R Kontsola elkarreragilean exekutatuko balitz bezala"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Plot"
-msgstr ""
+msgstr "Trazua"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
@@ -5928,9 +5971,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:940
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unnamed"
-msgstr "(Izengabea)"
+msgstr "Izengabea"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1085
 #, kde-format
@@ -6048,12 +6091,12 @@ msgstr ""
 #: rkward/windows/rkdebugmessagewindow.cpp:71
 #, kde-format
 msgid "About this window"
-msgstr ""
+msgstr "Leiho honi buruz"
 
 #: rkward/windows/rkfilebrowser.cpp:115
 #, kde-format
 msgid "Working directory"
-msgstr ""
+msgstr "Laneko direktorioa"
 
 #: rkward/windows/rkfilebrowser.cpp:126 rkward/windows/robjectbrowser.cpp:120
 #, kde-format
@@ -6068,7 +6111,7 @@ msgstr "Berrizendatu..."
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "New name for '%1':"
-msgstr ""
+msgstr "'%1'(e)rako izen berria:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:59
 #, kde-format
@@ -6078,7 +6121,7 @@ msgstr "Aurkitu:"
 #: rkward/windows/rkhelpsearchwindow.cpp:62
 #, kde-format
 msgid "Fields:"
-msgstr ""
+msgstr "Eremuak:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:80
 #, kde-format
@@ -6093,7 +6136,7 @@ msgstr ""
 #: rkward/windows/rkhelpsearchwindow.cpp:82
 #, kde-format
 msgid "Keywords"
-msgstr ""
+msgstr "Gako-hitzak"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:86
 #, kde-format
@@ -6170,14 +6213,14 @@ msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:739
 #: rkward/windows/rktoplevelwindowgui.cpp:252
-#, fuzzy, kde-format
+#, kde-format
 msgid "[Active]"
-msgstr "Aktibo"
+msgstr "[Aktibo]"
 
 #: rkward/windows/rkhtmlwindow.cpp:750
-#, fuzzy, kde-format
+#, kde-format
 msgid "Output %1"
-msgstr "Irteera"
+msgstr "Irteera %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:804
 #, kde-format
@@ -6212,19 +6255,19 @@ msgid "Flushing output"
 msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:889
-#, fuzzy, kde-format
+#, kde-format
 msgid "Zoom In"
 msgstr "Zooma gerturatu"
 
 #: rkward/windows/rkhtmlwindow.cpp:891
-#, fuzzy, kde-format
+#, kde-format
 msgid "Zoom Out"
 msgstr "Zooma urrundu"
 
 #: rkward/windows/rkhtmlwindow.cpp:895
 #, kde-format
 msgid "Default &Encoding"
-msgstr ""
+msgstr "Lehenetsitako &Kodifikazioa"
 
 #: rkward/windows/rkhtmlwindow.cpp:896
 #, kde-format
@@ -6236,32 +6279,32 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Export Page as HTML"
-msgstr ""
+msgstr "Esportatu Orrialdea HTML gisa"
 
 #: rkward/windows/rkhtmlwindow.cpp:920
 #, kde-format
 msgid "Save Output"
-msgstr ""
+msgstr "Gorde Irteera"
 
 #: rkward/windows/rkhtmlwindow.cpp:922
 #, kde-format
 msgid "Save Output As"
-msgstr ""
+msgstr "Gorde irteera honela"
 
 #: rkward/windows/rkhtmlwindow.cpp:925
 #, kde-format
 msgid "&Clear Output"
-msgstr ""
+msgstr "&Garbitu irteera"
 
 #: rkward/windows/rkhtmlwindow.cpp:931
 #, kde-format
 msgid "&Revert to last saved state"
-msgstr ""
+msgstr "&Lehengoratu gordetako azken egoerara"
 
 #: rkward/windows/rkhtmlwindow.cpp:935
 #, kde-format
 msgid "Set Output as &Active"
-msgstr ""
+msgstr "Ezarri Irteera &Aktibo gisa"
 
 #: rkward/windows/rkhtmlwindow.cpp:937
 #, kde-format
@@ -6271,17 +6314,17 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:959
 #, kde-format
 msgid "Print output"
-msgstr ""
+msgstr "Inprimatu irteera"
 
 #: rkward/windows/rkhtmlwindow.cpp:967
 #, kde-format
 msgid "Print page"
-msgstr ""
+msgstr "Inprimatu orrialdea"
 
 #: rkward/windows/rkhtmlwindow.cpp:1024
-#, fuzzy, kde-format
+#, kde-format
 msgid "No Title"
-msgstr "Titulurik gabe"
+msgstr "Izenbururik ez"
 
 #: rkward/windows/rkhtmlwindow.cpp:1037
 #, kde-format
@@ -6294,52 +6337,52 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1042
 #, kde-format
 msgid "Use %1 now"
-msgstr ""
+msgstr "%1 orain erabili"
 
 #: rkward/windows/rkhtmlwindow.cpp:1059
-#, fuzzy, kde-format
+#, kde-format
 msgid "Summary"
-msgstr "Laburpena:"
+msgstr "Laburpena"
 
 #: rkward/windows/rkhtmlwindow.cpp:1066
-#, fuzzy, kde-format
+#, kde-format
 msgid "Usage"
 msgstr "Erabilera"
 
 #: rkward/windows/rkhtmlwindow.cpp:1093
 #, kde-format
 msgid "Choose another file"
-msgstr ""
+msgstr "Aukeratu beste fitxategi bat"
 
 #: rkward/windows/rkhtmlwindow.cpp:1115
 #, kde-format
 msgid "GUI settings"
-msgstr ""
+msgstr "GUI ezarpenak"
 
 #: rkward/windows/rkhtmlwindow.cpp:1140
 #, kde-format
 msgid "Related functions and pages"
-msgstr ""
+msgstr "Erlazionatutako funtzioak eta orriak"
 
 #: rkward/windows/rkhtmlwindow.cpp:1148
-#, fuzzy, kde-format
+#, kde-format
 msgid "Technical details"
 msgstr "Xehetasun teknikoak"
 
 #: rkward/windows/rkhtmlwindow.cpp:1171
-#, fuzzy, kde-format
+#, kde-format
 msgid "About"
 msgstr "Honi buruz"
 
 #: rkward/windows/rkhtmlwindow.cpp:1178
 #, kde-format
 msgid "<h1>On this page:</h1>"
-msgstr ""
+msgstr "<h1>Orri honetan:</h1>"
 
 #: rkward/windows/rkhtmlwindow.cpp:1201
 #, kde-format
 msgid "Unnamed GUI element"
-msgstr ""
+msgstr "Izenik gabeko GUI elementua"
 
 #: rkward/windows/rkhtmlwindow.cpp:1275
 #, kde-format
@@ -6354,82 +6397,82 @@ msgstr ""
 #: rkward/windows/rkmdiwindow.cpp:430
 #, kde-format
 msgid "Help on %1"
-msgstr ""
+msgstr "%1(e)ri buruko laguntza"
 
 #: rkward/windows/rkmdiwindow.cpp:434
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure %1"
-msgstr "Konfiguratu..."
+msgstr "Konfiguratu %1"
 
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "Ez du PDF erakusle osagairik aurkitu"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
 msgid "The name <i>%1</i> might refer to:<br>"
-msgstr ""
+msgstr "<i>%1</i> izena hauei buruzkoa izan daiteke:<br>"
 
 #: rkward/windows/rktoolwindowbar.cpp:302
 #, kde-format
 msgid "Attach"
-msgstr ""
+msgstr "Erantsi"
 
 #: rkward/windows/rktoolwindowbar.cpp:305
-#, fuzzy, kde-format
+#, kde-format
 msgid "Position"
-msgstr "kokapena"
+msgstr "Kokapena"
 
 #: rkward/windows/rktoolwindowbar.cpp:306
 #, kde-format
 msgid "Left Sidebar"
-msgstr ""
+msgstr "Ezkerreko alboko-barra"
 
 #: rkward/windows/rktoolwindowbar.cpp:307
 #, kde-format
 msgid "Right Sidebar"
-msgstr ""
+msgstr "Eskuineko alboko-barra"
 
 #: rkward/windows/rktoolwindowbar.cpp:308
 #, kde-format
 msgid "Top Sidebar"
-msgstr ""
+msgstr "Goiko alboko-barra"
 
 #: rkward/windows/rktoolwindowbar.cpp:309
 #, kde-format
 msgid "Bottom Sidebar"
-msgstr ""
+msgstr "Beheko alboko-barra"
 
 #: rkward/windows/rktoolwindowbar.cpp:310
 #, kde-format
 msgid "Not shown in sidebar"
-msgstr ""
+msgstr "Ez da alboko-barran erakusten"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:56
 #, kde-format
 msgid "Help on R"
-msgstr ""
+msgstr "Rren laguntza"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:58
 #, kde-format
 msgid "Search R Help"
-msgstr ""
+msgstr "Bilatu Rren laguntza"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:60
 #, kde-format
 msgid "RKWard Dashboard and Help"
-msgstr ""
+msgstr "RKWard aginte-panela eta laguntza"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:67
 #, kde-format
 msgid "Shows the R help index"
-msgstr ""
+msgstr "Rren laguntzaren aurkibidea erakusten du"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
 msgid "Shows/raises the R Help Search window"
-msgstr ""
+msgstr "Rren Laguntza Bilaketa leihoa erakusten/altxatzen du"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:69
 #, kde-format
@@ -6440,22 +6483,22 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:74
 #, kde-format
 msgid "Previous Window"
-msgstr ""
+msgstr "Aurreko leihoa"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:78
 #, kde-format
 msgid "Next Window"
-msgstr ""
+msgstr "Hurrengo leihoa"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:83
 #, kde-format
 msgid "Activate Document view"
-msgstr ""
+msgstr "Aktibatu Dokumentu ikuspegia"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:130
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show/Hide %1"
-msgstr "Erakutsi/Ezkutatu"
+msgstr "Erakutsi/Ezkutatu %1"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:143
 #, kde-format
@@ -6470,7 +6513,7 @@ msgstr ""
 
 #: rkward/windows/rktoplevelwindowgui.cpp:143
 #: rkward/windows/rktoplevelwindowgui.cpp:157
-#, fuzzy, kde-format
+#, kde-format
 msgid "Note"
 msgstr "Oharra"
 
@@ -6509,9 +6552,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkwindowcatcher.cpp:310
-#, fuzzy, kde-format
+#, kde-format
 msgid "An error occurred"
-msgstr "Errore bat gertatu da: %1"
+msgstr "Errore bat gertatu da"
 
 #: rkward/windows/rkwindowcatcher.cpp:312
 #, kde-format
@@ -6568,12 +6611,12 @@ msgid "Specify fixed size"
 msgstr ""
 
 #: rkward/windows/rkwindowcatcher.cpp:540
-#, fuzzy, kde-format
+#, kde-format
 msgid "Width"
 msgstr "Zabalera"
 
 #: rkward/windows/rkwindowcatcher.cpp:550
-#, fuzzy, kde-format
+#, kde-format
 msgid "Height"
 msgstr "Altuera"
 
@@ -6739,7 +6782,7 @@ msgid "Remove this plot"
 msgstr ""
 
 #: rkward/windows/rkwindowcatcher.cpp:805
-#, fuzzy, kde-format
+#, kde-format
 msgid "Clear history"
 msgstr "Garbitu historia"
 
@@ -6766,7 +6809,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:826
 #, kde-format
 msgid "Duplicate"
-msgstr ""
+msgstr "Bikoiztu"
 
 #: rkward/windows/rkwindowcatcher.cpp:830
 #, kde-format
@@ -6809,70 +6852,70 @@ msgstr ""
 #: rkward/windows/rkworkplace.cpp:640
 #, kde-format
 msgid "About to edit very large object"
-msgstr ""
+msgstr "Objektu oso handia editatzear"
 
 #: rkward/windows/rkworkplace.cpp:979
 #, kde-format
 msgid "Save Workplace layout"
-msgstr ""
+msgstr "Gorde langunearen antolaera"
 
 #: rkward/windows/rkworkplace.cpp:988
 #, kde-format
 msgid "Restore Workplace layout"
-msgstr ""
+msgstr "Berrezarri langunearen antolaera"
 
 #: rkward/windows/rkworkplaceview.cpp:62
-#, fuzzy, kde-format
+#, kde-format
 msgid "Close all"
 msgstr "Itxi dena"
 
 #: rkward/windows/rkworkplaceview.cpp:239
 #, kde-format
 msgid "Window Left"
-msgstr ""
+msgstr "Ezker leihoa"
 
 #: rkward/windows/rkworkplaceview.cpp:246
 #, kde-format
 msgid "Window Right"
-msgstr ""
+msgstr "Eskuin leihoa"
 
 #: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split Ve&rtical"
-msgstr ""
+msgstr "Zatitu be&rtikalki"
 
 #: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
-msgstr ""
+msgstr "Zatitu unean aktibo dagoen ikuspegia bi ikuspegitan, bertikalki."
 
 #: rkward/windows/rkworkplaceview.cpp:262
 #, kde-format
 msgid "Split &Horizontal"
-msgstr ""
+msgstr "Zatitu &horizontalki"
 
 #: rkward/windows/rkworkplaceview.cpp:265
 #, kde-format
 msgid "Split the currently active view into two views, horizontally."
-msgstr ""
+msgstr "Zatitu unean aktibo dagoen ikuspegia bi ikuspegitan, horizontalki."
 
 #: rkward/windows/robjectbrowser.cpp:55
 #, kde-format
 msgid "R workspace browser"
-msgstr ""
+msgstr "R langune-arakatzailea"
 
 #: rkward/windows/robjectbrowser.cpp:58
 #, kde-format
 msgid "R Workspace"
-msgstr ""
+msgstr "R Langunea"
 
 #: rkward/windows/robjectbrowser.cpp:116 rkward/windows/robjectbrowser.cpp:255
-#, fuzzy, kde-format
+#, kde-format
 msgid "Edit"
 msgstr "Editatu"
 
 #: rkward/windows/robjectbrowser.cpp:118
-#, fuzzy, kde-format
+#, kde-format
 msgid "View"
 msgstr "Ikuspegia"
 
