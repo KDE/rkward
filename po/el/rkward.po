@@ -1431,16 +1431,14 @@ msgid "[Not saved]"
 msgstr "Εγκατάσταση"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "Output"
+#, kde-format
 msgid "Output files"
-msgstr "Παράθυρο αποτελεσμάτων"
+msgstr "Αρχεία αποτελεσμάτων"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:100
-#, fuzzy, kde-format
-#| msgid "Script File"
+#, kde-format
 msgid "Scripts"
-msgstr "Αρχείο σεναρίου"
+msgstr "Σενάρια"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:115
 #, fuzzy, kde-format
@@ -2606,13 +2604,13 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
-msgstr "Παράθυρο αποτελεσμάτων"
+msgstr "Αποτελέσματα"
 
 #: rkward/misc/rkprogresscontrol.cpp:241
 #: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
 msgid "Show Output"
-msgstr "Προβολή Παραθύρου αποτελεσμάτων"
+msgstr "Προβολή αποτελεσμάτων"
 
 #: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
