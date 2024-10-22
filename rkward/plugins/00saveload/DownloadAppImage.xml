@@ -21,20 +21,25 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <script>
       <![CDATA[
         doRCommand('Sys.getenv("APPIMAGE")', "commandFinished");
-        commandFinished = function (result, id) {
-          if (result != "") {
-            gui.setValue("aiu_file.selection", result);
-            return;
-          }
-        }
+            commandFinished = function (result, id) {
+              if (result != "") {
+                gui.setValue("aiu_file.selection", result);
+                return;
+              }
+            }
       ]]>
     </script>
+    <convert id="aiu_lgc_branch_stable" sources="aiu_branch.string" mode="equals" standard="stable" />
+    <convert id="aiu_lgc_branch_develop" sources="aiu_branch.string" mode="equals" standard="develop" />
+    <convert id="aiu_lgc_branch_custom" sources="aiu_branch.string" mode="equals" standard="custom" />
+    <connect governor="aiu_lgc_branch_custom" client="aiu_url.enabled" />
+    <connect governor="aiu_lgc_branch_custom" client="aiu_pattern.enabled" />
   </logic>
   <dialog label="Download AppImage">
     <tabbook id="tbbk_AppImage" label="AppImage">
       <tab label="File" id="tab_File">
-        <row id="row_cPAIYRFRPA">
-          <column id="clm_fPAIYRFRPA">
+        <row id="row_cSAISAILMS">
+          <column id="clm_fSAISAILMS">
             <frame id="frm_brwsrlbSAI">
               <browser label="Save to" type="savefile" id="aiu_file" filter="*.AppImage" />
             </frame>
@@ -44,10 +49,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
         </row>
       </tab>
       <tab label="Source" id="tab_Source">
-        <row id="row_cURLP8664A">
-          <column id="clm_iURLP8664A">
-            <input label="URL" id="aiu_url" initial="https://cdn.kde.org/ci-builds/education/rkward/master/linux" required="true" />
-            <input label="Pattern" id="aiu_pattern" initial="rkward-master.*linux-gcc-x86_64\\.AppImage" required="true" />
+        <row id="row_cRKWLCCURL">
+          <column id="clm_dRKWLCCURL">
+            <dropdown id="aiu_branch" label="RKWard release branch">
+              <option label="Latest stable release" value="stable" checked="true" />
+              <option label="Current development build (untested!)" value="develop" />
+              <option label="Custom" value="custom" />
+            </dropdown>
+            <input label="URL" id="aiu_url" initial="https://..." required="true" />
+            <input label="Pattern" id="aiu_pattern" initial="rkward.*x86_64\\.AppImage" required="true" />
             <stretch />
           </column>
         </row>

@@ -23,6 +23,7 @@ function preprocess(is_preview){
 function calculate(is_preview){
   // read in variables from dialog
   var aiuFile = getString("aiu_file");
+  var aiuBranch = getString("aiu_branch");
   var aiuUrl = getString("aiu_url");
   var aiuPattern = getString("aiu_pattern");
   var aiuMethod = getString("aiu_method");
@@ -39,7 +40,14 @@ function calculate(is_preview){
   } else {
     echo(",\n    overwrite = FALSE");  
   }
-  echo(",\n    url = \"" + aiuUrl + "\"" + ",\n    pattern = \"" + aiuPattern + "\"" + ",\n    method = \"" + aiuMethod + "\"");
+  if(aiuBranch == "stable") {
+    echo(",\n    url = \"https://download.kde.org/stable/rkward/0.8.0\"" + ",\n    pattern = \"rkward.*x86_64\\\\.AppImage\"");  
+  } else if(aiuBranch == "develop") {
+    echo(",\n    url = \"https://cdn.kde.org/ci-builds/education/rkward/master/linux\"" + ",\n    pattern = \"rkward-master.*linux-gcc-x86_64\\\\.AppImage\"");  
+  } else {
+    echo(",\n    url = \"" + aiuUrl + "\"" + ",\n    pattern = \"" + aiuPattern + "\"");  
+  }
+  echo(",\n    method = \"" + aiuMethod + "\"");
   if(aiuCacheok) {
     echo(",\n      cacheOK=TRUE");
   } else {}

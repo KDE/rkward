@@ -26,12 +26,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
   -->
   <settings>
     <caption id="tab_File" />
+    <caption id="frm_brwsrlbSAI" />
     <setting id="aiu_file">
       Select a target file to save the AppImage to.
     </setting>
     <setting id="noLoadMsg">
     </setting>
     <caption id="tab_Source" />
+    <setting id="aiu_branch">
+      Define which branch of RKWard you want to download: The latest stable release, the latest development build (used for testing and probably buggy/unstable) or an AppImage from a custom source.
+    </setting>
     <setting id="aiu_url">
       URL to look for the AppImage files.
     </setting>

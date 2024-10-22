@@ -32,7 +32,7 @@ aboutPlugin <- rk.XML.about(
   ),
   about=list(
     desc="Adds a dialog to install or update an AppImage of RKWard",
-    version="0.01-0",
+    version="0.02-0",
     url="https://rkward.kde.org",
     license="GPL (>= 3)"
   )
@@ -80,9 +80,27 @@ tab_file <- rk.XML.row(
   )
 )
 
+aiu_branch <- rk.XML.dropdown(
+  label = "RKWard release branch",
+  options = list(
+    "Latest stable release"=c(
+      val = "stable",
+      chk = TRUE
+    ),
+    "Current development build (untested!)"=c(
+      val = "develop"
+    ),
+    "Custom"=c(
+      val = "custom"
+    )
+  ),
+  id.name = "aiu_branch",
+  help = "Define which branch of RKWard you want to download: The latest stable release, the latest development build (used for testing and probably buggy/unstable) or an AppImage from a custom source."
+)
+
 aiu_url <- rk.XML.input(
   label = "URL",
-  initial = "https://cdn.kde.org/ci-builds/education/rkward/master/linux",
+  initial = "https://...",
   size = "medium",
   required = TRUE,
   id.name = "aiu_url",
@@ -91,7 +109,7 @@ aiu_url <- rk.XML.input(
 
 aiu_pattern <- rk.XML.input(
   label = "Pattern",
-  initial = "rkward-master.*linux-gcc-x86_64\\\\.AppImage",
+  initial = "rkward.*x86_64\\\\.AppImage",
   size = "medium",
   required = TRUE,
   id.name = "aiu_pattern",
@@ -100,6 +118,7 @@ aiu_pattern <- rk.XML.input(
 
 tab_source <- rk.XML.row(
   rk.XML.col(
+    aiu_branch,
     aiu_url,
     aiu_pattern,
     rk.XML.stretch()
@@ -174,15 +193,24 @@ pluginDialog <- rk.XML.dialog(
 ################
 ## logic section
 
-aiu_logic <- rk.XML.logic(rk.comment(id("
-  doRCommand('Sys.getenv(\"APPIMAGE\")', \"commandFinished\");
-        commandFinished = function (result, id) {
-          if (result != \"\") {
-            gui.setValue(\"", aiu_file, ".selection\", result);
-            return;
-          }
-        }
-", js=FALSE)))
+aiu_logic <- rk.XML.logic(
+  rk.comment(
+    id("
+      doRCommand('Sys.getenv(\"APPIMAGE\")', \"commandFinished\");
+            commandFinished = function (result, id) {
+              if (result != \"\") {
+                gui.setValue(\"", aiu_file, ".selection\", result);
+                return;
+              }
+            }
+    ", js=FALSE)
+  ),
+  aiu_gov_branch_stable <- rk.XML.convert(sources=list(string=aiu_branch), mode=c(equals="stable"), id.name="aiu_lgc_branch_stable"),
+  aiu_gov_branch_develop <- rk.XML.convert(sources=list(string=aiu_branch), mode=c(equals="develop"), id.name="aiu_lgc_branch_develop"),
+  aiu_gov_branch_custom <- rk.XML.convert(sources=list(string=aiu_branch), mode=c(equals="custom"), id.name="aiu_lgc_branch_custom"),
+  rk.XML.connect(governor=aiu_gov_branch_custom, client=aiu_url, set="enabled"),
+  rk.XML.connect(governor=aiu_gov_branch_custom, client=aiu_pattern, set="enabled")
+)
 
 
 #############
@@ -212,11 +240,25 @@ aiu_js_calc <- rk.paste.JS(
       echo(",\n    overwrite = TRUE")
     } else {
       echo(",\n    overwrite = FALSE")
+    },
+    if(aiu_branch == "stable"){
+      echo(
+        ",\n    url = \"https://download.kde.org/stable/rkward/0.8.0\"",
+        ",\n    pattern = \"rkward.*x86_64\\\\.AppImage\""
+      )
+    } else if(aiu_branch == "develop"){
+      echo(
+        ",\n    url = \"https://cdn.kde.org/ci-builds/education/rkward/master/linux\"",
+        ",\n    pattern = \"rkward-master.*linux-gcc-x86_64\\\\.AppImage\""
+      )
+    } else {
+      echo(
+        ",\n    url = \"", aiu_url, "\"",
+        ",\n    pattern = \"", aiu_pattern, "\""
+      )
     }
   ),
   echo(
-    ",\n    url = \"", aiu_url, "\"",                # url = "https://cdn.kde.org/ci-builds/education/rkward/master/linux"
-    ",\n    pattern = \"", aiu_pattern, "\"",        # pattern = "rkward-master.*linux-gcc-x86_64\\.AppImage"
     ",\n    method = \"", aiu_method, "\""           # method = "auto"
   ),
   tf(
