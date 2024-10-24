@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2024-08-31 09:09+0200\n"
+"PO-Revision-Date: 2024-10-23 06:37+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -66,6 +66,9 @@ msgid ""
 "release, the latest development build (used for testing and probably buggy/"
 "unstable) or an AppImage from a custom source."
 msgstr ""
+"Določite, katero vejo RKWard želite prenesti: najnovejšo stabilno izdajo, "
+"najnovejšo razvojno gradnjo (uporabljeno za testiranje in verjetno hroščasto/"
+"nestabilno) ali AppImage iz vira po meri."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "URL")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:39
@@ -148,19 +151,19 @@ msgstr "Izvor"
 #: rkward/plugins/00saveload/DownloadAppImage.xml:54
 #, kde-format
 msgid "RKWard release branch"
-msgstr ""
+msgstr "Veja izdaje RKWard"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:55
 #, kde-format
 msgid "Latest stable release"
-msgstr ""
+msgstr "Zadnja stabilna izdaja"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:56
 #, kde-format
 msgid "Current development build (untested!)"
-msgstr ""
+msgstr "Trenutna razvojna izgradnja (netestirana)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">

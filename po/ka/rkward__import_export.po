@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2024-09-06 06:27+0200\n"
+"PO-Revision-Date: 2024-10-23 05:32+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -64,6 +64,10 @@ msgid ""
 "release, the latest development build (used for testing and probably buggy/"
 "unstable) or an AppImage from a custom source."
 msgstr ""
+"მიუთითეთ, RKWard-ის რომელი ბრენჩის გადმოწერა გნებავთ. უახლესი სტაბილური "
+"რელიზის, უახლესი სატესტო აგების (გამოიყენება ახალი ფუნქციების შესამოწმებლად "
+"და დიდი ალბათობით შეიცავს შეცდომებს/არაა სტაბილური), ან AppImage სასურველი "
+"კოდიდან."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "URL")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:39
@@ -147,19 +151,19 @@ msgstr "წყარო"
 #: rkward/plugins/00saveload/DownloadAppImage.xml:54
 #, kde-format
 msgid "RKWard release branch"
-msgstr ""
+msgstr "RKWard-ის სტაბილური ბრენჩი"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:55
 #, kde-format
 msgid "Latest stable release"
-msgstr ""
+msgstr "უკანასკნელი სტაბილური რელიზი"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:56
 #, kde-format
 msgid "Current development build (untested!)"
-msgstr ""
+msgstr "მიმდინარე სატესტო აგება (შეუმოწმებელი)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
