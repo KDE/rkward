@@ -4,13 +4,13 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2018, 2019, 2020.
-# Josep M. Ferrer <txemaq@gmail.com>, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# SPDX-FileCopyrightText: 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-01-30 11:54+0100\n"
+"PO-Revision-Date: 2024-10-23 21:03+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4670,7 +4670,7 @@ msgid ""
 msgstr ""
 "Seleccioneu un o més objectes a analitzar. Per a la majoria dels tipus "
 "d'anàlisi, els objectes hauran de ser vectors numèrics. A les pestanyes/"
-"pàgines subsegüents especifiques, quines estadístiques voleu calcular (vegeu "
+"pàgines subsegüents especifiqueu quines estadístiques voleu calcular (vegeu "
 "a sota per als detalls)."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <usage>
