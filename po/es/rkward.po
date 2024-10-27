@@ -1,12 +1,11 @@
-# translation of rkward.po to español
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Translation of rkward to Spanish
+# This file is distributed under the same license as the rkward package.
 #
 # SPDX-FileCopyrightText: 2014, 2015, 2018, 2019, 2024 Eloy Cuadra <ecuadra@eloihr.net>
-# Mvillarino <mvillarino@dubmail.net>, 2005.
-# Mvillarino <mvillarino@users.sourceforge.net>, 2006.
-# Germán Márquez Mejía <manchito@users.sourceforge.net>, 2008,2009,2010.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2019, 2020, 2021, 2022, 2024, %Y.
+# SPDX-FileCopyrightText: 2017, 2019, 2020, 2021, 2022, 2024 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
+# SPDX-FileCopyrightText: 2005 Mvillarino <mvillarino@dubmail.net>
+# SPDX-FileCopyrightText: 2006 Mvillarino <mvillarino@users.sourceforge.net>
+# SPDX-FileCopyrightText: 2008, 2009, 2010 Germán Márquez Mejía <manchito@users.sourceforge.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"

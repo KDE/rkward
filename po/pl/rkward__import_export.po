@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2024-09-07 18:04+0200\n"
+"PO-Revision-Date: 2024-10-26 12:53+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -64,6 +64,9 @@ msgid ""
 "release, the latest development build (used for testing and probably buggy/"
 "unstable) or an AppImage from a custom source."
 msgstr ""
+"Określ gałąź RKWard, którą chcesz pobrać: Ostatnie stabilne wydanie, "
+"ostatnie wydanie rozwojowe (do popróbowania, więc pewnie z błędami i "
+"niestabilne) lub AppImage z własnego źródła."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "URL")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:39
@@ -148,19 +151,19 @@ msgstr "Źródło"
 #: rkward/plugins/00saveload/DownloadAppImage.xml:54
 #, kde-format
 msgid "RKWard release branch"
-msgstr ""
+msgstr "Gałąź wydania RKWard"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:55
 #, kde-format
 msgid "Latest stable release"
-msgstr ""
+msgstr "Ostatnie wydanie stabilne"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:56
 #, kde-format
 msgid "Current development build (untested!)"
-msgstr ""
+msgstr "Obecne wydanie rozwojowe (niesprawdzone!)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -2771,7 +2774,7 @@ msgid ""
 "for versions of R before 2.10.0."
 msgstr ""
 "Plik można skompresować, aby osiągnąć mniejszy rozmiar. Ten element "
-"sterujący umożliwia wybranie sposobu kompreskji. Niektóre ze sposobów są "
+"sterujący umożliwia wybranie sposobu kompresji. Niektóre ze sposobów są "
 "niedostępne dla wersji R przed 2.10.0."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression level")

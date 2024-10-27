@@ -1,14 +1,14 @@
 # Translation of rkward__import_export to Spanish
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2015, 2018, 2019, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2015 Eloy Cuadra <ecuadra@eloihr.net>
 # SPDX-FileCopyrightText: 2017, 2018, 2022, 2024 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__import_export\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2024-08-31 17:15+0200\n"
+"PO-Revision-Date: 2024-10-26 18:47+0200\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -64,6 +64,9 @@ msgid ""
 "release, the latest development build (used for testing and probably buggy/"
 "unstable) or an AppImage from a custom source."
 msgstr ""
+"Define que rama de RKWard quiere descargar: la última versión estable, la "
+"versión en desarrollo (inestable y usada en pruebas) o una AppImage desde "
+"una fuente personalizada."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "URL")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:39
@@ -148,19 +151,19 @@ msgstr "Fuente"
 #: rkward/plugins/00saveload/DownloadAppImage.xml:54
 #, kde-format
 msgid "RKWard release branch"
-msgstr ""
+msgstr "Rama de lanzamiento de RKWard"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:55
 #, kde-format
 msgid "Latest stable release"
-msgstr ""
+msgstr "Última rama estable"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:56
 #, kde-format
 msgid "Current development build (untested!)"
-msgstr ""
+msgstr "Versión en desarrollo (¡en pruebas!)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
