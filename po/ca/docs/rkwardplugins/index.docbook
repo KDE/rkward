@@ -1013,7 +1013,7 @@ as Authors, publish date, the abstract, and Keywords -->
 >getValue()</function
 >, en lloc de <function
 >getString()</function
->, i de fet els dos són <emphasis
+>, i de fet, tots dos són <emphasis
 >gairebé</emphasis
 > idèntics. No obstant això, utilitzar <function
 >getString()</function
@@ -2767,7 +2767,7 @@ function getSpecifics () {
 >&lt;varslot&gt;</command
 > dins de l'àrea <command
 >&lt;content&gt;</command
->, permetent a l'usuari seleccionar un element alhora. Tanmateix, significarà menys clics per a l'usuari, si en el seu lloc utilitzeu un <command
+>, que permet a l'usuari seleccionar un element a la vegada. Tanmateix, significarà menys clics per a l'usuari, si en el seu lloc utilitzeu un <command
 >&lt;varslot multi="true"&gt;</command
 > <emphasis
 >fora</emphasis
@@ -4024,7 +4024,7 @@ conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="C
 >if() {...} else {...}</function
 >. Hi ha algunes diferències entre el JS i l'&R;, &pex;, per a <function
 >paste()</function
-> a l'&R; utilitzeu la coma per concatenar les cadenes de caràcters, mentre que per a <function
+> a l'&R; utilitzeu la coma per a concatenar les cadenes de caràcters, mentre que per a <function
 >echo()</function
 > en el JS utilitzeu «+», i les línies han d'acabar amb un punt i coma. Mitjançant l'ús de les funcions &R;, gairebé podeu oblidar-vos d'aquestes diferències i continuar escrivint codi &R;.</para>
 			<para
@@ -4192,7 +4192,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 >plugin.dir</quote
 > conté el camí al directori on es va crear el connector. Això pot ser útil en combinació amb la funció <function
 >rk.build.package()</function
->, per a construir un paquet &R; real per a compartir el vostre connector amb altres; &pex;, per enviant-lo a l'equip de desenvolupament del &rkward; per a afegir-lo al nostre repositori de connectors.</para>
+>, per a construir un paquet &R; real per a compartir el vostre connector amb altres; &pex;, per a enviar-lo a l'equip de desenvolupament del &rkward; per a afegir-lo al nostre repositori de connectors.</para>
 		</sect2>
 		<sect2 id="rkdev_ttest_script"
 ><title
