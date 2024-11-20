@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-07-05 19:05+0200\n"
+"PO-Revision-Date: 2024-11-17 20:43+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -5166,7 +5166,7 @@ msgstr "Afig totes les ordres"
 #: rkward/settings/rksettingsmoduleconsole.cpp:70
 #, kde-format
 msgid "Command history is context sensitive by default"
-msgstr "L'historial d'ordres depén, de manera predeterminada, del context"
+msgstr "L'historial d'ordres depén del context de manera predeterminada"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:134
 #, kde-format
