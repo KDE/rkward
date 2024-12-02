@@ -1,6 +1,6 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Tommi Nieminen <translator@legisign.org>, 2015, 2018.
+# Tommi Nieminen <translator@legisign.org>, 2015, 2018, 2024.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2016.
 #
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2018-12-04 13:52+0200\n"
+"PO-Revision-Date: 2024-11-21 21:05+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -136,10 +136,9 @@ msgid ""
 msgstr ""
 
 #: rkward/agents/rksaveagent.cpp:82
-#, fuzzy, kde-format
-#| msgid "Save Workspace"
+#, kde-format
 msgid "Saving workspace"
-msgstr "Tallenna työtila"
+msgstr "Tallennetaan työtilaa"
 
 #: rkward/agents/rksaveagent.cpp:90
 #, kde-format
@@ -161,16 +160,13 @@ msgid "Done"
 msgstr "Valmis"
 
 #: rkward/agents/showedittextfileagent.cpp:82
-#, fuzzy, kde-format
-#| msgid ""
-#| "A command running in the R-engine wants you to see the following "
-#| "file(s):\n"
+#, kde-format
 msgid ""
 "A command running in the R-engine wants you to see the following file(s):"
 "<ul><li>"
 msgstr ""
-"R-moottorissa käynnissä oleva komento haluaa sinun katsovan seuraavia "
-"tiedostoja:\n"
+"R-moottorissa käynnissä oleva komento haluaa sinun näkevän seuraavat "
+"tiedostot:<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:82
 #, kde-format
@@ -178,21 +174,16 @@ msgid "Showing file(s)"
 msgstr "Näytetään tiedostoja"
 
 #: rkward/agents/showedittextfileagent.cpp:86
-#, fuzzy, kde-format
-#| msgid ""
-#| "A command running in the R-engine wants you to edit one or more file(s). "
-#| "Please look at these files, edit them as appropriate, and save them. When "
-#| "done, press the \"Done\"-button, or close this dialog to resume.\n"
-#| "\n"
+#, kde-format
 msgid ""
 "A command running in the R-engine wants you to edit the following file(s). "
 "Please look at these files, edit them as appropriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.<ul><li>"
 msgstr ""
-"R-moottorissa käynnissä oleva komento haluaa sinun muokkaavan yhtä tai "
-"useampaa tiedostoa. Avaa tiedostot, muokkaa jos tarpeen ja tallenna. Kun "
-"olet valmis, napsauta ”Valmis”-painiketta tai sulje tämä ikkuna.\n"
-"\n"
+"R-moottorissa käynnissä oleva komento haluaa sinun muokkaavan seuraavia "
+"tiedostoja. Katso tiedostoja, muokkaa jos tarpeen ja tallenna. Kun olet "
+"valmis, napsauta ”Valmis”-painiketta tai sulje tämä ikkuna.\n"
+"<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:86
 #, kde-format
@@ -220,10 +211,9 @@ msgid ""
 msgstr ""
 
 #: rkward/core/renvironmentobject.cpp:113
-#, fuzzy, kde-format
-#| msgid "Load an existing workspace:"
+#, kde-format
 msgid "Many objects in workspace"
-msgstr "Lataa olemassa oleva työtila:"
+msgstr "Monia olioita työtilassa"
 
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
@@ -362,11 +352,10 @@ msgid "List"
 msgstr "Lista"
 
 #: rkward/core/robject.cpp:178
-#, fuzzy, kde-format
-#| msgid "Variable"
+#, kde-format
 msgctxt "Noun; in brackets, data type of the var is stated"
 msgid "Variable (%1)"
-msgstr "Muuttuja"
+msgstr "Muuttuja (%1)"
 
 #: rkward/core/robject.cpp:180
 #, kde-format
@@ -463,10 +452,9 @@ msgid "&Edit"
 msgstr "&Muokkaa"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:73
-#, fuzzy, kde-format
-#| msgid "Duplicate columns detected"
+#, kde-format
 msgid "Duplicate column name '%1'"
-msgstr "Havaittu toistuvia sarakkeita"
+msgstr "Toistuva sarakkeen nimi ”%1”"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
@@ -583,10 +571,9 @@ msgstr ""
 "rajojen ulkopuolelle"
 
 #: rkward/dataeditor/twintable.cpp:139
-#, fuzzy, kde-format
-#| msgid "Show All Environments"
+#, kde-format
 msgid "Show / Edit row names"
-msgstr "Näytä kaikki ympäristöt"
+msgstr "Näytä rivien nimet tai muokkaa niitä"
 
 #: rkward/dataeditor/twintable.cpp:142 rkward/dataeditor/twintable.cpp:155
 #, kde-format
@@ -619,10 +606,9 @@ msgid ""
 msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:223
-#, fuzzy, kde-format
-#| msgid "Show Fields"
+#, kde-format
 msgid "Show details"
-msgstr "Näytä kentät"
+msgstr "Näytä yksityiskohdat"
 
 #: rkward/dataeditor/twintable.cpp:227
 #, kde-format
@@ -631,10 +617,9 @@ msgid ""
 msgstr ""
 
 #: rkward/dataeditor/twintable.cpp:227
-#, fuzzy, kde-format
-#| msgid "Run selection"
+#, kde-format
 msgid "Problem detected"
-msgstr "Suorita valinta"
+msgstr "Havaittiin ongelma"
 
 #: rkward/dataeditor/twintable.cpp:239
 #, kde-format
@@ -705,10 +690,9 @@ msgstr ""
 "Kommentti-kenttään.</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "Report As Bug"
+#, kde-format
 msgid "Report issue"
-msgstr "Ilmoita virheeksi"
+msgstr "Ilmoita ongelmasta"
 
 #: rkward/dialogs/rkerrordialog.cpp:72
 #, kde-format
@@ -732,10 +716,9 @@ msgid "Proceed"
 msgstr "Jatka"
 
 #: rkward/dialogs/rkerrordialog.cpp:102
-#, fuzzy, kde-format
-#| msgid "Show Fields"
+#, kde-format
 msgid "Show Details"
-msgstr "Näytä kentät"
+msgstr "Näytä yksityiskohdat"
 
 #: rkward/dialogs/rkerrordialog.cpp:104
 #, kde-format
@@ -864,10 +847,9 @@ msgid "Gathering setup information"
 msgstr "Kerätään tietoa asennuksesta"
 
 #: rkward/dialogs/rkimportdialog.cpp:29
-#, fuzzy, kde-format
-#| msgid "Import Data"
+#, kde-format
 msgid "Import Data Assistant"
-msgstr "Tuo tietoja"
+msgstr "Opastettu datan tuonti"
 
 #: rkward/dialogs/rkimportdialog.cpp:54
 #, kde-format
@@ -887,13 +869,12 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:70
 #, kde-format
 msgid "None of the above / try another method"
-msgstr ""
+msgstr "Ei mikään yllä olevista / kokeile toista menetelmää"
 
 #: rkward/dialogs/rkimportdialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "File format"
+#, kde-format
 msgid "Select format"
-msgstr "Tiedostomuoto"
+msgstr "Valitse tiedostomuoto"
 
 #: rkward/dialogs/rkimportdialog.cpp:80
 #, kde-format
@@ -909,21 +890,23 @@ msgid ""
 "The generic import plugin (shipped with RKWard) is not presently loaded. "
 "Check your settings."
 msgstr ""
+"Yleistä (RKWardin mukana tulevaa) tuontiliitännäistä ei ole ladattu. "
+"Tarkista asetukset."
 
 #: rkward/dialogs/rkimportdialog.cpp:91
 #, kde-format
 msgid "Use 'rio'-based importer"
-msgstr ""
+msgstr "Käytä ”rio”-pohjaista tuontia"
 
 #: rkward/dialogs/rkimportdialog.cpp:95 rkward/dialogs/rkimportdialog.cpp:113
 #, kde-format
 msgid "Try another method"
-msgstr ""
+msgstr "Kokeile toista menetelmää"
 
 #: rkward/dialogs/rkimportdialog.cpp:101
 #, kde-format
 msgid "Generic 'rio'-based importer"
-msgstr ""
+msgstr "Yleinen ”rio”-pohjainen tuonti"
 
 #: rkward/dialogs/rkimportdialog.cpp:105
 #, kde-format
@@ -936,7 +919,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:110 rkward/dialogs/rkimportdialog.cpp:119
 #, kde-format
 msgid "Import from clipboard"
-msgstr ""
+msgstr "Tuo leikepöydältä"
 
 #: rkward/dialogs/rkimportdialog.cpp:123
 #, kde-format
@@ -944,6 +927,8 @@ msgid ""
 "<b>Ready to go</b><p>Click \"Finish\" to start the selected import dialog, "
 "or \"Back\" to explore other options.</p>"
 msgstr ""
+"<b>Valmiina lähtöön</b><p>Aloita valittu tuonti napsauttamalla ”Lopeta” tai "
+"tutki muita vaihtoehtoja napsauttamalla ”Takaisin”.</p>"
 
 #: rkward/dialogs/rkimportdialog.cpp:125
 #, kde-format
@@ -967,7 +952,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:50
 #, kde-format
 msgid "Configure Packages"
-msgstr "Määritä paketit"
+msgstr "Pakettien asetukset"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:58
 #, kde-format
@@ -990,10 +975,9 @@ msgid "Closing will discard pending changes. Are you sure?"
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Locale change"
+#, kde-format
 msgid "Discard changes?"
-msgstr "Maa-asetusten muutos"
+msgstr "Hylätäänkö muutokset?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, fuzzy, kde-format
@@ -1053,18 +1037,16 @@ msgstr ""
 "jolloin sinulta kysytään salasanaa?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Become root"
+#, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Vaihda pääkäyttäjäksi"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, fuzzy, kde-format
-#| msgid "Updateable Packages"
+#, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr "Päivitettävissä olevat paketit"
+msgstr "Sivuuta nämä paketit"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -1101,9 +1083,9 @@ msgid ""
 "instead (you can also press \"Cancel\" and use the \"Configure Repositories"
 "\"-button to set up a different directory)?</p>"
 msgstr ""
-"<p>Asennusta varten valitsemasi kansio (%1) ei ole nykyisin käyttöoikeuksin "
-"kirjoitettavissa.</p><p>Haluatko asentaa sen sijaan kansioon %2? Voit myös "
-"napsauttaa ”Peru” ja asettaa eri kansion kohdassa ”Pakettilähteiden "
+"<p>Asennusta varten valitsemasi kansioon (%1) ei nykyisin käyttöoikeuksin "
+"voi kirjoittaa.</p><p>Haluatko asentaa sen sijaan kansioon %2? Voit myös "
+"napsauttaa ”Peru” ja asettaa eri kansion kohdassa ”Asennuslähteiden "
 "asetukset”.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:245
@@ -1159,10 +1141,9 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
-#, fuzzy, kde-format
-#| msgid "No help found"
+#, kde-format
 msgid "kdesu not found"
-msgstr "Ohjeita ei löytynyt"
+msgstr "kdesu-ohjelmaa ei löytynyt"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:347
 #, kde-format
@@ -1239,19 +1220,15 @@ msgid "Show only packages providing RKWard dialogs"
 msgstr "Näytä vain paketit, jotka tarjoavat RKWardin kyselyikkunan"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:655
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>Some but not all R packages come with plugins for RKWard. That means "
-#| "they provide a graphical user-interface in addition to R functions. Check "
-#| "this box to show only such packages.</p><p></p>"
+#, kde-format
 msgid ""
 "<p>Some but not all R packages come with plugins for RKWard. That means they "
 "provide a graphical user-interface in addition to R functions. Check this "
 "box to show only such packages.</p>"
 msgstr ""
-"<p>Joissakin muttei kaikissa R-paketeissa on RKWard-liitännäisiä, jolloin ne "
-"tarjoavat graafisen käyttöliittymän R-funktioiden lisäksi. Valitse tämä "
-"ruutu, jos haluat nähdä vain tällaiset paketit.</p><p></p>"
+"<p>Joissakin muttei kaikissa R-paketeissa tulee mukana RKWard-liitännäinen, "
+"jolloin ne tarjoavat R-funktioiden lisäksi graafisen käyttöliittymän. "
+"Valitse tämä, jos haluat nähdä vain tällaiset paketit.</p><p></p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:676
 #, kde-format
@@ -1278,7 +1255,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
 msgid "Configure Repositories"
-msgstr "Pakettilähteiden asetukset"
+msgstr "Asennuslähteiden asetukset"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:692
 #, kde-format
@@ -1286,8 +1263,8 @@ msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories.<br>Click this to add more sources."
 msgstr ""
-"Paljon paketteja on saatavilla CRANissa (Comprehensive R Archive Network) ja "
-"muissa paikoissa.<br> Lisää lähteitä napsauttamalla tästä."
+"Paljon paketteja on saatavilla CRANista (Comprehensive R Archive Network) ja "
+"muista asennuslähteistä.<br> Lisää lähteitä napsauttamalla tästä."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:716
 #, kde-format
@@ -1295,21 +1272,16 @@ msgid "<b>Install %1 packages (plus dependencies), remove %2 packages</b>"
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
-#, fuzzy, kde-format
-#| msgid ""
-#| "The package requested by the backend (\"%1\") was not found in the "
-#| "package repositories. Maybe the package name was mis-spelled. Or maybe "
-#| "you need to add additional repositories via the \"Configure Repositories"
-#| "\" button."
+#, kde-format
 msgid ""
 "The following package(s) requested by the backend have not been found in the "
 "package repositories: \"%1\". Maybe the package name was mis-spelled. Or "
 "maybe you need to add additional repositories via the \"Configure "
 "Repositories\" button."
 msgstr ""
-"Taustaosan pyytämää pakettia (”%1”) ei löytynyt pakettilähteistä. Sen nimi "
-"on ehkä kirjoitettu väärin tai sinun täytyy lisätä pakettilähteitä "
-"painikkeella ”Pakettilähteiden asetukset”."
+"Seuraava taustajärjestelmän pyytämiä paketteja ei löytynyt asennuslähteistä: "
+"”%1”. Paketin nimi on ehkä kirjoitettu väärin tai lisäasennuslähteitä pitää "
+"asentaa ”Asennuslähteiden asetukset” -painikkeella."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
@@ -1326,7 +1298,7 @@ msgid ""
 msgstr ""
 "<p>Odota, kun asennettuja ja saatavilla olevia paketteja etsitään.</"
 "p><p><strong>Huomaa:</strong> Tämä vaatii toimivan internetyhteyden ja voi "
-"viedä aikaa, erityisesti jos yksi tai useampi pakettilähde on väliaikaisesti "
+"viedä aikaa, erityisesti jos yksi tai useampi asennuslähde on väliaikaisesti "
 "saavuttamattomissa.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:952
@@ -1366,8 +1338,8 @@ msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
 "packages in non-local repositories.</p>"
 msgstr ""
-"<p>Pakettia kuvaava otsikko. Tämä ei toistaiseksi ole käytettävissä "
-"etäpakettilähteiden paketeille.</p>"
+"<p>Pakettia kuvaava otsikko. Ei toistaiseksi ole käytettävissä "
+"etäasennuslähteiden paketeille.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:963
 #, kde-format
@@ -1541,11 +1513,12 @@ msgid ""
 "The following items have been modified. Do you want to save them before "
 "closing?"
 msgstr ""
+"Seuraavat kohteet ovat muuttuneet. Haluatko tallentaa ne ennen sulkemista?"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:77
 #, kde-format
 msgid "R Workspace (Data and Functions)"
-msgstr ""
+msgstr "R-työtila (data ja funktiot)"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:80
 #, fuzzy, kde-format
@@ -1575,7 +1548,7 @@ msgstr "Suorita valinta"
 #: rkward/dialogs/rksavemodifieddialog.cpp:116
 #, kde-format
 msgid "Discard all"
-msgstr ""
+msgstr "Hylkää kaikki"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:117
 #, fuzzy, kde-format
@@ -1608,22 +1581,22 @@ msgstr "KDE:n tulostusikkunaa ei voi avata"
 #: rkward/dialogs/rksetupwizard.cpp:131
 #, kde-format
 msgid "RKWard is currently using the R installation at <nobr>%1</nobr>."
-msgstr ""
+msgstr "RKWard käyttää tällä hetkellä R-asennusta sijainnissa <nobr>%1</nobr>."
 
 #: rkward/dialogs/rksetupwizard.cpp:139
 #, kde-format
 msgid "<b>R backend has failed to start.</b>"
-msgstr ""
+msgstr "<b>R-taustajärjestelmän käynnistäminen epäonnistui.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:141
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
-msgstr ""
+msgstr "<b>R-taustajärjestelmä on kaatunut.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:148
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
-msgstr ""
+msgstr "<b>R:n version %1 käynnistäminen onnistui.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:151
 #, kde-format
@@ -1638,7 +1611,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:165
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
-msgstr ""
+msgstr "<b>Odotetaan R-taustajärjestelmää…</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
@@ -1648,12 +1621,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:188
 #, kde-format
 msgid "Select another R executable"
-msgstr ""
+msgstr "Valitse toinen R-ohjelmatiedosto"
 
 #: rkward/dialogs/rksetupwizard.cpp:190
 #, kde-format
 msgid "Select R executable"
-msgstr ""
+msgstr "Valitse R-ohjelmatiedosto"
 
 #: rkward/dialogs/rksetupwizard.cpp:206
 #, kde-format
@@ -1663,17 +1636,17 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:209
 #, kde-format
 msgid "Attempt to restart R at %1"
-msgstr ""
+msgstr "Yritä käynnistää R uudelleen %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:210
 #, kde-format
 msgid "Keep current version (%1)"
-msgstr ""
+msgstr "Pidä nykyinen versio (%1)"
 
 #: rkward/dialogs/rksetupwizard.cpp:242
 #, kde-format
 msgid "No action needed."
-msgstr ""
+msgstr "Toimenpiteitä ei vaadita."
 
 #: rkward/dialogs/rksetupwizard.cpp:277
 #, fuzzy, kde-format
@@ -1693,6 +1666,8 @@ msgid ""
 "(Attempt to) install the package %1 and its dependencies for this version of "
 "R. In most cases, this requires a working internet connection."
 msgstr ""
+"Asenna (tai yritä asentaa) paketti %1 riippuvuuksineen tähän R:n versioon. "
+"Useimmiten tämä vaatii toimivaa internetyhteyttä."
 
 #: rkward/dialogs/rksetupwizard.cpp:279 rkward/dialogs/rksetupwizard.cpp:290
 #: rkward/dialogs/rksetupwizard.cpp:350
@@ -1707,6 +1682,8 @@ msgid ""
 "Proceed without the package. You will again be given the option to install "
 "the package, when the package is needed."
 msgstr ""
+"Jatka ilman pakettia. Pakettia tarvittaessa sinulle tarjotaan jälleen sen "
+"asennusmahdollisuutta."
 
 #: rkward/dialogs/rksetupwizard.cpp:281 rkward/dialogs/rksetupwizard.cpp:301
 #, fuzzy, kde-format
@@ -1721,6 +1698,8 @@ msgid ""
 "will be prompted with a link to a download page at the last page of this "
 "dialog)"
 msgstr ""
+"Merkitse %1 asennettavaksi (varsinaista asennusta ei vielä tueta, mutta "
+"ikkunan viimeisellä sivulla sinulle tarjotaan linkki lataussivulle)"
 
 #: rkward/dialogs/rksetupwizard.cpp:290
 #, kde-format
@@ -1752,6 +1731,8 @@ msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of RKWard has been detected.</p>"
 msgstr ""
+"<p>Opastettu asennus on automaattisesti käynnistetty, koska havaittiin "
+"RKWardin uusi versio.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:319
 #, kde-format
@@ -1759,6 +1740,8 @@ msgid ""
 "<p>The setup assistant has been invoked, automatically, because a new "
 "version of R has been detected.</p>"
 msgstr ""
+"<p>Opastettu asennus on automaattisesti käynnistetty, koska havaittiin R:n "
+"uusi versio.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:332
 #, fuzzy, kde-format
@@ -1790,12 +1773,13 @@ msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
 "RKWard."
 msgstr ""
+"Ongelmaa ei voi automaattisesti korjata. RKWard on asennettava uudelleen."
 
 #: rkward/dialogs/rksetupwizard.cpp:341 rkward/dialogs/rksetupwizard.cpp:354
 #: rkward/dialogs/rksetupwizard.cpp:378
 #, kde-format
 msgid "Found."
-msgstr ""
+msgstr "Löytyi."
 
 #: rkward/dialogs/rksetupwizard.cpp:345
 #, fuzzy, kde-format
@@ -1807,6 +1791,8 @@ msgstr "RKWard-liitännäiset"
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr ""
+"<p>Liitännäisiä ei ole otettu käyttöön. Näin todennäköisesti ei ole "
+"tarkoitus.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:348
 #, fuzzy, kde-format
@@ -1829,7 +1815,7 @@ msgstr "Salli muokkaus"
 #: rkward/dialogs/rksetupwizard.cpp:350
 #, kde-format
 msgid "Proceed without plugins"
-msgstr ""
+msgstr "Jatka liitännäisittä"
 
 #: rkward/dialogs/rksetupwizard.cpp:358
 #, fuzzy, kde-format
@@ -1844,6 +1830,9 @@ msgid ""
 "like none are installed on this system. On Linux/BSD, this can usually be "
 "fixed by installing kate.</p>"
 msgstr ""
+"<p>Kate-liitännäiset tarjoavat RKWardiin tärkeitä toimintoja. Yhtäkään ei "
+"vaikuta olevan asennettu järjestelmään. Linuxissa ja BSD:ssä tämän voi "
+"yleensä korjata asentamalla Katen.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:362
 #, fuzzy, kde-format
@@ -1862,12 +1851,12 @@ msgstr[1] "Ei pyydettyä liitännäistä"
 #: rkward/dialogs/rksetupwizard.cpp:370
 #, kde-format
 msgid "Pre 0.7.3 output file"
-msgstr ""
+msgstr "0.7.3:a edeltävä tulostiedosto"
 
 #: rkward/dialogs/rksetupwizard.cpp:373
 #, kde-format
 msgid "Exists"
-msgstr ""
+msgstr "On olemassa"
 
 #: rkward/dialogs/rksetupwizard.cpp:375
 #, kde-format
@@ -1877,7 +1866,7 @@ msgstr "Tuo"
 #: rkward/dialogs/rksetupwizard.cpp:375
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
-msgstr ""
+msgstr "Tuo istuntoon, jotta voit tallentaa uuteen tulosmuotoon."
 
 #: rkward/dialogs/rksetupwizard.cpp:376
 #, fuzzy, kde-format
@@ -1910,6 +1899,8 @@ msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
 "required."
 msgstr ""
+"R2HTML-pakettia käyttävät lähes kaikki RKWardin tulosfunktiot, ja siksi se "
+"vaaditaan."
 
 #: rkward/dialogs/rksetupwizard.cpp:437
 #, kde-format
@@ -1917,11 +1908,13 @@ msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
 "preview rendering), which is an optional but recommended feature."
 msgstr ""
+"rmarkdown-pakettia vaaditaan .Rmd-tiedostojen hahmonnukseen (myös "
+"esikatselussa), joka on valinnainen mutta suositeltava ominaisuus."
 
 #: rkward/dialogs/rksetupwizard.cpp:442
 #, kde-format
 msgid "External software"
-msgstr ""
+msgstr "Ulkoiset ohjelmat"
 
 #: rkward/dialogs/rksetupwizard.cpp:444
 #, kde-format
@@ -1929,6 +1922,8 @@ msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
 "Rmd) files. This is optional but recommended."
 msgstr ""
+"pandoc-ohjelmasta on apua R-Markdown-tiedostojen (.Rmd) hahmonnuksessa tai "
+"esikatselussa. Tämä on valinnaista mutta suositeltavaa."
 
 #: rkward/dialogs/rksetupwizard.cpp:445
 #, kde-format
@@ -1936,11 +1931,13 @@ msgid ""
 "The kbibtex software is useful for managing citations while writing "
 "articles. It integrates into RKWard via the Document Preview kate plugin."
 msgstr ""
+"kbibtex-ohjelmasta on apua lähteiden hallinnassa artikkeleita "
+"kirjoitettaessa. Se yhdistyy RKWardiin Katen tiedostoesikatselun kautta."
 
 #: rkward/dialogs/rksetupwizard.cpp:450
 #, kde-format
 msgid "Summary of the next steps"
-msgstr ""
+msgstr "Seuraavien vaiheiden yhteenveto"
 
 #: rkward/dialogs/rksetupwizard.cpp:467
 #, kde-format
@@ -1948,11 +1945,13 @@ msgid ""
 "<h1>Reinstallation required</h1><p>Your installation of RKWard is broken, "
 "and cannot be fixed, automatically. You will have to reinstall RKWard!</p>"
 msgstr ""
+"<h1>Uudelleenasennus vaaditaan</h1><p>RKWard-asennus on rikki eikä sitä voi "
+"automaattisesti korjata. RKWard on asennettava uudelleen!</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:470
 #, kde-format
 msgid "<h2>Software to install</h2>"
-msgstr ""
+msgstr "<h2>Asennettavia ohjelmia</h2>"
 
 #: rkward/dialogs/rksetupwizard.cpp:480
 #, kde-format
@@ -1965,12 +1964,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:482
 #, kde-format
 msgid "No software to install"
-msgstr ""
+msgstr "Ei asennettavia ohjelmia"
 
 #: rkward/dialogs/rksetupwizard.cpp:484
 #, kde-format
 msgid "<h2>R packages to install</h2>"
-msgstr ""
+msgstr "<h2>Asennettavia R-paketteja</h2>"
 
 #: rkward/dialogs/rksetupwizard.cpp:486
 #, kde-format
@@ -1979,11 +1978,13 @@ msgid ""
 "dialog will be started when you press finish. You may be prompted to select "
 "a download mirror.</p>"
 msgstr ""
+"<p>%1 R-pakettia merkittiin asennettaviksi. R-pakettiasennusikkuna avataan "
+"napsautettuasi ”Lopeta”. Sinulta saatetaan kysyä latauspeilipalvelinta.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:488
 #, kde-format
 msgid "No R packages to install"
-msgstr ""
+msgstr "Ei asennettavia R-paketteja"
 
 #: rkward/main.cpp:176
 #, kde-format
@@ -2079,7 +2080,7 @@ msgstr ""
 #: rkward/main.cpp:185
 #, kde-format
 msgid "Jan Dittrich"
-msgstr ""
+msgstr "Jan Dittrich"
 
 #: rkward/main.cpp:186
 #, kde-format
@@ -2214,7 +2215,7 @@ msgstr "Pahoittelemme, jos unohduit. Ota yhteyttä niin lisäämme sinut!"
 #: rkward/main.cpp:199
 #, kde-format
 msgid "How to cite:"
-msgstr ""
+msgstr "Miten viitata:"
 
 #: rkward/main.cpp:199
 #, kde-format
@@ -3013,7 +3014,7 @@ msgstr "&Funktioviite"
 #: rkward/misc/rkstandardactions.cpp:137
 #, kde-format
 msgid "[No keyword detected]"
-msgstr ""
+msgstr "[Hakusanaa ei havaittu]"
 
 #: rkward/misc/rkstandardactions.cpp:171
 #, fuzzy, kde-format
@@ -3464,17 +3465,17 @@ msgstr "Valitse"
 #: rkward/plugin/rkpluginbrowser.cpp:127
 #, kde-format
 msgid "The file or directory does not exist."
-msgstr ""
+msgstr "Tiedostoa tai kansiota ei ole olemassa."
 
 #: rkward/plugin/rkpluginbrowser.cpp:130
 #, kde-format
 msgid "Only files (not directories) are acceptable, here."
-msgstr ""
+msgstr "Tässä hyväksytään vain tiedostot (ei kansioita)."
 
 #: rkward/plugin/rkpluginbrowser.cpp:133
 #, kde-format
 msgid "Only directories (not files) are acceptable, here."
-msgstr ""
+msgstr "Tässä hyväksytään vain kansiot (ei tiedostoja)."
 
 #: rkward/plugin/rkpluginbrowser.cpp:143
 #, kde-format
@@ -3484,7 +3485,7 @@ msgstr "Annettuun tiedostoon ei voi kirjoittaa."
 #: rkward/plugin/rkpluginbrowser.cpp:146
 #, kde-format
 msgid "You have to specify a filename (not directory) to write to."
-msgstr ""
+msgstr "On annettava tiedostonimi (ei kansio), johon kirjoitetaan."
 
 #: rkward/plugin/rkpluginbrowser.cpp:152
 #, kde-format
@@ -3725,6 +3726,8 @@ msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
+"RKward ei onnistunut havaitsemaan järjestelmässä R-asennusta. Joko R:ää ei "
+"ole asennettu tai se ei ole missään vakiopaikoista."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, kde-format
@@ -3732,6 +3735,8 @@ msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
 "executable."
 msgstr ""
+"Asetettua R-asennusta sijainnissa <b>%1</b> ei ole olemassa tai se ei ole "
+"suoritettava."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:220
 #, kde-format
@@ -3870,11 +3875,14 @@ msgid ""
 "requires a recompilation.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
+"R-grafiikkamoottorin versio on muuttunut (vanha %1, uusi %2).<br>Muutos "
+"vaatii uudelleenkoostamisen.<br><a href=\"rkward://page/"
+"rkward_incompatible_version\">Lisätietoa</a>"
 
 #: rkward/rbackend/rkrbackend.cpp:1692
 #, kde-format
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 #: rkward/rbackend/rkrinterface.cpp:88
 #, kde-format
@@ -3924,7 +3932,7 @@ msgstr "Vaaditaan paketti ”%1”"
 #: rkward/rbackend/rkrinterface.cpp:680
 #, kde-format
 msgid "Quitting was canceled"
-msgstr ""
+msgstr "Lopettaminen peruttiin"
 
 #: rkward/rbackend/rkrinterface.cpp:682
 #, kde-format
@@ -3973,7 +3981,7 @@ msgstr "Tiedostoa %1 ei voitu avata luettavaksi"
 #: rkward/rbackend/rkrinterface.cpp:803
 #, kde-format
 msgid "Error: unrecognized request '%1'"
-msgstr ""
+msgstr "Virhe: tunnistamaton pyyntö ”%1”"
 
 #: rkward/rbackend/rkrinterface.cpp:884
 #, kde-format
@@ -4030,11 +4038,13 @@ msgstr ""
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
+"<p>Katso seuraava kaavio painamalla Enter tai keskeytä napsauttamalla ”Peru”."
+"</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:637
 #, kde-format
 msgid "Ok to show next plot?"
-msgstr ""
+msgstr "Näytetäänkö seuraava kaavio?"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -4043,6 +4053,8 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
+"Yritettäessä yhdistää näyttögrafiikan taustajärjestelmään tapahtui virhe. "
+"Näyttögrafiikka RKWard-laitteella ei toimi tässä istunnossa."
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -4076,12 +4088,12 @@ msgstr "R-konsoli"
 #: rkward/rkconsole.cpp:120
 #, kde-format
 msgid "Scrollbar minimap"
-msgstr ""
+msgstr "Vierityspalkin pienoiskartta"
 
 #: rkward/rkconsole.cpp:122
 #, kde-format
 msgid "Dynamic word wrap"
-msgstr ""
+msgstr "Dynaaminen rivitys"
 
 #: rkward/rkconsole.cpp:480
 #, kde-format
@@ -4214,7 +4226,7 @@ msgstr ""
 #: rkward/rkward.cpp:305
 #, kde-format
 msgid "A note on external links"
-msgstr ""
+msgstr "Huomautus ulkoisista linkeistä"
 
 #: rkward/rkward.cpp:317
 #, kde-format
@@ -4328,7 +4340,7 @@ msgstr "Tulosikkuna"
 #: rkward/rkward.cpp:492
 #, kde-format
 msgid "Creates and activates a new output document"
-msgstr ""
+msgstr "Luo ja aktivoi uuden tulostiedoston"
 
 #: rkward/rkward.cpp:497
 #, kde-format
@@ -4499,16 +4511,19 @@ msgid ""
 "save your workspace, and you see this message, <b>your data may not be "
 "saved, yet!</b></p><p>How do you want to proceed?</p>"
 msgstr ""
+"<p>Yksi tai useampia toimenpiteitä on jonossa.</p><p>Jos olet vastikään "
+"valinnut tallentaa työtilan ja näet tämän viestin, <b>dataa ei ole vielä "
+"tallennettu</b>!</p><p>Miten haluat jatkaa?</p>"
 
 #: rkward/rkward.cpp:643
 #, kde-format
 msgid "R commands still pending"
-msgstr ""
+msgstr "R-komentoja yhä jonossa"
 
 #: rkward/rkward.cpp:643
 #, kde-format
 msgid "Force restart now"
-msgstr ""
+msgstr "Pakota uudelleenkäynnistys nyt"
 
 #: rkward/rkward.cpp:643
 #, fuzzy, kde-format
@@ -4519,7 +4534,7 @@ msgstr "Virheellinen asennus"
 #: rkward/rkward.cpp:643
 #, kde-format
 msgid "Cancel restarting"
-msgstr ""
+msgstr "Peru uudelleenkäynnistys"
 
 #: rkward/rkward.cpp:782
 #, kde-format
@@ -4583,6 +4598,8 @@ msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
+"R-moottori ei ole käytettävissä. Katso mahdollisia ratkaisuja kohdasta <a "
+"href=\"rkward://page/rkward_trouble_shooting\">ongelmanratkaisu</a>."
 
 #: rkward/rkward.cpp:1005
 #, fuzzy, kde-format
@@ -4956,7 +4973,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:86
 #, kde-format
 msgid "'@'-operator (object@member)"
-msgstr ""
+msgstr "”@”-operaattori (olio@jäsen)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:86
 #, kde-format
@@ -5740,7 +5757,7 @@ msgstr "R-taustaosa"
 #: rkward/settings/rksettingsmoduler.cpp:209
 #, kde-format
 msgid "Add System Path Directory"
-msgstr ""
+msgstr "Lisää kansio järjestelmäpolkuun"
 
 #: rkward/settings/rksettingsmoduler.cpp:211
 #, kde-format
@@ -5748,6 +5765,8 @@ msgid ""
 "Specify or select directory to add to the system file path of the running R "
 "session"
 msgstr ""
+"Määritä tai valitse käynnissä olevan R-istunnon järjestelmäpolkuun lisättävä "
+"kansio"
 
 #: rkward/settings/rksettingsmoduler.cpp:218
 #, kde-format
@@ -5769,7 +5788,7 @@ msgstr "Valitse peilipalvelin"
 #: rkward/settings/rksettingsmoduler.cpp:333
 #, kde-format
 msgid "Additional package repositories (where libraries are downloaded from)"
-msgstr "Lisäpakettilähteet (joista kirjastoja voidaan ladata)"
+msgstr "Lisäasennuslähteet (joista kirjastoja voi ladata)"
 
 #: rkward/settings/rksettingsmoduler.cpp:339
 #, kde-format
@@ -5808,6 +5827,9 @@ msgid ""
 "installed from development repositories. Use the button \"%1\", to install "
 "such packages, comfortably."
 msgstr ""
+"Jotkin lisäosapaketit eivät ole saatavilla CRAN-asennuslähteessä, mutta ne "
+"voi asentaa kehitysasennuslähteistä. Painikkeella ”%1” näitä paketteja voi "
+"asentaa mukavasti."
 
 #: rkward/settings/rksettingsmoduler.cpp:361
 #, kde-format
@@ -5845,12 +5867,12 @@ msgstr "Lisää"
 #: rkward/settings/rksettingsmoduler.cpp:442
 #, kde-format
 msgid "Add repository"
-msgstr "Lisää pakettilähde"
+msgstr "Lisää asennuslähde"
 
 #: rkward/settings/rksettingsmoduler.cpp:442
 #, kde-format
 msgid "Add URL of new repository"
-msgstr "Anna uuden pakettilähteen verkko-osoite"
+msgstr "Anna uuden asennuslähteen verkko-osoite"
 
 #: rkward/settings/rksettingsmoduler.cpp:448
 #, kde-format
