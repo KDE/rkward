@@ -15,6 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <name xml:lang="en-GB">RKWard</name>
   <name xml:lang="eo">RKWard</name>
   <name xml:lang="es">RKWard</name>
+  <name xml:lang="fi">RKWard</name>
   <name xml:lang="fr">RKWard</name>
   <name xml:lang="gl">RKWard</name>
   <name xml:lang="id">RKWard</name>
@@ -100,6 +101,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="en-GB">Main window, with data editor, object browser, interactive R console, and further tool windows.</caption>
       <caption xml:lang="eo">Ĉefa fenestro, kun datumredaktilo, objektfoliumilo, interaga R-konzolo, kaj pliaj ilfenestroj.</caption>
       <caption xml:lang="es">Ventana principal, con el editor de datos, el navegador de objetos, la consola interactiva de R y otras ventanas con herramientas adicionales.</caption>
+      <caption xml:lang="fi">Pääikkuna, jossa datamuokkain, olioselain, vuorovaikutteinen R-konsoli ja lisätyökaluikkunoita.</caption>
       <caption xml:lang="fr">Fenêtre principale avec l'éditeur de données, le navigateur d'objets, la console interactive de R et d'autres fenêtres d'outils.</caption>
       <caption xml:lang="gl">Xanela principal, co editor de datos, o navegador de obxectos, a consola interactiva de R, e outras xanelas de ferramentas.</caption>
       <caption xml:lang="id">Jendela utama, dengan editor data, browser objek, konsol R interaktif, dan jendela alat lebih lanjut.</caption>
@@ -126,6 +128,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="en-GB">Script editor with active preview</caption>
       <caption xml:lang="eo">Skripta redaktilo kun aktiva antaŭrigardo</caption>
       <caption xml:lang="es">Editor de scripts con vista previa activa</caption>
+      <caption xml:lang="fi">Skriptimuokkain aktiivisella esikatselulla</caption>
       <caption xml:lang="fr">Éditeur de scripts avec aperçu actif.</caption>
       <caption xml:lang="gl">Editor de guións con vista previa activa.</caption>
       <caption xml:lang="id">Pengedit skrip dengan pratinjau yang aktif</caption>
@@ -151,6 +154,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="en-GB">Working with data in RKWard</caption>
       <caption xml:lang="eo">Laborante kun datenoj en RKWard</caption>
       <caption xml:lang="es">Trabajando con datos en RKWard</caption>
+      <caption xml:lang="fi">Datatyöskentelyä RKWardissa</caption>
       <caption xml:lang="fr">Travailler avec des données dans RKWard</caption>
       <caption xml:lang="gl">Traballando con datos en RKWard.</caption>
       <caption xml:lang="id">Bekerja dengan data di RKWard</caption>
@@ -176,6 +180,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="en-GB">Searching objects by name, searching for help pages, and in-app help viewer</caption>
       <caption xml:lang="eo">Serĉante objektojn laŭ nomo, serĉante helpopaĝojn, kaj en-aplika helpvidilo</caption>
       <caption xml:lang="es">Búsqueda de objetos por nombre, búsqueda de páginas de ayuda y visor de ayuda integrado en la aplicación</caption>
+      <caption xml:lang="fi">Olioiden haku nimellä, ohjesivujen haku ja sisään rakennettu ohjekatselin</caption>
       <caption xml:lang="fr">Recherche d'objets par nom, de pages d'aide ou recherche dans l'afficheur d'aide intégré.</caption>
       <caption xml:lang="gl">Buscar obxectos por nome, buscar páxinas de axuda, e visor de axuda dentro da aplicación.</caption>
       <caption xml:lang="id">Pencarian objek berdasarkan nama, pencarian untuk halaman bantuan, dan penampil bantuan dalam-apl</caption>
