@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-10-20 06:26+0200\n"
+"PO-Revision-Date: 2024-11-27 03:38+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -127,7 +127,7 @@ msgstr ""
 #: rkward/agents/rksaveagent.cpp:56
 #, kde-format
 msgid "Overwrite File?"
-msgstr "Sovrascrivo il file?"
+msgstr "Vuoi sovrascrivere il file?"
 
 #: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:880
 #, kde-format
@@ -178,7 +178,7 @@ msgid ""
 "A command running in the R-engine wants you to see the following file(s):"
 "<ul><li>"
 msgstr ""
-"Un comando in esecuzione nel motore di R vuole che tu veda i seguenti file:\n"
+"Un comando in esecuzione nel motore di R vuole che tu veda i seguenti file:"
 "<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:82
@@ -247,7 +247,7 @@ msgstr ""
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
 msgid "Restore object?"
-msgstr "Ripristinare l'oggetto?"
+msgstr "Vuoi ripristinare l'oggetto?"
 
 #: rkward/core/rkmodificationtracker.cpp:75
 #, kde-format
@@ -264,14 +264,13 @@ msgstr ""
 #: rkward/core/rkmodificationtracker.cpp:80
 #, kde-format
 msgid "Remove object?"
-msgstr "Rimuovere l'oggetto?"
+msgstr "Vuoi rimuovere l'oggetto?"
 
 #: rkward/core/rkmodificationtracker.cpp:80
 #, kde-format
 msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
-msgstr ""
-"Vuoi veramente rimuovere l'oggetto «%1»? Non c'è modo di riaverlo indietro."
+msgstr "Vuoi davvero rimuovere l'oggetto «%1»? Non c'è modo di recuperarlo."
 
 #: rkward/core/rkmodificationtracker.cpp:351
 #: rkward/dataeditor/rkvareditmodel.cpp:679
@@ -310,7 +309,7 @@ msgstr "Classe"
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
-msgstr "Namespace orfani"
+msgstr "Spazi dei nomi orfani"
 
 #: rkward/core/rkpseudoobjects.cpp:141
 #, kde-format
@@ -437,8 +436,8 @@ msgid ""
 msgstr ""
 "Questa sezione contiene gli ambienti che non sono parte di <i>.GlobalEnv</i> "
 "o del tuo «spazio di lavoro». Più importante, include i pacchetti caricati "
-"ma anche gli oggetti aggiunti al percorso <i>search()</i> usando "
-"l'<i>attach()</i> di R."
+"ma anche gli oggetti aggiunti al percorso <i>search()</i> di R usando "
+"<i>attach()</i>."
 
 #: rkward/core/robjectlist.cpp:87
 #, kde-format
@@ -702,7 +701,7 @@ msgid ""
 "sure to fill in the missing bits - in English - where indicated, especially "
 "in the \"Comment\" field.</p>"
 msgstr ""
-"<p><b>Quali informazioni dovrei fornire, e come?</b></p>Facendo clic su "
+"<p><b>Quali informazioni dovrei fornire, e come?</b></p><p>Facendo clic su "
 "«Segnala un problema» verrai portato nel sistema di tracciamento degli "
 "errori di KDE. Una volta effettuato l'accesso, alcune informazioni sono già "
 "precompilate nel modulo di rapporto. Assicurati di riempire i pezzi mancati "
@@ -1741,7 +1740,7 @@ msgstr "Estensioni di RKWard"
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr ""
-"<p> Nessuna estensione abilitata. Questo probabilmente non è previsto.</p>"
+"<p>Nessuna estensione abilitata. Questo probabilmente non è previsto.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:155
 #, kde-format
@@ -1966,7 +1965,7 @@ msgstr ""
 "RKWard non è riuscito a rilevare un'installazione di R su questo sistema. R "
 "non è installato o non si trova in una delle posizioni di installazione "
 "standard. È possibile utilizzare il parametro della riga di comando «--r-"
-"executable <i> auto / PERCORSO_A_R</i>» o fornire un file rkward.ini per "
+"executable  <i>auto / PERCORSO_A_R</i>» o fornire un file rkward.ini per "
 "specificare un percorso non standard."
 
 #: rkward/main.cpp:221
@@ -2334,8 +2333,8 @@ msgid ""
 msgstr ""
 "L'eseguibile R specificato al momento della compilazione (%1) non esiste o "
 "non è eseguibile. Probabilmente l'installazione di R è stata spostata. È "
-"possibile utilizzare il parametro della riga di comando «--r-executable <i> "
-"auto / PERCORSO_A_R</i>» o fornire un file rkward.ini per specificare la "
+"possibile utilizzare il parametro della riga di comando «--r-executable "
+"<i>auto / PERCORSO_A_R</i>» o fornire un file rkward.ini per specificare la "
 "nuova posizione."
 
 #: rkward/misc/celleditor.cpp:49
@@ -2537,7 +2536,7 @@ msgstr ""
 "Profondità di ricerca nell'albero dell'oggetto.<ul><li><i>%1</i> significa "
 "cercare le corrispondenze negli oggetti che sono solo nel percorso di "
 "ricerca (in <i>.GlobalEnv</i> oppure in un pacchetto caricato)</li><li><i>"
-"%2</i> include gli oggetti che sono figli diretti. In questo caso l'elenco "
+"%2</i>  include gli oggetti che sono figli diretti. In questo caso l'elenco "
 "mostrerà solo gli oggetti corrispondenti nel percorso di ricerca <i>e</i> "
 "quelli nel percorso di ricerca che include gli oggetti figlio corrispondenti."
 "</li>"
@@ -2617,7 +2616,7 @@ msgstr "Sei sicuro di voler sovrascrivere il file esistente «%1»?"
 #: rkward/misc/rkoutputdirectory.cpp:152 rkward/plugin/rkpluginbrowser.cpp:136
 #, kde-format
 msgid "Overwrite?"
-msgstr "Sovrascrivo?"
+msgstr "Vuoi sovrascrivere?"
 
 #: rkward/misc/rkoutputdirectory.cpp:154 rkward/misc/rkoutputdirectory.cpp:340
 #, kde-format
@@ -2836,7 +2835,7 @@ msgstr "Annulla e chiudi"
 #: rkward/misc/rkprogresscontrol.cpp:545
 #, kde-format
 msgid "An operation is still running, please wait."
-msgstr "Un'operazione è ancora in corso, attendi."
+msgstr "Un'operazione è ancora in esecuzione, attendi."
 
 #: rkward/misc/rksaveobjectchooser.cpp:44
 #, kde-format
@@ -3189,7 +3188,7 @@ msgid ""
 "The plugin has crashed."
 msgstr ""
 "\n"
-"L'estensione è andata in crash."
+"L'estensione si è arrestata in modo anomalo."
 
 #: rkward/plugin/rkcomponentmap.cpp:508
 #, kde-format
@@ -3499,7 +3498,7 @@ msgid ""
 "<b>Note:</b> The given file already exists, and will be modified / "
 "overwritten."
 msgstr ""
-"<b>Nota:</b> il file specificato esiste già: sarà modificato o sovrascritto."
+"<b>Nota:</b> il file specificato esiste già: sarà modificato / sovrascritto."
 
 #: rkward/plugin/rkpluginbrowser.cpp:156
 #, kde-format
@@ -3782,7 +3781,7 @@ msgstr "Il processo del motore è terminato con codice %1, messaggio «%2»."
 #: rkward/rbackend/rkrbackend.cpp:572
 #, kde-format
 msgid "The R engine has shut down with status: %1"
-msgstr "Il motore di R si è chiuso con lo stato: %1"
+msgstr "Il motore di R si è spento con lo stato: %1"
 
 #: rkward/rbackend/rkrbackend.cpp:593
 #, kde-format
@@ -4051,7 +4050,7 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
 msgid "Expected connection token %1, but read connection token %2"
-msgstr "Gettone di connessione atteso %1, ma letto %2"
+msgstr "Token di connessione atteso %1, ma letto %2"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -4110,7 +4109,8 @@ msgstr "Seleziona un nome di file per salvare la cronologia dei comandi"
 #: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
-msgstr "File di cronologia di R [*.Rhistory](*.Rhistory);;Tutti i file [*](*)"
+msgstr ""
+"File di cronologia di R [*.Rhistory] (*.Rhistory);;Tutti i file [*] (*)"
 
 #: rkward/rkconsole.cpp:867
 #, kde-format
@@ -4469,7 +4469,7 @@ msgstr "Chiudi tutti"
 #: rkward/windows/rkworkplaceview.cpp:96
 #, kde-format
 msgid "Detach"
-msgstr "Stacca"
+msgstr "Sgancia"
 
 #: rkward/rkward.cpp:575
 #, kde-format
@@ -5820,7 +5820,7 @@ msgstr "Comando cambiadesktop"
 #: rkward/settings/rksettingsmoduler.cpp:145
 #, kde-format
 msgid "Further (option) commands to run in each session"
-msgstr "Ulteriori (opzioni per i) comandi da eseguire in ogni sessione"
+msgstr "Ulteriori (opzioni) comandi da eseguire in ogni sessione"
 
 #: rkward/settings/rksettingsmoduler.cpp:155
 #, kde-format
@@ -6151,7 +6151,7 @@ msgstr "in Script aperti"
 #: rkward/windows/rcontrolwindow.cpp:45 rkward/windows/rcontrolwindow.cpp:131
 #, kde-format
 msgid "Pause execution"
-msgstr "Metti in pausa l'esecuzione"
+msgstr "Sospendi l'esecuzione"
 
 #: rkward/windows/rcontrolwindow.cpp:50
 #, kde-format
