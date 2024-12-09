@@ -361,8 +361,8 @@ msgid ""
 msgstr ""
 "Para re-ejecutar (una secuencia de) órdenes seleccionadas, selecciónelas "
 "usando el ratón. Después elija «Ejecutar la selección» desde el menú "
-"contextual (el acceso rápido por omisión es Ctrl+Intro). Los símbolos «>» y "
-"«+» al principio de las líneas seleccionadas serán eliminados "
+"contextual (el atajo de teclado por omisión es Ctrl+Intro). Los símbolos «>» "
+"y «+» al principio de las líneas seleccionadas serán eliminados "
 "automáticamente."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
@@ -392,7 +392,7 @@ msgid ""
 "Note that the customary shortcut for copying text - Ctrl+C - does NOT work "
 "in the console, as Ctrl+C already means interrupting the current command."
 msgstr ""
-"Tenga en cuenta que el acceso rápido habitual para copiar texto - Ctrl+C - "
+"Tenga en cuenta que el atajo de teclado habitual para copiar texto (Ctrl+C) "
 "NO funciona en la consola, ya que Ctrl+C significa interrumpir la orden "
 "actual."
 
@@ -1832,7 +1832,7 @@ msgstr ""
 #: rkward/pages/rkward_shortcuts.rkh:8
 #, kde-format
 msgid "RKWard Shortcut keys"
-msgstr "Teclas de acceso rápido de RKWard"
+msgstr "Atajos de teclado de RKWard"
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1844,8 +1844,8 @@ msgid ""
 "the menu."
 msgstr ""
 "Puede controlar RKWard en muchas situaciones sin usar un ratón. La manera "
-"más sencilla de descubrir accesos rápidos de teclado es navegar por los "
-"menús. Estos accesos se listan junto a su acción en los menús."
+"más sencilla de descubrir atajos de teclado es navegar por los menús. Estos "
+"atajos de teclado se listan junto a su acción en los menús."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1877,14 +1877,14 @@ msgid ""
 "Settings->Configure Shortcuts. Most shortcuts for the script editor are "
 "managed separately using Settings->Configure Editor->Shortcuts."
 msgstr ""
-"La mayoría de accesos rápidos son configurables usando Preferencias-"
-">Configurar accesos rápidos. Por razones técnicas, solo los accesos rápidos "
-"de los componentes activos en el momento serán mostrados. Por ejemplo, si "
-"quiere editar los accesos rápidos para el editor de datos, primero debe "
-"abrir el editor de datos y luego seleccionar Preferencias->Configurar "
-"accesos rápidos. La mayoría de accesos rápidos del editor de scripts se "
-"configuran de manera separada usando Preferencias->Configurar editor-"
-">Accesos rápidos."
+"La mayoría de atajos de teclado son configurables usando Preferencias-"
+">Configurar atajos de teclado. Por razones técnicas, solo los atajos de "
+"teclado de los componentes activos en el momento serán mostrados. Por "
+"ejemplo, si quiere editar los atajos de teclado para el editor de datos, "
+"primero debe abrir el editor de datos y luego seleccionar Preferencias-"
+">Configurar atajos de teclado. La mayoría de atajos de teclado del editor de "
+"scripts se configuran de manera separada usando Preferencias->Configurar "
+"editor->Atajos de teclado."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1893,23 +1893,22 @@ msgid ""
 "On most systems, you can also configure shortcuts by right-clicking on the "
 "respective menu item."
 msgstr ""
-"En la mayoría de sistemas, puede configurar además los accesos rápidos de "
-"teclado pulsando el botón derecho del ratón en la opción de menú "
-"correspondiente."
+"En la mayoría de sistemas, puede configurar además los atajos de teclado "
+"pulsando el botón derecho del ratón en la opción de menú correspondiente."
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="...">
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "RKWard Default Shortcut keys"
-msgstr "Teclas de acceso rápido por omisión de RKWard"
+msgstr "Atajos de teclado por omisión de RKWard"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "To point out some of the less discoverable or more important shortcuts:"
 msgstr ""
-"Por mostrar algunos de los accesos rápidos de teclado más difíciles de "
-"encontrar o más importantes:"
+"Por mostrar algunos de los atajos de teclado más difíciles de encontrar o "
+"más importantes:"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -2582,7 +2581,7 @@ msgid ""
 "by default."
 msgstr ""
 "El navegador del área de trabajo puede ser invocado usando Ventanas->Activar-"
-">Mostrar / Ocultar el navegador del área de trabajo (el acceso rápido por "
+">Mostrar / Ocultar el navegador del área de trabajo (el atajo de teclado por "
 "omisión es Alt+1), o haciendo clic en el icono de «Área de trabajo», que se "
 "localiza en la parte superior del borde izquierdo de la ventana, por omisión."
 
