@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-02-22 13:07+0300\n"
+"PO-Revision-Date: 2024-12-11 22:37+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 25.03.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -304,7 +304,7 @@ msgstr "EM yinelemelerinin sayısı"
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:39
 #, kde-format
 msgid "Defaults to 40."
-msgstr "Öntanımlı olarak 40'tır."
+msgstr "Öntanımlı olarak 40’tır."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="..."> (refers to element labelled "Number of quasi-Newton iterations:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Number of quasi-Newton iterations:")
@@ -330,7 +330,7 @@ msgstr "Yarı Newton yinelemelerinin sayısı"
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:42
 #, kde-format
 msgid "Defaults to 150."
-msgstr "Öntanımlı olarak 150'dir."
+msgstr "Öntanımlı olarak 150’dir."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="..."> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
@@ -350,7 +350,7 @@ msgstr "Gauss-Hermite kareleme noktalarının sayısı"
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:45
 #, kde-format
 msgid "Defaults to 15."
-msgstr "Öntanımlı olarak 15'tir."
+msgstr "Öntanımlı olarak 15’tir."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="..."> (refers to element labelled "Optimization method:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Optimization method:")
@@ -380,7 +380,7 @@ msgid ""
 "BFGS-B, or SANN instead. Please refer to the <link href=\"rkward://rhelp/"
 "optim\">optim()</link> manual for details."
 msgstr ""
-"Öntanımlı eniyileme yöntemi BFGS'dir. Bunun yerine Nelder-Mead, CG, L-BFGS-B "
+"Öntanımlı eniyileme yöntemi BFGS’dir. Bunun yerine Nelder-Mead, CG, L-BFGS-B "
 "veya SANN olarak ayarlanabilir. Ayrıntılar için lütfen <link href=\"rkward://"
 "rhelp/optim\">optim()</link> kılavuzuna bakın."
 
@@ -862,7 +862,7 @@ msgid ""
 "matrix of manifest variables (dichotomous item responses) must be selected. "
 "Further options are described in the sections below."
 msgstr ""
-"Birnbaum'un üç parametreli modelini öntanımıl ayarlara sığdırmak için "
+"Birnbaum’un üç parametreli modelini öntanımlı ayarlara sığdırmak için "
 "yalnızca görünür değişkenlerin matrisi (ikili madde yanıtları) seçilmelidir. "
 "Diğer seçenekler aşağıdaki bölümlerde açıklanmaktadır."
 
@@ -921,7 +921,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:45
 #, kde-format
 msgid "Defaults to 1000."
-msgstr "Öntanımlı olarak 1000'dir."
+msgstr "Öntanımlı olarak 1000’dir."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="Number of Gauss-Hermite quadrature points"> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Number of Gauss-Hermite quadrature points"> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
@@ -933,7 +933,7 @@ msgstr "Öntanımlı olarak 1000'dir."
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:45
 #, kde-format
 msgid "Defaults to 21."
-msgstr "Öntanımlı olarak 21'dir."
+msgstr "Öntanımlı olarak 21’dir."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="..."> (refers to element labelled "Used optimizer:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="..."> (refers to element labelled "Used optimizer:")
@@ -967,7 +967,7 @@ msgid ""
 "details."
 msgstr ""
 "<i>Yalnızca <code>optim()</code> kullanılırsa:</i> Öntanımlı eniyileme "
-"yöntemi BFGS'dir. Bunun yerine Nelder-Mead, CG, L-BFGS-B veya SANN olarak da "
+"yöntemi BFGS’dir. Bunun yerine Nelder-Mead, CG, L-BFGS-B veya SANN olarak da "
 "ayarlanabilir. Ayrıntılar için lütfen <link href=\"rkward://rhelp/optim"
 "\">optim()</link> kılavuzuna bakın."
 
@@ -978,8 +978,8 @@ msgid ""
 "Used in the central difference approximation that approximates the hessian. "
 "Defaults to 1e-03."
 msgstr ""
-"Hessian'a yaklaşan merkezi fark yaklaşımında kullanılır. Öntanımlı olarak "
-"1e-03'tür."
+"Hessian’a yaklaşan merkezi fark yaklaşımında kullanılır. Öntanımlı olarak "
+"1e-03’tür."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <technical>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <technical>
@@ -1150,8 +1150,8 @@ msgid ""
 "equally sized subsets of data."
 msgstr ""
 "Yinelenen ölçüm geçerliyse veri matrisinde kaç tanesinin temsil edildiğini "
-"belirtin (varsayılanı 1'dir). Bu, matristeki sütunları eşit boyutlu veri alt "
-"kümelerine bölecektir."
+"belirtin (öntanımlı olarak 1’dir). Bu, matristeki sütunları eşit boyutlu "
+"veri alt kümelerine bölecektir."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Group contrasts")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Group contrasts")
@@ -1227,7 +1227,7 @@ msgid ""
 "design matrix. Uncheck this box to restrict the first parameter to 0."
 msgstr ""
 "Öntanımlı olarak parametreler, uygun bir tasarım matrisi belirtilerek toplam "
-"0'a normalleştirilir. İlk parametreyi 0 ile sınırlamak için bu kutunun "
+"0’a normalleştirilir. İlk parametreyi 0 ile sınırlamak için bu kutunun "
 "işaretini kaldırın."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <related>
@@ -1428,7 +1428,7 @@ msgstr "Standart hatayı hesapla"
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:54
 #, kde-format
 msgid "Normalize parameters to sum-0"
-msgstr "Parametreleri toplam 0'a normalleştir"
+msgstr "Parametreleri toplam 0’a normalleştir"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.js:55
@@ -1534,7 +1534,7 @@ msgid ""
 msgstr ""
 "Ayrım parametrelerinin her öge için ayrı ayrı hesaplanması gerekip "
 "gerekmediğini seçin. Alternatif olarak, tüm maddeler için eşit olan bir "
-"ayrımcılık parametresini tahmin edebilir veya bunu tüm maddeler için 1'e "
+"ayrımcılık parametresini tahmin edebilir veya bunu tüm maddeler için 1’e "
 "sabitleyebilirsiniz."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Start values")
@@ -1570,7 +1570,7 @@ msgid ""
 "use central difference approximation, change this to a larger value, e.g., "
 "1e-03 or 1e-04."
 msgstr ""
-"Sayısal türevde kullanılacak adım boyutu. Öntanımlı değer 1e-06'dır. Merkezi "
+"Sayısal türevde kullanılacak adım boyutu. Öntanımlı değer 1e-06’dır. Merkezi "
 "fark yaklaşımı kullanıyorsanız bunu daha büyük bir değerle değiştirin; "
 "örneğin, 1e-03 veya 1e-04."
 
@@ -1626,7 +1626,7 @@ msgstr "Ögeler arasında kaliteli ayrımcılık parametresi"
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:46
 #, kde-format
 msgid "Discrimination parameter fixed at 1 across items"
-msgstr "Ayrım parametresi öğeler arasında 1'de sabittir"
+msgstr "Ayrım parametresi ögeler arasında 1’de sabittir"
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <radio label="Start values"> <option label="...">
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Start values"> <option label="...">
@@ -1724,7 +1724,7 @@ msgid ""
 "Specifies how many digits are used in abbreviating item names. Defaults to 6."
 msgstr ""
 "Öge adlarının kısaltılmasında kaç rakamın kullanılacağını belirtir. "
-"Öntanımlı değer 6'dır."
+"Öntanımlı değer 6’dır."
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:18
@@ -1791,7 +1791,7 @@ msgid ""
 "By default the design matrix for the LPCM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"Öntanımlı olarak, LPCM'nin tasarım matrisi kendiliğinden hesaplanacaktır. "
+"Öntanımlı olarak, LPCM’nin tasarım matrisi kendiliğinden hesaplanacaktır. "
 "Alternatif olarak burada kendi tasarım matrisinizi belirleyebilirsiniz."
 
 #. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="...">
@@ -1829,7 +1829,7 @@ msgid ""
 "By default the design matrix for the LRSM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"Öntanımlı olarak, LRSM'nin tasarım matrisi kendiliğinden hesaplanacaktır. "
+"Öntanımlı olarak, LRSM’nin tasarım matrisi kendiliğinden hesaplanacaktır. "
 "Alternatif olarak burada kendi tasarım matrisinizi belirleyebilirsiniz."
 
 #. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="...">
@@ -1867,7 +1867,7 @@ msgid ""
 "By default the design matrix for the PCM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"Öntanımlı olarak, PCM'nin tasarım matrisi kendiliğinden hesaplanacaktır. "
+"Öntanımlı olarak, PCM’nin tasarım matrisi kendiliğinden hesaplanacaktır. "
 "Alternatif olarak burada kendi tasarım matrisinizi belirleyebilirsiniz."
 
 #. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="...">
@@ -1905,7 +1905,7 @@ msgid ""
 "By default the design matrix for the RSM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"Öntanımlı olarak, RSM'nin tasarım matrisi kendiliğinden hesaplanacaktır. "
+"Öntanımlı olarak, RSM’nin tasarım matrisi kendiliğinden hesaplanacaktır. "
 "Alternatif olarak burada kendi tasarım matrisinizi belirleyebilirsiniz."
 
 #. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="...">
@@ -2024,7 +2024,7 @@ msgstr "nlm()"
 #: rkward/plugins/irt.pluginmap:36
 #, kde-format
 msgid "Cronbach's alpha"
-msgstr "Cronbach'in alfası"
+msgstr "Cronbach’in alfası"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:68
@@ -2176,7 +2176,7 @@ msgstr "Monte Carlo örneklemleri:"
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:49
 #, kde-format
 msgid "Item-Fit Statistics and P-values:"
-msgstr "Öğe uyumu istatistikleri ve P değerleri:"
+msgstr "Öge uyumu istatistikleri ve P değerleri:"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:17
@@ -2493,7 +2493,7 @@ msgstr "Uyum İyiliği (Rasch)"
 #: rkward/plugins/irt.pluginmap:40
 #, kde-format
 msgid "Item-fit statistics (Rasch, LTM, 3PM)"
-msgstr "Öğe uyum istatistikleri (Rasch, LTM, 3PM)"
+msgstr "Öge uyum istatistikleri (Rasch, LTM, 3PM)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:41
@@ -2611,7 +2611,7 @@ msgstr "standart hata eğrilerini çizmek için iki adım gereklidir"
 #, kde-format
 msgctxt "R code comment"
 msgid "first some values are generated..."
-msgstr "önce bazı değerler üretilir..."
+msgstr "önce bazı değerler üretilir…"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2624,7 +2624,7 @@ msgstr "önce bazı değerler üretilir..."
 #, kde-format
 msgctxt "R code comment"
 msgid "... and then they're used to plot the curves:"
-msgstr "... ve sonra eğrileri çizmek için kullanılırlar:"
+msgstr "… ve sonra eğrileri çizmek için kullanılırlar:"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -3067,7 +3067,7 @@ msgstr "Uyumlu kısmi kredi modelini çizdirmek"
 #: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:28
 #, kde-format
 msgid "Plot up to 4 items in one figure"
-msgstr "Bir şekilde 4'e kadar öge çizdir"
+msgstr "Bir şekilde 4’e kadar öge çizdir"
 
 #. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Optional item selection"> <checkbox label="...">
 #. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Optional item selection"> <checkbox label="...">
@@ -3111,7 +3111,7 @@ msgstr "Uyumlu derecelendirme ölçeği modeli çizdiriliyor"
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.js:90
 #, kde-format
 msgid "Andersen's LR test"
-msgstr "Andersen'in LR testi"
+msgstr "Andersen’in LR testi"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:23
