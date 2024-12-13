@@ -1,32 +1,33 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
 # Alexander Potashev <aspotashev@gmail.com>, 2018.
+# SPDX-FileCopyrightText: 2024 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2018-10-13 03:54+0300\n"
-"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
-"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"PO-Revision-Date: 2024-12-12 17:19+0300\n"
+"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Олеся Герасименко"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "translation-team@basealt.ru"
 
 #: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
@@ -34,16 +35,19 @@ msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
+"Не удалось открыть объект «%1» для редактирования. Либо этот объект не "
+"существует, либо RKWard ещё не поддерживает редактирование объектов такого "
+"типа."
 
 #: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
 msgid "Cannot edit '%1'"
-msgstr ""
+msgstr "Невозможно изменить «%1»"
 
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
 msgid "Loading Workspace..."
-msgstr ""
+msgstr "Загрузка рабочей области…"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -51,11 +55,13 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
+"При открытии файла «%1» произошла ошибка:\n"
+"%2"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
 msgid "Error loading workspace"
-msgstr ""
+msgstr "Ошибка загрузки рабочей области"
 
 #: rkward/agents/rkprintagent.cpp:41
 #, kde-format
@@ -65,11 +71,16 @@ msgid ""
 "<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
 "print using a KDE print dialog."
 msgstr ""
+"Не найдена служба, предоставляющая диалоговое окно печати KDE для файлов "
+"PostScript. Вместо этого будет открыто типовое средство просмотра PostScript "
+"(если имеется).<br><br>Рекомендуется установить пакет «okular» или настроить "
+"RKWard так, чтобы программа не пыталась выполнить печать через диалог печати "
+"KDE."
 
 #: rkward/agents/rkprintagent.cpp:41
 #, kde-format
 msgid "Unable to open KDE print dialog"
-msgstr ""
+msgstr "Не удалось открыть диалог печати KDE"
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
@@ -77,11 +88,14 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
+"Ожидание завершения выполнения оставшихся команд R. Чтобы выполнить выход "
+"немедленно, нажмите кнопку «Отмена» (ВНИМАНИЕ: это может привести к потере "
+"данных)"
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
 msgid "Waiting for R to finish"
-msgstr ""
+msgstr "Ожидание завершения R"
 
 #: rkward/agents/rksaveagent.cpp:49
 #, kde-format
@@ -120,12 +134,14 @@ msgid ""
 "time, on a regular sized workspace, this may be due to other commands still "
 "pending completion in the R backend."
 msgstr ""
+"Выполняется сохранение рабочей области. <b>Подсказка:</b> если рабочая "
+"область обычного размера сохраняется необычно долго, причиной этого может "
+"быть наличие других ожидающих завершения команд в серверном приложении R."
 
 #: rkward/agents/rksaveagent.cpp:82
-#, fuzzy, kde-format
-#| msgid "Save Workspace?"
+#, kde-format
 msgid "Saving workspace"
-msgstr "Сохранить рабочую область?"
+msgstr "Сохранение рабочей области"
 
 #: rkward/agents/rksaveagent.cpp:90
 #, kde-format
@@ -138,6 +154,8 @@ msgid ""
 "An error occurred while trying to save the workspace. You data was <b>not</"
 "b> saved."
 msgstr ""
+"При попытке сохранения рабочей области произошла ошибка. Данные <b>не</b> "
+"сохранены."
 
 #: rkward/agents/showedittextfileagent.cpp:30
 #: rkward/misc/rkprogresscontrol.cpp:361
@@ -189,10 +207,9 @@ msgid ""
 msgstr ""
 
 #: rkward/core/renvironmentobject.cpp:113
-#, fuzzy, kde-format
-#| msgid "Save Workspace?"
+#, kde-format
 msgid "Many objects in workspace"
-msgstr "Сохранить рабочую область?"
+msgstr "Много объектов в рабочей области"
 
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
@@ -374,6 +391,10 @@ msgid ""
 "your \"workspace\". Most importantly, this includes loaded packages, but "
 "also objects added to R's <i>search()<i>-path using <i>attach()</i>."
 msgstr ""
+"В этом разделе содержатся среды, которые не являются частью <i>.GlobalEnv</"
+"i> или вашей «рабочей области». Самым важным является то, что здесь "
+"содержатся загруженные пакеты, а также объекты, добавленные к пути "
+"<i>search()<i> R с помощью <i>attach()</i>."
 
 #: rkward/core/robjectlist.cpp:87
 #, kde-format
@@ -1076,14 +1097,14 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:363
 #, kde-format
 msgid "Loaded packages"
-msgstr ""
+msgstr "Загруженные пакеты"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:500
 #, kde-format
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
-msgstr ""
+msgstr "При попытке загрузки или выгрузки пакетов произошла ошибка (см. ниже)"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:579
 #, kde-format
@@ -1114,6 +1135,10 @@ msgid ""
 "provide a graphical user-interface in addition to R functions. Check this "
 "box to show only such packages.</p>"
 msgstr ""
+"<p>Некоторые (не все) пакеты R поставляются с модулями для RKWard. Это "
+"означает, что они предоставляют не только функции R, но и графический "
+"интерфейс пользователя. Включите этот параметр для просмотра только таких "
+"пакетов.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:676
 #, kde-format
@@ -1133,6 +1158,9 @@ msgid ""
 "functionality. Check this option to include such additional suggested "
 "packages."
 msgstr ""
+"Некоторые пакеты «предлагают» дополнительные пакеты, которые не являются "
+"строго необходимыми для их работы, но могут предоставляют дополнительный "
+"функционал. Включите этот параметр, чтобы установить также и их."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
@@ -1430,12 +1458,12 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:139
 #, kde-format
 msgid "<b>R backend has failed to start.</b>"
-msgstr ""
+msgstr "<b>Не удалось запустить серверное приложение R.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:141
 #, kde-format
 msgid "<b>R backend has crashed.</b>"
-msgstr ""
+msgstr "<b>Сбой серверного приложения R.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:148
 #, kde-format
@@ -1455,7 +1483,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:165
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
-msgstr ""
+msgstr "<b>Ожидание данных от серверного приложения R…</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
@@ -1698,7 +1726,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:389
 #, kde-format
 msgid "R Backend"
-msgstr ""
+msgstr "Серверное приложение R"
 
 #: rkward/dialogs/rksetupwizard.cpp:434
 #, fuzzy, kde-format
@@ -2220,47 +2248,47 @@ msgstr ""
 #: rkward/misc/rkfindbar.cpp:53
 #, kde-format
 msgid "Search backwards (previous occurrence of search term)"
-msgstr ""
+msgstr "Поиск «назад» (предыдущее соответствие поисковому запросу)"
 
 #: rkward/misc/rkfindbar.cpp:59
 #, kde-format
 msgid "Search forward (next occurrence of search term)"
-msgstr ""
+msgstr "Поиск «вперёд» (следующее соответствие поисковому запросу)"
 
 #: rkward/misc/rkfindbar.cpp:89
 #, kde-format
 msgid "Match case"
-msgstr ""
+msgstr "С учётом регистра"
 
 #: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:940
 #, kde-format
 msgid "Find as you type"
-msgstr ""
+msgstr "Поиск по мере набора"
 
 #: rkward/misc/rkfindbar.cpp:94
 #, kde-format
 msgid "Highlight all matches"
-msgstr ""
+msgstr "Выделить все совпадения"
 
 #: rkward/misc/rkobjectlistview.cpp:51
 #, kde-format
 msgid "Other Environments"
-msgstr ""
+msgstr "Другие окружения"
 
 #: rkward/misc/rkobjectlistview.cpp:53
 #, kde-format
 msgid "My Workspace"
-msgstr ""
+msgstr "Моя рабочая область"
 
 #: rkward/misc/rkobjectlistview.cpp:54
 #, kde-format
 msgid "My Workspace (no objects matching filter)"
-msgstr ""
+msgstr "Моя рабочая область (нет объектов, соответствующих фильтру)"
 
 #: rkward/misc/rkobjectlistview.cpp:210 rkward/misc/rkobjectlistview.cpp:306
 #, kde-format
 msgid "Show Hidden Objects"
-msgstr ""
+msgstr "Показать скрытые объекты"
 
 #: rkward/misc/rkobjectlistview.cpp:261
 #, kde-format
@@ -2499,7 +2527,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "<b>There have been errors and / or warnings. See below for a transcript</b>"
-msgstr ""
+msgstr "<b>Присутствовали ошибки и/или предупреждения (см. ниже)</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:258
 #: rkward/settings/rksettingsmoduleoutput.cpp:187
@@ -2527,7 +2555,7 @@ msgstr ""
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
@@ -3362,7 +3390,7 @@ msgstr ""
 #: rkward/plugin/rkvarselector.cpp:62
 #, kde-format
 msgid "Show all environments"
-msgstr ""
+msgstr "Показать все окружения"
 
 #: rkward/plugin/rkvarselector.cpp:64
 #, kde-format
@@ -3371,6 +3399,9 @@ msgid ""
 "just those in <i>.GlobalEnv</i>. Check this, if you want to select objects "
 "from a loaded package."
 msgstr ""
+"Показать объекты во всех окружениях по пути <i>search()</i>, а не только "
+"объекты из <i>.GlobalEnv</i>. Включите этот параметр, если требуется выбрать "
+"объекты из загруженного пакета."
 
 #: rkward/plugin/rkvarselector.cpp:71
 #, kde-format
@@ -3512,12 +3543,12 @@ msgstr ""
 #: rkward/rbackend/rkrbackend.cpp:721
 #, kde-format
 msgid "Message from the R backend"
-msgstr ""
+msgstr "Сообщение от серверного приложения R"
 
 #: rkward/rbackend/rkrbackend.cpp:729
 #, kde-format
 msgid "Question from the R backend"
-msgstr ""
+msgstr "Вопрос от серверного приложения R"
 
 #: rkward/rbackend/rkrbackend.cpp:1631
 #, kde-format
@@ -3578,6 +3609,7 @@ msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
+"<p>При запуске серверного приложения R возникла проблема. Ошибка(и):</p>\n"
 
 #: rkward/rbackend/rkrinterface.cpp:94
 #, kde-format
@@ -3645,7 +3677,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:884
 #, kde-format
 msgid "R backend requests information"
-msgstr ""
+msgstr "Серверному приложению R требуется информация"
 
 #: rkward/rbackend/rkrinterface.cpp:906
 #, kde-format
@@ -3927,7 +3959,7 @@ msgstr ""
 #: rkward/rkward.cpp:435 rkward/settings/rksettingsmoduleobjectbrowser.cpp:84
 #, kde-format
 msgid "Workspace"
-msgstr ""
+msgstr "Рабочая область"
 
 #: rkward/rkward.cpp:444
 #, kde-format
@@ -4015,7 +4047,7 @@ msgstr ""
 #: rkward/rkward.cpp:519
 #, kde-format
 msgid "Open Workspace..."
-msgstr "Открыть рабочую область..."
+msgstr "Открыть рабочую область…"
 
 #: rkward/rkward.cpp:521
 #, kde-format
@@ -4035,7 +4067,7 @@ msgstr ""
 #: rkward/rkward.cpp:530
 #, kde-format
 msgid "Save Workspace"
-msgstr ""
+msgstr "Сохранить рабочую область"
 
 #: rkward/rkward.cpp:532
 #, kde-format
@@ -4045,7 +4077,7 @@ msgstr ""
 #: rkward/rkward.cpp:536
 #, kde-format
 msgid "Save Workspace As"
-msgstr ""
+msgstr "Сохранить рабочую область как"
 
 #: rkward/rkward.cpp:537
 #, kde-format
@@ -4121,7 +4153,7 @@ msgstr ""
 #: rkward/rkward.cpp:626
 #, kde-format
 msgid "Restart R Backend"
-msgstr ""
+msgstr "Перезапустить серверное приложение R"
 
 #: rkward/rkward.cpp:634
 #, kde-format
@@ -4134,7 +4166,7 @@ msgstr ""
 #: rkward/rkward.cpp:635
 #, kde-format
 msgid "Restart R backend"
-msgstr ""
+msgstr "Перезапустить серверное приложение R"
 
 #: rkward/rkward.cpp:642
 #, kde-format
@@ -4172,7 +4204,7 @@ msgstr ""
 #: rkward/rkward.cpp:800 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
 msgid "Configure R backend"
-msgstr ""
+msgstr "Настроить серверное приложение R"
 
 #: rkward/rkward.cpp:853
 #, kde-format
@@ -4192,12 +4224,12 @@ msgstr ""
 #: rkward/rkward.cpp:883
 #, kde-format
 msgid "Opening workspace..."
-msgstr ""
+msgstr "Открытие рабочей области…"
 
 #: rkward/rkward.cpp:886
 #, kde-format
 msgid "Select workspace to open..."
-msgstr ""
+msgstr "Рабочая область для открытия…"
 
 #: rkward/rkward.cpp:957
 #, kde-format
@@ -4234,7 +4266,7 @@ msgstr ""
 #: rkward/rkward.cpp:1009
 #, kde-format
 msgid "Opening mode:"
-msgstr ""
+msgstr "Режим открытия:"
 
 #: rkward/rkward.cpp:1011
 #, kde-format
@@ -4250,7 +4282,7 @@ msgstr "Последние сценарии R"
 #: rkward/rkward.cpp:1011
 #, kde-format
 msgid "Open as text file and force R highlighting"
-msgstr ""
+msgstr "Открыть как текстовый файл и принудительно применить подсветку R"
 
 #: rkward/rkward.cpp:1048
 #, kde-format
@@ -4271,37 +4303,37 @@ msgstr ""
 #: rkward/rkward.cpp:1071
 #, kde-format
 msgid "[Unnamed Workspace]"
-msgstr ""
+msgstr "[Безымянная рабочая область]"
 
 #. i18n: ectx: Menu (new_data)
 #: rkward/rkwardui.rc:13
 #, kde-format
 msgid "&New"
-msgstr ""
+msgstr "&Создать"
 
 #. i18n: ectx: Menu (open_specific)
 #: rkward/rkwardui.rc:19
 #, kde-format
 msgid "&Open by Type"
-msgstr ""
+msgstr "&Открыть по типу"
 
 #. i18n: ectx: Menu (import)
 #: rkward/rkwardui.rc:25
 #, kde-format
 msgid "&Import"
-msgstr ""
+msgstr "&Импорт"
 
 #. i18n: ectx: Menu (export)
 #: rkward/rkwardui.rc:30
 #, kde-format
 msgid "&Export"
-msgstr ""
+msgstr "&Экспорт"
 
 #. i18n: ectx: Menu (workspace)
 #: rkward/rkwardui.rc:36
 #, kde-format
 msgid "&Workspace"
-msgstr ""
+msgstr "&Рабочая область"
 
 #. i18n: ectx: Menu (window)
 #: rkward/rkwardui.rc:75
@@ -4315,7 +4347,7 @@ msgstr "&Окно"
 #: rkward/windows/rktoplevelwindowgui.rc:15
 #, kde-format
 msgid "&Activate"
-msgstr ""
+msgstr "&Активировать"
 
 #. i18n: ectx: Menu (settings)
 #: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
@@ -4352,12 +4384,12 @@ msgstr ""
 #: rkward/robjectviewer.cpp:79
 #, kde-format
 msgid "<b>Object was deleted</b>"
-msgstr ""
+msgstr "<b>Объект удалён</b>"
 
 #: rkward/robjectviewer.cpp:122
 #, kde-format
 msgid "Object Viewer: %1"
-msgstr ""
+msgstr "Средство просмотра объектов: %1"
 
 #: rkward/robjectviewer.cpp:126
 #, kde-format
@@ -6353,7 +6385,7 @@ msgstr "Настроить %1..."
 #: rkward/windows/rkpdfwindow.cpp:35
 #, kde-format
 msgid "No PDF viewer component found"
-msgstr ""
+msgstr "Не найден компонент средства просмотра PDF"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
