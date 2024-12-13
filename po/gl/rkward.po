@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2024-12-08 16:09+0100\n"
+"PO-Revision-Date: 2024-12-12 19:49+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -5711,6 +5711,7 @@ msgstr "Configurar os complementos activos"
 msgid "Add-ons"
 msgstr "Complementos"
 
+# skip-rule: trasno-find
 #: rkward/settings/rksettingsmoduleplugins.cpp:90
 #, kde-format
 msgid ""
