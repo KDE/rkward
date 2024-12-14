@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-12-08 16:09+0100\n"
+"PO-Revision-Date: 2024-12-13 22:58+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -898,6 +898,7 @@ msgstr ""
 msgid "The Console"
 msgstr "A consola"
 
+# skip-rule: trasno-window_reverse
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
@@ -1273,6 +1274,7 @@ msgstr ""
 msgid "Version incompatibilities"
 msgstr "Incompatibilidades de versións"
 
+# skip-rule: trasno-change_reverse
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
 #, kde-format
@@ -1438,7 +1440,7 @@ msgid ""
 msgstr ""
 "Internamente, os ficheiros de saída de RKWard baséanse actualmente "
 "simplemente en HTML. Se necesita acceso aos ficheiros HTML en cru e imaxes, "
-"un ficheiro .rko non é máis que un arquivo ZIP dun cartafol. Pode "
+"un ficheiro .rko non é máis que un ficheiro ZIP dun cartafol. Pode "
 "descomprimilo con ferramentas estándar, ou abrilo en RKWard e obter os "
 "ficheiros do «.rkward» do seu cartafol persoal (a localización pode "
 "configurarse en «Configuración → Configurar RKWard → Xeral)."
