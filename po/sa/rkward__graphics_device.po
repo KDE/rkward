@@ -19,19 +19,19 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "आरकेवार्ड टीम"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/x11device.pluginmap:10
@@ -75,6 +75,8 @@ msgid ""
 "The \"cairo\" library, providing SVG-support, is not compiled in by default "
 "on some systems."
 msgstr ""
+"SVG-समर्थनं प्रदातुं \"cairo\" पुस्तकालयः केषुचित् प्रणालीषु पूर्वनिर्धारितरूपेण संकलितः नास्ति "
+"।"
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <summary>
 #: rkward/plugins/x11device/export.rkh:8

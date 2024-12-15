@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-12-13 22:58+0100\n"
+"PO-Revision-Date: 2024-12-14 10:56+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -1301,7 +1301,7 @@ msgid ""
 msgstr ""
 "Se instalou RKWard co xestor de paquetes da súa distribución de Linux, pero "
 "non hai un paquete actualizado dispoñíbel, contacte co equipo de mantemento "
-"da distribución ou remítalle un informe de fallo."
+"da distribución ou envíelle un informe de fallo."
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9

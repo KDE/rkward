@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
@@ -986,7 +986,7 @@ msgstr "चि वर्ग पैरामीटर्स"
 #, kde-format
 msgctxt "Distribution name"
 msgid "Chi-Squared"
-msgstr ""
+msgstr "चि-वर्गः"
 
 #. i18n: ectx: (Central Limit Theorem: Chi squared to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_chi_squared_clt.xml:24
@@ -2396,7 +2396,7 @@ msgstr "मानक विचलन"
 #, kde-format
 msgctxt "Distribution name"
 msgid "Lognormal"
-msgstr ""
+msgstr "Lognormal इति"
 
 #. i18n: ectx: (Central Limit Theorem: Lognormal to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_lognormal_clt.xml:24
@@ -2677,7 +2677,7 @@ msgstr "द्वितीयनमूने अवलोकनानां स�
 #, kde-format
 msgctxt "Distribution name"
 msgid "Wilcoxon"
-msgstr ""
+msgstr "विल्कॉक्सनः"
 
 #. i18n: ectx: (Central Limit Theorem: Wilcoxon to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_wilcoxon_clt.xml:24
@@ -3940,7 +3940,7 @@ msgstr "प्लॉट कौची संभावनाएँ"
 #, kde-format
 msgctxt "Chi-square distribution"
 msgid "Chi-square"
-msgstr ""
+msgstr "चि-वर्गः"
 
 #. i18n: ectx: (Loaded from Plot Chi-squared probabilities) <summary>
 #: rkward/plugins/distributions/plot_chi_squared_distribution.rkh:12
@@ -4868,7 +4868,7 @@ msgstr "प्लॉट लॉजिस्टिक संभावनाएँ"
 #, kde-format
 msgctxt "Log-Normal distribution"
 msgid "Log-Normal"
-msgstr ""
+msgstr "लॉग-सामान्य"
 
 #. i18n: ectx: (Loaded from Plot Lognormal probabilities) <summary>
 #: rkward/plugins/distributions/plot_lognormal_distribution.rkh:12
@@ -5026,7 +5026,7 @@ msgstr "पॉयसन संभावनाओं प्लॉट करें
 #, kde-format
 msgctxt "t distribution"
 msgid "Student t"
-msgstr ""
+msgstr "छात्रा टी"
 
 #. i18n: ectx: (Loaded from Plot Student T probabilities) <summary>
 #: rkward/plugins/distributions/plot_t_distribution.rkh:12
@@ -5053,7 +5053,7 @@ msgstr "छात्र टी संभावनाओं प्लॉट क�
 #, kde-format
 msgctxt "Tukey distribution"
 msgid "Studentized Range (Tukey)"
-msgstr ""
+msgstr "छात्राधारित श्रेणी (तुकी) ९."
 
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <summary>
 #: rkward/plugins/distributions/plot_tukey_distribution.rkh:12
@@ -5607,4 +5607,4 @@ msgstr "n (द्वितीयनमूने अवलोकनानां �
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "आरकेवार्ड टीम"

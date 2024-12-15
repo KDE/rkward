@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: (Loaded from Download AppImage)
 #: rkward/plugins/00saveload/DownloadAppImage.js:59
@@ -649,7 +649,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "copy from the local environment to globalenv()"
-msgstr ""
+msgstr "स्थानीयवातावरणात् globalenv() प्रति प्रतिलिपिं कुर्वन्तु ।"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data)
 #: rkward/plugins/00saveload/import/import_csv.js:56
@@ -1441,7 +1441,7 @@ msgstr "रिक्तरेखाः त्यजन्तु"
 #, kde-format
 msgctxt "R code comment"
 msgid "assign to globalenv()"
-msgstr ""
+msgstr "globalenv() कृते नियुक्तं कुर्वन्तु।"
 
 #. i18n: ectx: (Loaded from Generic data import)
 #. i18n: ectx: (Generic data import) <dialog label="...">
@@ -1555,7 +1555,7 @@ msgstr "विशिष्ट उपसमूह आयात करें"
 #, kde-format
 msgctxt "R code comment"
 msgid "set variable labels for use in RKWard"
-msgstr ""
+msgstr "RKWard इत्यस्मिन् उपयोगाय चरलेबल् सेट् कुर्वन्तु"
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
@@ -2517,14 +2517,14 @@ msgstr "RMarkdown दस्तावेजान् विविधस्वर�
 #, kde-format
 msgctxt "Author name"
 msgid "Meik"
-msgstr ""
+msgstr "रचयति"
 
 #. i18n: ectx: (Export RMarkdown) <about> <author family="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:17
 #, kde-format
 msgctxt "Author name"
 msgid "Michalke"
-msgstr ""
+msgstr "मिचलका"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:68
@@ -3408,4 +3408,4 @@ msgstr "कार्यक्षेत्रम्"
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "आरकेवार्ड टीम"

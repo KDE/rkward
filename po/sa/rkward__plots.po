@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
@@ -174,6 +174,8 @@ msgid ""
 "barplot is a bit picky about attributes, so we need to convert to vector or "
 "matrix explicitly"
 msgstr ""
+"barplot इत्येतत् विशेषतानां विषये किञ्चित् पिकी अस्ति, अतः अस्माभिः स्पष्टतया vector "
+"अथवा matrix इत्यत्र परिवर्तनं कर्तव्यम्"
 
 #. i18n: ectx: (Loaded from Barplot) <summary>
 #: rkward/plugins/plots/barplot.rkh:8
@@ -434,21 +436,21 @@ msgstr "बारप्लॉट विकल्प"
 #, kde-format
 msgctxt "R code comment"
 msgid "split sample by grouping variables"
-msgstr ""
+msgstr "चरानाम् समूहीकरणेन नमूना विभक्तम्"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:37
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust width and position of boxes to achieve dodging"
-msgstr ""
+msgstr "चकमा प्राप्तुं पेटीनां विस्तारं स्थानं च समायोजयन्तु"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:45
 #, kde-format
 msgctxt "R code comment"
 msgid "convert single sample variables to list"
-msgstr ""
+msgstr "एकल नमूनाचरं सूचीं प्रति परिवर्तयन्तु"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #. i18n: ectx: (Boxplot) <dialog label="...">
@@ -491,28 +493,28 @@ msgstr "चर(s) ९."
 #, kde-format
 msgctxt "R code comment"
 msgid "actual boxplot function"
-msgstr ""
+msgstr "वास्तविक बॉक्सप्लॉट कार्य"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:69
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate geometric mean"
-msgstr ""
+msgstr "ज्यामितीय औसत गणना"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:72
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate harmonic mean"
-msgstr ""
+msgstr "हार्मोनिक माध्य गणना"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:75
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate the interquartile mean"
-msgstr ""
+msgstr "अन्तरचतुर्थांशमध्यमस्य गणनां कुरुत"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:83 rkward/plugins/plots/box_plot.js:85
@@ -521,7 +523,7 @@ msgctxt "R code comment"
 msgid ""
 "calculates the mean for all data and adds a point at the corresponding "
 "position"
-msgstr ""
+msgstr "सर्वेषां दत्तांशस्य मध्यमं गणयति, तत्सम्बद्धस्थाने बिन्दुं च योजयति"
 
 #. i18n: ectx: (Loaded from Boxplot) <summary>
 #: rkward/plugins/plots/box_plot.rkh:8
@@ -1277,7 +1279,7 @@ msgstr "अक्ष/शीर्षक"
 #, kde-format
 msgctxt "R code comment"
 msgid "dotchart() is somewhat picky about data type"
-msgstr ""
+msgstr "dotchart() इति दत्तांशप्रकारस्य विषये किञ्चित् पिकी अस्ति"
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Loaded from Pareto chart)
@@ -1951,7 +1953,7 @@ msgstr "X तथा Y चरानाम् असमानसंख्या �
 #, kde-format
 msgctxt "R code comment"
 msgid "find range of X/Y values needed"
-msgstr ""
+msgstr "आवश्यकस्य X/Y मूल्यानां परिधिं ज्ञातव्यम्"
 
 #. i18n: ectx: (Loaded from Scatterplot)
 #: rkward/plugins/plots/scatterplot.js:52
@@ -2410,4 +2412,4 @@ msgstr "ऊर्ध्वाधर"
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "आरकेवार्ड टीम"

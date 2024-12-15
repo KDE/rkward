@@ -20,12 +20,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
@@ -295,7 +295,7 @@ msgstr "श्रेणी"
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
-msgstr ""
+msgstr "अनाथनामस्थानानि"
 
 #: rkward/core/rkpseudoobjects.cpp:141
 #, kde-format
@@ -362,7 +362,7 @@ msgstr "सूची"
 #, kde-format
 msgctxt "Noun; in brackets, data type of the var is stated"
 msgid "Variable (%1)"
-msgstr ""
+msgstr "चर (%1) ९."
 
 #: rkward/core/robject.cpp:180
 #, kde-format
@@ -587,7 +587,7 @@ msgstr "सम्पादनं सक्षमं कुर्वन्तु"
 #, kde-format
 msgctxt "verb: switch to read-only state. Make this short."
 msgid "Lock"
-msgstr ""
+msgstr "ताल"
 
 #: rkward/dataeditor/twintable.cpp:150
 #, kde-format
@@ -598,7 +598,7 @@ msgstr "सम्पादनं निष्क्रियं कुर्व�
 #, kde-format
 msgctxt "verb: switch to read-write state. Make this short."
 msgid "Unlock"
-msgstr ""
+msgstr "अनलॉक"
 
 #: rkward/dataeditor/twintable.cpp:218
 #, kde-format
@@ -1008,7 +1008,7 @@ msgstr "परिवर्तनं परित्यजन्तु ?"
 #, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr ""
+msgstr "न निमील्यताम्"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
@@ -1070,7 +1070,7 @@ msgstr "मूलं भव"
 #, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
-msgstr ""
+msgstr "एतानि संकुलं त्यजन्तु"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
@@ -1455,8 +1455,9 @@ msgid "<p>A workspace recovery file exists, dating from <i>%2</i>.</p>"
 msgid_plural ""
 "<p>%1 workspace recovery files exist, the most recent one of which dates "
 "from <i>%2</i>.</p>"
-msgstr[0] ""
+msgstr[0] "<p>कार्यक्षेत्रपुनर्प्राप्तिसञ्चिका अस्ति, <i>%2</i> इत्यस्मात् आरभ्य ।</p>"
 msgstr[1] ""
+"<p>%1 कार्यक्षेत्रपुनर्प्राप्तिसञ्चिकाः विद्यन्ते, येषु अद्यतनतमः <i>%2</i> तः अस्ति ।</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:39
 #, kde-format
@@ -1506,7 +1507,11 @@ msgid_plural ""
 "You are about to delete %1 recovery files (the most recent one is %2). There "
 "will be no way to bring them back. Really delete them?"
 msgstr[0] ""
+"भवान् %2 पुनर्प्राप्तिसञ्चिकां विलोपयितुं प्रवृत्तः अस्ति । तस्य पुनः आनेतुं कोऽपि उपायः न "
+"भविष्यति। वास्तवमेव तत् विलोपयन्तु ?"
 msgstr[1] ""
+"भवान् %1 पुनर्प्राप्तिसञ्चिकाः विलोपयितुं प्रवृत्तः अस्ति (अद्यतनतमः %2 अस्ति) । तान् पुनः "
+"आनेतुं कोऽपि उपायः न भविष्यति। वास्तवमेव तान् विलोपयन्तु ?"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:60
 #, kde-format
@@ -1550,7 +1555,7 @@ msgstr "स्क्रिप्ट्"
 #, kde-format
 msgctxt "Save the selected items"
 msgid "Save selected"
-msgstr ""
+msgstr "चयनितं रक्षतु"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:116
 #, kde-format
@@ -1833,8 +1838,8 @@ msgstr "न कश्चित् लब्धः"
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 प्लगिन् प्राप्तम् ।"
+msgstr[1] "%1 प्लगिन्स् प्राप्ताः ।"
 
 #: rkward/dialogs/rksetupwizard.cpp:355
 #, kde-format
@@ -2480,7 +2485,7 @@ msgstr "गुप्तवस्तूनि दर्शयतु"
 #, kde-format
 msgctxt "Fields==columns in tree view"
 msgid "Fields to search in"
-msgstr ""
+msgstr "अन्वेषणार्थं क्षेत्राणि"
 
 #: rkward/misc/rkobjectlistview.cpp:282
 #, kde-format
@@ -2540,7 +2545,7 @@ msgctxt ""
 "English string. Simply 'Clear'/'Reset' should be good enough to understand "
 "the function."
 msgid "Reset filters"
-msgstr ""
+msgstr "फ़िल्टर पुनः सेट् कुर्वन्तु"
 
 #: rkward/misc/rkobjectlistview.cpp:316
 #, kde-format
@@ -3001,31 +3006,31 @@ msgstr "ऑनलाइन अन्वेषणं कुर्वन्तु"
 #, kde-format
 msgctxt "very short: Preview is updating"
 msgid "updating"
-msgstr ""
+msgstr "अद्यतनं कुर्वन्"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:192
 #, kde-format
 msgctxt "very short: Error while generating preview"
 msgid "error"
-msgstr ""
+msgstr "त्रुटि"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr ""
+msgstr "आत्त"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:195
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "दूरे"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:215
 #, kde-format
@@ -3275,7 +3280,7 @@ msgstr "लेखकाः : १."
 #, kde-format
 msgctxt "Author roles (contributor, etc.)"
 msgid "Roles"
-msgstr ""
+msgstr "भूमिकाः"
 
 #: rkward/plugin/rkcomponentmeta.cpp:98
 #, kde-format
@@ -3973,7 +3978,7 @@ msgstr "%1 (सक्रिय) २."
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
-msgstr ""
+msgstr "%1 (निष्क्रिय) २."
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:676
 #, kde-format
@@ -4897,7 +4902,7 @@ msgctxt ""
 "Note: list() and data.frame() are programming terms in R, and should not be "
 "translated, here"
 msgid "Operator for access to members of list() and data.frame() objects"
-msgstr ""
+msgstr "list() तथा data.frame() ऑब्जेक्ट्स् इत्यस्य सदस्यानां अभिगमनाय ऑपरेटरः"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:96
 #, kde-format
@@ -4915,7 +4920,7 @@ msgctxt ""
 "Note: S4-slot() is a programming term in R, and should not be translated, "
 "here"
 msgid "Operator for access to S4-slot()s"
-msgstr ""
+msgstr "S4-slot()s -पर्यन्तं प्रवेशार्थं संचालकः"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:102
 #, kde-format
@@ -5939,7 +5944,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
-msgstr ""
+msgstr "स्थापय"
 
 #: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
@@ -6039,13 +6044,13 @@ msgstr "&कोष्ठ"
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
-msgstr ""
+msgstr "in Current Script इति"
 
 #: rkward/windows/katepluginintegration.cpp:681
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
-msgstr ""
+msgstr "in Open Scripts इति"
 
 #: rkward/windows/rcontrolwindow.cpp:46 rkward/windows/rcontrolwindow.cpp:132
 #, kde-format
@@ -6175,7 +6180,7 @@ msgstr "पूर्वावलोकनं निष्क्रियं क�
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
-msgstr ""
+msgstr "यथा यथा टङ्कयति तथा अद्यतनं कुर्वन्तु"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:394
 #, kde-format
@@ -6245,7 +6250,7 @@ msgstr "पूर्वावलोकनस्य सम्भाव्य द�
 #, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr ""
+msgstr "सॉफ्टवेयरं गम्यते"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:663
 #, kde-format

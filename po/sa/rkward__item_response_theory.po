@@ -22,12 +22,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:59
@@ -130,7 +130,7 @@ msgstr "अभिसरणसमये लॉग-संभाव्यता म
 #, kde-format
 msgctxt "R code comment"
 msgid "keep results in current workspace"
-msgstr ""
+msgstr "वर्तमानकार्यक्षेत्रे परिणामान् स्थापयन्तु"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <summary>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <summary>
@@ -2568,7 +2568,7 @@ msgstr "द्वौ पैरामीटर् लॉजिस्टिक म
 #, kde-format
 msgctxt "R code comment"
 msgid "two steps are needed to plot standard error curves"
-msgstr ""
+msgstr "मानकदोषवक्राणां प्लॉट् कर्तुं द्वौ सोपानौ आवश्यकौ भवतः"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2581,7 +2581,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "first some values are generated..."
-msgstr ""
+msgstr "प्रथमं केचन मूल्यानि उत्पद्यन्ते..."
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2594,7 +2594,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "... and then they're used to plot the curves:"
-msgstr ""
+msgstr "... ततः च तेषां उपयोगः वक्राणां प्लॉट् कर्तुं भवति:"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2607,7 +2607,7 @@ msgstr ""
 #, kde-format
 msgctxt "Item response theory"
 msgid "Ability"
-msgstr ""
+msgstr "क्षमता"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -3175,4 +3175,4 @@ msgstr "अन्तरक्रियाशील लेबलिंग"
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "आरकेवार्ड टीम"

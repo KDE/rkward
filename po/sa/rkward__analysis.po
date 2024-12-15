@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
@@ -91,7 +91,7 @@ msgstr "विल्कॉक्सन/मान-व्हिटनी परी
 #, kde-format
 msgctxt "Statistics"
 msgid "Moment"
-msgstr ""
+msgstr "क्षण"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:33
@@ -249,7 +249,7 @@ msgstr "रेखीय प्रतिगमन"
 #, kde-format
 msgctxt "Power of tests"
 msgid "Power Analysis"
-msgstr ""
+msgstr "शक्ति विश्लेषण"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:77
@@ -541,7 +541,7 @@ msgstr "तूल"
 #, kde-format
 msgctxt "compare against"
 msgid "against"
-msgstr ""
+msgstr "विरुद्धम्‌"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <radio label="...">
@@ -780,14 +780,14 @@ msgstr "विश्वासान्तरस्य गणनां कुर�
 #, kde-format
 msgctxt "R code comment"
 msgid "cor requires all objects to be inside the same data.frame."
-msgstr ""
+msgstr "cor इत्यनेन सर्वाणि वस्तुनि समानस्य data.frame इत्यस्य अन्तः भवितुं आवश्यकम् ।"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:49
 #, kde-format
 msgctxt "R code comment"
 msgid "Here we construct such a temporary frame from the input variables"
-msgstr ""
+msgstr "अत्र वयं input variables इत्यस्मात् एतादृशं अस्थायी frame निर्मामः"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:52
@@ -797,34 +797,35 @@ msgid ""
 "Non-numeric variables will be treated as ordered data and transformed into "
 "numeric ranks"
 msgstr ""
+"असंख्यात्मकचराः क्रमबद्धदत्तांशरूपेण व्यवह्रियन्ते, संख्यात्मकपङ्क्तौ परिणमिताः च भविष्यन्ति"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:60
 #, kde-format
 msgctxt "R code comment"
 msgid "Keep track of all transformations"
-msgstr ""
+msgstr "सर्वेषां परिवर्तनानां निरीक्षणं कुर्वन्तु"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:64
 #, kde-format
 msgctxt "R code comment"
 msgid "Finally combine the actual data"
-msgstr ""
+msgstr "अन्ते वास्तविकदत्तांशं संयोजयन्तु"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:68
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate correlation matrix"
-msgstr ""
+msgstr "सहसंबन्धमात्रिका गणना"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:75
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate matrix of probabilities"
-msgstr ""
+msgstr "संभाव्यतानां आकृतिं गणयन्तु"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:78
@@ -835,13 +836,16 @@ msgid ""
 "we need to exclude incomplete cases first to match the use=\"complete.obs\" "
 "parameter in cor()"
 msgstr ""
+"यथा अस्माभिः तान्त्रिककारणात् युग्मरूपेण तुलनां कर्तुं आवश्यकम्,\n"
+"अस्माकं cor() मध्ये use=\"complete.obs\" पैरामीटर् इत्यस्य मेलनाय प्रथमं अपूर्णप्रकरणानाम् "
+"बहिष्कारः आवश्यकः ।"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:86
 #, kde-format
 msgctxt "R code comment"
 msgid "polyserial expects x to be numeric"
-msgstr ""
+msgstr "polyserial x संख्यात्मकं भवितुं अपेक्षते"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:131
@@ -1117,6 +1121,8 @@ msgid ""
 "convenience function to bind together several two dimensional tables into a "
 "single three dimensional table\n"
 msgstr ""
+"convenience function इत्यनेन अनेकाः द्विआयामी सारणीः एकस्मिन् त्रिविमसारणीयां एकत्र "
+"बन्धयितुं शक्यते\n"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:22
@@ -1130,7 +1136,7 @@ msgstr "सांख्यिकी"
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate crosstabs\n"
-msgstr ""
+msgstr "क्रॉसटैब्स् गणनां कुर्वन्तु\n"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:55
@@ -1138,7 +1144,7 @@ msgstr ""
 #, kde-format
 msgctxt "noun"
 msgid "count"
-msgstr ""
+msgstr "गणनां कारोतु"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:56
@@ -1167,7 +1173,7 @@ msgstr "कुलस्य %"
 #, kde-format
 msgctxt "expected count"
 msgid "expected"
-msgstr ""
+msgstr "अपेक्षित"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:75
@@ -1189,7 +1195,7 @@ msgstr "क्रॉस्स्टैब्स् कृते पियर्�
 #, kde-format
 msgctxt "a statistic indicator"
 msgid "Statistic"
-msgstr ""
+msgstr "सांख्यिकी"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:94
@@ -1731,7 +1737,7 @@ msgstr ""
 #, kde-format
 msgctxt "Statistical moment"
 msgid "Moment"
-msgstr ""
+msgstr "क्षण"
 
 #. i18n: ectx: (Loaded from sample moment)
 #: rkward/plugins/analysis/moments/moment.js:14
@@ -2335,14 +2341,14 @@ msgstr "मध्यमात् बृहत्तमं भेदं युक
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate f from eta squared"
-msgstr ""
+msgstr "एटा वर्गात् च गणनां कुर्वन्तु"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:206
 #, kde-format
 msgctxt "R code comment"
 msgid "Catch errors due to unsuitable data"
-msgstr ""
+msgstr "अनुपयुक्तदत्तांशस्य कारणेन त्रुटयः गृह्णन्तु"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:207
@@ -2355,7 +2361,7 @@ msgstr "भवता प्रदत्तेन दत्तांशैः स
 #, kde-format
 msgctxt "R code comment"
 msgid "Prepare printout"
-msgstr ""
+msgstr "मुद्रणं सज्जीकरोतु"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:212
@@ -2385,7 +2391,7 @@ msgstr "<strong>टीका:</strong>"
 #, no-c-format, kde-format
 msgctxt "Argument is name of statistic, e.g. 'r'"
 msgid "Interpretation of effect size <strong>%1</strong> (according to Cohen):"
-msgstr ""
+msgstr "प्रभाव आकारस्य <strong>%1</strong> व्याख्या (कोहेनस्य अनुसारम्):"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2397,7 +2403,7 @@ msgstr ""
 #, kde-format
 msgctxt "effect size"
 msgid "small"
-msgstr ""
+msgstr "लघु"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2409,7 +2415,7 @@ msgstr ""
 #, kde-format
 msgctxt "effect size"
 msgid "medium"
-msgstr ""
+msgstr "मध्यम"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2421,7 +2427,7 @@ msgstr ""
 #, kde-format
 msgctxt "effect size"
 msgid "large"
-msgstr ""
+msgstr "बृहत्‌"
 
 #. i18n: ectx: (Power analysis) <title>
 #. i18n: ectx: (Power analysis) <about name="...">
@@ -2604,28 +2610,28 @@ msgstr "शक्तिविश्लेषणं नमूनाकारस�
 #, kde-format
 msgctxt "Author name"
 msgid "Meik"
-msgstr ""
+msgstr "रचयति"
 
 #. i18n: ectx: (Power analysis) <about> <author family="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:15
 #, kde-format
 msgctxt "Author name"
 msgid "Michalke"
-msgstr ""
+msgstr "मिचलका"
 
 #. i18n: ectx: (Power analysis) <about> <author given="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:16
 #, kde-format
 msgctxt "Author name"
 msgid "Thomas"
-msgstr ""
+msgstr "थोमस"
 
 #. i18n: ectx: (Power analysis) <about> <author family="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:16
 #, kde-format
 msgctxt "Author name"
 msgid "Friedrichsmeier"
-msgstr ""
+msgstr "फ्रेडरिक्स्मेयर"
 
 #. i18n: ectx: (Power analysis) <dialog label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:103
@@ -2810,7 +2816,7 @@ msgstr "निर्धारयितुं पैरामीटर्"
 msgctxt ""
 "Here 'power' is a common statistical term and should not be translated"
 msgid "Power of test"
-msgstr ""
+msgstr "परीक्षणस्य शक्तिः"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2854,7 +2860,7 @@ msgstr "ज्ञाताः उपायाः"
 msgctxt ""
 "Here 'power' is a common statistical term and should not be translated"
 msgid "Power"
-msgstr ""
+msgstr "शक्ति"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:167
@@ -3547,7 +3553,7 @@ msgstr "Hodrick-Prescott Filter इत्यस्मिन् लुप्त�
 #, kde-format
 msgctxt "R code comment"
 msgid "The HP Filter itself. Thanks to Grant V. Farnsworth"
-msgstr ""
+msgstr "स्वयं HP Filter इति । ग्राण्ट् वी. फार्न्सवर्थ इत्यस्य धन्यवादः"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="...">
@@ -3887,7 +3893,7 @@ msgstr "तार इति व्याख्यायते"
 #, kde-format
 msgctxt "R code comment"
 msgid "remove NAs"
-msgstr ""
+msgstr "NAs निष्कासयति"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:27
@@ -4333,7 +4339,7 @@ msgstr "विल्कॉक्सन/मान-व्हिटनी परी
 #, kde-format
 msgctxt "compare against"
 msgid "against (optional)"
-msgstr ""
+msgstr "विरुद्धं (वैकल्पिकम्) २."
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:25
@@ -4388,14 +4394,14 @@ msgstr "बन्धनानि अनुमन्यताम्"
 #, kde-format
 msgctxt "R code comment"
 msgid "Split each input variable by grouping factor(s)"
-msgstr ""
+msgstr "प्रत्येकं निवेशचरं कारकं (कारकं) समूहीकृत्य विभजन्तु ।"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:20
 #, kde-format
 msgctxt "R code comment"
 msgid "Convert nested list into flat list"
-msgstr ""
+msgstr "नेस्टेड् सूचीं सपाटसूचौ परिवर्तयन्तु"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:23
@@ -4409,7 +4415,7 @@ msgstr "वस्तु"
 msgctxt "R code comment"
 msgid ""
 "we wrap each single call in a \"try\" statement to always continue on errors."
-msgstr ""
+msgstr "वयं प्रत्येकं एकं आह्वानं \"try\" इति कथने वेष्टयामः यत् सर्वदा त्रुटिषु निरन्तरं भवति ।"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:30
@@ -4949,7 +4955,7 @@ msgstr "पाठः स्केल करोतु"
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "आरकेवार्ड टीम"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:17
@@ -4968,7 +4974,7 @@ msgstr "लुप्तमूल्यानां संख्या"
 #, kde-format
 msgctxt "standard deviation; short"
 msgid "sd"
-msgstr ""
+msgstr "sd"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <checkbox label="...">
@@ -5019,7 +5025,7 @@ msgstr "क्वाण्टाइल्स्"
 #, kde-format
 msgctxt "R code comment"
 msgid "robust statistics"
-msgstr ""
+msgstr "दृढं सांख्यिकी"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Robust mean"> <checkbox label="...">
@@ -5051,7 +5057,7 @@ msgstr "ह्यूबर एम-अनुमानक"
 #, kde-format
 msgctxt "R code comment"
 msgid "store results"
-msgstr ""
+msgstr "परिणामान् भण्डारयन्तु"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:103

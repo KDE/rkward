@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/data.pluginmap:10
@@ -117,6 +117,8 @@ msgid ""
 "Use as.character() as intermediate data format, to support adding and "
 "dropping levels"
 msgstr ""
+"as.character() इत्यस्य उपयोगं मध्यवर्तीदत्तांशस्वरूपरूपेण कुर्वन्तु, स्तरं योजयितुं त्यक्तुं च "
+"समर्थयितुं"
 
 #. i18n: ectx: (Loaded from Recode categorical data)
 #: rkward/plugins/data/recode_categorical.js:78
@@ -959,4 +961,4 @@ msgstr "परिणामान् कार्यक्षेत्रे र�
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "आरकेवार्ड टीम"

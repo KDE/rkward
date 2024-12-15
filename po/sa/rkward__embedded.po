@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: (Level selector) <dialog label="...">
 #: rkward/plugins/distributions/../data/level_select.xml:65
@@ -451,7 +451,7 @@ msgstr "%1 इत्यस्य योगः"
 #, no-c-format, kde-format
 msgctxt "(function name) of (object name)"
 msgid "%1 of %2"
-msgstr ""
+msgstr "%2 इत्यस्य %1"
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
@@ -464,7 +464,7 @@ msgstr "सारणीबद्धता समूहाः"
 #, kde-format
 msgctxt "Tabulate X by Y [by Z [...]]"
 msgid " by "
-msgstr ""
+msgstr " इत्यनेन "
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
@@ -803,7 +803,7 @@ msgstr "रिक्तम्‌"
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust the range so that the labels will fit"
-msgstr ""
+msgstr "श्रेणीं समायोजयन्तु यथा लेबल्-पत्राणि उपयुक्तानि भविष्यन्ति"
 
 #. i18n: ectx: (Loaded from Barplot Options) <summary>
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:8
@@ -2977,7 +2977,7 @@ msgstr "य = १ रेखायाः कृते"
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "आरकेवार्ड टीम"
 
 #. i18n: ectx: (Internal plugin for automated testing) <dialog label="...">
 #: rkward/plugins/distributions/../testing/run_code.xml:10
