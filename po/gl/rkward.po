@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-12-12 19:49+0100\n"
+"PO-Revision-Date: 2024-12-14 10:57+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -1342,7 +1342,7 @@ msgid ""
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
 "<p>Pode marcar ou desmarcar as caixas correspondentes desta columna para "
-"seleccionar paquetes para instalar ou eliminar.</p>"
+"seleccionar paquetes para instalar ou desinstalar.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:946
 #, kde-format
@@ -5073,11 +5073,13 @@ msgstr "Editor de guións"
 msgid "Load/Save command history"
 msgstr "Cargar ou gardar o historial de ordes"
 
+# skip-rule: trasno-disable_reverse
 #: rkward/settings/rksettingsmoduleconsole.cpp:47
 #, kde-format
 msgid "Maximum length of command history (0 for no limit)"
 msgstr "Lonxitude máxima do historial de ordes (0 para desactivar o límite)"
 
+# skip-rule: trasno-disable_reverse
 #: rkward/settings/rksettingsmoduleconsole.cpp:51
 #, kde-format
 msgid ""
@@ -6068,6 +6070,7 @@ msgstr "Ordes de aplicación"
 msgid "Synchronization commands"
 msgstr "Ordes de sincronización"
 
+# skip-rule: trasno-disable_reverse
 #: rkward/settings/rksettingsmodulewatch.cpp:139
 #, kde-format
 msgid ""
