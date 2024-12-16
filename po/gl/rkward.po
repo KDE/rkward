@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2024-12-14 10:57+0100\n"
+"PO-Revision-Date: 2024-12-16 00:57+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -863,10 +863,10 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"RKWard is available in many different packagings, and sometimes problems are "
-"specific to one method of installation. How did you install RKWard (which "
-"file(s) did you download)?\n"
-"###Please fill in###\n"
+"RKWard está dispoñíbel en moitos empaquetados distintos, e ás veces os "
+"problemas son específicos do método de instalación. Como instalou RKWard "
+"(que ficheiros descargou)?\n"
+"### Escriba aquí a súa resposta. ###\n"
 "\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:145
@@ -4711,7 +4711,7 @@ msgstr "Abrir como texto ou ficheiro de guión"
 #: rkward/rkward.cpp:1022
 #, kde-format
 msgid "Open as text file and force R highlighting"
-msgstr "Abrir como texto e forzar o realce de sintaxe de R"
+msgstr "Abrir como ficheiro de texto e forzar o realce de sintaxe de R"
 
 #: rkward/rkward.cpp:1059
 #, kde-format
@@ -5457,22 +5457,22 @@ msgid ""
 "<i>Windows()</i> on Mac OS X) will always fall back to the <i>RK()</i> "
 "device.</p>"
 msgstr ""
-"<p>Moitos ficheiros de guionización usan chamadas a dispositivos estándar "
-"específicos de plataforma (<i>X11()</i>, <i>windows()</i> e <i>quartz()</"
-"i>), aínda que no seu lugar podería usarse calquera dispositivo de pantalla. "
-"RKWard fornece substitutos para estas funcións de dispositivo estándar, que "
-"poden cambiar o seu comportamento cando as usa no seu código:</p> <ul> "
-"<li>As chamadas poden dirixirse ao dispositivo nativo de RKWard (<i>RK()</"
-"i>). Algúns dos argumentos das funcións traduciranse, e o resto ignoraranse."
-"</li> <li>Poden usarse os dispositivos orixinais específicos dunha "
-"plataforma, pero incrustado nas xanelas de RKWard. Esta opción non está "
-"dispoñíbel en OS X.</li> <li>Poden usarse os dispositivos orixinais "
-"específicos dunha plataforma sen cambios, sen engadir funcionalidades "
-"específicas de RKWard.</li> </ul> <p>Independentemente do valor desta "
-"opción, sempre pode acceder aos dispositivos orixinais como <i>grDevices::"
-"X11()</i>, etc.</p> <p>Cando se use un dispositivo nunha plataforma na que "
-"non está definido (por exemplo, cando se use <i>Windows()</i> en OS X) "
-"sempre se usará o dispositivo <i>RK()</i> no seu lugar.</p>"
+"<p>Moitos guións usan chamadas a dispositivos estándar específicos de "
+"plataforma (<i>X11()</i>, <i>windows()</i> e <i>quartz()</i>), aínda que no "
+"seu lugar podería usarse calquera dispositivo de pantalla. RKWard fornece "
+"substitutos para estas funcións de dispositivo estándar, que poden cambiar o "
+"seu comportamento cando as usa no seu código:</p> <ul> <li>As chamadas poden "
+"dirixirse ao dispositivo nativo de RKWard (<i>RK()</i>). Algúns dos "
+"argumentos das funcións traduciranse, e o resto ignoraranse.</li> <li>Poden "
+"usarse os dispositivos orixinais específicos dunha plataforma, pero "
+"incrustado nas xanelas de RKWard. Esta opción non está dispoñíbel en OS X.</"
+"li> <li>Poden usarse os dispositivos orixinais específicos dunha plataforma "
+"sen cambios, sen engadir funcionalidades específicas de RKWard.</li> </ul> "
+"<p>Independentemente do valor desta opción, sempre pode acceder aos "
+"dispositivos orixinais como <i>grDevices::X11()</i>, etc.</p> <p>Cando se "
+"use un dispositivo nunha plataforma na que non está definido (por exemplo, "
+"cando se use <i>Windows()</i> en OS X) sempre se usará o dispositivo "
+"<i>RK()</i> no seu lugar.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:90
 #, kde-format
@@ -6338,13 +6338,12 @@ msgstr "Desmarcar o bloque"
 #: rkward/windows/rkcommandeditorwindow.cpp:367
 #, kde-format
 msgid "CD to script directory"
-msgstr "Entrar no directorio do ficheiro de guionización"
+msgstr "Abrir o cartafol do guión"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:368
 #, kde-format
 msgid "Change the working directory to the directory of this script"
-msgstr ""
-"Cambiar o cartafol de traballo ao directorio deste ficheiro de guionización"
+msgstr "Cambiar o cartafol de traballo ao cartafol deste guión"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:375
 #, kde-format

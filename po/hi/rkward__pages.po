@@ -1,0 +1,2696 @@
+# Hindi translations for rkward package.
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the rkward package.
+# Kali <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: rkward\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-06-10 00:36+0000\n"
+"PO-Revision-Date: 2024-12-15 17:37+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "तुम्हारे नाम"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "आपके ईमेल"
+
+#. i18n: ectx: (RKWard Add-Ons) <title>
+#: rkward/pages/rkward_addons.rkh:8
+#, kde-format
+msgid "RKWard Add-Ons"
+msgstr "आरकेवार्ड ऐड-ऑन"
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:9
+#, kde-format
+msgid ""
+"To offer you the best features, RKWard combines different technologies. "
+"Arguably this can make it a bit confusing on where to find the addon "
+"features you are looking for."
+msgstr ""
+"आपको बेहतरीन सुविधाएँ प्रदान करने के लिए, RKWard विभिन्न तकनीकों को जोड़ता है। यकीनन "
+"यह इस बात को लेकर थोड़ा भ्रमित कर सकता है कि आप जिस ऐडऑन सुविधाओं की तलाश कर रहे हैं, "
+"उसे कहाँ खोजें।"
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:9
+#, kde-format
+msgid "In a nutshell:"
+msgstr "संक्षेप में:"
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:9
+#, kde-format
+msgid ""
+"<strong>R packages</strong> offer a sheer incredible amount of data "
+"algorithms and tools. This functionality is (mostly) provided in the form of "
+"additional R functions that you can use in scripts, or in the interactive R "
+"console."
+msgstr ""
+"<strong>आर पैकेज</strong> डेटा एल्गोरिदम और उपकरणों की एक अविश्वसनीय मात्रा प्रदान "
+"करते हैं। यह कार्यक्षमता (अधिकांशतः) अतिरिक्त आर फ़ंक्शन के रूप में प्रदान की जाती है जिसका "
+"उपयोग आप स्क्रिप्ट में या इंटरैक्टिव आर कंसोल में कर सकते हैं।"
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:9
+#, kde-format
+msgid ""
+"<strong>Kate add-ons</strong>: Kate is the engine behind RKWard's script "
+"editor. It comes with powerful add-on features, many of which should come "
+"pre-installed with RKWard. However, due to their sheer number, not all are "
+"activated by default. It can further be extended with custom scripts, or "
+"color-schemes."
+msgstr ""
+"<strong>केट ऐड-ऑन</strong> : केट आरकेवार्ड के स्क्रिप्ट एडिटर के पीछे इंजन है। यह "
+"शक्तिशाली ऐड-ऑन सुविधाओं के साथ आता है, जिनमें से कई आरकेवार्ड के साथ पहले से इंस्टॉल होने "
+"चाहिए। हालाँकि, उनकी विशाल संख्या के कारण, सभी डिफ़ॉल्ट रूप से सक्रिय नहीं होते हैं। इसे "
+"कस्टम स्क्रिप्ट या रंग-योजनाओं के साथ आगे बढ़ाया जा सकता है।"
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:9
+#, kde-format
+msgid ""
+"<strong>RKWard plugins</strong>: If you are looking for a graphical dialog "
+"to help you import/convert/analyse/visualize your data, such dialogs are "
+"mostly implemented as plugin-ins in RKWard. Many such plugins are available "
+"for download, separately."
+msgstr ""
+"<strong>आरकेवार्ड प्लगइन्स</strong> : यदि आप अपने डेटा को आयात/परिवर्तित/विश्लेषण/"
+"दृश्यमान करने में सहायता के लिए ग्राफ़िकल डायलॉग की तलाश कर रहे हैं, तो ऐसे डायलॉग्स को "
+"अधिकतर आरकेवार्ड में प्लगइन-इन के रूप में लागू किया जाता है। ऐसे कई प्लगइन्स अलग से डाउनलोड "
+"के लिए उपलब्ध हैं।"
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:9
+#, kde-format
+msgid ""
+"The following sections deal with these, in turn, showing you how to find / "
+"install, what you need."
+msgstr ""
+"निम्नलिखित अनुभाग इनसे संबंधित हैं, तथा आपको बताते हैं कि आपको क्या चाहिए, उसे कैसे ढूंढें/"
+"स्थापित करें।"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="...">
+#: rkward/pages/rkward_addons.rkh:24
+#, kde-format
+msgid "R packages"
+msgstr "आर पैकेज"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
+#: rkward/pages/rkward_addons.rkh:24
+#, kde-format
+msgid ""
+"In addition to the regular R command line tools for managing R packages (see "
+"<link href=\"rkward://rhelp/install.packages\"/>), RKWard offers a graphical "
+"dialog to search, install and/or load packages (Settings->Manage R packages "
+"and plugins)."
+msgstr ""
+"आर पैकेजों के प्रबंधन के लिए नियमित आर कमांड लाइन टूल के अतिरिक्त (देखें<link href="
+"\"rkward://rhelp/install.packages\"/> ), RKWard पैकेजों को खोजने, स्थापित करने और/"
+"या लोड करने के लिए एक ग्राफिकल संवाद प्रदान करता है (सेटिंग्स-&gt;R पैकेज और प्लगइन "
+"प्रबंधित करें)।"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
+#: rkward/pages/rkward_addons.rkh:24
+#, kde-format
+msgid ""
+"Note that, by default, R packages are distributed as compiled binaries on "
+"Windows and MacOS, but not Linux. While for the latter, installation from "
+"source is fully automated, you may still have to install additional "
+"libraries or other software for the compilation."
+msgstr ""
+"ध्यान दें कि, डिफ़ॉल्ट रूप से, R पैकेज विंडोज और मैकओएस पर संकलित बाइनरी के रूप में वितरित "
+"किए जाते हैं, लेकिन लिनक्स पर नहीं। जबकि बाद के लिए, स्रोत से इंस्टॉलेशन पूरी तरह से "
+"स्वचालित है, फिर भी आपको संकलन के लिए अतिरिक्त लाइब्रेरी या अन्य सॉफ़्टवेयर इंस्टॉल करना "
+"पड़ सकता है।"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="...">
+#: rkward/pages/rkward_addons.rkh:32
+#, kde-format
+msgid "Kate Add-ons"
+msgstr "केट ऐड-ऑन"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
+#: rkward/pages/rkward_addons.rkh:32
+#, kde-format
+msgid ""
+"<link href=\"https://kate.kde.org\">Kate</link> is a very powerful text "
+"editor using the same text editing component that is also used in RKWard. It "
+"also comes with a variety of add-ons, e.g. for creating code snippets, or "
+"for managing projects in a git repository. Some of these - like e.g. the C++ "
+"backtrace navigation tool do not make much sense in the context of RKWard, "
+"but many do. To explore what is available, make sure you have kate "
+"installed, then visit <link href=\"rkward://settings/addons\">Settings-"
+">Addons</link>. Addons shown in bold have been reported to be useful and "
+"work well in RKWard, but feel free to explore the others, too."
+msgstr ""
+"<link href=\"https://kate.kde.org\">कैट</link> यह एक बहुत शक्तिशाली टेक्स्ट एडिटर "
+"है जो उसी टेक्स्ट एडिटिंग घटक का उपयोग करता है जिसका उपयोग RKWard में भी किया जाता "
+"है। यह कई तरह के ऐड-ऑन के साथ भी आता है, जैसे कोड स्निपेट बनाने के लिए, या git "
+"रिपॉजिटरी में प्रोजेक्ट प्रबंधित करने के लिए। इनमें से कुछ - जैसे कि C++ बैकट्रेस नेविगेशन टूल "
+"RKWard के संदर्भ में ज़्यादा मायने नहीं रखता, लेकिन कई मायने रखते हैं। यह जानने के लिए कि "
+"क्या उपलब्ध है, सुनिश्चित करें कि आपके पास kate इंस्टॉल है, फिर जाएँ<link href="
+"\"rkward://settings/addons\"> सेटिंग्स-&gt;एडऑन</link> बोल्ड में दिखाए गए ऐडऑन्स "
+"उपयोगी बताए गए हैं और आरकेवार्ड में अच्छी तरह से काम करते हैं, लेकिन अन्य का भी पता लगाने "
+"के लिए स्वतंत्र महसूस करें।"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="...">
+#: rkward/pages/rkward_addons.rkh:39
+#, kde-format
+msgid "RKWard Plugins"
+msgstr "आरकेवार्ड प्लगइन्स"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
+#: rkward/pages/rkward_addons.rkh:39
+#, kde-format
+msgid ""
+"RKWard plugins can be installed from a variety of sources, but the usual "
+"distribution of add-on packages is via R packages. To look for R packages "
+"that provide RKWard graphical dialogs, use the regular dialog (<link href="
+"\"rkward://actions/rpackage_install\">Settings->Manage R packages and "
+"plugins</link>), and check the option \"Show only packages providing RKWard "
+"dialogs\"."
+msgstr ""
+"RKWard प्लगइन्स को विभिन्न स्रोतों से इंस्टॉल किया जा सकता है, लेकिन ऐड-ऑन पैकेजों का "
+"सामान्य वितरण R पैकेजों के माध्यम से होता है। RKWard ग्राफ़िकल डायलॉग प्रदान करने वाले R "
+"पैकेजों को देखने के लिए, नियमित डायलॉग (<link href=\"rkward://actions/"
+"rpackage_install\"> सेटिंग्स-&gt;आर पैकेज और प्लगइन्स प्रबंधित करें</link> ), और &quot;"
+"केवल RKWard डायलॉग प्रदान करने वाले पैकेज दिखाएं&quot; विकल्प को चेक करें।"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
+#: rkward/pages/rkward_addons.rkh:39
+#, kde-format
+msgid ""
+"Not all RKWard plugins packaged this way will be visible in the R package "
+"installation dialog, as they are not hosted (yet) in the default "
+"repositories, notably, at the time of this writing, the very extensive <link "
+"href=\"https://github.com/rkward-community/rk.Teaching\">rk.Teaching</link> "
+"set of plugins. Many of these are hosted on platforms such as github.com, "
+"and knowing the repository url, can be installed with few clicks, using "
+"<link href=\"rkward://runplugin/rkward::install_from_git/fullURL."
+"text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
+"link> (pre-initialized for installation of rk.Teaching)."
+msgstr ""
+"इस तरह से पैकेज किए गए सभी RKWard प्लगइन्स R पैकेज इंस्टॉलेशन डायलॉग में दिखाई नहीं देंगे, "
+"क्योंकि वे डिफ़ॉल्ट रिपॉजिटरी में होस्ट नहीं हैं (अभी तक), विशेष रूप से, इस लेखन के समय, बहुत "
+"व्यापक<link href=\"https://github.com/rkward-community/rk.Teaching\"> आर.के."
+"शिक्षण</link> प्लगइन्स का सेट। इनमें से कई github.com जैसे प्लेटफ़ॉर्म पर होस्ट किए गए हैं, "
+"और रिपॉजिटरी यूआरएल जानने के बाद, कुछ क्लिक के साथ इंस्टॉल किया जा सकता है, <link "
+"href=\"rkward://runplugin/rkward::install_from_git/fullURL.text=https://"
+"github.com/rkward-community/rk.Teaching.git\"> यह संवाद</link> (rk.Teaching "
+"की स्थापना के लिए पूर्व-आरंभीकृत)।"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="...">
+#: rkward/pages/rkward_addons.rkh:47
+#, kde-format
+msgid "Creating your own RKWard Plugins"
+msgstr "अपना स्वयं का RKWard प्लगइन्स बनाना"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
+#: rkward/pages/rkward_addons.rkh:47
+#, kde-format
+msgid "Still missing something?"
+msgstr "अभी भी कुछ छूट गया है?"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
+#: rkward/pages/rkward_addons.rkh:47
+#, kde-format
+msgid ""
+"Check out the <link href=\"help:/rkwardplugins/index.html\">Introduction to "
+"Writing Plugins for RKWard</link> (<link href=\"https://rkward.kde.org/doc/"
+"rkwardplugins/\">most recent version online</link>) to learn how easy it is "
+"to enhance RKWard with your custom dialogs. And if you like, how to share "
+"your work with the community of RKWard users. See the <link href=\"rkward://"
+"rhelp/rkward-package\">rkward package overview</link> for RKWard specific "
+"function for development and scripting."
+msgstr ""
+"इसकी जाँच पड़ताल करो<link href=\"help:/rkwardplugins/index.html\"> आरकेवार्ड के "
+"लिए प्लगइन्स लिखने का परिचय</link> (<link href=\"https://rkward.kde.org/doc/"
+"rkwardplugins/\"> सबसे हाल ही का संस्करण ऑनलाइन</link> ) यह जानने के लिए कि अपने "
+"कस्टम डायलॉग के साथ RKWard को बेहतर बनाना कितना आसान है। और अगर आप चाहें, तो अपने "
+"काम को RKWard उपयोगकर्ताओं के समुदाय के साथ कैसे साझा करें। देखें<link href=\"rkward://"
+"rhelp/rkward-package\"> rkward पैकेज अवलोकन</link> विकास और स्क्रिप्टिंग के लिए "
+"RKWard विशिष्ट कार्य हेतु।"
+
+#. i18n: ectx: (Using the RKWard R Console) <title>
+#: rkward/pages/rkward_console.rkh:8
+#, kde-format
+msgid "Using the RKWard R Console"
+msgstr "RKWard R कंसोल का उपयोग करना"
+
+#. i18n: ectx: (Using the RKWard R Console) <summary>
+#: rkward/pages/rkward_console.rkh:9
+#, kde-format
+msgid "Describe features and settings regarding the RKWard R Console."
+msgstr "आरकेवार्ड आर कंसोल से संबंधित सुविधाओं और सेटिंग्स का वर्णन करें।"
+
+#. i18n: ectx: (Using the RKWard R Console) <summary>
+#: rkward/pages/rkward_console.rkh:9
+#, kde-format
+msgid ""
+"The console can - by default - be found at the bottom of the application "
+"window. Press the tool button labelled \"R Console\" to invoke it."
+msgstr ""
+"कंसोल - डिफ़ॉल्ट रूप से - एप्लिकेशन विंडो के निचले भाग में पाया जा सकता है। इसे आमंत्रित करने "
+"के लिए \"R कंसोल\" लेबल वाला टूल बटन दबाएँ।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:15
+#, kde-format
+msgid "What is the console?"
+msgstr "कंसोल क्या है?"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
+#: rkward/pages/rkward_console.rkh:15
+#, kde-format
+msgid ""
+"RKWard is based on the R language for statistical computing. The console "
+"allows you to enter R commands directly. Obviously, to use this, you need to "
+"know some basics of the R language. Select Help->Help on R for some "
+"introductory information."
+msgstr ""
+"RKWard सांख्यिकीय कंप्यूटिंग के लिए R भाषा पर आधारित है। कंसोल आपको सीधे R कमांड दर्ज "
+"करने की अनुमति देता है। जाहिर है, इसका उपयोग करने के लिए, आपको R भाषा की कुछ बुनियादी "
+"बातें जानने की आवश्यकता है। कुछ परिचयात्मक जानकारी के लिए सहायता->R पर सहायता चुनें।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
+#: rkward/pages/rkward_console.rkh:15
+#, kde-format
+msgid ""
+"The console is meant for interactive use and small commands. For editing "
+"complex commands / scripts, using the Script File Editor (File->New->Script "
+"File) is much more comfortable."
+msgstr ""
+"कंसोल इंटरैक्टिव उपयोग और छोटे कमांड के लिए है। जटिल कमांड/स्क्रिप्ट को संपादित करने के "
+"लिए, स्क्रिप्ट फ़ाइल एडिटर (फ़ाइल-> नई-> स्क्रिप्ट फ़ाइल) का उपयोग करना अधिक सुविधाजनक "
+"है।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
+#: rkward/pages/rkward_console.rkh:15
+#, kde-format
+msgid ""
+"Many console features are available from the context menu. To invoke the "
+"context menu, click the right mouse button inside the console window."
+msgstr ""
+"संदर्भ मेनू से कई कंसोल सुविधाएँ उपलब्ध हैं। संदर्भ मेनू को आमंत्रित करने के लिए, कंसोल विंडो के "
+"अंदर दायाँ माउस बटन क्लिक करें।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:23
+#, kde-format
+msgid "Interrupting commands"
+msgstr "आदेशों को बाधित करना"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Interrupting commands">
+#: rkward/pages/rkward_console.rkh:23
+#, kde-format
+msgid ""
+"To interrupt a running command, press Ctrl+C, or choose \"Interrupt running "
+"command\" from the context menu. Note that the command will not necessarily "
+"end immediately. If there are several other commands running at the same "
+"time (e.g. some action you invoked from the Analysis menu), the console will "
+"only become available again, when the R backend becomes idle."
+msgstr ""
+"किसी चल रहे आदेश को बाधित करने के लिए, Ctrl+C दबाएँ, या संदर्भ मेनू से \"चल रहे आदेश को "
+"बाधित करें\" चुनें। ध्यान दें कि आदेश तुरंत समाप्त नहीं होगा। यदि एक ही समय में कई अन्य आदेश "
+"चल रहे हैं (उदाहरण के लिए विश्लेषण मेनू से आपके द्वारा की गई कोई कार्रवाई), तो कंसोल केवल "
+"तभी फिर से उपलब्ध होगा, जब R बैकएंड निष्क्रिय हो जाएगा।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:27
+#, kde-format
+msgid "Re-running selected commands"
+msgstr "चयनित कमांड पुनः चलाना"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Re-running selected commands">
+#: rkward/pages/rkward_console.rkh:27
+#, kde-format
+msgid ""
+"To re-run (a sequence of) selected commands, select them using the mouse. "
+"Then choose \"Run selection\" from the context menu (default shortcut is Ctrl"
+"+Return). Leading \"> \" and \"+ \" on the selected lines will be removed "
+"automatically."
+msgstr ""
+"चयनित कमांड (एक अनुक्रम) को फिर से चलाने के लिए, उन्हें माउस का उपयोग करके चुनें। फिर "
+"संदर्भ मेनू से \"चयन चलाएँ\" चुनें (डिफ़ॉल्ट शॉर्टकट Ctrl+Return है)। चयनित पंक्तियों पर "
+"अग्रणी \"> \" और \"+ \" स्वचालित रूप से हटा दिए जाएँगे।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:31
+#, kde-format
+msgid "Copying commands / output"
+msgstr "कमांड / आउटपुट कॉपी करना"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
+#: rkward/pages/rkward_console.rkh:31
+#, kde-format
+msgid ""
+"There are two copy modes available from the context menu (or the Edit menu). "
+"One allows you to copy the selection literally, i.e. including the prompts "
+"\"> \" and \"+ \". In contrast, \"Copy commands, only\" will remove the "
+"prompts from the text copied into the clipboard."
+msgstr ""
+"संदर्भ मेनू (या संपादन मेनू) से दो कॉपी मोड उपलब्ध हैं। एक आपको चयन को शाब्दिक रूप से कॉपी "
+"करने की अनुमति देता है, यानी \"> \" और \"+ \" संकेतों सहित। इसके विपरीत, \"केवल कॉपी "
+"कमांड\" क्लिपबोर्ड में कॉपी किए गए पाठ से संकेतों को हटा देगा।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
+#: rkward/pages/rkward_console.rkh:31
+#, kde-format
+msgid ""
+"Note that the customary shortcut for copying text - Ctrl+C - does NOT work "
+"in the console, as Ctrl+C already means interrupting the current command."
+msgstr ""
+"ध्यान दें कि पाठ की प्रतिलिपि बनाने के लिए प्रचलित शॉर्टकट - Ctrl+C - कंसोल में काम नहीं "
+"करता है, क्योंकि Ctrl+C का अर्थ पहले से ही वर्तमान कमांड को बाधित करना है।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:37
+#, kde-format
+msgid "Function reference"
+msgstr "फ़ंक्शन संदर्भ"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Function reference">
+#: rkward/pages/rkward_console.rkh:37
+#, kde-format
+msgid ""
+"Pressing F2 (or selecting \"Function reference\" from the context menu) will "
+"try to look up the R help page for whichever keyword the cursor is currently "
+"on."
+msgstr ""
+"F2 दबाने पर (या संदर्भ मेनू से \"फ़ंक्शन संदर्भ\" का चयन करने पर) कर्सर जिस भी कीवर्ड पर "
+"वर्तमान में है, उसके लिए R सहायता पृष्ठ को देखने का प्रयास किया जाएगा।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:41
+#, kde-format
+msgid "Navigating the command history"
+msgstr "कमांड इतिहास नेविगेट करना"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:41
+#, kde-format
+msgid ""
+"The console provides a mechanism to recall recent commands, similar to the "
+"readline functionality offered in R or most shells."
+msgstr ""
+"कंसोल हाल के आदेशों को याद करने के लिए एक तंत्र प्रदान करता है, जो R या अधिकांश शेल्स में "
+"दी गई readline कार्यक्षमता के समान है।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:41
+#, kde-format
+msgid ""
+"To recall the previous command, simply press the up arrow. Press the up "
+"arrow repeatedly to recall the command before that, and so on. Similarly, "
+"pressing the down arrow goes downwards in the command history. Of course, "
+"you can also edit a recalled command line."
+msgstr ""
+"पिछले कमांड को वापस बुलाने के लिए, बस ऊपर तीर दबाएँ। उससे पहले के कमांड को वापस बुलाने के "
+"लिए ऊपर तीर को बार-बार दबाएँ, और इसी तरह आगे भी दबाएँ। इसी तरह, नीचे तीर दबाने से "
+"कमांड इतिहास नीचे की ओर चला जाता है। बेशक, आप किसी वापस बुलाए गए कमांड लाइन को "
+"संपादित भी कर सकते हैं।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:41
+#, kde-format
+msgid ""
+"It is also possible to search the command history for lines starting with a "
+"specified string. To use this, enter - for example - \"print\" in the "
+"console. Now use Shift+Up / Shift+Down. You will note, that only those "
+"recent command lines that started with \"print\" will be shown."
+msgstr ""
+"कमांड इतिहास में निर्दिष्ट स्ट्रिंग से शुरू होने वाली लाइनों को खोजना भी संभव है। इसका "
+"उपयोग करने के लिए, कंसोल में - उदाहरण के लिए - \"प्रिंट\" दर्ज करें। अब Shift+Up / Shift"
+"+Down का उपयोग करें। आप देखेंगे कि केवल वे हाल की कमांड लाइनें ही दिखाई जाएंगी जो \"प्रिंट"
+"\" से शुरू हुई थीं।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:41
+#, kde-format
+msgid ""
+"It is possible to make the second mode of searching the command history the "
+"default. In this case, pressing Shift+Up/Down will navigate all commands, "
+"while pressing Up/Down without the Shift key will show only matching lines. "
+"(see <link href=\"#settings\">Section settings</link>)."
+msgstr ""
+"कमांड इतिहास को खोजने के दूसरे मोड को डिफ़ॉल्ट बनाना संभव है। इस मामले में, Shift+Up/"
+"Down दबाने से सभी कमांड नेविगेट हो जाएंगे, जबकि Shift कुंजी के बिना Up/Down दबाने पर "
+"केवल मेल खाने वाली लाइनें ही दिखाई देंगी। (देखें<link href=\"#settings\"> अनुभाग सेटिंग्स</"
+"link> )."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:41
+#, kde-format
+msgid ""
+"You can also save / load a command history at any time during your session, "
+"using <i>File->Import / Export command history</i> or the R commands "
+"<i>savehistory()</i> and <i>loadhistory()</i>."
+msgstr ""
+"आप अपने सत्र के दौरान किसी भी समय <i>फ़ाइल-&gt;आयात/निर्यात कमांड इतिहास</i> या R "
+"कमांड <i>savehistory()</i> और <i>loadhistory() का</i> उपयोग करके कमांड इतिहास "
+"को सहेज/लोड कर सकते हैं।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:53
+#, kde-format
+msgid "Filename and Object name completion"
+msgstr "फ़ाइल नाम और ऑब्जेक्ट नाम पूर्णता"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
+#: rkward/pages/rkward_console.rkh:53
+#, kde-format
+msgid ""
+"Pressing the Tab key while typing the name of an R object will try to "
+"complete the name of that R object. If several objects start with the typed "
+"characters, a list of all those objects will be shown."
+msgstr ""
+"किसी R ऑब्जेक्ट का नाम टाइप करते समय Tab कुंजी दबाने से उस R ऑब्जेक्ट का नाम पूरा करने का "
+"प्रयास किया जाएगा। यदि कई ऑब्जेक्ट टाइप किए गए वर्णों से शुरू होते हैं, तो उन सभी ऑब्जेक्ट "
+"की सूची दिखाई जाएगी।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
+#: rkward/pages/rkward_console.rkh:53
+#, kde-format
+msgid ""
+"For an example, enter \"base::pa\" in the console, then press Tab. This will "
+"list all objects from package base starting with \"pa\". Now append an \"s"
+"\", and press Tab again. The word will be changed to \"paste\", as that is "
+"the only matching object name."
+msgstr ""
+"उदाहरण के लिए, कंसोल में \"base::pa\" दर्ज करें, फिर Tab दबाएँ। यह पैकेज बेस से \"pa\" से "
+"शुरू होने वाले सभी ऑब्जेक्ट को सूचीबद्ध करेगा। अब एक \"s\" जोड़ें, और फिर से Tab दबाएँ। शब्द "
+"बदलकर \"paste\" हो जाएगा, क्योंकि यह एकमात्र मिलान करने वाला ऑब्जेक्ट नाम है।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
+#: rkward/pages/rkward_console.rkh:53
+#, kde-format
+msgid ""
+"Based on some simple heuristics, RKWard will try to complete file names "
+"instead of object names, where appropriate. This is done, when the cursor "
+"seems to be inside a quoted string that does not seem to be part of an "
+"object name."
+msgstr ""
+"कुछ सरल अनुमानों के आधार पर, RKWard जहाँ उचित हो, वहाँ ऑब्जेक्ट नामों के बजाय फ़ाइल नामों "
+"को पूरा करने का प्रयास करेगा। ऐसा तब किया जाता है, जब कर्सर किसी उद्धृत स्ट्रिंग के अंदर "
+"लगता है जो ऑब्जेक्ट नाम का हिस्सा नहीं लगता है।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#. i18n: ectx: (Screen device history) <section title="...">
+#. i18n: ectx: (Workspace Browser) <section title="...">
+#: rkward/pages/rkward_console.rkh:61 rkward/pages/rkward_plot_history.rkh:29
+#: rkward/pages/rkward_workspace_browser.rkh:47
+#, kde-format
+msgid "Configurable Settings"
+msgstr "कॉन्फ़िगर करने योग्य सेटिंग्स"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:61
+#, kde-format
+msgid ""
+"To configure the behavior of the console, select <a href=\"rkward://settings/"
+"console\">Settings->Configure RKWard->R Console</a> or \"Configure\" from "
+"the context menu. The following options are configurable:"
+msgstr ""
+"कंसोल के व्यवहार को कॉन्फ़िगर करने के लिए, संदर्भ मेनू से <a href=\"rkward://settings/"
+"console\">सेटिंग्स-&gt;कॉन्फ़िगर RKWard-&gt;R कंसोल</a> या &quot;कॉन्फ़िगर करें&quot; "
+"चुनें। निम्नलिखित विकल्प कॉन्फ़िगर करने योग्य हैं:"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:61
+#, kde-format
+msgid ""
+"<b>Load/save command history</b>: Whether the <link href=\"#command_history"
+"\">command history</link> is saved when closing RKWard, and reloaded when "
+"next starting RKWard again. If this is not checked, each session of RKWard "
+"will start out with an empty command history."
+msgstr ""
+"<b>कमांड इतिहास लोड/सहेजें</b> : क्या<link href=\"#command_history\"> कमांड "
+"इतिहास</link> RKWard को बंद करते समय सहेजा जाता है, और अगली बार RKWard को फिर से "
+"शुरू करने पर पुनः लोड किया जाता है। यदि यह चेक नहीं किया गया है, तो RKWard का प्रत्येक "
+"सत्र एक खाली कमांड इतिहास के साथ शुरू होगा।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:61
+#, kde-format
+msgid ""
+"<b>Maximum length of command history</b>: Only this many lines are kept in "
+"the <link href=\"#command_history\">command history</link>."
+msgstr ""
+"<b>कमांड इतिहास की अधिकतम लंबाई</b> : केवल इतनी ही लाइनें रखी जाती हैं<link href="
+"\"#command_history\"> कमांड इतिहास</link> ."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:61
+#, kde-format
+msgid ""
+"<b>Maximum number of paragraphs/lines to display in the console</b>: No more "
+"than this many total lines (commands and output) will be shown in the "
+"console. When this number of lines is exceeded, lines will be removed at the "
+"top of the console window. To clear the console entirely, choose \"Clear\" "
+"from the context menu or the Edit menu."
+msgstr ""
+"<b>कंसोल में प्रदर्शित किए जाने वाले पैराग्राफ़/लाइनों की अधिकतम संख्या</b> : कंसोल में इससे "
+"ज़्यादा कुल लाइनें (कमांड और आउटपुट) नहीं दिखाई जाएँगी। जब लाइनों की यह संख्या पार हो "
+"जाती है, तो कंसोल विंडो के शीर्ष पर लाइनें हटा दी जाएँगी। कंसोल को पूरी तरह से साफ़ करने "
+"के लिए, संदर्भ मेनू या संपादन मेनू से &quot;साफ़ करें&quot; चुनें।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:61
+#, kde-format
+msgid ""
+"<b>Run commands from script editor through the console</b>: Commands coming "
+"from script editors may be sent through the console, i.e. the commands and "
+"their results will be shown in the console. If this option is not checked, "
+"the commands will only be visible in the Command log, but not in the console."
+msgstr ""
+"<b>कंसोल के माध्यम से स्क्रिप्ट एडिटर से कमांड चलाएं</b> : स्क्रिप्ट एडिटर से आने वाले कमांड "
+"कंसोल के माध्यम से भेजे जा सकते हैं, यानी कमांड और उनके परिणाम कंसोल में दिखाए जाएंगे। यदि "
+"यह विकल्प चेक नहीं किया गया है, तो कमांड केवल कमांड लॉग में दिखाई देंगे, लेकिन कंसोल में नहीं।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:61
+#, kde-format
+msgid ""
+"<b>Also add those commands to console history</b>: If the above option is "
+"checked, this affects, whether such commands are also added to the console "
+"history. Turning off this option may help to keep the console history \"clean"
+"\"."
+msgstr ""
+"<b>कंसोल इतिहास में उन कमांड को भी जोड़ें</b> : यदि उपरोक्त विकल्प को चेक किया जाता है, "
+"तो इससे यह प्रभावित होता है कि क्या ऐसे कमांड को कंसोल इतिहास में भी जोड़ा जाता है। इस "
+"विकल्प को बंद करने से कंसोल इतिहास को &quot;साफ़&quot; रखने में मदद मिल सकती है।"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:61
+#, kde-format
+msgid ""
+"<b>Command history is context-sensitive by default</b>: If this is checked, "
+"the context-sensitive mode of navigating the <link href=\"#command_history"
+"\">command history</link> is the default, i.e. available with Up/Down "
+"without Shift. Else the key binding for this is Shift+Up/Down."
+msgstr ""
+"<b>कमांड इतिहास डिफ़ॉल्ट रूप से संदर्भ-संवेदनशील होता है</b> : यदि यह चेक किया गया है, "
+"तो नेविगेट करने का संदर्भ-संवेदनशील मोड<link href=\"#command_history\"> कमांड "
+"इतिहास</link> डिफ़ॉल्ट है, यानी Shift के बिना Up/Down के साथ उपलब्ध है। अन्यथा इसके "
+"लिए कुंजी बाइंडिंग Shift+Up/Down है।"
+
+#. i18n: ectx: (RKWard for new Users) <title>
+#: rkward/pages/rkward_for_new_users.rkh:8
+#, kde-format
+msgid "RKWard for new Users"
+msgstr "नए उपयोगकर्ताओं के लिए RKWard"
+
+#. i18n: ectx: (RKWard for new Users) <summary>
+#: rkward/pages/rkward_for_new_users.rkh:9
+#, kde-format
+msgid ""
+"Provide some starting points for users new to R and RKWard. For a more in "
+"depth guide see <link href=\"rkward://page/rkward_for_r_users\"/>."
+msgstr ""
+"R और RKWard के नए उपयोगकर्ताओं के लिए कुछ शुरुआती बिंदु प्रदान करें। अधिक गहन मार्गदर्शिका "
+"के लिए देखें<link href=\"rkward://page/rkward_for_r_users\"/> ."
+
+#. i18n: ectx: (RKWard for new Users) <section title="...">
+#: rkward/pages/rkward_for_new_users.rkh:14
+#, kde-format
+msgid "Where's my data?"
+msgstr "मेरा डेटा कहां है?"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
+#: rkward/pages/rkward_for_new_users.rkh:14
+#, kde-format
+msgid ""
+"If you have previously used different statistics tools, you may be "
+"accustomed to the idea, that all your data is basically stored in one single "
+"spreadsheet, and that spreadsheet is visible all of the time. While, of "
+"course, R can deal with this sort of data (technically called a \"data.frame"
+"\"), it is much more flexible, and may be slightly confusing at first."
+msgstr ""
+"यदि आपने पहले अलग-अलग सांख्यिकी उपकरणों का उपयोग किया है, तो आप इस विचार के आदी हो "
+"सकते हैं कि आपका सारा डेटा मूल रूप से एक ही स्प्रेडशीट में संग्रहीत है, और वह स्प्रेडशीट हर "
+"समय दिखाई देती है। हालाँकि, बेशक, R इस तरह के डेटा (तकनीकी रूप से \"डेटा.फ़्रेम\" कहा "
+"जाता है) से निपट सकता है, यह बहुत अधिक लचीला है, और पहली बार में थोड़ा भ्रमित करने "
+"वाला हो सकता है।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
+#: rkward/pages/rkward_for_new_users.rkh:14
+#, kde-format
+msgid ""
+"R - and hence RKWard - can deal with a large number of different types of "
+"data: The well known spreadsheets, but also single vectors of data (like a "
+"column in a spreadsheet), so called \"list\"s of different vectors or other "
+"objects that may have different lengths, single data points, etc. Even most "
+"of the language itself, the functions, are stored just like data and can "
+"also be edited."
+msgstr ""
+"आर - और इसलिए आरकेवार्ड - विभिन्न प्रकार के डेटा की एक बड़ी संख्या से निपट सकता है: "
+"प्रसिद्ध स्प्रेडशीट, लेकिन डेटा के एकल वैक्टर (स्प्रेडशीट में एक कॉलम की तरह), विभिन्न वैक्टर "
+"या अन्य ऑब्जेक्ट्स की तथाकथित \"सूची\" जिनकी लंबाई अलग-अलग हो सकती है, एकल डेटा बिंदु, "
+"आदि। यहां तक कि भाषा का अधिकांश भाग, फ़ंक्शन, डेटा की तरह ही संग्रहीत होते हैं और उन्हें "
+"संपादित भी किया जा सकता है।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
+#: rkward/pages/rkward_for_new_users.rkh:14
+#, kde-format
+msgid ""
+"At the same time, R is not confined to working with just one piece of data "
+"at a time, but rather you have a \"Workspace\", where all your different "
+"variables, tables, etc. are accessible. You can have many data.frames at "
+"once, and additional data of other types. At the left side of the "
+"application window, there should be an icon labelled \"Workspace\". You can "
+"click on this to see all the objects present in your workspace. All the "
+"objects you create or modify will be visible inside the \".GlobalEnv\". Most "
+"other objects are predefined in libraries, such as \"package:base\". See "
+"<link href=\"rkward://page/rkward_workspace_browser\"/> for details."
+msgstr ""
+"साथ ही, R एक समय में सिर्फ़ एक ही डेटा के साथ काम करने तक सीमित नहीं है, बल्कि आपके पास "
+"एक &quot;वर्कस्पेस&quot; है, जहाँ आपके सभी अलग-अलग वैरिएबल, टेबल आदि एक्सेस किए जा सकते "
+"हैं। आप एक साथ कई डेटा.फ्रेम और अन्य प्रकार के अतिरिक्त डेटा रख सकते हैं। एप्लिकेशन विंडो के "
+"बाईं ओर, &quot;वर्कस्पेस&quot; लेबल वाला एक आइकन होना चाहिए। आप अपने वर्कस्पेस में मौजूद "
+"सभी ऑब्जेक्ट देखने के लिए इस पर क्लिक कर सकते हैं। आपके द्वारा बनाए गए या संशोधित किए गए "
+"सभी ऑब्जेक्ट &quot;.GlobalEnv&quot; के अंदर दिखाई देंगे। अधिकांश अन्य ऑब्जेक्ट लाइब्रेरी में "
+"पूर्वनिर्धारित हैं, जैसे &quot;पैकेज:बेस&quot;। देखें<link href=\"rkward://page/"
+"rkward_workspace_browser\"/> जानकारी के लिए।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
+#: rkward/pages/rkward_for_new_users.rkh:14
+#, kde-format
+msgid ""
+"You do not need to worry about all these details. To create a new "
+"spreadsheet (data.frame), choose File->New->Dataset from the menu. All you "
+"need to do is to assign a name to this table, then you can start editing. To "
+"work with pre-existing data, pick the appropriate option from the File-"
+">Import menu."
+msgstr ""
+"आपको इन सभी विवरणों के बारे में चिंता करने की ज़रूरत नहीं है। एक नई स्प्रेडशीट (डेटा.फ़्रेम) "
+"बनाने के लिए, मेनू से फ़ाइल->नया->डेटासेट चुनें। आपको बस इस तालिका को एक नाम देना है, फिर "
+"आप संपादन शुरू कर सकते हैं। पहले से मौजूद डेटा के साथ काम करने के लिए, फ़ाइल->आयात मेनू से "
+"उपयुक्त विकल्प चुनें।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="...">
+#: rkward/pages/rkward_for_new_users.rkh:23
+#, kde-format
+msgid "How can I make use of my results in an external application?"
+msgstr "मैं अपने परिणामों का उपयोग किसी बाहरी अनुप्रयोग में कैसे कर सकता हूँ?"
+
+#. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
+#: rkward/pages/rkward_for_new_users.rkh:23
+#, kde-format
+msgid ""
+"In this section you will learn about some basic methods how to make use of "
+"your results in external applications."
+msgstr ""
+"इस अनुभाग में आप कुछ बुनियादी तरीकों के बारे में जानेंगे कि कैसे अपने परिणामों को बाहरी "
+"अनुप्रयोगों में उपयोग किया जाए।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
+#: rkward/pages/rkward_for_new_users.rkh:23
+#, kde-format
+msgid ""
+"Suppose you produced a textual output from tests you performed. Such will be "
+"presented in the \"output window\" of RKWard. It's easy to keep track on "
+"your work since a standard of RKWard is to show everything in chronological "
+"order together with the date of creation."
+msgstr ""
+"मान लीजिए कि आपने अपने द्वारा किए गए परीक्षणों से एक पाठ्य आउटपुट तैयार किया है। ऐसा "
+"RKWard की \"आउटपुट विंडो\" में प्रस्तुत किया जाएगा। अपने काम पर नज़र रखना आसान है "
+"क्योंकि RKWard का एक मानक यह है कि निर्माण की तारीख के साथ-साथ सब कुछ कालानुक्रमिक "
+"क्रम में दिखाया जाए।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
+#: rkward/pages/rkward_for_new_users.rkh:23
+#, kde-format
+msgid ""
+"See <link href=\"rkward://page/rkward_output\"/> for details on working with "
+"the output. The easiest method of reusing the output is to select the "
+"relevant portion, and copy and paste them to an office suite."
+msgstr ""
+"देखना<link href=\"rkward://page/rkward_output\"/> आउटपुट के साथ काम करने के बारे में "
+"विस्तृत जानकारी के लिए देखें। आउटपुट का पुनः उपयोग करने का सबसे आसान तरीका प्रासंगिक भाग "
+"का चयन करना और उन्हें कॉपी करके ऑफिस सूट में पेस्ट करना है।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="...">
+#: rkward/pages/rkward_for_new_users.rkh:30
+#, kde-format
+msgid "Basic Analyses"
+msgstr "बुनियादी विश्लेषण"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
+#: rkward/pages/rkward_for_new_users.rkh:30
+#, kde-format
+msgid ""
+"In order to familiarize yourself with RKWard (or with your data), one of the "
+"first things to do might be to choose Analysis->Descriptive Statistics from "
+"the Menu. You will be presented with a dialog that allows you to select one "
+"or more variables to analyse. This looks similar to the workspace browser "
+"introduced above. On the additional tabs you can choose which types of "
+"descriptive statistics should be calculated."
+msgstr ""
+"आरकेवार्ड (या अपने डेटा) से खुद को परिचित करने के लिए, सबसे पहले आपको मेनू से विश्लेषण-"
+">वर्णनात्मक सांख्यिकी चुनना होगा। आपको एक संवाद प्रस्तुत किया जाएगा जो आपको विश्लेषण "
+"करने के लिए एक या अधिक चर चुनने की अनुमति देता है। यह ऊपर पेश किए गए वर्कस्पेस ब्राउज़र "
+"जैसा दिखता है। अतिरिक्त टैब पर आप चुन सकते हैं कि किस प्रकार के वर्णनात्मक सांख्यिकी की "
+"गणना की जानी चाहिए।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
+#: rkward/pages/rkward_for_new_users.rkh:30
+#, kde-format
+msgid ""
+"At the lower right of the dialog, there is a button labelled \"Code\". Using "
+"this, you can show/hide a text area. If you look at the contents of this "
+"text area (you may have to resize the window to view it more comfortably), "
+"you can see the text changing according to the settings you choose in the "
+"dialog. This text is actually R syntax. It is the code that is needed to "
+"perform these calculations in R. Most of RKWard is based on generating this "
+"code for you, and then running it inside R. Later, when you feel more "
+"comfortable, have specific needs not covered by RKWard, or you want to "
+"automate repetitive tasks, you can use this syntax to literally program your "
+"analyses. Note that the code is divided into up to three sections: "
+"\"Preprocess\" for loading required libraries or defining helper functions, "
+"\"Calculate\" to perform the actual calculations, and \"Printout\" to "
+"generate output in RKWard's output window."
+msgstr ""
+"संवाद के निचले दाएं भाग में, \"कोड\" नामक एक बटन है। इसका उपयोग करके, आप किसी टेक्स्ट "
+"क्षेत्र को दिखा/छिपा सकते हैं। यदि आप इस टेक्स्ट क्षेत्र की सामग्री को देखते हैं (आपको इसे "
+"अधिक आराम से देखने के लिए विंडो का आकार बदलना पड़ सकता है), तो आप संवाद में आपके द्वारा "
+"चुनी गई सेटिंग के अनुसार टेक्स्ट को बदलते हुए देख सकते हैं। यह टेक्स्ट वास्तव में R सिंटैक्स है। यह "
+"वह कोड है जो R में इन गणनाओं को करने के लिए आवश्यक है। RKWard का अधिकांश भाग आपके लिए "
+"इस कोड को जनरेट करने और फिर इसे R के अंदर चलाने पर आधारित है। बाद में, जब आप अधिक सहज "
+"महसूस करते हैं, तो आपके पास RKWard द्वारा कवर नहीं की गई विशिष्ट ज़रूरतें होती हैं, या आप "
+"दोहराए जाने वाले कार्यों को स्वचालित करना चाहते हैं, तो आप अपने विश्लेषणों को शाब्दिक रूप "
+"से प्रोग्राम करने के लिए इस सिंटैक्स का उपयोग कर सकते हैं। ध्यान दें कि कोड को तीन खंडों में "
+"विभाजित किया गया है: आवश्यक लाइब्रेरी लोड करने या सहायक फ़ंक्शन को परिभाषित करने के "
+"लिए \"प्रीप्रोसेस\", वास्तविक गणना करने के लिए \"गणना करें\", और RKWard की आउटपुट "
+"विंडो में आउटपुट जनरेट करने के लिए \"प्रिंटआउट\"।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
+#: rkward/pages/rkward_for_new_users.rkh:30
+#, kde-format
+msgid ""
+"For now, just click submit, once you've made your choices, and watch the "
+"results show up in a new window."
+msgstr ""
+"अभी के लिए, एक बार जब आप अपना विकल्प चुन लें, तो बस सबमिट पर क्लिक करें, और परिणाम "
+"को एक नई विंडो में देखें।"
+
+#. i18n: ectx: (RKWard for new Users) <section title="...">
+#: rkward/pages/rkward_for_new_users.rkh:38
+#, kde-format
+msgid "So much more"
+msgstr "और भी बहुत कुछ"
+
+#. i18n: ectx: (RKWard for new Users) <section title="So much more">
+#: rkward/pages/rkward_for_new_users.rkh:38
+#, kde-format
+msgid ""
+"The purpose of RKWard is to make the power of the R language easily "
+"accessible to the user, without having to learn a full programming language, "
+"first. However, for advanced needs, you may want to make use of the full "
+"flexibility of the R language. RKWard offers a lot of tools to make this "
+"easier, both for users new to R, and R experts. Read on in <link href="
+"\"rkward://page/rkward_for_r_users\"/> for more on this."
+msgstr ""
+"RKWard का उद्देश्य R भाषा की शक्ति को उपयोगकर्ता के लिए आसानी से सुलभ बनाना है, बिना "
+"पहले पूरी प्रोग्रामिंग भाषा सीखे। हालाँकि, उन्नत आवश्यकताओं के लिए, आप R भाषा की पूरी "
+"लचीलेपन का उपयोग करना चाह सकते हैं। RKWard इसे आसान बनाने के लिए बहुत सारे उपकरण "
+"प्रदान करता है, R के लिए नए उपयोगकर्ताओं और R विशेषज्ञों दोनों के लिए। आगे पढ़ें<link href="
+"\"rkward://page/rkward_for_r_users\"/> इस पर अधिक जानकारी के लिए."
+
+#. i18n: ectx: (RKWard for new Users) <section title="So much more">
+#: rkward/pages/rkward_for_new_users.rkh:38
+#, kde-format
+msgid ""
+"Also, you may want to select Help->Help on R from the menu for some starting "
+"points in learning R."
+msgstr ""
+"इसके अलावा, आप आर सीखने में कुछ शुरुआती बिंदुओं के लिए मेनू से सहायता->आर पर सहायता का चयन "
+"करना चाह सकते हैं।"
+
+#. i18n: ectx: (RKWard for R Users) <title>
+#: rkward/pages/rkward_for_r_users.rkh:8
+#, kde-format
+msgid "RKWard for R Users"
+msgstr "R उपयोगकर्ताओं के लिए RKWard"
+
+#. i18n: ectx: (RKWard for R Users) <summary>
+#: rkward/pages/rkward_for_r_users.rkh:9
+#, kde-format
+msgid ""
+"Briefly explains the main components of RKWard, assuming the user is already "
+"familiar with basic concepts of R."
+msgstr ""
+"आरकेवार्ड के मुख्य घटकों को संक्षेप में समझाया गया है, यह मानते हुए कि उपयोगकर्ता पहले से ही "
+"आर की बुनियादी अवधारणाओं से परिचित है।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:12
+#, kde-format
+msgid "The Console"
+msgstr "कंसोल"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:12
+#, kde-format
+msgid ""
+"First things first: An emulation of the standard R console can be found at "
+"the bottom on the screen. There you will notice several buttons, one of "
+"which is labelled \"R Console\" and has a console icon."
+msgstr ""
+"सबसे पहले: मानक R कंसोल का अनुकरण स्क्रीन के निचले भाग में पाया जा सकता है। वहाँ आपको कई "
+"बटन दिखाई देंगे, जिनमें से एक पर \"R कंसोल\" लिखा है और कंसोल आइकन है।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:12
+#, kde-format
+msgid ""
+"This console works almost exactly like the regular R text console, so you "
+"can start working right away. Differences include:"
+msgstr ""
+"यह कंसोल लगभग नियमित R टेक्स्ट कंसोल की तरह ही काम करता है, इसलिए आप तुरंत काम करना "
+"शुरू कर सकते हैं। अंतर में शामिल हैं:"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:12
+#, kde-format
+msgid "Syntax highlighting"
+msgstr "वाक्य - विन्यास पर प्रकाश डालना"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:12
+#, kde-format
+msgid ""
+"While typing function calls, a list of arguments to that function is shown "
+"in a box (argument hinting)"
+msgstr ""
+"फ़ंक्शन कॉल टाइप करते समय, उस फ़ंक्शन के लिए तर्कों की एक सूची एक बॉक्स में दिखाई जाती है "
+"(तर्क संकेत)"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:12
+#, kde-format
+msgid ""
+"While the cursor is on an R symbol or function, pressing F2 will search the "
+"R help for that symbol. Also available from the Help menu, or the right "
+"mouse button menu"
+msgstr ""
+"जब कर्सर किसी R सिंबल या फ़ंक्शन पर हो, तो F2 दबाने पर उस सिंबल के लिए R हेल्प सर्च की "
+"जाएगी। यह हेल्प मेनू या दाएँ माउस बटन मेनू से भी उपलब्ध है"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:12
+#, kde-format
+msgid ""
+"You can easily create a transcript of the commands you run in the console "
+"using Run->CC commands to output..."
+msgstr ""
+"आप आउटपुट के लिए Run->CC कमांड का उपयोग करके कंसोल में चलाए गए कमांड की आसानी से "
+"प्रतिलिपि बना सकते हैं..."
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:12
+#, kde-format
+msgid "See <link href=\"rkward://page/rkward_console\"/> for more details."
+msgstr "देखना<link href=\"rkward://page/rkward_console\"/> अधिक जानकारी के लिए."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:26
+#, kde-format
+msgid "Script Editors"
+msgstr "स्क्रिप्ट संपादक"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
+#: rkward/pages/rkward_for_r_users.rkh:26
+#, kde-format
+msgid ""
+"Often it is more convenient to write scripts in a separate file, instead of "
+"typing them directly in the console. To open a new script editor (with "
+"syntax highlighting, and many more features), choose File->New->Script File, "
+"or open an already existing Script file using File->Open R Script File."
+msgstr ""
+"अक्सर स्क्रिप्ट को सीधे कंसोल में टाइप करने के बजाय एक अलग फ़ाइल में लिखना अधिक सुविधाजनक "
+"होता है। एक नया स्क्रिप्ट एडिटर खोलने के लिए (सिंटैक्स हाइलाइटिंग और कई अन्य सुविधाओं के "
+"साथ), फ़ाइल-> नई-> स्क्रिप्ट फ़ाइल चुनें, या फ़ाइल-> ओपन आर स्क्रिप्ट फ़ाइल का उपयोग करके "
+"पहले से मौजूद स्क्रिप्ट फ़ाइल खोलें।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
+#: rkward/pages/rkward_for_r_users.rkh:26
+#, kde-format
+msgid ""
+"You will note that the editor opens in a new window in the main workplace "
+"(the area of the window, that you are most likely reading this text, in). "
+"You can open any number of script editor windows at the same time."
+msgstr ""
+"आप देखेंगे कि संपादक मुख्य कार्यस्थल (विंडो का वह क्षेत्र, जिसमें आप संभवतः यह पाठ पढ़ रहे हैं) "
+"में एक नई विंडो में खुलता है। आप एक ही समय में कितनी भी स्क्रिप्ट संपादक विंडो खोल सकते हैं।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
+#: rkward/pages/rkward_for_r_users.rkh:26
+#, kde-format
+msgid ""
+"To run the code in a script editor window, either copy and paste it to the "
+"console, or choose one of the actions in the Run menu, such as Run All or "
+"Run Selection. Note: The contents of the menus may change according to the "
+"type of active window. Hence, if you look at the Run menu while reading "
+"this, there will be no entries."
+msgstr ""
+"स्क्रिप्ट एडिटर विंडो में कोड चलाने के लिए, या तो इसे कॉपी करके कंसोल में पेस्ट करें, या रन "
+"मेनू में से कोई एक क्रिया चुनें, जैसे कि रन ऑल या रन सिलेक्शन। नोट: मेनू की सामग्री सक्रिय "
+"विंडो के प्रकार के अनुसार बदल सकती है। इसलिए, यदि आप इसे पढ़ते समय रन मेनू को देखते हैं, तो "
+"कोई प्रविष्टियाँ नहीं होंगी।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:33
+#, kde-format
+msgid "Workspace View"
+msgstr "कार्यस्थान दृश्य"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
+#: rkward/pages/rkward_for_r_users.rkh:33
+#, kde-format
+msgid ""
+"RKWard comes with a \"workspace view\" or \"object browser\". By default "
+"this is available by clicking on \"Workspace\" on the left side of the "
+"application window. This allows you to examine and manipulate all objects in "
+"the R workspace. By default, only the \".GlobalEnv\" environment is shown "
+"(where you'll typically do your work; see <link href=\"rkward://rhelp/."
+"GlobalEnv\"/>). But, checking \"Show All Environments\", you can easily "
+"explore data and functions in loaded R libraries (and even in package "
+"namespaces)."
+msgstr ""
+"RKWard एक &quot;कार्यस्थान दृश्य&quot; या &quot;ऑब्जेक्ट ब्राउज़र&quot; के साथ आता है। "
+"डिफ़ॉल्ट रूप से यह एप्लिकेशन विंडो के बाईं ओर &quot;कार्यस्थान&quot; पर क्लिक करके उपलब्ध "
+"है। यह आपको R कार्यस्थान में सभी ऑब्जेक्ट की जांच और हेरफेर करने की अनुमति देता है। डिफ़ॉल्ट "
+"रूप से, केवल &quot;.GlobalEnv&quot; वातावरण दिखाया जाता है (जहाँ आप आमतौर पर अपना "
+"काम करते हैं; देखें<link href=\"rkward://rhelp/.GlobalEnv\"/> ) लेकिन, &quot;सभी "
+"वातावरण दिखाएं&quot; को चेक करके, आप आसानी से लोड किए गए आर लाइब्रेरीज़ (और यहां तक "
+"कि पैकेज नेमस्पेस में भी) में डेटा और फ़ंक्शन का पता लगा सकते हैं।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
+#: rkward/pages/rkward_for_r_users.rkh:33
+#, kde-format
+msgid ""
+"The object browser provides function to select which types of object are "
+"shown (on the top). Hovering the mouse over an item will show some "
+"additional information on the symbol. Right-clicking on an item will show "
+"available actions. See <link href=\"rkward://page/rkward_workspace_browser\"/"
+"> for details."
+msgstr ""
+"ऑब्जेक्ट ब्राउज़र यह चुनने के लिए फ़ंक्शन प्रदान करता है कि किस प्रकार की ऑब्जेक्ट दिखाई जाए "
+"(शीर्ष पर)। किसी आइटम पर माउस घुमाने से प्रतीक पर कुछ अतिरिक्त जानकारी दिखाई देगी। "
+"किसी आइटम पर राइट-क्लिक करने से उपलब्ध क्रियाएँ दिखाई देंगी। देखें<link href=\"rkward://"
+"page/rkward_workspace_browser\"/> जानकारी के लिए।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:38
+#, kde-format
+msgid "R Help"
+msgstr "आर सहायता"
+
+#. i18n: ectx: (RKWard for R Users) <section title="R Help">
+#: rkward/pages/rkward_for_r_users.rkh:38
+#, kde-format
+msgid ""
+"By default R help pages are shown as HTML, inside RKWard. You can invoke the "
+"help in the usual way by running e.g. \"?print\" or \"help (print)\" or "
+"\"help.start ()\" in the console. Additionally, there is a tool window to "
+"search your installed R help pages. This is accessible using a button "
+"located at the bottom of the window (next to the console button). To view a "
+"help page found using this tool, double-click on it."
+msgstr ""
+"डिफ़ॉल्ट रूप से R सहायता पृष्ठ RKWard के अंदर HTML के रूप में दिखाए जाते हैं। आप कंसोल में "
+"उदाहरण के लिए \"?print\" या \"help (print)\" या \"help.start ()\" चलाकर "
+"सामान्य तरीके से सहायता को आमंत्रित कर सकते हैं। इसके अतिरिक्त, आपके इंस्टॉल किए गए R "
+"सहायता पृष्ठों को खोजने के लिए एक टूल विंडो है। यह विंडो के नीचे स्थित बटन (कंसोल बटन के "
+"बगल में) का उपयोग करके सुलभ है। इस टूल का उपयोग करके पाया गया सहायता पृष्ठ देखने के लिए, "
+"उस पर डबल-क्लिक करें।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:41
+#, kde-format
+msgid "Managing installed and loaded Libraries"
+msgstr "स्थापित और लोड की गई लाइब्रेरीज़ का प्रबंधन करना"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Managing installed and loaded Libraries">
+#: rkward/pages/rkward_for_r_users.rkh:41
+#, kde-format
+msgid ""
+"RKWard provides an advanced dialog to have installation, updating, and "
+"loading of packages. This is available from Settings->Manage R Packages."
+msgstr ""
+"RKWard पैकेजों की स्थापना, अद्यतन और लोडिंग के लिए एक उन्नत संवाद प्रदान करता है। यह "
+"सेटिंग्स-> R पैकेज प्रबंधित करें से उपलब्ध है।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:44
+#, kde-format
+msgid "Window management"
+msgstr "विंडो प्रबंधन"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Window management">
+#: rkward/pages/rkward_for_r_users.rkh:44
+#, kde-format
+msgid ""
+"All windows shown in the main view area can be detached to a separate top "
+"level window using Windows->Detach. Similarly, detached windows can be "
+"attached to the main workplace using Window->Attach to main window."
+msgstr ""
+"मुख्य दृश्य क्षेत्र में दिखाई गई सभी विंडो को Windows->Detach का उपयोग करके एक अलग शीर्ष "
+"स्तर की विंडो में अलग किया जा सकता है। इसी तरह, अलग की गई विंडो को Window->Attach "
+"to main विंडो का उपयोग करके मुख्य कार्यस्थल से जोड़ा जा सकता है।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Window management">
+#: rkward/pages/rkward_for_r_users.rkh:44
+#, kde-format
+msgid ""
+"Windows can be closed using Windows->Close (Ctrl+W by default). Ctrl+Tab and "
+"Ctrl+Shift+Tab cycle through all active document / tool windows in your "
+"session."
+msgstr ""
+"विंडोज़ को विंडोज़->क्लोज़ (डिफ़ॉल्ट रूप से Ctrl+W) का उपयोग करके बंद किया जा सकता है। "
+"Ctrl+Tab और Ctrl+Shift+Tab आपके सत्र में सभी सक्रिय दस्तावेज़ / टूल विंडो के माध्यम से "
+"चक्र करते हैं।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Window management">
+#: rkward/pages/rkward_for_r_users.rkh:44
+#, kde-format
+msgid ""
+"Tool windows (e.g. the R Console) can be detached and re-attached using the "
+"arrow-icon in their window border."
+msgstr ""
+"टूल विंडो (जैसे कि R कंसोल) को उनकी विंडो बॉर्डर में तीर-आइकन का उपयोग करके अलग और पुनः "
+"जोड़ा जा सकता है।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:51
+#, kde-format
+msgid "Editing data"
+msgstr "डेटा संपादन"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Editing data">
+#: rkward/pages/rkward_for_r_users.rkh:51
+#, kde-format
+msgid ""
+"RKWard provides a built-in editor for data.frames. In fact, you can edit "
+"many data.frames at the same time, and even while running lengthy "
+"calculations. Still the data is stored as a regular data.frame in R. To "
+"explore the data editor, either choose File->New->Dataset, or right-click a "
+"data.frame in the Workspace browser, and choose Edit from the menu."
+msgstr ""
+"RKWard डेटा.फ्रेम के लिए एक अंतर्निहित संपादक प्रदान करता है। वास्तव में, आप एक ही समय में "
+"कई डेटा.फ्रेम संपादित कर सकते हैं, और लंबी गणनाएँ करते समय भी। फिर भी डेटा को R में एक "
+"नियमित डेटा.फ्रेम के रूप में संग्रहीत किया जाता है। डेटा संपादक का पता लगाने के लिए, या तो "
+"फ़ाइल-> नया-> डेटासेट चुनें, या वर्कस्पेस ब्राउज़र में डेटा.फ्रेम पर राइट-क्लिक करें, और मेनू से "
+"संपादित करें चुनें।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Editing data">
+#: rkward/pages/rkward_for_r_users.rkh:51
+#, kde-format
+msgid ""
+"Support for adding other types of data, esp. single vectors is planned, but "
+"not currently supported."
+msgstr ""
+"अन्य प्रकार के डेटा, विशेषकर एकल वेक्टर को जोड़ने के लिए समर्थन की योजना बनाई गई है, "
+"लेकिन वर्तमान में यह समर्थित नहीं है।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:56
+#, kde-format
+msgid "Graphics"
+msgstr "GRAPHICS"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Graphics">
+#: rkward/pages/rkward_for_r_users.rkh:56
+#, kde-format
+msgid ""
+"R has a few immensely powerful graphics systems (although not interactive) "
+"provided by various packages such as <b>graphics</b> and <b>lattice</b>. "
+"RKWard wraps around the standard platform-dependent screen device to provide "
+"a uniform experience. In additional to the standard functionality of these "
+"packages, RKWard provides a screen device history mechanism to store and "
+"browse your plots. See <link href=\"rkward://page/rkward_plot_history\"/> "
+"for details."
+msgstr ""
+"R में कुछ बेहद शक्तिशाली ग्राफ़िक्स सिस्टम हैं (हालाँकि इंटरैक्टिव नहीं) जो <b>ग्राफ़िक्स</b> "
+"और <b>लैटिस</b> जैसे विभिन्न पैकेजों द्वारा प्रदान किए जाते हैं। RKWard एक समान अनुभव "
+"प्रदान करने के लिए मानक प्लेटफ़ॉर्म-निर्भर स्क्रीन डिवाइस के चारों ओर लपेटता है। इन पैकेजों "
+"की मानक कार्यक्षमता के अतिरिक्त, RKWard आपके प्लॉट को संग्रहीत और ब्राउज़ करने के लिए एक "
+"स्क्रीन डिवाइस इतिहास तंत्र प्रदान करता है। देखें<link href=\"rkward://page/"
+"rkward_plot_history\"/> जानकारी के लिए।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:59
+#, kde-format
+msgid "Utility functions"
+msgstr "उपयोगिता कार्य"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Utility functions">
+#: rkward/pages/rkward_for_r_users.rkh:59
+#, kde-format
+msgid ""
+"RKWard provides various utility functions which are listed in the index of "
+"the <link href=\"rkward://rhelp/rkward-package\">rkward package overview</"
+"link>."
+msgstr ""
+"आरकेवार्ड विभिन्न उपयोगिता फ़ंक्शन प्रदान करता है जो कि सूची में सूचीबद्ध हैं<link href="
+"\"rkward://rhelp/rkward-package\"> rkward पैकेज अवलोकन</link> ."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:62
+#, kde-format
+msgid "Everything else"
+msgstr "सबकुछ दूसरा"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Everything else">
+#: rkward/pages/rkward_for_r_users.rkh:62
+#, kde-format
+msgid ""
+"You will notice that RKWard provides a lot of further menu options. These "
+"provide access to functionality in R. In fact, they do so by generating R "
+"syntax from settings made in a graphical dialog. For instance, select "
+"Analysis->Descriptive Statistics. You will notice a small window at the "
+"bottom (can be toggled on or off using the \"Code\" button) that contains "
+"the R code needed to generate these statistics. This way, even if you prefer "
+"to script your code by hand, you can use dialogs to gain usage examples or "
+"snippets of code for functions you are less familiar with in R."
+msgstr ""
+"आप देखेंगे कि RKWard बहुत सारे मेनू विकल्प प्रदान करता है। ये R में कार्यक्षमता तक पहुँच प्रदान "
+"करते हैं। वास्तव में, वे ग्राफ़िकल डायलॉग में की गई सेटिंग्स से R सिंटैक्स उत्पन्न करके ऐसा करते "
+"हैं। उदाहरण के लिए, विश्लेषण->वर्णनात्मक सांख्यिकी चुनें। आप नीचे एक छोटी सी विंडो देखेंगे "
+"(जिसे \"कोड\" बटन का उपयोग करके चालू या बंद किया जा सकता है) जिसमें इन सांख्यिकी को "
+"उत्पन्न करने के लिए आवश्यक R कोड होता है। इस तरह, भले ही आप अपने कोड को हाथ से लिखना "
+"पसंद करते हों, आप R में कम परिचित फ़ंक्शन के लिए उपयोग के उदाहरण या कोड के स्निपेट प्राप्त "
+"करने के लिए डायलॉग का उपयोग कर सकते हैं।"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Everything else">
+#: rkward/pages/rkward_for_r_users.rkh:62
+#, kde-format
+msgid ""
+"Also, all commands that are executed get shown in the Command Log, available "
+"as a tool window next to the R Console."
+msgstr ""
+"इसके अलावा, निष्पादित किए गए सभी कमांड कमांड लॉग में दिखाए जाते हैं, जो आर कंसोल के बगल "
+"में एक टूल विंडो के रूप में उपलब्ध होता है।"
+
+#. i18n: ectx: (RKWard for R Users) <related>
+#: rkward/pages/rkward_for_r_users.rkh:68
+#, kde-format
+msgid ""
+"<link href=\"rkward://page/rkward_for_new_users\"/> For an introduction to "
+"some more basic concepts"
+msgstr ""
+"<link href=\"rkward://page/rkward_for_new_users\"/>कुछ और बुनियादी अवधारणाओं के "
+"परिचय के लिए"
+
+#. i18n: ectx: (Version incompatibilities) <title>
+#: rkward/pages/rkward_incompatible_version.rkh:8
+#, kde-format
+msgid "Version incompatibilities"
+msgstr "संस्करण असंगतताएं"
+
+#. i18n: ectx: (Version incompatibilities) <summary>
+#: rkward/pages/rkward_incompatible_version.rkh:9
+#, kde-format
+msgid ""
+"While RKWard tries to support a large number of different R versions, some "
+"of the time, a new version of R will not be compatible with RKWard out of "
+"the box. In these cases you will have to install a new version of RKWard. "
+"Quite often, this does not actually have to be a <i>new</i> version, but "
+"simply one that was compiled against your new version of R."
+msgstr ""
+"जबकि RKWard कई अलग-अलग R संस्करणों का समर्थन करने का प्रयास करता है, कभी-कभी, R का "
+"नया संस्करण RKWard के साथ संगत नहीं होगा। इन मामलों में आपको RKWard का नया संस्करण "
+"इंस्टॉल करना होगा। अक्सर, यह वास्तव में <i>नया</i> संस्करण नहीं होता है, बल्कि केवल वह "
+"होता है जिसे आपके R के नए संस्करण के विरुद्ध संकलित किया गया हो।"
+
+#. i18n: ectx: (Version incompatibilities) <summary>
+#: rkward/pages/rkward_incompatible_version.rkh:9
+#, kde-format
+msgid ""
+"If you have installed RKWard using the package manager of your Linux "
+"distribution, but no updated package is available, please contact your "
+"distribution maintainer or file a bug report, there."
+msgstr ""
+"यदि आपने अपने लिनक्स वितरण के पैकेज मैनेजर का उपयोग करके RKWard स्थापित किया है, लेकिन "
+"कोई अद्यतन पैकेज उपलब्ध नहीं है, तो कृपया अपने वितरण अनुरक्षक से संपर्क करें या वहां बग "
+"रिपोर्ट दर्ज करें।"
+
+#. i18n: ectx: (Version incompatibilities) <summary>
+#: rkward/pages/rkward_incompatible_version.rkh:9
+#, kde-format
+msgid ""
+"For more information about available versions, and more troubleshooting "
+"information, see <link href=\"https://rkward.kde.org\">the project homepage</"
+"link>."
+msgstr ""
+"उपलब्ध संस्करणों के बारे में अधिक जानकारी और अधिक समस्या निवारण जानकारी के लिए, "
+"देखें<link href=\"https://rkward.kde.org\"> परियोजना मुखपृष्ठ</link> ."
+
+#. i18n: ectx: (Version incompatibilities) <section title="...">
+#: rkward/pages/rkward_incompatible_version.rkh:17
+#, kde-format
+msgid "Graphics Engine Version Mismatch"
+msgstr "ग्राफ़िक्स इंजन संस्करण बेमेल"
+
+#. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
+#: rkward/pages/rkward_incompatible_version.rkh:17
+#, kde-format
+msgid ""
+"This is the most common kind of version incompatibility. The same advice "
+"applies as above, i.e. please install an updated version of RKWard. However, "
+"if no update appears to be immediately available, and you are desparate to "
+"continue working, set <link href=\"rkward://settings/graphics\">Settings-&gt;"
+"Onscreen Graphics</link>-&gt;\"Integration of R standard device\" to \"No "
+"integration\". Then you can use the vanille onscreen devices (X11() or "
+"Windows() or Quartz()), for plotting."
+msgstr ""
+"यह संस्करण असंगति का सबसे आम प्रकार है। ऊपर बताई गई सलाह भी यही है, यानी कृपया "
+"RKWard का अपडेटेड संस्करण इंस्टॉल करें। हालाँकि, अगर कोई अपडेट तुरंत उपलब्ध नहीं दिखता है, "
+"और आप काम जारी रखने के लिए बेताब हैं, तो सेट करें<link href=\"rkward://settings/"
+"graphics\"> सेटिंग्स-&gt;ऑनस्क्रीन ग्राफिक्स</link> -&gt;&quot;आर मानक डिवाइस का "
+"एकीकरण&quot; से &quot;कोई एकीकरण नहीं&quot;। फिर आप प्लॉटिंग के लिए वैनिल ऑनस्क्रीन "
+"डिवाइस (X11() या Windows() या Quartz()) का उपयोग कर सकते हैं।"
+
+#. i18n: ectx: (RKWard Output) <title>
+#: rkward/pages/rkward_output.rkh:8
+#, kde-format
+msgid "RKWard Output"
+msgstr "आरकेवार्ड आउटपुट"
+
+#. i18n: ectx: (RKWard Output) <summary>
+#: rkward/pages/rkward_output.rkh:9
+#, kde-format
+msgid ""
+"The RKWard output window, or, more generally, RKWard output files (.rko) are "
+"intended as an easy way to keep a log of the work on your data. By default, "
+"one output file is always available. Depending on your configuration (<link "
+"href=\"rkward://settings/output\">Settings->Configure RKWard->Output</"
+"link>), this output file may or may not be shared across different "
+"workspaces."
+msgstr ""
+"RKWard आउटपुट विंडो, या, अधिक सामान्यतः, RKWard आउटपुट फ़ाइलें (.rko) आपके डेटा पर "
+"काम का लॉग रखने का एक आसान तरीका है। डिफ़ॉल्ट रूप से, एक आउटपुट फ़ाइल हमेशा उपलब्ध "
+"होती है। आपके कॉन्फ़िगरेशन के आधार पर (<link href=\"rkward://settings/output\"> "
+"सेटिंग्स-&gt;RKWard कॉन्फ़िगर करें-&gt;आउटपुट</link> ), यह आउटपुट फ़ाइल विभिन्न "
+"कार्यस्थानों में साझा की जा सकती है या नहीं भी की जा सकती है।"
+
+#. i18n: ectx: (RKWard Output) <summary>
+#: rkward/pages/rkward_output.rkh:9
+#, kde-format
+msgid ""
+"RKWard output can be saved and opened like regular files. To direct output "
+"to a specific output file, you will have to \"activate\" it. Closing an "
+"output window does not discard the modifications, but on closing RKWard you "
+"will be prompted to save (or discard) any pending changes."
+msgstr ""
+"RKWard आउटपुट को नियमित फ़ाइलों की तरह सहेजा और खोला जा सकता है। आउटपुट को किसी "
+"विशिष्ट आउटपुट फ़ाइल में निर्देशित करने के लिए, आपको इसे \"सक्रिय\" करना होगा। आउटपुट "
+"विंडो को बंद करने से संशोधनों को नहीं हटाया जाता है, लेकिन RKWard को बंद करने पर आपको "
+"किसी भी लंबित परिवर्तन को सहेजने (या त्यागने) के लिए कहा जाएगा।"
+
+#. i18n: ectx: (RKWard Output) <section title="...">
+#: rkward/pages/rkward_output.rkh:16
+#, kde-format
+msgid "Producing RKWard output from R"
+msgstr "R से RKWard आउटपुट का उत्पादन"
+
+#. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
+#: rkward/pages/rkward_output.rkh:16
+#, kde-format
+msgid ""
+"To write to the active RKWard output file from custom R code, refer to <link "
+"href=\"rkward://rhelp/rk.print\"/>, and the functions linked from there."
+msgstr ""
+"कस्टम R कोड से सक्रिय RKWard आउटपुट फ़ाइल में लिखने के लिए, देखें<link href=\"rkward://"
+"rhelp/rk.print\"/> , और वहां से जुड़े कार्य।"
+
+#. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
+#: rkward/pages/rkward_output.rkh:16
+#, kde-format
+msgid ""
+"To load / save / switch between output files, etc., refer to <link href="
+"\"rkward://rhelp/rk.output\"/>."
+msgstr ""
+"आउटपुट फ़ाइलों को लोड करने / सहेजने / उनके बीच स्विच करने आदि के लिए, देखें<link href="
+"\"rkward://rhelp/rk.output\"/> ."
+
+#. i18n: ectx: (RKWard Output) <section title="...">
+#: rkward/pages/rkward_output.rkh:22
+#, kde-format
+msgid "Using the output in an office suite"
+msgstr "ऑफिस सूट में आउटपुट का उपयोग करना"
+
+#. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
+#: rkward/pages/rkward_output.rkh:22
+#, kde-format
+msgid ""
+"The easiest way to get output into your office suite, is to first select the "
+"relevant portions, copy them (Edit->Copy), then paste them. This works well, "
+"at least in OpenOffice or LibreOffice. You can also drag and drop images "
+"from the output to an OpenOffice or LibreOffice document."
+msgstr ""
+"अपने ऑफिस सूट में आउटपुट प्राप्त करने का सबसे आसान तरीका है, पहले संबंधित भागों का चयन "
+"करना, उन्हें कॉपी करना (संपादन-> कॉपी करना), फिर उन्हें पेस्ट करना। यह कम से कम "
+"ओपनऑफिस या लिबरऑफिस में अच्छी तरह से काम करता है। आप आउटपुट से छवियों को ओपनऑफिस या "
+"लिबरऑफिस दस्तावेज़ में खींचकर छोड़ भी सकते हैं।"
+
+#. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
+#: rkward/pages/rkward_output.rkh:22
+#, kde-format
+msgid ""
+"Internally, RKWard output files are currently simply based on HTML. If you "
+"need access to the raw HTML and image files, a .rko-file is just a zip'ed "
+"folder. You can unzip it using standard tools, or open it in RKWard, and "
+"retrieve the files from the \".rkward\" of your home directory (location "
+"configurable in Settings->Configure RKWard->General)."
+msgstr ""
+"आंतरिक रूप से, RKWard आउटपुट फ़ाइलें वर्तमान में केवल HTML पर आधारित हैं। यदि आपको कच्ची "
+"HTML और छवि फ़ाइलों तक पहुँच की आवश्यकता है, तो .rko-फ़ाइल केवल एक ज़िप किया हुआ फ़ोल्डर "
+"है। आप इसे मानक टूल का उपयोग करके अनज़िप कर सकते हैं, या इसे RKWard में खोल सकते हैं, और "
+"अपनी होम निर्देशिका के \".rkward\" से फ़ाइलें प्राप्त कर सकते हैं (स्थान सेटिंग्स-> RKWard "
+"कॉन्फ़िगर करें-> सामान्य में कॉन्फ़िगर करने योग्य है)।"
+
+#. i18n: ectx: (RKWard Output) <section title="...">
+#: rkward/pages/rkward_output.rkh:28
+#, kde-format
+msgid "RKWard output vs. R Markdown"
+msgstr "आरकेवार्ड आउटपुट बनाम आर मार्कडाउन"
+
+#. i18n: ectx: (RKWard Output) <section title="RKWard output vs. R Markdown">
+#: rkward/pages/rkward_output.rkh:28
+#, kde-format
+msgid ""
+"RKWard also assists you in writing RMarkdown (Rmd) documents. In particular "
+"there is a powerful preview feature for .Rmd scripts. While RMarkdown is "
+"great for writing interactive \"reports\", the RKWard Output is very easy to "
+"use for ad-hoc documentation while exploring your data."
+msgstr ""
+"RKWard आपको RMarkdown (Rmd) दस्तावेज़ लिखने में भी सहायता करता है। विशेष रूप से .Rmd "
+"स्क्रिप्ट के लिए एक शक्तिशाली पूर्वावलोकन सुविधा है। जबकि RMarkdown इंटरैक्टिव \"रिपोर्ट"
+"\" लिखने के लिए बहुत अच्छा है, RKWard आउटपुट आपके डेटा की खोज करते समय एड-हॉक "
+"डॉक्यूमेंटेशन के लिए उपयोग करना बहुत आसान है।"
+
+#. i18n: ectx: (Screen device history) <title>
+#: rkward/pages/rkward_plot_history.rkh:8
+#, kde-format
+msgid "Screen device history"
+msgstr "स्क्रीन डिवाइस इतिहास"
+
+#. i18n: ectx: (Screen device history) <summary>
+#: rkward/pages/rkward_plot_history.rkh:10
+#, kde-format
+msgid ""
+"The screen device history provides an interface to flip through your plots, "
+"similar a web browser. The current implementation understands most function "
+"calls from the graphics and lattice packages. Adding other graphical engines "
+"is planned for future. See the Technical Details section below for more "
+"information."
+msgstr ""
+"स्क्रीन डिवाइस इतिहास आपके प्लॉट को पलटने के लिए एक इंटरफ़ेस प्रदान करता है, जो वेब "
+"ब्राउज़र के समान है। वर्तमान कार्यान्वयन ग्राफ़िक्स और जाली पैकेज से अधिकांश फ़ंक्शन कॉल को "
+"समझता है। भविष्य में अन्य ग्राफ़िकल इंजन जोड़ने की योजना है। अधिक जानकारी के लिए नीचे "
+"तकनीकी विवरण अनुभाग देखें।"
+
+#. i18n: ectx: (Screen device history) <summary>
+#: rkward/pages/rkward_plot_history.rkh:10
+#, kde-format
+msgid ""
+"The screen device history is only accessible from an open screen device, "
+"under the <i>History</i> menu. It is available on most screen device "
+"windows. Such devices are called \"managed\" devices for the purpose of this "
+"help page. File devices, such as png, pdf, etc. are not, obviously, affected "
+"by this screen history implementation, and hence they are not managed. In "
+"addition, \"preview\" devices, which are available on some of the plugins "
+"are not managed either."
+msgstr ""
+"स्क्रीन डिवाइस इतिहास केवल <i>इतिहास</i> मेनू के अंतर्गत, एक खुली स्क्रीन डिवाइस से ही "
+"सुलभ है। यह अधिकांश स्क्रीन डिवाइस विंडो पर उपलब्ध है। इस सहायता पृष्ठ के उद्देश्य के लिए "
+"ऐसे उपकरणों को &quot;प्रबंधित&quot; उपकरण कहा जाता है। फ़ाइल डिवाइस, जैसे कि png, "
+"pdf, आदि, स्पष्ट रूप से, इस स्क्रीन इतिहास कार्यान्वयन से प्रभावित नहीं होते हैं, और इसलिए "
+"उन्हें प्रबंधित नहीं किया जाता है। इसके अलावा, &quot;पूर्वावलोकन&quot; डिवाइस, जो कुछ "
+"प्लगइन्स पर उपलब्ध हैं, उन्हें भी प्रबंधित नहीं किया जाता है।"
+
+#. i18n: ectx: (Screen device history) <section title="...">
+#. i18n: ectx: (Workspace Browser) <section title="...">
+#: rkward/pages/rkward_plot_history.rkh:16
+#: rkward/pages/rkward_workspace_browser.rkh:30
+#, kde-format
+msgid "Available actions"
+msgstr "उपलब्ध क्रियाएं"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:16
+#, kde-format
+msgid ""
+"Several actions are available either from the <i>History</i> menu or from "
+"the toolbar icons on a managed device. The displayed icons on the toolbar "
+"can be configured from the device window's Settings->Configure Toolbars menu "
+"item."
+msgstr ""
+"कई क्रियाएँ या तो <i>इतिहास</i> मेनू से या प्रबंधित डिवाइस पर टूलबार आइकन से उपलब्ध हैं। "
+"टूलबार पर प्रदर्शित आइकन को डिवाइस विंडो के सेटिंग्स-&gt; टूलबार कॉन्फ़िगर करें मेनू आइटम से "
+"कॉन्फ़िगर किया जा सकता है।"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:16
+#, kde-format
+msgid ""
+"<b>Go to plot</b>: This provides a drop-down list of _all_ the plots stored "
+"in the history; giving an easily accessible \"jumping\" action. RKWard tries "
+"hard to identify the appropriate plot calls, but this is not always "
+"feasible. In such cases a further attempt is made to identify the <i>X "
+"label</i>, <i>Y label</i> and the <i>Main</i> titles of the plot and the "
+"displayed string looks like \"<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; "
+"<i>main</i>\". Sometimes even that is not possible (indicated by <b>&lt;"
+"Unknown&gt;</b>). Plots which are pending to be saved are indicated by "
+"<b>&lt;Unsaved plot&gt;</b>. The displayed strings are prepended with their "
+"corresponding position in the history. For the usual \"linear browsing\" see "
+"first / previous / next / last actions below."
+msgstr ""
+"<b>प्लॉट पर जाएँ</b> : यह इतिहास में संग्रहीत सभी प्लॉट की ड्रॉप-डाउन सूची प्रदान करता "
+"है; एक आसानी से सुलभ &quot;जंपिंग&quot; क्रिया प्रदान करता है। RKWard उचित प्लॉट कॉल "
+"की पहचान करने का भरसक प्रयास करता है, लेकिन यह हमेशा संभव नहीं होता है। ऐसे मामलों में "
+"प्लॉट के <i>X लेबल</i> , <i>Y लेबल</i> और <i>मुख्य</i> शीर्षकों की पहचान करने का एक "
+"और प्रयास किया जाता है और प्रदर्शित स्ट्रिंग &quot; <b>X:</b> <i>xlab</i> ; <b>Y:</"
+"b> <i>ylab</i> ; <i>main</i> &quot; की तरह दिखती है। कभी-कभी यह भी संभव नहीं "
+"होता ( <b>&lt;अज्ञात</b> &gt; द्वारा इंगित)। सहेजे जाने के लिए लंबित प्लॉट को <b>&lt;"
+"असहायित प्लॉट&gt;</b> द्वारा इंगित किया जाता है। प्रदर्शित स्ट्रिंग को इतिहास में उनकी "
+"संगत स्थिति के साथ जोड़ा जाता है। सामान्य &quot;रैखिक ब्राउज़िंग&quot; के लिए नीचे पहले / "
+"पिछले / अगले / अंतिम क्रियाएँ देखें।"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:16
+#, kde-format
+msgid ""
+"<b>First, Previous, Next, and Last plot</b>: Obvious browsing (or replaying) "
+"actions. These will try to save any unsaved/pending plot before displaying/"
+"replaying the intended (first / previous / next / last) plot. This should be "
+"very helpful for browsing to an already stored in the history and update it. "
+"For example, a base graphics plot modified by, say, <code>abline(h=0, v=0)</"
+"code> will automatically get stored \"in-place\" in the history."
+msgstr ""
+"<b>पहला, पिछला, अगला और अंतिम प्लॉट</b> : स्पष्ट ब्राउज़िंग (या फिर से खेलना) क्रियाएँ। "
+"ये इच्छित (पहला / पिछला / अगला / अंतिम) प्लॉट प्रदर्शित/फिर से चलाने से पहले किसी भी "
+"सहेजे नहीं गए/लंबित प्लॉट को सहेजने का प्रयास करेंगे। यह इतिहास में पहले से संग्रहीत किसी "
+"प्लॉट को ब्राउज़ करने और उसे अपडेट करने के लिए बहुत मददगार होना चाहिए। उदाहरण के लिए, "
+"<code>abline(h=0, v=0)</code> द्वारा संशोधित एक बेस ग्राफ़िक्स प्लॉट स्वचालित रूप से "
+"इतिहास में &quot;इन-प्लेस&quot; संग्रहीत हो जाएगा।"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:16
+#, kde-format
+msgid ""
+"<b>Append this plot</b>: This action is provided to forcefully append the "
+"displayed plot to the end of the history, irrespective of its status "
+"(saved / unsaved) and type (graphics / lattice / ...). In cases when a plot "
+"does not automatically get stored in the history, this action should come in "
+"handy. But this flexibility comes at the cost of not being able to identify "
+"the plot call."
+msgstr ""
+"<b>इस प्लॉट को जोड़ें</b> : यह क्रिया प्रदर्शित प्लॉट को इतिहास के अंत में बलपूर्वक जोड़ने के "
+"लिए प्रदान की जाती है, चाहे उसकी स्थिति (सहेजी गई / बिना सहेजी गई) और प्रकार "
+"(ग्राफ़िक्स / जाली / ...) कुछ भी हो। ऐसे मामलों में जब कोई प्लॉट इतिहास में स्वचालित रूप "
+"से संग्रहीत नहीं होता है, तो यह क्रिया काम आनी चाहिए। लेकिन यह लचीलापन प्लॉट कॉल की "
+"पहचान न कर पाने की कीमत पर आता है।"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:16
+#, kde-format
+msgid ""
+"<b>Remove this plot</b>: This will remove the currently displayed from the "
+"history (if it is stored) and replay the next \"available\" plot. When "
+"multiple devices are displaying the same plot (to be precise, same position "
+"in the history), then removing a plot from one device will not remove it "
+"from other devices; instead it will set the status of this plot on the other "
+"devices as new / pending. Thus, if you happen to remove one by mistake, and "
+"if it happens to be displayed on a second device, then you can re-add it to "
+"the history from the second device."
+msgstr ""
+"<b>इस प्लॉट को हटाएँ</b> : यह वर्तमान में प्रदर्शित प्लॉट को इतिहास से हटा देगा (यदि "
+"यह संग्रहीत है) और अगले &quot;उपलब्ध&quot; प्लॉट को फिर से चलाएगा। जब कई डिवाइस एक "
+"ही प्लॉट (सटीक रूप से, इतिहास में एक ही स्थिति) प्रदर्शित कर रहे हों, तो एक डिवाइस से "
+"प्लॉट हटाने से यह अन्य डिवाइस से नहीं हटेगा; इसके बजाय यह अन्य डिवाइस पर इस प्लॉट की "
+"स्थिति को नया/लंबित के रूप में सेट करेगा। इस प्रकार, यदि आप गलती से किसी प्लॉट को हटा "
+"देते हैं, और यदि यह दूसरे डिवाइस पर प्रदर्शित होता है, तो आप इसे दूसरे डिवाइस से इतिहास में "
+"फिर से जोड़ सकते हैं।"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:16
+#, kde-format
+msgid ""
+"<b>Clear history</b>: As the name suggests, this action will clear the "
+"plotting history. But the plots currently displayed on the devices, upon "
+"further action, will get added back to the history. To completely reset the "
+"screen device history close all open devices and call <code>rk.clear.plot."
+"history()</code>"
+msgstr ""
+"<b>इतिहास साफ़ करें</b> : जैसा कि नाम से पता चलता है, यह क्रिया प्लॉटिंग इतिहास को "
+"साफ़ कर देगी। लेकिन डिवाइस पर वर्तमान में प्रदर्शित प्लॉट, आगे की कार्रवाई पर, इतिहास में "
+"वापस जुड़ जाएंगे। स्क्रीन डिवाइस इतिहास को पूरी तरह से रीसेट करने के लिए सभी खुले डिवाइस "
+"बंद करें और <code>rk.clear.plot.history()</code> कॉल करें"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:16
+#, kde-format
+msgid ""
+"<b>Plot properties</b>: This shows some additional information such as the "
+"size of the displayed plot as stored in the memory, the position of the "
+"current plot in the history, and, whenever possible the complete plot call."
+msgstr ""
+"<b>प्लॉट गुण</b> : यह कुछ अतिरिक्त जानकारी दिखाता है जैसे मेमोरी में संग्रहीत प्रदर्शित "
+"प्लॉट का आकार, इतिहास में वर्तमान प्लॉट की स्थिति, और जब भी संभव हो, पूर्ण प्लॉट कॉल।"
+
+#. i18n: ectx: (Screen device history) <section title="Configurable Settings">
+#: rkward/pages/rkward_plot_history.rkh:29
+#, kde-format
+msgid ""
+"Some default settings for the Screen device history can be configured from "
+"<a href=\"rkward://settings/graphics\">Settings->Configure RKWard->Onscreen "
+"Graphics</a>:"
+msgstr ""
+"स्क्रीन डिवाइस इतिहास के लिए कुछ डिफ़ॉल्ट सेटिंग्स को <a href=\"rkward://settings/"
+"graphics\">सेटिंग्स-&gt;आरकेवार्ड कॉन्फ़िगर करें-&gt;ऑनस्क्रीन ग्राफिक्स</a> से कॉन्फ़िगर "
+"किया जा सकता है:"
+
+#. i18n: ectx: (Screen device history) <section title="Configurable Settings">
+#: rkward/pages/rkward_plot_history.rkh:29
+#, kde-format
+msgid ""
+"<b>Screen device history</b>: Enables / disables the recording of plots "
+"globally. You can toggle this from within a running RKWard session, which "
+"will affect all currently open and future screen devices. When unchecked, "
+"RKWard will not store any further plots in the history; although, the ones "
+"already stored are not lost! You can access the stored plots by re-enabling "
+"this. When toggling this, RKWard tries to save any unsaved plots, but be "
+"careful especially when the maximum history length is small (see below). You "
+"may want to disable this when the implemented history behavior seems non-"
+"intuitive or when dealing with large plots."
+msgstr ""
+"<b>स्क्रीन डिवाइस इतिहास</b> : वैश्विक स्तर पर प्लॉट की रिकॉर्डिंग को सक्षम / अक्षम "
+"करता है। आप इसे चल रहे RKWard सत्र के भीतर से टॉगल कर सकते हैं, जो वर्तमान में खुले सभी और "
+"भविष्य के स्क्रीन डिवाइस को प्रभावित करेगा। जब अनचेक किया जाता है, तो RKWard इतिहास "
+"में कोई और प्लॉट संग्रहीत नहीं करेगा; हालाँकि, पहले से संग्रहीत प्लॉट खो नहीं जाते हैं! आप इसे "
+"फिर से सक्षम करके संग्रहीत प्लॉट तक पहुँच सकते हैं। इसे टॉगल करते समय, RKWard किसी भी सहेजे "
+"नहीं गए प्लॉट को सहेजने का प्रयास करता है, लेकिन विशेष रूप से सावधान रहें जब अधिकतम "
+"इतिहास की लंबाई छोटी हो (नीचे देखें)। जब लागू किया गया इतिहास व्यवहार गैर-सहज लगता है "
+"या बड़े प्लॉट से निपटते समय आप इसे अक्षम करना चाह सकते हैं।"
+
+#. i18n: ectx: (Screen device history) <section title="Configurable Settings">
+#: rkward/pages/rkward_plot_history.rkh:29
+#, kde-format
+msgid ""
+"<b>Maximum number of recorded plots</b>: Controls the maximum number of "
+"plots that can be stored in the history. When this limit is reached, plots "
+"from the beginning of the history will get removed one by one, much like a "
+"push-pop stack. A warning dialog is shown when this happens. Be careful when "
+"setting this below the number of already stored plots. In that case an "
+"appropriate number of plots from the beginning of the history stack will get "
+"removed, which may not be desirable."
+msgstr ""
+"<b>रिकॉर्ड किए गए प्लॉट की अधिकतम संख्या</b> : इतिहास में संग्रहीत किए जा सकने वाले "
+"प्लॉट की अधिकतम संख्या को नियंत्रित करता है। जब यह सीमा पूरी हो जाती है, तो इतिहास "
+"की शुरुआत से प्लॉट एक-एक करके हटा दिए जाएंगे, बिल्कुल पुश-पॉप स्टैक की तरह। ऐसा होने पर "
+"एक चेतावनी संवाद दिखाया जाता है। पहले से संग्रहीत प्लॉट की संख्या से कम इसे सेट करते समय "
+"सावधान रहें। उस स्थिति में इतिहास स्टैक की शुरुआत से प्लॉट की उचित संख्या हटा दी जाएगी, "
+"जो वांछनीय नहीं हो सकता है।"
+
+#. i18n: ectx: (Screen device history) <section title="Configurable Settings">
+#: rkward/pages/rkward_plot_history.rkh:29
+#, kde-format
+msgid ""
+"<b>Maximum size of a single recorded plot</b>: Controls the maximum allowed "
+"size (in KB) of a single plot that can be stored in the history. For a plot "
+"larger than this specified size, a dialog box, to save or to ignore the "
+"plot, will be presented. Unlike the above length restriction, this setting "
+"will affect only the future plots (that is, will not remove any already "
+"stored, yet large, plots)."
+msgstr ""
+"<b>एकल रिकॉर्ड किए गए प्लॉट का अधिकतम आकार</b> : इतिहास में संग्रहीत किए जा सकने "
+"वाले एकल प्लॉट के अधिकतम अनुमत आकार (KB में) को नियंत्रित करता है। इस निर्दिष्ट आकार से "
+"बड़े प्लॉट के लिए, प्लॉट को सहेजने या अनदेखा करने के लिए एक डायलॉग बॉक्स प्रस्तुत किया "
+"जाएगा। उपरोक्त लंबाई प्रतिबंध के विपरीत, यह सेटिंग केवल भविष्य के प्लॉट को प्रभावित करेगी "
+"(अर्थात, पहले से संग्रहीत किसी भी बड़े प्लॉट को नहीं हटाएगी)।"
+
+#. i18n: ectx: (Screen device history) <section title="...">
+#: rkward/pages/rkward_plot_history.rkh:39
+#, kde-format
+msgid "Technical Details"
+msgstr "टेक्निकल डिटेल"
+
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:39
+#, kde-format
+msgid "Some assorted technical details:"
+msgstr "कुछ मिश्रित तकनीकी विवरण:"
+
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:39
+#, kde-format
+msgid ""
+"<code>rk.plot.history.summary(which,type)</code>: this helper function "
+"provides some summaries about the screen device history. Here, <code>which</"
+"code> is a \"device id\" (default is <i>NULL</i>: summaries about all "
+"managed devices) and <code>type</code> is either <i>devices</i> (returns "
+"device specific information) or <i>history</i> (returns information on all "
+"the saved plots in the history)."
+msgstr ""
+"<code>rk.plot.history.summary(which,type)</code> : यह सहायक फ़ंक्शन स्क्रीन "
+"डिवाइस इतिहास के बारे में कुछ सारांश प्रदान करता है। यहाँ, <code>which</code> एक "
+"&quot;डिवाइस आईडी&quot; है (डिफ़ॉल्ट <i>NULL</i> है: सभी प्रबंधित डिवाइस के बारे में "
+"सारांश) और <code>type</code> या तो <i>डिवाइस</i> है (डिवाइस विशिष्ट जानकारी देता "
+"है) या <i>इतिहास</i> (इतिहास में सभी सहेजे गए प्लॉट की जानकारी देता है)।"
+
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:39
+#, kde-format
+msgid ""
+"Technically speaking, function calls that pass through either "
+"<code>graphics::plot.new()</code> or <code>graphics::persp()</code> or "
+"<code>lattice::print.trellis()</code> are captured."
+msgstr ""
+"तकनीकी रूप से, <code>graphics::plot.new()</code> या <code>graphics::persp()</"
+"code> या <code>lattice::print.trellis()</code> से गुजरने वाले फ़ंक्शन कॉल को कैप्चर "
+"किया जाता है।"
+
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:39
+#, kde-format
+msgid ""
+"The base graphics plots are recorded and replayed using <code>recordPlot()</"
+"code> and <code>replayPlot()</code>."
+msgstr ""
+"आधार ग्राफिक्स प्लॉट को <code>recordPlot()</code> और <code>replayPlot()</code> "
+"उपयोग करके रिकॉर्ड और पुनः चलाया जाता है।"
+
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:39
+#, kde-format
+msgid ""
+"The lattice plots are added to the history using a custom <code>print."
+"trellis()</code> function set by <code>lattice.options(\"print.function\")</"
+"code>. So, you are warned against resetting or modifying this from a running "
+"RKWard session. Similarly, you are very strongly advised against using the "
+"<code>plot</code> method on a trellis object since it will not pass through "
+"<code>print.trellis()</code> and hence not be stored in the history. This "
+"may seem innocuous, but it will have irreparable consequences when trying to "
+"use <code>trellis.last.object()</code>, thereafter. You have been warned!"
+msgstr ""
+"जाली प्लॉट्स को <code>lattice.options(&quot;print.function&quot;)</code> द्वारा "
+"सेट किए गए कस्टम <code>print.trellis()</code> फ़ंक्शन का उपयोग करके इतिहास में जोड़ा "
+"जाता है। इसलिए, आपको चल रहे RKWard सत्र से इसे रीसेट या संशोधित करने के खिलाफ चेतावनी "
+"दी जाती है। इसी तरह, आपको ट्रेलिस ऑब्जेक्ट पर <code>plot</code> विधि का उपयोग करने "
+"के खिलाफ बहुत दृढ़ता से सलाह दी जाती है क्योंकि यह <code>print.trellis()</code> से "
+"नहीं गुजरेगा और इसलिए इतिहास में संग्रहीत नहीं किया जाएगा। यह हानिरहित लग सकता है, "
+"लेकिन इसके बाद <code>trellis.last.object()</code> उपयोग करने का प्रयास करने पर "
+"इसके अपूरणीय परिणाम होंगे। आपको चेतावनी दी गई है!"
+
+#. i18n: ectx: (Screen device history) <related>
+#: rkward/pages/rkward_plot_history.rkh:49
+#, kde-format
+msgid "<link href=\"rkward://rhelp/lattice.options\"/> (needs lattice)"
+msgstr "<link href=\"rkward://rhelp/lattice.options\"/>(जाली की जरूरत है)"
+
+#. i18n: ectx: (Screen device history) <related>
+#: rkward/pages/rkward_plot_history.rkh:49
+#, kde-format
+msgid "<link href=\"rkward://rhelp/trellis.last.object\"/> (needs lattice)"
+msgstr "<link href=\"rkward://rhelp/trellis.last.object\"/>(जाली की जरूरत है)"
+
+#. i18n: ectx: (RKWard Shortcut keys) <title>
+#: rkward/pages/rkward_shortcuts.rkh:8
+#, kde-format
+msgid "RKWard Shortcut keys"
+msgstr "RKWard शॉर्टकट कुंजियाँ"
+
+#. i18n: ectx: (RKWard Shortcut keys) <summary>
+#: rkward/pages/rkward_shortcuts.rkh:9
+#, kde-format
+msgid ""
+"You can control RKWard in many situations without using a mouse device, "
+"using only the keyboard. The easiest way to find out about shortcuts of "
+"interest is to browse the menu. Shortcuts are listed next to their action in "
+"the menu."
+msgstr ""
+"आप माउस डिवाइस का उपयोग किए बिना, केवल कीबोर्ड का उपयोग करके कई स्थितियों में "
+"RKWard को नियंत्रित कर सकते हैं। रुचि के शॉर्टकट के बारे में पता लगाने का सबसे आसान तरीका "
+"मेनू ब्राउज़ करना है। शॉर्टकट मेनू में उनकी क्रिया के बगल में सूचीबद्ध हैं।"
+
+#. i18n: ectx: (RKWard Shortcut keys) <summary>
+#: rkward/pages/rkward_shortcuts.rkh:9
+#, kde-format
+msgid ""
+"Another possibility is to use the heads-up display (HUD). The HUD menu is a "
+"search field that allows fuzzy searching in the menus. The HUD was "
+"introduced in current KDE applications and is therefore not yet available in "
+"older RKWard versions. The HUD can be called up using Ctrl+Alt+i. This is "
+"particularly useful if you are looking for a function, the shortcut of a "
+"function or something in the menus, but do not want to go through each menu "
+"individually to find it."
+msgstr ""
+"एक और संभावना है हेड्स-अप डिस्प्ले (HUD) का उपयोग करना। HUD मेनू एक खोज फ़ील्ड है जो मेनू "
+"में फ़ज़ी सर्चिंग की अनुमति देता है। HUD को वर्तमान KDE अनुप्रयोगों में पेश किया गया था और "
+"इसलिए यह अभी तक पुराने RKWard संस्करणों में उपलब्ध नहीं है। HUD को Ctrl+Alt+i का उपयोग "
+"करके कॉल किया जा सकता है। यह विशेष रूप से तब उपयोगी होता है जब आप मेनू में कोई फ़ंक्शन, "
+"फ़ंक्शन का शॉर्टकट या कुछ ढूँढ़ रहे हों, लेकिन उसे खोजने के लिए प्रत्येक मेनू को अलग-अलग नहीं "
+"देखना चाहते हों।"
+
+#. i18n: ectx: (RKWard Shortcut keys) <summary>
+#: rkward/pages/rkward_shortcuts.rkh:9
+#, kde-format
+msgid ""
+"Most shortcuts are configurable, using Settings->Configure Shortcuts. For "
+"technical reasons, only the shortcuts of those components will be listed "
+"that are active at that time. Hence, for example, if you want to edit the "
+"shortcuts for the data editor, first open a data editor, then select "
+"Settings->Configure Shortcuts. Most shortcuts for the script editor are "
+"managed separately using Settings->Configure Editor->Shortcuts."
+msgstr ""
+"अधिकांश शॉर्टकट सेटिंग्स->कॉन्फ़िगर शॉर्टकट का उपयोग करके कॉन्फ़िगर करने योग्य हैं। तकनीकी "
+"कारणों से, केवल उन घटकों के शॉर्टकट सूचीबद्ध किए जाएंगे जो उस समय सक्रिय हैं। इसलिए, "
+"उदाहरण के लिए, यदि आप डेटा संपादक के लिए शॉर्टकट संपादित करना चाहते हैं, तो पहले डेटा "
+"संपादक खोलें, फिर सेटिंग्स->कॉन्फ़िगर शॉर्टकट चुनें। स्क्रिप्ट संपादक के लिए अधिकांश शॉर्टकट "
+"सेटिंग्स->कॉन्फ़िगर संपादक->शॉर्टकट का उपयोग करके अलग से प्रबंधित किए जाते हैं।"
+
+#. i18n: ectx: (RKWard Shortcut keys) <summary>
+#: rkward/pages/rkward_shortcuts.rkh:9
+#, kde-format
+msgid ""
+"On most systems, you can also configure shortcuts by right-clicking on the "
+"respective menu item."
+msgstr ""
+"अधिकांश प्रणालियों पर, आप संबंधित मेनू आइटम पर राइट-क्लिक करके भी शॉर्टकट कॉन्फ़िगर कर "
+"सकते हैं।"
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="...">
+#: rkward/pages/rkward_shortcuts.rkh:19
+#, kde-format
+msgid "RKWard Default Shortcut keys"
+msgstr "RKWard डिफ़ॉल्ट शॉर्टकट कुंजियाँ"
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
+#: rkward/pages/rkward_shortcuts.rkh:19
+#, kde-format
+msgid "To point out some of the less discoverable or more important shortcuts:"
+msgstr "कुछ कम खोजे जा सकने वाले या अधिक महत्वपूर्ण शॉर्टकट की ओर ध्यान दिलाना:"
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
+#: rkward/pages/rkward_shortcuts.rkh:19
+#, kde-format
+msgid ""
+"To cycle between document / tool windows inside RKWard, use Ctrl+Tab and Ctrl"
+"+Shift+Tab"
+msgstr ""
+"RKWard के अंदर दस्तावेज़ / टूल विंडो के बीच चक्रण करने के लिए, Ctrl+Tab और Ctrl+Shift"
+"+Tab का उपयोग करें"
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
+#: rkward/pages/rkward_shortcuts.rkh:19
+#, kde-format
+msgid ""
+"To run code from scripts / help pages / the console, select it, and use Ctrl"
+"+Enter"
+msgstr ""
+"स्क्रिप्ट / सहायता पृष्ठ / कंसोल से कोड चलाने के लिए, इसे चुनें, और Ctrl + Enter का उपयोग "
+"करें"
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
+#: rkward/pages/rkward_shortcuts.rkh:19
+#, kde-format
+msgid ""
+"F2 to search the R help for the symbol under the cursor in scripts and the "
+"console"
+msgstr "स्क्रिप्ट और कंसोल में कर्सर के नीचे प्रतीक के लिए R सहायता खोजने के लिए F2"
+
+#. i18n: ectx: (Split views) <title>
+#: rkward/pages/rkward_split_views.rkh:8
+#, kde-format
+msgid "Split views"
+msgstr "विभाजित दृश्य"
+
+#. i18n: ectx: (Split views) <summary>
+#: rkward/pages/rkward_split_views.rkh:10
+#, kde-format
+msgid ""
+"Split views can be used to partition the main window into several view areas."
+msgstr ""
+"विभाजित दृश्यों का उपयोग मुख्य विंडो को कई दृश्य क्षेत्रों में विभाजित करने के लिए किया जा "
+"सकता है।"
+
+#. i18n: ectx: (Split views) <summary>
+#: rkward/pages/rkward_split_views.rkh:10
+#, kde-format
+msgid ""
+"They can be used to make better use of screen space, but also to view far-"
+"apart portions of a single file, simultaneously."
+msgstr ""
+"इनका उपयोग स्क्रीन स्पेस का बेहतर उपयोग करने के लिए किया जा सकता है, साथ ही एक ही "
+"फाइल के दूर-दूर स्थित भागों को एक साथ देखने के लिए भी किया जा सकता है।"
+
+#. i18n: ectx: (Split views) <section title="...">
+#: rkward/pages/rkward_split_views.rkh:16
+#, kde-format
+msgid "Splitting views"
+msgstr "विभाजित दृश्य"
+
+#. i18n: ectx: (Split views) <section title="Splitting views">
+#: rkward/pages/rkward_split_views.rkh:16
+#, kde-format
+msgid ""
+"Splitting views is currently supported for the main window, only. Use Window-"
+">Split Vertical or Window->Split Horizontal to split the current view area "
+"vertically, or horizontally. For windows that support it (e.g. scripts, help "
+"pages), the newly created view area will contain a copy of the current "
+"window. When splitting other windows (such as onscreen graphics devices), "
+"the new view area will be initialized to show this help page."
+msgstr ""
+"वर्तमान में दृश्यों को विभाजित करना केवल मुख्य विंडो के लिए समर्थित है। वर्तमान दृश्य क्षेत्र "
+"को लंबवत या क्षैतिज रूप से विभाजित करने के लिए विंडो-> स्प्लिट वर्टिकल या विंडो-> स्प्लिट "
+"हॉरिजॉन्टल का उपयोग करें। इसका समर्थन करने वाली विंडो (जैसे स्क्रिप्ट, सहायता पृष्ठ) के "
+"लिए, नए बनाए गए दृश्य क्षेत्र में वर्तमान विंडो की एक प्रति होगी। अन्य विंडो (जैसे ऑनस्क्रीन "
+"ग्राफ़िक्स डिवाइस) को विभाजित करते समय, इस सहायता पृष्ठ को दिखाने के लिए नया दृश्य "
+"क्षेत्र आरंभ किया जाएगा।"
+
+#. i18n: ectx: (Split views) <section title="Splitting views">
+#: rkward/pages/rkward_split_views.rkh:16
+#, kde-format
+msgid ""
+"To add further files to a view area, simply open them the normal way (from "
+"\"File Browser\" window, the menu, or from the \"R Console\" window). Simply "
+"make sure that the view area where you want them new window to open has "
+"focus / is active."
+msgstr ""
+"किसी दृश्य क्षेत्र में और फ़ाइलें जोड़ने के लिए, उन्हें सामान्य तरीके से खोलें (\"फ़ाइल ब्राउज़र\" "
+"विंडो, मेनू या \"आर कंसोल\" विंडो से)। बस यह सुनिश्चित करें कि जिस दृश्य क्षेत्र में आप उन्हें "
+"नई विंडो में खोलना चाहते हैं, वहाँ फ़ोकस / सक्रिय है।"
+
+#. i18n: ectx: (Split views) <section title="...">
+#: rkward/pages/rkward_split_views.rkh:22
+#, kde-format
+msgid "Closing split views"
+msgstr "विभाजित दृश्य बंद करना"
+
+#. i18n: ectx: (Split views) <section title="Closing split views">
+#: rkward/pages/rkward_split_views.rkh:22
+#, kde-format
+msgid "To remove a view area, simply close all windows inside it."
+msgstr "किसी दृश्य क्षेत्र को हटाने के लिए, बस उसके अंदर की सभी विंडो बंद कर दें।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <title>
+#: rkward/pages/rkward_trouble_shooting.rkh:8
+#, kde-format
+msgid "Trouble Shooting / FAQ"
+msgstr "समस्या निवारण / FAQ"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <summary>
+#: rkward/pages/rkward_trouble_shooting.rkh:9
+#, kde-format
+msgid ""
+"This page will try to cover some common issues you may encounter when using "
+"RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
+"link>."
+msgstr ""
+"यह पृष्ठ कुछ सामान्य समस्याओं को कवर करने का प्रयास करेगा जिनका सामना आपको RKWard का "
+"उपयोग करते समय करना पड़ सकता है। यह भी देखें<link href=\"https://rkward.kde.org/faq"
+"\"> ऑनलाइन FAQ</link> ."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:12
+#, kde-format
+msgid "The \"Analysis\" menu is missing, or shows up as \"(no label)\""
+msgstr "\"विश्लेषण\" मेनू गायब है, या \"(कोई लेबल नहीं)\" के रूप में दिखाई देता है"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:12
+#, kde-format
+msgid "Missing menu items"
+msgstr "मेनू आइटम गुम हैं"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="The \"Analysis\" menu is missing, or shows up as \"(no label)\"">
+#: rkward/pages/rkward_trouble_shooting.rkh:12
+#, kde-format
+msgid ""
+"This problem will often occur, when moving an RKWard installation to a "
+"different path, esp. on Windows and Mac. You may have to visit Settings-"
+">Configure RKWard->Plugins and re-add the relevant \".pluginmap\"-files. "
+"Starting with version 0.6.3, RKWard should detect a changed installation "
+"path, and adjust paths, automatically."
+msgstr ""
+"यह समस्या अक्सर तब होती है, जब RKWard इंस्टॉलेशन को किसी दूसरे पथ पर ले जाया जाता है, "
+"खासकर विंडोज और मैक पर। आपको सेटिंग्स-> RKWard कॉन्फ़िगर करें-> प्लगइन्स पर जाना पड़ "
+"सकता है और संबंधित \".pluginmap\"-फ़ाइलों को फिर से जोड़ना पड़ सकता है। संस्करण 0.6.3 से "
+"शुरू करके, RKWard को एक परिवर्तित इंस्टॉलेशन पथ का पता लगाना चाहिए, और स्वचालित रूप से "
+"पथों को समायोजित करना चाहिए।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:17
+#, kde-format
+msgid "The R backend crashed or failed to start"
+msgstr "आर बैकएंड क्रैश हो गया या शुरू नहीं हो सका"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:17
+#, kde-format
+msgid "Crashed backend"
+msgstr "क्रैश हुआ बैकएंड"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
+#: rkward/pages/rkward_trouble_shooting.rkh:17
+#, kde-format
+msgid ""
+"At times the R backend will fail to start due to a configuration or "
+"installation problem. Common causes are changed paths, or an update to R. "
+"Usually, in these cases, the setup dialog is shown when starting RKWard, and "
+"this allows to select a different installation of R. (Note: You will be "
+"offered a selection of installations found a common paths, but you can also "
+"specify a non-detected installation, manually.)"
+msgstr ""
+"कभी-कभी कॉन्फ़िगरेशन या इंस्टॉलेशन समस्या के कारण R बैकएंड शुरू नहीं हो पाता है। सामान्य "
+"कारण पथ में बदलाव या R का अपडेट है। आमतौर पर, इन मामलों में, RKWard शुरू करते समय सेटअप "
+"डायलॉग दिखाया जाता है, और यह R की एक अलग इंस्टॉलेशन चुनने की अनुमति देता है। (नोट: "
+"आपको सामान्य पथ वाले इंस्टॉलेशन का चयन करने की पेशकश की जाएगी, लेकिन आप मैन्युअल रूप से "
+"एक गैर-पता लगाए गए इंस्टॉलेशन को भी निर्दिष्ट कर सकते हैं।)"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
+#: rkward/pages/rkward_trouble_shooting.rkh:17
+#, kde-format
+msgid ""
+"In many cases, it will \"just work\" to select a version of R other than "
+"what has been used at compile time. Should you run into trouble, it is "
+"advised to use the same, or a similar version of R to what was available "
+"during compilation, however."
+msgstr ""
+"कई मामलों में, संकलन समय पर इस्तेमाल किए गए R के अलावा किसी अन्य संस्करण का चयन करना "
+"\"बस काम करेगा\"। यदि आपको परेशानी होती है, तो आपको सलाह दी जाती है कि संकलन के "
+"दौरान उपलब्ध R के समान या उससे मिलते-जुलते संस्करण का उपयोग करें।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
+#: rkward/pages/rkward_trouble_shooting.rkh:17
+#, kde-format
+msgid ""
+"You can manually change the R backend at any time, using Settings->Check "
+"installation. Be sure to save your data, before changing the backend! You "
+"can also use the command-line option --r-executable in order to start a "
+"session using a specific installation of R."
+msgstr ""
+"आप सेटिंग्स->चेक इंस्टॉलेशन का उपयोग करके किसी भी समय R बैकएंड को मैन्युअल रूप से बदल सकते "
+"हैं। बैकएंड बदलने से पहले अपना डेटा सहेजना सुनिश्चित करें! आप R की किसी विशिष्ट इंस्टॉलेशन का "
+"उपयोग करके सत्र शुरू करने के लिए कमांड-लाइन विकल्प --r-executable का भी उपयोग कर सकते "
+"हैं।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:28
+#, kde-format
+msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
+msgstr "मुझे RKWard AppImage के अंदर R बंडल का उपयोग क्यों नहीं करना चाहिए?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:28
+#, kde-format
+msgid "AppImage"
+msgstr "ऐप छवि"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
+#: rkward/pages/rkward_trouble_shooting.rkh:28
+#, kde-format
+msgid ""
+"The AppImage includes an installation of R for convenience, but this "
+"installation is not, and cannot technically be made fully functional. "
+"Importantly, you will not generally be able to install R packages (other "
+"than ones implemented purely in R). Also, you may run into conflicts between "
+"the R installation inside the AppImage, and R packages that are installed "
+"system-wide. This may cause subtle and surprising bugs."
+msgstr ""
+"AppImage में सुविधा के लिए R की स्थापना शामिल है, लेकिन यह स्थापना नहीं है, और तकनीकी "
+"रूप से इसे पूरी तरह कार्यात्मक नहीं बनाया जा सकता है। महत्वपूर्ण बात यह है कि आप आम तौर "
+"पर R पैकेज (पूरी तरह से R में लागू किए गए पैकेजों के अलावा) स्थापित नहीं कर पाएंगे। साथ ही, "
+"आप AppImage के अंदर R स्थापना और सिस्टम-वाइड स्थापित R पैकेजों के बीच टकराव का सामना "
+"कर सकते हैं। इससे सूक्ष्म और आश्चर्यजनक बग हो सकते हैं।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:33
+#, kde-format
+msgid ""
+"Sometimes I enter a command short after the start of RKWard but it is not "
+"processed. What's wrong?"
+msgstr ""
+"कभी-कभी मैं RKWard के शुरू होने के कुछ समय बाद ही कमांड दर्ज करता हूँ लेकिन यह संसाधित नहीं "
+"होता। क्या गड़बड़ है?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:33
+#, kde-format
+msgid "Commands not processing"
+msgstr "आदेश संसाधित नहीं हो रहे"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
+#: rkward/pages/rkward_trouble_shooting.rkh:33
+#, kde-format
+msgid ""
+"This happens because RKWard starts first and subsequent R is started in the "
+"background. Depending on the speed of your machine it can take some time to "
+"start R. In any case you can check the state of R within RKWard. Just look "
+"at the little box on the right bottom corner of RKWard. If it is green you "
+"can go ahead."
+msgstr ""
+"ऐसा इसलिए होता है क्योंकि RKWard पहले शुरू होता है और उसके बाद बैकग्राउंड में R शुरू होता "
+"है। आपकी मशीन की गति के आधार पर R शुरू होने में कुछ समय लग सकता है। किसी भी स्थिति में "
+"आप RKWard के भीतर R की स्थिति की जांच कर सकते हैं। बस RKWard के दाहिने निचले कोने पर "
+"छोटे बॉक्स को देखें। अगर यह हरा है तो आप आगे बढ़ सकते हैं।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
+#: rkward/pages/rkward_trouble_shooting.rkh:33
+#, kde-format
+msgid ""
+"You can start submitting commands while the backend has not yet started, or "
+"while another lengthy calculation is still taking place. In this case your "
+"commands will be placed into a queue, first, and executed as soon as the "
+"backend becomes available, again."
+msgstr ""
+"आप तब भी कमांड सबमिट करना शुरू कर सकते हैं जब बैकएंड अभी शुरू नहीं हुआ है, या जब कोई अन्य "
+"लंबी गणना अभी भी चल रही है। इस मामले में आपके कमांड को पहले कतार में रखा जाएगा, और जैसे "
+"ही बैकएंड उपलब्ध होगा, उन्हें फिर से निष्पादित किया जाएगा।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:38
+#, kde-format
+msgid ""
+"RKWard says it needs a package. Was the installation of RKWard not complete?"
+msgstr ""
+"RKWard का कहना है कि उसे एक पैकेज की आवश्यकता है। क्या RKWard की स्थापना पूरी नहीं हुई "
+"थी?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:38
+#, kde-format
+msgid "Missing packages"
+msgstr "गुम हुए पैकेज"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
+#: rkward/pages/rkward_trouble_shooting.rkh:38
+#, kde-format
+msgid ""
+"RKWard has basically all the functionality, which comes with the standard "
+"packages of R. But RKWard is at the same time rather extensible. Many "
+"developers made use of this and thus some of the procedures in RKWard depend "
+"on \"external\" packages (obtained from <link href=\"http://cran.r-project."
+"org/\">The Comprehensive R Archive Network (CRAN)</link>) to perform a task."
+msgstr ""
+"RKWard में मूल रूप से वह सभी कार्यक्षमताएं हैं, जो R के मानक पैकेजों के साथ आती हैं। लेकिन "
+"RKWard एक ही समय में काफी विस्तार योग्य है। कई डेवलपर्स ने इसका उपयोग किया और इस "
+"प्रकार RKWard में कुछ प्रक्रियाएं &quot;बाहरी&quot; पैकेजों (से प्राप्त) पर निर्भर करती "
+"हैं<link href=\"http://cran.r-project.org/\"> व्यापक आर आर्काइव नेटवर्क (CRAN)</"
+"link> ) किसी कार्य को करने के लिए."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
+#: rkward/pages/rkward_trouble_shooting.rkh:38
+#, kde-format
+msgid ""
+"Here is an example. All tests related to <link href=\"rkward://rhelp/moments"
+"\">skewness</link> and <link href=\"rkward://rhelp/moments\">kurtosis</link> "
+"(which you would certainly expect to be shipped as a base package of R) are "
+"performed from an external package. If you read this the first time or "
+"restarted RKWard after you installed it and try to follow the link you will "
+"be out of luck. First you need to run a test from Analysis->Moment to "
+"achieve this."
+msgstr ""
+"यहाँ एक उदाहरण दिया गया है।<link href=\"rkward://rhelp/moments\"> तिरछापन</"
+"link> और<link href=\"rkward://rhelp/moments\"> कुकुदता</link> (जिसे आप निश्चित "
+"रूप से R के बेस पैकेज के रूप में शिप किए जाने की उम्मीद करेंगे) बाहरी पैकेज से किए जाते हैं। यदि "
+"आप इसे पहली बार पढ़ते हैं या इसे स्थापित करने के बाद RKWard को पुनः आरंभ करते हैं और लिंक "
+"का अनुसरण करने का प्रयास करते हैं तो आप भाग्य से बाहर हो जाएंगे। इसे प्राप्त करने के लिए "
+"सबसे पहले आपको Analysis-&gt;Moment से एक परीक्षण चलाने की आवश्यकता है।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
+#: rkward/pages/rkward_trouble_shooting.rkh:38
+#, kde-format
+msgid ""
+"Typically, you would call them from R via <link href=\"rkward://rhelp/update."
+"packages\">update.packages</link> and <link href=\"rkward://rhelp/library"
+"\">library</link> to achieve this. But RKWard simplifies this for you. "
+"You'll be guided through the install procedure for the required package. "
+"Please note you need root privileges in certain situations."
+msgstr ""
+"आम तौर पर, आप उन्हें R के माध्यम से कॉल करेंगे<link href=\"rkward://rhelp/update."
+"packages\"> अद्यतन.पैकेज</link> और<link href=\"rkward://rhelp/library\"> "
+"पुस्तकालय</link> इसे प्राप्त करने के लिए। लेकिन RKWard आपके लिए इसे सरल बनाता है। आपको "
+"आवश्यक पैकेज के लिए इंस्टॉल प्रक्रिया के माध्यम से निर्देशित किया जाएगा। कृपया ध्यान दें कि "
+"आपको कुछ स्थितियों में रूट विशेषाधिकारों की आवश्यकता होती है।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:45
+#, kde-format
+msgid ""
+"RKWard claims to take care of seamless integration with an office-suite. Why "
+"is there no native option to save it as an office file?"
+msgstr ""
+"आरकेवार्ड ऑफिस-सूट के साथ सहज एकीकरण का ख्याल रखने का दावा करता है। इसे ऑफिस फ़ाइल के "
+"रूप में सहेजने का कोई मूल विकल्प क्यों नहीं है?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:45
+#, kde-format
+msgid "RKWard integration with an office-suite"
+msgstr "ऑफिस-सूट के साथ RKWard एकीकरण"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?">
+#: rkward/pages/rkward_trouble_shooting.rkh:45
+#, kde-format
+msgid ""
+"We agree that RKWard is still very lacking when it comes to office "
+"integration, and \"seamless\" integration is still far away. Refer to <link "
+"href=\"rkward://page/rkward_output\"/> for information on how to accomplish "
+"the most important things right now. In the meantime, it is possible to "
+"carry out analyses in RMarkdown documents. These can be saved as PDF, TeX "
+"document or Office document, among others. Current RKWard versions support "
+"this in principle in the export menu."
+msgstr ""
+"हम इस बात से सहमत हैं कि जब ऑफिस एकीकरण की बात आती है तो RKWard में अभी भी बहुत कमी "
+"है, और &quot;निर्बाध&quot; एकीकरण अभी भी बहुत दूर है।<link href=\"rkward://page/"
+"rkward_output\"/> इस समय सबसे महत्वपूर्ण काम कैसे पूरे करें, इस बारे में जानकारी के लिए। "
+"इस बीच, RMarkdown दस्तावेज़ों में विश्लेषण करना संभव है। इन्हें PDF, TeX दस्तावेज़ या Office "
+"दस्तावेज़ के रूप में सहेजा जा सकता है। वर्तमान RKWard संस्करण निर्यात मेनू में सिद्धांत रूप में "
+"इसका समर्थन करते हैं।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:48
+#, kde-format
+msgid "People tend to ask me what RKWard means. What should I answer?"
+msgstr "लोग मुझसे अक्सर पूछते हैं कि RKWard का क्या मतलब है। मुझे क्या जवाब देना चाहिए?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:48
+#, kde-format
+msgid "What does \"RKWard\" mean?"
+msgstr "\"आरकेवार्ड\" का क्या अर्थ है?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
+#: rkward/pages/rkward_trouble_shooting.rkh:48
+#, kde-format
+msgid ""
+"Yes, it's a very odd name. ;) However, R comes obviously from the <link href="
+"\"http://www.r-project.org/\">R-language</link>, which is the statistical "
+"basis of RKWard. K is derived from <link href=\"http://kde.org/\">KDE</"
+"link>, which delivered the basic GUI technologies for RKWard. And <link href="
+"\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's another story."
+msgstr ""
+"हाँ, यह एक बहुत ही अजीब नाम है। ;) हालाँकि, R स्पष्ट रूप से से आता है<link href="
+"\"http://www.r-project.org/\"> आर-भाषा</link> , जो RKWard का सांख्यिकीय आधार "
+"है। K से व्युत्पन्न होता है<link href=\"http://kde.org/\"> केडीई</link> , जिसने "
+"RKWard के लिए बुनियादी GUI तकनीकें प्रदान कीं। और<link href=\"http://en.wikipedia."
+"org/wiki/Ward\"> वार्ड</link> ? यह एक और कहानी है."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:51
+#, kde-format
+msgid "RKWard is running since ages. Has it hung up?"
+msgstr "आरकेवार्ड बहुत समय से चल रहा है। क्या यह बंद हो गया है?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:51
+#, kde-format
+msgid "RKWard seems to hang"
+msgstr "आर.के.वार्ड लटका हुआ लगता है"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
+#: rkward/pages/rkward_trouble_shooting.rkh:51
+#, kde-format
+msgid ""
+"This depends. Some test and plots just need some time if you have huge "
+"amounts of data or sophisticated calculations. Therefore patience is "
+"sometimes needed. In any case you can check the state of R within RKWard. "
+"Just look at the little box on the right bottom corner of RKWard. Red means "
+"there is still something to calculate or plot. If it turns green, R is done "
+"calculating."
+msgstr ""
+"यह निर्भर करता है। यदि आपके पास बहुत अधिक मात्रा में डेटा या जटिल गणनाएँ हैं, तो कुछ "
+"परीक्षण और प्लॉट को कुछ समय की आवश्यकता होती है। इसलिए कभी-कभी धैर्य की आवश्यकता "
+"होती है। किसी भी मामले में आप RKWard के भीतर R की स्थिति की जाँच कर सकते हैं। बस "
+"RKWard के दाहिने निचले कोने पर छोटे बॉक्स को देखें। लाल का मतलब है कि गणना या प्लॉट करने "
+"के लिए अभी भी कुछ है। यदि यह हरा हो जाता है, तो R की गणना पूरी हो गई है।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
+#: rkward/pages/rkward_trouble_shooting.rkh:51
+#, kde-format
+msgid ""
+"But some statistical test are rather memory and stack hungry and can make "
+"the entire system unresponsive, if there is a lot of swapping. This is not a "
+"bug in RKWard or R, just the calculation taking your system to its limits. "
+"An example of very memory hungry tests are the <link href=\"rkward://rhelp/"
+"wilcox.test\">Wilcoxon Rank Sum and Signed Rank Tests</link>."
+msgstr ""
+"लेकिन कुछ सांख्यिकीय परीक्षण मेमोरी और स्टैक के भूखे होते हैं और यदि बहुत अधिक स्वैपिंग होती "
+"है, तो वे पूरे सिस्टम को अनुत्तरदायी बना सकते हैं। यह RKWard या R में कोई बग नहीं है, यह "
+"केवल गणना है जो आपके सिस्टम को उसकी सीमाओं तक ले जाती है। बहुत मेमोरी भूखे परीक्षणों का "
+"एक उदाहरण है<link href=\"rkward://rhelp/wilcox.test\"> विलकॉक्सन रैंक योग और "
+"हस्ताक्षरित रैंक परीक्षण</link> ."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
+#: rkward/pages/rkward_trouble_shooting.rkh:51
+#, kde-format
+msgid ""
+"Therefore, it is important you know the test. Moreover, it's very important "
+"to save the workspace and other sections you worked on before you do such "
+"operations. There is currently no recovery functionality within RKWard in "
+"case of a crash! You can find build-in tests from R to address this memory "
+"issue (see: <link href=\"rkward://rhelp/mem.limits\"/>, and <link href="
+"\"rkward://rhelp/memory.limit\"/>)."
+msgstr ""
+"इसलिए, यह महत्वपूर्ण है कि आप परीक्षण को जानें। इसके अलावा, ऐसे ऑपरेशन करने से पहले आपके "
+"द्वारा काम किए गए कार्यक्षेत्र और अन्य अनुभागों को सहेजना बहुत महत्वपूर्ण है। क्रैश के मामले में "
+"RKWard के भीतर वर्तमान में कोई पुनर्प्राप्ति कार्यक्षमता नहीं है! आप इस मेमोरी समस्या को "
+"संबोधित करने के लिए R से बिल्ट-इन परीक्षण पा सकते हैं (देखें:<link href=\"rkward://rhelp/"
+"mem.limits\"/> , और<link href=\"rkward://rhelp/memory.limit\"/> )."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:58
+#, kde-format
+msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
+msgstr "मुझे लगता है कि मैंने कुछ ग़लत किया? 'पूर्ववत करें' और 'पुनः करें' कहाँ है?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:58
+#, kde-format
+msgid "Undo/Redo"
+msgstr "फिर से पूर्ववत करना"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
+#: rkward/pages/rkward_trouble_shooting.rkh:58
+#, kde-format
+msgid ""
+"Right now RKWard doesn't have \"undo\" or \"redo\" functionality in all "
+"places. For example there is such functionality for the script editor, but "
+"there is no undo or redo for finished plots or tests. Therefore it's "
+"important that you know what you do before you start. It's recommended to "
+"use copies of original data and to give everything a meaningful name."
+msgstr ""
+"अभी RKWard में सभी जगहों पर \"पूर्ववत करें\" या \"पुनः करें\" कार्यक्षमता नहीं है। उदाहरण "
+"के लिए स्क्रिप्ट संपादक के लिए ऐसी कार्यक्षमता है, लेकिन समाप्त प्लॉट या परीक्षणों के लिए "
+"कोई पूर्ववत या पुनः करें नहीं है। इसलिए यह महत्वपूर्ण है कि आप शुरू करने से पहले जानते हों कि "
+"आपको क्या करना है। मूल डेटा की प्रतियों का उपयोग करने और हर चीज़ को एक सार्थक नाम देने "
+"की अनुशंसा की जाती है।"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
+#: rkward/pages/rkward_trouble_shooting.rkh:58
+#, kde-format
+msgid ""
+"However, RKWard tries to give you as much information as possible about "
+"things you have done. For tests and plots that you run from the menu, the "
+"<link href=\"rkward://page/rkward_output\"/> will contain a \"run again\" "
+"link below the output. You can use this to re-do this action with identical "
+"or slightly modified settings. Also, tests and plots try to show the most "
+"relevant settings in combination with the creation date. Moreover you can "
+"check and copy any code generated for your documentation purposes."
+msgstr ""
+"हालाँकि, RKWard आपको आपके द्वारा किए गए कामों के बारे में यथासंभव जानकारी देने की कोशिश "
+"करता है। मेनू से आपके द्वारा चलाए जाने वाले परीक्षणों और प्लॉट्स के लिए,<link href="
+"\"rkward://page/rkward_output\"/> आउटपुट के नीचे &quot;फिर से चलाएँ&quot; लिंक "
+"होगा। आप इसका उपयोग समान या थोड़े संशोधित सेटिंग्स के साथ इस क्रिया को फिर से करने के "
+"लिए कर सकते हैं। साथ ही, परीक्षण और प्लॉट निर्माण तिथि के साथ संयोजन में सबसे प्रासंगिक "
+"सेटिंग्स दिखाने का प्रयास करते हैं। इसके अलावा आप अपने दस्तावेज़ीकरण उद्देश्यों के लिए उत्पन्न "
+"किसी भी कोड की जाँच और प्रतिलिपि बना सकते हैं।"
+
+#. i18n: ectx: (Welcome to RKWard) <title>
+#: rkward/pages/rkward_welcome.rkh:8
+#, kde-format
+msgid "Welcome to RKWard"
+msgstr "आरकेवार्ड में आपका स्वागत है"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:10
+#, kde-format
+msgid "My recent script files"
+msgstr "मेरी हाल की स्क्रिप्ट फ़ाइलें"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:12
+#, kde-format
+msgid "My recent workspaces"
+msgstr "मेरे हाल के कार्यस्थान"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:14
+#, kde-format
+msgid "My recent output files"
+msgstr "मेरी हाल की आउटपुट फ़ाइलें"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:16
+#, kde-format
+msgid "Import or enter data"
+msgstr "डेटा आयात करें या दर्ज करें"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
+#: rkward/pages/rkward_welcome.rkh:16
+#, kde-format
+msgid "<link href=\"rkward://actions/new_data_frame\">Enter new data</link>"
+msgstr "<link href=\"rkward://actions/new_data_frame\">नया डेटा दर्ज करें</link>"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
+#: rkward/pages/rkward_welcome.rkh:16
+#, kde-format
+msgid "<link href=\"rkward://actions/import_assistant\">Import data</link>"
+msgstr "<link href=\"rkward://actions/import_assistant\">डेटा आयात करें</link>"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:23
+#, kde-format
+msgid "Useful settings"
+msgstr "उपयोगी सेटिंग्स"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
+#: rkward/pages/rkward_welcome.rkh:23
+#, kde-format
+msgid ""
+"<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
+"packages</link>"
+msgstr ""
+"<link href=\"rkward://actions/rpackage_install\">R और RKWard पैकेज स्थापित करें</"
+"link>"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
+#: rkward/pages/rkward_welcome.rkh:23
+#, kde-format
+msgid ""
+"&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
+"(e.g., git/project integration)</link>&lrm;"
+msgstr ""
+"‎<link href=\"rkward://settings/addons\"> आगे ऐड-ऑन से संबंधित सेटिंग्स (जैसे, git/"
+"प्रोजेक्ट एकीकरण)</link> ‎"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
+#: rkward/pages/rkward_welcome.rkh:23
+#, kde-format
+msgid ""
+"&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
+"(including this page)&lrm;"
+msgstr ""
+"‎<link href=\"rkward://settings/general\"> स्टार्टअप विकल्प</link> (इस पृष्ठ सहित)"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:31
+#, kde-format
+msgid "Documentation starting points"
+msgstr "दस्तावेज़ीकरण के प्रारंभिक बिंदु"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Documentation starting points">
+#: rkward/pages/rkward_welcome.rkh:31
+#, kde-format
+msgid ""
+"External links: <link href=\"https://rkward.kde.org/\">project homepage</"
+"link>"
+msgstr ""
+"बाहरी संबंध:<link href=\"https://rkward.kde.org/\"> परियोजना मुखपृष्ठ</link>"
+
+#. i18n: ectx: (Workspace Browser) <title>
+#: rkward/pages/rkward_workspace_browser.rkh:8
+#, kde-format
+msgid "Workspace Browser"
+msgstr "कार्यक्षेत्र ब्राउज़र"
+
+#. i18n: ectx: (Workspace Browser) <summary>
+#: rkward/pages/rkward_workspace_browser.rkh:10
+#, kde-format
+msgid ""
+"The workspace browser allows to view and manipulate R objects. This includes "
+"both your own objects (data, functions), and so-called \"package environments"
+"\". As a rough analogy, this is similar to a regular file-system browser, "
+"except you browse R objects in your workspace, instead of files on your "
+"computer."
+msgstr ""
+"वर्कस्पेस ब्राउज़र R ऑब्जेक्ट्स को देखने और उनमें हेरफेर करने की अनुमति देता है। इसमें आपके अपने "
+"ऑब्जेक्ट्स (डेटा, फ़ंक्शन) और तथाकथित \"पैकेज वातावरण\" दोनों शामिल हैं। मोटे तौर पर, यह "
+"एक नियमित फ़ाइल-सिस्टम ब्राउज़र के समान है, सिवाय इसके कि आप अपने कंप्यूटर पर फ़ाइलों के "
+"बजाय अपने वर्कस्पेस में R ऑब्जेक्ट्स ब्राउज़ करते हैं।"
+
+#. i18n: ectx: (Workspace Browser) <summary>
+#: rkward/pages/rkward_workspace_browser.rkh:10
+#, kde-format
+msgid ""
+"The workspace browser can be invoked using Windows->Activate->Show / Hide "
+"Workspace Browser (default shortcut is Alt+1), or by clicking on the "
+"\"Workspace\" icon, which is located on the top of the left window border, "
+"by default."
+msgstr ""
+"वर्कस्पेस ब्राउज़र को विंडोज़->एक्टिवेट->वर्कस्पेस ब्राउज़र दिखाएँ/छिपाएँ (डिफ़ॉल्ट शॉर्टकट Alt"
+"+1 है) का उपयोग करके या \"वर्कस्पेस\" आइकन पर क्लिक करके बुलाया जा सकता है, जो डिफ़ॉल्ट "
+"रूप से बाईं विंडो बॉर्डर के शीर्ष पर स्थित होता है।"
+
+#. i18n: ectx: (Workspace Browser) <section title="...">
+#: rkward/pages/rkward_workspace_browser.rkh:16
+#, kde-format
+msgid "What is shown"
+msgstr "क्या दिखाया गया है?"
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:16
+#, kde-format
+msgid ""
+"Literally hundreds or even thousands of objects are present in a typical R "
+"session. This can be overwhelming at first, therefore the workspace browser "
+"offers to show only a certain subset of objects. The options here are \"Show "
+"Hidden Objects\", \"All vs. Non-Functions vs. Functions\", and \"Show All "
+"Environments\" (available at the top of the browser window, or choosing "
+"\"Show Objects\" from the context menu)."
+msgstr ""
+"एक सामान्य R सत्र में वस्तुतः सैकड़ों या हज़ारों ऑब्जेक्ट मौजूद होते हैं। यह पहली बार में भारी "
+"पड़ सकता है, इसलिए वर्कस्पेस ब्राउज़र ऑब्जेक्ट्स का केवल एक निश्चित उपसमूह दिखाने की पेशकश "
+"करता है। यहाँ विकल्प हैं \"छिपे हुए ऑब्जेक्ट दिखाएँ\", \"सभी बनाम गैर-फ़ंक्शन बनाम फ़ंक्शन\", "
+"और \"सभी वातावरण दिखाएँ\" (ब्राउज़र विंडो के शीर्ष पर उपलब्ध है, या संदर्भ मेनू से "
+"\"ऑब्जेक्ट दिखाएँ\" चुनना)।"
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:16
+#, kde-format
+msgid ""
+"The first should be obvious. It controls whether objects whose name start "
+"with a dot ('.') are shown or not. Those are often used for internal "
+"objects, which are not meant for direct use, so it's generally safe to hide "
+"them from view."
+msgstr ""
+"पहला स्पष्ट होना चाहिए। यह नियंत्रित करता है कि जिन वस्तुओं का नाम बिंदु ('.') से शुरू "
+"होता है, उन्हें दिखाया जाए या नहीं। इनका उपयोग अक्सर आंतरिक वस्तुओं के लिए किया जाता है, "
+"जो सीधे उपयोग के लिए नहीं होती हैं, इसलिए उन्हें दृश्य से छिपाना आम तौर पर सुरक्षित होता "
+"है।"
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:16
+#, kde-format
+msgid ""
+"The second allows to select by the type of object. \"All\" does not filter, "
+"while \"Functions\" shows only functions, and \"Non-Functions\" shows all "
+"other objects (typically data)."
+msgstr ""
+"दूसरा विकल्प ऑब्जेक्ट के प्रकार के अनुसार चयन करने की अनुमति देता है। \"सभी\" फ़िल्टर नहीं "
+"करता है, जबकि \"फ़ंक्शन\" केवल फ़ंक्शन दिखाता है, और \"गैर-फ़ंक्शन\" अन्य सभी ऑब्जेक्ट (आमतौर "
+"पर डेटा) दिखाता है।"
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:16
+#, kde-format
+msgid ""
+"The \"Show All Environments\" option controls, whether package environments "
+"and their objects are shown. Roughly speaking, if you turn off this option, "
+"only your \"own\" objects are shown, while with the option turned on, all "
+"pre-defined objects are also shown. More technically speaking, when the "
+"option is turned off, only the .GlobalEnv (see <link href=\"rkward://rhelp/"
+"globalenv\"/>) is shown, which is the environment, in which you create and "
+"edit your data."
+msgstr ""
+"&quot;सभी वातावरण दिखाएँ&quot; विकल्प नियंत्रित करता है कि पैकेज वातावरण और उनके "
+"ऑब्जेक्ट दिखाए जाएँ या नहीं। मोटे तौर पर, यदि आप इस विकल्प को बंद कर देते हैं, तो केवल "
+"आपके &quot;अपने&quot; ऑब्जेक्ट दिखाए जाते हैं, जबकि विकल्प चालू होने पर, सभी पूर्व-"
+"निर्धारित ऑब्जेक्ट भी दिखाए जाते हैं। अधिक तकनीकी रूप से कहें तो, जब विकल्प बंद होता है, "
+"तो केवल .GlobalEnv (देखें<link href=\"rkward://rhelp/globalenv\"/> ) दिखाया जाता "
+"है, जो वह वातावरण है, जिसमें आप अपना डेटा बनाते और संपादित करते हैं।"
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:16
+#, kde-format
+msgid ""
+"Note that objects are organized in a hierarchy, i.e. some types of objects "
+"contain further \"child\" objects. This is indicated by a \"+\" symbol to "
+"the left of the object name. Clicking on this will expand the view to show "
+"all the children of the object."
+msgstr ""
+"ध्यान दें कि ऑब्जेक्ट्स को पदानुक्रम में व्यवस्थित किया जाता है, यानी कुछ प्रकार के ऑब्जेक्ट्स में "
+"आगे \"चाइल्ड\" ऑब्जेक्ट्स होते हैं। यह ऑब्जेक्ट नाम के बाईं ओर एक \"+\" चिह्न द्वारा इंगित "
+"किया जाता है। इस पर क्लिक करने से ऑब्जेक्ट के सभी चाइल्ड्स को दिखाने के लिए दृश्य का "
+"विस्तार होगा।"
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:16
+#, kde-format
+msgid ""
+"Hovering the mouse pointer over an object will show a short summary of the "
+"objects' basic properties."
+msgstr ""
+"किसी ऑब्जेक्ट पर माउस पॉइंटर घुमाने से ऑब्जेक्ट के मूल गुणों का संक्षिप्त सारांश दिखाई देगा।"
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:30
+#, kde-format
+msgid ""
+"Several actions are available from the context menu (by right-clicking on "
+"one of the objects), however some of these actions are only available for "
+"some types of objects. The most important actions for objects in package "
+"environments:"
+msgstr ""
+"संदर्भ मेनू से कई क्रियाएँ उपलब्ध हैं (किसी एक ऑब्जेक्ट पर राइट-क्लिक करके), हालाँकि इनमें से "
+"कुछ क्रियाएँ केवल कुछ प्रकार के ऑब्जेक्ट के लिए ही उपलब्ध हैं। पैकेज वातावरण में ऑब्जेक्ट के लिए "
+"सबसे महत्वपूर्ण क्रियाएँ:"
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:30
+#, kde-format
+msgid ""
+"<b>Search Help</b>: This will try to locate and show a relevant R help page "
+"on the object."
+msgstr ""
+"<b>सहायता खोजें</b> : यह ऑब्जेक्ट पर प्रासंगिक R सहायता पृष्ठ ढूंढने और दिखाने का प्रयास "
+"करेगा।"
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:30
+#, kde-format
+msgid ""
+"<b>View</b>: Open a window with detailed information about the object. This "
+"will, among others, use the R commands <link href=\"rkward://rhelp/print"
+"\">print</link> and <link href=\"rkward://rhelp/summary\">summary</link> to "
+"show more information."
+msgstr ""
+"<b>दृश्य</b> : ऑब्जेक्ट के बारे में विस्तृत जानकारी वाली एक विंडो खोलें। यह, अन्य के अलावा, "
+"R कमांड का उपयोग करेगा<link href=\"rkward://rhelp/print\"> छपाई</link> और<link "
+"href=\"rkward://rhelp/summary\"> सारांश</link> अधिक जानकारी दिखाने के लिए."
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:30
+#, kde-format
+msgid ""
+"<b>Copy to new symbol / Copy to .GlobalEnv</b>: In order to manipulate "
+"objects, you need to copy them to the .GlobalEnv. For instance, you could "
+"copy an object from the environment \"package:datasets\" into the ."
+"GlobalEnv, and in a second step, edit it."
+msgstr ""
+"<b>नए प्रतीक में कॉपी करें / .GlobalEnv में कॉपी करें</b> : ऑब्जेक्ट्स में हेरफेर करने के लिए, "
+"आपको उन्हें .GlobalEnv में कॉपी करना होगा। उदाहरण के लिए, आप &quot;पैकेज:डेटासेट&quot; "
+"वातावरण से किसी ऑब्जेक्ट को .GlobalEnv में कॉपी कर सकते हैं, और दूसरे चरण में, उसे संपादित "
+"कर सकते हैं।"
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:30
+#, kde-format
+msgid "Further actions available for objects in the .GlobalEnv:"
+msgstr ".GlobalEnv में ऑब्जेक्ट्स के लिए आगे उपलब्ध क्रियाएँ:"
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:30
+#, kde-format
+msgid ""
+"<b>Edit</b>: Open the object in a data editor. Currently editing is only "
+"supported for data.frames."
+msgstr ""
+"<b>संपादन</b> : ऑब्जेक्ट को डेटा एडिटर में खोलें। वर्तमान में संपादन केवल data.frames के "
+"लिए समर्थित है।"
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:30
+#, kde-format
+msgid "<b>Rename / Delete</b>: These should be obvious."
+msgstr "<b>नाम बदलें / हटाएं</b> : ये स्पष्ट होना चाहिए।"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:47
+#, kde-format
+msgid ""
+"Some default settings for the Workspace Browser can be configured using the "
+"context menu:"
+msgstr ""
+"कार्यक्षेत्र ब्राउज़र के लिए कुछ डिफ़ॉल्ट सेटिंग्स को संदर्भ मेनू का उपयोग करके कॉन्फ़िगर किया "
+"जा सकता है:"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:47
+#, kde-format
+msgid ""
+"<b>Show hidden objects / show all environments</b>: See <link href="
+"\"#introduction\">above</link>. In contrast to the settings made directly in "
+"the workspace browser, these configure the <i>default</i> settings in the "
+"workspace browser (i.e. those that are effectively after restarting RKWard)."
+msgstr ""
+"<b>छुपी हुई वस्तुएँ दिखाएँ / सभी वातावरण दिखाएँ</b> : देखें<link href=\"#introduction"
+"\"> ऊपर</link> कार्यक्षेत्र ब्राउज़र में सीधे की गई सेटिंग्स के विपरीत, ये कार्यक्षेत्र ब्राउज़र "
+"में <i>डिफ़ॉल्ट</i> सेटिंग्स को कॉन्फ़िगर करते हैं (यानी वे जो RKWard को पुनरारंभ करने के बाद "
+"प्रभावी होते हैं)।"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:47
+#, kde-format
+msgid ""
+"<b>Show objects with children</b>: Controls whether objects with children "
+"(such as environments, lists) are shown, even if they do not correspond to "
+"the current filter."
+msgstr ""
+"<b>बच्चों के साथ ऑब्जेक्ट दिखाएँ</b> : नियंत्रित करता है कि क्या बच्चों के साथ ऑब्जेक्ट (जैसे "
+"वातावरण, सूचियाँ) दिखाए जाएँ, भले ही वे वर्तमान फ़िल्टर के अनुरूप न हों।"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:47
+#, kde-format
+msgid ""
+"<b>Show variables / functions</b>: Equivalent to the \"All vs. Non-Function "
+"vs. Functions\" control described <link href=\"#introduction\">above</link>."
+msgstr ""
+"<b>चर/फ़ंक्शन दिखाएँ</b> : वर्णित &quot;सभी बनाम गैर-फ़ंक्शन बनाम फ़ंक्शन&quot; नियंत्रण के "
+"बराबर<link href=\"#introduction\"> ऊपर</link> ."
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:47
+#, kde-format
+msgid ""
+"<b>Label field / Type field / Class field</b>: Which columns are shown for "
+"each object?"
+msgstr ""
+"<b>लेबल फ़ील्ड / प्रकार फ़ील्ड / वर्ग फ़ील्ड</b> : प्रत्येक ऑब्जेक्ट के लिए कौन से कॉलम दिखाए "
+"जाते हैं?"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:47
+#, kde-format
+msgid ""
+"One additional setting is available from <a href=\"rkward://settings/browser"
+"\">Settings->Configure RKWard->Workspace</a>:"
+msgstr ""
+"एक अतिरिक्त सेटिंग <a href=\"rkward://settings/browser\">सेटिंग्स-&gt;कॉन्फ़िगर "
+"आरकेवार्ड-&gt;वर्कस्पेस</a> से उपलब्ध है:"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:47
+#, kde-format
+msgid ""
+"<b>Never fetch the structure of these packages</b>: Some (few) R packages "
+"contain <b>very</b> many small objects (tens of thousands). In the worst "
+"case, trying to fetch structure information on those (i.e. fetching the "
+"information to be shown in the workspace browser) can consume a lot of "
+"resources and make RKWard unresponsive. Package \"GO\" is one such package, "
+"and is \"blacklisted\" by default. If you note that loading a package takes "
+"exceedingly long, you may consider adding it to this list."
+msgstr ""
+"<b>इन पैकेजों की संरचना को कभी भी प्राप्त न करें</b> : कुछ (कुछ) R पैकेजों में <b>बहुत</b> "
+"सारे छोटे ऑब्जेक्ट (दसियों हज़ार) होते हैं। सबसे खराब स्थिति में, उन पर संरचना जानकारी "
+"प्राप्त करने का प्रयास (यानी वर्कस्पेस ब्राउज़र में दिखाई जाने वाली जानकारी प्राप्त करना) "
+"बहुत सारे संसाधनों का उपभोग कर सकता है और RKWard को अनुत्तरदायी बना सकता है। पैकेज "
+"&quot;GO&quot; एक ऐसा ही पैकेज है, और डिफ़ॉल्ट रूप से &quot;ब्लैकलिस्टेड&quot; है। यदि "
+"आप देखते हैं कि पैकेज लोड करने में बहुत अधिक समय लगता है, तो आप इसे इस सूची में जोड़ने पर "
+"विचार कर सकते हैं।"

@@ -1,4 +1,4 @@
-# Sanskrit translations for rkward package.
+# Hindi translations for rkward package.
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 # Kali <EMAIL@ADDRESS>, 2024.
@@ -8,38 +8,37 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-12-13 19:10+0530\n"
+"PO-Revision-Date: 2024-12-15 17:37+0530\n"
 "Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
-"Language: sa\n"
+"Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
+"Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n>2);\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "भवतः नामानि"
+msgstr "तुम्हारे नाम"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "भवतः ईमेलपत्राणि"
+msgstr "आपके ईमेल"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/plots.pluginmap:10 rkward/plugins/plots.pluginmap:40
 #, kde-format
 msgid "Plots"
-msgstr "कथानकम्"
+msgstr "भूखंडों"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/plots.pluginmap:10
 #, kde-format
 msgid ""
 "Plugins for producing various plots. Part of the official RKWard distribution"
-msgstr "विभिन्नानां कथानकानाम् उत्पादनार्थं प्लगिन्स् । आधिकारिक आरकेवार्ड वितरण का भाग"
+msgstr "विभिन्न प्लॉट बनाने के लिए प्लगइन्स। आधिकारिक RKWard वितरण का हिस्सा"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Barplot)
@@ -48,13 +47,13 @@ msgstr "विभिन्नानां कथानकानाम् उत�
 #: rkward/plugins/plots/barplot.xml:36
 #, kde-format
 msgid "Barplot"
-msgstr "बारप्लॉट्"
+msgstr "बारप्लॉट"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/plots.pluginmap:25
 #, kde-format
 msgid "Box Plot"
-msgstr "बक्सा प्लॉट"
+msgstr "रेखा - चित्र"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Density Plot)
@@ -69,7 +68,7 @@ msgstr "घनत्व प्लॉट"
 #: rkward/plugins/plots.pluginmap:27
 #, kde-format
 msgid "Dotchart"
-msgstr "डोटचार्ट्"
+msgstr "डॉटचार्ट"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/plots.pluginmap:28
@@ -84,7 +83,7 @@ msgstr "ईसीडीएफ प्लॉट"
 #: rkward/plugins/plots/plot.xml:15
 #, kde-format
 msgid "Generic Plot"
-msgstr "सामान्य कथानक"
+msgstr "सामान्य प्लॉट"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Histogram)
@@ -101,13 +100,13 @@ msgstr "हिस्टोग्राम"
 #: rkward/plugins/plots.pluginmap:31
 #, kde-format
 msgid "Pareto Chart"
-msgstr "पारेटो चार्ट"
+msgstr "पैरेटो चार्ट"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/plots.pluginmap:32
 #, kde-format
 msgid "Piechart"
-msgstr "पीचार्ट्"
+msgstr "पाई चार्ट"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Scatterplot)
@@ -118,7 +117,7 @@ msgstr "पीचार्ट्"
 #: rkward/plugins/plots/scatterplot.xml:107
 #, kde-format
 msgid "Scatterplot"
-msgstr "स्कैटरप्लॉट्"
+msgstr "स्कैटर प्लॉट"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Scatterplot Matrix)
@@ -135,7 +134,7 @@ msgstr "स्कैटरप्लॉट मैट्रिक्स"
 #: rkward/plugins/plots.pluginmap:35 rkward/plugins/plots/stem.js:12
 #, kde-format
 msgid "Stem-and-Leaf Plot"
-msgstr "काण्ड-पत्र-प्लॉट्"
+msgstr "तना और पत्ते का प्लॉट"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Stripchart)
@@ -144,7 +143,7 @@ msgstr "काण्ड-पत्र-प्लॉट्"
 #: rkward/plugins/plots/stripchart_plot.xml:22
 #, kde-format
 msgid "Stripchart"
-msgstr "पट्टीचार्ट"
+msgstr "खंड चार्ट"
 
 #. i18n: ectx: (Loaded from Barplot)
 #. i18n: ectx: (Loaded from Density Plot)
@@ -175,14 +174,14 @@ msgid ""
 "barplot is a bit picky about attributes, so we need to convert to vector or "
 "matrix explicitly"
 msgstr ""
-"barplot इत्येतत् विशेषतानां विषये किञ्चित् पिकी अस्ति, अतः अस्माभिः स्पष्टतया vector "
-"अथवा matrix इत्यत्र परिवर्तनं कर्तव्यम्"
+"बारप्लॉट विशेषताओं के बारे में थोड़ा चुस्त है, इसलिए हमें स्पष्ट रूप से वेक्टर या मैट्रिक्स में "
+"परिवर्तित करने की आवश्यकता है"
 
 #. i18n: ectx: (Loaded from Barplot) <summary>
 #: rkward/plugins/plots/barplot.rkh:8
 #, kde-format
 msgid "Creates a bar plot with vertical bars."
-msgstr "ऊर्ध्वाधरपट्टिकाभिः सह बारप्लॉट् निर्माति ।"
+msgstr "ऊर्ध्वाधर पट्टियों के साथ एक बार प्लॉट बनाता है।"
 
 #. i18n: ectx: (Loaded from Barplot) <usage>
 #. i18n: ectx: (Loaded from Dot chart) <usage>
@@ -191,9 +190,7 @@ msgstr "ऊर्ध्वाधरपट्टिकाभिः सह बा�
 msgid ""
 "Choose a matrix, vector or a factor to be plotted. Further options are "
 "available on the second tab."
-msgstr ""
-"प्लॉट् कर्तव्यं आकृतिं, सदिशं वा कारकं च चिनुत । द्वितीय-ट्याब्-मध्ये अधिकाः विकल्पाः "
-"उपलभ्यन्ते ।"
+msgstr "प्लॉट करने के लिए मैट्रिक्स, वेक्टर या फ़ैक्टर चुनें। दूसरे टैब पर अन्य विकल्प उपलब्ध हैं।"
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
@@ -207,9 +204,9 @@ msgid ""
 "option. Refer to <link href=\"rkward://component/one_var_tabulation\"/> for "
 "details on the dependent options."
 msgstr ""
-"यदि प्लॉट् कर्तुं पूर्वं भवतः दत्तांशस्य सारणीबद्धता / समुच्चयस्य आवश्यकता अस्ति तर्हि एतत् "
-"विकल्पं पश्यन्तु । द्रष्टव्यम्<link href=\"rkward://component/one_var_tabulation\"/> "
-"आश्रितविकल्पानां विवरणार्थम्।"
+"यदि प्लॉटिंग से पहले आपके डेटा को सारणीबद्ध/एकीकृत करने की आवश्यकता है, तो इस विकल्प को "
+"चेक करें।<link href=\"rkward://component/one_var_tabulation\"/> आश्रित विकल्पों के "
+"विवरण के लिए कृपया देखें."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Matrix, Vector or Factor")
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Variable")
@@ -219,8 +216,8 @@ msgid ""
 "If your data is already suitable for plotting, directly, specify it here. "
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
-"यदि भवतः दत्तांशः पूर्वमेव प्लॉट्-करणाय उपयुक्तः अस्ति तर्हि प्रत्यक्षतया अत्र निर्दिशतु । "
-"अन्यथा, एतत् रिक्तं त्यक्त्वा, \"Tabulate\" विकल्पं चिनोतु, उपरि ।"
+"यदि आपका डेटा पहले से ही प्लॉटिंग के लिए उपयुक्त है, तो सीधे इसे यहाँ निर्दिष्ट करें। अन्यथा, "
+"इसे खाली छोड़ दें, और ऊपर \"सारणीबद्ध करें\" विकल्प को चेक करें।"
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Limit number of groups")
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Limit number of groups")
@@ -235,9 +232,10 @@ msgid ""
 "set a limit. See Refer to <link href=\"rkward://component/limit_vector_length"
 "\"/> for details on the dependent options."
 msgstr ""
-"यदि भवतः दत्तांशेषु बहुवर्गाः सन्ति तर्हि प्रदर्शितानां वर्गानां परिमाणं सीमितं कर्तुं सार्थकं "
-"भवेत् । एतत् परीक्ष्यताम्, यदि भवान् सीमां निर्धारयितुम् इच्छति । द्रष्टव्यम्<link href="
-"\"rkward://component/limit_vector_length\"/> आश्रितविकल्पानां विवरणाय ।"
+"अगर आपके डेटा में बहुत ज़्यादा कैटेगरी हैं, तो प्रदर्शित होने वाली कैटेगरी की मात्रा को सीमित "
+"करना समझदारी होगी। अगर आप कोई सीमा तय करना चाहते हैं, तो इसे चेक करें। देखें<link href="
+"\"rkward://component/limit_vector_length\"/> आश्रित विकल्पों के विवरण के लिए कृपया "
+"देखें."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Bar labels")
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Labeling")
@@ -254,10 +252,10 @@ msgid ""
 "string, or as an R statement (e.g. if the names are stored in a different "
 "variable in the workspace)."
 msgstr ""
-"प्लॉट् मध्ये लेबल् नियुक्तुं विधिः । \"पूर्वनिर्धारितम्\" इत्यस्य अर्थः अस्ति यत्, लेबल् स्वयमेव "
-"चयनं भवति । यदि लेबल् उपलब्धं नास्ति तर्हि सामान्यतया मूल्यानि मुद्रयिष्यति । अन्ये विकल्पाः "
-"भवन्तं लेबल्-पत्राणि शाब्दिक-स्ट्रिंग्-रूपेण, अथवा R-कथनरूपेण (उदा. यदि नामानि कार्यक्षेत्रे "
-"भिन्न-चर-मध्ये संगृहीताः सन्ति) निर्दिष्टुं शक्नुवन्ति ।"
+"प्लॉट को लेबल असाइन करने की विधि। \"डिफ़ॉल्ट\" का अर्थ है, लेबल स्वचालित रूप से चुने जाते "
+"हैं। यदि कोई लेबल उपलब्ध नहीं है, तो यह आम तौर पर मान प्रिंट करेगा। अन्य विकल्प आपको "
+"लेबल को शाब्दिक स्ट्रिंग के रूप में या R कथन के रूप में निर्दिष्ट करने की अनुमति देते हैं (उदाहरण "
+"के लिए यदि नाम कार्यक्षेत्र में किसी भिन्न चर में संग्रहीत हैं)।"
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Barplot Options")
 #: rkward/plugins/plots/barplot.rkh:28
@@ -266,8 +264,8 @@ msgid ""
 "Since these settings are reused in further plugins, they are documented on a "
 "page of their own: See <link href=\"rkward://component/barplot_embed\"/>."
 msgstr ""
-"यतः एतानि सेटिङ्ग्स् अग्रे प्लगिन्स् मध्ये पुनः उपयुज्यन्ते, ते स्वस्य पृष्ठे दस्तावेजिताः भवन्ति: "
-"पश्यन्तु<link href=\"rkward://component/barplot_embed\"/> ."
+"चूंकि इन सेटिंग्स का उपयोग आगे के प्लगइन्स में पुनः किया जाता है, इसलिए इन्हें एक अलग पृष्ठ पर "
+"प्रलेखित किया जाता है: देखें<link href=\"rkward://component/barplot_embed\"/> ."
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
@@ -282,13 +280,13 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot_matrix.xml:13
 #, kde-format
 msgid "Variables"
-msgstr "चराः"
+msgstr "चर"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/barplot.xml:42
 #, kde-format
 msgid "Matrix, Vector or Factor"
-msgstr "आकृतिः, सदिशः वा कारकः"
+msgstr "मैट्रिक्स, वेक्टर या फैक्टर"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <text>
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <text>
@@ -298,7 +296,7 @@ msgstr "आकृतिः, सदिशः वा कारकः"
 #: rkward/plugins/plots/pareto.xml:39 rkward/plugins/plots/piechart.xml:51
 #, kde-format
 msgid "- or -"
-msgstr "- वा -"
+msgstr "- या -"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <frame label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <frame label="...">
@@ -308,7 +306,7 @@ msgstr "- वा -"
 #: rkward/plugins/plots/pareto.xml:41 rkward/plugins/plots/piechart.xml:52
 #, kde-format
 msgid "Tabulate data before plotting"
-msgstr "प्लॉट् करणात् पूर्वं दत्तांशं सारणीबद्धं कुर्वन्तु"
+msgstr "प्लॉटिंग से पहले डेटा को सारणीबद्ध करें"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
@@ -318,7 +316,7 @@ msgstr "प्लॉट् करणात् पूर्वं दत्ता
 #: rkward/plugins/plots/pareto.xml:42 rkward/plugins/plots/piechart.xml:53
 #, kde-format
 msgid "Tabulation Options"
-msgstr "सारणीबद्धता विकल्प"
+msgstr "सारणीयन विकल्प"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
@@ -328,7 +326,7 @@ msgstr "सारणीबद्धता विकल्प"
 #: rkward/plugins/plots/pareto.xml:51 rkward/plugins/plots/piechart.xml:60
 #, kde-format
 msgid "Limit"
-msgstr "सीमा"
+msgstr "आप LIMIT"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Limit"> <frame label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Limit"> <frame label="...">
@@ -338,7 +336,7 @@ msgstr "सीमा"
 #: rkward/plugins/plots/pareto.xml:52 rkward/plugins/plots/piechart.xml:61
 #, kde-format
 msgid "Limit number of groups"
-msgstr "समूहानां संख्यां सीमितं कुर्वन्तु"
+msgstr "समूहों की संख्या सीमित करें"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
@@ -348,7 +346,7 @@ msgstr "समूहानां संख्यां सीमितं कु
 #: rkward/plugins/plots/pareto.xml:53 rkward/plugins/plots/piechart.xml:62
 #, kde-format
 msgid "Limit Categories"
-msgstr "सीमा श्रेणी"
+msgstr "श्रेणियाँ सीमित करें"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="...">
@@ -365,7 +363,7 @@ msgstr "बार लेबल"
 #: rkward/plugins/plots/dotchart.xml:65 rkward/plugins/plots/piechart.xml:68
 #, kde-format
 msgid "Default labels"
-msgstr "पूर्वनिर्धारितलेबल्"
+msgstr "डिफ़ॉल्ट लेबल"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="Bar labels"> <option label="...">
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
@@ -385,7 +383,7 @@ msgstr "कस्टम लेबल"
 #: rkward/plugins/plots/dotchart.xml:67 rkward/plugins/plots/piechart.xml:70
 #, kde-format
 msgid "From R expression"
-msgstr "R व्यञ्जनात्"
+msgstr "आर अभिव्यक्ति से"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <input label="...">
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <input label="...">
@@ -395,7 +393,7 @@ msgstr "R व्यञ्जनात्"
 #: rkward/plugins/plots/dotchart.xml:69 rkward/plugins/plots/piechart.xml:72
 #, kde-format
 msgid "Expression to use for labels"
-msgstr "लेबल् कृते उपयोक्तुं अभिव्यक्तिः"
+msgstr "लेबल के लिए उपयोग की जाने वाली अभिव्यक्ति"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <input label="...">
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <input label="...">
@@ -405,7 +403,7 @@ msgstr "लेबल् कृते उपयोक्तुं अभिव्
 #: rkward/plugins/plots/dotchart.xml:70 rkward/plugins/plots/piechart.xml:73
 #, kde-format
 msgid "Labels (separated by ';')"
-msgstr "लेबल्स् (';' इत्यनेन पृथक्कृताः) २."
+msgstr "लेबल (';' से अलग)"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="...">
@@ -424,7 +422,7 @@ msgstr "लेबल्स् (';' इत्यनेन पृथक्कृ�
 #: rkward/plugins/plots/stem.xml:22 rkward/plugins/plots/stripchart_plot.xml:35
 #, kde-format
 msgid "Options"
-msgstr "विकल्पाः"
+msgstr "विकल्प"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Options"> <embed label="...">
 #: rkward/plugins/plots/barplot.xml:71
@@ -437,21 +435,21 @@ msgstr "बारप्लॉट विकल्प"
 #, kde-format
 msgctxt "R code comment"
 msgid "split sample by grouping variables"
-msgstr "चरानाम् समूहीकरणेन नमूना विभक्तम्"
+msgstr "चरों को समूहीकृत करके नमूना विभाजित करें"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:37
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust width and position of boxes to achieve dodging"
-msgstr "चकमा प्राप्तुं पेटीनां विस्तारं स्थानं च समायोजयन्तु"
+msgstr "डोजिंग प्राप्त करने के लिए बक्सों की चौड़ाई और स्थिति समायोजित करें"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:45
 #, kde-format
 msgctxt "R code comment"
 msgid "convert single sample variables to list"
-msgstr "एकल नमूनाचरं सूचीं प्रति परिवर्तयन्तु"
+msgstr "एकल नमूना चर को सूची में परिवर्तित करें"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #. i18n: ectx: (Boxplot) <dialog label="...">
@@ -461,19 +459,19 @@ msgstr "एकल नमूनाचरं सूचीं प्रति प�
 #: rkward/plugins/plots/scatterplot_matrix.xml:25
 #, kde-format
 msgid "Boxplot"
-msgstr "बॉक्सप्लॉट्"
+msgstr "रेखा - चित्र"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:55
 #, kde-format
 msgid "Outcome variable"
-msgstr "परिणामचर"
+msgstr "परिणामी चर"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:55
 #, kde-format
 msgid "Grouping variable(s)"
-msgstr "समूहीकरणं चर(s) 1.1."
+msgstr "समूहीकरण चर(चर)"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="...">
@@ -487,35 +485,35 @@ msgstr "समूहीकरणं चर(s) 1.1."
 #: rkward/plugins/plots/stripchart_plot.xml:24
 #, kde-format
 msgid "Variable(s)"
-msgstr "चर(s) ९."
+msgstr "चर(चर)"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:65
 #, kde-format
 msgctxt "R code comment"
 msgid "actual boxplot function"
-msgstr "वास्तविक बॉक्सप्लॉट कार्य"
+msgstr "वास्तविक बॉक्सप्लॉट फ़ंक्शन"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:69
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate geometric mean"
-msgstr "ज्यामितीय औसत गणना"
+msgstr "ज्यामितीय माध्य की गणना करें"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:72
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate harmonic mean"
-msgstr "हार्मोनिक माध्य गणना"
+msgstr "हार्मोनिक माध्य की गणना करें"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:75
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate the interquartile mean"
-msgstr "अन्तरचतुर्थांशमध्यमस्य गणनां कुरुत"
+msgstr "अंतर-चतुर्थक माध्य की गणना करें"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:83 rkward/plugins/plots/box_plot.js:85
@@ -524,13 +522,13 @@ msgctxt "R code comment"
 msgid ""
 "calculates the mean for all data and adds a point at the corresponding "
 "position"
-msgstr "सर्वेषां दत्तांशस्य मध्यमं गणयति, तत्सम्बद्धस्थाने बिन्दुं च योजयति"
+msgstr "सभी डेटा के लिए औसत की गणना करता है और संबंधित स्थिति पर एक बिंदु जोड़ता है"
 
 #. i18n: ectx: (Loaded from Boxplot) <summary>
 #: rkward/plugins/plots/box_plot.rkh:8
 #, kde-format
 msgid "Creates a box plot of one or more variables."
-msgstr "एकस्य वा अधिकस्य चरस्य बक्स प्लॉट् निर्माति ।"
+msgstr "एक या अधिक चरों का बॉक्स प्लॉट बनाता है।"
 
 #. i18n: ectx: (Loaded from Boxplot) <usage>
 #: rkward/plugins/plots/box_plot.rkh:12
@@ -539,8 +537,8 @@ msgid ""
 "Choose numerical data to be plotted. Data can be organized in separate "
 "vectors, or in a single outcome variable and one or more grouping variables."
 msgstr ""
-"प्लॉट् कर्तुं संख्यात्मकदत्तांशं चिनोतु । दत्तांशं पृथक् सदिशेषु, अथवा एकस्मिन् परिणामचररूपेण "
-"एकस्मिन् वा अधिकेषु समूहीकरणचरेषु च व्यवस्थितं कर्तुं शक्यते ।"
+"प्लॉट किए जाने वाले संख्यात्मक डेटा को चुनें। डेटा को अलग-अलग वेक्टर में, या एकल परिणाम चर "
+"और एक या अधिक समूह चर में व्यवस्थित किया जा सकता है।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Data format")
 #: rkward/plugins/plots/box_plot.rkh:18
@@ -550,14 +548,14 @@ msgid ""
 "vectors, or a single outcome variable split by one or more grouping "
 "variables."
 msgstr ""
-"भवतः दत्तांशस्य प्रारूपं चिनोतु । इदं पृथक् संख्यात्मकसदिशः भवितुम् अर्हति, अथवा एकेन वा "
-"अधिकेन समूहीकरणचरेन विभक्तः एकः परिणामचरः भवितुम् अर्हति ।"
+"अपने डेटा का प्रारूप चुनें। यह या तो अलग-अलग संख्यात्मक वेक्टर हो सकते हैं, या एक या अधिक "
+"समूह चर द्वारा विभाजित एकल परिणाम चर हो सकते हैं।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:19
 #, kde-format
 msgid "For separate variables mode: Select one or more numerical vectors."
-msgstr "पृथक् चर मोड् कृते : एकं वा अधिकं वा संख्यात्मकं सदिशं चिनोतु ।"
+msgstr "पृथक चर मोड के लिए: एक या अधिक संख्यात्मक सदिशों का चयन करें।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Outcome variable:")
 #: rkward/plugins/plots/box_plot.rkh:20
@@ -565,7 +563,7 @@ msgstr "पृथक् चर मोड् कृते : एकं वा अ�
 msgid ""
 "For single(grouped) variable mode: Select one numerical vector as the "
 "outcome variable."
-msgstr "एकल(समूहीकृत) चरविधानस्य कृते: परिणामचररूपेण एकं संख्यात्मकं सदिशं चिनोतु ।"
+msgstr "एकल(समूहीकृत) चर मोड के लिए: परिणाम चर के रूप में एक संख्यात्मक वेक्टर का चयन करें।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Group variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:21
@@ -575,8 +573,8 @@ msgid ""
 "group the outcome variable. Group variables should have the same length as "
 "the outcome variable."
 msgstr ""
-"एकल(समूहीकृत) चरविधानस्य कृते: एकं वा अधिकं वा सदिशं चिनोतु येन परिणामचरं समूहीकृत्य "
-"स्थापयितव्यम् । समूहचरानाम् दीर्घता परिणामचरस्य समाना भवेत् ।"
+"एकल (समूहीकृत) चर मोड के लिए: एक या अधिक वेक्टर चुनें जिसके द्वारा परिणाम चर को समूहीकृत "
+"किया जाए। समूह चर की लंबाई परिणाम चर के समान होनी चाहिए।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Dodged groups")
 #: rkward/plugins/plots/box_plot.rkh:22
@@ -587,28 +585,28 @@ msgid ""
 "This allows you to select, across how many group variables, boxes should be "
 "dodged (\"0\" for no dodging, \"1\" to dodge only the first group variable)."
 msgstr ""
-"एकल(समूहयुक्त) चरविधानस्य कृते: एकस्य वा अधिकस्य वा समूहस्य अन्तः बक्सान् चकमायितुं एकः "
-"सुन्दरः विकल्पः भवितुम् अर्हति यदा परिणामः अनेकैः समूहचरैः विभक्तः भवति । एतेन भवन्तः चयनं "
-"कर्तुं शक्नुवन्ति, कियन्तः समूहचराः पारं, पेटीः चकमाः भवेयुः (\"0\" for no dodging, "
-"\"1\" to dodge only the first group variable) ।"
+"एकल (समूहीकृत) चर मोड के लिए: जब परिणाम कई समूह चर द्वारा विभाजित किया जाता है, तो "
+"एक या अधिक समूहों के भीतर बक्से को चकमा देना एक अच्छा विकल्प हो सकता है। यह आपको यह "
+"चुनने की अनुमति देता है कि कितने समूह चर में, बक्से को चकमा दिया जाना चाहिए (\"0\" बिना "
+"चकमा दिए, \"1\" केवल पहले समूह चर को चकमा देने के लिए)।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Box width")
 #: rkward/plugins/plots/box_plot.rkh:24
 #, kde-format
 msgid "Allows to change the width of the boxes, relative to the entire plot."
-msgstr "पेटीनां विस्तारं परिवर्तयितुं शक्नोति, सम्पूर्णस्य कथानकस्य सापेक्षम् ।"
+msgstr "संपूर्ण प्लॉट के सापेक्ष बक्सों की चौड़ाई बदलने की अनुमति देता है।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "orientation")
 #: rkward/plugins/plots/box_plot.rkh:26
 #, kde-format
 msgid "Orientation of the plot: horizontal or vertical."
-msgstr "कथानकस्य अभिविन्यासः - क्षैतिजः वा लम्बः वा।"
+msgstr "भूखंड की दिशा: क्षैतिज या ऊर्ध्वाधर।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Draw Notches")
 #: rkward/plugins/plots/box_plot.rkh:27
 #, kde-format
 msgid "Whether to draw notches"
-msgstr "खांचानि आकर्षितव्यानि वा"
+msgstr "निशान बनाना है या नहीं"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Draw Outliers")
 #: rkward/plugins/plots/box_plot.rkh:28
@@ -617,14 +615,14 @@ msgid ""
 "Whether to draw outliers (if any). Outliers are draw as dots, if this option "
 "is checked."
 msgstr ""
-"बहिःस्थं (यदि सन्ति) आकर्षयितुं वा। बहिर्गताः बिन्दुरूपेण आकृष्यन्ते, यदि एषः विकल्पः "
-"परीक्षितः अस्ति ।"
+"क्या आउटलायर्स (यदि कोई हो) को ड्रा करना है। यदि यह विकल्प चुना गया है, तो आउटलायर्स "
+"को डॉट्स के रूप में ड्रा किया जाता है।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Show mean")
 #: rkward/plugins/plots/box_plot.rkh:29
 #, kde-format
 msgid "Whether to draw a mark indicating the mean."
-msgstr "मध्यमसूचकं चिह्नं आकर्षयितव्यं वा।"
+msgstr "क्या माध्य को दर्शाने वाला चिह्न बनाना है।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Trim of arithmetic mean")
 #: rkward/plugins/plots/box_plot.rkh:30
@@ -634,14 +632,15 @@ msgid ""
 "defines the fraction of observations to be trimmed from each end of a "
 "variable before the arithmetic mean is computed."
 msgstr ""
-"ट्रिम केवलं गणितीयमाध्ये एव प्रवर्तते। पूर्वनिर्धारितरूपेण trim शून्यं इति सेट् भवति । एतत् "
-"गणितीयमाध्यस्य गणनापूर्वं चरस्य प्रत्येकं अन्तः च्छेदनीयानां अवलोकनानाम् अंशं परिभाषयति ।"
+"ट्रिम केवल अंकगणितीय माध्य पर लागू होता है। डिफ़ॉल्ट रूप से ट्रिम शून्य पर सेट होता है। यह "
+"अंकगणितीय माध्य की गणना करने से पहले किसी चर के प्रत्येक छोर से काटे जाने वाले प्रेक्षणों के "
+"अंश को परिभाषित करता है।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "mean symbol")
 #: rkward/plugins/plots/box_plot.rkh:31
 #, kde-format
 msgid "If the mean is to be indicated: Symbol to use as mark."
-msgstr "यदि मध्यमं सूचयितव्यं भवति : चिह्नरूपेण उपयोक्तुं चिह्नम्।"
+msgstr "यदि माध्य को इंगित करना है: चिह्न के रूप में उपयोग करने हेतु प्रतीक।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Type of mean")
 #: rkward/plugins/plots/box_plot.rkh:32
@@ -651,15 +650,15 @@ msgid ""
 "the default. Others include the geometric mean, the harmonic mean and "
 "interquartile mean (IQM)."
 msgstr ""
-"विशिष्टप्रकारस्य मध्यमस्य चयनार्थं एतस्य विकल्पस्य उपयोगं कुर्वन्तु । गणितीयं माध्यं "
-"पूर्वनिर्धारितम् अस्ति । अन्येषु ज्यामितीयमाध्यं, हार्मोनिकमाध्यं, अन्तरचतुर्थांशमाध्यं च (IQM) "
-"अन्तर्भवति ।"
+"इस विकल्प का उपयोग किसी विशिष्ट प्रकार के माध्य का चयन करने के लिए करें। अंकगणितीय "
+"माध्य डिफ़ॉल्ट है। अन्य में ज्यामितीय माध्य, हार्मोनिक माध्य और इंटरक्वार्टाइल माध्य (IQM) "
+"शामिल हैं।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "show standard deviation")
 #: rkward/plugins/plots/box_plot.rkh:33
 #, kde-format
 msgid "Whether to draw a mark indicating the standard deviation."
-msgstr "मानकविचलनसूचकं चिह्नं आकर्षयितव्यं वा।"
+msgstr "क्या मानक विचलन को दर्शाने वाला चिह्न बनाया जाना है।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "standard deviation symbol (upper)")
 #: rkward/plugins/plots/box_plot.rkh:34
@@ -667,7 +666,9 @@ msgstr "मानकविचलनसूचकं चिह्नं आकर�
 msgid ""
 "If the standard deviation is to be indicated: Symbol to use as mark for the "
 "upper sd."
-msgstr "यदि मानकविचलनं सूचयितव्यं भवति तर्हि: उपरितन sd कृते चिह्नरूपेण उपयोक्तुं प्रतीकम्।"
+msgstr ""
+"यदि मानक विचलन को इंगित करना है: ऊपरी एसडी के लिए चिह्न के रूप में उपयोग किया जाने "
+"वाला प्रतीक।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "standard deviation symbol (lower)")
 #: rkward/plugins/plots/box_plot.rkh:35
@@ -675,7 +676,9 @@ msgstr "यदि मानकविचलनं सूचयितव्यं 
 msgid ""
 "If the standard deviation is to be indicated: Symbol to use as mark for the "
 "lower sd."
-msgstr "यदि मानकविचलनं सूचयितव्यं भवति: निम्न sd कृते चिह्नरूपेण उपयोक्तुं प्रतीकम्।"
+msgstr ""
+"यदि मानक विचलन को इंगित करना है: निम्न एसडी के लिए चिह्न के रूप में उपयोग किया जाने "
+"वाला प्रतीक।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "size")
 #: rkward/plugins/plots/box_plot.rkh:36
@@ -684,8 +687,8 @@ msgid ""
 "Size of mean / sd indicators. This option is only available, if at least one "
 "of mean or sd are to be drawn."
 msgstr ""
-"औसत / sd सूचकानां आकारः । एषः विकल्पः केवलं उपलभ्यते, यदि न्यूनातिन्यूनं mean अथवा sd "
-"इत्यस्य एकं आकर्षितव्यम् अस्ति ।"
+"माध्य/एसडी संकेतकों का आकार। यह विकल्प केवल तभी उपलब्ध है, जब माध्य या एसडी में से कम से "
+"कम एक निकाला जाना हो।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/box_plot.rkh:37
@@ -694,14 +697,14 @@ msgid ""
 "Color of mean / sd indicators. This option is only available, if at least "
 "one of mean or sd are to be drawn."
 msgstr ""
-"मध्यम / sd सूचकानां वर्णः । एषः विकल्पः केवलं उपलभ्यते, यदि न्यूनातिन्यूनं mean अथवा sd "
-"इत्यस्य एकं आकर्षितव्यम् अस्ति ।"
+"माध्य/एसडी संकेतकों का रंग। यह विकल्प केवल तभी उपलब्ध होता है, जब माध्य या एसडी में से कम "
+"से कम एक को खींचा जाना हो।"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting title="..."> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/box_plot.rkh:38
 #, kde-format
 msgid "General plot Options"
-msgstr "सामान्य कथानक विकल्प"
+msgstr "सामान्य प्लॉट विकल्प"
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting title="General plot Options"> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/box_plot.rkh:38
@@ -710,20 +713,20 @@ msgid ""
 "Since these settings are reused in further plugins, they are documented on a "
 "page of their own: See <link href=\"rkward://component/plot_options\"/>."
 msgstr ""
-"यतः एतानि सेटिङ्ग्स् अग्रे प्लगिन्स् मध्ये पुनः उपयुज्यन्ते, ते स्वस्य पृष्ठे दस्तावेजिताः भवन्ति: "
-"पश्यन्तु<link href=\"rkward://component/plot_options\"/> ."
+"चूंकि इन सेटिंग्स का उपयोग आगे के प्लगइन्स में पुनः किया जाता है, इसलिए इन्हें एक अलग पृष्ठ पर "
+"प्रलेखित किया जाता है: देखें<link href=\"rkward://component/plot_options\"/> ."
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:41
 #, kde-format
 msgid "Data format"
-msgstr "दत्तांशस्वरूपम्"
+msgstr "डेटा प्रारूप"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="Data format"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:42
 #, kde-format
 msgid "Separate variables"
-msgstr "चराः पृथक् कुर्वन्तु"
+msgstr "अलग चर"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="Data format"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:43
@@ -735,25 +738,25 @@ msgstr "एकल (समूहीकृत) चर"
 #: rkward/plugins/plots/box_plot.xml:48
 #, kde-format
 msgid "Variable(s):"
-msgstr "चर(s): 1.1."
+msgstr "चर(चर):"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <varslot label="...">
 #: rkward/plugins/plots/box_plot.xml:49
 #, kde-format
 msgid "Outcome variable:"
-msgstr "परिणामचरः : १."
+msgstr "परिणामी चर:"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <varslot label="...">
 #: rkward/plugins/plots/box_plot.xml:50
 #, kde-format
 msgid "Group variable(s):"
-msgstr "समूहचर (चर) : १."
+msgstr "समूह चर:"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:51
 #, kde-format
 msgid "Dodged groups"
-msgstr "चकमाकृताः समूहाः"
+msgstr "चकमा दिए गए समूह"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
@@ -765,7 +768,7 @@ msgstr "चकमाकृताः समूहाः"
 #: rkward/plugins/plots/piechart.xml:67
 #, kde-format
 msgid "Labels"
-msgstr "लेबल्स्"
+msgstr "लेबल"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:57
@@ -777,13 +780,13 @@ msgstr "लेबलिंग"
 #: rkward/plugins/plots/box_plot.xml:65
 #, kde-format
 msgid "Box width"
-msgstr "पेटी चौड़ाई"
+msgstr "बॉक्स की चौड़ाई"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:74
 #, kde-format
 msgid "orientation"
-msgstr "आभिमुख्य"
+msgstr "अभिविन्यास"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="orientation"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:75
@@ -795,31 +798,31 @@ msgstr "क्षैतिज"
 #: rkward/plugins/plots/box_plot.xml:76
 #, kde-format
 msgid "vertical"
-msgstr "ऊर्ध्वाधर"
+msgstr "खड़ा"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/box_plot.xml:78
 #, kde-format
 msgid "Draw Notches"
-msgstr "Draw Notches"
+msgstr "नोच बनाएं"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/box_plot.xml:79
 #, kde-format
 msgid "Draw Outliers"
-msgstr "Outliers आकर्षयन्तु"
+msgstr "आउटलायर्स ड्रा करें"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/plots/box_plot.xml:81
 #, kde-format
 msgid "Size and color of marks"
-msgstr "चिह्नानां आकारः वर्णः च"
+msgstr "निशानों का आकार और रंग"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Size and color of marks"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:82
 #, kde-format
 msgid "size"
-msgstr "आकृति"
+msgstr "आकार"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Size and color of marks"> <embed label="...">
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <embed label="...">
@@ -834,31 +837,31 @@ msgstr "आकृति"
 #: rkward/plugins/plots/scatterplot.xml:60
 #, kde-format
 msgid "Color"
-msgstr "वर्ण"
+msgstr "रंग"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/plots/box_plot.xml:87
 #, kde-format
 msgid "Show mean"
-msgstr "माध्यं दर्शयतु"
+msgstr "मतलब दिखाएँ"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Show mean"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:88
 #, kde-format
 msgid "mean symbol"
-msgstr "अर्थ प्रतीक"
+msgstr "मतलब प्रतीक"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Show mean"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:90
 #, kde-format
 msgid "Type of mean"
-msgstr "मध्यमस्य प्रकारः"
+msgstr "माध्य का प्रकार"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:91
 #, kde-format
 msgid "Arithmetic mean"
-msgstr "अंकगणितीय माध्य"
+msgstr "अंकगणित औसत"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:92
@@ -870,37 +873,37 @@ msgstr "ज्यामितीय माध्य"
 #: rkward/plugins/plots/box_plot.xml:93
 #, kde-format
 msgid "Harmonic mean"
-msgstr "हार्मोनिक अर्थ"
+msgstr "अनुकूल माध्य"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:94
 #, kde-format
 msgid "Interquartile mean (IQM)"
-msgstr "अन्तरचतुर्थांश माध्य (IQM) 1.1."
+msgstr "अंतर-चतुर्थक माध्य (आईक्यूएम)"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Show mean"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:96
 #, kde-format
 msgid "Trim of arithmetic mean"
-msgstr "गणितीय माध्यस्य ट्रिम"
+msgstr "अंकगणितीय माध्य का ट्रिम"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/plots/box_plot.xml:99
 #, kde-format
 msgid "show standard deviation"
-msgstr "मानकविचलनं दर्शयतु"
+msgstr "मानक विचलन दिखाएं"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="show standard deviation"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:100
 #, kde-format
 msgid "standard deviation symbol (upper)"
-msgstr "मानक विचलन चिह्न (ऊर्ध्व) २."
+msgstr "मानक विचलन प्रतीक (ऊपरी)"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="show standard deviation"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:101
 #, kde-format
 msgid "standard deviation symbol (lower)"
-msgstr "मानकविचलनचिह्नम् (निम्नतरम्) २."
+msgstr "मानक विचलन प्रतीक (निचला)"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <embed label="...">
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Axis/Title"> <embed label="...">
@@ -927,20 +930,20 @@ msgstr "प्लॉट विकल्प"
 #: rkward/plugins/plots/density_plot.js:45
 #, kde-format
 msgid "Highest density regions"
-msgstr "उच्चतम घनत्वयुक्ताः प्रदेशाः"
+msgstr "उच्चतम घनत्व वाले क्षेत्र"
 
 #. i18n: ectx: (Loaded from Density Plot)
 #: rkward/plugins/plots/density_plot.js:50
 #, kde-format
 msgid "Length"
-msgstr "दैर्घ्यम्‌"
+msgstr "लंबाई"
 
 #. i18n: ectx: (Loaded from Density Plot) <summary>
 #: rkward/plugins/plots/density_plot.rkh:8
 #, kde-format
 msgid ""
 "Plot an estimated density curve. Highest density regions can be marked up."
-msgstr "अनुमानितघनत्ववक्रस्य प्लॉट् कुर्वन्तु। उच्चतमघनत्वयुक्ताः प्रदेशाः चिह्नितुं शक्यन्ते ।"
+msgstr "अनुमानित घनत्व वक्र बनाएँ। उच्चतम घनत्व वाले क्षेत्रों को चिह्नित किया जा सकता है।"
 
 #. i18n: ectx: (Loaded from Density Plot) <usage>
 #: rkward/plugins/plots/density_plot.rkh:12
@@ -948,13 +951,13 @@ msgstr "अनुमानितघनत्ववक्रस्य प्ल�
 msgid ""
 "Select a numeric vector to estimate density for. For further options, see "
 "below."
-msgstr "घनत्वस्य अनुमानं कर्तुं संख्यात्मकं सदिशं चिनोतु । अधिकविकल्पानां कृते अधः पश्यन्तु ।"
+msgstr "घनत्व का अनुमान लगाने के लिए एक संख्यात्मक वेक्टर चुनें। अन्य विकल्पों के लिए, नीचे देखें।"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/density_plot.rkh:18
 #, kde-format
 msgid "A numeric vector to estimate density for."
-msgstr "घनत्वस्य अनुमानार्थं संख्यात्मकः सदिशः ।"
+msgstr "घनत्व का अनुमान लगाने के लिए एक संख्यात्मक वेक्टर."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "type of plot")
 #: rkward/plugins/plots/density_plot.rkh:21
@@ -964,8 +967,8 @@ msgid ""
 "regions marked up. For the second option, only the gaussian smoothing kernel "
 "is available (see below)."
 msgstr ""
-"प्लॉटस्य प्रकारः - साधारणघनत्ववक्रः, अथवा उच्चतमघनत्वप्रदेशैः सह घनत्ववक्रः चिह्नितः । "
-"द्वितीयविकल्पस्य कृते केवलं gaussian smoothing kernel उपलभ्यते (अधः पश्यन्तु) ।"
+"प्लॉट का प्रकार: सादा घनत्व वक्र, या उच्चतम घनत्व वाले क्षेत्रों के साथ घनत्व वक्र। दूसरे "
+"विकल्प के लिए, केवल गॉसियन स्मूथिंग कर्नेल उपलब्ध है (नीचे देखें)।"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Smoothing Kernel")
 #: rkward/plugins/plots/density_plot.rkh:24
@@ -974,8 +977,8 @@ msgid ""
 "Smoothing kernel to use. See <link href=\"rkward://rhelp/density\"/> for "
 "details on the available kernels."
 msgstr ""
-"उपयोगाय कर्नेल् स्मूथिंग्। पश्यतु<link href=\"rkward://rhelp/density\"/> उपलब्धानां "
-"कर्नेल्-विवरणार्थम् ।"
+"उपयोग करने के लिए स्मूथिंग कर्नेल। देखें<link href=\"rkward://rhelp/density\"/> उपलब्ध "
+"कर्नेल के विवरण के लिए कृपया देखें."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Bandwidth")
 #: rkward/plugins/plots/density_plot.rkh:25
@@ -985,8 +988,8 @@ msgid ""
 "kernels. This is the <i>bw</i> option of <link href=\"rkward://rhelp/density"
 "\">density()</link>."
 msgstr ""
-"बैण्डविड्थस्य चयनस्य मोडः । एतत् केवलं गॉसियन-स्मूथिंग्-कर्नेल्-कृते एव प्रयोज्यम् । इति <i>bw</"
-"i> विकल्पः<link href=\"rkward://rhelp/density\"> घनत्व()</link> ."
+"बैंडविड्थ चुनने का तरीका। यह केवल गॉसियन स्मूथिंग कर्नेल के लिए लागू है। यह <i>bw</i> "
+"विकल्प है<link href=\"rkward://rhelp/density\"> घनत्व()</link> ."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Adjust Bandwidth")
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Adjust Bandwidth")
@@ -994,7 +997,7 @@ msgstr ""
 #: rkward/plugins/plots/histogram.rkh:23
 #, kde-format
 msgid "Factor to adjust the bandwidth by."
-msgstr "द्वारा बैण्डविड्थं समायोजयितुं कारकम् ।"
+msgstr "बैंडविड्थ को समायोजित करने के लिए कारक."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Remove Missing Values")
 #: rkward/plugins/plots/density_plot.rkh:27
@@ -1003,7 +1006,8 @@ msgid ""
 "Whether missing values should be removed. Otherwise missing values lead to "
 "an error during density estimation."
 msgstr ""
-"किं लुप्तमूल्यानि निष्कासितव्यानि वा। अन्यथा लुप्तमूल्यानि घनत्व-अनुमानस्य समये त्रुटिं जनयन्ति ।"
+"क्या लुप्त मानों को हटाया जाना चाहिए। अन्यथा लुप्त मान घनत्व आकलन के दौरान त्रुटि का "
+"कारण बनते हैं।"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Resolution")
 #: rkward/plugins/plots/density_plot.rkh:28
@@ -1012,7 +1016,8 @@ msgid ""
 "Resolution of the density estimation, i.e. the number of (equally spaced) "
 "points at which the density is estimated."
 msgstr ""
-"घनत्व-अनुमानस्य संकल्पः अर्थात् येषु (समान-अन्तरेषु) बिन्दुषु घनत्वस्य अनुमानं भवति तस्य संख्या ।"
+"घनत्व आकलन का संकल्प, अर्थात् (समान दूरी पर स्थित) बिंदुओं की संख्या जिस पर घनत्व का "
+"अनुमान लगाया जाता है।"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Add rug")
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Add rug to plot")
@@ -1020,7 +1025,7 @@ msgstr ""
 #: rkward/plugins/plots/ecdf_plot.rkh:23
 #, kde-format
 msgid "Should a rug be added to the plot?"
-msgstr "कथानकं गलीचां योजयितव्यं वा ?"
+msgstr "क्या प्लॉट में गलीचा जोड़ा जाना चाहिए?"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Ticksize")
 #: rkward/plugins/plots/density_plot.rkh:32
@@ -1028,25 +1033,25 @@ msgstr "कथानकं गलीचां योजयितव्यं व
 msgid ""
 "Height of the rug ticks, where 1 corresponds to the height of the entire "
 "plot."
-msgstr "गलीचायाः ऊर्ध्वता टिक् करोति, यत्र १ सम्पूर्णस्य कथानकस्य ऊर्ध्वतायाः अनुरूपं भवति ।"
+msgstr "गलीचे की ऊंचाई, जहां 1 पूरे भूखंड की ऊंचाई के अनुरूप है।"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Line width of ticks")
 #: rkward/plugins/plots/density_plot.rkh:33
 #, kde-format
 msgid "Line width of the rug."
-msgstr "गलीचायाः रेखाविस्तारः ।"
+msgstr "गलीचे की लाइन की चौड़ाई."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Side of Rug")
 #: rkward/plugins/plots/density_plot.rkh:34
 #, kde-format
 msgid "Should the rug be shown at the top or at the bottom of the plot?"
-msgstr "किं कथानकस्य उपरि गलीचा दर्शयितव्या अथवा अधः ?"
+msgstr "क्या गलीचे को प्लॉट के सबसे ऊपर या नीचे दिखाया जाना चाहिए?"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/density_plot.rkh:35
 #, kde-format
 msgid "Color to use for drawing the rug."
-msgstr "गलीचायाः आकर्षणार्थं उपयोक्तुं वर्णः।"
+msgstr "गलीचा बनाने के लिए उपयोग किया जाने वाला रंग।"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/density_plot.rkh:38
@@ -1055,8 +1060,8 @@ msgid ""
 "Further options regarding the look of the plot. See <link href=\"rkward://"
 "component/plot_options\"/> for details."
 msgstr ""
-"कथानकस्य रूपस्य विषये अधिकविकल्पाः। पश्यतु<link href=\"rkward://component/"
-"plot_options\"/> विस्तरेण कृते।"
+"प्लॉट के स्वरूप के बारे में अन्य विकल्प देखें।<link href=\"rkward://component/plot_options"
+"\"/> जानकारी के लिए।"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Variable(s)"> <varslot label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Variable(s)"> <varslot label="...">
@@ -1067,43 +1072,43 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot_matrix.xml:17
 #, kde-format
 msgid "variable(s):"
-msgstr "चर(s): 1.1."
+msgstr "चर:"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/density_plot.xml:48
 #, kde-format
 msgid "type of plot"
-msgstr "कथानकस्य प्रकारः"
+msgstr "प्लॉट का प्रकार"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <radio label="type of plot"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:49
 #, kde-format
 msgid "plot normal density"
-msgstr "सामान्य घनत्व प्लॉट"
+msgstr "सामान्य घनत्व का प्लॉट"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <radio label="type of plot"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:50
 #, kde-format
 msgid "plot highest density regions"
-msgstr "उच्चतम घनत्वयुक्तान् प्रदेशान् प्लॉट् कुर्वन्तु"
+msgstr "उच्चतम घनत्व वाले क्षेत्रों का आरेख बनाएं"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/plots/density_plot.xml:52
 #, kde-format
 msgid "density estimation options"
-msgstr "घनत्वानुमानविकल्पाः"
+msgstr "घनत्व आकलन विकल्प"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <dropdown label="...">
 #: rkward/plugins/plots/density_plot.xml:55
 #, kde-format
 msgid "Smoothing Kernel"
-msgstr "स्मूथिंग कर्नल"
+msgstr "स्मूथिंग कर्नेल"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:56
 #, kde-format
 msgid "gaussian (default)"
-msgstr "गाउसीयन (पूर्वनिर्धारित) २."
+msgstr "गाऊसी (डिफ़ॉल्ट)"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:57
@@ -1115,31 +1120,31 @@ msgstr "आयताकार"
 #: rkward/plugins/plots/density_plot.xml:58
 #, kde-format
 msgid "triangular"
-msgstr "त्रिकोणम्"
+msgstr "त्रिकोणीय"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:59
 #, kde-format
 msgid "epanechnikov"
-msgstr "एपनेच्निकोव"
+msgstr "Epanechnikov"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:60
 #, kde-format
 msgid "biweight"
-msgstr "द्विभारः"
+msgstr "द्विवजन"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:61
 #, kde-format
 msgid "cosine"
-msgstr "कोसाइन"
+msgstr "कोज्या"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:62
 #, kde-format
 msgid "optcosine"
-msgstr "ऑप्टकोसाइन्"
+msgstr "ऑप्टकोसाइन"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <dropdown label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="Bandwidth options"> <dropdown label="...">
@@ -1147,7 +1152,7 @@ msgstr "ऑप्टकोसाइन्"
 #: rkward/plugins/plots/histogram.xml:57
 #, kde-format
 msgid "Bandwidth"
-msgstr "बैण्डविड्थ"
+msgstr "बैंडविड्थ"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1155,7 +1160,7 @@ msgstr "बैण्डविड्थ"
 #: rkward/plugins/plots/histogram.xml:58
 #, kde-format
 msgid "nrd0"
-msgstr "नृ०"
+msgstr "nrd0"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1163,7 +1168,7 @@ msgstr "नृ०"
 #: rkward/plugins/plots/histogram.xml:59
 #, kde-format
 msgid "nrd"
-msgstr "नहि"
+msgstr "नहीं"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1171,7 +1176,7 @@ msgstr "नहि"
 #: rkward/plugins/plots/histogram.xml:60
 #, kde-format
 msgid "ucv"
-msgstr "ucv"
+msgstr "यूसीवी"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1179,7 +1184,7 @@ msgstr "ucv"
 #: rkward/plugins/plots/histogram.xml:61
 #, kde-format
 msgid "bcv"
-msgstr "bcv"
+msgstr "बीसीवी"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1187,7 +1192,7 @@ msgstr "bcv"
 #: rkward/plugins/plots/histogram.xml:62
 #, kde-format
 msgid "SJ-ste"
-msgstr "SJ-ste"
+msgstr "एसजे-स्टी"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1195,7 +1200,7 @@ msgstr "SJ-ste"
 #: rkward/plugins/plots/histogram.xml:63
 #, kde-format
 msgid "SJ-dpi"
-msgstr "सज-द्पि"
+msgstr "एसजे-डीपीआई"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <spinbox label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="Bandwidth options"> <spinbox label="...">
@@ -1203,7 +1208,7 @@ msgstr "सज-द्पि"
 #: rkward/plugins/plots/histogram.xml:65
 #, kde-format
 msgid "Adjust Bandwidth"
-msgstr "बैण्डविड्थ समायोजित करें"
+msgstr "बैंडविड्थ समायोजित करें"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <checkbox label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="General options"> <checkbox label="...">
@@ -1211,13 +1216,13 @@ msgstr "बैण्डविड्थ समायोजित करें"
 #: rkward/plugins/plots/histogram.xml:52
 #, kde-format
 msgid "Remove Missing Values"
-msgstr "लुप्तमूल्यानि निष्कासयन्तु"
+msgstr "लुप्त मान हटाएं"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <spinbox label="...">
 #: rkward/plugins/plots/density_plot.xml:77
 #, kde-format
 msgid "Resolution"
-msgstr "प्रस्ताव"
+msgstr "संकल्प"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="...">
@@ -1225,13 +1230,13 @@ msgstr "प्रस्ताव"
 #: rkward/plugins/plots/ecdf_plot.xml:50
 #, kde-format
 msgid "Rug"
-msgstr "कम्बल"
+msgstr "गलीचा"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <checkbox label="...">
 #: rkward/plugins/plots/density_plot.xml:85
 #, kde-format
 msgid "Add rug"
-msgstr "पुनः योजयतु"
+msgstr "पिछला जोड़ें"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <spinbox label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <spinbox label="...">
@@ -1239,7 +1244,7 @@ msgstr "पुनः योजयतु"
 #: rkward/plugins/plots/ecdf_plot.xml:58
 #, kde-format
 msgid "Ticksize"
-msgstr "टिकसाइज"
+msgstr "टिकसाइज़"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <spinbox label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <spinbox label="...">
@@ -1247,7 +1252,7 @@ msgstr "टिकसाइज"
 #: rkward/plugins/plots/ecdf_plot.xml:59
 #, kde-format
 msgid "Line width of ticks"
-msgstr "टिक् इत्यस्य रेखाविस्तारः"
+msgstr "टिक्स की लाइन चौड़ाई"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <radio label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <radio label="...">
@@ -1255,19 +1260,19 @@ msgstr "टिक् इत्यस्य रेखाविस्तारः"
 #: rkward/plugins/plots/ecdf_plot.xml:53
 #, kde-format
 msgid "Side of Rug"
-msgstr "गलीचायाः पार्श्वः"
+msgstr "गलीचे का किनारा"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <radio label="Side of Rug"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:89
 #, kde-format
 msgid "Rug on Bottom"
-msgstr "तलस्य उपरि गलीचा"
+msgstr "तल पर गलीचा"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <radio label="Side of Rug"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:90
 #, kde-format
 msgid "Rug on Top"
-msgstr "Back on Top इति"
+msgstr "शीर्ष पर वापस"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="...">
 #: rkward/plugins/plots/density_plot.xml:98
@@ -1280,7 +1285,7 @@ msgstr "अक्ष/शीर्षक"
 #, kde-format
 msgctxt "R code comment"
 msgid "dotchart() is somewhat picky about data type"
-msgstr "dotchart() इति दत्तांशप्रकारस्य विषये किञ्चित् पिकी अस्ति"
+msgstr "dotchart() डेटा प्रकार के बारे में कुछ हद तक चुनिंदा है"
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Loaded from Pareto chart)
@@ -1292,21 +1297,21 @@ msgid ""
 "Data is not numeric, but proceeding as requested.\\nDid you forget to check "
 "the tabulate option?"
 msgstr ""
-"दत्तांशः संख्यात्मकः नास्ति, परन्तु यथा अनुरोधितं तथा प्रवर्तते।\\nकिं भवान् सारणीबद्धविकल्पं "
-"परीक्षितुं विस्मृतवान्?"
+"डेटा संख्यात्मक नहीं है, लेकिन अनुरोध के अनुसार आगे बढ़ रहा है।\\nक्या आप सारणीबद्ध विकल्प "
+"की जांच करना भूल गए?"
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Dot chart) <dialog label="...">
 #: rkward/plugins/plots/dotchart.js:44 rkward/plugins/plots/dotchart.xml:39
 #, kde-format
 msgid "Dot chart"
-msgstr "बिन्दु चार्ट"
+msgstr "डॉट चार्ट"
 
 #. i18n: ectx: (Loaded from Dot chart) <summary>
 #: rkward/plugins/plots/dotchart.rkh:8
 #, kde-format
 msgid "Draw a dot chart"
-msgstr "बिन्दुचार्टं आकर्षयन्तु"
+msgstr "एक बिंदु चार्ट बनाएं"
 
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Variable")
 #: rkward/plugins/plots/dotchart.rkh:18
@@ -1316,8 +1321,9 @@ msgid ""
 "Otherwise, leave this empty, and check the <i><label id=\"tabulate\"/></i> "
 "option, below."
 msgstr ""
-"यदि भवतः दत्तांशः पूर्वमेव प्लॉट्-करणाय उपयुक्तः अस्ति तर्हि प्रत्यक्षतया अत्र निर्दिशतु । "
-"अन्यथा एतत् रिक्तं त्यक्त्वा, परीक्ष्यताम्<i><label id=\"tabulate\"/></i> विकल्पः, अधः ।"
+"यदि आपका डेटा पहले से ही प्लॉटिंग के लिए उपयुक्त है, तो सीधे इसे यहाँ निर्दिष्ट करें। अन्यथा, "
+"इसे खाली छोड़ दें, और जाँच करें<i><label id=\"tabulate\"/></i> नीचे दिए गए विकल्प पर "
+"क्लिक करें।"
 
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Plot Options")
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Plot Options")
@@ -1325,14 +1331,13 @@ msgstr ""
 #, kde-format
 msgid ""
 "Generic plot options. See <link href=\"rkward://component/plot_options\"/>."
-msgstr ""
-"सामान्य कथानक विकल्प। पश्यतु<link href=\"rkward://component/plot_options\"/> ."
+msgstr "सामान्य प्लॉट विकल्प देखें<link href=\"rkward://component/plot_options\"/> ."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function)
 #: rkward/plugins/plots/ecdf_plot.js:29
 #, kde-format
 msgid "Empirical Cumulative Distribution Function"
-msgstr "अनुभवजन्य संचयी वितरण कार्य"
+msgstr "अनुभवजन्य संचयी वितरण फ़ंक्शन"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function)
 #: rkward/plugins/plots/ecdf_plot.js:31
@@ -1350,7 +1355,7 @@ msgstr "अधिकतम"
 #: rkward/plugins/plots/ecdf_plot.rkh:8
 #, kde-format
 msgid "Plot an empirical cumulative distribution function."
-msgstr "एकं अनुभवजन्य संचयी वितरणफलं प्लॉटं कुर्वन्तु।"
+msgstr "एक अनुभवजन्य संचयी वितरण फ़ंक्शन प्लॉट करें।"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <usage>
 #: rkward/plugins/plots/ecdf_plot.rkh:11
@@ -1359,14 +1364,14 @@ msgid ""
 "Select a variable to plot an ECDF for. The theoretical normal distribution "
 "and a rug can be added to the plot."
 msgstr ""
-"ECDF इत्यस्य प्लॉट् कर्तुं चरं चिनोतु । सैद्धान्तिकं सामान्यवितरणं, गलीचा च कथानकं योजयितुं "
-"शक्यते ।"
+"ECDF प्लॉट करने के लिए एक चर चुनें। सैद्धांतिक सामान्य वितरण और एक गलीचा प्लॉट में जोड़ा "
+"जा सकता है।"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/ecdf_plot.rkh:16
 #, kde-format
 msgid "The variable to plot the ECDF"
-msgstr "ECDF प्लॉट् कर्तुं चरः"
+msgstr "ECDF प्लॉट करने के लिए चर"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Step function plot options")
 #: rkward/plugins/plots/ecdf_plot.rkh:18
@@ -1375,14 +1380,14 @@ msgid ""
 "Options to change the look of the ECDF plot itself. Refer to <link href="
 "\"rkward://component/plot_stepfun_options\"/> for details."
 msgstr ""
-"ECDF प्लॉट् इत्यस्य एव रूपं परिवर्तयितुं विकल्पाः । द्रष्टव्यम्<link href=\"rkward://"
-"component/plot_stepfun_options\"/> विस्तरेण कृते।"
+"ECDF प्लॉट का स्वरूप बदलने के विकल्प। देखें<link href=\"rkward://component/"
+"plot_stepfun_options\"/> जानकारी के लिए।"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Draw Theoretical Normal Distribution")
 #: rkward/plugins/plots/ecdf_plot.rkh:20
 #, kde-format
 msgid "Should a theoretical normal distribution curve be added to the plot?"
-msgstr "किं कथानकं सैद्धान्तिकं सामान्यवितरणवक्रं योजयितव्यम् ?"
+msgstr "क्या प्लॉट में सैद्धांतिक सामान्य वितरण वक्र जोड़ा जाना चाहिए?"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Adjust to mean and sd of data")
 #: rkward/plugins/plots/ecdf_plot.rkh:21
@@ -1392,38 +1397,39 @@ msgid ""
 "standard deviation of the plotted data? If this is not set a normal curve "
 "with mean 0 and sd 1 is drawn."
 msgstr ""
-"किं सामान्यवितरणवक्रं प्लॉट् कृतदत्तांशस्य औसतं मानकविचलनं च मेलयितुम् समायोजितव्यम्? यदि एतत् "
-"न सेट् भवति तर्हि मध्यमवक्रं 0 तथा sd 1 आकृष्यते ।"
+"क्या सामान्य वितरण वक्र को प्लॉट किए गए डेटा के माध्य और मानक विचलन से मेल खाने के लिए "
+"समायोजित किया जाना चाहिए? यदि यह सेट नहीं है तो माध्य 0 और एसडी 1 वाला सामान्य "
+"वक्र खींचा जाता है।"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/ecdf_plot.rkh:22
 #, kde-format
 msgid "Color of the theoretical normal distribution curve."
-msgstr "सैद्धान्तिकसामान्यवितरणवक्रस्य वर्णः ।"
+msgstr "सैद्धांतिक सामान्य वितरण वक्र का रंग."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Side of Rug")
 #: rkward/plugins/plots/ecdf_plot.rkh:24
 #, kde-format
 msgid "Should the rug be added above or below the plot?"
-msgstr "कथानकस्य उपरि वा अधः वा गलीचां योजयितव्यम् ?"
+msgstr "क्या गलीचा भूखंड के ऊपर या नीचे लगाया जाना चाहिए?"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Ticksize")
 #: rkward/plugins/plots/ecdf_plot.rkh:25
 #, kde-format
 msgid "Height of the rug ticks"
-msgstr "गलीचायाः ऊर्ध्वता टिक् करोति"
+msgstr "गलीचे की टिकियों की ऊंचाई"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Line width of ticks")
 #: rkward/plugins/plots/ecdf_plot.rkh:26
 #, kde-format
 msgid "Line width of the rug ticks"
-msgstr "गलीचायाः रेखाविस्तारः टिक् करोति"
+msgstr "गलीचे की लाइन की चौड़ाई"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/ecdf_plot.rkh:27
 #, kde-format
 msgid "Color of the rug"
-msgstr "गलीचायाः वर्णः"
+msgstr "गलीचे का रंग"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/ecdf_plot.rkh:29
@@ -1432,26 +1438,26 @@ msgid ""
 "Further generic plot options. Refer to <link href=\"rkward://component/"
 "plot_options\"/> for details."
 msgstr ""
-"अग्रे सामान्य कथानकविकल्पाः। द्रष्टव्यम्<link href=\"rkward://component/plot_options"
-"\"/> विस्तरेण कृते।"
+"आगे सामान्य प्लॉट विकल्प। देखें<link href=\"rkward://component/plot_options\"/> "
+"जानकारी के लिए।"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:28
 #, kde-format
 msgid "Empirical Distribution Function"
-msgstr "अनुभवजन्य वितरण कार्य"
+msgstr "अनुभवजन्य वितरण फ़ंक्शन"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:40
 #, kde-format
 msgid "Step function options"
-msgstr "स्टेप फंक्शन विकल्प"
+msgstr "चरण फ़ंक्शन विकल्प"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Step function options"> <embed label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:41
 #, kde-format
 msgid "Step function plot options"
-msgstr "स्टेप फंक्शन प्लॉट विकल्प"
+msgstr "चरण फ़ंक्शन प्लॉट विकल्प"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="...">
@@ -1459,43 +1465,43 @@ msgstr "स्टेप फंक्शन प्लॉट विकल्प"
 #: rkward/plugins/plots/scatterplot.xml:75
 #, kde-format
 msgid "Further options"
-msgstr "अग्रे विकल्पाः"
+msgstr "आगे के विकल्प"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:45
 #, kde-format
 msgid "Theoretical Normal Distribution"
-msgstr "सैद्धान्तिक सामान्य वितरण"
+msgstr "सैद्धांतिक सामान्य वितरण"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Theoretical Normal Distribution"> <checkbox label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:46
 #, kde-format
 msgid "Draw Theoretical Normal Distribution"
-msgstr "सैद्धांतिक सामान्य वितरण आकर्षित करें"
+msgstr "सैद्धांतिक सामान्य वितरण बनाएं"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Theoretical Normal Distribution"> <checkbox label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:47
 #, kde-format
 msgid "Adjust to mean and sd of data"
-msgstr "दत्तांशस्य mean तथा sd इत्येतयोः समायोजनं कुर्वन्तु"
+msgstr "डेटा के माध्य और sd को समायोजित करें"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <checkbox label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:51
 #, kde-format
 msgid "Add rug to plot"
-msgstr "प्लॉट् मध्ये गलीचा योजयन्तु"
+msgstr "प्लॉट में गलीचा जोड़ें"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> [...] <radio label="Side of Rug"> <option label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:54
 #, kde-format
 msgid "Rug on bottom"
-msgstr "तले गलीचा"
+msgstr "नीचे गलीचा"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> [...] <radio label="Side of Rug"> <option label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:55
 #, kde-format
 msgid "Rug on top"
-msgstr "पुनः उपरि"
+msgstr "शीर्ष पर वापस"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:66
@@ -1513,20 +1519,20 @@ msgstr "घनत्व वक्र"
 #: rkward/plugins/plots/histogram.rkh:8
 #, kde-format
 msgid "Plot a histogram."
-msgstr "एकं हिस्टोग्रामं प्लॉट् कुर्वन्तु।"
+msgstr "एक हिस्टोग्राम प्लॉट करें."
 
 #. i18n: ectx: (Loaded from Histogram) <usage>
 #: rkward/plugins/plots/histogram.rkh:11
 #, kde-format
 msgid ""
 "Select a variable to plot a histogram. For available options, see below."
-msgstr "हिस्टोग्रामस्य प्लॉट् कर्तुं चरं चिनोतु । उपलब्धविकल्पानां कृते अधः पश्यन्तु ।"
+msgstr "हिस्टोग्राम प्लॉट करने के लिए एक चर चुनें। उपलब्ध विकल्पों के लिए, नीचे देखें।"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/histogram.rkh:16
 #, kde-format
 msgid "The variable to plot the histogram for"
-msgstr "हिस्टोग्रामस्य प्लॉट् कर्तुं चरः"
+msgstr "हिस्टोग्राम प्लॉट करने के लिए चर"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Histogram Options")
 #: rkward/plugins/plots/histogram.rkh:18
@@ -1535,8 +1541,8 @@ msgid ""
 "Options concerning the calculation and look of the histogram. Refer to <link "
 "href=\"rkward://component/histogram_options\"/> for details."
 msgstr ""
-"हिस्टोग्रामस्य गणना, रूपं च सम्बद्धाः विकल्पाः। द्रष्टव्यम्<link href=\"rkward://"
-"component/histogram_options\"/> विस्तरेण कृते।"
+"हिस्टोग्राम की गणना और स्वरूप से संबंधित विकल्प। देखें<link href=\"rkward://component/"
+"histogram_options\"/> जानकारी के लिए।"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Plot Density curve")
 #: rkward/plugins/plots/histogram.rkh:20
@@ -1545,14 +1551,14 @@ msgid ""
 "Should a density curve be plotted over the histogram? This option is only "
 "available, if the histogram is density scaled."
 msgstr ""
-"किं हिस्टोग्रामस्य उपरि घनत्ववक्रं प्लॉट् कर्तव्यम् ? एषः विकल्पः केवलं उपलभ्यते, यदि "
-"हिस्टोग्रामः घनत्वमापितः अस्ति ।"
+"क्या हिस्टोग्राम पर घनत्व वक्र प्लॉट किया जाना चाहिए? यह विकल्प केवल तभी उपलब्ध है, जब "
+"हिस्टोग्राम घनत्व स्केल किया गया हो।"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/histogram.rkh:21
 #, kde-format
 msgid "Which color should the density line be drawn in?"
-msgstr "घनत्वरेखा कस्मिन् वर्णे आकर्षणीया ?"
+msgstr "घनत्व रेखा किस रंग से खींची जानी चाहिए?"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Bandwidth")
 #: rkward/plugins/plots/histogram.rkh:22
@@ -1561,27 +1567,27 @@ msgid ""
 "The smoothing bandwidth used to calculate the density estimate. See <link "
 "href=\"rkward://rhelp/density\"/> for details."
 msgstr ""
-"घनत्व-अनुमानस्य गणनाय प्रयुक्तः स्मूथिंग्-बैण्डविड्थः । पश्यतु<link href=\"rkward://rhelp/"
-"density\"/> विस्तरेण कृते।"
+"घनत्व अनुमान की गणना करने के लिए उपयोग की जाने वाली स्मूथिंग बैंडविड्थ। देखें<link href="
+"\"rkward://rhelp/density\"/> जानकारी के लिए।"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Remove Missing Values")
 #: rkward/plugins/plots/histogram.rkh:24
 #, kde-format
 msgid ""
 "Remove missing values? If not checked, missing values will cause an error."
-msgstr "लुप्तमूल्यानि निष्कासयन्तु? यदि न परीक्षितं तर्हि लुप्तमूल्यानि त्रुटिं जनयिष्यन्ति ।"
+msgstr "यदि चेक नहीं किया गया है, तो अनुपलब्ध मान त्रुटि उत्पन्न करेंगे।"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "resolution")
 #: rkward/plugins/plots/histogram.rkh:25
 #, kde-format
 msgid "Number of equally spaced points to estimate the density at."
-msgstr "घनत्वस्य अनुमानं कर्तुं समानरूपेण अन्तरालस्य बिन्दुसङ्ख्या ।"
+msgstr "घनत्व का अनुमान लगाने के लिए समान दूरी वाले बिंदुओं की संख्या।"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Variable(s)"> <embed label="...">
 #: rkward/plugins/plots/histogram.xml:41
 #, kde-format
 msgid "Generic Plot Options"
-msgstr "जेनेरिक प्लॉट विकल्प"
+msgstr "सामान्य प्लॉट विकल्प"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Histogram Options"> <embed label="...">
@@ -1600,38 +1606,38 @@ msgstr "घनत्व"
 #: rkward/plugins/plots/histogram.xml:49
 #, kde-format
 msgid "Plot Density curve"
-msgstr "प्लॉट घनत्व वक्र"
+msgstr "घनत्व वक्र प्लॉट करें"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="...">
 #: rkward/plugins/plots/histogram.xml:51
 #, kde-format
 msgid "General options"
-msgstr "सामान्यविकल्पाः"
+msgstr "आम विकल्प"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="General options"> <spinbox label="...">
 #: rkward/plugins/plots/histogram.xml:54
 #, kde-format
 msgid "resolution"
-msgstr "प्रस्ताव"
+msgstr "संकल्प"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="...">
 #: rkward/plugins/plots/histogram.xml:56
 #, kde-format
 msgid "Bandwidth options"
-msgstr "बैण्डविड्थ विकल्प"
+msgstr "बैंडविड्थ विकल्प"
 
 #. i18n: ectx: (Loaded from Pareto chart)
 #. i18n: ectx: (Pareto chart) <dialog label="...">
 #: rkward/plugins/plots/pareto.js:40 rkward/plugins/plots/pareto.xml:31
 #, kde-format
 msgid "Pareto chart"
-msgstr "पारेटो चार्ट"
+msgstr "पैरेटो चार्ट"
 
 #. i18n: ectx: (Loaded from Pareto chart) <summary>
 #: rkward/plugins/plots/pareto.rkh:8
 #, kde-format
 msgid "Creates a pareto chart, and (optionally) prints the values."
-msgstr "एकं pareto चार्ट् रचयति, तथा च (वैकल्पिकरूपेण) मूल्यानि मुद्रयति ।"
+msgstr "एक पेरेटो चार्ट बनाता है, और (वैकल्पिक रूप से) मानों को प्रिंट करता है।"
 
 #. i18n: ectx: (Loaded from Pareto chart) <usage>
 #: rkward/plugins/plots/pareto.rkh:12
@@ -1641,8 +1647,8 @@ msgid ""
 "frequency, percentage and cumulative percentage will be printed under the "
 "plot."
 msgstr ""
-"प्लॉट् कर्तव्यं सदिशं वा कारकं वा चिनुत । आवृत्तिः, सञ्चित आवृत्तिः, प्रतिशतं, सञ्चितप्रतिशतं "
-"च प्लॉटस्य अधः मुद्रितं भविष्यति ।"
+"प्लॉट करने के लिए एक वेक्टर या फ़ैक्टर चुनें। प्लॉट के नीचे आवृत्ति, संचयी आवृत्ति, प्रतिशत और "
+"संचयी प्रतिशत मुद्रित किए जाएँगे।"
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Raw vector to plot")
 #: rkward/plugins/plots/pareto.rkh:19
@@ -1652,9 +1658,9 @@ msgid ""
 "data suitable for direct display in a pareto chart, specify it here. "
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
-"यदि भवतः दत्तांशे पूर्वमेव दोषगणना अथवा दोषव्ययः, अथवा अन्ये दत्तांशाः सन्ति ये pareto "
-"चार्ट् मध्ये प्रत्यक्षप्रदर्शनाय उपयुक्ताः सन्ति, तर्हि अत्र निर्दिशन्तु । अन्यथा, एतत् रिक्तं "
-"त्यक्त्वा, \"Tabulate\" विकल्पं चिनोतु, उपरि ।"
+"यदि आपके डेटा में पहले से ही दोष गणना या दोष लागत, या पेरेटो चार्ट में सीधे प्रदर्शन के लिए "
+"उपयुक्त अन्य डेटा शामिल है, तो इसे यहाँ निर्दिष्ट करें। अन्यथा, इसे खाली छोड़ दें, और ऊपर "
+"\"सारणीबद्ध करें\" विकल्प को चेक करें।"
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Print descriptives")
 #: rkward/plugins/plots/pareto.rkh:20
@@ -1663,8 +1669,8 @@ msgid ""
 "Whether to print the frequency, cumulative frequency, percentage and "
 "cumulative percentage below the plot in the output window."
 msgstr ""
-"आउटपुट् विण्डो मध्ये प्लॉट् इत्यस्य अधः आवृत्तिः, सञ्चित आवृत्तिः, प्रतिशतं, सञ्चितप्रतिशतं च "
-"मुद्रयितुं वा ।"
+"आउटपुट विंडो में प्लॉट के नीचे आवृत्ति, संचयी आवृत्ति, प्रतिशत और संचयी प्रतिशत को प्रिंट "
+"करना है या नहीं।"
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/pareto.rkh:24
@@ -1673,20 +1679,20 @@ msgid ""
 "Further options for the plot. Refer to <link href=\"rkward://component/"
 "plot_options\"/> for details."
 msgstr ""
-"कथानकस्य कृते अधिकविकल्पाः। द्रष्टव्यम्<link href=\"rkward://component/plot_options"
-"\"/> विस्तरेण कृते।"
+"प्लॉट के लिए अन्य विकल्प। देखें<link href=\"rkward://component/plot_options\"/> "
+"जानकारी के लिए।"
 
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/pareto.xml:37
 #, kde-format
 msgid "Raw vector to plot"
-msgstr "कच्चा सदिशः प्लॉट् कर्तुं"
+msgstr "प्लॉट करने के लिए कच्चा वेक्टर"
 
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <checkbox label="...">
 #: rkward/plugins/plots/pareto.xml:45
 #, kde-format
 msgid "Print descriptives"
-msgstr "विवरणानि मुद्रयन्तु"
+msgstr "विवरण प्रिंट करें"
 
 #. i18n: ectx: (Loaded from Pie chart)
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="...">
@@ -1694,19 +1700,19 @@ msgstr "विवरणानि मुद्रयन्तु"
 #: rkward/plugins/plots/stripchart_plot.xml:48
 #, kde-format
 msgid "Orientation"
-msgstr "आभिमुख्य"
+msgstr "अभिविन्यास"
 
 #. i18n: ectx: (Loaded from Pie chart)
 #: rkward/plugins/plots/piechart.js:34
 #, kde-format
 msgid "Clockwise"
-msgstr "घड़ीयाः दिशि"
+msgstr "दक्षिणावर्त"
 
 #. i18n: ectx: (Loaded from Pie chart)
 #: rkward/plugins/plots/piechart.js:36
 #, kde-format
 msgid "Counter clockwise"
-msgstr "प्रतिघटिका दिशि"
+msgstr "वामावर्त"
 
 #. i18n: ectx: (Loaded from Pie chart)
 #. i18n: ectx: (Pie chart) <dialog label="...">
@@ -1719,7 +1725,7 @@ msgstr "पाई चार्ट"
 #: rkward/plugins/plots/piechart.rkh:8
 #, kde-format
 msgid "Draw a pie chart"
-msgstr "पाई चार्टं आकर्षयन्तु"
+msgstr "पाई चार्ट बनाएं"
 
 #. i18n: ectx: (Loaded from Pie chart) <usage>
 #: rkward/plugins/plots/piechart.rkh:12
@@ -1728,20 +1734,19 @@ msgid ""
 "Draws a pie chart from numerical data, or from tabulated data. Further "
 "options are available on the second tab."
 msgstr ""
-"संख्यात्मकदत्तांशतः, अथवा सारणीबद्धदत्तांशतः पाई चार्टं आकर्षयति । द्वितीय-ट्याब्-मध्ये "
-"अधिकाः विकल्पाः उपलभ्यन्ते ।"
+"संख्यात्मक डेटा या सारणीबद्ध डेटा से पाई चार्ट बनाता है। दूसरे टैब पर अन्य विकल्प उपलब्ध हैं।"
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Colors")
 #: rkward/plugins/plots/piechart.rkh:28
 #, kde-format
 msgid "Type of colors to use."
-msgstr "उपयोक्तुं वर्णानाम् प्रकारः ।"
+msgstr "उपयोग किये जाने वाले रंगों के प्रकार."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "clockwise")
 #: rkward/plugins/plots/piechart.rkh:30
 #, kde-format
 msgid "Define if slices should be drawn clockwise or counter clockwise."
-msgstr "स्लाइस् घड़ीयानदिशायां वा प्रतिघटिकादिशायां वा आकृष्टव्याः इति परिभाषयन्तु ।"
+msgstr "निर्धारित करें कि स्लाइसें दक्षिणावर्त या वामावर्त खींची जानी चाहिए।"
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Radius")
 #: rkward/plugins/plots/piechart.rkh:31
@@ -1749,7 +1754,8 @@ msgstr "स्लाइस् घड़ीयानदिशायां वा 
 msgid ""
 "Radius of the pie. For long labels it may be necessary to make the pie "
 "smaller than the default."
-msgstr "पाई इत्यस्य त्रिज्या । दीर्घलेबल् कृते पाई पूर्वनिर्धारितात् लघुतरं कर्तुं आवश्यकं भवेत् ।"
+msgstr ""
+"पाई की त्रिज्या। लंबे लेबल के लिए पाई को डिफ़ॉल्ट से छोटा बनाना आवश्यक हो सकता है।"
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "density")
 #: rkward/plugins/plots/piechart.rkh:32
@@ -1758,8 +1764,8 @@ msgid ""
 "Density of shading lines (lines per inch). The default value of -1 means no "
 "shading lines are drawn."
 msgstr ""
-"छायाकरणरेखानां घनत्वं (रेखाप्रति इञ्चम्)। -1 इत्यस्य पूर्वनिर्धारितमूल्यं छायाकरणरेखाः न "
-"आकृष्यन्ते इति अर्थः ।"
+"छायांकन रेखाओं का घनत्व (रेखाएँ प्रति इंच)। -1 का डिफ़ॉल्ट मान का अर्थ है कि कोई छायांकन "
+"रेखाएँ नहीं खींची गई हैं।"
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in density")
 #: rkward/plugins/plots/piechart.rkh:33
@@ -1768,8 +1774,8 @@ msgid ""
 "The density of shading lines can be varied per pie slice. Set this to values "
 "other than 0 to get different densities of shading lines for each slice."
 msgstr ""
-"प्रति पाईस्लाइस् छायाकरणरेखानां घनत्वं भिन्नं कर्तुं शक्यते । प्रत्येकस्य स्लाइस् कृते "
-"छायाकरणरेखायाः भिन्नानि घनत्वं प्राप्तुं 0 इत्यस्मात् परं मूल्येषु एतत् सेट् कुर्वन्तु ।"
+"शेडिंग लाइनों का घनत्व प्रत्येक पाई स्लाइस में अलग-अलग हो सकता है। प्रत्येक स्लाइस के लिए "
+"शेडिंग लाइनों का अलग-अलग घनत्व प्राप्त करने के लिए इसे 0 के अलावा अन्य मानों पर सेट करें।"
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "angle")
 #: rkward/plugins/plots/piechart.rkh:34
@@ -1779,8 +1785,9 @@ msgid ""
 "This option is only available, if shading lines are drawn, as controlled by "
 "the density options above."
 msgstr ""
-"छायारेखानां प्रवणता, डिग्रीषु कोणरूपेण (घटिकायाः विपरीतदिशा) दत्ता । एषः विकल्पः केवलं "
-"उपलभ्यते, यदि छायाकरणरेखाः आकृष्यन्ते, यथा उपरि घनत्वविकल्पैः नियन्त्रितम् ।"
+"छायांकन रेखाओं का ढलान, डिग्री में कोण के रूप में दिया गया है (वामावर्त)। यह विकल्प केवल "
+"तभी उपलब्ध है, जब छायांकन रेखाएँ खींची गई हों, जैसा कि ऊपर दिए गए घनत्व विकल्पों द्वारा "
+"नियंत्रित किया जाता है।"
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in angle")
 #: rkward/plugins/plots/piechart.rkh:35
@@ -1791,51 +1798,52 @@ msgid ""
 "option is only available, if shading lines are drawn, as controlled by the "
 "density options above."
 msgstr ""
-"प्रति पाई स्लाइस् छायाकरणरेखानां प्रवणता भिन्ना कर्तुं शक्यते । प्रत्येकस्य स्लाइस् कृते "
-"छायाकरणरेखायाः भिन्नाः प्रवणाः प्राप्तुं 0 इत्यस्मात् परं मूल्येषु एतत् सेट् कुर्वन्तु । एषः "
-"विकल्पः केवलं उपलभ्यते, यदि छायाकरणरेखाः आकृष्यन्ते, यथा उपरि घनत्वविकल्पैः नियन्त्रितम् ।"
+"शेडिंग लाइनों की ढलान को पाई स्लाइस के अनुसार बदला जा सकता है। प्रत्येक स्लाइस के लिए "
+"शेडिंग लाइनों की अलग-अलग ढलान पाने के लिए इसे 0 के अलावा अन्य मानों पर सेट करें। यह "
+"विकल्प केवल तभी उपलब्ध होता है, जब शेडिंग लाइनें ऊपर दिए गए घनत्व विकल्पों द्वारा "
+"नियंत्रित की जाती हैं।"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/piechart.xml:78
 #, kde-format
 msgid "Colors"
-msgstr "वर्णाः"
+msgstr "रंग"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/plots/piechart.xml:79
 #, kde-format
 msgid "Default (pastel)"
-msgstr "पूर्वनिर्धारित (पेस्टल) २."
+msgstr "डिफ़ॉल्ट (पेस्टल)"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/plots/piechart.xml:80
 #, kde-format
 msgid "Grayscale"
-msgstr "ग्रेस्केल"
+msgstr "स्केल"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/plots/piechart.xml:81
 #, kde-format
 msgid "Rainbow colors"
-msgstr "इन्द्रधनुषवर्णाः"
+msgstr "इंद्रधनुष के रंग"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/piechart.xml:85
 #, kde-format
 msgid "clockwise"
-msgstr "घण्टायाः दिशि"
+msgstr "दक्षिणावर्त"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:86
 #, kde-format
 msgid "Radius"
-msgstr "त्रिज्या"
+msgstr "RADIUS"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/plots/piechart.xml:87
 #, kde-format
 msgid "Shading"
-msgstr "छायाकरणम्"
+msgstr "लकीर खींचने की क्रिया"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:89
@@ -1847,19 +1855,19 @@ msgstr "घनत्व"
 #: rkward/plugins/plots/piechart.xml:90
 #, kde-format
 msgid "increment in density"
-msgstr "घनत्वस्य वृद्धिः"
+msgstr "घनत्व में वृद्धि"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:93
 #, kde-format
 msgid "angle"
-msgstr "कोण:"
+msgstr "कोण"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:94
 #, kde-format
 msgid "increment in angle"
-msgstr "कोणे वृद्धिः"
+msgstr "कोण में वृद्धि"
 
 #. i18n: ectx: (Loaded from Generic Plot) <summary>
 #: rkward/plugins/plots/plot.rkh:8
@@ -1867,15 +1875,14 @@ msgstr "कोणे वृद्धिः"
 msgid ""
 "This is an implementation of the standard (traditional S) graphics function "
 "<b>plot</b>."
-msgstr ""
-"इदं मानकस्य (पारम्परिकस्य S) ग्राफिक्स् फंक्शन् <b>प्लॉट् इत्यस्य</b> कार्यान्वयनम् अस्ति ।"
+msgstr "यह मानक (पारंपरिक एस) ग्राफ़िक्स फ़ंक्शन <b>प्लॉट</b> का कार्यान्वयन है।"
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
 #, kde-format
 msgid ""
 "Choose the X and Y variables and customize the options to draw the plot."
-msgstr "X तथा Y चरं चित्वा प्लॉट् आकर्षयितुं विकल्पान् अनुकूलितं कुर्वन्तु ।"
+msgstr "X और Y चर चुनें और प्लॉट बनाने के लिए विकल्पों को अनुकूलित करें।"
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
@@ -1888,11 +1895,11 @@ msgid ""
 "meaningful visualization of the data, but does not allow for fine grained "
 "control."
 msgstr ""
-"नोटः- <b>plot इति</b> सामान्यं कार्यम् अस्ति । भवन्तः यत् प्लॉट् इत्यस्य प्रकारं वास्तवतः "
-"प्राप्नुयुः सः इनपुट् चरानाम् प्रकारस्य उपरि निर्भरं भवति । उदाहरणार्थं, संख्यात्मकसदिशानां "
-"कृते स्कैटरप्लॉट् उत्पाद्यते (अधः पश्यन्तु), यदा तु data.frames कृते यथा scatterplot matrix "
-"प्लॉट् भवति इत्यादिषु एतत् प्रायः दत्तांशस्य सार्थकं दृश्यीकरणं प्रदातुं उपयोगी भवति, परन्तु "
-"सूक्ष्मकणिकायुक्तं नियन्त्रणं न अनुमन्यते"
+"नोट: <b>प्लॉट</b> एक सामान्य फ़ंक्शन है। आपको वास्तव में किस प्रकार का प्लॉट मिलेगा यह "
+"इनपुट चर के प्रकार पर निर्भर करता है। उदाहरण के लिए, संख्यात्मक सदिशों के लिए एक "
+"स्कैटरप्लॉट तैयार किया जाता है (नीचे देखें), जबकि डेटा.फ्रेम के लिए स्कैटरप्लॉट मैट्रिक्स प्लॉट "
+"किया जाता है, आदि। यह अक्सर डेटा का सार्थक दृश्य प्रदान करने के लिए उपयोगी होता है, "
+"लेकिन बारीक नियंत्रण की अनुमति नहीं देता है।"
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "X variable")
 #: rkward/plugins/plots/plot.rkh:18
@@ -1904,10 +1911,11 @@ msgid ""
 "indices of the plotting variable is taken as the x-coordinate. See R "
 "reference on 'plot' for more details."
 msgstr ""
-"इति <i>x</i> तर्कः । तथा च कस्यापि कथानकस्य आकर्षणम् अपेक्षितम्। वर्गप्रकारस्य पूर्णाङ्कस्य/"
-"संख्यात्मकस्य चरस्य प्लॉटिङ्गस्य सरलतमस्य सन्दर्भे यदा &quot;Y Variable&quot; न प्रदत्तं "
-"भवति तदा एतत् वस्तुतः y-निर्देशाङ्कं भवति तथा च प्लॉटिङ्गचरस्य सूचकाङ्काः x-निर्देशाङ्करूपेण "
-"गृह्यन्ते अधिकविवरणार्थं &#39;plot&#39; इत्यत्र R सन्दर्भं पश्यन्तु ।"
+"यह <i>x</i> तर्क है। और किसी भी प्लॉट को खींचने के लिए इसकी आवश्यकता होती है। वर्ग "
+"प्रकार पूर्णांक/संख्यात्मक के चरों को प्लॉट करने के सबसे सरल मामले में, जब &quot;Y चर&quot; "
+"प्रदान नहीं किया जाता है, तो यह वास्तव में y-निर्देशांक होता है और प्लॉटिंग चर के सूचकांक "
+"को x-निर्देशांक के रूप में लिया जाता है। अधिक जानकारी के लिए &#39;प्लॉट&#39; पर R संदर्भ "
+"देखें।"
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Y variable")
 #: rkward/plugins/plots/plot.rkh:19
@@ -1916,8 +1924,8 @@ msgid ""
 "This is the <i>y</i> argument. Note that this is not always needed, and does "
 "not have an effect for some types of x variables."
 msgstr ""
-"इति <i>य</i> वार्तिकम् । ध्यानं कुर्वन्तु यत् एतस्य सर्वदा आवश्यकता नास्ति, तथा च केषाञ्चन "
-"प्रकारेषु x चरानाम् कृते प्रभावः नास्ति ।"
+"यह <i>y</i> तर्क है। ध्यान दें कि इसकी हमेशा ज़रूरत नहीं होती है, और कुछ प्रकार के x चरों "
+"पर इसका कोई प्रभाव नहीं पड़ता है।"
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/plot.rkh:21
@@ -1927,46 +1935,46 @@ msgid ""
 "plot_options\"/> for details. Note that some of these settings may not have "
 "an effect, depending on the type of plot actually produced."
 msgstr ""
-"अग्रे सामान्य कथानकविकल्पाः। द्रष्टव्यम्<link href=\"rkward://component/plot_options"
-"\"/> विस्तरेण कृते। ध्यानं कुर्वन्तु यत् एतेषु केषुचित् सेटिङ्ग्स् इत्यस्य प्रभावः न भवितुम् अर्हति, "
-"यत् वास्तविकरूपेण उत्पादितस्य कथानकस्य प्रकारस्य आधारेण ।"
+"आगे सामान्य प्लॉट विकल्प। देखें<link href=\"rkward://component/plot_options\"/> "
+"विवरण के लिए देखें। ध्यान दें कि इनमें से कुछ सेटिंग्स का कोई प्रभाव नहीं हो सकता है, यह "
+"वास्तव में उत्पादित प्लॉट के प्रकार पर निर्भर करता है।"
 
 #. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/plot.xml:21
 #, kde-format
 msgid "X variable"
-msgstr "X चर"
+msgstr "एक्स चर"
 
 #. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/plot.xml:22
 #, kde-format
 msgid "Y variable"
-msgstr "तथा चरः"
+msgstr "और परिवर्तनशील"
 
 #. i18n: ectx: (Loaded from Scatterplot)
 #: rkward/plugins/plots/scatterplot.js:27
 #, kde-format
 msgid "Unequal number of X and Y variables given"
-msgstr "X तथा Y चरानाम् असमानसंख्या दत्ता"
+msgstr "X और Y चरों की असमान संख्या दी गई है"
 
 #. i18n: ectx: (Loaded from Scatterplot)
 #: rkward/plugins/plots/scatterplot.js:30
 #, kde-format
 msgctxt "R code comment"
 msgid "find range of X/Y values needed"
-msgstr "आवश्यकस्य X/Y मूल्यानां परिधिं ज्ञातव्यम्"
+msgstr "आवश्यक X/Y मानों की सीमा ज्ञात करें"
 
 #. i18n: ectx: (Loaded from Scatterplot)
 #: rkward/plugins/plots/scatterplot.js:52
 #, kde-format
 msgid "X variables"
-msgstr "X चर"
+msgstr "एक्स चर"
 
 #. i18n: ectx: (Loaded from Scatterplot)
 #: rkward/plugins/plots/scatterplot.js:53
 #, kde-format
 msgid "Y variables"
-msgstr "तथा चर"
+msgstr "और चर"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/scatterplot.xml:29
@@ -1978,25 +1986,25 @@ msgstr "'X' चर"
 #: rkward/plugins/plots/scatterplot.xml:30
 #, kde-format
 msgid "'Y' variables"
-msgstr "'AND' चराः"
+msgstr "'और' चर"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <embed label="...">
 #: rkward/plugins/plots/scatterplot.xml:37
 #, kde-format
 msgid "General plot options"
-msgstr "सामान्य कथानक विकल्प"
+msgstr "सामान्य प्लॉट विकल्प"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot.xml:40
 #, kde-format
 msgid "Points / lines"
-msgstr "बिन्दु / रेखाएँ"
+msgstr "बिंदु / रेखाएँ"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Points / lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:41
 #, kde-format
 msgid "Same type for all variables"
-msgstr "सर्वेषां चरानाम् कृते समानः प्रकारः"
+msgstr "सभी चरों के लिए समान प्रकार"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Points / lines"> <option label="...">
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Color"> <option label="...">
@@ -2008,67 +2016,67 @@ msgstr "सर्वेषां चरानाम् कृते समान
 #: rkward/plugins/plots/scatterplot.xml:94
 #, kde-format
 msgid "Different for each variable"
-msgstr "प्रत्येकं चरस्य कृते भिन्नम्"
+msgstr "प्रत्येक चर के लिए अलग-अलग"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="...">
 #: rkward/plugins/plots/scatterplot.xml:45
 #, kde-format
 msgid "Type of all points/lines"
-msgstr "सर्वेषां बिन्दुना/रेखायाः प्रकारः"
+msgstr "सभी बिंदुओं/रेखाओं का प्रकार"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:46
 #, kde-format
 msgid "Plot individual points "
-msgstr "व्यक्तिगत बिन्दून् प्लॉट करें "
+msgstr "अलग-अलग बिंदुओं को प्लॉट करें"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:47
 #, kde-format
 msgid "Plot lines "
-msgstr "प्लॉट रेखाएँ "
+msgstr "कथानक पंक्तियाँ "
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:48
 #, kde-format
 msgid "Plot points connected by lines (both)"
-msgstr "रेखाभिः (उभयम्) सम्बद्धानि बिन्दून् प्लॉट् कुर्वन्तु ।"
+msgstr "रेखाओं से जुड़े बिंदुओं को प्लॉट करें (दोनों)"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:49
 #, kde-format
 msgid "Plot points overlaid by lines "
-msgstr "रेखाभिः आच्छादितबिन्दून् प्लॉट् कुर्वन्तु "
+msgstr "रेखाओं द्वारा अधिरोपित प्लॉट बिंदु"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:50
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
-msgstr "बिन्दुभ्यः शून्य-अक्षपर्यन्तं (उच्च-घनत्वम्) लम्बरेखाः प्लॉट् कुर्वन्तु ।"
+msgstr "बिंदुओं से शून्य अक्ष तक ऊर्ध्वाधर रेखाएँ अंकित करें (उच्च घनत्व)"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:51
 #, kde-format
 msgid "Step-function plots: the left edge defines the point"
-msgstr "Step-function plots: वामधारः बिन्दुं परिभाषयति"
+msgstr "चरण-फ़ंक्शन प्लॉट: बायां किनारा बिंदु को परिभाषित करता है"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:52
 #, kde-format
 msgid "Step-function plots: the right edge defines the point"
-msgstr "Step-function plots: दक्षिणधारः बिन्दुं परिभाषयति"
+msgstr "चरण-फ़ंक्शन प्लॉट: दायाँ किनारा बिंदु को परिभाषित करता है"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:54
 #, kde-format
 msgid "Vector of type specifiers"
-msgstr "प्रकार निर्दिष्टकर्तृणां सदिशः"
+msgstr "प्रकार विनिर्देशकों का वेक्टर"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Color"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:61
 #, kde-format
 msgid "Same color for all variables"
-msgstr "सर्वेषां चरानाम् कृते समानवर्णः"
+msgstr "सभी चरों के लिए समान रंग"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <text>
 #: rkward/plugins/plots/scatterplot.xml:65
@@ -2077,8 +2085,8 @@ msgid ""
 "Enter value - for diff.col. enter a vector -<br/> eg: c(1,2) or "
 "c('red','green')"
 msgstr ""
-"मूल्यं प्रविशतु - diff.col कृते । एकं सदिशं प्रविशतु - .<br/> यथा: ग(१,२) अथवा ग(&#39;"
-"लाल&#39;,&#39;हरित&#39;)"
+"मान दर्ज करें - diff.col के लिए एक वेक्टर दर्ज करें -<br/> उदाहरण: c(1,2) या c(&#39;"
+"लाल&#39;,&#39;हरा&#39;)"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:69
@@ -2090,7 +2098,7 @@ msgstr " "
 #: rkward/plugins/plots/scatterplot.xml:78
 #, kde-format
 msgid "Size"
-msgstr "आकृति"
+msgstr "आकार"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="Size"> <option label="...">
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="Symbol"> <option label="...">
@@ -2098,7 +2106,7 @@ msgstr "आकृति"
 #: rkward/plugins/plots/scatterplot.xml:93
 #, kde-format
 msgid "Same for all variables"
-msgstr "सर्वेषां चरानाम् कृते समानम्"
+msgstr "सभी चरों के लिए समान"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <text>
 #: rkward/plugins/plots/scatterplot.xml:83
@@ -2107,20 +2115,20 @@ msgid ""
 "A numerical value giving the amount by which plotting text and symbols "
 "should be scaled relative to the default."
 msgstr ""
-"पूर्वनिर्धारितस्य सापेक्षतया पाठस्य चिह्नानां च प्लॉटिङ्ग् स्केल करणीयम् इति परिमाणं ददाति "
-"संख्यात्मकं मूल्यम् ।"
+"एक संख्यात्मक मान जो प्लॉटिंग पाठ और प्रतीकों को डिफ़ॉल्ट के सापेक्ष स्केल करने की मात्रा "
+"बताता है।"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:86
 #, kde-format
 msgid "Enter value - for diff.size. enter a vector -"
-msgstr "मूल्यं प्रविशतु - diff.size कृते । एकं सदिशं प्रविशतु - ."
+msgstr "diff.size के लिए मान दर्ज करें - एक वेक्टर दर्ज करें -"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot.xml:92
 #, kde-format
 msgid "Symbol"
-msgstr "चिह्न"
+msgstr "प्रतीक"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <text>
 #: rkward/plugins/plots/scatterplot.xml:97
@@ -2129,14 +2137,14 @@ msgid ""
 "Either an integer specifying a symbol or a single character to be used as "
 "the default in plotting points."
 msgstr ""
-"चिह्नं निर्दिशति पूर्णाङ्कः अथवा बिन्दून् प्लॉटिङ्ग् इत्यत्र पूर्वनिर्धारितरूपेण उपयोक्तव्यः एकः "
-"वर्णः वा ।"
+"या तो एक पूर्णांक जो किसी प्रतीक को निर्दिष्ट करता है या एक एकल वर्ण जिसे बिंदुओं को "
+"प्लॉट करने में डिफ़ॉल्ट के रूप में उपयोग किया जाता है।"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:100
 #, kde-format
 msgid "Enter value - for diff.symbol. enter a vector -"
-msgstr "मूल्यं प्रविशतु - diff.symbol कृते । एकं सदिशं प्रविशतु - ."
+msgstr "diff.symbol के लिए मान दर्ज करें - एक वेक्टर दर्ज करें -"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <summary>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:8
@@ -2145,7 +2153,8 @@ msgid ""
 "Scatterplot matrix plot produces scatterplot matrices with univariate "
 "displays down the diagonal."
 msgstr ""
-"स्कैटरप्लॉट् मैट्रिक्स प्लॉट् विकर्णस्य अधः एकचरप्रदर्शनैः सह स्कैटरप्लॉट् मैट्रिक्स उत्पादयति ।"
+"स्कैटरप्लॉट मैट्रिक्स प्लॉट विकर्ण के नीचे एकतरफा डिस्प्ले के साथ स्कैटरप्लॉट मैट्रिक्स का "
+"उत्पादन करता है।"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <usage>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:12
@@ -2154,8 +2163,8 @@ msgid ""
 "Choose one or more objects to be plotted. Choose the diagonal plot and how "
 "the scatterplots should be plotted from the options tab."
 msgstr ""
-"एकं वा अधिकं वा वस्तु प्लॉट् कर्तुं चिनुत । विकल्प ट्याब् तः तिर्यक् प्लॉट् तथा च "
-"scatterplots कथं प्लॉट् कर्तव्यम् इति चिनोतु ।"
+"प्लॉट किए जाने वाले एक या अधिक ऑब्जेक्ट चुनें। विकल्प टैब से विकर्ण प्लॉट और स्कैटरप्लॉट को "
+"कैसे प्लॉट किया जाना चाहिए, चुनें।"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:18
@@ -2163,57 +2172,55 @@ msgstr ""
 msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
-msgstr ""
-"दत्तांशमात्रिकां वा संख्यात्मकं दत्तांशचक्रं वा दत्तांशमात्रिकातः एकादशाधिकचरं वा चिनोतु"
+msgstr "डेटा मैट्रिक्स से डेटा मैट्रिक्स या संख्यात्मक डेटा फ़्रेम या एक से अधिक चर चुनें"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
 #, kde-format
 msgid "Select which plot should be plotted in the diagonal among"
-msgstr "मध्ये तिर्यक् मध्ये कः प्लॉट् प्लॉट् कर्तव्यः इति चिनोतु"
+msgstr "चयन करें कि विकर्ण में कौन सा प्लॉट प्लॉट किया जाना चाहिए"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
 #, kde-format
 msgid "Density plot. See <link href=\"rkward://rhelp/density\"/>"
-msgstr "घनत्व कथानक। पश्यतु<link href=\"rkward://rhelp/density\"/>"
+msgstr "घनत्व आरेख. देखें<link href=\"rkward://rhelp/density\"/>"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
 #, kde-format
 msgid "Boxplot. See <link href=\"rkward://rhelp/boxplot\"/>"
-msgstr "बॉक्सप्लॉट् । पश्यतु<link href=\"rkward://rhelp/boxplot\"/>"
+msgstr "बॉक्सप्लॉट. देखें<link href=\"rkward://rhelp/boxplot\"/>"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
 #, kde-format
 msgid "Histogram. See <link href=\"rkward://rhelp/histogram\"/>"
-msgstr "हिस्टोग्राम। पश्यतु<link href=\"rkward://rhelp/histogram\"/>"
+msgstr "हिस्टोग्राम. देखें<link href=\"rkward://rhelp/histogram\"/>"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
 #, kde-format
 msgid "QQplot. See <link href=\"rkward://rhelp/qqplot\"/>"
-msgstr "QQplot. पश्यतु<link href=\"rkward://rhelp/qqplot\"/>"
+msgstr "QQplot. देखें<link href=\"rkward://rhelp/qqplot\"/>"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
 #, kde-format
 msgid "No plot. Do not plot anything in the diagonal"
-msgstr "न कथानक। तिर्यक् मध्ये किमपि प्लॉट् न कुर्वन्तु"
+msgstr "कोई प्लॉट नहीं। विकर्ण में कुछ भी प्लॉट न करें"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot points")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:27
 #, kde-format
 msgid "Select it if you want points to be plotted in scatterplots."
-msgstr "यदि भवान् इच्छति यत् बिन्दवः scatterplots इत्यत्र प्लॉट् भवन्तु तर्हि तत् चिनोतु ।"
+msgstr "यदि आप बिन्दुओं को स्कैटरप्लॉट में प्लॉट करना चाहते हैं तो इसे चुनें।"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot smooth")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:28
 #, kde-format
 msgid "Select it if you want a lowess smooth to be plotted in scatterplots."
-msgstr ""
-"यदि भवान् इच्छति यत् scatterplots मध्ये lowess smooth प्लॉट् भवतु तर्हि तत् चिनोतु ।"
+msgstr "यदि आप स्कैटरप्लॉट में लोवेस स्मूथ को प्लॉट करना चाहते हैं तो इसे चुनें।"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot data concentration ellipses")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:29
@@ -2222,56 +2229,56 @@ msgid ""
 "Select it if you want data-concentration ellipses to be plotted in "
 "scatterplots. The ellipses are plotted at levels 0.5 and 0.9."
 msgstr ""
-"यदि भवान् इच्छति यत् दत्तांश-सान्द्रता-अण्डाकाराः स्कैटरप्लॉट्-मध्ये प्लॉट्-कृताः भवेयुः तर्हि "
-"तत् चिनोतु । दीर्घवृत्ताः ०.५, ०.९ च स्तरयोः प्लॉट् भवन्ति ।"
+"यदि आप डेटा-सांद्रण दीर्घवृत्त को स्कैटरप्लॉट में प्लॉट करना चाहते हैं तो इसे चुनें। दीर्घवृत्त "
+"0.5 और 0.9 स्तरों पर प्लॉट किए जाते हैं।"
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:23
 #, kde-format
 msgid "Diagonal panels"
-msgstr "तिर्यक् फलकम्"
+msgstr "विकर्ण पैनल"
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:24
 #, kde-format
 msgid "Density plot"
-msgstr "घनत्व कथानक"
+msgstr "घनत्व प्लॉट"
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:27
 #, kde-format
 msgid "QQplot"
-msgstr "QQplot"
+msgstr "क्यूक्यूप्लॉट"
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:28
 #, kde-format
 msgid "No plot"
-msgstr "न कथानक"
+msgstr "कोई प्लॉट नहीं"
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:30
 #, kde-format
 msgid "Plot points"
-msgstr "प्लॉट बिन्दु"
+msgstr "कथानक बिंदु"
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:31
 #, kde-format
 msgid "Plot smooth"
-msgstr "प्लॉट स्मूद"
+msgstr "प्लॉट सुचारू"
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:32
 #, kde-format
 msgid "Plot data concentration ellipses"
-msgstr "आँकड़ा सान्द्रता दीर्घवृत्ताकार प्लॉट करें"
+msgstr "डेटा सांद्रता दीर्घवृत्त प्लॉट करें"
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <summary>
 #: rkward/plugins/plots/stem.rkh:8
 #, kde-format
 msgid "This produces a stem-and-leaf plot."
-msgstr "अनेन काण्ड-पत्र-प्लॉट् उत्पद्यते ।"
+msgstr "इससे तना-और-पत्ती वाला प्लॉट तैयार होता है।"
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <usage>
 #: rkward/plugins/plots/stem.rkh:12
@@ -2282,15 +2289,15 @@ msgid ""
 "<link href=\"http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html"
 "\">Rcmdr package</link>."
 msgstr ""
-"काण्ड-पत्र-प्लॉट् उत्पादयितुं दत्तांशं चिनोतु । पश्यतु<link href=\"rkward://rhelp/stem\"/"
-"> . अधिकं परिष्कृतं काण्ड-पत्र-प्लॉट् कृते द्रष्टव्यम्<link href=\"http://cran.r-project."
-"org/src/contrib/Descriptions/Rcmdr.html\"> Rcmdr संकुल</link> ."
+"स्टेम-एंड-लीफ प्लॉट बनाने के लिए डेटा चुनें। देखें<link href=\"rkward://rhelp/stem\"/> "
+"अधिक परिष्कृत स्टेम-एंड-लीफ प्लॉट के लिए देखें<link href=\"http://cran.r-project.org/"
+"src/contrib/Descriptions/Rcmdr.html\"> Rcmdr पैकेज</link> ."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "variable:")
 #: rkward/plugins/plots/stem.rkh:18
 #, kde-format
 msgid "Select the data to be computed. The vectors need to be numeric."
-msgstr "गणना कर्तव्यं दत्तांशं चिनोतु । सदिशाः संख्यात्मकाः भवितुम् आवश्यकाः सन्ति ।"
+msgstr "गणना किए जाने वाले डेटा का चयन करें। वेक्टर संख्यात्मक होने चाहिए।"
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot length (scale)")
 #: rkward/plugins/plots/stem.rkh:20
@@ -2299,50 +2306,50 @@ msgid ""
 "This controls the length of the plot. A scale of 2 will make the plot "
 "roughly twice as long as the default."
 msgstr ""
-"एतेन कथानकस्य दीर्घता नियन्त्रिता भवति । 2 इत्यस्य स्केलः प्लॉट् पूर्वनिर्धारितस्य अपेक्षया "
-"मोटेन द्विगुणं दीर्घं करिष्यति ।"
+"यह प्लॉट की लंबाई को नियंत्रित करता है। 2 का स्केल प्लॉट को डिफ़ॉल्ट से लगभग दोगुना लंबा "
+"बना देगा।"
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot width")
 #: rkward/plugins/plots/stem.rkh:21
 #, kde-format
 msgid "This controls the width of the plot."
-msgstr "एतेन कथानकस्य विस्तारः नियन्त्रितः भवति ।"
+msgstr "यह प्लॉट की चौड़ाई को नियंत्रित करता है।"
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Tolerance")
 #: rkward/plugins/plots/stem.rkh:22
 #, kde-format
 msgid "This defines the tolerance."
-msgstr "एतेन सहिष्णुता परिभाष्यते ।"
+msgstr "यह सहनशीलता को परिभाषित करता है।"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="...">
 #: rkward/plugins/plots/stem.xml:12
 #, kde-format
 msgid "Stem-and-Leaf Plots"
-msgstr "काण्ड-पत्र-प्लॉट्"
+msgstr "तना और पत्ती वाले भूखंड"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="...">
 #: rkward/plugins/plots/stem.xml:14
 #, kde-format
 msgid "Basic settings"
-msgstr "मूलभूत सेटिंग्स्"
+msgstr "मूल सेटिंग्स"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Basic settings"> <varslot label="...">
 #: rkward/plugins/plots/stem.xml:18
 #, kde-format
 msgid "variable:"
-msgstr "चरः : १."
+msgstr "चर:"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stem.xml:23
 #, kde-format
 msgid "Plot length (scale)"
-msgstr "प्लॉट लम्बाई (स्केल) 1.1."
+msgstr "प्लॉट की लंबाई (स्केल)"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stem.xml:24
 #, kde-format
 msgid "Plot width"
-msgstr "प्लॉट चौड़ाई"
+msgstr "प्लॉट की चौड़ाई"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stem.xml:25
@@ -2362,19 +2369,19 @@ msgstr "समूह"
 #: rkward/plugins/plots/stripchart_plot.xml:28
 #, kde-format
 msgid "variable"
-msgstr "चरः"
+msgstr "चर"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:38
 #, kde-format
 msgid "Treatment of identical values"
-msgstr "समानमूल्यानां उपचारः"
+msgstr "समान मूल्यों का उपचार"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:39
 #, kde-format
 msgid "Overplot"
-msgstr "अतिप्लॉट्"
+msgstr "ओवरप्लॉट"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <spinbox label="...">
@@ -2382,19 +2389,19 @@ msgstr "अतिप्लॉट्"
 #: rkward/plugins/plots/stripchart_plot.xml:43
 #, kde-format
 msgid "Jitter"
-msgstr "जिटर"
+msgstr "घबराना"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:41
 #, kde-format
 msgid "Stack"
-msgstr "स्त्राव"
+msgstr "ढेर"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:44
 #, kde-format
 msgid "Offset"
-msgstr "ऑफसेट्"
+msgstr "ओफ़्सेट"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Orientation"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:49
@@ -2406,7 +2413,7 @@ msgstr "क्षैतिज"
 #: rkward/plugins/plots/stripchart_plot.xml:50
 #, kde-format
 msgid "Vertical"
-msgstr "ऊर्ध्वाधर"
+msgstr "खड़ा"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9

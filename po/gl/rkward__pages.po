@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-12-14 10:56+0100\n"
+"PO-Revision-Date: 2024-12-16 00:53+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -134,10 +134,10 @@ msgid ""
 "libraries or other software for the compilation."
 msgstr ""
 "Teña en conta que, de maneira predeterminada, os paquetes de R distribúense "
-"como ficheiros binarios compilados en Windows e macOS, pero non en Linux. "
-"Aínda que, para este último, a instalación a partir do código fonte está "
-"completamente automatizada, pode que aínda así teña que instalar bibliotecas "
-"adicionais ou outros programas necesarios para a compilación."
+"como binarios compilados en Windows e macOS, pero non en Linux. Aínda que, "
+"para este último, a instalación a partir do código fonte está completamente "
+"automatizada, pode que aínda así teña que instalar bibliotecas adicionais ou "
+"outros programas necesarios para a compilación."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:32
@@ -1000,6 +1000,7 @@ msgstr ""
 "principal (a zona da xanela na que probabelmente estea a ler isto). Pode "
 "abrir cantas xanelas de editor de guións queira ao mesmo tempo."
 
+# skip-rule: trasno-empty2_reverse
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
 #, kde-format
@@ -2738,6 +2739,7 @@ msgstr ""
 "Algunhas opcións predeterminadas do Navegador do espazo de traballo poden "
 "configurarse desde o menú de contexto:"
 
+# skip-rule: trasno-enable_reverse
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
 #, kde-format
