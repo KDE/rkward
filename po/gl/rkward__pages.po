@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-12-16 00:53+0100\n"
+"PO-Revision-Date: 2024-12-17 22:47+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -502,6 +502,7 @@ msgstr ""
 "completarse o nome dese obxecto de R. Se existen varios obxectos que comezan "
 "polo texto escrito, amosarase unha lista con eses obxectos."
 
+# skip-rule: trasno-paste
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
 #, kde-format
@@ -2235,6 +2236,7 @@ msgstr ""
 "non funcionarán; primeiro ten que executar unha proba desde «Análise → "
 "Momento»."
 
+# skip-rule: trasno-library
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
 #, kde-format
@@ -2301,6 +2303,7 @@ msgstr "A xente pregúntame que significa «RKWard». Que lles digo?"
 msgid "What does \"RKWard\" mean?"
 msgstr "Que significa «RKWard»?"
 
+# skip-rule: trasno-provide_reverse
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
 #, kde-format
@@ -2364,6 +2367,7 @@ msgstr ""
 "rhelp/wilcox.test\">Probas de intervalo con signo e suma de intervalos de "
 "Wilcoxon</link>."
 
+# skip-rule: trasno-provide_reverse
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
 #, kde-format

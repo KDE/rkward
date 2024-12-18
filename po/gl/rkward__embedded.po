@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-12-15 10:43+0100\n"
+"PO-Revision-Date: 2024-12-17 22:13+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -3044,6 +3044,7 @@ msgstr "Equipo de RKWard"
 msgid "Internal plugin for automated testing"
 msgstr "Complemento interno para probas automáticas"
 
+# skip-rule: trasno-library
 #. i18n: ectx: (Loaded from Grid options) <summary>
 #: rkward/plugins/distributions/../x11device/grid.rkh:8
 #, kde-format
@@ -3083,8 +3084,8 @@ msgid ""
 msgstr ""
 "Este é o argumento <i>nx</i>. O predeterminado é NULL, que fai que as liñas "
 "verticais se debuxen nas marcas do eixo de X. Seleccione None para non "
-"debuxar as liñas verticais. Seleccione «Indicar a continuación» para indicar "
-"un número de liñas verticais da grade."
+"debuxar as liñas verticais. Seleccione «Indicar a continuación» para "
+"fornecer un número de liñas verticais da grade."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "X Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:16
@@ -3124,7 +3125,7 @@ msgid ""
 "width below."
 msgstr ""
 "Marque esta opción para usar unha anchura de liña personalizada. En tal "
-"caso, indique dita anchura a continuación."
+"caso, forneza a anchura a continuación."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line width")
 #: rkward/plugins/distributions/../x11device/grid.rkh:20
