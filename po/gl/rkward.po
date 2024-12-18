@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-12-16 00:57+0100\n"
+"PO-Revision-Date: 2024-12-17 22:48+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -838,7 +838,7 @@ msgstr ""
 "###Complete###\n"
 "\n"
 
-# skip-rule: normalization-ble
+# skip-rule: normalization-ble, trasno-insert3_reverse
 #: rkward/dialogs/rkerrordialog.cpp:132
 #, kde-format
 msgid ""
@@ -848,12 +848,13 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"Do you have any further information that might help us to track this problem "
-"down? In particular, if applicable, can you provide sample data and sample R "
-"code to reproduce this problem?\n"
-"###Complete###\n"
+"Ten algunha información adicional que poida axudarnos a descubrir as causas "
+"do problema? En concreto, se é o caso, pode fornecer datos e código de R de "
+"exemplo para reproducir o problema?\n"
+"### Escriba aquí a resposta. ###\n"
 "\n"
 
+# skip-rule: trasno-insert3_reverse
 #: rkward/dialogs/rkerrordialog.cpp:133
 #, kde-format
 msgid ""
@@ -6956,6 +6957,7 @@ msgstr "Imprimir a páxina"
 msgid "No Title"
 msgstr "Sen título"
 
+# skip-rule: trasno-provide_reverse
 #: rkward/windows/rkhtmlwindow.cpp:1037
 #, kde-format
 msgid ""
