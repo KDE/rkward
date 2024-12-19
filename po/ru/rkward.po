@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-12-17 17:22+0300\n"
+"PO-Revision-Date: 2024-12-18 17:20+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -263,7 +263,7 @@ msgstr "Удалить объект «%1»? Восстановить его бу
 #: rkward/settings/rksettingsmodulekateplugins.cpp:41
 #, kde-format
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: rkward/core/rkmodificationtracker.cpp:352
 #: rkward/dataeditor/rkvareditmodel.cpp:672
@@ -279,7 +279,7 @@ msgstr "Подпись"
 #: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: rkward/core/rkmodificationtracker.cpp:354
 #: rkward/misc/rkobjectlistview.cpp:213 rkward/misc/rkobjectlistview.cpp:271
@@ -313,7 +313,7 @@ msgstr "new.row"
 #: rkward/core/robject.cpp:161
 #, kde-format
 msgid "Full location:"
-msgstr ""
+msgstr "Адрес полностью:"
 
 #: rkward/core/robject.cpp:163
 #, kde-format
@@ -343,17 +343,17 @@ msgstr "Датафрейм"
 #: rkward/core/robject.cpp:172
 #, kde-format
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #: rkward/core/robject.cpp:174 rkward/misc/rkspecialactions.cpp:95
 #, kde-format
 msgid "Matrix"
-msgstr ""
+msgstr "Матрица"
 
 #: rkward/core/robject.cpp:176
 #, kde-format
 msgid "List"
-msgstr ""
+msgstr "Список"
 
 #: rkward/core/robject.cpp:178
 #, kde-format
@@ -364,17 +364,17 @@ msgstr "Переменная (%1)"
 #: rkward/core/robject.cpp:180
 #, kde-format
 msgid "Environment"
-msgstr ""
+msgstr "Окружение"
 
 #: rkward/core/robject.cpp:185
 #, kde-format
 msgid "Length: "
-msgstr ""
+msgstr "Длина: "
 
 #: rkward/core/robject.cpp:187
 #, kde-format
 msgid "Dimensions: "
-msgstr ""
+msgstr "Размеры: "
 
 #: rkward/core/robject.cpp:195
 #, kde-format
@@ -397,7 +397,7 @@ msgstr ""
 #: rkward/core/robject.cpp:275
 #, kde-format
 msgid "Package blacklisted"
-msgstr ""
+msgstr "Пакет в списке запрещённых"
 
 #: rkward/core/robjectlist.cpp:75
 #, kde-format
@@ -423,19 +423,20 @@ msgstr ""
 #: rkward/core/robjectlist.cpp:90
 #, kde-format
 msgid "Package %1 appears not to have been loaded"
-msgstr ""
+msgstr "Похоже, пакет %1 не загружен"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:48
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
 #, kde-format
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
+"Указанное имя уже используется или некорректно. Выполнено переименование: %1"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:48
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
 #, kde-format
 msgid "Invalid Name"
-msgstr ""
+msgstr "Некорректное имя"
 
 #. i18n: ectx: Menu (edit)
 #: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
@@ -450,18 +451,18 @@ msgstr "&Правка"
 #: rkward/dataeditor/rkvareditmodel.cpp:73
 #, kde-format
 msgid "Duplicate column name '%1'"
-msgstr ""
+msgstr "Дублирование названия столбца «%1»"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:259
 #: rkward/dataeditor/rkvareditmodel.cpp:539
 #, kde-format
 msgid "Type on these fields to add new columns"
-msgstr ""
+msgstr "Заполняйте эти поля для добавления новых столбцов"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:260
 #, kde-format
 msgid "Type on these fields to add new rows"
-msgstr ""
+msgstr "Заполняйте эти поля для добавления новых строк"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:282 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
@@ -476,12 +477,12 @@ msgstr "#Новая переменная#"
 #: rkward/dataeditor/rkvareditmodel.cpp:351
 #, kde-format
 msgid "Row names"
-msgstr "Имена строк"
+msgstr "Названия строк"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:356
 #, kde-format
 msgid "This column contains one or more invalid fields"
-msgstr ""
+msgstr "Этот столбец содержит одно или несколько некорректных полей"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:674
 #, kde-format
@@ -526,22 +527,22 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:107
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
-msgstr ""
+msgstr "Вырезает выделенный раздел и помещает его в буфер обмена"
 
 #: rkward/dataeditor/twintable.cpp:109
 #, kde-format
 msgid "Copies the selected section to the clipboard"
-msgstr ""
+msgstr "Копирует выделенный раздел в буфер обмена"
 
 #: rkward/dataeditor/twintable.cpp:112
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
-msgstr ""
+msgstr "Вставляет содержимое буфера обмена в текущую позицию курсора"
 
 #: rkward/dataeditor/twintable.cpp:115
 #, kde-format
 msgid "Paste inside table"
-msgstr ""
+msgstr "Вставить внутри таблицы"
 
 #: rkward/dataeditor/twintable.cpp:117
 #, kde-format
@@ -549,11 +550,13 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
 msgstr ""
+"Вставляет содержимое буфера обмена в текущую позицию курсора, но в пределах "
+"таблицы"
 
 #: rkward/dataeditor/twintable.cpp:120
 #, kde-format
 msgid "Paste inside selection"
-msgstr ""
+msgstr "Вставить внутри выделения"
 
 #: rkward/dataeditor/twintable.cpp:122
 #, kde-format
@@ -561,11 +564,13 @@ msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
 msgstr ""
+"Вставляет содержимое буфера обмена в текущую позицию курсора, но в пределах "
+"текущего выделения"
 
 #: rkward/dataeditor/twintable.cpp:139
 #, kde-format
 msgid "Show / Edit row names"
-msgstr "Показать / изменить имена строк"
+msgstr "Показать / изменить названия строк"
 
 #: rkward/dataeditor/twintable.cpp:142 rkward/dataeditor/twintable.cpp:155
 #, kde-format
@@ -671,6 +676,16 @@ msgid ""
 "b></p><p>In case this is not possible for some reason, refer to <a href="
 "\"%3\">%3</a> for alternative ways of reporting issues.</p>"
 msgstr ""
+"<p><b>Куда отправлять отчёты об ошибках или пожелания?</b></p><p>Спасибо, "
+"что помогаете сделать программу RKWard лучше. Чтобы разработчики могли "
+"эффективно поработать с вашим запросом, воспользуйтесь <a href="
+"\"%1\">системой отслеживания ошибок KDE</a>. Обратите внимание, что для "
+"этого потребуется учётная запись пользователя (чтобы разработчики смогли "
+"связаться с вами, если потребуется что-либо уточнить). <b>Если у вас нет "
+"такой учётной записи, то сначала <a href=\"%2\">создайте её</a>.</b></p><p>В "
+"том случае, если это невозможно сделать по каким-либо причинам, обратитесь к "
+"разделу <a href=\"%3\">%3</a>, чтобы узнать об альтернативных способах "
+"отправки отчётов об ошибках.</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:50
 #, kde-format
@@ -681,11 +696,16 @@ msgid ""
 "sure to fill in the missing bits - in English - where indicated, especially "
 "in the \"Comment\" field.</p>"
 msgstr ""
+"<p><b>Какую информацию следует предоставить и каким образом?</b></p>Нажатие "
+"кнопки «Сообщить об ошибке» позволяет перейти в систему отслеживания ошибок "
+"KDE. После входа в эту систему форма отчёта уже будет частично заполнена. "
+"Заполните остальные поля необходимыми данными (на английском), уделяя особое "
+"внимание полю «Комментарий».</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:57
 #, kde-format
 msgid "Report issue"
-msgstr ""
+msgstr "Сообщить об ошибке"
 
 #: rkward/dialogs/rkerrordialog.cpp:72
 #, kde-format
@@ -845,6 +865,9 @@ msgid ""
 "formats, but requires a number of additional R packages to be installed (you "
 "will be prompted for missing packages). Do you want to give that a try?"
 msgstr ""
+"Пакет «rio» предоставляет общую поддержку импорта файлов в различных "
+"форматах, но для его установки требуется ряд дополнительных пакетов R "
+"(недостающие пакеты будет предложено установить). Попробовать этот пакет?"
 
 #: rkward/dialogs/rkimportdialog.cpp:82
 #, kde-format
@@ -875,11 +898,14 @@ msgid ""
 "application on your system, importing it from clipboard (copy and paste) may "
 "be viable."
 msgstr ""
+"Если размер данных не слишком велик и их можно открыть/просмотреть в другом "
+"установленном в системе приложении, то эти данные, возможно, получится "
+"импортировать из буфера обмена (скопировать и вставить)."
 
 #: rkward/dialogs/rkimportdialog.cpp:110 rkward/dialogs/rkimportdialog.cpp:119
 #, kde-format
 msgid "Import from clipboard"
-msgstr ""
+msgstr "Импорт из буфера обмена"
 
 #: rkward/dialogs/rkimportdialog.cpp:123
 #, kde-format
@@ -970,12 +996,14 @@ msgid ""
 "Your current user permissions do not allow removing the following packages. "
 "These will be skipped."
 msgstr ""
+"С текущими правами пользователя удаление следующих пакетов невозможно. Они "
+"будут пропущены."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:186
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgid "Insufficient user permissions"
-msgstr ""
+msgstr "У пользователя недостаточно прав"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
@@ -1025,7 +1053,7 @@ msgstr "Удаление пакетов"
 #: rkward/dialogs/rkloadlibsdialog.cpp:241
 #, kde-format
 msgid "Selected library location not writable"
-msgstr ""
+msgstr "Выбранное расположение библиотеки недоступно для записи"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:242
 #, kde-format
@@ -1035,6 +1063,10 @@ msgid ""
 "instead (you can also press \"Cancel\" and use the \"Configure Repositories"
 "\"-button to set up a different directory)?</p>"
 msgstr ""
+"<p>Текущих прав пользователя недостаточно для записи в каталог, выбранный "
+"для установки (%1).</p><p>Выполнить установку в %2 (также можно нажать "
+"кнопку «Отмена» и воспользоваться кнопкой «Настроить репозитории» для "
+"указания другого каталога)?</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:245
 #, kde-format
@@ -1079,7 +1111,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Installing packages"
-msgstr ""
+msgstr "Установка пакетов"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
@@ -1087,6 +1119,8 @@ msgid ""
 "Neither kdesu nor kdesudo could be found. To install as root, please install "
 "one of these packages."
 msgstr ""
+"Не удалось найти ни kdesu, ни kdesudo. Для выполнения установки от имени "
+"root необходимо установить один из этих пакетов."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
@@ -1225,6 +1259,10 @@ msgid ""
 "maybe you need to add additional repositories via the \"Configure "
 "Repositories\" button."
 msgstr ""
+"В репозиториях не найдены следующие запрашиваемые серверным приложением "
+"пакеты: «%1». Возможно, при указании имён пакетов были допущены ошибки. Либо "
+"следует добавить дополнительные репозитории с помощью кнопки «Настроить "
+"репозитории»."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
@@ -1264,7 +1302,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
 msgid "<p>The name of the package.</p>"
-msgstr ""
+msgstr "<p>Имя пакета.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:962
 #, kde-format
@@ -1396,7 +1434,7 @@ msgstr ""
 #: rkward/dialogs/rkrecoverdialog.cpp:47 rkward/windows/robjectbrowser.cpp:125
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:48
 #, kde-format
@@ -1838,7 +1876,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:482
 #, kde-format
 msgid "No software to install"
-msgstr ""
+msgstr "Нет программного обеспечения для установки"
 
 #: rkward/dialogs/rksetupwizard.cpp:484
 #, kde-format
@@ -2041,7 +2079,7 @@ msgstr "Ralf Tautenhahn"
 #: rkward/main.cpp:194
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
-msgstr ""
+msgstr "Много комментариев, полезные предложения и отчёты об ошибках"
 
 #: rkward/main.cpp:195
 #, kde-format
@@ -2051,7 +2089,7 @@ msgstr "Jannis Vajen"
 #: rkward/main.cpp:195
 #, kde-format
 msgid "German Translation, bug reports"
-msgstr ""
+msgstr "Перевод на немецкий язык, отчёты об ошибках"
 
 #: rkward/main.cpp:196
 #, kde-format
@@ -2182,7 +2220,7 @@ msgstr "Ниже"
 #: rkward/misc/rkaccordiontable.cpp:85
 #, kde-format
 msgid "Click to add new row"
-msgstr ""
+msgstr "Нажмите для добавления новой строки"
 
 #: rkward/misc/rkaccordiontable.cpp:441
 #, kde-format
@@ -2507,7 +2545,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:240
 #, kde-format
 msgid "User canceled."
-msgstr ""
+msgstr "Операция отменена пользователем."
 
 #: rkward/misc/rkoutputdirectory.cpp:284
 #, kde-format
@@ -2682,7 +2720,7 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr "Специальная вставка..."
+msgstr "Специальная вставка…"
 
 #: rkward/misc/rkspecialactions.cpp:69
 #, kde-format
@@ -2712,52 +2750,52 @@ msgstr "data.frame"
 #: rkward/misc/rkspecialactions.cpp:108
 #, kde-format
 msgid "Field Separator"
-msgstr ""
+msgstr "Разделитель полей"
 
 #: rkward/misc/rkspecialactions.cpp:111
 #, kde-format
 msgid "Tab"
-msgstr ""
+msgstr "Табуляция"
 
 #: rkward/misc/rkspecialactions.cpp:115
 #, kde-format
 msgid "Comma"
-msgstr ""
+msgstr "Запятая"
 
 #: rkward/misc/rkspecialactions.cpp:119
 #, kde-format
 msgid "Single space"
-msgstr ""
+msgstr "Одинарный пробел"
 
 #: rkward/misc/rkspecialactions.cpp:122
 #, kde-format
 msgid "Any whitespace"
-msgstr ""
+msgstr "Любое пустое пространство"
 
 #: rkward/misc/rkspecialactions.cpp:126
 #, kde-format
 msgid "Other:"
-msgstr ""
+msgstr "Другое:"
 
 #: rkward/misc/rkspecialactions.cpp:139
 #, kde-format
 msgid "Quoting"
-msgstr ""
+msgstr "Кавычки"
 
 #: rkward/misc/rkspecialactions.cpp:142
 #, kde-format
 msgid "Do not quote values"
-msgstr ""
+msgstr "Не брать значения в кавычки"
 
 #: rkward/misc/rkspecialactions.cpp:145
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматически"
 
 #: rkward/misc/rkspecialactions.cpp:149
 #, kde-format
 msgid "Quote all values"
-msgstr ""
+msgstr "Брать в кавычки все значения"
 
 #: rkward/misc/rkspecialactions.cpp:156
 #, kde-format
@@ -2777,17 +2815,17 @@ msgstr "Первый столбец содержит подписи"
 #: rkward/misc/rkspecialactions.cpp:165
 #, kde-format
 msgid "Transformations"
-msgstr ""
+msgstr "Преобразования"
 
 #: rkward/misc/rkspecialactions.cpp:167
 #, kde-format
 msgid "Reverse horizontally"
-msgstr ""
+msgstr "Перевернуть по горизонтали"
 
 #: rkward/misc/rkspecialactions.cpp:169
 #, kde-format
 msgid "Reverse vertically"
-msgstr ""
+msgstr "Перевернуть по вертикали"
 
 #: rkward/misc/rkspecialactions.cpp:171
 #, kde-format
@@ -2805,26 +2843,29 @@ msgid ""
 "Command failed to parse. Try using <i>Edit->Paste special...</i> in the R "
 "Console window for better diagnostics."
 msgstr ""
+"Не удалось обработать команду. Чтобы получить более подробные "
+"диагностические данные, воспользуйтесь пунктом меню <i>Правка -> Специальная "
+"вставка…</i> в окне консоли R."
 
 #: rkward/misc/rkspecialactions.cpp:314
 #, kde-format
 msgid "Pasting object from clipboard data failed."
-msgstr ""
+msgstr "Не удалось вставить объект из данных в буфере обмена."
 
 #: rkward/misc/rkspecialactions.cpp:314
 #, kde-format
 msgid "Paste failed"
-msgstr ""
+msgstr "Не удалось выполнить вставку"
 
 #: rkward/misc/rkstandardactions.cpp:27
 #, kde-format
 msgid "Copy lines to output"
-msgstr ""
+msgstr "Копировать строки в вывод"
 
 #: rkward/misc/rkstandardactions.cpp:46
 #, kde-format
 msgid "Run line / selection"
-msgstr ""
+msgstr "Выполнить строку или выделенный фрагмент"
 
 #: rkward/misc/rkstandardactions.cpp:47
 #, kde-format
@@ -2832,16 +2873,18 @@ msgid ""
 "Runs the current selection (if any) or the current line (if there is no "
 "selection)"
 msgstr ""
+"Выполняет текущий выделенный фрагмент (если имеется) или текущую строку "
+"(если ничего не выделено)"
 
 #: rkward/misc/rkstandardactions.cpp:50
 #, kde-format
 msgid "Run selection"
-msgstr ""
+msgstr "Выполнить выделенный фрагмент"
 
 #: rkward/misc/rkstandardactions.cpp:65
 #, kde-format
 msgid "Run all"
-msgstr ""
+msgstr "Выполнить всё"
 
 #: rkward/misc/rkstandardactions.cpp:81
 #, kde-format
@@ -2894,36 +2937,38 @@ msgid ""
 "The preview is current unavailable (you will need to make further "
 "selections)."
 msgstr ""
+"Предварительный просмотр сейчас недоступен (необходимо выбрать что-то ещё)."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:219
 #, kde-format
 msgid "Preview is turned off."
-msgstr ""
+msgstr "Предварительный просмотр отключён."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:223
 #, kde-format
 msgid "Preview is currently being updated."
-msgstr ""
+msgstr "Предварительный просмотр сейчас обновляется."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:227
 #, kde-format
 msgid "The command to generate the preview has failed."
 msgstr ""
+"Не удалось выполнить команду для создания данных предварительного просмотра."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:231
 #, kde-format
 msgid "Preview is up to date."
-msgstr ""
+msgstr "Предварительный просмотр отражает актуальное состояние."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
 msgid "Warnings or Errors:"
-msgstr ""
+msgstr "Предупреждения или ошибки:"
 
 #: rkward/misc/xmlhelper.cpp:54
 #, kde-format
 msgid "Could not open file %1 for reading"
-msgstr ""
+msgstr "Не удалось открыть файл %1 для чтения"
 
 #: rkward/misc/xmlhelper.cpp:59
 #, kde-format
@@ -2931,6 +2976,9 @@ msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
 "Expect further errors to be reported below"
 msgstr ""
+"Ошибка обработки файла XML. Получено следующее сообщение об ошибке: «%1» в "
+"строке «%2», позиция «%3». Ниже могут появиться сообщения о последующих "
+"ошибках."
 
 #: rkward/misc/xmlhelper.cpp:176
 #, kde-format
@@ -3156,7 +3204,7 @@ msgstr ""
 #: rkward/plugin/rkcomponentproperties.cpp:944
 #, kde-format
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
-msgstr ""
+msgstr "Похоже, этот объект не принадлежит ни к одному из классов <i>%1</i>."
 
 #: rkward/plugin/rkcomponentproperties.cpp:951
 #, kde-format
@@ -3288,22 +3336,22 @@ msgstr "Выбрать"
 #: rkward/plugin/rkpluginbrowser.cpp:127
 #, kde-format
 msgid "The file or directory does not exist."
-msgstr ""
+msgstr "Файл или каталог не существует."
 
 #: rkward/plugin/rkpluginbrowser.cpp:130
 #, kde-format
 msgid "Only files (not directories) are acceptable, here."
-msgstr ""
+msgstr "Здесь допускаются только файлы (не каталоги)."
 
 #: rkward/plugin/rkpluginbrowser.cpp:133
 #, kde-format
 msgid "Only directories (not files) are acceptable, here."
-msgstr ""
+msgstr "Здесь допускаются только каталоги (не файлы)."
 
 #: rkward/plugin/rkpluginbrowser.cpp:143
 #, kde-format
 msgid "The specified file is not writable."
-msgstr ""
+msgstr "Указанный файл недоступен для записи."
 
 #: rkward/plugin/rkpluginbrowser.cpp:146
 #, kde-format
@@ -3560,6 +3608,8 @@ msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
 "token '%2'"
 msgstr ""
+"Ошибка при попытке установки связи с процессом серверного приложения. "
+"Ожидался маркер «%1», но получен маркер «%2»."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:360
 #, kde-format
@@ -3568,6 +3618,9 @@ msgid ""
 "'%1' while backend is '%2'.\n"
 "Please fix your installation."
 msgstr ""
+"Несоответствие версий при попытке установки связи с процессом серверного "
+"приложения. Версия интерфейса — «%1», версия серверного приложения — «%2».\n"
+"Устраните проблему с установленными компонентами."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:394
 #, kde-format
@@ -3584,6 +3637,7 @@ msgstr ""
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
+"Процесс серверного приложения завершил работу с кодом %1, сообщение: «%2»."
 
 #: rkward/rbackend/rkrbackend.cpp:530
 #, kde-format
@@ -3809,7 +3863,7 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
 msgid "Error while connection graphics backend"
-msgstr ""
+msgstr "Ошибка при соединении с серверным приложением для обработки графики"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -5128,6 +5182,14 @@ msgid ""
 "not make a whole lot of sense in the context of RKWard. Plugins shown in "
 "<b>bold</b> have been reported as \"useful\" by RKWard users.</p>"
 msgstr ""
+"<p>Модули Kate для загрузки в RKWard. Обратите внимание, что некоторые из "
+"загруженных модулей будут отображаться только при соблюдении определённых "
+"условий (например, когда загружается находящийся под управлением системы "
+"контроля версий файл для модуля <i>Проект</i>).</p><p>Перечисленные здесь "
+"модули не разрабатывались специально для RKWard, некоторые из них не "
+"принесут особой пользы при работе с программой. Пункты модулей, которые "
+"пользователи RKWard считают «полезными», обозначены <b>полужирным</b> "
+"шрифтом.</p>"
 
 #: rkward/settings/rksettingsmodulekateplugins.cpp:96
 #, kde-format
@@ -5137,7 +5199,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:40
 #, kde-format
 msgid "Never fetch the structure of these packages:"
-msgstr ""
+msgstr "Никогда не получать структуру этих пакетов:"
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:72
 #, kde-format
@@ -5147,7 +5209,7 @@ msgstr "Добавить исключение"
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:72
 #, kde-format
 msgid "Add the name of the package that no structure should be fetched for"
-msgstr ""
+msgstr "Добавить имя пакета, для которого не следует получать структуру"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:41
 #, kde-format
@@ -5530,6 +5592,7 @@ msgstr ""
 #, kde-format
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr ""
+"Расположения библиотек R (куда выполняется локальная установка библиотек)"
 
 #: rkward/settings/rksettingsmoduler.cpp:366
 #, kde-format
@@ -5552,6 +5615,11 @@ msgid ""
 "this is recommended, because R packages compiled for one version of R will "
 "often fail to work correctly in a different version of R."
 msgstr ""
+"Укажите или выберите расположение библиотеки, которое следует добавить.\n"
+"Обратите внимание, что адреса могут содержать заменитель «%v», который "
+"соответствует первым двум составляющим номера версии R (например, 3.5). "
+"Рекомендуется использовать его, так как пакеты R, собранные для одной версии "
+"R, часто не работают надлежащим образом в других версиях R."
 
 #: rkward/settings/rksettingsmoduler.cpp:429
 #, kde-format
@@ -7058,7 +7126,7 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:127
 #, kde-format
 msgid "New object from clipboard"
-msgstr ""
+msgstr "Новый объект из буфера обмена"
 
 #: rkward/windows/robjectbrowser.cpp:129
 #, kde-format
