@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-12-17 22:48+0100\n"
+"PO-Revision-Date: 2024-12-19 22:30+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -388,6 +388,7 @@ msgstr "Dimensións: "
 msgid "Class(es):"
 msgstr "Clases:"
 
+# skip-rule: trasno-remove_reverse
 #: rkward/core/robject.cpp:275
 #, kde-format
 msgid ""
@@ -6364,6 +6365,7 @@ msgstr "O documento «%1» modificouse. Quere pechalo aínda así?"
 msgid "File not saved"
 msgstr "Ficheiro non gardado"
 
+# skip-rule: trasno-remove_reverse
 #: rkward/windows/rkcommandeditorwindow.cpp:576
 #, kde-format
 msgid ""
@@ -6382,7 +6384,7 @@ msgstr ""
 "avaliación <i>local()</i>). <b>Porén, hai casos nos que usar a "
 "funcionalidade de vista previa pode causar efectos secundarios inesperados</"
 "b>.</p><p>Concretamente, este é o caso dos guións que conteñen asignacións "
-"explícitas a <i>globalenv()</i>, ou a scripts que modifican ficheiros no "
+"explícitas a <i>globalenv()</i>, ou a guións que modifican ficheiros no "
 "sistema de ficheiros. Ademais, anexar ou retirar paquetes ou espazos de "
 "nomes de paquetes afectará a toda a sesión de R.</p><p>Téñao en conta ao "
 "usar a funcionalidade de vista previa, especialmente ao usar a "
