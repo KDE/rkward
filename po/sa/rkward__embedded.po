@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the rkward package.
 # Kali <EMAIL@ADDRESS>, 2024.
 #
+# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2024-12-13 19:10+0530\n"
-"Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
+"PO-Revision-Date: 2024-12-20 12:26+0530\n"
+"Last-Translator: kali <skkalwar999@gmail.com>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -263,7 +265,7 @@ msgstr "इतर:"
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:41
 #, kde-format
 msgid "Custom statistic (as function of x)"
-msgstr "कस्टम् सांख्यिकी (x इत्यस्य कार्यत्वेन) २."
+msgstr "कस्टम् सांख्यिकी (x इत्यस्य कार्यत्वेन)"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:43
@@ -667,7 +669,7 @@ msgstr "संकुल स्रोतः"
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:33
 #, kde-format
 msgid "git (generic)"
-msgstr "गिट् (सामान्य) २."
+msgstr "गिट् (सामान्य)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:34
@@ -691,7 +693,7 @@ msgstr "बिटबकेट"
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:37
 #, kde-format
 msgid "subversion (generic)"
-msgstr "विध्वंस (सामान्य) २."
+msgstr "विध्वंस (सामान्य)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:39
@@ -951,7 +953,7 @@ msgstr "वर्णाः"
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:24
 #, kde-format
 msgid "Default (grayscale)"
-msgstr "पूर्वनिर्धारित (ग्रेस्केल) २."
+msgstr "पूर्वनिर्धारित (ग्रेस्केल)"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:25
@@ -1945,7 +1947,7 @@ msgstr "हिस्टोग्रामस्य कृते रेखाप�
 #: rkward/plugins/distributions/../plots/histogram_options.xml:83
 #, kde-format
 msgid "Blank (No lines)"
-msgstr "रिक्तम् (रेखाः नास्ति) २."
+msgstr "रिक्तम् (रेखाः नास्ति)"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">

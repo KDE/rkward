@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the rkward package.
 # Kali <EMAIL@ADDRESS>, 2024.
 #
+# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-12-13 19:10+0530\n"
-"Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
+"PO-Revision-Date: 2024-12-20 22:01+0530\n"
+"Last-Translator: kali <skkalwar999@gmail.com>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -405,7 +407,7 @@ msgstr "लेबल् कृते उपयोक्तुं अभिव्
 #: rkward/plugins/plots/dotchart.xml:70 rkward/plugins/plots/piechart.xml:73
 #, kde-format
 msgid "Labels (separated by ';')"
-msgstr "लेबल्स् (';' इत्यनेन पृथक्कृताः) २."
+msgstr "लेबल्स् (';' इत्यनेन पृथक्कृताः)"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="...">
@@ -487,7 +489,7 @@ msgstr "समूहीकरणं चर(s) 1.1."
 #: rkward/plugins/plots/stripchart_plot.xml:24
 #, kde-format
 msgid "Variable(s)"
-msgstr "चर(s) ९."
+msgstr "चर(s)"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:65
@@ -741,13 +743,13 @@ msgstr "चर(s): 1.1."
 #: rkward/plugins/plots/box_plot.xml:49
 #, kde-format
 msgid "Outcome variable:"
-msgstr "परिणामचरः : १."
+msgstr "परिणामचरः :"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <varslot label="...">
 #: rkward/plugins/plots/box_plot.xml:50
 #, kde-format
 msgid "Group variable(s):"
-msgstr "समूहचर (चर) : १."
+msgstr "समूहचर (चर) :"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:51
@@ -894,13 +896,13 @@ msgstr "मानकविचलनं दर्शयतु"
 #: rkward/plugins/plots/box_plot.xml:100
 #, kde-format
 msgid "standard deviation symbol (upper)"
-msgstr "मानक विचलन चिह्न (ऊर्ध्व) २."
+msgstr "मानक विचलन चिह्न (ऊर्ध्व)"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="show standard deviation"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:101
 #, kde-format
 msgid "standard deviation symbol (lower)"
-msgstr "मानकविचलनचिह्नम् (निम्नतरम्) २."
+msgstr "मानकविचलनचिह्नम् (निम्नतरम्)"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <embed label="...">
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Axis/Title"> <embed label="...">
@@ -1103,7 +1105,7 @@ msgstr "स्मूथिंग कर्नल"
 #: rkward/plugins/plots/density_plot.xml:56
 #, kde-format
 msgid "gaussian (default)"
-msgstr "गाउसीयन (पूर्वनिर्धारित) २."
+msgstr "गाउसीयन (पूर्वनिर्धारित)"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:57
@@ -1805,7 +1807,7 @@ msgstr "वर्णाः"
 #: rkward/plugins/plots/piechart.xml:79
 #, kde-format
 msgid "Default (pastel)"
-msgstr "पूर्वनिर्धारित (पेस्टल) २."
+msgstr "पूर्वनिर्धारित (पेस्टल)"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/plots/piechart.xml:80
@@ -2330,7 +2332,7 @@ msgstr "मूलभूत सेटिंग्स्"
 #: rkward/plugins/plots/stem.xml:18
 #, kde-format
 msgid "variable:"
-msgstr "चरः : १."
+msgstr "चरः :"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stem.xml:23

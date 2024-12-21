@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the rkward package.
 # Kali <EMAIL@ADDRESS>, 2024.
 #
+# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2024-12-13 19:10+0530\n"
-"Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
+"PO-Revision-Date: 2024-12-20 22:01+0530\n"
+"Last-Translator: kali <skkalwar999@gmail.com>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -230,7 +232,7 @@ msgstr "कर्ल्"
 #: rkward/plugins/00saveload/DownloadAppImage.xml:74
 #, kde-format
 msgid "wininet (Windows only)"
-msgstr "wininet (विण्डोज केवलं) २."
+msgstr "wininet (विण्डोज केवलं)"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <checkbox label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:76
@@ -576,7 +578,7 @@ msgstr "ISO8859-16 लैटिन-10 दक्षिण-पूर्वीय �
 #: rkward/plugins/00saveload/save/write_csv.xml:153
 #, kde-format
 msgid "Other (specify below)"
-msgstr "अन्ये (अधः निर्दिशन्तु) २."
+msgstr "अन्ये (अधः निर्दिशन्तु)"
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <input label="...">
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <input label="...">
@@ -1080,7 +1082,7 @@ msgstr "'।' (कालांशः)"
 #: rkward/plugins/00saveload/save/write_csv.xml:90
 #, kde-format
 msgid "',' (Comma)"
-msgstr "',' (अल्पविराम) २."
+msgstr "',' (अल्पविराम)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:126
@@ -1116,7 +1118,7 @@ msgstr "टब"
 #: rkward/plugins/00saveload/save/write_csv.xml:89
 #, kde-format
 msgid "';' (Semicolon)"
-msgstr "';' (अर्धविराम) २."
+msgstr "';' (अर्धविराम)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="Field separator character"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:133
@@ -1218,7 +1220,7 @@ msgstr "संख्यात्मकपङ्क्तिनाम"
 #: rkward/plugins/00saveload/import/import_csv.xml:155
 #, kde-format
 msgid "As specified in column x:"
-msgstr "यथा x स्तम्भे निर्दिष्टम् : १."
+msgstr "यथा x स्तम्भे निर्दिष्टम् :"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:156
@@ -1616,7 +1618,7 @@ msgstr ""
 "RKWard SPSS इत्येतत् चर लेबल् इव प्रदर्शयितुं शक्नोति । यदि भवान् SPSS चरलेबल् RKWard "
 "प्रारूपेण परिवर्तयितुम् इच्छति तर्हि एतत् विकल्पं पश्यन्तु । यदि भवान् विकल्पं अनिरीक्षितं "
 "त्यजति तर्हि SPSS चरलेबल् अद्यापि &quot;variable.labels&quot; इति विशेषतारूपेण उपलब्धं "
-"भविष्यति (द्रष्टव्यम्<link href=\"rkward://rhelp/read.spss\"/> ) ९."
+"भविष्यति (द्रष्टव्यम्<link href=\"rkward://rhelp/read.spss\"/> )"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Use value labels")
 #: rkward/plugins/00saveload/import/import_spss.rkh:27
@@ -1634,7 +1636,7 @@ msgid ""
 "spss\"/>)"
 msgstr ""
 "उपयोक्तुं कारकस्तरस्य अधिकतमसंख्या (द्रष्टव्यम्<link href=\"rkward://rhelp/read.spss\"/"
-"> ) ९."
+"> )"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Trim white space")
 #: rkward/plugins/00saveload/import/import_spss.rkh:29
@@ -2167,7 +2169,7 @@ msgstr "रिक्तं अग्रणीं वा पश्चात् �
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:53
 #, kde-format
 msgid "Column classes (empty for automatic)"
-msgstr "स्तम्भवर्गाः (स्वचालितस्य कृते रिक्ताः) २."
+msgstr "स्तम्भवर्गाः (स्वचालितस्य कृते रिक्ताः)"
 
 #. i18n: ectx: (Loaded from Load an R data file)
 #: rkward/plugins/00saveload/import/load_data.js:25
@@ -2591,13 +2593,13 @@ msgstr "मार्कडाउन"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:80
 #, kde-format
 msgid "Markdown (GitHub, old)"
-msgstr "मार्कडाउन (GitHub, पुरातन) २."
+msgstr "मार्कडाउन (GitHub, पुरातन)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:81
 #, kde-format
 msgid "Markdown (GitHub)"
-msgstr "मार्कडाउन (GitHub) ९."
+msgstr "मार्कडाउन (GitHub)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:82
@@ -2633,7 +2635,7 @@ msgstr "आर टी एफ"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:87
 #, kde-format
 msgid "Vignette (HTML)"
-msgstr "विगनेट् (HTML) ९."
+msgstr "विगनेट् (HTML)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:88
@@ -3122,7 +3124,7 @@ msgstr "सञ्चिकास्वरूपम्"
 #: rkward/plugins/00saveload/save/write_csv.xml:121
 #, kde-format
 msgid "Custom (specify below)"
-msgstr "कस्टम् (अधः निर्दिशन्तु) २."
+msgstr "कस्टम् (अधः निर्दिशन्तु)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <varselector label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:105
@@ -3154,7 +3156,7 @@ msgstr "न नाम"
 #: rkward/plugins/00saveload/save/write_csv.xml:114
 #, kde-format
 msgid "Row names (character vector)"
-msgstr "पङ्क्तिनाम (वर्णसदिश) २."
+msgstr "पङ्क्तिनाम (वर्णसदिश)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:117
@@ -3172,7 +3174,7 @@ msgstr "वर्तमानस्तम्भनामानां उपय�
 #: rkward/plugins/00saveload/save/write_csv.xml:123
 #, kde-format
 msgid "Column names (character vector)"
-msgstr "स्तम्भनाम (वर्ण सदिश) २."
+msgstr "स्तम्भनाम (वर्ण सदिश)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:129
@@ -3370,7 +3372,7 @@ msgstr "माइक्रोसॉफ्ट एक्सेल सञ्चि�
 #: rkward/plugins/import_export.pluginmap:51
 #, kde-format
 msgid "Generic import (rio-based)"
-msgstr "सामान्य आयातः (रिओ-आधारितः) २."
+msgstr "सामान्य आयातः (रिओ-आधारितः)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:53

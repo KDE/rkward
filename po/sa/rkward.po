@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2024-12-19 21:41+0530\n"
+"PO-Revision-Date: 2024-12-20 22:01+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -318,7 +318,7 @@ msgstr "नवीन.पङ्क्तिः"
 #: rkward/core/robject.cpp:161
 #, kde-format
 msgid "Full location:"
-msgstr "पूर्णं स्थानम् : १."
+msgstr "पूर्णं स्थानम् :"
 
 #: rkward/core/robject.cpp:163
 #, kde-format
@@ -364,7 +364,7 @@ msgstr "सूची"
 #, kde-format
 msgctxt "Noun; in brackets, data type of the var is stated"
 msgid "Variable (%1)"
-msgstr "चर (%1) ९."
+msgstr "चर (%1)"
 
 #: rkward/core/robject.cpp:180
 #, kde-format
@@ -384,7 +384,7 @@ msgstr "आयामाः : "
 #: rkward/core/robject.cpp:195
 #, kde-format
 msgid "Class(es):"
-msgstr "वर्ग(वर्गाः): १."
+msgstr "वर्ग(वर्गाः):"
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -2209,7 +2209,7 @@ msgstr ""
 #: rkward/main.cpp:196
 #, kde-format
 msgid "How to cite:"
-msgstr "कथं उद्धृतव्यम् : १."
+msgstr "कथं उद्धृतव्यम् :"
 
 #: rkward/main.cpp:196
 #, kde-format
@@ -2259,7 +2259,7 @@ msgstr "यथा आवश्यकम्"
 #: rkward/misc/editformatdialog.cpp:43
 #, kde-format
 msgid "Fixed precision:"
-msgstr "नियत परिशुद्धता : १."
+msgstr "नियत परिशुद्धता :"
 
 #: rkward/misc/editformatdialog.cpp:56
 #, kde-format
@@ -2323,7 +2323,7 @@ msgstr ""
 #: rkward/misc/rkcommandlineargs.cpp:29
 #, kde-format
 msgid "Verbosity of debug messages (0-5)"
-msgstr "त्रुटिनिवारणसन्देशानां वाच्यता (०-५) २."
+msgstr "त्रुटिनिवारणसन्देशानां वाच्यता (०-५)"
 
 #: rkward/misc/rkcommandlineargs.cpp:30
 #, kde-format
@@ -2441,12 +2441,12 @@ msgstr ""
 #: rkward/misc/rkfindbar.cpp:53
 #, kde-format
 msgid "Search backwards (previous occurrence of search term)"
-msgstr "पश्चात् अन्वेषणं (अन्वेषणपदस्य पूर्वावृत्तिः) २."
+msgstr "पश्चात् अन्वेषणं (अन्वेषणपदस्य पूर्वावृत्तिः)"
 
 #: rkward/misc/rkfindbar.cpp:59
 #, kde-format
 msgid "Search forward (next occurrence of search term)"
-msgstr "अग्रे अन्वेष्टुम् (अन्वेषणपदस्य अग्रिमः आवृत्तिः) २."
+msgstr "अग्रे अन्वेष्टुम् (अन्वेषणपदस्य अग्रिमः आवृत्तिः)"
 
 #: rkward/misc/rkfindbar.cpp:89
 #, kde-format
@@ -2675,7 +2675,7 @@ msgstr "आउटपुट् रिक्तं न भवति। न स्�
 #: rkward/misc/rkoutputdirectory.cpp:322
 #, kde-format
 msgid "[Unnamed]"
-msgstr "[अनाम] ९."
+msgstr "[अनाम]"
 
 #: rkward/misc/rkoutputdirectory.cpp:330
 #, kde-format
@@ -3064,7 +3064,7 @@ msgstr "पूर्वावलोकनं अद्यतनम् अस्�
 #: rkward/misc/rkxmlguipreviewarea.cpp:288
 #, kde-format
 msgid "Warnings or Errors:"
-msgstr "चेतावनी वा त्रुटयः वा : १."
+msgstr "चेतावनी वा त्रुटयः वा :"
 
 #: rkward/misc/xmlhelper.cpp:54
 #, kde-format
@@ -3138,7 +3138,7 @@ msgstr "नहि"
 #: rkward/plugin/rkcomponentmap.cpp:267 rkward/plugin/rkcomponentmap.cpp:655
 #, kde-format
 msgid "(no label)"
-msgstr "(कोऽपि लेबलः नास्ति) २."
+msgstr "(कोऽपि लेबलः नास्ति)"
 
 #: rkward/plugin/rkcomponentmap.cpp:464
 #, kde-format
@@ -3276,7 +3276,7 @@ msgstr "अनुज्ञापत्रम् : %1"
 #: rkward/plugin/rkcomponentmeta.cpp:84
 #, kde-format
 msgid "Authors:"
-msgstr "लेखकाः : १."
+msgstr "लेखकाः :"
 
 #: rkward/plugin/rkcomponentmeta.cpp:90
 #, kde-format
@@ -3287,7 +3287,7 @@ msgstr "भूमिकाः"
 #: rkward/plugin/rkcomponentmeta.cpp:98
 #, kde-format
 msgid "Translators:"
-msgstr "अनुवादकाः : १."
+msgstr "अनुवादकाः :"
 
 #: rkward/plugin/rkcomponentmeta.cpp:210
 #, kde-format
@@ -3331,7 +3331,7 @@ msgstr ""
 #: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:32
 #, kde-format
 msgid "Select one:"
-msgstr "एकं चिनुत : १."
+msgstr "एकं चिनुत :"
 
 #: rkward/plugin/rkformula.cpp:57
 #, kde-format
@@ -3351,7 +3351,7 @@ msgstr "मुख्यप्रभावाः एव"
 #: rkward/plugin/rkformula.cpp:66
 #, kde-format
 msgid "Custom Model:"
-msgstr "कस्टम मॉडलः : १."
+msgstr "कस्टम मॉडलः :"
 
 #: rkward/plugin/rkformula.cpp:92
 #, kde-format
@@ -3376,7 +3376,7 @@ msgstr "पाठं प्रविशतु"
 #: rkward/plugin/rkmatrixinput.cpp:35
 #, kde-format
 msgid "Enter data:"
-msgstr "दत्तांशं प्रविशतु : १."
+msgstr "दत्तांशं प्रविशतु :"
 
 #: rkward/plugin/rkmatrixinput.cpp:505
 #, kde-format
@@ -3509,7 +3509,7 @@ msgstr "मम.दत्तांशः"
 #: rkward/plugin/rkpluginspinbox.cpp:35
 #, kde-format
 msgid "Enter value:"
-msgstr "मूल्यं प्रविशतु : १."
+msgstr "मूल्यं प्रविशतु :"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
 #: rkward/windows/rkcommandeditorwindow.cpp:372
@@ -3647,7 +3647,7 @@ msgstr "सर्वाणि मूलस्तरीयवस्तूनि �
 #: rkward/plugin/rkvarslot.cpp:37
 #, kde-format
 msgid "Variable:"
-msgstr "चर : १."
+msgstr "चर :"
 
 #: rkward/plugin/rkvarslot.cpp:157
 #, kde-format
@@ -3974,13 +3974,13 @@ msgstr "ग्राफिक्स उपकरणसङ्ख्या %1"
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
-msgstr "%1 (सक्रिय) २."
+msgstr "%1 (सक्रिय)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:650
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
-msgstr "%1 (निष्क्रिय) २."
+msgstr "%1 (निष्क्रिय)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:676
 #, kde-format
@@ -4574,7 +4574,7 @@ msgstr "उद्घाटित"
 #: rkward/rkward.cpp:1020
 #, kde-format
 msgid "Opening mode:"
-msgstr "उद्घाटनविधिः : १."
+msgstr "उद्घाटनविधिः :"
 
 #: rkward/rkward.cpp:1022
 #, kde-format
@@ -4675,17 +4675,17 @@ msgstr "&साहाय्यम्‌"
 #: rkward/robjectviewer.cpp:49
 #, kde-format
 msgid "summary (x)"
-msgstr "सारांश (x) ९."
+msgstr "सारांश (x)"
 
 #: rkward/robjectviewer.cpp:50
 #, kde-format
 msgid "print (x)"
-msgstr "मुद्रण (x) ९."
+msgstr "मुद्रण (x)"
 
 #: rkward/robjectviewer.cpp:51
 #, kde-format
 msgid "str (x)"
-msgstr "गली (x) ९."
+msgstr "गली (x)"
 
 #: rkward/robjectviewer.cpp:79
 #, kde-format
@@ -4837,7 +4837,7 @@ msgstr "न्यूनतमं वर्णानाम् संख्या"
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:64
 #, kde-format
 msgid "Timeout (milliseconds)"
-msgstr "समयसमाप्तिः (मिलिसेकेण्ड्) २."
+msgstr "समयसमाप्तिः (मिलिसेकेण्ड्)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:66
 #, kde-format
@@ -4891,7 +4891,7 @@ msgstr "समाप्तिवस्तूनाम् कीबोर्ड �
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:88
 #, kde-format
 msgid "'$'-operator (list$member)"
-msgstr "'$'-सञ्चालक (सूची$सदस्य) २."
+msgstr "'$'-सञ्चालक (सूची$सदस्य)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:88
 #, kde-format
@@ -4977,7 +4977,7 @@ msgstr "स्वतः रक्षति"
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:153
 #, kde-format
 msgid "Autosave interval (minutes)"
-msgstr "स्वतः रक्षणान्तरं (निमेषाः) २."
+msgstr "स्वतः रक्षणान्तरं (निमेषाः)"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:155
 #, kde-format
@@ -5274,7 +5274,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:63
 #, kde-format
 msgid "Other device:"
-msgstr "अन्यत् यन्त्रम् : १."
+msgstr "अन्यत् यन्त्रम् :"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:68
 #, kde-format
@@ -5341,7 +5341,7 @@ msgstr "पूर्वनिर्धारित चौड़ाई (इञ्
 #: rkward/settings/rksettingsmodulegraphics.cpp:95
 #, kde-format
 msgid "Default height (inches)"
-msgstr "पूर्वनिर्धारित ऊर्ध्वता (इञ्च) २."
+msgstr "पूर्वनिर्धारित ऊर्ध्वता (इञ्च)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:99
 #, kde-format
@@ -5356,7 +5356,7 @@ msgstr "स्क्रीन उपकरण इतिहास"
 #: rkward/settings/rksettingsmodulegraphics.cpp:105
 #, kde-format
 msgid "Maximum number of recorded plots:"
-msgstr "अभिलेखितानां भूखण्डानां अधिकतमसंख्या : १."
+msgstr "अभिलेखितानां भूखण्डानां अधिकतमसंख्या :"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:109
 #, kde-format
@@ -5669,12 +5669,12 @@ msgstr "चेतावनीः त्रुटिरूपेण परिव�
 #: rkward/settings/rksettingsmoduler.cpp:90
 #, kde-format
 msgid "Decimal character (only for printing)"
-msgstr "दशमलववर्णः (केवलं मुद्रणार्थम्) २."
+msgstr "दशमलववर्णः (केवलं मुद्रणार्थम्)"
 
 #: rkward/settings/rksettingsmoduler.cpp:96
 #, kde-format
 msgid "Output width (characters)"
-msgstr "निर्गम चौड़ाई (वर्णाः) २."
+msgstr "निर्गम चौड़ाई (वर्णाः)"
 
 #: rkward/settings/rksettingsmoduler.cpp:100
 #, kde-format
@@ -5694,7 +5694,7 @@ msgstr "टिप्पण्यानि कार्येषु स्था�
 #: rkward/settings/rksettingsmoduler.cpp:109
 #, kde-format
 msgid "TRUE (default)"
-msgstr "TRUE (पूर्वनिर्धारितम्) २."
+msgstr "TRUE (पूर्वनिर्धारितम्)"
 
 #: rkward/settings/rksettingsmoduler.cpp:109
 #, kde-format
@@ -5716,7 +5716,7 @@ msgstr "सत्यम्‌"
 #: rkward/settings/rksettingsmoduler.cpp:127
 #, kde-format
 msgid "FALSE (default)"
-msgstr "FALSE (पूर्वनिर्धारितम्) २."
+msgstr "FALSE (पूर्वनिर्धारितम्)"
 
 #: rkward/settings/rksettingsmoduler.cpp:118
 #, kde-format
@@ -6303,7 +6303,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:678
 #, kde-format
 msgid "R Markdown (HTML)"
-msgstr "आर मार्कडाउन (HTML) ९."
+msgstr "आर मार्कडाउन (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:678
 #: rkward/windows/rkcommandeditorwindow.cpp:686
@@ -6320,7 +6320,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:686
 #, kde-format
 msgid "R Markdown (auto)"
-msgstr "आर मार्कडाउन (स्वयं) ९."
+msgstr "आर मार्कडाउन (स्वयं)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:687
 #, kde-format
@@ -6396,12 +6396,12 @@ msgstr "अनामिका"
 #: rkward/windows/rkcommandeditorwindow.cpp:1085
 #, kde-format
 msgid "%1 (Active)"
-msgstr "%1 (सक्रिय) २."
+msgstr "%1 (सक्रिय)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1104
 #, kde-format
 msgid "%1 (Unused)"
-msgstr "%1 (अप्रयुक्त) २."
+msgstr "%1 (अप्रयुक्त)"
 
 #. i18n: ectx: Menu (tools)
 #: rkward/windows/rkcommandeditorwindowpart.rc:11
@@ -6552,7 +6552,7 @@ msgstr "अन्वेषय:"
 #: rkward/windows/rkhelpsearchwindow.cpp:62
 #, kde-format
 msgid "Fields:"
-msgstr "क्षेत्राणि : १."
+msgstr "क्षेत्राणि :"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:80
 #, kde-format
@@ -7036,7 +7036,7 @@ msgstr "बृहत् खिडकी"
 #: rkward/windows/rkwindowcatcher.cpp:394
 #, kde-format
 msgid "Closing device (saving history)"
-msgstr "यन्त्रं समापनम् (इतिहासस्य रक्षणम्) २."
+msgstr "यन्त्रं समापनम् (इतिहासस्य रक्षणम्)"
 
 #: rkward/windows/rkwindowcatcher.cpp:396
 #, kde-format
@@ -7459,4 +7459,4 @@ msgstr "नूतनं नाम प्रविशतु"
 #: rkward/windows/robjectbrowser.cpp:255
 #, kde-format
 msgid "View in editor (read-only)"
-msgstr "सम्पादके दृश्यम् (केवलं पठनीयम्) २."
+msgstr "सम्पादके दृश्यम् (केवलं पठनीयम्)"

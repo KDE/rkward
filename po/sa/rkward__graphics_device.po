@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the rkward package.
 # Kali <EMAIL@ADDRESS>, 2024.
 #
+# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-12-13 19:10+0530\n"
-"Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
+"PO-Revision-Date: 2024-12-20 22:01+0530\n"
+"Last-Translator: kali <skkalwar999@gmail.com>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -516,7 +518,7 @@ msgstr "पूर्वनिर्धारित संकल्प"
 #: rkward/plugins/x11device/export.xml:105
 #, kde-format
 msgid "Resolution (dpi)"
-msgstr "संकल्प (dpi) ९."
+msgstr "संकल्प (dpi)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <checkbox label="...">
 #: rkward/plugins/x11device/export.xml:108
@@ -598,7 +600,7 @@ msgstr "केन्द्र पृष्ठ"
 #: rkward/plugins/x11device/export.xml:129
 #, kde-format
 msgid "Horizontal (ps/gs)"
-msgstr "क्षैतिज (ps/gs) ९."
+msgstr "क्षैतिज (ps/gs)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="...">
 #: rkward/plugins/x11device/export.xml:133
@@ -688,19 +690,19 @@ msgstr "टाइम्स"
 #: rkward/plugins/x11device/export.xml:149
 #, kde-format
 msgid "CenturySch (URW)"
-msgstr "शताब्दीSch (URW) ९."
+msgstr "शताब्दीSch (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:150
 #, kde-format
 msgid "NimbusMon (URW)"
-msgstr "निम्बसमोन् (URW) ९."
+msgstr "निम्बसमोन् (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:151
 #, kde-format
 msgid "NimbusSanCond (URW)"
-msgstr "निम्बससन्कोण्ड् (URW) ९."
+msgstr "निम्बससन्कोण्ड् (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:152
@@ -814,19 +816,19 @@ msgstr "पोस्टस्क्रिप्ट्"
 #: rkward/plugins/x11device/export.xml:185
 #, kde-format
 msgid "PNG (b/w)"
-msgstr "पीएनजी (ख/प) २."
+msgstr "पीएनजी (ख/प)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:186
 #, kde-format
 msgid "PNG (grayscale)"
-msgstr "पीएनजी (ग्रेस्केल) २."
+msgstr "पीएनजी (ग्रेस्केल)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:187
 #, kde-format
 msgid "PNG (256 colors)"
-msgstr "पीएनजी (२५६ रङ्ग) २."
+msgstr "पीएनजी (२५६ रङ्ग)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:188
@@ -838,7 +840,7 @@ msgstr "PNG (16M रङ्ग) 1 ."
 #: rkward/plugins/x11device/export.xml:190
 #, kde-format
 msgid "Other (specify here):"
-msgstr "अन्ये (अत्र निर्दिशन्तु) : १."
+msgstr "अन्ये (अत्र निर्दिशन्तु) :"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Ghostscript specific options"> <input label="...">
 #: rkward/plugins/x11device/export.xml:192
