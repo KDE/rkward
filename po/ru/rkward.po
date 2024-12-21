@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-12-19 13:52+0300\n"
+"PO-Revision-Date: 2024-12-20 17:22+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -522,7 +522,7 @@ msgstr ""
 #: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
 msgid "Object '%1' is not a vector"
-msgstr ""
+msgstr "Объект «%1» не является вектором"
 
 #: rkward/dataeditor/twintable.cpp:107
 #, kde-format
@@ -854,7 +854,6 @@ msgstr ""
 
 #: rkward/dialogs/rkimportdialog.cpp:76
 #, fuzzy, kde-format
-#| msgid "File format"
 msgid "Select format"
 msgstr "Формат файлов:"
 
@@ -1545,7 +1544,7 @@ msgstr "<b>Сбой серверного приложения R.</b>"
 #: rkward/dialogs/rksetupwizard.cpp:148
 #, kde-format
 msgid "<b>R version %1 started, successfully.</b>"
-msgstr ""
+msgstr "<b>Успешно выполнен запуск R версии %1.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:151
 #, kde-format
@@ -1565,12 +1564,12 @@ msgstr "<b>Ожидание данных от серверного прилож�
 #: rkward/dialogs/rksetupwizard.cpp:186
 #, kde-format
 msgid "Use R at:"
-msgstr ""
+msgstr "Использовать R в:"
 
 #: rkward/dialogs/rksetupwizard.cpp:188
 #, kde-format
 msgid "Select another R executable"
-msgstr ""
+msgstr "Использовать другой исполняемый файл R"
 
 #: rkward/dialogs/rksetupwizard.cpp:190
 #, kde-format
@@ -1580,32 +1579,32 @@ msgstr "Выбор исполняемого файла R"
 #: rkward/dialogs/rksetupwizard.cpp:206
 #, kde-format
 msgid "Use R at %1"
-msgstr ""
+msgstr "Использовать R в %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:209
 #, kde-format
 msgid "Attempt to restart R at %1"
-msgstr ""
+msgstr "Попробовать перезапустить R в %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:210
 #, kde-format
 msgid "Keep current version (%1)"
-msgstr ""
+msgstr "Оставить текущую версию (%1)"
 
 #: rkward/dialogs/rksetupwizard.cpp:242
 #, kde-format
 msgid "No action needed."
-msgstr ""
+msgstr "Дополнительные действия не требуются."
 
 #: rkward/dialogs/rksetupwizard.cpp:277
 #, kde-format
 msgid "Not installed"
-msgstr ""
+msgstr "Не установлено"
 
 #: rkward/dialogs/rksetupwizard.cpp:278 rkward/dialogs/rksetupwizard.cpp:289
 #, kde-format
 msgid "Install %1"
-msgstr ""
+msgstr "Установить %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:278
 #, kde-format
@@ -1629,7 +1628,6 @@ msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:281 rkward/dialogs/rksetupwizard.cpp:301
 #, fuzzy, kde-format
-#| msgid "Installed Packages"
 msgid "Installed"
 msgstr "Установленные пакеты"
 
@@ -1689,7 +1687,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:334
 #, kde-format
 msgid "Installation directory"
-msgstr ""
+msgstr "Каталог установки"
 
 #: rkward/dialogs/rksetupwizard.cpp:336
 #, kde-format
@@ -1699,7 +1697,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:338
 #, kde-format
 msgid "Reinstallation required"
-msgstr ""
+msgstr "Требуется переустановка"
 
 #: rkward/dialogs/rksetupwizard.cpp:338
 #, kde-format
@@ -1716,7 +1714,6 @@ msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:345
 #, fuzzy, kde-format
-#| msgid "RKWard"
 msgid "RKWard plugins"
 msgstr "RKWard"
 
@@ -1810,10 +1807,9 @@ msgid "R Backend"
 msgstr "Серверное приложение R"
 
 #: rkward/dialogs/rksetupwizard.cpp:434
-#, fuzzy, kde-format
-#| msgid "New Packages"
+#, kde-format
 msgid "R Packages"
-msgstr "Новые пакеты"
+msgstr "Пакеты R"
 
 #: rkward/dialogs/rksetupwizard.cpp:436
 #, kde-format
@@ -1859,6 +1855,9 @@ msgid ""
 "<h1>Reinstallation required</h1><p>Your installation of RKWard is broken, "
 "and cannot be fixed, automatically. You will have to reinstall RKWard!</p>"
 msgstr ""
+"<h1>Требуется переустановка</h1><p>Установленный дистрибутив RKWard "
+"повреждён, автоматическое исправление ошибок невозможно. Необходимо "
+"переустановить RKWard!</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:470
 #, kde-format
@@ -2660,64 +2659,65 @@ msgstr "Отмена"
 #: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
-msgstr ""
+msgstr "<b>Произошла ошибка</b> (подробные сведения доступны ниже)"
 
 #: rkward/misc/rkprogresscontrol.cpp:485
 #, kde-format
 msgid "<b>Done</b>"
-msgstr ""
+msgstr "<b>Готово</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:488
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: rkward/misc/rkprogresscontrol.cpp:525 rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
 msgid "Keep waiting"
-msgstr ""
+msgstr "Подождать ещё"
 
 #: rkward/misc/rkprogresscontrol.cpp:525
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
+"Закрытие окна приведёт к отмене текущей операции. Действительно сделать это?"
 
 #: rkward/misc/rkprogresscontrol.cpp:525
 #, kde-format
 msgid "Cancel operation"
-msgstr ""
+msgstr "Отменить операцию"
 
 #: rkward/misc/rkprogresscontrol.cpp:525
 #, kde-format
 msgid "Cancel && Close"
-msgstr ""
+msgstr "Отменить и закрыть"
 
 #: rkward/misc/rkprogresscontrol.cpp:537
 #, kde-format
 msgid "An operation is still running, please wait."
-msgstr ""
+msgstr "Операция ещё выполняется, подождите."
 
 #: rkward/misc/rksaveobjectchooser.cpp:44
 #, kde-format
 msgid "Change"
-msgstr ""
+msgstr "Изменить"
 
 #: rkward/misc/rksaveobjectchooser.cpp:54
 #, kde-format
 msgid "Overwrite"
-msgstr ""
+msgstr "Перезаписать"
 
 #: rkward/misc/rksaveobjectchooser.cpp:56
 #, kde-format
 msgid "The given object name already exists"
-msgstr ""
+msgstr "Объект с указанным именем уже существует"
 
 #: rkward/misc/rksaveobjectchooser.cpp:88
 #, kde-format
 msgid "Parent object: %1"
-msgstr ""
+msgstr "Родительский объект: %1"
 
 #: rkward/misc/rksaveobjectchooser.cpp:98
 #, kde-format
@@ -2737,17 +2737,17 @@ msgstr "Специальная вставка"
 #: rkward/misc/rkspecialactions.cpp:86
 #, kde-format
 msgid "Paste Mode"
-msgstr ""
+msgstr "Режим вставки"
 
 #: rkward/misc/rkspecialactions.cpp:89
 #, kde-format
 msgid "Single string"
-msgstr ""
+msgstr "Одиночная строка"
 
 #: rkward/misc/rkspecialactions.cpp:92
 #, kde-format
 msgid "Vector"
-msgstr ""
+msgstr "Вектор"
 
 #: rkward/misc/rkspecialactions.cpp:98
 #, kde-format
@@ -2842,7 +2842,7 @@ msgstr "Поменять местами строки и столбцы"
 #: rkward/misc/rkspecialactions.cpp:173
 #, kde-format
 msgid "Insert NAs where needed"
-msgstr ""
+msgstr "Вставить «Н/Д», где требуется"
 
 #: rkward/misc/rkspecialactions.cpp:313
 #, kde-format
@@ -4421,7 +4421,6 @@ msgstr ""
 
 #: rkward/rkward.cpp:1011
 #, fuzzy, kde-format
-#| msgid "Open Recent R Script File"
 msgid "Open as text / script file"
 msgstr "Последние сценарии R"
 
@@ -5227,7 +5226,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulekateplugins.cpp:96
 #, kde-format
 msgid "Kate Plugins"
-msgstr ""
+msgstr "Модули Kate"
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:40
 #, kde-format
@@ -5370,63 +5369,65 @@ msgid ""
 "traditional dialog interface. If both are available, which mode of "
 "presentation do you prefer?"
 msgstr ""
+"Некоторые модули доступны как с мастероподобным интерфейсом, так и с "
+"традиционным диалоговым. Какой вариант следует выбирать в таких случаях?"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:59
 #, kde-format
 msgid "Always prefer dialogs"
-msgstr ""
+msgstr "Всегда предпочитать диалог"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:62
 #, kde-format
 msgid "Prefer recommended interface"
-msgstr ""
+msgstr "Предпочитать рекомендуемый интерфейс"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:65
 #, kde-format
 msgid "Always prefer wizards"
-msgstr ""
+msgstr "Всегда предпочитать мастер"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:75
 #, kde-format
 msgid "Configure Active Plugins"
-msgstr ""
+msgstr "Настроить активные модули"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:93
 #: rkward/windows/rktoplevelwindowgui.cpp:151
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "Модули RKWard"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:473
 #: rkward/windows/rkhtmlwindow.cpp:1157
 #, kde-format
 msgid "Dependencies"
-msgstr ""
+msgstr "Зависимости"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:496
 #, kde-format
 msgid "Broken"
-msgstr ""
+msgstr "Повреждено"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:498
 #, kde-format
 msgid "Loaded"
-msgstr ""
+msgstr "Загружено"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:501
 #, kde-format
 msgid "Quirky"
-msgstr ""
+msgstr "Специфично"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:525
 #, kde-format
 msgid "Active"
-msgstr ""
+msgstr "Активно"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:526
 #, kde-format
 msgid "ID"
-msgstr ""
+msgstr "Идентификатор"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:554
 #, kde-format
@@ -5439,6 +5440,8 @@ msgid ""
 "The following settings mostly affect R behavior in the console. It is "
 "generally safe to keep these unchanged."
 msgstr ""
+"Следующие параметры в основном влияют на поведение R в консоли. Обычно можно "
+"спокойно оставлять их без изменений."
 
 #: rkward/settings/rksettingsmoduler.cpp:76
 #, kde-format
@@ -5453,32 +5456,32 @@ msgstr "Подавлять предупреждения"
 #: rkward/settings/rksettingsmoduler.cpp:78
 #, kde-format
 msgid "Print warnings later (default)"
-msgstr ""
+msgstr "Выводить предупреждения потом (по умолчанию)"
 
 #: rkward/settings/rksettingsmoduler.cpp:78
 #, kde-format
 msgid "Print warnings immediately"
-msgstr ""
+msgstr "Выводить предупреждения сразу"
 
 #: rkward/settings/rksettingsmoduler.cpp:78
 #, kde-format
 msgid "Convert warnings to errors"
-msgstr "Преобразовать предупреждения в ошибки"
+msgstr "Преобразовывать предупреждения в ошибки"
 
 #: rkward/settings/rksettingsmoduler.cpp:83
 #, kde-format
 msgid "Decimal character (only for printing)"
-msgstr ""
+msgstr "Десятичный символ (только для вывода)"
 
 #: rkward/settings/rksettingsmoduler.cpp:90
 #, kde-format
 msgid "Output width (characters)"
-msgstr ""
+msgstr "Ширина вывода (в символах)"
 
 #: rkward/settings/rksettingsmoduler.cpp:94
 #, kde-format
 msgid "Maximum number of elements shown in print"
-msgstr ""
+msgstr "Максимальное количество элементов, показанных в выводе"
 
 #: rkward/settings/rksettingsmoduler.cpp:98
 #, kde-format
@@ -5488,7 +5491,7 @@ msgstr "Максимальная длина предупреждений и ош
 #: rkward/settings/rksettingsmoduler.cpp:102
 #, kde-format
 msgid "Keep comments in functions"
-msgstr ""
+msgstr "Сохранять комментарии в функциях"
 
 #: rkward/settings/rksettingsmoduler.cpp:103
 #, kde-format
@@ -5503,7 +5506,7 @@ msgstr "FALSE"
 #: rkward/settings/rksettingsmoduler.cpp:107
 #, kde-format
 msgid "Keep comments in packages"
-msgstr ""
+msgstr "Сохранять комментарии в пакетах"
 
 #: rkward/settings/rksettingsmoduler.cpp:108
 #: rkward/settings/rksettingsmoduler.cpp:121
@@ -5520,17 +5523,17 @@ msgstr "FALSE (по умолчанию)"
 #: rkward/settings/rksettingsmoduler.cpp:112
 #, kde-format
 msgid "Maximum level of nested expressions"
-msgstr ""
+msgstr "Максимальный уровень вложенности выражений"
 
 #: rkward/settings/rksettingsmoduler.cpp:116
 #, kde-format
 msgid "Default decimal precision in print ()"
-msgstr ""
+msgstr "Стандартное количество знаков после запятой в print ()"
 
 #: rkward/settings/rksettingsmoduler.cpp:120
 #, kde-format
 msgid "Check vector bounds (warn)"
-msgstr ""
+msgstr "Проверять границы векторов (предупреждать)"
 
 #: rkward/settings/rksettingsmoduler.cpp:124
 #, kde-format
@@ -5844,7 +5847,6 @@ msgstr ""
 
 #: rkward/windows/katepluginintegration.cpp:670
 #, fuzzy, kde-format
-#| msgid "Opening script files"
 msgctxt "where to search"
 msgid "in Open Scripts"
 msgstr "Открытие файлов сценариев"
@@ -5901,13 +5903,11 @@ msgstr ""
 
 #: rkward/windows/rkcodecompletion.cpp:761
 #, fuzzy, kde-format
-#| msgid "&Function reference"
 msgid "Function calls"
 msgstr "&Документация по функции"
 
 #: rkward/windows/rkcodecompletion.cpp:859
 #, fuzzy, kde-format
-#| msgid "&Function reference"
 msgid "Function arguments"
 msgstr "&Документация по функции"
 
@@ -6559,7 +6559,6 @@ msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:1093
 #, fuzzy, kde-format
-#| msgid "<<Open another file>>"
 msgid "Choose another file"
 msgstr "<<Открыть другой файл>>"
 
