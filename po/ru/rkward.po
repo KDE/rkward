@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-12-23 17:31+0300\n"
+"PO-Revision-Date: 2024-12-24 17:16+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -515,17 +515,17 @@ msgstr "Описательная подпись для каждого столб
 #: rkward/dataeditor/rkvareditmodel.cpp:680
 #, kde-format
 msgid "Type of data."
-msgstr ""
+msgstr "Тип данных."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:681
 #, kde-format
 msgid "Double click on these fields to customize data display."
-msgstr ""
+msgstr "Двойной щелчок по этим полям позволит настроить отображение данных."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
-msgstr ""
+msgstr "Двойной щелчок по этим полям позволит изменить уровни факторов."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
@@ -718,7 +718,7 @@ msgstr "Сообщить об ошибке"
 #: rkward/dialogs/rkerrordialog.cpp:72
 #, kde-format
 msgid "Forwarding you to the KDE bugtracking system"
-msgstr ""
+msgstr "Переход к системе отслеживания ошибок KDE"
 
 #: rkward/dialogs/rkerrordialog.cpp:73
 #, kde-format
@@ -727,26 +727,29 @@ msgid ""
 "continue to see this page for more than a few seconds (e.g. if JavaScript is "
 "disabled), please click \"Proceed\", below."
 msgstr ""
+"Выполняется переход к системе отслеживания ошибок KDE. Если эта страница не "
+"исчезнет через несколько секунд (такое возможно, например, при отключении "
+"JavaScript), нажмите «Продолжить» ниже."
 
 #: rkward/dialogs/rkerrordialog.cpp:79
 #, kde-format
 msgid "Proceed"
-msgstr ""
+msgstr "Продолжить"
 
 #: rkward/dialogs/rkerrordialog.cpp:102
 #, kde-format
 msgid "Show Details"
-msgstr ""
+msgstr "Показать подробности"
 
 #: rkward/dialogs/rkerrordialog.cpp:104
 #, kde-format
 msgid "Report As Bug"
-msgstr ""
+msgstr "Сообщить об ошибке"
 
 #: rkward/dialogs/rkerrordialog.cpp:114
 #, kde-format
 msgid "Message code: %1\n"
-msgstr ""
+msgstr "Код сообщения: %1\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:123
 #, kde-format
@@ -755,6 +758,9 @@ msgid ""
 "Please fill in the missing bits *in English*.\n"
 "\n"
 msgstr ""
+"---Описание проблемы---\n"
+"Укажите недостающую информацию *на английском языке*.\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:125
 #, kde-format
@@ -763,6 +769,9 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Кратко резюмируйте проблему:\n"
+"###Укажите необходимую информацию###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:127
 #, kde-format
@@ -772,6 +781,10 @@ msgid ""
 "###Please fill in (if applicable)###\n"
 "\n"
 msgstr ""
+"Появилось приведённое ниже сообщение об ошибке. Кроме того, наблюдалось "
+"следующее:\n"
+"###Укажите необходимую информацию (если применимо)###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:129
 #, kde-format
@@ -780,6 +793,10 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Что делалось непосредственно перед появлением проблемы (приведите "
+"подробности)?\n"
+"###Укажите необходимую информацию###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:130
 #, kde-format
@@ -789,6 +806,10 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Возникает ли проблема снова при попытке повторить вышеперечисленное (нет, "
+"иногда, всегда)?\n"
+"###Укажите необходимую информацию###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:131
 #, kde-format
@@ -798,6 +819,10 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Если применимо: возникает ли та же проблема при выполнении тех же действий в "
+"сеансе R вне RKWard?\n"
+"###Укажите необходимую информацию###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:132
 #, kde-format
@@ -808,6 +833,11 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Имеется ли другая информация, которая может помочь в решении проблемы? В "
+"частности, образец данных и образец кода R для воспроизведения проблемы "
+"(если применимо)?\n"
+"###Укажите необходимую информацию###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:133
 #, kde-format
@@ -818,6 +848,11 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Программа RKWard может работать на различных платформах на основе разных "
+"способов установки. Иногда проблемы касаются только одного из них. Как "
+"выполнялась установка RKWard (какие файлы были загружены)?\n"
+"###Укажите необходимую информацию###\n"
+"\n"
 
 #: rkward/dialogs/rkerrordialog.cpp:145
 #, kde-format
@@ -833,7 +868,7 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:145
 #, kde-format
 msgid "Gathering setup information"
-msgstr ""
+msgstr "Сбор информации о настройке"
 
 #: rkward/dialogs/rkimportdialog.cpp:29
 #, kde-format
@@ -847,6 +882,9 @@ msgid ""
 "generally provide the most options. Is the file you wish to import in one of "
 "the following formats?"
 msgstr ""
+"Для некоторых форматов данных в RKWard предусмотрены особые диалоги импорта "
+"(обычно в них больше всего параметров настройки). Планируется импортировать "
+"данные в одном из указанных ниже форматов?"
 
 #: rkward/dialogs/rkimportdialog.cpp:56
 #, kde-format
@@ -854,16 +892,18 @@ msgid ""
 "RKWard comes with several import dialogs, but none seem to be loaded, at "
 "present. Check your settings."
 msgstr ""
+"В RKWard предусмотрены несколько диалогов импорта, но ни один из них сейчас "
+"не загружен. Проверьте параметры настройки."
 
 #: rkward/dialogs/rkimportdialog.cpp:70
 #, kde-format
 msgid "None of the above / try another method"
-msgstr ""
+msgstr "Не подходит ничего из вышеперечисленного / попробовать другой способ"
 
 #: rkward/dialogs/rkimportdialog.cpp:76
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select format"
-msgstr "Формат файлов:"
+msgstr "Выбрать формат"
 
 #: rkward/dialogs/rkimportdialog.cpp:80
 #, kde-format
@@ -882,21 +922,23 @@ msgid ""
 "The generic import plugin (shipped with RKWard) is not presently loaded. "
 "Check your settings."
 msgstr ""
+"Типовой модуль импорта (поставляется с RKWard) сейчас не загружен. Проверьте "
+"параметры настройки."
 
 #: rkward/dialogs/rkimportdialog.cpp:91
 #, kde-format
 msgid "Use 'rio'-based importer"
-msgstr ""
+msgstr "Использовать средство импорта на основе rio"
 
 #: rkward/dialogs/rkimportdialog.cpp:95 rkward/dialogs/rkimportdialog.cpp:113
 #, kde-format
 msgid "Try another method"
-msgstr ""
+msgstr "Попробовать другой способ"
 
 #: rkward/dialogs/rkimportdialog.cpp:101
 #, kde-format
 msgid "Generic 'rio'-based importer"
-msgstr ""
+msgstr "Типовое средство импорта на основе rio"
 
 #: rkward/dialogs/rkimportdialog.cpp:105
 #, kde-format
@@ -920,11 +962,13 @@ msgid ""
 "<b>Ready to go</b><p>Click \"Finish\" to start the selected import dialog, "
 "or \"Back\" to explore other options.</p>"
 msgstr ""
+"<b>Всё готово</b><p>Нажмите «Завершить» для запуска выбранного диалога "
+"импорта или «Назад» для просмотра других вариантов.</p>"
 
 #: rkward/dialogs/rkimportdialog.cpp:125
 #, kde-format
 msgid "Start import dialog"
-msgstr ""
+msgstr "Запустить диалог импорта"
 
 #: rkward/dialogs/rkimportdialog.cpp:129
 #, kde-format
@@ -934,11 +978,15 @@ msgid ""
 "li><li>Save your data to a different format in the original application</"
 "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgstr ""
+"Не осталось никаких других способов импорта. Можно попробовать сделать "
+"следующее: <ul><li>проверить, доступны ли дополнительные модули импорта</"
+"li><li>сохранить данные в другом формате в исходном приложении</"
+"li><li>обратиться за помощью в рассылку rkward-users@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:131
 #, kde-format
 msgid "No import method found"
-msgstr ""
+msgstr "Не найден способ импорта"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:50
 #, kde-format
@@ -948,7 +996,7 @@ msgstr "Настроить пакеты"
 #: rkward/dialogs/rkloadlibsdialog.cpp:58
 #, kde-format
 msgid "Load / Unload R packages"
-msgstr ""
+msgstr "Загрузить или выгрузить пакеты R"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:62
 #, kde-format
@@ -958,23 +1006,23 @@ msgstr "Установка и удаление пакетов R"
 #: rkward/dialogs/rkloadlibsdialog.cpp:64
 #, kde-format
 msgid "Manage RKWard Plugins"
-msgstr ""
+msgstr "Настроить модули RKWard"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Closing will discard pending changes. Are you sure?"
-msgstr ""
+msgstr "Закрытие приведёт к отмене ожидающих изменений. Продолжить?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Discard changes?"
-msgstr ""
+msgstr "Отменить изменения?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
-msgstr ""
+msgstr "Не закрывать"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:167
 #: rkward/dialogs/rkloadlibsdialog.cpp:174
@@ -1132,7 +1180,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:290
 #, kde-format
 msgid "kdesu not found"
-msgstr ""
+msgstr "Не удалось найти kdesu"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:347
 #, kde-format
@@ -1321,6 +1369,8 @@ msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
 "packages in non-local repositories.</p>"
 msgstr ""
+"<p>Описательное название пакета. В настоящее время доступно только для "
+"пакетов в локальных репозиториях.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:963
 #, kde-format
@@ -1371,7 +1421,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:1023
 #, kde-format
 msgid "Install"
-msgstr ""
+msgstr "Установить"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:1026
 #: rkward/misc/multistringselector.cpp:107
@@ -1387,7 +1437,7 @@ msgstr "Установленные группы модулей (файлы .plug
 #: rkward/dialogs/rkreadlinedialog.cpp:44
 #, kde-format
 msgid "Context:"
-msgstr ""
+msgstr "Контекст:"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:33
 #, kde-format
@@ -1401,6 +1451,8 @@ msgid ""
 "However, not everything is lost, and with a bit of luck, your data has been "
 "saved in time.</p>"
 msgstr ""
+"<p>Похоже, недавно произошёл сбой RKWard. Но не всё потеряно; скорее всего, "
+"данные удалось вовремя сохранить.</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:38
 #, kde-format
@@ -1409,9 +1461,15 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist, the most recent one of which dates "
 "from <i>%2</i>.</p>"
 msgstr[0] ""
+"<p>Имеются файлы восстановления рабочей области (%1), самый последний от <i>"
+"%2</i>.</p>"
 msgstr[1] ""
+"<p>Имеются файлы восстановления рабочей области (%1), самый последний от <i>"
+"%2</i>.</p>"
 msgstr[2] ""
-msgstr[3] ""
+"<p>Имеются файлы восстановления рабочей области (%1), самый последний от <i>"
+"%2</i>.</p>"
+msgstr[3] "<p>Имеется файл восстановления рабочей области от <i>%2</i>.</p>"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:39
 #, kde-format
@@ -1425,12 +1483,13 @@ msgstr ""
 #: rkward/dialogs/rkrecoverdialog.cpp:43
 #, kde-format
 msgid "Recover"
-msgstr ""
+msgstr "Восстановить"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:44
 #, kde-format
 msgid "Saves the recovery file(s), and opens it (or the most recent one)"
 msgstr ""
+"Сохраняет файлы восстановления и открывает их (или самый последний файл)"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:45
 #, kde-format
@@ -1441,6 +1500,8 @@ msgstr ""
 #, kde-format
 msgid "Saves the recovery file(s) for later use, but does not open it"
 msgstr ""
+"Сохраняет файлы восстановления для использования в дальнейшем, но не "
+"открывает их"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:47 rkward/windows/robjectbrowser.cpp:125
 #, kde-format
@@ -1450,7 +1511,7 @@ msgstr "Удалить"
 #: rkward/dialogs/rkrecoverdialog.cpp:48
 #, kde-format
 msgid "Deletes the recovery file(s)"
-msgstr ""
+msgstr "Удаляет файлы восстановления"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:60
 #, kde-format
@@ -1461,14 +1522,22 @@ msgid_plural ""
 "You are about to delete %1 recovery files (the most recent one is %2). There "
 "will be no way to bring them back. Really delete them?"
 msgstr[0] ""
+"Будут удалены файлы восстановления (%1, последний — %2). Это действие нельзя "
+"отменить. Продолжить?"
 msgstr[1] ""
+"Будут удалены файлы восстановления (%1, последний — %2). Это действие нельзя "
+"отменить. Продолжить?"
 msgstr[2] ""
+"Будут удалены файлы восстановления (%1, последний — %2). Это действие нельзя "
+"отменить. Продолжить?"
 msgstr[3] ""
+"Будет удалён файл восстановления %2. Это действие нельзя отменить. "
+"Продолжить?"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:60
 #, kde-format
 msgid "Really delete recovery file(s)?"
-msgstr ""
+msgstr "Удалить файлы восстановления?"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:64
 #, kde-format
@@ -1659,7 +1728,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:298
 #, kde-format
 msgid "Not found"
-msgstr ""
+msgstr "Не найдено"
 
 #: rkward/dialogs/rksetupwizard.cpp:312
 #, kde-format
@@ -1704,7 +1773,7 @@ msgstr "Каталог установки"
 #: rkward/dialogs/rksetupwizard.cpp:336
 #, kde-format
 msgid "Not found."
-msgstr ""
+msgstr "Не найдено."
 
 #: rkward/dialogs/rksetupwizard.cpp:338
 #, kde-format
@@ -1770,7 +1839,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:362
 #, kde-format
 msgid "None found"
-msgstr ""
+msgstr "Ничего не найдено"
 
 #: rkward/dialogs/rksetupwizard.cpp:365
 #, kde-format
@@ -1889,6 +1958,9 @@ msgid ""
 "installation is not (yet) supported. Click on the links, below, for download "
 "information:</p><li>%1</li>"
 msgstr ""
+"<p>Рекомендуется установить следующее программное обеспечение, но "
+"автоматическая установка (ещё) не поддерживается. Переходите по "
+"расположенным ниже ссылкам для получения сведений о загрузке:</p><li>%1</li>"
 
 #: rkward/dialogs/rksetupwizard.cpp:482
 #, kde-format
@@ -1907,6 +1979,9 @@ msgid ""
 "dialog will be started when you press finish. You may be prompted to select "
 "a download mirror.</p>"
 msgstr ""
+"<p>Пакеты R (%1) отмечены для установки. Нажмите «Завершить» для запуска "
+"диалога установки пакетов R. Может быть предложено выбрать зеркало для "
+"загрузки.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:488
 #, kde-format
@@ -2149,11 +2224,13 @@ msgstr "Как цитировать:"
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
 msgstr ""
+"Отрецензированная статья в Journal of Statistical Software (журнал "
+"статистического ПО)"
 
 #: rkward/misc/celleditor.cpp:49
 #, kde-format
 msgid "[Omitted %1 more factor levels]"
-msgstr ""
+msgstr "[Пропущено уровней факторов: ещё %1]"
 
 #: rkward/misc/editformatdialog.cpp:32
 #, kde-format
@@ -2188,17 +2265,17 @@ msgstr "Значение по умолчанию"
 #: rkward/misc/editformatdialog.cpp:51
 #, kde-format
 msgid "As required"
-msgstr ""
+msgstr "По необходимости"
 
 #: rkward/misc/editformatdialog.cpp:53
 #, kde-format
 msgid "Fixed precision:"
-msgstr ""
+msgstr "Фиксированная точность:"
 
 #: rkward/misc/editformatdialog.cpp:72
 #, kde-format
 msgid "Formatting options for '%1'"
-msgstr ""
+msgstr "Параметры форматирования для «%1»"
 
 #: rkward/misc/editlabelsdialog.cpp:204
 #, kde-format
@@ -2219,7 +2296,7 @@ msgstr ""
 #: rkward/misc/multistringselector.cpp:36
 #, kde-format
 msgid "Filename"
-msgstr ""
+msgstr "Имя файла"
 
 #: rkward/misc/multistringselector.cpp:103
 #, kde-format
@@ -2244,7 +2321,7 @@ msgstr "Нажмите для добавления новой строки"
 #: rkward/misc/rkaccordiontable.cpp:441
 #, kde-format
 msgid "Remove this row / element"
-msgstr ""
+msgstr "Удалить эту строку / элемент"
 
 #: rkward/misc/rkcommandlineargs.cpp:28
 #, kde-format
@@ -3021,7 +3098,7 @@ msgstr ""
 #: rkward/misc/xmlhelper.cpp:187
 #, kde-format
 msgid "Expected exactly one element '%1' but found %2"
-msgstr ""
+msgstr "Ожидался только один элемент «%1», но найдено %2"
 
 #: rkward/misc/xmlhelper.cpp:241 rkward/misc/xmlhelper.cpp:253
 #, kde-format
@@ -3640,6 +3717,8 @@ msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
 msgstr ""
+"Не удалось найти исполняемый файл серверного приложения. Вероятно, это "
+"связано с проблемой с установленными компонентами."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:304
 #, kde-format
@@ -3671,6 +3750,8 @@ msgstr ""
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
+"Не удалось запустить процесс серверного приложения. Проверьте корректность "
+"установки."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:395
 #, kde-format
@@ -6295,12 +6376,12 @@ msgstr ""
 #: rkward/windows/rkdebugconsole.cpp:51
 #, kde-format
 msgid "Finish current"
-msgstr ""
+msgstr "Завершить"
 
 #: rkward/windows/rkdebugconsole.cpp:51
 #, kde-format
 msgid "Finish current loop or function."
-msgstr ""
+msgstr "Завершить текущий цикл или функцию."
 
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
