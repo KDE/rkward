@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2024-12-24 20:39+0530\n"
+"PO-Revision-Date: 2024-12-25 19:37+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -120,7 +120,7 @@ msgstr "AppImage इति"
 #: rkward/plugins/import_export.pluginmap:60
 #, kde-format
 msgid "File"
-msgstr "संचिका"
+msgstr "सञ्चिका"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="...">
