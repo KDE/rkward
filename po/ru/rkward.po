@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2024-12-24 17:16+0300\n"
+"PO-Revision-Date: 2024-12-25 17:19+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1029,7 +1029,7 @@ msgstr "Не закрывать"
 #: rkward/dialogs/rkloadlibsdialog.cpp:205
 #, kde-format
 msgid "Package %1 at %2"
-msgstr ""
+msgstr "Пакет %1 в %2"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
@@ -1238,7 +1238,7 @@ msgstr "Выбрать все обновления"
 #: rkward/dialogs/rkloadlibsdialog.cpp:648
 #, kde-format
 msgid "Show only packages matching:"
-msgstr ""
+msgstr "Показывать только пакеты с соответствием:"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:650
 #, kde-format
@@ -1246,11 +1246,13 @@ msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
 "matching a filter string.</p>"
 msgstr ""
+"<p>Можно сделать так, чтобы в списке были показаны только те пакеты, имена "
+"или заголовки которых соответствуют строке фильтра.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:654
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
-msgstr ""
+msgstr "Показывать только пакеты, предоставляющие диалоги RKWard"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:655
 #, kde-format
@@ -1267,12 +1269,12 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:676
 #, kde-format
 msgid "Install packages to:"
-msgstr ""
+msgstr "Установить пакеты в:"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:680
 #, kde-format
 msgid "Install suggested packages"
-msgstr ""
+msgstr "Установить предложенные пакеты"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:682
 #, kde-format
@@ -1304,7 +1306,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:716
 #, kde-format
 msgid "<b>Install %1 packages (plus dependencies), remove %2 packages</b>"
-msgstr ""
+msgstr "<b>Установить пакеты (%1) и зависимости, удалить пакеты (%2)</b>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
@@ -1322,7 +1324,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:786
 #, kde-format
 msgid "Package not available"
-msgstr ""
+msgstr "Пакет недоступен"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:891
 #, kde-format
@@ -1350,6 +1352,9 @@ msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
 msgstr ""
+"<p>Пакеты, отмеченные значком RKWard в этом столбце, расширяют возможности "
+"RKWard (как правило, они предоставляют дополнительные графические диалоги).</"
+"p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:960
 #, kde-format
@@ -1357,6 +1362,8 @@ msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
+"<p>Пакеты для установки или удаления можно выбрать путём установки или "
+"снятия соответствующих флажков в этом столбце.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
@@ -1375,7 +1382,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:963
 #, kde-format
 msgid "<p>Installed and / or available version of the package</p>"
-msgstr ""
+msgstr "<p>Установленная и / или доступная версия пакета</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:964
 #, kde-format
@@ -1763,7 +1770,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:332
 #, kde-format
 msgid "Basic installation"
-msgstr ""
+msgstr "Базовая установка"
 
 #: rkward/dialogs/rksetupwizard.cpp:334
 #, kde-format
@@ -1786,12 +1793,14 @@ msgid ""
 "This problem cannot be corrected, automatically. You will have to reinstall "
 "RKWard."
 msgstr ""
+"Эту проблему нельзя исправить автоматически. Необходимо переустановить "
+"RKWard."
 
 #: rkward/dialogs/rksetupwizard.cpp:341 rkward/dialogs/rksetupwizard.cpp:354
 #: rkward/dialogs/rksetupwizard.cpp:378
 #, kde-format
 msgid "Found."
-msgstr ""
+msgstr "Найдено."
 
 #: rkward/dialogs/rksetupwizard.cpp:345
 #, fuzzy, kde-format
@@ -1801,12 +1810,12 @@ msgstr "RKWard"
 #: rkward/dialogs/rksetupwizard.cpp:347
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
-msgstr ""
+msgstr "<p>Включённых модулей нет. Вероятно, это не планировалось.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:348
 #, kde-format
 msgid "None selected"
-msgstr ""
+msgstr "Ничего не выбрано"
 
 #: rkward/dialogs/rksetupwizard.cpp:349
 #, kde-format
@@ -1816,17 +1825,17 @@ msgstr "Восстановить значения по умолчанию"
 #: rkward/dialogs/rksetupwizard.cpp:349
 #, kde-format
 msgid "Enable the default plugins"
-msgstr ""
+msgstr "Включить стандартные модули"
 
 #: rkward/dialogs/rksetupwizard.cpp:350
 #, kde-format
 msgid "Proceed without plugins"
-msgstr ""
+msgstr "Продолжить без модулей"
 
 #: rkward/dialogs/rksetupwizard.cpp:358
 #, kde-format
 msgid "Kate plugins"
-msgstr ""
+msgstr "Модули Kate"
 
 #: rkward/dialogs/rksetupwizard.cpp:361
 #, kde-format
@@ -1835,6 +1844,9 @@ msgid ""
 "like none are installed on this system. On Linux/BSD, this can usually be "
 "fixed by installing kate.</p>"
 msgstr ""
+"<p>Важные функциональные возможности RKWard реализованы на основе модулей "
+"Kate. Похоже, что они не установлены в этой системе. При работе в Linux/BSD "
+"такую ситуацию обычно можно исправить путём установки Kate.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:362
 #, kde-format
@@ -1845,10 +1857,10 @@ msgstr "Ничего не найдено"
 #, kde-format
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Найден %1 модуль."
+msgstr[1] "Найдены %1 модуля."
+msgstr[2] "Найдены %1 модулей."
+msgstr[3] "Найден %1 модуль."
 
 #: rkward/dialogs/rksetupwizard.cpp:370
 #, kde-format
@@ -1858,22 +1870,22 @@ msgstr "Файл вывода версии ниже 0.7.3"
 #: rkward/dialogs/rksetupwizard.cpp:373
 #, kde-format
 msgid "Exists"
-msgstr ""
+msgstr "Существует"
 
 #: rkward/dialogs/rksetupwizard.cpp:375
 #, kde-format
 msgid "Import"
-msgstr ""
+msgstr "Импорт"
 
 #: rkward/dialogs/rksetupwizard.cpp:375
 #, kde-format
 msgid "Import to the session, so you can save in the new output format."
-msgstr ""
+msgstr "Импортировать в сеанс, чтобы сохранить в новом выходном формате."
 
 #: rkward/dialogs/rksetupwizard.cpp:376
 #, kde-format
 msgid "No action"
-msgstr ""
+msgstr "Ничего не делать"
 
 #: rkward/dialogs/rksetupwizard.cpp:376
 #, kde-format
@@ -1898,6 +1910,8 @@ msgid ""
 "The R2HTML package is used by nearly all RKWard output functions, and thus "
 "required."
 msgstr ""
+"Так как пакет R2HTML используется почти всеми функциями вывода данных "
+"RKWard, он является необходимым."
 
 #: rkward/dialogs/rksetupwizard.cpp:437
 #, kde-format
@@ -1930,6 +1944,9 @@ msgid ""
 "The kbibtex software is useful for managing citations while writing "
 "articles. It integrates into RKWard via the Document Preview kate plugin."
 msgstr ""
+"Программа kbibtex помогает работать с библиографической информацией при "
+"написании статей. Она интегрируется в RKWard с помощью модуля "
+"предварительного просмотра Kate."
 
 #: rkward/dialogs/rksetupwizard.cpp:450
 #, kde-format
@@ -2630,12 +2647,12 @@ msgstr "Не удалось открыть %1. Не является файло�
 #: rkward/misc/rkoutputdirectory.cpp:219
 #, kde-format
 msgid "Output directory %1 is already in use."
-msgstr ""
+msgstr "Выходной каталог %1 уже используется."
 
 #: rkward/misc/rkoutputdirectory.cpp:229
 #, kde-format
 msgid "Output had no modifications. Nothing reverted."
-msgstr ""
+msgstr "В выведенных данных не было изменений. Нечего отменять."
 
 #: rkward/misc/rkoutputdirectory.cpp:232
 #, kde-format
@@ -2643,6 +2660,8 @@ msgid ""
 "This output has not been saved before. Reverting will clear it, entirely. "
 "Are you sure you want to proceed?"
 msgstr ""
+"Эти выведенные данные ранее не сохранялись. Отмена приведёт к их полной "
+"очистке. Продолжить?"
 
 #: rkward/misc/rkoutputdirectory.cpp:235
 #, kde-format
@@ -2666,7 +2685,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:289
 #, kde-format
 msgid "Output is not empty. Not clearing it."
-msgstr ""
+msgstr "Выведенные данные не пусты. Очистка не выполняется."
 
 #: rkward/misc/rkoutputdirectory.cpp:322
 #, kde-format
@@ -2676,7 +2695,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:330
 #, kde-format
 msgid "Output has been modified. Not closing it."
-msgstr ""
+msgstr "Выведенные данные были изменены. Закрытие не выполняется."
 
 #: rkward/misc/rkoutputdirectory.cpp:333
 #, kde-format
@@ -2684,6 +2703,8 @@ msgid ""
 "The output has been modified, and closing it will discard all changes. What "
 "do you want to do?"
 msgstr ""
+"Выведенные данные изменены, закрытие приведёт к отмене всех изменений. Что "
+"следует сделать?"
 
 #: rkward/misc/rkoutputdirectory.cpp:333
 #, kde-format
@@ -2693,17 +2714,17 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:423
 #, kde-format
 msgid "New empty output directory has been created, automatically"
-msgstr ""
+msgstr "Автоматически создан новый пустой выходной каталог"
 
 #: rkward/misc/rkoutputdirectory.cpp:440
 #, kde-format
 msgid "Output has been activated, automatically"
-msgstr ""
+msgstr "Автоматически активирован вывод"
 
 #: rkward/misc/rkoutputdirectory.cpp:507
 #, kde-format
 msgid "Output '%1' is already loaded in this session. Cannot create it."
-msgstr ""
+msgstr "Вывод «%1» уже загружен в этом сеансе. Его нельзя создать."
 
 #: rkward/misc/rkoutputdirectory.cpp:508
 #, kde-format
@@ -2718,12 +2739,12 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:559
 #, kde-format
 msgid "The output identified by '%1' is not loaded in this session."
-msgstr ""
+msgstr "Вывод с идентификатором «%1» не был загружен в этом сеансе."
 
 #: rkward/misc/rkoutputdirectory.cpp:588
 #, kde-format
 msgid "Unhandled output command '%1'"
-msgstr ""
+msgstr "Необработанная команда вывода «%1»"
 
 #: rkward/misc/rkprogresscontrol.cpp:245
 #, kde-format
@@ -4065,12 +4086,12 @@ msgstr ""
 #: rkward/rkconsole.cpp:869
 #, kde-format
 msgid "Import command history..."
-msgstr ""
+msgstr "Импорт журнала команд…"
 
 #: rkward/rkconsole.cpp:871
 #, kde-format
 msgid "Export command history..."
-msgstr ""
+msgstr "Экспорт журнала команд…"
 
 #: rkward/rkconsole.cpp:890
 #, kde-format
@@ -5241,12 +5262,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:75
 #, kde-format
 msgid "Integration of R standard devices"
-msgstr ""
+msgstr "Интеграция стандартных устройств R"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:78
 #, kde-format
 msgid "Replace with RKWard device"
-msgstr ""
+msgstr "Заменить на устройство RKWard"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:81
 #, kde-format
@@ -5256,7 +5277,7 @@ msgstr "Встроить исходное устройство"
 #: rkward/settings/rksettingsmodulegraphics.cpp:87
 #, kde-format
 msgid "No device integration"
-msgstr ""
+msgstr "Без интеграции устройств"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:92
 #, kde-format
@@ -5703,7 +5724,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:329
 #, kde-format
 msgid "Select mirror"
-msgstr "Выбрать зеркало..."
+msgstr "Выбрать зеркало"
 
 #: rkward/settings/rksettingsmoduler.cpp:333
 #, kde-format
@@ -5786,7 +5807,7 @@ msgstr ""
 #, kde-format
 msgctxt "Add file to list"
 msgid "Add"
-msgstr "Добавить…"
+msgstr "Добавить"
 
 #: rkward/settings/rksettingsmoduler.cpp:442
 #, kde-format
@@ -5930,7 +5951,7 @@ msgstr "Журнал команд"
 #: rkward/windows/detachedwindowcontainer.cpp:36
 #, kde-format
 msgid "Attach to main window"
-msgstr ""
+msgstr "Прикрепить к главному окну"
 
 #. i18n: ectx: Menu (device)
 #: rkward/windows/detachedwindowcontainer.rc:13
@@ -6255,11 +6276,15 @@ msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
 "if there is no call to <i>rk.print()</i> or other RKWard output commands."
 msgstr ""
+"Предварительный просмотр данных, которые передаются в окно вывода RKWard. "
+"Будет пустым, если не выполнялся вызов <i>rk.print()</i> или других команд "
+"вывода RKWard."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr ""
+"Предварительный просмотр сценария, выполняемого в интерактивной консоли R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:702
 #, kde-format
@@ -6405,6 +6430,9 @@ msgid ""
 "idea what this means, and you want to get out, press the 'Cancel' button on "
 "the right hand side of this window."
 msgstr ""
+"Это окно нельзя закрыть, пока работает отладчик. Если непонятно, что это "
+"значит, и нужно просто избавиться от этого окна, нажмите расположенную "
+"справа кнопку «Отмена»."
 
 #: rkward/windows/rkdebugmessagewindow.cpp:70
 #, kde-format
@@ -6430,22 +6458,22 @@ msgstr "Об этом окне"
 #: rkward/windows/rkfilebrowser.cpp:115
 #, kde-format
 msgid "Working directory"
-msgstr ""
+msgstr "Рабочий каталог"
 
 #: rkward/windows/rkfilebrowser.cpp:126 rkward/windows/robjectbrowser.cpp:119
 #, kde-format
 msgid "Rename"
-msgstr ""
+msgstr "Переименовать"
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "Rename..."
-msgstr ""
+msgstr "Переименовать…"
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "New name for '%1':"
-msgstr ""
+msgstr "Новое имя «%1»:"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:59
 #, kde-format
@@ -6485,7 +6513,7 @@ msgstr "С учётом регистра"
 #: rkward/windows/rkhelpsearchwindow.cpp:101
 #, kde-format
 msgid "Fuzzy matching"
-msgstr ""
+msgstr "Неточное совпадение"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:105
 #, kde-format
@@ -6523,17 +6551,17 @@ msgstr "Все установленные пакеты"
 #: rkward/windows/rkhelpsearchwindow.cpp:236
 #, kde-format
 msgid "All loaded packages"
-msgstr ""
+msgstr "Все загруженные пакеты"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:324
 #, kde-format
 msgid "Topic"
-msgstr ""
+msgstr "Тема"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:326
 #, kde-format
 msgid "Package"
-msgstr ""
+msgstr "Пакет"
 
 #: rkward/windows/rkhtmlwindow.cpp:302
 #, kde-format
@@ -6617,17 +6645,17 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Export Page as HTML"
-msgstr ""
+msgstr "Экспорт страницы в HTML"
 
 #: rkward/windows/rkhtmlwindow.cpp:920
 #, kde-format
 msgid "Save Output"
-msgstr ""
+msgstr "Сохранить вывод"
 
 #: rkward/windows/rkhtmlwindow.cpp:922
 #, kde-format
 msgid "Save Output As"
-msgstr ""
+msgstr "Сохранить вывод как"
 
 #: rkward/windows/rkhtmlwindow.cpp:925
 #, kde-format
@@ -6637,12 +6665,12 @@ msgstr "&Очистить вывод"
 #: rkward/windows/rkhtmlwindow.cpp:931
 #, kde-format
 msgid "&Revert to last saved state"
-msgstr ""
+msgstr "&Вернуться к последнему сохранённому состоянию"
 
 #: rkward/windows/rkhtmlwindow.cpp:935
 #, kde-format
 msgid "Set Output as &Active"
-msgstr ""
+msgstr "Установить вывод как &активный"
 
 #: rkward/windows/rkhtmlwindow.cpp:937
 #, kde-format
@@ -6652,12 +6680,12 @@ msgstr "Сделать этот вывод файлом, в который бу�
 #: rkward/windows/rkhtmlwindow.cpp:959
 #, kde-format
 msgid "Print output"
-msgstr ""
+msgstr "Распечатать вывод"
 
 #: rkward/windows/rkhtmlwindow.cpp:967
 #, kde-format
 msgid "Print page"
-msgstr ""
+msgstr "Распечатать страницу"
 
 #: rkward/windows/rkhtmlwindow.cpp:1024
 #, kde-format
@@ -6671,6 +6699,9 @@ msgid ""
 "<p>The help page for this component has not yet been written (or is broken). "
 "Please consider contributing it.</p>\n"
 msgstr ""
+"<h1>Страница справки отсутствует</h1>\n"
+"<p>Страница справки для этого компонента ещё не написана (или повреждена). "
+"Можно поучаствовать в развитии проекта, создав её.</p>\n"
 
 #: rkward/windows/rkhtmlwindow.cpp:1042
 #, kde-format
@@ -6715,27 +6746,27 @@ msgstr "Описание"
 #: rkward/windows/rkhtmlwindow.cpp:1178
 #, kde-format
 msgid "<h1>On this page:</h1>"
-msgstr ""
+msgstr "<h1>На этой странице:</h1>"
 
 #: rkward/windows/rkhtmlwindow.cpp:1201
 #, kde-format
 msgid "Unnamed GUI element"
-msgstr ""
+msgstr "Безымянный элемент графического интерфейса пользователя"
 
 #: rkward/windows/rkhtmlwindow.cpp:1275
 #, kde-format
 msgid "R Reference on '%1'"
-msgstr ""
+msgstr "Ссылка R на «%1»"
 
 #: rkward/windows/rkhtmlwindow.cpp:1286
 #, kde-format
 msgid "BROKEN REFERENCE"
-msgstr ""
+msgstr "НЕРАБОЧАЯ ССЫЛКА"
 
 #: rkward/windows/rkmdiwindow.cpp:429
 #, kde-format
 msgid "Help on %1"
-msgstr ""
+msgstr "Справка по %1"
 
 # BUGME: please add ellipsis --aspotashev
 #
@@ -6753,57 +6784,57 @@ msgstr "Не найден компонент средства просмотра
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
 msgid "The name <i>%1</i> might refer to:<br>"
-msgstr ""
+msgstr "Имя <i>%1</i> может относиться к:<br>"
 
 #: rkward/windows/rktoolwindowbar.cpp:302
 #, kde-format
 msgid "Attach"
-msgstr ""
+msgstr "Прикрепить"
 
 #: rkward/windows/rktoolwindowbar.cpp:305
 #, kde-format
 msgid "Position"
-msgstr ""
+msgstr "Позиция"
 
 #: rkward/windows/rktoolwindowbar.cpp:306
 #, kde-format
 msgid "Left Sidebar"
-msgstr ""
+msgstr "Левая боковая панель"
 
 #: rkward/windows/rktoolwindowbar.cpp:307
 #, kde-format
 msgid "Right Sidebar"
-msgstr ""
+msgstr "Правая боковая панель"
 
 #: rkward/windows/rktoolwindowbar.cpp:308
 #, kde-format
 msgid "Top Sidebar"
-msgstr ""
+msgstr "Верхняя боковая панель"
 
 #: rkward/windows/rktoolwindowbar.cpp:309
 #, kde-format
 msgid "Bottom Sidebar"
-msgstr ""
+msgstr "Нижняя боковая панель"
 
 #: rkward/windows/rktoolwindowbar.cpp:310
 #, kde-format
 msgid "Not shown in sidebar"
-msgstr ""
+msgstr "Не показывать на боковой панели"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:57
 #, kde-format
 msgid "Help on R"
-msgstr ""
+msgstr "Справка по R"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format
 msgid "Search R Help"
-msgstr ""
+msgstr "Поиск в справке по R"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:61
 #, kde-format
 msgid "RKWard Dashboard and Help"
-msgstr ""
+msgstr "Обзор параметров и справка RKWard"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
@@ -6820,6 +6851,8 @@ msgstr "Показывает или поднимает окно поиска в 
 msgid ""
 "Show the RKWard dashboard with links to important settings and documentation"
 msgstr ""
+"Показать страницу обзора RKWard со ссылками на важные параметры и "
+"документацию"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:75
 #, kde-format
