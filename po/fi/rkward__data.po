@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Tommi Nieminen <translator@legisign.org>, 2015.
+# SPDX-FileCopyrightText: 2015, 2024 Tommi Nieminen <translator@legisign.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2015-05-30 20:51+0300\n"
+"PO-Revision-Date: 2024-12-23 23:09+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,6 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -325,7 +326,7 @@ msgstr "Totuusarvot"
 #: rkward/plugins/data/sort.xml:65 rkward/plugins/data/subset_dataframe.xml:134
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "Esikatselu"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="...">
 #: rkward/plugins/data/recode_categorical.xml:49
@@ -389,13 +390,13 @@ msgstr "Arvo:"
 #: rkward/plugins/data/recode_categorical.xml:97
 #, kde-format
 msgid "(Value will be quoted, automatically)"
-msgstr ""
+msgstr "(Arvo lainataan automaattisesti)"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="...">
 #: rkward/plugins/data/recode_categorical.xml:104
 #, kde-format
 msgid "Any other values"
-msgstr ""
+msgstr "Kaikki muut arvot"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
 #: rkward/plugins/data/recode_categorical.xml:105
@@ -414,6 +415,8 @@ msgstr "Mukautettu arvo:"
 #, kde-format
 msgid "Sort data. Currently data.frames, or individual vectors can be sorted."
 msgstr ""
+"Lajittele tiedot. Nykyisellään lajitellaan datakehykset tai yksittäiset "
+"vektorit."
 
 #. i18n: ectx: (Loaded from Sort data) <usage>
 #: rkward/plugins/data/sort.rkh:11
@@ -423,6 +426,9 @@ msgid ""
 "sort by. By default the object to be sorted is replaced with the sorted "
 "variant, but you can also specify to save to a separate object."
 msgstr ""
+"Valitse lajiteltava olio. Datakehyksistä tulee valita myös lajittelusarake. "
+"Oletuksena lajiteltava olio korvataan lajitellulla, mutta myös erilliseen "
+"olioon tallentamisen voi valita."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to be sorted")
 #: rkward/plugins/data/sort.rkh:17
@@ -431,12 +437,14 @@ msgid ""
 "The object to sort. If a data.frame editor window is currently active, the "
 "corresponding object name will be filled in as a default."
 msgstr ""
+"Lajiteltava olio. Jos datakehysmuokkainikkuna on aktiivinen, oletuksena "
+"täytetään vastaavan olion nimi."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort by")
 #: rkward/plugins/data/sort.rkh:18
 #, kde-format
 msgid "Only for data.frame objects. Select the column(s) to sort by."
-msgstr ""
+msgstr "Vain datakehysolioille: valitse lajittelusarake tai -sarakkeet."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/data/sort.rkh:19
@@ -446,6 +454,9 @@ msgid ""
 "the sorted variant. If, instead, you want to keep the unsorted object, "
 "choose \"Another object\" to save the sorted object, separately."
 msgstr ""
+"Vain ”Sama olio” (oletus) korvataksesi lajiteltavan olion lajitellulla. Jos "
+"sen sijaan haluat pitää lajittelemattoman olion, valitse ”Toinen olio”, "
+"jolloin lajiteltu olio tallennetaan erikseen."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to save to")
 #: rkward/plugins/data/sort.rkh:20
@@ -454,6 +465,7 @@ msgid ""
 "Only, if you selected \"Another object\", above: Specify the object to save "
 "to."
 msgstr ""
+"Vain jos yllä on valittu ”Toinen olio”: määritä olio, johon tallennetaan."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/data/sort.rkh:21
@@ -462,12 +474,14 @@ msgid ""
 "Show a preview of the sorted data. The preview is limited to 200 rows and 50 "
 "columns of data, for performance reasons."
 msgstr ""
+"Näytä esikatselu lajitellusta tiedosta. Esikatselu on suorituskyvyn takia "
+"rajoitettu 200 datariviin ja 50 -sarakkeeseen."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort order")
 #: rkward/plugins/data/sort.rkh:24
 #, kde-format
 msgid "Sort in ascending or descending order."
-msgstr ""
+msgstr "Lajittele nousevaan tai laskevaan järjestykseen."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort mode")
 #: rkward/plugins/data/sort.rkh:25
@@ -711,6 +725,8 @@ msgid ""
 "Check this, if you want to remove some columns from the resulting data."
 "frame. Otherwise, all columns will be included."
 msgstr ""
+"Valitse tämä, jos haluat poistaa tulosdatakehyksestä joitakin sarakkeita, "
+"muuten kaikki sarakkeet sisällytetään."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Selected variables")
 #: rkward/plugins/data/subset_dataframe.rkh:59
@@ -740,7 +756,7 @@ msgstr "Valitse data"
 #: rkward/plugins/data/subset_dataframe.xml:77
 #, kde-format
 msgid "Data (data.frame)"
-msgstr ""
+msgstr "Tiedot (datakehys)"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="...">
 #: rkward/plugins/data/subset_dataframe.xml:79
@@ -828,13 +844,13 @@ msgstr "on EPÄTOSI"
 #: rkward/plugins/data/subset_dataframe.xml:106
 #, kde-format
 msgid "Value (pasted as-is, use proper quoting!)"
-msgstr ""
+msgstr "Arvo (liitetään sinänsä: lainaa oikein!)"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <input label="...">
 #: rkward/plugins/data/subset_dataframe.xml:109
 #, kde-format
 msgid "Minimum (or empty)"
-msgstr ""
+msgstr "Minimi (tai tyhjä)"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <checkbox label="...">
 #: rkward/plugins/data/subset_dataframe.xml:110
@@ -846,7 +862,7 @@ msgstr ""
 #: rkward/plugins/data/subset_dataframe.xml:113
 #, kde-format
 msgid "Maximum (or empty)"
-msgstr ""
+msgstr "Maksimi (tai tyhjä)"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <checkbox label="...">
 #: rkward/plugins/data/subset_dataframe.xml:114

@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Tommi Nieminen <translator@legisign.org>, 2015, 2022.
+# SPDX-FileCopyrightText: 2015, 2022, 2024 Tommi Nieminen <translator@legisign.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2022-04-28 18:12+0300\n"
+"PO-Revision-Date: 2024-12-23 20:22+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,6 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -99,6 +100,8 @@ msgid ""
 "The following sections deal with these, in turn, showing you how to find / "
 "install, what you need."
 msgstr ""
+"Seuraavissa osioissa käsitellään näitä yksi kerrallaan ja näytetään, miten "
+"voit löytää ja asentaa tarvitsemasi."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:24
@@ -115,6 +118,10 @@ msgid ""
 "dialog to search, install and/or load packages (Settings->Manage R packages "
 "and plugins)."
 msgstr ""
+"Tavallisten R-komentorivin paketinhallintatyökalukalujen (ks. <link href="
+"\"rkward://rhelp/install.packages\"/> lisäksi RKWard tarjoaa graafisen "
+"käyttöliittymän pakettien etsimiseen, asentamiseen ja lataamiseen (Asetukset "
+"→ Hallinnoi R-paketteja ja -liitännäisiä)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -150,6 +157,15 @@ msgid ""
 ">Addons</link>. Addons shown in bold have been reported to be useful and "
 "work well in RKWard, but feel free to explore the others, too."
 msgstr ""
+"<link href=\"https://kate.kde.org\">Kate</link> on erittäin tehokas "
+"tekstimuokkain, joka käyttää samaa tekstinmuokkausosaa kuin RKWard. Siihen "
+"saa myös runsaasti lisäosia esim. koodileikkeiden luontiin tai projektien "
+"Git-tietovarastojen hallinnointiin. Joistakin lisäosista – kuten C++-"
+"jäljitysnavigoinnilla – ei juuri ole hyötyä RKWardissa, mutta monista on. "
+"Nähdäksesi mitä on tarjolla varmista, että Kate on asennettu, ja avaa sitten "
+"<link href=\"rkward://settings/addons\">Asetukset → Lisäosat</link>. "
+"Lihavoiduista lisäosista on raportoitu olevan hyötyä ja toimivan RKWardissa "
+"hyvin, mutta myös muita kannattaa kokeilla."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:39
@@ -168,6 +184,12 @@ msgid ""
 "plugins</link>), and check the option \"Show only packages providing RKWard "
 "dialogs\"."
 msgstr ""
+"RKWardin liitännäisiä voi asentaa eri lähteistä, mutta tavallisin "
+"lisäosapakettien jakelutapa on R-paketteina. RKWard-käyttöliittymän "
+"tarjoavia R-paketteja voi etsiä yleisestä hakuikkunasta (<link href="
+"\"rkward://actions/rpackage_install\">Asetukset → Hallinnoi R-paketteja ja -"
+"liitännäisiä</link>) valitsemalla ruudun ”Näytä vain RKWard-käyttöliittymän "
+"tarjoavat paketit”."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -183,6 +205,16 @@ msgid ""
 "text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
 "link> (pre-initialized for installation of rk.Teaching)."
 msgstr ""
+"Kaikki näin paketoidut RKWard-liitännäiset eivät näy R-pakettien "
+"asennusikkunassa, koska niitä ei (vielä) hallinnoida oletusasennuslähteissä; "
+"etenkin tämä koskee tällä hetkellä laajaa <link href=\"https://github.com/"
+"rkward-community/rk.Teaching\">rk.Teaching</link>-liitännäisten joukkoa. "
+"Monia näistä hallinnoidaan github.comin tapaisilla alustoilla, ja jos tiedät "
+"asennuslähteen verkko-osoitteen, ne voi muutamalla napsautuksella asentaa "
+"<link href=\"rkward://runplugin/rkward::install_from_git/fullURL."
+"text=https://github.com/rkward-community/rk.Teaching.git\">tässä "
+"käyttöliittymässä</link> (joka on esivalmisteltu rk.Teachingin "
+"asentamiseksi)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:47
@@ -848,14 +880,7 @@ msgstr "R-ohje"
 
 #. i18n: ectx: (RKWard for R Users) <section title="R Help">
 #: rkward/pages/rkward_for_r_users.rkh:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "By default R help pages are shown as HTML, inside RKWard. You can invoke "
-#| "the help in the usual way by running e.g. \"?print\" or \"help (print)\" "
-#| "or \"help.start ()\" in the console. Additionally, there is a tool window "
-#| "to search your installed R help pages. This is accessible using a button "
-#| "located at the bottom of the window (next to the console button). To view "
-#| "a help page found using this tool, double click on it."
+#, kde-format
 msgid ""
 "By default R help pages are shown as HTML, inside RKWard. You can invoke the "
 "help in the usual way by running e.g. \"?print\" or \"help (print)\" or "
@@ -868,8 +893,8 @@ msgstr ""
 "käynnistää konsolista tavalliseen tapaan, esim. \"?print”, ”help(print)” tai "
 "”help.start()”. Lisäksi asennettuja R-ohjesivujen etsimiseen on "
 "työkaluikkuna, johon pääsee ikkunan alaosassa konsolipainikkeen vieressä "
-"olevasta painikkeesta. Kaksoisnapsauta painiketta työkalulla löytyneen "
-"ohjesivun avaamiseksi."
+"olevasta painikkeesta. Avaa löytynyt ohjesivu kaksoisnapsauttamalla "
+"painiketta."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:41
@@ -908,6 +933,9 @@ msgid ""
 "Ctrl+Shift+Tab cycle through all active document / tool windows in your "
 "session."
 msgstr ""
+"Ikkunat voi sulkea valitsemalla Ikkunat → Sulje (oletuspikanäppäin Ctrl+W). "
+"Ctrl+Sarkain ja Ctrl+Vaihto+Sarkain kiertävät istunnon aktiivisia tiedostoja "
+"ja työkaluikkunoita."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -916,12 +944,14 @@ msgid ""
 "Tool windows (e.g. the R Console) can be detached and re-attached using the "
 "arrow-icon in their window border."
 msgstr ""
+"Työkaluikkunat (esim. R-konsoli) voi irrottaa ja kiinnittää uudelleen niiden "
+"ikkunareunusten nuolikuvakkeella."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:51
 #, kde-format
 msgid "Editing data"
-msgstr ""
+msgstr "Tietojen muokkaaminen"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -933,6 +963,12 @@ msgid ""
 "explore the data editor, either choose File->New->Dataset, or right-click a "
 "data.frame in the Workspace browser, and choose Edit from the menu."
 msgstr ""
+"RKWard tarjoaa sisään rakennetun data.frames-muokkaimen. Itse asiassa voit "
+"muokata useampaa datakehystä yhtä aikaa, myös suoritettaessa pitkää "
+"laskentaa. Tiedot tallennetaan R:ään silti tavalliseksi data.frames-olioksi. "
+"Datamuokkainta voi tutkia joko valitsemalla Tiedosto → Uusi → Tietojoukko "
+"tai napsauttamalla työtilaselaimessa datakehystä hiiren oikealla "
+"painikkeella ja valitsemalla valikosta ”Muokkaa”."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -1155,7 +1191,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:28
 #, kde-format
 msgid "RKWard output vs. R Markdown"
-msgstr ""
+msgstr "RKWard-tuloste vs. R-Markdown"
 
 #. i18n: ectx: (RKWard Output) <section title="RKWard output vs. R Markdown">
 #: rkward/pages/rkward_output.rkh:28
@@ -1598,7 +1634,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "People tend to ask me what RKWard means. What should I answer?"
-msgstr ""
+msgstr "Minulta tavataan kysyä, mitä RKWard tarkoittaa. Mitä pitäisi vastata?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1616,6 +1652,12 @@ msgid ""
 "link>, which delivered the basic GUI technologies for RKWard. And <link href="
 "\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's another story."
 msgstr ""
+"Kyllä, nimi on outo ;) R kuitenkin mitä ilmeisimmin tulee <link href="
+"\"http://www.r-project.org/\">R-kielestä</link>, joka on RKWardin "
+"tilastolaskennallinen perusta. K periytyy <link href=\"http://kde.org/"
+"\">KDE</link>:sta, joka tarjoaa RKWardin käyttöliittymä perustekniikan. Entä "
+"<link href=\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? Se on toinen "
+"tarina."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:20
@@ -1733,7 +1775,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:35
 #, kde-format
 msgid "RKWard is running since ages. Has it hung up?"
-msgstr ""
+msgstr "RKWard on ollut käynnissä ikuisuuksia. Onko se jumittunut?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
@@ -1752,6 +1794,11 @@ msgid ""
 "there is still something to calculate or plot. If it turns green, R is done "
 "calculating."
 msgstr ""
+"Se riippuu. Jotkin testit kaaviot vain vaativat aikaa, jos dataa on "
+"valtavasti tai laskenta vaativaa. Joskus vaaditaan kärsivällisyyttä. R:n "
+"tilan voi joka tapauksessa tarkistaa RKWardista. Katso vain RKWardin "
+"oikeassa alakulmassa pientä ruutua. Punainen tarkoittaa, että jotakin yhä "
+"lasketaan tai piirretään. Kun väri vaihtuu vihreäksi, R:n laskenta on valmis."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
@@ -1763,6 +1810,11 @@ msgid ""
 "An example of very memory hungry tests are the <link href=\"rkward://rhelp/"
 "wilcox.test\">Wilcoxon Rank Sum and Signed Rank Tests</link>."
 msgstr ""
+"Jotkin tilastotestit ovat muisti- ja pinosyöppöjä ja voivat jumittaa koko "
+"järjestelmän, jos sivutusta tapahtuu paljon. Tämä ei ole RKWardin tai R:n "
+"ohjelmavirhe vaan laskenta vie vain järjestelmäsi äärirajoille. Esimerkki "
+"hyvin muistisyöpöistä testeistä ovat <link href=\"rkward://rhelp/wilcox.test"
+"\">Wilcoxonin merkittyjen järjestyslukujen testit</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:35
@@ -1775,6 +1827,12 @@ msgid ""
 "issue (see: <link href=\"rkward://rhelp/mem.limits\"/>, and <link href="
 "\"rkward://rhelp/memory.limit\"/>)."
 msgstr ""
+"Siksi on tärkeää tuntea testi. Lisäksi on tärkeää tallentaa työtila ja muut "
+"käytetyt osiot ennen näitä toimenpiteitä. RKWardissa ei toistaiseksi ole "
+"kaatumisten varalle palautustoiminnallisuutta! R:stä löytyy sisään "
+"rakennettuja testejä näiden muistiongelmien varalle (ks. <link href="
+"\"rkward://rhelp/mem.limits\"/> ja <link href=\"rkward://rhelp/memory.limit"
+"\"/>)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
@@ -1799,6 +1857,11 @@ msgid ""
 "important that you know what you do before you start. It's recommended to "
 "use copies of original data and to give everything a meaningful name."
 msgstr ""
+"RKWardissa ei toistaiseksi ole ”kumoa”- tai ”tee uudelleen” -mahdollisuutta "
+"kaikkialla. Skriptimuokkaimessa se on, muttei valmiissa kaavioissa tai "
+"testeissä. Siksi on tärkeää tietää, mitä tehdä ennen aloittamista. "
+"Alkuperäisestä datasta on suositeltavaa säilyttää kopioita, samoin kuin "
+"antaa kaikelle mielekkäät nimet."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
 #: rkward/pages/rkward_trouble_shooting.rkh:42
@@ -1812,6 +1875,14 @@ msgid ""
 "relevant settings in combination with the creation date. Moreover you can "
 "check and copy any code generated for your documentation purposes."
 msgstr ""
+"RKWard yrittää kuitenkin tarjota sinulle mahdollisimman paljon tietoa siitä, "
+"mitä olet tehnyt. Valikosta käynnistämillesi testeille ja kaavioille <link "
+"href=\"rkward://page/rkward_output\"/> sisältää tuloksen alla ”suorita "
+"uudelleen” -linkin. Sillä voi toimenpiteen tehdä uudelleen samoin tai vähän "
+"muuttunein asetuksin. Testit ja kaaviot yrittävät myös näyttää "
+"asiaankuuluvimmat asetukset luomispäivän yhteydessä. "
+"Dokumentointitarkoituksia varten voit edelleen tarkistaa ja kopioida luomasi "
+"koodin."
 
 #. i18n: ectx: (Welcome to RKWard) <title>
 #: rkward/pages/rkward_welcome.rkh:8
@@ -1823,25 +1894,25 @@ msgstr "Tervetuloa RKWardiin"
 #: rkward/pages/rkward_welcome.rkh:10
 #, kde-format
 msgid "My recent script files"
-msgstr ""
+msgstr "Viimeisimmät skriptitiedostot"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:12
 #, kde-format
 msgid "My recent workspaces"
-msgstr ""
+msgstr "Viimeisimmät työtilat"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:14
 #, kde-format
 msgid "My recent output files"
-msgstr ""
+msgstr "Viimeisimmät tulostiedostot"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "Import or enter data"
-msgstr ""
+msgstr "Tuo tai syötä tietoja"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
@@ -1859,7 +1930,7 @@ msgstr ""
 #: rkward/pages/rkward_welcome.rkh:23
 #, kde-format
 msgid "Useful settings"
-msgstr ""
+msgstr "Hyödyllisiä asetuksia"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -2086,6 +2157,8 @@ msgid ""
 "<b>Show variables / functions</b>: Equivalent to the \"All vs. Non-Function "
 "vs. Functions\" control described <link href=\"#introduction\">above</link>."
 msgstr ""
+"<b>Näytä muuttujat / funktiot</b>: Vastaava kuin <link href=\"#introduction"
+"\">yllä</link> kuvattu ”Kaikki vs. ei-funktiot vs. funktiot”."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2115,6 +2188,13 @@ msgid ""
 "and is \"blacklisted\" by default. If you note that loading a package takes "
 "exceedingly long, you may consider adding it to this list."
 msgstr ""
+"<b>Älä koskaan nouda näiden pakettien rakennetta</b>: Jotkin (harvat) R-"
+"paketit sisältävät <b>hyvin</b> monia (kymmeniätuhansia) pieniä olioita. "
+"Pahimmassa tapauksessa niiden rakennetiedon noutamisen yrittäminen "
+"työtilaselaimessa näytettäväksi voi kuluttaa valtavasti voimavaroja, jolloin "
+"RKWard tuntuu lakkaavaan vastaamasta. ”GO”-paketti on esimerkki sellaisesta, "
+"ja se on oletusarvoisesti estolistattu. Jos huomaat paketin lataamisen "
+"kestävän tavattoman kauan, harkitse sen lisäämistä tähän luetteloon."
 
 #~ msgid "Introduction to RKWard"
 #~ msgstr "Johdatus RKWardiin"
