@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Tommi Nieminen <translator@legisign.org>, 2015.
+# SPDX-FileCopyrightText: 2015, 2024 Tommi Nieminen <translator@legisign.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2015-05-30 20:44+0300\n"
+"PO-Revision-Date: 2024-12-23 23:20+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,6 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,13 +32,13 @@ msgstr "translator@legisign.org"
 #: rkward/plugins/distributions/../data/multi_input.xml:99
 #, kde-format
 msgid "Level selector"
-msgstr ""
+msgstr "Tasovalitsin"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <text>
 #: rkward/plugins/distributions/../data/level_select.xml:67
 #, kde-format
 msgid "Note: Some values were cut off."
-msgstr ""
+msgstr "Huom! Jotkin arvot leikkautuivat."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <summary>
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:8
@@ -175,37 +176,37 @@ msgstr ""
 #: rkward/plugins/distributions/../embedded.pluginmap:29
 #, kde-format
 msgid "Limit Vector Length"
-msgstr ""
+msgstr "Rajoita vektorin pituutta"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <spinbox label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:29
 #, kde-format
 msgid "Limit"
-msgstr ""
+msgstr "Rajoita"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:30
 #, kde-format
 msgid "Sorting"
-msgstr ""
+msgstr "Lajittelu"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:31
 #, kde-format
 msgid "Keep smallest values"
-msgstr ""
+msgstr "Pidä pienimmät arvot"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:32
 #, kde-format
 msgid "Keep largest values"
-msgstr ""
+msgstr "Pidä suurimmat arvot"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:35
 #, kde-format
 msgid "Add remainder category"
-msgstr ""
+msgstr "Lisää jäännösluokka"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="...">
@@ -241,13 +242,13 @@ msgstr "Muu:"
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:41
 #, kde-format
 msgid "Custom statistic (as function of x)"
-msgstr ""
+msgstr "Mukautettu tilasto (x:n funktiona)"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:43
 #, kde-format
 msgid "Remainder category label"
-msgstr ""
+msgstr "Jäännösluokan selite"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <radio label=""> <option label="...">
 #: rkward/plugins/distributions/../data/multi_input.xml:101
@@ -315,7 +316,7 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
 #, kde-format
 msgid "<link href=\"rkward://component/crosstab\"/> and"
-msgstr ""
+msgstr "<link href=\"rkward://component/crosstab\"/> ja"
 
 #. i18n: ectx: (Loaded from Tabulate) <related>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
@@ -472,7 +473,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:39
 #, kde-format
 msgid "Plot Options"
-msgstr ""
+msgstr "Piirtämisvalinnat"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:23
@@ -498,7 +499,7 @@ msgstr "Histogrammiasetukset"
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:21
 #, kde-format
 msgid "Barplot Options"
-msgstr ""
+msgstr "Pylväskaaviovalinnat"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:31
@@ -528,37 +529,37 @@ msgstr "Suorita koodi"
 #: rkward/plugins/distributions/../embedded.pluginmap:41
 #, kde-format
 msgid "Install from git"
-msgstr ""
+msgstr "Asenna Gitistä"
 
 #. i18n: ectx: (Loaded from Install from git/svn)
 #: rkward/plugins/distributions/../internal/Installfromgit.js:70
 #, kde-format
 msgid "Install from git results"
-msgstr ""
+msgstr "Asenna Git-tuloksista"
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Package source")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:18
 #, kde-format
 msgid "Set the location where the package resides that you want to install."
-msgstr ""
+msgstr "Aseta sijainti, johon asennettava paketti menee."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:22
 #, kde-format
 msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
-msgstr ""
+msgstr "Määritä käyttäjätunnus (vain GitHub, GitLab ja Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Repository")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:25
 #, kde-format
 msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
-msgstr ""
+msgstr "Anna tietovaraston nimi (vain GitHub, GitLab ja Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "URL to repository")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:28
 #, kde-format
 msgid "Give the full URL to the repository (generic git and svn only)."
-msgstr ""
+msgstr "Asenna tietovaraston täysi verkko-osoite (vain yleinen git ja svn)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Commit/tag/branch")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:31
@@ -567,6 +568,8 @@ msgid ""
 "If you want a certain commit, tag or branch for installation, define that "
 "here."
 msgstr ""
+"Jos haluat asentaa tietyn toimituksen, tunnisteen tai haaran, määritä se "
+"tässä."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:34
@@ -574,7 +577,7 @@ msgstr ""
 msgid ""
 "If you want to install from a subdirectory of the repository, define that "
 "here."
-msgstr ""
+msgstr "Jos haluat asentaa tietovaraston alikansiosta, määritä se tässä."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:38
@@ -583,6 +586,8 @@ msgid ""
 "To install from a private repository, set your personal access token (PAT, "
 "GitHub and GitLab only)."
 msgstr ""
+"Jos haluat asentaa yksityisestä tietovarastosta, aseta henkilökohtainen "
+"pääsymerkki (vain PAT, GitHub ja GitLab)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:41
@@ -590,6 +595,8 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the user name (Bitbucket only)."
 msgstr ""
+"Jos haluat asentaa yksityisestä tietovarastosta, määritä käyttäjätunnus "
+"(vain Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:44
@@ -597,116 +604,116 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the password (Bitbucket only)."
 msgstr ""
+"Jos haluat asentaa yksityisestä tietovarastosta, määritä salasana (vain "
+"Bitbucket)."
 
 #. i18n: ectx: (Install from git/svn) <dialog label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:30
 #, kde-format
 msgid "Install from git/svn"
-msgstr ""
+msgstr "Asenna Gitistä tai Subversionista"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:32
 #, kde-format
 msgid "Package source"
-msgstr ""
+msgstr "Pakettilähde"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:33
 #, kde-format
 msgid "git (generic)"
-msgstr ""
+msgstr "Git (yleinen)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:34
 #, kde-format
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:35
 #, kde-format
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:36
 #, kde-format
 msgid "Bitbucket"
-msgstr ""
+msgstr "Bitbucket"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:37
 #, kde-format
 msgid "subversion (generic)"
-msgstr ""
+msgstr "Subversion (yleinen)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:39
 #, kde-format
 msgid "Package repository"
-msgstr ""
+msgstr "Pakettitietovarasto"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:41
-#, fuzzy, kde-format
-#| msgctxt "NAME OF TRANSLATORS"
-#| msgid "Your names"
+#, kde-format
 msgid "Git user name"
-msgstr "Tommi Nieminen"
+msgstr "Git-käyttäjätunnus"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:42
 #, kde-format
 msgid "Repository"
-msgstr ""
+msgstr "Tietovarasto"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:44
 #, kde-format
 msgid "URL to repository"
-msgstr ""
+msgstr "Tietovaraston verkko-osoite"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:46
 #, kde-format
 msgid "Commit/tag/branch"
-msgstr ""
+msgstr "Toimitus/tunniste/haara"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:47
 #, kde-format
 msgid "Subdirectory"
-msgstr ""
+msgstr "Alikansio"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:48
 #, kde-format
 msgid "Private repository"
-msgstr ""
+msgstr "Yksityinen tietovarasto"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:49
 #, kde-format
 msgid "Personal access token (PAT)"
-msgstr ""
+msgstr "Henkilökohtainen pääsymerkki (PAT)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:51
 #, kde-format
 msgid "User"
-msgstr ""
+msgstr "Käyttäjä"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/distributions/../internal/Installfromgit.xml:52
 #, kde-format
 msgid "Password"
-msgstr ""
+msgstr "Salasana"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/distributions/../menu.pluginmap:10
 #, kde-format
 msgid "Menu structure definition"
-msgstr ""
+msgstr "Valikkorakennemäärittely"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/distributions/../menu.pluginmap:10
@@ -715,6 +722,8 @@ msgid ""
 "Not for direct use: Defines the names and order of top level menus. Part of "
 "the official RKWard distribution"
 msgstr ""
+"Ei suoraan käyttöön: määrittää ylimmän tason valikoiden nimet ja "
+"järjestyksen. Osa virallista RKWard-jakelua"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:24
@@ -732,7 +741,7 @@ msgstr "Analyysi"
 #: rkward/plugins/distributions/../menu.pluginmap:30
 #, kde-format
 msgid "Plots"
-msgstr ""
+msgstr "Kaaviot"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:33
@@ -1060,7 +1069,7 @@ msgstr "Ruskea"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:33
 #, kde-format
 msgid "Cyan"
-msgstr ""
+msgstr "Syaani"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:34
@@ -1186,31 +1195,31 @@ msgstr "Pellava"
 #: rkward/plugins/distributions/../plots/color_chooser.xml:54
 #, kde-format
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:55
 #, kde-format
 msgid "Magenta1"
-msgstr ""
+msgstr "Magenta1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:56
 #, kde-format
 msgid "Magenta2"
-msgstr ""
+msgstr "Magenta2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:57
 #, kde-format
 msgid "Magenta3"
-msgstr ""
+msgstr "Magenta3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:58
 #, kde-format
 msgid "Magenta4"
-msgstr ""
+msgstr "Magenta4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:59
@@ -1520,25 +1529,25 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:16
 #, kde-format
 msgid "This is the <i>freq</i> parameter."
-msgstr ""
+msgstr "Tämä on <i>freq</i>-parametri."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Bar labels")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:17
 #, kde-format
 msgid "This is the <i>label</i> parameter."
-msgstr ""
+msgstr "Tämä on <i>label</i>-parametri."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Right closed")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:18
 #, kde-format
 msgid "This is the <i>right</i> parameter."
-msgstr ""
+msgstr "Tämä on <i>right</i>-parametri."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Include in lowest cell")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:19
 #, kde-format
 msgid "This is the <i>include.lowest</i> parameter."
-msgstr ""
+msgstr "Tämä on <i>include.lowest</i>-parametri."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:21
@@ -2405,25 +2414,25 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:124
 #, kde-format
 msgid "Min X value"
-msgstr ""
+msgstr "X-vähimmäisarvo"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:125
 #, kde-format
 msgid "Min Y value"
-msgstr ""
+msgstr "Y-vähimmäisarvo"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:128
 #, kde-format
 msgid "Max X value"
-msgstr ""
+msgstr "X-enimmäisarvo"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:129
 #, kde-format
 msgid "Max Y value"
-msgstr ""
+msgstr "Y-enimmäisarvo"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:132
@@ -2441,25 +2450,25 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:135
 #, kde-format
 msgid "Always parallel to the axis "
-msgstr ""
+msgstr "Aina akselin suuntainen "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:136
 #, kde-format
 msgid "Always horizontal "
-msgstr ""
+msgstr "Aina vaakasuuntainen "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:137
 #, kde-format
 msgid "Always perpendicular to the axis "
-msgstr ""
+msgstr "Aina akselinvastainen "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:138
 #, kde-format
 msgid "Always vertical "
-msgstr ""
+msgstr "Aina pystysuuntainen "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:141
@@ -2471,31 +2480,31 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:148
 #, kde-format
 msgid "Points / Lines"
-msgstr ""
+msgstr "Pisteet / viivat"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:150
 #, kde-format
 msgid "Type of points/lines"
-msgstr ""
+msgstr "Pisteiden / viivojen tyyppi"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:152
 #, kde-format
 msgid "Plot individual points "
-msgstr ""
+msgstr "Piirrä yksittäiset pisteet "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:153
 #, kde-format
 msgid "Plot lines "
-msgstr ""
+msgstr "Piirrä viivat "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:154
 #, kde-format
 msgid "Plot points connected by lines (both)"
-msgstr ""
+msgstr "Piirrä viivojen yhdistämät pisteet (kummatkin)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:155
@@ -2525,7 +2534,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:164
 #, kde-format
 msgid "Aspect ratio y/x"
-msgstr ""
+msgstr "Kuvasuhde y/x"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:166
@@ -2561,7 +2570,7 @@ msgstr "Ruudukko"
 #: rkward/plugins/distributions/../plots/plot_options.xml:173
 #, kde-format
 msgid "Add Grid to the plot"
-msgstr ""
+msgstr "Lisää kaavioon ruudukko"
 
 #. i18n: ectx: (Loaded from Step function plot options) <summary>
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:8
@@ -2682,19 +2691,19 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:35
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "Valinnat"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:36
 #, kde-format
 msgid "Add to current plot"
-msgstr ""
+msgstr "Lisää nykyiseen kaavioon"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:37
 #, kde-format
 msgid "Line type for all lines"
-msgstr ""
+msgstr "Kaikkien viivojen tyyppi"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
@@ -2738,13 +2747,13 @@ msgstr "Piirrä pystyviivat"
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:62
 #, kde-format
 msgid "For y = 0 line"
-msgstr ""
+msgstr "y = 0 -viivalle"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:65
 #, kde-format
 msgid "For y = 1 line"
-msgstr ""
+msgstr "y = 1 -viivalle"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/distributions/../pluginmap_meta.inc:9
@@ -2757,7 +2766,7 @@ msgstr "RKWard-työryhmä"
 #: rkward/plugins/distributions/../testing/run_code.xml:10
 #, kde-format
 msgid "Internal plugin for automated testing"
-msgstr ""
+msgstr "Sisäinen liitännäinen automatisoituun testaukseen"
 
 #. i18n: ectx: (Loaded from Grid options) <summary>
 #: rkward/plugins/distributions/../x11device/grid.rkh:8
