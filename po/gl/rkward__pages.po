@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
-# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-12-17 22:47+0100\n"
+"PO-Revision-Date: 2025-01-06 21:11+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -648,9 +648,8 @@ msgid ""
 "Provide some starting points for users new to R and RKWard. For a more in "
 "depth guide see <link href=\"rkward://page/rkward_for_r_users\"/>."
 msgstr ""
-"Fornece algúns puntos de partida para os novos usuarios de R e RKWard. Para "
-"acceder a unha guía máis completa, consulte <link href=\"rkward://page/"
-"rkward_for_r_users\"/>."
+"Fornece algúns puntos de partida para os novos usuarios de R e RKWard. Ten "
+"unha guía máis completa en <link href=\"rkward://page/rkward_for_r_users\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -1038,10 +1037,10 @@ msgid ""
 "namespaces)."
 msgstr ""
 "RKWard inclúe unha «vista do espazo de traballo» ou «navegador de obxectos». "
-"A forma predeterminada de acceder a el é premer «Espazo de traballo» na "
-"parte esquerda da xanela da aplicación. Isto permítelle examinar e manipular "
-"todos os obxectos do espazo de traballo de R. De maneira predeterminada só "
-"se amosa o ambiente «.GlobalEnv» (que é no que normalmente realizará o seu "
+"A forma predeterminada de abrila é premer «Espazo de traballo» na parte "
+"esquerda da xanela da aplicación. Isto permítelle examinar e manipular todos "
+"os obxectos do espazo de traballo de R. De maneira predeterminada só se "
+"amosa o ambiente «.GlobalEnv» (que é no que normalmente realizará o seu "
 "traballo; consulte <link href=\"rkward://rhelp/.GlobalEnv\"/>). Pero pode "
 "marcar a opción «Amosar todos os ambientes» para explorar facilmente datos e "
 "funcións das bibliotecas de R cargadas (e mesmo en espazos de nomes de "
@@ -1563,6 +1562,7 @@ msgstr ""
 "correspondente no historial. Para a «navegación lineal» habitual, use as "
 "accións de primeira, anterior, seguinte e última descritas a continuación."
 
+# skip-rule: trasno-login1_reverse
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
 #, kde-format
@@ -2049,7 +2049,7 @@ msgid ""
 "path, and adjust paths, automatically."
 msgstr ""
 "Este problema adoita ocorrer tras cambiar a ruta de instalación de RKWard, "
-"especialmente en Windows e Mac. Pode que teña que acceder a «Configuración → "
+"especialmente en Windows e Mac. Pode que teña que abrir «Configuración → "
 "Configurar RKWard → Complementos» e engadir de novo os ficheiros «."
 "pluginmap» correspondentes. A partir da versión 0.6.3 RKWard debería ser "
 "capaz de detectar o cambio de ruta e axustar as rutas correspondentes "
