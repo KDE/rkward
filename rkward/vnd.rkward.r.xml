@@ -30,6 +30,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <comment xml:lang="pl">Plik źródłowy R</comment>
     <comment xml:lang="pt">Ficheiro de código em R</comment>
     <comment xml:lang="pt_BR">Arquivo de código do R</comment>
+    <comment xml:lang="ru">Файл кода R</comment>
     <comment xml:lang="sk">Zdrojový súbor R</comment>
     <comment xml:lang="sl">R izvorni program</comment>
     <comment xml:lang="sv">R-källkodsfil</comment>
@@ -69,6 +70,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <comment xml:lang="pl">Plik danych/przestrzeni pracy R</comment>
     <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
     <comment xml:lang="pt_BR">Arquivo de dados/espaço de trabalho do R</comment>
+    <comment xml:lang="ru">Файл данных/рабочей области R</comment>
     <comment xml:lang="sk">Súbor údajov/pracovnej plochy R</comment>
     <comment xml:lang="sl">R datoteka data/workspace</comment>
     <comment xml:lang="sv">R-datafil/arbetsrymdsfil</comment>
