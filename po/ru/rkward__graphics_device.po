@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-01-10 17:18+0300\n"
+"PO-Revision-Date: 2025-01-13 14:18+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -108,6 +108,19 @@ msgid ""
 "mostly using <b>par</b>(). Note that all the parameters to postscript are "
 "also valid parameters to dev2bitmap."
 msgstr ""
+"Выберите функцию экспорта и файл для сохранения. Также доступны "
+"дополнительные параметры для управления размером и разрешением (смотрите "
+"ниже). Экспорт выполняется с помощью <b>dev.print</b>. Для экспорта с "
+"помощью ghostscript используется <b>dev2bitmap</b> (требуется Ghostscript). "
+"Большинство параметров экспорта напрямую отправляются функции экспорта "
+"(<b>postscript</b>, <b>pdf</b>, <b>svg</b>, <b>png</b> или <b>jpeg</b>) "
+"функцией dev.print. Обратите внимание, что в этом модуле нет параметров "
+"цвета (например, цвета фона или переднего плана). Это обусловлено тем, что "
+"dev.print просто выводит текущую графику (главным образом в X11) в указанный "
+"файл в выбранном формате. Чтобы установить цвет фона (или переднего плана), "
+"необходимо передать эти параметры при вызове функции построения графика, "
+"обычно с помощью <b>par</b>(). Обратите внимание, что все параметры для "
+"postscript также могут использоваться в качестве параметров для dev2bitmap."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <usage>
 #: rkward/plugins/x11device/export.rkh:11
@@ -171,6 +184,11 @@ msgid ""
 "can not be set in this case. This sets the <i>onefile</i> parameter to "
 "postscript to FALSE."
 msgstr ""
+"При экспорте в формате postscript этот параметр указывает, следует ли "
+"создавать заголовок EPSF (.eps-file). Это позволяет получить переносимые "
+"файлы, поэтому обычно рекомендуется. В этом случае невозможно указать размер "
+"бумаги и ориентацию страницы. Параметр <i>onefile</i> для postscript будет "
+"установлен в значение FALSE."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Width")
 #: rkward/plugins/x11device/export.rkh:25
@@ -178,6 +196,8 @@ msgstr ""
 msgid ""
 "Check this box to let the export function determine the width automatically."
 msgstr ""
+"Установите этот флажок, чтобы функция экспорта автоматически определяла "
+"ширину."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Height")
 #: rkward/plugins/x11device/export.rkh:26
@@ -199,6 +219,16 @@ msgid ""
 "the provided resolution value is used. None of these matter for exporting to "
 "Postscript/PDF where the width parameter is provided in inches."
 msgstr ""
+"Это параметр <i>width</i> для функции экспорта. Его значение указывается в "
+"дюймах. При экспорте в формате JPEG или PNG (требующем указания ширины в "
+"пикселах) фактическая ширина вычисляется путём умножения значения ширины в "
+"дюймах на разрешение (в dpi, «точках на дюйм»): width_pixels = width_inches "
+"* resolution_dpi. Если выбрано «Разрешение по умолчанию», то при экспорте в "
+"формате JPEG или PNG по умолчанию используется значение 96, а при экспорте с "
+"помощью ghostscript — 72. В ином случае используется предоставленное "
+"значение разрешения. Ни один из этих вариантов не используется при экспорте "
+"в формате PostScript или PDF, где значение параметра ширины указывается в "
+"дюймах."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
 #: rkward/plugins/x11device/export.rkh:27
@@ -210,6 +240,12 @@ msgid ""
 "as the width (in pixels) parameter value. Again, none of these are required "
 "for exporting to Postscript/PDF."
 msgstr ""
+"Функциям <b>jpeg</b> и <b>png</b> требуется предоставить как минимум "
+"значение параметра ширины или длины. Это ограничение удаётся обойти "
+"благодаря чтению ширины (в дюймах) из <b>par(\"din\")[1]</b> и последующей "
+"установке «par(\"din\")[1] * resolution» в качестве значения параметра "
+"ширины (в пикселах). Если же выполняется экспорт в формате PostScript или "
+"PDF, то ничего из этого не требуется."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Height in inches")
 #: rkward/plugins/x11device/export.rkh:30
@@ -225,7 +261,7 @@ msgstr ""
 #: rkward/plugins/x11device/export.rkh:33
 #, kde-format
 msgid "This is the <i>pointsize</i> parameter to dev.print."
-msgstr ""
+msgstr "Это параметр <i>pointsize</i> для dev.print."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Resolution (dpi)")
 #: rkward/plugins/x11device/export.rkh:34
@@ -237,6 +273,12 @@ msgid ""
 "resolution (when 'Default Resolution' is checked) is 96 for PNG/JPEG exports "
 "and it is 72 for Ghostscript exports."
 msgstr ""
+"Доступно только для PNG, JPEG или Ghostscript, это параметр <i>res</i> для "
+"dev.print или dev2bitmap. Это значение используется при преобразовании "
+"ширины/высоты в пикселах в дюймы (смотрите описание параметра «Ширина» "
+"выше). Стандартное разрешение (когда установлен флажок «Разрешение по "
+"умолчанию») составляет 96 для экспорта в формате PNG или JPEG и 72 для "
+"экспорта с помощью Ghostscript."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "JPEG Quality")
 #: rkward/plugins/x11device/export.rkh:35
@@ -245,6 +287,9 @@ msgid ""
 "Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</"
 "b>. Sets the quality for JPEG exporting. The default quality is 75."
 msgstr ""
+"Доступно только для JPEG, это параметр <i>quality</i> для <b>jpeg</b>. "
+"Устанавливает качество при экспорте в формате JPEG. По умолчанию равняется "
+"75."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Paper Size")
 #: rkward/plugins/x11device/export.rkh:38
@@ -255,6 +300,11 @@ msgid ""
 "<b>postscript</b>. This is available only for Postscript/PDF exports. This "
 "is the <i>paper</i> option to the exporting function."
 msgstr ""
+"Этот параметр позволяет установить размер бумаги для экспорта. Чтобы не "
+"указывать какой-либо вариант размера бумаги, выберите «По умолчанию». "
+"Дополнительные сведения доступны в справке R по <b>postscript</b>. Доступно "
+"только для экспорта в формате PostScript или PDF. Этот параметр <i>paper</i> "
+"для функции экспорта."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Pagecentre")
 #: rkward/plugins/x11device/export.rkh:39
@@ -263,6 +313,8 @@ msgid ""
 "Uncheck this for NOT centering the image on the page. This is the "
 "<i>pagecentre</i> parameter."
 msgstr ""
+"Снимите флажок, чтобы НЕ центрировать изображение на странице. Это параметр "
+"<i>pagecentre</i>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Horizontal (ps/gs)")
 #: rkward/plugins/x11device/export.rkh:40
@@ -284,6 +336,11 @@ msgid ""
 "family (Helvectica) will be used. See the R reference on postscript for more "
 "details."
 msgstr ""
+"Это параметр <i>family</i> для <b>postscript</b>. Следует выбрать ту "
+"гарнитуру, которая доступна на компьютере. Для работы «URW»-класса гарнитур "
+"требуется ghostscript. Если имеются сомнения, оставьте вариант «По "
+"умолчанию» (будет использоваться гарнитура по умолчанию, Helvectica). "
+"Дополнительные сведения доступны в справке R по postscript."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font Encoding")
 #: rkward/plugins/x11device/export.rkh:42
@@ -294,6 +351,11 @@ msgid ""
 "leave this as 'Default', the default encoding (ISOLatin1) will be used. See "
 "the R reference on postscript for more details."
 msgstr ""
+"Это параметр <i>encoding</i> для <b>postscript</b>. Следует выбрать ту "
+"кодировку, которая совместима с выбранной гарнитурой шрифта. Если имеются "
+"сомнения, оставьте вариант «По умолчанию» (будет использоваться кодировка по "
+"умолчанию, ISOLatin1). Дополнительные сведения доступны в справке R по "
+"postscript."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Default Title")
 #: rkward/plugins/x11device/export.rkh:43
@@ -303,6 +365,9 @@ msgid ""
 "this is not displayed on the plot, but rather it is embedded inside the "
 "graphics file. This is the <i>title</i> parameter to <b>postscript</b>."
 msgstr ""
+"Снимите этот флажок, чтобы указать пользовательский заголовок графического "
+"файла. Обратите внимание, что он не отображается на графике, а встраивается "
+"в графический файл. Это параметр <i>title</i> для <b>postscript</b>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "GS Output device")
 #: rkward/plugins/x11device/export.rkh:46
@@ -312,6 +377,10 @@ msgid ""
 "supported by ghostscript. Select \"Other\" and see the option below to use "
 "these formats."
 msgstr ""
+"Формат файла, который следует использовать. В списке представлены только "
+"наиболее распространённые форматы, но ghostscript также поддерживает и "
+"многие другие. Выберите вариант «Другой формат» (чтобы узнать, как "
+"использовать эти форматы, прочтите приведённое ниже описание)."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Other Ghostscript device")
 #: rkward/plugins/x11device/export.rkh:47
@@ -321,36 +390,40 @@ msgid ""
 "identifier as used by ghostscript. Running \"ghostscript --help\" (or \"gs --"
 "help\") in a terminal should give a list of available devices."
 msgstr ""
+"Чтобы воспользоваться этим параметром, выберите значение «Другой формат» для "
+"параметра выше. Укажите идентификатор устройства, который используется "
+"ghostscript. Список доступных устройств можно получить с помощью команды "
+"«ghostscript --help» (или «gs --help»), отданной в окне терминала."
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="...">
 #: rkward/plugins/x11device/export.xml:63
 #, kde-format
 msgid "Export contents of graphics device to various formats"
-msgstr ""
+msgstr "Экспорт содержимого графического устройства в различные форматы"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="...">
 #: rkward/plugins/x11device/export.xml:65
 #, kde-format
 msgid "Filename and Generic options"
-msgstr ""
+msgstr "Имя файла и типовые параметры"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <browser label="...">
 #: rkward/plugins/x11device/export.xml:68
 #, kde-format
 msgid "File name"
-msgstr ""
+msgstr "Имя файла"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <checkbox label="...">
 #: rkward/plugins/x11device/export.xml:69
 #, kde-format
 msgid "Automatic File extension"
-msgstr ""
+msgstr "Автоматическое расширение файла"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="...">
 #: rkward/plugins/x11device/export.xml:70
 #, kde-format
 msgid "Dimensions"
-msgstr ""
+msgstr "Размеры"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Dimensions"> <checkbox label="...">
 #: rkward/plugins/x11device/export.xml:73
@@ -368,25 +441,25 @@ msgstr "Ширина в дюймах"
 #: rkward/plugins/x11device/export.xml:77
 #, kde-format
 msgid "Automatic Height"
-msgstr ""
+msgstr "Автоматическая высота"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Dimensions"> <spinbox label="...">
 #: rkward/plugins/x11device/export.xml:78
 #, kde-format
 msgid "Height in inches"
-msgstr ""
+msgstr "Высота в дюймах"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="...">
 #: rkward/plugins/x11device/export.xml:84
 #, kde-format
 msgid "Output format"
-msgstr ""
+msgstr "Выходной формат"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
 #: rkward/plugins/x11device/export.xml:85
 #, kde-format
 msgid "Postscript"
-msgstr ""
+msgstr "PostScript"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
@@ -426,31 +499,31 @@ msgstr "через Ghostscript"
 #: rkward/plugins/x11device/export.xml:91
 #, kde-format
 msgid "LaTeX/TikZ"
-msgstr ""
+msgstr "LaTeX/TikZ"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <checkbox label="...">
 #: rkward/plugins/x11device/export.xml:93
 #, kde-format
 msgid "EPS compatible"
-msgstr ""
+msgstr "Совместимость с EPS"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="...">
 #: rkward/plugins/x11device/export.xml:97
 #, kde-format
 msgid "Generic Export Options"
-msgstr ""
+msgstr "Типовые параметры экспорта"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <checkbox label="...">
 #: rkward/plugins/x11device/export.xml:100
 #, kde-format
 msgid "Default pointsize"
-msgstr ""
+msgstr "Размер пункта по умолчанию"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <spinbox label="...">
 #: rkward/plugins/x11device/export.xml:101
 #, kde-format
 msgid "Point size"
-msgstr ""
+msgstr "Размер пункта"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <checkbox label="...">
 #: rkward/plugins/x11device/export.xml:104
@@ -544,7 +617,7 @@ msgstr "По центру страницы"
 #: rkward/plugins/x11device/export.xml:129
 #, kde-format
 msgid "Horizontal (ps/gs)"
-msgstr ""
+msgstr "Горизонтально (ps/gs)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="...">
 #: rkward/plugins/x11device/export.xml:133
@@ -748,7 +821,7 @@ msgstr "Специфичные для Ghostscript параметры"
 #: rkward/plugins/x11device/export.xml:182
 #, kde-format
 msgid "GS Output device"
-msgstr ""
+msgstr "Устройство вывода GS"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:184
@@ -760,31 +833,31 @@ msgstr "PostScript"
 #: rkward/plugins/x11device/export.xml:185
 #, kde-format
 msgid "PNG (b/w)"
-msgstr ""
+msgstr "PNG (ч/б)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:186
 #, kde-format
 msgid "PNG (grayscale)"
-msgstr ""
+msgstr "PNG (оттенки серого)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:187
 #, kde-format
 msgid "PNG (256 colors)"
-msgstr ""
+msgstr "PNG (256 цветов)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:188
 #, kde-format
 msgid "PNG (16M colors)"
-msgstr ""
+msgstr "PNG (16 млн цветов)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:190
 #, kde-format
 msgid "Other (specify here):"
-msgstr ""
+msgstr "Другой формат (необходимо указать):"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Ghostscript specific options"> <input label="...">
 #: rkward/plugins/x11device/export.xml:192
