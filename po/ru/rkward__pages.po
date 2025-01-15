@@ -1,38 +1,39 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2025 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
 # Alexander Potashev <aspotashev@gmail.com>, 2018.
+# SPDX-FileCopyrightText: 2025 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2018-10-10 02:36+0300\n"
-"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
-"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"PO-Revision-Date: 2025-01-14 17:14+0300\n"
+"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Олеся Герасименко"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "translation-team@basealt.ru"
 
 #. i18n: ectx: (RKWard Add-Ons) <title>
 #: rkward/pages/rkward_addons.rkh:8
 #, kde-format
 msgid "RKWard Add-Ons"
-msgstr ""
+msgstr "Дополнения RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -42,12 +43,15 @@ msgid ""
 "Arguably this can make it a bit confusing on where to find the addon "
 "features you are looking for."
 msgstr ""
+"RKWard сочетает в себе различные технологии, что позволяет предложить "
+"пользователям широкий спектр возможностей. Вероятно, это немного усложняет "
+"поиск дополнения с нужным функционалом."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
 #, kde-format
 msgid "In a nutshell:"
-msgstr ""
+msgstr "Краткий перечень:"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -92,7 +96,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:24
 #, kde-format
 msgid "R packages"
-msgstr ""
+msgstr "Пакеты R"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -118,7 +122,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:32
 #, kde-format
 msgid "Kate Add-ons"
-msgstr ""
+msgstr "Дополнения Kate"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
 #: rkward/pages/rkward_addons.rkh:32
@@ -139,7 +143,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:39
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "Модули RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -178,7 +182,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Still missing something?"
-msgstr ""
+msgstr "Не удалось найти подходящий вариант?"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -197,13 +201,13 @@ msgstr ""
 #: rkward/pages/rkward_console.rkh:8
 #, kde-format
 msgid "Using the RKWard R Console"
-msgstr ""
+msgstr "Использование консоли R RKWard"
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
 #, kde-format
 msgid "Describe features and settings regarding the RKWard R Console."
-msgstr ""
+msgstr "Описание возможностей и параметров консоли R RKWard."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
@@ -212,12 +216,14 @@ msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labelled \"R Console\" to invoke it."
 msgstr ""
+"Консоль — по умолчанию — доступна в нижней части окна приложения. Чтобы "
+"вызвать её, нажмите кнопку инструмента с подписью «Консоль R»."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
 #, kde-format
 msgid "What is the console?"
-msgstr ""
+msgstr "Что такое консоль?"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -228,6 +234,10 @@ msgid ""
 "know some basics of the R language. Select Help->Help on R for some "
 "introductory information."
 msgstr ""
+"В основе RKWard лежит язык R, предназначенный для статистических расчётов. "
+"Консоль позволяет вводить команды R напрямую. Очевидно, что для "
+"использования этой возможности требуется знать основы языка R. Пункт меню "
+"«Справка -> Справка по R» позволяет получить вводную информацию."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -237,6 +247,10 @@ msgid ""
 "complex commands / scripts, using the Script File Editor (File->New->Script "
 "File) is much more comfortable."
 msgstr ""
+"Консоль предназначена для интерактивного использования и отправки небольших "
+"команд. Редактирование сложных команд или сценариев гораздо удобнее "
+"выполнять с помощью редактора файлов сценариев («Файл -> Создать -> Файл "
+"сценария»)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -245,12 +259,14 @@ msgid ""
 "Many console features are available from the context menu. To invoke the "
 "context menu, click the right mouse button inside the console window."
 msgstr ""
+"Многие возможности консоли доступны из контекстного меню. Чтобы вызвать "
+"контекстное меню, щёлкните правой кнопкой мыши внутри окна консоли."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:23
 #, kde-format
 msgid "Interrupting commands"
-msgstr ""
+msgstr "Прерывание выполнения команд"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Interrupting commands">
 #: rkward/pages/rkward_console.rkh:23
@@ -262,12 +278,18 @@ msgid ""
 "time (e.g. some action you invoked from the Analysis menu), the console will "
 "only become available again, when the R backend becomes idle."
 msgstr ""
+"Чтобы прервать выполняющуюся команду, нажмите Ctrl+C или выберите в "
+"контекстном меню пункт «Прервать выполняющуюся команду». Обратите внимание, "
+"что выполнение команды не обязательно завершится сразу же. Если одновременно "
+"выполняются несколько команд (например, это может быть какое-либо действие, "
+"вызванное с помощью меню «Анализ»), консоль снова станет доступна только "
+"после завершения обработки команд серверным приложением R."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:27
 #, kde-format
 msgid "Re-running selected commands"
-msgstr ""
+msgstr "Перезапуск выделенных команд"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Re-running selected commands">
 #: rkward/pages/rkward_console.rkh:27
@@ -278,12 +300,17 @@ msgid ""
 "+Return). Leading \"> \" and \"+ \" on the selected lines will be removed "
 "automatically."
 msgstr ""
+"Чтобы перезапустить выделенные команды (их последовательность), сначала "
+"выделите нужные команды с помощью мыши. Затем выберите в контекстном меню "
+"пункт «Выполнить выделенный фрагмент» (комбинация клавиш по умолчанию: Ctrl"
+"+Return). Символы «> » и «+ » в начале выделенных строк будут удалены "
+"автоматически."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:31
 #, kde-format
 msgid "Copying commands / output"
-msgstr ""
+msgstr "Копирование команд или вывода"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -294,6 +321,10 @@ msgid ""
 "\"> \" and \"+ \". In contrast, \"Copy commands, only\" will remove the "
 "prompts from the text copied into the clipboard."
 msgstr ""
+"В контекстном меню (или меню «Правка») доступны два режима копирования. В "
+"одном из них предусмотрено копирование выделенного без обработки, вместе с "
+"«> » и «+ » в начале. В другом, «Скопировать только команды», выполняется "
+"удаление начальных символов из текста, скопированного в буфер обмена."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -302,12 +333,15 @@ msgid ""
 "Note that the customary shortcut for copying text - Ctrl+C - does NOT work "
 "in the console, as Ctrl+C already means interrupting the current command."
 msgstr ""
+"Обратите внимание, что обычная комбинация клавиш для копирования текста — "
+"Ctrl+C — НЕ работает в консоли, так как уже используется для прерывания "
+"выполнения текущей команды."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:37
 #, kde-format
 msgid "Function reference"
-msgstr ""
+msgstr "Документация по функции"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Function reference">
 #: rkward/pages/rkward_console.rkh:37
@@ -317,12 +351,15 @@ msgid ""
 "try to look up the R help page for whichever keyword the cursor is currently "
 "on."
 msgstr ""
+"По нажатию клавиши F2 (или при выборе пункта «Документация по функции» в "
+"контекстном меню) выполняется поиск страницы справки R по тому ключевому "
+"слову, которое сейчас под курсором."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:41
 #, kde-format
 msgid "Navigating the command history"
-msgstr ""
+msgstr "Навигация по журналу команд"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -331,6 +368,9 @@ msgid ""
 "The console provides a mechanism to recall recent commands, similar to the "
 "readline functionality offered in R or most shells."
 msgstr ""
+"В консоли предусмотрен механизм запоминания последних команд (аналогичный "
+"функционалу библиотеки readline, который предусмотрен в командной строке R и "
+"большинстве командных оболочек)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -341,6 +381,11 @@ msgid ""
 "pressing the down arrow goes downwards in the command history. Of course, "
 "you can also edit a recalled command line."
 msgstr ""
+"Чтобы вывести предыдущую команду, просто нажмите клавишу со стрелкой вверх. "
+"Если продолжить нажимать эту клавишу, будут выводиться команды, отданные ещё "
+"раньше. Аналогичным образом, нажатие клавиши со стрелкой вниз позволяет "
+"перемещаться по журналу команд в противоположном направлении. Конечно же, "
+"выведенную команду из журнала также можно отредактировать."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -351,6 +396,11 @@ msgid ""
 "console. Now use Shift+Up / Shift+Down. You will note, that only those "
 "recent command lines that started with \"print\" will be shown."
 msgstr ""
+"Также возможно искать в журнале команд строки, начинающиеся с указанного "
+"фрагмента. Чтобы выполнить такой поиск, введите — например — слово «print» в "
+"консоли. Теперь воспользуйтесь комбинациями клавиш Shift+стрелка «вверх» / "
+"Shift+стрелка «вниз». Будут показаны только те последние команды, которые "
+"начинаются с «print»."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
