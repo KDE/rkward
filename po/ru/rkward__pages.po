@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2025-01-14 17:14+0300\n"
+"PO-Revision-Date: 2025-01-15 17:42+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -176,7 +176,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Creating your own RKWard Plugins"
-msgstr ""
+msgstr "Создание собственных модулей RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -368,7 +368,7 @@ msgid ""
 "The console provides a mechanism to recall recent commands, similar to the "
 "readline functionality offered in R or most shells."
 msgstr ""
-"В консоли предусмотрен механизм запоминания последних команд (аналогичный "
+"В консоли имеется механизм запоминания последних команд (аналогичный "
 "функционалу библиотеки readline, который предусмотрен в командной строке R и "
 "большинстве командных оболочек)."
 
@@ -411,6 +411,11 @@ msgid ""
 "while pressing Up/Down without the Shift key will show only matching lines. "
 "(see <link href=\"#settings\">Section settings</link>)."
 msgstr ""
+"Второй режим поиска в журнале команд можно сделать режимом по умолчанию. В "
+"этом случае нажатие комбинации клавиш Shift+стрелка «вверх»/«вниз» позволит "
+"перемещаться по списку всех команд, а нажатие клавиш со стрелками «вверх» "
+"или «вниз» — только по соответствующим запросу строкам. (смотрите <link href="
+"\"#settings\">Параметры раздела</link>)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -420,12 +425,16 @@ msgid ""
 "using <i>File->Import / Export command history</i> or the R commands "
 "<i>savehistory()</i> and <i>loadhistory()</i>."
 msgstr ""
+"Во время сеанса также можно в любое время сохранить или загрузить журнал "
+"команд. Для этого следует воспользоваться пунктом меню <i>Файл -> Импорт / "
+"Экспорт журнала команд</i> или командами R <i>savehistory()</i> и "
+"<i>loadhistory()</i>."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:53
 #, kde-format
 msgid "Filename and Object name completion"
-msgstr ""
+msgstr "Автодополнение имён файлов и объектов"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -435,6 +444,9 @@ msgid ""
 "complete the name of that R object. If several objects start with the typed "
 "characters, a list of all those objects will be shown."
 msgstr ""
+"Чтобы использовать автодополнение, нажмите клавишу Tab во время набора имени "
+"объекта R. Если с набранных символов начинаются имена нескольких объектов, "
+"будет показан их перечень."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -445,6 +457,10 @@ msgid ""
 "\", and press Tab again. The word will be changed to \"paste\", as that is "
 "the only matching object name."
 msgstr ""
+"Например, введите «base::pa» в консоли и нажмите клавишу Tab. Появится "
+"перечень всех объектов из пакета «base», имена которых начинаются с «pa». "
+"Теперь добавьте «s» и нажмите клавишу Tab ещё раз. Слово будет заменено на "
+"«paste», так как это единственное соответствующее запросу имя объекта."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -455,6 +471,10 @@ msgid ""
 "seems to be inside a quoted string that does not seem to be part of an "
 "object name."
 msgstr ""
+"RKWard будет задействовать простые эвристические методы для автодополнения "
+"имён файлов, когда это возможно. Соответствующая попытка выполняется, если "
+"курсор находится внутри взятой в кавычки строки, которая не является частью "
+"имени объекта."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #. i18n: ectx: (Screen device history) <section title="...">
@@ -463,7 +483,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:47
 #, kde-format
 msgid "Configurable Settings"
-msgstr ""
+msgstr "Настраиваемые параметры"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -473,6 +493,10 @@ msgid ""
 "console\">Settings->Configure RKWard->R Console</a> or \"Configure\" from "
 "the context menu. The following options are configurable:"
 msgstr ""
+"Чтобы настроить поведение консоли, воспользуйтесь пунктом меню <a href="
+"\"rkward://settings/console\">Настройка -> Настроить RKWard -> Консоль R</a> "
+"(или выберите пункт «Настроить» в контекстном меню). Для настройки доступны "
+"следующие параметры:"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -483,6 +507,10 @@ msgid ""
 "next starting RKWard again. If this is not checked, each session of RKWard "
 "will start out with an empty command history."
 msgstr ""
+"<b>Сохранять и загружать журнал команд</b>: следует ли сохранять <link href="
+"\"#command_history\">журнал команд</link> при закрытии RKWard и вновь "
+"загружать его при следующем запуске программы. Если этот флажок снят, каждый "
+"сеанс RKWard будет начинаться с пустым журналом команд."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -491,6 +519,8 @@ msgid ""
 "<b>Maximum length of command history</b>: Only this many lines are kept in "
 "the <link href=\"#command_history\">command history</link>."
 msgstr ""
+"<b>Максимальная длина журнала команд</b>: в <link href=\"#command_history"
+"\">журнале команд</link> сохраняется только указанное количество строк."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -502,6 +532,11 @@ msgid ""
 "top of the console window. To clear the console entirely, choose \"Clear\" "
 "from the context menu or the Edit menu."
 msgstr ""
+"<b>Максимальное количество абзацев/строк для показа в консоли</b>: общее "
+"количество строк в консоли (команды и вывод) не может превышать указанное. "
+"Если строк будет больше, то выполняется удаление строк в верхней части окна "
+"консоли. Чтобы полностью очистить консоль, выберите пункт «Очистить» в "
+"контекстном меню или меню «Правка»."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -512,6 +547,10 @@ msgid ""
 "their results will be shown in the console. If this option is not checked, "
 "the commands will only be visible in the Command log, but not in the console."
 msgstr ""
+"<b>Запускать команды из редактора сценариев через консоль</b>: команды из "
+"редакторов сценариев можно отправлять через консоль, то есть в консоли будут "
+"показаны эти команды и результаты их выполнения. Если этот флажок снят, "
+"команды будут видны только в журнале команд, но не в консоли."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -522,6 +561,10 @@ msgid ""
 "history. Turning off this option may help to keep the console history \"clean"
 "\"."
 msgstr ""
+"<b>Также добавлять эти команды в журнал консоли</b>: если параметр выше "
+"включён, то этот параметр определяет, будут ли такие команды также "
+"добавляться в журнал консоли. Если снять этот флажок, журнал консоли не "
+"будет «замусориваться»."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -532,12 +575,17 @@ msgid ""
 "\">command history</link> is the default, i.e. available with Up/Down "
 "without Shift. Else the key binding for this is Shift+Up/Down."
 msgstr ""
+"<b>По умолчанию журнал команд учитывает контекст</b>: если этот флажок "
+"установлен, по умолчанию используется чувствительный к контексту режим "
+"навигации по <link href=\"#command_history\">журналу команд</link> (то есть "
+"с помощью клавиш со стрелками «вверх» и «вниз», без Shift). Если этот флажок "
+"снят, для навигации служит комбинация клавиш Shift+стрелка «вверх»/«вниз»."
 
 #. i18n: ectx: (RKWard for new Users) <title>
 #: rkward/pages/rkward_for_new_users.rkh:8
 #, kde-format
 msgid "RKWard for new Users"
-msgstr ""
+msgstr "RKWard для новых пользователей"
 
 #. i18n: ectx: (RKWard for new Users) <summary>
 #: rkward/pages/rkward_for_new_users.rkh:9
@@ -546,12 +594,15 @@ msgid ""
 "Provide some starting points for users new to R and RKWard. For a more in "
 "depth guide see <link href=\"rkward://page/rkward_for_r_users\"/>."
 msgstr ""
+"Базовая информация для пользователей, которые раньше не работали с R и "
+"RKWard. Более подробное руководство: <link href=\"rkward://page/"
+"rkward_for_r_users\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:14
 #, kde-format
 msgid "Where's my data?"
-msgstr ""
+msgstr "Где мои данные?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -606,7 +657,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:23
 #, kde-format
 msgid "How can I make use of my results in an external application?"
-msgstr ""
+msgstr "Как использовать результаты во внешнем приложении?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -615,6 +666,8 @@ msgid ""
 "In this section you will learn about some basic methods how to make use of "
 "your results in external applications."
 msgstr ""
+"В этом разделе приводится описание базовых способов использования "
+"результатов во внешних приложениях."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -625,6 +678,10 @@ msgid ""
 "your work since a standard of RKWard is to show everything in chronological "
 "order together with the date of creation."
 msgstr ""
+"Предположим, что после выполнения тестов получен текстовый вывод. Он будет "
+"показан в «окне вывода» RKWard. Работу легко отслеживать, так как в RKWard "
+"всё отображается в хронологическом порядке, при этом всегда указана дата "
+"создания."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -634,12 +691,15 @@ msgid ""
 "the output. The easiest method of reusing the output is to select the "
 "relevant portion, and copy and paste them to an office suite."
 msgstr ""
+"Подробнее о работе с выводом: <link href=\"rkward://page/rkward_output\"/>. "
+"Проще всего работать с выводом так: выделить нужные части, а затем "
+"скопировать и вставить их в программу из офисного комплекта."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:30
 #, kde-format
 msgid "Basic Analyses"
-msgstr ""
+msgstr "Базовый анализ"
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -684,7 +744,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:38
 #, kde-format
 msgid "So much more"
-msgstr ""
+msgstr "Множество других возможностей"
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -710,7 +770,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:8
 #, kde-format
 msgid "RKWard for R Users"
-msgstr ""
+msgstr "RKWard для пользователей R"
 
 #. i18n: ectx: (RKWard for R Users) <summary>
 #: rkward/pages/rkward_for_r_users.rkh:9
@@ -724,7 +784,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "The Console"
-msgstr ""
+msgstr "Консоль"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -747,7 +807,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Подсветка синтаксиса"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -784,7 +844,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:26
 #, kde-format
 msgid "Script Editors"
-msgstr ""
+msgstr "Редакторы сценариев"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -795,6 +855,11 @@ msgid ""
 "syntax highlighting, and many more features), choose File->New->Script File, "
 "or open an already existing Script file using File->Open R Script File."
 msgstr ""
+"Чаще бывает удобнее писать сценарии в отдельном файле, а не набирать их "
+"непосредственно в консоли. Чтобы открыть панель редактирования нового "
+"сценария (с подсветкой синтаксиса и многими другими возможностями), "
+"воспользуйтесь пунктом меню «Файл -> Создать -> Файл сценария». Можно "
+"открыть и уже существующий файл сценария («Файл -> Открыть файл сценария R»)."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -1114,7 +1179,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:22
 #, kde-format
 msgid "Using the output in an office suite"
-msgstr ""
+msgstr "Использование вывода в программах из офисного комплекта"
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
@@ -1125,6 +1190,11 @@ msgid ""
 "at least in OpenOffice or LibreOffice. You can also drag and drop images "
 "from the output to an OpenOffice or LibreOffice document."
 msgstr ""
+"Проще всего передать вывод в программу из офисного комплекта следующим "
+"образом: выделить нужные части, а затем скопировать (Правка -> Скопировать) "
+"и вставить их в нужную программу. Такой способ хорошо подходит, в частности, "
+"для OpenOffice и LibreOffice. В документы OpenOffice или LibreOffice также "
+"можно перетаскивать изображения из вывода."
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
@@ -1563,7 +1633,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:12
 #, kde-format
 msgid "Missing menu items"
-msgstr ""
+msgstr "Отсутствие пунктов меню"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The \"Analysis\" menu is missing, or shows up as \"(no label)\"">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -1586,7 +1656,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Сбой серверного приложения"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1630,7 +1700,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -1656,7 +1726,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:33
 #, kde-format
 msgid "Commands not processing"
-msgstr ""
+msgstr "Невыполнение обработки команд"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -1690,7 +1760,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:38
 #, kde-format
 msgid "Missing packages"
-msgstr ""
+msgstr "Отсутствие пакетов"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -1734,12 +1804,15 @@ msgid ""
 "RKWard claims to take care of seamless integration with an office-suite. Why "
 "is there no native option to save it as an office file?"
 msgstr ""
+"В RKWard заявлена бесшовная интеграция с офисными программами. Почему тогда "
+"в программе не предусмотрена возможность выполнить сохранение данных в "
+"формате файла офисной программы?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
 #, kde-format
 msgid "RKWard integration with an office-suite"
-msgstr ""
+msgstr "Интеграция RKWard с набором офисных программ"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
@@ -1834,7 +1907,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:58
 #, kde-format
 msgid "Undo/Redo"
-msgstr ""
+msgstr "Отмена/Повтор"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
 #: rkward/pages/rkward_trouble_shooting.rkh:58
@@ -1870,25 +1943,25 @@ msgstr "Добро пожаловать в RKWard"
 #: rkward/pages/rkward_welcome.rkh:10
 #, kde-format
 msgid "My recent script files"
-msgstr ""
+msgstr "Последние файлы сценариев"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:12
 #, kde-format
 msgid "My recent workspaces"
-msgstr ""
+msgstr "Последние рабочие области"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:14
 #, kde-format
 msgid "My recent output files"
-msgstr ""
+msgstr "Последние выходные файлы"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "Import or enter data"
-msgstr ""
+msgstr "Импорт или ввод данных"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
@@ -1906,7 +1979,7 @@ msgstr ""
 #: rkward/pages/rkward_welcome.rkh:23
 #, kde-format
 msgid "Useful settings"
-msgstr ""
+msgstr "Полезные параметры"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1915,6 +1988,8 @@ msgid ""
 "<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
 "packages</link>"
 msgstr ""
+"<link href=\"rkward://actions/rpackage_install\">Установить пакеты R и "
+"RKWard</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1923,6 +1998,8 @@ msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)</link>&lrm;"
 msgstr ""
+"&lrm;<link href=\"rkward://settings/addons\">Другие связанные с дополнениями "
+"параметры (например, интеграция с git/проектами)</link>&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1931,12 +2008,14 @@ msgid ""
 "&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
 "(including this page)&lrm;"
 msgstr ""
+"&lrm;<link href=\"rkward://settings/general\">Параметры запуска</link> "
+"(включая эту страницу)&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31
 #, kde-format
 msgid "Documentation starting points"
-msgstr ""
+msgstr "Базовые пункты документации"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Documentation starting points">
 #: rkward/pages/rkward_welcome.rkh:31
@@ -1945,12 +2024,14 @@ msgid ""
 "External links: <link href=\"https://rkward.kde.org/\">project homepage</"
 "link>"
 msgstr ""
+"Внешние ссылки: <link href=\"https://rkward.kde.org/\">домашняя страница "
+"проекта</link>"
 
 #. i18n: ectx: (Workspace Browser) <title>
 #: rkward/pages/rkward_workspace_browser.rkh:8
 #, kde-format
 msgid "Workspace Browser"
-msgstr ""
+msgstr "Обзор рабочей области"
 
 #. i18n: ectx: (Workspace Browser) <summary>
 #: rkward/pages/rkward_workspace_browser.rkh:10

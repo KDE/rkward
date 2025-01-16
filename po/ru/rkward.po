@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2025-01-14 15:28+0300\n"
+"PO-Revision-Date: 2025-01-15 10:46+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -5188,7 +5188,7 @@ msgstr "Редактор сценариев"
 #: rkward/settings/rksettingsmoduleconsole.cpp:45
 #, kde-format
 msgid "Load/Save command history"
-msgstr "Загрузить или сохранить журнал команд"
+msgstr "Сохранять и загружать журнал команд"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:47
 #, kde-format
@@ -5207,12 +5207,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleconsole.cpp:57
 #, kde-format
 msgid "Run commands from script editor through console"
-msgstr "Запустить команды из редактора сценариев через консоль"
+msgstr "Запускать команды из редактора сценариев через консоль"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:60
 #, kde-format
 msgid "Also add those commands to console history"
-msgstr "Также добавить эти команды в журнал консоли"
+msgstr "Также добавлять эти команды в журнал консоли"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
