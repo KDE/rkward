@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2025-01-15 17:42+0300\n"
+"PO-Revision-Date: 2025-01-16 17:04+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -652,6 +652,11 @@ msgid ""
 "work with pre-existing data, pick the appropriate option from the File-"
 ">Import menu."
 msgstr ""
+"Обо всём этом не стоит беспокоиться. Чтобы создать электронную таблицу (data."
+"frame), воспользуйтесь пунктом меню «Файл -> Создать -> Набор данных». "
+"Остаётся только назначить имя этой таблице, после чего можно переходить к "
+"редактированию. Чтобы поработать с уже существующими данными, выберите "
+"подходящий вариант в меню «Файл -> Импорт»."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -779,6 +784,8 @@ msgid ""
 "Briefly explains the main components of RKWard, assuming the user is already "
 "familiar with basic concepts of R."
 msgstr ""
+"Краткое описание основных компонентов RKWard (предполагается, что "
+"пользователь уже знаком с основными принципами работы R)."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -885,7 +892,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:33
 #, kde-format
 msgid "Workspace View"
-msgstr ""
+msgstr "Просмотр рабочей области"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -916,7 +923,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:38
 #, kde-format
 msgid "R Help"
-msgstr ""
+msgstr "Справка R"
 
 #. i18n: ectx: (RKWard for R Users) <section title="R Help">
 #: rkward/pages/rkward_for_r_users.rkh:38
@@ -948,7 +955,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:44
 #, kde-format
 msgid "Window management"
-msgstr ""
+msgstr "Управление окнами"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -975,12 +982,14 @@ msgid ""
 "Tool windows (e.g. the R Console) can be detached and re-attached using the "
 "arrow-icon in their window border."
 msgstr ""
+"Окна инструментов (например, консоль R) можно отсоединять и присоединять с "
+"помощью значка со стрелкой на их границе."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:51
 #, kde-format
 msgid "Editing data"
-msgstr ""
+msgstr "Редактирование данных"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -992,6 +1001,13 @@ msgid ""
 "explore the data editor, either choose File->New->Dataset, or right-click a "
 "data.frame in the Workspace browser, and choose Edit from the menu."
 msgstr ""
+"RKWard предоставляет встроенный редактор объектов data.frame. Фактически, "
+"можно одновременно редактировать большое количество объектов data.frame, "
+"даже во время выполнения длительных расчётов. Данные всё равно сохраняются в "
+"обычном объекте data.frame в R. Чтобы открыть редактор данных, либо "
+"воспользуйтесь пунктом меню «Файл -> Создать -> Набор данных», либо щёлкните "
+"правой кнопкой мыши по объекту data.frame в средстве обзора рабочей области "
+"и выберите пункт «Изменить» в контекстном меню."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -1005,7 +1021,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:56
 #, kde-format
 msgid "Graphics"
-msgstr ""
+msgstr "Графика"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Graphics">
 #: rkward/pages/rkward_for_r_users.rkh:56
@@ -1024,7 +1040,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:59
 #, kde-format
 msgid "Utility functions"
-msgstr ""
+msgstr "Вспомогательные функции"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Utility functions">
 #: rkward/pages/rkward_for_r_users.rkh:59
@@ -1039,7 +1055,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:62
 #, kde-format
 msgid "Everything else"
-msgstr ""
+msgstr "Всё остальное"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Everything else">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -1070,12 +1086,14 @@ msgid ""
 "<link href=\"rkward://page/rkward_for_new_users\"/> For an introduction to "
 "some more basic concepts"
 msgstr ""
+"<link href=\"rkward://page/rkward_for_new_users\"/> Вводная информация о "
+"некоторых других базовых понятиях"
 
 #. i18n: ectx: (Version incompatibilities) <title>
 #: rkward/pages/rkward_incompatible_version.rkh:8
 #, kde-format
 msgid "Version incompatibilities"
-msgstr ""
+msgstr "Несовместимость версий"
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -1211,7 +1229,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:28
 #, kde-format
 msgid "RKWard output vs. R Markdown"
-msgstr ""
+msgstr "Вывод RKWard и Markdown R"
 
 #. i18n: ectx: (RKWard Output) <section title="RKWard output vs. R Markdown">
 #: rkward/pages/rkward_output.rkh:28
@@ -1227,7 +1245,7 @@ msgstr ""
 #: rkward/pages/rkward_plot_history.rkh:8
 #, kde-format
 msgid "Screen device history"
-msgstr ""
+msgstr "Журнал экранного устройства"
 
 #. i18n: ectx: (Screen device history) <summary>
 #: rkward/pages/rkward_plot_history.rkh:10
@@ -1259,7 +1277,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "Available actions"
-msgstr ""
+msgstr "Доступные действия"
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1270,6 +1288,10 @@ msgid ""
 "can be configured from the device window's Settings->Configure Toolbars menu "
 "item."
 msgstr ""
+"Доступ к нескольким действиям можно получить либо с помощью меню <i>Журнал</"
+"i>, либо с помощью значков на панели инструментов. Перечень значков, "
+"отображаемых на панели инструментов, можно настроить с помощью пункта меню "
+"«Настройка -> Настроить панели инструментов»."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1287,6 +1309,19 @@ msgid ""
 "corresponding position in the history. For the usual \"linear browsing\" see "
 "first / previous / next / last actions below."
 msgstr ""
+"<b>Перейти к графику</b>: предоставляет раскрывающийся список _всех_ "
+"сохранённых в журнале графиков, что обеспечивает удобный переход к нужному. "
+"RKWard задействует все доступные средства для идентификации соответствующих "
+"вызовов, но это не всегда возможно сделать. В таких случаях также "
+"выполняется попытка идентифицировать заголовки графика (<i>Подпись X</i>, "
+"<i>Подпись Y</i> и <i>Основной</i>), а отображаемая строка выглядит "
+"следующим образом: «<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; <i>main</"
+"i>». Иногда невозможно сделать даже это (появляется подпись <b>&lt;"
+"Неизвестно&gt;</b>). Графики, ожидающие сохранения, обозначаются подписью "
+"<b>&lt;Несохранённый график&gt;</b>. Отображаемые строки предваряются "
+"соответствующей позицией в журнале. Если нужен обычный «линейный просмотр», "
+"ознакомьтесь с приведённым далее описанием действий по переходу к первому / "
+"предыдущему / следующему / последнему графику."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1299,6 +1334,14 @@ msgid ""
 "For example, a base graphics plot modified by, say, <code>abline(h=0, v=0)</"
 "code> will automatically get stored \"in-place\" in the history."
 msgstr ""
+"<b>Первый/Предыдущий/Следующий/Последний график</b>: очевидные действия по "
+"навигации (или повторному воспроизведению). При выполнении этих действий "
+"будет предпринята попытка сохранить все несохранённые или непостроенные "
+"графики перед показом или повторным воспроизведением нужного (первого / "
+"предыдущего / следующего / последнего) графика. Это позволяет перейти к уже "
+"сохранённому в журнале графику и обновить его. Например, график base "
+"graphics, изменённый с помощью, скажем, <code>abline(h=0, v=0)</code>, будет "
+"автоматически сохранён «по месту» в журнале."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1311,6 +1354,12 @@ msgid ""
 "handy. But this flexibility comes at the cost of not being able to identify "
 "the plot call."
 msgstr ""
+"<b>Добавить этот график</b>: это действие позволяет принудительно добавить "
+"отображаемый график в конец журнала, независимо от его состояния (сохранён / "
+"не сохранён) и типа (graphics / lattice / ...). Эта опция полезна в тех "
+"случаях, когда график не сохраняется в журнале автоматически. Но такая "
+"гибкость имеет свою цену: вызов функции построения графика невозможно "
+"идентифицировать."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1399,7 +1448,7 @@ msgstr ""
 #: rkward/pages/rkward_plot_history.rkh:39
 #, kde-format
 msgid "Technical Details"
-msgstr ""
+msgstr "Технические сведения"
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1435,6 +1484,8 @@ msgid ""
 "The base graphics plots are recorded and replayed using <code>recordPlot()</"
 "code> and <code>replayPlot()</code>."
 msgstr ""
+"Графики base graphics записываются и повторно воспроизводятся с помощью "
+"<code>recordPlot()</code> и <code>replayPlot()</code>."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1754,7 +1805,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "RKWard says it needs a package. Was the installation of RKWard not complete?"
-msgstr ""
+msgstr "RKWard сообщает, что требуется пакет. Установка RKWard была неполной?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -1968,12 +2019,13 @@ msgstr "Импорт или ввод данных"
 #, kde-format
 msgid "<link href=\"rkward://actions/new_data_frame\">Enter new data</link>"
 msgstr ""
+"<link href=\"rkward://actions/new_data_frame\">Ввод новых данных</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/import_assistant\">Import data</link>"
-msgstr ""
+msgstr "<link href=\"rkward://actions/import_assistant\">Импорт данных</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1988,7 +2040,7 @@ msgid ""
 "<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
 "packages</link>"
 msgstr ""
-"<link href=\"rkward://actions/rpackage_install\">Установить пакеты R и "
+"<link href=\"rkward://actions/rpackage_install\">Установка пакетов R и "
 "RKWard</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
@@ -2043,6 +2095,11 @@ msgid ""
 "except you browse R objects in your workspace, instead of files on your "
 "computer."
 msgstr ""
+"Панель обзора рабочей области позволяет просматривать объекты R и управлять "
+"ими. Это касается и собственных объектов пользователя (данные, функции), и "
+"так называемых «пакетных окружений». Грубым аналогом может служить обычный "
+"диспетчер файловой системы; отличие состоит в том, что пользователь "
+"просматривает объекты R в рабочей области, а не файлы на компьютере."
 
 #. i18n: ectx: (Workspace Browser) <summary>
 #: rkward/pages/rkward_workspace_browser.rkh:10
@@ -2053,12 +2110,16 @@ msgid ""
 "\"Workspace\" icon, which is located on the top of the left window border, "
 "by default."
 msgstr ""
+"Панель обзора рабочей области можно вызвать с помощью пункта меню «Окна -> "
+"Активировать -> Показать / Скрыть \"Обзор рабочей области\"» (комбинация "
+"клавиш по умолчанию: Alt+1) или щелчком по значку «Рабочая область», по "
+"умолчанию расположенному в верхней части левой границы окна."
 
 #. i18n: ectx: (Workspace Browser) <section title="...">
 #: rkward/pages/rkward_workspace_browser.rkh:16
 #, kde-format
 msgid "What is shown"
-msgstr ""
+msgstr "Что показано"
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2071,6 +2132,13 @@ msgid ""
 "Environments\" (available at the top of the browser window, or choosing "
 "\"Show Objects\" from the context menu)."
 msgstr ""
+"В обычном сеансе R присутствуют буквально сотни или даже тысячи объектов. На "
+"первый взгляд, такое количество кажется избыточным, поэтому панель обзора "
+"рабочей области позволяет сделать так, чтобы было показано только "
+"определённое подмножество объектов. Для этого используются следующие "
+"параметры: «Показать скрытые объекты», «Все / Не функции / Функции» и "
+"«Показать все окружения» (доступно в верхней части окна обзора или при "
+"выборе пункта «Показать объекты» в контекстном меню)."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2081,6 +2149,10 @@ msgid ""
 "objects, which are not meant for direct use, so it's generally safe to hide "
 "them from view."
 msgstr ""
+"Задача первого параметра очевидна. Он определяет, отображаются ли объекты, "
+"имена которых начинаются с точки («.»). Такими именами часто обладают "
+"внутренние объекты, которые не предназначены для непосредственного "
+"использования, поэтому их скрытие обычно не приносит каких-либо проблем."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2090,6 +2162,10 @@ msgid ""
 "while \"Functions\" shows only functions, and \"Non-Functions\" shows all "
 "other objects (typically data)."
 msgstr ""
+"Второй параметр позволяет выполнять выбор по типу объекта. Вариант «Все» "
+"означает, что фильтр не используется. «Функции» — будут показаны только "
+"функции. «Не функции» — будут показаны все остальные объекты (обычно это "
+"данные)."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2103,6 +2179,13 @@ msgid ""
 "globalenv\"/>) is shown, which is the environment, in which you create and "
 "edit your data."
 msgstr ""
+"Параметр «Показать все окружения» управляет тем, отображаются ли пакетные "
+"окружения и их объекты. Грубо говоря, если его отключить, будут показаны "
+"только «собственные» объекты пользователя, а если включить — также и все "
+"предопределённые объекты. С технической точки зрения: при отключении этого "
+"параметра отображается только .GlobalEnv (подробнее: <link href=\"rkward://"
+"rhelp/globalenv\"/>), то есть то окружение, в котором пользователь создаёт и "
+"редактирует свои данные."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2131,6 +2214,10 @@ msgid ""
 "some types of objects. The most important actions for objects in package "
 "environments:"
 msgstr ""
+"Доступ к нескольким действиям можно получить с помощью контекстного меню "
+"(нужно щёлкнуть правой кнопкой мыши по одному из объектов), но некоторые из "
+"них доступны только для некоторых типов объектов. Наиболее важные действия "
+"для объектов в пакетных окружениях:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
