@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2025-01-16 17:04+0300\n"
+"PO-Revision-Date: 2025-01-17 17:32+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -62,6 +62,10 @@ msgid ""
 "additional R functions that you can use in scripts, or in the interactive R "
 "console."
 msgstr ""
+"<strong>Пакеты R</strong> предоставляют невероятное количество алгоритмов и "
+"инструментов для работы с данными. Эти возможности реализованы (в основном) "
+"в виде дополнительных функций R, которые можно использовать в сценариях или "
+"в интерактивной консоли R."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -73,6 +77,12 @@ msgid ""
 "activated by default. It can further be extended with custom scripts, or "
 "color-schemes."
 msgstr ""
+"<strong>Дополнения Kate</strong>: Kate — движок, на котором работает "
+"редактор сценариев RKWard. Программа поставляется с различными возможностями-"
+"дополнениями, многие из которых устанавливаются вместе с пакетом RKWard. Тем "
+"не менее, так как дополнений очень много, не все из них по умолчанию "
+"активированы. Дальнейшее расширение возможностей программы можно выполнить с "
+"помощью пользовательских сценариев или цветовых схем."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -83,6 +93,10 @@ msgid ""
 "mostly implemented as plugin-ins in RKWard. Many such plugins are available "
 "for download, separately."
 msgstr ""
+"<strong>Модули RKWard</strong>: если нужно найти графический диалог для "
+"импорта, преобразования, анализа или визуализации данных, то они в основном "
+"реализованы как модули RKWard. Многие такие модули можно загрузить по "
+"отдельности."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -91,6 +105,8 @@ msgid ""
 "The following sections deal with these, in turn, showing you how to find / "
 "install, what you need."
 msgstr ""
+"В последующих разделах приводится предметная информация о том, как найти и "
+"установить нужные дополнения."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:24
@@ -107,6 +123,10 @@ msgid ""
 "dialog to search, install and/or load packages (Settings->Manage R packages "
 "and plugins)."
 msgstr ""
+"В дополнение к обычным инструментам командной строки R для управления "
+"пакетами R (смотрите <link href=\"rkward://rhelp/install.packages\"/>) в "
+"RKWard предусмотрен графический диалог для поиска, установки и/или загрузки "
+"пакетов («Настройка -> Управление пакетами и модулями R»)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -117,6 +137,11 @@ msgid ""
 "source is fully automated, you may still have to install additional "
 "libraries or other software for the compilation."
 msgstr ""
+"Обратите внимание, что по умолчанию пакеты R распространяются как "
+"скомпилированные бинарные файлы для Windows и MacOS, но не для Linux. Хотя в "
+"случае последней операционной системы установка из исходного кода полностью "
+"автоматизирована, для сборки всё равно может потребоваться установить "
+"дополнительные библиотеки или другое программное обеспечение."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:32
@@ -138,6 +163,18 @@ msgid ""
 ">Addons</link>. Addons shown in bold have been reported to be useful and "
 "work well in RKWard, but feel free to explore the others, too."
 msgstr ""
+"<link href=\"https://kate.kde.org\">Kate</link> — текстовый редактор с очень "
+"широкими функциональными возможностями, в нём используется тот же компонент "
+"для редактирования текста, что и в RKWard. Программа также поставляется с "
+"различными дополнениями (например, для создания фрагментов кода или для "
+"управления проектами в git-репозитории). Некоторые из них — например, "
+"средство навигации по обратной трассировке C++ — не особенно полезны в "
+"контексте RKWard, но в большинстве случаев польза ощутима. Чтобы "
+"ознакомиться с перечнем доступных дополнений, установите Kate и "
+"воспользуйтесь пунктом меню <link href=\"rkward://settings/addons"
+"\">Настройка -> Дополнения</link>. Пункты модулей, которые считаются "
+"полезными и хорошо работающими в RKWard, обозначены полужирным шрифтом. Но "
+"можно обратить внимание и на другие варианты."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:39
@@ -156,6 +193,12 @@ msgid ""
 "plugins</link>), and check the option \"Show only packages providing RKWard "
 "dialogs\"."
 msgstr ""
+"Модули RKWard можно установить из различных источников, но обычно они "
+"распространяются через пакеты R. Чтобы найти пакеты R, предоставляющие "
+"графические диалоги RKWard, воспользуйтесь обычным диалогом (<link href="
+"\"rkward://actions/rpackage_install\">Настройка -> Управление пакетами и "
+"модулями R</link>) и включите параметр «Показывать только пакеты, "
+"предоставляющие диалоги RKWard»."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -302,8 +345,8 @@ msgid ""
 msgstr ""
 "Чтобы перезапустить выделенные команды (их последовательность), сначала "
 "выделите нужные команды с помощью мыши. Затем выберите в контекстном меню "
-"пункт «Выполнить выделенный фрагмент» (комбинация клавиш по умолчанию: Ctrl"
-"+Return). Символы «> » и «+ » в начале выделенных строк будут удалены "
+"пункт «Выполнить выделенный фрагмент» (комбинация клавиш по умолчанию: Ctrl "
+"+ Return). Символы «> » и «+ » в начале выделенных строк будут удалены "
 "автоматически."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
@@ -334,7 +377,7 @@ msgid ""
 "in the console, as Ctrl+C already means interrupting the current command."
 msgstr ""
 "Обратите внимание, что обычная комбинация клавиш для копирования текста — "
-"Ctrl+C — НЕ работает в консоли, так как уже используется для прерывания "
+"Ctrl + C — НЕ работает в консоли, так как уже используется для прерывания "
 "выполнения текущей команды."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
@@ -398,8 +441,8 @@ msgid ""
 msgstr ""
 "Также возможно искать в журнале команд строки, начинающиеся с указанного "
 "фрагмента. Чтобы выполнить такой поиск, введите — например — слово «print» в "
-"консоли. Теперь воспользуйтесь комбинациями клавиш Shift+стрелка «вверх» / "
-"Shift+стрелка «вниз». Будут показаны только те последние команды, которые "
+"консоли. Теперь воспользуйтесь комбинациями клавиш Shift + стрелка «вверх» / "
+"Shift + стрелка «вниз». Будут показаны только те последние команды, которые "
 "начинаются с «print»."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
@@ -412,10 +455,10 @@ msgid ""
 "(see <link href=\"#settings\">Section settings</link>)."
 msgstr ""
 "Второй режим поиска в журнале команд можно сделать режимом по умолчанию. В "
-"этом случае нажатие комбинации клавиш Shift+стрелка «вверх»/«вниз» позволит "
-"перемещаться по списку всех команд, а нажатие клавиш со стрелками «вверх» "
-"или «вниз» — только по соответствующим запросу строкам. (смотрите <link href="
-"\"#settings\">Параметры раздела</link>)."
+"этом случае нажатие комбинации клавиш Shift + стрелка «вверх»/«вниз» "
+"позволит перемещаться по списку всех команд, а нажатие клавиш со стрелками "
+"«вверх» или «вниз» — только по соответствующим запросу строкам. (смотрите "
+"<link href=\"#settings\">Параметры раздела</link>)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -579,7 +622,7 @@ msgstr ""
 "установлен, по умолчанию используется чувствительный к контексту режим "
 "навигации по <link href=\"#command_history\">журналу команд</link> (то есть "
 "с помощью клавиш со стрелками «вверх» и «вниз», без Shift). Если этот флажок "
-"снят, для навигации служит комбинация клавиш Shift+стрелка «вверх»/«вниз»."
+"снят, для навигации служит комбинация клавиш Shift + стрелка «вверх»/«вниз»."
 
 #. i18n: ectx: (RKWard for new Users) <title>
 #: rkward/pages/rkward_for_new_users.rkh:8
@@ -717,6 +760,12 @@ msgid ""
 "introduced above. On the additional tabs you can choose which types of "
 "descriptive statistics should be calculated."
 msgstr ""
+"Чтобы ознакомиться с программой RKWard (или с данными), можно сначала "
+"воспользоваться пунктом меню «Анализ -> Описательная статистика». Появится "
+"диалог, в котором можно выбрать для анализа одну или несколько переменных. "
+"Этот диалог похож на панель обзора рабочей области, о которой рассказывалось "
+"ранее. На дополнительных вкладках можно выбрать, какие типы описательной "
+"статистической обработки следует применить."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -801,6 +850,8 @@ msgid ""
 "the bottom on the screen. There you will notice several buttons, one of "
 "which is labelled \"R Console\" and has a console icon."
 msgstr ""
+"Самое важное: эмулятор стандартной консоли R находится в нижней части экрана "
+"(там несколько кнопок, это кнопка со значком консоли и подписью «Консоль R»)."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -809,6 +860,8 @@ msgid ""
 "This console works almost exactly like the regular R text console, so you "
 "can start working right away. Differences include:"
 msgstr ""
+"Эта консоль работает почти точно так же, как и обычная текстовая консоль R, "
+"поэтому к работе можно приступить сразу же. Отличия таковы:"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -823,6 +876,8 @@ msgid ""
 "While typing function calls, a list of arguments to that function is shown "
 "in a box (argument hinting)"
 msgstr ""
+"При наборе вызова функции на панели подсказки отображается список аргументов "
+"этой функции."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -832,6 +887,10 @@ msgid ""
 "R help for that symbol. Also available from the Help menu, or the right "
 "mouse button menu"
 msgstr ""
+"Когда курсор находится на символе или функции R, по нажатию клавиши F2 "
+"выполняется поиск соответствующей строки в справке R. Доступ к этой "
+"возможности также можно получить с помощью меню «Справка» или контекстного "
+"меню, которое вызывается нажатием правой кнопки мыши."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -1505,13 +1564,14 @@ msgstr ""
 #: rkward/pages/rkward_plot_history.rkh:49
 #, kde-format
 msgid "<link href=\"rkward://rhelp/lattice.options\"/> (needs lattice)"
-msgstr ""
+msgstr "<link href=\"rkward://rhelp/lattice.options\"/> (требуется lattice)"
 
 #. i18n: ectx: (Screen device history) <related>
 #: rkward/pages/rkward_plot_history.rkh:49
 #, kde-format
 msgid "<link href=\"rkward://rhelp/trellis.last.object\"/> (needs lattice)"
 msgstr ""
+"<link href=\"rkward://rhelp/trellis.last.object\"/> (требуется lattice)"
 
 #. i18n: ectx: (RKWard Shortcut keys) <title>
 #: rkward/pages/rkward_shortcuts.rkh:8
@@ -1589,6 +1649,8 @@ msgid ""
 "To run code from scripts / help pages / the console, select it, and use Ctrl"
 "+Enter"
 msgstr ""
+"Чтобы запустить код, находящийся в сценарии, на странице справки или в "
+"консоли, выберите его и воспользуйтесь комбинацией клавиш Ctrl + «Ввод»"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1602,7 +1664,7 @@ msgstr ""
 #: rkward/pages/rkward_split_views.rkh:8
 #, kde-format
 msgid "Split views"
-msgstr ""
+msgstr "Разделённое представление"
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1610,6 +1672,8 @@ msgstr ""
 msgid ""
 "Split views can be used to partition the main window into several view areas."
 msgstr ""
+"Разделённое представление можно использовать, чтобы разбить главное окно на "
+"несколько областей просмотра."
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1623,7 +1687,7 @@ msgstr ""
 #: rkward/pages/rkward_split_views.rkh:16
 #, kde-format
 msgid "Splitting views"
-msgstr ""
+msgstr "Разделение представления"
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -2112,7 +2176,7 @@ msgid ""
 msgstr ""
 "Панель обзора рабочей области можно вызвать с помощью пункта меню «Окна -> "
 "Активировать -> Показать / Скрыть \"Обзор рабочей области\"» (комбинация "
-"клавиш по умолчанию: Alt+1) или щелчком по значку «Рабочая область», по "
+"клавиш по умолчанию: Alt + 1) или щелчком по значку «Рабочая область», по "
 "умолчанию расположенному в верхней части левой границы окна."
 
 #. i18n: ectx: (Workspace Browser) <section title="...">
@@ -2196,6 +2260,10 @@ msgid ""
 "the left of the object name. Clicking on this will expand the view to show "
 "all the children of the object."
 msgstr ""
+"Обратите внимание, что у объектов есть иерархия, то есть объекты некоторых "
+"типов содержат «дочерние» объекты. Это обозначается символом «+» слева от "
+"имени объекта. При щелчке по этому символу будут показаны все дочерние "
+"объекты этого объекта."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2204,6 +2272,8 @@ msgid ""
 "Hovering the mouse pointer over an object will show a short summary of the "
 "objects' basic properties."
 msgstr ""
+"При наведении указателя мыши на объект будет показана краткая сводка "
+"основных свойств этого объекта."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2226,6 +2296,8 @@ msgid ""
 "<b>Search Help</b>: This will try to locate and show a relevant R help page "
 "on the object."
 msgstr ""
+"<b>Найти в справке</b>: будет выполнена попытка найти и показать подходящую "
+"страницу справки R для этого объекта."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2236,6 +2308,10 @@ msgid ""
 "\">print</link> and <link href=\"rkward://rhelp/summary\">summary</link> to "
 "show more information."
 msgstr ""
+"<b>Просмотреть</b>: открыть окно с подробной информацией об объекте. В этом "
+"окне, помимо прочего, для показа дополнительной информации используются "
+"команды R <link href=\"rkward://rhelp/print\">print</link> и <link href="
+"\"rkward://rhelp/summary\">summary</link>."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2246,12 +2322,16 @@ msgid ""
 "copy an object from the environment \"package:datasets\" into the ."
 "GlobalEnv, and in a second step, edit it."
 msgstr ""
+"<b>Скопировать в новый символ / Скопировать в .GlobalEnv</b>: для управления "
+"объектами необходимо скопировать их в .GlobalEnv. Например, можно "
+"скопировать объект из окружения «package:datasets» в .GlobalEnv, а затем "
+"отредактировать его."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "Further actions available for objects in the .GlobalEnv:"
-msgstr ""
+msgstr "Другие доступные действия над объектами в .GlobalEnv:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2260,12 +2340,14 @@ msgid ""
 "<b>Edit</b>: Open the object in a data editor. Currently editing is only "
 "supported for data.frames."
 msgstr ""
+"<b>Изменить</b>: открыть объект в редакторе данных. В текущей версии "
+"редактирование поддерживается только для объектов data.frame."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "<b>Rename / Delete</b>: These should be obvious."
-msgstr ""
+msgstr "<b>Переименовать / Удалить</b>: очевидные действия."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2274,6 +2356,8 @@ msgid ""
 "Some default settings for the Workspace Browser can be configured using the "
 "context menu:"
 msgstr ""
+"Некоторые стандартные параметры панели обзора рабочей области можно "
+"настроить с помощью контекстного меню:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2284,6 +2368,10 @@ msgid ""
 "the workspace browser, these configure the <i>default</i> settings in the "
 "workspace browser (i.e. those that are effectively after restarting RKWard)."
 msgstr ""
+"<b>Показать скрытые объекты / Показать все окружения</b>: смотрите <link "
+"href=\"#introduction\">выше</link>. В отличие от настройки непосредственно "
+"на панели обзора рабочей области, эти опции задают <i>стандартные</i> "
+"параметры обзора (то есть те, которые действуют после перезапуска RKWard)."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2293,6 +2381,9 @@ msgid ""
 "(such as environments, lists) are shown, even if they do not correspond to "
 "the current filter."
 msgstr ""
+"<b>Показать объекты с дочерними элементами</b>: позволяет включить "
+"отображение объектов с дочерними элементами (например, окружения, списки), "
+"даже если они не соответствуют условиям текущего фильтра."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2301,6 +2392,9 @@ msgid ""
 "<b>Show variables / functions</b>: Equivalent to the \"All vs. Non-Function "
 "vs. Functions\" control described <link href=\"#introduction\">above</link>."
 msgstr ""
+"<b>Показать переменные / функции</b>: аналогично параметру «Все / Не "
+"функции / Функции», описание которого приведено <link href=\"#introduction"
+"\">выше</link>."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2309,6 +2403,8 @@ msgid ""
 "<b>Label field / Type field / Class field</b>: Which columns are shown for "
 "each object?"
 msgstr ""
+"<b>Поле подписи / Поле типа / Поле класса</b>: какие столбцы следует "
+"показывать для каждого объекта?"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2317,6 +2413,9 @@ msgid ""
 "One additional setting is available from <a href=\"rkward://settings/browser"
 "\">Settings->Configure RKWard->Workspace</a>:"
 msgstr ""
+"При выборе пункта меню <a href=\"rkward://settings/browser\">Настройка -> "
+"Настроить RKWard -> Рабочая область</a> доступен один дополнительный "
+"параметр:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2330,3 +2429,11 @@ msgid ""
 "and is \"blacklisted\" by default. If you note that loading a package takes "
 "exceedingly long, you may consider adding it to this list."
 msgstr ""
+"<b>Никогда не получать структуру этих пакетов</b>: некоторые "
+"(немногочисленные) пакеты R содержат <b>очень</b> много маленьких объектов "
+"(десятки тысяч). В самом худшем случае попытка получения информации о "
+"структуре этих пакетов (то есть информации для отображения на панели обзора "
+"рабочей области) приведёт к большой нагрузке на систему и «зависанию» "
+"RKWard. Примером такого пакета является «GO», его загрузка запрещена по "
+"умолчанию. Если загрузка какого-либо пакета занимает слишком много времени, "
+"возможно, его также следует добавить в список запрещённых."
