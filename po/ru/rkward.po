@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2025-01-16 15:10+0300\n"
+"PO-Revision-Date: 2025-01-17 17:02+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1302,7 +1302,7 @@ msgid ""
 "packages."
 msgstr ""
 "Некоторые пакеты «предлагают» дополнительные пакеты, которые не являются "
-"строго необходимыми для их работы, но могут предоставляют дополнительный "
+"строго необходимыми для их работы, но могут предоставлять дополнительный "
 "функционал. Включите этот параметр, чтобы установить также и их."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:690
@@ -3737,12 +3737,12 @@ msgstr "Показать параметры фильтра"
 #: rkward/plugin/rkvarselector.cpp:127
 #, kde-format
 msgid "Expand all root level objects (show columns of data.frames)"
-msgstr "Развернуть все объекты корневого уровня (показать столбцы data.frames)"
+msgstr "Развернуть все объекты корневого уровня (показать столбцы data.frame)"
 
 #: rkward/plugin/rkvarselector.cpp:131
 #, kde-format
 msgid "Collapse all root level objects (hide columns of data.frames)"
-msgstr "Свернуть все объекты корневого уровня (скрыть столбцы data.frames)"
+msgstr "Свернуть все объекты корневого уровня (скрыть столбцы data.frame)"
 
 #: rkward/plugin/rkvarslot.cpp:37
 #, kde-format
@@ -5534,8 +5534,8 @@ msgstr ""
 "контроля версий файл для модуля <i>Проект</i>).</p><p>Перечисленные здесь "
 "модули не разрабатывались специально для RKWard, некоторые из них не "
 "принесут особой пользы при работе с программой. Пункты модулей, которые "
-"пользователи RKWard считают «полезными», обозначены <b>полужирным</b> "
-"шрифтом.</p>"
+"пользователи RKWard считают полезными, обозначены <b>полужирным</b> шрифтом."
+"</p>"
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:46
 #, kde-format
