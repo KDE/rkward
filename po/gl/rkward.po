@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-01-06 13:12+0100\n"
+"PO-Revision-Date: 2025-01-19 13:47+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -804,7 +804,7 @@ msgstr ""
 "###Complete###\n"
 "\n"
 
-# skip-rule: normalization-ble
+# skip-rule: trasno-gl_bel
 #: rkward/dialogs/rkerrordialog.cpp:132
 #, kde-format
 msgid ""
@@ -946,7 +946,7 @@ msgid ""
 msgstr ""
 "Se os datos teñen un tamaño moderado, e pode abrilos ou visualizalos noutra "
 "aplicación do sistema , importalos do portapapeis (copiar e pegar) podería "
-"ser unha opción viable."
+"ser unha opción viábel."
 
 #: rkward/dialogs/rkimportdialog.cpp:110 rkward/dialogs/rkimportdialog.cpp:119
 #, kde-format
@@ -1373,7 +1373,7 @@ msgstr "<p>Lugar onde o paquete está instalado ou dispoñíbel.</p>"
 #: rkward/dialogs/rkloadlibsdialog.cpp:972
 #, kde-format
 msgid "Updateable Packages"
-msgstr "Paquetes que se poden actualizar"
+msgstr "Paquetes actualizábeis"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:973
 #, kde-format
@@ -1630,8 +1630,8 @@ msgid ""
 "will be prompted with a link to a download page at the last page of this "
 "dialog)"
 msgstr ""
-"Marcar %1 para instalar (aínda non se pode instalar, pero indicaráselle unha "
-"ligazón de descarga na última páxina do diálogo)."
+"Marcar %1 para instalar (aínda non se permite instalar, pero indicaráselle "
+"unha ligazón de descarga na última páxina do diálogo)."
 
 #: rkward/dialogs/rksetupwizard.cpp:101
 #, kde-format
@@ -1727,7 +1727,7 @@ msgstr "Complementos de RKWard"
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr ""
-"<p>Non hai complementos activados. Probablemente isto non sexa intencional.</"
+"<p>Non hai complementos activados. Probabelmente isto non sexa intencional.</"
 "p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:155
@@ -1903,7 +1903,7 @@ msgid ""
 "information:</p><li>%1</li>"
 msgstr ""
 "<p>Recoméndase instalar o seguinte soporte lóxico pero a instalación "
-"automática aínda non funciona. Prema as seguintes ligazóns para obter "
+"automática aínda non se permite. Prema as seguintes ligazóns para obter "
 "información de instalación:</p><li>%1</li>"
 
 #: rkward/dialogs/rksetupwizard.cpp:276
@@ -1937,6 +1937,7 @@ msgstr "Non hai paquetes de R para instalar"
 msgid "Unable to detect R installation"
 msgstr "Non é posíbel detectar a instalación de R"
 
+# skip-rule: trasno-gl_bel
 #: rkward/main.cpp:208
 #, kde-format
 msgid ""
@@ -2306,6 +2307,7 @@ msgstr ""
 "O executábel de R (%1) indicado no ficheiro rkward.ini (%2) non existe ou "
 "non é executábel."
 
+# skip-rule: trasno-gl_bel
 #: rkward/main.cpp:401
 #, kde-format
 msgid ""
