@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2025-01-06 13:12+0100\n"
+"PO-Revision-Date: 2025-01-19 13:47+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -825,7 +825,7 @@ msgstr ""
 "###Complete###\n"
 "\n"
 
-# skip-rule: normalization-ble
+# skip-rule: trasno-gl_bel
 #: rkward/dialogs/rkerrordialog.cpp:131
 #, kde-format
 msgid ""
@@ -967,7 +967,7 @@ msgid ""
 msgstr ""
 "Se os datos teñen un tamaño moderado, e pode abrilos ou visualizalos noutra "
 "aplicación do sistema , importalos do portapapeis (copiar e pegar) podería "
-"ser unha opción viable."
+"ser unha opción viábel."
 
 #: rkward/dialogs/rkimportdialog.cpp:94 rkward/dialogs/rkimportdialog.cpp:98
 #, kde-format
@@ -1412,7 +1412,7 @@ msgstr "<p>Lugar onde o paquete está instalado ou dispoñíbel.</p>"
 #: rkward/dialogs/rkloadlibsdialog.cpp:987
 #, kde-format
 msgid "Updateable Packages"
-msgstr "Paquetes que se poden actualizar"
+msgstr "Paquetes actualizábeis"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:988
 #, kde-format
@@ -1749,8 +1749,8 @@ msgid ""
 "will be prompted with a link to a download page at the last page of this "
 "dialog)"
 msgstr ""
-"Marcar %1 para instalar (aínda non se pode instalar, pero indicaráselle unha "
-"ligazón de descarga na última páxina do diálogo)."
+"Marcar %1 para instalar (aínda non se permite instalar, pero indicaráselle "
+"unha ligazón de descarga na última páxina do diálogo)."
 
 #: rkward/dialogs/rksetupwizard.cpp:275
 #, kde-format
@@ -1837,7 +1837,7 @@ msgstr "Complementos de RKWard"
 #, kde-format
 msgid "<p>No plugins are enabled. This is probably not intended.</p>"
 msgstr ""
-"<p>Non hai complementos activados. Probablemente isto non sexa intencional.</"
+"<p>Non hai complementos activados. Probabelmente isto non sexa intencional.</"
 "p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:333
@@ -2001,7 +2001,7 @@ msgid ""
 "information:</p><li>%1</li>"
 msgstr ""
 "<p>Recoméndase instalar o seguinte soporte lóxico pero a instalación "
-"automática aínda non funciona. Prema as seguintes ligazóns para obter "
+"automática aínda non se permite. Prema as seguintes ligazóns para obter "
 "información de instalación:</p><li>%1</li>"
 
 #: rkward/dialogs/rksetupwizard.cpp:467
