@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2025-01-17 17:02+0300\n"
+"PO-Revision-Date: 2025-01-20 12:05+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -3918,8 +3918,8 @@ msgid ""
 "and fix your installation</b>. For help with that, see <a href=\"https://"
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 msgstr ""
-"</p>\t— либо библиотеку R «rkward» либо вообще не удалось загрузить, либо "
-"была загружена неверная её версия. Это может привести к появлению различных "
+"</p>\t— библиотеку R «rkward» либо вообще не удалось загрузить, либо была "
+"загружена неверная её версия. Это может привести к появлению различных "
 "ошибок; от отсутствия отдельных возможностей до полной неработоспособности. "
 "Вероятнее всего, при последней установке не все файлы оказались в нужном "
 "месте. Тем не менее, в некоторых случаях причиной может быть наличие "
@@ -5544,7 +5544,7 @@ msgstr "Использовать окно KDE для устройств печа
 #: rkward/settings/rksettingsmodulegraphics.cpp:115
 #, kde-format
 msgid "Screen device history"
-msgstr "Журнал экранного устройства"
+msgstr "Журнал экранных устройств"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:122
 #, kde-format
@@ -7089,7 +7089,7 @@ msgstr "Справка по R"
 #: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format
 msgid "Search R Help"
-msgstr "Поиск в справке по R"
+msgstr "Поиск в справке R"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:61
 #, kde-format
