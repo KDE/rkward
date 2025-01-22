@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-15 00:36+0000\n"
-"PO-Revision-Date: 2025-01-20 12:05+0300\n"
+"PO-Revision-Date: 2025-01-21 17:22+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -5366,10 +5366,9 @@ msgid ""
 "be saved (and loaded) per R workspace, or independent of the R workspace. "
 "Which do you prefer?"
 msgstr ""
-"Компоновку рабочего места (то, какие окна сценариев, данных и справки "
-"открыты) можно сохранить (и загрузить) либо для каждой отдельной рабочей "
-"области R, либо независимо от рабочей области R. Какой вариант следует "
-"выбрать?"
+"Компоновку рабочей зоны (то, какие окна сценариев, данных и справки открыты) "
+"можно сохранить (и загрузить) либо для каждой отдельной рабочей области R, "
+"либо независимо от рабочей области R. Какой вариант следует выбрать?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
@@ -5390,7 +5389,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:107
 #, kde-format
 msgid "Do not save/restore workplace layout"
-msgstr "Не сохранять и не восстанавливать компоновку рабочего места"
+msgstr "Не сохранять и не восстанавливать компоновку рабочей зоны"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:116
 #, kde-format
@@ -7544,12 +7543,12 @@ msgstr "Редактирование очень большого объекта"
 #: rkward/windows/rkworkplace.cpp:979
 #, kde-format
 msgid "Save Workplace layout"
-msgstr "Сохранить компоновку рабочего места"
+msgstr "Сохранить компоновку рабочей зоны"
 
 #: rkward/windows/rkworkplace.cpp:988
 #, kde-format
 msgid "Restore Workplace layout"
-msgstr "Восстановить компоновку рабочего места"
+msgstr "Восстановить компоновку рабочей зоны"
 
 #: rkward/windows/rkworkplaceview.cpp:62
 #, kde-format
