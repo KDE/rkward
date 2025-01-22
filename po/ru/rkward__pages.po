@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2025-01-20 17:14+0300\n"
+"PO-Revision-Date: 2025-01-21 17:22+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -239,6 +239,15 @@ msgid ""
 "rhelp/rkward-package\">rkward package overview</link> for RKWard specific "
 "function for development and scripting."
 msgstr ""
+"Ознакомьтесь с разделом <link href=\"help:/rkwardplugins/index.html"
+"\">Введение в написание модулей для RKWard</link> (<link href=\"https://"
+"rkward.kde.org/doc/rkwardplugins/\">самая последняя версия в Интернете</"
+"link>), чтобы узнать, как просто расширить возможности RKWard с помощью "
+"пользовательских диалогов. И как — при желании — поделиться своей работой с "
+"сообществом пользователей RKWard. В разделе <link href=\"rkward://rhelp/"
+"rkward-package\">Обзор пакета rkward</link> можно узнать больше про "
+"специфичную для RKWard функцию, предназначенную для разработки и создания "
+"сценариев."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -657,6 +666,12 @@ msgid ""
 "course, R can deal with this sort of data (technically called a \"data.frame"
 "\"), it is much more flexible, and may be slightly confusing at first."
 msgstr ""
+"Тем пользователям, которым уже доводилось работать с различными "
+"инструментами для обработки статистических данных, знакома концепция "
+"хранения всех данных в единственной электронной таблице и постоянной "
+"видимости этой таблицы. Конечно же, R позволяет работать с такими данными (с "
+"технической точки зрения это «data.frame»), но обладает гораздо более "
+"гибкими возможностями, что поначалу может вызывать некоторое недопонимание."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -669,6 +684,13 @@ msgid ""
 "of the language itself, the functions, are stored just like data and can "
 "also be edited."
 msgstr ""
+"R — и, следовательно, RKWard — позволяет работать с большим количеством "
+"различных типов данных: как с известными всем электронными таблицами, так и "
+"с отдельными векторами данных (например, со столбцом в электронной таблице), "
+"с так называемыми «списками» различных векторов или других объектов, которые "
+"могут иметь различную длину, с одиночными точками данных и так далее. Даже "
+"преобладающая часть самого языка (то есть функции) хранится совсем как "
+"данные и также доступна для редактирования."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -684,6 +706,16 @@ msgid ""
 "other objects are predefined in libraries, such as \"package:base\". See "
 "<link href=\"rkward://page/rkward_workspace_browser\"/> for details."
 msgstr ""
+"В то же время R не ограничивается работой лишь с одним фрагментом данных в "
+"отдельно взятый момент времени; скорее, имеется «рабочая область», где "
+"доступны все различные переменные, таблицы и так далее. Можно работать "
+"одновременно с несколькими объектами data.frame, а также с дополнительными "
+"данными других типов. В левой части окна приложения располагается значок с "
+"подписью «Рабочая область». Щёлкните по нему для просмотра всех объектов, "
+"присутствующих в рабочей области. Все создаваемые или изменяемые "
+"пользователем объекты будут видны в «.GlobalEnv». Большинство других "
+"объектов уже заранее определены в библиотеках, таких как «package:base». "
+"Подробнее здесь: <link href=\"rkward://page/rkward_workspace_browser\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -813,6 +845,12 @@ msgid ""
 "easier, both for users new to R, and R experts. Read on in <link href="
 "\"rkward://page/rkward_for_r_users\"/> for more on this."
 msgstr ""
+"Задача RKWard — обеспечить пользователю простой доступ к широким "
+"возможностям языка R без необходимости изучения самого этого языка. Тем не "
+"менее, для решения сложных задач может потребоваться задействовать всю "
+"гибкость R. Для этого в RKWard предусмотрен ряд инструментов, подходящих как "
+"для начинающих, так и для опытных пользователей R. Дополнительные сведения: "
+"<link href=\"rkward://page/rkward_for_r_users\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -942,7 +980,7 @@ msgid ""
 "(the area of the window, that you are most likely reading this text, in). "
 "You can open any number of script editor windows at the same time."
 msgstr ""
-"Редактор открывается в новом окне основного рабочего места (та часть окна, в "
+"Редактор открывается в новом окне основного рабочей зоны (та часть окна, в "
 "которой находится этот текст). Одновременно может быть открыто любое "
 "количество окон редактирования сценариев."
 
@@ -996,8 +1034,8 @@ msgstr ""
 "При обзоре объектов можно выбрать типы объектов, которые будут показаны (в "
 "верхней части окна). При наведении указателя мыши на какой-либо элемент "
 "будут показаны дополнительные сведения о символе. При щелчке по элементу "
-"правой кнопкой мыши будут показаны доступные действия. Подробнее: <link href="
-"\"rkward://page/rkward_workspace_browser\"/>."
+"правой кнопкой мыши будут показаны доступные действия. Подробнее здесь: "
+"<link href=\"rkward://page/rkward_workspace_browser\"/>."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:38
@@ -1030,6 +1068,9 @@ msgid ""
 "RKWard provides an advanced dialog to have installation, updating, and "
 "loading of packages. This is available from Settings->Manage R Packages."
 msgstr ""
+"RKWard предоставляет диалоговое окно с расширенными возможностями для "
+"установки, обновления и загрузки пакетов («Настройка -> Управление пакетами "
+"R»)."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -1045,6 +1086,9 @@ msgid ""
 "level window using Windows->Detach. Similarly, detached windows can be "
 "attached to the main workplace using Window->Attach to main window."
 msgstr ""
+"Все окна в главной области просмотра можно отсоединить, сделав их отдельными "
+"окнами верхнего уровня: «Окно -> Отделить». Также можно прикрепить "
+"отсоединённые окна к главной рабочей зоне: «Окно -> Прикрепить»."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -1054,7 +1098,7 @@ msgid ""
 "Ctrl+Shift+Tab cycle through all active document / tool windows in your "
 "session."
 msgstr ""
-"Окна можно закрывать с помощью пункта меню «Окна -> Закрыть» (комбинация "
+"Окна можно закрывать с помощью пункта меню «Окно -> Закрыть» (комбинация "
 "клавиш по умолчанию: Ctrl + W). Комбинации клавиш Ctrl + Tab и Ctrl + Shift "
 "+ Tab позволяют циклически перебирать активные окна документов или "
 "инструментов в текущем сеансе."
@@ -1134,6 +1178,9 @@ msgid ""
 "the <link href=\"rkward://rhelp/rkward-package\">rkward package overview</"
 "link>."
 msgstr ""
+"RKWard предоставляет различные функциональные возможности, со списком "
+"которых можно ознакомиться в разделе <link href=\"rkward://rhelp/rkward-"
+"package\">Обзор пакета rkward</link>."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -1329,6 +1376,12 @@ msgid ""
 "retrieve the files from the \".rkward\" of your home directory (location "
 "configurable in Settings->Configure RKWard->General)."
 msgstr ""
+"На внутреннем уровне файлы вывода RKWard основаны на HTML. Если требуется "
+"доступ к необработанным файлам HTML и файлам изображений, файл .rko — это "
+"просто сжатая с помощью zip папка. Её можно разархивировать с помощью "
+"стандартных инструментов или открыть в RKWard и извлечь файлы из папки «."
+"rkward» в домашнем каталоге (расположение указывается в разделе «Настройка -"
+"> Настроить RKWard-> Основное»)."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:28
@@ -1791,7 +1844,7 @@ msgstr ""
 #: rkward/pages/rkward_split_views.rkh:8
 #, kde-format
 msgid "Split views"
-msgstr "Разделённое представление"
+msgstr "Разделённые области просмотра"
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1799,8 +1852,8 @@ msgstr "Разделённое представление"
 msgid ""
 "Split views can be used to partition the main window into several view areas."
 msgstr ""
-"Разделённое представление можно использовать, чтобы разбить главное окно на "
-"несколько областей просмотра."
+"Разделённые области просмотра позволяют подразделить главное окно на "
+"несколько зон просмотра."
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1809,12 +1862,15 @@ msgid ""
 "They can be used to make better use of screen space, but also to view far-"
 "apart portions of a single file, simultaneously."
 msgstr ""
+"Благодаря этому можно эффективнее использовать экранное пространство, а "
+"также одновременно просматривать расположенные далеко друг от друга части "
+"одного файла."
 
 #. i18n: ectx: (Split views) <section title="...">
 #: rkward/pages/rkward_split_views.rkh:16
 #, kde-format
 msgid "Splitting views"
-msgstr "Разделение представления"
+msgstr "Разделение областей просмотра"
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1827,6 +1883,14 @@ msgid ""
 "window. When splitting other windows (such as onscreen graphics devices), "
 "the new view area will be initialized to show this help page."
 msgstr ""
+"В этой версии программы разделение областей просмотра поддерживается только "
+"для главного окна. Чтобы разделить текущую область просмотра по вертикали "
+"или по горизонтали, воспользуйтесь пунктом меню «Окно -> Разделить по "
+"вертикали» или «Окно -> Разделить по горизонтали». Если окно поддерживает "
+"такую опцию (например, окна сценариев, страниц справки), новая область "
+"просмотра будет содержать копию текущего окна. При разделении других окон "
+"(например, окон устройств экранной графики) в новой области просмотра будет "
+"показана эта страница справки."
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1837,18 +1901,22 @@ msgid ""
 "make sure that the view area where you want them new window to open has "
 "focus / is active."
 msgstr ""
+"Чтобы добавить другие файлы в область просмотра, просто откройте их обычным "
+"способом (в окне диспетчера файлов, через меню или с помощью окна консоли "
+"R). Нужно только убедиться, что область просмотра, в которой должно "
+"открыться новое окно с ними, находится в фокусе или активна."
 
 #. i18n: ectx: (Split views) <section title="...">
 #: rkward/pages/rkward_split_views.rkh:22
 #, kde-format
 msgid "Closing split views"
-msgstr ""
+msgstr "Закрытие разделённых областей просмотра"
 
 #. i18n: ectx: (Split views) <section title="Closing split views">
 #: rkward/pages/rkward_split_views.rkh:22
 #, kde-format
 msgid "To remove a view area, simply close all windows inside it."
-msgstr ""
+msgstr "Чтобы удалить область просмотра, просто закройте все окна внутри неё."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <title>
 #: rkward/pages/rkward_trouble_shooting.rkh:8
@@ -2018,6 +2086,13 @@ msgid ""
 "on \"external\" packages (obtained from <link href=\"http://cran.r-project."
 "org/\">The Comprehensive R Archive Network (CRAN)</link>) to perform a task."
 msgstr ""
+"В RKWard имеются практически все функциональные возможности, предоставляемые "
+"стандартными пакетами R. Но в то же время функционал RKWard можно "
+"значительно расширить. Многие разработчики уже воспользовались этим, "
+"благодаря чему некоторые процедуры в RKWard работают только после установки "
+"«внешних» пакетов (которые можно получить в репозитории <link href=\"http://"
+"cran.r-project.org/\">CRAN (Comprehensive R Archive Network, обширный "
+"сетевой архив R)</link>)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -2031,6 +2106,13 @@ msgid ""
 "be out of luck. First you need to run a test from Analysis->Moment to "
 "achieve this."
 msgstr ""
+"Вот пример. Все проверки, связанные с <link href=\"rkward://rhelp/moments"
+"\">ассимметрией</link> и <link href=\"rkward://rhelp/moments\">эксцессом</"
+"link> (которые, как можно ожидать, должны поставляться с базовым пакетом R), "
+"реализованы с помощью внешнего пакета. Если вы читаете это впервые или "
+"перезапускаете RKWard после установки и пытаетесь перейти по ссылке, то "
+"ничего не получится. Сначала потребуется запустить проверку («Анализ -> "
+"Момент»)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -2042,6 +2124,12 @@ msgid ""
 "You'll be guided through the install procedure for the required package. "
 "Please note you need root privileges in certain situations."
 msgstr ""
+"Обычно для получения результата следовало бы выполнить вызов из R с помощью  "
+"<link href=\"rkward://rhelp/update.packages\">update.packages</link> и <link "
+"href=\"rkward://rhelp/library\">library</link>. Но RKWard упрощает задачу. "
+"Программа проводит пользователя через процедуру установки необходимого "
+"пакета. Обратите внимание, что в некоторых случаях могут потребоваться права "
+"пользователя root."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
@@ -2077,13 +2165,13 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:48
 #, kde-format
 msgid "People tend to ask me what RKWard means. What should I answer?"
-msgstr ""
+msgstr "Как правильно пояснить смысл названия «RKWard»?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
 #, kde-format
 msgid "What does \"RKWard\" mean?"
-msgstr ""
+msgstr "Что означает «RKWard»?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
@@ -2095,18 +2183,24 @@ msgid ""
 "link>, which delivered the basic GUI technologies for RKWard. And <link href="
 "\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's another story."
 msgstr ""
+"Да, название странное. Но объяснение есть: R — от <link href=\"http://www.r-"
+"project.org/\">языка R</link>, который лежит в основе статистических "
+"расчётов RKWard. K — от <link href=\"http://kde.org/\">KDE</link>, откуда "
+"взяты основные технологии графического интерфейса пользователя RKWard. А "
+"<link href=\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? Это уже другая "
+"история."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
 #, kde-format
 msgid "RKWard is running since ages. Has it hung up?"
-msgstr ""
+msgstr "RKWard очень долго выполняет задачу. Программа зависла?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
 #, kde-format
 msgid "RKWard seems to hang"
-msgstr ""
+msgstr "Похоже, программа RKWard зависла"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
@@ -2119,6 +2213,13 @@ msgid ""
 "there is still something to calculate or plot. If it turns green, R is done "
 "calculating."
 msgstr ""
+"Бывает по-разному. На выполнение некоторых проверок и построение некоторых "
+"графиков требуется время, если данных много или вычисления являются очень "
+"сложными. Поэтому иногда приходится подождать. Как бы то ни было, всегда "
+"можно проверить состояние R в RKWard. Просто посмотрите на маленькую панель "
+"в правом нижнем углу программы. Красный цвет означает, что расчёты или "
+"построение графиков ещё в процессе. Если цвет стал зелёным, выполнение "
+"расчётов с помощью R завершено."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
@@ -2130,6 +2231,13 @@ msgid ""
 "An example of very memory hungry tests are the <link href=\"rkward://rhelp/"
 "wilcox.test\">Wilcoxon Rank Sum and Signed Rank Tests</link>."
 msgstr ""
+"Для выполнения некоторых статистических проверок требуется много оперативной "
+"памяти; система целиком может перестать реагировать на действия "
+"пользователя, поскольку используется резервная память на диске. Такое "
+"поведение не является внутренней ошибкой RKWard или R, просто выполнение "
+"расчётов поглощает все ресурсы системы. Примерами проверок с очень высокой "
+"нагрузкой на память могут служить <link href=\"rkward://rhelp/wilcox.test"
+"\">проверки по критерию суммы рангов или знаковых рангов Вилкоксона</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
@@ -2142,6 +2250,12 @@ msgid ""
 "issue (see: <link href=\"rkward://rhelp/mem.limits\"/>, and <link href="
 "\"rkward://rhelp/memory.limit\"/>)."
 msgstr ""
+"Следовательно, важно учитывать характеристики проверки. Более того, перед "
+"выполнением таких операций нужно сохранить рабочую область и другие разделы, "
+"где велась работа. В текущей версии RKWard нет функциональной возможности "
+"восстановления данных в случае сбоя! В R предусмотрены встроенные тесты для "
+"выявления таких проблем с памятью (подробнее здесь: <link href=\"rkward://"
+"rhelp/mem.limits\"/>, <link href=\"rkward://rhelp/memory.limit\"/>)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:58
@@ -2305,7 +2419,7 @@ msgid ""
 "\"Workspace\" icon, which is located on the top of the left window border, "
 "by default."
 msgstr ""
-"Панель обзора рабочей области можно вызвать с помощью пункта меню «Окна -> "
+"Панель обзора рабочей области можно вызвать с помощью пункта меню «Окно -> "
 "Активировать -> Показать / Скрыть \"Обзор рабочей области\"» (комбинация "
 "клавиш по умолчанию: Alt + 1) или щелчком по значку «Рабочая область», по "
 "умолчанию расположенному в верхней части левой границы окна."
@@ -2378,9 +2492,9 @@ msgstr ""
 "окружения и их объекты. Грубо говоря, если его отключить, будут показаны "
 "только «собственные» объекты пользователя, а если включить — также и все "
 "предопределённые объекты. С технической точки зрения: при отключении этого "
-"параметра отображается только .GlobalEnv (подробнее: <link href=\"rkward://"
-"rhelp/globalenv\"/>), то есть то окружение, в котором пользователь создаёт и "
-"редактирует свои данные."
+"параметра отображается только .GlobalEnv (подробнее здесь: <link href="
+"\"rkward://rhelp/globalenv\"/>), то есть то окружение, в котором "
+"пользователь создаёт и редактирует свои данные."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
