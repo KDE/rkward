@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2025-01-21 17:22+0300\n"
+"PO-Revision-Date: 2025-01-22 17:07+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -214,6 +214,16 @@ msgid ""
 "text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
 "link> (pre-initialized for installation of rk.Teaching)."
 msgstr ""
+"В диалоге установки пакетов R будут показаны не все упакованные таким "
+"образом модули RKWard, так как они (ещё) не находятся в стандартных "
+"репозиториях. На момент написания этого текста среди них присутствует очень "
+"большой набор модулей — <link href=\"https://github.com/rkward-community/rk."
+"Teaching\">rk.Teaching</link>. Многие из таких модулей размещены на "
+"платформах вроде github.com; зная адрес репозитория, можно установить их за "
+"несколько щелчков мышью с помощью <link href=\"rkward://runplugin/rkward::"
+"install_from_git/fullURL.text=https://github.com/rkward-community/rk."
+"Teaching.git\">этого диалога</link> (предварительно инициализирован для "
+"установки rk.Teaching)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:47
@@ -1020,6 +1030,14 @@ msgid ""
 "explore data and functions in loaded R libraries (and even in package "
 "namespaces)."
 msgstr ""
+"RKWard позволяет выполнять «просмотр рабочей области» или «обзор объектов». "
+"По умолчанию для этого следует щёлкнуть по значку «Рабочая область» в левой "
+"части окна приложения; будет можно изучать все объекты в рабочей области R и "
+"управлять ими. По умолчанию отображается только окружение «.GlobalEnv» (там "
+"обычно ведётся работа; подробнее здесь: <link href=\"rkward://rhelp/."
+"GlobalEnv\"/>). Если же установить флажок «Показать все окружения», будет "
+"можно с лёгкостью просматривать данные и функции в загруженных библиотеках R "
+"(и даже в пространствах имён пакетов)."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -1054,12 +1072,19 @@ msgid ""
 "located at the bottom of the window (next to the console button). To view a "
 "help page found using this tool, double-click on it."
 msgstr ""
+"По умолчанию внутри RKWard страницы справки R отображаются в формате HTML. "
+"Справку можно вызвать обычным способом, отдав в консоли команду «?print», "
+"«help (print)» или «help.start ()». Кроме того, имеется окно инструмента, с "
+"помощью которого можно выполнять поиск по установленным страницам справки R. "
+"Чтобы получить доступ к нему, нажмите кнопку, расположенную в нижней части "
+"окна (рядом с кнопкой консоли). Для просмотра страницы справки, найденной с "
+"помощью этого инструмента, сделайте двойной щелчок по ней."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:41
 #, kde-format
 msgid "Managing installed and loaded Libraries"
-msgstr ""
+msgstr "Управление установленными и загруженными библиотеками"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Managing installed and loaded Libraries">
 #: rkward/pages/rkward_for_r_users.rkh:41
@@ -1087,8 +1112,8 @@ msgid ""
 "attached to the main workplace using Window->Attach to main window."
 msgstr ""
 "Все окна в главной области просмотра можно отсоединить, сделав их отдельными "
-"окнами верхнего уровня: «Окно -> Отделить». Также можно прикрепить "
-"отсоединённые окна к главной рабочей зоне: «Окно -> Прикрепить»."
+"окнами верхнего уровня: «Окно -> Отделить». Соответственно, также можно "
+"прикрепить отсоединённые окна к главной рабочей зоне: «Окно -> Прикрепить»."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -1144,6 +1169,8 @@ msgid ""
 "Support for adding other types of data, esp. single vectors is planned, but "
 "not currently supported."
 msgstr ""
+"Реализация поддержки добавления данных других типов (в частности, отдельных "
+"векторов) запланирована, но ещё не осуществлена."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:56
@@ -1163,6 +1190,14 @@ msgid ""
 "browse your plots. See <link href=\"rkward://page/rkward_plot_history\"/> "
 "for details."
 msgstr ""
+"В R предусмотрено несколько систем построения графиков. Они отличаются "
+"широтой возможностей, хотя и не являются интерактивными. Работу этих систем "
+"обеспечивают различные пакеты, такие как <b>graphics</b> и <b>lattice</b>. В "
+"RKWard реализована надстройка над зависимыми от платформы экранными "
+"устройствами для обеспечения однородности принципов обработки данных. Помимо "
+"стандартных возможностей этих пакетов, RKWard предоставляет механизм журнала "
+"экранных устройств для сохранения и просмотра графиков. Подробнее здесь: "
+"<link href=\"rkward://page/rkward_plot_history\"/>."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:59
@@ -1336,6 +1371,9 @@ msgid ""
 "To write to the active RKWard output file from custom R code, refer to <link "
 "href=\"rkward://rhelp/rk.print\"/>, and the functions linked from there."
 msgstr ""
+"Сведения о записи в активный файл вывода RKWard из созданного пользователем "
+"кода R: <link href=\"rkward://rhelp/rk.print\"/> (также переходите по "
+"ссылкам на функции)."
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:16
@@ -1344,6 +1382,8 @@ msgid ""
 "To load / save / switch between output files, etc., refer to <link href="
 "\"rkward://rhelp/rk.output\"/>."
 msgstr ""
+"Сведения о загрузке файлов вывода, их сохранении и переключении между ними: "
+"<link href=\"rkward://rhelp/rk.output\"/>."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:22
@@ -1398,6 +1438,11 @@ msgid ""
 "great for writing interactive \"reports\", the RKWard Output is very easy to "
 "use for ad-hoc documentation while exploring your data."
 msgstr ""
+"RKWard также помогает в написании документов RMarkdown (Rmd). В частности, "
+"имеется возможность предварительного просмотра сценариев .Rmd. В то время "
+"как RMarkdown отлично подходит для написания интерактивных «отчётов», вывод "
+"RKWard очень легко использовать для специализированной документации при "
+"просмотре данных."
 
 #. i18n: ectx: (Screen device history) <title>
 #: rkward/pages/rkward_plot_history.rkh:8
@@ -1415,6 +1460,11 @@ msgid ""
 "is planned for future. See the Technical Details section below for more "
 "information."
 msgstr ""
+"Журнал экранных устройств предоставляет интерфейс для просмотра графиков, "
+"похожий на веб-браузер. В текущей реализации программа распознаёт "
+"большинство вызовов функций из пакетов graphics и lattice. В следующих "
+"версиях программы будут добавлены другие графические движки. Дополнительная "
+"информация доступна в разделе «Технические сведения» ниже."
 
 #. i18n: ectx: (Screen device history) <summary>
 #: rkward/pages/rkward_plot_history.rkh:10
@@ -1428,6 +1478,13 @@ msgid ""
 "addition, \"preview\" devices, which are available on some of the plugins "
 "are not managed either."
 msgstr ""
+"Журнал экранных устройств доступен только из окна открытого экранного "
+"устройства (меню <i>Журнал</i>, присутствует для большинства экранных "
+"устройств). Такие устройства в контексте этой страницы справки называются "
+"«управляемыми». На файловые устройства (например, png, pdf и так далее) эта "
+"реализация журнала не влияет, поэтому они не являются управляемыми. Кроме "
+"того, устройства «предварительного просмотра», доступные для некоторых "
+"модулей, также не являются управляемыми."
 
 #. i18n: ectx: (Screen device history) <section title="...">
 #. i18n: ectx: (Workspace Browser) <section title="...">
@@ -1714,6 +1771,15 @@ msgid ""
 "may seem innocuous, but it will have irreparable consequences when trying to "
 "use <code>trellis.last.object()</code>, thereafter. You have been warned!"
 msgstr ""
+"Графики lattice добавляются в журнал с помощью нестандартной функции "
+"<code>print.trellis()</code>, установленной командой <code>lattice."
+"options(\"print.function\")</code>. Поэтому не следует переназначать или "
+"изменять эту функцию в рамках запущенного сеанса RKWard. Кроме того, крайне "
+"не рекомендуется использовать метод <code>plot</code> для объекта trellis, "
+"поскольку такой вызов не будет передан через <code>print.trellis()</code> и, "
+"следовательно, не будет сохранён в журнале. Такие действия могут казаться "
+"безопасными, но приведут к непоправимым последствиям при последующей попытке "
+"использовать <code>trellis.last.object()</code>. Обязательно учтите это!"
 
 #. i18n: ectx: (Screen device history) <related>
 #: rkward/pages/rkward_plot_history.rkh:49
@@ -1932,12 +1998,16 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"На этой странице приводится информация о распространённых проблемах, с "
+"которыми можно столкнуться при использовании RKWard. Ознакомьтесь также со "
+"<link href=\"https://rkward.kde.org/faq\">списком часто задаваемых вопросов "
+"в Интернете</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
 #, kde-format
 msgid "The \"Analysis\" menu is missing, or shows up as \"(no label)\""
-msgstr ""
+msgstr "Меню «Анализ» отсутствует или показано как «(нет подписи)»"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -1955,6 +2025,12 @@ msgid ""
 "Starting with version 0.6.3, RKWard should detect a changed installation "
 "path, and adjust paths, automatically."
 msgstr ""
+"Эта проблема часто возникает при перемещении установленного дистрибутива "
+"RKWard в другой каталог (особенно это характерно для Windows и Mac). "
+"Вероятно, потребуется заново добавить нужные файлы «.pluginmap» в разделе "
+"меню «Настройка -> Настроить RKWard -> Модули». Программа RKWard версии "
+"0.6.3 и выше должна автоматически определять изменение пути установки и "
+"корректировать параметры соответствующим образом."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1979,6 +2055,12 @@ msgid ""
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"Иногда серверное приложение R не запускается из-за ошибки в конфигурации или "
+"при установке. Зачастую дело в изменении путей или обновлении R. В таких "
+"случаях при запуске RKWard обычно появляется диалог настройки, в котором "
+"можно выбрать другой установленный дистрибутив R. (Примечание: на выбор "
+"будут предложены дистрибутивы, обнаруженные по стандартным путям установки, "
+"но не найденный программой дистрибутив можно указать вручную)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -2003,12 +2085,17 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Можно в любое время вручную сменить серверное приложение R («Настройка -> "
+"Проверить установку»). Обязательно сохраните данные перед сменой серверного "
+"приложения! Также можно воспользоваться параметром командной строки --r-"
+"executable для запуска сеанса с использованием указанной установленной "
+"версии R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
-msgstr ""
+msgstr "Почему не следует использовать R из пакета AppImage RKWard"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -2027,6 +2114,13 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"Для удобства использования в пакет AppImage включена установленная версия R, "
+"но она не является и технически не может быть сделана полностью "
+"функциональной. Важнее всего то, что в общем случае не получится "
+"устанавливать пакеты R (за исключением реализованных полностью на R). Также "
+"могут быть конфликты между версией R из пакета AppImage и пакетами R, "
+"которые установлены на общесистемном уровне. Это может привести к неявным и "
+"неожиданным внутренним ошибкам."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -2035,6 +2129,8 @@ msgid ""
 "Sometimes I enter a command short after the start of RKWard but it is not "
 "processed. What's wrong?"
 msgstr ""
+"Иногда не выполняется обработка команды, введённой вскоре после запуска "
+"RKWard. Что не так?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -2052,6 +2148,11 @@ msgid ""
 "at the little box on the right bottom corner of RKWard. If it is green you "
 "can go ahead."
 msgstr ""
+"Это происходит, потому что сначала запускается RKWard, а уже потом, в "
+"фоновом режиме, R. В зависимости от скорости работы компьютеры на запуск R "
+"может уйти определённое время. Как бы то ни было, всегда можно проверить "
+"состояние R в RKWard. Просто посмотрите на маленькую панель в правом нижнем "
+"углу программы. Если она зелёного цвета, можно начинать работу."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -2062,6 +2163,10 @@ msgid ""
 "commands will be placed into a queue, first, and executed as soon as the "
 "backend becomes available, again."
 msgstr ""
+"Отправлять команды можно и до запуска серверного приложения, а также во "
+"время выполнения длительных расчётов. В этом случае отданные команды сначала "
+"будут помещены в очередь; их выполнение произойдёт тогда, когда серверное "
+"приложение снова станет доступным."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
