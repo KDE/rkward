@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2025-01-22 17:07+0300\n"
+"PO-Revision-Date: 2025-01-23 16:12+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -827,6 +827,21 @@ msgid ""
 "\"Calculate\" to perform the actual calculations, and \"Printout\" to "
 "generate output in RKWard's output window."
 msgstr ""
+"В нижней правой части диалогового окна расположена кнопка с подписью «Код». "
+"С её помощью можно показать или скрыть область с текстом. Этот текст (для "
+"более комфортного просмотра может понадобиться изменить размер окна) "
+"меняется в зависимости от выбранных в диалоге параметров. Он представляет "
+"собой синтаксические конструкции R, тот код, который требуется для "
+"выполнения указанных расчётов в R. Большая часть работы RKWard основывается "
+"на генерации этого кода и его последующем запуске в R. В дальнейшем, когда "
+"пользователь лучше освоит работу в программе, столкнётся с задачами, для "
+"которых в RKWard нет готовых решений, или захочет автоматизировать "
+"повторяющиеся задачи, этими синтаксическими конструкциями можно будет "
+"воспользоваться для программирования анализа. Обратите внимание, что код "
+"поделён на три раздела: «Предварительная обработка» («Preprocess») для "
+"загрузки необходимых библиотек или определения вспомогательных функций, "
+"«Вычисление» («Calculate») для выполнения самих расчётов, а также "
+"«Вывод» («Printout») для генерации вывода в окне вывода RKWard."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -1236,6 +1251,16 @@ msgid ""
 "to script your code by hand, you can use dialogs to gain usage examples or "
 "snippets of code for functions you are less familiar with in R."
 msgstr ""
+"В RKWard множество других пунктов меню. Они позволяют использовать "
+"возможности R. Фактически, с помощью этих пунктов меню можно создавать код R "
+"на основе значений параметров, указанных в графическом диалоговом окне. "
+"Например, выберите в меню пункт «Анализ -> Описательная статистика». В "
+"нижней части экрана появится небольшое окно (включить или отключить его "
+"показ можно с помощью кнопки «Код»), содержащее необходимый для "
+"соответствующей обработки данных код R. Таким образом, даже если "
+"предпочтение отдаётся написанию кода вручную, можно пользоваться диалогами "
+"для получения примеров использования или фрагментов кода для ещё не очень "
+"хорошо знакомых функций R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Everything else">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -1320,6 +1345,13 @@ msgid ""
 "integration\". Then you can use the vanille onscreen devices (X11() or "
 "Windows() or Quartz()), for plotting."
 msgstr ""
+"Это наиболее распространённый вид несовместимости версий. В этом случае "
+"актуален приведённый ранее совет: установите обновлённую версию RKWard. Если "
+"обновление нельзя получить сразу, а продолжить работу обязательно нужно, то "
+"установите для параметра <link href=\"rkward://settings/graphics\">Настройка "
+"-&gt; Экранная графика</link> -&gt; «Интеграция стандартных устройств R» "
+"значение «Без интеграции». После этого для построения графиков можно будет "
+"использовать базовые экранные устройства (X11(), Windows() или Quartz())."
 
 #. i18n: ectx: (RKWard Output) <title>
 #: rkward/pages/rkward_output.rkh:8
@@ -1732,8 +1764,8 @@ msgstr ""
 "функция предоставляет сводки по журналу экранных устройств. Здесь "
 "<code>which</code> обозначает «идентификатор устройства» (по умолчанию "
 "используется <i>NULL</i>: сводки по всем управляемым устройствам), а "
-"<code>type</code> — либо <i>devices</i> (возвращает информацию для "
-"определённых устройств), либо <i>history</i> (возвращает информацию по всем "
+"<code>type</code> — либо <i>devices</i> (возвращает информацию, относящуюся "
+"к устройствам), либо <i>history</i> (возвращает информацию по всем "
 "сохранённым в журнале графикам)."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
@@ -2265,6 +2297,13 @@ msgid ""
 "document or Office document, among others. Current RKWard versions support "
 "this in principle in the export menu."
 msgstr ""
+"У RKWard всё ещё не хватает определённых возможностей по интеграции с "
+"офисными программами; до «бесшовной» интеграции ещё далеко. Сведения о "
+"решении самых важных задач приводятся здесь: <link href=\"rkward://page/"
+"rkward_output\"/>. В то же время, возможно выполнять аналитические расчёты "
+"для документов RMarkdown. Их можно сохранять в формате PDF, TeX или Office, "
+"а также в других форматах. В текущих версиях RKWard такая возможность "
+"поддерживается с помощью меню экспорта."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
@@ -2366,7 +2405,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:58
 #, kde-format
 msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
-msgstr ""
+msgstr "Как отменить ошибочное действие? Где «Отмена» и «Повтор»?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:58
@@ -2384,6 +2423,12 @@ msgid ""
 "important that you know what you do before you start. It's recommended to "
 "use copies of original data and to give everything a meaningful name."
 msgstr ""
+"В текущей версии RKWard возможности «отмены» и «повтора» предусмотрены не "
+"везде. Например, они есть в редакторе сценариев, но для уже построенных "
+"графиков или завершённых проверок невозможно что-либо отменить или "
+"повторить. Поэтому важно тщательно продумывать свои действия заранее. "
+"Рекомендуется использовать копии исходных данных и давать сохранённым данным "
+"такие названия, по которым их будет просто найти."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
 #: rkward/pages/rkward_trouble_shooting.rkh:58
@@ -2397,6 +2442,15 @@ msgid ""
 "relevant settings in combination with the creation date. Moreover you can "
 "check and copy any code generated for your documentation purposes."
 msgstr ""
+"Тем не менее, программа RKWard стремится предоставить пользователю максимум "
+"информации о совершённых им действиях. Если построение графиков и запуск "
+"проверок выполнялись с помощью меню, <link href=\"rkward://page/rkward_output"
+"\"/> будет содержать ссылку «запустить снова» под выводом. Если "
+"воспользоваться ей, можно повторить действие с такими же или немного "
+"изменёнными параметрами. Кроме того, для проверок и графиков программа "
+"пытается показать большую часть соответствующих параметров в сочетании с "
+"данными о времени обработки. Также можно проверить и скопировать любой "
+"созданный код для целей документирования."
 
 #. i18n: ectx: (Welcome to RKWard) <title>
 #: rkward/pages/rkward_welcome.rkh:8
