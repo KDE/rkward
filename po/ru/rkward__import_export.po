@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2025-01-23 17:15+0300\n"
+"PO-Revision-Date: 2025-01-24 17:20+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -519,7 +519,7 @@ msgstr "Если выше выбрано «другое», укажите нуж
 #: rkward/plugins/00saveload/import/import_csv.rkh:23
 #, kde-format
 msgid "The separator character used in the imported file"
-msgstr ""
+msgstr "Символ разделения, который используется в импортируемом файле"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Object to save to")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Object to save to")
@@ -538,6 +538,8 @@ msgid ""
 "The name of an R object to store the imported data in. If you choose an "
 "existing symbol name, you will be prompted, whether to overwrite this object."
 msgstr ""
+"Имя объекта R, в котором будут сохранены импортированные данные. Если "
+"выбрать имя существующего символа, будет предложено перезаписать этот объект."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Open imported data for editing")
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Open imported data for editing")
@@ -546,7 +548,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:29
 #, kde-format
 msgid "Whether the object should be opened for editing after it was imported"
-msgstr ""
+msgstr "Следует ли открыть объект для редактирования после импорта"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Preview")
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Preview")
@@ -557,6 +559,8 @@ msgid ""
 "Show a preview of the imported data. At most the first 50 rows and columns "
 "will be shown."
 msgstr ""
+"Предварительный просмотр импортируемых данных. Будет показано не более 50 "
+"первых строк и столбцов."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Row names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:30
@@ -566,6 +570,9 @@ msgid ""
 "can specify a single column containing the row names (typically the first). "
 "Or you can provide a character vector of names."
 msgstr ""
+"Как определить названия строк? Они могут быть пронумерованы: 1...n. Либо "
+"можно указать один столбец, содержащий названия (обычно это первый столбец). "
+"Также можно предоставить символьный вектор с названиями."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column number or variable name")
 #: rkward/plugins/00saveload/import/import_csv.rkh:31
@@ -574,6 +581,8 @@ msgid ""
 "See above. The column containing the row names, given either as a number, or "
 "as a column name (in the latter case, make sure to quote the name)"
 msgstr ""
+"Смотрите выше. Столбец, содержащий названия строк, который указан либо по "
+"номеру, либо по названию (в последнем случае заключите название в кавычки)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of row names (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:32
@@ -583,6 +592,9 @@ msgid ""
 "\"), but you can also specify the name of an R object containing the names "
 "to use)"
 msgstr ""
+"Смотрите выше. Вектор с названиями строк (например, c (\"row1\", "
+"\"row2\", ..., \"rown\"), но также можно указать имя объекта R, содержащего "
+"названия для использования)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:33
@@ -591,6 +603,8 @@ msgid ""
 "Use automatic column names (possibly read from first row of file), or use "
 "manually specified names?"
 msgstr ""
+"Использовать автоматические названия столбцов (возможно прочитать из первой "
+"строки файла) или указанные вручную?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of column names (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:34
@@ -600,12 +614,15 @@ msgid ""
 "\"col2\", ..., \"coln\"), but you can also specify the name of an R object "
 "containing the names to use)"
 msgstr ""
+"Смотрите выше. Укажите символьный вектор с названиями столбцов (например, c "
+"(\"col1\", \"col2\", ..., \"coln\"), но также можно указать имя объекта R, "
+"содержащего названия для использования)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Check syntax of column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:35
 #, kde-format
 msgid "Should column names be checked for validity?"
-msgstr ""
+msgstr "Следует ли проверять названия столбцов на корректность?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Classes of columns")
 #: rkward/plugins/00saveload/import/import_csv.rkh:36
@@ -613,6 +630,7 @@ msgstr ""
 msgid ""
 "Should be class of each column be determined automatically, or specified?"
 msgstr ""
+"Должен ли класс каждого столбца определяться автоматически или указываться?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of column classes (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:37
@@ -621,6 +639,8 @@ msgid ""
 "See above. Specify a character vector with the names of the classes to use "
 "for each column."
 msgstr ""
+"Смотрите выше. Укажите символьный вектор с именами классов, которые следует "
+"использовать для каждого из столбцов."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip trailing fields")
 #: rkward/plugins/00saveload/import/import_csv.rkh:38
@@ -630,6 +650,9 @@ msgid ""
 "five rows of input) be skipped? See parameter flush in <link href=\"rkward://"
 "rhelp/read.table\"/>."
 msgstr ""
+"Следует ли пропускать дополнительные столбцы (не указанные выше и не "
+"находящиеся среди первых пяти строк входных данных)? Смотрите параметр flush "
+"в <link href=\"rkward://rhelp/read.table\"/>."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Pad rows if unequal length")
 #: rkward/plugins/00saveload/import/import_csv.rkh:39
@@ -638,6 +661,8 @@ msgid ""
 "If checked, and the rows have differing length, they will be padded with "
 "empty values in the imported data."
 msgstr ""
+"Если флажок установлен и строки имеют разную длину, то в импортированные "
+"данные будут добавлены пустые значения для выравнивания длины."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Allow escaped characters")
 #: rkward/plugins/00saveload/import/import_csv.rkh:43
@@ -646,6 +671,9 @@ msgid ""
 "Should a backslash ('\\') followed by a character be treated as an escaped "
 "character? Otherwise the sequence is read literally."
 msgstr ""
+"Следует ли считать обратную косую черту («\\»), за которой следует символ, "
+"экранированной последовательностью? В ином случае такая последовательность "
+"читается буквально."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Strip leading and trailing whitespace")
 #: rkward/plugins/00saveload/import/import_csv.rkh:44
@@ -653,6 +681,8 @@ msgstr ""
 msgid ""
 "Should leading and trailing white space be removed from character fields?"
 msgstr ""
+"Следует ли убирать из символьных полей пустое пространство в начале и в "
+"конце?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Convert character columns to factors")
 #: rkward/plugins/00saveload/import/import_csv.rkh:45
@@ -671,6 +701,9 @@ msgid ""
 "How are missing values (NAs) written in the file to be imported? (Blank "
 "fields are also interpreted as NAs in columns that are not strings.)"
 msgstr ""
+"Как импортировать записанные в файле отсутствующие значения («н/д»)? (Пустые "
+"поля также интерпретируются как «н/д» в столбцах, не содержащих строковых "
+"значений.)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "String delimiter")
 #: rkward/plugins/00saveload/import/import_csv.rkh:47
@@ -821,7 +854,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:24
 #, kde-format
 msgid "Use first row as column names"
-msgstr ""
+msgstr "Использовать первую строку как названия столбцов"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="...">
@@ -829,7 +862,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:78
 #, kde-format
 msgid "Decimal point character"
-msgstr ""
+msgstr "Символ десятичной точки"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Decimal point character"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="Decimal point character"> <option label="...">
@@ -857,7 +890,7 @@ msgstr "',' (запятая)"
 #: rkward/plugins/00saveload/import/import_csv.xml:126
 #, kde-format
 msgid "Specify decimal point character"
-msgstr ""
+msgstr "Указание символа десятичной точки"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <frame label="Options"> <radio label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="...">
@@ -867,7 +900,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:87
 #, kde-format
 msgid "Field separator character"
-msgstr ""
+msgstr "Символ разделения полей"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Field separator character"> <option label="...">
@@ -877,7 +910,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:88
 #, kde-format
 msgid "Tab"
-msgstr ""
+msgstr "Табуляция"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Field separator character"> <option label="...">
@@ -893,13 +926,13 @@ msgstr "';' (точка с запятой)"
 #: rkward/plugins/00saveload/import/import_csv.xml:133
 #, kde-format
 msgid "Single space"
-msgstr ""
+msgstr "Одинарный пробел"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="Field separator character"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:134
 #, kde-format
 msgid "Any whitespace"
-msgstr ""
+msgstr "Любое пустое пространство"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <frame label="Options"> <input label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <input label="...">
@@ -907,7 +940,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:36
 #, kde-format
 msgid "Specify field separator character"
-msgstr ""
+msgstr "Указание символа разделения полей"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <saveobject label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <saveobject label="...">
@@ -922,7 +955,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:28
 #, kde-format
 msgid "Object to save to"
-msgstr ""
+msgstr "Объект для выполнения сохранения"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <checkbox label="...">
@@ -931,7 +964,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:29
 #, kde-format
 msgid "Open imported data for editing"
-msgstr ""
+msgstr "Открыть импортированные данные для редактирования"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <preview label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <preview label="...">
@@ -945,7 +978,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:32
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "Предварительный просмотр"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="...">
@@ -977,7 +1010,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.xml:172
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматически"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:154
@@ -1007,7 +1040,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.xml:159
 #, kde-format
 msgid "Vector of row names (quoted)"
-msgstr ""
+msgstr "Вектор с названиями строк (в кавычках)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:164
@@ -1021,7 +1054,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:118
 #, kde-format
 msgid "Column names"
-msgstr ""
+msgstr "Названия столбцов"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Column names"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Classes of columns"> <option label="...">
@@ -1035,7 +1068,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.xml:169
 #, kde-format
 msgid "Vector of column names (quoted)"
-msgstr ""
+msgstr "Вектор с названиями столбцов (в кавычках)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:170
@@ -1053,7 +1086,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.xml:175
 #, kde-format
 msgid "Vector of column classes (quoted)"
-msgstr ""
+msgstr "Вектор с классами столбцов (в кавычках)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:180
@@ -1075,13 +1108,13 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:30
 #, kde-format
 msgid "Further Options"
-msgstr ""
+msgstr "Другие параметры"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:186
 #, kde-format
 msgid "String handling"
-msgstr ""
+msgstr "Обработка строк"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:187
@@ -1390,6 +1423,8 @@ msgid ""
 "Should SPSS variables with value labels be converted to R factors with those "
 "levels?"
 msgstr ""
+"Следует ли преобразовывать переменные SPSS с подписями значений в факторы R "
+"с соответствующими уровнями?"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Maximum number of labels per object")
 #: rkward/plugins/00saveload/import/import_spss.rkh:28
@@ -1413,6 +1448,10 @@ msgid ""
 "performance reasons. Internally, the preview uses a data.frame, even if "
 "<label id=\"data_frame\"/> is not checked."
 msgstr ""
+"Предварительный просмотр импортируемых данных. Для повышения "
+"производительности отображаются только первые 50 строк и столбцов. На уровне "
+"программы при предварительном просмотре используется data.frame, даже если "
+"флажок <label id=\"data_frame\"/> не установлен."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:24
@@ -1489,7 +1528,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_stata.rkh:23
 #, kde-format
 msgid "Whether the object should be opened for editing after it was imported."
-msgstr ""
+msgstr "Следует ли открыть объект для редактирования после импорта."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert Stata dates to 'Date' class")
 #: rkward/plugins/00saveload/import/import_stata.rkh:25
@@ -1515,6 +1554,10 @@ msgid ""
 "values. If this option is set, this information is stored in an attribute of "
 "the imported data. See <link href=\"rkward://rhelp/read.dta\"/> for details."
 msgstr ""
+"Stata версии 8 и выше позволяет дифференцировать различные типы "
+"отсутствующих значений. Если этот флажок установлен, данная информация будет "
+"сохранена как атрибут импортированных данных. Подробнее здесь: <link href="
+"\"rkward://rhelp/read.dta\"/>."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert '_' in Stata variable names to '.' in R names")
 #: rkward/plugins/00saveload/import/import_stata.rkh:28
@@ -1549,7 +1592,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:26
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "Параметры"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:29
@@ -1570,6 +1613,8 @@ msgid ""
 "For version 8 or later, store information about different types of missing "
 "data?"
 msgstr ""
+"Следует ли сохранять информацию о различных типах пропущенных данных (для "
+"версии 8 и выше)?"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:32
@@ -1677,7 +1722,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:168
 #, kde-format
 msgid "Character for missing values"
-msgstr ""
+msgstr "Символ для отсутствующих значений"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:45
@@ -1783,6 +1828,8 @@ msgid ""
 "If checked, empty leading and trailing rows will be omitted from the "
 "imported data."
 msgstr ""
+"Если флажок установлен, при импорте данных будут пропущены пустые строки в "
+"начале и в конце."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing columns")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:41
@@ -1791,6 +1838,8 @@ msgid ""
 "If checked, empty leading and trailing columns will be omitted from the "
 "imported data."
 msgstr ""
+"Если флажок установлен, при импорте данных будут пропущены пустые столбцы в "
+"начале и в конце."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column classes (empty for automatic)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:42
@@ -1860,13 +1909,13 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:50
 #, kde-format
 msgid "Skip empty leading or trailing rows"
-msgstr ""
+msgstr "Пропустить пустые строки в начале или в конце"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:51
 #, kde-format
 msgid "Skip empty leading or trailing columns"
-msgstr ""
+msgstr "Пропустить пустые столбцы в начале или в конце"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <matrix label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:53
@@ -1929,6 +1978,10 @@ msgid ""
 "not yet exist, it will be created. If it already exists, it will be "
 "overwritten completely, i.e. deleting all objects inside it!"
 msgstr ""
+"Установите этот флажок (и укажите окружение) для загрузки данных в "
+"окружение, отличное от .GlobalEnv. Если указанное окружение ещё не "
+"существует, оно будет создано. Если оно уже существует, то будет полностью "
+"перезаписано, то есть будут удалены все объекты внутри него!"
 
 #. i18n: ectx: (Load an R data file) <dialog label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:14
@@ -1984,6 +2037,9 @@ msgid ""
 "of R statements, which are then evaluated (see <link href=\"rkward://rhelp/"
 "source\"/>)."
 msgstr ""
+"Выберите файл для загрузки. Этот файл будет загружен и интерпретирован как "
+"сценарий инструкций R, которые затем будут обработаны (смотрите <link href="
+"\"rkward://rhelp/source\"/>)."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/source.rkh:18
@@ -2058,7 +2114,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/source.xml:20
 #, kde-format
 msgid "Main options"
-msgstr ""
+msgstr "Основные параметры"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:22
@@ -2082,7 +2138,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/source.xml:27
 #, kde-format
 msgid "Output options"
-msgstr ""
+msgstr "Параметры вывода"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:28
@@ -2119,7 +2175,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/ExportRMarkdown.js:123
 #, kde-format
 msgid "Export RMarkdown file"
-msgstr ""
+msgstr "Экспорт файла RMarkdown"
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "RMarkdown file")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:21
@@ -2328,7 +2384,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:96
 #, kde-format
 msgid "Advanced options"
-msgstr ""
+msgstr "Дополнительные параметры"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Advanced options"> <radio label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:99
@@ -2559,7 +2615,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:40
 #, kde-format
 msgid "Append to existing file"
-msgstr ""
+msgstr "Добавить к существующему файлу"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Export Table / CSV files)
@@ -2579,7 +2635,7 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:57
 #, kde-format
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #. i18n: ectx: (Export Table / CSV files) <summary>
 #: rkward/plugins/00saveload/save/write_csv.rkh:13
@@ -2619,6 +2675,9 @@ msgid ""
 "Should existing files be overwritten or the data appended? If this is greyed "
 "out, the selected preset sets this for you."
 msgstr ""
+"Следует ли перезаписать существующие файлы или добавить в них данные? Если "
+"пункт недоступен для выбора (серый цвет), значение задаётся путём "
+"предустановки."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File format")
 #: rkward/plugins/00saveload/save/write_csv.rkh:35
@@ -2628,6 +2687,10 @@ msgid ""
 "options (like field separator and decimal point) with reasonable defaults. "
 "Use the custom format if you need more control."
 msgstr ""
+"Выберите здесь один из стандартных форматов файлов. При этом для некоторых "
+"параметров (например, разделителя полей и десятичной точки) будут "
+"установлены разумные значения по умолчанию. Если требуется более тонкая "
+"настройка, воспользуйтесь нестандартным форматом."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:39
@@ -2636,12 +2699,14 @@ msgid ""
 "Specify the desired decimal point character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
+"Укажите нужный символ десятичной точки. Если пункт недоступен для выбора "
+"(серый цвет), значение задаётся путём предустановки."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:42
 #, kde-format
 msgid "Use this value as the custom decimal point character."
-msgstr ""
+msgstr "Использовать это значение как нестандартный символ десятичной точки."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Field separator character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:45
@@ -2650,12 +2715,14 @@ msgid ""
 "Specify the desired field separator character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
+"Укажите нужный символ разделения полей. Если пункт недоступен для выбора "
+"(серый цвет), значение задаётся путём предустановки."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:48
 #, kde-format
 msgid "Use this value as the custom field separator character."
-msgstr ""
+msgstr "Использовать это значение как нестандартный символ разделения полей."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Row names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:53
@@ -2676,6 +2743,8 @@ msgid ""
 "Decide how to deal with column names. If this is greyed out, the selected "
 "preset sets this for you."
 msgstr ""
+"Укажите, что следует делать с названиями столбцов. Если пункт недоступен для "
+"выбора (серый цвет), значение задаётся путём предустановки."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:63
@@ -2703,7 +2772,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
 #, kde-format
 msgid "Check this to have all string values quoted."
-msgstr ""
+msgstr "Установите этот флажок, чтобы взять в кавычки все строковые значения."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Handling double quote characters")
 #: rkward/plugins/00saveload/save/write_csv.rkh:78
@@ -2713,12 +2782,15 @@ msgid ""
 "escaped or double quoted. If this is greyed out, the selected preset sets "
 "this for you."
 msgstr ""
+"Управляет обработкой существующих кавычек в значениях — они могут быть либо "
+"экранированы, либо удвоены. Если пункт недоступен для выбора (серый цвет), "
+"значение задаётся путём предустановки."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Character for missing values")
 #: rkward/plugins/00saveload/save/write_csv.rkh:81
 #, kde-format
 msgid "Set the character to indicate missing data."
-msgstr ""
+msgstr "Укажите символ для обозначения отсутствующих данных."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Newline character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:84
@@ -2741,7 +2813,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:51
 #, kde-format
 msgid "Data and File Format"
-msgstr ""
+msgstr "Формат данных и файлов"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <varselector label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:54
@@ -2827,13 +2899,13 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:129
 #, kde-format
 msgid "Encoding and Character Options"
-msgstr ""
+msgstr "Параметры кодировки и символов"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="Encoding"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:133
 #, kde-format
 msgid "File encoding"
-msgstr ""
+msgstr "Кодировка файлов"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:134
@@ -2845,67 +2917,67 @@ msgstr "(по умолчанию)"
 #: rkward/plugins/00saveload/save/write_csv.xml:155
 #, kde-format
 msgid "Custom encoding"
-msgstr ""
+msgstr "Нестандартная кодировка"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:161
 #, kde-format
 msgid "Quote all strings"
-msgstr ""
+msgstr "Взять все строки в кавычки"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:162
 #, kde-format
 msgid "Handling double quote characters"
-msgstr ""
+msgstr "Обработка символов двойных кавычек"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="Handling double quote characters"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:163
 #, kde-format
 msgid "Escape"
-msgstr ""
+msgstr "Экранировать"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="Handling double quote characters"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:164
 #, kde-format
 msgid "Double"
-msgstr ""
+msgstr "Дублировать"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:169
 #, kde-format
 msgid "Newline character"
-msgstr ""
+msgstr "Символ новой строки"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:170
 #, kde-format
 msgid "\\n (LF: GNU/Linux, BSD, OS X)"
-msgstr ""
+msgstr "\\n (LF: GNU/Linux, BSD, OS X)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:171
 #, kde-format
 msgid "\\r\\n (CR+LF: Windows, DOS)"
-msgstr ""
+msgstr "\\r\\n (CR+LF: Windows, DOS)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:172
 #, kde-format
 msgid "\\r (CR: Mac OS <= 9)"
-msgstr ""
+msgstr "\\r (CR: Mac OS <= 9)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:173
 #, kde-format
 msgid "\\n\\r (LF+CR: RISC OS)"
-msgstr ""
+msgstr "\\n\\r (LF+CR: RISC OS)"
 
 #. i18n: ectx: (Loaded from Set the working directory) <summary>
 #: rkward/plugins/00saveload/setworkdir.rkh:8
 #, kde-format
 msgid "Set or change the current working directory."
-msgstr ""
+msgstr "Установить или изменить текущий рабочий каталог."
 
 #. i18n: ectx: (Loaded from Set the working directory) <usage>
 #: rkward/plugins/00saveload/setworkdir.rkh:11
@@ -2914,24 +2986,26 @@ msgid ""
 "Choose a directory to set/change the working directory for R. The R function "
 "<b>setwd</b> is used to do the job."
 msgstr ""
+"Выберите каталог для установки или изменения рабочего каталога R. Для этой "
+"задачи используется функция R <b>setwd</b>."
 
 #. i18n: ectx: (Set the working directory) <dialog label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:10
 #, kde-format
 msgid "Set the working directory"
-msgstr ""
+msgstr "Установка рабочего каталога"
 
 #. i18n: ectx: (Set the working directory) <dialog label="Set the working directory"> <browser label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:11
 #, kde-format
 msgid "Choose the Working Directory"
-msgstr ""
+msgstr "Выбор рабочего каталога"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/import_export.pluginmap:10
 #, kde-format
 msgid "Data Import and Export"
-msgstr ""
+msgstr "Импорт и экспорт данных"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/import_export.pluginmap:10
@@ -2940,90 +3014,92 @@ msgid ""
 "Plugins for reading and writing data in various formats. Part of the "
 "official RKWard distribution"
 msgstr ""
+"Модули для чтения и записи данных в различных форматах. Часть официального "
+"дистрибутива RKWard"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:24
 #, kde-format
 msgid "Load R data file"
-msgstr "Открыть файл данных R..."
+msgstr "Загрузка файла данных R"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:27
 #, kde-format
 msgid "Save objects as R data"
-msgstr ""
+msgstr "Сохранение объектов как данных R"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:31
 #, kde-format
 msgid "Export vector or matrix data"
-msgstr ""
+msgstr "Экспорт векторных или матричных данных"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:35
 #, kde-format
 msgid "Import SPSS"
-msgstr ""
+msgstr "Импорт SPSS"
 
 #. i18n: ectx: <components> <component label="Import SPSS"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:36
 #, kde-format
 msgid "SPSS data files"
-msgstr ""
+msgstr "Файлы данных SPSS"
 
 #. i18n: ectx: <components> <component label="Import Text / CSV data"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:39
 #, kde-format
 msgid "Text / Comma Separated Values"
-msgstr ""
+msgstr "Текст или разделённые запятыми значения"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:41
 #, kde-format
 msgid "Import Stata"
-msgstr ""
+msgstr "Импорт Stata"
 
 #. i18n: ectx: <components> <component label="Import Stata"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:42
 #, kde-format
 msgid "Stata data files"
-msgstr ""
+msgstr "Файлы данных Stata"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:44
 #, kde-format
 msgid "Import Excel files (Perl based)"
-msgstr ""
+msgstr "Импорт файлов Excel (на основе Perl)"
 
 #. i18n: ectx: <components> <component label="Import Excel files (Perl based)"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:45
 #, kde-format
 msgid "Microsoft Excel files (Perl)"
-msgstr ""
+msgstr "Файлы Microsoft Excel (Perl)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:47
 #, kde-format
 msgid "Import Excel files (Java based)"
-msgstr ""
+msgstr "Импорт файлов Excel (на основе Java)"
 
 #. i18n: ectx: <components> <component label="Import Excel files (Java based)"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:48
 #, kde-format
 msgid "Microsoft Excel files (Java)"
-msgstr ""
+msgstr "Файлы Microsoft Excel (Java)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:51
 #, kde-format
 msgid "Generic import (rio-based)"
-msgstr ""
+msgstr "Универсальный импорт (на основе rio)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:53
 #, kde-format
 msgid "Set Working Directory"
-msgstr ""
+msgstr "Установка рабочего каталога"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #. i18n: ectx: <context> <menu label="...">
@@ -3031,29 +3107,29 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:84
 #, kde-format
 msgid "Import"
-msgstr ""
+msgstr "Импорт"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="Import"> <menu label="...">
 #: rkward/plugins/import_export.pluginmap:59
 #, kde-format
 msgid "Import format"
-msgstr ""
+msgstr "Формат импорта"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #: rkward/plugins/import_export.pluginmap:70
 #, kde-format
 msgid "Export"
-msgstr ""
+msgstr "Экспорт"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/import_export.pluginmap:78
 #, kde-format
 msgid "Workspace"
-msgstr ""
+msgstr "Рабочая область"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "Команда RKWard"
