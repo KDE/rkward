@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2025-01-19 12:42+0100\n"
+"PO-Revision-Date: 2025-01-26 20:10+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -82,6 +82,7 @@ msgid ""
 msgstr ""
 "Expresión regular para atopar ligazóns á AppImage no código HTML do URL."
 
+# skip-rule: trasno-download
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Download method")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:46
 #, kde-format

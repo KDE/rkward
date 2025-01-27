@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:36+0000\n"
-"PO-Revision-Date: 2025-01-19 13:47+0100\n"
+"PO-Revision-Date: 2025-01-26 21:03+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1993,6 +1993,7 @@ msgstr ""
 msgid "<h2>Software to install</h2>"
 msgstr "<h2>Soporte lóxico para instalar</h2>"
 
+# skip-rule: trasno-download
 #: rkward/dialogs/rksetupwizard.cpp:465
 #, kde-format
 msgid ""
@@ -2002,7 +2003,7 @@ msgid ""
 msgstr ""
 "<p>Recoméndase instalar o seguinte soporte lóxico pero a instalación "
 "automática aínda non se permite. Prema as seguintes ligazóns para obter "
-"información de instalación:</p><li>%1</li>"
+"información de descarga:</p><li>%1</li>"
 
 #: rkward/dialogs/rksetupwizard.cpp:467
 #, kde-format
@@ -2754,7 +2755,7 @@ msgstr "Modificouse a saída, e pechala descartará os cambios. Que quere facer?
 #: rkward/misc/rkoutputdirectory.cpp:333
 #, kde-format
 msgid "Discard unsaved changes?"
-msgstr "Quere descargar os cambios sen gardar?"
+msgstr "Quere descartar os cambios sen gardar?"
 
 #: rkward/misc/rkoutputdirectory.cpp:423
 #, kde-format
@@ -6419,8 +6420,8 @@ msgstr ""
 "funcionalidade de vista previa pode causar efectos secundarios inesperados</"
 "b>.</p><p>Concretamente, este é o caso dos guións que conteñen asignacións "
 "explícitas a <i>globalenv()</i>, ou a guións que modifican ficheiros no "
-"sistema de ficheiros. Ademais, anexar ou retirar paquetes ou espazos de "
-"nomes de paquetes afectará a toda a sesión de R.</p><p>Téñao en conta ao "
+"sistema de ficheiros. Ademais, conectar ou desconectar paquetes ou espazos "
+"de nomes de paquetes afectará a toda a sesión de R.</p><p>Téñao en conta ao "
 "usar a funcionalidade de vista previa, especialmente ao usar a "
 "funcionalidade con scripts que proveñan de fontes que non sexan de confianza."
 "</p>"
