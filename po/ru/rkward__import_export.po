@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2025-01-27 17:18+0300\n"
+"PO-Revision-Date: 2025-01-28 15:12+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -941,12 +941,14 @@ msgid ""
 "This many rows will be skipped at the start of the file. Use, for instance, "
 "if the file contains a text header."
 msgstr ""
+"Будет пропущено указанное количество строк в начале файла. Этим параметром "
+"можно воспользоваться, например, если файл содержит текстовый заголовок."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Max number of lines to read (-1 for no limit)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:51
 #, kde-format
 msgid "Maximum number of rows to read (-1 to read all lines)"
-msgstr ""
+msgstr "Максимальное количество строк для чтения (-1 — чтение всех строк)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Character for comments")
 #: rkward/plugins/00saveload/import/import_csv.rkh:52
@@ -955,12 +957,15 @@ msgid ""
 "If you enter a single character, here, everything after that character in a "
 "line will be ignored. Leave blank to disable detection of comments."
 msgstr ""
+"Если ввести здесь один символ, будет проигнорировано всё следующее за ним "
+"содержимое строки. Оставьте пустым, если следует отключить определение "
+"комментариев."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip blank lines")
 #: rkward/plugins/00saveload/import/import_csv.rkh:53
 #, kde-format
 msgid "Should blank lines be ignored?"
-msgstr ""
+msgstr "Следует ли игнорировать пустые строки?"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="...">
@@ -1598,6 +1603,15 @@ msgid ""
 "<link href=\"http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf\">R News "
 "4/1 p30-31</link>."
 msgstr ""
+"Выберите файл данных SPSS для импорта. Обычно имена таких файлов "
+"заканчиваются на «*.sav». Будет создан объект R, содержащий данные SPSS. Это "
+"может быть либо data.frame, либо список. Несколько параметров преобразования "
+"касаются обработки подписей и кодировки символов. Подробнее здесь: <link "
+"href=\"rkward://rhelp/read.spss\"/>. Использование файлов SPSS, отличных от "
+"файлов данных (то есть: *.por, *.jnl, *.cht, *.spo, *.sps), не "
+"поддерживается. В случае возникновения проблем, связанных с обработкой даты "
+"и времени, ознакомьтесь со следующим материалом: <link href=\"http://cran.r-"
+"project.org/doc/Rnews/Rnews_2004-1.pdf\">Новости R 4/1, стр. 30–31</link>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Import as a data.frame")
 #: rkward/plugins/00saveload/import/import_spss.rkh:24
@@ -1643,6 +1657,8 @@ msgid ""
 "Maximum number of factor levels to use (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
+"Максимальное количество уровней факторов (подробнее здесь: <link href="
+"\"rkward://rhelp/read.spss\"/>)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Trim white space")
 #: rkward/plugins/00saveload/import/import_spss.rkh:29
@@ -1725,6 +1741,10 @@ msgid ""
 "dta'. An R object containing the STATA data will be created. STATA files "
 "other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported."
 msgstr ""
+"Выберите файл данных STATA для импорта. Обычно имена таких файлов "
+"заканчиваются на «*.dta». Будет создан объект R, содержащий данные STATA. "
+"Использование файлов STATA, отличных от файлов данных (то есть: *.log, *."
+"smcl, *.do, *.ado), не поддерживается."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/import_stata.rkh:21
@@ -1880,6 +1900,12 @@ msgid ""
 "you may want to try the Java-based alternative <link href=\"rkward://"
 "component/import_xls_xlconnect\"/>."
 msgstr ""
+"Выберите файл Microsoft Excel для импорта листа. Будет создан содержащий "
+"данные объект R. Этот способ импорта листов Excel основан на использовании "
+"пакета «gdata» R и требует наличия работающего интерпретатора Perl. Если "
+"такой способ не работает в системе или не даёт ожидаемых результатов, "
+"рекомендуется использовать альтернативу на основе Java: <link href="
+"\"rkward://component/import_xls_xlconnect\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Name or number of sheet")
 #: rkward/plugins/00saveload/import/import_xls.rkh:22
@@ -1981,6 +2007,11 @@ msgid ""
 "case this does not work on your system, you may want to try the Perl-based "
 "alternative <link href=\"rkward://component/import_xls\"/>."
 msgstr ""
+"Выберите файл Microsoft Excel для импорта листа. Будет создан содержащий "
+"данные объект R. Этот способ импорта листов Excel основан на использовании "
+"пакета «XLconnect» R и требует наличия работающего интерпретатора Java. Если "
+"такой способ не работает в системе, рекомендуется использовать альтернативу "
+"на основе Perl: <link href=\"rkward://component/import_xls\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of sheet")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:24
@@ -2097,6 +2128,13 @@ msgid ""
 "this control empty, entirely. Also note that most common type conversions "
 "can also be done <i>after</i> the data has been imported."
 msgstr ""
+"Позволяет переопределить автоматическое определение типа данных. Укажите "
+"здесь типы данных R, например «символьный» или «числовой». Указанные "
+"спецификации будут применены ко <b>всем</b> импортированным столбцам (при "
+"необходимости спецификация будет «использована повторно»). Чтобы "
+"использовать автоматическое определение типа данных, оставьте это поле "
+"полностью пустым. Также обратите внимание, что самые распространённые "
+"преобразования типа можно выполнить и <i>после</i> импорта данных."
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:22
@@ -2198,6 +2236,15 @@ msgid ""
 "with your existing workspace. If in doubt, use Workspace-&gt;Open Workspace, "
 "instead of this plugin."
 msgstr ""
+"Выберите файл R для импорта. Такой файл мог быть создан, например, путём "
+"сохранения рабочей области в RKWard с помощью команды R <link href="
+"\"rkward://rhelp/save\">save()</link> или модуля <link href=\"rkward://"
+"component/save_r\"/>. Основное отличие от загрузки рабочей области с помощью "
+"пункта меню «Рабочая область -&gt; Открыть рабочую область» заключается в "
+"том, что рабочая область не будет сначала очищена (вместо этого она будет "
+"объединена с существующей рабочей областью). Если имеются сомнения, "
+"используйте не этот модуль, а пункт меню «Рабочая область -&gt; Открыть "
+"рабочую область»."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
@@ -2207,12 +2254,15 @@ msgid ""
 "will be overwritten, if the loaded workspace contains objects of the same "
 "names."
 msgstr ""
+"Обязательно сохраните рабочую область перед использованием этого модуля, так "
+"как переменные будут перезаписаны, если загруженная рабочая область содержит "
+"объекты с такими же именами."
 
 #. i18n: ectx: (Loaded from Load an R data file) <settings> <setting> (refers to element labelled "R data file to load")
 #: rkward/plugins/00saveload/import/load_data.rkh:19
 #, kde-format
 msgid "The filename of the file to load"
-msgstr ""
+msgstr "Имя файла для загрузки"
 
 #. i18n: ectx: (Loaded from Load an R data file) <settings> <setting> (refers to element labelled "Save to environment")
 #: rkward/plugins/00saveload/import/load_data.rkh:20
@@ -2294,7 +2344,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/source.rkh:18
 #, kde-format
 msgid "The filename of the source file to run"
-msgstr ""
+msgstr "Имя исходного файла для запуска"
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Use directory of source file as working directory")
 #: rkward/plugins/00saveload/import/source.rkh:19
@@ -2304,6 +2354,10 @@ msgid ""
 "source file. This may be needed, if the source file refers to further files "
 "using relative paths."
 msgstr ""
+"Если флажок установлен, рабочим каталогом станет тот каталог, в котором "
+"хранится исходный файл. Включение этого параметра может потребоваться, "
+"например, если исходный файл ссылается на другие файлы по относительным "
+"путям."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Run in a local environment")
 #: rkward/plugins/00saveload/import/source.rkh:20
@@ -2315,6 +2369,11 @@ msgid ""
 "create new objects (in contrast to just producing printed output), it will "
 "have to be run in the global environment."
 msgstr ""
+"Если флажок установлен, исходный файл обрабатывается в локальном, а не "
+"глобальном окружении. Это намного безопаснее, так как предотвращает "
+"перезапись существующих объектов. С другой стороны, если задачей этого "
+"исходного файла является создание новых объектов (а не просто создание "
+"выходных данных), его потребуется запустить в глобальном окружении."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Echo source statements")
 #: rkward/plugins/00saveload/import/source.rkh:22
@@ -2681,6 +2740,9 @@ msgid ""
 "Save one or more selected R objects to a file. <b>Note:</b> Use <i>Workspace-"
 ">Save Workspace</i> for saving the complete workspace."
 msgstr ""
+"Сохранить один или несколько выбранных объектов R в файл. <b>Примечание:</b> "
+"для сохранения всей рабочей области воспользуйтесь пунктом меню <i>Рабочая "
+"область -> Сохранить рабочую область</i>."
 
 #. i18n: ectx: (Loaded from Save R objects) <usage>
 #: rkward/plugins/00saveload/save/save.rkh:12
@@ -3031,6 +3093,7 @@ msgid ""
 "If the default character encoding doesn't work for you, you can set a "
 "specific one here."
 msgstr ""
+"Если стандартная кодировка символов не подходит, здесь можно указать нужную."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Custom encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:71
@@ -3039,6 +3102,8 @@ msgid ""
 "Use this field to set a custom encoding, in case the dropdown menu doesn't "
 "list the one you need."
 msgstr ""
+"Используйте это поле для указания нестандартной кодировки, если в "
+"раскрывающемся меню нет нужной."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Quote all strings")
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
@@ -3083,6 +3148,8 @@ msgid ""
 "<link href=\"rkward://rhelp/write.table\"> R manual page for write.table(), "
 "which is called by this plugin. </link>"
 msgstr ""
+"<link href=\"rkward://rhelp/write.table\"> Страница справки R по функции "
+"write.table(), которую вызывает этот модуль. </link>"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:51
@@ -3094,13 +3161,13 @@ msgstr "Формат данных и файлов"
 #: rkward/plugins/00saveload/save/write_csv.xml:54
 #, kde-format
 msgid "Select a variable or table"
-msgstr ""
+msgstr "Выбор переменной или таблицы"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="Save to"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:62
 #, kde-format
 msgid "Append to file (if it exists)"
-msgstr ""
+msgstr "Добавить к файлу (если он существует)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:68
