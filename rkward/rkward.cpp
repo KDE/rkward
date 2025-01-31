@@ -130,7 +130,6 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 
 	///////////////////////////////////////////////////////////////////
 	// call inits to invoke all other construction parts
-	RKStandardIcons::initIcons ();
 	initActions();
 
 	new RKWorkplace (this);

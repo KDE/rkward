@@ -74,6 +74,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "misc/rkcommonfunctions.h"
 #include "kdsingleapplication.h"
 #include "misc/rkcommandlineargs.h"
+#include "misc/rkstandardicons.h"
 
 #ifdef Q_OS_WIN
 	// these are needed for the exit hack.
@@ -195,6 +196,9 @@ int main (int argc, char *argv[]) {
 	aboutData.addCredit (i18n ("Many more people on rkward-devel@kde.org"), i18n ("Sorry, if we forgot to list you. Please contact us to get added"));
 	aboutData.setOtherText(QString("<p><b>%1</b></p><ul><li><a href=\"https://www.jstatsoft.org/article/view/v049i09\">%2</a></li><li>Friedrichsmeier, T. &amp; the RKWard Team (%3). RKWard: %4. Version %5. %6</li></ul>").arg(i18n("How to cite:"), i18n("Peer-reviewed article in the Journal of Statistical Software"), aboutData.copyrightStatement().right(4), aboutData.shortDescription(), aboutData.version(), aboutData.homepage()));
 	KAboutData::setApplicationData (aboutData);
+
+	RKStandardIcons::initIcons ();
+	QApplication::setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
 #ifdef WITH_KCRASH
 	KCrash::setDrKonqiEnabled(true);
 	KCrash::initialize();
