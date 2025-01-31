@@ -1312,7 +1312,7 @@ msgstr "Subgráfica unidimensional na parte superior"
 #: rkward/plugins/plots/density_plot.xml:98
 #, kde-format
 msgid "Axis/Title"
-msgstr "Eixo ou título"
+msgstr "Eixe ou título"
 
 #. i18n: ectx: (Loaded from Dot chart)
 #: rkward/plugins/plots/dotchart.js:30
@@ -1547,7 +1547,7 @@ msgstr "Subgráfica unidimensional na parte superior"
 #: rkward/plugins/plots/ecdf_plot.xml:66
 #, kde-format
 msgid "Title/Axis"
-msgstr "Título ou eixo"
+msgstr "Título ou eixe"
 
 #. i18n: ectx: (Loaded from Histogram)
 #: rkward/plugins/plots/histogram.js:26
@@ -2108,7 +2108,7 @@ msgstr "Puntos cubertos por liñas"
 #: rkward/plugins/plots/scatterplot.xml:50
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
-msgstr "Liñas verticais que van dos puntos ao eixo cero (alta densidade)"
+msgstr "Liñas verticais que van dos puntos ao eixe cero (alta densidade)"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:51

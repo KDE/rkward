@@ -2184,7 +2184,7 @@ msgid ""
 "Uncheck this box to avoid drawing the X axis. This is the <i>xaxt</i> "
 "argument to par. See R reference on <b>par</b>."
 msgstr ""
-"Desmarque esta opción para non debuxar o eixo X. Este é o parámetro <i>xaxt</"
+"Desmarque esta opción para non debuxar o eixe X. Este é o parámetro <i>xaxt</"
 "i> para par. Consulte a axuda de R sobre <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw Y axis")
@@ -2194,7 +2194,7 @@ msgid ""
 "Uncheck this box to avoid drawing the Y axis. This is the <i>yaxt</i> "
 "argument to par. See R reference on <b>par</b>."
 msgstr ""
-"Desmarque esta opción para non debuxar o eixo Y. Este é o parámetro <i>yaxt</"
+"Desmarque esta opción para non debuxar o eixe Y. Este é o parámetro <i>yaxt</"
 "i> para par. Consulte a axuda de R sobre <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "X axis logarithmic")
@@ -2591,25 +2591,25 @@ msgstr "Tipos de eixes"
 #: rkward/plugins/distributions/../plots/plot_options.xml:103
 #, kde-format
 msgid "Draw X axis"
-msgstr "Debuxar o eixo de X"
+msgstr "Debuxar o eixe de X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:104
 #, kde-format
 msgid "Draw Y axis"
-msgstr "Debuxar o eixo de Y"
+msgstr "Debuxar o eixe de Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:107
 #, kde-format
 msgid "X axis logarithmic"
-msgstr "Eixo de X logarítmico"
+msgstr "Eixe de X logarítmico"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:108
 #, kde-format
 msgid "Y axis logarithmic"
-msgstr "Eixo de Y logarítmico"
+msgstr "Eixe de Y logarítmico"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:111
@@ -2621,13 +2621,13 @@ msgstr "Etiquetas (deixar en branco para usar o valor predeterminado)"
 #: rkward/plugins/distributions/../plots/plot_options.xml:113
 #, kde-format
 msgid "X axis label"
-msgstr "Lenda do eixo X"
+msgstr "Lenda do eixe X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:114
 #, kde-format
 msgid "Y axis label"
-msgstr "Lenda do eixo Y"
+msgstr "Lenda do eixe Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:116
@@ -2690,7 +2690,7 @@ msgstr "Orientación das etiquetas das marcas"
 #: rkward/plugins/distributions/../plots/plot_options.xml:135
 #, kde-format
 msgid "Always parallel to the axis "
-msgstr "Sempre en paralelo ao eixo"
+msgstr "Sempre en paralelo ao eixe"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:136
@@ -2702,7 +2702,7 @@ msgstr "Sempre en horizontal"
 #: rkward/plugins/distributions/../plots/plot_options.xml:137
 #, kde-format
 msgid "Always perpendicular to the axis "
-msgstr "Sempre perpendicular ao eixo"
+msgstr "Sempre perpendicular ao eixe"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:138
@@ -2756,7 +2756,7 @@ msgstr "Puntos cubertos por liñas"
 #: rkward/plugins/distributions/../plots/plot_options.xml:156
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
-msgstr "Liñas verticais que van dos puntos ao eixo cero (alta densidade)"
+msgstr "Liñas verticais que van dos puntos ao eixe cero (alta densidade)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:157
@@ -3083,7 +3083,7 @@ msgid ""
 "specified below) number of vertical lines in the grid."
 msgstr ""
 "Este é o argumento <i>nx</i>. O predeterminado é NULL, que fai que as liñas "
-"verticais se debuxen nas marcas do eixo de X. Seleccione None para non "
+"verticais se debuxen nas marcas do eixe de X. Seleccione None para non "
 "debuxar as liñas verticais. Seleccione «Indicar a continuación» para "
 "fornecer un número de liñas verticais da grade."
 

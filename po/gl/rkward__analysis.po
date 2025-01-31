@@ -3743,7 +3743,7 @@ msgid ""
 "If empty, the default label is the name of the original series plus <i>, "
 "Trend</i>."
 msgstr ""
-"Aquí pode indicar o texto da etiqueta do eixo Y do gráfico de tendencia "
+"Aquí pode indicar o texto da etiqueta do eixe Y do gráfico de tendencia "
 "(superior). Se está baleiro, a etiqueta predeterminada é o nome da serie "
 "orixinal máis <i>, Tendencia</i>."
 
@@ -3754,7 +3754,7 @@ msgid ""
 "Here you can specify the text on the Y axis label of the cycle plot (lower - "
 "if applicable). If empty, the default label is <i>Cycle</i>."
 msgstr ""
-"Aquí pode indicar o texto da etiqueta do eixo Y do gráfico de ciclo "
+"Aquí pode indicar o texto da etiqueta do eixe Y do gráfico de ciclo "
 "(inferior, se se aplica). Se está baleiro, a etiqueta predeterminada é "
 "<i>Ciclo</i>."
 
@@ -3947,13 +3947,13 @@ msgstr "Etiquetas (deixar en branco para usar o valor predeterminado)"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:110
 #, kde-format
 msgid "Original series and trend Y axis label"
-msgstr "Etiqueta do eixo Y da serie orixinal e da tendencia"
+msgstr "Etiqueta do eixe Y da serie orixinal e da tendencia"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:111
 #, kde-format
 msgid "Cycle Y axis label"
-msgstr "Etiqueta do eixo Y do ciclo"
+msgstr "Etiqueta do eixe Y do ciclo"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/analysis/time_series/hp_filter.xml:113
