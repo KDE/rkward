@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-01-31 17:13+0300\n"
+"PO-Revision-Date: 2025-02-03 10:41+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -402,7 +402,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:54
 #, kde-format
 msgid "Pretty much speaks for itself ;-)"
-msgstr ""
+msgstr "Говорит само за себя :)"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <related>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <related>
@@ -962,6 +962,9 @@ msgid ""
 "for optimization. Alternatively, <link href=\"rkward://rhelp/nlminb"
 "\">nlminb()</link> can be called."
 msgstr ""
+"По умолчанию для оптимизации используется <link href=\"rkward://rhelp/optim"
+"\">optim()</link>. Альтернативный вариант: вызвать <link href=\"rkward://"
+"rhelp/nlminb\">nlminb()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Optimization method"> (refers to element labelled "Optimization method:")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:54
@@ -995,7 +998,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:67
 #, kde-format
 msgid "Todo:"
-msgstr ""
+msgstr "Задача:"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <technical>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <technical>
@@ -1005,7 +1008,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:67
 #, kde-format
 msgid "The <code>parscale</code> control element is not yet implemented."
-msgstr ""
+msgstr "Управляющий элемент <code>parscale</code> ещё не реализован."
 
 #. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:20
@@ -1316,7 +1319,7 @@ msgstr "Вычислить групповые контрасты"
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:40
 #, kde-format
 msgid "Use this group vector:"
-msgstr ""
+msgstr "Использовать этот вектор группировки:"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="...">
@@ -2363,7 +2366,7 @@ msgstr "Предполагать стандартное нормальное р�
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:26
 #, no-c-format, kde-format
 msgid "Unidimensionality check (%1)"
-msgstr ""
+msgstr "Проверка одномерности (%1)"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:30
@@ -2376,6 +2379,7 @@ msgstr "Матрица тетрахорических корреляций:"
 #, kde-format
 msgid "Unidimensionality Check using Modified Parallel Analysis:"
 msgstr ""
+"Проверка одномерности с помощью модифицированного параллельного анализа:"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:33
@@ -3089,7 +3093,7 @@ msgstr "Характеристическая кривая работы элем�
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:47
 #, kde-format
 msgid "Category (plot all if set to 0)"
-msgstr ""
+msgstr "Категория (построить все, если значение «0»)"
 
 #. i18n: ectx: (Loaded from Plotting fitted partial credit model)
 #: rkward/plugins/plots/irt/polytomous/plot_pcm.js:73
@@ -3127,7 +3131,7 @@ msgstr "Спросить перед построением следующей ф
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:60
 #, kde-format
 msgid "Range of person parameters"
-msgstr ""
+msgstr "Диапазон параметров испытуемых"
 
 #. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="...">
@@ -3183,7 +3187,7 @@ msgstr "Использовать вектор для определения гр
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:39
 #, kde-format
 msgid "Can be numeric, character or a factor"
-msgstr ""
+msgstr "Может быть в числовом формате, символьном формате, а также фактором"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:44
@@ -3240,7 +3244,7 @@ msgstr "Простые точки, без аннотации"
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:71
 #, kde-format
 msgid "Interactive labeling"
-msgstr ""
+msgstr "Интерактивное создание подписей"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
