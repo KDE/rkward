@@ -45,6 +45,7 @@ MACRO(createRpackage name)
 			COMMAND ${_tar_executable} ARGS
 			cfz "${CMAKE_CURRENT_BINARY_DIR}/${name}.tgz" "${name}"
 			--sort=name
+			--mode=go=rX,u+rw,a-s
 			--numeric-owner --owner=0 --group=0
 			--mtime="@${TIMESTAMP}"
 			--pax-option=exthdr.name=%d/PaxHeaders/%f,delete=atime,delete=ctime
