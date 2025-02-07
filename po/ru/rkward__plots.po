@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-02-05 17:19+0300\n"
+"PO-Revision-Date: 2025-02-06 17:22+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -260,6 +260,11 @@ msgid ""
 "string, or as an R statement (e.g. if the names are stored in a different "
 "variable in the workspace)."
 msgstr ""
+"Способ нанесения подписей на график. Значение «по умолчанию» означает, что "
+"подписи будут выбираться автоматически. Если доступных подписей нет, то "
+"обычно будут выводиться значения. Другие параметры позволяют использовать в "
+"качестве подписей текстовые строки или инструкции R (например, если названия "
+"хранятся в другой переменной рабочей области)."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Barplot Options")
 #: rkward/plugins/plots/barplot.rkh:28
@@ -575,6 +580,8 @@ msgid ""
 "For single(grouped) variable mode: Select one numerical vector as the "
 "outcome variable."
 msgstr ""
+"Для режима единственной (группированной) переменной: выберите один числовой "
+"вектор как выходную переменную."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Group variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:21
@@ -584,6 +591,9 @@ msgid ""
 "group the outcome variable. Group variables should have the same length as "
 "the outcome variable."
 msgstr ""
+"Для режима единственной (группированной) переменной: выберите один или "
+"несколько векторов для группировки выходной переменной. Групповые переменные "
+"должны иметь ту же длину, что и выходная переменная."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Dodged groups")
 #: rkward/plugins/plots/box_plot.rkh:22
@@ -594,6 +604,12 @@ msgid ""
 "This allows you to select, across how many group variables, boxes should be "
 "dodged (\"0\" for no dodging, \"1\" to dodge only the first group variable)."
 msgstr ""
+"Для режима единственной (группированной) переменной: возможность уклонения "
+"коробок внутри одной или нескольких групп может оказаться полезной, когда "
+"результат разделён несколькими групповыми переменными. Этот параметр "
+"позволяет выбрать количество групповых переменных, от которых будут "
+"уклоняться коробки («0» — без уклонения, «1» — уклонение только от первой "
+"групповой переменной)."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Box width")
 #: rkward/plugins/plots/box_plot.rkh:24
@@ -763,7 +779,7 @@ msgstr "Групповые переменные:"
 #: rkward/plugins/plots/box_plot.xml:51
 #, kde-format
 msgid "Dodged groups"
-msgstr "Группы уклонения"
+msgstr "Группы, от которых выполняется уклонение"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
@@ -1047,7 +1063,7 @@ msgid ""
 "Height of the rug ticks, where 1 corresponds to the height of the entire "
 "plot."
 msgstr ""
-"Высота меток дополнительного графика, где «1» соответствует высоте всего "
+"Высота делений дополнительного графика, где «1» соответствует высоте всего "
 "графика."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Line width of ticks")
@@ -1259,7 +1275,7 @@ msgstr "Добавить дополнительный график"
 #: rkward/plugins/plots/ecdf_plot.xml:58
 #, kde-format
 msgid "Ticksize"
-msgstr ""
+msgstr "Размер деления"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <spinbox label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <spinbox label="...">
@@ -1267,7 +1283,7 @@ msgstr ""
 #: rkward/plugins/plots/ecdf_plot.xml:59
 #, kde-format
 msgid "Line width of ticks"
-msgstr "Ширина строки меток"
+msgstr "Ширина строки делений"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <radio label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <radio label="...">
@@ -1355,7 +1371,7 @@ msgstr ""
 #: rkward/plugins/plots/ecdf_plot.js:29
 #, kde-format
 msgid "Empirical Cumulative Distribution Function"
-msgstr ""
+msgstr "Эмпирическая кумулятивная функция распределения"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function)
 #: rkward/plugins/plots/ecdf_plot.js:31
@@ -1442,13 +1458,13 @@ msgstr "Следует ли добавить дополнительный гра
 #: rkward/plugins/plots/ecdf_plot.rkh:25
 #, kde-format
 msgid "Height of the rug ticks"
-msgstr "Высота меток дополнительного графика"
+msgstr "Высота делений дополнительного графика"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Line width of ticks")
 #: rkward/plugins/plots/ecdf_plot.rkh:26
 #, kde-format
 msgid "Line width of the rug ticks"
-msgstr "Ширина строки меток дополнительного графика"
+msgstr "Ширина строки делений дополнительного графика"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/ecdf_plot.rkh:27
@@ -1470,7 +1486,7 @@ msgstr ""
 #: rkward/plugins/plots/ecdf_plot.xml:28
 #, kde-format
 msgid "Empirical Distribution Function"
-msgstr ""
+msgstr "Эмпирическая функция распределения"
 
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
 #: rkward/plugins/plots/ecdf_plot.xml:40
@@ -1553,12 +1569,14 @@ msgstr "График гистограммы."
 msgid ""
 "Select a variable to plot a histogram. For available options, see below."
 msgstr ""
+"Выберите переменную для построения графика гистограммы. Описание доступных "
+"параметров приводится ниже."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/histogram.rkh:16
 #, kde-format
 msgid "The variable to plot the histogram for"
-msgstr ""
+msgstr "Переменная для построения графика гистограммы"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Histogram Options")
 #: rkward/plugins/plots/histogram.rkh:18
@@ -1567,6 +1585,8 @@ msgid ""
 "Options concerning the calculation and look of the histogram. Refer to <link "
 "href=\"rkward://component/histogram_options\"/> for details."
 msgstr ""
+"Параметры, касающиеся расчёта и внешнего вида гистограммы. Подробнее здесь: "
+"<link href=\"rkward://component/histogram_options\"/>."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Plot Density curve")
 #: rkward/plugins/plots/histogram.rkh:20
@@ -1607,7 +1627,7 @@ msgstr ""
 #: rkward/plugins/plots/histogram.rkh:25
 #, kde-format
 msgid "Number of equally spaced points to estimate the density at."
-msgstr ""
+msgstr "Количество равномерно распределённых точек для оценки плотности."
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Variable(s)"> <embed label="...">
 #: rkward/plugins/plots/histogram.xml:41
@@ -1684,6 +1704,10 @@ msgid ""
 "data suitable for direct display in a pareto chart, specify it here. "
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
+"Если данные уже содержат количество дефектов, стоимость дефектов или другие "
+"данные, которые могут быть напрямую показаны на диаграмме Парето, укажите "
+"это здесь. Если это не так, ничего не указывайте и установите выше флажок "
+"«Табулировать»."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Print descriptives")
 #: rkward/plugins/plots/pareto.rkh:20
@@ -1709,7 +1733,7 @@ msgstr ""
 #: rkward/plugins/plots/pareto.xml:37
 #, kde-format
 msgid "Raw vector to plot"
-msgstr ""
+msgstr "Необработанный вектор для построения графика"
 
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <checkbox label="...">
 #: rkward/plugins/plots/pareto.xml:45
@@ -1771,6 +1795,8 @@ msgstr "Тип цветов для использования."
 #, kde-format
 msgid "Define if slices should be drawn clockwise or counter clockwise."
 msgstr ""
+"Укажите, как следует рисовать секторы: по часовой стрелке или против часовой "
+"стрелки."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Radius")
 #: rkward/plugins/plots/piechart.rkh:31
@@ -1789,6 +1815,8 @@ msgid ""
 "Density of shading lines (lines per inch). The default value of -1 means no "
 "shading lines are drawn."
 msgstr ""
+"Плотность линий штриховки (линий на дюйм). Значение по умолчанию «-1» "
+"означает, что рисование линий штриховки не выполняется."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in density")
 #: rkward/plugins/plots/piechart.rkh:33
@@ -1797,6 +1825,9 @@ msgid ""
 "The density of shading lines can be varied per pie slice. Set this to values "
 "other than 0 to get different densities of shading lines for each slice."
 msgstr ""
+"Плотность линий штриховки может быть разной для разных секторов круговой "
+"диаграммы. Установите отличные от нуля значения, чтобы плотность линий "
+"штриховки различалась в зависимости от сектора."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "angle")
 #: rkward/plugins/plots/piechart.rkh:34
@@ -1806,6 +1837,9 @@ msgid ""
 "This option is only available, if shading lines are drawn, as controlled by "
 "the density options above."
 msgstr ""
+"Наклон линий штриховки, указанный как угол в градусах (против часовой "
+"стрелки). Этот параметр доступен только в том случае, если рисуются линии "
+"штриховки (в соответствии с указанными выше параметрами плотности)."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in angle")
 #: rkward/plugins/plots/piechart.rkh:35
@@ -1816,6 +1850,11 @@ msgid ""
 "option is only available, if shading lines are drawn, as controlled by the "
 "density options above."
 msgstr ""
+"Наклон линий штриховки может быть разным для разных секторов круговой "
+"диаграммы. Установите отличные от нуля значения, чтобы наклон линий "
+"штриховки различался в зависимости от сектора. Этот параметр доступен только "
+"в том случае, если рисуются линии штриховки (в соответствии с указанными "
+"выше параметрами плотности)."
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/piechart.xml:78
@@ -1857,7 +1896,7 @@ msgstr "Радиус"
 #: rkward/plugins/plots/piechart.xml:87
 #, kde-format
 msgid "Shading"
-msgstr ""
+msgstr "Штриховка"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
 #: rkward/plugins/plots/piechart.xml:89
@@ -1889,7 +1928,7 @@ msgstr "приращение угла"
 msgid ""
 "This is an implementation of the standard (traditional S) graphics function "
 "<b>plot</b>."
-msgstr ""
+msgstr "Это реализация <b>plot</b>, стандартной функции построения графиков."
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
@@ -1909,6 +1948,12 @@ msgid ""
 "meaningful visualization of the data, but does not allow for fine grained "
 "control."
 msgstr ""
+"Примечание: <b>plot</b> — обобщённая функция. Тип графика, который будет "
+"создан, зависит от типа входящих переменных. Например, для числовых векторов "
+"будет создан график рассеяния (смотрите ниже), а для data.frame — график "
+"матрицы рассеяния, и так далее. Такие диаграммы часто полезны для "
+"визуализации данных, но для них не предусмотрены возможности тонкой "
+"настройки."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "X variable")
 #: rkward/plugins/plots/plot.rkh:18
@@ -2080,7 +2125,7 @@ msgstr "Графики ступенчатых функций: правый кр�
 #: rkward/plugins/plots/scatterplot.xml:54
 #, kde-format
 msgid "Vector of type specifiers"
-msgstr ""
+msgstr "Вектор спецификаторов типа"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Color"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:61
@@ -2095,6 +2140,8 @@ msgid ""
 "Enter value - for diff.col. enter a vector -<br/> eg: c(1,2) or "
 "c('red','green')"
 msgstr ""
+"Введите значение — для diff.col. введите вектор —<br/> пример: c(1,2) или "
+"c('red','green')"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:69
@@ -2130,13 +2177,13 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:86
 #, kde-format
 msgid "Enter value - for diff.size. enter a vector -"
-msgstr ""
+msgstr "Введите значение — для diff.size. введите вектор —"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot.xml:92
 #, kde-format
 msgid "Symbol"
-msgstr ""
+msgstr "Символ"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <text>
 #: rkward/plugins/plots/scatterplot.xml:97
@@ -2152,7 +2199,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:100
 #, kde-format
 msgid "Enter value - for diff.symbol. enter a vector -"
-msgstr ""
+msgstr "Введите значение — для diff.symbol. введите вектор —"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <summary>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:8
@@ -2161,6 +2208,8 @@ msgid ""
 "Scatterplot matrix plot produces scatterplot matrices with univariate "
 "displays down the diagonal."
 msgstr ""
+"При построении графика матрицы рассеяния создаётся точечный график с "
+"одномерным отображением по диагонали."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <usage>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:12
@@ -2180,6 +2229,8 @@ msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
 msgstr ""
+"Выберите матрицу данных, числовой фрейм данных или более одной переменной из "
+"матрицы данных"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
@@ -2290,7 +2341,7 @@ msgstr "Рисовать эллипсы концентрации данных"
 #: rkward/plugins/plots/stem.rkh:8
 #, kde-format
 msgid "This produces a stem-and-leaf plot."
-msgstr ""
+msgstr "Будет создан график «стебель и листья»."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <usage>
 #: rkward/plugins/plots/stem.rkh:12
@@ -2332,13 +2383,13 @@ msgstr "Этот параметр управляет шириной график
 #: rkward/plugins/plots/stem.rkh:22
 #, kde-format
 msgid "This defines the tolerance."
-msgstr ""
+msgstr "Этот параметр определяет допуск."
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="...">
 #: rkward/plugins/plots/stem.xml:12
 #, kde-format
 msgid "Stem-and-Leaf Plots"
-msgstr ""
+msgstr "Графики «стебель и листья»"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="...">
 #: rkward/plugins/plots/stem.xml:14
@@ -2350,7 +2401,7 @@ msgstr "Основные параметры"
 #: rkward/plugins/plots/stem.xml:18
 #, kde-format
 msgid "variable:"
-msgstr ""
+msgstr "переменная:"
 
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stem.xml:23
@@ -2368,7 +2419,7 @@ msgstr "Ширина графика"
 #: rkward/plugins/plots/stem.xml:25
 #, kde-format
 msgid "Tolerance"
-msgstr ""
+msgstr "Допуск"
 
 #. i18n: ectx: (Loaded from Stripchart)
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Variable(s)"> <varslot label="...">
@@ -2376,25 +2427,25 @@ msgstr ""
 #: rkward/plugins/plots/stripchart_plot.xml:29
 #, kde-format
 msgid "Group"
-msgstr ""
+msgstr "Группа"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Variable(s)"> <varslot label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:28
 #, kde-format
 msgid "variable"
-msgstr ""
+msgstr "переменная"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:38
 #, kde-format
 msgid "Treatment of identical values"
-msgstr ""
+msgstr "Обработка одинаковых значений"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:39
 #, kde-format
 msgid "Overplot"
-msgstr ""
+msgstr "Наложение"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <spinbox label="...">
@@ -2402,35 +2453,35 @@ msgstr ""
 #: rkward/plugins/plots/stripchart_plot.xml:43
 #, kde-format
 msgid "Jitter"
-msgstr ""
+msgstr "Шум"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:41
 #, kde-format
 msgid "Stack"
-msgstr ""
+msgstr "Стопка"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:44
 #, kde-format
 msgid "Offset"
-msgstr ""
+msgstr "Смещение"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Orientation"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:49
 #, kde-format
 msgid "Horizontal"
-msgstr ""
+msgstr "Горизонтальная"
 
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Orientation"> <option label="...">
 #: rkward/plugins/plots/stripchart_plot.xml:50
 #, kde-format
 msgid "Vertical"
-msgstr ""
+msgstr "Вертикальная"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "Команда RKWard"
