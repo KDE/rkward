@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2025-02-11 17:16+0300\n"
+"PO-Revision-Date: 2025-02-12 12:33+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1039,6 +1039,13 @@ msgid ""
 "histograms or distribution functions. For brevity, D will denote the "
 "contending distribution (<label id=\"dist_name\"/> here)."
 msgstr ""
+"Аппроксимация нормальным распределением к выборочным средним значениям "
+"<label id=\"dist_name\"/>. Большую часть этого файла справки занимает общее "
+"описание модулей ЦПТ. Выборочные средние значения из конкурирующего "
+"распределения (здесь — <label id=\"dist_name\"/>) сравниваются с целевым "
+"нормальным распределением. Сравнение выполняется на основе либо гистограмм, "
+"либо функций распределения. Конкурирующее распределение (здесь — <label id="
+"\"dist_name\"/>) для краткости обозначается как «D»."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <usage>
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <usage>
@@ -1122,6 +1129,10 @@ msgid ""
 "these averages are used to construct the 'Histogram' or the 'Distribution "
 "function'."
 msgstr ""
+"Это количество наборов выборок (nDist) используется для получения "
+"представления о распределении выборочных средних значений. Каждый набор "
+"предоставляет среднее значение. Затем эти средние значения используются для "
+"построения «Гистограммы» или «Функции распределения»."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
@@ -1146,6 +1157,9 @@ msgid ""
 "Choose one of 'Histogram' or 'Distribution function' to compare the "
 "distribution of the sample averages of D with that of Normal distribution."
 msgstr ""
+"Выберите один из вариантов («Гистограмма» или «Функция распределения») для "
+"сравнения распределения выборочных средних значений D с нормальным "
+"распределением."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Use normalised random variable")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Use normalised random variable")
@@ -1174,6 +1188,12 @@ msgid ""
 "the target distribution is Normal with the mean E(D) and standard deviation "
 "S(D)/sqrt(nAvg)."
 msgstr ""
+"Следует ли выполнять нормализацию выборочных средних значений путём "
+"вычитания среднего, E(D), D и деления на стандартное отклонение, S(D)/"
+"sqrt(nAvg), где S(D) является стандартным отклонением D? Если да, то целевое "
+"нормальное распределение считается стандартным, то есть со средним 0 и "
+"вариантностью 1. Если нет, то целевое распределение является нормальным со "
+"средним E(D) и стандартным отклонением S(D)/sqrt(nAvg)."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Draw normal curve")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Draw normal curve")
@@ -1199,6 +1219,9 @@ msgid ""
 "samples are drawn from the target Normal distribution and their density "
 "values are plotted."
 msgstr ""
+"Следует ли рисовать кривую нормального распределения? Когда выбрана "
+"«Гистограмма», nDist случайных выборок извлекается из целевого нормального "
+"распределения и строится график значений их плотности."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Type of points/lines")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Type of points/lines")
@@ -1220,7 +1243,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:23
 #, kde-format
 msgid "Pointtype for the Normal curve."
-msgstr ""
+msgstr "Тип точек кривой нормального распределения."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Color")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Color")
@@ -1389,7 +1412,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:32
 #, kde-format
 msgid "<insert snippet=\"dist_related\"/>"
-msgstr ""
+msgstr "<insert snippet=\"dist_related\"/>"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <i18n label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <i18n label="...">
@@ -1664,7 +1687,7 @@ msgstr "Эмпирическая кумулятивная функция рас�
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:54
 #, kde-format
 msgid "Use normalised random variable"
-msgstr ""
+msgstr "Использовать нормализованную случайную переменную"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="Parameters"> <frame label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="Parameters"> <frame label="...">
@@ -2122,7 +2145,7 @@ msgstr "Экспоненциальное — параметры"
 #: rkward/plugins/distributions/plot_exponential_distribution.xml:23
 #, kde-format
 msgid "Rate"
-msgstr ""
+msgstr "Интенсивность"
 
 #. i18n: ectx: (Central Limit Theorem: Exponential to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_exponential_clt.xml:21
@@ -2230,7 +2253,7 @@ msgstr "Форма"
 #: rkward/plugins/distributions/plot_gamma_distribution.xml:24
 #, kde-format
 msgid "Rate (lambda) or 1/Scale"
-msgstr ""
+msgstr "Интенсивность (лямбда) или 1/масштаб"
 
 #. i18n: ectx: (Central Limit Theorem: Gamma to Normal) <logic> <i18n label="...">
 #: rkward/plugins/distributions/clt/plot_gamma_clt.xml:22
@@ -3025,7 +3048,7 @@ msgstr "Предварительный просмотр результата."
 #: rkward/plugins/distributions/dist_help_snippets.xml:18
 #, kde-format
 msgid "Distribution specific settings"
-msgstr ""
+msgstr "Параметры, зависящие от распределения"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <usage>
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <usage>
@@ -3379,7 +3402,7 @@ msgstr ""
 #: rkward/plugins/distributions/exponential.rkh:17
 #, kde-format
 msgid "Rate parameter λ (1/mean)"
-msgstr ""
+msgstr "Интенсивность с параметром λ (1/среднее)"
 
 #. i18n: ectx: (Loaded from Exponential distribution calculator) <related>
 #: rkward/plugins/distributions/exponential.rkh:19
@@ -3445,7 +3468,7 @@ msgstr "Параметр формы (k)"
 #: rkward/plugins/distributions/gamma.rkh:18
 #, kde-format
 msgid "Rate parameter β (inverse of scale parameter)"
-msgstr ""
+msgstr "Интенсивность с параметром β (обратный параметр масштаба)"
 
 #. i18n: ectx: (Loaded from Gamma distribution calculator) <related>
 #: rkward/plugins/distributions/gamma.rkh:20
@@ -3464,6 +3487,8 @@ msgid ""
 "<link href=\"rkward://rhelp/GammaDist\">R help on Gamma Distribution "
 "functions</link>"
 msgstr ""
+"<link href=\"rkward://rhelp/GammaDist\">Справка R по функциям гамма-"
+"распределения</link>"
 
 #. i18n: ectx: (Loaded from Geometric distribution calculator)
 #: rkward/plugins/distributions/geom.js:10
@@ -3517,7 +3542,7 @@ msgstr ""
 #: rkward/plugins/distributions/geom.xml:18
 #, kde-format
 msgid "probability of success in each trial"
-msgstr ""
+msgstr "Вероятность успеха в каждом испытании"
 
 #. i18n: ectx: (Loaded from Gumbel distribution calculator)
 #: rkward/plugins/distributions/gumbel.js:15
@@ -4995,6 +5020,9 @@ msgid ""
 "parametrization is used. This is always a non-negative integer. See R "
 "reference on Negative Binomial distribution."
 msgstr ""
+"Это параметр <i>size</i>, когда используется форма параметризации "
+"«вероятность». Значением всегда является неотрицательное целое число. "
+"Смотрите справку R по отрицательному биномиальному распределению."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Dispersion (Size)")
 #: rkward/plugins/distributions/plot_negbinomial_distribution.rkh:22
@@ -5004,6 +5032,9 @@ msgid ""
 "is used. This is a non-negative real number. See R reference on Negative "
 "Binomial distribution."
 msgstr ""
+"Это параметр <i>size</i>, когда используется форма параметризации «мю». "
+"Значением является неотрицательное вещественное число. Смотрите справку R по "
+"отрицательному биномиальному распределению."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Probability of success on each trial")
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Mean (alternate parameter, mu)")
