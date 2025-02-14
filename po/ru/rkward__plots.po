@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-02-06 17:22+0300\n"
+"PO-Revision-Date: 2025-02-13 10:36+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1070,7 +1070,7 @@ msgstr ""
 #: rkward/plugins/plots/density_plot.rkh:33
 #, kde-format
 msgid "Line width of the rug."
-msgstr "Ширина строки дополнительного графика."
+msgstr "Ширина линии дополнительного графика."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Side of Rug")
 #: rkward/plugins/plots/density_plot.rkh:34
@@ -1283,7 +1283,7 @@ msgstr "Размер деления"
 #: rkward/plugins/plots/ecdf_plot.xml:59
 #, kde-format
 msgid "Line width of ticks"
-msgstr "Ширина строки делений"
+msgstr "Ширина линии делений"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <radio label="...">
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <radio label="...">
@@ -1464,7 +1464,7 @@ msgstr "Высота делений дополнительного график�
 #: rkward/plugins/plots/ecdf_plot.rkh:26
 #, kde-format
 msgid "Line width of the rug ticks"
-msgstr "Ширина строки делений дополнительного графика"
+msgstr "Ширина линии делений дополнительного графика"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/ecdf_plot.rkh:27
