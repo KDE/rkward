@@ -26,7 +26,7 @@ msgstr "Adrián Chaves Fernández"
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "adrian@chaves.io"
+msgstr "adrian@chaves.gal"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:59
