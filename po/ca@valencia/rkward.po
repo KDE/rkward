@@ -5093,7 +5093,7 @@ msgstr "Interval de les guardades automàtiques (minuts)"
 #, kde-format
 msgid "Keep autosave file after manual save"
 msgstr ""
-"Mantín la còpia de seguretat automàtica dels fitxers després del guardada "
+"Mantín la còpia de seguretat automàtica dels fitxers després de la guardada "
 "manual"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:143
