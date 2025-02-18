@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-12 00:36+0000\n"
-"PO-Revision-Date: 2025-02-14 17:17+0300\n"
+"PO-Revision-Date: 2025-02-17 16:05+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -583,7 +583,7 @@ msgstr "Выбор по значению"
 #: rkward/plugins/distributions/../embedded.pluginmap:34
 #, kde-format
 msgid "Multi Input"
-msgstr ""
+msgstr "Несколько источников данных"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:38
@@ -797,13 +797,13 @@ msgstr ""
 #: rkward/plugins/distributions/../menu.pluginmap:24
 #, kde-format
 msgid "Data"
-msgstr ""
+msgstr "Данные"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:27
 #, kde-format
 msgid "Analysis"
-msgstr ""
+msgstr "Анализ"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:30
@@ -821,7 +821,7 @@ msgstr "Распределения"
 #: rkward/plugins/distributions/../menu.pluginmap:35
 #, kde-format
 msgid "empty"
-msgstr ""
+msgstr "пусто"
 
 #. i18n: ectx: (Loaded from Barplot Options)
 #: rkward/plugins/distributions/../plots/barplot_embed.js:57
@@ -855,7 +855,7 @@ msgid ""
 "used to construct the legend, so this option has no effect, if the rows are "
 "not named."
 msgstr ""
-"Следует ли добавить к столбчатому графику легенду? Для построения легенды "
+"Следует ли добавить к столбчатому графику легенду? Для создания легенды "
 "используются названия строк данных; этот параметр не будет работать, если у "
 "строк нет названий."
 
@@ -929,6 +929,9 @@ msgid ""
 "provide a means to select input data. When embedding this plugin, you will "
 "be interested in the following properties:"
 msgstr ""
+"Этот модуль предназначен для встраивания в другие модули. Сам по себе он не "
+"предоставляет средство выбора входных данных. При встраивании этого модуля "
+"важны следующие свойства:"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -1591,6 +1594,8 @@ msgid ""
 "This plugin provides various options for <b>hist</b> or <b>plot.histogram</"
 "b>."
 msgstr ""
+"Этот модуль предоставляет различные параметры для <b>hist</b> или <b>plot."
+"histogram</b>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <usage>
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:11
@@ -1602,6 +1607,12 @@ msgid ""
 "combinations might not produce any sensible plot, so read the R references "
 "to make a judicious choice of parameters."
 msgstr ""
+"Этот модуль чаще всего используется в качестве встроенного. Все элементы "
+"графического интерфейса пользователя здесь устанавливают различные параметры "
+"функции «hist» или «plot.histogram». Информация о конкретных параметрах "
+"доступна в соответствующих разделах справки R. При некоторых сочетаниях "
+"параметров будет невозможно получить полезный график, поэтому внимательно "
+"выбирайте их (обращайтесь к справке R)."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Add bars to current plot")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:15
@@ -1648,6 +1659,12 @@ msgid ""
 "points in the range of the variable. The number of break points in this case "
 "is provided by 'Vector length' (see below)."
 msgstr ""
+"Это параметр <i>breaks</i> функции <b>hist</b>, если не выбран пункт «Целые "
+"числа» или «Вектор точек разрыва». При выборе пункта «Целые числа» точки "
+"разрыва будут целыми числами между минимумом и максимумом переменной. При "
+"выборе пункта «Вектор точек разрыва» в диапазоне переменной будут "
+"равноотстоящие точки разрыва. В этом случае количество точек разрыва "
+"предоставляется параметром «Длина вектора» (смотрите ниже)."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Suggested cells")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:22
@@ -1672,6 +1689,13 @@ msgid ""
 "code). The range of the variable is extended by 10% before obtaining the "
 "sequence, so that both the minimum and maximum points are included."
 msgstr ""
+"Если в поле выше выбран вариант «Вектор точек разрыва», то этот параметр "
+"предоставляет длину вектора равноотстоящих точек разрыва в диапазоне "
+"переменной. Это параметр <i>breaks</i> с векторным аргументом. Сама "
+"последовательность рассчитывается вызовом встроенной функции (смотрите "
+"сгенерированный код). Перед получением последовательности диапазон "
+"переменной увеличивается на 10%, поэтому включаются обе точки (точка "
+"минимума и точка максимума)."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Draw border")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:25
@@ -1681,6 +1705,9 @@ msgid ""
 "<i>border=FALSE</i> is added to the code. Otherwise a color is provided as "
 "the argument to <i>border</i>."
 msgstr ""
+"Следует ли рисовать границу столбцов гистограммы. Если флажок снят, в код "
+"добавляется <i>border=FALSE</i>. В ином случае в качестве аргумента "
+"<i>border</i> предоставляется цвет."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:26
@@ -1725,6 +1752,8 @@ msgstr "Это параметр <i>angle</i>."
 #, kde-format
 msgid "Check this box to use a fill color for the histogram bars."
 msgstr ""
+"Установите этот флажок, чтобы программа использовала цвет заливки для "
+"столбцов гистограммы."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:33
@@ -1823,6 +1852,8 @@ msgid ""
 "In order to allow flexible use, the generated options are separated into "
 "three different sections:"
 msgstr ""
+"Чтобы обеспечить гибкость использования, сгенерированные параметры "
+"выделяются в следующие три раздела:"
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -2090,8 +2121,9 @@ msgid ""
 "If this box is checked, the <i>main</i> title will be used literally "
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
-"Если этот флажок установлен, заголовок <i>main</i> будет использоваться "
-"буквально (как в кавычках). В ином случае он будет обработан как инструкция R"
+"Если этот флажок установлен, заголовок <i>main</i> будет обрабатываться как "
+"текстовая строка (в кавычках). В ином случае он будет обработан как "
+"инструкция R."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Sub-title (at bottom). Leave empty for default title")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:20
@@ -2111,8 +2143,9 @@ msgid ""
 "If this box is checked, the <i>sub</i> title will be used literally "
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
-"Если этот флажок установлен, заголовок <i>sub</i> будет использоваться "
-"буквально (как в кавычках). В ином случае он будет обработан как инструкция R"
+"Если этот флажок установлен, заголовок <i>sub</i> будет обрабатываться как "
+"текстовая строка (в кавычках). В ином случае он будет обработан как "
+"инструкция R."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Custom margins")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:22
@@ -2124,25 +2157,25 @@ msgstr "Включите этот параметр, если требуется 
 #: rkward/plugins/distributions/../plots/plot_options.rkh:23
 #, kde-format
 msgid "Size of top margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "Размер верхнего поля. Размер указывается в (примерных) высотах строки."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Bottom")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:24
 #, kde-format
 msgid "Size of bottom margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "Размер нижнего поля. Размер указывается в (примерных) высотах строки."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Left")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:25
 #, kde-format
 msgid "Size of left margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "Размер левого поля. Размер указывается в (примерных) высотах строки."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Right")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:26
 #, kde-format
 msgid "Size of right margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "Размер правого поля. Размер указывается в (примерных) высотах строки."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw X axis")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:29
@@ -2172,7 +2205,8 @@ msgid ""
 "set <i>log=\"x\"</i>. See R reference on <b>plot.default</b>."
 msgstr ""
 "Указывает аргумент <i>log</i> функции plot.default. Установите этот флажок, "
-"чтобы указать <i>log=\"x\"</i>. Смотрите справку R по <b>plot.default</b>."
+"чтобы задать значение <i>log=\"x\"</i>. Смотрите справку R по <b>plot."
+"default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Y axis logarithmic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:32
@@ -2182,6 +2216,9 @@ msgid ""
 "set <i>log=\"y\"</i>. Check both the boxes to set <i>log=\"xy\"</i>. See R "
 "reference on <b>plot.default</b>."
 msgstr ""
+"Указывает аргумент <i>log</i> функции plot.default. Установите этот флажок, "
+"чтобы задать значение <i>log=\"y\"</i>. Установите оба флажка, чтобы задать "
+"значение <i>log=\"xy\"</i>. Смотрите справку R по <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Labels (leave empty for default)")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:34
@@ -2192,10 +2229,10 @@ msgid ""
 "labels being evaluated as literal (quoted) strings. To achieve a line-break "
 "(in a quoted string), enter '\\n'."
 msgstr ""
-"Подписи осей X и Y. Это аргументы <i>xlab</i> и <i>ylab</i> функции <b>plot."
-"default</b>. Флажки включают или отключают обработку подписей как текстовых "
-"(закавыченных) строк. Чтобы добавить разрыв строки (в закавыченной строке), "
-"введите «\\n»."
+"Подписи осей X и Y. Это, соответственно, аргументы <i>xlab</i> и <i>ylab</i> "
+"функции <b>plot.default</b>. Флажки включают или отключают обработку "
+"подписей как текстовых (закавыченных) строк. Чтобы добавить разрыв строки (в "
+"закавыченной строке), введите «\\n»."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:35
@@ -2205,6 +2242,9 @@ msgid ""
 "to <b>plot.default</b> respectively. For automatic evaluation of the limits, "
 "leave these blank."
 msgstr ""
+"Ограничения для осей X и Y. Это, соответственно, аргументы <i>xlim</i> и "
+"<i>ylim</i> функции <b>plot.default</b>. Для автоматической установки "
+"ограничений оставьте эти поля пустыми."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Type of points/lines")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:38
@@ -2214,6 +2254,9 @@ msgid ""
 "function use its default plotting type, choose the 'default' option. This is "
 "the <i>type</i> argument to <b>plot.default</b>."
 msgstr ""
+"Выберите в списке один из типов точек или линий графика. Чтобы вызывающая "
+"функция использовала стандартный тип, выберите вариант «по умолчанию». Это "
+"аргумент <i>type</i> функции <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:40
@@ -2223,6 +2266,9 @@ msgid ""
 "function use its default plotting color, choose the 'default' option. This "
 "is the <i>col</i> argument to <b>plot.default</b>."
 msgstr ""
+"Выберите в списке один из цветов точек или линий графика. Чтобы вызывающая "
+"функция использовала стандартный цвет, выберите вариант «по умолчанию». Это "
+"аргумент <i>col</i> функции <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Aspect ratio")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:43
@@ -2250,14 +2296,14 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>xvar</i>: The variable to be used for the x-coordinates."
-msgstr ""
+msgstr "<i>xvar</i>: переменная для x-координат."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>yvar</i>: The variable to be used for the y-coordinates."
-msgstr ""
+msgstr "<i>yvar</i>: переменная для y-координат."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2269,6 +2315,10 @@ msgid ""
 "possibilities are p,l,b,o,h,s and S; the options for the <i>type</i> "
 "argument."
 msgstr ""
+"<i>default_pointtype</i>: строка, предоставляющая стандартный тип точек, "
+"когда пользователь выбирает значение «По умолчанию» для параметра «<label id="
+"\"pointtype\"/>». Возможные варианты: p,l,b,o,h,s и S; параметры для "
+"аргумента <i>type</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2280,6 +2330,10 @@ msgid ""
 "various possibilities see the code color_chooser.xml; the options for the "
 "<i>col</i> argument."
 msgstr ""
+"<i>default_pointcolor</i>: строка, предоставляющая стандартный цвет точек, "
+"когда пользователь выбирает значение «По умолчанию» для параметра «<label id="
+"\"pointcolor\"/>». С перечнем возможных вариантов можно ознакомиться с "
+"помощью кода color_chooser.xml; параметры для аргумента <i>col</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2292,6 +2346,11 @@ msgid ""
 "unquoted. If you want to specify a literal string add quotes, explicitly, as "
 "\"&amp;<i>quote;</i>\"."
 msgstr ""
+"<i>default_main</i>: строка, указывающая аргумент <i>main</i> функции "
+"<b>plot.default</b>. Значение по умолчанию, \"\", означает, что основной "
+"заголовок будет создан функцией построения графика. Примечание: значение по "
+"умолчанию всегда используется без кавычек. Чтобы указать текстовую строку, "
+"необходимо добавить кавычки, вот так: \"&amp;<i>quote;</i>\"."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2301,6 +2360,8 @@ msgid ""
 "<i>default_sub</i>: Similar to <i>main</i> above but for the subtitle "
 "argument <i>sub</i>."
 msgstr ""
+"<i>default_sub</i>: аналогично <i>main</i> выше, но используется для "
+"аргумента подзаголовка <i>sub</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2310,6 +2371,8 @@ msgid ""
 "<i>default_xlab</i>: Similar to <i>main</i> above but for the X-label "
 "argument <i>xlab</i>."
 msgstr ""
+"<i>default_xlab</i>: аналогично <i>main</i> выше, но используется для "
+"аргумента подписи X <i>xlab</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2319,6 +2382,8 @@ msgid ""
 "<i>default_ylab</i>: Similar to <i>main</i> above but for the Y-label "
 "argument <i>ylab</i>."
 msgstr ""
+"<i>default_ylab</i>: аналогично <i>main</i> выше, но используется для "
+"аргумента подписи Y <i>ylab</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2328,9 +2393,8 @@ msgid ""
 "<i>allow_log</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of '<label id=\"xlog\"/>' and '<label id=\"ylog\"/>' check boxes."
 msgstr ""
-"<i>allow_log</i>:  установка в значение «true» («false») включает "
-"(отключает) отображение флажков «<label id=\"xlog\"/>» и «<label id=\"ylog\"/"
-">»."
+"<i>allow_log</i>: установка в значение «true» («false») включает (отключает) "
+"отображение флажков «<label id=\"xlog\"/>» и «<label id=\"ylog\"/>»."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2393,6 +2457,14 @@ msgid ""
 "following call:<br> printIndented (\"\\t\", getRK_val (\"plot_options.code."
 "calculate\"));</br><br> after the plotting function should do the job.</br>"
 msgstr ""
+"<i>allow_grid</i>: установка в значение «true» («false») включает "
+"(отключает) отображение вкладки «<label id=\"tab_grid\"/>». Если установлено "
+"значение «true», из функции code.calculate (смотрите ниже) можно извлечь код "
+"параметров сетки (эта функция, в свою очередь, извлекает его из grid_options."
+"code.printout). В частности, если модуль параметров графика встроен с "
+"помощью <i>id=\"plot_options\"</i>, то вызов<br> printIndented (\"\\t\", "
+"getRK_val (\"plot_options.code.calculate\"));</br><br> после функции "
+"построения графика должен справиться с этой задачей.</br>"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2402,6 +2474,8 @@ msgid ""
 "In order to allow flexible use, the generated options are separated into "
 "different sections:"
 msgstr ""
+"Чтобы обеспечить гибкость использования, сгенерированные параметры "
+"выделяются в следующие разделы:"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2411,6 +2485,8 @@ msgid ""
 "<i>code.preprocess</i>: Nothing yet, but will hopefully include some <b>par</"
 "b> options."
 msgstr ""
+"<i>code.preprocess</i>: пока здесь ничего нет, но в будущем тут должны "
+"появиться некоторые параметры <b>par</b>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2419,6 +2495,8 @@ msgstr ""
 msgid ""
 "<i>code.calculate</i>: Currently this contains only the <b>grid</b>-options."
 msgstr ""
+"<i>code.calculate</i>: в текущей версии программы здесь содержатся только "
+"параметры <b>grid</b>."
 
 #. i18n: ectx: (Default plot options) <dialog label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:78
@@ -2526,31 +2604,31 @@ msgstr "Рисовать ось Y"
 #: rkward/plugins/distributions/../plots/plot_options.xml:107
 #, kde-format
 msgid "X axis logarithmic"
-msgstr ""
+msgstr "Логарифмическая ось X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:108
 #, kde-format
 msgid "Y axis logarithmic"
-msgstr ""
+msgstr "Логарифмическая ось Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:111
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr ""
+msgstr "Подписи (оставьте пустым для использования значения по умолчанию)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:113
 #, kde-format
 msgid "X axis label"
-msgstr ""
+msgstr "Подпись оси X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:114
 #, kde-format
 msgid "Y axis label"
-msgstr ""
+msgstr "Подпись оси Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:116
@@ -2563,13 +2641,15 @@ msgstr "Обработать эти подписи как текстовые (з
 #: rkward/plugins/distributions/../plots/plot_options.xml:119
 #, kde-format
 msgid "interpret as string"
-msgstr ""
+msgstr "обработать как строку"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:122
 #, kde-format
 msgid "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"
 msgstr ""
+"Масштаб (минимальные/максимальные значения для X/Y). Оставьте пустым для "
+"автоматического определения."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:124
@@ -2712,6 +2792,9 @@ msgid ""
 "that one data unit in the x direction is equal in length to asp * one data "
 "unit in the y direction."
 msgstr ""
+"Обратите внимание: если «Соотношение» является конечным положительным "
+"значением, то окно настраивается таким образом, что одна единица данных по "
+"направлению x равна по длине asp * одна единица данных по направлению y."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:168
@@ -2721,6 +2804,10 @@ msgid ""
 "are represented accurately on screen. Values with Aspect > 1 can be used to "
 "produce more accurate maps when using latitude and longitude."
 msgstr ""
+"В том особом случае, когда соотношение == 1, будут создаваться графики, где "
+"расстояние между точками точно представлено на экране. Значения, где "
+"соотношение > 1, могут служить для создания более точных карт с "
+"использованием широты и долготы."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:172
@@ -2828,6 +2915,14 @@ msgid ""
 "of the same (specified) color. Otherwise (i.e., when both the colors are "
 "provided) both the colors are provided as a character vector of length two."
 msgstr ""
+"Два параметра выше предназначены не для <b>plot.stepfun</b>, а для <b>ecdf</"
+"b>. Они отображаются только в контексте «ecdf». Эти параметры используются, "
+"соответственно, для установки цвета горизонтальных линий при y = 0 и y = 1. "
+"В частности, это аргумент <i>col.01line</i> для <b>ecdf</b>. Если "
+"предоставлено значение только одного параметра (то есть другой параметр "
+"установлен в значение «По умолчанию»), то обе линии будут одного и того же "
+"(указанного) цвета. В ином случае (то есть при предоставлении обоих цветов) "
+"оба цвета предоставляются как символьный вектор длины два."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2837,6 +2932,8 @@ msgid ""
 "<i>default_dopoints</i>: Setting this to \"true\" (\"false\") toggles the "
 "state of the '<label id=\"do_points\"/>' check box."
 msgstr ""
+"<i>default_dopoints</i>: установка в значение «true» («false») переключает "
+"состояние флажка «<label id=\"do_points\"/>»."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2846,6 +2943,8 @@ msgid ""
 "<i>default_verticals</i>: Setting this to \"true\" (\"false\") toggles the "
 "state of the '<label id=\"verticals\"/>' check box."
 msgstr ""
+"<i>default_verticals</i>: установка в значение «true» («false») переключает "
+"состояние флажка «<label id=\"verticals\"/>»."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -3055,6 +3154,8 @@ msgid ""
 "This is the <i>col</i> argument. The Default option is similar to that of "
 "Line type (see above)."
 msgstr ""
+"Это аргумент <i>col</i>. Вариант «По умолчанию» аналогичен такому же "
+"варианту для «Типа линии» (смотрите выше)."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Equilogs")
 #: rkward/plugins/distributions/../x11device/grid.rkh:23
