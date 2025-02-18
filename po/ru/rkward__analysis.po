@@ -1,39 +1,40 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2025 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
 # Alexander Potashev <aspotashev@gmail.com>, 2018.
+# SPDX-FileCopyrightText: 2025 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2018-10-10 15:15+0300\n"
-"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
-"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"PO-Revision-Date: 2025-02-17 17:20+0300\n"
+"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Олеся Герасименко"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "translation-team@basealt.ru"
 
 #. i18n: ectx: <about name="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:10 rkward/plugins/analysis.pluginmap:71
 #, kde-format
 msgid "Analysis"
-msgstr ""
+msgstr "Анализ"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/analysis.pluginmap:10
@@ -42,12 +43,14 @@ msgid ""
 "Assorted plugins for univariate and multivariate data analysis. Part of the "
 "official RKWard distribution"
 msgstr ""
+"Различные модули для одномерного и многомерного анализа данных. Часть "
+"официального дистрибутива RKWard"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:24
 #, kde-format
 msgid "Basic Statistics"
-msgstr ""
+msgstr "Базовые статистические характеристики"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Correlation matrix)
@@ -55,7 +58,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.js:129
 #, kde-format
 msgid "Correlation Matrix"
-msgstr ""
+msgstr "Матрица корреляции"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Correlation Matrix Plot)
@@ -64,7 +67,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.xml:11
 #, kde-format
 msgid "Correlation Matrix Plot"
-msgstr ""
+msgstr "График матрицы корреляции"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="...">
@@ -72,14 +75,14 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.xml:11
 #, kde-format
 msgid "Descriptive Statistics"
-msgstr ""
+msgstr "Описательная статистика"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (t-Test) <dialog label="...">
 #: rkward/plugins/analysis.pluginmap:28 rkward/plugins/analysis/t_test.xml:20
 #, kde-format
 msgid "t-Test"
-msgstr ""
+msgstr "t-тест"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:29
@@ -92,7 +95,7 @@ msgstr ""
 #, kde-format
 msgctxt "Statistics"
 msgid "Moment"
-msgstr ""
+msgstr "Момент"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:33
@@ -219,7 +222,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.xml:11
 #, kde-format
 msgid "KPSS Test for Stationarity"
-msgstr ""
+msgstr "Тест KPSS на стационарность"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
@@ -256,7 +259,7 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:77
 #, kde-format
 msgid "Correlation"
-msgstr ""
+msgstr "Корреляция"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:81
@@ -807,7 +810,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate correlation matrix"
-msgstr ""
+msgstr "рассчитать матрицу корреляции"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:75
@@ -837,7 +840,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.js:131
 #, kde-format
 msgid "Coefficient"
-msgstr ""
+msgstr "Коэффициент"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:134
@@ -862,13 +865,13 @@ msgstr ""
 #, kde-format
 msgctxt "noun"
 msgid "Variable:"
-msgstr ""
+msgstr "Переменная:"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:146
 #, kde-format
 msgid "original value"
-msgstr ""
+msgstr "исходное значение"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:146
@@ -882,6 +885,8 @@ msgstr ""
 msgid ""
 "Calculate a correlation matrix given a number of numerical input vectors."
 msgstr ""
+"Рассчитать матрицу корреляции с указанным количеством числовых входных "
+"векторов."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <usage>
 #: rkward/plugins/analysis/corr_matrix.rkh:12
@@ -941,7 +946,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.xml:19
 #, kde-format
 msgid "Correlation matrix"
-msgstr ""
+msgstr "Матрица корреляции"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="...">
@@ -1036,7 +1041,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.xml:34
 #, kde-format
 msgid "Polyserial correlation"
-msgstr ""
+msgstr "Полисериальная корреляция"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:35
@@ -1193,7 +1198,7 @@ msgid ""
 "Calculate two dimensional contingency tables for the count of occurrences of "
 "values in one \"dependent\" variable crossed with the values in one or more "
 "\"independent\" variables."
-msgstr ""
+msgstr ",ё"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab.rkh:12
@@ -1474,7 +1479,6 @@ msgstr ""
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="N to N Crosstabulation"> <spinbox label="...">
 #: rkward/plugins/analysis/crosstab_multi.xml:17
 #, fuzzy, kde-format
-#| msgid "Select variables"
 msgid "Row variables"
 msgstr "Переменные"
 
@@ -3017,7 +3021,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:12
 #, kde-format
 msgid "Variable Name"
-msgstr ""
+msgstr "Имя переменной"
 
 #. i18n: ectx: (Loaded from t-Test)
 #: rkward/plugins/analysis/t_test.js:69
@@ -3242,6 +3246,8 @@ msgid ""
 "This test computes the Phillips-Perron test for the null hypothesis that x "
 "has a unit root against a stationary alternative."
 msgstr ""
+"Вычисляет тест Филлипса — Перрона для нулевой гипотезы о том, что x имеет "
+"единичный корень, при альтернативной гипотезе стационарности."
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots) <usage>
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:12
@@ -3344,7 +3350,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/Box_test.xml:19
 #, kde-format
 msgid "Type of test"
-msgstr ""
+msgstr "Тип теста"
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> <tab label="Basic settings"> <frame label="Type of test"> <radio label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:20
@@ -3383,7 +3389,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:40
 #, kde-format
 msgid "Lambda"
-msgstr ""
+msgstr "Лямбда"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <summary>
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:8
@@ -3489,37 +3495,37 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
 #, kde-format
 msgid "Select Variable"
-msgstr ""
+msgstr "Выбор переменной"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <varslot label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:37
 #, kde-format
 msgid "Variable:"
-msgstr ""
+msgstr "Переменная:"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:42
 #, kde-format
 msgid "100 (Annual)"
-msgstr ""
+msgstr "100 (ежегодно)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:43
 #, kde-format
 msgid "1600 (Quarterly)"
-msgstr ""
+msgstr "1600 (ежеквартально)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:44
 #, kde-format
 msgid "14400 (Monthly)"
-msgstr ""
+msgstr "14400 (ежемесячно)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="Lambda"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:46
 #, kde-format
 msgid "Custom value"
-msgstr ""
+msgstr "Пользовательское значение"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:51
@@ -3543,7 +3549,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:60
 #, kde-format
 msgid "Plot options"
-msgstr ""
+msgstr "Параметры графика"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:61
@@ -3555,7 +3561,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:62
 #, kde-format
 msgid "Lines"
-msgstr ""
+msgstr "Линии"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Lines"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:64
@@ -3571,7 +3577,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:93
 #, kde-format
 msgid "Line width"
-msgstr ""
+msgstr "Ширина линии"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Original series"> <dropdown label="...">
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <frame label="Trend"> <dropdown label="...">
@@ -3581,7 +3587,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:94
 #, kde-format
 msgid "Line type"
-msgstr ""
+msgstr "Тип линии"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:67
@@ -3589,7 +3595,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:95
 #, kde-format
 msgid "default"
-msgstr ""
+msgstr "по умолчанию"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:68
@@ -3597,7 +3603,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:96
 #, kde-format
 msgid "Solid"
-msgstr ""
+msgstr "Сплошная"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:69
@@ -3605,7 +3611,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:97
 #, kde-format
 msgid "Dashed"
-msgstr ""
+msgstr "Штриховая"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:70
@@ -3613,7 +3619,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:98
 #, kde-format
 msgid "Dotted"
-msgstr ""
+msgstr "Точечная"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:71
@@ -3621,7 +3627,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:99
 #, kde-format
 msgid "Dot-Dash"
-msgstr ""
+msgstr "Точка-черта"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:72
@@ -3629,7 +3635,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:100
 #, kde-format
 msgid "Long-dash"
-msgstr ""
+msgstr "Длинная черта"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:73
@@ -3637,7 +3643,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:101
 #, kde-format
 msgid "Two-dash"
-msgstr ""
+msgstr "Двойная черта"
 
 #. i18n: ectx: (KPSS Test for Stationarity) <dialog label="KPSS Test for Stationarity"> <tab label="Basic settings"> <radio label="null hypothesis"> <option label="...">
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Lines"> <frame label="...">
@@ -3695,19 +3701,19 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.js:27
 #, kde-format
 msgid "KPSS Level"
-msgstr ""
+msgstr "Уровень KPSS"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:27
 #, kde-format
 msgid "KPSS Trend"
-msgstr ""
+msgstr "Тренд KPSS"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:37
 #, kde-format
 msgid "KPSS Test for Level Stationarity"
-msgstr ""
+msgstr "Тест KPSS на стационарность уровня"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <summary>
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:8
@@ -3716,6 +3722,8 @@ msgid ""
 "This test computes the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test for the "
 "null hypothesis that x is level or trend stationary."
 msgstr ""
+"Вычисляет тест Квятковского — Филлипса — Шмидта — Шина (KPSS) для нулевой "
+"гипотезы о стационарности x по уровню или тренду."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <usage>
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:12
