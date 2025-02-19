@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2025-02-17 17:20+0300\n"
+"PO-Revision-Date: 2025-02-18 17:25+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -175,7 +175,7 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:48
 #, kde-format
 msgid "Chi-squared Test for Outlier"
-msgstr ""
+msgstr "Тест хи-квадрат для выброса"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:49
@@ -253,7 +253,7 @@ msgstr ""
 #, kde-format
 msgctxt "Power of tests"
 msgid "Power Analysis"
-msgstr ""
+msgstr "Анализ мощности"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:77
@@ -332,7 +332,7 @@ msgstr ""
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.js:36
 #, kde-format
 msgid "H1"
-msgstr ""
+msgstr "H1"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test)
@@ -437,6 +437,8 @@ msgid ""
 "Here you can specify the alternative hypothesis. It must be one of \"two "
 "sided\", \"greater\" or \"less\"."
 msgstr ""
+"Здесь можно указать альтернативную гипотезу (это должен быть один из "
+"следующих вариантов: «двухсторонняя», «больше» или «меньше»)."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "compute exact p-value")
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.rkh:22
@@ -501,7 +503,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:16
 #, kde-format
 msgid "Basic settings"
-msgstr ""
+msgstr "Основные параметры"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <varslot label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <varslot label="...">
@@ -735,7 +737,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.js:21
 #, kde-format
 msgid "Alternative Hypothesis"
-msgstr ""
+msgstr "Альтернативная гипотеза"
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <summary>
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.rkh:8
@@ -790,6 +792,8 @@ msgid ""
 "Non-numeric variables will be treated as ordered data and transformed into "
 "numeric ranks"
 msgstr ""
+"Нечисловые переменные будут обработаны как порядковые данные и преобразованы "
+"в числовые ранги"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:60
@@ -852,7 +856,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.js:137
 #, kde-format
 msgid "p-values and sample size"
-msgstr ""
+msgstr "p-значения и размер выборки"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:143
@@ -1002,7 +1006,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.xml:17
 #, kde-format
 msgid "variable(s):"
-msgstr ""
+msgstr "переменные:"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:29
@@ -1103,7 +1107,7 @@ msgstr ""
 #, kde-format
 msgctxt "a statistic indicator"
 msgid "statistic"
-msgstr ""
+msgstr "статистическая характеристика"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:37
@@ -1118,7 +1122,7 @@ msgstr ""
 #, kde-format
 msgctxt "noun"
 msgid "count"
-msgstr ""
+msgstr "количество"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:56
@@ -1478,10 +1482,9 @@ msgstr ""
 
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="N to N Crosstabulation"> <spinbox label="...">
 #: rkward/plugins/analysis/crosstab_multi.xml:17
-#, fuzzy, kde-format
-#| msgid "Select variables"
+#, kde-format
 msgid "Row variables"
-msgstr "Переменные"
+msgstr "Строчные переменные"
 
 #. i18n: ectx: (Loaded from D'Agostino test of skewness)
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="...">
@@ -1571,6 +1574,8 @@ msgid ""
 "If checked, a verbose description of the alternative hypothesis will be "
 "shown along with the results"
 msgstr ""
+"Если флажок установлен, вместе с результатами будет показано подробное "
+"описание альтернативной гипотезы"
 
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="D'Agostino test of skewness"> <tab label="Basic settings"> <radio label="...">
@@ -1580,7 +1585,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/bonett_test.xml:18
 #, kde-format
 msgid "Test hypothesis (H1)"
-msgstr ""
+msgstr "Гипотеза теста (H1)"
 
 #. i18n: ectx: (sample moment) <dialog label="sample moment"> <tab label="Options"> <frame label="additional settings"> <checkbox label="...">
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Options"> <checkbox label="...">
@@ -1614,7 +1619,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/bonett_test.xml:29
 #, kde-format
 msgid "Verbose alternative hypothesis"
-msgstr ""
+msgstr "Подробная альтернативная гипотеза"
 
 #. i18n: ectx: (Loaded from Anscombe-Glynn test of kurtosis)
 #. i18n: ectx: (Anscombe-Glynn test of kurtosis) <dialog label="...">
@@ -1760,7 +1765,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/outlier.xml:26
 #, kde-format
 msgid "additional settings"
-msgstr ""
+msgstr "дополнительные параметры"
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis)
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="...">
@@ -1857,7 +1862,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/outlier.xml:28
 #, kde-format
 msgid "Show Length"
-msgstr ""
+msgstr "Показать длину"
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier)
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests)
@@ -1865,7 +1870,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/Box_test.js:23
 #, kde-format
 msgid "X-squared"
-msgstr ""
+msgstr "X-квадрат"
 
 #. i18n: ectx: (Loaded from F test)
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances)
@@ -1889,7 +1894,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/fligner_test.js:26
 #, kde-format
 msgid "p-value"
-msgstr ""
+msgstr "p-значение"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
@@ -1898,7 +1903,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:36 rkward/plugins/uni1.2/description.xml:55
 #, kde-format
 msgid "Variance"
-msgstr ""
+msgstr "Вариантность"
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier)
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="...">
@@ -1906,7 +1911,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/chisq_out_test.xml:11
 #, kde-format
 msgid "Chi-squared test for outlier"
-msgstr ""
+msgstr "Тест хи-квадрат для выброса"
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <summary>
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:8
@@ -1940,6 +1945,9 @@ msgid ""
 "Check if you want not the value with largest difference from the mean, but "
 "opposite (lowest, if most suspicious is highest etc.)."
 msgstr ""
+"Установите этот флажок, если требуется не значение с наибольшим отличием от "
+"среднего, а противоположное (самое низкое, если самым подозрительным "
+"является самое высокое, и так далее)."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "Show additional descriptives")
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Show additional descriptives")
@@ -1955,6 +1963,10 @@ msgid ""
 "with interpretation of the test result (purely informational, does not "
 "affect the test). Missing values will be ignored."
 msgstr ""
+"Вывести дополнительные описательные статистические характеристики (среднее, "
+"стандартное отклонение, медиана, минимум, максимум) для облегчения "
+"интерпретации результатов теста (исключительно в информационных целях, не "
+"влияет на тест). Отсутствующие значения будут проигнорированы."
 
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="Chi-squared test for outlier"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> <tab label="Options"> <frame label="...">
@@ -1966,7 +1978,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/outlier.xml:23
 #, kde-format
 msgid "test specific settings"
-msgstr ""
+msgstr "параметры, зависящие от теста"
 
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="Chi-squared test for outlier"> <tab label="Options"> <frame label="test specific settings"> <checkbox label="...">
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> <tab label="Options"> <frame label="test specific settings"> <checkbox label="...">
@@ -1978,7 +1990,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/outlier.xml:24
 #, kde-format
 msgid "Opposite"
-msgstr ""
+msgstr "Противоположное"
 
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="Chi-squared test for outlier"> <tab label="Options"> <frame label="additional settings"> <checkbox label="...">
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> <tab label="Options"> <frame label="additional settings"> <checkbox label="...">
@@ -1990,25 +2002,25 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/outlier.xml:27
 #, kde-format
 msgid "Show additional descriptives"
-msgstr ""
+msgstr "Показать дополнительные описательные статистики"
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier)
 #: rkward/plugins/analysis/outliers/dixon_test.js:10
 #, kde-format
 msgid "Dixon Q-statistic"
-msgstr ""
+msgstr "Q-статистика Диксона"
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier)
 #: rkward/plugins/analysis/outliers/dixon_test.js:17
 #, kde-format
 msgid "Dixon test for outlier"
-msgstr ""
+msgstr "Тест Диксона на выброс"
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <summary>
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:8
 #, kde-format
 msgid "This test performs the Dixon test for outlier."
-msgstr ""
+msgstr "Выполняет тест Диксона на выброс."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <usage>
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:12
@@ -2017,6 +2029,8 @@ msgid ""
 "Choose the data to perform the Dixon test for outlier. You can choose "
 "multiple vectors. See <link href=\"rkward://rhelp/dixon.test\"/>."
 msgstr ""
+"Выберите данные для выполнения теста Диксона на выброс. Можно выбрать "
+"несколько векторов. Смотрите <link href=\"rkward://rhelp/dixon.test\"/>."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:18
@@ -2025,6 +2039,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and can be "
 "of different length but there is a limit."
 msgstr ""
+"Выберите данные для вычисления. Векторы должны быть числовыми и могут иметь "
+"разную длину, но есть ограничение."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Variant of test")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:20
@@ -2035,12 +2051,16 @@ msgid ""
 "suitable variant is selected automatically, according to the size of the "
 "sample."
 msgstr ""
+"Указывает вариант теста, который будет выполнен. Подробные сведения доступны "
+"здесь: <link href=\"rkward://rhelp/dixon.test\"/>. Значение по умолчанию (0) "
+"означает, что подходящий вариант выбирается автоматически, в соответствии с "
+"размером выборки."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "two-sided")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:21
 #, kde-format
 msgid "Should the test be treated as two-sided (default)?"
-msgstr ""
+msgstr "Следует ли считать тест двухсторонним (значение по умолчанию)?"
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Opposite")
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "Opposite")
@@ -2051,12 +2071,14 @@ msgid ""
 "Here you can define if you want to check not the value with largest "
 "difference from the mean, but opposite."
 msgstr ""
+"Здесь можно указать, что следует проверить не значение с наибольшим отличием "
+"от среднего, а противоположное."
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:11
 #, kde-format
 msgid "Dixon tests for outlier"
-msgstr ""
+msgstr "Тексты Диксона на выброс"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> <tab label="Options"> <frame label="test specific settings"> <dropdown label="...">
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> <tab label="Options"> <frame label="test specific settings"> <radio label="...">
@@ -2064,49 +2086,49 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:25
 #, kde-format
 msgid "Variant of test"
-msgstr ""
+msgstr "Вариант теста"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:26
 #, kde-format
 msgid "0 (Automatic)"
-msgstr ""
+msgstr "0 (автоматически)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:27
 #, kde-format
 msgid "10 (sample size 3-7)"
-msgstr ""
+msgstr "10 (размер выборки 3-7)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:28
 #, kde-format
 msgid "11 (sample size 8-10)"
-msgstr ""
+msgstr "11 (размер выборки 8-10)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:29
 #, kde-format
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:30
 #, kde-format
 msgid "20 (sample size 11-13)"
-msgstr ""
+msgstr "20 (размер выборки 11-13)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:31
 #, kde-format
 msgid "21 (sample size 14 and more)"
-msgstr ""
+msgstr "21 (размер выборки 14 и больше)"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> [...] <dropdown label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:32
 #, kde-format
 msgid "22"
-msgstr ""
+msgstr "22"
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="Dixon tests for outlier"> <tab label="Options"> <frame label="test specific settings"> <checkbox label="...">
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> <tab label="Options"> <frame label="test specific settings"> <checkbox label="...">
@@ -2114,7 +2136,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:31
 #, kde-format
 msgid "two-sided"
-msgstr ""
+msgstr "двухсторонний"
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample)
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="...">
@@ -2147,6 +2169,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and may be "
 "of different length."
 msgstr ""
+"Выберите данные для вычисления. Векторы должны быть числовыми и могут иметь "
+"разную длину."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "Variant of test")
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:20
@@ -2155,30 +2179,32 @@ msgid ""
 "Variant of test to be performed. One or two outliers can be detected, on the "
 "same, or on opposite tails."
 msgstr ""
+"Вариант теста, который будет выполнен. Могут быть обнаружены один или два "
+"выброса, на одном или разных хвостах."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "two-sided")
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:21
 #, kde-format
 msgid "Should the test be treated as two-sided?"
-msgstr ""
+msgstr "Следует ли считать тест двухсторонним?"
 
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> [...] <radio label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:26
 #, kde-format
 msgid "10 (test for one outlier)"
-msgstr ""
+msgstr "10 (тест на один выброс)"
 
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> [...] <radio label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:27
 #, kde-format
 msgid "11 (test for two outliers on opposite tails)"
-msgstr ""
+msgstr "11 (тест на два выброса на противоположных хвостах)"
 
 #. i18n: ectx: (Grubbs tests for one or two outliers in data sample) <dialog label="Grubbs tests for one or two outliers in data sample"> [...] <radio label="Variant of test"> <option label="...">
 #: rkward/plugins/analysis/outliers/grubbs_test.xml:28
 #, kde-format
 msgid "20 (test for two outliers on one tail)"
-msgstr ""
+msgstr "20 (тест на два выброса на одном хвосте)"
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean)
 #: rkward/plugins/analysis/outliers/outlier.js:15
@@ -2209,6 +2235,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric. Any missing "
 "values are ignored in the calculation."
 msgstr ""
+"Выберите данные для вычисления. Векторы должны быть числовыми. При расчёте "
+"все отсутствующие значения будут проигнорированы."
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean) <settings> <setting> (refers to element labelled "Opposite")
 #: rkward/plugins/analysis/outliers/outlier.rkh:20
@@ -2229,45 +2257,45 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate f from eta squared"
-msgstr ""
+msgstr "рассчитать f из эта-квадрат"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:206
 #, kde-format
 msgctxt "R code comment"
 msgid "Catch errors due to unsuitable data"
-msgstr ""
+msgstr "Найти ошибки из-за неподходящих данных"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:207
 #, kde-format
 msgid "Power analysis not possible with the data you provided"
-msgstr ""
+msgstr "Для предоставленных данных невозможно выполнить анализ мощности"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:208
 #, kde-format
 msgctxt "R code comment"
 msgid "Prepare printout"
-msgstr ""
+msgstr "Подготовить распечатку"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:212
 #, kde-format
 msgid "alternative"
-msgstr ""
+msgstr "альтернатива"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:214
 #, kde-format
 msgid "Parameters"
-msgstr ""
+msgstr "Параметры"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:214
 #, kde-format
 msgid "<strong>Note:</strong>"
-msgstr ""
+msgstr "<strong>Примечание:</strong>"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2279,7 +2307,7 @@ msgstr ""
 #, no-c-format, kde-format
 msgctxt "Argument is name of statistic, e.g. 'r'"
 msgid "Interpretation of effect size <strong>%1</strong> (according to Cohen):"
-msgstr ""
+msgstr "Интерпретация размера эффекта <strong>%1</strong> (согласно Коэну):"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2291,7 +2319,7 @@ msgstr ""
 #, kde-format
 msgctxt "effect size"
 msgid "small"
-msgstr ""
+msgstr "малый"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2303,7 +2331,7 @@ msgstr ""
 #, kde-format
 msgctxt "effect size"
 msgid "medium"
-msgstr ""
+msgstr "средний"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:216
@@ -2315,7 +2343,7 @@ msgstr ""
 #, kde-format
 msgctxt "effect size"
 msgid "large"
-msgstr ""
+msgstr "большой"
 
 #. i18n: ectx: (Power analysis) <title>
 #. i18n: ectx: (Power analysis) <about name="...">
@@ -2323,13 +2351,13 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:14
 #, kde-format
 msgid "Power analysis"
-msgstr ""
+msgstr "Анализ мощности"
 
 #. i18n: ectx: (Power analysis) <summary>
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:13
 #, kde-format
 msgid "Perform power analysis for a variety of statistical methods."
-msgstr ""
+msgstr "Выполнить анализ мощности для различных статистических методов."
 
 #. i18n: ectx: (Power analysis) <usage>
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:16
@@ -2352,6 +2380,7 @@ msgstr ""
 #, kde-format
 msgid "Specify the statistical method to perform power estimation for"
 msgstr ""
+"Укажите статистический метод, для которого следует выполнить оценку мощности"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Number of groups")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:37
@@ -2366,6 +2395,9 @@ msgid ""
 "Only enabled where applicable. Specify the nature of samples used in the "
 "test. For samples of different sizes, only one sample size can be estimated."
 msgstr ""
+"Включено только в случае применимости. Укажите природу выборок, используемых "
+"в тесте. Когда выборки разного размера, оценка возможна только для одного "
+"размера."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Using test hypothesis")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:43
@@ -2383,18 +2415,20 @@ msgid ""
 "Only shown where applicable. Allows you to select, whether to specify the "
 "effect size as Cohen's f, or as Eta squared."
 msgstr ""
+"Отображается только в случае применимости. Позволяет выбрать способ указания "
+"размера эффекта: как f Коэна или как эта-квадрат."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Parameter to determine")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:52
 #, kde-format
 msgid "Parameter to estimate, given the others."
-msgstr ""
+msgstr "Параметр для оценки, когда указаны другие."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Power")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:57
 #, kde-format
 msgid "Targeted power of test (1 minus Type II error probability)"
-msgstr ""
+msgstr "Целевая мощность теста (1 минус вероятность ошибки II рода)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:61
@@ -2432,6 +2466,9 @@ msgid ""
 "observations per sample, per group, or in total. Make sure to read the note "
 "shown below the control."
 msgstr ""
+"Размер выборки. Обратите внимание: значение зависит от выбранного метода. "
+"Это может быть количество наблюдений на выборку, на группу или всего. "
+"Обязательно прочтите примечание под элементом управления."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
@@ -2462,6 +2499,8 @@ msgstr ""
 #, kde-format
 msgid "RKWard GUI to perform power analysis and sample size estimation."
 msgstr ""
+"Графический интерфейс пользователя RKWard для выполнения анализа мощности и "
+"оценки размера выборки."
 
 #. i18n: ectx: (Power analysis) <about> <author given="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:15
@@ -2497,19 +2536,19 @@ msgstr ""
 msgctxt ""
 "Here 'power' is a common statistical term and should not be translated"
 msgid "Power analysis"
-msgstr ""
+msgstr "Анализ мощности"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:106
 #, kde-format
 msgid "Statistical Method"
-msgstr ""
+msgstr "Статистический метод"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:107
 #, kde-format
 msgid "Select a method"
-msgstr ""
+msgstr "Выбор метода"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Select a method"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:108
@@ -2539,7 +2578,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:112
 #, kde-format
 msgid "Chi-squared test"
-msgstr ""
+msgstr "Тест хи-квадрат"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Select a method"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:113
@@ -2564,21 +2603,21 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:123
 #, kde-format
 msgid "Samples"
-msgstr ""
+msgstr "Выборки"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:118
 #: rkward/plugins/analysis/power/Poweranalysis.xml:124
 #, kde-format
 msgid "Two samples (equal sizes)"
-msgstr ""
+msgstr "Две выборки (одинаковые размеры)"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:119
 #: rkward/plugins/analysis/power/Poweranalysis.xml:125
 #, kde-format
 msgid "Two samples (different sizes)"
-msgstr ""
+msgstr "Две выборки (разные размеры)"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <dropdown label="Test form"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
@@ -2586,7 +2625,7 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.xml:28
 #, kde-format
 msgid "Single sample (test against constant)"
-msgstr ""
+msgstr "Единственная выборка (тест по константе)"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <dropdown label="Test form"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
@@ -2594,19 +2633,19 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.xml:27
 #, kde-format
 msgid "Paired samples"
-msgstr ""
+msgstr "Парные выборки"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Samples"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:126
 #, kde-format
 msgid "One sample"
-msgstr ""
+msgstr "Одна выборка"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:128
 #, kde-format
 msgid "Using test hypothesis"
-msgstr ""
+msgstr "Используемая для теста гипотеза"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
@@ -2616,7 +2655,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:24
 #, kde-format
 msgid "First is greater"
-msgstr ""
+msgstr "Первое — больше"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Using test hypothesis"> <option label="...">
@@ -2624,37 +2663,37 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.xml:42
 #, kde-format
 msgid "Second is greater"
-msgstr ""
+msgstr "Второе — больше"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:133
 #, kde-format
 msgid "Hypothesis probably expects a negative effect size!"
-msgstr ""
+msgstr "Вероятно, для гипотезы ожидается отрицательный размер эффекта!"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:136
 #, kde-format
 msgid "Hypothesis probably expects a positive effect size!"
-msgstr ""
+msgstr "Вероятно, для гипотезы ожидается положительный размер эффекта!"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <radio label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:139
 #, kde-format
 msgid "Provided effect size"
-msgstr ""
+msgstr "Предоставленный размер эффекта"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <radio label="Provided effect size"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:140
 #, kde-format
 msgid "Cohen's f"
-msgstr ""
+msgstr "f Коэна"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <radio label="Provided effect size"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:141
 #, kde-format
 msgid "Eta squared"
-msgstr ""
+msgstr "Эта-квадрат"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:150
@@ -2666,7 +2705,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:151
 #, kde-format
 msgid "Parameter to determine"
-msgstr ""
+msgstr "Параметр для определения"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:152
@@ -2674,7 +2713,7 @@ msgstr ""
 msgctxt ""
 "Here 'power' is a common statistical term and should not be translated"
 msgid "Power of test"
-msgstr ""
+msgstr "Мощность теста"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2682,7 +2721,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:184
 #, kde-format
 msgid "Sample size"
-msgstr ""
+msgstr "Размер выборки"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2690,7 +2729,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:212
 #, kde-format
 msgid "Effect size"
-msgstr ""
+msgstr "Размер эффекта"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Target measure"> <radio label="Parameter to determine"> <option label="...">
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
@@ -2704,7 +2743,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:156
 #, kde-format
 msgid "Parameter count"
-msgstr ""
+msgstr "Количество параметров"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:162
@@ -2742,7 +2781,7 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
 #, kde-format
 msgid "Degrees of freedom for denominator"
-msgstr ""
+msgstr "Степени свободы знаменателя"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
@@ -2754,85 +2793,85 @@ msgstr ""
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185
 #, kde-format
 msgid "First sample size"
-msgstr ""
+msgstr "Размер первой выборки"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:186
 #, kde-format
 msgid "Second sample size"
-msgstr ""
+msgstr "Размер второй выборки"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:187
 #, kde-format
 msgid "Number of observations"
-msgstr ""
+msgstr "Количество наблюдений"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:190
 #, kde-format
 msgid "Number of observations <b> per sample </b>"
-msgstr ""
+msgstr "Количество наблюдений <b> на выборку </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:195
 #, kde-format
 msgid "Number of observations <b> per group </b>"
-msgstr ""
+msgstr "Количество наблюдений <b> на группу </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:200
 #, kde-format
 msgid "Number of observations <b> in total </b>"
-msgstr ""
+msgstr "Количество наблюдений <b> общее </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:205
 #, kde-format
 msgid "Number of <b> pairs </b>"
-msgstr ""
+msgstr "Количество <b> пар </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:213
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's d </b>"
-msgstr ""
+msgstr "Мерой для выбранного метода является <b> d Коэна </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:218
 #, kde-format
 msgid "Measure for selected method is <b> Pearson's r </b>"
-msgstr ""
+msgstr "Мерой для выбранного метода является <b> r Пирсона </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:223
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's f </b>"
-msgstr ""
+msgstr "Мерой для выбранного метода является <b> f Коэна </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:228
 #, kde-format
 msgid "Measure for selected method is <b> Eta <sup> 2 </sup> </b>"
-msgstr ""
+msgstr "Мерой для выбранного метода является <b> эта <sup> 2 </sup> </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:235
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's f <sup> 2 </sup> </b>"
-msgstr ""
+msgstr "Мерой для выбранного метода является <b> f Коэна <sup> 2 </sup> </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:242
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's w </b>"
-msgstr ""
+msgstr "Мерой для выбранного метода является <b> w Коэна </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:247
 #, kde-format
 msgid "Measure for selected method is <b> Cohen's h </b>"
-msgstr ""
+msgstr "Мерой для выбранного метода является <b> h Коэна </b>"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <saveobject label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:257
@@ -3093,7 +3132,7 @@ msgstr ""
 #: rkward/plugins/analysis/t_test.rkh:23
 #, kde-format
 msgid "Alternative hypothesis (H1) of the test."
-msgstr ""
+msgstr "Альтернативная гипотеза (H1) теста."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "Show Confidence Interval")
 #: rkward/plugins/analysis/t_test.rkh:25
@@ -3160,6 +3199,8 @@ msgid ""
 "Select the parameters of the t-test. If your hypothesis is directed, "
 "selecting a directional test hypothesis may increase test power."
 msgstr ""
+"Выберите параметры t-теста. Если гипотеза является направленной, выбор "
+"направленной гипотезы теста может увеличить мощность теста."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:75
@@ -3208,7 +3249,7 @@ msgstr ""
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:19
 #, kde-format
 msgid "Alternative hypothesis to use for the test."
-msgstr ""
+msgstr "Альтернативная гипотеза, которая будет использоваться для теста."
 
 #. i18n: ectx: (Mood Two-Sample Test of Scale) <dialog label="...">
 #: rkward/plugins/analysis/TESTS/mood_test.xml:11
@@ -3357,7 +3398,7 @@ msgstr "Тип теста"
 #: rkward/plugins/analysis/time_series/Box_test.xml:20
 #, kde-format
 msgid "test to be performed"
-msgstr ""
+msgstr "тест, который будет выполнен"
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> [...] <radio label="test to be performed"> <option label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:21
@@ -3767,7 +3808,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/bartlett_test.js:24
 #, kde-format
 msgid "Bartlett's K-squared"
-msgstr ""
+msgstr "K-квадрат Бартлетта"
 
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances) <summary>
 #: rkward/plugins/analysis/variances/bartlett_test.rkh:8
@@ -3817,7 +3858,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.js:28
 #, kde-format
 msgid "Denominator DF"
-msgstr ""
+msgstr "Степени свободы знаменателя"
 
 #. i18n: ectx: (Loaded from F test)
 #: rkward/plugins/analysis/variances/F_test.js:30
@@ -3868,7 +3909,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.rkh:20
 #, kde-format
 msgid "Alternative hypothesis of the test."
-msgstr ""
+msgstr "Альтернативная гипотеза теста."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "Hypothesized ratio")
 #: rkward/plugins/analysis/variances/F_test.rkh:22
@@ -4583,7 +4624,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.js:56
 #, kde-format
 msgid "Legend:"
-msgstr ""
+msgstr "Легенда:"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <summary>
 #: rkward/plugins/plots/cor_graph.rkh:8
@@ -5005,7 +5046,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:126
 #, kde-format
 msgid "Omit missing values"
-msgstr ""
+msgstr "Опустить отсутствующие значения"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Options"> <saveobject label="...">
 #: rkward/plugins/uni1.2/description.xml:127
