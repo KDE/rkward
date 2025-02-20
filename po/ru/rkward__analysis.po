@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2025-02-18 17:25+0300\n"
+"PO-Revision-Date: 2025-02-19 17:22+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -101,13 +101,13 @@ msgstr "Момент"
 #: rkward/plugins/analysis.pluginmap:33
 #, kde-format
 msgid "Bonett-Seier Test of Geary's Kurtosis"
-msgstr ""
+msgstr "Тест Бонетта — Сейер на эксцесс Гири"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:34
 #, kde-format
 msgid "D'Agostino Test of Skewness"
-msgstr ""
+msgstr "Тест Д'Агостино на асимметрию"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:35
@@ -123,7 +123,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:10
 #, kde-format
 msgid "Skewness and Kurtosis"
-msgstr ""
+msgstr "Асимметрия и эксцесс"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:39
@@ -157,19 +157,19 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:43
 #, kde-format
 msgid "Ansari-Bradley Two-Sample Test"
-msgstr ""
+msgstr "Двухвыборочный тест Ансари — Бредли"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:44
 #, kde-format
 msgid "Ansari-Bradley Two-Sample Exact Test"
-msgstr ""
+msgstr "Двухвыборочный перестановочный тест Ансари — Бредли"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:45
 #, kde-format
 msgid "Mood Two-Sample Test"
-msgstr ""
+msgstr "Двухвыборочный тест Муда"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:48
@@ -181,26 +181,26 @@ msgstr "Тест хи-квадрат для выброса"
 #: rkward/plugins/analysis.pluginmap:49
 #, kde-format
 msgid "Dixon Test"
-msgstr ""
+msgstr "Тест Диксона"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:50
 #, kde-format
 msgid "Find Outlier"
-msgstr ""
+msgstr "Поиск выброса"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:51
 #, kde-format
 msgid "Grubbs Test"
-msgstr ""
+msgstr "Тест Граббса"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="...">
 #: rkward/plugins/analysis.pluginmap:54 rkward/plugins/analysis/crosstab.xml:18
 #, kde-format
 msgid "N to 1 Crosstabulation"
-msgstr ""
+msgstr "Сопряжённость «N к 1»"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="...">
@@ -208,7 +208,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab_multi.xml:11
 #, kde-format
 msgid "N to N Crosstabulation"
-msgstr ""
+msgstr "Сопряжённость «N к N»"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:58
@@ -232,13 +232,13 @@ msgstr "Тест KPSS на стационарность"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:28
 #, kde-format
 msgid "Hodrick-Prescott Filter"
-msgstr ""
+msgstr "Фильтр Ходрика — Прескотта"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:61
 #, kde-format
 msgid "Phillips-Perron Test"
-msgstr ""
+msgstr "Тест Филлипса — Перрона"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Fitting Linear Models)
@@ -246,7 +246,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.js:40
 #, kde-format
 msgid "Linear Regression"
-msgstr ""
+msgstr "Линейная регрессия"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/analysis.pluginmap:67
@@ -265,32 +265,32 @@ msgstr "Корреляция"
 #: rkward/plugins/analysis.pluginmap:81
 #, kde-format
 msgid "Crosstabs"
-msgstr ""
+msgstr "Таблицы сопряжённости"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:85
 #, kde-format
 msgid "Means"
-msgstr ""
+msgstr "Средние"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Means"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:86
 #, kde-format
 msgid "t-Tests"
-msgstr ""
+msgstr "t-тесты"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:90
 #, kde-format
 msgctxt "Statistics"
 msgid "Moments"
-msgstr ""
+msgstr "Моменты"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:97
 #, kde-format
 msgid "Outlier Tests"
-msgstr ""
+msgstr "Тесты на выбросы"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:103
@@ -444,7 +444,7 @@ msgstr ""
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.rkh:22
 #, kde-format
 msgid "Defines whether an exact p-value should be computed."
-msgstr ""
+msgstr "Определяет, следует ли вычислить точное p-значение."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "Compute confidence interval")
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "compute confidence interval")
@@ -467,7 +467,7 @@ msgstr ""
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.xml:15
 #, kde-format
 msgid "Ansari-Bradley two-sample exact test"
-msgstr ""
+msgstr "Двухвыборочный перестановочный тест Ансари — Бредли"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="...">
@@ -519,7 +519,7 @@ msgstr "Основные параметры"
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:20
 #, kde-format
 msgid "compare"
-msgstr ""
+msgstr "сравнить"
 
 #. i18n: ectx: (Loaded from t-Test)
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <varslot label="...">
@@ -539,7 +539,7 @@ msgstr ""
 #, kde-format
 msgctxt "compare against"
 msgid "against"
-msgstr ""
+msgstr "с"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <radio label="...">
@@ -555,7 +555,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:22
 #, kde-format
 msgid "using test hypothesis"
-msgstr ""
+msgstr "с помощью гипотезы теста"
 
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <radio label="using test hypothesis"> <option label="...">
@@ -579,7 +579,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:23
 #, kde-format
 msgid "Two-sided"
-msgstr ""
+msgstr "Двухсторонняя"
 
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Basic settings"> <radio label="Test hypothesis (H1)"> <option label="...">
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="D'Agostino test of skewness"> <tab label="Basic settings"> <radio label="Test hypothesis (H1)"> <option label="...">
@@ -597,7 +597,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.xml:21
 #, kde-format
 msgid "greater"
-msgstr ""
+msgstr "больше"
 
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Basic settings"> <radio label="Test hypothesis (H1)"> <option label="...">
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="D'Agostino test of skewness"> <tab label="Basic settings"> <radio label="Test hypothesis (H1)"> <option label="...">
@@ -615,7 +615,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.xml:22
 #, kde-format
 msgid "less"
-msgstr ""
+msgstr "меньше"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="...">
@@ -659,7 +659,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:125
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "Параметры"
 
 #. i18n: ectx: (Ansari-Bradley two-sample test) <dialog label="Ansari-Bradley two-sample test"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (Ansari-Bradley two-sample exact test) <dialog label="Ansari-Bradley two-sample exact test"> <tab label="Options"> <radio label="...">
@@ -667,7 +667,7 @@ msgstr ""
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.xml:34
 #, kde-format
 msgid "compute exact p-value"
-msgstr ""
+msgstr "вычислить точное p-значение"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> [...] <radio label="Compute exact p-value"> <option label="...">
 #. i18n: ectx: (Ansari-Bradley two-sample test) <dialog label="Ansari-Bradley two-sample test"> <tab label="Options"> <radio label="compute exact p-value"> <option label="...">
@@ -927,7 +927,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.rkh:21
 #, kde-format
 msgid "Method of correlation to be used."
-msgstr ""
+msgstr "Метод вычисления корреляции, который будет использован."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Treat ordered categorial variables as numeric ranks")
 #: rkward/plugins/analysis/corr_matrix.rkh:22
@@ -936,6 +936,9 @@ msgid ""
 "For Kendall and Spearman, if some variables are not numeric but ordered "
 "categorial variables, have them treated as numeric ranks."
 msgstr ""
+"Для Кендалла и Спирмена: если некоторые переменные являются не числовыми, а "
+"порядковыми категориальными переменными, они будут обрабатываться как "
+"числовые ранги."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/analysis/corr_matrix.rkh:23
@@ -945,6 +948,9 @@ msgid ""
 "e. even for those pairs of variables, where neither value is missing), or "
 "should they only be excluded for those pairs where it is actually missing?"
 msgstr ""
+"Следует ли в случае отсутствия значений исключать строку из всех расчётов "
+"(то есть даже для тех пар переменных, где нет отсутствующих значений) или "
+"делать это только для тех пар, где фактически отсутствуют значения?"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:19
@@ -972,7 +978,7 @@ msgstr "Матрица корреляции"
 #: rkward/plugins/plots/cor_graph.xml:13
 #, kde-format
 msgid "Variables"
-msgstr ""
+msgstr "Переменные"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Variables"> <varslot label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Variables"> <varslot label="...">
@@ -1012,7 +1018,7 @@ msgstr "переменные:"
 #: rkward/plugins/analysis/corr_matrix.xml:29
 #, kde-format
 msgid "Calculate p values"
-msgstr ""
+msgstr "Рассчитать p-значения"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="...">
@@ -1021,25 +1027,25 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.js:88 rkward/plugins/plots/cor_graph.xml:23
 #, kde-format
 msgid "Method"
-msgstr ""
+msgstr "Метод"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:31
 #, kde-format
 msgid "Pearson's product-moment correlation"
-msgstr ""
+msgstr "Корреляция моментов произведения Пирсона"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:32
 #, kde-format
 msgid "Kendall's tau"
-msgstr ""
+msgstr "Тау Кендалла"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:33
 #, kde-format
 msgid "Spearman's rho"
-msgstr ""
+msgstr "Ро Спирмена"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:34
@@ -1051,13 +1057,14 @@ msgstr "Полисериальная корреляция"
 #: rkward/plugins/analysis/corr_matrix.xml:35
 #, kde-format
 msgid "Polychoric correlation"
-msgstr ""
+msgstr "Полихорическая корреляция"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:37
 #, kde-format
 msgid "Treat ordered categorial variables as numeric ranks"
 msgstr ""
+"Обрабатывать упорядоченные категориальные переменные как числовые ранги"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="...">
@@ -1075,7 +1082,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.xml:28
 #, kde-format
 msgid "Exclude missing values"
-msgstr ""
+msgstr "Исключить отсутствующие значения"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Exclude missing values"> <option label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Exclude missing values"> <option label="...">
@@ -1083,7 +1090,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.xml:29
 #, kde-format
 msgid "whole cases"
-msgstr ""
+msgstr "случаи целиком"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Exclude missing values"> <option label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Exclude missing values"> <option label="...">
@@ -1091,7 +1098,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.xml:30
 #, kde-format
 msgid "pairwise"
-msgstr ""
+msgstr "попарно"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:17
@@ -1101,6 +1108,8 @@ msgid ""
 "convenience function to bind together several two dimensional tables into a "
 "single three dimensional table\n"
 msgstr ""
+"вспомогательная функция, связывающая несколько двухмерных таблиц в одну "
+"трёхмерную таблицу\n"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:22
@@ -1114,7 +1123,7 @@ msgstr "статистическая характеристика"
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate crosstabs\n"
-msgstr ""
+msgstr "рассчитать таблицы сопряжённости\n"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:55
@@ -1129,21 +1138,21 @@ msgstr "количество"
 #: rkward/plugins/analysis/crosstab.js:63
 #, no-c-format, kde-format
 msgid "% of row"
-msgstr ""
+msgstr "% по строке"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:57
 #: rkward/plugins/analysis/crosstab.js:64
 #, no-c-format, kde-format
 msgid "% of column"
-msgstr ""
+msgstr "% по столбцу"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:58
 #: rkward/plugins/analysis/crosstab.js:65
 #, no-c-format, kde-format
 msgid "% of total"
-msgstr ""
+msgstr "% от итога"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:59
@@ -1151,20 +1160,20 @@ msgstr ""
 #, kde-format
 msgctxt "expected count"
 msgid "expected"
-msgstr ""
+msgstr "ожидаемое значение"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:75
 #: rkward/plugins/analysis/crosstab.js:80
 #, kde-format
 msgid "Crosstabs (n to 1)"
-msgstr ""
+msgstr "Таблицы сопряжённости (n к 1)"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:88
 #, kde-format
 msgid "Pearson's Chi Square Test for Crosstabs"
-msgstr ""
+msgstr "Тест хи-квадрат Пирсона для таблиц сопряжённости"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
@@ -1173,27 +1182,27 @@ msgstr ""
 #, kde-format
 msgctxt "a statistic indicator"
 msgid "Statistic"
-msgstr ""
+msgstr "Статистическая характеристика"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:94
 #, kde-format
 msgid "Barplot for Crosstabs"
-msgstr ""
+msgstr "Столбчатый график для таблиц сопряжённости"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:110
 #, kde-format
 msgctxt "dependent variable"
 msgid "Dependent"
-msgstr ""
+msgstr "Зависимая переменая"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:111
 #, kde-format
 msgctxt "independent variable"
 msgid "Independent"
-msgstr ""
+msgstr "Независимая переменная"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <summary>
 #: rkward/plugins/analysis/crosstab.rkh:8
@@ -1202,7 +1211,10 @@ msgid ""
 "Calculate two dimensional contingency tables for the count of occurrences of "
 "values in one \"dependent\" variable crossed with the values in one or more "
 "\"independent\" variables."
-msgstr ",ё"
+msgstr ""
+"Рассчитать двумерные таблицы сопряжённости для частоты значений одной "
+"«зависимой» переменной, пересекающихся со значениями одной или нескольких "
+"«независимых» переменных."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab.rkh:12
@@ -1215,6 +1227,12 @@ msgid ""
 "each table, the occurrence of combinations of values in the \"dependent\" "
 "and \"independent\" variable is counted."
 msgstr ""
+"Укажите «зависимую» переменную. Эта переменная будет присутствовать во всех "
+"созданных таблицах. Укажите одну или несколько «независимых» переменных. Для "
+"каждой из них будет выполнена перекрёстная табуляция по «зависимой» "
+"переменной. Здесь «Зависимая переменная» и «Независимая переменная» не "
+"подразумевают какой-либо инференциальной статистики. В каждой таблице "
+"считается частота комбинаций значений «зависимой» и «независимой» переменных."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab.rkh:12
@@ -1240,6 +1258,9 @@ msgid ""
 "Select one or more vectors that can be interpreted as a factor. Each of "
 "these will be cross-tabulated against the \"dependent\" variable."
 msgstr ""
+"Выберите один или несколько векторов, которые могут обрабатываться как "
+"фактор. Для каждого из них будет выполнено перекрёстное табулирование по "
+"«зависимой» переменной."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Chisquare")
 #: rkward/plugins/analysis/crosstab.rkh:22
@@ -1251,7 +1272,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.rkh:23
 #, kde-format
 msgid "Should a barplot be produced (for each pair)?"
-msgstr ""
+msgstr "Следует ли создавать столбчатый график (для каждой пары)?"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting>
 #: rkward/plugins/analysis/crosstab.rkh:24
@@ -1265,7 +1286,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.rkh:27
 #, kde-format
 msgid "Calculate and show sums / margins"
-msgstr ""
+msgstr "Рассчитать и показать суммы / результаты"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show percent of row")
 #: rkward/plugins/analysis/crosstab.rkh:28
@@ -1274,6 +1295,8 @@ msgid ""
 "Calculate and show the proportion (in %) of each cell's count of the "
 "corresponding row's total count."
 msgstr ""
+"Рассчитать и показать пропорцию (в %) вклада каждой ячейки к общему итогу в "
+"соответствующей строке."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show percent of column")
 #: rkward/plugins/analysis/crosstab.rkh:29
@@ -1282,6 +1305,8 @@ msgid ""
 "Calculate and show the proportion (in %) of each cell's count of the "
 "corresponding column's total count."
 msgstr ""
+"Рассчитать и показать пропорцию (в %) вклада каждой ячейки к общему итогу в "
+"соответствующем столбце."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show percent of total")
 #: rkward/plugins/analysis/crosstab.rkh:30
@@ -1290,6 +1315,8 @@ msgid ""
 "Calculate and show the proportion (in %) of each cell's count of overall "
 "total count."
 msgstr ""
+"Рассчитать и показать пропорцию (в %) вклада каждой ячейки к совокупному "
+"общему итогу."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Method of computing p-value")
 #: rkward/plugins/analysis/crosstab.rkh:33
@@ -1316,6 +1343,8 @@ msgid ""
 "Various options controlling the look of the generated barplot(s). See <link "
 "href=\"rkward://component/barplot_embed\"/>"
 msgstr ""
+"Различные параметры, управляющие внешним видом созданных столбчатых "
+"графиков. Подробнее здесь: <link href=\"rkward://component/barplot_embed\"/>"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/analysis/crosstab.xml:24
@@ -1339,7 +1368,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.xml:27
 #, kde-format
 msgid "Draw Barplot"
-msgstr ""
+msgstr "Рисовать столбчатый график"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="...">
 #: rkward/plugins/analysis/crosstab.xml:33
@@ -1419,13 +1448,13 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.xml:52
 #, kde-format
 msgid "Barplot Options"
-msgstr ""
+msgstr "Параметры столбчатого графика"
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation)
 #: rkward/plugins/analysis/crosstab_multi.js:25
 #, kde-format
 msgid "Crosstabs (n to n)"
-msgstr ""
+msgstr "Таблицы сопряжённости (n к n)"
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <summary>
 #: rkward/plugins/analysis/crosstab_multi.rkh:8
@@ -1434,12 +1463,14 @@ msgid ""
 "Multiple crosstabulation where all the variables are crosstabulated with all "
 "the others."
 msgstr ""
+"Множественное перекрёстное табулирование, где все переменные перекрёстно "
+"табулируются со всеми остальными."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
 #, kde-format
 msgid "Choose one or more objects to be crosstabulated."
-msgstr ""
+msgstr "Выберите один или несколько объектов для перекрёстного табулирования."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
@@ -1492,7 +1523,7 @@ msgstr "Строчные переменные"
 #: rkward/plugins/analysis/moments/agostino_test.xml:11
 #, kde-format
 msgid "D'Agostino test of skewness"
-msgstr ""
+msgstr "Тест Д'Агостино на асимметрию"
 
 #. i18n: ectx: (Loaded from D'Agostino test of skewness) <summary>
 #: rkward/plugins/analysis/moments/agostino_test.rkh:8
@@ -1501,6 +1532,7 @@ msgid ""
 "This test performs the D'Agostino test for skewness in normally distributed "
 "data."
 msgstr ""
+"Выполняет тест Д'Агостино на асимметрию данных с нормальным распределением."
 
 #. i18n: ectx: (Loaded from D'Agostino test of skewness) <usage>
 #: rkward/plugins/analysis/moments/agostino_test.rkh:12
@@ -1532,6 +1564,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and can be "
 "of different length."
 msgstr ""
+"Выберите данные для вычисления. Векторы должны быть числовыми и могут иметь "
+"разную длину."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "Show Length and NAs")
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "Show Length and NAs")
@@ -1562,6 +1596,8 @@ msgid ""
 "Show the total length of the data, and the number of missing values (purely "
 "informational, does not affect the test)?"
 msgstr ""
+"Показать общую длину данных и количество пропущенных значений (исключительно "
+"в информационных целях, не влияет на тест)?"
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "Verbose alternative hypothesis")
 #. i18n: ectx: (Loaded from D'Agostino test of skewness) <settings> <setting> (refers to element labelled "Verbose alternative hypothesis")
@@ -1609,7 +1645,7 @@ msgstr "Гипотеза теста (H1)"
 #: rkward/plugins/analysis/time_series/kpss_test.xml:32
 #, kde-format
 msgid "Show Length and NAs"
-msgstr ""
+msgstr "Показать длину и недоступные значения"
 
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Options"> <checkbox label="...">
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="D'Agostino test of skewness"> <tab label="Options"> <checkbox label="...">
@@ -1651,7 +1687,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/bonett_test.xml:11
 #, kde-format
 msgid "Bonett-Seier test of Geary's kurtosis"
-msgstr ""
+msgstr "Тест Бонетта — Сейер на эксцесс Гири"
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <summary>
 #: rkward/plugins/analysis/moments/bonett_test.rkh:8
@@ -1660,6 +1696,8 @@ msgid ""
 "This test performs the Bonett-Seier test of Geary's measure of kurtosis for "
 "normally distributed data."
 msgstr ""
+"Выполняет тест Бонетта — Сейер на меру эксцесса по Гири для данных с "
+"нормальным распределением."
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <usage>
 #: rkward/plugins/analysis/moments/bonett_test.rkh:12
@@ -1669,25 +1707,28 @@ msgid ""
 "kurtosis for normally distributed data. You can choose multiple data. See "
 "<link href=\"rkward://rhelp/bonett.test\"/>."
 msgstr ""
+"Выберите данные для выполнения теста Бонетта — Сейер на меру эксцесса по "
+"Гири для данных с нормальным распределением. Можно выбрать несколько наборов "
+"данных. Подробнее здесь: <link href=\"rkward://rhelp/bonett.test\"/>."
 
 #. i18n: ectx: (Loaded from sample moment)
 #: rkward/plugins/analysis/moments/moment.js:9
 #, kde-format
 msgctxt "Statistical moment"
 msgid "Moment"
-msgstr ""
+msgstr "Момент"
 
 #. i18n: ectx: (Loaded from sample moment)
 #: rkward/plugins/analysis/moments/moment.js:14
 #, kde-format
 msgid "Statistical Moment"
-msgstr ""
+msgstr "Статистический момент"
 
 #. i18n: ectx: (Loaded from sample moment) <summary>
 #: rkward/plugins/analysis/moments/moment.rkh:8
 #, kde-format
 msgid "This test computes the sample moment of specified order."
-msgstr ""
+msgstr "Этот тест вычисляет выборочный момент указанного порядка."
 
 #. i18n: ectx: (Loaded from sample moment) <usage>
 #: rkward/plugins/analysis/moments/moment.rkh:12
@@ -1701,13 +1742,13 @@ msgstr ""
 #: rkward/plugins/analysis/moments/moment.rkh:20
 #, kde-format
 msgid "If checked, central moments are computed."
-msgstr ""
+msgstr "Если флажок установлен, вычисляются центральные моменты."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "compute absolute moments")
 #: rkward/plugins/analysis/moments/moment.rkh:21
 #, kde-format
 msgid "If checked, absolute moments are computed."
-msgstr ""
+msgstr "Если флажок установлен, вычисляются абсолютные моменты."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "remove missing values")
 #: rkward/plugins/analysis/moments/moment.rkh:22
@@ -1727,7 +1768,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/moment.xml:23
 #, kde-format
 msgid "Order"
-msgstr ""
+msgstr "Порядок"
 
 #. i18n: ectx: (sample moment) <dialog label="sample moment"> <tab label="Options"> <frame label="...">
 #: rkward/plugins/analysis/moments/moment.xml:24
@@ -1739,7 +1780,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/moment.xml:25
 #, kde-format
 msgid "compute central moments"
-msgstr ""
+msgstr "вычислить центральные моменты"
 
 #. i18n: ectx: (sample moment) <dialog label="sample moment"> <tab label="Options"> <frame label="specific test settings"> <checkbox label="...">
 #: rkward/plugins/analysis/moments/moment.xml:26
@@ -1775,7 +1816,7 @@ msgstr "дополнительные параметры"
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:29
 #, kde-format
 msgid "Skewness"
-msgstr ""
+msgstr "Асимметрия"
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis)
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="...">
@@ -1785,19 +1826,19 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:32
 #, kde-format
 msgid "Kurtosis"
-msgstr ""
+msgstr "Эксцесс"
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis)
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.js:18
 #, kde-format
 msgid "Excess Kurtosis"
-msgstr ""
+msgstr "Избыточный эксцесс"
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis)
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.js:21
 #, kde-format
 msgid "Geary Kurtosis"
-msgstr ""
+msgstr "Эксцесс Гири"
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <summary>
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:8
@@ -1806,6 +1847,8 @@ msgid ""
 "This computes the estimator of Pearson's measure of kurtosis, Geary's "
 "kurtosis and skewness of given data."
 msgstr ""
+"Вычисляет статистическую оценку меры эксцесса по Пирсону, эксцесс Гири и "
+"асимметрию указанных данных."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <usage>
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:12
@@ -1820,19 +1863,19 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:20
 #, kde-format
 msgid "If this option is chosen, Skewness will be computed."
-msgstr ""
+msgstr "Если выбран этот вариант, будет вычислена асимметрия."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Kurtosis")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:21
 #, kde-format
 msgid "If this option is chosen, Pearson's kurtosis will be computed."
-msgstr ""
+msgstr "Если выбран этот вариант, будет вычислен эксцесс Пирсона."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Geary's kurtosis")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:22
 #, kde-format
 msgid "If this option is chosen, Geary's kurtosis will be computed."
-msgstr ""
+msgstr "Если выбран этот вариант, будет вычислен эксцесс Гири."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:23
@@ -1846,7 +1889,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:12
 #, kde-format
 msgid "Select Variables"
-msgstr ""
+msgstr "Выбор переменных"
 
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="Geary's kurtosis"> <checkbox label="...">
@@ -1854,7 +1897,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:35
 #, kde-format
 msgid "Geary's kurtosis"
-msgstr ""
+msgstr "Эксцесс Гири"
 
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <checkbox label="...">
 #. i18n: ectx: (Find value with largest difference from the mean) <dialog label="Find value with largest difference from the mean"> <tab label="Options"> <frame label="additional settings"> <checkbox label="...">
@@ -1917,7 +1960,7 @@ msgstr "Тест хи-квадрат для выброса"
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:8
 #, kde-format
 msgid "This test performs a chisquared test for detection of one outlier."
-msgstr ""
+msgstr "Выполняет тест хи-квадрат на обнаружение одного выброса."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <usage>
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:12
@@ -1937,6 +1980,8 @@ msgid ""
 "of different length. For the calculation missing values are removed from the "
 "data."
 msgstr ""
+"Выберите данные для вычисления. Векторы должны быть числовыми и могут иметь "
+"разную длину. Для расчёта из данных удаляются отсутствующие значения."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "Opposite")
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:20
@@ -2030,7 +2075,8 @@ msgid ""
 "multiple vectors. See <link href=\"rkward://rhelp/dixon.test\"/>."
 msgstr ""
 "Выберите данные для выполнения теста Диксона на выброс. Можно выбрать "
-"несколько векторов. Смотрите <link href=\"rkward://rhelp/dixon.test\"/>."
+"несколько векторов. Подробнее здесь: <link href=\"rkward://rhelp/dixon.test"
+"\"/>."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:18
@@ -2493,6 +2539,8 @@ msgid ""
 "<link href=\"rkward://rhelp/pwr\"> Description of the R package \"pwr\", "
 "used to perform the power calculations. </link>"
 msgstr ""
+"<link href=\"rkward://rhelp/pwr\"> Описание пакета «pwr» R, используемого "
+"для выполнения расчётов мощности. </link>"
 
 #. i18n: ectx: (Power analysis) <about shortinfo="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:14
@@ -3265,7 +3313,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/kpss_test.js:18
 #, kde-format
 msgid "Length"
-msgstr ""
+msgstr "Длина"
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots)
 #: rkward/plugins/analysis/TESTS/PP_test.js:23
@@ -3723,21 +3771,21 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:113
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
-msgstr ""
+msgstr "Обработать эти подписи как текстовые (закавыченные) строки?"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:115
 #: rkward/plugins/analysis/time_series/hp_filter.xml:116
 #, kde-format
 msgid "interpret as string"
-msgstr ""
+msgstr "обработать как строку"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:23
 #, kde-format
 msgctxt "R code comment"
 msgid "remove NAs"
-msgstr ""
+msgstr "удалить недоступные значения"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:27
@@ -4124,6 +4172,10 @@ msgid ""
 "asymptomatic p-value is calculated if and only if you have less than 50 "
 "cases per group without binding when an exact test should be performed."
 msgstr ""
+"Следует ли вычислить точное p-значение? По умолчанию («Автоматически») "
+"асимптотическое p-значение рассчитывается в том и только том случае, когда "
+"на группу приходится менее 50 случаев, без привязки к выполнению "
+"перестановочного теста."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Allow ties")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:28
@@ -4131,6 +4183,8 @@ msgstr ""
 msgid ""
 "Check this option to compute an exact p-value even in the presence of ties."
 msgstr ""
+"Установите этот флажок для вычисления точного p-значения даже при наличии "
+"связей."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Apply continuity correction")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:29
@@ -4139,12 +4193,14 @@ msgid ""
 "If checked a continuity correction in the normal approximation for the p-"
 "value is applied."
 msgstr ""
+"Если флажок установлен, при нормальной аппроксимации p-значения применяется "
+"поправка на непрерывность."
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:14
 #, kde-format
 msgid "Wilcoxon/Mann-Whitney Test"
-msgstr ""
+msgstr "Тест Вилкоксона / Манна — Уитни"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <varslot label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:21
@@ -4294,7 +4350,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.js:61
 #, kde-format
 msgid "product"
-msgstr ""
+msgstr "произведение"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="Dispersion"> <checkbox label="...">
@@ -4316,7 +4372,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.js:71
 #, kde-format
 msgid "number of NAs"
-msgstr ""
+msgstr "количество недоступных значений"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:78
@@ -4348,6 +4404,8 @@ msgid ""
 "Each selected variable will be analysed independently of the others. NA "
 "values are excluded from the calculations."
 msgstr ""
+"Каждая выбранная переменная анализируется независимо от остальных. "
+"Недоступные значения исключаются из расчётов."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
@@ -4365,6 +4423,12 @@ msgid ""
 "any grouping). If specifying more than one grouping factor, separate splits "
 "will be performed for each combination of values of the grouping factors."
 msgstr ""
+"Выберите (необязательно) один или несколько факторов группировки для "
+"разделения каждого входного вектора. Факторы группировки должны иметь ту же "
+"длину, что и входные векторы (следовательно, все входные векторы должны быть "
+"одинаковой длины, если используется какая-либо группировка). Если указать "
+"более одного фактора группировки, для каждой комбинации значений факторов "
+"группировки будет выполняться отдельное разделение."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:24
@@ -4429,19 +4493,19 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:35
 #, kde-format
 msgid "Compute the range, i.e. lowest and highest value"
-msgstr ""
+msgstr "Вычислить диапазон, то есть самое низкое и самое высокое значения"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "sum")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:36
 #, kde-format
 msgid "Compute the sum of all values"
-msgstr ""
+msgstr "Вычислить сумму всех значений"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "prod")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:37
 #, kde-format
 msgid "Compute the product of all values"
-msgstr ""
+msgstr "Вычислить произведение всех значений"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Length and NAs")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:38
@@ -4449,6 +4513,8 @@ msgstr ""
 msgid ""
 "Count the total number of values, and the number of missing values (NAs)"
 msgstr ""
+"Посчитать общее количество значений и количество отсутствующих значений "
+"(недоступных значений)"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:20
@@ -4592,7 +4658,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.xml:59
 #, kde-format
 msgid "Range, Sum, Product and Length"
-msgstr ""
+msgstr "Диапазон, сумма, произведение и длина"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:63
@@ -4618,7 +4684,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:44
 #, kde-format
 msgid "Length and NAs"
-msgstr ""
+msgstr "Длина и недоступные значения"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot)
 #: rkward/plugins/plots/cor_graph.js:56
