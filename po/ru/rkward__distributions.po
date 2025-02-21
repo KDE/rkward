@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2025-02-12 12:33+0300\n"
+"PO-Revision-Date: 2025-02-20 12:42+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1192,7 +1192,7 @@ msgstr ""
 "вычитания среднего, E(D), D и деления на стандартное отклонение, S(D)/"
 "sqrt(nAvg), где S(D) является стандартным отклонением D? Если да, то целевое "
 "нормальное распределение считается стандартным, то есть со средним 0 и "
-"вариантностью 1. Если нет, то целевое распределение является нормальным со "
+"дисперсией 1. Если нет, то целевое распределение является нормальным со "
 "средним E(D) и стандартным отклонением S(D)/sqrt(nAvg)."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Draw normal curve")
@@ -2171,7 +2171,7 @@ msgid ""
 "to be greater than 4."
 msgstr ""
 "Смотрите следующий раздел справки RKWard: <link href=\"rkward://component/"
-"plot_f_distribution\"/>. Для существования вариантности параметр «Степени "
+"plot_f_distribution\"/>. Для существования дисперсии параметр «Степени "
 "свободы знаменателя» должен быть больше 4."
 
 #. i18n: ectx: (Central Limit Theorem: F to Normal) <snippets> <snippet> <frame label="...">
@@ -2476,7 +2476,7 @@ msgstr "Целевое количество успешных испытаний"
 #: rkward/plugins/distributions/clt/plot_negbinomial_clt.xml:14
 #, kde-format
 msgid "Dispersion"
-msgstr "Дисперсия"
+msgstr "Разброс"
 
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> [...] <radio label="Type of Parametrization"> <option label="...">
 #. i18n: ectx: (Central Limit Theorem: Negative Binomial to Normal) <snippets> <snippet> <frame label="Negative Binomial Parameters"> <spinbox label="...">
@@ -2592,7 +2592,7 @@ msgid ""
 "greater than 2."
 msgstr ""
 "Смотрите следующий раздел справки RKWard: <link href=\"rkward://component/"
-"plot_t_distribution\"/>. Для существования вариантности параметр «Степени "
+"plot_t_distribution\"/>. Для существования дисперсии параметр «Степени "
 "свободы» должен быть больше 2."
 
 #. i18n: ectx: (Central Limit Theorem: t to Normal) <snippets> <snippet> <frame label="...">
@@ -2852,8 +2852,8 @@ msgid ""
 "Alternatively, leave this empty to use the setting above, instead."
 msgstr ""
 "При расчёте плотностей или вероятностей укажите один или несколько "
-"квантилей. Альтернативный вариант — не указывать значение этого параметра, "
-"чтобы использовать параметр выше вместо него."
+"квантилей. Альтернативный вариант — не указывать значение этого параметра "
+"(тогда вместо него будет использован параметр выше)."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Number of probabilities")
@@ -5058,7 +5058,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:30
 #, kde-format
 msgid "Dispersion (Size)"
-msgstr "Дисперсия (размер)"
+msgstr "Разброс (размер)"
 
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:34
@@ -5466,7 +5466,7 @@ msgid ""
 "and tests against the null hypothesis of normality."
 msgstr ""
 "Этот модуль рассчитывает статистику хи-квадрат Харке — Бера для переменной x "
-"и проверяет её по нулевой гипотезе нормальности."
+"и выполняет проверку на соответствие нулевой гипотезе о нормальности."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <usage>
 #: rkward/plugins/distributions/tests/jb_test.rkh:12
