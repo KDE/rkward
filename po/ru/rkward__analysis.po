@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2025-02-26 17:19+0300\n"
+"PO-Revision-Date: 2025-02-27 17:18+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1225,7 +1225,7 @@ msgstr "Столбчатый график для таблиц сопряжённ
 #, kde-format
 msgctxt "dependent variable"
 msgid "Dependent"
-msgstr "Зависимая переменая"
+msgstr "Зависимая переменная"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:111
@@ -2747,7 +2747,7 @@ msgstr "Тесты пропорций"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:114
 #, kde-format
 msgid "Mean of a normal distribution (known variance)"
-msgstr ""
+msgstr "Среднее нормального распределения (известная дисперсия)"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:116
@@ -2932,7 +2932,7 @@ msgstr "Степени свободы числителя"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
 #, kde-format
 msgid "df <sub> num </sub> : k &minus; 1"
-msgstr ""
+msgstr "df <sub> num </sub> : k &minus; 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2944,7 +2944,7 @@ msgstr "Степени свободы знаменателя"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
 #, kde-format
 msgid "df <sub> den </sub> : N &minus; k"
-msgstr ""
+msgstr "df <sub> den </sub> : N &minus; k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185
@@ -3083,7 +3083,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.rkh:20
 #, kde-format
 msgid "Should an intercept term be included in the model?"
-msgstr ""
+msgstr "Следует ли включить в модель свободный член?"
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Show standardized coefficients")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:21
@@ -3099,7 +3099,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.rkh:22
 #, kde-format
 msgid "Show an analysis of variance table."
-msgstr ""
+msgstr "Показать анализ таблицы дисперсии."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Save full fitted model")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:24
@@ -3147,7 +3147,7 @@ msgstr "независимые переменные"
 #: rkward/plugins/analysis/regression/linear_regression.xml:18
 #, kde-format
 msgid "Include intercept"
-msgstr ""
+msgstr "Включить свободный член"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Model"> <checkbox label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:19
@@ -3434,7 +3434,7 @@ msgstr "Первая выборка. Векторы должны быть чис
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:18
 #, kde-format
 msgid "Second sample. The vectors need to be numeric."
-msgstr ""
+msgstr "Вторая выборка. Векторы должны быть числовыми."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:19
@@ -3554,7 +3554,7 @@ msgid ""
 "This test computes Box-Pierce or Ljung-Box test statistic for examining the "
 "null hypothesis of independence in a given time series."
 msgstr ""
-"Вычисляет тестовую статистику Бокса — Пирса или Льюнга — Бокса для изучения "
+"Вычисляет статистику теста Бокса — Пирса или Льюнга — Бокса для изучения "
 "нулевой гипотезы о независимости в указанном временном ряду."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <usage>
@@ -3664,6 +3664,9 @@ msgid ""
 "relation with the original series provided so as to give a graphic view of "
 "the filtering operation."
 msgstr ""
+"Этот модуль позволяет не только получать объекты результирующих рядов, но и "
+"строить их графики относительно исходного ряда для графического "
+"представления операции фильтрации."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Variable:")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:20
@@ -3707,6 +3710,12 @@ msgid ""
 "original series to avoid overwriting other variables' trend/cycle (i.e. "
 "\"myseries.hptrend\").</i>"
 msgstr ""
+"Выберите, какой результирующий ряд следует создать в рабочей области. По "
+"умолчанию создаётся тренд исходного ряда. Введите любое название для "
+"использования в качестве идентификатора ряда. По умолчанию это будет <i>hp</"
+"i> с добавлением <i>trend</i> и/или <i>cycle</i>. <i>Совет: можно добавить "
+"название исходного ряда, чтобы предотвратить перезапись тренда или цикла "
+"других переменных (то есть «myseries.hptrend»).</i>"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Plot Cycle")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:25
@@ -3723,6 +3732,8 @@ msgid ""
 "Here you can adjust the line width, type and colour of each series on the "
 "plot. (Default: blue series, red trend and dark green cycle)"
 msgstr ""
+"Здесь можно настроить ширину линии, тип и цвет каждого ряда на графике. (По "
+"умолчанию: синий ряд, красный тренд, тёмно-зелёный цикл)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Original series and trend Y axis label")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:28
@@ -3732,7 +3743,7 @@ msgid ""
 "If empty, the default label is the name of the original series plus <i>, "
 "Trend</i>."
 msgstr ""
-"Здесь можно указать текст подписи оси Y графика тренда (сверху) Если ничего "
+"Здесь можно указать текст подписи оси Y графика тренда (сверху). Если ничего "
 "не указано, подписью по умолчанию будет имя исходного ряда плюс <i>, Тренд</"
 "i>."
 
@@ -3754,6 +3765,9 @@ msgid ""
 "Enable or disable the labels being evaluated as literal (quoted) strings. To "
 "achieve a line-break (in a quoted string), enter '\\n'. (Default: YES)"
 msgstr ""
+"Включить или отключить обработку подписей как текстовых (закавыченных) "
+"строк. Чтобы добавить разрыв строки (в закавыченной строке), введите «\\n». "
+"(По умолчанию: ДА)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
@@ -3795,7 +3809,7 @@ msgstr "Пользовательское значение"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:51
 #, kde-format
 msgid "Output series"
-msgstr ""
+msgstr "Выходной ряд"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="Output series"> <saveobject label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:52
@@ -3807,7 +3821,7 @@ msgstr "Сохранить тренд"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:53
 #, kde-format
 msgid "Save cycle"
-msgstr ""
+msgstr "Сохранить цикл"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:60
@@ -3819,7 +3833,7 @@ msgstr "Параметры графика"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:61
 #, kde-format
 msgid "Plot Cycle"
-msgstr ""
+msgstr "Построить график цикла"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:62
@@ -3921,25 +3935,25 @@ msgstr "Тренд"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:92
 #, kde-format
 msgid "Cycle"
-msgstr ""
+msgstr "Цикл"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:108
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr ""
+msgstr "Подписи (оставьте пустым для использования значения по умолчанию)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:110
 #, kde-format
 msgid "Original series and trend Y axis label"
-msgstr ""
+msgstr "Подпись оси Y исходного ряда и тренда"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:111
 #, kde-format
 msgid "Cycle Y axis label"
-msgstr ""
+msgstr "Подписи оси Y цикла"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/analysis/time_series/hp_filter.xml:113
@@ -4008,6 +4022,8 @@ msgid ""
 "Indicates the null hypothesis and must be one of \"Level\" (default) or "
 "\"Trend\"."
 msgstr ""
+"Обозначает нулевую гипотезу. Можно выбрать один из следующих вариантов: "
+"«Уровень» (по умолчанию) или «Тренд»."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "version of truncation lag parameter")
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:20
@@ -4029,7 +4045,7 @@ msgstr "нулевая гипотеза"
 #: rkward/plugins/analysis/time_series/kpss_test.xml:19
 #, kde-format
 msgid "Level"
-msgstr ""
+msgstr "Уровень"
 
 #. i18n: ectx: (Loaded from Bartlett Test of Homogeneity of Variances)
 #: rkward/plugins/analysis/variances/bartlett_test.js:24
@@ -4062,6 +4078,8 @@ msgid ""
 "The samples to be checked for equal variance. The vectors need to be "
 "numeric, but don't need to have the same length."
 msgstr ""
+"Выборки для проверки на равенство дисперсий. Векторы должны быть числовыми, "
+"но могут быть разной длины."
 
 #. i18n: ectx: (Bartlett Test of Homogeneity of Variances) <dialog label="...">
 #: rkward/plugins/analysis/variances/bartlett_test.xml:11
@@ -4129,13 +4147,13 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.rkh:18
 #, kde-format
 msgid "First sample (numeric vector)."
-msgstr ""
+msgstr "Первая выборка (числовой вектор)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "against")
 #: rkward/plugins/analysis/variances/F_test.rkh:19
 #, kde-format
 msgid "Second sample (numeric vector)."
-msgstr ""
+msgstr "Вторая выборка (числовой вектор)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/variances/F_test.rkh:20
@@ -4179,7 +4197,7 @@ msgstr "Доверительный уровень"
 #: rkward/plugins/analysis/variances/fligner_test.js:24
 #, kde-format
 msgid "Fligner-Killeen:med X^2 test statistic"
-msgstr ""
+msgstr "Статистика теста Флигнера — Киллина: med X^2"
 
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances) <summary>
 #: rkward/plugins/analysis/variances/fligner_test.rkh:8
@@ -4243,6 +4261,9 @@ msgid ""
 "Honor of Harold Hotelling, I. Olkin et al. eds., Stanford University Press, "
 "pp. 278-292."
 msgstr ""
+"Levene, H. (1960). In Contributions to Probability and Statistics: Essays in "
+"Honor of Harold Hotelling, I. Olkin et al. eds., Stanford University Press, "
+"pp. 278-292."
 
 #. i18n: ectx: (Levene's Test) <dialog label="Levene's Test"> <varslot label="...">
 #: rkward/plugins/analysis/variances/levene_test.xml:15
@@ -4418,7 +4439,7 @@ msgstr "сравнить с (необязательно)"
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:25
 #, kde-format
 msgid "First is less"
-msgstr ""
+msgstr "Первое — меньше"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Basic settings"> <checkbox label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:27
@@ -4468,7 +4489,7 @@ msgstr "Разрешить связи"
 #, kde-format
 msgctxt "R code comment"
 msgid "Split each input variable by grouping factor(s)"
-msgstr ""
+msgstr "Разделить каждую входную переменную по факторам группировки"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:20
@@ -4490,6 +4511,8 @@ msgctxt "R code comment"
 msgid ""
 "we wrap each single call in a \"try\" statement to always continue on errors."
 msgstr ""
+"каждый отдельный вызов оборачивается инструкцией «try», чтобы программа "
+"всегда продолжала работу при появлении ошибок"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:30
@@ -4503,7 +4526,7 @@ msgstr "среднее"
 #: rkward/plugins/uni1.2/code.js:25
 #, kde-format
 msgid "geometric mean"
-msgstr ""
+msgstr "геометрическое среднее"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Loaded from Descriptive Statistics)
@@ -4519,25 +4542,25 @@ msgstr "межквантильное среднее"
 #: rkward/plugins/uni1.2/code.js:33
 #, kde-format
 msgid "harmonic mean"
-msgstr ""
+msgstr "гармоническое среднее"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:45
 #, kde-format
 msgid "median"
-msgstr ""
+msgstr "медиана"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:50
 #, kde-format
 msgid "min"
-msgstr ""
+msgstr "мин."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:51
 #, kde-format
 msgid "max"
-msgstr ""
+msgstr "макс."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:55
@@ -4550,7 +4573,7 @@ msgstr "стандартное отклонение"
 #, kde-format
 msgctxt "noun"
 msgid "sum"
-msgstr ""
+msgstr "сумма"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:61
@@ -4623,7 +4646,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
 #, kde-format
 msgid "Select one or more numeric vectors to analyse"
-msgstr ""
+msgstr "Выберите один или несколько числовых векторов для анализа"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "group by:")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:22
@@ -4646,7 +4669,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:24
 #, kde-format
 msgid "Should the mean value be computed?"
-msgstr ""
+msgstr "Следует ли вычислить значение среднего?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Trim of mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:25
@@ -4659,7 +4682,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:26
 #, kde-format
 msgid "Should the geometric mean value be computed?"
-msgstr ""
+msgstr "Следует ли вычислить значение геометрического среднего?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Interquantile mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:27
@@ -4988,7 +5011,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.rkh:22
 #, kde-format
 msgid "Select how many digits after decimal point should be shown"
-msgstr ""
+msgstr "Выберите, сколько цифр после десятичной точки следует показывать"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Scale text")
 #: rkward/plugins/plots/cor_graph.rkh:23
@@ -5020,7 +5043,7 @@ msgstr "Пирсона"
 #: rkward/plugins/plots/cor_graph.xml:25
 #, kde-format
 msgid "Kendall"
-msgstr ""
+msgstr "Кендалла"
 
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/plots/cor_graph.xml:26
@@ -5032,14 +5055,14 @@ msgstr "Спирмена"
 #: rkward/plugins/plots/cor_graph.xml:32
 #, kde-format
 msgid "Precision (digits)"
-msgstr ""
+msgstr "Точность (цифры)"
 
 #. i18n: i18n: Should text be scaled?
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/plots/cor_graph.xml:33
 #, kde-format
 msgid "Scale text"
-msgstr ""
+msgstr "Масштабировать текст"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
@@ -5154,7 +5177,7 @@ msgstr "сохранить результаты"
 #: rkward/plugins/uni1.2/code.js:103
 #, kde-format
 msgid "Univariate statistics"
-msgstr ""
+msgstr "Одномерная статистика"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #: rkward/plugins/uni1.2/code.js:105
@@ -5323,7 +5346,7 @@ msgstr "M-оценка Хубера (требуется библиотека MAS
 #: rkward/plugins/uni1.2/description.xml:99
 #, kde-format
 msgid "Winsorize at 'k' sd"
-msgstr ""
+msgstr "Винзоризировать по «k» станд. откл."
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Robust statistics"> <frame label="M-Estimator"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:103
