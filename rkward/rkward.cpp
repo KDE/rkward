@@ -116,8 +116,6 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	RK_TRACE(APP);
 	RK_ASSERT(rkward_mainwin == nullptr);
 
-	Q_INIT_RESOURCE(resources);
-	Q_INIT_RESOURCE(icons);
 	testmode_suppress_dialogs = false;
 	gui_rebuild_locked = true;
 	no_ask_save = true;
@@ -130,6 +128,10 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 
 	///////////////////////////////////////////////////////////////////
 	// call inits to invoke all other construction parts
+	Q_INIT_RESOURCE(resources);
+	Q_INIT_RESOURCE(icons);
+	RKStandardIcons::initIcons();
+	QApplication::setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
 	initActions();
 
 	new RKWorkplace (this);
