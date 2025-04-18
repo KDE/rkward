@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<about
 		name="Plugins under development"
 		shortinfo="Plugins that are under development, experimental, or meant for testing, only. Part of the official RKWard distribution"
-		version="0.8.1"
+		version="0.8.2"
 		license="GPL"
 		url="https://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>
