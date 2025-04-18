@@ -402,7 +402,7 @@ private Q_SLOTS:
 
 	void priorityCommandTest() {
 		bool priority_command_done = false;
-		runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+		runCommandAsync(new RCommand("cat(\"sleeping\n\"); Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
 			QVERIFY(priority_command_done);
 			QVERIFY(command->failed());
 			QVERIFY(command->wasCanceled());
@@ -413,7 +413,7 @@ private Q_SLOTS:
 			RInterface::instance()->cancelAll();
 		});
 		waitForAllFinished();
-		waitForAllFinished(4000);  // priority_command_done must remain in scope until done (even if interrupting fails for some reason)
+		waitForAllFinished(5000);  // priority_command_done must remain in scope until done (even if interrupting fails for some reason)
 	}
 
 	void RKConsoleHistoryTest() {
