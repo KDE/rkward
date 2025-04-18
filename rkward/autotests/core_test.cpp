@@ -70,17 +70,19 @@ class RKWardCoreTest: public QObject {
 	Q_OBJECT
 
 	void runCommandWithTimeout(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback, int timeoutms = 1000) {
+		static int done;
 		QString ccopy = command->command();
+		auto command_id = command->id();
 		QElapsedTimer t;
 		t.start();
-		bool done = false;
-		bool *_done = &done;
-		connect(command->notifier(), &RCommandNotifier::commandFinished, this, [_done, callback](RCommand *command) { *_done = true; callback(command); });
+		done = -1;
+		int *_done = &done;
+		connect(command->notifier(), &RCommandNotifier::commandFinished, this, [_done, command_id, callback](RCommand *command) { *_done = command_id; callback(command); });
 		RInterface::issueCommand(command, chain);
-		while (!done && (t.elapsed() < timeoutms)) {
+		while ((done != command_id) && (t.elapsed() < timeoutms)) {
 			qApp->processEvents(QEventLoop::AllEvents, 500);
 		}
-		if (!done) {
+		if (done != command_id) {
 			testLog("Command timed out: %s", qPrintable(ccopy));
 			QFAIL("Command timed out");
 		}
@@ -402,18 +404,21 @@ private Q_SLOTS:
 
 	void priorityCommandTest() {
 		bool priority_command_done = false;
-		runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+		runCommandAsync(new RCommand("\ncat(\"sleeping\\n\"); Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
 			QVERIFY(priority_command_done);
 			QVERIFY(command->failed());
 			QVERIFY(command->wasCanceled());
 		});
-		auto priority_command = new RCommand("cat(\"something\\n\")", RCommand::PriorityCommand | RCommand::App);
+		auto priority_command = new RCommand("cat(\"priority\\n\")", RCommand::PriorityCommand | RCommand::App);
 		runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
 			priority_command_done = true;
 			RInterface::instance()->cancelAll();
 		});
-		waitForAllFinished();
-		waitForAllFinished(4000);  // priority_command_done must remain in scope until done (even if interrupting fails for some reason)
+		// NOTE: The above two commands may or may not run in that order. Conceivably, the priority command gets handled, before the initial sleep command even started.
+		//       The newline in the first command actually makes it a bit more likely for the priority command to go first (because parsing needs more iterations).
+		//       We try to step on that interesting corner case, deliberately, at is has been causing failures in the past.
+		waitForAllFinished();      // first wait with a short timeout: sleep should have been cancelled
+		waitForAllFinished(5000);  // fallbacck: priority_command_done must remain in scope until done (even if interrupting fails for some reason)
 	}
 
 	void RKConsoleHistoryTest() {

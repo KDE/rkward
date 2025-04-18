@@ -164,9 +164,11 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 		RKRBackend::repl_status.user_command_completely_transmitted = true;
 	}
 	buf[++pos] = '\0';
+	RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
 
 	if (reached_newline || reached_eof) {
 		// Making this request synchronous is a bit painful. However, without this, it's extremely difficult to get correct interleaving of output and command lines
+		RKRSupport::InterruptSuspension susp; // This could also result in interrupts, in corner cases, so lets suspend those, for the minute
 		RBackendRequest req (true, RBackendRequest::CommandLineIn);
 		req.params["commandid"] = RKRBackend::this_pointer->current_command->id;
 		RKRBackend::this_pointer->handleRequest (&req);
@@ -224,7 +226,6 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					RKRBackend::repl_status.user_command_successful_up_to = 0;
 					RKRBackend::repl_status.user_command_buffer = RKTextCodec::toNative(command->command);
 					RKTransmitNextUserCommandChunk (buf, buflen);
-					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
 					return 1;
 				}
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
