@@ -1,6 +1,6 @@
 --- Version 0.8.2 - UNRELEASED
 
---- Version 0.8.2 - Apr-21-2025
+--- Version 0.8.1 - Apr-21-2025
 - Added: Allow to register custom R functions in the menu (rk.menu())
 - Added: Plugin to facilitate download of latest AppImage (Linux only)
 - Added: Allow to limit plugins to certain platforms
