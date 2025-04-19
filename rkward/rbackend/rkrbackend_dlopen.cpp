@@ -60,12 +60,16 @@ auto loadlib(const char* name) {
 }
 
 #if !(defined(Win32) || defined(__APPLE__))
+// some systems appear to lack symlinks, so we try several names for some libs
+auto loadLibWithAltNames(const char *name1, const char* name2, int flags) {
+	auto ret = dlopen(name1, flags);
+	if (ret) return ret;
+	return dlopen(name2, flags);
+}
+
 auto loadGlib(unsigned int *version) {
 	*version = 0;
-	auto glib = dlopen("libglib-2.0.so", RTLD_LAZY | RTLD_LOCAL);
-	if (!glib) {
-		glib = dlopen("libglib-2.0.so.0", RTLD_LAZY | RTLD_LOCAL); // some systems appear to lack the link
-	}
+	auto glib = loadLibWithAltNames("libglib-2.0.so", "libglib-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
 	if (glib) {
 		dlerror();
 		auto glib_verp = static_cast<unsigned int *>(resolve_symb(glib, "glib_minor_version")); // Major version is always "2"
@@ -91,11 +95,10 @@ void preloadBetterGlib(const char *cd_to) {
 	}
 	auto glib2 = loadGlib(&glib2_ver);
 	if (glib1_ver < glib2_ver) {
-		// For good measure, we'll also load the matching libgobject lib, if present).
-		// (libgobject links against libglib, but does not provide runtime version information!)
-		if (!dlopen("libgobject-2.0.so", RTLD_LAZY | RTLD_LOCAL)) {
-			dlopen("libgobject-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
-		}
+		// For good measure, we'll also try loading some matching glibs, if present, assuming, they'll be of a matching version.
+		// (libgobject and friends link against libglib, but do not provide runtime version information!)
+		loadLibWithAltNames("libgobject-2.0.so", "libgobject-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
+		loadLibWithAltNames("libgio-2.0.so", "libgio-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
 	}
 	std::filesystem::current_path(cd);
 
@@ -103,9 +106,8 @@ void preloadBetterGlib(const char *cd_to) {
 		dlclose(glib2);
 		loadGlib(&glib1_ver);
 		// see above
-		if (!dlopen("libgobject-2.0.so", RTLD_LAZY | RTLD_LOCAL)) {
-			dlopen("libgobject-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
-		}
+		loadLibWithAltNames("libgobject-2.0.so", "libgobject-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
+		loadLibWithAltNames("libgio-2.0.so", "libgio-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
 	}
 }
 #endif
