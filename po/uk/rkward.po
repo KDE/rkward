@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-04 00:37+0000\n"
+"POT-Creation-Date: 2025-04-19 00:38+0000\n"
 "PO-Revision-Date: 2024-08-09 09:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -2075,8 +2075,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Графічна оболонка до мови статистичних обчислень R"
 
 #: rkward/main.cpp:174
-#, kde-format
-msgid "(c) 2002 - 2024"
+#, fuzzy, kde-format
+#| msgid "(c) 2002 - 2024"
+msgid "(c) 2002 - 2025"
 msgstr "© 2002–2024"
 
 #: rkward/main.cpp:175
@@ -3895,12 +3896,12 @@ msgstr "Не вдалося запустити процес модуля. Код
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Процес модуля завершив роботу з кодом %1, повідомлення: «%2»."
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:499
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "Роботу рушія R було завершено з таким повідомленням щодо стану: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:520
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3909,17 +3910,17 @@ msgstr ""
 "У рушії R сталася критична помилка:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:690
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Повідомлення від основного модуля R"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:698
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Запитання від основного модуля R"
 
-#: rkward/rbackend/rkrbackend.cpp:1598
+#: rkward/rbackend/rkrbackend.cpp:1599
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3941,7 +3942,7 @@ msgstr ""
 "Довідкові матеріали, які допоможуть в усуванні негараздів, можна знайти <a "
 "href=\"https://rkward.kde.org/compiling\">тут</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1602
+#: rkward/rbackend/rkrbackend.cpp:1603
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3957,12 +3958,12 @@ msgstr ""
 "негараздів, можна знайти <a href=\"https://rkward.kde.org/compiling\">тут</"
 "a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Невідповідність версії графіки"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3973,7 +3974,7 @@ msgstr ""
 "збирання програми.<br><a href=\"rkward://page/rkward_incompatible_version"
 "\">Додаткові відомості</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid "Ok"
 msgstr "Гаразд"
