@@ -99,6 +99,7 @@ void preloadBetterGlib(const char *cd_to) {
 		// (libgobject and friends link against libglib, but do not provide runtime version information!)
 		loadLibWithAltNames("libgobject-2.0.so", "libgobject-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
 		loadLibWithAltNames("libgio-2.0.so", "libgio-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
+		// NOTE: libgmodule is a dependency of libgio, already
 	}
 	std::filesystem::current_path(cd);
 

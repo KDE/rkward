@@ -419,6 +419,8 @@ private Q_SLOTS:
 		//       We try to step on that interesting corner case, deliberately, at is has been causing failures in the past.
 		waitForAllFinished();      // first wait with a short timeout: sleep should have been cancelled
 		waitForAllFinished(5000);  // fallbacck: priority_command_done must remain in scope until done (even if interrupting fails for some reason)
+		// TODO: This test is still failing, occasionally, possibly, because the user command has not even been added to all_current_commands, yet
+		//       (event processing in RKRBackend::handleRequest2())
 	}
 
 	void RKConsoleHistoryTest() {
