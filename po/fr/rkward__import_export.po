@@ -1,10 +1,10 @@
-# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__import_export\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:36+0000\n"
-"PO-Revision-Date: 2024-09-03 21:05+0200\n"
+"PO-Revision-Date: 2025-04-16 14:46+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -854,7 +854,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.xml:111
 #, kde-format
 msgid "read.table() default (whitespace separated values)"
-msgstr "Par défaut read.table() (Valeurs séparées par des espaces)"
+msgstr "Par défaut « read.table() » (Valeurs séparées par des espaces)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -1298,8 +1298,9 @@ msgid ""
 "Select the data file to import. An R object containing the data will be "
 "created. This will usually be a data.frame, or a list."
 msgstr ""
-"Sélectionnez le fichier de données à importer. Un objet R contenant les "
-"données sera créé. Ceci est en général un objet « data.frame » ou une liste."
+"Veuillez sélectionner le fichier de données à importer. Un objet R contenant "
+"les données sera créé. Ceci est en général un objet « data.frame » ou une "
+"liste."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Edit Object")
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Edit Object")
@@ -3011,8 +3012,8 @@ msgid ""
 "<link href=\"rkward://rhelp/write.table\"> R manual page for write.table(), "
 "which is called by this plugin. </link>"
 msgstr ""
-"<link href=\"rkward://rhelp/write.table\"> Page de manuel R pour « write."
-"table() », appelé par ce module externe. </link>"
+"<link href=\"rkward://rhelp/write.table\"> Page de manuel R pour la fonction "
+"« write.table() », appelée par ce module externe. </link>"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:51
