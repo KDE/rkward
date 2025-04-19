@@ -90,11 +90,21 @@ void preloadBetterGlib(const char *cd_to) {
 		std::filesystem::current_path(cd_to);
 	}
 	auto glib2 = loadGlib(&glib2_ver);
+	if (glib1_ver < glib2_ver) {
+		// For good measure, we'll also load the matching libgobject lib, if present). (libgobject links against libglib, but not vice-versa)
+		if (!dlopen("libgobject-2.0.so", RTLD_LAZY | RTLD_LOCAL)) {
+			dlopen("libgobject-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
+		}
+	}
 	std::filesystem::current_path(cd);
 
 	if (glib1_ver >= glib2_ver) {
 		dlclose(glib2);
 		loadGlib(&glib1_ver);
+		// see above
+		if (!dlopen("libgobject-2.0.so", RTLD_LAZY | RTLD_LOCAL)) {
+			dlopen("libgobject-2.0.so.0", RTLD_LAZY | RTLD_LOCAL);
+		}
 	}
 }
 #endif
