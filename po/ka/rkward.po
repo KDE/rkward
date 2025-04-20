@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:38+0000\n"
-"PO-Revision-Date: 2024-09-06 10:17+0200\n"
+"PO-Revision-Date: 2025-04-19 04:05+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1997,10 +1997,9 @@ msgid "Frontend to the R statistics language"
 msgstr "წინაბოლო სტატისტიკის ენა R-ისთვის"
 
 #: rkward/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "(c) 2002 - 2024"
+msgstr "(c) 2002 - 2025"
 
 #: rkward/main.cpp:175
 #, kde-format
