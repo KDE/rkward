@@ -6,9 +6,9 @@
 #
 
 ## begin: These may need adjusting!
-## sse http://www.releases.ubuntu.com/ for the up-to-date list
-TARGETS="jammy focal bionic"
-AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
+## see http://www.releases.ubuntu.com/ for the up-to-date list
+TARGETS="oracular plucky"
+AUTHOR="Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>"
 ## end: These may need adjusting!
 
 cd `dirname $0`/..
@@ -18,20 +18,17 @@ mkdir $PPATEMPDIR
 
 if [ ! -d "$BASEDIR/debian" ]; then
 	git clone https://invent.kde.org/tfry/rkward-ppa-support.git debian
+	cd debian
 else
 	cd debian
 	git pull
-	cd ..
 fi
+git checkout kf6
+cd ..
 
-if [ "${1}" == "--stable" ]; then
-	shift
-	PPAIDS="rkward-stable rkward-stable-cran rkward-stable-backports-cran"
-	PPAVERSIONSTRING=".1rkward.stable"
-else
-	PPAIDS="rkward-devel rkward-devel-cran"
-	PPAVERSIONSTRING=".0rkward.devel"
-fi
+
+PPAIDS="rkward-stable rkward-stable-cran rkward-stable-backports-cran"
+PPAVERSIONSTRING=".1rkward.stable"
 VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 
 if [ ! -f "${BASEDIR}/rkward-$VERSION.tar.gz" ]; then
