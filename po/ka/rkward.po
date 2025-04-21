@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:38+0000\n"
-"PO-Revision-Date: 2025-04-19 04:05+0200\n"
+"PO-Revision-Date: 2025-04-20 04:12+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -6799,6 +6799,9 @@ msgid ""
 "regularly, you may want to adjust the default graphics window size in "
 "Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
+"მიმდინარე ფანჯარა, როგორც ჩანს, მეტისმეტად დიდია ეკრანზე დასატევად. თუ ეს "
+"ხშირად ხდება, შეიძლება, ნაგულისხმევი გრაფიკის ფანჯრის ზომის მორგება სჯობს, "
+"მენიუდან მორგება->RKWard-ის მორგება->ეკრანის გრაფიკა."
 
 #: rkward/windows/rkwindowcatcher.cpp:370
 #, kde-format
@@ -6823,6 +6826,11 @@ msgid ""
 "close the graphics device immediately, in case it is stuck. However, the "
 "last plot may be missing from the plot history, if you do this.</p>"
 msgstr ""
+"<p>მიმდინარეობს გრაფიკული მოწყობილობის დახურვა და ბოლო გრაფიკის შენახვა "
+"გრაფიკების ისტორიაში. ამას საკმაო დრო შეიძლება, დასჭირდეს, თუ R-ის უკანაბოლო "
+"ჯერ დაკავებულია. შეგიძლიათ, გრაფიკული მოწყობილობა დაუყოვნებლივ დახუროთ, თუ "
+"ის გაჭედილია. მაგრამ გახსოვდეთ, თუ ამას იზამთ, ბოლო გრაფიკი ისტორაში არ "
+"იქნება.</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:404
 #, kde-format
@@ -6830,6 +6838,8 @@ msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
 "close it manually in this case.</p>"
 msgstr ""
+"<p>შენიშვნა: X11-ზე ჩაშენებული ფანჯრები შეიძლება, გაიჭედოს. დახურეთ ისინი "
+"ხელით, თუ ეს მოხდა.</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
@@ -7057,6 +7067,9 @@ msgid ""
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
+"URL, რომლის გახსნასაც ცდილობთ, ('%1') ლოკალური ფაილი არაა, ან ფაილის ტიპი "
+"RKWard-ის მიერ მხარდაჭერილი არაა. გნებავთ, გახსნათ URL ნაგულისხმევ "
+"აპლიკაციაში?"
 
 #: rkward/windows/rkworkplace.cpp:443
 #, kde-format
