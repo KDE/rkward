@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-04 00:37+0000\n"
-"PO-Revision-Date: 2024-08-09 07:15+0200\n"
+"POT-Creation-Date: 2025-04-21 02:30+0000\n"
+"PO-Revision-Date: 2024-07-15 07:04+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -2041,8 +2041,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Začelje za statistični jezik R"
 
 #: rkward/main.cpp:174
-#, kde-format
-msgid "(c) 2002 - 2024"
+#, fuzzy, kde-format
+#| msgid "(c) 2002 - 2024"
+msgid "(c) 2002 - 2025"
 msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:175
@@ -2790,13 +2791,16 @@ msgid "Unhandled output command '%1'"
 msgstr "Neobdelan izhodni ukaz '%1'"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "There has been an error while trying to load / unload packages. See "
+#| "transcript below for details"
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"<b>Pri poskusu nalaganja/odlaganju paketov je prišlo do napake. Podrobnosti "
-"si oglejte v nadaljevanju</b>"
+"Pri poskusu nalaganja/odlaganju paketov je prišlo do napake. Podrobnosti si "
+"oglejte v nadaljevanju"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
@@ -3844,12 +3848,12 @@ msgstr "Zaledni proces se ni uspel zagnati z izhodno kodo %1, sporočilo: %2."
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Zaledni proces se je končal s kodo %1, sporočilo: '%2'."
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:499
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "Stroj R se je ustavil s stanjem: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:520
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3858,17 +3862,17 @@ msgstr ""
 "Stroj R je naletel na usodno napako:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:690
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Sporočilo zaledja R"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:698
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Vprašanje zaledja R"
 
-#: rkward/rbackend/rkrbackend.cpp:1598
+#: rkward/rbackend/rkrbackend.cpp:1599
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3889,7 +3893,7 @@ msgstr ""
 "namestitev.</b> Za pomoč pri tem si oglejte <a href=\"http://rkward.kde.org/"
 "compiling\">http://rkward.kde.org/compiling.</a></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1602
+#: rkward/rbackend/rkrbackend.cpp:1603
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3903,12 +3907,12 @@ msgstr ""
 "popravite namestitev.</b> Za pomoč pri tem si oglejte <a href=\"http://"
 "rkward.kde.org/compiling\">http://rkward.kde.org/compiling.</a></p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Neustrezni inačici grafike"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3919,7 +3923,7 @@ msgstr ""
 "zahteva ponovni prevod.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Dodatne informacije</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid "Ok"
 msgstr "V redu"

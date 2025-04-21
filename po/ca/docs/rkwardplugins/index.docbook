@@ -69,7 +69,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <copyright>
 <year
->2006-2024</year>
+>2006-2022</year>
 <holder
 >Thomas Friedrichsmeier</holder>
 </copyright>
@@ -80,9 +80,9 @@ as Authors, publish date, the abstract, and Keywords -->
 >&FDLNotice;</legalnotice>
 
 <date
->7 de setembre de 2024</date>
+>24 d'abril de 2022</date>
 <releaseinfo
->0.8.1</releaseinfo>
+>0.7.4</releaseinfo>
 
 <abstract>
 <para
@@ -7364,28 +7364,6 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >. Opcional; si no s'especifica, no es requerirà cap versió mínima/màxima de l'&R;.</para
 ></listitem>
 	</varlistentry>
-	<varlistentry>
-	<term
->plataformes</term>
-	<listitem
-><para
->Plataformes a on és disponible aquest connector. Els valors admesos són <replaceable
->"unix"</replaceable
->, <replaceable
->"windows"</replaceable
->, <replaceable
->"macos"</replaceable
->, <replaceable
->"any"</replaceable
-> i combinacions separades per dos punts (p. ex. <replaceable
->"unix:macos"</replaceable
->). <replaceable
->"unix"</replaceable
-> inclou totes les variants del Linux i del BSD, però <emphasis
->no</emphasis
-> MacOS. Si el connector no és dependent de la plataforma, ometeu aquest atribut.</para
-></listitem>
-	</varlistentry>
 	</variablelist>
 <para
 >Elements fills:</para>
@@ -7635,20 +7613,6 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 	<listitem
 ><para
 >L'etiqueta d'aquest component, quan es col·loca a la jerarquia del menú.</para
-></listitem>
-	</varlistentry>
-	<varlistentry>
-	<term
->opcional</term>
-	<listitem
-><para
->Només és significatiu per als components amb <link linkend="chapter_dependencies"
->dependències</link
-> definides: normalment, està considerat com a error que s'informa, si un component no és compatible amb aquesta versió del RKWard. Tanmateix, si el component no és realment necessari a l'entorn actual, definint aquest atribut a <replaceable
->"true"</replaceable
-> suprimeix qualsevol error (valor predeterminat <replaceable
->"false"</replaceable
->).</para
 ></listitem>
 	</varlistentry>
 	</variablelist

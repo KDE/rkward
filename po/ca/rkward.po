@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-04 00:37+0000\n"
-"PO-Revision-Date: 2024-11-17 20:43+0100\n"
+"POT-Creation-Date: 2025-04-21 02:30+0000\n"
+"PO-Revision-Date: 2024-11-17 20:42+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2063,8 +2063,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Frontal per al llenguatge estadístic R"
 
 #: rkward/main.cpp:174
-#, kde-format
-msgid "(c) 2002 - 2024"
+#, fuzzy, kde-format
+#| msgid "(c) 2002 - 2024"
+msgid "(c) 2002 - 2025"
 msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:175
@@ -2824,13 +2825,16 @@ msgid "Unhandled output command '%1'"
 msgstr "Ordre de sortida no gestionada «%1»"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "There has been an error while trying to load / unload packages. See "
+#| "transcript below for details"
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"<b>S'ha produït un error en executar l'ordre. Vegeu a sota els detalls de la "
-"sortida</b>"
+"S'ha produït un error en intentar carregar/descarregar els paquets. Reviseu "
+"la transcripció d'aquí sota per a més detalls"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
@@ -3911,12 +3915,12 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "El procés del dorsal ha sortit amb el codi %1, missatge: «%2»."
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:499
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "El motor R s'ha aturat amb l'estat: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:520
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3925,17 +3929,17 @@ msgstr ""
 "El motor R ha trobat un error fatal:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:690
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Missatge del dorsal R"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:698
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Pregunta del dorsal R"
 
-#: rkward/rbackend/rkrbackend.cpp:1598
+#: rkward/rbackend/rkrbackend.cpp:1599
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3957,7 +3961,7 @@ msgstr ""
 "això, consultar <a href=\"https://rkward.kde.org/compiling\">https://rkward."
 "kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1602
+#: rkward/rbackend/rkrbackend.cpp:1603
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3972,12 +3976,12 @@ msgstr ""
 "consulteu <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "La versió del motor gràfic no coincideix"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3988,7 +3992,7 @@ msgstr ""
 "canvi requereix una recompilació.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Informació addicional</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid "Ok"
 msgstr "D'acord"
@@ -7739,99 +7743,3 @@ msgstr "Veure a l'editor (només lectura)"
 
 #~ msgid "Errors / Warnings:"
 #~ msgstr "Errors / Avisos:"
-
-#~ msgid ""
-#~ "The editor '%1' contains the following duplicate columns. Editing this "
-#~ "table may not be safe, and has been disabled. You may re-enable editing "
-#~ "if you know what you are doing, but you are strongly advised to fix the "
-#~ "table, and/or backup your data, first."
-#~ msgstr ""
-#~ "L'editor «%1» té duplicades les columnes següents. Editar aquesta taula "
-#~ "pot ser perillós i s'ha desactivat. Si sabeu el que esteu fent, podeu "
-#~ "tornar a activar l'edició, però s'aconsella primer corregir la taula, i / "
-#~ "o fer una còpia de seguretat de les dades."
-
-#~ msgid "Pandoc is not installed"
-#~ msgstr "El Pandoc no està instal·lat"
-
-#~ msgid "pdflatex is not installed"
-#~ msgstr "El «pdflatex» no està instal·lat"
-
-#~ msgid "Preview not (yet) possible"
-#~ msgstr "Encara no és possible la vista prèvia"
-
-#~ msgid ""
-#~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
-#~ "now), the function call tip feature would crash, and has been disabled in "
-#~ "this session. To enable the call tip, install any other (earlier or "
-#~ "later) version of (lib|kf5)ktexteditor."
-#~ msgstr ""
-#~ "A causa d'un error en la versió 5.92.0 de KTextEditor (la versió en ús, "
-#~ "en aquest moment), la funció de consell de crida de funció podria fallar, "
-#~ "i s'ha desactivat en aquesta sessió. Per a activar la punta de trucada, "
-#~ "instal·leu qualsevol altra versió (anterior o posterior) de «(lib|"
-#~ "kf5)ktexteditor»."
-
-#~ msgid "Incompatible version of ktexteditor"
-#~ msgstr "Versió incompatible del KTextEditor"
-
-#~ msgid ""
-#~ "<p>The setup assistant has been invoked, automatically, because a problem "
-#~ "has been detected in your setup.</p>"
-#~ msgstr ""
-#~ "<p>S'ha invocat l'assistent de configuració, de manera automàtica, perquè "
-#~ "s'ha detectat un problema a la vostra configuració.</p>"
-
-#~ msgid ""
-#~ "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
-#~ msgstr ""
-#~ "<b>El dorsal de l'R ha fallat. Feu clic a «Cancel·la» per a sortir de "
-#~ "l'assistent de configuració.</b>"
-
-#~ msgid "Specified R executable does not exist"
-#~ msgstr "L'executable especificat de l'R no existeix"
-
-#~ msgid ""
-#~ "The R executable (%1) specified in the rkward.ini file (%2) does not "
-#~ "exist or is not executable."
-#~ msgstr ""
-#~ "L'executable R (%1) especificat al fitxer «rkward.ini» (%2) no existeix o "
-#~ "no és un executable."
-
-#~ msgid ""
-#~ "The R executable specified at compile time (%1) does not exist or is not "
-#~ "executable. Probably the installation of R has moved. You can use the "
-#~ "command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or "
-#~ "supply an rkward.ini file to specify the new location."
-#~ msgstr ""
-#~ "L'executable R especificat en temps de compilació (%1) no existeix o no "
-#~ "és un executable. Probablement s'ha mogut la instal·lació de l'R. Podeu "
-#~ "usar el paràmetre de la línia d'ordres «--r-executable <i>auto / "
-#~ "PATH_TO_R</i>», o proporcionar un fitxer «rkward.ini» per a especificar "
-#~ "la ubicació nova."
-
-#~ msgid "Unrecognized call '%1'"
-#~ msgstr "Crida no reconeguda «%1»"
-
-#~ msgid ""
-#~ "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
-#~ "</BODY></HTML>"
-#~ msgstr ""
-#~ "<HTML><BODY><H1>El fitxer de sortida del RKWard no s'ha pogut trobar</"
-#~ "H1>\n"
-#~ "</BODY></HTML>"
-
-#~ msgid "Color Scheme"
-#~ msgstr "Esquema de color"
-
-#~ msgid "[No token received]"
-#~ msgstr "[No s'ha rebut cap testimoni]"
-
-#~ msgid "Help on RKWard"
-#~ msgstr "Ajuda quant al RKWard"
-
-#~ msgid "Show help on RKWard"
-#~ msgstr "Mostra l'ajuda del RKWard"
-
-#~ msgid "Data Type:"
-#~ msgstr "Tipus de dades:"

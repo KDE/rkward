@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2024-09-04 06:41+0200\n"
+"PO-Revision-Date: 2024-09-13 06:26+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2347,7 +2347,7 @@ msgstr "წრფივი ნაწილობრივი კრედიტ�
 #: rkward/plugins/irt.pluginmap:38
 #, kde-format
 msgid "Goodness of Fit (Rasch)"
-msgstr "თანხმობის კრიტერიუმი (რაშის მოდელი)"
+msgstr ""
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:40
@@ -2883,7 +2883,7 @@ msgstr "ქულების მქონე პასუხის მოდე
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:19
 #, kde-format
 msgid "Plotting fitted graded response model"
-msgstr "ქულების მქონე პასუხის მოდელის ნახაზი"
+msgstr ""
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Model"> <text>
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:26
@@ -2895,7 +2895,7 @@ msgstr "ობიექტების გამოყენება, მხო
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:42
 #, kde-format
 msgid "Item operation characteristic curve"
-msgstr "ჩანაწერის მახასიათებლების მრუდი"
+msgstr ""
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:43

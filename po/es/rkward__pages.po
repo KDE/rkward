@@ -1,10 +1,10 @@
 # Spanish translations for rkward__pages.po package.
 # Copyright (C) 2014 This_file_is_part_of_KDE
-# This file is distributed under the same license as the rkward package.
+# This file is distributed under the same license as the PACKAGE package.
 #
 # Automatically generated, 2014.
-# SPDX-FileCopyrightText: 2014, 2015, 2018, 2019, Eloy Cuadra <ecuadra@eloihr.net>
-# SPDX-FileCopyrightText: 2017, 2022, 2024 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
+# SPDX-FileCopyrightText: 2014, 2015, 2018, 2019, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2022, %Y.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__pages\n"
@@ -1832,7 +1832,7 @@ msgstr ""
 #: rkward/pages/rkward_shortcuts.rkh:8
 #, kde-format
 msgid "RKWard Shortcut keys"
-msgstr "Teclas de atajos de teclado de RKWard"
+msgstr "Atajos de teclado de RKWard"
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1845,7 +1845,7 @@ msgid ""
 msgstr ""
 "Puede controlar RKWard en muchas situaciones sin usar un ratón. La manera "
 "más sencilla de descubrir atajos de teclado es navegar por los menús. Estos "
-"atajos se listan junto a su acción en los menús."
+"atajos de teclado se listan junto a su acción en los menús."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1900,7 +1900,7 @@ msgstr ""
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "RKWard Default Shortcut keys"
-msgstr "Teclas de atajos de teclado por omisión de RKWard"
+msgstr "Atajos de teclado por omisión de RKWard"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19

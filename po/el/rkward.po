@@ -3,22 +3,21 @@
 # This file is put in the public domain.
 #
 # Ilias Soumpasis <nono.231@gmail.com>, 2006, 2007, 2008, 2009.
-# SPDX-FileCopyrightText: 2024 Antonis Geralis <capoiosct@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-04 00:37+0000\n"
-"PO-Revision-Date: 2024-09-19 22:25+0300\n"
-"Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
-"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"POT-Creation-Date: 2025-04-21 02:30+0000\n"
+"PO-Revision-Date: 2012-10-09 04:02+0000\n"
+"Last-Translator: Giannis Katsampirhs <juankatsampirhs@gmail.com>\n"
+"Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.1\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -49,9 +48,10 @@ msgid "Cannot edit '%1'"
 msgstr "Δεν μπορεί να γίνει επεξεργασία του '%1'"
 
 #: rkward/agents/rkloadagent.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Loading Workspace ..."
 msgid "Loading Workspace..."
-msgstr "Φόρτωση χώρου εργασίας..."
+msgstr "Φόρτωση χώρου εργασίας ..."
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -451,12 +451,12 @@ msgstr ""
 #: rkward/dataeditor/rkvareditmodel.cpp:539
 #, kde-format
 msgid "Type on these fields to add new columns"
-msgstr "Πληκτρολογήστε σε αυτά τα πεδία για να προσθέσετε νέες στήλες"
+msgstr "Πληκτρολογίστε σε αυτά τα πεδία για να προσθέσετε νέες στήλες"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:260
 #, kde-format
 msgid "Type on these fields to add new rows"
-msgstr "Πληκτρολογήστε σε αυτά τα πεδία για να προσθέσετε νέες γραμμές"
+msgstr "Πληκτρολογίστε σε αυτά τα πεδία για να προσθέσετε νέες γραμμές"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:282 rkward/plugin/rkmatrixinput.cpp:517
 #, kde-format
@@ -983,7 +983,8 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Become root"
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Γίνετε υπερχρήστης"
@@ -1061,7 +1062,7 @@ msgstr "Γίνετε υπερχρήστης"
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
 msgid "Please stand by while installing selected packages"
-msgstr "Παρακαλώ περιμένετε όσο εγκαθίστανται τα επιλεγμένα πακέτα"
+msgstr "Παρακαλώ πριμένετε όσο εγκαθίστανται τα επιλεγμένα πακέτα"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:269
 #, kde-format
@@ -1431,14 +1432,16 @@ msgid "[Not saved]"
 msgstr "Εγκατάσταση"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:88
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output"
 msgid "Output files"
-msgstr "Αρχεία αποτελεσμάτων"
+msgstr "Παράθυρο αποτελεσμάτων"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:100
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Script File"
 msgid "Scripts"
-msgstr "Σενάρια"
+msgstr "Αρχείο σεναρίου"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:115
 #, fuzzy, kde-format
@@ -1738,9 +1741,10 @@ msgid "Exists"
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Import"
 msgid "Import"
-msgstr "Εισαγωγή"
+msgstr "&Εισαγωγή"
 
 #: rkward/dialogs/rksetupwizard.cpp:360
 #, kde-format
@@ -1865,7 +1869,7 @@ msgstr "Γραφικό περιβάλλον για τη γλώσσα στατι�
 
 #: rkward/main.cpp:174
 #, kde-format
-msgid "(c) 2002 - 2024"
+msgid "(c) 2002 - 2025"
 msgstr ""
 
 #: rkward/main.cpp:175
@@ -2422,9 +2426,10 @@ msgid "RKWard Output Files [*.rko](*.rko)"
 msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:132
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "All Files"
 msgid "All Files [*](*)"
-msgstr "Όλα τα αρχεία [*](*)"
+msgstr "Όλα τα αρχεία"
 
 #: rkward/misc/rkoutputdirectory.cpp:137
 #, kde-format
@@ -2522,9 +2527,10 @@ msgid "Output is not empty. Not clearing it."
 msgstr ""
 
 #: rkward/misc/rkoutputdirectory.cpp:322
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Unnamed"
 msgid "[Unnamed]"
-msgstr "[Ανώνυμο]"
+msgstr "Ανώνυμο"
 
 #: rkward/misc/rkoutputdirectory.cpp:330
 #, kde-format
@@ -2604,13 +2610,14 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
-msgstr "Αποτελέσματα"
+msgstr "Παράθυρο αποτελεσμάτων"
 
 #: rkward/misc/rkprogresscontrol.cpp:241
 #: rkward/windows/rktoplevelwindowgui.cpp:87
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show &Output"
 msgid "Show Output"
-msgstr "Προβολή αποτελεσμάτων"
+msgstr "Προβολή &Παραθύρου αποτελεσμάτων"
 
 #: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
@@ -2667,9 +2674,10 @@ msgid "Change"
 msgstr ""
 
 #: rkward/misc/rksaveobjectchooser.cpp:54
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Overwrite?"
 msgid "Overwrite"
-msgstr "Αντικατάσταση"
+msgstr "Αντικατάσταση;"
 
 #: rkward/misc/rksaveobjectchooser.cpp:56
 #, fuzzy, kde-format
@@ -2886,10 +2894,11 @@ msgid "error"
 msgstr "προβολή σφαλμάτων"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Ready"
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr "έτοιμο"
+msgstr "Έτοιμο"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
@@ -3621,29 +3630,29 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:499
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:520
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:690
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Μήνυμα από το σύστημα υποστήριξης R"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:698
 #, kde-format
 msgid "Question from the R backend"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1598
+#: rkward/rbackend/rkrbackend.cpp:1599
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3656,7 +3665,7 @@ msgid ""
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1602
+#: rkward/rbackend/rkrbackend.cpp:1603
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3666,12 +3675,12 @@ msgid ""
 "p></p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3679,7 +3688,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1659
+#: rkward/rbackend/rkrbackend.cpp:1660
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -3798,7 +3807,8 @@ msgid "Graphics Device Number %1"
 msgstr ""
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:648
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "%1 (Active)"
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Ενεργό)"
@@ -4486,9 +4496,10 @@ msgid "str (x)"
 msgstr ""
 
 #: rkward/robjectviewer.cpp:79
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<b>Object was deleted!</b>"
 msgid "<b>Object was deleted</b>"
-msgstr "<b>Το αντικείμενο έχει διαγραφεί</b>"
+msgstr "<b>Το αντικείμενο έχει διαγραφεί!</b>"
 
 #: rkward/robjectviewer.cpp:122
 #, kde-format
@@ -4498,7 +4509,7 @@ msgstr "Προβολέας αντικειμένων: %1"
 #: rkward/robjectviewer.cpp:126
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
-msgstr "Το αντικείμενο έχει αλλάξει. Ίσως να θέλετε να πατήσετε \"Ανανέωση\""
+msgstr "Το αντικείμενο έχει αλλάξει. Ισως να θέλετε να πατήσετε  \"Ανανέωση\""
 
 #: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:111
 #, kde-format
@@ -4506,9 +4517,10 @@ msgid "Update"
 msgstr "Ενημέρωση"
 
 #: rkward/robjectviewer.cpp:211
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Fetching information. Please wait."
 msgid "Fetching information"
-msgstr "Ανάκτηση πληροφοριών"
+msgstr "Ανάκτηση πληροφοριών. Παρακαλώ περιμένετε."
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:139
 #, kde-format
@@ -4992,7 +5004,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Do not save/restore workplace layout"
-msgstr "Μη αποθήκευση/ανάκτηση της διάταξης χώρου εργασίας του RKWard"
+msgstr "Μη αποθήκευση/ανάκτηση της διάταξης χώρου εργασίαςτου RKWard"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:116
 #, kde-format
@@ -5016,7 +5028,7 @@ msgstr "Συμπεριφορά εστίασης παραθύρου εργασί�
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "Click to focus"
-msgstr "Κλικ για εστίαση"
+msgstr "Κλίκ για εστίαση"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
@@ -5435,7 +5447,7 @@ msgstr "Μέγιστος αριθμός εμφάνισης στοιχείων σ
 #: rkward/settings/rksettingsmoduler.cpp:104
 #, kde-format
 msgid "Maximum length of warnings/errors to print"
-msgstr "Μέγιστο μήκος προειδοποιήσεων/λαθών στην εμφάνιση"
+msgstr "Μέγιστο μήκος προειδοποιήσεων/λάθών στην εμφάνιση"
 
 #: rkward/settings/rksettingsmoduler.cpp:108
 #, kde-format
@@ -5518,7 +5530,8 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:176
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
 msgctxt "Add directory to list"
 msgid "Add"
 msgstr "Προσθήκη"
@@ -5561,7 +5574,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:360
 #, kde-format
 msgid "Archive downloaded packages"
-msgstr "Αρχικοποίηση μεταφορτωμένων πακέτων"
+msgstr "Αρχικοποίηση μεταφορτομένων πακέτων"
 
 #: rkward/settings/rksettingsmoduler.cpp:362
 #, kde-format
@@ -5617,7 +5630,8 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:399
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
 msgctxt "Add file to list"
 msgid "Add"
 msgstr "Προσθήκη"
@@ -5650,7 +5664,8 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:574
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rename"
 msgctxt "verb"
 msgid "Rename"
 msgstr "Μετονομασία"
@@ -5664,7 +5679,8 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:582
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove"
 msgctxt "verb"
 msgid "Remove"
 msgstr "Αφαίρεση"
@@ -5699,7 +5715,7 @@ msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
 "visible/invisible."
 msgstr ""
-"Από τώρα οι ρυθμίσεις έχουν εφαρμογή μόνο στις καινούριες εντολές. Όλες οι "
+"Από τώρα οι ρυθμίσεις έχουν εφαρμογή μόνο στιςκαινούριες εντολές. Όλες οι "
 "προηγούμενες εντολές παραμένουν ορατές/αόρατες."
 
 #: rkward/settings/rksettingsmodulewatch.cpp:128
@@ -6232,9 +6248,10 @@ msgid "Rename"
 msgstr "Μετονομασία"
 
 #: rkward/windows/rkfilebrowser.cpp:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rename"
 msgid "Rename..."
-msgstr "Μετονομασία..."
+msgstr "Μετονομασία"
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
@@ -6971,7 +6988,7 @@ msgstr ""
 #: rkward/windows/rkworkplace.cpp:443
 #, kde-format
 msgid "Open in default application?"
-msgstr "Άνοιγμα με την προεπιλεγμένη εφαρμογή;"
+msgstr "Άνοιγμα με·την·προεπιλεγμένη·εφαρμογή;"
 
 #: rkward/windows/rkworkplace.cpp:531
 #, kde-format
@@ -7021,7 +7038,8 @@ msgid "Restore Workplace layout"
 msgstr "Ανάκτηση διάταξης χώρου εργασίας"
 
 #: rkward/windows/rkworkplaceview.cpp:62
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Close All"
 msgid "Close all"
 msgstr "Κλείσιμο όλων"
 

@@ -1,10 +1,10 @@
-# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2024-09-01 22:16+0200\n"
+"PO-Revision-Date: 2025-04-16 14:43+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -792,7 +792,7 @@ msgstr "Calculer l'intervalle de confiance"
 #, kde-format
 msgctxt "R code comment"
 msgid "cor requires all objects to be inside the same data.frame."
-msgstr "cor a que tous les objets se trouvent dans le même data.frame."
+msgstr "cor impose que tous les objets se trouvent dans le même data.frame."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:49
@@ -3809,7 +3809,7 @@ msgid ""
 "If empty, the default label is the name of the original series plus <i>, "
 "Trend</i>."
 msgstr ""
-"Vous pouvez spécifier ici le texte de l'étiquette de l'axe Y du tracé de "
+"Vous pouvez spécifier ici le texte de l'étiquette de l'axe en Y du tracé de "
 "tendance (supérieur). Si elle est vide, l'étiquette par défaut est le nom de "
 "la série originale plus <i>, Trend</i>."
 
@@ -4336,9 +4336,9 @@ msgid ""
 "Honor of Harold Hotelling, I. Olkin et al. eds., Stanford University Press, "
 "pp. 278-292."
 msgstr ""
-"Levene, H. (1960). Dans contributions aux probabilités et aux statistiques : "
-"essais en l'honneur de Harold Hotelling, I. Olkin et al. eds., Stanford "
-"University Press, pp. 278-292."
+"Levene, H. (1960). Dans ses contributions aux probabilités et aux "
+"statistiques : essais en l'honneur de Harold Hotelling, I. Olkin et autres "
+"rédacteurs, Éditions de l'université de Stanford, pages 278 - 292."
 
 #. i18n: ectx: (Levene's Test) <dialog label="Levene's Test"> <varslot label="...">
 #: rkward/plugins/analysis/variances/levene_test.xml:15
