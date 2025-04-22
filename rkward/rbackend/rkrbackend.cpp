@@ -306,7 +306,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					n_frames = dummy->intVector ().at (0);
 				}
 				// What the ??? Why does this simple version always return 0?
-				//int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (RFn::Rf_install ("sys.nframe"), ROb(R_GlobalEnv);
+				//int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (Rf_install ("sys.nframe"), R_GlobalEnv));
 				if (n_frames < 1) {
 					// No active frames? This can't be a call to readline(), so the previous command must have finished.
 					if (RKRBackend::repl_status.user_command_completely_transmitted) {
@@ -1134,7 +1134,7 @@ bool RKRBackend::startR () {
 
 	connectCallbacks();
 	RKREventLoop::setRKEventHandler(doPendingPriorityCommands);
-	default_global_context = ROb(R_GlobalContext);
+	default_global_context = R_GlobalContext;
 #ifdef Q_OS_WIN
 	// See the corresponding note in RWriteConsoleEx(). For auto-detecting UTF8 markers in console output.
 	win_do_detect_winutf8markers = true;
