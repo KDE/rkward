@@ -1,4 +1,5 @@
 --- Version 0.8.2 - UNRELEASED
+- Internal: Remove dependency on Qt5-compatibility library
 
 --- Version 0.8.1 - Apr-21-2025
 - Added: Allow to register custom R functions in the menu (rk.menu())

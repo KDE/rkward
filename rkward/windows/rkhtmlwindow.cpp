@@ -28,7 +28,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QPrintDialog>
 #include <QMenu>
 #include <QFileDialog>
-#include <QTextCodec>
 #include <QFontDatabase>
 #include <QTemporaryFile>
 #include <QGuiApplication>
