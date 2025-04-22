@@ -28,7 +28,7 @@ craft_windows_qt6_x86_64:
       # we don't want the manual job to block the pipeline
       allow_failure: true
 
-craft_appimage_qt6:
+craft_appimage_qt6_x86_64:
   rules:
     # run the job on mainline branches of mainline repositories
     - if: $KDECI_SECURE_SERVICES_KEY
@@ -39,7 +39,7 @@ craft_appimage_qt6:
       # we don't want the manual job to block the pipeline
       allow_failure: true
 
-craft_macos_arm64_qt6:
+craft_macos_qt6_arm64:
   rules:
     # run the job on mainline branches of mainline repositories
     - if: $KDECI_SECURE_SERVICES_KEY
@@ -50,7 +50,7 @@ craft_macos_arm64_qt6:
       # we don't want the manual job to block the pipeline
       allow_failure: true
 
-craft_macos_x86_64_qt6:
+craft_macos_qt6_x86_64:
   rules:
     # run the job on mainline branches of mainline repositories
     - if: $KDECI_SECURE_SERVICES_KEY
