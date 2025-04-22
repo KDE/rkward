@@ -39,7 +39,18 @@ Allows to add (and subsequently remove) menu items associated to specific plain 
              us feedback on what you would like to see added. Only items defined using this mechanism can be manipulated / removed.
 }
 \details{
-
+The R function associated with a menu item will be called with the following (named, not positional) parameters:
+         \itemize{
+             \item \code{current_filename}: Specified if, and only if a script editor window is currently active: The filename of that script.
+             \item \code{current_object}: Specified if, and only if a data editor/viewer window is currently active: The R object being edited/views.
+                   To refer to the "name" of this object, use \code{deparse(substitute(current_object))} (see also \code{\link{rk.get.description}}).
+                   Similarly, it is possible to assign to the given object using \code{eval(substitute(current_object <- value), envir=globalenv())}.
+                   It is strongly recommended, however, not to modify data, without asking for explicit confirmation by the user, first (see
+                   \code{\link{rk.ask.question}}).
+             \item \code{current_dataframe}: Identical to \code{current_object}, but provided only, if the current object is a \code{data.frame}.
+             \item \code{...}: To swallow unused argumens, and for compatibility with future extensions, you function should always accept a
+                   \code{...}-parameter.
+         }
 }
 \section{Methods}{
 
