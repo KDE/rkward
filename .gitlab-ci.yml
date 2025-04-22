@@ -15,9 +15,42 @@ include:
       - /gitlab-templates/craft-macos-x86-64-qt6.yml
 #      - /gitlab-templates/flatpak.yml // just a waste of CPU power in the current state
 
-# experimental: delay running deployment job(s)
-delayed_craft_windows_qt6_x86_64:
-  extends: craft_windows_qt6_x86_64
+# experimental: delay running the deployment job(s) to be more resource friendly
+#               jobs can still be triggered, manually
+craft_windows_qt6_x86_64:
+  rules:
+    # run the job on mainline branches of mainline repositories
+    - if: $KDECI_SECURE_SERVICES_KEY
+      when: delayed
+      start_in: 4 hours
+    # or when triggered manually
+    - when: manual
+      # we don't want the manual job to block the pipeline
+      allow_failure: true
+
+craft_appimage_qt6:
+  rules:
+    # run the job on mainline branches of mainline repositories
+    - if: $KDECI_SECURE_SERVICES_KEY
+      when: delayed
+      start_in: 4 hours
+    # or when triggered manually
+    - when: manual
+      # we don't want the manual job to block the pipeline
+      allow_failure: true
+
+craft_macos_arm64_qt6:
+  rules:
+    # run the job on mainline branches of mainline repositories
+    - if: $KDECI_SECURE_SERVICES_KEY
+      when: delayed
+      start_in: 4 hours
+    # or when triggered manually
+    - when: manual
+      # we don't want the manual job to block the pipeline
+      allow_failure: true
+
+craft_macos_x86_64_qt6:
   rules:
     # run the job on mainline branches of mainline repositories
     - if: $KDECI_SECURE_SERVICES_KEY
