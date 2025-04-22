@@ -17,8 +17,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kshortcutsdialog.h>
 #include <KHelpMenu>
 #include <KColorSchemeManager>
+#include <kcolorscheme_version.h>
 #include <KActionMenu>
-#include <kconfigwidgets_version.h>
 
 #include <QWhatsThis>
 #include <QDomDocument>
@@ -94,7 +94,11 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	KStandardAction::keyBindings(this, &RKTopLevelWindowGUI::configureShortcuts, actionCollection());
 	KStandardAction::configureToolbars(this, &RKTopLevelWindowGUI::configureToolbars, actionCollection());
 	// Color scheme action. NOTE: selection is non-permanent for KF5 <= 5.87.0, auto-saved afterwards. Apparently, auto-save cannot be implemented for earlier versions within a few lines of code
+#if KCOLORSCHEME_VERSION >= QT_VERSION_CHECK(6,6,0)   // NOTE: When retiring this version check, obsolete the "manager"-member along with it
+	KColorSchemeManager *manager = KColorSchemeManager::instance();
+#else
 	KColorSchemeManager *manager = new KColorSchemeManager(this);
+#endif
 	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), KColorSchemeMenu::createMenu(manager, this));
 	// our "status bar" is inlined, and always visible. Action below would only hide and show a useless proxy
 	// KF6 TODO: Still needed at all?

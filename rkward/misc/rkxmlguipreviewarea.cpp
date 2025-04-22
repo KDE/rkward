@@ -234,7 +234,7 @@ friend class RKPreviewManager;
 			update();
 		});
 	}
-	void paintEvent(QPaintEvent *event) {
+	void paintEvent(QPaintEvent *event) override {
 		QPainter painter(this);
 		painter.setRenderHint(QPainter::Antialiasing);
 		painter.setPen(pen);
