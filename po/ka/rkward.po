@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:38+0000\n"
-"PO-Revision-Date: 2025-04-20 04:12+0200\n"
+"PO-Revision-Date: 2025-04-21 03:28+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3570,6 +3570,9 @@ msgid ""
 "Below you can preview the R commands corresponding to the settings you made. "
 "Click 'Submit' to run the commands."
 msgstr ""
+"ქვემოთ შეგიძლიათ, გადახედოთ R-ის ბრძანებებს, რომლებიც შეესაბამება "
+"პარამეტრებს, რომლებიც თქვენ შექმენით. ბრძანებების გასაშვებად დააწექით ღილაკს "
+"'გადაცემა'."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:528
 #, kde-format
@@ -3577,6 +3580,8 @@ msgid ""
 "Below you can preview the result of your settings, and the R commands to be "
 "run. Click 'Submit' to run the commands."
 msgstr ""
+"ქვემოთ შეგიძლიათ, გადახედოთ თქვენი პარამეტრების შედეგი და R-ის ბრძანებები "
+"გასაშვებად. ბრძანებების გასაშვებად დააჭირეთ ღილაკს 'გადაცემა'."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:582
 #: rkward/plugin/rkstandardcomponentgui.cpp:600

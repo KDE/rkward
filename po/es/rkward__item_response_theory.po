@@ -1,16 +1,16 @@
 # Spanish translations for rkward__item_response_theory.po package.
-# Copyright (C) 2015 This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2015-2025 This_file_is_part_of_KDE
+# This file is distributed under the same license as the rkward package.
 #
 # Automatically generated, 2015.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2015.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2018.
+# SPDX-FileCopyrightText: 2015 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2018, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__item_response_theory\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2018-01-07 16:49+0100\n"
+"PO-Revision-Date: 2025-04-21 12:19+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -2638,7 +2638,7 @@ msgstr "se necesitan dos pasos para dibujar las curvas de error estándar"
 #, kde-format
 msgctxt "R code comment"
 msgid "first some values are generated..."
-msgstr "primero se generan algunos valores..."
+msgstr "primero se generan algunos valores…"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
@@ -2651,7 +2651,7 @@ msgstr "primero se generan algunos valores..."
 #, kde-format
 msgctxt "R code comment"
 msgid "... and then they're used to plot the curves:"
-msgstr "... y entonces son usados para dibujar las curvas:"
+msgstr "… y entonces son usados para dibujar las curvas:"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)

@@ -1,16 +1,16 @@
 # Spanish translations for rkward__pages.po package.
-# Copyright (C) 2014 This_file_is_part_of_KDE
+# Copyright (C) 2014-2025 This_file_is_part_of_KDE
 # This file is distributed under the same license as the rkward package.
 #
 # Automatically generated, 2014.
 # SPDX-FileCopyrightText: 2014, 2015, 2018, 2019, Eloy Cuadra <ecuadra@eloihr.net>
-# SPDX-FileCopyrightText: 2017, 2022, 2024 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
+# SPDX-FileCopyrightText: 2017, 2022, 2024, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-06-29 22:05+0100\n"
+"PO-Revision-Date: 2025-04-21 12:19+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -965,7 +965,7 @@ msgid ""
 "using Run->CC commands to output..."
 msgstr ""
 "Puede crear fácilmente una transcripción de las órdenes ejecutadas en la "
-"consola usando Ejecutar->Copiar órdenes en la salida..."
+"consola usando Ejecutar->Copiar órdenes en la salida…"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -1603,7 +1603,7 @@ msgid ""
 msgstr ""
 "<b>Añadir este gráfico</b>: Se proporciona esta acción para añadir "
 "forzosamente el gráfico mostrado al final del historial, independientemente "
-"de su estado (guardado/sin guardar) y su tipo (graphics / lattice / ...). En "
+"de su estado (guardado/sin guardar) y su tipo (graphics / lattice / …). En "
 "aquellos casos en los que el gráfico no se almacene automáticamente en el "
 "historial, esta acción puede ser útil. Pero esta flexibilidad viene a costa "
 "de no ser capaz de identificar la llamada del gráfico."
@@ -2842,16 +2842,3 @@ msgstr ""
 "responda. El paquete «GO» es uno de estos paquetes, y está incluido en la "
 "lista negra por omisión. Si observa que cargar un paquete lleva mucho "
 "tiempo, puede considerar añadirlo a esta lista."
-
-#~ msgid ""
-#~ "RKWard is far from complete and certainly there are many issues that need "
-#~ "to be fixed. However, some of the things you notice are not due to the "
-#~ "nature of RKWard but R or something else. This section will try to cover "
-#~ "some common issues. See also <link href=\"https://rkward.kde.org/faq"
-#~ "\">the online FAQ</link>."
-#~ msgstr ""
-#~ "RKWard se encuentra incompleto y hay muchos problemas a solucionar. Sin "
-#~ "embargo, algunos de las cosas de las que se de cuenta son debidas a R o "
-#~ "algún otro componente. Esta sección tratará de cubrir algunos de los "
-#~ "problemas comunes. Vea también <link href=\"https://rkward.kde.org/faq"
-#~ "\">el FAQ en línea</link>."

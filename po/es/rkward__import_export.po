@@ -1,14 +1,15 @@
-# Translation of rkward__import_export to Spanish
+# Spanish translations for rkward__import_export.po package.
+# Copyright (C) 2015-2025 This_file_is_part_of_KDE
 # This file is distributed under the same license as the rkward package.
 #
 # SPDX-FileCopyrightText: 2015 Eloy Cuadra <ecuadra@eloihr.net>
-# SPDX-FileCopyrightText: 2017, 2018, 2022, 2024 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
+# SPDX-FileCopyrightText: 2017, 2018, 2022, 2024, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__import_export\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-23 00:37+0000\n"
-"PO-Revision-Date: 2024-10-26 18:47+0200\n"
+"PO-Revision-Date: 2025-04-21 12:17+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -815,7 +816,7 @@ msgid ""
 "to use)"
 msgstr ""
 "Vea más arriba. Un vector de nombres de filas (por ejemplo: c(\"fila1\", "
-"\"fila2\", ... \"filaN\"), aunque también puede especificar el nombre de un "
+"\"fila2\", … \"filaN\"), aunque también puede especificar el nombre de un "
 "objeto R que contenga los nombres a usar)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column names")
@@ -837,7 +838,7 @@ msgid ""
 "containing the names to use)"
 msgstr ""
 "Vea más arriba. Especifique un vector de caracteres con los nombres de "
-"columnas (por ejemplo: c(\"col1\", \"col2\", ..., \"colN\"), aunque también "
+"columnas (por ejemplo: c(\"col1\", \"col2\", …, \"colN\"), aunque también "
 "puede especificar el nombre de un objeto R que contenga los nombres a usar)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Check syntax of column names")
@@ -2258,11 +2259,10 @@ msgstr ""
 "guardando el área de trabajo desde RKWard, usando la orden <link href="
 "\"rkward://rhelp/save\">save()</link> de R o el complemento <link href="
 "\"rkward://component/save_r\"/>. La mayor diferencia con respecto a cargar "
-"el área de trabajo a través de «Área de trabajo-&gt;Abrir área de "
-"trabajo...» es que el área de trabajo no se limpia primero si no que se "
-"mezcla con el área de trabajo existente. Si no está seguro sobre que opción "
-"usar, use Área de trabajo-&gt;Abrir área de trabajo... en lugar de este "
-"complemento."
+"el área de trabajo a través de «Área de trabajo-&gt;Abrir área de trabajo…» "
+"es que el área de trabajo no se limpia primero si no que se mezcla con el "
+"área de trabajo existente. Si no está seguro sobre que opción usar, use Área "
+"de trabajo-&gt;Abrir área de trabajo… en lugar de este complemento."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
@@ -3490,14 +3490,3 @@ msgstr "Área de trabajo"
 msgctxt "Author name"
 msgid "RKWard Team"
 msgstr "El equipo de RKWard"
-
-#~ msgid ""
-#~ "Please note that downloading the AppImage file might take a while. Your R "
-#~ "session can be occupied for some minutes once you submit. For a live "
-#~ "feedback of the download progress, please run the <code> rk."
-#~ "download_appimage() </code> call in the R console manually."
-#~ msgstr ""
-#~ "Tenga en cuenta que descargar el archivo AppImage puede llevar un rato. "
-#~ "Su sesión R se puede bloquear por varios minutos una vez que empiece. "
-#~ "Para supervisar en directo del proceso de descarga, ejecute la orden "
-#~ "<code> rk.download_appimage() </code> en su consola de R de manera manual."
