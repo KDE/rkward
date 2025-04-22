@@ -9,7 +9,9 @@
 
 \item{label}{Label of the menu entry (character)}
 
-\item{func}{Function to call for leaf item}
+\item{func}{Function to call for leaf item. Depending on the context, this function will be called with certain named arguments, which you may or may not
+want to handle (see section Details). It is strongly recommended for this R function to include an \code{...} parameter (generally unused),
+for compatibility with future expansions.}
 }
 \value{
 \code{rk.menu()} and \code{$item()} return a handle. \code{$define() returns the handle it was given (to allow command chaining)}.
@@ -27,8 +29,7 @@ Allows to add (and subsequently remove) menu items associated to specific plain 
              items in the toolbar (nesting into submenus inside a toolbar is not currently supported).
 
              To actually create a menu entry for a handle, the method \code{$define} needs to be called, specifying a label, and - for leaf items - and
-             associated R function. It is recommended that specified functions have an ignored \code{...} parameter. This will be unused, currently, but
-             might be useful for compatibility with future expansions.
+             associated R function.
 
              Adding/removing menu items is a fairly computation heavy exercise, internally, and is handled asynchronously, in the frontend. Should you need
              to remove and re-add certain elements, frequently, hiding them will be more efficient (see \code{$enable()}). Note: A disabled menu item
@@ -37,12 +38,15 @@ Allows to add (and subsequently remove) menu items associated to specific plain 
              This interface is still somewhat experimental, and currently kept to a minimal set of functions, deliberately. Please don't hesistate to give
              us feedback on what you would like to see added. Only items defined using this mechanism can be manipulated / removed.
 }
+\details{
+
+}
 \section{Methods}{
 
 \describe{
-\item{\code{call()}}{Call the function associated with this menu item}
+\item{\code{call(...)}}{Call the function associated with this menu item}
 
-\item{\code{define(label, func)}}{(Re-)define the menu item at this path. If call is specified, this become a leaf item, associated with the given function, otherwise, a submenu is created.}
+\item{\code{define(label, func)}}{(Re-)define the menu item at this path. If call is specified, this becomes a leaf item, associated with the given function, otherwise, a submenu is created.}
 
 \item{\code{enable(enable = TRUE, show = TRUE)}}{Disable and/or hide this menu item}
 
