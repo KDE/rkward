@@ -35,6 +35,7 @@ rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/i18n/* $DISTDIR/i1
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/po/* $DISTDIR/po
 rsync -a --exclude '*~' --exclude '*.git*' --exclude 'templates' --exclude 'rbackend/rpackages/rkwardtests/debian' $EXCLUDES $BASEDIR/rkward/* $DISTDIR/rkward
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/tests
+rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/3rdparty/* $DISTDIR/3rdparty
 
 cd $BASEDIR/disttemp
 tar -czf rkward-$VERSION.tar.gz $DISTDIRREL
