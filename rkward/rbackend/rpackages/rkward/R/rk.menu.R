@@ -40,7 +40,7 @@
 #'          \itemize{
 #'              \item \code{current_filename}: Specified if, and only if a script editor window is currently active: The filename of that script.
 #'              \item \code{current_object}: Specified if, and only if a data editor/viewer window is currently active: The R object being edited/views.
-#'                    To refer to the "name" of this object, use \code{deparse(substitute(current_object))} (see also \code{\link{rk.get.description}).
+#'                    To refer to the "name" of this object, use \code{deparse(substitute(current_object))} (see also \code{\link{rk.get.description}}).
 #'                    Similarly, it is possible to assign to the given object using \code{eval(substitute(current_object <- value), envir=globalenv())}.
 #'                    It is strongly recommended, however, not to modify data, without asking for explicit confirmation by the user, first (see
 #'                    \code{\link{rk.ask.question}}).
