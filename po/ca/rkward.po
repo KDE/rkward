@@ -1,19 +1,19 @@
 # Translation of rkward.po to Catalan
-# Copyright (C) 2006-2024 This_file_is_part_of_KDE
+# Copyright (C) 2006-2025 This_file_is_part_of_KDE
 # This file is put in the public domain.
 # 28-11-2006: v 1.00
 #
-# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
 # Griera <griera@gmail.com>, 2006.
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
 # Josep Roca <pep.roca@gmail.com>, 2007, 2010, 2012.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2019, 2020, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2024-11-17 20:42+0100\n"
+"PO-Revision-Date: 2025-04-21 10:32+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2063,10 +2063,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Frontal per al llenguatge estadístic R"
 
 #: rkward/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "(c) 2002 - 2024"
+msgstr "(c) 2002 - 2025"
 
 #: rkward/main.cpp:175
 #, kde-format
@@ -2825,16 +2824,13 @@ msgid "Unhandled output command '%1'"
 msgstr "Ordre de sortida no gestionada «%1»"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"S'ha produït un error en intentar carregar/descarregar els paquets. Reviseu "
-"la transcripció d'aquí sota per a més detalls"
+"<b>S'ha produït un error en executar l'ordre. Vegeu a sota els detalls de la "
+"sortida</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
@@ -7727,19 +7723,3 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure a l'editor (només lectura)"
-
-#~ msgid ""
-#~ "<b>There have been errors and / or warnings. See below for a transcript</"
-#~ "b>"
-#~ msgstr ""
-#~ "<b>S'han produït errors i / o avisos. A sota es mostra una transcripció "
-#~ "dels missatges</b>"
-
-#~ msgid "Output:"
-#~ msgstr "Sortida:"
-
-#~ msgid "Errors / Warnings"
-#~ msgstr "Errors / Avisos"
-
-#~ msgid "Errors / Warnings:"
-#~ msgstr "Errors / Avisos:"

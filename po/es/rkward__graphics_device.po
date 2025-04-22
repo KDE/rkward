@@ -1,16 +1,16 @@
 # Spanish translations for rkward__graphics_device.po package.
-# Copyright (C) 2015 This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2015-2025 This_file_is_part_of_KDE
+# This file is distributed under the same license as the rkward package.
 #
 # Automatically generated, 2015.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2015.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017.
+# SPDX-FileCopyrightText: 2015 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2017, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__graphics_device\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2017-10-22 16:51+0100\n"
+"PO-Revision-Date: 2025-04-21 12:25+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -57,7 +57,7 @@ msgstr ""
 #: rkward/plugins/x11device.pluginmap:23
 #, kde-format
 msgid "Export..."
-msgstr "Exportar..."
+msgstr "Exportar…"
 
 #. i18n: ectx: <context> <menu label="...">
 #: rkward/plugins/x11device.pluginmap:27
@@ -110,7 +110,7 @@ msgid ""
 "also valid parameters to dev2bitmap."
 msgstr ""
 "Elija una función para exportar y un nombre de archivo para guardar. Hay "
-"disponibles opciones adicionales para el tamaño, la resolución ... (vea más "
+"disponibles opciones adicionales para el tamaño, la resolución … (vea más "
 "abajo).La exportación se lleva a cabo con <b>dev.print</b>. Para exportar "
 "usando ghostscript, se usa <b>dev2bitmap</b>, lo que requiere Ghostscript. "
 "La mayoría de los parámetros se envían directamente a la función de "

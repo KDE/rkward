@@ -1,18 +1,18 @@
-# translation of rkward.po to español
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for rkward.po package.
+# Copyright (C) 2005-2025 This_file_is_part_of_KDE
+# This file is distributed under the same license as the rkward package.
 #
-# Mvillarino <mvillarino@dubmail.net>, 2005.
-# Mvillarino <mvillarino@users.sourceforge.net>, 2006.
-# Germán Márquez Mejía <manchito@users.sourceforge.net>, 2008,2009,2010.
-# SPDX-FileCopyrightText: 2014, 2015, 2018, 2019, 2024 Eloy Cuadra <ecuadra@eloihr.net>
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2019, 2020, 2021, 2022, %Y.
+# SPDX-FileCopyrightText: 2005 Mvillarino <mvillarino@dubmail.net>
+# SPDX-FileCopyrightText: 2006 Mvillarino <mvillarino@users.sourceforge.net>
+# SPDX-FileCopyrightText: 2008, 2009, 2010 Germán Márquez Mejía <manchito@users.sourceforge.net>
+# SPDX-FileCopyrightText: 2014, 2015, 2018 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2017, 2019, 2020, 2021, 2022, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2024-07-22 01:10+0100\n"
+"PO-Revision-Date: 2025-04-21 12:17+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -54,7 +54,7 @@ msgstr "No se puede editar «%1»"
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
 msgid "Loading Workspace..."
-msgstr "Cargando área de trabajo..."
+msgstr "Cargando área de trabajo…"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
@@ -691,7 +691,7 @@ msgstr "Borrar esta fila (%1)"
 #: rkward/dataeditor/twintable.cpp:435
 #, kde-format
 msgid "Inserting clipboard contents..."
-msgstr "Insertando el contenido del portapapeles..."
+msgstr "Insertando el contenido del portapapeles…"
 
 #: rkward/dialogs/rkerrordialog.cpp:42
 #, kde-format
@@ -1682,7 +1682,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:163
 #, kde-format
 msgid "<b>Waiting for R backend...</b>"
-msgstr "<b>Esperando al motor de R...</b>"
+msgstr "<b>Esperando al motor de R…</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:180
 #, kde-format
@@ -2059,10 +2059,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Interfaz gráfica para el lenguaje estadístico R"
 
 #: rkward/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "© 2002 - 2024"
+msgstr "© 2002 - 2025"
 
 #: rkward/main.cpp:175
 #, kde-format
@@ -2814,16 +2813,13 @@ msgid "Unhandled output command '%1'"
 msgstr "Salida de la órden no manejada «%1»"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"Ha ocurrido un error al intentar cargar o descartar paquetes. Consulte el "
-"informe inferior para más detalles"
+"<b>Ha ocurrido un error al ejecutar la orden. Consulte más abajo para "
+"detalles de la salida</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
@@ -2914,12 +2910,12 @@ msgstr "Seleccionar objeto padre"
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr "Pegado especial..."
+msgstr "Pegado especial…"
 
 #: rkward/misc/rkspecialactions.cpp:67
 #, kde-format
 msgid "Paste Special..."
-msgstr "Pegado especial..."
+msgstr "Pegado especial…"
 
 #: rkward/misc/rkspecialactions.cpp:79
 #, kde-format
@@ -3037,8 +3033,8 @@ msgid ""
 "Command failed to parse. Try using <i>Edit->Paste special...</i> in the R "
 "Console window for better diagnostics."
 msgstr ""
-"Error al interpretar orden. Pruebe a usar <i>Editar->Pegado especial...</"
-"i>en la ventana de consola de R para obtener un mejor diagnóstico."
+"Error al interpretar orden. Pruebe a usar <i>Editar->Pegado especial…</i>en "
+"la ventana de consola de R para obtener un mejor diagnóstico."
 
 #: rkward/misc/rkspecialactions.cpp:272
 #, kde-format
@@ -4237,12 +4233,12 @@ msgstr "Imprimir la consola"
 #: rkward/rkconsole.cpp:861
 #, kde-format
 msgid "Import command history..."
-msgstr "Importar historial de órdenes..."
+msgstr "Importar historial de órdenes…"
 
 #: rkward/rkconsole.cpp:863
 #, kde-format
 msgid "Export command history..."
-msgstr "Exportar historial de órdenes..."
+msgstr "Exportar historial de órdenes…"
 
 #: rkward/rkconsole.cpp:882
 #, kde-format
@@ -4335,7 +4331,7 @@ msgstr "Una nota sobre enlaces externos"
 #: rkward/rkward.cpp:321
 #, kde-format
 msgid "Setting up plugins..."
-msgstr "Iniciando complementos..."
+msgstr "Iniciando complementos…"
 
 #: rkward/rkward.cpp:355
 #, kde-format
@@ -4460,17 +4456,17 @@ msgstr "Crea y activa un nuevo documento de salida"
 #: rkward/rkward.cpp:505
 #, kde-format
 msgid "Open R Script File..."
-msgstr "Abrir archivo de guiones de R..."
+msgstr "Abrir archivo de guiones de R…"
 
 #: rkward/rkward.cpp:509
 #, kde-format
 msgid "Open RKWard Output File..."
-msgstr "Abrir archivo de salida de RKWard..."
+msgstr "Abrir archivo de salida de RKWard…"
 
 #: rkward/rkward.cpp:513
 #, kde-format
 msgid "Open any File..."
-msgstr "Abrir cualquier archivo..."
+msgstr "Abrir cualquier archivo…"
 
 #: rkward/rkward.cpp:518
 #, kde-format
@@ -4528,7 +4524,7 @@ msgstr "Guardar área de trabajo como"
 #: rkward/rkward.cpp:545
 #, kde-format
 msgid "Saves the actual document as..."
-msgstr "Guarda el documento actual como..."
+msgstr "Guarda el documento actual como…"
 
 #: rkward/rkward.cpp:548
 #, kde-format
@@ -4543,12 +4539,12 @@ msgstr "Interrumpir todas las órdenes"
 #: rkward/rkward.cpp:557
 #, kde-format
 msgid "CC commands to output..."
-msgstr "Copiar órdenes en la salida..."
+msgstr "Copiar órdenes en la salida…"
 
 #: rkward/rkward.cpp:561 rkward/rkward.cpp:565
 #, kde-format
 msgid "Manage R packages and plugins..."
-msgstr "Gestionar paquetes de R y complementos..."
+msgstr "Gestionar paquetes de R y complementos…"
 
 #: rkward/rkward.cpp:572
 #, kde-format
@@ -4584,17 +4580,17 @@ msgstr "[No hay acciones disponibles para la vista actual]"
 #: rkward/rkward.cpp:597
 #, kde-format
 msgid "Open..."
-msgstr "Abrir..."
+msgstr "Abrir…"
 
 #: rkward/rkward.cpp:611
 #, kde-format
 msgid "Create..."
-msgstr "Crear..."
+msgstr "Crear…"
 
 #: rkward/rkward.cpp:618
 #, kde-format
 msgid "Save..."
-msgstr "Guardar..."
+msgstr "Guardar…"
 
 #: rkward/rkward.cpp:634
 #, kde-format
@@ -4661,7 +4657,7 @@ msgstr "Configurar el motor R"
 #: rkward/rkward.cpp:861
 #, kde-format
 msgid "Exiting..."
-msgstr "Saliendo..."
+msgstr "Saliendo…"
 
 #: rkward/rkward.cpp:879
 #, kde-format
@@ -4676,12 +4672,12 @@ msgstr "Introducir nombre para el nuevo conjunto de datos"
 #: rkward/rkward.cpp:891
 #, kde-format
 msgid "Opening workspace..."
-msgstr "Abriendo área de trabajo..."
+msgstr "Abriendo área de trabajo…"
 
 #: rkward/rkward.cpp:894
 #, kde-format
 msgid "Select workspace to open..."
-msgstr "Seleccione el área de trabajo a abrir..."
+msgstr "Seleccione el área de trabajo a abrir…"
 
 #: rkward/rkward.cpp:965
 #, kde-format
@@ -4741,7 +4737,7 @@ msgstr "Abrir como archivo de texto y forzar resaltado de R"
 #: rkward/rkward.cpp:1060
 #, kde-format
 msgid "Select RKWard Output file to open..."
-msgstr "Seleccione el archivo de salida a abrir..."
+msgstr "Seleccione el archivo de salida a abrir…"
 
 #: rkward/rkward.cpp:1060
 #, kde-format
@@ -6395,12 +6391,12 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:401
 #, kde-format
 msgid "Save Script..."
-msgstr "Guardar guion..."
+msgstr "Guardar guion…"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:403
 #, kde-format
 msgid "Save Script As..."
-msgstr "Guardar guion como..."
+msgstr "Guardar guion como…"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:479
 #: rkward/windows/rkcommandeditorwindow.cpp:941
@@ -6745,7 +6741,7 @@ msgstr "Cambiar nombre"
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
 msgid "Rename..."
-msgstr "Cambiar nombre..."
+msgstr "Cambiar nombre…"
 
 #: rkward/windows/rkfilebrowser.cpp:155
 #, kde-format
@@ -7431,7 +7427,7 @@ msgstr "Establecer tamaño fijo de 2000x2000"
 #: rkward/windows/rkwindowcatcher.cpp:762
 #, kde-format
 msgid "Set specified fixed size..."
-msgstr "Especificar tamaño fijo..."
+msgstr "Especificar tamaño fijo…"
 
 #: rkward/windows/rkwindowcatcher.cpp:767
 #, kde-format
@@ -7491,7 +7487,7 @@ msgstr "Copiar a la salida"
 #: rkward/windows/rkwindowcatcher.cpp:824
 #, kde-format
 msgid "Store as R object..."
-msgstr "Almacenar como objeto R..."
+msgstr "Almacenar como objeto R…"
 
 #: rkward/windows/rkwindowcatcher.cpp:826
 #, kde-format
@@ -7683,106 +7679,3 @@ msgstr "Introducir el nuevo nombre"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Mostrar en el editor (solo-lectura)"
-
-#~ msgid ""
-#~ "<b>There have been errors and / or warnings. See below for a transcript</"
-#~ "b>"
-#~ msgstr ""
-#~ "<b>Se han encontrado errores o avisos. Consulte el informe inferior</b>"
-
-#~ msgid "Output:"
-#~ msgstr "Salida:"
-
-#~ msgid "Errors / Warnings"
-#~ msgstr "Errores o avisos"
-
-#~ msgid "Errors / Warnings:"
-#~ msgstr "Errores o avisos:"
-
-#~ msgid ""
-#~ "The editor '%1' contains the following duplicate columns. Editing this "
-#~ "table may not be safe, and has been disabled. You may re-enable editing "
-#~ "if you know what you are doing, but you are strongly advised to fix the "
-#~ "table, and/or backup your data, first."
-#~ msgstr ""
-#~ "El editor «%1» contiene las siguientes columnas duplicadas. La edición de "
-#~ "esta tabla puede ser insegura, por lo que se ha desactivado. Puede volver "
-#~ "a activar la edición si sabe lo que está haciendo, pero se le recomienda "
-#~ "con insistencia que primero repare la tabla o respalde sus datos."
-
-#~ msgid "Pandoc is not installed"
-#~ msgstr "Pandoc no está instalado"
-
-#~ msgid "pdflatex is not installed"
-#~ msgstr "pdflatex no está instalado"
-
-#~ msgid "Preview not (yet) possible"
-#~ msgstr "La vista previa no es posible (aún)"
-
-#~ msgid ""
-#~ "Due to a bug in version 5.92.0 of ktexteditor (the version in use, right "
-#~ "now), the function call tip feature would crash, and has been disabled in "
-#~ "this session. To enable the call tip, install any other (earlier or "
-#~ "later) version of (lib|kf5)ktexteditor."
-#~ msgstr ""
-#~ "Debido a un error en la versión 5.92.0 de ktexteditor (la versión en uso "
-#~ "en la actualidad), la funcionalidad de aviso de llamada a función está "
-#~ "rota y por tanto ha sido deshabilitada en esta sesión. Para activar el "
-#~ "aviso de llamada, instale cualquier otra (anterior o posterior) versión "
-#~ "de (lib | kf5)ktexteditor."
-
-#~ msgid "Incompatible version of ktexteditor"
-#~ msgstr "Versión incompatible de ktexteditor."
-
-#~ msgid ""
-#~ "<p>The setup assistant has been invoked, automatically, because a problem "
-#~ "has been detected in your setup.</p>"
-#~ msgstr ""
-#~ "<p>Este asistente de instalación ha sido invocado, automáticamente, "
-#~ "porque se ha detectado un problema en su instalación.</p>"
-
-#~ msgid ""
-#~ "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
-#~ msgstr ""
-#~ "<b>El motor R ha fallado. Pulse «Cancelar» para abandonar el asistente de "
-#~ "instalación.</b>"
-
-#~ msgid "Specified R executable does not exist"
-#~ msgstr "El ejecutable de R especificado no existe"
-
-#~ msgid ""
-#~ "The R executable (%1) specified in the rkward.ini file (%2) does not "
-#~ "exist or is not executable."
-#~ msgstr ""
-#~ "El ejecutable de R (%1) especificado en el archivo rkward.ini (%2) no "
-#~ "existe o no es ejecutable."
-
-#~ msgid ""
-#~ "The R executable specified at compile time (%1) does not exist or is not "
-#~ "executable. Probably the installation of R has moved. You can use the "
-#~ "command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or "
-#~ "supply an rkward.ini file to specify the new location."
-#~ msgstr ""
-#~ "El ejecutable de R especificado en tiempo de compilación (%1) no existe o "
-#~ "no es un ejecutable. Probablemente la instalación de R ha cambiado. Puede "
-#~ "usar el parámetro de la línea de órdenes '--r-executable <i>auto /"
-#~ "RUTA_A_R</i>', o proporcionar un archivo rkward.ini para especificar una "
-#~ "localización no estándar."
-
-#~ msgid "Unrecognized call '%1'"
-#~ msgstr "Llamada no reconocida «%1»"
-
-#~ msgid ""
-#~ "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
-#~ "</BODY></HTML>"
-#~ msgstr ""
-#~ "<HTML><BODY><H1>No se encontró el archivo de salida de RKWard</H1>\n"
-#~ "</BODY></HTML>"
-
-#~ msgid "Color Scheme"
-#~ msgstr "Esquema de color"
-
-#, fuzzy
-#~| msgid "[Not saved]"
-#~ msgid "[No token received]"
-#~ msgstr "[No guardado]"
