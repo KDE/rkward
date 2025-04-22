@@ -64,7 +64,7 @@ function doSourceUpload {
 
 	# build source package
 	cd $PPASOURCEDIR
-	dpkg-buildpackage -S -sa -i -I
+	dpkg-buildpackage -S -d -sa -i -I
 
 	# upload
 	cd $PPATEMPDIR
