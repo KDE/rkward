@@ -1133,14 +1133,8 @@ bool RKRBackend::startR () {
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
 
 	connectCallbacks();
-<<<<<<< HEAD
-	RKInsertToplevelStatementFinishedCallback (0);
-	RKREventLoop::setRKEventHandler (doPendingPriorityCommands);
-	default_global_context = R_GlobalContext;
-=======
 	RKREventLoop::setRKEventHandler(doPendingPriorityCommands);
 	default_global_context = ROb(R_GlobalContext);
->>>>>>> 11a555b04 (Adjust to the removal of Rf_addTaskCallback() in R (devel) 4.5)
 #ifdef Q_OS_WIN
 	// See the corresponding note in RWriteConsoleEx(). For auto-detecting UTF8 markers in console output.
 	win_do_detect_winutf8markers = true;
