@@ -58,7 +58,7 @@ void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool
 	RK_TRACE (PLUGIN);
 
 	for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
-		if (it.key () == "#noid#") continue;
+		if (it.key () == QLatin1String("#noid#")) continue;
 		if (it.value ()->isInternal ()) continue;
 
 		if (it.value ()->isProperty ()) {
@@ -134,17 +134,17 @@ QStringList RKComponentBase::matchAgainstState (const PropertyValueMap &state) {
 				if ((prop->type () == PropertyDouble) && static_cast<RKComponentPropertyDouble*> (prop)->doubleValue () == it.value ().toDouble ()) {
 					// COMPAT: In RKWard 0.5.1, the formatting of real numbers was different. Hence we compare the numeric values, instead
 					continue;
-				} else if ((prop->type () == PropertyBool) && (it.value () == prop->value ("labeled").toString ())) {
+				} else if ((prop->type () == PropertyBool) && (it.value () == prop->value (QStringLiteral("labeled")).toString ())) {
 					// COMPAT: In RKWard 0.6.0, bool properties returned the labelled string, by default. Hence we also compare on the labelled value
 					continue;
 				} else if (fetchStringValue (prop) == it.value ()) {
 					continue;
 				} else {
 					if (current_value.isEmpty ()) current_value = fetchStringValue (prop);	// TODO: Hm, what did I have in mind, here?
-					probs.append (QString ("Tried to apply 'value %1' to property %2, but got '%3', instead").arg (it.value (), it.key (), current_value));
+					probs.append (QStringLiteral ("Tried to apply 'value %1' to property %2, but got '%3', instead").arg (it.value (), it.key (), current_value));
 				}
 			} else {
-				probs.append (QString ("No such property %1 (remainder was %2)").arg (it.key (), dummy));
+				probs.append (QStringLiteral ("No such property %1 (remainder was %2)").arg (it.key (), dummy));
 			}
 		}
 	}
@@ -157,15 +157,15 @@ QString RKComponentBase::fetchStringValue (RKComponentBase* prop, const QString 
 // TODO: we need a bit of special casing, here. Probably, instead, we should add new virutal functions serialize() and unserialize(QString()), which properties can re-implement, if needed.
 
 	if (prop->type () == PropertyDouble) {
-		if (modifier.isEmpty ()) return (prop->value ("formatted").toString ());
+		if (modifier.isEmpty ()) return (prop->value (QStringLiteral("formatted")).toString ());
 	} else if (prop->type () == PropertyStringList) {
-		if (modifier.isEmpty ()) return (prop->value ("joined").toString ());
+		if (modifier.isEmpty ()) return (prop->value (QStringLiteral("joined")).toString ());
 	} else if (prop->type () == PropertyRObjects) {
-		return (prop->value (modifier).toStringList ().join ("\n"));
+		return (prop->value (modifier).toStringList ().join (QStringLiteral("\n")));
 	}
 	QVariant value = prop->value (modifier);
 	if (value.metaType () == QMetaType(QMetaType::QStringList)) {
-		return value.toStringList ().join ("\n");
+		return value.toStringList ().join (QStringLiteral("\n"));
 	}
 	return (value.toString ());
 }
@@ -184,7 +184,7 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 	} else if (hint == TraditionalValue) {
 		QString val = fetchStringValue (id);
 		// return "0" as numeric constant. Many plugins rely on this form PHP times.
-		if (val == "0") return (QVariant (0.0));
+		if (val == QLatin1String("0")) return (QVariant (0.0));
 		else return (QVariant (val));
 	} else {
 		QString mod;
@@ -201,7 +201,7 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 				RK_DEBUG (PLUGIN, DL_WARNING, "Getting ui labels is not supported for properties, only for components. Failed id was: %s", qPrintable (id));
 			}
 			if (ret.isEmpty ()) {
-				ret << "-" << "-";
+				ret << QStringLiteral("-") << QStringLiteral("-");
 			}
 			return QVariant (ret);
 		}
@@ -266,15 +266,15 @@ RKComponent::RKComponent(RKComponent *parent_component, QWidget *parent_widget) 
 void RKComponent::createDefaultProperties () {
 	RK_TRACE (PLUGIN);
 
-	addChild ("enabled", enabledness_property = new RKComponentPropertyBool (this, false));
+	addChild (QStringLiteral("enabled"), enabledness_property = new RKComponentPropertyBool (this, false));
 	enabledness_property->setBoolValue (true);
 	enabledness_property->setInternal (true);
 	connect (enabledness_property, &RKComponentPropertyBase::valueChanged, this, &RKComponent::propertyValueChanged);
-	addChild ("visible", visibility_property = new RKComponentPropertyBool (this, false));
+	addChild (QStringLiteral("visible"), visibility_property = new RKComponentPropertyBool (this, false));
 	visibility_property->setBoolValue (true);
 	visibility_property->setInternal (true);
 	connect (visibility_property, &RKComponentPropertyBase::valueChanged, this, &RKComponent::propertyValueChanged);
-	addChild ("required", requiredness_property = new RKComponentPropertyBool (this, false));
+	addChild (QStringLiteral("required"), requiredness_property = new RKComponentPropertyBool (this, false));
 	requiredness_property->setBoolValue (true);
 	requiredness_property->setInternal (true);
 	connect (requiredness_property, &RKComponentPropertyBase::valueChanged, this, &RKComponent::propertyValueChanged);

@@ -28,7 +28,7 @@ public:
 	int type () override { return ComponentCheckBox; };
 	RKComponentPropertyBool *state;
 	QVariant value (const QString &modifier=QString ()) override {
-		if (modifier.isEmpty ()) return state->value ("labeled");
+		if (modifier.isEmpty ()) return state->value (QStringLiteral("labeled"));
 		return (state->value (modifier));
 	};
 	QStringList getUiLabelPair () const override;

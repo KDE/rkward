@@ -29,9 +29,9 @@ RKTextMatrix RKTextMatrix::matrixFromClipboard () {
 	// actually, we don't care, whether tsv or plain gets pasted - it's both
 	// treated the same. We should however encourage external senders to
 	// provided the two in order.
-	if (data->hasFormat ("text/tab-separated-values")) {
+	if (data->hasFormat (QStringLiteral("text/tab-separated-values"))) {
 		RK_DEBUG (EDITOR, DL_DEBUG, "paste tsv");
-		return (matrixFromSeparatedValues (QString::fromLocal8Bit (data->data ("text/tab-separated-values"))));
+		return (matrixFromSeparatedValues (QString::fromLocal8Bit (data->data (QStringLiteral("text/tab-separated-values")))));
 	} else if (data->hasText ()) {
 		RK_DEBUG (EDITOR, DL_DEBUG, "paste plain text");
 		return (matrixFromSeparatedValues (data->text ()));
@@ -74,7 +74,7 @@ void RKTextMatrix::copyToClipboard () const {
 	QString text = toTabSeparatedValues ();
 	QMimeData* data = new QMimeData ();
 	data->setText (text);
-	data->setData ("text/tab-separated-values", text.toLocal8Bit ());
+	data->setData (QStringLiteral("text/tab-separated-values"), text.toLocal8Bit ());
 	QApplication::clipboard()->setMimeData (data);
 }
 

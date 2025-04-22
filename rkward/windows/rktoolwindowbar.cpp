@@ -52,13 +52,13 @@ void RKToolWindowBar::captionChanged (RKMDIWindow* window) {
 void RKToolWindowBar::restoreSize (const KConfigGroup &cg) {
 	RK_TRACE (APP);
 
-	last_known_size = cg.readEntry (QString ("view_size_%1").arg (position ()), DEFAULT_SPLITTER_SIZE);
+	last_known_size = cg.readEntry (QStringLiteral ("view_size_%1").arg (position ()), DEFAULT_SPLITTER_SIZE);
 }
 
 void RKToolWindowBar::saveSize (KConfigGroup &cg) const {
 	RK_TRACE (APP);
 
-	cg.writeEntry (QString ("view_size_%1").arg (position ()), last_known_size);
+	cg.writeEntry (QStringLiteral ("view_size_%1").arg (position ()), last_known_size);
 }
 
 int RKToolWindowBar::getSplitterSize () const {

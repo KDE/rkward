@@ -107,7 +107,7 @@ void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 
 	// first check for requests which originated in the frontend
 	if (request->type == RBackendRequest::Interrupt) {
-		RKRBackend::this_pointer->interruptCommand (request->params.value ("commandid", -1).toInt ());
+		RKRBackend::this_pointer->interruptCommand (request->params.value (QStringLiteral("commandid"), -1).toInt ());
 	} else if (request->type == RBackendRequest::PriorityCommand) {
 		RKRBackend::this_pointer->setPriorityCommand (request->takeCommand ());
 	} else {    // requests which originated in the backend below this line

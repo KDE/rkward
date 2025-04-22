@@ -41,17 +41,17 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 
 	QVBoxLayout *button_layout = new QVBoxLayout ();
 	upper_layout->addLayout (button_layout);
-	button_layout->addWidget(addButton("n\n", i18n("Next (step over)"), i18n("Evaluate the next statement, stepping over function calls.")));
-	button_layout->addWidget(addButton("s\n", i18n("Next (step into)"), i18n("Evaluate the next statement, stepping into function calls.")));
-	button_layout->addWidget(addButton("browserSetDebug(1)\ncont\n", i18n("Step out"), i18n(
+	button_layout->addWidget(addButton(QStringLiteral("n\n"), i18n("Next (step over)"), i18n("Evaluate the next statement, stepping over function calls.")));
+	button_layout->addWidget(addButton(QStringLiteral("s\n"), i18n("Next (step into)"), i18n("Evaluate the next statement, stepping into function calls.")));
+	button_layout->addWidget(addButton(QStringLiteral("browserSetDebug(1)\ncont\n"), i18n("Step out"), i18n(
 	        "<p>Continue until the caller of this function is reached (unless another debug statement is hit, earlier)</p>"
 	        "<p><b>Note:</b> In some cases, the calling function will never be reached, because the call was the last step in the caller. "
 	        "In these cases, the behavior is identical to 'Continue'.</p>")
 	));
-	button_layout->addWidget(addButton("f\n", i18n("Finish current"), i18n("Finish current loop or function.")));
-	button_layout->addWidget(addButton("cont\n", i18n("Continue"), i18n("Continue evaluation.")));
+	button_layout->addWidget(addButton(QStringLiteral("f\n"), i18n("Finish current"), i18n("Finish current loop or function.")));
+	button_layout->addWidget(addButton(QStringLiteral("cont\n"), i18n("Continue"), i18n("Continue evaluation.")));
 	button_layout->addStretch ();
-	button_layout->addWidget(addButton("Q\n", i18n("Cancel"), i18n("Exit debugger and return to top-level statement.")));
+	button_layout->addWidget(addButton(QStringLiteral("Q\n"), i18n("Cancel"), i18n("Exit debugger and return to top-level statement.")));
 	button_layout->addStretch ();
 
 	QHBoxLayout *lower_layout = new QHBoxLayout ();

@@ -150,7 +150,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 		area->setWindow(code_display);
 
 		KActionCollection *action_collection = new KActionCollection (this);
-		action_collection->addAction(KStandardAction::Copy, "copy", this, &RKStandardComponentGUI::copyCode);
+		action_collection->addAction(KStandardAction::Copy, QStringLiteral("copy"), this, &RKStandardComponentGUI::copyCode);
 	}
 }
 
@@ -306,7 +306,7 @@ void RKStandardComponentGUI::ok () {
 
 	RK_ASSERT (code_property->isValid ());
 
-	QString command = "local({\n";
+	QString command = QStringLiteral("local({\n");
 	command.append (code_property->preprocess ());
 	command.append (code_property->calculate ());
 	command.append (code_property->printout ());
@@ -409,7 +409,7 @@ void RKStandardComponentGUI::copyCode () {
 void RKStandardComponentGUI::help () {
 	RK_TRACE (PLUGIN);
 
-	QString path = component->getId ().split ("::").join ("/");
+	QString path = component->getId ().split (QStringLiteral("::")).join (QStringLiteral("/"));
 	RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://component/" + path));
 }
 

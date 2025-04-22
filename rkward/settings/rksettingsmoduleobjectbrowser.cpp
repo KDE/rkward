@@ -35,7 +35,7 @@ public:
 
 		setWindowTitle(i18n("Workspace"));
 		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowWorkspaceBrowser));
-		help_url = QUrl("rkward://page/rkward_workspace_browser#settings");
+		help_url = QUrl(QStringLiteral("rkward://page/rkward_workspace_browser#settings"));
 
 		QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -109,10 +109,10 @@ void syncSettings(KConfigGroup cg, RKConfigBase::ConfigSyncAction a, RKConfigVal
 void RKSettingsModuleObjectBrowser::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group("Object Browser");
+	KConfigGroup cg = config->group(QStringLiteral("Object Browser"));
 	getstructure_blacklist.syncConfig(cg, a);
 
-	syncSettings (cg.group("Tool window"), a, workspace_settings);
-	syncSettings (cg.group("Varselector"), a, varselector_settings);
+	syncSettings (cg.group(QStringLiteral("Tool window")), a, workspace_settings);
+	syncSettings (cg.group(QStringLiteral("Varselector")), a, varselector_settings);
 }
 

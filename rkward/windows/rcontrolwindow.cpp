@@ -120,7 +120,7 @@ void RControlWindow::cancelButtonClicked () {
 	}
 
 	if (some_not_cancelable) {
-		KMessageBox::information (this, i18n ("Some of the commands you were trying to cancel are marked as \"sync\" (letter 'S' in the type column). Cancelling such commands could lead to loss of data. These commands have _not_ been cancelled."), i18n ("Some commands not cancelled"), "cancel_sync");
+		KMessageBox::information (this, i18n ("Some of the commands you were trying to cancel are marked as \"sync\" (letter 'S' in the type column). Cancelling such commands could lead to loss of data. These commands have _not_ been cancelled."), i18n ("Some commands not cancelled"), QStringLiteral("cancel_sync"));
 	}
 }
 

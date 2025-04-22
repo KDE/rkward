@@ -201,7 +201,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 				QString cl;
 				if (RFn::TYPEOF (symb) == SYMSXP) cl = RFn::R_CHAR(RFn::PRINTNAME (symb));
 				RFn::Rf_unprotect (1);
-				if ((cl != "if") && (cl != "while") && (cl != "for") && (cl != "=") && (cl != "<-") && (cl != "(") && (cl != "{")) cl = "call";
+				if ((cl != QLatin1String("if")) && (cl != QLatin1String("while")) && (cl != QLatin1String("for")) && (cl != QLatin1String("=")) && (cl != QLatin1String("<-")) && (cl != QLatin1String("(")) && (cl != QLatin1String("{"))) cl = QLatin1String("call");
 				classes = QStringList (cl);
                         } else if (RFn::TYPEOF (value) == BCODESXP) {
 				value = ROb(R_NilValue);   // This is a bit lame, but bytecode cannot be cast to expression, below, and no idea what else to do with it (or what info to extract, anyway)
@@ -227,7 +227,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 #ifdef __GNUC__
 #	warning: Using is.data.frame() may be more reliable (would need to be called only on List-objects, thus no major performance hit)
 #endif
-		if (classes[i] == "data.frame") type |= RObject::DataFrame;
+		if (classes[i] == QLatin1String("data.frame")) type |= RObject::DataFrame;
 	}
 
 	if (RKRSupport::callSimpleBool (is_matrix_fun, value, baseenv)) type |= RObject::Matrix;
@@ -312,7 +312,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 
 			SEXP slots_pseudo_object = RKRSupport::callSimpleFun (rk_get_slots_fun, value, ROb(R_GlobalEnv));
 			RFn::Rf_protect (slots_pseudo_object);
-			getStructureSafe (slots_pseudo_object, "SLOTS", RObject::PseudoObject, dummy[0], nesting_depth);	// do not increase depth for this pseudo-object
+			getStructureSafe (slots_pseudo_object, QStringLiteral("SLOTS"), RObject::PseudoObject, dummy[0], nesting_depth);	// do not increase depth for this pseudo-object
 			RFn::Rf_unprotect (1);
 
 			slotsdata->setData (dummy);
@@ -424,7 +424,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 				RData::RDataStorage dummy(1, nullptr);
 				dummy[0] = new RData ();
 
-				getStructureSafe (namespace_envir, "NAMESPACE", RObject::PseudoObject, dummy[0], nesting_depth+99);	// HACK: By default, do not recurse into the children of the namespace, until dealing with the namespace object itself.
+				getStructureSafe (namespace_envir, QStringLiteral("NAMESPACE"), RObject::PseudoObject, dummy[0], nesting_depth+99);	// HACK: By default, do not recurse into the children of the namespace, until dealing with the namespace object itself.
 
 				namespacedata->setData (dummy);
 			}

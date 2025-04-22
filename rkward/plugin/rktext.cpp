@@ -30,7 +30,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	label = RKCommonFunctions::linkedWrappedLabel (QString ());
 	vbox->addWidget (label);
 
-	int type = xml->getMultiChoiceAttribute (element, "type", "normal;warning;error", 0, DL_INFO);
+	int type = xml->getMultiChoiceAttribute (element, QStringLiteral("type"), QStringLiteral("normal;warning;error"), 0, DL_INFO);
 	if (type != 0) {
 		QFont font = label->font ();
 		QPalette palette = label->palette ();
@@ -48,7 +48,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	QString initial_text = xml->i18nElementText (element, true, DL_ERROR);
 
 	// create and add property
-	addChild ("text", text = new RKComponentPropertyBase (this, true));
+	addChild (QStringLiteral("text"), text = new RKComponentPropertyBase (this, true));
 	text->setInternal (true);
 	connect (text, &RKComponentPropertyBase::valueChanged, this, &RKText::textChanged);
 

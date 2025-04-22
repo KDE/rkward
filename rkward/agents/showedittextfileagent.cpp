@@ -24,10 +24,10 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RBackendRequest *request, const QS
 	ShowEditTextFileAgent::request = request;
 
 	message = new KMessageWidget(nullptr);
-	message->setText(QString("<p><strong>%1<strong></p><p>%2</p>").arg(caption, text));
+	message->setText(QStringLiteral("<p><strong>%1<strong></p><p>%2</p>").arg(caption, text));
 	if (request) {
 		message->setCloseButtonVisible (false);
-		QAction *done_action = new QAction (QIcon::fromTheme ("dialog-ok"), i18n ("Done"), message);
+		QAction *done_action = new QAction (QIcon::fromTheme (QStringLiteral("dialog-ok")), i18n ("Done"), message);
 		connect (done_action, &QAction::triggered, this, &QObject::deleteLater);
 		message->addAction (done_action);
 		message->setMessageType (KMessageWidget::Warning);  // Hm, not really a warning, but it _does_ require user attention, as the R engine is blocked until "Done" is clicked.
@@ -52,10 +52,10 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 	RK_TRACE (APP);
 	if (!request) return;
 
-	QStringList files = request->params["files"].toStringList ();
-	QStringList titles = request->params["titles"].toStringList ();
-	QString wtitle = request->params["wtitle"].toString ();
-	bool prompt = request->params["prompt"].toBool ();
+	QStringList files = request->params[QStringLiteral("files")].toStringList ();
+	QStringList titles = request->params[QStringLiteral("titles")].toStringList ();
+	QString wtitle = request->params[QStringLiteral("wtitle")].toString ();
+	bool prompt = request->params[QStringLiteral("prompt")].toBool ();
 	int count = files.count ();
 	RK_ASSERT (titles.count () == count);
 
@@ -75,15 +75,15 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 	if (request->type == RBackendRequest::ShowFiles) {
 		RK_ASSERT (!request->synchronous);
 
-		if (request->params["delete"].toBool ()) flags +=  RKCommandEditorFlags::DeleteOnClose;
+		if (request->params[QStringLiteral("delete")].toBool ()) flags +=  RKCommandEditorFlags::DeleteOnClose;
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 
 		if (prompt) {
-			new ShowEditTextFileAgent(nullptr, i18n("A command running in the R-engine wants you to see the following file(s):<ul><li>") + display_titles.join("</li></li>") + "</li></ul>", i18n("Showing file(s)"));
+			new ShowEditTextFileAgent(nullptr, i18n("A command running in the R-engine wants you to see the following file(s):<ul><li>") + display_titles.join(QStringLiteral("</li></li>")) + "</li></ul>", i18n("Showing file(s)"));
 		}
 	} else if (request->type == RBackendRequest::EditFiles) {
 		if (prompt) {
-			new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit the following file(s). Please look at these files, edit them as appropriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.<ul><li>") + display_titles.join ("</li></li>") + "</li></ul>", i18n ("Edit file(s)"));
+			new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit the following file(s). Please look at these files, edit them as appropriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.<ul><li>") + display_titles.join (QStringLiteral("</li></li>")) + "</li></ul>", i18n ("Edit file(s)"));
 		} else {
 			RKRBackendProtocolFrontend::setRequestCompleted (request);
 		}

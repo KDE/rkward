@@ -21,16 +21,16 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	frame = new QGroupBox (xml->i18nStringAttribute (element, "label", QString(), DL_INFO));
+	frame = new QGroupBox (xml->i18nStringAttribute (element, QStringLiteral("label"), QString(), DL_INFO));
 	layout->addWidget (frame);
 
 	QVBoxLayout *inner = new QVBoxLayout (frame);
 	inner->setSpacing(RKStyle::spacingHint());
 
 	checked = nullptr;
-	if (xml->getBoolAttribute (element, "checkable", false, DL_INFO)) {
+	if (xml->getBoolAttribute (element, QStringLiteral("checkable"), false, DL_INFO)) {
 		frame->setCheckable (true);
-		frame->setChecked (xml->getBoolAttribute (element, "checked", true, DL_INFO));
+		frame->setChecked (xml->getBoolAttribute (element, QStringLiteral("checked"), true, DL_INFO));
 		initCheckedProperty ();
 		connect (frame, &QGroupBox::toggled, this, &RKPluginFrame::checkedChanged);
 	}
@@ -48,7 +48,7 @@ void RKPluginFrame::initCheckedProperty () {
 		return;
 	}
 
-	addChild ("checked", checked = new RKComponentPropertyBool (this, false, frame->isChecked (), "1", "0"));
+	addChild (QStringLiteral("checked"), checked = new RKComponentPropertyBool (this, false, frame->isChecked (), QStringLiteral("1"), QStringLiteral("0")));
 	connect (checked, &RKComponentPropertyBase::valueChanged, this, &RKPluginFrame::propertyChanged);
 }
 
@@ -57,7 +57,7 @@ QWidget* RKPluginFrame::getPage () {
 }
 
 RKComponentBase* RKPluginFrame::lookupComponent (const QString& identifier, QString* remainder) {
-	if ((!checked) && (identifier == "checked")) initCheckedProperty ();
+	if ((!checked) && (identifier == QLatin1String("checked"))) initCheckedProperty ();
 	return RKComponentBase::lookupComponent(identifier, remainder);
 }
 

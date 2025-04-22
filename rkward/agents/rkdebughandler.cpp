@@ -36,12 +36,12 @@ void RKDebugHandler::debugCall (RBackendRequest *request, RCommand *command) {
 	if (command) _output_context = command->fullOutput ();
 	else _output_context.clear ();
 
-	_calls = request->params["calls"].toStringList ();
-	_functions = request->params["funs"].toStringList ();
-	_environments = request->params["envs"].toStringList ();
-	_locals = request->params["locals"].toStringList ();
-	_prompt = request->params["prompt"].toString ();
-	QStringList dummy = request->params["relsrclines"].toStringList ();
+	_calls = request->params[QStringLiteral("calls")].toStringList ();
+	_functions = request->params[QStringLiteral("funs")].toStringList ();
+	_environments = request->params[QStringLiteral("envs")].toStringList ();
+	_locals = request->params[QStringLiteral("locals")].toStringList ();
+	_prompt = request->params[QStringLiteral("prompt")].toString ();
+	QStringList dummy = request->params[QStringLiteral("relsrclines")].toStringList ();
 	_rel_src_lines.clear ();
 	for (int i = 0; i < dummy.size (); ++i) _rel_src_lines.append (dummy.at (i).toInt ());
 
@@ -53,7 +53,7 @@ void RKDebugHandler::sendCancel () {
 	RK_TRACE (APP);
 
 	RK_ASSERT (_request);
-	submitDebugString ("Q\n");
+	submitDebugString (QStringLiteral("Q\n"));
 }
 
 void RKDebugHandler::submitDebugString (const QString &command) {
@@ -64,7 +64,7 @@ void RKDebugHandler::submitDebugString (const QString &command) {
 		return;
 	}
 
-	_request->params["result"] = command;
+	_request->params[QStringLiteral("result")] = command;
 
 	RKRBackendProtocolFrontend::setRequestCompleted (_request);
 

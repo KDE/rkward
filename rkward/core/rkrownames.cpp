@@ -27,7 +27,7 @@ RKRowNames::RKRowNames (RContainerObject *parent) : RKVariable (parent, QString 
 	check_duplicates = true;
 	is_sequential_up_to_row = -1;
 
-	name = QString ("row.names");
+	name = QStringLiteral ("row.names");
 }
 
 RKRowNames::~RKRowNames () {
@@ -66,7 +66,7 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 		RInterface::issueCommand(command, chain);
 	} else {
 		// unfortunately, we always need to write the whole data, as row.names<- does not support indexing.
-		QString data_string = "c (";
+		QString data_string = QStringLiteral("c (");
 		for (int row = 0; row < getLength (); ++row) {
 			// TODO: use getCharacter and direct setting of vectors.
 			data_string.append (getRText (row));

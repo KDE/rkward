@@ -68,7 +68,7 @@ void RKDebugMessageWindow::createWidget () {
 
 		if (first) {
 			KMessageBox::information (this, i18n ("<p>This window is used for displaying RKWard related debug messages. It is targeted primarily at (plugin) developers. It does <b>not</b> offer any features for debugging R code.</p>"
-				"<p>Note that the list of messages is cleared every time you close the window.</p><p>Type and severity level of messages can be controlled from Settings->Configure RKWard->Debug</p>"), i18n ("About this window"), "inforkdebugmessagewindow");
+				"<p>Note that the list of messages is cleared every time you close the window.</p><p>Type and severity level of messages can be controlled from Settings->Configure RKWard->Debug</p>"), i18n ("About this window"), QStringLiteral("inforkdebugmessagewindow"));
 			first = false;
 		}
 	}
@@ -113,19 +113,19 @@ void RKDebugMessageWindowWidget::newMessage (const int flags, const int level, c
 	// Not tracing this! That might lead to infinite recursion!
 	if (level == DL_TRACE) {
 		message_viewer->setTextColor (Qt::gray);
-		message_viewer->insertPlainText ("TRACE\t");
+		message_viewer->insertPlainText (QStringLiteral("TRACE\t"));
 	} else if (level == DL_DEBUG) {
 		message_viewer->setTextColor (Qt::blue);
-		message_viewer->insertPlainText ("DEBUG\t");
+		message_viewer->insertPlainText (QStringLiteral("DEBUG\t"));
 	} else if (level == DL_INFO) {
 		message_viewer->setTextColor (Qt::green);
-		message_viewer->insertPlainText ("INFO\t");
+		message_viewer->insertPlainText (QStringLiteral("INFO\t"));
 	} else if (level == DL_WARNING) {
 		message_viewer->setTextColor (Qt::darkYellow);
-		message_viewer->insertPlainText ("WARNING\t");
+		message_viewer->insertPlainText (QStringLiteral("WARNING\t"));
 	} else {
 		message_viewer->setTextColor (Qt::red);
-		message_viewer->insertPlainText ("ERROR\t");
+		message_viewer->insertPlainText (QStringLiteral("ERROR\t"));
 	}
 	message_viewer->setTextColor (Qt::black);
 

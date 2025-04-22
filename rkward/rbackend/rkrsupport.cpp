@@ -89,7 +89,7 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 		SEXP dummy = RFn::STRING_ELT (from_exp, i);
 
 		if (RFn::TYPEOF (dummy) != CHARSXP) {
-			list.append (QString ("not defined"));	// can this ever happen?
+			list.append (QStringLiteral ("not defined"));	// can this ever happen?
 		} else {
 			if (dummy == ROb(R_NaString)) {
 				list.append (QString ());

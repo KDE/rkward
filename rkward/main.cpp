@@ -166,12 +166,12 @@ int main (int argc, char *argv[]) {
 	}
 #endif
 	// Don't complain when linking rkward://-pages from Rd pages
-	KUrlAuthorized::allowUrlAction ("redirect", QUrl("http://"), QUrl ("rkward://"));
+	KUrlAuthorized::allowUrlAction (QStringLiteral("redirect"), QUrl(QStringLiteral("http://")), QUrl (QStringLiteral("rkward://")));
 	// Don't complain when trying to open help pages
-	KUrlAuthorized::allowUrlAction ("redirect", QUrl("rkward://"), QUrl ("help:"));
+	KUrlAuthorized::allowUrlAction (QStringLiteral("redirect"), QUrl(QStringLiteral("rkward://")), QUrl (QStringLiteral("help:")));
 
 	KLocalizedString::setApplicationDomain ("rkward");
-	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002 - 2025"), QString (), "https://rkward.kde.org");
+	KAboutData aboutData (QStringLiteral("rkward"), i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002 - 2025"), QString (), QStringLiteral("https://rkward.kde.org"));
 	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
 	aboutData.addAuthor (i18n ("Pierre Ecochard"), i18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (i18n ("Prasenjit Kapat"), i18n ("Many plugins, suggestions, plot history feature"));
@@ -194,7 +194,7 @@ int main (int argc, char *argv[]) {
 	aboutData.addCredit (i18n ("Roland Vollgraf"), i18n ("Some patches"));
 	aboutData.addCredit (i18n ("Roy Qu"), i18n ("patches and helpful comments"));
 	aboutData.addCredit (i18n ("Many more people on rkward-devel@kde.org"), i18n ("Sorry, if we forgot to list you. Please contact us to get added"));
-	aboutData.setOtherText(QString("<p><b>%1</b></p><ul><li><a href=\"https://www.jstatsoft.org/article/view/v049i09\">%2</a></li><li>Friedrichsmeier, T. &amp; the RKWard Team (%3). RKWard: %4. Version %5. %6</li></ul>").arg(i18n("How to cite:"), i18n("Peer-reviewed article in the Journal of Statistical Software"), aboutData.copyrightStatement().right(4), aboutData.shortDescription(), aboutData.version(), aboutData.homepage()));
+	aboutData.setOtherText(QStringLiteral("<p><b>%1</b></p><ul><li><a href=\"https://www.jstatsoft.org/article/view/v049i09\">%2</a></li><li>Friedrichsmeier, T. &amp; the RKWard Team (%3). RKWard: %4. Version %5. %6</li></ul>").arg(i18n("How to cite:"), i18n("Peer-reviewed article in the Journal of Statistical Software"), aboutData.copyrightStatement().right(4), aboutData.shortDescription(), aboutData.version(), aboutData.homepage()));
 	KAboutData::setApplicationData (aboutData);
 
 #ifdef WITH_KCRASH

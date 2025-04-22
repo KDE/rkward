@@ -23,21 +23,21 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 	// read settings
 	XMLHelper *xml = parent_component->xmlHelper ();
 
-	bool checkable = xml->getBoolAttribute (element, "checkable", false, DL_INFO);
-	bool checked = xml->getBoolAttribute (element, "checked", false, DL_INFO);
-	bool required = xml->getBoolAttribute (element, "required", true, DL_INFO);
-	QString label = xml->i18nStringAttribute (element, "label", i18n ("Save to:"), DL_INFO);
-	QString initial = xml->getStringAttribute (element, "initial", i18n ("my.data"), DL_INFO);
+	bool checkable = xml->getBoolAttribute (element, QStringLiteral("checkable"), false, DL_INFO);
+	bool checked = xml->getBoolAttribute (element, QStringLiteral("checked"), false, DL_INFO);
+	bool required = xml->getBoolAttribute (element, QStringLiteral("required"), true, DL_INFO);
+	QString label = xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Save to:"), DL_INFO);
+	QString initial = xml->getStringAttribute (element, QStringLiteral("initial"), i18n ("my.data"), DL_INFO);
 
 	// create and add properties
-	addChild ("selection", selection = new RKComponentPropertyBase (this, required));
+	addChild (QStringLiteral("selection"), selection = new RKComponentPropertyBase (this, required));
 	connect (selection, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	selection->setInternal (true);	// the two separate properties "parent" and "objectname" are used for (re-)storing.
-	addChild ("parent", parent = new RKComponentPropertyRObjects (this, false));
+	addChild (QStringLiteral("parent"), parent = new RKComponentPropertyRObjects (this, false));
 	connect (parent, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
-	addChild ("objectname", objectname = new RKComponentPropertyBase (this, false));
+	addChild (QStringLiteral("objectname"), objectname = new RKComponentPropertyBase (this, false));
 	connect (objectname, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
-	addChild ("active", active = new RKComponentPropertyBool (this, false, false, "1", "0"));
+	addChild (QStringLiteral("active"), active = new RKComponentPropertyBool (this, false, false, QStringLiteral("1"), QStringLiteral("0")));
 	connect (active, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	if (!checkable) active->setInternal (true);
 
@@ -72,8 +72,8 @@ RKPluginSaveObject::~RKPluginSaveObject () {
 void RKPluginSaveObject::update () {
 	RK_TRACE (PLUGIN);
 
-	if (isSatisfied ()) selector->setStyleSheet(QString(""));
-	else selector->setStyleSheet(QString("background: red; color: black"));
+	if (isSatisfied ()) selector->setStyleSheet(QLatin1String(""));
+	else selector->setStyleSheet(QStringLiteral("background: red; color: black"));
 	changed ();
 }
 

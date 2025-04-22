@@ -94,11 +94,11 @@ class RKWardCoreTest: public QObject {
 	}
 
 	void waitForAllFinished(int timeoutms = 2000) {
-		runCommandWithTimeout(new RCommand("# waitForAllFinished", RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand*){}, timeoutms);
+		runCommandWithTimeout(new RCommand(QStringLiteral("# waitForAllFinished"), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand*){}, timeoutms);
 	}
 
 	void cleanGlobalenv() {
-		RInterface::issueCommand(new RCommand("rm(list=ls(all.names=TRUE))", RCommand::User));
+		RInterface::issueCommand(new RCommand(QStringLiteral("rm(list=ls(all.names=TRUE))"), RCommand::User));
 	}
 
 	void listBackendLog() {
@@ -144,9 +144,9 @@ class RKWardCoreTest: public QObject {
 	}
 
 	QString backendStatus() {
-		if (RInterface::instance()->backendIsDead()) return "dead";
-		if (RInterface::instance()->backendIsIdle()) return "idle";
-		return "busy";
+		if (RInterface::instance()->backendIsDead()) return QStringLiteral("dead");
+		if (RInterface::instance()->backendIsIdle()) return QStringLiteral("idle");
+		return QStringLiteral("busy");
 	}
     
 	QPointer<RKWardMainWindow> main_win;
@@ -168,7 +168,7 @@ private Q_SLOTS:
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
 		// qputenv("QT_LOGGING_RULES", "qt.qpa.windows.debug=true");  // Deliberately overwriting the rules set in the CI, as we are producing too much output, otherwise  -- TODO: does not appear to have any effect
 		KLocalizedString::setApplicationDomain("rkward");
-		KAboutData about("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL); // component name needed for .rc files to load
+		KAboutData about(QStringLiteral("rkward"), QStringLiteral("RKWard"), RKWARD_VERSION, QStringLiteral("Frontend to the R statistics language"), KAboutLicense::GPL); // component name needed for .rc files to load
 		KAboutData::setApplicationData(about);
 		new RKCommandLineArgs(&about, qApp);
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
@@ -185,7 +185,7 @@ private Q_SLOTS:
 	}
 
 	void getIntVector() {
-		auto c = new RCommand("c(1, 2, 3)", RCommand::GetIntVector | RCommand::App);
+		auto c = new RCommand(QStringLiteral("c(1, 2, 3)"), RCommand::GetIntVector | RCommand::App);
 		runCommandWithTimeout(c, nullptr, [](RCommand *command) {
 			QCOMPARE(command->getDataType(), RData::IntVector);
 			QCOMPARE(command->getDataLength(), 3);
@@ -230,9 +230,9 @@ private Q_SLOTS:
 
 	void objectListTest() {
 		// check that resprentation a objects in backend is sane
-		RInterface::issueCommand("a <- list(x1=c(1, 2, 3), x2=letters, x3=datasets::women); b <- a", RCommand::User);
+		RInterface::issueCommand(QStringLiteral("a <- list(x1=c(1, 2, 3), x2=letters, x3=datasets::women); b <- a"), RCommand::User);
 		RInterface::whenAllFinished(this, []() {
-			auto a = RObjectList::getGlobalEnv()->findObject("a");
+			auto a = RObjectList::getGlobalEnv()->findObject(QStringLiteral("a"));
 			QVERIFY(a != nullptr);
 			QVERIFY(a && a->isContainer());
 			auto ac = static_cast<RContainerObject*>(a);
@@ -242,7 +242,7 @@ private Q_SLOTS:
 			QVERIFY(ac->findChildByIndex(2)->isDataFrame());
 		}, nullptr);
 		// check that changes are detected, and reflected, properly
-		RInterface::issueCommand("rm(a); b <- 1; c <- letters; .d <- c", RCommand::User);
+		RInterface::issueCommand(QStringLiteral("rm(a); b <- 1; c <- letters; .d <- c"), RCommand::User);
 		RInterface::whenAllFinished(this, []() {
 			QVERIFY(RObjectList::getGlobalEnv()->findObject("a") == nullptr);
 			QCOMPARE(RObjectList::getGlobalEnv()->findObject("b")->getDataType(), RObject::DataNumeric);
@@ -255,19 +255,19 @@ private Q_SLOTS:
 		});
 
 		bool lock = true;
-		runCommandAsync(new RCommand("dx <- data.frame(a=1:2, b=3:4)", RCommand::User), nullptr, [this, &lock](RCommand *) {
-			auto dx = RObjectList::getGlobalEnv()->findObject("dx");
+		runCommandAsync(new RCommand(QStringLiteral("dx <- data.frame(a=1:2, b=3:4)"), RCommand::User), nullptr, [this, &lock](RCommand *) {
+			auto dx = RObjectList::getGlobalEnv()->findObject(QStringLiteral("dx"));
 			QVERIFY(dx != nullptr);
 			QVERIFY(dx && dx->isContainer());
 			if (dx && dx->isContainer()) {
-			    auto dx_a = static_cast<RContainerObject*>(dx)->findChildByName("a");
+			    auto dx_a = static_cast<RContainerObject*>(dx)->findChildByName(QStringLiteral("a"));
 			    QVERIFY(dx_a != nullptr);
 			    if (dx_a) {
-				dx_a->rename("c");
+				dx_a->rename(QStringLiteral("c"));
 			    }
-			    dx->rename("dy");
+			    dx->rename(QStringLiteral("dy"));
 			}
-			auto c = new RCommand("dy$c", RCommand::GetIntVector | RCommand::App);
+			auto c = new RCommand(QStringLiteral("dy$c"), RCommand::GetIntVector | RCommand::App);
 			runCommandAsync(c, nullptr, [](RCommand *command) {
 			    QCOMPARE(command->getDataType(), RData::IntVector);
 			    QCOMPARE(command->getDataLength(), 2);
@@ -278,11 +278,11 @@ private Q_SLOTS:
 		while(lock) qApp->processEvents();
 
 		// Saw a frontend crash on this idiom, once:
-		RInterface::issueCommand("x <- list(NULL, 1)", RCommand::User);
+		RInterface::issueCommand(QStringLiteral("x <- list(NULL, 1)"), RCommand::User);
 		RInterface::whenAllFinished(this, [](RCommand*) {
 			QCOMPARE(RObjectList::getGlobalEnv()->findObject("x")->getLength(), 2);
 		});
-		RInterface::issueCommand("x[[1]] <- NULL", RCommand::User);
+		RInterface::issueCommand(QStringLiteral("x[[1]] <- NULL"), RCommand::User);
 		RInterface::whenAllFinished(this, [](RCommand*) {
 			QCOMPARE(RObjectList::getGlobalEnv()->findObject("x")->getLength(), 1);
 		});
@@ -290,20 +290,20 @@ private Q_SLOTS:
 	}
 
 	void parseErrorTest() {
-		runCommandWithTimeout(new RCommand("x <- ", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("x <- "), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(command->failed());
 			QVERIFY(command->errorIncomplete());
 		});
-		runCommandWithTimeout(new RCommand("(}", RCommand::App), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("(}"), RCommand::App), nullptr, [](RCommand *command) {
 			QVERIFY(command->failed());
 			QVERIFY(command->errorSyntax());
 		});
-		runCommandWithTimeout(new RCommand("(}", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("(}"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(command->failed());
 			QEXPECT_FAIL("", "Syntax error detection for User commands known to be broken, but doesn't really matter", Continue);
 			QVERIFY(command->errorSyntax());
 		});
-		runCommandWithTimeout(new RCommand("stop(\"123test\")", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("stop(\"123test\")"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(command->failed());
 			QVERIFY(command->error().contains("123test"));
 		});
@@ -312,25 +312,25 @@ private Q_SLOTS:
 
 	void userCommandTest() {
 		// Two commands submitted on one user line should both be run
-		runCommandWithTimeout(new RCommand("print('first'); print('second')", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("print('first'); print('second')"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(!command->failed());
 			QVERIFY(command->fullOutput().contains("first"));
 			QVERIFY(command->fullOutput().contains("second"));
 		});
 		// Also, of course for commands on separate lines:
-		runCommandWithTimeout(new RCommand("print('first')\nprint('second')", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("print('first')\nprint('second')"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(!command->failed());
 			QVERIFY(command->fullOutput().contains("first"));
 			QVERIFY(command->fullOutput().contains("second"));
 		});
 		// or multi-line commands:
-		runCommandWithTimeout(new RCommand("{ print('first')\nprint('second') }", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("{ print('first')\nprint('second') }"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(!command->failed());
 			QVERIFY(command->fullOutput().contains("first"));
 			QVERIFY(command->fullOutput().contains("second"));
 		});
 		// However, if a partial command fails, the next part should not get parsed:
-		runCommandWithTimeout(new RCommand("stop('first'); print('second')", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("stop('first'); print('second')"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(command->failed());
 			QVERIFY(command->fullOutput().contains("first"));
 			QVERIFY(!command->fullOutput().contains("second"));
@@ -341,20 +341,20 @@ private Q_SLOTS:
 	void commandOrderAndOutputTest() {
 		// commands shall run in the order 1, 3, 2, 5, 4, but also, of course, all different types of output shall be captured
 		QStringList output;
-		QRegularExpression extractnumber("\\d\\d\\d");
+		QRegularExpression extractnumber(QStringLiteral("\\d\\d\\d"));
 		auto callback = [&output, extractnumber](RCommand *command) {
 			auto res = extractnumber.match(command->fullOutput()); // clazy:exclude=use-static-qregularexpression - TODO: apparently false positive in clazy?
 			QVERIFY(res.hasMatch());
 			output.append(res.captured());
 		};
 
-		runCommandAsync(new RCommand("cat(\"111\\n\")", RCommand::User), nullptr, callback);
+		runCommandAsync(new RCommand(QStringLiteral("cat(\"111\\n\")"), RCommand::User), nullptr, callback);
 		auto chain = RInterface::startChain();
 		auto chain2 = RInterface::startChain(chain);
-		runCommandAsync(new RCommand("message(\"222\\n\")", RCommand::App), chain, callback);
-		runCommandAsync(new RCommand("stop(\"333\\n\")", RCommand::App), chain2, callback);
-		runCommandAsync(new RCommand("warning(\"444\\n\")", RCommand::User), nullptr, callback);
-		runCommandAsync(new RCommand("if (.Platform$OS.type == \"unix\") system(\"echo 555\") else invisible(system(\"cmd /c echo 555\"))", RCommand::App), chain, callback);
+		runCommandAsync(new RCommand(QStringLiteral("message(\"222\\n\")"), RCommand::App), chain, callback);
+		runCommandAsync(new RCommand(QStringLiteral("stop(\"333\\n\")"), RCommand::App), chain2, callback);
+		runCommandAsync(new RCommand(QStringLiteral("warning(\"444\\n\")"), RCommand::User), nullptr, callback);
+		runCommandAsync(new RCommand(QStringLiteral("if (.Platform$OS.type == \"unix\") system(\"echo 555\") else invisible(system(\"cmd /c echo 555\"))"), RCommand::App), chain, callback);
 		RInterface::closeChain(chain);
 		RInterface::closeChain(chain2);
 		waitForAllFinished();
@@ -371,7 +371,7 @@ private Q_SLOTS:
 		int cancelled_commands = 0;
 		int commands_out = 0;
 		for (int i = 0; i < 100; ++i) {
-			runCommandAsync(new RCommand("Sys.sleep(.005)", RCommand::User), nullptr, [&cancelled_commands, &commands_out](RCommand *command) {
+			runCommandAsync(new RCommand(QStringLiteral("Sys.sleep(.005)"), RCommand::User), nullptr, [&cancelled_commands, &commands_out](RCommand *command) {
 				if (command->wasCanceled()) cancelled_commands++;
 				commands_out++;
 			});
@@ -405,12 +405,12 @@ private Q_SLOTS:
 
 	void priorityCommandTest() {
 		bool priority_command_done = false;
-		runCommandAsync(new RCommand("\ncat(\"sleeping\\n\"); Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+		runCommandAsync(new RCommand(QStringLiteral("\ncat(\"sleeping\\n\"); Sys.sleep(5)"), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
 			QVERIFY(priority_command_done);
 			QVERIFY(command->failed());
 			QVERIFY(command->wasCanceled());
 		});
-		auto priority_command = new RCommand("cat(\"priority\\n\")", RCommand::PriorityCommand | RCommand::App);
+		auto priority_command = new RCommand(QStringLiteral("cat(\"priority\\n\")"), RCommand::PriorityCommand | RCommand::App);
 		runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
 			priority_command_done = true;
 			RInterface::instance()->cancelAll();
@@ -435,7 +435,7 @@ private Q_SLOTS:
 #		define UNIQUE_STRING "unique_command_string"
 		auto console = RKConsole::mainConsole();
 		console->pipeUserCommand("if (FALSE) " UNIQUE_STRING "()");
-		runCommandWithTimeout(new RCommand("local({x <- tempfile(); savehistory(x); readLines(x)})", RCommand::GetStringVector | RCommand::App), nullptr, [](RCommand *command) {
+		runCommandWithTimeout(new RCommand(QStringLiteral("local({x <- tempfile(); savehistory(x); readLines(x)})"), RCommand::GetStringVector | RCommand::App), nullptr, [](RCommand *command) {
 			QCOMPARE(command->stringVector().filter(UNIQUE_STRING).size(), 1);
 		});
 		console->pipeUserCommand("timestamp(prefix=\"" UNIQUE_STRING "\")");
@@ -448,33 +448,33 @@ private Q_SLOTS:
 
 	void RKDeviceTest() {
 		// Well, this test is sort of lame but should at least catch major breakage in RK() device
-		runCommandAsync(new RCommand("demo(graphics, ask=FALSE)", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandAsync(new RCommand(QStringLiteral("demo(graphics, ask=FALSE)"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(!command->failed());
 		});
-		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
+		RInterface::issueCommand(new RCommand(QStringLiteral("dev.off()"), RCommand::User));
 		waitForAllFinished(10000);
 	}
 
 	void HTMLWindowTest() {
 		// this test, too, is extremely basic, but sometimes there are problems instantiating a QWebEnginePage
-		runCommandAsync(new RCommand("?print", RCommand::User), nullptr, [](RCommand *command) {
+		runCommandAsync(new RCommand(QStringLiteral("?print"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(!command->failed());
 			QCOMPARE(RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::HelpWindow).size(), 1);
 			RKWorkplace::mainWorkplace()->closeAll(RKMDIWindow::HelpWindow);
 			QCOMPARE(RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::HelpWindow).size(), 0);
 		});
-		RInterface::issueCommand(new RCommand("dev.off()", RCommand::User));
+		RInterface::issueCommand(new RCommand(QStringLiteral("dev.off()"), RCommand::User));
 		waitForAllFinished(5000);
 	}
 
 	void SettingsTest() {
 		// Another very basic test. Essentially we check, whether the settings dialog can be created.
 		QVERIFY(!RKSettings::settings_dialog);
-		RKWorkplace::mainWorkplace()->openAnyUrl(QUrl("rkward://settings/plugins"));
+		RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(QStringLiteral("rkward://settings/plugins")));
 		auto dialog = RKSettings::settings_dialog;
 		QVERIFY(dialog);
 
-		RKWorkplace::mainWorkplace()->openAnyUrl(QUrl("rkward://settings/graphics"));
+		RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(QStringLiteral("rkward://settings/graphics")));
 		QVERIFY(dialog == RKSettings::settings_dialog);  // shall be reused
 
 		// Load and unload a bunch of plugins (settings dialog will be modified, but of course, also plugin loading/unloading is given another round
@@ -533,19 +533,19 @@ private Q_SLOTS:
 
 	void dataEditorTest() {
 		// Create a quirky data.frame, intentionally. Goal is not to crash ;-)
-		RInterface::issueCommand(new RCommand("df <- data.frame('a'=letters, 'a'=letters, 'b'=letters, check.names=FALSE); df[[2, 'b']] <- list('x')", RCommand::User));
-		RInterface::issueCommand(new RCommand("rk.edit(df)", RCommand::User));
+		RInterface::issueCommand(new RCommand(QStringLiteral("df <- data.frame('a'=letters, 'a'=letters, 'b'=letters, check.names=FALSE); df[[2, 'b']] <- list('x')"), RCommand::User));
+		RInterface::issueCommand(new RCommand(QStringLiteral("rk.edit(df)"), RCommand::User));
 		waitForAllFinished();
 		RKWardMainWindow::getMain()->slotCloseAllEditors();
 	}
 
 	void rkMenuTest() {
 		const QStringList actionpath {"analysis", "myaction"};
-		RInterface::issueCommand(new RCommand("a <- rk.menu()", RCommand::App));
+		RInterface::issueCommand(new RCommand(QStringLiteral("a <- rk.menu()"), RCommand::App));
 		for (const auto &segment : actionpath) {
 			RInterface::issueCommand(new RCommand("a <- a$item(" + RObject::rQuote(segment) + ")", RCommand::App));
 		}
-		RInterface::issueCommand(new RCommand("a$define('My Label', function() assign('x', 'actionval', envir=globalenv()))", RCommand::User));
+		RInterface::issueCommand(new RCommand(QStringLiteral("a$define('My Label', function() assign('x', 'actionval', envir=globalenv()))"), RCommand::User));
 		waitForAllFinished();
 		auto m = RKWardMainWindow::getMain()->rApiMenu();
 		auto a = m->actionByPath(actionpath);
@@ -553,8 +553,8 @@ private Q_SLOTS:
 		QVERIFY(a && a->text()=="My Label");
 		QVERIFY(a && a->isEnabled());
 		if (a) a->trigger();
-		RInterface::issueCommand(new RCommand("a$enable(FALSE)", RCommand::User));
-		runCommandAsync(new RCommand("stopifnot(x == 'actionval')", RCommand::App), nullptr, [](RCommand *c) {
+		RInterface::issueCommand(new RCommand(QStringLiteral("a$enable(FALSE)"), RCommand::User));
+		runCommandAsync(new RCommand(QStringLiteral("stopifnot(x == 'actionval')"), RCommand::App), nullptr, [](RCommand *c) {
 			QVERIFY(c->succeeded());
 		});
 		waitForAllFinished();
@@ -562,15 +562,15 @@ private Q_SLOTS:
 		QVERIFY(b);
 		QVERIFY(b == a); // existing action should have been reused
 		QVERIFY(b && (!b->isEnabled()));
-		RInterface::issueCommand(new RCommand("a$remove()", RCommand::App));
-		RInterface::issueCommand(new RCommand("rm(x)", RCommand::App));
+		RInterface::issueCommand(new RCommand(QStringLiteral("a$remove()"), RCommand::App));
+		RInterface::issueCommand(new RCommand(QStringLiteral("rm(x)"), RCommand::App));
 		waitForAllFinished();
 		QVERIFY(!m->actionByPath(actionpath));
 	}
 
 	void restartRBackend() {
-		RInterface::issueCommand(new RCommand("setwd(tempdir())", RCommand::User)); // retart used to fail, if in non-existant directory
-		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
+		RInterface::issueCommand(new RCommand(QStringLiteral("setwd(tempdir())"), RCommand::User)); // retart used to fail, if in non-existant directory
+		RInterface::issueCommand(new RCommand(QStringLiteral("x <- 1"), RCommand::User));
 		waitForAllFinished();
 		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
 
@@ -593,7 +593,7 @@ private Q_SLOTS:
 		// backend should be clean after restart
 		QVERIFY(!RObjectList::getGlobalEnv()->findObject("x"));
 		// but of course it should also be functional...
-		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
+		RInterface::issueCommand(new RCommand(QStringLiteral("x <- 1"), RCommand::User));
 		waitForAllFinished();
 		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
 	}
@@ -601,7 +601,7 @@ private Q_SLOTS:
 	void cleanupTestCase()
 	{
 		// at least the backend should exit properly, to avoid creating emergency save files
-		RInterface::issueCommand(new RCommand(QString("# Quit (test cleanup)"), RCommand::App | RCommand::EmptyCommand | RCommand::QuitCommand));
+		RInterface::issueCommand(new RCommand(QStringLiteral("# Quit (test cleanup)"), RCommand::App | RCommand::EmptyCommand | RCommand::QuitCommand));
 		RKWardMainWindow::getMain()->slotCloseAllWindows();
 		while (!(RInterface::instance()->backendIsDead())) {
 			qApp->processEvents();

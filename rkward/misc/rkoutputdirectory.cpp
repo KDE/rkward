@@ -40,7 +40,7 @@ void listDirectoryState(const QString& _dir, QString *list, const QString &prefi
 			listDirectoryState(fi.absolutePath(), list, prefix + '/' + fi.fileName());
 		} else {
 			list->append(fi.fileName() + '\t');
-			list->append(fi.lastModified().toString("dd.hh.mm.ss.zzz") + '\t');
+			list->append(fi.lastModified().toString(QStringLiteral("dd.hh.mm.ss.zzz")) + '\t');
 			list->append(QString::number(fi.size()) + '\n');
 		}
 	}
@@ -78,7 +78,7 @@ RKOutputDirectory* RKOutputDirectory::findOutputById(const QString& id) {
 RKOutputDirectory* RKOutputDirectory::findOutputByWorkPath(const QString& workpath) {
 	RK_TRACE (APP);
 
-	if (workpath.endsWith("index.html")) {
+	if (workpath.endsWith(QLatin1String("index.html"))) {
 		QString wp = workpath;
 		return(outputs.value(wp.chopped(11)));  // index.html, including pathsep
 	}
@@ -167,7 +167,7 @@ GenericRRequestResult RKOutputDirectory::exportZipInternal(const QString &dest) 
 
 	KZip zip(tempname);
 	bool ok = zip.open(QIODevice::WriteOnly);
-	zip.addLocalDirectory(work_dir, "rkward_output");
+	zip.addLocalDirectory(work_dir, QStringLiteral("rkward_output"));
 	ok = ok && zip.close();
 	if (!ok) {
 		QFile(tempname).remove();
@@ -199,7 +199,7 @@ GenericRRequestResult RKOutputDirectory::importZipInternal(const QString &_from)
 	KZip zip(from);
 	bool ok = zip.open(QIODevice::ReadOnly);
 	if (ok) {
-		auto dir = zip.directory()->entry("rkward_output");
+		auto dir = zip.directory()->entry(QStringLiteral("rkward_output"));
 		if (!(dir && dir->isDirectory())) ok = false;
 		if (ok && !static_cast<const KArchiveDirectory*>(dir)->copyTo(work_dir, true)) ok = false;
 	}
@@ -293,7 +293,7 @@ GenericRRequestResult RKOutputDirectory::clear(OverwriteBehavior discard) {
 
 	QDir dir(work_dir);
 	dir.removeRecursively();
-	dir.mkpath(".");
+	dir.mkpath(QStringLiteral("."));
 	initialized = false;
 	if (isActive()) activate();
 
@@ -367,7 +367,7 @@ QString RKOutputDirectory::workPath() const {
 	RK_TRACE(APP);
 
 	// hardcoded for now, might be made to support several files in the future
-	return (QDir(work_dir).absoluteFilePath("index.html"));
+	return (QDir(work_dir).absoluteFilePath(QStringLiteral("index.html")));
 }
 
 bool RKOutputDirectory::isActive() const {

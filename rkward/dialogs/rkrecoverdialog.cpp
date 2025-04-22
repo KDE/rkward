@@ -33,7 +33,7 @@ RKRecoverDialog::RKRecoverDialog (const QStringList &recovery_files) : QDialog (
 	const QString caption = i18n ("Crash recovery file detected");
 	setWindowTitle (caption);
 
-	QString text = QString ("<p><b>%1</b></p>").arg (caption);
+	QString text = QStringLiteral ("<p><b>%1</b></p>").arg (caption);
 	text.append (i18n ("<p>It looks like RKWard has crashed, recently. We are sorry about that! However, not everything is lost, and with a bit of luck, your data has been saved in time.</p>"));
 	text.append (i18np ("<p>A workspace recovery file exists, dating from <i>%2</i>.</p>", "<p>%1 workspace recovery files exist, the most recent one of which dates from <i>%2</i>.</p>", recovery_files.count (),  QLocale::system().toString(QFileInfo (recovery_files.first ()).lastModified (), QLocale::ShortFormat)));
 	text.append (i18n ("<p>Do you want to open this file, now, save it for later (as <i>%1</i>), or discard it?</p>", saveFileFor (recovery_files.first ())));
@@ -77,7 +77,7 @@ QString RKRecoverDialog::saveFileFor (const QString& recovery_file) {
 	for (int i = 0; i < 100; ++i) {	// If we just had more than 100 crashes per minutes, you'll excuse another small bug, at this point
 		QString num;
 		if (i > 0) num = '_' + QString::number (i+1);
-		new_name = dir.absoluteFilePath ("recovered_workspace_" + mtime.toString ("yyyy-MM-dd_hh:mm") + num + ".RData");
+		new_name = dir.absoluteFilePath ("recovered_workspace_" + mtime.toString (QStringLiteral("yyyy-MM-dd_hh:mm")) + num + ".RData");
 		if (!QFileInfo::exists(new_name)) break;
 	}
 	return new_name;

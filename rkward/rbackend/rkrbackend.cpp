@@ -170,7 +170,7 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 		// Making this request synchronous is a bit painful. However, without this, it's extremely difficult to get correct interleaving of output and command lines
 		RKRSupport::InterruptSuspension susp; // This could also result in interrupts, in corner cases, so lets suspend those, for the minute
 		RBackendRequest req (true, RBackendRequest::CommandLineIn);
-		req.params["commandid"] = RKRBackend::this_pointer->current_command->id;
+		req.params[QStringLiteral("commandid")] = RKRBackend::this_pointer->current_command->id;
 		RKRBackend::this_pointer->handleRequest (&req);
 	}
 }
@@ -187,7 +187,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	if (RKRBackend::repl_status.browser_context) {		// previously we were in a browser context. Check, whether we've left that.
 		if (RKRBackend::default_global_context == ROb(R_GlobalContext)) {
 			RKRBackend::repl_status.browser_context = RKRBackend::RKReplStatus::NotInBrowserContext;
-			RKRBackend::this_pointer->doRCallRequest("endBrowserContext", QVariant(), RKRBackend::Asynchronous);
+			RKRBackend::this_pointer->doRCallRequest(QStringLiteral("endBrowserContext"), QVariant(), RKRBackend::Asynchronous);
 		}
 	}
 
@@ -260,7 +260,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				}
 
 				int n_frames = 0;
-				RCommandProxy *dummy = RKRBackend::this_pointer->runDirectCommand ("sys.nframe()", RCommand::GetIntVector);
+				RCommandProxy *dummy = RKRBackend::this_pointer->runDirectCommand (QStringLiteral("sys.nframe()"), RCommand::GetIntVector);
 				if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
 					n_frames = dummy->intVector ().at (0);
 				}
@@ -292,8 +292,8 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	// browser() also takes us here.
 	QVariantMap params;
 	RBackendRequest::RCallbackType request_type = RBackendRequest::ReadLine;
-	params["prompt"] = QVariant (prompt);
-	params["cancelled"] = QVariant (false);
+	params[QStringLiteral("prompt")] = QVariant (prompt);
+	params[QStringLiteral("cancelled")] = QVariant (false);
 
 	// add info for browser requests
 	if (hist && (RKRBackend::default_global_context != ROb(R_GlobalContext))) {
@@ -302,16 +302,16 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			return 1;
 		} else {
 			RKRBackend::repl_status.browser_context = RKRBackend::RKReplStatus::InBrowserContextPreventRecursion;
-			RCommandProxy *dummy = RKRBackend::this_pointer->runDirectCommand (".rk.callstack.info()", RCommand::GetStructuredData);
+			RCommandProxy *dummy = RKRBackend::this_pointer->runDirectCommand (QStringLiteral(".rk.callstack.info()"), RCommand::GetStructuredData);
 
 			request_type = RBackendRequest::Debugger;
 			if ((dummy->getDataType () == RData::StructureVector) && (dummy->getDataLength () >= 4)) {
 				RData::RDataStorage dummy_data = dummy->structureVector ();
-				params["calls"] = QVariant (dummy_data.at (0)->stringVector ());
-				params["funs"] = QVariant (dummy_data.at (1)->stringVector ());
-				params["envs"] = QVariant (dummy_data.at (2)->stringVector ());
-				params["locals"] = QVariant (dummy_data.at (3)->stringVector ());
-				params["relsrclines"] = QVariant (dummy_data.at (4)->stringVector ());		// hacky: passing a QList<int> is not supported by QVariant
+				params[QStringLiteral("calls")] = QVariant (dummy_data.at (0)->stringVector ());
+				params[QStringLiteral("funs")] = QVariant (dummy_data.at (1)->stringVector ());
+				params[QStringLiteral("envs")] = QVariant (dummy_data.at (2)->stringVector ());
+				params[QStringLiteral("locals")] = QVariant (dummy_data.at (3)->stringVector ());
+				params[QStringLiteral("relsrclines")] = QVariant (dummy_data.at (4)->stringVector ());		// hacky: passing a QList<int> is not supported by QVariant
 			} else {
 				RK_ASSERT (false);
 			}
@@ -326,13 +326,13 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	request.params = params;
 
 	RKRBackend::this_pointer->handleRequest (&request);
-	if (request.params["cancelled"].toBool ()) {
+	if (request.params[QStringLiteral("cancelled")].toBool ()) {
 		if (RKRBackend::this_pointer->current_command) RKRBackend::this_pointer->current_command->status |= RCommand::Canceled;
 		RFn::Rf_error("cancelled");
 		RK_ASSERT (false);	// should not reach this point.
 	}
 
-	QByteArray localres = RKTextCodec::toNative(request.params["result"].toString());
+	QByteArray localres = RKTextCodec::toNative(request.params[QStringLiteral("result")].toString());
 	// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
 	qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
 	return 1;
@@ -496,7 +496,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	if (saveact != SA_SUICIDE) {
 		if (!RKRBackend::this_pointer->isKilled ()) {
 			RBackendRequest request (true, RBackendRequest::BackendExit);
-			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1", status));
+			request.params[QStringLiteral("message")] = QVariant (i18n ("The R engine has shut down with status: %1", status));
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Cleaning up");
@@ -517,7 +517,7 @@ void RSuicide (const char* message) {
 
 	if (!RKRBackend::this_pointer->isKilled ()) {
 		RBackendRequest request (true, RBackendRequest::BackendExit);
-		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1", message));
+		request.params[QStringLiteral("message")] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1", message));
 		RKRBackend::this_pointer->handleRequest (&request);
 		RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 		RCleanUp (SA_SUICIDE, 1, 0);
@@ -567,8 +567,8 @@ int RChooseFile(int isnew, char *buf, int len) {
 	RK_TRACE (RBACKEND);
 
 	QStringList params;
-	params << QString() /* caption */ << QString() /* initial */ << "*" /* filter */ << (isnew ? "newfile" : "file");
-	auto res = RKRBackend::this_pointer->doRCallRequest("choosefile", params, RKRBackend::Synchronous);
+	params << QString() /* caption */ << QString() /* initial */ << QStringLiteral("*") /* filter */ << (isnew ? "newfile" : "file");
+	auto res = RKRBackend::this_pointer->doRCallRequest(QStringLiteral("choosefile"), params, RKRBackend::Synchronous);
 
 	QByteArray localres = RKTextCodec::toNative(res.ret.toString());
 	qstrncpy ((char *) buf, localres.data(), len);
@@ -586,14 +586,14 @@ void REditFilesHelper (const QStringList &files, const QStringList &titles, cons
 	RK_ASSERT ((edit == RBackendRequest::ShowFiles) || (edit == RBackendRequest::EditFiles));
 	RBackendRequest request (edit != RBackendRequest::ShowFiles, edit);		// editing is synchronous, showing is asynchronous
 	if (edit == RBackendRequest::ShowFiles) {
-		request.params["delete"] = QVariant (delete_files);
+		request.params[QStringLiteral("delete")] = QVariant (delete_files);
 	}
 	// see ?file.show() for what appears to be the intended meaning of these first three parameters
 	// (which seem to be inconsistently named even in R itself...)
-	request.params["files"] = QVariant (files);
-	request.params["titles"] = QVariant (titles);
-	request.params["wtitle"] = QVariant (wtitle);
-	request.params["prompt"] = QVariant (prompt);
+	request.params[QStringLiteral("files")] = QVariant (files);
+	request.params[QStringLiteral("titles")] = QVariant (titles);
+	request.params[QStringLiteral("wtitle")] = QVariant (wtitle);
+	request.params[QStringLiteral("prompt")] = QVariant (prompt);
 
 	RKRBackend::this_pointer->handleRequest (&request);
 }
@@ -657,19 +657,19 @@ int doDialogHelper (const QString &caption, const QString &message, const QStrin
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (wait, RBackendRequest::ShowMessage);
-	request.params["caption"] = QVariant (caption);
-	request.params["message"] = QVariant (message);
-	request.params["button_yes"] = QVariant (button_yes);
-	request.params["button_no"] = QVariant (button_no);
-	request.params["button_cancel"] = QVariant (button_cancel);
-	request.params["default"] = QVariant (default_button);
+	request.params[QStringLiteral("caption")] = QVariant (caption);
+	request.params[QStringLiteral("message")] = QVariant (message);
+	request.params[QStringLiteral("button_yes")] = QVariant (button_yes);
+	request.params[QStringLiteral("button_no")] = QVariant (button_no);
+	request.params[QStringLiteral("button_cancel")] = QVariant (button_cancel);
+	request.params[QStringLiteral("default")] = QVariant (default_button);
 
 	RKRBackend::this_pointer->handleRequest (&request);
  
 	if (wait) {
-		QString ret = request.params["result"].toString ();
-		if (ret == "yes") return 1;
-		if (ret == "no") return -1;
+		QString ret = request.params[QStringLiteral("result")].toString ();
+		if (ret == QLatin1String("yes")) return 1;
+		if (ret == QLatin1String("no")) return -1;
 	}
 	return 0;
 }
@@ -687,7 +687,7 @@ SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP
 void RShowMessage (const char* message) {
 	RK_TRACE (RBACKEND);
 
-	doDialogHelper (i18n ("Message from the R backend"), message, "ok", QString (), QString (), "ok", true);
+	doDialogHelper (i18n ("Message from the R backend"), message, QStringLiteral("ok"), QString (), QString (), QStringLiteral("ok"), true);
 }
 
 // TODO: currently used on windows, only!
@@ -695,7 +695,7 @@ int RAskYesNoCancel (const char* message) {
 	RK_TRACE (RBACKEND);
 
 	if (RKRBackend::this_pointer->killed) return -1;	// HACK: At this point R asks whether to save the workspace. We have already handled that. So return -1 for "no"
-	return doDialogHelper (i18n ("Question from the R backend"), message, "yes", "no", "cancel", "yes", true);
+	return doDialogHelper (i18n ("Question from the R backend"), message, QStringLiteral("yes"), QStringLiteral("no"), QStringLiteral("cancel"), QStringLiteral("yes"), true);
 }
 
 void RBusy (int busy) {
@@ -903,17 +903,17 @@ SEXP doSimpleBackendCall (SEXP _call) {
 		return ROb(R_NilValue);
 	} else if (call == QStringLiteral ("tempdir")) {
 		return (RKRSupport::StringListToSEXP (QStringList (RKRBackendProtocolBackend::dataDir ())));
-	} else if (call == "home") {
-		if (list.value(1) == "home") return RKRSupport::StringListToSEXP(QStringList(RKRBackendProtocolBackend::dataDir()));
-		else if (list.value(1) == "lib") return RKRSupport::StringListToSEXP(QStringList(getLibLoc()));
+	} else if (call == QLatin1String("home")) {
+		if (list.value(1) == QLatin1String("home")) return RKRSupport::StringListToSEXP(QStringList(RKRBackendProtocolBackend::dataDir()));
+		else if (list.value(1) == QLatin1String("lib")) return RKRSupport::StringListToSEXP(QStringList(getLibLoc()));
 		else RK_ASSERT(false); // should have been handled in frontend
-	} else if (call == "backendSessionInfo") {
+	} else if (call == QLatin1String("backendSessionInfo")) {
 		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
 		QStringList lines("Debug message file (this may contain relevant diagnostic output in case of trouble):");
 		lines.append(RKRBackendProtocolBackend::backendDebugFile());
 		lines.append(QString());
 		// NOTE: R_SVN_REVISON used to be a string, but has changed to numeric constant in R 3.0.0. QString::arg() handles both.
-		lines.append(QString("R version (compile time): %1").arg(QString(R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg(R_SVN_REVISION)));
+		lines.append(QStringLiteral("R version (compile time): %1").arg(QString(R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg(R_SVN_REVISION)));
 		return RKRSupport::StringListToSEXP(lines);
 	}
 
@@ -1047,8 +1047,8 @@ bool RKRBackend::startR () {
 	setlocale (LC_NUMERIC, "C");	// Under some conditions something appears to mess with the locale. R will not work correctly without LC_NUMERIC=C
 
 	RBackendRequest req (false, RBackendRequest::SetParamsFromBackend);
-	req.params["na_real"] = ROb(R_NaReal);	// may not be initialized before setup_Rmainloop!
-	req.params["na_int"] = ROb(R_NaInt);
+	req.params[QStringLiteral("na_real")] = ROb(R_NaReal);	// may not be initialized before setup_Rmainloop!
+	req.params[QStringLiteral("na_int")] = ROb(R_NaInt);
 	handleRequest (&req);
 
 	RKWard_RData_Tag = RFn::Rf_install ("RKWard_RData_Tag");
@@ -1088,10 +1088,10 @@ bool RKRBackend::startR () {
 
 	// What the??? Somehow the first command we run *will* appear to throw a syntax error. Some init step seems to be missing, but where?
 	// Anyway, we just run a dummy to "clear" that trap.
-	runDirectCommand ("\n");
+	runDirectCommand (QStringLiteral("\n"));
 
 	// get info on R runtime version
-	RCommandProxy *dummy = runDirectCommand ("(as.numeric(R.version$major)*1000+as.numeric(R.version$minor)*10)\n", RCommand::GetIntVector);
+	RCommandProxy *dummy = runDirectCommand (QStringLiteral("(as.numeric(R.version$major)*1000+as.numeric(R.version$minor)*10)\n"), RCommand::GetIntVector);
 	if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
 		r_version = dummy->intVector ().at (0);
 	} else {
@@ -1288,7 +1288,7 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	if (ctype & RCommand::QuitCommand) {
 		RFn::R_dot_Last ();		// should run while communication with frontend is still possible
 		RBackendRequest req (true, RBackendRequest::BackendExit);
-		req.params["regular"] = QVariant (true);
+		req.params[QStringLiteral("regular")] = QVariant (true);
 		handleRequest (&req);
 		killed = ExitNow;
 	} else if (!(ctype & RCommand::EmptyCommand)) {
@@ -1391,7 +1391,7 @@ void RKRBackend::catToOutputFile (const QString &out) {
 void RKRBackend::printCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
-	QString highlighted = doRCallRequest("highlightRCode", command, RKRBackend::Synchronous).ret.toString();
+	QString highlighted = doRCallRequest(QStringLiteral("highlightRCode"), command, RKRBackend::Synchronous).ret.toString();
 	catToOutputFile(highlighted);
 }
 
@@ -1546,10 +1546,10 @@ GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVar
 
 	bool synchronous = flags != Asynchronous;
 	RBackendRequest request(synchronous, RBackendRequest::RCallRequest);
-	request.params["call"] = call;
-	if (!params.isNull()) request.params["args"] = params;
+	request.params[QStringLiteral("call")] = call;
+	if (!params.isNull()) request.params[QStringLiteral("args")] = params;
 	if (flags == SynchronousWithSubcommands) {
-		request.params["cid"] = current_command->id;
+		request.params[QStringLiteral("cid")] = current_command->id;
 		request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
 	}
 	handleRequest(&request);
@@ -1572,7 +1572,7 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	// Try to load rkward package. If that fails, or is the wrong version, try to install
 	// rkward package, then load again.
 	QString libloc = getLibLoc();
-	QString versioncheck = QString("stopifnot(.rk.app.version==\"%1\")").arg(RKWARD_VERSION);
+	QString versioncheck = QStringLiteral("stopifnot(.rk.app.version==\"%1\")").arg(RKWARD_VERSION);
 	QString command = "local({\n"
 	                  "  libloc <- " + RKRSharedFunctionality::quote(libloc) + "\n"
 	                  "  if (!dir.exists (libloc)) dir.create(libloc, recursive=TRUE)\n"
@@ -1589,10 +1589,10 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	if (!runDirectCommand(command)) lib_load_fail = true;
 	RK_setupGettext(locale_dir);	// must happen *after* package loading, since R will re-set it
 	if (!runDirectCommand(versioncheck + "\n")) lib_load_fail = true;
-	if (!runDirectCommand(".rk.fix.assignments ()\n")) sink_fail = true;
+	if (!runDirectCommand(QStringLiteral(".rk.fix.assignments ()\n"))) sink_fail = true;
 
 // error/output sink and help browser
-	if (!runDirectCommand ("options (error=quote (.rk.do.error ()))\n")) sink_fail = true;
+	if (!runDirectCommand (QStringLiteral("options (error=quote (.rk.do.error ()))\n"))) sink_fail = true;
 
 	QString error_messages;
 	if (lib_load_fail) {
@@ -1605,7 +1605,7 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	}
 
 	RBackendRequest req (true, RBackendRequest::Started);
-	req.params["message"] = QVariant (error_messages);
+	req.params[QStringLiteral("message")] = QVariant (error_messages);
 	// blocks until RKWard is set to go (esp, it has displayed startup error messages, etc.)
 	// in fact, a number of sub-commands are run while handling this request!
 	handleRequest (&req);
@@ -1622,7 +1622,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	if (check_list) {	
 	// TODO: avoid parsing this over and over again
 		RK_DEBUG (RBACKEND, DL_TRACE, "checkObjectUpdatesNeeded: getting search list");
-		RCommandProxy *dummy = runDirectCommand ("list(search(), loadedNamespaces())\n", RCommand::GetStructuredData);
+		RCommandProxy *dummy = runDirectCommand (QStringLiteral("list(search(), loadedNamespaces())\n"), RCommand::GetStructuredData);
 		QStringList n_toplevel_env_names = dummy->structureVector().value(0)->stringVector();
 		QStringList n_loaded_namespaces = dummy->structureVector().value(1)->stringVector();
 		delete dummy;
@@ -1632,7 +1632,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 			QVariantList args;
 			args.append(QVariant(toplevel_env_names));
 			args.append(QVariant(loaded_namespaces));
-			doRCallRequest("syncenvs", args, SynchronousWithSubcommands);
+			doRCallRequest(QStringLiteral("syncenvs"), args, SynchronousWithSubcommands);
 		} 
 	}
 
@@ -1642,7 +1642,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 		args.append(changes.added);
 		args.append(changes.removed);
 		args.append(changes.changed);
-		doRCallRequest("sync", args, SynchronousWithSubcommands);
+		doRCallRequest(QStringLiteral("sync"), args, SynchronousWithSubcommands);
 	}
 }
 

@@ -43,7 +43,7 @@ public:
 
 		setWindowTitle(i18n("Console"));
 		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowConsole));
-		help_url = QUrl("rkward://page/rkward_console#settings");
+		help_url = QUrl(QStringLiteral("rkward://page/rkward_console#settings"));
 
 		QVBoxLayout *vbox = new QVBoxLayout(this);
 
@@ -114,7 +114,7 @@ bool RKSettingsModuleConsole::shouldDoHistoryContextSensitive (Qt::KeyboardModif
 void RKSettingsModuleConsole::syncConfig(KConfig* config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group ("Console Settings");
+	KConfigGroup cg = config->group (QStringLiteral("Console Settings"));
 	save_history.syncConfig(cg, a);
 	max_history_length.syncConfig(cg, a);
 	max_console_lines.syncConfig(cg, a);
@@ -133,7 +133,7 @@ void RKSettingsModuleConsole::syncConfig(KConfig* config, RKConfigBase::ConfigSy
 QStringList RKSettingsModuleConsole::loadCommandHistory () {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = KSharedConfig::openConfig ()->group ("Console Settings");
+	KConfigGroup cg = KSharedConfig::openConfig ()->group (QStringLiteral("Console Settings"));
 	return cg.readEntry ("history", QStringList ());
 }
 
@@ -141,7 +141,7 @@ QStringList RKSettingsModuleConsole::loadCommandHistory () {
 void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = KSharedConfig::openConfig ()->group ("Console Settings");
+	KConfigGroup cg = KSharedConfig::openConfig ()->group (QStringLiteral("Console Settings"));
 	if (save_history) {
 		cg.writeEntry ("history", list);
 	}

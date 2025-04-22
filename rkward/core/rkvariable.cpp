@@ -77,10 +77,10 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 
 		if (sync) {
 			QString command = ".rk.set.vector.mode(" + getFullName () + ", ";
-			if (new_type == RObject::DataCharacter) command += "as.character";
-			else if (new_type == RObject::DataNumeric) command += "as.numeric";
-			else if (new_type == RObject::DataLogical) command += "as.logical";
-			else if (new_type == RObject::DataFactor) command += "as.factor";
+			if (new_type == RObject::DataCharacter) command += QLatin1String("as.character");
+			else if (new_type == RObject::DataNumeric) command += QLatin1String("as.numeric");
+			else if (new_type == RObject::DataLogical) command += QLatin1String("as.logical");
+			else if (new_type == RObject::DataFactor) command += QLatin1String("as.factor");
 			command += ')';
 			RCommand *rcommand = new RCommand(command, RCommand::App | RCommand::Sync);
 			rcommand->setUpdatesObject(this);
@@ -267,7 +267,7 @@ void RKVariable::updateDataFromR (RCommandChain *chain) {
 			}
 		}
 		data->previously_valid = data->invalid_fields.isEmpty ();
-		data->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
+		data->formatting_options = parseFormattingOptionsString (getMetaProperty (QStringLiteral("format")));
 
 		ChangeSet *set = new ChangeSet (0, getLength (), true);
 		RKModificationTracker::instance()->objectDataChanged (this, set);
@@ -377,7 +377,7 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 		RInterface::issueCommand(command, chain);
 		if (data->cell_states[from_row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (from_row);
 	} else {
-		QString data_string = "c (";
+		QString data_string = QStringLiteral("c (");
 		for (int row = from_row; row <= to_row; ++row) {
 			// TODO: use getCharacter and direct setting of vectors.
 			data_string.append (getRText (row));
@@ -463,8 +463,8 @@ QString RKVariable::getText (int row, bool pretty) const {
 
 	if (pretty) {
 		if (getDataType () == DataLogical) {
-			if (ret == "0") return "FALSE";
-			else if (ret == "1") return "TRUE";
+			if (ret == QLatin1String("0")) return QStringLiteral("FALSE");
+			else if (ret == QLatin1String("1")) return QStringLiteral("TRUE");
 		} else if (data->value_labels) {
 			if (data->value_labels->contains (ret)) {
 				return (*(data->value_labels))[ret];
@@ -525,8 +525,8 @@ void RKVariable::setText (int row, const QString &text) {
 				}
 			} else valid = false;
 		} else if (getDataType () == DataLogical) {
-			if (text == "0" || text == "F" || text == "FALSE") data->cell_doubles[row] = 0;
-			else if (text == "1" || text == "T" || text == "TRUE") data->cell_doubles[row] = 1;
+			if (text == QLatin1String("0") || text == QLatin1String("F") || text == QLatin1String("FALSE")) data->cell_doubles[row] = 0;
+			else if (text == QLatin1String("1") || text == QLatin1String("T") || text == QLatin1String("TRUE")) data->cell_doubles[row] = 1;
 			else valid = false;
 		} else {
 			data->cell_doubles[row] = text.toDouble (&valid);
@@ -742,7 +742,7 @@ void RKVariable::writeValueLabels (RCommandChain *chain) const {
 	QString level_string;
 	if (data->value_labels && (!data->value_labels->isEmpty())) {
 		int i = 1;
-		level_string = "c (";
+		level_string = QLatin1String("c (");
 		while (data->value_labels->contains (QString::number (i))) {
 			level_string.append (rQuote ((*(data->value_labels))[QString::number (i)]));
 			if (data->value_labels->contains (QString::number (++i))) {
@@ -751,7 +751,7 @@ void RKVariable::writeValueLabels (RCommandChain *chain) const {
 		}
 		level_string.append (")");
 	} else {
-		level_string = "NULL";
+		level_string = QLatin1String("NULL");
 	}
 
 	RCommand* command = new RCommand(".rk.set.levels(" + getFullName() + ", " + level_string + ')', RCommand::App | RCommand::Sync);
@@ -784,7 +784,7 @@ void RKVariable::setValueLabelString (const QString &string) {
 	RK_ASSERT (data);
 
 	ValueLabels new_labels;	
-	QStringList list = string.split ("#,#");
+	QStringList list = string.split (QStringLiteral("#,#"));
 
 	int i = 1;
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
@@ -808,7 +808,7 @@ void RKVariable::setFormattingOptions (const FormattingOptions new_options) {
 	if ((new_options.alignment == data->formatting_options.alignment) && (new_options.precision_mode == data->formatting_options.precision_mode) && (new_options.precision == data->formatting_options.precision)) return;
 
 	data->formatting_options = new_options;
-	setMetaProperty ("format", formattingOptionsToString (new_options));
+	setMetaProperty (QStringLiteral("format"), formattingOptionsToString (new_options));
 
 	// also update display of all values:
 	ChangeSet *set = new ChangeSet (0, getLength () -1);
@@ -819,7 +819,7 @@ QString RKVariable::getFormattingOptionsString () const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
 
-	return getMetaProperty ("format");
+	return getMetaProperty (QStringLiteral("format"));
 }
 
 void RKVariable::setFormattingOptionsString (const QString &string) {
@@ -868,15 +868,15 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 		
 		if (parameter.isEmpty ()) continue;
 		
-		if (option == "align") {
+		if (option == QLatin1String("align")) {
 			int al = parameter.toInt ();
 			if ((al >= (int) FormattingOptions::AlignDefault) && (al <= (int) FormattingOptions::AlignRight)) {
 				formatting_options.alignment = (FormattingOptions::Alignment) al;
 			}
-		} else if (option == "prec") {
-			if (parameter == "d") {
+		} else if (option == QLatin1String("prec")) {
+			if (parameter == QLatin1String("d")) {
 				formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
-			} else if (parameter == "v") {
+			} else if (parameter == QLatin1String("v")) {
 				formatting_options.precision_mode = FormattingOptions::PrecisionRequired;
 			} else {
 				int digits = parameter.toInt ();

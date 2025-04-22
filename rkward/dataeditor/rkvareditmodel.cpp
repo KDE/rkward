@@ -273,7 +273,7 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 
 	RKVariable::Status status = var->cellStatus (row);
 	if (role == Qt::DisplayRole) {
-		if (status == RKVariable::ValueUnused) return QString ("<NA>");
+		if (status == RKVariable::ValueUnused) return QStringLiteral ("<NA>");
 		return var->getText (row, true);
 	}
 	if (role == Qt::BackgroundRole) {

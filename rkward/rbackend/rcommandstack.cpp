@@ -267,7 +267,7 @@ QVariant RCommandStackModel::data (const QModelIndex& index, int role) const {
 			QString ret;
 			if (command->status & RCommand::Running) ret += i18n ("Running");
 			if (command->status & RCommand::Canceled) {
-				if (!ret.isEmpty ()) ret += ", ";
+				if (!ret.isEmpty ()) ret += QLatin1String(", ");
 				ret += i18n ("Canceled");
 			}
 			return (ret);

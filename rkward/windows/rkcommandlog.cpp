@@ -79,7 +79,7 @@ void RKCommandLog::addOtherMessage(const QString &message, const QIcon &icon, RO
 
 	if (!icon.isNull()) {
 		auto doc = log_view->document();
-		QUrl uri = QUrl(QString("internalicon://%1.png").arg(icon.name()));
+		QUrl uri = QUrl(QStringLiteral("internalicon://%1.png").arg(icon.name()));
 		doc->addResource(QTextDocument::ImageResource, uri, QVariant(icon.pixmap(16,16)));
 		QTextImageFormat f;
 		f.setWidth(16);
@@ -207,7 +207,7 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 		}
 	}
 
-	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->insertPlainText ("\n");
+	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->insertPlainText (QStringLiteral("\n"));
 	command_input_shown.removeAll (command);
 }
 
@@ -284,7 +284,7 @@ RKCommandLogPart::RKCommandLogPart(RKCommandLog *for_log) : KParts::Part(nullptr
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setWidget (log = for_log);
-	setXMLFile ("rkcommandlogpart.rc");
+	setXMLFile (QStringLiteral("rkcommandlogpart.rc"));
 }
 
 RKCommandLogPart::~RKCommandLogPart () {
@@ -294,10 +294,10 @@ RKCommandLogPart::~RKCommandLogPart () {
 void RKCommandLogPart::initActions () {
 	RK_TRACE (APP);
 
-	copy = actionCollection()->addAction(KStandardAction::Copy, "log_copy", log->getView(), &RKCommandLogView::copy);
-	actionCollection()->addAction(KStandardAction::Clear, "log_clear", log, &RKCommandLog::clearLog);
-	actionCollection()->addAction(KStandardAction::SelectAll, "log_select_all", log->getView(), &RKCommandLogView::selectAll);
-	QAction *configure = actionCollection()->addAction("log_configure", log, &RKCommandLog::configureLog);
+	copy = actionCollection()->addAction(KStandardAction::Copy, QStringLiteral("log_copy"), log->getView(), &RKCommandLogView::copy);
+	actionCollection()->addAction(KStandardAction::Clear, QStringLiteral("log_clear"), log, &RKCommandLog::clearLog);
+	actionCollection()->addAction(KStandardAction::SelectAll, QStringLiteral("log_select_all"), log->getView(), &RKCommandLogView::selectAll);
+	QAction *configure = actionCollection()->addAction(QStringLiteral("log_configure"), log, &RKCommandLog::configureLog);
 	configure->setText (i18n ("Configure"));
 
 	run_selection = RKStandardActions::runCurrent (log, log, SLOT(runSelection()));
@@ -306,7 +306,7 @@ void RKCommandLogPart::initActions () {
 }
 
 void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
-	QMenu *menu = static_cast<QMenu *> (factory ()->container ("rkcommandlog_context_menu", this));
+	QMenu *menu = static_cast<QMenu *> (factory ()->container (QStringLiteral("rkcommandlog_context_menu"), this));
 	copy->setEnabled (log->getView ()->textCursor ().hasSelection ());
 	run_selection->setEnabled (log->getView ()->textCursor ().hasSelection ());
 

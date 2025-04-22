@@ -39,7 +39,7 @@ RKMDIStandardActionClient::RKMDIStandardActionClient () : KXMLGUIClient () {
 	RK_TRACE (APP);
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
-	setXMLFile ("rkstandardactions.rc", true);
+	setXMLFile (QStringLiteral("rkstandardactions.rc"), true);
 }
 
 RKMDIStandardActionClient::~RKMDIStandardActionClient () {
@@ -405,11 +405,11 @@ void RKMDIWindow::resizeEvent (QResizeEvent*) {
 void RKMDIWindow::setWindowStyleHint (const QString& hint) {
 	RK_TRACE (APP);
 
-	if (hint == "preview") {
+	if (hint == QLatin1String("preview")) {
 		if (standard_client) {
-			QAction *act = standardActionCollection ()->action ("window_help");
+			QAction *act = standardActionCollection ()->action (QStringLiteral("window_help"));
 			if (act) act->setVisible (false);
-			act = standardActionCollection ()->action ("window_configure");
+			act = standardActionCollection ()->action (QStringLiteral("window_configure"));
 			if (act) act->setVisible (false);
 		}
 		no_border_when_active = true;
@@ -426,11 +426,11 @@ void RKMDIWindow::setMetaInfo(const QString& _generic_window_name, const QUrl& _
 	settings_page = _settings_page;
 
 	if (!help_url.isEmpty ()) {
-		QAction *action = standardActionCollection()->addAction("window_help", this, &RKMDIWindow::showWindowHelp);
+		QAction *action = standardActionCollection()->addAction(QStringLiteral("window_help"), this, &RKMDIWindow::showWindowHelp);
 		action->setText (i18n ("Help on %1", generic_window_name));
 	}
 	if (settings_page != RKSettingsModule::no_page_id) {
-		QAction *action = standardActionCollection()->addAction("window_configure", this, &RKMDIWindow::showWindowSettings);
+		QAction *action = standardActionCollection()->addAction(QStringLiteral("window_configure"), this, &RKMDIWindow::showWindowSettings);
 		action->setText (i18n ("Configure %1", generic_window_name));
 	}
 }

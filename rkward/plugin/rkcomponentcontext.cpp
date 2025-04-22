@@ -36,7 +36,7 @@ RKContextHandler::RKContextHandler (QObject *parent, const QDomDocument &gui_xml
 
 	RKComponentPropertyBase *incontext = new RKComponentPropertyBase (this, false);
 	incontext->setValue (id);
-	addChild ("context", incontext);
+	addChild (QStringLiteral("context"), incontext);
 }
 
 RKContextHandler::~RKContextHandler () {
@@ -75,7 +75,7 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 
 	// set context values
 	for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
-		if (it.key () != "#noid#") {
+		if (it.key () != QLatin1String("#noid#")) {
 			QString id = it.key ();
 			QString remainder;
 			RKComponentBase *client = component->lookupComponent (id, &remainder);

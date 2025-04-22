@@ -30,7 +30,7 @@ namespace RKCommonFunctions {
 			nchild = child.nextSibling ();		// need to fetch next sibling here, as we might remove the child below
 			if (child.isElement ()) {
 				QDomElement e = child.toElement ();
-				if (names.contains (e.attribute ("name"))) {
+				if (names.contains (e.attribute (QStringLiteral("name")))) {
 					parent.removeChild (child);
 				}
 			}
@@ -73,7 +73,7 @@ namespace RKCommonFunctions {
 		QDomElement from_elem;
 		QDomElement to_elem;
 
-		const QString name_attr ("name");
+		const QString name_attr (QStringLiteral("name"));
 		const QDomNodeList list = e.elementsByTagName (tagname);
 		int count = list.count ();
 		for (int i = 0; i < count; ++i) {
@@ -171,22 +171,22 @@ namespace RKCommonFunctions {
 	QString getRKWardDataDir () {
 		static QString rkward_data_dir;
 		if (rkward_data_dir.isNull ()) {
-			QString inside_build_tree = findPathFromAppDir(QStringList() << "rkwardinstall" << "../rkwardinstall" << "../rkward/rkwardinstall");
+			QString inside_build_tree = findPathFromAppDir(QStringList() << QStringLiteral("rkwardinstall") << QStringLiteral("../rkwardinstall") << QStringLiteral("../rkward/rkwardinstall"));
 			if (!inside_build_tree.isEmpty()) {
 				RK_DEBUG(APP, DL_INFO, "Running from inside build tree");
 				rkward_data_dir = inside_build_tree;
 				return rkward_data_dir;
 			}
-			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "resource.ver");
-			candidates += QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "rkward/resource.ver");  // Well, isn't this just silly? AppDataLocation may or may not contain the application name (on Mac)
+			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::AppDataLocation, QStringLiteral("resource.ver"));
+			candidates += QStandardPaths::locateAll (QStandardPaths::AppDataLocation, QStringLiteral("rkward/resource.ver"));  // Well, isn't this just silly? AppDataLocation may or may not contain the application name (on Mac)
 			for (int i = 0; i < candidates.size (); ++i) {
 				QFile resource_ver (candidates[i]);
 				if (resource_ver.open (QIODevice::ReadOnly) && (resource_ver.read (100).trimmed () == RKWARD_VERSION)) {
-					rkward_data_dir = candidates[i].replace ("resource.ver", QString ());
+					rkward_data_dir = candidates[i].replace (QLatin1String("resource.ver"), QString ());
 					return rkward_data_dir;
 				}
 			}
-			rkward_data_dir = "";   // prevents checking again
+			rkward_data_dir = QLatin1String("");   // prevents checking again
 			RK_DEBUG(APP, DL_ERROR, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
 		}
 		return rkward_data_dir;

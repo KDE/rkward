@@ -35,7 +35,7 @@ RKCodeCompletionSettings RKSettingsModuleCommandEditor::completion_settings;
 RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_enabled { "Autosave enabled", true };
 RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_keep { "Autosave keep saves", false };
 RKConfigValue<int> RKSettingsModuleCommandEditor::autosave_interval {"Autosave interval", 5 };
-RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter { "Script file filter", "*.R *.S *.q *.Rhistory" };
+RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter { "Script file filter", QStringLiteral("*.R *.S *.q *.Rhistory") };
 
 RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(RKSettingsModuleWidget* parent, RKCodeCompletionSettings* settings, bool show_common)
     : QWidget(parent), settings(settings), parentwidget(parent) {
@@ -211,11 +211,11 @@ void RKSettingsModuleCommandEditor::createPages(RKSettings *parent) {
 }
 
 QString completionTypeToConfigKey (int cat) {
-	if (cat == RKCodeCompletionSettings::Calltip) return "Calltips";
-	if (cat == RKCodeCompletionSettings::Arghint) return "Argument completion";
-	if (cat == RKCodeCompletionSettings::Object) return "Object completion";
-	if (cat == RKCodeCompletionSettings::Filename) return "Filename completion";
-	if (cat == RKCodeCompletionSettings::AutoWord) return "Auto word completion";
+	if (cat == RKCodeCompletionSettings::Calltip) return QStringLiteral("Calltips");
+	if (cat == RKCodeCompletionSettings::Arghint) return QStringLiteral("Argument completion");
+	if (cat == RKCodeCompletionSettings::Object) return QStringLiteral("Object completion");
+	if (cat == RKCodeCompletionSettings::Filename) return QStringLiteral("Filename completion");
+	if (cat == RKCodeCompletionSettings::AutoWord) return QStringLiteral("Auto word completion");
 	RK_ASSERT(false);
 	return QString ();
 }
@@ -223,7 +223,7 @@ QString completionTypeToConfigKey (int cat) {
 void RKSettingsModuleCommandEditor::syncConfig(KConfig* config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group("Command Editor Windows");
+	KConfigGroup cg = config->group(QStringLiteral("Command Editor Windows"));
 	completion_settings.syncConfig(cg, a);
 
 	autosave_enabled.syncConfig(cg, a);

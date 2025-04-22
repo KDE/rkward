@@ -52,7 +52,7 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	RCommand *command;
 	
 	if (!merge) {
-		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App | RCommand::ObjectListUpdate);
+		command = new RCommand (QStringLiteral("remove (list=ls (all.names=TRUE))"), RCommand::App | RCommand::ObjectListUpdate);
 		RInterface::issueCommand (command);
 	}
 

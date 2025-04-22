@@ -65,7 +65,7 @@ RKCarbonCopySettings::~RKCarbonCopySettings() {
 void RKCarbonCopySettings::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group("Carbon Copy Settings");
+	KConfigGroup cg = config->group(QStringLiteral("Carbon Copy Settings"));
 	cc_globally_enabled.syncConfig(cg, a);
 	cc_console_commands.syncConfig(cg, a);
 	cc_script_commands.syncConfig(cg, a);
@@ -91,7 +91,7 @@ void RKCarbonCopySettings::applyChanges() {
 // static members
 RKConfigValue<bool> RKSettingsModuleOutput::auto_show {"auto_show", true};
 RKConfigValue<bool> RKSettingsModuleOutput::auto_raise {"auto_raise", true};
-RKConfigValue<QString> RKSettingsModuleOutput::graphics_type {"graphics_type", "NULL"};
+RKConfigValue<QString> RKSettingsModuleOutput::graphics_type {"graphics_type", QStringLiteral("NULL")};
 RKConfigValue<int> RKSettingsModuleOutput::graphics_width {"graphics_width", 480};
 RKConfigValue<int> RKSettingsModuleOutput::graphics_height {"graphics_height", 480};
 RKConfigValue<int> RKSettingsModuleOutput::graphics_jpg_quality {"graphics_jpg_quality", 75};
@@ -134,17 +134,17 @@ public:
 		group_layout->addLayout(h_layout);
 		h_layout->addWidget(new QLabel(i18n("File format"), group));
 		h_layout->addWidget(graphics_type_box = new QComboBox(group));
-		graphics_type_box->addItem(i18n("<Default>"), QString("NULL"));
-		graphics_type_box->addItem(i18n("PNG"), QString("\"PNG\""));
-		graphics_type_box->addItem(i18n("SVG"), QString("\"SVG\""));
-		graphics_type_box->addItem(i18n("JPG"), QString("\"JPG\""));
+		graphics_type_box->addItem(i18n("<Default>"), QStringLiteral("NULL"));
+		graphics_type_box->addItem(i18n("PNG"), QStringLiteral("\"PNG\""));
+		graphics_type_box->addItem(i18n("SVG"), QStringLiteral("\"SVG\""));
+		graphics_type_box->addItem(i18n("JPG"), QStringLiteral("\"JPG\""));
 		graphics_type_box->setCurrentIndex(graphics_type_box->findData (RKSettingsModuleOutput::graphics_type.get()));
 		graphics_type_box->setEditable(false);
 		connect(graphics_type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsPageOutput::boxChanged);
 		h_layout->addSpacing(2*RKStyle::spacingHint());
 		h_layout->addWidget(new QLabel(i18n("JPG quality"), group));
 		h_layout->addWidget(graphics_jpg_quality_box = RKSettingsModuleOutput::graphics_jpg_quality.makeSpinBox(1, 100, this));
-		graphics_jpg_quality_box->setEnabled(RKSettingsModuleOutput::graphics_type == "\"JPG\"");
+		graphics_jpg_quality_box->setEnabled(RKSettingsModuleOutput::graphics_type == QStringLiteral("\"JPG\""));
 		h_layout->addStretch();
 
 		h_layout = new QHBoxLayout();
@@ -166,7 +166,7 @@ public:
 	void boxChanged() {
 		RK_TRACE(SETTINGS);
 		change();
-		graphics_jpg_quality_box->setEnabled(graphics_type_box->itemData(graphics_type_box->currentIndex()).toString() == "\"JPG\"");
+		graphics_jpg_quality_box->setEnabled(graphics_type_box->itemData(graphics_type_box->currentIndex()).toString() == QLatin1String("\"JPG\""));
 	}
 	void applyChanges() override {
 		RK_TRACE(SETTINGS);
@@ -202,7 +202,7 @@ void RKSettingsModuleOutput::createPages(RKSettings *parent) {
 void RKSettingsModuleOutput::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group ("Output Window");
+	KConfigGroup cg = config->group (QStringLiteral("Output Window"));
 	auto_show.syncConfig(cg, a);
 	auto_raise.syncConfig(cg, a);
 	graphics_type.syncConfig(cg, a);
@@ -224,7 +224,7 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	QString command = "options (\"rk.graphics.type\"=" + graphics_type.get();
 	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
 	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
-	if (graphics_type == "\"JPG\"") command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
+	if (graphics_type == QStringLiteral("\"JPG\"")) command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
 	command.append (", \"rk.output.css.file\"=\"" + (custom_css_file.get().isEmpty () ? RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css" : custom_css_file.get()) + '\"');
 	list.append (command + ")\n");
 

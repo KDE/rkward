@@ -90,7 +90,7 @@ public:
 	static QString userLibraryLocation ();
 
 /** returns the list of packages which are essential to rkward. This is hard-coded. */
-	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
+	static QStringList essentialPackages() { return essential_packages.split(QStringLiteral("\n")); };
 private:
 friend class RKLoadLibsDialog;
 friend class RKSettingsPageRPackages;

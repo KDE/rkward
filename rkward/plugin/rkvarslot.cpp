@@ -34,7 +34,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	// basic layout
 	QGridLayout *g_layout = new QGridLayout (this);
 
-	label_string = xml->i18nStringAttribute (element, "label", i18n ("Variable:"), DL_INFO);
+	label_string = xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Variable:"), DL_INFO);
 	if (!label_string.isEmpty ()) {
 		QLabel *label = new QLabel (label_string, this);
 		g_layout->addWidget (label, 0, 2);
@@ -61,24 +61,24 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	list->setRootIsDecorated (false);
 	g_layout->addWidget (list, 1, 2);
 
-	mode = (element.tagName () == "valueslot") ? Valueslot : Varslot;
+	mode = (element.tagName () == QLatin1String("valueslot")) ? Valueslot : Varslot;
 
 	// initialize properties
 	if (mode == Valueslot) {
-		addChild ("source", source = new RKComponentPropertyStringList (this, false));
-		addChild ("available", available = new RKComponentPropertyStringList (this, true));
-		addChild ("selected", selected = new RKComponentPropertyStringList (this, false));
+		addChild (QStringLiteral("source"), source = new RKComponentPropertyStringList (this, false));
+		addChild (QStringLiteral("available"), available = new RKComponentPropertyStringList (this, true));
+		addChild (QStringLiteral("selected"), selected = new RKComponentPropertyStringList (this, false));
 	} else {
-		addChild ("source", source = new RKComponentPropertyRObjects (this, false));
-		addChild ("available", available = new RKComponentPropertyRObjects (this, true));
-		addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
+		addChild (QStringLiteral("source"), source = new RKComponentPropertyRObjects (this, false));
+		addChild (QStringLiteral("available"), available = new RKComponentPropertyRObjects (this, true));
+		addChild (QStringLiteral("selected"), selected = new RKComponentPropertyRObjects (this, false));
 	}
 	source->setInternal (true);
 	selected->setInternal (true);
 
 	// find out about options
-	if ((multi = xml->getBoolAttribute (element, "multi", false, DL_INFO))) {
-		available->setAllowedLength (xml->getIntAttribute (element, "min_vars", 1, DL_INFO), xml->getIntAttribute (element, "min_vars_if_any", 1, DL_INFO), xml->getIntAttribute (element, "max_vars", 0, DL_INFO));
+	if ((multi = xml->getBoolAttribute (element, QStringLiteral("multi"), false, DL_INFO))) {
+		available->setAllowedLength (xml->getIntAttribute (element, QStringLiteral("min_vars"), 1, DL_INFO), xml->getIntAttribute (element, QStringLiteral("min_vars_if_any"), 1, DL_INFO), xml->getIntAttribute (element, QStringLiteral("max_vars"), 0, DL_INFO));
 		connect (list, &QTreeWidget::itemSelectionChanged, this, &RKVarSlot::listSelectionChanged);
 	} else {
 		available->setAllowedLength (1, 1, 1);
@@ -86,7 +86,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		// make it look like a line-edit
 		list->header ()->hide ();
 		QTreeWidgetItem dummy (list);
-		dummy.setText (0, "Tg");
+		dummy.setText (0, QStringLiteral("Tg"));
 		QMargins margins = list->contentsMargins();
 		list->setFixedHeight(list->visualItemRect(&dummy).height() + 2*list->visualItemRect(&dummy).top() + margins.top() + margins.bottom());
 		list->header ()->setStretchLastSection (true);
@@ -97,13 +97,13 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	if (mode == Varslot) {
 		// initialize filters
-		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (' ', Qt::SkipEmptyParts));
-		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString (), DL_INFO).split (' ', Qt::SkipEmptyParts));
-		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
+		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, QStringLiteral("classes"), QString (), DL_INFO).split (' ', Qt::SkipEmptyParts));
+		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, QStringLiteral("types"), QString (), DL_INFO).split (' ', Qt::SkipEmptyParts));
+		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, QStringLiteral("num_dimensions"), 0, DL_INFO), xml->getIntAttribute (element, QStringLiteral("min_length"), 0, DL_INFO), xml->getIntAttribute (element, QStringLiteral("max_length"), INT_MAX, DL_INFO));
 		static_cast<RKComponentPropertyRObjects*> (available)->setObjectProblemsAreErrors (false);
 	}
-	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
-	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
+	available->setStripDuplicates (!xml->getBoolAttribute (element, QStringLiteral("allow_duplicates"), false, DL_INFO));
+	setRequired (xml->getBoolAttribute (element, QStringLiteral("required"), false, DL_INFO));
 
 	connect (available, &RKComponentPropertyBase::valueChanged, this, &RKVarSlot::availablePropertyChanged);
 	availablePropertyChanged (available);	// initialize
@@ -155,7 +155,7 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 			QString probs = static_cast<RKComponentPropertyRObjects*> (available)->objectProblems (i);
 			if (!probs.isEmpty ()) {
 				new_item->setToolTip (0, i18n ("<p>Using this object, here, may lead to failures or unexpected results, for the following reason(s):</p>") + probs);
-				new_item->setIcon (0, QIcon::fromTheme ("task-attention"));
+				new_item->setIcon (0, QIcon::fromTheme (QStringLiteral("task-attention")));
 			}
 		}
 	}
@@ -170,12 +170,12 @@ void RKVarSlot::updateLook () {
 	RK_TRACE (PLUGIN);
 
 	if (!isSatisfied ()) {		// implies that it is enabled
-		list->setStyleSheet(QString("background: red; color: black"));
+		list->setStyleSheet(QStringLiteral("background: red; color: black"));
 	} else {
 		if (isEnabled ()) {
-			list->setStyleSheet(QString(""));
+			list->setStyleSheet(QLatin1String(""));
 		} else {
-			list->setStyleSheet(QString("background: rgb(200, 200, 200); color: black"));
+			list->setStyleSheet(QStringLiteral("background: rgb(200, 200, 200); color: black"));
 		}
 	}
 }

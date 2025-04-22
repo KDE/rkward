@@ -37,7 +37,7 @@ QString findBackendAtPath (const QString &path) {
 #ifdef Q_OS_WIN
 	QString ret = dir.filePath ("rkward.rbackend.exe");
 #else
-	QString ret = dir.filePath ("rkward.rbackend");
+	QString ret = dir.filePath (QStringLiteral("rkward.rbackend"));
 #endif
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Looking for backend at %s", qPrintable (ret));
 	QFileInfo fi (ret);
@@ -54,7 +54,7 @@ QString findBackendLibAtPath(const QString &path) {
 #elif defined(Q_OS_MACOS)
 	QString ret = dir.filePath("librkward.rbackend.lib.dylib");
 #else
-	QString ret = dir.filePath("librkward.rbackend.lib.so");
+	QString ret = dir.filePath(QStringLiteral("librkward.rbackend.lib.so"));
 #endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Looking for backend lib at %s", qPrintable(ret));
 	if (QFileInfo::exists(ret)) return ret;
@@ -143,7 +143,7 @@ void RKFrontendTransmitter::detectAndCheckRBinary() {
 		r_exe = RKSettingsModuleR::userConfiguredRBinary();
 	} else {
 		QDir frontend_path = qApp->applicationDirPath();
-		QFileInfo rkward_ini_file(frontend_path.absoluteFilePath("rkward.ini"));
+		QFileInfo rkward_ini_file(frontend_path.absoluteFilePath(QStringLiteral("rkward.ini")));
 		if (rkward_ini_file.isReadable()) {
 			QSettings rkward_ini(rkward_ini_file.absoluteFilePath(), QSettings::IniFormat);
 			r_exe = rkward_ini.value("R executable").toString ();
@@ -162,7 +162,7 @@ void RKFrontendTransmitter::detectAndCheckRBinary() {
 	}
 	if (r_exe.isEmpty()) {
 		RK_DEBUG(APP, DL_DEBUG, "Falling back to auto-detection of R binary");
-		r_exe = "auto";
+		r_exe = QLatin1String("auto");
 	}
 
 	RKSessionVars::r_binary = resolveRSpecOrFail(r_exe);
@@ -198,7 +198,7 @@ void RKFrontendTransmitter::run () {
 	}
 
 	QStringList args;
-	args.append("CMD");
+	args.append(QStringLiteral("CMD"));
 	QString debugger = RKCommandLineArgs::get(RKCommandLineArgs::BackendDebugger).toString();
 	if (!debugger.isEmpty()) {
 		args += debugger.split(' ');
@@ -235,7 +235,7 @@ void RKFrontendTransmitter::run () {
 #	else
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + QFileInfo(backend_lib).fileName());
 	QTemporaryDir rkward_only_dir(QDir::tempPath() + "/rkward_only");
-	QFile(QFileInfo(backend_lib).absolutePath()).link(rkward_only_dir.filePath("_rkward_only_dlpath"));
+	QFile(QFileInfo(backend_lib).absolutePath()).link(rkward_only_dir.filePath(QStringLiteral("_rkward_only_dlpath")));
 	env.append(QStringLiteral("RK_ADD_LDPATH=./_rkward_only_dlpath"));
 	env.append(QStringLiteral("RK_LD_CWD=") + rkward_only_dir.path());
 #	endif
@@ -357,7 +357,7 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 		if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
 	}
 	QString version_c = waitReadLine(con, 1000).trimmed();
-	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
+	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QStringLiteral (RKWARD_VERSION), version_c));
 
 	setConnection (con);
 }
@@ -409,7 +409,7 @@ void RKFrontendTransmitter::handleTransmissionError (const QString &message) {
 
 	if (connection) connection->close ();
 	RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
-	req->params["message"] = message;
+	req->params[QStringLiteral("message")] = message;
 	RKRBackendEvent* event = new RKRBackendEvent (req);
 	qApp->postEvent(frontend, event);
 

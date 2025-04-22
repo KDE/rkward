@@ -91,9 +91,9 @@ bool RKSetupWizard::wizard_active = false;
 
 static auto iconForStatus(RKSetupWizardItem::Status status) {
 	QString icon_id;
-	if (status == RKSetupWizardItem::Good) icon_id = QLatin1String("dialog-positive");
-	else if (status == RKSetupWizardItem::Warning) icon_id = QLatin1String("dialog-warning");
-	else icon_id = QLatin1String("dialog-error");
+	if (status == RKSetupWizardItem::Good) icon_id = QStringLiteral("dialog-positive");
+	else if (status == RKSetupWizardItem::Warning) icon_id = QStringLiteral("dialog-warning");
+	else icon_id = QStringLiteral("dialog-error");
 	return (QIcon::fromTheme(icon_id).pixmap(32, 32));  // TODO: Correct way to not hardcode size?
 }
 
@@ -238,7 +238,7 @@ void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
 	if (!(longlabel.isEmpty() && options.isEmpty())) {
 		QString details = longlabel;
 		for (int i = 0; i < options.size(); ++i) {
-			details += QString("<p><b>%1</b>: %2</p>").arg(options[i].shortlabel, options[i].longlabel);
+			details += QStringLiteral("<p><b>%1</b>: %2</p>").arg(options[i].shortlabel, options[i].longlabel);
 		}
 		auto info = new QPushButton();
 		info->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowHelp));
@@ -308,7 +308,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		auto lab = new QLabel();
 		lab->setPixmap(iconForStatus(RKSetupWizardItem::Error));
 		hl->addWidget(lab);
-		hl->addWidget(RKCommonFunctions::wordWrappedLabel("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>"));
+		hl->addWidget(RKCommonFunctions::wordWrappedLabel(QStringLiteral("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>")));
 		hl->setStretch(1,2);
 	}
 	l->addStretch();
@@ -319,7 +319,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	auto idir = new RKSetupWizardItem(i18n("Installation directory"));
 	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
 		idir->setStatus(RKSetupWizardItem::Error, i18n("Not found."));
-		idir->setLongLabel("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/Building_RKWard_From_Source.html\">https://rkward.kde.org/Building_RKWard_From_Source.html</a>.</p>");
+		idir->setLongLabel(QStringLiteral("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/Building_RKWard_From_Source.html\">https://rkward.kde.org/Building_RKWard_From_Source.html</a>.</p>"));
 		idir->addOption(i18n("Reinstallation required"), i18n("This problem cannot be corrected, automatically. You will have to reinstall RKWard."), [](RKSetupWizard*) {});
 		reinstallation_required = true;
 	} else {
@@ -345,7 +345,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	if (kateplugincount < 1) {
 		kateplugins->setLongLabel(i18n("<p>Important functionality in RKWard is provided by kate plugins. It looks like none are installed on this system. On Linux/BSD, this can usually be fixed by installing kate.</p>"));
 		kateplugins->setStatus(RKSetupWizardItem::Error, i18n("None found"));
-		addSoftwareInstallOptions(kateplugins, QStringLiteral("kate"), "https://kate.kde.org");
+		addSoftwareInstallOptions(kateplugins, QStringLiteral("kate"), QStringLiteral("https://kate.kde.org"));
 	} else {
 		kateplugins->setStatus(RKSetupWizardItem::Good, i18np("Found %1 plugin.", "Found %1 plugins.", kateplugincount));
 	}
@@ -356,8 +356,8 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	QString legacy_output_path = RKSettingsModuleGeneral::filesPath() + "rk_out.html";
 	if (QFileInfo::exists(legacy_output_path)) {
 		legacy_output->setStatus(RKSetupWizardItem::Warning, i18n("Exists"));
-		legacy_output->setLongLabel(QString("<p>An output file from before RKWard version 0.7.3 was found (%1). You will probably want to convert this to the new format. Alternatively, if it is no longer needed, you can delete it, manually.</p>").arg(legacy_output_path));
-		legacy_output->addOption(i18n("Import"), i18n("Import to the session, so you can save in the new output format."), [](RKSetupWizard* wizard) { wizard->r_commands_to_run.append("rk.import.legacy.output()\n"); });
+		legacy_output->setLongLabel(QStringLiteral("<p>An output file from before RKWard version 0.7.3 was found (%1). You will probably want to convert this to the new format. Alternatively, if it is no longer needed, you can delete it, manually.</p>").arg(legacy_output_path));
+		legacy_output->addOption(i18n("Import"), i18n("Import to the session, so you can save in the new output format."), [](RKSetupWizard* wizard) { wizard->r_commands_to_run.append(QStringLiteral("rk.import.legacy.output()\n")); });
 		legacy_output->addOption(i18n("No action"), i18n("Ignore (and keep) the file. You can import it manually, at any time, using rk.import.legacy.output()"), [](RKSetupWizard*) {});
 	} else {
 		legacy_output->setStatus(RKSetupWizardItem::Good, i18n("Found."));
@@ -418,23 +418,23 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	// R packages page
 	page = new RKSetupWizardPage(this, i18n("R Packages"));
 	page->lazyInitOnce([](RKSetupWizardPage *p) {
-		p->appendItem(makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error));
-		p->appendItem(makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning));
+		p->appendItem(makeRPackageCheck(QStringLiteral("R2HTML"), i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error));
+		p->appendItem(makeRPackageCheck(QStringLiteral("rmarkdown"), i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning));
 		p->addStretch();
 	});
 
 	// external software page
 	page = new RKSetupWizardPage(this, i18n("External software"));
 	page->lazyInitOnce([](RKSetupWizardPage *p) {
-		p->appendItem(makeSoftwareCheck("pandoc", i18n("The pandoc software is needed for rendering (or previewing) R markdown (.Rmd) files. This is optional but recommended."), "https://pandoc.org/installing.html", RKSetupWizardItem::Warning));
-		p->appendItem(makeSoftwareCheck("kbibtex", i18n("The kbibtex software is useful for managing citations while writing articles. It integrates into RKWard via the Document Preview kate plugin."), "https://userbase.kde.org/KBibTeX", RKSetupWizardItem::Warning));
+		p->appendItem(makeSoftwareCheck(QStringLiteral("pandoc"), i18n("The pandoc software is needed for rendering (or previewing) R markdown (.Rmd) files. This is optional but recommended."), QStringLiteral("https://pandoc.org/installing.html"), RKSetupWizardItem::Warning));
+		p->appendItem(makeSoftwareCheck(QStringLiteral("kbibtex"), i18n("The kbibtex software is useful for managing citations while writing articles. It integrates into RKWard via the Document Preview kate plugin."), QStringLiteral("https://userbase.kde.org/KBibTeX"), RKSetupWizardItem::Warning));
 		p->addStretch();
 	});
 
 	// summary page
 	page = new RKSetupWizardPage(this, i18n("Summary of the next steps"));
 	l = new QVBoxLayout(page);
-	auto last_page_label = RKCommonFunctions::linkedWrappedLabel("");
+	auto last_page_label = RKCommonFunctions::linkedWrappedLabel(QLatin1String(""));
 	l->addWidget(last_page_label);
 	l->addStretch();
 	page->lazyInitRepeated([this, last_page_label](RKSetupWizardPage *page) {

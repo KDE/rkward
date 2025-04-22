@@ -132,7 +132,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #if defined Q_OS_MACOS
 			KMessageBox::information(nullptr, i18n("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See https://rkward.kde.org/mac for more information."), i18n("Could not embed R X11 window"), "embed_x11_device_not_supported");
 #else
-			RKErrorDialog::reportableErrorMessage (nullptr, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
+			RKErrorDialog::reportableErrorMessage (nullptr, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), QStringLiteral("failure_to_detect_x11_device"));
 #endif
 		}
 	}
@@ -309,7 +309,7 @@ void RKCaughtX11Window::commonInit (int device_number) {
 
 	error_dialog = new RKProgressControl(nullptr, i18n("An error occurred"), i18n("An error occurred"), RKProgressControl::ErrorsOnly);
 	setPart (new RKCaughtX11WindowPart (this));
-	setMetaInfo(i18n("Graphics Device Window"), QUrl("rkward://page/rkward_plot_history"), RKSettingsModuleGraphics::page_id);
+	setMetaInfo(i18n("Graphics Device Window"), QUrl(QStringLiteral("rkward://page/rkward_plot_history")), RKSettingsModuleGraphics::page_id);
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 	updateHistoryActions (0, 0, QStringList ());
@@ -367,7 +367,7 @@ void RKCaughtX11Window::doEmbed () {
 	const QRect avail = window()->screen() ? window()->screen()->availableGeometry() : QApplication::primaryScreen()->availableGeometry();
 	if ((dims.width() > avail.width()) || (dims.height() > avail.height())) {
 		if (!RKWardMainWindow::suppressModalDialogsForTesting()) {
-			KMessageBox::information(this, i18n("The current window appears too large to fit on the screen. If this happens regularly, you may want to adjust the default graphics window size in Settings->Configure RKWard->Onscreen Graphics."), i18n("Large window"), "dont_ask_again_large_x11_window");
+			KMessageBox::information(this, i18n("The current window appears too large to fit on the screen. If this happens regularly, you may want to adjust the default graphics window size in Settings->Configure RKWard->Onscreen Graphics."), i18n("Large window"), QStringLiteral("dont_ask_again_large_x11_window"));
 		}
 	}
 }
@@ -410,7 +410,7 @@ void RKCaughtX11Window::commonClose(bool in_destructor) {
 void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 	RK_TRACE (MISC);
 
-	if (hint == "preview") {
+	if (hint == QLatin1String("preview")) {
 		for (int i = actions_not_for_preview.count () - 1; i >= 0; --i) {
 			actions_not_for_preview[i]->setVisible (false);
 		}
@@ -499,7 +499,7 @@ void RKCaughtX11Window::fixedSizeToggled () {
 
 	if (embedded && !embedding_complete) {
 		embedding_complete = true;
-		RInterface::issueCommand ("assign ('devembedded', TRUE, rkward:::.rk.variables)", RCommand::App | RCommand::Sync | RCommand::PriorityCommand);
+		RInterface::issueCommand (QStringLiteral("assign ('devembedded', TRUE, rkward:::.rk.variables)"), RCommand::App | RCommand::Sync | RCommand::PriorityCommand);
 	}
 }
 
@@ -594,7 +594,7 @@ void RKCaughtX11Window::printDevice () {
 	RK_TRACE (MISC);
 
 	QString printer_device;
-	if (RKSettingsModuleGraphics::kdePrintingEnabled ()) printer_device = "rk.printer.device";
+	if (RKSettingsModuleGraphics::kdePrintingEnabled ()) printer_device = QLatin1String("rk.printer.device");
 	issueCommand(new RCommand("dev.set (" + QString::number(device_number) + ")\ndev.print (" + printer_device + ')', RCommand::App, i18n("Print contents of graphics device number %1", device_number)), error_dialog);
 }
 
@@ -608,7 +608,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 	QVBoxLayout *layout = new QVBoxLayout (dialog);
 
 	layout->addWidget (new QLabel (i18n ("Specify the R object name, you want to save the graph to"), dialog));
-	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (dialog, "my.plot");
+	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (dialog, QStringLiteral("my.plot"));
 	layout->addWidget (chooser);
 
 	QDialogButtonBox *box = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -696,7 +696,7 @@ void RKCaughtX11Window::clearHistory () {
 
 	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all device windows, not just this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
 
-	issueCommand(new RCommand("rk.clear.plot.history ()", RCommand::App, i18n("Clear plot history")), error_dialog);
+	issueCommand(new RCommand(QStringLiteral("rk.clear.plot.history ()"), RCommand::App, i18n("Clear plot history")), error_dialog);
 }
 
 void RKCaughtX11Window::showPlotInfo () {
@@ -741,43 +741,43 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart(RKCaughtX11Window *window) : KParts
 	setWidget (window);
 	RKCaughtX11WindowPart::window = window;
 
-	setXMLFile ("rkcatchedx11windowpart.rc");
+	setXMLFile (QStringLiteral("rkcatchedx11windowpart.rc"));
 
 	window->dynamic_size_action = new KToggleAction (i18n ("Draw area follows size of window"), window);
 	connect (window->dynamic_size_action, &KToggleAction::triggered, window, &RKCaughtX11Window::fixedSizeToggled);
-	actionCollection ()->addAction ("toggle_fixed_size", window->dynamic_size_action);
+	actionCollection ()->addAction (QStringLiteral("toggle_fixed_size"), window->dynamic_size_action);
 	window->actions_not_for_preview.append (window->dynamic_size_action);
 
 	QAction *action;
-	action = actionCollection()->addAction("set_fixed_size_1", window, &RKCaughtX11Window::setFixedSize1);
+	action = actionCollection()->addAction(QStringLiteral("set_fixed_size_1"), window, &RKCaughtX11Window::setFixedSize1);
 	action->setText (i18n ("Set fixed size 500x500"));
 	window->actions_not_for_preview.append (action);
-	action = actionCollection()->addAction("set_fixed_size_2", window, &RKCaughtX11Window::setFixedSize2);
+	action = actionCollection()->addAction(QStringLiteral("set_fixed_size_2"), window, &RKCaughtX11Window::setFixedSize2);
 	action->setText (i18n ("Set fixed size 1000x1000"));
 	window->actions_not_for_preview.append (action);
-	action = actionCollection()->addAction("set_fixed_size_3", window, &RKCaughtX11Window::setFixedSize3);
+	action = actionCollection()->addAction(QStringLiteral("set_fixed_size_3"), window, &RKCaughtX11Window::setFixedSize3);
 	action->setText (i18n ("Set fixed size 2000x2000"));
 	window->actions_not_for_preview.append (action);
-	action = actionCollection()->addAction("set_fixed_size_manual", window, &RKCaughtX11Window::setFixedSizeManual);
+	action = actionCollection()->addAction(QStringLiteral("set_fixed_size_manual"), window, &RKCaughtX11Window::setFixedSizeManual);
 	action->setText (i18n ("Set specified fixed size..."));
 	window->actions_not_for_preview.append (action);
 
-	action = actionCollection()->addAction("plot_prev", window, &RKCaughtX11Window::previousPlot);
+	action = actionCollection()->addAction(QStringLiteral("plot_prev"), window, &RKCaughtX11Window::previousPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Previous plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft));
 	window->plot_prev_action = (QAction *) action;
-	action = actionCollection()->addAction("plot_first", window, &RKCaughtX11Window::firstPlot);
+	action = actionCollection()->addAction(QStringLiteral("plot_first"), window, &RKCaughtX11Window::firstPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("First plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveFirst));
 	window->plot_first_action = (QAction *) action;
-	action = actionCollection()->addAction("plot_next", window, &RKCaughtX11Window::nextPlot);
+	action = actionCollection()->addAction(QStringLiteral("plot_next"), window, &RKCaughtX11Window::nextPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Next plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight));
 	window->plot_next_action = (QAction *) action;
-	action = actionCollection()->addAction("plot_last", window, &RKCaughtX11Window::lastPlot);
+	action = actionCollection()->addAction(QStringLiteral("plot_last"), window, &RKCaughtX11Window::lastPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
@@ -786,59 +786,59 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart(RKCaughtX11Window *window) : KParts
 	window->actions_not_for_preview.append (action);
 	window->plot_list_action->setToolBarMode (KSelectAction::MenuMode);
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionListPlots));
-	actionCollection ()->addAction ("plot_list", action);
+	actionCollection ()->addAction (QStringLiteral("plot_list"), action);
 	connect (action, &QAction::triggered, window, &RKCaughtX11Window::gotoPlot);
 
-	action = actionCollection()->addAction("plot_force_append", window, &RKCaughtX11Window::forceAppendCurrentPlot);
+	action = actionCollection()->addAction(QStringLiteral("plot_force_append"), window, &RKCaughtX11Window::forceAppendCurrentPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Append this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
 	window->plot_force_append_action = (QAction *) action;
-	action = actionCollection()->addAction("plot_remove", window, &RKCaughtX11Window::removeCurrentPlot);
+	action = actionCollection()->addAction(QStringLiteral("plot_remove"), window, &RKCaughtX11Window::removeCurrentPlot);
 	window->actions_not_for_preview.append (action);
 	action->setText (i18n ("Remove this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
 	window->plot_remove_action = (QAction *) action;
 
-	action = actionCollection()->addAction("plot_clear_history", window, &RKCaughtX11Window::clearHistory);
+	action = actionCollection()->addAction(QStringLiteral("plot_clear_history"), window, &RKCaughtX11Window::clearHistory);
 	window->plot_clear_history_action = (QAction *) action;
 	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
 	window->actions_not_for_preview.append (action);
 
-	action = actionCollection()->addAction("plot_properties", window, &RKCaughtX11Window::showPlotInfo);
+	action = actionCollection()->addAction(QStringLiteral("plot_properties"), window, &RKCaughtX11Window::showPlotInfo);
 	window->plot_properties_action = (QAction *) action;
 	action->setText (i18n ("Plot properties"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDocumentInfo));
 	window->actions_not_for_preview.append (action);
 
-	action = actionCollection()->addAction("device_activate", window, &RKCaughtX11Window::activateDevice);
+	action = actionCollection()->addAction(QStringLiteral("device_activate"), window, &RKCaughtX11Window::activateDevice);
 	action->setText (i18n ("Make active"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionFlagGreen));
 	window->actions_not_for_preview.append (action);
-	action = actionCollection()->addAction("device_copy_to_output", window, &RKCaughtX11Window::copyDeviceToOutput);
+	action = actionCollection()->addAction(QStringLiteral("device_copy_to_output"), window, &RKCaughtX11Window::copyDeviceToOutput);
 	action->setText (i18n ("Copy to output"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
-	actionCollection()->addAction(KStandardAction::Print, "device_print", window, &RKCaughtX11Window::printDevice);
-	action = actionCollection()->addAction("device_copy_to_r_object", window, &RKCaughtX11Window::copyDeviceToRObject);
+	actionCollection()->addAction(KStandardAction::Print, QStringLiteral("device_print"), window, &RKCaughtX11Window::printDevice);
+	action = actionCollection()->addAction(QStringLiteral("device_copy_to_r_object"), window, &RKCaughtX11Window::copyDeviceToRObject);
 	action->setText (i18n ("Store as R object..."));
-	action = actionCollection()->addAction("device_duplicate", window, &RKCaughtX11Window::duplicateDevice);
+	action = actionCollection()->addAction(QStringLiteral("device_duplicate"), window, &RKCaughtX11Window::duplicateDevice);
 	action->setText (i18n ("Duplicate"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionWindowDuplicate));
 
-	action = window->stop_interaction = actionCollection()->addAction("stop_interaction", window, &RKCaughtX11Window::stopInteraction);
+	action = window->stop_interaction = actionCollection()->addAction(QStringLiteral("stop_interaction"), window, &RKCaughtX11Window::stopInteraction);
 	action->setText (i18n ("Stop interaction"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	action->setVisible (false);
 
 	// initialize context for plugins
-	RKComponentGUIXML *context = RKComponentMap::getContext ("x11");
+	RKComponentGUIXML *context = RKComponentMap::getContext (QStringLiteral("x11"));
 	if (!context) return;
 	RKContextHandler *context_handler = context->makeContextHandler (this);
 	insertChildClient (context_handler);
 	RKComponentPropertyInt *devnum_property = new RKComponentPropertyInt (this, false, 0);
 	devnum_property->setIntValue (window->device_number);
-	context_handler->addChild ("devnum", devnum_property);
+	context_handler->addChild (QStringLiteral("devnum"), devnum_property);
 }
 
 RKCaughtX11WindowPart::~RKCaughtX11WindowPart () {

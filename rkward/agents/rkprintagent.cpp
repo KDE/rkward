@@ -57,8 +57,8 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 		return;
 	}
 
-	QAction *printaction = provider->action("print");
-	if (!printaction) printaction = provider->action("file_print");
+	QAction *printaction = provider->action(QStringLiteral("print"));
+	if (!printaction) printaction = provider->action(QStringLiteral("file_print"));
 	if (!printaction) {
 		QAction *a = new QAction(provider);
 		bool ok = connect(a, SIGNAL(triggered()), provider, SLOT(slotPrint()));

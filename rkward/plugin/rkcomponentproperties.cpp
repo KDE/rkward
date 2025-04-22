@@ -104,7 +104,7 @@ RKComponentPropertyBase::~RKComponentPropertyBase () {
 QVariant RKComponentPropertyBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 	if (modifier.isEmpty ()) return _value;
-	if (modifier == "quoted") return RObject::rQuote (_value);
+	if (modifier == QLatin1String("quoted")) return RObject::rQuote (_value);
 	// else
 	warnModifierNotRecognized (modifier);
 	return QString ();
@@ -146,7 +146,7 @@ void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier
 
 ///////////////////////////////////////// AbstractList /////////////////////////////////////
 
-QString RKComponentPropertyAbstractList::sep = "\n";
+QString RKComponentPropertyAbstractList::sep = QStringLiteral("\n");
 RKComponentPropertyAbstractList::RKComponentPropertyAbstractList (QObject* parent, bool required) : RKComponentPropertyBase (parent, required) {
 	RK_TRACE (PLUGIN);
 	setAllowedLength ();
@@ -228,7 +228,7 @@ QVariant RKComponentPropertyStringList::value (const QString &modifier) {
 
 	if (modifier.isEmpty ()) {
 		return storage;
-	} else if (modifier == "joined") {
+	} else if (modifier == QLatin1String("joined")) {
 		if (_value.isNull ()) {
 			for (int i = 0; i < storage.size (); ++i) {
 				if (!_value.isEmpty ()) _value.append (sep);
@@ -324,13 +324,13 @@ RKComponentBase* RKComponentPropertyBool::lookupComponent (const QString &identi
 	if (dummy != this) return dummy;
 
 	QString next = identifier.section ('.', 0, 0);
-	if (next == "not") {
+	if (next == QLatin1String("not")) {
 		RKComponentPropertyBool *negated = new RKComponentPropertyBool (this, false, false, value_true, value_false);
 		negated->setInverted (true);
 		negated->setInternal (true);
 		negated->connectToGovernor (this);
 		*remainder = QString ();		// reset
-		addChild ("not", negated);		// so subsequent lookups will not recreate the negated property
+		addChild (QStringLiteral("not"), negated);		// so subsequent lookups will not recreate the negated property
 		return (negated->lookupComponent (identifier.section ('.', 1), remainder));
 	}
 
@@ -358,8 +358,8 @@ bool RKComponentPropertyBool::stringToBool (const QString &value, bool *ok) {
 	bool ret = value.toInt (&_ok);
 	if (_ok) return ret;
 
-	if (value == "true") return true;
-	if (value == "false") return false;
+	if (value == QLatin1String("true")) return true;
+	if (value == QLatin1String("false")) return false;
 	if (value.isEmpty ()) return false;
 	
 	if (ok) *ok = false;
@@ -410,14 +410,14 @@ bool RKComponentPropertyBool::boolValue () {
 QVariant RKComponentPropertyBool::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
-	if (modifier.isEmpty () || (modifier == "numeric")) {
+	if (modifier.isEmpty () || (modifier == QLatin1String("numeric"))) {
 		return (int) (current_value ? 1 : 0);
 	}
-	if (modifier == "labeled") {
+	if (modifier == QLatin1String("labeled")) {
 		return current_value ? value_true : value_false;
 	}
-	if (modifier == "true") return value_true;
-	if (modifier == "false") return value_false;
+	if (modifier == QLatin1String("true")) return value_true;
+	if (modifier == QLatin1String("false")) return value_false;
 
 	warnModifierNotRecognized (modifier);
 	return QVariant ();
@@ -690,7 +690,7 @@ QVariant RKComponentPropertyDouble::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
 	if (modifier.isEmpty ()) return current_value;
-	else if (modifier == "formatted") return _value;
+	else if (modifier == QLatin1String("formatted")) return _value;
 
 	warnModifierNotRecognized (modifier);
 	return QString ();
@@ -941,19 +941,19 @@ QString RKComponentPropertyRObjects::checkObjectProblems (RObject *object) const
 			}
 			++it;
 		}
-		if (!ok) probs.append (i18n ("This object does not appear to belong to any of the classes <i>%1</i>.", classes.join (", ")));
+		if (!ok) probs.append (i18n ("This object does not appear to belong to any of the classes <i>%1</i>.", classes.join (QStringLiteral(", "))));
 	}
 
 	// finally, check type
 	if (!types.isEmpty ()) {
 		QString type = RObject::typeToText (object->getDataType ()).toLower ();
 		if (!types.contains (type)) {
-			probs.append (i18n ("This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</i>.", type, types.join (", ")));
+			probs.append (i18n ("This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</i>.", type, types.join (QStringLiteral(", "))));
 		}
 	}
 
 	if (probs.isEmpty ()) return QString ();
-	return (QString ("<ul><li>") + probs.join ("</li><li>") + "</li></ul>");
+	return (QStringLiteral ("<ul><li>") + probs.join (QStringLiteral("</li><li>")) + "</li></ul>");
 }
 
 RObject *RKComponentPropertyRObjects::objectValue () {
@@ -977,11 +977,11 @@ QVariant RKComponentPropertyRObjects::value (const QString &modifier) {
 		for (int i = 0; i < object_list.size (); ++i) {
 			ret.append (object_list[i]->getFullName ());
 		}
-	} else if (modifier == "shortname") {
+	} else if (modifier == QLatin1String("shortname")) {
 		for (int i = 0; i < object_list.size (); ++i) {
 			ret.append (object_list[i]->getShortName ());
 		}
-	} else if (modifier == "label") {
+	} else if (modifier == QLatin1String("label")) {
 		for (int i = 0; i < object_list.size (); ++i) {
 			ret.append (object_list[i]->getLabel ());
 		}
@@ -1184,9 +1184,9 @@ RKComponentPropertyCode::~RKComponentPropertyCode () {
 QVariant RKComponentPropertyCode::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
-	if (modifier == "preprocess") return preprocess ();
-	if (modifier == "calculate") return calculate ();
-	if (modifier == "printout") return printout ();
+	if (modifier == QLatin1String("preprocess")) return preprocess ();
+	if (modifier == QLatin1String("calculate")) return calculate ();
+	if (modifier == QLatin1String("printout")) return printout ();
 	if (!modifier.isEmpty ()) warnModifierNotRecognized (modifier);
 
 	return (QString (preprocess () + calculate () + printout ()));

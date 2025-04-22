@@ -144,7 +144,7 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 		return nullptr;
 	}
 
-	if (identifier == "katekonsoleplugin") {
+	if (identifier == QLatin1String("katekonsoleplugin")) {
 		// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
 		if (qEnvironmentVariableIsEmpty("EDITOR")) qputenv("EDITOR", "vi");
 	}
@@ -483,10 +483,10 @@ bool KatePluginIntegrationWindow::showMessage(const QVariantMap &map) {
 	RK_TRACE(APP);
 
 	ROutput::ROutputType severity = ROutput::Output;
-	auto type = map["type"].toString();
+	auto type = map[QStringLiteral("type")].toString();
 	if (type == QStringLiteral("Error")) severity = ROutput::Error;
 	else if (type == QStringLiteral("Warning")) severity = ROutput::Warning;
-	RKCommandLog::getLog()->addOtherMessage(map["text"].toString(), map["categoryicon"].value<QIcon>(), severity);
+	RKCommandLog::getLog()->addOtherMessage(map[QStringLiteral("text")].toString(), map[QStringLiteral("categoryicon")].value<QIcon>(), severity);
 	return true;
 }
 
@@ -681,15 +681,15 @@ void KatePluginIntegrationWindow::fixUpPluginUI(const QString &id, const PluginR
 					box->setItemText(1, i18nc("where to search", "in Open Scripts"));
 				}
 			}
-			RKCommonFunctions::removeContainers(client, QStringList() << "search_in_files", true);
+			RKCommonFunctions::removeContainers(client, QStringList() << QStringLiteral("search_in_files"), true);
 			// TODO: Rename "Search more" to something sensible. These actions should still be accessible, globally.
 		} else if (i == 0 && id == QStringLiteral("kateprojectplugin")) {
-			RKCommonFunctions::moveContainer(client, "Menu", "projects", "view", true, false);
+			RKCommonFunctions::moveContainer(client, QStringLiteral("Menu"), QStringLiteral("projects"), QStringLiteral("view"), true, false);
 		} else if (i == 0 && id == QStringLiteral("katectagsplugin")) {
-			RKCommonFunctions::moveContainer(client, "Menu", "CTags Menubar", "view", true, false);
+			RKCommonFunctions::moveContainer(client, QStringLiteral("Menu"), QStringLiteral("CTags Menubar"), QStringLiteral("view"), true, false);
 		}
 
-		RKCommonFunctions::moveContainer(client, "Menu", "tools", "edit", true, true);
+		RKCommonFunctions::moveContainer(client, QStringLiteral("Menu"), QStringLiteral("tools"), QStringLiteral("edit"), true, true);
 		dynamic_actions_client->insertChildClient(client);
 	}
 

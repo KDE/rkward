@@ -47,95 +47,95 @@ void RKStandardIcons::doInitIcons () {
 	RK_TRACE (APP);
 
 	// actions
-	icons[ActionRunAll] = loadRKWardIcon("run_all.png");
-	icons[ActionRunLine] = loadRKWardIcon("run_line.png");
-	icons[ActionRunSelection] = loadRKWardIcon("run_selection.png");
-	icons[ActionCDToScript] = loadThemeIcon("folder-txt");
+	icons[ActionRunAll] = loadRKWardIcon(QStringLiteral("run_all.png"));
+	icons[ActionRunLine] = loadRKWardIcon(QStringLiteral("run_line.png"));
+	icons[ActionRunSelection] = loadRKWardIcon(QStringLiteral("run_selection.png"));
+	icons[ActionCDToScript] = loadThemeIcon(QStringLiteral("folder-txt"));
 
-	icons[ActionConfigurePackages] = loadThemeIcon("utilities-file-archiver");
-	icons[ActionConfigureGeneric] = loadThemeIcon("configure");
-	icons[ActionSearch] = loadThemeIcon("edit-find");
+	icons[ActionConfigurePackages] = loadThemeIcon(QStringLiteral("utilities-file-archiver"));
+	icons[ActionConfigureGeneric] = loadThemeIcon(QStringLiteral("configure"));
+	icons[ActionSearch] = loadThemeIcon(QStringLiteral("edit-find"));
 
-	icons[ActionDeleteRow] = loadThemeIcon("edit-delete");
-	icons[ActionInsertRow] = loadThemeIcon("list-add");
+	icons[ActionDeleteRow] = loadThemeIcon(QStringLiteral("edit-delete"));
+	icons[ActionInsertRow] = loadThemeIcon(QStringLiteral("list-add"));
 	icons[ActionDeleteVar] = icons[ActionDeleteRow];
 	icons[ActionInsertVar] = icons[ActionInsertRow];
-	icons[ActionPasteInsideTable] = loadRKWardIcon("paste_inside_table.png");
-	icons[ActionPasteInsideSelection] = loadRKWardIcon("paste_inside_selection.png");
+	icons[ActionPasteInsideTable] = loadRKWardIcon(QStringLiteral("paste_inside_table.png"));
+	icons[ActionPasteInsideSelection] = loadRKWardIcon(QStringLiteral("paste_inside_selection.png"));
 
 	icons[ActionDelete] = icons[ActionDeleteRow];
-	icons[ActionAddRight] = loadThemeIcon("arrow-right");
-	icons[ActionRemoveLeft] = loadThemeIcon("arrow-left");
+	icons[ActionAddRight] = loadThemeIcon(QStringLiteral("arrow-right"));
+	icons[ActionRemoveLeft] = loadThemeIcon(QStringLiteral("arrow-left"));
 
-	icons[ActionMoveLeft] = loadThemeIcon("go-previous");
-	icons[ActionMoveRight] = loadThemeIcon("go-next");
-	icons[ActionMoveFirst] = loadThemeIcon("go-first");
-	icons[ActionMoveLast] = loadThemeIcon("go-last");
-	icons[ActionMoveUp] = loadThemeIcon("go-up");
-	icons[ActionMoveDown] = loadThemeIcon("go-down");
+	icons[ActionMoveLeft] = loadThemeIcon(QStringLiteral("go-previous"));
+	icons[ActionMoveRight] = loadThemeIcon(QStringLiteral("go-next"));
+	icons[ActionMoveFirst] = loadThemeIcon(QStringLiteral("go-first"));
+	icons[ActionMoveLast] = loadThemeIcon(QStringLiteral("go-last"));
+	icons[ActionMoveUp] = loadThemeIcon(QStringLiteral("go-up"));
+	icons[ActionMoveDown] = loadThemeIcon(QStringLiteral("go-down"));
 
-	icons[ActionExpandDown] = loadThemeIcon("arrow-right");
-	icons[ActionCollapseUp] = loadThemeIcon("arrow-down");
+	icons[ActionExpandDown] = loadThemeIcon(QStringLiteral("arrow-right"));
+	icons[ActionCollapseUp] = loadThemeIcon(QStringLiteral("arrow-down"));
 
-	icons[ActionDocumentInfo] = loadThemeIcon("documentinfo");
-	icons[ActionFlagGreen] = loadThemeIcon("flag-green");
-	icons[ActionSnapshot] = loadThemeIcon("list-add");
-	icons[ActionListPlots] = loadThemeIcon("view-preview");
-	icons[ActionRemovePlot] = loadThemeIcon("list-remove");
-	icons[ActionWindowDuplicate] = loadThemeIcon("window-duplicate");
+	icons[ActionDocumentInfo] = loadThemeIcon(QStringLiteral("documentinfo"));
+	icons[ActionFlagGreen] = loadThemeIcon(QStringLiteral("flag-green"));
+	icons[ActionSnapshot] = loadThemeIcon(QStringLiteral("list-add"));
+	icons[ActionListPlots] = loadThemeIcon(QStringLiteral("view-preview"));
+	icons[ActionRemovePlot] = loadThemeIcon(QStringLiteral("list-remove"));
+	icons[ActionWindowDuplicate] = loadThemeIcon(QStringLiteral("window-duplicate"));
 
-	icons[ActionClear] = loadThemeIcon("edit-clear");
-	icons[ActionInterrupt] = loadThemeIcon("media-playback-stop");
+	icons[ActionClear] = loadThemeIcon(QStringLiteral("edit-clear"));
+	icons[ActionInterrupt] = loadThemeIcon(QStringLiteral("media-playback-stop"));
 
-	icons[ActionDetachWindow] = loadThemeIcon("view-fullscreen");
-	icons[ActionAttachWindow] = loadThemeIcon("view-restore");
+	icons[ActionDetachWindow] = loadThemeIcon(QStringLiteral("view-fullscreen"));
+	icons[ActionAttachWindow] = loadThemeIcon(QStringLiteral("view-restore"));
 
-	icons[ActionLock] = loadThemeIcon("object-locked");
-	icons[ActionUnlock] = loadThemeIcon("object-unlocked");
+	icons[ActionLock] = loadThemeIcon(QStringLiteral("object-locked"));
+	icons[ActionUnlock] = loadThemeIcon(QStringLiteral("object-unlocked"));
 
-	icons[ActionShowMenu] = loadThemeIcon("application-menu");
-	if (icons[ActionShowMenu].isNull ()) icons[ActionShowMenu] = loadRKWardIcon("menu.svg");  // fallback
-	icons[ActionClose] = loadThemeIcon("window-close");
+	icons[ActionShowMenu] = loadThemeIcon(QStringLiteral("application-menu"));
+	if (icons[ActionShowMenu].isNull ()) icons[ActionShowMenu] = loadRKWardIcon(QStringLiteral("menu.svg"));  // fallback
+	icons[ActionClose] = loadThemeIcon(QStringLiteral("window-close"));
 
 	// objects
-	icons[ObjectList] = loadRKWardIcon("list.png");
-	icons[ObjectFunction] = loadRKWardIcon("function.png");
-	icons[ObjectEnvironment] = loadThemeIcon("konqueror");
+	icons[ObjectList] = loadRKWardIcon(QStringLiteral("list.png"));
+	icons[ObjectFunction] = loadRKWardIcon(QStringLiteral("function.png"));
+	icons[ObjectEnvironment] = loadThemeIcon(QStringLiteral("konqueror"));
 	icons[ObjectPackageEnvironment] = icons[ActionConfigurePackages];
-	icons[ObjectMatrix] = loadRKWardIcon("matrix.png");
-	icons[ObjectDataFrame] = loadThemeIcon("x-office-spreadsheet");
-	icons[ObjectDataNumeric] = loadRKWardIcon("data-numeric.png");
-	icons[ObjectDataFactor] = loadRKWardIcon("data-factor.png");
-	icons[ObjectDataCharacter] = loadThemeIcon("draw-text");
-	icons[ObjectDataLogical] = loadRKWardIcon("data-logical.png");
-	icons[ObjectDataUnknown] = loadThemeIcon("unknown");
+	icons[ObjectMatrix] = loadRKWardIcon(QStringLiteral("matrix.png"));
+	icons[ObjectDataFrame] = loadThemeIcon(QStringLiteral("x-office-spreadsheet"));
+	icons[ObjectDataNumeric] = loadRKWardIcon(QStringLiteral("data-numeric.png"));
+	icons[ObjectDataFactor] = loadRKWardIcon(QStringLiteral("data-factor.png"));
+	icons[ObjectDataCharacter] = loadThemeIcon(QStringLiteral("draw-text"));
+	icons[ObjectDataLogical] = loadRKWardIcon(QStringLiteral("data-logical.png"));
+	icons[ObjectDataUnknown] = loadThemeIcon(QStringLiteral("unknown"));
 	icons[ObjectDataOther] = icons[ActionDeleteRow];
-	icons[ObjectPseudo] = loadRKWardIcon("s4_slots.png");
+	icons[ObjectPseudo] = loadRKWardIcon(QStringLiteral("s4_slots.png"));
 
 	// windows
 	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
-	icons[WindowCommandEditor] = loadThemeIcon("text-x-makefile");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
-	icons[WindowOutput] = loadThemeIcon("applications-education");
-	icons[WindowHelp] = loadThemeIcon("help-contents");
-	icons[WindowX11] = loadThemeIcon("applications-graphics");
-	icons[WindowObject] = loadThemeIcon("zoom-original");
-	icons[WindowConsole] = loadThemeIcon("utilities-terminal");
-	icons[WindowCommandLog] = loadThemeIcon("format-justify-left");
-	icons[WindowWorkspaceBrowser] = loadThemeIcon("view-list-tree");
-	icons[WindowSearchHelp] = loadThemeIcon("help-contents");
-	icons[WindowPendingJobs] = loadThemeIcon("system-run");
-	icons[WindowFileBrowser] = loadThemeIcon("folder");
-	icons[WindowDebugConsole] = loadThemeIcon("view-process-system");
-	icons[WindowCallstackViewer] = loadThemeIcon("view-sort-ascending");
-	icons[WindowPDF] = loadThemeIcon("application-pdf");
+	icons[WindowCommandEditor] = loadThemeIcon(QStringLiteral("text-x-makefile"));	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
+	icons[WindowOutput] = loadThemeIcon(QStringLiteral("applications-education"));
+	icons[WindowHelp] = loadThemeIcon(QStringLiteral("help-contents"));
+	icons[WindowX11] = loadThemeIcon(QStringLiteral("applications-graphics"));
+	icons[WindowObject] = loadThemeIcon(QStringLiteral("zoom-original"));
+	icons[WindowConsole] = loadThemeIcon(QStringLiteral("utilities-terminal"));
+	icons[WindowCommandLog] = loadThemeIcon(QStringLiteral("format-justify-left"));
+	icons[WindowWorkspaceBrowser] = loadThemeIcon(QStringLiteral("view-list-tree"));
+	icons[WindowSearchHelp] = loadThemeIcon(QStringLiteral("help-contents"));
+	icons[WindowPendingJobs] = loadThemeIcon(QStringLiteral("system-run"));
+	icons[WindowFileBrowser] = loadThemeIcon(QStringLiteral("folder"));
+	icons[WindowDebugConsole] = loadThemeIcon(QStringLiteral("view-process-system"));
+	icons[WindowCallstackViewer] = loadThemeIcon(QStringLiteral("view-sort-ascending"));
+	icons[WindowPDF] = loadThemeIcon(QStringLiteral("application-pdf"));
 
 	// TODO: We really want an hourglass symbol, or similar, here.
-	icons[StatusWaitingUpdating] = loadThemeIcon("system-search");
+	icons[StatusWaitingUpdating] = loadThemeIcon(QStringLiteral("system-search"));
 
-	icons[DocumentPDF] = loadThemeIcon("application-pdf");
+	icons[DocumentPDF] = loadThemeIcon(QStringLiteral("application-pdf"));
 
 	// this used to be accessible as QApplication::windowIcon(), but apparently no longer since Qt5 (despite documentation)
-	icons[RKWardIcon] = loadRKWardIcon("rkward.svgz");
+	icons[RKWardIcon] = loadRKWardIcon(QStringLiteral("rkward.svgz"));
 }
 
 QIcon RKStandardIcons::iconForObject (const RObject* object) {
@@ -204,7 +204,7 @@ QTimer *RKStandardIcons::busyAnimation(QObject *parent, std::function<void (cons
 	QObject::connect(t, &QTimer::timeout, parent, [setter, animation_step]() mutable {
 		animation_step = (animation_step + 1) % 2;
 		if (animation_step) {
-			setter(QIcon::fromTheme("computer-symbolic"));
+			setter(QIcon::fromTheme(QStringLiteral("computer-symbolic")));
 		} else {
 			setter(getIcon(RKWardIcon));
 		}

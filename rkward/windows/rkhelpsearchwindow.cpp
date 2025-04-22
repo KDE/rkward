@@ -145,14 +145,14 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	RK_TRACE (APP);
 
 	// we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
-	QString command = ".rk.getHelp(";
-	if (type == "demo") command = "rk.demo(";
-	else if (type == "vignette") command = "print (vignette(";
+	QString command = QStringLiteral(".rk.getHelp(");
+	if (type == QLatin1String("demo")) command = QLatin1String("rk.demo(");
+	else if (type == QLatin1String("vignette")) command = QLatin1String("print (vignette(");
 
 	command.append (RObject::rQuote (function_name));
 	if (!package.isEmpty ()) command.append (", package=" + RObject::rQuote (package));
 	command.append (")");
-	if (type == "vignette") command.append (")");
+	if (type == QLatin1String("vignette")) command.append (")");
 
 	auto c = new RCommand(command, RCommand::App | RCommand::GetStringVector, i18n("Find HTML help for %1", function_name));
 	c->whenFinished(this, [this](RCommand* command) {
@@ -170,17 +170,17 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 		return;
 	}
 	
-	QString agrep = "FALSE";
+	QString agrep = QStringLiteral("FALSE");
 	if (fuzzyCheckBox->isChecked ()) {
-		agrep="NULL";
+		agrep=QLatin1String("NULL");
 	}
 	
-	QString ignoreCase = "TRUE";
+	QString ignoreCase = QStringLiteral("TRUE");
 	if(caseSensitiveCheckBox->isChecked ()) {
-		ignoreCase="FALSE";
+		ignoreCase=QLatin1String("FALSE");
 	}
 	
-	QString package = ", package=";
+	QString package = QStringLiteral(", package=");
 	if (packagesList->currentIndex () == 0) {
 		package.append ("NULL");	// all installed packages; actually we could also use package.clear(), here.
 	} else if (packagesList->currentIndex () == 1) {
@@ -305,9 +305,9 @@ QVariant RKHelpSearchResultsModel::data (const QModelIndex& index, int role) con
 			if (col == COL_PACKAGE) return packages[row];
 			if (col == COL_TYPE) return types[row];
 		} else if ((col == 0) && (role == Qt::DecorationRole)) {
-			if (types[row] == "help") return RKStandardIcons::getIcon (RKStandardIcons::WindowHelp);
-			if (types[row] == "demo") return RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor);
-			if (types[row] == "vignette") return RKStandardIcons::getIcon (RKStandardIcons::DocumentPDF);
+			if (types[row] == QLatin1String("help")) return RKStandardIcons::getIcon (RKStandardIcons::WindowHelp);
+			if (types[row] == QLatin1String("demo")) return RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor);
+			if (types[row] == QLatin1String("vignette")) return RKStandardIcons::getIcon (RKStandardIcons::DocumentPDF);
 		}
 	} else {
 		RK_ASSERT (false);

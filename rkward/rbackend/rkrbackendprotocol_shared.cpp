@@ -71,13 +71,13 @@ RBackendRequest* RBackendRequest::duplicate () {
 }
 
 void RBackendRequest::setResult(const GenericRRequestResult& res) {
-	if (!res.warning.isNull()) params[".w"] = res.warning;
-	if (!res.error.isNull()) params[".e"] = res.error;
-	else params[".r"] = res.ret;
+	if (!res.warning.isNull()) params[QStringLiteral(".w")] = res.warning;
+	if (!res.error.isNull()) params[QStringLiteral(".e")] = res.error;
+	else params[QStringLiteral(".r")] = res.ret;
 }
 
 GenericRRequestResult RBackendRequest::getResult() const {
-	return GenericRRequestResult(params.value(".r"), params.value(".w").toString(), params.value(".e").toString());
+	return GenericRRequestResult(params.value(QStringLiteral(".r")), params.value(QStringLiteral(".w")).toString(), params.value(QStringLiteral(".e")).toString());
 }
 
 

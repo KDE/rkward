@@ -68,7 +68,7 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 	}
 
 	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
-	QString common_js (files_path.absoluteFilePath ("common.js"));
+	QString common_js (files_path.absoluteFilePath (QStringLiteral("common.js")));
 
 	script_thread = new QtScriptBackendThread (common_js, filename, this, catalog);
 	connect (script_thread, &QtScriptBackendThread::error, this, &QtScriptBackend::threadError);
@@ -193,7 +193,7 @@ void QtScriptBackendThread::setCommand (const QString &command) {
 
 	mutex.lock ();
 	RK_ASSERT (_command.isNull ());
-	if (command.isNull ()) _command = "";
+	if (command.isNull ()) _command = QLatin1String("");
 	else _command = command;
 	mutex.unlock ();
 }
@@ -255,7 +255,7 @@ bool QtScriptBackendThread::scriptError(const QJSValue &val) {
 
 	if (!val.isError()) return false;
 
-	QString message = i18n("Script Error in %1, line %2: %3\nBacktrace:\n%4", val.property("fileName").toString(), val.property("lineNumber").toInt(), val.toString(), val.property("stack").toString());  // TODO: correct?
+	QString message = i18n("Script Error in %1, line %2: %3\nBacktrace:\n%4", val.property(QStringLiteral("fileName")).toString(), val.property(QStringLiteral("lineNumber")).toInt(), val.toString(), val.property(QStringLiteral("stack")).toString());  // TODO: correct?
 	Q_EMIT error(message);
 
 	return true;
@@ -286,13 +286,13 @@ void QtScriptBackendThread::run () {
 	RK_TRACE (PHP);
 
 	QJSValue backend_object = engine.newQObject (this);
-	engine.globalObject ().setProperty ("_RK_backend", backend_object);
+	engine.globalObject ().setProperty (QStringLiteral("_RK_backend"), backend_object);
 	RKMessageCatalogObject::addI18nToScriptEngine (&engine, catalog);
 
 	if (!includeFile (_commonfile)) return;  // TODO: import this as a module and re-use the engine in the next thread?
 	if (!includeFile (_scriptfile)) return;
 
-	Q_EMIT commandDone("startup complete");
+	Q_EMIT commandDone(QStringLiteral("startup complete"));
 
 	QString command;
 	while (true) {

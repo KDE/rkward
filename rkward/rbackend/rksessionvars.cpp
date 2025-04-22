@@ -96,15 +96,15 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append ("RKWard version: " RKWARD_VERSION);
 	lines.append ("KDE Frameworks version (runtime): " + QString (KCoreAddons::versionString ()));
 	lines.append ("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING);
-	lines.append (QString ("Qt version (runtime): ") + qVersion ());
+	lines.append (QStringLiteral ("Qt version (runtime): ") + qVersion ());
 	lines.append ("Qt version (compile time): " QT_VERSION_STR);
-	lines.append ("Using QWebEngine for HTML rendering");
+	lines.append (QStringLiteral("Using QWebEngine for HTML rendering"));
 	lines.append(QStringLiteral("Running on: ") + QSysInfo::prettyProductName());
 	lines.append ("Local config directory: " + QStandardPaths::writableLocation (QStandardPaths::GenericConfigLocation));
 	lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
 	lines.append ("Backend version (as known to the frontend): " + r_version_string);
 	lines.append (QString());
-	lines.append ("Debug message file (this may contain relevant diagnostic output in case of trouble):");
+	lines.append (QStringLiteral("Debug message file (this may contain relevant diagnostic output in case of trouble):"));
 	lines.append (RK_Debug::debug_file->fileName ());
 	return lines;
 }
@@ -154,7 +154,7 @@ QStringList RKSessionVars::findRInstallations() {
 	}
 #endif
 	// On Unix, but also, if R was not found in the default locations try to find R in the system path.
-	QString r = QStandardPaths::findExecutable("R");
+	QString r = QStandardPaths::findExecutable(QStringLiteral("R"));
 	if (!(r.isEmpty() || ret.contains(r))) ret.append(r);
 	// NOTE: in a default start, the configured R binary takes precedence over all the others, *but*
 	//       --r-executable auto was specified, we want to detect as if from scratch. Thus appending, rather than prepending

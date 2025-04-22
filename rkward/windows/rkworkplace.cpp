@@ -61,7 +61,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	RK_ASSERT (main_workplace == nullptr);
 
 	main_workplace = this;
-	QDesktopServices::setUrlHandler("rkward", this, "openRKWardUrl");
+	QDesktopServices::setUrlHandler(QStringLiteral("rkward"), this, "openRKWardUrl");
 	_workspace_config = nullptr;
 	window_placement_override = RKMDIWindow::AnyWindowState;
 
@@ -110,7 +110,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	status_bar = new QStatusBar();
 	bottom_box->addWidget(status_bar, 0, Qt::AlignRight);
 
-	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group ("ToolwindowBars");
+	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group (QStringLiteral("ToolwindowBars"));
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->restoreSize (toolbar_config);
 
 	history = new RKMDIWindowHistory (this);
@@ -139,7 +139,7 @@ void RKWorkplace::addMessageWidget (KMessageWidget* message) {
 QString workspaceConfigFileName (const QUrl &url) {
 	QString base_name = QString (QCryptographicHash::hash (url.toDisplayString ().toUtf8 (), QCryptographicHash::Md5).toHex());
 	QDir dir (QStandardPaths::writableLocation (QStandardPaths::GenericDataLocation));
-	dir.mkpath ("rkward");
+	dir.mkpath (QStringLiteral("rkward"));
 	return (dir.absoluteFilePath ("rkward/workspace_config_" + base_name));
 }
 
@@ -181,7 +181,7 @@ void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
 void RKWorkplace::saveSettings () {
 	RK_TRACE (APP);
 
-	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group ("ToolwindowBars");
+	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group (QStringLiteral("ToolwindowBars"));
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->saveSize (toolbar_config);
 }
 
@@ -341,8 +341,8 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 void RKWorkplace::setWindowPlacementOverrides(const QString& placement, const QString& name, const QString& style) {
 	RK_TRACE (APP);
 
-	if (placement == "attached") window_placement_override = RKMDIWindow::Attached;
-	else if (placement == "detached") window_placement_override = RKMDIWindow::Detached;
+	if (placement == QLatin1String("attached")) window_placement_override = RKMDIWindow::Attached;
+	else if (placement == QLatin1String("detached")) window_placement_override = RKMDIWindow::Detached;
 	else {
 		RK_ASSERT (placement.isEmpty ());
 		window_placement_override = RKMDIWindow::AnyWindowState;
@@ -407,7 +407,7 @@ void RKWorkplace::openRKWardUrl(const QUrl &url) {
 bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bool force_external) {
 	RK_TRACE (APP);
 
-	if (url.scheme () == "rkward") {
+	if (url.scheme () == QLatin1String("rkward")) {
 		if (RKHTMLWindow::handleRKWardURL (url)) return true;
 	}
 	QMimeDatabase mdb;
@@ -418,10 +418,10 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 	if (!force_external) {
 	// NOTE: Currently a known mimetype implies that the URL is local or served from the local machine.
 	// Thus, external web pages are *not* opened, here. Which is the behavior we want, although the implementation is ugly
-		if (mimetype.inherits("text/html") || url.scheme().toLower().startsWith(QLatin1String("help"))) {
+		if (mimetype.inherits(QStringLiteral("text/html")) || url.scheme().toLower().startsWith(QLatin1String("help"))) {
 			openHelpWindow (url, true);
 			return true;	// TODO
-		} else if (mimetype.inherits("application/pdf")) {
+		} else if (mimetype.inherits(QStringLiteral("application/pdf"))) {
 			openPDFWindow(url);
 			return true;
 		}
@@ -430,11 +430,11 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 			RKWardMainWindow::getMain()->askOpenWorkspace(url);
 			return true;	// TODO
 		}
-		if (lname.endsWith(".rko")) {
+		if (lname.endsWith(QLatin1String(".rko"))) {
 			auto win = openOutputWindow(url, false);
 			return win != nullptr;
 		}
-		if (mimetype.inherits ("text/plain")) {
+		if (mimetype.inherits (QStringLiteral("text/plain"))) {
 			return (openScriptEditor (url, QString ()));
 		}
 		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype.name ()));
@@ -615,7 +615,7 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 		}
 	}
 
-	bool activate = window_style_override != "preview";
+	bool activate = window_style_override != QLatin1String("preview");
 	RKEditor *ed = nullptr;
 	QList<RKEditor*> existing_editors = object->editors ();
 	RKMDIWindow *nw = getNamedWindow(window_name_override);
@@ -825,38 +825,38 @@ QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
 	QString type, specification;
 	QStringList params;
 	if (win->isType (RKMDIWindow::DataEditorWindow)) {
-		type = "data";
+		type = QLatin1String("data");
 		specification = static_cast<RKEditor*> (win)->getObject ()->getFullName ();
 	} else if (win->isType (RKMDIWindow::CommandEditorWindow)) {
-		type = "script";
+		type = QLatin1String("script");
 		specification = static_cast<RKCommandEditorWindow*> (win)->url ().url ();
 		if (specification.isEmpty ()) specification = static_cast<RKCommandEditorWindow*> (win)->id ();
 	} else if (win->isType (RKMDIWindow::OutputWindow)) {
 		RKOutputDirectory *dir = RKOutputDirectory::findOutputByWindow(win);
 		if (dir) {
-			type = "rkoutput";
+			type = QLatin1String("rkoutput");
 			specification = QUrl::fromLocalFile(dir->filename()).url();
 			if (dir->isActive()) type.append(QStringLiteral(".active"));
 		} else {
 			// legacy support for rk.set.html.output.file()
-			type = "output";
+			type = QLatin1String("output");
 			specification = static_cast<RKHTMLWindow*> (win)->url ().url ();
 		}
 	} else if (win->isType (RKMDIWindow::HelpWindow)) {
-		type = "help";
+		type = QLatin1String("help");
 		specification = static_cast<RKHTMLWindow*> (win)->restorableUrl ().url ();
 	} else if (win->isType(RKMDIWindow::PDFWindow)) {
-		type = "pdf";
+		type = QLatin1String("pdf");
 		specification = static_cast<RKPDFWindow*>(win)->url().url();
 	} else if (win->isToolWindow ()) {
 		type = RKToolWindowList::idOfWindow (win);
 	} else if (win->isType (RKMDIWindow::ObjectWindow)) {
-		type = "object";
+		type = QLatin1String("object");
 		specification = static_cast<RObjectViewer*> (win)->object ()->getFullName ();
 	}
 	if (!type.isEmpty ()) {
 		if (!win->isAttached ()) {
-			params.append (QString ("detached,") + QString::number (win->x ()) + ',' + QString::number (win->y ()) + ',' + QString::number (win->width ()) + ',' + QString::number (win->height ()));
+			params.append (QStringLiteral ("detached,") + QString::number (win->x ()) + ',' + QString::number (win->y ()) + ',' + QString::number (win->width ()) + ',' + QString::number (win->height ()));
 		}
 		if (win->isToolWindow ()) {
 			int sidebar = RKToolWindowList::Nowhere;
@@ -866,9 +866,9 @@ QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
 					break;
 				}
 			}
-			params.append (QString ("sidebar,") + QString::number (sidebar));
+			params.append (QStringLiteral ("sidebar,") + QString::number (sidebar));
 		}
-		return (type + "::" + params.join (":") + "::" + specification);
+		return (type + "::" + params.join (QStringLiteral(":")) + "::" + specification);
 	}
 
 	return QString ();
@@ -892,7 +892,7 @@ ItemSpecification parseItemDescription (const QString &description) {
 	}
 	ret.type = description.left (typeend);
 	if (description.at (typeend + 1) == ':') {	// rkward 0.5.5 or later
-		int specstart = description.indexOf ("::", typeend + 2);
+		int specstart = description.indexOf (QLatin1String("::"), typeend + 2);
 		if (specstart < typeend) {
 			RK_ASSERT (false);
 			return ret;
@@ -910,25 +910,25 @@ RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, const ItemSpecifica
 	RK_TRACE (APP);
 
 	RKMDIWindow *win = nullptr;
-	if (spec.type == "data") {
+	if (spec.type == QLatin1String("data")) {
 		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
 		if (object) win = wp->editObject (object);
-	} else if (spec.type == "script") {
+	} else if (spec.type == QLatin1String("script")) {
 		QUrl url = checkAdjustRestoredUrl (spec.specification, base);
 		win = wp->openScriptEditor (url, QString ());
-	} else if (spec.type == "output") {
+	} else if (spec.type == QLatin1String("output")) {
 		win = wp->openOutputWindow (checkAdjustRestoredUrl(spec.specification, base));
-	} else if (spec.type.startsWith("rkoutput")) {
+	} else if (spec.type.startsWith(QLatin1String("rkoutput"))) {
 		RKOutputDirectory *dir = RKOutputDirectory::get(checkAdjustRestoredUrl(spec.specification, base).toLocalFile(), false).dir();
 		if (!dir) return nullptr;
-		if (spec.type.endsWith(".active")) dir->activate();
+		if (spec.type.endsWith(QLatin1String(".active"))) dir->activate();
 		win = RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(dir->workPath()));
-	} else if (spec.type == "help") {
+	} else if (spec.type == QLatin1String("help")) {
 		auto url = checkAdjustRestoredUrl (spec.specification, base);
 		if (!url.isEmpty()) win = wp->openHelpWindow(url, true);
-	} else if (spec.type == "pdf") {
+	} else if (spec.type == QLatin1String("pdf")) {
 		win = wp->openPDFWindow(checkAdjustRestoredUrl(spec.specification, base));
-	} else if (spec.type == "object") {
+	} else if (spec.type == QLatin1String("object")) {
 		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
 		if (object) win = wp->newObjectViewer (object);
 	}
@@ -975,8 +975,8 @@ void RKWorkplace::saveWorkplace(const QUrl& for_url, RCommandChain *chain) {
 	if (RKSettingsModuleGeneral::workplaceSaveMode() != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
 	QString file_param;
-	if (!for_url.isEmpty()) file_param = QString("file=") + RObject::rQuote(for_url.toLocalFile() + QStringLiteral(".rkworkplace")) + QStringLiteral(", ");
-	RInterface::issueCommand(new RCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote(makeWorkplaceDescription().join("\n")) + ')', RCommand::App, i18n("Save Workplace layout")), chain);
+	if (!for_url.isEmpty()) file_param = QStringLiteral("file=") + RObject::rQuote(for_url.toLocalFile() + QStringLiteral(".rkworkplace")) + QStringLiteral(", ");
+	RInterface::issueCommand(new RCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote(makeWorkplaceDescription().join(QStringLiteral("\n"))) + ')', RCommand::App, i18n("Save Workplace layout")), chain);
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
@@ -984,7 +984,7 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
 	QString no_close_windows;
-	if (merge) no_close_windows = "close.windows = FALSE";
+	if (merge) no_close_windows = QLatin1String("close.windows = FALSE");
 	RInterface::issueCommand(new RCommand("rk.restore.workplace(" + no_close_windows + ')', RCommand::App, i18n ("Restore Workplace layout")), chain);
 }
 
@@ -996,14 +996,14 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	for (int i = 0; i < description.size (); ++i) {
 		ItemSpecification spec = parseItemDescription (description[i]);
 		RKMDIWindow *win = nullptr;
-		if (spec.type == "base") {
+		if (spec.type == QLatin1String("base")) {
 			RK_ASSERT (i == 0);
 			base = spec.specification;
 		} else if (restoreDocumentWindowInternal (this, spec, base)) {
 			// it was restored. nothing else to do
-		} else if (spec.type == "layout") {
+		} else if (spec.type == QLatin1String("layout")) {
 			view ()->restoreLayout (spec.specification);
-		} else if (spec.type == "pane_end") {
+		} else if (spec.type == QLatin1String("pane_end")) {
 			view ()->nextPane ();
 		} else {
 			win = RKToolWindowList::findToolWindowById (spec.type);
@@ -1046,7 +1046,7 @@ void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
 	} else if (source->isType (RKMDIWindow::ObjectWindow)) {
 		newObjectViewer (static_cast<RObjectViewer*> (source)->object ());
 	} else {
-		openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
+		openHelpWindow (QUrl (QStringLiteral("rkward://page/rkward_split_views")));
 	}
 }
 

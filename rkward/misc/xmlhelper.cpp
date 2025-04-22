@@ -62,17 +62,17 @@ QDomElement XMLHelper::openXMLFile (int debug_level, bool with_includes, bool wi
 	f.close();
 
 	QDomElement ret = doc.documentElement ();
-	if (ret.hasAttribute ("po_id")) {
+	if (ret.hasAttribute (QStringLiteral("po_id"))) {
 		QDir path = QFileInfo (filename).absoluteDir ();
-		catalog = RKMessageCatalog::getCatalog ("rkward__" + ret.attribute ("po_id"), path.absoluteFilePath (getStringAttribute (ret, "po_path", "po", DL_INFO)));
+		catalog = RKMessageCatalog::getCatalog ("rkward__" + ret.attribute (QStringLiteral("po_id")), path.absoluteFilePath (getStringAttribute (ret, QStringLiteral("po_path"), QStringLiteral("po"), DL_INFO)));
 	}
 	if (with_includes) {
-		XMLChildList includes = nodeListToChildList (doc.elementsByTagName ("include"));
+		XMLChildList includes = nodeListToChildList (doc.elementsByTagName (QStringLiteral("include")));
 		for (XMLChildList::const_iterator it = includes.constBegin (); it != includes.constEnd (); ++it) {
 			// resolve the file to include
 			QDomElement el = *it;
 
-			QString inc_filename = getStringAttribute (el, "file", QString (), DL_ERROR);
+			QString inc_filename = getStringAttribute (el, QStringLiteral("file"), QString (), DL_ERROR);
 			QDir base = QFileInfo (filename).absoluteDir ();
 			inc_filename = base.filePath (inc_filename);
 
@@ -122,25 +122,25 @@ XMLChildList XMLHelper::nodeListToChildList (const QDomNodeList &from) {
 QDomElement XMLHelper::resolveSnippets (QDomElement &from_doc) {
 	RK_TRACE (XML);
 
-	XMLChildList refs = nodeListToChildList (from_doc.elementsByTagName ("insert"));
+	XMLChildList refs = nodeListToChildList (from_doc.elementsByTagName (QStringLiteral("insert")));
 	int ref_count = refs.count ();
 
 	if (!ref_count) {	// nothing to resolve
 		return (from_doc);
 	}
 
-	QDomElement snippets_section = getChildElement (from_doc, "snippets", DL_ERROR);
-	XMLChildList snippets = getChildElements (snippets_section, "snippet", DL_ERROR);
+	QDomElement snippets_section = getChildElement (from_doc, QStringLiteral("snippets"), DL_ERROR);
+	XMLChildList snippets = getChildElements (snippets_section, QStringLiteral("snippet"), DL_ERROR);
 
 	for (XMLChildList::const_iterator it = refs.constBegin (); it != refs.constEnd (); ++it) {
 		QDomElement ref = *it;
-		QString id = getStringAttribute (ref, "snippet", QString (), DL_ERROR);
+		QString id = getStringAttribute (ref, QStringLiteral("snippet"), QString (), DL_ERROR);
 		displayError (&ref, "resolving snippet '" + id + '\'', DL_DEBUG, DL_DEBUG);
 
 		// resolve the reference
 		QDomElement snippet;
 		for (XMLChildList::const_iterator it = snippets.constBegin(); it != snippets.constEnd (); ++it) {
-			if (getStringAttribute (*it, "id", QString (), DL_ERROR) == id) {
+			if (getStringAttribute (*it, QStringLiteral("id"), QString (), DL_ERROR) == id) {
 				snippet = *it;
 				break;
 			}
@@ -257,7 +257,7 @@ QString XMLHelper::i18nStringAttribute (const QDomElement& element, const QStrin
 	QString attr = element.attribute (name);
 	if (attr.isEmpty ()) return attr;	// Do not translate empty strings!
 
-	const QString context = element.attribute ("i18n_context", QString ());
+	const QString context = element.attribute (QStringLiteral("i18n_context"), QString ());
 	if (!context.isNull ()) return (catalog->translate (context, attr));
 	return (catalog->translate (attr));
 }
@@ -314,20 +314,20 @@ bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &nam
 	RK_TRACE (XML);
 
 	QString defstring, res;
-	if (def) defstring = "true";
-	else defstring = "false";
+	if (def) defstring = QLatin1String("true");
+	else defstring = QLatin1String("false");
 
 	res = getStringAttribute (element, name, defstring, debug_level);
-	if (res == "true") return true;
-	if (res == "false") return false;
+	if (res == QLatin1String("true")) return true;
+	if (res == QLatin1String("false")) return false;
 
-	displayError (&element, i18n ("Illegal attribute value. Allowed values are '%1' or '%2', only.", QString ("true"), QString ("false")), debug_level, DL_ERROR);
+	displayError (&element, i18n ("Illegal attribute value. Allowed values are '%1' or '%2', only.", QStringLiteral ("true"), QStringLiteral ("false")), debug_level, DL_ERROR);
 	return def;
 }
 
 QString translateChunk (const QString &chunk, const QString &context, bool add_paragraphs, const RKMessageCatalog *catalog) {
 	// if (!with_paragraphs), text should better not contain double newlines. We treat all the same, though, just as the message extraction script does.
-	QStringList paras = chunk.split ("\n\n");
+	QStringList paras = chunk.split (QStringLiteral("\n\n"));
 	QString ret;
 
 	for (int i = 0; i < paras.count (); ++i) {
@@ -336,10 +336,10 @@ QString translateChunk (const QString &chunk, const QString &context, bool add_p
 		else {
 			if (!ret.isEmpty ()) ret.append ("\n");
 			// Oh, crap. Fix up after some differences between python message extraction and qt's.
-			para.replace ("<li> <", "<li><");
-			para.replace ("br> <", "br><");
-			para.replace ("> </li>", "></li>");
-			para.replace ("&amp;", "&");
+			para.replace (QLatin1String("<li> <"), QLatin1String("<li><"));
+			para.replace (QLatin1String("br> <"), QLatin1String("br><"));
+			para.replace (QLatin1String("> </li>"), QLatin1String("></li>"));
+			para.replace (QLatin1String("&amp;"), QLatin1String("&"));
 			QString text = context.isNull () ? catalog->translate (para) : catalog->translate (context, para);
 			if (add_paragraphs) ret += "<p>" + text + "</p>";
 			else ret += text;
@@ -358,7 +358,7 @@ QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragr
 	}
 
 	QString ret;
-	QString context = element.attribute ("i18n_context", QString ());
+	QString context = element.attribute (QStringLiteral("i18n_context"), QString ());
 	QString buffer;
 	QTextStream stream (&buffer, QIODevice::WriteOnly);
 	for (QDomNode node = element.firstChild (); !node.isNull (); node = node.nextSibling ()) {
@@ -409,7 +409,7 @@ void XMLHelper::displayError (const QDomNode *in_node, const QString &message, i
 			}
 		}
 
-		backtrace += list.join ("->");
+		backtrace += list.join (QStringLiteral("->"));
 
 		RK_DEBUG (XML, message_level, "%s: %s", backtrace.toLatin1 ().data (), message.toLatin1 ().data ());
 	}

@@ -88,7 +88,7 @@ public:
 	static bool autosaveEnabled () { return autosave_enabled; };
 	static bool autosaveKeep () { return autosave_keep; };
 	static int autosaveInterval () { return autosave_interval; };
-	static QString autosaveSuffix () { return ".rkward_autosave"; };
+	static QString autosaveSuffix() { return QStringLiteral(".rkward_autosave"); };
 
 	static QString scriptFileFilter () { return script_file_filter; };
 	static bool matchesScriptFileFilter (const QString &filename);

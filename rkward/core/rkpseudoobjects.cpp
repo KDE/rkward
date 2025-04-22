@@ -11,7 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RSlotsPseudoObject::RSlotsPseudoObject (RObject *parent) : RContainerObject (parent, "SLOTS") {
+RSlotsPseudoObject::RSlotsPseudoObject (RObject *parent) : RContainerObject (parent, QStringLiteral("SLOTS")) {
 	RK_TRACE (OBJECTS);
 	type |= PseudoObject;
 	pseudo_object_types.insert (this, SlotsObject);
@@ -39,7 +39,7 @@ QString RSlotsPseudoObject::makeChildName(const QString &short_child_name, int o
 	return (parent->getFullName (options) + '@' + safe_name);
 }
 
-RKNamespaceObject::RKNamespaceObject (REnvironmentObject* package, const QString &name) : REnvironmentObject (package, name.isNull () ? "NAMESPACE" : name) {
+RKNamespaceObject::RKNamespaceObject (REnvironmentObject* package, const QString &name) : REnvironmentObject (package, name.isNull () ? QStringLiteral("NAMESPACE") : name) {
 	RK_TRACE (OBJECTS);
 	type |= PseudoObject;
 	pseudo_object_types.insert (this, NamespaceObject);
@@ -138,6 +138,6 @@ QString RKOrphanNamespacesObject::getObjectDescription () const {
 	RK_TRACE (OBJECTS);
 
 	QString desc = REnvironmentObject::getObjectDescription ();
-	desc.append (QString ("<p>%1</p>").arg (i18n ("This special object does not actually exist anywhere in R. It is used, here, to list namespaces which are loaded, but not attached to a package on the search path. These are typically 'imported' namespaces.")));
+	desc.append (QStringLiteral ("<p>%1</p>").arg (i18n ("This special object does not actually exist anywhere in R. It is used, here, to list namespaces which are loaded, but not attached to a package on the search path. These are typically 'imported' namespaces.")));
 	return desc;
 }

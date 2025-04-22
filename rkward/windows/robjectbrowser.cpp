@@ -52,7 +52,7 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
-	setMetaInfo(i18n("R workspace browser"), QUrl("rkward://page/rkward_workspace_browser"), RKSettingsModuleObjectBrowser::page_id);
+	setMetaInfo(i18n("R workspace browser"), QUrl(QStringLiteral("rkward://page/rkward_workspace_browser")), RKSettingsModuleObjectBrowser::page_id);
 	initializeActivationSignals ();
 
 	setCaption (i18n ("R Workspace"));
@@ -125,7 +125,7 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent, RObjectBrowser 
 	connect (actions[CopyToGlobalEnv], &QAction::triggered, this, &RObjectBrowserInternal::popupCopyToGlobalEnv);
 	actions.insert (Delete, new QAction (i18n ("Delete"), this));
 	connect (actions[Delete], &QAction::triggered, this, &RObjectBrowserInternal::popupDelete);
-	actions.insert(NewFromClipboard, new QAction(QIcon::fromTheme("edit-paste"), i18n("New object from clipboard"), this));
+	actions.insert(NewFromClipboard, new QAction(QIcon::fromTheme(QStringLiteral("edit-paste")), i18n("New object from clipboard"), this));
 	connect (actions[NewFromClipboard], &QAction::triggered, this, []() { RKPasteSpecialDialog dia(RKWardMainWindow::getMain(), true); dia.exec(); });
 	actions.insert (Unload, new QAction (i18n ("Unload Package"), this));
 	connect (actions[Unload], &QAction::triggered, this, &RObjectBrowserInternal::popupUnload);
@@ -223,7 +223,7 @@ void RObjectBrowserInternal::popupUnload () {
 
 	QStringList messages = RObjectList::getObjectList ()->detachPackages (QStringList (object->getShortName ()));
 
-	if (!messages.isEmpty()) KMessageBox::error(this, messages.join("\n"));
+	if (!messages.isEmpty()) KMessageBox::error(this, messages.join(QStringLiteral("\n")));
 }
 
 void RObjectBrowserInternal::popupRename () {

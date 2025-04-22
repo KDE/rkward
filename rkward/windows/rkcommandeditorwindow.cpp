@@ -68,7 +68,7 @@ RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent) : KParts:
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setWidget (parent);
-	setXMLFile ("rkcommandeditorwindowpart.rc");
+	setXMLFile (QStringLiteral("rkcommandeditorwindowpart.rc"));
 }
 
 RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
@@ -149,7 +149,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 				// KF5 TODO: Check which parts of this are still needed in KF5, and which no longer work
 				if (!(flags & RKCommandEditorFlags::DeleteOnClose)) {	// don't litter config with temporary files
 					QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
-					KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+					KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QStringLiteral ("SkriptDocumentSettings %1").arg (p_url));
 					// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
 					// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
 					if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
@@ -190,7 +190,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	connect (preview_manager, &RKPreviewManager::statusChanged, this, [this]() { preview_timer.start (500); });
 	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {
-		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
+		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QStringLiteral ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
 		m_view->readSessionConfig (viewconf);
 	}
 
@@ -283,9 +283,9 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	bool have_url = !url().isEmpty(); // cache early, as potentially needed after destruction of m_doc (at which point calling url() may crash
 	if (have_url) {
 		QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
-		KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+		KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QStringLiteral ("SkriptDocumentSettings %1").arg (p_url));
 		m_doc->writeSessionConfig (conf);
-		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
+		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QStringLiteral ("SkriptViewSettings %1").arg (p_url));
 		m_view->writeSessionConfig (viewconf);
 	}
 
@@ -318,8 +318,8 @@ void RKCommandEditorWindow::fixupPartGUI () {
 	RK_TRACE (COMMANDEDITOR);
 
 	// strip down the katepart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line,set_confdlg").split (','), true);
-	RKCommonFunctions::moveContainer (m_view, "Menu", "tools", "edit", true);
+	RKCommonFunctions::removeContainers (m_view, QStringLiteral ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line,set_confdlg").split (','), true);
+	RKCommonFunctions::moveContainer (m_view, QStringLiteral("Menu"), QStringLiteral("tools"), QStringLiteral("edit"), true);
 }
 
 QAction *findAction (KTextEditor::View* view, const QString &actionName) {
@@ -344,7 +344,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_run_all = RKStandardActions::runAll (this, this, SLOT (runAll()));
 	action_run_current = RKStandardActions::runCurrent (this, this, SLOT (runCurrent()), true);
 	// NOTE: enter_and_submit is not currently added to the menu
-	QAction *action = ac->addAction("enter_and_submit", this, &RKCommandEditorWindow::enterAndSubmit);
+	QAction *action = ac->addAction(QStringLiteral("enter_and_submit"), this, &RKCommandEditorWindow::enterAndSubmit);
 	action->setText (i18n ("Insert line break and run"));
 	ac->setDefaultShortcuts (action, QList<QKeySequence>() << (Qt::AltModifier | Qt::Key_Return) << (Qt::AltModifier | Qt::Key_Enter));
 	ac->setDefaultShortcut (action, Qt::AltModifier | Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
@@ -354,22 +354,22 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
 	actionmenu_run_block->setPopupMode(QToolButton::InstantPopup);
-	ac->addAction ("run_block", actionmenu_run_block);
+	ac->addAction (QStringLiteral("run_block"), actionmenu_run_block);
 	connect (actionmenu_run_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_mark_block = new KActionMenu (i18n ("Mark selection as block"), this);
-	ac->addAction ("mark_block", actionmenu_mark_block);
+	ac->addAction (QStringLiteral("mark_block"), actionmenu_mark_block);
 	connect (actionmenu_mark_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_unmark_block = new KActionMenu (i18n ("Unmark block"), this);
-	ac->addAction ("unmark_block", actionmenu_unmark_block);
+	ac->addAction (QStringLiteral("unmark_block"), actionmenu_unmark_block);
 	connect (actionmenu_unmark_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 
-	action_setwd_to_script = ac->addAction("setwd_to_script", this, &RKCommandEditorWindow::setWDToScript);
+	action_setwd_to_script = ac->addAction(QStringLiteral("setwd_to_script"), this, &RKCommandEditorWindow::setWDToScript);
 	action_setwd_to_script->setText (i18n ("CD to script directory"));
 	action_setwd_to_script->setWhatsThis(i18n ("Change the working directory to the directory of this script"));
 	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
-	KActionMenu* actionmenu_preview = new KActionMenu(QIcon::fromTheme("view-preview"), i18n("Preview"), this);
+	KActionMenu* actionmenu_preview = new KActionMenu(QIcon::fromTheme(QStringLiteral("view-preview")), i18n("Preview"), this);
 	actionmenu_preview->setPopupMode(QToolButton::InstantPopup);
 	preview_modes = new QActionGroup(this);
 	action_no_preview = preview_modes->addAction(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete), i18n("No preview"));
@@ -390,16 +390,16 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	connect(preview_modes, &QActionGroup::triggered, this, &RKCommandEditorWindow::changePreviewMode);
 
 	actionmenu_preview->addSeparator ();
-	action_preview_as_you_type = new QAction (QIcon::fromTheme ("input-keyboard"), i18nc ("Checkable action: the preview gets updated while typing", "Update as you type"), ac);
+	action_preview_as_you_type = new QAction (QIcon::fromTheme (QStringLiteral("input-keyboard")), i18nc ("Checkable action: the preview gets updated while typing", "Update as you type"), ac);
 	action_preview_as_you_type->setToolTip (i18n ("When this option is enabled, an update of the preview will be triggered every time you modify the script. When this option is disabled, the preview will be updated whenever you save the script, only."));
 	action_preview_as_you_type->setCheckable (true);
 	action_preview_as_you_type->setChecked (m_doc->url ().isEmpty ());  // By default, update as you type for unsaved "quick and dirty" scripts, preview on save for saved scripts
 	actionmenu_preview->addAction (action_preview_as_you_type);
-	ac->addAction ("render_preview", actionmenu_preview);
+	ac->addAction (QStringLiteral("render_preview"), actionmenu_preview);
 
-	file_save_action = findAction (m_view, "file_save");
+	file_save_action = findAction (m_view, QStringLiteral("file_save"));
 	if (file_save_action) file_save_action->setText (i18n ("Save Script..."));
-	file_save_as_action = findAction (m_view, "file_save_as");
+	file_save_as_action = findAction (m_view, QStringLiteral("file_save_as"));
 	if (file_save_as_action) file_save_as_action->setText (i18n ("Save Script As..."));
 }
 
@@ -497,7 +497,7 @@ void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 void RKCommandEditorWindow::setWindowStyleHint (const QString& hint) {
 	RK_TRACE (COMMANDEDITOR);
 
-	m_view->setStatusBarEnabled (hint != "preview");
+	m_view->setStatusBarEnabled (hint != QLatin1String("preview"));
 	RKMDIWindow::setWindowStyleHint (hint);
 }
 
@@ -565,7 +565,7 @@ public:
 			// rkmarkdown::render() leaves these directories lying around, even if clean=TRUE. interemdiates_dir does not seem to have an effect. (07/2024)
 			// the name should be unique enough, though, so let's clean them
 			auto fi = QFileInfo(*infile);
-			auto known_temp_path = fi.absolutePath() + '/' + fi.baseName() + QLatin1String("_cache");
+			QString known_temp_path = fi.absolutePath() + '/' + fi.baseName() + QLatin1String("_cache");
 			QDir(known_temp_path).removeRecursively();
 		}
 		infile->remove();
@@ -618,7 +618,7 @@ void RKCommandEditorWindow::discardPreview () {
 	if (preview_io) {
 		preview->hide ();
 		preview_manager->setPreviewDisabled ();
-		RInterface::issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
+		RInterface::issueCommand (QStringLiteral (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
 		delete preview_io;
 		preview_io = nullptr;
 	}
@@ -758,7 +758,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 	}
 
 	preview_io = RKScriptPreviewIO::init(preview_io, m_doc, nmode, mode.input_ext);
-	QString command = mode.command(preview_io->inpath(), preview_io->outpath(""), preview_manager->previewId());
+	QString command = mode.command(preview_io->inpath(), preview_io->outpath(QLatin1String("")), preview_manager->previewId());
 	preview->setLabel(mode.previewlabel);
 	preview->show();
 
@@ -863,7 +863,7 @@ void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (seq->hadError ()) {
-		KMessageBox::detailedError (this, i18n ("An error occurred while trying to create an autosave of the script file '%1':", url ().url ()), "- " + seq->errors ().join ("\n- "));
+		KMessageBox::detailedError (this, i18n ("An error occurred while trying to create an autosave of the script file '%1':", url ().url ()), "- " + seq->errors ().join (QStringLiteral("\n- ")));
 	}
 }
 
@@ -928,7 +928,7 @@ void RKCommandEditorWindow::highlightLine (int linenum) {
 void RKCommandEditorWindow::urlChanged() {
 	RK_TRACE (COMMANDEDITOR);
 	updateCaption();
-	setGlobalContextProperty("current_filename", url().url());
+	setGlobalContextProperty(QStringLiteral("current_filename"), url().url());
 	if (!url().isEmpty()) RKRecentUrls::addRecentUrl(RKRecentUrls::scriptsId(), url());
 	action_setwd_to_script->setEnabled (!url().isEmpty ());
 }
@@ -1008,7 +1008,7 @@ void RKCommandEditorWindow::enterAndSubmit () {
 
 	KTextEditor::Cursor c = m_view->cursorPosition ();
 	int line = c.line ();
-	m_doc->insertText (c, "\n");
+	m_doc->insertText (c, QStringLiteral("\n"));
 	QString command = m_doc->line (line);
 	if (!command.isEmpty ()) RKConsole::pipeUserCommand (command + '\n');
 }
@@ -1172,7 +1172,7 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 		&& (!m_defaultAttribute || attrib->background().color() != m_defaultAttribute->background().color());
 
 	if ( writeForeground || writeBackground ) {
-		ret.append (QString("<span style='%1%2'>")
+		ret.append (QStringLiteral("<span style='%1%2'>")
 					.arg(writeForeground ? QString(QLatin1String("color:") + attrib->foreground().color().name() + QLatin1Char(';')) : QString(),
 					     writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
 	}
@@ -1203,9 +1203,9 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 	QString opening;
 	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute (KSyntaxHighlighting::Theme::TextStyle::Normal);
 	if ( !m_defaultAttribute ) {
-		opening = "<pre class=\"%3\">";
+		opening = QLatin1String("<pre class=\"%3\">");
 	} else {
-		opening = QString("<pre style='%1%2' class=\"%3\">")
+		opening = QStringLiteral("<pre style='%1%2' class=\"%3\">")
 				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "",
 				     m_defaultAttribute->fontItalic() ? "text-style:italic;" : "");
 				// Note: copying the default text/background colors is pointless in our case, and leads to subtle inconsistencies.
@@ -1213,7 +1213,7 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 
 	const KTextEditor::Attribute::Ptr noAttrib(nullptr);
 
-	if (mode == RScript) ret = opening.arg ("code");
+	if (mode == RScript) ret = opening.arg (QStringLiteral("code"));
 	enum {
 		Command,
 		Output,
@@ -1227,17 +1227,17 @@ QString RKCommandHighlighter::commandToHTML (const QString &r_command, Highlight
 		int lineStart = 0;
 
 		if (mode == RInteractiveSession) {
-			if (line.startsWith ("> ") || line.startsWith ("+ ")) {
+			if (line.startsWith (QLatin1String("> ")) || line.startsWith (QLatin1String("+ "))) {
 				lineStart = 2;	// skip the prompt. Prompt will be indicated by the CSS, instead
 				if (previous_chunk != Command) {
 					if (previous_chunk != None) ret.append ("</pre>");
-					ret.append (opening.arg ("code"));
+					ret.append (opening.arg (QStringLiteral("code")));
 					previous_chunk = Command;
 				}
 			} else {
 				if (previous_chunk != Output) {
 					if (previous_chunk != None) ret.append ("</pre>");
-					ret.append (opening.arg ("output_normal"));
+					ret.append (opening.arg (QStringLiteral("output_normal")));
 					previous_chunk = Output;
 				}
 				ret.append (line.toHtmlEscaped () + '\n');	// don't copy output "highlighting". It is set using CSS, instead
@@ -1275,14 +1275,14 @@ void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, Highligh
 	RK_TRACE (COMMANDEDITOR);
 
 	QString mode_string;
-	if (mode == RScript) mode_string = "R Script";
-	else if (mode == RInteractiveSession) mode_string = "R interactive session";
+	if (mode == RScript) mode_string = QLatin1String("R Script");
+	else if (mode == RInteractiveSession) mode_string = QLatin1String("R interactive session");
 	else {
 		QString fn = doc->url ().fileName ().toLower ();
 		if (fn.endsWith (QLatin1String (".pluginmap")) || fn.endsWith (QLatin1String (".rkh")) || fn.endsWith (QLatin1String (".xml")) || fn.endsWith (QLatin1String (".inc"))) {
-			mode_string = "XML";
+			mode_string = QLatin1String("XML");
 		} else if (fn.endsWith (QLatin1String (".js"))) {
-			mode_string = "JavaScript";
+			mode_string = QLatin1String("JavaScript");
 		} else {
 			return;
 		}

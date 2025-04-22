@@ -76,7 +76,7 @@ void RKRApiMenu::makeAction(QDomElement e, const QString &full_id, const QString
 			if (w) {
 				const auto props = w->globalContextProperties();
 				for (const auto [key,value] : props.asKeyValueRange()) {
-					if (key == "current_object" || key == "current_dataframe") { // TODO: find cleaner solution than this special casing
+					if (key == QLatin1String("current_object") || key == QLatin1String("current_dataframe")) { // TODO: find cleaner solution than this special casing
 						args.append(key + '=' + value);
 					} else {
 						args.append(key + '=' + RObject::rQuote(value));
@@ -117,13 +117,13 @@ void RKRApiMenu::commit() {
 	RK_TRACE(MISC);
 
 	QStringList actionlist;
-	QDomDocument doc("kpartgui");
+	QDomDocument doc(QStringLiteral("kpartgui"));
 	auto r = addChildElement(doc, QStringLiteral("kpartgui"), QStringLiteral("rapi_menu"));
 	auto mb = addChildElement(r,  QStringLiteral("MenuBar"), QString());
 	const auto menus = getChildlist(rep);
 	for (const auto &menu : menus) {
 		const auto menuList = menu.toList();
-		if (getId(menuList) == "toolbar") {
+		if (getId(menuList) == QLatin1String("toolbar")) {
 			auto tb = addChildElement(r, QStringLiteral("ToolBar"), QStringLiteral("mainToolBar"));
 			const auto tb_children = getChildlist(menuList);
 			for (const auto &tbit : tb_children) {

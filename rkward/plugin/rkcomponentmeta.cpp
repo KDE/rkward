@@ -31,35 +31,35 @@ RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml
 	}
 
 	valid = true;
-	name = xml.i18nStringAttribute (e, "name", QString (), DL_INFO);
-	version = xml.getStringAttribute (e, "version", QString (), DL_INFO);
-	releasedate = xml.getStringAttribute (e, "releasedate", QString (), DL_INFO);
-	shortinfo = xml.i18nStringAttribute (e, "shortinfo", QString (), DL_INFO);
-	copyright = xml.getStringAttribute (e, "copyright", QString (), DL_INFO);
-	license = xml.getStringAttribute (e, "license", QString (), DL_INFO);
-	url = xml.getStringAttribute (e, "url", QString (), DL_INFO);
-	category = xml.i18nStringAttribute (e, "category", i18n ("Unspecified"), DL_INFO);
+	name = xml.i18nStringAttribute (e, QStringLiteral("name"), QString (), DL_INFO);
+	version = xml.getStringAttribute (e, QStringLiteral("version"), QString (), DL_INFO);
+	releasedate = xml.getStringAttribute (e, QStringLiteral("releasedate"), QString (), DL_INFO);
+	shortinfo = xml.i18nStringAttribute (e, QStringLiteral("shortinfo"), QString (), DL_INFO);
+	copyright = xml.getStringAttribute (e, QStringLiteral("copyright"), QString (), DL_INFO);
+	license = xml.getStringAttribute (e, QStringLiteral("license"), QString (), DL_INFO);
+	url = xml.getStringAttribute (e, QStringLiteral("url"), QString (), DL_INFO);
+	category = xml.i18nStringAttribute (e, QStringLiteral("category"), i18n ("Unspecified"), DL_INFO);
 
-	XMLChildList aes = xml.getChildElements (e, "author", DL_INFO);
+	XMLChildList aes = xml.getChildElements (e, QStringLiteral("author"), DL_INFO);
 	for (int i = 0; i < aes.size (); ++i) {
 		QDomElement ae = aes[i];
 		RKComponentAuthor author;
-		author.name = xml.i18nStringAttribute (ae, "name", QString (), DL_INFO);
+		author.name = xml.i18nStringAttribute (ae, QStringLiteral("name"), QString (), DL_INFO);
 		if (author.name.isEmpty ()) {
-			author.name = xml.i18nStringAttribute (ae, "given", QString (), DL_WARNING) + ' ' + xml.i18nStringAttribute (ae, "family", QString (), DL_WARNING);
+			author.name = xml.i18nStringAttribute (ae, QStringLiteral("given"), QString (), DL_WARNING) + ' ' + xml.i18nStringAttribute (ae, QStringLiteral("family"), QString (), DL_WARNING);
 			
 		}
-		if (author.name.isEmpty ()) xml.displayError (&ae, "No author name specified", DL_WARNING);
-		author.roles = xml.getStringAttribute (ae, "role", QString (), DL_INFO);
-		author.email = xml.getStringAttribute (ae, "email", QString (), DL_WARNING);
-		author.url = xml.getStringAttribute (ae, "url", QString (), DL_INFO);
+		if (author.name.isEmpty ()) xml.displayError (&ae, QStringLiteral("No author name specified"), DL_WARNING);
+		author.roles = xml.getStringAttribute (ae, QStringLiteral("role"), QString (), DL_INFO);
+		author.email = xml.getStringAttribute (ae, QStringLiteral("email"), QString (), DL_WARNING);
+		author.url = xml.getStringAttribute (ae, QStringLiteral("url"), QString (), DL_INFO);
 		authors.append (author);
 	}
 
-	const QString translator_names_id ("Your names");
-	const QString translator_emails_id ("Your emails");
-	translator_names = xml.messageCatalog ()->translate ("NAME OF TRANSLATORS", translator_names_id);
-	translator_emails = xml.messageCatalog ()->translate ("EMAIL OF TRANSLATORS", translator_emails_id);
+	const QString translator_names_id (QStringLiteral("Your names"));
+	const QString translator_emails_id (QStringLiteral("Your emails"));
+	translator_names = xml.messageCatalog ()->translate (QStringLiteral("NAME OF TRANSLATORS"), translator_names_id);
+	translator_emails = xml.messageCatalog ()->translate (QStringLiteral("EMAIL OF TRANSLATORS"), translator_emails_id);
 	if (translator_names == translator_names_id) translator_names.clear ();
 	if (translator_emails == translator_emails_id) translator_emails.clear ();
 }
@@ -164,17 +164,17 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 	XMLChildList deps = xml.getChildElements (e, QString (), DL_INFO);
 	for (int i = 0; i < deps.size (); ++i) {
 		QDomElement dep_e = deps[i];
-		if (dep_e.tagName () == "package") {
+		if (dep_e.tagName () == QLatin1String("package")) {
 			dep.type = RKComponentDependency::RPackage;
-			dep.source_info = xml.getStringAttribute (e, "repository", QString (), DL_INFO);
-		} else if (dep_e.tagName () == "pluginmap") {
+			dep.source_info = xml.getStringAttribute (e, QStringLiteral("repository"), QString (), DL_INFO);
+		} else if (dep_e.tagName () == QLatin1String("pluginmap")) {
 			dep.type = RKComponentDependency::RKWardPluginmap;
-			dep.source_info = xml.getStringAttribute (e, "url", QString ("https://rkward.kde.org"), DL_WARNING);
+			dep.source_info = xml.getStringAttribute (e, QStringLiteral("url"), QStringLiteral ("https://rkward.kde.org"), DL_WARNING);
 		} else {
 			RK_DEBUG (PLUGIN, DL_ERROR, "Tag <%s> is not allowed, here.", qPrintable (dep_e.tagName ()));
 			continue;
 		}
-		dep.package = xml.getStringAttribute (dep_e, "name", QString (), DL_ERROR);
+		dep.package = xml.getStringAttribute (dep_e, QStringLiteral("name"), QString (), DL_ERROR);
 
 		if (e.hasAttribute(any_min_version_tag)) dep.min_version = RKParsedVersion(e.attribute(any_min_version_tag));
 		if (e.hasAttribute(any_max_version_tag)) dep.max_version = RKParsedVersion(e.attribute(any_max_version_tag));

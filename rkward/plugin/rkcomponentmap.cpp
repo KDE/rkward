@@ -36,7 +36,7 @@ QString RKPluginMapFile::makeFileName (const QString &filename) const {
 QString RKPluginMapFile::parseId (const QDomElement& e, XMLHelper &xml) {
 	RK_TRACE (PLUGIN);
 
-	return (xml.getStringAttribute (e, "namespace", "rkward", DL_WARNING) + "::" + xml.getStringAttribute (e, "id", QString (), DL_INFO));
+	return (xml.getStringAttribute (e, QStringLiteral("namespace"), QStringLiteral("rkward"), DL_WARNING) + "::" + xml.getStringAttribute (e, QStringLiteral("id"), QString (), DL_INFO));
 }
 
 RKComponentAboutData RKPluginMapFile::getAboutData () {
@@ -45,7 +45,7 @@ RKComponentAboutData RKPluginMapFile::getAboutData () {
 	if (about) return *about;
 	XMLHelper xml (filename);
 	QDomElement element = xml.openXMLFile (DL_ERROR);
-	about = new RKComponentAboutData (xml.getChildElement (element, "about", DL_INFO), xml);	// might be empty, but not null
+	about = new RKComponentAboutData (xml.getChildElement (element, QStringLiteral("about"), DL_INFO), xml);	// might be empty, but not null
 	return *about;
 }
 
@@ -65,7 +65,7 @@ RKComponentGUIXML::~RKComponentGUIXML () {
 void RKComponentGUIXML::clearGUIDescription () {
 	RK_TRACE (PLUGIN);
 
-	gui_xml.setContent (QString ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"063\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
+	gui_xml.setContent (QStringLiteral ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"063\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
 	toplevel_menu.clear ();
 	component_menus.clear ();
 }
@@ -109,7 +109,7 @@ void RKComponentGUIXML::menuItemsToXml (const RKComponentGUIXML::Menu *menu, QDo
 	// ok, we could really do simply text-pasting, instead of using QDom in this function, but I'm afraid of not getting all character escapes right.
 	for (int i = 0; i < menu->groups.size (); ++i) {
 		const RKComponentGUIXML::Group *group = menu->groups[i];
-		if (group->separated) xml.appendChild (gui_xml.createElement ("Separator"));
+		if (group->separated) xml.appendChild (gui_xml.createElement (QStringLiteral("Separator")));
 		for (int j = 0; j < group->entries.size (); ++j) {
 			const RKComponentGUIXML::Entry *entry = group->entries[j];
 			if (entry->is_menu) {
@@ -118,20 +118,20 @@ void RKComponentGUIXML::menuItemsToXml (const RKComponentGUIXML::Menu *menu, QDo
 					continue;	// just skip over empty menus
 				}
 
-				QDomElement elem = gui_xml.createElement ("Menu");
-				elem.setAttribute ("name", submenu->id);
-				QDomElement text = gui_xml.createElement ("text");
+				QDomElement elem = gui_xml.createElement (QStringLiteral("Menu"));
+				elem.setAttribute (QStringLiteral("name"), submenu->id);
+				QDomElement text = gui_xml.createElement (QStringLiteral("text"));
 				text.appendChild (gui_xml.createTextNode (submenu->label));
 				elem.appendChild (text);
 				menuItemsToXml (submenu, elem);
 				xml.appendChild (elem);
 			} else {
-				QDomElement action = gui_xml.createElement ("Action");
-				action.setAttribute ("name", entry->id);
+				QDomElement action = gui_xml.createElement (QStringLiteral("Action"));
+				action.setAttribute (QStringLiteral("name"), entry->id);
 				xml.appendChild (action);
 			}
 		}
-		if (group->separated) xml.appendChild (gui_xml.createElement ("Separator"));
+		if (group->separated) xml.appendChild (gui_xml.createElement (QStringLiteral("Separator")));
 	}
 }
 
@@ -144,7 +144,7 @@ int RKComponentGUIXML::createMenus (XMLHelper &xml, const QDomElement& hierarchy
 void RKComponentGUIXML::finalize () {
 	RK_TRACE (PLUGIN);
 
-	QDomElement xmlgui_menubar_element = gui_xml.documentElement ().firstChildElement ("MenuBar");
+	QDomElement xmlgui_menubar_element = gui_xml.documentElement ().firstChildElement (QStringLiteral("MenuBar"));
 	resolveComponentLabelsAndSortMenu (&toplevel_menu);
 	menuItemsToXml (&toplevel_menu, xmlgui_menubar_element);
 	toplevel_menu.clear ();	// no longer needed
@@ -254,9 +254,9 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml
 	int leaves = 0;
 	XMLChildList list = xml.getChildElements (description, QString (), DL_INFO);
 	for (int i = 0; i < list.size (); ++i) {
-		const QString add_to = xml.getStringAttribute (list[i], "group", QString (), DL_INFO);
-		if (list[i].tagName () == "menu") {
-			QString sub_id = xml.getStringAttribute (list[i], "id", "none", DL_ERROR);
+		const QString add_to = xml.getStringAttribute (list[i], QStringLiteral("group"), QString (), DL_INFO);
+		if (list[i].tagName () == QLatin1String("menu")) {
+			QString sub_id = xml.getStringAttribute (list[i], QStringLiteral("id"), QStringLiteral("none"), DL_ERROR);
 
 			Menu *found = findMenu (menu, sub_id);
 			if (found) {
@@ -264,12 +264,12 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml
 			} else {
 				Menu *sub = new Menu ();
 				sub->id = sub_id;
-				sub->label = xml.i18nStringAttribute (list[i], "label", i18n ("(no label)"), DL_WARNING);
+				sub->label = xml.i18nStringAttribute (list[i], QStringLiteral("label"), i18n ("(no label)"), DL_WARNING);
 				leaves += addEntries (sub, xml, list[i], cnamespace);
 				insertEntry (menu, sub, add_to);
 			}
-		} else if (list[i].tagName () == "entry") {
-			QString id = cnamespace + xml.getStringAttribute (list[i], "component", "#invalid#", DL_ERROR);
+		} else if (list[i].tagName () == QLatin1String("entry")) {
+			QString id = cnamespace + xml.getStringAttribute (list[i], QStringLiteral("component"), QStringLiteral("#invalid#"), DL_ERROR);
 			if (menu->components.contains (id)) {
 				RK_DEBUG (PLUGIN, DL_INFO, "Component %s is registered more than once in menu %s. Keeping one entry, only", qPrintable (id), qPrintable (menu->id));
 				continue;
@@ -294,8 +294,8 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml
 			plug->id = id;
 			insertEntry (menu, plug, add_to);
 			++leaves;
-		} else if (list[i].tagName () == "group") {
-			insertGroup (menu, xml.getStringAttribute (list[i], "id", "none", DL_ERROR), xml.getBoolAttribute (list[i], "separated", false, DL_INFO), add_to);
+		} else if (list[i].tagName () == QLatin1String("group")) {
+			insertGroup (menu, xml.getStringAttribute (list[i], QStringLiteral("id"), QStringLiteral("none"), DL_ERROR), xml.getBoolAttribute (list[i], QStringLiteral("separated"), false, DL_INFO), add_to);
 		} else {
 			RK_ASSERT (false);
 		}
@@ -340,12 +340,12 @@ void RKComponentMap::initialize () {
 	component_map = new RKComponentMap ();
 }
 
-RKComponentMap::RKComponentMap () : QObject (), RKComponentGUIXML ("global"), KXMLGUIClient () {
+RKComponentMap::RKComponentMap () : QObject (), RKComponentGUIXML (QStringLiteral("global")), KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
 
 	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
-	actionCollection ()->setConfigGroup ("Plugin Shortcuts");
-	contexts.insert ("global", this);
+	actionCollection ()->setConfigGroup (QStringLiteral("Plugin Shortcuts"));
+	contexts.insert (QStringLiteral("global"), this);
 }
 
 RKComponentMap::~RKComponentMap () {
@@ -375,7 +375,7 @@ void RKComponentMap::clearAll () {
 		if (it.value () != this) delete (it.value ());
 	}
 	contexts.clear ();
-	contexts.insert ("global", this);
+	contexts.insert (QStringLiteral("global"), this);
 
 	clearGUIDescription ();
 
@@ -475,7 +475,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	if (!format_ok) {
 		_message = i18n ("Bad serialization format while trying to invoke plugin '%1'. In general, this should not happen, unless you modified the parameters by hand. Please consider reporting this issue.", component_id);
 		if (message) *message = _message;
-		else RKErrorDialog::reportableErrorMessage (component, _message, QString (), i18n ("Bad serialization format"), "invoke_comp_deserialization_error");
+		else RKErrorDialog::reportableErrorMessage (component, _message, QString (), i18n ("Bad serialization format"), QStringLiteral("invoke_comp_deserialization_error"));
 		return false;
 	}
 	component->applyState (state);
@@ -570,15 +570,15 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		return ret;
 	}
 
-	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml.getStringAttribute (document_element, "base_prefix", QString (), DL_INFO);
-	QString cnamespace = xml.getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
+	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml.getStringAttribute (document_element, QStringLiteral("base_prefix"), QString (), DL_INFO);
+	QString cnamespace = xml.getStringAttribute (document_element, QStringLiteral("namespace"), QStringLiteral("rkward"), DL_INFO) + "::";
 
 	RKPluginMapFile* pluginmap_file_desc = new RKPluginMapFile (QFileInfo (plugin_map_file).absoluteFilePath (), prefix, xml.messageCatalog ());
 	pluginmap_file_desc->id = RKPluginMapFile::parseId (document_element, xml);
 	pluginmapfiles.append (pluginmap_file_desc);
 
 	// step 0: check dependencies, parse about, and initialize
-	QDomElement dependencies = xml.getChildElement (document_element, "dependencies", DL_INFO);
+	QDomElement dependencies = xml.getChildElement (document_element, QStringLiteral("dependencies"), DL_INFO);
 	if (!dependencies.isNull ()) {
 		if (!RKComponentDependency::isRKWardVersionCompatible (dependencies)) {
 			ret.addAndPrintError (DL_WARNING, i18n ("Skipping plugin map file '%1': Not compatible with this version of RKWard", plugin_map_file_abs));
@@ -589,17 +589,17 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 
 	// step 1: include required files
 	QStringList includelist;
-	list = xml.getChildElements (document_element, "require", DL_INFO);
+	list = xml.getChildElements (document_element, QStringLiteral("require"), DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
-		if ((*it).hasAttribute ("file")) {
-			QString file = pluginmap_file_desc->makeFileName (xml.getStringAttribute (*it, "file", QString (), DL_ERROR));
+		if ((*it).hasAttribute (QStringLiteral("file"))) {
+			QString file = pluginmap_file_desc->makeFileName (xml.getStringAttribute (*it, QStringLiteral("file"), QString (), DL_ERROR));
 			if (QFileInfo (file).isReadable ()) {
 				includelist.append (file);
 			} else {
 				ret.addAndPrintError (DL_ERROR, i18n ("Specified required file '%1' does not exist or is not readable. Ignoring.", file));
 			}
 		} else {
-			QString map_id = xml.getStringAttribute (*it, "map", QString (), DL_ERROR);
+			QString map_id = xml.getStringAttribute (*it, QStringLiteral("map"), QString (), DL_ERROR);
 			// Try to locate the map among the already loaded files, first
 			QString file;
 			for (int i = 0; i < pluginmapfiles.size (); ++i) {
@@ -623,22 +623,22 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	}
 
 	// step 2: create (list of) components
-	element = xml.getChildElement (document_element, "components", DL_INFO);
-	list = xml.getChildElements (element, "component", DL_INFO);
+	element = xml.getChildElement (document_element, QStringLiteral("components"), DL_INFO);
+	list = xml.getChildElements (element, QStringLiteral("component"), DL_INFO);
 	// Plugins that depend on a specific version of RKWard can be specified in several alternative version.
 	// It is not an error, unless *none* of the specified alternatives can be loaded.
 	QSet<QString> local_components;
 	QSet<QString> depfailed_local_components;
 
 	for (XMLChildList::const_iterator it=list.cbegin (); it != list.cend (); ++it) {
-		QString id = cnamespace + xml.getStringAttribute((*it), "id", QString (), DL_WARNING);
+		QString id = cnamespace + xml.getStringAttribute((*it), QStringLiteral("id"), QString (), DL_WARNING);
 
 		// check dependencies, first
-		QDomElement cdependencies = xml.getChildElement (*it, "dependencies", DL_INFO);
+		QDomElement cdependencies = xml.getChildElement (*it, QStringLiteral("dependencies"), DL_INFO);
 		if (!cdependencies.isNull ()) {
 			if (!RKComponentDependency::isRKWardVersionCompatible (cdependencies)) {
 				RK_DEBUG (PLUGIN, DL_INFO, "Skipping component '%1': Not compatible with this version of RKWard", qPrintable (id));
-				if (xml.getBoolAttribute((*it), "optional", false, DL_INFO)) {
+				if (xml.getBoolAttribute((*it), QStringLiteral("optional"), false, DL_INFO)) {
 					// HACK: Unavailable optional components are represented by a null handle, which will then be ignored while
 					//       creating menu entries
 					RKComponentHandle *handle = new RKComponentHandle(pluginmap_file_desc, QString(), QString());
@@ -650,9 +650,9 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 			}
 		}
 
-		QString filename = xml.getStringAttribute((*it), "file", QString (), DL_WARNING);
-		xml.getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);	// unused, but documented for future extension; TODO: remove?
-		QString label = xml.i18nStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
+		QString filename = xml.getStringAttribute((*it), QStringLiteral("file"), QString (), DL_WARNING);
+		xml.getMultiChoiceAttribute ((*it), QStringLiteral("type"), QStringLiteral("standard"), 0, DL_WARNING);	// unused, but documented for future extension; TODO: remove?
+		QString label = xml.i18nStringAttribute ((*it), QStringLiteral("label"), i18n ("(no label)"), DL_WARNING);
 
 		if (local_components.contains (id)) {
 			ret.addAndPrintError (DL_WARNING, i18n ("Duplicate declaration of component id \"%1\" within pluginmap file \"%2\".", id, plugin_map_file_abs));
@@ -665,9 +665,9 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		} else {
 			// create and initialize component handle
 			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label);
-			XMLChildList attributes_list = xml.getChildElements (*it, "attribute", DL_DEBUG);
+			XMLChildList attributes_list = xml.getChildElements (*it, QStringLiteral("attribute"), DL_DEBUG);
 			for (XMLChildList::const_iterator ait=attributes_list.cbegin (); ait != attributes_list.cend (); ++ait) {
-				handle->addAttribute (xml.getStringAttribute (*ait, "id", "noid", DL_WARNING), xml.getStringAttribute (*ait, "value", QString (), DL_ERROR), xml.i18nStringAttribute (*ait, "label", QString (), DL_ERROR));
+				handle->addAttribute (xml.getStringAttribute (*ait, QStringLiteral("id"), QStringLiteral("noid"), DL_WARNING), xml.getStringAttribute (*ait, QStringLiteral("value"), QString (), DL_ERROR), xml.i18nStringAttribute (*ait, QStringLiteral("label"), QString (), DL_ERROR));
 			}
 			if (!cdependencies.isNull ()) handle->addDependencies (RKComponentDependency::parseDependencies (cdependencies, xml));
 			components.insert (id, handle);
@@ -681,12 +681,12 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	}
 
 	// step 3: create / insert into menus
-	ret.valid_plugins += createMenus (xml, xml.getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
+	ret.valid_plugins += createMenus (xml, xml.getChildElement (document_element, QStringLiteral("hierarchy"), DL_INFO), cnamespace);
 
 	// step 4: create and register contexts
-	list = xml.getChildElements (document_element, "context", DL_INFO);
+	list = xml.getChildElements (document_element, QStringLiteral("context"), DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
-		QString id = xml.getStringAttribute (*it, "id", QString (), DL_ERROR);
+		QString id = xml.getStringAttribute (*it, QStringLiteral("id"), QString (), DL_ERROR);
 
 		RKComponentGUIXML *context = contexts.value (id);
 		if (!context) {
@@ -763,7 +763,7 @@ void RKComponentMap::setPluginStatus (const QStringList& ids, const QStringList&
 	RK_ASSERT (_contexts.size () == _visible.size ());
 
 	for (int i = 0; i < ids.size (); ++i) {
-		addOverride (ids[i], _contexts[i], (_visible[i] == "1"));
+		addOverride (ids[i], _contexts[i], (_visible[i] == QLatin1String("1")));
 	}
 
 	RKWardMainWindow::getMain ()->initPlugins ();
@@ -854,7 +854,7 @@ RKComponentAboutData RKComponentHandle::getAboutData () {
 
 	XMLHelper component_xml (getFilename (), pluginmap_xml.messageCatalog ());
 	QDomElement component_doc = component_xml.openXMLFile (DL_ERROR);
-	QDomElement about = component_xml.getChildElement (component_doc, "about", DL_INFO);
+	QDomElement about = component_xml.getChildElement (component_doc, QStringLiteral("about"), DL_INFO);
 	if (!about.isNull ()) return RKComponentAboutData (about, component_xml);
 
 	return (plugin_map->getAboutData ());

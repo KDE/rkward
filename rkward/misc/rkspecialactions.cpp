@@ -91,10 +91,10 @@ RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : Q
 	box = new RKRadioGroup(i18n("Field Separator"));
 	separator_group = box->group();
 	box->addButton(i18n("Tab"), SepTab)->setChecked(true); // tab-separated is a reasonable fallback guess
-	box->addButton(i18n("Comma"), SepComma)->setChecked(clipdata->hasFormat ("text/comma-separated-values"));
+	box->addButton(i18n("Comma"), SepComma)->setChecked(clipdata->hasFormat (QStringLiteral("text/comma-separated-values")));
 	box->addButton(i18n("Single space"), SepSpace);
 	box->addButton(i18n("Any whitespace"), SepWhitespace);
-	separator_freefield = new QLineEdit(";", box);
+	separator_freefield = new QLineEdit(QStringLiteral(";"), box);
 	box->addButton(i18n("Other:"), SepCustom, separator_freefield, QBoxLayout::LeftToRight);
 	connect(separator_group, &QButtonGroup::idClicked, this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget(box);
@@ -178,10 +178,10 @@ QString RKPasteSpecialDialog::resultingText () {
 	QString clip;
 
 	const QMimeData* data = QApplication::clipboard ()->mimeData ();
-	if ((dim != DimSingleString) && (sep == SepTab) && data->hasFormat ("text/tab-separated-values")) {
-		clip = QString::fromLocal8Bit (data->data ("text/tab-separated-values"));
-	} else if ((dim != DimSingleString) && (sep == SepComma) && data->hasFormat ("text/comma-separated-values")) {
-		clip = QString::fromLocal8Bit (data->data ("text/comma-separated-values"));
+	if ((dim != DimSingleString) && (sep == SepTab) && data->hasFormat (QStringLiteral("text/tab-separated-values"))) {
+		clip = QString::fromLocal8Bit (data->data (QStringLiteral("text/tab-separated-values")));
+	} else if ((dim != DimSingleString) && (sep == SepComma) && data->hasFormat (QStringLiteral("text/comma-separated-values"))) {
+		clip = QString::fromLocal8Bit (data->data (QStringLiteral("text/comma-separated-values")));
 	} else {
 		clip = data->text ();
 	}
@@ -190,10 +190,10 @@ QString RKPasteSpecialDialog::resultingText () {
 
 	QRegularExpression fieldsep;
 	if (sep == SepCustom) fieldsep.setPattern (separator_freefield->text ());
-	else if (sep == SepWhitespace) fieldsep.setPattern ("\\s+");
-	else if (sep == SepSpace) fieldsep.setPattern (" ");
-	else if (sep == SepTab) fieldsep.setPattern ("\t");
-	else if (sep == SepComma) fieldsep.setPattern ("\\,");
+	else if (sep == SepWhitespace) fieldsep.setPattern (QStringLiteral("\\s+"));
+	else if (sep == SepSpace) fieldsep.setPattern (QStringLiteral(" "));
+	else if (sep == SepTab) fieldsep.setPattern (QStringLiteral("\t"));
+	else if (sep == SepComma) fieldsep.setPattern (QStringLiteral("\\,"));
 	else RK_ASSERT (false);
 
 	RKTextMatrix matrix = RKTextMatrix::matrixFromSeparatedValues (clip, fieldsep);
@@ -203,7 +203,7 @@ QString RKPasteSpecialDialog::resultingText () {
 		for (int i = 0; i < matrix.numRows (); ++i) {
 			list += matrix.getRow (i);
 		}
-		matrix = RKTextMatrix::matrixFromSeparatedValues (list.join ("\t"));
+		matrix = RKTextMatrix::matrixFromSeparatedValues (list.join (QStringLiteral("\t")));
 	}
 
 	if (reverse_h || reverse_v || transpose) matrix = matrix.transformed (reverse_h, reverse_v, transpose);

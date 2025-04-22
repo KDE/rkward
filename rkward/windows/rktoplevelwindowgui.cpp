@@ -49,20 +49,20 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 
 	RKTopLevelWindowGUI::for_window = for_window;
 
-	setXMLFile ("rktoplevelwindowgui.rc");
+	setXMLFile (QStringLiteral("rktoplevelwindowgui.rc"));
 
 	// help menu
-	QAction *help_invoke_r_help = actionCollection()->addAction("invoke_r_help", this, &RKTopLevelWindowGUI::invokeRHelp);
+	QAction *help_invoke_r_help = actionCollection()->addAction(QStringLiteral("invoke_r_help"), this, &RKTopLevelWindowGUI::invokeRHelp);
 	help_invoke_r_help->setText (i18n ("Help on R"));
-	QAction *show_help_search = actionCollection()->addAction("show_help_search", this, &RKTopLevelWindowGUI::showHelpSearch);
+	QAction *show_help_search = actionCollection()->addAction(QStringLiteral("show_help_search"), this, &RKTopLevelWindowGUI::showHelpSearch);
 	show_help_search->setText (i18n ("Search R Help"));
-	QAction *show_rkward_help = actionCollection()->addAction(KStandardAction::HelpContents, "rkward_help", this, &RKTopLevelWindowGUI::showRKWardHelp);
+	QAction *show_rkward_help = actionCollection()->addAction(KStandardAction::HelpContents, QStringLiteral("rkward_help"), this, &RKTopLevelWindowGUI::showRKWardHelp);
 	show_rkward_help->setText(i18n("RKWard Dashboard and Help"));
 
-	actionCollection()->addAction(KStandardAction::AboutApp, "about_app", this, &RKTopLevelWindowGUI::showAboutApplication);
-	actionCollection()->addAction(KStandardAction::WhatsThis, "whats_this", this, &RKTopLevelWindowGUI::startWhatsThis);
-	actionCollection()->addAction(KStandardAction::ReportBug, "report_bug", this, &RKTopLevelWindowGUI::reportRKWardBug);
-	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, "switch_application_language", this, &RKTopLevelWindowGUI::showSwitchApplicationLanguage);
+	actionCollection()->addAction(KStandardAction::AboutApp, QStringLiteral("about_app"), this, &RKTopLevelWindowGUI::showAboutApplication);
+	actionCollection()->addAction(KStandardAction::WhatsThis, QStringLiteral("whats_this"), this, &RKTopLevelWindowGUI::startWhatsThis);
+	actionCollection()->addAction(KStandardAction::ReportBug, QStringLiteral("report_bug"), this, &RKTopLevelWindowGUI::reportRKWardBug);
+	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, QStringLiteral("switch_application_language"), this, &RKTopLevelWindowGUI::showSwitchApplicationLanguage);
 
 	help_invoke_r_help->setWhatsThis(i18n ("Shows the R help index"));
 	show_help_search->setWhatsThis(i18n ("Shows/raises the R Help Search window"));
@@ -70,20 +70,20 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 
 	// window menu
 	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled
-	prev_action = actionCollection()->addAction("prev_window", this, &RKTopLevelWindowGUI::previousWindow);
+	prev_action = actionCollection()->addAction(QStringLiteral("prev_window"), this, &RKTopLevelWindowGUI::previousWindow);
 	prev_action->setText(i18n("Previous Window"));
 	prev_action->setIcon(QIcon(":/rkward/icons/window_back.png"));
 	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier | Qt::Key_Tab);
-	next_action = actionCollection()->addAction("next_window", this, &RKTopLevelWindowGUI::nextWindow);
+	next_action = actionCollection()->addAction(QStringLiteral("next_window"), this, &RKTopLevelWindowGUI::nextWindow);
 	next_action->setText(i18n("Next Window"));
 	next_action->setIcon(QIcon(":rkward/icons/window_forward.png"));
 	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_Tab);
 
-	QAction* action = actionCollection()->addAction("window_activate_docview", this, &RKTopLevelWindowGUI::activateDocumentView);
+	QAction* action = actionCollection()->addAction(QStringLiteral("window_activate_docview"), this, &RKTopLevelWindowGUI::activateDocumentView);
 	action->setText (i18n ("Activate Document view"));
 	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier | Qt::Key_0);
 
-	action = actionCollection()->addAction("output_show");
+	action = actionCollection()->addAction(QStringLiteral("output_show"));
 	action->setText(i18n("Show Output"));
 	action->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
 	action->setMenu(output_windows_menu = new QMenu());
@@ -102,7 +102,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), KColorSchemeMenu::createMenu(manager, this));
 	// our "status bar" is inlined, and always visible. Action below would only hide and show a useless proxy
 	// KF6 TODO: Still needed at all?
-	QAction *a = for_window->action("options_show_statusbar");
+	QAction *a = for_window->action(QStringLiteral("options_show_statusbar"));
 	if (a) a->setVisible(false);
 }
 
@@ -116,11 +116,11 @@ void RKTopLevelWindowGUI::initToolWindowActions () {
 	RK_TRACE (APP);
 
 	// Tool window actions
-	QString action_tag ("Action");
-	QString name_attr ("name");
+	QString action_tag (QStringLiteral("Action"));
+	QString name_attr (QStringLiteral("name"));
 	QDomDocument doc = xmlguiBuildDocument ();
 	if  (doc.documentElement ().isNull ()) doc = domDocument ();
-	QDomElement menu = doc.elementsByTagName("Menu").at (1).toElement (); // NOTE: this is known to be the "Windows"-Menu
+	QDomElement menu = doc.elementsByTagName(QStringLiteral("Menu")).at (1).toElement (); // NOTE: this is known to be the "Windows"-Menu
 	QDomElement ref = menu.firstChildElement (action_tag);
 	while (!ref.isNull() && ref.attribute (name_attr) != QLatin1String ("window_show_PLACEHOLDER")) {
 		ref = ref.nextSiblingElement (action_tag);
@@ -144,7 +144,7 @@ void RKTopLevelWindowGUI::initToolWindowActions () {
 void RKTopLevelWindowGUI::configureShortcuts () {
 	RK_TRACE (APP);
 
-	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the keyboard shortcuts only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure keyboard shortcuts e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), "configure_shortcuts_kparts");
+	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the keyboard shortcuts only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure keyboard shortcuts e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), QStringLiteral("configure_shortcuts_kparts"));
 
 	KShortcutsDialog dlg (KShortcutsEditor::AllActions, KShortcutsEditor::LetterShortcutsAllowed, qobject_cast<QWidget*> (parent()));
 	const auto clients = factory ()->clients ();
@@ -158,7 +158,7 @@ void RKTopLevelWindowGUI::configureShortcuts () {
 void RKTopLevelWindowGUI::configureToolbars () {
 	RK_TRACE (APP);
 
-	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the toolbar buttons only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure tool buttons e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), "configure_toolbars_kparts");
+	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the toolbar buttons only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure tool buttons e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), QStringLiteral("configure_toolbars_kparts"));
 
 	for_window->configureToolbars ();
 }
@@ -166,7 +166,7 @@ void RKTopLevelWindowGUI::configureToolbars () {
 void RKTopLevelWindowGUI::invokeRHelp () {
 	RK_TRACE (APP);
 
-	RInterface::issueCommand ("help.start ()", RCommand::App);
+	RInterface::issueCommand (QStringLiteral("help.start ()"), RCommand::App);
 	RKWardMainWindow::getMain ()->topLevelWidget ()->raise ();
 }
 
@@ -224,7 +224,7 @@ void RKTopLevelWindowGUI::showHelpSearch () {
 void RKTopLevelWindowGUI::showRKWardHelp () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl("rkward://page/rkward_welcome"), true);
+	RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl(QStringLiteral("rkward://page/rkward_welcome")), true);
 }
 
 void RKTopLevelWindowGUI::activateDocumentView () {

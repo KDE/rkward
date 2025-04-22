@@ -21,22 +21,22 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 
 	updating = false;
 	XMLHelper *xml = parent_component->xmlHelper ();
-	standalone = element.tagName () == "select";
+	standalone = element.tagName () == QLatin1String("select");
 
-	addChild ("selected", selected = new RKComponentPropertyStringList (this, false));
+	addChild (QStringLiteral("selected"), selected = new RKComponentPropertyStringList (this, false));
 	connect (selected, &RKComponentPropertyBase::valueChanged, this, &RKValueSelector::selectionPropertyChanged);
 	selected->setInternal (!standalone);
-	addChild ("available", available = new RKComponentPropertyStringList (this, false));
+	addChild (QStringLiteral("available"), available = new RKComponentPropertyStringList (this, false));
 	connect (available, &RKComponentPropertyBase::valueChanged, this, &RKValueSelector::availablePropertyChanged);
 	available->setInternal (true);
-	addChild ("labels", labels = new RKComponentPropertyStringList (this, false));
+	addChild (QStringLiteral("labels"), labels = new RKComponentPropertyStringList (this, false));
 	connect (labels, &RKComponentPropertyBase::valueChanged, this, &RKValueSelector::labelsPropertyChanged);
 	labels->setInternal (true);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	label_string = xml->i18nStringAttribute (element, "label", QString (), DL_INFO);
+	label_string = xml->i18nStringAttribute (element, QStringLiteral("label"), QString (), DL_INFO);
 	if (!label_string.isNull ()) {
 		QLabel *label = new QLabel (label_string, this);
 		vbox->addWidget (label);
@@ -44,7 +44,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 
 	list_view = new QTreeView (this);
 	list_view->setHeaderHidden (true);
-	if (standalone && xml->getBoolAttribute (element, "single", false, DL_INFO)) {
+	if (standalone && xml->getBoolAttribute (element, QStringLiteral("single"), false, DL_INFO)) {
 		list_view->setSelectionMode (QAbstractItemView::SingleSelection);
 	} else {
 		list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
@@ -56,7 +56,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 
 	vbox->addWidget (list_view);
 
-	XMLChildList options = xml->getChildElements (element, "option", DL_INFO);
+	XMLChildList options = xml->getChildElements (element, QStringLiteral("option"), DL_INFO);
 	if (!options.isEmpty ()) {
 		QStringList values_list;
 		QStringList labels_list;
@@ -64,9 +64,9 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 
 		for (int i = 0; i < options.size (); ++i) {
 			const QDomElement &child = options[i];
-			QString v = xml->getStringAttribute (child, "value", QString (), DL_WARNING);
-			QString l = xml->i18nStringAttribute (child, "label", v, DL_INFO);
-			if (xml->getBoolAttribute (child, "checked", false, DL_INFO)) selected_list.append (v);
+			QString v = xml->getStringAttribute (child, QStringLiteral("value"), QString (), DL_WARNING);
+			QString l = xml->i18nStringAttribute (child, QStringLiteral("label"), v, DL_INFO);
+			if (xml->getBoolAttribute (child, QStringLiteral("checked"), false, DL_INFO)) selected_list.append (v);
 			labels_list.append (l);
 			values_list.append (v);
 		}
@@ -166,7 +166,7 @@ void RKValueSelector::selectionPropertyChanged () {
 QVariant RKValueSelector::value (const QString& modifier) {
 	RK_TRACE (PLUGIN);
 
-	if (modifier == "labeled") {
+	if (modifier == QLatin1String("labeled")) {
 		QStringList selected_labels;
 		for (int i = 0; i < selected->listLength (); ++i) {
 			int index = available->values ().indexOf (selected->valueAt (i));
@@ -183,7 +183,7 @@ QStringList RKValueSelector::getUiLabelPair () const {
 	RK_TRACE (PLUGIN);
 
 	QStringList ret (label_string);
-	ret.append (const_cast<RKValueSelector *> (this)->value ("labeled").toStringList ().join ("; "));
+	ret.append (const_cast<RKValueSelector *> (this)->value (QStringLiteral("labeled")).toStringList ().join (QStringLiteral("; ")));
 	return ret;
 }
 

@@ -59,7 +59,7 @@ void RKWorkplaceViewPane::initActions () {
 	split_button->setIcon (QIcon::fromTheme (QStringLiteral("view-split-left-right")));
 	split_button->addAction (workplace_view->action_split_vert);
 	split_button->addAction (workplace_view->action_split_horiz);
-	QAction *close_all = new QAction (QIcon::fromTheme("tab-close"), i18n ("Close all"), this);
+	QAction *close_all = new QAction (QIcon::fromTheme(QStringLiteral("tab-close")), i18n ("Close all"), this);
 	connect (close_all, &QAction::triggered, this, &RKWorkplaceViewPane::closeAll);
 	split_button->addAction (close_all);
 	split_button->installEventFilter (this); // on click, active this pane
@@ -235,14 +235,14 @@ RKWorkplaceViewPane* RKWorkplaceView::activePane () const {
 void RKWorkplaceView::initActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
-	action_page_left = ac->addAction("left_window", this, &RKWorkplaceView::pageLeft);
+	action_page_left = ac->addAction(QStringLiteral("left_window"), this, &RKWorkplaceView::pageLeft);
 	action_page_left->setText (i18n ("Window Left"));
 	ac->setDefaultShortcuts (action_page_left, {
 		Qt::ControlModifier | Qt::Key_Less,
 		Qt::ControlModifier | Qt::Key_Comma
 	});
 
-	action_page_right = ac->addAction("right_window", this, &RKWorkplaceView::pageRight);
+	action_page_right = ac->addAction(QStringLiteral("right_window"), this, &RKWorkplaceView::pageRight);
 	action_page_right->setText (i18n ("Window Right"));
 	ac->setDefaultShortcuts (action_page_right, {
 		Qt::ControlModifier | Qt::Key_Greater,
@@ -336,7 +336,7 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, const QString &des
 	if (_description.isEmpty ()) {
 		RKMDIWindow *active = dynamic_cast<RKMDIWindow *> (pane->currentWidget ());
 		if (!active) {
-			RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
+			RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl (QStringLiteral("rkward://page/rkward_split_views")));
 			RK_ASSERT (count () == 0);
 			active = activePage ();
 			RK_ASSERT (active);
@@ -386,7 +386,7 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, const QString &des
 	// "copy" the "split" window to the new pane.
 	// TODO: lines below will only work for the main window, for the time being. We need to rethink this, if we want to enable window splitting for detached windows, too.
 	if (!RKWorkplace::mainWorkplace ()->restoreDocumentWindow (_description, base)) {
-		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
+		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl (QStringLiteral("rkward://page/rkward_split_views")));
 	}
 	newpane = nullptr;
 

@@ -46,7 +46,7 @@ public:
 		                                  "<a href=\"%1\">KDE bugtracking system</a>. Note that you need a user account for this, so that we will be able to contact you, "
 		                                  "for follow-up questions. <b>If you do not have an account, please <a href=\"%2\">create one</a>, first.</b></p>"
 		                                  "<p>In case this is not possible for some reason, refer to <a href=\"%3\">%3</a> for alternative ways of reporting issues.</p>",
-		                         QString ("https://bugs.kde.org"), QString ("https://bugs.kde.org/createaccount.cgi"), QString ("https://rkward.kde.org/Bugs.html"))
+		                         QStringLiteral ("https://bugs.kde.org"), QStringLiteral ("https://bugs.kde.org/createaccount.cgi"), QStringLiteral ("https://rkward.kde.org/Bugs.html"))
 		                          + i18n ("<p><b>What information should I provide, and how?</b></p>Clicking \"Report issue\" will take you to the "
 		                                  "KDE bugtracking system. After logging in, some information will already be pre-filled into the report form. Please make sure "
 		                                  "to fill in the missing bits - in English - where indicated, especially in the \"Comment\" field.</p>"));
@@ -55,7 +55,7 @@ public:
 
 		RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 		buttons->button (QDialogButtonBox::Ok)->setText (i18n ("Report issue"));
-		buttons->button (QDialogButtonBox::Ok)->setIcon (QIcon::fromTheme("tools-report-bug"));
+		buttons->button (QDialogButtonBox::Ok)->setIcon (QIcon::fromTheme(QStringLiteral("tools-report-bug")));
 		layout->addWidget (buttons);
 
 		connect (this, &QDialog::finished, this, &RKBugzillaReportDialog::deleteLater);
@@ -141,7 +141,7 @@ void RKErrorDialog::reportBug (QWidget* parent_widget, const QString& message_in
 	report_template.append ("\n---Session Info---\n");
 	bool ok = false;
 	if (!RInterface::instance()->backendIsDead ()) {
-		RCommand *command = new RCommand ("rk.sessionInfo()", RCommand::App);
+		RCommand *command = new RCommand (QStringLiteral("rk.sessionInfo()"), RCommand::App);
 		RKProgressControl *control = new RKProgressControl (parent_widget, i18n ("Please stand by while gathering some information on your setup.\nIn case the backend has died or hung up, you may want to press 'Cancel' to skip this step."), i18n ("Gathering setup information"), RKProgressControl::CancellableNoProgress);
 		control->addRCommand (command, true);
 		RInterface::issueCommand(command);
@@ -151,7 +151,7 @@ void RKErrorDialog::reportBug (QWidget* parent_widget, const QString& message_in
 		delete control;
 	}
 	if (!ok) {
-		report_template.append (RKSessionVars::frontendSessionInfo ().join ("\n"));
+		report_template.append (RKSessionVars::frontendSessionInfo ().join (QStringLiteral("\n")));
 		report_template.append ("\n- backend not available or rk.sessionInfo() canceled -\n");
 	}
 

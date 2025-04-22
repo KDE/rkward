@@ -29,22 +29,22 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create and add property
-	addChild ("text", text = new RKComponentPropertyBase (this, false));
+	addChild (QStringLiteral("text"), text = new RKComponentPropertyBase (this, false));
 	connect (text, &RKComponentPropertyBase::valueChanged, this, &RKInput::textChanged);
 
-	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
+	setRequired (xml->getBoolAttribute (element, QStringLiteral("required"), false, DL_INFO));
 	connect (requirednessProperty (), &RKComponentPropertyBase::valueChanged, this, &RKInput::requirednessChanged);
 
 	// do all the layouting
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	label_string = xml->i18nStringAttribute (element, "label", i18n ("Enter text"), DL_INFO);
+	label_string = xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Enter text"), DL_INFO);
 	if (!label_string.isEmpty ()) {
 		QLabel *label = new QLabel (label_string, this);
 		vbox->addWidget (label);
 	}
 
-	int size = xml->getMultiChoiceAttribute (element, "size", "small;medium;large", 1, DL_INFO);
+	int size = xml->getMultiChoiceAttribute (element, QStringLiteral("size"), QStringLiteral("small;medium;large"), 1, DL_INFO);
 	if (size == 2) {
 		textedit = new QTextEdit (this);
 		QFontMetrics fm = QFontMetrics (textedit->currentFont ());
@@ -65,7 +65,7 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	// initialize
 	updating = false;
 	// DO NOT replace "" with QString (), here! it is important, that this is actually an empty string, not a null string.
-	text->setValue (xml->getStringAttribute (element, "initial", "", DL_INFO));
+	text->setValue (xml->getStringAttribute (element, QStringLiteral("initial"), QLatin1String(""), DL_INFO));
 }
 
 RKInput::~RKInput () {
@@ -88,12 +88,12 @@ void RKInput::updateColor () {
 
 	if (isEnabled ()) {
 		if (isSatisfied ()) {
-			widget->setStyleSheet("");
+			widget->setStyleSheet(QLatin1String(""));
 		} else {
-			widget->setStyleSheet("background: red; color: black");
+			widget->setStyleSheet(QStringLiteral("background: red; color: black"));
 		}
 	} else {
-		widget->setStyleSheet("background: rgb(200, 200, 200); color: black");
+		widget->setStyleSheet(QStringLiteral("background: rgb(200, 200, 200); color: black"));
 	}
 }
 

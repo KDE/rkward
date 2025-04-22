@@ -28,7 +28,7 @@ RKComponentScriptingProxy::RKComponentScriptingProxy (RKComponent *component) : 
 	RKComponentScriptingProxy::component = component;
 
 	QJSValue backend_object = engine.newQObject(this);
-	engine.globalObject ().setProperty ("_rkward", backend_object);
+	engine.globalObject ().setProperty (QStringLiteral("_rkward"), backend_object);
 	RKMessageCatalogObject::addI18nToScriptEngine (&engine, component->xmlHelper ()->messageCatalog ());
 }
 
@@ -56,8 +56,8 @@ void RKComponentScriptingProxy::initialize (const QString& file, const QString& 
 		engine.evaluate (i18n ("Error opening script file %1", files_path.absoluteFilePath ("common.js")));
 	}
 #else
-	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("rkcomponentscripting.js") + "');\n");
-	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("common.js") + "');\n");
+	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath (QStringLiteral("rkcomponentscripting.js")) + "');\n");
+	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath (QStringLiteral("common.js")) + "');\n");
 #endif
 	evaluate (_command);
 }
@@ -68,8 +68,8 @@ void RKComponentScriptingProxy::handleScriptError(const QJSValue &val, const QSt
 	QString file = current_file;
 	if (file.isEmpty ()) file = _scriptfile;
 	if (val.isError()) {
-		QString message = i18n("Script Error at '%1' line %2: %3\n", file.isEmpty() ? i18n("inlined code") : file, val.property("lineNumber").toInt(), val.toString());
-		KMessageBox::detailedError(nullptr, message, val.property("stack").toString());
+		QString message = i18n("Script Error at '%1' line %2: %3\n", file.isEmpty() ? i18n("inlined code") : file, val.property(QStringLiteral("lineNumber")).toInt(), val.toString());
+		KMessageBox::detailedError(nullptr, message, val.property(QStringLiteral("stack")).toString());
 		Q_EMIT haveError();
 	}
 }
@@ -115,7 +115,7 @@ void RKComponentScriptingProxy::addChangeCommand (const QString& changed_id, con
 			connect (static_cast<RKComponentPropertyBase*> (base), &RKComponentPropertyBase::valueChanged, this, &RKComponentScriptingProxy::propertyChanged);
 		}
 	} else {
-		evaluate (QString ("error ('No such property %1 (failed portion was %2)');\n").arg (changed_id, remainder));
+		evaluate (QStringLiteral ("error ('No such property %1 (failed portion was %2)');\n").arg (changed_id, remainder));
 	}
 }
 
@@ -236,7 +236,7 @@ void RKComponentScriptingProxy::setValue (const QString &value, const QString &i
 	if (resolved && modifier.isEmpty () && resolved->isProperty ()) {
 		static_cast<RKComponentPropertyBase*> (resolved)->setValue (value);
 	} else {
-		evaluate (QString ("error ('No such property %1 (failed portion was %2)');\n").arg (id, modifier));
+		evaluate (QStringLiteral ("error ('No such property %1 (failed portion was %2)');\n").arg (id, modifier));
 	}
 }
 
@@ -251,9 +251,9 @@ void RKComponentScriptingProxy::setListValue (const QStringList& value, const QS
 			l->setValueList (value);
 			return;
 		}
-		static_cast<RKComponentPropertyBase*> (resolved)->setValue (value.join ("\n"));
+		static_cast<RKComponentPropertyBase*> (resolved)->setValue (value.join (QStringLiteral("\n")));
 	} else {
-		evaluate (QString ("error ('No such property %1 (failed portion was %2)');\n").arg (id, modifier));
+		evaluate (QStringLiteral ("error ('No such property %1 (failed portion was %2)');\n").arg (id, modifier));
 	}
 }
 

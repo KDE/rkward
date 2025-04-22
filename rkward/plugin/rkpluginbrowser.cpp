@@ -26,27 +26,27 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create and add property
-	addChild ("selection", selection = new RKComponentPropertyBase (this, true));
+	addChild (QStringLiteral("selection"), selection = new RKComponentPropertyBase (this, true));
 	connect (selection, &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::textChanged);
 
-	setRequired (xml->getBoolAttribute (element, "required", true, DL_INFO));
+	setRequired (xml->getBoolAttribute (element, QStringLiteral("required"), true, DL_INFO));
 	connect(requirednessProperty(), &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::validateInput);
 	connect(enablednessProperty(), &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::validateInput);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	int intmode = xml->getMultiChoiceAttribute (element, "type", "file;dir;savefile", 0, DL_INFO);
+	int intmode = xml->getMultiChoiceAttribute (element, QStringLiteral("type"), QStringLiteral("file;dir;savefile"), 0, DL_INFO);
 	GetFileNameWidget::FileType mode;
 	if (intmode == 0) mode = GetFileNameWidget::ExistingFile;
 	else if (intmode == 1) mode = GetFileNameWidget::ExistingDirectory;
 	else mode = GetFileNameWidget::SaveFile;
 
-	only_local = !xml->getBoolAttribute (element, "allow_urls", false, DL_INFO);
+	only_local = !xml->getBoolAttribute (element, QStringLiteral("allow_urls"), false, DL_INFO);
 
-	label_string = xml->i18nStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO);
-	selector = new GetFileNameWidget (this, mode, only_local, label_string, i18n ("Select"), xml->getStringAttribute (element, "initial", QString (), DL_INFO));
-	QString filter = xml->getStringAttribute (element, "filter", QString (), DL_INFO);
+	label_string = xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Enter filename"), DL_INFO);
+	selector = new GetFileNameWidget (this, mode, only_local, label_string, i18n ("Select"), xml->getStringAttribute (element, QStringLiteral("initial"), QString (), DL_INFO));
+	QString filter = xml->getStringAttribute (element, QStringLiteral("filter"), QString (), DL_INFO);
 	if (!filter.isEmpty ()) {
 		filter.append ("\n*|All files (*)");
 		selector->setFilter (filter);
@@ -60,7 +60,7 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	vbox->addWidget (overwrite_confirm);
 	overwrite_confirm->setVisible (mode == GetFileNameWidget::SaveFile);
 	auto overwrite_prop = new RKComponentPropertyBool(this, false, false);
-	addChild("overwrite", overwrite_prop);
+	addChild(QStringLiteral("overwrite"), overwrite_prop);
 	connect(overwrite_confirm, &QCheckBox::toggled, overwrite_prop, [overwrite_prop](bool checked) { if (checked != overwrite_prop->boolValue()) overwrite_prop->setBoolValue(checked); });
 
 	validation_timer.setSingleShot (true);
@@ -146,7 +146,7 @@ void RKPluginBrowser::validateInput () {
 					tip = i18n ("You have to specify a filename (not directory) to write to.");
 					status = RKComponentBase::Unsatisfied;
 				} else if (fi.exists ()) {
-					overwrite_confirm->setText ("Overwrite? (The given file already exists)");
+					overwrite_confirm->setText (QStringLiteral("Overwrite? (The given file already exists)"));
 					overwrite_confirm->setEnabled (true);
 					// TODO: soft warning (icon)
 					tip = i18n ("<b>Note:</b> The given file already exists, and will be modified / overwritten.");
@@ -178,14 +178,14 @@ void RKPluginBrowser::updateColor () {
 
 	if (isEnabled ()) {
 		if (status == RKComponentBase::Satisfied) {
-			selector->setStyleSheet (QString (""));
+			selector->setStyleSheet (QLatin1String (""));
 		} else if (status == RKComponentBase::Processing) {
-			selector->setStyleSheet (QString ("background: yellow; color: black"));
+			selector->setStyleSheet (QStringLiteral ("background: yellow; color: black"));
 		} else {
-			selector->setStyleSheet (QString ("background: red; color: black"));
+			selector->setStyleSheet (QStringLiteral ("background: red; color: black"));
 		}
 	} else {
-		selector->setStyleSheet (QString ("background: rgb(200, 200, 200); color: black"));
+		selector->setStyleSheet (QStringLiteral ("background: rgb(200, 200, 200); color: black"));
 	}
 }
 

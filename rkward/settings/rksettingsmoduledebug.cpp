@@ -51,19 +51,19 @@ public:
 		QGroupBox* group = new QGroupBox(i18n("Debug flags"), this);
 		QVBoxLayout* box_layout = new QVBoxLayout(group);
 
-		debug_flags_group->addButton(new QCheckBox("APP", group), APP);
-		debug_flags_group->addButton(new QCheckBox("PLUGIN", group), PLUGIN);
-		debug_flags_group->addButton(new QCheckBox("OBJECTS", group), OBJECTS);
-		debug_flags_group->addButton(new QCheckBox("EDITOR", group), EDITOR);
-		debug_flags_group->addButton(new QCheckBox("SETTINGS", group), SETTINGS);
-		debug_flags_group->addButton(new QCheckBox("PHP", group), PHP);
-		debug_flags_group->addButton(new QCheckBox("RBACKEND", group), RBACKEND);
-		debug_flags_group->addButton(new QCheckBox("COMMANDEDITOR", group), COMMANDEDITOR);
-		debug_flags_group->addButton(new QCheckBox("MISC", group), MISC);
-		debug_flags_group->addButton(new QCheckBox("DIALOGS", group), DIALOGS);
-		debug_flags_group->addButton(new QCheckBox("OUTPUT", group), OUTPUT);
-		debug_flags_group->addButton(new QCheckBox("XML", group), XML);
-		debug_flags_group->addButton(new QCheckBox("GRAPHICS_DEVICE", group), GRAPHICS_DEVICE);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("APP"), group), APP);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("PLUGIN"), group), PLUGIN);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("OBJECTS"), group), OBJECTS);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("EDITOR"), group), EDITOR);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("SETTINGS"), group), SETTINGS);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("PHP"), group), PHP);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("RBACKEND"), group), RBACKEND);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("COMMANDEDITOR"), group), COMMANDEDITOR);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("MISC"), group), MISC);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("DIALOGS"), group), DIALOGS);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("OUTPUT"), group), OUTPUT);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("XML"), group), XML);
+		debug_flags_group->addButton(new QCheckBox(QStringLiteral("GRAPHICS_DEVICE"), group), GRAPHICS_DEVICE);
 
 		QList<QAbstractButton*> buttons = debug_flags_group->buttons();
 		for (QList<QAbstractButton*>::const_iterator it = buttons.constBegin(); it != buttons.constEnd(); ++it) {

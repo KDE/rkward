@@ -114,16 +114,16 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setCaption (i18n ("R Console"));
 	console_part = new RKConsolePart (this);
 	setPart (console_part);
-	setMetaInfo(shortCaption(), QUrl("rkward://page/rkward_console"), RKSettingsModuleConsole::page_id);
+	setMetaInfo(shortCaption(), QUrl(QStringLiteral("rkward://page/rkward_console")), RKSettingsModuleConsole::page_id);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
-	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [this](bool val) { view->setConfigValue("scrollbar-minimap", val); });
-	getPart()->actionCollection()->addAction("view_show_minimap", action);
-	action = RKSettingsModuleConsole::wordWrap()->makeAction(this, i18n("Dynamic word wrap"), [this](bool val) { view->setConfigValue("dynamic-word-wrap", val); });
-	getPart()->actionCollection()->addAction("view_dynamic_word_wrap", action);
+	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [this](bool val) { view->setConfigValue(QStringLiteral("scrollbar-minimap"), val); });
+	getPart()->actionCollection()->addAction(QStringLiteral("view_show_minimap"), action);
+	action = RKSettingsModuleConsole::wordWrap()->makeAction(this, i18n("Dynamic word wrap"), [this](bool val) { view->setConfigValue(QStringLiteral("dynamic-word-wrap"), val); });
+	getPart()->actionCollection()->addAction(QStringLiteral("view_dynamic_word_wrap"), action);
 
-	nprefix = "> ";
-	iprefix = "+ ";
+	nprefix = QLatin1String("> ");
+	iprefix = QLatin1String("+ ");
 	prefix = nprefix;
 // KDE4: a way to do this?
 //	doc->setUndoSteps (0);
@@ -290,9 +290,9 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		if (pos <= prefix.length ()) return true;
 
 		if (modifier == Qt::NoModifier) setCursorClear (para, pos - 1);
-		else if (modifier == Qt::ShiftModifier) triggerEditAction ("select_char_left");
-		else if (modifier == Qt::ControlModifier) triggerEditAction ("word_left");
-		else if (modifier == (Qt::ControlModifier | Qt::ShiftModifier)) triggerEditAction ("select_word_left");
+		else if (modifier == Qt::ShiftModifier) triggerEditAction (QStringLiteral("select_char_left"));
+		else if (modifier == Qt::ControlModifier) triggerEditAction (QStringLiteral("word_left"));
+		else if (modifier == (Qt::ControlModifier | Qt::ShiftModifier)) triggerEditAction (QStringLiteral("select_word_left"));
 		else return false;
 
 		return true;
@@ -300,9 +300,9 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		if (pos >= doc->lineLength (para)) return true;
 
 		if (modifier == Qt::NoModifier) setCursorClear (para, pos + 1);
-		else if (modifier == Qt::ShiftModifier) triggerEditAction ("select_char_right");
-		else if (modifier == Qt::ControlModifier) triggerEditAction ("word_right");
-		else if (modifier == (Qt::ControlModifier | Qt::ShiftModifier)) triggerEditAction ("select_word_right");
+		else if (modifier == Qt::ShiftModifier) triggerEditAction (QStringLiteral("select_char_right"));
+		else if (modifier == Qt::ControlModifier) triggerEditAction (QStringLiteral("word_right"));
+		else if (modifier == (Qt::ControlModifier | Qt::ShiftModifier)) triggerEditAction (QStringLiteral("select_word_right"));
 		else return false;
 
 		return true;
@@ -525,7 +525,7 @@ void RKConsole::rawWriteLine(const QString& line, QChar line_end) {
 	output_cursor.setColumn(output_cursor.column() + line.length());
 	if (line_end == '\n') {
 		output_cursor.setColumn(doc->lineLength(output_cursor.line()));
-		doc->insertText(output_cursor, "\n");
+		doc->insertText(output_cursor, QStringLiteral("\n"));
 		output_cursor.setColumn(0);
 		output_cursor.setLine(output_cursor.line() + 1);
 	} else if (line_end == '\r') {
@@ -716,7 +716,7 @@ void RKConsole::userSaveHistory (const QUrl &_url) {
 
 	QTemporaryFile tempfile;
 	tempfile.open ();
-	tempfile.write (QString (commandHistory ().join ("\n") + '\n').toLocal8Bit ().data ());
+	tempfile.write (QString (commandHistory ().join (QStringLiteral("\n")) + '\n').toLocal8Bit ().data ());
 	tempfile.close ();
 
 	KIO::Job* getjob = KIO::file_copy (QUrl::fromLocalFile (tempfile.fileName()), url);
@@ -764,7 +764,7 @@ void RKConsole::copyCommands () {
 		}
 		++i;
 	}
-	QApplication::clipboard()->setText (cleanSelection (command_lines.join ("\n")));
+	QApplication::clipboard()->setText (cleanSelection (command_lines.join (QStringLiteral("\n"))));
 }
 
 void RKConsole::literalCopy () {
@@ -834,32 +834,32 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	RKStandardActions::onlineHelp (this, this);
 	run_selection_action = RKStandardActions::runCurrent(this, this, SLOT (runSelection()));
 
-	interrupt_command_action = ac->addAction("interrupt", this, &RKConsole::resetConsole);
+	interrupt_command_action = ac->addAction(QStringLiteral("interrupt"), this, &RKConsole::resetConsole);
 	interrupt_command_action->setText(i18n("Interrupt running command"));
 	ac->setDefaultShortcut(interrupt_command_action, REAL_CTRL_KEY | Qt::Key_C);
 	interrupt_command_action->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionInterrupt));
 	interrupt_command_action->setEnabled(false);
 
-	copy_literal_action = ac->addAction("rkconsole_copy_literal", this, &RKConsole::literalCopy);
+	copy_literal_action = ac->addAction(QStringLiteral("rkconsole_copy_literal"), this, &RKConsole::literalCopy);
 	ac->setDefaultShortcut(copy_literal_action, REAL_CMD_KEY | Qt::Key_C);
 	copy_literal_action->setText(i18n("Copy selection literally"));
 
-	copy_commands_action = ac->addAction("rkconsole_copy_commands", this, &RKConsole::copyCommands);
+	copy_commands_action = ac->addAction(QStringLiteral("rkconsole_copy_commands"), this, &RKConsole::copyCommands);
 	copy_commands_action->setText(i18n("Copy commands, only"));
 
 	RKStandardActions::pasteSpecial (this, this, SLOT (submitBatch(QString)));
 
-	ac->addAction(KStandardAction::Clear, "rkconsole_clear", this, &RKConsole::clear);
-	paste_action = ac->addAction(KStandardAction::Paste, "rkconsole_paste", this, &RKConsole::paste);
+	ac->addAction(KStandardAction::Clear, QStringLiteral("rkconsole_clear"), this, &RKConsole::clear);
+	paste_action = ac->addAction(KStandardAction::Paste, QStringLiteral("rkconsole_paste"), this, &RKConsole::paste);
 
-	addProxyAction ("file_print", i18n ("Print Console"));
-	addProxyAction ("file_export_html");
-	addProxyAction ("view_inc_font_sizes");
-	addProxyAction ("view_dec_font_sizes");
+	addProxyAction (QStringLiteral("file_print"), i18n ("Print Console"));
+	addProxyAction (QStringLiteral("file_export_html"));
+	addProxyAction (QStringLiteral("view_inc_font_sizes"));
+	addProxyAction (QStringLiteral("view_dec_font_sizes"));
 
-	QAction *action = ac->addAction("loadhistory", this, [this](){ userLoadHistory(); });
+	QAction *action = ac->addAction(QStringLiteral("loadhistory"), this, [this](){ userLoadHistory(); });
 	action->setText(i18n("Import command history..."));
-	action = ac->addAction("savehistory", this, [this](){ userSaveHistory(); });
+	action = ac->addAction(QStringLiteral("savehistory"), this, [this](){ userSaveHistory(); });
 	action->setText(i18n("Export command history..."));
 }
 
@@ -938,7 +938,7 @@ RKConsolePart::RKConsolePart(RKConsole *console) : KParts::Part(nullptr) {
 
 	setWidget (console);
 
-	setXMLFile ("rkconsolepart.rc");
+	setXMLFile (QStringLiteral("rkconsolepart.rc"));
 }
 
 RKConsolePart::~RKConsolePart () {
@@ -948,7 +948,7 @@ RKConsolePart::~RKConsolePart () {
 void RKConsolePart::showPopupMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
-	QMenu *menu = static_cast<QMenu *> (factory ()->container ("rkconsole_context_menu", this));
+	QMenu *menu = static_cast<QMenu *> (factory ()->container (QStringLiteral("rkconsole_context_menu"), this));
 
 	if (!menu) {
 		RK_ASSERT (false);

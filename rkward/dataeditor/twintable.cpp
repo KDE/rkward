@@ -86,7 +86,7 @@ TwinTable::TwinTable (QWidget *parent) :
 	context_menu_table = nullptr;
 	context_menu_row = context_menu_column = -2;
 
-	setXMLFile ("rkeditordataframepart.rc");
+	setXMLFile (QStringLiteral("rkeditordataframepart.rc"));
 	initActions ();
 
 	setFocusPolicy (Qt::StrongFocus);
@@ -103,42 +103,42 @@ TwinTable::~TwinTable() {
 void TwinTable::initActions () {
 	RK_TRACE (EDITOR);
 
-	editCut = actionCollection()->addAction(KStandardAction::Cut, "cut", this, &TwinTable::cut);
+	editCut = actionCollection()->addAction(KStandardAction::Cut, QStringLiteral("cut"), this, &TwinTable::cut);
 	editCut->setWhatsThis(i18n("Cuts the selected section and puts it to the clipboard"));
-	editCopy = actionCollection()->addAction (KStandardAction::Copy, "copy", this, &TwinTable::copy);
+	editCopy = actionCollection()->addAction (KStandardAction::Copy, QStringLiteral("copy"), this, &TwinTable::copy);
 	editCopy->setWhatsThis(i18n("Copies the selected section to the clipboard"));
 //	editor->editActions ()->addAction (editCopy);	// this is a read-only action, not an "edit" action
-	editPaste = actionCollection()->addAction(KStandardAction::Paste, "paste", this, qOverload<>(&TwinTable::paste));
+	editPaste = actionCollection()->addAction(KStandardAction::Paste, QStringLiteral("paste"), this, qOverload<>(&TwinTable::paste));
 	editPaste->setWhatsThis(i18n("Pastes the clipboard contents to current position"));
 
-	editPasteToTable = actionCollection()->addAction("paste_to_table", this, &TwinTable::pasteToTable);
+	editPasteToTable = actionCollection()->addAction(QStringLiteral("paste_to_table"), this, &TwinTable::pasteToTable);
 	editPasteToTable->setText(i18n("Paste inside table"));
 	editPasteToTable->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionPasteInsideTable));
 	editPasteToTable->setWhatsThis(i18n("Pastes the clipboard contents to current position, but not beyond the table's boundaries"));
 
-	editPasteToSelection = actionCollection()->addAction("paste_to_selection", this, &TwinTable::pasteToSelection);
+	editPasteToSelection = actionCollection()->addAction(QStringLiteral("paste_to_selection"), this, &TwinTable::pasteToSelection);
 	editPasteToSelection->setText(i18n("Paste inside selection"));
 	editPasteToSelection->setIcon(RKStandardIcons::getIcon (RKStandardIcons::ActionPasteInsideSelection));
 	editPasteToSelection->setWhatsThis(i18n("Pastes the clipboard contents to current position, but not beyond the boundaries of the current selection"));
 
 	// header menus
-	action_insert_col_left = actionCollection()->addAction("insert_col_left", this, &TwinTable::insertColumn);
+	action_insert_col_left = actionCollection()->addAction(QStringLiteral("insert_col_left"), this, &TwinTable::insertColumn);
 	action_insert_col_left->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionInsertVar));
-	action_delete_col = actionCollection()->addAction("delete_col", this, &TwinTable::deleteColumn);
+	action_delete_col = actionCollection()->addAction(QStringLiteral("delete_col"), this, &TwinTable::deleteColumn);
 	action_delete_col->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDeleteVar));
 
-	action_insert_row_above = actionCollection()->addAction("insert_row_above", this, &TwinTable::insertRow);
+	action_insert_row_above = actionCollection()->addAction(QStringLiteral("insert_row_above"), this, &TwinTable::insertRow);
 	action_insert_row_above->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionInsertRow));
-	action_delete_row = actionCollection()->addAction("delete_row", this, &TwinTable::deleteRow);
+	action_delete_row = actionCollection()->addAction(QStringLiteral("delete_row"), this, &TwinTable::deleteRow);
 	action_delete_row->setIcon(RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
-	action_delete_rows = actionCollection()->addAction("delete_rows", this, &TwinTable::deleteSelectedRows);
+	action_delete_rows = actionCollection()->addAction(QStringLiteral("delete_rows"), this, &TwinTable::deleteSelectedRows);
 	action_delete_rows->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDeleteRow));
 
 	// global actions
-	action_show_rownames = actionCollection()->addAction("show_rownames", this, &TwinTable::showRownames);
+	action_show_rownames = actionCollection()->addAction(QStringLiteral("show_rownames"), this, &TwinTable::showRownames);
 	action_show_rownames->setText(i18n("Show / Edit row names"));
 	action_show_rownames->setCheckable(true);
-	action_enable_editing = actionCollection()->addAction ("enable_editing", this, &TwinTable::enableEditing);
+	action_enable_editing = actionCollection()->addAction (QStringLiteral("enable_editing"), this, &TwinTable::enableEditing);
 	action_enable_editing->setText(i18n("Enable editing"));
 	action_enable_editing->setCheckable(true);
 	// these actually do the same thing, but are designed to work well in the toolbar
@@ -148,12 +148,12 @@ void TwinTable::initActions () {
 	action_tb_lock_editing->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionLock));
 	action_tb_lock_editing->setActionGroup (lockactions);
 	action_tb_lock_editing->setWhatsThis(i18n ("Disable editing (to prevent accidental modification of data)"));
-	actionCollection ()->addAction ("lock_editing", action_tb_lock_editing);
+	actionCollection ()->addAction (QStringLiteral("lock_editing"), action_tb_lock_editing);
 	action_tb_unlock_editing = new KToggleAction (i18nc ("verb: switch to read-write state. Make this short.", "Unlock"), this);
 	action_tb_unlock_editing->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionUnlock));
 	action_tb_unlock_editing->setActionGroup (lockactions);
 	action_tb_unlock_editing->setWhatsThis(i18n ("Enable editing"));
-	actionCollection ()->addAction ("unlock_editing", action_tb_unlock_editing);
+	actionCollection ()->addAction (QStringLiteral("unlock_editing"), action_tb_unlock_editing);
 	connect (action_tb_unlock_editing, &QAction::toggled, this, &TwinTable::enableEditing);
 	// NOTE: No need to connect lock_editing, too, as they are radio-exclusive
 
@@ -201,7 +201,7 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 
 void TwinTable::setWindowStyleHint (const QString& hint) {
 	RK_TRACE (EDITOR);
-	if (hint == "preview") { // preview skin: Squeeze header as much as possible
+	if (hint == QLatin1String("preview")) { // preview skin: Squeeze header as much as possible
 		metaview->horizontalHeader ()->hide ();
 		metaview->setMinimumHeight (metaview->rowHeight (0));
 		// Now, I just don't understand QSplitter sizing, here... Despite stretch factors being set, metaview continues to be the first to grow.
@@ -224,7 +224,7 @@ void TwinTable::hasProblems() {
 		problems_note->addAction(a);
 		connect(a, &QAction::triggered, datamodel, [this, msg]() {
 			// NOTE: Not caching the problems in the lambda, as additional problem may yet be detected
-			KMessageBox::detailedError(this, msg + "<br/>" + i18n("You may want to create an editable subset using Data->Subset data.frame."), datamodel->problems().join("\n"), i18n("Problem detected"));
+			KMessageBox::detailedError(this, msg + "<br/>" + i18n("You may want to create an editable subset using Data->Subset data.frame."), datamodel->problems().join(QStringLiteral("\n")), i18n("Problem detected"));
 		});
 	}
 	problems_note->animatedShow();
@@ -286,7 +286,7 @@ void TwinTable::contextMenu (int row, int col, const QPoint& pos) {
 			action_delete_col->setEnabled (rw && (col >= datamodel->firstRealColumn ()) && (col < datamodel->trueCols ()));
 			action_delete_col->setText (i18n ("Delete this variable"));	// TODO: show name
 
-			container_name = "top_header_menu";
+			container_name = QLatin1String("top_header_menu");
 		}
 	} else if (sender () == dataview) {
 		context_menu_table = dataview;
@@ -312,7 +312,7 @@ void TwinTable::contextMenu (int row, int col, const QPoint& pos) {
 				action_delete_row->setEnabled (rw && (row < datamodel->trueRows ()));
 				action_delete_row->setText (i18n ("Delete this row (%1)", (row+1)));
 
-				container_name = "left_header_menu";
+				container_name = QLatin1String("left_header_menu");
 			}
 		}
 	} else {
@@ -320,7 +320,7 @@ void TwinTable::contextMenu (int row, int col, const QPoint& pos) {
 	}
 
 	if (container_name.isEmpty ()) {	// none of the headers
-		container_name = "general_context_menu";
+		container_name = QLatin1String("general_context_menu");
 	}
 
 	RK_ASSERT (factory ());

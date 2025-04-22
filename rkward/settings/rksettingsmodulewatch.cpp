@@ -241,7 +241,7 @@ void RKSettingsModuleWatch::createPages(RKSettings *parent) {
 void RKSettingsModuleWatch::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group("RInterface Watch Settings");
+	KConfigGroup cg = config->group(QStringLiteral("RInterface Watch Settings"));
 	user_filter.syncConfig(cg, a);
 	plugin_filter.syncConfig(cg, a);
 	app_filter.syncConfig(cg, a);

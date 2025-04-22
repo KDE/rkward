@@ -18,7 +18,7 @@ RKTabPage::RKTabPage (const QDomElement &element, RKComponent *parent_component,
 	RK_TRACE (PLUGIN);
 
 	XMLHelper* xml = parent_component->xmlHelper ();
-	label = xml->i18nStringAttribute (element, "label", QString (), DL_WARNING);
+	label = xml->i18nStringAttribute (element, QStringLiteral("label"), QString (), DL_WARNING);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);

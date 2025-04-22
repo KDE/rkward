@@ -253,7 +253,7 @@ RObject::ObjectList RContainerObject::findObjects (const QStringList &path, bool
 
 	fetchMoreIfNeeded ();
 
-	if (op != "$") return RObject::findObjects (path, partial, op);
+	if (op != QLatin1String("$")) return RObject::findObjects (path, partial, op);
 
 	if (path.length () > 1) {
 		RObject* found = findChildByName (path.value (0));
@@ -371,14 +371,14 @@ QString RContainerObject::renameChildCommand (RObject *object, const QString &ne
 QString RContainerObject::validizeName (const QString &child_name, bool unique) const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (isType (GlobalEnv) || isInGlobalEnv ());
-	static const QRegularExpression validizename1("[^a-zA-Z0-9_]");
-	static const QRegularExpression validizename2("^\\.*[0-9]+");
+	static const QRegularExpression validizename1(QStringLiteral("[^a-zA-Z0-9_]"));
+	static const QRegularExpression validizename2(QStringLiteral("^\\.*[0-9]+"));
 
 	QString ret = child_name;
-	if (ret.isEmpty ()) ret = "var";
+	if (ret.isEmpty ()) ret = QLatin1String("var");
 	else {
-		ret = ret.replace(validizename1, ".");
-		ret = ret.replace(validizename2, ".");
+		ret = ret.replace(validizename1, QLatin1String("."));
+		ret = ret.replace(validizename2, QLatin1String("."));
 	}
 	if (!unique) return ret;
 

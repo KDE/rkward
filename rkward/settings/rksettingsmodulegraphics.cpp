@@ -35,7 +35,7 @@ RKConfigValue<int> RKSettingsModuleGraphics::graphics_hist_max_length {"graphics
 RKConfigValue<int> RKSettingsModuleGraphics::graphics_hist_max_plotsize {"graphics_hist_max_plotsize", 4096};
 RKConfigValue<bool> RKSettingsModuleGraphics::options_kde_printing {"kde printing", true};
 RKConfigValue<RKSettingsModuleGraphics::DefaultDevice, int> RKSettingsModuleGraphics::default_device {"default_device", RKDevice};
-RKConfigValue<QString> RKSettingsModuleGraphics::default_device_other {"default_device_custom", QString("Cairo")};
+RKConfigValue<QString> RKSettingsModuleGraphics::default_device_other {"default_device_custom", QStringLiteral("Cairo")};
 RKConfigValue<RKSettingsModuleGraphics::StandardDevicesMode, int> RKSettingsModuleGraphics::replace_standard_devices {"replace_device", ReplaceDevice};
 
 class RKSettingsPageGraphics : public RKSettingsModuleWidget {
@@ -45,7 +45,7 @@ public:
 
 		setWindowTitle(i18n("Onscreen Graphics"));
 		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowX11));
-		help_url = QUrl("rkward://page/rkward_plot_history#scd_settings");
+		help_url = QUrl(QStringLiteral("rkward://page/rkward_plot_history#scd_settings"));
 
 		QVBoxLayout *main_vbox = new QVBoxLayout(this);
 
@@ -160,7 +160,7 @@ void RKSettingsModuleGraphics::createPages(RKSettings *parent) {
 void RKSettingsModuleGraphics::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group("Graphics Device Windows");
+	KConfigGroup cg = config->group(QStringLiteral("Graphics Device Windows"));
 	default_device.syncConfig(cg, a);
 	default_device_other.syncConfig(cg, a);
 	replace_standard_devices.syncConfig(cg, a);
@@ -178,9 +178,9 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	QStringList list;
 
 	// register RK as interactive
-	list.append ("try (if (!(\"RKGraphicsDevice\" %in% deviceIsInteractive())) deviceIsInteractive(name=\"RKGraphicsDevice\"))\n");
+	list.append (QStringLiteral("try (if (!(\"RKGraphicsDevice\" %in% deviceIsInteractive())) deviceIsInteractive(name=\"RKGraphicsDevice\"))\n"));
 
-	QString command = "options (device=";
+	QString command = QStringLiteral("options (device=");
 	if (default_device == RKDevice) command.append ("\"RK\"");
 	else if (default_device == OtherDevice) command.append (RObject::rQuote (default_device_other));
 	else {
@@ -194,7 +194,7 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	}
 	list.append (command + ")\n");
 
-	command = "options (rk.override.platform.devices=\"";
+	command = QLatin1String("options (rk.override.platform.devices=\"");
 	if ((replace_standard_devices == ReplaceDevice) && (default_device != PlatformDevice)) {
 		command.append ("replace");
 	} else if (replace_standard_devices == LeaveDevice) {
@@ -204,7 +204,7 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	}
 	list.append (command + "\")\n");
 
-	command = "options";
+	command = QLatin1String("options");
 	command.append ("(\"rk.screendevice.width\"=" + QString::number (graphics_width));
 	command.append (", \"rk.screendevice.height\"=" + QString::number (graphics_height) + ")\n");
 	list.append (command);

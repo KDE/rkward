@@ -23,7 +23,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 QAction* RKStandardActions::copyLinesToOutput (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	QAction* ret = window->standardActionCollection ()->addAction ("copy_lines_to_output", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction (QStringLiteral("copy_lines_to_output"), receiver, member);
 	ret->setText (i18n ("Copy lines to output"));
 	return ret;
 }
@@ -32,7 +32,7 @@ QAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *re
 	RK_TRACE (MISC);
 
 	QAction* ret = new RKPasteSpecialAction (window->standardActionCollection ());
-	window->standardActionCollection ()->addAction ("paste_special", ret);
+	window->standardActionCollection ()->addAction (QStringLiteral("paste_special"), ret);
 	ret->connect (ret, SIGNAL (pasteText(QString)), receiver, member);
 	window->standardActionCollection ()->setDefaultShortcut (ret, Qt::ShiftModifier | Qt::ControlModifier | Qt::Key_V);
 	return ret;
@@ -41,7 +41,7 @@ QAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *re
 QAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *receiver, const char *member, bool current_or_line) {
 	RK_TRACE (MISC);
 
-	QAction* ret = window->standardActionCollection ()->addAction ("run_current", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction (QStringLiteral("run_current"), receiver, member);
 	if (current_or_line) {
 		ret->setText (i18n ("Run line / selection"));
 		ret->setWhatsThis(i18n ("Runs the current selection (if any) or the current line (if there is no selection)"));
@@ -61,7 +61,7 @@ QAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *rece
 QAction* RKStandardActions::runAll (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	QAction* ret = window->standardActionCollection ()->addAction ("run_all", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction (QStringLiteral("run_all"), receiver, member);
 	ret->setText (i18n ("Run all"));
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunAll));
 	window->standardActionCollection ()->setDefaultShortcuts (ret, {
@@ -96,7 +96,7 @@ QAction* RKStandardActions::functionHelp (RKMDIWindow *window, RKScriptContextPr
 	RK_TRACE (MISC);
 
 	QAction* ret = new RKSearchRHelpAction (window, context_provider);
-	window->standardActionCollection ()->addAction ("function_reference", ret);
+	window->standardActionCollection ()->addAction (QStringLiteral("function_reference"), ret);
 	window->standardActionCollection ()->setDefaultShortcut (ret, Qt::Key_F2);
 	return ret;
 }
@@ -169,7 +169,7 @@ QAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProv
 	auto *a = new RKSearchOnlineHelpAction (window, context_provider);
 	QAction* ret = a->action ();
 	ret->setText(i18n("Search online"));
-	window->standardActionCollection ()->addAction ("search_online", ret);
+	window->standardActionCollection ()->addAction (QStringLiteral("search_online"), ret);
 	return ret;
 }
 

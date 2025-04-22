@@ -26,7 +26,7 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	mlayout = new QHBoxLayout (this);
 	mlayout->setContentsMargins (0, 0, 0, 0);
 	QToolButton* close_button = new QToolButton (this);
-	close_button->setIcon (QIcon::fromTheme("dialog-close"));
+	close_button->setIcon (QIcon::fromTheme(QStringLiteral("dialog-close")));
 	close_button->setAutoRaise (true);   // makes it flat
 	connect (close_button, &QToolButton::clicked, this, &RKFindBar::hide);
 	mlayout->addWidget (close_button);
@@ -36,8 +36,8 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	slayout->setContentsMargins (0, 0, 0, 0);
 	slayout->setSpacing (0);
 	term_edit = new KHistoryComboBox (this);
-	QString dummylong("This is quite a long search term by any standard, indeed");
-	QString dummyshort("A short search term");
+	QString dummylong(QStringLiteral("This is quite a long search term by any standard, indeed"));
+	QString dummyshort(QStringLiteral("A short search term"));
 	term_edit->setMaximumWidth(fontMetrics().horizontalAdvance(dummylong));
 	term_edit->setMinimumWidth(fontMetrics().horizontalAdvance(dummyshort));
 	connect (term_edit, &KHistoryComboBox::editTextChanged, this, &RKFindBar::searchChanged);

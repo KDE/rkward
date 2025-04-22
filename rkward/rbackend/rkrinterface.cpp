@@ -91,7 +91,7 @@ RInterface::RInterface () {
 		if (startup_phase2_error || command->failed()) backend_error.message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
 		if (!backend_error.message.isEmpty ()) {
 			backend_error.message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
-			backend_error.details = command->fullOutput().replace('<', "&lt;").replace('\n', "<br>");
+			backend_error.details = command->fullOutput().replace('<', QLatin1String("&lt;")).replace('\n', QLatin1String("<br>"));
 			backend_error.title = i18n("Error starting R");
 			// reporting the error will happen via RKWardMainWindow, which calls the setup wizard in this case
 		}
@@ -105,7 +105,7 @@ RInterface::RInterface () {
 
 	/////// Further initialization commands, which do not necessarily have to run before everything else can be queued, here. ///////
 	// NOTE: will receive the list as a call plain generic request from the backend ("updateInstalledPackagesList")
-	_issueCommand(new RCommand(".rk.get.installed.packages()", RCommand::App | RCommand::Sync));
+	_issueCommand(new RCommand(QStringLiteral(".rk.get.installed.packages()"), RCommand::App | RCommand::Sync));
 
 	whenAllFinished(this, [this]() { backend_started = !backend_dead; RKSettings::validateSettingsInteractive (); });
 }
@@ -360,7 +360,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		auto subcommandrequest = request->subcommandrequest;
 		RCommandChain *in_chain = RCommandStack::regular_stack;
 		if (subcommandrequest) {
-			int id = params.value("cid").toInt();
+			int id = params.value(QStringLiteral("cid")).toInt();
 			RCommand *parent = nullptr;
 			for (int i = all_current_commands.size() - 1; i >= 0; --i) {
 				if (all_current_commands[i]->id() == id) {
@@ -382,19 +382,19 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			request->subcommandrequest = nullptr;  // it is now a separate request. Make sure we won't try to send it back as part of this one.
 		}
 
-		request->setResult(processRCallRequest(params.value("call").toString(), params.value("args"), in_chain));
+		request->setResult(processRCallRequest(params.value(QStringLiteral("call")).toString(), params.value(QStringLiteral("args")), in_chain));
 
 		if (subcommandrequest) closeChain(in_chain);
 
 		RKRBackendProtocolFrontend::setRequestCompleted(request);
 	} else if (request->type == RBackendRequest::Started) {
 		// The backend thread has finished basic initialization, but we still have more to do...
-		backend_error.message.append(request->params["message"].toString());
+		backend_error.message.append(request->params[QStringLiteral("message")].toString());
 
 		command_requests.append (request);
 		RCommandChain *chain = openSubcommandChain (runningCommand ());
 
-		runStartupCommand(new RCommand("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain, 
+		runStartupCommand(new RCommand(QStringLiteral("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain, 
 		[](RCommand *command) {
 			RK_ASSERT (command->getDataType () == RData::StringVector);
 			RK_ASSERT (command->getDataLength () == 1);
@@ -419,7 +419,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		}
 
 		// find out about standard library locations
-		runStartupCommand(new RCommand("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
+		runStartupCommand(new RCommand(QStringLiteral("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
 		[this](RCommand *command) {
 			RK_ASSERT(command->getDataType() == RData::StringVector);
 			RKSettingsModuleRPackages::r_libs_user = command->stringVector().value(0);
@@ -439,15 +439,15 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			RKOutputDirectory::getCurrentOutput(chain);
 
 			// Workaround for https://bugs.kde.org/show_bug.cgi?id=421958
-			if (RKSessionVars::compareRVersion("4.0.0") < 1 && RKSessionVars::compareRVersion("4.0.1") > 0) {
-				runStartupCommand(new RCommand("if(compiler::enableJIT(-1) > 2) compiler::enableJIT(2)\n", RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
+			if (RKSessionVars::compareRVersion(QStringLiteral("4.0.0")) < 1 && RKSessionVars::compareRVersion(QStringLiteral("4.0.1")) > 0) {
+				runStartupCommand(new RCommand(QStringLiteral("if(compiler::enableJIT(-1) > 2) compiler::enableJIT(2)\n"), RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
 			}
 
 			closeChain (chain);
 		});
 
 		// start help server / determined help base url
-		runStartupCommand(new RCommand(".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
+		runStartupCommand(new RCommand(QStringLiteral(".rk.getHelpBaseUrl ()\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
 		[](RCommand *command) {
 			RK_ASSERT (command->getDataType () == RData::StringVector);
 			RK_ASSERT (command->getDataLength () == 1);
@@ -456,7 +456,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 		QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory();
 		if (cd_to.isEmpty()) cd_to = QDir::currentPath();
-		if (cd_to.isEmpty()) cd_to = QLatin1String("."); // we must be in a non-existent dir. cd'ing to "." will cause us to sync with the backend
+		if (cd_to.isEmpty()) cd_to = QStringLiteral("."); // we must be in a non-existent dir. cd'ing to "." will cause us to sync with the backend
 		RInterface::issueCommand(new RCommand("setwd(" + RObject::rQuote(cd_to) + ")\n", RCommand::App | RCommand::Sync), chain);
 	} else {
 		processRBackendRequest (request);
@@ -595,7 +595,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 	RK_TRACE (RBACKEND);
 
 	// TODO: All these calls should be mapped to an enum directly in the backend, for efficiency, and to avoid typo-bugs
-	if (call == "sync") {
+	if (call == QLatin1String("sync")) {
 		QVariantList al = args.toList();  // added, removed, changed
 		RObjectList::getGlobalEnv()->updateFromR(in_chain, al.value(0).toStringList(), al.value(1).toStringList());
 		QStringList changed = al.value(2).toStringList();
@@ -613,7 +613,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		}
 		return GenericRRequestResult();
 	}
-	if (call == "syncenvs") {
+	if (call == QLatin1String("syncenvs")) {
 		QVariantList al = args.toList();  // envs, namespaces
 		RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update of object list");
 		RObjectList::getObjectList ()->updateFromR (in_chain, al.value(0).toStringList(), al.value(1).toStringList());
@@ -625,37 +625,37 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 	if (false) {  // syntax dummy
 #ifndef DISABLE_RKWINDOWCATCHER
 	// NOTE: WARNING: When converting these to PlainGenericRequests, the occasional "error, figure margins too large" starts coming up, again. Not sure, why.
-	} else if (call == "startOpenX11") {
+	} else if (call == QLatin1String("startOpenX11")) {
 		RK_ASSERT(arglist.count() == 1);
 		RKWindowCatcher::instance()->start(arglist.value(0).toInt());
-	} else if (call == "endOpenX11") {
+	} else if (call == QLatin1String("endOpenX11")) {
 		RK_ASSERT(arglist.count() == 1);
 		RKWindowCatcher::instance()->stop(arglist.value(0).toInt());
-	} else if (call == "updateDeviceHistory") {
+	} else if (call == QLatin1String("updateDeviceHistory")) {
 		if (!arglist.isEmpty()) {
 			RKWindowCatcher::instance()->updateHistory(arglist);
 		}
-	} else if (call == "killDevice") {
+	} else if (call == QLatin1String("killDevice")) {
 		RK_ASSERT(arglist.count() == 1);
 		RKWindowCatcher::instance()->killDevice(arglist.value(0).toInt());
 #endif // DISABLE_RKWINDOWCATCHER
-	} else if (call == "edit") {
+	} else if (call == QLatin1String("edit")) {
 		RK_ASSERT(!arglist.isEmpty());
 		new RKEditObjectAgent (arglist, in_chain);
-	} else if (call == "require") {
+	} else if (call == QLatin1String("require")) {
 		RK_ASSERT (!arglist.isEmpty());
 		if (!RKWardMainWindow::suppressModalDialogsForTesting()) {
 			QString lib_name = arglist.value(0);
 			KMessageBox::information(nullptr, i18n("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n("Require package '%1'", lib_name));
 			RKLoadLibsDialog::showInstallPackagesModal(nullptr, in_chain, QStringList(lib_name));
 		}
-	} else if (call == "doPlugin") {
+	} else if (call == QLatin1String("doPlugin")) {
 		if (arglist.count () >= 2) {
 			QString message;
 			bool ok;
 			RKComponentMap::ComponentInvocationMode mode = RKComponentMap::ManualSubmit;
-			if (arglist[1] == "auto") mode = RKComponentMap::AutoSubmit;
-			else if (arglist[1] == "submit") mode = RKComponentMap::AutoSubmitOrFail;
+			if (arglist[1] == QLatin1String("auto")) mode = RKComponentMap::AutoSubmit;
+			else if (arglist[1] == QLatin1String("submit")) mode = RKComponentMap::AutoSubmitOrFail;
 			ok = RKComponentMap::invokeComponent(arglist[0], arglist.mid(2), mode, &message, in_chain);
 
 			if (!message.isEmpty ()) {
@@ -666,26 +666,26 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		}
 	} else if (call == QStringLiteral ("output")) {
 		return(RKOutputDirectory::handleRCall(arglist, in_chain));
-	} else if (call == "set.output.file") {
+	} else if (call == QLatin1String("set.output.file")) {
 		RK_ASSERT(arglist.count () == 1);
 		RKOutputWindowManager::self()->setCurrentOutputPath(arglist.value(0));
-	} else if (call == "wdChange") {
+	} else if (call == QLatin1String("wdChange")) {
 		// apply new working directory in frontend, too.
 		QDir::setCurrent(arglist.value(0));
 		Q_EMIT backendWorkdirChanged();
-	} else if (call == "highlightRCode") {
+	} else if (call == QLatin1String("highlightRCode")) {
 		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(arglist.join('\n')));
-	} else if (call == "quit") {
+	} else if (call == QLatin1String("quit")) {
 		RKWardMainWindow::getMain()->close();
 		// if we're still alive, quitting was canceled
 		return GenericRRequestResult::makeError(i18n("Quitting was canceled"));
-	} else if (call == "preLocaleChange") {
+	} else if (call == QLatin1String("preLocaleChange")) {
 		int res = KMessageBox::warningContinueCancel(nullptr, i18n("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please choose 'Cancel' now, then close the data windows, save, and retry."), i18n("Locale change"));
 		if (res != KMessageBox::Continue) return GenericRRequestResult::makeError(i18n("Changing the locale was canceled by user"));
-	} else if (call == "listPlugins") {
+	} else if (call == QLatin1String("listPlugins")) {
 		RK_ASSERT(arglist.isEmpty());
 		return GenericRRequestResult(RKComponentMap::getMap()->listPlugins());
-	} else if (call == "setPluginStatus") {
+	} else if (call == QLatin1String("setPluginStatus")) {
 		// TODO: Pass args in a saner way
 		RK_ASSERT((arglist.size() % 3) == 0);
 		const int rows = arglist.size() / 3;
@@ -693,33 +693,33 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		QStringList contexts = arglist.mid(rows, rows);
 		QStringList visible = arglist.mid(rows*2, rows);
 		RKComponentMap::getMap()->setPluginStatus(ids, contexts, visible);
-	} else if (call == "loadPluginMaps") {
-		bool force = (arglist.value(0) == "force");
-		bool reload = (arglist.value(1) == "reload");
+	} else if (call == QLatin1String("loadPluginMaps")) {
+		bool force = (arglist.value(0) == QLatin1String("force"));
+		bool reload = (arglist.value(1) == QLatin1String("reload"));
 		RKSettingsModulePlugins::registerPluginMaps(arglist.mid(2), force ? RKSettingsModulePlugins::ForceActivate : RKSettingsModulePlugins::AutoActivateIfNew, reload);
-	} else if (call == "updateInstalledPackagesList") {
+	} else if (call == QLatin1String("updateInstalledPackagesList")) {
 		RKSessionVars::instance ()->setInstalledPackages(arglist);
-	} else if (call == "showHTML") {
+	} else if (call == QLatin1String("showHTML")) {
 		if (arglist.size() == 1) RKWorkplace::mainWorkplace()->openHelpWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath(), QUrl::AssumeLocalFile));
 		else {
 			auto win = qobject_cast<RKHTMLWindow*>(RKWorkplace::mainWorkplace()->openHelpWindow(QUrl()));
 			RK_ASSERT(win);
 			win->setContent(arglist.value(1));
 		}
-	} else if (call == "showPDF") {
+	} else if (call == QLatin1String("showPDF")) {
 		RK_ASSERT(arglist.size() == 1);
 		RKWorkplace::mainWorkplace()->openPDFWindow(QUrl::fromUserInput(arglist.value(0), QDir::currentPath (), QUrl::AssumeLocalFile));
-	} else if (call == "select.list") {
+	} else if (call == QLatin1String("select.list")) {
 		QString title = arglist.value(0);
-		bool multiple = (arglist.value(1) == "multi");
+		bool multiple = (arglist.value(1) == QLatin1String("multi"));
 		int num_preselects = arglist.value(2).toInt ();
 		QStringList preselects = arglist.mid(3, num_preselects);
 		QStringList choices = arglist.mid(3 + num_preselects);
 
 		QStringList results = RKSelectListDialog::doSelect(QApplication::activeWindow(), title, choices, preselects, multiple);
-		if (results.isEmpty()) results.append("");	// R wants to have it that way
+		if (results.isEmpty()) results.append(QLatin1String(""));	// R wants to have it that way
 		return GenericRRequestResult(results);
-	} else if (call == "choosefile") {
+	} else if (call == QLatin1String("choosefile")) {
 		QFileDialog d(nullptr, arglist.value(0));  // caption
 		QString initial = arglist.value(1);
 		QString cat;
@@ -735,10 +735,10 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 			d.setNameFilter(filter);
 		}
 		QString mode = arglist.value(3);
-		if (mode == "file") d.setFileMode(QFileDialog::ExistingFile);
-		else if (mode == "files") d.setFileMode(QFileDialog::ExistingFiles);
-		else if (mode == "dir") d.setFileMode(QFileDialog::Directory);
-		else if (mode == "newfile") {
+		if (mode == QLatin1String("file")) d.setFileMode(QFileDialog::ExistingFile);
+		else if (mode == QLatin1String("files")) d.setFileMode(QFileDialog::ExistingFiles);
+		else if (mode == QLatin1String("dir")) d.setFileMode(QFileDialog::Directory);
+		else if (mode == QLatin1String("newfile")) {
 			d.setFileMode(QFileDialog::AnyFile);
 			d.setAcceptMode(QFileDialog::AcceptSave);
 		} else RK_ASSERT(false);
@@ -750,32 +750,32 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		}
 
 		return GenericRRequestResult(res);
-	} else if (call == "commandHistory") {
-		if (arglist.value(0) == "get") {
+	} else if (call == QLatin1String("commandHistory")) {
+		if (arglist.value(0) == QLatin1String("get")) {
 			return GenericRRequestResult(RKConsole::mainConsole()->commandHistory());
 		} else {
-			RKConsole::mainConsole()->setCommandHistory(arglist.mid(1), arglist.value(0) == "append");
+			RKConsole::mainConsole()->setCommandHistory(arglist.mid(1), arglist.value(0) == QLatin1String("append"));
 		}
-	} else if (call == "getWorkspaceUrl") {
+	} else if (call == QLatin1String("getWorkspaceUrl")) {
 		QUrl url = RKWorkplace::mainWorkplace ()->workspaceURL ();
 		if (!url.isEmpty()) return GenericRRequestResult(url.url());
-	} else if (call == "workplace.layout") {
-		if (arglist.value(0) == "set") {
-			if (arglist.value(1) == "close") RKWorkplace::mainWorkplace ()->closeAll ();
+	} else if (call == QLatin1String("workplace.layout")) {
+		if (arglist.value(0) == QLatin1String("set")) {
+			if (arglist.value(1) == QLatin1String("close")) RKWorkplace::mainWorkplace ()->closeAll ();
 			QStringList list = arglist.mid(2);
 			RKWorkplace::mainWorkplace()->restoreWorkplace(list);
 		} else {
 			RK_ASSERT(arglist.value(0) == "get");
 			return GenericRRequestResult(RKWorkplace::mainWorkplace()->makeWorkplaceDescription());
 		}
-	} else if (call == "set.window.placement.hint") {
+	} else if (call == QLatin1String("set.window.placement.hint")) {
 		RKWorkplace::mainWorkplace ()->setWindowPlacementOverrides(arglist.value(0), arglist.value(1), arglist.value(2));
-	} else if (call == "frontendSessionInfo") {
+	} else if (call == QLatin1String("frontendSessionInfo")) {
 		return GenericRRequestResult(RKSessionVars::frontendSessionInfo());
-	} else if (call == "recordCommands") {
+	} else if (call == QLatin1String("recordCommands")) {
 		RK_ASSERT(arglist.count() == 2);
 		QString filename = arglist.value(0);
-		bool unfiltered = (arglist.value(1) == "include.all");
+		bool unfiltered = (arglist.value(1) == QLatin1String("include.all"));
 
 		if (filename.isEmpty()) {
 			command_logfile_mode = NotRecordingCommands;
@@ -794,22 +794,22 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 				}
 			}
 		}
-	} else if (call == "printPreview") {
+	} else if (call == QLatin1String("printPreview")) {
 		RKPrintAgent::printPostscript(arglist.value(0), true);
-	} else if (call == "endBrowserContext") {
+	} else if (call == QLatin1String("endBrowserContext")) {
 		RKDebugHandler::instance ()->endDebug();
-	} else if (call == "switchLanguage") {
+	} else if (call == QLatin1String("switchLanguage")) {
 		RKMessageCatalog::switchLanguage(arglist.value(0));
-	} else if (call == "menuupdate") {
+	} else if (call == QLatin1String("menuupdate")) {
 		RKWardMainWindow::getMain()->rApiMenu()->updateFromR(args.toList());
-	} else if (call == "menuenable") {
+	} else if (call == QLatin1String("menuenable")) {
 		auto path = args.toList().value(0).toStringList();
 		auto enable = args.toList().value(1).toList().value(0).toBool(); // NOTE: bool value is a vector of ints, in R, therefore the toList(), first
 		auto show = args.toList().value(2).toList().value(0).toBool();
 		RKWardMainWindow::getMain()->rApiMenu()->enableAction(path, enable, show);
-	} else if (call == "with.progress") {
+	} else if (call == QLatin1String("with.progress")) {
 		auto dialog = new RKProgressControl(this, arglist.value(0), QString(), RKProgressControl::CancellableProgress | RKProgressControl::OutputShownByDefault);
-		auto command = new RCommand("rkward:::.rk.with.progress.eval()", RCommand::App);
+		auto command = new RCommand(QStringLiteral("rkward:::.rk.with.progress.eval()"), RCommand::App);
 		dialog->addRCommand(command, true);
 		issueCommand(command, in_chain);
 		dialog->doNonModal(true);
@@ -837,7 +837,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	RBackendRequest::RCallbackType type = request->type;
 
 	if (type == RBackendRequest::CommandLineIn) {
-		int id = request->params["commandid"].toInt ();
+		int id = request->params[QStringLiteral("commandid")].toInt ();
 		RCommand *command = all_current_commands.value(0,nullptr);	// User command will always be the first.
 		if ((command == nullptr) || (command->id () != id)) {
 			RK_ASSERT (false);
@@ -845,23 +845,23 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			command->commandLineIn ();
 		}
 	} else if (type == RBackendRequest::ShowMessage) {
-		QString caption = request->params["caption"].toString ();
-		QString message = request->params["message"].toString ();
-		QString button_yes = request->params["button_yes"].toString ();
-		QString button_no = request->params["button_no"].toString ();
-		QString button_cancel = request->params["button_cancel"].toString ();
-		QString def_button = request->params["default"].toString ();
+		QString caption = request->params[QStringLiteral("caption")].toString ();
+		QString message = request->params[QStringLiteral("message")].toString ();
+		QString button_yes = request->params[QStringLiteral("button_yes")].toString ();
+		QString button_no = request->params[QStringLiteral("button_no")].toString ();
+		QString button_cancel = request->params[QStringLiteral("button_cancel")].toString ();
+		QString def_button = request->params[QStringLiteral("default")].toString ();
 
 		// NOTE: In order to support non-modal (information) dialogs, we cannot use KMessageBox or QMessgaeBox, below.
 		QDialog* dialog = new QDialog ();
 		dialog->setResult (-1);  // We use this to stand for cancelled
 		QDialogButtonBox *button_box = new QDialogButtonBox (dialog);
 		int button_count = 0;
-		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Yes, button_yes, "yes", def_button == button_yes);
-		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::No, button_no, "no", def_button == button_no);
-		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Cancel, button_cancel, "cancel", def_button == button_cancel);
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Yes, button_yes, QStringLiteral("yes"), def_button == button_yes);
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::No, button_no, QStringLiteral("no"), def_button == button_no);
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Cancel, button_cancel, QStringLiteral("cancel"), def_button == button_cancel);
 		if (!button_count) { // cannot have no button defined at all
-			button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Ok, "ok", "ok", true);
+			button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Ok, QStringLiteral("ok"), QStringLiteral("ok"), true);
 		}
 
 		bool synchronous = request->synchronous || (button_count > 1);
@@ -877,10 +877,10 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		} else {
 			int result = RKWardMainWindow::suppressModalDialogsForTesting() ? QDialogButtonBox::Cancel : dialog->exec();
 			QString result_string;
-			if (result == QDialogButtonBox::Yes || result == QDialogButtonBox::Ok) result_string = "yes";
-			else if (result == QDialogButtonBox::No) result_string = "no";
-			else result_string = "cancel";
-			request->params["result"] = result_string;
+			if (result == QDialogButtonBox::Yes || result == QDialogButtonBox::Ok) result_string = QLatin1String("yes");
+			else if (result == QDialogButtonBox::No) result_string = QLatin1String("no");
+			else result_string = QLatin1String("cancel");
+			request->params[QStringLiteral("result")] = result_string;
 			delete dialog;
 		}
 	} else if (type == RBackendRequest::ReadLine) {
@@ -890,16 +890,16 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		bool dummy_command = false;
 		RCommand *command = runningCommand ();
 		if (!command) {
-			command = new RCommand ("", RCommand::EmptyCommand);
+			command = new RCommand (QLatin1String(""), RCommand::EmptyCommand);
 			dummy_command = true;
 		}
 
 
-		bool ok = RKReadLineDialog::readLine(nullptr, i18n("R backend requests information"), request->params["prompt"].toString(), command, &result);
-		request->params["result"] = QVariant (result);
+		bool ok = RKReadLineDialog::readLine(nullptr, i18n("R backend requests information"), request->params[QStringLiteral("prompt")].toString(), command, &result);
+		request->params[QStringLiteral("result")] = QVariant (result);
 
 		if (dummy_command) delete command;
-		if (!ok) request->params["cancelled"] = QVariant (true);
+		if (!ok) request->params[QStringLiteral("cancelled")] = QVariant (true);
 	} else if (type == RBackendRequest::Debugger) {
 		RKDebugHandler::instance ()->debugCall (request, runningCommand ());
 		return;		// request will be closed by the debug handler
@@ -907,19 +907,19 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		ShowEditTextFileAgent::showEditFiles (request);
 		return;		// we are not done, yet!
 	} else if (type == RBackendRequest::SetParamsFromBackend) {
-			na_real = request->params["na_real"].toDouble ();
-			na_int = request->params["na_int"].toInt ();
+			na_real = request->params[QStringLiteral("na_real")].toDouble ();
+			na_int = request->params[QStringLiteral("na_int")].toInt ();
 	} else if (type == RBackendRequest::BackendExit) {
 		if (!backend_dead) {
 			bool report = false;
 			backend_dead = true;
-			if (!request->params.value("regular", QVariant(false)).toBool()) { // irregular exit
-				backend_error.message.append(request->params["message"].toString());
+			if (!request->params.value(QStringLiteral("regular"), QVariant(false)).toBool()) { // irregular exit
+				backend_error.message.append(request->params[QStringLiteral("message")].toString());
 				RK_DEBUG(RBACKEND, DL_ERROR, "Backend exit: %s", qPrintable(backend_error.message));
 				if (backend_started) {
 					backend_error.message += i18n("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
 					backend_error.title = i18n("R engine has died");
-					backend_error.id = "r_engine_has_died";
+					backend_error.id = QLatin1String("r_engine_has_died");
 					report = true;
 				} else 	if (all_current_commands.isEmpty()) {
 					// the fake startup command may not technically have started running, if exit occurred early on

@@ -77,7 +77,7 @@ void ScriptBackend::commandFinished (const QString &output) {
 
 	if (current_type != Ignore) {
 		if (code_property) {
-			if (_output.isNull ()) _output = "";			// must not be null for the code property!
+			if (_output.isNull ()) _output = QLatin1String("");			// must not be null for the code property!
 			bool add_header = add_headings && (!_output.isEmpty ());
 			if (current_type == Preprocess) {
 				if (add_header) code_property->setPreprocess (i18n ("## Prepare\n") + _output);

@@ -34,20 +34,20 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();
 
-	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;output;custom", 0, DL_INFO);
-	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", 0, DL_INFO);
+	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, QStringLiteral("mode"), QStringLiteral("plot;data;output;custom"), 0, DL_INFO);
+	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, QStringLiteral("placement"), QStringLiteral("default;attached;detached;docked"), 0, DL_INFO);
 	if (placement == DefaultPreview) placement = DockedPreview;
-	preview_active = xml->getBoolAttribute (element, "active", false, DL_INFO);
+	preview_active = xml->getBoolAttribute (element, QStringLiteral("active"), false, DL_INFO);
 	idprop = RObject::rQuote (manager->previewId ());
 
 	// create and add property
-	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
+	addChild (QStringLiteral("state"), state = new RKComponentPropertyBool (this, true, preview_active, QStringLiteral("active"), QStringLiteral("inactive")));
 	state->setInternal (true);	// restoring this does not make sense.
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	toggle_preview_box = new QGroupBox(xml->i18nStringAttribute(element, "label", i18n ("Preview"), DL_INFO), this);
+	toggle_preview_box = new QGroupBox(xml->i18nStringAttribute(element, QStringLiteral("label"), i18n ("Preview"), DL_INFO), this);
 	toggle_preview_box->setCheckable(true);
 	toggle_preview_box->setAlignment(Qt::AlignLeft);
 	vbox->addWidget(toggle_preview_box);
@@ -59,8 +59,8 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	box_layout->addWidget(manager->inlineStatusWidget());
 
 	// prepare placement
-	placement_command = ".rk.with.window.hints ({";
-	placement_end = "\n}, ";
+	placement_command = QLatin1String(".rk.with.window.hints ({");
+	placement_end = QLatin1String("\n}, ");
 	if (placement == AttachedPreview) placement_end.append ("\"attached\"");
 	else if (placement == DetachedPreview) placement_end.append ("\"detached\"");
 	else placement_end.append ("\"\"");
@@ -98,7 +98,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 	// find and connect to code property of the parent
 	QString dummy;
-	RKComponentBase *cp = parentComponent ()->lookupComponent ("code", &dummy);
+	RKComponentBase *cp = parentComponent ()->lookupComponent (QStringLiteral("code"), &dummy);
 	if (cp && dummy.isNull () && (cp->type () == PropertyCode)) {
 		code_property = static_cast<RKComponentPropertyCode *> (cp);
 		connect (code_property, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedCode);
@@ -122,7 +122,7 @@ RKPreviewBox::~RKPreviewBox () {
 }
 
 QVariant RKPreviewBox::value(const QString& modifier) {
-	if (modifier == "id") {
+	if (modifier == QLatin1String("id")) {
 		return idprop;
 	}
 	return (state->value (modifier));

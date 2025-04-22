@@ -626,14 +626,14 @@ void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_
 		shortnames.append(matches[i]->getShortName());
 	}
 
-	if ((objectpath.size() == 2 || objectpath.size() == 3) && objectpath.at(1).startsWith("::")) {
+	if ((objectpath.size() == 2 || objectpath.size() == 3) && objectpath.at(1).startsWith(QLatin1String("::"))) {
 		rcompletions->update(objectpath.at(1), objectpath.at(0), objectpath.value(2), shortnames);
 	} else if (is_help) {
-		rcompletions->update("?", symbol, symbol, shortnames);
+		rcompletions->update(QStringLiteral("?"), symbol, symbol, shortnames);
 	} else if (objectpath.size() > 1) {
 		QString op = objectpath.at(objectpath.size() - 1 - objectpath.size() % 2);
-		QString start = objectpath.mid(0, objectpath.size() - 1 - objectpath.size() % 2).join("");
-		if (op == "$" || op == "@") {
+		QString start = objectpath.mid(0, objectpath.size() - 1 - objectpath.size() % 2).join(QLatin1String(""));
+		if (op == QLatin1String("$") || op == QLatin1String("@")) {
 			rcompletions->update(op, start, objectpath.size() % 2 ? objectpath.last() : QString(), shortnames);
 		}
 	}
@@ -648,7 +648,7 @@ void RKCodeCompletionModel::addRCompletions() {
 
 	QStringList addlist = rcompletions->results();
 	if (addlist.isEmpty()) return;
-	bool help_mode = (rcompletions->mode() == "?");
+	bool help_mode = (rcompletions->mode() == QLatin1String("?"));
 	beginInsertRows(index(0, 0), n_completions, n_completions + addlist.size());
 	n_completions += addlist.size();
 	for (int i = 0; i < addlist.size(); ++i) {
@@ -810,7 +810,7 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 			args = fo->argumentNames ();
 			n_formals_args = args.size();
 			defs = fo->argumentDefaults ();
-			rcompletions->update("funargs", function->getShortName(), QString(), args);
+			rcompletions->update(QStringLiteral("funargs"), function->getShortName(), QString(), args);
 		} else {
 			args.clear ();
 			defs.clear ();
@@ -1035,7 +1035,7 @@ void RKDynamicCompletionsAddition::doUpdateFromR() {
 	}
 
 	status = Updating;
-	RCommand *command = new RCommand(QString("rkward:::.rk.completions(%1, \"%2\")").arg(RObject::rQuote(current_fragment), current_mode), RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
+	RCommand *command = new RCommand(QStringLiteral("rkward:::.rk.completions(%1, \"%2\")").arg(RObject::rQuote(current_fragment), current_mode), RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
 	command->whenFinished(this, [this](RCommand *command) {
 		if (status == PendingUpdate) {
 			QTimer::singleShot(0, this, &RKDynamicCompletionsAddition::doUpdateFromR);
@@ -1046,8 +1046,8 @@ void RKDynamicCompletionsAddition::doUpdateFromR() {
 			current_raw_resultlist.clear();
 			// we used to do the subsitution below in R, but that proved challenging, as fragments would often contain symbols with a special meaning in regexps (importantly "$").
 			QString input;
-			if (mode() == "?") input = mode();
-			else if (mode() != "funargs") input = fragment() + mode();
+			if (mode() == QLatin1String("?")) input = mode();
+			else if (mode() != QLatin1String("funargs")) input = fragment() + mode();
 			for (int i = 0; i < res.size(); ++i) {
 				auto it = res[i];
 				if (it.startsWith(input)) current_raw_resultlist.append(it.right(it.length() - input.length()));

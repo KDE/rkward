@@ -20,15 +20,15 @@ RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_componen
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create and add property
-	addChild ("state", state = new RKComponentPropertyBool (this, true, xml->getBoolAttribute (element, "checked", false, DL_INFO), xml->getStringAttribute (element, "value", "1", DL_INFO), xml->getStringAttribute (element, "value_unchecked", QString (), DL_INFO)));
+	addChild (QStringLiteral("state"), state = new RKComponentPropertyBool (this, true, xml->getBoolAttribute (element, QStringLiteral("checked"), false, DL_INFO), xml->getStringAttribute (element, QStringLiteral("value"), QStringLiteral("1"), DL_INFO), xml->getStringAttribute (element, QStringLiteral("value_unchecked"), QString (), DL_INFO)));
 	connect (state, &RKComponentPropertyBase::valueChanged, this, &RKCheckBox::changedState);
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	checkbox = new QCheckBox (xml->i18nStringAttribute (element, "label", QString (), DL_WARNING), this);
+	checkbox = new QCheckBox (xml->i18nStringAttribute (element, QStringLiteral("label"), QString (), DL_WARNING), this);
 	vbox->addWidget (checkbox);
-	checkbox->setChecked (xml->getBoolAttribute (element, "checked", false, DL_INFO));
+	checkbox->setChecked (xml->getBoolAttribute (element, QStringLiteral("checked"), false, DL_INFO));
 	connect (checkbox, &QCheckBox::stateChanged, this, &RKCheckBox::changedStateFromUi);
 
 	// initialize

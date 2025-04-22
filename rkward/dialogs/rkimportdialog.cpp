@@ -25,7 +25,7 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 	RK_TRACE (DIALOGS);
 
 	setWindowTitle(i18n("Import Data Assistant"));
-	rio_handle = RKComponentMap::getComponentHandle("rkward::import_generic_rio");
+	rio_handle = RKComponentMap::getComponentHandle(QStringLiteral("rkward::import_generic_rio"));
 	context = RKComponentMap::getContext(context_id);
 	if (context) {
 		component_ids = context->components();
@@ -38,12 +38,12 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 			continue;
 		}
 
-		QString filter = handle->getAttributeValue("format");
-		QString label = handle->getAttributeLabel("format");
+		QString filter = handle->getAttributeValue(QStringLiteral("format"));
+		QString label = handle->getAttributeLabel(QStringLiteral("format"));
 
 		QString elabel = label;
-		elabel.replace ('(', "[");
-		elabel.replace (')', "]");
+		elabel.replace ('(', QLatin1String("["));
+		elabel.replace (')', QLatin1String("]"));
 		filters.append (elabel + " [" + filter + "] (" + filter + ')');
 	}
 

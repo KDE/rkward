@@ -29,7 +29,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKConfigValue<QStringList> RKSettingsModuleKatePlugins::plugins_to_load {"Plugins to load", QStringList() << "katesearchplugin" << "kateprojectplugin" << "katesnippetsplugin"};
+RKConfigValue<QStringList> RKSettingsModuleKatePlugins::plugins_to_load {"Plugins to load", QStringList() << QStringLiteral("katesearchplugin") << QStringLiteral("kateprojectplugin") << QStringLiteral("katesnippetsplugin")};
 
 class RKSettingsPageKatePlugins : public RKSettingsModuleWidget {
 public:
@@ -37,7 +37,7 @@ public:
 		RK_TRACE(SETTINGS);
 
 		setWindowTitle(i18n("Kate Plugins"));
-		setWindowIcon(QIcon::fromTheme("kate"));
+		setWindowIcon(QIcon::fromTheme(QStringLiteral("kate")));
 
 		/* Known kate plugins at the time of this writing (March 2020): katesearchplugin katexmltoolsplugin katexmlcheckplugin katectagsplugin katefiletreeplugin 	katecloseexceptplugin katebacktracebrowserplugin tabswitcherplugin kterustcompletionplugin katekonsoleplugin katesnippetsplugin katefilebrowserplugin katereplicodeplugin ktexteditor_lumen kateprojectplugin kateopenheaderplugin katesymbolviewerplugin ktexteditorpreviewplugin katesqlplugin kategdbplugin katebuildplugin textfilterplugin */
 		QStringList recommended_plugins = QStringList({"katesearchplugin", "katecloseexceptplugin", "katekonsoleplugin", "katesnippetsplugin", "katefiletreeplugin", "kateprojectplugin", "ktexteditorpreviewplugin", "textfilterplugin"});
@@ -133,6 +133,6 @@ void RKSettingsModuleKatePlugins::syncConfig(KConfig *config, RKConfigBase::Conf
 		if (!RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount()) return;
 	}
 
-	KConfigGroup cg = config->group("Kate Plugins");
+	KConfigGroup cg = config->group(QStringLiteral("Kate Plugins"));
 	plugins_to_load.syncConfig(cg, a);
 }

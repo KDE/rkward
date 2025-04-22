@@ -133,7 +133,7 @@ void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
 	if (current) {
 		factory->removeClient(current);  // _always_ remove before adding, or the previous child will be leaked in the factory
 	}
-	window->setWindowStyleHint("preview");
+	window->setWindowStyleHint(QStringLiteral("preview"));
 	current = window->getPart();
 	internal_layout->addWidget(window);
 	factory->addClient(current);
@@ -151,7 +151,7 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 	for (int i = 0; i < entries.size (); ++i) {
 		QMenu *smenu = entries[i]->menu ();
 		if (!smenu) continue;    // Don't think it can happen...
-		if (entries[i]->objectName () == "settings") continue;  // Skip settings menu, entirely
+		if (entries[i]->objectName () == QLatin1String("settings")) continue;  // Skip settings menu, entirely
 
 		QList<QAction*> subentries = smenu->actions ();
 		QList<QAction*> entries_to_add;
@@ -285,7 +285,7 @@ void RKPreviewManager::previewCommandDone (RCommand* command) {
 		setNoPreviewAvailable();
 	} else {
 		QString warnings = command->warnings() + command->error();
-		if (!warnings.isEmpty()) warnings = QString("<b>%1</b>\n<pre>%2</pre>").arg(i18n("Warnings or Errors:"), warnings.toHtmlEscaped());
+		if (!warnings.isEmpty()) warnings = QStringLiteral("<b>%1</b>\n<pre>%2</pre>").arg(i18n("Warnings or Errors:"), warnings.toHtmlEscaped());
 		current_preview_failed = command->failed();
 		updateStatusDisplay(warnings);
 	}

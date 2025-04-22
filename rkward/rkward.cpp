@@ -154,7 +154,7 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	// build the interface
 
 	setHelpMenuEnabled (false);
-	setXMLFile ("rkwardui.rc");
+	setXMLFile (QStringLiteral("rkwardui.rc"));
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	insertChildClient (katePluginIntegration ()->mainWindow ());
 	insertChildClient(rapimenu = new RKRApiMenu());
@@ -172,9 +172,9 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
 	// replicate File->import and export menus into the Open/Save toolbar button menus
-	QMenu *menu = dynamic_cast<QMenu*>(guiFactory ()->container ("import", this));
+	QMenu *menu = dynamic_cast<QMenu*>(guiFactory ()->container (QStringLiteral("import"), this));
 	if (menu) open_any_action->addAction (menu->menuAction ());
-	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("export", this));
+	menu = dynamic_cast<QMenu*>(guiFactory ()->container (QStringLiteral("export"), this));
 	if (menu) save_any_action->addAction (menu->menuAction ());
 
 	RKComponentMap::initialize ();
@@ -244,7 +244,7 @@ void RKWardMainWindow::doPostInit () {
 
 	show ();
 	if (!testmode_suppress_dialogs) RKSetupWizard::doAutoCheck();
-	KMessageBox::enableMessage ("external_link_warning");  // can only be disabled per session
+	KMessageBox::enableMessage (QStringLiteral("external_link_warning"));  // can only be disabled per session
 
 	QUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
 	if (!recover_url.isEmpty ()) {
@@ -266,9 +266,9 @@ void RKWardMainWindow::doPostInit () {
 
 		openUrlsFromCommandLineOrExternal(true, open_urls);
 	} else {
-		if (RKSettingsModuleGeneral::openRestoreFileOnLoad() && QFile::exists(".RData")) {
+		if (RKSettingsModuleGeneral::openRestoreFileOnLoad() && QFile::exists(QStringLiteral(".RData"))) {
 			// setNoAskSave(true); was called earlier
-			askOpenWorkspace(QUrl::fromLocalFile(QFileInfo(".RData").absoluteFilePath()));
+			askOpenWorkspace(QUrl::fromLocalFile(QFileInfo(QStringLiteral(".RData")).absoluteFilePath()));
 		}
 
 		if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
@@ -296,7 +296,7 @@ void RKWardMainWindow::openUrlsFromCommandLineOrExternal(bool no_warn_external, 
 	QList<QUrl> urls;
 	for (int i = 0; i < _urls.size (); ++i) {
 		QUrl url = QUrl::fromUserInput (_urls[i], QString (), QUrl::AssumeLocalFile);
-		if (url.scheme () == "rkward" && url.host () == "runplugin") {
+		if (url.scheme () == QLatin1String("rkward") && url.host () == QLatin1String("runplugin")) {
 			any_dangerous_urls = true;
 		}
 		urls.append (url);
@@ -306,7 +306,7 @@ void RKWardMainWindow::openUrlsFromCommandLineOrExternal(bool no_warn_external, 
 	if (any_dangerous_urls && !(no_warn_external && RKCommandLineArgs::get(RKCommandLineArgs::NoWarnExternal).toBool())) {
 		RK_ASSERT (urls.size () == 1);
 		QString message = i18n ("<p>You are about to start an RKWard dialog from outside of RKWard, probably by clicking on an 'rkward://'-link, somewhere. In case you have found this link on an external website, please bear in mind that R can be used to run arbitrary commands on your computer, <b>potentially including downloading and installing malicious software</b>. If you do not trust the source of the link you were following, you should press 'Cancel', below.</p><p>In case you click 'Continue', no R code will be run, unless and until you click 'Submit' in the dialog window, and you are encouraged to review the generated R code, before doing so.</p><p><i>Note</i>: Checking 'Do not ask again' will suppress this message for the remainder of this session, only.");
-		if (KMessageBox::warningContinueCancel (this, message, i18n ("A note on external links"), KStandardGuiItem::cont (), KStandardGuiItem::cancel (), "external_link_warning") != KMessageBox::Continue) return;
+		if (KMessageBox::warningContinueCancel (this, message, i18n ("A note on external links"), KStandardGuiItem::cont (), KStandardGuiItem::cancel (), QStringLiteral("external_link_warning")) != KMessageBox::Continue) return;
 	}
 
 	RKWardMainWindow::getMain ()->setMergeLoads (true);
@@ -352,15 +352,15 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 	if (!automatically_added.isEmpty ()) {
 		// NOTE: When plugins are added from R, these must be fully initialized *before* showing any dialog, which is modal, i.e. has an event loop. Otherwise, subsequent calls e.g. to rk.call.plugin() could sneak in front of this.
 		// This is the reason for handling notification about automatically_added plugins, here.
-		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs (listed below) have been found, and have been activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins."), automatically_added, i18n ("New plugins found"), "new_plugins_found");
+		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs (listed below) have been found, and have been activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins."), automatically_added, i18n ("New plugins found"), QStringLiteral("new_plugins_found"));
 	}
 	if (!completely_broken_maps.isEmpty ()) {
-		QString maplist = "<ul><li>" + completely_broken_maps.join ("</li>\n<li>") + "</li></ul>";
-		KMessageBox::detailedError(nullptr, QString("<p>%1</p><p>%2</p>").arg(i18n("The following RKWard pluginmap files could not be loaded, and have been disabled. This could be because they are broken, not compatible with this version of RKWard, or not meant for direct loading (see the 'Details' for more information). They have been disabled."), maplist), completely_broken_maps_details.join ("\n"), i18n("Failed to load some plugin maps"));
+		QString maplist = "<ul><li>" + completely_broken_maps.join (QStringLiteral("</li>\n<li>")) + "</li></ul>";
+		KMessageBox::detailedError(nullptr, QStringLiteral("<p>%1</p><p>%2</p>").arg(i18n("The following RKWard pluginmap files could not be loaded, and have been disabled. This could be because they are broken, not compatible with this version of RKWard, or not meant for direct loading (see the 'Details' for more information). They have been disabled."), maplist), completely_broken_maps_details.join (QStringLiteral("\n")), i18n("Failed to load some plugin maps"));
 	}
 	if (!somewhat_broken_maps.isEmpty ()) {
-		QString maplist = "<ul><li>" + somewhat_broken_maps.join ("</li>\n<li>") + "</li></ul>";
-		KMessageBox::detailedError(nullptr, QString("<p>%1</p><p>%2</p><p>%3</p>").arg(i18n("Some errors were encountered while loading the following RKWard pluginmap files. This could be because individual plugins are broken or not compatible with this version of RKWard (see the 'Details' for more information). Other plugins were loaded, successfully, however."), maplist, i18n("Note: You will not be warned about these pluginmap files again, until you upgrade RKWard, or remove and re-add them in Settings->Configure RKWard->Plugins.")), somewhat_broken_maps_details.join("\n"), i18n("Failed to load some plugin maps"));
+		QString maplist = "<ul><li>" + somewhat_broken_maps.join (QStringLiteral("</li>\n<li>")) + "</li></ul>";
+		KMessageBox::detailedError(nullptr, QStringLiteral("<p>%1</p><p>%2</p><p>%3</p>").arg(i18n("Some errors were encountered while loading the following RKWard pluginmap files. This could be because individual plugins are broken or not compatible with this version of RKWard (see the 'Details' for more information). Other plugins were loaded, successfully, however."), maplist, i18n("Note: You will not be warned about these pluginmap files again, until you upgrade RKWard, or remove and re-add them in Settings->Configure RKWard->Plugins.")), somewhat_broken_maps_details.join(QStringLiteral("\n")), i18n("Failed to load some plugin maps"));
 	}
 
 	slotSetStatusReady ();
@@ -441,41 +441,41 @@ void RKWardMainWindow::initToolViewsAndR () {
 
 	RObjectBrowser::object_browser = new RObjectBrowser(nullptr, true);
 	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
-	RKToolWindowList::registerToolWindow (RObjectBrowser::mainBrowser (), "workspace", RKToolWindowList::Left, Qt::AltModifier | Qt::Key_1);
+	RKToolWindowList::registerToolWindow (RObjectBrowser::mainBrowser (), QStringLiteral("workspace"), RKToolWindowList::Left, Qt::AltModifier | Qt::Key_1);
 
 	RKCommandLog::rkcommand_log = new RKCommandLog(nullptr, true);
-	RKToolWindowList::registerToolWindow (RKCommandLog::rkcommand_log, "commandlog", RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_3);
+	RKToolWindowList::registerToolWindow (RKCommandLog::rkcommand_log, QStringLiteral("commandlog"), RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_3);
 
 	startR ();
 
 	RKFileBrowser::main_browser = new RKFileBrowser(nullptr, true);
 	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
-	RKToolWindowList::registerToolWindow (RKFileBrowser::main_browser, "filebrowser", RKToolWindowList::Left, Qt::AltModifier | Qt::Key_2);
+	RKToolWindowList::registerToolWindow (RKFileBrowser::main_browser, QStringLiteral("filebrowser"), RKToolWindowList::Left, Qt::AltModifier | Qt::Key_2);
 
 	RControlWindow::control_window = new RControlWindow(nullptr, true);
 	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
-	RKToolWindowList::registerToolWindow (RControlWindow::getControl (), "pendingjobs", RKToolWindowList::Nowhere, Qt::AltModifier | Qt::Key_4);
+	RKToolWindowList::registerToolWindow (RControlWindow::getControl (), QStringLiteral("pendingjobs"), RKToolWindowList::Nowhere, Qt::AltModifier | Qt::Key_4);
 
 	RKConsole *console = new RKConsole(nullptr, true);
 	RKConsole::setMainConsole (console);
-	RKToolWindowList::registerToolWindow (console, "console", RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_5);
+	RKToolWindowList::registerToolWindow (console, QStringLiteral("console"), RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_5);
 
 	RKHelpSearchWindow *help_search = new RKHelpSearchWindow(nullptr, true);
 	RKHelpSearchWindow::main_help_search = help_search;
-	RKToolWindowList::registerToolWindow (help_search, "helpsearch", RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_6);
+	RKToolWindowList::registerToolWindow (help_search, QStringLiteral("helpsearch"), RKToolWindowList::Bottom, Qt::AltModifier | Qt::Key_6);
 
 	RKCallstackViewer::_instance = new RKCallstackViewer(nullptr, true);
 	RKCallstackViewer::instance ()->setCaption (i18n ("Debugger Frames"));
-	RKToolWindowList::registerToolWindow (RKCallstackViewer::instance (), "debugframes", RKToolWindowList::Right, Qt::AltModifier | Qt::Key_8);
+	RKToolWindowList::registerToolWindow (RKCallstackViewer::instance (), QStringLiteral("debugframes"), RKToolWindowList::Right, Qt::AltModifier | Qt::Key_8);
 
 	// HACK: Creating this _after_ the callstackviewer is important, so the debug console will end up the active window when entering a debug context
 	RKDebugConsole::_instance = new RKDebugConsole(nullptr, true);
 	RKDebugConsole::instance ()->setCaption (i18n ("Debugger Console"));
-	RKToolWindowList::registerToolWindow (RKDebugConsole::instance (), "debugconsole", RKToolWindowList::Nowhere, Qt::AltModifier | Qt::Key_7);
+	RKToolWindowList::registerToolWindow (RKDebugConsole::instance (), QStringLiteral("debugconsole"), RKToolWindowList::Nowhere, Qt::AltModifier | Qt::Key_7);
 
 	RKDebugMessageWindow::_instance = new RKDebugMessageWindow(nullptr, true);
 	RKDebugMessageWindow::instance ()->setCaption (i18n ("RKWard Debug Messages"));
-	RKToolWindowList::registerToolWindow (RKDebugMessageWindow::instance (), "rkdebugmessages", RKToolWindowList::Nowhere, QKeyCombination());
+	RKToolWindowList::registerToolWindow (RKDebugMessageWindow::instance (), QStringLiteral("rkdebugmessages"), RKToolWindowList::Nowhere, QKeyCombination());
 
 	RKWorkplace::mainWorkplace ()->placeToolWindows ();
 }
@@ -485,117 +485,117 @@ void RKWardMainWindow::initActions() {
 	QAction *action;
 
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
-	new_data_frame = actionCollection()->addAction("new_data_frame", this, &RKWardMainWindow::slotNewDataFrame);
+	new_data_frame = actionCollection()->addAction(QStringLiteral("new_data_frame"), this, &RKWardMainWindow::slotNewDataFrame);
 	new_data_frame->setText (i18n ("Dataset"));
 	new_data_frame->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowDataFrameEditor));
 	new_data_frame->setWhatsThis(i18n ("Creates new empty dataset and opens it for editing"));
 
-	new_command_editor = actionCollection()->addAction(KStandardAction::New, "new_command_editor", this, &RKWardMainWindow::slotNewCommandEditor);
+	new_command_editor = actionCollection()->addAction(KStandardAction::New, QStringLiteral("new_command_editor"), this, &RKWardMainWindow::slotNewCommandEditor);
 	new_command_editor->setText (i18n ("Script File"));
 	new_command_editor->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor));
 
-	new_output = actionCollection()->addAction("new_output", this, &RKWardMainWindow::slotNewOutput);
+	new_output = actionCollection()->addAction(QStringLiteral("new_output"), this, &RKWardMainWindow::slotNewOutput);
 	new_output->setText(i18n("Output document"));
 	new_output->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
 	new_output->setWhatsThis(i18n("Creates and activates a new output document"));
 
-	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script");
+	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, QStringLiteral("file_open_script"));
 	connect(fileOpenScript, &QAction::triggered, this, [this]() { slotOpenCommandEditor(); });
 	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier | Qt::AltModifier | Qt::Key_O);
 	fileOpenScript->setText(i18n("Open R Script File..."));
 
-	fileOpenOutput = actionCollection()->addAction(KStandardAction::Open, "file_open_output", this, [this](){ slotOpenOutput(); });
+	fileOpenOutput = actionCollection()->addAction(KStandardAction::Open, QStringLiteral("file_open_output"), this, [this](){ slotOpenOutput(); });
 	actionCollection()->setDefaultShortcut(fileOpenOutput, QKeySequence());
 	fileOpenOutput->setText(i18n("Open RKWard Output File..."));
 
-	QAction *file_open_any = actionCollection ()->addAction (KStandardAction::Open, "file_open_any");
+	QAction *file_open_any = actionCollection ()->addAction (KStandardAction::Open, QStringLiteral("file_open_any"));
 	connect (file_open_any, &QAction::triggered, this, &RKWardMainWindow::openAnyFile);
 	file_open_any->setText (i18n ("Open any File..."));
 
 	fileOpenRecent = RKRecentUrls::claimAction(RKRecentUrls::scriptsId());
-	actionCollection ()->addAction("file_open_recenty", fileOpenRecent);
+	actionCollection ()->addAction(QStringLiteral("file_open_recenty"), fileOpenRecent);
 	connect(fileOpenRecent, &KRecentFilesAction::urlSelected, this, [this](const QUrl &url) { slotOpenCommandEditor(url); });
 	fileOpenRecent->setText(i18n("Open Recent R Script File"));
 
-	action = actionCollection()->addAction("import_data");
+	action = actionCollection()->addAction(QStringLiteral("import_data"));
 	connect(action, &QAction::triggered, this, &RKWardMainWindow::importData);
 	action->setText(i18n("Import Assistant"));
 	action->setWhatsThis(i18n("Assistant to find the best method to import data from a variety of formats"));
 
-	fileOpenWorkspace = actionCollection()->addAction(KStandardAction::Open, "file_openx");
+	fileOpenWorkspace = actionCollection()->addAction(KStandardAction::Open, QStringLiteral("file_openx"));
 	connect(fileOpenWorkspace, &QAction::triggered, this, [this](){ askOpenWorkspace(); });
 	fileOpenWorkspace->setText (i18n ("Open Workspace..."));
 	actionCollection ()->setDefaultShortcut (fileOpenWorkspace, Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_O);
 	fileOpenWorkspace->setWhatsThis(i18n ("Opens an existing document"));
 
 	fileOpenRecentWorkspace = RKRecentUrls::claimAction(RKRecentUrls::workspaceId());
-	actionCollection ()->addAction("file_open_recentx", fileOpenRecentWorkspace);
+	actionCollection ()->addAction(QStringLiteral("file_open_recentx"), fileOpenRecentWorkspace);
 	connect(fileOpenRecentWorkspace, &KRecentFilesAction::urlSelected, this, &RKWardMainWindow::askOpenWorkspace);
 	fileOpenRecentWorkspace->setText (i18n ("Open Recent Workspace"));
 	fileOpenRecentWorkspace->setWhatsThis(i18n ("Opens a recently used file"));
 
-	fileSaveWorkspace = actionCollection()->addAction(KStandardAction::Save, "file_savex", this, [](){ RKSaveAgent::saveWorkspace(); });
+	fileSaveWorkspace = actionCollection()->addAction(KStandardAction::Save, QStringLiteral("file_savex"), this, [](){ RKSaveAgent::saveWorkspace(); });
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
 	actionCollection ()->setDefaultShortcut (fileSaveWorkspace, Qt::ControlModifier | Qt::AltModifier | Qt::Key_S);
 	fileSaveWorkspace->setWhatsThis(i18n ("Saves the actual document"));
 
-	fileSaveWorkspaceAs = actionCollection()->addAction(KStandardAction::SaveAs, "file_save_asx", this, [](){ RKSaveAgent::saveWorkspaceAs(); });
+	fileSaveWorkspaceAs = actionCollection()->addAction(KStandardAction::SaveAs, QStringLiteral("file_save_asx"), this, [](){ RKSaveAgent::saveWorkspaceAs(); });
 	actionCollection ()->setDefaultShortcut (fileSaveWorkspaceAs, Qt::ControlModifier | Qt::AltModifier | Qt::ShiftModifier | Qt::Key_S);
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 	fileSaveWorkspaceAs->setWhatsThis(i18n ("Saves the actual document as..."));
 
-	fileQuit = actionCollection()->addAction(KStandardAction::Quit, "file_quitx", this, &RKWardMainWindow::close);
+	fileQuit = actionCollection()->addAction(KStandardAction::Quit, QStringLiteral("file_quitx"), this, &RKWardMainWindow::close);
 	fileQuit->setWhatsThis(i18n ("Quits the application"));
 
-	interrupt_all_commands = actionCollection()->addAction("cancel_all_commands", this, &RKWardMainWindow::slotCancelAllCommands);
+	interrupt_all_commands = actionCollection()->addAction(QStringLiteral("cancel_all_commands"), this, &RKWardMainWindow::slotCancelAllCommands);
 	interrupt_all_commands->setText (i18n ("Interrupt all commands"));
 	actionCollection ()->setDefaultShortcut (interrupt_all_commands, Qt::ShiftModifier | Qt::Key_Escape);
 	interrupt_all_commands->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_all_commands->setEnabled (false);		// enabled from within setRStatus()
 
-	action = actionCollection()->addAction("carbon_copy", this, &RKWardMainWindow::configureCarbonCopy);
+	action = actionCollection()->addAction(QStringLiteral("carbon_copy"), this, &RKWardMainWindow::configureCarbonCopy);
 	action->setText (i18n ("CC commands to output..."));
 
 	// These two currently do the same thing
-	action = actionCollection()->addAction("load_unload_libs", this, &RKWardMainWindow::slotFileLoadLibs); // TODO: set page
+	action = actionCollection()->addAction(QStringLiteral("load_unload_libs"), this, &RKWardMainWindow::slotFileLoadLibs); // TODO: set page
 	action->setText (i18n ("Manage R packages and plugins..."));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
-	action = actionCollection()->addAction("configure_packages", this, &RKWardMainWindow::slotFileLoadLibs); // TODO: set page
+	action = actionCollection()->addAction(QStringLiteral("configure_packages"), this, &RKWardMainWindow::slotFileLoadLibs); // TODO: set page
 	action->setText (i18n ("Manage R packages and plugins..."));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
 	setStandardToolBarMenuEnabled (true);
 	createStandardStatusBarAction ();
 
-	close_all_editors = actionCollection()->addAction("close_all_editors", this, &RKWardMainWindow::slotCloseAllEditors);
+	close_all_editors = actionCollection()->addAction(QStringLiteral("close_all_editors"), this, &RKWardMainWindow::slotCloseAllEditors);
 	close_all_editors->setText (i18n ("Close All Data"));
 	close_all_editors->setWhatsThis(i18n ("Closes all open data editors"));
 
-	action = actionCollection()->addAction(KStandardAction::Close, "window_close", this, &RKWardMainWindow::slotCloseWindow);
+	action = actionCollection()->addAction(KStandardAction::Close, QStringLiteral("window_close"), this, &RKWardMainWindow::slotCloseWindow);
 
-	window_close_all = actionCollection()->addAction("window_close_all", this, &RKWardMainWindow::slotCloseAllWindows);
+	window_close_all = actionCollection()->addAction(QStringLiteral("window_close_all"), this, &RKWardMainWindow::slotCloseAllWindows);
 	window_close_all->setText (i18n ("Close All"));
 
-	window_detach = actionCollection()->addAction("window_detach", this, &RKWardMainWindow::slotDetachWindow);
+	window_detach = actionCollection()->addAction(QStringLiteral("window_detach"), this, &RKWardMainWindow::slotDetachWindow);
 	window_detach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDetachWindow));
 	window_detach->setText (i18n ("Detach"));
 
-	configure = actionCollection()->addAction(KStandardAction::Preferences, "options_configure", this, &RKWardMainWindow::slotConfigure);
-	action = actionCollection()->addAction("setup_wizard");
+	configure = actionCollection()->addAction(KStandardAction::Preferences, QStringLiteral("options_configure"), this, &RKWardMainWindow::slotConfigure);
+	action = actionCollection()->addAction(QStringLiteral("setup_wizard"));
 	action->setText(i18n("Check installation"));
 	connect(action, &QAction::triggered, &RKSetupWizard::manualCheck);
 
-	edit_menu_dummy = actionCollection ()->addAction ("edit_menu_dummy", this);
+	edit_menu_dummy = actionCollection ()->addAction (QStringLiteral("edit_menu_dummy"), this);
 	edit_menu_dummy->setText (i18n ("[No actions available for current view]"));
 	edit_menu_dummy->setEnabled (false);
-	view_menu_dummy = actionCollection ()->addAction ("view_menu_dummy", this);
+	view_menu_dummy = actionCollection ()->addAction (QStringLiteral("view_menu_dummy"), this);
 	view_menu_dummy->setText (edit_menu_dummy->text ());
 	view_menu_dummy->setEnabled (false);
 
 	// collections for the toolbar:
-	open_any_action = new KActionMenu (QIcon::fromTheme("document-open-folder"), i18n ("Open..."), this);
-	actionCollection ()->addAction ("open_any", open_any_action);
+	open_any_action = new KActionMenu (QIcon::fromTheme(QStringLiteral("document-open-folder")), i18n ("Open..."), this);
+	actionCollection ()->addAction (QStringLiteral("open_any"), open_any_action);
 
 	open_any_action->addAction (fileOpenWorkspace);
 	open_any_action->addAction (fileOpenRecentWorkspace);
@@ -608,15 +608,15 @@ void RKWardMainWindow::initActions() {
 	open_any_action->addSeparator ();
 	//open_any_action->addAction (proxy_import); -> later
 
-	KActionMenu* new_any_action = new KActionMenu (QIcon::fromTheme("document-new"), i18n ("Create..."), this);
-	actionCollection ()->addAction ("new_any", new_any_action);
+	KActionMenu* new_any_action = new KActionMenu (QIcon::fromTheme(QStringLiteral("document-new")), i18n ("Create..."), this);
+	actionCollection ()->addAction (QStringLiteral("new_any"), new_any_action);
 
 	new_any_action->addAction (new_data_frame);
 	new_any_action->addAction (new_command_editor);
 	new_any_action->addAction (new_output);
 
-	save_any_action = new KActionMenu (QIcon::fromTheme("document-save"), i18n ("Save..."), this);
-	actionCollection ()->addAction ("save_any", save_any_action);
+	save_any_action = new KActionMenu (QIcon::fromTheme(QStringLiteral("document-save")), i18n ("Save..."), this);
+	actionCollection ()->addAction (QStringLiteral("save_any"), save_any_action);
 
 	open_any_action->setPopupMode(QToolButton::InstantPopup);
 	new_any_action->setPopupMode(QToolButton::InstantPopup);
@@ -629,8 +629,8 @@ void RKWardMainWindow::initActions() {
 	save_actions_plug_point = save_any_action->addSeparator ();
 	//save_any_action->addAction (proxy_export); -> later
 
-	restart_r = actionCollection()->addAction("restart_r");
-	restart_r->setIcon(QIcon::fromTheme("view-refresh"));
+	restart_r = actionCollection()->addAction(QStringLiteral("restart_r"));
+	restart_r->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
 	restart_r->setText(i18n("Restart R Backend"));
 	connect(restart_r, &QAction::triggered, this, &RKWardMainWindow::triggerBackendRestart);
 }
@@ -672,7 +672,7 @@ bool RKWardMainWindow::triggerBackendRestart(bool promptsave) {
 		RKConsole::mainConsole()->resetConsole();
 		restart_now();
 	} else {
-		RCommand *c = new RCommand(QString("# Quit (restarting)"), RCommand::App | RCommand::EmptyCommand | RCommand::QuitCommand);
+		RCommand *c = new RCommand(QStringLiteral("# Quit (restarting)"), RCommand::App | RCommand::EmptyCommand | RCommand::QuitCommand);
 		c->whenFinished(this, [this, restart_now]() { QTimer::singleShot(0, this, restart_now); });
 		RInterface::issueCommand(c);
 	}
@@ -734,8 +734,8 @@ void RKWardMainWindow::partChanged(KParts::Part *part) {
 	if (buddy) factory()->addClient(buddy);
 	active_ui_buddy = buddy;
 
-	updateEmptyMenuIndicator(edit_menu_dummy, dynamic_cast<QMenu*>(guiFactory()->container("edit", this)));
-	updateEmptyMenuIndicator(view_menu_dummy, dynamic_cast<QMenu*>(guiFactory()->container("view", this)));
+	updateEmptyMenuIndicator(edit_menu_dummy, dynamic_cast<QMenu*>(guiFactory()->container(QStringLiteral("edit"), this)));
+	updateEmptyMenuIndicator(view_menu_dummy, dynamic_cast<QMenu*>(guiFactory()->container(QStringLiteral("view"), this)));
 
 	// plug save file actions into the toolbar collections
 	RK_ASSERT(save_any_action);
@@ -794,7 +794,7 @@ void RKWardMainWindow::initStatusBar () {
 	auto box = new QWidget();
 	QHBoxLayout *boxl = new QHBoxLayout(box);
 	boxl->setSpacing(0);
-	statusbar_r_status = new QLabel("&nbsp;<b>R</b>&nbsp;");
+	statusbar_r_status = new QLabel(QStringLiteral("&nbsp;<b>R</b>&nbsp;"));
 	statusbar_r_status->setFixedHeight(realbar->fontMetrics().height() + 2);
 	boxl->addWidget(statusbar_r_status);
 
@@ -818,10 +818,10 @@ void RKWardMainWindow::saveOptions () {
 	RK_TRACE (APP);
 	KSharedConfig::Ptr config = KSharedConfig::openConfig ();
 
-	KConfigGroup cg = config->group ("main window options");
+	KConfigGroup cg = config->group (QStringLiteral("main window options"));
 	saveMainWindowSettings (cg);
 
-	cg = config->group ("General Options");
+	cg = config->group (QStringLiteral("General Options"));
 // TODO: WORKAROUND. See corresponding line in readOptions ()
 	cg.writeEntry("Geometry", size ());
 
@@ -837,12 +837,12 @@ void RKWardMainWindow::readOptions () {
 
 	KSharedConfig::Ptr config = KSharedConfig::openConfig ();
 
-	applyMainWindowSettings (config->group ("main window options"));
+	applyMainWindowSettings (config->group (QStringLiteral("main window options")));
 
 // TODO: WORKAROUND: Actually applyMainWindowSettings could/should do this, but apparently this just does not work for maximized windows. Therefore we use our own version instead.
 // KDE4: still needed?
 // KF5 TODO: still needed?
-	KConfigGroup cg = config->group ("General Options");
+	KConfigGroup cg = config->group (QStringLiteral("General Options"));
 	QSize size = cg.readEntry ("Geometry", QSize ());
 	if (size.isEmpty ()) {
 		size = screen() ? screen()->availableGeometry().size() : QApplication::primaryScreen()->availableGeometry().size();
@@ -862,7 +862,7 @@ bool RKWardMainWindow::doQueryQuit () {
 	saveOptions ();
 	// TODO: This may not be correct, some urls may still change while closing Workspace (due to save as)!
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join ("\n"), KSharedConfig::openConfig ().data ());
+		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join (QStringLiteral("\n")), KSharedConfig::openConfig ().data ());
 	}
 	if (!RKWorkplace::mainWorkplace()->closeWorkspace()) {
 		slotSetStatusReady ();
@@ -876,7 +876,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 	RK_TRACE (APP);
 	bool ok;
 
-	QString name = QInputDialog::getText (this, i18n ("New dataset"), i18n ("Enter name for the new dataset"), QLineEdit::Normal, "my.data", &ok);
+	QString name = QInputDialog::getText (this, i18n ("New dataset"), i18n ("Enter name for the new dataset"), QLineEdit::Normal, QStringLiteral("my.data"), &ok);
 
 	if (ok) RKWorkplace::mainWorkplace ()->editNewDataFrame (name);
 }
@@ -916,7 +916,7 @@ void RKWardMainWindow::slotSetStatusBarText (const QString &text) {
 
 //KDE4: still needed?
 	QString ntext = text.trimmed ();
-	ntext.replace ("<qt>", QString ());	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
+	ntext.replace (QLatin1String("<qt>"), QString ());	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
 	if (ntext.isEmpty ()) {
 		statusBar ()->clearMessage ();
 	} else {
@@ -996,7 +996,7 @@ void RKWardMainWindow::setRStatus (int status) {
 void RKWardMainWindow::importData() {
 	RK_TRACE (APP);
 
-	RKImportDialog d("import", this);
+	RKImportDialog d(QStringLiteral("import"), this);
 	d.exec();
 }
 
@@ -1009,7 +1009,7 @@ void RKWardMainWindow::slotNewCommandEditor () {
 void RKWardMainWindow::openAnyFile () {
 	RK_TRACE (APP);
 
-	QFileDialog* dialog = new QFileDialog(nullptr, QString(), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename).toLocalFile(), QString ("*|All Files (*)\n%1|R Script Files (%1)").arg(RKSettingsModuleCommandEditor::scriptFileFilter()));
+	QFileDialog* dialog = new QFileDialog(nullptr, QString(), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename).toLocalFile(), QStringLiteral ("*|All Files (*)\n%1|R Script Files (%1)").arg(RKSettingsModuleCommandEditor::scriptFileFilter()));
 	dialog->setFileMode(QFileDialog::ExistingFiles);
 
 // Create a type selection widget, and hack it into the dialog:
@@ -1066,7 +1066,7 @@ void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &en
 	RK_TRACE (APP);
 
 	if (url.isEmpty()) {
-		auto res = KEncodingFileDialog::getOpenUrlsAndEncoding(QString(), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename), QString("%1|R Script Files (%1)\n*|All Files (*)").arg(RKSettingsModuleCommandEditor::scriptFileFilter()), this, i18n("Open script file(s)"));
+		auto res = KEncodingFileDialog::getOpenUrlsAndEncoding(QString(), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename), QStringLiteral("%1|R Script Files (%1)\n*|All Files (*)").arg(RKSettingsModuleCommandEditor::scriptFileFilter()), this, i18n("Open script file(s)"));
 		for (int i = 0; i < res.URLs.size(); ++i) {
 				RKWorkplace::mainWorkplace ()->openScriptEditor(res.URLs[i], res.encoding);
 		}

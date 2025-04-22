@@ -32,62 +32,62 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Enter data:"), DL_INFO), this);
+	QLabel *label = new QLabel (xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Enter data:"), DL_INFO), this);
 	vbox->addWidget (label);
 
 	display = new RKTableView (this);
 	vbox->addWidget (display);
 
-	mode = static_cast<Mode> (xml->getMultiChoiceAttribute (element, "mode", "integer;real;string", 1, DL_WARNING));
+	mode = static_cast<Mode> (xml->getMultiChoiceAttribute (element, QStringLiteral("mode"), QStringLiteral("integer;real;string"), 1, DL_WARNING));
 	if (mode == Integer) {
-		min = xml->getIntAttribute (element, "min", INT_MIN, DL_INFO) - .1;	// we'll only allow ints anyway. Make sure not to run into floating point precision issues.
-		max = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO) + .1;
+		min = xml->getIntAttribute (element, QStringLiteral("min"), INT_MIN, DL_INFO) - .1;	// we'll only allow ints anyway. Make sure not to run into floating point precision issues.
+		max = xml->getIntAttribute (element, QStringLiteral("max"), INT_MAX, DL_INFO) + .1;
 	} else if (mode == Real) {
-		min = xml->getDoubleAttribute (element, "min", -FLT_MAX, DL_INFO);
-		max = xml->getDoubleAttribute (element, "max", FLT_MAX, DL_INFO);
+		min = xml->getDoubleAttribute (element, QStringLiteral("min"), -FLT_MAX, DL_INFO);
+		max = xml->getDoubleAttribute (element, QStringLiteral("max"), FLT_MAX, DL_INFO);
 	} else {
 		min = -FLT_MAX;
 		max = FLT_MAX;
 	}
 
-	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
-	min_columns = xml->getIntAttribute (element, "min_columns", 0, DL_INFO);
+	min_rows = xml->getIntAttribute (element, QStringLiteral("min_rows"), 0, DL_INFO);
+	min_columns = xml->getIntAttribute (element, QStringLiteral("min_columns"), 0, DL_INFO);
 
 	// Note: string type matrix allows missings, implicitly (treating them as empty strings)
-	allow_missings = xml->getBoolAttribute (element, "allow_missings", false, DL_INFO);
+	allow_missings = xml->getBoolAttribute (element, QStringLiteral("allow_missings"), false, DL_INFO);
 	if (mode == String) allow_missings = true;
-	allow_user_resize_columns = xml->getBoolAttribute (element, "allow_user_resize_columns", true, DL_INFO);
-	allow_user_resize_rows = xml->getBoolAttribute (element, "allow_user_resize_rows", true, DL_INFO);
+	allow_user_resize_columns = xml->getBoolAttribute (element, QStringLiteral("allow_user_resize_columns"), true, DL_INFO);
+	allow_user_resize_rows = xml->getBoolAttribute (element, QStringLiteral("allow_user_resize_rows"), true, DL_INFO);
 	trailing_rows = allow_user_resize_rows ? 1 : 0;
 	trailing_columns = allow_user_resize_columns ? 1 : 0;
 
-	row_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, "rows", qMax (2, min_rows), DL_INFO));
-	column_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, "columns", qMax (2, min_columns), DL_INFO));
+	row_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, QStringLiteral("rows"), qMax (2, min_rows), DL_INFO));
+	column_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, QStringLiteral("columns"), qMax (2, min_columns), DL_INFO));
 	tsv_data = new RKComponentPropertyBase (this, false);
 	row_count->setInternal (true);
-	addChild ("rows", row_count);
+	addChild (QStringLiteral("rows"), row_count);
 	column_count->setInternal (true);
-	addChild ("columns", column_count);
-	addChild ("tsv", tsv_data);
+	addChild (QStringLiteral("columns"), column_count);
+	addChild (QStringLiteral("tsv"), tsv_data);
 	connect (row_count, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
 	connect (column_count, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
 	connect (tsv_data, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::tsvPropertyChanged);
 	updating_tsv_data = false;
 
 	model = new RKMatrixInputModel (this);
-	QString headers = xml->getStringAttribute (element, "horiz_headers", QString (), DL_INFO);
+	QString headers = xml->getStringAttribute (element, QStringLiteral("horiz_headers"), QString (), DL_INFO);
 	if (!headers.isEmpty ()) model->horiz_header = headers.split (';');
 	else if (!headers.isNull ()) display->horizontalHeader ()->hide ();	// attribute explicitly set to ""
-	headers = xml->getStringAttribute (element, "vert_headers", QString (), DL_INFO);
+	headers = xml->getStringAttribute (element, QStringLiteral("vert_headers"), QString (), DL_INFO);
 	if (!headers.isEmpty ()) model->vert_header = headers.split (';');
 	else if (!headers.isNull ()) display->verticalHeader ()->hide ();
 	updateAll ();
 	display->setModel (model);
 	display->setAlternatingRowColors (true);
-	if (xml->getBoolAttribute (element, "fixed_width", false, DL_INFO)) {
+	if (xml->getBoolAttribute (element, QStringLiteral("fixed_width"), false, DL_INFO)) {
 		display->horizontalHeader ()->setStretchLastSection (true);
 	}
-	if (xml->getBoolAttribute (element, "fixed_height", false, DL_INFO)) {
+	if (xml->getBoolAttribute (element, QStringLiteral("fixed_height"), false, DL_INFO)) {
 		int max_row = row_count->intValue () - 1;
 		display->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		display->setFixedHeight (display->horizontalHeader ()->height () + display->rowViewportPosition (max_row) + display->rowHeight (max_row));
@@ -111,12 +111,12 @@ RKMatrixInput::~RKMatrixInput () {
 }
 
 QVariant RKMatrixInput::value (const QString& modifier) {
-	if (modifier.isEmpty () || (modifier == "cbind")) {
+	if (modifier.isEmpty () || (modifier == QLatin1String("cbind"))) {
 		QStringList ret;
 		for (int i = 0; i < column_count->intValue (); ++i) {
-			ret.append ("\tc (" + makeColumnString (i, ", ") + ')');
+			ret.append ("\tc (" + makeColumnString (i, QStringLiteral(", ")) + ')');
 		}
-		return QString ("cbind (\n" + ret.join (",\n") + "\n)");
+		return QString ("cbind (\n" + ret.join (QStringLiteral(",\n")) + "\n)");
 	} else if (modifier.startsWith (QLatin1String ("row."))) {
 		bool ok;
 		int row = QStringView(modifier).mid(4).toInt(&ok);
@@ -279,14 +279,14 @@ void RKMatrixInput::updateAll () {
 	for (; i < columns.size (); ++i) {
 		Column& col = columns[i];
 		if (col.cached_tab_joined_string.isEmpty ()) {
-			col.cached_tab_joined_string = makeColumnString (i, "\t", false);
+			col.cached_tab_joined_string = makeColumnString (i, QStringLiteral("\t"), false);
 		}
 		tsv.append (col.cached_tab_joined_string);
 	}
 	for (; i < max_col; ++i) {
 		tsv.append (QString (max_row, '\t'));
 	}
-	tsv_data->setValue (tsv.join ("\n"));
+	tsv_data->setValue (tsv.join (QStringLiteral("\n")));
 
 	updating_tsv_data = false;
 

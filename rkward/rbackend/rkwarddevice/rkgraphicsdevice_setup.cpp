@@ -98,8 +98,8 @@ SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family
 }
 
 bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg) {
-	default_family = family.value (0, "Helvetica");
-	default_symbol_family = family.value (0, "Symbol");
+	default_family = family.value (0, QStringLiteral("Helvetica"));
+	default_symbol_family = family.value (0, QStringLiteral("Symbol"));
 	RKD_QueryResolution (&dpix, &dpiy);
 	if (dpix <= 1) dpix = RKGD_DEFAULT_DPI;
 	if (dpiy <= 1) dpiy = RKGD_DEFAULT_DPI;

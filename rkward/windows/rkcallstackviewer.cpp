@@ -136,7 +136,7 @@ void RKCallstackViewerWidget::frameChanged (int frame_number) {
 	frame_info->setText (i18n ("<b>Current call:</b> %1<br><b>Environment:</b> %2<br><b>Local objects:</b> %3",
 									RKDebugHandler::instance ()->calls ().value (frame_number).toHtmlEscaped (),
 									RKDebugHandler::instance ()->environments ().value (frame_number).toHtmlEscaped (),
-									RKDebugHandler::instance ()->locals ().value (frame_number).split ('\n').join (", ").toHtmlEscaped ()));
+									RKDebugHandler::instance ()->locals ().value (frame_number).split ('\n').join (QStringLiteral(", ")).toHtmlEscaped ()));
 	frame_source->setText (RKDebugHandler::instance ()->functions ().value (frame_number) + '\n');
 	int line = RKDebugHandler::instance ()->relativeSourceLines ().value (frame_number, 0);
 	if (line > 0) frame_source->highlightLine (line - 1);

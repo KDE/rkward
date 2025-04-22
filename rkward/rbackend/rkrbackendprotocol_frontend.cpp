@@ -61,7 +61,7 @@ void RKRBackendProtocolFrontend::interruptCommand (int command_id) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest *req = new RBackendRequest (false, RBackendRequest::Interrupt);
-	req->params.insert ("commandid", QVariant (command_id));
+	req->params.insert (QStringLiteral("commandid"), QVariant (command_id));
 	qApp->postEvent (RKFrontendTransmitter::instance (), new RKRBackendEvent (req));
 }
 

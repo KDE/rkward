@@ -30,15 +30,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture, bool copy_geometry) : KParts::MainWindow  () {
 	RK_TRACE (APP);
 
-	actionCollection()->addAction(KStandardAction::Close, "dwindow_close", this, &DetachedWindowContainer::close);
+	actionCollection()->addAction(KStandardAction::Close, QStringLiteral("dwindow_close"), this, &DetachedWindowContainer::close);
 
-	QAction *reattach = actionCollection()->addAction("dwindow_attach", this, &DetachedWindowContainer::slotReattach);
+	QAction *reattach = actionCollection()->addAction(QStringLiteral("dwindow_attach"), this, &DetachedWindowContainer::slotReattach);
 	reattach->setText (i18n ("Attach to main window"));
 	reattach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAttachWindow));
 
 	setHelpMenuEnabled (false);
 // create own GUI
-	setXMLFile ("detachedwindowcontainer.rc");
+	setXMLFile (QStringLiteral("detachedwindowcontainer.rc"));
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	statusBar ()->hide ();
 	createShellGUI (true);
@@ -108,7 +108,7 @@ void DetachedWindowContainer::hideEmptyMenus (bool ignore) {
 
 	// remove empty menus (we had to define them in detachedwindowcontainer.rc in order to force a sane menu order)
 	QStringList menu_names;
-	menu_names << "file" << "device" << "history" << "edit" << "run" << "view" << "settings";
+	menu_names << QStringLiteral("file") << QStringLiteral("device") << QStringLiteral("history") << QStringLiteral("edit") << QStringLiteral("run") << QStringLiteral("view") << QStringLiteral("settings");
 	for (const QString& name : std::as_const(menu_names)) {
 		QMenu* menu = dynamic_cast<QMenu*>(guiFactory ()->container (name, this));
 		if (menu) menu->menuAction ()->setVisible (!menu->isEmpty ());
@@ -133,7 +133,7 @@ void DetachedWindowContainer::slotSetStatusBarText (const QString &text) {
 	RK_TRACE (APP);
 
 	QString ntext = text.trimmed ();
-	ntext.replace ("<qt>", QString ());	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
+	ntext.replace (QLatin1String("<qt>"), QString ());	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
 
 	statusBar ()->showMessage (ntext);
 	statusBar ()->show ();

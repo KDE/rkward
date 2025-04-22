@@ -126,14 +126,14 @@ QString RObject::getFullName (int options) const {
 
 QString RObject::getLabel () const {
 	RK_TRACE (OBJECTS);
-	return getMetaProperty ("label");
+	return getMetaProperty (QStringLiteral("label"));
 }
 
 RObject::ObjectList RObject::findObjects (const QStringList &path, bool partial, const QString &op) {
 	RK_TRACE (OBJECTS);
 	// not a container
-	if (op == "@") {
-		if (slotsPseudoObject ()) return (slotsPseudoObject ()->findObjects (path, partial, "$"));
+	if (op == QLatin1String("@")) {
+		if (slotsPseudoObject ()) return (slotsPseudoObject ()->findObjects (path, partial, QStringLiteral("$")));
 	}
 	return ObjectList();
 }
@@ -147,7 +147,7 @@ QString RObject::getMetaProperty (const QString &id) const {
 QString RObject::getDescription () const {
 	RK_TRACE (OBJECTS);
 	if (meta_map) {
-		QString label = meta_map->value ("label");
+		QString label = meta_map->value (QStringLiteral("label"));
 		if (!label.isEmpty ()) return (getShortName () + " (" + label + ')');
 	}
 	return getShortName ();
@@ -192,14 +192,14 @@ QString RObject::getObjectDescription () const {
 		}
 	}
 
-	if (!isType(Function)) ret.append("<br><b>" + i18n("Class(es):") + " </b>" + makeClassString(",").ESCS);
+	if (!isType(Function)) ret.append("<br><b>" + i18n("Class(es):") + " </b>" + makeClassString(QStringLiteral(",")).ESCS);
 
 	return ret;
 }
 
 void RObject::setLabel (const QString &value, bool sync) {
 	RK_TRACE (OBJECTS);
-	setMetaProperty ("label", value, sync);
+	setMetaProperty (QStringLiteral("label"), value, sync);
 }
 
 void RObject::setMetaProperty (const QString &id, const QString &value, bool sync) {
@@ -276,7 +276,7 @@ void RObject::updateFromR (RCommandChain *chain) {
 			return;
 		}
 		commandstring = ".rk.get.structure (" + getFullName(DefaultObjectNameOptions) + ", " + rQuote(getShortName());
-		if (isType(GlobalEnv)) commandstring += ", envlevel=-1";  // in the .GlobalEnv recurse one more level
+		if (isType(GlobalEnv)) commandstring += QLatin1String(", envlevel=-1");  // in the .GlobalEnv recurse one more level
 		if (isType(PackageEnv)) commandstring += ", namespacename=" + rQuote(env->packageName());
 		commandstring += ')';
 	} else {
@@ -662,32 +662,32 @@ QString RObject::typeToText (RDataType var_type) {
 	// TODO: These are non-i18n, and not easily i18n-able due to being used, internally.
 	// But they _are_ display strings, too.
 	if (var_type == DataUnknown) {
-		return "Unknown";
+		return QStringLiteral("Unknown");
 	} else if (var_type == DataNumeric) {
-		return "Numeric";
+		return QStringLiteral("Numeric");
 	} else if (var_type == DataCharacter) {
-		return "String";
+		return QStringLiteral("String");
 	} else if (var_type == DataFactor) {
-		return "Factor";
+		return QStringLiteral("Factor");
 	} else if (var_type == DataLogical) {
-		return "Logical";
+		return QStringLiteral("Logical");
 	} else {
 		RK_ASSERT (false);
-		return "Invalid";
+		return QStringLiteral("Invalid");
 	}
 }
 
 //static 
 RObject::RDataType RObject::textToType (const QString &text) {
-	if (text == "Unknown") {
+	if (text == QLatin1String("Unknown")) {
 		return DataUnknown;
-	} else if (text == "Numeric") {
+	} else if (text == QLatin1String("Numeric")) {
 		return DataNumeric;
-	} else if (text == "String") {
+	} else if (text == QLatin1String("String")) {
 		return DataCharacter;
-	} else if (text == "Factor") {
+	} else if (text == QLatin1String("Factor")) {
 		return DataFactor;
-	} else if (text == "Logical") {
+	} else if (text == QLatin1String("Logical")) {
 		return DataLogical;
 	} else {
 		RK_ASSERT (false);
@@ -720,11 +720,11 @@ QStringList RObject::parseObjectPath (const QString &path) {
 				if (!seek_bracket_end) {
 					if (c == '$') {
 						ret.append (fragment);
-						ret.append ("$");
+						ret.append (QStringLiteral("$"));
 						fragment.clear ();
 					} else if (c == '[') {
 						ret.append (fragment);
-						ret.append ("$");
+						ret.append (QStringLiteral("$"));
 						fragment.clear ();
 						if ((i+1 < end) && (path.at (i+1) == '[')) ++i;
 						seek_bracket_end = true;
@@ -733,12 +733,12 @@ QStringList RObject::parseObjectPath (const QString &path) {
 						if ((i+1 < end) && (path.at (i+1) == ':')) ++i;
 						if ((i+1 < end) && (path.at (i+1) == ':')) {
 							++i;
-							ret.append (":::");
-						} else ret.append ("::");
+							ret.append (QStringLiteral(":::"));
+						} else ret.append (QStringLiteral("::"));
 						fragment.clear ();
 					} else if (c == '@') {
 						ret.append (fragment);
-						ret.append ("@");
+						ret.append (QStringLiteral("@"));
 						fragment.clear ();
 					} else {
 						fragment.append (c);

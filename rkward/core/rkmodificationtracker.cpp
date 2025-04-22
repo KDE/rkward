@@ -324,7 +324,7 @@ QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
 			if (object->isVariable ()) return RObject::typeToText (object->getDataType ());
 			return QVariant ();
 		}
-		if ((col == ClassColumn) && (!object->isPseudoObject ())) return object->makeClassString ("; ");
+		if ((col == ClassColumn) && (!object->isPseudoObject ())) return object->makeClassString (QStringLiteral("; "));
 	} else if (role == Qt::FontRole) {
 		if (col == NameColumn && object->isPseudoObject ()) {
 			QFont font;
@@ -334,7 +334,7 @@ QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
 	} else if (role == Qt::DecorationRole) {
 		if (col == NameColumn) return RKStandardIcons::iconForObject (object);
 	} else if (role == Qt::ToolTipRole) {
-		QString ret = QString("<i>") + object->getShortName().replace('<', "&lt;") + "</i><br>" + object->getObjectDescription();
+		QString ret = QStringLiteral("<i>") + object->getShortName().replace('<', QLatin1String("&lt;")) + "</i><br>" + object->getObjectDescription();
 		return ret;
 	}
 

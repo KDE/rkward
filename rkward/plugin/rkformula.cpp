@@ -31,20 +31,20 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	// create and register properties
 	fixed_factors = new RKComponentPropertyRObjects (this, false);
 	connect (fixed_factors, &RKComponentPropertyBase::valueChanged, this, &RKFormula::factorsChanged);
-	addChild ("fixed_factors", fixed_factors);
+	addChild (QStringLiteral("fixed_factors"), fixed_factors);
 	fixed_factors->setInternal (true);
 	dependent = new RKComponentPropertyRObjects (this, false);
 	connect (dependent, &RKComponentPropertyBase::valueChanged, this, &RKFormula::factorsChanged);
-	addChild ("dependent", dependent);
+	addChild (QStringLiteral("dependent"), dependent);
 	dependent->setInternal (true);
 	model = new RKComponentPropertyBase (this, true);
-	addChild ("model", model);
+	addChild (QStringLiteral("model"), model);
 	model->setInternal (true);
 	table = new RKComponentPropertyBase (this, true);
-	addChild ("table", table);
+	addChild (QStringLiteral("table"), table);
 	table->setInternal (true);
 	labels = new RKComponentPropertyBase (this, true);
-	addChild ("labels", labels);
+	addChild (QStringLiteral("labels"), labels);
 	labels->setInternal (true);
 
 	// get xmlHelper
@@ -54,7 +54,7 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	label_string = xml->i18nStringAttribute (element, "label", i18n ("Specify model"), DL_INFO);
+	label_string = xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Specify model"), DL_INFO);
 	vbox->addWidget (new QLabel (label_string, this));
 
 	type_selector = new QButtonGroup (this);
@@ -169,7 +169,7 @@ void RKFormula::makeModelString () {
 		}
 	}
 	if (multitable) {
-		table_string = "data.frame (";
+		table_string = QLatin1String("data.frame (");
 		if (dep_var) table_string.append (mangleName (dep_var) + '=' + dep_var->getFullName ());
 		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
 			table_string.append (", " + mangleName ((*it)) + '=' + (*it)->getFullName ());
@@ -207,7 +207,7 @@ void RKFormula::makeModelString () {
 	}
 
 	// labels
-	labels_string = "list (";
+	labels_string = QLatin1String("list (");
 	MangledNames::const_iterator it;
 	for (it = mangled_names.cbegin (); it != mangled_names.cend (); ++it) {
 		if (it != mangled_names.cbegin ()) {

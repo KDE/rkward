@@ -28,7 +28,7 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
+	label = new QLabel (xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Select one:"), DL_INFO), this);
 	vbox->addWidget (label);
 
 	// create ComboBox

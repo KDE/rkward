@@ -22,27 +22,27 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// first question: int or real
-	intmode = (xml->getMultiChoiceAttribute (element, "type", "integer;real", 1, DL_INFO) == 0);
+	intmode = (xml->getMultiChoiceAttribute (element, QStringLiteral("type"), QStringLiteral("integer;real"), 1, DL_INFO) == 0);
 
 	// create and add properties
-	addChild ("int", intvalue = new RKComponentPropertyInt (this, intmode, 0));
+	addChild (QStringLiteral("int"), intvalue = new RKComponentPropertyInt (this, intmode, 0));
 	intvalue->setInternal (true);
-	addChild ("real", realvalue = new RKComponentPropertyDouble (this, !intmode, 0));
+	addChild (QStringLiteral("real"), realvalue = new RKComponentPropertyDouble (this, !intmode, 0));
 
 	// layout and label
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Enter value:"), DL_WARNING), this);
+	label = new QLabel (xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Enter value:"), DL_WARNING), this);
 	vbox->addWidget (label);
 
 	// create spinbox and read settings
 	spinbox = new RKSpinBox (this);
 	if (!intmode) {
-		double min = xml->getDoubleAttribute (element, "min", -FLT_MAX, DL_INFO);
-		double max = xml->getDoubleAttribute (element, "max", FLT_MAX, DL_INFO);
-		double initial = xml->getDoubleAttribute (element, "initial", qMin (max, qMax (min, double (qreal(0.0)))), DL_INFO);
-		int default_precision = xml->getIntAttribute (element, "default_precision", 2, DL_INFO);
-		int max_precision = xml->getIntAttribute (element, "max_precision", 8, DL_INFO);
+		double min = xml->getDoubleAttribute (element, QStringLiteral("min"), -FLT_MAX, DL_INFO);
+		double max = xml->getDoubleAttribute (element, QStringLiteral("max"), FLT_MAX, DL_INFO);
+		double initial = xml->getDoubleAttribute (element, QStringLiteral("initial"), qMin (max, qMax (min, double (qreal(0.0)))), DL_INFO);
+		int default_precision = xml->getIntAttribute (element, QStringLiteral("default_precision"), 2, DL_INFO);
+		int max_precision = xml->getIntAttribute (element, QStringLiteral("max_precision"), 8, DL_INFO);
 
 		spinbox->setRealMode (min, max, initial, default_precision, max_precision);
 
@@ -50,9 +50,9 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 		realvalue->setMax (max);
 		realvalue->setPrecision (default_precision);
 	} else {
-		int min = xml->getIntAttribute (element, "min", INT_MIN, DL_INFO);
-		int max = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO);
-		int initial = xml->getIntAttribute (element, "initial", qMin (max, qMax (min, 0)), DL_INFO);
+		int min = xml->getIntAttribute (element, QStringLiteral("min"), INT_MIN, DL_INFO);
+		int max = xml->getIntAttribute (element, QStringLiteral("max"), INT_MAX, DL_INFO);
+		int initial = xml->getIntAttribute (element, QStringLiteral("initial"), qMin (max, qMax (min, 0)), DL_INFO);
 
 		spinbox->setIntMode (min, max, initial);
 
@@ -69,7 +69,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	// finish layout
 	vbox->addWidget (spinbox);
 	vbox->addStretch (1);		// make sure label remains attached to spinbox
-	if (xml->getStringAttribute (element, "size", "normal", DL_INFO) == "small") {
+	if (xml->getStringAttribute (element, QStringLiteral("size"), QStringLiteral("normal"), DL_INFO) == QLatin1String("small")) {
 		spinbox->setFixedWidth (100);
 	}
 
@@ -123,7 +123,7 @@ QVariant RKPluginSpinBox::value (const QString &modifier) {
 	if (intmode) {
 		return intvalue->value (modifier);
 	} else {
-		if (modifier.isEmpty ()) return realvalue->value ("formatted");
+		if (modifier.isEmpty ()) return realvalue->value (QStringLiteral("formatted"));
 		return realvalue->value (modifier);
 	}
 }

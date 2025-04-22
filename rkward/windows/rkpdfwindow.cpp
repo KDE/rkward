@@ -26,7 +26,7 @@ RKPDFWindow::RKPDFWindow(QWidget *parent) : RKMDIWindow(parent, RKMDIWindow::PDF
 	// Try loading okular part first, then fall back to any other pdf part
 	auto pdfpart = getOkularPart();
 	if (!pdfpart) {
-		pdfpart = KParts::PartLoader::instantiatePartForMimeType<KParts::ReadOnlyPart>("application/pdf").plugin;
+		pdfpart = KParts::PartLoader::instantiatePartForMimeType<KParts::ReadOnlyPart>(QStringLiteral("application/pdf")).plugin;
 	}
 	if (pdfpart) {
 		setPart(pdfpart);
@@ -50,7 +50,7 @@ void RKPDFWindow::openURL(const QUrl &url) {
 			// NOTE: Okular part appears to auto-reload local files, anyway, but I'd like not to rely on thie behavior
 			// NOTE: I tried KParts::NavigationExtension / KParts::OpenUrlArguments for a reload saving scroll position, but somehow
 			//       that did not work, reliably (possibly a race condition with the auto-reload, above).
-			auto reload = p->action("file_reload");
+			auto reload = p->action(QStringLiteral("file_reload"));
 			if (reload) {
 				reload->trigger();
 				return;

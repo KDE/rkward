@@ -30,10 +30,10 @@ public:
 	bool initialize (RKComponentPropertyCode *code_property=nullptr, bool add_headings=true) override;
 	void destroy () override;
 	
-	void preprocess (int flags) override { callFunction ("do_preprocess ();\n", flags, Preprocess); };
-	void calculate (int flags) override { callFunction ("do_calculate ();\n", flags, Calculate); };
-	void printout (int flags) override { callFunction ("do_printout ();\n", flags, Printout); };
-	void preview (int flags) override { callFunction ("do_preview ();\n", flags, Preview); };
+	void preprocess (int flags) override { callFunction (QStringLiteral("do_preprocess ();\n"), flags, Preprocess); };
+	void calculate (int flags) override { callFunction (QStringLiteral("do_calculate ();\n"), flags, Calculate); };
+	void printout (int flags) override { callFunction (QStringLiteral("do_printout ();\n"), flags, Printout); };
+	void preview (int flags) override { callFunction (QStringLiteral("do_preview ();\n"), flags, Preview); };
 	void writeData (const QVariant &data) override;
 #ifdef JSBACKEND_PERFORMANCE_TEST
 	static void _performanceTest();

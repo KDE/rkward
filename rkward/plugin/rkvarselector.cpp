@@ -33,9 +33,9 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 // TODO: read filter settings
-	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
+	addChild (QStringLiteral("selected"), selected = new RKComponentPropertyRObjects (this, false));
 	selected->setInternal (true);
-	addChild ("root", root = new RKComponentPropertyRObjects (this, false));
+	addChild (QStringLiteral("root"), root = new RKComponentPropertyRObjects (this, false));
 	connect (root, &RKComponentPropertyBase::valueChanged, this, &RKVarSelector::rootChanged);
 	root->setInternal (true);
 
@@ -45,7 +45,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	QHBoxLayout *hbox = new QHBoxLayout ();
 	hbox->setContentsMargins (0, 0, 0, 0);
 	vbox->addLayout (hbox);
-	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Select Variable(s)"), DL_INFO), this);
+	QLabel *label = new QLabel (xml->i18nStringAttribute (element, QStringLiteral("label"), i18n ("Select Variable(s)"), DL_INFO), this);
 	hbox->addWidget (label);
 	expand_collapse_button = new QToolButton (this);
 	expand_collapse_button->setPopupMode (QToolButton::InstantPopup);
@@ -70,7 +70,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	vbox->addLayout (filter_widget_placeholder);
 	show_filter_action = new QAction (i18n ("Show filter options"), this);
 	show_filter_action->setCheckable (true);
-	show_filter_action->setShortcut (QKeySequence ("Ctrl+F"));
+	show_filter_action->setShortcut (QKeySequence (QStringLiteral("Ctrl+F")));
 	show_filter_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSearch));
 	connect (show_filter_action, &QAction::toggled, this, &RKVarSelector::showFilterWidget);
 

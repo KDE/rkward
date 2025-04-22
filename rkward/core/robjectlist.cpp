@@ -36,7 +36,7 @@ RObjectList::RObjectList() : RContainerObject(nullptr, QString()) {
 	update_chain = nullptr;
 
 	type = RObject::Workspace;
-	name = "search()";
+	name = QLatin1String("search()");
 
 	globalenv = new REnvironmentObject(nullptr, QStringLiteral(".GlobalEnv"));
 	globalenv->updateFromR(nullptr);
@@ -66,7 +66,7 @@ void RObjectList::init() {
 			RK_ASSERT(obj->editors().isEmpty());
 			RKModificationTracker::instance()->removeObject(obj, nullptr, true);
 		}
-		object_list->updateEnvironments(QStringList() << ".GlobalEnv", false);
+		object_list->updateEnvironments(QStringList() << QStringLiteral(".GlobalEnv"), false);
 		object_list->updateNamespaces(QStringList());
 	}
 }
@@ -82,7 +82,7 @@ QStringList RObjectList::detachPackages (const QStringList &packages, RCommandCh
 	QStringList reject;
 	for (int i = 0; i < packages.size(); ++i) {
 		QString shortname = packages[i];
-		shortname.remove ("package:");
+		shortname.remove (QStringLiteral("package:"));
 		if (RKSettingsModuleRPackages::essentialPackages ().contains (shortname)) {
 			reject.append (i18n ("Did not unload package %1. It is required in RKWard. If you really want to do this, do so on the R Console.", shortname));
 		} else if (!findChildByName (packages[i])) {
@@ -115,7 +115,7 @@ void RObjectList::updateFromR (RCommandChain *chain) {
 	Q_EMIT updateStarted();
 	update_chain = RInterface::startChain (chain);
 
-	RCommand *command = new RCommand("list (search (), loadedNamespaces ())", RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
+	RCommand *command = new RCommand(QStringLiteral("list (search (), loadedNamespaces ())"), RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
 	whenCommandFinished(command, [this](RCommand* command) {
 		RK_ASSERT (command->getDataType () == RData::StructureVector);
 		const RData::RDataStorage & data = command->structureVector ();
@@ -240,27 +240,27 @@ RObject::ObjectList RObjectList::findObjects (const QStringList &path, bool part
 	RK_ASSERT (op == "$");
 
 	RObject::ObjectList ret;
-	if (path.value (1) == "::") {
+	if (path.value (1) == QLatin1String("::")) {
 		RObject *environment = findPackage (path[0]);
-		if (environment) return (environment->findObjects (path.mid (2), partial, "$"));
+		if (environment) return (environment->findObjects (path.mid (2), partial, QStringLiteral("$")));
 		return ret;
-	} else if (path.value (1) == ":::") {
+	} else if (path.value (1) == QLatin1String(":::")) {
 		RObject *environment = findPackage (path[0]);
 		if (environment) environment = static_cast<REnvironmentObject*> (environment)->namespaceEnvironment ();
 		if (!environment) environment = orphan_namespaces->findOrphanNamespace (path[0]);
-		if (environment) return (environment->findObjects (path.mid (2), partial, "$"));
+		if (environment) return (environment->findObjects (path.mid (2), partial, QStringLiteral("$")));
 		return ret;
-	} else if (path.value (0) == ".GlobalEnv") {
-		if (path.length () > 1) return getGlobalEnv ()->findObjects (path.mid (2), partial, "$");
+	} else if (path.value (0) == QLatin1String(".GlobalEnv")) {
+		if (path.length () > 1) return getGlobalEnv ()->findObjects (path.mid (2), partial, QStringLiteral("$"));
 		// else we'll find base::.GlobalEnv, below
 	}
 
 	// no namespace given. Search all environments for matches, .GlobalEnv, first
-	ret = getGlobalEnv ()->findObjects (path, partial, "$");
+	ret = getGlobalEnv ()->findObjects (path, partial, QStringLiteral("$"));
 	for (int i = 0; i < childmap.size (); ++i) {
 		if (!(partial || ret.isEmpty ())) return ret;
 
-		ret.append (childmap[i]->findObjects (path, partial, "$"));
+		ret.append (childmap[i]->findObjects (path, partial, QStringLiteral("$")));
 	}
 	return ret;
 }

@@ -63,7 +63,7 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 	QString token = RKFrontendTransmitter::instance ()->connectionToken ();
 	QString token_c = RKFrontendTransmitter::waitReadLine(con, 2000).trimmed ();
 	if (token_c != token) {
-		KMessageBox::detailedError(nullptr, QString("<p>%1</p>").arg(i18n("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n("Expected connection token %1, but read connection token %2", token, token_c), i18n("Error while connection graphics backend"));
+		KMessageBox::detailedError(nullptr, QStringLiteral("<p>%1</p>").arg(i18n("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n("Expected connection token %1, but read connection token %2", token, token_c), i18n("Error while connection graphics backend"));
 		con->close();
 		return;
 	}
@@ -198,7 +198,7 @@ static QFont readFont (QDataStream &instream) {
 #	warning TODO deal with line-height
 #endif
 	QFont ret;
-	if (!(fontfamily.isEmpty() || fontfamily == "Symbol")) ret.setFamily(fontfamily); // NOTE: QPainter won't paint with "Symbol", somehow
+	if (!(fontfamily.isEmpty() || fontfamily == QLatin1String("Symbol"))) ret.setFamily(fontfamily); // NOTE: QPainter won't paint with "Symbol", somehow
 	if (fontface == 2 || fontface == 4) ret.setWeight (QFont::Bold);
 	if (fontface == 3 || fontface == 4) ret.setItalic (true);
 	ret.setPointSizeF (cex*ps);

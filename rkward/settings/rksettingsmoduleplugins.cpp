@@ -50,7 +50,7 @@ public:
 		RK_TRACE(SETTINGS);
 
 		setWindowTitle(i18n("RKWard Plugins"));
-		setWindowIcon(QIcon::fromTheme("plugins"));
+		setWindowIcon(QIcon::fromTheme(QStringLiteral("plugins")));
 
 		QVBoxLayout *main_vbox = new QVBoxLayout(this);
 		main_vbox->addSpacing(2*RKStyle::spacingHint());
@@ -121,8 +121,8 @@ RKSettingsModulePlugins::RKPluginMapList RKSettingsModulePlugins::setPluginMaps(
 void RKSettingsModulePlugins::RKPluginMapList::saveToConfig(KConfigGroup& cg) {
 	RK_TRACE(SETTINGS);
 
-	cg.deleteGroup("Known Plugin maps");	// always start from scratch to remove cruft from pluginmaps
-	KConfigGroup pmg = cg.group("Known Plugin maps");
+	cg.deleteGroup(QStringLiteral("Known Plugin maps"));	// always start from scratch to remove cruft from pluginmaps
+	KConfigGroup pmg = cg.group(QStringLiteral("Known Plugin maps"));
 	QStringList kplugin_maps;
 	for (auto it = all_maps.constBegin(); it != all_maps.constEnd(); ++it) {
 		const auto &maps = it.value().list;
@@ -150,7 +150,7 @@ void RKSettingsModulePlugins::RKPluginMapList::readFromConfig(KConfigGroup& cg) 
 	all_maps.clear();
 
 	/* Known maps are stored at runtime as a nested list id -> variants, but stored in config as a plain list of variants. This is for historic reasons, but may be too much trouble to change. */
-	KConfigGroup pmg = cg.group ("Known Plugin maps");
+	KConfigGroup pmg = cg.group (QStringLiteral("Known Plugin maps"));
 	QStringList kplugin_maps = cg.readEntry("All known plugin maps", QStringList());
 	for (int i = 0; i < kplugin_maps.size (); ++i) {
 		KConfigGroup ppmg = pmg.group (kplugin_maps[i]);	// unadjusted path on purpose!
@@ -185,7 +185,7 @@ void RKSettingsModulePlugins::RKPluginMapList::readFromConfig(KConfigGroup& cg) 
 void RKSettingsModulePlugins::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group("Plugin Settings");
+	KConfigGroup cg = config->group(QStringLiteral("Plugin Settings"));
 	interface_pref.syncConfig(cg, a);
 	show_code.syncConfig(cg, a);
 	code_size.syncConfig(cg, a);
@@ -212,7 +212,7 @@ bool RKSettingsModulePlugins::RKPluginMapList::addMap(const PluginMapStoredInfo 
 	if (info.lastModified () != inf.last_modified || inf.version.isNull()) {
 		auto inf2 = parsePluginMapBasics(inf.filename);
 		inf2.last_modified = info.lastModified();
-		if (inf2.version.isNull()) inf2.version = RKParsedVersion("0.0.0.1");  // prevent infinite recursion
+		if (inf2.version.isNull()) inf2.version = RKParsedVersion(QStringLiteral("0.0.0.1"));  // prevent infinite recursion
 		return addMap(inf2, add_mode);
 	}
 
@@ -327,7 +327,7 @@ void RKSettingsModulePlugins::registerDefaultPluginMaps(AddMode add_mode) {
 	QDir def_plugindir (RKCommonFunctions::getRKWardDataDir ());
 	if (def_plugindir.dirName() == QStringLiteral ("rkwardinstall")) {
 		// For running from build-dir: Work around bad design choice of installation layout
-		def_plugindir.cd ("plugins");
+		def_plugindir.cd (QStringLiteral("plugins"));
 	}
 	QStringList def_pluginmaps = def_plugindir.entryList (QStringList ("*.pluginmap"));
 	for (int i = 0; i < def_pluginmaps.size (); ++i) {
@@ -388,9 +388,9 @@ RKSettingsModulePlugins::PluginMapStoredInfo RKSettingsModulePlugins::parsePlugi
 	QDomElement de = xml.openXMLFile(DL_WARNING);
 	PluginMapStoredInfo inf(filename);
 	inf.id = RKPluginMapFile::parseId(de, xml);
-	inf.priority = xml.getMultiChoiceAttribute(de, "priority", "hidden;low;medium;high", (int) PriorityMedium, DL_WARNING);
-	auto about = xml.getChildElement(de, "about", DL_WARNING);
-	inf.version = RKParsedVersion(xml.getStringAttribute(about, "version", QString(), DL_WARNING));
+	inf.priority = xml.getMultiChoiceAttribute(de, QStringLiteral("priority"), QStringLiteral("hidden;low;medium;high"), (int) PriorityMedium, DL_WARNING);
+	auto about = xml.getChildElement(de, QStringLiteral("about"), DL_WARNING);
+	inf.version = RKParsedVersion(xml.getStringAttribute(about, QStringLiteral("version"), QString(), DL_WARNING));
 	return inf;
 }
 
@@ -550,7 +550,7 @@ bool RKSettingsModulePluginsModel::setData (const QModelIndex& index, const QVar
 void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 	RK_TRACE (SETTINGS);
 
-	QStringList files = QFileDialog::getOpenFileNames (static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"), RKCommonFunctions::getRKWardDataDir (), "RKWard pluginmap files [*.pluginmap](*.pluginmap)");
+	QStringList files = QFileDialog::getOpenFileNames (static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"), RKCommonFunctions::getRKWardDataDir (), QStringLiteral("RKWard pluginmap files [*.pluginmap](*.pluginmap)"));
 
 	beginResetModel();
 	// not bothering with proper rowsInserted signals, this does not need to be efficient, anyway.
@@ -593,8 +593,8 @@ const RKSettingsModulePluginsModel::PluginMapMetaInfo& RKSettingsModulePluginsMo
 		PluginMapMetaInfo inf;
 		XMLHelper xml (pluginmapfile);
 		QDomElement doc_elem = xml.openXMLFile (DL_WARNING);
-		inf.about = new RKComponentAboutData (xml.getChildElement (doc_elem, "about", DL_INFO), xml);
-		inf.dependencies = RKComponentDependency::parseDependencies (xml.getChildElement (doc_elem, "dependencies", DL_INFO), xml);
+		inf.about = new RKComponentAboutData (xml.getChildElement (doc_elem, QStringLiteral("about"), DL_INFO), xml);
+		inf.dependencies = RKComponentDependency::parseDependencies (xml.getChildElement (doc_elem, QStringLiteral("dependencies"), DL_INFO), xml);
 		plugin_map_dynamic_info.insert (pluginmapfile, inf);
 	}
 

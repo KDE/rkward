@@ -92,7 +92,7 @@ RKMessageCatalog* RKMessageCatalog::getCatalog (const QString& name, const QStri
 
 RKMessageCatalog* RKMessageCatalog::nullCatalog () {
 	// ok, not thread-safe, here, but the worst that can happen is creating more than one dummy catalog.
-	return (getCatalog  ("rkward_dummy", QString ()));
+	return (getCatalog  (QStringLiteral("rkward_dummy"), QString ()));
 }
 
 // static

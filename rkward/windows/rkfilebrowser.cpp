@@ -101,7 +101,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 
 	dir = new KDirOperator (QUrl (), this);
 	dir->setPreviewWidget (nullptr);
-	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
+	KConfigGroup config = KSharedConfig::openConfig ()->group (QStringLiteral("file browser window"));
 	dir->readConfig (config);
 	dir->setViewMode (KFile::Tree);
 	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKFileBrowserWidget::saveConfig);
@@ -112,7 +112,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	toolbar->addAction (dir->action (KDirOperator::Forward));
 	toolbar->addAction (dir->action (KDirOperator::Home));
 
-	QAction* action = new QAction (QIcon::fromTheme ("folder-sync"), i18n ("Working directory"), this);
+	QAction* action = new QAction (QIcon::fromTheme (QStringLiteral("folder-sync")), i18n ("Working directory"), this);
 	action->setToolTip (action->text ());
 	connect(action, &QAction::triggered, this, [=] () { follow_working_directory = true; syncToWD(); });
 	toolbar->addAction (action);
@@ -191,7 +191,7 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 void RKFileBrowserWidget::saveConfig () {
 	RK_TRACE (APP);
 
-	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
+	KConfigGroup config = KSharedConfig::openConfig ()->group (QStringLiteral("file browser window"));
 	dir->writeConfig (config);
 }
 

@@ -167,8 +167,8 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg;
-	bool config_exists = config->hasGroup("General");	// one of the very oldest groups in the config
-	cg = config->group ("Internal");
+	bool config_exists = config->hasGroup(QStringLiteral("General"));	// one of the very oldest groups in the config
+	cg = config->group (QStringLiteral("Internal"));
 	if (a == RKConfigBase::LoadConfig) {
 		stored_config_version = (RKWardConfigVersion) cg.readEntry("config file version", (int) RKWardConfig_Pre0_5_7_Obsolete);
 		if (config_exists && stored_config_version < RKWardConfig_0_6_3) {
@@ -180,10 +180,10 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 		rkward_version_changed = (cg.readEntry("previous runtime version", QString()) != RKWARD_VERSION) || RKCommandLineArgs::get(RKCommandLineArgs::Setup).toBool();
 	} else {
 		cg.writeEntry("config file version", (int) RKWardConfig_Latest);
-		cg.writeEntry("previous runtime version", QString(RKWARD_VERSION));
+		cg.writeEntry("previous runtime version", QStringLiteral(RKWARD_VERSION));
 	}
 
-	cg = config->group("Logfiles");
+	cg = config->group(QStringLiteral("Logfiles"));
 	if (a == RKConfigBase::LoadConfig) {
 		// default not yet set, first time loading config
 		if (new_files_path.get().isNull()) new_files_path = QString(QDir().homePath() + "/.rkward/");
@@ -194,7 +194,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 		new_files_path.saveConfig(cg);
 	}
 
-	cg = config->group("General");
+	cg = config->group(QStringLiteral("General"));
 	if (a == RKConfigBase::LoadConfig) {
 		previous_rkward_data_dir = cg.readEntry("last known data dir", RKCommonFunctions::getRKWardDataDir());
 		installation_moved = (previous_rkward_data_dir != RKCommonFunctions::getRKWardDataDir ()) && !previous_rkward_data_dir.isEmpty ();
@@ -211,14 +211,14 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 		initial_dir_specification.syncConfig(cg, a);
 	}
 
-	cg = config->group ("Workplace");
+	cg = config->group (QStringLiteral("Workplace"));
 	workplace_save_mode.syncConfig(cg, a);
 	cd_to_workspace_dir_on_load.syncConfig(cg, a);
 
-	cg = config->group ("Editor");
+	cg = config->group (QStringLiteral("Editor"));
 	warn_size_object_edit.syncConfig(cg, a);
 
-	cg = config->group ("MDI");
+	cg = config->group (QStringLiteral("MDI"));
 	mdi_focus_policy.syncConfig(cg, a);
 
 	if ((a == RKConfigBase::LoadConfig) && (stored_config_version < RKWardConfig_0_7_4)) {
@@ -229,14 +229,14 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 QString RKSettingsModuleGeneral::getSavedWorkplace (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group ("Workplace");
+	KConfigGroup cg = config->group (QStringLiteral("Workplace"));
 	return (cg.readEntry ("last saved layout", QString ()));
 }
 
 void RKSettingsModuleGeneral::setSavedWorkplace (const QString &description, KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group ("Workplace");
+	KConfigGroup cg = config->group (QStringLiteral("Workplace"));
 	cg.writeEntry ("last saved layout", description);
 }
 

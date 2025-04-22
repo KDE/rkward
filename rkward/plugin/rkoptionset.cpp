@@ -34,9 +34,9 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	last_known_status = Processing;
 	n_invalid_rows = n_unfinished_rows = 0;
 
-	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
-	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
-	max_rows = xml->getIntAttribute (element, "max_rows", INT_MAX, DL_INFO);
+	min_rows = xml->getIntAttribute (element, QStringLiteral("min_rows"), 0, DL_INFO);
+	min_rows_if_any = xml->getIntAttribute (element, QStringLiteral("min_rows_if_any"), 1, DL_INFO);
+	max_rows = xml->getIntAttribute (element, QStringLiteral("max_rows"), INT_MAX, DL_INFO);
 
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
@@ -56,40 +56,40 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 	// create some meta properties
 	serialization_of_set = new RKComponentPropertyBase (this, false);
-	addChild ("serialized", serialization_of_set);
+	addChild (QStringLiteral("serialized"), serialization_of_set);
 	connect (serialization_of_set, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::serializationPropertyChanged);
 
 	row_count = new RKComponentPropertyInt (this, false, 0);
 	row_count->setInternal (true);
-	addChild ("row_count", row_count);		// NOTE: read-only
+	addChild (QStringLiteral("row_count"), row_count);		// NOTE: read-only
 	return_to_row = active_row = -1;
 	current_row = new RKComponentPropertyInt (this, false, active_row);
 	current_row->setInternal (true);
-	addChild ("current_row", current_row);		// NOTE: read-write
+	addChild (QStringLiteral("current_row"), current_row);		// NOTE: read-write
 	connect (current_row, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::currentRowPropertyChanged);
 
 	// first build the contents, as we will need to refer to the elements inside, later
 	model = new RKOptionSetDisplayModel (this);
 	contents_container = new RKComponent (this, accordion->editorWidget ());
 	accordion->editorWidget ()->layout ()->addWidget (contents_container);
-	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
+	QDomElement content_element = xml->getChildElement (element, QStringLiteral("content"), DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
 	builder->buildElement (content_element, *xml, accordion->editorWidget (), false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
-	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), *xml, false);
+	builder->parseLogic (xml->getChildElement (element, QStringLiteral("logic"), DL_INFO), *xml, false);
 	builder->makeConnections ();
-	addChild ("contents", contents_container);
+	addChild (QStringLiteral("contents"), contents_container);
 	connect (standardComponent (), &RKStandardComponent::standardInitializationComplete, this, &RKOptionSet::fetchDefaults);
 
 	// create columns
-	XMLChildList options = xml->getChildElements (element, "optioncolumn", DL_WARNING);
+	XMLChildList options = xml->getChildElements (element, QStringLiteral("optioncolumn"), DL_WARNING);
 
 	QStringList visible_column_labels;
 	for (int i = 0; i < options.size (); ++i) {
 		const QDomElement &e = options.at (i);
-		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
-		QString label = xml->i18nStringAttribute (e, "label", QString (), DL_DEBUG);
-		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_INFO);
-		bool external = xml->getBoolAttribute (e, "external", false, DL_INFO);
+		QString id = xml->getStringAttribute (e, QStringLiteral("id"), QString (), DL_ERROR);
+		QString label = xml->i18nStringAttribute (e, QStringLiteral("label"), QString (), DL_DEBUG);
+		QString governor = xml->getStringAttribute (e, QStringLiteral("connect"), QString (), DL_INFO);
+		bool external = xml->getBoolAttribute (e, QStringLiteral("external"), false, DL_INFO);
 
 		while (child_map.contains (id)) {
 			RK_DEBUG (PLUGIN, DL_ERROR, "optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id));
@@ -100,7 +100,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		col_inf.column_name = id;
 		col_inf.external = external;
 		col_inf.governor = governor;
-		if (external && e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
+		if (external && e.hasAttribute (QStringLiteral("default"))) col_inf.default_value = xml->getStringAttribute (e, QStringLiteral("default"), QString (), DL_ERROR);
 
 		RKComponentPropertyStringList *column_property = new RKComponentPropertyStringList (this, false);
 		column_property->setInternal (external);	// Yes, looks strange, indeed. External properties should simply not be serialized / restored...
@@ -120,7 +120,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	}
 
 	keycolumn = nullptr;
-	QString keycol = xml->getStringAttribute (element, "keycolumn", QString (), DL_DEBUG);
+	QString keycol = xml->getStringAttribute (element, QStringLiteral("keycolumn"), QString (), DL_DEBUG);
 	if (!keycol.isEmpty ()) {
 		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 		if (!column_map.contains (keycolumn)) {
@@ -835,7 +835,7 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 				if ((set->rowCount () > 0) && (set->rowCount () < set->min_rows_if_any)) probs.append (i18n ("At least %1 rows have to be defined (if any)", set->min_rows_if_any));
 				if (set->rowCount () < set->min_rows) probs.append (i18n ("At least %1 rows have to be defined", set->min_rows));
 				if (set->rowCount () > set->max_rows) probs.append (i18n ("At most %1 rows may be defined", set->max_rows));
-				return (QString ("<p>%1</p><ul><li>%2</li></ul>").arg(i18n("This element is not valid for the following reason(s):"), probs.join("</li>\n<li>")));
+				return (QStringLiteral ("<p>%1</p><ul><li>%2</li></ul>").arg(i18n("This element is not valid for the following reason(s):"), probs.join(QStringLiteral("</li>\n<li>"))));
 			}
 		}
 	}
@@ -850,7 +850,7 @@ void RKOptionSetDisplayModel::triggerReset() {
 	}
 }
 
-QString optionsetdisplaymodel_mt ("application/x-rkaccordiontableitem");
+QString optionsetdisplaymodel_mt (QStringLiteral("application/x-rkaccordiontableitem"));
 QStringList RKOptionSetDisplayModel::mimeTypes () const {
 	return QStringList (optionsetdisplaymodel_mt);
 }

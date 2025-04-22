@@ -278,7 +278,7 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 
 	if (output->type != last_output_type) {
 		last_output_type = output->type;
-		output_text->insertPlainText ("\n");
+		output_text->insertPlainText (QStringLiteral("\n"));
 
 		if (output->type == ROutput::Output) {
 			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());

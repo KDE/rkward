@@ -16,9 +16,9 @@ RKAbstractOptionSelector::RKAbstractOptionSelector (RKComponent *parent_componen
 	RK_TRACE (PLUGIN);
 
 	// create and register properties
-	addChild ("string", string = new RKComponentPropertyBase (this, false));
+	addChild (QStringLiteral("string"), string = new RKComponentPropertyBase (this, false));
 	connect (string, &RKComponentPropertyBase::valueChanged, this, &RKAbstractOptionSelector::propertyChanged);
-	addChild ("number", number = new RKComponentPropertyInt (this, true, -1));
+	addChild (QStringLiteral("number"), number = new RKComponentPropertyInt (this, true, -1));
 	connect (number, &RKComponentPropertyBase::valueChanged, this, &RKAbstractOptionSelector::propertyChanged);
 	number->setInternal (true);
 }
@@ -38,13 +38,13 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 	XMLHelper *xml = parentComponent ()->xmlHelper ();
 
 	// create all the options
-	XMLChildList option_elements = xml->getChildElements (element, "option", DL_ERROR);	
+	XMLChildList option_elements = xml->getChildElements (element, QStringLiteral("option"), DL_ERROR);	
 	int selected = 0;
 	int i = 0;
 	for (XMLChildList::const_iterator it = option_elements.cbegin (); it != option_elements.cend (); ++it) {
-		QString label = xml->i18nStringAttribute (*it, "label", QString (), DL_ERROR);
-		QString value = xml->getStringAttribute (*it, "value", QString (), DL_WARNING);
-		QString name = xml->getStringAttribute (*it, "id", QString (), DL_INFO);
+		QString label = xml->i18nStringAttribute (*it, QStringLiteral("label"), QString (), DL_ERROR);
+		QString value = xml->getStringAttribute (*it, QStringLiteral("value"), QString (), DL_WARNING);
+		QString name = xml->getStringAttribute (*it, QStringLiteral("id"), QString (), DL_INFO);
 
 		Option *opt = new Option;
 		opt->value = value;
@@ -55,7 +55,7 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 
 		addOptionToGUI (label, i);
 
-		if (xml->getBoolAttribute (*it, "checked", false, DL_INFO)) {
+		if (xml->getBoolAttribute (*it, QStringLiteral("checked"), false, DL_INFO)) {
 			selected = i;
 		}
 
@@ -78,7 +78,7 @@ RKComponentBase* RKAbstractOptionSelector::lookupComponent (const QString &ident
 		Option *opt = named_options[name];
 
 		QString mod = identifier.section ('.', 1);
-		if (mod != "enabled") {
+		if (mod != QLatin1String("enabled")) {
 			RK_DEBUG (PLUGIN, DL_DEBUG, "options do not have property '%s'", mod.toLatin1().data ());
 			return this;
 		}
