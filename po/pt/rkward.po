@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2025-04-23 01:55+0000\n"
 "PO-Revision-Date: 2022-10-08 11:03+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -3805,12 +3805,12 @@ msgstr ""
 "O processo da infra-estrutura saiu com o código de erro %1 e a mensagem: "
 "'%2'."
 
-#: rkward/rbackend/rkrbackend.cpp:572
+#: rkward/rbackend/rkrbackend.cpp:540
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "O motor do R foi encerrado com o estado: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:593
+#: rkward/rbackend/rkrbackend.cpp:561
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3819,17 +3819,17 @@ msgstr ""
 "O motor do R obteve um erro fatal:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:763
+#: rkward/rbackend/rkrbackend.cpp:731
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Mensagem da infra-estrutura do R"
 
-#: rkward/rbackend/rkrbackend.cpp:771
+#: rkward/rbackend/rkrbackend.cpp:739
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Pergunta da infra-estrutura do R"
 
-#: rkward/rbackend/rkrbackend.cpp:1732
+#: rkward/rbackend/rkrbackend.cpp:1699
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3851,7 +3851,7 @@ msgstr ""
 "b>. Para mais ajuda sobre o assunto, veja em <a href=\"http://rkward.kde.org/"
 "compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1736
+#: rkward/rbackend/rkrbackend.cpp:1703
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3866,12 +3866,12 @@ msgstr ""
 "obter alguma ajuda sobre o assunto, veja em <a href=\"https://rkward.kde.org/"
 "compiling\">http://rkward.kde.org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1793
+#: rkward/rbackend/rkrbackend.cpp:1760
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Inconsistência da versão gráfica"
 
-#: rkward/rbackend/rkrbackend.cpp:1793
+#: rkward/rbackend/rkrbackend.cpp:1760
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3882,7 +3882,7 @@ msgstr ""
 "mudança obriga a uma recompilação.<br/><a href=\"rkward://page/"
 "rkward_incompatible_version\">Informações adicionais</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1793
+#: rkward/rbackend/rkrbackend.cpp:1760
 #, kde-format
 msgid "Ok"
 msgstr "Ok"
