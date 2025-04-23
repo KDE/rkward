@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-19 00:38+0000\n"
+"POT-Creation-Date: 2025-04-23 00:38+0000\n"
 "PO-Revision-Date: 2025-04-20 08:53+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -2564,7 +2564,7 @@ msgstr "Recherche en avant (Prochaine occurrence du terme recherché)."
 msgid "Match case"
 msgstr "Respecter la casse"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:939
 #, kde-format
 msgid "Find as you type"
 msgstr "Rechercher au fur et à mesure de la saisie"
@@ -5791,7 +5791,7 @@ msgid "Height:"
 msgstr "Hauteur :"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:52
-#: rkward/windows/rktoplevelwindowgui.cpp:150
+#: rkward/windows/rktoplevelwindowgui.cpp:154
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "Modules externes pour RKWard"
@@ -5873,7 +5873,7 @@ msgstr ""
 "propre flux de travail.</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:472
-#: rkward/windows/rkhtmlwindow.cpp:1157
+#: rkward/windows/rkhtmlwindow.cpp:1156
 #, kde-format
 msgid "Dependencies"
 msgstr "Dépendances"
@@ -6953,43 +6953,43 @@ msgstr "Sujet"
 msgid "Package"
 msgstr "Paquetage"
 
-#: rkward/windows/rkhtmlwindow.cpp:302
+#: rkward/windows/rkhtmlwindow.cpp:301
 #, kde-format
 msgid "Save as"
 msgstr "Enregistrer sous"
 
-#: rkward/windows/rkhtmlwindow.cpp:609
+#: rkward/windows/rkhtmlwindow.cpp:608
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "Le fichier de sortie de RKWard n'existe (pas) encore."
 
-#: rkward/windows/rkhtmlwindow.cpp:739
-#: rkward/windows/rktoplevelwindowgui.cpp:252
+#: rkward/windows/rkhtmlwindow.cpp:738
+#: rkward/windows/rktoplevelwindowgui.cpp:256
 #, kde-format
 msgid "[Active]"
 msgstr "[Actif]"
 
-#: rkward/windows/rkhtmlwindow.cpp:750
+#: rkward/windows/rkhtmlwindow.cpp:749
 #, kde-format
 msgid "Output %1"
 msgstr "Sortie de %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:804
+#: rkward/windows/rkhtmlwindow.cpp:803
 #, kde-format
 msgid "Output Window"
 msgstr "Fenêtre de sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:806
+#: rkward/windows/rkhtmlwindow.cpp:805
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Rafraîchir la sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:832
+#: rkward/windows/rkhtmlwindow.cpp:831
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "La page n'existe pas ou été incorrectement référencée"
 
-#: rkward/windows/rkhtmlwindow.cpp:844
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6999,32 +6999,32 @@ msgstr ""
 "fichiers d'images utilisés dans la sortie. Il sera impossible de la "
 "restaurer."
 
-#: rkward/windows/rkhtmlwindow.cpp:844
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid "Flush output?"
 msgstr "Vider la sortie ?"
 
-#: rkward/windows/rkhtmlwindow.cpp:849
+#: rkward/windows/rkhtmlwindow.cpp:848
 #, kde-format
 msgid "Flushing output"
 msgstr "Vidage de la sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:889
+#: rkward/windows/rkhtmlwindow.cpp:888
 #, kde-format
 msgid "Zoom In"
 msgstr "Zoom avant"
 
-#: rkward/windows/rkhtmlwindow.cpp:891
+#: rkward/windows/rkhtmlwindow.cpp:890
 #, kde-format
 msgid "Zoom Out"
 msgstr "Zoom arrière"
 
-#: rkward/windows/rkhtmlwindow.cpp:895
+#: rkward/windows/rkhtmlwindow.cpp:894
 #, kde-format
 msgid "Default &Encoding"
 msgstr "&Encodage par défaut"
 
-#: rkward/windows/rkhtmlwindow.cpp:896
+#: rkward/windows/rkhtmlwindow.cpp:895
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -7033,58 +7033,58 @@ msgstr ""
 "Définissez le codage pour être sûr qu'aucun code implicite n'a été défini "
 "dans la page ou dans les en-têtes « http »."
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:905
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Exporter la page au format « HTML »"
 
-#: rkward/windows/rkhtmlwindow.cpp:920
+#: rkward/windows/rkhtmlwindow.cpp:919
 #, kde-format
 msgid "Save Output"
 msgstr "Enregistrer la sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:922
+#: rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "Save Output As"
 msgstr "Enregistrer la sortie comme"
 
-#: rkward/windows/rkhtmlwindow.cpp:925
+#: rkward/windows/rkhtmlwindow.cpp:924
 #, kde-format
 msgid "&Clear Output"
 msgstr "Effa&cer une sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:931
+#: rkward/windows/rkhtmlwindow.cpp:930
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Revenir au dernier état enregistré"
 
-#: rkward/windows/rkhtmlwindow.cpp:935
+#: rkward/windows/rkhtmlwindow.cpp:934
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Définir une sortie comme &active"
 
-#: rkward/windows/rkhtmlwindow.cpp:937
+#: rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr ""
 "Définir cette sortie comme le fichier dans lequel concaténer la sortie."
 
-#: rkward/windows/rkhtmlwindow.cpp:959
+#: rkward/windows/rkhtmlwindow.cpp:958
 #, kde-format
 msgid "Print output"
 msgstr "Imprimer la sortie"
 
-#: rkward/windows/rkhtmlwindow.cpp:967
+#: rkward/windows/rkhtmlwindow.cpp:966
 #, kde-format
 msgid "Print page"
 msgstr "Imprimer une page"
 
-#: rkward/windows/rkhtmlwindow.cpp:1024
+#: rkward/windows/rkhtmlwindow.cpp:1023
 #, kde-format
 msgid "No Title"
 msgstr "Aucun titre"
 
-#: rkward/windows/rkhtmlwindow.cpp:1037
+#: rkward/windows/rkhtmlwindow.cpp:1036
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -7095,62 +7095,62 @@ msgstr ""
 "<p> La page d'aide pour ce composant n'a pas été encore écrite (ou est "
 "cassée). Veuillez prendre en compte que vous y contribuez.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1042
+#: rkward/windows/rkhtmlwindow.cpp:1041
 #, kde-format
 msgid "Use %1 now"
 msgstr "Utiliser %1 maintenant"
 
-#: rkward/windows/rkhtmlwindow.cpp:1059
+#: rkward/windows/rkhtmlwindow.cpp:1058
 #, kde-format
 msgid "Summary"
 msgstr "Résumé"
 
-#: rkward/windows/rkhtmlwindow.cpp:1066
+#: rkward/windows/rkhtmlwindow.cpp:1065
 #, kde-format
 msgid "Usage"
 msgstr "Utilisation"
 
-#: rkward/windows/rkhtmlwindow.cpp:1093
+#: rkward/windows/rkhtmlwindow.cpp:1092
 #, kde-format
 msgid "Choose another file"
 msgstr "Sélectionnez un autre fichier"
 
-#: rkward/windows/rkhtmlwindow.cpp:1115
+#: rkward/windows/rkhtmlwindow.cpp:1114
 #, kde-format
 msgid "GUI settings"
 msgstr "Configuration de l'interface graphique utilisateur"
 
-#: rkward/windows/rkhtmlwindow.cpp:1140
+#: rkward/windows/rkhtmlwindow.cpp:1139
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Fonctions et pages associées"
 
-#: rkward/windows/rkhtmlwindow.cpp:1148
+#: rkward/windows/rkhtmlwindow.cpp:1147
 #, kde-format
 msgid "Technical details"
 msgstr "Détails techniques"
 
-#: rkward/windows/rkhtmlwindow.cpp:1171
+#: rkward/windows/rkhtmlwindow.cpp:1170
 #, kde-format
 msgid "About"
 msgstr "À propos"
 
-#: rkward/windows/rkhtmlwindow.cpp:1178
+#: rkward/windows/rkhtmlwindow.cpp:1177
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Sur cette page : </h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1201
+#: rkward/windows/rkhtmlwindow.cpp:1200
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Élément sans nom de l'interface graphique utilisateur"
 
-#: rkward/windows/rkhtmlwindow.cpp:1275
+#: rkward/windows/rkhtmlwindow.cpp:1274
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Référence R vers « %1 »"
 
-#: rkward/windows/rkhtmlwindow.cpp:1286
+#: rkward/windows/rkhtmlwindow.cpp:1285
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "RÉFÉRENCE CASSÉE"
@@ -7259,12 +7259,12 @@ msgstr "Fenêtre suivante"
 msgid "Activate Document view"
 msgstr "Activer l'affichage de documents"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:130
+#: rkward/windows/rktoplevelwindowgui.cpp:134
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Afficher / Masquer %1"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:143
+#: rkward/windows/rktoplevelwindowgui.cpp:147
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -7282,13 +7282,13 @@ msgstr ""
 "pour une utilisation à l'intérieur de l'éditeur de scripts, vous devrez "
 "ouvrir la fenêtre d'éditeur de scripts et l'activer."
 
-#: rkward/windows/rktoplevelwindowgui.cpp:143
-#: rkward/windows/rktoplevelwindowgui.cpp:157
+#: rkward/windows/rktoplevelwindowgui.cpp:147
+#: rkward/windows/rktoplevelwindowgui.cpp:161
 #, kde-format
 msgid "Note"
 msgstr "Remarque"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:157
+#: rkward/windows/rktoplevelwindowgui.cpp:161
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "

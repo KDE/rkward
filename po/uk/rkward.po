@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-19 00:38+0000\n"
+"POT-Creation-Date: 2025-04-23 00:38+0000\n"
 "PO-Revision-Date: 2025-04-19 18:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -2544,7 +2544,7 @@ msgstr "Шукати вперед (наступний результат пош�
 msgid "Match case"
 msgstr "З урахуванням регістру"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:939
 #, kde-format
 msgid "Find as you type"
 msgstr "Шукати під час введення"
@@ -5704,7 +5704,7 @@ msgid "Height:"
 msgstr "Висота:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:52
-#: rkward/windows/rktoplevelwindowgui.cpp:150
+#: rkward/windows/rktoplevelwindowgui.cpp:154
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "Додатки RKWard"
@@ -5782,7 +5782,7 @@ msgstr ""
 "тих додатків, які потрібні у вашому робочому процесі.</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:472
-#: rkward/windows/rkhtmlwindow.cpp:1157
+#: rkward/windows/rkhtmlwindow.cpp:1156
 #, kde-format
 msgid "Dependencies"
 msgstr "Залежності"
@@ -6857,43 +6857,43 @@ msgstr "Тема"
 msgid "Package"
 msgstr "Пакунок"
 
-#: rkward/windows/rkhtmlwindow.cpp:302
+#: rkward/windows/rkhtmlwindow.cpp:301
 #, kde-format
 msgid "Save as"
 msgstr "Зберегти як"
 
-#: rkward/windows/rkhtmlwindow.cpp:609
+#: rkward/windows/rkhtmlwindow.cpp:608
 #, kde-format
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "Файла результатів RKWard %s ще не існує"
 
-#: rkward/windows/rkhtmlwindow.cpp:739
-#: rkward/windows/rktoplevelwindowgui.cpp:252
+#: rkward/windows/rkhtmlwindow.cpp:738
+#: rkward/windows/rktoplevelwindowgui.cpp:256
 #, kde-format
 msgid "[Active]"
 msgstr "[Активний]"
 
-#: rkward/windows/rkhtmlwindow.cpp:750
+#: rkward/windows/rkhtmlwindow.cpp:749
 #, kde-format
 msgid "Output %1"
 msgstr "Виведення %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:804
+#: rkward/windows/rkhtmlwindow.cpp:803
 #, kde-format
 msgid "Output Window"
 msgstr "Вікно виведення даних"
 
-#: rkward/windows/rkhtmlwindow.cpp:806
+#: rkward/windows/rkhtmlwindow.cpp:805
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Освіжити панель виведення"
 
-#: rkward/windows/rkhtmlwindow.cpp:832
+#: rkward/windows/rkhtmlwindow.cpp:831
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "Сторінки не існує або код сторінки пошкоджено"
 
-#: rkward/windows/rkhtmlwindow.cpp:844
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6903,32 +6903,32 @@ msgstr ""
 "вилучення всіх файлів зображень у виведених даних. Відновити ці файли буде "
 "майже неможливо."
 
-#: rkward/windows/rkhtmlwindow.cpp:844
+#: rkward/windows/rkhtmlwindow.cpp:843
 #, kde-format
 msgid "Flush output?"
 msgstr "С&порожнити панель виведення?"
 
-#: rkward/windows/rkhtmlwindow.cpp:849
+#: rkward/windows/rkhtmlwindow.cpp:848
 #, kde-format
 msgid "Flushing output"
 msgstr "Вилучення виведених даних"
 
-#: rkward/windows/rkhtmlwindow.cpp:889
+#: rkward/windows/rkhtmlwindow.cpp:888
 #, kde-format
 msgid "Zoom In"
 msgstr "Збільшити"
 
-#: rkward/windows/rkhtmlwindow.cpp:891
+#: rkward/windows/rkhtmlwindow.cpp:890
 #, kde-format
 msgid "Zoom Out"
 msgstr "Зменшити"
 
-#: rkward/windows/rkhtmlwindow.cpp:895
+#: rkward/windows/rkhtmlwindow.cpp:894
 #, kde-format
 msgid "Default &Encoding"
 msgstr "Типове &кодування"
 
-#: rkward/windows/rkhtmlwindow.cpp:896
+#: rkward/windows/rkhtmlwindow.cpp:895
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6937,58 +6937,58 @@ msgstr ""
 "Встановлює кодування, яким слід користуватися, якщо на сторінці або у "
 "заголовках HTTP кодування не вказано явним чином."
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:905
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Експортувати сторінку у форматі HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:920
+#: rkward/windows/rkhtmlwindow.cpp:919
 #, kde-format
 msgid "Save Output"
 msgstr "Зберегти виведене"
 
-#: rkward/windows/rkhtmlwindow.cpp:922
+#: rkward/windows/rkhtmlwindow.cpp:921
 #, kde-format
 msgid "Save Output As"
 msgstr "Зберегти виведене як"
 
-#: rkward/windows/rkhtmlwindow.cpp:925
+#: rkward/windows/rkhtmlwindow.cpp:924
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Очистити вивід"
 
-#: rkward/windows/rkhtmlwindow.cpp:931
+#: rkward/windows/rkhtmlwindow.cpp:930
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "П&овернутися до останнього збереженого стану"
 
-#: rkward/windows/rkhtmlwindow.cpp:935
+#: rkward/windows/rkhtmlwindow.cpp:934
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Зберегти виведене як &активне"
 
-#: rkward/windows/rkhtmlwindow.cpp:937
+#: rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr ""
 "Встановити це виведення як файл, До якого слід дописувати виведені дані."
 
-#: rkward/windows/rkhtmlwindow.cpp:959
+#: rkward/windows/rkhtmlwindow.cpp:958
 #, kde-format
 msgid "Print output"
 msgstr "Надрукувати виведене"
 
-#: rkward/windows/rkhtmlwindow.cpp:967
+#: rkward/windows/rkhtmlwindow.cpp:966
 #, kde-format
 msgid "Print page"
 msgstr "Надрукувати сторінку"
 
-#: rkward/windows/rkhtmlwindow.cpp:1024
+#: rkward/windows/rkhtmlwindow.cpp:1023
 #, kde-format
 msgid "No Title"
 msgstr "Без назви"
 
-#: rkward/windows/rkhtmlwindow.cpp:1037
+#: rkward/windows/rkhtmlwindow.cpp:1036
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6999,62 +6999,62 @@ msgstr ""
 "<p>Сторінку довідки для цього компонента ще не було написано (або її дані "
 "було пошкоджено). Допоможіть нам у створенні цієї сторінки.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1042
+#: rkward/windows/rkhtmlwindow.cpp:1041
 #, kde-format
 msgid "Use %1 now"
 msgstr "Скористатися %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:1059
+#: rkward/windows/rkhtmlwindow.cpp:1058
 #, kde-format
 msgid "Summary"
 msgstr "Резюме"
 
-#: rkward/windows/rkhtmlwindow.cpp:1066
+#: rkward/windows/rkhtmlwindow.cpp:1065
 #, kde-format
 msgid "Usage"
 msgstr "Використання"
 
-#: rkward/windows/rkhtmlwindow.cpp:1093
+#: rkward/windows/rkhtmlwindow.cpp:1092
 #, kde-format
 msgid "Choose another file"
 msgstr "Вибрати інший файл"
 
-#: rkward/windows/rkhtmlwindow.cpp:1115
+#: rkward/windows/rkhtmlwindow.cpp:1114
 #, kde-format
 msgid "GUI settings"
 msgstr "Параметри графічного інтерфейсу"
 
-#: rkward/windows/rkhtmlwindow.cpp:1140
+#: rkward/windows/rkhtmlwindow.cpp:1139
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Пов’язані функції і сторінки"
 
-#: rkward/windows/rkhtmlwindow.cpp:1148
+#: rkward/windows/rkhtmlwindow.cpp:1147
 #, kde-format
 msgid "Technical details"
 msgstr "Технічні подробиці"
 
-#: rkward/windows/rkhtmlwindow.cpp:1171
+#: rkward/windows/rkhtmlwindow.cpp:1170
 #, kde-format
 msgid "About"
 msgstr "Про програму"
 
-#: rkward/windows/rkhtmlwindow.cpp:1178
+#: rkward/windows/rkhtmlwindow.cpp:1177
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>На цій сторінці:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1201
+#: rkward/windows/rkhtmlwindow.cpp:1200
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Елемент графічного інтерфейсу без назви"
 
-#: rkward/windows/rkhtmlwindow.cpp:1275
+#: rkward/windows/rkhtmlwindow.cpp:1274
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Довідка R щодо «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1286
+#: rkward/windows/rkhtmlwindow.cpp:1285
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "ПОМИЛКОВЕ ПОСИЛАННЯ"
@@ -7162,12 +7162,12 @@ msgstr "Наступне вікно"
 msgid "Activate Document view"
 msgstr "Задіяти панель перегляду документів"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:130
+#: rkward/windows/rktoplevelwindowgui.cpp:134
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Показати/Сховати «%1»"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:143
+#: rkward/windows/rktoplevelwindowgui.cpp:147
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -7184,13 +7184,13 @@ msgstr ""
 "використання у редакторі скриптів, вам слід відкрити вікно редактора "
 "скриптів і задіяти його."
 
-#: rkward/windows/rktoplevelwindowgui.cpp:143
-#: rkward/windows/rktoplevelwindowgui.cpp:157
+#: rkward/windows/rktoplevelwindowgui.cpp:147
+#: rkward/windows/rktoplevelwindowgui.cpp:161
 #, kde-format
 msgid "Note"
 msgstr "Примітка"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:157
+#: rkward/windows/rktoplevelwindowgui.cpp:161
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
