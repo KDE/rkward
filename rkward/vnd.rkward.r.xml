@@ -19,6 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <comment xml:lang="fr">Fichier source « R »</comment>
     <comment xml:lang="gl">Ficheiro de código R.</comment>
     <comment xml:lang="he">קובץ מקור בשפת R</comment>
+    <comment xml:lang="hi">आर स्रोत फ़ाइल</comment>
     <comment xml:lang="hu">R forrásfájl</comment>
     <comment xml:lang="ia">File fonte de R</comment>
     <comment xml:lang="it">File sorgente di R</comment>
@@ -31,6 +32,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <comment xml:lang="pt">Ficheiro de código em R</comment>
     <comment xml:lang="pt_BR">Arquivo de código do R</comment>
     <comment xml:lang="ru">Файл кода R</comment>
+    <comment xml:lang="sa">आर स्रोत सञ्चिका</comment>
     <comment xml:lang="sk">Zdrojový súbor R</comment>
     <comment xml:lang="sl">R izvorni program</comment>
     <comment xml:lang="sv">R-källkodsfil</comment>
@@ -59,6 +61,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <comment xml:lang="fr">Fichier de données ou d'espace de travail « R »</comment>
     <comment xml:lang="gl">Ficheiro de dato ou espazo de traballo de R.</comment>
     <comment xml:lang="he">קובץ סביבת עבודה/נתונים של R</comment>
+    <comment xml:lang="hi">आर डेटा/कार्यस्थान फ़ाइल</comment>
     <comment xml:lang="hu">R adat/munkaterületfájl</comment>
     <comment xml:lang="ia">File de datos/spatio de labor de R</comment>
     <comment xml:lang="it">File di dati/spazio di lavoro di R</comment>
@@ -71,6 +74,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
     <comment xml:lang="pt_BR">Arquivo de dados/espaço de trabalho do R</comment>
     <comment xml:lang="ru">Файл данных/рабочей области R</comment>
+    <comment xml:lang="sa">आर दत्तांश/कार्यक्षेत्र सञ्चिका</comment>
     <comment xml:lang="sk">Súbor údajov/pracovnej plochy R</comment>
     <comment xml:lang="sl">R datoteka data/workspace</comment>
     <comment xml:lang="sv">R-datafil/arbetsrymdsfil</comment>
