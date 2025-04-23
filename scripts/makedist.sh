@@ -25,17 +25,18 @@ $BASEDIR/scripts/roxygenize.sh || exit 1
 
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure VERSION.cmake $DISTDIR
 mkdir $DISTDIR/doc
-mkdir $DISTDIR/i18n
 mkdir $DISTDIR/po
 mkdir $DISTDIR/rkward
 mkdir $DISTDIR/tests
+mkdir $DISTDIR/3rdparty
+mkdir $DISTDIR/LICENSES
 
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/doc/* $DISTDIR/doc
-rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/i18n/* $DISTDIR/i18n
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/po/* $DISTDIR/po
 rsync -a --exclude '*~' --exclude '*.git*' --exclude 'templates' --exclude 'rbackend/rpackages/rkwardtests/debian' $EXCLUDES $BASEDIR/rkward/* $DISTDIR/rkward
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/tests
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/3rdparty/* $DISTDIR/3rdparty
+rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/LICENSES/* $DISTDIR/LICENSES
 
 cd $BASEDIR/disttemp
 tar -czf rkward-$VERSION.tar.gz $DISTDIRREL
