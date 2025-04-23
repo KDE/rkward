@@ -30,6 +30,7 @@ mkdir $DISTDIR/rkward
 mkdir $DISTDIR/tests
 mkdir $DISTDIR/3rdparty
 mkdir $DISTDIR/LICENSES
+mkdir $DISTDIR/.reuse
 
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/doc/* $DISTDIR/doc
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/po/* $DISTDIR/po
@@ -37,6 +38,7 @@ rsync -a --exclude '*~' --exclude '*.git*' --exclude 'templates' --exclude 'rbac
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/tests
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/3rdparty/* $DISTDIR/3rdparty
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/LICENSES/* $DISTDIR/LICENSES
+rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/.reuse/* $DISTDIR/.reuse
 
 cd $BASEDIR/disttemp
 tar -czf rkward-$VERSION.tar.gz $DISTDIRREL
