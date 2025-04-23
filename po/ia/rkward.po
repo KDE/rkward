@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024 giovanni <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2024, 2025 giovanni <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2024-07-15 09:58+0200\n"
+"PO-Revision-Date: 2025-04-22 12:45+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1785,10 +1785,9 @@ msgid "Frontend to the R statistics language"
 msgstr ""
 
 #: rkward/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "(c) 2002 - 2024"
+msgstr "C) 2002 - 2025"
 
 #: rkward/main.cpp:175
 #, kde-format
