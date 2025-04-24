@@ -177,7 +177,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 				config->deleteGroup(groups[i]);
 			}
 		}
-		rkward_version_changed = (cg.readEntry("previous runtime version", QString()) != RKWARD_VERSION) || RKCommandLineArgs::get(RKCommandLineArgs::Setup).toBool();
+		rkward_version_changed = (cg.readEntry("previous runtime version", QString()) != QLatin1String(RKWARD_VERSION)) || RKCommandLineArgs::get(RKCommandLineArgs::Setup).toBool();
 	} else {
 		cg.writeEntry("config file version", (int) RKWardConfig_Latest);
 		cg.writeEntry("previous runtime version", QStringLiteral(RKWARD_VERSION));
@@ -186,7 +186,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	cg = config->group(QStringLiteral("Logfiles"));
 	if (a == RKConfigBase::LoadConfig) {
 		// default not yet set, first time loading config
-		if (new_files_path.get().isNull()) new_files_path = QString(QDir().homePath() + "/.rkward/");
+		if (new_files_path.get().isNull()) new_files_path = QString(QDir().homePath() + u"/.rkward/"_s);
 
 		new_files_path.loadConfig(cg);
 		files_path = new_files_path;

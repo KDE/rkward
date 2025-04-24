@@ -220,13 +220,14 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	RK_TRACE (SETTINGS);
 	QStringList list;
 
-// output format options
-	QString command = "options (\"rk.graphics.type\"=" + graphics_type.get();
-	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
-	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
-	if (graphics_type == QStringLiteral("\"JPG\"")) command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
-	command.append (", \"rk.output.css.file\"=\"" + (custom_css_file.get().isEmpty () ? RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css" : custom_css_file.get()) + '\"');
-	list.append (command + ")\n");
+	// output format options
+	QString command = u"options (\"rk.graphics.type\"="_s + graphics_type.get();
+	command.append(u", \"rk.graphics.width\"="_s + QString::number(graphics_width));
+	command.append(u", \"rk.graphics.height\"="_s + QString::number(graphics_height));
+	if (graphics_type == "\"JPG\""_L1) command.append(u", \"rk.graphics.jpg.quality\"="_s + QString::number(graphics_jpg_quality));
+	command.append(u", \"rk.output.css.file\"=\""_s +
+		(custom_css_file.get().isEmpty() ? RKCommonFunctions::getRKWardDataDir() + u"pages/rkward_output.css"_s : custom_css_file.get()) + u'\"');
+	list.append(command + u")\n"_s);
 
 	return (list);
 }

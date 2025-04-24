@@ -26,7 +26,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // static
 RKConfigValue<bool> RKSettingsModuleObjectBrowser::workspace_settings[RKObjectListViewSettings::SettingsCount] {{"show hidden vars", false},{"show type field", true},{"show class field", true},{"show label field", true}};
 RKConfigValue<bool> RKSettingsModuleObjectBrowser::varselector_settings[RKObjectListViewSettings::SettingsCount] { RKSettingsModuleObjectBrowser::workspace_settings[0],RKSettingsModuleObjectBrowser::workspace_settings[1],RKSettingsModuleObjectBrowser::workspace_settings[2],RKSettingsModuleObjectBrowser::workspace_settings[3]};
-RKConfigValue<QStringList> RKSettingsModuleObjectBrowser::getstructure_blacklist {"package blacklist", QStringList("GO")};
+RKConfigValue<QStringList> RKSettingsModuleObjectBrowser::getstructure_blacklist {"package blacklist", QStringList(u"GO"_s)};
 
 class RKSettingsPageObjectBrowser : public RKSettingsModuleWidget {
 public:

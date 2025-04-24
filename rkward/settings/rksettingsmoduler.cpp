@@ -224,44 +224,44 @@ void RKSettingsModuleR::createPages(RKSettings *parent) {
 	parent->addSettingsPage(new RKSettingsPageR(parent, this));
 }
 
-static QLatin1String RTrueFalse(bool val) {
-	if (val) return QLatin1String("TRUE");
-	return QLatin1String("FALSE");
+static QString RTrueFalse(bool val) {
+	if (val) return u"TRUE"_s;
+	return u"FALSE"_s;
 }
 
-//static
-QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
-	RK_TRACE (SETTINGS);
+// static
+QStringList RKSettingsModuleR::makeRRunTimeOptionCommands() {
+	RK_TRACE(SETTINGS);
 	QStringList list;
 
 	QString outdec = options_outdec;
-	if (outdec.isEmpty()) outdec = '.';
-	list.append ("options (OutDec=\"" + outdec + "\")\n");
-	list.append ("options (width=" + QString::number (options_width) + ")\n");
-	list.append ("options (warn=" + QString::number (options_warn) + ")\n");
-	list.append ("options (max.print=" + QString::number (options_maxprint) + ")\n");
-	list.append ("options (warnings.length=" + QString::number (options_warningslength) + ")\n");
-	list.append ("options (keep.source=" + RTrueFalse(options_keepsource) + ")\n");
-	list.append ("options (keep.source.pkgs=" + RTrueFalse(options_keepsourcepkgs) + ")\n");
-	list.append ("options (expressions=" + QString::number (options_expressions) + ")\n");
-	list.append ("options (digits=" + QString::number (options_digits) + ")\n");
-	list.append ("options (checkbounds=" + RTrueFalse(options_checkbounds) + ")\n");
-	if (options_editor == builtin_editor) list.append (QStringLiteral("options (editor=rk.edit.files)\n"));
-	else list.append ("options (editor=\"" + options_editor.get() + "\")\n");
-	if (options_pager == builtin_editor) list.append (QStringLiteral("options (pager=rk.show.files)\n"));
-	else list.append ("options (pager=\"" + options_pager.get() + "\")\n");
-	if (!options_further.get().isEmpty ()) list.append (options_further.get() + '\n');
-	if (!options_addpaths.get().isEmpty ()) {
-		QString command = QStringLiteral("rk.adjust.system.path (add=c(");
+	if (outdec.isEmpty()) outdec = u'.';
+	list.append(u"options (OutDec=\""_s + outdec + u"\")\n"_s);
+	list.append(u"options (width="_s + QString::number(options_width) + u")\n"_s);
+	list.append(u"options (warn="_s + QString::number(options_warn) + u")\n"_s);
+	list.append(u"options (max.print="_s + QString::number(options_maxprint) + u")\n"_s);
+	list.append(u"options (warnings.length="_s + QString::number(options_warningslength) + u")\n"_s);
+	list.append(u"options (keep.source="_s + RTrueFalse(options_keepsource) + u")\n"_s);
+	list.append(u"options (keep.source.pkgs="_s + RTrueFalse(options_keepsourcepkgs) + u")\n"_s);
+	list.append(u"options (expressions="_s + QString::number(options_expressions) + u")\n"_s);
+	list.append(u"options (digits="_s + QString::number(options_digits) + u")\n"_s);
+	list.append(u"options (checkbounds="_s + RTrueFalse(options_checkbounds) + u")\n"_s);
+	if (options_editor == builtin_editor) list.append(u"options (editor=rk.edit.files)\n"_s);
+	else list.append(u"options (editor=\""_s + options_editor.get() + u"\")\n"_s);
+	if (options_pager == builtin_editor) list.append(u"options (pager=rk.show.files)\n"_s);
+	else list.append(u"options (pager=\""_s + options_pager.get() + u"\")\n"_s);
+	if (!options_further.get().isEmpty()) list.append(options_further.get() + u'\n');
+	if (!options_addpaths.get().isEmpty()) {
+		QString command = u"rk.adjust.system.path (add=c("_s;
 		for (const QString &p : std::as_const(options_addpaths.get())) {
-			command.append (RObject::rQuote (p));
+			command.append(RObject::rQuote(p));
 		}
-		list.append (command + "))\n");
+		list.append(command + u"))\n"_s);
 	}
 
-	list.append (QStringLiteral("options (help_type=\"html\")\n"));		// for R 2.10.0 and above
-	list.append (QStringLiteral("options (browser=rk.show.html)\n"));
-	list.append (QStringLiteral("options (askYesNo=rk.askYesNo)\n")); // for R 3.5.0 and above
+	list.append(u"options (help_type=\"html\")\n"_s);  // for R 2.10.0 and above
+	list.append(u"options (browser=rk.show.html)\n"_s);
+	list.append(u"options (askYesNo=rk.askYesNo)\n"_s);  // for R 3.5.0 and above
 
 	return list;
 }
@@ -303,11 +303,11 @@ RKConfigValue<bool> RKSettingsModuleRPackages::archive_packages {"archive packag
 #else
 #	define USE_SOURCE_PACKAGES true
 #endif
-RKConfigValue<bool> RKSettingsModuleRPackages::source_packages {"source_packages", USE_SOURCE_PACKAGES};
+RKConfigValue<bool> RKSettingsModuleRPackages::source_packages{"source_packages", USE_SOURCE_PACKAGES};
 #define RKWARD_REPO "https://files.kde.org/rkward/R/"
-RKConfigValue<QStringList> RKSettingsModuleRPackages::package_repositories {"Repositories", QStringList(RKWARD_REPO)};
-QString RKSettingsModuleRPackages::essential_packages = QStringLiteral ("base\nmethods\nutils\ngrDevices\ngraphics\nrkward");
-RKConfigValue<QString> RKSettingsModuleRPackages::cran_mirror_url {"CRAN mirror url", QStringLiteral("@CRAN@")};
+RKConfigValue<QStringList> RKSettingsModuleRPackages::package_repositories{"Repositories", QStringList(QStringLiteral(RKWARD_REPO))};
+QString RKSettingsModuleRPackages::essential_packages = u"base\nmethods\nutils\ngrDevices\ngraphics\nrkward"_s;
+RKConfigValue<QString> RKSettingsModuleRPackages::cran_mirror_url{"CRAN mirror url", u"@CRAN@"_s};
 QStringList RKSettingsModuleRPackages::defaultliblocs;
 QString RKSettingsModuleRPackages::r_libs_user;
 
@@ -442,27 +442,28 @@ void RKSettingsModuleRPackages::createPages(RKSettings *parent) {
 	parent->addSettingsPage(new RKSettingsPageRPackages(parent, this));
 }
 
-void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCommandChain *chain) {
-	RK_TRACE (SETTINGS);
+void RKSettingsModuleRPackages::addLibraryLocation(const QString &new_loc, RCommandChain *chain) {
+	RK_TRACE(SETTINGS);
 
-	if (!libraryLocations ().contains (new_loc)) liblocs.get().prepend (new_loc);
+	if (!libraryLocations().contains(new_loc)) liblocs.get().prepend(new_loc);
 
 	// update the backend in any case. User might have changed liblocs, there.
-	RInterface::issueCommand(new RCommand(".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync), chain);
+	RInterface::issueCommand(new RCommand(u".libPaths (unique (c ("_s + RObject::rQuote(new_loc) + u", .libPaths ())))"_s, RCommand::App | RCommand::Sync),
+	                         chain);
 }
 
-QStringList expandLibLocs (const QStringList &in) {
+QStringList expandLibLocs(const QStringList &in) {
 	QStringList ret;
-	for (int i = 0; i < in.size (); ++i) {
+	for (int i = 0; i < in.size(); ++i) {
 		QString dummy = in[i];
-		ret.append (dummy.replace (QLatin1String ("%v"), RKSessionVars::RVersion (true)));
+		ret.append(dummy.replace("%v"_L1, RKSessionVars::RVersion(true)));
 	}
 	return ret;
 }
 
-QString RKSettingsModuleRPackages::userLibraryLocation () {
+QString RKSettingsModuleRPackages::userLibraryLocation() {
 	if (!r_libs_user.isEmpty()) return r_libs_user;
-	return QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library/" + RKSessionVars::RVersion (true));
+	return QDir(RKSettingsModuleGeneral::filesPath()).absoluteFilePath(u"library/"_s + RKSessionVars::RVersion(true));
 }
 
 QStringList RKSettingsModuleRPackages::libraryLocations () {
@@ -474,34 +475,38 @@ QStringList RKSettingsModuleRPackages::addUserLibLocTo (const QStringList& liblo
 	return liblocs;
 }
 
-QString RKSettingsModuleRPackages::libLocsCommand () {
-	RK_TRACE (SETTINGS);
+QString RKSettingsModuleRPackages::libLocsCommand() {
+	RK_TRACE(SETTINGS);
 
 	// For additional library locations configured inside RKWard, try to create them, as needed.
 	// This is especially important for versioned dirs (which will not exist after upgrading R, for instance)
 	QString command;
 	if (!liblocs.get().isEmpty()) {
 		bool first = true;
-		command = QLatin1String("local({\naddpaths <- unique (c(");
+		command = u"local({\naddpaths <- unique (c("_s;
 		const QStringList ll = expandLibLocs(liblocs);
 		for (const QString& libloc : ll) {
-			if (first) first = false;
-			else command.append (", ");
-			command.append (RObject::rQuote (libloc));
+			if (first)
+				first = false;
+			else
+				command.append(u", "_s);
+			command.append(RObject::rQuote(libloc));
 		}
-		command.append ("))\nlapply(addpaths, function(p) { if (!dir.exists(p)) try(dir.create(p, recursive=TRUE)) })\n})\n");
+		command.append(u"))\nlapply(addpaths, function(p) { if (!dir.exists(p)) try(dir.create(p, recursive=TRUE)) })\n})\n"_s);
 	}
 
 	// For add library locations set "the R way", try to interfere as little as possible.
-	command.append(".libPaths (unique (c (");
+	command.append(u".libPaths (unique (c ("_s);
 	bool first = true;
-	const QStringList ll = libraryLocations ();
+	const QStringList ll = libraryLocations();
 	for (const QString& libloc : ll) {
-		if (first) first = false;
-		else command.append (", ");
-		command.append (RObject::rQuote (libloc));
+		if (first)
+			first = false;
+		else
+			command.append(u", "_s);
+		command.append(RObject::rQuote(libloc));
 	}
-	command.append (")))");
+	command.append(u")))"_s);
 
 	return command;
 }
@@ -510,32 +515,32 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 QString RKSettingsModuleRPackages::pkgTypeOption () {
 	QString ret;
 #if defined Q_OS_WIN || defined Q_OS_MACOS
-	ret.append("options (pkgType=\"");
-	if (source_packages) ret.append("source");
-	else ret.append("binary");   // "automatically select appropriate binary"
-	ret.append("\")\n");
+	ret.append(u"options (pkgType=\""_s);
+	if (source_packages) ret.append(u"source"_s);
+	else ret.append(u"binary"_s);   // "automatically select appropriate binary"
+	ret.append(u"\")\n"_s);
 #endif
 	return ret;
 }
 
 //static
-QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
-	RK_TRACE (SETTINGS);
+QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands() {
+	RK_TRACE(SETTINGS);
 	QStringList list;
 
-// package repositories
-	QString command = "options (repos=c (CRAN=" + RObject::rQuote (cran_mirror_url);
-	for (auto it = package_repositories.get().constBegin (); it != package_repositories.get().constEnd(); ++it) {
-		command.append (", " + RObject::rQuote (*it));
+	// package repositories
+	QString command = u"options (repos=c (CRAN="_s + RObject::rQuote(cran_mirror_url);
+	for (auto it = package_repositories.get().constBegin(); it != package_repositories.get().constEnd(); ++it) {
+		command.append(u", "_s + RObject::rQuote(*it));
 	}
-	list.append (command + "))\n");
+	list.append(command + u"))\n"_s);
 
 #if defined Q_OS_WIN || defined Q_OS_MACOS
-	list.append (pkgTypeOption ());
+	list.append(pkgTypeOption());
 #endif
 
-// library locations
-	list.append (libLocsCommand ());
+	// library locations
+	list.append(libLocsCommand());
 
 	return list;
 }
@@ -543,7 +548,7 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 void RKSettingsModuleRPackages::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group(QStringLiteral("R Settings"));
+	KConfigGroup cg = config->group(u"R Settings"_s);
 	cran_mirror_url.syncConfig(cg, a);
 	liblocs.syncConfig(cg, a);
 	archive_packages.syncConfig(cg, a);
@@ -553,8 +558,8 @@ void RKSettingsModuleRPackages::syncConfig(KConfig *config, RKConfigBase::Config
 	if (a == RKConfigBase::LoadConfig) {
 		if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_3) {
 			auto v = package_repositories.get();
-			v.removeAll("http://rkward.sf.net/R");
-			v.append(RKWARD_REPO);
+			v.removeAll(u"http://rkward.sf.net/R"_s);
+			v.append(QStringLiteral(RKWARD_REPO));
 			package_repositories = v;
 		}
 	}
@@ -564,7 +569,7 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSetupWizard
 	RK_TRACE (SETTINGS);
 
 	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_7_1) {
-		QString legacy_libloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath (QStringLiteral("library"));
+		QString legacy_libloc = QDir(RKSettingsModuleGeneral::filesPath()).absoluteFilePath(u"library"_s);
 		if (liblocs.get().contains(legacy_libloc)) {
 			auto item = new RKSetupWizardItem(i18n("Unversioned library location"), i18n("The configured library locations (where R packages will be installed on this system) contains the directory '%1', "
 			                                  "which was suggested as a default library location in earlier versions of RKWard. Use of this directory is no longer "
@@ -574,10 +579,10 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSetupWizard
 			item->addOption(i18nc("verb", "Rename"), i18n("Rename this location to include the version number of the currently running R. Packages will continue "
 			                                        "to work (if they are compatible with this version of R)."), [legacy_libloc](RKSetupWizard*) {
 									liblocs.get().removeAll(legacy_libloc);
-									QString new_loc = legacy_libloc + '-' + RKSessionVars::RVersion (true);
-									RInterface::issueCommand (QStringLiteral ("file.rename(%1, %2)\n").arg(RObject::rQuote(legacy_libloc), RObject::rQuote (new_loc)), RCommand::App);
-									liblocs.get().prepend (legacy_libloc + QStringLiteral ("-%v"));
-									RInterface::issueCommand (libLocsCommand(), RCommand::App);
+									QString new_loc = legacy_libloc + u'-' + RKSessionVars::RVersion(true);
+									RInterface::issueCommand(u"file.rename(%1, %2)\n"_s.arg(RObject::rQuote(legacy_libloc), RObject::rQuote(new_loc)), RCommand::App);
+									liblocs.get().prepend(legacy_libloc + u"-%v"_s);
+									RInterface::issueCommand(libLocsCommand(), RCommand::App);
 								});
 			item->addOption(i18nc("verb", "Remove"), i18n("Remove this location from the configuration (it will not be deleted on disk). You will have to "
 			                                        "re-install any packages that you want to keep."), [legacy_libloc](RKSetupWizard*) {

@@ -322,33 +322,33 @@ QStringList RKSettingsModulePlugins::RKPluginMapList::activeMapFiles() {
 }
 
 void RKSettingsModulePlugins::registerDefaultPluginMaps(AddMode add_mode) {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 
-	QDir def_plugindir (RKCommonFunctions::getRKWardDataDir ());
-	if (def_plugindir.dirName() == QStringLiteral ("rkwardinstall")) {
+	QDir def_plugindir(RKCommonFunctions::getRKWardDataDir());
+	if (def_plugindir.dirName() == "rkwardinstall"_L1) {
 		// For running from build-dir: Work around bad design choice of installation layout
-		def_plugindir.cd (QStringLiteral("plugins"));
+		def_plugindir.cd(u"plugins"_s);
 	}
-	QStringList def_pluginmaps = def_plugindir.entryList (QStringList ("*.pluginmap"));
-	for (int i = 0; i < def_pluginmaps.size (); ++i) {
-		def_pluginmaps[i] = def_plugindir.absoluteFilePath (def_pluginmaps[i]);
+	QStringList def_pluginmaps = def_plugindir.entryList(QStringList(u"*.pluginmap"_s));
+	for (int i = 0; i < def_pluginmaps.size(); ++i) {
+		def_pluginmaps[i] = def_plugindir.absoluteFilePath(def_pluginmaps[i]);
 	}
-	registerPluginMaps (def_pluginmaps, add_mode, false, add_mode == AutoActivateIfNew);
+	registerPluginMaps(def_pluginmaps, add_mode, false, add_mode == AutoActivateIfNew);
 }
 
-QString RKSettingsModulePlugins::findPluginMapById (const QString &id) {
-	RK_TRACE (SETTINGS);
+QString RKSettingsModulePlugins::findPluginMapById(const QString &id) {
+	RK_TRACE(SETTINGS);
 
 	QString ret = known_plugin_maps.mapFileForId(id);
 	if (!ret.isNull()) return ret;
 
 	// for "rkward::" namespace, try a little harded:
-	if (id.startsWith (QLatin1String ("rkward::"))) {
-		QFileInfo info (RKCommonFunctions::getRKWardDataDir () + '/' + id.mid (8));
-		if (info.isReadable ()) return info.absoluteFilePath ();
+	if (id.startsWith("rkward::"_L1)) {
+		QFileInfo info(RKCommonFunctions::getRKWardDataDir() + u'/' + id.mid(8));
+		if (info.isReadable()) return info.absoluteFilePath();
 	}
 
-	return QString ();
+	return QString();
 }
 
 bool RKSettingsModulePlugins::markPluginMapState(const QString& map, PluginMapState state) {
@@ -388,17 +388,17 @@ RKSettingsModulePlugins::PluginMapStoredInfo RKSettingsModulePlugins::parsePlugi
 	QDomElement de = xml.openXMLFile(DL_WARNING);
 	PluginMapStoredInfo inf(filename);
 	inf.id = RKPluginMapFile::parseId(de, xml);
-	inf.priority = xml.getMultiChoiceAttribute(de, QStringLiteral("priority"), QStringLiteral("hidden;low;medium;high"), (int) PriorityMedium, DL_WARNING);
-	auto about = xml.getChildElement(de, QStringLiteral("about"), DL_WARNING);
-	inf.version = RKParsedVersion(xml.getStringAttribute(about, QStringLiteral("version"), QString(), DL_WARNING));
+	inf.priority = xml.getMultiChoiceAttribute(de, u"priority"_s, u"hidden;low;medium;high"_s, (int) PriorityMedium, DL_WARNING);
+	auto about = xml.getChildElement(de, u"about"_s, DL_WARNING);
+	inf.version = RKParsedVersion(xml.getStringAttribute(about, u"version"_s, QString(), DL_WARNING));
 	return inf;
 }
 
-QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &basedir) {
-	RK_TRACE (SETTINGS);
+QStringList RKSettingsModulePlugins::findPluginMapsRecursive(const QString &basedir) {
+	RK_TRACE(SETTINGS);
 
 	QDir dir(basedir);
-	static const QRegularExpression pluginmapfile_ext((".*\\.pluginmap$"));
+	static const QRegularExpression pluginmapfile_ext(u".*\\.pluginmap$"_s);
 	const QStringList maps = dir.entryList(QDir::Files).filter(pluginmapfile_ext);
 	QStringList ret;
 	for (const QString &map : maps) {
@@ -406,7 +406,7 @@ QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &bas
 	}
 
 	const QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-	for (const QString& subdir : subdirs) {
+	for (const QString &subdir : subdirs) {
 		ret.append(findPluginMapsRecursive(dir.absoluteFilePath(subdir)));
 	}
 
@@ -449,10 +449,10 @@ int RKSettingsModulePluginsModel::columnCount (const QModelIndex& parent) const 
 	return COLUMN_COUNT;
 }
 
-QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role) const {
+QVariant RKSettingsModulePluginsModel::data(const QModelIndex &index, int role) const {
 	// RK_TRACE (SETTINGS);
-	if (!index.isValid ()) return QVariant ();
-	int col = index.column ();
+	if (!index.isValid()) return QVariant();
+	int col = index.column();
 
 	const auto id = plugin_maps.ordered_ids.value(index.row());
 	const auto &handle = plugin_maps.all_maps.value(id);
@@ -462,23 +462,23 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 	if (role == Qt::BackgroundRole) {
 		if (inf.state == RKSettingsModulePlugins::Broken) return QColor(Qt::red);
 		if (inf.state == RKSettingsModulePlugins::Quirky) return QColor(Qt::yellow);
-		return (QVariant ());
+		return (QVariant());
 	} else if (role == Qt::ForegroundRole) {
-		if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QColor (Qt::gray);
+		if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QColor(Qt::gray);
 	} else if (role == Qt::ToolTipRole) {
-		const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
-		QString desc = meta.about->toHtml ();
-		if (!meta.dependencies.isEmpty ()) {
-			desc.append ("<b>" + i18n ("Dependencies") + "</b>");
-			desc.append (RKComponentDependency::depsToHtml (meta.dependencies));
+		const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel *>(this)->getPluginMapMetaInfo(inf.filename);
+		QString desc = meta.about->toHtml();
+		if (!meta.dependencies.isEmpty()) {
+			desc.append(u"<b>"_s + i18n("Dependencies") + u"</b>"_s);
+			desc.append(RKComponentDependency::depsToHtml(meta.dependencies));
 		}
-		desc.append ("<p>" + inf.filename + "</p>");
+		desc.append(u"<p>"_s + inf.filename + u"</p>"_s);
 		return desc;
 	}
 
 	if (col == COLUMN_CHECKED) {
 		if (role == Qt::CheckStateRole) {
-			if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QVariant ();
+			if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QVariant();
 			return (handle.active ? Qt::Checked : Qt::Unchecked);
 		}
 	} else if (col == COLUMN_ID) {
@@ -487,23 +487,23 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 		}
 	} else if (col == COLUMN_TITLE) {
 		if (role == Qt::DisplayRole) {
-			const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
+			const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel *>(this)->getPluginMapMetaInfo(inf.filename);
 			return meta.about->name;
 		}
 	} else if (col == COLUMN_STATUS) {
 		if (role == Qt::DisplayRole) {
-			if (inf.state == RKSettingsModulePlugins::Broken) return i18n ("Broken");
+			if (inf.state == RKSettingsModulePlugins::Broken) return i18n("Broken");
 			QString status;
-			if (RKComponentMap::getMap ()->isPluginMapLoaded (inf.filename)) status = i18n ("Loaded");
+			if (RKComponentMap::getMap()->isPluginMapLoaded(inf.filename)) status = i18n("Loaded");
 			if (inf.state == RKSettingsModulePlugins::Quirky) {
-				if (!status.isEmpty ()) status.append (", ");
-				status.append (i18n ("Quirky"));
+				if (!status.isEmpty()) status.append(u", "_s);
+				status.append(i18n("Quirky"));
 			}
 			return status;
 		}
 	}
 
-	return QVariant ();
+	return QVariant();
 }
 
 Qt::ItemFlags RKSettingsModulePluginsModel::flags (const QModelIndex& index) const {

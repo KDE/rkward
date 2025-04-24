@@ -43,7 +43,7 @@ void RKSettings::configureSettings(const RKSettingsModule::PageId page, QWidget 
 		settings_dialog = new RKSettings(parent);
 	}
 
-	if (page != "") {
+	if (!page.isEmpty()) {
 		settings_dialog->setCurrentPage(settings_dialog->findPage(page));
 	}
 	settings_dialog->show();

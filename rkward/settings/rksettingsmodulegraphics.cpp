@@ -181,36 +181,36 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	list.append (QStringLiteral("try (if (!(\"RKGraphicsDevice\" %in% deviceIsInteractive())) deviceIsInteractive(name=\"RKGraphicsDevice\"))\n"));
 
 	QString command = QStringLiteral("options (device=");
-	if (default_device == RKDevice) command.append ("\"RK\"");
+	if (default_device == RKDevice) command.append(u"\"RK\""_s);
 	else if (default_device == OtherDevice) command.append (RObject::rQuote (default_device_other));
 	else {
 #if defined Q_OS_WIN
-	command.append ("\"windows\"");
+	command.append(u"\"windows\""_s);
 #elif defined Q_OS_MACOS
-	command.append ("ifelse (capabilities(\"quartz\"), \"quartz\", \"X11\")");
+	command.append(u"ifelse (capabilities(\"quartz\"), \"quartz\", \"X11\")"_s);
 #else
-	command.append ("\"X11\"");
+	command.append(u"\"X11\""_s);
 #endif
 	}
-	list.append (command + ")\n");
+	list.append(command + u")\n"_s);
 
-	command = QLatin1String("options (rk.override.platform.devices=\"");
+	command = u"options (rk.override.platform.devices=\""_s;
 	if ((replace_standard_devices == ReplaceDevice) && (default_device != PlatformDevice)) {
-		command.append ("replace");
+		command.append(u"replace"_s);
 	} else if (replace_standard_devices == LeaveDevice) {
-		command.append ("nointegration");
+		command.append(u"nointegration"_s);
 	} else {
-		command.append ("embed");
+		command.append(u"embed"_s);
 	}
-	list.append (command + "\")\n");
+	list.append(command + u"\")\n"_s);
 
-	command = QLatin1String("options");
-	command.append ("(\"rk.screendevice.width\"=" + QString::number (graphics_width));
-	command.append (", \"rk.screendevice.height\"=" + QString::number (graphics_height) + ")\n");
-	list.append (command);
-	list.append ("options (\"rk.graphics.hist.max.plotsize\"=" + QString::number (graphics_hist_max_plotsize) + ")\n");
-	list.append ("rk.toggle.plot.history (" + QString (graphics_hist_enable?"TRUE":"FALSE") + ")\n");
-	list.append ("rk.verify.plot.hist.limits (" + QString::number (graphics_hist_max_length) + ")\n");
+	command = u"options"_s;
+	command.append(u"(\"rk.screendevice.width\"="_s + QString::number(graphics_width));
+	command.append(u", \"rk.screendevice.height\"="_s + QString::number(graphics_height) + u")\n"_s);
+	list.append(command);
+	list.append(u"options (\"rk.graphics.hist.max.plotsize\"="_s + QString::number(graphics_hist_max_plotsize) + u")\n"_s);
+	list.append(u"rk.toggle.plot.history ("_s + QString(graphics_hist_enable?u"TRUE"_s:u"FALSE"_s) + u")\n"_s);
+	list.append(u"rk.verify.plot.hist.limits ("_s + QString::number(graphics_hist_max_length) + u")\n"_s);
 	
 	return (list);
 }

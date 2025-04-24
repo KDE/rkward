@@ -40,7 +40,7 @@ public:
 		setWindowIcon(QIcon::fromTheme(QStringLiteral("kate")));
 
 		/* Known kate plugins at the time of this writing (March 2020): katesearchplugin katexmltoolsplugin katexmlcheckplugin katectagsplugin katefiletreeplugin 	katecloseexceptplugin katebacktracebrowserplugin tabswitcherplugin kterustcompletionplugin katekonsoleplugin katesnippetsplugin katefilebrowserplugin katereplicodeplugin ktexteditor_lumen kateprojectplugin kateopenheaderplugin katesymbolviewerplugin ktexteditorpreviewplugin katesqlplugin kategdbplugin katebuildplugin textfilterplugin */
-		QStringList recommended_plugins = QStringList({"katesearchplugin", "katecloseexceptplugin", "katekonsoleplugin", "katesnippetsplugin", "katefiletreeplugin", "kateprojectplugin", "ktexteditorpreviewplugin", "textfilterplugin"});
+		QStringList recommended_plugins = QStringList({u"katesearchplugin"_s, u"katecloseexceptplugin"_s, u"katekonsoleplugin"_s, u"katesnippetsplugin"_s, u"katefiletreeplugin"_s, u"kateprojectplugin"_s, u"ktexteditorpreviewplugin"_s, u"textfilterplugin"_s});
 
 		QVBoxLayout *vbox = new QVBoxLayout(this);
 		vbox->setContentsMargins(0, 0, 0, 0);

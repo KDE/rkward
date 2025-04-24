@@ -58,7 +58,7 @@ public:
 	static bool cdToWorkspaceOnLoad () { return cd_to_workspace_dir_on_load; };
 	static unsigned long warnLargeObjectThreshold () { return warn_size_object_edit; };
 	static RKMDIFocusPolicy mdiFocusPolicy () { return mdi_focus_policy; }
-	static QString workspaceFilenameFilter () { return ("*.RData *.RDA"); };
+	static QString workspaceFilenameFilter () { return ("*.RData *.RDA"_L1); };
 	static QString initialWorkingDirectory ();
 	static int maxNumRecentFiles () { return num_recent_files; };
 /** if the installation-path of KDE seems to have moved since the last startup, *and* the given path is relative to the

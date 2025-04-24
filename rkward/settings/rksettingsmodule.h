@@ -26,6 +26,8 @@ class RKSpinBox;
 class QAction;
 class QLineEdit;
 
+using namespace Qt::Literals::StringLiterals;
+
 /** Base class for RKWard config settings.
  *
  *  Meant to reduce the amount of boilerplate code involved in defining, loading, saving config settings (and in the future probably also creating widgets and applying changes). */
@@ -115,14 +117,14 @@ public:
 	void loadConfig(KConfigGroup &cg) override {
 		KConfigGroup lcg = cg;
 		if (name && name[0]) {
-			lcg = cg.group(name);
+			lcg = cg.group(QString::fromLatin1(name));
 		}
 		for (auto it = values.begin(); it != values.end(); ++it) (*it)->loadConfig(lcg);
 	}
 	void saveConfig(KConfigGroup &cg) const override {
 		KConfigGroup lcg = cg;
 		if (name && name[0]) {
-			lcg = cg.group(name);
+			lcg = cg.group(QString::fromLatin1(name));
 		}
 		for (auto it = values.begin(); it != values.end(); ++it) (*it)->saveConfig(lcg);
 	}

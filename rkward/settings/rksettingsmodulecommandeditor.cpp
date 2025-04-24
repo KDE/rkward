@@ -173,7 +173,7 @@ private:
 };
 
 RKTextEditorConfigPageWrapper::RKTextEditorConfigPageWrapper(QWidget* parent, RKSettingsModule *parent_module, RKSettingsModule::PageId superpage, KTextEditor::ConfigPage* wrapped) :
-	RKSettingsModuleWidget(parent, parent_module, QLatin1String(("kate_" + wrapped->name()).toLatin1()), superpage),
+	RKSettingsModuleWidget(parent, parent_module, QLatin1String(("kate_"_L1 + wrapped->name()).toLatin1()), superpage),
 	page(wrapped)
 {
 	RK_TRACE(SETTINGS);
@@ -237,7 +237,7 @@ void RKSettingsModuleCommandEditor::syncConfig(KConfig* config, RKConfigBase::Co
 bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &filename) {
 	RK_TRACE (SETTINGS);
 
-	const QStringList exts = script_file_filter.get().split(' ');
+	const QStringList exts = script_file_filter.get().split(u' ');
 	for (const QString& ext : exts) {
 		auto reg = QRegularExpression::fromWildcard(ext, Qt::CaseInsensitive);
 		if (reg.match (filename).hasMatch()) return true;
