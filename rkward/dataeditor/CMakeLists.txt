@@ -15,3 +15,4 @@ SET(dataeditor_STAT_SRCS
 
 ADD_LIBRARY(dataeditor STATIC ${dataeditor_STAT_SRCS})
 TARGET_LINK_LIBRARIES(dataeditor Qt6::Widgets KF6::WidgetsAddons KF6::Parts KF6::I18n)
+add_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove, here, once enabled on top level

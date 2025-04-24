@@ -224,7 +224,7 @@ void TwinTable::hasProblems() {
 		problems_note->addAction(a);
 		connect(a, &QAction::triggered, datamodel, [this, msg]() {
 			// NOTE: Not caching the problems in the lambda, as additional problem may yet be detected
-			KMessageBox::detailedError(this, msg + "<br/>" + i18n("You may want to create an editable subset using Data->Subset data.frame."), datamodel->problems().join(QStringLiteral("\n")), i18n("Problem detected"));
+			KMessageBox::detailedError(this, msg + u"<br/>"_s + i18n("You may want to create an editable subset using Data->Subset data.frame."), datamodel->problems().join(u"\n"_s), i18n("Problem detected"));
 		});
 	}
 	problems_note->animatedShow();

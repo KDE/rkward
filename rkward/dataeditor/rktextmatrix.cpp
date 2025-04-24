@@ -57,13 +57,13 @@ RKTextMatrix RKTextMatrix::matrixFromSeparatedValues (const QString& text, const
 	return ret;
 }
 
-QString RKTextMatrix::toTabSeparatedValues () const {
-	RK_TRACE (EDITOR);
+QString RKTextMatrix::toTabSeparatedValues() const {
+	RK_TRACE(EDITOR);
 
 	QString ret;
-	for (int row = 0; row < rows.size (); ++row) {
-		if (row) ret.append ('\n');
-		ret.append (rows[row].join (QChar ('\t')));
+	for (int row = 0; row < rows.size(); ++row) {
+		if (row) ret.append(u'\n');
+		ret.append(rows[row].join(u'\t'));
 	}
 	return ret;
 }
