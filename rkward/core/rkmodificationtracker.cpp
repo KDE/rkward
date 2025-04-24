@@ -306,40 +306,40 @@ int RKObjectListModel::columnCount (const QModelIndex&) const {
 	return ColumnCount;
 }
 
-QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
-	RK_TRACE (OBJECTS);
+QVariant RKObjectListModel::data(const QModelIndex& index, int role) const {
+	RK_TRACE(OBJECTS);
 
-	int col = index.column ();
-	RObject *object = static_cast<RObject*> (index.internalPointer ());
+	int col = index.column();
+	RObject* object = static_cast<RObject*>(index.internalPointer());
 
 	if (!object) {
-		RK_ASSERT (object);
-		return QVariant ();
+		RK_ASSERT(object);
+		return QVariant();
 	}
 
 	if (role == Qt::DisplayRole) {
-		if (col == NameColumn) return object->getShortName ();
-		if (col == LabelColumn) return object->getLabel ();
+		if (col == NameColumn) return object->getShortName();
+		if (col == LabelColumn) return object->getLabel();
 		if (col == TypeColumn) {
-			if (object->isVariable ()) return RObject::typeToText (object->getDataType ());
-			return QVariant ();
+			if (object->isVariable()) return RObject::typeToText(object->getDataType());
+			return QVariant();
 		}
-		if ((col == ClassColumn) && (!object->isPseudoObject ())) return object->makeClassString (QStringLiteral("; "));
+		if ((col == ClassColumn) && (!object->isPseudoObject())) return object->makeClassString(QStringLiteral("; "));
 	} else if (role == Qt::FontRole) {
-		if (col == NameColumn && object->isPseudoObject ()) {
+		if (col == NameColumn && object->isPseudoObject()) {
 			QFont font;
-			font.setItalic (true);
+			font.setItalic(true);
 			return (font);
 		}
 	} else if (role == Qt::DecorationRole) {
-		if (col == NameColumn) return RKStandardIcons::iconForObject (object);
+		if (col == NameColumn) return RKStandardIcons::iconForObject(object);
 	} else if (role == Qt::ToolTipRole) {
-		QString ret = QStringLiteral("<i>") + object->getShortName().replace('<', QLatin1String("&lt;")) + "</i><br>" + object->getObjectDescription();
+		QString ret = u"<i>"_s + object->getShortName().replace(u'<', u"&lt;"_s) + u"</i><br>"_s + object->getObjectDescription();
 		return ret;
 	}
 
-	RK_ASSERT (col < columnCount ());
-	return QVariant ();
+	RK_ASSERT(col < columnCount());
+	return QVariant();
 }
 
 QVariant RKObjectListModel::headerData (int section, Qt::Orientation orientation, int role) const {

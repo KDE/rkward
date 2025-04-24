@@ -21,16 +21,16 @@ RFunctionObject::~RFunctionObject () {
 	RK_TRACE (OBJECTS);
 }
 
-QString RFunctionObject::printArgs () const {
-	RK_TRACE (OBJECTS);
+QString RFunctionObject::printArgs() const {
+	RK_TRACE(OBJECTS);
 
 	QString ret;
-	for (int i = 0; i < argnames.size (); ++i) {
-		if (i) ret.append (", ");
-		ret.append (argnames[i]);
-		if (!argvalues[i].isEmpty ()) {
-			ret.append ("=");
-			ret.append (argvalues[i]);
+	for (int i = 0; i < argnames.size(); ++i) {
+		if (i) ret.append(u", "_s);
+		ret.append(argnames[i]);
+		if (!argvalues[i].isEmpty()) {
+			ret.append(u'=');
+			ret.append(argvalues[i]);
 		}
 	}
 	return ret;

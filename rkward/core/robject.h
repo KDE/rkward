@@ -24,6 +24,8 @@ class RData;
 class RObjectLifeTimeGuard;
 class RCommand;
 
+using namespace Qt::Literals::StringLiterals;
+
 /**
 Base class for representations of objects in the R-workspace. RObject is never used directly (contains pure virtual functions).
 

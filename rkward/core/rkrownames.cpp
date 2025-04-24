@@ -51,32 +51,32 @@ void RKRowNames::beginEdit () {
 	}
 }
 
-QString RKRowNames::getFullName (int options) const {
-//	RK_TRACE (OBJECTS);
+QString RKRowNames::getFullName(int options) const {
+	//	RK_TRACE (OBJECTS);
 
-	return ("row.names (" + parent->getFullName (options) + ')');
+	return (u"row.names ("_s + parent->getFullName(options) + u')');
 }
 
-void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
+void RKRowNames::writeData(int from_row, int to_row, RCommandChain *chain) {
+	RK_TRACE(OBJECTS);
 
-	if (isSequential ()) {
-		RCommand *command = new RCommand(getFullName(DefaultObjectNameOptions) + " <- NULL", RCommand::App | RCommand::Sync);
+	if (isSequential()) {
+		RCommand *command = new RCommand(getFullName(DefaultObjectNameOptions) + u" <- NULL"_s, RCommand::App | RCommand::Sync);
 		command->setUpdatesObject(this);
 		RInterface::issueCommand(command, chain);
 	} else {
 		// unfortunately, we always need to write the whole data, as row.names<- does not support indexing.
-		QString data_string = QStringLiteral("c (");
-		for (int row = 0; row < getLength (); ++row) {
+		QString data_string = u"c ("_s;
+		for (int row = 0; row < getLength(); ++row) {
 			// TODO: use getCharacter and direct setting of vectors.
-			data_string.append (getRText (row));
-			if (row != (getLength () - 1)) {
-				data_string.append (", ");
+			data_string.append(getRText(row));
+			if (row != (getLength() - 1)) {
+				data_string.append(u", "_s);
 			}
 		}
-		data_string.append (")");
+		data_string.append(u')');
 
-		RCommand* command = new RCommand(getFullName(DefaultObjectNameOptions) + " <- " + data_string, RCommand::App | RCommand::Sync);
+		RCommand *command = new RCommand(getFullName(DefaultObjectNameOptions) + u" <- "_s + data_string, RCommand::App | RCommand::Sync);
 		command->setUpdatesObject(this);
 		RInterface::issueCommand(command, chain);
 	}
@@ -84,7 +84,7 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 	ChangeSet *set = new ChangeSet;
 	set->from_index = from_row;
 	set->to_index = to_row;
-	RKModificationTracker::instance()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged(this, set);
 }
 
 void RKRowNames::setText (int row, const QString &text) {
@@ -156,7 +156,7 @@ bool RKRowNames::makeUnique (QString *text, bool non_sequentials_only) {
 		}
 
 		// try adjusted text on next iteration
-		dummy = *text + '.' + QString::number (i);
+		dummy = *text + u'.' + QString::number(i);
 	}
 
 	RK_ASSERT (false);

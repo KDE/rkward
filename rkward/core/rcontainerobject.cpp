@@ -356,38 +356,38 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 	delete object;
 }
 
-QString RContainerObject::removeChildCommand (RObject *object) const {
-	RK_TRACE (OBJECTS);
+QString RContainerObject::removeChildCommand(RObject *object) const {
+	RK_TRACE(OBJECTS);
 
-	return (object->getFullName () + " <- NULL");
+	return (object->getFullName() + u" <- NULL"_s);
 }
 
-QString RContainerObject::renameChildCommand (RObject *object, const QString &new_name) const {
-	RK_TRACE (OBJECTS);
+QString RContainerObject::renameChildCommand(RObject *object, const QString &new_name) const {
+	RK_TRACE(OBJECTS);
 
-	return ("rk.rename.in.container (" + getFullName () + ", \"" + object->getShortName () + "\", \"" + new_name + "\")");
+	return (u"rk.rename.in.container ("_s + getFullName() + u", \""_s + object->getShortName() + u"\", \""_s + new_name + u"\")"_s);
 }
 
-QString RContainerObject::validizeName (const QString &child_name, bool unique) const {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (isType (GlobalEnv) || isInGlobalEnv ());
+QString RContainerObject::validizeName(const QString &child_name, bool unique) const {
+	RK_TRACE(OBJECTS);
+	RK_ASSERT(isType(GlobalEnv) || isInGlobalEnv());
 	static const QRegularExpression validizename1(QStringLiteral("[^a-zA-Z0-9_]"));
 	static const QRegularExpression validizename2(QStringLiteral("^\\.*[0-9]+"));
 
 	QString ret = child_name;
-	if (ret.isEmpty ()) ret = QLatin1String("var");
+	if (ret.isEmpty()) ret = u"var"_s;
 	else {
-		ret = ret.replace(validizename1, QLatin1String("."));
-		ret = ret.replace(validizename2, QLatin1String("."));
+		ret = ret.replace(validizename1, u"."_s);
+		ret = ret.replace(validizename2, u"."_s);
 	}
 	if (!unique) return ret;
 
-// NOTE: this is potentially a quadratic time algorithm with respect to number of children.
-// Its only called on user actions, though, and hopefully users will not keep all objects named "varX".
-	int i=0;
+	// NOTE: this is potentially a quadratic time algorithm with respect to number of children.
+	// Its only called on user actions, though, and hopefully users will not keep all objects named "varX".
+	int i = 0;
 	QString postfix;
-	while (findChildByName (ret + postfix)) {
-		postfix.setNum (++i);
+	while (findChildByName(ret + postfix)) {
+		postfix.setNum(++i);
 	}
 	return (ret + postfix);
 }

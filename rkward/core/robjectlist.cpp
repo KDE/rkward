@@ -93,7 +93,7 @@ QStringList RObjectList::detachPackages (const QStringList &packages, RCommandCh
 		}
 	}
 	for (int i = 0; i < remove.size (); ++i) {
-		RCommand *command = new RCommand ("detach (" + rQuote (remove[i]) + ')', RCommand::App | RCommand::ObjectListUpdate);
+		RCommand *command = new RCommand(u"detach ("_s + rQuote(remove[i]) + u')', RCommand::App | RCommand::ObjectListUpdate);
 
 		if (control) control->addRCommand (command);
 		RInterface::issueCommand (command, chain);
@@ -173,7 +173,7 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 	QStringList env_names = _env_names;
 	if (!env_names.isEmpty ()) {
 		QString dummy = env_names.takeFirst ();
-		RK_ASSERT (dummy == ".GlobalEnv");
+		RK_ASSERT(dummy == ".GlobalEnv"_L1);
 		if (force_globalenv_update) {
 			// for now, we only update the .GlobalEnv. All others we assume to be static
 			getGlobalEnv ()->updateFromR (update_chain);
@@ -235,32 +235,32 @@ REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name)
 	return envobj;
 }
 
-RObject::ObjectList RObjectList::findObjects (const QStringList &path, bool partial, const QString &op) {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (op == "$");
+RObject::ObjectList RObjectList::findObjects(const QStringList &path, bool partial, const QString &op) {
+	RK_TRACE(OBJECTS);
+	RK_ASSERT(op == "$"_L1);
 
 	RObject::ObjectList ret;
-	if (path.value (1) == QLatin1String("::")) {
-		RObject *environment = findPackage (path[0]);
-		if (environment) return (environment->findObjects (path.mid (2), partial, QStringLiteral("$")));
+	if (path.value(1) == "::"_L1) {
+		RObject *environment = findPackage(path[0]);
+		if (environment) return (environment->findObjects(path.mid(2), partial, u"$"_s));
 		return ret;
-	} else if (path.value (1) == QLatin1String(":::")) {
-		RObject *environment = findPackage (path[0]);
-		if (environment) environment = static_cast<REnvironmentObject*> (environment)->namespaceEnvironment ();
-		if (!environment) environment = orphan_namespaces->findOrphanNamespace (path[0]);
-		if (environment) return (environment->findObjects (path.mid (2), partial, QStringLiteral("$")));
+	} else if (path.value(1) == ":::"_L1) {
+		RObject *environment = findPackage(path[0]);
+		if (environment) environment = static_cast<REnvironmentObject *>(environment)->namespaceEnvironment();
+		if (!environment) environment = orphan_namespaces->findOrphanNamespace(path[0]);
+		if (environment) return (environment->findObjects(path.mid(2), partial, u"$"_s));
 		return ret;
-	} else if (path.value (0) == QLatin1String(".GlobalEnv")) {
-		if (path.length () > 1) return getGlobalEnv ()->findObjects (path.mid (2), partial, QStringLiteral("$"));
+	} else if (path.value(0) == ".GlobalEnv"_L1) {
+		if (path.length() > 1) return getGlobalEnv()->findObjects(path.mid(2), partial, u"$"_s);
 		// else we'll find base::.GlobalEnv, below
 	}
 
 	// no namespace given. Search all environments for matches, .GlobalEnv, first
-	ret = getGlobalEnv ()->findObjects (path, partial, QStringLiteral("$"));
-	for (int i = 0; i < childmap.size (); ++i) {
-		if (!(partial || ret.isEmpty ())) return ret;
+	ret = getGlobalEnv()->findObjects(path, partial, u"$"_s);
+	for (int i = 0; i < childmap.size(); ++i) {
+		if (!(partial || ret.isEmpty())) return ret;
 
-		ret.append (childmap[i]->findObjects (path, partial, QStringLiteral("$")));
+		ret.append(childmap[i]->findObjects(path, partial, u"$"_s));
 	}
 	return ret;
 }
@@ -311,16 +311,14 @@ bool RObjectList::updateStructure (RData *) {
 	return true;
 }
 
-QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) const {
-	RK_TRACE (OBJECTS);
+QString RObjectList::renameChildCommand(RObject *object, const QString &new_name) const {
+	RK_TRACE(OBJECTS);
 
-	return (makeChildName(new_name, IncludeEnvirIfNotGlobalEnv) + " <- " + object->getFullName() + '\n' + removeChildCommand(object));
+	return (makeChildName(new_name, IncludeEnvirIfNotGlobalEnv) + u" <- "_s + object->getFullName() + u'\n' + removeChildCommand(object));
 }
 
-QString RObjectList::removeChildCommand (RObject *object) const {
-	RK_TRACE (OBJECTS);
+QString RObjectList::removeChildCommand(RObject *object) const {
+	RK_TRACE(OBJECTS);
 
-	return ("remove (" + object->getFullName () + ')');
+	return (u"remove ("_s + object->getFullName() + u')');
 }
-
-

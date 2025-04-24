@@ -93,7 +93,7 @@ RObject::~RObject () {
 	if (hasPseudoObject (RowNamesObject)) delete rownames_objects.take (this);
 }
 
-bool RObject::irregularShortName (const QString &name) {
+bool RObject::irregularShortName(const QString &name) {
 	// no trace
 	const int len = name.length();
 	for (int i = 0; i < len; ++i) {
@@ -101,32 +101,32 @@ bool RObject::irregularShortName (const QString &name) {
 		// letters are allowed anywhere in the name
 		// underscore is allowed, but not as the first character
 		// dot, and digits are allowed, too unless they make the name start with a number (or with ...)
-		if(c.isLetter()) continue;
-		if(!i) {
-			if(c.isDigit()) return true;
-			if(c == '.') {
-				if(len > 1 && name[1].isDigit()) return true;
-				if(name == QStringLiteral("...")) return true;
+		if (c.isLetter()) continue;
+		if (!i) {
+			if (c.isDigit()) return true;
+			if (c == u'.') {
+				if (len > 1 && name[1].isDigit()) return true;
+				if (name == "..."_L1) return true;
 				continue;
 			}
 		} else {
-			if(c.isDigit()) continue;
-			if(c == '.') continue;
-			if(c == '_') continue;
+			if (c.isDigit()) continue;
+			if (c == u'.') continue;
+			if (c == u'_') continue;
 		}
 		return true;
 	}
-	return(false);
+	return (false);
 }
 
-QString RObject::getFullName (int options) const {
-	RK_TRACE (OBJECTS);
+QString RObject::getFullName(int options) const {
+	RK_TRACE(OBJECTS);
 	return parent->makeChildName(RObject::name, options);
 }
 
-QString RObject::getLabel () const {
-	RK_TRACE (OBJECTS);
-	return getMetaProperty (QStringLiteral("label"));
+QString RObject::getLabel() const {
+	RK_TRACE(OBJECTS);
+	return getMetaProperty(u"label"_s);
 }
 
 RObject::ObjectList RObject::findObjects (const QStringList &path, bool partial, const QString &op) {
@@ -144,62 +144,62 @@ QString RObject::getMetaProperty (const QString &id) const {
 	return QString ();
 }
 
-QString RObject::getDescription () const {
-	RK_TRACE (OBJECTS);
+QString RObject::getDescription() const {
+	RK_TRACE(OBJECTS);
 	if (meta_map) {
-		QString label = meta_map->value (QStringLiteral("label"));
-		if (!label.isEmpty ()) return (getShortName () + " (" + label + ')');
+		QString label = meta_map->value(u"label"_s);
+		if (!label.isEmpty()) return (getShortName() + u" ("_s + label + u')');
 	}
-	return getShortName ();
+	return getShortName();
 }
 
-QString RObject::getObjectDescription () const {
-	RK_TRACE (OBJECTS);
+QString RObject::getObjectDescription() const {
+	RK_TRACE(OBJECTS);
 
-#define ESCS replace ('<', "&lt;")
+#define ESCS replace(u'<', u"&lt;"_s)
 
-	QString ret = "<b>" + i18n("Full location:") + " </b>" + getFullName().ESCS;
-	QString lab = getLabel ();
-	if (!lab.isEmpty ()) ret.append ("<br><b>" + i18n ("Label:") + " </b>" + lab.ESCS);
-	ret.append ("<br><b>" + i18n ("Type:") + " </b>");
+	QString ret = u"<b>"_s + i18n("Full location:") + u" </b>"_s + getFullName().ESCS;
+	QString lab = getLabel();
+	if (!lab.isEmpty()) ret.append(u"<br><b>"_s + i18n("Label:") + u" </b>"_s + lab.ESCS);
+	ret.append(u"<br><b>"_s + i18n("Type:") + u" </b>"_s);
 
-	if (isType (Function)) {
-		ret.append (i18n ("Function"));
-		ret.append ("<br><b>" + i18n ("Usage: ") + " </b>" + getShortName ().ESCS + '(' + static_cast<const RFunctionObject *> (this)->printArgs ().ESCS + ')');
-	} else if (isType (DataFrame)) {
-		ret.append (i18n ("Data frame"));
-	} else if (isType (Array)) {
-		ret.append (i18n ("Array"));
-	} else if (isType (Matrix)) {
-		ret.append (i18n ("Matrix"));
-	} else if (isType (List)) {
-		ret.append (i18n ("List"));
-	} else if (isType (Variable)) {
+	if (isType(Function)) {
+		ret.append(i18n("Function"));
+		ret.append(u"<br><b>"_s + i18n("Usage: ") + u" </b>"_s + getShortName().ESCS + u'(' + static_cast<const RFunctionObject *>(this)->printArgs().ESCS + u')');
+	} else if (isType(DataFrame)) {
+		ret.append(i18n("Data frame"));
+	} else if (isType(Array)) {
+		ret.append(i18n("Array"));
+	} else if (isType(Matrix)) {
+		ret.append(i18n("Matrix"));
+	} else if (isType(List)) {
+		ret.append(i18n("List"));
+	} else if (isType(Variable)) {
 		ret.append(i18nc("Noun; in brackets, data type of the var is stated", "Variable (%1)", typeToText(getDataType())));
-	} else if (isType (Environment)) {
-		ret.append (i18n ("Environment"));
+	} else if (isType(Environment)) {
+		ret.append(i18n("Environment"));
 	}
 
-	if (isType (Container | Variable)) {
-		if (dimensions.size () == 1) {
-			ret.append ("<br><b>" + i18n ("Length: ") + " </b>"  + QString::number (dimensions[0]));
-		} else if (dimensions.size () > 1) {
-			ret.append ("<br><b>" + i18n ("Dimensions: ") + " </b>");
-			for (int i=0; i < dimensions.size (); ++i) {
-				if (i) ret.append (", ");
-				ret.append (QString::number (dimensions[i]));
+	if (isType(Container | Variable)) {
+		if (dimensions.size() == 1) {
+			ret.append(u"<br><b>"_s + i18n("Length: ") + u" </b>"_s + QString::number(dimensions[0]));
+		} else if (dimensions.size() > 1) {
+			ret.append(u"<br><b>"_s + i18n("Dimensions: ") + u" </b>"_s);
+			for (int i = 0; i < dimensions.size(); ++i) {
+				if (i) ret.append(u", "_s);
+				ret.append(QString::number(dimensions[i]));
 			}
 		}
 	}
 
-	if (!isType(Function)) ret.append("<br><b>" + i18n("Class(es):") + " </b>" + makeClassString(QStringLiteral(",")).ESCS);
+	if (!isType(Function)) ret.append(u"<br><b>"_s + i18n("Class(es):") + u" </b>"_s + makeClassString(u","_s).ESCS);
 
 	return ret;
 }
 
-void RObject::setLabel (const QString &value, bool sync) {
-	RK_TRACE (OBJECTS);
-	setMetaProperty (QStringLiteral("label"), value, sync);
+void RObject::setLabel(const QString &value, bool sync) {
+	RK_TRACE(OBJECTS);
+	setMetaProperty(u"label"_s, value, sync);
 }
 
 void RObject::setMetaProperty (const QString &id, const QString &value, bool sync) {
@@ -230,76 +230,85 @@ bool RObject::inherits (const QString &class_name) const {
 }
 
 QString RObject::makeChildName(const QString &short_child_name, int options) const {
-	RK_TRACE (OBJECTS);
+	RK_TRACE(OBJECTS);
 	if (options & DollarExpansion) {
-		if (irregularShortName (short_child_name)) return (getFullName (options) + '$' + rQuote (short_child_name));
-		return (getFullName (options) + '$' + short_child_name);  // Do not return list$"member", unless necessary
+		if (irregularShortName(short_child_name)) return (getFullName(options) + u'$' + rQuote(short_child_name));
+		return (getFullName(options) + u'$' + short_child_name);  // Do not return list$"member", unless necessary
 	}
-	return (getFullName (options) + "[[" + rQuote (short_child_name) + "]]");
+	return (getFullName(options) + u"[["_s + rQuote(short_child_name) + u"]]"_s);
 }
 
-void RObject::writeMetaData (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
+void RObject::writeMetaData(RCommandChain *chain) {
+	RK_TRACE(OBJECTS);
 
 	if (!meta_map) return;
 
 	QString map_string;
-	if (meta_map->isEmpty ()) {
-		map_string.append ("NULL");
+	if (meta_map->isEmpty()) {
+		map_string.append(u"NULL"_s);
 
-		delete meta_map;	// now that it is synced, delete it
+		delete meta_map;  // now that it is synced, delete it
 		meta_map = nullptr;
 	} else {
-		for (MetaMap::const_iterator it = meta_map->constBegin (); it != meta_map->constEnd (); ++it) {
-			if (!map_string.isEmpty ()) map_string.append (", ");
-			map_string.append (rQuote (it.key ()) + '=' + rQuote (it.value ()));
+		for (MetaMap::const_iterator it = meta_map->constBegin(); it != meta_map->constEnd(); ++it) {
+			if (!map_string.isEmpty()) map_string.append(u", "_s);
+			map_string.append(rQuote(it.key()) + u'=' + rQuote(it.value()));
 		}
-		map_string = "c (" + map_string + ')';
+		map_string = u"c ("_s + map_string + u')';
 	}
 
-	RCommand *command = new RCommand (".rk.set.meta (" + getFullName () + ", " + map_string + ')', RCommand::App | RCommand::Sync);
+	RCommand *command = new RCommand(u".rk.set.meta ("_s + getFullName() + u", "_s + map_string + u')', RCommand::App | RCommand::Sync);
 	command->setUpdatesObject(this);
-	RInterface::issueCommand (command, chain);
+	RInterface::issueCommand(command, chain);
 }
 
-void RObject::updateFromR (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
+void RObject::updateFromR(RCommandChain *chain) {
+	RK_TRACE(OBJECTS);
 
 	QString commandstring;
-	if (parentObject () == RObjectList::getGlobalEnv ()) {
-// We handle objects directly in .GlobalEnv differently. That's to avoid forcing promises, when addressing the object directly. In the long run, .rk.get.structure should be reworked to simply not need the value-argument in any case.
-		commandstring = ".rk.get.structure.global (" + rQuote (getShortName ()) + ')';
+	if (parentObject() == RObjectList::getGlobalEnv()) {
+		// We handle objects directly in .GlobalEnv differently. That's to avoid forcing promises, when addressing the object directly. In the long run,
+		// .rk.get.structure should be reworked to simply not need the value-argument in any case.
+		commandstring = u".rk.get.structure.global ("_s + rQuote(getShortName()) + u')';
 	} else if (isType(Environment)) {
-		REnvironmentObject *env = static_cast<REnvironmentObject*>(this);
+		REnvironmentObject *env = static_cast<REnvironmentObject *>(this);
 		if (isType(PackageEnv) && RKSettingsModuleObjectBrowser::isPackageBlacklisted(env->packageName())) {
-			KMessageBox::information(nullptr, i18n ("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, the objects in this package will not appear in the object browser, and there will be no object name completion or function argument hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.", env->packageName()), i18n("Package blacklisted"), "packageblacklist" + env->packageName());
+			KMessageBox::information(
+			    nullptr,
+			    i18n("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, "
+			         "the objects in this package will not appear in the object browser, and there will be no object name completion or function argument "
+			         "hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too "
+			         "long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.",
+			         env->packageName()),
+			    i18n("Package blacklisted"), u"packageblacklist"_s + env->packageName());
 			return;
 		}
-		commandstring = ".rk.get.structure (" + getFullName(DefaultObjectNameOptions) + ", " + rQuote(getShortName());
-		if (isType(GlobalEnv)) commandstring += QLatin1String(", envlevel=-1");  // in the .GlobalEnv recurse one more level
-		if (isType(PackageEnv)) commandstring += ", namespacename=" + rQuote(env->packageName());
-		commandstring += ')';
+		commandstring = u".rk.get.structure ("_s + getFullName(DefaultObjectNameOptions) + u", "_s + rQuote(getShortName());
+		if (isType(GlobalEnv)) commandstring += u", envlevel=-1"_s;  // in the .GlobalEnv recurse one more level
+		if (isType(PackageEnv)) commandstring += u", namespacename="_s + rQuote(env->packageName());
+		commandstring += u')';
 	} else {
-// This is the less common branch, but we do call .rk.get.structure on sub-object, e.g. when fetching more levels in the Workspace Browser, or when calling rk.sync(), explicitly
-		commandstring = ".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ')';
+		// This is the less common branch, but we do call .rk.get.structure on sub-object, e.g. when fetching more levels in the Workspace Browser, or when
+		// calling rk.sync(), explicitly
+		commandstring = u".rk.get.structure ("_s + getFullName() + u", "_s + rQuote(getShortName()) + u')';
 	}
 	RCommand *command = new RCommand(commandstring, RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
-	whenCommandFinished(command, [this](RCommand* command) {
-		if (command->failed ()) {
-			RK_DEBUG (OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ().data ());
+	whenCommandFinished(command, [this](RCommand *command) {
+		if (command->failed()) {
+			RK_DEBUG(OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName().toLatin1().data());
 			// this may happen, if the object has been removed in the workspace in between
 			RKModificationTracker::instance()->removeObject(this, nullptr, true);
 			return;
 		}
 		if (parent && parent->isContainer()) {
-			static_cast<RContainerObject*>(parent)->updateChildStructure(this, command);		// this may result in a delete, so nothing after this!
+			static_cast<RContainerObject *>(parent)->updateChildStructure(this, command);  // this may result in a delete, so nothing after this!
 		} else {
-			updateStructure(command);		// no (container) parent can happen for RObjectList and pseudo objects
+			updateStructure(command);  // no (container) parent can happen for RObjectList and pseudo objects
 		}
 	});
 	RInterface::issueCommand(command, chain);
 
-	type |= Updating;	// will be cleared, implicitly, when the new structure gets set
+	type |= Updating;  // will be cleared, implicitly, when the new structure gets set
 }
 
 void RObject::fetchMoreIfNeeded (int levels) {
@@ -700,78 +709,78 @@ QString RObject::rQuote (const QString &string) {
 	return (RKRSharedFunctionality::quote (string));
 }
 
-//static 
-QStringList RObject::parseObjectPath (const QString &path) {
-	RK_TRACE (OBJECTS);
+// static
+QStringList RObject::parseObjectPath(const QString &path) {
+	RK_TRACE(OBJECTS);
 
 	QStringList ret;
 	QString fragment;
 
-	int end = path.length ();
+	int end = path.length();
 	QChar quote_char;
 	bool escaped = false;
 	bool seek_bracket_end = false;
 	for (int i = 0; i < end; ++i) {
-		QChar c = path.at (i);
-		if (quote_char.isNull ()) {
-			if (c == '\'' || c == '\"' || c == '`') {
+		QChar c = path.at(i);
+		if (quote_char.isNull()) {
+			if (c == u'\'' || c == u'\"' || c == u'`') {
 				quote_char = c;
 			} else {
 				if (!seek_bracket_end) {
-					if (c == '$') {
-						ret.append (fragment);
-						ret.append (QStringLiteral("$"));
-						fragment.clear ();
-					} else if (c == '[') {
-						ret.append (fragment);
-						ret.append (QStringLiteral("$"));
-						fragment.clear ();
-						if ((i+1 < end) && (path.at (i+1) == '[')) ++i;
+					if (c == u'$') {
+						ret.append(fragment);
+						ret.append(u"$"_s);
+						fragment.clear();
+					} else if (c == u'[') {
+						ret.append(fragment);
+						ret.append(u"$"_s);
+						fragment.clear();
+						if ((i + 1 < end) && (path.at(i + 1) == u'[')) ++i;
 						seek_bracket_end = true;
-					} else if (c == ':') {
-						ret.append (fragment);
-						if ((i+1 < end) && (path.at (i+1) == ':')) ++i;
-						if ((i+1 < end) && (path.at (i+1) == ':')) {
+					} else if (c == u':') {
+						ret.append(fragment);
+						if ((i + 1 < end) && (path.at(i + 1) == u':')) ++i;
+						if ((i + 1 < end) && (path.at(i + 1) == u':')) {
 							++i;
-							ret.append (QStringLiteral(":::"));
-						} else ret.append (QStringLiteral("::"));
-						fragment.clear ();
-					} else if (c == '@') {
-						ret.append (fragment);
-						ret.append (QStringLiteral("@"));
-						fragment.clear ();
+							ret.append(u":::"_s);
+						} else ret.append(u"::"_s);
+						fragment.clear();
+					} else if (c == u'@') {
+						ret.append(fragment);
+						ret.append(u"@"_s);
+						fragment.clear();
 					} else {
-						fragment.append (c);
+						fragment.append(c);
 					}
 				} else {
-					if (c == ']') {
-						if ((i+1 < end) && (path.at (i+1) == ']')) ++i;
+					if (c == u']') {
+						if ((i + 1 < end) && (path.at(i + 1) == u']')) ++i;
 						seek_bracket_end = false;
 						continue;
 					} else {
-						fragment.append (c);
+						fragment.append(c);
 					}
 				}
 			}
-		} else {	// inside a quote
-			if (c == '\\') escaped = !escaped;
+		} else {  // inside a quote
+			if (c == u'\\') escaped = !escaped;
 			else {
 				if (escaped) {
-					if (c == 't') fragment.append ('\t');
-					else if (c == 'n') fragment.append ('\n');
-					else fragment.append ('\\' + c);
+					if (c == u't') fragment.append(u'\t');
+					else if (c == u'n') fragment.append(u'\n');
+					else fragment.append(u'\\' + c);
 				} else {
 					if (c == quote_char) {
-						quote_char = QChar ();
+						quote_char = QChar();
 					} else {
-						fragment.append (c);
+						fragment.append(c);
 					}
 				}
 			}
 		}
 	}
-	if (!fragment.isEmpty ()) ret.append (fragment);
-	RK_DEBUG (OBJECTS, DL_DEBUG, "parsed object path %s into %s", qPrintable (path), qPrintable (ret.join ("-")));
+	if (!fragment.isEmpty()) ret.append(fragment);
+	RK_DEBUG(OBJECTS, DL_DEBUG, "parsed object path %s into %s", qPrintable(path), qPrintable(ret.join(u"-"_s)));
 	return ret;
 }
 

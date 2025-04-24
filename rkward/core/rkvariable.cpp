@@ -76,12 +76,12 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 		for (int i = list.size () - 1; i >= 0; --i) setText (i, list[i]);
 
 		if (sync) {
-			QString command = ".rk.set.vector.mode(" + getFullName () + ", ";
-			if (new_type == RObject::DataCharacter) command += QLatin1String("as.character");
-			else if (new_type == RObject::DataNumeric) command += QLatin1String("as.numeric");
-			else if (new_type == RObject::DataLogical) command += QLatin1String("as.logical");
-			else if (new_type == RObject::DataFactor) command += QLatin1String("as.factor");
-			command += ')';
+			QString command = u".rk.set.vector.mode("_s + getFullName() + u", "_s;
+			if (new_type == RObject::DataCharacter) command += u"as.character"_s;
+			else if (new_type == RObject::DataNumeric) command += u"as.numeric"_s;
+			else if (new_type == RObject::DataLogical) command += u"as.logical"_s;
+			else if (new_type == RObject::DataFactor) command += u"as.factor"_s;
+			command += u')';
 			RCommand *rcommand = new RCommand(command, RCommand::App | RCommand::Sync);
 			rcommand->setUpdatesObject(this);
 			RInterface::issueCommand(rcommand);
@@ -199,7 +199,7 @@ void RKVariable::updateDataFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 	if (!data) return;
 
-	RCommand *c = new RCommand(".rk.get.vector.data (" + getFullName () + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
+	RCommand *c = new RCommand(u".rk.get.vector.data ("_s + getFullName() + u')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
 	whenCommandFinished(c, [this](RCommand* command) {
 		if (!data) return;	// this can happen, if the editor is closed while a data update is still queued.
 
@@ -318,84 +318,84 @@ void RKVariable::restore (RCommandChain *chain) {
 	writeMetaData (chain);
 }
 
-void RKVariable::writeInvalidFields (QList<int> rows, RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
+void RKVariable::writeInvalidFields(QList<int> rows, RCommandChain *chain) {
+	RK_TRACE(OBJECTS);
 
-	if (rows.isEmpty ()) return;
+	if (rows.isEmpty()) return;
 
 	QString set;
 	QString values;
 	QString clear;
 
-	for (int i = 0; i < rows.size (); ++i) {
+	for (int i = 0; i < rows.size(); ++i) {
 		int row = rows[i];
 
-		if (data->invalid_fields.contains (row)) {
-			if (!set.isEmpty ()) {
-				set.append (", ");
-				values.append (", ");
+		if (data->invalid_fields.contains(row)) {
+			if (!set.isEmpty()) {
+				set.append(u", "_s);
+				values.append(u", "_s);
 			}
-			set.append (QString::number (row+1));
-			values.append (rQuote (data->invalid_fields[row]));
+			set.append(QString::number(row + 1));
+			values.append(rQuote(data->invalid_fields[row]));
 		} else {
-			if (!clear.isEmpty ()) clear.append (", ");
-			clear.append (QString::number (row+1));
+			if (!clear.isEmpty()) clear.append(u", "_s);
+			clear.append(QString::number(row + 1));
 		}
 
 		data->cell_states[row] -= (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState);
 	}
 
-	if (!set.isEmpty ()) {
-		set = "set=c(" + set + "), ";
-		values = "values=c(" + values + ')';
+	if (!set.isEmpty()) {
+		set = u"set=c("_s + set + u"), "_s;
+		values = u"values=c("_s + values + u')';
 	}
-	if (!clear.isEmpty ()) {
-		clear = "clear=c(" + clear + ')';
-		if (!values.isEmpty ()) values.append (",");
+	if (!clear.isEmpty()) {
+		clear = u"clear=c("_s + clear + u')';
+		if (!values.isEmpty()) values.append(u',');
 	}
 
-	RCommand *command = new RCommand(".rk.set.invalid.fields (" + getFullName () + ", " + set + values + clear + ')', RCommand::App | RCommand::Sync);
+	RCommand *command = new RCommand(u".rk.set.invalid.fields ("_s + getFullName() + u", "_s + set + values + clear + u')', RCommand::App | RCommand::Sync);
 	command->setUpdatesObject(this);
 	RInterface::issueCommand(command, chain);
 
-	if (data->previously_valid != data->invalid_fields.isEmpty ()) {
-		data->previously_valid = data->invalid_fields.isEmpty ();
-		RKModificationTracker::instance()->objectMetaChanged (this);
+	if (data->previously_valid != data->invalid_fields.isEmpty()) {
+		data->previously_valid = data->invalid_fields.isEmpty();
+		RKModificationTracker::instance()->objectMetaChanged(this);
 	}
 }
 
-void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
+void RKVariable::writeData(int from_row, int to_row, RCommandChain *chain) {
+	RK_TRACE(OBJECTS);
 	if (from_row == -1) return;
 
 	QList<int> changed_invalids;
 
 	// TODO: try to sync in correct storage mode
 	if (from_row == to_row) {
-		RCommand *command = new RCommand(getFullName() + '[' + QString::number(from_row+1) + "] <- " + getRText(from_row), RCommand::App | RCommand::Sync);
+		RCommand *command = new RCommand(getFullName() + u'[' + QString::number(from_row + 1) + u"] <- "_s + getRText(from_row), RCommand::App | RCommand::Sync);
 		command->setUpdatesObject(this);
 		RInterface::issueCommand(command, chain);
-		if (data->cell_states[from_row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (from_row);
+		if (data->cell_states[from_row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append(from_row);
 	} else {
-		QString data_string = QStringLiteral("c (");
+		QString data_string = u"c ("_s;
 		for (int row = from_row; row <= to_row; ++row) {
 			// TODO: use getCharacter and direct setting of vectors.
-			data_string.append (getRText (row));
+			data_string.append(getRText(row));
 			if (row != to_row) {
-				data_string.append (", ");
+				data_string.append(u", "_s);
 			}
-			if (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (row);
+			if (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append(row);
 		}
-		data_string.append (")");
-		RCommand* command = new RCommand(getFullName() + '[' + QString::number(from_row + 1) + ':' + QString::number(to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync);
+		data_string.append(u')');
+		RCommand *command = new RCommand(getFullName() + u'[' + QString::number(from_row + 1) + u':' + QString::number(to_row + 1) + u"] <- "_s + data_string, RCommand::App | RCommand::Sync);
 		command->setUpdatesObject(this);
 		RInterface::issueCommand(command, chain);
 	}
 
-	if (!changed_invalids.isEmpty ()) writeInvalidFields (changed_invalids, chain);
+	if (!changed_invalids.isEmpty()) writeInvalidFields(changed_invalids, chain);
 
-	ChangeSet *set = new ChangeSet (from_row, to_row);
-	RKModificationTracker::instance()->objectDataChanged (this, set);
+	ChangeSet *set = new ChangeSet(from_row, to_row);
+	RKModificationTracker::instance()->objectDataChanged(this, set);
 }
 
 void RKVariable::cellsChanged (int from_row, int to_row) {
@@ -474,24 +474,24 @@ QString RKVariable::getText (int row, bool pretty) const {
 	return ret;
 }
 
-QString RKVariable::getRText (int row) const {
-	RK_TRACE (OBJECTS);
-	
-	Status cell_state = cellStatus (row);
-	
+QString RKVariable::getRText(int row) const {
+	RK_TRACE(OBJECTS);
+
+	Status cell_state = cellStatus(row);
+
 	if ((cell_state == ValueUnused) || (cell_state == ValueInvalid)) {
-		return ("NA");
-	} else if (getDataType () == DataFactor) {
-		return (rQuote (getText (row, true)));
-	} else if (getDataType () == DataCharacter) {
-		return (rQuote (getText (row)));
-	} else if (getDataType () == DataLogical) {
-		RK_ASSERT (!data->cell_doubles.isEmpty ());
-		if (data->cell_doubles[row] == 0) return ("FALSE");
-		else return ("TRUE");
+		return u"NA"_s;
+	} else if (getDataType() == DataFactor) {
+		return (rQuote(getText(row, true)));
+	} else if (getDataType() == DataCharacter) {
+		return (rQuote(getText(row)));
+	} else if (getDataType() == DataLogical) {
+		RK_ASSERT(!data->cell_doubles.isEmpty());
+		if (data->cell_doubles[row] == 0) return u"FALSE"_s;
+		else return u"TRUE"_s;
 	} else {
-		RK_ASSERT (!data->cell_doubles.isEmpty ());
-		return (QString::number (data->cell_doubles[row], 'g', MAX_PRECISION));
+		RK_ASSERT(!data->cell_doubles.isEmpty());
+		return (QString::number(data->cell_doubles[row], 'g', MAX_PRECISION));
 	}
 }
 
@@ -735,63 +735,63 @@ void RKVariable::updateValueLabels () {
 	// TODO: find out whether the object is valid after the operation and update accordingly!
 }
 
-void RKVariable::writeValueLabels (RCommandChain *chain) const {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (data);
+void RKVariable::writeValueLabels(RCommandChain* chain) const {
+	RK_TRACE(OBJECTS);
+	RK_ASSERT(data);
 
 	QString level_string;
 	if (data->value_labels && (!data->value_labels->isEmpty())) {
 		int i = 1;
-		level_string = QLatin1String("c (");
-		while (data->value_labels->contains (QString::number (i))) {
-			level_string.append (rQuote ((*(data->value_labels))[QString::number (i)]));
-			if (data->value_labels->contains (QString::number (++i))) {
-				level_string.append (", ");
+		level_string = u"c ("_s;
+		while (data->value_labels->contains(QString::number(i))) {
+			level_string.append(rQuote((*(data->value_labels))[QString::number(i)]));
+			if (data->value_labels->contains(QString::number(++i))) {
+				level_string.append(u", "_s);
 			}
 		}
-		level_string.append (")");
+		level_string.append(u')');
 	} else {
-		level_string = QLatin1String("NULL");
+		level_string = u"NULL"_s;
 	}
 
-	RCommand* command = new RCommand(".rk.set.levels(" + getFullName() + ", " + level_string + ')', RCommand::App | RCommand::Sync);
+	RCommand* command = new RCommand(u".rk.set.levels("_s + getFullName() + u", "_s + level_string + u')', RCommand::App | RCommand::Sync);
 	command->setUpdatesObject(this);
 	RInterface::issueCommand(command, chain);
 }
 
-QString RKVariable::getValueLabelString () const {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (data);
+QString RKVariable::getValueLabelString() const {
+	RK_TRACE(OBJECTS);
+	RK_ASSERT(data);
 
 	if (data->value_labels) {
 		int i = 1;
 		QString level_string;
-		while (data->value_labels->contains (QString::number (i))) {
-			level_string.append ((*(data->value_labels))[QString::number (i)]);
-			if (data->value_labels->contains (QString::number (++i))) {
-				level_string.append ("#,#");
+		while (data->value_labels->contains(QString::number(i))) {
+			level_string.append((*(data->value_labels))[QString::number(i)]);
+			if (data->value_labels->contains(QString::number(++i))) {
+				level_string.append(u"#,#"_s);
 			}
 		}
-		
+
 		return level_string;
 	} else {
-		return QString ();
+		return QString();
 	}
 }
 
-void RKVariable::setValueLabelString (const QString &string) {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (data);
+void RKVariable::setValueLabelString(const QString &string) {
+	RK_TRACE(OBJECTS);
+	RK_ASSERT(data);
 
-	ValueLabels new_labels;	
-	QStringList list = string.split (QStringLiteral("#,#"));
+	ValueLabels new_labels;
+	QStringList list = string.split(u"#,#"_s);
 
 	int i = 1;
-	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
-		new_labels.insert (QString::number (i), *it);
+	for (QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it) {
+		new_labels.insert(QString::number(i), *it);
 		++i;
 	}
-	setValueLabels (new_labels);
+	setValueLabels(new_labels);
 }
 
 RKVariable::FormattingOptions RKVariable::getFormattingOptions () const {
@@ -830,21 +830,21 @@ void RKVariable::setFormattingOptionsString (const QString &string) {
 }
 
 // static
-QString RKVariable::formattingOptionsToString (const FormattingOptions& options) {
-	RK_TRACE (OBJECTS);
+QString RKVariable::formattingOptionsToString(const FormattingOptions& options) {
+	RK_TRACE(OBJECTS);
 
 	QString format_string;
-	if (options.alignment != (int) FormattingOptions::AlignDefault) {
-		format_string.append ("align:" + QString::number (options.alignment));
+	if (options.alignment != (int)FormattingOptions::AlignDefault) {
+		format_string.append(u"align:"_s + QString::number(options.alignment));
 	}
 
-	if (options.precision_mode != (int) FormattingOptions::PrecisionDefault) {
-		if (!format_string.isEmpty ()) format_string.append ("#");
-		format_string.append ("prec:");
-		if (options.precision_mode == (int) FormattingOptions::PrecisionRequired) {
-			format_string.append ("v");
+	if (options.precision_mode != (int)FormattingOptions::PrecisionDefault) {
+		if (!format_string.isEmpty()) format_string.append(u'#');
+		format_string.append(u"prec:"_s);
+		if (options.precision_mode == (int)FormattingOptions::PrecisionRequired) {
+			format_string.append(u'v');
 		} else {
-			format_string.append (QString::number (options.precision));
+			format_string.append(QString::number(options.precision));
 		}
 	}
 
@@ -852,44 +852,44 @@ QString RKVariable::formattingOptionsToString (const FormattingOptions& options)
 }
 
 // static
-RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QString &string) {
-	RK_TRACE (OBJECTS);
+RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString(const QString &string) {
+	RK_TRACE(OBJECTS);
 
 	FormattingOptions formatting_options;
 	formatting_options.alignment = FormattingOptions::AlignDefault;
 	formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 	formatting_options.precision = 0;
 
-	QStringList list = string.split ('#', Qt::SkipEmptyParts);
+	QStringList list = string.split(u'#', Qt::SkipEmptyParts);
 	QString option, parameter;
-	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
-		option = (*it).section (':', 0, 0);
-		parameter = (*it).section (':', 1, 1);
-		
-		if (parameter.isEmpty ()) continue;
-		
-		if (option == QLatin1String("align")) {
-			int al = parameter.toInt ();
-			if ((al >= (int) FormattingOptions::AlignDefault) && (al <= (int) FormattingOptions::AlignRight)) {
-				formatting_options.alignment = (FormattingOptions::Alignment) al;
+	for (QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it) {
+		option = (*it).section(u':', 0, 0);
+		parameter = (*it).section(u':', 1, 1);
+
+		if (parameter.isEmpty()) continue;
+
+		if (option == "align"_L1) {
+			int al = parameter.toInt();
+			if ((al >= (int)FormattingOptions::AlignDefault) && (al <= (int)FormattingOptions::AlignRight)) {
+				formatting_options.alignment = (FormattingOptions::Alignment)al;
 			}
-		} else if (option == QLatin1String("prec")) {
-			if (parameter == QLatin1String("d")) {
+		} else if (option == "prec"_L1) {
+			if (parameter == "d"_L1) {
 				formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
-			} else if (parameter == QLatin1String("v")) {
+			} else if (parameter == "v"_L1) {
 				formatting_options.precision_mode = FormattingOptions::PrecisionRequired;
 			} else {
-				int digits = parameter.toInt ();
+				int digits = parameter.toInt();
 				if ((digits >= 0) && (digits <= 15)) {
 					formatting_options.precision_mode = FormattingOptions::PrecisionFixed;
 					formatting_options.precision = digits;
 				}
 			}
 		} else {
-			RK_ASSERT (false);
+			RK_ASSERT(false);
 		}
 	}
-	
+
 	return formatting_options;
 }
 
