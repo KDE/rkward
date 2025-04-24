@@ -2667,16 +2667,13 @@ msgid "Unhandled output command '%1'"
 msgstr ""
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"Při pokusu o načtení/odstranění balíčků se vyskytla chyba. Podívejte se, "
-"prosím, kvůli podrobnostem, na zápis níže"
+"<b>Při pokusu o spuštění příkazu se vyskytla chyba. Podrobnosti výstupu "
+"najdete níže</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
