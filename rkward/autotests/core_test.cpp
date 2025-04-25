@@ -124,7 +124,7 @@ class RKWardCoreTest: public QObject {
 		if (output.startsWith(oldoutput)) {
 			output = output.sliced(oldoutput.length());
 		}
-		testLog("%s", output.data());
+		testLog("%s", qPrintable(QString::fromLocal8Bit(output)));
 	}
 
 	void waitForBackendStarted() {
