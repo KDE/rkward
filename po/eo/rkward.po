@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2024-08-22 17:49+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -208,7 +208,7 @@ msgstr ""
 "kiujn vi kreis aŭ importis, kontraste al datumoj enhavitaj en ŝargita R-"
 "pakaĵo. Teknike tio respondas al la medio <i>.GlobalEnv</i>."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -222,7 +222,7 @@ msgstr ""
 "bonvolu sciigi nin ĉe rkward-devel@kde.org, por ke ni povu pripensi eblajn "
 "solvojn."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid "Many objects in workspace"
 msgstr "Multaj objektoj en laborspaco"
@@ -299,13 +299,13 @@ msgstr "Tipo"
 msgid "Class"
 msgstr "Klaso"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "Orfaj Nomspacoj"
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -392,7 +392,7 @@ msgstr "Dimensioj: "
 msgid "Class(es):"
 msgstr "Klaso(j):"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -412,7 +412,7 @@ msgstr ""
 "datumoj, tio bezonus tro longe por ŝargi. Por mallistigi la pakaĵon, vizitu "
 "Agordoj->Agordi RKWard->Laborspaco."
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "Nigra pako enlistigita"
@@ -5982,12 +5982,12 @@ msgstr ""
 "Noto: La komencaj defaŭltoj ĉiam estos uzataj aldone al la lokoj, kiujn vi "
 "specifas en ĉi tiu listo"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid "Unversioned library location"
 msgstr "Neversionigita biblioteko-loko"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -6006,13 +6006,13 @@ msgstr ""
 "dosieruja nomo, ĝi ofertas neniun protekton kontraŭ uzado de pakaĵoj "
 "konstruitaj por malkongrua versio de R."
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Alinomi"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -6022,13 +6022,13 @@ msgstr ""
 "Alinomi ĉi tiun lokon por inkluzivi la versinumeron de la nuna funkcianta R. "
 "Pakoj daŭre funkcios (se ili estas kongruaj kun ĉi tiu versio de R)."
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Forigi"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
@@ -6037,13 +6037,13 @@ msgstr ""
 "Forigu ĉi tiun lokon de la agordo (ĝi ne estos forigita sur disko). Vi devos "
 "reinstali iujn ajn pakaĵojn, kiujn vi volas konservi."
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "Konservi"
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "Konservi ĉi tiun lokon (ne ŝanĝu ion ajn)"

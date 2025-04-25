@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -195,7 +195,7 @@ msgid ""
 "Technically, this corresponds to the <i>.GlobalEnv</i> environment."
 msgstr ""
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -204,7 +204,7 @@ msgid ""
 "let us know at rkward-devel@kde.org, so we can consider possible solutions."
 msgstr ""
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, fuzzy, kde-format
 #| msgid "Load an existing workspace:"
 msgid "Many objects in workspace"
@@ -279,13 +279,13 @@ msgstr "Tipas"
 msgid "Class"
 msgstr "Klasė"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr ""
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -370,7 +370,7 @@ msgstr "Matmenys: "
 msgid "Class(es):"
 msgstr "Klasė(s) :"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -392,7 +392,7 @@ msgstr ""
 "išbraukti paketą iš juodojo sąrašo, eikite Nuostatos -> Konfigūruoti RKWard -"
 "> Darbo erdvė."
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "Juodojo sąrašo paketai"
@@ -5712,13 +5712,13 @@ msgstr ""
 "Pastaba: be sąraše nurodytųjų vietų, papildomai visada naudojamos ir "
 "numatytosios reikšmės."
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, fuzzy, kde-format
 #| msgid "Selected library location not writable"
 msgid "Unversioned library location"
 msgstr "neįmanoma rašyti į pasirinktą bibliotekų vietą"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -5730,14 +5730,14 @@ msgid ""
 "for an incompatible version of R."
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "verb"
 msgid "Rename"
 msgstr "Pervadinti"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -5745,27 +5745,27 @@ msgid ""
 "of R)."
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "verb"
 msgid "Remove"
 msgstr "Pašalinti"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
 "disk). You will have to re-install any packages that you want to keep."
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr ""

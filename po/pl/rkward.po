@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2024-08-10 12:44+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -212,7 +212,7 @@ msgstr ""
 "wczytywanych pakietach R. Technicznie, odpowiada to środowisku <i>."
 "GlobalEnv</i>."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -226,7 +226,7 @@ msgstr ""
 "występuje u ciebie na porządku dziennym, to powiadom nas o tym na rkward-"
 "devel@kde.org, a my spróbujemy znaleźć rozwiązanie."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid "Many objects in workspace"
 msgstr "Wiele obiektów w przestrzeni pracy"
@@ -300,13 +300,13 @@ msgstr "Rodzaj"
 msgid "Class"
 msgstr "Klasa"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "Osierocone przestrzenie nazw"
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -394,7 +394,7 @@ msgstr "Wymiary: "
 msgid "Class(es):"
 msgstr "Klasa(y):"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -415,7 +415,7 @@ msgstr ""
 "danych, które zajęłyby zbyt dużo czasu do wczytania. Aby usunąć pakiet z "
 "listy, odwiedź Ustawienia->Ustawienia RKWard->Przestrzeń robocza."
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "Pakiet dodany do czarnej listy"
@@ -6030,12 +6030,12 @@ msgstr ""
 "Uwaga: Ustawienia domyślne przy uruchamianiu będą zawsze używane w dodatku "
 "do położeń, które określisz na tej liście"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid "Unversioned library location"
 msgstr "Położenie niewersjonowanej biblioteki"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -6054,13 +6054,13 @@ msgstr ""
 "wersji R w nazwie katalogu, nie zapewnia ochrony przed użyciem pakietu z "
 "niezgodnej wersji R."
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Przemianuj"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -6071,13 +6071,13 @@ msgstr ""
 "uruchomionego R. Pakiety będą nadal działały (jeśli będą zgodne z tą wersją "
 "R)."
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Usuń"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
@@ -6086,13 +6086,13 @@ msgstr ""
 "Usuń to położenie z ustawień (nie zostanie ono usunięte z dysku). Będzie "
 "trzeba ponownie wgrać każdy pakiet, który ma być zachowany."
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "Zachowaj"
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "Zachowaj to położenie (nie zmieniaj niczego)"

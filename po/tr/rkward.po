@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2025-04-21 10:50+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -213,7 +213,7 @@ msgstr ""
 "bulunan verilerin aksine, oluşturduğunuz veya içe aktardığınız verilerdir. "
 "Teknik olarak bu, <i>.GlobalEnv</i> ortamına karşılık gelir."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -227,7 +227,7 @@ msgstr ""
 "lütfen rkward-devel@kde.org adresinden bize bildirin, böylece olası "
 "çözümleri değerlendirebiliriz."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid "Many objects in workspace"
 msgstr "Çalışma Alanında Çok Fazla Nesne"
@@ -305,13 +305,13 @@ msgstr "Tür"
 msgid "Class"
 msgstr "Sınıf"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "Kimsesiz Ad Alanları"
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -398,7 +398,7 @@ msgstr "Boyutlar: "
 msgid "Class(es):"
 msgstr "Sınıf(lar):"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -418,7 +418,7 @@ msgstr ""
 "genellikle kara listeye alınır. Paketi listeden çıkarmak için Ayarlar → "
 "RKWard Uygulamasını Yapılandır → Çalışma Alanı’nı ziyaret edin."
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "Paket Kara Listede"
@@ -5998,12 +5998,12 @@ msgstr ""
 "Not: Bu listede belirttiğiniz konumlara ek olarak her zaman başlangıç "
 "öntanımlıları kullanılacaktır."
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid "Unversioned library location"
 msgstr "Sürümlendirilmemiş kitaplık konumu"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -6022,13 +6022,13 @@ msgstr ""
 "nedeniyle, uyumsuz bir R sürümü için oluşturulmuş paketlerin kullanılmasına "
 "karşı koruma sağlamaz."
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Yeniden Adlandır"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -6039,13 +6039,13 @@ msgstr ""
 "yeniden adlandırın. Paketler çalışmayı sürdürecektir (eğer R’nin bu "
 "sürümüyle uyumlularsa)."
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Kaldır"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
@@ -6054,13 +6054,13 @@ msgstr ""
 "Bu konumu yapılandırmadan kaldırın (diskten silinmeyecektir). Tutmak "
 "istediğiniz paketleri yeniden kurmanız gerekecektir."
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "Tut"
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "Bu konumu tut (bir şeyi değiştirme)"

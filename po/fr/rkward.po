@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2025-04-20 08:53+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -212,7 +212,7 @@ msgstr ""
 "contenues dans un paquet de R chargé. Techniquement, ceci correspond à "
 "l'environnement <i>.GlobalEnv</i>."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -227,7 +227,7 @@ msgstr ""
 "l'adresse de courriel « rkward-devel@kde.org », afin que l'équipe de "
 "développement vous propose des solutions possibles."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid "Many objects in workspace"
 msgstr "De nombreux objets dans l'espace de travail"
@@ -305,13 +305,13 @@ msgstr "Type"
 msgid "Class"
 msgstr "Classe"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "Espaces de noms orphelins"
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -399,7 +399,7 @@ msgstr "Dimensions : "
 msgid "Class(es):"
 msgstr "Classe(s) :"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -421,7 +421,7 @@ msgstr ""
 "Pour retirer un paquet de la liste noire, rendez-vous dans Paramètres / "
 "Configurer RKWard / Espace de travail."
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "Paquet non autorisé"
@@ -6183,12 +6183,12 @@ msgstr ""
 "Remarque : les valeurs par défaut au démarrage seront toujours utilisées en "
 "plus des emplacements que vous avez spécifiés dans cette liste."
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid "Unversioned library location"
 msgstr "Emplacement des bibliothèques non versionnées."
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -6208,13 +6208,13 @@ msgstr ""
 "version de R dans le nom du dossier, il n'offre aucune protection contre "
 "l'utilisation de paquets construits pour une version incompatible de R."
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Renommer"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -6225,13 +6225,13 @@ msgstr ""
 "R en cours d'exécution. Les paquets continueront à fonctionner (si ils sont "
 "compatibles avec cette version de R)."
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Supprimer"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
@@ -6240,13 +6240,13 @@ msgstr ""
 "Supprimer cet emplacement de la configuration (Il ne sera pas supprimé du "
 "disque). Vous devrez réinstaller chaque paquet que vous voulez conserver."
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "Conserver"
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "Conserver cet emplacement (ne rien modifier du tout)"

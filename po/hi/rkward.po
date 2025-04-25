@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2024-12-15 19:29+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -204,7 +204,7 @@ msgstr ""
 "या आयात किया है, लोड किए गए R पैकेज में मौजूद डेटा के विपरीत। तकनीकी रूप से, यह <i>."
 "GlobalEnv</i> वातावरण से मेल खाता है।"
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -217,7 +217,7 @@ msgstr ""
 "काम के लिए एक नियमित उपयोग का मामला बनती है, तो कृपया हमें rkward-devel@kde.org "
 "पर बताएं, ताकि हम संभावित समाधानों पर विचार कर सकें।"
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid "Many objects in workspace"
 msgstr "कार्यस्थान में अनेक वस्तुएँ"
@@ -293,13 +293,13 @@ msgstr "प्रकार"
 msgid "Class"
 msgstr "कक्षा"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "अनाथ नामस्थान"
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -386,7 +386,7 @@ msgstr "आयाम:"
 msgid "Class(es):"
 msgstr "वर्ग:"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -405,7 +405,7 @@ msgstr ""
 "लोड होने में बहुत अधिक समय लगेगा। पैकेज को अनलिस्ट करने के लिए, सेटिंग्स-> RKWard कॉन्फ़िगर "
 "करें-> वर्कस्पेस पर जाएँ।"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "पैकेज ब्लैकलिस्टेड"
@@ -5904,12 +5904,12 @@ msgstr ""
 "नोट: इस सूची में आपके द्वारा निर्दिष्ट स्थानों के अतिरिक्त स्टार्टअप डिफ़ॉल्ट का उपयोग हमेशा "
 "किया जाएगा"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid "Unversioned library location"
 msgstr "असंशोधित पुस्तकालय स्थान"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -5927,13 +5927,13 @@ msgstr ""
 "नाम में R संस्करण संख्या की कमी के कारण, यह R के असंगत संस्करण के लिए बनाए गए पैकेजों का "
 "उपयोग करने के विरुद्ध कोई सुरक्षा प्रदान नहीं करता है।"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "नाम बदलें"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -5943,13 +5943,13 @@ msgstr ""
 "वर्तमान में चल रहे R के संस्करण संख्या को शामिल करने के लिए इस स्थान का नाम बदलें। पैकेज काम "
 "करना जारी रखेंगे (यदि वे R के इस संस्करण के साथ संगत हैं)।"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "निकालना"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
@@ -5958,13 +5958,13 @@ msgstr ""
 "कॉन्फ़िगरेशन से इस स्थान को हटा दें (यह डिस्क पर डिलीट नहीं होगा)। आपको उन सभी पैकेजों "
 "को फिर से इंस्टॉल करना होगा जिन्हें आप रखना चाहते हैं।"
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "रखना"
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "इस स्थान को बनाए रखें (कुछ भी न बदलें)"

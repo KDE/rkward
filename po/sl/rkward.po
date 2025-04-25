@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2025-04-19 07:33+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -210,7 +210,7 @@ msgstr ""
 "jih ustvarili ali uvažali, v nasprotju s podatki iz naloženega paketa R. "
 "Tehnično to ustreza okolju <i>.GlobalEnv</i>."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -224,7 +224,7 @@ msgstr ""
 "nam prosim to sporočite na rkward-devel@kde.org, da bomo lahko razmislili o "
 "možnih rešitvah."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid "Many objects in workspace"
 msgstr "Veliko predmetov v delovnem prostoru"
@@ -298,13 +298,13 @@ msgstr "Vrsta"
 msgid "Class"
 msgstr "Razred"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "Imenski prostori sirote"
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -391,7 +391,7 @@ msgstr "Mere: "
 msgid "Class(es):"
 msgstr "Razredi:"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -412,7 +412,7 @@ msgstr ""
 "njihovo nalaganje trajalo predolgo. Če želite paket odstraniti s seznama, "
 "obiščite Nastavitve -> Prilagodi RKWard-> Delovni prostor."
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "Paket na črnem seznamu"
@@ -6004,12 +6004,12 @@ msgstr ""
 "Opomba: Privzete nastavitve zagona bodo vedno uporabljene poleg lokacij, ki "
 "jih določite na tem seznamu"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid "Unversioned library location"
 msgstr "Lokacija knjižnice brez različice"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -6027,13 +6027,13 @@ msgstr ""
 "konfigurirana). Prav tako zaradi pomanjkanja različice R v imeniku, ne "
 "ponuja zaščite pred uporabo paketov, zgrajenih za nezdružljivo različico R."
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -6043,13 +6043,13 @@ msgstr ""
 "Preimenuj to mesto in vključite število različice trenutno zagnanega R-a. "
 "Paketi bodo še naprej delovali (če so združljivi s to različico R-a)."
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Odstrani"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
@@ -6058,13 +6058,13 @@ msgstr ""
 "Odstrani to mesto iz konfiguracije (ne bo izbrisana na disku). Vse pakete, "
 "ki jih želite obdržati boste morali namestiti ponovno."
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "Ohrani"
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "Obdrži to lokacijo (ničesar ne spreminjaj)"

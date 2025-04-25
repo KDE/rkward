@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -203,7 +203,7 @@ msgstr ""
 "ise loonud või importinud, mitte andmed, mida sisaldab laaditud R-i pakett. "
 "Tehniliselt vastab see <i>.GlobalEnv</i> keskkonnale."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -212,7 +212,7 @@ msgid ""
 "let us know at rkward-devel@kde.org, so we can consider possible solutions."
 msgstr ""
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, fuzzy, kde-format
 #| msgid "Load an existing workspace:"
 msgid "Many objects in workspace"
@@ -287,13 +287,13 @@ msgstr "Tüüp"
 msgid "Class"
 msgstr "Klass"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "Orb-nimeruumi"
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -378,7 +378,7 @@ msgstr "Mõõtmed: "
 msgid "Class(es):"
 msgstr "Klass(id):"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -400,7 +400,7 @@ msgstr ""
 "eemaldamiseks mustast nimekirjast vali Seadistused->RKWardi seadistamine-"
 ">Töötsoon."
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "Pakett on mustas nimekirjas"
@@ -5939,12 +5939,12 @@ msgstr ""
 "Märkus: lisaks siin määratud asukohtadele kasutatakse alati ka "
 "käivitamisaegseid vaikeasukohti."
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid "Unversioned library location"
 msgstr "Versioonita teegi asukoht"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, fuzzy, kde-format
 #| msgid ""
 #| "The configured library locations (where R packages will be installed on "
@@ -5971,14 +5971,14 @@ msgstr ""
 "kataloogi nimes R-i versiooni number, ei paku see kaitset pakettide "
 "kasutamise eest, mis on ehitatud R-i ühildumatu versiooni peale."
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "verb"
 msgid "Rename"
 msgstr "Muuda nime"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, fuzzy, kde-format
 #| msgid ""
 #| "<b>Rename</b> this location to include the version number of the "
@@ -5993,14 +5993,14 @@ msgstr ""
 "versiooni. Paketid töötavad sel juhul edasi (kui nad muidugi ühilduvad "
 "praeguse R-i versiooniga)."
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "verb"
 msgid "Remove"
 msgstr "Eemaldamine"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, fuzzy, kde-format
 #| msgid ""
 #| "<b>Remove</b> this location from the configuration (it will not be "
@@ -6013,13 +6013,13 @@ msgstr ""
 "Selle asukoha <b>eemaldamine</b> seadistusest (seda ei kustutata kettalt). "
 "Kõik paketid, mida soovid säilitada, tuleb uuesti paigaldada."
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr ""
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, fuzzy, kde-format
 #| msgid "<b>Keep</b> this location (do not change anything)."
 msgid "Keep this location (do not change anything)"

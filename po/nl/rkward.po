@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-23 00:38+0000\n"
+"POT-Creation-Date: 2025-04-25 00:38+0000\n"
 "PO-Revision-Date: 2025-04-19 16:18+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -208,7 +208,7 @@ msgstr ""
 "hebt gemaakt of geïmporteerd, in tegenstelling tot gegevens in een geladen R-"
 "pakket. Technisch correspondeert dit met de <i>.GlobalEnv</i> omgeving."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
@@ -222,7 +222,7 @@ msgstr ""
 "het ons dan weten op rkward-devel@kde.org, zodat we mogelijke oplossingen "
 "kunnen bekijken."
 
-#: rkward/core/renvironmentobject.cpp:113
+#: rkward/core/renvironmentobject.cpp:110
 #, kde-format
 msgid "Many objects in workspace"
 msgstr "Veel objecten in de werkruimte"
@@ -300,13 +300,13 @@ msgstr "Type"
 msgid "Class"
 msgstr "Klasse"
 
-#: rkward/core/rkpseudoobjects.cpp:71
+#: rkward/core/rkpseudoobjects.cpp:72
 #, kde-format
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "Loze naamruimten"
 
-#: rkward/core/rkpseudoobjects.cpp:141
+#: rkward/core/rkpseudoobjects.cpp:142
 #, kde-format
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
@@ -394,7 +394,7 @@ msgstr "Afmetingen: "
 msgid "Class(es):"
 msgstr "Class(en):"
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:278
 #, kde-format
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
@@ -415,7 +415,7 @@ msgstr ""
 "pakket uit de zwarte lijst verwijderen, met behulp van Instellingen>RKWard "
 "instellen>Werkruimte."
 
-#: rkward/core/robject.cpp:275
+#: rkward/core/robject.cpp:283
 #, kde-format
 msgid "Package blacklisted"
 msgstr "Pakket op de zwarte lijst"
@@ -6044,12 +6044,12 @@ msgstr ""
 "Merk op: de standaardwaarden voor het opstarten worden altijd gebruikt samen "
 "met de locaties die in deze lijst worden opgegeven"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid "Unversioned library location"
 msgstr "Bibliotheeklocatie zonder versie"
 
-#: rkward/settings/rksettingsmoduler.cpp:569
+#: rkward/settings/rksettingsmoduler.cpp:574
 #, kde-format
 msgid ""
 "The configured library locations (where R packages will be installed on this "
@@ -6068,13 +6068,13 @@ msgstr ""
 "van de map,  waardoor er geen bescherming is tegen het gebruiken van "
 "pakketten die gecompileerd zijn voor een niet compatibele versie van R."
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Hernoemen"
 
-#: rkward/settings/rksettingsmoduler.cpp:574
+#: rkward/settings/rksettingsmoduler.cpp:579
 #, kde-format
 msgid ""
 "Rename this location to include the version number of the currently running "
@@ -6085,13 +6085,13 @@ msgstr ""
 "huidige versie van R. Pakketten blijven werken (als ze compatibel zijn met "
 "de huidige versie van R)."
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: rkward/settings/rksettingsmoduler.cpp:582
+#: rkward/settings/rksettingsmoduler.cpp:587
 #, kde-format
 msgid ""
 "Remove this location from the configuration (it will not be deleted on "
@@ -6101,13 +6101,13 @@ msgstr ""
 "gewist). Alle pakketten die u wilt behouden moeten opnieuw worden "
 "geïnstalleerd."
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgctxt "verb"
 msgid "Keep"
 msgstr "Bewaren"
 
-#: rkward/settings/rksettingsmoduler.cpp:587
+#: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
 msgid "Keep this location (do not change anything)"
 msgstr "Behouden van deze locatie (niets veranderen)."
