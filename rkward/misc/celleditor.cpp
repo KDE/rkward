@@ -27,28 +27,28 @@ CellEditor::~CellEditor () {
 	RK_TRACE (EDITOR);
 }
 
-void CellEditor::setValueLabels (const RObject::ValueLabels& labels) {
-	RK_TRACE (EDITOR);
+void CellEditor::setValueLabels(const RObject::ValueLabels& labels) {
+	RK_TRACE(EDITOR);
 
-	if (labels.isEmpty ()) return;
+	if (labels.isEmpty()) return;
 
-// NOTE: not using a QComboBox, as we do not want it to pop up immediately
-	value_list = new QMenu (this);
-	value_list->setFont (font ());
-	value_list->setPalette (palette ());
-	value_list->setFocusProxy (this);
-	value_list->installEventFilter (this);	// somehow setting us as a focus proxy is not enough to continue to receive the key-presses
+	// NOTE: not using a QComboBox, as we do not want it to pop up immediately
+	value_list = new QMenu(this);
+	value_list->setFont(font());
+	value_list->setPalette(palette());
+	value_list->setFocusProxy(this);
+	value_list->installEventFilter(this);  // somehow setting us as a focus proxy is not enough to continue to receive the key-presses
 
 	const int limit = 64;
 	int i = 0;
-	for (RObject::ValueLabels::const_iterator it = labels.constBegin (); it != labels.constEnd (); ++it) {
+	for (RObject::ValueLabels::const_iterator it = labels.constBegin(); it != labels.constEnd(); ++it) {
 		if (++i >= limit) break;
-		value_list->addAction (it.key () + ": " + it.value ())->setData (it.key ());
+		value_list->addAction(it.key() + u": "_s + it.value())->setData(it.key());
 	}
 	if (i >= limit) {
-		value_list->addAction (i18n ("[Omitted %1 more factor levels]", labels.size () - limit))->setEnabled (false);
+		value_list->addAction(i18n("[Omitted %1 more factor levels]", labels.size() - limit))->setEnabled(false);
 	}
-	connect (value_list, &QMenu::triggered, this, &CellEditor::selectedFromList);
+	connect(value_list, &QMenu::triggered, this, &CellEditor::selectedFromList);
 
 	QTimer::singleShot(200, this, &CellEditor::showValueLabels);
 }

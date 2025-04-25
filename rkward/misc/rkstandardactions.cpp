@@ -129,7 +129,7 @@ public Q_SLOTS:
 		QString symbol, package;
 		bool enabled = true;
 		provider->currentHelpContext (&symbol, &package);
-		QString searchtext = symbol + " " + package + " R";
+		QString searchtext = symbol + u' ' + package + u" R"_s;
 		actions->setSelectedText(searchtext);
 		menu->clear();
 

@@ -21,6 +21,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
+using namespace Qt::Literals::StringLiterals;
+
 /* We want to allow undelcared entities in our XML files, importantly arbitrary HTML entities inside our .rkh files. Further, we want to
  * preserve them *non-replaced* in order to pass them along to the webegine for rendering.
  *
@@ -29,7 +31,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
  * i18nElementText(). */
 #define ENTITIYHACK "RKENTITY"
 class DummyEntityResolver : public QXmlStreamEntityResolver {
-	QString resolveUndeclaredEntity(const QString &name) override { return QString("<" ENTITIYHACK ">%1</" ENTITIYHACK ">").arg(name); }
+	QString resolveUndeclaredEntity(const QString &name) override { return QStringLiteral("<" ENTITIYHACK ">%1</" ENTITIYHACK ">").arg(name); }
 };
 
 XMLHelper::XMLHelper (const QString &filename, const RKMessageCatalog *default_catalog) {
@@ -43,54 +45,58 @@ XMLHelper::~XMLHelper () {
 	RK_TRACE (XML);
 }
 
-QDomElement XMLHelper::openXMLFile (int debug_level, bool with_includes, bool with_snippets) {
-	RK_TRACE (XML);
+QDomElement XMLHelper::openXMLFile(int debug_level, bool with_includes, bool with_snippets) {
+	RK_TRACE(XML);
 
 	int error_line, error_column;
 	QString error_message;
 	QDomDocument doc;
 
-	QFile f (filename);
+	QFile f(filename);
 	if (!f.open(QIODevice::ReadOnly)) displayError(nullptr, i18n("Could not open file %1 for reading", filename), debug_level, DL_ERROR);
 	QXmlStreamReader reader(&f);
 	DummyEntityResolver res;
 	reader.setEntityResolver(&res);
 	if (!doc.setContent(&reader, false, &error_message, &error_line, &error_column)) {
-		displayError(nullptr, i18n("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below", error_message, error_line, error_column), debug_level, DL_ERROR);
-		return QDomElement ();
+		displayError(nullptr,
+		             i18n("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below",
+		                  error_message, error_line, error_column),
+		             debug_level, DL_ERROR);
+		return QDomElement();
 	}
 	f.close();
 
-	QDomElement ret = doc.documentElement ();
-	if (ret.hasAttribute (QStringLiteral("po_id"))) {
-		QDir path = QFileInfo (filename).absoluteDir ();
-		catalog = RKMessageCatalog::getCatalog ("rkward__" + ret.attribute (QStringLiteral("po_id")), path.absoluteFilePath (getStringAttribute (ret, QStringLiteral("po_path"), QStringLiteral("po"), DL_INFO)));
+	QDomElement ret = doc.documentElement();
+	if (ret.hasAttribute(QStringLiteral("po_id"))) {
+		QDir path = QFileInfo(filename).absoluteDir();
+		catalog = RKMessageCatalog::getCatalog(u"rkward__"_s + ret.attribute(QStringLiteral("po_id")),
+		                                       path.absoluteFilePath(getStringAttribute(ret, QStringLiteral("po_path"), QStringLiteral("po"), DL_INFO)));
 	}
 	if (with_includes) {
-		XMLChildList includes = nodeListToChildList (doc.elementsByTagName (QStringLiteral("include")));
-		for (XMLChildList::const_iterator it = includes.constBegin (); it != includes.constEnd (); ++it) {
+		XMLChildList includes = nodeListToChildList(doc.elementsByTagName(QStringLiteral("include")));
+		for (XMLChildList::const_iterator it = includes.constBegin(); it != includes.constEnd(); ++it) {
 			// resolve the file to include
 			QDomElement el = *it;
 
-			QString inc_filename = getStringAttribute (el, QStringLiteral("file"), QString (), DL_ERROR);
-			QDir base = QFileInfo (filename).absoluteDir ();
-			inc_filename = base.filePath (inc_filename);
+			QString inc_filename = getStringAttribute(el, QStringLiteral("file"), QString(), DL_ERROR);
+			QDir base = QFileInfo(filename).absoluteDir();
+			inc_filename = base.filePath(inc_filename);
 
 			// import
-			XMLHelper inc_xml = XMLHelper (inc_filename);
-			QDomElement included = inc_xml.openXMLFile (debug_level, true, false);
+			XMLHelper inc_xml = XMLHelper(inc_filename);
+			QDomElement included = inc_xml.openXMLFile(debug_level, true, false);
 
-			if (!included.isNull ()) {
-				QDomElement copied = doc.importNode (included, true).toElement ();
-	
+			if (!included.isNull()) {
+				QDomElement copied = doc.importNode(included, true).toElement();
+
 				// insert everything within the document tag
-				replaceWithChildren (&el, copied);
+				replaceWithChildren(&el, copied);
 			}
 		}
 	}
 
 	if (with_snippets) {
-		return (resolveSnippets (ret));
+		return (resolveSnippets(ret));
 	}
 
 	return (ret);
@@ -119,38 +125,38 @@ XMLChildList XMLHelper::nodeListToChildList (const QDomNodeList &from) {
 	return ret;
 }
 
-QDomElement XMLHelper::resolveSnippets (QDomElement &from_doc) {
-	RK_TRACE (XML);
+QDomElement XMLHelper::resolveSnippets(QDomElement &from_doc) {
+	RK_TRACE(XML);
 
-	XMLChildList refs = nodeListToChildList (from_doc.elementsByTagName (QStringLiteral("insert")));
-	int ref_count = refs.count ();
+	XMLChildList refs = nodeListToChildList(from_doc.elementsByTagName(QStringLiteral("insert")));
+	int ref_count = refs.count();
 
-	if (!ref_count) {	// nothing to resolve
+	if (!ref_count) {  // nothing to resolve
 		return (from_doc);
 	}
 
-	QDomElement snippets_section = getChildElement (from_doc, QStringLiteral("snippets"), DL_ERROR);
-	XMLChildList snippets = getChildElements (snippets_section, QStringLiteral("snippet"), DL_ERROR);
+	QDomElement snippets_section = getChildElement(from_doc, QStringLiteral("snippets"), DL_ERROR);
+	XMLChildList snippets = getChildElements(snippets_section, QStringLiteral("snippet"), DL_ERROR);
 
-	for (XMLChildList::const_iterator it = refs.constBegin (); it != refs.constEnd (); ++it) {
+	for (XMLChildList::const_iterator it = refs.constBegin(); it != refs.constEnd(); ++it) {
 		QDomElement ref = *it;
-		QString id = getStringAttribute (ref, QStringLiteral("snippet"), QString (), DL_ERROR);
-		displayError (&ref, "resolving snippet '" + id + '\'', DL_DEBUG, DL_DEBUG);
+		QString id = getStringAttribute(ref, QStringLiteral("snippet"), QString(), DL_ERROR);
+		displayError(&ref, u"resolving snippet '"_s + id + u'\'', DL_DEBUG, DL_DEBUG);
 
 		// resolve the reference
 		QDomElement snippet;
-		for (XMLChildList::const_iterator it = snippets.constBegin(); it != snippets.constEnd (); ++it) {
-			if (getStringAttribute (*it, QStringLiteral("id"), QString (), DL_ERROR) == id) {
+		for (XMLChildList::const_iterator it = snippets.constBegin(); it != snippets.constEnd(); ++it) {
+			if (getStringAttribute(*it, QStringLiteral("id"), QString(), DL_ERROR) == id) {
 				snippet = *it;
 				break;
 			}
 		}
-		if (snippet.isNull ()) {
-			displayError (&ref, "no such snippet '" + id + '\'', DL_ERROR, DL_ERROR);
+		if (snippet.isNull()) {
+			displayError(&ref, u"no such snippet '"_s + id + u'\'', DL_ERROR, DL_ERROR);
 		}
 
 		// now insert it.
-		replaceWithChildren (&ref, snippet.cloneNode (true).toElement ());
+		replaceWithChildren(&ref, snippet.cloneNode(true).toElement());
 	}
 
 	return from_doc;
@@ -245,35 +251,35 @@ QString XMLHelper::getStringAttribute (const QDomElement &element, const QString
 	return (element.attribute (name));
 }
 
-QString XMLHelper::i18nStringAttribute (const QDomElement& element, const QString& name, const QString& def, int debug_level) {
-	RK_TRACE (XML);
-	if (!element.hasAttribute (name)) {
-		const QString no18nname = "noi18n_" + name;
-		if (element.hasAttribute (no18nname)) return element.attribute (no18nname);
-		displayError (&element, i18n ("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
+QString XMLHelper::i18nStringAttribute(const QDomElement& element, const QString& name, const QString& def, int debug_level) {
+	RK_TRACE(XML);
+	if (!element.hasAttribute(name)) {
+		const QString no18nname = u"noi18n_"_s + name;
+		if (element.hasAttribute(no18nname)) return element.attribute(no18nname);
+		displayError(&element, i18n("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
 		return def;
 	}
 
-	QString attr = element.attribute (name);
-	if (attr.isEmpty ()) return attr;	// Do not translate empty strings!
+	QString attr = element.attribute(name);
+	if (attr.isEmpty()) return attr;  // Do not translate empty strings!
 
-	const QString context = element.attribute (QStringLiteral("i18n_context"), QString ());
-	if (!context.isNull ()) return (catalog->translate (context, attr));
-	return (catalog->translate (attr));
+	const QString context = element.attribute(QStringLiteral("i18n_context"), QString());
+	if (!context.isNull()) return (catalog->translate(context, attr));
+	return (catalog->translate(attr));
 }
 
-int XMLHelper::getMultiChoiceAttribute (const QDomElement &element, const QString &name, const QString &values, int def, int debug_level) {
-	RK_TRACE (XML);
+int XMLHelper::getMultiChoiceAttribute(const QDomElement &element, const QString &name, const QString &values, int def, int debug_level) {
+	RK_TRACE(XML);
 
-	QStringList value_list = values.split (';');
+	QStringList value_list = values.split(u';');
 
-	QString plain_value = getStringAttribute (element, name, value_list[def], debug_level);
-	
+	QString plain_value = getStringAttribute(element, name, value_list[def], debug_level);
+
 	int index;
-	if ((index = value_list.indexOf (plain_value)) >= 0) {
+	if ((index = value_list.indexOf(plain_value)) >= 0) {
 		return (index);
 	} else {
-		displayError (&element, i18n ("Illegal attribute value. Allowed values are one of '%1', only.", values), debug_level, DL_ERROR);
+		displayError(&element, i18n("Illegal attribute value. Allowed values are one of '%1', only.", values), debug_level, DL_ERROR);
 		return def;
 	}
 }
@@ -325,23 +331,23 @@ bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &nam
 	return def;
 }
 
-QString translateChunk (const QString &chunk, const QString &context, bool add_paragraphs, const RKMessageCatalog *catalog) {
+QString translateChunk(const QString &chunk, const QString &context, bool add_paragraphs, const RKMessageCatalog *catalog) {
 	// if (!with_paragraphs), text should better not contain double newlines. We treat all the same, though, just as the message extraction script does.
-	QStringList paras = chunk.split (QStringLiteral("\n\n"));
+	QStringList paras = chunk.split(QStringLiteral("\n\n"));
 	QString ret;
 
-	for (int i = 0; i < paras.count (); ++i) {
-		QString para = paras[i].simplified ();
-		if (para.isEmpty ()) ret.append (QChar (' '));
+	for (int i = 0; i < paras.count(); ++i) {
+		QString para = paras[i].simplified();
+		if (para.isEmpty()) ret.append(u' ');
 		else {
-			if (!ret.isEmpty ()) ret.append ("\n");
+			if (!ret.isEmpty()) ret.append(u'\n');
 			// Oh, crap. Fix up after some differences between python message extraction and qt's.
-			para.replace (QLatin1String("<li> <"), QLatin1String("<li><"));
-			para.replace (QLatin1String("br> <"), QLatin1String("br><"));
-			para.replace (QLatin1String("> </li>"), QLatin1String("></li>"));
-			para.replace (QLatin1String("&amp;"), QLatin1String("&"));
-			QString text = context.isNull () ? catalog->translate (para) : catalog->translate (context, para);
-			if (add_paragraphs) ret += "<p>" + text + "</p>";
+			para.replace(QLatin1String("<li> <"), u"<li><"_s);
+			para.replace(QLatin1String("br> <"), u"br><"_s);
+			para.replace(QLatin1String("> </li>"), u"></li>"_s);
+			para.replace(QLatin1String("&amp;"), u"&"_s);
+			QString text = context.isNull() ? catalog->translate(para) : catalog->translate(context, para);
+			if (add_paragraphs) ret += u"<p>"_s + text + u"</p>"_s;
 			else ret += text;
 		}
 	}
@@ -349,44 +355,45 @@ QString translateChunk (const QString &chunk, const QString &context, bool add_p
 	return ret;
 }
 
-QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragraphs, int debug_level) const {
-	RK_TRACE (XML);
+QString XMLHelper::i18nElementText(const QDomElement &element, bool with_paragraphs, int debug_level) const {
+	RK_TRACE(XML);
 
-	if (element.isNull ()) {
-		displayError (&element, i18n ("Trying to retrieve contents of invalid element"), debug_level);
-		return QString ();
+	if (element.isNull()) {
+		displayError(&element, i18n("Trying to retrieve contents of invalid element"), debug_level);
+		return QString();
 	}
 
 	QString ret;
-	QString context = element.attribute (QStringLiteral("i18n_context"), QString ());
+	QString context = element.attribute(QStringLiteral("i18n_context"), QString());
 	QString buffer;
-	QTextStream stream (&buffer, QIODevice::WriteOnly);
-	for (QDomNode node = element.firstChild (); !node.isNull (); node = node.nextSibling ()) {
-		QDomElement e = node.toElement ();
-		if (!e.isNull ()) {
-			if (e.tagName () == QLatin1String ("ul") || e.tagName () == QLatin1String ("ol") || e.tagName () == QLatin1String ("li") || e.tagName () == QLatin1String ("p")) { // split translation units on these elements
+	QTextStream stream(&buffer, QIODevice::WriteOnly);
+	for (QDomNode node = element.firstChild(); !node.isNull(); node = node.nextSibling()) {
+		QDomElement e = node.toElement();
+		if (!e.isNull()) {
+			if (e.tagName() == QLatin1String("ul") || e.tagName() == QLatin1String("ol") || e.tagName() == QLatin1String("li") ||
+			    e.tagName() == QLatin1String("p")) {  // split translation units on these elements
 				// split before
-				ret.append (translateChunk (buffer, context, with_paragraphs, catalog));
-				buffer.clear ();
+				ret.append(translateChunk(buffer, context, with_paragraphs, catalog));
+				buffer.clear();
 
 				// serialize the tag with all its attributes but not the children.
-				e.cloneNode (false).save (stream, 0);   // will write: <TAG[ attributes]/>
-				buffer = buffer.left (buffer.lastIndexOf ('/')) + QChar ('>');
-				buffer.append (i18nElementText (e, false, debug_level));
-				buffer.append ("</" + e.tagName () + QChar ('>'));
+				e.cloneNode(false).save(stream, 0);  // will write: <TAG[ attributes]/>
+				buffer = buffer.left(buffer.lastIndexOf(u'/')) + u'>';
+				buffer.append(i18nElementText(e, false, debug_level));
+				buffer.append(u"</"_s + e.tagName() + u'>');
 
 				// split after
-				ret.append (buffer);
-				buffer.clear ();
+				ret.append(buffer);
+				buffer.clear();
 				continue;
 			} else if (e.tagName() == QLatin1String(ENTITIYHACK)) {
-				ret.append(QChar('&') + e.text() + QChar(';'));
+				ret.append(u'&' + e.text() + u';');
 				continue;
 			}
 		}
-		node.save (stream, 0);
+		node.save(stream, 0);
 	}
-	ret.append (translateChunk (buffer, context, with_paragraphs, catalog));
+	ret.append(translateChunk(buffer, context, with_paragraphs, catalog));
 
 	return ret;
 }

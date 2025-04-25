@@ -52,22 +52,22 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	edit->setMode (mode_flags);
 
 	QString append = initial;
-	if (initial.startsWith ('<')) {
-		storage_key = initial.section ('>', 0, 0).mid (1);
-		append = initial.section ('>', 1);
+	if (initial.startsWith(u'<')) {
+		storage_key = initial.section(u'>', 0, 0).mid(1);
+		append = initial.section(u'>', 1);
 	}
 	QUrl initial_url = RKRecentUrls::mostRecentUrl(storage_key).adjusted(QUrl::RemoveFilename);  // storage_key == QString () in the default case is intended
-	if (!append.isEmpty ()) {
-		if (initial_url.isLocalFile ()) {
-			initial_url = QUrl::fromUserInput (append, initial_url.toLocalFile (), QUrl::AssumeLocalFile);
+	if (!append.isEmpty()) {
+		if (initial_url.isLocalFile()) {
+			initial_url = QUrl::fromUserInput(append, initial_url.toLocalFile(), QUrl::AssumeLocalFile);
 		} else {
-			initial_url.setPath (initial_url.path () + '/' + append);
+			initial_url.setPath(initial_url.path() + u'/' + append);
 		}
-		initial_url = initial_url.adjusted (QUrl::NormalizePathSegments);
+		initial_url = initial_url.adjusted(QUrl::NormalizePathSegments);
 	}
-	if (initial_url.isLocalFile () || !only_local) {
-		if (!initial.isEmpty ()) edit->setUrl (initial_url);
-		else edit->setStartDir (initial_url);
+	if (initial_url.isLocalFile() || !only_local) {
+		if (!initial.isEmpty()) edit->setUrl(initial_url);
+		else edit->setStartDir(initial_url);
 	}
 
 	connect (edit, &KUrlRequester::textChanged, this, &GetFileNameWidget::locationEditChanged);

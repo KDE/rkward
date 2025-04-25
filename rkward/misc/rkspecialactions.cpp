@@ -163,108 +163,108 @@ void RKPasteSpecialDialog::updateState () {
 	ok_button->setEnabled((objectname == nullptr) || objectname->isOk());
 }
 
-QString RKPasteSpecialDialog::resultingText () {
-	RK_TRACE (MISC);
+QString RKPasteSpecialDialog::resultingText() {
+	RK_TRACE(MISC);
 
-	const int sep = separator_group->checkedId ();		// for easier typing
-	const int dim = dimensionality_group->checkedId ();
-	const bool reverse_h = reverse_h_box->isChecked () && (dim != DimSingleString);
-	const bool reverse_v = reverse_v_box->isChecked () && (dim >= DimMatrix);
-	const bool transpose = transpose_box->isChecked () && (dim >= DimMatrix);
+	const int sep = separator_group->checkedId();  // for easier typing
+	const int dim = dimensionality_group->checkedId();
+	const bool reverse_h = reverse_h_box->isChecked() && (dim != DimSingleString);
+	const bool reverse_v = reverse_v_box->isChecked() && (dim >= DimMatrix);
+	const bool transpose = transpose_box->isChecked() && (dim >= DimMatrix);
 	const bool names = names_box->isChecked() && (dim == DimDataFrame);
 	const bool rownames = rownames_box->isChecked() && (dim == DimDataFrame);
-	Quoting quot = (Quoting) quoting_group->checkedId();
+	Quoting quot = (Quoting)quoting_group->checkedId();
 
 	QString clip;
 
-	const QMimeData* data = QApplication::clipboard ()->mimeData ();
-	if ((dim != DimSingleString) && (sep == SepTab) && data->hasFormat (QStringLiteral("text/tab-separated-values"))) {
-		clip = QString::fromLocal8Bit (data->data (QStringLiteral("text/tab-separated-values")));
-	} else if ((dim != DimSingleString) && (sep == SepComma) && data->hasFormat (QStringLiteral("text/comma-separated-values"))) {
-		clip = QString::fromLocal8Bit (data->data (QStringLiteral("text/comma-separated-values")));
+	const QMimeData* data = QApplication::clipboard()->mimeData();
+	if ((dim != DimSingleString) && (sep == SepTab) && data->hasFormat(QStringLiteral("text/tab-separated-values"))) {
+		clip = QString::fromLocal8Bit(data->data(QStringLiteral("text/tab-separated-values")));
+	} else if ((dim != DimSingleString) && (sep == SepComma) && data->hasFormat(QStringLiteral("text/comma-separated-values"))) {
+		clip = QString::fromLocal8Bit(data->data(QStringLiteral("text/comma-separated-values")));
 	} else {
-		clip = data->text ();
+		clip = data->text();
 	}
 
 	if (dim == DimSingleString) return prepString(clip, quot);
 
 	QRegularExpression fieldsep;
-	if (sep == SepCustom) fieldsep.setPattern (separator_freefield->text ());
-	else if (sep == SepWhitespace) fieldsep.setPattern (QStringLiteral("\\s+"));
-	else if (sep == SepSpace) fieldsep.setPattern (QStringLiteral(" "));
-	else if (sep == SepTab) fieldsep.setPattern (QStringLiteral("\t"));
-	else if (sep == SepComma) fieldsep.setPattern (QStringLiteral("\\,"));
-	else RK_ASSERT (false);
+	if (sep == SepCustom) fieldsep.setPattern(separator_freefield->text());
+	else if (sep == SepWhitespace) fieldsep.setPattern(QStringLiteral("\\s+"));
+	else if (sep == SepSpace) fieldsep.setPattern(QStringLiteral(" "));
+	else if (sep == SepTab) fieldsep.setPattern(QStringLiteral("\t"));
+	else if (sep == SepComma) fieldsep.setPattern(QStringLiteral("\\,"));
+	else RK_ASSERT(false);
 
-	RKTextMatrix matrix = RKTextMatrix::matrixFromSeparatedValues (clip, fieldsep);
+	RKTextMatrix matrix = RKTextMatrix::matrixFromSeparatedValues(clip, fieldsep);
 	if (dim == DimVector) {
 		// transform list to single row matrix. This is wasteful on resources, but easy to code...
 		QStringList list;
-		for (int i = 0; i < matrix.numRows (); ++i) {
-			list += matrix.getRow (i);
+		for (int i = 0; i < matrix.numRows(); ++i) {
+			list += matrix.getRow(i);
 		}
-		matrix = RKTextMatrix::matrixFromSeparatedValues (list.join (QStringLiteral("\t")));
+		matrix = RKTextMatrix::matrixFromSeparatedValues(list.join(QStringLiteral("\t")));
 	}
 
-	if (reverse_h || reverse_v || transpose) matrix = matrix.transformed (reverse_h, reverse_v, transpose);
+	if (reverse_h || reverse_v || transpose) matrix = matrix.transformed(reverse_h, reverse_v, transpose);
 
 	QString ret;
-	if (dim == DimDataFrame) ret.append("data.frame(");
-	if (dim >= DimMatrix) ret.append ("cbind(\n");
-	else ret.append ("c(");	// DimVector
+	if (dim == DimDataFrame) ret.append(u"data.frame("_s);
+	if (dim >= DimMatrix) ret.append(u"cbind(\n"_s);
+	else ret.append(u"c("_s);  // DimVector
 
 	int startcol = rownames ? 1 : 0;
 	int startrow = names ? 1 : 0;
-	for (int i = startcol; i < matrix.numColumns (); ++i) {
+	for (int i = startcol; i < matrix.numColumns(); ++i) {
 		if (dim >= DimMatrix) {
-			if (i != startcol) ret.append ("),\n");
+			if (i != startcol) ret.append(u"),\n"_s);
 			if (names) {
-				ret.append(prepString(matrix.getText(0, i), QuoteAll) + "=c(");
+				ret.append(prepString(matrix.getText(0, i), QuoteAll) + u"=c("_s);
 			} else {
-				ret.append("c(");
+				ret.append(u"c("_s);
 			}
-		} else if (i != 0) ret.append (",");
+		} else if (i != 0) ret.append(u',');
 
-		for (int j = startrow; j < matrix.numRows (); ++j) {
-			if (j != startrow) ret.append (",");
+		for (int j = startrow; j < matrix.numRows(); ++j) {
+			if (j != startrow) ret.append(u',');
 			ret.append(prepString(matrix.getText(j, i), quot));
 		}
 	}
-	ret.append (")\n");
+	ret.append(u")\n"_s);
 	if (dim == DimDataFrame) {
-		ret.append(')');
+		ret.append(u')');
 		if (rownames) {
-			ret.append(", rownames=c(\n");
+			ret.append(u", rownames=c(\n"_s);
 			for (int row = startrow; row < matrix.numRows(); ++row) {
-				if (row != startrow) ret.append (",");
+				if (row != startrow) ret.append(u',');
 				ret.append(prepString(matrix.getText(row, 0), QuoteAll));
 			}
-			ret.append(")\n");
+			ret.append(u")\n"_s);
 		}
 	}
-	if (dim >= DimMatrix) ret.append (")\n");
+	if (dim >= DimMatrix) ret.append(u")\n"_s);
 
 	return (ret);
 }
 
 QString RKPasteSpecialDialog::prepString(const QString& src, const Quoting quot) const {
-//	RK_TRACE (MISC);
+	//	RK_TRACE (MISC);
 
-	if (quot == QuoteAll) return (RObject::rQuote (src));
-	if (src.isEmpty() && insert_nas_box->isChecked ()) return ("NA");
+	if (quot == QuoteAll) return (RObject::rQuote(src));
+	if (src.isEmpty() && insert_nas_box->isChecked()) return (u"NA"_s);
 	if (quot == QuoteNone) return (src);
-	RK_ASSERT (quot == QuoteAuto);
+	RK_ASSERT(quot == QuoteAuto);
 
 	bool numeric = false;
-	src.toDouble (&numeric);	// side-effect of setting numeric to true, if number conversion succeeds
-	if (!numeric) return (RObject::rQuote (src));
+	src.toDouble(&numeric);  // side-effect of setting numeric to true, if number conversion succeeds
+	if (!numeric) return (RObject::rQuote(src));
 	return src;
 }
 
 void RKPasteSpecialDialog::accept() {
 	RK_TRACE(MISC);
 	if (objectname) {
-		RCommand *command = new RCommand(objectname->currentFullName() + " <- " + resultingText(), RCommand::App | RCommand::ObjectListUpdate);
+		RCommand *command = new RCommand(objectname->currentFullName() + u" <- "_s + resultingText(), RCommand::App | RCommand::ObjectListUpdate);
 		connect(command->notifier(), &RCommandNotifier::commandFinished, [](RCommand *c) {
 			if (c->failed()) {
 				QString msg = c->fullOutput();

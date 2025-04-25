@@ -449,8 +449,8 @@ void RKInlineProgressControl::done() {
 		deleteLater();
 	} else {
 		message_widget->setMessageType(any_failed ? KMessageWidget::Error : KMessageWidget::Positive);
-		message_widget->setText(text + ' ' + (any_failed ? i18n("<b>An error occurred</b> (see below for details)") : i18n("<b>Done</b>")));
-		message_widget->setIcon(QIcon::fromTheme(any_failed ? "emblem-error" : "emblem-success"));
+		message_widget->setText(text + u' ' + (any_failed ? i18n("<b>An error occurred</b> (see below for details)") : i18n("<b>Done</b>")));
+		message_widget->setIcon(QIcon::fromTheme(any_failed ? u"emblem-error"_s : u"emblem-success"_s));
 		message_widget->animatedShow(); // to force an update of geometry
 		setCloseAction(i18n("Close"));
 	}

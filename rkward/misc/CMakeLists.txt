@@ -40,3 +40,4 @@ SET(misc_STAT_SRCS
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
 TARGET_LINK_LIBRARIES(misc Qt6::Widgets KF6::WidgetsAddons KF6::KIOWidgets Qt6::Xml Qt6::DBus KF6::ConfigCore KF6::Parts KF6::WindowSystem KF6::TextEditor KF6::Archive KF6::I18n)
+add_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove, here, once enabled on top level

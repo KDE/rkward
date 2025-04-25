@@ -425,8 +425,8 @@ bool RKObjectListViewSettings::acceptRow (int source_row, const QModelIndex& sou
 	RK_ASSERT (object);
 
 	if (!persistent_settings[ShowObjectsHidden]) {
-		if (object->getShortName ().startsWith ('.')) return false;
-		if (object == reinterpret_cast<RObject*> (RObjectList::getObjectList ()->orphanNamespacesObject ())) return false;
+		if (object->getShortName().startsWith(u'.')) return false;
+		if (object == reinterpret_cast<RObject*>(RObjectList::getObjectList()->orphanNamespacesObject())) return false;
 	}
 
 	if (hide_functions && object->isType (RObject::Function)) return false;

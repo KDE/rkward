@@ -23,7 +23,7 @@ RKParsedVersion::RKParsedVersion(const QString& version) {
 					else val = 0;
 				}
 				ret += val << (8 * i);
-				if ((pos < version.size ()) && (version[pos] == '.')) {
+				if ((pos < version.size ()) && (version[pos] == u'.')) {
 					opos = pos + 1;
 					break;
 				}
@@ -45,7 +45,7 @@ QString RKParsedVersion::toString() const {
 	for (int i = 3; i >= 0; --i) {
 		int ver_part = (version_numeric >> (i * 8)) & 0x000000FF;
 		ret.append(QString::number(ver_part));
-		if (i > 0) ret.append('.');
+		if (i > 0) ret.append(u'.');
 	}
 	if (ret.endsWith(QLatin1String(".0"))) ret.chop(2);	// HACK: Don't print more than three version parts, unless the fourth is non-zero
 	ret.append(version_suffix);

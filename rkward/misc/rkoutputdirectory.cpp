@@ -37,11 +37,11 @@ void listDirectoryState(const QString& _dir, QString *list, const QString &prefi
 	for (int i = 0; i < entries.size(); ++i) {
 		const QFileInfo fi = entries[i];
 		if (fi.isDir()) {
-			listDirectoryState(fi.absolutePath(), list, prefix + '/' + fi.fileName());
+			listDirectoryState(fi.absolutePath(), list, prefix + u'/' + fi.fileName());
 		} else {
-			list->append(fi.fileName() + '\t');
-			list->append(fi.lastModified().toString(QStringLiteral("dd.hh.mm.ss.zzz")) + '\t');
-			list->append(QString::number(fi.size()) + '\n');
+			list->append(fi.fileName() + u'\t');
+			list->append(fi.lastModified().toString(QStringLiteral("dd.hh.mm.ss.zzz")) + u'\t');
+			list->append(QString::number(fi.size()) + u'\n');
 		}
 	}
 }
@@ -160,9 +160,9 @@ GenericRRequestResult RKOutputDirectory::exportZipInternal(const QString &dest) 
 	RK_TRACE (APP);
 
 	// write to a temporary location, first, then - if successful - copy to final destination
-	QString tempname = dest + '~';
+	QString tempname = dest + u'~';
 	while (QFileInfo::exists(tempname)) {
-		tempname.append('~');
+		tempname.append(u'~');
 	}
 
 	KZip zip(tempname);
@@ -265,7 +265,7 @@ RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
 GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
 	RK_TRACE (APP);
 
-	QString index_file = work_dir + "/index.html";
+	QString index_file = work_dir + u"/index.html"_s;
 	RInterface::issueCommand(new RCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App), chain);
 	if (!initialized) {
 		// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
@@ -409,7 +409,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain* c
 	RKOutputDirectoryCallResult ret;
 	if (outputs.isEmpty()) {
 		if (RKSettingsModuleOutput::sharedDefaultOutput()) {
-			QString filename = RKSettingsModuleGeneral::filesPath() + "default.rko";
+			QString filename = RKSettingsModuleGeneral::filesPath() + u"default.rko"_s;
 			ret = get(filename, !QFileInfo::exists(filename), chain);
 			if (ret.dir()) {
 				ret.dir()->activate(chain);

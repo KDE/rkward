@@ -124,7 +124,7 @@ namespace RKCommonFunctions {
 		for (int i=from; i <= line_end; ++i) {
 			QChar c = haystack.at (i);
 			if (c == quote_char) return i;
-			if (c == '\\') {
+			if (c == u'\\') {
 				++i;
 				continue;
 			}
@@ -141,14 +141,14 @@ namespace RKCommonFunctions {
 
 		for (int i=0; i <= line_end; ++i) {
 			QChar c = context_line.at (i);
-			if (c == '\'' || c == '\"' || c == '`') {
+			if (c == u'\'' || c == u'\"' || c == u'`') {
 				i = quoteEndPosition (c, context_line, i+1);
 				if (i < 0) break;
 				continue;
-			} else if (c.isLetterOrNumber () || c == '.' || c == '_') {
+			} else if (c.isLetterOrNumber () || c == u'.' || c == u'_') {
 				continue;
 			} else if (!strict) {
-				if (c == '$' || c == ':' || c == '[' || c == ']' || c == '@') continue;
+				if (c == u'$' || c == u':' || c == u'[' || c == u']' || c == u'@') continue;
 			}
 
 			// if we did not hit a continue, yet, that means we are on a potential symbol boundary
@@ -162,7 +162,7 @@ namespace RKCommonFunctions {
 
 	static QString findPathFromAppDir(const QStringList &candidates) {
 		for (int i = 0;  i < candidates.size(); ++i) {
-			QString candidate = QCoreApplication::applicationDirPath() + '/' + candidates[i] + '/';
+			QString candidate = QCoreApplication::applicationDirPath() + u'/' + candidates[i] + u'/';
 			if (QFile::exists(candidate)) return candidate;
 		}
 		return QString();
@@ -186,42 +186,41 @@ namespace RKCommonFunctions {
 					return rkward_data_dir;
 				}
 			}
-			rkward_data_dir = QLatin1String("");   // prevents checking again
-			RK_DEBUG(APP, DL_ERROR, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
+			rkward_data_dir = u""_s; // NOTE: not null. Prevents checking again
+			RK_DEBUG(APP, DL_ERROR, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join(u':')));
 		}
 		return rkward_data_dir;
 	}
 
-	QString escape (const QString &in) {
+	QString escape(const QString &in) {
 		QString out;
 
-		for (int i = 0; i < in.size (); ++i) {
+		for (int i = 0; i < in.size(); ++i) {
 			QChar c = in[i];
-			if (c == '\\') out.append ("\\\\");
-			else if (c == '\n') out.append ("\\n");
-			else if (c == '\t') out.append ("\\t");
-			else if (c == '"') out.append ("\\\"");
-			else out.append (c);
+			if (c == u'\\') out.append(u"\\\\"_s);
+			else if (c == u'\n') out.append(u"\\n"_s);
+			else if (c == u'\t') out.append(u"\\t"_s);
+			else if (c == u'"') out.append(u"\\\""_s);
+			else out.append(c);
 		}
 
 		return out;
 	}
 
-	QString unescape (const QString &in) {
+	QString unescape(const QString &in) {
 		QString out;
-		out.reserve (in.size ());
+		out.reserve(in.size());
 
-		for (int i = 0; i < in.size (); ++i) {
+		for (int i = 0; i < in.size(); ++i) {
 			QChar c = in[i];
-			if (c == '\\') {
+			if (c == u'\\') {
 				++i;
-				if (i >= in.size ()) break;
-				c = in[i];
-				if (c == 'n') c = '\n';
-				else if (c == 't') c = '\t';
-				// NOTE: Quote (") and backslash (\) are escaped by the same symbol, i.e. c = in[i] is good enough
+				if (i >= in.size()) break;
+				if (c == u'n') c = u'\n';
+				else if (c == u't') c = u'\t';
+				else c = in[i]; // NOTE: Quote (") and backslash (\) are escaped by the same symbol, i.e. c = in[i] is good enough
 			}
-			out.append (c);
+			out.append(c);
 		}
 
 		return out;

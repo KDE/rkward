@@ -65,9 +65,9 @@ void RKRApiMenu::makeAction(QDomElement e, const QString &full_id, const QString
 		actionCollection()->addAction(full_id, a);
 		QObject::connect(a, &QAction::triggered, a, [full_id]() {
 			QString path;
-			auto segments = full_id.split(',');
+			auto segments = full_id.split(u',');
 			for (int i = 0; i < segments.size(); ++i) {
-				if (i) path += ',';
+				if (i) path += u',';
 				path += RObject::rQuote(segments[i]);
 			}
 
@@ -77,14 +77,14 @@ void RKRApiMenu::makeAction(QDomElement e, const QString &full_id, const QString
 				const auto props = w->globalContextProperties();
 				for (const auto [key,value] : props.asKeyValueRange()) {
 					if (key == QLatin1String("current_object") || key == QLatin1String("current_dataframe")) { // TODO: find cleaner solution than this special casing
-						args.append(key + '=' + value);
+						args.append(key + u'=' + value);
 					} else {
-						args.append(key + '=' + RObject::rQuote(value));
+						args.append(key + u'=' + RObject::rQuote(value));
 					}
 				}
 			}
 
-			RInterface::issueCommand(new RCommand("rk.menu()$item(" + path + ")$call(" + args.join(',') + ')', RCommand::App));
+			RInterface::issueCommand(new RCommand(u"rk.menu()$item("_s + path + u")$call("_s + args.join(u',') + u')', RCommand::App));
 		});
 	}
 	a->setText(label);
@@ -93,7 +93,7 @@ void RKRApiMenu::makeAction(QDomElement e, const QString &full_id, const QString
 
 void RKRApiMenu::makeXML(QDomElement e, const QVariantList &l, const QString &path, QStringList *actionlist) {
 	const auto id = getId(l);
-	const QString full_id = path.isEmpty() ? id : path + ',' + id;
+	const QString full_id = path.isEmpty() ? id : path + u',' + id;
 	const auto label = getLabel(l);
 	const auto callable = getCallable(l);
 
@@ -161,7 +161,7 @@ void RKRApiMenu::updateFromR(const QVariantList &_rep) {
 
 QAction *RKRApiMenu::actionByPath(const QStringList &path) {
 	commit(); // force commit before lookup
-	return action(path.join(','));
+	return action(path.join(u','));
 }
 
 void RKRApiMenu::enableAction(const QStringList &path, bool enable, bool show) {

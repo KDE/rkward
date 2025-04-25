@@ -142,41 +142,41 @@ void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
 	RKWorkplace::mainWorkplace()->setWindowNotManaged(window);
 }
 
-void RKXMLGUIPreviewArea::prepareMenu () {
-	RK_TRACE (PLUGIN);
+void RKXMLGUIPreviewArea::prepareMenu() {
+	RK_TRACE(PLUGIN);
 
 	// flatten menu, and try to purge irrelevant actions
-	menu->clear ();
-	QList<QAction*> entries = menubar->actions ();
-	for (int i = 0; i < entries.size (); ++i) {
-		QMenu *smenu = entries[i]->menu ();
-		if (!smenu) continue;    // Don't think it can happen...
-		if (entries[i]->objectName () == QLatin1String("settings")) continue;  // Skip settings menu, entirely
+	menu->clear();
+	QList<QAction *> entries = menubar->actions();
+	for (int i = 0; i < entries.size(); ++i) {
+		QMenu *smenu = entries[i]->menu();
+		if (!smenu) continue;                                                 // Don't think it can happen...
+		if (entries[i]->objectName() == QLatin1String("settings")) continue;  // Skip settings menu, entirely
 
-		QList<QAction*> subentries = smenu->actions ();
-		QList<QAction*> entries_to_add;
+		QList<QAction *> subentries = smenu->actions();
+		QList<QAction *> entries_to_add;
 		bool menu_empty = true;
-		for (int j = 0; j < subentries.size (); ++j) {
+		for (int j = 0; j < subentries.size(); ++j) {
 			QAction *act = subentries[j];
-			if (act->isVisible () && act->isEnabled()) {
-				entries_to_add.append (act);
-				if (!act->isSeparator ()) menu_empty = false;  // Copy separators, but purge menus with only separators in them.
+			if (act->isVisible() && act->isEnabled()) {
+				entries_to_add.append(act);
+				if (!act->isSeparator()) menu_empty = false;  // Copy separators, but purge menus with only separators in them.
 			}
 		}
 		if (menu_empty) continue;
 
-		QWidgetAction *act = new QWidgetAction (this);
-		QLabel *lab = new QLabel ("<b>" + entries[i]->text ().remove ('&') + "</b>");
-		lab->setAlignment (Qt::AlignCenter);
-		act->setDefaultWidget (lab);
-		menu->addAction (act);
+		QWidgetAction *act = new QWidgetAction(this);
+		QLabel *lab = new QLabel(u"<b>"_s + entries[i]->text().remove(u'&') + u"</b>"_s);
+		lab->setAlignment(Qt::AlignCenter);
+		act->setDefaultWidget(lab);
+		menu->addAction(act);
 
 		QMenu *where_to_add = menu;
-		if (entries_to_add.size () >= 8) {                     // if there are really many entries in the menu don't flatten it, keep it as a (shortened) submenu
-			where_to_add = menu->addMenu (entries[i]->text ());
+		if (entries_to_add.size() >= 8) {  // if there are really many entries in the menu don't flatten it, keep it as a (shortened) submenu
+			where_to_add = menu->addMenu(entries[i]->text());
 		}
-		for (int j = 0; j < entries_to_add.size (); ++j) {
-			where_to_add->addAction (entries_to_add[j]);
+		for (int j = 0; j < entries_to_add.size(); ++j) {
+			where_to_add->addAction(entries_to_add[j]);
 		}
 	}
 }
@@ -195,7 +195,7 @@ friend class RKPreviewManager;
 	off(i18nc("very short: Preview is turned off", "off"))
 	{
 		QFontMetrics fm(font());
-		em = fm.horizontalAdvance('w');
+		em = fm.horizontalAdvance(u'w');
 		auto l = new QVBoxLayout(this);
 		l->setContentsMargins(em,0,em,0);
 		lab = new QLabel();
@@ -270,7 +270,7 @@ RKPreviewManager::RKPreviewManager(QObject* parent) : QObject (parent), current_
 
 	update_pending = NoUpdatePending;
 	updating = false;
-	id = "0x" + QString::number((quint64) (quintptr) this, 16);
+	id = u"0x"_s + QString::number((quint64) (quintptr) this, 16);
 }
 
 RKPreviewManager::~RKPreviewManager () {
