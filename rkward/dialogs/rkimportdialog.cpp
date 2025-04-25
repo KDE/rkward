@@ -42,9 +42,9 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 		QString label = handle->getAttributeLabel(QStringLiteral("format"));
 
 		QString elabel = label;
-		elabel.replace ('(', QLatin1String("["));
-		elabel.replace (')', QLatin1String("]"));
-		filters.append (elabel + " [" + filter + "] (" + filter + ')');
+		elabel.replace(u'(', u"["_s);
+		elabel.replace(u')', u"]"_s);
+		filters.append(elabel + u" ["_s + filter + u"] ("_s + filter + u')');
 	}
 
 	QWidget *page = new QWidget();

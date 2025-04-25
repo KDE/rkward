@@ -61,27 +61,27 @@ public:
 		connect (this, &QDialog::finished, this, &RKBugzillaReportDialog::deleteLater);
 	}
 
-	void accept () override {
+	void accept() override {
 		// The report template is just too large to pass it via GET, so we use a local proxy page to pass it in a POST request
 		QTemporaryFile proxy;
-		proxy.setFileTemplate (QDir::tempPath () + "/rkwardbugXXXXXX.html"); // Force .html-suffix, as it appears to be required on Windows
-		proxy.setAutoRemove (false);
-		proxy.open ();
-		QTextStream out (&proxy);
+		proxy.setFileTemplate(QDir::tempPath() + u"/rkwardbugXXXXXX.html"_s);  // Force .html-suffix, as it appears to be required on Windows
+		proxy.setAutoRemove(false);
+		proxy.open();
+		QTextStream out(&proxy);
 		out << "<html><head><title>Relaying to " SUBMIT_ADDRESS "</title></head><body onLoad=\"document.getElementById('form').submit();\">\n";
-		out << "<h1>" + i18n ("Forwarding you to the KDE bugtracking system") + "</h1>\n";
-		out << "<p>" + i18n ("You are now being forwarded to the KDE bugtracking system. Should you continue to see this page for more than a few seconds (e.g. if JavaScript is disabled), please click \"Proceed\", below.") + "</p>\n";
+		out << "<h1>" << i18n("Forwarding you to the KDE bugtracking system") << "</h1>\n";
+		out << "<p>" << i18n("You are now being forwarded to the KDE bugtracking system. Should you continue to see this page for more than a few seconds (e.g. if JavaScript is disabled), please click \"Proceed\", below.") << "</p>\n";
 		out << "<form name=\"form\" id=\"form\" action=\"" SUBMIT_ADDRESS "\" method=\"POST\">\n";
 		out << "<input name=\"product\" type=\"hidden\" value=\"rkward\"/>\n";
 		out << "<input name=\"component\" type=\"hidden\" value=\"general\"/>\n";
 		out << "<input name=\"version\" type=\"hidden\" value=\"" RKWARD_VERSION "\"/>\n";
-		out << "<input name=\"comment\" type=\"hidden\" value=\"" << report_template.toHtmlEscaped () << "\"/>\n";
-		out << "<input type=\"submit\" value=\"" << i18n ("Proceed") << "\"/>\n";
+		out << "<input name=\"comment\" type=\"hidden\" value=\"" << report_template.toHtmlEscaped() << "\"/>\n";
+		out << "<input type=\"submit\" value=\"" << i18n("Proceed") << "\"/>\n";
 		out << "</form></body></html>";
-		proxy.close ();
+		proxy.close();
 
-		QDesktopServices::openUrl (QUrl::fromLocalFile (proxy.fileName ()));
-		QDialog::accept ();
+		QDesktopServices::openUrl(QUrl::fromLocalFile(proxy.fileName()));
+		QDialog::accept();
 	}
 private:
 	QString report_template;
@@ -115,46 +115,55 @@ void RKErrorDialog::reportableErrorMessage (QWidget* parent_widget, const QStrin
 	}
 }
 
-void RKErrorDialog::reportBug (QWidget* parent_widget, const QString& message_info) {
-	RK_TRACE (APP);
+void RKErrorDialog::reportBug(QWidget *parent_widget, const QString &message_info) {
+	RK_TRACE(APP);
 
-	if (!parent_widget) parent_widget = RKWardMainWindow::getMain ();
+	if (!parent_widget) parent_widget = RKWardMainWindow::getMain();
 
-	QString report_template = i18n ("---Problem description---\nPlease fill in the missing bits *in English*.\n\n");
-	if (message_info.isEmpty ()) {
-		report_template.append (i18n ("Please give a brief summary on the problem:\n###Please fill in###\n\n"));
+	QString report_template = i18n("---Problem description---\nPlease fill in the missing bits *in English*.\n\n");
+	if (message_info.isEmpty()) {
+		report_template.append(i18n("Please give a brief summary on the problem:\n###Please fill in###\n\n"));
 	} else {
-		report_template.append (i18n ("I encountered the error message quoted below. Additionally, I saw the following symptoms:\n###Please fill in (if applicable)###\n\n"));
+		report_template.append(
+		    i18n("I encountered the error message quoted below. Additionally, I saw the following symptoms:\n###Please fill in (if applicable)###\n\n"));
 	}
-	report_template.append (i18n ("What - in detail - did you do directly before you encountered this problem?\n###Please fill in###\n\n"));
-	report_template.append (i18n ("When you try to repeat the above, does the problem occur again (no, sometimes, always)?\n###Please fill in###\n\n"));
-	report_template.append (i18n ("If applicable: When doing the same thing in an R session outside of RKWard, do you see the same problem?\n###Please fill in###\n\n"));
-	report_template.append (i18n ("Do you have any further information that might help us to track this problem down? In particular, if applicable, can you provide sample data and sample R code to reproduce this problem?\n###Please fill in###\n\n"));
-	report_template.append (i18n ("RKWard is available in many different packagings, and sometimes problems are specific to one method of installation. How did you install RKWard (which file(s) did you download)?\n###Please fill in###\n\n"));
+	report_template.append(i18n("What - in detail - did you do directly before you encountered this problem?\n###Please fill in###\n\n"));
+	report_template.append(i18n("When you try to repeat the above, does the problem occur again (no, sometimes, always)?\n###Please fill in###\n\n"));
+	report_template.append(
+	    i18n("If applicable: When doing the same thing in an R session outside of RKWard, do you see the same problem?\n###Please fill in###\n\n"));
+	report_template.append(
+	    i18n("Do you have any further information that might help us to track this problem down? In particular, if applicable, can you provide sample data and "
+	         "sample R code to reproduce this problem?\n###Please fill in###\n\n"));
+	report_template.append(
+	    i18n("RKWard is available in many different packagings, and sometimes problems are specific to one method of installation. How did you install RKWard "
+	         "(which file(s) did you download)?\n###Please fill in###\n\n"));
 
-	if (!message_info.isEmpty ()) {
-		report_template.append ("\n---Error Message---\n");
-		report_template.append (message_info);
-		report_template.append ("\n");
+	if (!message_info.isEmpty()) {
+		report_template.append(u"\n---Error Message---\n"_s); // deliberately no i18n, here
+		report_template.append(message_info);
+		report_template.append(u'\n');
 	}
 
-	report_template.append ("\n---Session Info---\n");
+	report_template.append(u"\n---Session Info---\n"_s);
 	bool ok = false;
-	if (!RInterface::instance()->backendIsDead ()) {
-		RCommand *command = new RCommand (QStringLiteral("rk.sessionInfo()"), RCommand::App);
-		RKProgressControl *control = new RKProgressControl (parent_widget, i18n ("Please stand by while gathering some information on your setup.\nIn case the backend has died or hung up, you may want to press 'Cancel' to skip this step."), i18n ("Gathering setup information"), RKProgressControl::CancellableNoProgress);
-		control->addRCommand (command, true);
+	if (!RInterface::instance()->backendIsDead()) {
+		RCommand *command = new RCommand(u"rk.sessionInfo()"_s, RCommand::App);
+		RKProgressControl *control = new RKProgressControl(parent_widget,
+		                                                   i18n("Please stand by while gathering some information on your setup.\nIn case the backend has died "
+		                                                        "or hung up, you may want to press 'Cancel' to skip this step."),
+		                                                   i18n("Gathering setup information"), RKProgressControl::CancellableNoProgress);
+		control->addRCommand(command, true);
 		RInterface::issueCommand(command);
-		ok = control->doModal (false);
+		ok = control->doModal(false);
 		// NOTE: command is already deleted at this point
-		report_template.append (control->fullCommandOutput ());
+		report_template.append(control->fullCommandOutput());
 		delete control;
 	}
 	if (!ok) {
-		report_template.append (RKSessionVars::frontendSessionInfo ().join (QStringLiteral("\n")));
-		report_template.append ("\n- backend not available or rk.sessionInfo() canceled -\n");
+		report_template.append(RKSessionVars::frontendSessionInfo().join(u"\n"_s));
+		report_template.append(u"\n- backend not available or rk.sessionInfo() canceled -\n"_s);
 	}
 
-	RKBugzillaReportDialog *dialog = new RKBugzillaReportDialog (parent_widget, report_template);
-	dialog->show ();
+	RKBugzillaReportDialog *dialog = new RKBugzillaReportDialog(parent_widget, report_template);
+	dialog->show();
 }

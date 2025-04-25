@@ -430,7 +430,7 @@ public:
 	bool isValid () override;
 
 /** string representation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
-	static QString convertModeOptionString () { return ("equals;notequals;range;and;or"); };
+	static QString convertModeOptionString () { return (u"equals;notequals;range;and;or"_s); };
 /** reimplemented to do raise a warning, and do nothing else. */
 	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** reimplemented to do raise a warning, and do nothing else. */

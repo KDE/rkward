@@ -66,49 +66,49 @@ void RKRecoverDialog::deleteButtonClicked () {
 	reject ();
 }
 
-//static
-QString RKRecoverDialog::saveFileFor (const QString& recovery_file) {
-	RK_TRACE (DIALOGS);
+// static
+QString RKRecoverDialog::saveFileFor(const QString& recovery_file) {
+	RK_TRACE(DIALOGS);
 
-	QFileInfo fi (recovery_file);
-	QDateTime mtime = fi.lastModified ();
-	QDir dir = fi.absoluteDir ();
+	QFileInfo fi(recovery_file);
+	QDateTime mtime = fi.lastModified();
+	QDir dir = fi.absoluteDir();
 	QString new_name;
-	for (int i = 0; i < 100; ++i) {	// If we just had more than 100 crashes per minutes, you'll excuse another small bug, at this point
+	for (int i = 0; i < 100; ++i) {  // If we just had more than 100 crashes per minutes, you'll excuse another small bug, at this point
 		QString num;
-		if (i > 0) num = '_' + QString::number (i+1);
-		new_name = dir.absoluteFilePath ("recovered_workspace_" + mtime.toString (QStringLiteral("yyyy-MM-dd_hh:mm")) + num + ".RData");
+		if (i > 0) num = u'_' + QString::number(i + 1);
+		new_name = dir.absoluteFilePath(u"recovered_workspace_"_s + mtime.toString(u"yyyy-MM-dd_hh:mm"_s) + num + u".RData"_s);
 		if (!QFileInfo::exists(new_name)) break;
 	}
 	return new_name;
 }
 
-//static
-QUrl RKRecoverDialog::checkRecoverCrashedWorkspace () {
-	RK_TRACE (DIALOGS);
+// static
+QUrl RKRecoverDialog::checkRecoverCrashedWorkspace() {
+	RK_TRACE(DIALOGS);
 
-	QDir dir (RKSettingsModuleGeneral::filesPath ());
-	dir.setNameFilters (QStringList ("rkward_recover*.RData"));
-	QStringList matches = dir.entryList (QDir::Files, QDir::Time);
-	for (int i = 0; i < matches.count (); ++i) {
-		matches[i] = dir.absoluteFilePath (matches[i]);
+	QDir dir(RKSettingsModuleGeneral::filesPath());
+	dir.setNameFilters(QStringList(u"rkward_recover*.RData"_s));
+	QStringList matches = dir.entryList(QDir::Files, QDir::Time);
+	for (int i = 0; i < matches.count(); ++i) {
+		matches[i] = dir.absoluteFilePath(matches[i]);
 	}
 
-	if (!matches.isEmpty ()) {
-		RKRecoverDialog dialog (matches);
-		dialog.exec ();
+	if (!matches.isEmpty()) {
+		RKRecoverDialog dialog(matches);
+		dialog.exec();
 
 		// "Save" recovery files, so they want be matched, again
-		matches = dialog.files;	// May have been modified, notably deleted
-		for (int i = matches.count () - 1; i >= 0; --i) {
-			QString new_name = saveFileFor (matches[i]);
-			QFile::rename (matches[i], new_name);
+		matches = dialog.files;  // May have been modified, notably deleted
+		for (int i = matches.count() - 1; i >= 0; --i) {
+			QString new_name = saveFileFor(matches[i]);
+			QFile::rename(matches[i], new_name);
 			matches[i] = new_name;
 		}
 
-		if (dialog.result () == QDialog::Accepted) return (QUrl::fromLocalFile (dir.absoluteFilePath (matches.first ())));
+		if (dialog.result() == QDialog::Accepted) return (QUrl::fromLocalFile(dir.absoluteFilePath(matches.first())));
 	}
 
-	return QUrl ();
+	return QUrl();
 }
 

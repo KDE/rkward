@@ -221,7 +221,7 @@ void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
 	auto label = new QLabel();
 	label->setPixmap(iconForStatus(status));
 	layout->addWidget(label, row, 0);
-	layout->addWidget(new QLabel(shortlabel + ": " + shortstatuslabel), row, 1);
+	layout->addWidget(new QLabel(shortlabel + u": "_s + shortstatuslabel), row, 1);
 
 	if (options.isEmpty()) {
 		layout->addWidget(new QLabel(i18n("No action needed.")), row, 2);
@@ -353,7 +353,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 
 	// TODO: Remove, eventually
 	auto legacy_output = new RKSetupWizardItem(i18n("Pre 0.7.3 output file"));
-	QString legacy_output_path = RKSettingsModuleGeneral::filesPath() + "rk_out.html";
+	QString legacy_output_path = RKSettingsModuleGeneral::filesPath() + u"rk_out.html"_s;
 	if (QFileInfo::exists(legacy_output_path)) {
 		legacy_output->setStatus(RKSetupWizardItem::Warning, i18n("Exists"));
 		legacy_output->setLongLabel(QStringLiteral("<p>An output file from before RKWard version 0.7.3 was found (%1). You will probably want to convert this to the new format. Alternatively, if it is no longer needed, you can delete it, manually.</p>").arg(legacy_output_path));
@@ -456,11 +456,11 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		if (!software_to_install.isEmpty()) {
 			QString install_info;
 			for (int i = 0; i < software_to_install.size(); ++i) {
-				install_info.append("<ul>* <a href=\"");
+				install_info.append(u"<ul>* <a href=\""_s);
 				install_info.append(software_to_install_urls.value(i));
-				install_info.append("\">");
+				install_info.append(u"\">"_s);
 				install_info.append(software_to_install[i]);
-				install_info.append("</a></ul>");
+				install_info.append(u"</a></ul>"_s);
 			}
 			label_text.append(i18n("<p>The following software is recommended for installation, but automatic installation is not (yet) supported. Click on the links, below, for download information:</p><li>%1</li>", install_info));
 		} else {

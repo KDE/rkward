@@ -22,6 +22,8 @@ class QAction;
 class KatePluginIntegrationApp;
 class RKRApiMenu;
 
+using namespace Qt::Literals::StringLiterals;
+
 /**
 The main class of rkward. This is where all strings are tied together, controls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
 */

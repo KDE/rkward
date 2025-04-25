@@ -204,7 +204,7 @@ bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_li
 	for (int i = 0; i < packages.count (); ++i) {
 		descriptions.append (i18n ("Package %1 at %2", packages[i], from_liblocs[i]));
 		// NOTE: the "lib"-parameter to remove.packages is NOT matched to the pkgs-parameter. Therefore, we simply concatenate a bunch of single removals.
-		command.append ("remove.packages (" + RObject::rQuote (packages[i]) + ", " + RObject::rQuote (from_liblocs[i]) + ")\n");
+		command.append(u"remove.packages ("_s + RObject::rQuote (packages[i]) + u", "_s + RObject::rQuote (from_liblocs[i]) + u")\n"_s);
 	}
 
 	// last check. This may be an annoying third dialog, in the worst case, but at least it can be turned off.
@@ -219,10 +219,10 @@ bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_li
 #ifdef Q_OS_WIN
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
-bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages) {
-	RK_TRACE (DIALOGS);
+bool RKLoadLibsDialog::installPackages(const QStringList &packages, QString to_libloc, bool install_suggested_packages) {
+	RK_TRACE(DIALOGS);
 
-	if (packages.isEmpty ()) return false;
+	if (packages.isEmpty()) return false;
 
 	bool as_root = false;
 	// It is ok, if the selected location does not yet exist. In order to know, whether we can write to it, we have to create it first.
@@ -232,23 +232,30 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 	extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 	qt_ntfs_permission_lookup++;
 #endif
-	QFileInfo fi = QFileInfo (to_libloc);
-	bool writable = fi.isWritable ();
+	QFileInfo fi = QFileInfo(to_libloc);
+	bool writable = fi.isWritable();
 #ifdef Q_OS_WIN
 	qt_ntfs_permission_lookup--;
 #endif
 	if (!writable) {
-		QString mcaption = i18n ("Selected library location not writable");
-		QString message = i18n ("<p>The directory you have selected for installation (%1) is not writable with your current user permissions.</p>"
-			"<p>Would you like to install to %2, instead (you can also press \"Cancel\" and use the \"Configure Repositories\"-button to set up a different directory)?</p>", to_libloc, altlibloc);
+		QString mcaption = i18n("Selected library location not writable");
+		QString message = i18n(
+		    "<p>The directory you have selected for installation (%1) is not writable with your current user permissions.</p>"
+		    "<p>Would you like to install to %2, instead (you can also press \"Cancel\" and use the \"Configure Repositories\"-button to set up a different "
+		    "directory)?</p>",
+		    to_libloc, altlibloc);
 #ifdef Q_OS_WIN
-		message.append (i18n ("<p>Alternatively, if you have access to an administrator account on this machine, you can use that to install the package(s), or "
-			"you could change the permissions of '%1'. Sorry, automatic switching to Administrator is not yet supported in RKWard on Windows.</p>", to_libloc));
-		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)));
+		message.append(
+		    i18n("<p>Alternatively, if you have access to an administrator account on this machine, you can use that to install the package(s), or "
+		         "you could change the permissions of '%1'. Sorry, automatic switching to Administrator is not yet supported in RKWard on Windows.</p>",
+		         to_libloc));
+		int res = KMessageBox::warningContinueCancel(this, message, mcaption, KGuiItem(i18n("Install to %1", altlibloc)));
 		if (res == KMessageBox::Continue) to_libloc = altlibloc;
 #else
-		message.append (i18n ("<p>Alternatively, if you are the administrator of this machine, you can try to install the packages as root (you'll be prompted for the root password).</p>"));
-		int res = KMessageBox::warningTwoActionsCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)), KGuiItem (i18n ("Become root")));
+		message.append(
+		    i18n("<p>Alternatively, if you are the administrator of this machine, you can try to install the packages as root (you'll be prompted for the root "
+		         "password).</p>"));
+		int res = KMessageBox::warningTwoActionsCancel(this, message, mcaption, KGuiItem(i18n("Install to %1", altlibloc)), KGuiItem(i18n("Become root")));
 		if (res == KMessageBox::PrimaryAction) to_libloc = altlibloc;
 		if (res == KMessageBox::SecondaryAction) as_root = true;
 #endif
@@ -257,16 +264,16 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 
 	addLibraryLocation(to_libloc);
 
-	QString command_string = "install.packages (c (\"" + packages.join(QStringLiteral("\", \"")) + "\")" + ", lib=" + RObject::rQuote(to_libloc);
-	QString downloaddir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath (QStringLiteral("package_archive"));
-	if (RKSettingsModuleRPackages::archivePackages ()) {
-		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir (QStringLiteral("package_archive"));
-		command_string += ", destdir=" + RObject::rQuote (downloaddir);
+	QString command_string = u"install.packages (c (\""_s + packages.join(u"\", \""_s) + u"\")"_s + u", lib="_s + RObject::rQuote(to_libloc);
+	QString downloaddir = QDir(RKSettingsModuleGeneral::filesPath()).filePath(u"package_archive"_s);
+	if (RKSettingsModuleRPackages::archivePackages()) {
+		QDir(RKSettingsModuleGeneral::filesPath()).mkdir(u"package_archive"_s);
+		command_string += u", destdir="_s + RObject::rQuote(downloaddir);
 	}
-	if (install_suggested_packages) command_string += QLatin1String(", dependencies=TRUE");
-	command_string += QLatin1String(")");
+	if (install_suggested_packages) command_string += u", dependencies=TRUE"_s;
+	command_string += u')';
 
-	runInstallationCommand (command_string, as_root, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"));
+	runInstallationCommand(command_string, as_root, i18n("Please stand by while installing selected packages"), i18n("Installing packages"));
 
 	return true;
 }
@@ -280,8 +287,8 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 
 	RCommand *rcommand;
 	if (as_root) {
-		QStringList libexecpath(LIBEXECDIR "/kf5");
-		libexecpath << QString(LIBEXECDIR "/kf6");
+		QStringList libexecpath(QStringLiteral(LIBEXECDIR "/kf5"));
+		libexecpath << QString(QStringLiteral(LIBEXECDIR "/kf6"));
 		QString call = QStandardPaths::findExecutable(QStringLiteral("kdesu"));
 		if (call.isEmpty()) call = QStandardPaths::findExecutable(QStringLiteral("kdesu"), libexecpath);
 		if (call.isEmpty ()) call = QStandardPaths::findExecutable(QStringLiteral("kdesudo"));
@@ -294,20 +301,20 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 		QStringList call_with_params(call);
 		call_with_params << QStringLiteral("-t") << QStringLiteral("--") << RKSessionVars::RBinary() << QStringLiteral("--no-save") << QStringLiteral("--no-restore") << QStringLiteral("--file=");
 		KUser user;
-		QString aux_command = QString("local({ "
+		QString aux_command = QStringLiteral("local({ "
 			"install_script <- tempfile(\".R\"); f <- file(install_script, \"w\")\n"
 			"repos <- options()$repos\n"
 			"pkgType <- options()$pkgType\n"
 			"libPaths <- .libPaths()\n"
 			"dump(c(\"repos\", \"pkgType\", \"libPaths\"), f)\n"
 			"cat(\"\\n\", file=f, append=TRUE)\n"
-			"cat(") + RObject::rQuote(QStringLiteral("options(\"repos\"=repos, \"pkgType\"=pkgType)\n")) + QString(", file=f, append=TRUE)\n"
-			"cat(\".libPaths(libPaths)\\n\"") + QString(", file=f, append=TRUE)\n"
-			"cat(") + RObject::rQuote(command + "\n") + QString(", file=f, append=TRUE)\n"
-			"cat(") + RObject::rQuote("system(\"chown " + user.loginName() + ' ' + QDir(RKSettingsModuleGeneral::filesPath()).filePath(QStringLiteral("package_archive")) + "/*\")") + QString(", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote(QStringLiteral("options(\"repos\"=repos, \"pkgType\"=pkgType)\n")) + QStringLiteral(", file=f, append=TRUE)\n"
+			"cat(\".libPaths(libPaths)\\n\"") + QStringLiteral(", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote(command + u"\n"_s) + QStringLiteral(", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote(u"system(\"chown "_s + user.loginName() + u' ' + QDir(RKSettingsModuleGeneral::filesPath()).filePath(QStringLiteral("package_archive")) + u"/*\")"_s) + QStringLiteral(", file=f, append=TRUE)\n"
 			"cat(\"\\n\", file=f, append=TRUE)\n"
 			"close(f)\n"
-			"system(paste0(" + RObject::rQuote(call_with_params.join(' ')) + ", install_script))\n"
+			"system(paste0(") + RObject::rQuote(call_with_params.join(u' ')) + QStringLiteral(", install_script))\n"
 			"unlink(install_script)\n"
 		"})");
 
@@ -493,40 +500,38 @@ void LoadUnloadWidget::updateCurrentList () {
 	}
 }
 
-void LoadUnloadWidget::doLoadUnload () {
-	RK_TRACE (DIALOGS);
+void LoadUnloadWidget::doLoadUnload() {
+	RK_TRACE(DIALOGS);
 
 	RKInlineProgressControl *control = new RKInlineProgressControl(this, false);
 	control->setText(i18n("There has been an error while trying to load / unload packages. See transcript below for details"));
 
 	// load packages previously not loaded
-	for (int i = 0; i < loaded_view->topLevelItemCount (); ++i) {
-		QTreeWidgetItem* loaded = loaded_view->topLevelItem (i);
-		if (!prev_packages.contains (loaded->text (0))) {
-			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App | RCommand::ObjectListUpdate);
-			control->addRCommand (command);
-			RInterface::issueCommand (command, parent->chain);
+	for (int i = 0; i < loaded_view->topLevelItemCount(); ++i) {
+		QTreeWidgetItem *loaded = loaded_view->topLevelItem(i);
+		if (!prev_packages.contains(loaded->text(0))) {
+			RCommand *command = new RCommand(u"library (\""_s + loaded->text(0) + u"\")"_s, RCommand::App | RCommand::ObjectListUpdate);
+			control->addRCommand(command);
+			RInterface::issueCommand(command, parent->chain);
 		}
 	}
-	
+
 	// detach packages previously attached
 	QStringList packages_to_remove;
-	for (QStringList::Iterator it = prev_packages.begin (); it != prev_packages.end (); ++it) {
-		QList<QTreeWidgetItem*> loaded = loaded_view->findItems ((*it), Qt::MatchExactly, 0);
-		if (loaded.isEmpty ()) {	// no longer in the list
-			packages_to_remove.append ("package:" + *it);
+	for (QStringList::Iterator it = prev_packages.begin(); it != prev_packages.end(); ++it) {
+		QList<QTreeWidgetItem *> loaded = loaded_view->findItems((*it), Qt::MatchExactly, 0);
+		if (loaded.isEmpty()) {  // no longer in the list
+			packages_to_remove.append(u"package:"_s + *it);
 		}
 	}
-	if (!packages_to_remove.isEmpty ()) {
-		QStringList messages = RObjectList::getObjectList ()->detachPackages (packages_to_remove, parent->chain, control);
-		if (!messages.isEmpty ()) KMessageBox::error(this, messages.join(QStringLiteral("\n")));
+	if (!packages_to_remove.isEmpty()) {
+		QStringList messages = RObjectList::getObjectList()->detachPackages(packages_to_remove, parent->chain, control);
+		if (!messages.isEmpty()) KMessageBox::error(this, messages.join(QStringLiteral("\n")));
 	}
 
 	// find out, when we're done
 	RCommand *command = new RCommand(QString(), RCommand::EmptyCommand);
-	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *) {
-		clearChanged();
-	});
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *) { clearChanged(); });
 	control->addRCommand(command);  // this is actually important, in case no commands had been generated, above
 	RInterface::issueCommand(command, parent->chain);
 	control->setAutoCloseWhenCommandsDone(true);
@@ -559,7 +564,7 @@ public:
 		QStyledItemDelegate::initStyleOption (option, index);
 		if (!index.parent ().isValid ()) {
 			int ccount = index.model ()->rowCount (index);
-			option->text = option->text + " (" + QString::number (ccount) + ')';
+			option->text = option->text + u" ("_s + QString::number(ccount) + u')';
 			if (ccount) {
 				option->icon = table->isExpanded (index) ? expanded : collapsed;
 			} else {
@@ -1048,7 +1053,7 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 			if (role == Qt::DisplayRole) {
 				if (prow == InstalledPackages) return installed_versions.value (irow);
 				else if (prow == NewPackages) return available_versions.value (arow);
-				else return QVariant (installed_versions.value (irow) + " -> " + available_versions.value (arow));
+				else return QVariant(installed_versions.value(irow) + u" -> "_s + available_versions.value(arow));
 			}
 		} else if (col == Location) {
 			if (role == Qt::DisplayRole) {
@@ -1056,7 +1061,7 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 				else if (prow == NewPackages) return available_repos.value (arow);
 				else {
 					RK_ASSERT (prow == UpdateablePackages);
-					return QVariant (installed_libpaths.value (irow) + " -> " + available_repos.value (arow));
+					return QVariant(installed_libpaths.value(irow) + u" -> "_s + available_repos.value(arow));
 				}
 			}
 		}

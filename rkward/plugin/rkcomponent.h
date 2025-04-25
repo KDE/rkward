@@ -15,6 +15,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class RKComponentPropertyBase;
 class RKStandardComponent;
 
+using namespace Qt::Literals::StringLiterals;
+
 /** a very low level base for RKComponent and RKComponentProperty. */
 class RKComponentBase {
 public:
