@@ -56,7 +56,7 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 		RInterface::issueCommand (command);
 	}
 
-	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate);
+	command = new RCommand(u"load (\""_s + filename + u"\")"_s, RCommand::App | RCommand::ObjectListUpdate);
 	command->whenFinished(this, [this](RCommand* command) {
 		if (command->failed()) {
 			KMessageBox::error(nullptr, i18n("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace()->workspaceURL().path(), command->warnings() + command->error()), i18n("Error loading workspace"));
@@ -65,7 +65,7 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 			RKWorkplace::mainWorkplace()->restoreWorkplace(nullptr, _merge);
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
 				if (RKWorkplace::mainWorkplace ()->workspaceURL ().isLocalFile ()) {
-					RInterface::issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);
+					RInterface::issueCommand(u"setwd ("_s + RObject::rQuote (RKWorkplace::mainWorkplace()->workspaceURL().adjusted(QUrl::RemoveFilename).path()) + u')', RCommand::App);
 				}
 			}
 		}

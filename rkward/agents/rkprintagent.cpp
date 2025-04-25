@@ -50,7 +50,7 @@ void fallbackToGeneric(const QString &file, bool delete_file) {
 void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	RK_TRACE (APP)
 
-	auto provider = RKPDFWindow::getOkularPart({"ViewerWidget"});
+	auto provider = RKPDFWindow::getOkularPart({u"ViewerWidget"_s});
 	if(!provider) {
 		RK_DEBUG(APP, DL_WARNING, "No valid postscript provider was found");
 		fallbackToGeneric(file, delete_file);

@@ -31,7 +31,7 @@ bool checkOverwriteWorkspace (const QUrl &url, QWidget *parent) {
 
 	QString mainfile = url.toLocalFile ();
 //	QString addfile = mainfile.left (mainfile.lastIndexOf ('.')) + ".rkward";
-	QString addfile = mainfile + ".rkworkplace";
+	QString addfile = mainfile + u".rkworkplace"_s;
 	QFileInfo info (mainfile);
 	if (!info.exists ()) mainfile.clear (); // signifies: not a problem
 	else mainfile = info.fileName ();
@@ -78,7 +78,7 @@ bool RKSaveAgent::saveWorkspace(const QUrl& _url) {
 	auto save_chain = RInterface::startChain(nullptr);
 
 	RKWorkplace::mainWorkplace()->saveWorkplace(url, save_chain);
-	auto command = new RCommand("save.image(" + RObject::rQuote(url.toLocalFile()) + ')', RCommand::App);
+	auto command = new RCommand(u"save.image("_s + RObject::rQuote(url.toLocalFile()) + u')', RCommand::App);
 	RKProgressControl control(RKWardMainWindow::getMain(), i18n("Workspace is being saved. <b>Hint:</b> Should this take an unusually long time, on a regular sized workspace, this may be due to other commands still pending completion in the R backend."), i18n("Saving workspace"), RKProgressControl::CancellableNoProgress);
 	control.addRCommand(command, true);
 	bool success = false;

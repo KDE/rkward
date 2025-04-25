@@ -65,7 +65,7 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 		if (!titles[n].isEmpty ()) title = titles[n];
 		else if (count > 1) title = files[n];
 		if (!wtitle.isEmpty ()) {
-			if (!title.isEmpty ()) title.prepend (": ");
+			if (!title.isEmpty()) title.prepend(u": "_s);
 			title.prepend (wtitle);
 		}
 		display_titles.append (title);
@@ -79,11 +79,11 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 
 		if (prompt) {
-			new ShowEditTextFileAgent(nullptr, i18n("A command running in the R-engine wants you to see the following file(s):<ul><li>") + display_titles.join(QStringLiteral("</li></li>")) + "</li></ul>", i18n("Showing file(s)"));
+			new ShowEditTextFileAgent(nullptr, i18n("A command running in the R-engine wants you to see the following file(s):<ul><li>") + display_titles.join(QStringLiteral("</li></li>")) + u"</li></ul>"_s, i18n("Showing file(s)"));
 		}
 	} else if (request->type == RBackendRequest::EditFiles) {
 		if (prompt) {
-			new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit the following file(s). Please look at these files, edit them as appropriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.<ul><li>") + display_titles.join (QStringLiteral("</li></li>")) + "</li></ul>", i18n ("Edit file(s)"));
+			new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit the following file(s). Please look at these files, edit them as appropriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.<ul><li>") + display_titles.join (QStringLiteral("</li></li>")) + u"</li></ul>"_s, i18n ("Edit file(s)"));
 		} else {
 			RKRBackendProtocolFrontend::setRequestCompleted (request);
 		}
