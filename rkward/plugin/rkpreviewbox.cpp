@@ -59,21 +59,21 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	box_layout->addWidget(manager->inlineStatusWidget());
 
 	// prepare placement
-	placement_command = QLatin1String(".rk.with.window.hints ({");
-	placement_end = QLatin1String("\n}, ");
-	if (placement == AttachedPreview) placement_end.append ("\"attached\"");
-	else if (placement == DetachedPreview) placement_end.append ("\"detached\"");
-	else placement_end.append ("\"\"");
-	placement_end.append (", " + idprop + ", style=\"preview\")");
+	placement_command = u".rk.with.window.hints ({"_s;
+	placement_end = u"\n}, "_s;
+	if (placement == AttachedPreview) placement_end.append(u"\"attached\""_s);
+	else if (placement == DetachedPreview) placement_end.append(u"\"detached\""_s);
+	else placement_end.append(u"\"\""_s);
+	placement_end.append(u", "_s + idprop + u", style=\"preview\")"_s);
 	if (placement == DockedPreview) {
 		RKStandardComponent *uicomp = topmostStandardComponent ();
 		if (uicomp) {
 			uicomp->addDockedPreview(state, toggle_preview_box->title(), manager);
 
 			if (preview_mode == OutputPreview) {
-				RInterface::issueCommand ("local ({\n"
+				RInterface::issueCommand(QStringLiteral("local ({\n"
 				    "outfile <- tempfile (fileext='.html')\n"
-				    "rk.assign.preview.data(" + idprop + ", list (filename=outfile, on.delete=function (id) {\n"
+				    "rk.assign.preview.data(") + idprop + QStringLiteral(", list (filename=outfile, on.delete=function (id) {\n"
 				    "	oldfile <- rk.get.output.html.file()\n"
 				    "	rk.flush.output(outfile, ask=FALSE)\n"
 				    "	unlink(outfile)\n"
@@ -81,10 +81,10 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 				    "}))\n"
 				    "oldfile <- rk.set.output.html.file (outfile, style='preview')  # for initialization\n"
 				    "rk.set.output.html.file (oldfile)\n"
-				    "})\n" + placement_command + "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync);
+				    "})\n") + placement_command + u"rk.show.html(rk.get.preview.data ("_s + idprop + u")$filename)"_s + placement_end, RCommand::Plugin | RCommand::Sync);
 			} else {
 				// For all others, create an empty data.frame as dummy. Even for custom docked previews it has the effect of initializing the preview area with _something_.
-				RInterface::issueCommand ("local ({\nrk.assign.preview.data(" + idprop + ", data.frame ())\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
+				RInterface::issueCommand(u"local ({\nrk.assign.preview.data("_s + idprop + u", data.frame ())\n})\n"_s + placement_command + u"rk.edit(rkward::.rk.variables$.rk.preview.data[["_s + idprop + u"]])"_s + placement_end, RCommand::Plugin | RCommand::Sync);
 			}
 
 			// A bit of a hack: For now, in wizards, docked previews are always active, and control boxes are meaningless.
@@ -168,56 +168,67 @@ void RKPreviewBox::tryPreview () {
 	}
 }
 
-void RKPreviewBox::tryPreviewNow () {
-	RK_TRACE (PLUGIN);
+void RKPreviewBox::tryPreviewNow() {
+	RK_TRACE(PLUGIN);
 
 	if (!code_property) return;
 
-	ComponentStatus s = parentComponent ()->recursiveStatus ();
+	ComponentStatus s = parentComponent()->recursiveStatus();
 	if (s != Satisfied) {
-		manager->setNoPreviewAvailable ();
-		if (s == Processing) tryPreview ();
+		manager->setNoPreviewAvailable();
+		if (s == Processing) tryPreview();
 		return;
 	}
 
-	if (!manager->needsCommand ()) return; // if the last plot is not done, yet, wait before starting the next.
+	if (!manager->needsCommand()) return;  // if the last plot is not done, yet, wait before starting the next.
 
 	preview_active = true;
 
 	RCommand *command;
 	if (preview_mode == PlotPreview) {
-		RInterface::issueCommand (placement_command + ".rk.startPreviewDevice (" + idprop + ')' + placement_end, RCommand::Plugin | RCommand::Sync, QString ());
+		RInterface::issueCommand(placement_command + u".rk.startPreviewDevice ("_s + idprop + u')' + placement_end, RCommand::Plugin | RCommand::Sync, QString());
 		// creating window generates warnings, sometimes. Don't make those part of the warnings shown for the preview -> separate command for the actual plot.
-		command = new RCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync);
+		command = new RCommand(u"local({\n"_s + code_property->preview() + u"})\n"_s, RCommand::Plugin | RCommand::Sync);
 	} else if (preview_mode == DataPreview) {
-		command = new RCommand ("local({try({\n" + code_property->preview () + "\n})\nif(!exists(\"preview_data\",inherits=FALSE)) preview_data <- data.frame ('ERROR')\nrk.assign.preview.data(" + idprop + ", preview_data)\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
+		command =
+		    new RCommand(u"local({try({\n"_s + code_property->preview() +
+		                 u"\n})\nif(!exists(\"preview_data\",inherits=FALSE)) preview_data <- data.frame ('ERROR')\nrk.assign.preview.data("_s + idprop +
+		                 u", preview_data)\n})\n"_s + placement_command + u"rk.edit(rkward::.rk.variables$.rk.preview.data[["_s + idprop + u"]])"_s + placement_end,
+		                 RCommand::Plugin | RCommand::Sync);
 	} else if (preview_mode == OutputPreview) {
-		command = new RCommand (placement_command + "local({\n"
-		    "	oldfile <- rk.set.output.html.file(rk.get.preview.data (" + idprop + ")$filename, style='preview')\n"
-		    "	rk.flush.output(ask=FALSE, style='preview')\n"
-		    "	local({try({\n" + code_property->preview () + "\n})})\n"  // nested local to make sure "oldfile" is not overwritten.
-		    "	rk.set.output.html.file(oldfile)\n})\n"
-		    "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync);
+		command = new RCommand(placement_command +
+		                           u"local({\n"_s
+		                           u"	oldfile <- rk.set.output.html.file(rk.get.preview.data ("_s +
+		                           idprop +
+		                           u")$filename, style='preview')\n"_s
+		                           u"	rk.flush.output(ask=FALSE, style='preview')\n"_s
+		                           u"	local({try({\n"_s +
+		                           code_property->preview() +
+		                           u"\n})})\n"_s  // nested local to make sure "oldfile" is not overwritten.
+		                           u"	rk.set.output.html.file(oldfile)\n})\n"_s
+		                           u"rk.show.html(rk.get.preview.data ("_s +
+		                           idprop + u")$filename)"_s + placement_end,
+		                       RCommand::Plugin | RCommand::Sync);
 	} else {
-		command = new RCommand ("local({\n" + placement_command + code_property->preview () + placement_end + "})\n", RCommand::Plugin | RCommand::Sync);
+		command = new RCommand(u"local({\n"_s + placement_command + code_property->preview() + placement_end + u"})\n"_s, RCommand::Plugin | RCommand::Sync);
 	}
-	manager->setCommand (command);
+	manager->setCommand(command);
 }
 
-void RKPreviewBox::killPreview (bool cleanup) {
-	RK_TRACE (PLUGIN);
+void RKPreviewBox::killPreview(bool cleanup) {
+	RK_TRACE(PLUGIN);
 
 	if (!(preview_active || cleanup)) return;
 	preview_active = false;
 
 	if (cleanup) {
 		QString command;
-		if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ")\n";
-		command += "rk.discard.preview.data (" + idprop + ')';
-		RInterface::issueCommand (command, RCommand::Plugin | RCommand::Sync);
+		if (preview_mode == PlotPreview) command = u".rk.killPreviewDevice ("_s + idprop + u")\n"_s;
+		command += u"rk.discard.preview.data ("_s + idprop + u')';
+		RInterface::issueCommand(command, RCommand::Plugin | RCommand::Sync);
 	}
 	if (placement != DockedPreview) {
-		RKMDIWindow *window =  RKWorkplace::mainWorkplace ()->getNamedWindow (manager->previewId ());
-		if (window) window->deleteLater ();
+		RKMDIWindow *window = RKWorkplace::mainWorkplace()->getNamedWindow(manager->previewId());
+		if (window) window->deleteLater();
 	}
 }

@@ -301,33 +301,34 @@ void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	}
 }
 
-void RKStandardComponentGUI::ok () {
-	RK_TRACE (PLUGIN);
+void RKStandardComponentGUI::ok() {
+	RK_TRACE(PLUGIN);
 
-	RK_ASSERT (code_property->isValid ());
+	RK_ASSERT(code_property->isValid());
 
 	QString command = QStringLiteral("local({\n");
-	command.append (code_property->preprocess ());
-	command.append (code_property->calculate ());
-	command.append (code_property->printout ());
-	command.append ("})\n");
-	RInterface::issueCommand (new RCommand (command, RCommand::Plugin | RCommand::CCOutput | RCommand::ObjectListUpdate), component->commandChain ());
+	command.append(code_property->preprocess());
+	command.append(code_property->calculate());
+	command.append(code_property->printout());
+	command.append(u"})\n"_s);
+	RInterface::issueCommand(new RCommand(command, RCommand::Plugin | RCommand::CCOutput | RCommand::ObjectListUpdate), component->commandChain());
 
 	// re-run link
 	// This should be run in a separate command, in case the above command bails out with an error. Even in that case, the re-run link should be printed.
-	command.clear ();
-	RKComponentHandle *handle = RKComponentMap::getComponentHandle (component->getId ());
-	if (handle && handle->isAccessible ()) {
+	command.clear();
+	RKComponentHandle *handle = RKComponentMap::getComponentHandle(component->getId());
+	if (handle && handle->isAccessible()) {
 		RKComponent::PropertyValueMap map;
-		component->serializeState (&map);
-		command.append (".rk.rerun.plugin.link(plugin=\"" + component->getId () + "\", settings=\"" + RKCommonFunctions::escape (RKComponent::valueMapToString (map)) + "\", label=\"" + i18n ("Run again") + "\")\n");
+		component->serializeState(&map);
+		command.append(u".rk.rerun.plugin.link(plugin=\""_s + component->getId() + u"\", settings=\""_s +
+		               RKCommonFunctions::escape(RKComponent::valueMapToString(map)) + u"\", label=\""_s + i18n("Run again") + u"\")\n"_s);
 		// NOTE: the serialized state is quote-escape *again* for passing to R.
 	}
 	// separator line
-	command.append (".rk.make.hr()\n");
-	RInterface::issueCommand (new RCommand (command, RCommand::Plugin | RCommand::ObjectListUpdate | RCommand::Silent), component->commandChain ());
+	command.append(u".rk.make.hr()\n"_s);
+	RInterface::issueCommand(new RCommand(command, RCommand::Plugin | RCommand::ObjectListUpdate | RCommand::Silent), component->commandChain());
 
-	if (auto_close_box->isChecked ()) cancel ();
+	if (auto_close_box->isChecked()) cancel();
 }
 
 void RKStandardComponentGUI::cancel () {
@@ -406,11 +407,11 @@ void RKStandardComponentGUI::copyCode () {
 	code_display->copy ();
 }
 
-void RKStandardComponentGUI::help () {
-	RK_TRACE (PLUGIN);
+void RKStandardComponentGUI::help() {
+	RK_TRACE(PLUGIN);
 
-	QString path = component->getId ().split (QStringLiteral("::")).join (QStringLiteral("/"));
-	RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://component/" + path));
+	QString path = component->getId().split(QStringLiteral("::")).join(QStringLiteral("/"));
+	RKWorkplace::mainWorkplace()->openHelpWindow(QUrl(u"rkward://component/"_s + path));
 }
 
 void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {
@@ -439,18 +440,19 @@ void RKStandardComponentGUI::updateCode () {
 	code_update_timer->start (0);
 }
 
-void RKStandardComponentGUI::updateCodeNow () {
-	RK_TRACE (PLUGIN);
+void RKStandardComponentGUI::updateCodeNow() {
+	RK_TRACE(PLUGIN);
 	static bool was_valid = false;
-	if (was_valid) code_display->saveScrollPosition ();
+	if (was_valid) code_display->saveScrollPosition();
 
-	if (!code_property->isValid ()) {
-		code_display->setText (i18n ("Processing. Please wait"));
-		RK_DEBUG (PLUGIN, DL_DEBUG, "code not ready to be displayed: pre %d, cal %d, pri %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull ());
+	if (!code_property->isValid()) {
+		code_display->setText(i18n("Processing. Please wait"));
+		RK_DEBUG(PLUGIN, DL_DEBUG, "code not ready to be displayed: pre %d, cal %d, pri %d", !code_property->preprocess().isNull(),
+		         !code_property->calculate().isNull(), !code_property->printout().isNull());
 		was_valid = false;
 	} else {
-		code_display->setText ("local({\n" + code_property->preprocess () + code_property->calculate () + code_property->printout () + "})\n");
-		code_display->restoreScrollPosition ();
+		code_display->setText(u"local({\n"_s + code_property->preprocess() + code_property->calculate() + code_property->printout() + u"})\n"_s);
+		code_display->restoreScrollPosition();
 		was_valid = true;
 	}
 }

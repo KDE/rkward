@@ -15,6 +15,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
+using namespace Qt::Literals::StringLiterals;
+
 static QLatin1String rkward_min_version_tag("rkward_min_version");
 static QLatin1String rkward_max_version_tag("rkward_max_version");
 static QLatin1String R_min_version_tag("R_min_version");
@@ -46,7 +48,7 @@ RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml
 		RKComponentAuthor author;
 		author.name = xml.i18nStringAttribute (ae, QStringLiteral("name"), QString (), DL_INFO);
 		if (author.name.isEmpty ()) {
-			author.name = xml.i18nStringAttribute (ae, QStringLiteral("given"), QString (), DL_WARNING) + ' ' + xml.i18nStringAttribute (ae, QStringLiteral("family"), QString (), DL_WARNING);
+			author.name = xml.i18nStringAttribute (ae, QStringLiteral("given"), QString (), DL_WARNING) + u' ' + xml.i18nStringAttribute (ae, QStringLiteral("family"), QString (), DL_WARNING);
 			
 		}
 		if (author.name.isEmpty ()) xml.displayError (&ae, QStringLiteral("No author name specified"), DL_WARNING);
@@ -68,49 +70,49 @@ RKComponentAboutData::~RKComponentAboutData () {
 	RK_TRACE (PLUGIN);
 }
 
-QString RKComponentAboutData::toHtml () const {
-	RK_TRACE (PLUGIN);
+QString RKComponentAboutData::toHtml() const {
+	RK_TRACE(PLUGIN);
 
-	QString ret = "<p><b>" + name + "</b>";
-	if (!version.isEmpty ()) ret.append (' ' + version);
-	if (!releasedate.isEmpty ()) ret.append (" (" + releasedate + ')');
-	if (!shortinfo.isEmpty ()) ret.append (":</p>\n<p>" + shortinfo);
-	ret.append ("</p>\n");
-	if (!url.isEmpty ()) ret.append ("URL: <a href=\"" + url + "\">" + url + "</a></p>\n<p>");
-	if (!copyright.isEmpty ()) ret.append (i18n ("Copyright (c): %1", copyright) + "</p>\n<p>");
-	if (!license.isEmpty ()) ret.append (i18n ("License: %1", license) + "</p>");
+	QString ret = u"<p><b>"_s + name + u"</b>"_s;
+	if (!version.isEmpty()) ret.append(u' ' + version);
+	if (!releasedate.isEmpty()) ret.append(u" ("_s + releasedate + u')');
+	if (!shortinfo.isEmpty()) ret.append(u":</p>\n<p>"_s + shortinfo);
+	ret.append(u"</p>\n"_s);
+	if (!url.isEmpty()) ret.append(u"URL: <a href=\""_s + url + u"\">"_s + url + u"</a></p>\n<p>"_s);
+	if (!copyright.isEmpty()) ret.append(i18n("Copyright (c): %1", copyright) + u"</p>\n<p>"_s);
+	if (!license.isEmpty()) ret.append(i18n("License: %1", license) + u"</p>"_s);
 
-	if (!authors.isEmpty ()) {
-		ret.append ("\n<p><b>" + i18n ("Authors:") + "</b></p>\n<p><ul>");
-		for (int i = 0; i < authors.size (); ++i) {
+	if (!authors.isEmpty()) {
+		ret.append(u"\n<p><b>"_s + i18n("Authors:") + u"</b></p>\n<p><ul>"_s);
+		for (int i = 0; i < authors.size(); ++i) {
 			RKComponentAuthor a = authors[i];
-			ret.append ("<li>" + a.name);
-			if (!a.email.isEmpty ()) ret.append (" (" + a.email + ')');
-			if (!a.url.isEmpty ()) ret.append (" (" + a.url + ')');
-			if (!a.roles.isEmpty ()) ret.append ("<br/><i>" + i18nc ("Author roles (contributor, etc.)", "Roles") + "</i>: " + a.roles);
+			ret.append(u"<li>"_s + a.name);
+			if (!a.email.isEmpty()) ret.append(u" ("_s + a.email + u')');
+			if (!a.url.isEmpty()) ret.append(u" ("_s + a.url + u')');
+			if (!a.roles.isEmpty()) ret.append(u"<br/><i>"_s + i18nc("Author roles (contributor, etc.)", "Roles") + u"</i>: "_s + a.roles);
 		}
-		ret.append ("</ul></p>");
+		ret.append(u"</ul></p>"_s);
 	}
 
-	if (!translator_names.isNull ()) {
-		QStringList tns = translator_names.split (QLatin1Char(','), Qt::KeepEmptyParts);
-		QStringList tes = translator_emails.split (QLatin1Char(','), Qt::KeepEmptyParts);
-		ret.append ("\n<p><b>" + i18n ("Translators:") + "</b></p>\n<p><ul>");
-		for (int i = 0; i < tns.size (); ++i) {
-			QString tn = tns.value (i);
-			QString te = tes.value (i);
-			if (tn.isEmpty () && te.isEmpty ()) continue;
-			ret.append ("<li>" + tn + " <" + te + "></li>\n");
+	if (!translator_names.isNull()) {
+		QStringList tns = translator_names.split(QLatin1Char(','), Qt::KeepEmptyParts);
+		QStringList tes = translator_emails.split(QLatin1Char(','), Qt::KeepEmptyParts);
+		ret.append(u"\n<p><b>"_s + i18n("Translators:") + u"</b></p>\n<p><ul>"_s);
+		for (int i = 0; i < tns.size(); ++i) {
+			QString tn = tns.value(i);
+			QString te = tes.value(i);
+			if (tn.isEmpty() && te.isEmpty()) continue;
+			ret.append(u"<li>"_s + tn + u" <"_s + te + u"></li>\n"_s);
 		}
-		ret.append ("</ul></p>");
+		ret.append(u"</ul></p>"_s);
 	}
 
 	return ret;
 }
 
 
-bool RKComponentDependency::isRKWardVersionCompatible (const QDomElement& e) {
-	RK_TRACE (PLUGIN);
+bool RKComponentDependency::isRKWardVersionCompatible(const QDomElement& e) {
+	RK_TRACE(PLUGIN);
 
 	if (e.hasAttribute(rkward_min_version_tag)) {
 		if (RKSessionVars::compareRKWardVersion(e.attribute(rkward_min_version_tag)) > 0) return false;
@@ -119,12 +121,12 @@ bool RKComponentDependency::isRKWardVersionCompatible (const QDomElement& e) {
 		if (RKSessionVars::compareRKWardVersion(e.attribute(rkward_max_version_tag)) < 0) return false;
 	}
 	if (e.hasAttribute(platforms_tag)) {
-		auto platforms = e.attribute(platforms_tag).split(':');
+		auto platforms = e.attribute(platforms_tag).split(u':');
 #if defined(Q_OS_WIN)
 		if (platforms.contains(QLatin1String("windows"))) return true;
 #elif defined(Q_OS_MACOS)
 		if (platforms.contains(QLatin1String("macos"))) return true;
-#elif defined(Q_OS_UNIX) // NOTE: order matters. Q_OS_UNIX is also defined on mac, but we do not want to count that as "unix", here.
+#elif defined(Q_OS_UNIX)  // NOTE: order matters. Q_OS_UNIX is also defined on mac, but we do not want to count that as "unix", here.
 		if (platforms.contains(QLatin1String("unix"))) return true;
 #else
 		static_assert(false, "Undefined platform");
@@ -192,31 +194,30 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 	return ret;
 }
 
-QString RKComponentDependency::depsToHtml (const QList <RKComponentDependency>& deps) {
-	RK_TRACE (PLUGIN);
+QString RKComponentDependency::depsToHtml(const QList<RKComponentDependency>& deps) {
+	RK_TRACE(PLUGIN);
 
 	QString ret;
-	if (deps.isEmpty ()) return ret;
+	if (deps.isEmpty()) return ret;
 
-	ret.append ("<ul>");
-	for (int i = 0;  i < deps.size (); ++i) {
-		ret.append ("<li>");
-		const RKComponentDependency &dep = deps[i];
+	ret.append(u"<ul>"_s);
+	for (int i = 0; i < deps.size(); ++i) {
+		ret.append(u"<li>"_s);
+		const RKComponentDependency& dep = deps[i];
 		if (dep.type == RBaseInstallation) {
-			ret.append ("R");
+			ret.append(u"R"_s);
 		} else if (dep.type == RKWardVersion) {
-			ret.append ("RKWard");
+			ret.append(u"RKWard"_s);
 		} else {
-			if (dep.type == RKWardPluginmap) ret.append (i18n ("RKWard plugin map"));
-			else ret.append (i18n ("R package"));
-			ret.append (" \"" + dep.package + "\"");
-			if (!dep.source_info.isEmpty ()) ret.append (" (" + dep.source_info + ')');
+			if (dep.type == RKWardPluginmap) ret.append(i18n("RKWard plugin map"));
+			else ret.append(i18n("R package"));
+			ret.append(u" \""_s + dep.package + u"\""_s);
+			if (!dep.source_info.isEmpty()) ret.append(u" ("_s + dep.source_info + u')');
 		}
-		if (!dep.min_version.isNull()) ret.append(" &gt;= " + dep.min_version.toString());
-		if (!dep.max_version.isNull()) ret.append(" &lt;= " + dep.max_version.toString());
-		ret.append ("</li>");
+		if (!dep.min_version.isNull()) ret.append(u" &gt;= "_s + dep.min_version.toString());
+		if (!dep.max_version.isNull()) ret.append(u" &lt;= "_s + dep.max_version.toString());
+		ret.append(u"</li>"_s);
 	}
-	ret.append ("</ul>");
+	ret.append(u"</ul>"_s);
 	return ret;
 }
-

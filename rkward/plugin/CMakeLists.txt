@@ -37,3 +37,4 @@ SET(plugin_STAT_SRCS
 
 ADD_LIBRARY(plugin STATIC ${plugin_STAT_SRCS})
 TARGET_LINK_LIBRARIES(plugin Qt6::Widgets KF6::TextEditor KF6::WindowSystem KF6::I18n)
+add_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove, here, once enabled on top level

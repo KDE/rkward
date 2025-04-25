@@ -92,7 +92,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	// initialize the script backend with the code-template
 	QDomElement element = xml->getChildElement (doc_element, QStringLiteral("code"), DL_WARNING);
 	if (element.hasAttribute (QStringLiteral("file"))) {
-		QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, QStringLiteral("file"), QStringLiteral("code.js"), DL_WARNING);
+		QString dummy = QFileInfo (filename).path() + u'/' + xml->getStringAttribute (element, QStringLiteral("file"), QStringLiteral("code.js"), DL_WARNING);
 
 		backend = new QtScriptBackend (dummy, xml->messageCatalog ());
 	} else {
@@ -110,7 +110,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	// check for existence of help file
 	element = xml->getChildElement(doc_element, QStringLiteral("help"), DL_WARNING);
-	QString dummy = QFileInfo(filename).path() + '/' + xml->getStringAttribute(element, QStringLiteral("file"), QStringLiteral("::nosuchfile::"), DL_INFO);
+	QString dummy = QFileInfo(filename).path() + u'/' + xml->getStringAttribute(element, QStringLiteral("file"), QStringLiteral("::nosuchfile::"), DL_INFO);
 	have_help = QFileInfo::exists(dummy);
 
 	update_pending = false;
@@ -625,7 +625,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		} else if ((e.tagName () == QLatin1String ("varslot")) || (e.tagName () == QLatin1String ("valueslot"))) {
 			widget = new RKVarSlot (e, component (), parent_widget);
 			QString source = xml.getStringAttribute (e, QStringLiteral("source_property"), QString (), DL_INFO);
-			if (source.isEmpty ()) source = xml.getStringAttribute (e, QStringLiteral("source"), QStringLiteral("#noid#"), DL_WARNING) + ".selected";
+			if (source.isEmpty ()) source = xml.getStringAttribute (e, QStringLiteral("source"), QStringLiteral("#noid#"), DL_WARNING) + u".selected"_s;
 			addConnection (id, QStringLiteral("source"), source, QString (), false, e);
 		} else if ((e.tagName () == QLatin1String ("valueselector")) || (e.tagName () == QLatin1String ("select"))) {
 			widget = new RKValueSelector (e, component (), parent_widget);
@@ -753,7 +753,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 			} else if (mode == RKComponentPropertyConvert::Range) {
 				convert->setRange (xml.getDoubleAttribute (cel, QStringLiteral("min"), -FLT_MAX, DL_INFO), xml.getDoubleAttribute (cel, QStringLiteral("max"), FLT_MAX, DL_INFO));
 			}
-			switch_convert_sources.insert (convert, xml.getStringAttribute (cel, QStringLiteral("sources"), QString (), DL_WARNING).split (';'));
+			switch_convert_sources.insert(convert, xml.getStringAttribute(cel, QStringLiteral("sources"), QString(), DL_WARNING).split(u';'));
 			convert->setRequireTrue (xml.getBoolAttribute (cel, QStringLiteral("require_true"), false, DL_INFO));
 			component ()->addChild (id, convert);
 		} else if (tagName == QLatin1String ("switch")) {
@@ -826,17 +826,18 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 	}
 }
 
-void RKComponentBuilder::addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin) {
-	RK_TRACE (PLUGIN);
+void RKComponentBuilder::addConnection(const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property,
+                                       bool reconcile, const QDomElement &origin) {
+	RK_TRACE(PLUGIN);
 
 	RKComponentPropertyConnection conn;
 	conn.client_property = client_id;
-	if (!client_property.isEmpty ()) conn.client_property += '.' + client_property;
+	if (!client_property.isEmpty()) conn.client_property += u'.' + client_property;
 	conn.governor_property = governor_id;
-	if (!governor_property.isEmpty ()) conn.governor_property += '.' + governor_property;
+	if (!governor_property.isEmpty()) conn.governor_property += u'.' + governor_property;
 	conn.reconcile = reconcile;
 	conn.origin = origin;
-	connection_list.append (conn);
+	connection_list.append(conn);
 }
 
 void RKComponentBuilder::makeConnections () {

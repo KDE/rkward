@@ -141,86 +141,86 @@ void RKFormula::typeChange (int id) {
 	makeModelString ();
 }
 
-void RKFormula::makeModelString () {
-	RK_TRACE (PLUGIN);
+void RKFormula::makeModelString() {
+	RK_TRACE(PLUGIN);
 	// first find out, whether multiple containers are involved and construct table string
 	multitable = false;
 	model_ok = false;
 	QString table_string, model_string, labels_string;
-	mangled_names.clear ();
-	RObject *dep_var = dependent->objectValue ();
+	mangled_names.clear();
+	RObject *dep_var = dependent->objectValue();
 	RObject *container = nullptr;
 	if (dep_var) {
 		model_ok = true;
 	}
-	RObject::ObjectList vlist = fixed_factors->objectList ();
-	if (vlist.empty ()) {
+	RObject::ObjectList vlist = fixed_factors->objectList();
+	if (vlist.empty()) {
 		model_ok = false;
 	}
 	if (dep_var) {
-		container = dep_var->parentObject ();
-	} else if (!vlist.empty ()) {
-		container = vlist.first ()->parentObject ();
+		container = dep_var->parentObject();
+	} else if (!vlist.empty()) {
+		container = vlist.first()->parentObject();
 	}
-	for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
-		if ((*it)->parentObject () != container) {
+	for (RObject::ObjectList::const_iterator it = vlist.cbegin(); it != vlist.cend(); ++it) {
+		if ((*it)->parentObject() != container) {
 			multitable = true;
 			break;
 		}
 	}
 	if (multitable) {
-		table_string = QLatin1String("data.frame (");
-		if (dep_var) table_string.append (mangleName (dep_var) + '=' + dep_var->getFullName ());
-		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
-			table_string.append (", " + mangleName ((*it)) + '=' + (*it)->getFullName ());
+		table_string = u"data.frame ("_s;
+		if (dep_var) table_string.append(mangleName(dep_var) + u'=' + dep_var->getFullName());
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin(); it != vlist.cend(); ++it) {
+			table_string.append(u", "_s + mangleName((*it)) + u'=' + (*it)->getFullName());
 		}
-		table_string.append (")");
+		table_string.append(u")"_s);
 	} else {
-		if (container) table_string = container->getFullName ();
+		if (container) table_string = container->getFullName();
 	}
-	
+
 	// construct model string
-	model_string = mangleName (dep_var) + " ~ ";
+	model_string = mangleName(dep_var) + u" ~ "_s;
 	if (model_type == FullModel) {
-		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
-			if (it != vlist.cbegin ()) model_string.append (" * ");
-			model_string.append (mangleName (*it));
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin(); it != vlist.cend(); ++it) {
+			if (it != vlist.cbegin()) model_string.append(u" * "_s);
+			model_string.append(mangleName(*it));
 		}
 	} else if (model_type == MainEffects) {
-		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
-			if (it != vlist.cbegin ()) model_string.append (" + ");
-			model_string.append (mangleName (*it));
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin(); it != vlist.cend(); ++it) {
+			if (it != vlist.cbegin()) model_string.append(u" + "_s);
+			model_string.append(mangleName(*it));
 		}
-	} else if (model_type == Custom) {	
-		if (interaction_map.empty ()) model_ok = false;
-		for (InteractionMap::Iterator it = interaction_map.begin (); it != interaction_map.end (); ++it) {
-			if (it != interaction_map.begin ()) {
-				model_string.append (" + ");
+	} else if (model_type == Custom) {
+		if (interaction_map.empty()) model_ok = false;
+		for (InteractionMap::Iterator it = interaction_map.begin(); it != interaction_map.end(); ++it) {
+			if (it != interaction_map.begin()) {
+				model_string.append(u" + "_s);
 			}
-			for (int i=0; i <= it.value ().level; ++i) {
+			for (int i = 0; i <= it.value().level; ++i) {
 				if (i) {
-					model_string.append (":");
+					model_string.append(u":"_s);
 				}
-				model_string.append (mangleName (it.value ().vars[i]));
+				model_string.append(mangleName(it.value().vars[i]));
 			}
 		}
 	}
 
 	// labels
-	labels_string = QLatin1String("list (");
+	labels_string = u"list ("_s;
 	MangledNames::const_iterator it;
-	for (it = mangled_names.cbegin (); it != mangled_names.cend (); ++it) {
-		if (it != mangled_names.cbegin ()) {
-			labels_string.append (", ");
+	for (it = mangled_names.cbegin(); it != mangled_names.cend(); ++it) {
+		if (it != mangled_names.cbegin()) {
+			labels_string.append(u", "_s);
 		}
-		labels_string.append (it.key () + "=\"" + it.value ()->getDescription () + "\"");
+		labels_string.append(it.key() + u"=\""_s + it.value()->getDescription() + u'"');
 	}
-	labels_string.append (")");
+	labels_string.append(u')');
 
-	table->setValue (table_string);
-	model->setValue (model_string);
-	labels->setValue (labels_string);
-	changed ();
+	table->setValue(table_string);
+	model->setValue(model_string);
+	labels->setValue(labels_string);
+	changed();
 }
 
 QString RKFormula::mangleName (RObject *var) {
@@ -287,7 +287,7 @@ void RKFormula::addButtonClicked () {
 		for (int j=0; j <= interactions[i].level; ++j) {
 			RK_DEBUG (PLUGIN, DL_DEBUG, "inserting interaction %d, level %d", i, j);
 			if (j) {
-				dummy.append (" X ");
+				dummy.append(u" X "_s);
 			}
 			dummy.append (interactions[i].vars[j]->getShortName ());
 		}
@@ -398,13 +398,13 @@ bool RKFormula::isValid () {
 	return (model_ok);
 }
 
-QStringList RKFormula::getUiLabelPair () const {
-	RK_TRACE (PLUGIN);
+QStringList RKFormula::getUiLabelPair() const {
+	RK_TRACE(PLUGIN);
 
-	QStringList ret (label_string);
-	QString m = stripAccelerators (type_selector->checkedButton ()->text ());
-	if (model_type == Custom) m.append (' ' + model->value ().toString ());
-	ret.append (m);
+	QStringList ret(label_string);
+	QString m = stripAccelerators(type_selector->checkedButton()->text());
+	if (model_type == Custom) m.append(u' ' + model->value().toString());
+	ret.append(m);
 	return ret;
 }
 

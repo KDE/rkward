@@ -36,7 +36,7 @@ QString RKPluginMapFile::makeFileName (const QString &filename) const {
 QString RKPluginMapFile::parseId (const QDomElement& e, XMLHelper &xml) {
 	RK_TRACE (PLUGIN);
 
-	return (xml.getStringAttribute (e, QStringLiteral("namespace"), QStringLiteral("rkward"), DL_WARNING) + "::" + xml.getStringAttribute (e, QStringLiteral("id"), QString (), DL_INFO));
+	return (xml.getStringAttribute (e, QStringLiteral("namespace"), QStringLiteral("rkward"), DL_WARNING) + u"::"_s + xml.getStringAttribute (e, QStringLiteral("id"), QString (), DL_INFO));
 }
 
 RKComponentAboutData RKPluginMapFile::getAboutData () {
@@ -62,12 +62,12 @@ RKComponentGUIXML::~RKComponentGUIXML () {
 	toplevel_menu.clear ();
 }
 
-void RKComponentGUIXML::clearGUIDescription () {
-	RK_TRACE (PLUGIN);
+void RKComponentGUIXML::clearGUIDescription() {
+	RK_TRACE(PLUGIN);
 
-	gui_xml.setContent (QStringLiteral ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"063\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
-	toplevel_menu.clear ();
-	component_menus.clear ();
+	gui_xml.setContent(QStringLiteral("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"063\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
+	toplevel_menu.clear();
+	component_menus.clear();
 }
 
 bool compareMenuEntries (const RKComponentGUIXML::Entry *a, const RKComponentGUIXML::Entry *b) {
@@ -96,7 +96,7 @@ void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu, const QSt
 					component_menus.insert (entry->id, menu_path);
 				}
 			} else {
-				resolveComponentLabelsAndSortMenu (static_cast<Menu*> (entry), menu_path.isEmpty () ? entry->label : menu_path + '\t' + entry->label);
+				resolveComponentLabelsAndSortMenu(static_cast<Menu *>(entry), menu_path.isEmpty() ? entry->label : menu_path + u'\t' + entry->label);
 			}
 		}
 		std::sort(group->entries.begin(), group->entries.end(), compareMenuEntries);
@@ -504,12 +504,12 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 		return false;
 	}
 
-	QStringList problems = component->matchAgainstState (state);
-	if (!problems.isEmpty ()) {
-		_message = i18n ("Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace.");
-		RK_DEBUG (PLUGIN, DL_WARNING, "%s", qPrintable (problems.join ("\n")));	// TODO: make failures available to backend
+	QStringList problems = component->matchAgainstState(state);
+	if (!problems.isEmpty()) {
+		_message = i18n("Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace.");
+		RK_DEBUG(PLUGIN, DL_WARNING, "%s", qPrintable(problems.join(u'\n')));  // TODO: make failures available to backend
 		if (message) *message = _message;
-		else KMessageBox::informationList (component, _message, problems, i18n ("Not all settings applied"));
+		else KMessageBox::informationList(component, _message, problems, i18n("Not all settings applied"));
 		// TODO: Don't show again-box?
 		// not considered an error
 	}
@@ -570,8 +570,8 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		return ret;
 	}
 
-	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml.getStringAttribute (document_element, QStringLiteral("base_prefix"), QString (), DL_INFO);
-	QString cnamespace = xml.getStringAttribute (document_element, QStringLiteral("namespace"), QStringLiteral("rkward"), DL_INFO) + "::";
+	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + u'/' + xml.getStringAttribute (document_element, QStringLiteral("base_prefix"), QString (), DL_INFO);
+	QString cnamespace = xml.getStringAttribute (document_element, QStringLiteral("namespace"), QStringLiteral("rkward"), DL_INFO) + u"::"_s;
 
 	RKPluginMapFile* pluginmap_file_desc = new RKPluginMapFile (QFileInfo (plugin_map_file).absoluteFilePath (), prefix, xml.messageCatalog ());
 	pluginmap_file_desc->id = RKPluginMapFile::parseId (document_element, xml);

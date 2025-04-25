@@ -209,15 +209,16 @@ RKComponentPropertyStringList::~RKComponentPropertyStringList () {
 	RK_TRACE (PLUGIN);
 }
 
-// escapes only newlines, so we can join strings by newline. Does duplicate backslashes, so the string can safely be passed through RKCommonFunction::unescape().
-QString escapeNewlines (const QString &in) {
+// escapes only newlines, so we can join strings by newline. Does duplicate backslashes, so the string can safely be passed through
+// RKCommonFunction::unescape().
+QString escapeNewlines(const QString &in) {
 	QString out;
 
-	for (int i = 0; i < in.size (); ++i) {
+	for (int i = 0; i < in.size(); ++i) {
 		QChar c = in[i];
-		if (c == '\\') out.append ("\\\\");
-		else if (c == '\n') out.append ("\\n");
-		else out.append (c);
+		if (c == u'\\') out.append(u"\\\\"_s);
+		else if (c == u'\n') out.append(u"\\n"_s);
+		else out.append(c);
 	}
 
 	return out;
@@ -317,21 +318,21 @@ RKComponentPropertyBool::~RKComponentPropertyBool () {
 	RK_TRACE (PLUGIN);
 }
 
-RKComponentBase* RKComponentPropertyBool::lookupComponent (const QString &identifier, QString *remainder) {
-	RK_TRACE (PLUGIN);
+RKComponentBase *RKComponentPropertyBool::lookupComponent(const QString &identifier, QString *remainder) {
+	RK_TRACE(PLUGIN);
 
-	RKComponentBase *dummy = RKComponentPropertyBase::lookupComponent (identifier, remainder);
+	RKComponentBase *dummy = RKComponentPropertyBase::lookupComponent(identifier, remainder);
 	if (dummy != this) return dummy;
 
-	QString next = identifier.section ('.', 0, 0);
+	QString next = identifier.section(u'.', 0, 0);
 	if (next == QLatin1String("not")) {
-		RKComponentPropertyBool *negated = new RKComponentPropertyBool (this, false, false, value_true, value_false);
-		negated->setInverted (true);
-		negated->setInternal (true);
-		negated->connectToGovernor (this);
-		*remainder = QString ();		// reset
-		addChild (QStringLiteral("not"), negated);		// so subsequent lookups will not recreate the negated property
-		return (negated->lookupComponent (identifier.section ('.', 1), remainder));
+		RKComponentPropertyBool *negated = new RKComponentPropertyBool(this, false, false, value_true, value_false);
+		negated->setInverted(true);
+		negated->setInternal(true);
+		negated->connectToGovernor(this);
+		*remainder = QString();                    // reset
+		addChild(QStringLiteral("not"), negated);  // so subsequent lookups will not recreate the negated property
+		return (negated->lookupComponent(identifier.section(u'.', 1), remainder));
 	}
 
 	return (this);
@@ -752,21 +753,21 @@ QDoubleValidator *RKComponentPropertyDouble::getValidator () {
 	return validator;
 }
 
-void RKComponentPropertyDouble::internalSetValue (double new_value) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyDouble::internalSetValue(double new_value) {
+	RK_TRACE(PLUGIN);
 
 	current_value = new_value;
 
 	// what we want is AT LEAST *precision digits, more if required. I'm sure there's a nifty algorithm for that, but this hack does the trick:
-	_value = QString::number (current_value, 'f', 9);	// 9 is an arbitrary limit to counter floating point jitter
-	int decimal = _value.indexOf ('.');
+	_value = QString::number(current_value, 'f', 9);  // 9 is an arbitrary limit to counter floating point jitter
+	int decimal = _value.indexOf(u'.');
 	if (decimal >= 0) {
 		int min_digit = decimal + precision + 1;
-		while ((min_digit < _value.length ()) && _value.endsWith ('0')) _value.chop (1);
+		while ((min_digit < _value.length()) && _value.endsWith(u'0')) _value.chop(1);
 	}
-	if (_value.endsWith ('.')) _value.chop (1);
+	if (_value.endsWith(u'.')) _value.chop(1);
 
-	is_valid = ((new_value >= validator->bottom ()) && (new_value <= validator->top ()));
+	is_valid = ((new_value >= validator->bottom()) && (new_value <= validator->top()));
 	if (!is_valid) current_value = default_value;
 }
 
@@ -952,8 +953,8 @@ QString RKComponentPropertyRObjects::checkObjectProblems (RObject *object) const
 		}
 	}
 
-	if (probs.isEmpty ()) return QString ();
-	return (QStringLiteral ("<ul><li>") + probs.join (QStringLiteral("</li><li>")) + "</li></ul>");
+	if (probs.isEmpty()) return QString();
+	return (u"<ul><li>"_s + probs.join(u"</li><li>"_s) + u"</li></ul>"_s);
 }
 
 RObject *RKComponentPropertyRObjects::objectValue () {
@@ -1402,13 +1403,13 @@ QVariant RKComponentPropertySwitch::value (const QString& modifier) {
 		if (index < 0) index = standards.size ();	// remainder-category
 	}
 
-	// First try to return matching property
-	RKComponentPropertyBase *p = value_props.value (index);
+	// First, try to return matching property
+	RKComponentPropertyBase *p = value_props.value(index);
 	if (p) {
-		QString mod = value_prop_mods.value (index);
-		if (!(mod.isEmpty () || modifier.isEmpty ())) mod.append (".");
-		mod.append (modifier);
-		return p->value (mod);
+		QString mod = value_prop_mods.value(index);
+		if (!(mod.isEmpty() || modifier.isEmpty())) mod.append(u"."_s);
+		mod.append(modifier);
+		return p->value(mod);
 	}
 
 	// If that fails, try to find a static default string

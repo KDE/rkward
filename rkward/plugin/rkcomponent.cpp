@@ -14,19 +14,19 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 //############### RKComponentBase #####################
 
-RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QString *remainder) {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (remainder);
+RKComponentBase *RKComponentBase::lookupComponent(const QString &identifier, QString *remainder) {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(remainder);
 
-	if (identifier.isEmpty ()) return this;
-	RK_DEBUG (PLUGIN, DL_DEBUG, "looking up '%s'", identifier.toLatin1 ().data ());
+	if (identifier.isEmpty()) return this;
+	RK_DEBUG(PLUGIN, DL_DEBUG, "looking up '%s'", identifier.toLatin1().data());
 
-	RKComponentBase *child = child_map.value (identifier.section ('.', 0, 0));
-	if (!child) {	// if we do not have such a child, return this (and set remainder)
+	RKComponentBase *child = child_map.value(identifier.section(u'.', 0, 0));
+	if (!child) {  // if we do not have such a child, return this (and set remainder)
 		*remainder = identifier;
 		return this;
-	} else {	// else do recursive lookup
-		return child->lookupComponent (identifier.section ('.', 1), remainder);
+	} else {  // else do recursive lookup
+		return child->lookupComponent(identifier.section(u'.', 1), remainder);
 	}
 }
 
@@ -54,21 +54,22 @@ void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	child_map.insert(id, child);		// no overwriting even on duplicate ("#noid#") ids
 }
 
-void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix, bool include_inactive_elements) const {
-	RK_TRACE (PLUGIN);
+void RKComponentBase::fetchPropertyValuesRecursive(PropertyValueMap *list, bool include_top_level, const QString &prefix,
+                                                   bool include_inactive_elements) const {
+	RK_TRACE(PLUGIN);
 
-	for (auto it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
-		if (it.key () == QLatin1String("#noid#")) continue;
-		if (it.value ()->isInternal ()) continue;
+	for (auto it = child_map.constBegin(); it != child_map.constEnd(); ++it) {
+		if (it.key() == QLatin1String("#noid#")) continue;
+		if (it.value()->isInternal()) continue;
 
-		if (it.value ()->isProperty ()) {
+		if (it.value()->isProperty()) {
 			if (include_top_level) {
-				list->insert (prefix + it.key (), fetchStringValue (it.value ()));
+				list->insert(prefix + it.key(), fetchStringValue(it.value()));
 			}
 		} else {
-			RK_ASSERT (it.value ()->isComponent ());
-			if (static_cast<RKComponent *> (it.value ())->isInactive () && (!include_inactive_elements)) continue;
-			it.value ()->fetchPropertyValuesRecursive (list, true, prefix + it.key () + '.');
+			RK_ASSERT(it.value()->isComponent());
+			if (static_cast<RKComponent *>(it.value())->isInactive() && (!include_inactive_elements)) continue;
+			it.value()->fetchPropertyValuesRecursive(list, true, prefix + it.key() + u'.');
 		}
 	}
 }
@@ -92,27 +93,27 @@ void RKComponentBase::setPropertyValues (const PropertyValueMap *list, bool warn
 	}
 }
 
-//static
-QString RKComponentBase::valueMapToString (const PropertyValueMap &map) {
-	RK_TRACE (PLUGIN);
+// static
+QString RKComponentBase::valueMapToString(const PropertyValueMap &map) {
+	RK_TRACE(PLUGIN);
 
 	QString out;
-	for (PropertyValueMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
-		if (!out.isEmpty ()) out.append ("\n");
-		out.append (RKCommonFunctions::escape (it.key () + '=' + it.value ()));
+	for (PropertyValueMap::const_iterator it = map.constBegin(); it != map.constEnd(); ++it) {
+		if (!out.isEmpty()) out.append(u'\n');
+		out.append(RKCommonFunctions::escape(it.key() + u'=' + it.value()));
 	}
 	return out;
 }
 
-//static
-bool RKComponentBase::stringListToValueMap (const QStringList &strings, PropertyValueMap *map) {
-	RK_TRACE (PLUGIN);
+// static
+bool RKComponentBase::stringListToValueMap(const QStringList &strings, PropertyValueMap *map) {
+	RK_TRACE(PLUGIN);
 
-	for (int i = 0; i < strings.size (); ++i) {
-		QString line = RKCommonFunctions::unescape (strings[i]);
-		int sep = line.indexOf ('=');
+	for (int i = 0; i < strings.size(); ++i) {
+		QString line = RKCommonFunctions::unescape(strings[i]);
+		int sep = line.indexOf(u'=');
 		if (sep < 0) return false;
-		map->insert (line.left (sep), line.mid (sep+1));
+		map->insert(line.left(sep), line.mid(sep + 1));
 	}
 	return true;
 }
@@ -380,16 +381,16 @@ void RKComponent::changed () {
 	Q_EMIT componentChanged(this);
 }
 
-RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) const {
-	RK_TRACE (PLUGIN);
+RKStandardComponent *RKComponent::standardComponent(QString *id_adjust) const {
+	RK_TRACE(PLUGIN);
 
-	RKComponent *p = const_cast<RKComponent*> (this);
+	RKComponent *p = const_cast<RKComponent *>(this);
 	while (p) {
-		if (p->type () == RKComponent::ComponentStandard) return static_cast<RKStandardComponent*> (p);
-		if (id_adjust) id_adjust->prepend (p->getIdInParent () + '.');
-		p = p->parentComponent ();
+		if (p->type() == RKComponent::ComponentStandard) return static_cast<RKStandardComponent *>(p);
+		if (id_adjust) id_adjust->prepend(p->getIdInParent() + u'.');
+		p = p->parentComponent();
 	}
-	RK_ASSERT (false);
+	RK_ASSERT(false);
 	return nullptr;
 }
 

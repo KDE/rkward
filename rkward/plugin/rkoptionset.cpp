@@ -24,7 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-#define KEYCOLUMN_UNINITIALIZED_VALUE QString ("___#!RK!___Keycol_uninitialized")
+#define KEYCOLUMN_UNINITIALIZED_VALUE QStringLiteral("___#!RK!___Keycol_uninitialized")
 
 RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
@@ -91,9 +91,9 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		QString governor = xml->getStringAttribute (e, QStringLiteral("connect"), QString (), DL_INFO);
 		bool external = xml->getBoolAttribute (e, QStringLiteral("external"), false, DL_INFO);
 
-		while (child_map.contains (id)) {
-			RK_DEBUG (PLUGIN, DL_ERROR, "optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id));
-			id = '_' + id;
+		while (child_map.contains(id)) {
+			RK_DEBUG(PLUGIN, DL_ERROR, "optionset already contains a property named %s. Renaming to _%s", qPrintable(id), qPrintable(id));
+			id = u'_' + id;
 		}
 
 		ColumnInfo col_inf;
@@ -131,7 +131,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 			keycolumn = nullptr;
 		} else {
 			updating = true;
-			keycolumn->setValue (KEYCOLUMN_UNINITIALIZED_VALUE);
+			keycolumn->setValue(KEYCOLUMN_UNINITIALIZED_VALUE);
 			updating = false;
 		}
 	}
@@ -180,68 +180,68 @@ void RKOptionSet::fetchDefaults () {
 	contents_container->enablednessProperty ()->setBoolValue (rowCount () > 0);	// no current row; Do this *after* fetching default values, however. Otherwise most values will *not* be read, as the element is disabled
 }
 
-QString serializeList (const QStringList &list) {
+QString serializeList(const QStringList &list) {
 	QString ret;
-	for (int i = 0; i < list.size (); ++i) {
-		if (i > 0) ret.append ('\t');
-		ret.append (RKCommonFunctions::escape (list[i]));
+	for (int i = 0; i < list.size(); ++i) {
+		if (i > 0) ret.append(u'\t');
+		ret.append(RKCommonFunctions::escape(list[i]));
 	}
 	return ret;
 }
 
-QStringList unserializeList  (const QString &serial) {
-	QStringList ret = serial.split ('\t', Qt::KeepEmptyParts);
-	for (int i = 0; i < ret.size (); ++i) {
-		ret[i] = RKCommonFunctions::unescape (ret[i]);
+QStringList unserializeList(const QString &serial) {
+	QStringList ret = serial.split(u'\t', Qt::KeepEmptyParts);
+	for (int i = 0; i < ret.size(); ++i) {
+		ret[i] = RKCommonFunctions::unescape(ret[i]);
 	}
 	return ret;
 }
 
-QString serializeMap (const RKComponent::PropertyValueMap &map) {
+QString serializeMap(const RKComponent::PropertyValueMap &map) {
 	QString ret;
 
 	RKComponent::PropertyValueMap::const_iterator it;
-	for (it = map.constBegin (); it != map.constEnd (); ++it) {
-		if (!ret.isEmpty ()) ret.append ('\t');
-		ret.append (RKCommonFunctions::escape (it.key () + '=' + it.value ()));
+	for (it = map.constBegin(); it != map.constEnd(); ++it) {
+		if (!ret.isEmpty()) ret.append(u'\t');
+		ret.append(RKCommonFunctions::escape(it.key() + u'=' + it.value()));
 	}
 	return ret;
 }
 
-RKComponent::PropertyValueMap unserializeMap (const QString &serial) {
+RKComponent::PropertyValueMap unserializeMap(const QString &serial) {
 	RKComponent::PropertyValueMap ret;
-	QStringList l = serial.split ('\t', Qt::KeepEmptyParts);
-	for (int i = 0; i < l.size (); ++i) {
+	QStringList l = serial.split(u'\t', Qt::KeepEmptyParts);
+	for (int i = 0; i < l.size(); ++i) {
 		QString &line = l[i];
-		int sep = line.indexOf ('=');
-		ret.insert (RKCommonFunctions::unescape (line.left (sep)), RKCommonFunctions::unescape (line.mid (sep+1)));
+		int sep = line.indexOf(u'=');
+		ret.insert(RKCommonFunctions::unescape(line.left(sep)), RKCommonFunctions::unescape(line.mid(sep + 1)));
 	}
 	return ret;
 }
 
-void RKOptionSet::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix, bool include_inactive_elements) const {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (include_top_level);
-	RK_ASSERT (!include_inactive_elements);
+void RKOptionSet::fetchPropertyValuesRecursive(PropertyValueMap *list, bool include_top_level, const QString &prefix, bool include_inactive_elements) const {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(include_top_level);
+	RK_ASSERT(!include_inactive_elements);
 
 	QString serialization;
 
 	if (keycolumn) {
-		serialization.append ("keys=" + serializeList (old_keys));
+		serialization.append(u"keys="_s + serializeList(old_keys));
 	}
 
-	for (int r = 0; r < rows.size (); ++r) {
-		if (!serialization.isEmpty ()) serialization.append ("\n");
+	for (int r = 0; r < rows.size(); ++r) {
+		if (!serialization.isEmpty()) serialization.append(u'\n');
 		if (r == active_row) {
-			PropertyValueMap map;	// current row may have changes which have not yet been stored to the state map
-			contents_container->fetchPropertyValuesRecursive (&map);
-			serialization.append ("_row=" + serializeMap (map));
+			PropertyValueMap map;  // current row may have changes which have not yet been stored to the state map
+			contents_container->fetchPropertyValuesRecursive(&map);
+			serialization.append(u"_row="_s + serializeMap(map));
 		} else {
-			serialization.append ("_row=" + serializeMap (rows[r].full_row_map));
+			serialization.append(u"_row="_s + serializeMap(rows[r].full_row_map));
 		}
 	}
 
-	list->insert (prefix + "serialized", serialization);
+	list->insert(prefix + u"serialized"_s, serialization);
 }
 
 void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* property) {
@@ -269,11 +269,11 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 
 	QList<RowInfo> new_rows;
 	int row = 0;
-	QStringList items = fetchStringValue (property).split ('\n');
+	QStringList items = fetchStringValue (property).split(u'\n');
 	bool keys_missing = (keycolumn != nullptr);
-	for (int i = 0; i < items.size (); ++i) {
+	for (int i = 0; i < items.size(); ++i) {
 		const QString &item = items[i];
-		int sep = item.indexOf ('=');
+		int sep = item.indexOf(u'=');
 		if (sep < 0) {
 			RK_DEBUG (PLUGIN, DL_WARNING, "Bad format while trying to de-serialize optionset, line %d", i);
 			continue;

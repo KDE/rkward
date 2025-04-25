@@ -97,10 +97,13 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	if (mode == Varslot) {
 		// initialize filters
-		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, QStringLiteral("classes"), QString (), DL_INFO).split (' ', Qt::SkipEmptyParts));
-		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, QStringLiteral("types"), QString (), DL_INFO).split (' ', Qt::SkipEmptyParts));
-		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, QStringLiteral("num_dimensions"), 0, DL_INFO), xml->getIntAttribute (element, QStringLiteral("min_length"), 0, DL_INFO), xml->getIntAttribute (element, QStringLiteral("max_length"), INT_MAX, DL_INFO));
-		static_cast<RKComponentPropertyRObjects*> (available)->setObjectProblemsAreErrors (false);
+		static_cast<RKComponentPropertyRObjects*>(available)->setClassFilter(xml->getStringAttribute(element, QStringLiteral("classes"), QString(), DL_INFO).split(u' ', Qt::SkipEmptyParts));
+		static_cast<RKComponentPropertyRObjects*>(available)->setTypeFilter(xml->getStringAttribute(element, QStringLiteral("types"), QString(), DL_INFO).split(u' ', Qt::SkipEmptyParts));
+		static_cast<RKComponentPropertyRObjects*>(available)->setDimensionFilter(
+		     xml->getIntAttribute(element, QStringLiteral("num_dimensions"), 0, DL_INFO),
+		     xml->getIntAttribute(element, QStringLiteral("min_length"), 0, DL_INFO),
+		     xml->getIntAttribute(element, QStringLiteral("max_length"), INT_MAX, DL_INFO));
+		static_cast<RKComponentPropertyRObjects*>(available)->setObjectProblemsAreErrors(false);
 	}
 	available->setStripDuplicates (!xml->getBoolAttribute (element, QStringLiteral("allow_duplicates"), false, DL_INFO));
 	setRequired (xml->getBoolAttribute (element, QStringLiteral("required"), false, DL_INFO));

@@ -76,10 +76,10 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 
 	model = new RKMatrixInputModel (this);
 	QString headers = xml->getStringAttribute (element, QStringLiteral("horiz_headers"), QString (), DL_INFO);
-	if (!headers.isEmpty ()) model->horiz_header = headers.split (';');
+	if (!headers.isEmpty()) model->horiz_header = headers.split(u';');
 	else if (!headers.isNull ()) display->horizontalHeader ()->hide ();	// attribute explicitly set to ""
 	headers = xml->getStringAttribute (element, QStringLiteral("vert_headers"), QString (), DL_INFO);
-	if (!headers.isEmpty ()) model->vert_header = headers.split (';');
+	if (!headers.isEmpty()) model->vert_header = headers.split(u';');
 	else if (!headers.isNull ()) display->verticalHeader ()->hide ();
 	updateAll ();
 	display->setModel (model);
@@ -110,33 +110,33 @@ RKMatrixInput::~RKMatrixInput () {
 	RK_TRACE (PLUGIN);
 }
 
-QVariant RKMatrixInput::value (const QString& modifier) {
-	if (modifier.isEmpty () || (modifier == QLatin1String("cbind"))) {
+QVariant RKMatrixInput::value(const QString& modifier) {
+	if (modifier.isEmpty() || (modifier == QLatin1String("cbind"))) {
 		QStringList ret;
-		for (int i = 0; i < column_count->intValue (); ++i) {
-			ret.append ("\tc (" + makeColumnString (i, QStringLiteral(", ")) + ')');
+		for (int i = 0; i < column_count->intValue(); ++i) {
+			ret.append(u"\tc ("_s + makeColumnString(i, u", "_s) + u')');
 		}
-		return QString ("cbind (\n" + ret.join (QStringLiteral(",\n")) + "\n)");
-	} else if (modifier.startsWith (QLatin1String ("row."))) {
+		return QString(u"cbind (\n"_s + ret.join(u",\n"_s) + u"\n)"_s);
+	} else if (modifier.startsWith(QLatin1String("row."))) {
 		bool ok;
 		int row = QStringView(modifier).mid(4).toInt(&ok);
 		if ((row >= 0) && ok) {
-			return (rowStrings (row));
+			return (rowStrings(row));
 		}
 	}
 
 	bool ok;
-	int col = modifier.toInt (&ok);
+	int col = modifier.toInt(&ok);
 	if ((col >= 0) && ok) {
 		QStringList l;
-		if (col < columns.size ()) l = columns[col].storage;
-		while (l.size () < row_count->intValue ()) {
-			l.append (QString ());
+		if (col < columns.size()) l = columns[col].storage;
+		while (l.size() < row_count->intValue()) {
+			l.append(QString());
 		}
-		if (l.size () > row_count->intValue ()) l = l.mid (0, row_count->intValue ());
+		if (l.size() > row_count->intValue()) l = l.mid(0, row_count->intValue());
 		return l;
 	}
-	return (QString ("Modifier '" + modifier + "' not recognized\n"));
+	return (QString(u"Modifier '"_s + modifier + u"' not recognized\n"_s));
 }
 
 bool RKMatrixInput::expandStorageForColumn (int column) {
@@ -180,13 +180,13 @@ void RKMatrixInput::setCellValue (int row, int column, const QString& value) {
 	Q_EMIT model->dataChanged(model->index(row, column), model->index(row, column));
 }
 
-void RKMatrixInput::setColumnValue (int column, const QString& value) {
-	RK_TRACE (PLUGIN);
+void RKMatrixInput::setColumnValue(int column, const QString& value) {
+	RK_TRACE(PLUGIN);
 
-	if (!expandStorageForColumn (column)) return;
-	columns[column].storage = value.split ('\t', Qt::KeepEmptyParts);
-	updateColumn (column);
-	Q_EMIT model->dataChanged (model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
+	if (!expandStorageForColumn(column)) return;
+	columns[column].storage = value.split(u'\t', Qt::KeepEmptyParts);
+	updateColumn(column);
+	Q_EMIT model->dataChanged(model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
 }
 
 void RKMatrixInput::updateColumn (int column) {
@@ -207,9 +207,9 @@ void RKMatrixInput::updateColumn (int column) {
 	updateAll ();
 }
 
-QString pasteableValue (const QString &in, bool string) {
-	if (string) return (RObject::rQuote (in));
-	else if (in.isEmpty ()) return ("NA");
+QString pasteableValue(const QString &in, bool string) {
+	if (string) return (RObject::rQuote(in));
+	else if (in.isEmpty()) return (u"NA"_s);
 	else return in;
 }
 
@@ -284,9 +284,9 @@ void RKMatrixInput::updateAll () {
 		tsv.append (col.cached_tab_joined_string);
 	}
 	for (; i < max_col; ++i) {
-		tsv.append (QString (max_row, '\t'));
+		tsv.append(QString(max_row, u'\t'));
 	}
-	tsv_data->setValue (tsv.join (QStringLiteral("\n")));
+	tsv_data->setValue(tsv.join(u'\n'));
 
 	updating_tsv_data = false;
 
@@ -327,19 +327,19 @@ void RKMatrixInput::dimensionPropertyChanged (RKComponentPropertyBase *property)
 	Q_EMIT model->layoutChanged();
 }
 
-void RKMatrixInput::tsvPropertyChanged () {
+void RKMatrixInput::tsvPropertyChanged() {
 	if (updating_tsv_data) return;
 	updating_tsv_data = true;
-	RK_TRACE (PLUGIN);
+	RK_TRACE(PLUGIN);
 
-	columns.clear ();
-	QStringList coldata = fetchStringValue (tsv_data).split ('\n', Qt::KeepEmptyParts);
-	for (int i = 0; i < coldata.size (); ++i) {
-		setColumnValue (i, coldata[i]);
+	columns.clear();
+	QStringList coldata = fetchStringValue(tsv_data).split(u'\n', Qt::KeepEmptyParts);
+	for (int i = 0; i < coldata.size(); ++i) {
+		setColumnValue(i, coldata[i]);
 	}
 
 	updating_tsv_data = false;
-	updateAll ();
+	updateAll();
 }
 
 bool RKMatrixInput::isValueValid (const QString& value) const {

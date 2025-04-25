@@ -48,7 +48,7 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	selector = new GetFileNameWidget (this, mode, only_local, label_string, i18n ("Select"), xml->getStringAttribute (element, QStringLiteral("initial"), QString (), DL_INFO));
 	QString filter = xml->getStringAttribute (element, QStringLiteral("filter"), QString (), DL_INFO);
 	if (!filter.isEmpty ()) {
-		filter.append ("\n*|All files (*)");
+		filter.append(u"\n*|All files (*)"_s);
 		selector->setFilter (filter);
 	}
 	connect (selector, &GetFileNameWidget::locationChanged, this, &RKPluginBrowser::textChangedFromUi);

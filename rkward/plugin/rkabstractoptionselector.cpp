@@ -68,30 +68,30 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 	number->setIntValue (selected);		// will also take care of activating the correct item
 }
 
-RKComponentBase* RKAbstractOptionSelector::lookupComponent (const QString &identifier, QString *remainder) {
-	RK_TRACE (PLUGIN);
+RKComponentBase *RKAbstractOptionSelector::lookupComponent(const QString &identifier, QString *remainder) {
+	RK_TRACE(PLUGIN);
 
-	if (identifier.isEmpty ()) return this;
+	if (identifier.isEmpty()) return this;
 
-	QString name = identifier.section ('.', 0, 0);
-	if (named_options.contains (name)) {
+	QString name = identifier.section(u'.', 0, 0);
+	if (named_options.contains(name)) {
 		Option *opt = named_options[name];
 
-		QString mod = identifier.section ('.', 1);
+		QString mod = identifier.section(u'.', 1);
 		if (mod != QLatin1String("enabled")) {
-			RK_DEBUG (PLUGIN, DL_DEBUG, "options do not have property '%s'", mod.toLatin1().data ());
+			RK_DEBUG(PLUGIN, DL_DEBUG, "options do not have property '%s'", mod.toLatin1().data());
 			return this;
 		}
 
-		if (!(opt->enabledness_prop)) {		// requested for the first time
-			opt->enabledness_prop = new RKComponentPropertyBool (this, false);
-			connect (opt->enabledness_prop, &RKComponentPropertyBase::valueChanged, this, &RKAbstractOptionSelector::ItemPropertyChanged);
+		if (!(opt->enabledness_prop)) {  // requested for the first time
+			opt->enabledness_prop = new RKComponentPropertyBool(this, false);
+			connect(opt->enabledness_prop, &RKComponentPropertyBase::valueChanged, this, &RKAbstractOptionSelector::ItemPropertyChanged);
 		}
 
 		return (opt->enabledness_prop);
 	}
 
-	return RKComponent::lookupComponent (identifier, remainder);
+	return RKComponent::lookupComponent(identifier, remainder);
 }
 
 void RKAbstractOptionSelector::propertyChanged (RKComponentPropertyBase *property) {
