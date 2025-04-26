@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-25 00:38+0000\n"
+"POT-Creation-Date: 2025-04-26 00:38+0000\n"
 "PO-Revision-Date: 2025-04-19 07:33+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -164,7 +164,7 @@ msgstr ""
 
 #: rkward/agents/showedittextfileagent.cpp:30
 #: rkward/misc/rkprogresscontrol.cpp:328
-#: rkward/plugin/rkstandardcomponentgui.cpp:586
+#: rkward/plugin/rkstandardcomponentgui.cpp:588
 #, kde-format
 msgid "Done"
 msgstr "Zaključeno"
@@ -267,9 +267,9 @@ msgstr "Ali res želite odstraniti predmet »%1«? Ne morete ga dobiti nazaj."
 
 #: rkward/core/rkmodificationtracker.cpp:351
 #: rkward/dataeditor/rkvareditmodel.cpp:671
-#: rkward/dialogs/rkloadlibsdialog.cpp:349
-#: rkward/dialogs/rkloadlibsdialog.cpp:365
-#: rkward/dialogs/rkloadlibsdialog.cpp:953 rkward/misc/rkobjectlistview.cpp:267
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:372
+#: rkward/dialogs/rkloadlibsdialog.cpp:958 rkward/misc/rkobjectlistview.cpp:267
 #: rkward/plugin/rkformula.cpp:73 rkward/plugin/rkvarslot.cpp:58
 #: rkward/settings/rksettingsmodulekateplugins.cpp:52
 #, kde-format
@@ -780,7 +780,7 @@ msgstr ""
 "###Prosimo, izpolnite###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:127
+#: rkward/dialogs/rkerrordialog.cpp:128
 #, kde-format
 msgid ""
 "I encountered the error message quoted below. Additionally, I saw the "
@@ -793,7 +793,7 @@ msgstr ""
 "###Prosimo, izpolnite (če je ustrezno, v angl.)###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:129
+#: rkward/dialogs/rkerrordialog.cpp:130
 #, kde-format
 msgid ""
 "What - in detail - did you do directly before you encountered this problem?\n"
@@ -804,7 +804,7 @@ msgstr ""
 "###Prosimo, izpolnite (v angl.)###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:130
+#: rkward/dialogs/rkerrordialog.cpp:131
 #, kde-format
 msgid ""
 "When you try to repeat the above, does the problem occur again (no, "
@@ -817,7 +817,7 @@ msgstr ""
 "###Prosimo, izpolnite (v angl.)###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:131
+#: rkward/dialogs/rkerrordialog.cpp:133
 #, kde-format
 msgid ""
 "If applicable: When doing the same thing in an R session outside of RKWard, "
@@ -830,7 +830,7 @@ msgstr ""
 "###Prosim izpolnite###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:132
+#: rkward/dialogs/rkerrordialog.cpp:135
 #, kde-format
 msgid ""
 "Do you have any further information that might help us to track this problem "
@@ -845,7 +845,7 @@ msgstr ""
 "###Prosim izpolnite###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:133
+#: rkward/dialogs/rkerrordialog.cpp:138
 #, kde-format
 msgid ""
 "RKWard is available in many different packagings, and sometimes problems are "
@@ -860,7 +860,7 @@ msgstr ""
 "###Prosimo, izpolnite (v angl.)###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:145
+#: rkward/dialogs/rkerrordialog.cpp:152
 #, kde-format
 msgid ""
 "Please stand by while gathering some information on your setup.\n"
@@ -871,7 +871,7 @@ msgstr ""
 "V primeru, da je zaledje prenehalo delovati ali se je obesilo, lahko morda "
 "pritisnete »Prekliči«, da preskočite ta korak."
 
-#: rkward/dialogs/rkerrordialog.cpp:145
+#: rkward/dialogs/rkerrordialog.cpp:154
 #, kde-format
 msgid "Gathering setup information"
 msgstr "Zbiranje informacij o nastavitvi"
@@ -1121,7 +1121,7 @@ msgstr "Odstranjevanje paketov"
 msgid "Selected library location not writable"
 msgstr "Na izbrano mesto knjižnice ni mogoče pisati"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:242
+#: rkward/dialogs/rkloadlibsdialog.cpp:243
 #, kde-format
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
@@ -1134,7 +1134,7 @@ msgstr ""
 "namestiti v %2 (lahko pritisnete tudi »Prekliči« in uporabite gumb "
 "»Konfiguriraj repozitorije« za nastavitev drugega imenika)?</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:245
+#: rkward/dialogs/rkloadlibsdialog.cpp:249
 #, kde-format
 msgid ""
 "<p>Alternatively, if you have access to an administrator account on this "
@@ -1147,13 +1147,13 @@ msgstr ""
 "Oprostite, samodejno preklapljanje na skrbnika še ni podprto v programu "
 "RKWard na sistemu Windows.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:247
-#: rkward/dialogs/rkloadlibsdialog.cpp:251
+#: rkward/dialogs/rkloadlibsdialog.cpp:252
+#: rkward/dialogs/rkloadlibsdialog.cpp:258
 #, kde-format
 msgid "Install to %1"
 msgstr "Namesti v %1"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:250
+#: rkward/dialogs/rkloadlibsdialog.cpp:256
 #, kde-format
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
@@ -1163,22 +1163,22 @@ msgstr ""
 "<p>Če ste skrbnik tega računalnika, lahko poskusite namestiti pakete kot "
 "skrbnik root (od vas bo zahtevano skrbniško geslo).</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:251
+#: rkward/dialogs/rkloadlibsdialog.cpp:258
 #, kde-format
 msgid "Become root"
 msgstr "Postani korenski uporabnik"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:269
+#: rkward/dialogs/rkloadlibsdialog.cpp:276
 #, kde-format
 msgid "Please stand by while installing selected packages"
 msgstr "Bodite v pripravljenosti med nameščanjem izbranih paketov"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:269
+#: rkward/dialogs/rkloadlibsdialog.cpp:276
 #, kde-format
 msgid "Installing packages"
 msgstr "Nameščanje paketov"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:290
+#: rkward/dialogs/rkloadlibsdialog.cpp:297
 #, kde-format
 msgid ""
 "Neither kdesu nor kdesudo could be found. To install as root, please install "
@@ -1187,18 +1187,18 @@ msgstr ""
 "Ni mogoče najti niti kdesu niti kdesudo. Za namestitev kot root namestite "
 "vsaj enega od obeh paketov."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:290
+#: rkward/dialogs/rkloadlibsdialog.cpp:297
 #, kde-format
 msgid "kdesu not found"
 msgstr "kdesu ni bil najden"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:347
+#: rkward/dialogs/rkloadlibsdialog.cpp:354
 #, kde-format
 msgid "Installed packages"
 msgstr "Nameščeni paketi"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:349
-#: rkward/dialogs/rkloadlibsdialog.cpp:954
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:959
 #: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
 #: rkward/windows/rkhelpsearchwindow.cpp:325
@@ -1206,34 +1206,34 @@ msgstr "Nameščeni paketi"
 msgid "Title"
 msgstr "Naslov"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:349
-#: rkward/dialogs/rkloadlibsdialog.cpp:955
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:960
 #, kde-format
 msgid "Version"
 msgstr "Različica"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:349
-#: rkward/dialogs/rkloadlibsdialog.cpp:956
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
 msgid "Location"
 msgstr "Mesto"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:354
+#: rkward/dialogs/rkloadlibsdialog.cpp:361
 #, kde-format
 msgid "Load"
 msgstr "Naloži"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:363
 #, kde-format
 msgid "Unload"
 msgstr "Odloži"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:363
+#: rkward/dialogs/rkloadlibsdialog.cpp:370
 #, kde-format
 msgid "Loaded packages"
 msgstr "Naloženi paketi"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:500
+#: rkward/dialogs/rkloadlibsdialog.cpp:507
 #, kde-format
 msgid ""
 "There has been an error while trying to load / unload packages. See "
@@ -1242,17 +1242,17 @@ msgstr ""
 "Pri poskusu nalaganja/odlaganju paketov je prišlo do napake. Podrobnosti si "
 "oglejte v nadaljevanju"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:579
+#: rkward/dialogs/rkloadlibsdialog.cpp:584
 #, kde-format
 msgid "Select all updates"
 msgstr "Izberi vse posodobitve"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:648
+#: rkward/dialogs/rkloadlibsdialog.cpp:653
 #, kde-format
 msgid "Show only packages matching:"
 msgstr "Prikaži samo pakete, ki se ujemajo:"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:650
+#: rkward/dialogs/rkloadlibsdialog.cpp:655
 #, kde-format
 msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
@@ -1261,12 +1261,12 @@ msgstr ""
 "<p>Pakete, prikazane na seznamu, lahko omejite z imeni ali naslovi, ki se "
 "ujemajo s filtrnim nizom.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:654
+#: rkward/dialogs/rkloadlibsdialog.cpp:659
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
 msgstr "Pokaži samo pakete, ki zagotavljajo pogovorna okna RKWard"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:655
+#: rkward/dialogs/rkloadlibsdialog.cpp:660
 #, kde-format
 msgid ""
 "<p>Some but not all R packages come with plugins for RKWard. That means they "
@@ -1277,17 +1277,17 @@ msgstr ""
 "pomeni, da poleg funkcij R zagotavljajo tudi grafični uporabniški vmesnik. "
 "Potrdite to polje, če želite pokazati samo takšne pakete.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:676
+#: rkward/dialogs/rkloadlibsdialog.cpp:681
 #, kde-format
 msgid "Install packages to:"
 msgstr "Namesti pakete v:"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:680
+#: rkward/dialogs/rkloadlibsdialog.cpp:685
 #, kde-format
 msgid "Install suggested packages"
 msgstr "Namesti predlagane pakete"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:682
+#: rkward/dialogs/rkloadlibsdialog.cpp:687
 #, kde-format
 msgid ""
 "Some packages \"suggest\" additional packages, which are not strictly "
@@ -1299,12 +1299,12 @@ msgstr ""
 "uporabo tega paketa, lahko pa zagotovijo dodatno povezano funkcionalnost. "
 "Preverite to možnost, če želite vključiti takšne dodatne predlagane pakete."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:690
+#: rkward/dialogs/rkloadlibsdialog.cpp:695
 #, kde-format
 msgid "Configure Repositories"
 msgstr "Prilagodi skladišča"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:692
+#: rkward/dialogs/rkloadlibsdialog.cpp:697
 #, kde-format
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
@@ -1313,12 +1313,12 @@ msgstr ""
 "Veliko paketov je na voljo v CRAN (Comprehensive R Archive Network) in "
 "drugih skladiščih.<br>Kliknite sem, če želite dodati več virov."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:716
+#: rkward/dialogs/rkloadlibsdialog.cpp:721
 #, kde-format
 msgid "<b>Install %1 packages (plus dependencies), remove %2 packages</b>"
 msgstr "<b>Namesti pakete %1 (in odvisnike), odstrani pakete %2</b>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:786
+#: rkward/dialogs/rkloadlibsdialog.cpp:791
 #, kde-format
 msgid ""
 "The following package(s) requested by the backend have not been found in the "
@@ -1330,12 +1330,12 @@ msgstr ""
 "\"%1\". Morda je bilo ime paketa napačno napisano. Ali pa morate dodati "
 "dodatne repozitorije prek gumba \"Konfiguriraj repozitorije\"."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:786
+#: rkward/dialogs/rkloadlibsdialog.cpp:791
 #, kde-format
 msgid "Package not available"
 msgstr "Paket ni na voljo"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:891
+#: rkward/dialogs/rkloadlibsdialog.cpp:896
 #, kde-format
 msgid ""
 "<p>Please stand by while searching for installed and available packages.</"
@@ -1348,14 +1348,14 @@ msgstr ""
 "lahko traja nekaj časa, še posebej če je en ali več repozitorijev začasno ni "
 "na voljo.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:952
+#: rkward/dialogs/rkloadlibsdialog.cpp:957
 #: rkward/rbackend/rcommandstack.cpp:314
 #: rkward/settings/rksettingsmoduleplugins.cpp:527
 #, kde-format
 msgid "Status"
 msgstr "Stanje"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:959
+#: rkward/dialogs/rkloadlibsdialog.cpp:964
 #, kde-format
 msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
@@ -1364,7 +1364,7 @@ msgstr ""
 "<p>Paketi, označeni z ikono RKWard v tem stolpcu, zagotavljajo izboljšave za "
 "RKWard, običajno v obliki dodatnih grafičnih dialogov.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:960
+#: rkward/dialogs/rkloadlibsdialog.cpp:965
 #, kde-format
 msgid ""
 "<p>You can select packages for installation / removal by checking / "
@@ -1373,12 +1373,12 @@ msgstr ""
 "<p>Pakete za namestitev / odstranitev lahko izberete tako, da odkljukate / "
 "odstranite ustrezna polja v tem stolpcu.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:961
+#: rkward/dialogs/rkloadlibsdialog.cpp:966
 #, kde-format
 msgid "<p>The name of the package.</p>"
 msgstr "<p>Ime paketa.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:962
+#: rkward/dialogs/rkloadlibsdialog.cpp:967
 #, kde-format
 msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
@@ -1387,22 +1387,22 @@ msgstr ""
 "<p>Opisni naslov za paket. Trenutno to ni na voljo za pakete v ne-lokalnih "
 "repozitorijih.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:963
+#: rkward/dialogs/rkloadlibsdialog.cpp:968
 #, kde-format
 msgid "<p>Installed and / or available version of the package</p>"
 msgstr "<p>Nameščena in/ali razpoložljiva različica paketa</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:964
+#: rkward/dialogs/rkloadlibsdialog.cpp:969
 #, kde-format
 msgid "<p>Location where the package is installed / available</p>"
 msgstr "<p>Mesto, kjer je paket nameščen/na voljo</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:987
+#: rkward/dialogs/rkloadlibsdialog.cpp:992
 #, kde-format
 msgid "Updateable Packages"
 msgstr "Paketi, ki jih je mogoče posodobiti"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:988
+#: rkward/dialogs/rkloadlibsdialog.cpp:993
 #, kde-format
 msgid ""
 "Packages for which an update is available. This may include packages which "
@@ -1411,24 +1411,24 @@ msgstr ""
 "Paketi, za katere je na voljo posodobitev. To lahko vključuje pakete, ki so "
 "bili zgrajeni le proti novejši različici R."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:991
+#: rkward/dialogs/rkloadlibsdialog.cpp:996
 #, kde-format
 msgid "New Packages"
 msgstr "Novi paketi"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:992
+#: rkward/dialogs/rkloadlibsdialog.cpp:997
 #, kde-format
 msgid ""
 "Packages which are available for installation, but which are not currently "
 "installed."
 msgstr "Paketi, ki so na voljo za namestitev, vendar trenutno niso nameščeni."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:994
+#: rkward/dialogs/rkloadlibsdialog.cpp:999
 #, kde-format
 msgid "Installed Packages"
 msgstr "Nameščeni paketi"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:995
+#: rkward/dialogs/rkloadlibsdialog.cpp:1000
 #, kde-format
 msgid ""
 "Packages which are installed locally. Note that updates may be available for "
@@ -1437,18 +1437,18 @@ msgstr ""
 "Paketi, ki so nameščeni lokalno. Upoštevajte, da so morda na voljo "
 "posodobitve za te pakete."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1023
+#: rkward/dialogs/rkloadlibsdialog.cpp:1028
 #, kde-format
 msgid "Install"
 msgstr "Namesti"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1026
+#: rkward/dialogs/rkloadlibsdialog.cpp:1031
 #: rkward/misc/multistringselector.cpp:107
 #, kde-format
 msgid "Remove"
 msgstr "Odstrani"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1210
+#: rkward/dialogs/rkloadlibsdialog.cpp:1215
 #, kde-format
 msgid "Installed plugin groups (.pluginmap files)"
 msgstr "Nameščene skupine vtičnikov (datoteke .pluginmap)"
@@ -2465,7 +2465,7 @@ msgstr ""
 "datoteke skripta R. Pri nalaganju več stvari najprej določite delovni "
 "prostor."
 
-#: rkward/misc/rkcommonfunctions.cpp:243
+#: rkward/misc/rkcommonfunctions.cpp:242
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -2811,7 +2811,7 @@ msgid "Show Output"
 msgstr "Pokaži izhod"
 
 #: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
-#: rkward/plugin/rkstandardcomponentgui.cpp:494
+#: rkward/plugin/rkstandardcomponentgui.cpp:496
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
@@ -2829,7 +2829,7 @@ msgstr "<b>Opravljeno</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:455
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
-#: rkward/plugin/rkstandardcomponentgui.cpp:594
+#: rkward/plugin/rkstandardcomponentgui.cpp:596
 #, kde-format
 msgid "Close"
 msgstr "Zapri"
@@ -3128,12 +3128,12 @@ msgstr "Predogled je osvežen."
 msgid "Warnings or Errors:"
 msgstr "Opozorila ali napake:"
 
-#: rkward/misc/xmlhelper.cpp:54
+#: rkward/misc/xmlhelper.cpp:56
 #, kde-format
 msgid "Could not open file %1 for reading"
 msgstr "Datoteke »%1« ni bilo moč odpreti za branje"
 
-#: rkward/misc/xmlhelper.cpp:59
+#: rkward/misc/xmlhelper.cpp:62
 #, kde-format
 msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
@@ -3143,48 +3143,48 @@ msgstr ""
 "vrstici '%2', stolpec '%3'. Pričakujte nadaljnje napake, ki bodo sporočene v "
 "nadaljevanju"
 
-#: rkward/misc/xmlhelper.cpp:176
+#: rkward/misc/xmlhelper.cpp:182
 #, kde-format
 msgid "Trying to retrieve children of invalid element"
 msgstr "Poskus pridobivanja otrok neveljavnega elementa"
 
-#: rkward/misc/xmlhelper.cpp:187
+#: rkward/misc/xmlhelper.cpp:193
 #, kde-format
 msgid "Expected exactly one element '%1' but found %2"
 msgstr "Pričakovan natanko en element '%1', vendar najden %2"
 
-#: rkward/misc/xmlhelper.cpp:241 rkward/misc/xmlhelper.cpp:253
+#: rkward/misc/xmlhelper.cpp:247 rkward/misc/xmlhelper.cpp:259
 #, kde-format
 msgid "'%1'-attribute not given. Assuming '%2'"
 msgstr "Atribut '%1' ni podan. Predpostavljeno '%2'"
 
-#: rkward/misc/xmlhelper.cpp:276
+#: rkward/misc/xmlhelper.cpp:282
 #, kde-format
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
 msgstr "Neveljavna vrednost atributa. Dovoljene vrednosti so ene od '%1'."
 
-#: rkward/misc/xmlhelper.cpp:290
+#: rkward/misc/xmlhelper.cpp:296
 #, kde-format
 msgid "Illegal attribute value. Only integer numbers are allowed."
 msgstr "Neveljavna vrednost atributa. Dovoljena so samo cela števila."
 
-#: rkward/misc/xmlhelper.cpp:306
+#: rkward/misc/xmlhelper.cpp:312
 #, kde-format
 msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "Neveljavna vrednost atributa. Dovoljena so samo realna števila."
 
-#: rkward/misc/xmlhelper.cpp:324
+#: rkward/misc/xmlhelper.cpp:330
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
 "Neveljavna vrednost atributa. Dovoljene vrednosti so samo '%1' ali '%2'."
 
-#: rkward/misc/xmlhelper.cpp:356
+#: rkward/misc/xmlhelper.cpp:362
 #, kde-format
 msgid "Trying to retrieve contents of invalid element"
 msgstr "Poskus pridobivanja vsebine neveljavnega elementa"
 
-#: rkward/misc/xmlhelper.cpp:400
+#: rkward/misc/xmlhelper.cpp:407
 #, kde-format
 msgid "XML-parsing '%1' "
 msgstr "Razčlenjevanje XML '%1' "
@@ -3332,70 +3332,70 @@ msgstr ""
 "Komponenta '%1' ni na voljo v različici, združljivi s to različico programa "
 "RKWard"
 
-#: rkward/plugin/rkcomponentmeta.cpp:41
+#: rkward/plugin/rkcomponentmeta.cpp:43
 #, kde-format
 msgid "Unspecified"
 msgstr "Nedoločeno"
 
-#: rkward/plugin/rkcomponentmeta.cpp:80
+#: rkward/plugin/rkcomponentmeta.cpp:82
 #, kde-format
 msgid "Copyright (c): %1"
 msgstr "Avtorske pravice (c): %1"
 
-#: rkward/plugin/rkcomponentmeta.cpp:81
+#: rkward/plugin/rkcomponentmeta.cpp:83
 #, kde-format
 msgid "License: %1"
 msgstr "Dovoljenje: %1"
 
-#: rkward/plugin/rkcomponentmeta.cpp:84
+#: rkward/plugin/rkcomponentmeta.cpp:86
 #, kde-format
 msgid "Authors:"
 msgstr "Avtorji:"
 
-#: rkward/plugin/rkcomponentmeta.cpp:90
+#: rkward/plugin/rkcomponentmeta.cpp:92
 #, kde-format
 msgctxt "Author roles (contributor, etc.)"
 msgid "Roles"
 msgstr "Vloge"
 
-#: rkward/plugin/rkcomponentmeta.cpp:98
+#: rkward/plugin/rkcomponentmeta.cpp:100
 #, kde-format
 msgid "Translators:"
 msgstr "Prevajalci:"
 
-#: rkward/plugin/rkcomponentmeta.cpp:210
+#: rkward/plugin/rkcomponentmeta.cpp:212
 #, kde-format
 msgid "RKWard plugin map"
 msgstr "Zemljevid vtičnikov RKWard"
 
-#: rkward/plugin/rkcomponentmeta.cpp:211
+#: rkward/plugin/rkcomponentmeta.cpp:213
 #, kde-format
 msgid "R package"
 msgstr "Paket R"
 
-#: rkward/plugin/rkcomponentproperties.cpp:928
+#: rkward/plugin/rkcomponentproperties.cpp:929
 #, kde-format
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
 msgstr ""
 "Ta predmet ima %1 dimenzijo/ie, vendar je/sta/so pričakovana/i/e %2 "
 "dimenzija/i/e."
 
-#: rkward/plugin/rkcomponentproperties.cpp:931
+#: rkward/plugin/rkcomponentproperties.cpp:932
 #, kde-format
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
 msgstr "Ta predmet ima dolžino %1, vendar je pričakovana najmanjša dolžina %2."
 
-#: rkward/plugin/rkcomponentproperties.cpp:932
+#: rkward/plugin/rkcomponentproperties.cpp:933
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
 msgstr "Ta predmet ima dolžino %1, vendar je pričakovana največja dolžina %2."
 
-#: rkward/plugin/rkcomponentproperties.cpp:944
+#: rkward/plugin/rkcomponentproperties.cpp:945
 #, kde-format
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
 msgstr "Zdi se, da ta predmet ne pripada nobenemu od razredov <i>%1</i>."
 
-#: rkward/plugin/rkcomponentproperties.cpp:951
+#: rkward/plugin/rkcomponentproperties.cpp:952
 #, kde-format
 msgid ""
 "This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</"
@@ -3618,7 +3618,7 @@ msgid "Code Preview"
 msgstr "Predogled kode"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:184
-#: rkward/plugin/rkstandardcomponentgui.cpp:605
+#: rkward/plugin/rkstandardcomponentgui.cpp:607
 #, kde-format
 msgid "Submit"
 msgstr "Oddaj"
@@ -3629,7 +3629,7 @@ msgid "Auto close"
 msgstr "Samodejno zapri"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:198
-#: rkward/plugin/rkstandardcomponentgui.cpp:497
+#: rkward/plugin/rkstandardcomponentgui.cpp:499
 #, kde-format
 msgid "Help"
 msgstr "Pomoč"
@@ -3639,17 +3639,17 @@ msgstr "Pomoč"
 msgid "Use Wizard"
 msgstr "Uporabi čarovnika"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:323
+#: rkward/plugin/rkstandardcomponentgui.cpp:324
 #, kde-format
 msgid "Run again"
 msgstr "Znova zaženi"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:448
+#: rkward/plugin/rkstandardcomponentgui.cpp:449
 #, kde-format
 msgid "Processing. Please wait"
 msgstr "Obdelava v teku. Prosimo, počakajte"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:525
+#: rkward/plugin/rkstandardcomponentgui.cpp:527
 #, kde-format
 msgid ""
 "Below you can preview the R commands corresponding to the settings you made. "
@@ -3658,7 +3658,7 @@ msgstr ""
 "Spodaj si lahko ogledate ukaze R, ki ustrezajo nastavitvam, ki ste jih "
 "naredili. Če želite zagnati ukaze, kliknite »Predloži«."
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:528
+#: rkward/plugin/rkstandardcomponentgui.cpp:530
 #, kde-format
 msgid ""
 "Below you can preview the result of your settings, and the R commands to be "
@@ -3667,19 +3667,19 @@ msgstr ""
 "Spodaj si lahko ogledate rezultate nastavitev in ukaze R, ki jih želite "
 "zagnati. Če želite zagnati ukaze, kliknite »Predloži«."
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:582
-#: rkward/plugin/rkstandardcomponentgui.cpp:600
+#: rkward/plugin/rkstandardcomponentgui.cpp:584
+#: rkward/plugin/rkstandardcomponentgui.cpp:602
 #, kde-format
 msgid "Next >"
 msgstr "Naslednji >"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:592
-#: rkward/plugin/rkstandardcomponentgui.cpp:610
+#: rkward/plugin/rkstandardcomponentgui.cpp:594
+#: rkward/plugin/rkstandardcomponentgui.cpp:612
 #, kde-format
 msgid "< Back"
 msgstr "< Nazaj"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:613
+#: rkward/plugin/rkstandardcomponentgui.cpp:615
 #, kde-format
 msgid "Use Dialog"
 msgstr "Uporabi pogovorno okno"
@@ -3725,7 +3725,7 @@ msgstr "Strni vse predmete korenske ravni (skrij stolpce data.framov)"
 msgid "Variable:"
 msgstr "Spremenljivka:"
 
-#: rkward/plugin/rkvarslot.cpp:157
+#: rkward/plugin/rkvarslot.cpp:160
 #, kde-format
 msgid ""
 "<p>Using this object, here, may lead to failures or unexpected results, for "

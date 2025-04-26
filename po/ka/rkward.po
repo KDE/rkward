@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-25 00:38+0000\n"
+"POT-Creation-Date: 2025-04-26 00:38+0000\n"
 "PO-Revision-Date: 2025-04-21 03:28+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -158,7 +158,7 @@ msgstr ""
 
 #: rkward/agents/showedittextfileagent.cpp:30
 #: rkward/misc/rkprogresscontrol.cpp:328
-#: rkward/plugin/rkstandardcomponentgui.cpp:586
+#: rkward/plugin/rkstandardcomponentgui.cpp:588
 #, kde-format
 msgid "Done"
 msgstr "დასრულებულია"
@@ -262,9 +262,9 @@ msgstr "მართლა გნებავთ, წაშალოთ ობ�
 
 #: rkward/core/rkmodificationtracker.cpp:351
 #: rkward/dataeditor/rkvareditmodel.cpp:671
-#: rkward/dialogs/rkloadlibsdialog.cpp:349
-#: rkward/dialogs/rkloadlibsdialog.cpp:365
-#: rkward/dialogs/rkloadlibsdialog.cpp:953 rkward/misc/rkobjectlistview.cpp:267
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:372
+#: rkward/dialogs/rkloadlibsdialog.cpp:958 rkward/misc/rkobjectlistview.cpp:267
 #: rkward/plugin/rkformula.cpp:73 rkward/plugin/rkvarslot.cpp:58
 #: rkward/settings/rksettingsmodulekateplugins.cpp:52
 #, kde-format
@@ -762,7 +762,7 @@ msgstr ""
 "###შეავსეთ###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:127
+#: rkward/dialogs/rkerrordialog.cpp:128
 #, kde-format
 msgid ""
 "I encountered the error message quoted below. Additionally, I saw the "
@@ -775,7 +775,7 @@ msgstr ""
 "###შეავსეთ (თუ გგონიათ, რომ ეს საჭიროა)###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:129
+#: rkward/dialogs/rkerrordialog.cpp:130
 #, kde-format
 msgid ""
 "What - in detail - did you do directly before you encountered this problem?\n"
@@ -786,7 +786,7 @@ msgstr ""
 "###შეავსეთ###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:130
+#: rkward/dialogs/rkerrordialog.cpp:131
 #, kde-format
 msgid ""
 "When you try to repeat the above, does the problem occur again (no, "
@@ -799,7 +799,7 @@ msgstr ""
 "###შეავსეთ###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:131
+#: rkward/dialogs/rkerrordialog.cpp:133
 #, kde-format
 msgid ""
 "If applicable: When doing the same thing in an R session outside of RKWard, "
@@ -812,7 +812,7 @@ msgstr ""
 "###შეავსეთ###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:132
+#: rkward/dialogs/rkerrordialog.cpp:135
 #, kde-format
 msgid ""
 "Do you have any further information that might help us to track this problem "
@@ -827,7 +827,7 @@ msgstr ""
 "###შეავსეთ, გეთაყვა###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:133
+#: rkward/dialogs/rkerrordialog.cpp:138
 #, kde-format
 msgid ""
 "RKWard is available in many different packagings, and sometimes problems are "
@@ -842,7 +842,7 @@ msgstr ""
 "### შეავსეთ###\n"
 "\n"
 
-#: rkward/dialogs/rkerrordialog.cpp:145
+#: rkward/dialogs/rkerrordialog.cpp:152
 #, kde-format
 msgid ""
 "Please stand by while gathering some information on your setup.\n"
@@ -853,7 +853,7 @@ msgstr ""
 "იმ შემთხვევაში, თუ უკანაბოლო მოკვდა ან დაეკიდა, ამ ნაბიჯის გამოსატოვებლად "
 "დააწექით ღილაკს 'გაუქმება'."
 
-#: rkward/dialogs/rkerrordialog.cpp:145
+#: rkward/dialogs/rkerrordialog.cpp:154
 #, kde-format
 msgid "Gathering setup information"
 msgstr "მორგების ინფორმაციის მოგროვება"
@@ -1102,7 +1102,7 @@ msgstr "პაკეტების წაშლა"
 msgid "Selected library location not writable"
 msgstr "არჩეული ბიბლიოთეკის მდებარეობა ჩაწერადი არაა"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:242
+#: rkward/dialogs/rkloadlibsdialog.cpp:243
 #, kde-format
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
@@ -1115,7 +1115,7 @@ msgstr ""
 "შეგიძლიათ დააწვეთ \"გაუქმებას\" და გამოიყენოთ \"რეპოზიტორიების მორგების\" "
 "ღილაკი, რომ სხვა საქაღალდე მიუთითოთ)?</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:245
+#: rkward/dialogs/rkloadlibsdialog.cpp:249
 #, kde-format
 msgid ""
 "<p>Alternatively, if you have access to an administrator account on this "
@@ -1128,13 +1128,13 @@ msgstr ""
 "უკაცრავად, ადმინისტრატორზე ავტომატური გადართვა RKWard-ში Windows-ზე ჯერ "
 "მხარდაჭერილი არაა.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:247
-#: rkward/dialogs/rkloadlibsdialog.cpp:251
+#: rkward/dialogs/rkloadlibsdialog.cpp:252
+#: rkward/dialogs/rkloadlibsdialog.cpp:258
 #, kde-format
 msgid "Install to %1"
 msgstr "დაყენება მისამართზე %1"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:250
+#: rkward/dialogs/rkloadlibsdialog.cpp:256
 #, kde-format
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
@@ -1144,22 +1144,22 @@ msgstr ""
 "<p>ან, თუ ამ მანქანაზე ადმინისტრატორი ბრძანდებით, შეგიძლიათ, ეს პაკეტები "
 "root-ით დააყენოთ (root-ის პაროლს გკითხავთ).</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:251
+#: rkward/dialogs/rkloadlibsdialog.cpp:258
 #, kde-format
 msgid "Become root"
 msgstr "Root-ზე გადართვა"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:269
+#: rkward/dialogs/rkloadlibsdialog.cpp:276
 #, kde-format
 msgid "Please stand by while installing selected packages"
 msgstr "მოითმინეთ. მიმდინარეობს არჩეული პაკეტების დაყენება"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:269
+#: rkward/dialogs/rkloadlibsdialog.cpp:276
 #, kde-format
 msgid "Installing packages"
 msgstr "პაკეტების დაყენება"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:290
+#: rkward/dialogs/rkloadlibsdialog.cpp:297
 #, kde-format
 msgid ""
 "Neither kdesu nor kdesudo could be found. To install as root, please install "
@@ -1168,18 +1168,18 @@ msgstr ""
 "პროგრამები kdesu და kdesudo აღმოჩენილი არაა. root მომხმარებლით დასაყენებლად "
 "ამ პროგრამებიდან ერთ-ერთი გჭირდებათ."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:290
+#: rkward/dialogs/rkloadlibsdialog.cpp:297
 #, kde-format
 msgid "kdesu not found"
 msgstr "kdesu ვერ ვიპოვე"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:347
+#: rkward/dialogs/rkloadlibsdialog.cpp:354
 #, kde-format
 msgid "Installed packages"
 msgstr "დაყენებული პაკეტები"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:349
-#: rkward/dialogs/rkloadlibsdialog.cpp:954
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:959
 #: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
 #: rkward/windows/rkhelpsearchwindow.cpp:325
@@ -1187,34 +1187,34 @@ msgstr "დაყენებული პაკეტები"
 msgid "Title"
 msgstr "სათაური"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:349
-#: rkward/dialogs/rkloadlibsdialog.cpp:955
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:960
 #, kde-format
 msgid "Version"
 msgstr "ვერსია"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:349
-#: rkward/dialogs/rkloadlibsdialog.cpp:956
+#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
 msgid "Location"
 msgstr "დებარეობა"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:354
+#: rkward/dialogs/rkloadlibsdialog.cpp:361
 #, kde-format
 msgid "Load"
 msgstr "ჩატვირთვა"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:356
+#: rkward/dialogs/rkloadlibsdialog.cpp:363
 #, kde-format
 msgid "Unload"
 msgstr "გამოტვირთვა"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:363
+#: rkward/dialogs/rkloadlibsdialog.cpp:370
 #, kde-format
 msgid "Loaded packages"
 msgstr "ჩატვირთული პაკეტები"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:500
+#: rkward/dialogs/rkloadlibsdialog.cpp:507
 #, kde-format
 msgid ""
 "There has been an error while trying to load / unload packages. See "
@@ -1223,17 +1223,17 @@ msgstr ""
 "შეცდომა პაკეტების ჩატვირთვა / გამოტვირთვისას. დეტალებისთვის იხილეთ "
 "ტრანსკრიპტი ქვემოთ"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:579
+#: rkward/dialogs/rkloadlibsdialog.cpp:584
 #, kde-format
 msgid "Select all updates"
 msgstr "ყველა განახლების მონიშვნა"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:648
+#: rkward/dialogs/rkloadlibsdialog.cpp:653
 #, kde-format
 msgid "Show only packages matching:"
 msgstr "აჩვენე, მხოლოდ, პაკეტები, რომლებიც ემთხვევა:"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:650
+#: rkward/dialogs/rkloadlibsdialog.cpp:655
 #, kde-format
 msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
@@ -1242,12 +1242,12 @@ msgstr ""
 "<p>შეგიძლიათ, შეზღუდოთ პაკეტები, რომლებიც სიაშია ნაჩვენები სახელებზე ან "
 "სათაურებზე, რომლებიც ფილტრის სტრიქონს ემთხვევა.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:654
+#: rkward/dialogs/rkloadlibsdialog.cpp:659
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
 msgstr "მხოლოდ, RKWard-ის დიალოგების მომწოდებელი პაკეტების ჩვენება"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:655
+#: rkward/dialogs/rkloadlibsdialog.cpp:660
 #, kde-format
 msgid ""
 "<p>Some but not all R packages come with plugins for RKWard. That means they "
@@ -1258,17 +1258,17 @@ msgstr ""
 "მოდის. ეს ნიშნავს, რომ ისინი R-ის ფუნქციებთან ერთად გრაფიკულ ინტერფეისსაც "
 "გთავაზობთ. დასვით ეს თოლია, რომ, მხოლოდ, ასეთი პაკეტები გაჩვენოთ.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:676
+#: rkward/dialogs/rkloadlibsdialog.cpp:681
 #, kde-format
 msgid "Install packages to:"
 msgstr "პაკეტების დაყენება მისამართზე:"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:680
+#: rkward/dialogs/rkloadlibsdialog.cpp:685
 #, kde-format
 msgid "Install suggested packages"
 msgstr "მინიშნებული პაკეტების დაყენება"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:682
+#: rkward/dialogs/rkloadlibsdialog.cpp:687
 #, kde-format
 msgid ""
 "Some packages \"suggest\" additional packages, which are not strictly "
@@ -1280,12 +1280,12 @@ msgstr ""
 "არაა, მაგრამ ისინი, შეიძლება, დამატებით ფუნქციონალს გთავაზობდეთ. ჩართეთ ეს "
 "პარამეტრი, რომ ასეთი დამატებითი პაკეტების დაყენებაც მოხდეს."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:690
+#: rkward/dialogs/rkloadlibsdialog.cpp:695
 #, kde-format
 msgid "Configure Repositories"
 msgstr "რეპოზიტორიების მორგება"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:692
+#: rkward/dialogs/rkloadlibsdialog.cpp:697
 #, kde-format
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
@@ -1294,12 +1294,12 @@ msgstr ""
 "ბევრი პაკეტი ხელმისაწვდომია CRAN-ზე (Comprehensive R Archive Network) და "
 "სხვა რეპოზიტორიებში.<br>დააწკაპუნეთ მეტი წყაროს დასამატებლად."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:716
+#: rkward/dialogs/rkloadlibsdialog.cpp:721
 #, kde-format
 msgid "<b>Install %1 packages (plus dependencies), remove %2 packages</b>"
 msgstr "<b>%1 პაკეტის (პლუს დამოკიდებულებები) დაყენება, %2 პაკეტის წაშლა</b>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:786
+#: rkward/dialogs/rkloadlibsdialog.cpp:791
 #, kde-format
 msgid ""
 "The following package(s) requested by the backend have not been found in the "
@@ -1311,12 +1311,12 @@ msgstr ""
 "რეპოზიტორიებში: \"%1\". შეიძლება, სახელი არასწორად წერია, ან გჭირდებათ, "
 "დამატებითი რეპოზიტორიები დაამატოთ \"რეპოზიტორიების მორგების\" ღილაკით."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:786
+#: rkward/dialogs/rkloadlibsdialog.cpp:791
 #, kde-format
 msgid "Package not available"
 msgstr "პაკეტი ხელმიუწვდომელია"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:891
+#: rkward/dialogs/rkloadlibsdialog.cpp:896
 #, kde-format
 msgid ""
 "<p>Please stand by while searching for installed and available packages.</"
@@ -1329,14 +1329,14 @@ msgstr ""
 "დრო სჭირდება. განსაკუთრებით, თუ ერთი ან მეტი რეპოზიტორია დროებით "
 "ხელმისაწვდომი არაა.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:952
+#: rkward/dialogs/rkloadlibsdialog.cpp:957
 #: rkward/rbackend/rcommandstack.cpp:314
 #: rkward/settings/rksettingsmoduleplugins.cpp:527
 #, kde-format
 msgid "Status"
 msgstr "სტატუსი"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:959
+#: rkward/dialogs/rkloadlibsdialog.cpp:964
 #, kde-format
 msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
@@ -1345,7 +1345,7 @@ msgstr ""
 "<p>პაკეტები, რომლებიც RKWard-ის ხატულისაა დანიშნული ამ სვეტში, RKWard-ის "
 "ფუნქციონალს აფართოებს, ჩვეულებრივ, დამატებითი დიალოგებით.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:960
+#: rkward/dialogs/rkloadlibsdialog.cpp:965
 #, kde-format
 msgid ""
 "<p>You can select packages for installation / removal by checking / "
@@ -1354,12 +1354,12 @@ msgstr ""
 "<p>შეგიძლიათ მონიშნოთ პაკეტები დაყენება / წასაშლელად თოლიების დასმით / "
 "მოხსნით შესაბამის ველებში ამ სვეტში.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:961
+#: rkward/dialogs/rkloadlibsdialog.cpp:966
 #, kde-format
 msgid "<p>The name of the package.</p>"
 msgstr "<p>პაკეტის სახელი.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:962
+#: rkward/dialogs/rkloadlibsdialog.cpp:967
 #, kde-format
 msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
@@ -1368,22 +1368,22 @@ msgstr ""
 "<p>აღმწერი სათაური ამ პაკეტისთვის. ამჟამად ხელმისაწვდომი არაა არალოკალური "
 "რეპოზიტორიებისთვის.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:963
+#: rkward/dialogs/rkloadlibsdialog.cpp:968
 #, kde-format
 msgid "<p>Installed and / or available version of the package</p>"
 msgstr "<p>პაკეტის დაყენებული და / ან ხელმისაწვდომი ვერსია</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:964
+#: rkward/dialogs/rkloadlibsdialog.cpp:969
 #, kde-format
 msgid "<p>Location where the package is installed / available</p>"
 msgstr "<p>მდებარეობა, სადაც პაკეტი დაყენებული / ხელმისაწვდომია</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:987
+#: rkward/dialogs/rkloadlibsdialog.cpp:992
 #, kde-format
 msgid "Updateable Packages"
 msgstr "განახლებადი პაკეტები"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:988
+#: rkward/dialogs/rkloadlibsdialog.cpp:993
 #, kde-format
 msgid ""
 "Packages for which an update is available. This may include packages which "
@@ -1392,12 +1392,12 @@ msgstr ""
 "პაკეტები, რომლებისთვისაც ხელმისაწვდომია განახლებები. ეს, შეიძლება, შეიცავდეს "
 "პაკეტებს, რომლებიც R-ის უფრო ახალი ვერსიისთვისაა განკუთვნილი."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:991
+#: rkward/dialogs/rkloadlibsdialog.cpp:996
 #, kde-format
 msgid "New Packages"
 msgstr "ახალი პაკეტები"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:992
+#: rkward/dialogs/rkloadlibsdialog.cpp:997
 #, kde-format
 msgid ""
 "Packages which are available for installation, but which are not currently "
@@ -1406,12 +1406,12 @@ msgstr ""
 "პაკეტები, რომლებიც ხელმისაწვდომია დასაყენებლად, მაგრამ ამჟამად დაყენებული "
 "არაა."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:994
+#: rkward/dialogs/rkloadlibsdialog.cpp:999
 #, kde-format
 msgid "Installed Packages"
 msgstr "დაყენებული პაკეტები"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:995
+#: rkward/dialogs/rkloadlibsdialog.cpp:1000
 #, kde-format
 msgid ""
 "Packages which are installed locally. Note that updates may be available for "
@@ -1420,18 +1420,18 @@ msgstr ""
 "პაკეტები, რომლებიც ლოკალურადაა დაყენებული. დაიმახსოვრეთ, რომ ამ "
 "პაკეტებისთვის, შეიძლება, განახლებები ხელმისაწვდომი არ იყოს."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1023
+#: rkward/dialogs/rkloadlibsdialog.cpp:1028
 #, kde-format
 msgid "Install"
 msgstr "ჩადგმა"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1026
+#: rkward/dialogs/rkloadlibsdialog.cpp:1031
 #: rkward/misc/multistringselector.cpp:107
 #, kde-format
 msgid "Remove"
 msgstr "წაშლა"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1210
+#: rkward/dialogs/rkloadlibsdialog.cpp:1215
 #, kde-format
 msgid "Installed plugin groups (.pluginmap files)"
 msgstr "დაყენებული დამატების ჯგუფები (.pluginmap ფაილები)"
@@ -2405,7 +2405,7 @@ msgid ""
 "loading several things, you should specify the workspace, first."
 msgstr ""
 
-#: rkward/misc/rkcommonfunctions.cpp:243
+#: rkward/misc/rkcommonfunctions.cpp:242
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -2731,7 +2731,7 @@ msgid "Show Output"
 msgstr "გამოტანის ჩვენება"
 
 #: rkward/misc/rkprogresscontrol.cpp:244 rkward/misc/rkprogresscontrol.cpp:384
-#: rkward/plugin/rkstandardcomponentgui.cpp:494
+#: rkward/plugin/rkstandardcomponentgui.cpp:496
 #: rkward/windows/rkdebugconsole.cpp:54
 #, kde-format
 msgid "Cancel"
@@ -2749,7 +2749,7 @@ msgstr "<b>მზადაა</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:455
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
-#: rkward/plugin/rkstandardcomponentgui.cpp:594
+#: rkward/plugin/rkstandardcomponentgui.cpp:596
 #, kde-format
 msgid "Close"
 msgstr "დახურვა"
@@ -3051,12 +3051,12 @@ msgstr "მინიატურა განახლებულია."
 msgid "Warnings or Errors:"
 msgstr "გაფრთხილებები ან შეცდომები:"
 
-#: rkward/misc/xmlhelper.cpp:54
+#: rkward/misc/xmlhelper.cpp:56
 #, kde-format
 msgid "Could not open file %1 for reading"
 msgstr "ფაილის (\"%1\") წასაკითხად გახსნის შეცდომა"
 
-#: rkward/misc/xmlhelper.cpp:59
+#: rkward/misc/xmlhelper.cpp:62
 #, kde-format
 msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
@@ -3065,51 +3065,51 @@ msgstr ""
 "XML ფაილის დამუშავების შეცდომა. შეცდომის შეტყობინება იყო: '%1' ხაზზე '%2', "
 "სვეტი '%3'. თუ აღმოჩენილი იქნება მეტი შეცდომა, ისინი ქვემოთ იქნება ნაჩვენები"
 
-#: rkward/misc/xmlhelper.cpp:176
+#: rkward/misc/xmlhelper.cpp:182
 #, kde-format
 msgid "Trying to retrieve children of invalid element"
 msgstr "არასწორი ელემენტის შვილების მიღების მცდელობა"
 
-#: rkward/misc/xmlhelper.cpp:187
+#: rkward/misc/xmlhelper.cpp:193
 #, kde-format
 msgid "Expected exactly one element '%1' but found %2"
 msgstr "მოველოდი მხოლოდ ერთ ელემენტს, '%1. აღმოჩენილია %2"
 
-#: rkward/misc/xmlhelper.cpp:241 rkward/misc/xmlhelper.cpp:253
+#: rkward/misc/xmlhelper.cpp:247 rkward/misc/xmlhelper.cpp:259
 #, kde-format
 msgid "'%1'-attribute not given. Assuming '%2'"
 msgstr "'%1' ატრიბუტი მითითებული არაა. ჩაითვლება '%2'"
 
-#: rkward/misc/xmlhelper.cpp:276
+#: rkward/misc/xmlhelper.cpp:282
 #, kde-format
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
 msgstr ""
 "დაუშვებელი ატრიბუტის მნიშვნელობა. დაშვებული მნიშვნელობებია ერთ-ერთი '%1'-დან "
 "და, მხოლოდ."
 
-#: rkward/misc/xmlhelper.cpp:290
+#: rkward/misc/xmlhelper.cpp:296
 #, kde-format
 msgid "Illegal attribute value. Only integer numbers are allowed."
 msgstr "დაუშვებელი ატრიბუტის მნიშვნელობა. დაშვებულია მხოლოდ მთელი რიცხვები."
 
-#: rkward/misc/xmlhelper.cpp:306
+#: rkward/misc/xmlhelper.cpp:312
 #, kde-format
 msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "დაუშვებელი ატრიბუტის მნიშვნელობა. დაშვებულია მხოლოდ ნამდვილი რიცხვები."
 
-#: rkward/misc/xmlhelper.cpp:324
+#: rkward/misc/xmlhelper.cpp:330
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
 "დაუშვებელი ატრიბუტის მნიშვნელობა. დაშვებული მნიშვნელობებია, მხოლოდ, '%1' ან "
 "'%2'."
 
-#: rkward/misc/xmlhelper.cpp:356
+#: rkward/misc/xmlhelper.cpp:362
 #, kde-format
 msgid "Trying to retrieve contents of invalid element"
 msgstr "არასწორი ელემენტის შემცველობის მიღების შეცდომა"
 
-#: rkward/misc/xmlhelper.cpp:400
+#: rkward/misc/xmlhelper.cpp:407
 #, kde-format
 msgid "XML-parsing '%1' "
 msgstr "XML-დამუშავება '%1' "
@@ -3247,69 +3247,69 @@ msgid ""
 msgstr ""
 "კომპონენტი '%1' ამ ვერსიის RKWard-თან არსებული ვერსიით ხელმისაწვდომი არაა"
 
-#: rkward/plugin/rkcomponentmeta.cpp:41
+#: rkward/plugin/rkcomponentmeta.cpp:43
 #, kde-format
 msgid "Unspecified"
 msgstr "მიუთითებელი"
 
-#: rkward/plugin/rkcomponentmeta.cpp:80
+#: rkward/plugin/rkcomponentmeta.cpp:82
 #, kde-format
 msgid "Copyright (c): %1"
 msgstr "Copyright (c): %1"
 
-#: rkward/plugin/rkcomponentmeta.cpp:81
+#: rkward/plugin/rkcomponentmeta.cpp:83
 #, kde-format
 msgid "License: %1"
 msgstr "ლიცენზია: %1"
 
-#: rkward/plugin/rkcomponentmeta.cpp:84
+#: rkward/plugin/rkcomponentmeta.cpp:86
 #, kde-format
 msgid "Authors:"
 msgstr "ავტორები:"
 
-#: rkward/plugin/rkcomponentmeta.cpp:90
+#: rkward/plugin/rkcomponentmeta.cpp:92
 #, kde-format
 msgctxt "Author roles (contributor, etc.)"
 msgid "Roles"
 msgstr "როლები"
 
-#: rkward/plugin/rkcomponentmeta.cpp:98
+#: rkward/plugin/rkcomponentmeta.cpp:100
 #, kde-format
 msgid "Translators:"
 msgstr "მთარგმნელები:"
 
-#: rkward/plugin/rkcomponentmeta.cpp:210
+#: rkward/plugin/rkcomponentmeta.cpp:212
 #, kde-format
 msgid "RKWard plugin map"
 msgstr "RKWard-ის დამატებების რუკა"
 
-#: rkward/plugin/rkcomponentmeta.cpp:211
+#: rkward/plugin/rkcomponentmeta.cpp:213
 #, kde-format
 msgid "R package"
 msgstr "R-ის პაკეტი"
 
-#: rkward/plugin/rkcomponentproperties.cpp:928
+#: rkward/plugin/rkcomponentproperties.cpp:929
 #, kde-format
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
 msgstr ""
 "ობიექტს გააჩნია %1 განზომილება, მაგრამ მოველოდი მხოლოდ %2 განზომილებას."
 
-#: rkward/plugin/rkcomponentproperties.cpp:931
+#: rkward/plugin/rkcomponentproperties.cpp:932
 #, kde-format
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
 msgstr "ობიექტის სიგრძეა %1, მაგრამ მინიმალურ სიგრძეს %2 მოველოდი."
 
-#: rkward/plugin/rkcomponentproperties.cpp:932
+#: rkward/plugin/rkcomponentproperties.cpp:933
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
 msgstr "ობიექტის სიგრძეა %1, მაგრამ მაქსიმალურ სიგრძეს %2 მოველოდი."
 
-#: rkward/plugin/rkcomponentproperties.cpp:944
+#: rkward/plugin/rkcomponentproperties.cpp:945
 #, kde-format
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
 msgstr "ეს ობიექტი, როგორც ჩანს, <i>%1</i>-ის არც ერთ კლასს არ მიეკუთვნება."
 
-#: rkward/plugin/rkcomponentproperties.cpp:951
+#: rkward/plugin/rkcomponentproperties.cpp:952
 #, kde-format
 msgid ""
 "This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</"
@@ -3533,7 +3533,7 @@ msgid "Code Preview"
 msgstr "კოდის მინიატურა"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:184
-#: rkward/plugin/rkstandardcomponentgui.cpp:605
+#: rkward/plugin/rkstandardcomponentgui.cpp:607
 #, kde-format
 msgid "Submit"
 msgstr "გადაცემა"
@@ -3544,7 +3544,7 @@ msgid "Auto close"
 msgstr "ავტომატური დახურვა"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:198
-#: rkward/plugin/rkstandardcomponentgui.cpp:497
+#: rkward/plugin/rkstandardcomponentgui.cpp:499
 #, kde-format
 msgid "Help"
 msgstr "დახმარება"
@@ -3554,17 +3554,17 @@ msgstr "დახმარება"
 msgid "Use Wizard"
 msgstr "ოსტატის გამოყენება"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:323
+#: rkward/plugin/rkstandardcomponentgui.cpp:324
 #, kde-format
 msgid "Run again"
 msgstr "კიდევ გაშვება"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:448
+#: rkward/plugin/rkstandardcomponentgui.cpp:449
 #, kde-format
 msgid "Processing. Please wait"
 msgstr "დამუშავება. მოითმინეთ"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:525
+#: rkward/plugin/rkstandardcomponentgui.cpp:527
 #, kde-format
 msgid ""
 "Below you can preview the R commands corresponding to the settings you made. "
@@ -3574,7 +3574,7 @@ msgstr ""
 "პარამეტრებს, რომლებიც თქვენ შექმენით. ბრძანებების გასაშვებად დააწექით ღილაკს "
 "'გადაცემა'."
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:528
+#: rkward/plugin/rkstandardcomponentgui.cpp:530
 #, kde-format
 msgid ""
 "Below you can preview the result of your settings, and the R commands to be "
@@ -3583,19 +3583,19 @@ msgstr ""
 "ქვემოთ შეგიძლიათ, გადახედოთ თქვენი პარამეტრების შედეგი და R-ის ბრძანებები "
 "გასაშვებად. ბრძანებების გასაშვებად დააჭირეთ ღილაკს 'გადაცემა'."
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:582
-#: rkward/plugin/rkstandardcomponentgui.cpp:600
+#: rkward/plugin/rkstandardcomponentgui.cpp:584
+#: rkward/plugin/rkstandardcomponentgui.cpp:602
 #, kde-format
 msgid "Next >"
 msgstr "შემდეგი >"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:592
-#: rkward/plugin/rkstandardcomponentgui.cpp:610
+#: rkward/plugin/rkstandardcomponentgui.cpp:594
+#: rkward/plugin/rkstandardcomponentgui.cpp:612
 #, kde-format
 msgid "< Back"
 msgstr "< უკან"
 
-#: rkward/plugin/rkstandardcomponentgui.cpp:613
+#: rkward/plugin/rkstandardcomponentgui.cpp:615
 #, kde-format
 msgid "Use Dialog"
 msgstr "დიალოგის გამოყენება"
@@ -3638,7 +3638,7 @@ msgstr "ყველა ძირითადი დონის ობიექ
 msgid "Variable:"
 msgstr "ცვლადი:"
 
-#: rkward/plugin/rkvarslot.cpp:157
+#: rkward/plugin/rkvarslot.cpp:160
 #, kde-format
 msgid ""
 "<p>Using this object, here, may lead to failures or unexpected results, for "
