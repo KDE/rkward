@@ -118,36 +118,36 @@ void SimpleBackend::processCall () {
 	finishCall (current_template.mid (template_sep + 3));
 }
 
-void SimpleBackend::finishCall (const QString &conditions) {
-	RK_TRACE (PHP);
+void SimpleBackend::finishCall(const QString &conditions) {
+	RK_TRACE(PHP);
 
 	QString conds = conditions;
 	int repl = current_values.count();
 	for (int i = repl; i > 0; --i) {
-		QString placeholder = '%' + QString::number (i);
-		QString replacement = current_values[i-1].toString ();
-		conds.replace (placeholder, replacement);
+		QString placeholder = u'%' + QString::number(i);
+		QString replacement = current_values[i - 1].toString();
+		conds.replace(placeholder, replacement);
 	}
 
 	QString output;
 	int pos = 3;
-	int max = conds.length ();
+	int max = conds.length();
 	do {
-		int cond_end = conds.indexOf (QLatin1String("!?!"), pos);
+		int cond_end = conds.indexOf(QLatin1String("!?!"), pos);
 		if (cond_end < 0) cond_end = max;
-		QString condition = conds.mid (pos, cond_end - pos);
+		QString condition = conds.mid(pos, cond_end - pos);
 
-		int if_end = condition.indexOf (QLatin1String("!:!"));
-		RK_ASSERT (if_end >= 0);
-		QString if_part = condition.left (if_end);
+		int if_end = condition.indexOf(QLatin1String("!:!"));
+		RK_ASSERT(if_end >= 0);
+		QString if_part = condition.left(if_end);
 
-		int if_mid = if_part.indexOf (QLatin1String("!=!"));
-		RK_ASSERT (if_mid >= 0);
-		QString if_compare = if_part.left (if_mid);
+		int if_mid = if_part.indexOf(QLatin1String("!=!"));
+		RK_ASSERT(if_mid >= 0);
+		QString if_compare = if_part.left(if_mid);
 
-		QString if_against = if_part.mid (if_mid + 3);
-		if ((if_compare.isEmpty() && if_against.isEmpty ()) || (if_compare == if_against)) {
-			output = condition.mid (if_end + 3);
+		QString if_against = if_part.mid(if_mid + 3);
+		if ((if_compare.isEmpty() && if_against.isEmpty()) || (if_compare == if_against)) {
+			output = condition.mid(if_end + 3);
 			break;
 		}
 
@@ -155,5 +155,5 @@ void SimpleBackend::finishCall (const QString &conditions) {
 	} while (pos < max);
 
 	// reached end of template
-	commandFinished (output);
+	commandFinished(output);
 }

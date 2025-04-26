@@ -40,26 +40,18 @@ RKComponentScriptingProxy::~RKComponentScriptingProxy () {
 	}
 }
 
-void RKComponentScriptingProxy::initialize (const QString& file, const QString& command) {
-	RK_TRACE (PHP);
+void RKComponentScriptingProxy::initialize(const QString& file, const QString& command) {
+	RK_TRACE(PHP);
 
 	QString _command = command;
-	if (!file.isEmpty ()) {
-		_command.prepend ("_rkward.include('" + file + "');\n");
+	if (!file.isEmpty()) {
+		_command.prepend(u"_rkward.include('"_s + file + u"');\n"_s);
 		_scriptfile = file;
 	}
-	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
-#ifdef USE_Q_SCRIPT_PROGRAM
-	if (!RKPrecompiledQtScripts::loadCommonScript (&engine, files_path.absoluteFilePath ("rkcomponentscripting.js"))) {
-		engine.evaluate (i18n ("Error opening script file %1", files_path.absoluteFilePath ("rkcomponentscripting.js")));
-	} else if (!RKPrecompiledQtScripts::loadCommonScript (&engine, files_path.absoluteFilePath ("common.js"))) {
-		engine.evaluate (i18n ("Error opening script file %1", files_path.absoluteFilePath ("common.js")));
-	}
-#else
-	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath (QStringLiteral("rkcomponentscripting.js")) + "');\n");
-	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath (QStringLiteral("common.js")) + "');\n");
-#endif
-	evaluate (_command);
+	QDir files_path(RKCommonFunctions::getRKWardDataDir() + u"phpfiles/"_s);
+	_command.prepend(u"_rkward.include('"_s + files_path.absoluteFilePath(QStringLiteral("rkcomponentscripting.js")) + u"');\n"_s);
+	_command.prepend(u"_rkward.include('"_s + files_path.absoluteFilePath(QStringLiteral("common.js")) + u"');\n"_s);
+	evaluate(_command);
 }
 
 void RKComponentScriptingProxy::handleScriptError(const QJSValue &val, const QString& current_file) {
@@ -74,23 +66,23 @@ void RKComponentScriptingProxy::handleScriptError(const QJSValue &val, const QSt
 	}
 }
 
-void RKComponentScriptingProxy::include (const QString& filename) {
-	RK_TRACE (PHP);
+void RKComponentScriptingProxy::include(const QString& filename) {
+	RK_TRACE(PHP);
 
 	QString _filename = filename;
-	if (QFileInfo (filename).isRelative ()) {
-		QUrl script_path = QUrl (QUrl::fromLocalFile (_scriptfile)).adjusted (QUrl::RemoveFilename).resolved (QUrl (filename));
-		_filename = script_path.toLocalFile ();
+	if (QFileInfo(filename).isRelative()) {
+		QUrl script_path = QUrl(QUrl::fromLocalFile(_scriptfile)).adjusted(QUrl::RemoveFilename).resolved(QUrl(filename));
+		_filename = script_path.toLocalFile();
 	}
 
-	QFile file (_filename);
-	if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
-		evaluate (i18n ("error ('The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.');\n", _filename, _scriptfile).toUtf8 ());
+	QFile file(_filename);
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		evaluate(i18n("error ('The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.');\n", _filename, _scriptfile));
 		return;
 	}
 
-	evaluate (QString::fromUtf8 (file.readAll()));
-	handleScriptError (_filename);
+	evaluate(QString::fromUtf8(file.readAll()));
+	handleScriptError(_filename);
 }
 
 void RKComponentScriptingProxy::evaluate (const QString &code) {
@@ -201,11 +193,11 @@ void RKComponentScriptingProxy::propertyChanged (RKComponentPropertyBase* change
 	handleChange (changed);
 }
 
-void RKComponentScriptingProxy::handleChange (RKComponentBase* changed) {
-	RK_TRACE (PHP);
+void RKComponentScriptingProxy::handleChange(RKComponentBase* changed) {
+	RK_TRACE(PHP);
 
-	QString command = component_commands.value (changed);
-	evaluate (command.toUtf8());
+	QString command = component_commands.value(changed);
+	evaluate(command);
 }
 
 QVariant RKComponentScriptingProxy::getValue (const QString &id) const {
@@ -257,37 +249,37 @@ void RKComponentScriptingProxy::setListValue (const QStringList& value, const QS
 	}
 }
 
-QVariantList RKComponentScriptingProxy::getObjectInfo (const QString &name) {
-	RK_TRACE (PHP);
+QVariantList RKComponentScriptingProxy::getObjectInfo(const QString& name) {
+	RK_TRACE(PHP);
 
-	RObject* object = RObjectList::getObjectList ()->findObject (name);
+	RObject* object = RObjectList::getObjectList()->findObject(name);
 	if (object) {
 		QVariantList ret;
 
 		QVariantList dims;
-		const auto objectDims = object->getDimensions ();
+		const auto objectDims = object->getDimensions();
 		for (int dim : objectDims) {
-			dims.append (dim);
+			dims.append(dim);
 		}
-		ret.append (QVariant (dims));
+		ret.append(QVariant(dims));
 
-		ret.append (QVariant (object->classNames ()));
+		ret.append(QVariant(object->classNames()));
 
-		ret.append (object->isType (RObject::DataFrame));
-		ret.append (object->isType (RObject::Matrix));
-		ret.append (object->isType (RObject::List));
-		ret.append (object->isType (RObject::Function));
-		ret.append (object->isType (RObject::Environment));
+		ret.append(object->isType(RObject::DataFrame));
+		ret.append(object->isType(RObject::Matrix));
+		ret.append(object->isType(RObject::List));
+		ret.append(object->isType(RObject::Function));
+		ret.append(object->isType(RObject::Environment));
 
-		if (object->getDataType () == RObject::DataNumeric) ret.append ("numeric");
-		else if (object->getDataType () == RObject::DataFactor) ret.append ("factor");
-		else if (object->getDataType () == RObject::DataCharacter) ret.append ("character");
-		else if (object->getDataType () == RObject::DataLogical) ret.append ("logical");
-		else ret.append ("unknown");
+		if (object->getDataType() == RObject::DataNumeric) ret.append(u"numeric"_s);
+		else if (object->getDataType() == RObject::DataFactor) ret.append(u"factor"_s);
+		else if (object->getDataType() == RObject::DataCharacter) ret.append(u"character"_s);
+		else if (object->getDataType() == RObject::DataLogical) ret.append(u"logical"_s);
+		else ret.append(u"unknown"_s);
 
 		return (ret);
 	}
-	return (QVariantList ());
+	return (QVariantList());
 }
 
 QString RKComponentScriptingProxy::getObjectParent (const QString &name) {

@@ -16,3 +16,4 @@ ADD_LIBRARY(scriptbackends STATIC ${scriptbackends_STAT_SRCS})
 TARGET_LINK_LIBRARIES(scriptbackends Qt6::Qml Qt6::Widgets Qt6::Xml KF6::WidgetsAddons KF6::I18n)
 
 INSTALL(FILES common.js rkcomponentscripting.js DESTINATION ${KDE_INSTALL_DATADIR}/rkward/phpfiles )
+add_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove, here, once enabled on top level

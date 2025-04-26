@@ -59,23 +59,23 @@ void QtScriptBackend::_performanceTest() {
 }
 #endif
 
-bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool add_headings) {
-	RK_TRACE (PHP);
+bool QtScriptBackend::initialize(RKComponentPropertyCode *code_property, bool add_headings) {
+	RK_TRACE(PHP);
 
 	if (script_thread) {
-		RK_DEBUG (PHP, DL_ERROR, "another template is already opened in this backend");
+		RK_DEBUG(PHP, DL_ERROR, "another template is already opened in this backend");
 		return false;
 	}
 
-	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
-	QString common_js (files_path.absoluteFilePath (QStringLiteral("common.js")));
+	QDir files_path(RKCommonFunctions::getRKWardDataDir() + u"phpfiles/"_s);
+	QString common_js(files_path.absoluteFilePath(u"common.js"_s));
 
-	script_thread = new QtScriptBackendThread (common_js, filename, this, catalog);
-	connect (script_thread, &QtScriptBackendThread::error, this, &QtScriptBackend::threadError);
-	connect (script_thread, &QtScriptBackendThread::commandDone, this, &QtScriptBackend::commandDone);
-	connect (script_thread, &QtScriptBackendThread::needData, this, &QtScriptBackend::needData);
+	script_thread = new QtScriptBackendThread(common_js, filename, this, catalog);
+	connect(script_thread, &QtScriptBackendThread::error, this, &QtScriptBackend::threadError);
+	connect(script_thread, &QtScriptBackendThread::commandDone, this, &QtScriptBackend::commandDone);
+	connect(script_thread, &QtScriptBackendThread::needData, this, &QtScriptBackend::needData);
 	current_type = ScriptBackend::Ignore;
-	script_thread->start ();
+	script_thread->start();
 
 	QtScriptBackend::code_property = code_property;
 	QtScriptBackend::add_headings = add_headings;
@@ -188,24 +188,24 @@ void QtScriptBackendThread::goToSleep (bool sleep) {
 	}
 }
 
-void QtScriptBackendThread::setCommand (const QString &command) {
-	RK_TRACE (PHP);
+void QtScriptBackendThread::setCommand(const QString &command) {
+	RK_TRACE(PHP);
 
-	mutex.lock ();
-	RK_ASSERT (_command.isNull ());
-	if (command.isNull ()) _command = QLatin1String("");
+	mutex.lock();
+	RK_ASSERT(_command.isNull());
+	if (command.isNull()) _command = u""_s;
 	else _command = command;
-	mutex.unlock ();
+	mutex.unlock();
 }
 
-void QtScriptBackendThread::setData (const QVariant &data) {
-	RK_TRACE (PHP);
+void QtScriptBackendThread::setData(const QVariant &data) {
+	RK_TRACE(PHP);
 
-	mutex.lock ();
-	RK_ASSERT (_data.isNull ());
-	if (data.isNull ()) _data = "";
+	mutex.lock();
+	RK_ASSERT(_data.isNull());
+	if (data.isNull()) _data = u""_s;
 	else _data = data;
-	mutex.unlock ();
+	mutex.unlock();
 }
 
 QVariant QtScriptBackendThread::getValue (const QString &identifier, const int hint) {
