@@ -93,34 +93,34 @@ void RKCommandLog::addOtherMessage(const QString &message, const QIcon &icon, RO
 		f.setBackground(QBrush(QColor(255, 255, 255)));
 		log_view->textCursor().mergeBlockFormat(f);
 	}
-	log_view->insertPlainText(message + '\n');
+	log_view->insertPlainText(message + u'\n');
 	log_view->setFontWeight(QFont::Normal);
 	log_view->setTextColor(Qt::black);
 }
 
-void RKCommandLog::addInputNoCheck (RCommand *command) {
-	RK_TRACE (APP);
-	if (command_input_shown.contains (command)) return;		// already shown
+void RKCommandLog::addInputNoCheck(RCommand *command) {
+	RK_TRACE(APP);
+	if (command_input_shown.contains(command)) return;  // already shown
 
-// TODO: make colors/styles configurable
-	if (command->type () & RCommand::User) {
-		log_view->setTextColor (Qt::red);
-	} else if (command->type () & RCommand::Sync) {
-		log_view->setTextColor (Qt::gray);
-	} else if (command->type () & RCommand::Plugin) {
-		log_view->setTextColor (Qt::blue);
+	// TODO: make colors/styles configurable
+	if (command->type() & RCommand::User) {
+		log_view->setTextColor(Qt::red);
+	} else if (command->type() & RCommand::Sync) {
+		log_view->setTextColor(Qt::gray);
+	} else if (command->type() & RCommand::Plugin) {
+		log_view->setTextColor(Qt::blue);
 	}
 
-	log_view->setFontItalic (true);
+	log_view->setFontItalic(true);
 
-	log_view->insertPlainText (command->command () + '\n');
+	log_view->insertPlainText(command->command() + u'\n');
 
-	checkRaiseWindow (command);
-	linesAdded ();
+	checkRaiseWindow(command);
+	linesAdded();
 
-	log_view->setFontItalic (false);
+	log_view->setFontItalic(false);
 
-	command_input_shown.append (command);
+	command_input_shown.append(command);
 }
 
 void RKCommandLog::addOutputNoCheck (RCommand *command, ROutput *output) {

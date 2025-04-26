@@ -149,15 +149,16 @@ void RKFileBrowserWidget::syncToWD () {
 	if (isVisible()) setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }
 
-void RKFileBrowserWidget::rename () {
-	RK_TRACE (APP);
+void RKFileBrowserWidget::rename() {
+	RK_TRACE(APP);
 
-	QString name = QInputDialog::getText (this, i18n ("Rename..."), i18n ("New name for '%1':", context_menu_url.fileName ()), QLineEdit::Normal, context_menu_url.fileName ());
-	if (name.isEmpty ()) return;
+	QString name =
+	    QInputDialog::getText(this, i18n("Rename..."), i18n("New name for '%1':", context_menu_url.fileName()), QLineEdit::Normal, context_menu_url.fileName());
+	if (name.isEmpty()) return;
 
 	QUrl dest_url = context_menu_url;
-	dest_url.setPath (context_menu_url.adjusted (QUrl::RemoveFilename).path () + '/' + name);
-	KIO::moveAs (context_menu_url, dest_url);
+	dest_url.setPath(context_menu_url.adjusted(QUrl::RemoveFilename).path() + u'/' + name);
+	KIO::moveAs(context_menu_url, dest_url);
 }
 
 void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {

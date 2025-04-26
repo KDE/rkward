@@ -27,7 +27,7 @@ RKTextHints::~RKTextHints() {
 QString RKTextHints::textHint(KTextEditor::View *view, const KTextEditor::Cursor &position) {
 	if (!settings->isEnabled(RKCodeCompletionSettings::MouseOver)) return QString();
 	RK_TRACE(COMMANDEDITOR);
-	QString line = view->document()->line(position.line()) + ' ';
+	QString line = view->document()->line(position.line()) + u' ';
 	QString symbol = RKCommonFunctions::getCurrentSymbol(line, position.column(), false);
 	auto obj = RObjectList::getObjectList()->findObject(symbol);
 	if (obj) {

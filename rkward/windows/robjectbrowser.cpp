@@ -177,30 +177,32 @@ void RObjectBrowserInternal::popupEdit () {
 	if (list_view->menuObject ()) RKWorkplace::mainWorkplace ()->editObject (list_view->menuObject ());
 }
 
-void RObjectBrowserInternal::popupCopy () {
-	RK_TRACE (APP);
+void RObjectBrowserInternal::popupCopy() {
+	RK_TRACE(APP);
 
 	bool ok;
-	RObject *object = list_view->menuObject ();
-	QString suggested_name = RObjectList::getGlobalEnv ()->validizeName (object->getShortName ());
-	QString name = QInputDialog::getText (this, i18n ("Copy object"), i18n ("Enter the name to copy to"), QLineEdit::Normal, suggested_name, &ok);
+	RObject *object = list_view->menuObject();
+	QString suggested_name = RObjectList::getGlobalEnv()->validizeName(object->getShortName());
+	QString name = QInputDialog::getText(this, i18n("Copy object"), i18n("Enter the name to copy to"), QLineEdit::Normal, suggested_name, &ok);
 
 	if (ok) {
-		QString valid = RObjectList::getGlobalEnv ()->validizeName (name);
+		QString valid = RObjectList::getGlobalEnv()->validizeName(name);
 		if (valid != name) KMessageBox::error(this, i18n("The name you specified was already in use or not valid. Renamed to %1", valid), i18n("Invalid Name"));
-		RInterface::issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
+		RInterface::issueCommand(RObject::rQuote(valid) + u" <- "_s + object->getFullName(), RCommand::App | RCommand::ObjectListUpdate);
 	}
 }
 
-void RObjectBrowserInternal::popupCopyToGlobalEnv () {
-	RK_TRACE (APP);
+void RObjectBrowserInternal::popupCopyToGlobalEnv() {
+	RK_TRACE(APP);
 
-	const RObject *object = list_view->menuObject ();
-	QString name = object->getShortName ();
+	const RObject *object = list_view->menuObject();
+	QString name = object->getShortName();
 
-	QString valid = RObjectList::getGlobalEnv ()->validizeName (name);
-	if (valid != name) KMessageBox::error(this, i18n("An object named '%1' already exists in the GlobalEnv. Created the copy as '%2' instead.", name, valid), i18n("Name already in use"));
-	RInterface::issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
+	QString valid = RObjectList::getGlobalEnv()->validizeName(name);
+	if (valid != name)
+		KMessageBox::error(this, i18n("An object named '%1' already exists in the GlobalEnv. Created the copy as '%2' instead.", name, valid),
+		                   i18n("Name already in use"));
+	RInterface::issueCommand(RObject::rQuote(valid) + u" <- "_s + object->getFullName(), RCommand::App | RCommand::ObjectListUpdate);
 }
 
 void RObjectBrowserInternal::popupView () {

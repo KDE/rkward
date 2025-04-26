@@ -314,12 +314,13 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	}
 }
 
-void RKCommandEditorWindow::fixupPartGUI () {
-	RK_TRACE (COMMANDEDITOR);
+void RKCommandEditorWindow::fixupPartGUI() {
+	RK_TRACE(COMMANDEDITOR);
 
 	// strip down the katepart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (m_view, QStringLiteral ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line,set_confdlg").split (','), true);
-	RKCommonFunctions::moveContainer (m_view, QStringLiteral("Menu"), QStringLiteral("tools"), QStringLiteral("edit"), true);
+	RKCommonFunctions::removeContainers(
+	    m_view, u"bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line,set_confdlg"_s.split(u','), true);
+	RKCommonFunctions::moveContainer(m_view, QStringLiteral("Menu"), QStringLiteral("tools"), QStringLiteral("edit"), true);
 }
 
 QAction *findAction (KTextEditor::View* view, const QString &actionName) {
@@ -443,13 +444,13 @@ void RKCommandEditorWindow::initBlocks () {
 		colorsquare.fill (colors[i]);
 		QIcon icon (colorsquare);
 
-		record.mark = ac->addAction("markblock" + QString::number(i), this, [this, i](){ markBlock(i); });
+		record.mark = ac->addAction(u"markblock"_s + QString::number(i), this, [this, i](){ markBlock(i); });
 		record.mark->setIcon (icon);
 		actionmenu_mark_block->addAction (record.mark);
-		record.unmark = ac->addAction("unmarkblock" + QString::number(i), this, [this, i](){ unmarkBlock(i); });
+		record.unmark = ac->addAction(u"unmarkblock"_s + QString::number(i), this, [this, i](){ unmarkBlock(i); });
 		record.unmark->setIcon (icon);
 		actionmenu_unmark_block->addAction (record.unmark);
-		record.run = ac->addAction("runblock" + QString::number(i), this, [this, i](){ runBlock(i); });
+		record.run = ac->addAction(u"runblock"_s + QString::number(i), this, [this, i](){ runBlock(i); });
 		ac->setDefaultShortcut (record.run, shortcuts[i]);
 		record.run->setIcon (icon);
 		actionmenu_run_block->addAction (record.run);
@@ -565,7 +566,7 @@ public:
 			// rkmarkdown::render() leaves these directories lying around, even if clean=TRUE. interemdiates_dir does not seem to have an effect. (07/2024)
 			// the name should be unique enough, though, so let's clean them
 			auto fi = QFileInfo(*infile);
-			QString known_temp_path = fi.absolutePath() + '/' + fi.baseName() + QLatin1String("_cache");
+			QString known_temp_path = fi.absolutePath() + u'/' + fi.baseName() + u"_cache"_s;
 			QDir(known_temp_path).removeRecursively();
 		}
 		infile->remove();
@@ -675,17 +676,17 @@ QString RmarkDownRender(const QString &infile, const QString &outdir, const QStr
 void RKCommandEditorWindow::initPreviewModes() {
 	RK_TRACE(COMMANDEDITOR);
 	preview_mode_list.append(PreviewMode{
-		QIcon::fromTheme("preview_math"), i18n("R Markdown (HTML)"), i18n("Preview of rendered R Markdown"),
+		QIcon::fromTheme(u"preview_math"_s), i18n("R Markdown (HTML)"), i18n("Preview of rendered R Markdown"),
 		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to HTML."),
-		QLatin1String(".Rmd"),
+		u".Rmd"_s,
 		[](const QString& infile, const QString& outdir, const QString& /*preview_id*/) {
-			return RmarkDownRender(infile, outdir, "output_format=\"html_document\", ");
+			return RmarkDownRender(infile, outdir, u"output_format=\"html_document\", "_s);
 		}
 	});
 	preview_mode_list.append(PreviewMode{
-		QIcon::fromTheme("preview_math"), i18n("R Markdown (auto)"), i18n("Preview of rendered R Markdown"),
+		QIcon::fromTheme(u"preview_math"_s), i18n("R Markdown (auto)"), i18n("Preview of rendered R Markdown"),
 		i18n("Preview the script as rendered from RMarkdown format (.Rmd) to the format specified in the document header."),
-		QLatin1String(".Rmd"),
+		u".Rmd"_s,
 		[](const QString& infile, const QString& outdir, const QString& /*preview_id*/) {
 			return RmarkDownRender(infile, outdir, QString());
 		}
@@ -693,22 +694,22 @@ void RKCommandEditorWindow::initPreviewModes() {
 	preview_mode_list.append(PreviewMode{
 		RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), i18n("RKWard Output"), i18n("Preview of generated RKWard output"),
 		i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."),
-		QLatin1String(".R"),
+		u".R"_s,
 		[](const QString& infile, const QString& outdir, const QString& /*preview_id*/) {
-			auto command = QLatin1String("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+			auto command = QStringLiteral("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 				"try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
 				"try(source(%1, local=TRUE))\n"
 				"rk.set.output.html.file(output, silent=TRUE)\n"
 				"rk.show.html(%2)\n");
-			return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + QLatin1String("/output.html")));
+			return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
 		}
 	});
 	preview_mode_list.append(PreviewMode{
 		RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), i18n("R Console"), i18n("Preview of script running in interactive R Console"),
 		i18n("Preview the script as if it was run in the interactive R Console"),
-		QLatin1String(".R"),
+		u".R"_s,
 		[](const QString& infile, const QString& outdir, const QString& /*preview_id*/) {
-			auto command = QLatin1String("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+			auto command = QStringLiteral("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 				"on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
 				"try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
 				"exprs <- expression(NULL)\n"
@@ -727,15 +728,15 @@ void RKCommandEditorWindow::initPreviewModes() {
 				"}\n"
 				"rk.set.output.html.file(output, silent=TRUE)\n"
 				"rk.show.html(%2)\n");
-			return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + QLatin1String("/output.html")));
+			return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
 		}
 	});
 	preview_mode_list.append(PreviewMode{
 		RKStandardIcons::getIcon(RKStandardIcons::WindowX11), i18n("Plot"), i18n("Preview of generated plot"),
 		i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."),
-		QLatin1String(".R"),
+		u".R"_s,
 		[](const QString& infile, const QString& /*outdir*/, const QString& preview_id) {
-			auto command = QLatin1String("olddev <- dev.cur()\n"
+			auto command = QStringLiteral("olddev <- dev.cur()\n"
 				".rk.startPreviewDevice(%2)\n"
 				"try(source(%1, local=TRUE, print.eval=TRUE))\n"
 				"if (olddev != 1) dev.set(olddev)\n");
@@ -754,7 +755,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	if (!preview->findChild<RKMDIWindow*>()) {
 		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
-		RInterface::issueCommand(".rk.with.window.hints(rk.show.html(content=\"\"), \"\", " + RObject::rQuote(preview_manager->previewId()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
+		RInterface::issueCommand(u".rk.with.window.hints(rk.show.html(content=\"\"), \"\", "_s + RObject::rQuote(preview_manager->previewId()) + u", style=\"preview\")"_s, RCommand::App | RCommand::Sync);
 	}
 
 	preview_io = RKScriptPreviewIO::init(preview_io, m_doc, nmode, mode.input_ext);
@@ -762,7 +763,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 	preview->setLabel(mode.previewlabel);
 	preview->show();
 
-	RCommand *rcommand = new RCommand(".rk.with.window.hints(local({\n" + command + QStringLiteral("}), \"\", ") + RObject::rQuote(preview_manager->previewId()) + ", style=\"preview\")", RCommand::App);
+	RCommand *rcommand = new RCommand(u".rk.with.window.hints(local({\n"_s + command + u"}), \"\", "_s + RObject::rQuote(preview_manager->previewId()) + u", style=\"preview\")"_s, RCommand::App);
 	preview_manager->setCommand(rcommand);
 }
 
@@ -819,7 +820,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	if (previous_autosave_url.isValid ()) {
 		backup_autosave_url = previous_autosave_url;
 		backup_autosave_url = backup_autosave_url.adjusted(QUrl::RemoveFilename);
-		backup_autosave_url.setPath(backup_autosave_url.path() + backup_autosave_url.fileName () + '~');
+		backup_autosave_url.setPath(backup_autosave_url.path() + backup_autosave_url.fileName () + u'~');
 		if (previous_autosave_url.isLocalFile ()) {
 			QFile::remove (backup_autosave_url.toLocalFile ());
 			QFile::copy (previous_autosave_url.toLocalFile (), backup_autosave_url.toLocalFile ());
@@ -859,11 +860,12 @@ void RKCommandEditorWindow::doAutoSave () {
 	autosave_timer.stop ();
 }
 
-void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
-	RK_TRACE (COMMANDEDITOR);
+void RKCommandEditorWindow::autoSaveHandlerJobFinished(RKJobSequence* seq) {
+	RK_TRACE(COMMANDEDITOR);
 
-	if (seq->hadError ()) {
-		KMessageBox::detailedError (this, i18n ("An error occurred while trying to create an autosave of the script file '%1':", url ().url ()), "- " + seq->errors ().join (QStringLiteral("\n- ")));
+	if (seq->hadError()) {
+		KMessageBox::detailedError(this, i18n("An error occurred while trying to create an autosave of the script file '%1':", url().url()),
+		                           u"- "_s + seq->errors().join(u"\n- "_s));
 	}
 }
 
@@ -951,7 +953,7 @@ void RKCommandEditorWindow::currentHelpContext (QString *symbol, QString *packag
 		*symbol = m_view->selectionText();
 	} else {
 		KTextEditor::Cursor c = m_view->cursorPosition();
-		QString line = m_doc->line(c.line()) + ' ';
+		QString line = m_doc->line(c.line()) + u' ';
 		*symbol = RKCommonFunctions::getCurrentSymbol(line, c.column());
 	}
 }
@@ -975,42 +977,42 @@ void RKCommandEditorWindow::paste (const QString& text) {
 	m_view->insertText (text);
 }
 
-void RKCommandEditorWindow::setWDToScript () {
-	RK_TRACE (COMMANDEDITOR);
+void RKCommandEditorWindow::setWDToScript() {
+	RK_TRACE(COMMANDEDITOR);
 
-	RK_ASSERT (!url ().isEmpty ());
-	QString dir = url ().adjusted (QUrl::RemoveFilename).path ();
+	RK_ASSERT(!url().isEmpty());
+	QString dir = url().adjusted(QUrl::RemoveFilename).path();
 #ifdef Q_OS_WIN
 	// KURL::directory () returns a leading slash on windows as of KDElibs 4.3
-	while (dir.startsWith ('/')) dir.remove (0, 1);
+	while (dir.startsWith(u'/')) dir.remove(0, 1);
 #endif
-	RKConsole::pipeUserCommand ("setwd (\"" + dir + "\")");
+	RKConsole::pipeUserCommand(u"setwd (\""_s + dir + u"\")"_s);
 }
 
-void RKCommandEditorWindow::runCurrent () {
-	RK_TRACE (COMMANDEDITOR);
+void RKCommandEditorWindow::runCurrent() {
+	RK_TRACE(COMMANDEDITOR);
 
-	if (m_view->selection ()) {
-		RKConsole::pipeUserCommand (m_view->selectionText ());
+	if (m_view->selection()) {
+		RKConsole::pipeUserCommand(m_view->selectionText());
 	} else {
 		KTextEditor::Cursor c = m_view->cursorPosition();
-		QString command = m_doc->line (c.line());
-		if (!command.isEmpty ()) RKConsole::pipeUserCommand (command + '\n');
+		QString command = m_doc->line(c.line());
+		if (!command.isEmpty()) RKConsole::pipeUserCommand(command + u'\n');
 
 		// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines)
 		c.setLine(c.line() + 1);
-		m_view->setCursorPosition (c);
+		m_view->setCursorPosition(c);
 	}
 }
 
-void RKCommandEditorWindow::enterAndSubmit () {
-	RK_TRACE (COMMANDEDITOR);
+void RKCommandEditorWindow::enterAndSubmit() {
+	RK_TRACE(COMMANDEDITOR);
 
-	KTextEditor::Cursor c = m_view->cursorPosition ();
-	int line = c.line ();
-	m_doc->insertText (c, QStringLiteral("\n"));
-	QString command = m_doc->line (line);
-	if (!command.isEmpty ()) RKConsole::pipeUserCommand (command + '\n');
+	KTextEditor::Cursor c = m_view->cursorPosition();
+	int line = c.line();
+	m_doc->insertText(c, QStringLiteral("\n"));
+	QString command = m_doc->line(line);
+	if (!command.isEmpty()) RKConsole::pipeUserCommand(command + u'\n');
 }
 
 void RKCommandEditorWindow::copyLinesToOutput () {
@@ -1154,118 +1156,111 @@ KTextEditor::View* RKCommandHighlighter::getView () {
 // NOTE: Most of the exporting code is copied from the katepart HTML exporter plugin more or less verbatim! (Source license: LGPL v2)
 //////////
 QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attrib, const KTextEditor::Attribute::Ptr& m_defaultAttribute) {
-	if ( !attrib || !attrib->hasAnyProperty() || attrib == m_defaultAttribute ) {
+	if (!attrib || !attrib->hasAnyProperty() || attrib == m_defaultAttribute) {
 		return (text.toHtmlEscaped());
 	}
 
 	QString ret;
-	if ( attrib->fontBold() ) {
-		ret.append ("<b>");
+	if (attrib->fontBold()) {
+		ret.append(u"<b>"_s);
 	}
-	if ( attrib->fontItalic() ) {
-		ret.append ("<i>");
-	}
-
-	bool writeForeground = attrib->hasProperty(QTextCharFormat::ForegroundBrush)
-		&& (!m_defaultAttribute || attrib->foreground().color() != m_defaultAttribute->foreground().color());
-	bool writeBackground = attrib->hasProperty(QTextCharFormat::BackgroundBrush)
-		&& (!m_defaultAttribute || attrib->background().color() != m_defaultAttribute->background().color());
-
-	if ( writeForeground || writeBackground ) {
-		ret.append (QStringLiteral("<span style='%1%2'>")
-					.arg(writeForeground ? QString(QLatin1String("color:") + attrib->foreground().color().name() + QLatin1Char(';')) : QString(),
-					     writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
+	if (attrib->fontItalic()) {
+		ret.append(u"<i>"_s);
 	}
 
-	ret.append (text.toHtmlEscaped());
+	bool writeForeground = attrib->hasProperty(QTextCharFormat::ForegroundBrush) &&
+	                       (!m_defaultAttribute || attrib->foreground().color() != m_defaultAttribute->foreground().color());
+	bool writeBackground = attrib->hasProperty(QTextCharFormat::BackgroundBrush) &&
+	                       (!m_defaultAttribute || attrib->background().color() != m_defaultAttribute->background().color());
 
-	if ( writeBackground || writeForeground ) {
-		ret.append ("</span>");
+	if (writeForeground || writeBackground) {
+		ret.append(QStringLiteral("<span style='%1%2'>")
+		               .arg(writeForeground ? QString(QLatin1String("color:") + attrib->foreground().color().name() + QLatin1Char(';')) : QString(),
+		                    writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
 	}
-	if ( attrib->fontItalic() ) {
-		ret.append ("</i>");
+
+	ret.append(text.toHtmlEscaped());
+
+	if (writeBackground || writeForeground) {
+		ret.append(u"</span>"_s);
 	}
-	if ( attrib->fontBold() ) {
-		ret.append ("</b>");
+	if (attrib->fontItalic()) {
+		ret.append(u"</i>"_s);
+	}
+	if (attrib->fontBold()) {
+		ret.append(u"</b>"_s);
 	}
 
 	return ret;
 }
 
-QString RKCommandHighlighter::commandToHTML (const QString &r_command, HighlightingMode mode) {
-	KTextEditor::Document* doc = getDoc ();
-	KTextEditor::View* view = getView ();
-	doc->setText (r_command);
-	if (r_command.endsWith ('\n')) doc->removeLine (doc->lines () - 1);
-	setHighlighting (doc, mode);
+QString RKCommandHighlighter::commandToHTML(const QString& r_command, HighlightingMode mode) {
+	KTextEditor::Document* doc = getDoc();
+	KTextEditor::View* view = getView();
+	doc->setText(r_command);
+	if (r_command.endsWith(u'\n')) doc->removeLine(doc->lines() - 1);
+	setHighlighting(doc, mode);
 	QString ret;
 
 	QString opening;
-	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute (KSyntaxHighlighting::Theme::TextStyle::Normal);
-	if ( !m_defaultAttribute ) {
-		opening = QLatin1String("<pre class=\"%3\">");
+	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute(KSyntaxHighlighting::Theme::TextStyle::Normal);
+	if (!m_defaultAttribute) {
+		opening = u"<pre class=\"%3\">"_s;
 	} else {
-		opening = QStringLiteral("<pre style='%1%2' class=\"%3\">")
-				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "",
-				     m_defaultAttribute->fontItalic() ? "text-style:italic;" : "");
-				// Note: copying the default text/background colors is pointless in our case, and leads to subtle inconsistencies.
+		opening = u"<pre style='%1%2' class=\"%3\">"_s
+		              .arg(m_defaultAttribute->fontBold() ? u"font-weight:bold;"_s : u""_s, m_defaultAttribute->fontItalic() ? u"text-style:italic;"_s : u""_s);
+		// Note: copying the default text/background colors is pointless in our case, and leads to subtle inconsistencies.
 	}
 
 	const KTextEditor::Attribute::Ptr noAttrib(nullptr);
 
-	if (mode == RScript) ret = opening.arg (QStringLiteral("code"));
-	enum {
-		Command,
-		Output,
-		Warning,
-		None
-	} previous_chunk = None;
-	for (int i = 0; i < doc->lines (); ++i)
-	{
-		const QString &line = doc->line(i);
+	if (mode == RScript) ret = opening.arg(QStringLiteral("code"));
+	enum { Command, Output, Warning, None } previous_chunk = None;
+	for (int i = 0; i < doc->lines(); ++i) {
+		const QString& line = doc->line(i);
 		const QList<KTextEditor::AttributeBlock> attribs = view->lineAttributes(i);
 		int lineStart = 0;
 
 		if (mode == RInteractiveSession) {
-			if (line.startsWith (QLatin1String("> ")) || line.startsWith (QLatin1String("+ "))) {
-				lineStart = 2;	// skip the prompt. Prompt will be indicated by the CSS, instead
+			if (line.startsWith(QLatin1String("> ")) || line.startsWith(QLatin1String("+ "))) {
+				lineStart = 2;  // skip the prompt. Prompt will be indicated by the CSS, instead
 				if (previous_chunk != Command) {
-					if (previous_chunk != None) ret.append ("</pre>");
-					ret.append (opening.arg (QStringLiteral("code")));
+					if (previous_chunk != None) ret.append(u"</pre>"_s);
+					ret.append(opening.arg(QStringLiteral("code")));
 					previous_chunk = Command;
 				}
 			} else {
 				if (previous_chunk != Output) {
-					if (previous_chunk != None) ret.append ("</pre>");
-					ret.append (opening.arg (QStringLiteral("output_normal")));
+					if (previous_chunk != None) ret.append(u"</pre>"_s);
+					ret.append(opening.arg(QStringLiteral("output_normal")));
 					previous_chunk = Output;
 				}
-				ret.append (line.toHtmlEscaped () + '\n');	// don't copy output "highlighting". It is set using CSS, instead
+				ret.append(line.toHtmlEscaped() + u'\n');  // don't copy output "highlighting". It is set using CSS, instead
 				continue;
 			}
 		}
 
 		int handledUntil = lineStart;
 		int remainingChars = line.length();
-		for ( const KTextEditor::AttributeBlock& block : attribs ) {
+		for (const KTextEditor::AttributeBlock& block : attribs) {
 			if ((block.start + block.length) <= handledUntil) continue;
 			int start = qMax(block.start, lineStart);
-			if ( start > handledUntil ) {
-				ret += exportText( line.mid( handledUntil, start - handledUntil ), noAttrib, m_defaultAttribute );
+			if (start > handledUntil) {
+				ret += exportText(line.mid(handledUntil, start - handledUntil), noAttrib, m_defaultAttribute);
 			}
-			int end = qMin (block.start + block.length, remainingChars);
+			int end = qMin(block.start + block.length, remainingChars);
 			int length = end - start;
-			ret += exportText( line.mid( start, length ), block.attribute, m_defaultAttribute);
+			ret += exportText(line.mid(start, length), block.attribute, m_defaultAttribute);
 			handledUntil = end;
 		}
 
-		if ( handledUntil < lineStart + remainingChars ) {
-			ret += exportText( line.mid( handledUntil, remainingChars ), noAttrib, m_defaultAttribute );
+		if (handledUntil < lineStart + remainingChars) {
+			ret += exportText(line.mid(handledUntil, remainingChars), noAttrib, m_defaultAttribute);
 		}
 
-		if (i < (doc->lines () - 1)) ret.append ("\n");
+		if (i < (doc->lines() - 1)) ret.append(u"\n"_s);
 	}
-	ret.append ("</pre>\n");
+	ret.append(u"</pre>\n"_s);
 
 	return ret;
 }
@@ -1290,26 +1285,22 @@ void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, Highligh
 	if (!(doc->setHighlightingMode (mode_string) && doc->setMode (mode_string))) RK_DEBUG (COMMANDEDITOR, DL_ERROR, "R syntax highlighting definition ('%s')not found!", qPrintable (mode_string));
 }
 
-void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, HighlightingMode mode) {
-	RK_TRACE (COMMANDEDITOR);
+void RKCommandHighlighter::copyLinesToOutput(KTextEditor::View *view, HighlightingMode mode) {
+	RK_TRACE(COMMANDEDITOR);
 
 	// expand selection to full lines (or current line)
-	KTextEditor::Document *doc = view->document ();
-	KTextEditor::Range sel = view->selectionRange ();
-	if (!sel.isValid ()) {
-		KTextEditor::Cursor pos = view->cursorPosition ();
-		sel.setRange (KTextEditor::Cursor (pos.line (), 0),
-					  KTextEditor::Cursor (pos.line (), doc->lineLength (pos.line ())));
+	KTextEditor::Document *doc = view->document();
+	KTextEditor::Range sel = view->selectionRange();
+	if (!sel.isValid()) {
+		KTextEditor::Cursor pos = view->cursorPosition();
+		sel.setRange(KTextEditor::Cursor(pos.line(), 0), KTextEditor::Cursor(pos.line(), doc->lineLength(pos.line())));
 	} else {
-		sel.setRange (KTextEditor::Cursor (sel.start ().line (), 0),
-					  KTextEditor::Cursor (sel.end ().line (), doc->lineLength (sel.end ().line ())));
+		sel.setRange(KTextEditor::Cursor(sel.start().line(), 0), KTextEditor::Cursor(sel.end().line(), doc->lineLength(sel.end().line())));
 	}
 
 	// highlight and submit
-	QString highlighted = commandToHTML (doc->text (sel), mode);
-	if (!highlighted.isEmpty ()) {
-		RInterface::issueCommand (".rk.cat.output (" + RObject::rQuote (highlighted) + ")\n", RCommand::App | RCommand::Silent);
+	QString highlighted = commandToHTML(doc->text(sel), mode);
+	if (!highlighted.isEmpty()) {
+		RInterface::issueCommand(u".rk.cat.output ("_s + RObject::rQuote(highlighted) + u")\n"_s, RCommand::App | RCommand::Silent);
 	}
 }
-
-

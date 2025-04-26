@@ -489,33 +489,33 @@ void RKHTMLWindow::openRKHPage (const QUrl &url) {
 }
 
 // static
-bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
-	RK_TRACE (APP);
+bool RKHTMLWindow::handleRKWardURL(const QUrl &url, RKHTMLWindow *window) {
+	RK_TRACE(APP);
 
 	if (isRKWardUrl(url)) {
-		if (url.host () == QLatin1String("runplugin")) {
-			QString path = url.path ();
-			if (path.startsWith ('/')) path = path.mid (1);
-			int sep = path.indexOf ('/');
+		if (url.host() == QLatin1String("runplugin")) {
+			QString path = url.path();
+			if (path.startsWith(u'/')) path = path.mid(1);
+			int sep = path.indexOf(u'/');
 			// NOTE: These links may originate externally, even from untrusted sources. The submit mode *must* remain "ManualSubmit" for this reason!
-			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', Qt::SkipEmptyParts), RKComponentMap::ManualSubmit);
-		} else if (url.host () == QLatin1String("rhelp")) {
+			RKComponentMap::invokeComponent(path.left(sep), path.mid(sep + 1).split(u'\n', Qt::SkipEmptyParts), RKComponentMap::ManualSubmit);
+		} else if (url.host() == QLatin1String("rhelp")) {
 			// TODO: find a nice solution to render this in the current window
-			QStringList spec = url.path ().mid (1).split ('/');
+			QStringList spec = url.path().mid(1).split(u'/');
 			QString function, package, type;
-			if (!spec.isEmpty ()) function = spec.takeLast ();
-			if (!spec.isEmpty ()) package = spec.takeLast ();
-			if (!spec.isEmpty ()) type = spec.takeLast ();
-			RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (function, package, type);
-		} else if (url.host () == QLatin1String("settings")) {
-			QString path = url.path ();
-			if (path.startsWith ('/')) path = path.mid (1);
+			if (!spec.isEmpty()) function = spec.takeLast();
+			if (!spec.isEmpty()) package = spec.takeLast();
+			if (!spec.isEmpty()) type = spec.takeLast();
+			RKHelpSearchWindow::mainHelpSearch()->getFunctionHelp(function, package, type);
+		} else if (url.host() == QLatin1String("settings")) {
+			QString path = url.path();
+			if (path.startsWith(u'/')) path = path.mid(1);
 			RKSettings::configureSettings(RKSettingsModule::PageId(path.toLatin1()));
-		} else if (url.host () == QLatin1String("open")) {
-			QString path = url.path().mid(1); // skip initial '/'
-			int sep = path.indexOf('/');
+		} else if (url.host() == QLatin1String("open")) {
+			QString path = url.path().mid(1);  // skip initial '/'
+			int sep = path.indexOf(u'/');
 			QString category = path.left(sep);
-			path = path.mid(sep+1);
+			path = path.mid(sep + 1);
 			RK_DEBUG(APP, DL_DEBUG, "rkward://open: %s -> %s , %s", qPrintable(url.path()), qPrintable(category), qPrintable(path));
 			QUrl target;
 			if (!path.isEmpty()) target = QUrl::fromUserInput(path);
@@ -530,9 +530,9 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 				// See opening workspace, above.
 				QTimer::singleShot(0, RKWardMainWindow::getMain(), [target]() { RKWorkplace::mainWorkplace()->openAnyUrl(target); });
 			}
-		} else if (url.host () == QLatin1String("actions")) {  // anything else
-			QString action = url.path ();
-			if (action.startsWith ('/')) action = action.mid (1);
+		} else if (url.host() == QLatin1String("actions")) {  // anything else
+			QString action = url.path();
+			if (action.startsWith(u'/')) action = action.mid(1);
 			if (action == QLatin1String("new_data_frame")) {
 				RKWardMainWindow::getMain()->slotNewDataFrame();
 			} else if (action == QLatin1String("rpackage_install")) {
@@ -543,8 +543,8 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 				RK_ASSERT(false);
 			}
 		} else {
-			if (window) window->openRKHPage (url);
-			else RKWorkplace::mainWorkplace ()->openHelpWindow (url);	// will recurse with window set, via openURL()
+			if (window) window->openRKHPage(url);
+			else RKWorkplace::mainWorkplace()->openHelpWindow(url);  // will recurse with window set, via openURL()
 		}
 		return true;
 	}
@@ -592,7 +592,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 				RK_DEBUG (APP, DL_WARNING, "Applying workaround for https://bugs.kde.org/show_bug.cgi?id=405386");
 				QFile f (url.toLocalFile ());
 				f.open (QIODevice::ReadOnly);
-				page->setHtmlWrapper(f.readAll(), url.adjusted(QUrl::RemoveFilename));
+				page->setHtmlWrapper(QString::fromUtf8(f.readAll()), url.adjusted(QUrl::RemoveFilename));
 				f.close ();
 			} else {
 				// NOTE: Quirk in Qt 6.7: When first loading a page, the window is somehow brought to the front, again. In preview windows
@@ -728,8 +728,8 @@ void RKHTMLWindow::updateState(){
 	updateCaption(current_url);
 }
 
-void RKHTMLWindow::updateCaption (const QUrl &url) {
-	RK_TRACE (APP);
+void RKHTMLWindow::updateCaption(const QUrl &url) {
+	RK_TRACE(APP);
 
 	if (window_mode == HTMLOutputWindow) {
 		if (dir) {
@@ -738,18 +738,17 @@ void RKHTMLWindow::updateCaption (const QUrl &url) {
 			if (dir->isActive()) mods.append(i18n("[Active]"));
 			// TODO: use icon(s), instead
 			bool mod = dir->isModifiedFast();
-			if (mod) mods.append("(*)");
+			if (mod) mods.append(u"(*)"_s);
 			if (!mods.isEmpty()) {
-				name.append(' ');
+				name.append(u' ');
 				name.append(mods);
 			}
 			setCaption(name);
 			part->revert->setEnabled(mod);
 		} else {
-			setCaption (i18n ("Output %1", url.fileName ()));
+			setCaption(i18nc("noun, the output", "Output %1", url.fileName()));
 		}
-	}
-	else setCaption (url.fileName ());
+	} else setCaption(url.fileName());
 }
 
 void RKHTMLWindow::refresh () {
@@ -783,12 +782,12 @@ void RKHTMLWindow::zoomOut () {
 	view->setZoomFactor (view->zoomFactor () / 1.1);
 }
 
-void RKHTMLWindow::setTextEncoding (QStringConverter::Encoding encoding) {
-	RK_TRACE (APP);
+void RKHTMLWindow::setTextEncoding(QStringConverter::Encoding encoding) {
+	RK_TRACE(APP);
 
 	QStringEncoder converter(encoding);
-	page->settings ()->setDefaultTextEncoding (converter.name ());
-	view->reload ();
+	page->settings()->setDefaultTextEncoding(QString::fromUtf8(converter.name()));
+	view->reload();
 }
 
 void RKHTMLWindow::useMode (WindowMode new_mode) {
@@ -819,20 +818,20 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 	window_mode = new_mode;
 }
 
-void RKHTMLWindow::startNewCacheFile () {
+void RKHTMLWindow::startNewCacheFile() {
 	delete current_cache_file;
-	current_cache_file = new QTemporaryFile (QDir::tempPath () + QLatin1String ("/rkward_XXXXXX") + QLatin1String (".html"));
-	current_cache_file->open ();
+	current_cache_file = new QTemporaryFile(QDir::tempPath() + u"/rkward_XXXXXX.html"_s);
+	current_cache_file->open();
 }
 
-void RKHTMLWindow::fileDoesNotExistMessage () {
-	RK_TRACE (APP);
+void RKHTMLWindow::fileDoesNotExistMessage() {
+	RK_TRACE(APP);
 
-	page->setHtmlWrapper(QString("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>"), QUrl());;
+	page->setHtmlWrapper(u"<html><body><h1>"_s + i18n("Page does not exist or is broken") + u"</h1></body></html>"_s, QUrl());
 }
 
-void RKHTMLWindow::flushOutput () {
-	RK_TRACE (APP);
+void RKHTMLWindow::flushOutput() {
+	RK_TRACE(APP);
 
 	if (dir) {
 		dir->clear();
@@ -840,15 +839,17 @@ void RKHTMLWindow::flushOutput () {
 	}
 
 	// TODO: remove legacy code below, eventually
-	int res = KMessageBox::questionTwoActions(this, i18n ("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."), i18n("Flush output?"), KStandardGuiItem::clear(), KStandardGuiItem::cancel());
-	if (res==KMessageBox::PrimaryAction) {
-		QFile out_file (current_url.toLocalFile ());
-		RCommand *c = new RCommand ("rk.flush.output (" + RCommand::rQuote (out_file.fileName ()) + ", ask=FALSE)\n", RCommand::App);
-		connect (c->notifier (), &RCommandNotifier::commandFinished, this, &RKHTMLWindow::refresh);
-		RKProgressControl *status = new RKProgressControl (this, i18n ("Flushing output"), i18n ("Flushing output"), RKProgressControl::CancellableNoProgress);
-		status->addRCommand (c, true);
-		status->doNonModal (true);
-		RInterface::issueCommand (c);
+	int res = KMessageBox::questionTwoActions(
+	    this, i18n("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."),
+	    i18n("Flush output?"), KStandardGuiItem::clear(), KStandardGuiItem::cancel());
+	if (res == KMessageBox::PrimaryAction) {
+		QFile out_file(current_url.toLocalFile());
+		RCommand *c = new RCommand(u"rk.flush.output ("_s + RCommand::rQuote(out_file.fileName()) + u", ask=FALSE)\n"_s, RCommand::App);
+		connect(c->notifier(), &RCommandNotifier::commandFinished, this, &RKHTMLWindow::refresh);
+		RKProgressControl *status = new RKProgressControl(this, i18n("Flushing output"), i18n("Flushing output"), RKProgressControl::CancellableNoProgress);
+		status->addRCommand(c, true);
+		status->doNonModal(true);
+		RInterface::issueCommand(c);
 	}
 }
 
@@ -971,22 +972,22 @@ void RKHTMLWindowPart::setHelpWindowSkin() {
 //////////////////////////////////////////
 //////////////////////////////////////////
 
-bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
-	RK_TRACE (APP);
+bool RKHelpRenderer::renderRKHelp(const QUrl &url, RKHTMLWindow *container) {
+	RK_TRACE(APP);
 
 	if (!isRKWardUrl(url)) {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 		return (false);
 	}
 
-	bool for_component = false;		// is this a help page for a component, or a top-level help page?
-	if (url.host () == QLatin1String("component")) for_component = true;
+	bool for_component = false;  // is this a help page for a component, or a top-level help page?
+	if (url.host() == QLatin1String("component")) for_component = true;
 
 	QStringList anchors, anchornames;
 
 	RKComponentHandle *chandle = nullptr;
 	if (for_component) {
-		chandle = componentPathToHandle (url.path ());
+		chandle = componentPathToHandle(url.path());
 		if (!chandle) return false;
 	}
 
@@ -994,86 +995,90 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	component_xml = &component_xml_helper;
 	QString help_file_name;
 	QDomElement element;
-	QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
-	QString css_filename = QUrl::fromLocalFile (help_base_dir + "rkward_help.css").toString ();
+	QString help_base_dir = RKCommonFunctions::getRKWardDataDir() + u"pages/"_s;
+	QString css_filename = QUrl::fromLocalFile(help_base_dir + u"rkward_help.css"_s).toString();
 
 	// determine help file, and prepare
 	if (for_component) {
-		component_doc_element = component_xml_helper.openXMLFile (DL_ERROR);
-		if (component_doc_element.isNull ()) return false;
-		element = component_xml_helper.getChildElement (component_doc_element, QStringLiteral("help"), DL_ERROR);
-		if (!element.isNull ()) {
-			help_file_name = component_xml_helper.getStringAttribute (element, QStringLiteral("file"), QString (), DL_ERROR);
-			if (!help_file_name.isEmpty ()) help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
+		component_doc_element = component_xml_helper.openXMLFile(DL_ERROR);
+		if (component_doc_element.isNull()) return false;
+		element = component_xml_helper.getChildElement(component_doc_element, QStringLiteral("help"), DL_ERROR);
+		if (!element.isNull()) {
+			help_file_name = component_xml_helper.getStringAttribute(element, QStringLiteral("file"), QString(), DL_ERROR);
+			if (!help_file_name.isEmpty()) help_file_name = QFileInfo(chandle->getFilename()).absoluteDir().filePath(help_file_name);
 		}
 	} else {
-		help_file_name = help_base_dir + url.path () + ".rkh";
+		help_file_name = help_base_dir + url.path() + u".rkh"_s;
 	}
-	RK_DEBUG (APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
+	RK_DEBUG(APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
 
 	// open help file
-	const RKMessageCatalog *catalog = component_xml_helper.messageCatalog ();
-	if (!for_component) catalog = RKMessageCatalog::getCatalog (QStringLiteral("rkward__pages"), RKCommonFunctions::getRKWardDataDir () + "po/");
-	XMLHelper help_xml_helper (help_file_name, catalog);
+	const RKMessageCatalog *catalog = component_xml_helper.messageCatalog();
+	if (!for_component) catalog = RKMessageCatalog::getCatalog(QStringLiteral("rkward__pages"), RKCommonFunctions::getRKWardDataDir() + u"po/"_s);
+	XMLHelper help_xml_helper(help_file_name, catalog);
 	help_xml = &help_xml_helper;
-	help_doc_element = help_xml_helper.openXMLFile (DL_ERROR);
-	if (help_doc_element.isNull () && (!for_component)) return false;
+	help_doc_element = help_xml_helper.openXMLFile(DL_ERROR);
+	if (help_doc_element.isNull() && (!for_component)) return false;
 
 	// initialize output, and set title
-	QString page_title (i18n ("No Title"));
+	QString page_title(i18n("No Title"));
 	if (for_component) {
-		page_title = chandle->getLabel ();
+		page_title = chandle->getLabel();
 	} else {
-		element = help_xml_helper.getChildElement (help_doc_element, QStringLiteral("title"), DL_WARNING);
-		page_title = help_xml_helper.i18nElementText (element, false, DL_WARNING);
+		element = help_xml_helper.getChildElement(help_doc_element, QStringLiteral("title"), DL_WARNING);
+		page_title = help_xml_helper.i18nElementText(element, false, DL_WARNING);
 	}
-	writeHTML("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
-	          "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n"
-	          "<body id=\"" + help_xml_helper.getStringAttribute(help_doc_element, QStringLiteral("pageid"), QStringLiteral("standard"), DL_INFO) + "\"><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
+	writeHTML(u"<html><head><title>"_s + page_title + u"</title><link rel=\"stylesheet\" type=\"text/css\" href=\""_s + css_filename + u"\">"_s
+	          u"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n"_s
+	          u"<body id=\""_s +
+	          help_xml_helper.getStringAttribute(help_doc_element, u"pageid"_s, u"standard"_s, DL_INFO) + u"\"><div id=\"main\">\n<h1>"_s + page_title +
+	          u"</h1>\n"_s);
 
-	if (help_doc_element.isNull ()) {
-		RK_ASSERT (for_component);
-		writeHTML (i18n ("<h1>Help page missing</h1>\n<p>The help page for this component has not yet been written (or is broken). Please consider contributing it.</p>\n"));
+	if (help_doc_element.isNull()) {
+		RK_ASSERT(for_component);
+		writeHTML(i18n(
+		    "<h1>Help page missing</h1>\n<p>The help page for this component has not yet been written (or is broken). Please consider contributing it.</p>\n"));
 	}
 	if (for_component) {
-		QString component_id = componentPathToId (url.path());
-		RKComponentHandle *handle = componentPathToHandle (url.path());
-		if (handle && handle->isAccessible ()) writeHTML ("<a href=\"rkward://runplugin/" + component_id + "/\">" + i18n ("Use %1 now", page_title) + "</a>");
+		QString component_id = componentPathToId(url.path());
+		RKComponentHandle *handle = componentPathToHandle(url.path());
+		if (handle && handle->isAccessible())
+			writeHTML(u"<a href=\"rkward://runplugin/"_s + component_id + u"/\">"_s + i18n("Use %1 now", page_title) + u"</a>"_s);
 	}
 
 	// fix all elements containing an "src" attribute
-	QDir base_path (QFileInfo (help_file_name).absolutePath());
-	XMLChildList src_elements = help_xml_helper.findElementsWithAttribute (help_doc_element, QStringLiteral("src"), QString (), true, DL_DEBUG);
-	for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
-		QString src = (*it).attribute (QStringLiteral("src"));
-		if (QUrl (src).isRelative ()) {
-			src = "file://" + QDir::cleanPath (base_path.filePath (src));
-			(*it).setAttribute (QStringLiteral("src"), src);
+	QDir base_path(QFileInfo(help_file_name).absolutePath());
+	XMLChildList src_elements = help_xml_helper.findElementsWithAttribute(help_doc_element, QStringLiteral("src"), QString(), true, DL_DEBUG);
+	for (XMLChildList::iterator it = src_elements.begin(); it != src_elements.end(); ++it) {
+		QString src = (*it).attribute(QStringLiteral("src"));
+		if (QUrl(src).isRelative()) {
+			src = u"file://"_s + QDir::cleanPath(base_path.filePath(src));
+			(*it).setAttribute(QStringLiteral("src"), src);
 		}
 	}
 
 	// render the sections
-	element = help_xml_helper.getChildElement (help_doc_element, QStringLiteral("summary"), DL_INFO);
-	if (!element.isNull ()) {
-		writeHTML (startSection (QStringLiteral("summary"), i18n ("Summary"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element));
+	element = help_xml_helper.getChildElement(help_doc_element, QStringLiteral("summary"), DL_INFO);
+	if (!element.isNull()) {
+		writeHTML(startSection(QStringLiteral("summary"), i18n("Summary"), QString(), &anchors, &anchornames));
+		writeHTML(renderHelpFragment(element));
 		writeHTML(endSection());
 	}
 
-	element = help_xml_helper.getChildElement (help_doc_element, QStringLiteral("usage"), DL_INFO);
-	if (!element.isNull ()) {
-		writeHTML (startSection (QStringLiteral("usage"), i18n ("Usage"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element));
+	element = help_xml_helper.getChildElement(help_doc_element, QStringLiteral("usage"), DL_INFO);
+	if (!element.isNull()) {
+		writeHTML(startSection(QStringLiteral("usage"), i18n("Usage"), QString(), &anchors, &anchornames));
+		writeHTML(renderHelpFragment(element));
 		writeHTML(endSection());
 	}
 
 	bool container_refresh_connected = false;
-	XMLChildList section_elements = help_xml_helper.getChildElements (help_doc_element, QStringLiteral("section"), DL_INFO);
-	for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
-		QString title = help_xml_helper.i18nStringAttribute (*it, QStringLiteral("title"), QString (), DL_WARNING);
-		QString shorttitle = help_xml_helper.i18nStringAttribute (*it, QStringLiteral("shorttitle"), QString (), DL_DEBUG);
-		QString id = help_xml_helper.getStringAttribute (*it, QStringLiteral("id"), QString (), DL_WARNING);
-		writeHTML (startSection (id, title, shorttitle, &anchors, &anchornames));
+	XMLChildList section_elements = help_xml_helper.getChildElements(help_doc_element, QStringLiteral("section"), DL_INFO);
+	for (XMLChildList::iterator it = section_elements.begin(); it != section_elements.end(); ++it) {
+		QString title = help_xml_helper.i18nStringAttribute(*it, QStringLiteral("title"), QString(), DL_WARNING);
+		QString shorttitle = help_xml_helper.i18nStringAttribute(*it, QStringLiteral("shorttitle"), QString(), DL_DEBUG);
+		QString id = help_xml_helper.getStringAttribute(*it, QStringLiteral("id"), QString(), DL_WARNING);
+		writeHTML(startSection(id, title, shorttitle, &anchors, &anchornames));
 		QString special = help_xml_helper.getStringAttribute(*it, QStringLiteral("special"), QString(), DL_DEBUG);
 		if (!special.isEmpty()) {
 			if (special == QLatin1String("recentfiles")) {
@@ -1086,14 +1091,16 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 					}
 				}
 				for (int i = 0; i < list.size(); ++i) {
-					writeHTML(QStringLiteral("<li>&lrm;<a href=\"rkward://open/%1/%2\" title=\"%2\">%3</a></li>\n").arg(category, list[i].url(), RKCommonFunctions::escape(list[i].url(QUrl::PreferLocalFile))));
+					writeHTML(QStringLiteral("<li>&lrm;<a href=\"rkward://open/%1/%2\" title=\"%2\">%3</a></li>\n")
+					              .arg(category, list[i].url(), RKCommonFunctions::escape(list[i].url(QUrl::PreferLocalFile))));
 				}
 				writeHTML(QStringLiteral("</ul>\n"));
-				writeHTML(QStringLiteral("<form action=\"rkward://open/%1/\"><button type=\"submit\">%3</button></form>\n").arg(category, i18n("Choose another file")));
+				writeHTML(QStringLiteral("<form action=\"rkward://open/%1/\"><button type=\"submit\">%3</button></form>\n")
+				              .arg(category, i18n("Choose another file")));
 				if (container && !container_refresh_connected) {
 					container_refresh_connected = true;
 					auto connection = new QMetaObject::Connection;
-					*connection = QObject::connect(RKRecentUrls::notifier(), &RKRecentUrls::recentUrlsChanged, container, [connection, container](){
+					*connection = QObject::connect(RKRecentUrls::notifier(), &RKRecentUrls::recentUrlsChanged, container, [connection, container]() {
 						// connection must self-destruct, as it will be re-created from refresh()
 						QObject::disconnect(*connection);
 						delete connection;
@@ -1103,30 +1110,31 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 				}
 			}
 		}
-		writeHTML (renderHelpFragment (*it));
+		writeHTML(renderHelpFragment(*it));
 		writeHTML(endSection());
 	}
 
-	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
+	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it
+	// is only meaningful for component help, and not rendered for top level help pages.
 	if (for_component) {
-		element = help_xml_helper.getChildElement (help_doc_element, QStringLiteral("settings"), DL_INFO);
-		if (!element.isNull ()) {
-			writeHTML (startSection (QStringLiteral("settings"), i18n ("GUI settings"), QString (), &anchors, &anchornames));
-			XMLChildList setting_elements = help_xml_helper.getChildElements (element, QString (), DL_WARNING);
-			for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
-				if ((*it).tagName () == QLatin1String("setting")) {
-					QString id = help_xml_helper.getStringAttribute (*it, QStringLiteral("id"), QString (), DL_WARNING);
-					QString title = help_xml_helper.i18nStringAttribute (*it, QStringLiteral("title"), QString (), DL_INFO);
-					if (title.isEmpty ()) title = resolveLabel (id);
-					writeHTML ("<h4>" + title + "</h4>");
-					writeHTML (renderHelpFragment (*it));
-				} else if ((*it).tagName () == QLatin1String("caption")) {
-					QString id = help_xml_helper.getStringAttribute (*it, QStringLiteral("id"), QString (), DL_WARNING);
-					QString title = help_xml_helper.i18nStringAttribute (*it, QStringLiteral("title"), QString (), DL_INFO);
-					if (title.isEmpty ()) title = resolveLabel (id);
-					writeHTML ("<h3>" + title + "</h3>");
+		element = help_xml_helper.getChildElement(help_doc_element, QStringLiteral("settings"), DL_INFO);
+		if (!element.isNull()) {
+			writeHTML(startSection(QStringLiteral("settings"), i18n("GUI settings"), QString(), &anchors, &anchornames));
+			XMLChildList setting_elements = help_xml_helper.getChildElements(element, QString(), DL_WARNING);
+			for (XMLChildList::iterator it = setting_elements.begin(); it != setting_elements.end(); ++it) {
+				if ((*it).tagName() == QLatin1String("setting")) {
+					QString id = help_xml_helper.getStringAttribute(*it, QStringLiteral("id"), QString(), DL_WARNING);
+					QString title = help_xml_helper.i18nStringAttribute(*it, QStringLiteral("title"), QString(), DL_INFO);
+					if (title.isEmpty()) title = resolveLabel(id);
+					writeHTML(u"<h4>"_s + title + u"</h4>"_s);
+					writeHTML(renderHelpFragment(*it));
+				} else if ((*it).tagName() == QLatin1String("caption")) {
+					QString id = help_xml_helper.getStringAttribute(*it, QStringLiteral("id"), QString(), DL_WARNING);
+					QString title = help_xml_helper.i18nStringAttribute(*it, QStringLiteral("title"), QString(), DL_INFO);
+					if (title.isEmpty()) title = resolveLabel(id);
+					writeHTML(u"<h3>"_s + title + u"</h3>"_s);
 				} else {
-					help_xml_helper.displayError (&(*it), QStringLiteral("Tag not allowed, here"), DL_WARNING);
+					help_xml_helper.displayError(&(*it), QStringLiteral("Tag not allowed, here"), DL_WARNING);
 				}
 			}
 			writeHTML(endSection());
@@ -1134,27 +1142,27 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	}
 
 	// "related" section
-	element = help_xml_helper.getChildElement (help_doc_element, QStringLiteral("related"), DL_INFO);
-	if (!element.isNull ()) {
-		writeHTML (startSection (QStringLiteral("related"), i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element));
+	element = help_xml_helper.getChildElement(help_doc_element, QStringLiteral("related"), DL_INFO);
+	if (!element.isNull()) {
+		writeHTML(startSection(QStringLiteral("related"), i18n("Related functions and pages"), QString(), &anchors, &anchornames));
+		writeHTML(renderHelpFragment(element));
 		writeHTML(endSection());
 	}
 
 	// "technical" section
-	element = help_xml_helper.getChildElement (help_doc_element, QStringLiteral("technical"), DL_INFO);
-	if (!element.isNull ()) {
-		writeHTML (startSection (QStringLiteral("technical"), i18n ("Technical details"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element));
+	element = help_xml_helper.getChildElement(help_doc_element, QStringLiteral("technical"), DL_INFO);
+	if (!element.isNull()) {
+		writeHTML(startSection(QStringLiteral("technical"), i18n("Technical details"), QString(), &anchors, &anchornames));
+		writeHTML(renderHelpFragment(element));
 		writeHTML(endSection());
 	}
 
 	if (for_component) {
 		// "dependencies" section
-		QList<RKComponentDependency> deps = chandle->getDependencies ();
-		if (!deps.isEmpty ()) {
-			writeHTML (startSection (QStringLiteral("dependencies"), i18n ("Dependencies"), QString (), &anchors, &anchornames));
-			writeHTML (RKComponentDependency::depsToHtml (deps));
+		QList<RKComponentDependency> deps = chandle->getDependencies();
+		if (!deps.isEmpty()) {
+			writeHTML(startSection(QStringLiteral("dependencies"), i18n("Dependencies"), QString(), &anchors, &anchornames));
+			writeHTML(RKComponentDependency::depsToHtml(deps));
 			writeHTML(endSection());
 		}
 	}
@@ -1162,30 +1170,30 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	// "about" section
 	RKComponentAboutData about;
 	if (for_component) {
-		about = chandle->getAboutData ();
+		about = chandle->getAboutData();
 	} else {
-		about = RKComponentAboutData (help_xml_helper.getChildElement (help_doc_element, QStringLiteral("about"), DL_INFO), *help_xml);
+		about = RKComponentAboutData(help_xml_helper.getChildElement(help_doc_element, QStringLiteral("about"), DL_INFO), *help_xml);
 	}
 	if (about.valid) {
-		writeHTML (startSection (QStringLiteral("about"), i18n ("About"), QString (), &anchors, &anchornames));
-		writeHTML (about.toHtml ());
+		writeHTML(startSection(QStringLiteral("about"), i18n("About"), QString(), &anchors, &anchornames));
+		writeHTML(about.toHtml());
 		writeHTML(endSection());
 	}
 
 	// create a navigation bar
 	QUrl url_copy = url;
-	QString navigation = i18n ("<h1>On this page:</h1>");
-	RK_ASSERT (anchornames.size () == anchors.size ());
-	for (int i = 0; i < anchors.size (); ++i) {
+	QString navigation = i18n("<h1>On this page:</h1>");
+	RK_ASSERT(anchornames.size() == anchors.size());
+	for (int i = 0; i < anchors.size(); ++i) {
 		QString anchor = anchors[i];
 		QString anchorname = anchornames[i];
-		if (!(anchor.isEmpty () || anchorname.isEmpty ())) {
-			url_copy.setFragment (anchor);
-			navigation.append ("<p><a href=\"" + url_copy.url () + "\">" + anchorname + "</a></p>\n");
+		if (!(anchor.isEmpty() || anchorname.isEmpty())) {
+			url_copy.setFragment(anchor);
+			navigation.append(u"<p><a href=\""_s + url_copy.url() + u"\">"_s + anchorname + u"</a></p>\n"_s);
 		}
 	}
-	writeHTML ("</div><div id=\"navigation\">" + navigation + "</div>");
-	writeHTML (QStringLiteral("</body></html>\n"));
+	writeHTML(u"</div><div id=\"navigation\">"_s + navigation + u"</div>"_s);
+	writeHTML(u"</body></html>\n"_s);
 
 	return (true);
 }
@@ -1222,7 +1230,7 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 		}
 		QString linktext;
 		int end = text.indexOf (QLatin1String(">"), npos) + 1;
-		if (text[end-2] != QChar ('/')) {
+		if (text[end-2] != u'/') {
 			int nend = text.indexOf (QLatin1String("</link>"), end);
 			linktext = text.mid (end, nend - end);
 			end = nend + 7;
@@ -1257,50 +1265,51 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 	return ret;
 }
 
-QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &text) {
-	RK_TRACE (APP);
+QString RKHelpRenderer::prepareHelpLink(const QString &href, const QString &text) {
+	RK_TRACE(APP);
 
-	QString ret = "<a href=\"" + href + "\">";
-	if (!text.isEmpty ()) {
+	QString ret = u"<a href=\""_s + href + u"\">"_s;
+	if (!text.isEmpty()) {
 		ret += text;
 	} else {
 		QString ltext;
-		QUrl url (href);
+		QUrl url(href);
 		if (isRKWardUrl(url)) {
-			if (url.host () == QLatin1String("component")) {
-				RKComponentHandle *chandle = componentPathToHandle (url.path ());
-				if (chandle) ltext = chandle->getLabel ();
-			} else if (url.host () == QLatin1String("rhelp")) {
-				ltext = i18n ("R Reference on '%1'", url.path ().mid (1));
-			} else if (url.host () == QLatin1String("page")) {
-				QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
-		
-				XMLHelper xml (help_base_dir + url.path () + ".rkh", RKMessageCatalog::getCatalog (QStringLiteral("rkward__pages"), RKCommonFunctions::getRKWardDataDir () + "po/"));
-				QDomElement doc_element = xml.openXMLFile (DL_WARNING);
-				QDomElement title_element = xml.getChildElement (doc_element, QStringLiteral("title"), DL_WARNING);
-				ltext = xml.i18nElementText (title_element, false, DL_WARNING);
+			if (url.host() == QLatin1String("component")) {
+				RKComponentHandle *chandle = componentPathToHandle(url.path());
+				if (chandle) ltext = chandle->getLabel();
+			} else if (url.host() == QLatin1String("rhelp")) {
+				ltext = i18n("R Reference on '%1'", url.path().mid(1));
+			} else if (url.host() == QLatin1String("page")) {
+				QString help_base_dir = RKCommonFunctions::getRKWardDataDir() + u"pages/"_s;
+
+				XMLHelper xml(help_base_dir + url.path() + u".rkh"_s,
+				              RKMessageCatalog::getCatalog(QStringLiteral("rkward__pages"), RKCommonFunctions::getRKWardDataDir() + u"po/"_s));
+				QDomElement doc_element = xml.openXMLFile(DL_WARNING);
+				QDomElement title_element = xml.getChildElement(doc_element, QStringLiteral("title"), DL_WARNING);
+				ltext = xml.i18nElementText(title_element, false, DL_WARNING);
 			}
 
-			if (ltext.isEmpty ()) {
-				ltext = i18n ("BROKEN REFERENCE");
-				RK_DEBUG (APP, DL_WARNING, "Broken reference to %s", url.path ().toLatin1 ().data ());
+			if (ltext.isEmpty()) {
+				ltext = i18n("BROKEN REFERENCE");
+				RK_DEBUG(APP, DL_WARNING, "Broken reference to %s", url.path().toLatin1().data());
 			}
 		}
-		ret.append (ltext);
+		ret.append(ltext);
 	}
-	return (ret + "</a>");
+	return (ret + u"</a>"_s);
 }
 
-QString RKHelpRenderer::componentPathToId (const QString &path) {
-	RK_TRACE (APP);
+QString RKHelpRenderer::componentPathToId(const QString &path) {
+	RK_TRACE(APP);
 
-	QStringList path_segments = path.split ('/', Qt::SkipEmptyParts);
-	if (path_segments.count () > 2) return QString();
-	if (path_segments.count () < 1) return QString();
-	if (path_segments.count () == 1) path_segments.push_front (QStringLiteral("rkward"));
-	RK_ASSERT (path_segments.count () == 2);
+	QStringList path_segments = path.split(u'/', Qt::SkipEmptyParts);
+	if (path_segments.count() > 2) return QString();
+	if (path_segments.count() < 1) return QString();
+	if (path_segments.count() == 1) path_segments.push_front(QStringLiteral("rkward"));
+	RK_ASSERT(path_segments.count() == 2);
 
-	return (path_segments.join (QStringLiteral("::")));
+	return (path_segments.join(QStringLiteral("::")));
 }
 
 RKComponentHandle *RKHelpRenderer::componentPathToHandle (const QString &path) {
@@ -1309,17 +1318,17 @@ RKComponentHandle *RKHelpRenderer::componentPathToHandle (const QString &path) {
 	return (RKComponentMap::getComponentHandle (componentPathToId (path)));
 }
 
-QString RKHelpRenderer::startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {
-	QString ret = "<div id=\"" + name + "\"><a name=\"" + name + "\">";
-	ret.append ("<h2>" + title + "</h2>\n");
-	anchors->append (name);
-	if (!shorttitle.isNull ()) anchor_names->append (shorttitle);
-	else anchor_names->append (title);
+QString RKHelpRenderer::startSection(const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {
+	QString ret = u"<div id=\""_s + name + u"\"><a name=\""_s + name + u"\">"_s;
+	ret.append(u"<h2>"_s + title + u"</h2>\n"_s);
+	anchors->append(name);
+	if (!shorttitle.isNull()) anchor_names->append(shorttitle);
+	else anchor_names->append(title);
 	return (ret);
 }
 
 QString RKHelpRenderer::endSection() {
-	return("</div>\n");
+	return(u"</div>\n"_s);
 }
 
 void RKHelpRenderer::writeHTML (const QString& string) {

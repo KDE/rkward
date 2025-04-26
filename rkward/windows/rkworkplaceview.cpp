@@ -495,77 +495,77 @@ void RKWorkplaceView::setCaption(const QString &caption) {
 }
 
 void RKWorkplaceView::restoreLayout(const QString& desc) {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
-	bool old_updates_enabled = updatesEnabled ();
-	setUpdatesEnabled (false);
+	bool old_updates_enabled = updatesEnabled();
+	setUpdatesEnabled(false);
 
 	QList<RKMDIWindow*> windows_to_readd;
 	// It is probably not a good idea to restore the layout while merging workplaces, i.e. without closing existing windows, first.
 	// However, we'll do our best to cope... For this, we clear out all splitters, first.
-	for (int i = 0; i < panes.count (); ++i) {
-		while (panes[i]->count ()) {
-			RKMDIWindow *win = static_cast<RKMDIWindow*> (panes[i]->widget (0));
-			panes[i]->removeTab (0);
-			windows_to_readd.append (win);
+	for (int i = 0; i < panes.count(); ++i) {
+		while (panes[i]->count()) {
+			RKMDIWindow* win = static_cast<RKMDIWindow*>(panes[i]->widget(0));
+			panes[i]->removeTab(0);
+			windows_to_readd.append(win);
 			win->hide();
 			win->setParent(nullptr);
 		}
 	}
-	while (count ()) {
-		delete (widget (0));
+	while (count()) {
+		delete (widget(0));
 	}
-	panes.clear ();
+	panes.clear();
 
 	QList<QSplitter*> parents;
-	parents.append (this);
-	QStringList dl = desc.split ('-');
-	if (dl.value (0) == QStringLiteral ("col")) setOrientation (Qt::Vertical);
-	else setOrientation (Qt::Horizontal);
+	parents.append(this);
+	QStringList dl = desc.split(u'-');
+	if (dl.value(0) == QStringLiteral("col")) setOrientation(Qt::Vertical);
+	else setOrientation(Qt::Horizontal);
 
-	for (int i = 1; i < dl.size (); ++i) {
-		if (parents.isEmpty ()) {
-			RK_DEBUG (APP, DL_ERROR, "Bad specification while restoring workplace view layout");
+	for (int i = 1; i < dl.size(); ++i) {
+		if (parents.isEmpty()) {
+			RK_DEBUG(APP, DL_ERROR, "Bad specification while restoring workplace view layout");
 			break;
 		}
-		if (dl[i] == QStringLiteral ("p")) {
-			RKWorkplaceViewPane *pane = createPane ();
-			pane = createPane ();
-			panes.append (pane);
-			parents.last ()->addWidget (pane);
-		} else if (dl[i] == QStringLiteral ("row")) {
-			QSplitter* newsplit = createSplitter (Qt::Horizontal);
-			parents.last ()->addWidget (newsplit);
-			parents.append (newsplit);
-		} else if (dl[i] == QStringLiteral ("col")) {
-			QSplitter* newsplit = createSplitter (Qt::Vertical);
-			parents.last ()->addWidget (newsplit);
-			parents.append (newsplit);
+		if (dl[i] == QStringLiteral("p")) {
+			RKWorkplaceViewPane* pane = createPane();
+			pane = createPane();
+			panes.append(pane);
+			parents.last()->addWidget(pane);
+		} else if (dl[i] == QStringLiteral("row")) {
+			QSplitter* newsplit = createSplitter(Qt::Horizontal);
+			parents.last()->addWidget(newsplit);
+			parents.append(newsplit);
+		} else if (dl[i] == QStringLiteral("col")) {
+			QSplitter* newsplit = createSplitter(Qt::Vertical);
+			parents.last()->addWidget(newsplit);
+			parents.append(newsplit);
 		} else {
-			RK_ASSERT (dl[i].startsWith (QStringLiteral ("end")));
-			const QStringList s = dl[i].mid (4).split (',');
-			QList<int> sizes = parents.last ()->sizes ();  // simply to have an initialized list of the correct length
-			for (int i = 0; i < sizes.count (); ++i) {
-				int size = qMax (50, s.value (i).toInt ());  // avoid collapsed views in case of errors
+			RK_ASSERT(dl[i].startsWith(QStringLiteral("end")));
+			const QStringList s = dl[i].mid(4).split(u',');
+			QList<int> sizes = parents.last()->sizes();  // simply to have an initialized list of the correct length
+			for (int i = 0; i < sizes.count(); ++i) {
+				int size = qMax(50, s.value(i).toInt());  // avoid collapsed views in case of errors
 				sizes[i] = size;
 			}
-			parents.last ()->setSizes (sizes);
-			parents.pop_back ();
+			parents.last()->setSizes(sizes);
+			parents.pop_back();
 		}
 	}
 
-	if (panes.isEmpty ()) {
-		panes.append (createPane ());
-		addWidget (panes[0]);
+	if (panes.isEmpty()) {
+		panes.append(createPane());
+		addWidget(panes[0]);
 	}
 
-	newpane = panes.value (0);
+	newpane = panes.value(0);
 
-	for (int i = 0; i < windows_to_readd.count (); ++i) {
-		addWindow (windows_to_readd[i]);
+	for (int i = 0; i < windows_to_readd.count(); ++i) {
+		addWindow(windows_to_readd[i]);
 	}
 
-	setUpdatesEnabled (old_updates_enabled);
+	setUpdatesEnabled(old_updates_enabled);
 }
 
 void RKWorkplaceView::nextPane () {
@@ -590,26 +590,26 @@ void RKWorkplaceView::purgeEmptyPanes () {
 	}
 }
 
-QString listLayout (const QSplitter *parent) {
-	RK_TRACE (APP);
+QString listLayout(const QSplitter* parent) {
+	RK_TRACE(APP);
 
-	QString ret = (parent->orientation () == Qt::Horizontal ? QStringLiteral ("row") : QStringLiteral ("col"));
+	QString ret = (parent->orientation() == Qt::Horizontal ? QStringLiteral("row") : QStringLiteral("col"));
 
-	for (int i = 0; i < parent->count (); ++i) {
-		QWidget* w = parent->widget (i);
-		RKWorkplaceViewPane *pane = qobject_cast<RKWorkplaceViewPane*> (w);
+	for (int i = 0; i < parent->count(); ++i) {
+		QWidget* w = parent->widget(i);
+		RKWorkplaceViewPane* pane = qobject_cast<RKWorkplaceViewPane*>(w);
 		if (pane) {
-			ret.append (QStringLiteral ("-p"));
+			ret.append(QStringLiteral("-p"));
 		} else {
-			QSplitter* sub = qobject_cast<QSplitter*> (w);
-			ret.append ('-' + listLayout (sub));
+			QSplitter* sub = qobject_cast<QSplitter*>(w);
+			ret.append(u'-' + listLayout(sub));
 		}
 	}
 
-	ret.append (QStringLiteral ("-end"));
-	const QList<int> sizes = parent->sizes ();
-	for (int i = 0; i < sizes.count (); ++i) {
-		ret.append (',' + QString::number (sizes[i]));
+	ret.append(QStringLiteral("-end"));
+	const QList<int> sizes = parent->sizes();
+	for (int i = 0; i < sizes.count(); ++i) {
+		ret.append(u',' + QString::number(sizes[i]));
 	}
 
 	return ret;

@@ -42,82 +42,82 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 RKHelpSearchWindow* RKHelpSearchWindow::main_help_search = nullptr;
 
-RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, SearchHelpWindow, tool_window, name) {
-	RK_TRACE (APP);
-	setPart (new RKDummyPart(nullptr, this));
-	initializeActivationSignals ();
-	setFocusPolicy (Qt::ClickFocus);
+RKHelpSearchWindow::RKHelpSearchWindow(QWidget* parent, bool tool_window, const char* name) : RKMDIWindow(parent, SearchHelpWindow, tool_window, name) {
+	RK_TRACE(APP);
+	setPart(new RKDummyPart(nullptr, this));
+	initializeActivationSignals();
+	setFocusPolicy(Qt::ClickFocus);
 
-	QVBoxLayout* main_layout = new QVBoxLayout (this);
-	QHBoxLayout* selection_layout = new QHBoxLayout ();
-	main_layout->addLayout (selection_layout);
-	selection_layout->setContentsMargins (0, 0, 0, 0);
+	QVBoxLayout* main_layout = new QVBoxLayout(this);
+	QHBoxLayout* selection_layout = new QHBoxLayout();
+	main_layout->addLayout(selection_layout);
+	selection_layout->setContentsMargins(0, 0, 0, 0);
 
-	QVBoxLayout* labels_layout = new QVBoxLayout ();
-	selection_layout->addLayout (labels_layout);
-	labels_layout->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (i18n ("Find:"), this);
-	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
-	labels_layout->addWidget (label);
-	label = new QLabel (i18n ("Fields:"), this);
-	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
-	labels_layout->addWidget (label);
+	QVBoxLayout* labels_layout = new QVBoxLayout();
+	selection_layout->addLayout(labels_layout);
+	labels_layout->setContentsMargins(0, 0, 0, 0);
+	QLabel* label = new QLabel(i18n("Find:"), this);
+	label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
+	labels_layout->addWidget(label);
+	label = new QLabel(i18n("Fields:"), this);
+	label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
+	labels_layout->addWidget(label);
 
-	QVBoxLayout* main_settings_layout = new QVBoxLayout ();
-	selection_layout->addLayout (main_settings_layout);
-	main_settings_layout->setContentsMargins (0, 0, 0, 0);
-	field = new QComboBox (this);
-	field->setEditable (true);
-	field->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-	connect (field->lineEdit (), &QLineEdit::returnPressed, this, &RKHelpSearchWindow::slotFindButtonClicked);
-	main_settings_layout->addWidget (field);
+	QVBoxLayout* main_settings_layout = new QVBoxLayout();
+	selection_layout->addLayout(main_settings_layout);
+	main_settings_layout->setContentsMargins(0, 0, 0, 0);
+	field = new QComboBox(this);
+	field->setEditable(true);
+	field->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+	connect(field->lineEdit(), &QLineEdit::returnPressed, this, &RKHelpSearchWindow::slotFindButtonClicked);
+	main_settings_layout->addWidget(field);
 
-	QHBoxLayout* fields_packages_layout = new QHBoxLayout ();
-	main_settings_layout->addLayout (fields_packages_layout);
-	fields_packages_layout->setContentsMargins (0, 0, 0, 0);
-	fieldsList = new QComboBox (this);
-	fieldsList->setEditable (false);
-	fieldsList->addItem (i18n ("All"), "c(\"alias\", \"concept\", \"title\",\"keyword\")");
-	fieldsList->addItem (i18n ("All but keywords"), "c(\"alias\", \"concept\", \"title\")");
-	fieldsList->addItem (i18n ("Keywords"), "c(\"keyword\")");
-	fieldsList->addItem (i18n ("Title"), "c(\"title\")");
-	fields_packages_layout->addWidget (fieldsList);
+	QHBoxLayout* fields_packages_layout = new QHBoxLayout();
+	main_settings_layout->addLayout(fields_packages_layout);
+	fields_packages_layout->setContentsMargins(0, 0, 0, 0);
+	fieldsList = new QComboBox(this);
+	fieldsList->setEditable(false);
+	fieldsList->addItem(i18n("All"), u"c(\"alias\", \"concept\", \"title\",\"keyword\")"_s);
+	fieldsList->addItem(i18n("All but keywords"), u"c(\"alias\", \"concept\", \"title\")"_s);
+	fieldsList->addItem(i18n("Keywords"), u"c(\"keyword\")"_s);
+	fieldsList->addItem(i18n("Title"), u"c(\"title\")"_s);
+	fields_packages_layout->addWidget(fieldsList);
 
-	label = new QLabel (i18n ("Package:"), this);
-	label->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Minimum);
-	fields_packages_layout->addWidget (label);
+	label = new QLabel(i18n("Package:"), this);
+	label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
+	fields_packages_layout->addWidget(label);
 
-	packagesList = new QComboBox (this);
-	packagesList->setEditable (false);
-	fields_packages_layout->addWidget (packagesList);
-	connect (RKSessionVars::instance (), &RKSessionVars::installedPackagesChanged, this, &RKHelpSearchWindow::updateInstalledPackages);
-	updateInstalledPackages ();
+	packagesList = new QComboBox(this);
+	packagesList->setEditable(false);
+	fields_packages_layout->addWidget(packagesList);
+	connect(RKSessionVars::instance(), &RKSessionVars::installedPackagesChanged, this, &RKHelpSearchWindow::updateInstalledPackages);
+	updateInstalledPackages();
 
-	QVBoxLayout* checkboxes_layout = new QVBoxLayout ();
-	selection_layout->addLayout (checkboxes_layout);
-	checkboxes_layout->setContentsMargins (0, 0, 0, 0);
-	caseSensitiveCheckBox = new QCheckBox (i18n ("Case sensitive"), this);
-	checkboxes_layout->addWidget (caseSensitiveCheckBox);
-	fuzzyCheckBox = new QCheckBox (i18n ("Fuzzy matching"), this);
-	fuzzyCheckBox->setChecked (true);
-	checkboxes_layout->addWidget (fuzzyCheckBox);
+	QVBoxLayout* checkboxes_layout = new QVBoxLayout();
+	selection_layout->addLayout(checkboxes_layout);
+	checkboxes_layout->setContentsMargins(0, 0, 0, 0);
+	caseSensitiveCheckBox = new QCheckBox(i18n("Case sensitive"), this);
+	checkboxes_layout->addWidget(caseSensitiveCheckBox);
+	fuzzyCheckBox = new QCheckBox(i18n("Fuzzy matching"), this);
+	fuzzyCheckBox->setChecked(true);
+	checkboxes_layout->addWidget(fuzzyCheckBox);
 
-	findButton = new QPushButton (i18n ("Find"), this);
-	findButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect (findButton, &QPushButton::clicked, this, &RKHelpSearchWindow::slotFindButtonClicked);
-	selection_layout->addWidget (findButton);
+	findButton = new QPushButton(i18n("Find"), this);
+	findButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	connect(findButton, &QPushButton::clicked, this, &RKHelpSearchWindow::slotFindButtonClicked);
+	selection_layout->addWidget(findButton);
 
-	results = new RKHelpSearchResultsModel (this);
-	proxy_model = new QSortFilterProxyModel (this);
-	proxy_model->setSourceModel (results);
-	results_view = new QTreeView (this);
-	results_view->setRootIsDecorated (false);
-	results_view->setModel (proxy_model);
-	results_view->setSortingEnabled (true);
-	connect (results_view, &QTreeView::doubleClicked, this, &RKHelpSearchWindow::resultDoubleClicked);
-	main_layout->addWidget (results_view);
+	results = new RKHelpSearchResultsModel(this);
+	proxy_model = new QSortFilterProxyModel(this);
+	proxy_model->setSourceModel(results);
+	results_view = new QTreeView(this);
+	results_view->setRootIsDecorated(false);
+	results_view->setModel(proxy_model);
+	results_view->setSortingEnabled(true);
+	connect(results_view, &QTreeView::doubleClicked, this, &RKHelpSearchWindow::resultDoubleClicked);
+	main_layout->addWidget(results_view);
 
-	setCaption (i18n ("Help search"));
+	setCaption(i18n("Help search"));
 }
 
 RKHelpSearchWindow::~RKHelpSearchWindow () {
@@ -141,70 +141,71 @@ void RKHelpSearchWindow::getContextHelp (const QString &context_line, int cursor
 	getFunctionHelp (result);
 }
 
-void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QString &package, const QString &type) {
-	RK_TRACE (APP);
+void RKHelpSearchWindow::getFunctionHelp(const QString &function_name, const QString &package, const QString &type) {
+	RK_TRACE(APP);
 
-	// we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
-	QString command = QStringLiteral(".rk.getHelp(");
-	if (type == QLatin1String("demo")) command = QLatin1String("rk.demo(");
-	else if (type == QLatin1String("vignette")) command = QLatin1String("print (vignette(");
+	QString command = RObject::rQuote(function_name);
+	if (!package.isEmpty()) command.append(u", package="_s + RObject::rQuote(package));
 
-	command.append (RObject::rQuote (function_name));
-	if (!package.isEmpty ()) command.append (", package=" + RObject::rQuote (package));
-	command.append (")");
-	if (type == QLatin1String("vignette")) command.append (")");
+	if (type == QLatin1String("demo")) command = u"rk.demo("_s + command + u')';
+	else if (type == QLatin1String("vignette")) command = u"print (vignette("_s + command + u"))"_s;
+	else command = u".rk.getHelp("_s + command + u')'; // we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
 
 	auto c = new RCommand(command, RCommand::App | RCommand::GetStringVector, i18n("Find HTML help for %1", function_name));
-	c->whenFinished(this, [this](RCommand* command) {
-		if (command->failed ()) {
-			KMessageBox::error(this, i18n("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command().section('\"', 1, 1)), i18n("No help found"));
+	c->whenFinished(this, [this, function_name](RCommand *command) {
+		if (command->failed()) {
+			KMessageBox::error(this,
+			                   i18n("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try "
+			                        "using Help->Search R Help for more options.", function_name),
+			                   i18n("No help found"));
 		}
 	});
 	RInterface::issueCommand(c);
 }
 
-void RKHelpSearchWindow::slotFindButtonClicked () {
-	RK_TRACE (APP);
+void RKHelpSearchWindow::slotFindButtonClicked() {
+	RK_TRACE(APP);
 
-	if (field->currentText ().isEmpty ()) {
+	if (field->currentText().isEmpty()) {
 		return;
 	}
-	
+
 	QString agrep = QStringLiteral("FALSE");
-	if (fuzzyCheckBox->isChecked ()) {
-		agrep=QLatin1String("NULL");
+	if (fuzzyCheckBox->isChecked()) {
+		agrep = QLatin1String("NULL");
 	}
-	
+
 	QString ignoreCase = QStringLiteral("TRUE");
-	if(caseSensitiveCheckBox->isChecked ()) {
-		ignoreCase=QLatin1String("FALSE");
+	if (caseSensitiveCheckBox->isChecked()) {
+		ignoreCase = QLatin1String("FALSE");
 	}
-	
+
 	QString package = QStringLiteral(", package=");
-	if (packagesList->currentIndex () == 0) {
-		package.append ("NULL");	// all installed packages; actually we could also use package.clear(), here.
-	} else if (packagesList->currentIndex () == 1) {
-		package.append (".packages()");	// all loaded packages
+	if (packagesList->currentIndex() == 0) {
+		package.append(u"NULL"_s);  // all installed packages; actually we could also use package.clear(), here.
+	} else if (packagesList->currentIndex() == 1) {
+		package.append(u".packages()"_s);  // all loaded packages
 	} else {
-		package.append ("\"" + packagesList->currentText () + "\"");
+		package.append(u"\""_s + packagesList->currentText() + u"\""_s);
 	}
 
-	QString fields = fieldsList->itemData (fieldsList->currentIndex ()).toString ();
+	QString fields = fieldsList->itemData(fieldsList->currentIndex()).toString();
 
-	QString s = ".rk.get.search.results (" + RObject::rQuote (field->currentText ()) + ", agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields + ')';
+	QString s = u".rk.get.search.results ("_s + RObject::rQuote(field->currentText()) + u", agrep="_s + agrep + u", ignore.case="_s + ignoreCase + package +
+	            u", fields="_s + fields + u')';
 
 	auto c = new RCommand(s, RCommand::App | RCommand::Sync | RCommand::GetStringVector);
 	c->whenFinished(this, [this](RCommand *command) {
 		QStringList res;
-		if (command->failed ()) {
-			RK_ASSERT (false);
+		if (command->failed()) {
+			RK_ASSERT(false);
 		} else {
-			RK_ASSERT (command->getDataType () == RData::StringVector);
-			res = command->stringVector ();
+			RK_ASSERT(command->getDataType() == RData::StringVector);
+			res = command->stringVector();
 		}
-		results->setResults (res);
+		results->setResults(res);
 
-		for (int i = 0; i < COL_COUNT; ++i) results_view->resizeColumnToContents (i);
+		for (int i = 0; i < COL_COUNT; ++i) results_view->resizeColumnToContents(i);
 		setEnabled(true);
 	});
 	RInterface::issueCommand(c);

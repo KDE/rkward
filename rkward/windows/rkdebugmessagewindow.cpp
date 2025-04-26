@@ -107,28 +107,27 @@ RKDebugMessageWindowWidget::~RKDebugMessageWindowWidget () {
 	RK_TRACE (APP);
 }
 
-void RKDebugMessageWindowWidget::newMessage (const int flags, const int level, const QString &message) {
-	Q_UNUSED (flags);
+void RKDebugMessageWindowWidget::newMessage(const int flags, const int level, const QString &message) {
+	Q_UNUSED(flags);
 
 	// Not tracing this! That might lead to infinite recursion!
 	if (level == DL_TRACE) {
-		message_viewer->setTextColor (Qt::gray);
-		message_viewer->insertPlainText (QStringLiteral("TRACE\t"));
+		message_viewer->setTextColor(Qt::gray);
+		message_viewer->insertPlainText(QStringLiteral("TRACE\t"));
 	} else if (level == DL_DEBUG) {
-		message_viewer->setTextColor (Qt::blue);
-		message_viewer->insertPlainText (QStringLiteral("DEBUG\t"));
+		message_viewer->setTextColor(Qt::blue);
+		message_viewer->insertPlainText(QStringLiteral("DEBUG\t"));
 	} else if (level == DL_INFO) {
-		message_viewer->setTextColor (Qt::green);
-		message_viewer->insertPlainText (QStringLiteral("INFO\t"));
+		message_viewer->setTextColor(Qt::green);
+		message_viewer->insertPlainText(QStringLiteral("INFO\t"));
 	} else if (level == DL_WARNING) {
-		message_viewer->setTextColor (Qt::darkYellow);
-		message_viewer->insertPlainText (QStringLiteral("WARNING\t"));
+		message_viewer->setTextColor(Qt::darkYellow);
+		message_viewer->insertPlainText(QStringLiteral("WARNING\t"));
 	} else {
-		message_viewer->setTextColor (Qt::red);
-		message_viewer->insertPlainText (QStringLiteral("ERROR\t"));
+		message_viewer->setTextColor(Qt::red);
+		message_viewer->insertPlainText(QStringLiteral("ERROR\t"));
 	}
-	message_viewer->setTextColor (Qt::black);
+	message_viewer->setTextColor(Qt::black);
 
-	message_viewer->insertPlainText (message + '\n');
+	message_viewer->insertPlainText(message + u'\n');
 }
-

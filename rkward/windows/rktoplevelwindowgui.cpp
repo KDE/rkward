@@ -72,11 +72,11 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled
 	prev_action = actionCollection()->addAction(QStringLiteral("prev_window"), this, &RKTopLevelWindowGUI::previousWindow);
 	prev_action->setText(i18n("Previous Window"));
-	prev_action->setIcon(QIcon(":/rkward/icons/window_back.png"));
+	prev_action->setIcon(QIcon(u":/rkward/icons/window_back.png"_s));
 	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier | Qt::Key_Tab);
 	next_action = actionCollection()->addAction(QStringLiteral("next_window"), this, &RKTopLevelWindowGUI::nextWindow);
 	next_action->setText(i18n("Next Window"));
-	next_action->setIcon(QIcon(":rkward/icons/window_forward.png"));
+	next_action->setIcon(QIcon(u":rkward/icons/window_forward.png"_s));
 	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_Tab);
 
 	QAction* action = actionCollection()->addAction(QStringLiteral("window_activate_docview"), this, &RKTopLevelWindowGUI::activateDocumentView);
@@ -252,7 +252,7 @@ void RKTopLevelWindowGUI::populateOutputWindowsMenu() {
 		auto dir = outputs[i];
 		QString title = dir->caption();
 		if (dir->isActive()) {
-			title.append(' ');
+			title.append(u' ');
 			title.append(i18n("[Active]"));
 		}
 		QAction* action = output_windows_menu->addAction(title);

@@ -393,7 +393,7 @@ void RKCaughtX11Window::commonClose(bool in_destructor) {
 
 	QString status = i18n("Closing device (saving history)");
 	if (!(close_attempted || killed_in_r)) {
-		RCommand* c = new RCommand("dev.off (" + QString::number(device_number) + ')', RCommand::App, i18n("Shutting down device number %1", device_number));
+		RCommand* c = new RCommand(u"dev.off ("_s + QString::number(device_number) + u')', RCommand::App, i18n("Shutting down device number %1", device_number));
 		if (!in_destructor) setStatusMessage(status, c);
 		RInterface::issueCommand(c);
 		close_attempted = true;
@@ -578,131 +578,147 @@ static void issueCommand(RCommand* command, RKProgressControl* control) {
 	RInterface::issueCommand(command);
 }
 
-void RKCaughtX11Window::activateDevice () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::activateDevice() {
+	RK_TRACE(MISC);
 
-	issueCommand(new RCommand("dev.set (" + QString::number(device_number) + ')', RCommand::App, i18n("Activate graphics device number %1", device_number)), error_dialog);
+	issueCommand(new RCommand(u"dev.set ("_s + QString::number(device_number) + u')', RCommand::App, i18n("Activate graphics device number %1", device_number)),
+	             error_dialog);
 }
 
-void RKCaughtX11Window::copyDeviceToOutput () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::copyDeviceToOutput() {
+	RK_TRACE(MISC);
 
-	issueCommand(new RCommand("dev.set (" + QString::number(device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::CCOutput, i18n("Copy contents of graphics device number %1 to output", device_number)), error_dialog);
+	issueCommand(new RCommand(u"dev.set ("_s + QString::number(device_number) + u")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()"_s,
+	                          RCommand::App | RCommand::CCOutput, i18n("Copy contents of graphics device number %1 to output", device_number)),
+	             error_dialog);
 }
 
-void RKCaughtX11Window::printDevice () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::printDevice() {
+	RK_TRACE(MISC);
 
 	QString printer_device;
-	if (RKSettingsModuleGraphics::kdePrintingEnabled ()) printer_device = QLatin1String("rk.printer.device");
-	issueCommand(new RCommand("dev.set (" + QString::number(device_number) + ")\ndev.print (" + printer_device + ')', RCommand::App, i18n("Print contents of graphics device number %1", device_number)), error_dialog);
+	if (RKSettingsModuleGraphics::kdePrintingEnabled()) printer_device = u"rk.printer.device"_s;
+	issueCommand(new RCommand(u"dev.set ("_s + QString::number(device_number) + u")\ndev.print ("_s + printer_device + u')', RCommand::App,
+	                          i18n("Print contents of graphics device number %1", device_number)),
+	             error_dialog);
 }
 
-void RKCaughtX11Window::copyDeviceToRObject () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::copyDeviceToRObject() {
+	RK_TRACE(MISC);
 
-// TODO: not very pretty, yet
-	QDialog *dialog = new QDialog (this);
-	dialog->setWindowTitle (i18n ("Specify R object"));
-	dialog->setModal (true);
-	QVBoxLayout *layout = new QVBoxLayout (dialog);
+	// TODO: not very pretty, yet
+	QDialog *dialog = new QDialog(this);
+	dialog->setWindowTitle(i18n("Specify R object"));
+	dialog->setModal(true);
+	QVBoxLayout *layout = new QVBoxLayout(dialog);
 
-	layout->addWidget (new QLabel (i18n ("Specify the R object name, you want to save the graph to"), dialog));
-	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (dialog, QStringLiteral("my.plot"));
-	layout->addWidget (chooser);
+	layout->addWidget(new QLabel(i18n("Specify the R object name, you want to save the graph to"), dialog));
+	RKSaveObjectChooser *chooser = new RKSaveObjectChooser(dialog, QStringLiteral("my.plot"));
+	layout->addWidget(chooser);
 
-	QDialogButtonBox *box = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	connect (box->button (QDialogButtonBox::Ok), &QPushButton::clicked, dialog, &QDialog::accept);
-	connect (box->button (QDialogButtonBox::Cancel), &QPushButton::clicked, dialog, &QDialog::reject);
-	box->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
-	layout->addWidget (box);
+	QDialogButtonBox *box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	connect(box->button(QDialogButtonBox::Ok), &QPushButton::clicked, dialog, &QDialog::accept);
+	connect(box->button(QDialogButtonBox::Cancel), &QPushButton::clicked, dialog, &QDialog::reject);
+	box->button(QDialogButtonBox::Ok)->setShortcut(Qt::CTRL | Qt::Key_Return);
+	layout->addWidget(box);
 
-	connect (chooser, &RKSaveObjectChooser::changed, box->button (QDialogButtonBox::Ok), &QPushButton::setEnabled);
-	if (!chooser->isOk ()) box->button (QDialogButtonBox::Ok)->setEnabled (false);
+	connect(chooser, &RKSaveObjectChooser::changed, box->button(QDialogButtonBox::Ok), &QPushButton::setEnabled);
+	if (!chooser->isOk()) box->button(QDialogButtonBox::Ok)->setEnabled(false);
 
-	dialog->exec ();
+	dialog->exec();
 
-	if (dialog->result () == QDialog::Accepted) {
-		RK_ASSERT (chooser->isOk ());
+	if (dialog->result() == QDialog::Accepted) {
+		RK_ASSERT(chooser->isOk());
 
-		QString name = chooser->currentFullName ();
+		QString name = chooser->currentFullName();
 
-		issueCommand(new RCommand("dev.set (" + QString::number(device_number) + ")\n" + name + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n("Save contents of graphics device number %1 to object '%2'", device_number, name)), error_dialog);
+		issueCommand(new RCommand(u"dev.set ("_s + QString::number(device_number) + u")\n"_s + name + u" <- recordPlot ()"_s, RCommand::App | RCommand::ObjectListUpdate,
+		                          i18n("Save contents of graphics device number %1 to object '%2'", device_number, name)),
+		             error_dialog);
 	}
 
 	delete dialog;
 }
 
-void RKCaughtX11Window::duplicateDevice () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::duplicateDevice() {
+	RK_TRACE(MISC);
 
-	issueCommand(new RCommand("rk.duplicate.device (" + QString::number(device_number) + ')', RCommand::App, i18n("Duplicate graphics device number %1", device_number)), error_dialog);
+	issueCommand(
+	    new RCommand(u"rk.duplicate.device ("_s + QString::number(device_number) + u')', RCommand::App, i18n("Duplicate graphics device number %1", device_number)),
+	    error_dialog);
 }
 
-void RKCaughtX11Window::nextPlot () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::nextPlot() {
+	RK_TRACE(MISC);
 
-	RCommand* c = new RCommand("rk.next.plot (" + QString::number(device_number) + ')', RCommand::App, i18n("Load next plot in device number %1", device_number));
-	setStatusMessage (i18n ("Loading plot from history"), c);
+	auto c = new RCommand(u"rk.next.plot ("_s + QString::number(device_number) + u')', RCommand::App, i18n("Load next plot in device number %1", device_number));
+	setStatusMessage(i18n("Loading plot from history"), c);
 	issueCommand(c, error_dialog);
 }
 
-void RKCaughtX11Window::previousPlot () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::previousPlot() {
+	RK_TRACE(MISC);
 
-	RCommand* c = new RCommand("rk.previous.plot (" + QString::number(device_number) + ')', RCommand::App, i18n("Load previous plot in device number %1", device_number));
-	setStatusMessage (i18n ("Loading plot from history"), c);
+	auto c = new RCommand(u"rk.previous.plot ("_s + QString::number(device_number) + u')', RCommand::App, i18n("Load previous plot in device number %1", device_number));
+	setStatusMessage(i18n("Loading plot from history"), c);
 	issueCommand(c, error_dialog);
 }
 
-void RKCaughtX11Window::firstPlot () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::firstPlot() {
+	RK_TRACE(MISC);
 
-	RCommand* c = new RCommand("rk.first.plot (" + QString::number(device_number) + ')', RCommand::App, i18n("Load first plot in device number %1", device_number));
-	setStatusMessage (i18n ("Loading plot from history"), c);
+	auto c = new RCommand(u"rk.first.plot ("_s + QString::number(device_number) + u')', RCommand::App, i18n("Load first plot in device number %1", device_number));
+	setStatusMessage(i18n("Loading plot from history"), c);
 	issueCommand(c, error_dialog);
 }
 
-void RKCaughtX11Window::lastPlot () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::lastPlot() {
+	RK_TRACE(MISC);
 
-	RCommand* c = new RCommand("rk.last.plot (" + QString::number(device_number) + ')', RCommand::App, i18n("Load last plot in device number %1", device_number));
-	setStatusMessage (i18n ("Loading plot from history"), c);
+	auto c = new RCommand(u"rk.last.plot ("_s + QString::number(device_number) + u')', RCommand::App, i18n("Load last plot in device number %1", device_number));
+	setStatusMessage(i18n("Loading plot from history"), c);
 	issueCommand(c, error_dialog);
 }
 
-void RKCaughtX11Window::gotoPlot (int index) {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::gotoPlot(int index) {
+	RK_TRACE(MISC);
 
-	RCommand* c = new RCommand("rk.goto.plot (" + QString::number(device_number) + ", " + QString::number(index+1) + ')', RCommand::App, i18n("Load plot %1 in device number %2", index, device_number));
-	setStatusMessage (i18n ("Loading plot from history"), c);
+	RCommand* c = new RCommand(u"rk.goto.plot ("_s + QString::number(device_number) + u", "_s + QString::number(index + 1) + u')', RCommand::App,
+	                           i18n("Load plot %1 in device number %2", index, device_number));
+	setStatusMessage(i18n("Loading plot from history"), c);
 	issueCommand(c, error_dialog);
 }
 
-void RKCaughtX11Window::forceAppendCurrentPlot () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::forceAppendCurrentPlot() {
+	RK_TRACE(MISC);
 
-	issueCommand(new RCommand("rk.force.append.plot (" + QString::number(device_number) + ')', RCommand::App, i18n("Append this plot to history (device number %1)", device_number)), error_dialog);
+	issueCommand(new RCommand(u"rk.force.append.plot ("_s + QString::number(device_number) + u')', RCommand::App,
+	                          i18n("Append this plot to history (device number %1)", device_number)),
+	             error_dialog);
 }
 
-void RKCaughtX11Window::removeCurrentPlot () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::removeCurrentPlot() {
+	RK_TRACE(MISC);
 
-	issueCommand(new RCommand("rk.removethis.plot (" + QString::number(device_number) + ')', RCommand::App, i18n("Remove current plot from history (device number %1)", device_number)), error_dialog);
+	issueCommand(new RCommand(u"rk.removethis.plot ("_s + QString::number(device_number) + u')', RCommand::App,
+	                          i18n("Remove current plot from history (device number %1)", device_number)),
+	             error_dialog);
 }
 
-void RKCaughtX11Window::clearHistory () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::clearHistory() {
+	RK_TRACE(MISC);
 
-	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all device windows, not just this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
+	if (KMessageBox::warningContinueCancel(this, i18n("This will clear the plot history for all device windows, not just this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
 
 	issueCommand(new RCommand(QStringLiteral("rk.clear.plot.history ()"), RCommand::App, i18n("Clear plot history")), error_dialog);
 }
 
-void RKCaughtX11Window::showPlotInfo () {
-	RK_TRACE (MISC);
+void RKCaughtX11Window::showPlotInfo() {
+	RK_TRACE(MISC);
 
-	issueCommand(new RCommand("rk.show.plot.info (" + QString::number(device_number) + ')', RCommand::App, i18n("Plot properties (device number %1)", device_number)), error_dialog);
+	issueCommand(
+	    new RCommand(u"rk.show.plot.info ("_s + QString::number(device_number) + u')', RCommand::App, i18n("Plot properties (device number %1)", device_number)),
+	    error_dialog);
 }
 
 void RKCaughtX11Window::updateHistoryActions (int history_length, int position, const QStringList &labels) {

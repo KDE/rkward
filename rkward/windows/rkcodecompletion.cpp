@@ -116,11 +116,11 @@ void RKCompletionManager::userTriggeredCompletion () {
 	user_triggered = false;
 }
 
-void RKCompletionManager::tryCompletion () {
-	RK_TRACE (COMMANDEDITOR);
+void RKCompletionManager::tryCompletion() {
+	RK_TRACE(COMMANDEDITOR);
 	if (!_view) {
 		// NOTE: This should not be possible, because the connections  have not been set up in the constructor, in this case.
-		RK_ASSERT (_view);
+		RK_ASSERT(_view);
 		return;
 	}
 	if (ignore_next_trigger) {
@@ -128,33 +128,36 @@ void RKCompletionManager::tryCompletion () {
 		return;
 	}
 
-	KTextEditor::Document *doc = _view->document ();
+	KTextEditor::Document *doc = _view->document();
 	KTextEditor::Cursor c = _view->cursorPosition();
 	cached_position = c;
-	uint para=c.line(); int cursor_pos=c.column();
+	uint para = c.line();
+	int cursor_pos = c.column();
 
-	QString current_line = doc->line (para);
+	QString current_line = doc->line(para);
 	int start;
 	int end;
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos-1, false, &start, &end);
-	symbol_range = KTextEditor::Range (para, start, para, end);
-	bool is_help = (start >= 1) && (current_line.at(start-1) == '?');
+	RKCommonFunctions::getCurrentSymbolOffset(current_line, cursor_pos - 1, false, &start, &end);
+	symbol_range = KTextEditor::Range(para, start, para, end);
+	bool is_help = (start >= 1) && (current_line.at(start - 1) == u'?');
 	if (!user_triggered) {
 		if (end > cursor_pos) {
-			symbol_range = KTextEditor::Range ();   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
+			symbol_range =
+			    KTextEditor::Range();  // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
 		} else {
-			if (doc->defaultStyleAt (c) == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range ();	// do not hint while in comments
+			if (doc->defaultStyleAt(c) == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range();  // do not hint while in comments
 		}
 	}
 
-	QString word = currentCompletionWord ();
-	if (user_triggered || (word.length () >= settings->autoMinChars ())) {
+	QString word = currentCompletionWord();
+	if (user_triggered || (word.length() >= settings->autoMinChars())) {
 		QString filename;
-		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
-		if (word.startsWith ('\"') || word.startsWith ('\'') || word.startsWith ('`')) {
-			symbol_range.setStart (KTextEditor::Cursor (symbol_range.start ().line (), symbol_range.start ().column () + 1));   // confine range to inside the quotes.
-			filename = word.mid (1);
-			word.clear ();
+		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name
+		// completion
+		if (word.startsWith(u'\"') || word.startsWith(u'\'') || word.startsWith(u'`')) {
+			symbol_range.setStart(KTextEditor::Cursor(symbol_range.start().line(), symbol_range.start().column() + 1));  // confine range to inside the quotes.
+			filename = word.mid(1);
+			word.clear();
 		}
 
 		completion_model->updateCompletionList(word, is_help);
@@ -163,29 +166,30 @@ void RKCompletionManager::tryCompletion () {
 		completion_model->updateCompletionList(QString(), false);
 		file_completion_model->updateCompletionList(QString());
 	}
-	RK_DEBUG(EDITOR, DL_DEBUG, "completion symbol range %d, %d -> %d, %d", symbol_range.start().line(), symbol_range.start().column(), symbol_range.end().line(), symbol_range.end().column());
+	RK_DEBUG(EDITOR, DL_DEBUG, "completion symbol range %d, %d -> %d, %d", symbol_range.start().line(), symbol_range.start().column(),
+	         symbol_range.end().line(), symbol_range.end().column());
 
-	updateCallHint ();
+	updateCallHint();
 
 	// update ArgHint.
-	argname_range = KTextEditor::Range (-1, -1, -1, -1);
+	argname_range = KTextEditor::Range(-1, -1, -1, -1);
 	// Named arguments are just like regular symbols, *but* we must require that they are preceeded by either a ',', or the opening '(', immediately.
 	// Otherwise, they are an argument value expression, for sure.
 	// We also assume (foolishly), that if we are on a new line, we're probably starting a new arg. TODO: Actually check this!
-	if (callhint_model->currentFunction ()) {
+	if (callhint_model->currentFunction()) {
 		argname_range = symbol_range;
-		for (int i = symbol_range.start ().column () - 1; i >= 0; --i) {
-			QChar c = current_line.at (i);
-			if (c == ',' || c == '(') {
+		for (int i = symbol_range.start().column() - 1; i >= 0; --i) {
+			QChar c = current_line.at(i);
+			if (c == u',' || c == u'(') {
 				break;
-			} else if (!c.isSpace ()) {
-				argname_range = KTextEditor::Range (-1, -1, -1, -1);
+			} else if (!c.isSpace()) {
+				argname_range = KTextEditor::Range(-1, -1, -1, -1);
 			}
 		}
 	}
-	arghint_model->updateCompletionList (callhint_model->currentFunction (), argname_range.isValid () ? doc->text (argname_range) : QString ());
+	arghint_model->updateCompletionList(callhint_model->currentFunction(), argname_range.isValid() ? doc->text(argname_range) : QString());
 
-	updateVisibility ();
+	updateVisibility();
 }
 
 bool isCode (KTextEditor::Document* doc, int line, int column) {
@@ -196,22 +200,22 @@ bool isCode (KTextEditor::Document* doc, int line, int column) {
 	return true;
 }
 
-void RKCompletionManager::updateCallHint () {
-	RK_TRACE (COMMANDEDITOR);
+void RKCompletionManager::updateCallHint() {
+	RK_TRACE(COMMANDEDITOR);
 
-	if (_view->isCompletionActive () && !update_call) return;
+	if (_view->isCompletionActive() && !update_call) return;
 	update_call = false;
 
-	int line = cached_position.line () + 1;
+	int line = cached_position.line() + 1;
 	QString full_context;
 	int potential_symbol_end = -2;
 	int parenthesis_level = 0;
 	int prefix_offset = 0;
-	KTextEditor::Document *doc = _view->document ();
+	KTextEditor::Document *doc = _view->document();
 	while (potential_symbol_end < -1 && line >= 0) {
 		--line;
-		QString context_line = doc->line (line);
-		if (!prefix.isEmpty()) {   // For skipping interactive output sections in console. Empty for RKCommandEditorWindow
+		QString context_line = doc->line(line);
+		if (!prefix.isEmpty()) {  // For skipping interactive output sections in console. Empty for RKCommandEditorWindow
 			if (context_line.startsWith(prefix)) {
 				prefix_offset = prefix.length();
 			} else if (context_line.startsWith(continuation_prefix)) {
@@ -221,21 +225,22 @@ void RKCompletionManager::updateCallHint () {
 			}
 			context_line = context_line.mid(prefix_offset);
 		}
-		full_context.prepend (context_line);
+		full_context.prepend(context_line);
 
-		int pos = context_line.length () - 1;
-		if (line == cached_position.line ()) pos = cached_position.column () - 1 - prefix_offset;   // when on current line, look backward from cursor position, not line end
+		int pos = context_line.length() - 1;
+		if (line == cached_position.line())
+			pos = cached_position.column() - 1 - prefix_offset;  // when on current line, look backward from cursor position, not line end
 		for (int i = pos; i >= 0; --i) {
-			QChar c = context_line.at (i);
-			if (c == '(') {
-				if (isCode (doc, line, i)) {
+			QChar c = context_line.at(i);
+			if (c == u'(') {
+				if (isCode(doc, line, i)) {
 					if (--parenthesis_level < 0) {
 						potential_symbol_end = i - 1;
 						break;
 					}
 				}
-			} else if (c == ')') {
-				if (isCode (doc, line, i)) {
+			} else if (c == u')') {
+				if (isCode(doc, line, i)) {
 					++parenthesis_level;
 				}
 			}
@@ -244,22 +249,22 @@ void RKCompletionManager::updateCallHint () {
 
 	// now find out where the symbol to the left of the opening brace ends
 	// there cannot be a line-break between the opening brace, and the symbol name (or can there?), so no need to fetch further context
-	while ((potential_symbol_end >= 0) && full_context.at (potential_symbol_end).isSpace ()) {
+	while ((potential_symbol_end >= 0) && full_context.at(potential_symbol_end).isSpace()) {
 		--potential_symbol_end;
 	}
 
 	// now identify the symbol and object (if any)
 	RObject *object = nullptr;
-	call_opening = KTextEditor::Cursor (-1, -1);
+	call_opening = KTextEditor::Cursor(-1, -1);
 	if (potential_symbol_end > 0) {
-		QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end);
-		if (!effective_symbol.isEmpty ()) {
-			object = RObjectList::getObjectList ()->findObject (effective_symbol);
-			call_opening = KTextEditor::Cursor (line, potential_symbol_end+1);
+		QString effective_symbol = RKCommonFunctions::getCurrentSymbol(full_context, potential_symbol_end);
+		if (!effective_symbol.isEmpty()) {
+			object = RObjectList::getObjectList()->findObject(effective_symbol);
+			call_opening = KTextEditor::Cursor(line, potential_symbol_end + 1);
 		}
 	}
 
-	callhint_model->setFunction (object);
+	callhint_model->setFunction(object);
 }
 
 void RKCompletionManager::startModel( KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range) {
@@ -306,18 +311,18 @@ void RKCompletionManager::modelGainedLateData(RKCompletionModelBase* model) {
 	startModel(model, true, model->completionRange(view(), view()->cursorPosition()));
 }
 
-void RKCompletionManager::textInserted (KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
-	if (_view->isCompletionActive ()) {
+void RKCompletionManager::textInserted(KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
+	if (_view->isCompletionActive()) {
 		if (position < call_opening) update_call = true;
-		else if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
+		else if (text.contains(QChar(u'(')) || text.contains(QChar(u')'))) update_call = true;
 	}
 	tryCompletionProxy();
 }
 
-void RKCompletionManager::textRemoved (KTextEditor::Document*, const KTextEditor::Range& range, const QString& text) {
-	if (_view->isCompletionActive ()) {
-		if (range.start () < call_opening) update_call = true;
-		else if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
+void RKCompletionManager::textRemoved(KTextEditor::Document*, const KTextEditor::Range& range, const QString& text) {
+	if (_view->isCompletionActive()) {
+		if (range.start() < call_opening) update_call = true;
+		else if (text.contains(QChar(u'(')) || text.contains(QChar(u')'))) update_call = true;
 	}
 	tryCompletionProxy();
 }
@@ -332,16 +337,16 @@ void RKCompletionManager::lineUnwrapped (KTextEditor::Document* , int ) {
 	tryCompletionProxy ();
 }
 
-void RKCompletionManager::cursorPositionChanged (KTextEditor::View* view, const KTextEditor::Cursor& newPosition) {
-	if (_view->isCompletionActive ()) {
+void RKCompletionManager::cursorPositionChanged(KTextEditor::View* view, const KTextEditor::Cursor& newPosition) {
+	if (_view->isCompletionActive()) {
 		if (newPosition < call_opening) update_call = true;
 		else {
-			QString text = view->document ()->text (KTextEditor::Range (newPosition, cached_position));
-			if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
+			QString text = view->document()->text(KTextEditor::Range(newPosition, cached_position));
+			if (text.contains(QChar(u'(')) || text.contains(QChar(u')'))) update_call = true;
 		}
-		tryCompletionProxy ();
-	} else if (settings->autoCursorActivated ()) {
-		tryCompletionProxy ();
+		tryCompletionProxy();
+	} else if (settings->autoCursorActivated()) {
+		tryCompletionProxy();
 	}
 }
 
@@ -529,11 +534,11 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				}
 
 				// No, we cannot just send a fake key event, easily...
-				KActionCollection *kate_edit_actions = view ()->findChild<KActionCollection*> ("edit_actions");
-				QAction *action = kate_edit_actions ? (kate_edit_actions->action (k->key () == Qt::Key_Up ? "move_line_up" : "move_line_down")) : nullptr;
+				KActionCollection *kate_edit_actions = view()->findChild<KActionCollection *>("edit_actions");
+				QAction *action = kate_edit_actions ? (kate_edit_actions->action(k->key() == Qt::Key_Up ? u"move_line_up"_s : u"move_line_down"_s)) : nullptr;
 				if (!action) {
-					kate_edit_actions = view ()->actionCollection ();
-					action = kate_edit_actions ? (kate_edit_actions->action (k->key () == Qt::Key_Up ? "move_line_up" : "move_line_down")) : nullptr;
+					kate_edit_actions = view()->actionCollection();
+					action = kate_edit_actions ? (kate_edit_actions->action(k->key() == Qt::Key_Up ? u"move_line_up"_s : u"move_line_down"_s)) : nullptr;
 				}
 				if (action) action->trigger ();
 				else RK_ASSERT (action);
@@ -721,40 +726,40 @@ RKCallHintModel::RKCallHintModel (RKCompletionManager* manager) : RKCompletionMo
 
 // TODO: There could be more than one function by a certain name, and we could support this!
 void RKCallHintModel::setFunction(RObject* _function) {
-	RK_TRACE (COMMANDEDITOR);
+	RK_TRACE(COMMANDEDITOR);
 
 	if (function == _function) return;
 	function = _function;
 
-	beginResetModel ();
-	if (function && function->isType (RObject::Function)) {
+	beginResetModel();
+	if (function && function->isType(RObject::Function)) {
 		// initialize hint
-		RFunctionObject *fo = static_cast<RFunctionObject*> (function);
-		QStringList args = fo->argumentNames ();
-		QStringList defs = fo->argumentDefaults ();
+		RFunctionObject* fo = static_cast<RFunctionObject*>(function);
+		QStringList args = fo->argumentNames();
+		QStringList defs = fo->argumentDefaults();
 
-		formals = '(';
-		formatting.clear ();
+		formals = u'(';
+		formatting.clear();
 		QTextCharFormat format;
 		format.setForeground(QBrush(Qt::green));
 
 		int pos = 1;
-		for (int i = 0; i < args.size (); ++i) {
+		for (int i = 0; i < args.size(); ++i) {
 			QString pair = args[i];
-			if (!defs.value(i).isEmpty ()) pair.append ('=' + defs[i]);
-			formatting.append ({ pos + args[i].length (), pair.length ()-args[i].length (), format });
+			if (!defs.value(i).isEmpty()) pair.append(u'=' + defs[i]);
+			formatting.append({pos + args[i].length(), pair.length() - args[i].length(), format});
 
-			if (i < (args.size () - 1)) pair.append (", ");
-			formals.append (pair);
+			if (i < (args.size() - 1)) pair.append(u", "_s);
+			formals.append(pair);
 
-			pos = pos + pair.length ();
+			pos = pos + pair.length();
 		}
-		formals.append (')');
+		formals.append(u')');
 		n_completions = 1;
 	} else {
 		n_completions = 0;
 	}
-	endResetModel ();
+	endResetModel();
 }
 
 QVariant RKCallHintModel::data (const QModelIndex& index, int role) const {
@@ -855,21 +860,21 @@ void RKArgumentHintModel::addRCompletions() {
 	}
 }
 
-QVariant RKArgumentHintModel::data (const QModelIndex& index, int role) const {
-	if (isHeaderItem (index)) {
-		if (role == Qt::DisplayRole) return i18n ("Function arguments");
+QVariant RKArgumentHintModel::data(const QModelIndex& index, int role) const {
+	if (isHeaderItem(index)) {
+		if (role == Qt::DisplayRole) return i18n("Function arguments");
 		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
-		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 0; // Sort above other models (except calltip)
-		return QVariant ();
+		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 0;  // Sort above other models (except calltip)
+		return QVariant();
 	}
 
-	int col = index.column ();
-	int row = index.row ();
+	int col = index.column();
+	int row = index.row();
 	if (role == Qt::DisplayRole) {
-		if (col == KTextEditor::CodeCompletionModel::Name) return (args.value (matches.value (row)));
+		if (col == KTextEditor::CodeCompletionModel::Name) return (args.value(matches.value(row)));
 		if (col == KTextEditor::CodeCompletionModel::Postfix) {
-			QString def = defs.value (matches.value (row));
-			if (!def.isEmpty ()) return (QString ('=' + def));
+			QString def = defs.value(matches.value(row));
+			if (!def.isEmpty()) return (QString(u'=' + def));
 		}
 	} else if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) {
 		return row;  // disable sorting
@@ -880,7 +885,7 @@ QVariant RKArgumentHintModel::data (const QModelIndex& index, int role) const {
 		return (20);
 	}
 
-	return QVariant ();
+	return QVariant();
 }
 
 KTextEditor::Range RKArgumentHintModel::completionRange (KTextEditor::View*, const KTextEditor::Cursor&) {
