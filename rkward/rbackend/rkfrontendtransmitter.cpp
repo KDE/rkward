@@ -50,11 +50,11 @@ QString findBackendLibAtPath(const QString &path) {
 	QDir dir(path);
 	dir.makeAbsolute();
 #ifdef Q_OS_WIN
-	QString ret = dir.filePath("rkward.rbackend.lib.dll");
+	QString ret = dir.filePath(u"rkward.rbackend.lib.dll"_s);
 #elif defined(Q_OS_MACOS)
-	QString ret = dir.filePath("librkward.rbackend.lib.dylib");
+	QString ret = dir.filePath(u"librkward.rbackend.lib.dylib"_s);
 #else
-	QString ret = dir.filePath(QStringLiteral("librkward.rbackend.lib.so"));
+	QString ret = dir.filePath(u"librkward.rbackend.lib.so"_s);
 #endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Looking for backend lib at %s", qPrintable(ret));
 	if (QFileInfo::exists(ret)) return ret;
