@@ -225,7 +225,7 @@ int main (int argc, char *argv[]) {
 	if (!oldpath.contains(QStringLiteral(INSTALL_PATH))) {
 		//ensure that PATH is set to include what we deliver with the bundle
 		qputenv("PATH", QStringLiteral("%1/bin:%1/sbin:%2").arg(QStringLiteral(INSTALL_PATH)).arg(oldpath).toLocal8Bit());
-		if (RK_Debug::RK_Debug_Level > 3) qDebug("Adjusting system path to %s", qPrintable(qgetenv("PATH")));
+		if (RK_Debug::RK_Debug_Level > 3) qDebug("Adjusting system path to %s", qPrintable(QString::fromLocal8Bit(qgetenv("PATH"))));
 	}
 #elif defined(Q_OS_UNIX)
 	QStringList data_dirs = QString::fromLocal8Bit(qgetenv("XDG_DATA_DIRS")).split(PATH_VAR_SEP);
