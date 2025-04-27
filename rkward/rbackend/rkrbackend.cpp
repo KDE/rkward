@@ -292,8 +292,8 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	// browser() also takes us here.
 	QVariantMap params;
 	RBackendRequest::RCallbackType request_type = RBackendRequest::ReadLine;
-	params[QStringLiteral("prompt")] = QVariant (prompt);
-	params[QStringLiteral("cancelled")] = QVariant (false);
+	params[QStringLiteral("prompt")] = QVariant(RKTextCodec::fromNative(prompt));
+	params[QStringLiteral("cancelled")] = QVariant(false);
 
 	// add info for browser requests
 	if (hist && (RKRBackend::default_global_context != ROb(R_GlobalContext))) {
@@ -480,11 +480,11 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			QDir dir (RKRBackendProtocolBackend::dataDir ());
 			int i=0;
 			while (true) {
-				filename = "rkward_recover" + QString::number (i) + ".RData";
-				if (!dir.exists (filename)) break;
+				filename = u"rkward_recover"_s + QString::number(i) + u".RData"_s;
+				if (!dir.exists(filename)) break;
 				i++;
 			}
-			filename = dir.absoluteFilePath (filename);
+			filename = dir.absoluteFilePath(filename);
 
 			RFn::R_SaveGlobalEnvToFile(filename.toLocal8Bit().data());
 			RK_DEBUG(RBACKEND, DL_WARNING, "Created emergency save file in %s", qPrintable(filename));
@@ -512,17 +512,17 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	RKRBackendProtocolBackend::doExit();
 }
 
-void RSuicide (const char* message) {
-	RK_TRACE (RBACKEND);
+void RSuicide(const char* message) {
+	RK_TRACE(RBACKEND);
 
-	if (!RKRBackend::this_pointer->isKilled ()) {
-		RBackendRequest request (true, RBackendRequest::BackendExit);
-		request.params[QStringLiteral("message")] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1", message));
-		RKRBackend::this_pointer->handleRequest (&request);
+	if (!RKRBackend::this_pointer->isKilled()) {
+		RBackendRequest request(true, RBackendRequest::BackendExit);
+		request.params[u"message"_s] = QVariant(i18n("The R engine has encountered a fatal error:\n%1", RKTextCodec::fromNative(message)));
+		RKRBackend::this_pointer->handleRequest(&request);
 		RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
-		RCleanUp (SA_SUICIDE, 1, 0);
+		RCleanUp(SA_SUICIDE, 1, 0);
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 	}
 }
 
@@ -554,11 +554,11 @@ void RKRBackend::tryToDoEmergencySave () {
 	}
 }
 
-QStringList charPArrayToQStringList (const char** chars, int count) {
+QStringList charPArrayToQStringList(const char** chars, int count) {
 	QStringList ret;
 	for (int i = 0; i < count; ++i) {
 		// do we need to do locale conversion, here?
-		ret.append (chars[i]);
+		ret.append(RKTextCodec::fromNative(chars[i]));
 	}
 	return ret;
 }
@@ -567,7 +567,7 @@ int RChooseFile(int isnew, char *buf, int len) {
 	RK_TRACE (RBACKEND);
 
 	QStringList params;
-	params << QString() /* caption */ << QString() /* initial */ << QStringLiteral("*") /* filter */ << (isnew ? "newfile" : "file");
+	params << QString() /* caption */ << QString() /* initial */ << QStringLiteral("*") /* filter */ << (isnew ? u"newfile"_s : u"file"_s);
 	auto res = RKRBackend::this_pointer->doRCallRequest(QStringLiteral("choosefile"), params, RKRBackend::Synchronous);
 
 	QByteArray localres = RKTextCodec::toNative(res.ret.toString());
@@ -598,12 +598,12 @@ void REditFilesHelper (const QStringList &files, const QStringList &titles, cons
 	RKRBackend::this_pointer->handleRequest (&request);
 }
 
-int REditFiles (int nfile, const char **file, const char **title, const char *wtitle) {
-	RK_TRACE (RBACKEND);
+int REditFiles(int nfile, const char **file, const char **title, const char *wtitle) {
+	RK_TRACE(RBACKEND);
 
-	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (title, nfile), wtitle, RBackendRequest::EditFiles, false, true);
+	REditFilesHelper(charPArrayToQStringList(file, nfile), charPArrayToQStringList(title, nfile), RKTextCodec::fromNative(wtitle), RBackendRequest::EditFiles, false, true);
 
-// default implementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
+	// default implementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
 	return (nfile <= 0);
 }
 
@@ -642,12 +642,12 @@ SEXP doShowFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP delete_files, SEXP 
 	return (doShowEditFiles (files, titles, wtitle, delete_files, prompt, RBackendRequest::ShowFiles));
 }
 
-int RShowFiles (int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char */* pager */) {
-	RK_TRACE (RBACKEND);
+int RShowFiles(int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char * /* pager */) {
+	RK_TRACE(RBACKEND);
 
-	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (headers, nfile), QString (wtitle), RBackendRequest::ShowFiles, (bool) del, true);
+	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (headers, nfile), RKTextCodec::fromNative(wtitle), RBackendRequest::ShowFiles, (bool) del, true);
 
-// default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
+	// default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
 	return 1;
 }
 
@@ -684,18 +684,18 @@ SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP
 	return ret;
 }
 
-void RShowMessage (const char* message) {
-	RK_TRACE (RBACKEND);
+void RShowMessage(const char* message) {
+	RK_TRACE(RBACKEND);
 
-	doDialogHelper (i18n ("Message from the R backend"), message, QStringLiteral("ok"), QString (), QString (), QStringLiteral("ok"), true);
+	doDialogHelper(i18n("Message from the R backend"), RKTextCodec::fromNative(message), u"ok"_s, QString(), QString(), u"ok"_s, true);
 }
 
 // TODO: currently used on windows, only!
-int RAskYesNoCancel (const char* message) {
-	RK_TRACE (RBACKEND);
+int RAskYesNoCancel(const char* message) {
+	RK_TRACE(RBACKEND);
 
-	if (RKRBackend::this_pointer->killed) return -1;	// HACK: At this point R asks whether to save the workspace. We have already handled that. So return -1 for "no"
-	return doDialogHelper (i18n ("Question from the R backend"), message, QStringLiteral("yes"), QStringLiteral("no"), QStringLiteral("cancel"), QStringLiteral("yes"), true);
+	if (RKRBackend::this_pointer->killed) return -1;  // HACK: At this point R asks whether to save the workspace. We have already handled that. So return -1 for "no"
+	return doDialogHelper(i18n("Question from the R backend"), RKTextCodec::fromNative(message), u"yes"_s, u"no"_s, u"cancel"_s, u"yes"_s, true);
 }
 
 void RBusy (int busy) {
@@ -871,7 +871,7 @@ SEXP doRCall (SEXP _call, SEXP _args, SEXP _sync, SEXP _nested) {
 }
 
 QString getLibLoc() {
-	return RKRBackendProtocolBackend::dataDir() + "/.rkward_packages/" + QString::number(RKRBackend::this_pointer->r_version / 10);
+	return RKRBackendProtocolBackend::dataDir() + u"/.rkward_packages/"_s + QString::number(RKRBackend::this_pointer->r_version / 10);
 }
 
 // Function to handle several simple calls from R code, that do not need any special arguments, or interaction with the frontend process.
@@ -909,11 +909,11 @@ SEXP doSimpleBackendCall (SEXP _call) {
 		else RK_ASSERT(false); // should have been handled in frontend
 	} else if (call == QLatin1String("backendSessionInfo")) {
 		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
-		QStringList lines("Debug message file (this may contain relevant diagnostic output in case of trouble):");
+		QStringList lines(u"Debug message file (this may contain relevant diagnostic output in case of trouble):"_s);
 		lines.append(RKRBackendProtocolBackend::backendDebugFile());
 		lines.append(QString());
 		// NOTE: R_SVN_REVISON used to be a string, but has changed to numeric constant in R 3.0.0. QString::arg() handles both.
-		lines.append(QStringLiteral("R version (compile time): %1").arg(QString(R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg(R_SVN_REVISION)));
+		lines.append(QStringLiteral("R version (compile time): %1").arg(QStringLiteral(R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg(R_SVN_REVISION)));
 		return RKRSupport::StringListToSEXP(lines);
 	}
 
@@ -1401,14 +1401,13 @@ void RKRBackend::startOutputCapture () {
 	pushOutputCapture (RecordMessages | RecordOutput);
 }
 
-void RKRBackend::printAndClearCapturedMessages (bool with_header) {
-	RK_TRACE (RBACKEND);
+void RKRBackend::printAndClearCapturedMessages(bool with_header) {
+	RK_TRACE(RBACKEND);
 
-	QString out = popOutputCapture (true);
-
-	if (out.isEmpty ()) return;
-	if (with_header) out.prepend ("<h2>Messages, warnings, or errors:</h2>\n");
-	catToOutputFile (out);
+	QString out = popOutputCapture(true);
+	if (out.isEmpty()) return;
+	if (with_header) out.prepend(u"<h2>Messages, warnings, or errors:</h2>\n"_s);
+	catToOutputFile(out);
 }
 
 void RKRBackend::run(const QString &locale_dir, bool setup) {
@@ -1572,23 +1571,23 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	// Try to load rkward package. If that fails, or is the wrong version, try to install
 	// rkward package, then load again.
 	QString libloc = getLibLoc();
-	QString versioncheck = QStringLiteral("stopifnot(.rk.app.version==\"%1\")").arg(RKWARD_VERSION);
-	QString command = "local({\n"
-	                  "  libloc <- " + RKRSharedFunctionality::quote(libloc) + "\n"
+	QString versioncheck = QStringLiteral("stopifnot(.rk.app.version==\"%1\")").arg(QStringLiteral(RKWARD_VERSION));
+	QString command = QStringLiteral("local({\n"
+	                  "  libloc <- ") + RKRSharedFunctionality::quote(libloc) + QStringLiteral("\n"
 	                  "  if (!dir.exists (libloc)) dir.create(libloc, recursive=TRUE)\n"
-	                  "  ok <- FALSE\n"
-	                  + (setup ? "# skipping: " : "") +
-	                  " suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); " + versioncheck + "; ok <- TRUE}))\n"
+	                  "  ok <- FALSE\n")
+	                  + (setup ? u"# skipping: "_s : u""_s) +
+	                  QStringLiteral(" suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); ") + versioncheck + QStringLiteral("; ok <- TRUE}))\n"
 	                  "  if (!ok) {\n"
 	                  "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
 	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\", INSTALL_opts=\"--no-multiarch\")\n"
 	                  "    library (\"rkward\", lib.loc=libloc)\n"
 	                  "  }\n"
 	                  "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be avaiable for help serach, but hopefully, not get into the way, otherwise
-	                  "})\n";
+	                  "})\n");
 	if (!runDirectCommand(command)) lib_load_fail = true;
 	RK_setupGettext(locale_dir);	// must happen *after* package loading, since R will re-set it
-	if (!runDirectCommand(versioncheck + "\n")) lib_load_fail = true;
+	if (!runDirectCommand(versioncheck + u"\n"_s)) lib_load_fail = true;
 	if (!runDirectCommand(QStringLiteral(".rk.fix.assignments ()\n"))) sink_fail = true;
 
 // error/output sink and help browser

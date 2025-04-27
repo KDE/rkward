@@ -42,14 +42,14 @@ RKGraphicsDeviceFrontendTransmitter::~RKGraphicsDeviceFrontendTransmitter () {
 	if (local_server->isListening ()) local_server->close ();
 }
 
-void RKGraphicsDeviceFrontendTransmitter::setupServer () {
-	RK_TRACE (GRAPHICS_DEVICE);
+void RKGraphicsDeviceFrontendTransmitter::setupServer() {
+	RK_TRACE(GRAPHICS_DEVICE);
 
-	RK_ASSERT (!local_server);
+	RK_ASSERT(!local_server);
 	local_server = new QLocalServer(this);
-	RK_ASSERT (local_server->listen ("rkd" + KRandom::randomString (8)));
-	connect (local_server, &QLocalServer::newConnection, this, &RKGraphicsDeviceFrontendTransmitter::newConnection);
-	server_name = local_server->fullServerName ();
+	RK_ASSERT(local_server->listen(u"rkd"_s + KRandom::randomString(8)));
+	connect(local_server, &QLocalServer::newConnection, this, &RKGraphicsDeviceFrontendTransmitter::newConnection);
+	server_name = local_server->fullServerName();
 }
 
 void RKGraphicsDeviceFrontendTransmitter::newConnection () {

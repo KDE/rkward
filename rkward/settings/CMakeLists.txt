@@ -35,4 +35,3 @@ ENDIF (WIN32 OR USE_BINARY_PACKAGES)
 
 ADD_LIBRARY(settings STATIC ${settings_STAT_SRCS})
 TARGET_LINK_LIBRARIES(settings Qt6::Widgets KF6::WidgetsAddons Qt6::Xml KF6::ConfigCore KF6::Parts KF6::TextEditor KF6::I18n KF6::KIOWidgets)
-add_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove, here, once enabled on top level

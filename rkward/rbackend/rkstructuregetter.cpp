@@ -199,15 +199,15 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 			if (RFn::TYPEOF (value) == LANGSXP) {
 				SEXP symb = RFn::Rf_protect (RFn::CAR (value));
 				QString cl;
-				if (RFn::TYPEOF (symb) == SYMSXP) cl = RFn::R_CHAR(RFn::PRINTNAME (symb));
+				if (RFn::TYPEOF (symb) == SYMSXP) cl = RKTextCodec::fromNative(RFn::R_CHAR(RFn::PRINTNAME (symb)));
 				RFn::Rf_unprotect (1);
 				if ((cl != QLatin1String("if")) && (cl != QLatin1String("while")) && (cl != QLatin1String("for")) && (cl != QLatin1String("=")) && (cl != QLatin1String("<-")) && (cl != QLatin1String("(")) && (cl != QLatin1String("{"))) cl = QLatin1String("call");
-				classes = QStringList (cl);
+				classes = QStringList(cl);
                         } else if (RFn::TYPEOF (value) == BCODESXP) {
 				value = ROb(R_NilValue);   // This is a bit lame, but bytecode cannot be cast to expression, below, and no idea what else to do with it (or what info to extract, anyway)
-				classes = QStringList("bytecode");
+				classes = QStringList(u"bytecode"_s);
 			} else {
-				classes = QStringList ("name");
+				classes = QStringList(u"name"_s);
 			}
 		}
 

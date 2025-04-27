@@ -16,6 +16,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rkreventloop.h"
 #include "../../debug.h"
 
+using namespace Qt::Literals::StringLiterals;
+
 #undef RK_TRACE
 #define RK_TRACE(flags)
 /*
@@ -178,7 +180,7 @@ public:
 	RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill);
 #endif
 #define WRITE_FONT(dev) \
-	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
+	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString::fromUtf8(gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->getFontFamily(gc->fontface == 5)))
 
 static void RKD_QueryResolution (double *dpix, double *dpiy) {
 	RK_TRACE(GRAPHICS_DEVICE);
@@ -529,7 +531,7 @@ static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
 	// Return value FALSE: Let R ask, instead
 }
 
-void RKD_EventHelper (pDevDesc dev, int code) {
+void RKD_EventHelper(pDevDesc dev, int code) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
@@ -539,17 +541,17 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 				SEXP sprompt = RFn::Rf_findVar(RFn::Rf_install("prompt"), dev->eventEnv);
 				if (RFn::Rf_length(sprompt) == 1) prompt = QString::fromUtf8(RFn::R_CHAR(RFn::Rf_asChar(sprompt)));
 			}
-			WRITE_HEADER (RKDStartGettingEvents, dev);
+			WRITE_HEADER(RKDStartGettingEvents, dev);
 			RKD_OUT_STREAM << prompt;
 			return;
 		} else if (code == 0) {
-			WRITE_HEADER (RKDStopGettingEvents, dev);
+			WRITE_HEADER(RKDStopGettingEvents, dev);
 			return;
 		} else {
-			WRITE_HEADER (RKDFetchNextEvent, dev);
+			WRITE_HEADER(RKDFetchNextEvent, dev);
 		}
 	}
-	RK_ASSERT (code == 2);
+	RK_ASSERT(code == 2);
 
 	// NOTE: The event handler functions doKeybd() and doMouseEvent() could conceivably produce errors -> longjump
 	// Thus we need to make sure the read-guard has gone out of scope before that. Thus, we take the somewhat clunky
@@ -572,20 +574,21 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 	}
 
 	if (event_code == RKDFrontendCancel) {
-		RFn::Rf_error ("Interrupted by user");
+		RFn::Rf_error("Interrupted by user");
 		return;  // not reached
 	}
 	if (event_code == RKDNothing) {
 		if (RFn::Rf_doesIdle(dev)) RFn::Rf_doIdle(dev);
 		return;
 	} else if (event_code == RKDKeyPress) {
-		if (modifiers - (modifiers & Qt::ShiftModifier)) {  // any other modifier than Shift, alone. NOTE: devX11.c and devWindows.c handle Ctrl, only as of R 3.0.0
+		if (modifiers -
+		    (modifiers & Qt::ShiftModifier)) {  // any other modifier than Shift, alone. NOTE: devX11.c and devWindows.c handle Ctrl, only as of R 3.0.0
 			QString mod_text;
-			if (modifiers & Qt::ControlModifier) mod_text.append ("ctrl-");
-			if (modifiers & Qt::AltModifier) mod_text.append ("alt-");
-			if (modifiers & Qt::MetaModifier) mod_text.append ("meta-");
-			if (text.isEmpty () && (modifiers & Qt::ShiftModifier)) mod_text.append ("shift-");     // don't apply shift when there is text (where it has already been handled)
-			text = mod_text + text.toUpper ();
+			if (modifiers & Qt::ControlModifier) mod_text.append(u"ctrl-"_s);
+			if (modifiers & Qt::AltModifier) mod_text.append(u"alt-"_s);
+			if (modifiers & Qt::MetaModifier) mod_text.append(u"meta-"_s);
+			if (text.isEmpty() && (modifiers & Qt::ShiftModifier)) mod_text.append(u"shift-"_s);  // don't apply shift when there is text (where it has already been handled)
+			text = mod_text + text.toUpper();
 		}
 
 		R_KeyName r_key_name = R_KeyName::knUNKNOWN;
@@ -593,7 +596,7 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 		else if (keycode == Qt::Key_Right) r_key_name = R_KeyName::knRIGHT;
 		else if (keycode == Qt::Key_Up) r_key_name = R_KeyName::knUP;
 		else if (keycode == Qt::Key_Down) r_key_name = R_KeyName::knDOWN;
-		else if ((keycode >= Qt::Key_F1) && (keycode <= Qt::Key_F12)) r_key_name = (R_KeyName) (R_KeyName::knF1 + (keycode - Qt::Key_F1));
+		else if ((keycode >= Qt::Key_F1) && (keycode <= Qt::Key_F12)) r_key_name = (R_KeyName)(R_KeyName::knF1 + (keycode - Qt::Key_F1));
 		else if (keycode == Qt::Key_PageUp) r_key_name = R_KeyName::knPGUP;
 		else if (keycode == Qt::Key_PageDown) r_key_name = R_KeyName::knPGDN;
 		else if (keycode == Qt::Key_End) r_key_name = R_KeyName::knEND;
@@ -601,9 +604,11 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 		else if (keycode == Qt::Key_Insert) r_key_name = R_KeyName::knINS;
 		else if (keycode == Qt::Key_Delete) r_key_name = R_KeyName::knDEL;
 
-		RFn::Rf_doKeybd(dev, r_key_name, text.toUtf8 ().data());
-	} else {    // all others are mouse events
-		RFn::Rf_doMouseEvent(dev, event_code == RKDMouseDown ? R_MouseEvent::meMouseDown : (event_code == RKDMouseUp ? R_MouseEvent::meMouseUp : R_MouseEvent::meMouseMove), buttons, x, y);
+		RFn::Rf_doKeybd(dev, r_key_name, text.toUtf8().data());
+	} else {  // all others are mouse events
+		RFn::Rf_doMouseEvent(
+		    dev, event_code == RKDMouseDown ? R_MouseEvent::meMouseDown : (event_code == RKDMouseUp ? R_MouseEvent::meMouseUp : R_MouseEvent::meMouseMove),
+		    buttons, x, y);
 	}
 }
 
@@ -942,9 +947,9 @@ void RKD_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, double size,
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER(RKDGlyph, dev);
 
-		QString qfont = QString(RFn::R_GE_glyphFontFile(font));
+		QString qfont = QString::fromUtf8(RFn::R_GE_glyphFontFile(font));
 		quint8 index = RFn::R_GE_glyphFontIndex(font);
-		QString family = QString(RFn::R_GE_glyphFontFamily(font));
+		QString family = QString::fromUtf8(RFn::R_GE_glyphFontFamily(font));
 		quint32 weight = RFn::R_GE_glyphFontWeight(font);
 		quint8 style = mapTextStyle(RFn::R_GE_glyphFontStyle(font));
 		// NOTE: family, weight, and style are used as fallback, if font(-file), and index don't work

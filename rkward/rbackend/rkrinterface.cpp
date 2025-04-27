@@ -89,9 +89,9 @@ RInterface::RInterface () {
 	auto fake_c = new RCommand(i18n("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n("R Startup"));
 	fake_c->whenFinished(this, [this](RCommand *command) {
 		if (startup_phase2_error || command->failed()) backend_error.message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
-		if (!backend_error.message.isEmpty ()) {
+		if (!backend_error.message.isEmpty()) {
 			backend_error.message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
-			backend_error.details = command->fullOutput().replace('<', QLatin1String("&lt;")).replace('\n', QLatin1String("<br>"));
+			backend_error.details = command->fullOutput().replace(u'<', u"&lt;"_s).replace(u'\n', u"<br>"_s);
 			backend_error.title = i18n("Error starting R");
 			// reporting the error will happen via RKWardMainWindow, which calls the setup wizard in this case
 		}
@@ -254,7 +254,7 @@ void RInterface::handleCommandOut (RCommand *command) {
 		command->status |= RCommand::HasError;
 		ROutput *out = new ROutput;
 		out->type = ROutput::Error;
-		out->output = ("--- interrupted ---");
+		out->output = u"--- interrupted ---"_s;
 		command->output_list.append (out);
 		command->newOutput (out);
 	}
@@ -404,7 +404,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		if (qEnvironmentVariableIsSet("APPDIR")) {
 			// Running inside an AppImage. As soon as R has started, it should behave as if running in the main (system) environment (esp. when calling helper binaries such as wget or gcc).
 			// Unset any paths starting with APPDIR, _except_ those inside R_HOME.
-			runStartupCommand(new RCommand("local({\n"
+			runStartupCommand(new RCommand(QStringLiteral("local({\n"
 			"	appdir <- Sys.getenv(\"APPDIR\")\n"
 			"	fix <- function(key) {\n"
 			"		paths <- strsplit(Sys.getenv(key), \":\", fixed=TRUE)[[1]]\n"
@@ -415,7 +415,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			"	}\n"
 			"	fix(\"LD_LIBRARY_PATH\")\n"
 			"	fix(\"PATH\")\n"
-			"})\n", RCommand::App | RCommand::Sync), chain, [](RCommand*) {});
+			"})\n"), RCommand::App | RCommand::Sync), chain, [](RCommand*) {});
 		}
 
 		// find out about standard library locations
@@ -457,7 +457,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory();
 		if (cd_to.isEmpty()) cd_to = QDir::currentPath();
 		if (cd_to.isEmpty()) cd_to = QStringLiteral("."); // we must be in a non-existent dir. cd'ing to "." will cause us to sync with the backend
-		RInterface::issueCommand(new RCommand("setwd(" + RObject::rQuote(cd_to) + ")\n", RCommand::App | RCommand::Sync), chain);
+		RInterface::issueCommand(new RCommand(u"setwd("_s + RObject::rQuote(cd_to) + u")\n"_s, RCommand::App | RCommand::Sync), chain);
 	} else {
 		processRBackendRequest (request);
 	}
@@ -599,7 +599,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		QVariantList al = args.toList();  // added, removed, changed
 		RObjectList::getGlobalEnv()->updateFromR(in_chain, al.value(0).toStringList(), al.value(1).toStringList());
 		QStringList changed = al.value(2).toStringList();
-		RK_DEBUG(RBACKEND, DL_DEBUG, "symbols added %s, removed %s, changed %s", qPrintable(al.value(0).toStringList().join(",")), qPrintable(al.value(1).toStringList().join(",")), qPrintable(al.value(2).toStringList().join(",")));
+		RK_DEBUG(RBACKEND, DL_DEBUG, "symbols added %s, removed %s, changed %s", qPrintable(al.value(0).toStringList().join(u","_s)), qPrintable(al.value(1).toStringList().join(u","_s)), qPrintable(al.value(2).toStringList().join(u","_s)));
 		for (int i = 0; i < changed.count (); ++i) {
 			QString object_name = changed[i];
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
@@ -674,7 +674,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		QDir::setCurrent(arglist.value(0));
 		Q_EMIT backendWorkdirChanged();
 	} else if (call == QLatin1String("highlightRCode")) {
-		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(arglist.join('\n')));
+		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(arglist.join(u'\n')));
 	} else if (call == QLatin1String("quit")) {
 		RKWardMainWindow::getMain()->close();
 		// if we're still alive, quitting was canceled
@@ -723,7 +723,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		QFileDialog d(nullptr, arglist.value(0));  // caption
 		QString initial = arglist.value(1);
 		QString cat;
-		if (initial.startsWith('#')) {
+		if (initial.startsWith(u'#')) {
 			cat = initial.mid(1);
 			initial = QFileInfo(RKRecentUrls::mostRecentUrl(cat).toLocalFile()).absolutePath();
 		}
@@ -731,7 +731,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 		d.setDirectory(initial);
 		QString filter = arglist.value(2);
 		if (!filter.isEmpty()) {
-			if (!filter.contains('(')) filter += '(' + filter + ')';
+			if (!filter.contains(u'(')) filter += u'(' + filter + u')';
 			d.setNameFilter(filter);
 		}
 		QString mode = arglist.value(3);
@@ -765,7 +765,7 @@ GenericRRequestResult RInterface::processRCallRequest (const QString &call, cons
 			QStringList list = arglist.mid(2);
 			RKWorkplace::mainWorkplace()->restoreWorkplace(list);
 		} else {
-			RK_ASSERT(arglist.value(0) == "get");
+			RK_ASSERT(arglist.value(0) == "get"_L1);
 			return GenericRRequestResult(RKWorkplace::mainWorkplace()->makeWorkplaceDescription());
 		}
 	} else if (call == QLatin1String("set.window.placement.hint")) {

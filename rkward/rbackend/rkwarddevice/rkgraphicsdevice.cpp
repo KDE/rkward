@@ -24,6 +24,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../../debug.h"
 
+using namespace Qt::Literals::StringLiterals;
+
 #define UPDATE_INTERVAL 100
 
 QHash<int, RKGraphicsDevice*> RKGraphicsDevice::devices;
@@ -193,11 +195,12 @@ void RKGraphicsDevice::updateNow () {
 }
 
 void RKGraphicsDevice::checkSize() {
-	RK_TRACE (GRAPHICS_DEVICE);
-	if(!view) return;
-	if (view->size () != area.size ()) {
-		if(view->size().isEmpty()) return;
-		RInterface::issueCommand(new RCommand ("rkward:::RK.resize(" + QString::number(devices.key(this) + 1) + ',' + QString::number(id) + ')', RCommand::PriorityCommand));
+	RK_TRACE(GRAPHICS_DEVICE);
+	if (!view) return;
+	if (view->size() != area.size()) {
+		if (view->size().isEmpty()) return;
+		RInterface::issueCommand(
+		    new RCommand(u"rkward:::RK.resize("_s + QString::number(devices.key(this) + 1) + u',' + QString::number(id) + u')', RCommand::PriorityCommand));
 	}
 }
 

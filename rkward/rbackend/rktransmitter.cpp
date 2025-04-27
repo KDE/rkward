@@ -209,44 +209,44 @@ RKAbstractTransmitter::~RKAbstractTransmitter() {
 	_instance = nullptr;
 }
 
-void RKAbstractTransmitter::transmitRequest (RBackendRequest *request) {
-	RK_TRACE (RBACKEND);
-	RK_ASSERT (connection);
+void RKAbstractTransmitter::transmitRequest(RBackendRequest *request) {
+	RK_TRACE(RBACKEND);
+	RK_ASSERT(connection);
 
-	if (!connection->isOpen ()) {
-		handleTransmissionError ("Connection not open while trying to write request. Last error was: " + connection->errorString ());
+	if (!connection->isOpen()) {
+		handleTransmissionError(u"Connection not open while trying to write request. Last error was: "_s + connection->errorString());
 		return;
 	}
 
-	RKRBackendSerializer::serialize (*request, streamer.outstream);
-	RK_DEBUG (RBACKEND, DL_DEBUG, "Transmitting request type %d of length %d", (int) request->type, streamer.outSize ());
-	streamer.writeOutBuffer ();
+	RKRBackendSerializer::serialize(*request, streamer.outstream);
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Transmitting request type %d of length %d", (int)request->type, streamer.outSize());
+	streamer.writeOutBuffer();
 }
 
-void RKAbstractTransmitter::customEvent (QEvent *e) {
-	RK_TRACE (RBACKEND);
+void RKAbstractTransmitter::customEvent(QEvent *e) {
+	RK_TRACE(RBACKEND);
 
-	if (((int) e->type ()) == ((int) RKRBackendEvent::RKWardEvent)) {
-		RKRBackendEvent *ev = static_cast<RKRBackendEvent*> (e);
-		writeRequest (ev->data ());
+	if (((int)e->type()) == ((int)RKRBackendEvent::RKWardEvent)) {
+		RKRBackendEvent *ev = static_cast<RKRBackendEvent *>(e);
+		writeRequest(ev->data());
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 		return;
 	}
 }
 
-void RKAbstractTransmitter::fetchTransmission () {
-	RK_TRACE (RBACKEND);
+void RKAbstractTransmitter::fetchTransmission() {
+	RK_TRACE(RBACKEND);
 
-	while (connection->bytesAvailable ()) {
-		if (!streamer.readInBuffer ()) break;
+	while (connection->bytesAvailable()) {
+		if (!streamer.readInBuffer()) break;
 
-		requestReceived (RKRBackendSerializer::unserialize (streamer.instream));
-		RK_ASSERT (streamer.instream.atEnd ());   // full transmission should have been read
+		requestReceived(RKRBackendSerializer::unserialize(streamer.instream));
+		RK_ASSERT(streamer.instream.atEnd());  // full transmission should have been read
 	}
 
-	if (!connection->isOpen ()) {
-		handleTransmissionError ("Connection closed unexepctedly. Last error was: " + connection->errorString ());
+	if (!connection->isOpen()) {
+		handleTransmissionError(u"Connection closed unexepctedly. Last error was: "_s + connection->errorString());
 		return;
 	}
 }
@@ -266,10 +266,9 @@ void RKAbstractTransmitter::setConnection (QLocalSocket *_connection) {
 	if (connection->bytesAvailable ()) QTimer::singleShot(0, this, &RKAbstractTransmitter::fetchTransmission);
 }
 
-void RKAbstractTransmitter::disconnected () {
-	RK_TRACE (RBACKEND);
+void RKAbstractTransmitter::disconnected() {
+	RK_TRACE(RBACKEND);
 
 	if (!connection) return;  // -> May happen in RKRBackendTransmitter::doExit()
-	handleTransmissionError ("Connection closed unexpectedly. Last error was: " + connection->errorString ());
+	handleTransmissionError(u"Connection closed unexpectedly. Last error was: "_s + connection->errorString());
 }
-

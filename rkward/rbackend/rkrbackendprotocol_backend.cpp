@@ -45,17 +45,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 	// NOTE: This function serves no benefit over qDebug() in the backend. But provided for consistency with the frontend.
 	// See the frontend version in main.cpp
-	void RKDebug (int flags, int level, const char *fmt, ...) {
-		Q_UNUSED (flags);
-		Q_UNUSED (level);
-		const int bufsize = 1024*8;
+	void RKDebug(int flags, int level, const char *fmt, ...) {
+		Q_UNUSED(flags);
+		Q_UNUSED(level);
+		const int bufsize = 1024 * 8;
 		char buffer[bufsize];
 
 		va_list ap;
-		va_start (ap, fmt);
-		vsnprintf (buffer, bufsize-1, fmt, ap);
-		va_end (ap);
-		RKDebugMessageOutput (QtDebugMsg, QMessageLogContext (), buffer);
+		va_start(ap, fmt);
+		vsnprintf(buffer, bufsize - 1, fmt, ap);
+		va_end(ap);
+		RKDebugMessageOutput(QtDebugMsg, QMessageLogContext(), QString::fromUtf8(buffer));
 	}
 
 #ifdef RK_DLOPEN_LIBRSO
@@ -83,37 +83,37 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			}
 		}
 #endif
-		QCoreApplication app (argc, argv);
+		QCoreApplication app(argc, argv);
 
 		setvbuf(stdout, nullptr, _IONBF, 0);
 		setvbuf(stderr, nullptr, _IONBF, 0);
 
 		RK_Debug::RK_Debug_Flags = RBACKEND | GRAPHICS_DEVICE;
-		if (RK_Debug::setupLogFile (QDir::tempPath () + "/rkward.rbackend")) qInstallMessageHandler (RKDebugMessageOutput);
+		if (RK_Debug::setupLogFile(QDir::tempPath() + u"/rkward.rbackend"_s)) qInstallMessageHandler(RKDebugMessageOutput);
 
 		QString servername, rkd_server_name;
 		QString data_dir, locale_dir;
 		QStringList args = app.arguments();
 		bool setup = false;
-		for (int i = 1; i < args.count (); ++i) {
-			if (args[i].startsWith (QLatin1String ("--debug-level"))) {
-				RK_Debug::RK_Debug_Level = args[i].section ('=', 1).toInt ();
-			} else if (args[i].startsWith (QLatin1String ("--server-name"))) {
-				servername = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
-			} else if (args[i].startsWith (QLatin1String ("--data-dir"))) {
-				data_dir = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
-			} else if (args[i].startsWith (QLatin1String ("--locale-dir"))) {
-				locale_dir = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
-			} else if (args[i].startsWith (QLatin1String ("--rkd-server-name"))) {
-				rkd_server_name = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
+		for (int i = 1; i < args.count(); ++i) {
+			if (args[i].startsWith(QLatin1String("--debug-level"))) {
+				RK_Debug::RK_Debug_Level = args[i].section(u'=', 1).toInt();
+			} else if (args[i].startsWith(QLatin1String("--server-name"))) {
+				servername = QUrl::fromPercentEncoding(args[i].section(u'=', 1).toUtf8());
+			} else if (args[i].startsWith(QLatin1String("--data-dir"))) {
+				data_dir = QUrl::fromPercentEncoding(args[i].section(u'=', 1).toUtf8());
+			} else if (args[i].startsWith(QLatin1String("--locale-dir"))) {
+				locale_dir = QUrl::fromPercentEncoding(args[i].section(u'=', 1).toUtf8());
+			} else if (args[i].startsWith(QLatin1String("--rkd-server-name"))) {
+				rkd_server_name = QUrl::fromPercentEncoding(args[i].section(u'=', 1).toUtf8());
 			} else if (args[i] == QLatin1String("--setup")) {
 				setup = true;
 			} else {
-				printf ("unknown argument %s", qPrintable (args[i]));
+				printf("unknown argument %s", qPrintable(args[i]));
 			}
 		}
-		if (servername.isEmpty ()) {
-			printf ("no server to connect to\n");
+		if (servername.isEmpty()) {
+			printf("no server to connect to\n");
 			return 1;
 		}
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Qt version (runtime): %s", qVersion());

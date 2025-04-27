@@ -86,9 +86,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "version.h"
 
 #ifdef Q_OS_WIN
-#	define PATH_VAR_SEP ';'
+#	define PATH_VAR_SEP u';'
 #else
-#	define PATH_VAR_SEP ':'
+#	define PATH_VAR_SEP u':'
 #endif
 
 bool RK_Debug_Terminal = true;
@@ -123,18 +123,18 @@ void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &ctx, const 
 /** The point of this redirect (to be called via the RK_DEBUG() macro) is to separate RKWard specific debug messages from
  * any other noise, coming from Qt / kdelibs. Also it allows us to retain info on flags and level, and to show messages
  * in a tool window, esp. for debugging plugins. */
-void RKDebug (int flags, int level, const char *fmt, ...) {
-	const int bufsize = 1024*8;
+void RKDebug(int flags, int level, const char *fmt, ...) {
+	const int bufsize = 1024 * 8;
 	char buffer[bufsize];
 
 	va_list ap;
-	va_start (ap, fmt);
-	vsnprintf (buffer, bufsize-1, fmt, ap);
-	va_end (ap);
-	RKDebugMessageOutput (QtDebugMsg, QMessageLogContext (), buffer);
-	if (QApplication::instance ()->thread () == QThread::currentThread ()) {
+	va_start(ap, fmt);
+	vsnprintf(buffer, bufsize - 1, fmt, ap);
+	va_end(ap);
+	RKDebugMessageOutput(QtDebugMsg, QMessageLogContext(), QString::fromUtf8(buffer));
+	if (QApplication::instance()->thread() == QThread::currentThread()) {
 		// not safe to call from any other than the GUI thread
-		RKDebugMessageWindow::newMessage (flags, level, QString (buffer));
+		RKDebugMessageWindow::newMessage(flags, level, QString::fromUtf8(buffer));
 	}
 }
 
@@ -171,7 +171,7 @@ int main (int argc, char *argv[]) {
 	KUrlAuthorized::allowUrlAction (QStringLiteral("redirect"), QUrl(QStringLiteral("rkward://")), QUrl (QStringLiteral("help:")));
 
 	KLocalizedString::setApplicationDomain ("rkward");
-	KAboutData aboutData (QStringLiteral("rkward"), i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002 - 2025"), QString (), QStringLiteral("https://rkward.kde.org"));
+	KAboutData aboutData(QStringLiteral("rkward"), i18n("RKWard"), QStringLiteral(RKWARD_VERSION), i18n("Frontend to the R statistics language"), KAboutLicense::GPL, i18n("(c) 2002 - 2025"), QString(), QStringLiteral("https://rkward.kde.org"));
 	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
 	aboutData.addAuthor (i18n ("Pierre Ecochard"), i18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (i18n ("Prasenjit Kapat"), i18n ("Many plugins, suggestions, plot history feature"));
@@ -208,7 +208,7 @@ int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_FATAL - args[RKCommandLineArgs::DebugLevel].toInt();
 	RK_Debug::RK_Debug_Flags = args[RKCommandLineArgs::DebugFlags].toInt();
 	RK_Debug_Terminal = args[RKCommandLineArgs::DebugOutput].toString() == QLatin1String("terminal");
-	if (RK_Debug::setupLogFile(QDir::tempPath() + "/rkward.frontend")) {
+	if (RK_Debug::setupLogFile(QDir::tempPath() + u"/rkward.frontend"_s)) {
 		RK_DEBUG(APP, DL_INFO, "Full debug output is at %s", qPrintable(RK_Debug::debug_file->fileName()));
 	} else {
 		RK_Debug_Terminal = true;
@@ -216,20 +216,20 @@ int main (int argc, char *argv[]) {
 	}
 	qInstallMessageHandler(RKDebugMessageOutput);
 	RK_DO({
-		RK_DEBUG(APP, DL_DEBUG, "Basic runtime info (expected to be incomplete at this stage):\n%s", qPrintable(RKSessionVars::frontendSessionInfo().join("\n")));
+		RK_DEBUG(APP, DL_DEBUG, "Basic runtime info (expected to be incomplete at this stage):\n%s", qPrintable(RKSessionVars::frontendSessionInfo().join(u"\n"_s)));
 	}, APP, DL_DEBUG);
 
 	// MacOS may need some path adjustments, first
 #if defined(Q_OS_MACOS)
-	QString oldpath = qgetenv ("PATH");
-	if (!oldpath.contains (INSTALL_PATH)) {
+	QString oldpath = QString::fromLocal8Bit(qgetenv("PATH"));
+	if (!oldpath.contains(QStringLiteral(INSTALL_PATH))) {
 		//ensure that PATH is set to include what we deliver with the bundle
-		qputenv ("PATH", QString ("%1/bin:%1/sbin:%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
-		if (RK_Debug::RK_Debug_Level > 3) qDebug ("Adjusting system path to %s", qPrintable (qgetenv ("PATH")));
+		qputenv("PATH", QStringLiteral("%1/bin:%1/sbin:%2").arg(QStringLiteral(INSTALL_PATH)).arg(oldpath).toLocal8Bit());
+		if (RK_Debug::RK_Debug_Level > 3) qDebug("Adjusting system path to %s", qPrintable(qgetenv("PATH")));
 	}
 #elif defined(Q_OS_UNIX)
-	QStringList data_dirs = QString(qgetenv("XDG_DATA_DIRS")).split(PATH_VAR_SEP);;
-	QString reldatadir = QDir::cleanPath(QDir(app.applicationDirPath()).absoluteFilePath(REL_PATH_TO_DATA));
+	QStringList data_dirs = QString::fromLocal8Bit(qgetenv("XDG_DATA_DIRS")).split(PATH_VAR_SEP);
+	QString reldatadir = QDir::cleanPath(QDir(app.applicationDirPath()).absoluteFilePath(QStringLiteral(REL_PATH_TO_DATA)));
 	if (!data_dirs.contains(reldatadir)) {
 		RK_DEBUG(APP, DL_WARNING, "Running from non-standard path? Adding %s to XDG_DATA_DIRS", qPrintable(reldatadir));
 		data_dirs.prepend(reldatadir);
@@ -237,7 +237,7 @@ int main (int argc, char *argv[]) {
 	}
 #endif
 	// This is _not_ the same path adjustment as above: Make sure to add the current dir to the path, before launching R and backend.
-	QStringList syspaths = QString(qgetenv("PATH")).split(PATH_VAR_SEP);
+	QStringList syspaths = QString::fromLocal8Bit(qgetenv("PATH")).split(PATH_VAR_SEP);
 	if (!syspaths.contains(app.applicationDirPath())) {
 		syspaths.prepend(app.applicationDirPath());
 		qputenv("PATH", syspaths.join(PATH_VAR_SEP).toLocal8Bit());

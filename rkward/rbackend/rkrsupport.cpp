@@ -378,9 +378,9 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 	}
 	RFn::Rf_unprotect(1);  // symbols2
 
-	RK_DEBUG(RBACKEND, DL_DEBUG, "added %s\n", qPrintable(res.added.join(", ")));
-	RK_DEBUG(RBACKEND, DL_DEBUG, "changed %s\n", qPrintable(res.changed.join(", ")));
-	RK_DEBUG(RBACKEND, DL_DEBUG, "removed %s\n", qPrintable(res.removed.join(", ")));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "added %s\n", qPrintable(res.added.join(u", "_s)));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "changed %s\n", qPrintable(res.changed.join(u", "_s)));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "removed %s\n", qPrintable(res.removed.join(u", "_s)));
 	return res;
 }
 

@@ -114,19 +114,20 @@ void RObjectViewer::objectDataChanged (RObject* object, const RObject::ChangeSet
 	}
 }
 
-void RObjectViewer::initDescription (bool notify) {
-	RK_TRACE (APP);
+void RObjectViewer::initDescription(bool notify) {
+	RK_TRACE(APP);
 
 	if (!_object) return;
 
-	setCaption (i18n("Object Viewer: %1", _object->getShortName ()));
+	setCaption(i18n("Object Viewer: %1", _object->getShortName()));
 	// make the description use less height. Trying to specify <nobr>s, here, is no good idea (see http://sourceforge.net/p/rkward/bugs/55/)
-	description_label->setText("<i>" + _object->getShortName().replace('<', QLatin1String("&lt;")) + "</i> &nbsp; " + _object->getObjectDescription ().replace (QLatin1String("<br>"), QLatin1String("&nbsp; &nbsp; ")));
+	description_label->setText(u"<i>"_s + _object->getShortName().replace(u'<', u"&lt;"_s) + u"</i> &nbsp; "_s +
+	                           _object->getObjectDescription().replace(u"<br>"_s, u"&nbsp; &nbsp; "_s));
 	if (notify) {
-		QString reason = i18n ("The object was changed. You may want to click \"Update\"");
-		summary_widget->invalidate (reason);
-		print_widget->invalidate (reason);
-		structure_widget->invalidate (reason);
+		QString reason = i18n("The object was changed. You may want to click \"Update\"");
+		summary_widget->invalidate(reason);
+		print_widget->invalidate(reason);
+		structure_widget->invalidate(reason);
 	}
 }
 
@@ -231,7 +232,7 @@ void RObjectViewerWidget::setText (const QString& text) {
 
 RCommand* RObjectSummaryWidget::makeCommand() {
 	RK_TRACE(APP);
-	return new RCommand("print(summary(" + _object->getFullName() + "))", RCommand::App);
+	return new RCommand(u"print(summary("_s + _object->getFullName() + u"))"_s, RCommand::App);
 }
 
 ////////////////// print widget /////////////////
@@ -240,18 +241,18 @@ RCommand* RObjectPrintWidget::makeCommand() {
 	RK_TRACE(APP);
 
 	// make sure to print as wide as possible
-	return new RCommand("local({\n"
+	return new RCommand(QStringLiteral("local({\n"
 	                                  "\trk.temp.width.save <- getOption(\"width\")\n"
 	                                  "\toptions(width=10000)\n"
 	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
-	                                  "\tprint(" + _object->getFullName() + ")\n"
-	                                  "})", RCommand::App);
+	                                  "\tprint(") + _object->getFullName() + QStringLiteral(")\n"
+	                                  "})"), RCommand::App);
 }
 
 ////////////////// structure widget /////////////////
 
 RCommand* RObjectStructureWidget::makeCommand() {
 	RK_TRACE(APP);
-	return new RCommand("str(" + _object->getFullName() + ')', RCommand::App);
+	return new RCommand(u"str("_s + _object->getFullName() + u')', RCommand::App);
 }
 

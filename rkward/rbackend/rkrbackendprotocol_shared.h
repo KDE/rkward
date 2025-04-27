@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QMutex>
 #include "rcommand.h"
 
+using namespace Qt::Literals::StringLiterals;
 class RCommandProxy;
 
 /** Class to represent an "event" sent between backend and frontend. This encapuslates all communication sent between the two processes (actually the graphics device uses a separate channel, but that's not the point, here).

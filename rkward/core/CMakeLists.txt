@@ -18,5 +18,3 @@ SET(core_STAT_SRCS
 
 ADD_LIBRARY(core STATIC ${core_STAT_SRCS})
 TARGET_LINK_LIBRARIES(core Qt6::Core Qt6::Widgets KF6::WidgetsAddons KF6::I18n KF6::Parts)
-add_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove, here, once enabled on top level
-

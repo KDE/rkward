@@ -18,6 +18,8 @@ class RCommand;
 class RCommandProxy;
 class RObject;
 
+using namespace Qt::Literals::StringLiterals;
+
 /** R Commands can be arranged in a simple chain to make sure they are not interrupted by other commands.
  *  Also, command may need to run sub-commands.
 @see \ref UsingTheInterfaceToR

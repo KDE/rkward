@@ -20,4 +20,3 @@ endmacro()
 rkward_executable_tests(
   core_test
 )
-add_definitions(-DQT_NO_CAST_FROM_ASCII) # TODO remove, here, once enabled on top level

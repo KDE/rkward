@@ -240,54 +240,54 @@ int RCommandStackModel::columnCount (const QModelIndex&) const {
 	return NUM_COLS;
 }
 
-QVariant RCommandStackModel::data (const QModelIndex& index, int role) const {
-	RK_ASSERT (listeners);
-	RK_TRACE (RBACKEND);
+QVariant RCommandStackModel::data(const QModelIndex& index, int role) const {
+	RK_ASSERT(listeners);
+	RK_TRACE(RBACKEND);
 
-	if (!index.isValid ()) return QVariant ();
-	RK_ASSERT (index.model () == this);
+	if (!index.isValid()) return QVariant();
+	RK_ASSERT(index.model() == this);
 
-	RCommandChain* index_data = static_cast<RCommandChain*> (index.internalPointer ());
+	RCommandChain* index_data = static_cast<RCommandChain*>(index.internalPointer());
 
 	if (index_data->is_command) {
-		RCommand *command = index_data->toCommand ();
-		if ((index.column () == MAIN_COL) && (role == Qt::DisplayRole)) return (command->command ());
-		if ((index.column () == FLAGS_COL) && (role == Qt::DisplayRole)) {
+		RCommand* command = index_data->toCommand();
+		if ((index.column() == MAIN_COL) && (role == Qt::DisplayRole)) return (command->command());
+		if ((index.column() == FLAGS_COL) && (role == Qt::DisplayRole)) {
 			QString ret;
-			if (command->type () & RCommand::User) ret += 'U';
-			if (command->type () & RCommand::Plugin) ret += 'P';
-			if (command->type () & RCommand::App) ret += 'A';
-			if (command->type () & RCommand::Sync) ret += 'S';
-			if (command->type () & RCommand::EmptyCommand) ret += 'E';
-			if (command->type () & (RCommand::GetIntVector | RCommand::GetRealVector | RCommand::GetStringVector | RCommand::GetStructuredData)) ret += 'D';
-			if (command->type () & RCommand::CCOutput) ret += 'O';
+			if (command->type() & RCommand::User) ret += u'U';
+			if (command->type() & RCommand::Plugin) ret += u'P';
+			if (command->type() & RCommand::App) ret += u'A';
+			if (command->type() & RCommand::Sync) ret += u'S';
+			if (command->type() & RCommand::EmptyCommand) ret += u'E';
+			if (command->type() & (RCommand::GetIntVector | RCommand::GetRealVector | RCommand::GetStringVector | RCommand::GetStructuredData)) ret += u'D';
+			if (command->type() & RCommand::CCOutput) ret += u'O';
 			return (ret);
 		}
-		if ((index.column () == STATUS_COL) && (role == Qt::DisplayRole)) {
+		if ((index.column() == STATUS_COL) && (role == Qt::DisplayRole)) {
 			QString ret;
-			if (command->status & RCommand::Running) ret += i18n ("Running");
+			if (command->status & RCommand::Running) ret += i18n("Running");
 			if (command->status & RCommand::Canceled) {
-				if (!ret.isEmpty ()) ret += QLatin1String(", ");
-				ret += i18n ("Canceled");
+				if (!ret.isEmpty()) ret += u", "_s;
+				ret += i18n("Canceled");
 			}
 			return (ret);
 		}
-		if ((index.column () == DESC_COL) && (role == Qt::DisplayRole)) {
-			return (command->rkEquivalent ());
+		if ((index.column() == DESC_COL) && (role == Qt::DisplayRole)) {
+			return (command->rkEquivalent());
 		}
 	} else {
 		if (index_data->parent) {
-			if ((index.column () == MAIN_COL) && (role == Qt::DisplayRole)) return (i18n ("Command Chain"));
-			if ((index.column () == STATUS_COL) && (role == Qt::DisplayRole)) {
-				if (index_data->closed) return (i18n ("Closed"));
-				return (i18n ("Waiting"));
+			if ((index.column() == MAIN_COL) && (role == Qt::DisplayRole)) return (i18n("Command Chain"));
+			if ((index.column() == STATUS_COL) && (role == Qt::DisplayRole)) {
+				if (index_data->closed) return (i18n("Closed"));
+				return (i18n("Waiting"));
 			}
 		} else {
-			if ((index.column () == MAIN_COL) && (role == Qt::DisplayRole)) return (i18n ("Command Stack"));
+			if ((index.column() == MAIN_COL) && (role == Qt::DisplayRole)) return (i18n("Command Stack"));
 		}
 	}
 
-	return (QVariant ());
+	return (QVariant());
 }
 
 Qt::ItemFlags RCommandStackModel::flags (const QModelIndex& index) const {

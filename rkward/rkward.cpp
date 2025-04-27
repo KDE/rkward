@@ -272,7 +272,7 @@ void RKWardMainWindow::doPostInit () {
 		}
 
 		if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-			RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KSharedConfig::openConfig ().data ()).split ('\n'));
+			RKWorkplace::mainWorkplace()->restoreWorkplace(RKSettingsModuleGeneral::getSavedWorkplace(KSharedConfig::openConfig().data ()).split(u'\n'));
 		}
 		if (RKSettingsModuleGeneral::showHelpOnStartup() && !testmode_suppress_dialogs) toplevel_actions->showRKWardHelp ();
 	}
@@ -355,42 +355,42 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs (listed below) have been found, and have been activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins."), automatically_added, i18n ("New plugins found"), QStringLiteral("new_plugins_found"));
 	}
 	if (!completely_broken_maps.isEmpty ()) {
-		QString maplist = "<ul><li>" + completely_broken_maps.join (QStringLiteral("</li>\n<li>")) + "</li></ul>";
+		QString maplist = u"<ul><li>"_s + completely_broken_maps.join(u"</li>\n<li>"_s) + u"</li></ul>"_s;
 		KMessageBox::detailedError(nullptr, QStringLiteral("<p>%1</p><p>%2</p>").arg(i18n("The following RKWard pluginmap files could not be loaded, and have been disabled. This could be because they are broken, not compatible with this version of RKWard, or not meant for direct loading (see the 'Details' for more information). They have been disabled."), maplist), completely_broken_maps_details.join (QStringLiteral("\n")), i18n("Failed to load some plugin maps"));
 	}
 	if (!somewhat_broken_maps.isEmpty ()) {
-		QString maplist = "<ul><li>" + somewhat_broken_maps.join (QStringLiteral("</li>\n<li>")) + "</li></ul>";
+		QString maplist = u"<ul><li>"_s + somewhat_broken_maps.join(u"</li>\n<li>"_s) + u"</li></ul>"_s;
 		KMessageBox::detailedError(nullptr, QStringLiteral("<p>%1</p><p>%2</p><p>%3</p>").arg(i18n("Some errors were encountered while loading the following RKWard pluginmap files. This could be because individual plugins are broken or not compatible with this version of RKWard (see the 'Details' for more information). Other plugins were loaded, successfully, however."), maplist, i18n("Note: You will not be warned about these pluginmap files again, until you upgrade RKWard, or remove and re-add them in Settings->Configure RKWard->Plugins.")), somewhat_broken_maps_details.join(QStringLiteral("\n")), i18n("Failed to load some plugin maps"));
 	}
 
 	slotSetStatusReady ();
 }
 
-void RKWardMainWindow::startR () {
-	RK_TRACE (APP);
+void RKWardMainWindow::startR() {
+	RK_TRACE(APP);
 
 	setRStatus(RInterface::Starting);
 	// make sure our general purpose files directory exists
-	QString packages_path = RKSettingsModuleGeneral::filesPath() + "/.rkward_packages";
-	bool ok = QDir ().mkpath (packages_path);
-	RK_ASSERT (ok);
+	QString packages_path = RKSettingsModuleGeneral::filesPath() + u"/.rkward_packages"_s;
+	bool ok = QDir().mkpath(packages_path);
+	RK_ASSERT(ok);
 
 	// Copy RKWard R source packages to general  purpose files directory (if still needed).
 	// This may look redundant at first (since the package still needs to be installed from the
 	// backend. However, if frontend and backend are on different machines (eventually), only  the
 	// filesPath is shared between both.
-	QStringList packages({"rkward.tgz", "rkwardtests.tgz"});
-	for (int i = 0; i < packages.size (); ++i) {
-		QString package = QDir (packages_path).absoluteFilePath (packages[i]);
+	QStringList packages({u"rkward.tgz"_s, u"rkwardtests.tgz"_s});
+	for (int i = 0; i < packages.size(); ++i) {
+		QString package = QDir(packages_path).absoluteFilePath(packages[i]);
 		if (RKSettingsModuleGeneral::rkwardVersionChanged() || RKCommandLineArgs::get(RKCommandLineArgs::Setup).toBool()) {
 			RK_DEBUG(APP, DL_INFO, "RKWard version changed or setup requested. Discarding cached package at %s", qPrintable(package));
-			if(QFileInfo::exists(package)) {
+			if (QFileInfo::exists(package)) {
 				bool rem = QFile::remove(package);
 				RK_ASSERT(rem);
 			}
 		}
 		if (!QFileInfo::exists(package)) {
-			QString source = RKCommonFunctions::getRKWardDataDir() + "/rpackages/" + packages[i];
+			QString source = RKCommonFunctions::getRKWardDataDir() + u"/rpackages/"_s + packages[i];
 			RK_ASSERT(QFileInfo::exists(source));
 			RK_DEBUG(APP, DL_INFO, "Copying rkward R source package %s to %s", qPrintable(source), qPrintable(package));
 			RK_ASSERT(QFile::copy(source, package));
@@ -403,7 +403,7 @@ void RKWardMainWindow::startR () {
 	connect(RInterface::instance(), &RInterface::backendWorkdirChanged, this, &RKWardMainWindow::updateCWD);
 	RObjectList::init();
 
-	RObjectBrowser::mainBrowser ()->unlock ();
+	RObjectBrowser::mainBrowser()->unlock();
 }
 
 void RKWardMainWindow::slotConfigure() {
@@ -1006,41 +1006,44 @@ void RKWardMainWindow::slotNewCommandEditor () {
 	RKWorkplace::mainWorkplace()->openScriptEditor();
 }
 
-void RKWardMainWindow::openAnyFile () {
-	RK_TRACE (APP);
+void RKWardMainWindow::openAnyFile() {
+	RK_TRACE(APP);
 
-	QFileDialog* dialog = new QFileDialog(nullptr, QString(), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename).toLocalFile(), QStringLiteral ("*|All Files (*)\n%1|R Script Files (%1)").arg(RKSettingsModuleCommandEditor::scriptFileFilter()));
+	QFileDialog* dialog =
+	    new QFileDialog(nullptr, QString(), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename).toLocalFile(),
+	                    QStringLiteral("*|All Files (*)\n%1|R Script Files (%1)").arg(RKSettingsModuleCommandEditor::scriptFileFilter()));
 	dialog->setFileMode(QFileDialog::ExistingFiles);
 
-// Create a type selection widget, and hack it into the dialog:
-	QFrame* dummy = new QFrame (this);
-	dummy->setWindowTitle (i18n ("Open"));
-	QVBoxLayout* layout = new QVBoxLayout (dummy);
+	// Create a type selection widget, and hack it into the dialog:
+	QFrame* dummy = new QFrame(this);
+	dummy->setWindowTitle(i18n("Open"));
+	QVBoxLayout* layout = new QVBoxLayout(dummy);
 	QHBoxLayout* hbox = new QHBoxLayout;
-	layout->addLayout (hbox);
-	hbox->addWidget (new QLabel (i18n ("Opening mode:")));
+	layout->addLayout(hbox);
+	hbox->addWidget(new QLabel(i18n("Opening mode:")));
 	QComboBox* open_mode = new QComboBox;
-	open_mode->addItems (QStringList () << i18n ("Guess file type, automatically") << i18n ("Open as text / script file") << i18n ("Open as text file and force R highlighting") << ("Open as R workspace"));
-	hbox->addWidget (open_mode);
-	hbox->setStretchFactor (open_mode, 100);
+	open_mode->addItems(QStringList() << i18n("Guess file type, automatically") << i18n("Open as text / script file")
+	                                  << i18n("Open as text file and force R highlighting") << i18n("Open as R workspace"));
+	hbox->addWidget(open_mode);
+	hbox->setStretchFactor(open_mode, 100);
 
-	dummy->setWindowFlags (dialog->windowFlags ());
-	dialog->setOption (QFileDialog::DontUseNativeDialog);
-	dialog->setWindowFlags (Qt::Widget);
-	layout->addWidget (dialog);
-	dummy->show ();
-	auto res = dialog->exec ();
-	QUrl url = QUrl::fromLocalFile (dialog->selectedFiles ().value (0));
-	int mode = open_mode->currentIndex ();
+	dummy->setWindowFlags(dialog->windowFlags());
+	dialog->setOption(QFileDialog::DontUseNativeDialog);
+	dialog->setWindowFlags(Qt::Widget);
+	layout->addWidget(dialog);
+	dummy->show();
+	auto res = dialog->exec();
+	QUrl url = QUrl::fromLocalFile(dialog->selectedFiles().value(0));
+	int mode = open_mode->currentIndex();
 	delete dummy;
 	if (res != QDialog::Accepted) return;
 
 	if (mode == 0) {
-		RKWorkplace::mainWorkplace ()->openAnyUrl (url);
+		RKWorkplace::mainWorkplace()->openAnyUrl(url);
 	} else if (mode == 1) {
-		RKWorkplace::mainWorkplace ()->openScriptEditor (url);
+		RKWorkplace::mainWorkplace()->openScriptEditor(url);
 	} else if (mode == 2) {
-		RKWorkplace::mainWorkplace ()->openScriptEditor (url, QString (), RKCommandEditorFlags::DefaultFlags | RKCommandEditorFlags::ForceRHighlighting);
+		RKWorkplace::mainWorkplace()->openScriptEditor(url, QString(), RKCommandEditorFlags::DefaultFlags | RKCommandEditorFlags::ForceRHighlighting);
 	} else if (mode == 3) {
 		askOpenWorkspace(url);
 	}
@@ -1075,15 +1078,15 @@ void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &en
 	}
 }
 
-void RKWardMainWindow::setCaption (const QString &) {
-	RK_TRACE (APP);
+void RKWardMainWindow::setCaption(const QString &) {
+	RK_TRACE(APP);
 
-	QString wcaption = RKWorkplace::mainWorkplace ()->workspaceURL ().fileName ();
-	if (wcaption.isEmpty ()) wcaption = RKWorkplace::mainWorkplace ()->workspaceURL ().toDisplayString ();
-	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
-	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->view ()->activePage ();
-	if (window) wcaption.append (" - " + window->fullCaption ());
-	KParts::MainWindow::setCaption (wcaption);
+	QString wcaption = RKWorkplace::mainWorkplace()->workspaceURL().fileName();
+	if (wcaption.isEmpty()) wcaption = RKWorkplace::mainWorkplace()->workspaceURL().toDisplayString();
+	if (wcaption.isEmpty()) wcaption = i18n("[Unnamed Workspace]");
+	RKMDIWindow *window = RKWorkplace::mainWorkplace()->view()->activePage();
+	if (window) wcaption.append(u" - "_s + window->fullCaption());
+	KParts::MainWindow::setCaption(wcaption);
 }
 
 

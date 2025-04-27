@@ -105,40 +105,40 @@ void RKROutputBuffer::pushOutputCapture (int capture_mode) {
 	output_captures.append (capture);
 }
 
-QString RKROutputBuffer::popOutputCapture (bool highlighted) {
-	RK_TRACE (RBACKEND);
+QString RKROutputBuffer::popOutputCapture(bool highlighted) {
+	RK_TRACE(RBACKEND);
 
-	if (output_captures.isEmpty ()) {
-		RK_ASSERT (!output_captures.isEmpty ());
-		return QString ();
+	if (output_captures.isEmpty()) {
+		RK_ASSERT(!output_captures.isEmpty());
+		return QString();
 	}
-	OutputCapture capture = output_captures.takeLast ();
-	if (capture.recorded.isEmpty ()) return QString ();
+	OutputCapture capture = output_captures.takeLast();
+	if (capture.recorded.isEmpty()) return QString();
 
 	QString ret;
 	ROutput::ROutputType previous_type = ROutput::NoOutput;
-	for (int i = 0; i < capture.recorded.length (); ++i) {
-		const ROutput * output = capture.recorded[i];
-		if (output->output.isEmpty ()) continue;
+	for (int i = 0; i < capture.recorded.length(); ++i) {
+		const ROutput* output = capture.recorded[i];
+		if (output->output.isEmpty()) continue;
 
-		if (output->type != ROutput::Error) {	// NOTE: skip error output. It has already been written as a warning.
+		if (output->type != ROutput::Error) {  // NOTE: skip error output. It has already been written as a warning.
 			if (highlighted && (output->type != previous_type)) {
-				if (!ret.isEmpty ()) ret.append ("</pre>\n");
+				if (!ret.isEmpty()) ret.append(u"</pre>\n"_s);
 
-				if (output->type == ROutput::Output) ret.append ("<pre class=\"output_normal\">");
-				else if (output->type == ROutput::Warning) ret.append ("<pre class=\"output_warning\">");
+				if (output->type == ROutput::Output) ret.append(u"<pre class=\"output_normal\">"_s);
+				else if (output->type == ROutput::Warning) ret.append(u"<pre class=\"output_warning\">"_s);
 				else {
-					RK_ASSERT (false);
-					ret.append ("<pre>");
+					RK_ASSERT(false);
+					ret.append(u"<pre>"_s);
 				}
 			}
-			if (highlighted) ret.append (output->output.toHtmlEscaped ());
-			else ret.append (output->output);
+			if (highlighted) ret.append(output->output.toHtmlEscaped());
+			else ret.append(output->output);
 
 			previous_type = output->type;
 		}
 	}
-	if (highlighted && !ret.isEmpty ()) ret.append ("</pre>\n");
+	if (highlighted && !ret.isEmpty()) ret.append(u"</pre>\n"_s);
 	return ret;
 }
 
@@ -214,17 +214,17 @@ ROutputList RKROutputBuffer::flushOutput (bool forcibly) {
 
 
 
-QString RKRSharedFunctionality::quote (const QString &string) {
+QString RKRSharedFunctionality::quote(const QString &string) {
 	QString ret;
-	int s = string.size ();
-	ret.reserve (s + 2);	// typical case: Only quotes added, no escapes needed.
-	ret.append ('\"');
+	int s = string.size();
+	ret.reserve(s + 2);  // typical case: Only quotes added, no escapes needed.
+	ret.append(u'\"');
 	for (int i = 0; i < s; ++i) {
 		const QChar c = string[i];
-		if ((c == '\\') || (c == '\"')) ret.append ('\\');
-		ret.append (c);
+		if ((c == u'\\') || (c == u'\"')) ret.append(u'\\');
+		ret.append(c);
 	}
-	ret.append ('\"');
+	ret.append(u'\"');
 
 	return ret;
 }
@@ -239,7 +239,7 @@ namespace RK_Debug {
 
 	bool setupLogFile (const QString &basename) {
 		QStringList all_debug_files (basename);
-		all_debug_files << basename + ".0" << basename + ".1";
+		all_debug_files << basename + u".0"_s << basename + u".1"_s;
 		for (int i = all_debug_files.size () -1; i >= 0; --i) {
 			QFile oldfile (all_debug_files[i]);
 			if (oldfile.exists ()) {

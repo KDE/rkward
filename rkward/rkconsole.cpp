@@ -330,15 +330,15 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	return false;
 }
 
-QString RKConsole::provideContext (int line_rev) {
-	RK_TRACE (COMMANDEDITOR);
+QString RKConsole::provideContext(int line_rev) {
+	RK_TRACE(COMMANDEDITOR);
 
 	QString ret;
-	if (line_rev == 0) ret = currentEditingLine ().left (currentCursorPositionInCommand ()); 
-	else if (!incomplete_command.isEmpty ()) {
-		QStringList lines = incomplete_command.split ('\n');
-		if (lines.size () > line_rev) {
-			ret = lines[lines.size () - line_rev - 1];
+	if (line_rev == 0) ret = currentEditingLine().left(currentCursorPositionInCommand());
+	else if (!incomplete_command.isEmpty()) {
+		QStringList lines = incomplete_command.split(u'\n');
+		if (lines.size() > line_rev) {
+			ret = lines[lines.size() - line_rev - 1];
 		}
 	}
 	return ret;
@@ -440,15 +440,15 @@ void RKConsole::cursorAtTheBeginning () {
 	view->setCursorPosition (KTextEditor::Cursor (doc->lines() - 1, prefix.length ()));
 }
 
-void RKConsole::submitCommand () {
-	RK_TRACE (APP);
+void RKConsole::submitCommand() {
+	RK_TRACE(APP);
 
-	QString command = incomplete_command + currentEditingLine ();
-	if (!input_buffer.isEmpty ()) {
-		int last_line_end = input_buffer.lastIndexOf ('\n');
+	QString command = incomplete_command + currentEditingLine();
+	if (!input_buffer.isEmpty()) {
+		int last_line_end = input_buffer.lastIndexOf(u'\n');
 		if (last_line_end < 0) {
 			last_line_end = 0;
-			RK_ASSERT (false);
+			RK_ASSERT(false);
 		}
 		command.append(QStringView{input_buffer}.left(last_line_end));
 		if (last_line_end < (input_buffer.size() - 1)) {
@@ -457,19 +457,20 @@ void RKConsole::submitCommand () {
 			input_buffer.clear();
 		}
 	} else {
-		RK_ASSERT (!command.endsWith ('\n'));
-		command.append ('\n');
+		RK_ASSERT(!command.endsWith(u'\n'));
+		command.append(u'\n');
 	}
 
-	current_command_displayed_up_to = incomplete_command.length ();
-	setCurrentEditingLine (command.mid (current_command_displayed_up_to, command.indexOf ('\n', current_command_displayed_up_to) - current_command_displayed_up_to));
-	current_command_displayed_up_to += currentEditingLine ().length ();
-	skip_command_display_lines = incomplete_command.count ('\n') + 1;	// incomplete command, and first line have already been shown.
+	current_command_displayed_up_to = incomplete_command.length();
+	setCurrentEditingLine(
+	    command.mid(current_command_displayed_up_to, command.indexOf(u'\n', current_command_displayed_up_to) - current_command_displayed_up_to));
+	current_command_displayed_up_to += currentEditingLine().length();
+	skip_command_display_lines = incomplete_command.count(u'\n') + 1;  // incomplete command, and first line have already been shown.
 
-	doc->insertLine (doc->lines (), QString ());
+	doc->insertLine(doc->lines(), QString());
 	output_cursor = doc->documentEnd();
-	if (!command.isEmpty ()) {
-		current_command = new RCommand (command, RCommand::User | RCommand::Console);
+	if (!command.isEmpty()) {
+		current_command = new RCommand(command, RCommand::User | RCommand::Console);
 		connect(current_command->notifier(), &RCommandNotifier::commandOutput, this, &RKConsole::newOutput);
 		connect(current_command->notifier(), &RCommandNotifier::commandLineIn, this, &RKConsole::userCommandLineIn);
 		current_command->whenFinished(this, [this](RCommand *command) {
@@ -491,11 +492,11 @@ void RKConsole::submitCommand () {
 			showPrompt();
 			tryNextInBuffer();
 		});
-		RInterface::issueCommand (current_command);
-		interrupt_command_action->setEnabled (true);
+		RInterface::issueCommand(current_command);
+		interrupt_command_action->setEnabled(true);
 	} else {
-		showPrompt ();
-		tryNextInBuffer ();
+		showPrompt();
+		tryNextInBuffer();
 	}
 }
 
@@ -523,12 +524,12 @@ void RKConsole::rawWriteLine(const QString& line, QChar line_end) {
 	}
 	doc->insertText(output_cursor, line);
 	output_cursor.setColumn(output_cursor.column() + line.length());
-	if (line_end == '\n') {
+	if (line_end == u'\n') {
 		output_cursor.setColumn(doc->lineLength(output_cursor.line()));
 		doc->insertText(output_cursor, QStringLiteral("\n"));
 		output_cursor.setColumn(0);
 		output_cursor.setLine(output_cursor.line() + 1);
-	} else if (line_end == '\r') {
+	} else if (line_end == u'\r') {
 		output_cursor.setColumn(0);
 	}
 }
@@ -549,12 +550,12 @@ void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 	int end_pos = out.length();
 	while (++string_pos < end_pos) {
 		auto c = out.at(string_pos);
-		if (c == '\n' || c == '\r') {
+		if (c == u'\n' || c == u'\r') {
 			rawWriteLine(out.mid(start_pos, string_pos - start_pos), c);
 			start_pos = string_pos+1;
 		}
 	}
-	if (start_pos < end_pos) rawWriteLine(out.mid(start_pos, string_pos - start_pos + 1), ' ');
+	if (start_pos < end_pos) rawWriteLine(out.mid(start_pos, string_pos - start_pos + 1), u' ');
 
 	int end_line = output_cursor.line();
 	if (output->type != ROutput::Output || (!command)) {
@@ -578,20 +579,20 @@ void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 	cursorAtTheEnd ();
 }
 
-void RKConsole::userCommandLineIn (RCommand* cmd) {
-	RK_TRACE (APP);
-	RK_ASSERT (cmd == current_command);
+void RKConsole::userCommandLineIn(RCommand* cmd) {
+	RK_TRACE(APP);
+	RK_ASSERT(cmd == current_command);
 
 	if (--skip_command_display_lines >= 0) return;
 
-	QString line = cmd->command ().mid (current_command_displayed_up_to + 1);
-	line = line.section ('\n', 0, 0) + '\n';
-	current_command_displayed_up_to += line.length ();
-	if (line.length () < 2) return;		// omit empty lines (esp. the trailing newline of the command!)
+	QString line = cmd->command().mid(current_command_displayed_up_to + 1);
+	line = line.section(u'\n', 0, 0) + u'\n';
+	current_command_displayed_up_to += line.length();
+	if (line.length() < 2) return;  // omit empty lines (esp. the trailing newline of the command!)
 
 	prefix = iprefix;
-	showPrompt ();
-	setCurrentEditingLine (line);
+	showPrompt();
+	setCurrentEditingLine(line);
 	output_cursor = doc->documentEnd();
 }
 
@@ -631,19 +632,19 @@ void RKConsole::showPrompt () {
 	cursorAtTheEnd ();
 }
 
-void RKConsole::tryNextInBuffer () {
-	RK_TRACE (APP);
+void RKConsole::tryNextInBuffer() {
+	RK_TRACE(APP);
 
-	if (!input_buffer.isEmpty ()) {
-		if (input_buffer.contains ('\n')) {
-			submitCommand ();	// will submit and clear the buffer
+	if (!input_buffer.isEmpty()) {
+		if (input_buffer.contains(u'\n')) {
+			submitCommand();  // will submit and clear the buffer
 			return;
 		} else {
-			setCurrentEditingLine (currentEditingLine () + input_buffer);
-			input_buffer.clear ();
+			setCurrentEditingLine(currentEditingLine() + input_buffer);
+			input_buffer.clear();
 		}
 	}
-	interrupt_command_action->setEnabled (!incomplete_command.isEmpty ());
+	interrupt_command_action->setEnabled(!incomplete_command.isEmpty());
 }
 
 bool RKConsole::isBusy () const {
@@ -672,67 +673,70 @@ void RKConsole::setCommandHistory (const QStringList &new_history, bool append) 
 	commands_history.setHistory (new_history, append);
 }
 
-void RKConsole::userLoadHistory (const QUrl &_url) {
-	RK_TRACE (APP);
+void RKConsole::userLoadHistory(const QUrl &_url) {
+	RK_TRACE(APP);
 
 	QUrl url = _url;
-	if (url.isEmpty ()) {
-		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename), i18n ("R history files [*.Rhistory](*.Rhistory);;All files [*](*)"));
-		if (url.isEmpty ()) return;
+	if (url.isEmpty()) {
+		url = QFileDialog::getOpenFileUrl(this, i18n("Select command history file to load"),
+		                                  RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename),
+		                                  i18n("R history files [*.Rhistory](*.Rhistory);;All files [*](*)"));
+		if (url.isEmpty()) return;
 	}
 
 	QTemporaryFile *tmpfile = nullptr;
 	QString filename;
-	if (!url.isLocalFile ()) {
-		tmpfile = new QTemporaryFile (this);
-		KIO::Job* getjob = KIO::file_copy (url, QUrl::fromLocalFile (tmpfile->fileName()));
-		KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
-		if (!getjob->exec ()) {
-			getjob->uiDelegate ()->showErrorMessage();
+	if (!url.isLocalFile()) {
+		tmpfile = new QTemporaryFile(this);
+		KIO::Job *getjob = KIO::file_copy(url, QUrl::fromLocalFile(tmpfile->fileName()));
+		KJobWidgets::setWindow(getjob, RKWardMainWindow::getMain());
+		if (!getjob->exec()) {
+			getjob->uiDelegate()->showErrorMessage();
 			delete (tmpfile);
 			return;
 		}
-		filename = tmpfile->fileName ();
+		filename = tmpfile->fileName();
 	} else {
-		filename = url.toLocalFile ();
+		filename = url.toLocalFile();
 	}
 
-	QFile file (filename);
-	if (!file.open (QIODevice::Text | QIODevice::ReadOnly)) return;
-	setCommandHistory (QString (file.readAll ()).split ('\n', Qt::SkipEmptyParts), false);
-	file.close ();
+	QFile file(filename);
+	if (!file.open(QIODevice::Text | QIODevice::ReadOnly)) return;
+	setCommandHistory(QString::fromUtf8(file.readAll()).split(u'\n', Qt::SkipEmptyParts), false);
+	file.close();
 
-	delete (tmpfile);
+	delete tmpfile;
 }
 
-void RKConsole::userSaveHistory (const QUrl &_url) {
-	RK_TRACE (APP);
+void RKConsole::userSaveHistory(const QUrl& _url) {
+	RK_TRACE(APP);
 
 	QUrl url = _url;
-	if (url.isEmpty ()) {
-		url = QFileDialog::getSaveFileUrl (this, i18n ("Select filename to save command history"), QUrl (), i18n ("R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"));
-		if (url.isEmpty ()) return;
+	if (url.isEmpty()) {
+		url = QFileDialog::getSaveFileUrl(this, i18n("Select filename to save command history"), QUrl(),
+		                                  i18n("R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"));
+		if (url.isEmpty()) return;
 	}
 
 	QTemporaryFile tempfile;
-	tempfile.open ();
-	tempfile.write (QString (commandHistory ().join (QStringLiteral("\n")) + '\n').toLocal8Bit ().data ());
-	tempfile.close ();
+	tempfile.open();
+	tempfile.write(QString(commandHistory().join(QStringLiteral("\n")) + u'\n').toLocal8Bit().data());
+	tempfile.close();
 
-	KIO::Job* getjob = KIO::file_copy (QUrl::fromLocalFile (tempfile.fileName()), url);
-	KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
-	if (!getjob->exec ()) {
-		getjob->uiDelegate ()->showErrorMessage();
+	KIO::Job* getjob = KIO::file_copy(QUrl::fromLocalFile(tempfile.fileName()), url);
+	KJobWidgets::setWindow(getjob, RKWardMainWindow::getMain());
+	if (!getjob->exec()) {
+		getjob->uiDelegate()->showErrorMessage();
 		return;
 	}
 }
 
-QString RKConsole::cleanSelection (const QString &origin) {
-	RK_TRACE (APP);
+QString RKConsole::cleanSelection(const QString& origin) {
+	RK_TRACE(APP);
 
 	QString ret;
-	ret.reserve (origin.length ());
-	const QStringList lines = origin.split ('\n');
+	ret.reserve(origin.length());
+	const QStringList lines = origin.split(u'\n');
 	for (const QString& line : lines) {
 		if (line.startsWith(nprefix)) {
 			ret.append(QStringView{line}.mid(nprefix.length()));
@@ -741,30 +745,30 @@ QString RKConsole::cleanSelection (const QString &origin) {
 		} else {
 			ret.append(line);
 		}
-		ret.append ('\n');
+		ret.append(u'\n');
 	}
 
 	return ret;
 }
 
-void RKConsole::copyCommands () {
-	RK_TRACE (APP);
+void RKConsole::copyCommands() {
+	RK_TRACE(APP);
 
-	KTextEditor::Range sel = view->selectionRange ();
-	if (!sel.isValid ()) return;
+	KTextEditor::Range sel = view->selectionRange();
+	if (!sel.isValid()) return;
 
 	// we use this somewhat cumbersome (and inefficient) approach as it should also be correct in case of blockwise selections
-	QStringList command_lines = view->selectionText ().split ('\n');
+	QStringList command_lines = view->selectionText().split(u'\n');
 	int i = 0;
-	for (int l = sel.start ().line (); l <= sel.end ().line (); ++l) {
-		QString line = doc->line (l);
-		if (!(line.startsWith (iprefix) || line.startsWith (nprefix))) {
-			command_lines.removeAt (i);
+	for (int l = sel.start().line(); l <= sel.end().line(); ++l) {
+		QString line = doc->line(l);
+		if (!(line.startsWith(iprefix) || line.startsWith(nprefix))) {
+			command_lines.removeAt(i);
 			--i;
 		}
 		++i;
 	}
-	QApplication::clipboard()->setText (cleanSelection (command_lines.join (QStringLiteral("\n"))));
+	QApplication::clipboard()->setText(cleanSelection(command_lines.join(QStringLiteral("\n"))));
 }
 
 void RKConsole::literalCopy () {
@@ -887,15 +891,15 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 		}
 	}
 	if (RKSettingsModuleConsole::addPipedCommandsToHistory() != RKSettingsModuleConsole::DontAdd) {
-		QStringList lines = command_string.split ('\n', Qt::SkipEmptyParts);
+		QStringList lines = command_string.split (u'\n', Qt::SkipEmptyParts);
 		if ((RKSettingsModuleConsole::addPipedCommandsToHistory() == RKSettingsModuleConsole::AlwaysAdd) || (lines.count () == 1)) {
 			for (int i = 0; i < lines.count (); ++i) {
 				commands_history.append (lines[i]);
 			}
 		}
 	}
-	cursorAtTheEnd ();
-	submitBatch (command_string + '\n');
+	cursorAtTheEnd();
+	submitBatch(command_string + u'\n');
 	previous_chunk_was_piped = true;
 }
 
@@ -932,13 +936,13 @@ void RKConsole::activate (bool with_focus) {
 
 
 RKConsolePart::RKConsolePart(RKConsole *console) : KParts::Part(nullptr) {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
-	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
+	setComponentName(QCoreApplication::applicationName(), QGuiApplication::applicationDisplayName());
 
-	setWidget (console);
+	setWidget(console);
 
-	setXMLFile (QStringLiteral("rkconsolepart.rc"));
+	setXMLFile(QStringLiteral("rkconsolepart.rc"));
 }
 
 RKConsolePart::~RKConsolePart () {

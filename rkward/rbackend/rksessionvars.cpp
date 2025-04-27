@@ -26,7 +26,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 RKSessionVars* RKSessionVars::_instance = nullptr;
-RKParsedVersion RKSessionVars::rkward_version(RKWARD_VERSION);
+RKParsedVersion RKSessionVars::rkward_version(QStringLiteral(RKWARD_VERSION));
 RKParsedVersion RKSessionVars::r_version;
 QString RKSessionVars::r_version_string;
 QString RKSessionVars::r_binary;
@@ -71,7 +71,7 @@ void RKSessionVars::setRVersion (const QString& version_string) {
 
 QString RKSessionVars::RVersion(bool abbridged) {
 	if (!abbridged) return r_version_string;
-	return r_version_string.section ('.', 0, 1);
+	return r_version_string.section (u'.', 0, 1);
 }
 
 int RKSessionVars::compareRKWardVersion (const QString& version) {
@@ -90,35 +90,35 @@ int RKSessionVars::compareRVersion (const QString& version) {
 	return 0;
 }
 
-QStringList RKSessionVars::frontendSessionInfo () {
+QStringList RKSessionVars::frontendSessionInfo() {
 	// NOTE: No translation on purpose. This is mostly meant for pasting to the bug tracker
 	QStringList lines;
-	lines.append ("RKWard version: " RKWARD_VERSION);
-	lines.append ("KDE Frameworks version (runtime): " + QString (KCoreAddons::versionString ()));
-	lines.append ("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING);
-	lines.append (QStringLiteral ("Qt version (runtime): ") + qVersion ());
-	lines.append ("Qt version (compile time): " QT_VERSION_STR);
-	lines.append (QStringLiteral("Using QWebEngine for HTML rendering"));
+	lines.append(QStringLiteral("RKWard version: " RKWARD_VERSION));
+	lines.append(u"KDE Frameworks version (runtime): "_s + QString(KCoreAddons::versionString()));
+	lines.append(QStringLiteral("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING));
+	lines.append(QStringLiteral("Qt version (runtime): ") + QString::fromLatin1(qVersion()));
+	lines.append(QStringLiteral("Qt version (compile time): " QT_VERSION_STR));
+	lines.append(QStringLiteral("Using QWebEngine for HTML rendering"));
 	lines.append(QStringLiteral("Running on: ") + QSysInfo::prettyProductName());
-	lines.append ("Local config directory: " + QStandardPaths::writableLocation (QStandardPaths::GenericConfigLocation));
-	lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
-	lines.append ("Backend version (as known to the frontend): " + r_version_string);
-	lines.append (QString());
-	lines.append (QStringLiteral("Debug message file (this may contain relevant diagnostic output in case of trouble):"));
-	lines.append (RK_Debug::debug_file->fileName ());
+	lines.append(u"Local config directory: "_s + QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation));
+	lines.append(u"RKWard storage directory: "_s + RKSettingsModuleGeneral::filesPath());
+	lines.append(u"Backend version (as known to the frontend): "_s + r_version_string);
+	lines.append(QString());
+	lines.append(QStringLiteral("Debug message file (this may contain relevant diagnostic output in case of trouble):"));
+	lines.append(RK_Debug::debug_file->fileName());
 	return lines;
 }
 
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
-static QString findExeAtPath (const QString &appname, const QString &path) {
-	QDir dir (path);
-	dir.makeAbsolute ();
-	if (QFileInfo (dir.filePath (appname)).isExecutable ()) return dir.filePath (appname);
+static QString findExeAtPath(const QString &appname, const QString &path) {
+	QDir dir(path);
+	dir.makeAbsolute();
+	if (QFileInfo(dir.filePath(appname)).isExecutable()) return dir.filePath(appname);
 #ifdef Q_OS_WIN
-	if (QFileInfo (dir.filePath (appname + ".exe")).isExecutable ()) return dir.filePath (appname + ".exe");
-	if (QFileInfo (dir.filePath (appname + ".com")).isExecutable ()) return dir.filePath (appname + ".com");
+	if (QFileInfo(dir.filePath(appname + u".exe"_s)).isExecutable()) return dir.filePath(appname + u".exe"_s);
+	if (QFileInfo(dir.filePath(appname + u".com"_s)).isExecutable()) return dir.filePath(appname + u".com"_s);
 #endif
-	return QString ();
+	return QString();
 }
 
 /** glob dirs instroot/prefix-* /rpath, sorted by version number represented in "*" */
@@ -126,8 +126,8 @@ static QStringList globVersionedDirs(const QString &instroot, const QString &pre
 	QStringList ret;
 	if (QFileInfo(instroot).isReadable()) {
 		QDir dir(instroot);
-		QStringList candidates = dir.entryList(QStringList(prefix + "*"), QDir::Dirs);
-		std::sort(candidates.begin(), candidates.end(), [prefix](const QString&a, const QString& b) -> bool {
+		QStringList candidates = dir.entryList(QStringList(prefix + u"*"_s), QDir::Dirs);
+		std::sort(candidates.begin(), candidates.end(), [prefix](const QString &a, const QString &b) -> bool {
 			return QVersionNumber::fromString(a.mid(prefix.length())) > QVersionNumber::fromString(b.mid(prefix.length()));
 		});
 		for (int i = 0; i < candidates.count(); ++i) {
@@ -142,13 +142,13 @@ static QStringList globVersionedDirs(const QString &instroot, const QString &pre
 QStringList RKSessionVars::findRInstallations() {
 	QStringList ret;
 #if defined(Q_OS_MACOS)
-	ret = globVersionedDirs("/Library/Frameworks/R.framework/Versions", QString(), "Resources/bin/R");
+	ret = globVersionedDirs(u"/Library/Frameworks/R.framework/Versions"_s, QString(), u"Resources/bin/R"_s);
 #elif defined(Q_OS_WIN)
-	QString instroot = QString(getenv("PROGRAMFILES")) + "/R";
-	if (!QFileInfo(instroot).isReadable()) instroot = QString(getenv("PROGRAMFILES(x86)")) + "/R";
-	ret = globVersionedDirs(instroot, "R-", "bin/R");
+	QString instroot = QString(getenv("PROGRAMFILES")) + u"/R"_s;
+	if (!QFileInfo(instroot).isReadable()) instroot = QString(getenv("PROGRAMFILES(x86)")) + u"/R"_s;
+	ret = globVersionedDirs(instroot, u"R-"_s, u"bin/R"_s);
 #else
-	const QStringList candidates{"/usr/bin/R", "/usr/local/bin/R"};
+	const QStringList candidates{u"/usr/bin/R"_s, u"/usr/local/bin/R"_s};
 	for(const QString &p : candidates) {
 		if (!ret.contains(p) && QFileInfo(p).isExecutable()) ret.append(p);
 	}
