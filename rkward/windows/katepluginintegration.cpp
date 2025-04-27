@@ -675,7 +675,7 @@ void KatePluginIntegrationWindow::fixUpPluginUI(const QString &id, const PluginR
 			// window->setCaption(i18nc("Tab title", "Search in Scripts"));
 			if (!resources.windows.isEmpty()) {
 				// I wonder how long this HACK will work...
-				QComboBox *box = resources.windows.first()->findChild<QComboBox*>("searchPlaceCombo");
+				QComboBox *box = resources.windows.first()->findChild<QComboBox*>(u"searchPlaceCombo"_s);
 				if (box && (box->count() > 1)) {
 					box->setItemText(0, i18nc("where to search", "in Current Script"));
 					box->setItemText(1, i18nc("where to search", "in Open Scripts"));

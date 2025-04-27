@@ -534,7 +534,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				}
 
 				// No, we cannot just send a fake key event, easily...
-				KActionCollection *kate_edit_actions = view()->findChild<KActionCollection *>("edit_actions");
+				KActionCollection *kate_edit_actions = view()->findChild<KActionCollection *>(u"edit_actions"_s);
 				QAction *action = kate_edit_actions ? (kate_edit_actions->action(k->key() == Qt::Key_Up ? u"move_line_up"_s : u"move_line_down"_s)) : nullptr;
 				if (!action) {
 					kate_edit_actions = view()->actionCollection();
