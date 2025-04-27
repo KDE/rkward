@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-26 00:38+0000\n"
+"POT-Creation-Date: 2025-04-27 00:38+0000\n"
 "PO-Revision-Date: 2025-04-19 18:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -289,7 +289,7 @@ msgstr "Мітка"
 #: rkward/core/rkmodificationtracker.cpp:353
 #: rkward/dataeditor/rkvareditmodel.cpp:673
 #: rkward/misc/rkobjectlistview.cpp:211 rkward/rbackend/rcommandstack.cpp:313
-#: rkward/windows/rkhelpsearchwindow.cpp:327
+#: rkward/windows/rkhelpsearchwindow.cpp:328
 #, kde-format
 msgid "Type"
 msgstr "Тип"
@@ -449,7 +449,7 @@ msgid "Package %1 appears not to have been loaded"
 msgstr "Здається, пакунок %1 не було завантажено"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:49
-#: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:236
+#: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:238
 #, kde-format
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
@@ -457,7 +457,7 @@ msgstr ""
 "Перейменовано на %1"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:49
-#: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:236
+#: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:238
 #, kde-format
 msgid "Invalid Name"
 msgstr "Некоректна назва"
@@ -1222,7 +1222,7 @@ msgstr "Встановлені пакунки"
 #: rkward/dialogs/rkloadlibsdialog.cpp:959
 #: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
-#: rkward/windows/rkhelpsearchwindow.cpp:325
+#: rkward/windows/rkhelpsearchwindow.cpp:326
 #, kde-format
 msgid "Title"
 msgstr "Назва"
@@ -2544,7 +2544,7 @@ msgstr "Шукати вперед (наступний результат пош�
 msgid "Match case"
 msgstr "З урахуванням регістру"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:939
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:940
 #, kde-format
 msgid "Find as you type"
 msgstr "Шукати під час введення"
@@ -3632,7 +3632,7 @@ msgid "Enter value:"
 msgstr "Введіть значення:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:372
+#: rkward/windows/rkcommandeditorwindow.cpp:373
 #, kde-format
 msgid "Preview"
 msgstr "Перегляд"
@@ -4181,7 +4181,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "Не вдалося виявити компонент «katepart»"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:707
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:708
 #, kde-format
 msgid "R Console"
 msgstr "Консоль R"
@@ -4900,23 +4900,17 @@ msgstr ""
 "Не вдалося знайти файл «%1» (потрібен «%2»). Будь ласка, перевірте, чи "
 "належним чином встановлено програму."
 
-#: rkward/scriptbackends/rkcomponentscripting.cpp:54
-#: rkward/scriptbackends/rkcomponentscripting.cpp:56
-#, kde-format
-msgid "Error opening script file %1"
-msgstr "Помилка під час спроби відкрити файл скрипту %1"
-
-#: rkward/scriptbackends/rkcomponentscripting.cpp:71
+#: rkward/scriptbackends/rkcomponentscripting.cpp:63
 #, kde-format
 msgid "inlined code"
 msgstr "вбудований код"
 
-#: rkward/scriptbackends/rkcomponentscripting.cpp:71
+#: rkward/scriptbackends/rkcomponentscripting.cpp:63
 #, kde-format
 msgid "Script Error at '%1' line %2: %3\n"
 msgstr "Помилка скрипту у «%1», рядок %2: %3\n"
 
-#: rkward/scriptbackends/rkcomponentscripting.cpp:88
+#: rkward/scriptbackends/rkcomponentscripting.cpp:80
 #, kde-format
 msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
@@ -5782,7 +5776,7 @@ msgstr ""
 "тих додатків, які потрібні у вашому робочому процесі.</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:472
-#: rkward/windows/rkhtmlwindow.cpp:1156
+#: rkward/windows/rkhtmlwindow.cpp:1164
 #, kde-format
 msgid "Dependencies"
 msgstr "Залежності"
@@ -6309,22 +6303,22 @@ msgstr ""
 "<b>Поточний виклик:</b> %1<br><b>Середовище:</b> %2<br><b>Локальні об’єкти:</"
 "b> %3"
 
-#: rkward/windows/rkcodecompletion.cpp:675
+#: rkward/windows/rkcodecompletion.cpp:680
 #, kde-format
 msgid "Objects on search path"
 msgstr "Об'єкти за шляхом пошуку"
 
-#: rkward/windows/rkcodecompletion.cpp:762
+#: rkward/windows/rkcodecompletion.cpp:767
 #, kde-format
 msgid "Function calls"
 msgstr "Виклики функцій"
 
-#: rkward/windows/rkcodecompletion.cpp:860
+#: rkward/windows/rkcodecompletion.cpp:865
 #, kde-format
 msgid "Function arguments"
 msgstr "Параметри функцій"
 
-#: rkward/windows/rkcodecompletion.cpp:977
+#: rkward/windows/rkcodecompletion.cpp:982
 #, kde-format
 msgid "Local file names"
 msgstr "Назви локальних файлів"
@@ -6344,53 +6338,53 @@ msgstr "Не вдалося відкрити файл команд"
 msgid "Script Editor"
 msgstr "Редактор скриптів"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:348
+#: rkward/windows/rkcommandeditorwindow.cpp:349
 #, kde-format
 msgid "Insert line break and run"
 msgstr "Вставити розрив рядка і запустити"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:355
+#: rkward/windows/rkcommandeditorwindow.cpp:356
 #, kde-format
 msgid "Run block"
 msgstr "Виконати блок"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:359
+#: rkward/windows/rkcommandeditorwindow.cpp:360
 #, kde-format
 msgid "Mark selection as block"
 msgstr "Вважати позначене блоком"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:362
+#: rkward/windows/rkcommandeditorwindow.cpp:363
 #, kde-format
 msgid "Unmark block"
 msgstr "Зняти позначення блоку"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:367
+#: rkward/windows/rkcommandeditorwindow.cpp:368
 #, kde-format
 msgid "CD to script directory"
 msgstr "Перейти до каталогу скрипту"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:368
+#: rkward/windows/rkcommandeditorwindow.cpp:369
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "Змінити робочий каталог на каталог цього скрипту"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:375
+#: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
 msgid "No preview"
 msgstr "Без перегляду"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:376
+#: rkward/windows/rkcommandeditorwindow.cpp:377
 #, kde-format
 msgid "Disable preview"
 msgstr "Вимкнути перегляд"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:393
+#: rkward/windows/rkcommandeditorwindow.cpp:394
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Оновлення під час введення коду"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:394
+#: rkward/windows/rkcommandeditorwindow.cpp:395
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6402,33 +6396,33 @@ msgstr ""
 "не позначено, оновлення відбуватиметься лише у відповідь на команду зберегти "
 "дані скрипту."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:401
+#: rkward/windows/rkcommandeditorwindow.cpp:402
 #, kde-format
 msgid "Save Script..."
 msgstr "Зберегти скрипт…"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:403
+#: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
 msgid "Save Script As..."
 msgstr "Зберегти скрипт як…"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:479
-#: rkward/windows/rkcommandeditorwindow.cpp:941
+#: rkward/windows/rkcommandeditorwindow.cpp:480
+#: rkward/windows/rkcommandeditorwindow.cpp:943
 #, kde-format
 msgid " [modified]"
 msgstr " [змінено]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:486
+#: rkward/windows/rkcommandeditorwindow.cpp:487
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "До документа «%1» внесено зміни. Закрити його без збереження цих змін?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:486
+#: rkward/windows/rkcommandeditorwindow.cpp:487
 #, kde-format
 msgid "File not saved"
 msgstr "Файл не збережено"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:604
+#: rkward/windows/rkcommandeditorwindow.cpp:605
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6453,23 +6447,23 @@ msgstr ""
 "користуєтеся можливістю попереднього перегляду, особливо, коли користуєтеся "
 "нею для скриптів, які можуть походити з ненадійних джерел.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:604
+#: rkward/windows/rkcommandeditorwindow.cpp:605
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Потенційні побіжні ефекти попереднього перегляду"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:662
+#: rkward/windows/rkcommandeditorwindow.cpp:663
 #, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
 msgstr "Не вистачає програмного забезпечення"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:663
+#: rkward/windows/rkcommandeditorwindow.cpp:664
 #, kde-format
 msgid "Rendering the preview failed"
 msgstr "Не вдалося створити зображення попереднього перегляду"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:664
+#: rkward/windows/rkcommandeditorwindow.cpp:665
 #, kde-format
 msgid ""
 "The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
@@ -6488,7 +6482,7 @@ msgstr ""
 "пункту меню <a href=\"rkward://settings/rbackend\">Параметри → Налаштувати "
 "RKward → R-модуль</a>."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:667
+#: rkward/windows/rkcommandeditorwindow.cpp:668
 #, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
@@ -6499,7 +6493,7 @@ msgstr ""
 "встановити відповідну програму є запуск <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>```"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:668
+#: rkward/windows/rkcommandeditorwindow.cpp:669
 #, kde-format
 msgid ""
 "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
@@ -6512,30 +6506,30 @@ msgstr ""
 "дані у зовнішній програмі за допомогою наведеного нижче посилання або "
 "змінити режим попереднього перегляду на «Розмітка R (HTML)».</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:678
+#: rkward/windows/rkcommandeditorwindow.cpp:679
 #, kde-format
 msgid "R Markdown (HTML)"
 msgstr "Розмітка R (HTML)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:678
-#: rkward/windows/rkcommandeditorwindow.cpp:686
+#: rkward/windows/rkcommandeditorwindow.cpp:679
+#: rkward/windows/rkcommandeditorwindow.cpp:687
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Попередній перегляд створеного файла розмітки R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:679
+#: rkward/windows/rkcommandeditorwindow.cpp:680
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
 "Попередній перегляд скрипту на основі обробки формату RMarkdown (.Rmd) до "
 "формату HTML."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:686
+#: rkward/windows/rkcommandeditorwindow.cpp:687
 #, kde-format
 msgid "R Markdown (auto)"
 msgstr "Розмітка R (авто)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:687
+#: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
@@ -6544,17 +6538,17 @@ msgstr ""
 "Попередній перегляд скрипту на основі обробки формату RMarkdown до формату, "
 "який вказано у заголовку документа."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:694
+#: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
 msgid "RKWard Output"
 msgstr "Виведення даних у RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:694
+#: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Попередній перегляд даних, які виведено RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:695
+#: rkward/windows/rkcommandeditorwindow.cpp:696
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6564,30 +6558,30 @@ msgstr ""
 "попередній перегляд буде порожнім, якщо у скрипті немає викликів <i>rk."
 "print()</i> або інших команд виведення RKWard."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:707
+#: rkward/windows/rkcommandeditorwindow.cpp:708
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr ""
 "Попередній перегляд скрипту, який виконується у інтерактивній консолі R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:708
+#: rkward/windows/rkcommandeditorwindow.cpp:709
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 "Попередній перегляд скрипту так, наче він виконується в інтерактивній "
 "консолі R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Plot"
 msgstr "Креслення"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Попередній перегляд створеного креслення"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:735
+#: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6598,7 +6592,7 @@ msgstr ""
 "скрипту. Цей попередній перегляд буде порожнім, якщо у скрипті немає "
 "викликів <i>plot()</i> або інших команд побудови графіків."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:866
+#: rkward/windows/rkcommandeditorwindow.cpp:867
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6606,17 +6600,17 @@ msgstr ""
 "Під час спроби створення резервної копії файла скрипту «%1» у автоматичному "
 "режимі сталася помилка:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:940
+#: rkward/windows/rkcommandeditorwindow.cpp:942
 #, kde-format
 msgid "Unnamed"
 msgstr "Без назви"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1085
+#: rkward/windows/rkcommandeditorwindow.cpp:1087
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (активний)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1104
+#: rkward/windows/rkcommandeditorwindow.cpp:1106
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (не використовується)"
@@ -6755,12 +6749,12 @@ msgstr "Робочий каталог"
 msgid "Rename"
 msgstr "Перейменувати"
 
-#: rkward/windows/rkfilebrowser.cpp:155
+#: rkward/windows/rkfilebrowser.cpp:156
 #, kde-format
 msgid "Rename..."
 msgstr "Перейменувати…"
 
-#: rkward/windows/rkfilebrowser.cpp:155
+#: rkward/windows/rkfilebrowser.cpp:156
 #, kde-format
 msgid "New name for '%1':"
 msgstr "Нова назва «%1»:"
@@ -6815,12 +6809,12 @@ msgstr "Знайти"
 msgid "Help search"
 msgstr "Пошук у довідці"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:157
+#: rkward/windows/rkhelpsearchwindow.cpp:154
 #, kde-format
 msgid "Find HTML help for %1"
 msgstr "Знайти файл довідки у форматі HTML для %1"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:160
+#: rkward/windows/rkhelpsearchwindow.cpp:158
 #, kde-format
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
@@ -6837,22 +6831,22 @@ msgstr ""
 msgid "No help found"
 msgstr "Довідки не знайдено"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:235
+#: rkward/windows/rkhelpsearchwindow.cpp:236
 #, kde-format
 msgid "All installed packages"
 msgstr "Всі встановлені пакунки"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:236
+#: rkward/windows/rkhelpsearchwindow.cpp:237
 #, kde-format
 msgid "All loaded packages"
 msgstr "Всі завантажені пакунки"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:324
+#: rkward/windows/rkhelpsearchwindow.cpp:325
 #, kde-format
 msgid "Topic"
 msgstr "Тема"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:326
+#: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
 msgid "Package"
 msgstr "Пакунок"
@@ -6874,21 +6868,23 @@ msgid "[Active]"
 msgstr "[Активний]"
 
 #: rkward/windows/rkhtmlwindow.cpp:749
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
+msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Виведення %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:803
+#: rkward/windows/rkhtmlwindow.cpp:802
 #, kde-format
 msgid "Output Window"
 msgstr "Вікно виведення даних"
 
-#: rkward/windows/rkhtmlwindow.cpp:805
+#: rkward/windows/rkhtmlwindow.cpp:804
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Освіжити панель виведення"
 
-#: rkward/windows/rkhtmlwindow.cpp:831
+#: rkward/windows/rkhtmlwindow.cpp:830
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "Сторінки не існує або код сторінки пошкоджено"
@@ -6903,32 +6899,32 @@ msgstr ""
 "вилучення всіх файлів зображень у виведених даних. Відновити ці файли буде "
 "майже неможливо."
 
-#: rkward/windows/rkhtmlwindow.cpp:843
+#: rkward/windows/rkhtmlwindow.cpp:844
 #, kde-format
 msgid "Flush output?"
 msgstr "С&порожнити панель виведення?"
 
-#: rkward/windows/rkhtmlwindow.cpp:848
+#: rkward/windows/rkhtmlwindow.cpp:849
 #, kde-format
 msgid "Flushing output"
 msgstr "Вилучення виведених даних"
 
-#: rkward/windows/rkhtmlwindow.cpp:888
+#: rkward/windows/rkhtmlwindow.cpp:889
 #, kde-format
 msgid "Zoom In"
 msgstr "Збільшити"
 
-#: rkward/windows/rkhtmlwindow.cpp:890
+#: rkward/windows/rkhtmlwindow.cpp:891
 #, kde-format
 msgid "Zoom Out"
 msgstr "Зменшити"
 
-#: rkward/windows/rkhtmlwindow.cpp:894
+#: rkward/windows/rkhtmlwindow.cpp:895
 #, kde-format
 msgid "Default &Encoding"
 msgstr "Типове &кодування"
 
-#: rkward/windows/rkhtmlwindow.cpp:895
+#: rkward/windows/rkhtmlwindow.cpp:896
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
@@ -6937,58 +6933,58 @@ msgstr ""
 "Встановлює кодування, яким слід користуватися, якщо на сторінці або у "
 "заголовках HTTP кодування не вказано явним чином."
 
-#: rkward/windows/rkhtmlwindow.cpp:905
+#: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Експортувати сторінку у форматі HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:919
+#: rkward/windows/rkhtmlwindow.cpp:920
 #, kde-format
 msgid "Save Output"
 msgstr "Зберегти виведене"
 
-#: rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/windows/rkhtmlwindow.cpp:922
 #, kde-format
 msgid "Save Output As"
 msgstr "Зберегти виведене як"
 
-#: rkward/windows/rkhtmlwindow.cpp:924
+#: rkward/windows/rkhtmlwindow.cpp:925
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Очистити вивід"
 
-#: rkward/windows/rkhtmlwindow.cpp:930
+#: rkward/windows/rkhtmlwindow.cpp:931
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "П&овернутися до останнього збереженого стану"
 
-#: rkward/windows/rkhtmlwindow.cpp:934
+#: rkward/windows/rkhtmlwindow.cpp:935
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Зберегти виведене як &активне"
 
-#: rkward/windows/rkhtmlwindow.cpp:936
+#: rkward/windows/rkhtmlwindow.cpp:937
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr ""
 "Встановити це виведення як файл, До якого слід дописувати виведені дані."
 
-#: rkward/windows/rkhtmlwindow.cpp:958
+#: rkward/windows/rkhtmlwindow.cpp:959
 #, kde-format
 msgid "Print output"
 msgstr "Надрукувати виведене"
 
-#: rkward/windows/rkhtmlwindow.cpp:966
+#: rkward/windows/rkhtmlwindow.cpp:967
 #, kde-format
 msgid "Print page"
 msgstr "Надрукувати сторінку"
 
-#: rkward/windows/rkhtmlwindow.cpp:1023
+#: rkward/windows/rkhtmlwindow.cpp:1024
 #, kde-format
 msgid "No Title"
 msgstr "Без назви"
 
-#: rkward/windows/rkhtmlwindow.cpp:1036
+#: rkward/windows/rkhtmlwindow.cpp:1040
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6999,62 +6995,62 @@ msgstr ""
 "<p>Сторінку довідки для цього компонента ще не було написано (або її дані "
 "було пошкоджено). Допоможіть нам у створенні цієї сторінки.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1041
+#: rkward/windows/rkhtmlwindow.cpp:1046
 #, kde-format
 msgid "Use %1 now"
 msgstr "Скористатися %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:1058
+#: rkward/windows/rkhtmlwindow.cpp:1063
 #, kde-format
 msgid "Summary"
 msgstr "Резюме"
 
-#: rkward/windows/rkhtmlwindow.cpp:1065
+#: rkward/windows/rkhtmlwindow.cpp:1070
 #, kde-format
 msgid "Usage"
 msgstr "Використання"
 
-#: rkward/windows/rkhtmlwindow.cpp:1092
+#: rkward/windows/rkhtmlwindow.cpp:1099
 #, kde-format
 msgid "Choose another file"
 msgstr "Вибрати інший файл"
 
-#: rkward/windows/rkhtmlwindow.cpp:1114
+#: rkward/windows/rkhtmlwindow.cpp:1122
 #, kde-format
 msgid "GUI settings"
 msgstr "Параметри графічного інтерфейсу"
 
-#: rkward/windows/rkhtmlwindow.cpp:1139
+#: rkward/windows/rkhtmlwindow.cpp:1147
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Пов’язані функції і сторінки"
 
-#: rkward/windows/rkhtmlwindow.cpp:1147
+#: rkward/windows/rkhtmlwindow.cpp:1155
 #, kde-format
 msgid "Technical details"
 msgstr "Технічні подробиці"
 
-#: rkward/windows/rkhtmlwindow.cpp:1170
+#: rkward/windows/rkhtmlwindow.cpp:1178
 #, kde-format
 msgid "About"
 msgstr "Про програму"
 
-#: rkward/windows/rkhtmlwindow.cpp:1177
+#: rkward/windows/rkhtmlwindow.cpp:1185
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>На цій сторінці:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1200
+#: rkward/windows/rkhtmlwindow.cpp:1208
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Елемент графічного інтерфейсу без назви"
 
-#: rkward/windows/rkhtmlwindow.cpp:1274
+#: rkward/windows/rkhtmlwindow.cpp:1282
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Довідка R щодо «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1285
+#: rkward/windows/rkhtmlwindow.cpp:1294
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "ПОМИЛКОВЕ ПОСИЛАННЯ"
@@ -7323,81 +7319,81 @@ msgstr "Висота"
 msgid "Activate graphics device number %1"
 msgstr "Задіяти графічний пристрій з номером %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:590
+#: rkward/windows/rkwindowcatcher.cpp:592
 #, kde-format
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "Скопіювати дані з графічного пристрою з номером %1 на панель виведення"
 
-#: rkward/windows/rkwindowcatcher.cpp:598
+#: rkward/windows/rkwindowcatcher.cpp:602
 #, kde-format
 msgid "Print contents of graphics device number %1"
 msgstr "Надрукувати дані графічного пристрою з номером %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:606
+#: rkward/windows/rkwindowcatcher.cpp:611
 #, kde-format
 msgid "Specify R object"
 msgstr "Вкажіть об’єкт R"
 
-#: rkward/windows/rkwindowcatcher.cpp:610
+#: rkward/windows/rkwindowcatcher.cpp:615
 #, kde-format
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "Вкажіть назву об’єкта R, до якого слід зберегти графік"
 
-#: rkward/windows/rkwindowcatcher.cpp:630
+#: rkward/windows/rkwindowcatcher.cpp:636
 #, kde-format
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "Зберегти дані графічного пристрою з номером %1 до об’єкта «%2»"
 
-#: rkward/windows/rkwindowcatcher.cpp:639
+#: rkward/windows/rkwindowcatcher.cpp:647
 #, kde-format
 msgid "Duplicate graphics device number %1"
 msgstr "Здублювати графічний пристрій з номером %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:645
+#: rkward/windows/rkwindowcatcher.cpp:654
 #, kde-format
 msgid "Load next plot in device number %1"
 msgstr "Завантажити наступне креслення на пристрій з номером %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:646
-#: rkward/windows/rkwindowcatcher.cpp:654
-#: rkward/windows/rkwindowcatcher.cpp:662
-#: rkward/windows/rkwindowcatcher.cpp:670
-#: rkward/windows/rkwindowcatcher.cpp:678
+#: rkward/windows/rkwindowcatcher.cpp:655
+#: rkward/windows/rkwindowcatcher.cpp:663
+#: rkward/windows/rkwindowcatcher.cpp:671
+#: rkward/windows/rkwindowcatcher.cpp:679
+#: rkward/windows/rkwindowcatcher.cpp:688
 #, kde-format
 msgid "Loading plot from history"
 msgstr "Завантаження креслення з журналу"
 
-#: rkward/windows/rkwindowcatcher.cpp:653
+#: rkward/windows/rkwindowcatcher.cpp:662
 #, kde-format
 msgid "Load previous plot in device number %1"
 msgstr "Завантажити попереднє креслення на пристрій з номером %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:661
+#: rkward/windows/rkwindowcatcher.cpp:670
 #, kde-format
 msgid "Load first plot in device number %1"
 msgstr "Завантажити перше креслення на пристрій з номером %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:669
+#: rkward/windows/rkwindowcatcher.cpp:678
 #, kde-format
 msgid "Load last plot in device number %1"
 msgstr "Завантажити останнє креслення на пристрій з номером %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:677
+#: rkward/windows/rkwindowcatcher.cpp:687
 #, kde-format
 msgid "Load plot %1 in device number %2"
 msgstr "Завантажити креслення %1 до пристрою з номером %2"
 
-#: rkward/windows/rkwindowcatcher.cpp:685
+#: rkward/windows/rkwindowcatcher.cpp:696
 #, kde-format
 msgid "Append this plot to history (device number %1)"
 msgstr "Дописати це креслення до журналу (пристрій з номером %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:691
+#: rkward/windows/rkwindowcatcher.cpp:704
 #, kde-format
 msgid "Remove current plot from history (device number %1)"
 msgstr "Вилучити поточне креслення з журналу (пристрій з номером %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:697
+#: rkward/windows/rkwindowcatcher.cpp:711
 #, kde-format
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
@@ -7407,112 +7403,112 @@ msgstr ""
 "вікна. Якщо ви цього не бажаєте, натисніть кнопку «Скасувати», розташовану "
 "нижче."
 
-#: rkward/windows/rkwindowcatcher.cpp:699
+#: rkward/windows/rkwindowcatcher.cpp:713
 #, kde-format
 msgid "Clear plot history"
 msgstr "Спорожнити журнал креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:705
+#: rkward/windows/rkwindowcatcher.cpp:720
 #, kde-format
 msgid "Plot properties (device number %1)"
 msgstr "Властивості креслення (пристрій з номером %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:719
+#: rkward/windows/rkwindowcatcher.cpp:735
 #, kde-format
 msgid "<Unsaved plot>"
 msgstr "<Незбережене креслення>"
 
-#: rkward/windows/rkwindowcatcher.cpp:746
+#: rkward/windows/rkwindowcatcher.cpp:762
 #, kde-format
 msgid "Draw area follows size of window"
 msgstr "Область малювання підбирається за розмірами вікна"
 
-#: rkward/windows/rkwindowcatcher.cpp:753
+#: rkward/windows/rkwindowcatcher.cpp:769
 #, kde-format
 msgid "Set fixed size 500x500"
 msgstr "Фіксований розмір у 500⨯500"
 
-#: rkward/windows/rkwindowcatcher.cpp:756
+#: rkward/windows/rkwindowcatcher.cpp:772
 #, kde-format
 msgid "Set fixed size 1000x1000"
 msgstr "Фіксований розмір у 1000⨯1000"
 
-#: rkward/windows/rkwindowcatcher.cpp:759
+#: rkward/windows/rkwindowcatcher.cpp:775
 #, kde-format
 msgid "Set fixed size 2000x2000"
 msgstr "Фіксований розмір у 2000⨯2000"
 
-#: rkward/windows/rkwindowcatcher.cpp:762
+#: rkward/windows/rkwindowcatcher.cpp:778
 #, kde-format
 msgid "Set specified fixed size..."
 msgstr "Встановити вказаний фіксований розмір…"
 
-#: rkward/windows/rkwindowcatcher.cpp:767
+#: rkward/windows/rkwindowcatcher.cpp:783
 #, kde-format
 msgid "Previous plot"
 msgstr "Попереднє креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:772
+#: rkward/windows/rkwindowcatcher.cpp:788
 #, kde-format
 msgid "First plot"
 msgstr "Перше креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:777
+#: rkward/windows/rkwindowcatcher.cpp:793
 #, kde-format
 msgid "Next plot"
 msgstr "Наступне креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:782
+#: rkward/windows/rkwindowcatcher.cpp:798
 #, kde-format
 msgid "Last plot"
 msgstr "Останнє креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:785
+#: rkward/windows/rkwindowcatcher.cpp:801
 #, kde-format
 msgid "Go to plot"
 msgstr "Перейти до креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:794
+#: rkward/windows/rkwindowcatcher.cpp:810
 #, kde-format
 msgid "Append this plot"
 msgstr "Додати до цього креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:799
+#: rkward/windows/rkwindowcatcher.cpp:815
 #, kde-format
 msgid "Remove this plot"
 msgstr "Вилучити це креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:805
+#: rkward/windows/rkwindowcatcher.cpp:821
 #, kde-format
 msgid "Clear history"
 msgstr "Спорожнити журнал"
 
-#: rkward/windows/rkwindowcatcher.cpp:811
+#: rkward/windows/rkwindowcatcher.cpp:827
 #, kde-format
 msgid "Plot properties"
 msgstr "Властивості креслення"
 
-#: rkward/windows/rkwindowcatcher.cpp:816
+#: rkward/windows/rkwindowcatcher.cpp:832
 #, kde-format
 msgid "Make active"
 msgstr "Зробити активним"
 
-#: rkward/windows/rkwindowcatcher.cpp:820
+#: rkward/windows/rkwindowcatcher.cpp:836
 #, kde-format
 msgid "Copy to output"
 msgstr "Копіювати до виведення"
 
-#: rkward/windows/rkwindowcatcher.cpp:824
+#: rkward/windows/rkwindowcatcher.cpp:840
 #, kde-format
 msgid "Store as R object..."
 msgstr "Зберегти як об’єкт R…"
 
-#: rkward/windows/rkwindowcatcher.cpp:826
+#: rkward/windows/rkwindowcatcher.cpp:842
 #, kde-format
 msgid "Duplicate"
 msgstr "Здублювати"
 
-#: rkward/windows/rkwindowcatcher.cpp:830
+#: rkward/windows/rkwindowcatcher.cpp:846
 #, kde-format
 msgid "Stop interaction"
 msgstr "Припинити взаємодію"
@@ -7570,12 +7566,12 @@ msgstr ""
 msgid "About to edit very large object"
 msgstr "Щодо редагування дуже великого об’єкта"
 
-#: rkward/windows/rkworkplace.cpp:979
+#: rkward/windows/rkworkplace.cpp:980
 #, kde-format
 msgid "Save Workplace layout"
 msgstr "Зберегти компонування робочого аркуша"
 
-#: rkward/windows/rkworkplace.cpp:988
+#: rkward/windows/rkworkplace.cpp:989
 #, kde-format
 msgid "Restore Workplace layout"
 msgstr "Відновити компонування робочого аркуша"
@@ -7625,7 +7621,7 @@ msgstr "Перегляд робочого простору R"
 msgid "R Workspace"
 msgstr "Робочий простір R"
 
-#: rkward/windows/robjectbrowser.cpp:116 rkward/windows/robjectbrowser.cpp:255
+#: rkward/windows/robjectbrowser.cpp:116 rkward/windows/robjectbrowser.cpp:257
 #, kde-format
 msgid "Edit"
 msgstr "Змінити"
@@ -7670,7 +7666,7 @@ msgstr "Копіювати об’єкт"
 msgid "Enter the name to copy to"
 msgstr "Вкажіть назву об’єкта для копіювання"
 
-#: rkward/windows/robjectbrowser.cpp:202
+#: rkward/windows/robjectbrowser.cpp:203
 #, kde-format
 msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as "
@@ -7678,25 +7674,28 @@ msgid ""
 msgstr ""
 "Об’єкт з назвою «%1» вже існує у GlobalEnv. Створено копію з назвою «%2»."
 
-#: rkward/windows/robjectbrowser.cpp:202
+#: rkward/windows/robjectbrowser.cpp:204
 #, kde-format
 msgid "Name already in use"
 msgstr "Назву вже використано"
 
-#: rkward/windows/robjectbrowser.cpp:232
+#: rkward/windows/robjectbrowser.cpp:234
 #, kde-format
 msgid "Rename object"
 msgstr "Перейменувати об'єкт"
 
-#: rkward/windows/robjectbrowser.cpp:232
+#: rkward/windows/robjectbrowser.cpp:234
 #, kde-format
 msgid "Enter the new name"
 msgstr "Вкажіть нову назву"
 
-#: rkward/windows/robjectbrowser.cpp:255
+#: rkward/windows/robjectbrowser.cpp:257
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Переглянути у редакторі (лише читання)"
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "Помилка під час спроби відкрити файл скрипту %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

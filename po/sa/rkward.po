@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-26 00:38+0000\n"
+"POT-Creation-Date: 2025-04-27 00:38+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -282,7 +282,7 @@ msgstr "नामपत्र"
 #: rkward/core/rkmodificationtracker.cpp:353
 #: rkward/dataeditor/rkvareditmodel.cpp:673
 #: rkward/misc/rkobjectlistview.cpp:211 rkward/rbackend/rcommandstack.cpp:313
-#: rkward/windows/rkhelpsearchwindow.cpp:327
+#: rkward/windows/rkhelpsearchwindow.cpp:328
 #, kde-format
 msgid "Type"
 msgstr "प्रकारः"
@@ -438,14 +438,14 @@ msgid "Package %1 appears not to have been loaded"
 msgstr "%1 संकुलं न लोड् कृतम् इति दृश्यते"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:49
-#: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:236
+#: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:238
 #, kde-format
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
 "भवता निर्दिष्टं नाम पूर्वमेव प्रयुक्तम् आसीत् अथवा वैधं नासीत् । %1 इति पुनर्नामकरणं कृतम्"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:49
-#: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:236
+#: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:238
 #, kde-format
 msgid "Invalid Name"
 msgstr "अमान्य नाम"
@@ -1182,7 +1182,7 @@ msgstr "संकुलं संस्थापितम्"
 #: rkward/dialogs/rkloadlibsdialog.cpp:959
 #: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
-#: rkward/windows/rkhelpsearchwindow.cpp:325
+#: rkward/windows/rkhelpsearchwindow.cpp:326
 #, kde-format
 msgid "Title"
 msgstr "शीर्षक"
@@ -2454,7 +2454,7 @@ msgstr "अग्रे अन्वेष्टुम् (अन्वेषण
 msgid "Match case"
 msgstr "मेलप्रकरणम्"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:939
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:940
 #, kde-format
 msgid "Find as you type"
 msgstr "यथा टङ्कयति तथा अन्वेष्टुम्"
@@ -3513,7 +3513,7 @@ msgid "Enter value:"
 msgstr "मूल्यं प्रविशतु :"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:372
+#: rkward/windows/rkcommandeditorwindow.cpp:373
 #, kde-format
 msgid "Preview"
 msgstr "पूर्वावलोकनम्"
@@ -4037,7 +4037,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "'katepart' घटकः न लब्धः"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:707
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:708
 #, kde-format
 msgid "R Console"
 msgstr "आर कन्सोल"
@@ -4745,23 +4745,17 @@ msgid ""
 "installation."
 msgstr "\"%1\" (\"%2\" इत्यस्य आवश्यकता) सञ्चिका न लब्धा । कृपया स्वस्य संस्थापनं पश्यन्तु।"
 
-#: rkward/scriptbackends/rkcomponentscripting.cpp:54
-#: rkward/scriptbackends/rkcomponentscripting.cpp:56
-#, kde-format
-msgid "Error opening script file %1"
-msgstr "स्क्रिप्ट् सञ्चिकां %1 उद्घाटयितुं त्रुटिः"
-
-#: rkward/scriptbackends/rkcomponentscripting.cpp:71
+#: rkward/scriptbackends/rkcomponentscripting.cpp:63
 #, kde-format
 msgid "inlined code"
 msgstr "इन्लाइन्ड् कोड्"
 
-#: rkward/scriptbackends/rkcomponentscripting.cpp:71
+#: rkward/scriptbackends/rkcomponentscripting.cpp:63
 #, kde-format
 msgid "Script Error at '%1' line %2: %3\n"
 msgstr "'%1' पङ्क्तौ स्क्रिप्ट् त्रुटिः %2: %3\n"
 
-#: rkward/scriptbackends/rkcomponentscripting.cpp:88
+#: rkward/scriptbackends/rkcomponentscripting.cpp:80
 #, kde-format
 msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
@@ -5593,7 +5587,7 @@ msgstr ""
 "शक्नोति ।</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:472
-#: rkward/windows/rkhtmlwindow.cpp:1156
+#: rkward/windows/rkhtmlwindow.cpp:1164
 #, kde-format
 msgid "Dependencies"
 msgstr "आश्रयाः"
@@ -6104,22 +6098,22 @@ msgid ""
 msgstr ""
 "<b>वर्तमान आह्वान:</b> %1<br> <b>पर्यावरणम् :</b> %2<br> <b>स्थानीयवस्तूनि :</b> %3"
 
-#: rkward/windows/rkcodecompletion.cpp:675
+#: rkward/windows/rkcodecompletion.cpp:680
 #, kde-format
 msgid "Objects on search path"
 msgstr "अन्वेषणमार्गे वस्तूनि"
 
-#: rkward/windows/rkcodecompletion.cpp:762
+#: rkward/windows/rkcodecompletion.cpp:767
 #, kde-format
 msgid "Function calls"
 msgstr "फंक्शन् आह्वानम्"
 
-#: rkward/windows/rkcodecompletion.cpp:860
+#: rkward/windows/rkcodecompletion.cpp:865
 #, kde-format
 msgid "Function arguments"
 msgstr "कार्यवादाः"
 
-#: rkward/windows/rkcodecompletion.cpp:977
+#: rkward/windows/rkcodecompletion.cpp:982
 #, kde-format
 msgid "Local file names"
 msgstr "स्थानीयसञ्चिकानामानि"
@@ -6139,53 +6133,53 @@ msgstr "आदेशसञ्चिकां उद्घाटयितुं �
 msgid "Script Editor"
 msgstr "स्क्रिप्ट सम्पादक"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:348
+#: rkward/windows/rkcommandeditorwindow.cpp:349
 #, kde-format
 msgid "Insert line break and run"
 msgstr "रेखाविच्छेदं सम्मिलितं कृत्वा चालयन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:355
+#: rkward/windows/rkcommandeditorwindow.cpp:356
 #, kde-format
 msgid "Run block"
 msgstr "ब्लॉकं चालयन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:359
+#: rkward/windows/rkcommandeditorwindow.cpp:360
 #, kde-format
 msgid "Mark selection as block"
 msgstr "चयनं खण्डरूपेण चिह्नितव्यम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:362
+#: rkward/windows/rkcommandeditorwindow.cpp:363
 #, kde-format
 msgid "Unmark block"
 msgstr "अचिह्न खण्ड"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:367
+#: rkward/windows/rkcommandeditorwindow.cpp:368
 #, kde-format
 msgid "CD to script directory"
 msgstr "सीडी तः स्क्रिप्ट् निर्देशिका"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:368
+#: rkward/windows/rkcommandeditorwindow.cpp:369
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "कार्यनिर्देशिकाम् अस्याः स्क्रिप्ट् इत्यस्य निर्देशिकायां परिवर्तयन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:375
+#: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
 msgid "No preview"
 msgstr "पूर्वावलोकनं नास्ति"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:376
+#: rkward/windows/rkcommandeditorwindow.cpp:377
 #, kde-format
 msgid "Disable preview"
 msgstr "पूर्वावलोकनं निष्क्रियं कुर्वन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:393
+#: rkward/windows/rkcommandeditorwindow.cpp:394
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "यथा यथा टङ्कयति तथा अद्यतनं कुर्वन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:394
+#: rkward/windows/rkcommandeditorwindow.cpp:395
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6196,33 +6190,33 @@ msgstr ""
 "अद्यतनं प्रवर्तते । यदा एषः विकल्पः निष्क्रियः भवति तदा यदा कदापि भवन्तः स्क्रिप्ट् "
 "रक्षन्ति तदा पूर्वावलोकनं अद्यतनं भविष्यति, केवलं ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:401
+#: rkward/windows/rkcommandeditorwindow.cpp:402
 #, kde-format
 msgid "Save Script..."
 msgstr "स्क्रिप्ट् रक्षतु..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:403
+#: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
 msgid "Save Script As..."
 msgstr "स्क्रिप्ट् इत्यस्य रक्षणं कुर्वन्तु..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:479
-#: rkward/windows/rkcommandeditorwindow.cpp:941
+#: rkward/windows/rkcommandeditorwindow.cpp:480
+#: rkward/windows/rkcommandeditorwindow.cpp:943
 #, kde-format
 msgid " [modified]"
 msgstr " [संशोधितम्] ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:486
+#: rkward/windows/rkcommandeditorwindow.cpp:487
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "\"%1\" इति दस्तावेजं परिवर्तितम् अस्ति । तथापि पिधाय ?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:486
+#: rkward/windows/rkcommandeditorwindow.cpp:487
 #, kde-format
 msgid "File not saved"
 msgstr "सञ्चिका न रक्षिता"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:604
+#: rkward/windows/rkcommandeditorwindow.cpp:605
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6244,23 +6238,23 @@ msgstr ""
 "करिष्यति ।</p><p> कृपया पूर्वावलोकनविशेषतायाः उपयोगं कुर्वन्, विशेषतः च "
 "अविश्वसनीयस्रोतात् उत्पन्नेषु स्क्रिप्ट्-मध्ये विशेषतायाः उपयोगं कुर्वन् एतत् मनसि धारयन्तु ।</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:604
+#: rkward/windows/rkcommandeditorwindow.cpp:605
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "पूर्वावलोकनस्य सम्भाव्य दुष्प्रभावाः"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:662
+#: rkward/windows/rkcommandeditorwindow.cpp:663
 #, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
 msgstr "सॉफ्टवेयरं गम्यते"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:663
+#: rkward/windows/rkcommandeditorwindow.cpp:664
 #, kde-format
 msgid "Rendering the preview failed"
 msgstr "पूर्वावलोकनस्य प्रतिपादनं विफलम् अभवत्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:664
+#: rkward/windows/rkcommandeditorwindow.cpp:665
 #, kde-format
 msgid ""
 "The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
@@ -6277,7 +6271,7 @@ msgstr ""
 "\">Settings-&gt;Configure RKward-&gt;R-backend</a> इत्यत्र चालितस्य R सत्रस्य "
 "सिस्टम् मार्गे योजयितुं प्रयतध्वम् ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:667
+#: rkward/windows/rkcommandeditorwindow.cpp:668
 #, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
@@ -6288,7 +6282,7 @@ msgstr ""
 "संस्थापनस्य सरलतमः उपायः <tt>install.packages(\"tinytex\"); पुस्तकालय (\"tinytex"
 "\"); install_tinytex()</tt> इति"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:668
+#: rkward/windows/rkcommandeditorwindow.cpp:669
 #, kde-format
 msgid ""
 "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
@@ -6301,29 +6295,29 @@ msgstr ""
 "उपयोगेन, अधः, अथवा पूर्वावलोकन-विधिं &#39;R Markdown (HTML)&#39; इति परिवर्तयितुं "
 "शक्नोति ।</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:678
+#: rkward/windows/rkcommandeditorwindow.cpp:679
 #, kde-format
 msgid "R Markdown (HTML)"
 msgstr "आर मार्कडाउन (HTML)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:678
-#: rkward/windows/rkcommandeditorwindow.cpp:686
+#: rkward/windows/rkcommandeditorwindow.cpp:679
+#: rkward/windows/rkcommandeditorwindow.cpp:687
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "रेण्डर्ड् R Markdown इत्यस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:679
+#: rkward/windows/rkcommandeditorwindow.cpp:680
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgstr ""
 "RMarkdown प्रारूपात् (.Rmd) HTML मध्ये यथा रेण्डर् कृतं तथा स्क्रिप्ट् पूर्वावलोकनं कुर्वन्तु ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:686
+#: rkward/windows/rkcommandeditorwindow.cpp:687
 #, kde-format
 msgid "R Markdown (auto)"
 msgstr "आर मार्कडाउन (स्वयं)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:687
+#: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format
 msgid ""
 "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
@@ -6332,17 +6326,17 @@ msgstr ""
 "RMarkdown प्रारूपात् (.Rmd) दस्तावेजशीर्षके निर्दिष्टे प्रारूपे यथा रेण्डर्ड् कृतं तथा स्क्रिप्ट् "
 "पूर्वावलोकनं कुर्वन्तु ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:694
+#: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
 msgid "RKWard Output"
 msgstr "आरकेवार्ड आउटपुट"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:694
+#: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "उत्पन्नस्य RKWard आउटपुटस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:695
+#: rkward/windows/rkcommandeditorwindow.cpp:696
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6352,27 +6346,27 @@ msgstr ""
 "रिक्तं भविष्यति, यदि <i>rk.print()</i> अथवा अन्येषां RKWard आउटपुट् आदेशानां कृते आह्वानं "
 "नास्ति ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:707
+#: rkward/windows/rkcommandeditorwindow.cpp:708
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "अन्तरक्रियाशील R Console मध्ये चालितस्य स्क्रिप्ट् इत्यस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:708
+#: rkward/windows/rkcommandeditorwindow.cpp:709
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "स्क्रिप्ट् इत्यस्य पूर्वावलोकनं यथा इंटरएक्टिव् R Console इत्यत्र चालितम् अस्ति"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Plot"
 msgstr "भूखण्ड"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "उत्पन्न कथानकस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:735
+#: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6383,23 +6377,23 @@ msgstr ""
 "पूर्वावलोकनं रिक्तं भविष्यति, यदि <i>plot()</i> अथवा अन्ये ग्राफिक्स् आदेशाः आह्वानं नास्ति "
 "।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:866
+#: rkward/windows/rkcommandeditorwindow.cpp:867
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "'%1' स्क्रिप्ट् सञ्चिकायाः स्वयमेव रक्षणं निर्मातुं प्रयतमाने त्रुटिः अभवत्:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:940
+#: rkward/windows/rkcommandeditorwindow.cpp:942
 #, kde-format
 msgid "Unnamed"
 msgstr "अनामिका"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1085
+#: rkward/windows/rkcommandeditorwindow.cpp:1087
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (सक्रिय)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1104
+#: rkward/windows/rkcommandeditorwindow.cpp:1106
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (अप्रयुक्त)"
@@ -6535,12 +6529,12 @@ msgstr "कार्यनिर्देशिका"
 msgid "Rename"
 msgstr "पुनर्नाम"
 
-#: rkward/windows/rkfilebrowser.cpp:155
+#: rkward/windows/rkfilebrowser.cpp:156
 #, kde-format
 msgid "Rename..."
 msgstr "पुनर्नामकरणं..."
 
-#: rkward/windows/rkfilebrowser.cpp:155
+#: rkward/windows/rkfilebrowser.cpp:156
 #, kde-format
 msgid "New name for '%1':"
 msgstr "'%1' इत्यस्य नूतनं नाम:"
@@ -6595,12 +6589,12 @@ msgstr "अन्वेषय"
 msgid "Help search"
 msgstr "अन्वेषणं कर्तुं साहाय्यं कुर्वन्तु"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:157
+#: rkward/windows/rkhelpsearchwindow.cpp:154
 #, kde-format
 msgid "Find HTML help for %1"
 msgstr "%1 कृते HTML सहायतां अन्वेष्टुम्"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:160
+#: rkward/windows/rkhelpsearchwindow.cpp:158
 #, kde-format
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
@@ -6616,22 +6610,22 @@ msgstr ""
 msgid "No help found"
 msgstr "कोऽपि साहाय्यं न लब्धम्"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:235
+#: rkward/windows/rkhelpsearchwindow.cpp:236
 #, kde-format
 msgid "All installed packages"
 msgstr "सर्वे संस्थापिताः संकुलाः"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:236
+#: rkward/windows/rkhelpsearchwindow.cpp:237
 #, kde-format
 msgid "All loaded packages"
 msgstr "सर्वे लोड् कृताः संकुलाः"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:324
+#: rkward/windows/rkhelpsearchwindow.cpp:325
 #, kde-format
 msgid "Topic"
 msgstr "विषय"
 
-#: rkward/windows/rkhelpsearchwindow.cpp:326
+#: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
 msgid "Package"
 msgstr "सम्पुट"
@@ -6653,21 +6647,23 @@ msgid "[Active]"
 msgstr "[सक्रियं]"
 
 #: rkward/windows/rkhtmlwindow.cpp:749
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
+msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "आउटपुट %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:803
+#: rkward/windows/rkhtmlwindow.cpp:802
 #, kde-format
 msgid "Output Window"
 msgstr "आउटपुट विण्डो"
 
-#: rkward/windows/rkhtmlwindow.cpp:805
+#: rkward/windows/rkhtmlwindow.cpp:804
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&रिफ्रेश आउटपुट"
 
-#: rkward/windows/rkhtmlwindow.cpp:831
+#: rkward/windows/rkhtmlwindow.cpp:830
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "पृष्ठं नास्ति भग्नं वा"
@@ -6681,89 +6677,89 @@ msgstr ""
 "किं भवन्तः वास्तवमेव आउटपुट् स्वच्छं कर्तुम् इच्छन्ति? एतेन आउटपुट् मध्ये प्रयुक्ताः सर्वाः इमेज् "
 "सञ्चिकाः अपि निष्कासिताः भविष्यन्ति । तस्य पुनर्स्थापनं न सम्भवति।"
 
-#: rkward/windows/rkhtmlwindow.cpp:843
+#: rkward/windows/rkhtmlwindow.cpp:844
 #, kde-format
 msgid "Flush output?"
 msgstr "फ्लश आउटपुट् ?"
 
-#: rkward/windows/rkhtmlwindow.cpp:848
+#: rkward/windows/rkhtmlwindow.cpp:849
 #, kde-format
 msgid "Flushing output"
 msgstr "फ्लशिंग आउटपुट"
 
-#: rkward/windows/rkhtmlwindow.cpp:888
+#: rkward/windows/rkhtmlwindow.cpp:889
 #, kde-format
 msgid "Zoom In"
 msgstr "Zoom In इति"
 
-#: rkward/windows/rkhtmlwindow.cpp:890
+#: rkward/windows/rkhtmlwindow.cpp:891
 #, kde-format
 msgid "Zoom Out"
 msgstr "Zoom Out इति"
 
-#: rkward/windows/rkhtmlwindow.cpp:894
+#: rkward/windows/rkhtmlwindow.cpp:895
 #, kde-format
 msgid "Default &Encoding"
 msgstr "पूर्वनिर्धारित &एन्कोडिंग"
 
-#: rkward/windows/rkhtmlwindow.cpp:895
+#: rkward/windows/rkhtmlwindow.cpp:896
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
 "page or in the HTTP headers."
 msgstr "पृष्ठे अथवा HTTP शीर्षकेषु स्पष्टं एन्कोडिंग् सेट् न कृतं चेत् कल्पयितुं एन्कोडिंग् सेट् कुर्वन्तु ।"
 
-#: rkward/windows/rkhtmlwindow.cpp:905
+#: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "पृष्ठं HTML रूपेण निर्यातयन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:919
+#: rkward/windows/rkhtmlwindow.cpp:920
 #, kde-format
 msgid "Save Output"
 msgstr "आउटपुट् रक्षतु"
 
-#: rkward/windows/rkhtmlwindow.cpp:921
+#: rkward/windows/rkhtmlwindow.cpp:922
 #, kde-format
 msgid "Save Output As"
 msgstr "Save Output As"
 
-#: rkward/windows/rkhtmlwindow.cpp:924
+#: rkward/windows/rkhtmlwindow.cpp:925
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Clear Output"
 
-#: rkward/windows/rkhtmlwindow.cpp:930
+#: rkward/windows/rkhtmlwindow.cpp:931
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&अन्तिम रक्षितावस्थां प्रति प्रत्यागच्छन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:934
+#: rkward/windows/rkhtmlwindow.cpp:935
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Output इत्येतत् &Active इति सेट् कुर्वन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:936
+#: rkward/windows/rkhtmlwindow.cpp:937
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "एतत् आउटपुट् आउटपुट् योजयितुं सञ्चिकारूपेण सेट् कुर्वन्तु ।"
 
-#: rkward/windows/rkhtmlwindow.cpp:958
+#: rkward/windows/rkhtmlwindow.cpp:959
 #, kde-format
 msgid "Print output"
 msgstr "मुद्रणनिर्गमः"
 
-#: rkward/windows/rkhtmlwindow.cpp:966
+#: rkward/windows/rkhtmlwindow.cpp:967
 #, kde-format
 msgid "Print page"
 msgstr "पृष्ठं मुद्रयन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:1023
+#: rkward/windows/rkhtmlwindow.cpp:1024
 #, kde-format
 msgid "No Title"
 msgstr "No Title"
 
-#: rkward/windows/rkhtmlwindow.cpp:1036
+#: rkward/windows/rkhtmlwindow.cpp:1040
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6773,62 +6769,62 @@ msgstr ""
 "<h1>सहायता पृष्ठ अनुपलब्ध</h1><p> अस्य घटकस्य सहायतापृष्ठं अद्यापि न लिखितम् (अथवा भग्नम् "
 "अस्ति) । कृपया तस्य योगदानं कर्तुं विचारयन्तु।</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1041
+#: rkward/windows/rkhtmlwindow.cpp:1046
 #, kde-format
 msgid "Use %1 now"
 msgstr "इदानीं %1 इत्यस्य उपयोगं कुर्वन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:1058
+#: rkward/windows/rkhtmlwindow.cpp:1063
 #, kde-format
 msgid "Summary"
 msgstr "संक्षेपः"
 
-#: rkward/windows/rkhtmlwindow.cpp:1065
+#: rkward/windows/rkhtmlwindow.cpp:1070
 #, kde-format
 msgid "Usage"
 msgstr "प्रयोगः"
 
-#: rkward/windows/rkhtmlwindow.cpp:1092
+#: rkward/windows/rkhtmlwindow.cpp:1099
 #, kde-format
 msgid "Choose another file"
 msgstr "अन्यां सञ्चिकां चिनोतु"
 
-#: rkward/windows/rkhtmlwindow.cpp:1114
+#: rkward/windows/rkhtmlwindow.cpp:1122
 #, kde-format
 msgid "GUI settings"
 msgstr "GUI सेटिंग्स्"
 
-#: rkward/windows/rkhtmlwindow.cpp:1139
+#: rkward/windows/rkhtmlwindow.cpp:1147
 #, kde-format
 msgid "Related functions and pages"
 msgstr "सम्बन्धित कार्य एवं पृष्ठ"
 
-#: rkward/windows/rkhtmlwindow.cpp:1147
+#: rkward/windows/rkhtmlwindow.cpp:1155
 #, kde-format
 msgid "Technical details"
 msgstr "तकनीकी विवरण"
 
-#: rkward/windows/rkhtmlwindow.cpp:1170
+#: rkward/windows/rkhtmlwindow.cpp:1178
 #, kde-format
 msgid "About"
 msgstr "विषये"
 
-#: rkward/windows/rkhtmlwindow.cpp:1177
+#: rkward/windows/rkhtmlwindow.cpp:1185
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>अस्मिन् पृष्ठे : १.</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1200
+#: rkward/windows/rkhtmlwindow.cpp:1208
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "अनाम GUI तत्व"
 
-#: rkward/windows/rkhtmlwindow.cpp:1274
+#: rkward/windows/rkhtmlwindow.cpp:1282
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "R '%1' इत्यत्र सन्दर्भः ।"
 
-#: rkward/windows/rkhtmlwindow.cpp:1285
+#: rkward/windows/rkhtmlwindow.cpp:1294
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "भग्न सन्दर्भ"
@@ -7091,81 +7087,81 @@ msgstr "औनत्यम्‌"
 msgid "Activate graphics device number %1"
 msgstr "ग्राफिक्स् उपकरणसङ्ख्या %1 सक्रियताम्"
 
-#: rkward/windows/rkwindowcatcher.cpp:590
+#: rkward/windows/rkwindowcatcher.cpp:592
 #, kde-format
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "ग्राफिक्स् उपकरणसङ्ख्या %1 इत्यस्य सामग्रीं आउटपुट् प्रति प्रतिलिख्यताम्"
 
-#: rkward/windows/rkwindowcatcher.cpp:598
+#: rkward/windows/rkwindowcatcher.cpp:602
 #, kde-format
 msgid "Print contents of graphics device number %1"
 msgstr "ग्राफिक्स् उपकरणसङ्ख्या %1 इत्यस्य सामग्रीं मुद्रयन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:606
+#: rkward/windows/rkwindowcatcher.cpp:611
 #, kde-format
 msgid "Specify R object"
 msgstr "R वस्तु निर्दिशतु"
 
-#: rkward/windows/rkwindowcatcher.cpp:610
+#: rkward/windows/rkwindowcatcher.cpp:615
 #, kde-format
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "R वस्तुनाम निर्दिशन्तु, यस्मिन् भवन्तः आलेखं रक्षितुं इच्छन्ति"
 
-#: rkward/windows/rkwindowcatcher.cpp:630
+#: rkward/windows/rkwindowcatcher.cpp:636
 #, kde-format
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "ग्राफिक्स् उपकरणसङ्ख्या %1 इत्यस्य सामग्रीं '%2' इति वस्तुनि रक्षन्तु ।"
 
-#: rkward/windows/rkwindowcatcher.cpp:639
+#: rkward/windows/rkwindowcatcher.cpp:647
 #, kde-format
 msgid "Duplicate graphics device number %1"
 msgstr "द्वितीयकचित्रयन्त्रसङ्ख्या %1"
 
-#: rkward/windows/rkwindowcatcher.cpp:645
+#: rkward/windows/rkwindowcatcher.cpp:654
 #, kde-format
 msgid "Load next plot in device number %1"
 msgstr "%1 इति उपकरणसङ्ख्यायां अग्रिमम् प्लॉट् लोड् कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:646
-#: rkward/windows/rkwindowcatcher.cpp:654
-#: rkward/windows/rkwindowcatcher.cpp:662
-#: rkward/windows/rkwindowcatcher.cpp:670
-#: rkward/windows/rkwindowcatcher.cpp:678
+#: rkward/windows/rkwindowcatcher.cpp:655
+#: rkward/windows/rkwindowcatcher.cpp:663
+#: rkward/windows/rkwindowcatcher.cpp:671
+#: rkward/windows/rkwindowcatcher.cpp:679
+#: rkward/windows/rkwindowcatcher.cpp:688
 #, kde-format
 msgid "Loading plot from history"
 msgstr "इतिहासतः कथानकं लोडयति"
 
-#: rkward/windows/rkwindowcatcher.cpp:653
+#: rkward/windows/rkwindowcatcher.cpp:662
 #, kde-format
 msgid "Load previous plot in device number %1"
 msgstr "%1 इति उपकरणसङ्ख्यायां पूर्वप्लॉट् लोड् कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:661
+#: rkward/windows/rkwindowcatcher.cpp:670
 #, kde-format
 msgid "Load first plot in device number %1"
 msgstr "प्रथमं प्लॉट् %1 इति उपकरणसङ्ख्यायां लोड् कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:669
+#: rkward/windows/rkwindowcatcher.cpp:678
 #, kde-format
 msgid "Load last plot in device number %1"
 msgstr "%1 इति उपकरणसङ्ख्यायां अन्तिमप्लॉट् लोड् कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:677
+#: rkward/windows/rkwindowcatcher.cpp:687
 #, kde-format
 msgid "Load plot %1 in device number %2"
 msgstr "उपकरणसङ्ख्या %2 मध्ये प्लॉट् %1 लोड् कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:685
+#: rkward/windows/rkwindowcatcher.cpp:696
 #, kde-format
 msgid "Append this plot to history (device number %1)"
 msgstr "एतत् प्लॉट् इतिहासे (यन्त्रसङ्ख्या %1) योजयन्तु ।"
 
-#: rkward/windows/rkwindowcatcher.cpp:691
+#: rkward/windows/rkwindowcatcher.cpp:704
 #, kde-format
 msgid "Remove current plot from history (device number %1)"
 msgstr "इतिहासात् वर्तमानप्लॉट् निष्कासयन्तु (उपकरणसङ्ख्या %1)"
 
-#: rkward/windows/rkwindowcatcher.cpp:697
+#: rkward/windows/rkwindowcatcher.cpp:711
 #, kde-format
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
@@ -7174,112 +7170,112 @@ msgstr ""
 "एतेन सर्वेषां उपकरणविण्डोजानां कृते प्लॉट् इतिहासः स्वच्छः भविष्यति, न केवलं एतस्य । यदि एषः "
 "भवतः अभिप्रायः नास्ति तर्हि cancel नुदन्तु, अधः ।"
 
-#: rkward/windows/rkwindowcatcher.cpp:699
+#: rkward/windows/rkwindowcatcher.cpp:713
 #, kde-format
 msgid "Clear plot history"
 msgstr "कथानक-इतिहासः स्पष्टः भवतु"
 
-#: rkward/windows/rkwindowcatcher.cpp:705
+#: rkward/windows/rkwindowcatcher.cpp:720
 #, kde-format
 msgid "Plot properties (device number %1)"
 msgstr "प्लॉट् गुणाः (यन्त्रसङ्ख्या %1) ."
 
-#: rkward/windows/rkwindowcatcher.cpp:719
+#: rkward/windows/rkwindowcatcher.cpp:735
 #, kde-format
 msgid "<Unsaved plot>"
 msgstr "<असंरक्षित प्लॉट>"
 
-#: rkward/windows/rkwindowcatcher.cpp:746
+#: rkward/windows/rkwindowcatcher.cpp:762
 #, kde-format
 msgid "Draw area follows size of window"
 msgstr "Draw area इत्येतत् window इत्यस्य size इत्यस्य अनुसरणं करोति"
 
-#: rkward/windows/rkwindowcatcher.cpp:753
+#: rkward/windows/rkwindowcatcher.cpp:769
 #, kde-format
 msgid "Set fixed size 500x500"
 msgstr "नियतं आकारं 500x500 सेट् कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:756
+#: rkward/windows/rkwindowcatcher.cpp:772
 #, kde-format
 msgid "Set fixed size 1000x1000"
 msgstr "नियतं आकारं 1000x1000 सेट् कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:759
+#: rkward/windows/rkwindowcatcher.cpp:775
 #, kde-format
 msgid "Set fixed size 2000x2000"
 msgstr "नियतं आकारं 2000x2000 सेट् कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:762
+#: rkward/windows/rkwindowcatcher.cpp:778
 #, kde-format
 msgid "Set specified fixed size..."
 msgstr "निर्दिष्टं नियतं आकारं सेट् कुर्वन्तु..."
 
-#: rkward/windows/rkwindowcatcher.cpp:767
+#: rkward/windows/rkwindowcatcher.cpp:783
 #, kde-format
 msgid "Previous plot"
 msgstr "पूर्व कथानक"
 
-#: rkward/windows/rkwindowcatcher.cpp:772
+#: rkward/windows/rkwindowcatcher.cpp:788
 #, kde-format
 msgid "First plot"
 msgstr "प्रथमं कथानकम्"
 
-#: rkward/windows/rkwindowcatcher.cpp:777
+#: rkward/windows/rkwindowcatcher.cpp:793
 #, kde-format
 msgid "Next plot"
 msgstr "अग्रिमः कथानकः"
 
-#: rkward/windows/rkwindowcatcher.cpp:782
+#: rkward/windows/rkwindowcatcher.cpp:798
 #, kde-format
 msgid "Last plot"
 msgstr "अन्तिम कथानक"
 
-#: rkward/windows/rkwindowcatcher.cpp:785
+#: rkward/windows/rkwindowcatcher.cpp:801
 #, kde-format
 msgid "Go to plot"
 msgstr "कथानकं गच्छतु"
 
-#: rkward/windows/rkwindowcatcher.cpp:794
+#: rkward/windows/rkwindowcatcher.cpp:810
 #, kde-format
 msgid "Append this plot"
 msgstr "एतत् कथानकं संलग्नं कुर्वन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:799
+#: rkward/windows/rkwindowcatcher.cpp:815
 #, kde-format
 msgid "Remove this plot"
 msgstr "एतत् कथानकं निष्कासयन्तु"
 
-#: rkward/windows/rkwindowcatcher.cpp:805
+#: rkward/windows/rkwindowcatcher.cpp:821
 #, kde-format
 msgid "Clear history"
 msgstr "इतिहासं स्पष्टं कुरुत"
 
-#: rkward/windows/rkwindowcatcher.cpp:811
+#: rkward/windows/rkwindowcatcher.cpp:827
 #, kde-format
 msgid "Plot properties"
 msgstr "प्लॉट गुण"
 
-#: rkward/windows/rkwindowcatcher.cpp:816
+#: rkward/windows/rkwindowcatcher.cpp:832
 #, kde-format
 msgid "Make active"
 msgstr "सक्रियं कुरुत"
 
-#: rkward/windows/rkwindowcatcher.cpp:820
+#: rkward/windows/rkwindowcatcher.cpp:836
 #, kde-format
 msgid "Copy to output"
 msgstr "आउटपुट् प्रति प्रतिलिख्यताम्"
 
-#: rkward/windows/rkwindowcatcher.cpp:824
+#: rkward/windows/rkwindowcatcher.cpp:840
 #, kde-format
 msgid "Store as R object..."
 msgstr "R वस्तुरूपेण संग्रहयन्तु..."
 
-#: rkward/windows/rkwindowcatcher.cpp:826
+#: rkward/windows/rkwindowcatcher.cpp:842
 #, kde-format
 msgid "Duplicate"
 msgstr "डुप्लिकेट्"
 
-#: rkward/windows/rkwindowcatcher.cpp:830
+#: rkward/windows/rkwindowcatcher.cpp:846
 #, kde-format
 msgid "Stop interaction"
 msgstr "अन्तरक्रियां स्थगयतु"
@@ -7333,12 +7329,12 @@ msgstr ""
 msgid "About to edit very large object"
 msgstr "अतीव विशालं वस्तु सम्पादयितुं प्रवृत्तः"
 
-#: rkward/windows/rkworkplace.cpp:979
+#: rkward/windows/rkworkplace.cpp:980
 #, kde-format
 msgid "Save Workplace layout"
 msgstr "कार्यस्थलविन्यासं रक्षतु"
 
-#: rkward/windows/rkworkplace.cpp:988
+#: rkward/windows/rkworkplace.cpp:989
 #, kde-format
 msgid "Restore Workplace layout"
 msgstr "कार्यस्थलविन्यासं पुनर्स्थापयन्तु"
@@ -7388,7 +7384,7 @@ msgstr "आर कार्यक्षेत्र ब्राउज़र"
 msgid "R Workspace"
 msgstr "आर कार्यक्षेत्र"
 
-#: rkward/windows/robjectbrowser.cpp:116 rkward/windows/robjectbrowser.cpp:255
+#: rkward/windows/robjectbrowser.cpp:116 rkward/windows/robjectbrowser.cpp:257
 #, kde-format
 msgid "Edit"
 msgstr "सम्पादन"
@@ -7433,7 +7429,7 @@ msgstr "प्रतिलिपि वस्तु"
 msgid "Enter the name to copy to"
 msgstr "प्रतिलिपिं कर्तुं नाम प्रविशतु"
 
-#: rkward/windows/robjectbrowser.cpp:202
+#: rkward/windows/robjectbrowser.cpp:203
 #, kde-format
 msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as "
@@ -7442,22 +7438,25 @@ msgstr ""
 "'%1' इति नामकं वस्तु GlobalEnv मध्ये पूर्वमेव विद्यते । तस्य स्थाने '%2' इति प्रतिलिपिं "
 "निर्मितवती ।"
 
-#: rkward/windows/robjectbrowser.cpp:202
+#: rkward/windows/robjectbrowser.cpp:204
 #, kde-format
 msgid "Name already in use"
 msgstr "पूर्वमेव प्रयुक्तं नाम"
 
-#: rkward/windows/robjectbrowser.cpp:232
+#: rkward/windows/robjectbrowser.cpp:234
 #, kde-format
 msgid "Rename object"
 msgstr "वस्तुनः नामकरणं कुर्वन्तु"
 
-#: rkward/windows/robjectbrowser.cpp:232
+#: rkward/windows/robjectbrowser.cpp:234
 #, kde-format
 msgid "Enter the new name"
 msgstr "नूतनं नाम प्रविशतु"
 
-#: rkward/windows/robjectbrowser.cpp:255
+#: rkward/windows/robjectbrowser.cpp:257
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "सम्पादके दृश्यम् (केवलं पठनीयम्)"
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "स्क्रिप्ट् सञ्चिकां %1 उद्घाटयितुं त्रुटिः"
