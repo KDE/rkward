@@ -144,8 +144,8 @@ QStringList RKSessionVars::findRInstallations() {
 #if defined(Q_OS_MACOS)
 	ret = globVersionedDirs(u"/Library/Frameworks/R.framework/Versions"_s, QString(), u"Resources/bin/R"_s);
 #elif defined(Q_OS_WIN)
-	QString instroot = QString(getenv("PROGRAMFILES")) + u"/R"_s;
-	if (!QFileInfo(instroot).isReadable()) instroot = QString(getenv("PROGRAMFILES(x86)")) + u"/R"_s;
+	QString instroot = QString::fromLocal8Bit(getenv("PROGRAMFILES")) + u"/R"_s;
+	if (!QFileInfo(instroot).isReadable()) instroot = QString::fromLocal8Bit(getenv("PROGRAMFILES(x86)")) + u"/R"_s;
 	ret = globVersionedDirs(instroot, u"R-"_s, u"bin/R"_s);
 #else
 	const QStringList candidates{u"/usr/bin/R"_s, u"/usr/local/bin/R"_s};
