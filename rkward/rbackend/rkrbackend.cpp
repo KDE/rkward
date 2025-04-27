@@ -1082,7 +1082,7 @@ bool RKRBackend::startR () {
 #ifdef Q_OS_WIN
 	// See the corresponding note in RWriteConsoleEx(). For auto-detecting UTF8 markers in console output.
 	win_do_detect_winutf8markers = true;
-	runDirectCommand("print(c(\"X\",\"Y\"), print.gap=1, quote=FALSE)");
+	runDirectCommand(u"print(c(\"X\",\"Y\"), print.gap=1, quote=FALSE)"_s);
 	win_do_detect_winutf8markers = false;
 #endif
 
