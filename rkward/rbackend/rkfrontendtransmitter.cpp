@@ -35,9 +35,9 @@ QString findBackendAtPath (const QString &path) {
 	QDir dir (path);
 	dir.makeAbsolute ();
 #ifdef Q_OS_WIN
-	QString ret = dir.filePath ("rkward.rbackend.exe");
+	QString ret = dir.filePath(u"rkward.rbackend.exe"_s);
 #else
-	QString ret = dir.filePath (QStringLiteral("rkward.rbackend"));
+	QString ret = dir.filePath(u"rkward.rbackend"_s);
 #endif
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Looking for backend at %s", qPrintable (ret));
 	QFileInfo fi (ret);
