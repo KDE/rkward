@@ -226,7 +226,7 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	command.append(u", \"rk.graphics.height\"="_s + QString::number(graphics_height));
 	if (graphics_type == "\"JPG\""_L1) command.append(u", \"rk.graphics.jpg.quality\"="_s + QString::number(graphics_jpg_quality));
 	command.append(u", \"rk.output.css.file\"=\""_s +
-		(custom_css_file.get().isEmpty() ? RKCommonFunctions::getRKWardDataDir() + u"pages/rkward_output.css"_s : custom_css_file.get()) + u'\"');
+		(custom_css_file.get().isEmpty() ? RKCommonFunctions::getRKWardDataDir() + u"pages/rkward_output.css"_s : custom_css_file.get()) + u'"');
 	list.append(command + u")\n"_s);
 
 	return (list);

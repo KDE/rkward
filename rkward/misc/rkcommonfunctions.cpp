@@ -141,7 +141,7 @@ namespace RKCommonFunctions {
 
 		for (int i=0; i <= line_end; ++i) {
 			QChar c = context_line.at (i);
-			if (c == u'\'' || c == u'\"' || c == u'`') {
+			if (c == u'\'' || c == u'"' || c == u'`') {
 				i = quoteEndPosition (c, context_line, i+1);
 				if (i < 0) break;
 				continue;
