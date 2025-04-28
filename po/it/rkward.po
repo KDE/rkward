@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the it package.
 # Daniele Medri <daniele@medri.org>, 2004-2005.
 # Paolo Zamponi <feus73@gmail.com>, 2018, 2019.
-# SPDX-FileCopyrightText: 2020, 2021, 2022, 2024 Vincenzo Reale <smart2128vr@gmail.com>
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2024, 2025 Vincenzo Reale <smart2128vr@gmail.com>
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-27 00:38+0000\n"
-"PO-Revision-Date: 2024-11-27 03:38+0100\n"
+"POT-Creation-Date: 2025-04-28 00:38+0000\n"
+"PO-Revision-Date: 2025-04-23 09:06+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2059,10 +2059,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Interfaccia per il linguaggio statistico R"
 
 #: rkward/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "(c) 2002 - 2024"
+msgstr "(c) 2002 - 2025"
 
 #: rkward/main.cpp:175
 #, kde-format
@@ -3828,7 +3827,7 @@ msgstr ""
 "L'installazione di R configurata in <b>%1</b> non esiste o non è un "
 "eseguibile."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:220
+#: rkward/rbackend/rkfrontendtransmitter.cpp:228
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3837,13 +3836,13 @@ msgstr ""
 "L'eseguibile del motore non è stato trovato. Questo probabilmente è dovuto "
 "ad un problema con la tua installazione."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:304
+#: rkward/rbackend/rkfrontendtransmitter.cpp:322
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "L'eseguibile del motore non è stato avviato. Il messaggio d'errore è: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:357
+#: rkward/rbackend/rkfrontendtransmitter.cpp:376
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3852,7 +3851,7 @@ msgstr ""
 "Errore nella negoziazione con il processo del motore: atteso il gettone "
 "«%1», ricevuto «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:360
+#: rkward/rbackend/rkfrontendtransmitter.cpp:381
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3864,7 +3863,7 @@ msgstr ""
 "motore è «%2».\n"
 "Correggi la tua installazione."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:394
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3872,14 +3871,14 @@ msgstr ""
 "Il processo del motore non può essere avviato. Controlla la tua "
 "installazione."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:395
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "L'avvio del processo del motore non è riuscito, con codice di uscita %1, "
 "messaggio: «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:396
+#: rkward/rbackend/rkfrontendtransmitter.cpp:418
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Il processo del motore è terminato con codice %1, messaggio «%2»."
@@ -3908,7 +3907,7 @@ msgstr "Messaggio dal motore di R"
 msgid "Question from the R backend"
 msgstr "Domanda dal motore di R"
 
-#: rkward/rbackend/rkrbackend.cpp:1599
+#: rkward/rbackend/rkrbackend.cpp:1598
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3930,7 +3929,7 @@ msgstr ""
 "la tua installazione</b>. Per un aiuto, vedi <a href=\"https://rkward.kde."
 "org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1603
+#: rkward/rbackend/rkrbackend.cpp:1602
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3945,12 +3944,12 @@ msgstr ""
 "aiuto, vedi <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Versione Graphics non corrispondente"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3961,7 +3960,7 @@ msgstr ""
 "richiede una ricompilazione.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Informazioni aggiuntive</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Ok"
 msgstr "Ok"
@@ -4099,24 +4098,24 @@ msgstr ""
 msgid "R engine has died"
 msgstr "Il motore di R è terminato inaspettatamente"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:211
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:214
 #, kde-format
 msgid "Graphics Device Number %1"
 msgstr "Dispositivo grafico numero %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:648
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:651
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Attivo)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:650
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:653
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (Inattivo)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:676
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:679
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4125,14 +4124,14 @@ msgstr ""
 "<h2>Individuazione dei punti</h2><p>Usa il pulsante sinistro per selezionare "
 "i punti; interrompi con un qualsiasi altro pulsante del mouse.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:686
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:689
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Premi Invio per vedere il prossimo grafico, oppure «Annulla» per "
 "interrompere.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:690
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:693
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Ok per mostrare il prossimo grafico?"
@@ -4187,63 +4186,63 @@ msgstr "Minimappa della barra di scorrimento"
 msgid "Dynamic word wrap"
 msgstr "A capo automatico dinamico"
 
-#: rkward/rkconsole.cpp:480
+#: rkward/rkconsole.cpp:481
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Errore di sintassi\n"
 
-#: rkward/rkconsole.cpp:680
+#: rkward/rkconsole.cpp:681
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Seleziona un file di cronologia dei comandi da caricare"
 
-#: rkward/rkconsole.cpp:680
+#: rkward/rkconsole.cpp:683
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "File di cronologia di R [*.Rhistory](*.Rhistory);;Tutti i file [*](*)"
 
-#: rkward/rkconsole.cpp:713
+#: rkward/rkconsole.cpp:716
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Seleziona un nome di file per salvare la cronologia dei comandi"
 
-#: rkward/rkconsole.cpp:713
+#: rkward/rkconsole.cpp:717
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr ""
 "File di cronologia di R [*.Rhistory] (*.Rhistory);;Tutti i file [*] (*)"
 
-#: rkward/rkconsole.cpp:838
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Interrompi comando in esecuzione"
 
-#: rkward/rkconsole.cpp:845
+#: rkward/rkconsole.cpp:849
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Copia la selezione letteralmente"
 
-#: rkward/rkconsole.cpp:848
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Copia solo i comandi"
 
-#: rkward/rkconsole.cpp:855
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Print Console"
 msgstr "Stampa la console"
 
-#: rkward/rkconsole.cpp:861
+#: rkward/rkconsole.cpp:865
 #, kde-format
 msgid "Import command history..."
 msgstr "Importa cronologia dei comandi..."
 
-#: rkward/rkconsole.cpp:863
+#: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Export command history..."
 msgstr "Esporta cronologia dei comandi..."
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4257,17 +4256,17 @@ msgstr ""
 "azzerare prima la console? Premi annulla se non vuoi eseguire adesso il "
 "nuovo comando."
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "R Console is busy"
 msgstr "La console di R è occupata"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Append"
 msgstr "Aggiungi"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Azzera, poi invia"
@@ -4715,47 +4714,53 @@ msgstr ""
 "rkward_trouble_shooting\">risoluzione dei problemi</a> per possibili "
 "soluzioni."
 
-#: rkward/rkward.cpp:1017
+#: rkward/rkward.cpp:1019
 #, kde-format
 msgid "Open"
 msgstr "Apri"
 
-#: rkward/rkward.cpp:1021
+#: rkward/rkward.cpp:1023
 #, kde-format
 msgid "Opening mode:"
 msgstr "Modalità di apertura:"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1025
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Individua il tipo di file, automaticamente"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1025
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Apri come file di testo / script"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1026
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Apri come file di testo e forza l'evidenziazione di R"
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1026
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
+msgid "Open as R workspace"
+msgstr "Apri spazio di lavoro recente"
+
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Seleziona il file di uscita di RKWard da aprire..."
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "File di uscita di RKWard [*.rko](*.rko);;Tutti i file [*](*)"
 
-#: rkward/rkward.cpp:1069
+#: rkward/rkward.cpp:1072
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Apri file di script"
 
-#: rkward/rkward.cpp:1083
+#: rkward/rkward.cpp:1086
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[spazio di lavoro senza nome]"
@@ -4846,17 +4851,17 @@ msgstr "<b>l'oggetto è stato eliminato</b>"
 msgid "Object Viewer: %1"
 msgstr "Visualizzatore di oggetti: %1"
 
-#: rkward/robjectviewer.cpp:126
+#: rkward/robjectviewer.cpp:127
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
 msgstr "L'oggetto è stato modificato. Meglio se fai clic su «Aggiorna»"
 
-#: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:111
+#: rkward/robjectviewer.cpp:164 rkward/windows/robjectbrowser.cpp:111
 #, kde-format
 msgid "Update"
 msgstr "Aggiorna"
 
-#: rkward/robjectviewer.cpp:211
+#: rkward/robjectviewer.cpp:212
 #, kde-format
 msgid "Fetching information"
 msgstr "Recupero delle informazioni"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-27 00:38+0000\n"
+"POT-Creation-Date: 2025-04-28 00:38+0000\n"
 "PO-Revision-Date: 2024-08-10 12:44+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -3800,7 +3800,7 @@ msgid ""
 "executable."
 msgstr "Plik wykonywalny R w <b>%1</b> ie istnieje lub jest niewykonywalny."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:220
+#: rkward/rbackend/rkfrontendtransmitter.cpp:228
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3809,12 +3809,12 @@ msgstr ""
 "Nie można znaleźć pliku wykonywalnego silnika. Najprawdopodobniej jest to "
 "problem z twoją instalacją."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:304
+#: rkward/rbackend/rkfrontendtransmitter.cpp:322
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "Nie można uruchomić pliku wykonywalnego silnik. Wiadomość błędu: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:357
+#: rkward/rbackend/rkfrontendtransmitter.cpp:376
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3823,7 +3823,7 @@ msgstr ""
 "Błąd przy powitaniu z procesem silnika. Oczekiwano tokena '%1', otrzymano "
 "tokena '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:360
+#: rkward/rbackend/rkfrontendtransmitter.cpp:381
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3834,21 +3834,21 @@ msgstr ""
 "wersji '%1' podczas gdy silnik jest w wersji '%2'.\n"
 "Proszę naprawić swoją instalację."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:394
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
 "Nie można uruchomić procesu silnika. Proszę sprawdzić swoją instalację."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:395
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "Nie udało się uruchomić procesu silnika, a kod wyjścia to %1, wiadomość: "
 "'%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:396
+#: rkward/rbackend/rkfrontendtransmitter.cpp:418
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Proces silnika wyszedł z kodem %1, wiadomość: '%2'."
@@ -3877,7 +3877,7 @@ msgstr "Wiadomości z silnika R"
 msgid "Question from the R backend"
 msgstr "Pytania z silnika R"
 
-#: rkward/rbackend/rkrbackend.cpp:1599
+#: rkward/rbackend/rkrbackend.cpp:1598
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3899,7 +3899,7 @@ msgstr ""
 "Pomocnym w tym temacie jest przejrzenie <a href=\"https://rkward.kde.org/"
 "compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1603
+#: rkward/rbackend/rkrbackend.cpp:1602
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3914,12 +3914,12 @@ msgstr ""
 "przejrzenie <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Niezgodność wersji graficznej"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3930,7 +3930,7 @@ msgstr ""
 "ponownego skompilowania.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Dodatkowe szczegóły</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Ok"
 msgstr "Ok"
@@ -4065,24 +4065,24 @@ msgstr ""
 msgid "R engine has died"
 msgstr "Silnik R wyłączył się"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:211
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:214
 #, kde-format
 msgid "Graphics Device Number %1"
 msgstr "Numer urządzenia graficznego %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:648
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:651
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Aktywna)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:650
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:653
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (Nieaktywne)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:676
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:679
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4091,14 +4091,14 @@ msgstr ""
 "<h2>Punkt(y) ustalający</h2><p>Użyj lewego przycisku myszy, aby "
 "zaznaczyć punkt(y). Dowolny innym przycisk myszy zatrzymuje.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:686
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:689
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Naciśnij klawisz Enter, aby obejrzeć następny wykres, lub naciśnij "
 "'Anuluj', aby przerwać.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:690
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:693
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Ok, aby pokazać następny wykres?"
@@ -4153,62 +4153,62 @@ msgstr "Przewiń mini-mapę"
 msgid "Dynamic word wrap"
 msgstr "Dynamiczne zawijanie wierszy"
 
-#: rkward/rkconsole.cpp:480
+#: rkward/rkconsole.cpp:481
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Błąd składni\n"
 
-#: rkward/rkconsole.cpp:680
+#: rkward/rkconsole.cpp:681
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Wybierz pliku historii poleceń do wczytania"
 
-#: rkward/rkconsole.cpp:680
+#: rkward/rkconsole.cpp:683
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "Pliki historii R [*.Rhistory](*.Rhistory);;Wszystkie pliki [*](*)"
 
-#: rkward/rkconsole.cpp:713
+#: rkward/rkconsole.cpp:716
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Wybierz nazwę pliku, do zapisania historii poleceń"
 
-#: rkward/rkconsole.cpp:713
+#: rkward/rkconsole.cpp:717
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "Pliki historii R [*.Rhistory] (*.Rhistory);;Wszystkie pliki [*](*)"
 
-#: rkward/rkconsole.cpp:838
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Przerwij wykonywanie polecenia"
 
-#: rkward/rkconsole.cpp:845
+#: rkward/rkconsole.cpp:849
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Skopiuj zaznaczenie dosłownie"
 
-#: rkward/rkconsole.cpp:848
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Skopiuj tylko polecenia"
 
-#: rkward/rkconsole.cpp:855
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Print Console"
 msgstr "Konsola wyświetlania"
 
-#: rkward/rkconsole.cpp:861
+#: rkward/rkconsole.cpp:865
 #, kde-format
 msgid "Import command history..."
 msgstr "Zaimportuj historię poleceń..."
 
-#: rkward/rkconsole.cpp:863
+#: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Export command history..."
 msgstr "Wyeksportuj historię poleceń..."
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4221,17 +4221,17 @@ msgstr ""
 "dołączyć je do polecenia w konsoli, czy może najpierw wyzerować tę konsolę? "
 "Naciśnij zaniechaj, jeśli nie chcesz uruchomić teraz nowego polecenia."
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "R Console is busy"
 msgstr "Konsola R jest zajęta"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Append"
 msgstr "Dołącz"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Wyzeruj, a następnie wyślij"
@@ -4673,47 +4673,53 @@ msgstr ""
 "Silni R jest niedostępny. Zajrzyj na stronę <a href=\"rkward://page/"
 "rkward_trouble_shooting\">rozwiązywania problemów</a> po możliwe rozwiązania."
 
-#: rkward/rkward.cpp:1017
+#: rkward/rkward.cpp:1019
 #, kde-format
 msgid "Open"
 msgstr "Otwórz"
 
-#: rkward/rkward.cpp:1021
+#: rkward/rkward.cpp:1023
 #, kde-format
 msgid "Opening mode:"
 msgstr "Tryb otwierania:"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1025
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Samoczynnie zgadnij rodzaj pliku"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1025
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Otwórz jako plik tekstowy lub skryptu"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1026
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Otwórz plik tekstowy i wymuś podświetlanie R"
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1026
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
+msgid "Open as R workspace"
+msgstr "Otwórz ostatnio używaną przestrzeń roboczą"
+
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Wybierz plik wyjściowy RKWard do otwarcia..."
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "Pliki wyników RKWard [*.rko](*.rko);;Wszystkie pliki [*](*)"
 
-#: rkward/rkward.cpp:1069
+#: rkward/rkward.cpp:1072
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Otwórz plik(i) skryptu"
 
-#: rkward/rkward.cpp:1083
+#: rkward/rkward.cpp:1086
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Nienazwana przestrzeń robocza]"
@@ -4804,17 +4810,17 @@ msgstr "<b>Obiekt został usunięty</b>"
 msgid "Object Viewer: %1"
 msgstr "Przeglądarka obiektów: %1"
 
-#: rkward/robjectviewer.cpp:126
+#: rkward/robjectviewer.cpp:127
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
 msgstr "Obiekt uległ zmianie. Możesz kliknąć \"Uaktualnij\""
 
-#: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:111
+#: rkward/robjectviewer.cpp:164 rkward/windows/robjectbrowser.cpp:111
 #, kde-format
 msgid "Update"
 msgstr "Uaktualnij"
 
-#: rkward/robjectviewer.cpp:211
+#: rkward/robjectviewer.cpp:212
 #, kde-format
 msgid "Fetching information"
 msgstr "Pobieranie szczegółów"
