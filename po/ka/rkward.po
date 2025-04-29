@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2024-09-13 06:27+0200\n"
+"PO-Revision-Date: 2025-04-28 08:59+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1997,10 +1997,9 @@ msgid "Frontend to the R statistics language"
 msgstr "წინაბოლო სტატისტიკის ენა R-ისთვის"
 
 #: rkward/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "(c) 2002 - 2024"
+msgstr "(c) 2002 - 2025"
 
 #: rkward/main.cpp:175
 #, kde-format
@@ -2398,6 +2397,8 @@ msgid ""
 "Act as if the version of RKWard had changed (show setup wizard, and "
 "(re-)install rkward R package)."
 msgstr ""
+"იქცევა ისე, თითქოს RKWard-ის ვერსია შეიცვალა (აჩვენებს მორგების ოსტატს და "
+"(თავიდან) დააყენებს R-ის პაკეტს rkward)."
 
 #: rkward/misc/rkcommandlineargs.cpp:39
 #, kde-format
@@ -2405,6 +2406,8 @@ msgid ""
 "File or files to open, typically a workspace, or an R script file. When "
 "loading several things, you should specify the workspace, first."
 msgstr ""
+"გასახსნელი ფაილი, ან ფაილები. ჩვეულებრივ სამუშაო სივრცე, ან R-ის სკრიპტის "
+"ფაილი. როცა ტვირთავთ რამდენიმე რამეს, ჯერ სამუშაო სივრცე ჩატვირთეთ."
 
 #: rkward/misc/rkcommonfunctions.cpp:243
 #, kde-format
@@ -2627,6 +2630,8 @@ msgid ""
 "This output has not been saved before. Reverting will clear it, entirely. "
 "Are you sure you want to proceed?"
 msgstr ""
+"გამოტანა ჯერ არ შეგინახავთ. მისი დაბრუნება სრულად გაასუფთავებს მას. მართლა "
+"გნებავთ, გააგრძელოთ?"
 
 #: rkward/misc/rkoutputdirectory.cpp:235
 #, kde-format
@@ -2634,6 +2639,8 @@ msgid ""
 "Reverting will destroy any changes, since the last time you saved (%1). Are "
 "you sure you want to proceed?"
 msgstr ""
+"დაბრუნება გაანადგურებს ყველა ცვლილებას მას შემდეგ, რაც ეს ფაილი შეინახეთ "
+"(%1). მართლა გნებავთ, გააგრძელოთ?"
 
 #: rkward/misc/rkoutputdirectory.cpp:240
 #, kde-format
@@ -2646,6 +2653,8 @@ msgid ""
 "Clearing will destroy any unsaved changes, and - upon saving - also saved "
 "changes. Are you sure you want to proceed?"
 msgstr ""
+"გასუფთავება გაანადგურებს ყველა შეუნახავ ცვლილებას, შენახვისას კი - "
+"შენახულებსაც. მაინც გნებავთ, გააგრძელოთ?"
 
 #: rkward/misc/rkoutputdirectory.cpp:289
 #, kde-format
@@ -2711,16 +2720,13 @@ msgid "Unhandled output command '%1'"
 msgstr "დაუმუშავებელი გამოტანის ბრძანება '%1'"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"შეცდომა პაკეტების ჩატვირთვა / გამოტვირთვისას. დეტალებისთვის იხილეთ "
-"ტრანსკრიპტი ქვემოთ"
+"<b>შეცდომა ბრძანების შესრულებისას. დეტალებისთვის იხილეთ გამოტანილი "
+"ინფორმაცია ქვემოთ</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
@@ -3574,6 +3580,9 @@ msgid ""
 "Below you can preview the R commands corresponding to the settings you made. "
 "Click 'Submit' to run the commands."
 msgstr ""
+"ქვემოთ შეგიძლიათ, გადახედოთ R-ის ბრძანებებს, რომლებიც შეესაბამება "
+"პარამეტრებს, რომლებიც თქვენ შექმენით. ბრძანებების გასაშვებად დააწექით ღილაკს "
+"'გადაცემა'."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:528
 #, kde-format
@@ -3581,6 +3590,8 @@ msgid ""
 "Below you can preview the result of your settings, and the R commands to be "
 "run. Click 'Submit' to run the commands."
 msgstr ""
+"ქვემოთ შეგიძლიათ, გადახედოთ თქვენი პარამეტრების შედეგი და R-ის ბრძანებები "
+"გასაშვებად. ბრძანებების გასაშვებად დააჭირეთ ღილაკს 'გადაცემა'."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:582
 #: rkward/plugin/rkstandardcomponentgui.cpp:600
@@ -3643,6 +3654,8 @@ msgid ""
 "<p>Using this object, here, may lead to failures or unexpected results, for "
 "the following reason(s):</p>"
 msgstr ""
+"<p>ამ ობიექტის აქ გამოყენებამ, შეიძლება, ჩავარდნები, ან მოულოდნელი შედეგები "
+"გამოიწვიოს, შემდეგი მიზეზით:</p>"
 
 #: rkward/rbackend/rcommandstack.cpp:268
 #, kde-format
@@ -3691,6 +3704,8 @@ msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
+"RKWard-მა ამ სისტემაზე R-ის ფაილები ვერ იპოვა. ან R დაყენებული არაა, ან ის "
+"სტანდარტული დაყენების ადგილას არაა."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, kde-format
@@ -3975,6 +3990,8 @@ msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
 "katepart, and will exit, now. Please install katepart, and try again."
 msgstr ""
+"კომპონენტის 'katepart' ჩატვირთვა შეუძლებელია. RKWard ვერ გაეშვება katepart-"
+"ის გარეშე და ახლა დაასრულებს მუშაობას. დააყენეთ katepart და თავიდან სცადეთ."
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -6803,6 +6820,9 @@ msgid ""
 "regularly, you may want to adjust the default graphics window size in "
 "Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
+"მიმდინარე ფანჯარა, როგორც ჩანს, მეტისმეტად დიდია ეკრანზე დასატევად. თუ ეს "
+"ხშირად ხდება, შეიძლება, ნაგულისხმევი გრაფიკის ფანჯრის ზომის მორგება სჯობს, "
+"მენიუდან მორგება->RKWard-ის მორგება->ეკრანის გრაფიკა."
 
 #: rkward/windows/rkwindowcatcher.cpp:370
 #, kde-format
@@ -6827,6 +6847,11 @@ msgid ""
 "close the graphics device immediately, in case it is stuck. However, the "
 "last plot may be missing from the plot history, if you do this.</p>"
 msgstr ""
+"<p>მიმდინარეობს გრაფიკული მოწყობილობის დახურვა და ბოლო გრაფიკის შენახვა "
+"გრაფიკების ისტორიაში. ამას საკმაო დრო შეიძლება, დასჭირდეს, თუ R-ის უკანაბოლო "
+"ჯერ დაკავებულია. შეგიძლიათ, გრაფიკული მოწყობილობა დაუყოვნებლივ დახუროთ, თუ "
+"ის გაჭედილია. მაგრამ გახსოვდეთ, თუ ამას იზამთ, ბოლო გრაფიკი ისტორაში არ "
+"იქნება.</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:404
 #, kde-format
@@ -6834,6 +6859,8 @@ msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
 "close it manually in this case.</p>"
 msgstr ""
+"<p>შენიშვნა: X11-ზე ჩაშენებული ფანჯრები შეიძლება, გაიჭედოს. დახურეთ ისინი "
+"ხელით, თუ ეს მოხდა.</p>"
 
 #: rkward/windows/rkwindowcatcher.cpp:406
 #, kde-format
@@ -7061,6 +7088,9 @@ msgid ""
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
+"URL, რომლის გახსნასაც ცდილობთ, ('%1') ლოკალური ფაილი არაა, ან ფაილის ტიპი "
+"RKWard-ის მიერ მხარდაჭერილი არაა. გნებავთ, გახსნათ URL ნაგულისხმევ "
+"აპლიკაციაში?"
 
 #: rkward/windows/rkworkplace.cpp:443
 #, kde-format
