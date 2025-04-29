@@ -8,7 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKGRAPHICSDEVICE_FRONTENDTRANSMITTER_H
 #define RKGRAPHICSDEVICE_FRONTENDTRANSMITTER_H
 
-#include <QPainter> // for enums
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "rkgraphicsdevice_backendtransmitter.h"
 #include "../rkasyncdatastreamhelper.h"

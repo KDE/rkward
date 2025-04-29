@@ -148,6 +148,7 @@ enum RKDEventCodes {
 #define MapDefault(Message,Ival,Qval) Message; return Ival;
 #define RKD_IN_FRONTEND false
 #else
+#include <QPainter> // for enums
 #define MapEnum(Rval,Ival,Qval) case Ival: static_assert(Ival == (int) Qval, "Enum mismatch"); return Qval;
 #define MapDefault(Message,Ival,Qval) return Qval;
 #define RKD_IN_FRONTEND true
