@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-27 00:38+0000\n"
-"PO-Revision-Date: 2025-04-19 18:41+0300\n"
+"POT-Creation-Date: 2025-04-28 00:38+0000\n"
+"PO-Revision-Date: 2025-04-27 16:30+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3842,7 +3842,7 @@ msgstr ""
 "Налаштованого місця встановлення R у <b>%1</b> не існує або там не "
 "зберігається виконуваного файла."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:220
+#: rkward/rbackend/rkfrontendtransmitter.cpp:228
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3851,13 +3851,13 @@ msgstr ""
 "Не вдалося знайти виконуваний файл модуля. Ймовірно, це пов’язано із "
 "проблемами зі встановленими компонентами."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:304
+#: rkward/rbackend/rkfrontendtransmitter.cpp:322
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Не вдалося запустити виконуваний файл модуля. Повідомлення щодо помилки: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:357
+#: rkward/rbackend/rkfrontendtransmitter.cpp:376
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3866,7 +3866,7 @@ msgstr ""
 "Під час спроби встановлення зв’язку з процесом основного модуля сталася "
 "помилка. Мало бути отримано жетон «%1», отримано — «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:360
+#: rkward/rbackend/rkfrontendtransmitter.cpp:381
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3877,7 +3877,7 @@ msgstr ""
 "основного модуля. Оболонка має версію «%1», основний модуль — «%2».\n"
 "Будь ласка, виправте проблему зі встановленими компонентами."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:394
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3885,12 +3885,12 @@ msgstr ""
 "Не вдалося запустити процес модуля. Будь ласка, перевірте, чи встановлено "
 "усе належним чином."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:395
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Не вдалося запустити процес модуля. Код виходу %1, повідомлення: «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:396
+#: rkward/rbackend/rkfrontendtransmitter.cpp:418
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Процес модуля завершив роботу з кодом %1, повідомлення: «%2»."
@@ -3919,7 +3919,7 @@ msgstr "Повідомлення від основного модуля R"
 msgid "Question from the R backend"
 msgstr "Запитання від основного модуля R"
 
-#: rkward/rbackend/rkrbackend.cpp:1599
+#: rkward/rbackend/rkrbackend.cpp:1598
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3941,7 +3941,7 @@ msgstr ""
 "Довідкові матеріали, які допоможуть в усуванні негараздів, можна знайти <a "
 "href=\"https://rkward.kde.org/compiling\">тут</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1603
+#: rkward/rbackend/rkrbackend.cpp:1602
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3957,12 +3957,12 @@ msgstr ""
 "негараздів, можна знайти <a href=\"https://rkward.kde.org/compiling\">тут</"
 "a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Невідповідність версії графіки"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3973,7 +3973,7 @@ msgstr ""
 "збирання програми.<br><a href=\"rkward://page/rkward_incompatible_version"
 "\">Додаткові відомості</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Ok"
 msgstr "Гаразд"
@@ -4106,24 +4106,24 @@ msgstr ""
 msgid "R engine has died"
 msgstr "Рушій R припинив роботу"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:211
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:214
 #, kde-format
 msgid "Graphics Device Number %1"
 msgstr "Графічний пристрій з номером %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:648
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:651
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (активне)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:650
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:653
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (неактивне)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:676
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:679
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4132,14 +4132,14 @@ msgstr ""
 "<h2>Визначення розташування точок</h2><p>Скористайтеся лівою кнопкою миші "
 "для вибору точок. Вибір можна зупинити клацанням будь-якою іншою кнопкою.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:686
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:689
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Натисніть Enter, щоб переглянути наступне креслення, або натисніть "
 "«Скасувати», щоб перервати показ.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:690
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:693
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Показати наступне креслення?"
@@ -4196,62 +4196,62 @@ msgstr "Мінікарта на смужці гортання"
 msgid "Dynamic word wrap"
 msgstr "Динамічне перенесення рядків"
 
-#: rkward/rkconsole.cpp:480
+#: rkward/rkconsole.cpp:481
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Синтаксична помилка\n"
 
-#: rkward/rkconsole.cpp:680
+#: rkward/rkconsole.cpp:681
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Виберіть файл журналу команд, який слід завантажити"
 
-#: rkward/rkconsole.cpp:680
+#: rkward/rkconsole.cpp:683
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "файли журналу R [*.Rhistory](*.Rhistory);;усі файли [*](*)"
 
-#: rkward/rkconsole.cpp:713
+#: rkward/rkconsole.cpp:716
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Виберіть назву файла журналу команд"
 
-#: rkward/rkconsole.cpp:713
+#: rkward/rkconsole.cpp:717
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "файли журналу R [*.Rhistory] (*.Rhistory);;усі файли [*] (*)"
 
-#: rkward/rkconsole.cpp:838
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Перервати команду, що виконується"
 
-#: rkward/rkconsole.cpp:845
+#: rkward/rkconsole.cpp:849
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Копіювати позначене без обробки"
 
-#: rkward/rkconsole.cpp:848
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Копіювати лише команди"
 
-#: rkward/rkconsole.cpp:855
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Print Console"
 msgstr "Консоль друку"
 
-#: rkward/rkconsole.cpp:861
+#: rkward/rkconsole.cpp:865
 #, kde-format
 msgid "Import command history..."
 msgstr "Імпортувати журнал команд…"
 
-#: rkward/rkconsole.cpp:863
+#: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Export command history..."
 msgstr "Експортувати журнал команд…"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4265,17 +4265,17 @@ msgstr ""
 "виконання команд? Натисніть кнопку «Скасувати», якщо ви не хочете виконувати "
 "команду редагування зараз."
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "R Console is busy"
 msgstr "У консолі R виконується завдання"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Append"
 msgstr "Дописати"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Скасувати, потім надіслати"
@@ -4720,47 +4720,53 @@ msgstr ""
 "Рушій R є недоступним. Можливі шляхи усування цієї проблеми наведено у <a "
 "href=\"rkward://page/rkward_trouble_shooting\">розділі щодо усування вад</a>."
 
-#: rkward/rkward.cpp:1017
+#: rkward/rkward.cpp:1019
 #, kde-format
 msgid "Open"
 msgstr "Відкрити"
 
-#: rkward/rkward.cpp:1021
+#: rkward/rkward.cpp:1023
 #, kde-format
 msgid "Opening mode:"
 msgstr "Режим відкриття:"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1025
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Вгадати тип файла, автоматично"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1025
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Відкрити як текстовий файл або скрипт"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1026
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Відкрити як текстовий файл і примусово використати підсвічування R"
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1026
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
+msgid "Open as R workspace"
+msgstr "Повторно відкрити робочий простір"
+
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Виберіть файл виведення RKWard, який слід відкрити…"
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1063
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "файли виведення RKWard [*.rko](*.rko);;усі файли [*](*)"
 
-#: rkward/rkward.cpp:1069
+#: rkward/rkward.cpp:1072
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Відкрити файли скриптів"
 
-#: rkward/rkward.cpp:1083
+#: rkward/rkward.cpp:1086
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Робочий простір без назви]"
@@ -4851,17 +4857,17 @@ msgstr "<b>Об’єкт було вилучено</b>"
 msgid "Object Viewer: %1"
 msgstr "Переглядач об’єктів: %1"
 
-#: rkward/robjectviewer.cpp:126
+#: rkward/robjectviewer.cpp:127
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
 msgstr "Об’єкт зазнав змін. Вам варто натиснути кнопку «Оновити»"
 
-#: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:111
+#: rkward/robjectviewer.cpp:164 rkward/windows/robjectbrowser.cpp:111
 #, kde-format
 msgid "Update"
 msgstr "Оновити"
 
-#: rkward/robjectviewer.cpp:211
+#: rkward/robjectviewer.cpp:212
 #, kde-format
 msgid "Fetching information"
 msgstr "Отримуємо відомості"
@@ -6868,8 +6874,7 @@ msgid "[Active]"
 msgstr "[Активний]"
 
 #: rkward/windows/rkhtmlwindow.cpp:749
-#, fuzzy, kde-format
-#| msgid "Output %1"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Виведення %1"

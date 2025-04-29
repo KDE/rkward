@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-27 00:38+0000\n"
+"POT-Creation-Date: 2025-04-28 00:38+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -3706,7 +3706,7 @@ msgstr ""
 "Käsureal määratud R-i täitmisfaili (%1) ei ole olemas või see ei ole "
 "käivitatav."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:220
+#: rkward/rbackend/rkfrontendtransmitter.cpp:228
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3715,12 +3715,12 @@ msgstr ""
 "Taustaprogrammi täitmisfaili ei leitud. Põhjus peitub tõenäoliselt sinu "
 "paigalduses."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:304
+#: rkward/rbackend/rkfrontendtransmitter.cpp:322
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "Taustaprogrammi täitmisfaili käivitamine nurjus. Veateade oli: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:357
+#: rkward/rbackend/rkfrontendtransmitter.cpp:376
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3729,7 +3729,7 @@ msgstr ""
 "Tõrge läbirääkimistel taustaprotsessiga. Oodati pääsmikku \"%1\", saadi "
 "pääsmik \"%2\""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:360
+#: rkward/rbackend/rkfrontendtransmitter.cpp:381
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3740,19 +3740,19 @@ msgstr ""
 "versioon on \"%1\", taustaprogrammil \"%2\".\n"
 "Palun paranda oma paigaldus."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:394
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Taustaprotsessi käivitamine nurjus. Palun kontrolli oma paigaldust."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:395
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, fuzzy, kde-format
 #| msgid "The backend process failed to start with exit code %1."
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Taustaprotsessi käivitamine nurjus väljumiskoodiga %1."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:396
+#: rkward/rbackend/rkfrontendtransmitter.cpp:418
 #, fuzzy, kde-format
 #| msgid "Backend process has exited with code %1."
 msgid "Backend process has exited with code %1, message: '%2'."
@@ -3782,7 +3782,7 @@ msgstr "R-i taustaprogrammi teade"
 msgid "Question from the R backend"
 msgstr "R-i taustaprogrammi küsimus"
 
-#: rkward/rbackend/rkrbackend.cpp:1599
+#: rkward/rbackend/rkrbackend.cpp:1598
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3814,7 +3814,7 @@ msgstr ""
 "Asjakohast abi võib leida aadressil <a href=\"http://rkward.kde.org/compiling"
 "\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1603
+#: rkward/rbackend/rkrbackend.cpp:1602
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3835,12 +3835,12 @@ msgstr ""
 "leida aadressil <a href=\"http://rkward.kde.org/compiling\">http://rkward."
 "kde.org/compiling</a>.<p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3848,7 +3848,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1660
+#: rkward/rbackend/rkrbackend.cpp:1659
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -3981,24 +3981,24 @@ msgstr ""
 msgid "R engine has died"
 msgstr "R-i mootor suri"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:211
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:214
 #, kde-format
 msgid "Graphics Device Number %1"
 msgstr "Graafikaseade number %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:648
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:651
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (aktiivne)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:650
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:653
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (mitteaktiivne)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:676
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:679
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4007,14 +4007,14 @@ msgstr ""
 "<h2>Punkti(de) leidmine</h2><p>Hiire vasaku nupuga saab punkte valida. "
 "Teised nupud peatavad selle tegevuse.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:686
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:689
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Enteri vajutamisel näeb järgmist diagrammi, klõps nupule \"Loobu\" "
 "katkestab.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:690
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:693
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Kas näidata järgmist diagrammi?"
@@ -4068,62 +4068,62 @@ msgstr ""
 msgid "Dynamic word wrap"
 msgstr ""
 
-#: rkward/rkconsole.cpp:480
+#: rkward/rkconsole.cpp:481
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Süntaksi viga\n"
 
-#: rkward/rkconsole.cpp:680
+#: rkward/rkconsole.cpp:681
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Laaditava käsuajaloo faili valimine"
 
-#: rkward/rkconsole.cpp:680
+#: rkward/rkconsole.cpp:683
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "R-i ajaloofailid [*.Rhistory](*.Rhistory);;Kõik failid [*](*)"
 
-#: rkward/rkconsole.cpp:713
+#: rkward/rkconsole.cpp:716
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Failinime valimine käsuajaloo salvestamiseks"
 
-#: rkward/rkconsole.cpp:713
+#: rkward/rkconsole.cpp:717
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "R-i ajaloofailid [*.Rhistory] (*.Rhistory);;Kõik failid [*] (*)"
 
-#: rkward/rkconsole.cpp:838
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Katkesta töötav käsk"
 
-#: rkward/rkconsole.cpp:845
+#: rkward/rkconsole.cpp:849
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopeeri valik nagu on"
 
-#: rkward/rkconsole.cpp:848
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopeeri ainult käsud"
 
-#: rkward/rkconsole.cpp:855
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Print Console"
 msgstr "Näita konsooli sisu"
 
-#: rkward/rkconsole.cpp:861
+#: rkward/rkconsole.cpp:865
 #, kde-format
 msgid "Import command history..."
 msgstr "Impordi käsuajalugu ..."
 
-#: rkward/rkconsole.cpp:863
+#: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Export command history..."
 msgstr "Ekspordi käsuajalugu ..."
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4136,17 +4136,17 @@ msgstr ""
 "või kõigepealt konsool lähtestada? Klõpsa \"Loobu\", kui sa ei soovi uut "
 "käsku praegu käivitada."
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "R Console is busy"
 msgstr "R-i konsool on hõivatud"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Append"
 msgstr "Lisa"
 
-#: rkward/rkconsole.cpp:882
+#: rkward/rkconsole.cpp:886
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Lähtesta ja siis saada"
@@ -4587,49 +4587,55 @@ msgid ""
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
 
-#: rkward/rkward.cpp:1017
+#: rkward/rkward.cpp:1019
 #, kde-format
 msgid "Open"
 msgstr "Avamine"
 
-#: rkward/rkward.cpp:1021
+#: rkward/rkward.cpp:1023
 #, kde-format
 msgid "Opening mode:"
 msgstr "Avamisrežiim:"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1025
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Failitüübi automaatne äraarvamine"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1025
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Avamine teksti-/skriptifailina"
 
-#: rkward/rkward.cpp:1023
+#: rkward/rkward.cpp:1026
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Avamine tekstifailina ja jõuga R-i esiletõstmise kasutamine"
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1026
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
+msgid "Open as R workspace"
+msgstr "Ava hiljuti kasutatud töötsoon"
+
+#: rkward/rkward.cpp:1063
 #, fuzzy, kde-format
 #| msgid "Select workspace to open..."
 msgid "Select RKWard Output file to open..."
 msgstr "Avatava töötsooni valimine ..."
 
-#: rkward/rkward.cpp:1060
+#: rkward/rkward.cpp:1063
 #, fuzzy, kde-format
 #| msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "R-i töötsooni failid [%1](%1);;Kõik failid [*](*)"
 
-#: rkward/rkward.cpp:1069
+#: rkward/rkward.cpp:1072
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Skriptifaili(de) avamine"
 
-#: rkward/rkward.cpp:1083
+#: rkward/rkward.cpp:1086
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Nimetu töötsoon]"
@@ -4720,17 +4726,17 @@ msgstr "<b>Objekt kustutati</b>"
 msgid "Object Viewer: %1"
 msgstr "Objektinäitaja; %1"
 
-#: rkward/robjectviewer.cpp:126
+#: rkward/robjectviewer.cpp:127
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
 msgstr "Objekti on muudetud. Võiksid klõpsata \"Uuenda\""
 
-#: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:111
+#: rkward/robjectviewer.cpp:164 rkward/windows/robjectbrowser.cpp:111
 #, kde-format
 msgid "Update"
 msgstr "Uuenda"
 
-#: rkward/robjectviewer.cpp:211
+#: rkward/robjectviewer.cpp:212
 #, fuzzy, kde-format
 #| msgid "Fetching information. Please wait."
 msgid "Fetching information"

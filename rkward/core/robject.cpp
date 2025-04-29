@@ -723,7 +723,7 @@ QStringList RObject::parseObjectPath(const QString &path) {
 	for (int i = 0; i < end; ++i) {
 		QChar c = path.at(i);
 		if (quote_char.isNull()) {
-			if (c == u'\'' || c == u'\"' || c == u'`') {
+			if (c == u'\'' || c == u'"' || c == u'`') {
 				quote_char = c;
 			} else {
 				if (!seek_bracket_end) {

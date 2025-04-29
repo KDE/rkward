@@ -141,7 +141,7 @@ namespace RKCommonFunctions {
 
 		for (int i=0; i <= line_end; ++i) {
 			QChar c = context_line.at (i);
-			if (c == u'\'' || c == u'\"' || c == u'`') {
+			if (c == u'\'' || c == u'"' || c == u'`') {
 				i = quoteEndPosition (c, context_line, i+1);
 				if (i < 0) break;
 				continue;
@@ -216,9 +216,9 @@ namespace RKCommonFunctions {
 			if (c == u'\\') {
 				++i;
 				if (i >= in.size()) break;
+				c = in[i]; // NOTE: Quote (") and backslash (\) are escaped by the same symbol, i.e. c = in[i] is good enough
 				if (c == u'n') c = u'\n';
 				else if (c == u't') c = u'\t';
-				else c = in[i]; // NOTE: Quote (") and backslash (\) are escaped by the same symbol, i.e. c = in[i] is good enough
 			}
 			out.append(c);
 		}
