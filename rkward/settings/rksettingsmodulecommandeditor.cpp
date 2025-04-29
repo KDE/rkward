@@ -7,24 +7,24 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rksettingsmodulecommandeditor.h"
 
 #include <KLocalizedString>
+#include <KTextEditor/ConfigPage>
+#include <KTextEditor/Editor>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <KTextEditor/Editor>
-#include <KTextEditor/ConfigPage>
 
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QFormLayout>
 #include <QCheckBox>
-#include <QGroupBox>
-#include <QLineEdit>
 #include <QComboBox>
+#include <QFormLayout>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QVBoxLayout>
 
-#include "../misc/rkspinbox.h"
-#include "../misc/rkcommonfunctions.h"
-#include "../misc/rkstandardicons.h"
 #include "../core/robject.h"
+#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkspinbox.h"
+#include "../misc/rkstandardicons.h"
 #include "../misc/rkstyle.h"
 #include "rksettings.h"
 
@@ -32,22 +32,22 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 // static members
 RKCodeCompletionSettings RKSettingsModuleCommandEditor::completion_settings;
-RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_enabled { "Autosave enabled", true };
-RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_keep { "Autosave keep saves", false };
-RKConfigValue<int> RKSettingsModuleCommandEditor::autosave_interval {"Autosave interval", 5 };
-RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter { "Script file filter", QStringLiteral("*.R *.S *.q *.Rhistory") };
+RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_enabled{"Autosave enabled", true};
+RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_keep{"Autosave keep saves", false};
+RKConfigValue<int> RKSettingsModuleCommandEditor::autosave_interval{"Autosave interval", 5};
+RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter{"Script file filter", QStringLiteral("*.R *.S *.q *.Rhistory")};
 
-RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(RKSettingsModuleWidget* parent, RKCodeCompletionSettings* settings, bool show_common)
+RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(RKSettingsModuleWidget *parent, RKCodeCompletionSettings *settings, bool show_common)
     : QWidget(parent), settings(settings), parentwidget(parent) {
 	RK_TRACE(SETTINGS);
 
-	QVBoxLayout* main_vbox = new QVBoxLayout(this);
+	QVBoxLayout *main_vbox = new QVBoxLayout(this);
 	main_vbox->setContentsMargins(0, 0, 0, 0);
 
-	QGroupBox* group = new QGroupBox(i18n("Code Completion / Code Hints"));
-	QVBoxLayout* box_layout = new QVBoxLayout(group);
+	QGroupBox *group = new QGroupBox(i18n("Code Completion / Code Hints"));
+	QVBoxLayout *box_layout = new QVBoxLayout(group);
 
-	QGridLayout* g_layout = new QGridLayout();
+	QGridLayout *g_layout = new QGridLayout();
 	box_layout->addLayout(g_layout);
 	makeCompletionTypeBoxes(QStringList{i18n("Function call tip"), i18n("Function argument completion"), i18n("Object name completion"),
 	                                    i18n("Filename completion"), i18n("Auto word completion"), i18n("Mouseover object info")},
@@ -56,7 +56,7 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(RKSettingsModuleW
 	auto auto_completion_enabled_box = settings->auto_completion_enabled.makeCheckableGroupBox(i18n("Start code completions/hints, automatically"), parent);
 	box_layout->addWidget(auto_completion_enabled_box);
 
-	QFormLayout* form_layout = new QFormLayout(auto_completion_enabled_box);
+	QFormLayout *form_layout = new QFormLayout(auto_completion_enabled_box);
 	auto auto_completion_min_chars_box = settings->auto_completion_min_chars.makeSpinBox(1, INT_MAX, parent);
 	form_layout->addRow(i18n("Minimum number of characters"), auto_completion_min_chars_box);
 
@@ -115,31 +115,29 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(RKSettingsModuleW
 	main_vbox->addWidget(group);
 }
 
-void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes(const QStringList& labels, QGridLayout* layout) {
+void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes(const QStringList &labels, QGridLayout *layout) {
 	RK_ASSERT(labels.count() == RKCodeCompletionSettings::N_COMPLETION_CATEGORIES);
 	for (int i = 0; i < RKCodeCompletionSettings::N_COMPLETION_CATEGORIES; ++i) {
-		auto* box = settings->completion_type_enabled[i].makeCheckbox(labels[i], parentwidget);
+		auto *box = settings->completion_type_enabled[i].makeCheckbox(labels[i], parentwidget);
 		layout->addWidget(box, i / 2, i % 2);
 	}
 }
 
 RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor(QObject *parent) : RKSettingsModule(parent) {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 }
 
 RKSettingsModuleCommandEditor::~RKSettingsModuleCommandEditor() {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 }
 
 class RKSettingsPageCommandEditor : public RKSettingsModuleWidget {
-public:
-	RKSettingsPageCommandEditor(QWidget* parent, RKSettingsModuleCommandEditor *parent_module) : 
-		RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleCommandEditor::page_id)
-	{
+  public:
+	RKSettingsPageCommandEditor(QWidget *parent, RKSettingsModuleCommandEditor *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleCommandEditor::page_id) {
 		setWindowTitle(i18n("Script editor"));
 		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowCommandEditor));
 
-		QVBoxLayout* main_vbox = new QVBoxLayout(this);
+		QVBoxLayout *main_vbox = new QVBoxLayout(this);
 		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Settings marked with (*) do not take effect until you restart RKWard")));
 		main_vbox->addSpacing(2 * RKStyle::spacingHint());
 
@@ -156,7 +154,7 @@ public:
 
 		main_vbox->addWidget(group);
 
-		main_vbox->addSpacing(2 * RKStyle::spacingHint ());
+		main_vbox->addSpacing(2 * RKStyle::spacingHint());
 
 		auto script_file_filter_box = RKSettingsModuleCommandEditor::script_file_filter.makeLineEdit(this);
 		RKCommonFunctions::setTips(i18n("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box);
@@ -168,20 +166,19 @@ public:
 	void applyChanges() override {
 		// All settings based on RKConfigValue
 	}
-private:
+
+  private:
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
 };
 
-RKTextEditorConfigPageWrapper::RKTextEditorConfigPageWrapper(QWidget* parent, RKSettingsModule *parent_module, RKSettingsModule::PageId superpage, KTextEditor::ConfigPage* wrapped) :
-	RKSettingsModuleWidget(parent, parent_module, QLatin1String(("kate_"_L1 + wrapped->name()).toLatin1()), superpage),
-	page(wrapped)
-{
+RKTextEditorConfigPageWrapper::RKTextEditorConfigPageWrapper(QWidget *parent, RKSettingsModule *parent_module, RKSettingsModule::PageId superpage, KTextEditor::ConfigPage *wrapped) : RKSettingsModuleWidget(parent, parent_module, QLatin1String(("kate_"_L1 + wrapped->name()).toLatin1()), superpage),
+                                                                                                                                                                                       page(wrapped) {
 	RK_TRACE(SETTINGS);
 	setWindowTitle(page->name());
 	setWindowIcon(page->icon());
 
 	auto vbox = new QVBoxLayout(this);
-	vbox->setContentsMargins(0,0,0,0);
+	vbox->setContentsMargins(0, 0, 0, 0);
 	vbox->addWidget(wrapped);
 	connect(wrapped, &KTextEditor::ConfigPage::changed, this, &RKTextEditorConfigPageWrapper::change);
 }
@@ -210,17 +207,17 @@ void RKSettingsModuleCommandEditor::createPages(RKSettings *parent) {
 	}
 }
 
-QString completionTypeToConfigKey (int cat) {
+QString completionTypeToConfigKey(int cat) {
 	if (cat == RKCodeCompletionSettings::Calltip) return QStringLiteral("Calltips");
 	if (cat == RKCodeCompletionSettings::Arghint) return QStringLiteral("Argument completion");
 	if (cat == RKCodeCompletionSettings::Object) return QStringLiteral("Object completion");
 	if (cat == RKCodeCompletionSettings::Filename) return QStringLiteral("Filename completion");
 	if (cat == RKCodeCompletionSettings::AutoWord) return QStringLiteral("Auto word completion");
 	RK_ASSERT(false);
-	return QString ();
+	return QString();
 }
 
-void RKSettingsModuleCommandEditor::syncConfig(KConfig* config, RKConfigBase::ConfigSyncAction a) {
+void RKSettingsModuleCommandEditor::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
 	KConfigGroup cg = config->group(QStringLiteral("Command Editor Windows"));
@@ -234,13 +231,13 @@ void RKSettingsModuleCommandEditor::syncConfig(KConfig* config, RKConfigBase::Co
 }
 
 // static
-bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &filename) {
-	RK_TRACE (SETTINGS);
+bool RKSettingsModuleCommandEditor::matchesScriptFileFilter(const QString &filename) {
+	RK_TRACE(SETTINGS);
 
 	const QStringList exts = script_file_filter.get().split(u' ');
-	for (const QString& ext : exts) {
+	for (const QString &ext : exts) {
 		auto reg = QRegularExpression::fromWildcard(ext, Qt::CaseInsensitive);
-		if (reg.match (filename).hasMatch()) return true;
+		if (reg.match(filename).hasMatch()) return true;
 	}
 	return false;
 }

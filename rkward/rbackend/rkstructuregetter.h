@@ -16,12 +16,13 @@ class RData;
 
 /** Low level helper class for getting the structure of R objects (.rk.get.structure). */
 class RKStructureGetter {
-public:
-	explicit RKStructureGetter (bool keep_evalled_promises);
-	~RKStructureGetter ();
+  public:
+	explicit RKStructureGetter(bool keep_evalled_promises);
+	~RKStructureGetter();
 
-	RData *getStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename);
-private:
+	RData *getStructure(SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename);
+
+  private:
 	struct GetStructureWorkerArgs {
 		SEXP toplevel;
 		QString name;
@@ -31,13 +32,13 @@ private:
 		RKStructureGetter *getter;
 	};
 
-	void getStructureWorker (SEXP value, const QString &name, int add_type_flags, RData *storage, int nesting_depth);
-/** needed to wrap things inside an R_ToplevelExec */
-	static void getStructureWrapper (GetStructureWorkerArgs *data);
-	void getStructureSafe (SEXP value, const QString &name, int add_type_flags, RData *storage, int nesting_depth);
-	SEXP resolvePromise (SEXP from);
+	void getStructureWorker(SEXP value, const QString &name, int add_type_flags, RData *storage, int nesting_depth);
+	/** needed to wrap things inside an R_ToplevelExec */
+	static void getStructureWrapper(GetStructureWorkerArgs *data);
+	void getStructureSafe(SEXP value, const QString &name, int add_type_flags, RData *storage, int nesting_depth);
+	SEXP resolvePromise(SEXP from);
 
-	SEXP prefetch_fun (const char *name, bool from_base=true);
+	SEXP prefetch_fun(const char *name, bool from_base = true);
 
 	bool with_namespace;
 	SEXP namespace_envir;

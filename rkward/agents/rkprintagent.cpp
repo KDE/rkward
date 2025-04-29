@@ -7,34 +7,34 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkprintagent.h"
 
+#include <QElapsedTimer>
 #include <QFile>
 #include <QTimer>
-#include <QElapsedTimer>
 #include <QUrl>
 
-#include <KMessageBox>
-#include <KIO/OpenUrlJob>
 #include <KIO/JobUiDelegate>
 #include <KIO/JobUiDelegateFactory>
+#include <KIO/OpenUrlJob>
 #include <KLocalizedString>
+#include <KMessageBox>
 #include <KPluginFactory>
 #include <kcoreaddons_version.h>
 
-#include "../windows/rkpdfwindow.h"
 #include "../rkward.h"
+#include "../windows/rkpdfwindow.h"
 
 #include "../debug.h"
 
 RKPrintAgent::RKPrintAgent(const QString &file, KParts::ReadOnlyPart *provider, bool delete_file) : QObject(), file(file), provider(provider), delete_file(delete_file) {
-	RK_TRACE (APP);
-	//provider->widget()->show(); // not very helpful as a preview, unfortunately
+	RK_TRACE(APP);
+	// provider->widget()->show(); // not very helpful as a preview, unfortunately
 }
 
-RKPrintAgent::~RKPrintAgent () {
-	RK_TRACE (APP)
+RKPrintAgent::~RKPrintAgent() {
+	RK_TRACE(APP)
 
-	if (delete_file) QFile (file).remove ();
-	if (provider) provider->deleteLater ();
+	if (delete_file) QFile(file).remove();
+	if (provider) provider->deleteLater();
 }
 
 void fallbackToGeneric(const QString &file, bool delete_file) {
@@ -47,11 +47,11 @@ void fallbackToGeneric(const QString &file, bool delete_file) {
 	job->start();
 }
 
-void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
-	RK_TRACE (APP)
+void RKPrintAgent::printPostscript(const QString &file, bool delete_file) {
+	RK_TRACE(APP)
 
 	auto provider = RKPDFWindow::getOkularPart({u"ViewerWidget"_s});
-	if(!provider) {
+	if (!provider) {
 		RK_DEBUG(APP, DL_WARNING, "No valid postscript provider was found");
 		fallbackToGeneric(file, delete_file);
 		return;
@@ -85,6 +85,6 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	if (ts.elapsed() < 5000) {
 		QTimer::singleShot(1800000, agent, &QObject::deleteLater);
 	} else {
-		agent->deleteLater ();
+		agent->deleteLater();
 	}
 }

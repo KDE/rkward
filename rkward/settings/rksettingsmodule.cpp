@@ -6,20 +6,20 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rksettingsmodule.h"
 
-#include "../rkward.h"
 #include "../debug.h"
-#include "rksettings.h"
 #include "../misc/rkspinbox.h"
+#include "../rkward.h"
+#include "rksettings.h"
 
 #include <QCheckBox>
-#include <QGroupBox>
 #include <QComboBox>
+#include <QGroupBox>
 #include <QLineEdit>
 
 #include <functional>
 
-//static
-RCommandChain* RKSettingsModule::chain = nullptr;
+// static
+RCommandChain *RKSettingsModule::chain = nullptr;
 
 RKSettingsModule::RKSettingsModule(QObject *parent) : QObject(parent) {
 	RK_TRACE(SETTINGS);
@@ -29,13 +29,11 @@ RKSettingsModule::~RKSettingsModule() {
 	RK_TRACE(SETTINGS);
 }
 
-RKSettingsModuleWidget::RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module, const RKSettingsModule::PageId pageid, const RKSettingsModule::PageId superpageid) :
-	QWidget(parent),
-	changed(false),
-	pageid(pageid),
-	superpageid(superpageid),
-	parent_module(parent_module)
-{
+RKSettingsModuleWidget::RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module, const RKSettingsModule::PageId pageid, const RKSettingsModule::PageId superpageid) : QWidget(parent),
+                                                                                                                                                                                      changed(false),
+                                                                                                                                                                                      pageid(pageid),
+                                                                                                                                                                                      superpageid(superpageid),
+                                                                                                                                                                                      parent_module(parent_module) {
 	RK_TRACE(SETTINGS);
 }
 
@@ -44,9 +42,8 @@ void RKSettingsModuleWidget::change() {
 	Q_EMIT settingsChanged();
 }
 
-
-template<>
-QCheckBox* RKConfigValue<bool, bool>::makeCheckbox(const QString& label, RKSettingsModuleWidget* module) {
+template <>
+QCheckBox *RKConfigValue<bool, bool>::makeCheckbox(const QString &label, RKSettingsModuleWidget *module) {
 	QCheckBox *ret = new QCheckBox(label);
 	ret->setChecked(value);
 	QObject::connect(ret, &QCheckBox::stateChanged, module, &RKSettingsModuleWidget::change);
@@ -54,8 +51,8 @@ QCheckBox* RKConfigValue<bool, bool>::makeCheckbox(const QString& label, RKSetti
 	return ret;
 }
 
-template<>
-QGroupBox* RKConfigValue<bool, bool>::makeCheckableGroupBox(const QString& label, RKSettingsModuleWidget* module) {
+template <>
+QGroupBox *RKConfigValue<bool, bool>::makeCheckableGroupBox(const QString &label, RKSettingsModuleWidget *module) {
 	QGroupBox *ret = new QGroupBox(label);
 	ret->setCheckable(true);
 	ret->setChecked(value);
@@ -64,55 +61,54 @@ QGroupBox* RKConfigValue<bool, bool>::makeCheckableGroupBox(const QString& label
 	return ret;
 }
 
-
-template<>
-QAction* RKConfigValue<bool, bool>::makeAction(QObject *parent, const QString &label, std::function<void(bool)> handler) {
+template <>
+QAction *RKConfigValue<bool, bool>::makeAction(QObject *parent, const QString &label, std::function<void(bool)> handler) {
 	QAction *ret = new QAction(label, parent);
 	ret->setCheckable(true);
 	ret->setChecked(value);
 	QObject::connect(ret, &QAction::triggered, handler);
-	QObject::connect(ret, &QAction::triggered, parent, [this](bool val) { value=val; });
+	QObject::connect(ret, &QAction::triggered, parent, [this](bool val) { value = val; });
 	handler(value);
 	return ret;
 }
 
-template<>
-RKSpinBox* RKConfigValue<double, double>::makeSpinBox(double min, double max, RKSettingsModuleWidget* module) {
-	RKSpinBox* ret = new RKSpinBox();
+template <>
+RKSpinBox *RKConfigValue<double, double>::makeSpinBox(double min, double max, RKSettingsModuleWidget *module) {
+	RKSpinBox *ret = new RKSpinBox();
 	ret->setRealMode(min, max, value, 1, 2);
 	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
 	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->realValue(); });
 	return ret;
 }
 
-template<>
-RKSpinBox* RKConfigValue<int, int>::makeSpinBox(int min, int max, RKSettingsModuleWidget* module) {
-	RKSpinBox* ret = new RKSpinBox();
+template <>
+RKSpinBox *RKConfigValue<int, int>::makeSpinBox(int min, int max, RKSettingsModuleWidget *module) {
+	RKSpinBox *ret = new RKSpinBox();
 	ret->setIntMode(min, max, value);
 	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
 	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->intValue(); });
 	return ret;
 }
 // Hmm... Boring dupe of the above
-template<>
-RKSpinBox* RKConfigValue<uint, uint>::makeSpinBox(uint min, uint max, RKSettingsModuleWidget* module) {
-	RKSpinBox* ret = new RKSpinBox();
+template <>
+RKSpinBox *RKConfigValue<uint, uint>::makeSpinBox(uint min, uint max, RKSettingsModuleWidget *module) {
+	RKSpinBox *ret = new RKSpinBox();
 	ret->setIntMode(min, max, value);
 	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
 	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->intValue(); });
 	return ret;
 }
 
-template<>
-QLineEdit* RKConfigValue<QString, QString>::makeLineEdit(RKSettingsModuleWidget* module) {
-	QLineEdit* ret = new QLineEdit();
+template <>
+QLineEdit *RKConfigValue<QString, QString>::makeLineEdit(RKSettingsModuleWidget *module) {
+	QLineEdit *ret = new QLineEdit();
 	ret->setText(value);
 	QObject::connect(ret, &QLineEdit::textChanged, module, &RKSettingsModuleWidget::change);
 	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->text(); });
 	return ret;
 }
 
-QComboBox* RKConfigBase::makeDropDownHelper(const LabelList &entries, RKSettingsModuleWidget* module, int initial, std::function<void(int)> setter) {
+QComboBox *RKConfigBase::makeDropDownHelper(const LabelList &entries, RKSettingsModuleWidget *module, int initial, std::function<void(int)> setter) {
 	RK_TRACE(SETTINGS);
 
 	QComboBox *ret = new QComboBox();

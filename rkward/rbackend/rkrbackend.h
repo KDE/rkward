@@ -10,11 +10,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <stddef.h>
 
+#include <QEvent>
 #include <QMap>
-#include <QVariant>
 #include <QRecursiveMutex>
 #include <QStringList>
-#include <QEvent>
+#include <QVariant>
 
 #include "rcommand.h"
 #include "rcommandstack.h"
@@ -34,11 +34,11 @@ processing of X11-Events in R is triggered. The rest of the time the thread slee
 Actually, there is also a custom sub-eventloop, which gets called when the R backend has requested something. See handleRequest(). In this case, we might have to run some further child commands in the backend, before we proceed with the commands in the main queque. Some thing like:
 
 - Run some RCommand s
-	- R backend asks for some information / action
-		- potentially some more RCommand s are needed to accomplish this request
-			- (additional levels of substacks)
-		- return the result
-	- R backend request completed
+    - R backend asks for some information / action
+        - potentially some more RCommand s are needed to accomplish this request
+            - (additional levels of substacks)
+        - return the result
+    - R backend request completed
 - Run some more RCommand s
 
 This subordinate/nested eventloop is done in handleRequest ().
@@ -54,45 +54,47 @@ Don't use this class in RKWard directly. Unless you really want to modify the in
 @author Thomas Friedrichsmeier
 */
 class RKRBackend : public RKROutputBuffer {
-public: 
-/** constructor. Only one RKRBackend should ever be created, and that happens in RInterface::RInterface (). */
-	RKRBackend ();
-/** destructor */
-	virtual ~RKRBackend ();
+  public:
+	/** constructor. Only one RKRBackend should ever be created, and that happens in RInterface::RInterface (). */
+	RKRBackend();
+	/** destructor */
+	virtual ~RKRBackend();
 
-/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RKRBackend, but I can't see a good way around placing it here, or to make it portable. */
-	static void interruptProcessing (bool interrupt);
+	/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RKRBackend, but I can't see a good way around placing it here, or to make it portable. */
+	static void interruptProcessing(bool interrupt);
 
-/** Enum specifying types of errors that may occur while parsing/evaluating a command in R */
+	/** Enum specifying types of errors that may occur while parsing/evaluating a command in R */
 	enum RKWardRError {
-		NoError=0,			/**< No error */
-		Incomplete=1,		/**< The command is incomplete. Command was syntactically ok up to given point, but incomplete. It may or may not be semantically correct. */
-		SyntaxError=2,		/**< Syntax error */
-		OtherError=3		/**< Other error, usually a semantic error, e.g. object not found */
+		NoError = 0,     /**< No error */
+		Incomplete = 1,  /**< The command is incomplete. Command was syntactically ok up to given point, but incomplete. It may or may not be semantically correct. */
+		SyntaxError = 2, /**< Syntax error */
+		OtherError = 3   /**< Other error, usually a semantic error, e.g. object not found */
 	};
 
-/** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
-Note that you should call initialize only once in a application */
+	/** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
+	Note that you should call initialize only once in a application */
 	void initialize(const QString &locale_dir, bool setup);
 
-	void enterEventLoop ();
-protected:
-/** low-level initialization of R */
-	bool startR ();
-/** reimplemented from RKROutputBuffer */
-	bool doMSleep (int msecs) override;
-public:
-/** convenience low-level function for running a command, directly
-@param command command to be runCommand
-@returns true if command was run successfully, false in case of an error */
-	bool runDirectCommand (const QString &command);
-/** convenience low-level function for running a command, directly. Use this overload, if you want to handle a return value.
-@param command command to be runCommand
-@param datatype the data type that should be (attempted to be) returned
-@returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
-	RCommandProxy *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
+	void enterEventLoop();
 
-	void handleRequest(RBackendRequest *request) { handleRequest (request, true); };
+  protected:
+	/** low-level initialization of R */
+	bool startR();
+	/** reimplemented from RKROutputBuffer */
+	bool doMSleep(int msecs) override;
+
+  public:
+	/** convenience low-level function for running a command, directly
+	@param command command to be runCommand
+	@returns true if command was run successfully, false in case of an error */
+	bool runDirectCommand(const QString &command);
+	/** convenience low-level function for running a command, directly. Use this overload, if you want to handle a return value.
+	@param command command to be runCommand
+	@param datatype the data type that should be (attempted to be) returned
+	@returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
+	RCommandProxy *runDirectCommand(const QString &command, RCommand::CommandTypes datatype);
+
+	void handleRequest(RBackendRequest *request) { handleRequest(request, true); };
 
 	enum RequestFlags {
 		Asynchronous,
@@ -100,35 +102,35 @@ public:
 		SynchronousWithSubcommands
 	};
 
-/** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). */
+	/** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). */
 	GenericRRequestResult doRCallRequest(const QString &call, const QVariant &args, RequestFlags flags);
-	RCommandProxy* fetchNextCommand ();
+	RCommandProxy *fetchNextCommand();
 
-/** The command currently being executed. */
+	/** The command currently being executed. */
 	RCommandProxy *current_command;
-	QList<RCommandProxy*> all_current_commands;
+	QList<RCommandProxy *> all_current_commands;
 
-	void runCommand (RCommandProxy *command);
+	void runCommand(RCommandProxy *command);
 
-/** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
+	/** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static RKRBackend *this_pointer;
-	static void tryToDoEmergencySave ();
+	static void tryToDoEmergencySave();
 	bool r_running;
-/** Check whether the runtime version of R is at least the given version. Valid only *after* startR() has been called! */
-	bool RRuntimeIsVersion (int major, int minor, int revision) {
+	/** Check whether the runtime version of R is at least the given version. Valid only *after* startR() has been called! */
+	bool RRuntimeIsVersion(int major, int minor, int revision) {
 		return (r_version >= (1000 * major + 10 * minor + revision));
 	}
 
-/** backend is killed. Should exit as soon as possible. @see kill */
+	/** backend is killed. Should exit as soon as possible. @see kill */
 	enum KillType {
 		NotKilled = 0,
 		ExitNow = 1,
 		EmergencySaveThenExit = 2,
 		AlreadyDead = 3
 	} killed;
-/** "Kills" the backend. Actually this just tells the thread that it is about to be terminated. Allows the thread to terminate gracefully */
-	void kill () { killed = ExitNow; };
-	bool isKilled () { return (killed != NotKilled); };
+	/** "Kills" the backend. Actually this just tells the thread that it is about to be terminated. Allows the thread to terminate gracefully */
+	void kill() { killed = ExitNow; };
+	bool isKilled() { return (killed != NotKilled); };
 
 	struct RKReplStatus {
 		QByteArray user_command_buffer;
@@ -144,7 +146,7 @@ public:
 			UserCommandFailed,
 			ReplIterationKilled
 		} user_command_status;
-		int eval_depth;		// Number (depth) of non-user commands currently running. User commands can only run at depth 0
+		int eval_depth; // Number (depth) of non-user commands currently running. User commands can only run at depth 0
 		enum {
 			NotInBrowserContext = 0,
 			InBrowserContext,
@@ -153,61 +155,64 @@ public:
 		bool interrupted;
 	};
 	static RKReplStatus repl_status;
-/** holds a copy of the default R_GlobalContext. Needed to find out, when a browser context has been left. */
+	/** holds a copy of the default R_GlobalContext. Needed to find out, when a browser context has been left. */
 	static void *default_global_context;
 
-	void commandFinished (bool check_object_updates_needed=true);
-/** A list of symbols that have been assigned new values during the current command */
+	void commandFinished(bool check_object_updates_needed = true);
+	/** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
-/** the main loop. See \ref RKRBackend for a more detailed description */
+	/** the main loop. See \ref RKRBackend for a more detailed description */
 	void run(const QString &locale_dir, bool setup);
-	static void scheduleInterrupt ();
+	static void scheduleInterrupt();
 
-	void startOutputCapture ();
-	void printAndClearCapturedMessages (bool with_header);
-	void printCommand (const QString &command);
-	void catToOutputFile (const QString &out);
+	void startOutputCapture();
+	void printAndClearCapturedMessages(bool with_header);
+	void printCommand(const QString &command);
+	void catToOutputFile(const QString &out);
 
 	QMutex all_current_commands_mutex;
-	QList<RCommandProxy*> current_commands_to_cancel;
+	QList<RCommandProxy *> current_commands_to_cancel;
 	bool too_late_to_interrupt;
-	void interruptCommand (int command_id);
+	void interruptCommand(int command_id);
 
-/** check stdout and stderr for new output (from sub-processes). Since this function is called from both threads, it is protected by a mutex.
- *  @param forcibly: if false, and the other thread currently has a lock on the mutex, do nothing, and return false.
- *  @returns: true, if output was actually fetched (or no output was available), false, if the function gave up on a locked mutex. */
-	bool fetchStdoutStderr (bool forcibly);
-/** public for technical reasons */
+	/** check stdout and stderr for new output (from sub-processes). Since this function is called from both threads, it is protected by a mutex.
+	 *  @param forcibly: if false, and the other thread currently has a lock on the mutex, do nothing, and return false.
+	 *  @returns: true, if output was actually fetched (or no output was available), false, if the function gave up on a locked mutex. */
+	bool fetchStdoutStderr(bool forcibly);
+	/** public for technical reasons */
 	QRecursiveMutex stdout_stderr_mutex;
 
-	void setPriorityCommand (RCommandProxy *command);
+	void setPriorityCommand(RCommandProxy *command);
 	RCommandProxy *pending_priority_command;
 	QMutex priority_command_mutex;
 	int r_version;
 
 	bool graphicsEngineMismatchMessage(int compiled_version, int runtime_version);
-private:
-	void clearPendingInterrupt ();
-protected:
-	RCommandProxy* handleRequest(RBackendRequest *request, bool mayHandleSubstack);
-	RCommandProxy* handleRequest2(RBackendRequest *request, bool mayHandleSubstack);
-private:
+
+  private:
+	void clearPendingInterrupt();
+
+  protected:
+	RCommandProxy *handleRequest(RBackendRequest *request, bool mayHandleSubstack);
+	RCommandProxy *handleRequest2(RBackendRequest *request, bool mayHandleSubstack);
+
+  private:
 	int stdout_stderr_fd;
-/** set up R standard callbacks */
-	void setupCallbacks ();
-/** connect R standard callbacks */
-	void connectCallbacks ();
+	/** set up R standard callbacks */
+	void setupCallbacks();
+	/** connect R standard callbacks */
+	void connectCallbacks();
 
 	QString output_file;
-/** A copy of the names of the toplevel environments (as returned by "search()"). */
+	/** A copy of the names of the toplevel environments (as returned by "search()"). */
 	QStringList toplevel_env_names;
-/** A copy of the names of "loadedNamespaces()"). */
+	/** A copy of the names of "loadedNamespaces()"). */
 	QStringList loaded_namespaces;
-/** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
-	void checkObjectUpdatesNeeded (bool check_list);
-friend void doPendingPriorityCommands ();
+	/** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
+	void checkObjectUpdatesNeeded(bool check_list);
+	friend void doPendingPriorityCommands();
 	/** The previously executed command. Only non-zero until a new command has been requested. */
 	RCommandProxy *previous_command;
 };
- 
+
 #endif

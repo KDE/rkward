@@ -6,25 +6,25 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 /******************************* ACKNOWLEDGEMENT ***************************
- * 
+ *
  * Much of the code in this file is based on, or even copied from package qtutils, version 0.1-3
  * by Deepayan Sarkar. Package qtutils is available from http://qtinterfaces.r-forge.r-project.org
  * under GNU LPGL 2 or later.
- * 
+ *
  ***************************************************************************/
 
-#include "../rkrsupport.h"
 #include "../rkrbackend.h"
+#include "../rkrsupport.h"
 
 #include "../rkrapi.h"
 
 struct RKGraphicsDeviceDesc {
-	bool init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg);
+	bool init(pDevDesc dev, double pointsize, const QStringList &family, rcolor bg);
 	int devnum;
 	quint32 id;
 	double width, height;
 	double dpix, dpiy;
-	QString getFontFamily (bool symbolfont) const {
+	QString getFontFamily(bool symbolfont) const {
 		if (symbolfont) return default_symbol_family;
 		return default_family;
 	}
@@ -40,7 +40,7 @@ static SEXP RKD_capabilities(SEXP capabilities);
 // Several functions pass sizes assuming 72DPI resolution, too.
 #define RKGD_DEFAULT_DPI 72.0
 
-void RKStartGraphicsDevice (double width, double height, double pointsize, const QStringList &family, rcolor bg, const char* title, bool antialias) {
+void RKStartGraphicsDevice(double width, double height, double pointsize, const QStringList &family, rcolor bg, const char *title, bool antialias) {
 	static quint32 id = 0;
 	if (width <= 0 || height <= 0) {
 		RFn::Rf_error("Invalid width or height: (%g, %g)", width, height);
@@ -66,18 +66,18 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 		RKRSupport::InterruptSuspension susp;
 		/* Allocate and initialize the device driver data */
 		const size_t allocsize = sizeof(DevDesc) + 256; // deliberately overallocating, in case later version of R try to write something, here
-		dev = (pDevDesc) RFn::R_chk_calloc(1, allocsize);
+		dev = (pDevDesc)RFn::R_chk_calloc(1, allocsize);
 		// NOTE: The call to RKGraphicsDeviceBackendTransmitter::instance(), here is important beyond error checking. It might *create* the instance and connection, if this is the first use.
-		if (!(dev && RKGraphicsDeviceBackendTransmitter::instance () && desc->init (dev, pointsize, family, bg))) {
+		if (!(dev && RKGraphicsDeviceBackendTransmitter::instance() && desc->init(dev, pointsize, family, bg))) {
 			RFn::R_chk_free(dev);
-			delete(desc);
+			delete (desc);
 			desc = nullptr;
 		} else {
-			desc->devnum = 0;  // graphics engine will send an Activate-event, before we were even
-			                   // able to see our own devnum and call RKD_Create. Therefore, initialize
-			                   // devnum to 0, so as not to confuse the frontend
-			desc->id = id++;   // extra identifier to make sure, R and the frontend are really talking about the same device
-			                   // in case of potentially out-of-sync operations (notably RKDAdjustSize)
+			desc->devnum = 0; // graphics engine will send an Activate-event, before we were even
+			                  // able to see our own devnum and call RKD_Create. Therefore, initialize
+			                  // devnum to 0, so as not to confuse the frontend
+			desc->id = id++;  // extra identifier to make sure, R and the frontend are really talking about the same device
+			                  // in case of potentially out-of-sync operations (notably RKDAdjustSize)
 			pGEDevDesc gdd = RFn::GEcreateDevDesc(dev);
 			gdd->displayList = ROb(R_NilValue);
 			RFn::GEaddDevice2(gdd, "RKGraphicsDevice");
@@ -92,28 +92,28 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	}
 }
 
-SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias) {
+SEXP RKStartGraphicsDevice(SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias) {
 	RKStartGraphicsDevice(RFn::Rf_asReal(width), RFn::Rf_asReal(height), RFn::Rf_asReal(pointsize), RKRSupport::SEXPToStringList(family), RFn::R_GE_str2col(RFn::R_CHAR(RFn::Rf_asChar(bg))), RFn::R_CHAR(RFn::Rf_asChar(title)), RFn::Rf_asLogical(antialias));
 	return ROb(R_NilValue);
 }
 
-bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg) {
-	default_family = family.value (0, QStringLiteral("Helvetica"));
-	default_symbol_family = family.value (0, QStringLiteral("Symbol"));
-	RKD_QueryResolution (&dpix, &dpiy);
+bool RKGraphicsDeviceDesc::init(pDevDesc dev, double pointsize, const QStringList &family, rcolor bg) {
+	default_family = family.value(0, QStringLiteral("Helvetica"));
+	default_symbol_family = family.value(0, QStringLiteral("Symbol"));
+	RKD_QueryResolution(&dpix, &dpiy);
 	if (dpix <= 1) dpix = RKGD_DEFAULT_DPI;
 	if (dpiy <= 1) dpiy = RKGD_DEFAULT_DPI;
 	width *= dpix;
 	height *= dpiy;
-//	Rprintf ("dpi: %d * %d, dims: %f * %f\n", dpix, dpiy, width, height);
+	//	Rprintf ("dpi: %d * %d, dims: %f * %f\n", dpix, dpiy, width, height);
 
-	dev->deviceSpecific = (void *) this;
+	dev->deviceSpecific = (void *)this;
 
 	// pointsize?
 
 	/*
-	* Initial graphical settings
-	*/
+	 * Initial graphical settings
+	 */
 	dev->startfont = 1;
 	dev->startps = pointsize;
 	dev->startcol = R_RGB(0, 0, 0);
@@ -121,12 +121,12 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->startlty = LTY_SOLID;
 	dev->startgamma = 1;
 	/*
-	* Device physical characteristics
-	*/
-	dev->left   = dev->clipLeft   = 0;
-	dev->right  = dev->clipRight  = width;
+	 * Device physical characteristics
+	 */
+	dev->left = dev->clipLeft = 0;
+	dev->right = dev->clipRight = width;
 	dev->bottom = dev->clipBottom = height;
-	dev->top    = dev->clipTop    = 0;
+	dev->top = dev->clipTop = 0;
 	dev->cra[0] = 0.9 * pointsize * (dpix / RKGD_DEFAULT_DPI);
 	dev->cra[1] = 1.2 * pointsize * (dpiy / RKGD_DEFAULT_DPI);
 	dev->xCharOffset = 0.4900;
@@ -135,8 +135,8 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->ipr[0] = 1.0 / dpix;
 	dev->ipr[1] = 1.0 / dpiy;
 	/*
-	* Device capabilities
-	*/
+	 * Device capabilities
+	 */
 	dev->canClip = TRUE;
 	dev->canHAdj = 2;
 	dev->canChangeGamma = FALSE;
@@ -155,11 +155,11 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->haveLocator = 2;
 
 	/*
-	* Mouse events
-	*/
+	 * Mouse events
+	 */
 	dev->canGenMouseDown = TRUE;
 	dev->canGenMouseMove = TRUE;
-	dev->canGenMouseUp = TRUE; 
+	dev->canGenMouseUp = TRUE;
 	dev->canGenKeybd = TRUE;
 	dev->canGenIdle = TRUE;
 
@@ -169,8 +169,8 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->onExit = RKD_onExit;
 
 	/*
-	* Device functions
-	*/
+	 * Device functions
+	 */
 	dev->activate = RKD_Activate;
 	dev->circle = RKD_Circle;
 	dev->clip = RKD_Clip;
@@ -192,10 +192,10 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->newFrameConfirm = RKD_NewFrameConfirm;
 	dev->holdflush = RKD_HoldFlush;
 
-#if R_VERSION >= R_Version (4, 1, 0)
+#if R_VERSION >= R_Version(4, 1, 0)
 	static_assert(R_GE_version >= 13);
 	// NOTE: We need both a compiletime and a runtime check, in order to support running with an R older than what was used at compile time
-	if (RFn::R_GE_getVersion() >=  13) {
+	if (RFn::R_GE_getVersion() >= 13) {
 		// patterns and gradients
 		dev->setPattern = RKD_SetPattern;
 		dev->releasePattern = RKD_ReleasePattern;
@@ -206,15 +206,15 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 		dev->setMask = RKD_SetMask;
 		dev->releaseMask = RKD_ReleaseMask;
 		dev->deviceVersion = qMin(qMin(16, R_GE_version), RFn::R_GE_getVersion());
-		if (RFn::R_GE_getVersion() >=  14) {
+		if (RFn::R_GE_getVersion() >= 14) {
 			dev->deviceClip = TRUE; // for now
 		}
 	}
 #endif
 
-#if R_VERSION >= R_Version (4, 2, 0)
+#if R_VERSION >= R_Version(4, 2, 0)
 	static_assert(R_GE_version >= 15);
-	if (RFn::R_GE_getVersion() >=  15) {
+	if (RFn::R_GE_getVersion() >= 15) {
 		// groups
 		dev->defineGroup = RKD_DefineGroup;
 		dev->useGroup = RKD_UseGroup;
@@ -228,9 +228,9 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	}
 #endif
 
-#if R_VERSION >= R_Version (4, 3, 0)
+#if R_VERSION >= R_Version(4, 3, 0)
 	static_assert(R_GE_version >= 16);
-	if (RFn::R_GE_getVersion() >=  16) {
+	if (RFn::R_GE_getVersion() >= 16) {
 		// glyhp
 		dev->glyph = RKD_Glyph;
 	}
@@ -241,7 +241,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	return true;
 }
 
-#if R_VERSION >= R_Version (4, 2, 0)
+#if R_VERSION >= R_Version(4, 2, 0)
 static void setCapabilityStruct(SEXP capabilities, int category, std::initializer_list<int> values) {
 	SEXP sub;
 	RFn::Rf_protect(sub = RFn::Rf_allocVector(INTSXP, values.size()));
@@ -256,48 +256,21 @@ static void setCapabilityStruct(SEXP capabilities, int category, std::initialize
 static SEXP RKD_capabilities(SEXP capabilities) {
 	RK_TRACE(GRAPHICS_DEVICE);
 
-	setCapabilityStruct(capabilities, R_GE_capability_patterns, {
-		R_GE_linearGradientPattern,
-		R_GE_radialGradientPattern,
-		R_GE_tilingPattern
-	});
-	setCapabilityStruct(capabilities, R_GE_capability_clippingPaths, { 1 });
-	setCapabilityStruct(capabilities, R_GE_capability_masks, { R_GE_luminanceMask });
+	setCapabilityStruct(capabilities, R_GE_capability_patterns, {R_GE_linearGradientPattern, R_GE_radialGradientPattern, R_GE_tilingPattern});
+	setCapabilityStruct(capabilities, R_GE_capability_clippingPaths, {1});
+	setCapabilityStruct(capabilities, R_GE_capability_masks, {R_GE_luminanceMask});
 	setCapabilityStruct(capabilities, R_GE_capability_compositing, {
-		R_GE_compositeMultiply,
-		R_GE_compositeScreen,
-		R_GE_compositeOverlay,
-		R_GE_compositeDarken,
-		R_GE_compositeLighten,
-		R_GE_compositeColorDodge,
-		R_GE_compositeColorBurn,
-		R_GE_compositeHardLight,
-		R_GE_compositeSoftLight,
-		R_GE_compositeDifference,
-		R_GE_compositeExclusion,
-		R_GE_compositeClear,
-		R_GE_compositeSource,
-		R_GE_compositeOver,
-		R_GE_compositeIn,
-		R_GE_compositeOut,
-		R_GE_compositeAtop,
-		R_GE_compositeDest,
-		R_GE_compositeDestOver,
-		R_GE_compositeDestIn,
-		R_GE_compositeDestOut,
-		R_GE_compositeDestAtop,
-		R_GE_compositeXor,
-		R_GE_compositeAdd,
-		//R_GE_compositeSaturate // not supported in QPainter
-	});
-	setCapabilityStruct(capabilities, R_GE_capability_transformations, { 1 });
-	setCapabilityStruct(capabilities, R_GE_capability_paths, { 1 });
+	                                                                   R_GE_compositeMultiply, R_GE_compositeScreen, R_GE_compositeOverlay, R_GE_compositeDarken, R_GE_compositeLighten, R_GE_compositeColorDodge, R_GE_compositeColorBurn, R_GE_compositeHardLight, R_GE_compositeSoftLight, R_GE_compositeDifference, R_GE_compositeExclusion, R_GE_compositeClear, R_GE_compositeSource, R_GE_compositeOver, R_GE_compositeIn, R_GE_compositeOut, R_GE_compositeAtop, R_GE_compositeDest, R_GE_compositeDestOver, R_GE_compositeDestIn, R_GE_compositeDestOut, R_GE_compositeDestAtop, R_GE_compositeXor, R_GE_compositeAdd,
+	                                                                   // R_GE_compositeSaturate // not supported in QPainter
+	                                                               });
+	setCapabilityStruct(capabilities, R_GE_capability_transformations, {1});
+	setCapabilityStruct(capabilities, R_GE_capability_paths, {1});
 
-#if R_GE_version >= 16  // R >= 4.3.0
-	if (RFn::R_GE_getVersion() >=  16) {
-		setCapabilityStruct(capabilities, R_GE_capability_glyphs, { 1 });
+#	if R_GE_version >= 16 // R >= 4.3.0
+	if (RFn::R_GE_getVersion() >= 16) {
+		setCapabilityStruct(capabilities, R_GE_capability_glyphs, {1});
 	}
-#endif
+#	endif
 
 	return capabilities;
 }

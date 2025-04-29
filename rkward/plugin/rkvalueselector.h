@@ -21,18 +21,19 @@ class QDomElement;
 */
 class RKValueSelector : public RKComponent {
 	Q_OBJECT
-public: 
-	RKValueSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKValueSelector ();
-	int type () override { return ComponentValueSelector; };
-	QVariant value (const QString &modifier=QString ()) override;
-	QStringList getUiLabelPair () const override;
-private Q_SLOTS:
-	void selectionPropertyChanged ();
-	void listSelectionChanged ();
-	void labelsPropertyChanged ();
-	void availablePropertyChanged ();
-private:
+  public:
+	RKValueSelector(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKValueSelector();
+	int type() override { return ComponentValueSelector; };
+	QVariant value(const QString &modifier = QString()) override;
+	QStringList getUiLabelPair() const override;
+  private Q_SLOTS:
+	void selectionPropertyChanged();
+	void listSelectionChanged();
+	void labelsPropertyChanged();
+	void availablePropertyChanged();
+
+  private:
 	QTreeView *list_view;
 	QStringListModel *model;
 	bool updating;

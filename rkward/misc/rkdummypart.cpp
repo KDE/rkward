@@ -11,14 +11,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKDummyPart::RKDummyPart (QObject *parent, QWidget *widget) : KParts::Part (parent) {
-	RK_TRACE (MISC);
-	setWidget (widget);
-	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
-	setXMLFile (QStringLiteral("rkdummypart.rc"));
+RKDummyPart::RKDummyPart(QObject *parent, QWidget *widget) : KParts::Part(parent) {
+	RK_TRACE(MISC);
+	setWidget(widget);
+	setComponentName(QCoreApplication::applicationName(), QGuiApplication::applicationDisplayName());
+	setXMLFile(QStringLiteral("rkdummypart.rc"));
 }
 
-RKDummyPart::~RKDummyPart () {
-	RK_TRACE (MISC);
+RKDummyPart::~RKDummyPart() {
+	RK_TRACE(MISC);
 }
-

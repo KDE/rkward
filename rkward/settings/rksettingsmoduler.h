@@ -19,7 +19,7 @@ Configure the R-backend
 */
 class RKSettingsModuleR : public RKSettingsModule {
 	Q_OBJECT
-public:
+  public:
 	explicit RKSettingsModuleR(QObject *parent);
 	~RKSettingsModuleR() override;
 
@@ -27,16 +27,17 @@ public:
 	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("rbackend");
 
-/** generate the commands needed to set the R run time options */
-	static QStringList makeRRunTimeOptionCommands ();
+	/** generate the commands needed to set the R run time options */
+	static QStringList makeRRunTimeOptionCommands();
 
-/** retrieve the (probable) base url of help pages. May change across R sessions */
-	static QString helpBaseUrl () { return help_base_url; };
+	/** retrieve the (probable) base url of help pages. May change across R sessions */
+	static QString helpBaseUrl() { return help_base_url; };
 
-	static int getDefaultWidth () { return options_width; };
+	static int getDefaultWidth() { return options_width; };
 	static QString userConfiguredRBinary() { return options_r_binary; };
-private:
-friend class RKSettingsPageR;
+
+  private:
+	friend class RKSettingsPageR;
 	static RKConfigValue<QString> options_outdec;
 	static RKConfigValue<int> options_width;
 	static RKConfigValue<int> options_warn;
@@ -51,13 +52,13 @@ friend class RKSettingsPageR;
 	static RKConfigValue<QString> options_pager;
 	static RKConfigValue<QString> options_further;
 	static RKConfigValue<QStringList> options_addpaths;
-friend class RKSetupWizard;
+	friend class RKSetupWizard;
 	static RKConfigValue<QString> options_r_binary;
 
-// constants
+	// constants
 	static QString builtin_editor;
 
-// session constants
+	// session constants
 	friend class RInterface;
 	static QString help_base_url;
 };
@@ -69,32 +70,33 @@ Configure packages and library paths
 */
 class RKSettingsModuleRPackages : public RKSettingsModule {
 	Q_OBJECT
-public:
+  public:
 	explicit RKSettingsModuleRPackages(QObject *parent);
 	~RKSettingsModuleRPackages() override;
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	void createPages(RKSettings *parent) override;
-	void validateSettingsInteractive (QList<RKSetupWizardItem*>*) override;
+	void validateSettingsInteractive(QList<RKSetupWizardItem *> *) override;
 	static constexpr PageId page_id = QLatin1String("rpackages");
 
-/** generate the commands needed to set the R run time options */
-	static QStringList makeRRunTimeOptionCommands ();
+	/** generate the commands needed to set the R run time options */
+	static QStringList makeRRunTimeOptionCommands();
 
-	static bool archivePackages () { return archive_packages; }
-	static QString pkgTypeOption ();
-	static void addLibraryLocation (const QString& new_loc, RCommandChain *chain);
-	static QStringList libraryLocations ();
-/** Add a reasonable user writable path to the given library locations. */
-	static QStringList addUserLibLocTo (const QStringList &liblocs);
-	static QString userLibraryLocation ();
+	static bool archivePackages() { return archive_packages; }
+	static QString pkgTypeOption();
+	static void addLibraryLocation(const QString &new_loc, RCommandChain *chain);
+	static QStringList libraryLocations();
+	/** Add a reasonable user writable path to the given library locations. */
+	static QStringList addUserLibLocTo(const QStringList &liblocs);
+	static QString userLibraryLocation();
 
-/** returns the list of packages which are essential to rkward. This is hard-coded. */
+	/** returns the list of packages which are essential to rkward. This is hard-coded. */
 	static QStringList essentialPackages() { return essential_packages.split(QStringLiteral("\n")); };
-private:
-friend class RKLoadLibsDialog;
-friend class RKSettingsPageRPackages;
-	static QString libLocsCommand ();
+
+  private:
+	friend class RKLoadLibsDialog;
+	friend class RKSettingsPageRPackages;
+	static QString libLocsCommand();
 
 	static RKConfigValue<QString> cran_mirror_url;
 	static RKConfigValue<QStringList> liblocs;

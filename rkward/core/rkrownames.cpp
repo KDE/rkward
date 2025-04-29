@@ -11,43 +11,43 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <KLocalizedString>
 
-#include "rcontainerobject.h"
 #include "../rbackend/rkrinterface.h"
+#include "rcontainerobject.h"
 #include "rkmodificationtracker.h"
 
 #include "../debug.h"
 
-RKRowNames::RKRowNames (RContainerObject *parent) : RKVariable (parent, QString ()) {
-	RK_TRACE (OBJECTS);
+RKRowNames::RKRowNames(RContainerObject *parent) : RKVariable(parent, QString()) {
+	RK_TRACE(OBJECTS);
 
 	type = Variable | NonVisibleObject | PseudoObject;
-	pseudo_object_types.insert (this, RowNamesObject);
+	pseudo_object_types.insert(this, RowNamesObject);
 
-	setDataType (RObject::DataCharacter);
+	setDataType(RObject::DataCharacter);
 	check_duplicates = true;
 	is_sequential_up_to_row = -1;
 
-	name = QStringLiteral ("row.names");
+	name = QStringLiteral("row.names");
 }
 
-RKRowNames::~RKRowNames () {
-	RK_TRACE (OBJECTS);
-	pseudo_object_types.remove (this);
+RKRowNames::~RKRowNames() {
+	RK_TRACE(OBJECTS);
+	pseudo_object_types.remove(this);
 }
 
-void RKRowNames::beginEdit () {
-	RK_TRACE (OBJECTS);
+void RKRowNames::beginEdit() {
+	RK_TRACE(OBJECTS);
 
 	bool just_initialized = (data == nullptr);
-	RKVariable::beginEdit ();
+	RKVariable::beginEdit();
 
 	if (just_initialized) {
-		RK_ASSERT (data);
-		for (int i = 0; i < getLength (); ++i) {
-			data->cell_strings[i] = QString::number (i+1);
+		RK_ASSERT(data);
+		for (int i = 0; i < getLength(); ++i) {
+			data->cell_strings[i] = QString::number(i + 1);
 			data->cell_states[i] = RKVarEditData::Valid;
 		}
-		is_sequential_up_to_row = getLength () - 1;
+		is_sequential_up_to_row = getLength() - 1;
 	}
 }
 
@@ -87,31 +87,31 @@ void RKRowNames::writeData(int from_row, int to_row, RCommandChain *chain) {
 	RKModificationTracker::instance()->objectDataChanged(this, set);
 }
 
-void RKRowNames::setText (int row, const QString &text) {
-	RK_TRACE (OBJECTS);
+void RKRowNames::setText(int row, const QString &text) {
+	RK_TRACE(OBJECTS);
 
-	lockSyncing (true);
+	lockSyncing(true);
 
-	data->cell_strings[row] = QString ();	// don't get in the way of duplicate checking!
+	data->cell_strings[row] = QString(); // don't get in the way of duplicate checking!
 	QString real_text = text;
-	if (real_text.isEmpty ()) {
-		if (isSequential ()) {
-			real_text = QString::number (row + 1);
+	if (real_text.isEmpty()) {
+		if (isSequential()) {
+			real_text = QString::number(row + 1);
 		} else {
-			real_text = i18n ("new.row");		// empty row names are forbidden
+			real_text = i18n("new.row"); // empty row names are forbidden
 		}
 	}
 
 	bool was_sequential_row = false;
 	if (is_sequential_up_to_row >= (row - 1)) {
-		if (real_text == QString::number (row + 1)) {
-			if (makeUnique (&real_text, true)) {
-				is_sequential_up_to_row = qMax (row, is_sequential_up_to_row);
+		if (real_text == QString::number(row + 1)) {
+			if (makeUnique(&real_text, true)) {
+				is_sequential_up_to_row = qMax(row, is_sequential_up_to_row);
 				was_sequential_row = true;
 				if (is_sequential_up_to_row == row) {
 					// even more sequential numbers after this?
-					for (int i = row + 1; i < getLength (); ++i) {
-						if (data->cell_strings[i] != QString::number (i + 1)) break;
+					for (int i = row + 1; i < getLength(); ++i) {
+						if (data->cell_strings[i] != QString::number(i + 1)) break;
 						is_sequential_up_to_row = i;
 					}
 				}
@@ -120,16 +120,16 @@ void RKRowNames::setText (int row, const QString &text) {
 	}
 
 	if (!was_sequential_row) {
-		makeUnique (&real_text, false);
-		is_sequential_up_to_row = qMin (row - 1, is_sequential_up_to_row);
+		makeUnique(&real_text, false);
+		is_sequential_up_to_row = qMin(row - 1, is_sequential_up_to_row);
 	}
-	RKVariable::setText (row, real_text);
+	RKVariable::setText(row, real_text);
 
-	lockSyncing (false);
+	lockSyncing(false);
 }
 
-bool RKRowNames::makeUnique (QString *text, bool non_sequentials_only) {
-	RK_TRACE (OBJECTS);
+bool RKRowNames::makeUnique(QString *text, bool non_sequentials_only) {
+	RK_TRACE(OBJECTS);
 
 	if (!check_duplicates) return true;
 
@@ -140,7 +140,7 @@ bool RKRowNames::makeUnique (QString *text, bool non_sequentials_only) {
 	for (long i = 0; i < INT_MAX; ++i) {
 		// check whether the text is unique on this iteration
 		bool is_unique = true;
-		for (int row = from_index; row <= getLength (); ++row) {
+		for (int row = from_index; row <= getLength(); ++row) {
 			if (dummy == data->cell_strings[row]) {
 				is_unique = false;
 				break;
@@ -148,7 +148,7 @@ bool RKRowNames::makeUnique (QString *text, bool non_sequentials_only) {
 		}
 		if (is_unique) {
 			if (i == 0) {
-				return true;	// was unique on first attempt
+				return true; // was unique on first attempt
 			} else {
 				*text = dummy;
 				return false;
@@ -159,64 +159,64 @@ bool RKRowNames::makeUnique (QString *text, bool non_sequentials_only) {
 		dummy = *text + u'.' + QString::number(i);
 	}
 
-	RK_ASSERT (false);
+	RK_ASSERT(false);
 	return false;
 }
 
-void RKRowNames::insertRows (int row, int count) {
-	RK_TRACE (OBJECTS);
+void RKRowNames::insertRows(int row, int count) {
+	RK_TRACE(OBJECTS);
 
-	lockSyncing (true);
+	lockSyncing(true);
 
-	bool was_sequential = isSequential ();
-	RKVariable::insertRows (row, count);
+	bool was_sequential = isSequential();
+	RKVariable::insertRows(row, count);
 
-	if (was_sequential) {	// length just increased
+	if (was_sequential) { // length just increased
 		is_sequential_up_to_row += count;
-		for (int i = row; i < getLength (); ++i) {
-			data->cell_strings[i] = QString::number (i + 1);
-			data->cell_states[i] = RKVarEditData::Valid;	// was set to NA by RKVariable::insertRows
+		for (int i = row; i < getLength(); ++i) {
+			data->cell_strings[i] = QString::number(i + 1);
+			data->cell_states[i] = RKVarEditData::Valid; // was set to NA by RKVariable::insertRows
 		}
 	} else {
-		is_sequential_up_to_row = qMin (is_sequential_up_to_row, row - 1);
+		is_sequential_up_to_row = qMin(is_sequential_up_to_row, row - 1);
 		for (int i = row; i < row + count; ++i) {
-			setText (i, QString ());
+			setText(i, QString());
 		}
 	}
 	// always need to update. If sequential, rows have just changed. If non-sequential, data needs to be written to backend
-	cellsChanged (row, getLength () - 1);
+	cellsChanged(row, getLength() - 1);
 
-	lockSyncing (false);
+	lockSyncing(false);
 }
 
-void RKRowNames::removeRows (int from_row, int to_row) {
-	RK_TRACE (OBJECTS);
+void RKRowNames::removeRows(int from_row, int to_row) {
+	RK_TRACE(OBJECTS);
 
-	lockSyncing (true);
+	lockSyncing(true);
 
-	bool was_sequential = isSequential ();
-	RKVariable::removeRows (from_row, to_row);
+	bool was_sequential = isSequential();
+	RKVariable::removeRows(from_row, to_row);
 
-	if (was_sequential) {	// length just decreased
+	if (was_sequential) { // length just decreased
 		is_sequential_up_to_row -= (to_row - from_row + 1);
-		for (int i = from_row; i < getLength (); ++i) {
-			data->cell_strings[i] = QString::number (i + 1);
+		for (int i = from_row; i < getLength(); ++i) {
+			data->cell_strings[i] = QString::number(i + 1);
 		}
 	} else {
-		is_sequential_up_to_row = qMin (is_sequential_up_to_row, from_row - 1);
+		is_sequential_up_to_row = qMin(is_sequential_up_to_row, from_row - 1);
 	}
 
 	// always need to update. If sequential, rows have just changed. If non-sequential, data needs to be written to backend
-	cellsChanged (from_row, getLength () - 1);
+	cellsChanged(from_row, getLength() - 1);
 
-	lockSyncing (false);
+	lockSyncing(false);
 }
 
-void RKRowNames::setCharacterFromR (int from_row, int to_row, const QStringList &data) {
-	RK_TRACE (OBJECTS);
+void RKRowNames::setCharacterFromR(int from_row, int to_row, const QStringList &data) {
+	RK_TRACE(OBJECTS);
 
 	is_sequential_up_to_row = -1;
 	check_duplicates = false;
-	RKVariable::setCharacterFromR (from_row, to_row, data);
+	RKVariable::setCharacterFromR(from_row, to_row, data);
 	check_duplicates = true;
 }

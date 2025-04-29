@@ -15,11 +15,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
  *  to offer a KDE print dialog for an existing postscript file. */
 class RKPrintAgent : public QObject {
 	Q_OBJECT
-public:
+  public:
 	/** print the given postscript file.
 	 *  @param delete_file : Try to delete the file after printing. Note: This is not guaranteed to work. */
-	static void printPostscript (const QString &file, bool delete_file=false);
-protected:
+	static void printPostscript(const QString &file, bool delete_file = false);
+
+  protected:
 	RKPrintAgent(const QString &file, KParts::ReadOnlyPart *provider, bool delete_file);
 	~RKPrintAgent();
 

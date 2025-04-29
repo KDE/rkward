@@ -18,19 +18,20 @@ Internal representation of function objects in the R workspace
 */
 
 class RFunctionObject : public RObject {
-public:
-	RFunctionObject (RObject *parent, const QString &name);
-	~RFunctionObject ();
+  public:
+	RFunctionObject(RObject *parent, const QString &name);
+	~RFunctionObject();
 
-/** reimplemented from RObject to handle function arguments */
-	bool updateStructure (RData *new_data) override;
-	QString printArgs () const;
-	QStringList argumentNames () const { return argnames; }
-	QStringList argumentDefaults () const { return argvalues; }
-protected:
+	/** reimplemented from RObject to handle function arguments */
+	bool updateStructure(RData *new_data) override;
+	QString printArgs() const;
+	QStringList argumentNames() const { return argnames; }
+	QStringList argumentDefaults() const { return argvalues; }
+
+  protected:
 	QStringList argnames;
 	QStringList argvalues;
-	bool updateArguments (RData *new_data);
+	bool updateArguments(RData *new_data);
 };
 
 #endif

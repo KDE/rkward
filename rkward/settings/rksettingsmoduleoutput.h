@@ -25,19 +25,20 @@ and a widget to configure the settings.
 */
 class RKCarbonCopySettings : public RKSettingsModuleWidget {
 	Q_OBJECT
-public:
-	explicit RKCarbonCopySettings(QWidget* parent, RKSettingsModuleWidget* page);
+  public:
+	explicit RKCarbonCopySettings(QWidget *parent, RKSettingsModuleWidget *page);
 	~RKCarbonCopySettings();
 
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 
-	static bool shouldCarbonCopyCommand (const RCommand *command);
-	static bool includeOutputInCarbonCopy () { return (cc_globally_enabled && cc_command_output); };
-public Q_SLOTS:
+	static bool shouldCarbonCopyCommand(const RCommand *command);
+	static bool includeOutputInCarbonCopy() { return (cc_globally_enabled && cc_command_output); };
+  public Q_SLOTS:
 	void applyChanges() override;
-private:
+
+  private:
 	// There can be multiple instances of this widget, which need to be kept in sync.
-	static QList<RKCarbonCopySettings*> instances;
+	static QList<RKCarbonCopySettings *> instances;
 
 	static RKConfigValue<bool> cc_globally_enabled;
 	static RKConfigValue<bool> cc_console_commands;
@@ -51,7 +52,7 @@ private:
 */
 class RKSettingsModuleOutput : public RKSettingsModule {
 	Q_OBJECT
-public:
+  public:
 	explicit RKSettingsModuleOutput(QObject *parent);
 	~RKSettingsModuleOutput() override;
 
@@ -59,14 +60,15 @@ public:
 	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("output");
 
-/** generate the commands needed to set the R run time options */
-	static QStringList makeRRunTimeOptionCommands ();
+	/** generate the commands needed to set the R run time options */
+	static QStringList makeRRunTimeOptionCommands();
 
-	static bool autoShow () { return auto_show; };
-	static bool autoRaise () { return auto_raise; };
+	static bool autoShow() { return auto_show; };
+	static bool autoRaise() { return auto_raise; };
 	static bool sharedDefaultOutput() { return shared_default_output; };
-private:
-friend class RKSettingsPageOutput;
+
+  private:
+	friend class RKSettingsPageOutput;
 	static RKConfigValue<bool> auto_show;
 	static RKConfigValue<bool> auto_raise;
 	static RKConfigValue<QString> graphics_type;

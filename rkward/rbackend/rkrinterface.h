@@ -8,8 +8,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKRINTERFACE_H
 #define RKRINTERFACE_H
 
-#include <qobject.h>
 #include <QFile>
+#include <qobject.h>
 
 #include "rcommand.h"
 
@@ -21,55 +21,56 @@ class RKRBackendProtocolFrontend;
 
 /** This class provides the main interface to the R-processor.
 
-	Note that since communication with R is asynchronous, there is no way to get
-	R-output within the same function, the request is submitted. You have to
-	provide a callback (possibly a lambda function), if you're interested in the output.
-	
-	For a detailed explanation see \ref UsingTheInterfaceToR .
+    Note that since communication with R is asynchronous, there is no way to get
+    R-output within the same function, the request is submitted. You have to
+    provide a callback (possibly a lambda function), if you're interested in the output.
 
-	@see RCommand
-	*@author Thomas Friedrichsmeier
+    For a detailed explanation see \ref UsingTheInterfaceToR .
+
+    @see RCommand
+    *@author Thomas Friedrichsmeier
 */
 
 class RInterface : public QObject {
 	Q_OBJECT
-public:
+  public:
 	static void create();
-/** destructor */
+	/** destructor */
 	~RInterface();
 
-	static RInterface* instance() { return _instance; };
+	static RInterface *instance() { return _instance; };
 
-/** issues the given command in the given chain */
-	static void issueCommand(RCommand *command, RCommandChain *chain=nullptr);
-/** convenience function to create a new command and issue it. See documentation on RCommand::RCommand() and RInterface::issueCommand() */
-	static void issueCommand(const QString &command, int type = 0, const QString &rk_equiv = QString(), RCommandChain *chain=nullptr);
+	/** issues the given command in the given chain */
+	static void issueCommand(RCommand *command, RCommandChain *chain = nullptr);
+	/** convenience function to create a new command and issue it. See documentation on RCommand::RCommand() and RInterface::issueCommand() */
+	static void issueCommand(const QString &command, int type = 0, const QString &rk_equiv = QString(), RCommandChain *chain = nullptr);
 
-/** convenience function to call a function / lambda, once all commands issued in the given chain have finished (successfully or not). Internally, this works by queing an empty command. */
-	template<typename T> static void whenAllFinished(QObject *receiver, T func, RCommandChain *chain=nullptr) {
+	/** convenience function to call a function / lambda, once all commands issued in the given chain have finished (successfully or not). Internally, this works by queing an empty command. */
+	template <typename T>
+	static void whenAllFinished(QObject *receiver, T func, RCommandChain *chain = nullptr) {
 		RCommand *c = new RCommand(QString(), RCommand::EmptyCommand | RCommand::Sync);
 		c->whenFinished(receiver, func);
 		issueCommand(c, chain);
 	}
 
-/** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
+	/** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
 	static RCommandChain *startChain(RCommandChain *parent = nullptr);
-/** closes the command chain. The chain (and even its parent, if it is already closed) may be deleted right afterwards! */
+	/** closes the command chain. The chain (and even its parent, if it is already closed) may be deleted right afterwards! */
 	static void closeChain(RCommandChain *chain);
 
-/** Ensures that the given command will not be executed, or, if it is already running, interrupts it. Note that commands marked RCommand::Sync can
-not be interrupted. */
-	void cancelCommand (RCommand *command);
-/** Cancels the given command, unless it has already been submitted to the backend. Returns true, if command was cancelled, false otherwise. */
-	bool softCancelCommand (RCommand *command);
-/** Cancels all running or outstanding commands. @See cancelCommand() */
-	void cancelAll ();
+	/** Ensures that the given command will not be executed, or, if it is already running, interrupts it. Note that commands marked RCommand::Sync can
+	not be interrupted. */
+	void cancelCommand(RCommand *command);
+	/** Cancels the given command, unless it has already been submitted to the backend. Returns true, if command was cancelled, false otherwise. */
+	bool softCancelCommand(RCommand *command);
+	/** Cancels all running or outstanding commands. @See cancelCommand() */
+	void cancelAll();
 
-/** Pauses process. The current command will continue to run, but no new command will be */
-	void pauseProcessing (bool pause);
+	/** Pauses process. The current command will continue to run, but no new command will be */
+	void pauseProcessing(bool pause);
 
-/** returns the command currently running in the thread. Be careful when using the returned pointer! */
-	RCommand *runningCommand () const { return (all_current_commands.isEmpty () ? nullptr : all_current_commands.last ()); };
+	/** returns the command currently running in the thread. Be careful when using the returned pointer! */
+	RCommand *runningCommand() const { return (all_current_commands.isEmpty() ? nullptr : all_current_commands.last()); };
 
 	enum RStatus {
 		Busy,
@@ -78,25 +79,26 @@ not be interrupted. */
 		Dead
 	};
 
-	bool backendIsDead () const { return backend_dead; };
-/** implies backendIsDead() */
+	bool backendIsDead() const { return backend_dead; };
+	/** implies backendIsDead() */
 	bool backendFailedToStart() const { return (backend_dead && !backend_started); }
-	bool backendIsIdle ();
-	static bool isNaReal (double value) { return na_real == value; };
-	static bool isNaInt (int value) { return na_int == value; };
-	struct BackendError{
+	bool backendIsIdle();
+	static bool isNaReal(double value) { return na_real == value; };
+	static bool isNaInt(int value) { return na_int == value; };
+	struct BackendError {
 		QString title;
 		QString id;
 		QString message;
 		QString details;
 	};
 	BackendError backendError() const { return backend_error; };
-private:
-/** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
-	void flushOutput (bool forced);
-/** pointer to the RThread */
+
+  private:
+	/** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
+	void flushOutput(bool forced);
+	/** pointer to the RThread */
 	RKRBackend *r_thread;
-/** Used by the testing framework. see R function rk.record.commands(). */
+	/** Used by the testing framework. see R function rk.record.commands(). */
 	QFile command_logfile;
 	enum {
 		NotRecordingCommands,
@@ -104,58 +106,59 @@ private:
 		RecordingCommandsUnfiltered
 	} command_logfile_mode;
 
-/** helper function to handle backend requests that (may) involve running additional R-"sub"-commands. TODO; This should probably be merged with processRBackendRequest.*/
-	GenericRRequestResult processRCallRequest (const QString &call, const QVariant &args, RCommandChain *in_chain);
-/** helper function to handle backend requests that do not inolve running sub-commands. */
-	void processRBackendRequest (RBackendRequest *request);
+	/** helper function to handle backend requests that (may) involve running additional R-"sub"-commands. TODO; This should probably be merged with processRBackendRequest.*/
+	GenericRRequestResult processRCallRequest(const QString &call, const QVariant &args, RCommandChain *in_chain);
+	/** helper function to handle backend requests that do not inolve running sub-commands. */
+	void processRBackendRequest(RBackendRequest *request);
 
-/** A list of all commands that have entered, and not yet left, the backend thread */
-	QList<RCommand*> all_current_commands;
-/** NOTE: processing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
-	QList<RBackendRequest*> command_requests;
-	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? nullptr : command_requests.last ()); };
-	void tryNextCommand ();
-	void doNextCommand (RCommand *command);
-	RCommand *popPreviousCommand (int id);
-	void handleCommandOut (RCommand *command);
+	/** A list of all commands that have entered, and not yet left, the backend thread */
+	QList<RCommand *> all_current_commands;
+	/** NOTE: processing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
+	QList<RBackendRequest *> command_requests;
+	RBackendRequest *currentCommandRequest() const { return (command_requests.isEmpty() ? nullptr : command_requests.last()); };
+	void tryNextCommand();
+	void doNextCommand(RCommand *command);
+	RCommand *popPreviousCommand(int id);
+	void handleCommandOut(RCommand *command);
 	bool previously_idle;
 
-	RCommandChain* openSubcommandChain (RCommand *parent_command);
+	RCommandChain *openSubcommandChain(RCommand *parent_command);
 	QList<RCommand *> current_commands_with_subcommands;
-	void closeSubcommandChain (RCommand *parent_command);
+	void closeSubcommandChain(RCommand *parent_command);
 	void reportFatalError();
 
-/** @see locked */
+	/** @see locked */
 	enum LockType {
-		User=1		/**< locked on user request */
+		User = 1 /**< locked on user request */
 	};
 
-/** Used for locking the backend, meaning not further commands will be given to the backend. It is called, if the RThread is paused on User request.
- * @see RInterface::pauseProcessing
- * May be an OR'ed combination of several LockType s, but currently, there is only one LockType */
+	/** Used for locking the backend, meaning not further commands will be given to the backend. It is called, if the RThread is paused on User request.
+	 * @see RInterface::pauseProcessing
+	 * May be an OR'ed combination of several LockType s, but currently, there is only one LockType */
 	int locked;
 
 	BackendError backend_error;
 	bool startup_phase2_error;
-	void runStartupCommand(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback);
+	void runStartupCommand(RCommand *command, RCommandChain *chain, std::function<void(RCommand *)> callback);
 	RCommand *dummy_command_on_stack;
-friend class RKRBackendProtocolFrontend;
+	friend class RKRBackendProtocolFrontend;
 	bool backend_dead;
 	bool backend_started;
 	static double na_real;
 	static int na_int;
 	RKRBackendProtocolFrontend *backendprotocol;
-friend class RKWardMainWindow;
-friend class RCommand;
-protected:
-	void handleRequest (RBackendRequest *request);
+	friend class RKWardMainWindow;
+	friend class RCommand;
+
+  protected:
+	void handleRequest(RBackendRequest *request);
 	static RInterface *_instance;
 	void _issueCommand(RCommand *command, RCommandChain *chain = nullptr);
-/** constructor */
+	/** constructor */
 	RInterface();
-Q_SIGNALS:
+  Q_SIGNALS:
 	void backendWorkdirChanged();
-/** Note: status is actually RInterface::RStatus */
+	/** Note: status is actually RInterface::RStatus */
 	void backendStatusChanged(int new_status);
 };
 
@@ -209,19 +212,19 @@ class MyReceiver : public QObject {
 //...
 private:
 /// does something by submitting an RCommand
-	void someFunction ();
+    void someFunction ();
 //...
 };
 
 
 void MyReceiver::someFunction () {
-	RCommand *c = new RCommand("print (1+1)", RCommand::App);
-	c->whenFinished(this, [this](RCommand *command) {
-		if (command->successful ()) {
-			qDebug ("Result was %s", command->output ()->utf8 ());
-		}
-	});
-	RInterface::issueCommand(c);
+    RCommand *c = new RCommand("print (1+1)", RCommand::App);
+    c->whenFinished(this, [this](RCommand *command) {
+        if (command->successful ()) {
+            qDebug ("Result was %s", command->output ()->utf8 ());
+        }
+    });
+    RInterface::issueCommand(c);
 }
 
 \endcode
@@ -236,8 +239,8 @@ In some cases you don't just want to deal with a single RCommand in a callback, 
 
 There are several ways to deal with this:
 
-	- storing the RCommand::id () (each command is automatically assigned a unique id)
-	- keeping the pointer (CAUTION: don't use that pointer except to compare it with the pointer of an incoming command. Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!)
+    - storing the RCommand::id () (each command is automatically assigned a unique id)
+    - keeping the pointer (CAUTION: don't use that pointer except to compare it with the pointer of an incoming command. Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!)
 
 
 Now what about that RKGlobals::rObjectList()->getUpdateCommandChain ()? We'll talk about RCommandChain and what you need it for further down below. But first we'll have a look at how an RCommand is handled internally.
@@ -297,17 +300,17 @@ To cope with this, it is sometimes desirable to keep closer control over the ord
 The way to do this is to use RCommandChain. Basically, when you want commands to be executed in a sequence being sure that no other commands intervene, you do this:
 
 \code
-	RCommandChain *chain = RInterface::startChain ();
+    RCommandChain *chain = RInterface::startChain ();
 
-	// create first command
-	RInterface::issueCommand (first_command, chain);
+    // create first command
+    RInterface::issueCommand (first_command, chain);
 
-	// wait for command to return, potentially allows further calls to RInterface::issueCommand () from other places in the code
+    // wait for command to return, potentially allows further calls to RInterface::issueCommand () from other places in the code
 
-	// create second command
-	RInterface::issueCommand (second_command, chain);
+    // create second command
+    RInterface::issueCommand (second_command, chain);
 
-	RInterface::closeChain (chain);
+    RInterface::closeChain (chain);
 \endcode
 
 Now the point is that you place both of your commands in a dedicated "chain", telling RKWard that those two commands will have to be run in direct succession. If between the first and the second command, another section of the code issues a different command, this command will never be run until all commands in the chain have been run and the chain has been marked as closed.
@@ -326,12 +329,12 @@ To illustrate, consider this series of events:
 Now let's assume for a second, the R backend has been busy doing other stuff and has not executed any of the commands so far, then the execution stack will now look like this:
 
 - top level
-	- chain
-		- first_command
-		- second_command
-		- chain is marked as closed: after executing second_command, we may proceed with the top level
-	- some_command
-	- some_command2
+    - chain
+        - first_command
+        - second_command
+        - chain is marked as closed: after executing second_command, we may proceed with the top level
+    - some_command
+    - some_command2
 
 So the order of execution will be guaranteed to be first_command, second_command, some_command, some_command2, although they were issued ina different order. You can also open sub chains, using
 

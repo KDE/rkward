@@ -21,26 +21,27 @@ This class is very hackish and NOT sure to stay! It might be obsoleted by anothe
 @author Thomas Friedrichsmeier
 */
 class SimpleBackend : public ScriptBackend {
-public:
-	SimpleBackend ();
-	~SimpleBackend ();
+  public:
+	SimpleBackend();
+	~SimpleBackend();
 
-	void setPreprocessTemplate (const QString &template_string) { preprocess_template = template_string; };
-	void setCalculateTemplate (const QString &template_string) { calculate_template = template_string; };
-	void setPrintoutTemplate (const QString &template_string) { printout_template = template_string; };
-	void setPreviewTemplate (const QString &template_string) { preview_template = template_string; };
+	void setPreprocessTemplate(const QString &template_string) { preprocess_template = template_string; };
+	void setCalculateTemplate(const QString &template_string) { calculate_template = template_string; };
+	void setPrintoutTemplate(const QString &template_string) { printout_template = template_string; };
+	void setPreviewTemplate(const QString &template_string) { preview_template = template_string; };
 
-	bool initialize (RKComponentPropertyCode *code_property=nullptr, bool add_headings=true) override;
-	void destroy () override;
-	
-	void preprocess (int flags) override;
-	void calculate (int flags) override;
-	void printout (int flags) override;
-	void preview (int flags) override;
-	
-	void writeData (const QVariant &data) override;
-	void tryNextFunction () override;
-private:
+	bool initialize(RKComponentPropertyCode *code_property = nullptr, bool add_headings = true) override;
+	void destroy() override;
+
+	void preprocess(int flags) override;
+	void calculate(int flags) override;
+	void printout(int flags) override;
+	void preview(int flags) override;
+
+	void writeData(const QVariant &data) override;
+	void tryNextFunction() override;
+
+  private:
 	QString preprocess_template;
 	QString calculate_template;
 	QString printout_template;
@@ -51,8 +52,8 @@ private:
 	int template_pos;
 	QList<QVariant> current_values;
 
-	void processCall ();
-	void finishCall (const QString &conditions);
+	void processCall();
+	void finishCall(const QString &conditions);
 };
 
 #endif

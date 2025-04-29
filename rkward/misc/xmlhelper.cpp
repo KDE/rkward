@@ -9,13 +9,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <KLocalizedString>
 
-#include <qstringlist.h>
+#include <QTextStream>
+#include <QXmlStreamEntityResolver>
+#include <QXmlStreamReader>
+#include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
-#include <qdir.h>
-#include <QTextStream>
-#include <QXmlStreamReader>
-#include <QXmlStreamEntityResolver>
+#include <qstringlist.h>
 
 #include <rkmessagecatalog.h>
 
@@ -34,15 +34,15 @@ class DummyEntityResolver : public QXmlStreamEntityResolver {
 	QString resolveUndeclaredEntity(const QString &name) override { return QStringLiteral("<" ENTITIYHACK ">%1</" ENTITIYHACK ">").arg(name); }
 };
 
-XMLHelper::XMLHelper (const QString &filename, const RKMessageCatalog *default_catalog) {
-	RK_TRACE (XML);
+XMLHelper::XMLHelper(const QString &filename, const RKMessageCatalog *default_catalog) {
+	RK_TRACE(XML);
 	XMLHelper::filename = filename;
-	if (!default_catalog) catalog = RKMessageCatalog::nullCatalog ();
+	if (!default_catalog) catalog = RKMessageCatalog::nullCatalog();
 	else catalog = default_catalog;
 }
 
-XMLHelper::~XMLHelper () {
-	RK_TRACE (XML);
+XMLHelper::~XMLHelper() {
+	RK_TRACE(XML);
 }
 
 QDomElement XMLHelper::openXMLFile(int debug_level, bool with_includes, bool with_snippets) {
@@ -102,25 +102,25 @@ QDomElement XMLHelper::openXMLFile(int debug_level, bool with_includes, bool wit
 	return (ret);
 }
 
-void XMLHelper::replaceWithChildren (QDomNode *replaced, const QDomElement &replacement_parent) {
-	RK_TRACE (XML);
-	RK_ASSERT (replaced);
+void XMLHelper::replaceWithChildren(QDomNode *replaced, const QDomElement &replacement_parent) {
+	RK_TRACE(XML);
+	RK_ASSERT(replaced);
 
-	QDomNode parent = replaced->parentNode ();
-	XMLChildList replacement_children = getChildElements (replacement_parent, QString (), DL_WARNING);
-	for (XMLChildList::const_iterator it = replacement_children.constBegin (); it != replacement_children.constEnd (); ++it) {
-		parent.insertBefore (*it, *replaced);
+	QDomNode parent = replaced->parentNode();
+	XMLChildList replacement_children = getChildElements(replacement_parent, QString(), DL_WARNING);
+	for (XMLChildList::const_iterator it = replacement_children.constBegin(); it != replacement_children.constEnd(); ++it) {
+		parent.insertBefore(*it, *replaced);
 	}
-	parent.removeChild (*replaced);
+	parent.removeChild(*replaced);
 }
 
-XMLChildList XMLHelper::nodeListToChildList (const QDomNodeList &from) {
-	RK_TRACE (XML);
+XMLChildList XMLHelper::nodeListToChildList(const QDomNodeList &from) {
+	RK_TRACE(XML);
 
-	int count = from.count ();
+	int count = from.count();
 	XMLChildList ret;
 	for (int i = 0; i < count; ++i) {
-		ret.append (from.item (i).toElement ());
+		ret.append(from.item(i).toElement());
 	}
 	return ret;
 }
@@ -131,7 +131,7 @@ QDomElement XMLHelper::resolveSnippets(QDomElement &from_doc) {
 	XMLChildList refs = nodeListToChildList(from_doc.elementsByTagName(QStringLiteral("insert")));
 	int ref_count = refs.count();
 
-	if (!ref_count) {  // nothing to resolve
+	if (!ref_count) { // nothing to resolve
 		return (from_doc);
 	}
 
@@ -162,55 +162,55 @@ QDomElement XMLHelper::resolveSnippets(QDomElement &from_doc) {
 	return from_doc;
 }
 
-XMLChildList XMLHelper::getChildElements (const QDomElement &parent, const QString &name, int debug_level) {
-	RK_TRACE (XML);
+XMLChildList XMLHelper::getChildElements(const QDomElement &parent, const QString &name, int debug_level) {
+	RK_TRACE(XML);
 
 	XMLChildList list;
 
 	if (!parent.isNull()) {
-		QDomNode n = parent.firstChild ();
-		while (!n.isNull ()) {
-			QDomElement e = n.toElement ();
-			if (!e.isNull ()) {
-				if ((name.isEmpty ()) || (e.tagName () == name)) {
-					list.append (e);
+		QDomNode n = parent.firstChild();
+		while (!n.isNull()) {
+			QDomElement e = n.toElement();
+			if (!e.isNull()) {
+				if ((name.isEmpty()) || (e.tagName() == name)) {
+					list.append(e);
 				}
 			}
-			n = n.nextSibling ();
+			n = n.nextSibling();
 		}
 	} else {
-		displayError (&parent, i18n ("Trying to retrieve children of invalid element"), debug_level);
+		displayError(&parent, i18n("Trying to retrieve children of invalid element"), debug_level);
 	}
 
 	return (list);
 }
 
-QDomElement XMLHelper::getChildElement (const QDomElement &parent, const QString &name, int debug_level) {
-	RK_TRACE (XML);
+QDomElement XMLHelper::getChildElement(const QDomElement &parent, const QString &name, int debug_level) {
+	RK_TRACE(XML);
 
-	XMLChildList list = getChildElements (parent, name, debug_level);
-	if (list.count () != 1) {
-		displayError (&parent, i18n ("Expected exactly one element '%1' but found %2", name, list.count ()), debug_level);
+	XMLChildList list = getChildElements(parent, name, debug_level);
+	if (list.count() != 1) {
+		displayError(&parent, i18n("Expected exactly one element '%1' but found %2", name, list.count()), debug_level);
 		QDomElement dummy;
 		return dummy;
 	}
 
-	return list.first ();
+	return list.first();
 }
 
-QDomElement XMLHelper::findElementWithAttribute (const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level) {
-	RK_TRACE (XML);
+QDomElement XMLHelper::findElementWithAttribute(const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level) {
+	RK_TRACE(XML);
 
-	XMLChildList list = getChildElements (parent, QString (), debug_level);
-	for (XMLChildList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
-		if ((*it).hasAttribute (attribute_name)) {
-			if (attribute_value.isNull () || ((*it).attribute (attribute_name) == attribute_value)) {
+	XMLChildList list = getChildElements(parent, QString(), debug_level);
+	for (XMLChildList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it) {
+		if ((*it).hasAttribute(attribute_name)) {
+			if (attribute_value.isNull() || ((*it).attribute(attribute_name) == attribute_value)) {
 				return (*it);
 			}
 		}
 		if (recursive) {
-			QDomElement found = findElementWithAttribute (*it, attribute_name, attribute_value, true, debug_level);
-			if (!found.isNull ()) return found;
+			QDomElement found = findElementWithAttribute(*it, attribute_name, attribute_value, true, debug_level);
+			if (!found.isNull()) return found;
 		}
 	}
 
@@ -218,21 +218,21 @@ QDomElement XMLHelper::findElementWithAttribute (const QDomElement &parent, cons
 	return dummy;
 }
 
-XMLChildList XMLHelper::findElementsWithAttribute (const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level) {
-	RK_TRACE (XML);
+XMLChildList XMLHelper::findElementsWithAttribute(const QDomElement &parent, const QString &attribute_name, const QString &attribute_value, bool recursive, int debug_level) {
+	RK_TRACE(XML);
 
 	XMLChildList ret;
-	XMLChildList list = getChildElements (parent, QString (), debug_level);
-	for (XMLChildList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
-		if ((*it).hasAttribute (attribute_name)) {
-			if (attribute_value.isNull () || ((*it).attribute (attribute_name) == attribute_value)) {
-				ret.append (*it);
+	XMLChildList list = getChildElements(parent, QString(), debug_level);
+	for (XMLChildList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it) {
+		if ((*it).hasAttribute(attribute_name)) {
+			if (attribute_value.isNull() || ((*it).attribute(attribute_name) == attribute_value)) {
+				ret.append(*it);
 			}
 		}
 		if (recursive) {
-			XMLChildList subret = findElementsWithAttribute (*it, attribute_name, attribute_value, true, debug_level);
-			for (XMLChildList::const_iterator it = subret.constBegin (); it != subret.constEnd (); ++it) {
-				ret.append (*it);
+			XMLChildList subret = findElementsWithAttribute(*it, attribute_name, attribute_value, true, debug_level);
+			for (XMLChildList::const_iterator it = subret.constBegin(); it != subret.constEnd(); ++it) {
+				ret.append(*it);
 			}
 		}
 	}
@@ -240,18 +240,18 @@ XMLChildList XMLHelper::findElementsWithAttribute (const QDomElement &parent, co
 	return ret;
 }
 
-QString XMLHelper::getStringAttribute (const QDomElement &element, const QString &name, const QString &def, int debug_level) {
-	RK_TRACE (XML);
+QString XMLHelper::getStringAttribute(const QDomElement &element, const QString &name, const QString &def, int debug_level) {
+	RK_TRACE(XML);
 
-	if (!element.hasAttribute (name)) {
-		displayError (&element, i18n ("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
+	if (!element.hasAttribute(name)) {
+		displayError(&element, i18n("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
 		return (def);
 	}
 
-	return (element.attribute (name));
+	return (element.attribute(name));
 }
 
-QString XMLHelper::i18nStringAttribute(const QDomElement& element, const QString& name, const QString& def, int debug_level) {
+QString XMLHelper::i18nStringAttribute(const QDomElement &element, const QString &name, const QString &def, int debug_level) {
 	RK_TRACE(XML);
 	if (!element.hasAttribute(name)) {
 		const QString no18nname = u"noi18n_"_s + name;
@@ -261,7 +261,7 @@ QString XMLHelper::i18nStringAttribute(const QDomElement& element, const QString
 	}
 
 	QString attr = element.attribute(name);
-	if (attr.isEmpty()) return attr;  // Do not translate empty strings!
+	if (attr.isEmpty()) return attr; // Do not translate empty strings!
 
 	const QString context = element.attribute(QStringLiteral("i18n_context"), QString());
 	if (!context.isNull()) return (catalog->translate(context, attr));
@@ -284,50 +284,50 @@ int XMLHelper::getMultiChoiceAttribute(const QDomElement &element, const QString
 	}
 }
 
-int XMLHelper::getIntAttribute (const QDomElement &element, const QString &name, int def, int debug_level) {
-	RK_TRACE (XML);
+int XMLHelper::getIntAttribute(const QDomElement &element, const QString &name, int def, int debug_level) {
+	RK_TRACE(XML);
 
-	QString res = getStringAttribute (element, name, QString::number (def), debug_level);
+	QString res = getStringAttribute(element, name, QString::number(def), debug_level);
 
 	bool valid_number;
-	int ret = res.toInt (&valid_number);
+	int ret = res.toInt(&valid_number);
 
 	if (!valid_number) {
-		displayError (&element, i18n ("Illegal attribute value. Only integer numbers are allowed."), debug_level, DL_ERROR);
+		displayError(&element, i18n("Illegal attribute value. Only integer numbers are allowed."), debug_level, DL_ERROR);
 		return def;
 	}
 
 	return ret;
 }
 
-double XMLHelper::getDoubleAttribute (const QDomElement &element, const QString &name, double def, int debug_level) {
-	RK_TRACE (XML);
+double XMLHelper::getDoubleAttribute(const QDomElement &element, const QString &name, double def, int debug_level) {
+	RK_TRACE(XML);
 
-	QString res = getStringAttribute (element, name, QString::number (def), debug_level);
+	QString res = getStringAttribute(element, name, QString::number(def), debug_level);
 
 	bool valid_number;
-	double ret = res.toDouble (&valid_number);
+	double ret = res.toDouble(&valid_number);
 
 	if (!valid_number) {
-		displayError (&element, i18n ("Illegal attribute value. Only real numbers are allowed."), debug_level, DL_ERROR);
+		displayError(&element, i18n("Illegal attribute value. Only real numbers are allowed."), debug_level, DL_ERROR);
 		return def;
 	}
 
 	return ret;
 }
 
-bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &name, bool def, int debug_level) {
-	RK_TRACE (XML);
+bool XMLHelper::getBoolAttribute(const QDomElement &element, const QString &name, bool def, int debug_level) {
+	RK_TRACE(XML);
 
 	QString defstring, res;
 	if (def) defstring = QLatin1String("true");
 	else defstring = QLatin1String("false");
 
-	res = getStringAttribute (element, name, defstring, debug_level);
+	res = getStringAttribute(element, name, defstring, debug_level);
 	if (res == QLatin1String("true")) return true;
 	if (res == QLatin1String("false")) return false;
 
-	displayError (&element, i18n ("Illegal attribute value. Allowed values are '%1' or '%2', only.", QStringLiteral ("true"), QStringLiteral ("false")), debug_level, DL_ERROR);
+	displayError(&element, i18n("Illegal attribute value. Allowed values are '%1' or '%2', only.", QStringLiteral("true"), QStringLiteral("false")), debug_level, DL_ERROR);
 	return def;
 }
 
@@ -371,13 +371,13 @@ QString XMLHelper::i18nElementText(const QDomElement &element, bool with_paragra
 		QDomElement e = node.toElement();
 		if (!e.isNull()) {
 			if (e.tagName() == QLatin1String("ul") || e.tagName() == QLatin1String("ol") || e.tagName() == QLatin1String("li") ||
-			    e.tagName() == QLatin1String("p")) {  // split translation units on these elements
+			    e.tagName() == QLatin1String("p")) { // split translation units on these elements
 				// split before
 				ret.append(translateChunk(buffer, context, with_paragraphs, catalog));
 				buffer.clear();
 
 				// serialize the tag with all its attributes but not the children.
-				e.cloneNode(false).save(stream, 0);  // will write: <TAG[ attributes]/>
+				e.cloneNode(false).save(stream, 0); // will write: <TAG[ attributes]/>
 				buffer = buffer.left(buffer.lastIndexOf(u'/')) + u'>';
 				buffer.append(i18nElementText(e, false, debug_level));
 				buffer.append(u"</"_s + e.tagName() + u'>');
@@ -398,27 +398,26 @@ QString XMLHelper::i18nElementText(const QDomElement &element, bool with_paragra
 	return ret;
 }
 
-void XMLHelper::displayError (const QDomNode *in_node, const QString &message, int debug_level, int message_level) const {
-	RK_TRACE (XML);
+void XMLHelper::displayError(const QDomNode *in_node, const QString &message, int debug_level, int message_level) const {
+	RK_TRACE(XML);
 
 	if (message_level < debug_level) message_level = debug_level;
 
 	if ((RK_Debug::RK_Debug_Flags & XML) && (message_level >= RK_Debug::RK_Debug_Level)) {
-		QString backtrace = i18n ("XML-parsing '%1' ", filename);
+		QString backtrace = i18n("XML-parsing '%1' ", filename);
 		// create a "backtrace"
 		QStringList list;
 
 		if (in_node) {
 			QDomNode node_copy = *in_node;
-			while (!((node_copy.isNull ()) || (node_copy.isDocument ()))) {
-				list.prepend (node_copy.nodeName ());
-				node_copy = node_copy.parentNode ();
+			while (!((node_copy.isNull()) || (node_copy.isDocument()))) {
+				list.prepend(node_copy.nodeName());
+				node_copy = node_copy.parentNode();
 			}
 		}
 
-		backtrace += list.join (QStringLiteral("->"));
+		backtrace += list.join(QStringLiteral("->"));
 
-		RK_DEBUG (XML, message_level, "%s: %s", backtrace.toLatin1 ().data (), message.toLatin1 ().data ());
+		RK_DEBUG(XML, message_level, "%s: %s", backtrace.toLatin1().data(), message.toLatin1().data());
 	}
 }
-

@@ -17,21 +17,23 @@ class QThread;
 class RCommandProxy;
 
 class RKRBackendProtocolFrontend : public QObject {
-public:
-	explicit RKRBackendProtocolFrontend (RInterface* parent);
-	~RKRBackendProtocolFrontend ();
+  public:
+	explicit RKRBackendProtocolFrontend(RInterface *parent);
+	~RKRBackendProtocolFrontend();
 
-	static void setRequestCompleted (RBackendRequest *request);
-	ROutputList flushOutput (bool force);
-	static void interruptCommand (int command_id);
-	static void sendPriorityCommand (RCommandProxy *proxy);
-	void terminateBackend ();
-	void setupBackend ();
-protected:
-/** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */
-	void customEvent (QEvent *e) override;
-	QThread* main_thread;
-private:
+	static void setRequestCompleted(RBackendRequest *request);
+	ROutputList flushOutput(bool force);
+	static void interruptCommand(int command_id);
+	static void sendPriorityCommand(RCommandProxy *proxy);
+	void terminateBackend();
+	void setupBackend();
+
+  protected:
+	/** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */
+	void customEvent(QEvent *e) override;
+	QThread *main_thread;
+
+  private:
 	RInterface *frontend;
 };
 

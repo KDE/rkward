@@ -6,37 +6,37 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rksettingsmoduler.h"
 
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KSharedConfig>
-#include <KConfigGroup>
 #include <KUrlRequester>
 
-#include <qlabel.h>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QInputDialog>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QTextEdit>
+#include <QVBoxLayout>
 #include <qcheckbox.h>
 #include <qcombobox.h>
+#include <qlabel.h>
 #include <qlineedit.h>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QPushButton>
-#include <QTextEdit>
-#include <QDialogButtonBox>
-#include <QSpinBox>
-#include <QInputDialog>
 
-#include "rksettingsmodulegeneral.h"
-#include "rksettingsmoduleplugins.h"
 #include "../core/robject.h"
 #include "../dialogs/rksetupwizard.h"
 #include "../misc/multistringselector.h"
-#include "../misc/rkprogresscontrol.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkprogresscontrol.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkstyle.h"
+#include "../plugin/rkcomponentmap.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
-#include "../plugin/rkcomponentmap.h"
-#include "../misc/rkstyle.h"
 #include "rksettings.h"
+#include "rksettingsmodulegeneral.h"
+#include "rksettingsmoduleplugins.h"
 
 #include "../debug.h"
 
@@ -45,25 +45,25 @@ QString RKSettingsModuleR::builtin_editor = QStringLiteral("<rkward>");
 // session constants
 QString RKSettingsModuleR::help_base_url;
 // static members
-RKConfigValue<QString> RKSettingsModuleR::options_outdec {"OutDec", QStringLiteral(".")};
-RKConfigValue<int> RKSettingsModuleR::options_width {"width", 80};
-RKConfigValue<int> RKSettingsModuleR::options_warn {"warn", 0};
-RKConfigValue<int> RKSettingsModuleR::options_warningslength {"warnings.length", 1000};
-RKConfigValue<int> RKSettingsModuleR::options_maxprint {"max.print", 99999};
-RKConfigValue<bool> RKSettingsModuleR::options_keepsource {"keep.source", true};
-RKConfigValue<bool> RKSettingsModuleR::options_keepsourcepkgs {"keep.source.pkgs", false};
-RKConfigValue<int> RKSettingsModuleR::options_expressions {"expressions", 5000};
-RKConfigValue<int> RKSettingsModuleR::options_digits {"digits", 7};
-RKConfigValue<bool> RKSettingsModuleR::options_checkbounds {"check.bounds", false};
-RKConfigValue<QString> RKSettingsModuleR::options_editor {"editor", builtin_editor};
-RKConfigValue<QString> RKSettingsModuleR::options_pager {"pager", builtin_editor};
-RKConfigValue<QString> RKSettingsModuleR::options_further {"further init commands", QString()};
-RKConfigValue<QStringList> RKSettingsModuleR::options_addpaths {"addsyspaths", QStringList()};
-RKConfigValue<QString> RKSettingsModuleR::options_r_binary {"user configured R binary", QString()};
+RKConfigValue<QString> RKSettingsModuleR::options_outdec{"OutDec", QStringLiteral(".")};
+RKConfigValue<int> RKSettingsModuleR::options_width{"width", 80};
+RKConfigValue<int> RKSettingsModuleR::options_warn{"warn", 0};
+RKConfigValue<int> RKSettingsModuleR::options_warningslength{"warnings.length", 1000};
+RKConfigValue<int> RKSettingsModuleR::options_maxprint{"max.print", 99999};
+RKConfigValue<bool> RKSettingsModuleR::options_keepsource{"keep.source", true};
+RKConfigValue<bool> RKSettingsModuleR::options_keepsourcepkgs{"keep.source.pkgs", false};
+RKConfigValue<int> RKSettingsModuleR::options_expressions{"expressions", 5000};
+RKConfigValue<int> RKSettingsModuleR::options_digits{"digits", 7};
+RKConfigValue<bool> RKSettingsModuleR::options_checkbounds{"check.bounds", false};
+RKConfigValue<QString> RKSettingsModuleR::options_editor{"editor", builtin_editor};
+RKConfigValue<QString> RKSettingsModuleR::options_pager{"pager", builtin_editor};
+RKConfigValue<QString> RKSettingsModuleR::options_further{"further init commands", QString()};
+RKConfigValue<QStringList> RKSettingsModuleR::options_addpaths{"addsyspaths", QStringList()};
+RKConfigValue<QString> RKSettingsModuleR::options_r_binary{"user configured R binary", QString()};
 
 class RKSettingsPageR : public RKSettingsModuleWidget {
-public:
-	RKSettingsPageR(QWidget* parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleR::page_id) {
+  public:
+	RKSettingsPageR(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleR::page_id) {
 		RK_TRACE(SETTINGS);
 
 		setWindowTitle(i18n("R-Backend"));
@@ -71,7 +71,7 @@ public:
 
 		QVBoxLayout *main_vbox = new QVBoxLayout(this);
 
-		main_vbox->addSpacing(2*RKStyle::spacingHint());
+		main_vbox->addSpacing(2 * RKStyle::spacingHint());
 
 		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged.")));
 
@@ -82,8 +82,8 @@ public:
 		// options (warn)
 		grid->addWidget(new QLabel(i18n("Display warnings")), ++row, 0);
 		auto warn_input = RKSettingsModuleR::options_warn.makeDropDown(RKConfigBase::LabelList(
-			{{-1, i18n("Suppress warnings")}, {0, i18n("Print warnings later (default)")}, {1, i18n("Print warnings immediately")}, {2, i18n ("Convert warnings to errors")}}
-		), this);
+		                                                                   {{-1, i18n("Suppress warnings")}, {0, i18n("Print warnings later (default)")}, {1, i18n("Print warnings immediately")}, {2, i18n("Convert warnings to errors")}}),
+		                                                               this);
 		grid->addWidget(warn_input, row, 1);
 
 		// options (OutDec)
@@ -127,7 +127,7 @@ public:
 		auto checkbounds_input = RKSettingsModuleR::options_checkbounds.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE")}, {0, i18n("FALSE (default)")}}), this);
 		grid->addWidget(checkbounds_input, row, 1);
 
-		grid->addWidget (new QLabel(i18n("Editor command"), this), ++row, 0);
+		grid->addWidget(new QLabel(i18n("Editor command"), this), ++row, 0);
 		editor_input = new QComboBox(this);
 		editor_input->setEditable(true);
 		editor_input->addItem(RKSettingsModuleR::builtin_editor);
@@ -149,7 +149,7 @@ public:
 		connect(pager_input, &QComboBox::editTextChanged, this, &RKSettingsPageR::change);
 		grid->addWidget(pager_input, row, 1);
 
-		grid->addWidget(new QLabel(i18n ("Further (option) commands to run in each session"), this), ++row, 0, 1, 2);
+		grid->addWidget(new QLabel(i18n("Further (option) commands to run in each session"), this), ++row, 0, 1, 2);
 		further_input = new QTextEdit(this);
 		further_input->setWordWrapMode(QTextOption::NoWrap);
 		further_input->setAcceptRichText(false);
@@ -162,11 +162,11 @@ public:
 		addpaths_selector = new MultiStringSelector(i18n("Addition search paths for utilities used by R"), this);
 		addpaths_selector->setValues(RKSettingsModuleR::options_addpaths);
 		connect(addpaths_selector, &MultiStringSelector::listChanged, this, &RKSettingsPageR::change);
-		connect(addpaths_selector, &MultiStringSelector::getNewStrings, this, [this](QStringList* string_list) {
+		connect(addpaths_selector, &MultiStringSelector::getNewStrings, this, [this](QStringList *string_list) {
 			QDialog dialog(this);
 			dialog.setWindowTitle(i18n("Add System Path Directory"));
 			QVBoxLayout *layout = new QVBoxLayout(&dialog);
-			layout->addWidget (RKCommonFunctions::wordWrappedLabel(i18n("Specify or select directory to add to the system file path of the running R session")));
+			layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Specify or select directory to add to the system file path of the running R session")));
 
 			KUrlRequester *req = new KUrlRequester();
 			req->setMode(KFile::Directory);
@@ -205,7 +205,8 @@ public:
 			RInterface::issueCommand(new RCommand(*it, RCommand::App), parentModule()->commandChain());
 		}
 	}
-private:
+
+  private:
 	QComboBox *editor_input;
 	QComboBox *pager_input;
 	QTextEdit *further_input;
@@ -217,7 +218,7 @@ RKSettingsModuleR::RKSettingsModuleR(QObject *parent) : RKSettingsModule(parent)
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 }
 
 void RKSettingsModuleR::createPages(RKSettings *parent) {
@@ -259,9 +260,9 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands() {
 		list.append(command + u"))\n"_s);
 	}
 
-	list.append(u"options (help_type=\"html\")\n"_s);  // for R 2.10.0 and above
+	list.append(u"options (help_type=\"html\")\n"_s); // for R 2.10.0 and above
 	list.append(u"options (browser=rk.show.html)\n"_s);
-	list.append(u"options (askYesNo=rk.askYesNo)\n"_s);  // for R 3.5.0 and above
+	list.append(u"options (askYesNo=rk.askYesNo)\n"_s); // for R 3.5.0 and above
 
 	return list;
 }
@@ -292,8 +293,8 @@ void RKSettingsModuleR::syncConfig(KConfig *config, RKConfigBase::ConfigSyncActi
 //#################################################
 
 // static members
-RKConfigValue<QStringList> RKSettingsModuleRPackages::liblocs {"LibraryLocations", QStringList()};
-RKConfigValue<bool> RKSettingsModuleRPackages::archive_packages {"archive packages", false};
+RKConfigValue<QStringList> RKSettingsModuleRPackages::liblocs{"LibraryLocations", QStringList()};
+RKConfigValue<bool> RKSettingsModuleRPackages::archive_packages{"archive packages", false};
 #if (defined Q_OS_WIN || defined Q_OS_MACOS)
 #	if (defined USE_BINARY_PACKAGES)
 #		define USE_SOURCE_PACKAGES false
@@ -312,7 +313,7 @@ QStringList RKSettingsModuleRPackages::defaultliblocs;
 QString RKSettingsModuleRPackages::r_libs_user;
 
 class RKSettingsPageRPackages : public RKSettingsModuleWidget {
-public:
+  public:
 	RKSettingsPageRPackages(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleRPackages::page_id, RKSettingsModulePlugins::addons_superpage_id) {
 		RK_TRACE(SETTINGS);
 
@@ -321,18 +322,18 @@ public:
 
 		QVBoxLayout *main_vbox = new QVBoxLayout(this);
 
-		main_vbox->addSpacing(2*RKStyle::spacingHint());
+		main_vbox->addSpacing(2 * RKStyle::spacingHint());
 
 		main_vbox->addWidget(new QLabel(i18n("CRAN download mirror (leave empty to be prompted once each session):"), this));
-		QHBoxLayout* hbox = new QHBoxLayout();
+		QHBoxLayout *hbox = new QHBoxLayout();
 		main_vbox->addLayout(hbox);
 		auto cran_mirror_input = RKSettingsModuleRPackages::cran_mirror_url.makeLineEdit(this);
 		if (RKSettingsModuleRPackages::cran_mirror_url == QStringLiteral("@CRAN@")) cran_mirror_input->clear();
 		hbox->addWidget(cran_mirror_input);
-		QPushButton* cran_mirror_button = new QPushButton(i18n("Select mirror"), this);
+		QPushButton *cran_mirror_button = new QPushButton(i18n("Select mirror"), this);
 		connect(cran_mirror_button, &QPushButton::clicked, this, [this, cran_mirror_input]() {
 			QString title = i18n("Select CRAN mirror");
-			RCommand* command = new RCommand(QStringLiteral("rk.select.CRAN.mirror()\n"), RCommand::App | RCommand::GetStringVector, title);
+			RCommand *command = new RCommand(QStringLiteral("rk.select.CRAN.mirror()\n"), RCommand::App | RCommand::GetStringVector, title);
 			connect(command->notifier(), &RCommandNotifier::commandFinished, cran_mirror_input, [cran_mirror_input](RCommand *command) {
 				if (command->succeeded()) {
 					RK_ASSERT(command->getDataLength() >= 1);
@@ -340,7 +341,7 @@ public:
 				}
 			});
 
-			RKProgressControl* control = new RKProgressControl(this, title, title, RKProgressControl::CancellableProgress);
+			RKProgressControl *control = new RKProgressControl(this, title, title, RKProgressControl::CancellableProgress);
 			control->addRCommand(command, true);
 			RInterface::issueCommand(command, parentModule()->commandChain());
 			control->doModal(true);
@@ -387,9 +388,9 @@ public:
 			dialog.setWindowTitle(i18n("Add R Library Directory"));
 			QVBoxLayout *layout = new QVBoxLayout(&dialog);
 			layout->addWidget(RKCommonFunctions::wordWrappedLabel(
-				i18n("Specify or select library location to add.\nNote that locations may contain a '%v', which will expand to the first "
-				     "two components of the R version number (e.g. to 3.5), automatically. Including this is recommended, because R packages "
-				     "compiled for one version of R will often fail to work correctly in a different version of R.")));
+			    i18n("Specify or select library location to add.\nNote that locations may contain a '%v', which will expand to the first "
+			         "two components of the R version number (e.g. to 3.5), automatically. Including this is recommended, because R packages "
+			         "compiled for one version of R will often fail to work correctly in a different version of R.")));
 			KUrlRequester *req = new KUrlRequester();
 			req->setText(QDir(RKSettingsModuleGeneral::filesPath()).absoluteFilePath(QStringLiteral("library/%v")));
 			req->setMode(KFile::Directory);
@@ -414,10 +415,10 @@ public:
 	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 
-		if (RKSettingsModuleRPackages::cran_mirror_url.get().isEmpty ()) RKSettingsModuleRPackages::cran_mirror_url = QStringLiteral("@CRAN@");
+		if (RKSettingsModuleRPackages::cran_mirror_url.get().isEmpty()) RKSettingsModuleRPackages::cran_mirror_url = QStringLiteral("@CRAN@");
 
 		RKSettingsModuleRPackages::package_repositories = repository_selector->getValues();
-		RKSettingsModuleRPackages::liblocs = libloc_selector->getValues ();
+		RKSettingsModuleRPackages::liblocs = libloc_selector->getValues();
 
 		// apply options in R
 		QStringList commands = RKSettingsModuleRPackages::makeRRunTimeOptionCommands();
@@ -425,7 +426,8 @@ public:
 			RInterface::issueCommand(new RCommand(*it, RCommand::App), parentModule()->commandChain());
 		}
 	}
-private:
+
+  private:
 	MultiStringSelector *libloc_selector;
 	MultiStringSelector *repository_selector;
 };
@@ -434,8 +436,8 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages(QObject *parent) : RKSettin
 	RK_TRACE(SETTINGS);
 }
 
-RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
-	RK_TRACE (SETTINGS);
+RKSettingsModuleRPackages::~RKSettingsModuleRPackages() {
+	RK_TRACE(SETTINGS);
 }
 
 void RKSettingsModuleRPackages::createPages(RKSettings *parent) {
@@ -466,12 +468,12 @@ QString RKSettingsModuleRPackages::userLibraryLocation() {
 	return QDir(RKSettingsModuleGeneral::filesPath()).absoluteFilePath(u"library/"_s + RKSessionVars::RVersion(true));
 }
 
-QStringList RKSettingsModuleRPackages::libraryLocations () {
-	return (QStringList (userLibraryLocation ()) + expandLibLocs (liblocs.get() + defaultliblocs));
+QStringList RKSettingsModuleRPackages::libraryLocations() {
+	return (QStringList(userLibraryLocation()) + expandLibLocs(liblocs.get() + defaultliblocs));
 }
 
-QStringList RKSettingsModuleRPackages::addUserLibLocTo (const QStringList& liblocs) {
-	if (!liblocs.contains(userLibraryLocation ())) return (QStringList (userLibraryLocation ()) + liblocs);
+QStringList RKSettingsModuleRPackages::addUserLibLocTo(const QStringList &liblocs) {
+	if (!liblocs.contains(userLibraryLocation())) return (QStringList(userLibraryLocation()) + liblocs);
 	return liblocs;
 }
 
@@ -485,7 +487,7 @@ QString RKSettingsModuleRPackages::libLocsCommand() {
 		bool first = true;
 		command = u"local({\naddpaths <- unique (c("_s;
 		const QStringList ll = expandLibLocs(liblocs);
-		for (const QString& libloc : ll) {
+		for (const QString &libloc : ll) {
 			if (first)
 				first = false;
 			else
@@ -499,7 +501,7 @@ QString RKSettingsModuleRPackages::libLocsCommand() {
 	command.append(u".libPaths (unique (c ("_s);
 	bool first = true;
 	const QStringList ll = libraryLocations();
-	for (const QString& libloc : ll) {
+	for (const QString &libloc : ll) {
 		if (first)
 			first = false;
 		else
@@ -511,19 +513,19 @@ QString RKSettingsModuleRPackages::libLocsCommand() {
 	return command;
 }
 
-//static
-QString RKSettingsModuleRPackages::pkgTypeOption () {
+// static
+QString RKSettingsModuleRPackages::pkgTypeOption() {
 	QString ret;
 #if defined Q_OS_WIN || defined Q_OS_MACOS
 	ret.append(u"options (pkgType=\""_s);
 	if (source_packages) ret.append(u"source"_s);
-	else ret.append(u"binary"_s);   // "automatically select appropriate binary"
+	else ret.append(u"binary"_s); // "automatically select appropriate binary"
 	ret.append(u"\")\n"_s);
 #endif
 	return ret;
 }
 
-//static
+// static
 QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands() {
 	RK_TRACE(SETTINGS);
 	QStringList list;
@@ -552,11 +554,11 @@ void RKSettingsModuleRPackages::syncConfig(KConfig *config, RKConfigBase::Config
 	cran_mirror_url.syncConfig(cg, a);
 	liblocs.syncConfig(cg, a);
 	archive_packages.syncConfig(cg, a);
-	source_packages.syncConfig(cg, a);  // NOTE: does not take effect on Linux, see pkgTypeOption
+	source_packages.syncConfig(cg, a); // NOTE: does not take effect on Linux, see pkgTypeOption
 	package_repositories.syncConfig(cg, a);
 
 	if (a == RKConfigBase::LoadConfig) {
-		if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_3) {
+		if (RKSettingsModuleGeneral::storedConfigVersion() < RKSettingsModuleGeneral::RKWardConfig_0_6_3) {
 			auto v = package_repositories.get();
 			v.removeAll(u"http://rkward.sf.net/R"_s);
 			v.append(QStringLiteral(RKWARD_REPO));
@@ -565,31 +567,35 @@ void RKSettingsModuleRPackages::syncConfig(KConfig *config, RKConfigBase::Config
 	}
 }
 
-void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSetupWizardItem*>* items) {
-	RK_TRACE (SETTINGS);
+void RKSettingsModuleRPackages::validateSettingsInteractive(QList<RKSetupWizardItem *> *items) {
+	RK_TRACE(SETTINGS);
 
-	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_7_1) {
+	if (RKSettingsModuleGeneral::storedConfigVersion() < RKSettingsModuleGeneral::RKWardConfig_0_7_1) {
 		QString legacy_libloc = QDir(RKSettingsModuleGeneral::filesPath()).absoluteFilePath(u"library"_s);
 		if (liblocs.get().contains(legacy_libloc)) {
 			auto item = new RKSetupWizardItem(i18n("Unversioned library location"), i18n("The configured library locations (where R packages will be installed on this system) contains the directory '%1', "
-			                                  "which was suggested as a default library location in earlier versions of RKWard. Use of this directory is no longer "
-			                                  "recommended, as it is not accessible to R sessions outside of RKWard (unless configured, explicitly). Also due to the lack "
-			                                  "of an R version number in the directory name, it offers no protection against using packages built for an incompatible "
-			                                  "version of R.", legacy_libloc), RKSetupWizardItem::Warning);
+			                                                                             "which was suggested as a default library location in earlier versions of RKWard. Use of this directory is no longer "
+			                                                                             "recommended, as it is not accessible to R sessions outside of RKWard (unless configured, explicitly). Also due to the lack "
+			                                                                             "of an R version number in the directory name, it offers no protection against using packages built for an incompatible "
+			                                                                             "version of R.",
+			                                                                             legacy_libloc),
+			                                  RKSetupWizardItem::Warning);
 			item->addOption(i18nc("verb", "Rename"), i18n("Rename this location to include the version number of the currently running R. Packages will continue "
-			                                        "to work (if they are compatible with this version of R)."), [legacy_libloc](RKSetupWizard*) {
-									liblocs.get().removeAll(legacy_libloc);
-									QString new_loc = legacy_libloc + u'-' + RKSessionVars::RVersion(true);
-									RInterface::issueCommand(u"file.rename(%1, %2)\n"_s.arg(RObject::rQuote(legacy_libloc), RObject::rQuote(new_loc)), RCommand::App);
-									liblocs.get().prepend(legacy_libloc + u"-%v"_s);
-									RInterface::issueCommand(libLocsCommand(), RCommand::App);
-								});
+			                                              "to work (if they are compatible with this version of R)."),
+			                [legacy_libloc](RKSetupWizard *) {
+				                liblocs.get().removeAll(legacy_libloc);
+				                QString new_loc = legacy_libloc + u'-' + RKSessionVars::RVersion(true);
+				                RInterface::issueCommand(u"file.rename(%1, %2)\n"_s.arg(RObject::rQuote(legacy_libloc), RObject::rQuote(new_loc)), RCommand::App);
+				                liblocs.get().prepend(legacy_libloc + u"-%v"_s);
+				                RInterface::issueCommand(libLocsCommand(), RCommand::App);
+			                });
 			item->addOption(i18nc("verb", "Remove"), i18n("Remove this location from the configuration (it will not be deleted on disk). You will have to "
-			                                        "re-install any packages that you want to keep."), [legacy_libloc](RKSetupWizard*) {
-									liblocs.get().removeAll(legacy_libloc);
-									RInterface::issueCommand (libLocsCommand(), RCommand::App);
-								});
-			item->addOption(i18nc("verb", "Keep"), i18n("Keep this location (do not change anything)"), [](RKSetupWizard*) {});
+			                                              "re-install any packages that you want to keep."),
+			                [legacy_libloc](RKSetupWizard *) {
+				                liblocs.get().removeAll(legacy_libloc);
+				                RInterface::issueCommand(libLocsCommand(), RCommand::App);
+			                });
+			item->addOption(i18nc("verb", "Keep"), i18n("Keep this location (do not change anything)"), [](RKSetupWizard *) {});
 
 			items->append(item);
 		}

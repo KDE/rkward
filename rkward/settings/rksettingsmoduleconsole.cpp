@@ -7,19 +7,19 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rksettingsmoduleconsole.h"
 
 #include <KLocalizedString>
-#include <kconfiggroup.h>
 #include <KSharedConfig>
+#include <kconfiggroup.h>
 
-#include <qlayout.h>
 #include <QCheckBox>
-#include <qlabel.h>
-#include <QVBoxLayout>
 #include <QComboBox>
+#include <QVBoxLayout>
+#include <qlabel.h>
+#include <qlayout.h>
 
-#include "../rbackend/rcommand.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstyle.h"
+#include "../rbackend/rcommand.h"
 #include "rksettings.h"
 
 #include "../debug.h"
@@ -27,18 +27,18 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // static
 
 RKCodeCompletionSettings RKSettingsModuleConsole::completion_settings;
-RKConfigValue<bool> RKSettingsModuleConsole::save_history {"save history", true};
-RKConfigValue<uint> RKSettingsModuleConsole::max_history_length {"max history length", 100};
-RKConfigValue<uint> RKSettingsModuleConsole::max_console_lines {"max console lines", 500};
-RKConfigValue<bool> RKSettingsModuleConsole::pipe_user_commands_through_console {"pipe user commands through console", true};
-RKConfigValue<RKSettingsModuleConsole::PipedCommandsHistoryMode, int> RKSettingsModuleConsole::add_piped_commands_to_history {"add piped commands to history", RKSettingsModuleConsole::AddSingleLine };
-RKConfigValue<bool> RKSettingsModuleConsole::context_sensitive_history_by_default {"command history defaults to context sensitive", false};
-RKConfigValue<bool> RKSettingsModuleConsole::show_minimap {"show minimap", true};
-RKConfigValue<bool> RKSettingsModuleConsole::word_wrap {"dynamic word wrap", false};
+RKConfigValue<bool> RKSettingsModuleConsole::save_history{"save history", true};
+RKConfigValue<uint> RKSettingsModuleConsole::max_history_length{"max history length", 100};
+RKConfigValue<uint> RKSettingsModuleConsole::max_console_lines{"max console lines", 500};
+RKConfigValue<bool> RKSettingsModuleConsole::pipe_user_commands_through_console{"pipe user commands through console", true};
+RKConfigValue<RKSettingsModuleConsole::PipedCommandsHistoryMode, int> RKSettingsModuleConsole::add_piped_commands_to_history{"add piped commands to history", RKSettingsModuleConsole::AddSingleLine};
+RKConfigValue<bool> RKSettingsModuleConsole::context_sensitive_history_by_default{"command history defaults to context sensitive", false};
+RKConfigValue<bool> RKSettingsModuleConsole::show_minimap{"show minimap", true};
+RKConfigValue<bool> RKSettingsModuleConsole::word_wrap{"dynamic word wrap", false};
 
 class RKSettingsPageConsole : public RKSettingsModuleWidget {
-public:
-	RKSettingsPageConsole(QWidget* parent, RKSettingsModule* parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleConsole::page_id) {
+  public:
+	RKSettingsPageConsole(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleConsole::page_id) {
 		RK_TRACE(SETTINGS);
 
 		setWindowTitle(i18n("Console"));
@@ -59,24 +59,23 @@ public:
 		auto max_console_lines_spinner = RKSettingsModuleConsole::max_console_lines.makeSpinBox(0, 10000, this);
 		vbox->addWidget(max_console_lines_spinner);
 
-		vbox->addSpacing(2*RKStyle::spacingHint());
+		vbox->addSpacing(2 * RKStyle::spacingHint());
 
 		auto pipe_user_commands_through_console_box = RKSettingsModuleConsole::pipe_user_commands_through_console.makeCheckbox(i18n("Run commands from script editor through console"), this);
 		vbox->addWidget(pipe_user_commands_through_console_box);
 
 		vbox->addWidget(new QLabel(i18n("Also add those commands to console history")));
-		auto add_piped_commands_to_history_box = RKSettingsModuleConsole::add_piped_commands_to_history.makeDropDown(RKConfigBase::LabelList({
-			{(int) RKSettingsModuleConsole::DontAdd, i18n("Do not add")},
-			{(int) RKSettingsModuleConsole::AddSingleLine, i18n("Add only if single line")},
-			{(int) RKSettingsModuleConsole::AlwaysAdd, i18n("Add all commands")}
-		}), this);
+		auto add_piped_commands_to_history_box = RKSettingsModuleConsole::add_piped_commands_to_history.makeDropDown(RKConfigBase::LabelList({{(int)RKSettingsModuleConsole::DontAdd, i18n("Do not add")},
+		                                                                                                                                      {(int)RKSettingsModuleConsole::AddSingleLine, i18n("Add only if single line")},
+		                                                                                                                                      {(int)RKSettingsModuleConsole::AlwaysAdd, i18n("Add all commands")}}),
+		                                                                                                             this);
 		add_piped_commands_to_history_box->setEnabled(pipe_user_commands_through_console_box->isChecked());
 		connect(pipe_user_commands_through_console_box, &QCheckBox::stateChanged, add_piped_commands_to_history_box, [add_piped_commands_to_history_box](int state) {
 			add_piped_commands_to_history_box->setEnabled(state);
 		});
 		vbox->addWidget(add_piped_commands_to_history_box);
 
-		vbox->addSpacing(2*RKStyle::spacingHint());
+		vbox->addSpacing(2 * RKStyle::spacingHint());
 
 		vbox->addWidget(RKSettingsModuleConsole::context_sensitive_history_by_default.makeCheckbox(i18n("Command history is context sensitive by default"), this));
 
@@ -86,7 +85,8 @@ public:
 		RK_TRACE(SETTINGS);
 		// All settings are RKConfigValue-based
 	}
-private:
+
+  private:
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
 };
 
@@ -98,23 +98,23 @@ void RKSettingsModuleConsole::createPages(RKSettings *parent) {
 	parent->addSettingsPage(new RKSettingsPageConsole(parent, this));
 }
 
-RKSettingsModuleConsole::~RKSettingsModuleConsole () {
-	RK_TRACE (SETTINGS);
+RKSettingsModuleConsole::~RKSettingsModuleConsole() {
+	RK_TRACE(SETTINGS);
 }
 
-//static
-bool RKSettingsModuleConsole::shouldDoHistoryContextSensitive (Qt::KeyboardModifiers current_state) {
-	RK_TRACE (SETTINGS);
+// static
+bool RKSettingsModuleConsole::shouldDoHistoryContextSensitive(Qt::KeyboardModifiers current_state) {
+	RK_TRACE(SETTINGS);
 
 	if (current_state & Qt::ShiftModifier) return (!context_sensitive_history_by_default);
 	return context_sensitive_history_by_default;
 }
 
-//static
-void RKSettingsModuleConsole::syncConfig(KConfig* config, RKConfigBase::ConfigSyncAction a) {
-	RK_TRACE (SETTINGS);
+// static
+void RKSettingsModuleConsole::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
+	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group (QStringLiteral("Console Settings"));
+	KConfigGroup cg = config->group(QStringLiteral("Console Settings"));
 	save_history.syncConfig(cg, a);
 	max_history_length.syncConfig(cg, a);
 	max_console_lines.syncConfig(cg, a);
@@ -129,21 +129,21 @@ void RKSettingsModuleConsole::syncConfig(KConfig* config, RKConfigBase::ConfigSy
 	completion_settings.syncConfig(cg, a);
 }
 
-//static
-QStringList RKSettingsModuleConsole::loadCommandHistory () {
-	RK_TRACE (SETTINGS);
+// static
+QStringList RKSettingsModuleConsole::loadCommandHistory() {
+	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = KSharedConfig::openConfig ()->group (QStringLiteral("Console Settings"));
-	return cg.readEntry ("history", QStringList ());
+	KConfigGroup cg = KSharedConfig::openConfig()->group(QStringLiteral("Console Settings"));
+	return cg.readEntry("history", QStringList());
 }
 
-//static
-void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
-	RK_TRACE (SETTINGS);
+// static
+void RKSettingsModuleConsole::saveCommandHistory(const QStringList &list) {
+	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = KSharedConfig::openConfig ()->group (QStringLiteral("Console Settings"));
+	KConfigGroup cg = KSharedConfig::openConfig()->group(QStringLiteral("Console Settings"));
 	if (save_history) {
-		cg.writeEntry ("history", list);
+		cg.writeEntry("history", list);
 	}
-	cg.sync ();
+	cg.sync();
 }

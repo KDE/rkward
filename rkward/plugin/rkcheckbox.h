@@ -20,23 +20,24 @@ This RKComponent provides a checkbox
 
 @author Thomas Friedrichsmeier
 */
-class RKCheckBox : public RKComponent  {
+class RKCheckBox : public RKComponent {
 	Q_OBJECT
-public: 
-	RKCheckBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKCheckBox ();
-	int type () override { return ComponentCheckBox; };
+  public:
+	RKCheckBox(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKCheckBox();
+	int type() override { return ComponentCheckBox; };
 	RKComponentPropertyBool *state;
-	QVariant value (const QString &modifier=QString ()) override {
-		if (modifier.isEmpty ()) return state->value (QStringLiteral("labeled"));
-		return (state->value (modifier));
+	QVariant value(const QString &modifier = QString()) override {
+		if (modifier.isEmpty()) return state->value(QStringLiteral("labeled"));
+		return (state->value(modifier));
 	};
-	QStringList getUiLabelPair () const override;
-public Q_SLOTS:
-	void changedStateFromUi (int);
-	void changedState (RKComponentPropertyBase *);
-private:
-	bool updating;		// prevent recursion
+	QStringList getUiLabelPair() const override;
+  public Q_SLOTS:
+	void changedStateFromUi(int);
+	void changedState(RKComponentPropertyBase *);
+
+  private:
+	bool updating; // prevent recursion
 	QCheckBox *checkbox;
 };
 

@@ -11,10 +11,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKDebugHandler* RKDebugHandler::_instance = nullptr;
+RKDebugHandler *RKDebugHandler::_instance = nullptr;
 
-RKDebugHandler::RKDebugHandler (QObject *parent) : QObject (parent) {
-	RK_TRACE (APP);
+RKDebugHandler::RKDebugHandler(QObject *parent) : QObject(parent) {
+	RK_TRACE(APP);
 
 	_state = NotInDebugger;
 	_request = nullptr;
@@ -22,63 +22,63 @@ RKDebugHandler::RKDebugHandler (QObject *parent) : QObject (parent) {
 	_instance = this;
 }
 
-RKDebugHandler::~RKDebugHandler () {
-	RK_TRACE (APP);
+RKDebugHandler::~RKDebugHandler() {
+	RK_TRACE(APP);
 	RK_ASSERT(_instance == this);
 	_instance = nullptr;
 }
 
-void RKDebugHandler::debugCall (RBackendRequest *request, RCommand *command) {
-	RK_TRACE (APP);
+void RKDebugHandler::debugCall(RBackendRequest *request, RCommand *command) {
+	RK_TRACE(APP);
 
 	_command = command;
 	_request = request;
-	if (command) _output_context = command->fullOutput ();
-	else _output_context.clear ();
+	if (command) _output_context = command->fullOutput();
+	else _output_context.clear();
 
-	_calls = request->params[QStringLiteral("calls")].toStringList ();
-	_functions = request->params[QStringLiteral("funs")].toStringList ();
-	_environments = request->params[QStringLiteral("envs")].toStringList ();
-	_locals = request->params[QStringLiteral("locals")].toStringList ();
-	_prompt = request->params[QStringLiteral("prompt")].toString ();
-	QStringList dummy = request->params[QStringLiteral("relsrclines")].toStringList ();
-	_rel_src_lines.clear ();
-	for (int i = 0; i < dummy.size (); ++i) _rel_src_lines.append (dummy.at (i).toInt ());
+	_calls = request->params[QStringLiteral("calls")].toStringList();
+	_functions = request->params[QStringLiteral("funs")].toStringList();
+	_environments = request->params[QStringLiteral("envs")].toStringList();
+	_locals = request->params[QStringLiteral("locals")].toStringList();
+	_prompt = request->params[QStringLiteral("prompt")].toString();
+	QStringList dummy = request->params[QStringLiteral("relsrclines")].toStringList();
+	_rel_src_lines.clear();
+	for (int i = 0; i < dummy.size(); ++i)
+		_rel_src_lines.append(dummy.at(i).toInt());
 
 	_state = InDebugPrompt;
 	Q_EMIT newDebugState();
 }
 
-void RKDebugHandler::sendCancel () {
-	RK_TRACE (APP);
+void RKDebugHandler::sendCancel() {
+	RK_TRACE(APP);
 
-	RK_ASSERT (_request);
-	submitDebugString (QStringLiteral("Q\n"));
+	RK_ASSERT(_request);
+	submitDebugString(QStringLiteral("Q\n"));
 }
 
-void RKDebugHandler::submitDebugString (const QString &command) {
-	RK_TRACE (APP);
+void RKDebugHandler::submitDebugString(const QString &command) {
+	RK_TRACE(APP);
 
 	if (!_request) {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 		return;
 	}
 
 	_request->params[QStringLiteral("result")] = command;
 
-	RKRBackendProtocolFrontend::setRequestCompleted (_request);
+	RKRBackendProtocolFrontend::setRequestCompleted(_request);
 
 	_command = nullptr;
 	_state = InDebugRun;
 	Q_EMIT newDebugState();
 }
 
-void RKDebugHandler::endDebug () {
-	RK_TRACE (APP);
+void RKDebugHandler::endDebug() {
+	RK_TRACE(APP);
 
 	_command = nullptr;
 	_request = nullptr;
 	_state = NotInDebugger;
 	Q_EMIT newDebugState();
 }
-

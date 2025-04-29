@@ -6,13 +6,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // globals
 var options;
 
-include ('plot_dist_common.js');
+include('plot_dist_common.js');
 
-function getParameters () {
-	options['args'] = ', lambda=' + getString ("mean");
+function getParameters() {
+	options['args'] = ', lambda=' + getString("mean");
 	getDiscontRangeParameters();
 
-	options['distname'] = i18nc ("Poisson distribution", noquote ("Poisson"));
+	options['distname'] = i18nc("Poisson distribution", noquote("Poisson"));
 	if (options['is_density']) {
 		options['fun'] = "dpois";
 	} else {
@@ -20,7 +20,7 @@ function getParameters () {
 	}
 }
 
-function addParamsToHeader (header) {
-	header.addFromUI ("mean");
+function addParamsToHeader(header) {
+	header.addFromUI("mean");
 	return header;
 }

@@ -8,16 +8,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #define UPDATE_DELAY_INTERVAL 500
 
-#include <qtimer.h>
 #include <qstringlist.h>
+#include <qtimer.h>
 
 #include <KLocalizedString>
 
-#include "renvironmentobject.h"
-#include "../rbackend/rkrinterface.h"
-#include "rkmodificationtracker.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduler.h"
+#include "renvironmentobject.h"
+#include "rkmodificationtracker.h"
 #include "rkpseudoobjects.h"
 
 #include "../debug.h"
@@ -26,12 +26,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RObjectList *RObjectList::object_list = nullptr;
 
 RObjectList::RObjectList() : RContainerObject(nullptr, QString()) {
-	RK_TRACE (OBJECTS);
+	RK_TRACE(OBJECTS);
 	RK_ASSERT(!object_list);
 	object_list = this;
 
-	update_timer = new QTimer (this);
-	update_timer->setSingleShot (true);
+	update_timer = new QTimer(this);
+	update_timer->setSingleShot(true);
 	connect(update_timer, &QTimer::timeout, this, [this]() { updateFromR(nullptr); });
 	update_chain = nullptr;
 
@@ -41,15 +41,15 @@ RObjectList::RObjectList() : RContainerObject(nullptr, QString()) {
 	globalenv = new REnvironmentObject(nullptr, QStringLiteral(".GlobalEnv"));
 	globalenv->updateFromR(nullptr);
 
-   // TODO: Do we really need tracker notification at this stage?
-	RKOrphanNamespacesObject *obj = new RKOrphanNamespacesObject (this);
-	RKModificationTracker::instance()->beginAddObject (obj, this, 0);      // first child after GlobalEnv
+	// TODO: Do we really need tracker notification at this stage?
+	RKOrphanNamespacesObject *obj = new RKOrphanNamespacesObject(this);
+	RKModificationTracker::instance()->beginAddObject(obj, this, 0); // first child after GlobalEnv
 	orphan_namespaces = obj;
-	RKModificationTracker::instance()->endAddObject (obj, this, 0);
+	RKModificationTracker::instance()->endAddObject(obj, this, 0);
 }
 
-RObjectList::~RObjectList () {
-	RK_TRACE (OBJECTS);
+RObjectList::~RObjectList() {
+	RK_TRACE(OBJECTS);
 	delete orphan_namespaces;
 	delete globalenv;
 }
@@ -58,7 +58,7 @@ RObjectList::~RObjectList () {
 void RObjectList::init() {
 	RK_TRACE(OBJECTS);
 	if (!object_list) {
-		 new RObjectList();
+		new RObjectList();
 	} else {
 		auto *globalenv = object_list->globalenv; // easier typing
 		for (int i = globalenv->numChildren() - 1; i >= 0; --i) {
@@ -71,167 +71,167 @@ void RObjectList::init() {
 	}
 }
 
-QString RObjectList::getObjectDescription () const {
-	return i18n ("This section contains environments that are not part of <i>.GlobalEnv</i> / your \"workspace\". Most importantly, this includes loaded packages, but also objects added to R's <i>search()<i>-path using <i>attach()</i>.");
+QString RObjectList::getObjectDescription() const {
+	return i18n("This section contains environments that are not part of <i>.GlobalEnv</i> / your \"workspace\". Most importantly, this includes loaded packages, but also objects added to R's <i>search()<i>-path using <i>attach()</i>.");
 }
 
-QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKInlineProgressControl* control) {
-	RK_TRACE (OBJECTS);
+QStringList RObjectList::detachPackages(const QStringList &packages, RCommandChain *chain, RKInlineProgressControl *control) {
+	RK_TRACE(OBJECTS);
 
 	QStringList remove;
 	QStringList reject;
 	for (int i = 0; i < packages.size(); ++i) {
 		QString shortname = packages[i];
-		shortname.remove (QStringLiteral("package:"));
-		if (RKSettingsModuleRPackages::essentialPackages ().contains (shortname)) {
-			reject.append (i18n ("Did not unload package %1. It is required in RKWard. If you really want to do this, do so on the R Console.", shortname));
-		} else if (!findChildByName (packages[i])) {
-			RK_ASSERT (false);
-			reject.append (i18n ("Package %1 appears not to have been loaded", shortname));
+		shortname.remove(QStringLiteral("package:"));
+		if (RKSettingsModuleRPackages::essentialPackages().contains(shortname)) {
+			reject.append(i18n("Did not unload package %1. It is required in RKWard. If you really want to do this, do so on the R Console.", shortname));
+		} else if (!findChildByName(packages[i])) {
+			RK_ASSERT(false);
+			reject.append(i18n("Package %1 appears not to have been loaded", shortname));
 		} else {
-			remove.append (packages[i]);
+			remove.append(packages[i]);
 		}
 	}
-	for (int i = 0; i < remove.size (); ++i) {
+	for (int i = 0; i < remove.size(); ++i) {
 		RCommand *command = new RCommand(u"detach ("_s + rQuote(remove[i]) + u')', RCommand::App | RCommand::ObjectListUpdate);
 
-		if (control) control->addRCommand (command);
-		RInterface::issueCommand (command, chain);
+		if (control) control->addRCommand(command);
+		RInterface::issueCommand(command, chain);
 	}
 
 	return reject;
 }
 
-void RObjectList::updateFromR (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
+void RObjectList::updateFromR(RCommandChain *chain) {
+	RK_TRACE(OBJECTS);
 
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
-		update_timer->start (UPDATE_DELAY_INTERVAL);
-		RK_DEBUG (OBJECTS, DL_DEBUG, "another object-list update is already running. Rescheduling a further update for later");
+		update_timer->start(UPDATE_DELAY_INTERVAL);
+		RK_DEBUG(OBJECTS, DL_DEBUG, "another object-list update is already running. Rescheduling a further update for later");
 		return;
 	}
 
 	Q_EMIT updateStarted();
-	update_chain = RInterface::startChain (chain);
+	update_chain = RInterface::startChain(chain);
 
 	RCommand *command = new RCommand(QStringLiteral("list (search (), loadedNamespaces ())"), RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
-	whenCommandFinished(command, [this](RCommand* command) {
-		RK_ASSERT (command->getDataType () == RData::StructureVector);
-		const RData::RDataStorage & data = command->structureVector ();
-		RK_ASSERT (data.size () == 2);
+	whenCommandFinished(command, [this](RCommand *command) {
+		RK_ASSERT(command->getDataType() == RData::StructureVector);
+		const RData::RDataStorage &data = command->structureVector();
+		RK_ASSERT(data.size() == 2);
 
-		QStringList new_environments = data[0]->stringVector ();
-		RK_ASSERT (new_environments.size () >= 2);
+		QStringList new_environments = data[0]->stringVector();
+		RK_ASSERT(new_environments.size() >= 2);
 
-		updateEnvironments (new_environments, true);
-		updateNamespaces (data[1]->stringVector ());
+		updateEnvironments(new_environments, true);
+		updateNamespaces(data[1]->stringVector());
 
 		makeUpdateCompleteCallback();
 	});
-	RInterface::issueCommand (command, update_chain);
+	RInterface::issueCommand(command, update_chain);
 }
 
-void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces) {
-	RK_TRACE (OBJECTS);
+void RObjectList::updateFromR(RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces) {
+	RK_TRACE(OBJECTS);
 
-// TODO: can this happen? when?
+	// TODO: can this happen? when?
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
-		update_timer->start (UPDATE_DELAY_INTERVAL);
-		RK_DEBUG (OBJECTS, DL_DEBUG, "another object-list update is already running. Rescheduling a further update for later");
+		update_timer->start(UPDATE_DELAY_INTERVAL);
+		RK_DEBUG(OBJECTS, DL_DEBUG, "another object-list update is already running. Rescheduling a further update for later");
 		return;
 	}
 
 	Q_EMIT updateStarted();
-	update_chain = RInterface::startChain (chain);
+	update_chain = RInterface::startChain(chain);
 
-	updateEnvironments (current_searchpath, false);
-	updateNamespaces (current_namespaces);
+	updateEnvironments(current_searchpath, false);
+	updateNamespaces(current_namespaces);
 
 	makeUpdateCompleteCallback();
 }
 
 void RObjectList::makeUpdateCompleteCallback() {
 	RK_TRACE(OBJECTS);
-	RCommand* command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
-	whenCommandFinished(command, [this](RCommand*) {
-		RK_ASSERT (update_chain);
-		RInterface::closeChain (update_chain);
+	RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
+	whenCommandFinished(command, [this](RCommand *) {
+		RK_ASSERT(update_chain);
+		RInterface::closeChain(update_chain);
 		update_chain = nullptr;
 
-		RK_DEBUG (OBJECTS, DL_DEBUG, "object list update complete");
+		RK_DEBUG(OBJECTS, DL_DEBUG, "object list update complete");
 		Q_EMIT updateComplete();
 	});
 	RInterface::issueCommand(command, update_chain);
 }
 
-void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_globalenv_update) {
-	RK_TRACE (OBJECTS);
+void RObjectList::updateEnvironments(const QStringList &_env_names, bool force_globalenv_update) {
+	RK_TRACE(OBJECTS);
 
 	RObjectMap newchildmap;
 	QStringList env_names = _env_names;
-	if (!env_names.isEmpty ()) {
-		QString dummy = env_names.takeFirst ();
+	if (!env_names.isEmpty()) {
+		QString dummy = env_names.takeFirst();
 		RK_ASSERT(dummy == ".GlobalEnv"_L1);
 		if (force_globalenv_update) {
 			// for now, we only update the .GlobalEnv. All others we assume to be static
-			getGlobalEnv ()->updateFromR (update_chain);
+			getGlobalEnv()->updateFromR(update_chain);
 		}
 	} else {
-		RK_ASSERT (!env_names.isEmpty ());
+		RK_ASSERT(!env_names.isEmpty());
 	}
 
 	// find which items are new, and copy the old ones
-	for (int i = 0; i < env_names.count (); ++i) {
+	for (int i = 0; i < env_names.count(); ++i) {
 		QString name = env_names[i];
 
-		RObject *obj = findChildByName (name);
-		if (obj && (i > 0) && (env_names.lastIndexOf (name, i-1) > -1)) {		// duplicate environment names can happen (e.g. if a data.frame is attached multiple times)
-			obj = nullptr;	// only copy the old item once
+		RObject *obj = findChildByName(name);
+		if (obj && (i > 0) && (env_names.lastIndexOf(name, i - 1) > -1)) { // duplicate environment names can happen (e.g. if a data.frame is attached multiple times)
+			obj = nullptr;                                                 // only copy the old item once
 		}
 		if (!obj) {
-			obj = createTopLevelEnvironment (name);
-			RKModificationTracker::instance()->beginAddObject (obj, this, i);
-			childmap.insert (i, obj);
-			RKModificationTracker::instance()->endAddObject (obj, this, i);
+			obj = createTopLevelEnvironment(name);
+			RKModificationTracker::instance()->beginAddObject(obj, this, i);
+			childmap.insert(i, obj);
+			RKModificationTracker::instance()->endAddObject(obj, this, i);
 		}
-		newchildmap.insert (i, obj);
+		newchildmap.insert(i, obj);
 	}
 
 	// check which envs have been removed or changed position
-	for (int i = 0; i < childmap.size (); ++i) {	// do *not* cache the childmap.size ()! We may change it in the loop.
+	for (int i = 0; i < childmap.size(); ++i) { // do *not* cache the childmap.size ()! We may change it in the loop.
 		RObject *obj = childmap[i];
-		int new_pos = newchildmap.indexOf (obj);
-		
-		if (new_pos < 0) {	// environment is gone
-			RK_DEBUG (OBJECTS, DL_INFO, "removing toplevel environment %s from list", obj->getShortName ().toLatin1 ().data ());
+		int new_pos = newchildmap.indexOf(obj);
+
+		if (new_pos < 0) { // environment is gone
+			RK_DEBUG(OBJECTS, DL_INFO, "removing toplevel environment %s from list", obj->getShortName().toLatin1().data());
 			if (RKModificationTracker::instance()->removeObject(obj, nullptr, true)) --i;
-			else (newchildmap.insert (i, obj));
+			else (newchildmap.insert(i, obj));
 		} else if (new_pos != i) {
 			// this call is rather expensive, all in all, but fortunately called very rarely
-			moveChild (obj, i, new_pos);
+			moveChild(obj, i, new_pos);
 		}
 	}
 
-	RK_DO (RK_ASSERT (childmap == newchildmap), OBJECTS, DL_DEBUG);	// this is an expensive assert, hence wrapping it inside RK_DO
+	RK_DO(RK_ASSERT(childmap == newchildmap), OBJECTS, DL_DEBUG); // this is an expensive assert, hence wrapping it inside RK_DO
 }
 
-void RObjectList::updateNamespaces (const QStringList &namespace_names) {
-	RK_TRACE (OBJECTS);
+void RObjectList::updateNamespaces(const QStringList &namespace_names) {
+	RK_TRACE(OBJECTS);
 
 	QStringList orphan_namespace_names;
-	for (int i = 0; i < namespace_names.size (); ++i) {
-		if (!findPackage (namespace_names[i])) orphan_namespace_names.append (namespace_names[i]);
+	for (int i = 0; i < namespace_names.size(); ++i) {
+		if (!findPackage(namespace_names[i])) orphan_namespace_names.append(namespace_names[i]);
 	}
-	orphan_namespaces->updateNamespacesFromR (update_chain, orphan_namespace_names);
+	orphan_namespaces->updateNamespacesFromR(update_chain, orphan_namespace_names);
 }
 
-REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name) {
-	RK_TRACE (OBJECTS);
+REnvironmentObject *RObjectList::createTopLevelEnvironment(const QString &name) {
+	RK_TRACE(OBJECTS);
 
-	REnvironmentObject *envobj = new REnvironmentObject (this, name);
-	envobj->updateFromR (update_chain);
+	REnvironmentObject *envobj = new REnvironmentObject(this, name);
+	envobj->updateFromR(update_chain);
 	return envobj;
 }
 
@@ -265,48 +265,48 @@ RObject::ObjectList RObjectList::findObjects(const QStringList &path, bool parti
 	return ret;
 }
 
-QStringList RObject::getFullNames (const RObject::ObjectList &matches, int options) {
-	RK_TRACE (OBJECTS);
+QStringList RObject::getFullNames(const RObject::ObjectList &matches, int options) {
+	RK_TRACE(OBJECTS);
 
 	QStringList ret;
 	QSet<QString> unique_names;
-	for (int i = 0; i < matches.count (); ++i) {
+	for (int i = 0; i < matches.count(); ++i) {
 		if (options & IncludeEnvirIfMasked) {
 			// - If the name is *not* masked (yet), return the plain name.
 			// - If the name *is* masked, return the full qualitfied name.
 			// NOTE: This assumes objects are given in search order!
-			QString base_name = matches[i]->getFullName (options);
-			if (unique_names.contains (base_name)) {
-				base_name = matches[i]->getFullName (options | IncludeEnvirIfNotGlobalEnv | IncludeEnvirForGlobalEnv);
+			QString base_name = matches[i]->getFullName(options);
+			if (unique_names.contains(base_name)) {
+				base_name = matches[i]->getFullName(options | IncludeEnvirIfNotGlobalEnv | IncludeEnvirForGlobalEnv);
 			}
-			RK_ASSERT (!unique_names.contains (base_name));
-			unique_names.insert (base_name);
-			ret.append (base_name);
+			RK_ASSERT(!unique_names.contains(base_name));
+			unique_names.insert(base_name);
+			ret.append(base_name);
 		} else {
-			ret.append (matches[i]->getFullName (options));
+			ret.append(matches[i]->getFullName(options));
 		}
 	}
 	return ret;
 }
 
-REnvironmentObject* RObjectList::findPackage (const QString &namespacename) const {
-	RK_TRACE (OBJECTS);
+REnvironmentObject *RObjectList::findPackage(const QString &namespacename) const {
+	RK_TRACE(OBJECTS);
 
-	for (int i = childmap.size () - 1; i >= 0; --i) {
-		RObject* child = childmap[i];
-		if (!child->isType (PackageEnv)) continue;	// Skip Autoloads
-		REnvironmentObject* env = static_cast<REnvironmentObject *> (child);
-		if (env->packageName () == namespacename) {
+	for (int i = childmap.size() - 1; i >= 0; --i) {
+		RObject *child = childmap[i];
+		if (!child->isType(PackageEnv)) continue; // Skip Autoloads
+		REnvironmentObject *env = static_cast<REnvironmentObject *>(child);
+		if (env->packageName() == namespacename) {
 			return env;
 		}
 	}
 	return nullptr;
 }
 
-bool RObjectList::updateStructure (RData *) {
-	RK_TRACE (OBJECTS);
+bool RObjectList::updateStructure(RData *) {
+	RK_TRACE(OBJECTS);
 
-	RK_ASSERT (false);
+	RK_ASSERT(false);
 
 	return true;
 }

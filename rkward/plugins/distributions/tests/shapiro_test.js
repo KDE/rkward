@@ -3,17 +3,17 @@ SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemai
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
-include ("dist_test_common.js");
+include("dist_test_common.js");
 
-preprocess = function () {}
+preprocess = function() {}
 
-function testCall () {
+function testCall() {
 	return ("shapiro.test (var)");
 }
 
-function printout (is_preview) {
+function printout(is_preview) {
 	if (!is_preview) {
-		echo ('rk.header (' + i18n ("Shapiro-Wilk Normality Test") + ')\n');
+		echo('rk.header (' + i18n("Shapiro-Wilk Normality Test") + ')\n');
 	}
-	echo ('rk.results (results)\n');
+	echo('rk.results (results)\n');
 }

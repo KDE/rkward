@@ -19,19 +19,21 @@ class QLabel;
 */
 class RKDropDown : public RKAbstractOptionSelector {
 	Q_OBJECT
-public: 
-	RKDropDown (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKDropDown ();
-	int type () override { return ComponentDropDown; };
-public Q_SLOTS:
+  public:
+	RKDropDown(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKDropDown();
+	int type() override { return ComponentDropDown; };
+  public Q_SLOTS:
 	// workaround for a qt bug (3.3.7)
-	void comboItemActivated (int id);
-protected:
-	void setItemInGUI (int id) override;
-	void addOptionToGUI (const QString &label, int id) override;
-	void setItemEnabledInGUI (int id, bool enabled) override;
-	QStringList getUiLabelPair () const override;
-private:
+	void comboItemActivated(int id);
+
+  protected:
+	void setItemInGUI(int id) override;
+	void addOptionToGUI(const QString &label, int id) override;
+	void setItemEnabledInGUI(int id, bool enabled) override;
+	QStringList getUiLabelPair() const override;
+
+  private:
 	QComboBox *box;
 	QListWidget *listwidget;
 	QLabel *label;

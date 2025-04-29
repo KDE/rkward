@@ -18,29 +18,30 @@ class QLabel;
 /** A very simple debugger console */
 class RKDebugConsole : public RKMDIWindow {
 	Q_OBJECT
-public:
-	RKDebugConsole(QWidget *parent, bool tool_window, const char *name=nullptr);
+  public:
+	RKDebugConsole(QWidget *parent, bool tool_window, const char *name = nullptr);
 	~RKDebugConsole();
 
-	static RKDebugConsole *instance () { return _instance; };
+	static RKDebugConsole *instance() { return _instance; };
 
 	// reimplemented to refuse closing while inside the debugger
-	bool close (CloseWindowMode ask_save) override;
-public Q_SLOTS:
-	void newDebugState ();
-private Q_SLOTS:
-	void sendReplySlot ();
-private:
-	QPushButton* addButton(const QString &command, const QString &text, const QString &tip);
-	void sendReply (const QString &reply);
+	bool close(CloseWindowMode ask_save) override;
+  public Q_SLOTS:
+	void newDebugState();
+  private Q_SLOTS:
+	void sendReplySlot();
 
-	QTextEdit* context_view;
-	KHistoryComboBox* reply_edit;
-	QLabel* prompt_label;
+  private:
+	QPushButton *addButton(const QString &command, const QString &text, const QString &tip);
+	void sendReply(const QString &reply);
 
-	QList<QPushButton*> buttons;
+	QTextEdit *context_view;
+	KHistoryComboBox *reply_edit;
+	QLabel *prompt_label;
 
-friend class RKWardMainWindow;
+	QList<QPushButton *> buttons;
+
+	friend class RKWardMainWindow;
 	static RKDebugConsole *_instance;
 };
 

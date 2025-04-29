@@ -25,22 +25,23 @@ This RKComponent provides a (togglable) automatic graphical preview. WARNING: Th
 */
 class RKPreviewBox : public RKComponent {
 	Q_OBJECT
-public: 
-	RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKPreviewBox ();
-	int type () override { return ComponentPreviewBox; };
+  public:
+	RKPreviewBox(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKPreviewBox();
+	int type() override { return ComponentPreviewBox; };
 	RKComponentPropertyBool *state;
-	QVariant value (const QString &modifier=QString ()) override;
-public Q_SLOTS:
-	void changedStateFromUi ();
-	void changedState (RKComponentPropertyBase *);
-	void changedCode (RKComponentPropertyBase *);
-	void tryPreviewNow ();
-private:
-	bool updating;		// prevent recursion
+	QVariant value(const QString &modifier = QString()) override;
+  public Q_SLOTS:
+	void changedStateFromUi();
+	void changedState(RKComponentPropertyBase *);
+	void changedCode(RKComponentPropertyBase *);
+	void tryPreviewNow();
+
+  private:
+	bool updating; // prevent recursion
 	bool preview_active;
-	void tryPreview ();
-	void killPreview (bool cleanup = false);
+	void tryPreview();
+	void killPreview(bool cleanup = false);
 	RKPreviewManager *manager;
 	enum PreviewMode {
 		PlotPreview,

@@ -7,63 +7,62 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rktext.h"
 
+#include <QVBoxLayout>
+#include <qdom.h>
+#include <qlabel.h>
 #include <qstring.h>
 #include <qstringlist.h>
-#include <qlabel.h>
-#include <qdom.h>
-#include <QVBoxLayout>
 
-#include "../misc/xmlhelper.h"
-#include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
+#include "../misc/rkcommonfunctions.h"
+#include "../misc/xmlhelper.h"
 
-RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
-	RK_TRACE (PLUGIN);
+RKText::RKText(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent(parent_component, parent_widget) {
+	RK_TRACE(PLUGIN);
 
 	// get xml-helper
-	XMLHelper *xml = parent_component->xmlHelper ();
+	XMLHelper *xml = parent_component->xmlHelper();
 
 	// create layout and label
-	QVBoxLayout *vbox = new QVBoxLayout (this);
-	vbox->setContentsMargins (0, 0, 0, 0);
+	QVBoxLayout *vbox = new QVBoxLayout(this);
+	vbox->setContentsMargins(0, 0, 0, 0);
 
-	label = RKCommonFunctions::linkedWrappedLabel (QString ());
-	vbox->addWidget (label);
+	label = RKCommonFunctions::linkedWrappedLabel(QString());
+	vbox->addWidget(label);
 
-	int type = xml->getMultiChoiceAttribute (element, QStringLiteral("type"), QStringLiteral("normal;warning;error"), 0, DL_INFO);
+	int type = xml->getMultiChoiceAttribute(element, QStringLiteral("type"), QStringLiteral("normal;warning;error"), 0, DL_INFO);
 	if (type != 0) {
-		QFont font = label->font ();
-		QPalette palette = label->palette ();
-		if (type == 1) {		// warning
-			palette.setColor (label->foregroundRole (), QColor (255, 100, 0));
-			font.setWeight (QFont::DemiBold);
-		} else if (type == 2) {		// error
-			palette.setColor (label->foregroundRole (), QColor (255, 0, 0));
-			font.setWeight (QFont::Bold);
+		QFont font = label->font();
+		QPalette palette = label->palette();
+		if (type == 1) { // warning
+			palette.setColor(label->foregroundRole(), QColor(255, 100, 0));
+			font.setWeight(QFont::DemiBold);
+		} else if (type == 2) { // error
+			palette.setColor(label->foregroundRole(), QColor(255, 0, 0));
+			font.setWeight(QFont::Bold);
 		}
-		label->setPalette (palette);
-		label->setFont (font);
+		label->setPalette(palette);
+		label->setFont(font);
 	}
 
-	QString initial_text = xml->i18nElementText (element, true, DL_ERROR);
+	QString initial_text = xml->i18nElementText(element, true, DL_ERROR);
 
 	// create and add property
-	addChild (QStringLiteral("text"), text = new RKComponentPropertyBase (this, true));
-	text->setInternal (true);
-	connect (text, &RKComponentPropertyBase::valueChanged, this, &RKText::textChanged);
+	addChild(QStringLiteral("text"), text = new RKComponentPropertyBase(this, true));
+	text->setInternal(true);
+	connect(text, &RKComponentPropertyBase::valueChanged, this, &RKText::textChanged);
 
 	// initialize
-	text->setValue (initial_text);
+	text->setValue(initial_text);
 }
 
-RKText::~RKText(){
-	RK_TRACE (PLUGIN);
+RKText::~RKText() {
+	RK_TRACE(PLUGIN);
 }
 
-void RKText::textChanged (RKComponentPropertyBase *) {
-	RK_TRACE (PLUGIN);
+void RKText::textChanged(RKComponentPropertyBase *) {
+	RK_TRACE(PLUGIN);
 
-	label->setText (fetchStringValue (text));
-	changed ();
+	label->setText(fetchStringValue(text));
+	changed();
 }
-

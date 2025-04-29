@@ -7,42 +7,42 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rksessionvars.h"
 
-#include "rkrinterface.h"
 #include "../settings/rksettingsmoduledebug.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../version.h"
+#include "rkrinterface.h"
 
-#include <kcoreaddons_version.h>
 #include <KCoreAddons>
+#include <kcoreaddons_version.h>
 
-#include <QTemporaryFile>
+#include <QDir>
+#include <QFileInfo>
 #include <QStandardPaths>
 #include <QSysInfo>
-#include <QFileInfo>
+#include <QTemporaryFile>
 #include <QVersionNumber>
-#include <QDir>
 
 #include "../debug.h"
 
-RKSessionVars* RKSessionVars::_instance = nullptr;
+RKSessionVars *RKSessionVars::_instance = nullptr;
 RKParsedVersion RKSessionVars::rkward_version(QStringLiteral(RKWARD_VERSION));
 RKParsedVersion RKSessionVars::r_version;
 QString RKSessionVars::r_version_string;
 QString RKSessionVars::r_binary;
 QString RKSessionVars::appimagedir;
 
-RKSessionVars::RKSessionVars (RInterface *parent) : QObject (parent) {
-	RK_TRACE (RBACKEND);
-	RK_ASSERT (!_instance);
+RKSessionVars::RKSessionVars(RInterface *parent) : QObject(parent) {
+	RK_TRACE(RBACKEND);
+	RK_ASSERT(!_instance);
 
 	_instance = this;
 	auto appdir = qgetenv("APPDIR");
 	if (!appdir.isEmpty()) appimagedir = QFileInfo(QString::fromLocal8Bit(appdir)).canonicalFilePath();
 }
 
-RKSessionVars::~RKSessionVars () {
-	RK_TRACE (RBACKEND);
+RKSessionVars::~RKSessionVars() {
+	RK_TRACE(RBACKEND);
 	RK_ASSERT(_instance == this);
 	_instance = nullptr;
 }
@@ -52,18 +52,18 @@ bool RKSessionVars::isPathInAppImage(const QString &path) {
 	return QFileInfo(path).canonicalFilePath().startsWith(appimagedir);
 }
 
-void RKSessionVars::setInstalledPackages (const QStringList &new_list) {
-	RK_TRACE (RBACKEND);
+void RKSessionVars::setInstalledPackages(const QStringList &new_list) {
+	RK_TRACE(RBACKEND);
 
 	installed_packages = new_list;
 	Q_EMIT installedPackagesChanged();
 }
 
-void RKSessionVars::setRVersion (const QString& version_string) {
-	RK_TRACE (RBACKEND);
+void RKSessionVars::setRVersion(const QString &version_string) {
+	RK_TRACE(RBACKEND);
 
-	if (!r_version_string.isEmpty ()) {
-		RK_DEBUG (RBACKEND, DL_WARNING, "R version has changed during runtime, from %s to %s", qPrintable (r_version_string), qPrintable (version_string));
+	if (!r_version_string.isEmpty()) {
+		RK_DEBUG(RBACKEND, DL_WARNING, "R version has changed during runtime, from %s to %s", qPrintable(r_version_string), qPrintable(version_string));
 	}
 	r_version_string = version_string;
 	r_version = RKParsedVersion(version_string);
@@ -71,17 +71,17 @@ void RKSessionVars::setRVersion (const QString& version_string) {
 
 QString RKSessionVars::RVersion(bool abbridged) {
 	if (!abbridged) return r_version_string;
-	return r_version_string.section (u'.', 0, 1);
+	return r_version_string.section(u'.', 0, 1);
 }
 
-int RKSessionVars::compareRKWardVersion (const QString& version) {
+int RKSessionVars::compareRKWardVersion(const QString &version) {
 	auto ver = RKParsedVersion(version);
 	if (rkward_version > ver) return -1;
 	if (ver > rkward_version) return 1;
 	return 0;
 }
 
-int RKSessionVars::compareRVersion (const QString& version) {
+int RKSessionVars::compareRVersion(const QString &version) {
 	if (r_version_string.isEmpty()) return 0;
 
 	auto ver = RKParsedVersion(version);
@@ -114,10 +114,10 @@ static QString findExeAtPath(const QString &appname, const QString &path) {
 	QDir dir(path);
 	dir.makeAbsolute();
 	if (QFileInfo(dir.filePath(appname)).isExecutable()) return dir.filePath(appname);
-#ifdef Q_OS_WIN
+#	ifdef Q_OS_WIN
 	if (QFileInfo(dir.filePath(appname + u".exe"_s)).isExecutable()) return dir.filePath(appname + u".exe"_s);
 	if (QFileInfo(dir.filePath(appname + u".com"_s)).isExecutable()) return dir.filePath(appname + u".com"_s);
-#endif
+#	endif
 	return QString();
 }
 
@@ -149,7 +149,7 @@ QStringList RKSessionVars::findRInstallations() {
 	ret = globVersionedDirs(instroot, u"R-"_s, u"bin/R"_s);
 #else
 	const QStringList candidates{u"/usr/bin/R"_s, u"/usr/local/bin/R"_s};
-	for(const QString &p : candidates) {
+	for (const QString &p : candidates) {
 		if (!ret.contains(p) && QFileInfo(p).isExecutable()) ret.append(p);
 	}
 #endif

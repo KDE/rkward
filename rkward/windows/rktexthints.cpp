@@ -9,8 +9,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KTextEditor/Document>
 
-#include "../misc/rkcommonfunctions.h"
 #include "../core/robjectlist.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
 
 #include "../debug.h"
@@ -35,4 +35,3 @@ QString RKTextHints::textHint(KTextEditor::View *view, const KTextEditor::Cursor
 	}
 	return QString();
 }
-

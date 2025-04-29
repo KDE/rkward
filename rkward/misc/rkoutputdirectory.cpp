@@ -8,28 +8,28 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkoutputdirectory.h"
 
 #include <QDir>
-#include <QFileInfo>
 #include <QFileDialog>
+#include <QFileInfo>
 
 #include <KLocalizedString>
 #include <KMessageBox>
 
-#include "../settings/rksettingsmodulegeneral.h"
-#include "../settings/rksettingsmoduleoutput.h"
-#include "../settings/rkrecenturls.h"
+#include "../agents/rkquitagent.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rkrinterface.h"
-#include "../windows/rkmdiwindow.h"
-#include "../windows/rkhtmlwindow.h"
-#include "../windows/rkworkplace.h"
-#include "../misc/rkcommonfunctions.h"
-#include "../agents/rkquitagent.h"
 #include "../rkward.h"
+#include "../settings/rkrecenturls.h"
+#include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmoduleoutput.h"
+#include "../windows/rkhtmlwindow.h"
+#include "../windows/rkmdiwindow.h"
+#include "../windows/rkworkplace.h"
 
 #include "../debug.h"
 
 /** much like `ls -Rl`. List directory contents including timestamps and sizes, recursively. Used to detect whether an output directory has any changes. */
-void listDirectoryState(const QString& _dir, QString *list, const QString &prefix) {
+void listDirectoryState(const QString &_dir, QString *list, const QString &prefix) {
 	RK_TRACE(APP);
 
 	QDir dir(_dir);
@@ -46,12 +46,12 @@ void listDirectoryState(const QString& _dir, QString *list, const QString &prefi
 	}
 }
 
-QString hashDirectoryState(const QString& dir) {
+QString hashDirectoryState(const QString &dir) {
 	RK_TRACE(APP);
 	QString list;
 	listDirectoryState(dir, &list, QString());
 	return list;
-//	return QCryptographicHash::hash (list.toUtf8 (), QCryptographicHash::Md5);
+	//	return QCryptographicHash::hash (list.toUtf8 (), QCryptographicHash::Md5);
 }
 
 void RKOutputDirectoryCallResult::setDir(RKOutputDirectory *d) {
@@ -59,7 +59,7 @@ void RKOutputDirectoryCallResult::setDir(RKOutputDirectory *d) {
 	if (d) ret = d->getId();
 }
 
-QMap<QString, RKOutputDirectory*> RKOutputDirectory::outputs;
+QMap<QString, RKOutputDirectory *> RKOutputDirectory::outputs;
 
 RKOutputDirectory::RKOutputDirectory() : initialized(false), known_modified(false) {
 	RK_TRACE(APP);
@@ -69,61 +69,61 @@ RKOutputDirectory::~RKOutputDirectory() {
 	RK_TRACE(APP);
 }
 
-RKOutputDirectory* RKOutputDirectory::findOutputById(const QString& id) {
-	RK_TRACE (APP);
+RKOutputDirectory *RKOutputDirectory::findOutputById(const QString &id) {
+	RK_TRACE(APP);
 
 	return outputs.value(id);
 }
 
-RKOutputDirectory* RKOutputDirectory::findOutputByWorkPath(const QString& workpath) {
-	RK_TRACE (APP);
+RKOutputDirectory *RKOutputDirectory::findOutputByWorkPath(const QString &workpath) {
+	RK_TRACE(APP);
 
 	if (workpath.endsWith(QLatin1String("index.html"))) {
 		QString wp = workpath;
-		return(outputs.value(wp.chopped(11)));  // index.html, including pathsep
+		return (outputs.value(wp.chopped(11))); // index.html, including pathsep
 	}
 	return nullptr;
 }
 
-RKOutputDirectory* RKOutputDirectory::findOutputBySaveUrl(const QString& dest) {
-	RK_TRACE (APP);
+RKOutputDirectory *RKOutputDirectory::findOutputBySaveUrl(const QString &dest) {
+	RK_TRACE(APP);
 
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
 		if (it.value()->save_filename == dest) {
-			return(it.value());
+			return (it.value());
 		}
 	}
 	return nullptr;
 }
 
-RKOutputDirectory* RKOutputDirectory::findOutputByWindow(const RKMDIWindow *window) {
-	RK_TRACE (APP);
+RKOutputDirectory *RKOutputDirectory::findOutputByWindow(const RKMDIWindow *window) {
+	RK_TRACE(APP);
 
 	if (!window) return nullptr;
 	if (!window->isType(RKMDIWindow::OutputWindow)) return nullptr;
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
-		if (it.value()->workPath() == static_cast<const RKHTMLWindow*>(window)->url().toLocalFile()) {
-			return(it.value());
+		if (it.value()->workPath() == static_cast<const RKHTMLWindow *>(window)->url().toLocalFile()) {
+			return (it.value());
 		}
 	}
 	return nullptr;
 }
 
-GenericRRequestResult RKOutputDirectory::save(const QString& dest, RKOutputDirectory::OverwriteBehavior overwrite) {
-	RK_TRACE (APP);
+GenericRRequestResult RKOutputDirectory::save(const QString &dest, RKOutputDirectory::OverwriteBehavior overwrite) {
+	RK_TRACE(APP);
 
 	GenericRRequestResult res = exportAs(dest, overwrite);
 	if (!res.failed()) {
-		save_filename = res.ret.toString();  // might by different from dest, notably, if dest was empty or not yet normalized
-		known_modified = true;  // dirty trick to ensure that updateSavedHash() will trigger a stateChange()->update caption in views, even if using SaveAs on an unmodified directory
+		save_filename = res.ret.toString(); // might by different from dest, notably, if dest was empty or not yet normalized
+		known_modified = true;              // dirty trick to ensure that updateSavedHash() will trigger a stateChange()->update caption in views, even if using SaveAs on an unmodified directory
 		updateSavedHash();
 		RKRecentUrls::addRecentUrl(RKRecentUrls::outputId(), QUrl::fromLocalFile(save_filename));
 	}
 	return res;
 }
 
-GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutputDirectory::OverwriteBehavior overwrite) {
-	RK_TRACE (APP);
+GenericRRequestResult RKOutputDirectory::exportAs(const QString &_dest, RKOutputDirectory::OverwriteBehavior overwrite) {
+	RK_TRACE(APP);
 
 	QString dest = _dest;
 	if (dest.isEmpty()) {
@@ -131,9 +131,9 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 		dialog.setFileMode(QFileDialog::AnyFile);
 		dialog.setNameFilters(QStringList() << i18n("RKWard Output Files [*.rko](*.rko)") << i18n("All Files [*](*)"));
 		dialog.setAcceptMode(QFileDialog::AcceptSave);
-		dialog.setOption(QFileDialog::DontConfirmOverwrite, true);  // custom handling below
+		dialog.setOption(QFileDialog::DontConfirmOverwrite, true); // custom handling below
 
-		if (dialog.exec () != QDialog::Accepted) {
+		if (dialog.exec() != QDialog::Accepted) {
 			return GenericRRequestResult::makeError(i18n("File selection canceled"));
 		}
 
@@ -145,7 +145,7 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 		if (overwrite == Ask) {
 			const QString warning = i18n("Are you sure you want to overwrite the existing file '%1'?", dest);
 			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), warning, i18n("Overwrite?"), KStandardGuiItem::overwrite(),
-												KStandardGuiItem::cancel(), QString(), KMessageBox::Options(KMessageBox::Notify | KMessageBox::Dangerous));
+			                                                                 KStandardGuiItem::cancel(), QString(), KMessageBox::Options(KMessageBox::Notify | KMessageBox::Dangerous));
 			if (KMessageBox::Continue != res) return GenericRRequestResult::makeError(i18n("User canceled"));
 		} else if (overwrite != Force) {
 			return GenericRRequestResult::makeError(i18n("Not overwriting existing file"));
@@ -157,7 +157,7 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 
 #include <KZip>
 GenericRRequestResult RKOutputDirectory::exportZipInternal(const QString &dest) {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
 	// write to a temporary location, first, then - if successful - copy to final destination
 	QString tempname = dest + u'~';
@@ -188,7 +188,7 @@ GenericRRequestResult RKOutputDirectory::exportZipInternal(const QString &dest) 
 
 #include <KArchiveDirectory>
 GenericRRequestResult RKOutputDirectory::importZipInternal(const QString &_from) {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
 	QFileInfo fi(_from);
 	if (!fi.isFile()) {
@@ -201,7 +201,7 @@ GenericRRequestResult RKOutputDirectory::importZipInternal(const QString &_from)
 	if (ok) {
 		auto dir = zip.directory()->entry(QStringLiteral("rkward_output"));
 		if (!(dir && dir->isDirectory())) ok = false;
-		if (ok && !static_cast<const KArchiveDirectory*>(dir)->copyTo(work_dir, true)) ok = false;
+		if (ok && !static_cast<const KArchiveDirectory *>(dir)->copyTo(work_dir, true)) ok = false;
 	}
 	if (!ok) return GenericRRequestResult::makeError(i18n("Failure to open %1. Not an rkward output file?", from));
 
@@ -212,8 +212,8 @@ GenericRRequestResult RKOutputDirectory::importZipInternal(const QString &_from)
 	return GenericRRequestResult(QVariant(id));
 }
 
-GenericRRequestResult RKOutputDirectory::import(const QString& _dir) {
-	RK_TRACE (APP);
+GenericRRequestResult RKOutputDirectory::import(const QString &_dir) {
+	RK_TRACE(APP);
 
 	if (initialized) {
 		return GenericRRequestResult::makeError(i18n("Output directory %1 is already in use.", id));
@@ -224,7 +224,7 @@ GenericRRequestResult RKOutputDirectory::import(const QString& _dir) {
 }
 
 GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
 	if (!isModifiedAccurate()) return GenericRRequestResult(id, i18n("Output had no modifications. Nothing reverted."));
 	if (discard == Ask) {
@@ -243,8 +243,8 @@ GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 	return importZipInternal(save_filename);
 }
 
-RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
-	RK_TRACE (APP);
+RKOutputDirectory *RKOutputDirectory::createOutputDirectoryInternal() {
+	RK_TRACE(APP);
 
 	QString prefix = QStringLiteral("unsaved_output");
 	QString destname = prefix;
@@ -262,14 +262,15 @@ RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
 	return d;
 }
 
-GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
-	RK_TRACE (APP);
+GenericRRequestResult RKOutputDirectory::activate(RCommandChain *chain) {
+	RK_TRACE(APP);
 
 	QString index_file = work_dir + u"/index.html"_s;
 	RInterface::issueCommand(new RCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App), chain);
 	if (!initialized) {
 		// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
-		RInterface::whenAllFinished(this, [this]() { updateSavedHash(); }, chain);
+		RInterface::whenAllFinished(
+		    this, [this]() { updateSavedHash(); }, chain);
 		initialized = true;
 	}
 
@@ -303,10 +304,10 @@ GenericRRequestResult RKOutputDirectory::clear(OverwriteBehavior discard) {
 bool RKOutputDirectory::isEmpty() const {
 	RK_TRACE(APP);
 
-	if (!save_filename.isEmpty()) return false;  // we _could_ have saved an empty output, of course, but no worries about corner cases. In any doubt we return false.
+	if (!save_filename.isEmpty()) return false; // we _could_ have saved an empty output, of course, but no worries about corner cases. In any doubt we return false.
 
 	if (!initialized) return true;
-	if (!isModifiedAccurate()) return true;   // because we have not saved/loaded this file, before, see above
+	if (!isModifiedAccurate()) return true; // because we have not saved/loaded this file, before, see above
 	return false;
 }
 
@@ -322,7 +323,7 @@ QString RKOutputDirectory::caption() const {
 	return i18n("[Unnamed]");
 }
 
-GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain, bool activate_other) {
+GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain *chain, bool activate_other) {
 	RK_TRACE(APP);
 
 	if ((discard != Force) && isModifiedAccurate()) {
@@ -376,10 +377,10 @@ bool RKOutputDirectory::isActive() const {
 	return RKOutputWindowManager::self()->currentOutputPath() == workPath();
 }
 
-QList<RKOutputDirectory*> RKOutputDirectory::modifiedOutputDirectories() {
-	RK_TRACE (APP);
+QList<RKOutputDirectory *> RKOutputDirectory::modifiedOutputDirectories() {
+	RK_TRACE(APP);
 
-	QList<RKOutputDirectory*> ret;
+	QList<RKOutputDirectory *> ret;
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
 		if (it.value()->isModifiedAccurate()) ret.append(it.value());
 	}
@@ -387,7 +388,7 @@ QList<RKOutputDirectory*> RKOutputDirectory::modifiedOutputDirectories() {
 }
 
 void RKOutputDirectory::updateSavedHash() {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 	saved_hash = hashDirectoryState(work_dir);
 	save_timestamp = QDateTime::currentDateTime();
 	setKnownModified(false);
@@ -396,14 +397,14 @@ void RKOutputDirectory::updateSavedHash() {
 QList<RKOutputDirectory *> RKOutputDirectory::allOutputs() {
 	RK_TRACE(APP);
 
-	QList<RKOutputDirectory*> ret;
-	for (auto it = outputs.constBegin (); it != outputs.constEnd (); ++it) {
+	QList<RKOutputDirectory *> ret;
+	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
 		ret.append(it.value());
 	}
 	return ret;
 }
 
-RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain* chain) {
+RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain *chain) {
 	RK_TRACE(APP);
 
 	RKOutputDirectoryCallResult ret;
@@ -425,7 +426,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain* c
 		return ret;
 	}
 
-	RKOutputDirectory* candidate = nullptr;
+	RKOutputDirectory *candidate = nullptr;
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
 		if (it.value()->isActive()) {
 			ret.setDir(it.value());
@@ -448,7 +449,7 @@ RKOutputDirectory::OverwriteBehavior parseOverwrite(const QString &param) {
 	return RKOutputDirectory::Fail;
 }
 
-RKOutputDirectory* RKOutputDirectory::activeOutput() {
+RKOutputDirectory *RKOutputDirectory::activeOutput() {
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
 		if (it.value()->isActive()) {
 			return it.value();
@@ -457,7 +458,7 @@ RKOutputDirectory* RKOutputDirectory::activeOutput() {
 	return nullptr;
 }
 
-RKMDIWindow * RKOutputDirectory::getOrCreateView(bool raise, RCommandChain* chain) {
+RKMDIWindow *RKOutputDirectory::getOrCreateView(bool raise, RCommandChain *chain) {
 	RK_TRACE(APP);
 
 	if (!initialized) {
@@ -480,7 +481,7 @@ RKMDIWindow * RKOutputDirectory::getOrCreateView(bool raise, RCommandChain* chai
 	return RKWorkplace::mainWorkplace()->openNewOutputWindow(this);
 }
 
-GenericRRequestResult RKOutputDirectory::view(bool raise, RCommandChain* chain) {
+GenericRRequestResult RKOutputDirectory::view(bool raise, RCommandChain *chain) {
 	RK_TRACE(APP);
 
 	getOrCreateView(raise, chain);
@@ -497,7 +498,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, boo
 		} else {
 			return (getCurrentOutput(chain));
 		}
-	} else {  // filename not empty
+	} else { // filename not empty
 		QFileInfo fi(_filename);
 		bool file_exists = fi.exists();
 		QString filename = file_exists ? fi.canonicalFilePath() : _filename;
@@ -534,7 +535,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, boo
 	return ret;
 }
 
-GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, RCommandChain *chain) {
+GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList &params, RCommandChain *chain) {
 	RK_TRACE(APP);
 
 	QString command = params.value(0);
@@ -542,7 +543,7 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 		if (params.value(1) == QStringLiteral("all")) {
 			QStringList ret;
 			auto all = allOutputs();
-			for (int i=0; i < all.size(); ++i) {
+			for (int i = 0; i < all.size(); ++i) {
 				ret.append(all[i]->getId());
 			}
 			return GenericRRequestResult(ret);
@@ -599,4 +600,3 @@ void RKOutputDirectory::setKnownModified(bool modified) {
 bool RKOutputDirectory::isModifiedFast() const {
 	return known_modified;
 }
-

@@ -10,11 +10,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
  * It is meant to be included, there. */
 
 #define RKD_BACKEND_CODE
-#include "rkgraphicsdevice_protocol_shared.h"
-#include "rkgraphicsdevice_backendtransmitter.h"
+#include "../../debug.h"
 #include "../rkrbackend.h"
 #include "../rkreventloop.h"
-#include "../../debug.h"
+#include "rkgraphicsdevice_backendtransmitter.h"
+#include "rkgraphicsdevice_protocol_shared.h"
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -24,15 +24,14 @@ using namespace Qt::Literals::StringLiterals;
 #define RK_TRACE(flags) RKFullTrace _rk_full_trace(__FILE__, __FUNCTION__, __LINE__);
 class RKFullTrace {
 public:
-	RKFullTrace(char *file, const char *function, int line) : _function(function){
-		qDebug("Trace enter: %s - function %s line %d", file, _function, line);
-	};
-	~RKFullTrace() {
-		qDebug("Trace leave: function %s", _function);
-	};
-	const char *_function;
+    RKFullTrace(char *file, const char *function, int line) : _function(function){
+        qDebug("Trace enter: %s - function %s line %d", file, _function, line);
+    };
+    ~RKFullTrace() {
+        qDebug("Trace leave: function %s", _function);
+    };
+    const char *_function;
 }; */
-
 
 #include "../rkrapi.h"
 
@@ -47,77 +46,77 @@ static int rkd_suppress_on_exit = 0;
  * @note: Never ever call RFn::Rf_error(), or any R function that might fail during the lifetime of an RKGraphicsDataStreamReadGuard or
  * RKGraphicsDataStreamWriteGuard. If R decides to long-jump out, the d'tor will not be called, the mutex will be left locked, and
  * the next graphics operation will hang, with no way to interrupt.
- * 
+ *
  * At the same time, note that the RKGraphicsDataStreamReadGuard c'tor @em may cause R to long-jump (safely) in case of a user interrupt,
  * or if the connection was killed. Don't rely on the code following the creation of an RKGraphicsDataStreamReadGuard to be called.
  */
 class RKGraphicsDataStreamReadGuard {
-public:
-	RKGraphicsDataStreamReadGuard () {
-		RKGraphicsDeviceBackendTransmitter::mutex.lock ();
+  public:
+	RKGraphicsDataStreamReadGuard() {
+		RKGraphicsDeviceBackendTransmitter::mutex.lock();
 		have_lock = true;
 		rkd_waiting_for_reply = true;
-		QIODevice* connection = RKGraphicsDeviceBackendTransmitter::connection;
+		QIODevice *connection = RKGraphicsDeviceBackendTransmitter::connection;
 		{
 			RKRSupport::InterruptSuspension susp;
-			while (connection->bytesToWrite ()) {
-				if (!connection->waitForBytesWritten (10)) {
-					checkHandleError ();
+			while (connection->bytesToWrite()) {
+				if (!connection->waitForBytesWritten(10)) {
+					checkHandleError();
 				}
-				if (connection->bytesToWrite ()) RKREventLoop::processX11Events ();
+				if (connection->bytesToWrite()) RKREventLoop::processX11Events();
 			}
-			while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer ()) {
-				RKREventLoop::processX11Events ();
-				if (!connection->waitForReadyRead (10)) {
-					if (checkHandleInterrupt (connection)) break;
-					checkHandleError ();
+			while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer()) {
+				RKREventLoop::processX11Events();
+				if (!connection->waitForReadyRead(10)) {
+					if (checkHandleInterrupt(connection)) break;
+					checkHandleError();
 				}
 			}
 			if (ROb(R_interrupts_pending)) {
 				if (have_lock) {
-					RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
-					have_lock = false;  // Will d'tor still be called? We don't rely on it.
+					RKGraphicsDeviceBackendTransmitter::mutex.unlock();
+					have_lock = false; // Will d'tor still be called? We don't rely on it.
 				}
 				rkd_waiting_for_reply = false;
 			}
 		};
 	}
 
-	~RKGraphicsDataStreamReadGuard () {
-		if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+	~RKGraphicsDataStreamReadGuard() {
+		if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock();
 		rkd_waiting_for_reply = false;
 	}
 
-private:
-	bool checkHandleInterrupt (QIODevice *connection) {
+  private:
+	bool checkHandleInterrupt(QIODevice *connection) {
 		// NOTE: It would be possible, but not exactly easier to rely on GEonExit() rather than R_interrupts_pending
 		// Might be an option, if R_interrupts_pending gets hidden one day, though
 		if (!ROb(R_interrupts_pending)) return false;
 
 		// Tell the frontend to finish whatever it was doing ASAP. Don't process any other events until that has happened
-		RKGraphicsDeviceBackendTransmitter::streamer.outstream << (quint8) RKDCancel << (quint8) 0;
-		RKGraphicsDeviceBackendTransmitter::streamer.writeOutBuffer ();
-		while (connection->bytesToWrite ()) {
-			if (!connection->waitForBytesWritten (10)) {
-				checkHandleError ();
+		RKGraphicsDeviceBackendTransmitter::streamer.outstream << (quint8)RKDCancel << (quint8)0;
+		RKGraphicsDeviceBackendTransmitter::streamer.writeOutBuffer();
+		while (connection->bytesToWrite()) {
+			if (!connection->waitForBytesWritten(10)) {
+				checkHandleError();
 			}
 		}
 		int loop = 0;
-		while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer ()) {
-			if (!connection->waitForReadyRead (10)) {
+		while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer()) {
+			if (!connection->waitForReadyRead(10)) {
 				if (++loop > 500) {
-					connection->close ();	// If frontend is unresponsive, kill connection
+					connection->close(); // If frontend is unresponsive, kill connection
 				}
-				checkHandleError ();
+				checkHandleError();
 			}
 		}
 		return true;
 	}
 
-	void checkHandleError () {
-		if (!RKGraphicsDeviceBackendTransmitter::connectionAlive ()) {	// Don't go into endless loop, if e.g. frontend has crashed
-			if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
-			have_lock = false;	// Will d'tor still be called? We don't rely on it.
+	void checkHandleError() {
+		if (!RKGraphicsDeviceBackendTransmitter::connectionAlive()) { // Don't go into endless loop, if e.g. frontend has crashed
+			if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock();
+			have_lock = false; // Will d'tor still be called? We don't rely on it.
 			RFn::Rf_error("RKWard Graphics connection has shut down");
 		}
 	}
@@ -126,8 +125,8 @@ private:
 
 /** This class is essentially like QMutexLocker. In addition, the destructor takes care of pushing anything that was written to the protocol buffer during it lifetime to the transmitter. (Does NOT wait for the transmission itself). */
 class RKGraphicsDataStreamWriteGuard {
-public:
-	RKGraphicsDataStreamWriteGuard () {
+  public:
+	RKGraphicsDataStreamWriteGuard() {
 		if (rkd_waiting_for_reply) {
 			// For now, the backend does not support any nesting of graphics operations. It would make the protocol more complex.
 			// I believe the only use-case is resizing during interaction, and IMO, that's not a terribly important one to support.
@@ -143,11 +142,11 @@ public:
 			rkd_suppress_on_exit++;
 			RFn::Rf_error("Nested graphics operations are not supported by this device (did you try to resize the device during locator()?)");
 		}
-		RKGraphicsDeviceBackendTransmitter::mutex.lock ();
+		RKGraphicsDeviceBackendTransmitter::mutex.lock();
 	}
-	~RKGraphicsDataStreamWriteGuard () {
-		RKGraphicsDeviceBackendTransmitter::streamer.writeOutBuffer ();
-		RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+	~RKGraphicsDataStreamWriteGuard() {
+		RKGraphicsDeviceBackendTransmitter::streamer.writeOutBuffer();
+		RKGraphicsDeviceBackendTransmitter::mutex.unlock();
 	}
 };
 
@@ -157,51 +156,55 @@ public:
 // I'd love to convert to QColor, directly, but that's in QtGui, not QtCore. QRgb used different byte ordering
 // TODO: is the check against NA_INTEGER needed at all?
 #define WRITE_COLOR_BYTES(col) \
-	RKD_OUT_STREAM << (quint8) R_RED (col) << (quint8) R_GREEN (col) << (quint8) R_BLUE (col) << (quint8) R_ALPHA (col)
-#define WRITE_HEADER_NUM(x,devnum) \
-	RKD_OUT_STREAM << (qint8) x << (quint8) devnum
-#define WRITE_HEADER(x,dev) \
-	WRITE_HEADER_NUM (x,static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->devnum)
+	RKD_OUT_STREAM << (quint8)R_RED(col) << (quint8)R_GREEN(col) << (quint8)R_BLUE(col) << (quint8)R_ALPHA(col)
+#define WRITE_HEADER_NUM(x, devnum) \
+	RKD_OUT_STREAM << (qint8)x << (quint8)devnum
+#define WRITE_HEADER(x, dev) \
+	WRITE_HEADER_NUM(x, static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->devnum)
 #define WRITE_COL() \
-	WRITE_COLOR_BYTES (gc->col)
+	WRITE_COLOR_BYTES(gc->col)
 #define WRITE_PEN() \
-	WRITE_COL(); RKD_OUT_STREAM << (double) gc->lwd << (qint32) gc->lty
+	WRITE_COL();    \
+	RKD_OUT_STREAM << (double)gc->lwd << (qint32)gc->lty
 // actually lmitre is only needed if linejoin is GE_MITRE_JOIN, so we could optimize a bit
 #define WRITE_LINE_ENDS() \
-	RKD_OUT_STREAM << (quint8) mapLineEndStyle(gc->lend) << (quint8) mapLineJoinStyle(gc->ljoin) << gc->lmitre
+	RKD_OUT_STREAM << (quint8)mapLineEndStyle(gc->lend) << (quint8)mapLineJoinStyle(gc->ljoin) << gc->lmitre
 #if R_VERSION >= R_Version(4, 1, 0)
-#  define WRITE_FILL() \
-	if (gc->patternFill != ROb(R_NilValue)) RKD_OUT_STREAM << (qint8) PatternFill << (qint16) (RFn::INTEGER(gc->patternFill)[0]); \
-	else { \
-		RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill); \
-	}
+#	define WRITE_FILL()                                                                                                            \
+		if (gc->patternFill != ROb(R_NilValue)) RKD_OUT_STREAM << (qint8)PatternFill << (qint16)(RFn::INTEGER(gc->patternFill)[0]); \
+		else {                                                                                                                      \
+			RKD_OUT_STREAM << (qint8)ColorFill;                                                                                     \
+			WRITE_COLOR_BYTES(gc->fill);                                                                                            \
+		}
 #else
-#  define WRITE_FILL() \
-	RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill);
+#	define WRITE_FILL()                    \
+		RKD_OUT_STREAM << (qint8)ColorFill; \
+		WRITE_COLOR_BYTES(gc->fill);
 #endif
 #define WRITE_FONT(dev) \
-	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString::fromUtf8(gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->getFontFamily(gc->fontface == 5)))
+	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8)gc->fontface << (gc->fontfamily[0] ? QString::fromUtf8(gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->getFontFamily(gc->fontface == 5)))
 
-static void RKD_QueryResolution (double *dpix, double *dpiy) {
+static void RKD_QueryResolution(double *dpix, double *dpiy) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER_NUM (RKDQueryResolution, 0);
+		WRITE_HEADER_NUM(RKDQueryResolution, 0);
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
 		qreal _dpix, _dpiy;
 		RKD_IN_STREAM >> _dpix >> _dpiy;
-		*dpix = _dpix; *dpiy = _dpiy;
+		*dpix = _dpix;
+		*dpiy = _dpiy;
 	}
 }
 
-static void RKD_Create (double width, double height, pDevDesc dev, const char *title, bool antialias, quint32 id) {
+static void RKD_Create(double width, double height, pDevDesc dev, const char *title, bool antialias, quint32 id) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard guard;
-		WRITE_HEADER (RKDCreate, dev);
-		RKD_OUT_STREAM << width << height << QString::fromUtf8 (title) << antialias << id;
+		WRITE_HEADER(RKDCreate, dev);
+		RKD_OUT_STREAM << width << height << QString::fromUtf8(title) << antialias << id;
 	}
 	{
 		// Reading a reply in order to force this to be synchronous. .rk.with.placement.hint() may run into race conditions, otherwise.
@@ -211,32 +214,32 @@ static void RKD_Create (double width, double height, pDevDesc dev, const char *t
 	}
 }
 
-static void RKD_Size (double *left, double *right, double *bottom, double *top, pDevDesc dev) {
+static void RKD_Size(double *left, double *right, double *bottom, double *top, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-// NOTE: This does *not* query the frontend for the current size. This is only done on request
+	// NOTE: This does *not* query the frontend for the current size. This is only done on request
 	*left = dev->left;
 	*top = dev->top;
 	*right = dev->right;
 	*bottom = dev->bottom;
 }
 
-static void RKD_SetSize (pDevDesc dev) {
+static void RKD_SetSize(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard wguard;
-	WRITE_HEADER (RKDSetSize, dev);
-	RKD_OUT_STREAM << QSize (qAbs (dev->right - dev->left) + .2, qAbs (dev->bottom - dev->top) + .2);
+	WRITE_HEADER(RKDSetSize, dev);
+	RKD_OUT_STREAM << QSize(qAbs(dev->right - dev->left) + .2, qAbs(dev->bottom - dev->top) + .2);
 }
 
-static void RKD_Activate (pDevDesc dev) {
+static void RKD_Activate(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDActivate, dev);
+	WRITE_HEADER(RKDActivate, dev);
 }
 
-static void RKD_Deactivate (pDevDesc dev) {
+static void RKD_Deactivate(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDDeActivate, dev);
+	WRITE_HEADER(RKDDeActivate, dev);
 }
 
 SEXP RKD_AdjustSize(SEXP _devnum, SEXP _id) {
@@ -249,7 +252,7 @@ SEXP RKD_AdjustSize(SEXP _devnum, SEXP _id) {
 	// This is called from rkward:::RK.resize(), which in turn may be out of sync with R's device list. Before doing anything,
 	// double check that this is really the device we think it is.
 	if (dev->activate != RKD_Activate) RFn::Rf_error("Not an RKWard device %d", devnum);
-	if (static_cast<RKGraphicsDeviceDesc*>(dev->deviceSpecific)->id != id) RFn::Rf_error("Graphics device mismatch %d", devnum);
+	if (static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->id != id) RFn::Rf_error("Graphics device mismatch %d", devnum);
 
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
@@ -265,103 +268,103 @@ SEXP RKD_AdjustSize(SEXP _devnum, SEXP _id) {
 	dev->right = size.width();
 	dev->bottom = size.height();
 
-	RKD_SetSize(dev);    // This adjusts the rendering area in the frontend
-	if(gdev->dirty) RFn::GEplayDisplayList(gdev);
+	RKD_SetSize(dev); // This adjusts the rendering area in the frontend
+	if (gdev->dirty) RFn::GEplayDisplayList(gdev);
 	return ROb(R_NilValue);
 }
 
-static void RKD_Circle (double x, double y, double r, R_GE_gcontext *gc, pDevDesc dev) {
+static void RKD_Circle(double x, double y, double r, R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDCircle, dev);
+	WRITE_HEADER(RKDCircle, dev);
 	RKD_OUT_STREAM << x << y << r;
-	WRITE_PEN ();
-	WRITE_FILL ();
+	WRITE_PEN();
+	WRITE_FILL();
 }
 
-static void RKD_Line (double x1, double y1, double x2, double y2, R_GE_gcontext *gc, pDevDesc dev) {
+static void RKD_Line(double x1, double y1, double x2, double y2, R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDLine, dev);
+	WRITE_HEADER(RKDLine, dev);
 	RKD_OUT_STREAM << x1 << y1 << x2 << y2;
-	WRITE_PEN ();
-	WRITE_LINE_ENDS ();
+	WRITE_PEN();
+	WRITE_LINE_ENDS();
 }
 
-static void RKD_Polygon (int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
+static void RKD_Polygon(int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDPolygon, dev);
-	quint32 _n = qMin (n, 1 << 25);	// skip stuff exceeding reasonable limits to keep protocol simple
+	WRITE_HEADER(RKDPolygon, dev);
+	quint32 _n = qMin(n, 1 << 25); // skip stuff exceeding reasonable limits to keep protocol simple
 	RKD_OUT_STREAM << _n;
 	for (quint32 i = 0; i < _n; ++i) {
 		RKD_OUT_STREAM << x[i] << y[i];
 	}
-	WRITE_PEN ();
-	WRITE_LINE_ENDS ();
-	WRITE_FILL ();
+	WRITE_PEN();
+	WRITE_LINE_ENDS();
+	WRITE_FILL();
 }
 
-static void RKD_Polyline (int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
+static void RKD_Polyline(int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDPolyline, dev);
-	quint32 _n = qMin (n, 1 << 25);	// skip stuff exceeding reasonable limits to keep protocol simple
+	WRITE_HEADER(RKDPolyline, dev);
+	quint32 _n = qMin(n, 1 << 25); // skip stuff exceeding reasonable limits to keep protocol simple
 	RKD_OUT_STREAM << _n;
 	for (quint32 i = 0; i < _n; ++i) {
 		RKD_OUT_STREAM << x[i] << y[i];
 	}
-	WRITE_PEN ();
-	WRITE_LINE_ENDS ();
+	WRITE_PEN();
+	WRITE_LINE_ENDS();
 }
 
-static void RKD_Path (double *x, double *y, int npoly, int *nper, Rboolean winding, R_GE_gcontext *gc, pDevDesc dev) {
+static void RKD_Path(double *x, double *y, int npoly, int *nper, Rboolean winding, R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDPath, dev);
+	WRITE_HEADER(RKDPath, dev);
 	quint32 total_points = 0;
-	quint32 _n = qMin (npoly, 1 << 24);	// skip stuff exceeding reasonable limits to keep protocol simple
+	quint32 _n = qMin(npoly, 1 << 24); // skip stuff exceeding reasonable limits to keep protocol simple
 	RKD_OUT_STREAM << _n;
 	for (quint32 i = 0; i < _n; ++i) {
-		quint32 np = nper[i];	// Actually, a quint8 would probably do?
+		quint32 np = nper[i]; // Actually, a quint8 would probably do?
 		RKD_OUT_STREAM << np;
 		for (quint32 j = 0; j < np; ++j) {
 			RKD_OUT_STREAM << x[total_points] << y[total_points];
 			total_points++;
 		}
 	}
-	RKD_OUT_STREAM << (bool) winding;
-	WRITE_PEN ();
-	WRITE_LINE_ENDS ();
-	WRITE_FILL ();
+	RKD_OUT_STREAM << (bool)winding;
+	WRITE_PEN();
+	WRITE_LINE_ENDS();
+	WRITE_FILL();
 }
 
-static void RKD_Rect (double x0, double y0, double x1, double y1, R_GE_gcontext *gc, pDevDesc dev) {
+static void RKD_Rect(double x0, double y0, double x1, double y1, R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDRect, dev);
-	RKD_OUT_STREAM << QRectF (x0, y0, x1-x0, y1-y0);
-	WRITE_PEN ();
-	WRITE_LINE_ENDS ();
-	WRITE_FILL ();
+	WRITE_HEADER(RKDRect, dev);
+	RKD_OUT_STREAM << QRectF(x0, y0, x1 - x0, y1 - y0);
+	WRITE_PEN();
+	WRITE_LINE_ENDS();
+	WRITE_FILL();
 }
 
-static void RKD_TextUTF8 (double x, double y, const char *str, double rot, double hadj, R_GE_gcontext *gc, pDevDesc dev) {
+static void RKD_TextUTF8(double x, double y, const char *str, double rot, double hadj, R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDTextUTF8, dev);
-	RKD_OUT_STREAM << x << y << QString::fromUtf8 (str) << rot << hadj;	// NOTE: yes, even Symbols are sent as UTF-8, here.
-	WRITE_COL ();
-	WRITE_FONT (dev);
+	WRITE_HEADER(RKDTextUTF8, dev);
+	RKD_OUT_STREAM << x << y << QString::fromUtf8(str) << rot << hadj; // NOTE: yes, even Symbols are sent as UTF-8, here.
+	WRITE_COL();
+	WRITE_FONT(dev);
 }
 
-static double RKD_StrWidthUTF8 (const char *str, R_GE_gcontext *gc, pDevDesc dev) {
+static double RKD_StrWidthUTF8(const char *str, R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard guard;
-		WRITE_HEADER (RKDStrWidthUTF8, dev);
-		RKD_OUT_STREAM << QString::fromUtf8 (str);	// NOTE: yes, even Symbols are sent as UTF-8, here.
-		WRITE_FONT (dev);
+		WRITE_HEADER(RKDStrWidthUTF8, dev);
+		RKD_OUT_STREAM << QString::fromUtf8(str); // NOTE: yes, even Symbols are sent as UTF-8, here.
+		WRITE_FONT(dev);
 	}
 	double ret;
 	{
@@ -371,34 +374,34 @@ static double RKD_StrWidthUTF8 (const char *str, R_GE_gcontext *gc, pDevDesc dev
 	return ret;
 }
 
-static void RKD_NewPage (R_GE_gcontext *gc, pDevDesc dev) {
+static void RKD_NewPage(R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDNewPage, dev);
-	WRITE_FILL ();
+	WRITE_HEADER(RKDNewPage, dev);
+	WRITE_FILL();
 }
 
-static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* descent, double* width, pDevDesc dev) {
+static void RKD_MetricInfo(int c, R_GE_gcontext *gc, double *ascent, double *descent, double *width, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER (RKDMetricInfo, dev);
+		WRITE_HEADER(RKDMetricInfo, dev);
 		QChar unichar;
 		if (c < 0) {
 			char32_t inbuf[2];
 			inbuf[0] = -c;
 			inbuf[1] = 0;
 			QString dummy = QString::fromUcs4(inbuf);
-			if (!dummy.isEmpty ()) unichar = dummy.at (0);
-		} else {		// correct?! Do we get utf8, here?
+			if (!dummy.isEmpty()) unichar = dummy.at(0);
+		} else { // correct?! Do we get utf8, here?
 			int inbuf[2];
 			inbuf[0] = c;
 			inbuf[1] = 0;
-			QString dummy = QString::fromUtf8 ((char*) inbuf);
-			if (!dummy.isEmpty ()) unichar = dummy.at (0);
+			QString dummy = QString::fromUtf8((char *)inbuf);
+			if (!dummy.isEmpty()) unichar = dummy.at(0);
 		}
 		RKD_OUT_STREAM << unichar;
-		WRITE_FONT (dev);
+		WRITE_FONT(dev);
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
@@ -406,12 +409,12 @@ static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* de
 	}
 }
 
-static void RKD_Close (pDevDesc dev) {
+static void RKD_Close(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard guard;
-		WRITE_HEADER (RKDClose, dev);
-		delete static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific);
+		WRITE_HEADER(RKDClose, dev);
+		delete static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific);
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
@@ -420,52 +423,52 @@ static void RKD_Close (pDevDesc dev) {
 	}
 }
 
-static void RKD_Clip (double left, double right, double top, double bottom, pDevDesc dev) {
+static void RKD_Clip(double left, double right, double top, double bottom, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	dev->clipLeft = left;
 	dev->clipRight = right;
 	dev->clipTop = top;
 	dev->clipBottom = bottom;
 	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDClip, dev);
-	RKD_OUT_STREAM << QRectF (left, top, right - left, bottom - top);
+	WRITE_HEADER(RKDClip, dev);
+	RKD_OUT_STREAM << QRectF(left, top, right - left, bottom - top);
 }
 
-static void RKD_Mode (int mode, pDevDesc dev) {
+static void RKD_Mode(int mode, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	Q_UNUSED (mode);
-	Q_UNUSED (dev);
-/* Left empty for now. 1 is start signal, 0 is stop signal. Might be useful for flushing, though.
+	Q_UNUSED(mode);
+	Q_UNUSED(dev);
+	/* Left empty for now. 1 is start signal, 0 is stop signal. Might be useful for flushing, though.
 
-	RKGraphicsDataStreamWriteGuard guard;
-	RKD_OUT_STREAM << WRITE_HEADER (RKDMode, dev);
-	connection << (qint8) mode; */
+	    RKGraphicsDataStreamWriteGuard guard;
+	    RKD_OUT_STREAM << WRITE_HEADER (RKDMode, dev);
+	    connection << (qint8) mode; */
 }
 
-static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, double width, double height, double rot, Rboolean interpolate, const pGEcontext gc, pDevDesc dev) {
+static void RKD_Raster(unsigned int *raster, int w, int h, double x, double y, double width, double height, double rot, Rboolean interpolate, const pGEcontext gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	Q_UNUSED(gc); // No idea what this is supposed to be good for. R's own cairo device ignores it.
 
 	RKGraphicsDataStreamWriteGuard wguard;
-	WRITE_HEADER (RKDRaster, dev);
+	WRITE_HEADER(RKDRaster, dev);
 
-	quint32 _w = qMin (w, 1 << 15);	// skip stuff exceeding reasonable limits to keep protocol simple
+	quint32 _w = qMin(w, 1 << 15); // skip stuff exceeding reasonable limits to keep protocol simple
 	RKD_OUT_STREAM << _w;
-	quint32 _h = qMin (h, 1 << 15);
+	quint32 _h = qMin(h, 1 << 15);
 	RKD_OUT_STREAM << _h;
 	for (quint32 col = 0; col < _h; ++col) {
 		for (quint32 row = 0; row < _w; ++row) {
-			WRITE_COLOR_BYTES (raster[(col*_w) + row]);
+			WRITE_COLOR_BYTES(raster[(col * _w) + row]);
 		}
 	}
-	RKD_OUT_STREAM << QRectF (x, y, width, height) << rot << (bool) interpolate;
+	RKD_OUT_STREAM << QRectF(x, y, width, height) << rot << (bool)interpolate;
 }
 
 static SEXP RKD_Capture(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER (RKDCapture, dev);
+		WRITE_HEADER(RKDCapture, dev);
 	}
 
 	quint32 w, h;
@@ -475,8 +478,8 @@ static SEXP RKD_Capture(pDevDesc dev) {
 		RKGraphicsDataStreamReadGuard rguard;
 		quint8 r, g, b, a;
 		RKD_IN_STREAM >> w >> h;
-		size = w*h;
-		buffer.reserve(size);// Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks benign in comparison; Note that the vector may easily be too large for allocation on the stack)
+		size = w * h;
+		buffer.reserve(size); // Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks benign in comparison; Note that the vector may easily be too large for allocation on the stack)
 		for (quint32 row = 0; row < h; ++row) {
 			for (quint32 col = 0; col < w; ++col) {
 				RKD_IN_STREAM >> r >> g >> b >> a;
@@ -500,26 +503,26 @@ static SEXP RKD_Capture(pDevDesc dev) {
 	return ret;
 }
 
-static Rboolean RKD_Locator (double *x, double *y, pDevDesc dev) {
+static Rboolean RKD_Locator(double *x, double *y, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER (RKDLocator, dev);
+		WRITE_HEADER(RKDLocator, dev);
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
 		bool ok;
 		RKD_IN_STREAM >> ok >> *x >> *y;
-		if (ok) return (Rboolean) TRUE;
-		return (Rboolean) FALSE;
+		if (ok) return (Rboolean)TRUE;
+		return (Rboolean)FALSE;
 	}
 }
 
-static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
+static Rboolean RKD_NewFrameConfirm(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER (RKDNewPageConfirm, dev);
+		WRITE_HEADER(RKDNewPageConfirm, dev);
 	}
 	bool ok;
 	{
@@ -568,26 +571,26 @@ void RKD_EventHelper(pDevDesc dev, int code) {
 			// nothing
 		} else if (event_code == RKDKeyPress) {
 			RKD_IN_STREAM >> text >> keycode >> modifiers;
-		} else {  // a mouse event
+		} else { // a mouse event
 			RKD_IN_STREAM >> buttons >> x >> y;
 		}
 	}
 
 	if (event_code == RKDFrontendCancel) {
 		RFn::Rf_error("Interrupted by user");
-		return;  // not reached
+		return; // not reached
 	}
 	if (event_code == RKDNothing) {
 		if (RFn::Rf_doesIdle(dev)) RFn::Rf_doIdle(dev);
 		return;
 	} else if (event_code == RKDKeyPress) {
 		if (modifiers -
-		    (modifiers & Qt::ShiftModifier)) {  // any other modifier than Shift, alone. NOTE: devX11.c and devWindows.c handle Ctrl, only as of R 3.0.0
+		    (modifiers & Qt::ShiftModifier)) { // any other modifier than Shift, alone. NOTE: devX11.c and devWindows.c handle Ctrl, only as of R 3.0.0
 			QString mod_text;
 			if (modifiers & Qt::ControlModifier) mod_text.append(u"ctrl-"_s);
 			if (modifiers & Qt::AltModifier) mod_text.append(u"alt-"_s);
 			if (modifiers & Qt::MetaModifier) mod_text.append(u"meta-"_s);
-			if (text.isEmpty() && (modifiers & Qt::ShiftModifier)) mod_text.append(u"shift-"_s);  // don't apply shift when there is text (where it has already been handled)
+			if (text.isEmpty() && (modifiers & Qt::ShiftModifier)) mod_text.append(u"shift-"_s); // don't apply shift when there is text (where it has already been handled)
 			text = mod_text + text.toUpper();
 		}
 
@@ -605,14 +608,14 @@ void RKD_EventHelper(pDevDesc dev, int code) {
 		else if (keycode == Qt::Key_Delete) r_key_name = R_KeyName::knDEL;
 
 		RFn::Rf_doKeybd(dev, r_key_name, text.toUtf8().data());
-	} else {  // all others are mouse events
+	} else { // all others are mouse events
 		RFn::Rf_doMouseEvent(
 		    dev, event_code == RKDMouseDown ? R_MouseEvent::meMouseDown : (event_code == RKDMouseUp ? R_MouseEvent::meMouseUp : R_MouseEvent::meMouseMove),
 		    buttons, x, y);
 	}
 }
 
-void RKD_onExit (pDevDesc dev) {
+void RKD_onExit(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	if (rkd_suppress_on_exit > 0) {
 		--rkd_suppress_on_exit;
@@ -620,18 +623,18 @@ void RKD_onExit (pDevDesc dev) {
 	}
 	if (dev->gettingEvent) {
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER (RKDStopGettingEvents, dev);
+		WRITE_HEADER(RKDStopGettingEvents, dev);
 	}
 	dev->gettingEvent = (Rboolean) false;
 }
 
-int RKD_HoldFlush (pDevDesc, int) {
+int RKD_HoldFlush(pDevDesc, int) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	// deliberately left unimplemented: Drawing is in a separte thread, anyway, and only done after a timeout
 	return 0;
 }
 
-#if R_VERSION >= R_Version (4, 1, 0)
+#if R_VERSION >= R_Version(4, 1, 0)
 qint8 getGradientExtend(int Rextent) {
 	if (Rextent == R_GE_patternExtendPad) return GradientExtendPad;
 	if (Rextent == R_GE_patternExtendReflect) return GradientExtendReflect;
@@ -654,31 +657,31 @@ static void RK_tryCall(SEXP func) {
 	RFn::Rf_unprotect(1);
 }
 
-SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
+SEXP RKD_SetPattern(SEXP pattern, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	auto ptype = RFn::R_GE_patternType(pattern);
 	if ((ptype == R_GE_linearGradientPattern) || (ptype == R_GE_radialGradientPattern)) {
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDSetPattern, dev);
 		if (ptype == R_GE_linearGradientPattern) {
-			RKD_OUT_STREAM << (qint8) RKDPatternType::LinearPattern;
-			RKD_OUT_STREAM << (double) RFn::R_GE_linearGradientX1(pattern) << (double) RFn::R_GE_linearGradientX2(pattern) << (double) RFn::R_GE_linearGradientY1(pattern) << (double) RFn::R_GE_linearGradientY2(pattern);
+			RKD_OUT_STREAM << (qint8)RKDPatternType::LinearPattern;
+			RKD_OUT_STREAM << (double)RFn::R_GE_linearGradientX1(pattern) << (double)RFn::R_GE_linearGradientX2(pattern) << (double)RFn::R_GE_linearGradientY1(pattern) << (double)RFn::R_GE_linearGradientY2(pattern);
 			qint16 nstops = RFn::R_GE_linearGradientNumStops(pattern);
 			RKD_OUT_STREAM << nstops;
 			for (int i = 0; i < nstops; ++i) {
 				WRITE_COLOR_BYTES(RFn::R_GE_linearGradientColour(pattern, i));
-				RKD_OUT_STREAM << (double) RFn::R_GE_linearGradientStop(pattern, i);
+				RKD_OUT_STREAM << (double)RFn::R_GE_linearGradientStop(pattern, i);
 			}
 			RKD_OUT_STREAM << getGradientExtend(RFn::R_GE_linearGradientExtend(pattern));
 		} else if (ptype == R_GE_radialGradientPattern) {
-			RKD_OUT_STREAM << (qint8) RKDPatternType::RadialPattern;
-			RKD_OUT_STREAM << (double) RFn::R_GE_radialGradientCX1(pattern) << (double) RFn::R_GE_radialGradientCY1(pattern) << (double) RFn::R_GE_radialGradientR1(pattern);
-			RKD_OUT_STREAM << (double) RFn::R_GE_radialGradientCX2(pattern) << (double) RFn::R_GE_radialGradientCY2(pattern) << (double) RFn::R_GE_radialGradientR2(pattern);
+			RKD_OUT_STREAM << (qint8)RKDPatternType::RadialPattern;
+			RKD_OUT_STREAM << (double)RFn::R_GE_radialGradientCX1(pattern) << (double)RFn::R_GE_radialGradientCY1(pattern) << (double)RFn::R_GE_radialGradientR1(pattern);
+			RKD_OUT_STREAM << (double)RFn::R_GE_radialGradientCX2(pattern) << (double)RFn::R_GE_radialGradientCY2(pattern) << (double)RFn::R_GE_radialGradientR2(pattern);
 			qint16 nstops = RFn::R_GE_radialGradientNumStops(pattern);
 			RKD_OUT_STREAM << nstops;
 			for (int i = 0; i < nstops; ++i) {
 				WRITE_COLOR_BYTES(RFn::R_GE_radialGradientColour(pattern, i));
-				RKD_OUT_STREAM << (double) RFn::R_GE_radialGradientStop(pattern, i);
+				RKD_OUT_STREAM << (double)RFn::R_GE_radialGradientStop(pattern, i);
 			}
 			RKD_OUT_STREAM << getGradientExtend(RFn::R_GE_radialGradientExtend(pattern));
 		}
@@ -686,8 +689,8 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 		{
 			RKGraphicsDataStreamWriteGuard wguard;
 			WRITE_HEADER(RKDStartRecordTilingPattern, dev);
-			RKD_OUT_STREAM << (double) RFn::R_GE_tilingPatternWidth(pattern) << (double) RFn::R_GE_tilingPatternHeight(pattern);
-			RKD_OUT_STREAM << (double) RFn::R_GE_tilingPatternX(pattern) << (double) RFn::R_GE_tilingPatternY(pattern);
+			RKD_OUT_STREAM << (double)RFn::R_GE_tilingPatternWidth(pattern) << (double)RFn::R_GE_tilingPatternHeight(pattern);
+			RKD_OUT_STREAM << (double)RFn::R_GE_tilingPatternX(pattern) << (double)RFn::R_GE_tilingPatternY(pattern);
 		}
 		// Play the pattern generator function. Contrary to cairo device, we use tryEval, here, to avoid getting into a
 		// bad device state in case of errors
@@ -721,25 +724,25 @@ void releaseCachedResource(RKDCachedResourceType type, SEXP ref, pDevDesc dev) {
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDReleaseCachedResource, dev);
-		RKD_OUT_STREAM << (quint8) type;
+		RKD_OUT_STREAM << (quint8)type;
 		if (RFn::Rf_isNull(ref)) {
-			RKD_OUT_STREAM << (qint32) 1 << (qint32) -1; // means: destroy all objects of that type
+			RKD_OUT_STREAM << (qint32)1 << (qint32)-1; // means: destroy all objects of that type
 		} else {
 			qint32 len = RFn::Rf_length(ref);
 			RKD_OUT_STREAM << len;
 			for (int i = 0; i < len; ++i) {
-				RKD_OUT_STREAM << (qint32) RFn::INTEGER(ref)[i];
+				RKD_OUT_STREAM << (qint32)RFn::INTEGER(ref)[i];
 			}
 		}
 	}
 }
 
-void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {
+void RKD_ReleasePattern(SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	releaseCachedResource(RKDPattern, ref, dev);
 }
 
-SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
+SEXP RKD_SetClipPath(SEXP path, SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	qint32 index = -1;
 	if (!RFn::Rf_isNull(ref)) index = RFn::INTEGER(ref)[0];
@@ -769,11 +772,11 @@ SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDEndRecordClipPath, dev);
-#if R_VERSION >= R_Version(4, 2, 0)
-		RKD_OUT_STREAM << (qint8) mapFillRule(RFn::R_GE_clipPathFillRule(path));
-#else
-		RKD_OUT_STREAM << (qint8) 0;  // NOTE: 0 == Qt::OddEvenFill
-#endif
+#	if R_VERSION >= R_Version(4, 2, 0)
+		RKD_OUT_STREAM << (qint8)mapFillRule(RFn::R_GE_clipPathFillRule(path));
+#	else
+		RKD_OUT_STREAM << (qint8)0; // NOTE: 0 == Qt::OddEvenFill
+#	endif
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
@@ -782,18 +785,18 @@ SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
 	return makeInt(index);
 }
 
-void RKD_ReleaseClipPath (SEXP ref, pDevDesc dev) {
+void RKD_ReleaseClipPath(SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	releaseCachedResource(RKDClipPath, ref, dev);
 }
 
-SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
+SEXP RKD_SetMask(SEXP mask, SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	// Same logic as RKD_SetClipPath
 
 	qint32 index = 0;
-	if (!RFn::Rf_isNull(ref)) index = RFn::INTEGER(ref)[0];  // ref==NULL means the mask is not yet registered, will be recorded, below
-	if (index > 0 || RFn::Rf_isNull(mask)) {  // mask==NULL means to unset the current mask. signalled to the frontend as index=0
+	if (!RFn::Rf_isNull(ref)) index = RFn::INTEGER(ref)[0]; // ref==NULL means the mask is not yet registered, will be recorded, below
+	if (index > 0 || RFn::Rf_isNull(mask)) {                // mask==NULL means to unset the current mask. signalled to the frontend as index=0
 		{
 			RKGraphicsDataStreamWriteGuard wguard;
 			WRITE_HEADER(RKDSetMask, dev);
@@ -818,11 +821,11 @@ SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDEndRecordMask, dev);
-#if R_VERSION >= R_Version(4,2,0)
-		RKD_OUT_STREAM << (qint8) (RFn::R_GE_maskType(mask) == R_GE_luminanceMask ? 1 : 0);
-#else
-		RKD_OUT_STREAM << (qint8) 0;
-#endif
+#	if R_VERSION >= R_Version(4, 2, 0)
+		RKD_OUT_STREAM << (qint8)(RFn::R_GE_maskType(mask) == R_GE_luminanceMask ? 1 : 0);
+#	else
+		RKD_OUT_STREAM << (qint8)0;
+#	endif
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
@@ -831,14 +834,14 @@ SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
 	return makeInt(index);
 }
 
-void RKD_ReleaseMask (SEXP ref, pDevDesc dev) {
+void RKD_ReleaseMask(SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	releaseCachedResource(RKDMask, ref, dev);
 }
 
 #endif
 
-#if R_VERSION >= R_Version(4,2,0)
+#if R_VERSION >= R_Version(4, 2, 0)
 SEXP RKD_DefineGroup(SEXP source, int op, SEXP destination, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
@@ -854,7 +857,7 @@ SEXP RKD_DefineGroup(SEXP source, int op, SEXP destination, pDevDesc dev) {
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDDefineGroupStep2, dev);
-		RKD_OUT_STREAM << (qint8) mapCompositionModeEnum(op);
+		RKD_OUT_STREAM << (qint8)mapCompositionModeEnum(op);
 	}
 
 	// Play generator function for source
@@ -881,7 +884,8 @@ void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
 	bool have_trans = (trans != ROb(R_NilValue));
 	double matrix[6];
 	if (have_trans) {
-		for (int i = 0; i < 6; ++i) matrix[i] = RFn::REAL(trans)[i];  // order in cairo terms: xx, xy, x0, yx, yy, y0
+		for (int i = 0; i < 6; ++i)
+			matrix[i] = RFn::REAL(trans)[i]; // order in cairo terms: xx, xy, x0, yx, yy, y0
 	}
 
 	{
@@ -889,10 +893,11 @@ void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
 		WRITE_HEADER(RKDUseGroup, dev);
 		RKD_OUT_STREAM << index;
 		if (have_trans) {
-			RKD_OUT_STREAM << (qint8) 1;
-			for (int i = 0; i < 6; ++i) RKD_OUT_STREAM << matrix[i];
+			RKD_OUT_STREAM << (qint8)1;
+			for (int i = 0; i < 6; ++i)
+				RKD_OUT_STREAM << matrix[i];
 		} else {
-			RKD_OUT_STREAM << (qint8) 0;
+			RKD_OUT_STREAM << (qint8)0;
 		}
 	}
 }
@@ -915,12 +920,12 @@ void doFillAndOrStroke(SEXP path, const pGEcontext gc, pDevDesc dev, bool fill, 
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDFillStrokePathEnd, dev);
-		RKD_OUT_STREAM << (quint8) fill;
+		RKD_OUT_STREAM << (quint8)fill;
 		if (fill) {
-			RKD_OUT_STREAM << (qint8) mapFillRule(rule);
+			RKD_OUT_STREAM << (qint8)mapFillRule(rule);
 			WRITE_FILL();
 		}
-		RKD_OUT_STREAM << (quint8) stroke;
+		RKD_OUT_STREAM << (quint8)stroke;
 		if (stroke) {
 			WRITE_PEN();
 		}
@@ -940,7 +945,7 @@ void RKD_FillStroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
 }
 #endif
 
-#if R_VERSION >= R_Version(4,3,0)
+#if R_VERSION >= R_Version(4, 3, 0)
 void RKD_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, double size, int colour, double rot, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
@@ -955,9 +960,9 @@ void RKD_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, double size,
 		// NOTE: family, weight, and style are used as fallback, if font(-file), and index don't work
 
 		WRITE_COLOR_BYTES(colour);
-		RKD_OUT_STREAM << qfont << index << family << weight << style << size << rot << (quint32) n;
+		RKD_OUT_STREAM << qfont << index << family << weight << style << size << rot << (quint32)n;
 		for (int i = 0; i < n; ++i) {
-			RKD_OUT_STREAM << x[i] << y[i] << (quint32) glyphs[i];
+			RKD_OUT_STREAM << x[i] << y[i] << (quint32)glyphs[i];
 		}
 	}
 

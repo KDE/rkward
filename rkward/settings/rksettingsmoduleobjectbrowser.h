@@ -21,7 +21,7 @@ class MultiStringSelector;
 */
 class RKSettingsModuleObjectBrowser : public RKSettingsModule {
 	Q_OBJECT
-public:
+  public:
 	explicit RKSettingsModuleObjectBrowser(QObject *parent);
 	~RKSettingsModuleObjectBrowser() override;
 
@@ -29,14 +29,15 @@ public:
 	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("browser");
 
-	static bool isDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };
-	static bool isDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting) { return varselector_settings[setting]; };
-	static void setDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting, bool state);
-	static void setDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting, bool state);
+	static bool isDefaultForWorkspace(RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };
+	static bool isDefaultForVarselector(RKObjectListViewSettings::PersistentSettings setting) { return varselector_settings[setting]; };
+	static void setDefaultForWorkspace(RKObjectListViewSettings::PersistentSettings setting, bool state);
+	static void setDefaultForVarselector(RKObjectListViewSettings::PersistentSettings setting, bool state);
 
-	static bool isPackageBlacklisted (const QString &package_name);
-private:
-friend class RKSettingsPageObjectBrowser;
+	static bool isPackageBlacklisted(const QString &package_name);
+
+  private:
+	friend class RKSettingsPageObjectBrowser;
 	static RKConfigValue<QStringList> getstructure_blacklist;
 
 	static RKConfigValue<bool> workspace_settings[RKObjectListViewSettings::SettingsCount];

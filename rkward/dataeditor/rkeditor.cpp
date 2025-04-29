@@ -8,12 +8,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKEditor::RKEditor (QWidget *parent) : RKMDIWindow (parent, RKMDIWindow::DataEditorWindow) {
-	RK_TRACE (EDITOR);
+RKEditor::RKEditor(QWidget *parent) : RKMDIWindow(parent, RKMDIWindow::DataEditorWindow) {
+	RK_TRACE(EDITOR);
 }
 
-RKEditor::~RKEditor () {
-	RK_TRACE (EDITOR);
-//	getObject ()->setObjectOpened (this, false);
+RKEditor::~RKEditor() {
+	RK_TRACE(EDITOR);
+	//	getObject ()->setObjectOpened (this, false);
 }
-

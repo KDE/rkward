@@ -4,16 +4,16 @@ SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsme
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
- 
+
 #ifndef RKGRAPHICSDEVICE_H
 #define RKGRAPHICSDEVICE_H
 
 #include <QHash>
-#include <QPen>
-#include <QTimer>
+#include <QLabel>
 #include <QPainter>
 #include <QPainterPath>
-#include <QLabel>
+#include <QPen>
+#include <QTimer>
 
 #ifndef Q_OS_WIN
 // On Mac, drawing on a pixmap does not work correctly. Probably can only be done inside paint
@@ -38,37 +38,38 @@ class QDialog;
 /** This is the class that actually does all the drawing for the RKGraphicsDevice */
 class RKGraphicsDevice : public QObject {
 	Q_OBJECT
-protected:
-	RKGraphicsDevice (double width, double height, const QString &title, bool antialias);
-	~RKGraphicsDevice ();
-public:
-	static RKGraphicsDevice* newDevice (int devnum, double width, double height, const QString &title, bool antialias, quint32 id);
-	static void closeDevice (int devnum);
-	static QHash<int, RKGraphicsDevice*> devices;
+  protected:
+	RKGraphicsDevice(double width, double height, const QString &title, bool antialias);
+	~RKGraphicsDevice();
 
-	void circle (double x, double y, double r, const QPen& pen, const QBrush& brush);
-	void line (double x1, double y1, double x2, double y2, const QPen& pen);
-	void rect (const QRectF& rec, const QPen& pen, const QBrush& brush);
-	QSizeF strSize (const QString &text, const QFont& font);
-	void text (double x, double y, const QString &text, double rot, double hadj, const QColor& col, const QFont& font);
-	QString glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, const QVector<QPointF>& points, const QVector<quint32>& glyphs);
-	void metricInfo (const QChar& c, const QFont& font, double *ascent, double *descent, double *width);
-	void setClip (const QRectF& new_clip);
-	void polygon (const QPolygonF& pol, const QPen& pen, const QBrush &brush);
-	void polyline (const QPolygonF& pol, const QPen& pen);
-	void polypath (const QVector<QPolygonF>& polygons, bool winding, const QPen& pen, const QBrush& brush);
-	void clear(const QBrush& col=QBrush());
-	void image (const QImage &image, const QRectF &target_rect, double rot, bool interpolate);
-	QImage capture () const;
-	void setActive (bool active);
-	void triggerUpdate ();
-	void locator ();
-	void confirmNewPage ();
+  public:
+	static RKGraphicsDevice *newDevice(int devnum, double width, double height, const QString &title, bool antialias, quint32 id);
+	static void closeDevice(int devnum);
+	static QHash<int, RKGraphicsDevice *> devices;
+
+	void circle(double x, double y, double r, const QPen &pen, const QBrush &brush);
+	void line(double x1, double y1, double x2, double y2, const QPen &pen);
+	void rect(const QRectF &rec, const QPen &pen, const QBrush &brush);
+	QSizeF strSize(const QString &text, const QFont &font);
+	void text(double x, double y, const QString &text, double rot, double hadj, const QColor &col, const QFont &font);
+	QString glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, const QVector<QPointF> &points, const QVector<quint32> &glyphs);
+	void metricInfo(const QChar &c, const QFont &font, double *ascent, double *descent, double *width);
+	void setClip(const QRectF &new_clip);
+	void polygon(const QPolygonF &pol, const QPen &pen, const QBrush &brush);
+	void polyline(const QPolygonF &pol, const QPen &pen);
+	void polypath(const QVector<QPolygonF> &polygons, bool winding, const QPen &pen, const QBrush &brush);
+	void clear(const QBrush &col = QBrush());
+	void image(const QImage &image, const QRectF &target_rect, double rot, bool interpolate);
+	QImage capture() const;
+	void setActive(bool active);
+	void triggerUpdate();
+	void locator();
+	void confirmNewPage();
 
 	// graphics event handling
-/** Simple struct to keep info about both mouse and keyboard events, so we can store them in a list, until R fetches them. */
+	/** Simple struct to keep info about both mouse and keyboard events, so we can store them in a list, until R fetches them. */
 	struct StoredEvent {
-		StoredEvent () : event_code (0), buttons (0), modifiers (0), keycode (0), x (0), y (0) {};
+		StoredEvent() : event_code(0), buttons(0), modifiers(0), keycode(0), x(0), y(0){};
 		qint8 event_code;
 		qint8 buttons;
 		qint32 modifiers;
@@ -76,15 +77,15 @@ public:
 		QString keytext;
 		double x, y;
 	};
-	void startGettingEvents (const QString &prompt);
-	StoredEvent fetchNextEvent ();
-	void stopGettingEvents ();
+	void startGettingEvents(const QString &prompt);
+	StoredEvent fetchNextEvent();
+	void stopGettingEvents();
 
- 	QWidget* viewPort () const { return view; };
-	QSizeF currentSize () const { return view ? view->size() : QSizeF(); }
-	void setAreaSize (const QSize &size);
+	QWidget *viewPort() const { return view; };
+	QSizeF currentSize() const { return view ? view->size() : QSizeF(); }
+	void setAreaSize(const QSize &size);
 
-/** Patterns / gradients are registered per device in R */
+	/** Patterns / gradients are registered per device in R */
 	int registerPattern(const QBrush &brush);
 	void destroyPattern(int id);
 	QBrush getPattern(int id) const { return patterns.value(id); };
@@ -106,23 +107,24 @@ public:
 	int endRecordGroup();
 	void useGroup(int index, const QTransform &matrix);
 	void destroyGroup(int index);
-public Q_SLOTS:
-	void stopInteraction ();
-Q_SIGNALS:
-	void goingInteractive (bool interactive, const QString &prompt);
-	void activeChanged (bool);
-	void locatorDone (bool ok, double x, double y);
-	void newPageConfirmDone (bool accepted);
-	void captionChanged (const QString &caption);
+  public Q_SLOTS:
+	void stopInteraction();
+  Q_SIGNALS:
+	void goingInteractive(bool interactive, const QString &prompt);
+	void activeChanged(bool);
+	void locatorDone(bool ok, double x, double y);
+	void newPageConfirmDone(bool accepted);
+	void captionChanged(const QString &caption);
 	void deviceClosed(int devnum);
-private Q_SLOTS:
-	void updateNow ();
-	void newPageDialogDone (int result);
-	void viewKilled ();
-private:
-	void goInteractive (const QString &prompt);
-	bool eventFilter (QObject *watched, QEvent *event) override;
-	void checkSize ();
+  private Q_SLOTS:
+	void updateNow();
+	void newPageDialogDone(int result);
+	void viewKilled();
+
+  private:
+	void goInteractive(const QString &prompt);
+	bool eventFilter(QObject *watched, QEvent *event) override;
+	void checkSize();
 
 	QTimer updatetimer;
 #ifdef USE_QIMAGE_BUFFER
@@ -145,7 +147,7 @@ private:
 	bool recording_path;
 	int current_mask;
 
-	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
+	int interaction_opcode; /**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 	quint32 id;
 
 	QList<StoredEvent> stored_events;

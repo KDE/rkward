@@ -7,71 +7,71 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkcommandlog.h"
 
+#include "../misc/rkstandardactions.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkconsole.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulewatch.h"
-#include "../misc/rkstandardactions.h"
 #include "rkcommandeditorwindow.h"
 
-#include <qpushbutton.h>
-#include <qfont.h>
-#include <qlayout.h>
-#include <qsplitter.h>
-#include <QMenu>
 #include <QContextMenuEvent>
 #include <QFontDatabase>
+#include <QMenu>
+#include <qfont.h>
+#include <qlayout.h>
+#include <qpushbutton.h>
+#include <qsplitter.h>
 
 #include <KLocalizedString>
 #include <kactioncollection.h>
 
 #include "../debug.h"
 
-//static
+// static
 RKCommandLog *RKCommandLog::rkcommand_log = nullptr;
 
-RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name) : RKMDIWindow (parent, CommandLogWindow, tool_window, name) {
-	RK_TRACE (APP);
+RKCommandLog::RKCommandLog(QWidget *parent, bool tool_window, const char *name) : RKMDIWindow(parent, CommandLogWindow, tool_window, name) {
+	RK_TRACE(APP);
 
-	log_view = new RKCommandLogView (this);
-	log_view->setLineWrapMode (QTextEdit::NoWrap);
-	log_view->setUndoRedoEnabled (false);
-	log_view->setReadOnly (true);
+	log_view = new RKCommandLogView(this);
+	log_view->setLineWrapMode(QTextEdit::NoWrap);
+	log_view->setUndoRedoEnabled(false);
+	log_view->setReadOnly(true);
 
-	QHBoxLayout *layout = new QHBoxLayout (this);
-	layout->setContentsMargins (0, 0, 0, 0);
-	layout->addWidget (log_view);
+	QHBoxLayout *layout = new QHBoxLayout(this);
+	layout->setContentsMargins(0, 0, 0, 0);
+	layout->addWidget(log_view);
 
-	setCaption (i18n ("Command log"));
-	
-	clearLog ();
+	setCaption(i18n("Command log"));
+
+	clearLog();
 
 	last_raised_command = 0;
 
-	RKCommandLogPart *part = new RKCommandLogPart (this);
-	setPart (part);
-	part->initActions ();
-	initializeActivationSignals ();
-	setFocusPolicy (Qt::ClickFocus);
+	RKCommandLogPart *part = new RKCommandLogPart(this);
+	setPart(part);
+	part->initActions();
+	initializeActivationSignals();
+	setFocusPolicy(Qt::ClickFocus);
 
 	connect(RKSettingsModuleWatch::instance(), &RKSettingsModuleWatch::settingsChanged, this, &RKCommandLog::settingsChanged);
 	settingsChanged();
 }
 
-RKCommandLog::~RKCommandLog(){
-	RK_TRACE (APP);
+RKCommandLog::~RKCommandLog() {
+	RK_TRACE(APP);
 
-	RK_ASSERT (command_input_shown.isEmpty ());
+	RK_ASSERT(command_input_shown.isEmpty());
 }
 
-void RKCommandLog::addInput (RCommand *command) {
-	RK_TRACE (APP);
-	if (!RKSettingsModuleWatch::shouldShowInput (command)) return;
+void RKCommandLog::addInput(RCommand *command) {
+	RK_TRACE(APP);
+	if (!RKSettingsModuleWatch::shouldShowInput(command)) return;
 
-// commands submitted via the console are often incomplete. We delay showing the input, until the command is finished.
-	if (command->type () & RCommand::Console) return;
+	// commands submitted via the console are often incomplete. We delay showing the input, until the command is finished.
+	if (command->type() & RCommand::Console) return;
 
-	addInputNoCheck (command);
+	addInputNoCheck(command);
 }
 
 void RKCommandLog::addOtherMessage(const QString &message, const QIcon &icon, ROutput::ROutputType severity) {
@@ -80,11 +80,12 @@ void RKCommandLog::addOtherMessage(const QString &message, const QIcon &icon, RO
 	if (!icon.isNull()) {
 		auto doc = log_view->document();
 		QUrl uri = QUrl(QStringLiteral("internalicon://%1.png").arg(icon.name()));
-		doc->addResource(QTextDocument::ImageResource, uri, QVariant(icon.pixmap(16,16)));
+		doc->addResource(QTextDocument::ImageResource, uri, QVariant(icon.pixmap(16, 16)));
 		QTextImageFormat f;
 		f.setWidth(16);
 		f.setHeight(16);
-		f.setName(uri.toString());;
+		f.setName(uri.toString());
+		;
 		log_view->textCursor().insertImage(f);
 	}
 
@@ -100,7 +101,7 @@ void RKCommandLog::addOtherMessage(const QString &message, const QIcon &icon, RO
 
 void RKCommandLog::addInputNoCheck(RCommand *command) {
 	RK_TRACE(APP);
-	if (command_input_shown.contains(command)) return;  // already shown
+	if (command_input_shown.contains(command)) return; // already shown
 
 	// TODO: make colors/styles configurable
 	if (command->type() & RCommand::User) {
@@ -123,139 +124,138 @@ void RKCommandLog::addInputNoCheck(RCommand *command) {
 	command_input_shown.append(command);
 }
 
-void RKCommandLog::addOutputNoCheck (RCommand *command, ROutput *output) {
-	RK_TRACE (APP);
+void RKCommandLog::addOutputNoCheck(RCommand *command, ROutput *output) {
+	RK_TRACE(APP);
 
-	if (command->type () & RCommand::User) {
-		log_view->setTextColor (Qt::red);
-	} else if (command->type () & RCommand::Sync) {
-		log_view->setTextColor (Qt::gray);
-	} else if (command->type () & RCommand::Plugin) {
-		log_view->setTextColor (Qt::blue);
+	if (command->type() & RCommand::User) {
+		log_view->setTextColor(Qt::red);
+	} else if (command->type() & RCommand::Sync) {
+		log_view->setTextColor(Qt::gray);
+	} else if (command->type() & RCommand::Plugin) {
+		log_view->setTextColor(Qt::blue);
 	}
-	log_view->setFontWeight (QFont::Bold);
+	log_view->setFontWeight(QFont::Bold);
 	if (output->type != ROutput::Output) {
 		QTextBlockFormat f;
-		f.setBackground (QBrush (QColor (255, 200, 200)));
-		log_view->textCursor ().mergeBlockFormat (f);
+		f.setBackground(QBrush(QColor(255, 200, 200)));
+		log_view->textCursor().mergeBlockFormat(f);
 	}
 
-	log_view->insertPlainText (output->output);
+	log_view->insertPlainText(output->output);
 
 	if (output->type != ROutput::Output) {
 		QTextBlockFormat f;
-		f.setBackground (QBrush (QColor (255, 255, 255)));
-		log_view->textCursor ().mergeBlockFormat (f);
+		f.setBackground(QBrush(QColor(255, 255, 255)));
+		log_view->textCursor().mergeBlockFormat(f);
 	}
-	log_view->setFontWeight (QFont::Normal);
-	log_view->setTextColor (Qt::black);
+	log_view->setFontWeight(QFont::Normal);
+	log_view->setTextColor(Qt::black);
 
-	checkRaiseWindow (command);
-	linesAdded ();
+	checkRaiseWindow(command);
+	linesAdded();
 }
 
-void RKCommandLog::checkRaiseWindow (RCommand *command) {
+void RKCommandLog::checkRaiseWindow(RCommand *command) {
 	// called during output. do not trace
-	if (command->id () == last_raised_command) return;
-	if (!RKSettingsModuleWatch::shouldRaiseWindow (command)) return;
-	if (command->type () & RCommand::Console) return;
+	if (command->id() == last_raised_command) return;
+	if (!RKSettingsModuleWatch::shouldRaiseWindow(command)) return;
+	if (command->type() & RCommand::Console) return;
 
-	last_raised_command = command->id ();
-	activate (false);
+	last_raised_command = command->id();
+	activate(false);
 }
 
-void RKCommandLog::newOutput (RCommand *command, ROutput *output_fragment) {
-	RK_TRACE (APP);
+void RKCommandLog::newOutput(RCommand *command, ROutput *output_fragment) {
+	RK_TRACE(APP);
 
-	if (!RKSettingsModuleWatch::shouldShowOutput (command)) return;
+	if (!RKSettingsModuleWatch::shouldShowOutput(command)) return;
 
-	if (RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
+	if (RKSettingsModuleWatch::shouldShowInput(command)) addInputNoCheck(command);
 
-	addOutputNoCheck (command, output_fragment);
+	addOutputNoCheck(command, output_fragment);
 }
 
-void RKCommandLog::rCommandDone (RCommand *command) {
-	RK_TRACE (APP);
+void RKCommandLog::rCommandDone(RCommand *command) {
+	RK_TRACE(APP);
 
-	if (command->type () & RCommand::Console) {
-		if (command->errorIncomplete ()) return;
-		addInputNoCheck (command);
+	if (command->type() & RCommand::Console) {
+		if (command->errorIncomplete()) return;
+		addInputNoCheck(command);
 	}
 
-// the case we have to deal with here, is that the command/output has not been shown, yet, but should, due to errors
+	// the case we have to deal with here, is that the command/output has not been shown, yet, but should, due to errors
 	if (command->hasWarnings() || command->failed()) {
-		if (RKSettingsModuleWatch::shouldShowError (command)) {
-			if (!RKSettingsModuleWatch::shouldShowInput (command)) addInputNoCheck (command);
-			if (!RKSettingsModuleWatch::shouldShowOutput (command)) {
-				ROutputList out_list = command->getOutput ();
-				for (ROutputList::const_iterator it = out_list.constBegin (); it != out_list.constEnd (); ++it) {
-					addOutputNoCheck (command, *it);
+		if (RKSettingsModuleWatch::shouldShowError(command)) {
+			if (!RKSettingsModuleWatch::shouldShowInput(command)) addInputNoCheck(command);
+			if (!RKSettingsModuleWatch::shouldShowOutput(command)) {
+				ROutputList out_list = command->getOutput();
+				for (ROutputList::const_iterator it = out_list.constBegin(); it != out_list.constEnd(); ++it) {
+					addOutputNoCheck(command, *it);
 				}
 			}
-			if (command->failed () && command->error ().isEmpty ()) {
+			if (command->failed() && command->error().isEmpty()) {
 				ROutput dummy_output;
 				dummy_output.type = ROutput::Error;
-				if (command->errorIncomplete ()) {
-					dummy_output.output = i18n ("Incomplete statement.\n");
-				} else if (command->errorSyntax ()) {
-					dummy_output.output = i18n ("Syntax error.\n");
+				if (command->errorIncomplete()) {
+					dummy_output.output = i18n("Incomplete statement.\n");
+				} else if (command->errorSyntax()) {
+					dummy_output.output = i18n("Syntax error.\n");
 				} else {
-					dummy_output.output = i18n ("An unspecified error occurred while running the command.\n");
+					dummy_output.output = i18n("An unspecified error occurred while running the command.\n");
 				}
-				addOutputNoCheck (command, &dummy_output);
+				addOutputNoCheck(command, &dummy_output);
 			}
 		}
 	}
 
-	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->insertPlainText (QStringLiteral("\n"));
-	command_input_shown.removeAll (command);
+	if (RKSettingsModuleWatch::shouldShowOutput(command)) log_view->insertPlainText(QStringLiteral("\n"));
+	command_input_shown.removeAll(command);
 }
 
 void RKCommandLog::settingsChanged() {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
 	log_view->document()->setMaximumBlockCount(RKSettingsModuleWatch::maxLogLines());
 }
 
-void RKCommandLog::linesAdded () {
-	RK_TRACE (APP);
+void RKCommandLog::linesAdded() {
+	RK_TRACE(APP);
 
-// scroll to bottom
-	log_view->moveCursor (QTextCursor::End, QTextCursor::MoveAnchor);
-	log_view->ensureCursorVisible ();
+	// scroll to bottom
+	log_view->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+	log_view->ensureCursorVisible();
 }
 
-void RKCommandLog::configureLog () {
-	RK_TRACE (APP);
+void RKCommandLog::configureLog() {
+	RK_TRACE(APP);
 	RKSettings::configureSettings(RKSettingsModuleWatch::page_id, this);
 }
 
-void RKCommandLog::clearLog () {
-	RK_TRACE (APP);
+void RKCommandLog::clearLog() {
+	RK_TRACE(APP);
 
-	log_view->setPlainText (QString ());
+	log_view->setPlainText(QString());
 
 	// set a fixed width font
-	QFont font = QFontDatabase::systemFont (QFontDatabase::FixedFont);
-	log_view->setCurrentFont (font);
+	QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+	log_view->setCurrentFont(font);
 }
 
-void RKCommandLog::runSelection () {
-	RK_TRACE (APP);
+void RKCommandLog::runSelection() {
+	RK_TRACE(APP);
 
-	RKConsole::pipeUserCommand (getView ()->textCursor ().selectedText ());
+	RKConsole::pipeUserCommand(getView()->textCursor().selectedText());
 }
 
 ////////////////////////// END RKCommandLog ///////////////////////////
 /////////////////////// BEGIN RKCommandLogView ////////////////////////
 
-
-RKCommandLogView::RKCommandLogView (RKCommandLog *parent) : QTextEdit (parent) {
-	RK_TRACE (APP);
+RKCommandLogView::RKCommandLogView(RKCommandLog *parent) : QTextEdit(parent) {
+	RK_TRACE(APP);
 }
 
-RKCommandLogView::~RKCommandLogView () {
-	RK_TRACE (APP);
+RKCommandLogView::~RKCommandLogView() {
+	RK_TRACE(APP);
 }
 
 void RKCommandLogView::contextMenuEvent(QContextMenuEvent *event) {
@@ -265,58 +265,57 @@ void RKCommandLogView::contextMenuEvent(QContextMenuEvent *event) {
 	event->accept();
 }
 
-void RKCommandLogView::selectAll () {
-	RK_TRACE (APP);
+void RKCommandLogView::selectAll() {
+	RK_TRACE(APP);
 
-	moveCursor (QTextCursor::Start, QTextCursor::MoveAnchor);
-	moveCursor (QTextCursor::Start, QTextCursor::KeepAnchor);
+	moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+	moveCursor(QTextCursor::Start, QTextCursor::KeepAnchor);
 }
 
 //////////////////////// END RKCommandLogView /////////////////////////
 /////////////////////// BEGIN RKCommandLogPart ////////////////////////
 
-#include <kxmlguifactory.h>
 #include <QAction>
 #include <QGuiApplication>
+#include <kxmlguifactory.h>
 
 RKCommandLogPart::RKCommandLogPart(RKCommandLog *for_log) : KParts::Part(nullptr) {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
-	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
-	setWidget (log = for_log);
-	setXMLFile (QStringLiteral("rkcommandlogpart.rc"));
+	setComponentName(QCoreApplication::applicationName(), QGuiApplication::applicationDisplayName());
+	setWidget(log = for_log);
+	setXMLFile(QStringLiteral("rkcommandlogpart.rc"));
 }
 
-RKCommandLogPart::~RKCommandLogPart () {
-	RK_TRACE (APP);
+RKCommandLogPart::~RKCommandLogPart() {
+	RK_TRACE(APP);
 }
 
-void RKCommandLogPart::initActions () {
-	RK_TRACE (APP);
+void RKCommandLogPart::initActions() {
+	RK_TRACE(APP);
 
 	copy = actionCollection()->addAction(KStandardAction::Copy, QStringLiteral("log_copy"), log->getView(), &RKCommandLogView::copy);
 	actionCollection()->addAction(KStandardAction::Clear, QStringLiteral("log_clear"), log, &RKCommandLog::clearLog);
 	actionCollection()->addAction(KStandardAction::SelectAll, QStringLiteral("log_select_all"), log->getView(), &RKCommandLogView::selectAll);
 	QAction *configure = actionCollection()->addAction(QStringLiteral("log_configure"), log, &RKCommandLog::configureLog);
-	configure->setText (i18n ("Configure"));
+	configure->setText(i18n("Configure"));
 
-	run_selection = RKStandardActions::runCurrent (log, log, SLOT(runSelection()));
+	run_selection = RKStandardActions::runCurrent(log, log, SLOT(runSelection()));
 
-	connect (log->getView (), &RKCommandLogView::popupMenuRequest, this, &RKCommandLogPart::doPopupMenu);
+	connect(log->getView(), &RKCommandLogView::popupMenuRequest, this, &RKCommandLogPart::doPopupMenu);
 }
 
-void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
-	QMenu *menu = static_cast<QMenu *> (factory ()->container (QStringLiteral("rkcommandlog_context_menu"), this));
-	copy->setEnabled (log->getView ()->textCursor ().hasSelection ());
-	run_selection->setEnabled (log->getView ()->textCursor ().hasSelection ());
+void RKCommandLogPart::doPopupMenu(const QPoint &pos) {
+	QMenu *menu = static_cast<QMenu *>(factory()->container(QStringLiteral("rkcommandlog_context_menu"), this));
+	copy->setEnabled(log->getView()->textCursor().hasSelection());
+	run_selection->setEnabled(log->getView()->textCursor().hasSelection());
 
 	if (!menu) {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 		return;
 	}
-	menu->exec (pos);
+	menu->exec(pos);
 
-	copy->setEnabled (true);
-	run_selection->setEnabled (true);
+	copy->setEnabled(true);
+	run_selection->setEnabled(true);
 }
-

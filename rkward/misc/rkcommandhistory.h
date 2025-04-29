@@ -12,20 +12,24 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 /** Simple class to manage a history of command strings (esp. for the RKConsole) */
 class RKCommandHistory {
-public:
-	RKCommandHistory (bool allow_empty, bool allow_dupes);
-	~RKCommandHistory ();
+  public:
+	RKCommandHistory(bool allow_empty, bool allow_dupes);
+	~RKCommandHistory();
 
-	bool up (bool context_sensitive = false, const QString& current_context = QString ());
-	bool down (bool context_sensitive = false, const QString& current_context = QString ());
-	QString current () const { return history.value (current_position, editing_line); };
-	void append (const QString& new_line);
-	void goToEnd () { editing_line.clear (); current_position = history.size (); }
+	bool up(bool context_sensitive = false, const QString &current_context = QString());
+	bool down(bool context_sensitive = false, const QString &current_context = QString());
+	QString current() const { return history.value(current_position, editing_line); };
+	void append(const QString &new_line);
+	void goToEnd() {
+		editing_line.clear();
+		current_position = history.size();
+	}
 
-	QStringList getHistory () const { return history; }
-	void setHistory (const QStringList& _history, bool append=false);
-private:
-	void trim ();
+	QStringList getHistory() const { return history; }
+	void setHistory(const QStringList &_history, bool append = false);
+
+  private:
+	void trim();
 	bool allow_empty;
 	bool allow_dupes;
 	int current_position;

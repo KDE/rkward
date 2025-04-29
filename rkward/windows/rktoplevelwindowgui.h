@@ -21,50 +21,51 @@ class QMenu;
 /** represents the common portions of the GUI for top level windows: The help menu, and the windows menu */
 class RKTopLevelWindowGUI : public QObject, public KXMLGUIClient {
 	Q_OBJECT
-public:
-	explicit RKTopLevelWindowGUI (KXmlGuiWindow *for_window);
-	~RKTopLevelWindowGUI ();
-	void initToolWindowActions ();
-public Q_SLOTS:
+  public:
+	explicit RKTopLevelWindowGUI(KXmlGuiWindow *for_window);
+	~RKTopLevelWindowGUI();
+	void initToolWindowActions();
+  public Q_SLOTS:
 	// windows menu
 	/** Raise the help search window */
-	void showHelpSearch ();
+	void showHelpSearch();
 	/** Activate the current (non tools) window in the workspace */
-	void activateDocumentView ();
+	void activateDocumentView();
 	/** Show an output window */
 	void slotOutputShow(QAction *action);
 	void populateOutputWindowsMenu();
 
 	// help menu
 	/** Show the starting page of RKWard help */
-	void showRKWardHelp ();
+	void showRKWardHelp();
 	/** enter "what's this" mode */
-	void startWhatsThis ();
+	void startWhatsThis();
 	/** Invokes R help (help.start ()) */
-	void invokeRHelp ();
+	void invokeRHelp();
 	/** show instructions on reporting bugs in rkward */
-	void reportRKWardBug ();
+	void reportRKWardBug();
 	/** not quite sure, why I have to reimplement this from KMainWindow */
-	void showAboutApplication ();
+	void showAboutApplication();
 	/** Language switching dialog */
 	void showSwitchApplicationLanguage();
 
 	// settings menu
 	/** configure key bindings. Reimplemented to show notice before the actual dialog. */
-	void configureShortcuts ();
+	void configureShortcuts();
 	/** configure key bindings. Reimplemented to show notice before the actual dialog. */
-	void configureToolbars ();
-private Q_SLOTS:
+	void configureToolbars();
+  private Q_SLOTS:
 	void toggleToolView(const QString &id);
-	void previousWindow ();
-	void nextWindow ();
-private:
+	void previousWindow();
+	void nextWindow();
+
+  private:
 	KXmlGuiWindow *for_window;
 	QAction *prev_action;
 	QAction *next_action;
-	void toggleToolView (RKMDIWindow *tool_window);
+	void toggleToolView(RKMDIWindow *tool_window);
 	KHelpMenu *help_menu_dummy;
-	QMenu* output_windows_menu;
+	QMenu *output_windows_menu;
 };
 
 #endif

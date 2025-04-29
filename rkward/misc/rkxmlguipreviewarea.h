@@ -10,10 +10,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <kparts/part.h>
 
-#include <QWidget>
 #include <QMenuBar>
 #include <QPointer>
 #include <QVBoxLayout>
+#include <QWidget>
 
 class QMenu;
 class QToolButton;
@@ -26,17 +26,18 @@ class RKPreviewManager;
 
 class RKXMLGUIPreviewArea : public QWidget {
 	Q_OBJECT
-public:
-	RKXMLGUIPreviewArea(const QString &label, QWidget* parent, RKPreviewManager* manager);
+  public:
+	RKXMLGUIPreviewArea(const QString &label, QWidget *parent, RKPreviewManager *manager);
 	~RKXMLGUIPreviewArea();
 	QString label() const;
 	void setLabel(const QString &label);
-	void setWindow(RKMDIWindow* window);
-protected Q_SLOTS:
-	void prepareMenu ();
-Q_SIGNALS:
-	void previewClosed (RKXMLGUIPreviewArea *preview);
-private:
+	void setWindow(RKMDIWindow *window);
+  protected Q_SLOTS:
+	void prepareMenu();
+  Q_SIGNALS:
+	void previewClosed(RKXMLGUIPreviewArea *preview);
+
+  private:
 	QLabel *lab;
 	RKPreviewStatusNote *statusnote;
 	QMenu *menu;
@@ -52,26 +53,27 @@ class RCommand;
  *  status information to any preview window. */
 class RKPreviewManager : public QObject {
 	Q_OBJECT
-public:
-	explicit RKPreviewManager (QObject *parent);
-	~RKPreviewManager ();
+  public:
+	explicit RKPreviewManager(QObject *parent);
+	~RKPreviewManager();
 
-	void setUpdatePending ();
-	void setPreviewDisabled ();
-	void setNoPreviewAvailable ();
+	void setUpdatePending();
+	void setPreviewDisabled();
+	void setNoPreviewAvailable();
 	/** Start the next preview update, as given by command. You must call needsCommand() first, to check whether the next command is
 	 *  ready to go. */
-	void setCommand (RCommand *command);
+	void setCommand(RCommand *command);
 	bool needsCommand() const { return !updating && (update_pending == UpdatePending); };
 	QString previewId() const { return id; };
-	QWidget* inlineStatusWidget();
-Q_SIGNALS:
+	QWidget *inlineStatusWidget();
+  Q_SIGNALS:
 	void statusChanged(RKPreviewManager *);
-private Q_SLOTS:
-	void previewCommandDone (RCommand *command);
-private:
-friend class RKPreviewStatusNote;
-	void updateStatusDisplay(const QString &warnings=QString());
+  private Q_SLOTS:
+	void previewCommandDone(RCommand *command);
+
+  private:
+	friend class RKPreviewStatusNote;
+	void updateStatusDisplay(const QString &warnings = QString());
 	enum {
 		NoUpdatePending,
 		NoUpdatePossible,

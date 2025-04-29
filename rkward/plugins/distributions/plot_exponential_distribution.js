@@ -6,13 +6,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // globals
 var options;
 
-include ('plot_dist_common.js');
+include('plot_dist_common.js');
 
-function getParameters () {
-	options['args'] = ', rate=' + getString ("rate");
-	getContRangeParameters ();
+function getParameters() {
+	options['args'] = ', rate=' + getString("rate");
+	getContRangeParameters();
 
-	options['distname'] = i18nc ("Exponential distribution", noquote ("Exponential"));
+	options['distname'] = i18nc("Exponential distribution", noquote("Exponential"));
 	if (options['is_density']) {
 		options['fun'] = "dexp";
 	} else {
@@ -20,7 +20,7 @@ function getParameters () {
 	}
 }
 
-function addParamsToHeader (header) {
-	header.addFromUI ("rate");
+function addParamsToHeader(header) {
+	header.addFromUI("rate");
 	return header;
 }

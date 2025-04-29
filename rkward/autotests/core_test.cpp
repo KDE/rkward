@@ -5,56 +5,56 @@ SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include <QObject>
-#include <QTest>
-#include <QApplication>
-#include <QFile>
-#include <QDir>
-#include <QLoggingCategory>
-#include <QRegularExpression>
-#include <QTemporaryFile>
 #include <QActionGroup>
+#include <QApplication>
+#include <QDir>
+#include <QFile>
+#include <QLoggingCategory>
+#include <QObject>
+#include <QRegularExpression>
 #include <QStandardPaths>
+#include <QTemporaryFile>
+#include <QTest>
 
 #include <KAboutData>
-#include <KLocalizedString>
 #include <KActionCollection>
+#include <KLocalizedString>
 
-#include "../debug.h"
-#include "../rkward.h"
-#include "../rkconsole.h"
-#include "../version.h"
 #include "../agents/rkquitagent.h"
-#include "../rbackend/rksessionvars.h"
-#include "../rbackend/rkrinterface.h"
+#include "../core/renvironmentobject.h"
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
-#include "../core/renvironmentobject.h"
-#include "../misc/rkcommonfunctions.h"
+#include "../debug.h"
 #include "../misc/rkcommandlineargs.h"
-#include "../misc/rkxmlguipreviewarea.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../misc/rkrapimenu.h"
+#include "../misc/rkxmlguipreviewarea.h"
+#include "../rbackend/rkrinterface.h"
+#include "../rbackend/rksessionvars.h"
+#include "../rkconsole.h"
+#include "../rkward.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulekateplugins.h"
+#include "../version.h"
 #include "../windows/katepluginintegration.h"
 
 QElapsedTimer _test_timer;
 
-void testLog(const char* fmt, va_list args) {
+void testLog(const char *fmt, va_list args) {
 	printf("%lld: ", _test_timer.elapsed());
 	vprintf(fmt, args);
 	printf("\n");
 	fflush(stdout);
 }
 
-void testLog(const char* fmt, ...) {
+void testLog(const char *fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	testLog(fmt, ap);
 	va_end(ap);
 }
 
-void RKDebug (int, int level, const char* fmt, ...) {
+void RKDebug(int, int level, const char *fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	testLog(fmt, ap);
@@ -66,10 +66,10 @@ void RKDebug (int, int level, const char* fmt, ...) {
  *  tests involve passing commands to the R backend, and then verifying the expected state in the frontend. That alone requires a fairly extensive setup, anyway.
  *
  *  Since starting can still take several seconds, the plan, for now, is to run most individual tests inside this single test suite. */
-class RKWardCoreTest: public QObject {
+class RKWardCoreTest : public QObject {
 	Q_OBJECT
 
-	void runCommandWithTimeout(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback, int timeoutms = 1000) {
+	void runCommandWithTimeout(RCommand *command, RCommandChain *chain, std::function<void(RCommand *)> callback, int timeoutms = 1000) {
 		static int done;
 		QString ccopy = command->command();
 		auto command_id = command->id();
@@ -88,13 +88,14 @@ class RKWardCoreTest: public QObject {
 		}
 	}
 
-	void runCommandAsync(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback) {
+	void runCommandAsync(RCommand *command, RCommandChain *chain, std::function<void(RCommand *)> callback) {
 		command->whenFinished(this, callback);
 		RInterface::issueCommand(command, chain);
 	}
 
 	void waitForAllFinished(int timeoutms = 2000) {
-		runCommandWithTimeout(new RCommand(QStringLiteral("# waitForAllFinished"), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand*){}, timeoutms);
+		runCommandWithTimeout(
+		    new RCommand(QStringLiteral("# waitForAllFinished"), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand *) {}, timeoutms);
 	}
 
 	void cleanGlobalenv() {
@@ -116,7 +117,7 @@ class RKWardCoreTest: public QObject {
 			fl.close();
 		}
 
-		if (fl.open(QIODevice::ReadWrite | QIODevice::Truncate) ) {
+		if (fl.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
 			fl.write(output);
 			fl.close();
 		}
@@ -148,9 +149,9 @@ class RKWardCoreTest: public QObject {
 		if (RInterface::instance()->backendIsIdle()) return QStringLiteral("idle");
 		return QStringLiteral("busy");
 	}
-    
+
 	QPointer<RKWardMainWindow> main_win;
-private Q_SLOTS:
+  private Q_SLOTS:
 	void init() {
 		testLog("Starting next test");
 	}
@@ -231,26 +232,30 @@ private Q_SLOTS:
 	void objectListTest() {
 		// check that resprentation a objects in backend is sane
 		RInterface::issueCommand(QStringLiteral("a <- list(x1=c(1, 2, 3), x2=letters, x3=datasets::women); b <- a"), RCommand::User);
-		RInterface::whenAllFinished(this, []() {
-			auto a = RObjectList::getGlobalEnv()->findObject(QStringLiteral("a"));
-			QVERIFY(a != nullptr);
-			QVERIFY(a && a->isContainer());
-			auto ac = static_cast<RContainerObject*>(a);
-			QCOMPARE(ac->numChildren(), 3);
-			QCOMPARE(ac->findChildByIndex(0)->getDataType(), RObject::DataNumeric);
-			QCOMPARE(ac->findChildByIndex(1)->getDataType(), RObject::DataCharacter);
-			QVERIFY(ac->findChildByIndex(2)->isDataFrame());
-		}, nullptr);
+		RInterface::whenAllFinished(
+		    this, []() {
+			    auto a = RObjectList::getGlobalEnv()->findObject(QStringLiteral("a"));
+			    QVERIFY(a != nullptr);
+			    QVERIFY(a && a->isContainer());
+			    auto ac = static_cast<RContainerObject *>(a);
+			    QCOMPARE(ac->numChildren(), 3);
+			    QCOMPARE(ac->findChildByIndex(0)->getDataType(), RObject::DataNumeric);
+			    QCOMPARE(ac->findChildByIndex(1)->getDataType(), RObject::DataCharacter);
+			    QVERIFY(ac->findChildByIndex(2)->isDataFrame());
+		    },
+		    nullptr);
 		// check that changes are detected, and reflected, properly
 		RInterface::issueCommand(QStringLiteral("rm(a); b <- 1; c <- letters; .d <- c"), RCommand::User);
-		RInterface::whenAllFinished(this, []() {
-			QVERIFY(RObjectList::getGlobalEnv()->findObject(u"a"_s) == nullptr);
-			QCOMPARE(RObjectList::getGlobalEnv()->findObject(u"b"_s)->getDataType(), RObject::DataNumeric);
-			QCOMPARE(RObjectList::getGlobalEnv()->findObject(u"c"_s)->getDataType(), RObject::DataCharacter);
-			QCOMPARE(RObjectList::getGlobalEnv()->findObject(u".d"_s)->getDimensions(), RObjectList::getGlobalEnv()->findObject(u"c"_s)->getDimensions());
-		}, nullptr);
+		RInterface::whenAllFinished(
+		    this, []() {
+			    QVERIFY(RObjectList::getGlobalEnv()->findObject(u"a"_s) == nullptr);
+			    QCOMPARE(RObjectList::getGlobalEnv()->findObject(u"b"_s)->getDataType(), RObject::DataNumeric);
+			    QCOMPARE(RObjectList::getGlobalEnv()->findObject(u"c"_s)->getDataType(), RObject::DataCharacter);
+			    QCOMPARE(RObjectList::getGlobalEnv()->findObject(u".d"_s)->getDimensions(), RObjectList::getGlobalEnv()->findObject(u"c"_s)->getDimensions());
+		    },
+		    nullptr);
 		cleanGlobalenv();
-		RInterface::whenAllFinished(this, [](RCommand*) {
+		RInterface::whenAllFinished(this, [](RCommand *) {
 			QCOMPARE(RObjectList::getGlobalEnv()->numChildren(), 0);
 		});
 
@@ -260,30 +265,31 @@ private Q_SLOTS:
 			QVERIFY(dx != nullptr);
 			QVERIFY(dx && dx->isContainer());
 			if (dx && dx->isContainer()) {
-			    auto dx_a = static_cast<RContainerObject*>(dx)->findChildByName(QStringLiteral("a"));
-			    QVERIFY(dx_a != nullptr);
-			    if (dx_a) {
-				dx_a->rename(QStringLiteral("c"));
-			    }
-			    dx->rename(QStringLiteral("dy"));
+				auto dx_a = static_cast<RContainerObject *>(dx)->findChildByName(QStringLiteral("a"));
+				QVERIFY(dx_a != nullptr);
+				if (dx_a) {
+					dx_a->rename(QStringLiteral("c"));
+				}
+				dx->rename(QStringLiteral("dy"));
 			}
 			auto c = new RCommand(QStringLiteral("dy$c"), RCommand::GetIntVector | RCommand::App);
 			runCommandAsync(c, nullptr, [](RCommand *command) {
-			    QCOMPARE(command->getDataType(), RData::IntVector);
-			    QCOMPARE(command->getDataLength(), 2);
-			    QCOMPARE(command->intVector().value(1), 2);
+				QCOMPARE(command->getDataType(), RData::IntVector);
+				QCOMPARE(command->getDataLength(), 2);
+				QCOMPARE(command->intVector().value(1), 2);
 			});
 			lock = false;
 		});
-		while(lock) qApp->processEvents();
+		while (lock)
+			qApp->processEvents();
 
 		// Saw a frontend crash on this idiom, once:
 		RInterface::issueCommand(QStringLiteral("x <- list(NULL, 1)"), RCommand::User);
-		RInterface::whenAllFinished(this, [](RCommand*) {
+		RInterface::whenAllFinished(this, [](RCommand *) {
 			QCOMPARE(RObjectList::getGlobalEnv()->findObject(u"x"_s)->getLength(), 2);
 		});
 		RInterface::issueCommand(QStringLiteral("x[[1]] <- NULL"), RCommand::User);
-		RInterface::whenAllFinished(this, [](RCommand*) {
+		RInterface::whenAllFinished(this, [](RCommand *) {
 			QCOMPARE(RObjectList::getGlobalEnv()->findObject(u"x"_s)->getLength(), 1);
 		});
 		cleanGlobalenv();
@@ -418,10 +424,10 @@ private Q_SLOTS:
 		// NOTE: The above two commands may or may not run in that order. Conceivably, the priority command gets handled, before the initial sleep command even started.
 		//       The newline in the first command actually makes it a bit more likely for the priority command to go first (because parsing needs more iterations).
 		//       We try to step on that interesting corner case, deliberately, at is has been causing failures in the past.
-		waitForAllFinished();      // first wait with a short timeout: sleep should have been cancelled
-		waitForAllFinished(5000);  // fallbacck: priority_command_done must remain in scope until done (even if interrupting fails for some reason)
-		// TODO: This test is still failing, occasionally, possibly, because the user command has not even been added to all_current_commands, yet
-		//       (event processing in RKRBackend::handleRequest2())
+		waitForAllFinished();     // first wait with a short timeout: sleep should have been cancelled
+		waitForAllFinished(5000); // fallbacck: priority_command_done must remain in scope until done (even if interrupting fails for some reason)
+		                          // TODO: This test is still failing, occasionally, possibly, because the user command has not even been added to all_current_commands, yet
+		                          //       (event processing in RKRBackend::handleRequest2())
 	}
 
 	void RKConsoleHistoryTest() {
@@ -432,7 +438,7 @@ private Q_SLOTS:
 		RInterface::issueCommand(new RCommand(u"savehistory("_s + RObject::rQuote(oldhist.fileName()) + u"); loadhistory("_s + RObject::rQuote(emptyhist.fileName()) + u")"_s, RCommand::App));
 		waitForAllFinished();
 
-#		define UNIQUE_STRING "unique_command_string"
+#define UNIQUE_STRING "unique_command_string"
 		auto console = RKConsole::mainConsole();
 		console->pipeUserCommand(QStringLiteral("if (FALSE) " UNIQUE_STRING "()"));
 		runCommandWithTimeout(new RCommand(QStringLiteral("local({x <- tempfile(); savehistory(x); readLines(x)})"), RCommand::GetStringVector | RCommand::App), nullptr, [](RCommand *command) {
@@ -475,7 +481,7 @@ private Q_SLOTS:
 		QVERIFY(dialog);
 
 		RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(QStringLiteral("rkward://settings/graphics")));
-		QVERIFY(dialog == RKSettings::settings_dialog);  // shall be reused
+		QVERIFY(dialog == RKSettings::settings_dialog); // shall be reused
 
 		// Load and unload a bunch of plugins (settings dialog will be modified, but of course, also plugin loading/unloading is given another round
 		// of testing.
@@ -506,7 +512,7 @@ private Q_SLOTS:
 		QVERIFY(w != nullptr);
 		auto wins = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
 		QCOMPARE(wins.size(), 1);
-		auto win = qobject_cast<RKCommandEditorWindow*>(wins[0]);
+		auto win = qobject_cast<RKCommandEditorWindow *>(wins[0]);
 		QVERIFY(win == w);
 		// opening the same url again shall re-use the window
 		const auto w2 = RKWorkplace::mainWorkplace()->openScriptEditor(QUrl::fromLocalFile(f.fileName()));
@@ -520,7 +526,7 @@ private Q_SLOTS:
 			auto a = actions[i];
 			if (a->isCheckable()) {
 				qDebug("action %s", qPrintable(a->text()));
-				a->trigger();  // NOTE: Using setChecked(true), here, would not emit the require QActionGroup::triggered() inside RKCommandEditorWindow
+				a->trigger(); // NOTE: Using setChecked(true), here, would not emit the require QActionGroup::triggered() inside RKCommandEditorWindow
 				QVERIFY(a->isChecked());
 				win->doRenderPreview(); // don't wait for debounce timeout
 				waitForAllFinished(8000);
@@ -540,7 +546,7 @@ private Q_SLOTS:
 	}
 
 	void rkMenuTest() {
-		const QStringList actionpath {u"analysis"_s, u"myaction"_s};
+		const QStringList actionpath{u"analysis"_s, u"myaction"_s};
 		RInterface::issueCommand(new RCommand(QStringLiteral("a <- rk.menu()"), RCommand::App));
 		for (const auto &segment : actionpath) {
 			RInterface::issueCommand(new RCommand(u"a <- a$item("_s + RObject::rQuote(segment) + u")"_s, RCommand::App));
@@ -550,7 +556,7 @@ private Q_SLOTS:
 		auto m = RKWardMainWindow::getMain()->rApiMenu();
 		auto a = m->actionByPath(actionpath);
 		QVERIFY(a);
-		QVERIFY(a && a->text()==u"My Label"_s);
+		QVERIFY(a && a->text() == u"My Label"_s);
 		QVERIFY(a && a->isEnabled());
 		if (a) a->trigger();
 		RInterface::issueCommand(new RCommand(QStringLiteral("a$enable(FALSE)"), RCommand::User));
@@ -578,7 +584,7 @@ private Q_SLOTS:
 		RKWardMainWindow::getMain()->triggerBackendRestart(false);
 		QElapsedTimer t;
 		t.start();
-		while (oldiface) {  // action may be delayed until next event processing
+		while (oldiface) { // action may be delayed until next event processing
 			qApp->processEvents(QEventLoop::AllEvents, 500);
 			if (t.elapsed() > 30000) {
 				testLog("Backend shutdown timed out");
@@ -598,8 +604,7 @@ private Q_SLOTS:
 		QVERIFY(RObjectList::getGlobalEnv()->findObject(u"x"_s));
 	}
 
-	void cleanupTestCase()
-	{
+	void cleanupTestCase() {
 		// at least the backend should exit properly, to avoid creating emergency save files
 		RInterface::issueCommand(new RCommand(QStringLiteral("# Quit (test cleanup)"), RCommand::App | RCommand::EmptyCommand | RCommand::QuitCommand));
 		RKWardMainWindow::getMain()->slotCloseAllWindows();

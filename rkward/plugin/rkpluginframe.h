@@ -20,24 +20,25 @@ class KVBox;
 */
 class RKPluginFrame : public RKComponent {
 	Q_OBJECT
-public:
-	RKPluginFrame (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKPluginFrame ();
+  public:
+	RKPluginFrame(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKPluginFrame();
 
-/** returns the page child elements should be drawn in */
-	QWidget *getPage ();
-	int type () override { return ComponentFrame; };
-/** reimplemented to return the value of the checked property by default */
-	QVariant value (const QString &modifier=QString ()) override;
+	/** returns the page child elements should be drawn in */
+	QWidget *getPage();
+	int type() override { return ComponentFrame; };
+	/** reimplemented to return the value of the checked property by default */
+	QVariant value(const QString &modifier = QString()) override;
 
-/** re-implemented to create "checked" property on demand. */
-	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder) override;
-private Q_SLOTS:
-/** called when checked property changes */
-	void propertyChanged (RKComponentPropertyBase *property);
-	void checkedChanged (bool new_state);
-private:
-	void initCheckedProperty ();
+	/** re-implemented to create "checked" property on demand. */
+	RKComponentBase *lookupComponent(const QString &identifier, QString *remainder) override;
+  private Q_SLOTS:
+	/** called when checked property changes */
+	void propertyChanged(RKComponentPropertyBase *property);
+	void checkedChanged(bool new_state);
+
+  private:
+	void initCheckedProperty();
 	RKComponentPropertyBool *checked;
 	QGroupBox *frame;
 };

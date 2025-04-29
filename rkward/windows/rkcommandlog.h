@@ -11,71 +11,74 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qstring.h>
 #include <qtextedit.h>
 
-#include "rkmdiwindow.h"
 #include "../rbackend/rcommand.h"
+#include "rkmdiwindow.h"
 
 class RKCommandLogView;
 class RKCommandLogPart;
 
 /**
-	\brief This widget shows all executed commands and their result
+    \brief This widget shows all executed commands and their result
 @author Thomas Friedrichsmeier
 */
 
 class RKCommandLog : public RKMDIWindow {
 	Q_OBJECT
-public: 
-/** Adds input to the log_view-window (i.e. commands issued) */
-	void addInput (RCommand *command);
-/** Adds output to the log_view-window (i.e. replies received) */
-	void newOutput (RCommand *command, ROutput *output_fragment);
-/** Adds output not originating from R. Note: Currently used from kate plugins, only, see katepluginintegration.cpp */
+  public:
+	/** Adds input to the log_view-window (i.e. commands issued) */
+	void addInput(RCommand *command);
+	/** Adds output to the log_view-window (i.e. replies received) */
+	void newOutput(RCommand *command, ROutput *output_fragment);
+	/** Adds output not originating from R. Note: Currently used from kate plugins, only, see katepluginintegration.cpp */
 	void addOtherMessage(const QString &message, const QIcon &icon, ROutput::ROutputType severity);
 
-	static RKCommandLog *getLog () { return rkcommand_log; };
+	static RKCommandLog *getLog() { return rkcommand_log; };
 
-	RKCommandLogView *getView () { return log_view; };
-protected:
-friend class RCommand;
-/** Command has finished. If the command has failed, it may be necessary to print some more information */
-	void rCommandDone (RCommand *command);
-	RKCommandLog(QWidget *parent, bool tool_window, const char *name=nullptr);
+	RKCommandLogView *getView() { return log_view; };
+
+  protected:
+	friend class RCommand;
+	/** Command has finished. If the command has failed, it may be necessary to print some more information */
+	void rCommandDone(RCommand *command);
+	RKCommandLog(QWidget *parent, bool tool_window, const char *name = nullptr);
 	~RKCommandLog();
-public Q_SLOTS:
-/** configures the log_view-window */
-	void configureLog ();
-/** clears the log_view-window */
-	void clearLog ();
-	void runSelection ();
+  public Q_SLOTS:
+	/** configures the log_view-window */
+	void configureLog();
+	/** clears the log_view-window */
+	void clearLog();
+	void runSelection();
 	void settingsChanged();
-private:
-	void addInputNoCheck (RCommand *command);
-	void addOutputNoCheck (RCommand *command, ROutput *output);
-	void checkRaiseWindow (RCommand *command);
-/** internal helper function, called whenever a line/lines have been added. Check whether log is longer than maximum setting. Scroll to the bottom */
-	void linesAdded ();
-/** Used to keep track, which commands "input" has already been shown */
-	QList<RCommand*> command_input_shown;
-/** On a given command, the log_view should not be raised more than once */
+
+  private:
+	void addInputNoCheck(RCommand *command);
+	void addOutputNoCheck(RCommand *command, ROutput *output);
+	void checkRaiseWindow(RCommand *command);
+	/** internal helper function, called whenever a line/lines have been added. Check whether log is longer than maximum setting. Scroll to the bottom */
+	void linesAdded();
+	/** Used to keep track, which commands "input" has already been shown */
+	QList<RCommand *> command_input_shown;
+	/** On a given command, the log_view should not be raised more than once */
 	int last_raised_command;
 
 	RKCommandLogView *log_view;
-friend class RKWardMainWindow;
+	friend class RKWardMainWindow;
 	static RKCommandLog *rkcommand_log;
 };
 
 /** Simply subclass of QTextEdit to override context menu handling */
 class RKCommandLogView : public QTextEdit {
 	Q_OBJECT
-public:
-	explicit RKCommandLogView (RKCommandLog *parent);
-	~RKCommandLogView ();
-public Q_SLOTS:
-	void selectAll ();
-Q_SIGNALS:
-	void popupMenuRequest (const QPoint &pos);
-protected:
-	void contextMenuEvent (QContextMenuEvent *event) override;
+  public:
+	explicit RKCommandLogView(RKCommandLog *parent);
+	~RKCommandLogView();
+  public Q_SLOTS:
+	void selectAll();
+  Q_SIGNALS:
+	void popupMenuRequest(const QPoint &pos);
+
+  protected:
+	void contextMenuEvent(QContextMenuEvent *event) override;
 };
 
 #include <kparts/part.h>
@@ -85,14 +88,15 @@ class QAction;
 /** Provides a part interface for the RKCommandLog */
 class RKCommandLogPart : public KParts::Part {
 	Q_OBJECT
-public:
-	explicit RKCommandLogPart (RKCommandLog *for_log);
-	~RKCommandLogPart ();
+  public:
+	explicit RKCommandLogPart(RKCommandLog *for_log);
+	~RKCommandLogPart();
 
-	void initActions ();
-public Q_SLOTS:
-	void doPopupMenu (const QPoint &pos);
-private:
+	void initActions();
+  public Q_SLOTS:
+	void doPopupMenu(const QPoint &pos);
+
+  private:
 	RKCommandLog *log;
 
 	QAction *run_selection;

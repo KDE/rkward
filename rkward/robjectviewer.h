@@ -7,8 +7,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef ROBJECTVIEWER_H
 #define ROBJECTVIEWER_H
 
-#include <qwidget.h>
 #include <qstring.h>
+#include <qwidget.h>
 
 #include "core/rkmodificationtracker.h"
 #include "windows/rkmdiwindow.h"
@@ -27,35 +27,37 @@ A simple object viewer. You pass it an object in the constructor. It will extrac
 @author Thomas Friedrichsmeier
 */
 class RObjectViewer : public RKMDIWindow, public RObjectListener {
-Q_OBJECT
-public:
-	~RObjectViewer ();
+	Q_OBJECT
+  public:
+	~RObjectViewer();
 
-	RObject *object () { return _object; };
+	RObject *object() { return _object; };
 
 	enum ViewerPage {
 		SummaryPage = 0,
 		PrintPage = 1,
 		StructurePage = 2
 	};
-public Q_SLOTS:
-	void currentTabChanged (int new_current);
-protected:
-	friend class RKWorkplace;
-	RObjectViewer (QWidget *parent, RObject *object, ViewerPage initial_page = SummaryPage);
+  public Q_SLOTS:
+	void currentTabChanged(int new_current);
 
-	void objectRemoved (RObject *object) override;
-	void objectMetaChanged (RObject *object) override;
-	void objectDataChanged (RObject *object, const RObject::ChangeSet*) override;
-private:
-	void initDescription (bool notify);
+  protected:
+	friend class RKWorkplace;
+	RObjectViewer(QWidget *parent, RObject *object, ViewerPage initial_page = SummaryPage);
+
+	void objectRemoved(RObject *object) override;
+	void objectMetaChanged(RObject *object) override;
+	void objectDataChanged(RObject *object, const RObject::ChangeSet *) override;
+
+  private:
+	void initDescription(bool notify);
 
 	QLabel *status_label;
 	QLabel *description_label;
-	QTabWidget* tabs;
-	RObjectViewerWidget* summary_widget;
-	RObjectViewerWidget* print_widget;
-	RObjectViewerWidget* structure_widget;
+	QTabWidget *tabs;
+	RObjectViewerWidget *summary_widget;
+	RObjectViewerWidget *print_widget;
+	RObjectViewerWidget *structure_widget;
 
 	RObject *_object;
 };
@@ -64,59 +66,61 @@ private:
 
 @author Thomas Friedrichsmeier */
 class RObjectViewerWidget : public QWidget {
-Q_OBJECT
-protected:
-	RObjectViewerWidget (QWidget* parent, RObject* object);
-	virtual ~RObjectViewerWidget ();
-public:
+	Q_OBJECT
+  protected:
+	RObjectViewerWidget(QWidget *parent, RObject *object);
+	virtual ~RObjectViewerWidget();
+
+  public:
 	void objectKilled() { _object = nullptr; };
 
-	void invalidate (const QString& reason);
-	void initialize ();
-	void setText (const QString& text);
-public Q_SLOTS:
-	virtual void update ();
-protected:
-	virtual RCommand* makeCommand() = 0;
+	void invalidate(const QString &reason);
+	void initialize();
+	void setText(const QString &text);
+  public Q_SLOTS:
+	virtual void update();
 
-	QLabel* status_label;
+  protected:
+	virtual RCommand *makeCommand() = 0;
+
+	QLabel *status_label;
 
 	QPushButton *update_button;
 	QTextEdit *area;
 
 	bool initialized;
 
-	RObject* _object;
+	RObject *_object;
 };
 
 /** Represents the "summary" area in an RObjectViewer */
 class RObjectSummaryWidget : public RObjectViewerWidget {
-public:
-	RObjectSummaryWidget (QWidget* parent, RObject* object) : RObjectViewerWidget (parent, object) {};
-	~RObjectSummaryWidget () {};
+  public:
+	RObjectSummaryWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object){};
+	~RObjectSummaryWidget(){};
 
 	/** reimplemented from RObjectViewerWidget to call "summary" */
-	RCommand* makeCommand() override;
+	RCommand *makeCommand() override;
 };
 
 /** Represents the "print" area in an RObjectViewer */
 class RObjectPrintWidget : public RObjectViewerWidget {
-public:
-	RObjectPrintWidget (QWidget* parent, RObject* object) : RObjectViewerWidget (parent, object) {}
-	~RObjectPrintWidget () {};
+  public:
+	RObjectPrintWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object) {}
+	~RObjectPrintWidget(){};
 
 	/** reimplemented from RObjectViewerWidget to call "print" */
-	RCommand* makeCommand() override;
+	RCommand *makeCommand() override;
 };
 
 /** Represents the "str" area in an RObjectViewer */
 class RObjectStructureWidget : public RObjectViewerWidget {
-public:
-	RObjectStructureWidget (QWidget* parent, RObject* object) : RObjectViewerWidget (parent, object) {};
-	~RObjectStructureWidget () {};
+  public:
+	RObjectStructureWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object){};
+	~RObjectStructureWidget(){};
 
 	/** reimplemented from RObjectViewerWidget to call "str" */
-	RCommand* makeCommand() override;
+	RCommand *makeCommand() override;
 };
 
 #endif

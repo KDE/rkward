@@ -7,32 +7,32 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rksettingsmodulekateplugins.h"
 
+#include <QIcon>
+#include <QLabel>
 #include <QTreeWidget>
 #include <QVBoxLayout>
-#include <QLabel>
-#include <QIcon>
 
-#include <KPluginMetaData>
-#include <KLocalizedString>
-#include <KConfigGroup>
 #include <KConfig>
-#include <KTextEditor/Plugin>
-#include <KTextEditor/Editor>
+#include <KConfigGroup>
+#include <KLocalizedString>
+#include <KPluginMetaData>
 #include <KTextEditor/Application>
+#include <KTextEditor/Editor>
+#include <KTextEditor/Plugin>
 
-#include "rksettingsmoduleplugins.h"
-#include "rksettingsmodulecommandeditor.h"
-#include "rksettings.h"
-#include "../windows/katepluginintegration.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../rkward.h"
+#include "../windows/katepluginintegration.h"
+#include "rksettings.h"
+#include "rksettingsmodulecommandeditor.h"
+#include "rksettingsmoduleplugins.h"
 
 #include "../debug.h"
 
-RKConfigValue<QStringList> RKSettingsModuleKatePlugins::plugins_to_load {"Plugins to load", QStringList() << QStringLiteral("katesearchplugin") << QStringLiteral("kateprojectplugin") << QStringLiteral("katesnippetsplugin")};
+RKConfigValue<QStringList> RKSettingsModuleKatePlugins::plugins_to_load{"Plugins to load", QStringList() << QStringLiteral("katesearchplugin") << QStringLiteral("kateprojectplugin") << QStringLiteral("katesnippetsplugin")};
 
 class RKSettingsPageKatePlugins : public RKSettingsModuleWidget {
-public:
+  public:
 	RKSettingsPageKatePlugins(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleKatePlugins::page_id, RKSettingsModulePlugins::addons_superpage_id) {
 		RK_TRACE(SETTINGS);
 
@@ -56,7 +56,7 @@ public:
 			QTreeWidgetItem *item = new QTreeWidgetItem();
 			KPluginMetaData plugindata = pluginapp->known_plugins.value(key).data;
 			item->setData(1, Qt::DisplayRole, plugindata.name());
-			if (recommended_plugins.contains(key)) item->setData(1, Qt::FontRole, boldfont); 
+			if (recommended_plugins.contains(key)) item->setData(1, Qt::FontRole, boldfont);
 			item->setData(2, Qt::DisplayRole, plugindata.description());
 			item->setData(1, Qt::DecorationRole, QIcon::fromTheme(plugindata.iconName()));
 			item->setData(1, Qt::UserRole, key);
@@ -84,7 +84,8 @@ public:
 		RKSettingsModuleKatePlugins::plugins_to_load = p;
 		RKWardMainWindow::getMain()->katePluginIntegration()->loadPlugins(p);
 	}
-private:
+
+  private:
 	QTreeWidget *plugin_table;
 };
 

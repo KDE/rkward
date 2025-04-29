@@ -26,23 +26,27 @@ Use as a base class for all widgets that can be used to display and edit RObject
 */
 class RKEditor : public RKMDIWindow {
 	Q_OBJECT
-protected:
-    RKEditor (QWidget *parent);
+  protected:
+	RKEditor(QWidget *parent);
 
-    virtual ~RKEditor ();
-public:
-/// flushes all pending edit operations and syncs the data to R. Implement in the child classes
-	virtual void flushChanges () = 0;
-/// returns the object that is being edited in this editor
-	RObject *getObject () { return object; };
-	
-	enum PasteMode {PasteEverywhere, PasteToTable, PasteToSelection};
+	virtual ~RKEditor();
 
-/** Tells the editor to restore the given object in the R-workspace from its copy of the data */
-	virtual void restoreObject (RObject *object) = 0;
+  public:
+	/// flushes all pending edit operations and syncs the data to R. Implement in the child classes
+	virtual void flushChanges() = 0;
+	/// returns the object that is being edited in this editor
+	RObject *getObject() { return object; };
+
+	enum PasteMode { PasteEverywhere,
+		             PasteToTable,
+		             PasteToSelection };
+
+	/** Tells the editor to restore the given object in the R-workspace from its copy of the data */
+	virtual void restoreObject(RObject *object) = 0;
 
 	bool isModified() const override { return false; };
-protected:
+
+  protected:
 	RObject *object;
 };
 

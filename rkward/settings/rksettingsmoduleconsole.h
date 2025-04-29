@@ -9,7 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rksettingsmodule.h"
 
-#include "rksettingsmodulecommandeditor.h"  // For RKCodeCompletionSettings
+#include "rksettingsmodulecommandeditor.h" // For RKCodeCompletionSettings
 #include <qnamespace.h>
 
 class QComboBox;
@@ -21,8 +21,8 @@ Settings module for the console. Allows you to configure whether to store comman
 @author Thomas Friedrichsmeier
 */
 class RKSettingsModuleConsole : public RKSettingsModule {
-Q_OBJECT
-public:
+	Q_OBJECT
+  public:
 	explicit RKSettingsModuleConsole(QObject *parent);
 	~RKSettingsModuleConsole() override;
 
@@ -30,28 +30,29 @@ public:
 	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("console");
 
-	static bool saveHistory () { return save_history; };
-	static uint maxHistoryLength () { return max_history_length; };
-	static uint maxConsoleLines () { return max_console_lines; };
-	static bool pipeUserCommandsThroughConsole () { return pipe_user_commands_through_console; };
+	static bool saveHistory() { return save_history; };
+	static uint maxHistoryLength() { return max_history_length; };
+	static uint maxConsoleLines() { return max_console_lines; };
+	static bool pipeUserCommandsThroughConsole() { return pipe_user_commands_through_console; };
 	enum PipedCommandsHistoryMode {
 		DontAdd = 0,
 		AddSingleLine = 1,
 		AlwaysAdd = 2
 	};
-	static PipedCommandsHistoryMode addPipedCommandsToHistory () { return add_piped_commands_to_history; };
+	static PipedCommandsHistoryMode addPipedCommandsToHistory() { return add_piped_commands_to_history; };
 	/** Given the button state, return whether the command history should be navigated context sensitive or insensitive
 	@param current_state the current button state
 	@returns true, if a the search should be context sensitive, false for a normal search */
-	static bool shouldDoHistoryContextSensitive (Qt::KeyboardModifiers current_state);
+	static bool shouldDoHistoryContextSensitive(Qt::KeyboardModifiers current_state);
 	static RKConfigValue<bool> *showMinimap() { return &show_minimap; };
 	static RKConfigValue<bool> *wordWrap() { return &word_wrap; };
-	static const RKCodeCompletionSettings* completionSettings() { return &completion_settings; }
+	static const RKCodeCompletionSettings *completionSettings() { return &completion_settings; }
 
-	static QStringList loadCommandHistory ();
-	static void saveCommandHistory (const QStringList &list);
-private:
-friend class RKSettingsPageConsole;
+	static QStringList loadCommandHistory();
+	static void saveCommandHistory(const QStringList &list);
+
+  private:
+	friend class RKSettingsPageConsole;
 	static RKCodeCompletionSettings completion_settings;
 	static RKConfigValue<bool> save_history;
 	static RKConfigValue<uint> max_history_length;

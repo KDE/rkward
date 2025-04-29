@@ -20,20 +20,22 @@ This dialog displays the question asked, the output context (as often times the 
 @author Thomas Friedrichsmeier
 */
 class RKReadLineDialog : public QDialog {
-public:
+  public:
 	/** Construct and run modal RKReadLineDialog.
 	@param parent QWidget to center the modal dialog on (0 for application)
 	@param prompt The question
 	@param command The command the readline() has arisen from. This is used to get the relevant output context
 	@param result The answer to the question (the line read) will be stored in this string
 	@returns true if ok was pressed (or the dialog was closed), false if cancel was pressed (i.e. the command should be cancelled) */
-	static bool readLine (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command, QString *result);
-protected:
+	static bool readLine(QWidget *parent, const QString &caption, const QString &prompt, RCommand *command, QString *result);
+
+  protected:
 	/** ctor. Use the static readLine() instead. */
-	RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command);
+	RKReadLineDialog(QWidget *parent, const QString &caption, const QString &prompt, RCommand *command);
 	/** destructor */
-	~RKReadLineDialog ();
-private:
+	~RKReadLineDialog();
+
+  private:
 	QLineEdit *input;
 	static QByteArray stored_geom;
 };

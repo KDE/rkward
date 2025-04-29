@@ -14,13 +14,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class RKPDFWindow : public RKMDIWindow {
 	Q_OBJECT
-public:
+  public:
 	explicit RKPDFWindow(QWidget *parent);
 	~RKPDFWindow() override;
 	void openURL(const QUrl &url);
 	QUrl url() const;
-	static KParts::ReadOnlyPart* getOkularPart(const QVariantList &args=QVariantList());
-private:
+	static KParts::ReadOnlyPart *getOkularPart(const QVariantList &args = QVariantList());
+
+  private:
 	bool valid;
 };
 

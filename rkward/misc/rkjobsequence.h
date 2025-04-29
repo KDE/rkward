@@ -15,22 +15,23 @@ SPDX-License-Identifier: GPL-2.0-or-later
 /** Simple class to queue up a sequence of KJob that will be executed one after the other */
 class RKJobSequence : public QObject {
 	Q_OBJECT
-public:
-	RKJobSequence ();
-	~RKJobSequence ();
+  public:
+	RKJobSequence();
+	~RKJobSequence();
 
-	void addJob (KJob* job);
-	bool hadError () const;
-	QStringList errors () const;
-	void start ();
-private Q_SLOTS:
-	void jobDone (KJob* job);
-Q_SIGNALS:
-	void finished (RKJobSequence *seq);
-private:
-	void nextJob ();
+	void addJob(KJob *job);
+	bool hadError() const;
+	QStringList errors() const;
+	void start();
+  private Q_SLOTS:
+	void jobDone(KJob *job);
+  Q_SIGNALS:
+	void finished(RKJobSequence *seq);
 
-	QList<KJob*> outstanding_jobs;
+  private:
+	void nextJob();
+
+	QList<KJob *> outstanding_jobs;
 	QStringList _errors;
 };
 

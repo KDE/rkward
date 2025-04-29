@@ -9,33 +9,33 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QDir>
 
-#include <KSharedConfig>
 #include <KConfigGroup>
 #include <KRecentFilesAction>
+#include <KSharedConfig>
 #include <kconfigwidgets_version.h>
 
-#include "rksettingsmodulegeneral.h"
 #include "../rkward.h"
+#include "rksettingsmodulegeneral.h"
 
 #include "../debug.h"
 
-static QString _scripts_id(QStringLiteral("rscripts"));  // clazy:exclude=non-pod-global-static
+static QString _scripts_id(QStringLiteral("rscripts")); // clazy:exclude=non-pod-global-static
 QString RKRecentUrls::scriptsId() { return _scripts_id; }
-static QString _workspace_id(QStringLiteral("workspaces"));  // clazy:exclude=non-pod-global-static
+static QString _workspace_id(QStringLiteral("workspaces")); // clazy:exclude=non-pod-global-static
 QString RKRecentUrls::workspaceId() { return _workspace_id; }
-static QString _output_id(QStringLiteral("rkoutput"));  // clazy:exclude=non-pod-global-static
+static QString _output_id(QStringLiteral("rkoutput")); // clazy:exclude=non-pod-global-static
 QString RKRecentUrls::outputId() { return _output_id; }
 
-QHash<QString, KRecentFilesAction*> RKRecentUrls::actions;
-RKRecentUrls* RKRecentUrls::_notifier = nullptr;
+QHash<QString, KRecentFilesAction *> RKRecentUrls::actions;
+RKRecentUrls *RKRecentUrls::_notifier = nullptr;
 
-void RKRecentUrls::addRecentUrl(const QString& id, const QUrl& url) {
+void RKRecentUrls::addRecentUrl(const QString &id, const QUrl &url) {
 	RK_TRACE(SETTINGS);
 	action(id)->addUrl(url);
 	notifyChangeProxy();
 }
 
-QUrl RKRecentUrls::mostRecentUrl(const QString& id) {
+QUrl RKRecentUrls::mostRecentUrl(const QString &id) {
 	RK_TRACE(SETTINGS);
 	if (id.isEmpty() && !actions.contains(id)) {
 		return QUrl::fromLocalFile(QDir::currentPath());
@@ -45,11 +45,11 @@ QUrl RKRecentUrls::mostRecentUrl(const QString& id) {
 	return list.first();
 }
 
-QList<QUrl> RKRecentUrls::allRecentUrls(const QString& id) {
+QList<QUrl> RKRecentUrls::allRecentUrls(const QString &id) {
 	return action(id)->urls();
 }
 
-RKRecentUrls* RKRecentUrls::notifier() {
+RKRecentUrls *RKRecentUrls::notifier() {
 	RK_TRACE(SETTINGS);
 	if (!_notifier) {
 		_notifier = new RKRecentUrls(RKWardMainWindow::getMain());
@@ -65,7 +65,7 @@ void RKRecentUrls::notifyChange() {
 	Q_EMIT recentUrlsChanged();
 }
 
-RKRecentUrls::RKRecentUrls(QObject* parent) : QObject(parent) {
+RKRecentUrls::RKRecentUrls(QObject *parent) : QObject(parent) {
 	RK_TRACE(SETTINGS);
 	// Not currrently used
 }
@@ -88,22 +88,21 @@ void RKRecentUrls::saveConfig() {
 	}
 }
 
-KRecentFilesAction* RKRecentUrls::claimAction(const QString& id) {
+KRecentFilesAction *RKRecentUrls::claimAction(const QString &id) {
 	RK_TRACE(SETTINGS);
 	return action(id);
 }
 
-KRecentFilesAction * RKRecentUrls::action(const QString& id) {
+KRecentFilesAction *RKRecentUrls::action(const QString &id) {
 	RK_TRACE(SETTINGS);
 	if (!actions.contains(id)) {
 		auto cg = config();
 		auto act = new KRecentFilesAction(RKWardMainWindow::getMain());
 		if (!id.isEmpty()) act->loadEntries(cg.group(id));
-		act->setMaxItems(RKSettingsModuleGeneral::maxNumRecentFiles());  // TODO: Move setting somewhere else
+		act->setMaxItems(RKSettingsModuleGeneral::maxNumRecentFiles()); // TODO: Move setting somewhere else
 		QObject::connect(act, &QObject::destroyed, [id]() { RKRecentUrls::actions.remove(id); });
 		QObject::connect(act, &KRecentFilesAction::recentListCleared, &RKRecentUrls::notifyChangeProxy);
 		actions.insert(id, act);
 	}
 	return actions[id];
 }
-

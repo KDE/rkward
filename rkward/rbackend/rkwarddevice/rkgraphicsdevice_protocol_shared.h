@@ -9,21 +9,21 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKGRAPHICSDEVICE_PROTOCOL_SHARED_H
 
 /** @page RKGraphicsDeviceProtocol
- * 
+ *
  * The key feature of the RKWard Graphics Device is that it serializes all drawing operations, so they
  * can be sent to a separate process (the frontend) or even computer (well, not yet). Some notes on the protocol:
- * 
+ *
  * This is not the same protocol as used for other communication between frontend and backend, and not even
  * the same connection. The key idea behind this protocol here, is that it should have very low overhead,
  * even when sending many @em small requests.
- * 
+ *
  * All communication is initiated from the backend. The backend sends a request, starting with the size of the
  * request in bytes (quint32), then an opcode (quint8), then the device number (quint8), then all applicable parameters.
  * Most requests are asynchronous, but a few await a reply from the frontend.
- * 
+ *
  * At any time, there can only be one request waiting for a reply, and the request waiting for a reply is always the most
  * recent one. This makes the protocol very simple.
- * 
+ *
  * If the frontend has spontaneous need for communication, it will have to use some separate channel.
  *
  * How do we handle cancellation of interactive ops (e.g. locator()) from the backend? If an interrupt is pending
@@ -31,7 +31,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
  * send a reply to the last request ASAP (if the frontend has already sent the reply, it will ignore the RKD_Cancel). From
  * there, we simply process the reply as usual, and leave it to R to actually do the interrupt. If the frontend takes more than
  * fives seconds to respond at this point, the connection will be killed.
- * 
+ *
  */
 
 enum RKDCachedResourceType {
@@ -63,54 +63,54 @@ enum RKDGradientExtend {
 enum RKDOpcodes {
 	// NOTE: the only point of the assigned int values is to ease debugging in case of trouble
 	// Asynchronous operations
-	RKDCreate               = 0,
+	RKDCreate = 0,
 	RKDCircle,
 	RKDLine,
 	RKDPolygon,
 	RKDPolyline,
-	RKDPath,               // 5
+	RKDPath, // 5
 	RKDRect,
 	RKDTextUTF8,
 	RKDNewPage,
 	RKDStartGettingEvents,
-	RKDActivate,           // 10
+	RKDActivate, // 10
 	RKDDeActivate,
 	RKDClip,
 	RKDMode,
 	RKDRaster,
-	RKDSetSize,            // 15
+	RKDSetSize, // 15
 	RKDStopGettingEvents,
 	RKDReleaseCachedResource,
-	RKDStartRecordTilingPattern,      // part of setPattern in R
+	RKDStartRecordTilingPattern, // part of setPattern in R
 	RKDStartRecordClipPath,
-	RKDStartRecordMask,    // 20
+	RKDStartRecordMask, // 20
 	RKDFillStrokePathBegin,
 	RKDFillStrokePathEnd,
 	RKDDefineGroupBegin,
 	RKDDefineGroupStep2,
-	RKDUseGroup,           // 25
+	RKDUseGroup, // 25
 
 	// Synchronous operations
-	RKDFetchNextEvent      = 100,
+	RKDFetchNextEvent = 100,
 	RKDStrWidthUTF8,
 	RKDMetricInfo,
 	RKDLocator,
 	RKDNewPageConfirm,
-	RKDCapture,           // 105
+	RKDCapture, // 105
 	RKDQueryResolution,
 	RKDGetSize,
 	RKDSetPattern,
-	RKDEndRecordTilingPattern,       // part of setPattern in R
-	RKDSetClipPath,       // 110
+	RKDEndRecordTilingPattern, // part of setPattern in R
+	RKDSetClipPath,            // 110
 	RKDEndRecordClipPath,
 	RKDSetMask,
 	RKDEndRecordMask,
 	RKDDefineGroupEnd,
-	RKDClose,             // 115
+	RKDClose, // 115
 	RKDGlyph,
 
 	// Protocol operations
-	RKDCancel              = 200
+	RKDCancel = 200
 };
 
 enum RKDEventCodes {
@@ -121,12 +121,12 @@ enum RKDEventCodes {
 	RKDNothing = 4,
 	RKDFrontendCancel = 5,
 
-// Mouse buttons, or-able, identical to the corresponding R defines. Note: x1 and x2 buttons are not handled by R
+	// Mouse buttons, or-able, identical to the corresponding R defines. Note: x1 and x2 buttons are not handled by R
 	RKDMouseLeftButton = 1,
 	RKDMouseMiddleButton = 2,
 	RKDMouseRightButton = 4
-//	RKDMouseX1Button = 8,
-//	RKDMouseX2Button = 16
+	//	RKDMouseX1Button = 8,
+	//	RKDMouseX2Button = 16
 };
 
 /** Common problem is that we need to map an R parameter enum onto the corresponding Qt parameter enum, e.g. line ending style, etc.
@@ -144,20 +144,27 @@ enum RKDEventCodes {
  * to catch conceivable mistakes at compile time.
  */
 #if defined(RKD_BACKEND_CODE)
-#define MapEnum(Rval,Ival,Qval) case Rval: return Ival;
-#define MapDefault(Message,Ival,Qval) Message; return Ival;
-#define RKD_IN_FRONTEND false
+#	define MapEnum(Rval, Ival, Qval) \
+	case Rval:                        \
+		return Ival;
+#	define MapDefault(Message, Ival, Qval) \
+		Message;                            \
+		return Ival;
+#	define RKD_IN_FRONTEND false
 #else
-#include <QPainter> // for enums
-#define MapEnum(Rval,Ival,Qval) case Ival: static_assert(Ival == (int) Qval, "Enum mismatch"); return Qval;
-#define MapDefault(Message,Ival,Qval) return Qval;
-#define RKD_IN_FRONTEND true
-#define R_GE_version 99999 // always support latest features in frontend. Backend may or may not use them
+#	include <QPainter> // for enums
+#	define MapEnum(Rval, Ival, Qval)                      \
+	case Ival:                                             \
+		static_assert(Ival == (int)Qval, "Enum mismatch"); \
+		return Qval;
+#	define MapDefault(Message, Ival, Qval) return Qval;
+#	define RKD_IN_FRONTEND true
+#	define R_GE_version 99999 // always support latest features in frontend. Backend may or may not use them
 #endif
 
 static inline quint8 mapLineEndStyle(quint8 from) {
 	if (RKD_IN_FRONTEND) return from;
-	switch(from) {
+	switch (from) {
 		MapEnum(R_GE_lineend::GE_BUTT_CAP, 0x00, Qt::FlatCap);
 		MapEnum(R_GE_lineend::GE_SQUARE_CAP, 0x10, Qt::SquareCap);
 		MapEnum(R_GE_lineend::GE_ROUND_CAP, 0x20, Qt::RoundCap);
@@ -167,11 +174,11 @@ static inline quint8 mapLineEndStyle(quint8 from) {
 
 static inline quint8 mapLineJoinStyle(quint8 from) {
 	if (RKD_IN_FRONTEND) return from;
-	switch(from) {
+	switch (from) {
 		MapEnum(R_GE_linejoin::GE_MITRE_JOIN, 0x00, Qt::MiterJoin);
 		MapEnum(R_GE_linejoin::GE_BEVEL_JOIN, 0x40, Qt::BevelJoin);
 		MapEnum(R_GE_linejoin::GE_ROUND_JOIN, 0x80, Qt::RoundJoin);
-		//MapEnum(GE_ROUND_JOIN, 0x100, Qt::SvgMiterJoin);  // not available in R, and wouldn't fit in quint8
+		// MapEnum(GE_ROUND_JOIN, 0x100, Qt::SvgMiterJoin);  // not available in R, and wouldn't fit in quint8
 	}
 	MapDefault({}, 0x00, Qt::MiterJoin);
 }
@@ -179,7 +186,7 @@ static inline quint8 mapLineJoinStyle(quint8 from) {
 #if R_GE_version >= 15
 static inline int mapCompositionModeEnum(int from) {
 	if (RKD_IN_FRONTEND) return from;
-	switch(from) {
+	switch (from) {
 		MapEnum(R_GE_compositeClear, 2, QPainter::CompositionMode_Clear);
 		MapEnum(R_GE_compositeSource, 3, QPainter::CompositionMode_Source);
 		MapEnum(R_GE_compositeOver, 0, QPainter::CompositionMode_SourceOver);
@@ -204,15 +211,15 @@ static inline int mapCompositionModeEnum(int from) {
 		MapEnum(R_GE_compositeSoftLight, 21, QPainter::CompositionMode_SoftLight);
 		MapEnum(R_GE_compositeDifference, 22, QPainter::CompositionMode_Difference);
 		MapEnum(R_GE_compositeExclusion, 23, QPainter::CompositionMode_Exclusion);
-// Unsupported in Qt:
-// MapEnum(R_GE_compositeSaturate, xx, yy)
+		// Unsupported in Qt:
+		// MapEnum(R_GE_compositeSaturate, xx, yy)
 	}
 	MapDefault(RFn::Rf_warning("Unsupported enumeration value %d", from), 0, QPainter::CompositionMode_SourceOver);
 }
 
 static inline quint8 mapFillRule(quint8 from) {
 	if (RKD_IN_FRONTEND) return from;
-	switch(from) {
+	switch (from) {
 		MapEnum(R_GE_evenOddRule, 0, Qt::OddEvenFill);
 		MapEnum(R_GE_nonZeroWindingRule, 1, Qt::WindingFill);
 	}
@@ -223,7 +230,7 @@ static inline quint8 mapFillRule(quint8 from) {
 #if R_GE_version >= 16
 static inline quint8 mapTextStyle(quint8 from) {
 	if (RKD_IN_FRONTEND) return from;
-	switch(from) {
+	switch (from) {
 		MapEnum(R_GE_text_style_normal, 0, QFont::StyleNormal);
 		MapEnum(R_GE_text_style_italic, 1, QFont::StyleItalic);
 		MapEnum(R_GE_text_style_oblique, 2, QFont::StyleOblique);

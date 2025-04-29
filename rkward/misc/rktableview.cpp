@@ -11,95 +11,94 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKTableView::RKTableView (QWidget *parent) : QTableView (parent) {
-	RK_TRACE (MISC);
+RKTableView::RKTableView(QWidget *parent) : QTableView(parent) {
+	RK_TRACE(MISC);
 
 	trailing_columns = 0;
 	trailing_rows = 0;
 }
 
-RKTableView::~RKTableView () {
-	RK_TRACE (MISC);
+RKTableView::~RKTableView() {
+	RK_TRACE(MISC);
 }
 
-int RKTableView::apparentColumns () const {
-	return model ()->columnCount ();
+int RKTableView::apparentColumns() const {
+	return model()->columnCount();
 }
 
-int RKTableView::apparentRows () const {
-	return model ()->rowCount ();
+int RKTableView::apparentRows() const {
+	return model()->rowCount();
 }
 
-QItemSelectionRange RKTableView::getSelectionBoundaries () const {
-	RK_TRACE (MISC);
+QItemSelectionRange RKTableView::getSelectionBoundaries() const {
+	RK_TRACE(MISC);
 
-	RK_ASSERT (selectionModel ());
-	QItemSelection sel = selectionModel ()->selection ();
-	if (sel.isEmpty ()){
-		QModelIndex current = currentIndex ();
-		if ((!current.isValid ()) || isIndexHidden (current)) return (QItemSelectionRange ());
+	RK_ASSERT(selectionModel());
+	QItemSelection sel = selectionModel()->selection();
+	if (sel.isEmpty()) {
+		QModelIndex current = currentIndex();
+		if ((!current.isValid()) || isIndexHidden(current)) return (QItemSelectionRange());
 
-		return (QItemSelectionRange (currentIndex (), currentIndex ()));
+		return (QItemSelectionRange(currentIndex(), currentIndex()));
 	} else {
-		RK_ASSERT (sel.size () == 1);
+		RK_ASSERT(sel.size() == 1);
 
 		QItemSelectionRange range = sel[0];
-		while (isColumnHidden (range.left ())) {
+		while (isColumnHidden(range.left())) {
 			// purge hidden leading columns from the range
-			range = QItemSelectionRange (model ()->index (range.top (), range.left () + 1, rootIndex ()), range.bottomRight ());
+			range = QItemSelectionRange(model()->index(range.top(), range.left() + 1, rootIndex()), range.bottomRight());
 		}
 		return (range);
 	}
 }
 
-void RKTableView::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason) {
-	RK_TRACE (EDITOR);
+void RKTableView::editorDone(QWidget *editor, RKItemDelegate::EditorDoneReason reason) {
+	RK_TRACE(EDITOR);
 
-	int row = currentIndex ().row ();
-	int col = currentIndex ().column ();
+	int row = currentIndex().row();
+	int col = currentIndex().column();
 
-	closeEditor (editor, QAbstractItemDelegate::NoHint);
+	closeEditor(editor, QAbstractItemDelegate::NoHint);
 
 	if (reason == RKItemDelegate::EditorExitRight) ++col;
 	else if (reason == RKItemDelegate::EditorExitLeft) --col;
 	else if (reason == RKItemDelegate::EditorExitUp) --row;
 	else if (reason == RKItemDelegate::EditorExitDown) ++row;
 
-	if (row >= trueRows ()) {
+	if (row >= trueRows()) {
 		// if we have edited the trailing row, a new row may have been inserted, apparently *above* the
 		// current index. We need to fix this up. Basically, we can only ever be in the last row after
 		// a reject, or an exit to the next row
 		if ((reason != RKItemDelegate::EditorExitDown) && (reason != RKItemDelegate::EditorReject)) --row;
 	}
-	if (col >= trueColumns ()) {
+	if (col >= trueColumns()) {
 		// see above
 		if ((reason != RKItemDelegate::EditorExitRight) && (reason != RKItemDelegate::EditorReject)) --col;
 	}
 
-	row = qMin (row, apparentRows () - 1);
-	col = qMin (col, apparentColumns () - 1);
-	setCurrentIndex (model ()->index (row, col));
+	row = qMin(row, apparentRows() - 1);
+	col = qMin(col, apparentColumns() - 1);
+	setCurrentIndex(model()->index(row, col));
 }
 
-void RKTableView::setRKItemDelegate (RKItemDelegate* delegate) {
-	RK_TRACE (EDITOR);
+void RKTableView::setRKItemDelegate(RKItemDelegate *delegate) {
+	RK_TRACE(EDITOR);
 
-	setItemDelegate (delegate);
-	connect (delegate, &RKItemDelegate::doCloseEditor, this, &RKTableView::editorDone);
+	setItemDelegate(delegate);
+	connect(delegate, &RKItemDelegate::doCloseEditor, this, &RKTableView::editorDone);
 }
 
-void RKTableView::keyPressEvent (QKeyEvent *e) {
-	RK_TRACE (EDITOR);
+void RKTableView::keyPressEvent(QKeyEvent *e) {
+	RK_TRACE(EDITOR);
 
-	if ((e->key () == Qt::Key_Delete) || (e->key () == Qt::Key_Backspace)) {
+	if ((e->key() == Qt::Key_Delete) || (e->key() == Qt::Key_Backspace)) {
 		Q_EMIT blankSelectionRequest();
-		e->accept ();
+		e->accept();
 	} else {
-		QTableView::keyPressEvent (e);
-		scrollTo (currentIndex ());	// why oh why isn't this the default behavior?
+		QTableView::keyPressEvent(e);
+		scrollTo(currentIndex()); // why oh why isn't this the default behavior?
 	}
 }
-
 
 /////////////////// RKItemDelegate /////////////////////
 
@@ -108,8 +107,8 @@ void RKTableView::keyPressEvent (QKeyEvent *e) {
 #include "editformatdialog.h"
 #include "editlabelsdialog.h"
 
-RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditModel* datamodel) : QItemDelegate (parent) {
-	RK_TRACE (EDITOR);
+RKItemDelegate::RKItemDelegate(QObject *parent, RKVarEditModel *datamodel) : QItemDelegate(parent) {
+	RK_TRACE(EDITOR);
 
 	RKItemDelegate::datamodel = datamodel;
 	metamodel = nullptr;
@@ -117,8 +116,8 @@ RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditModel* datamodel) : QI
 	locked_for_modal_editor = false;
 }
 
-RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel) : QItemDelegate (parent) {
-	RK_TRACE (EDITOR);
+RKItemDelegate::RKItemDelegate(QObject *parent, RKVarEditMetaModel *metamodel) : QItemDelegate(parent) {
+	RK_TRACE(EDITOR);
 
 	RKItemDelegate::metamodel = metamodel;
 	datamodel = nullptr;
@@ -126,9 +125,9 @@ RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel) 
 	locked_for_modal_editor = false;
 }
 
-RKItemDelegate::RKItemDelegate (QObject *parent, QAbstractItemModel* model, bool dummy) : QItemDelegate (parent) {
-	RK_TRACE (EDITOR);
-	Q_UNUSED (dummy);
+RKItemDelegate::RKItemDelegate(QObject *parent, QAbstractItemModel *model, bool dummy) : QItemDelegate(parent) {
+	RK_TRACE(EDITOR);
+	Q_UNUSED(dummy);
 
 	genericmodel = model;
 	metamodel = nullptr;
@@ -136,130 +135,129 @@ RKItemDelegate::RKItemDelegate (QObject *parent, QAbstractItemModel* model, bool
 	locked_for_modal_editor = false;
 }
 
-RKItemDelegate::~RKItemDelegate () {
-	RK_TRACE (EDITOR);
+RKItemDelegate::~RKItemDelegate() {
+	RK_TRACE(EDITOR);
 }
 
-QWidget* RKItemDelegate::createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
-	RK_TRACE (EDITOR);
+QWidget *RKItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+	RK_TRACE(EDITOR);
 
-	QWidget* ed;
+	QWidget *ed;
 	if (metamodel) {
-		int row = index.row ();
+		int row = index.row();
 		if (row == RKVarEditMetaModel::FormatRow) {
-			ed = new EditFormatDialogProxy (parent);
-			const_cast<RKItemDelegate*> (this)->locked_for_modal_editor = true;
+			ed = new EditFormatDialogProxy(parent);
+			const_cast<RKItemDelegate *>(this)->locked_for_modal_editor = true;
 		} else if (row == RKVarEditMetaModel::LevelsRow) {
-			ed = new EditLabelsDialogProxy (parent);
-			const_cast<RKItemDelegate*> (this)->locked_for_modal_editor = true;
+			ed = new EditLabelsDialogProxy(parent);
+			const_cast<RKItemDelegate *>(this)->locked_for_modal_editor = true;
 		} else {
-			ed = new CellEditor (parent);
+			ed = new CellEditor(parent);
 		}
 	} else {
-		RK_ASSERT (datamodel || genericmodel);
-		ed = new CellEditor (parent);
+		RK_ASSERT(datamodel || genericmodel);
+		ed = new CellEditor(parent);
 	}
 
-	ed->setFont (option.font);
+	ed->setFont(option.font);
 	// NOTE: Can't use new SIGNAL/SLOT syntax, here, as the editors are of different types (TODO: define a common base class)
-	connect (ed, SIGNAL (done(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
+	connect(ed, SIGNAL(done(QWidget *, RKItemDelegate::EditorDoneReason)), this, SLOT(editorDone(QWidget *, RKItemDelegate::EditorDoneReason)));
 	return ed;
 }
 
-void RKItemDelegate::setEditorData (QWidget* editor, const QModelIndex& index) const {
-	RK_TRACE (EDITOR);
+void RKItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const {
+	RK_TRACE(EDITOR);
 
-	if (!index.isValid ()) return;
+	if (!index.isValid()) return;
 
 	if (metamodel) {
-		int row = index.row ();
+		int row = index.row();
 		if (row == RKVarEditMetaModel::FormatRow) {
-			EditFormatDialogProxy* fed = static_cast<EditFormatDialogProxy*> (editor);
-			fed->initialize (RKVariable::parseFormattingOptionsString (metamodel->data (index, Qt::EditRole).toString ()), metamodel->headerData (index.column (), Qt::Horizontal).toString ());
+			EditFormatDialogProxy *fed = static_cast<EditFormatDialogProxy *>(editor);
+			fed->initialize(RKVariable::parseFormattingOptionsString(metamodel->data(index, Qt::EditRole).toString()), metamodel->headerData(index.column(), Qt::Horizontal).toString());
 		} else if (row == RKVarEditMetaModel::LevelsRow) {
-			EditLabelsDialogProxy* led = static_cast<EditLabelsDialogProxy*> (editor);
-			led->initialize (metamodel->getValueLabels (index.column ()), metamodel->headerData (index.column (), Qt::Horizontal).toString ());
+			EditLabelsDialogProxy *led = static_cast<EditLabelsDialogProxy *>(editor);
+			led->initialize(metamodel->getValueLabels(index.column()), metamodel->headerData(index.column(), Qt::Horizontal).toString());
 		} else {
-			CellEditor* ced = static_cast<CellEditor*> (editor);
-			ced->setText (metamodel->data (index, Qt::EditRole).toString ());
+			CellEditor *ced = static_cast<CellEditor *>(editor);
+			ced->setText(metamodel->data(index, Qt::EditRole).toString());
 
 			if (row == RKVarEditMetaModel::TypeRow) {
 				RObject::ValueLabels labels;
 				for (int i = RObject::MinKnownDataType; i <= RObject::MaxKnownDataType; ++i) {
-					labels.insert (QString::number (i), RObject::typeToText ((RObject::RDataType) i));
+					labels.insert(QString::number(i), RObject::typeToText((RObject::RDataType)i));
 				}
-				ced->setValueLabels (labels);
+				ced->setValueLabels(labels);
 			}
 		}
 	} else {
-		CellEditor* ced = static_cast<CellEditor*> (editor);
-		ced->setText (index.data (Qt::EditRole).toString ());
+		CellEditor *ced = static_cast<CellEditor *>(editor);
+		ced->setText(index.data(Qt::EditRole).toString());
 		if (datamodel) {
-			if (index.column () < datamodel->trueCols ()) {
-				ced->setValueLabels (datamodel->getObject (index.column ())->getValueLabels ());
+			if (index.column() < datamodel->trueCols()) {
+				ced->setValueLabels(datamodel->getObject(index.column())->getValueLabels());
 			}
 		} else {
-			RK_ASSERT (genericmodel);
+			RK_ASSERT(genericmodel);
 		}
 	}
 }
 
-void RKItemDelegate::setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const {
-	RK_TRACE (EDITOR);
+void RKItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {
+	RK_TRACE(EDITOR);
 
-	if (!index.isValid ()) return;
+	if (!index.isValid()) return;
 
 	if (metamodel) {
-		RK_ASSERT (model == metamodel);
+		RK_ASSERT(model == metamodel);
 
-		int row = index.row ();
+		int row = index.row();
 		if (row == RKVarEditMetaModel::FormatRow) {
-			EditFormatDialogProxy* fed = static_cast<EditFormatDialogProxy*> (editor);
-			model->setData (index, RKVariable::formattingOptionsToString (fed->getOptions ()), Qt::EditRole);
+			EditFormatDialogProxy *fed = static_cast<EditFormatDialogProxy *>(editor);
+			model->setData(index, RKVariable::formattingOptionsToString(fed->getOptions()), Qt::EditRole);
 			return;
 		} else if (row == RKVarEditMetaModel::LevelsRow) {
-			EditLabelsDialogProxy* led = static_cast<EditLabelsDialogProxy*> (editor);
-			metamodel->setValueLabels (index.column (), led->getLabels ());
+			EditLabelsDialogProxy *led = static_cast<EditLabelsDialogProxy *>(editor);
+			metamodel->setValueLabels(index.column(), led->getLabels());
 			return;
 		} // else all others use the regular CellEditor
 	} else if (datamodel) {
-		RK_ASSERT (model == datamodel);
+		RK_ASSERT(model == datamodel);
 	} else {
-		RK_ASSERT (genericmodel && (model == genericmodel));
+		RK_ASSERT(genericmodel && (model == genericmodel));
 	}
 
-	CellEditor* ced = static_cast<CellEditor*> (editor);
-	model->setData (index, ced->text (), Qt::EditRole);
+	CellEditor *ced = static_cast<CellEditor *>(editor);
+	model->setData(index, ced->text(), Qt::EditRole);
 }
 
-bool RKItemDelegate::eventFilter (QObject* object, QEvent* event) {
-	RK_TRACE (EDITOR);
+bool RKItemDelegate::eventFilter(QObject *object, QEvent *event) {
+	RK_TRACE(EDITOR);
 
-	if (locked_for_modal_editor) return false;	// Needed on MacOSX: Pressing Ok in one of the modal editors seems to
-							// generate a Return-like event.
-							// This would be handled *before* the editor had a chance to update its data,
-							// thus committing the old, not new state.
+	if (locked_for_modal_editor) return false; // Needed on MacOSX: Pressing Ok in one of the modal editors seems to
+		                                       // generate a Return-like event.
+		                                       // This would be handled *before* the editor had a chance to update its data,
+		                                       // thus committing the old, not new state.
 
-	QWidget *editor = qobject_cast<QWidget*> (object);
+	QWidget *editor = qobject_cast<QWidget *>(object);
 	if (!editor) return false;
 
 	if (event->type() == QEvent::KeyPress) {
-		QKeyEvent* ke = static_cast<QKeyEvent *> (event);
-		if (ke->key () == Qt::Key_Tab) editorDone (editor, EditorExitRight);
-		else if (ke->key () == Qt::Key_Tab) editorDone (editor, EditorExitRight);
-		else if (ke->key () == Qt::Key_Enter) editorDone (editor, EditorExitDown);
-		else if (ke->key () == Qt::Key_Return) editorDone (editor, EditorExitDown);
-		else return QItemDelegate::eventFilter (editor, event);
+		QKeyEvent *ke = static_cast<QKeyEvent *>(event);
+		if (ke->key() == Qt::Key_Tab) editorDone(editor, EditorExitRight);
+		else if (ke->key() == Qt::Key_Tab) editorDone(editor, EditorExitRight);
+		else if (ke->key() == Qt::Key_Enter) editorDone(editor, EditorExitDown);
+		else if (ke->key() == Qt::Key_Return) editorDone(editor, EditorExitDown);
+		else return QItemDelegate::eventFilter(editor, event);
 		return true;
 	}
-	return QItemDelegate::eventFilter (editor, event);
+	return QItemDelegate::eventFilter(editor, event);
 }
 
-void RKItemDelegate::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason) {
-	RK_TRACE (EDITOR);
+void RKItemDelegate::editorDone(QWidget *editor, RKItemDelegate::EditorDoneReason reason) {
+	RK_TRACE(EDITOR);
 
 	if (reason != EditorReject) Q_EMIT commitData(editor);
 	Q_EMIT doCloseEditor(editor, reason);
 	locked_for_modal_editor = false;
 }
-

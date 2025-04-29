@@ -91,86 +91,85 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 
 ///////////////////////////////////////////// Base //////////////////////////////////////////
 
-RKComponentPropertyBase::RKComponentPropertyBase (QObject *parent, bool required) : QObject (parent) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyBase::RKComponentPropertyBase(QObject *parent, bool required) : QObject(parent) {
+	RK_TRACE(PLUGIN);
 	RKComponentPropertyBase::required = required;
 	is_valid = true;
 }
 
-RKComponentPropertyBase::~RKComponentPropertyBase () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyBase::~RKComponentPropertyBase() {
+	RK_TRACE(PLUGIN);
 }
 
-QVariant RKComponentPropertyBase::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
-	if (modifier.isEmpty ()) return _value;
-	if (modifier == QLatin1String("quoted")) return RObject::rQuote (_value);
+QVariant RKComponentPropertyBase::value(const QString &modifier) {
+	RK_TRACE(PLUGIN);
+	if (modifier.isEmpty()) return _value;
+	if (modifier == QLatin1String("quoted")) return RObject::rQuote(_value);
 	// else
-	warnModifierNotRecognized (modifier);
-	return QString ();
+	warnModifierNotRecognized(modifier);
+	return QString();
 }
 
-bool RKComponentPropertyBase::setValue (const QString &string) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyBase::setValue(const QString &string) {
+	RK_TRACE(PLUGIN);
 
 	_value = string;
 	Q_EMIT valueChanged(this);
 	return true;
 }
 
-void RKComponentPropertyBase::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyBase::connectToGovernor(RKComponentPropertyBase *governor, const QString &modifier, bool) {
+	RK_TRACE(PLUGIN);
 
-	RK_ASSERT (governor);
-	connect (governor, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyBase::governorValueChanged);
+	RK_ASSERT(governor);
+	connect(governor, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyBase::governorValueChanged);
 	governor_modifier = modifier;
 	// no need to reconcile any requirements, as the RKComponentPropertyBase does not have any requirements
 
 	// fetch current value
-	governorValueChanged (governor);
+	governorValueChanged(governor);
 }
 
-void RKComponentPropertyBase::governorValueChanged (RKComponentPropertyBase *property) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyBase::governorValueChanged(RKComponentPropertyBase *property) {
+	RK_TRACE(PLUGIN);
 #ifdef __GNUC__
 #	warning TOOD: connected value should be stored as qvariant
 #endif
-	setValue (property->value (governor_modifier).toString ());
+	setValue(property->value(governor_modifier).toString());
 }
 
-void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier) {
-	RK_TRACE (PLUGIN);
-	RK_DEBUG (PLUGIN, DL_ERROR, "Modifier '%s' not recognized.", modifier.toLatin1 (). data ());
+void RKComponentPropertyBase::warnModifierNotRecognized(const QString &modifier) {
+	RK_TRACE(PLUGIN);
+	RK_DEBUG(PLUGIN, DL_ERROR, "Modifier '%s' not recognized.", modifier.toLatin1().data());
 }
-
 
 ///////////////////////////////////////// AbstractList /////////////////////////////////////
 
 QString RKComponentPropertyAbstractList::sep = QStringLiteral("\n");
-RKComponentPropertyAbstractList::RKComponentPropertyAbstractList (QObject* parent, bool required) : RKComponentPropertyBase (parent, required) {
-	RK_TRACE (PLUGIN);
-	setAllowedLength ();
-	setStripDuplicates (false);
+RKComponentPropertyAbstractList::RKComponentPropertyAbstractList(QObject *parent, bool required) : RKComponentPropertyBase(parent, required) {
+	RK_TRACE(PLUGIN);
+	setAllowedLength();
+	setStripDuplicates(false);
 }
 
-RKComponentPropertyAbstractList::~RKComponentPropertyAbstractList () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyAbstractList::~RKComponentPropertyAbstractList() {
+	RK_TRACE(PLUGIN);
 }
 
-void RKComponentPropertyAbstractList::setAllowedLength ( int min_num_items, int min_num_items_if_any, int max_num_items ) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyAbstractList::setAllowedLength(int min_num_items, int min_num_items_if_any, int max_num_items) {
+	RK_TRACE(PLUGIN);
 
 	RKComponentPropertyAbstractList::min_num_items = min_num_items;
 	RKComponentPropertyAbstractList::min_num_items_if_any = min_num_items_if_any;
 	RKComponentPropertyAbstractList::max_num_items = max_num_items;
-	is_valid = checkListLength ();
+	is_valid = checkListLength();
 }
 
-bool RKComponentPropertyAbstractList::checkListLength () {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyAbstractList::checkListLength() {
+	RK_TRACE(PLUGIN);
 
 	if ((min_num_items > 0) || (max_num_items > 0) || (min_num_items_if_any > 0)) {
-		int len = listLength ();
+		int len = listLength();
 		if (len < min_num_items) return false;
 		if (len && (len < min_num_items_if_any)) return false;
 		if ((max_num_items > 0) && (len > max_num_items)) return false;
@@ -178,35 +177,34 @@ bool RKComponentPropertyAbstractList::checkListLength () {
 	return true;
 }
 
-void RKComponentPropertyAbstractList::reconcileLengthRequirements (RKComponentPropertyAbstractList* governor) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyAbstractList::reconcileLengthRequirements(RKComponentPropertyAbstractList *governor) {
+	RK_TRACE(PLUGIN);
 
 	if (governor->min_num_items < min_num_items) governor->min_num_items = min_num_items;
 	if (governor->min_num_items_if_any < min_num_items_if_any) governor->min_num_items_if_any = min_num_items_if_any;
 	if (max_num_items && (governor->max_num_items > max_num_items)) governor->max_num_items = max_num_items;
 }
 
-void RKComponentPropertyAbstractList::connectToGovernor (RKComponentPropertyBase* governor, const QString& modifier, bool reconcile_requirements) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyAbstractList::connectToGovernor(RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
+	RK_TRACE(PLUGIN);
 
-	if (reconcile_requirements && modifier.isEmpty ()) {
-		if ((governor->type () == PropertyStringList) || (governor->type () == PropertyRObjects)) {
-			reconcileLengthRequirements (static_cast<RKComponentPropertyAbstractList*> (governor));
+	if (reconcile_requirements && modifier.isEmpty()) {
+		if ((governor->type() == PropertyStringList) || (governor->type() == PropertyRObjects)) {
+			reconcileLengthRequirements(static_cast<RKComponentPropertyAbstractList *>(governor));
 		}
 	}
 
-	RKComponentPropertyBase::connectToGovernor (governor, modifier, reconcile_requirements);
+	RKComponentPropertyBase::connectToGovernor(governor, modifier, reconcile_requirements);
 }
-
 
 ///////////////////////////////////////// StringList ///////////////////////////////////////
 
-RKComponentPropertyStringList::RKComponentPropertyStringList (QObject *parent, bool required) : RKComponentPropertyAbstractList (parent, required) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyStringList::RKComponentPropertyStringList(QObject *parent, bool required) : RKComponentPropertyAbstractList(parent, required) {
+	RK_TRACE(PLUGIN);
 }
 
-RKComponentPropertyStringList::~RKComponentPropertyStringList () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyStringList::~RKComponentPropertyStringList() {
+	RK_TRACE(PLUGIN);
 }
 
 // escapes only newlines, so we can join strings by newline. Does duplicate backslashes, so the string can safely be passed through
@@ -224,98 +222,99 @@ QString escapeNewlines(const QString &in) {
 	return out;
 }
 
-QVariant RKComponentPropertyStringList::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
+QVariant RKComponentPropertyStringList::value(const QString &modifier) {
+	RK_TRACE(PLUGIN);
 
-	if (modifier.isEmpty ()) {
+	if (modifier.isEmpty()) {
 		return storage;
 	} else if (modifier == QLatin1String("joined")) {
-		if (_value.isNull ()) {
-			for (int i = 0; i < storage.size (); ++i) {
-				if (!_value.isEmpty ()) _value.append (sep);
-				_value.append (escapeNewlines (storage[i]));	// _value acts as a cache for joined string
+		if (_value.isNull()) {
+			for (int i = 0; i < storage.size(); ++i) {
+				if (!_value.isEmpty()) _value.append(sep);
+				_value.append(escapeNewlines(storage[i])); // _value acts as a cache for joined string
 			}
 		}
 		return _value;
 	}
 
-	warnModifierNotRecognized (modifier);
-	return QString ();
+	warnModifierNotRecognized(modifier);
+	return QString();
 }
 
-bool RKComponentPropertyStringList::setValue (const QString &string) {
-	if (string.isNull ()) {
-		setValueList (QStringList ());
+bool RKComponentPropertyStringList::setValue(const QString &string) {
+	if (string.isNull()) {
+		setValueList(QStringList());
 	} else {
-		QStringList list = string.split (sep);
-		for (int i = 0; i < list.size (); ++i) {
-			list[i] = RKCommonFunctions::unescape (list[i]);
+		QStringList list = string.split(sep);
+		for (int i = 0; i < list.size(); ++i) {
+			list[i] = RKCommonFunctions::unescape(list[i]);
 		}
-		setValueList (list);
+		setValueList(list);
 	}
 	return true;
 }
 
-void RKComponentPropertyStringList::setValueAt (int index, const QString& value) {
-	RK_TRACE (PLUGIN);
-	
-	if (getStripDuplicates () && storage.contains (value)) return;
-	
-	while (index >= storage.size ()) storage.append (QString ());	// expand as needed
+void RKComponentPropertyStringList::setValueAt(int index, const QString &value) {
+	RK_TRACE(PLUGIN);
+
+	if (getStripDuplicates() && storage.contains(value)) return;
+
+	while (index >= storage.size())
+		storage.append(QString()); // expand as needed
 	storage[index] = value;
-	doChange ();
+	doChange();
 }
 
-void RKComponentPropertyStringList::governorValueChanged (RKComponentPropertyBase *property) {
-	QVariant value = property->value (governor_modifier);
+void RKComponentPropertyStringList::governorValueChanged(RKComponentPropertyBase *property) {
+	QVariant value = property->value(governor_modifier);
 	if (value.metaType() == QMetaType(QMetaType::QStringList)) {
-		setValueList (value.toStringList ());
+		setValueList(value.toStringList());
 	} else {
-		setValue (value.toString ());
+		setValue(value.toString());
 	}
 }
 
-void RKComponentPropertyStringList::checkStripDuplicates () {
-	if (!getStripDuplicates ()) return;
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyStringList::checkStripDuplicates() {
+	if (!getStripDuplicates()) return;
+	RK_TRACE(PLUGIN);
 
 	QStringList unique;
-	for (int i = 0; i < storage.size (); ++i) {
-		if (!unique.contains (storage[i])) unique.append (storage[i]);
+	for (int i = 0; i < storage.size(); ++i) {
+		if (!unique.contains(storage[i])) unique.append(storage[i]);
 	}
 	storage = unique;
 }
 
-void RKComponentPropertyStringList::removeAt (int index) {
-	RK_TRACE (PLUGIN);
-	if ((index < 0) || (index >= storage.size ())) {
-		RK_ASSERT (false);
+void RKComponentPropertyStringList::removeAt(int index) {
+	RK_TRACE(PLUGIN);
+	if ((index < 0) || (index >= storage.size())) {
+		RK_ASSERT(false);
 		return;
 	}
-	storage.removeAt (index);
-	doChange ();
+	storage.removeAt(index);
+	doChange();
 }
 
-void RKComponentPropertyStringList::doChange () {
-	RK_TRACE (PLUGIN);
-	is_valid = checkListLength ();
-	_value.clear ();
+void RKComponentPropertyStringList::doChange() {
+	RK_TRACE(PLUGIN);
+	is_valid = checkListLength();
+	_value.clear();
 	Q_EMIT valueChanged(this);
 }
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
 
-RKComponentPropertyBool::RKComponentPropertyBool (QObject *parent, bool required, bool default_state, const QString &value_true, const QString &value_false) : RKComponentPropertyBase (parent, required) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyBool::RKComponentPropertyBool(QObject *parent, bool required, bool default_state, const QString &value_true, const QString &value_false) : RKComponentPropertyBase(parent, required) {
+	RK_TRACE(PLUGIN);
 	RKComponentPropertyBool::value_true = value_true;
 	RKComponentPropertyBool::value_false = value_false;
 	default_value = default_state;
 	inverted = false;
-	internalSetValue (default_state);
+	internalSetValue(default_state);
 }
 
-RKComponentPropertyBool::~RKComponentPropertyBool () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyBool::~RKComponentPropertyBool() {
+	RK_TRACE(PLUGIN);
 }
 
 RKComponentBase *RKComponentPropertyBool::lookupComponent(const QString &identifier, QString *remainder) {
@@ -330,16 +329,16 @@ RKComponentBase *RKComponentPropertyBool::lookupComponent(const QString &identif
 		negated->setInverted(true);
 		negated->setInternal(true);
 		negated->connectToGovernor(this);
-		*remainder = QString();                    // reset
-		addChild(QStringLiteral("not"), negated);  // so subsequent lookups will not recreate the negated property
+		*remainder = QString();                   // reset
+		addChild(QStringLiteral("not"), negated); // so subsequent lookups will not recreate the negated property
 		return (negated->lookupComponent(identifier.section(u'.', 1), remainder));
 	}
 
 	return (this);
 }
 
-void RKComponentPropertyBool::internalSetValue (bool new_value) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyBool::internalSetValue(bool new_value) {
+	RK_TRACE(PLUGIN);
 
 	if (inverted) current_value = !new_value;
 	else current_value = new_value;
@@ -352,67 +351,67 @@ void RKComponentPropertyBool::internalSetValue (bool new_value) {
 	is_valid = true;
 }
 
-bool RKComponentPropertyBool::stringToBool (const QString &value, bool *ok) {
+bool RKComponentPropertyBool::stringToBool(const QString &value, bool *ok) {
 	if (ok) *ok = true;
 
 	bool _ok;
-	bool ret = value.toInt (&_ok);
+	bool ret = value.toInt(&_ok);
 	if (_ok) return ret;
 
 	if (value == QLatin1String("true")) return true;
 	if (value == QLatin1String("false")) return false;
-	if (value.isEmpty ()) return false;
-	
+	if (value.isEmpty()) return false;
+
 	if (ok) *ok = false;
 	return false;
 }
 
-bool RKComponentPropertyBool::variantToBool (const QVariant &value, bool *ok) {
+bool RKComponentPropertyBool::variantToBool(const QVariant &value, bool *ok) {
 	if (value.metaType() == QMetaType(QMetaType::Bool)) {
 		if (ok) *ok = true;
 		return value.toBool();
 	} else if (value.canConvert(QMetaType(QMetaType::Int))) {
 		bool valid;
-		bool ret = (bool) value.toInt (&valid);
+		bool ret = (bool)value.toInt(&valid);
 		if (valid) {
 			if (ok) *ok = true;
 			return ret;
 		}
 	}
-	return stringToBool (value.toString (), ok);
+	return stringToBool(value.toString(), ok);
 }
 
-void RKComponentPropertyBool::internalSetValue (const QString &new_value) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyBool::internalSetValue(const QString &new_value) {
+	RK_TRACE(PLUGIN);
 
-// try to convert to bool
+	// try to convert to bool
 	if (new_value == value_true) {
-		internalSetValue (true);
+		internalSetValue(true);
 	} else if (new_value == value_false) {
-		internalSetValue (false);
+		internalSetValue(false);
 	} else {
-		internalSetValue (stringToBool (new_value, &is_valid));
+		internalSetValue(stringToBool(new_value, &is_valid));
 	}
 }
 
-void RKComponentPropertyBool::setBoolValue (bool new_value) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyBool::setBoolValue(bool new_value) {
+	RK_TRACE(PLUGIN);
 
-	internalSetValue (new_value);
+	internalSetValue(new_value);
 	Q_EMIT valueChanged(this);
 }
 
-bool RKComponentPropertyBool::boolValue () {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyBool::boolValue() {
+	RK_TRACE(PLUGIN);
 
 	return current_value;
 }
 
-QVariant RKComponentPropertyBool::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
+QVariant RKComponentPropertyBool::value(const QString &modifier) {
+	RK_TRACE(PLUGIN);
 
-	if (modifier.isEmpty () || (modifier == QLatin1String("numeric"))) {
-		return (int) (current_value ? 1 : 0);
+	if (modifier.isEmpty() || (modifier == QLatin1String("numeric"))) {
+		return (int)(current_value ? 1 : 0);
 	}
 	if (modifier == QLatin1String("labeled")) {
 		return current_value ? value_true : value_false;
@@ -420,20 +419,20 @@ QVariant RKComponentPropertyBool::value (const QString &modifier) {
 	if (modifier == QLatin1String("true")) return value_true;
 	if (modifier == QLatin1String("false")) return value_false;
 
-	warnModifierNotRecognized (modifier);
-	return QVariant ();
+	warnModifierNotRecognized(modifier);
+	return QVariant();
 }
 
-bool RKComponentPropertyBool::setValue (const QString &string) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyBool::setValue(const QString &string) {
+	RK_TRACE(PLUGIN);
 
-	internalSetValue (string);
+	internalSetValue(string);
 	Q_EMIT valueChanged(this);
-	return isValid ();
+	return isValid();
 }
 
-bool RKComponentPropertyBool::isStringValid (const QString &string) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyBool::isStringValid(const QString &string) {
+	RK_TRACE(PLUGIN);
 
 	if ((string == value_true) || (string == value_false)) {
 		return true;
@@ -441,147 +440,146 @@ bool RKComponentPropertyBool::isStringValid (const QString &string) {
 	return false;
 }
 
-void RKComponentPropertyBool::governorValueChanged (RKComponentPropertyBase *property) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyBool::governorValueChanged(RKComponentPropertyBase *property) {
+	RK_TRACE(PLUGIN);
 
-	QVariant value = property->value (governor_modifier);
-	if (value.metaType() == QMetaType(QMetaType::QString)) {	// Qt's conversion from string to bool does not meet our needs
-		internalSetValue (value.toString());
+	QVariant value = property->value(governor_modifier);
+	if (value.metaType() == QMetaType(QMetaType::QString)) { // Qt's conversion from string to bool does not meet our needs
+		internalSetValue(value.toString());
 	} else if (value.canConvert(QMetaType(QMetaType::Bool))) {
 		internalSetValue(value.toBool());
-	} else {	// fallback for lists, and other stuff that really should not have been connected to a bool property, in the first place
+	} else { // fallback for lists, and other stuff that really should not have been connected to a bool property, in the first place
 		internalSetValue(value.toString());
 	}
 	Q_EMIT valueChanged(this);
 }
 
-
 ///////////////////////////////////////////// Int //////////////////////////////////////////
-RKComponentPropertyInt::RKComponentPropertyInt (QObject *parent, bool required, int default_value) : RKComponentPropertyBase (parent, required) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyInt::RKComponentPropertyInt(QObject *parent, bool required, int default_value) : RKComponentPropertyBase(parent, required) {
+	RK_TRACE(PLUGIN);
 
-	validator = new QIntValidator (this);		// accepts all ints initially
+	validator = new QIntValidator(this); // accepts all ints initially
 	RKComponentPropertyInt::default_value = default_value;
-	internalSetValue (default_value);
+	internalSetValue(default_value);
 }
 
-RKComponentPropertyInt::~RKComponentPropertyInt () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyInt::~RKComponentPropertyInt() {
+	RK_TRACE(PLUGIN);
 }
 
-bool RKComponentPropertyInt::setIntValue (int new_value) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyInt::setIntValue(int new_value) {
+	RK_TRACE(PLUGIN);
 
-	internalSetValue (new_value);
+	internalSetValue(new_value);
 	Q_EMIT valueChanged(this);
-	return (isValid ());
+	return (isValid());
 }
 
-bool RKComponentPropertyInt::setValue (const QString &string) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyInt::setValue(const QString &string) {
+	RK_TRACE(PLUGIN);
 
-	internalSetValue (string);
+	internalSetValue(string);
 	Q_EMIT valueChanged(this);
-	return (isValid ());
+	return (isValid());
 }
 
-void RKComponentPropertyInt::setMin (int lower) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyInt::setMin(int lower) {
+	RK_TRACE(PLUGIN);
 
-	validator->setBottom (lower);
+	validator->setBottom(lower);
 	if (default_value < lower) {
-		RK_DEBUG (PLUGIN, DL_DEBUG, "default value in integer property is lower than lower boundary");	// actually this is ok. In this case the default is simply "invalid"
+		RK_DEBUG(PLUGIN, DL_DEBUG, "default value in integer property is lower than lower boundary"); // actually this is ok. In this case the default is simply "invalid"
 	}
 	if (current_value < lower) {
-		setIntValue (lower);
+		setIntValue(lower);
 	}
 }
 
-void RKComponentPropertyInt::setMax (int upper) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyInt::setMax(int upper) {
+	RK_TRACE(PLUGIN);
 
-	validator->setTop (upper);
+	validator->setTop(upper);
 	if (default_value > upper) {
-		RK_DEBUG (PLUGIN, DL_DEBUG, "default value in integer property is larger than upper boundary");	// see above
+		RK_DEBUG(PLUGIN, DL_DEBUG, "default value in integer property is larger than upper boundary"); // see above
 	}
 	if (current_value > upper) {
-		setIntValue (upper);
+		setIntValue(upper);
 	}
 }
 
-int RKComponentPropertyInt::minValue () {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (validator);
+int RKComponentPropertyInt::minValue() {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(validator);
 
-	return (validator->bottom ());
+	return (validator->bottom());
 }
 
-int RKComponentPropertyInt::maxValue () {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (validator);
+int RKComponentPropertyInt::maxValue() {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(validator);
 
-	return (validator->top ());
+	return (validator->top());
 }
 
-int RKComponentPropertyInt::intValue () {
-	RK_TRACE (PLUGIN);
+int RKComponentPropertyInt::intValue() {
+	RK_TRACE(PLUGIN);
 
 	return current_value;
 }
 
-QVariant RKComponentPropertyInt::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
+QVariant RKComponentPropertyInt::value(const QString &modifier) {
+	RK_TRACE(PLUGIN);
 
-	if (!modifier.isEmpty ()) {
-		warnModifierNotRecognized (modifier);
-		return QString ();
+	if (!modifier.isEmpty()) {
+		warnModifierNotRecognized(modifier);
+		return QString();
 	}
 	return current_value;
 }
 
-bool RKComponentPropertyInt::isStringValid (const QString &string) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyInt::isStringValid(const QString &string) {
+	RK_TRACE(PLUGIN);
 
 	int dummy = 0;
 	QString string_copy = string;
-	return (validator->validate (string_copy, dummy) == QValidator::Acceptable);
+	return (validator->validate(string_copy, dummy) == QValidator::Acceptable);
 }
 
-void RKComponentPropertyInt::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (governor);
+void RKComponentPropertyInt::connectToGovernor(RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(governor);
 
 	// reconcile requirements if applicable
-	if (reconcile_requirements && modifier.isEmpty ()) {
-		if (governor->type () == PropertyInt) {
-			RKComponentPropertyInt *igov = static_cast<RKComponentPropertyInt *> (governor); 	// convenience pointer
-			if (validator->bottom () > igov->minValue ()) {
-				igov->setMin (validator->bottom ());
+	if (reconcile_requirements && modifier.isEmpty()) {
+		if (governor->type() == PropertyInt) {
+			RKComponentPropertyInt *igov = static_cast<RKComponentPropertyInt *>(governor); // convenience pointer
+			if (validator->bottom() > igov->minValue()) {
+				igov->setMin(validator->bottom());
 			}
-			if (validator->top () < igov->maxValue ()) {
-				igov->setMax (validator->top ());
+			if (validator->top() < igov->maxValue()) {
+				igov->setMax(validator->top());
 			}
-		} else if (governor->type () == PropertyDouble) {
-			RKComponentPropertyDouble *dgov = static_cast<RKComponentPropertyDouble *> (governor); 	// convenience pointer
-			if (validator->bottom () > (int) dgov->minValue ()) {
-				dgov->setMin (validator->bottom ());
+		} else if (governor->type() == PropertyDouble) {
+			RKComponentPropertyDouble *dgov = static_cast<RKComponentPropertyDouble *>(governor); // convenience pointer
+			if (validator->bottom() > (int)dgov->minValue()) {
+				dgov->setMin(validator->bottom());
 			}
-			if (validator->top () < (int) dgov->maxValue ()) {
-				dgov->setMax (validator->top ());
+			if (validator->top() < (int)dgov->maxValue()) {
+				dgov->setMax(validator->top());
 			}
 		}
 	}
 
-	RKComponentPropertyBase::connectToGovernor (governor, modifier, reconcile_requirements);
+	RKComponentPropertyBase::connectToGovernor(governor, modifier, reconcile_requirements);
 }
 
-void RKComponentPropertyInt::governorValueChanged (RKComponentPropertyBase *property) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyInt::governorValueChanged(RKComponentPropertyBase *property) {
+	RK_TRACE(PLUGIN);
 
-	QVariant value = property->value (governor_modifier);
-	double val = value.toDouble (&is_valid);	// QVariant's toInt() does not document rounding behavior. So we rather use a defined behavior, here.
+	QVariant value = property->value(governor_modifier);
+	double val = value.toDouble(&is_valid); // QVariant's toInt() does not document rounding behavior. So we rather use a defined behavior, here.
 	if (isValid()) {
-		internalSetValue((int) val);
+		internalSetValue((int)val);
 	} else {
 		internalSetValue(value.toString());
 	}
@@ -589,167 +587,167 @@ void RKComponentPropertyInt::governorValueChanged (RKComponentPropertyBase *prop
 	Q_EMIT valueChanged(this);
 }
 
-QIntValidator *RKComponentPropertyInt::getValidator () {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (validator);
+QIntValidator *RKComponentPropertyInt::getValidator() {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(validator);
 	return validator;
 }
 
-void RKComponentPropertyInt::internalSetValue (int new_value) {
+void RKComponentPropertyInt::internalSetValue(int new_value) {
 	current_value = new_value;
-	_value = QString::number (current_value);
-	is_valid = ((new_value >= validator->bottom ()) && (new_value <= validator->top ()));
+	_value = QString::number(current_value);
+	is_valid = ((new_value >= validator->bottom()) && (new_value <= validator->top()));
 	if (!is_valid) current_value = default_value;
 }
 
-void RKComponentPropertyInt::internalSetValue (const QString &new_value) {
-	current_value = new_value.toInt (&is_valid);
+void RKComponentPropertyInt::internalSetValue(const QString &new_value) {
+	current_value = new_value.toInt(&is_valid);
 	if (!is_valid) {
 		_value = new_value;
 		current_value = default_value;
 		return;
 	}
-	internalSetValue (current_value);		// will check range and prettify _value
+	internalSetValue(current_value); // will check range and prettify _value
 }
 
 ///////////////////////////////////////////// Double //////////////////////////////////////////
 
-RKComponentPropertyDouble::RKComponentPropertyDouble (QObject *parent, bool required, double default_value) : RKComponentPropertyBase (parent, required) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyDouble::RKComponentPropertyDouble(QObject *parent, bool required, double default_value) : RKComponentPropertyBase(parent, required) {
+	RK_TRACE(PLUGIN);
 
-	validator = new QDoubleValidator (this);		// accepts all ints initially
+	validator = new QDoubleValidator(this); // accepts all ints initially
 	RKComponentPropertyDouble::default_value = default_value;
 	precision = 2;
-	internalSetValue (default_value);
+	internalSetValue(default_value);
 }
 
-RKComponentPropertyDouble::~RKComponentPropertyDouble () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyDouble::~RKComponentPropertyDouble() {
+	RK_TRACE(PLUGIN);
 }
 
-bool RKComponentPropertyDouble::setDoubleValue (double new_value) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyDouble::setDoubleValue(double new_value) {
+	RK_TRACE(PLUGIN);
 
-	internalSetValue (new_value);
+	internalSetValue(new_value);
 	Q_EMIT valueChanged(this);
-	return (isValid ());
+	return (isValid());
 }
 
-bool RKComponentPropertyDouble::setValue (const QString &string) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyDouble::setValue(const QString &string) {
+	RK_TRACE(PLUGIN);
 
-	internalSetValue (string);
+	internalSetValue(string);
 	Q_EMIT valueChanged(this);
-	return (isValid ());
+	return (isValid());
 }
 
-void RKComponentPropertyDouble::setMin (double lower) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyDouble::setMin(double lower) {
+	RK_TRACE(PLUGIN);
 
-	validator->setBottom (lower);
+	validator->setBottom(lower);
 	if (default_value < lower) {
-		RK_DEBUG (PLUGIN, DL_DEBUG, "default value in double property is lower than lower boundary");	// actually this is ok. In this case the default is simply "invalid"
+		RK_DEBUG(PLUGIN, DL_DEBUG, "default value in double property is lower than lower boundary"); // actually this is ok. In this case the default is simply "invalid"
 	}
 	if (current_value < lower) {
-		setDoubleValue (lower);
+		setDoubleValue(lower);
 	}
 }
 
-void RKComponentPropertyDouble::setMax (double upper) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyDouble::setMax(double upper) {
+	RK_TRACE(PLUGIN);
 
-	validator->setTop (upper);
+	validator->setTop(upper);
 	if (default_value > upper) {
-		RK_DEBUG (PLUGIN, DL_DEBUG, "default value in double property is larger than upper boundary");	// see above
+		RK_DEBUG(PLUGIN, DL_DEBUG, "default value in double property is larger than upper boundary"); // see above
 	}
 	if (current_value > upper) {
-		setDoubleValue (upper);
+		setDoubleValue(upper);
 	}
 }
 
-double RKComponentPropertyDouble::minValue () {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (validator);
+double RKComponentPropertyDouble::minValue() {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(validator);
 
-	return (validator->bottom ());
+	return (validator->bottom());
 }
 
-double RKComponentPropertyDouble::maxValue () {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (validator);
+double RKComponentPropertyDouble::maxValue() {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(validator);
 
-	return (validator->top ());
+	return (validator->top());
 }
 
-double RKComponentPropertyDouble::doubleValue () {
-	RK_TRACE (PLUGIN);
+double RKComponentPropertyDouble::doubleValue() {
+	RK_TRACE(PLUGIN);
 
 	return current_value;
 }
 
-QVariant RKComponentPropertyDouble::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
+QVariant RKComponentPropertyDouble::value(const QString &modifier) {
+	RK_TRACE(PLUGIN);
 
-	if (modifier.isEmpty ()) return current_value;
+	if (modifier.isEmpty()) return current_value;
 	else if (modifier == QLatin1String("formatted")) return _value;
 
-	warnModifierNotRecognized (modifier);
-	return QString ();
+	warnModifierNotRecognized(modifier);
+	return QString();
 }
 
-bool RKComponentPropertyDouble::isStringValid (const QString &string) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyDouble::isStringValid(const QString &string) {
+	RK_TRACE(PLUGIN);
 
 	int dummy = 0;
 	QString string_copy = string;
-	return (validator->validate (string_copy, dummy) == QValidator::Acceptable);
+	return (validator->validate(string_copy, dummy) == QValidator::Acceptable);
 }
 
-void RKComponentPropertyDouble::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (governor);
+void RKComponentPropertyDouble::connectToGovernor(RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(governor);
 
 	// reconcile requirements if applicable
-	if (reconcile_requirements && modifier.isEmpty ()) {
-		if (governor->type () == PropertyInt) {
-			RKComponentPropertyInt *igov = static_cast<RKComponentPropertyInt *> (governor); 	// convenience pointer
-			if (validator->bottom () > igov->minValue ()) {
-				igov->setMin ((int) validator->bottom ());			// no (real) need to worry about integer overflow, as we only do this if the integers bottom limit is lower. Bad things could happen, if the bottom limit of this double property is extremely large (> INT_MAX), but this should rarely happen.
+	if (reconcile_requirements && modifier.isEmpty()) {
+		if (governor->type() == PropertyInt) {
+			RKComponentPropertyInt *igov = static_cast<RKComponentPropertyInt *>(governor); // convenience pointer
+			if (validator->bottom() > igov->minValue()) {
+				igov->setMin((int)validator->bottom()); // no (real) need to worry about integer overflow, as we only do this if the integers bottom limit is lower. Bad things could happen, if the bottom limit of this double property is extremely large (> INT_MAX), but this should rarely happen.
 			}
-			if (validator->top () < igov->maxValue ()) {
-				igov->setMax ((int) validator->top ());			// see above comment
+			if (validator->top() < igov->maxValue()) {
+				igov->setMax((int)validator->top()); // see above comment
 			}
-		} else if (governor->type () == PropertyDouble) {
-			RKComponentPropertyDouble *dgov = static_cast<RKComponentPropertyDouble *> (governor); 	// convenience pointer
-			if (validator->bottom () > dgov->minValue ()) {
-				dgov->setMin (validator->bottom ());
+		} else if (governor->type() == PropertyDouble) {
+			RKComponentPropertyDouble *dgov = static_cast<RKComponentPropertyDouble *>(governor); // convenience pointer
+			if (validator->bottom() > dgov->minValue()) {
+				dgov->setMin(validator->bottom());
 			}
-			if (validator->top () < dgov->maxValue ()) {
-				dgov->setMax (validator->top ());
+			if (validator->top() < dgov->maxValue()) {
+				dgov->setMax(validator->top());
 			}
 		}
 	}
 
-	RKComponentPropertyBase::connectToGovernor (governor, modifier, reconcile_requirements);
+	RKComponentPropertyBase::connectToGovernor(governor, modifier, reconcile_requirements);
 }
 
-void RKComponentPropertyDouble::governorValueChanged (RKComponentPropertyBase *property) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyDouble::governorValueChanged(RKComponentPropertyBase *property) {
+	RK_TRACE(PLUGIN);
 
-	QVariant value = property->value (governor_modifier);
-	double val = value.toDouble (&is_valid);
+	QVariant value = property->value(governor_modifier);
+	double val = value.toDouble(&is_valid);
 	if (is_valid) {
-		internalSetValue (val);
+		internalSetValue(val);
 	} else {
-		internalSetValue (value.toString ());
+		internalSetValue(value.toString());
 	}
 
 	Q_EMIT valueChanged(this);
 }
 
-QDoubleValidator *RKComponentPropertyDouble::getValidator () {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (validator);
+QDoubleValidator *RKComponentPropertyDouble::getValidator() {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(validator);
 	return validator;
 }
 
@@ -759,11 +757,12 @@ void RKComponentPropertyDouble::internalSetValue(double new_value) {
 	current_value = new_value;
 
 	// what we want is AT LEAST *precision digits, more if required. I'm sure there's a nifty algorithm for that, but this hack does the trick:
-	_value = QString::number(current_value, 'f', 9);  // 9 is an arbitrary limit to counter floating point jitter
+	_value = QString::number(current_value, 'f', 9); // 9 is an arbitrary limit to counter floating point jitter
 	int decimal = _value.indexOf(u'.');
 	if (decimal >= 0) {
 		int min_digit = decimal + precision + 1;
-		while ((min_digit < _value.length()) && _value.endsWith(u'0')) _value.chop(1);
+		while ((min_digit < _value.length()) && _value.endsWith(u'0'))
+			_value.chop(1);
 	}
 	if (_value.endsWith(u'.')) _value.chop(1);
 
@@ -771,185 +770,184 @@ void RKComponentPropertyDouble::internalSetValue(double new_value) {
 	if (!is_valid) current_value = default_value;
 }
 
-void RKComponentPropertyDouble::internalSetValue (const QString &new_value) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyDouble::internalSetValue(const QString &new_value) {
+	RK_TRACE(PLUGIN);
 
-	current_value = new_value.toDouble (&is_valid);
+	current_value = new_value.toDouble(&is_valid);
 	if (!is_valid) {
 		_value = new_value;
 		current_value = default_value;
 		return;
 	}
-	internalSetValue (current_value);		// will check range and prettify _value
+	internalSetValue(current_value); // will check range and prettify _value
 }
 
 ///////////////////////////////////////////////// RObjects ////////////////////////////////////////////////////////
 
-
-#include "../core/robjectlist.h"
-#include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
+#include "../core/rkvariable.h"
+#include "../core/robjectlist.h"
 #include "../misc/rkobjectlistview.h"
 
-RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyAbstractList (parent, required), RObjectListener (RObjectListener::Other) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyRObjects::RKComponentPropertyRObjects(QObject *parent, bool required) : RKComponentPropertyAbstractList(parent, required), RObjectListener(RObjectListener::Other) {
+	RK_TRACE(PLUGIN);
 
-// no initial requirements
+	// no initial requirements
 	dims = min_length = max_length = 0;
 	problems_are_errors = true;
-	setStripDuplicates (true);      // legacy default
+	setStripDuplicates(true); // legacy default
 
-	addNotificationType (RObjectListener::ObjectRemoved);
-	addNotificationType (RObjectListener::MetaChanged);
+	addNotificationType(RObjectListener::ObjectRemoved);
+	addNotificationType(RObjectListener::MetaChanged);
 }
 
-RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyRObjects::~RKComponentPropertyRObjects() {
+	RK_TRACE(PLUGIN);
 
 	setObjectValueSilent(nullptr);
 }
 
-bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyRObjects::addObjectValue(RObject *object) {
+	RK_TRACE(PLUGIN);
 
-	if (addObjectValueSilent (object)) {
-		updateValidity ();
+	if (addObjectValueSilent(object)) {
+		updateValidity();
 		Q_EMIT valueChanged(this);
-		return isValid ();
+		return isValid();
 	}
 	return false;
 }
 
-bool RKComponentPropertyRObjects::addObjectValueSilent (RObject *object) {
+bool RKComponentPropertyRObjects::addObjectValueSilent(RObject *object) {
 	if (!object) return false;
-	bool is_dupe = object_list.contains (object);
-	if (getStripDuplicates () && is_dupe) return false;
+	bool is_dupe = object_list.contains(object);
+	if (getStripDuplicates() && is_dupe) return false;
 
-	object_list.append (object);
+	object_list.append(object);
 	if (!is_dupe) {
-		QString probs = checkObjectProblems (object);
-		if (!probs.isEmpty ()) problems.insert (object, probs);
-		listenForObject (object);
+		QString probs = checkObjectProblems(object);
+		if (!probs.isEmpty()) problems.insert(object, probs);
+		listenForObject(object);
 	}
 	return true;
 }
 
-void RKComponentPropertyRObjects::objectRemoved (RObject *object) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::objectRemoved(RObject *object) {
+	RK_TRACE(PLUGIN);
 
-	int removals = object_list.removeAll (object);
+	int removals = object_list.removeAll(object);
 	if (removals) {
-		problems.remove (object);
-		stopListenForObject (object);
-		updateValidity ();
+		problems.remove(object);
+		stopListenForObject(object);
+		updateValidity();
 		Q_EMIT valueChanged(this);
 	}
 }
 
-void RKComponentPropertyRObjects::removeAt (int index) {
-	RK_TRACE (PLUGIN);
-	if ((index < 0) || (index >= object_list.size ())) {
-		RK_ASSERT (false);
+void RKComponentPropertyRObjects::removeAt(int index) {
+	RK_TRACE(PLUGIN);
+	if ((index < 0) || (index >= object_list.size())) {
+		RK_ASSERT(false);
 		return;
 	}
-	RObject* obj = object_list.takeAt (index);
-	problems.remove (obj);
-	if (!object_list.contains (obj)) stopListenForObject (obj);
-	updateValidity ();
+	RObject *obj = object_list.takeAt(index);
+	problems.remove(obj);
+	if (!object_list.contains(obj)) stopListenForObject(obj);
+	updateValidity();
 	Q_EMIT valueChanged(this);
 }
 
-void RKComponentPropertyRObjects::setClassFilter (const QStringList &classes) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::setClassFilter(const QStringList &classes) {
+	RK_TRACE(PLUGIN);
 
 	RKComponentPropertyRObjects::classes = classes;
-	validizeAll ();
+	validizeAll();
 }
 
-void RKComponentPropertyRObjects::setTypeFilter (const QStringList &types) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::setTypeFilter(const QStringList &types) {
+	RK_TRACE(PLUGIN);
 
 	RKComponentPropertyRObjects::types = types;
-	validizeAll ();
+	validizeAll();
 }
 
-void RKComponentPropertyRObjects::setDimensionFilter (int dimensionality, int min_length, int max_length) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::setDimensionFilter(int dimensionality, int min_length, int max_length) {
+	RK_TRACE(PLUGIN);
 
 	dims = dimensionality;
 	RKComponentPropertyRObjects::min_length = min_length;
 	RKComponentPropertyRObjects::max_length = max_length;
-	validizeAll ();
+	validizeAll();
 }
 
-bool RKComponentPropertyRObjects::setObjectValueSilent (RObject* object) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyRObjects::setObjectValueSilent(RObject *object) {
+	RK_TRACE(PLUGIN);
 
-	problems.clear ();
-	const QSet<RObject*> unique(object_list.constBegin(), object_list.constEnd());
+	problems.clear();
+	const QSet<RObject *> unique(object_list.constBegin(), object_list.constEnd());
 	for (RObject *obj : unique) {
-		stopListenForObject (obj);
+		stopListenForObject(obj);
 	}
-	object_list.clear ();
-	return (addObjectValueSilent (object));
+	object_list.clear();
+	return (addObjectValueSilent(object));
 }
 
-bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
-	setObjectValueSilent (object);
-	updateValidity ();
+bool RKComponentPropertyRObjects::setObjectValue(RObject *object) {
+	setObjectValueSilent(object);
+	updateValidity();
 	Q_EMIT valueChanged(this);
-	return isValid ();
+	return isValid();
 }
 
-void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newlist) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::setObjectList(const RObject::ObjectList &newlist) {
+	RK_TRACE(PLUGIN);
 
 	if (newlist != object_list) {
-		setObjectValueSilent (nullptr);
-		for (int i = 0; i < newlist.size (); ++i) {
-			addObjectValueSilent (newlist[i]);
+		setObjectValueSilent(nullptr);
+		for (int i = 0; i < newlist.size(); ++i) {
+			addObjectValueSilent(newlist[i]);
 		}
-		updateValidity ();
+		updateValidity();
 		Q_EMIT valueChanged(this);
 	}
 }
 
-QString RKComponentPropertyRObjects::objectProblems (int list_index) const {
-	return problems.value (object_list.value (list_index));
+QString RKComponentPropertyRObjects::objectProblems(int list_index) const {
+	return problems.value(object_list.value(list_index));
 }
 
-QString RKComponentPropertyRObjects::checkObjectProblems (RObject *object) const {
-	RK_TRACE (PLUGIN);
+QString RKComponentPropertyRObjects::checkObjectProblems(RObject *object) const {
+	RK_TRACE(PLUGIN);
 
 	QStringList probs;
 
 	// first check dimensionality
 	if (dims > 0) {
-		if (object->getDimensions ().size () != dims) probs.append (i18n ("This object has %1 dimension(s), but %2 dimension(s) is/are expected.", object->getDimensions().size(), dims));
+		if (object->getDimensions().size() != dims) probs.append(i18n("This object has %1 dimension(s), but %2 dimension(s) is/are expected.", object->getDimensions().size(), dims));
 	}
-	int olength = object->getLength ();
-	if ((min_length > 0) && (olength < min_length)) probs.append (i18n ("This object has a length of %1, but a minimum length of %2 is expected.", olength, min_length));
-	if ((max_length >= 0) && (olength > max_length)) probs.append (i18n ("This object has a length of %1, but a maximum length of %2 is expected.", olength, max_length));
+	int olength = object->getLength();
+	if ((min_length > 0) && (olength < min_length)) probs.append(i18n("This object has a length of %1, but a minimum length of %2 is expected.", olength, min_length));
+	if ((max_length >= 0) && (olength > max_length)) probs.append(i18n("This object has a length of %1, but a maximum length of %2 is expected.", olength, max_length));
 
 	// next, check classes
-	if (!classes.isEmpty ()) {
+	if (!classes.isEmpty()) {
 		bool ok = false;
-		QStringList::const_iterator it = classes.begin ();
-		while ((!ok) && (it != classes.end ())) {
-			if (object->inherits (*it)) {
+		QStringList::const_iterator it = classes.begin();
+		while ((!ok) && (it != classes.end())) {
+			if (object->inherits(*it)) {
 				ok = true;
 			}
 			++it;
 		}
-		if (!ok) probs.append (i18n ("This object does not appear to belong to any of the classes <i>%1</i>.", classes.join (QStringLiteral(", "))));
+		if (!ok) probs.append(i18n("This object does not appear to belong to any of the classes <i>%1</i>.", classes.join(QStringLiteral(", "))));
 	}
 
 	// finally, check type
-	if (!types.isEmpty ()) {
-		QString type = RObject::typeToText (object->getDataType ()).toLower ();
-		if (!types.contains (type)) {
-			probs.append (i18n ("This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</i>.", type, types.join (QStringLiteral(", "))));
+	if (!types.isEmpty()) {
+		QString type = RObject::typeToText(object->getDataType()).toLower();
+		if (!types.contains(type)) {
+			probs.append(i18n("This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</i>.", type, types.join(QStringLiteral(", "))));
 		}
 	}
 
@@ -957,71 +955,71 @@ QString RKComponentPropertyRObjects::checkObjectProblems (RObject *object) const
 	return (u"<ul><li>"_s + probs.join(u"</li><li>"_s) + u"</li></ul>"_s);
 }
 
-RObject *RKComponentPropertyRObjects::objectValue () {
-	RK_TRACE (PLUGIN);
+RObject *RKComponentPropertyRObjects::objectValue() {
+	RK_TRACE(PLUGIN);
 
 	if (object_list.empty()) return nullptr;
-	return (object_list.first ());
+	return (object_list.first());
 }
 
-RObject::ObjectList RKComponentPropertyRObjects::objectList () {
-	RK_TRACE (PLUGIN);
+RObject::ObjectList RKComponentPropertyRObjects::objectList() {
+	RK_TRACE(PLUGIN);
 
 	return (object_list);
 }
 
-QVariant RKComponentPropertyRObjects::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
+QVariant RKComponentPropertyRObjects::value(const QString &modifier) {
+	RK_TRACE(PLUGIN);
 
 	QStringList ret;
-	if (modifier.isEmpty ()) {
-		for (int i = 0; i < object_list.size (); ++i) {
-			ret.append (object_list[i]->getFullName ());
+	if (modifier.isEmpty()) {
+		for (int i = 0; i < object_list.size(); ++i) {
+			ret.append(object_list[i]->getFullName());
 		}
 	} else if (modifier == QLatin1String("shortname")) {
-		for (int i = 0; i < object_list.size (); ++i) {
-			ret.append (object_list[i]->getShortName ());
+		for (int i = 0; i < object_list.size(); ++i) {
+			ret.append(object_list[i]->getShortName());
 		}
 	} else if (modifier == QLatin1String("label")) {
-		for (int i = 0; i < object_list.size (); ++i) {
-			ret.append (object_list[i]->getLabel ());
+		for (int i = 0; i < object_list.size(); ++i) {
+			ret.append(object_list[i]->getLabel());
 		}
 	} else {
-		warnModifierNotRecognized (modifier);
+		warnModifierNotRecognized(modifier);
 	}
 	return ret;
 }
 
-bool RKComponentPropertyRObjects::setValueList (const QStringList& values) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyRObjects::setValueList(const QStringList &values) {
+	RK_TRACE(PLUGIN);
 
 	setObjectValue(nullptr);
 
 	bool ok = true;
-	for (int i = 0; i < values.size (); ++i) {
-		RObject *obj = RObjectList::getObjectList ()->findObject (values[i]);
-		ok &= addObjectValueSilent (obj);
+	for (int i = 0; i < values.size(); ++i) {
+		RObject *obj = RObjectList::getObjectList()->findObject(values[i]);
+		ok &= addObjectValueSilent(obj);
 	}
 
-	updateValidity ();
+	updateValidity();
 	Q_EMIT valueChanged(this);
-	return (isValid () && ok);
+	return (isValid() && ok);
 }
 
-bool RKComponentPropertyRObjects::setValue (const QString &value) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyRObjects::setValue(const QString &value) {
+	RK_TRACE(PLUGIN);
 
-	return setValueList (value.split (sep, Qt::SkipEmptyParts));
+	return setValueList(value.split(sep, Qt::SkipEmptyParts));
 }
 
-bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyRObjects::isStringValid(const QString &value) {
+	RK_TRACE(PLUGIN);
 
-	QStringList slist = value.split (sep, Qt::SkipEmptyParts);
+	QStringList slist = value.split(sep, Qt::SkipEmptyParts);
 
-	for (QStringList::const_iterator it = slist.cbegin (); it != slist.cend (); ++it) {
-		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
-		if (!(obj && checkObjectProblems (obj).isEmpty ())) {
+	for (QStringList::const_iterator it = slist.cbegin(); it != slist.cend(); ++it) {
+		RObject *obj = RObjectList::getObjectList()->findObject(*it);
+		if (!(obj && checkObjectProblems(obj).isEmpty())) {
 			return false;
 		}
 	}
@@ -1029,21 +1027,21 @@ bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	return true;
 }
 
-void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (governor);
+void RKComponentPropertyRObjects::connectToGovernor(RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(governor);
 
 	// reconcile requirements if applicable
-	if (reconcile_requirements && modifier.isEmpty ()) {
-		if (governor->type () == PropertyRObjects) {
-			RKComponentPropertyRObjects *ogov = static_cast<RKComponentPropertyRObjects *> (governor); 	// convenience pointer
+	if (reconcile_requirements && modifier.isEmpty()) {
+		if (governor->type() == PropertyRObjects) {
+			RKComponentPropertyRObjects *ogov = static_cast<RKComponentPropertyRObjects *>(governor); // convenience pointer
 
 			// reconcile dimensionality filter
 			if (dims > 0) {
 				if (ogov->dims <= 0) {
 					ogov->dims = dims;
 				} else if (ogov->dims != dims) {
-					RK_DEBUG (PLUGIN, DL_WARNING, "Could not reconcile dimensionality in RObject properties");
+					RK_DEBUG(PLUGIN, DL_WARNING, "Could not reconcile dimensionality in RObject properties");
 				}
 			}
 			if (ogov->min_length < min_length) {
@@ -1056,351 +1054,361 @@ void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *go
 			}
 
 			// reconcile class filter
-			if (!classes.isEmpty ()) {
-				if (ogov->classes.isEmpty ()) {
-					ogov->classes= classes;
+			if (!classes.isEmpty()) {
+				if (ogov->classes.isEmpty()) {
+					ogov->classes = classes;
 				} else {
-					QStringList::Iterator it = ogov->classes.begin ();
-					while (it != ogov->classes.end ()) {
-						if (classes.contains (*it)) {
+					QStringList::Iterator it = ogov->classes.begin();
+					while (it != ogov->classes.end()) {
+						if (classes.contains(*it)) {
 							++it;
 						} else {
-							ogov->classes.erase (it);		// automatically advances to the next item
+							ogov->classes.erase(it); // automatically advances to the next item
 						}
 					}
-					if (ogov->classes.isEmpty ()) {
-						RK_DEBUG (PLUGIN, DL_WARNING, "Incompatible class filters for RObject properties");
+					if (ogov->classes.isEmpty()) {
+						RK_DEBUG(PLUGIN, DL_WARNING, "Incompatible class filters for RObject properties");
 						ogov->classes = classes;
 					}
 				}
 			}
 
 			// reconcile type filter
-			if (!types.isEmpty ()) {
-				if (ogov->types.isEmpty ()) {
+			if (!types.isEmpty()) {
+				if (ogov->types.isEmpty()) {
 					ogov->types = types;
 				} else {
-					QStringList::Iterator it = ogov->types.begin ();
-					while (it != ogov->types.end ()) {
-						if (types.contains (*it)) {
+					QStringList::Iterator it = ogov->types.begin();
+					while (it != ogov->types.end()) {
+						if (types.contains(*it)) {
 							++it;
 						} else {
-							ogov->types.erase (it);		// automatically advances to the next item
+							ogov->types.erase(it); // automatically advances to the next item
 						}
 					}
-					if (ogov->types.isEmpty ()) {
-						RK_DEBUG (PLUGIN, DL_WARNING, "Incompatible type filters for RObject properties");
+					if (ogov->types.isEmpty()) {
+						RK_DEBUG(PLUGIN, DL_WARNING, "Incompatible type filters for RObject properties");
 						ogov->types = types;
 					}
 				}
 			}
 
 			// make governor recheck its values
-			ogov->validizeAll ();
+			ogov->validizeAll();
 		}
 	}
 
-	RKComponentPropertyAbstractList::connectToGovernor (governor, modifier, reconcile_requirements);
+	RKComponentPropertyAbstractList::connectToGovernor(governor, modifier, reconcile_requirements);
 }
 
-void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase *property) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::governorValueChanged(RKComponentPropertyBase *property) {
+	RK_TRACE(PLUGIN);
 
-	if ((property->type () == PropertyRObjects) && governor_modifier.isEmpty ()) {
-		setObjectList (static_cast <RKComponentPropertyRObjects *> (property)->objectList ());
+	if ((property->type() == PropertyRObjects) && governor_modifier.isEmpty()) {
+		setObjectList(static_cast<RKComponentPropertyRObjects *>(property)->objectList());
 	} else {
-		QVariant value = property->value ();
+		QVariant value = property->value();
 		if (value.metaType() == QMetaType(QMetaType::QStringList)) {
-			setValueList (value.toStringList());
+			setValueList(value.toStringList());
 		} else {
-			setValue (value.toString ());
+			setValue(value.toString());
 		}
 	}
 }
 
-void RKComponentPropertyRObjects::objectMetaChanged (RObject *object) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::objectMetaChanged(RObject *object) {
+	RK_TRACE(PLUGIN);
 
 	// if object list contains this object, check whether it is still valid. Otherwise check, whether it's problem set has changed, revalidize and signal change.
-	int index = object_list.indexOf (object);
+	int index = object_list.indexOf(object);
 	if (index >= 0) {
-		QString probs = checkObjectProblems (object);
-		if (probs != problems.value (object)) {
-			if (probs.isEmpty ()) problems.remove (object);
-			else problems.insert (object, probs);
-			updateValidity ();
+		QString probs = checkObjectProblems(object);
+		if (probs != problems.value(object)) {
+			if (probs.isEmpty()) problems.remove(object);
+			else problems.insert(object, probs);
+			updateValidity();
 			Q_EMIT valueChanged(this);
 		}
 	}
 }
 
-void RKComponentPropertyRObjects::validizeAll (bool silent) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::validizeAll(bool silent) {
+	RK_TRACE(PLUGIN);
 
 	bool changes = false;
 
-	for (int i = 0; i < object_list.size (); ++i) {
+	for (int i = 0; i < object_list.size(); ++i) {
 		RObject *object = object_list[i];
-		QString probs = checkObjectProblems (object);
-		if (probs != problems.value (object)) {
-			if (probs.isEmpty ()) problems.remove (object);
-			else problems.insert (object, probs);
+		QString probs = checkObjectProblems(object);
+		if (probs != problems.value(object)) {
+			if (probs.isEmpty()) problems.remove(object);
+			else problems.insert(object, probs);
 			changes = true;
 		}
 	}
 
-	updateValidity ();		// we should do this even if there are no changes in the list. There might have still been changes in the filter!
+	updateValidity(); // we should do this even if there are no changes in the list. There might have still been changes in the filter!
 	if (changes) {
 		if (!silent) Q_EMIT valueChanged(this);
 	}
 }
 
-void RKComponentPropertyRObjects::updateValidity () {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::updateValidity() {
+	RK_TRACE(PLUGIN);
 
-	is_valid = true;	// innocent until proven guilty
+	is_valid = true; // innocent until proven guilty
 
-	if (problems_are_errors && (!problems.isEmpty ())) is_valid = false;
-	else is_valid = checkListLength ();
+	if (problems_are_errors && (!problems.isEmpty())) is_valid = false;
+	else is_valid = checkListLength();
 }
 
-void RKComponentPropertyRObjects::setObjectProblemsAreErrors (bool errors) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyRObjects::setObjectProblemsAreErrors(bool errors) {
+	RK_TRACE(PLUGIN);
 	problems_are_errors = errors;
-	updateValidity ();
+	updateValidity();
 }
 
 /////////////////////////////////////////// Code ////////////////////////////////////////////////
 
-RKComponentPropertyCode::RKComponentPropertyCode (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyCode::RKComponentPropertyCode(QObject *parent, bool required) : RKComponentPropertyBase(parent, required) {
+	RK_TRACE(PLUGIN);
 
-	preprocess_code = calculate_code = printout_code = QString ();
+	preprocess_code = calculate_code = printout_code = QString();
 }
 
-RKComponentPropertyCode::~RKComponentPropertyCode () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyCode::~RKComponentPropertyCode() {
+	RK_TRACE(PLUGIN);
 }
 
-QVariant RKComponentPropertyCode::value (const QString &modifier) {
-	RK_TRACE (PLUGIN);
+QVariant RKComponentPropertyCode::value(const QString &modifier) {
+	RK_TRACE(PLUGIN);
 
-	if (modifier == QLatin1String("preprocess")) return preprocess ();
-	if (modifier == QLatin1String("calculate")) return calculate ();
-	if (modifier == QLatin1String("printout")) return printout ();
-	if (!modifier.isEmpty ()) warnModifierNotRecognized (modifier);
+	if (modifier == QLatin1String("preprocess")) return preprocess();
+	if (modifier == QLatin1String("calculate")) return calculate();
+	if (modifier == QLatin1String("printout")) return printout();
+	if (!modifier.isEmpty()) warnModifierNotRecognized(modifier);
 
-	return (QString (preprocess () + calculate () + printout ()));
+	return (QString(preprocess() + calculate() + printout()));
 }
 
 /////////////////////////////////////////// Convert ////////////////////////////////////////////////
 
-RKComponentPropertyConvert::RKComponentPropertyConvert (RKComponent *parent) : RKComponentPropertyBool (parent, false) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyConvert::RKComponentPropertyConvert(RKComponent *parent) : RKComponentPropertyBool(parent, false) {
+	RK_TRACE(PLUGIN);
 
 	_mode = Equals;
 	require_true = false;
 	c_parent = parent;
 	// get notified of own changes
-	connect (this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyConvert::selfChanged);
+	connect(this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyConvert::selfChanged);
 }
 
-RKComponentPropertyConvert::~RKComponentPropertyConvert () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertyConvert::~RKComponentPropertyConvert() {
+	RK_TRACE(PLUGIN);
 }
 
-void RKComponentPropertyConvert::setMode (ConvertMode mode) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyConvert::setMode(ConvertMode mode) {
+	RK_TRACE(PLUGIN);
 
 	_mode = mode;
 	sourcePropertyChanged(nullptr);
 }
 
-void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyConvert::setSources(const QStringList &source_ids) {
+	RK_TRACE(PLUGIN);
 
-	sources.clear ();
-	for (QStringList::const_iterator it = source_ids.constBegin (); it != source_ids.constEnd (); ++it) {
+	sources.clear();
+	for (QStringList::const_iterator it = source_ids.constBegin(); it != source_ids.constEnd(); ++it) {
 		Source s;
-		RKComponentBase *prop = c_parent->lookupComponent (*it, &(s.modifier));
-		if (prop && prop->isProperty ()) {
+		RKComponentBase *prop = c_parent->lookupComponent(*it, &(s.modifier));
+		if (prop && prop->isProperty()) {
 			s.property = static_cast<RKComponentPropertyBase *>(prop);
-			sources.append (s);
-			connect (s.property, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyConvert::sourcePropertyChanged);
+			sources.append(s);
+			connect(s.property, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyConvert::sourcePropertyChanged);
 		} else {
-			RK_DEBUG (PLUGIN, DL_WARNING, "Not found or not a property: %s", (*it).toLatin1 ().data ());
+			RK_DEBUG(PLUGIN, DL_WARNING, "Not found or not a property: %s", (*it).toLatin1().data());
 		}
 	}
 
 	sourcePropertyChanged(nullptr);
 }
 
-void RKComponentPropertyConvert::setStandard (const QString &standard) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyConvert::setStandard(const QString &standard) {
+	RK_TRACE(PLUGIN);
 
 	RKComponentPropertyConvert::standard = standard;
 	sourcePropertyChanged(nullptr);
 }
 
-void RKComponentPropertyConvert::setRange (double min, double max) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyConvert::setRange(double min, double max) {
+	RK_TRACE(PLUGIN);
 
 	RKComponentPropertyConvert::min = min;
 	RKComponentPropertyConvert::max = max;
 	sourcePropertyChanged(nullptr);
 }
 
-void RKComponentPropertyConvert::selfChanged (RKComponentPropertyBase *) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyConvert::selfChanged(RKComponentPropertyBase *) {
+	RK_TRACE(PLUGIN);
 
-	c_parent->changed ();
+	c_parent->changed();
 }
 
-void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase *) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyConvert::sourcePropertyChanged(RKComponentPropertyBase *) {
+	RK_TRACE(PLUGIN);
 
-	for (int i = 0; i < sources.size (); ++i) {
-		Source source = sources[i];		// easier typing
+	for (int i = 0; i < sources.size(); ++i) {
+		Source source = sources[i]; // easier typing
 		switch (_mode) {
-			case Equals: {
-				if (fetchStringValue (source.property, source.modifier) != standard) {
-					setBoolValue (false);
-					return;
-				}
-				break;
-			} case NotEquals: {
-				if (fetchStringValue (source.property, source.modifier) == standard) {
-					setBoolValue (false);
-					return;
-				}
-				break;
-			} case Range: {
-				bool ok;
-				double val = source.property->value (source.modifier).toDouble (&ok);
-				if (!ok) {
-					val = min;
-					RK_DEBUG (PLUGIN, DL_WARNING, "Non-numeric property in convert sources, cannot check range");
-				}
-
-				if ((min > val) || (max < val)) {
-					setBoolValue (false);
-					return;
-				}
-				break;
-			} case And: {
-				bool ok;
-				bool val = variantToBool (source.property->value (source.modifier), &ok);
-				if (ok) {
-					if (!val) {
-						setBoolValue (false);
-						return;
-					}
-				} else {
-					RK_DEBUG (PLUGIN, DL_WARNING, "Non-boolean property in convert sources, cannot check AND");
-				}
-				break;
-			} case Or: {
-				bool ok;
-				bool val = variantToBool (source.property->value (source.modifier), &ok);
-				if (ok) {
-					if (val) {
-						setBoolValue (true);
-						return;
-					}
-				} else {
-					RK_DEBUG (PLUGIN, DL_WARNING, "Non-boolean property in convert sources, cannot check OR");
-				}
-				break;
+		case Equals: {
+			if (fetchStringValue(source.property, source.modifier) != standard) {
+				setBoolValue(false);
+				return;
 			}
+			break;
+		}
+		case NotEquals: {
+			if (fetchStringValue(source.property, source.modifier) == standard) {
+				setBoolValue(false);
+				return;
+			}
+			break;
+		}
+		case Range: {
+			bool ok;
+			double val = source.property->value(source.modifier).toDouble(&ok);
+			if (!ok) {
+				val = min;
+				RK_DEBUG(PLUGIN, DL_WARNING, "Non-numeric property in convert sources, cannot check range");
+			}
+
+			if ((min > val) || (max < val)) {
+				setBoolValue(false);
+				return;
+			}
+			break;
+		}
+		case And: {
+			bool ok;
+			bool val = variantToBool(source.property->value(source.modifier), &ok);
+			if (ok) {
+				if (!val) {
+					setBoolValue(false);
+					return;
+				}
+			} else {
+				RK_DEBUG(PLUGIN, DL_WARNING, "Non-boolean property in convert sources, cannot check AND");
+			}
+			break;
+		}
+		case Or: {
+			bool ok;
+			bool val = variantToBool(source.property->value(source.modifier), &ok);
+			if (ok) {
+				if (val) {
+					setBoolValue(true);
+					return;
+				}
+			} else {
+				RK_DEBUG(PLUGIN, DL_WARNING, "Non-boolean property in convert sources, cannot check OR");
+			}
+			break;
+		}
 		}
 	}
 
 	// if we did not return above, this is the default value:
 	switch (_mode) {
-		case Equals:
-		case NotEquals:
-		case Range:
-		case And: { setBoolValue (true); break; }
-		case Or: { setBoolValue (false); break; }
+	case Equals:
+	case NotEquals:
+	case Range:
+	case And: {
+		setBoolValue(true);
+		break;
+	}
+	case Or: {
+		setBoolValue(false);
+		break;
+	}
 	}
 }
 
-void RKComponentPropertyConvert::setRequireTrue (bool require_true) {
-	RK_TRACE (PLUGIN);
+void RKComponentPropertyConvert::setRequireTrue(bool require_true) {
+	RK_TRACE(PLUGIN);
 
 	RKComponentPropertyConvert::require_true = require_true;
 	required = require_true;
 }
 
-bool RKComponentPropertyConvert::isValid () {
-	RK_TRACE (PLUGIN);
+bool RKComponentPropertyConvert::isValid() {
+	RK_TRACE(PLUGIN);
 
 	if (require_true) {
-		return (boolValue ());
+		return (boolValue());
 	}
 
 	return is_valid;
 }
 
-void RKComponentPropertyConvert::connectToGovernor (RKComponentPropertyBase*, const QString&, bool) {
-	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot connect a <convert> property to a governor");
+void RKComponentPropertyConvert::connectToGovernor(RKComponentPropertyBase *, const QString &, bool) {
+	RK_DEBUG(PLUGIN, DL_ERROR, "Cannot connect a <convert> property to a governor");
 }
 
-bool RKComponentPropertyConvert::setValue (const QString&) {
-	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot set value for a <convert> property");
+bool RKComponentPropertyConvert::setValue(const QString &) {
+	RK_DEBUG(PLUGIN, DL_ERROR, "Cannot set value for a <convert> property");
 	return false;
 }
 
 /////////////////////////////////////////// Switch ////////////////////////////////////////////////
 
-RKComponentPropertySwitch::RKComponentPropertySwitch (RKComponent* parent, const QStringList& def_values, const QStringList& standards) : RKComponentPropertyBase (parent, false) {
-	RK_TRACE (PLUGIN);
+RKComponentPropertySwitch::RKComponentPropertySwitch(RKComponent *parent, const QStringList &def_values, const QStringList &standards) : RKComponentPropertyBase(parent, false) {
+	RK_TRACE(PLUGIN);
 
 	RKComponentPropertySwitch::def_values = def_values;
 	RKComponentPropertySwitch::standards = standards;
 	condition_prop = nullptr;
 	c_parent = parent;
 
-	connect (this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::selfChanged);
+	connect(this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::selfChanged);
 }
 
-RKComponentPropertySwitch::~RKComponentPropertySwitch () {
-	RK_TRACE (PLUGIN);
+RKComponentPropertySwitch::~RKComponentPropertySwitch() {
+	RK_TRACE(PLUGIN);
 }
 
-void RKComponentPropertySwitch::connectToGovernor (RKComponentPropertyBase*, const QString&, bool) {
-	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot connect a <switch> property to a governor");
+void RKComponentPropertySwitch::connectToGovernor(RKComponentPropertyBase *, const QString &, bool) {
+	RK_DEBUG(PLUGIN, DL_ERROR, "Cannot connect a <switch> property to a governor");
 }
 
-bool RKComponentPropertySwitch::setValue (const QString&) {
-	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot set value for a <switch> property");
+bool RKComponentPropertySwitch::setValue(const QString &) {
+	RK_DEBUG(PLUGIN, DL_ERROR, "Cannot set value for a <switch> property");
 	return false;
 }
 
-void RKComponentPropertySwitch::selfChanged (RKComponentPropertyBase *) {
-	RK_TRACE (PLUGIN);
-	c_parent->changed ();
+void RKComponentPropertySwitch::selfChanged(RKComponentPropertyBase *) {
+	RK_TRACE(PLUGIN);
+	c_parent->changed();
 }
 
-void RKComponentPropertySwitch::sourcePropertyChanged (RKComponentPropertyBase*) {
-	RK_TRACE (PLUGIN);
-	Q_EMIT valueChanged(this);	// new value will be pulled by anyone interested
+void RKComponentPropertySwitch::sourcePropertyChanged(RKComponentPropertyBase *) {
+	RK_TRACE(PLUGIN);
+	Q_EMIT valueChanged(this); // new value will be pulled by anyone interested
 }
 
-QVariant RKComponentPropertySwitch::value (const QString& modifier) {
-	RK_TRACE (PLUGIN);
+QVariant RKComponentPropertySwitch::value(const QString &modifier) {
+	RK_TRACE(PLUGIN);
 
 	if (!condition_prop) {
-		RK_ASSERT (false);
-		return QVariant ();
+		RK_ASSERT(false);
+		return QVariant();
 	}
-	QVariant cond = condition_prop->value (condition_prop_modifier);
+	QVariant cond = condition_prop->value(condition_prop_modifier);
 	int index = 0;
-	if (standards.isEmpty ()) {
+	if (standards.isEmpty()) {
 		if (RKComponentPropertyBool::variantToBool(cond, nullptr)) index = 1;
 	} else {
-		index = standards.indexOf (cond.toString ());		// NOTE: list search. Could use a hash, instead, but in general there won't be more than a hand full of standards
-		if (index < 0) index = standards.size ();	// remainder-category
+		index = standards.indexOf(cond.toString()); // NOTE: list search. Could use a hash, instead, but in general there won't be more than a hand full of standards
+		if (index < 0) index = standards.size();    // remainder-category
 	}
 
 	// First, try to return matching property
@@ -1413,32 +1421,31 @@ QVariant RKComponentPropertySwitch::value (const QString& modifier) {
 	}
 
 	// If that fails, try to find a static default string
-	if (index < def_values.size ()) {
-		return def_values[index];	// NOTE: silently dropping modifier. This is useful for static "other" strings.
+	if (index < def_values.size()) {
+		return def_values[index]; // NOTE: silently dropping modifier. This is useful for static "other" strings.
 	}
 
-	RK_DEBUG (PLUGIN, DL_ERROR, "Neither a fixed value, nor a property is defined for value %s (element %d/%d of standards)", qPrintable (cond.toString ()), index + 1, standards.size ());
-	return QVariant ();
+	RK_DEBUG(PLUGIN, DL_ERROR, "Neither a fixed value, nor a property is defined for value %s (element %d/%d of standards)", qPrintable(cond.toString()), index + 1, standards.size());
+	return QVariant();
 }
 
-void RKComponentPropertySwitch::setSources (const QString& _condition_prop, const QStringList& _value_props) {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (!condition_prop);	// must only be called once
+void RKComponentPropertySwitch::setSources(const QString &_condition_prop, const QStringList &_value_props) {
+	RK_TRACE(PLUGIN);
+	RK_ASSERT(!condition_prop); // must only be called once
 
-	condition_prop = c_parent->lookupProperty (_condition_prop, &condition_prop_modifier, true);
+	condition_prop = c_parent->lookupProperty(_condition_prop, &condition_prop_modifier, true);
 	if (!condition_prop) {
-		RK_DEBUG (PLUGIN, DL_ERROR, "Not a valid condition to connect <switch> property to: %s", qPrintable (_condition_prop));
+		RK_DEBUG(PLUGIN, DL_ERROR, "Not a valid condition to connect <switch> property to: %s", qPrintable(_condition_prop));
 	} else {
-		connect (condition_prop, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::sourcePropertyChanged);
+		connect(condition_prop, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::sourcePropertyChanged);
 	}
 
-	for (int i = 0; i < _value_props.size (); ++i) {
+	for (int i = 0; i < _value_props.size(); ++i) {
 		QString mod;
 		RKComponentPropertyBase *p = nullptr;
-		if (!_value_props[i].isEmpty ()) p = c_parent->lookupProperty (_value_props[i], &mod, true);	// Don't try to look it up, if it's empty (as it always is for fixed_value, as this would generate a warning.)
-		value_props.append (p);	// NOTE: Even if it is 0. value() takes care of that.
-		value_prop_mods.append (mod);
-		if (p) connect (p, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::sourcePropertyChanged);
+		if (!_value_props[i].isEmpty()) p = c_parent->lookupProperty(_value_props[i], &mod, true); // Don't try to look it up, if it's empty (as it always is for fixed_value, as this would generate a warning.)
+		value_props.append(p);                                                                     // NOTE: Even if it is 0. value() takes care of that.
+		value_prop_mods.append(mod);
+		if (p) connect(p, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::sourcePropertyChanged);
 	}
 }
-

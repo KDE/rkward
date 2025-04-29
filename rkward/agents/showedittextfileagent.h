@@ -22,19 +22,20 @@ You probably don't want to create an instance of this agent directly. Rather use
 @author Thomas Friedrichsmeier
 */
 class ShowEditTextFileAgent : public QObject {
-public:
-/** constructor. Do not use directly. Use the static showEditFiles () instead.
-@param args The corresponding RCallbackArgs-record
-@param text Text to display in the dialog. */
-	ShowEditTextFileAgent (RBackendRequest *request, const QString &text, const QString &caption);
+  public:
+	/** constructor. Do not use directly. Use the static showEditFiles () instead.
+	@param args The corresponding RCallbackArgs-record
+	@param text Text to display in the dialog. */
+	ShowEditTextFileAgent(RBackendRequest *request, const QString &text, const QString &caption);
 
-/** destructor. Called when the user presses the done button (or closes the notification dialog). Resumes processing in the backend, deletes the agent */
-	~ShowEditTextFileAgent ();
+	/** destructor. Called when the user presses the done button (or closes the notification dialog). Resumes processing in the backend, deletes the agent */
+	~ShowEditTextFileAgent();
 
-/** This gets called by RInterface, in order to show/edit the files in question. The RCallbackArgs-struct is passed in raw form, and only this function sorts
-out, what exactly needs to be done. Note that this is a static member. It will take care of creating/deleting an agent on its own. */
-	static void showEditFiles (RBackendRequest *request);
-private:
+	/** This gets called by RInterface, in order to show/edit the files in question. The RCallbackArgs-struct is passed in raw form, and only this function sorts
+	out, what exactly needs to be done. Note that this is a static member. It will take care of creating/deleting an agent on its own. */
+	static void showEditFiles(RBackendRequest *request);
+
+  private:
 	RBackendRequest *request;
 	KMessageWidget *message;
 };

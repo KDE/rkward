@@ -5,8 +5,6 @@ SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-
-
 /*!
 **	\mainpage	RKWard
 **	\author		Thomas Friedrichsmeier and the RKWard Team
@@ -17,9 +15,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 **
 **	\section	description Description
 **
-** RKWard is meant to become an easy to use, transparent frontend to the R-language, a very powerful, yet hard-to-get-into 
-** scripting-language with a strong focus on statistic functions. It will not only provide a convenient user-interface, however, but also 
-** take care of seamless integration with an office-suite. Practical statistics is not just about calculating, after all, but also about 
+** RKWard is meant to become an easy to use, transparent frontend to the R-language, a very powerful, yet hard-to-get-into
+** scripting-language with a strong focus on statistic functions. It will not only provide a convenient user-interface, however, but also
+** take care of seamless integration with an office-suite. Practical statistics is not just about calculating, after all, but also about
 ** documenting and ultimately publishing the results.
 **
 ** RKWard then is (will be) something like a free replacement for commercial statistical packages.
@@ -27,7 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 ** \section docOverview Getting started with the documentation
 **
 ** The following sections of the API-documentation provide useful entry-points:
-** 
+**
 ** - \ref UsingTheInterfaceToR
 ** - \ref RKComponentProperties
 **
@@ -40,11 +38,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 **
 */
 
-
-#include <kaboutdata.h>
 #include <KLocalizedString>
-#include <KUrlAuthorized>
 #include <KMessageBox>
+#include <KUrlAuthorized>
+#include <kaboutdata.h>
 #if __has_include(<KStartupInfo>)
 #	include <KStartupInfo>
 #endif
@@ -54,30 +51,30 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #endif
 #include <BreezeIcons>
 
-#include <QString>
-#include <QMutex>
-#include <QTemporaryFile>
-#include <QDir>
-#include <QThread>
 #include <QApplication>
-#include <QUrl>
+#include <QDir>
+#include <QMutex>
+#include <QString>
+#include <QTemporaryFile>
+#include <QThread>
 #include <QTime>
+#include <QUrl>
 
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "kdsingleapplication.h"
+#include "misc/rkcommandlineargs.h"
+#include "misc/rkcommonfunctions.h"
+#include "misc/rkstandardicons.h"
+#include "rbackend/rksessionvars.h"
 #include "rkward.h"
 #include "settings/rksettingsmoduledebug.h"
 #include "settings/rksettingsmodulegeneral.h"
-#include "rbackend/rksessionvars.h"
 #include "windows/rkdebugmessagewindow.h"
-#include "misc/rkcommonfunctions.h"
-#include "kdsingleapplication.h"
-#include "misc/rkcommandlineargs.h"
-#include "misc/rkstandardicons.h"
 
 #ifdef Q_OS_WIN
-	// these are needed for the exit hack.
+// these are needed for the exit hack.
 #	include <windows.h>
 #endif
 
@@ -94,30 +91,30 @@ SPDX-License-Identifier: GPL-2.0-or-later
 bool RK_Debug_Terminal = true;
 QMutex RK_Debug_Mutex;
 
-void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &ctx, const QString &msg) {
-	RK_Debug_Mutex.lock ();
+void RKDebugMessageOutput(QtMsgType type, const QMessageLogContext &ctx, const QString &msg) {
+	RK_Debug_Mutex.lock();
 	if (type == QtFatalMsg) {
-		fprintf (stderr, "%s\n", qPrintable (msg));
+		fprintf(stderr, "%s\n", qPrintable(msg));
 	}
 
 	if (RK_Debug_Terminal) {
 #ifdef QT_MESSAGELOGCONTEXT
-		fprintf (stderr, "%s, %s: %s", ctx.file, ctx.function, qPrintable (msg));
+		fprintf(stderr, "%s, %s: %s", ctx.file, ctx.function, qPrintable(msg));
 #else
-		Q_UNUSED (ctx);
-		fprintf (stderr, "%s", qPrintable (msg));
+		Q_UNUSED(ctx);
+		fprintf(stderr, "%s", qPrintable(msg));
 #endif
-		fprintf (stderr, "\n");
+		fprintf(stderr, "\n");
 	} else {
 #ifdef QT_MESSAGELOGCONTEXT
-		RK_Debug::debug_file->write (ctx.file);
-		RK_Debug::debug_file->write (ctx.function);
+		RK_Debug::debug_file->write(ctx.file);
+		RK_Debug::debug_file->write(ctx.function);
 #endif
-		RK_Debug::debug_file->write (qPrintable (msg));
-		RK_Debug::debug_file->write ("\n");
-		RK_Debug::debug_file->flush ();
+		RK_Debug::debug_file->write(qPrintable(msg));
+		RK_Debug::debug_file->write("\n");
+		RK_Debug::debug_file->flush();
 	}
-	RK_Debug_Mutex.unlock ();
+	RK_Debug_Mutex.unlock();
 }
 
 /** The point of this redirect (to be called via the RK_DEBUG() macro) is to separate RKWard specific debug messages from
@@ -140,11 +137,11 @@ void RKDebug(int flags, int level, const char *fmt, ...) {
 
 #include <QWebEngineUrlScheme>
 
-int main (int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
 #if defined(Q_OS_MACOS)
 	// TODO: This is just a hackish workaround. See https://invent.kde.org/education/rkward/-/issues/28
-	const char* chromiumflags = "QTWEBENGINE_CHROMIUM_FLAGS";
+	const char *chromiumflags = "QTWEBENGINE_CHROMIUM_FLAGS";
 	if (!qEnvironmentVariableIsSet(chromiumflags)) {
 		qputenv(chromiumflags, "--no-sandbox --single-process --enable-features=NetworkServiceInProcess");
 	}
@@ -166,36 +163,36 @@ int main (int argc, char *argv[]) {
 	}
 #endif
 	// Don't complain when linking rkward://-pages from Rd pages
-	KUrlAuthorized::allowUrlAction (QStringLiteral("redirect"), QUrl(QStringLiteral("http://")), QUrl (QStringLiteral("rkward://")));
+	KUrlAuthorized::allowUrlAction(QStringLiteral("redirect"), QUrl(QStringLiteral("http://")), QUrl(QStringLiteral("rkward://")));
 	// Don't complain when trying to open help pages
-	KUrlAuthorized::allowUrlAction (QStringLiteral("redirect"), QUrl(QStringLiteral("rkward://")), QUrl (QStringLiteral("help:")));
+	KUrlAuthorized::allowUrlAction(QStringLiteral("redirect"), QUrl(QStringLiteral("rkward://")), QUrl(QStringLiteral("help:")));
 
-	KLocalizedString::setApplicationDomain ("rkward");
+	KLocalizedString::setApplicationDomain("rkward");
 	KAboutData aboutData(QStringLiteral("rkward"), i18n("RKWard"), QStringLiteral(RKWARD_VERSION), i18n("Frontend to the R statistics language"), KAboutLicense::GPL, i18n("(c) 2002 - 2025"), QString(), QStringLiteral("https://rkward.kde.org"));
-	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
-	aboutData.addAuthor (i18n ("Pierre Ecochard"), i18n ("C++ developer between 2004 and 2007"));
-	aboutData.addAuthor (i18n ("Prasenjit Kapat"), i18n ("Many plugins, suggestions, plot history feature"));
-	aboutData.addAuthor (i18n ("Meik Michalke"), i18n ("Many plugins, suggestions, rkwarddev package"));
-	aboutData.addAuthor (i18n ("Stefan Roediger"), i18n ("Many plugins, suggestions, marketing, translations"));
-	aboutData.addCredit (i18n ("Contributors in alphabetical order"));
-	aboutData.addCredit (i18n ("Björn Balazs"), i18n ("Extensive usability feedback"));
-	aboutData.addCredit (i18n ("Aaron Batty"), i18n ("Wealth of feedback, hardware donations"));
-	aboutData.addCredit (i18n ("Jan Dittrich"), i18n ("Extensive usability feedback"));
-	aboutData.addCredit (i18n ("Philippe Grosjean"), i18n ("Several helpful comments and discussions"));
-	aboutData.addCredit (i18n ("Adrien d'Hardemare"), i18n ("Plugins and patches"));
-	aboutData.addCredit (i18n ("Yves Jacolin"), i18n ("New website"));
-	aboutData.addCredit (i18n ("Germán Márquez Mejía"), i18n ("HP filter plugin, spanish translation"));
-	aboutData.addCredit (i18n ("Marco Martin"), i18n ("A cool icon"));
-	aboutData.addCredit (i18n ("Daniele Medri"), i18n ("RKWard logo, many suggestions, help on wording"));
-	aboutData.addCredit (i18n ("David Sibai"), i18n ("Several valuable comments, hints and patches"));
-	aboutData.addCredit (i18n ("Ilias Soumpasis"), i18n ("Translation, Suggestions, plugins"));
-	aboutData.addCredit (i18n ("Ralf Tautenhahn"), i18n ("Many comments, useful suggestions, and bug reports"));
-	aboutData.addCredit (i18n ("Jannis Vajen"), i18n ("German Translation, bug reports"));
-	aboutData.addCredit (i18n ("Roland Vollgraf"), i18n ("Some patches"));
-	aboutData.addCredit (i18n ("Roy Qu"), i18n ("patches and helpful comments"));
-	aboutData.addCredit (i18n ("Many more people on rkward-devel@kde.org"), i18n ("Sorry, if we forgot to list you. Please contact us to get added"));
+	aboutData.addAuthor(i18n("Thomas Friedrichsmeier"), i18n("Project leader / main developer"));
+	aboutData.addAuthor(i18n("Pierre Ecochard"), i18n("C++ developer between 2004 and 2007"));
+	aboutData.addAuthor(i18n("Prasenjit Kapat"), i18n("Many plugins, suggestions, plot history feature"));
+	aboutData.addAuthor(i18n("Meik Michalke"), i18n("Many plugins, suggestions, rkwarddev package"));
+	aboutData.addAuthor(i18n("Stefan Roediger"), i18n("Many plugins, suggestions, marketing, translations"));
+	aboutData.addCredit(i18n("Contributors in alphabetical order"));
+	aboutData.addCredit(i18n("Björn Balazs"), i18n("Extensive usability feedback"));
+	aboutData.addCredit(i18n("Aaron Batty"), i18n("Wealth of feedback, hardware donations"));
+	aboutData.addCredit(i18n("Jan Dittrich"), i18n("Extensive usability feedback"));
+	aboutData.addCredit(i18n("Philippe Grosjean"), i18n("Several helpful comments and discussions"));
+	aboutData.addCredit(i18n("Adrien d'Hardemare"), i18n("Plugins and patches"));
+	aboutData.addCredit(i18n("Yves Jacolin"), i18n("New website"));
+	aboutData.addCredit(i18n("Germán Márquez Mejía"), i18n("HP filter plugin, spanish translation"));
+	aboutData.addCredit(i18n("Marco Martin"), i18n("A cool icon"));
+	aboutData.addCredit(i18n("Daniele Medri"), i18n("RKWard logo, many suggestions, help on wording"));
+	aboutData.addCredit(i18n("David Sibai"), i18n("Several valuable comments, hints and patches"));
+	aboutData.addCredit(i18n("Ilias Soumpasis"), i18n("Translation, Suggestions, plugins"));
+	aboutData.addCredit(i18n("Ralf Tautenhahn"), i18n("Many comments, useful suggestions, and bug reports"));
+	aboutData.addCredit(i18n("Jannis Vajen"), i18n("German Translation, bug reports"));
+	aboutData.addCredit(i18n("Roland Vollgraf"), i18n("Some patches"));
+	aboutData.addCredit(i18n("Roy Qu"), i18n("patches and helpful comments"));
+	aboutData.addCredit(i18n("Many more people on rkward-devel@kde.org"), i18n("Sorry, if we forgot to list you. Please contact us to get added"));
 	aboutData.setOtherText(QStringLiteral("<p><b>%1</b></p><ul><li><a href=\"https://www.jstatsoft.org/article/view/v049i09\">%2</a></li><li>Friedrichsmeier, T. &amp; the RKWard Team (%3). RKWard: %4. Version %5. %6</li></ul>").arg(i18n("How to cite:"), i18n("Peer-reviewed article in the Journal of Statistical Software"), aboutData.copyrightStatement().right(4), aboutData.shortDescription(), aboutData.version(), aboutData.homepage()));
-	KAboutData::setApplicationData (aboutData);
+	KAboutData::setApplicationData(aboutData);
 
 #ifdef WITH_KCRASH
 	KCrash::setDrKonqiEnabled(true);
@@ -217,13 +214,14 @@ int main (int argc, char *argv[]) {
 	qInstallMessageHandler(RKDebugMessageOutput);
 	RK_DO({
 		RK_DEBUG(APP, DL_DEBUG, "Basic runtime info (expected to be incomplete at this stage):\n%s", qPrintable(RKSessionVars::frontendSessionInfo().join(u"\n"_s)));
-	}, APP, DL_DEBUG);
+	},
+	      APP, DL_DEBUG);
 
 	// MacOS may need some path adjustments, first
 #if defined(Q_OS_MACOS)
 	QString oldpath = QString::fromLocal8Bit(qgetenv("PATH"));
 	if (!oldpath.contains(QStringLiteral(INSTALL_PATH))) {
-		//ensure that PATH is set to include what we deliver with the bundle
+		// ensure that PATH is set to include what we deliver with the bundle
 		qputenv("PATH", QStringLiteral("%1/bin:%1/sbin:%2").arg(QStringLiteral(INSTALL_PATH)).arg(oldpath).toLocal8Bit());
 		if (RK_Debug::RK_Debug_Level > 3) qDebug("Adjusting system path to %s", qPrintable(QString::fromLocal8Bit(qgetenv("PATH"))));
 	}
@@ -251,7 +249,7 @@ int main (int argc, char *argv[]) {
 			stream << QVariant(QStringLiteral("openAnyUrl")) << args[RKCommandLineArgs::UrlArgs] << args[RKCommandLineArgs::NoWarnExternal];
 			app_singleton.sendMessageWithTimeout(call, 1000);
 			// TODO: should always debug to terminal in this case!
-			RK_DEBUG (DEBUG_ALL, DL_INFO, "Reusing running instance");
+			RK_DEBUG(DEBUG_ALL, DL_INFO, "Reusing running instance");
 #if __has_include(<KStartupInfo>)
 			KStartupInfo::appStarted();
 #endif
@@ -259,10 +257,10 @@ int main (int argc, char *argv[]) {
 		}
 	}
 
-	if (app.isSessionRestored ()) {
-		kRestoreMainWindows<RKWardMainWindow>();	// well, whatever this is supposed to do -> TODO
+	if (app.isSessionRestored()) {
+		kRestoreMainWindows<RKWardMainWindow>(); // well, whatever this is supposed to do -> TODO
 	} else {
-		new RKWardMainWindow ();
+		new RKWardMainWindow();
 	}
 
 	if (app_singleton.isPrimaryInstance()) {
@@ -290,16 +288,16 @@ int main (int argc, char *argv[]) {
 					main->openUrlsFromCommandLineOrExternal(nowarn.toBool(), urls.toStringList());
 				});
 			} else {
-				RK_DEBUG (APP, DL_ERROR, "Unrecognized SingleApplication call");
+				RK_DEBUG(APP, DL_ERROR, "Unrecognized SingleApplication call");
 			}
 		});
 	}
 
 	// do it!
-	int status = app.exec ();
+	int status = app.exec();
 
 	qInstallMessageHandler(nullptr);
-	RK_Debug::debug_file->close ();
+	RK_Debug::debug_file->close();
 
 	return status;
 }

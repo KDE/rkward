@@ -6,13 +6,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // globals
 var options;
 
-include ('plot_dist_common.js');
+include('plot_dist_common.js');
 
-function getParameters () {
-	options['args'] = ', shape=' + getString ("shape") + ', scale=' + getString ("scale");
-	getContRangeParameters ();
+function getParameters() {
+	options['args'] = ', shape=' + getString("shape") + ', scale=' + getString("scale");
+	getContRangeParameters();
 
-	options['distname'] = i18nc ("Weibull distribution", noquote ("Weibull"));
+	options['distname'] = i18nc("Weibull distribution", noquote("Weibull"));
 	if (options['is_density']) {
 		options['fun'] = "dweibull";
 	} else {
@@ -20,8 +20,8 @@ function getParameters () {
 	}
 }
 
-function addParamsToHeader (header) {
-	header.addFromUI ("shape");
-	header.addFromUI ("scale");
+function addParamsToHeader(header) {
+	header.addFromUI("shape");
+	header.addFromUI("scale");
 	return header;
 }

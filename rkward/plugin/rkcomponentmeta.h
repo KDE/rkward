@@ -15,9 +15,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class XMLHelper;
 struct RKComponentDependency {
-	RKComponentDependency () : type(RBaseInstallation), min_version(RKParsedVersion()), max_version(RKParsedVersion::maxVersion()) {};
-	QString toHtml () const;
-	static QString depsToHtml (const QList<RKComponentDependency> &deps);
+	RKComponentDependency() : type(RBaseInstallation), min_version(RKParsedVersion()), max_version(RKParsedVersion::maxVersion()){};
+	QString toHtml() const;
+	static QString depsToHtml(const QList<RKComponentDependency> &deps);
 	enum DependencyType {
 		RBaseInstallation,
 		RPackage,
@@ -30,9 +30,9 @@ struct RKComponentDependency {
 	RKParsedVersion min_version;
 	RKParsedVersion max_version;
 
-	static QList<RKComponentDependency> parseDependencies (const QDomElement &e, XMLHelper &xml);
-	static bool isRKWardVersionCompatible (const QDomElement &e);
-	static bool isRVersionCompatible (const QDomElement &e);
+	static QList<RKComponentDependency> parseDependencies(const QDomElement &e, XMLHelper &xml);
+	static bool isRKWardVersionCompatible(const QDomElement &e);
+	static bool isRVersionCompatible(const QDomElement &e);
 };
 
 struct RKComponentAuthor {
@@ -43,11 +43,11 @@ struct RKComponentAuthor {
 };
 
 class RKComponentAboutData {
-public:
-	RKComponentAboutData () { valid = false; };
-	RKComponentAboutData (const QDomElement &e, XMLHelper &xml);
-	~RKComponentAboutData ();
-	QString toHtml () const;
+  public:
+	RKComponentAboutData() { valid = false; };
+	RKComponentAboutData(const QDomElement &e, XMLHelper &xml);
+	~RKComponentAboutData();
+	QString toHtml() const;
 
 	QString name;
 	QString version;

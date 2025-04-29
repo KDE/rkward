@@ -3,21 +3,23 @@ SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemai
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
-function preprocess(){
+function preprocess() {
 	var x = getValue("x");
 	var y = getValue("y");
 	var ties = getValue("ties");
-	if(ties) {
+	if (ties) {
 		echo("\trequire(exactRankTests)\n");
-	} else {}
+	} else {
+	}
 	echo("\tnames <- rk.get.description (" + x);
-	if(y) {
+	if (y) {
 		echo(", " + y);
-	} else {}
+	} else {
+	}
 	echo(")\n");
 }
 
-function calculate(){
+function calculate() {
 	// read in variables from dialog
 	var x = getValue("x");
 	var y = getValue("y");
@@ -34,42 +36,51 @@ function calculate(){
 	// the R code to be evaluated
 	var confintChecked = getValue("confint.checked");
 	echo("\twcox.result <- ");
-	if(ties) {
+	if (ties) {
 		echo("wilcox.exact(");
 	} else {
 		echo("wilcox.test(");
 	}
-	if(x) {
+	if (x) {
 		echo("\n\t\tx=" + x);
-	} else {}
-	if(y) {
+	} else {
+	}
+	if (y) {
 		echo(",\n\t\ty=" + y);
-	} else {}
-	if(alternative != "two.sided") {
+	} else {
+	}
+	if (alternative != "two.sided") {
 		echo(",\n\t\talternative=\"" + alternative + "\"");
-	} else {}
-	if(mu != 0) {
+	} else {
+	}
+	if (mu != 0) {
 		echo(",\n\t\tmu=" + mu);
-	} else {}
-	if(y && paired) {
+	} else {
+	}
+	if (y && paired) {
 		echo(",\n\t\tpaired=TRUE");
-	} else {}
-	if(exact != "automatic") {
+	} else {
+	}
+	if (exact != "automatic") {
 		echo(",\n\t\texact=" + exact);
-	} else {}
-	if(correct) {
+	} else {
+	}
+	if (correct) {
 		echo(",\n\t\tcorrect=TRUE");
-	} else {}
-	if(confintChecked) {
+	} else {
+	}
+	if (confintChecked) {
 		echo(",\n\t\tconf.int=TRUE");
-		if(conflevel != 0.95) {
+		if (conflevel != 0.95) {
 			echo(",\n\t\tconf.level=" + conflevel);
-		} else {}
-	} else {}
+		} else {
+		}
+	} else {
+	}
 	echo("\n\t)\n\n");
 }
 
-function printout(is_preview){
+function printout(is_preview) {
 	// printout the results
 
 	var y = getValue("y");
@@ -77,23 +88,25 @@ function printout(is_preview){
 	var correct = getValue("correct");
 	var mu = getValue("mu");
 	if (!is_preview) {
-		var header = new Header (noquote ('wcox.result$method'));
-		header.add (i18n ("Comparing"), noquote ('names[1]'));
-		if (y) header.add (i18nc ("compare against", "against"), noquote ('names[2]'));
-		header.add ("H1", noquote ('rk.describe.alternative (wcox.result)'));
-		header.add (i18n ("Continuity correction in normal approximation for p-value"), correct ? "TRUE" : "FALSE");
-		header.addFromUI ("exact");
-		if (y) header.addFromUI ("paired");
-		header.addFromUI ("mu");
-		header.print ();
+		var header = new Header(noquote('wcox.result$method'));
+		header.add(i18n("Comparing"), noquote('names[1]'));
+		if (y) header.add(i18nc("compare against", "against"), noquote('names[2]'));
+		header.add("H1", noquote('rk.describe.alternative (wcox.result)'));
+		header.add(i18n("Continuity correction in normal approximation for p-value"), correct ? "TRUE" : "FALSE");
+		header.addFromUI("exact");
+		if (y) header.addFromUI("paired");
+		header.addFromUI("mu");
+		header.print();
 	}
-	echo("rk.results (list (\n\t" + i18n ("Variable Names") + "=names,\n\t" + i18nc ("a statistic indicator", "Statistic") + "=wcox.result$statistic,\n\t" + i18n ("Location Shift") + "=wcox.result$null.value,\n\t" + i18n ("Hypothesis") + "=wcox.result$alternative,\n" + "\tp=wcox.result$p.value");
-	if(confintChecked) {
-		echo(",\n\t" + i18n ("Confidence interval percent") + "=(100 * attr(wcox.result$conf.int, \"conf.level\")),\n\t" + i18n ("Confidence interval of difference") + "=wcox.result$conf.int,\n\t" + i18n ("Difference in Location") + "=wcox.result$estimate");
-	} else {}
+	echo("rk.results (list (\n\t" + i18n("Variable Names") + "=names,\n\t" + i18nc("a statistic indicator", "Statistic") + "=wcox.result$statistic,\n\t" + i18n("Location Shift") + "=wcox.result$null.value,\n\t" + i18n("Hypothesis") + "=wcox.result$alternative,\n" +
+	     "\tp=wcox.result$p.value");
+	if (confintChecked) {
+		echo(",\n\t" + i18n("Confidence interval percent") + "=(100 * attr(wcox.result$conf.int, \"conf.level\")),\n\t" + i18n("Confidence interval of difference") + "=wcox.result$conf.int,\n\t" + i18n("Difference in Location") + "=wcox.result$estimate");
+	} else {
+	}
 	echo("))\n");
 	// save result, if requested
-	if(getBoolean("svb_Svrsltst.active")) {
+	if (getBoolean("svb_Svrsltst.active")) {
 		echo("\n\t.GlobalEnv$" + getString("svb_Svrsltst") + " <- wcox.result\n");
 	}
 }

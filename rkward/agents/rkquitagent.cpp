@@ -11,57 +11,55 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qtimer.h>
 
+#include "../misc/rkprogresscontrol.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
-#include "../misc/rkprogresscontrol.h"
 
 #include "../debug.h"
 
-//static
+// static
 bool RKQuitAgent::quitting = false;
 
-RKQuitAgent::RKQuitAgent (QObject *parent) : QObject (parent) {
-	RK_TRACE (APP);
+RKQuitAgent::RKQuitAgent(QObject *parent) : QObject(parent) {
+	RK_TRACE(APP);
 
 	quitting = true;
 	RCommand *command = new RCommand(QStringLiteral("# Quit"), RCommand::App | RCommand::EmptyCommand | RCommand::QuitCommand);
 
-	RKWardMainWindow::getMain ()->hide ();
-	cancel_dialog = new RKProgressControl (this, i18n ("Waiting for remaining R commands to finish. To quit immediately, press Cancel (WARNING: This may result in loss of data)"), i18n ("Waiting for R to finish"), RKProgressControl::AllowCancel | RKProgressControl::ShowAtOnce);
-	cancel_dialog->addRCommand (command, true);
-	connect (cancel_dialog, &RKProgressControl::cancelled, this, &RKQuitAgent::doQuitNow);
+	RKWardMainWindow::getMain()->hide();
+	cancel_dialog = new RKProgressControl(this, i18n("Waiting for remaining R commands to finish. To quit immediately, press Cancel (WARNING: This may result in loss of data)"), i18n("Waiting for R to finish"), RKProgressControl::AllowCancel | RKProgressControl::ShowAtOnce);
+	cancel_dialog->addRCommand(command, true);
+	connect(cancel_dialog, &RKProgressControl::cancelled, this, &RKQuitAgent::doQuitNow);
 
-	if (RInterface::instance()->backendIsDead()) {	// nothing to loose
+	if (RInterface::instance()->backendIsDead()) { // nothing to loose
 		QTimer::singleShot(0, this, &RKQuitAgent::doQuitNow);
 		return;
 	} else if (RInterface::instance()->backendIsIdle()) {
 		// there should be no problem while quitting. If there is, show the dialog after 300 msec
 		QTimer::singleShot(300, this, &RKQuitAgent::showWaitDialog);
 	} else {
-		showWaitDialog ();
+		showWaitDialog();
 	}
 
 	command->whenFinished(this, [this]() {
 		RK_TRACE(APP);
 		QTimer::singleShot(0, this, &RKQuitAgent::doQuitNow);
 	});
-	RInterface::issueCommand (command);
+	RInterface::issueCommand(command);
 }
 
-RKQuitAgent::~RKQuitAgent () {
-	RK_TRACE (APP);
+RKQuitAgent::~RKQuitAgent() {
+	RK_TRACE(APP);
 }
 
-void RKQuitAgent::showWaitDialog () {
-	RK_TRACE (APP);
+void RKQuitAgent::showWaitDialog() {
+	RK_TRACE(APP);
 
-	cancel_dialog->doNonModal (true);
+	cancel_dialog->doNonModal(true);
 }
 
-void RKQuitAgent::doQuitNow () {
-	RK_TRACE (APP);
+void RKQuitAgent::doQuitNow() {
+	RK_TRACE(APP);
 
-	RKWardMainWindow::getMain ()->close ();		// this will kill the agent as well.
+	RKWardMainWindow::getMain()->close(); // this will kill the agent as well.
 }
-
-

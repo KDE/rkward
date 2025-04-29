@@ -7,41 +7,41 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkxmlguipreviewarea.h"
 
-#include <QMenu>
-#include <QToolButton>
-#include <QEvent>
-#include <QMenuBar>
-#include <QWidgetAction>
-#include <QLabel>
-#include <QVBoxLayout>
 #include <QDomElement>
+#include <QEvent>
+#include <QLabel>
+#include <QMenu>
+#include <QMenuBar>
 #include <QPainter>
 #include <QPen>
+#include <QToolButton>
+#include <QVBoxLayout>
+#include <QWidgetAction>
 
-#include <KXMLGUIFactory>
-#include <KXMLGUIBuilder>
-#include <KToolBar>
-#include <KLocalizedString>
 #include <KColorScheme>
+#include <KLocalizedString>
 #include <KMessageWidget>
+#include <KToolBar>
+#include <KXMLGUIBuilder>
+#include <KXMLGUIFactory>
 
-#include "../windows/rkmdiwindow.h"
-#include "../windows/rkworkplace.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rkrinterface.h"
+#include "../windows/rkmdiwindow.h"
+#include "../windows/rkworkplace.h"
 #include "rkstandardicons.h"
 
 #include "../debug.h"
 
 class RKXMLGUIPreviewBuilder : public KXMLGUIBuilder {
-public:
-	RKXMLGUIPreviewBuilder(QWidget* parent, QMenuBar* menubar) : KXMLGUIBuilder(parent), menubar(menubar) {};
+  public:
+	RKXMLGUIPreviewBuilder(QWidget *parent, QMenuBar *menubar) : KXMLGUIBuilder(parent), menubar(menubar){};
 	QStringList containerTags() const override {
 		QStringList ret;
 		ret << QStringLiteral("menubar") << QStringLiteral("menu");
 		return ret;
 	}
-	QWidget* createContainer(QWidget *parent, int index, const QDomElement &element, QAction *&containerAction) override {
+	QWidget *createContainer(QWidget *parent, int index, const QDomElement &element, QAction *&containerAction) override {
 		QString tagname = element.tagName().toLower();
 		if (tagname == QStringLiteral("menubar")) {
 			return menubar;
@@ -56,12 +56,13 @@ public:
 		}
 		KXMLGUIBuilder::removeContainer(container, parent, element, containerAction);
 	}
-private:
+
+  private:
 	QMenuBar *menubar;
 };
 
-RKXMLGUIPreviewArea::RKXMLGUIPreviewArea(const QString &label, QWidget* parent, RKPreviewManager *manager) : QWidget (parent) {
-	RK_TRACE (PLUGIN);
+RKXMLGUIPreviewArea::RKXMLGUIPreviewArea(const QString &label, QWidget *parent, RKPreviewManager *manager) : QWidget(parent) {
+	RK_TRACE(PLUGIN);
 
 	current = nullptr;
 	menubar = nullptr;
@@ -105,8 +106,8 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea(const QString &label, QWidget* parent, 
 	factory = new KXMLGUIFactory(builder, this);
 }
 
-RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
-	RK_TRACE (PLUGIN);
+RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea() {
+	RK_TRACE(PLUGIN);
 
 	if (current && factory) {
 		factory->removeClient(current);
@@ -117,7 +118,7 @@ RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 	delete factory;
 }
 
-void RKXMLGUIPreviewArea::setLabel (const QString& label) {
+void RKXMLGUIPreviewArea::setLabel(const QString &label) {
 	RK_TRACE(PLUGIN);
 	lab->setText(label);
 }
@@ -127,18 +128,19 @@ QString RKXMLGUIPreviewArea::label() const {
 	return lab->text();
 }
 
-void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
+void RKXMLGUIPreviewArea::setWindow(RKMDIWindow *window) {
 	RK_TRACE(PLUGIN);
 
 	if (current) {
-		factory->removeClient(current);  // _always_ remove before adding, or the previous child will be leaked in the factory
+		factory->removeClient(current); // _always_ remove before adding, or the previous child will be leaked in the factory
 	}
 	window->setWindowStyleHint(QStringLiteral("preview"));
 	current = window->getPart();
 	internal_layout->addWidget(window);
 	factory->addClient(current);
-	QList<QAction*> acts = actions();
-	for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	QList<QAction *> acts = actions();
+	for (int i = 0; i < acts.size(); ++i)
+		acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 	RKWorkplace::mainWorkplace()->setWindowNotManaged(window);
 }
 
@@ -150,8 +152,8 @@ void RKXMLGUIPreviewArea::prepareMenu() {
 	QList<QAction *> entries = menubar->actions();
 	for (int i = 0; i < entries.size(); ++i) {
 		QMenu *smenu = entries[i]->menu();
-		if (!smenu) continue;                                                 // Don't think it can happen...
-		if (entries[i]->objectName() == QLatin1String("settings")) continue;  // Skip settings menu, entirely
+		if (!smenu) continue;                                                // Don't think it can happen...
+		if (entries[i]->objectName() == QLatin1String("settings")) continue; // Skip settings menu, entirely
 
 		QList<QAction *> subentries = smenu->actions();
 		QList<QAction *> entries_to_add;
@@ -160,7 +162,7 @@ void RKXMLGUIPreviewArea::prepareMenu() {
 			QAction *act = subentries[j];
 			if (act->isVisible() && act->isEnabled()) {
 				entries_to_add.append(act);
-				if (!act->isSeparator()) menu_empty = false;  // Copy separators, but purge menus with only separators in them.
+				if (!act->isSeparator()) menu_empty = false; // Copy separators, but purge menus with only separators in them.
 			}
 		}
 		if (menu_empty) continue;
@@ -172,7 +174,7 @@ void RKXMLGUIPreviewArea::prepareMenu() {
 		menu->addAction(act);
 
 		QMenu *where_to_add = menu;
-		if (entries_to_add.size() >= 8) {  // if there are really many entries in the menu don't flatten it, keep it as a (shortened) submenu
+		if (entries_to_add.size() >= 8) { // if there are really many entries in the menu don't flatten it, keep it as a (shortened) submenu
 			where_to_add = menu->addMenu(entries[i]->text());
 		}
 		for (int j = 0; j < entries_to_add.size(); ++j) {
@@ -181,33 +183,29 @@ void RKXMLGUIPreviewArea::prepareMenu() {
 	}
 }
 
-
-
 /** Similar to KMessageWidget, but much smaller margins / spacings */
 class RKPreviewStatusNote : public QFrame {
-friend class RKPreviewManager;
-	RKPreviewStatusNote(RKPreviewManager *manager) :
-	QFrame(),
-	updating(i18nc("very short: Preview is updating", "updating")),
-	error(i18nc("very short: Error while generating preview", "error")),
-	ready(i18nc("very short: Preview is up to date", "ready")),
-	unavailable(i18nc("very short: Preview is not(yet) possible", "n/a")),
-	off(i18nc("very short: Preview is turned off", "off"))
-	{
+	friend class RKPreviewManager;
+	RKPreviewStatusNote(RKPreviewManager *manager) : QFrame(),
+	                                                 updating(i18nc("very short: Preview is updating", "updating")),
+	                                                 error(i18nc("very short: Error while generating preview", "error")),
+	                                                 ready(i18nc("very short: Preview is up to date", "ready")),
+	                                                 unavailable(i18nc("very short: Preview is not(yet) possible", "n/a")),
+	                                                 off(i18nc("very short: Preview is turned off", "off")) {
 		QFontMetrics fm(font());
 		em = fm.horizontalAdvance(u'w');
 		auto l = new QVBoxLayout(this);
-		l->setContentsMargins(em,0,em,0);
+		l->setContentsMargins(em, 0, em, 0);
 		lab = new QLabel();
 		l->addWidget(lab, 0, Qt::AlignHCenter);
 		setAutoFillBackground(false);
-		setFixedHeight(fm.height()+4);
+		setFixedHeight(fm.height() + 4);
 		int maxw = fm.horizontalAdvance(updating);
 		maxw = qMax(maxw, fm.horizontalAdvance(error));
 		maxw = qMax(maxw, fm.horizontalAdvance(ready));
 		maxw = qMax(maxw, fm.horizontalAdvance(unavailable));
 		maxw = qMax(maxw, fm.horizontalAdvance(off));
-		setFixedWidth(maxw+2*em+2);
+		setFixedWidth(maxw + 2 * em + 2);
 
 		connect(manager, &RKPreviewManager::statusChanged, this, [this](RKPreviewManager *m) {
 			if (m->update_pending == RKPreviewManager::NoUpdatePossible) {
@@ -259,26 +257,26 @@ friend class RKPreviewManager;
 	QPen pen;
 };
 
-QWidget* RKPreviewManager::inlineStatusWidget() {
+QWidget *RKPreviewManager::inlineStatusWidget() {
 	return new RKPreviewStatusNote(this);
 }
 
 #include "../windows/rkworkplace.h"
 
-RKPreviewManager::RKPreviewManager(QObject* parent) : QObject (parent), current_preview_failed(false) {
-	RK_TRACE (PLUGIN);
+RKPreviewManager::RKPreviewManager(QObject *parent) : QObject(parent), current_preview_failed(false) {
+	RK_TRACE(PLUGIN);
 
 	update_pending = NoUpdatePending;
 	updating = false;
-	id = u"0x"_s + QString::number((quint64) (quintptr) this, 16);
+	id = u"0x"_s + QString::number((quint64)(quintptr)this, 16);
 }
 
-RKPreviewManager::~RKPreviewManager () {
-	RK_TRACE (PLUGIN);
+RKPreviewManager::~RKPreviewManager() {
+	RK_TRACE(PLUGIN);
 }
 
-void RKPreviewManager::previewCommandDone (RCommand* command) {
-	RK_TRACE (PLUGIN);
+void RKPreviewManager::previewCommandDone(RCommand *command) {
+	RK_TRACE(PLUGIN);
 
 	updating = false;
 	if (update_pending == NoUpdatePossible) {
@@ -291,47 +289,47 @@ void RKPreviewManager::previewCommandDone (RCommand* command) {
 	}
 }
 
-void RKPreviewManager::setCommand (RCommand* command) {
-	RK_TRACE (PLUGIN);
+void RKPreviewManager::setCommand(RCommand *command) {
+	RK_TRACE(PLUGIN);
 
-	RK_ASSERT (!updating);
+	RK_ASSERT(!updating);
 	updating = true;
 	update_pending = NoUpdatePending;
-	connect (command->notifier(), &RCommandNotifier::commandFinished, this, &RKPreviewManager::previewCommandDone);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKPreviewManager::previewCommandDone);
 
 	// Send an empty dummy command first. This is to sync up with any commands that should have been run _before_ the preview (e.g. to set up the preview area, so that status labels can be shown)
 	RInterface::whenAllFinished(this, [this]() { updateStatusDisplay(); });
 
-	RInterface::issueCommand (command);
+	RInterface::issueCommand(command);
 	updateStatusDisplay();
 }
 
-void RKPreviewManager::setUpdatePending () {
+void RKPreviewManager::setUpdatePending() {
 	if (update_pending == UpdatePending) return;
-	RK_TRACE (PLUGIN);
+	RK_TRACE(PLUGIN);
 
 	update_pending = UpdatePending;
 	updateStatusDisplay();
 }
 
-void RKPreviewManager::setNoPreviewAvailable () {
+void RKPreviewManager::setNoPreviewAvailable() {
 	if (update_pending == NoUpdatePossible) return;
-	RK_TRACE (PLUGIN);
+	RK_TRACE(PLUGIN);
 
 	update_pending = NoUpdatePossible;
 	updateStatusDisplay();
 }
 
-void RKPreviewManager::setPreviewDisabled () {
+void RKPreviewManager::setPreviewDisabled() {
 	if (update_pending == PreviewDisabled) return;
-	RK_TRACE (PLUGIN);
+	RK_TRACE(PLUGIN);
 
 	update_pending = PreviewDisabled;
 	updateStatusDisplay();
 }
 
 void RKPreviewManager::updateStatusDisplay(const QString &warnings) {
-	RK_TRACE (PLUGIN);
+	RK_TRACE(PLUGIN);
 
 	RKMDIWindow *window = RKWorkplace::mainWorkplace()->getNamedWindow(id);
 	if (window) window->setStatusMessage(warnings);

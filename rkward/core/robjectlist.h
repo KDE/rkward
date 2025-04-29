@@ -9,8 +9,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qobject.h>
 
-#include <qstring.h>
 #include <qmap.h>
+#include <qstring.h>
 
 #include <QUrl>
 
@@ -33,58 +33,60 @@ It acts as the "document".
 */
 class RObjectList : public QObject, public RContainerObject {
 	Q_OBJECT
-public:
-	RObjectList ();
-	~RObjectList ();
+  public:
+	RObjectList();
+	~RObjectList();
 
-	void updateFromR (RCommandChain *chain) override;
+	void updateFromR(RCommandChain *chain) override;
 	/** like updateFromR, but only adjusts to new / missing environments, but does not update the .GlobalEnv. Designed to be used from the backend, when packages were loaded/unloaded . */
-	void updateFromR (RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces);
-	
-	QString getFullName (int) const override { return QString (); };
+	void updateFromR(RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces);
+
+	QString getFullName(int) const override { return QString(); };
 	QString makeChildName(const QString &short_child_name, int) const override { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
-	void writeMetaData (RCommandChain *) override {};
+	void writeMetaData(RCommandChain *) override{};
 
-	REnvironmentObject* findPackage (const QString &namespacename) const;
+	REnvironmentObject *findPackage(const QString &namespacename) const;
 
-	static RObjectList *getObjectList () { return object_list; };
-	static REnvironmentObject *getGlobalEnv () { return object_list->globalenv; };
+	static RObjectList *getObjectList() { return object_list; };
+	static REnvironmentObject *getGlobalEnv() { return object_list->globalenv; };
 	static void init();
 
 	/** detach the given list of packages (if the packages are loaded, and safe to remove)
 	@returns a list of error messages (usually empty) */
-	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = nullptr, RKInlineProgressControl *control = nullptr);
+	QStringList detachPackages(const QStringList &packages, RCommandChain *chain = nullptr, RKInlineProgressControl *control = nullptr);
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
-	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
-	QString getObjectDescription () const override;
-Q_SIGNALS:
-/// emitted when the list of objects is about to be updated	// TODO: remove me
-	void updateStarted ();
-/// emitted when the list of objects has been updated	// TODO: remove me
-	void updateComplete ();
-protected:
-/** reimplemented from RContainerObject to search the environments in search order */
-	RObject::ObjectList findObjects (const QStringList &path, bool partial, const QString &op) override;
+	RKOrphanNamespacesObject *orphanNamespacesObject() const { return orphan_namespaces; };
+	QString getObjectDescription() const override;
+  Q_SIGNALS:
+	/// emitted when the list of objects is about to be updated	// TODO: remove me
+	void updateStarted();
+	/// emitted when the list of objects has been updated	// TODO: remove me
+	void updateComplete();
 
-/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString removeChildCommand (RObject *object) const override;
-/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString renameChildCommand (RObject *object, const QString &new_name) const override;
-/// reimplemented from RContainerObject to Q_EMIT a change signal
-	void objectsChanged ();
-	bool updateStructure (RData *new_data) override;
-	void updateEnvironments (const QStringList &env_names, bool force_globalenv_update);
-	void updateNamespaces (const QStringList &namespace_names);
-private:
+  protected:
+	/** reimplemented from RContainerObject to search the environments in search order */
+	RObject::ObjectList findObjects(const QStringList &path, bool partial, const QString &op) override;
+
+	/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
+	QString removeChildCommand(RObject *object) const override;
+	/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
+	QString renameChildCommand(RObject *object, const QString &new_name) const override;
+	/// reimplemented from RContainerObject to Q_EMIT a change signal
+	void objectsChanged();
+	bool updateStructure(RData *new_data) override;
+	void updateEnvironments(const QStringList &env_names, bool force_globalenv_update);
+	void updateNamespaces(const QStringList &namespace_names);
+
+  private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;
 	QTimer *update_timer;
-	
+
 	RCommandChain *update_chain;
 	RKOrphanNamespacesObject *orphan_namespaces;
 
-	REnvironmentObject *createTopLevelEnvironment (const QString &name);
+	REnvironmentObject *createTopLevelEnvironment(const QString &name);
 	void makeUpdateCompleteCallback();
 
 	REnvironmentObject *globalenv;
@@ -102,13 +104,13 @@ The second reason is that R and Qt includes clash, and we cannot easily use R SE
 RKWard then uses an own specialized description of R objects. This is slightly more abstracted than objects in R, but stores the most important information about each object, and of course the hierarchical organization of objects.
 
 TODO: write me!
-	
+
 @see RObject
 @see RKVariable
 @see RContainerObject
 @see RObjectList
 @see RKModificationTracker
- 
+
  */
- 
+
 #endif

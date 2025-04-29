@@ -11,20 +11,20 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
-#include "../windows/rkmdiwindow.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../windows/rkmdiwindow.h"
 
 #include "../debug.h"
 
 // static
-RKStandardIcons* RKStandardIcons::instance = nullptr;
+RKStandardIcons *RKStandardIcons::instance = nullptr;
 
-void RKStandardIcons::initIcons () {
-	RK_TRACE (APP);
+void RKStandardIcons::initIcons() {
+	RK_TRACE(APP);
 
-	RK_ASSERT (!instance);	// init only once
-	instance = new RKStandardIcons ();
-	instance->doInitIcons ();
+	RK_ASSERT(!instance); // init only once
+	instance = new RKStandardIcons();
+	instance->doInitIcons();
 }
 
 static QIcon loadThemeIcon(const QString &name) {
@@ -43,8 +43,8 @@ static QIcon loadRKWardIcon(const QString &name) {
 // TODO: With number of items growing, we should probably use a lazy-loading approach, instead:
 //       if (!loaded[thing]) initIcon (thing);
 //       return icons[thing];
-void RKStandardIcons::doInitIcons () {
-	RK_TRACE (APP);
+void RKStandardIcons::doInitIcons() {
+	RK_TRACE(APP);
 
 	// actions
 	icons[ActionRunAll] = loadRKWardIcon(QStringLiteral("run_all.png"));
@@ -94,7 +94,7 @@ void RKStandardIcons::doInitIcons () {
 	icons[ActionUnlock] = loadThemeIcon(QStringLiteral("object-unlocked"));
 
 	icons[ActionShowMenu] = loadThemeIcon(QStringLiteral("application-menu"));
-	if (icons[ActionShowMenu].isNull ()) icons[ActionShowMenu] = loadRKWardIcon(QStringLiteral("menu.svg"));  // fallback
+	if (icons[ActionShowMenu].isNull()) icons[ActionShowMenu] = loadRKWardIcon(QStringLiteral("menu.svg")); // fallback
 	icons[ActionClose] = loadThemeIcon(QStringLiteral("window-close"));
 
 	// objects
@@ -114,7 +114,7 @@ void RKStandardIcons::doInitIcons () {
 
 	// windows
 	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
-	icons[WindowCommandEditor] = loadThemeIcon(QStringLiteral("text-x-makefile"));	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
+	icons[WindowCommandEditor] = loadThemeIcon(QStringLiteral("text-x-makefile")); // this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
 	icons[WindowOutput] = loadThemeIcon(QStringLiteral("applications-education"));
 	icons[WindowHelp] = loadThemeIcon(QStringLiteral("help-contents"));
 	icons[WindowX11] = loadThemeIcon(QStringLiteral("applications-graphics"));
@@ -138,64 +138,64 @@ void RKStandardIcons::doInitIcons () {
 	icons[RKWardIcon] = loadRKWardIcon(QStringLiteral("rkward.svgz"));
 }
 
-QIcon RKStandardIcons::iconForObject (const RObject* object) {
+QIcon RKStandardIcons::iconForObject(const RObject *object) {
 	// don't trace this
 
-	if (!object) return getIcon (ObjectDataOther);
-	if (object->isDataFrame ()) return getIcon (ObjectDataFrame);
+	if (!object) return getIcon(ObjectDataOther);
+	if (object->isDataFrame()) return getIcon(ObjectDataFrame);
 	if (object->isVariable()) {
-		switch (object->getDataType ()) {
-			case RObject::DataNumeric:
-				return getIcon (ObjectDataNumeric);
-			case RObject::DataFactor:
-				return getIcon (ObjectDataFactor);
-			case RObject::DataCharacter:
-				return getIcon (ObjectDataCharacter);
-			case RObject::DataLogical:
-				return getIcon (ObjectDataLogical);
-			case RObject::DataUnknown:
-				return getIcon (ObjectDataUnknown);
-			default:
-				return getIcon (ObjectDataOther);
+		switch (object->getDataType()) {
+		case RObject::DataNumeric:
+			return getIcon(ObjectDataNumeric);
+		case RObject::DataFactor:
+			return getIcon(ObjectDataFactor);
+		case RObject::DataCharacter:
+			return getIcon(ObjectDataCharacter);
+		case RObject::DataLogical:
+			return getIcon(ObjectDataLogical);
+		case RObject::DataUnknown:
+			return getIcon(ObjectDataUnknown);
+		default:
+			return getIcon(ObjectDataOther);
 		}
 	}
-	if (object->isSlotsPseudoObject ()) return getIcon (ObjectPseudo);
-	if (object->isType (RObject::List)) return getIcon (ObjectList);
-	if (object->isType (RObject::Function)) return getIcon (ObjectFunction);
-	if (object->isType (RObject::Matrix)) return getIcon (ObjectMatrix);
-	if (object->isType (RObject::PackageEnv)) return getIcon (ObjectPackageEnvironment);
-	if (object->isType (RObject::Environment)) return getIcon (ObjectEnvironment);
+	if (object->isSlotsPseudoObject()) return getIcon(ObjectPseudo);
+	if (object->isType(RObject::List)) return getIcon(ObjectList);
+	if (object->isType(RObject::Function)) return getIcon(ObjectFunction);
+	if (object->isType(RObject::Matrix)) return getIcon(ObjectMatrix);
+	if (object->isType(RObject::PackageEnv)) return getIcon(ObjectPackageEnvironment);
+	if (object->isType(RObject::Environment)) return getIcon(ObjectEnvironment);
 
-	return QIcon ();
+	return QIcon();
 }
 
-QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
+QIcon RKStandardIcons::iconForWindow(const RKMDIWindow *window) {
 	// don't trace this
-	if (!window) return QIcon ();
+	if (!window) return QIcon();
 
-	if (window->isType (RKMDIWindow::DataEditorWindow)) return getIcon (WindowDataFrameEditor);
-	if (window->isType (RKMDIWindow::CommandEditorWindow)) return getIcon (WindowCommandEditor);
-	if (window->isType (RKMDIWindow::OutputWindow)) return getIcon (WindowOutput);
-	if (window->isType (RKMDIWindow::HelpWindow)) return getIcon (WindowHelp);
-	if (window->isType (RKMDIWindow::X11Window)) return getIcon (WindowX11);
-	if (window->isType (RKMDIWindow::ObjectWindow)) return getIcon (WindowObject);
-	if (window->isType (RKMDIWindow::ConsoleWindow)) return getIcon (WindowConsole);
-	if (window->isType (RKMDIWindow::CommandLogWindow)) return getIcon (WindowCommandLog);
-	if (window->isType (RKMDIWindow::WorkspaceBrowserWindow)) return getIcon (WindowWorkspaceBrowser);
-	if (window->isType (RKMDIWindow::SearchHelpWindow)) return getIcon (WindowSearchHelp);
-	if (window->isType (RKMDIWindow::PendingJobsWindow)) return getIcon (WindowPendingJobs);
-	if (window->isType (RKMDIWindow::FileBrowserWindow)) return getIcon (WindowFileBrowser);
-	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return getIcon (WindowDebugConsole);
-	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return getIcon (WindowCallstackViewer);
+	if (window->isType(RKMDIWindow::DataEditorWindow)) return getIcon(WindowDataFrameEditor);
+	if (window->isType(RKMDIWindow::CommandEditorWindow)) return getIcon(WindowCommandEditor);
+	if (window->isType(RKMDIWindow::OutputWindow)) return getIcon(WindowOutput);
+	if (window->isType(RKMDIWindow::HelpWindow)) return getIcon(WindowHelp);
+	if (window->isType(RKMDIWindow::X11Window)) return getIcon(WindowX11);
+	if (window->isType(RKMDIWindow::ObjectWindow)) return getIcon(WindowObject);
+	if (window->isType(RKMDIWindow::ConsoleWindow)) return getIcon(WindowConsole);
+	if (window->isType(RKMDIWindow::CommandLogWindow)) return getIcon(WindowCommandLog);
+	if (window->isType(RKMDIWindow::WorkspaceBrowserWindow)) return getIcon(WindowWorkspaceBrowser);
+	if (window->isType(RKMDIWindow::SearchHelpWindow)) return getIcon(WindowSearchHelp);
+	if (window->isType(RKMDIWindow::PendingJobsWindow)) return getIcon(WindowPendingJobs);
+	if (window->isType(RKMDIWindow::FileBrowserWindow)) return getIcon(WindowFileBrowser);
+	if (window->isType(RKMDIWindow::DebugConsoleWindow)) return getIcon(WindowDebugConsole);
+	if (window->isType(RKMDIWindow::CallstackViewerWindow)) return getIcon(WindowCallstackViewer);
 	if (window->isType(RKMDIWindow::PDFWindow)) return getIcon(WindowPDF);
-	if (window->isType (RKMDIWindow::DebugMessageWindow)) return QIcon();
+	if (window->isType(RKMDIWindow::DebugMessageWindow)) return QIcon();
 
-	RK_ASSERT (false);
-	return QIcon ();
+	RK_ASSERT(false);
+	return QIcon();
 }
 
-QTimer *RKStandardIcons::busyAnimation(QObject *parent, std::function<void (const QIcon &)> setter) {
-	RK_TRACE (APP);
+QTimer *RKStandardIcons::busyAnimation(QObject *parent, std::function<void(const QIcon &)> setter) {
+	RK_TRACE(APP);
 
 	setter(getIcon(RKWardIcon));
 	auto t = new QTimer(parent);

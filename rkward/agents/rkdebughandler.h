@@ -17,35 +17,36 @@ class RBackendRequest;
 /** A central handler, responsible for keeping all debug related widgets up-to-date */
 class RKDebugHandler : public QObject {
 	Q_OBJECT
-public:
-	explicit RKDebugHandler (QObject *parent);
-	~RKDebugHandler ();
+  public:
+	explicit RKDebugHandler(QObject *parent);
+	~RKDebugHandler();
 
-	static RKDebugHandler *instance () { return _instance; };
+	static RKDebugHandler *instance() { return _instance; };
 
-	void debugCall (RBackendRequest *request, RCommand *command);
-	void submitDebugString (const QString &command);
-	void sendCancel ();
-	void endDebug ();
+	void debugCall(RBackendRequest *request, RCommand *command);
+	void submitDebugString(const QString &command);
+	void sendCancel();
+	void endDebug();
 
 	enum DebugState {
 		NotInDebugger,
 		InDebugPrompt,
 		InDebugRun
 	};
-	DebugState state () const { return _state; };
+	DebugState state() const { return _state; };
 
-	QString outputContext () const { return _output_context; };
-	QStringList calls () const { return _calls; };
-	QStringList functions () const { return _functions; };
-	QStringList environments () const { return _environments; };
-	QStringList locals () const { return _locals; };
-	QList<int> relativeSourceLines () const { return _rel_src_lines; };
-	QString debugPrompt () const { return _prompt; };
-	RCommand *command () const { return _command; };
-Q_SIGNALS:
-	void newDebugState ();
-private:
+	QString outputContext() const { return _output_context; };
+	QStringList calls() const { return _calls; };
+	QStringList functions() const { return _functions; };
+	QStringList environments() const { return _environments; };
+	QStringList locals() const { return _locals; };
+	QList<int> relativeSourceLines() const { return _rel_src_lines; };
+	QString debugPrompt() const { return _prompt; };
+	RCommand *command() const { return _command; };
+  Q_SIGNALS:
+	void newDebugState();
+
+  private:
 	RCommand *_command;
 	QStringList _calls, _functions, _environments, _locals;
 	QList<int> _rel_src_lines;
