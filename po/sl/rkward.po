@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-28 00:38+0000\n"
-"PO-Revision-Date: 2025-04-27 08:19+0200\n"
+"PO-Revision-Date: 2025-04-28 10:04+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -36,13 +36,13 @@ msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
-"Predmeta »%1« ni bilo mogoče odpreti za urejanje. Ali ne obstaja ali pa "
+"Predmeta '%1' ni bilo mogoče odpreti za urejanje. Ali ne obstaja ali pa "
 "RKWard še ne podpira urejanja te vrste predmeta."
 
 #: rkward/agents/rkeditobjectagent.cpp:31
 #, kde-format
 msgid "Cannot edit '%1'"
-msgstr "Ni mogoče urejati »%1«"
+msgstr "Ni mogoče urejati '%1'"
 
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
@@ -55,7 +55,7 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
-"Prišlo je do napake pri odpiranju datoteke »%1«:\n"
+"Prišlo je do napake pri odpiranju datoteke '%1':\n"
 "%2"
 
 #: rkward/agents/rkloadagent.cpp:62
@@ -4682,10 +4682,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "Odpri kot besedilno datoteko in vsili poudarjanje R"
 
 #: rkward/rkward.cpp:1026
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Odpri nedavni delovni prostor"
+msgstr "Odpri kot R-ov delovni prostor"
 
 #: rkward/rkward.cpp:1063
 #, kde-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-28 00:38+0000\n"
-"PO-Revision-Date: 2025-04-27 05:39+0200\n"
+"PO-Revision-Date: 2025-04-28 04:15+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3990,6 +3990,8 @@ msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
 "katepart, and will exit, now. Please install katepart, and try again."
 msgstr ""
+"კომპონენტის 'katepart' ჩატვირთვა შეუძლებელია. RKWard ვერ გაეშვება katepart-"
+"ის გარეშე და ახლა დაასრულებს მუშაობას. დააყენეთ katepart და თავიდან სცადეთ."
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -4521,10 +4523,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "ტექსტური ფაილის სახით გახსნა და R-ის ტექსტის გამოკვეთა"
 
 #: rkward/rkward.cpp:1026
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "უახლესი სამუშაო სივრცის გახსნა"
+msgstr "R-ის სამუშაო სივრცის სახით გახსნა"
 
 #: rkward/rkward.cpp:1063
 #, kde-format

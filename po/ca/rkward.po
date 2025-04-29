@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-28 00:38+0000\n"
-"PO-Revision-Date: 2025-04-27 09:18+0200\n"
+"PO-Revision-Date: 2025-04-28 09:24+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -4770,10 +4770,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "Obre com a fitxer de text i força el ressaltat de l'R"
 
 #: rkward/rkward.cpp:1026
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Obre un espai de treball recent"
+msgstr "Obre com un espai de treball R"
 
 #: rkward/rkward.cpp:1063
 #, kde-format

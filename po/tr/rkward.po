@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-28 00:38+0000\n"
-"PO-Revision-Date: 2025-04-21 10:50+0300\n"
+"PO-Revision-Date: 2025-04-28 10:27+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4682,10 +4682,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "Metin dosyası olarak aç ve R vurgulamasını zorla"
 
 #: rkward/rkward.cpp:1026
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Son Kullanılan Çalışma Alanını Aç"
+msgstr "R Çalışma Alanı Olarak Aç"
 
 #: rkward/rkward.cpp:1063
 #, kde-format
@@ -6770,11 +6769,10 @@ msgid "[Active]"
 msgstr "[Etkin]"
 
 #: rkward/windows/rkhtmlwindow.cpp:749
-#, fuzzy, kde-format
-#| msgid "Output %1"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
-msgstr "%1 çıktısı"
+msgstr "Çıktı: %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:802
 #, kde-format
