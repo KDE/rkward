@@ -12,8 +12,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 /** Simple helper class to help keep sanity: Just like QDialogButtonBox, but it "Ok" and / or "Cancel" buttons are requested in the constructor, these are connected to the
  *  dialog's accept() and reject()-slots, automatically. Also, adds the Ctrl+Enter shortcut to the ok button, as suggested by KDE */
 class RKDialogButtonBox : public QDialogButtonBox {
-public:
-	RKDialogButtonBox (QDialogButtonBox::StandardButtons buttons, QDialog *parent);
+  public:
+	RKDialogButtonBox(QDialogButtonBox::StandardButtons buttons, QDialog *parent);
 };
 
 #endif

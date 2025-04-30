@@ -9,54 +9,54 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <functional>
 
-#include <QLabel>
 #include <QApplication>
 #include <QComboBox>
+#include <QFileInfo>
 #include <QGridLayout>
 #include <QIcon>
+#include <QLabel>
 #include <QPushButton>
-#include <QTimer>
-#include <QFileInfo>
 #include <QStandardPaths>
+#include <QTimer>
 
 #include <KLocalizedString>
-#include <KUrlRequester>
 #include <KMessageBox>
+#include <KUrlRequester>
 
-#include "../settings/rksettingsmoduleplugins.h"
-#include "../settings/rksettingsmodulegeneral.h"
-#include "../settings/rksettings.h"
-#include "../misc/rkcommonfunctions.h"
-#include "../misc/rkcommandlineargs.h"
-#include "../misc/rkstandardicons.h"
-#include "../misc/rkradiogroup.h"
 #include "../dialogs/rkloadlibsdialog.h"
-#include "../windows/katepluginintegration.h"
-#include "../rbackend/rksessionvars.h"
+#include "../misc/rkcommandlineargs.h"
+#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkradiogroup.h"
+#include "../misc/rkstandardicons.h"
 #include "../rbackend/rkrinterface.h"
+#include "../rbackend/rksessionvars.h"
+#include "../settings/rksettings.h"
+#include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmoduleplugins.h"
+#include "../windows/katepluginintegration.h"
 
 #include "../rkward.h"
 
 #include "../debug.h"
 
 class RKSetupWizardPage : public QWidget {
-public:
-	RKSetupWizardPage(RKSetupWizard* wizard, const QString& caption) : QWidget(), wizard(wizard), current_row(-1), glayout(nullptr) {
-		RK_TRACE (DIALOGS);
+  public:
+	RKSetupWizardPage(RKSetupWizard *wizard, const QString &caption) : QWidget(), wizard(wizard), current_row(-1), glayout(nullptr) {
+		RK_TRACE(DIALOGS);
 		ref = wizard->addPage(this, caption);
 	};
 
-	void lazyInitOnce(std::function<void(RKSetupWizardPage*)> initfun) {
+	void lazyInitOnce(std::function<void(RKSetupWizardPage *)> initfun) {
 		auto refcopy = ref;
-		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, refcopy, initfun](KPageWidgetItem* current, KPageWidgetItem*) mutable {
+		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, refcopy, initfun](KPageWidgetItem *current, KPageWidgetItem *) mutable {
 			if (current && current == refcopy) {
 				initfun(this);
 				refcopy = nullptr;
 			}
 		});
 	}
-	void lazyInitRepeated(std::function<void(RKSetupWizardPage*)> initfun) {
-		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, initfun](KPageWidgetItem* current, KPageWidgetItem*) {
+	void lazyInitRepeated(std::function<void(RKSetupWizardPage *)> initfun) {
+		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, initfun](KPageWidgetItem *current, KPageWidgetItem *) {
 			if (current && current == ref) {
 				initfun(this);
 			}
@@ -67,11 +67,11 @@ public:
 	int current_row;
 	QGridLayout *glayout;
 	KPageWidgetItem *ref;
-	void appendItem(RKSetupWizardItem* item) {
-		RK_TRACE (DIALOGS);
+	void appendItem(RKSetupWizardItem *item) {
+		RK_TRACE(DIALOGS);
 
 		if (!glayout) {
-			RK_ASSERT(!layout());  // must now mix with different type of layout
+			RK_ASSERT(!layout()); // must now mix with different type of layout
 			glayout = new QGridLayout(this);
 			glayout->setColumnStretch(1, 2);
 			glayout->setColumnStretch(2, 1);
@@ -94,11 +94,11 @@ static auto iconForStatus(RKSetupWizardItem::Status status) {
 	if (status == RKSetupWizardItem::Good) icon_id = QStringLiteral("dialog-positive");
 	else if (status == RKSetupWizardItem::Warning) icon_id = QStringLiteral("dialog-warning");
 	else icon_id = QStringLiteral("dialog-error");
-	return (QIcon::fromTheme(icon_id).pixmap(32, 32));  // TODO: Correct way to not hardcode size?
+	return (QIcon::fromTheme(icon_id).pixmap(32, 32)); // TODO: Correct way to not hardcode size?
 }
 
 class RBackendStatusWidget : public QWidget {
-public:
+  public:
 	RBackendStatusWidget(QWidget *parent) : QWidget(parent), anim(nullptr) {
 		auto l = new QVBoxLayout(this);
 		rinst_label = new QLabel();
@@ -161,12 +161,13 @@ public:
 			}
 		} else {
 			rstatus_label->setText(i18n("<b>Waiting for R backend...</b>"));
-			if (!anim) anim = RKStandardIcons::busyAnimation(this, [this](const QIcon& icon) {
-				rstatus_icon->setPixmap(icon.pixmap(32, 32));
-			});
+			if (!anim) anim = RKStandardIcons::busyAnimation(this, [this](const QIcon &icon) {
+					       rstatus_icon->setPixmap(icon.pixmap(32, 32));
+				       });
 		}
 	}
-private:
+
+  private:
 	QLabel *rstatus_label, *rstatus_icon, *rinst_label;
 	QPushButton *detail_button;
 	QTimer *anim;
@@ -174,7 +175,7 @@ private:
 };
 
 class RBackendSelectionWidget : public RKRadioGroup {
-public:
+  public:
 	RBackendSelectionWidget(QWidget *parent) : RKRadioGroup(parent) {
 		req = new KUrlRequester();
 		req->setPlaceholderText(i18n("Select another R executable"));
@@ -193,7 +194,7 @@ public:
 			r_installations.removeAll(RKSessionVars::RBinary());
 			r_installations.prepend(RKSessionVars::RBinary());
 		}
-		for(int i = 0; i < r_installations.size(); ++i) {
+		for (int i = 0; i < r_installations.size(); ++i) {
 			addButton(i18n("Use R at %1", r_installations[i]), i);
 		}
 		addButton(i18n("Use R at:"), -1, req);
@@ -212,7 +213,8 @@ public:
 		if (index >= 0) return r_installations[index];
 		return req->text();
 	}
-private:
+
+  private:
 	QStringList r_installations;
 	KUrlRequester *req;
 };
@@ -254,8 +256,8 @@ void RKSetupWizardItem::apply(RKSetupWizard *wizard) {
 	options[opt].callback(wizard);
 };
 
-RKSetupWizardItem* makeRPackageCheck(const QString &packagename, const QString &explanation, RKSetupWizardItem::Status status_if_missing) {
-	RK_TRACE (DIALOGS);
+RKSetupWizardItem *makeRPackageCheck(const QString &packagename, const QString &explanation, RKSetupWizardItem::Status status_if_missing) {
+	RK_TRACE(DIALOGS);
 
 	auto ret = new RKSetupWizardItem(packagename, explanation);
 	if (!RKSessionVars::instance()->installedPackages().contains(packagename)) {
@@ -268,15 +270,15 @@ RKSetupWizardItem* makeRPackageCheck(const QString &packagename, const QString &
 	return ret;
 }
 
-void addSoftwareInstallOptions(RKSetupWizardItem* item, const QString &exename, const QString &downloadurl) {
-	RK_TRACE (DIALOGS);
+void addSoftwareInstallOptions(RKSetupWizardItem *item, const QString &exename, const QString &downloadurl) {
+	RK_TRACE(DIALOGS);
 
 	item->addOption(i18n("Install %1", exename), i18n("Mark %1 for installation (actual installation is not yet supported, but you will be prompted with a link to a download page at the last page of this dialog)", exename), [exename, downloadurl](RKSetupWizard *wizard) { wizard->markSoftwareForInstallation(exename, downloadurl, true); });
 	item->addOption(i18n("No change"), i18n("Proceed without %1. You will be missing some functionality.", exename), [exename, downloadurl](RKSetupWizard *wizard) { wizard->markSoftwareForInstallation(exename, downloadurl, false); });
 }
 
-RKSetupWizardItem* makeSoftwareCheck(const QString &exename, const QString& explanation, const QString &downloadurl, RKSetupWizardItem::Status status_if_missing) {
-	RK_TRACE (DIALOGS);
+RKSetupWizardItem *makeSoftwareCheck(const QString &exename, const QString &explanation, const QString &downloadurl, RKSetupWizardItem::Status status_if_missing) {
+	RK_TRACE(DIALOGS);
 
 	auto ret = new RKSetupWizardItem(exename, explanation);
 	if (QStandardPaths::findExecutable(exename).isEmpty()) {
@@ -288,8 +290,8 @@ RKSetupWizardItem* makeSoftwareCheck(const QString &exename, const QString& expl
 	return ret;
 }
 
-RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) : KAssistantDialog(parent), reason(reason) {
-	RK_TRACE (DIALOGS);
+RKSetupWizard::RKSetupWizard(QWidget *parent, InvokationReason reason, const QList<RKSetupWizardItem *> &settings_items) : KAssistantDialog(parent), reason(reason) {
+	RK_TRACE(DIALOGS);
 	RK_ASSERT(!wizard_active);
 	wizard_active = true;
 
@@ -309,7 +311,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		lab->setPixmap(iconForStatus(RKSetupWizardItem::Error));
 		hl->addWidget(lab);
 		hl->addWidget(RKCommonFunctions::wordWrappedLabel(QStringLiteral("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>")));
-		hl->setStretch(1,2);
+		hl->setStretch(1, 2);
 	}
 	l->addStretch();
 
@@ -317,10 +319,10 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	page = new RKSetupWizardPage(this, i18n("Basic installation"));
 	reinstallation_required = false;
 	auto idir = new RKSetupWizardItem(i18n("Installation directory"));
-	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
+	if (RKCommonFunctions::getRKWardDataDir().isEmpty()) {
 		idir->setStatus(RKSetupWizardItem::Error, i18n("Not found."));
 		idir->setLongLabel(QStringLiteral("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/Building_RKWard_From_Source.html\">https://rkward.kde.org/Building_RKWard_From_Source.html</a>.</p>"));
-		idir->addOption(i18n("Reinstallation required"), i18n("This problem cannot be corrected, automatically. You will have to reinstall RKWard."), [](RKSetupWizard*) {});
+		idir->addOption(i18n("Reinstallation required"), i18n("This problem cannot be corrected, automatically. You will have to reinstall RKWard."), [](RKSetupWizard *) {});
 		reinstallation_required = true;
 	} else {
 		idir->setStatus(RKSetupWizardItem::Good, i18n("Found."));
@@ -331,8 +333,8 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	if (RKSettingsModulePlugins::pluginMaps().isEmpty()) {
 		pluginmaps->setLongLabel(i18n("<p>No plugins are enabled. This is probably not intended.</p>"));
 		pluginmaps->setStatus(RKSetupWizardItem::Warning, i18n("None selected"));
-		pluginmaps->addOption(i18n("Restore defaults"), i18n("Enable the default plugins"), [](RKSetupWizard*) { RKSettingsModulePlugins::registerDefaultPluginMaps(RKSettingsModulePlugins::AutoActivate); });
-		pluginmaps->addOption(i18n("No change"), i18n("Proceed without plugins"), [](RKSetupWizard*) {});
+		pluginmaps->addOption(i18n("Restore defaults"), i18n("Enable the default plugins"), [](RKSetupWizard *) { RKSettingsModulePlugins::registerDefaultPluginMaps(RKSettingsModulePlugins::AutoActivate); });
+		pluginmaps->addOption(i18n("No change"), i18n("Proceed without plugins"), [](RKSetupWizard *) {});
 
 		// TODO: Also offer help, if a suspiciously small share of plugins is active? RKSettingsModulePlugins::knownUsablePluginCount();
 	} else {
@@ -357,8 +359,8 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	if (QFileInfo::exists(legacy_output_path)) {
 		legacy_output->setStatus(RKSetupWizardItem::Warning, i18n("Exists"));
 		legacy_output->setLongLabel(QStringLiteral("<p>An output file from before RKWard version 0.7.3 was found (%1). You will probably want to convert this to the new format. Alternatively, if it is no longer needed, you can delete it, manually.</p>").arg(legacy_output_path));
-		legacy_output->addOption(i18n("Import"), i18n("Import to the session, so you can save in the new output format."), [](RKSetupWizard* wizard) { wizard->r_commands_to_run.append(QStringLiteral("rk.import.legacy.output()\n")); });
-		legacy_output->addOption(i18n("No action"), i18n("Ignore (and keep) the file. You can import it manually, at any time, using rk.import.legacy.output()"), [](RKSetupWizard*) {});
+		legacy_output->addOption(i18n("Import"), i18n("Import to the session, so you can save in the new output format."), [](RKSetupWizard *wizard) { wizard->r_commands_to_run.append(QStringLiteral("rk.import.legacy.output()\n")); });
+		legacy_output->addOption(i18n("No action"), i18n("Ignore (and keep) the file. You can import it manually, at any time, using rk.import.legacy.output()"), [](RKSetupWizard *) {});
 	} else {
 		legacy_output->setStatus(RKSetupWizardItem::Good, i18n("Found."));
 	}
@@ -440,11 +442,12 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	page->lazyInitRepeated([this, last_page_label](RKSetupWizardPage *page) {
 		software_to_install.clear();
 		packages_to_install.clear();
-		r_commands_to_run.clear();;
+		r_commands_to_run.clear();
+		;
 
 		// NOTE: This is not quite clean: Some settings get applied before clicking finish, this way.
 		//       However, I don't really want to pop up a separate dialog for a summary page, either.
-		for(int i = 0; i < items.size(); ++i) {
+		for (int i = 0; i < items.size(); ++i) {
 			items[i]->apply(this);
 		}
 		QString label_text;
@@ -479,15 +482,15 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 }
 
 RKSetupWizard::~RKSetupWizard() {
-	RK_TRACE (DIALOGS);
-	for(int i = 0; i < items.size(); ++i) {
+	RK_TRACE(DIALOGS);
+	for (int i = 0; i < items.size(); ++i) {
 		delete items[i];
 	}
 	wizard_active = false;
 }
 
 void RKSetupWizard::next() {
-	RK_TRACE (DIALOGS);
+	RK_TRACE(DIALOGS);
 
 	if (next_callbacks.contains(currentPage())) {
 		if (!next_callbacks[currentPage()]()) return;
@@ -496,12 +499,12 @@ void RKSetupWizard::next() {
 }
 
 void RKSetupWizard::doAutoCheck() {
-	RK_TRACE (DIALOGS);
+	RK_TRACE(DIALOGS);
 
 	// query settings modules for any problems
-	QList<RKSetupWizardItem*> settings_items = RKSettings::validateSettingsInteractive();
+	QList<RKSetupWizardItem *> settings_items = RKSettings::validateSettingsInteractive();
 	// check for those, and some cheap-but-important basics
-	if (RInterface::instance()->backendIsDead() || RKCommonFunctions::getRKWardDataDir().isEmpty () || RKSettingsModulePlugins::pluginMaps().isEmpty() || (RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount() == 0) || !settings_items.isEmpty()) {
+	if (RInterface::instance()->backendIsDead() || RKCommonFunctions::getRKWardDataDir().isEmpty() || RKSettingsModulePlugins::pluginMaps().isEmpty() || (RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount() == 0) || !settings_items.isEmpty()) {
 		fullInteractiveCheck(ProblemsDetected, settings_items);
 	} else if (RKSettingsModuleGeneral::rkwardVersionChanged()) {
 		fullInteractiveCheck(NewVersionRKWard, settings_items);
@@ -509,12 +512,12 @@ void RKSetupWizard::doAutoCheck() {
 }
 
 void RKSetupWizard::manualCheck() {
-	RK_TRACE (DIALOGS);
+	RK_TRACE(DIALOGS);
 	fullInteractiveCheck(ManualCheck);
 }
 
-void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) {
-	RK_TRACE (DIALOGS);
+void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RKSetupWizardItem *> &settings_items) {
+	RK_TRACE(DIALOGS);
 
 	if (wizard_active) return; // This can actually happen: In particular, if backend fails to start
 	if (has_been_run && reason != ManualCheck) return;
@@ -529,7 +532,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 			RKLoadLibsDialog::showInstallPackagesModal(wizard, nullptr, wizard->packages_to_install);
 		}
 
-#if 0 && (defined(Q_OS_LINUX) || defined(Q_OS_UNIX))  // D'uh: muon (5.8.0) does not have an "install" command line option or equivalent
+#if 0 && (defined(Q_OS_LINUX) || defined(Q_OS_UNIX)) // D'uh: muon (5.8.0) does not have an "install" command line option or equivalent
 		if (!wizard->software_to_install.isEmpty()) {
 			QString muonexe = QStandardPaths::findExecutable("muon");
 			if(!muonexe.isEmpty()) {
@@ -537,7 +540,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 			}
 		}
 #endif
-		for(int i = 0; i < wizard->r_commands_to_run.size(); ++i) {
+		for (int i = 0; i < wizard->r_commands_to_run.size(); ++i) {
 			RInterface::issueCommand(wizard->r_commands_to_run[i], RCommand::App);
 		}
 
@@ -545,7 +548,8 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 		if (!RInterface::instance()->backendIsDead() && (RKSessionVars::RBinary() != old_r_binary)) {
 			if (RKSessionVars::isPathInAppImage(RKSessionVars::RBinary())) {
 				// the appimage path isn't stable, but an empty setting causes it to be used by default (via rkward.ini)
-				RKSettingsModuleR::options_r_binary = QString();;
+				RKSettingsModuleR::options_r_binary = QString();
+				;
 			} else {
 				RKSettingsModuleR::options_r_binary = RKSessionVars::RBinary();
 			}
@@ -555,8 +559,8 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 	delete wizard;
 }
 
-void RKSetupWizard::markSoftwareForInstallation(const QString& name, const QString& downloadurl, bool install) {
-	RK_TRACE (DIALOGS);
+void RKSetupWizard::markSoftwareForInstallation(const QString &name, const QString &downloadurl, bool install) {
+	RK_TRACE(DIALOGS);
 	bool present = software_to_install.contains(name);
 	if (install && !present) {
 		software_to_install.append(name);
@@ -568,8 +572,8 @@ void RKSetupWizard::markSoftwareForInstallation(const QString& name, const QStri
 	}
 }
 
-void RKSetupWizard::markRPackageForInstallation(const QString& name, bool install) {
-	RK_TRACE (DIALOGS);
+void RKSetupWizard::markRPackageForInstallation(const QString &name, bool install) {
+	RK_TRACE(DIALOGS);
 	bool present = packages_to_install.contains(name);
 	if (install && !present) packages_to_install.append(name);
 	if (present && !install) packages_to_install.removeAll(name);

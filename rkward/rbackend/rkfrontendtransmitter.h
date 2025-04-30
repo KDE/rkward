@@ -17,37 +17,37 @@ class RKGraphicsDeviceFrontendTransmitter;
 class RKRBackendProtocolFrontend;
 
 class RKFrontendTransmitter : public RKAbstractTransmitter, public RKROutputBuffer {
-Q_OBJECT
-public:
+	Q_OBJECT
+  public:
 	RKFrontendTransmitter(RKRBackendProtocolFrontend *frontend);
-	~RKFrontendTransmitter ();
+	~RKFrontendTransmitter();
 
-	void run () override;
+	void run() override;
 
-	bool doMSleep (int delay) override {
-		msleep (delay);
+	bool doMSleep(int delay) override {
+		msleep(delay);
 		return true;
 	};
-	void writeRequest (RBackendRequest *request) override;
-	void requestReceived (RBackendRequest *request) override;
+	void writeRequest(RBackendRequest *request) override;
+	void requestReceived(RBackendRequest *request) override;
 	/** Simple convenience function similar to QIODevice::waitForReadyRead(), but waiting for a full line to be available.
 	    In particular on Windows, we often receive _less_ than a full line per chunk. */
-	static QString waitReadLine (QIODevice *con, int msecs);
-private Q_SLOTS:
-	void connectAndEnterLoop ();
-	void backendExit (int exitcode);
-private:
-	void handleTransmissionError (const QString &message) override;
+	static QString waitReadLine(QIODevice *con, int msecs);
+  private Q_SLOTS:
+	void connectAndEnterLoop();
+	void backendExit(int exitcode);
+
+  private:
+	void handleTransmissionError(const QString &message) override;
 
 	bool quirkmode;
-	QProcess* backend;
-	QLocalServer* server;
-	RKRBackendProtocolFrontend* frontend;
-	RKGraphicsDeviceFrontendTransmitter* rkd_transmitter;
+	QProcess *backend;
+	QLocalServer *server;
+	RKRBackendProtocolFrontend *frontend;
+	RKGraphicsDeviceFrontendTransmitter *rkd_transmitter;
 
 	QString resolveRSpecOrFail(QString input);
 	void detectAndCheckRBinary();
 };
 
 #endif
-

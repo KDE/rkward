@@ -17,12 +17,12 @@ This class used to have much more (over-)complexity. It could probably be merged
 @author Thomas Friedrichsmeier
 */
 class RKSaveAgent {
-public:
-/** Save the workspace. If no URL is given use the last known save url. If the workspace has not been saved, previously, ask for url to save to. */
-	static bool saveWorkspace(const QUrl &url=QUrl());
-/** Save the workspace, asking for a (new) file name.
- @param previous_url If given, specified the default directory and file name. */
-	static bool saveWorkspaceAs(const QUrl &previous_url=QUrl());
+  public:
+	/** Save the workspace. If no URL is given use the last known save url. If the workspace has not been saved, previously, ask for url to save to. */
+	static bool saveWorkspace(const QUrl &url = QUrl());
+	/** Save the workspace, asking for a (new) file name.
+	 @param previous_url If given, specified the default directory and file name. */
+	static bool saveWorkspaceAs(const QUrl &previous_url = QUrl());
 };
 
 #endif

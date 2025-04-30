@@ -7,47 +7,47 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkworkplace.h"
 
-#include <KParts/PartManager>
-#include <KMessageBox>
-#include <KLocalizedString>
 #include <KActionCollection>
-#include <KSharedConfig>
-#include <KMessageWidget>
 #include <KIO/OpenUrlJob>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KMessageWidget>
+#include <KParts/PartManager>
+#include <KSharedConfig>
 
-#include <QFileInfo>
-#include <QCryptographicHash>
-#include <QKeyEvent>
-#include <QDir>
 #include <QApplication>
-#include <QMimeDatabase>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QStatusBar>
+#include <QCryptographicHash>
 #include <QDesktopServices>
+#include <QDir>
+#include <QFileInfo>
+#include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QMimeDatabase>
+#include <QStatusBar>
+#include <QVBoxLayout>
 
-#include "detachedwindowcontainer.h"
-#include "rkcommandeditorwindow.h"
-#include "rkhtmlwindow.h"
-#include "rkpdfwindow.h"
-#include "rkworkplaceview.h"
-#include "rktoolwindowbar.h"
-#include "rktoolwindowlist.h"
-#include "../core/robject.h"
 #include "../core/rcontainerobject.h"
+#include "../core/robject.h"
 #include "../core/robjectlist.h"
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkeditordataframe.h"
 #include "../dialogs/rksavemodifieddialog.h"
-#include "../robjectviewer.h"
-#include "../settings/rksettingsmodulegeneral.h"
-#include "../settings/rksettingsmodulecommandeditor.h"
-#include "../rbackend/rkrinterface.h"
-#include "../windows/rkwindowcatcher.h"
-#include "../rbackend/rcommand.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../misc/rkxmlguipreviewarea.h"
+#include "../rbackend/rcommand.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
+#include "../robjectviewer.h"
+#include "../settings/rksettingsmodulecommandeditor.h"
+#include "../settings/rksettingsmodulegeneral.h"
+#include "../windows/rkwindowcatcher.h"
+#include "detachedwindowcontainer.h"
+#include "rkcommandeditorwindow.h"
+#include "rkhtmlwindow.h"
+#include "rkpdfwindow.h"
+#include "rktoolwindowbar.h"
+#include "rktoolwindowlist.h"
+#include "rkworkplaceview.h"
 
 #include "../debug.h"
 
@@ -56,9 +56,9 @@ RKWorkplace *RKWorkplace::main_workplace = nullptr;
 
 #include <QLabel> // remove ME
 
-RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
-	RK_TRACE (APP);
-	RK_ASSERT (main_workplace == nullptr);
+RKWorkplace::RKWorkplace(QWidget *parent) : QWidget(parent) {
+	RK_TRACE(APP);
+	RK_ASSERT(main_workplace == nullptr);
 
 	main_workplace = this;
 	QDesktopServices::setUrlHandler(QStringLiteral("rkward"), this, "openRKWardUrl");
@@ -66,74 +66,75 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	window_placement_override = RKMDIWindow::AnyWindowState;
 
 	// message area
-	message_area = new QWidget (this);
-	QVBoxLayout *message_layout = new QVBoxLayout (message_area);
-	message_layout->setContentsMargins (0, 0, 0, 0);
+	message_area = new QWidget(this);
+	QVBoxLayout *message_layout = new QVBoxLayout(message_area);
+	message_layout->setContentsMargins(0, 0, 0, 0);
 
-	QVBoxLayout *vbox = new QVBoxLayout (this);
-	vbox->setContentsMargins (0, 0, 0, 0);
-	vbox->setSpacing (0);
-	vbox->addWidget (message_area);
+	QVBoxLayout *vbox = new QVBoxLayout(this);
+	vbox->setContentsMargins(0, 0, 0, 0);
+	vbox->setSpacing(0);
+	vbox->addWidget(message_area);
 
-	tool_window_bars[RKToolWindowList::Top] = new RKToolWindowBar (KMultiTabBar::Top, this);
-	vert_splitter = new QSplitter (Qt::Vertical, this);
-	tool_window_bars[RKToolWindowList::Top]->setSplitter (vert_splitter);
+	tool_window_bars[RKToolWindowList::Top] = new RKToolWindowBar(KMultiTabBar::Top, this);
+	vert_splitter = new QSplitter(Qt::Vertical, this);
+	tool_window_bars[RKToolWindowList::Top]->setSplitter(vert_splitter);
 
-	QWidget *harea = new QWidget (vert_splitter);
-	QHBoxLayout *hbox = new QHBoxLayout (harea);
-	hbox->setContentsMargins (0, 0, 0, 0);
-	hbox->setSpacing (0);
-	vert_splitter->setCollapsible (vert_splitter->indexOf (harea), false);
-	vert_splitter->setStretchFactor (vert_splitter->indexOf (harea), 1);
+	QWidget *harea = new QWidget(vert_splitter);
+	QHBoxLayout *hbox = new QHBoxLayout(harea);
+	hbox->setContentsMargins(0, 0, 0, 0);
+	hbox->setSpacing(0);
+	vert_splitter->setCollapsible(vert_splitter->indexOf(harea), false);
+	vert_splitter->setStretchFactor(vert_splitter->indexOf(harea), 1);
 
-	tool_window_bars[RKToolWindowList::Left] = new RKToolWindowBar (KMultiTabBar::Left, harea);
-	horiz_splitter = new QSplitter (Qt::Horizontal, harea);
-	tool_window_bars[RKToolWindowList::Left]->setSplitter (horiz_splitter);
+	tool_window_bars[RKToolWindowList::Left] = new RKToolWindowBar(KMultiTabBar::Left, harea);
+	horiz_splitter = new QSplitter(Qt::Horizontal, harea);
+	tool_window_bars[RKToolWindowList::Left]->setSplitter(horiz_splitter);
 
-	wview = new RKWorkplaceView (horiz_splitter);
-	horiz_splitter->setCollapsible (horiz_splitter->indexOf (wview), false);
-	horiz_splitter->setStretchFactor(horiz_splitter->indexOf (wview), 1);
+	wview = new RKWorkplaceView(horiz_splitter);
+	horiz_splitter->setCollapsible(horiz_splitter->indexOf(wview), false);
+	horiz_splitter->setStretchFactor(horiz_splitter->indexOf(wview), 1);
 
-	tool_window_bars[RKToolWindowList::Right] = new RKToolWindowBar (KMultiTabBar::Right, harea);
-	tool_window_bars[RKToolWindowList::Right]->setSplitter (horiz_splitter);
-	hbox->addWidget (tool_window_bars[RKToolWindowList::Left]);
-	hbox->addWidget (horiz_splitter);
-	hbox->addWidget (tool_window_bars[RKToolWindowList::Right]);
+	tool_window_bars[RKToolWindowList::Right] = new RKToolWindowBar(KMultiTabBar::Right, harea);
+	tool_window_bars[RKToolWindowList::Right]->setSplitter(horiz_splitter);
+	hbox->addWidget(tool_window_bars[RKToolWindowList::Left]);
+	hbox->addWidget(horiz_splitter);
+	hbox->addWidget(tool_window_bars[RKToolWindowList::Right]);
 
-	tool_window_bars[RKToolWindowList::Bottom] = new RKToolWindowBar (KMultiTabBar::Bottom, this);
-	tool_window_bars[RKToolWindowList::Bottom]->setSplitter (vert_splitter);
-	vbox->addWidget (tool_window_bars[RKToolWindowList::Top]);
-	vbox->addWidget (vert_splitter);
+	tool_window_bars[RKToolWindowList::Bottom] = new RKToolWindowBar(KMultiTabBar::Bottom, this);
+	tool_window_bars[RKToolWindowList::Bottom]->setSplitter(vert_splitter);
+	vbox->addWidget(tool_window_bars[RKToolWindowList::Top]);
+	vbox->addWidget(vert_splitter);
 	auto bottom_box = new QHBoxLayout();
 	vbox->addLayout(bottom_box);
-	bottom_box->addWidget (tool_window_bars[RKToolWindowList::Bottom]);
+	bottom_box->addWidget(tool_window_bars[RKToolWindowList::Bottom]);
 	status_bar = new QStatusBar();
 	bottom_box->addWidget(status_bar, 0, Qt::AlignRight);
 
-	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group (QStringLiteral("ToolwindowBars"));
-	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->restoreSize (toolbar_config);
+	KConfigGroup toolbar_config = KSharedConfig::openConfig()->group(QStringLiteral("ToolwindowBars"));
+	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i)
+		tool_window_bars[i]->restoreSize(toolbar_config);
 
-	history = new RKMDIWindowHistory (this);
+	history = new RKMDIWindowHistory(this);
 
-	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKWorkplace::saveSettings);
+	connect(RKWardMainWindow::getMain(), &RKWardMainWindow::aboutToQuitRKWard, this, &RKWorkplace::saveSettings);
 }
 
-RKWorkplace::~RKWorkplace () {
-	RK_TRACE (APP);
+RKWorkplace::~RKWorkplace() {
+	RK_TRACE(APP);
 
 	delete _workspace_config;
-//	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
-	for (int i = 0; i < windows.size (); ++i) {
-		disconnect (windows[i], nullptr, this, nullptr);
+	//	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
+	for (int i = 0; i < windows.size(); ++i) {
+		disconnect(windows[i], nullptr, this, nullptr);
 	}
 }
 
-void RKWorkplace::addMessageWidget (KMessageWidget* message) {
-	RK_TRACE (APP);
+void RKWorkplace::addMessageWidget(KMessageWidget *message) {
+	RK_TRACE(APP);
 
-	message_area->layout ()->addWidget (message);
-	topLevelWidget ()->show ();
-	topLevelWidget ()->raise ();
+	message_area->layout()->addWidget(message);
+	topLevelWidget()->show();
+	topLevelWidget()->raise();
 }
 
 QString workspaceConfigFileName(const QUrl &url) {
@@ -143,31 +144,31 @@ QString workspaceConfigFileName(const QUrl &url) {
 	return (dir.absoluteFilePath(u"rkward/workspace_config_"_s + base_name));
 }
 
-KConfigBase *RKWorkplace::workspaceConfig () {
+KConfigBase *RKWorkplace::workspaceConfig() {
 	if (!_workspace_config) {
-		RK_TRACE (APP);
-		_workspace_config = new KConfig (workspaceConfigFileName (workspaceURL ()));
+		RK_TRACE(APP);
+		_workspace_config = new KConfig(workspaceConfigFileName(workspaceURL()));
 	}
 	return _workspace_config;
 }
 
-QString RKWorkplace::portableUrl (const QUrl &url) {
+QString RKWorkplace::portableUrl(const QUrl &url) {
 	QUrl ret = url;
-	if (url.scheme () == workspaceURL ().scheme () && url.authority () == workspaceURL ().authority ()) {
-		QString relative = QDir (workspaceURL ().path ()).relativeFilePath (url.path ());
-		ret = QUrl (relative);
+	if (url.scheme() == workspaceURL().scheme() && url.authority() == workspaceURL().authority()) {
+		QString relative = QDir(workspaceURL().path()).relativeFilePath(url.path());
+		ret = QUrl(relative);
 	}
 	// QUrl::toDisplayString () used here, for the side effect of stripping credentials
-	return QUrl (ret).adjusted (QUrl::NormalizePathSegments).toDisplayString ();
+	return QUrl(ret).adjusted(QUrl::NormalizePathSegments).toDisplayString();
 }
 
-void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
-	RK_TRACE (APP);
+void RKWorkplace::setWorkspaceURL(const QUrl &url, bool keep_config) {
+	RK_TRACE(APP);
 
 	if (url != current_url) {
 		current_url = url;
 		if (keep_config && _workspace_config) {
-			KConfig * _new_config = _workspace_config->copyTo (workspaceConfigFileName (workspaceURL ()));
+			KConfig *_new_config = _workspace_config->copyTo(workspaceConfigFileName(workspaceURL()));
 			delete _workspace_config;
 			_workspace_config = _new_config;
 		} else {
@@ -178,116 +179,117 @@ void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
 	}
 }
 
-void RKWorkplace::saveSettings () {
-	RK_TRACE (APP);
+void RKWorkplace::saveSettings() {
+	RK_TRACE(APP);
 
-	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group (QStringLiteral("ToolwindowBars"));
-	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->saveSize (toolbar_config);
+	KConfigGroup toolbar_config = KSharedConfig::openConfig()->group(QStringLiteral("ToolwindowBars"));
+	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i)
+		tool_window_bars[i]->saveSize(toolbar_config);
 }
 
-void RKWorkplace::initActions (KActionCollection *ac) {
-	RK_TRACE (APP);
+void RKWorkplace::initActions(KActionCollection *ac) {
+	RK_TRACE(APP);
 
-	wview->initActions (ac);
+	wview->initActions(ac);
 }
 
-void RKWorkplace::attachWindow (RKMDIWindow *window) {
-	RK_TRACE (APP);
-	RK_ASSERT (windows.contains (window));		// This should not happen for now.
+void RKWorkplace::attachWindow(RKMDIWindow *window) {
+	RK_TRACE(APP);
+	RK_ASSERT(windows.contains(window)); // This should not happen for now.
 
-	if (!window->isAttached ()) {
-		QWidget *old_parent = window->parentWidget ();
-		window->prepareToBeAttached ();
-		if (old_parent && qobject_cast<DetachedWindowContainer*> (old_parent)) {
-			old_parent->deleteLater ();
+	if (!window->isAttached()) {
+		QWidget *old_parent = window->parentWidget();
+		window->prepareToBeAttached();
+		if (old_parent && qobject_cast<DetachedWindowContainer *>(old_parent)) {
+			old_parent->deleteLater();
 		}
 	}
 
 	// all the rest is done, even if the window was previously "Attached", as this may also mean it was freshly created
 	window->state = RKMDIWindow::Attached;
-	if (window->isToolWindow ()) {
-		if (!window->tool_window_bar) placeInToolWindowBar (window, RKToolWindowList::Bottom);
-		else window->tool_window_bar->reclaimDetached (window);
+	if (window->isToolWindow()) {
+		if (!window->tool_window_bar) placeInToolWindowBar(window, RKToolWindowList::Bottom);
+		else window->tool_window_bar->reclaimDetached(window);
 	} else {
-		view ()->addWindow (window);
-		view ()->topLevelWidget ()->raise ();
-		view ()->topLevelWidget ()->activateWindow ();
+		view()->addWindow(window);
+		view()->topLevelWidget()->raise();
+		view()->topLevelWidget()->activateWindow();
 	}
 
-	RK_ASSERT (window->getPart ());
-	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart (), !window->isToolWindow ());
+	RK_ASSERT(window->getPart());
+	RKWardMainWindow::getMain()->partManager()->addPart(window->getPart(), !window->isToolWindow());
 }
 
-void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
-	RK_TRACE (APP);
+void RKWorkplace::detachWindow(RKMDIWindow *window, bool was_attached) {
+	RK_TRACE(APP);
 	if (!window) return;
-	RK_ASSERT (windows.contains (window));		// Can't detach a window that is not registered
+	RK_ASSERT(windows.contains(window)); // Can't detach a window that is not registered
 
-	window->prepareToBeDetached ();
+	window->prepareToBeDetached();
 	window->state = RKMDIWindow::Detached;
 
-	RK_ASSERT (window->getPart ());
+	RK_ASSERT(window->getPart());
 	if (was_attached) {
-		RKWardMainWindow::getMain ()->partManager ()->removePart (window->getPart ());
-		if (!window->isToolWindow ()) view ()->removeWindow (window);
+		RKWardMainWindow::getMain()->partManager()->removePart(window->getPart());
+		if (!window->isToolWindow()) view()->removeWindow(window);
 	}
 
-	DetachedWindowContainer *detached = new DetachedWindowContainer (window, was_attached);
-	detached->show ();
-	if (!was_attached) window->activate ();
+	DetachedWindowContainer *detached = new DetachedWindowContainer(window, was_attached);
+	detached->show();
+	if (!was_attached) window->activate();
 }
 
-void RKWorkplace::setWindowNotManaged(RKMDIWindow* window) {
-	RK_TRACE (APP);
+void RKWorkplace::setWindowNotManaged(RKMDIWindow *window) {
+	RK_TRACE(APP);
 	window->state = RKMDIWindow::Detached;
 }
 
-void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
-	RK_TRACE (APP);
+void RKWorkplace::addWindow(RKMDIWindow *window, bool attached) {
+	RK_TRACE(APP);
 
 	// first handle placement overrides
 	if (window_placement_override == RKMDIWindow::Attached) {
-		if (!attached) window->state = RKMDIWindow::Detached;   // Ok, yeah. BAD style. But windows that would go to detached by default would not prepareToBeAttached(), without this.
-		                                                        // TODO: Create third state: NotManaged
+		if (!attached) window->state = RKMDIWindow::Detached; // Ok, yeah. BAD style. But windows that would go to detached by default would not prepareToBeAttached(), without this.
+			                                                  // TODO: Create third state: NotManaged
 		attached = true;
 	} else if (window_placement_override == RKMDIWindow::Detached) {
 		attached = false;
 	}
 
 	// style override. Windows may or may not handle this
-	if (!window_style_override.isEmpty ()) window->setWindowStyleHint (window_style_override);
+	if (!window_style_override.isEmpty()) window->setWindowStyleHint(window_style_override);
 
 	// next handle name overrides, if any
-	if (!window_name_override.isEmpty ()) {
+	if (!window_name_override.isEmpty()) {
 		int pos = -1;
-		for (int i = 0; i < named_windows.size (); ++i) {
+		for (int i = 0; i < named_windows.size(); ++i) {
 			if (named_windows[i].id == window_name_override) {
 				pos = i;
 				break;
 			}
 		}
-		if (pos < 0) {   // not yet known: implicit registration -> create corresponding named_window_spec on the fly.
+		if (pos < 0) { // not yet known: implicit registration -> create corresponding named_window_spec on the fly.
 			registerNamedWindow(window_name_override, nullptr, attached ? RKWardMainWindow::getMain() : nullptr);
-			pos = named_windows.size () - 1;
+			pos = named_windows.size() - 1;
 		}
 
 		NamedWindow &nw = named_windows[pos];
 		if (nw.window != window) {
-			if (nw.window) {  // kill existing window (going to be replaced)
+			if (nw.window) { // kill existing window (going to be replaced)
 				// TODO: this is not really elegant, yet, as it will change tab-placement (for attached windows), and discard / recreate container (for detached windows)
-				disconnect (nw.window, &QObject::destroyed, this, &RKWorkplace::namedWindowDestroyed);
+				disconnect(nw.window, &QObject::destroyed, this, &RKWorkplace::namedWindowDestroyed);
 				nw.window->close(RKMDIWindow::NoAskSaveModified);
 			}
 			nw.window = window;
-			connect (nw.window, &QObject::destroyed, this, &RKWorkplace::namedWindowDestroyed);
+			connect(nw.window, &QObject::destroyed, this, &RKWorkplace::namedWindowDestroyed);
 		}
 		named_windows[pos] = nw;
 
 		// add window in the correct area
-		if (nw.parent == RKWardMainWindow::getMain ()) attached = true;
+		if (nw.parent == RKWardMainWindow::getMain()) attached = true;
 		else if (nw.parent == nullptr) attached = false;
 		else { // custom parent
-			RKXMLGUIPreviewArea* area = qobject_cast<RKXMLGUIPreviewArea*>(nw.parent);
+			RKXMLGUIPreviewArea *area = qobject_cast<RKXMLGUIPreviewArea *>(nw.parent);
 			if (!area) {
 				RK_ASSERT(area);
 				return;
@@ -301,58 +303,58 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 		}
 	}
 
-	windows.append (window);
-	connect (window, &QObject::destroyed, this, &RKWorkplace::removeWindow);
-	connect (window, &RKMDIWindow::windowActivated, history, &RKMDIWindowHistory::windowActivated);
-	if (window->isToolWindow () && !window->tool_window_bar) return;
+	windows.append(window);
+	connect(window, &QObject::destroyed, this, &RKWorkplace::removeWindow);
+	connect(window, &RKMDIWindow::windowActivated, history, &RKMDIWindowHistory::windowActivated);
+	if (window->isToolWindow() && !window->tool_window_bar) return;
 
-	if (attached) attachWindow (window);
-	else detachWindow (window, false);
+	if (attached) attachWindow(window);
+	else detachWindow(window, false);
 }
 
 void RKWorkplace::placeToolWindows() {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
-	const auto windows = RKToolWindowList::registeredToolWindows ();
-	for (const RKToolWindowList::ToolWindowRepresentation& rep : windows) {
-		placeInToolWindowBar (rep.window, rep.default_placement);
+	const auto windows = RKToolWindowList::registeredToolWindows();
+	for (const RKToolWindowList::ToolWindowRepresentation &rep : windows) {
+		placeInToolWindowBar(rep.window, rep.default_placement);
 	}
 }
 
-void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
-	RK_TRACE (APP);
+void RKWorkplace::placeInToolWindowBar(RKMDIWindow *window, int position) {
+	RK_TRACE(APP);
 
-	RK_ASSERT (window->isToolWindow ());
+	RK_ASSERT(window->isToolWindow());
 	bool needs_registration = (!window->tool_window_bar && (position != RKToolWindowList::Nowhere));
 	if ((position < 0) || (position >= TOOL_WINDOW_BAR_COUNT)) {
-		RK_ASSERT (position == RKToolWindowList::Nowhere);	// should never happen...
-		position = RKToolWindowList::Nowhere;		// ... but let's set this explicitly, in case of a broken workplace representation
+		RK_ASSERT(position == RKToolWindowList::Nowhere); // should never happen...
+		position = RKToolWindowList::Nowhere;             // ... but let's set this explicitly, in case of a broken workplace representation
 	}
 	if (position == RKToolWindowList::Nowhere) {
-		if (window->tool_window_bar) window->tool_window_bar->removeWidget (window);
+		if (window->tool_window_bar) window->tool_window_bar->removeWidget(window);
 	} else {
-		tool_window_bars[position]->addWidget (window);
+		tool_window_bars[position]->addWidget(window);
 	}
 
-	if (!windows.contains (window)) addWindow (window, true);	// first time we see this window
-	else if (needs_registration) attachWindow (window);
+	if (!windows.contains(window)) addWindow(window, true); // first time we see this window
+	else if (needs_registration) attachWindow(window);
 }
 
-void RKWorkplace::setWindowPlacementOverrides(const QString& placement, const QString& name, const QString& style) {
-	RK_TRACE (APP);
+void RKWorkplace::setWindowPlacementOverrides(const QString &placement, const QString &name, const QString &style) {
+	RK_TRACE(APP);
 
 	if (placement == QLatin1String("attached")) window_placement_override = RKMDIWindow::Attached;
 	else if (placement == QLatin1String("detached")) window_placement_override = RKMDIWindow::Detached;
 	else {
-		RK_ASSERT (placement.isEmpty ());
+		RK_ASSERT(placement.isEmpty());
 		window_placement_override = RKMDIWindow::AnyWindowState;
 	}
 	window_name_override = name;
 	window_style_override = style;
 }
 
-void RKWorkplace::registerNamedWindow (const QString& id, QObject* owner, QWidget* parent, RKMDIWindow* window) {
-	RK_TRACE (APP);
+void RKWorkplace::registerNamedWindow(const QString &id, QObject *owner, QWidget *parent, RKMDIWindow *window) {
+	RK_TRACE(APP);
 
 	NamedWindow nw;
 	nw.id = id;
@@ -360,22 +362,22 @@ void RKWorkplace::registerNamedWindow (const QString& id, QObject* owner, QWidge
 	nw.parent = parent;
 	nw.window = window;
 
-	for (int i = 0; i < named_windows.size (); ++i) {
-		RK_ASSERT (named_windows[i].id != id);
+	for (int i = 0; i < named_windows.size(); ++i) {
+		RK_ASSERT(named_windows[i].id != id);
 	}
 
-	named_windows.append (nw);
-	if (owner) connect (owner, &QObject::destroyed, this, &RKWorkplace::namedWindowOwnerDestroyed);
-	if (window) connect (window, &QObject::destroyed, this, &RKWorkplace::namedWindowOwnerDestroyed);
+	named_windows.append(nw);
+	if (owner) connect(owner, &QObject::destroyed, this, &RKWorkplace::namedWindowOwnerDestroyed);
+	if (window) connect(window, &QObject::destroyed, this, &RKWorkplace::namedWindowOwnerDestroyed);
 }
 
-void RKWorkplace::namedWindowDestroyed (QObject* window) {
-	RK_TRACE (APP);
+void RKWorkplace::namedWindowDestroyed(QObject *window) {
+	RK_TRACE(APP);
 
-	for (int i = 0; i < named_windows.size (); ++i) {
+	for (int i = 0; i < named_windows.size(); ++i) {
 		if (named_windows[i].window == window) {
 			if (!named_windows[i].owner) {
-				named_windows.removeAt (i);
+				named_windows.removeAt(i);
 				return;
 			} else {
 				named_windows[i].window = nullptr;
@@ -384,15 +386,15 @@ void RKWorkplace::namedWindowDestroyed (QObject* window) {
 	}
 }
 
-void RKWorkplace::namedWindowOwnerDestroyed (QObject* owner) {
-	RK_TRACE (APP);
+void RKWorkplace::namedWindowOwnerDestroyed(QObject *owner) {
+	RK_TRACE(APP);
 
-	for (int i = 0; i < named_windows.size (); ++i) {
+	for (int i = 0; i < named_windows.size(); ++i) {
 		if (named_windows[i].owner == owner) {
 			if (named_windows[i].window) {
-				named_windows[i].window->deleteLater ();
+				named_windows[i].window->deleteLater();
 			}
-			named_windows.removeAt (i);
+			named_windows.removeAt(i);
 			return;
 		}
 	}
@@ -404,23 +406,23 @@ void RKWorkplace::openRKWardUrl(const QUrl &url) {
 	RKHTMLWindow::handleRKWardURL(url);
 }
 
-bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bool force_external) {
-	RK_TRACE (APP);
+bool RKWorkplace::openAnyUrl(const QUrl &url, const QString &known_mimetype, bool force_external) {
+	RK_TRACE(APP);
 
-	if (url.scheme () == QLatin1String("rkward")) {
-		if (RKHTMLWindow::handleRKWardURL (url)) return true;
+	if (url.scheme() == QLatin1String("rkward")) {
+		if (RKHTMLWindow::handleRKWardURL(url)) return true;
 	}
 	QMimeDatabase mdb;
 	QMimeType mimetype;
-	if (!known_mimetype.isEmpty ()) mimetype = mdb.mimeTypeForName (known_mimetype);
-	else mimetype = mdb.mimeTypeForUrl (url);
+	if (!known_mimetype.isEmpty()) mimetype = mdb.mimeTypeForName(known_mimetype);
+	else mimetype = mdb.mimeTypeForUrl(url);
 
 	if (!force_external) {
-	// NOTE: Currently a known mimetype implies that the URL is local or served from the local machine.
-	// Thus, external web pages are *not* opened, here. Which is the behavior we want, although the implementation is ugly
+		// NOTE: Currently a known mimetype implies that the URL is local or served from the local machine.
+		// Thus, external web pages are *not* opened, here. Which is the behavior we want, although the implementation is ugly
 		if (mimetype.inherits(QStringLiteral("text/html")) || url.scheme().toLower().startsWith(QLatin1String("help"))) {
-			openHelpWindow (url, true);
-			return true;	// TODO
+			openHelpWindow(url, true);
+			return true; // TODO
 		} else if (mimetype.inherits(QStringLiteral("application/pdf"))) {
 			openPDFWindow(url);
 			return true;
@@ -428,19 +430,19 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 		QString lname = url.fileName().toLower();
 		if (lname.endsWith(QLatin1String(".rdata")) || lname.endsWith(QLatin1String(".rda"))) {
 			RKWardMainWindow::getMain()->askOpenWorkspace(url);
-			return true;	// TODO
+			return true; // TODO
 		}
 		if (lname.endsWith(QLatin1String(".rko"))) {
 			auto win = openOutputWindow(url, false);
 			return win != nullptr;
 		}
-		if (mimetype.inherits (QStringLiteral("text/plain"))) {
-			return (openScriptEditor (url, QString ()));
+		if (mimetype.inherits(QStringLiteral("text/plain"))) {
+			return (openScriptEditor(url, QString()));
 		}
-		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype.name ()));
+		RK_DEBUG(APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable(mimetype.name()));
 	}
 
-	if (KMessageBox::questionTwoActions (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.toDisplayString ()), i18n ("Open in default application?"), KStandardGuiItem::open(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction) {
+	if (KMessageBox::questionTwoActions(this, i18n("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.toDisplayString()), i18n("Open in default application?"), KStandardGuiItem::open(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction) {
 		return false;
 	}
 	auto openUrlJob = new KIO::OpenUrlJob(url);
@@ -448,31 +450,31 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 	return false;
 }
 
-RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& encoding, int flags, const QString &force_caption) {
-	RK_TRACE (APP);
+RKMDIWindow *RKWorkplace::openScriptEditor(const QUrl &url, const QString &encoding, int flags, const QString &force_caption) {
+	RK_TRACE(APP);
 
-// is this url already opened?
-	if (!url.isEmpty ()) {
-		RKWorkplaceObjectList script_windows = getObjectList (RKMDIWindow::CommandEditorWindow, RKMDIWindow::AnyWindowState);
-		for (int i = 0; i < script_windows.size (); ++i) {
-			QUrl ourl = static_cast<RKCommandEditorWindow *> (script_windows[i])->url ();
+	// is this url already opened?
+	if (!url.isEmpty()) {
+		RKWorkplaceObjectList script_windows = getObjectList(RKMDIWindow::CommandEditorWindow, RKMDIWindow::AnyWindowState);
+		for (int i = 0; i < script_windows.size(); ++i) {
+			QUrl ourl = static_cast<RKCommandEditorWindow *>(script_windows[i])->url();
 			if (url == ourl) {
-				if (view ()->windowInActivePane (script_windows[i])) {
-					script_windows[i]->activate ();
+				if (view()->windowInActivePane(script_windows[i])) {
+					script_windows[i]->activate();
 					return (script_windows[i]);
 				}
 			}
 		}
 	}
 
-	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), url, encoding, flags);
+	RKCommandEditorWindow *editor = new RKCommandEditorWindow(view(), url, encoding, flags);
 
-	if (!force_caption.isEmpty ()) editor->setCaption (force_caption);
-	addWindow (editor);
+	if (!force_caption.isEmpty()) editor->setCaption(force_caption);
+	addWindow(editor);
 	return (editor);
 }
 
-RKMDIWindow* RKWorkplace::openPDFWindow(const QUrl &url) {
+RKMDIWindow *RKWorkplace::openPDFWindow(const QUrl &url) {
 	RK_TRACE(APP);
 	auto pw = getNamedWindow<RKPDFWindow>(window_name_override);
 	// TODO: also match by url?
@@ -486,15 +488,15 @@ RKMDIWindow* RKWorkplace::openPDFWindow(const QUrl &url) {
 	return pw;
 }
 
-RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
-	RK_TRACE (APP);
+RKMDIWindow *RKWorkplace::openHelpWindow(const QUrl &url, bool only_once) {
+	RK_TRACE(APP);
 
 	if (only_once) {
-		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
-		for (int i = 0; i < help_windows.size (); ++i) {
-			if (static_cast<RKHTMLWindow *> (help_windows[i])->url ().matches (url, QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)) {
-				if (view ()->windowInActivePane (help_windows[i])) {
-					help_windows[i]->activate ();
+		RKWorkplaceObjectList help_windows = getObjectList(RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
+		for (int i = 0; i < help_windows.size(); ++i) {
+			if (static_cast<RKHTMLWindow *>(help_windows[i])->url().matches(url, QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)) {
+				if (view()->windowInActivePane(help_windows[i])) {
+					help_windows[i]->activate();
 					return (help_windows[i]);
 				}
 			}
@@ -504,25 +506,25 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	auto w = getNamedWindow<RKHTMLWindow>(window_name_override);
 	if (w) {
 		if (!url.isEmpty()) w->openURL(url);
-//		w->activate ();   // HACK: Keep preview windows from stealing focus
+		//		w->activate ();   // HACK: Keep preview windows from stealing focus
 		return w;
 	}
 
-	RKHTMLWindow *hw = new RKHTMLWindow (view (), RKHTMLWindow::HTMLHelpWindow);
+	RKHTMLWindow *hw = new RKHTMLWindow(view(), RKHTMLWindow::HTMLHelpWindow);
 	if (!url.isEmpty()) hw->openURL(url);
-	addWindow (hw);
+	addWindow(hw);
 	return (hw);
 }
 
-RKMDIWindow* RKWorkplace::openHTMLWindow(const QUrl &url) {
-	RK_TRACE (APP);
+RKMDIWindow *RKWorkplace::openHTMLWindow(const QUrl &url) {
+	RK_TRACE(APP);
 
 	// special treatment, for now
 	return openHelpWindow(url, true);
 }
 
-RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url, bool create) {
-	RK_TRACE (APP);
+RKMDIWindow *RKWorkplace::openOutputWindow(const QUrl &url, bool create) {
+	RK_TRACE(APP);
 
 	if (create) RK_ASSERT(url.isEmpty());
 
@@ -535,81 +537,81 @@ RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url, bool create) {
 	return res.dir()->getOrCreateView(true); // Will call openNewOutputWindow(), unless a view alredy exists
 }
 
-RKMDIWindow* RKWorkplace::openNewOutputWindow(RKOutputDirectory* dir) {
-	RK_TRACE (APP);
+RKMDIWindow *RKWorkplace::openNewOutputWindow(RKOutputDirectory *dir) {
+	RK_TRACE(APP);
 
-	RKHTMLWindow* win = new RKHTMLWindow(view(), RKHTMLWindow::HTMLOutputWindow);
+	RKHTMLWindow *win = new RKHTMLWindow(view(), RKHTMLWindow::HTMLOutputWindow);
 	win->openURL(QUrl::fromLocalFile(dir->workPath()));
 	RK_ASSERT(win->url().toLocalFile() == dir->workPath());
 	addWindow(win);
 	return win;
 }
 
-void RKWorkplace::newX11Window (QWindow* window_to_embed, int device_number) {
-	RK_TRACE (APP);
+void RKWorkplace::newX11Window(QWindow *window_to_embed, int device_number) {
+	RK_TRACE(APP);
 
-	RKCaughtX11Window *window = new RKCaughtX11Window (window_to_embed, device_number);
+	RKCaughtX11Window *window = new RKCaughtX11Window(window_to_embed, device_number);
 	window->state = RKMDIWindow::Detached;
-	addWindow (window, false);
+	addWindow(window, false);
 }
 
-void RKWorkplace::newRKWardGraphisWindow (RKGraphicsDevice* dev, int device_number) {
-	RK_TRACE (APP);
+void RKWorkplace::newRKWardGraphisWindow(RKGraphicsDevice *dev, int device_number) {
+	RK_TRACE(APP);
 
-	RKCaughtX11Window *window = new RKCaughtX11Window (dev, device_number);
+	RKCaughtX11Window *window = new RKCaughtX11Window(dev, device_number);
 	window->state = RKMDIWindow::Detached;
-	addWindow (window, false);
+	addWindow(window, false);
 }
 
-RKMDIWindow* RKWorkplace::newObjectViewer (RObject *object) {
-	RK_TRACE (APP);
-	RK_ASSERT (object);
+RKMDIWindow *RKWorkplace::newObjectViewer(RObject *object) {
+	RK_TRACE(APP);
+	RK_ASSERT(object);
 
-	RKWorkplaceObjectList object_windows = getObjectList (RKMDIWindow::ObjectWindow, RKMDIWindow::AnyWindowState);
-	for (int i = 0; i < object_windows.size (); ++i) {
-		RObjectViewer *viewer = static_cast<RObjectViewer *> (object_windows[i]);
-		if (viewer->object () == object) {
-			if (view ()->windowInActivePane (viewer)) {
-				viewer->activate ();
+	RKWorkplaceObjectList object_windows = getObjectList(RKMDIWindow::ObjectWindow, RKMDIWindow::AnyWindowState);
+	for (int i = 0; i < object_windows.size(); ++i) {
+		RObjectViewer *viewer = static_cast<RObjectViewer *>(object_windows[i]);
+		if (viewer->object() == object) {
+			if (view()->windowInActivePane(viewer)) {
+				viewer->activate();
 				return viewer;
 			}
 		}
 	}
 
-	RObjectViewer *ov = new RObjectViewer (view (), object);
-	addWindow (ov);
+	RObjectViewer *ov = new RObjectViewer(view(), object);
+	addWindow(ov);
 	return ov;
 }
 
-bool RKWorkplace::canEditObject (RObject *object) {
-	RK_TRACE (APP);
-	
-	if (object->isDataFrame ()) {
+bool RKWorkplace::canEditObject(RObject *object) {
+	RK_TRACE(APP);
+
+	if (object->isDataFrame()) {
 		return true;
-	} else if (object->isVariable () && object->parentObject ()->isDataFrame ()) {
+	} else if (object->isVariable() && object->parentObject()->isDataFrame()) {
 		return true;
 	}
 	return false;
 }
 
-RKEditor* RKWorkplace::editNewDataFrame (const QString &name) {
-	RK_TRACE (APP);
+RKEditor *RKWorkplace::editNewDataFrame(const QString &name) {
+	RK_TRACE(APP);
 
-	RKEditorDataFrame* ed = new RKEditorDataFrame(name, nullptr);
-	addWindow (ed);
-	ed->activate ();
+	RKEditorDataFrame *ed = new RKEditorDataFrame(name, nullptr);
+	addWindow(ed);
+	ed->activate();
 
 	return ed;
 }
 
-RKEditor *RKWorkplace::editObject (RObject *object) {
-	RK_TRACE (APP);
-	RK_ASSERT (object);
+RKEditor *RKWorkplace::editObject(RObject *object) {
+	RK_TRACE(APP);
+	RK_ASSERT(object);
 
 	RObject *iobj = object;
-	if (!iobj->isDataFrame ()) {
-		if (iobj->isVariable () && iobj->parentObject ()->isDataFrame ()) {
-			iobj = iobj->parentObject ();
+	if (!iobj->isDataFrame()) {
+		if (iobj->isVariable() && iobj->parentObject()->isDataFrame()) {
+			iobj = iobj->parentObject();
 		} else {
 			return nullptr;
 		}
@@ -617,10 +619,10 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 
 	bool activate = window_style_override != QLatin1String("preview");
 	RKEditor *ed = nullptr;
-	QList<RKEditor*> existing_editors = object->editors ();
+	QList<RKEditor *> existing_editors = object->editors();
 	RKMDIWindow *nw = getNamedWindow(window_name_override);
-	for (int i = 0; i < existing_editors.size (); ++i) {
-		RObject *eobj = existing_editors[i]->getObject ();
+	for (int i = 0; i < existing_editors.size(); ++i) {
+		RObject *eobj = existing_editors[i]->getObject();
 		if (eobj == iobj) {
 			auto candidate = existing_editors[i];
 			if (view()->windowInActivePane(candidate) || (nw == candidate)) {
@@ -632,59 +634,59 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 
 	if (!ed) {
 		unsigned long size = 1;
-		const auto objDims = iobj->getDimensions ();
+		const auto objDims = iobj->getDimensions();
 		for (int dim : objDims) {
 			size *= dim;
 		}
-		if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {
-			if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit using command line means or to split into smaller chunks before editing. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure this warning (or turn it off entirely) under Settings->Configure RKWard->General.\nReally edit object?", iobj->getFullName (), size), i18n ("About to edit very large object")) != KMessageBox::Continue) {
+		if ((RKSettingsModuleGeneral::warnLargeObjectThreshold() != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold())) {
+			if (KMessageBox::warningContinueCancel(view(), i18n("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit using command line means or to split into smaller chunks before editing. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure this warning (or turn it off entirely) under Settings->Configure RKWard->General.\nReally edit object?", iobj->getFullName(), size), i18n("About to edit very large object")) != KMessageBox::Continue) {
 				return nullptr;
 			}
 		}
 
-		ed = new RKEditorDataFrame(static_cast<RContainerObject*>(iobj), nullptr);
-		addWindow (ed);
+		ed = new RKEditorDataFrame(static_cast<RContainerObject *>(iobj), nullptr);
+		addWindow(ed);
 	}
 
-	if (activate) ed->activate ();
+	if (activate) ed->activate();
 	return ed;
 }
 
-void RKWorkplace::flushAllData () {
-	RK_TRACE (APP);
+void RKWorkplace::flushAllData() {
+	RK_TRACE(APP);
 
-	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin(); it != windows.constEnd(); ++it) {
 		if ((*it)->type == RKMDIWindow::DataEditorWindow) {
-			static_cast<RKEditor *> (*it)->flushChanges ();
+			static_cast<RKEditor *>(*it)->flushChanges();
 		}
 	}
 }
 
-bool RKWorkplace::closeWindow (RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save) {
-	RK_TRACE (APP);
-	RK_ASSERT (windows.contains (window));
+bool RKWorkplace::closeWindow(RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save) {
+	RK_TRACE(APP);
+	RK_ASSERT(windows.contains(window));
 
-	bool tool_window = window->isToolWindow ();
-	bool closed = window->close (ask_save);		// all the rest should happen in removeWindow ()
+	bool tool_window = window->isToolWindow();
+	bool closed = window->close(ask_save); // all the rest should happen in removeWindow ()
 
-	if (closed && tool_window) windowRemoved ();	// for regular windows, this happens in removeWindow(), already
+	if (closed && tool_window) windowRemoved(); // for regular windows, this happens in removeWindow(), already
 	return closed;
 }
 
-void RKWorkplace::closeActiveWindow () {
-	RK_TRACE (APP);
+void RKWorkplace::closeActiveWindow() {
+	RK_TRACE(APP);
 
-	RKMDIWindow *w = activeWindow (RKMDIWindow::Attached);
-	if (w) closeWindow (w);
+	RKMDIWindow *w = activeWindow(RKMDIWindow::Attached);
+	if (w) closeWindow(w);
 }
 
-RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int state) {
-	RK_TRACE (APP);
+RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList(int type, int state) {
+	RK_TRACE(APP);
 
 	RKWorkplaceObjectList ret;
-	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin(); it != windows.constEnd(); ++it) {
 		if (((*it)->type & type) && ((*it)->state & state)) {
-			ret.append ((*it));
+			ret.append((*it));
 		}
 	}
 	return ret;
@@ -696,7 +698,7 @@ bool RKWorkplace::closeAll(int type, int state) {
 	return closeWindows(getObjectList(type, state));
 }
 
-bool RKWorkplace::closeWindows(QList<RKMDIWindow*> windows, RKMDIWindow::CloseWindowMode ask_save) {
+bool RKWorkplace::closeWindows(QList<RKMDIWindow *> windows, RKMDIWindow::CloseWindowMode ask_save) {
 	RK_TRACE(APP);
 
 	RKWardMainWindow::getMain()->lockGUIRebuild(true);
@@ -720,57 +722,57 @@ bool RKWorkplace::closeWorkspace() {
 	return closeWindows(windows, RKMDIWindow::NoAskSaveModified);
 }
 
-void RKWorkplace::removeWindow (QObject *object) {
-	RK_TRACE (APP);
-	RKMDIWindow *window = static_cast<RKMDIWindow *> (object);
+void RKWorkplace::removeWindow(QObject *object) {
+	RK_TRACE(APP);
+	RKMDIWindow *window = static_cast<RKMDIWindow *>(object);
 
 	// remove from history first (otherwise, we might find it there, when trying to activate a new window)
-	history->removeWindow (window);
+	history->removeWindow(window);
 
 	// WARNING: the window is dead. Don't call any functions on it.
 
-	RK_ASSERT (windows.contains (window));
-	windows.removeAll (window);		// do this first! view()->removeWindow will call activePage() indirectly from setCaption, causing us to iterate over all known windows!
-	if (view ()->hasWindow (window)) view ()->removeWindow (window, true);
+	RK_ASSERT(windows.contains(window));
+	windows.removeAll(window); // do this first! view()->removeWindow will call activePage() indirectly from setCaption, causing us to iterate over all known windows!
+	if (view()->hasWindow(window)) view()->removeWindow(window, true);
 
-	windowRemoved ();
+	windowRemoved();
 }
 
-void RKWorkplace::windowRemoved () {
-	RK_TRACE (APP);
+void RKWorkplace::windowRemoved() {
+	RK_TRACE(APP);
 
-	if (activeWindow (RKMDIWindow::AnyWindowState) != nullptr) return;	// some RKMDIWindow is already active
-	QWidget *appWin = QApplication::activeWindow ();
-	if (appWin && appWin != RKWardMainWindow::getMain () && !qobject_cast<DetachedWindowContainer*> (appWin)) return; // a dialog window or the like is active
+	if (activeWindow(RKMDIWindow::AnyWindowState) != nullptr) return; // some RKMDIWindow is already active
+	QWidget *appWin = QApplication::activeWindow();
+	if (appWin && appWin != RKWardMainWindow::getMain() && !qobject_cast<DetachedWindowContainer *>(appWin)) return; // a dialog window or the like is active
 
 	// try to activate an attached document window, first
-	RKMDIWindow *window = view ()->activePage ();
+	RKMDIWindow *window = view()->activePage();
 	if (window) {
-		window->activate (true);
+		window->activate(true);
 		return;
 	}
 
 	// some document window in the history? Try that.
-	window = history->previousDocumentWindow ();
+	window = history->previousDocumentWindow();
 	if (window) {
-		window->activate (true);
+		window->activate(true);
 		return;
 	}
 
 	// now try to activate an attached (tool) window, if one is visible
-	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
-		if ((*it)->isAttached ()) {
-			if ((*it)->isVisible ()) {
-				(*it)->activate (true);
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin(); it != windows.constEnd(); ++it) {
+		if ((*it)->isAttached()) {
+			if ((*it)->isVisible()) {
+				(*it)->activate(true);
 				return;
 			}
 		}
 	}
 
 	// nothing, yet? Try *any* visible window
-	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
-		if ((*it)->isVisible ()) {
-			(*it)->activate (true);
+	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin(); it != windows.constEnd(); ++it) {
+		if ((*it)->isVisible()) {
+			(*it)->activate(true);
 			return;
 		}
 	}
@@ -779,19 +781,19 @@ void RKWorkplace::windowRemoved () {
 }
 
 RKMDIWindow *RKWorkplace::activeWindow(RKMDIWindow::State state) const {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
-	for (auto it = windows.constBegin (); it != windows.constEnd (); ++it) {
+	for (auto it = windows.constBegin(); it != windows.constEnd(); ++it) {
 		if (!(state & ((*it)->state))) continue;
 
-		if ((*it)->isActive ()) {
+		if ((*it)->isActive()) {
 			return *it;
 		}
 	}
 	return nullptr;
 }
 
-RKMDIWindow * RKWorkplace::windowForPart(KParts::Part* part) const {
+RKMDIWindow *RKWorkplace::windowForPart(KParts::Part *part) const {
 	for (auto it = windows.constBegin(); it != windows.constEnd(); ++it) {
 		if ((*it)->getPart() == part) {
 			return *it;
@@ -800,23 +802,23 @@ RKMDIWindow * RKWorkplace::windowForPart(KParts::Part* part) const {
 	return nullptr;
 }
 
-QUrl checkAdjustRestoredUrl (const QString &_url, const QString &old_base) {
-	QUrl url = QUrl::fromUserInput (_url, QString (), QUrl::AssumeLocalFile);
+QUrl checkAdjustRestoredUrl(const QString &_url, const QString &old_base) {
+	QUrl url = QUrl::fromUserInput(_url, QString(), QUrl::AssumeLocalFile);
 
-	if (old_base.isEmpty ()) return (url);
-	QUrl new_base_url = RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename | QUrl::NormalizePathSegments);
-	if (new_base_url.isEmpty ()) return (url);
-	QUrl old_base_url (old_base);
+	if (old_base.isEmpty()) return (url);
+	QUrl new_base_url = RKWorkplace::mainWorkplace()->workspaceURL().adjusted(QUrl::RemoveFilename | QUrl::NormalizePathSegments);
+	if (new_base_url.isEmpty()) return (url);
+	QUrl old_base_url(old_base);
 	if (old_base_url == new_base_url) return (url);
 
 	// TODO: Should we also care about non-local files? In theory: yes, but stat'ing remote files for existence can take a long time.
-	if (!(old_base_url.isLocalFile () && new_base_url.isLocalFile () && url.isLocalFile ())) return (url);
+	if (!(old_base_url.isLocalFile() && new_base_url.isLocalFile() && url.isLocalFile())) return (url);
 
 	// if the file exists, unadjusted, return it.
 	if (QFileInfo::exists(url.toLocalFile())) return (url);
 
 	// check whether a file exists for the adjusted url
-	QString relative = QDir (new_base_url.path ()).absoluteFilePath (QDir (old_base_url.path ()).relativeFilePath (url.path ()));
+	QString relative = QDir(new_base_url.path()).absoluteFilePath(QDir(old_base_url.path()).relativeFilePath(url.path()));
 	if (QFileInfo::exists(relative)) return (QUrl::fromLocalFile(relative));
 	return (url);
 }
@@ -892,7 +894,7 @@ ItemSpecification parseItemDescription(const QString &description) {
 		return ret;
 	}
 	ret.type = description.left(typeend);
-	if (description.at(typeend + 1) == u':') {  // rkward 0.5.5 or later
+	if (description.at(typeend + 1) == u':') { // rkward 0.5.5 or later
 		int specstart = description.indexOf(QLatin1String("::"), typeend + 2);
 		if (specstart < typeend) {
 			RK_ASSERT(false);
@@ -907,37 +909,37 @@ ItemSpecification parseItemDescription(const QString &description) {
 	return ret;
 }
 
-RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, const ItemSpecification &spec, const QString &base) {
-	RK_TRACE (APP);
+RKMDIWindow *restoreDocumentWindowInternal(RKWorkplace *wp, const ItemSpecification &spec, const QString &base) {
+	RK_TRACE(APP);
 
 	RKMDIWindow *win = nullptr;
 	if (spec.type == QLatin1String("data")) {
-		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
-		if (object) win = wp->editObject (object);
+		RObject *object = RObjectList::getObjectList()->findObject(spec.specification);
+		if (object) win = wp->editObject(object);
 	} else if (spec.type == QLatin1String("script")) {
-		QUrl url = checkAdjustRestoredUrl (spec.specification, base);
-		win = wp->openScriptEditor (url, QString ());
+		QUrl url = checkAdjustRestoredUrl(spec.specification, base);
+		win = wp->openScriptEditor(url, QString());
 	} else if (spec.type == QLatin1String("output")) {
-		win = wp->openOutputWindow (checkAdjustRestoredUrl(spec.specification, base));
+		win = wp->openOutputWindow(checkAdjustRestoredUrl(spec.specification, base));
 	} else if (spec.type.startsWith(QLatin1String("rkoutput"))) {
 		RKOutputDirectory *dir = RKOutputDirectory::get(checkAdjustRestoredUrl(spec.specification, base).toLocalFile(), false).dir();
 		if (!dir) return nullptr;
 		if (spec.type.endsWith(QLatin1String(".active"))) dir->activate();
 		win = RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(dir->workPath()));
 	} else if (spec.type == QLatin1String("help")) {
-		auto url = checkAdjustRestoredUrl (spec.specification, base);
+		auto url = checkAdjustRestoredUrl(spec.specification, base);
 		if (!url.isEmpty()) win = wp->openHelpWindow(url, true);
 	} else if (spec.type == QLatin1String("pdf")) {
 		win = wp->openPDFWindow(checkAdjustRestoredUrl(spec.specification, base));
 	} else if (spec.type == QLatin1String("object")) {
-		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
-		if (object) win = wp->newObjectViewer (object);
+		RObject *object = RObjectList::getObjectList()->findObject(spec.specification);
+		if (object) win = wp->newObjectViewer(object);
 	}
 	return win;
 }
 
-bool RKWorkplace::restoreDocumentWindow (const QString &description, const QString &base) {
-	RK_TRACE (APP);
+bool RKWorkplace::restoreDocumentWindow(const QString &description, const QString &base) {
+	RK_TRACE(APP);
 
 	return (restoreDocumentWindowInternal(this, parseItemDescription(description), base) != nullptr);
 }
@@ -969,10 +971,10 @@ QStringList RKWorkplace::makeWorkplaceDescription() {
 	return workplace_description;
 }
 
-void RKWorkplace::saveWorkplace(const QUrl& for_url, RCommandChain *chain) {
-	RK_TRACE (APP);
-// TODO: This is still a mess. All workplace-related settings, including the workspaceConfig(), should be saved to a single place, and in 
-// standard KConfig format.
+void RKWorkplace::saveWorkplace(const QUrl &for_url, RCommandChain *chain) {
+	RK_TRACE(APP);
+	// TODO: This is still a mess. All workplace-related settings, including the workspaceConfig(), should be saved to a single place, and in
+	// standard KConfig format.
 	if (RKSettingsModuleGeneral::workplaceSaveMode() != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
 	QString file_param;
@@ -1031,26 +1033,25 @@ void RKWorkplace::restoreWorkplace(const QStringList &description) {
 	RKWardMainWindow::getMain()->lockGUIRebuild(false);
 }
 
-void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
-	RK_TRACE (APP);
-	RK_ASSERT (source);
+void RKWorkplace::splitAndAttachWindow(RKMDIWindow *source) {
+	RK_TRACE(APP);
+	RK_ASSERT(source);
 
-	if (source->isType (RKMDIWindow::CommandEditorWindow)) {
-		QUrl url = static_cast<RKCommandEditorWindow*> (source)->url ();
-		openScriptEditor (url, QString ());
-	} else if (source->isType (RKMDIWindow::HelpWindow)) {
-		openHelpWindow (static_cast<RKHTMLWindow*> (source)->url ());
-	} else if (source->isType (RKMDIWindow::OutputWindow)) {
-		openOutputWindow (static_cast<RKHTMLWindow*> (source)->url ());
-	} else if (source->isType (RKMDIWindow::DataEditorWindow)) {
-		editObject (static_cast<RKEditor*> (source)->getObject ());
-	} else if (source->isType (RKMDIWindow::ObjectWindow)) {
-		newObjectViewer (static_cast<RObjectViewer*> (source)->object ());
+	if (source->isType(RKMDIWindow::CommandEditorWindow)) {
+		QUrl url = static_cast<RKCommandEditorWindow *>(source)->url();
+		openScriptEditor(url, QString());
+	} else if (source->isType(RKMDIWindow::HelpWindow)) {
+		openHelpWindow(static_cast<RKHTMLWindow *>(source)->url());
+	} else if (source->isType(RKMDIWindow::OutputWindow)) {
+		openOutputWindow(static_cast<RKHTMLWindow *>(source)->url());
+	} else if (source->isType(RKMDIWindow::DataEditorWindow)) {
+		editObject(static_cast<RKEditor *>(source)->getObject());
+	} else if (source->isType(RKMDIWindow::ObjectWindow)) {
+		newObjectViewer(static_cast<RObjectViewer *>(source)->object());
 	} else {
-		openHelpWindow (QUrl (QStringLiteral("rkward://page/rkward_split_views")));
+		openHelpWindow(QUrl(QStringLiteral("rkward://page/rkward_split_views")));
 	}
 }
-
 
 ///////////////////////// END RKWorkplace ////////////////////////////
 ///////////////////// BEGIN RKMDIWindowHistory ///////////////////////
@@ -1059,191 +1060,189 @@ void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
 #include <QListWidget>
 
 class RKMDIWindowHistoryWidget : public QListWidget {
-public:
+  public:
 	RKMDIWindowHistoryWidget() : QListWidget(nullptr) {
-		RK_TRACE (APP);
+		RK_TRACE(APP);
 
 		current = 0;
-		setFocusPolicy (Qt::StrongFocus);
-		setWindowFlags (Qt::Popup);
+		setFocusPolicy(Qt::StrongFocus);
+		setWindowFlags(Qt::Popup);
 	}
 
-	~RKMDIWindowHistoryWidget () {
-		RK_TRACE (APP);
+	~RKMDIWindowHistoryWidget() {
+		RK_TRACE(APP);
 	}
 
-	void update (const QList<RKMDIWindow*> &windows) {
-		RK_TRACE (APP);
+	void update(const QList<RKMDIWindow *> &windows) {
+		RK_TRACE(APP);
 
-		clear ();
+		clear();
 		_windows = windows;
-		for (int i = windows.count() - 1; i >= 0; --i) {  // most recent first / on top
+		for (int i = windows.count() - 1; i >= 0; --i) { // most recent first / on top
 			RKMDIWindow *win = _windows.at(i);
-			QListWidgetItem *item = new QListWidgetItem (this);
-			item->setIcon (RKStandardIcons::iconForWindow (win));
-			item->setText (win->windowTitle ());
+			QListWidgetItem *item = new QListWidgetItem(this);
+			item->setIcon(RKStandardIcons::iconForWindow(win));
+			item->setText(win->windowTitle());
 		}
-		if (current >= count ()) current = count () - 1;
+		if (current >= count()) current = count() - 1;
 		if (current < 0) {
-			hide ();
+			hide();
 			return;
 		}
-		setCurrentRow (current);
+		setCurrentRow(current);
 	}
 
-	void next () {
-		RK_TRACE (APP);
+	void next() {
+		RK_TRACE(APP);
 
-		if (--current < 0) current = count () - 1;
-		setCurrentRow (current);
+		if (--current < 0) current = count() - 1;
+		setCurrentRow(current);
 	}
 
-	void prev () {
-		RK_TRACE (APP);
+	void prev() {
+		RK_TRACE(APP);
 
-		if (++current >= count ()) current = 0;
-		setCurrentRow (current);
+		if (++current >= count()) current = 0;
+		setCurrentRow(current);
 	}
 
-private:
-	void focusOutEvent (QFocusEvent *) override {
-		RK_TRACE (APP);
+  private:
+	void focusOutEvent(QFocusEvent *) override {
+		RK_TRACE(APP);
 
-		deleteLater ();
+		deleteLater();
 	}
 
-	void keyReleaseEvent (QKeyEvent *ev) override {
-		RK_TRACE (APP);
+	void keyReleaseEvent(QKeyEvent *ev) override {
+		RK_TRACE(APP);
 
-		if (ev->modifiers () == Qt::NoModifier) {
-			commit ();
+		if (ev->modifiers() == Qt::NoModifier) {
+			commit();
 		}
 	}
 
-	void mouseReleaseEvent (QMouseEvent *ev) override {
-		RK_TRACE (APP);
+	void mouseReleaseEvent(QMouseEvent *ev) override {
+		RK_TRACE(APP);
 
 		// HACK to get by without slots, and the associated moc'ing
-		QListWidget::mouseReleaseEvent (ev);
-		commit ();
+		QListWidget::mouseReleaseEvent(ev);
+		commit();
 	}
 
-	void commit () {
-		RK_TRACE (APP);
+	void commit() {
+		RK_TRACE(APP);
 
-		current = currentRow ();
-		if ((current > 0) && (current < count ())) {
-			RKMDIWindow *win = _windows.value (count () - 1 - current);
-			RK_ASSERT (win);
-			win->activate (true);
+		current = currentRow();
+		if ((current > 0) && (current < count())) {
+			RKMDIWindow *win = _windows.value(count() - 1 - current);
+			RK_ASSERT(win);
+			win->activate(true);
 		}
-		deleteLater ();
+		deleteLater();
 	}
 
 	int current;
-	QList<RKMDIWindow*> _windows;
+	QList<RKMDIWindow *> _windows;
 };
 
-RKMDIWindowHistory::RKMDIWindowHistory (QObject *parent) : QObject (parent) {
-	RK_TRACE (APP);
+RKMDIWindowHistory::RKMDIWindowHistory(QObject *parent) : QObject(parent) {
+	RK_TRACE(APP);
 
 	switcher = nullptr;
 }
 
-RKMDIWindowHistory::~RKMDIWindowHistory () {
-	RK_TRACE (APP);
+RKMDIWindowHistory::~RKMDIWindowHistory() {
+	RK_TRACE(APP);
 
-	RK_DEBUG (APP, DL_DEBUG, "Remaining windows in history: %d", recent_windows.count ());
+	RK_DEBUG(APP, DL_DEBUG, "Remaining windows in history: %d", recent_windows.count());
 }
 
-void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
-	RK_TRACE (APP);
+void RKMDIWindowHistory::windowActivated(RKMDIWindow *window) {
+	RK_TRACE(APP);
 
 	if (!window) return;
-	if (!recent_windows.isEmpty () && (window == recent_windows.last ())) return;
+	if (!recent_windows.isEmpty() && (window == recent_windows.last())) return;
 
 	// update lists
-	recent_windows.removeAll (window);		// remove dupes
-	recent_windows.append (window);
+	recent_windows.removeAll(window); // remove dupes
+	recent_windows.append(window);
 
-	updateSwitcher ();
+	updateSwitcher();
 
-	Q_EMIT activeWindowChanged (window);
+	Q_EMIT activeWindowChanged(window);
 }
 
-void RKMDIWindowHistory::next (QAction* prev_action, QAction *next_action) {
-	RK_TRACE (APP);
+void RKMDIWindowHistory::next(QAction *prev_action, QAction *next_action) {
+	RK_TRACE(APP);
 
-	if (recent_windows.isEmpty ()) return;
-	getSwitcher (prev_action, next_action)->next ();
+	if (recent_windows.isEmpty()) return;
+	getSwitcher(prev_action, next_action)->next();
 }
 
-void RKMDIWindowHistory::prev (QAction* prev_action, QAction *next_action) {
-	RK_TRACE (APP);
+void RKMDIWindowHistory::prev(QAction *prev_action, QAction *next_action) {
+	RK_TRACE(APP);
 
-	if (recent_windows.isEmpty ()) return;
-	getSwitcher (prev_action, next_action)->prev ();
+	if (recent_windows.isEmpty()) return;
+	getSwitcher(prev_action, next_action)->prev();
 }
 
-RKMDIWindow* RKMDIWindowHistory::previousDocumentWindow () {
-	RK_TRACE (APP);
+RKMDIWindow *RKMDIWindowHistory::previousDocumentWindow() {
+	RK_TRACE(APP);
 
-	for (int i = recent_windows.count () - 1; i >= 0; --i) {
-		if (!recent_windows[i]->isToolWindow ()) return (recent_windows[i]);
+	for (int i = recent_windows.count() - 1; i >= 0; --i) {
+		if (!recent_windows[i]->isToolWindow()) return (recent_windows[i]);
 	}
 	return nullptr;
 }
 
-void RKMDIWindowHistory::updateSwitcher () {
-	RK_TRACE (APP);
+void RKMDIWindowHistory::updateSwitcher() {
+	RK_TRACE(APP);
 
-	if (switcher) switcher->update (recent_windows);
+	if (switcher) switcher->update(recent_windows);
 }
 
-void RKMDIWindowHistory::removeWindow (RKMDIWindow *window) {
-	RK_TRACE (APP);
+void RKMDIWindowHistory::removeWindow(RKMDIWindow *window) {
+	RK_TRACE(APP);
 
-	recent_windows.removeAll (window);
-	updateSwitcher ();
+	recent_windows.removeAll(window);
+	updateSwitcher();
 }
 
-RKMDIWindowHistoryWidget* RKMDIWindowHistory::getSwitcher (QAction* prev_action, QAction *next_action) {
-	RK_TRACE (APP);
+RKMDIWindowHistoryWidget *RKMDIWindowHistory::getSwitcher(QAction *prev_action, QAction *next_action) {
+	RK_TRACE(APP);
 
 	if (switcher) return switcher;
 
-	switcher = new RKMDIWindowHistoryWidget ();
-	connect (switcher, &QObject::destroyed, this, &RKMDIWindowHistory::switcherDestroyed);
-	switcher->addAction (prev_action);
-	switcher->addAction (next_action);
-	switcher->update (recent_windows);
-	switcher->show ();
-	QWidget *act = QApplication::activeWindow ();
+	switcher = new RKMDIWindowHistoryWidget();
+	connect(switcher, &QObject::destroyed, this, &RKMDIWindowHistory::switcherDestroyed);
+	switcher->addAction(prev_action);
+	switcher->addAction(next_action);
+	switcher->update(recent_windows);
+	switcher->show();
+	QWidget *act = QApplication::activeWindow();
 	if (act) {
-		int center_x = act->x () + act->width () / 2;
-		int center_y = act->y () + act->height () / 2;
-		switcher->move (center_x - switcher->width () / 2, center_y - switcher->height () / 2);
+		int center_x = act->x() + act->width() / 2;
+		int center_y = act->y() + act->height() / 2;
+		switcher->move(center_x - switcher->width() / 2, center_y - switcher->height() / 2);
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 	}
-	switcher->setFocus ();
+	switcher->setFocus();
 
 	return switcher;
 }
 
-void RKMDIWindowHistory::switcherDestroyed () {
-	RK_TRACE (APP);
+void RKMDIWindowHistory::switcherDestroyed() {
+	RK_TRACE(APP);
 
-	RK_ASSERT (switcher);
+	RK_ASSERT(switcher);
 	switcher = nullptr;
 }
 
-void RKMDIWindowHistory::popLastWindow (RKMDIWindow* match) {
-	RK_TRACE (APP);
+void RKMDIWindowHistory::popLastWindow(RKMDIWindow *match) {
+	RK_TRACE(APP);
 
-	if (recent_windows.isEmpty ()) return;
-	else if (recent_windows.last () == match) recent_windows.removeLast ();
-	updateSwitcher ();
+	if (recent_windows.isEmpty()) return;
+	else if (recent_windows.last() == match) recent_windows.removeLast();
+	updateSwitcher();
 }
-
-

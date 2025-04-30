@@ -10,8 +10,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <limits.h>
 
-#include <QVariant>
 #include <QStringList>
+#include <QVariant>
 
 #include "rdata.h"
 
@@ -19,33 +19,37 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 /** Convenience functions for working with R. */
 namespace RKRSupport {
-	SEXP callSimpleFun0 (SEXP fun, SEXP env);
-	SEXP callSimpleFun (SEXP fun, SEXP arg, SEXP env);
-	SEXP callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env);
-	bool callSimpleBool (SEXP fun, SEXP arg, SEXP env);
+SEXP callSimpleFun0(SEXP fun, SEXP env);
+SEXP callSimpleFun(SEXP fun, SEXP arg, SEXP env);
+SEXP callSimpleFun2(SEXP fun, SEXP arg1, SEXP arg2, SEXP env);
+bool callSimpleBool(SEXP fun, SEXP arg, SEXP env);
 
-	QStringList SEXPToStringList (SEXP from_exp);
-	SEXP StringListToSEXP (const QStringList &list);
-	SEXP QVariantToSEXP(const QVariant &val);
-	QVariant SEXPToNestedStrings(SEXP from_exp);
-	QString SEXPToString (SEXP from_exp);
-	RData::IntStorage SEXPToIntArray (SEXP from_exp);
-	int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);
-	RData::RealStorage SEXPToRealArray (SEXP from_exp);
-	RData* SEXPToRData (SEXP from_exp);
+QStringList SEXPToStringList(SEXP from_exp);
+SEXP StringListToSEXP(const QStringList &list);
+SEXP QVariantToSEXP(const QVariant &val);
+QVariant SEXPToNestedStrings(SEXP from_exp);
+QString SEXPToString(SEXP from_exp);
+RData::IntStorage SEXPToIntArray(SEXP from_exp);
+int SEXPToInt(SEXP from_exp, int def_value = INT_MIN);
+RData::RealStorage SEXPToRealArray(SEXP from_exp);
+RData *SEXPToRData(SEXP from_exp);
 
-	/** Replacement for BEGIN_SUSPEND_INTERRUPTS-macro that we cannot easily use */
-	class InterruptSuspension {
-	public:
-		InterruptSuspension() { old_susp = ROb(R_interrupts_suspended); }
-		~InterruptSuspension() { ROb(R_interrupts_suspended) = old_susp; if(ROb(R_interrupts_pending)) RFn::Rf_onintr(); }
-	private:
-		Rboolean old_susp;
-	};
+/** Replacement for BEGIN_SUSPEND_INTERRUPTS-macro that we cannot easily use */
+class InterruptSuspension {
+  public:
+	InterruptSuspension() { old_susp = ROb(R_interrupts_suspended); }
+	~InterruptSuspension() {
+		ROb(R_interrupts_suspended) = old_susp;
+		if (ROb(R_interrupts_pending)) RFn::Rf_onintr();
+	}
+
+  private:
+	Rboolean old_susp;
 };
+}; // namespace RKRSupport
 
 class RKRShadowEnvironment {
-public:
+  public:
 	struct Result {
 		QStringList added;
 		QStringList removed;
@@ -55,27 +59,29 @@ public:
 	Result diffAndUpdate();
 	static Result diffAndUpdate(SEXP envir) { return environmentFor(envir)->diffAndUpdate(); };
 	static void updateCacheForGlobalenvSymbol(const QString &name);
-private:
-	RKRShadowEnvironment(SEXP baseenvir, SEXP shadowenvir) : baseenvir(baseenvir), shadowenvir(shadowenvir) {};
+
+  private:
+	RKRShadowEnvironment(SEXP baseenvir, SEXP shadowenvir) : baseenvir(baseenvir), shadowenvir(shadowenvir){};
 	~RKRShadowEnvironment();
-	static RKRShadowEnvironment* environmentFor(SEXP baseenvir);
+	static RKRShadowEnvironment *environmentFor(SEXP baseenvir);
 	void updateSymbolCache(const QString &name);
 	SEXP baseenvir;
 	SEXP shadowenvir;
-	static QHash<SEXP, RKRShadowEnvironment*> environments;
+	static QHash<SEXP, RKRShadowEnvironment *> environments;
 	static SEXP shadowenvbase;
 };
 
 class RKTextCodec {
-public:
-	static QString fromNative(const QByteArray& buf) {
+  public:
+	static QString fromNative(const QByteArray &buf) {
 		return QString::fromUtf8(doConv(from_native, buf));
 	}
-	static QByteArray toNative(const QString& buf) {
+	static QByteArray toNative(const QString &buf) {
 		return doConv(to_native, buf.toUtf8());
 	}
 	static void reinit();
-private:
+
+  private:
 	static QByteArray doConv(void *cd, const QByteArray &inp);
 	static void *from_native;
 	static void *to_native;

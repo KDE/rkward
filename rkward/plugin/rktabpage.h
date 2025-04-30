@@ -21,20 +21,21 @@ class QTabWidget;
 */
 class RKTabPage : public RKComponent {
 	Q_OBJECT
-public:
-	RKTabPage (const QDomElement &element, RKComponent *parent_component, QTabWidget *parent_widget);
+  public:
+	RKTabPage(const QDomElement &element, RKComponent *parent_component, QTabWidget *parent_widget);
 
-	~RKTabPage ();
+	~RKTabPage();
 
 	/** @returns the page child elements should be drawn in */
-	QWidget *getPage () { return this; };
+	QWidget *getPage() { return this; };
 
-	int type () override { return ComponentTab; };
+	int type() override { return ComponentTab; };
 
-public Q_SLOTS:
-/** called when visibile or enabled properties change */
-	void visibleEnabledChanged (RKComponentPropertyBase *property);
-private:
+  public Q_SLOTS:
+	/** called when visibile or enabled properties change */
+	void visibleEnabledChanged(RKComponentPropertyBase *property);
+
+  private:
 	QTabWidget *tabbook;
 	int index;
 	QString label;

@@ -7,19 +7,19 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkrapimenu.h"
 
-#include <QDomElement>
-#include <QDomDocument>
 #include <QAction>
+#include <QDomDocument>
+#include <QDomElement>
 #include <QTimer>
 
 #include <KActionCollection>
 #include <KXMLGUIFactory>
 
-#include "../rbackend/rkrinterface.h"
 #include "../core/robject.h"
-#include "../windows/rkworkplace.h"
-#include "../windows/rkmdiwindow.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
+#include "../windows/rkmdiwindow.h"
+#include "../windows/rkworkplace.h"
 
 #include "../debug.h"
 
@@ -75,7 +75,7 @@ void RKRApiMenu::makeAction(QDomElement e, const QString &full_id, const QString
 			RKMDIWindow *w = RKWorkplace::mainWorkplace()->activeWindow(RKMDIWindow::AnyWindowState);
 			if (w) {
 				const auto props = w->globalContextProperties();
-				for (const auto [key,value] : props.asKeyValueRange()) {
+				for (const auto [key, value] : props.asKeyValueRange()) {
 					if (key == QLatin1String("current_object") || key == QLatin1String("current_dataframe")) { // TODO: find cleaner solution than this special casing
 						args.append(key + u'=' + value);
 					} else {
@@ -119,7 +119,7 @@ void RKRApiMenu::commit() {
 	QStringList actionlist;
 	QDomDocument doc(QStringLiteral("kpartgui"));
 	auto r = addChildElement(doc, QStringLiteral("kpartgui"), QStringLiteral("rapi_menu"));
-	auto mb = addChildElement(r,  QStringLiteral("MenuBar"), QString());
+	auto mb = addChildElement(r, QStringLiteral("MenuBar"), QString());
 	const auto menus = getChildlist(rep);
 	for (const auto &menu : menus) {
 		const auto menuList = menu.toList();
@@ -155,7 +155,7 @@ void RKRApiMenu::updateFromR(const QVariantList &_rep) {
 	RK_TRACE(MISC);
 
 	// Actual update is done debounced
-	if (rep.isEmpty()) QTimer::singleShot(100, factory(), [this](){ commit(); });
+	if (rep.isEmpty()) QTimer::singleShot(100, factory(), [this]() { commit(); });
 	rep = _rep;
 }
 

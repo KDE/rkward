@@ -8,9 +8,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef TWINTABLEMEMBER_H
 #define TWINTABLEMEMBER_H
 
-#include <qpoint.h>
 #include <QEvent>
 #include <QKeyEvent>
+#include <qpoint.h>
 
 class TwinTable;
 class CellEditor;
@@ -24,40 +24,41 @@ class RKVarEditModelBase;
 */
 class TwinTableMember : public RKTableView {
 	Q_OBJECT
-public: 
-	explicit TwinTableMember (QWidget *parent);
-	~TwinTableMember ();
-	TwinTableMember *getTwin () { return twin; };
-/** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */
-	void stopEditing ();
+  public:
+	explicit TwinTableMember(QWidget *parent);
+	~TwinTableMember();
+	TwinTableMember *getTwin() { return twin; };
+	/** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */
+	void stopEditing();
 
-	void copy ();
-	void paste (RKEditor::PasteMode mode);
+	void copy();
+	void paste(RKEditor::PasteMode mode);
 
-	void setRKModel (RKVarEditModelBase* model);
-	int trueRows () const override;	// re-implemented from RKTableView
-	int trueColumns () const override;	// re-implemented from RKTableView
-public Q_SLOTS:
-/** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
-	void blankSelected ();
-Q_SIGNALS:
-	void contextMenuRequest (int row, int col, const QPoint& pos);
-protected:
+	void setRKModel(RKVarEditModelBase *model);
+	int trueRows() const override;    // re-implemented from RKTableView
+	int trueColumns() const override; // re-implemented from RKTableView
+  public Q_SLOTS:
+	/** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
+	void blankSelected();
+  Q_SIGNALS:
+	void contextMenuRequest(int row, int col, const QPoint &pos);
+
+  protected:
 	TwinTableMember *twin;
 	bool updating_twin;
 
-/** reimplemented from QTableView to also adjust the twin */
-	void scrollContentsBy (int dx, int dy) override;
+	/** reimplemented from QTableView to also adjust the twin */
+	void scrollContentsBy(int dx, int dy) override;
 
-	RKVarEditModelBase* mymodel;
+	RKVarEditModelBase *mymodel;
 
 	bool rw;
-friend class TwinTable;
-	void setTwin (TwinTableMember *new_twin);
-protected Q_SLOTS:
-	void handleContextMenuRequest (const QPoint& pos);
-	void updateColWidth (int section, int old_w, int new_w);
-	void tableSelectionChanged (const QItemSelection& selected, const QItemSelection& deselected);
+	friend class TwinTable;
+	void setTwin(TwinTableMember *new_twin);
+  protected Q_SLOTS:
+	void handleContextMenuRequest(const QPoint &pos);
+	void updateColWidth(int section, int old_w, int new_w);
+	void tableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 };
 
 #endif

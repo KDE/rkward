@@ -10,9 +10,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kparts/part.h>
 
 class RKDummyPart : public KParts::Part {
-public:
-	RKDummyPart (QObject *parent, QWidget *widget);
-	~RKDummyPart ();
+  public:
+	RKDummyPart(QObject *parent, QWidget *widget);
+	~RKDummyPart();
 };
 
 #endif

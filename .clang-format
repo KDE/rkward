@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: None
+# SPDX-License-Identifier: CC0-1.0
+
+BasedOnStyle: LLVM
+# Leave line wrapping to the humans and/or the editor. Suggestion: No longer than 160, where reasonably avoidable
+ColumnLimit: 0
+UseTab: ForIndentation
+TabWidth: 4
+IndentWidth: 4
+AlignAfterOpenBracket: Align
+BreakStringLiterals: true
+BinPackArguments: true
+AllowAllArgumentsOnNextLine: true
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+IndentPPDirectives: AfterHash

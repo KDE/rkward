@@ -28,28 +28,29 @@ TODO: I ripped out multiple file selection for now. GetFileNameWidget should be 
 
 class RKPluginBrowser : public RKComponent {
 	Q_OBJECT
-public:
-	RKPluginBrowser (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKPluginBrowser ();
+  public:
+	RKPluginBrowser(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKPluginBrowser();
 
 	RKComponentPropertyBase *selection;
-	QVariant value (const QString &modifier=QString ()) override { return (selection->value (modifier)); };
-	QStringList getUiLabelPair () const override;
-	int type () override { return ComponentBrowser; };
-	ComponentStatus recursiveStatus () override;
-public Q_SLOTS:
-	void textChangedFromUi ();
-	void textChanged (RKComponentPropertyBase *);
-	void validateInput ();
-private:
-	void updateColor ();
+	QVariant value(const QString &modifier = QString()) override { return (selection->value(modifier)); };
+	QStringList getUiLabelPair() const override;
+	int type() override { return ComponentBrowser; };
+	ComponentStatus recursiveStatus() override;
+  public Q_SLOTS:
+	void textChangedFromUi();
+	void textChanged(RKComponentPropertyBase *);
+	void validateInput();
+
+  private:
+	void updateColor();
 	QTimer validation_timer;
 	ComponentStatus status;
 	GetFileNameWidget *selector;
 	bool updating;
 	bool only_local;
 	QString label_string;
-	QCheckBox* overwrite_confirm;
+	QCheckBox *overwrite_confirm;
 };
 
 #endif

@@ -8,10 +8,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKGRAPHICSDEVICE_FRONTENDTRANSMITTER_H
 #define RKGRAPHICSDEVICE_FRONTENDTRANSMITTER_H
 
-#include <QPainter> // for enums
-#include "rkgraphicsdevice_protocol_shared.h"
-#include "rkgraphicsdevice_backendtransmitter.h"
 #include "../rkasyncdatastreamhelper.h"
+#include "rkgraphicsdevice_backendtransmitter.h"
+#include "rkgraphicsdevice_protocol_shared.h"
 
 class QIODevice;
 class QLocalServer;
@@ -20,21 +19,22 @@ class QLocalServer;
  * frontend has a running Qt event loop, We can use simple signals and slots, here. */
 class RKGraphicsDeviceFrontendTransmitter : public QObject {
 	Q_OBJECT
-public:
-	RKGraphicsDeviceFrontendTransmitter ();
-	~RKGraphicsDeviceFrontendTransmitter ();
-	QString serverName () const { return server_name; };
+  public:
+	RKGraphicsDeviceFrontendTransmitter();
+	~RKGraphicsDeviceFrontendTransmitter();
+	QString serverName() const { return server_name; };
 	static double lwdscale;
-public Q_SLOTS:
-	void newData ();
-	void newConnection ();
-	void locatorDone (bool ok, double x, double y);
-	void newPageConfirmDone (bool accepted);
-Q_SIGNALS:
-	void stopInteraction ();
-private:
-	void setupServer ();
-	void sendDummyReply (quint8 opcode);
+  public Q_SLOTS:
+	void newData();
+	void newConnection();
+	void locatorDone(bool ok, double x, double y);
+	void newPageConfirmDone(bool accepted);
+  Q_SIGNALS:
+	void stopInteraction();
+
+  private:
+	void setupServer();
+	void sendDummyReply(quint8 opcode);
 	QString server_name;
 	QIODevice *connection;
 	QLocalServer *local_server;

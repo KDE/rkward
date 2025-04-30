@@ -6,111 +6,111 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "robjectviewer.h"
 
-#include <QLabel>
-#include <QTextEdit>
 #include <QFont>
-#include <QPushButton>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
 #include <QTabWidget>
+#include <QTextEdit>
+#include <QVBoxLayout>
 
 #include <KLocalizedString>
 #include <QFontDatabase>
 
 #include "rbackend/rkrinterface.h"
 
+#include "../misc/rkcommonfunctions.h"
 #include "core/robject.h"
 #include "misc/rkdummypart.h"
-#include "../misc/rkcommonfunctions.h"
 #include "misc/rkprogresscontrol.h"
 
 #include "debug.h"
 
-RObjectViewer::RObjectViewer (QWidget *parent, RObject *object, ViewerPage initial_page) : RKMDIWindow (parent, RKMDIWindow::ObjectWindow, false), RObjectListener (RObjectListener::ObjectView) {
-	RK_TRACE (APP);
-	RK_ASSERT (object);
+RObjectViewer::RObjectViewer(QWidget *parent, RObject *object, ViewerPage initial_page) : RKMDIWindow(parent, RKMDIWindow::ObjectWindow, false), RObjectListener(RObjectListener::ObjectView) {
+	RK_TRACE(APP);
+	RK_ASSERT(object);
 	_object = object;
 
-	addNotificationType (RObjectListener::ObjectRemoved);
-	addNotificationType (RObjectListener::MetaChanged);
-	addNotificationType (RObjectListener::DataChanged);
-	listenForObject (_object);
+	addNotificationType(RObjectListener::ObjectRemoved);
+	addNotificationType(RObjectListener::MetaChanged);
+	addNotificationType(RObjectListener::DataChanged);
+	listenForObject(_object);
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	layout->setContentsMargins (0, 0, 0, 0);
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->setContentsMargins(0, 0, 0, 0);
 
-	description_label = RKCommonFunctions::wordWrappedLabel (QString ());
-	layout->addWidget (description_label);
-	status_label = new QLabel (this);
-	status_label->hide ();
-	layout->addWidget (status_label);
+	description_label = RKCommonFunctions::wordWrappedLabel(QString());
+	layout->addWidget(description_label);
+	status_label = new QLabel(this);
+	status_label->hide();
+	layout->addWidget(status_label);
 
-	tabs = new QTabWidget (this);
-	tabs->insertTab (SummaryPage, summary_widget = new RObjectSummaryWidget (tabs, object), i18n ("summary (x)"));
-	tabs->insertTab (PrintPage, print_widget = new RObjectPrintWidget (tabs, object), i18n ("print (x)"));
-	tabs->insertTab (StructurePage, structure_widget = new RObjectStructureWidget (tabs, object), i18n ("str (x)"));
-	layout->addWidget (tabs);
+	tabs = new QTabWidget(this);
+	tabs->insertTab(SummaryPage, summary_widget = new RObjectSummaryWidget(tabs, object), i18n("summary (x)"));
+	tabs->insertTab(PrintPage, print_widget = new RObjectPrintWidget(tabs, object), i18n("print (x)"));
+	tabs->insertTab(StructurePage, structure_widget = new RObjectStructureWidget(tabs, object), i18n("str (x)"));
+	layout->addWidget(tabs);
 
-	tabs->setFocusPolicy (Qt::StrongFocus);
-	setPart (new RKDummyPart (this, tabs));
-	initializeActivationSignals ();
+	tabs->setFocusPolicy(Qt::StrongFocus);
+	setPart(new RKDummyPart(this, tabs));
+	initializeActivationSignals();
 
-	tabs->setCurrentIndex (initial_page);
-	currentTabChanged (initial_page);
-	connect (tabs, &QTabWidget::currentChanged, this, &RObjectViewer::currentTabChanged);
+	tabs->setCurrentIndex(initial_page);
+	currentTabChanged(initial_page);
+	connect(tabs, &QTabWidget::currentChanged, this, &RObjectViewer::currentTabChanged);
 
-	initDescription (false);
+	initDescription(false);
 }
 
-RObjectViewer::~RObjectViewer () {
-	RK_TRACE (APP);
+RObjectViewer::~RObjectViewer() {
+	RK_TRACE(APP);
 
-	if (_object) stopListenForObject (_object);
+	if (_object) stopListenForObject(_object);
 }
 
-void RObjectViewer::objectRemoved (RObject *object) {
-	RK_TRACE (APP);
+void RObjectViewer::objectRemoved(RObject *object) {
+	RK_TRACE(APP);
 
 	if (object == _object) {
-		summary_widget->objectKilled ();
-		print_widget->objectKilled ();
-		structure_widget->objectKilled ();
+		summary_widget->objectKilled();
+		print_widget->objectKilled();
+		structure_widget->objectKilled();
 
-		QString reason = i18n ("<b>Object was deleted</b>");
-		summary_widget->invalidate (reason);
-		print_widget->invalidate (reason);
-		structure_widget->invalidate (reason);
+		QString reason = i18n("<b>Object was deleted</b>");
+		summary_widget->invalidate(reason);
+		print_widget->invalidate(reason);
+		structure_widget->invalidate(reason);
 
-		QPalette palette = status_label->palette ();
-		palette.setColor (status_label->foregroundRole (), Qt::red);
-		status_label->setPalette (palette);
-		status_label->setText (reason);
-		status_label->show ();
+		QPalette palette = status_label->palette();
+		palette.setColor(status_label->foregroundRole(), Qt::red);
+		status_label->setPalette(palette);
+		status_label->setText(reason);
+		status_label->show();
 
-		stopListenForObject (_object);
+		stopListenForObject(_object);
 		_object = nullptr;
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 	}
 }
 
-void RObjectViewer::objectMetaChanged (RObject* object) {
-	RK_TRACE (APP);
+void RObjectViewer::objectMetaChanged(RObject *object) {
+	RK_TRACE(APP);
 
 	if (object == _object) {
-		initDescription (true);
+		initDescription(true);
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 	}
 }
 
-void RObjectViewer::objectDataChanged (RObject* object, const RObject::ChangeSet*) {
-	RK_TRACE (APP);
+void RObjectViewer::objectDataChanged(RObject *object, const RObject::ChangeSet *) {
+	RK_TRACE(APP);
 
 	if (object == _object) {
-		initDescription (true);
+		initDescription(true);
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 	}
 }
 
@@ -131,35 +131,35 @@ void RObjectViewer::initDescription(bool notify) {
 	}
 }
 
-void RObjectViewer::currentTabChanged (int new_current) {
-	RK_TRACE (APP);
+void RObjectViewer::currentTabChanged(int new_current) {
+	RK_TRACE(APP);
 
 	if (new_current == SummaryPage) {
-		summary_widget->initialize ();
+		summary_widget->initialize();
 	} else if (new_current == PrintPage) {
-		print_widget->initialize ();
+		print_widget->initialize();
 	} else if (new_current == StructurePage) {
-		structure_widget->initialize ();
+		structure_widget->initialize();
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 	}
 }
 
 ///////////////// RObjectViewerWidget /////////////////////
 
-RObjectViewerWidget::RObjectViewerWidget(QWidget* parent, RObject* object) : QWidget(parent) {
-	RK_TRACE (APP);
+RObjectViewerWidget::RObjectViewerWidget(QWidget *parent, RObject *object) : QWidget(parent) {
+	RK_TRACE(APP);
 
 	_object = object;
-	QVBoxLayout* main_layout = new QVBoxLayout(this);
+	QVBoxLayout *main_layout = new QVBoxLayout(this);
 	main_layout->setContentsMargins(0, 0, 0, 0);
-	QHBoxLayout* status_layout = new QHBoxLayout();
+	QHBoxLayout *status_layout = new QHBoxLayout();
 	main_layout->addLayout(status_layout);
 
 	status_label = new QLabel();
 	status_layout->addWidget(status_label);
 
-	status_layout->addStretch ();
+	status_layout->addStretch();
 
 	update_button = new QPushButton(i18n("Update"));
 	connect(update_button, &QPushButton::clicked, this, &RObjectViewerWidget::update);
@@ -173,26 +173,26 @@ RObjectViewerWidget::RObjectViewerWidget(QWidget* parent, RObject* object) : QWi
 	initialized = false;
 }
 
-RObjectViewerWidget::~RObjectViewerWidget () {
-	RK_TRACE (APP);
+RObjectViewerWidget::~RObjectViewerWidget() {
+	RK_TRACE(APP);
 }
 
-void RObjectViewerWidget::invalidate (const QString& reason) {
-	RK_TRACE (APP);
+void RObjectViewerWidget::invalidate(const QString &reason) {
+	RK_TRACE(APP);
 
-	QPalette palette = status_label->palette ();
-	palette.setColor (status_label->foregroundRole (), Qt::red);
-	status_label->setPalette (palette);
+	QPalette palette = status_label->palette();
+	palette.setColor(status_label->foregroundRole(), Qt::red);
+	status_label->setPalette(palette);
 
 	status_label->setText(reason);
 	update_button->setEnabled(_object != nullptr);
 }
 
-void RObjectViewerWidget::initialize () {
-	RK_TRACE (APP);
+void RObjectViewerWidget::initialize() {
+	RK_TRACE(APP);
 
 	if (initialized) return;
-	update ();
+	update();
 	initialized = true;
 }
 
@@ -218,41 +218,42 @@ void RObjectViewerWidget::update() {
 	RInterface::issueCommand(command);
 }
 
-void RObjectViewerWidget::setText (const QString& text) {
-	RK_TRACE (APP);
+void RObjectViewerWidget::setText(const QString &text) {
+	RK_TRACE(APP);
 
-	area->setPlainText (QString ());
+	area->setPlainText(QString());
 	QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-	area->setCurrentFont (font);
+	area->setCurrentFont(font);
 
-	area->insertPlainText (text);
+	area->insertPlainText(text);
 }
 
 ////////////////// summary widget /////////////////
 
-RCommand* RObjectSummaryWidget::makeCommand() {
+RCommand *RObjectSummaryWidget::makeCommand() {
 	RK_TRACE(APP);
 	return new RCommand(u"print(summary("_s + _object->getFullName() + u"))"_s, RCommand::App);
 }
 
 ////////////////// print widget /////////////////
 
-RCommand* RObjectPrintWidget::makeCommand() {
+RCommand *RObjectPrintWidget::makeCommand() {
 	RK_TRACE(APP);
 
 	// make sure to print as wide as possible
 	return new RCommand(QStringLiteral("local({\n"
-	                                  "\trk.temp.width.save <- getOption(\"width\")\n"
-	                                  "\toptions(width=10000)\n"
-	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
-	                                  "\tprint(") + _object->getFullName() + QStringLiteral(")\n"
-	                                  "})"), RCommand::App);
+	                                   "\trk.temp.width.save <- getOption(\"width\")\n"
+	                                   "\toptions(width=10000)\n"
+	                                   "\ton.exit(options(width=rk.temp.width.save))\n"
+	                                   "\tprint(") +
+	                        _object->getFullName() + QStringLiteral(")\n"
+	                                                                "})"),
+	                    RCommand::App);
 }
 
 ////////////////// structure widget /////////////////
 
-RCommand* RObjectStructureWidget::makeCommand() {
+RCommand *RObjectStructureWidget::makeCommand() {
 	RK_TRACE(APP);
 	return new RCommand(u"str("_s + _object->getFullName() + u')', RCommand::App);
 }
-

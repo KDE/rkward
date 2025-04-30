@@ -34,14 +34,14 @@ function calculate(is_preview) {
 		}
 		echo('preview_data <- data[1:min(50,dim(data)[1]),1:min(50,dim(data)[2]),drop=FALSE]\n');
 	} else {
-		echo('.GlobalEnv$' + object + ' <- data  '); comment('assign to globalenv()');
+		echo('.GlobalEnv$' + object + ' <- data  ');
+		comment('assign to globalenv()');
 		if (getValue("doedit")) {
 			echo('rk.edit(.GlobalEnv$' + object + ')\n');
 		}
 	}
 }
 
-function printout () {
-	new Header (i18n ("Generic data import")).addFromUI ("file").addFromUI ("saveto").print ();
+function printout() {
+	new Header(i18n("Generic data import")).addFromUI("file").addFromUI("saveto").print();
 }
-

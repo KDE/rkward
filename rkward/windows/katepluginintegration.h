@@ -8,9 +8,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef KATEPLUGININTEGRATION_H
 #define KATEPLUGININTEGRATION_H
 
-#include <KTextEditor/MainWindow>
-#include <KTextEditor/Application>
 #include <KPluginMetaData>
+#include <KTextEditor/Application>
+#include <KTextEditor/MainWindow>
 #include <KXMLGUIClient>
 
 #include <QMap>
@@ -26,17 +26,17 @@ class RKMDIWindow;
  *  a name-clash in on of the slots (openUrl()), otherwise. */
 class KatePluginIntegrationApp : public QObject {
 	Q_OBJECT
-public:
+  public:
 	explicit KatePluginIntegrationApp(QObject *parent);
 	~KatePluginIntegrationApp();
-	QObject* loadPlugin(const QString& identifier);
+	QObject *loadPlugin(const QString &identifier);
 	/** Loads the given plugins, *and* unloads all others. */
-	void unloadPlugin(const QString& identifier);
+	void unloadPlugin(const QString &identifier);
 	void loadPlugins(const QStringList &plugins);
 	KatePluginIntegrationWindow *mainWindow() const { return window; };
 	int knownPluginCount() const { return known_plugins.size(); };
-private Q_SLOTS:
-friend class KatePluginIntegrationWindow;
+  private Q_SLOTS:
+	friend class KatePluginIntegrationWindow;
 	void saveConfigAndUnload();
 	// These are the implementations of the KTextEditor::Application interface.
 	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
@@ -48,13 +48,14 @@ friend class KatePluginIntegrationWindow;
 	bool closeDocument(KTextEditor::Document *document);
 	bool closeDocuments(const QList<KTextEditor::Document *> &documents);
 	KTextEditor::Plugin *plugin(const QString &name);
-private:
-friend class RKSettingsPageKatePlugins;
-friend class RKSettingsModuleKatePlugins;
-	QList<KTextEditor::Plugin*> loadedPlugins() const;
-	KatePluginIntegrationWindow *window;  // For now, only one main window
+
+  private:
+	friend class RKSettingsPageKatePlugins;
+	friend class RKSettingsModuleKatePlugins;
+	QList<KTextEditor::Plugin *> loadedPlugins() const;
+	KatePluginIntegrationWindow *window; // For now, only one main window
 	KTextEditor::Application *app;
-/** Provides a hidden dummy view (created on the fly as needed), for plugins that assume there is always at least one view/document around. */
+	/** Provides a hidden dummy view (created on the fly as needed), for plugins that assume there is always at least one view/document around. */
 	KTextEditor::View *dummyView();
 	KTextEditor::View *dummy_view;
 
@@ -70,13 +71,13 @@ friend class RKSettingsModuleKatePlugins;
 class KatePluginWindow;
 class KatePluginIntegrationWindow : public QObject, public KXMLGUIClient {
 	Q_OBJECT
-public:
+  public:
 	explicit KatePluginIntegrationWindow(KatePluginIntegrationApp *parent);
 	~KatePluginIntegrationWindow();
 	KTextEditor::MainWindow *mainWindow() const { return main; };
-	KXMLGUIClient* persistentGuiClient() { return this; }
-	KXMLGUIClient* dynamicGuiClient() const { return dynamic_actions_client; }
-private Q_SLOTS:
+	KXMLGUIClient *persistentGuiClient() { return this; }
+	KXMLGUIClient *dynamicGuiClient() const { return dynamic_actions_client; }
+  private Q_SLOTS:
 	// These are the implementations of the KTextEditor::MainWindow interface.
 	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
 	QWidget *createToolView(KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text);
@@ -107,32 +108,34 @@ private Q_SLOTS:
 	void hideViewBar(KTextEditor::View *view);
 	void addWidgetToViewBar(KTextEditor::View *view, QWidget *bar);
 
-// New in Kate 2023-07, not yet formalized in KTextEditor
+	// New in Kate 2023-07, not yet formalized in KTextEditor
 	QWidget *toolviewForName(const QString &toolviewName);
 	bool showMessage(const QVariantMap &map);
 	bool addWidget(QWidget *widget);
 	void activateWidget(QWidget *widget);
 	QWidgetList widgets();
 	void insertWidgetInStatusbar(QWidget *widget);
-private:
-friend class KatePluginIntegrationApp;
+
+  private:
+	friend class KatePluginIntegrationApp;
 	KTextEditor::MainWindow *main;
-	QObject* createPluginView(KTextEditor::Plugin* plugin);
+	QObject *createPluginView(KTextEditor::Plugin *plugin);
 	struct PluginResources {
-		PluginResources() : view(nullptr) {};
+		PluginResources() : view(nullptr){};
 		QObject *view;
-		QList<KXMLGUIClient*> clients;
-		QList<KatePluginWindow*> windows;
+		QList<KXMLGUIClient *> clients;
+		QList<KatePluginWindow *> windows;
 	};
-	QHash<QObject*, PluginResources> plugin_resources;
+	QHash<QObject *, PluginResources> plugin_resources;
 
 	KatePluginIntegrationApp *app;
 	KXMLGUIClient *dynamic_actions_client;
-private Q_SLOTS:
-	void catchXMLGUIClientsHack(KXMLGUIClient* client);
+  private Q_SLOTS:
+	void catchXMLGUIClientsHack(KXMLGUIClient *client);
 	void activeWindowChanged(RKMDIWindow *window);
-private:
-	KTextEditor::Plugin* active_plugin;
+
+  private:
+	KTextEditor::Plugin *active_plugin;
 	void fixUpPluginUI(const QString &id, const PluginResources &resources);
 };
 

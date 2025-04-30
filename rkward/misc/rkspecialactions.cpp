@@ -14,7 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKPasteSpecialAction::RKPasteSpecialAction(QObject* parent) : QAction(parent) {
+RKPasteSpecialAction::RKPasteSpecialAction(QObject *parent) : QAction(parent) {
 	RK_TRACE(MISC);
 
 	setText(i18n("Paste special..."));
@@ -30,13 +30,13 @@ void RKPasteSpecialAction::doSpecialPaste() {
 
 	QWidget *pwin = nullptr;
 	const auto objs = associatedObjects();
-	for(auto obj : objs) {
-		if (qobject_cast<QWidget*>(obj)) {
-			pwin = static_cast<QWidget*>(obj);
+	for (auto obj : objs) {
+		if (qobject_cast<QWidget *>(obj)) {
+			pwin = static_cast<QWidget *>(obj);
 			break;
 		}
 	}
-	RKPasteSpecialDialog* dialog = new RKPasteSpecialDialog(pwin);
+	RKPasteSpecialDialog *dialog = new RKPasteSpecialDialog(pwin);
 	int res = dialog->exec();
 	if (res == QDialog::Accepted) {
 		Q_EMIT pasteText(dialog->resultingText());
@@ -44,36 +44,36 @@ void RKPasteSpecialAction::doSpecialPaste() {
 	dialog->deleteLater();
 }
 
+#include <QApplication>
 #include <QCheckBox>
-#include <QVBoxLayout>
+#include <QClipboard>
+#include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QLineEdit>
-#include <QApplication>
-#include <QClipboard>
 #include <QMimeData>
-#include <QDialogButtonBox>
 #include <QPushButton>
+#include <QVBoxLayout>
 
-#include "../dataeditor/rktextmatrix.h"
 #include "../core/robject.h"
-#include "rksaveobjectchooser.h"
-#include "../rbackend/rkrinterface.h"
+#include "../dataeditor/rktextmatrix.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkradiogroup.h"
+#include "../rbackend/rkrinterface.h"
+#include "rksaveobjectchooser.h"
 
-RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : QDialog(parent) {
-	RK_TRACE (MISC);
+RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget *parent, bool standalone) : QDialog(parent) {
+	RK_TRACE(MISC);
 
-	setWindowTitle (i18n ("Paste Special..."));
+	setWindowTitle(i18n("Paste Special..."));
 
-	QVBoxLayout *pagelayout = new QVBoxLayout (this);
+	QVBoxLayout *pagelayout = new QVBoxLayout(this);
 	objectname = standalone ? new RKSaveObjectChooser(this, QStringLiteral("pasted.data")) : nullptr;
 	if (objectname) {
 		connect(objectname, &RKSaveObjectChooser::changed, this, &RKPasteSpecialDialog::updateState);
 		pagelayout->addWidget(objectname);
 	}
-	QHBoxLayout *rowlayout = new QHBoxLayout ();
-	pagelayout->addLayout (rowlayout);
+	QHBoxLayout *rowlayout = new QHBoxLayout();
+	pagelayout->addLayout(rowlayout);
 
 	// Mode box
 	auto box = new RKRadioGroup(i18n("Paste Mode"));
@@ -81,17 +81,18 @@ RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : Q
 	box->addButton(i18n("Single string"), DimSingleString);
 	box->addButton(i18n("Vector"), DimVector);
 	box->addButton(i18n("Matrix"), DimMatrix);
-	box->addButton(i18n("data.frame"), DimDataFrame)->setChecked(true);;
-	connect (dimensionality_group, &QButtonGroup::idClicked, this, &RKPasteSpecialDialog::updateState);
-	rowlayout->addWidget (box);
+	box->addButton(i18n("data.frame"), DimDataFrame)->setChecked(true);
+	;
+	connect(dimensionality_group, &QButtonGroup::idClicked, this, &RKPasteSpecialDialog::updateState);
+	rowlayout->addWidget(box);
 
-	const QMimeData* clipdata = QApplication::clipboard ()->mimeData ();
+	const QMimeData *clipdata = QApplication::clipboard()->mimeData();
 
 	// Separator box
 	box = new RKRadioGroup(i18n("Field Separator"));
 	separator_group = box->group();
 	box->addButton(i18n("Tab"), SepTab)->setChecked(true); // tab-separated is a reasonable fallback guess
-	box->addButton(i18n("Comma"), SepComma)->setChecked(clipdata->hasFormat (QStringLiteral("text/comma-separated-values")));
+	box->addButton(i18n("Comma"), SepComma)->setChecked(clipdata->hasFormat(QStringLiteral("text/comma-separated-values")));
 	box->addButton(i18n("Single space"), SepSpace);
 	box->addButton(i18n("Any whitespace"), SepWhitespace);
 	separator_freefield = new QLineEdit(QStringLiteral(";"), box);
@@ -100,7 +101,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : Q
 	rowlayout->addWidget(box);
 
 	rowlayout = new QHBoxLayout;
-	pagelayout->addLayout (rowlayout);
+	pagelayout->addLayout(rowlayout);
 
 	// Quoting box
 	box = new RKRadioGroup(i18n("Quoting"));
@@ -134,28 +135,28 @@ RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : Q
 	group_layout->addWidget(insert_nas_box);
 	rowlayout->addWidget(box);
 
-	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+	QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 	ok_button = buttons->button(QDialogButtonBox::Ok);
 	connect(ok_button, &QPushButton::clicked, this, &QDialog::accept);
-	connect(buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
-	pagelayout->addWidget (buttons);
+	connect(buttons->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	pagelayout->addWidget(buttons);
 
-	updateState ();		// initialize
+	updateState(); // initialize
 }
 
-RKPasteSpecialDialog::~RKPasteSpecialDialog () {
-	RK_TRACE (MISC);
+RKPasteSpecialDialog::~RKPasteSpecialDialog() {
+	RK_TRACE(MISC);
 }
 
-void RKPasteSpecialDialog::updateState () {
-	RK_TRACE (MISC);
+void RKPasteSpecialDialog::updateState() {
+	RK_TRACE(MISC);
 
-	int dimensionality = dimensionality_group->checkedId ();
-	
-	static_cast<QWidget*> (separator_group->parent ())->setEnabled (dimensionality != DimSingleString);
-	reverse_h_box->setEnabled (dimensionality != DimSingleString);
-	reverse_v_box->setEnabled (dimensionality >= DimMatrix);
-	insert_nas_box->setEnabled (dimensionality != DimSingleString);
+	int dimensionality = dimensionality_group->checkedId();
+
+	static_cast<QWidget *>(separator_group->parent())->setEnabled(dimensionality != DimSingleString);
+	reverse_h_box->setEnabled(dimensionality != DimSingleString);
+	reverse_v_box->setEnabled(dimensionality >= DimMatrix);
+	insert_nas_box->setEnabled(dimensionality != DimSingleString);
 	transpose_box->setEnabled(dimensionality >= DimMatrix);
 	names_box->setEnabled(dimensionality == DimDataFrame);
 	rownames_box->setEnabled(dimensionality == DimDataFrame);
@@ -166,7 +167,7 @@ void RKPasteSpecialDialog::updateState () {
 QString RKPasteSpecialDialog::resultingText() {
 	RK_TRACE(MISC);
 
-	const int sep = separator_group->checkedId();  // for easier typing
+	const int sep = separator_group->checkedId(); // for easier typing
 	const int dim = dimensionality_group->checkedId();
 	const bool reverse_h = reverse_h_box->isChecked() && (dim != DimSingleString);
 	const bool reverse_v = reverse_v_box->isChecked() && (dim >= DimMatrix);
@@ -177,7 +178,7 @@ QString RKPasteSpecialDialog::resultingText() {
 
 	QString clip;
 
-	const QMimeData* data = QApplication::clipboard()->mimeData();
+	const QMimeData *data = QApplication::clipboard()->mimeData();
 	if ((dim != DimSingleString) && (sep == SepTab) && data->hasFormat(QStringLiteral("text/tab-separated-values"))) {
 		clip = QString::fromLocal8Bit(data->data(QStringLiteral("text/tab-separated-values")));
 	} else if ((dim != DimSingleString) && (sep == SepComma) && data->hasFormat(QStringLiteral("text/comma-separated-values"))) {
@@ -211,7 +212,7 @@ QString RKPasteSpecialDialog::resultingText() {
 	QString ret;
 	if (dim == DimDataFrame) ret.append(u"data.frame("_s);
 	if (dim >= DimMatrix) ret.append(u"cbind(\n"_s);
-	else ret.append(u"c("_s);  // DimVector
+	else ret.append(u"c("_s); // DimVector
 
 	int startcol = rownames ? 1 : 0;
 	int startrow = names ? 1 : 0;
@@ -247,7 +248,7 @@ QString RKPasteSpecialDialog::resultingText() {
 	return (ret);
 }
 
-QString RKPasteSpecialDialog::prepString(const QString& src, const Quoting quot) const {
+QString RKPasteSpecialDialog::prepString(const QString &src, const Quoting quot) const {
 	//	RK_TRACE (MISC);
 
 	if (quot == QuoteAll) return (RObject::rQuote(src));
@@ -256,7 +257,7 @@ QString RKPasteSpecialDialog::prepString(const QString& src, const Quoting quot)
 	RK_ASSERT(quot == QuoteAuto);
 
 	bool numeric = false;
-	src.toDouble(&numeric);  // side-effect of setting numeric to true, if number conversion succeeds
+	src.toDouble(&numeric); // side-effect of setting numeric to true, if number conversion succeeds
 	if (!numeric) return (RObject::rQuote(src));
 	return src;
 }

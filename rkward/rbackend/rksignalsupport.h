@@ -9,11 +9,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKSIGNALSUPPORT_H
 
 namespace RKSignalSupport {
-	void saveDefaultSignalHandlers ();
-	void installSignalProxies ();
+void saveDefaultSignalHandlers();
+void installSignalProxies();
 
-	void installSigIntAndUsrHandlers (void (*handler) (void));
-	void callOldSigIntHandler ();
-};
+void installSigIntAndUsrHandlers(void (*handler)(void));
+void callOldSigIntHandler();
+}; // namespace RKSignalSupport
 
 #endif

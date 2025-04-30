@@ -14,17 +14,18 @@ Namespace to hold common styling options: Spacing and color scheme.
 
 @author Thomas Friedrichsmeier
 */
-class RKStyle{
-public:
-/// @returns KDialog::marginHint (), without the need to include kdialog.h in all the sources
-	static int marginHint ();
-/// @returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
-	static int spacingHint ();
-/// @returns a cached instance of the color scheme for normal views. Particularly useful for setting specials colors in item models
-	static KColorScheme* viewScheme();
-private:
-friend class RKWardMainWindow;
-	static KColorScheme* _view_scheme;
+class RKStyle {
+  public:
+	/// @returns KDialog::marginHint (), without the need to include kdialog.h in all the sources
+	static int marginHint();
+	/// @returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
+	static int spacingHint();
+	/// @returns a cached instance of the color scheme for normal views. Particularly useful for setting specials colors in item models
+	static KColorScheme *viewScheme();
+
+  private:
+	friend class RKWardMainWindow;
+	static KColorScheme *_view_scheme;
 };
 
 #endif

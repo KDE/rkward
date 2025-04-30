@@ -20,7 +20,7 @@ configuration for the Command Editor windows
 */
 class RKSettingsModuleDebug : public RKSettingsModule {
 	Q_OBJECT
-public:
+  public:
 	explicit RKSettingsModuleDebug(QObject *parent);
 	~RKSettingsModuleDebug() override;
 

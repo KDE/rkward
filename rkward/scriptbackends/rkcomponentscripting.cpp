@@ -8,39 +8,39 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkcomponentscripting.h"
 
 #include <KLocalizedString>
-#include <kmessagebox.h>
 #include <QDir>
+#include <kmessagebox.h>
 
-#include "../plugin/rkcomponent.h"
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/xmlhelper.h"
+#include "../plugin/rkcomponent.h"
 #include "../rbackend/rkrinterface.h"
 #include "qtscriptbackend.h"
 #include "qtscripti18n.h"
 
 #include "../debug.h"
 
-RKComponentScriptingProxy::RKComponentScriptingProxy (RKComponent *component) : QObject (component) {
-	RK_TRACE (PHP);
+RKComponentScriptingProxy::RKComponentScriptingProxy(RKComponent *component) : QObject(component) {
+	RK_TRACE(PHP);
 
-	RK_ASSERT (component);
+	RK_ASSERT(component);
 	RKComponentScriptingProxy::component = component;
 
 	QJSValue backend_object = engine.newQObject(this);
-	engine.globalObject ().setProperty (QStringLiteral("_rkward"), backend_object);
-	RKMessageCatalogObject::addI18nToScriptEngine (&engine, component->xmlHelper ()->messageCatalog ());
+	engine.globalObject().setProperty(QStringLiteral("_rkward"), backend_object);
+	RKMessageCatalogObject::addI18nToScriptEngine(&engine, component->xmlHelper()->messageCatalog());
 }
 
-RKComponentScriptingProxy::~RKComponentScriptingProxy () {
-	RK_TRACE (PHP);
+RKComponentScriptingProxy::~RKComponentScriptingProxy() {
+	RK_TRACE(PHP);
 
-	for (int i = 0; i < outstanding_commands.size (); ++i) {
+	for (int i = 0; i < outstanding_commands.size(); ++i) {
 		RInterface::instance()->cancelCommand(outstanding_commands[i].command);
 	}
 }
 
-void RKComponentScriptingProxy::initialize(const QString& file, const QString& command) {
+void RKComponentScriptingProxy::initialize(const QString &file, const QString &command) {
 	RK_TRACE(PHP);
 
 	QString _command = command;
@@ -54,11 +54,11 @@ void RKComponentScriptingProxy::initialize(const QString& file, const QString& c
 	evaluate(_command);
 }
 
-void RKComponentScriptingProxy::handleScriptError(const QJSValue &val, const QString& current_file) {
-	RK_TRACE (PHP);
+void RKComponentScriptingProxy::handleScriptError(const QJSValue &val, const QString &current_file) {
+	RK_TRACE(PHP);
 
 	QString file = current_file;
-	if (file.isEmpty ()) file = _scriptfile;
+	if (file.isEmpty()) file = _scriptfile;
 	if (val.isError()) {
 		QString message = i18n("Script Error at '%1' line %2: %3\n", file.isEmpty() ? i18n("inlined code") : file, val.property(QStringLiteral("lineNumber")).toInt(), val.toString());
 		KMessageBox::detailedError(nullptr, message, val.property(QStringLiteral("stack")).toString());
@@ -66,7 +66,7 @@ void RKComponentScriptingProxy::handleScriptError(const QJSValue &val, const QSt
 	}
 }
 
-void RKComponentScriptingProxy::include(const QString& filename) {
+void RKComponentScriptingProxy::include(const QString &filename) {
 	RK_TRACE(PHP);
 
 	QString _filename = filename;
@@ -85,41 +85,41 @@ void RKComponentScriptingProxy::include(const QString& filename) {
 	handleScriptError(_filename);
 }
 
-void RKComponentScriptingProxy::evaluate (const QString &code) {
-	RK_TRACE (PHP);
+void RKComponentScriptingProxy::evaluate(const QString &code) {
+	RK_TRACE(PHP);
 
-	QJSValue result = engine.evaluate (code, _scriptfile);
+	QJSValue result = engine.evaluate(code, _scriptfile);
 
 	handleScriptError(result);
 }
 
-void RKComponentScriptingProxy::addChangeCommand (const QString& changed_id, const QString& command) {
-	RK_TRACE (PHP);
+void RKComponentScriptingProxy::addChangeCommand(const QString &changed_id, const QString &command) {
+	RK_TRACE(PHP);
 
 	QString remainder;
-	RKComponentBase* base = component->lookupComponent (changed_id, &remainder);
+	RKComponentBase *base = component->lookupComponent(changed_id, &remainder);
 
-	if (remainder.isEmpty ()) {
-		component_commands.insert (base, command);
+	if (remainder.isEmpty()) {
+		component_commands.insert(base, command);
 		if (base->isComponent()) {
-			connect (static_cast<RKComponent*> (base), &RKComponent::componentChanged, this, &RKComponentScriptingProxy::componentChanged);
+			connect(static_cast<RKComponent *>(base), &RKComponent::componentChanged, this, &RKComponentScriptingProxy::componentChanged);
 		} else {
-			connect (static_cast<RKComponentPropertyBase*> (base), &RKComponentPropertyBase::valueChanged, this, &RKComponentScriptingProxy::propertyChanged);
+			connect(static_cast<RKComponentPropertyBase *>(base), &RKComponentPropertyBase::valueChanged, this, &RKComponentScriptingProxy::propertyChanged);
 		}
 	} else {
-		evaluate (QStringLiteral ("error ('No such property %1 (failed portion was %2)');\n").arg (changed_id, remainder));
+		evaluate(QStringLiteral("error ('No such property %1 (failed portion was %2)');\n").arg(changed_id, remainder));
 	}
 }
 
-QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QString& callback) {
-	RK_TRACE (PHP);
+QVariant RKComponentScriptingProxy::doRCommand(const QString &command, const QString &callback) {
+	RK_TRACE(PHP);
 
 	// purge duplicate commands
-	for (int i = 0; i < outstanding_commands.size (); ++i) {
+	for (int i = 0; i < outstanding_commands.size(); ++i) {
 		const OutstandingCommand &oc = outstanding_commands[i];
 		if (oc.callback == callback) {
 			if (RInterface::instance()->softCancelCommand(oc.command)) {
-				outstanding_commands.removeAt (i);
+				outstanding_commands.removeAt(i);
 				--i;
 				continue;
 			}
@@ -127,13 +127,13 @@ QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QS
 	}
 
 	OutstandingCommand com;
-	com.command = new RCommand (command, RCommand::PriorityCommand | RCommand::GetStructuredData | RCommand::Plugin);
-	connect (com.command->notifier (), &RCommandNotifier::commandFinished, this, &RKComponentScriptingProxy::scriptRCommandFinished);
+	com.command = new RCommand(command, RCommand::PriorityCommand | RCommand::GetStructuredData | RCommand::Plugin);
+	connect(com.command->notifier(), &RCommandNotifier::commandFinished, this, &RKComponentScriptingProxy::scriptRCommandFinished);
 	com.callback = callback;
-	outstanding_commands.append (com);
+	outstanding_commands.append(com);
 
-	RInterface::issueCommand (com.command);
-	return (QVariant (com.command->id ()));
+	RInterface::issueCommand(com.command);
+	return (QVariant(com.command->id()));
 }
 
 static QJSValue marshall(QJSEngine *engine, const RData *data) {
@@ -146,9 +146,9 @@ static QJSValue marshall(QJSEngine *engine, const RData *data) {
 	} else if (data->getDataType() == RData::RealVector) {
 		return (rkJSMakeArray(engine, data->realVector()));
 	} else if (data->getDataType() == RData::StructureVector) {
-		const RData::RDataStorage& rs = data->structureVector();
-		QJSValue ret = engine->newArray (rs.size ());
-		for (int i = 0; i < rs.size (); ++i) {
+		const RData::RDataStorage &rs = data->structureVector();
+		QJSValue ret = engine->newArray(rs.size());
+		for (int i = 0; i < rs.size(); ++i) {
 			ret.setProperty(i, marshall(engine, rs[i]));
 		}
 		return ret;
@@ -158,101 +158,101 @@ static QJSValue marshall(QJSEngine *engine, const RData *data) {
 	return QJSValue();
 }
 
-void RKComponentScriptingProxy::scriptRCommandFinished (RCommand* command) {
-	RK_TRACE (PHP);
+void RKComponentScriptingProxy::scriptRCommandFinished(RCommand *command) {
+	RK_TRACE(PHP);
 
 	QString callback;
-	for (int i = 0; i < outstanding_commands.size (); ++i) {
-		const OutstandingCommand& oc = outstanding_commands[i];
+	for (int i = 0; i < outstanding_commands.size(); ++i) {
+		const OutstandingCommand &oc = outstanding_commands[i];
 		if (oc.command == command) {
 			callback = oc.callback;
-			outstanding_commands.removeAt (i);
+			outstanding_commands.removeAt(i);
 			break;
 		}
 	}
-	RK_ASSERT (!callback.isNull ());
+	RK_ASSERT(!callback.isNull());
 
-	if (command->wasCanceled ()) return;
-	if (command->failed ()) RK_DEBUG (PHP, DL_ERROR, "Plugin script R command %s failed. Full output was %s", qPrintable (command->command ()), qPrintable (command->fullOutput ()));
+	if (command->wasCanceled()) return;
+	if (command->failed()) RK_DEBUG(PHP, DL_ERROR, "Plugin script R command %s failed. Full output was %s", qPrintable(command->command()), qPrintable(command->fullOutput()));
 
 	QJSValueList args;
-	args.append (marshall (&engine, command));
-	args.append (QJSValue (command->id ()));
-	QJSValue callback_obj = engine.globalObject ().property (callback);
+	args.append(marshall(&engine, command));
+	args.append(QJSValue(command->id()));
+	QJSValue callback_obj = engine.globalObject().property(callback);
 	auto res = callback_obj.call(args);
 	handleScriptError(res);
 }
 
-void RKComponentScriptingProxy::componentChanged (RKComponent* changed) {
-	RK_TRACE (PHP);
-	handleChange (changed);
+void RKComponentScriptingProxy::componentChanged(RKComponent *changed) {
+	RK_TRACE(PHP);
+	handleChange(changed);
 }
 
-void RKComponentScriptingProxy::propertyChanged (RKComponentPropertyBase* changed) {
-	RK_TRACE (PHP);
-	handleChange (changed);
+void RKComponentScriptingProxy::propertyChanged(RKComponentPropertyBase *changed) {
+	RK_TRACE(PHP);
+	handleChange(changed);
 }
 
-void RKComponentScriptingProxy::handleChange(RKComponentBase* changed) {
+void RKComponentScriptingProxy::handleChange(RKComponentBase *changed) {
 	RK_TRACE(PHP);
 
 	QString command = component_commands.value(changed);
 	evaluate(command);
 }
 
-QVariant RKComponentScriptingProxy::getValue (const QString &id) const {
-	RK_TRACE (PHP);
-	return (component->fetchValue (id, RKComponent::TraditionalValue));
+QVariant RKComponentScriptingProxy::getValue(const QString &id) const {
+	RK_TRACE(PHP);
+	return (component->fetchValue(id, RKComponent::TraditionalValue));
 }
 
-QVariant RKComponentScriptingProxy::getString (const QString &id) const {
-	RK_TRACE (PHP);
-	return (component->fetchValue (id, RKComponent::StringValue));
+QVariant RKComponentScriptingProxy::getString(const QString &id) const {
+	RK_TRACE(PHP);
+	return (component->fetchValue(id, RKComponent::StringValue));
 }
 
-QVariant RKComponentScriptingProxy::getBoolean (const QString &id) const {
-	RK_TRACE (PHP);
-	return (component->fetchValue (id, RKComponent::BooleanValue));
+QVariant RKComponentScriptingProxy::getBoolean(const QString &id) const {
+	RK_TRACE(PHP);
+	return (component->fetchValue(id, RKComponent::BooleanValue));
 }
 
-QVariant RKComponentScriptingProxy::getList (const QString &id) const {
-	RK_TRACE (PHP);
-	return (component->fetchValue (id, RKComponent::StringlistValue));
+QVariant RKComponentScriptingProxy::getList(const QString &id) const {
+	RK_TRACE(PHP);
+	return (component->fetchValue(id, RKComponent::StringlistValue));
 }
 
-void RKComponentScriptingProxy::setValue (const QString &value, const QString &id) {
-	RK_TRACE (PHP);
-
-	QString modifier;
-	RKComponentBase* resolved = component->lookupComponent (id, &modifier);
-	if (resolved && modifier.isEmpty () && resolved->isProperty ()) {
-		static_cast<RKComponentPropertyBase*> (resolved)->setValue (value);
-	} else {
-		evaluate (QStringLiteral ("error ('No such property %1 (failed portion was %2)');\n").arg (id, modifier));
-	}
-}
-
-void RKComponentScriptingProxy::setListValue (const QStringList& value, const QString& id) {
-	RK_TRACE (PHP);
-
-	QString modifier;
-	RKComponentBase* resolved = component->lookupComponent (id, &modifier);
-	if (resolved && modifier.isEmpty () && resolved->isProperty ()) {
-		RKComponentPropertyAbstractList *l = dynamic_cast<RKComponentPropertyAbstractList*> (resolved);
-		if (l) {
-			l->setValueList (value);
-			return;
-		}
-		static_cast<RKComponentPropertyBase*> (resolved)->setValue (value.join (QStringLiteral("\n")));
-	} else {
-		evaluate (QStringLiteral ("error ('No such property %1 (failed portion was %2)');\n").arg (id, modifier));
-	}
-}
-
-QVariantList RKComponentScriptingProxy::getObjectInfo(const QString& name) {
+void RKComponentScriptingProxy::setValue(const QString &value, const QString &id) {
 	RK_TRACE(PHP);
 
-	RObject* object = RObjectList::getObjectList()->findObject(name);
+	QString modifier;
+	RKComponentBase *resolved = component->lookupComponent(id, &modifier);
+	if (resolved && modifier.isEmpty() && resolved->isProperty()) {
+		static_cast<RKComponentPropertyBase *>(resolved)->setValue(value);
+	} else {
+		evaluate(QStringLiteral("error ('No such property %1 (failed portion was %2)');\n").arg(id, modifier));
+	}
+}
+
+void RKComponentScriptingProxy::setListValue(const QStringList &value, const QString &id) {
+	RK_TRACE(PHP);
+
+	QString modifier;
+	RKComponentBase *resolved = component->lookupComponent(id, &modifier);
+	if (resolved && modifier.isEmpty() && resolved->isProperty()) {
+		RKComponentPropertyAbstractList *l = dynamic_cast<RKComponentPropertyAbstractList *>(resolved);
+		if (l) {
+			l->setValueList(value);
+			return;
+		}
+		static_cast<RKComponentPropertyBase *>(resolved)->setValue(value.join(QStringLiteral("\n")));
+	} else {
+		evaluate(QStringLiteral("error ('No such property %1 (failed portion was %2)');\n").arg(id, modifier));
+	}
+}
+
+QVariantList RKComponentScriptingProxy::getObjectInfo(const QString &name) {
+	RK_TRACE(PHP);
+
+	RObject *object = RObjectList::getObjectList()->findObject(name);
 	if (object) {
 		QVariantList ret;
 
@@ -282,26 +282,25 @@ QVariantList RKComponentScriptingProxy::getObjectInfo(const QString& name) {
 	return (QVariantList());
 }
 
-QString RKComponentScriptingProxy::getObjectParent (const QString &name) {
-	RK_TRACE (PHP);
+QString RKComponentScriptingProxy::getObjectParent(const QString &name) {
+	RK_TRACE(PHP);
 
-	RObject* object = RObjectList::getObjectList ()->findObject (name);
+	RObject *object = RObjectList::getObjectList()->findObject(name);
 	if (object) {
-		if (object->parentObject ()) return (object->parentObject ()->getFullName ());
+		if (object->parentObject()) return (object->parentObject()->getFullName());
 	}
-	return (QString ());
+	return (QString());
 }
 
-QString RKComponentScriptingProxy::getObjectChild (const QString &name) {
-	RK_TRACE (PHP);
-	RObject* object = RObjectList::getObjectList ()->findObject (name);
+QString RKComponentScriptingProxy::getObjectChild(const QString &name) {
+	RK_TRACE(PHP);
+	RObject *object = RObjectList::getObjectList()->findObject(name);
 
 	if (object) {
-		if (object->isContainer ()) {
-			RObject* child = static_cast<RContainerObject*> (object)->findChildByName (name);
-			if (child) return (child->getFullName ());
+		if (object->isContainer()) {
+			RObject *child = static_cast<RContainerObject *>(object)->findChildByName(name);
+			if (child) return (child->getFullName());
 		}
 	}
-	return (QString ());
+	return (QString());
 }
-

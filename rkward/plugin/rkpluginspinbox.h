@@ -21,20 +21,21 @@ TODO: rename file and class to RKComponentSpinBox
 */
 class RKPluginSpinBox : public RKComponent {
 	Q_OBJECT
-public:
-	RKPluginSpinBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+  public:
+	RKPluginSpinBox(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 
-	~RKPluginSpinBox ();
-	QVariant value (const QString &modifier=QString ()) override;
-	QStringList getUiLabelPair () const override;
-	int type () override { return ComponentSpinBox; };
+	~RKPluginSpinBox();
+	QVariant value(const QString &modifier = QString()) override;
+	QStringList getUiLabelPair() const override;
+	int type() override { return ComponentSpinBox; };
 
 	RKComponentPropertyInt *intvalue;
 	RKComponentPropertyDouble *realvalue;
-public Q_SLOTS:
-	void valueChangedFromUi ();
-	void valueChanged (RKComponentPropertyBase *property);
-private:
+  public Q_SLOTS:
+	void valueChangedFromUi();
+	void valueChanged(RKComponentPropertyBase *property);
+
+  private:
 	RKSpinBox *spinbox;
 	QLabel *label;
 	bool intmode;

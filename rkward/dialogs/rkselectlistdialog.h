@@ -19,7 +19,7 @@ class QDialogButtonBox;
 */
 class RKSelectListDialog : public QDialog {
 	Q_OBJECT
-public:
+  public:
 	/** Construct and run modal RKSelectListDialog.
 	@param parent QWidget to center the modal dialog on (0 for application)
 	@param caption Dialog title
@@ -27,15 +27,17 @@ public:
 	@param preselected The preselected choices (QStringList ()) for no preselects
 	@param multiple Whether multiple items may be selected
 	@returns The selected option(s). An empty list, if cancel was pressed. */
-	static QStringList doSelect (QWidget *parent, const QString &caption, const QStringList& choices, const QStringList& preselected, bool multiple);
-protected:
+	static QStringList doSelect(QWidget *parent, const QString &caption, const QStringList &choices, const QStringList &preselected, bool multiple);
+
+  protected:
 	/** ctor. Use the doSelect() instead. */
-	RKSelectListDialog (QWidget *parent, const QString &caption, const QStringList& choices, const QStringList& preselected, bool multiple);
+	RKSelectListDialog(QWidget *parent, const QString &caption, const QStringList &choices, const QStringList &preselected, bool multiple);
 	/** destructor */
-	~RKSelectListDialog ();
-private Q_SLOTS:
-	void updateState ();
-private:
+	~RKSelectListDialog();
+  private Q_SLOTS:
+	void updateState();
+
+  private:
 	QListWidget *input;
 	QDialogButtonBox *buttons;
 };

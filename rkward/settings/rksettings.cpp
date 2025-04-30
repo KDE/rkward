@@ -11,31 +11,31 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KSharedConfig>
 
-#include "../windows/rkworkplace.h"
 #include "../rkward.h"
+#include "../windows/rkworkplace.h"
 
 // modules
-#include "rksettingsmoduleplugins.h"
-#include "rksettingsmodulekateplugins.h"
-#include "rksettingsmoduler.h"
-#include "rksettingsmodulegeneral.h"
-#include "rksettingsmoduleoutput.h"
-#include "rksettingsmodulegraphics.h"
-#include "rksettingsmodulewatch.h"
-#include "rksettingsmoduleobjectbrowser.h"
-#include "rksettingsmoduleconsole.h"
 #include "rksettingsmodulecommandeditor.h"
+#include "rksettingsmoduleconsole.h"
 #include "rksettingsmoduledebug.h"
+#include "rksettingsmodulegeneral.h"
+#include "rksettingsmodulegraphics.h"
+#include "rksettingsmodulekateplugins.h"
+#include "rksettingsmoduleobjectbrowser.h"
+#include "rksettingsmoduleoutput.h"
+#include "rksettingsmoduleplugins.h"
+#include "rksettingsmoduler.h"
+#include "rksettingsmodulewatch.h"
 
 #include "../debug.h"
 
-//static
+// static
 RKSettings *RKSettings::settings_dialog = nullptr;
 QList<RKSettingsModule *> RKSettings::modules;
 
-//static 
+// static
 void RKSettings::configureSettings(const RKSettingsModule::PageId page, QWidget *parent, RCommandChain *chain) {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 
 	RKSettingsModule::chain = chain;
 
@@ -50,7 +50,7 @@ void RKSettings::configureSettings(const RKSettingsModule::PageId page, QWidget 
 	settings_dialog->raise();
 }
 
-RKSettings::RKSettings(QWidget *parent) : KPageDialog (parent) {
+RKSettings::RKSettings(QWidget *parent) : KPageDialog(parent) {
 	RK_TRACE(SETTINGS);
 	RK_ASSERT(!settings_dialog);
 
@@ -102,35 +102,35 @@ void RKSettings::addSettingsPage(RKSettingsModuleWidget *widget) {
 	pages.append(page);
 }
 
-KPageWidgetItem* RKSettings::findPage(const RKSettingsModule::PageId id) const {
-	RK_TRACE (SETTINGS);
-	auto it = std::find_if(pages.constBegin(), pages.constEnd(), [id](KPageWidgetItem* p) {
-		return (static_cast<RKSettingsModuleWidget*>(p->widget())->pageid == id);
+KPageWidgetItem *RKSettings::findPage(const RKSettingsModule::PageId id) const {
+	RK_TRACE(SETTINGS);
+	auto it = std::find_if(pages.constBegin(), pages.constEnd(), [id](KPageWidgetItem *p) {
+		return (static_cast<RKSettingsModuleWidget *>(p->widget())->pageid == id);
 	});
 	RK_ASSERT(it != pages.constEnd());
 	return *it;
 }
 
-void RKSettings::pageChange (KPageWidgetItem *current, KPageWidgetItem *) {
-	RK_TRACE (SETTINGS);
-	RKSettingsModuleWidget *current_page = dynamic_cast<RKSettingsModuleWidget*>(current->widget());
+void RKSettings::pageChange(KPageWidgetItem *current, KPageWidgetItem *) {
+	RK_TRACE(SETTINGS);
+	RKSettingsModuleWidget *current_page = dynamic_cast<RKSettingsModuleWidget *>(current->widget());
 	RK_ASSERT(current_page);
 
 	bool has_help = current_page && !current_page->helpURL().isEmpty();
 	button(QDialogButtonBox::Help)->setEnabled(has_help);
 }
 
-void RKSettings::done (int result) {
-	RK_TRACE (SETTINGS);
+void RKSettings::done(int result) {
+	RK_TRACE(SETTINGS);
 
-	if (result == Accepted) applyAll ();
-	QDialog::done (result);
+	if (result == Accepted) applyAll();
+	QDialog::done(result);
 }
 
-void RKSettings::helpClicked () {
-	RK_TRACE (SETTINGS);
+void RKSettings::helpClicked() {
+	RK_TRACE(SETTINGS);
 
-	RKSettingsModuleWidget *current_page = dynamic_cast<RKSettingsModuleWidget*>(currentPage()->widget());
+	RKSettingsModuleWidget *current_page = dynamic_cast<RKSettingsModuleWidget *>(currentPage()->widget());
 	if (!current_page) {
 		RK_ASSERT(false);
 		return;
@@ -139,23 +139,23 @@ void RKSettings::helpClicked () {
 }
 
 void RKSettings::applyAll() {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 
 	// NOTE: This is shoddy design, but also kind of difficult: While applying the changes of the kate plugin page, pages may be added/removed
 	//       to this very dialog. I.e. while looping over the pages, they'd get modified (and even deleted!). Can't have that, so for now, we
 	//       special-case the kate plugins page, and handle it last.
 	auto kate_plugin_page = findPage(RKSettingsModuleKatePlugins::page_id);
 	RK_ASSERT(kate_plugin_page);
-	QSet<RKSettingsModule*> changed_modules;
+	QSet<RKSettingsModule *> changed_modules;
 	for (auto it = pages.constBegin(); it != pages.constEnd(); ++it) {
 		if ((*it) == kate_plugin_page) continue;
-		auto w = static_cast<RKSettingsModuleWidget*>((*it)->widget());
+		auto w = static_cast<RKSettingsModuleWidget *>((*it)->widget());
 		if (w->hasChanges()) {
 			w->doApply();
 			changed_modules.insert(w->parentModule());
 		}
 	}
-	auto kateconfig = static_cast<RKSettingsModuleWidget*>(kate_plugin_page->widget());
+	auto kateconfig = static_cast<RKSettingsModuleWidget *>(kate_plugin_page->widget());
 	if (kateconfig->hasChanges()) {
 		kateconfig->doApply();
 		changed_modules.insert(kateconfig->parentModule());
@@ -163,7 +163,7 @@ void RKSettings::applyAll() {
 
 	for (auto it = changed_modules.constBegin(); it != changed_modules.constEnd(); ++it) {
 		(*it)->syncConfig(KSharedConfig::openConfig().data(), RKConfigBase::SaveConfig);
-		Q_EMIT (*it)->settingsChanged();
+		Q_EMIT(*it)->settingsChanged();
 	}
 	button(QDialogButtonBox::Apply)->setEnabled(false);
 }
@@ -171,7 +171,7 @@ void RKSettings::applyAll() {
 void RKSettings::removeSettingsPage(RKSettingsModuleWidget *which) {
 	RK_TRACE(SETTINGS);
 
-	auto it = std::find_if(pages.constBegin(), pages.constEnd(), [which](KPageWidgetItem* p) {
+	auto it = std::find_if(pages.constBegin(), pages.constEnd(), [which](KPageWidgetItem *p) {
 		return (p->widget() == which);
 	});
 	RK_ASSERT(it != pages.constEnd());
@@ -202,7 +202,7 @@ void RKSettings::loadSettings(KConfig *config) {
 		modules.append(new RKSettingsModuleObjectBrowser(p));
 		modules.append(new RKSettingsModuleDebug(p));
 	}
-	for(auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
+	for (auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
 		(*it)->syncConfig(config, RKConfigBase::LoadConfig);
 	}
 }
@@ -211,16 +211,16 @@ void RKSettings::saveSettings(KConfig *config) {
 	RK_TRACE(SETTINGS);
 	RK_ASSERT(!modules.isEmpty());
 
-	for(auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
+	for (auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
 		(*it)->syncConfig(config, RKConfigBase::SaveConfig);
 	}
 }
 
-QList<RKSetupWizardItem*> RKSettings::validateSettingsInteractive () {
-	RK_TRACE (SETTINGS);
+QList<RKSetupWizardItem *> RKSettings::validateSettingsInteractive() {
+	RK_TRACE(SETTINGS);
 
-	QList<RKSetupWizardItem*> interaction_items;
-	for(auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
+	QList<RKSetupWizardItem *> interaction_items;
+	for (auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
 		(*it)->validateSettingsInteractive(&interaction_items);
 	}
 	return interaction_items;

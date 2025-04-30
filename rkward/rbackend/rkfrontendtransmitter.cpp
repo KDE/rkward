@@ -7,55 +7,55 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkfrontendtransmitter.h"
 
-#include "rkrbackendprotocol_frontend.h"
-#include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
-#include "rksessionvars.h"
 #include "../misc/rkcommandlineargs.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduler.h"
+#include "rkrbackendprotocol_frontend.h"
+#include "rksessionvars.h"
+#include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
 
 #include <KLocalizedString>
 #include <krandom.h>
 
 #include <QCoreApplication>
-#include <QRegularExpression>
-#include <QProcess>
+#include <QDir>
+#include <QElapsedTimer>
 #include <QLocalServer>
 #include <QLocalSocket>
-#include <QDir>
-#include <QStandardPaths>
-#include <QElapsedTimer>
-#include <QTemporaryDir>
+#include <QProcess>
+#include <QRegularExpression>
 #include <QSettings>
+#include <QStandardPaths>
+#include <QTemporaryDir>
 
-#include "../version.h"
 #include "../debug.h"
+#include "../version.h"
 
-QString findBackendAtPath (const QString &path) {
-	QDir dir (path);
-	dir.makeAbsolute ();
+QString findBackendAtPath(const QString &path) {
+	QDir dir(path);
+	dir.makeAbsolute();
 #ifdef Q_OS_WIN
 	QString ret = dir.filePath(u"rkward.rbackend.exe"_s);
 #else
 	QString ret = dir.filePath(u"rkward.rbackend"_s);
 #endif
-	RK_DEBUG (RBACKEND, DL_DEBUG, "Looking for backend at %s", qPrintable (ret));
-	QFileInfo fi (ret);
-	if (fi.exists () && fi.isExecutable ()) return ret;
-	return QString ();
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Looking for backend at %s", qPrintable(ret));
+	QFileInfo fi(ret);
+	if (fi.exists() && fi.isExecutable()) return ret;
+	return QString();
 }
 
 #if defined(RK_DLOPEN_LIBRSO)
 QString findBackendLibAtPath(const QString &path) {
 	QDir dir(path);
 	dir.makeAbsolute();
-#ifdef Q_OS_WIN
+#	ifdef Q_OS_WIN
 	QString ret = dir.filePath(u"rkward.rbackend.lib.dll"_s);
-#elif defined(Q_OS_MACOS)
+#	elif defined(Q_OS_MACOS)
 	QString ret = dir.filePath(u"librkward.rbackend.lib.dylib"_s);
-#else
+#	else
 	QString ret = dir.filePath(u"librkward.rbackend.lib.so"_s);
-#endif
+#	endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Looking for backend lib at %s", qPrintable(ret));
 	if (QFileInfo::exists(ret)) return ret;
 	return QString();
@@ -66,7 +66,7 @@ bool pathIsChildOf(const QString &parent, const QString &child) {
 	return QFileInfo(child).canonicalFilePath().startsWith(QFileInfo(parent).canonicalFilePath());
 }
 
-void removeFromPathList (const char* varname, bool (*shouldRemove)(const QString &path)) {
+void removeFromPathList(const char *varname, bool (*shouldRemove)(const QString &path)) {
 #ifdef Q_OS_WIN
 #	define PATH_VAR_SEP u';'
 #else
@@ -77,7 +77,7 @@ void removeFromPathList (const char* varname, bool (*shouldRemove)(const QString
 
 	const auto list = QString::fromLocal8Bit(var).split(PATH_VAR_SEP);
 	QStringList newlist;
-	for(const auto &str : list) {
+	for (const auto &str : list) {
 		if (shouldRemove(str)) {
 			RK_DEBUG(RBACKEND, DL_DEBUG, "Removing path %s from $%s", qPrintable(str), varname);
 		} else {
@@ -88,15 +88,15 @@ void removeFromPathList (const char* varname, bool (*shouldRemove)(const QString
 }
 
 RKFrontendTransmitter::RKFrontendTransmitter(RKRBackendProtocolFrontend *frontend) : RKAbstractTransmitter(), frontend(frontend) {
-	RK_TRACE (RBACKEND);
+	RK_TRACE(RBACKEND);
 
-	rkd_transmitter = new RKGraphicsDeviceFrontendTransmitter ();
+	rkd_transmitter = new RKGraphicsDeviceFrontendTransmitter();
 	quirkmode = false;
-	start ();
+	start();
 }
 
-RKFrontendTransmitter::~RKFrontendTransmitter () {
-	RK_TRACE (RBACKEND);
+RKFrontendTransmitter::~RKFrontendTransmitter() {
+	RK_TRACE(RBACKEND);
 
 	delete rkd_transmitter;
 }
@@ -118,7 +118,7 @@ QString RKFrontendTransmitter::resolveRSpecOrFail(QString input) {
 		if (ret.isNull() || !QFileInfo(ret).isExecutable()) {
 			handleTransmissionError(i18n("RKWard failed to detect an R installation on this system. Either R is not installed, or not at one of the standard installation locations."));
 		}
-		RK_DEBUG (APP, DL_DEBUG, "Using auto-detected R at %s", qPrintable (ret));
+		RK_DEBUG(APP, DL_DEBUG, "Using auto-detected R at %s", qPrintable(ret));
 		return ret;
 	}
 
@@ -146,13 +146,13 @@ void RKFrontendTransmitter::detectAndCheckRBinary() {
 		QFileInfo rkward_ini_file(frontend_path.absoluteFilePath(QStringLiteral("rkward.ini")));
 		if (rkward_ini_file.isReadable()) {
 			QSettings rkward_ini(rkward_ini_file.absoluteFilePath(), QSettings::IniFormat);
-			r_exe = rkward_ini.value("R executable").toString ();
+			r_exe = rkward_ini.value("R executable").toString();
 			if (!r_exe.isNull()) {
 				if (QDir::isRelativePath(r_exe) && r_exe != QStringLiteral("auto")) {
-					r_exe = frontend_path.absoluteFilePath (r_exe);
+					r_exe = frontend_path.absoluteFilePath(r_exe);
 				}
 			}
-			RK_DEBUG(APP, DL_DEBUG, "Using R as configured in config file %s", qPrintable (rkward_ini_file.absoluteFilePath ()));
+			RK_DEBUG(APP, DL_DEBUG, "Using R as configured in config file %s", qPrintable(rkward_ini_file.absoluteFilePath()));
 		} else {
 			if (QFileInfo::exists(QStringLiteral(R_EXECUTABLE))) {
 				RK_DEBUG(APP, DL_DEBUG, "Using R as configured at compile time");
@@ -187,7 +187,7 @@ void RKFrontendTransmitter::run() {
 
 	QStringList env = QProcess::systemEnvironment();
 	// Try to synchronize language selection in frontend and backend
-	int index = env.indexOf(QRegularExpression(QStringLiteral("^LANGUAGE=.*"), QRegularExpression::CaseInsensitiveOption));  // clazy:exclude=use-static-qregularexpression ; it'll only be craeted once
+	int index = env.indexOf(QRegularExpression(QStringLiteral("^LANGUAGE=.*"), QRegularExpression::CaseInsensitiveOption)); // clazy:exclude=use-static-qregularexpression ; it'll only be craeted once
 	if (index >= 0) env.removeAt(index);
 	env.append(u"LANGUAGE="_s + QLocale().name().section(u'_', 0, 0));
 
@@ -208,48 +208,48 @@ void RKFrontendTransmitter::run() {
 #ifdef Q_OS_MACOS
 	if (backend_executable.isEmpty())
 		backend_executable =
-		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../Resources"_s);  // an appropriate location in a standalone app-bundle
+		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../Resources"_s); // an appropriate location in a standalone app-bundle
 #endif
 	if (backend_executable.isEmpty())
-		backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath() + u"/rbackend"_s);  // for running directly from the build-dir
+		backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath() + u"/rbackend"_s); // for running directly from the build-dir
 	if (backend_executable.isEmpty())
-		backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../rbackend"_s);  // for running directly from the build-test-dir
+		backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../rbackend"_s); // for running directly from the build-test-dir
 	if (backend_executable.isEmpty())
 		backend_executable =
-		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/"_s + QStringLiteral(REL_PATH_TO_LIBEXEC));  // as calculated from cmake
+		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/"_s + QStringLiteral(REL_PATH_TO_LIBEXEC)); // as calculated from cmake
 #ifdef Q_OS_MACOS
 	if (backend_executable.isEmpty()) backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../../../rbackend"_s);
 	if (backend_executable.isEmpty())
 		backend_executable =
-		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../Frameworks/libexec"_s);  // For running from .dmg created by craft --package rkward
+		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../Frameworks/libexec"_s); // For running from .dmg created by craft --package rkward
 #endif
 	if (backend_executable.isEmpty()) backend_executable = findBackendAtPath(QStringLiteral(RKWARD_BACKEND_PATH));
 	if (backend_executable.isEmpty()) {
 		handleTransmissionError(i18n("The backend executable could not be found. This is likely to be a problem with your installation."));
-		exec();  // To actually show the transmission error
+		exec(); // To actually show the transmission error
 		return;
 	}
 
 #if defined(RK_DLOPEN_LIBRSO)
 	/** NOTE: For a description of the rationale for this involved loading procedure rkapi.h ! */
-	QString backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath());  // for running directly from the build tree, but also covers windows
+	QString backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath()); // for running directly from the build tree, but also covers windows
 	if (backend_lib.isEmpty())
-		backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + u"/"_s + QStringLiteral(REL_PATH_TO_LIB));  // regular installation; rel path between bin and lib dir is calculated in cmake
+		backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + u"/"_s + QStringLiteral(REL_PATH_TO_LIB)); // regular installation; rel path between bin and lib dir is calculated in cmake
 	if (backend_lib.isEmpty())
-		backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath());  // backend and lib both installed in libexec or similar
-#if defined(Q_OS_MACOS)
+		backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath()); // backend and lib both installed in libexec or similar
+#	if defined(Q_OS_MACOS)
 	if (backend_lib.isEmpty())
-		backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + u"/../Frameworks"_s);  // MacOS bundle: rkward in /MacOS, lib in /Framweorks
-#endif
-#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+		backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + u"/../Frameworks"_s); // MacOS bundle: rkward in /MacOS, lib in /Framweorks
+#	endif
+#	if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);
-#else
+#	else
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + QFileInfo(backend_lib).fileName());
 	QTemporaryDir rkward_only_dir(QDir::tempPath() + u"/rkward_only"_s);
 	QFile(QFileInfo(backend_lib).absolutePath()).link(rkward_only_dir.filePath(QStringLiteral("_rkward_only_dlpath")));
 	env.append(QStringLiteral("RK_ADD_LDPATH=./_rkward_only_dlpath"));
 	env.append(QStringLiteral("RK_LD_CWD=") + rkward_only_dir.path());
-#endif
+#	endif
 #endif
 	backend->setEnvironment(env);
 
@@ -261,11 +261,11 @@ void RKFrontendTransmitter::run() {
 	// On MacOS, we cd to R_HOME, instead, below
 	QFileInfo bfi(backend_executable);
 	backend->setWorkingDirectory(bfi.absolutePath());
-#ifdef Q_OS_WIN
+#	ifdef Q_OS_WIN
 	args.append(bfi.fileName());
-#else
+#	else
 	args.append(u"./"_s + bfi.fileName());
-#endif
+#	endif
 #else
 	args.append(backend_executable);
 #endif
@@ -305,7 +305,7 @@ void RKFrontendTransmitter::run() {
 	QProcess dummy;
 	QStringList dummyargs = args;
 	dummy.setWorkingDirectory(backend->workingDirectory());
-	dummyargs.removeAt(dummyargs.size() - 4);  // the --server-name. With this empty, the backend will exit
+	dummyargs.removeAt(dummyargs.size() - 4); // the --server-name. With this empty, the backend will exit
 	dummy.start(RKSessionVars::RBinary(), dummyargs, QIODevice::ReadOnly);
 	dummy.waitForFinished();
 	dummy.readAllStandardOutput();
@@ -344,8 +344,8 @@ void RKFrontendTransmitter::run() {
 	delete backend;
 }
 
-QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {
-	RK_TRACE (RBACKEND);
+QString RKFrontendTransmitter::waitReadLine(QIODevice *con, int msecs) {
+	RK_TRACE(RBACKEND);
 
 	// NOTE: On Qt5+Windows, readyReady may actually come in char by char, so calling waitForReadyRead() does not guarantee we will
 	//       see the full line, at all. But also, of course, we want to put some cap on trying. Using a time threshold for this.
@@ -356,7 +356,7 @@ QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {
 		ret.append(con->readLine());
 		if (ret.contains('\n')) break;
 		con->waitForReadyRead(500);
-	} while(time.elapsed() < msecs);
+	} while (time.elapsed() < msecs);
 	return QString::fromLocal8Bit(ret);
 }
 
@@ -384,16 +384,16 @@ void RKFrontendTransmitter::connectAndEnterLoop() {
 	setConnection(con);
 }
 
-void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
-	RK_TRACE (RBACKEND);
+void RKFrontendTransmitter::requestReceived(RBackendRequest *request) {
+	RK_TRACE(RBACKEND);
 
 	if (request->type == RBackendRequest::Output) {
-		ROutputList* list = request->output;
-		for (int i = 0; i < list->size (); ++i) {
+		ROutputList *list = request->output;
+		for (int i = 0; i < list->size(); ++i) {
 			ROutput *out = (*list)[i];
 
-			if (handleOutput (out->output, out->output.length (), out->type)) {
-				RKRBackendEvent* event = new RKRBackendEvent (new RBackendRequest (false, RBackendRequest::OutputStartedNotification));
+			if (handleOutput(out->output, out->output.length(), out->type)) {
+				RKRBackendEvent *event = new RKRBackendEvent(new RBackendRequest(false, RBackendRequest::OutputStartedNotification));
 				qApp->postEvent(frontend, event);
 			}
 
@@ -401,40 +401,39 @@ void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
 		}
 		delete list;
 		request->output = nullptr;
-		RK_ASSERT (request->synchronous);
-		writeRequest (request);	// to tell the backend, that we are keeping up. Also deletes the request.
+		RK_ASSERT(request->synchronous);
+		writeRequest(request); // to tell the backend, that we are keeping up. Also deletes the request.
 		return;
 	}
 
-	RKRBackendEvent* event = new RKRBackendEvent (request);
+	RKRBackendEvent *event = new RKRBackendEvent(request);
 	qApp->postEvent(frontend, event);
 }
 
-void RKFrontendTransmitter::backendExit (int exitcode) {
-	RK_TRACE (RBACKEND);
+void RKFrontendTransmitter::backendExit(int exitcode) {
+	RK_TRACE(RBACKEND);
 
 	if (!exitcode && token.isEmpty()) handleTransmissionError(i18n("The backend process could not be started. Please check your installation."));
 	else if (token.isEmpty()) handleTransmissionError(i18n("The backend process failed to start with exit code %1, message: '%2'.", exitcode, QString::fromLocal8Bit(backend->readAllStandardError().replace('\n', "<br>"))));
 	else handleTransmissionError(i18n("Backend process has exited with code %1, message: '%2'.", exitcode, QString::fromLocal8Bit(backend->readAllStandardError().replace('\n', "<br>"))));
 }
 
-void RKFrontendTransmitter::writeRequest (RBackendRequest *request) {
-	RK_TRACE (RBACKEND);
+void RKFrontendTransmitter::writeRequest(RBackendRequest *request) {
+	RK_TRACE(RBACKEND);
 
-	transmitRequest (request);
-	connection->flush ();
+	transmitRequest(request);
+	connection->flush();
 	delete request;
 }
 
-void RKFrontendTransmitter::handleTransmissionError (const QString &message) {
-	RK_TRACE (RBACKEND);
+void RKFrontendTransmitter::handleTransmissionError(const QString &message) {
+	RK_TRACE(RBACKEND);
 
-	if (connection) connection->close ();
-	RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
+	if (connection) connection->close();
+	RBackendRequest *req = new RBackendRequest(false, RBackendRequest::BackendExit);
 	req->params[QStringLiteral("message")] = message;
-	RKRBackendEvent* event = new RKRBackendEvent (req);
+	RKRBackendEvent *event = new RKRBackendEvent(req);
 	qApp->postEvent(frontend, event);
 
-	exit ();
+	exit();
 }
-

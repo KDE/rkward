@@ -16,16 +16,17 @@ class RKProgressControl;
 */
 class RKQuitAgent : public QObject {
 	Q_OBJECT
-public:
-/** Constructor. As soon as you construct an object of this type, the RKWard application *will* quit (but maybe with a short delay)! */
-	explicit RKQuitAgent (QObject *parent);
-	~RKQuitAgent ();
+  public:
+	/** Constructor. As soon as you construct an object of this type, the RKWard application *will* quit (but maybe with a short delay)! */
+	explicit RKQuitAgent(QObject *parent);
+	~RKQuitAgent();
 
-	static bool quittingInProgress () { return quitting; };
-public Q_SLOTS:
-	void doQuitNow ();
-	void showWaitDialog ();
-private:
+	static bool quittingInProgress() { return quitting; };
+  public Q_SLOTS:
+	void doQuitNow();
+	void showWaitDialog();
+
+  private:
 	RKProgressControl *cancel_dialog;
 	static bool quitting;
 };

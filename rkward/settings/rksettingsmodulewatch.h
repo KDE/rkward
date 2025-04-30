@@ -19,10 +19,9 @@ Settings module for the RInterface-watch. Allows you to configure what kind of c
 
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModuleWatch : public RKSettingsModule
-{
-Q_OBJECT
-public:
+class RKSettingsModuleWatch : public RKSettingsModule {
+	Q_OBJECT
+  public:
 	explicit RKSettingsModuleWatch(QObject *parent);
 	~RKSettingsModuleWatch() override;
 
@@ -30,17 +29,21 @@ public:
 	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("commandlog");
 
-	static bool shouldShowInput (RCommand *command);
-	static bool shouldShowOutput (RCommand *command);
-	static bool shouldShowError (RCommand *command);
-	static bool shouldRaiseWindow (RCommand *command);
+	static bool shouldShowInput(RCommand *command);
+	static bool shouldShowOutput(RCommand *command);
+	static bool shouldShowError(RCommand *command);
+	static bool shouldRaiseWindow(RCommand *command);
 
-	static uint maxLogLines () { return max_log_lines; };
+	static uint maxLogLines() { return max_log_lines; };
 
 	static RKSettingsModuleWatch *instance() { return _instance; };
-private:
-friend class RKSettingsPageWatch;
-	enum FilterType { ShowInput=1, ShowOutput=2, ShowError=4, RaiseWindow=8 };
+
+  private:
+	friend class RKSettingsPageWatch;
+	enum FilterType { ShowInput = 1,
+		              ShowOutput = 2,
+		              ShowError = 4,
+		              RaiseWindow = 8 };
 
 	static RKConfigValue<int> plugin_filter;
 	static RKConfigValue<int> app_filter;
@@ -48,7 +51,7 @@ friend class RKSettingsPageWatch;
 	static RKConfigValue<int> user_filter;
 
 	static RKConfigValue<uint> max_log_lines;
-	static RKSettingsModuleWatch* _instance;
+	static RKSettingsModuleWatch *_instance;
 };
 
 #endif

@@ -6,28 +6,28 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "celleditor.h"
 
-#include <QMenu>
-#include <QTimer>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QMenu>
+#include <QTimer>
 
 #include <KLocalizedString>
 
 #include "../debug.h"
 
-CellEditor::CellEditor (QWidget* parent) : QLineEdit (parent) {
-	RK_TRACE (EDITOR);
+CellEditor::CellEditor(QWidget *parent) : QLineEdit(parent) {
+	RK_TRACE(EDITOR);
 
-	setFrame (false);
+	setFrame(false);
 
 	value_list = nullptr;
 }
 
-CellEditor::~CellEditor () {
-	RK_TRACE (EDITOR);
+CellEditor::~CellEditor() {
+	RK_TRACE(EDITOR);
 }
 
-void CellEditor::setValueLabels(const RObject::ValueLabels& labels) {
+void CellEditor::setValueLabels(const RObject::ValueLabels &labels) {
 	RK_TRACE(EDITOR);
 
 	if (labels.isEmpty()) return;
@@ -37,7 +37,7 @@ void CellEditor::setValueLabels(const RObject::ValueLabels& labels) {
 	value_list->setFont(font());
 	value_list->setPalette(palette());
 	value_list->setFocusProxy(this);
-	value_list->installEventFilter(this);  // somehow setting us as a focus proxy is not enough to continue to receive the key-presses
+	value_list->installEventFilter(this); // somehow setting us as a focus proxy is not enough to continue to receive the key-presses
 
 	const int limit = 64;
 	int i = 0;
@@ -53,61 +53,60 @@ void CellEditor::setValueLabels(const RObject::ValueLabels& labels) {
 	QTimer::singleShot(200, this, &CellEditor::showValueLabels);
 }
 
-void CellEditor::selectedFromList (QAction* action) {
-	RK_TRACE (EDITOR);
-	RK_ASSERT (action);
+void CellEditor::selectedFromList(QAction *action) {
+	RK_TRACE(EDITOR);
+	RK_ASSERT(action);
 
-	setText (action->data ().toString ());	// which is a string representation of an int, really
+	setText(action->data().toString()); // which is a string representation of an int, really
 }
 
-void CellEditor::setText (const QString& text) {
-	RK_TRACE (EDITOR);
+void CellEditor::setText(const QString &text) {
+	RK_TRACE(EDITOR);
 
-	QLineEdit::setText (text);
-	selectAll ();
+	QLineEdit::setText(text);
+	selectAll();
 }
 
-void CellEditor::showValueLabels () {
-	RK_TRACE (EDITOR);
-	RK_ASSERT (value_list);
+void CellEditor::showValueLabels() {
+	RK_TRACE(EDITOR);
+	RK_ASSERT(value_list);
 
-	QPoint pos = mapToGlobal (QPoint (5, height ()+5));
-	value_list->popup (QPoint (pos));
+	QPoint pos = mapToGlobal(QPoint(5, height() + 5));
+	value_list->popup(QPoint(pos));
 }
 
-void CellEditor::keyPressEvent (QKeyEvent *e) {
-	if (e->modifiers () == Qt::NoModifier) {
-		if ((e->key () == Qt::Key_Left) || (e->key () == Qt::Key_Backspace)) {
-			if (cursorPosition () < 1) {
+void CellEditor::keyPressEvent(QKeyEvent *e) {
+	if (e->modifiers() == Qt::NoModifier) {
+		if ((e->key() == Qt::Key_Left) || (e->key() == Qt::Key_Backspace)) {
+			if (cursorPosition() < 1) {
 				Q_EMIT done(this, RKItemDelegate::EditorExitLeft);
 				return;
 			}
 		}
-		if (e->key () == Qt::Key_Right) {
-			if (cursorPosition () >= (int) text ().length ()) {
+		if (e->key() == Qt::Key_Right) {
+			if (cursorPosition() >= (int)text().length()) {
 				Q_EMIT done(this, RKItemDelegate::EditorExitRight);
 				return;
 			}
 		}
-		if (e->key () == Qt::Key_Up) {
+		if (e->key() == Qt::Key_Up) {
 			Q_EMIT done(this, RKItemDelegate::EditorExitUp);
 			return;
 		}
-		if (e->key () == Qt::Key_Down) {
+		if (e->key() == Qt::Key_Down) {
 			Q_EMIT done(this, RKItemDelegate::EditorExitDown);
 			return;
 		}
 	}
-	QLineEdit::keyPressEvent (e);
+	QLineEdit::keyPressEvent(e);
 }
 
-bool CellEditor::eventFilter (QObject* object, QEvent* e) {
+bool CellEditor::eventFilter(QObject *object, QEvent *e) {
 	if (object && (object == value_list)) {
 		if (e->type() == QEvent::KeyPress) {
-			RK_TRACE (EDITOR);
-			return event (e);
+			RK_TRACE(EDITOR);
+			return event(e);
 		}
 	}
 	return false;
 }
-

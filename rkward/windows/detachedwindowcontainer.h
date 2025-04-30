@@ -8,8 +8,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef DETACHEDWINDOWCONTAINER_H
 #define DETACHEDWINDOWCONTAINER_H
 
-#include <kparts/part.h>
 #include <kparts/mainwindow.h>
+#include <kparts/part.h>
 
 class RKMDIWindow;
 class RKTopLevelWindowGUI;
@@ -21,27 +21,29 @@ class QCloseEvent;
 */
 class DetachedWindowContainer : public KParts::MainWindow {
 	Q_OBJECT
-public:
-/** constructor.
-@param widget_to_capture The window to reparent into the detached window */
-	explicit DetachedWindowContainer (RKMDIWindow *widget_to_capture, bool copy_geometry);
-/** destructor. Usually you don't call this explicitly, but rather delete/close the child view. The DetachedWindowContainer will then self destruct via viewDestroyed () */
-	~DetachedWindowContainer ();
-public Q_SLOTS:
-/** self-destruct, when child view is destroyed */
-	void viewDestroyed (QObject *view);
-/** re-attach to the main window */
-	void slotReattach ();
-/** update own caption, when the window's caption has changed */
-	void updateCaption (RKMDIWindow *);
-	void slotSetStatusBarText (const QString &text) override;
-/** Hide any emtpy menus.
-@param ignore do nothing if true. For internal use, only. */
-	void hideEmptyMenus (bool ignore=false);
-protected:
-/** when receiving a close event, dispatch to the embedded window */
-	void closeEvent (QCloseEvent *e) override;
-private:
+  public:
+	/** constructor.
+	@param widget_to_capture The window to reparent into the detached window */
+	explicit DetachedWindowContainer(RKMDIWindow *widget_to_capture, bool copy_geometry);
+	/** destructor. Usually you don't call this explicitly, but rather delete/close the child view. The DetachedWindowContainer will then self destruct via viewDestroyed () */
+	~DetachedWindowContainer();
+  public Q_SLOTS:
+	/** self-destruct, when child view is destroyed */
+	void viewDestroyed(QObject *view);
+	/** re-attach to the main window */
+	void slotReattach();
+	/** update own caption, when the window's caption has changed */
+	void updateCaption(RKMDIWindow *);
+	void slotSetStatusBarText(const QString &text) override;
+	/** Hide any emtpy menus.
+	@param ignore do nothing if true. For internal use, only. */
+	void hideEmptyMenus(bool ignore = false);
+
+  protected:
+	/** when receiving a close event, dispatch to the embedded window */
+	void closeEvent(QCloseEvent *e) override;
+
+  private:
 	RKMDIWindow *captured;
 	RKTopLevelWindowGUI *toplevel_actions;
 };

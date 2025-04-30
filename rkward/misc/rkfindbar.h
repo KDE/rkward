@@ -8,8 +8,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKFINDBAR_H
 #define RKFINDBAR_H
 
-#include <QWidget>
 #include <QMap>
+#include <QWidget>
 
 class QCheckBox;
 class KHistoryComboBox;
@@ -17,9 +17,9 @@ class QHBoxLayout;
 
 class RKFindBar : public QWidget {
 	Q_OBJECT
-public:
-	explicit RKFindBar (QWidget *parent, bool custom=false);
-	~RKFindBar ();
+  public:
+	explicit RKFindBar(QWidget *parent, bool custom = false);
+	~RKFindBar();
 
 	enum FindOptions {
 		HighlightAll,
@@ -27,30 +27,31 @@ public:
 		MatchCase
 	};
 
-/** Insert the given option-widgets into the search bar. Widgets must be owned by the find bar. 
+	/** Insert the given option-widgets into the search bar. Widgets must be owned by the find bar.
 
-I'd love to be able to implement options as QWidgetAction, instead of QWidgets.
-However, these can't be inserted into anything other than QToolBar or QMenu... */
-	void setPrimaryOptions (const QList<QWidget*>& options);
+	I'd love to be able to implement options as QWidgetAction, instead of QWidgets.
+	However, these can't be inserted into anything other than QToolBar or QMenu... */
+	void setPrimaryOptions(const QList<QWidget *> &options);
 
-	QCheckBox* getOption (const FindOptions option);
-	bool isOptionSet (const FindOptions option) const;
-	void indicateSearchFail ();
-public Q_SLOTS:
-	void activate ();
-	void activateWithFindAsYouType ();
-	void forward ();
-	void backward ();
-Q_SIGNALS:
-	void findRequest (const QString& text, bool backwards, const RKFindBar *findbar, bool *result);
-private Q_SLOTS:
-/** search term _or_ search options changed. Triggers a forward search, if FindAsYouType is active */
-	void searchChanged ();
-private:
-	QMap<FindOptions, QCheckBox*> default_actions;
-	KHistoryComboBox* term_edit;
+	QCheckBox *getOption(const FindOptions option);
+	bool isOptionSet(const FindOptions option) const;
+	void indicateSearchFail();
+  public Q_SLOTS:
+	void activate();
+	void activateWithFindAsYouType();
+	void forward();
+	void backward();
+  Q_SIGNALS:
+	void findRequest(const QString &text, bool backwards, const RKFindBar *findbar, bool *result);
+  private Q_SLOTS:
+	/** search term _or_ search options changed. Triggers a forward search, if FindAsYouType is active */
+	void searchChanged();
+
+  private:
+	QMap<FindOptions, QCheckBox *> default_actions;
+	KHistoryComboBox *term_edit;
 	QHBoxLayout *mlayout;
-	void doSearch (bool backward);
+	void doSearch(bool backward);
 	QPalette regular_palette;
 	QPalette nomatch_palette;
 };

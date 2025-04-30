@@ -15,40 +15,42 @@ class RKRBackendTransmitter;
 
 extern "C"
 #ifdef Q_OS_WIN
-	__declspec(dllexport)
+    __declspec(dllexport)
 #else
-	__attribute__((__visibility__("default")))
+    __attribute__((__visibility__("default")))
 #endif
-int do_main(int, char**, void*, void* (*)(void*, const char*));
+        int do_main(int, char **, void *, void *(*)(void *, const char *));
 
 class RKRBackendProtocolBackend {
-public:
-	static bool inRThread ();
-	static const QString& dataDir () { return _instance->data_dir; };
-	static const QString& rkdServerName () { return _instance->rkd_server_name; };
-	static QString backendDebugFile ();
+  public:
+	static bool inRThread();
+	static const QString &dataDir() { return _instance->data_dir; };
+	static const QString &rkdServerName() { return _instance->rkd_server_name; };
+	static QString backendDebugFile();
 	static void doExit();
 
-	RKRBackendProtocolBackend (const QString &data_dir, const QString &rkd_server_name);
-	~RKRBackendProtocolBackend ();
-protected:
-friend class RKRBackendProtocolFrontend;
-friend class RKRBackend;
-friend class RKRBackendThread;
-friend class RKRBackendTransmitter;
-friend int main(int, char**);
-friend int do_main(int, char**, void*, void* (*)(void*, const char*));
-	void sendRequest (RBackendRequest *request);
-	static void msleep (int delay);
-	static RKRBackendProtocolBackend* instance () { return _instance; };
+	RKRBackendProtocolBackend(const QString &data_dir, const QString &rkd_server_name);
+	~RKRBackendProtocolBackend();
+
+  protected:
+	friend class RKRBackendProtocolFrontend;
+	friend class RKRBackend;
+	friend class RKRBackendThread;
+	friend class RKRBackendTransmitter;
+	friend int main(int, char **);
+	friend int do_main(int, char **, void *, void *(*)(void *, const char *));
+	void sendRequest(RBackendRequest *request);
+	static void msleep(int delay);
+	static RKRBackendProtocolBackend *instance() { return _instance; };
 	QString data_dir;
-private:
+
+  private:
 	QString rkd_server_name;
-	static RKRBackendProtocolBackend* _instance;
-	static RKRBackendTransmitter* p_transmitter;
+	static RKRBackendProtocolBackend *_instance;
+	static RKRBackendTransmitter *p_transmitter;
 	QThread *r_thread;
 #ifndef Q_OS_WIN
-	friend void completeForkChild ();
+	friend void completeForkChild();
 	Qt::HANDLE r_thread_id;
 #endif
 };

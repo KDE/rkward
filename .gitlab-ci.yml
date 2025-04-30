@@ -60,3 +60,18 @@ craft_macos_qt6_x86_64:
     - when: manual
       # we don't want the manual job to block the pipeline
       allow_failure: true
+
+clang_format:
+  stage: build
+  image: debian:stable
+  tags:
+    - Linux
+  only:
+    - merge_requests
+    - master
+  before_script:
+    - apt-get update
+    - apt-get install --yes --no-install-recommends git clang-format-14
+  script:
+    - find rkward \( -name "*.cpp" -or -name "*.h"  -or -name "*.js" \) -exec clang-format-14 -i {} \;
+    - git diff --exit-code

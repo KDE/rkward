@@ -6,13 +6,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // globals
 var options;
 
-include ('plot_dist_common.js');
+include('plot_dist_common.js');
 
-function getParameters () {
-	options['args'] = ', prob=' + getString ("prob");
+function getParameters() {
+	options['args'] = ', prob=' + getString("prob");
 	getDiscontRangeParameters();
 
-	options['distname'] = i18nc ("Geometric distribution", noquote ("Geometric"));
+	options['distname'] = i18nc("Geometric distribution", noquote("Geometric"));
 	if (options['is_density']) {
 		options['fun'] = "dgeom";
 	} else {
@@ -20,7 +20,7 @@ function getParameters () {
 	}
 }
 
-function addParamsToHeader (header) {
-	header.addFromUI ("prob");
+function addParamsToHeader(header) {
+	header.addFromUI("prob");
 	return header;
 }

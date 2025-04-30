@@ -22,28 +22,29 @@ The script itself is run in a separate thread to ensure good performance even fo
 TODO: The code is currently based on the old PHPBackend. Once that is truly obsolete, there should be room for redesigning several aspects. */
 class QtScriptBackend : public ScriptBackend {
 	Q_OBJECT
-public:
-	QtScriptBackend (const QString &filename, const RKMessageCatalog *catalog);
+  public:
+	QtScriptBackend(const QString &filename, const RKMessageCatalog *catalog);
 
-	~QtScriptBackend ();
+	~QtScriptBackend();
 
-	bool initialize (RKComponentPropertyCode *code_property=nullptr, bool add_headings=true) override;
-	void destroy () override;
-	
-	void preprocess (int flags) override { callFunction (QStringLiteral("do_preprocess ();\n"), flags, Preprocess); };
-	void calculate (int flags) override { callFunction (QStringLiteral("do_calculate ();\n"), flags, Calculate); };
-	void printout (int flags) override { callFunction (QStringLiteral("do_printout ();\n"), flags, Printout); };
-	void preview (int flags) override { callFunction (QStringLiteral("do_preview ();\n"), flags, Preview); };
-	void writeData (const QVariant &data) override;
+	bool initialize(RKComponentPropertyCode *code_property = nullptr, bool add_headings = true) override;
+	void destroy() override;
+
+	void preprocess(int flags) override { callFunction(QStringLiteral("do_preprocess ();\n"), flags, Preprocess); };
+	void calculate(int flags) override { callFunction(QStringLiteral("do_calculate ();\n"), flags, Calculate); };
+	void printout(int flags) override { callFunction(QStringLiteral("do_printout ();\n"), flags, Printout); };
+	void preview(int flags) override { callFunction(QStringLiteral("do_preview ();\n"), flags, Preview); };
+	void writeData(const QVariant &data) override;
 #ifdef JSBACKEND_PERFORMANCE_TEST
 	static void _performanceTest();
 #endif
-public Q_SLOTS:
-	void threadError (const QString &message);
-	void commandDone (const QString &result);
-	void needData (const QString &identifier, const int hint);
-private:
-	void tryNextFunction () override;
+  public Q_SLOTS:
+	void threadError(const QString &message);
+	void commandDone(const QString &result);
+	void needData(const QString &identifier, const int hint);
+
+  private:
+	void tryNextFunction() override;
 	QtScriptBackendThread *script_thread;
 	const RKMessageCatalog *catalog;
 
@@ -52,43 +53,47 @@ private:
 	QString filename;
 };
 
-#include <QThread>
 #include <QMutex>
+#include <QThread>
 #include <QtQml/QJSEngine>
 
-template<typename T> QJSValue rkJSMakeArray(QJSEngine *engine, QList<T> list) {
+template <typename T>
+QJSValue rkJSMakeArray(QJSEngine *engine, QList<T> list) {
 	auto ret = engine->newArray(list.size());
-	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));
+	for (int i = 0; i < list.size(); ++i)
+		ret.setProperty(i, list.at(i));
 	return ret;
 }
 
 class QtScriptBackendThread : public QThread {
 	Q_OBJECT
-public:
-	QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog);
-	~QtScriptBackendThread ();
+  public:
+	QtScriptBackendThread(const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog);
+	~QtScriptBackendThread();
 
-	void setCommand (const QString &command);
-	void setData (const QVariant &data);
-	void kill () { killed = true; };
-	void goToSleep (bool sleep);
-Q_SIGNALS:
-	void commandDone (const QString &result);
-	void needData (const QString &identifier, const int hint);
-	void error (const QString &error);
-protected Q_SLOTS:
-	QVariant getValue (const QString &identifier);
-	QVariant getList (const QString &identifier);
-	QVariant getString (const QString &identifier);
-	QVariant getBoolean (const QString &identifier);
-	QVariant getUiLabelPair (const QString &identifier);
-	bool includeFile (const QString &filename);
-protected:
-	void run () override;
-private:
+	void setCommand(const QString &command);
+	void setData(const QVariant &data);
+	void kill() { killed = true; };
+	void goToSleep(bool sleep);
+  Q_SIGNALS:
+	void commandDone(const QString &result);
+	void needData(const QString &identifier, const int hint);
+	void error(const QString &error);
+  protected Q_SLOTS:
+	QVariant getValue(const QString &identifier);
+	QVariant getList(const QString &identifier);
+	QVariant getString(const QString &identifier);
+	QVariant getBoolean(const QString &identifier);
+	QVariant getUiLabelPair(const QString &identifier);
+	bool includeFile(const QString &filename);
+
+  protected:
+	void run() override;
+
+  private:
 	/** for any script error in the last evaluation. If there was an error, a message is generated, and this function returns true (and the thread should be made to exit!) */
 	bool scriptError(const QJSValue &val);
-	QVariant getValue (const QString &identifier, const int hint);
+	QVariant getValue(const QString &identifier, const int hint);
 
 	QString _command;
 	QVariant _data;

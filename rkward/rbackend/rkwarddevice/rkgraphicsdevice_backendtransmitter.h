@@ -9,8 +9,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKGRAPHICSDEVICE_BACKENDTRANSMITTER_H
 
 #include <QIODevice>
-#include <QThread>
 #include <QMutex>
+#include <QThread>
 
 #include "../rkasyncdatastreamhelper.h"
 
@@ -20,20 +20,22 @@ typedef quint32 RKGraphicsDeviceTransmittionLengthType;
  Also it provides the namespace for some statics.
  As the protocol is really quite simple (only the backend send requests, only one request at a time), so is the transmitter. */
 class RKGraphicsDeviceBackendTransmitter : public QThread {
-	RKGraphicsDeviceBackendTransmitter (QIODevice *connection, bool is_q_local_socket);
-	~RKGraphicsDeviceBackendTransmitter ();
-public:
-	static void kill ();
-	static bool connectionAlive ();
-	static RKGraphicsDeviceBackendTransmitter* instance ();
+	RKGraphicsDeviceBackendTransmitter(QIODevice *connection, bool is_q_local_socket);
+	~RKGraphicsDeviceBackendTransmitter();
+
+  public:
+	static void kill();
+	static bool connectionAlive();
+	static RKGraphicsDeviceBackendTransmitter *instance();
 	static RKAsyncDataStreamHelper<quint32> streamer;
-	static QIODevice* connection;
+	static QIODevice *connection;
 	static QMutex mutex;
-private:
-	static RKGraphicsDeviceBackendTransmitter* _instance;
+
+  private:
+	static RKGraphicsDeviceBackendTransmitter *_instance;
 	bool alive;
 	bool is_local_socket;
-	void run () override;
+	void run() override;
 };
 
 #endif

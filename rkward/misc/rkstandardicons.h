@@ -21,12 +21,12 @@ Eventually all icons (even those that are only used once, so far) should be adde
 
 @author Thomas Friedrichsmeier */
 class RKStandardIcons {
-public:
+  public:
 	/** initializes the items. */
-	static void initIcons ();
+	static void initIcons();
 
 	enum IconName {
-		ActionRunAll=0,
+		ActionRunAll = 0,
 		ActionRunLine,
 		ActionRunSelection,
 		ActionCDToScript,
@@ -111,25 +111,26 @@ public:
 
 		RKWardIcon,
 
-		Last	/**< not really an item, only the count of items available. Do not use. */
+		Last /**< not really an item, only the count of items available. Do not use. */
 	};
 
 	/** get the icon with the given name */
-	static QIcon getIcon (IconName name) { return instance->icons[name]; };
+	static QIcon getIcon(IconName name) { return instance->icons[name]; };
 
 	/** convenience function to get the icon most suited for the given RObject */
-	static QIcon iconForObject (const RObject* object);
+	static QIcon iconForObject(const RObject *object);
 
 	/** convenience function to get the icon most suited for the given RKMDIWindow */
-	static QIcon iconForWindow (const RKMDIWindow* window);
+	static QIcon iconForWindow(const RKMDIWindow *window);
 
 	/** create a "busy" animation that will cycle through appropriate items using the "setter" function */
-	static QTimer* busyAnimation(QObject *parent, std::function<void(const QIcon &)> setter);
-private:
+	static QTimer *busyAnimation(QObject *parent, std::function<void(const QIcon &)> setter);
+
+  private:
 	// NOTE: Using a static array of QIcons lead to crashes on exit (Qt 5.4.1). Moving that inside a class instance seems to fix the issue.
 	QIcon icons[Last];
-	void doInitIcons ();
-	static RKStandardIcons* instance;
+	void doInitIcons();
+	static RKStandardIcons *instance;
 };
 
 #endif

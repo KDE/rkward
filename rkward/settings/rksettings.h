@@ -26,36 +26,38 @@ The main settings-dialog. Contains subsections (tabs) for different modules. Use
 */
 class RKSettings : public KPageDialog {
 	Q_OBJECT
-public:
-	static void configureSettings(const RKSettingsModule::PageId page, QWidget *parent=nullptr, RCommandChain *chain=nullptr);
+  public:
+	static void configureSettings(const RKSettingsModule::PageId page, QWidget *parent = nullptr, RCommandChain *chain = nullptr);
 
-	static void loadSettings (KConfig *config);
-	static void saveSettings (KConfig *config);
+	static void loadSettings(KConfig *config);
+	static void saveSettings(KConfig *config);
 	/** Perform any settings validation that may need user interaction (and should happen after a GUI is available, and R has started up) */
-	static QList<RKSetupWizardItem*> validateSettingsInteractive ();
+	static QList<RKSetupWizardItem *> validateSettingsInteractive();
 
-	void enableApply ();
+	void enableApply();
 	void addSettingsPage(RKSettingsModuleWidget *which);
-public Q_SLOTS:
-	void pageChange (KPageWidgetItem *current, KPageWidgetItem *before);
-protected:
-	RKSettings (QWidget *parent = nullptr);
-	~RKSettings ();
+  public Q_SLOTS:
+	void pageChange(KPageWidgetItem *current, KPageWidgetItem *before);
 
-	void done (int result) override;
-private Q_SLOTS:
-	void applyAll ();
-	void helpClicked ();
-private:
-friend class RKWardCoreTest;
+  protected:
+	RKSettings(QWidget *parent = nullptr);
+	~RKSettings();
+
+	void done(int result) override;
+  private Q_SLOTS:
+	void applyAll();
+	void helpClicked();
+
+  private:
+	friend class RKWardCoreTest;
 	static QList<RKSettingsModule *> modules;
 	void initDialogPages();
-	QList<KPageWidgetItem*> pages;
+	QList<KPageWidgetItem *> pages;
 	KPageWidgetItem *findPage(const RKSettingsModule::PageId id) const;
 
 	static RKSettings *settings_dialog;
 
-friend class RKSettingsModuleKatePlugins;
+	friend class RKSettingsModuleKatePlugins;
 	/** dynamically remove the given page from the dialog (for pages provided by plugins, which might get unloaded) */
 	void removeSettingsPage(RKSettingsModuleWidget *which);
 };

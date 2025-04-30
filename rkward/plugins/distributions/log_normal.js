@@ -3,8 +3,8 @@ SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemai
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
-include ("dist_common.js");
+include("dist_common.js");
 
-function getDistSpecifics () {
-	return initDistSpecifics (i18n ('Log Normal distribution'), 'lnorm', ["meanlog", "sdlog"], [0, undefined], continuous);
+function getDistSpecifics() {
+	return initDistSpecifics(i18n('Log Normal distribution'), 'lnorm', [ "meanlog", "sdlog" ], [ 0, undefined ], continuous);
 }

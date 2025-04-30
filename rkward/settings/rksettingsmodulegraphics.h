@@ -16,15 +16,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 class RKSettingsModuleGraphics : public RKSettingsModule {
 	Q_OBJECT
-public:
+  public:
 	explicit RKSettingsModuleGraphics(QObject *parent);
 	~RKSettingsModuleGraphics() override;
-	
-/** generate the commands needed to set the R run time options */
-	static QStringList makeRRunTimeOptionCommands ();
 
-/** Configured to (attempt to) use KDE printing dialog? */
-	static bool kdePrintingEnabled () { return options_kde_printing; };
+	/** generate the commands needed to set the R run time options */
+	static QStringList makeRRunTimeOptionCommands();
+
+	/** Configured to (attempt to) use KDE printing dialog? */
+	static bool kdePrintingEnabled() { return options_kde_printing; };
 
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	void createPages(RKSettings *parent) override;
@@ -40,10 +40,11 @@ public:
 		EmbedDevice,
 		LeaveDevice
 	};
-	
-	static bool plotHistoryEnabled () { return graphics_hist_enable; };
-private:
-friend class RKSettingsPageGraphics;
+
+	static bool plotHistoryEnabled() { return graphics_hist_enable; };
+
+  private:
+	friend class RKSettingsPageGraphics;
 	static RKConfigValue<DefaultDevice, int> default_device;
 	static RKConfigValue<QString> default_device_other;
 	static RKConfigValue<StandardDevicesMode, int> replace_standard_devices;

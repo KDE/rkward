@@ -16,27 +16,29 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKEditObjectAgent::RKEditObjectAgent (const QStringList &_object_names, RCommandChain *chain) : object_names(_object_names) {
-	RK_TRACE (APP);
+RKEditObjectAgent::RKEditObjectAgent(const QStringList &_object_names, RCommandChain *chain) : object_names(_object_names) {
+	RK_TRACE(APP);
 
 	// first issue an empty command to trigger an update of the object list
-	RInterface::issueCommand (new RCommand (QString (), RCommand::EmptyCommand | RCommand::ObjectListUpdate), chain);
+	RInterface::issueCommand(new RCommand(QString(), RCommand::EmptyCommand | RCommand::ObjectListUpdate), chain);
 
 	// now add another empty command to find out, when the update has completed
-	RInterface::whenAllFinished(this, [this]() {
-		for (QStringList::const_iterator it = object_names.constBegin (); it != object_names.constEnd (); ++it) {
-			QString object_name = *it;
-			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
-			if (!(obj && RKWorkplace::mainWorkplace()->editObject (obj))) {
-				KMessageBox::information(nullptr, i18n("The object '%1', could not be opened for editing. Either it does not exist, or RKWard does not support editing this type of object, yet.", object_name), i18n("Cannot edit '%1'", object_name));
-			}
-		}
+	RInterface::whenAllFinished(
+	    this, [this]() {
+		    for (QStringList::const_iterator it = object_names.constBegin(); it != object_names.constEnd(); ++it) {
+			    QString object_name = *it;
+			    RObject *obj = RObjectList::getObjectList()->findObject(object_name);
+			    if (!(obj && RKWorkplace::mainWorkplace()->editObject(obj))) {
+				    KMessageBox::information(nullptr, i18n("The object '%1', could not be opened for editing. Either it does not exist, or RKWard does not support editing this type of object, yet.", object_name), i18n("Cannot edit '%1'", object_name));
+			    }
+		    }
 
-		// we're done
-		deleteLater ();
-	}, chain);
+		    // we're done
+		    deleteLater();
+	    },
+	    chain);
 }
 
-RKEditObjectAgent::~RKEditObjectAgent () {
-	RK_TRACE (APP);
+RKEditObjectAgent::~RKEditObjectAgent() {
+	RK_TRACE(APP);
 }

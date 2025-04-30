@@ -7,66 +7,65 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkradio.h"
 
+#include <QVBoxLayout>
 #include <qdom.h>
 #include <qlabel.h>
-#include <QVBoxLayout>
 
 #include <KLocalizedString>
 
-#include "../misc/xmlhelper.h"
 #include "../misc/rkradiogroup.h"
+#include "../misc/xmlhelper.h"
 
 #include "../debug.h"
 
-RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKAbstractOptionSelector (parent_component, parent_widget) {
-	RK_TRACE (PLUGIN);
+RKRadio::RKRadio(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKAbstractOptionSelector(parent_component, parent_widget) {
+	RK_TRACE(PLUGIN);
 
 	// get xml-helper
-	XMLHelper *xml = parent_component->xmlHelper ();
+	XMLHelper *xml = parent_component->xmlHelper();
 
 	// create layout
-	QVBoxLayout *vbox = new QVBoxLayout (this);
-	vbox->setContentsMargins (0, 0, 0, 0);
+	QVBoxLayout *vbox = new QVBoxLayout(this);
+	vbox->setContentsMargins(0, 0, 0, 0);
 
 	// create ButtonGroup
 	group_box = new RKRadioGroup(xml->i18nStringAttribute(element, QStringLiteral("label"), i18n("Select one:"), DL_INFO));
 
-	addOptionsAndInit (element);
+	addOptionsAndInit(element);
 
-	vbox->addWidget (group_box);
+	vbox->addWidget(group_box);
 	connect(group_box->group(), &QButtonGroup::idClicked, this, &RKRadio::itemSelected);
 }
 
-RKRadio::~RKRadio(){
-	RK_TRACE (PLUGIN);
+RKRadio::~RKRadio() {
+	RK_TRACE(PLUGIN);
 }
 
-void RKRadio::setItemInGUI (int id) {
-	RK_TRACE (PLUGIN);
+void RKRadio::setItemInGUI(int id) {
+	RK_TRACE(PLUGIN);
 
 	QAbstractButton *button = group_box->group()->button(id);
-	if (button) button->setChecked (true);
+	if (button) button->setChecked(true);
 }
 
-void RKRadio::addOptionToGUI (const QString &label, int id) {
-	RK_TRACE (PLUGIN);
+void RKRadio::addOptionToGUI(const QString &label, int id) {
+	RK_TRACE(PLUGIN);
 
 	group_box->addButton(label, id);
 }
 
-void RKRadio::setItemEnabledInGUI (int id, bool enabled) {
-	RK_TRACE (PLUGIN);
+void RKRadio::setItemEnabledInGUI(int id, bool enabled) {
+	RK_TRACE(PLUGIN);
 
 	QAbstractButton *button = group_box->group()->button(id);
-	RK_ASSERT (button);
-	button->setEnabled (enabled);
+	RK_ASSERT(button);
+	button->setEnabled(enabled);
 }
 
-QStringList RKRadio::getUiLabelPair () const {
-	RK_TRACE (PLUGIN);
+QStringList RKRadio::getUiLabelPair() const {
+	RK_TRACE(PLUGIN);
 
 	QStringList ret(stripAccelerators(group_box->title()));
 	ret.append(stripAccelerators(group_box->group()->checkedButton()->text()));
 	return ret;
 }
-

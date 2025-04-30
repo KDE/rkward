@@ -10,11 +10,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KMessageBox>
 
-#include "robjectlist.h"
-#include "rkpseudoobjects.h"
 #include "../rbackend/rkrinterface.h"
-#include "rkmodificationtracker.h"
 #include "../rkward.h"
+#include "rkmodificationtracker.h"
+#include "rkpseudoobjects.h"
+#include "robjectlist.h"
 
 #include "../debug.h"
 
@@ -33,15 +33,15 @@ REnvironmentObject::REnvironmentObject(RContainerObject *parent, const QString &
 	}
 }
 
-REnvironmentObject::~REnvironmentObject () {
-	RK_TRACE (OBJECTS);
+REnvironmentObject::~REnvironmentObject() {
+	RK_TRACE(OBJECTS);
 }
 
-QString REnvironmentObject::getObjectDescription () const {
-	if (isType (GlobalEnv)) {
-		return i18n ("This section contains data in your \"workspace\". This is data that you created or imported, in contrast to data contained in a loaded R package. Technically, this corresponds to the <i>.GlobalEnv</i> environment.");
+QString REnvironmentObject::getObjectDescription() const {
+	if (isType(GlobalEnv)) {
+		return i18n("This section contains data in your \"workspace\". This is data that you created or imported, in contrast to data contained in a loaded R package. Technically, this corresponds to the <i>.GlobalEnv</i> environment.");
 	}
-	return RContainerObject::getObjectDescription ();
+	return RContainerObject::getObjectDescription();
 }
 
 QString REnvironmentObject::packageName() const {
@@ -53,7 +53,7 @@ QString REnvironmentObject::packageName() const {
 QString REnvironmentObject::getFullName(int options) const {
 	RK_TRACE(OBJECTS);
 
-	if (type & GlobalEnv) return name;  // .GlobalEnv
+	if (type & GlobalEnv) return name; // .GlobalEnv
 	if ((type & ToplevelEnv) && (options & IncludeEnvirIfNotGlobalEnv)) return (u"as.environment ("_s + rQuote(name) + u')');
 	return parent->makeChildName(name, options);
 }
@@ -68,7 +68,7 @@ QString REnvironmentObject::makeChildName(const QString &short_child_name, int o
 		safe_name = rQuote(short_child_name);
 	} else safe_name = short_child_name;
 
-	if (type & GlobalEnv) {  // don't print as ".GlobalEnv$something" unless asked to, or childname needs fixing
+	if (type & GlobalEnv) { // don't print as ".GlobalEnv$something" unless asked to, or childname needs fixing
 		if (irregular || (options & IncludeEnvirForGlobalEnv)) return (getShortName() + u'$' + safe_name);
 		return (safe_name);
 	}
@@ -80,27 +80,27 @@ QString REnvironmentObject::makeChildName(const QString &short_child_name, int o
 	return (getFullName(options) + u'$' + safe_name);
 }
 
-void REnvironmentObject::writeMetaData (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
+void REnvironmentObject::writeMetaData(RCommandChain *chain) {
+	RK_TRACE(OBJECTS);
 
 	if (type & ToplevelEnv) return;
-	RContainerObject::writeMetaData (chain);
+	RContainerObject::writeMetaData(chain);
 }
 
 void REnvironmentObject::updateFromR(RCommandChain *chain, const QStringList &added_symbols, const QStringList &removed_symbols) {
-	RK_TRACE (OBJECTS);
+	RK_TRACE(OBJECTS);
 
-	for (int i = removed_symbols.size() -1; i >= 0; --i) {
+	for (int i = removed_symbols.size() - 1; i >= 0; --i) {
 		RObject *removed_object = findChildByName(removed_symbols[i]);
-		if(!removed_object) RK_DEBUG(OBJECTS, DL_ERROR, "Removed object %s was not registered", qPrintable(removed_symbols[i]));
+		if (!removed_object) RK_DEBUG(OBJECTS, DL_ERROR, "Removed object %s was not registered", qPrintable(removed_symbols[i]));
 		if (removed_object) RKModificationTracker::instance()->removeObject(removed_object, nullptr, true);
 	}
 
-	for (int i = added_symbols.size() -1; i >= 0; --i) {
+	for (int i = added_symbols.size() - 1; i >= 0; --i) {
 		RObject *child = findChildByName(added_symbols[i]);
 		if (!child) child = createPendingChild(added_symbols[i], i, false, false);
 		if (child->isPending()) {
-			child->type -= RObject::Pending;  // HACK: Child is not actually pending: We've just seen it!
+			child->type -= RObject::Pending; // HACK: Child is not actually pending: We've just seen it!
 			child->updateFromR(chain);
 		}
 	}
@@ -113,52 +113,52 @@ void REnvironmentObject::updateFromR(RCommandChain *chain, const QStringList &ad
 	}
 }
 
-bool REnvironmentObject::updateStructure (RData *new_data) {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
-	RK_ASSERT (new_data->getDataLength () >= StorageSizeBasicInfo);
+bool REnvironmentObject::updateStructure(RData *new_data) {
+	RK_TRACE(OBJECTS);
+	RK_ASSERT(new_data->getDataType() == RData::StructureVector);
+	RK_ASSERT(new_data->getDataLength() >= StorageSizeBasicInfo);
 
 	if (!(type & ToplevelEnv)) {
 		if (!RContainerObject::updateStructure(new_data)) return false;
 	}
 
-	RData::RDataStorage new_data_data = new_data->structureVector ();
-	if (new_data->getDataLength () > StorageSizeBasicInfo) {
-		RData *children_sub = new_data_data.at (StoragePositionChildren);
-		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
-		updateChildren (children_sub);
+	RData::RDataStorage new_data_data = new_data->structureVector();
+	if (new_data->getDataLength() > StorageSizeBasicInfo) {
+		RData *children_sub = new_data_data.at(StoragePositionChildren);
+		RK_ASSERT(children_sub->getDataType() == RData::StructureVector);
+		updateChildren(children_sub);
 
 		// a namespace to go with that?
-		if (new_data->getDataLength () > (StorageSizeBasicInfo + 1)) {
-			RK_ASSERT (new_data->getDataLength () == (StorageSizeBasicInfo + 2));
-			updateNamespace (new_data_data.at (StoragePositionNamespace));
+		if (new_data->getDataLength() > (StorageSizeBasicInfo + 1)) {
+			RK_ASSERT(new_data->getDataLength() == (StorageSizeBasicInfo + 2));
+			updateNamespace(new_data_data.at(StoragePositionNamespace));
 		} else updateNamespace(nullptr);
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT(false);
 	}
 	return true;
 }
 
-void REnvironmentObject::updateNamespace (RData* new_data) {
-	RK_TRACE (OBJECTS);
+void REnvironmentObject::updateNamespace(RData *new_data) {
+	RK_TRACE(OBJECTS);
 
 	if (!new_data) {
 		setSpecialChildObject(nullptr, NamespaceObject);
 		return;
 	}
 
-	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
+	RK_ASSERT(new_data->getDataType() == RData::StructureVector);
 	bool added = false;
-	REnvironmentObject *namespace_envir = namespaceEnvironment ();
+	REnvironmentObject *namespace_envir = namespaceEnvironment();
 	if (!namespace_envir) {
-		namespace_envir = new RKNamespaceObject (this);
+		namespace_envir = new RKNamespaceObject(this);
 		added = true;
-		RKModificationTracker::instance()->lockUpdates (true);
+		RKModificationTracker::instance()->lockUpdates(true);
 	}
-	namespace_envir->updateStructure (new_data->structureVector ().at (0));
+	namespace_envir->updateStructure(new_data->structureVector().at(0));
 	if (added) {
-		RKModificationTracker::instance()->lockUpdates (false);
-		setSpecialChildObject (namespace_envir, NamespaceObject);
+		RKModificationTracker::instance()->lockUpdates(false);
+		setSpecialChildObject(namespace_envir, NamespaceObject);
 	}
 }
 

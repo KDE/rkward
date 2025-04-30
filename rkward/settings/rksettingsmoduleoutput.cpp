@@ -10,43 +10,43 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <QGroupBox>
 #include <QCheckBox>
-#include <QVBoxLayout>
 #include <QComboBox>
+#include <QGroupBox>
+#include <QVBoxLayout>
+#include <qlabel.h>
+#include <qlayout.h>
 
-#include "../misc/rkstyle.h"
+#include "../debug.h"
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkstyle.h"
 #include "../rbackend/rkrinterface.h"
 #include "rksettings.h"
-#include "../debug.h"
 
 // static members
-RKConfigValue<bool> RKCarbonCopySettings::cc_globally_enabled {"CC enabled", false};
-RKConfigValue<bool> RKCarbonCopySettings::cc_console_commands {"CC console commands", true};
-RKConfigValue<bool> RKCarbonCopySettings::cc_script_commands {"CC script commands", false};
-RKConfigValue<bool> RKCarbonCopySettings::cc_app_plugin_commands {"CC app/plugin commands", false};
-RKConfigValue<bool> RKCarbonCopySettings::cc_command_output {"CC command output", true};
+RKConfigValue<bool> RKCarbonCopySettings::cc_globally_enabled{"CC enabled", false};
+RKConfigValue<bool> RKCarbonCopySettings::cc_console_commands{"CC console commands", true};
+RKConfigValue<bool> RKCarbonCopySettings::cc_script_commands{"CC script commands", false};
+RKConfigValue<bool> RKCarbonCopySettings::cc_app_plugin_commands{"CC app/plugin commands", false};
+RKConfigValue<bool> RKCarbonCopySettings::cc_command_output{"CC command output", true};
 
 // TODO: Multiple instances of this are allowed to exist, simultaneously, and they are not kept in sync.
 //       Idea for a generic solution: RKSettingsModule could emit a signal, when changes got synced (from UI),
 //       and RKConfigValue-created controls could listen to that, and update if needed.
 //       Module would be set to RKSettingsModuleOutput, in this case.
-RKCarbonCopySettings::RKCarbonCopySettings(QWidget* parent, RKSettingsModuleWidget* page)
+RKCarbonCopySettings::RKCarbonCopySettings(QWidget *parent, RKSettingsModuleWidget *page)
     : RKSettingsModuleWidget(parent, nullptr, RKSettingsModule::no_page_id) {
 	RK_TRACE(SETTINGS);
 
-	QVBoxLayout* main_vbox = new QVBoxLayout(this);
+	QVBoxLayout *main_vbox = new QVBoxLayout(this);
 	main_vbox->setContentsMargins(0, 0, 0, 0);
 	auto cc_globally_enabled_box = cc_globally_enabled.makeCheckableGroupBox(i18n("Carbon copy commands to output"), this);
 	main_vbox->addWidget(cc_globally_enabled_box);
 
-	QVBoxLayout* group_layout = new QVBoxLayout(cc_globally_enabled_box);
+	QVBoxLayout *group_layout = new QVBoxLayout(cc_globally_enabled_box);
 	group_layout->addWidget(cc_console_commands.makeCheckbox(i18n("Commands entered in the console"), this));
 	group_layout->addWidget(cc_script_commands.makeCheckbox(i18n("Commands run via the 'Run' menu"), this));
 	group_layout->addWidget(cc_app_plugin_commands.makeCheckbox(i18n("Commands originating from dialogs and plugins"), this));
@@ -59,7 +59,7 @@ RKCarbonCopySettings::RKCarbonCopySettings(QWidget* parent, RKSettingsModuleWidg
 }
 
 RKCarbonCopySettings::~RKCarbonCopySettings() {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 }
 
 void RKCarbonCopySettings::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
@@ -73,14 +73,14 @@ void RKCarbonCopySettings::syncConfig(KConfig *config, RKConfigBase::ConfigSyncA
 	cc_command_output.syncConfig(cg, a);
 }
 
-bool RKCarbonCopySettings::shouldCarbonCopyCommand (const RCommand *command) {
-	RK_TRACE (SETTINGS);
+bool RKCarbonCopySettings::shouldCarbonCopyCommand(const RCommand *command) {
+	RK_TRACE(SETTINGS);
 
 	if (!cc_globally_enabled) return false;
-	if (command->type () & (RCommand::Silent | RCommand::Sync)) return false;
-	if (command->type () & RCommand::Console) return cc_console_commands;
-	if (command->type () & RCommand::User) return cc_script_commands;
-	if (command->type () & (RCommand::App | RCommand::Plugin)) return cc_app_plugin_commands;
+	if (command->type() & (RCommand::Silent | RCommand::Sync)) return false;
+	if (command->type() & RCommand::Console) return cc_console_commands;
+	if (command->type() & RCommand::User) return cc_script_commands;
+	if (command->type() & (RCommand::App | RCommand::Plugin)) return cc_app_plugin_commands;
 	return false;
 }
 
@@ -89,27 +89,27 @@ void RKCarbonCopySettings::applyChanges() {
 }
 
 // static members
-RKConfigValue<bool> RKSettingsModuleOutput::auto_show {"auto_show", true};
-RKConfigValue<bool> RKSettingsModuleOutput::auto_raise {"auto_raise", true};
-RKConfigValue<QString> RKSettingsModuleOutput::graphics_type {"graphics_type", QStringLiteral("NULL")};
-RKConfigValue<int> RKSettingsModuleOutput::graphics_width {"graphics_width", 480};
-RKConfigValue<int> RKSettingsModuleOutput::graphics_height {"graphics_height", 480};
-RKConfigValue<int> RKSettingsModuleOutput::graphics_jpg_quality {"graphics_jpg_quality", 75};
-RKConfigValue<QString> RKSettingsModuleOutput::custom_css_file {"custom css file", QString()};
-RKConfigValue<bool> RKSettingsModuleOutput::shared_default_output {"Shared default output", false};
+RKConfigValue<bool> RKSettingsModuleOutput::auto_show{"auto_show", true};
+RKConfigValue<bool> RKSettingsModuleOutput::auto_raise{"auto_raise", true};
+RKConfigValue<QString> RKSettingsModuleOutput::graphics_type{"graphics_type", QStringLiteral("NULL")};
+RKConfigValue<int> RKSettingsModuleOutput::graphics_width{"graphics_width", 480};
+RKConfigValue<int> RKSettingsModuleOutput::graphics_height{"graphics_height", 480};
+RKConfigValue<int> RKSettingsModuleOutput::graphics_jpg_quality{"graphics_jpg_quality", 75};
+RKConfigValue<QString> RKSettingsModuleOutput::custom_css_file{"custom css file", QString()};
+RKConfigValue<bool> RKSettingsModuleOutput::shared_default_output{"Shared default output", false};
 
 class RKSettingsPageOutput : public RKSettingsModuleWidget {
-public:
-	RKSettingsPageOutput(QWidget *parent, RKSettingsModule* parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleOutput::page_id) {
+  public:
+	RKSettingsPageOutput(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleOutput::page_id) {
 		RK_TRACE(SETTINGS);
 
 		setWindowTitle(i18n("Output"));
 		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
 
 		QVBoxLayout *main_vbox = new QVBoxLayout(this);
-		
+
 		QGroupBox *group = new QGroupBox(i18n("Output Window options"), this);
-		QVBoxLayout* group_layout = new QVBoxLayout(group);
+		QVBoxLayout *group_layout = new QVBoxLayout(group);
 		auto auto_show_box = RKSettingsModuleOutput::auto_show.makeCheckbox(i18n("show window on new output"), this);
 		group_layout->addWidget(auto_show_box);
 		auto auto_raise_box = RKSettingsModuleOutput::auto_raise.makeCheckbox(i18n("raise window on new output"), this);
@@ -123,10 +123,10 @@ public:
 
 		main_vbox->addWidget(RKSettingsModuleOutput::shared_default_output.makeCheckbox(i18n("Default output (used, while no other output has been set, explicitly) is shared across workspaces(*)."), this));
 
-		custom_css_file_box = new GetFileNameWidget(this, GetFileNameWidget::ExistingFile, true, i18n ("CSS file to use for output (leave empty for default)"), i18n ("Select CSS file"), RKSettingsModuleOutput::custom_css_file);
-		connect (custom_css_file_box, &GetFileNameWidget::locationChanged, this, &RKSettingsPageOutput::boxChanged);
-		RKCommonFunctions::setTips (i18n ("Select a CSS file for custom formatting of the output window. Leave empty to use the default CSS file shipped with RKWard. Note that this setting takes effect, when initializing an output file (e.g. after flushing the output), only."), custom_css_file_box);
-		main_vbox->addWidget (custom_css_file_box);
+		custom_css_file_box = new GetFileNameWidget(this, GetFileNameWidget::ExistingFile, true, i18n("CSS file to use for output (leave empty for default)"), i18n("Select CSS file"), RKSettingsModuleOutput::custom_css_file);
+		connect(custom_css_file_box, &GetFileNameWidget::locationChanged, this, &RKSettingsPageOutput::boxChanged);
+		RKCommonFunctions::setTips(i18n("Select a CSS file for custom formatting of the output window. Leave empty to use the default CSS file shipped with RKWard. Note that this setting takes effect, when initializing an output file (e.g. after flushing the output), only."), custom_css_file_box);
+		main_vbox->addWidget(custom_css_file_box);
 
 		group = new QGroupBox(i18n("Graphics"), this);
 		group_layout = new QVBoxLayout(group);
@@ -138,10 +138,10 @@ public:
 		graphics_type_box->addItem(i18n("PNG"), QStringLiteral("\"PNG\""));
 		graphics_type_box->addItem(i18n("SVG"), QStringLiteral("\"SVG\""));
 		graphics_type_box->addItem(i18n("JPG"), QStringLiteral("\"JPG\""));
-		graphics_type_box->setCurrentIndex(graphics_type_box->findData (RKSettingsModuleOutput::graphics_type.get()));
+		graphics_type_box->setCurrentIndex(graphics_type_box->findData(RKSettingsModuleOutput::graphics_type.get()));
 		graphics_type_box->setEditable(false);
 		connect(graphics_type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsPageOutput::boxChanged);
-		h_layout->addSpacing(2*RKStyle::spacingHint());
+		h_layout->addSpacing(2 * RKStyle::spacingHint());
 		h_layout->addWidget(new QLabel(i18n("JPG quality"), group));
 		h_layout->addWidget(graphics_jpg_quality_box = RKSettingsModuleOutput::graphics_jpg_quality.makeSpinBox(1, 100, this));
 		graphics_jpg_quality_box->setEnabled(RKSettingsModuleOutput::graphics_type == QStringLiteral("\"JPG\""));
@@ -151,7 +151,7 @@ public:
 		group_layout->addLayout(h_layout);
 		h_layout->addWidget(new QLabel(i18n("Width:"), group));
 		h_layout->addWidget(RKSettingsModuleOutput::graphics_width.makeSpinBox(1, INT_MAX, this));
-		h_layout->addSpacing(2*RKStyle::spacingHint());
+		h_layout->addSpacing(2 * RKStyle::spacingHint());
 		h_layout->addWidget(new QLabel(i18n("Height:"), group));
 		h_layout->addWidget(RKSettingsModuleOutput::graphics_height.makeSpinBox(1, INT_MAX, this));
 		h_layout->addStretch();
@@ -180,7 +180,8 @@ public:
 
 		cc_settings->applyChanges();
 	}
-private:
+
+  private:
 	QComboBox *graphics_type_box;
 	RKSpinBox *graphics_jpg_quality_box;
 	RKCarbonCopySettings *cc_settings;
@@ -192,7 +193,7 @@ RKSettingsModuleOutput::RKSettingsModuleOutput(QObject *parent) : RKSettingsModu
 }
 
 RKSettingsModuleOutput::~RKSettingsModuleOutput() {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 }
 
 void RKSettingsModuleOutput::createPages(RKSettings *parent) {
@@ -200,9 +201,9 @@ void RKSettingsModuleOutput::createPages(RKSettings *parent) {
 }
 
 void RKSettingsModuleOutput::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
-	RK_TRACE (SETTINGS);
+	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group (QStringLiteral("Output Window"));
+	KConfigGroup cg = config->group(QStringLiteral("Output Window"));
 	auto_show.syncConfig(cg, a);
 	auto_raise.syncConfig(cg, a);
 	graphics_type.syncConfig(cg, a);
@@ -215,9 +216,9 @@ void RKSettingsModuleOutput::syncConfig(KConfig *config, RKConfigBase::ConfigSyn
 	RKCarbonCopySettings::syncConfig(config, a);
 }
 
-//static
-QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
-	RK_TRACE (SETTINGS);
+// static
+QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands() {
+	RK_TRACE(SETTINGS);
 	QStringList list;
 
 	// output format options
@@ -226,9 +227,8 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	command.append(u", \"rk.graphics.height\"="_s + QString::number(graphics_height));
 	if (graphics_type == "\"JPG\""_L1) command.append(u", \"rk.graphics.jpg.quality\"="_s + QString::number(graphics_jpg_quality));
 	command.append(u", \"rk.output.css.file\"=\""_s +
-		(custom_css_file.get().isEmpty() ? RKCommonFunctions::getRKWardDataDir() + u"pages/rkward_output.css"_s : custom_css_file.get()) + u'"');
+	               (custom_css_file.get().isEmpty() ? RKCommonFunctions::getRKWardDataDir() + u"pages/rkward_output.css"_s : custom_css_file.get()) + u'"');
 	list.append(command + u")\n"_s);
 
 	return (list);
 }
-

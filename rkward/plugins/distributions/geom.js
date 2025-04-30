@@ -3,9 +3,9 @@ SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemai
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
-include ("dist_common.js");
+include("dist_common.js");
 
-function getDistSpecifics () {
-	var prob = Number (getString ("prob"));
-	return initDistSpecifics (i18n ('Geometric distribution'), 'geom', ["prob"], [0, Math.floor (5/prob)], discrete);
+function getDistSpecifics() {
+	var prob = Number(getString("prob"));
+	return initDistSpecifics(i18n('Geometric distribution'), 'geom', [ "prob" ], [ 0, Math.floor(5 / prob) ], discrete);
 }

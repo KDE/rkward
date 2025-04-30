@@ -21,11 +21,11 @@ This class represents a "pseudo" list of the S4 slots of the corresponding paren
 @author Thomas Friedrichsmeier
 */
 class RSlotsPseudoObject : public RContainerObject {
-public:
-	explicit RSlotsPseudoObject (RObject *parent);
-	~RSlotsPseudoObject ();
+  public:
+	explicit RSlotsPseudoObject(RObject *parent);
+	~RSlotsPseudoObject();
 
-	QString getFullName (int) const override;
+	QString getFullName(int) const override;
 	QString makeChildName(const QString &short_child_name, int) const override;
 };
 
@@ -37,14 +37,15 @@ rather call it a "special" object, instead).
 @author Thomas Friedrichsmeier
 */
 class RKNamespaceObject : public REnvironmentObject {
-public:
-	explicit RKNamespaceObject (REnvironmentObject* package, const QString &name = QString ());
-	~RKNamespaceObject ();
+  public:
+	explicit RKNamespaceObject(REnvironmentObject *package, const QString &name = QString());
+	~RKNamespaceObject();
 
-	QString getFullName (int) const override;
+	QString getFullName(int) const override;
 	QString makeChildName(const QString &short_child_name, int) const override;
-	QString namespaceName () const { return namespace_name; };
-private:
+	QString namespaceName() const { return namespace_name; };
+
+  private:
 	QString namespace_name;
 };
 
@@ -60,21 +61,21 @@ It exists only once, as a direct child of the RObjectList.
 @author Thomas Friedrichsmeier
 */
 class RKOrphanNamespacesObject : public REnvironmentObject {
-public:
-	explicit RKOrphanNamespacesObject (RObjectList *parent);
-	~RKOrphanNamespacesObject ();
+  public:
+	explicit RKOrphanNamespacesObject(RObjectList *parent);
+	~RKOrphanNamespacesObject();
 
-	QString getFullName (int options) const override;
+	QString getFullName(int options) const override;
 	QString makeChildName(const QString &short_child_name, int options) const override;
-	QString getObjectDescription () const override;
+	QString getObjectDescription() const override;
 
-	RKNamespaceObject *findOrphanNamespace (const QString &name) const;
+	RKNamespaceObject *findOrphanNamespace(const QString &name) const;
 
 	using REnvironmentObject::updateFromR;
 	/** should not be called on this object. Reimplemented to raise an assert, and do nothing else. */
-	void updateFromR (RCommandChain *chain) override;
+	void updateFromR(RCommandChain *chain) override;
 	/** reimplemented from REnvironmentObject */
-	void updateNamespacesFromR (RCommandChain *chain, const QStringList &current_symbols);
+	void updateNamespacesFromR(RCommandChain *chain, const QStringList &current_symbols);
 };
 
 #endif

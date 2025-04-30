@@ -12,9 +12,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-void RK_doIntr ();
+void RK_doIntr();
 
-static void processX11EventsWorker (void *) {
+static void processX11EventsWorker(void *) {
 // this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
 #ifndef Q_OS_WIN
 	for (;;) {
@@ -49,18 +49,18 @@ TODO: verify we really need this. */
 void RKREventLoop::processX11Events() {
 	// do not trace
 	if (!RKRBackend::this_pointer->r_running) return;
-	if (RKRBackend::this_pointer->isKilled ()) return;
+	if (RKRBackend::this_pointer->isKilled()) return;
 
 	RKRBackend::repl_status.eval_depth++;
-// In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
+	// In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
 	RFn::R_ToplevelExec(processX11EventsWorker, nullptr);
 	RKRBackend::repl_status.eval_depth--;
 }
 
-static void (* RK_eventHandlerFunction)() = nullptr;
+static void (*RK_eventHandlerFunction)() = nullptr;
 
 #ifndef Q_OS_WIN
-static void (* RK_old_R_PolledEvents)();
+static void (*RK_old_R_PolledEvents)();
 // NOTE: input-handler-based event loop mechanism is heavily inspired by (but not quite the same as in) package qtbase version 1.0.4 by Michael Lawrence, Deepayan Sarkar.
 // URL: http://qtinterfaces.r-forge.r-project.org
 static int ifd = 0;
@@ -68,35 +68,35 @@ static int ofd = 0;
 static char buf[16];
 static bool rk_event_handler_triggered = false;
 #	include <unistd.h>
-static void RK_eventHandlerWrapper (void *data) {
-	Q_UNUSED (data);
+static void RK_eventHandlerWrapper(void *data) {
+	Q_UNUSED(data);
 	rk_event_handler_triggered = false;
 	char buf[16];
-	bool read_ok = read (ifd, buf, 16);
-	RK_ASSERT (read_ok);
-	RK_eventHandlerFunction ();
+	bool read_ok = read(ifd, buf, 16);
+	RK_ASSERT(read_ok);
+	RK_eventHandlerFunction();
 }
 
-static void RK_eventHandlerChain () {
-	if (RK_eventHandlerFunction) RK_eventHandlerFunction ();
-	if (RK_old_R_PolledEvents) RK_old_R_PolledEvents ();
+static void RK_eventHandlerChain() {
+	if (RK_eventHandlerFunction) RK_eventHandlerFunction();
+	if (RK_old_R_PolledEvents) RK_old_R_PolledEvents();
 }
 #else
-void RKREventLoop::winRKEventHandlerWrapper (void) {
-        if (RK_eventHandlerFunction) RK_eventHandlerFunction ();
+void RKREventLoop::winRKEventHandlerWrapper(void) {
+	if (RK_eventHandlerFunction) RK_eventHandlerFunction();
 }
 #endif
 
-void RKREventLoop::setRKEventHandler (void (* handler) ()) {
-	RK_TRACE (RBACKEND);
-	RK_ASSERT (!RK_eventHandlerFunction);
+void RKREventLoop::setRKEventHandler(void (*handler)()) {
+	RK_TRACE(RBACKEND);
+	RK_ASSERT(!RK_eventHandlerFunction);
 	RK_eventHandlerFunction = handler;
 
 #ifndef Q_OS_WIN
-        bool ok = false;
+	bool ok = false;
 	int fds[2];
 
-	if (!pipe (fds)) {
+	if (!pipe(fds)) {
 		ifd = fds[0];
 		ofd = fds[1];
 		RFn::addInputHandler(ROb(R_InputHandlers), ifd, RK_eventHandlerWrapper, 32);
@@ -110,13 +110,13 @@ void RKREventLoop::setRKEventHandler (void (* handler) ()) {
 #endif
 }
 
-void RKREventLoop::wakeRKEventHandler () {
+void RKREventLoop::wakeRKEventHandler() {
 #ifndef Q_OS_WIN
 	if (!ofd) return;
 	if (rk_event_handler_triggered) return;
 	rk_event_handler_triggered = true;
 	*buf = 0;
-	bool write_ok = write (ofd, buf, 1);
-	RK_ASSERT (write_ok);
+	bool write_ok = write(ofd, buf, 1);
+	RK_ASSERT(write_ok);
 #endif
 }

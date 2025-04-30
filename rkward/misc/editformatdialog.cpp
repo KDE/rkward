@@ -6,12 +6,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "editformatdialog.h"
 
-#include <qspinbox.h>
-#include <qstringlist.h>
-#include <QVBoxLayout>
-#include <QTimer>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <QTimer>
+#include <QVBoxLayout>
+#include <qspinbox.h>
+#include <qstringlist.h>
 
 #include <KLocalizedString>
 
@@ -21,90 +21,90 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-EditFormatDialog::EditFormatDialog (QWidget *parent) : QDialog (parent) {
-	RK_TRACE (EDITOR);
+EditFormatDialog::EditFormatDialog(QWidget *parent) : QDialog(parent) {
+	RK_TRACE(EDITOR);
 
-	QVBoxLayout *layout = new QVBoxLayout (this);
+	QVBoxLayout *layout = new QVBoxLayout(this);
 
-	auto alignment_box = new RKRadioGroup(i18n ("Alignment"));
+	auto alignment_box = new RKRadioGroup(i18n("Alignment"));
 	alignment_group = alignment_box->group();
 	layout->addWidget(alignment_box);
-	alignment_box->addButton(i18n("Default"), (int) RKVariable::FormattingOptions::AlignDefault)->setChecked(true);
-	alignment_box->addButton(i18n("Left"), (int) RKVariable::FormattingOptions::AlignLeft);
-	alignment_box->addButton(i18n("Right"), (int) RKVariable::FormattingOptions::AlignRight);
+	alignment_box->addButton(i18n("Default"), (int)RKVariable::FormattingOptions::AlignDefault)->setChecked(true);
+	alignment_box->addButton(i18n("Left"), (int)RKVariable::FormattingOptions::AlignLeft);
+	alignment_box->addButton(i18n("Right"), (int)RKVariable::FormattingOptions::AlignRight);
 
 	auto precision_box = new RKRadioGroup(i18n("Decimal Places"));
 	precision_group = precision_box->group();
 	layout->addWidget(precision_box);
-	precision_box->addButton(i18n("Default setting"), (int) RKVariable::FormattingOptions::PrecisionDefault);
-	precision_box->addButton(i18n("As required"), (int) RKVariable::FormattingOptions::PrecisionRequired);
+	precision_box->addButton(i18n("Default setting"), (int)RKVariable::FormattingOptions::PrecisionDefault);
+	precision_box->addButton(i18n("As required"), (int)RKVariable::FormattingOptions::PrecisionRequired);
 	precision_field = new QSpinBox();
 	precision_field->setRange(0, 10);
-	precision_box->addButton(i18n("Fixed precision:"), (int) RKVariable::FormattingOptions::PrecisionFixed, precision_field);
+	precision_box->addButton(i18n("Fixed precision:"), (int)RKVariable::FormattingOptions::PrecisionFixed, precision_field);
 
-	RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-	layout->addWidget (buttons);
+	RKDialogButtonBox *buttons = new RKDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+	layout->addWidget(buttons);
 }
 
-EditFormatDialog::~EditFormatDialog () {
-	RK_TRACE (EDITOR);
+EditFormatDialog::~EditFormatDialog() {
+	RK_TRACE(EDITOR);
 }
 
-void EditFormatDialog::initialize (const RKVariable::FormattingOptions& options, const QString& varname) {
-	RK_TRACE (EDITOR);
+void EditFormatDialog::initialize(const RKVariable::FormattingOptions &options, const QString &varname) {
+	RK_TRACE(EDITOR);
 
-	setWindowTitle (i18n ("Formatting options for '%1'", varname));
+	setWindowTitle(i18n("Formatting options for '%1'", varname));
 
 	EditFormatDialog::options = options;
 
-	alignment_group->button ((int) options.alignment)->setChecked (true);
-	precision_group->button ((int) options.precision_mode)->setChecked (true);
-	precision_field->setValue (options.precision);
+	alignment_group->button((int)options.alignment)->setChecked(true);
+	precision_group->button((int)options.precision_mode)->setChecked(true);
+	precision_field->setValue(options.precision);
 }
 
-void EditFormatDialog::accept () {
-	RK_TRACE (EDITOR);
+void EditFormatDialog::accept() {
+	RK_TRACE(EDITOR);
 
-	options.alignment = (RKVariable::FormattingOptions::Alignment) alignment_group->checkedId ();
+	options.alignment = (RKVariable::FormattingOptions::Alignment)alignment_group->checkedId();
 
-	options.precision_mode = (RKVariable::FormattingOptions::Precision) precision_group->checkedId ();
+	options.precision_mode = (RKVariable::FormattingOptions::Precision)precision_group->checkedId();
 	if (options.precision_mode == RKVariable::FormattingOptions::PrecisionFixed) {
-		options.precision = precision_field->value ();
+		options.precision = precision_field->value();
 	} else {
 		options.precision = 0;
 	}
 
-	QDialog::accept ();
+	QDialog::accept();
 }
 
 ///////////// EditFormatDialogProxy ////////////////////
 
-EditFormatDialogProxy::EditFormatDialogProxy (QWidget* parent) : QWidget (parent) {
-	RK_TRACE (EDITOR);
+EditFormatDialogProxy::EditFormatDialogProxy(QWidget *parent) : QWidget(parent) {
+	RK_TRACE(EDITOR);
 
 	dialog = nullptr;
 }
 
-EditFormatDialogProxy::~EditFormatDialogProxy () {
-	RK_TRACE (EDITOR);
+EditFormatDialogProxy::~EditFormatDialogProxy() {
+	RK_TRACE(EDITOR);
 }
 
-void EditFormatDialogProxy::initialize (const RKVariable::FormattingOptions& options, const QString& varname) {
-	RK_TRACE (EDITOR);
+void EditFormatDialogProxy::initialize(const RKVariable::FormattingOptions &options, const QString &varname) {
+	RK_TRACE(EDITOR);
 
-	if (dialog) return;	// one dialog at a time, please!
+	if (dialog) return; // one dialog at a time, please!
 
 	EditFormatDialogProxy::options = options;
-	dialog = new EditFormatDialog (this);
-	dialog->initialize (options, varname);
+	dialog = new EditFormatDialog(this);
+	dialog->initialize(options, varname);
 
-	connect (dialog, &QDialog::finished, this, &EditFormatDialogProxy::dialogDone);
+	connect(dialog, &QDialog::finished, this, &EditFormatDialogProxy::dialogDone);
 	QTimer::singleShot(0, dialog, &EditFormatDialog::exec);
 }
 
-void EditFormatDialogProxy::dialogDone (int result) {
-	RK_TRACE (EDITOR);
-	RK_ASSERT (dialog);
+void EditFormatDialogProxy::dialogDone(int result) {
+	RK_TRACE(EDITOR);
+	RK_ASSERT(dialog);
 
 	if (result == QDialog::Accepted) {
 		options = dialog->options;
@@ -112,7 +112,6 @@ void EditFormatDialogProxy::dialogDone (int result) {
 	} else {
 		Q_EMIT done(this, RKItemDelegate::EditorReject);
 	}
-	dialog->deleteLater ();
+	dialog->deleteLater();
 	dialog = nullptr;
 }
-

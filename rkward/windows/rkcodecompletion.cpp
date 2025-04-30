@@ -6,113 +6,112 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rkcodecompletion.h"
 
+#include <KActionCollection>
+#include <KLocalizedString>
 #include <ktexteditor/document.h>
 #include <ktexteditor/editor.h>
-#include <KLocalizedString>
-#include <KActionCollection>
 
-#include <QApplication>
-#include <QKeyEvent>
-#include <QIcon>
-#include <QDir>
 #include <QAction>
+#include <QApplication>
+#include <QDir>
+#include <QIcon>
+#include <QKeyEvent>
 #include <QTimer>
 
-#include "../misc/rkcommonfunctions.h"
-#include "../misc/rkstandardicons.h"
 #include "../core/rfunctionobject.h"
 #include "../core/robjectlist.h"
-#include "../settings/rksettingsmodulecommandeditor.h"
+#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardicons.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rkrinterface.h"
+#include "../settings/rksettingsmodulecommandeditor.h"
 
 #include "../debug.h"
 
-
 class RKCompletionNotifierModel : public RKCompletionModelBase {
-public:
-	explicit RKCompletionNotifierModel(RKCompletionManager *manager) : RKCompletionModelBase(manager) {};
-	KTextEditor::Range completionRange (KTextEditor::View *, const KTextEditor::Cursor &position) override {
-		return KTextEditor::Range (position, position);
+  public:
+	explicit RKCompletionNotifierModel(RKCompletionManager *manager) : RKCompletionModelBase(manager){};
+	KTextEditor::Range completionRange(KTextEditor::View *, const KTextEditor::Cursor &position) override {
+		return KTextEditor::Range(position, position);
 	}
 	/** reimplemented in order to receive notification, when completion is invoked by user shortcut. */
-	void completionInvoked (KTextEditor::View*, const KTextEditor::Range&, KTextEditor::CodeCompletionModel::InvocationType invocationType) override {
-		RK_TRACE (COMMANDEDITOR);
+	void completionInvoked(KTextEditor::View *, const KTextEditor::Range &, KTextEditor::CodeCompletionModel::InvocationType invocationType) override {
+		RK_TRACE(COMMANDEDITOR);
 
 		if (invocationType == KTextEditor::CodeCompletionModel::UserInvocation) {
 			// NOTE: Without this short timeout, the completion window will sometimes disappear, again, right away.
-			QTimer::singleShot(50, manager, [this](){ manager->userTriggeredCompletion();});
+			QTimer::singleShot(50, manager, [this]() { manager->userTriggeredCompletion(); });
 		}
 	}
-	QVariant data (const QModelIndex&, int) const override {
-		return QVariant ();
+	QVariant data(const QModelIndex &, int) const override {
+		return QVariant();
 	}
 };
 
 //////////////////////// RKCompletionManager //////////////////////
 #include <KAboutData>
 #include <KMessageBox>
-RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCompletionSettings *settings) : QObject(view), settings(settings) {
-	RK_TRACE (COMMANDEDITOR);
+RKCompletionManager::RKCompletionManager(KTextEditor::View *view, const RKCodeCompletionSettings *settings) : QObject(view), settings(settings) {
+	RK_TRACE(COMMANDEDITOR);
 
 	_view = view;
 	user_triggered = false;
 	ignore_next_trigger = false;
 	update_call = true;
-	cached_position = KTextEditor::Cursor (-1, -1);
+	cached_position = KTextEditor::Cursor(-1, -1);
 
-	view->setAutomaticInvocationEnabled (false);
-	completion_model = new RKCodeCompletionModel (this);
-	file_completion_model = new RKFileCompletionModel (this);
-	callhint_model = new RKCallHintModel (this);
-	arghint_model = new RKArgumentHintModel (this);
-	view->registerCompletionModel (new RKCompletionNotifierModel (this));  // (at least) one model needs to be registered, so we will know, when completion was triggered by the user (shortcut)
-	completion_timer = new QTimer (this);
-	completion_timer->setSingleShot (true);
-	connect (completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
-	connect (view->document (), &KTextEditor::Document::textInserted, this, &RKCompletionManager::textInserted);
-	connect (view->document (), &KTextEditor::Document::textRemoved, this, &RKCompletionManager::textRemoved);
-	connect (view->document (), &KTextEditor::Document::lineWrapped, this, &RKCompletionManager::lineWrapped);
-	connect (view->document (), &KTextEditor::Document::lineUnwrapped, this, &RKCompletionManager::lineUnwrapped);
-	connect (view, &KTextEditor::View::cursorPositionChanged, this, &RKCompletionManager::cursorPositionChanged);
-	const QObjectList children = _view->children ();
-	for (QObjectList::const_iterator it = children.constBegin(); it != children.constEnd (); ++it) {
-		(*it)->installEventFilter (this);  // to handle Tab-key; installing on the view, alone, is not enough.
+	view->setAutomaticInvocationEnabled(false);
+	completion_model = new RKCodeCompletionModel(this);
+	file_completion_model = new RKFileCompletionModel(this);
+	callhint_model = new RKCallHintModel(this);
+	arghint_model = new RKArgumentHintModel(this);
+	view->registerCompletionModel(new RKCompletionNotifierModel(this)); // (at least) one model needs to be registered, so we will know, when completion was triggered by the user (shortcut)
+	completion_timer = new QTimer(this);
+	completion_timer->setSingleShot(true);
+	connect(completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
+	connect(view->document(), &KTextEditor::Document::textInserted, this, &RKCompletionManager::textInserted);
+	connect(view->document(), &KTextEditor::Document::textRemoved, this, &RKCompletionManager::textRemoved);
+	connect(view->document(), &KTextEditor::Document::lineWrapped, this, &RKCompletionManager::lineWrapped);
+	connect(view->document(), &KTextEditor::Document::lineUnwrapped, this, &RKCompletionManager::lineUnwrapped);
+	connect(view, &KTextEditor::View::cursorPositionChanged, this, &RKCompletionManager::cursorPositionChanged);
+	const QObjectList children = _view->children();
+	for (QObjectList::const_iterator it = children.constBegin(); it != children.constEnd(); ++it) {
+		(*it)->installEventFilter(this); // to handle Tab-key; installing on the view, alone, is not enough.
 	}
 
 	// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
 	//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
 	//       to a pointer to the default kate keyword completion model
-	kate_keyword_completion_model = KTextEditor::Editor::instance ()->findChild<KTextEditor::CodeCompletionModel *> ();
-	if (!kate_keyword_completion_model) kate_keyword_completion_model = view->findChild<KTextEditor::CodeCompletionModel *> (QString());
+	kate_keyword_completion_model = KTextEditor::Editor::instance()->findChild<KTextEditor::CodeCompletionModel *>();
+	if (!kate_keyword_completion_model) kate_keyword_completion_model = view->findChild<KTextEditor::CodeCompletionModel *>(QString());
 }
 
-RKCompletionManager::~RKCompletionManager () {
-	RK_TRACE (COMMANDEDITOR);
+RKCompletionManager::~RKCompletionManager() {
+	RK_TRACE(COMMANDEDITOR);
 }
 
-void RKCompletionManager::tryCompletionProxy () {
-	if (_view->isCompletionActive ()) {
+void RKCompletionManager::tryCompletionProxy() {
+	if (_view->isCompletionActive()) {
 		// Handle this in the next event cycle, as more than one event may trigger
-		completion_timer->start (0);
-	} else if (settings->autoEnabled ()) {
-		completion_timer->start (settings->autoTimeout ());
+		completion_timer->start(0);
+	} else if (settings->autoEnabled()) {
+		completion_timer->start(settings->autoTimeout());
 	}
 }
 
-QString RKCompletionManager::currentCompletionWord () const {
-	RK_TRACE (COMMANDEDITOR);
+QString RKCompletionManager::currentCompletionWord() const {
+	RK_TRACE(COMMANDEDITOR);
 
-	if (symbol_range.isValid ()) return _view->document ()->text (symbol_range);
-	return QString ();
+	if (symbol_range.isValid()) return _view->document()->text(symbol_range);
+	return QString();
 }
 
-void RKCompletionManager::userTriggeredCompletion () {
-	RK_TRACE (COMMANDEDITOR);
+void RKCompletionManager::userTriggeredCompletion() {
+	RK_TRACE(COMMANDEDITOR);
 
 	user_triggered = true;
-	completion_timer->stop ();
-	tryCompletion ();
+	completion_timer->stop();
+	tryCompletion();
 	user_triggered = false;
 }
 
@@ -143,9 +142,9 @@ void RKCompletionManager::tryCompletion() {
 	if (!user_triggered) {
 		if (end > cursor_pos) {
 			symbol_range =
-			    KTextEditor::Range();  // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
+			    KTextEditor::Range(); // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
 		} else {
-			if (doc->defaultStyleAt(c) == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range();  // do not hint while in comments
+			if (doc->defaultStyleAt(c) == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range(); // do not hint while in comments
 		}
 	}
 
@@ -155,7 +154,7 @@ void RKCompletionManager::tryCompletion() {
 		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name
 		// completion
 		if (word.startsWith(u'\"') || word.startsWith(u'\'') || word.startsWith(u'`')) {
-			symbol_range.setStart(KTextEditor::Cursor(symbol_range.start().line(), symbol_range.start().column() + 1));  // confine range to inside the quotes.
+			symbol_range.setStart(KTextEditor::Cursor(symbol_range.start().line(), symbol_range.start().column() + 1)); // confine range to inside the quotes.
 			filename = word.mid(1);
 			word.clear();
 		}
@@ -192,8 +191,8 @@ void RKCompletionManager::tryCompletion() {
 	updateVisibility();
 }
 
-bool isCode (KTextEditor::Document* doc, int line, int column) {
-	KSyntaxHighlighting::Theme::TextStyle style = doc->defaultStyleAt (KTextEditor::Cursor (line, column));
+bool isCode(KTextEditor::Document *doc, int line, int column) {
+	KSyntaxHighlighting::Theme::TextStyle style = doc->defaultStyleAt(KTextEditor::Cursor(line, column));
 	if (style == KSyntaxHighlighting::Theme::TextStyle::Comment) return false;
 	if (style == KSyntaxHighlighting::Theme::TextStyle::String) return false;
 	if (style == KSyntaxHighlighting::Theme::TextStyle::Char) return false;
@@ -215,7 +214,7 @@ void RKCompletionManager::updateCallHint() {
 	while (potential_symbol_end < -1 && line >= 0) {
 		--line;
 		QString context_line = doc->line(line);
-		if (!prefix.isEmpty()) {  // For skipping interactive output sections in console. Empty for RKCommandEditorWindow
+		if (!prefix.isEmpty()) { // For skipping interactive output sections in console. Empty for RKCommandEditorWindow
 			if (context_line.startsWith(prefix)) {
 				prefix_offset = prefix.length();
 			} else if (context_line.startsWith(continuation_prefix)) {
@@ -229,7 +228,7 @@ void RKCompletionManager::updateCallHint() {
 
 		int pos = context_line.length() - 1;
 		if (line == cached_position.line())
-			pos = cached_position.column() - 1 - prefix_offset;  // when on current line, look backward from cursor position, not line end
+			pos = cached_position.column() - 1 - prefix_offset; // when on current line, look backward from cursor position, not line end
 		for (int i = pos; i >= 0; --i) {
 			QChar c = context_line.at(i);
 			if (c == u'(') {
@@ -267,27 +266,27 @@ void RKCompletionManager::updateCallHint() {
 	callhint_model->setFunction(object);
 }
 
-void RKCompletionManager::startModel( KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range) {
+void RKCompletionManager::startModel(KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range) {
 	if (start) {
 		if (!range.isValid()) start = false;
 	}
 	if (start) {
-		if (!started_models.contains (model)) {
-			_view->startCompletion (range, model);
-			started_models.append (model);
+		if (!started_models.contains(model)) {
+			_view->startCompletion(range, model);
+			started_models.append(model);
 		}
-		auto ci = dynamic_cast<KTextEditor::CodeCompletionModelControllerInterface*>(model);
+		auto ci = dynamic_cast<KTextEditor::CodeCompletionModelControllerInterface *>(model);
 		model_filters.insert(model, ci ? ci->filterString(view(), range, view()->cursorPosition()) : QString());
 	} else {
-		started_models.removeAll (model);
+		started_models.removeAll(model);
 	}
 }
 
-void RKCompletionManager::updateVisibility () {
-	RK_TRACE (COMMANDEDITOR);
+void RKCompletionManager::updateVisibility() {
+	RK_TRACE(COMMANDEDITOR);
 
 	if (user_triggered || !_view->isCompletionActive()) {
-		started_models.clear ();
+		started_models.clear();
 	}
 
 	bool min_len = (currentCompletionWord().length() >= settings->autoMinChars()) || user_triggered;
@@ -298,20 +297,20 @@ void RKCompletionManager::updateVisibility () {
 		if (min_len) kate_keyword_completion_model->completionInvoked(view(), symbol_range, KTextEditor::CodeCompletionModel::ManualInvocation);
 		startModel(kate_keyword_completion_model, min_len, symbol_range);
 	}
-// NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
+	// NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
 	startModel(callhint_model, settings->isEnabled(RKCodeCompletionSettings::Calltip), currentCallRange());
 	startModel(arghint_model, settings->isEnabled(RKCodeCompletionSettings::Arghint), argname_range);
 }
 
-void RKCompletionManager::modelGainedLateData(RKCompletionModelBase* model) {
-	RK_TRACE (COMMANDEDITOR);
+void RKCompletionManager::modelGainedLateData(RKCompletionModelBase *model) {
+	RK_TRACE(COMMANDEDITOR);
 
 	bool removed = started_models.removeAll(model);
 	RK_ASSERT(removed); // should have been started before, thus be in the list
 	startModel(model, true, model->completionRange(view(), view()->cursorPosition()));
 }
 
-void RKCompletionManager::textInserted(KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
+void RKCompletionManager::textInserted(KTextEditor::Document *, const KTextEditor::Cursor &position, const QString &text) {
 	if (_view->isCompletionActive()) {
 		if (position < call_opening) update_call = true;
 		else if (text.contains(QChar(u'(')) || text.contains(QChar(u')'))) update_call = true;
@@ -319,7 +318,7 @@ void RKCompletionManager::textInserted(KTextEditor::Document*, const KTextEditor
 	tryCompletionProxy();
 }
 
-void RKCompletionManager::textRemoved(KTextEditor::Document*, const KTextEditor::Range& range, const QString& text) {
+void RKCompletionManager::textRemoved(KTextEditor::Document *, const KTextEditor::Range &range, const QString &text) {
 	if (_view->isCompletionActive()) {
 		if (range.start() < call_opening) update_call = true;
 		else if (text.contains(QChar(u'(')) || text.contains(QChar(u')'))) update_call = true;
@@ -327,17 +326,17 @@ void RKCompletionManager::textRemoved(KTextEditor::Document*, const KTextEditor:
 	tryCompletionProxy();
 }
 
-void RKCompletionManager::lineWrapped (KTextEditor::Document* , const KTextEditor::Cursor& ) {
-// should already have been handled by textInserted()
-	tryCompletionProxy ();
+void RKCompletionManager::lineWrapped(KTextEditor::Document *, const KTextEditor::Cursor &) {
+	// should already have been handled by textInserted()
+	tryCompletionProxy();
 }
 
-void RKCompletionManager::lineUnwrapped (KTextEditor::Document* , int ) {
-// should already have been handled by textRemoved()
-	tryCompletionProxy ();
+void RKCompletionManager::lineUnwrapped(KTextEditor::Document *, int) {
+	// should already have been handled by textRemoved()
+	tryCompletionProxy();
 }
 
-void RKCompletionManager::cursorPositionChanged(KTextEditor::View* view, const KTextEditor::Cursor& newPosition) {
+void RKCompletionManager::cursorPositionChanged(KTextEditor::View *view, const KTextEditor::Cursor &newPosition) {
 	if (_view->isCompletionActive()) {
 		if (newPosition < call_opening) update_call = true;
 		else {
@@ -350,12 +349,12 @@ void RKCompletionManager::cursorPositionChanged(KTextEditor::View* view, const K
 	}
 }
 
-KTextEditor::Range RKCompletionManager::currentCallRange () const {
-	return KTextEditor::Range (call_opening, _view->cursorPosition ());
+KTextEditor::Range RKCompletionManager::currentCallRange() const {
+	return KTextEditor::Range(call_opening, _view->cursorPosition());
 }
 
 bool modelHasGroups(KTextEditor::CodeCompletionModel *model) {
-	return (model->hasGroups() || (model->rowCount() && model->rowCount(model->index(0,0)))); // kate_keyword_completion_model claims to have no groups, but is still grouped
+	return (model->hasGroups() || (model->rowCount() && model->rowCount(model->index(0, 0)))); // kate_keyword_completion_model claims to have no groups, but is still grouped
 }
 
 QStringList genPartialCompletions(KTextEditor::CodeCompletionModel *model, const QString &lead, const QModelIndex &root) {
@@ -390,9 +389,9 @@ QStringList genPartialCompletions(const QStringList &matches, const QString &lea
 	return ret;
 }
 
-QString findCommonCompletion (const QStringList &candidates) {
-	RK_TRACE (COMMANDEDITOR);
-	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for common completion among set of %d", candidates.size ());
+QString findCommonCompletion(const QStringList &candidates) {
+	RK_TRACE(COMMANDEDITOR);
+	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for common completion among set of %d", candidates.size());
 
 	QString ret;
 	bool first = true;
@@ -411,7 +410,7 @@ QString findCommonCompletion (const QStringList &candidates) {
 				if (ret[c] != candidate[c]) {
 					if (!c) return QString();
 
-					ret = ret.left (c);
+					ret = ret.left(c);
 					break;
 				}
 			}
@@ -421,7 +420,7 @@ QString findCommonCompletion (const QStringList &candidates) {
 	return ret;
 }
 
-bool isModelEmpty(KTextEditor::CodeCompletionModel* model, const QString &filter) {
+bool isModelEmpty(KTextEditor::CodeCompletionModel *model, const QString &filter) {
 	int rootcount = model->rowCount();
 	bool groups = modelHasGroups(model);
 	for (int i = 0; i < rootcount; ++i) {
@@ -449,13 +448,13 @@ bool RKCompletionManager::onlyCallHintShown() const {
 	return true;
 }
 
-bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
-	if (event->type () == QEvent::KeyPress || event->type () == QEvent::ShortcutOverride) {
-		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
-		QKeyEvent *k = static_cast<QKeyEvent *> (event);
+bool RKCompletionManager::eventFilter(QObject *, QEvent *event) {
+	if (event->type() == QEvent::KeyPress || event->type() == QEvent::ShortcutOverride) {
+		RK_TRACE(COMMANDEDITOR); // avoid loads of empty traces, putting this here
+		QKeyEvent *k = static_cast<QKeyEvent *>(event);
 
 		if (!_view->isCompletionActive()) {
-			if (k->type () == QEvent::ShortcutOverride) return true; // retriggered as key event
+			if (k->type() == QEvent::ShortcutOverride) return true; // retriggered as key event
 			if (settings->tabKeyInvokesCompletion() && k->key() == Qt::Key_Tab && k->modifiers() == Qt::NoModifier) {
 				userTriggeredCompletion();
 				return true;
@@ -468,26 +467,26 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 			if (onlyCallHintShown()) {
 				completion_timer->start(0);
 				_view->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
-							// the completion window should come back up, without delay
+				                          // the completion window should come back up, without delay
 				return false;
 			}
 		}
 
-		if ((k->modifiers() == Qt::NoModifier) && ((k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter))) {
-			if (k->type () == QEvent::ShortcutOverride) {
+		if ((k->modifiers() == Qt::NoModifier) && ((k->key() == Qt::Key_Return) || (k->key() == Qt::Key_Enter))) {
+			if (k->type() == QEvent::ShortcutOverride) {
 				// Too bad for all the duplicate work, but the event will re-trigger as a keypress event, and we need to intercept that one, too.
 				return true;
 			}
 			bool callhint_active = started_models.contains(callhint_model);
 			_view->forceCompletion();
-			started_models.clear();  // forceCompletion(), also aborts. Keep track of that.
-// TODO: If nothing was actually modified, should return press be sent? Configurable?
-			completion_timer->stop();  // do not bring up completion right again, but do restore the call-hint, if applicable
+			started_models.clear();   // forceCompletion(), also aborts. Keep track of that.
+			                          // TODO: If nothing was actually modified, should return press be sent? Configurable?
+			completion_timer->stop(); // do not bring up completion right again, but do restore the call-hint, if applicable
 			if (callhint_active) startModel(callhint_model, true, currentCallRange());
 			return true;
 		}
 
-		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
+		if (k->key() == Qt::Key_Tab && (!k->modifiers())) {
 			// Try to do partial completion. Unfortunately, the base implementation in ktexteditor is totally broken (inserts the whole partial completion, without removing the start).
 			// This is terribly inefficient, but fortunately, it only needs to be called, when Tab is actually pressed.
 			QStringList candidate_completions;
@@ -503,34 +502,34 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 
 			if (!comp.isEmpty()) {
 				RK_DEBUG(COMMANDEDITOR, DL_WARNING, "Tab completion: %s", qPrintable(comp));
-				if (k->type () == QEvent::ShortcutOverride) {
+				if (k->type() == QEvent::ShortcutOverride) {
 					// Too bad for all the duplicate work, but the event will re-trigger as a keypress event, and we need to intercept that one, too.
 					return true;
 				}
-				view ()->document ()->insertText (view ()->cursorPosition (), comp);
+				view()->document()->insertText(view()->cursorPosition(), comp);
 				if (candidate_completions.size() == 1) {
 					// Ouch, how messy. We want to make sure completion stops (except for any call hints), and is not re-triggered by the insertion, itself
 					bool callhint_active = started_models.contains(callhint_model);
-					_view->abortCompletion ();
-					started_models.clear ();
+					_view->abortCompletion();
+					started_models.clear();
 					completion_timer->stop();
 					if (callhint_active) startModel(callhint_model, true, currentCallRange());
 				}
 			} else {
-				QApplication::beep ();
+				QApplication::beep();
 			}
 			return true;
-		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && _view->isCompletionActive ()) {
+		} else if ((k->key() == Qt::Key_Up || k->key() == Qt::Key_Down) && _view->isCompletionActive()) {
 			bool navigate = (settings->cursorNavigatesCompletions() && k->modifiers() == Qt::NoModifier) || (!settings->cursorNavigatesCompletions() && k->modifiers() == Qt::AltModifier);
 
 			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
 			// Make alt+up / alt+down navigate in the completion list
 			if (navigate) {
 				if (k->type() == QKeyEvent::ShortcutOverride) {
-					k->accept();  // -> will be re-sent as a regular key event, then handled, below
+					k->accept(); // -> will be re-sent as a regular key event, then handled, below
 					return true;
 				} else {
-					if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
+					if (k->type() != QKeyEvent::KeyPress) return true; // eat the release event
 				}
 
 				// No, we cannot just send a fake key event, easily...
@@ -540,11 +539,11 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 					kate_edit_actions = view()->actionCollection();
 					action = kate_edit_actions ? (kate_edit_actions->action(k->key() == Qt::Key_Up ? u"move_line_up"_s : u"move_line_down"_s)) : nullptr;
 				}
-				if (action) action->trigger ();
-				else RK_ASSERT (action);
+				if (action) action->trigger();
+				else RK_ASSERT(action);
 				return true;
 			} else {
-				_view->abortCompletion ();
+				_view->abortCompletion();
 				return false;
 			}
 		}
@@ -555,67 +554,67 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 
 //////////////////////// RKCompletionModelBase ////////////////////
 
-RKCompletionModelBase::RKCompletionModelBase (RKCompletionManager *manager) : KTextEditor::CodeCompletionModel (manager) {
-	RK_TRACE (COMMANDEDITOR);
+RKCompletionModelBase::RKCompletionModelBase(RKCompletionManager *manager) : KTextEditor::CodeCompletionModel(manager) {
+	RK_TRACE(COMMANDEDITOR);
 	n_completions = 0;
 	RKCompletionModelBase::manager = manager;
 	setHasGroups(true);
 }
 
-RKCompletionModelBase::~RKCompletionModelBase () {
-	RK_TRACE (COMMANDEDITOR);
+RKCompletionModelBase::~RKCompletionModelBase() {
+	RK_TRACE(COMMANDEDITOR);
 }
 
-QModelIndex RKCompletionModelBase::index (int row, int column, const QModelIndex& parent) const {
-	if (!parent.isValid ()) { // root
-		if (row == 0) return createIndex (row, column, quintptr (HeaderItem));
-	} else if (isHeaderItem (parent)) {
-		return createIndex (row, column, quintptr (LeafItem));
+QModelIndex RKCompletionModelBase::index(int row, int column, const QModelIndex &parent) const {
+	if (!parent.isValid()) { // root
+		if (row == 0) return createIndex(row, column, quintptr(HeaderItem));
+	} else if (isHeaderItem(parent)) {
+		return createIndex(row, column, quintptr(LeafItem));
 	}
-	return QModelIndex ();
+	return QModelIndex();
 }
 
-QModelIndex RKCompletionModelBase::parent (const QModelIndex& index) const {
-	if (index.isValid () && !isHeaderItem (index)) {
-		return createIndex (0, 0, quintptr (HeaderItem));
+QModelIndex RKCompletionModelBase::parent(const QModelIndex &index) const {
+	if (index.isValid() && !isHeaderItem(index)) {
+		return createIndex(0, 0, quintptr(HeaderItem));
 	}
-	return QModelIndex ();
+	return QModelIndex();
 }
 
-int RKCompletionModelBase::rowCount (const QModelIndex& parent) const {
-	if (!parent.isValid ()) return (n_completions ? 1 : 0); // header item, if list not empty
-	if (isHeaderItem (parent)) return n_completions;
-	return 0;  // no children on completion entries
+int RKCompletionModelBase::rowCount(const QModelIndex &parent) const {
+	if (!parent.isValid()) return (n_completions ? 1 : 0); // header item, if list not empty
+	if (isHeaderItem(parent)) return n_completions;
+	return 0; // no children on completion entries
 }
 
-void RKCompletionModelBase::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range & word, const QModelIndex &index) const {
-// I have no idea, why this is needed at all, but sometimes (and inconsitently!) the default implementation will replace the wrong range, without this.
-// Importantly, the RKFileCompletionModel replaces with the wrong range, the *second* time it gets called.
-	KTextEditor::CodeCompletionModel::executeCompletionItem(view, const_cast<RKCompletionModelBase*>(this)->completionRange(view, word.end()), index);
+void RKCompletionModelBase::executeCompletionItem(KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const {
+	// I have no idea, why this is needed at all, but sometimes (and inconsitently!) the default implementation will replace the wrong range, without this.
+	// Importantly, the RKFileCompletionModel replaces with the wrong range, the *second* time it gets called.
+	KTextEditor::CodeCompletionModel::executeCompletionItem(view, const_cast<RKCompletionModelBase *>(this)->completionRange(view, word.end()), index);
 }
 
 //////////////////////// RKCodeCompletionModel ////////////////////
 
-RKCodeCompletionModel::RKCodeCompletionModel (RKCompletionManager *manager) : RKCompletionModelBase (manager) {
-	RK_TRACE (COMMANDEDITOR);
+RKCodeCompletionModel::RKCodeCompletionModel(RKCompletionManager *manager) : RKCompletionModelBase(manager) {
+	RK_TRACE(COMMANDEDITOR);
 	rcompletions = new RKDynamicCompletionsAddition(this);
 	connect(rcompletions, &RKDynamicCompletionsAddition::resultsComplete, this, &RKCodeCompletionModel::addRCompletions);
 }
 
-RKCodeCompletionModel::~RKCodeCompletionModel () {
-	RK_TRACE (COMMANDEDITOR);
+RKCodeCompletionModel::~RKCodeCompletionModel() {
+	RK_TRACE(COMMANDEDITOR);
 }
 
-void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_help) {
-	RK_TRACE (COMMANDEDITOR);
+void RKCodeCompletionModel::updateCompletionList(const QString &symbol, bool is_help) {
+	RK_TRACE(COMMANDEDITOR);
 
-	if (current_symbol == symbol) return;	// already up to date
-	beginResetModel ();
+	if (current_symbol == symbol) return; // already up to date
+	beginResetModel();
 
 	RObject::ObjectList matches;
-	QStringList objectpath = RObject::parseObjectPath (symbol);
-	if (!objectpath.isEmpty () && !objectpath[0].isEmpty ()) {  // Skip completion, if the current symbol is '""' (or another empty quote), for instance
-		matches = RObjectList::getObjectList ()->findObjectsMatching (symbol);
+	QStringList objectpath = RObject::parseObjectPath(symbol);
+	if (!objectpath.isEmpty() && !objectpath[0].isEmpty()) { // Skip completion, if the current symbol is '""' (or another empty quote), for instance
+		matches = RObjectList::getObjectList()->findObjectsMatching(symbol);
 	}
 
 	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
@@ -625,9 +624,9 @@ void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_
 	icons.reserve(n_completions);
 	shortnames.clear();
 	shortnames.reserve(n_completions);
-	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionSettings()->options());  // NOTE: Intentionally using the script editor completion settings object, here. the completion options are shared with the console!
+	names = RObject::getFullNames(matches, RKSettingsModuleCommandEditor::completionSettings()->options()); // NOTE: Intentionally using the script editor completion settings object, here. the completion options are shared with the console!
 	for (int i = 0; i < n_completions; ++i) {
-		icons.append (RKStandardIcons::iconForObject (matches[i]));
+		icons.append(RKStandardIcons::iconForObject(matches[i]));
 		shortnames.append(matches[i]->getShortName());
 	}
 
@@ -645,11 +644,11 @@ void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_
 
 	current_symbol = symbol;
 
-	endResetModel ();
+	endResetModel();
 }
 
 void RKCodeCompletionModel::addRCompletions() {
-	RK_TRACE (COMMANDEDITOR);
+	RK_TRACE(COMMANDEDITOR);
 
 	QStringList addlist = rcompletions->results();
 	if (addlist.isEmpty()) return;
@@ -671,61 +670,60 @@ void RKCodeCompletionModel::addRCompletions() {
 	manager->modelGainedLateData(this);
 }
 
-KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&) {
-	return manager->currentSymbolRange ();
+KTextEditor::Range RKCodeCompletionModel::completionRange(KTextEditor::View *, const KTextEditor::Cursor &) {
+	return manager->currentSymbolRange();
 }
 
-QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
-	if (isHeaderItem (index)) {
-		if (role == Qt::DisplayRole) return i18n ("Objects on search path");
+QVariant RKCodeCompletionModel::data(const QModelIndex &index, int role) const {
+	if (isHeaderItem(index)) {
+		if (role == Qt::DisplayRole) return i18n("Objects on search path");
 		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
-		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 1;  // sort below arghint model
-		return QVariant ();
+		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 1; // sort below arghint model
+		return QVariant();
 	}
 
-	int col = index.column ();
-	int row = index.row ();
+	int col = index.column();
+	int row = index.row();
 
 	if ((role == Qt::DisplayRole) || (role == KTextEditor::CodeCompletionModel::CompletionRole)) {
 		if (col == KTextEditor::CodeCompletionModel::Name) {
-			return (names.value (row));
+			return (names.value(row));
 		}
 	} else if (role == Qt::DecorationRole) {
 		if (col == KTextEditor::CodeCompletionModel::Icon) {
-			return (icons.value (row));
+			return (icons.value(row));
 		}
 	} else if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) {
-		return (row);  // disable sorting
+		return (row); // disable sorting
 	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
 		return (10);
 	}
 
-	return QVariant ();
+	return QVariant();
 }
 
 QStringList RKCodeCompletionModel::rawPartialCompletions() const {
-	RK_TRACE (COMMANDEDITOR);
+	RK_TRACE(COMMANDEDITOR);
 
 	// Here, we need to do completion on the *last* portion of the object-path, only, so we will be able to complete "obj" to "object", even if "object" is present as
 	// both packageA::object and packageB::object.
 	// Thus as a first step, we look up the short names. We do this, lazily, as this function is only called on demand.
-	QStringList objectpath = RObject::parseObjectPath (current_symbol);
+	QStringList objectpath = RObject::parseObjectPath(current_symbol);
 	if (objectpath.isEmpty() || objectpath[0].isEmpty()) return (QStringList());
 	QString lead = objectpath.last();
-	if (!shortnames.value(0).startsWith(lead)) lead.clear ();  // This could happen if the current path ends with '$', for instance
+	if (!shortnames.value(0).startsWith(lead)) lead.clear(); // This could happen if the current path ends with '$', for instance
 
 	return genPartialCompletions(shortnames, lead);
 }
 
-
 //////////////////////// RKCallHintModel //////////////////////////
-RKCallHintModel::RKCallHintModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
-	RK_TRACE (COMMANDEDITOR);
+RKCallHintModel::RKCallHintModel(RKCompletionManager *manager) : RKCompletionModelBase(manager) {
+	RK_TRACE(COMMANDEDITOR);
 	function = nullptr;
 }
 
 // TODO: There could be more than one function by a certain name, and we could support this!
-void RKCallHintModel::setFunction(RObject* _function) {
+void RKCallHintModel::setFunction(RObject *_function) {
 	RK_TRACE(COMMANDEDITOR);
 
 	if (function == _function) return;
@@ -734,7 +732,7 @@ void RKCallHintModel::setFunction(RObject* _function) {
 	beginResetModel();
 	if (function && function->isType(RObject::Function)) {
 		// initialize hint
-		RFunctionObject* fo = static_cast<RFunctionObject*>(function);
+		RFunctionObject *fo = static_cast<RFunctionObject *>(function);
 		QStringList args = fo->argumentNames();
 		QStringList defs = fo->argumentDefaults();
 
@@ -762,14 +760,14 @@ void RKCallHintModel::setFunction(RObject* _function) {
 	endResetModel();
 }
 
-QVariant RKCallHintModel::data (const QModelIndex& index, int role) const {
-	if (isHeaderItem (index)) {
-		if (role == Qt::DisplayRole) return i18n ("Function calls");  // NOTE: Header is not currently used as of KF5 5.44.0
+QVariant RKCallHintModel::data(const QModelIndex &index, int role) const {
+	if (isHeaderItem(index)) {
+		if (role == Qt::DisplayRole) return i18n("Function calls"); // NOTE: Header is not currently used as of KF5 5.44.0
 		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
-		return QVariant ();
+		return QVariant();
 	}
 
-	int col = index.column ();
+	int col = index.column();
 	if (role == Qt::DisplayRole) {
 		if (col == KTextEditor::CodeCompletionModel::Prefix) return (name);
 		if (col == KTextEditor::CodeCompletionModel::Arguments) return (formals);
@@ -785,40 +783,40 @@ QVariant RKCallHintModel::data (const QModelIndex& index, int role) const {
 		return (10);
 	}
 
-	return QVariant ();
+	return QVariant();
 }
 
-KTextEditor::Range RKCallHintModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&) {
-	return manager->currentCallRange ();
+KTextEditor::Range RKCallHintModel::completionRange(KTextEditor::View *, const KTextEditor::Cursor &) {
+	return manager->currentCallRange();
 }
 
 //////////////////////// RKArgumentHintModel //////////////////////
-RKArgumentHintModel::RKArgumentHintModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
-	RK_TRACE (COMMANDEDITOR);
+RKArgumentHintModel::RKArgumentHintModel(RKCompletionManager *manager) : RKCompletionModelBase(manager) {
+	RK_TRACE(COMMANDEDITOR);
 
 	function = nullptr;
 	rcompletions = new RKDynamicCompletionsAddition(this);
 	connect(rcompletions, &RKDynamicCompletionsAddition::resultsComplete, this, &RKArgumentHintModel::addRCompletions);
 }
 
-void RKArgumentHintModel::updateCompletionList (RObject* _function, const QString &argument) {
-	RK_TRACE (COMMANDEDITOR);
+void RKArgumentHintModel::updateCompletionList(RObject *_function, const QString &argument) {
+	RK_TRACE(COMMANDEDITOR);
 
 	bool changed = false;
 	if (function != _function) {
-		beginResetModel ();
+		beginResetModel();
 		changed = true;
 		function = _function;
-		if (function && function->isType (RObject::Function)) {
+		if (function && function->isType(RObject::Function)) {
 			// initialize hint
-			RFunctionObject *fo = static_cast<RFunctionObject*> (function);
-			args = fo->argumentNames ();
+			RFunctionObject *fo = static_cast<RFunctionObject *>(function);
+			args = fo->argumentNames();
 			n_formals_args = args.size();
-			defs = fo->argumentDefaults ();
+			defs = fo->argumentDefaults();
 			rcompletions->update(QStringLiteral("funargs"), function->getShortName(), QString(), args);
 		} else {
-			args.clear ();
-			defs.clear ();
+			args.clear();
+			defs.clear();
 			n_formals_args = 0;
 		}
 	}
@@ -826,30 +824,29 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 	if (changed || (argument != fragment)) {
 		if (!changed) {
 			changed = true;
-			beginResetModel ();
+			beginResetModel();
 		}
 		fragment = argument;
-		matches.clear ();
-		if (!fragment.isNull()) {  // meaning were not on an argument name for sure
-			for (int i = 0; i < args.size (); ++i) {
-				if (args[i].startsWith (fragment)) matches.append (i);
+		matches.clear();
+		if (!fragment.isNull()) { // meaning were not on an argument name for sure
+			for (int i = 0; i < args.size(); ++i) {
+				if (args[i].startsWith(fragment)) matches.append(i);
 			}
 		}
 	}
 
 	if (changed) {
-		n_completions = matches.size ();
-		endResetModel ();
+		n_completions = matches.size();
+		endResetModel();
 	}
 }
 
-
 void RKArgumentHintModel::addRCompletions() {
-	RK_TRACE (COMMANDEDITOR);
+	RK_TRACE(COMMANDEDITOR);
 
 	QStringList addlist = rcompletions->results();
 	args += addlist;
-	for (int i = 0; i < addlist.size (); ++i) {
+	for (int i = 0; i < addlist.size(); ++i) {
 		if (addlist[i].startsWith(fragment)) matches.append(n_completions + i);
 	}
 	if (n_completions != matches.size()) {
@@ -860,11 +857,11 @@ void RKArgumentHintModel::addRCompletions() {
 	}
 }
 
-QVariant RKArgumentHintModel::data(const QModelIndex& index, int role) const {
+QVariant RKArgumentHintModel::data(const QModelIndex &index, int role) const {
 	if (isHeaderItem(index)) {
 		if (role == Qt::DisplayRole) return i18n("Function arguments");
 		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
-		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 0;  // Sort above other models (except calltip)
+		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 0; // Sort above other models (except calltip)
 		return QVariant();
 	}
 
@@ -877,135 +874,133 @@ QVariant RKArgumentHintModel::data(const QModelIndex& index, int role) const {
 			if (!def.isEmpty()) return (QString(u'=' + def));
 		}
 	} else if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) {
-		return row;  // disable sorting
+		return row; // disable sorting
 	} else if (role == KTextEditor::CodeCompletionModel::CompletionRole) {
 		return KTextEditor::CodeCompletionModel::Function;
 	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
-		if (matches.value(row) >= n_formals_args) return (0);  // Argument names returned from R completion. This could be _lot_ (S3), so lower priority
+		if (matches.value(row) >= n_formals_args) return (0); // Argument names returned from R completion. This could be _lot_ (S3), so lower priority
 		return (20);
 	}
 
 	return QVariant();
 }
 
-KTextEditor::Range RKArgumentHintModel::completionRange (KTextEditor::View*, const KTextEditor::Cursor&) {
-	return manager->currentArgnameRange ();
+KTextEditor::Range RKArgumentHintModel::completionRange(KTextEditor::View *, const KTextEditor::Cursor &) {
+	return manager->currentArgnameRange();
 }
 
 QStringList RKArgumentHintModel::rawPartialCompletions() const {
-	RK_TRACE (COMMANDEDITOR);
+	RK_TRACE(COMMANDEDITOR);
 
 	return genPartialCompletions(args, fragment);
 }
 
 //////////////////////// RKFileCompletionModel ////////////////////
 #include <KUrlCompletion>
-RKFileCompletionModelWorker::RKFileCompletionModelWorker (const QString &_string) : QThread () {
-	RK_TRACE (COMMANDEDITOR);
+RKFileCompletionModelWorker::RKFileCompletionModelWorker(const QString &_string) : QThread() {
+	RK_TRACE(COMMANDEDITOR);
 	string = _string;
-	connect (this, &QThread::finished, this, &QObject::deleteLater);
+	connect(this, &QThread::finished, this, &QObject::deleteLater);
 }
 
-void RKFileCompletionModelWorker::run () {
-	RK_TRACE (COMMANDEDITOR);
+void RKFileCompletionModelWorker::run() {
+	RK_TRACE(COMMANDEDITOR);
 
 	KUrlCompletion comp;
-	comp.setDir (QUrl::fromLocalFile (QDir::currentPath ()));
-	comp.makeCompletion (string);
+	comp.setDir(QUrl::fromLocalFile(QDir::currentPath()));
+	comp.makeCompletion(string);
 	while (comp.isRunning()) {
 		msleep(50);
 	}
-	QStringList files = comp.allMatches ();
+	QStringList files = comp.allMatches();
 
 	QStringList exes;
-	if (!QDir (string).isAbsolute ()) {  // NOTE: KUrlCompletion does not handle this well, returns, e.g. "/home/me/firefox" when given "/home/me/f"; KF5 5.44.0
-		comp.setMode (KUrlCompletion::ExeCompletion);
-		comp.makeCompletion (string);
-		exes = comp.allMatches ();
+	if (!QDir(string).isAbsolute()) { // NOTE: KUrlCompletion does not handle this well, returns, e.g. "/home/me/firefox" when given "/home/me/f"; KF5 5.44.0
+		comp.setMode(KUrlCompletion::ExeCompletion);
+		comp.makeCompletion(string);
+		exes = comp.allMatches();
 	}
 
 	Q_EMIT completionsReady(string, exes, files);
 }
 
-RKFileCompletionModel::RKFileCompletionModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
-	RK_TRACE (COMMANDEDITOR);
+RKFileCompletionModel::RKFileCompletionModel(RKCompletionManager *manager) : RKCompletionModelBase(manager) {
+	RK_TRACE(COMMANDEDITOR);
 	worker = nullptr;
 }
 
-RKFileCompletionModel::~RKFileCompletionModel () {
-	RK_TRACE (COMMANDEDITOR);
+RKFileCompletionModel::~RKFileCompletionModel() {
+	RK_TRACE(COMMANDEDITOR);
 }
 
-void RKFileCompletionModel::updateCompletionList(const QString& fragment) {
-	RK_TRACE (COMMANDEDITOR);
+void RKFileCompletionModel::updateCompletionList(const QString &fragment) {
+	RK_TRACE(COMMANDEDITOR);
 
 	if (current_fragment == fragment) return;
 
 	current_fragment = fragment;
-	launchThread ();
+	launchThread();
 }
 
-void RKFileCompletionModel::launchThread () {
-	RK_TRACE (COMMANDEDITOR);
+void RKFileCompletionModel::launchThread() {
+	RK_TRACE(COMMANDEDITOR);
 
-	if (current_fragment.isEmpty ()) {
-		completionsReady (QString (), QStringList (), QStringList ());
+	if (current_fragment.isEmpty()) {
+		completionsReady(QString(), QStringList(), QStringList());
 	} else if (!worker) {
-		RK_DEBUG (COMMANDEDITOR, DL_DEBUG, "Launching filename completion thread for '%s'", qPrintable (current_fragment));
-		worker = new RKFileCompletionModelWorker (current_fragment);
-		connect (worker, &RKFileCompletionModelWorker::completionsReady, this, &RKFileCompletionModel::completionsReady);
-		worker->start ();
+		RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Launching filename completion thread for '%s'", qPrintable(current_fragment));
+		worker = new RKFileCompletionModelWorker(current_fragment);
+		connect(worker, &RKFileCompletionModelWorker::completionsReady, this, &RKFileCompletionModel::completionsReady);
+		worker->start();
 	}
 }
 
-void RKFileCompletionModel::completionsReady (const QString& string, const QStringList& exes, const QStringList& files) {
-	RK_TRACE (COMMANDEDITOR);
+void RKFileCompletionModel::completionsReady(const QString &string, const QStringList &exes, const QStringList &files) {
+	RK_TRACE(COMMANDEDITOR);
 
-	RK_DEBUG (COMMANDEDITOR, DL_DEBUG, "Filename completion finished for '%s': %d matches", qPrintable (string), files.size () + exes.size ());
+	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Filename completion finished for '%s': %d matches", qPrintable(string), files.size() + exes.size());
 	worker = nullptr;
 	if (current_fragment == string) {
-		beginResetModel ();
+		beginResetModel();
 		names = files + exes; // TODO: This could be prettier
-		n_completions = names.size ();
-		endResetModel ();
+		n_completions = names.size();
+		endResetModel();
 	} else {
-		launchThread ();
+		launchThread();
 	}
 }
 
-KTextEditor::Range RKFileCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor &) {
-	return manager->currentSymbolRange ();
+KTextEditor::Range RKFileCompletionModel::completionRange(KTextEditor::View *, const KTextEditor::Cursor &) {
+	return manager->currentSymbolRange();
 }
 
-QVariant RKFileCompletionModel::data (const QModelIndex& index, int role) const {
-	if (isHeaderItem (index)) {
-		if (role == Qt::DisplayRole) return i18n ("Local file names");
+QVariant RKFileCompletionModel::data(const QModelIndex &index, int role) const {
+	if (isHeaderItem(index)) {
+		if (role == Qt::DisplayRole) return i18n("Local file names");
 		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
 		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 1; // Sort below arghint model
-		return QVariant ();
+		return QVariant();
 	}
 
-	int col = index.column ();
-	int row = index.row ();
+	int col = index.column();
+	int row = index.row();
 	if ((role == Qt::DisplayRole) || (role == KTextEditor::CodeCompletionModel::CompletionRole)) {
 		if (col == KTextEditor::CodeCompletionModel::Name) {
-			return (names.value (row));
+			return (names.value(row));
 		}
 	} else if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) {
-		return (row);  // disable sorting
+		return (row); // disable sorting
 	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
 		return (10);
 	}
-	return QVariant ();
+	return QVariant();
 }
 
 QStringList RKFileCompletionModel::rawPartialCompletions() const {
-	RK_TRACE (COMMANDEDITOR);
+	RK_TRACE(COMMANDEDITOR);
 
 	return genPartialCompletions(names, current_fragment);
 }
-
-
 
 RKDynamicCompletionsAddition::RKDynamicCompletionsAddition(RKCompletionModelBase *parent) : QObject(parent) {
 	RK_TRACE(COMMANDEDITOR);

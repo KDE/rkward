@@ -9,8 +9,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qobject.h>
 
-#include <qstring.h>
 #include <QUrl>
+#include <qstring.h>
 
 class QTemporaryFile;
 
@@ -20,13 +20,14 @@ agents, the RKLoadAgent self-destructs when done.
 */
 class RKLoadAgent : public QObject {
 	Q_OBJECT
-public:
-	explicit RKLoadAgent (const QUrl &url, bool merge=false);
+  public:
+	explicit RKLoadAgent(const QUrl &url, bool merge = false);
 
-	~RKLoadAgent ();
-private:
-/// needed if file to be loaded is remote
-	QTemporaryFile* tmpfile;
+	~RKLoadAgent();
+
+  private:
+	/// needed if file to be loaded is remote
+	QTemporaryFile *tmpfile;
 	bool _merge;
 };
 

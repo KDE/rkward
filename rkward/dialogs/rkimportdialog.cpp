@@ -13,16 +13,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KMessageWidget>
 
-#include "../plugin/rkcomponentmap.h"
-#include "../plugin/rkcomponentcontext.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rkspecialactions.h"
 #include "../misc/rkradiogroup.h"
+#include "../misc/rkspecialactions.h"
+#include "../plugin/rkcomponentcontext.h"
+#include "../plugin/rkcomponentmap.h"
 
 #include "../debug.h"
 
 RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAssistantDialog(parent) {
-	RK_TRACE (DIALOGS);
+	RK_TRACE(DIALOGS);
 
 	setWindowTitle(i18n("Import Data Assistant"));
 	rio_handle = RKComponentMap::getComponentHandle(QStringLiteral("rkward::import_generic_rio"));
@@ -34,7 +34,7 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 	for (auto it = component_ids.constBegin(); it != component_ids.constEnd(); ++it) {
 		RKComponentHandle *handle = RKComponentMap::getComponentHandle(*it);
 		if (!handle) {
-			RK_ASSERT (false);
+			RK_ASSERT(false);
 			continue;
 		}
 
@@ -129,8 +129,8 @@ void RKImportDialog::updateState() {
 	setAppropriate(end_without_selection, !isAppropriate(end_with_selection));
 }
 
-void RKImportDialog::accept () {
-	RK_TRACE (DIALOGS);
+void RKImportDialog::accept() {
+	RK_TRACE(DIALOGS);
 
 	hide();
 	int index = select_format_group->checkedId();

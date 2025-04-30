@@ -10,8 +10,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKTOOLWINDOWBAR_H
 #define RKTOOLWINDOWBAR_H
 
-#include <kmultitabbar.h>
 #include <kconfiggroup.h>
+#include <kmultitabbar.h>
 
 #include <QMap>
 
@@ -27,45 +27,47 @@ class RKMDIWindow;
 Some more would need to be copied for full functionality (session saving / restoring), but for now, I focused on the bare essentials */
 class RKToolWindowBar : public KMultiTabBar {
 	Q_OBJECT
-public:
-	RKToolWindowBar (KMultiTabBar::KMultiTabBarPosition position, QWidget *parent);
-	~RKToolWindowBar ();
+  public:
+	RKToolWindowBar(KMultiTabBar::KMultiTabBarPosition position, QWidget *parent);
+	~RKToolWindowBar();
 
-	void setSplitter (QSplitter *splitter);
-	void addWidget (RKMDIWindow *widget);
-	void removeWidget (RKMDIWindow *widget);
+	void setSplitter(QSplitter *splitter);
+	void addWidget(RKMDIWindow *widget);
+	void removeWidget(RKMDIWindow *widget);
 
-	void showWidget (RKMDIWindow *widget);
-	void hideWidget (RKMDIWindow *widget);
+	void showWidget(RKMDIWindow *widget);
+	void hideWidget(RKMDIWindow *widget);
 
-	void restoreSize (const KConfigGroup &cg);
-	void saveSize (KConfigGroup &cg) const;
-	void captionChanged(RKMDIWindow* window);
-private Q_SLOTS:
-	void tabClicked (int id);
-	void changeAttachment ();
-	void moveToolWindow (int target);
-	void addRemoveToolWindow (QAction* action);
-	void splitterMoved (int, int);
-protected:
+	void restoreSize(const KConfigGroup &cg);
+	void saveSize(KConfigGroup &cg) const;
+	void captionChanged(RKMDIWindow *window);
+  private Q_SLOTS:
+	void tabClicked(int id);
+	void changeAttachment();
+	void moveToolWindow(int target);
+	void addRemoveToolWindow(QAction *action);
+	void splitterMoved(int, int);
+
+  protected:
 	/** handle RMB clicks on individual buttons */
-	bool eventFilter (QObject *obj, QEvent *ev) override;
+	bool eventFilter(QObject *obj, QEvent *ev) override;
 	/** handle RMB clicks on the bar itself */
-	void contextMenuEvent (QContextMenuEvent *event) override;
-private:
-friend class RKWorkplace;
-	void reclaimDetached (RKMDIWindow *window);
-	void closeOthers (RKMDIWindow *window);
-	void windowDestroyed (QObject *window);
+	void contextMenuEvent(QContextMenuEvent *event) override;
 
-	int getSplitterSize () const;
-	void setSplitterSize (int new_size);
+  private:
+	friend class RKWorkplace;
+	void reclaimDetached(RKMDIWindow *window);
+	void closeOthers(RKMDIWindow *window);
+	void windowDestroyed(QObject *window);
 
-	QMap<RKMDIWindow*, int> widget_to_id;
-	RKMDIWindow* idToWidget (int id) const;
+	int getSplitterSize() const;
+	void setSplitterSize(int new_size);
 
-	QSplitter* splitter;
-	QWidget* container;
+	QMap<RKMDIWindow *, int> widget_to_id;
+	RKMDIWindow *idToWidget(int id) const;
+
+	QSplitter *splitter;
+	QWidget *container;
 
 	int last_known_size;
 	int id_of_popup;

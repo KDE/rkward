@@ -8,8 +8,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKIMPORTDIALOG_H
 #define RKIMPORTDIALOG_H
 
-#include <QStringList>
 #include <KAssistantDialog>
+#include <QStringList>
 
 class RKComponentGUIXML;
 class KPageWidgetitem;
@@ -20,15 +20,16 @@ class RKComponentHandle;
 is opened automatically to deal with this type of file . */
 class RKImportDialog : public KAssistantDialog {
 	Q_OBJECT
-public:
-/** constructor
-@param context_id The id of the context containing the relevant plugins
-@param parent Parent widget (dialog will be centered on this widget, if non-zero */
-	RKImportDialog (const QString &context_id, QWidget *parent);
-/** dtor */
-	~RKImportDialog ();
+  public:
+	/** constructor
+	@param context_id The id of the context containing the relevant plugins
+	@param parent Parent widget (dialog will be centered on this widget, if non-zero */
+	RKImportDialog(const QString &context_id, QWidget *parent);
+	/** dtor */
+	~RKImportDialog();
 	void accept() override;
-private:
+
+  private:
 	void updateState();
 
 	QStringList filters;

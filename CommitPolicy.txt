@@ -9,7 +9,7 @@ Library dependencies
 ====================
 
 It is important to note that RKWard makes a point of _not_ requiring the latest KDE / QT libraries. If you want to use the latest and greatest, be sure to use #ifdef's, and make a best
-effort to support features for older versions of libraries, too. Generally we aim to support the two most recent Ubunut LTS releases.
+effort to support features for older versions of libraries, too. Generally we aim to support the most recent Ubuntu LTS release (plus a reasonable transition period).
 
 Of course, with the switch to KF6, we made a clean cut, thus, currently the minimum requirements are:
 
@@ -31,26 +31,29 @@ Branches and policies
   * merge your commit to master, unless it is really specific to the release-branch (or unless you cherry-picked it from master)
 * released:
   This will be updated for each new stable release, but _only_ for each new stable release. Meant to allow tracking released versions. In general, please don't commit / push anything, here, unless you are the release manager.
-* devel/*
-  For longer, experimental, or disruptive work, consider creating a branch named "devel/feature_description". Do let us know, when the feature is merged (or discarded), and the branch can be removed.
 * work/*
-  The KDE git infrastructure special-cases branches under the prefix "work". Among other things these will allow history-rewrites, and will not produce commit notifications, i.e. the rules are much like for a personal fork.
-  If you want other people to pariticipate on the branch, please use a "devel" branch (see above), instead of a "work" branch, as this allows better collaboration.
-* kde4:
-  The latest KDE4 based development version of RKWard. There may or may not be future bugfix releases for KDE4, but no active development is expected on this branch.
+  The KDE git infrastructure special-cases branches under the prefix "work". Among other things these will allow history-rewrites (please be careful with than, esp. while collaborating with others), and will not produce commit notifications, i.e. the rules are much like for a personal fork. Use this for longer, experimental, and / or potentially disruptive work.
+* kf5:
+  The latest KF5 based development version of RKWard. There may or may not be future bugfix releases for KF5, but no active development is expected on this branch.
 
 Testing
 =======
 
-Only some of RKWard (mostly: the plugins) is currently covered by automated tests. To run these, use
-  make plugintests
-More elaborate documentation is available at https://rkward.kde.org/Automated_Plugin_Testing . Running tests is particularly important when making changes to the "plugin" and "plugins"
-subdirectories.
-
-Note that there are some false positives or unstable tests (failing in some locales, for instance). Check the diffs to find out, exactly how the test failed, or run tests before
+There are two types of autotest that you are encourage to run:
+1. bin/core_text
+These should generally succeed in all cases, and are enforced by the CI. Note that false positives can happen, occasionally, esp. due to timeouts, though.
+2. make plugintests
+More elaborate documentation on the latter is available at https://rkward.kde.org/Automated_Plugin_Testing . Running tests is particularly important when making changes to the "plugin" and "plugins"
+subdirectories. Note that there are some false positives or unstable tests (failing in some locales, for instance). Check the diffs to find out, exactly how the test failed, or run tests before
 and after your changes. If in any doubt, ask on the mailing list rkward-devel@kde.org .
 
 Review
 ======
 
 There is no strict policy on code reviews. It is never wrong to ask for review on https://invent.kde.org/education/rkward
+
+Code formatting
+===============
+
+Code formatting is enforced using clang-format, and there is a CI job to check the formatting on merge requests and on master. Code formatting is certainly not the first or most important thing we
+are going to check in a merge request, but to save yourself and us some trouble, just run ```clang-format-14 -i your_source_files.cpp``` on your code.

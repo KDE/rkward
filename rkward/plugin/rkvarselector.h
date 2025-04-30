@@ -27,16 +27,17 @@ you can have more than one, e.g. for serving conceptionally different RKVarSlots
 */
 class RKVarSelector : public RKComponent {
 	Q_OBJECT
-public: 
-	RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKVarSelector ();
-	int type () override { return ComponentVarSelector; };
-private Q_SLOTS:
-	void objectSelectionChanged ();
-	void rootChanged ();
-	void showFilterWidget ();
-	void toggleLevel1 ();
-private:
+  public:
+	RKVarSelector(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKVarSelector();
+	int type() override { return ComponentVarSelector; };
+  private Q_SLOTS:
+	void objectSelectionChanged();
+	void rootChanged();
+	void showFilterWidget();
+	void toggleLevel1();
+
+  private:
 	RKObjectListView *list_view;
 	RKComponentPropertyRObjects *selected;
 	RKComponentPropertyRObjects *root;

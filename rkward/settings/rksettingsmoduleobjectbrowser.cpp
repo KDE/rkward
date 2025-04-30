@@ -11,26 +11,26 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
-#include <qlayout.h>
+#include <QInputDialog>
+#include <QVBoxLayout>
 #include <qcheckbox.h>
 #include <qlabel.h>
-#include <QVBoxLayout>
-#include <QInputDialog>
+#include <qlayout.h>
 
+#include "../debug.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkstandardicons.h"
 #include "rksettings.h"
 #include "rksettingsmodulegeneral.h"
-#include "../debug.h"
 
 // static
-RKConfigValue<bool> RKSettingsModuleObjectBrowser::workspace_settings[RKObjectListViewSettings::SettingsCount] {{"show hidden vars", false},{"show type field", true},{"show class field", true},{"show label field", true}};
-RKConfigValue<bool> RKSettingsModuleObjectBrowser::varselector_settings[RKObjectListViewSettings::SettingsCount] { RKSettingsModuleObjectBrowser::workspace_settings[0],RKSettingsModuleObjectBrowser::workspace_settings[1],RKSettingsModuleObjectBrowser::workspace_settings[2],RKSettingsModuleObjectBrowser::workspace_settings[3]};
-RKConfigValue<QStringList> RKSettingsModuleObjectBrowser::getstructure_blacklist {"package blacklist", QStringList(u"GO"_s)};
+RKConfigValue<bool> RKSettingsModuleObjectBrowser::workspace_settings[RKObjectListViewSettings::SettingsCount]{{"show hidden vars", false}, {"show type field", true}, {"show class field", true}, {"show label field", true}};
+RKConfigValue<bool> RKSettingsModuleObjectBrowser::varselector_settings[RKObjectListViewSettings::SettingsCount]{RKSettingsModuleObjectBrowser::workspace_settings[0], RKSettingsModuleObjectBrowser::workspace_settings[1], RKSettingsModuleObjectBrowser::workspace_settings[2], RKSettingsModuleObjectBrowser::workspace_settings[3]};
+RKConfigValue<QStringList> RKSettingsModuleObjectBrowser::getstructure_blacklist{"package blacklist", QStringList(u"GO"_s)};
 
 class RKSettingsPageObjectBrowser : public RKSettingsModuleWidget {
-public:
-	RKSettingsPageObjectBrowser(QWidget* parent, RKSettingsModule* parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleObjectBrowser::page_id) {
+  public:
+	RKSettingsPageObjectBrowser(QWidget *parent, RKSettingsModule *parent_module) : RKSettingsModuleWidget(parent, parent_module, RKSettingsModuleObjectBrowser::page_id) {
 		RK_TRACE(SETTINGS);
 
 		setWindowTitle(i18n("Workspace"));
@@ -48,7 +48,7 @@ public:
 		connect(blacklist_choser, &MultiStringSelector::listChanged, this, &RKSettingsPageObjectBrowser::change);
 		connect(blacklist_choser, &MultiStringSelector::getNewStrings, this, [this](QStringList *string_list) {
 			bool ok;
-			QString new_string = QInputDialog::getText(this, i18n("Add exclusion"), i18n("Add the name of the package that no structure should be fetched for"), QLineEdit::Normal, QString (), &ok);
+			QString new_string = QInputDialog::getText(this, i18n("Add exclusion"), i18n("Add the name of the package that no structure should be fetched for"), QLineEdit::Normal, QString(), &ok);
 			if (ok) (*string_list).append(new_string);
 		});
 		layout->addWidget(blacklist_choser);
@@ -58,7 +58,8 @@ public:
 
 		RKSettingsModuleObjectBrowser::getstructure_blacklist = blacklist_choser->getValues();
 	}
-private:
+
+  private:
 	MultiStringSelector *blacklist_choser;
 };
 
@@ -66,37 +67,38 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser(QObject *parent) : 
 	RK_TRACE(SETTINGS);
 }
 
-RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
-	RK_TRACE (SETTINGS);
+RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser() {
+	RK_TRACE(SETTINGS);
 }
 
 void RKSettingsModuleObjectBrowser::createPages(RKSettings *parent) {
-	parent->addSettingsPage(new RKSettingsPageObjectBrowser(parent, this));;
+	parent->addSettingsPage(new RKSettingsPageObjectBrowser(parent, this));
+	;
 }
 
-//static
-void RKSettingsModuleObjectBrowser::setDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting, bool state) {
-	RK_TRACE (SETTINGS);
+// static
+void RKSettingsModuleObjectBrowser::setDefaultForWorkspace(RKObjectListViewSettings::PersistentSettings setting, bool state) {
+	RK_TRACE(SETTINGS);
 	workspace_settings[setting] = state;
 }
 
-//static
-void RKSettingsModuleObjectBrowser::setDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting, bool state) {
-	RK_TRACE (SETTINGS);
+// static
+void RKSettingsModuleObjectBrowser::setDefaultForVarselector(RKObjectListViewSettings::PersistentSettings setting, bool state) {
+	RK_TRACE(SETTINGS);
 	varselector_settings[setting] = state;
 }
 
-//static
-bool RKSettingsModuleObjectBrowser::isPackageBlacklisted (const QString &package_name) {
-	RK_TRACE (SETTINGS);
-	return getstructure_blacklist.get().contains (package_name);
+// static
+bool RKSettingsModuleObjectBrowser::isPackageBlacklisted(const QString &package_name) {
+	RK_TRACE(SETTINGS);
+	return getstructure_blacklist.get().contains(package_name);
 }
 
-void writeSettings (KConfigGroup &cg, bool *settings) {
-	cg.writeEntry ("show hidden vars", settings[RKObjectListViewSettings::ShowObjectsHidden]);
-	cg.writeEntry ("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
-	cg.writeEntry ("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
-	cg.writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
+void writeSettings(KConfigGroup &cg, bool *settings) {
+	cg.writeEntry("show hidden vars", settings[RKObjectListViewSettings::ShowObjectsHidden]);
+	cg.writeEntry("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
+	cg.writeEntry("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
+	cg.writeEntry("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
 }
 
 void syncSettings(KConfigGroup cg, RKConfigBase::ConfigSyncAction a, RKConfigValue<bool> *settings) {
@@ -105,14 +107,13 @@ void syncSettings(KConfigGroup cg, RKConfigBase::ConfigSyncAction a, RKConfigVal
 	}
 }
 
-//static
+// static
 void RKSettingsModuleObjectBrowser::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
 	KConfigGroup cg = config->group(QStringLiteral("Object Browser"));
 	getstructure_blacklist.syncConfig(cg, a);
 
-	syncSettings (cg.group(QStringLiteral("Tool window")), a, workspace_settings);
-	syncSettings (cg.group(QStringLiteral("Varselector")), a, varselector_settings);
+	syncSettings(cg.group(QStringLiteral("Tool window")), a, workspace_settings);
+	syncSettings(cg.group(QStringLiteral("Varselector")), a, varselector_settings);
 }
-

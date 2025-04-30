@@ -22,19 +22,20 @@ Allows editing of format-attributes for an RKVariable
 */
 class EditFormatDialog : public QDialog {
 	Q_OBJECT
-protected:
-/** reimplemented to make the newly selected options available */
-	void accept () override;
+  protected:
+	/** reimplemented to make the newly selected options available */
+	void accept() override;
 
-friend class EditFormatDialogProxy;
-/** ctor */
+	friend class EditFormatDialogProxy;
+	/** ctor */
 	explicit EditFormatDialog(QWidget *parent);
-/** dtor */
-	~EditFormatDialog ();
+	/** dtor */
+	~EditFormatDialog();
 
-/** initializes the GUI-options from the settings for the variable */
-	void initialize (const RKVariable::FormattingOptions& options, const QString& varname);
-private:
+	/** initializes the GUI-options from the settings for the variable */
+	void initialize(const RKVariable::FormattingOptions &options, const QString &varname);
+
+  private:
 	QButtonGroup *alignment_group;
 	QButtonGroup *precision_group;
 	QSpinBox *precision_field;
@@ -44,19 +45,20 @@ private:
 /** Simple proxy wrapper to allow using a model EditFormatDialog in a QTableView */
 class EditFormatDialogProxy : public QWidget {
 	Q_OBJECT
-public:
-	explicit EditFormatDialogProxy (QWidget* parent);
-	~EditFormatDialogProxy ();
+  public:
+	explicit EditFormatDialogProxy(QWidget *parent);
+	~EditFormatDialogProxy();
 
-	void initialize (const RKVariable::FormattingOptions& options, const QString& varname);
-	RKVariable::FormattingOptions getOptions () const { return options; };
-Q_SIGNALS:
-	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
-protected Q_SLOTS:
-	void dialogDone (int result);
-private:
+	void initialize(const RKVariable::FormattingOptions &options, const QString &varname);
+	RKVariable::FormattingOptions getOptions() const { return options; };
+  Q_SIGNALS:
+	void done(QWidget *widget, RKItemDelegate::EditorDoneReason reason);
+  protected Q_SLOTS:
+	void dialogDone(int result);
+
+  private:
 	RKVariable::FormattingOptions options;
-	EditFormatDialog* dialog;
+	EditFormatDialog *dialog;
 };
 
 #endif

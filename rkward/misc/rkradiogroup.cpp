@@ -15,18 +15,20 @@ SPDX-License-Identifier: GPL-2.0-or-later
  *  Using a separate class rather than filtering in RKRadioGroup has the advantage, that the filter will
  *  automatically be removed, in case the button is deleted independent of the controlled widget. */
 class RKRadioGroupButton : public QRadioButton {
-public:
-	explicit RKRadioGroupButton(const QString &label) : QRadioButton(label) {};
+  public:
+	explicit RKRadioGroupButton(const QString &label) : QRadioButton(label){};
 	void control(QWidget *controlled) {
 		RKRadioGroupButton::controlled = controlled;
 		controlled->installEventFilter(this);
-		const auto children = controlled->findChildren<QWidget*>();
-		for (auto child : children) child->installEventFilter(this);  // need to receive clicks on all child widgets!
+		const auto children = controlled->findChildren<QWidget *>();
+		for (auto child : children)
+			child->installEventFilter(this); // need to receive clicks on all child widgets!
 		controlled->setEnabled(isChecked());
 		connect(this, &QAbstractButton::toggled, controlled, &QWidget::setEnabled);
 	}
-private:
-	bool eventFilter(QObject* obj, QEvent *ev) override {
+
+  private:
+	bool eventFilter(QObject *obj, QEvent *ev) override {
 		if (ev->isSinglePointEvent()) {
 			// When clicking in the widget controlled by a button, automatically check the button (enabling the controlled widget).
 			// In effect, the appearance is that the widget "belongs" to the button.
@@ -58,7 +60,7 @@ RKRadioGroup::~RKRadioGroup() {
 	RK_TRACE(MISC);
 }
 
-QRadioButton* RKRadioGroup::addButton(const QString &label, int id) {
+QRadioButton *RKRadioGroup::addButton(const QString &label, int id) {
 	RK_TRACE(MISC);
 	auto button = new RKRadioGroupButton(label);
 	_group->addButton(button, id);
@@ -66,14 +68,14 @@ QRadioButton* RKRadioGroup::addButton(const QString &label, int id) {
 	return button;
 }
 
-QRadioButton* RKRadioGroup::addButton(const QString &label, int id, QWidget* controlled, QBoxLayout::Direction dir) {
+QRadioButton *RKRadioGroup::addButton(const QString &label, int id, QWidget *controlled, QBoxLayout::Direction dir) {
 	RK_TRACE(MISC);
 	auto old_layout = _layout;
 	if (dir != _layout->direction()) {
 		_layout = new QBoxLayout(dir);
 		old_layout->addLayout(_layout);
 	}
-	RKRadioGroupButton *button = static_cast<RKRadioGroupButton*>(addButton(label, id));
+	RKRadioGroupButton *button = static_cast<RKRadioGroupButton *>(addButton(label, id));
 	_layout->addWidget(controlled);
 	_layout = old_layout;
 	button->control(controlled);

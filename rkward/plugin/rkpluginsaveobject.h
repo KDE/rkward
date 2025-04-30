@@ -23,23 +23,24 @@ class QGroupBox;
 
 class RKPluginSaveObject : public RKComponent {
 	Q_OBJECT
-public:
-	RKPluginSaveObject (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKPluginSaveObject ();
+  public:
+	RKPluginSaveObject(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKPluginSaveObject();
 
-	QVariant value (const QString &modifier=QString ()) override;
-	QStringList getUiLabelPair () const override;
-	int type () override { return ComponentSaveObject; };
-	bool isValid () override;
-public Q_SLOTS:
-	void externalChange ();
-	void internalChange ();
-private:
+	QVariant value(const QString &modifier = QString()) override;
+	QStringList getUiLabelPair() const override;
+	int type() override { return ComponentSaveObject; };
+	bool isValid() override;
+  public Q_SLOTS:
+	void externalChange();
+	void internalChange();
+
+  private:
 	RKSaveObjectChooser *selector;
-	void update ();
+	void update();
 	bool updating;
 
-	QGroupBox* groupbox;
+	QGroupBox *groupbox;
 
 	RKComponentPropertyBase *selection;
 	RKComponentPropertyBase *objectname;

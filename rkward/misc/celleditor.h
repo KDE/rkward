@@ -26,24 +26,26 @@ focus.
 @author Thomas Friedrichsmeier
 */
 class CellEditor : public QLineEdit {
-Q_OBJECT
-public:
-	explicit CellEditor (QWidget* parent);
-	~CellEditor ();
+	Q_OBJECT
+  public:
+	explicit CellEditor(QWidget *parent);
+	~CellEditor();
 
-	void setValueLabels (const RObject::ValueLabels& labels);
+	void setValueLabels(const RObject::ValueLabels &labels);
 
-	void setText (const QString& text);
-Q_SIGNALS:
-	void done (QWidget* widget, RKItemDelegate::EditorDoneReason reason);
-public Q_SLOTS:
-	void selectedFromList (QAction* action);
-	void showValueLabels ();
-protected:
-/// reimplemented to ignore arrow left/right if at the beginning/end
-	void keyPressEvent (QKeyEvent *e) override;
-	bool eventFilter (QObject* object, QEvent* event) override;
-private:
+	void setText(const QString &text);
+  Q_SIGNALS:
+	void done(QWidget *widget, RKItemDelegate::EditorDoneReason reason);
+  public Q_SLOTS:
+	void selectedFromList(QAction *action);
+	void showValueLabels();
+
+  protected:
+	/// reimplemented to ignore arrow left/right if at the beginning/end
+	void keyPressEvent(QKeyEvent *e) override;
+	bool eventFilter(QObject *object, QEvent *event) override;
+
+  private:
 	QMenu *value_list;
 };
 

@@ -8,14 +8,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkrapi.h"
 
 #ifdef Q_OS_WIN
-#include <windows.h>
+#	include <windows.h>
 #else
-#include <dlfcn.h>
+#	include <dlfcn.h>
 #endif
 
 #include "../debug.h"
 
-void RFn::init(void* libr_dll_handle, void* (*dlsym_fun)(void*, const char*)) {
+void RFn::init(void *libr_dll_handle, void *(*dlsym_fun)(void *, const char *)) {
 #if defined RK_DLOPEN_LIBRSO
 	auto rfn = new RFn(); // we need a dummy object, even if we are only interested in the static members
 	auto meta = rfn->metaObject();
@@ -25,7 +25,7 @@ void RFn::init(void* libr_dll_handle, void* (*dlsym_fun)(void*, const char*)) {
 		auto name = prop.name();
 		auto symb = dlsym_fun(libr_dll_handle, name);
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Lookup of symbol %s in %p: %p", name, libr_dll_handle, symb);
-		prop.write(rfn, QVariant::fromValue((void*) symb)); // NOTE: Qt refuses to write nullptr as value, but that's already the initial value of each member
+		prop.write(rfn, QVariant::fromValue((void *)symb)); // NOTE: Qt refuses to write nullptr as value, but that's already the initial value of each member
 	}
 #else
 	RK_DEBUG(RBACKEND, DL_DEBUG, "R lib already linked");

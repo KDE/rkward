@@ -20,11 +20,12 @@ class RCommandChain;
 */
 class RKEditObjectAgent : public QObject {
 	Q_OBJECT
-public:
-	RKEditObjectAgent (const QStringList &object_names, RCommandChain *chain);
+  public:
+	RKEditObjectAgent(const QStringList &object_names, RCommandChain *chain);
 
-	~RKEditObjectAgent ();
-private:
+	~RKEditObjectAgent();
+
+  private:
 	QStringList object_names;
 };
 

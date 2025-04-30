@@ -7,15 +7,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkcommandlineargs.h"
 
-#include <KLocalizedString>
 #include <KAboutData>
+#include <KLocalizedString>
 #include <QCommandLineParser>
-#include <QUrl>
 #include <QDir>
+#include <QUrl>
 
 #include "../debug.h"
 
-RKCommandLineArgs* RKCommandLineArgs::instance = nullptr;
+RKCommandLineArgs *RKCommandLineArgs::instance = nullptr;
 
 RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication *app) {
 	RK_TRACE(MISC);
@@ -53,8 +53,8 @@ RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication *app) {
 	storage[NoWarnExternal] = parser.isSet(QStringLiteral("nowarn-external"));
 	storage[QuirkMode] = parser.isSet(QStringLiteral("quirkmode"));
 	storage[Setup] = parser.isSet(QStringLiteral("setup"));
-	QStringList url_args = parser.positionalArguments ();
-	if (!url_args.isEmpty ()) {
+	QStringList url_args = parser.positionalArguments();
+	if (!url_args.isEmpty()) {
 		for (int i = 0; i < url_args.size(); ++i) {
 			url_args[i] = QUrl::fromUserInput(url_args[i], QDir::currentPath(), QUrl::AssumeLocalFile).toString();
 		}

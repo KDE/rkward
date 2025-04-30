@@ -8,58 +8,57 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKJobSequence::RKJobSequence () : QObject () {
-	RK_TRACE (MISC);
+RKJobSequence::RKJobSequence() : QObject() {
+	RK_TRACE(MISC);
 }
 
-RKJobSequence::~RKJobSequence () {
-	RK_TRACE (MISC);
+RKJobSequence::~RKJobSequence() {
+	RK_TRACE(MISC);
 }
 
-void RKJobSequence::addJob (KJob* job) {
-	RK_TRACE (MISC);
+void RKJobSequence::addJob(KJob *job) {
+	RK_TRACE(MISC);
 
-	outstanding_jobs.append (job);
-	connect (job, &KJob::result, this, &RKJobSequence::jobDone);
+	outstanding_jobs.append(job);
+	connect(job, &KJob::result, this, &RKJobSequence::jobDone);
 }
 
-bool RKJobSequence::hadError () const {
-	RK_TRACE (MISC);
+bool RKJobSequence::hadError() const {
+	RK_TRACE(MISC);
 
-	return (!_errors.isEmpty ());
+	return (!_errors.isEmpty());
 }
 
-QStringList RKJobSequence::errors () const {
-	RK_TRACE (MISC);
+QStringList RKJobSequence::errors() const {
+	RK_TRACE(MISC);
 
 	return (_errors);
 }
 
-void RKJobSequence::start () {
-	RK_TRACE (MISC);
+void RKJobSequence::start() {
+	RK_TRACE(MISC);
 
-	nextJob ();
+	nextJob();
 }
 
-void RKJobSequence::nextJob () {
-	RK_TRACE (MISC);
+void RKJobSequence::nextJob() {
+	RK_TRACE(MISC);
 
-	if (outstanding_jobs.isEmpty ()) {
+	if (outstanding_jobs.isEmpty()) {
 		Q_EMIT finished(this);
-		deleteLater ();
+		deleteLater();
 		return;
 	}
 
-	outstanding_jobs.first ()->start ();
+	outstanding_jobs.first()->start();
 }
 
-void RKJobSequence::jobDone (KJob* job) {
-	RK_TRACE (MISC);
+void RKJobSequence::jobDone(KJob *job) {
+	RK_TRACE(MISC);
 
-	outstanding_jobs.removeAll (job);
-	if (job->error ()) {
-		_errors.append (job->errorString ());
+	outstanding_jobs.removeAll(job);
+	if (job->error()) {
+		_errors.append(job->errorString());
 	}
-	nextJob ();
+	nextJob();
 }
-

@@ -8,18 +8,18 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKCOMMANDLINEARGS_H
 #define RKCOMMANDLINEARGS_H
 
-#include <QVariant>
-#include <QMap>
 #include <QCommandLineOption>
+#include <QMap>
+#include <QVariant>
 
 class QCommandLineParser;
 class KAboutData;
 class QCoreApplication;
 
 class RKCommandLineArgs {
-public:
+  public:
 	explicit RKCommandLineArgs(KAboutData *about, QCoreApplication *app);
-	~RKCommandLineArgs() {};
+	~RKCommandLineArgs(){};
 	enum Option {
 		UrlArgs,
 		Evaluate,
@@ -36,15 +36,16 @@ public:
 
 		NUM_OPTIONS
 	};
-	void parseArgs(	QCommandLineParser *parser);
+	void parseArgs(QCommandLineParser *parser);
 	QVariant operator[](const Option op) const {
 		return storage[op];
 	}
 	static QVariant get(const Option op) {
 		return instance->storage[op];
 	};
-private:
-friend class RKSetupWizard;
+
+  private:
+	friend class RKSetupWizard;
 	void set(const Option op, const QVariant value) { storage[op] = value; };
 	QList<QVariant> storage;
 	static RKCommandLineArgs *instance;

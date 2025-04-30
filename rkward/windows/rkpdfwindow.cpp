@@ -7,8 +7,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkpdfwindow.h"
 
-#include <QVBoxLayout>
 #include <QLabel>
+#include <QVBoxLayout>
 
 #include <KLocalizedString>
 #include <KParts/PartLoader>
@@ -44,7 +44,7 @@ RKPDFWindow::~RKPDFWindow() {
 void RKPDFWindow::openURL(const QUrl &url) {
 	RK_TRACE(APP);
 	if (valid) {
-		auto p = static_cast<KParts::ReadOnlyPart*>(getPart());
+		auto p = static_cast<KParts::ReadOnlyPart *>(getPart());
 		if (url == p->url()) {
 			// If reloading existing file, use reload mechanism, in order to keep scroll position
 			// NOTE: Okular part appears to auto-reload local files, anyway, but I'd like not to rely on thie behavior
@@ -56,18 +56,18 @@ void RKPDFWindow::openURL(const QUrl &url) {
 				return;
 			}
 		}
-		p->openUrl(url);  // no "reload" action found or navigating to differen url
+		p->openUrl(url); // no "reload" action found or navigating to differen url
 	}
 	setWindowTitle(url.fileName());
 	Q_EMIT captionChanged(this);
 }
 
 QUrl RKPDFWindow::url() const {
-	if (valid) return static_cast<KParts::ReadOnlyPart*>(getPart())->url();
+	if (valid) return static_cast<KParts::ReadOnlyPart *>(getPart())->url();
 	return QUrl();
 }
 
-KParts::ReadOnlyPart* RKPDFWindow::getOkularPart(const QVariantList &args) {
+KParts::ReadOnlyPart *RKPDFWindow::getOkularPart(const QVariantList &args) {
 	RK_TRACE(APP);
 	const KPluginMetaData okularPart(QStringLiteral(OKULAR_LIBRARY_NAME));
 	auto result = KPluginFactory::instantiatePlugin<KParts::ReadOnlyPart>(okularPart, nullptr, args);
