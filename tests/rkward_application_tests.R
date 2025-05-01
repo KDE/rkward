@@ -300,7 +300,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 		}),
 		new ("RKTest", id="rk_output_test", call=function () {
 			optwarn <- options("warn"=1) # This test leaks warning messages, otherwise...
-			on.exit(options("warn"=optwarn))
+			on.exit(options("warn"=optwarn$warn))
 			sync_outfile <- function() {
 				# Manually notify frontend of current output file.  This is usually suppressed for auto-texting, but important, here, since
 				# the frontend uses this to detect, which output is active.
