@@ -172,10 +172,8 @@ void RKStandardComponent::kill() {
 
 	if (killed) return;
 	killed = true;
-
-	hide();
-	removeFromParent();
-	deleteLater();
+	if (parentComponent()) topmostStandardComponent()->kill();
+	if (gui) gui->deleteLater();
 }
 
 RKComponentScriptingProxy *RKStandardComponent::scriptingProxy() {

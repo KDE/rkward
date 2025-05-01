@@ -1,4 +1,5 @@
 --- Version 0.8.2 - UNRELEASED
+- Fixed: Crash on script errors in plugins
 - Fixed: Printing of captured R messages/warnings in plugins was broken
 - Internal: Code cleanups
 - Internal: Remove dependency on Qt5-compatibility library

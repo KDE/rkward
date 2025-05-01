@@ -263,7 +263,7 @@ RKAccordionTable::RKAccordionTable(QWidget *parent) : QTreeView(parent) {
 	setItemsExpandable(false);      // custom handling
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-	pmodel = new RKAccordionDummyModel(nullptr);
+	pmodel = new RKAccordionDummyModel(this);
 	RKAccordionDelegate *delegate = new RKAccordionDelegate(this);
 	delegate->pmodel = pmodel;
 	setItemDelegateForColumn(0, delegate);
@@ -275,10 +275,6 @@ RKAccordionTable::RKAccordionTable(QWidget *parent) : QTreeView(parent) {
 RKAccordionTable::~RKAccordionTable() {
 	RK_TRACE(MISC);
 
-	// Qt 4.8.6: The model must _not_ be a child of this view, and must _not_ be deleted along with it, or else there will be a crash
-	// on destruction _if_ (and only if) there are any trailing dummy rows. (Inside QAbstractItemModelPrivate::removePersistentIndexData())
-	// No, I do not understand this, yes, this is worrysome, but no idea, what could be the actual cause.
-	pmodel->deleteLater();
 	delete editor_widget_container;
 }
 

@@ -67,7 +67,7 @@ class RKComponentScriptingProxy : public QObject {
 	};
 	QList<OutstandingCommand> outstanding_commands;
 	QString _scriptfile;
-	void evaluate(const QString &code);
+	void evaluate(const QString &code, const QString &filename=QString());
 
 	void handleChange(RKComponentBase *changed);
 	QHash<RKComponentBase *, QString> component_commands;

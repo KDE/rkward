@@ -9,7 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <KLocalizedString>
 #include <QDir>
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
@@ -81,16 +81,15 @@ void RKComponentScriptingProxy::include(const QString &filename) {
 		return;
 	}
 
-	evaluate(QString::fromUtf8(file.readAll()));
-	handleScriptError(_filename);
+	evaluate(QString::fromUtf8(file.readAll()), _filename);
 }
 
-void RKComponentScriptingProxy::evaluate(const QString &code) {
+void RKComponentScriptingProxy::evaluate(const QString &code, const QString &filename) {
 	RK_TRACE(PHP);
 
-	QJSValue result = engine.evaluate(code, _scriptfile);
+	QJSValue result = engine.evaluate(code, filename.isNull() ? _scriptfile : filename);
 
-	handleScriptError(result);
+	handleScriptError(result, filename);
 }
 
 void RKComponentScriptingProxy::addChangeCommand(const QString &changed_id, const QString &command) {
