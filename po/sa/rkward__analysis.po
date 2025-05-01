@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-29 00:36+0000\n"
+"POT-Creation-Date: 2025-05-01 00:38+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -54,7 +54,7 @@ msgstr "मूलभूत सांख्यिकी"
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis.pluginmap:25
-#: rkward/plugins/analysis/corr_matrix.js:129
+#: rkward/plugins/analysis/corr_matrix.js:134
 #, kde-format
 msgid "Correlation Matrix"
 msgstr "सहसंबंध मैट्रिक्स"
@@ -227,7 +227,7 @@ msgstr "स्थिरतायाः कृते KPSS परीक्षण�
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="...">
 #: rkward/plugins/analysis.pluginmap:60
-#: rkward/plugins/analysis/time_series/hp_filter.js:68
+#: rkward/plugins/analysis/time_series/hp_filter.js:69
 #: rkward/plugins/analysis/time_series/hp_filter.xml:28
 #, kde-format
 msgid "Hodrick-Prescott Filter"
@@ -338,7 +338,7 @@ msgstr "H1"
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test)
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.js:45
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.js:43
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:101
 #, kde-format
 msgid "Variable Names"
 msgstr "चरनाम"
@@ -540,7 +540,7 @@ msgstr "तूल"
 #: rkward/plugins/analysis/t_test.xml:38
 #: rkward/plugins/analysis/TESTS/mood_test.xml:16
 #: rkward/plugins/analysis/variances/F_test.xml:18
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:82
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:93
 #, kde-format
 msgctxt "compare against"
 msgid "against"
@@ -779,21 +779,21 @@ msgid "Compute confidence interval"
 msgstr "विश्वासान्तरस्य गणनां कुरुत"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:48
+#: rkward/plugins/analysis/corr_matrix.js:49
 #, kde-format
 msgctxt "R code comment"
 msgid "cor requires all objects to be inside the same data.frame."
 msgstr "cor इत्यनेन सर्वाणि वस्तुनि समानस्य data.frame इत्यस्य अन्तः भवितुं आवश्यकम् ।"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:49
+#: rkward/plugins/analysis/corr_matrix.js:50
 #, kde-format
 msgctxt "R code comment"
 msgid "Here we construct such a temporary frame from the input variables"
 msgstr "अत्र वयं input variables इत्यस्मात् एतादृशं अस्थायी frame निर्मामः"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:52
+#: rkward/plugins/analysis/corr_matrix.js:53
 #, kde-format
 msgctxt "R code comment"
 msgid ""
@@ -803,35 +803,35 @@ msgstr ""
 "असंख्यात्मकचराः क्रमबद्धदत्तांशरूपेण व्यवह्रियन्ते, संख्यात्मकपङ्क्तौ परिणमिताः च भविष्यन्ति"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:60
+#: rkward/plugins/analysis/corr_matrix.js:61
 #, kde-format
 msgctxt "R code comment"
 msgid "Keep track of all transformations"
 msgstr "सर्वेषां परिवर्तनानां निरीक्षणं कुर्वन्तु"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:64
+#: rkward/plugins/analysis/corr_matrix.js:65
 #, kde-format
 msgctxt "R code comment"
 msgid "Finally combine the actual data"
 msgstr "अन्ते वास्तविकदत्तांशं संयोजयन्तु"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:68
+#: rkward/plugins/analysis/corr_matrix.js:70
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate correlation matrix"
 msgstr "सहसंबन्धमात्रिका गणना"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:75
+#: rkward/plugins/analysis/corr_matrix.js:77
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate matrix of probabilities"
 msgstr "संभाव्यतानां आकृतिं गणयन्तु"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:78
+#: rkward/plugins/analysis/corr_matrix.js:80
 #, kde-format
 msgctxt "R code comment"
 msgid ""
@@ -844,51 +844,51 @@ msgstr ""
 "बहिष्कारः आवश्यकः ।"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:86
+#: rkward/plugins/analysis/corr_matrix.js:89
 #, kde-format
 msgctxt "R code comment"
 msgid "polyserial expects x to be numeric"
 msgstr "polyserial x संख्यात्मकं भवितुं अपेक्षते"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:131
+#: rkward/plugins/analysis/corr_matrix.js:136
 #, kde-format
 msgid "Coefficient"
 msgstr "गुणांक"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:134
+#: rkward/plugins/analysis/corr_matrix.js:139
 #, kde-format
 msgid "Standard errors, test of bivariate normality and sample size"
 msgstr "मानकदोषाः, द्विचरणीयसामान्यतायाः परीक्षणं नमूनाकारः च"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:137
+#: rkward/plugins/analysis/corr_matrix.js:142
 #, kde-format
 msgid "p-values and sample size"
 msgstr "p-मूल्यानि नमूनाकारः च"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:143
+#: rkward/plugins/analysis/corr_matrix.js:148
 #, kde-format
 msgid "Variables treated as numeric ranks"
 msgstr "संख्यात्मकपङ्क्तिरूपेण व्यवह्रियमाणाः चराः"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:145
+#: rkward/plugins/analysis/corr_matrix.js:150
 #, kde-format
 msgctxt "noun"
 msgid "Variable:"
 msgstr "चर :"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:146
+#: rkward/plugins/analysis/corr_matrix.js:151
 #, kde-format
 msgid "original value"
 msgstr "मूल मूल्य"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:146
+#: rkward/plugins/analysis/corr_matrix.js:151
 #, kde-format
 msgid "assigned rank"
 msgstr "नियुक्तः पदः"
@@ -989,7 +989,7 @@ msgstr "सहसंबन्धमात्रिका"
 #: rkward/plugins/analysis/crosstab_multi.js:25
 #: rkward/plugins/analysis/TESTS/mood_test.js:17
 #: rkward/plugins/analysis/variances/bartlett_test.js:23
-#: rkward/plugins/analysis/variances/F_test.js:25
+#: rkward/plugins/analysis/variances/F_test.js:26
 #: rkward/plugins/analysis/variances/fligner_test.js:23
 #: rkward/plugins/descriptive/descriptive_statistics.xml:13
 #: rkward/plugins/plots/cor_graph.xml:13
@@ -1194,7 +1194,7 @@ msgstr "क्रॉस्स्टैब्स् कृते पियर्�
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:89
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:101
 #, kde-format
 msgctxt "a statistic indicator"
 msgid "Statistic"
@@ -1214,7 +1214,7 @@ msgid "Dependent"
 msgstr "आश्रितः"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
-#: rkward/plugins/analysis/crosstab.js:111
+#: rkward/plugins/analysis/crosstab.js:110
 #, kde-format
 msgctxt "independent variable"
 msgid "Independent"
@@ -1966,9 +1966,9 @@ msgstr "X-वर्गः"
 #: rkward/plugins/analysis/TESTS/mood_test.js:19
 #: rkward/plugins/analysis/TESTS/PP_test.js:25
 #: rkward/plugins/analysis/time_series/Box_test.js:25
-#: rkward/plugins/analysis/time_series/kpss_test.js:30
+#: rkward/plugins/analysis/time_series/kpss_test.js:31
 #: rkward/plugins/analysis/variances/bartlett_test.js:26
-#: rkward/plugins/analysis/variances/F_test.js:29
+#: rkward/plugins/analysis/variances/F_test.js:30
 #: rkward/plugins/analysis/variances/fligner_test.js:26
 #, kde-format
 msgid "p-value"
@@ -2340,93 +2340,93 @@ msgid "Find value with largest difference from the mean"
 msgstr "मध्यमात् बृहत्तमं भेदं युक्तं मूल्यं ज्ञातव्यम्"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:88
+#: rkward/plugins/analysis/power/Poweranalysis.js:86
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate f from eta squared"
 msgstr "एटा वर्गात् च गणनां कुर्वन्तु"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:206
+#: rkward/plugins/analysis/power/Poweranalysis.js:203
 #, kde-format
 msgctxt "R code comment"
 msgid "Catch errors due to unsuitable data"
 msgstr "अनुपयुक्तदत्तांशस्य कारणेन त्रुटयः गृह्णन्तु"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:207
+#: rkward/plugins/analysis/power/Poweranalysis.js:205
 #, kde-format
 msgid "Power analysis not possible with the data you provided"
 msgstr "भवता प्रदत्तेन दत्तांशैः सह शक्तिविश्लेषणं सम्भवं नास्ति"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:208
+#: rkward/plugins/analysis/power/Poweranalysis.js:207
 #, kde-format
 msgctxt "R code comment"
 msgid "Prepare printout"
 msgstr "मुद्रणं सज्जीकरोतु"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:212
+#: rkward/plugins/analysis/power/Poweranalysis.js:214
 #, kde-format
 msgid "alternative"
 msgstr "वैकल्पिक"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:214
+#: rkward/plugins/analysis/power/Poweranalysis.js:219
 #, kde-format
 msgid "Parameters"
 msgstr "पैरामीटर्"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:214
+#: rkward/plugins/analysis/power/Poweranalysis.js:221
 #, kde-format
 msgid "<strong>Note:</strong>"
 msgstr "<strong>टीका:</strong>"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:216
-#: rkward/plugins/analysis/power/Poweranalysis.js:219
-#: rkward/plugins/analysis/power/Poweranalysis.js:222
-#: rkward/plugins/analysis/power/Poweranalysis.js:225
-#: rkward/plugins/analysis/power/Poweranalysis.js:228
+#: rkward/plugins/analysis/power/Poweranalysis.js:223
+#: rkward/plugins/analysis/power/Poweranalysis.js:227
 #: rkward/plugins/analysis/power/Poweranalysis.js:231
+#: rkward/plugins/analysis/power/Poweranalysis.js:235
+#: rkward/plugins/analysis/power/Poweranalysis.js:239
+#: rkward/plugins/analysis/power/Poweranalysis.js:243
 #, no-c-format, kde-format
 msgctxt "Argument is name of statistic, e.g. 'r'"
 msgid "Interpretation of effect size <strong>%1</strong> (according to Cohen):"
 msgstr "प्रभाव आकारस्य <strong>%1</strong> व्याख्या (कोहेनस्य अनुसारम्):"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:216
-#: rkward/plugins/analysis/power/Poweranalysis.js:219
-#: rkward/plugins/analysis/power/Poweranalysis.js:222
-#: rkward/plugins/analysis/power/Poweranalysis.js:225
+#: rkward/plugins/analysis/power/Poweranalysis.js:224
 #: rkward/plugins/analysis/power/Poweranalysis.js:228
-#: rkward/plugins/analysis/power/Poweranalysis.js:231
+#: rkward/plugins/analysis/power/Poweranalysis.js:232
+#: rkward/plugins/analysis/power/Poweranalysis.js:236
+#: rkward/plugins/analysis/power/Poweranalysis.js:240
+#: rkward/plugins/analysis/power/Poweranalysis.js:244
 #, kde-format
 msgctxt "effect size"
 msgid "small"
 msgstr "लघु"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:216
-#: rkward/plugins/analysis/power/Poweranalysis.js:219
-#: rkward/plugins/analysis/power/Poweranalysis.js:222
-#: rkward/plugins/analysis/power/Poweranalysis.js:225
+#: rkward/plugins/analysis/power/Poweranalysis.js:224
 #: rkward/plugins/analysis/power/Poweranalysis.js:228
-#: rkward/plugins/analysis/power/Poweranalysis.js:231
+#: rkward/plugins/analysis/power/Poweranalysis.js:232
+#: rkward/plugins/analysis/power/Poweranalysis.js:236
+#: rkward/plugins/analysis/power/Poweranalysis.js:240
+#: rkward/plugins/analysis/power/Poweranalysis.js:244
 #, kde-format
 msgctxt "effect size"
 msgid "medium"
 msgstr "मध्यम"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:216
-#: rkward/plugins/analysis/power/Poweranalysis.js:219
-#: rkward/plugins/analysis/power/Poweranalysis.js:222
-#: rkward/plugins/analysis/power/Poweranalysis.js:225
+#: rkward/plugins/analysis/power/Poweranalysis.js:224
 #: rkward/plugins/analysis/power/Poweranalysis.js:228
-#: rkward/plugins/analysis/power/Poweranalysis.js:231
+#: rkward/plugins/analysis/power/Poweranalysis.js:232
+#: rkward/plugins/analysis/power/Poweranalysis.js:236
+#: rkward/plugins/analysis/power/Poweranalysis.js:240
+#: rkward/plugins/analysis/power/Poweranalysis.js:244
 #, kde-format
 msgctxt "effect size"
 msgid "large"
@@ -3131,7 +3131,7 @@ msgstr "अवशेषान् रक्षन्तु"
 #. i18n: ectx: (Loaded from t-Test)
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/t_test.js:57
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:81
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
 #, kde-format
 msgid "Comparing"
 msgstr "तुलनां कुर्वन्"
@@ -3401,7 +3401,7 @@ msgstr "डिक्की-फुलर"
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots)
 #: rkward/plugins/analysis/TESTS/PP_test.js:24
-#: rkward/plugins/analysis/time_series/kpss_test.js:29
+#: rkward/plugins/analysis/time_series/kpss_test.js:30
 #, kde-format
 msgid "Truncation lag parameter"
 msgstr "ट्रंकेशन लैग पैरामीटर"
@@ -3552,7 +3552,7 @@ msgid "Missing values cannot be handled in Hodrick-Prescott Filter"
 msgstr "Hodrick-Prescott Filter इत्यस्मिन् लुप्तमूल्यानि नियन्त्रयितुं न शक्यन्ते"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
-#: rkward/plugins/analysis/time_series/hp_filter.js:24
+#: rkward/plugins/analysis/time_series/hp_filter.js:25
 #, kde-format
 msgctxt "R code comment"
 msgid "The HP Filter itself. Thanks to Grant V. Farnsworth"
@@ -3560,7 +3560,7 @@ msgstr "स्वयं HP Filter इति । ग्राण्ट् वी.
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="...">
-#: rkward/plugins/analysis/time_series/hp_filter.js:68
+#: rkward/plugins/analysis/time_series/hp_filter.js:69
 #: rkward/plugins/analysis/time_series/hp_filter.xml:40
 #, kde-format
 msgid "Lambda"
@@ -3892,26 +3892,26 @@ msgid "interpret as string"
 msgstr "तार इति व्याख्यायते"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
-#: rkward/plugins/analysis/time_series/kpss_test.js:23
+#: rkward/plugins/analysis/time_series/kpss_test.js:24
 #, kde-format
 msgctxt "R code comment"
 msgid "remove NAs"
 msgstr "NAs निष्कासयति"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
-#: rkward/plugins/analysis/time_series/kpss_test.js:27
+#: rkward/plugins/analysis/time_series/kpss_test.js:28
 #, kde-format
 msgid "KPSS Level"
 msgstr "केपीएसएस स्तर"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
-#: rkward/plugins/analysis/time_series/kpss_test.js:27
+#: rkward/plugins/analysis/time_series/kpss_test.js:28
 #, kde-format
 msgid "KPSS Trend"
 msgstr "केपीएसएस प्रवृत्ति"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
-#: rkward/plugins/analysis/time_series/kpss_test.js:37
+#: rkward/plugins/analysis/time_series/kpss_test.js:38
 #, kde-format
 msgid "KPSS Test for Level Stationarity"
 msgstr "स्तरस्थिरतायाः कृते केपीएसएस परीक्षणम्"
@@ -4018,31 +4018,31 @@ msgid "samples"
 msgstr "नमूनानि"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:27
+#: rkward/plugins/analysis/variances/F_test.js:28
 #, kde-format
 msgid "Numerator DF"
 msgstr "गणक DF"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:28
+#: rkward/plugins/analysis/variances/F_test.js:29
 #, kde-format
 msgid "Denominator DF"
 msgstr "हर DF"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:30
+#: rkward/plugins/analysis/variances/F_test.js:31
 #, kde-format
 msgid "Lower CI"
 msgstr "निम्न सीआई"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:31
+#: rkward/plugins/analysis/variances/F_test.js:32
 #, kde-format
 msgid "Upper CI"
 msgstr "ऊपरी सी.आइ"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:32
+#: rkward/plugins/analysis/variances/F_test.js:33
 #, kde-format
 msgid "ratio of variances"
 msgstr "विचरणानाम् अनुपातः"
@@ -4197,37 +4197,37 @@ msgid "groups"
 msgstr "समूहाः"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:84
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:95
 #, kde-format
 msgid "Continuity correction in normal approximation for p-value"
 msgstr "p-मूल्ये सामान्यसन्निकर्षे निरन्तरतासुधारः"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:101
 #, kde-format
 msgid "Location Shift"
 msgstr "स्थान शिफ्ट"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:101
 #, kde-format
 msgid "Hypothesis"
 msgstr "परिकल्पना"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:104
 #, kde-format
 msgid "Confidence interval percent"
 msgstr "विश्वासान्तरं प्रतिशतम्"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:104
 #, kde-format
 msgid "Confidence interval of difference"
 msgstr "भेदस्य विश्वासान्तरम्"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:104
 #, kde-format
 msgid "Difference in Location"
 msgstr "स्थानान्तरम्"

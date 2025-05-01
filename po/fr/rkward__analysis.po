@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-29 00:36+0000\n"
+"POT-Creation-Date: 2025-05-01 00:38+0000\n"
 "PO-Revision-Date: 2025-04-16 14:43+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -55,7 +55,7 @@ msgstr "Statistiques basiques"
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis.pluginmap:25
-#: rkward/plugins/analysis/corr_matrix.js:129
+#: rkward/plugins/analysis/corr_matrix.js:134
 #, kde-format
 msgid "Correlation Matrix"
 msgstr "Matrice de corrélation"
@@ -228,7 +228,7 @@ msgstr "Test de stationnarité de KPSS"
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="...">
 #: rkward/plugins/analysis.pluginmap:60
-#: rkward/plugins/analysis/time_series/hp_filter.js:68
+#: rkward/plugins/analysis/time_series/hp_filter.js:69
 #: rkward/plugins/analysis/time_series/hp_filter.xml:28
 #, kde-format
 msgid "Hodrick-Prescott Filter"
@@ -339,7 +339,7 @@ msgstr "H1"
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test)
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.js:45
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.js:43
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:101
 #, kde-format
 msgid "Variable Names"
 msgstr "Noms de variables"
@@ -547,7 +547,7 @@ msgstr "comparer"
 #: rkward/plugins/analysis/t_test.xml:38
 #: rkward/plugins/analysis/TESTS/mood_test.xml:16
 #: rkward/plugins/analysis/variances/F_test.xml:18
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:82
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:93
 #, kde-format
 msgctxt "compare against"
 msgid "against"
@@ -788,14 +788,14 @@ msgid "Compute confidence interval"
 msgstr "Calculer l'intervalle de confiance"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:48
+#: rkward/plugins/analysis/corr_matrix.js:49
 #, kde-format
 msgctxt "R code comment"
 msgid "cor requires all objects to be inside the same data.frame."
 msgstr "cor impose que tous les objets se trouvent dans le même data.frame."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:49
+#: rkward/plugins/analysis/corr_matrix.js:50
 #, kde-format
 msgctxt "R code comment"
 msgid "Here we construct such a temporary frame from the input variables"
@@ -804,7 +804,7 @@ msgstr ""
 "d'entrée."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:52
+#: rkward/plugins/analysis/corr_matrix.js:53
 #, kde-format
 msgctxt "R code comment"
 msgid ""
@@ -815,35 +815,35 @@ msgstr ""
 "transformées en intervalles numériques."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:60
+#: rkward/plugins/analysis/corr_matrix.js:61
 #, kde-format
 msgctxt "R code comment"
 msgid "Keep track of all transformations"
 msgstr "Conserver une trace de toutes les transformations"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:64
+#: rkward/plugins/analysis/corr_matrix.js:65
 #, kde-format
 msgctxt "R code comment"
 msgid "Finally combine the actual data"
 msgstr "Finalement, combiner les données actuelles"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:68
+#: rkward/plugins/analysis/corr_matrix.js:70
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate correlation matrix"
 msgstr "Calculer la matrice de corrélation"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:75
+#: rkward/plugins/analysis/corr_matrix.js:77
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate matrix of probabilities"
 msgstr "Calculer une matrice de probabilités"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:78
+#: rkward/plugins/analysis/corr_matrix.js:80
 #, kde-format
 msgctxt "R code comment"
 msgid ""
@@ -857,52 +857,52 @@ msgstr ""
 "paramètre « use = complete.obs » de cor()."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:86
+#: rkward/plugins/analysis/corr_matrix.js:89
 #, kde-format
 msgctxt "R code comment"
 msgid "polyserial expects x to be numeric"
 msgstr "La fonction « polyserial » s'attend à ce que x soit numérique."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:131
+#: rkward/plugins/analysis/corr_matrix.js:136
 #, kde-format
 msgid "Coefficient"
 msgstr "Coefficient"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:134
+#: rkward/plugins/analysis/corr_matrix.js:139
 #, kde-format
 msgid "Standard errors, test of bivariate normality and sample size"
 msgstr ""
 "Erreurs standard, test de normalité bivariée et taille de l'échantillon."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:137
+#: rkward/plugins/analysis/corr_matrix.js:142
 #, kde-format
 msgid "p-values and sample size"
 msgstr "p-valeurs et taille de l'échantillon"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:143
+#: rkward/plugins/analysis/corr_matrix.js:148
 #, kde-format
 msgid "Variables treated as numeric ranks"
 msgstr "Variables traitées comme des intervalles numériques"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:145
+#: rkward/plugins/analysis/corr_matrix.js:150
 #, kde-format
 msgctxt "noun"
 msgid "Variable:"
 msgstr "Variable :"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:146
+#: rkward/plugins/analysis/corr_matrix.js:151
 #, kde-format
 msgid "original value"
 msgstr "Valeur originale"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
-#: rkward/plugins/analysis/corr_matrix.js:146
+#: rkward/plugins/analysis/corr_matrix.js:151
 #, kde-format
 msgid "assigned rank"
 msgstr "Intervalle assigné"
@@ -1012,7 +1012,7 @@ msgstr "Matrice de corrélation"
 #: rkward/plugins/analysis/crosstab_multi.js:25
 #: rkward/plugins/analysis/TESTS/mood_test.js:17
 #: rkward/plugins/analysis/variances/bartlett_test.js:23
-#: rkward/plugins/analysis/variances/F_test.js:25
+#: rkward/plugins/analysis/variances/F_test.js:26
 #: rkward/plugins/analysis/variances/fligner_test.js:23
 #: rkward/plugins/descriptive/descriptive_statistics.xml:13
 #: rkward/plugins/plots/cor_graph.xml:13
@@ -1219,7 +1219,7 @@ msgstr "Test du Khi carré de Pearson pour les tableaux croisés"
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:89
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:101
 #, kde-format
 msgctxt "a statistic indicator"
 msgid "Statistic"
@@ -1239,7 +1239,7 @@ msgid "Dependent"
 msgstr "Dépendant"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
-#: rkward/plugins/analysis/crosstab.js:111
+#: rkward/plugins/analysis/crosstab.js:110
 #, kde-format
 msgctxt "independent variable"
 msgid "Independent"
@@ -2021,9 +2021,9 @@ msgstr "Racine puissance X"
 #: rkward/plugins/analysis/TESTS/mood_test.js:19
 #: rkward/plugins/analysis/TESTS/PP_test.js:25
 #: rkward/plugins/analysis/time_series/Box_test.js:25
-#: rkward/plugins/analysis/time_series/kpss_test.js:30
+#: rkward/plugins/analysis/time_series/kpss_test.js:31
 #: rkward/plugins/analysis/variances/bartlett_test.js:26
-#: rkward/plugins/analysis/variances/F_test.js:29
+#: rkward/plugins/analysis/variances/F_test.js:30
 #: rkward/plugins/analysis/variances/fligner_test.js:26
 #, kde-format
 msgid "p-value"
@@ -2416,58 +2416,58 @@ msgstr ""
 "Trouver la valeur avec la plus grande différence par rapport à la moyenne"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:88
+#: rkward/plugins/analysis/power/Poweranalysis.js:86
 #, kde-format
 msgctxt "R code comment"
 msgid "calculate f from eta squared"
 msgstr "calculer f à partir de eta carré"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:206
+#: rkward/plugins/analysis/power/Poweranalysis.js:203
 #, kde-format
 msgctxt "R code comment"
 msgid "Catch errors due to unsuitable data"
 msgstr "Capture des erreurs dues à des données inadaptées"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:207
+#: rkward/plugins/analysis/power/Poweranalysis.js:205
 #, kde-format
 msgid "Power analysis not possible with the data you provided"
 msgstr ""
 "Analyse de puissance impossible avec les données que vous avez fournies."
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:208
+#: rkward/plugins/analysis/power/Poweranalysis.js:207
 #, kde-format
 msgctxt "R code comment"
 msgid "Prepare printout"
 msgstr "Préparer le périphérique de sortie"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:212
+#: rkward/plugins/analysis/power/Poweranalysis.js:214
 #, kde-format
 msgid "alternative"
 msgstr "Alternative"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:214
+#: rkward/plugins/analysis/power/Poweranalysis.js:219
 #, kde-format
 msgid "Parameters"
 msgstr "Paramètres"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:214
+#: rkward/plugins/analysis/power/Poweranalysis.js:221
 #, kde-format
 msgid "<strong>Note:</strong>"
 msgstr "<strong>Remarque : </strong>"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:216
-#: rkward/plugins/analysis/power/Poweranalysis.js:219
-#: rkward/plugins/analysis/power/Poweranalysis.js:222
-#: rkward/plugins/analysis/power/Poweranalysis.js:225
-#: rkward/plugins/analysis/power/Poweranalysis.js:228
+#: rkward/plugins/analysis/power/Poweranalysis.js:223
+#: rkward/plugins/analysis/power/Poweranalysis.js:227
 #: rkward/plugins/analysis/power/Poweranalysis.js:231
+#: rkward/plugins/analysis/power/Poweranalysis.js:235
+#: rkward/plugins/analysis/power/Poweranalysis.js:239
+#: rkward/plugins/analysis/power/Poweranalysis.js:243
 #, no-c-format, kde-format
 msgctxt "Argument is name of statistic, e.g. 'r'"
 msgid "Interpretation of effect size <strong>%1</strong> (according to Cohen):"
@@ -2475,36 +2475,36 @@ msgstr ""
 "Interprétation de la taille de l'effet <strong>%1</strong> (selon Cohen) :"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:216
-#: rkward/plugins/analysis/power/Poweranalysis.js:219
-#: rkward/plugins/analysis/power/Poweranalysis.js:222
-#: rkward/plugins/analysis/power/Poweranalysis.js:225
+#: rkward/plugins/analysis/power/Poweranalysis.js:224
 #: rkward/plugins/analysis/power/Poweranalysis.js:228
-#: rkward/plugins/analysis/power/Poweranalysis.js:231
+#: rkward/plugins/analysis/power/Poweranalysis.js:232
+#: rkward/plugins/analysis/power/Poweranalysis.js:236
+#: rkward/plugins/analysis/power/Poweranalysis.js:240
+#: rkward/plugins/analysis/power/Poweranalysis.js:244
 #, kde-format
 msgctxt "effect size"
 msgid "small"
 msgstr "petit"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:216
-#: rkward/plugins/analysis/power/Poweranalysis.js:219
-#: rkward/plugins/analysis/power/Poweranalysis.js:222
-#: rkward/plugins/analysis/power/Poweranalysis.js:225
+#: rkward/plugins/analysis/power/Poweranalysis.js:224
 #: rkward/plugins/analysis/power/Poweranalysis.js:228
-#: rkward/plugins/analysis/power/Poweranalysis.js:231
+#: rkward/plugins/analysis/power/Poweranalysis.js:232
+#: rkward/plugins/analysis/power/Poweranalysis.js:236
+#: rkward/plugins/analysis/power/Poweranalysis.js:240
+#: rkward/plugins/analysis/power/Poweranalysis.js:244
 #, kde-format
 msgctxt "effect size"
 msgid "medium"
 msgstr "moyen"
 
 #. i18n: ectx: (Loaded from Power analysis)
-#: rkward/plugins/analysis/power/Poweranalysis.js:216
-#: rkward/plugins/analysis/power/Poweranalysis.js:219
-#: rkward/plugins/analysis/power/Poweranalysis.js:222
-#: rkward/plugins/analysis/power/Poweranalysis.js:225
+#: rkward/plugins/analysis/power/Poweranalysis.js:224
 #: rkward/plugins/analysis/power/Poweranalysis.js:228
-#: rkward/plugins/analysis/power/Poweranalysis.js:231
+#: rkward/plugins/analysis/power/Poweranalysis.js:232
+#: rkward/plugins/analysis/power/Poweranalysis.js:236
+#: rkward/plugins/analysis/power/Poweranalysis.js:240
+#: rkward/plugins/analysis/power/Poweranalysis.js:244
 #, kde-format
 msgctxt "effect size"
 msgid "large"
@@ -3237,7 +3237,7 @@ msgstr "Enregistrer les résidus"
 #. i18n: ectx: (Loaded from t-Test)
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #: rkward/plugins/analysis/t_test.js:57
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:81
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
 #, kde-format
 msgid "Comparing"
 msgstr "Comparaison"
@@ -3527,7 +3527,7 @@ msgstr "Dickey-Fuller"
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots)
 #: rkward/plugins/analysis/TESTS/PP_test.js:24
-#: rkward/plugins/analysis/time_series/kpss_test.js:29
+#: rkward/plugins/analysis/time_series/kpss_test.js:30
 #, kde-format
 msgid "Truncation lag parameter"
 msgstr "Paramètre de retard de troncature"
@@ -3684,7 +3684,7 @@ msgstr ""
 "Hodrick-Prescott."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
-#: rkward/plugins/analysis/time_series/hp_filter.js:24
+#: rkward/plugins/analysis/time_series/hp_filter.js:25
 #, kde-format
 msgctxt "R code comment"
 msgid "The HP Filter itself. Thanks to Grant V. Farnsworth"
@@ -3692,7 +3692,7 @@ msgstr "Le filtre HP lui-même. Merci à Grant V. Farnsworth."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter)
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <frame label="...">
-#: rkward/plugins/analysis/time_series/hp_filter.js:68
+#: rkward/plugins/analysis/time_series/hp_filter.js:69
 #: rkward/plugins/analysis/time_series/hp_filter.xml:40
 #, kde-format
 msgid "Lambda"
@@ -4036,26 +4036,26 @@ msgid "interpret as string"
 msgstr "interpréter comme chaîne"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
-#: rkward/plugins/analysis/time_series/kpss_test.js:23
+#: rkward/plugins/analysis/time_series/kpss_test.js:24
 #, kde-format
 msgctxt "R code comment"
 msgid "remove NAs"
 msgstr "Supprimer les « N / A »"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
-#: rkward/plugins/analysis/time_series/kpss_test.js:27
+#: rkward/plugins/analysis/time_series/kpss_test.js:28
 #, kde-format
 msgid "KPSS Level"
 msgstr "Niveau « KPSS »"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
-#: rkward/plugins/analysis/time_series/kpss_test.js:27
+#: rkward/plugins/analysis/time_series/kpss_test.js:28
 #, kde-format
 msgid "KPSS Trend"
 msgstr "Tendance « KPSS »"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
-#: rkward/plugins/analysis/time_series/kpss_test.js:37
+#: rkward/plugins/analysis/time_series/kpss_test.js:38
 #, kde-format
 msgid "KPSS Test for Level Stationarity"
 msgstr "Test de niveau de stationnarité de KPSS"
@@ -4166,31 +4166,31 @@ msgid "samples"
 msgstr "échantillons"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:27
+#: rkward/plugins/analysis/variances/F_test.js:28
 #, kde-format
 msgid "Numerator DF"
 msgstr "Numérateur « DF »"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:28
+#: rkward/plugins/analysis/variances/F_test.js:29
 #, kde-format
 msgid "Denominator DF"
 msgstr "Dénominateur « DF »"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:30
+#: rkward/plugins/analysis/variances/F_test.js:31
 #, kde-format
 msgid "Lower CI"
 msgstr "CI plus petit"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:31
+#: rkward/plugins/analysis/variances/F_test.js:32
 #, kde-format
 msgid "Upper CI"
 msgstr "CI plus grand"
 
 #. i18n: ectx: (Loaded from F test)
-#: rkward/plugins/analysis/variances/F_test.js:32
+#: rkward/plugins/analysis/variances/F_test.js:33
 #, kde-format
 msgid "ratio of variances"
 msgstr "Taux de variances"
@@ -4353,37 +4353,37 @@ msgid "groups"
 msgstr "groupes"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:84
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:95
 #, kde-format
 msgid "Continuity correction in normal approximation for p-value"
 msgstr "Correction de continuité dans l'approximation normale pour la p-valeur"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:101
 #, kde-format
 msgid "Location Shift"
 msgstr "Décalage d'emplacement"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:90
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:101
 #, kde-format
 msgid "Hypothesis"
 msgstr "Hypothèse"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:104
 #, kde-format
 msgid "Confidence interval percent"
 msgstr "Pourcentage de l'intervalle de confiance"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:104
 #, kde-format
 msgid "Confidence interval of difference"
 msgstr "Intervalle de confiance de la différence"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
-#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:92
+#: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:104
 #, kde-format
 msgid "Difference in Location"
 msgstr "Différence dans l'emplacement"

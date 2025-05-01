@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-23 00:37+0000\n"
+"POT-Creation-Date: 2025-05-01 00:38+0000\n"
 "PO-Revision-Date: 2024-12-15 17:37+0530\n"
 "Last-Translator: Kali <EMAIL@ADDRESS>\n"
 "Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
@@ -28,7 +28,7 @@ msgid "Your emails"
 msgstr "आपके ईमेल"
 
 #. i18n: ectx: (Loaded from Download AppImage)
-#: rkward/plugins/00saveload/DownloadAppImage.js:59
+#: rkward/plugins/00saveload/DownloadAppImage.js:63
 #, kde-format
 msgid "Download AppImage results"
 msgstr "ऐप डाउनलोड करेंछवि परिणाम"
@@ -113,7 +113,7 @@ msgstr "ऐप छवि"
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:40
-#: rkward/plugins/00saveload/save/write_csv.js:110
+#: rkward/plugins/00saveload/save/write_csv.js:107
 #: rkward/plugins/import_export.pluginmap:60
 #, kde-format
 msgid "File"
@@ -1438,11 +1438,11 @@ msgstr "रिक्त पंक्तियाँ छोड़ें"
 #. i18n: ectx: (Loaded from Import STATA file)
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #. i18n: ectx: (Loaded from Generic data import)
-#: rkward/plugins/00saveload/import/import_generic_rio.js:37
-#: rkward/plugins/00saveload/import/import_spss.js:55
-#: rkward/plugins/00saveload/import/import_stata.js:64
-#: rkward/plugins/00saveload/import/import_xls.js:38
-#: rkward/plugins/00saveload/import/import_xls_xlconnect.js:48
+#: rkward/plugins/00saveload/import/import_generic_rio.js:38
+#: rkward/plugins/00saveload/import/import_spss.js:56
+#: rkward/plugins/00saveload/import/import_stata.js:65
+#: rkward/plugins/00saveload/import/import_xls.js:39
+#: rkward/plugins/00saveload/import/import_xls_xlconnect.js:49
 #, kde-format
 msgctxt "R code comment"
 msgid "assign to globalenv()"
@@ -1450,7 +1450,7 @@ msgstr "globalenv() को असाइन करें"
 
 #. i18n: ectx: (Loaded from Generic data import)
 #. i18n: ectx: (Generic data import) <dialog label="...">
-#: rkward/plugins/00saveload/import/import_generic_rio.js:45
+#: rkward/plugins/00saveload/import/import_generic_rio.js:46
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:19
 #, kde-format
 msgid "Generic data import"
@@ -1564,8 +1564,8 @@ msgstr "RKWard में उपयोग के लिए चर लेबल �
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
-#: rkward/plugins/00saveload/import/import_spss.js:63
-#: rkward/plugins/00saveload/import/import_xls_xlconnect.js:56
+#: rkward/plugins/00saveload/import/import_spss.js:64
+#: rkward/plugins/00saveload/import/import_xls_xlconnect.js:57
 #, kde-format
 msgid "Import SPSS data"
 msgstr "SPSS डेटा आयात करें"
@@ -1702,7 +1702,7 @@ msgid "Trim white space"
 msgstr "सफेद स्थान काटें"
 
 #. i18n: ectx: (Loaded from Import STATA file)
-#: rkward/plugins/00saveload/import/import_stata.js:72
+#: rkward/plugins/00saveload/import/import_stata.js:73
 #, kde-format
 msgid "Import Stata File"
 msgstr "स्टाटा फ़ाइल आयात करें"
@@ -1853,7 +1853,7 @@ msgstr ""
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="...">
-#: rkward/plugins/00saveload/import/import_xls.js:46
+#: rkward/plugins/00saveload/import/import_xls.js:47
 #: rkward/plugins/00saveload/import/import_xls.xml:15
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:18
 #, kde-format
@@ -2447,8 +2447,8 @@ msgid "Print eval"
 msgstr "प्रिंट मूल्यांकन"
 
 #. i18n: ectx: (Loaded from Export RMarkdown)
-#: rkward/plugins/00saveload/save/ExportRMarkdown.js:121
-#: rkward/plugins/00saveload/save/ExportRMarkdown.js:123
+#: rkward/plugins/00saveload/save/ExportRMarkdown.js:122
+#: rkward/plugins/00saveload/save/ExportRMarkdown.js:124
 #, kde-format
 msgid "Export RMarkdown file"
 msgstr "RMarkdown फ़ाइल निर्यात करें"
@@ -2904,7 +2904,7 @@ msgstr "मौजूदा फ़ाइल में जोड़ें"
 #. i18n: ectx: (Loaded from Export Table / CSV files)
 #. i18n: ectx: (Export Table / CSV files) <title>
 #. i18n: ectx: (Export Table / CSV files) <dialog label="...">
-#: rkward/plugins/00saveload/save/write_csv.js:110
+#: rkward/plugins/00saveload/save/write_csv.js:107
 #: rkward/plugins/00saveload/save/write_csv.rkh:10
 #: rkward/plugins/00saveload/save/write_csv.xml:49
 #: rkward/plugins/import_export.pluginmap:32

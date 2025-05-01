@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__plots\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2025-05-01 00:38+0000\n"
 "PO-Revision-Date: 2015-06-23 23:37-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -41,7 +41,7 @@ msgstr ""
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Barplot)
 #. i18n: ectx: (Barplot) <dialog label="...">
-#: rkward/plugins/plots.pluginmap:24 rkward/plugins/plots/barplot.js:51
+#: rkward/plugins/plots.pluginmap:24 rkward/plugins/plots/barplot.js:50
 #: rkward/plugins/plots/barplot.xml:36
 #, kde-format
 msgid "Barplot"
@@ -56,7 +56,7 @@ msgstr ""
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Density Plot)
 #. i18n: ectx: (Density Plot) <dialog label="...">
-#: rkward/plugins/plots.pluginmap:26 rkward/plugins/plots/density_plot.js:44
+#: rkward/plugins/plots.pluginmap:26 rkward/plugins/plots/density_plot.js:43
 #: rkward/plugins/plots/density_plot.xml:33
 #, kde-format
 msgid "Density Plot"
@@ -121,7 +121,7 @@ msgstr ""
 #. i18n: ectx: (Loaded from Scatterplot Matrix)
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="...">
 #: rkward/plugins/plots.pluginmap:34
-#: rkward/plugins/plots/scatterplot_matrix.js:26
+#: rkward/plugins/plots/scatterplot_matrix.js:25
 #: rkward/plugins/plots/scatterplot_matrix.xml:11
 #, kde-format
 msgid "Scatterplot Matrix"
@@ -154,7 +154,7 @@ msgstr ""
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Variables"> <varslot label="...">
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots)
 #. i18n: ectx: (Loaded from Stripchart)
-#: rkward/plugins/plots/barplot.js:19 rkward/plugins/plots/density_plot.js:49
+#: rkward/plugins/plots/barplot.js:19 rkward/plugins/plots/density_plot.js:48
 #: rkward/plugins/plots/dotchart.js:19 rkward/plugins/plots/dotchart.xml:45
 #: rkward/plugins/plots/ecdf_plot.js:30 rkward/plugins/plots/histogram.js:24
 #: rkward/plugins/plots/pareto.js:42 rkward/plugins/plots/piechart.js:18
@@ -165,7 +165,7 @@ msgid "Variable"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Barplot)
-#: rkward/plugins/plots/barplot.js:34
+#: rkward/plugins/plots/barplot.js:33
 #, kde-format
 msgctxt "R code comment"
 msgid ""
@@ -412,21 +412,21 @@ msgid "Barplot Options"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:35
+#: rkward/plugins/plots/box_plot.js:36
 #, kde-format
 msgctxt "R code comment"
 msgid "split sample by grouping variables"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:37
+#: rkward/plugins/plots/box_plot.js:38
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust width and position of boxes to achieve dodging"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:45
+#: rkward/plugins/plots/box_plot.js:47
 #, kde-format
 msgctxt "R code comment"
 msgid "convert single sample variables to list"
@@ -435,7 +435,7 @@ msgstr ""
 #. i18n: ectx: (Loaded from Boxplot)
 #. i18n: ectx: (Boxplot) <dialog label="...">
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
-#: rkward/plugins/plots/box_plot.js:55 rkward/plugins/plots/box_plot.js:57
+#: rkward/plugins/plots/box_plot.js:57 rkward/plugins/plots/box_plot.js:59
 #: rkward/plugins/plots/box_plot.xml:36
 #: rkward/plugins/plots/scatterplot_matrix.xml:25
 #, kde-format
@@ -443,13 +443,13 @@ msgid "Boxplot"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:55
+#: rkward/plugins/plots/box_plot.js:57
 #, kde-format
 msgid "Outcome variable"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:55
+#: rkward/plugins/plots/box_plot.js:57
 #, kde-format
 msgid "Grouping variable(s)"
 msgstr ""
@@ -460,7 +460,7 @@ msgstr ""
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="...">
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="...">
-#: rkward/plugins/plots/box_plot.js:57 rkward/plugins/plots/box_plot.xml:38
+#: rkward/plugins/plots/box_plot.js:59 rkward/plugins/plots/box_plot.xml:38
 #: rkward/plugins/plots/density_plot.xml:35
 #: rkward/plugins/plots/ecdf_plot.xml:30 rkward/plugins/plots/histogram.xml:34
 #: rkward/plugins/plots/stripchart_plot.xml:24
@@ -469,35 +469,35 @@ msgid "Variable(s)"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:65
+#: rkward/plugins/plots/box_plot.js:68
 #, kde-format
 msgctxt "R code comment"
 msgid "actual boxplot function"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:69
+#: rkward/plugins/plots/box_plot.js:73
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate geometric mean"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:72
+#: rkward/plugins/plots/box_plot.js:77
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate harmonic mean"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:75
+#: rkward/plugins/plots/box_plot.js:81
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate the interquartile mean"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Boxplot)
-#: rkward/plugins/plots/box_plot.js:83 rkward/plugins/plots/box_plot.js:85
+#: rkward/plugins/plots/box_plot.js:90 rkward/plugins/plots/box_plot.js:93
 #, kde-format
 msgctxt "R code comment"
 msgid ""
@@ -880,13 +880,13 @@ msgid "Plot Options"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Density Plot)
-#: rkward/plugins/plots/density_plot.js:45
+#: rkward/plugins/plots/density_plot.js:44
 #, kde-format
 msgid "Highest density regions"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Density Plot)
-#: rkward/plugins/plots/density_plot.js:50
+#: rkward/plugins/plots/density_plot.js:49
 #, kde-format
 msgid "Length"
 msgstr ""
@@ -1222,7 +1222,7 @@ msgid "Axis/Title"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Dot chart)
-#: rkward/plugins/plots/dotchart.js:30
+#: rkward/plugins/plots/dotchart.js:31
 #, kde-format
 msgctxt "R code comment"
 msgid "dotchart() is somewhat picky about data type"
@@ -1231,7 +1231,7 @@ msgstr ""
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Loaded from Pareto chart)
 #. i18n: ectx: (Loaded from Pie chart)
-#: rkward/plugins/plots/dotchart.js:34 rkward/plugins/plots/pareto.js:15
+#: rkward/plugins/plots/dotchart.js:35 rkward/plugins/plots/pareto.js:15
 #: rkward/plugins/plots/piechart.js:57
 #, kde-format
 msgid ""
@@ -1241,7 +1241,7 @@ msgstr ""
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Dot chart) <dialog label="...">
-#: rkward/plugins/plots/dotchart.js:44 rkward/plugins/plots/dotchart.xml:39
+#: rkward/plugins/plots/dotchart.js:45 rkward/plugins/plots/dotchart.xml:39
 #, kde-format
 msgid "Dot chart"
 msgstr ""

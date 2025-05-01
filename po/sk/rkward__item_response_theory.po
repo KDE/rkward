@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__item_response_theory\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:24+0000\n"
+"POT-Creation-Date: 2025-05-01 00:38+0000\n"
 "PO-Revision-Date: 2016-09-01 20:38+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -56,8 +56,8 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:37
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:37
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.js:30
-#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:43
-#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:42
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:42
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:41
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:28
 #, kde-format
 msgid "Call:"
@@ -1869,7 +1869,7 @@ msgstr ""
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Cronbach's alpha)
 #. i18n: ectx: (Cronbach's alpha) <dialog label="...">
-#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:68
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:67
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:16
 #: rkward/plugins/irt.pluginmap:36
 #, kde-format
@@ -1877,37 +1877,37 @@ msgid "Cronbach's alpha"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
-#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:68
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:67
 #, kde-format
 msgid "Dataset"
 msgstr "Dátová sada"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
-#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:70
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:69
 #, kde-format
 msgid "Subset"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
-#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:73
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:72
 #, kde-format
 msgid "Items:"
 msgstr "Položky:"
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
-#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:73
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:72
 #, kde-format
 msgid "<br />Sample units:"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
-#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:76
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:75
 #, kde-format
 msgid "Effects on alpha if items are removed:"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Cronbach's alpha)
-#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:79
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:78
 #, no-c-format, kde-format
 msgid "%1% Confidence interval:"
 msgstr ""
@@ -1997,33 +1997,33 @@ msgid "Number of samples"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
-#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:41
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:40
 #, no-c-format, kde-format
 msgid "Item-fit statistics (%1)"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
-#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:45
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:44
 #, kde-format
 msgid "Alternative: Items do not fit the model"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
-#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:46
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:45
 #, kde-format
 msgid "Ability Categories:"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
-#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:48
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:47
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:36
 #, kde-format
 msgid "Monte Carlo samples:"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
-#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:49
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:48
 #, kde-format
 msgid "Item-Fit Statistics and P-values:"
 msgstr ""
@@ -2103,13 +2103,13 @@ msgid "Number of replications"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Person-fit statistics for Rasch, LTM and 3PM)
-#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:40
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:39
 #, no-c-format, kde-format
 msgid "Person-fit statistics (%1)"
 msgstr ""
 
 #. i18n: ectx: (Loaded from Person-fit statistics for Rasch, LTM and 3PM)
-#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:44
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:43
 #, kde-format
 msgid ""
 "Response patterns, person-fit statistics (L0, Lz) and probabilities for each "
@@ -2490,8 +2490,8 @@ msgstr ""
 #. i18n: ectx: (Loaded from Plotting fitted graded response model)
 #: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:104
 #: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:101
-#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:101
-#: rkward/plugins/plots/irt/polytomous/plot_grm.js:109
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:102
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:110
 #, kde-format
 msgid "Standard Error"
 msgstr ""
@@ -2502,8 +2502,8 @@ msgstr ""
 #. i18n: ectx: (Loaded from Plotting fitted graded response model)
 #: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:105
 #: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:102
-#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:102
-#: rkward/plugins/plots/irt/polytomous/plot_grm.js:110
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:103
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:111
 #, kde-format
 msgid "Standard Error of Measurement"
 msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__embedded\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-12 00:36+0000\n"
+"POT-Creation-Date: 2025-05-01 00:38+0000\n"
 "PO-Revision-Date: 2025-04-21 12:20+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -596,7 +596,7 @@ msgid "Install from git"
 msgstr "Instalar desde git"
 
 #. i18n: ectx: (Loaded from Install from git/svn)
-#: rkward/plugins/distributions/../internal/Installfromgit.js:70
+#: rkward/plugins/distributions/../internal/Installfromgit.js:78
 #, kde-format
 msgid "Install from git results"
 msgstr "Resultados de instalar desde git"
@@ -821,7 +821,7 @@ msgid "empty"
 msgstr "vacío"
 
 #. i18n: ectx: (Loaded from Barplot Options)
-#: rkward/plugins/distributions/../plots/barplot_embed.js:57
+#: rkward/plugins/distributions/../plots/barplot_embed.js:56
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust the range so that the labels will fit"
