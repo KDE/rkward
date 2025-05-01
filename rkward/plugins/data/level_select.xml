@@ -19,7 +19,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<external id="limit" default="100"/>
 
 		<script><![CDATA[
-				last_command_id = -1;
 				gui.setValue ("limitnote.visible", false);
 
 				gui.addChangeCommand ("variable", "update ()");
@@ -46,19 +45,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
 					code += "\tx\n";
 					code += "})";
 
-					last_command_id = doRCommand (code, "commandFinished");
-				}
-
-				commandFinished = function (result, id) {
-					if (id != last_command_id) return;  // another result is about to arrive
-					if (typeof (result) == "undefined") {
-						gui.setListValue ("selector.available", Array ("ERROR"));
-						return;
-					}
-					gui.setValue ("selector.enabled", 1);
-					limit = gui.getValue ("limit");
-					gui.setValue ("limitnote.visible", result.length > limit ? 1 : 0);
-					gui.setListValue ("selector.available", result.slice (0, limit));
+					new RCommand(code, "getvals")
+						.then(result => {
+							if (result === "outdated") return;  // another result is about to arrive
+							gui.setValue("selector.enabled", 1);
+							limit = gui.getValue("limit");
+							gui.setValue("limitnote.visible", result.length > limit ? 1 : 0);
+							gui.setListValue("selector.available", result.slice(0, limit));
+						})
+						.catch(err => {
+							gui.setListValue("selector.available", Array("ERROR:", err));
+						});
 				}
 		]]></script>
 	</logic>

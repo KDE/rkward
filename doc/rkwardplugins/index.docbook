@@ -1654,38 +1654,44 @@ This chapter contains information on some topics that are useful only to certain
 	<para>With this in mind, here is the general pattern. You will use this inside a <link linkend="logic_scripted">scripted UI logic</link> section:</para>
 	<programlisting>
 		&lt;script&gt;&lt;![CDATA[
-				last_command_id = -1;
 				gui.addChangeCommand ("variable", "update ()");
 				update = function () {
 					gui.setValue ("selector.enabled", 0);
 					variable = gui.getValue ("variable");
 					if (variable == "") return;
 
-					last_command_id = doRCommand ('levels (' + variable + ')', "commandFinished");
-				}
-
-				commandFinished = function (result, id) {
-					if (id != last_command_id) return;  // another result is about to arrive
-					if (typeof (result) == "undefined") {
-						gui.setListValue ("selector.available", Array ("ERROR"));
-						return;
-					}
-					gui.setValue ("selector.enabled", 1);
-					gui.setListValue ("selector.available", result);
+					new RCommand('levels (' + variable + ')', "myid").then(result => {
+						gui.setValue ("selector.enabled", 1);
+						gui.setListValue ("selector.available", result);
+					}).catch(msg => {
+						if (msg === "outdated") return;  // command was canceled, because new one is about to arrive -> benign
+						// possibly other error handling, msg carries the warnings and error messages produced,
+						// if the command failed e.g.:
+						gui.setListValue ("selector.available", Array ("ERROR:", msg));
+					});
 				}
 		]]&gt;&lt;/script&gt;
 	</programlisting>
 	<para>Here, <parameter>variable</parameter> is a property holding an object name (&eg; inside a <command>&lt;varslot&gt;</command>). Whenever that changes, you will want to update the display
-	      of levels inside the <command>&lt;valueselector&gt;</command>, named <parameter>selector</parameter>. The key function here is <command>doRCommand()</command>, taking as first parameter
-		  the command string to run, and as second parameter the name of a function to call, when the command has finished. Note that the command is running asynchronously, and this makes things
-		  a bit more complex. For one thing you want to make sure, that your <command>&lt;valueselector&gt;</command> remains disabled, while it does not contain up-to-date information. Another
-		  thing is that you could potentially have queued more than one command, before you get the first results. This is why every command is given an "id", and we store that in <parameter>last_command_id</parameter> for later reference.</para>
-	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the corresponding
-		  command. The result will be of a type resembling the representation in &R;, &ie; a numeric Array, if the result is numeric, &etc; It can even be an &R; <command>list()</command>, but in this case
-		  it will be represented as a JS <command>Array()</command> without names.</para>
-	  <para>Note that even this example is somewhat simplified. In reality you should take additional precautions, &eg; to avoid putting an extreme amount of levels into the selector. The good news
-		  is that probably you do not have to do all this yourself. The above example is taken from the <command>rkward::level_select</command> plugin, for instance, which you can simply <link linkend="embedding">embed</link> in your own
-		  plugin. This even allows you to specify a different expression to run in place of <command>levels()</command>.</para>
+	of levels inside the <command>&lt;valueselector&gt;</command>, named <parameter>selector</parameter>. The key function here is the constructor statement <command>new RCommand()</command>, taking as first parameter
+	the command string to run. Note that the command is running asynchronously, and this makes things
+	a bit more complex. For one thing you want to make sure, that your <command>&lt;valueselector&gt;</command> remains disabled, while it does not contain up-to-date information.
+	Secondly, as the user may make changes, quickly, more than one command may have been generated, before we receive any result. Thus, you'll need to make sure to act on the most recent
+	command, only.
+	</para>
+	<para>To deal with asynchronousicty, what is returned, here, is a <command>Promise</command> object. More info on this powerful javascript feature can be found <ulink url="https://javascript.info/async">on the internet</ulink>. The important thing to know, here, is that appending a <command>.then()</command> statement allows you to specify what will happen when the command has completed, and a <command>.catch()</command> statement can be used ot handle any errors. Again, keep in mind, that the <command>.then()</command> block does not get executed right away. To understand the implications of this, it may
+	be helpful, during development, to insert a <command>Sys.sleep(1);</command> into your R command, to see what happens, when a command does not complete, immediately.</para>
+	<para>Finally, to deal with multiple commands being generated, you can specify a second argument to <command>new RCommand()</command>, ("myid", in this example). Any comands with the same (freely chosen) identifier will be understood to belong to the same queue. RKWard will then make sure that only the latest command will actually trigger the <command>.then()</command> block, while any obsoleted commands will arrive in the
+	<command>.catch()</command> block. Here, obsoleted commands can be identified, as the string "outdated" is passed as their value, while for any other possible errors, the warnings, and error messages are passed along.
+	</para>
+	<para>Note that this example is somewhat simplified. In reality you should take additional precautions, &eg; to avoid putting an extreme amount of levels into the selector. The good news
+		is that probably you do not have to do all this yourself. The above example is taken from the <command>rkward::level_select</command> plugin, for instance, which you can simply <link linkend="embedding">embed</link> in your own
+		plugin. This even allows you to specify a different expression to run in place of <command>levels()</command>.</para>
+	<note>
+		<para>In earlier versions of RKWard R commands were run using a somewhat more complex <command>doRCommand()</command> function. You may still see that in some plugins, but it is not recommended to use it
+		in new code.</para>
+	</note>
+
 </sect1>
 
 <sect1 id="current_object">
@@ -4502,7 +4508,10 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 <listitem><para><command>include(filename)</command> can be used to include a separate JS file.</para></listitem>
 </varlistentry>
 <varlistentry><term>doRCommand()-function</term>
-<listitem><para><command>doRCommand(command, callback)</command> can be used to query &R; for information. Please read the section on <link linkend="querying_r_for_info">querying &R; from inside a plugin</link> for details, and caveats.</para></listitem>
+<listitem><para><emphasis>Obsolete. Do not use in new plugins:</emphasis> <command>doRCommand(command, callback)</command>. Use <command>new RCommand()</command>, instead.</para></listitem>
+</varlistentry>
+<varlistentry><term>new RCommand()-function</term>
+<listitem><para><command>new RCommand(command, optional_id)</command> can be used to query &R; for information. Please read the section on <link linkend="querying_r_for_info">querying &R; from inside a plugin</link> for details, and caveats.</para></listitem>
 </varlistentry>
 </variablelist>
 </sect1>

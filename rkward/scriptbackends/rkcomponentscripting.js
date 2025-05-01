@@ -62,7 +62,7 @@ function Component(id) {
 
 	this.addChangeCommand = function(id, command) {
 		_rkward.addChangeCommand(this.absoluteId(id), command);
-	}
+	};
 };
 
 makeComponent = function(id) {
@@ -73,91 +73,97 @@ gui = new Component("");
 
 doRCommand = function(command, callback) {
 	return (_rkward.doRCommand(command, callback));
-}:
+};
 
-    function RObject(objectname) {
-	    this.objectname = objectname;
+function RCommand(command, id = null) {
+	return new Promise(function(resolve, reject) {
+		_rkward.doRCommand2(command, id, resolve, reject);
+	});
+};
 
-	    // for internal use
-	    this.initialize = function() {
-		    info = _rkward.getObjectInfo(this.objectname);
+function RObject(objectname) {
+	this.objectname = objectname;
 
-		    this._dimensions = info.shift();
-		    this._classes = info.shift();
-		    this._isDataFrame = info.shift();
-		    this._isMatrix = info.shift();
-		    this._isList = info.shift();
-		    this._isFunction = info.shift();
-		    this._isEnvironment = info.shift();
-		    this._datatype = info.shift();
-	    };
+	// for internal use
+	this.initialize = function() {
+		info = _rkward.getObjectInfo(this.objectname);
 
-	    this.initialize();
+		this._dimensions = info.shift();
+		this._classes = info.shift();
+		this._isDataFrame = info.shift();
+		this._isMatrix = info.shift();
+		this._isList = info.shift();
+		this._isFunction = info.shift();
+		this._isEnvironment = info.shift();
+		this._datatype = info.shift();
+	};
 
-	    this.getName = function() {
-		    return (this.objectname);
-	    };
+	this.initialize();
 
-	    this.exists = function() {
-		    return (typeof (this._dimensions) != "undefined");
-	    };
+	this.getName = function() {
+		return (this.objectname);
+	};
 
-	    this.dimensions = function() {
-		    return (this._dimensions);
-	    };
+	this.exists = function() {
+		return (typeof (this._dimensions) != "undefined");
+	};
 
-	    this.classes = function() {
-		    return (this._classes);
-	    };
+	this.dimensions = function() {
+		return (this._dimensions);
+	};
 
-	    this.isClass = function(classname) {
-		    return (this._classes.indexOf(classname) != -1);
-	    };
+	this.classes = function() {
+		return (this._classes);
+	};
 
-	    this.isDataFrame = function() {
-		    return (this._isDataFrame);
-	    };
+	this.isClass = function(classname) {
+		return (this._classes.indexOf(classname) != -1);
+	};
 
-	    this.isMatrix = function() {
-		    return (this._isMatrix);
-	    };
+	this.isDataFrame = function() {
+		return (this._isDataFrame);
+	};
 
-	    this.isList = function() {
-		    return (this._isList);
-	    };
+	this.isMatrix = function() {
+		return (this._isMatrix);
+	};
 
-	    this.isFunction = function() {
-		    return (this._isFunction);
-	    };
+	this.isList = function() {
+		return (this._isList);
+	};
 
-	    this.isEnvironment = function() {
-		    return (this._isEnvironment);
-	    };
+	this.isFunction = function() {
+		return (this._isFunction);
+	};
 
-	    this.isDataNumeric = function() {
-		    return (this._datatype == "numeric");
-	    };
+	this.isEnvironment = function() {
+		return (this._isEnvironment);
+	};
 
-	    this.isDataFactor = function() {
-		    return (this._datatype == "factor");
-	    };
+	this.isDataNumeric = function() {
+		return (this._datatype == "numeric");
+	};
 
-	    this.isDataCharacter = function() {
-		    return (this._datatype == "character");
-	    };
+	this.isDataFactor = function() {
+		return (this._datatype == "factor");
+	};
 
-	    this.isDataLogical = function() {
-		    return (this._datatype == "logical");
-	    };
+	this.isDataCharacter = function() {
+		return (this._datatype == "character");
+	};
 
-	    this.parent = function() {
-		    return (new RObject(_rkward.getObjectParent(this._name)));
-	    };
+	this.isDataLogical = function() {
+		return (this._datatype == "logical");
+	};
 
-	    this.child = function(childname) {
-		    return (new RObject(_rkward.getObjectChild(this._name, childname)));
-	    }
-    };
+	this.parent = function() {
+		return (new RObject(_rkward.getObjectParent(this._name)));
+	};
+
+	this.child = function(childname) {
+		return (new RObject(_rkward.getObjectChild(this._name, childname)));
+	}
+};
 
 makeRObject = function(objectname) {
 	return (new RObject(objectname));

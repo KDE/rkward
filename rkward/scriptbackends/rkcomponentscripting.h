@@ -42,6 +42,7 @@ class RKComponentScriptingProxy : public QObject {
 	Q_INVOKABLE void addChangeCommand(const QString &changed_id, const QString &command);
 	/** @returns id of the command issued. */
 	Q_INVOKABLE QVariant doRCommand(const QString &command, const QString &callback);
+	Q_INVOKABLE void doRCommand2(const QString &command, const QString &id, const QJSValue resolve, const QJSValue reject);
 
 	Q_INVOKABLE QVariant getValue(const QString &id) const;
 	Q_INVOKABLE QVariant getString(const QString &id) const;
@@ -66,8 +67,9 @@ class RKComponentScriptingProxy : public QObject {
 		QString callback;
 	};
 	QList<OutstandingCommand> outstanding_commands;
+	QHash<QString, RCommand *> latest_commands;
 	QString _scriptfile;
-	void evaluate(const QString &code, const QString &filename=QString());
+	void evaluate(const QString &code, const QString &filename = QString());
 
 	void handleChange(RKComponentBase *changed);
 	QHash<RKComponentBase *, QString> component_commands;

@@ -157,6 +157,30 @@ static QJSValue marshall(QJSEngine *engine, const RData *data) {
 	return QJSValue();
 }
 
+void RKComponentScriptingProxy::doRCommand2(const QString &command, const QString &id, const QJSValue resolve, const QJSValue reject) {
+	RK_TRACE(PHP);
+	auto c = new RCommand(command, RCommand::PriorityCommand | RCommand::GetStructuredData | RCommand::Plugin);
+	if (!id.isNull()) {
+		auto old_c = latest_commands.value(id);
+		if (old_c) RInterface::instance()->softCancelCommand(old_c);
+		latest_commands.insert(id, c);
+	}
+	c->whenFinished(this, [this, resolve, reject, id](RCommand *command) {
+		QJSValue res;
+		auto latest_c = id.isNull() ? nullptr : latest_commands.value(id);
+		if (latest_c && (latest_c != command)) {
+			res = reject.call(QJSValueList{(QJSValue(u"outdated"_s))});
+		} else if (command->failed()) {
+			res = reject.call(QJSValueList{(QJSValue(command->warnings() + command->error()))});
+		} else {
+			res = resolve.call(QJSValueList({(marshall(&engine, command))}));
+		}
+		handleScriptError(res);
+		if (latest_c == command) latest_commands.remove(id);
+	});
+	RInterface::issueCommand(c);
+}
+
 void RKComponentScriptingProxy::scriptRCommandFinished(RCommand *command) {
 	RK_TRACE(PHP);
 
