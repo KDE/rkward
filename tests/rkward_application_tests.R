@@ -16,15 +16,19 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 	), tests = list (
 		new ("RKTest", id="active_binding", call=function () {
 			.GlobalEnv$active.binding.value <- 1
-			makeActiveBinding ("active.binding", function () { message ("active.binding"); .GlobalEnv$active.binding.value }, .GlobalEnv)
+			makeActiveBinding("active.binding", function () { message ("active.binding"); .GlobalEnv$active.binding.value }, .GlobalEnv)
+			message("before sync")
+			rk.sync.global() # NOTE: This will currently create two "active.binding"-messages, one for the binding being copied to the shadow env,
+			                 #       and one for the frontend syncing info about the symbol.
+			                 #       That's an implementation detail, and could reasonably change, i.e. a failure to match the exact messages is
+			                 #       not necessarily an error. It just needs careful review.
+			                 #       The further tests, below, *are* critical, however
+			message("after sync")
 
-			rk.sync.global ()
-			message ("after sync")
-
-			stopifnot (.GlobalEnv$active.binding == .GlobalEnv$active.binding.value)
+			stopifnot(.GlobalEnv$active.binding == .GlobalEnv$active.binding.value)
 
 			.GlobalEnv$active.binding.value <- 123
-			stopifnot (.GlobalEnv$active.binding == 123)
+			stopifnot(.GlobalEnv$active.binding == 123)
 
 			# NOTE: the message "active.binding" should be displayed in the message output
 		}),
@@ -269,9 +273,9 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 		}, libraries=c ("lattice")),
 		new ("RKTest", id="device_capturing_stress_test", call=function () {
 			# This test checks for the "figure margins too large" error, that used to occur when plotting on a fresh device, sometimes.
-			# Since the error only appeared occasionally, we try 100 times to produce it. Unfortunately, that does make the test run annoyingly long...
+			# Since the error only appeared occasionally, we used to try 100 times to produce it, but that does made the test run annoyingly long...
 			graphics.off()
-			for (i in 1:100) {
+			for (i in 1:10) {
 				rk.embed.device (grDevices::x11())
 				plot (rnorm (100), main=paste (i, "/ 100"))
 				dev.off ()

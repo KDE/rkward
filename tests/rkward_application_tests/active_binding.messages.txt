@@ -1,3 +1,5 @@
+before sync
+active.binding
 active.binding
 after sync
 active.binding
