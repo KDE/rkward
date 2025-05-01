@@ -17,7 +17,7 @@ for (i in 1:length (vars)) {
 	results[i, "sum"] <- try (sum (var, na.rm=TRUE))
 	results[i, "product"] <- try (prod (var, na.rm=TRUE))
 	results[i, "Median Absolute Deviation"] <- try (mad (var, constant = 1.4628, na.rm=TRUE))
-	results[i, "length of sample"] <- length (var)
+	results[i, "total length (N)"] <- length (var)
 	results[i, "number of NAs"] <- sum (is.na(var))
 }
 ## Print result
