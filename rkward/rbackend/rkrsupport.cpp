@@ -269,6 +269,16 @@ RData *RKRSupport::SEXPToRData(SEXP from_exp) {
 	return data;
 }
 
+SEXP RKRSupport::getRKVariablesEnv() {
+	SEXP rkn = RFn::Rf_allocVector(STRSXP, 1);
+	RFn::SET_STRING_ELT(rkn, 0, RFn::Rf_mkChar("package:rkward"));
+	SEXP rkwardenv = RKRSupport::callSimpleFun(RFn::Rf_install("as.environment"), rkn, ROb(R_GlobalEnv));
+	RK_ASSERT(RFn::Rf_isEnvironment(rkwardenv));
+	SEXP rkwardvars = RFn::Rf_eval(RFn::Rf_findVar(RFn::Rf_install(".rk.variables"), rkwardenv), ROb(R_BaseEnv)); // NOTE: RFn::Rf_eval to resolve promise
+	RK_ASSERT(RFn::Rf_isEnvironment(rkwardvars));
+	return rkwardvars;
+}
+
 SEXP RKRShadowEnvironment::shadowenvbase = nullptr;
 QHash<SEXP, RKRShadowEnvironment *> RKRShadowEnvironment::environments;
 RKRShadowEnvironment *RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
@@ -277,13 +287,7 @@ RKRShadowEnvironment *RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
 	if (!environments.contains(baseenvir)) {
 		RK_DEBUG(RBACKEND, DL_DEBUG, "creating new shadow environment for %p\n", baseenvir);
 		if (!shadowenvbase) {
-			SEXP rkn = RFn::Rf_allocVector(STRSXP, 1);
-			RFn::SET_STRING_ELT(rkn, 0, RFn::Rf_mkChar("package:rkward"));
-			SEXP rkwardenv = RKRSupport::callSimpleFun(RFn::Rf_install("as.environment"), rkn, ROb(R_GlobalEnv));
-			RK_ASSERT(RFn::Rf_isEnvironment(rkwardenv));
-			SEXP rkwardvars = RFn::Rf_eval(RFn::Rf_findVar(RFn::Rf_install(".rk.variables"), rkwardenv), ROb(R_BaseEnv)); // NOTE: RFn::Rf_eval to resolve promise
-			RK_ASSERT(RFn::Rf_isEnvironment(rkwardvars));
-			shadowenvbase = RFn::Rf_findVar(RFn::Rf_install(".rk.shadow.envs"), rkwardvars);
+			shadowenvbase = RFn::Rf_findVar(RFn::Rf_install(".rk.shadow.envs"), RKRSupport::getRKVariablesEnv());
 			RK_ASSERT(RFn::Rf_isEnvironment(shadowenvbase));
 		}
 

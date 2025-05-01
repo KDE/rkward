@@ -33,6 +33,7 @@ RData::IntStorage SEXPToIntArray(SEXP from_exp);
 int SEXPToInt(SEXP from_exp, int def_value = INT_MIN);
 RData::RealStorage SEXPToRealArray(SEXP from_exp);
 RData *SEXPToRData(SEXP from_exp);
+SEXP getRKVariablesEnv(); /**< retries the rkward:::.rk.variables environment. NOTE: currently not cached */
 
 /** Replacement for BEGIN_SUSPEND_INTERRUPTS-macro that we cannot easily use */
 class InterruptSuspension {

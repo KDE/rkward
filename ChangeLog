@@ -1,4 +1,6 @@
 --- Version 0.8.2 - UNRELEASED
+- Fixed: Printing of captured R messages/warnings in plugins was broken
+- Internal: Code cleanups
 - Internal: Remove dependency on Qt5-compatibility library
 
 --- Version 0.8.1 - Apr-21-2025

@@ -1375,6 +1375,8 @@ void doPendingPriorityCommands() {
 void RKRBackend::catToOutputFile(const QString &out) {
 	RK_TRACE(RBACKEND);
 
+	SEXP output_file_r = RFn::Rf_findVar(RFn::Rf_install(".rk.output.html.file"), RKRSupport::getRKVariablesEnv());
+	auto output_file = RKRSupport::SEXPToString(output_file_r);
 	if (output_file.isEmpty()) {
 		RK_ASSERT(false);
 		return;
