@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-01 00:38+0000\n"
+"POT-Creation-Date: 2025-05-02 00:38+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -3667,7 +3667,7 @@ msgstr "R variklio pranešimas"
 msgid "Question from the R backend"
 msgstr "R variklio klausimas"
 
-#: rkward/rbackend/rkrbackend.cpp:1600
+#: rkward/rbackend/rkrbackend.cpp:1602
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3695,7 +3695,7 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1604
+#: rkward/rbackend/rkrbackend.cpp:1606
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3720,12 +3720,12 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1661
+#: rkward/rbackend/rkrbackend.cpp:1663
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1661
+#: rkward/rbackend/rkrbackend.cpp:1663
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3733,7 +3733,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1661
+#: rkward/rbackend/rkrbackend.cpp:1663
 #, kde-format
 msgid "Ok"
 msgstr ""

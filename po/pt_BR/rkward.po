@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-01 00:38+0000\n"
+"POT-Creation-Date: 2025-05-02 00:38+0000\n"
 "PO-Revision-Date: 2024-11-29 22:52-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -3882,7 +3882,7 @@ msgstr "Mensagem da infraestrutura do R"
 msgid "Question from the R backend"
 msgstr "Pergunta da infraestrutura do R"
 
-#: rkward/rbackend/rkrbackend.cpp:1600
+#: rkward/rbackend/rkrbackend.cpp:1602
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3914,7 +3914,7 @@ msgstr ""
 "obter ajuda sobre o assunto, leia <a href=\"http://rkward.kde.org/compiling"
 "\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1604
+#: rkward/rbackend/rkrbackend.cpp:1606
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3935,12 +3935,12 @@ msgstr ""
 "o assunto, leia <a href=\"http://rkward.kde.org/compiling\">http://rkward."
 "kde.org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1661
+#: rkward/rbackend/rkrbackend.cpp:1663
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1661
+#: rkward/rbackend/rkrbackend.cpp:1663
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3948,7 +3948,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1661
+#: rkward/rbackend/rkrbackend.cpp:1663
 #, kde-format
 msgid "Ok"
 msgstr ""
