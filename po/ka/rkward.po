@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-02 00:38+0000\n"
-"PO-Revision-Date: 2025-04-28 04:15+0200\n"
+"PO-Revision-Date: 2025-05-02 03:29+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3159,6 +3159,9 @@ msgid ""
 "this should not happen, unless you modified the parameters by hand. Please "
 "consider reporting this issue."
 msgstr ""
+"არასწორი სერიალიზაციის ფორმატი დამატების '%1' ჩაწოდებისას. ზოგადად, ეს არ "
+"უნდა ხდებოდეს, თუ პარამეტრები ხელით არ შეცვალეთ. იფიქრეთ, მოგვწეროთ ამ "
+"პრობლემის შესახებ."
 
 #: rkward/plugin/rkcomponentmap.cpp:478
 #, kde-format
@@ -3180,6 +3183,8 @@ msgid ""
 "Not all specified settings could be applied. Most likely this is because "
 "some R objects are no longer present in your current workspace."
 msgstr ""
+"ყველა მითითებული პარამეტრის გადატარება შეუძლებელია. როგორც ჩანს, ზოგიერთი R-"
+"ის ობიექტი თქვენს სამუშაო სივრცეში აღარ არსებობს."
 
 #: rkward/plugin/rkcomponentmap.cpp:512
 #, kde-format
@@ -3746,6 +3751,9 @@ msgid ""
 "'%1' while backend is '%2'.\n"
 "Please fix your installation."
 msgstr ""
+"ვერსია არ ემთხვევა უკანაბოლოს პროცესთან დაკავშირებისას. წინაბოლოს ვერსიაა "
+"'%1', უკანაბოლოსი კი '%2'.\n"
+"გაასწორეთ პროგრამის ფაილები."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
