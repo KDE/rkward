@@ -32,6 +32,7 @@ class RKComponentScriptingProxy : public QObject {
 	~RKComponentScriptingProxy();
 
 	void initialize(const QString &file, const QString &command);
+
   public:
 	// these are meant to be called from the script
 	Q_INVOKABLE void include(const QString &filename);

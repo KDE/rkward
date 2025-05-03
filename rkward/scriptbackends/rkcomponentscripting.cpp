@@ -8,8 +8,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkcomponentscripting.h"
 
 #include <KLocalizedString>
-#include <QDir>
 #include <KMessageBox>
+#include <QDir>
 
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
