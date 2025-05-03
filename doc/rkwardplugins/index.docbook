@@ -566,6 +566,12 @@ res &lt;- t.test (
 		<para>
 			as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using <function>getString ("x")</function>, and append it to the string to be <quote>echoed</quote>. This prints out the value of the &GUI;-element with <parameter>id=</parameter><replaceable>"x"</replaceable>: our first <command>&lt;checkbox&gt;</command>. Next, we append a ', ', and do the same to fetch the value of the element <replaceable>"y"</replaceable> - the second <command>&lt;checkbox&gt;</command>. For the hypothesis (the <command>&lt;radio&gt;</command> group), and the equal variances <command>&lt;checkbox&gt;</command>, the procedure is very similar.
 		</para>
+		<note>
+			<para>Instead concatenating strings using the <command>+</command> operator, you can also use a "template literal", like this (note the string is enclosed in backticks (`)):</para>
+			<programlisting>
+echo(`res &lt;- t.test (x=${ getString("x") }, y=${ getString("y") }, hypothesis="${ getString("hypothesis") }"`); // etc.
+			</programlisting>
+		</note>
 		<para>
 			Note that instead of concatenating the output snippets with <quote>+</quote>, you can also use several <function>echo()</function> statements. Everything is printed on a single line. To produce a line break in the generated code, insert a <replaceable>"\n"</replaceable> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
 		</para>

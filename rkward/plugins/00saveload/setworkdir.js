@@ -4,5 +4,5 @@ SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 function calculate() {
-	echo('setwd("' + getValue("dir") + '")\n');
+	echo(`setwd("${ getValue("dir") }")\n`);
 }

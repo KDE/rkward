@@ -7,5 +7,5 @@
 kdoctools_create_handbook (index.docbook INSTALL_DESTINATION ${KDE_INSTALL_DOCBUNDLEDIR}/en SUBDIR rkwardplugins)
 
 ADD_CUSTOM_TARGET (webdocs
-	COMMAND meinproc5 --stylesheet customization/kde-web.xsl ${CMAKE_CURRENT_SOURCE_DIR}/index.docbook
+	COMMAND meinproc6 --stylesheet customization/kde-web.xsl ${CMAKE_CURRENT_SOURCE_DIR}/index.docbook
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
