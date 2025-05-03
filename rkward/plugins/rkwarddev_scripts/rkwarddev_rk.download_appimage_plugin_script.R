@@ -196,13 +196,14 @@ pluginDialog <- rk.XML.dialog(
 aiu_logic <- rk.XML.logic(
   rk.comment(
     id("
-      doRCommand('Sys.getenv(\"APPIMAGE\")', \"commandFinished\");
-            commandFinished = function (result, id) {
-              if (result != \"\") {
-                gui.setValue(\"", aiu_file, ".selection\", result);
-                return;
-              }
+          new RCommand('Sys.getenv(\"APPIMAGE\")').then(result => {
+            if (result != \"\") {
+              gui.setValue(\"", aiu_file, ".selection\", result);
+              return;
             }
+          }).catch(err => {
+            // no error handling
+          });
     ", js=FALSE)
   ),
   aiu_gov_branch_stable <- rk.XML.convert(sources=list(string=aiu_branch), mode=c(equals="stable"), id.name="aiu_lgc_branch_stable"),

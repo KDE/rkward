@@ -41,7 +41,7 @@ function calculate(is_preview) {
 		echo(",\n    overwrite = FALSE");
 	}
 	if (aiuBranch == "stable") {
-		echo(",\n    url = \"https://download.kde.org/stable/rkward/0.8.0\"" +
+		echo(",\n    url = \"https://download.kde.org/stable/rkward/0.8.1\"" +
 		     ",\n    pattern = \"rkward.*x86_64\\\\.AppImage\"");
 	} else if (aiuBranch == "develop") {
 		echo(",\n    url = \"https://cdn.kde.org/ci-builds/education/rkward/master/linux\"" +
