@@ -58,8 +58,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2024-09-07</date>
-<releaseinfo>0.8.1</releaseinfo>
+<date>2025-05-03</date>
+<releaseinfo>0.8.2</releaseinfo>
 
 <abstract>
 <para>
@@ -919,16 +919,13 @@ R code.
 '
 	&lt;logic&gt;
 		&lt;script&gt;&lt;![CDATA[
-			// ECMAScript code in this block
-			// the top-level statement is only called once
-			gui.addChangeCommand ("mode.string", "modeChanged ()");
-
-			// this function is called whenever the "mode" was changed
-			modeChanged = function () {
-				var varmode = (gui.getString ("mode.string") == "variable");
-				gui.setValue ("y.enabled", varmode);
-				gui.setValue ("constant.enabled", !varmode);
-			}
+			// [...] any code at the top level is called only once
+			gui.addChangeCommand("mode.string", function() {
+				// while this anonymous function will be called, whenever "mode.string" changes
+				var varmode = (gui.getString("mode.string") == "variable");
+				gui.setValue("y.enabled", varmode);
+				gui.setValue("constant.enabled", !varmode);
+			});
 		]]&gt;&lt;/script&gt;
 	&lt;/logic&gt;
 
@@ -936,8 +933,11 @@ R code.
 	[...]
 	</programlisting>
 	<para>
-		The first line of code tells &rkward; to call the function <function>modeChanged()</function> whenever the value of the <parameter>id=</parameter><replaceable>"mode"</replaceable> radio box changes. Inside this function, we define a helper-variable <replaceable>"varmode"</replaceable> which is true when the mode is <replaceable>"variable"</replaceable>, false as it is <replaceable>"constant"</replaceable>. Then we use <function>gui.setValue()</function> to set the <quote>enabled</quote> properties of <replaceable>"y"</replaceable> and <replaceable>"constant"</replaceable>, in just the same way as we did using <command>&lt;connect&gt;</command> statements, before.
+		This registers an anonymous function to be called, whenever the value of the <parameter>id=</parameter><replaceable>"mode"</replaceable> radio box changes. Inside this function, we define a helper-variable <replaceable>"varmode"</replaceable> which is true when the mode is <replaceable>"variable"</replaceable>, false as it is <replaceable>"constant"</replaceable>. Then we use <function>gui.setValue()</function> to set the <quote>enabled</quote> properties of <replaceable>"y"</replaceable> and <replaceable>"constant"</replaceable>, in just the same way as we did using <command>&lt;connect&gt;</command> statements, before.
 	</para>
+	<note><para>
+		Alternatively, <command>gui.addChangeCommmand()</command> accepts a string to be evaluated on changes, e.g. <replaceable>"my_update_function()"</replaceable>. This can be useful, if you want to call the same function for changes in several different UI elements.
+	</para></note>
 	<para>
 		The scripted approach to &GUI; logic becomes particularly useful when you want to change the available option according to the type of object that the user has selected. See <link linkend="guilogic_functions">the reference</link> for available functions.
 	</para>
@@ -4477,7 +4477,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	<varlistentry><term>getList(id)</term><listitem><para>Returns the value of the given child property as an array of strings (if possible). Returns the value of this property, if ID is omitted.</para></listitem></varlistentry>
 	<varlistentry><term>setValue(id, value)</term><listitem><para>Set the value of the given child property to <emphasis>value</emphasis>.</para></listitem></varlistentry>
 	<varlistentry><term>getChild(id)</term><listitem><para>Return an instance of the child-property with the given <emphasis>id</emphasis>.</para></listitem></varlistentry>
-	<varlistentry><term>addChangeCommand(id, command)</term><listitem><para>Execute <emphasis>command</emphasis> whenever the child property given by <emphasis>id</emphasis> changes.</para></listitem></varlistentry>
+	<varlistentry><term>addChangeCommand(id, command)</term><listitem><para>Execute <emphasis>command</emphasis> whenever the child property given by <emphasis>id</emphasis> changes. Command can either be a string to be evaluated, or callable value (usually a function).</para></listitem></varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry><term>Class "RObject"</term>

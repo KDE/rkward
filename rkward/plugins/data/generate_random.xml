@@ -9,14 +9,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<logic>
 		<connect governor="current_object" client="saveto.parent"/>
 		<script><![CDATA[
-			// the top-level block is called only once
-			gui.addChangeCommand ("saveto.parent", "parentChanged ()");
-
-			// this function is called on every change of the saveto's parent
-			parentChanged = function () {
-				parent_object = makeRObject (gui.getValue ("saveto.parent"));
-				gui.setValue ("length.enabled", !parent_object.isDataFrame ());
-			}
+			gui.addChangeCommand("saveto.parent", function() {
+				// this function is called on every change of the saveto's parent
+				parent_object = makeRObject(gui.getValue("saveto.parent"));
+				gui.setValue("length.enabled", !parent_object.isDataFrame());
+			});
 			]]></script>
 	</logic>
 	<dialog label="Generate random data (normal distribution)">

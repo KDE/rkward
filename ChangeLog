@@ -1,4 +1,6 @@
 --- Version 0.8.2 - UNRELEASED
+- Added: Plugins: Enhance addChangeCommand() to accept callable objects, directly
+- Added: Plugins: Simplify running R commands inside GUI logic code
 - Fixed: Crash on script errors in plugins
 - Fixed: Printing of captured R messages/warnings in plugins was broken
 - Internal: Code cleanups

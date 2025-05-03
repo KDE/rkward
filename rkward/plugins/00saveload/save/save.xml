@@ -17,17 +17,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<connect governor="lgc_compress" client="complevel.enabled" />
 		<connect governor="lgc_cmprssxz" client="xzextreme.enabled" />
 		<script>
-			<![CDATA[ gui.addChangeCommand("compress.string", "compressionChanged()");
-					// try to set compression level dynamically
-					// run each time the compression method is changed
-					compressionChanged = function(){
-							var thisObject = gui.getValue("compress.string");
-							 if(thisObject == "bzip2" | thisObject == "xz"){
-								gui.setValue("complevel.int", 9);
-							} else {
-								gui.setValue("complevel.int", 6);
-							}
-						} ]]>
+			<![CDATA[
+				gui.addChangeCommand("compress.string", function() {
+					var thisObject = gui.getValue("compress.string");
+					if(thisObject == "bzip2" | thisObject == "xz"){
+						gui.setValue("complevel.int", 9);
+					} else {
+						gui.setValue("complevel.int", 6);
+					}
+				})
+			]]>
 		</script>
 	</logic>
 	<dialog label="Save R objects">

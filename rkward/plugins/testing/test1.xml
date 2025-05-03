@@ -11,15 +11,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<logic>
 		<script><![CDATA[
 			call_num = 0;
- 			last_command_id = -1;
 			gui.setValue ("text.text", i18n (noquote ("Select a dependent variable!")));
 
 			/*f = Kross.module('forms');
 			label = f.createWidget(scripty, 'QLabel', 'Label', {});
 			label.setText ('<b>This label was created by the script. Be sure to read the label above, too.</b>');*/
 
-			gui.addChangeCommand ("x.available", "updateText ()");
-			updateText = function () {
+			gui.addChangeCommand ("x.available", function() {
 				call_num += 1;
 				obj = makeRObject (gui.getValue ("x.available"));
 				text = "So, you think it's '" + obj.objectname + "'?\n";
@@ -27,12 +25,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 				text += "Updates of this text so far: " + call_num;
 				gui.setValue ("text.text", text);
 
-				if (obj.objectname != "") last_command_id = doRCommand ("levels (" + obj.objectname + ")", "levelsCommandFinished");
-			}
-			levelsCommandFinished = function (value, id) {
-				otext = gui.getValue ("text.text");
-				gui.setValue ("text.text", otext + "\n" + last_command_id + "-" + id + "\nadas" + value.join ("-"));
-			}
+				if (obj.objectname != "") last_command_id = new RCommand("levels (" + obj.objectname + ")", "levelscom").then(result => {
+					otext = gui.getValue ("text.text");
+					gui.setValue ("text.text", otext + "\n" + last_command_id + "-" + id + "\nadas" + value.join ("-"));
+				}).catch(err => {
+					// no error handling
+				});
+			});
 			]]></script>
 	</logic>
 

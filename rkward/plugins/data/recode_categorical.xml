@@ -18,12 +18,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<connect governor="other_values_custom" client="other_custom.enabled"/>
 
 		<script><![CDATA[
-			gui.addChangeCommand ("datamode", "update ()");
-
-			update = function () {
+			gui.addChangeCommand("datamode", function() {
 				var mode = gui.getValue ("datamode.string");
 				gui.setValue ("set.contents.quotation_note.visible", mode == "factor" || mode == "character");
-			}
+			});
 		]]></script>
 	</logic>
 	<dialog label="Recode categorical data"><tabbook>

@@ -92,24 +92,33 @@ void RKComponentScriptingProxy::evaluate(const QString &code, const QString &fil
 	handleScriptError(result, filename);
 }
 
-void RKComponentScriptingProxy::addChangeCommand(const QString &changed_id, const QString &command) {
+void RKComponentScriptingProxy::addChangeCommand(const QString &changed_id, const QJSValue &command) {
 	RK_TRACE(PHP);
 
 	QString remainder;
 	RKComponentBase *base = component->lookupComponent(changed_id, &remainder);
-
-	if (remainder.isEmpty()) {
-		component_commands.insert(base, command);
-		if (base->isComponent()) {
-			connect(static_cast<RKComponent *>(base), &RKComponent::componentChanged, this, &RKComponentScriptingProxy::componentChanged);
-		} else {
-			connect(static_cast<RKComponentPropertyBase *>(base), &RKComponentPropertyBase::valueChanged, this, &RKComponentScriptingProxy::propertyChanged);
-		}
-	} else {
+	if (!remainder.isEmpty()) {
 		evaluate(QStringLiteral("error ('No such property %1 (failed portion was %2)');\n").arg(changed_id, remainder));
+		return;
+	}
+
+	auto callback = [this, command](RKComponentBase *) {
+		if (command.isCallable()) {
+			auto res = command.call();
+			handleScriptError(res);
+		} else {
+			evaluate(command.toString());
+		}
+	};
+
+	if (base->isComponent()) {
+		connect(static_cast<RKComponent *>(base), &RKComponent::componentChanged, this, callback);
+	} else {
+		connect(static_cast<RKComponentPropertyBase *>(base), &RKComponentPropertyBase::valueChanged, this, callback);
 	}
 }
 
+// TODO: retire this function (how do we depracate js-level calls?
 QVariant RKComponentScriptingProxy::doRCommand(const QString &command, const QString &callback) {
 	RK_TRACE(PHP);
 
@@ -204,23 +213,6 @@ void RKComponentScriptingProxy::scriptRCommandFinished(RCommand *command) {
 	QJSValue callback_obj = engine.globalObject().property(callback);
 	auto res = callback_obj.call(args);
 	handleScriptError(res);
-}
-
-void RKComponentScriptingProxy::componentChanged(RKComponent *changed) {
-	RK_TRACE(PHP);
-	handleChange(changed);
-}
-
-void RKComponentScriptingProxy::propertyChanged(RKComponentPropertyBase *changed) {
-	RK_TRACE(PHP);
-	handleChange(changed);
-}
-
-void RKComponentScriptingProxy::handleChange(RKComponentBase *changed) {
-	RK_TRACE(PHP);
-
-	QString command = component_commands.value(changed);
-	evaluate(command);
 }
 
 QVariant RKComponentScriptingProxy::getValue(const QString &id) const {

@@ -32,14 +32,10 @@ class RKComponentScriptingProxy : public QObject {
 	~RKComponentScriptingProxy();
 
 	void initialize(const QString &file, const QString &command);
-  public Q_SLOTS:
-	void componentChanged(RKComponent *changed);
-	void propertyChanged(RKComponentPropertyBase *changed);
-
   public:
 	// these are meant to be called from the script
 	Q_INVOKABLE void include(const QString &filename);
-	Q_INVOKABLE void addChangeCommand(const QString &changed_id, const QString &command);
+	Q_INVOKABLE void addChangeCommand(const QString &changed_id, const QJSValue &command);
 	/** @returns id of the command issued. */
 	Q_INVOKABLE QVariant doRCommand(const QString &command, const QString &callback);
 	Q_INVOKABLE void doRCommand2(const QString &command, const QString &id, const QJSValue resolve, const QJSValue reject);
@@ -72,7 +68,6 @@ class RKComponentScriptingProxy : public QObject {
 	void evaluate(const QString &code, const QString &filename = QString());
 
 	void handleChange(RKComponentBase *changed);
-	QHash<RKComponentBase *, QString> component_commands;
 
 	void handleScriptError(const QJSValue &val, const QString &current_file = QString());
 };

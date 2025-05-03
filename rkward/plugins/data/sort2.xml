@@ -17,11 +17,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<connect governor="saveto_other_object" client="saveto.enabled"/>
 		<connect governor="saveto_other_object" client="saveto.required"/>
 		<script><![CDATA[
-			// the top-level block is called only once
-			gui.addChangeCommand ("object.available", "objectChanged ()");
-
-			// this function is called on every change of the saveto's parent
-			objectChanged = function () {
+			gui.addChangeCommand ("object.available", function () {
+				// this function is called on every change of the saveto's parent
 				object = makeRObject (gui.getValue ("object.available"));
 				gui.setValue ("sortby_frame.enabled", object.isDataFrame ());
 				gui.setValue ("sortby.required", object.isDataFrame ());
@@ -32,7 +29,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 					// Not very elegant, but does the trick
 					gui.setValue ("notice.text", i18n ("Sorting this type of object is not supported in this plugin"));
 				}
-			}
+			});
 			]]></script>
 	</logic>
 	<dialog label="Sort data (Variant 2)">

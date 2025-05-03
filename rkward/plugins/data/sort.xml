@@ -22,11 +22,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<convert id="custom_conversion" mode="equals" sources="conversion.string" standard="custom"/>
 		<connect governor="custom_conversion" client="conversion_custom.enabled"/>
 		<script><![CDATA[
-			// the top-level block is called only once
-			gui.addChangeCommand ("object.available", "objectChanged ()");
-
-			// this function is called on every change of the saveto's parent
-			objectChanged = function () {
+			gui.addChangeCommand ("object.available", function () {
+				// this function is called on every change of the saveto's parent
 				object = makeRObject (gui.getValue ("object.available"));
 				gui.setValue ("sortby.enabled", object.isDataFrame ());
 				if (object.isDataFrame ()) gui.setValue ("selector.root", object.getName ());
@@ -38,7 +35,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 					// Not very elegant, but does the trick
 					gui.setValue ("notice.text", i18n ("Sorting this type of object is not supported in this plugin"));
 				}
-			}
+			});
 			]]></script>
 	</logic>
 
