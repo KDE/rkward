@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-02 00:38+0000\n"
-"PO-Revision-Date: 2025-04-23 09:06+0200\n"
+"PO-Revision-Date: 2025-04-29 08:36+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -4740,10 +4740,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "Apri come file di testo e forza l'evidenziazione di R"
 
 #: rkward/rkward.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Apri spazio di lavoro recente"
+msgstr "Apri come spazio di lavoro di R"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6866,8 +6865,7 @@ msgid "[Active]"
 msgstr "[Attivo]"
 
 #: rkward/windows/rkhtmlwindow.cpp:751
-#, fuzzy, kde-format
-#| msgid "Output %1"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Output %1"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-02 00:38+0000\n"
-"PO-Revision-Date: 2025-01-26 21:03+0100\n"
-"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
+"PO-Revision-Date: 2025-05-03 07:08+0200\n"
+"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2042,10 +2042,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Interface para a linguaxe de estatísticas R"
 
 #: rkward/main.cpp:171
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "© 2002-2024"
+msgstr "© 2002-2025"
 
 #: rkward/main.cpp:172
 #, kde-format
@@ -4717,10 +4716,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "Abrir como ficheiro de texto e forzar o realce de sintaxe de R"
 
 #: rkward/rkward.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Abrir un espazo de traballo recente"
+msgstr "Abrir como espazo de traballo de R"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6843,8 +6841,7 @@ msgid "[Active]"
 msgstr "(activo)"
 
 #: rkward/windows/rkhtmlwindow.cpp:751
-#, fuzzy, kde-format
-#| msgid "Output %1"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Saída %1"
