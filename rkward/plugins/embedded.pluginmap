@@ -36,8 +36,5 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<!-- This plugin does not really belong, here, but nowhere else, either, since it's only for the purpose of testing some things in the
 				automated tests. It definitely should not be shown in the menu, of course. -->
 		<component type="standard" id="testing_run_code" file="testing/run_code.xml" label="Run Code"/>
-
-		<!-- This plugin does not really belong, here, either, but has no place in the menu, too. -->
-		<component type="standard" id="install_from_git" file="internal/Installfromgit.xml" label="Install from git"/>
 	</components>
 </document>
