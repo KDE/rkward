@@ -233,7 +233,9 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 
 					Problems to deal with:
 					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
-					- One difficulty lies in finding out, just when a command has finished (successfully or with an error). RKToplevelStatementFinishCallback(), and doError() handle the respective cases.
+					- One difficulty lies in finding out, just when a command has finished (successfully or with an error).
+					See below (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning)
+					for this, and and doError() for finding out, if an error occured.
 					NOTE; in R 2.12.0 and above, RFn::Rf_countContexts() might help to find out when we are back to square 1!
 					*/
 					RKRBackend::repl_status.user_command_transmitted_up_to = 0;
