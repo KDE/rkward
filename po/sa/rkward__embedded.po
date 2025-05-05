@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-01 00:38+0000\n"
+"POT-Creation-Date: 2025-05-05 00:38+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -574,186 +574,6 @@ msgstr "बहु इनपुट"
 #, kde-format
 msgid "Run Code"
 msgstr "संहिता चालयन्तु"
-
-#. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:41
-#, kde-format
-msgid "Install from git"
-msgstr "git इत्यस्मात् संस्थापयन्तु"
-
-#. i18n: ectx: (Loaded from Install from git/svn)
-#: rkward/plugins/distributions/../internal/Installfromgit.js:78
-#, kde-format
-msgid "Install from git results"
-msgstr "git परिणामात् संस्थापयन्तु"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Package source")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:18
-#, kde-format
-msgid "Set the location where the package resides that you want to install."
-msgstr "यत्र संकुलं निवसति तत् स्थानं सेट् कुर्वन्तु यत् भवन्तः संस्थापयितुम् इच्छन्ति ।"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:22
-#, kde-format
-msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
-msgstr "उपयोक्तृनाम निर्दिशन्तु (केवलं GitHub, GitLab तथा Bitbucket) ।"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Repository")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:25
-#, kde-format
-msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
-msgstr "भण्डारस्य नाम (केवलं GitHub, GitLab तथा Bitbucket) ददातु ।"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "URL to repository")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:28
-#, kde-format
-msgid "Give the full URL to the repository (generic git and svn only)."
-msgstr "भण्डारं प्रति पूर्णं URL ददातु (केवलं सामान्यं git तथा svn) ।"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Commit/tag/branch")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:31
-#, kde-format
-msgid ""
-"If you want a certain commit, tag or branch for installation, define that "
-"here."
-msgstr ""
-"यदि भवान् संस्थापनार्थं निश्चितं commit, tag अथवा branch इच्छति तर्हि तत् अत्र परिभाषयतु "
-"।"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:34
-#, kde-format
-msgid ""
-"If you want to install from a subdirectory of the repository, define that "
-"here."
-msgstr "यदि भवान् भण्डारस्य उपनिर्देशिकातः संस्थापयितुम् इच्छति तर्हि तत् अत्र परिभाषयतु ।"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:38
-#, kde-format
-msgid ""
-"To install from a private repository, set your personal access token (PAT, "
-"GitHub and GitLab only)."
-msgstr ""
-"निजभण्डारतः संस्थापनार्थं स्वस्य व्यक्तिगतप्रवेशटोकनं (केवलं PAT, GitHub तथा GitLab) सेट् "
-"कुर्वन्तु ।"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:41
-#, kde-format
-msgid ""
-"To install from a private repository, set the user name (Bitbucket only)."
-msgstr "निजभण्डारतः संस्थापयितुं उपयोक्तृनाम (केवलं Bitbucket) सेट् कुर्वन्तु ।"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:44
-#, kde-format
-msgid ""
-"To install from a private repository, set the password (Bitbucket only)."
-msgstr "निजभण्डारतः संस्थापनार्थं गुप्तशब्दं (केवलं Bitbucket) सेट् कुर्वन्तु ।"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:30
-#, kde-format
-msgid "Install from git/svn"
-msgstr "git/svn इत्यस्मात् संस्थापयन्तु"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:32
-#, kde-format
-msgid "Package source"
-msgstr "संकुल स्रोतः"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:33
-#, kde-format
-msgid "git (generic)"
-msgstr "गिट् (सामान्य)"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:34
-#, kde-format
-msgid "GitHub"
-msgstr "गित्हब"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:35
-#, kde-format
-msgid "GitLab"
-msgstr "गिटलैब"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:36
-#, kde-format
-msgid "Bitbucket"
-msgstr "बिटबकेट"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:37
-#, kde-format
-msgid "subversion (generic)"
-msgstr "विध्वंस (सामान्य)"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:39
-#, kde-format
-msgid "Package repository"
-msgstr "संकुल भण्डार"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:41
-#, kde-format
-msgid "Git user name"
-msgstr "उपयोक्तृनाम गिट्"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:42
-#, kde-format
-msgid "Repository"
-msgstr "भण्डारः"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:44
-#, kde-format
-msgid "URL to repository"
-msgstr "भण्डारं प्रति URL"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:46
-#, kde-format
-msgid "Commit/tag/branch"
-msgstr "प्रतिबद्ध/टैग/शाखा"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:47
-#, kde-format
-msgid "Subdirectory"
-msgstr "उपनिर्देशिका"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:48
-#, kde-format
-msgid "Private repository"
-msgstr "निजी भण्डार"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:49
-#, kde-format
-msgid "Personal access token (PAT)"
-msgstr "व्यक्तिगत अभिगम टोकन (PAT) 1.1."
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:51
-#, kde-format
-msgid "User"
-msgstr "उपयोक्ता"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:52
-#, kde-format
-msgid "Password"
-msgstr "समाभाष्"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/distributions/../menu.pluginmap:10
@@ -3185,3 +3005,100 @@ msgstr "रेखाप्रकारः"
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
 msgstr "नोटः- Trellis प्रकारस्य उपकरणानां कृते न प्रयोज्यम्!"
+
+#~ msgid "Install from git"
+#~ msgstr "git इत्यस्मात् संस्थापयन्तु"
+
+#~ msgid "Install from git results"
+#~ msgstr "git परिणामात् संस्थापयन्तु"
+
+#~ msgid "Set the location where the package resides that you want to install."
+#~ msgstr "यत्र संकुलं निवसति तत् स्थानं सेट् कुर्वन्तु यत् भवन्तः संस्थापयितुम् इच्छन्ति ।"
+
+#~ msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
+#~ msgstr "उपयोक्तृनाम निर्दिशन्तु (केवलं GitHub, GitLab तथा Bitbucket) ।"
+
+#~ msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
+#~ msgstr "भण्डारस्य नाम (केवलं GitHub, GitLab तथा Bitbucket) ददातु ।"
+
+#~ msgid "Give the full URL to the repository (generic git and svn only)."
+#~ msgstr "भण्डारं प्रति पूर्णं URL ददातु (केवलं सामान्यं git तथा svn) ।"
+
+#~ msgid ""
+#~ "If you want a certain commit, tag or branch for installation, define that "
+#~ "here."
+#~ msgstr ""
+#~ "यदि भवान् संस्थापनार्थं निश्चितं commit, tag अथवा branch इच्छति तर्हि तत् अत्र "
+#~ "परिभाषयतु ।"
+
+#~ msgid ""
+#~ "If you want to install from a subdirectory of the repository, define that "
+#~ "here."
+#~ msgstr ""
+#~ "यदि भवान् भण्डारस्य उपनिर्देशिकातः संस्थापयितुम् इच्छति तर्हि तत् अत्र परिभाषयतु ।"
+
+#~ msgid ""
+#~ "To install from a private repository, set your personal access token "
+#~ "(PAT, GitHub and GitLab only)."
+#~ msgstr ""
+#~ "निजभण्डारतः संस्थापनार्थं स्वस्य व्यक्तिगतप्रवेशटोकनं (केवलं PAT, GitHub तथा GitLab) सेट् "
+#~ "कुर्वन्तु ।"
+
+#~ msgid ""
+#~ "To install from a private repository, set the user name (Bitbucket only)."
+#~ msgstr "निजभण्डारतः संस्थापयितुं उपयोक्तृनाम (केवलं Bitbucket) सेट् कुर्वन्तु ।"
+
+#~ msgid ""
+#~ "To install from a private repository, set the password (Bitbucket only)."
+#~ msgstr "निजभण्डारतः संस्थापनार्थं गुप्तशब्दं (केवलं Bitbucket) सेट् कुर्वन्तु ।"
+
+#~ msgid "Install from git/svn"
+#~ msgstr "git/svn इत्यस्मात् संस्थापयन्तु"
+
+#~ msgid "Package source"
+#~ msgstr "संकुल स्रोतः"
+
+#~ msgid "git (generic)"
+#~ msgstr "गिट् (सामान्य)"
+
+#~ msgid "GitHub"
+#~ msgstr "गित्हब"
+
+#~ msgid "GitLab"
+#~ msgstr "गिटलैब"
+
+#~ msgid "Bitbucket"
+#~ msgstr "बिटबकेट"
+
+#~ msgid "subversion (generic)"
+#~ msgstr "विध्वंस (सामान्य)"
+
+#~ msgid "Package repository"
+#~ msgstr "संकुल भण्डार"
+
+#~ msgid "Git user name"
+#~ msgstr "उपयोक्तृनाम गिट्"
+
+#~ msgid "Repository"
+#~ msgstr "भण्डारः"
+
+#~ msgid "URL to repository"
+#~ msgstr "भण्डारं प्रति URL"
+
+#~ msgid "Commit/tag/branch"
+#~ msgstr "प्रतिबद्ध/टैग/शाखा"
+
+#~ msgid "Subdirectory"
+#~ msgstr "उपनिर्देशिका"
+
+#~ msgid "Private repository"
+#~ msgstr "निजी भण्डार"
+
+#~ msgid "Personal access token (PAT)"
+#~ msgstr "व्यक्तिगत अभिगम टोकन (PAT) 1.1."
+
+#~ msgid "User"
+#~ msgstr "उपयोक्ता"
+
+#~ msgid "Password"
+#~ msgstr "समाभाष्"

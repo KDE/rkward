@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__embedded\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-01 00:38+0000\n"
+"POT-Creation-Date: 2025-05-05 00:38+0000\n"
 "PO-Revision-Date: 2022-06-04 13:55+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -601,190 +601,6 @@ msgstr "Multi-Entradas"
 #, kde-format
 msgid "Run Code"
 msgstr "Executar o Código"
-
-#. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:41
-#, kde-format
-msgid "Install from git"
-msgstr "Instalar a partir do Git"
-
-#. i18n: ectx: (Loaded from Install from git/svn)
-#: rkward/plugins/distributions/../internal/Installfromgit.js:78
-#, kde-format
-msgid "Install from git results"
-msgstr "Instalar a partir dos resultados do Git Git"
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Package source")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:18
-#, kde-format
-msgid "Set the location where the package resides that you want to install."
-msgstr "Define a localização do pacote que deseja instalar."
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:22
-#, kde-format
-msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
-msgstr "Indique o nome do utilizador (apenas no GitHub, GitLab e Bitbucket)."
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Repository")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:25
-#, kde-format
-msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
-msgstr "Indique o nome do repositório (apenas no GitHub, GitLab e Bitbucket)."
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "URL to repository")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:28
-#, kde-format
-msgid "Give the full URL to the repository (generic git and svn only)."
-msgstr "Indique o URL completo do repositório (apenas no Git e SVN genéricos)."
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Commit/tag/branch")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:31
-#, kde-format
-msgid ""
-"If you want a certain commit, tag or branch for installation, define that "
-"here."
-msgstr ""
-"Se deseja uma versão, marca ou ramificação específicas, defina-as aqui."
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:34
-#, kde-format
-msgid ""
-"If you want to install from a subdirectory of the repository, define that "
-"here."
-msgstr ""
-"Se deseja instalar a partir de uma sub-pasta do repositório, indique-a aqui."
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:38
-#, kde-format
-msgid ""
-"To install from a private repository, set your personal access token (PAT, "
-"GitHub and GitLab only)."
-msgstr ""
-"Para instalar a partir de um repositório privado, defina o seu código de "
-"acesso pessoal (apenas no PAT, GitHub e GitLab)."
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:41
-#, kde-format
-msgid ""
-"To install from a private repository, set the user name (Bitbucket only)."
-msgstr ""
-"Para instalar a partir de um repositório privado, indique o nome do "
-"utilizador (apenas no BitBucket)."
-
-#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:44
-#, kde-format
-msgid ""
-"To install from a private repository, set the password (Bitbucket only)."
-msgstr ""
-"Para instalar a partir de um repositório privado, indique a senha (apenas no "
-"BitBucket)."
-
-#. i18n: ectx: (Install from git/svn) <dialog label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:30
-#, kde-format
-msgid "Install from git/svn"
-msgstr "Instalar a partir do Git/SVN"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:32
-#, kde-format
-msgid "Package source"
-msgstr "Código do pacote"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:33
-#, kde-format
-msgid "git (generic)"
-msgstr "Git (genérico)"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:34
-#, kde-format
-msgid "GitHub"
-msgstr "GitHub"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:35
-#, kde-format
-msgid "GitLab"
-msgstr "GitLab"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:36
-#, kde-format
-msgid "Bitbucket"
-msgstr "Bitbucket"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:37
-#, kde-format
-msgid "subversion (generic)"
-msgstr "Subversion (genérico)"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:39
-#, kde-format
-msgid "Package repository"
-msgstr "Repositório do pacote"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:41
-#, kde-format
-msgid "Git user name"
-msgstr "Nome do utilizador do Git"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:42
-#, kde-format
-msgid "Repository"
-msgstr "Repositório"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:44
-#, kde-format
-msgid "URL to repository"
-msgstr "URL do repositório"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:46
-#, kde-format
-msgid "Commit/tag/branch"
-msgstr "Versão/marca/ramificação"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:47
-#, kde-format
-msgid "Subdirectory"
-msgstr "Sub-pasta"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:48
-#, kde-format
-msgid "Private repository"
-msgstr "Repositório privado"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:49
-#, kde-format
-msgid "Personal access token (PAT)"
-msgstr "Código de acesso pessoal (PAT)"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:51
-#, kde-format
-msgid "User"
-msgstr "Utilizador"
-
-#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:52
-#, kde-format
-msgid "Password"
-msgstr "Senha"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/distributions/../menu.pluginmap:10
@@ -3274,3 +3090,107 @@ msgstr "Tipo de linha"
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
 msgstr "Nota: Não se aplica nos dispositivos do tipo Trellis!"
+
+#~ msgid "Install from git"
+#~ msgstr "Instalar a partir do Git"
+
+#~ msgid "Install from git results"
+#~ msgstr "Instalar a partir dos resultados do Git Git"
+
+#~ msgid "Set the location where the package resides that you want to install."
+#~ msgstr "Define a localização do pacote que deseja instalar."
+
+#~ msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
+#~ msgstr ""
+#~ "Indique o nome do utilizador (apenas no GitHub, GitLab e Bitbucket)."
+
+#~ msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
+#~ msgstr ""
+#~ "Indique o nome do repositório (apenas no GitHub, GitLab e Bitbucket)."
+
+#~ msgid "Give the full URL to the repository (generic git and svn only)."
+#~ msgstr ""
+#~ "Indique o URL completo do repositório (apenas no Git e SVN genéricos)."
+
+#~ msgid ""
+#~ "If you want a certain commit, tag or branch for installation, define that "
+#~ "here."
+#~ msgstr ""
+#~ "Se deseja uma versão, marca ou ramificação específicas, defina-as aqui."
+
+#~ msgid ""
+#~ "If you want to install from a subdirectory of the repository, define that "
+#~ "here."
+#~ msgstr ""
+#~ "Se deseja instalar a partir de uma sub-pasta do repositório, indique-a "
+#~ "aqui."
+
+#~ msgid ""
+#~ "To install from a private repository, set your personal access token "
+#~ "(PAT, GitHub and GitLab only)."
+#~ msgstr ""
+#~ "Para instalar a partir de um repositório privado, defina o seu código de "
+#~ "acesso pessoal (apenas no PAT, GitHub e GitLab)."
+
+#~ msgid ""
+#~ "To install from a private repository, set the user name (Bitbucket only)."
+#~ msgstr ""
+#~ "Para instalar a partir de um repositório privado, indique o nome do "
+#~ "utilizador (apenas no BitBucket)."
+
+#~ msgid ""
+#~ "To install from a private repository, set the password (Bitbucket only)."
+#~ msgstr ""
+#~ "Para instalar a partir de um repositório privado, indique a senha (apenas "
+#~ "no BitBucket)."
+
+#~ msgid "Install from git/svn"
+#~ msgstr "Instalar a partir do Git/SVN"
+
+#~ msgid "Package source"
+#~ msgstr "Código do pacote"
+
+#~ msgid "git (generic)"
+#~ msgstr "Git (genérico)"
+
+#~ msgid "GitHub"
+#~ msgstr "GitHub"
+
+#~ msgid "GitLab"
+#~ msgstr "GitLab"
+
+#~ msgid "Bitbucket"
+#~ msgstr "Bitbucket"
+
+#~ msgid "subversion (generic)"
+#~ msgstr "Subversion (genérico)"
+
+#~ msgid "Package repository"
+#~ msgstr "Repositório do pacote"
+
+#~ msgid "Git user name"
+#~ msgstr "Nome do utilizador do Git"
+
+#~ msgid "Repository"
+#~ msgstr "Repositório"
+
+#~ msgid "URL to repository"
+#~ msgstr "URL do repositório"
+
+#~ msgid "Commit/tag/branch"
+#~ msgstr "Versão/marca/ramificação"
+
+#~ msgid "Subdirectory"
+#~ msgstr "Sub-pasta"
+
+#~ msgid "Private repository"
+#~ msgstr "Repositório privado"
+
+#~ msgid "Personal access token (PAT)"
+#~ msgstr "Código de acesso pessoal (PAT)"
+
+#~ msgid "User"
+#~ msgstr "Utilizador"
+
+#~ msgid "Password"
+#~ msgstr "Senha"
