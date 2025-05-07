@@ -735,6 +735,33 @@ void RBusy(int busy) {
 	}
 }
 
+void RResetConsole() {
+	RK_TRACE(RBACKEND);
+
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {
+		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
+	}
+	if (RKRBackend::repl_status.interrupted) {
+		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
+		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
+#ifdef Q_OS_WIN
+		if (!ROb(UserBreak)) {
+#else
+		if (!ROb(R_interrupts_pending)) {
+#endif
+			RKRBackend::repl_status.interrupted = false;
+			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) { // was interrupted only to step out of the repl iteration
+				QMutexLocker lock(&(RKRBackend::this_pointer->all_current_commands_mutex));
+				for (RCommandProxy *command : std::as_const(RKRBackend::this_pointer->all_current_commands))
+					command->status |= RCommand::Canceled;
+				RK_DEBUG(RBACKEND, DL_DEBUG, "interrupted");
+			}
+		}
+	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "error in user command");
+	}
+}
+
 // ############## R Standard callback overrides END ####################
 
 SEXP doUpdateLocale();
@@ -758,30 +785,27 @@ void RKRBackend::setupCallbacks() {
 	RK_TRACE(RBACKEND);
 
 	RFn::R_setStartTime();
-	RFn::R_DefParams(&RK_R_Params);
+	RFn::R_DefParamsEx(&RK_R_Params, /* RSTART_VERSION */ 1);
 
 	// IMPORTANT: see also the #ifndef QS_WS_WIN-portion!
 	RK_R_Params.rhome = RFn::get_R_HOME();
 	RK_R_Params.home = RFn::getRUser();
 	RK_R_Params.CharacterMode = RGui;
 	RK_R_Params.ShowMessage = RShowMessage;
-#	if R_VERSION < R_Version(4, 2, 0)
-	RK_R_Params.ReadConsole = RReadConsoleWin;
-#	else
 	RK_R_Params.ReadConsole = RReadConsole;
-#	endif
 	RK_R_Params.WriteConsoleEx = RWriteConsoleEx;
-	RK_R_Params.WriteConsole = 0;
+	RK_R_Params.WriteConsole = nullptr;
 	RK_R_Params.CallBack = RKREventLoop::winRKEventHandlerWrapper;
 	RK_R_Params.YesNoCancel = RAskYesNoCancel;
 	RK_R_Params.Busy = RBusy;
+	RK_R_Params.ResetConsole = RResetConsole;
 
 	// TODO: callback mechanism(s) for ChosseFile, ShowFiles, EditFiles
 	// TODO: also for RSuicide (Less important, obviously, since this should not be triggered, in normal operation).
 	// NOTE: For RCleanUp see RReadConsole RCleanup?
 
-	RK_R_Params.R_Quiet = (Rboolean)0;
-	RK_R_Params.R_Interactive = (Rboolean)1;
+	RK_R_Params.R_Quiet = 0;
+	RK_R_Params.R_Interactive = 1;
 }
 
 void RKRBackend::connectCallbacks() {
@@ -810,7 +834,7 @@ void RKRBackend::connectCallbacks() {
 	ROb(ptr_R_ReadConsole) = RReadConsole;
 	ROb(ptr_R_WriteConsoleEx) = RWriteConsoleEx;
 	ROb(ptr_R_WriteConsole) = nullptr;
-	ROb(ptr_R_ResetConsole) = RDoNothing;
+	ROb(ptr_R_ResetConsole) = RResetConsole;
 	ROb(ptr_R_FlushConsole) = RDoNothing;
 	ROb(ptr_R_ClearerrConsole) = RDoNothing;
 	ROb(ptr_R_Busy) = RBusy;
@@ -831,35 +855,6 @@ void RKRBackend::connectCallbacks() {
 
 RKRBackend::~RKRBackend() {
 	RK_TRACE(RBACKEND);
-}
-
-void doError(const QString &callstring) {
-	RK_TRACE(RBACKEND);
-
-	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {
-		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
-		RK_DEBUG(RBACKEND, DL_DEBUG, "user command failed");
-	}
-	if (RKRBackend::repl_status.interrupted) {
-		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
-		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
-#ifdef Q_OS_WIN
-		if (!ROb(UserBreak)) {
-#else
-		if (!ROb(R_interrupts_pending)) {
-#endif
-			RKRBackend::repl_status.interrupted = false;
-			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) { // was interrupted only to step out of the repl iteration
-				QMutexLocker lock(&(RKRBackend::this_pointer->all_current_commands_mutex));
-				for (RCommandProxy *command : std::as_const(RKRBackend::this_pointer->all_current_commands))
-					command->status |= RCommand::Canceled;
-				RK_DEBUG(RBACKEND, DL_DEBUG, "interrupted");
-			}
-		}
-	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
-		RKRBackend::this_pointer->handleOutput(callstring, callstring.length(), ROutput::Error);
-		RK_DEBUG(RBACKEND, DL_DEBUG, "error '%s'", qPrintable(callstring));
-	}
 }
 
 // TODO: Pass nested/sync as a single enum value, in the first place
