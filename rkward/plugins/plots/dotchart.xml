@@ -22,9 +22,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<connect client="tabulate_options.varsource.selected" governor="vars.selected" />
 
 		<script><![CDATA[
-			gui.addChangeCommand ("tabulate.checked", "updateFunLabel ()");
-			gui.addChangeCommand ("tabulate_options.fun_label", "updateFunLabel ()");
-			updateFunLabel = function () {
+			updateFunLabel = gui.addChangeCommand(["tabulate.checked", "tabulate_options.fun_label"], function() {
 				if (gui.getValue ("tabulate.checked")) {
 					gui.setValue ("plotoptions.default_xlab", gui.getValue ("tabulate_options.fun_label"));
 					gui.setValue ("plotoptions.default_ylab", "title");
@@ -32,7 +30,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 					gui.setValue ("plotoptions.default_xlab", "");
 					gui.setValue ("plotoptions.default_ylab", "");
 				}
-			}
+			});
 			updateFunLabel ();
 		]]></script>
 	</logic>

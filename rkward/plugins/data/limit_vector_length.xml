@@ -16,12 +16,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<connect client="custom_stat.enabled" governor="is_custom_stat"/>
 
 		<script><![CDATA[
-				gui.addChangeCommand ("sorting.string", "updateDescription ()");
-				gui.addChangeCommand ("cutoff.int", "updateDescription ()");
-				updateDescription = function () {
-					gui.setValue ("parameters", '"Limit"="' + gui.getValue ("cutoff.int") + ' ' + gui.getValue ("sorting.string") + ' values"');
-				}
-				updateDescription ();
+				updateDescription = function() {
+					gui.setValue("parameters", `"Limit"="${gui.getValue("cutoff.int")} ${gui.getValue("sorting.string")} values"`);
+				};
+				gui.addChangeCommand(["sorting.string", "cutoff.int"], updateDescription);
+				updateDescription();
 		]]></script>
 	</logic>
 	<dialog label="Limit Vector Length">

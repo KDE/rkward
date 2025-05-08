@@ -21,10 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<script><![CDATA[
 				gui.setValue ("limitnote.visible", false);
 
-				gui.addChangeCommand ("variable", "update ()");
-				gui.addChangeCommand ("limit", "update ()");
-				gui.addChangeCommand ("custom_expression", "update ()");
-				update = function () {
+				gui.addChangeCommand(["variable", "limit", "custom_expression"], function() {
 					gui.setValue ("selector.available", "");
 					gui.setValue ("selector.enabled", 0);
 
@@ -56,7 +53,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 						.catch(err => {
 							gui.setListValue("selector.available", Array("ERROR:", err));
 						});
-				}
+				});
 		]]></script>
 	</logic>
 	<dialog label="Level selector">

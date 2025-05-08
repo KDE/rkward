@@ -16,15 +16,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<connect client="x.enabled" governor="tabulate.checked.not"/>
 		<connect client="tabulate_options.varsource.selected" governor="vars.selected" />
 		<script><![CDATA[
-			gui.addChangeCommand ("tabulate.checked", "updateFunLabel ()");
-			gui.addChangeCommand ("tabulate_options.fun_label", "updateFunLabel ()");
-			updateFunLabel = function () {
+			updateFunLabel = gui.addChangeCommand(["tabulate.checked", "tabulate_options.fun_label"], function() {
 				if (gui.getValue ("tabulate.checked")) {
 					gui.setValue ("plotoptions.default_ylab", gui.getValue ("tabulate_options.fun_label"));
 				} else {
 					gui.setValue ("plotoptions.default_ylab", quote ("Frequency"));
 				}
-			}
+			});
 			updateFunLabel ();
 		]]></script>
 	</logic>

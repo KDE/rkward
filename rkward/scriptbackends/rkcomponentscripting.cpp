@@ -92,15 +92,8 @@ void RKComponentScriptingProxy::evaluate(const QString &code, const QString &fil
 	handleScriptError(result, filename);
 }
 
-void RKComponentScriptingProxy::addChangeCommand(const QString &changed_id, const QJSValue &command) {
+void RKComponentScriptingProxy::addChangeCommand(const QStringList &changed_ids, const QJSValue &command) {
 	RK_TRACE(PHP);
-
-	QString remainder;
-	RKComponentBase *base = component->lookupComponent(changed_id, &remainder);
-	if (!remainder.isEmpty()) {
-		evaluate(QStringLiteral("error ('No such property %1 (failed portion was %2)');\n").arg(changed_id, remainder));
-		return;
-	}
 
 	auto callback = [this, command](RKComponentBase *) {
 		if (command.isCallable()) {
@@ -111,10 +104,20 @@ void RKComponentScriptingProxy::addChangeCommand(const QString &changed_id, cons
 		}
 	};
 
-	if (base->isComponent()) {
-		connect(static_cast<RKComponent *>(base), &RKComponent::componentChanged, this, callback);
-	} else {
-		connect(static_cast<RKComponentPropertyBase *>(base), &RKComponentPropertyBase::valueChanged, this, callback);
+	for (const QString &changed_id : changed_ids) {
+		QString remainder;
+		RKComponentBase *base = component->lookupComponent(changed_id, &remainder);
+		if (!remainder.isEmpty()) {
+			evaluate(QStringLiteral("error ('No such property %1 (failed portion was %2)');\n").arg(changed_id, remainder));
+			return;
+		}
+
+
+		if (base->isComponent()) {
+			connect(static_cast<RKComponent *>(base), &RKComponent::componentChanged, this, callback);
+		} else {
+			connect(static_cast<RKComponentPropertyBase *>(base), &RKComponentPropertyBase::valueChanged, this, callback);
+		}
 	}
 }
 
