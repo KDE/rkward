@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-02 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2024-08-10 12:44+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -2362,7 +2362,7 @@ msgstr "W dół"
 msgid "Click to add new row"
 msgstr "Naciśnij, aby dodać nowy wiersz"
 
-#: rkward/misc/rkaccordiontable.cpp:442
+#: rkward/misc/rkaccordiontable.cpp:438
 #, kde-format
 msgid "Remove this row / element"
 msgstr "Usuń ten wiersz / element"
@@ -3614,7 +3614,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Nie można utworzyć wtyczki"
 
-#: rkward/plugin/rkstandardcomponent.cpp:671
+#: rkward/plugin/rkstandardcomponent.cpp:669
 #, kde-format
 msgid "Options"
 msgstr "Opcje"

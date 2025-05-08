@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-02 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2025-04-28 09:24+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2386,7 +2386,7 @@ msgstr "Avall"
 msgid "Click to add new row"
 msgstr "Cliqueu per a afegir una fila nova"
 
-#: rkward/misc/rkaccordiontable.cpp:442
+#: rkward/misc/rkaccordiontable.cpp:438
 #, kde-format
 msgid "Remove this row / element"
 msgstr "Elimina aquesta fila / element"
@@ -3661,7 +3661,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "No s'ha pogut crear el connector"
 
-#: rkward/plugin/rkstandardcomponent.cpp:671
+#: rkward/plugin/rkstandardcomponent.cpp:669
 #, kde-format
 msgid "Options"
 msgstr "Opcions"

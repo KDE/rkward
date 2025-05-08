@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-02 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2025-04-29 08:36+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -2377,7 +2377,7 @@ msgstr "Giù"
 msgid "Click to add new row"
 msgstr "Fai clic per aggiungere una nuova riga"
 
-#: rkward/misc/rkaccordiontable.cpp:442
+#: rkward/misc/rkaccordiontable.cpp:438
 #, kde-format
 msgid "Remove this row / element"
 msgstr "Rimuovi questa riga / questo elemento"
@@ -3636,7 +3636,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Impossibile creare l'estensione"
 
-#: rkward/plugin/rkstandardcomponent.cpp:671
+#: rkward/plugin/rkstandardcomponent.cpp:669
 #, kde-format
 msgid "Options"
 msgstr "Opzioni"

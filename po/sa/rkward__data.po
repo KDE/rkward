@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -53,7 +53,7 @@ msgstr "यादृच्छिकदत्तांशं जनयन्त�
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Sort data) <dialog label="...">
-#: rkward/plugins/data.pluginmap:25 rkward/plugins/data/sort.xml:45
+#: rkward/plugins/data.pluginmap:25 rkward/plugins/data/sort.xml:42
 #, kde-format
 msgid "Sort data"
 msgstr "दत्तांशं क्रमयन्तु"
@@ -71,7 +71,7 @@ msgstr "उपसमूह data.frame"
 #: rkward/plugins/data.pluginmap:27
 #: rkward/plugins/data/recode_categorical.js:93
 #: rkward/plugins/data/recode_categorical.rkh:8
-#: rkward/plugins/data/recode_categorical.xml:29
+#: rkward/plugins/data/recode_categorical.xml:27
 #, kde-format
 msgid "Recode categorical data"
 msgstr "श्रेणीगतदत्तांशं पुनः कोडयन्तु"
@@ -83,31 +83,31 @@ msgid "Data"
 msgstr "दत्तांश"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="...">
-#: rkward/plugins/data/generate_random.xml:22
+#: rkward/plugins/data/generate_random.xml:19
 #, kde-format
 msgid "Generate random data (normal distribution)"
 msgstr "यादृच्छिकदत्तांशं जनयन्तु (सामान्यवितरणं)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
-#: rkward/plugins/data/generate_random.xml:24
+#: rkward/plugins/data/generate_random.xml:21
 #, kde-format
 msgid "mu (mean)"
 msgstr "मु (अर्थः)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
-#: rkward/plugins/data/generate_random.xml:25
+#: rkward/plugins/data/generate_random.xml:22
 #, kde-format
 msgid "sigma (standard deviation)"
 msgstr "सिग्मा (मानक विचलन)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
-#: rkward/plugins/data/generate_random.xml:27
+#: rkward/plugins/data/generate_random.xml:24
 #, kde-format
 msgid "Length of generated sequence"
 msgstr "उत्पन्नक्रमस्य दीर्घता"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <saveobject label="...">
-#: rkward/plugins/data/generate_random.xml:28
+#: rkward/plugins/data/generate_random.xml:25
 #, kde-format
 msgid "Save as"
 msgstr "यथा रक्षतु"
@@ -276,73 +276,73 @@ msgstr ""
 "\"/> तथा<link href=\"rkward://component/rkward/multi_input\"/> एम्बेडेबल प्लगिन्स्।"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="...">
-#: rkward/plugins/data/recode_categorical.xml:30
+#: rkward/plugins/data/recode_categorical.xml:28
 #, kde-format
 msgid "Input and output variables"
 msgstr "इनपुट् तथा आउटपुट चर"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <varslot label="...">
-#: rkward/plugins/data/recode_categorical.xml:32
+#: rkward/plugins/data/recode_categorical.xml:30
 #, kde-format
 msgid "Select variable to recode"
 msgstr "पुनः कोडयितुं चरं चिनोतु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="...">
-#: rkward/plugins/data/recode_categorical.xml:34
-#: rkward/plugins/data/sort.xml:58
+#: rkward/plugins/data/recode_categorical.xml:32
+#: rkward/plugins/data/sort.xml:55
 #, kde-format
 msgid "Save to"
 msgstr "प्रति रक्षतु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="Save to"> <option label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="Save to"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:35
-#: rkward/plugins/data/sort.xml:59
+#: rkward/plugins/data/recode_categorical.xml:33
+#: rkward/plugins/data/sort.xml:56
 #, kde-format
 msgid "Same object"
 msgstr "समानं वस्तु"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="Save to"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:36
+#: rkward/plugins/data/recode_categorical.xml:34
 #, kde-format
 msgid "Other:"
 msgstr "इतर:"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <saveobject label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <saveobject label="...">
-#: rkward/plugins/data/recode_categorical.xml:38
-#: rkward/plugins/data/sort.xml:62
+#: rkward/plugins/data/recode_categorical.xml:36
+#: rkward/plugins/data/sort.xml:59
 #, kde-format
 msgid "Object to save to"
 msgstr "रक्षितुं वस्तु"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="...">
-#: rkward/plugins/data/recode_categorical.xml:40
+#: rkward/plugins/data/recode_categorical.xml:38
 #, kde-format
 msgid "Data type after recoding"
 msgstr "पुनः कोडीकरणस्य अनन्तरं दत्तांशप्रकारः"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:41
+#: rkward/plugins/data/recode_categorical.xml:39
 #, kde-format
 msgid "Character"
 msgstr "स्वभावः"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:42
+#: rkward/plugins/data/recode_categorical.xml:40
 #, kde-format
 msgid "Factor"
 msgstr "कारक"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:43
+#: rkward/plugins/data/recode_categorical.xml:41
 #, kde-format
 msgid "Numeric"
 msgstr "संख्यात्मकः"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:44
+#: rkward/plugins/data/recode_categorical.xml:42
 #, kde-format
 msgid "Logical"
 msgstr "तार्किकम्"
@@ -350,38 +350,38 @@ msgstr "तार्किकम्"
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <preview label="...">
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <preview label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <preview label="...">
-#: rkward/plugins/data/recode_categorical.xml:47
-#: rkward/plugins/data/sort.xml:65 rkward/plugins/data/subset_dataframe.xml:134
+#: rkward/plugins/data/recode_categorical.xml:45
+#: rkward/plugins/data/sort.xml:62 rkward/plugins/data/subset_dataframe.xml:134
 #, kde-format
 msgid "Preview"
 msgstr "पूर्वावलोकनम्"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="...">
-#: rkward/plugins/data/recode_categorical.xml:49
+#: rkward/plugins/data/recode_categorical.xml:47
 #, kde-format
 msgid "Values"
 msgstr "मूल्यानि"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="...">
-#: rkward/plugins/data/recode_categorical.xml:51
+#: rkward/plugins/data/recode_categorical.xml:49
 #, kde-format
 msgid "Recodings"
 msgstr "रिकोडिंग्स्"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <optioncolumn label="...">
-#: rkward/plugins/data/recode_categorical.xml:70
+#: rkward/plugins/data/recode_categorical.xml:68
 #, kde-format
 msgid "Old value(s)"
 msgstr "पुरातनं मूल्यं (मूल्यानि) ."
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <optioncolumn label="...">
-#: rkward/plugins/data/recode_categorical.xml:74
+#: rkward/plugins/data/recode_categorical.xml:72
 #, kde-format
 msgid "New value(s)"
 msgstr "नवीनं मूल्यं (मूल्यानि) ."
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <radio label="...">
-#: rkward/plugins/data/recode_categorical.xml:82
+#: rkward/plugins/data/recode_categorical.xml:80
 #, kde-format
 msgid "Old values"
 msgstr "पुरातनमूल्यानि"
@@ -389,51 +389,51 @@ msgstr "पुरातनमूल्यानि"
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="Old values"> <option label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="New value"> <option label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:83
-#: rkward/plugins/data/recode_categorical.xml:93
-#: rkward/plugins/data/recode_categorical.xml:106
+#: rkward/plugins/data/recode_categorical.xml:81
+#: rkward/plugins/data/recode_categorical.xml:91
+#: rkward/plugins/data/recode_categorical.xml:104
 #, kde-format
 msgid "NA"
 msgstr "तत्‌"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="Old values"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:84
+#: rkward/plugins/data/recode_categorical.xml:82
 #, kde-format
 msgid "Select value(s):"
 msgstr "मूल्य (मूल्यानि) चयनं कुर्वन्तु:"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <radio label="...">
-#: rkward/plugins/data/recode_categorical.xml:92
+#: rkward/plugins/data/recode_categorical.xml:90
 #, kde-format
 msgid "New value"
 msgstr "नवीनं मूल्यम्"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="New value"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:94
+#: rkward/plugins/data/recode_categorical.xml:92
 #, kde-format
 msgid "Value:"
 msgstr "मूल्यम्‌:"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <text>
-#: rkward/plugins/data/recode_categorical.xml:97
+#: rkward/plugins/data/recode_categorical.xml:95
 #, kde-format
 msgid "(Value will be quoted, automatically)"
 msgstr "(मूल्यं उद्धृतं भविष्यति, स्वयमेव)"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="...">
-#: rkward/plugins/data/recode_categorical.xml:104
+#: rkward/plugins/data/recode_categorical.xml:102
 #, kde-format
 msgid "Any other values"
 msgstr "अन्ये केचन मूल्यानि"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:105
+#: rkward/plugins/data/recode_categorical.xml:103
 #, kde-format
 msgid "Copy"
 msgstr "प्रतिलिपि"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:107
+#: rkward/plugins/data/recode_categorical.xml:105
 #, kde-format
 msgid "Custom value:"
 msgstr "कस्टम् मूल्यम् :"
@@ -537,105 +537,105 @@ msgid "<link href=\"rkward://rhelp/order\"/>"
 msgstr "<link href=\"rkward://rhelp/order\"/>"
 
 #. i18n: ectx: (Sort data)
-#: rkward/plugins/data/sort.xml:39
+#: rkward/plugins/data/sort.xml:36
 #, kde-format
 msgid "Sorting this type of object is not supported in this plugin"
 msgstr "एतादृशस्य वस्तुनः क्रमणं अस्मिन् प्लगिन् मध्ये समर्थितं नास्ति"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="...">
-#: rkward/plugins/data/sort.xml:47
+#: rkward/plugins/data/sort.xml:44
 #, kde-format
 msgid "Basic settings"
 msgstr "मूलभूत सेटिंग्स्"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <varslot label="...">
-#: rkward/plugins/data/sort.xml:51
+#: rkward/plugins/data/sort.xml:48
 #, kde-format
 msgid "Object to be sorted"
 msgstr "क्रमबद्धं वस्तु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <varslot label="...">
-#: rkward/plugins/data/sort.xml:54
+#: rkward/plugins/data/sort.xml:51
 #, kde-format
 msgid "Sort by"
 msgstr "क्रमेण क्रमयन्तु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="Save to"> <option label="...">
-#: rkward/plugins/data/sort.xml:60
+#: rkward/plugins/data/sort.xml:57
 #, kde-format
 msgid "Another object"
 msgstr "अन्यत् वस्तु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="...">
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="...">
-#: rkward/plugins/data/sort.xml:67 rkward/plugins/data/sort.xml:68
+#: rkward/plugins/data/sort.xml:64 rkward/plugins/data/sort.xml:65
 #, kde-format
 msgid "Sort order"
 msgstr "क्रमाङ्कनम्"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="Sort order"> <option label="...">
-#: rkward/plugins/data/sort.xml:69
+#: rkward/plugins/data/sort.xml:66
 #, kde-format
 msgid "Ascending"
 msgstr "आरोहणम्"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="Sort order"> <option label="...">
-#: rkward/plugins/data/sort.xml:70
+#: rkward/plugins/data/sort.xml:67
 #, kde-format
 msgid "Descending"
 msgstr "अवतरन्"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="...">
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
-#: rkward/plugins/data/sort.xml:73 rkward/plugins/data/sort.xml:100
+#: rkward/plugins/data/sort.xml:70 rkward/plugins/data/sort.xml:97
 #, kde-format
 msgid "Sort mode"
 msgstr "क्रमबद्धविधिः"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
-#: rkward/plugins/data/sort.xml:74
+#: rkward/plugins/data/sort.xml:71
 #, kde-format
 msgid "Sort as is"
 msgstr "यथावत् क्रमयन्तु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
-#: rkward/plugins/data/sort.xml:75
+#: rkward/plugins/data/sort.xml:72
 #, kde-format
 msgid "Sort as character"
 msgstr "वर्णरूपेण क्रमयन्तु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
-#: rkward/plugins/data/sort.xml:76
+#: rkward/plugins/data/sort.xml:73
 #, kde-format
 msgid "Sort as number"
 msgstr "संख्यारूपेण क्रमयन्तु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
-#: rkward/plugins/data/sort.xml:77
+#: rkward/plugins/data/sort.xml:74
 #, kde-format
 msgid "Sort by custom function:"
 msgstr "कस्टम् फंक्शन् द्वारा क्रमबद्धं कुर्वन्तु:"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <input label="...">
-#: rkward/plugins/data/sort.xml:79
+#: rkward/plugins/data/sort.xml:76
 #, kde-format
 msgid "Function(_X_) to use for sorting"
 msgstr "क्रमाङ्कनार्थं उपयोक्तुं फंक्शन्(_X_)"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <checkbox label="...">
-#: rkward/plugins/data/sort.xml:93
+#: rkward/plugins/data/sort.xml:90
 #, kde-format
 msgid "Reverse sort order"
 msgstr "क्रमाङ्कनं विपर्ययम्"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
-#: rkward/plugins/data/sort.xml:97
+#: rkward/plugins/data/sort.xml:94
 #, kde-format
 msgid "Object"
 msgstr "वस्तु"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
-#: rkward/plugins/data/sort.xml:98
+#: rkward/plugins/data/sort.xml:95
 #, kde-format
 msgid "Order"
 msgstr "आदेशः"

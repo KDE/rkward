@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__data\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:36+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2024-04-11 08:42+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -54,7 +54,7 @@ msgstr "Створити випадкові дані"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Sort data) <dialog label="...">
-#: rkward/plugins/data.pluginmap:25 rkward/plugins/data/sort.xml:45
+#: rkward/plugins/data.pluginmap:25 rkward/plugins/data/sort.xml:42
 #, kde-format
 msgid "Sort data"
 msgstr "Упорядкувати дані"
@@ -72,7 +72,7 @@ msgstr "Розділити data.frame"
 #: rkward/plugins/data.pluginmap:27
 #: rkward/plugins/data/recode_categorical.js:93
 #: rkward/plugins/data/recode_categorical.rkh:8
-#: rkward/plugins/data/recode_categorical.xml:29
+#: rkward/plugins/data/recode_categorical.xml:27
 #, kde-format
 msgid "Recode categorical data"
 msgstr "Перекодувати категоріальні дані"
@@ -84,31 +84,31 @@ msgid "Data"
 msgstr "Дані"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="...">
-#: rkward/plugins/data/generate_random.xml:22
+#: rkward/plugins/data/generate_random.xml:19
 #, kde-format
 msgid "Generate random data (normal distribution)"
 msgstr "Створити випадкові дані (нормальний розподіл)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
-#: rkward/plugins/data/generate_random.xml:24
+#: rkward/plugins/data/generate_random.xml:21
 #, kde-format
 msgid "mu (mean)"
 msgstr "μ (математичне сподівання)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
-#: rkward/plugins/data/generate_random.xml:25
+#: rkward/plugins/data/generate_random.xml:22
 #, kde-format
 msgid "sigma (standard deviation)"
 msgstr "σ (стандартне відхилення)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
-#: rkward/plugins/data/generate_random.xml:27
+#: rkward/plugins/data/generate_random.xml:24
 #, kde-format
 msgid "Length of generated sequence"
 msgstr "Довжина створеної послідовності"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <saveobject label="...">
-#: rkward/plugins/data/generate_random.xml:28
+#: rkward/plugins/data/generate_random.xml:25
 #, kde-format
 msgid "Save as"
 msgstr "Зберегти як"
@@ -285,73 +285,73 @@ msgstr ""
 "component/rkward/multi_input\"/>."
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="...">
-#: rkward/plugins/data/recode_categorical.xml:30
+#: rkward/plugins/data/recode_categorical.xml:28
 #, kde-format
 msgid "Input and output variables"
 msgstr "Вхідні і вихідні змінні"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <varslot label="...">
-#: rkward/plugins/data/recode_categorical.xml:32
+#: rkward/plugins/data/recode_categorical.xml:30
 #, kde-format
 msgid "Select variable to recode"
 msgstr "Виберіть змінні для перекодовування"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="...">
-#: rkward/plugins/data/recode_categorical.xml:34
-#: rkward/plugins/data/sort.xml:58
+#: rkward/plugins/data/recode_categorical.xml:32
+#: rkward/plugins/data/sort.xml:55
 #, kde-format
 msgid "Save to"
 msgstr "Зберегти до"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="Save to"> <option label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="Save to"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:35
-#: rkward/plugins/data/sort.xml:59
+#: rkward/plugins/data/recode_categorical.xml:33
+#: rkward/plugins/data/sort.xml:56
 #, kde-format
 msgid "Same object"
 msgstr "Той самий об’єкт"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="Save to"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:36
+#: rkward/plugins/data/recode_categorical.xml:34
 #, kde-format
 msgid "Other:"
 msgstr "Інше:"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <saveobject label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <saveobject label="...">
-#: rkward/plugins/data/recode_categorical.xml:38
-#: rkward/plugins/data/sort.xml:62
+#: rkward/plugins/data/recode_categorical.xml:36
+#: rkward/plugins/data/sort.xml:59
 #, kde-format
 msgid "Object to save to"
 msgstr "Об’єкт для збереження даних"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="...">
-#: rkward/plugins/data/recode_categorical.xml:40
+#: rkward/plugins/data/recode_categorical.xml:38
 #, kde-format
 msgid "Data type after recoding"
 msgstr "Тип даних після перекодовування"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:41
+#: rkward/plugins/data/recode_categorical.xml:39
 #, kde-format
 msgid "Character"
 msgstr "Символ"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:42
+#: rkward/plugins/data/recode_categorical.xml:40
 #, kde-format
 msgid "Factor"
 msgstr "Фактор"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:43
+#: rkward/plugins/data/recode_categorical.xml:41
 #, kde-format
 msgid "Numeric"
 msgstr "Числове"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:44
+#: rkward/plugins/data/recode_categorical.xml:42
 #, kde-format
 msgid "Logical"
 msgstr "Логічне"
@@ -359,38 +359,38 @@ msgstr "Логічне"
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <preview label="...">
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <preview label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <preview label="...">
-#: rkward/plugins/data/recode_categorical.xml:47
-#: rkward/plugins/data/sort.xml:65 rkward/plugins/data/subset_dataframe.xml:134
+#: rkward/plugins/data/recode_categorical.xml:45
+#: rkward/plugins/data/sort.xml:62 rkward/plugins/data/subset_dataframe.xml:134
 #, kde-format
 msgid "Preview"
 msgstr "Перегляд"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="...">
-#: rkward/plugins/data/recode_categorical.xml:49
+#: rkward/plugins/data/recode_categorical.xml:47
 #, kde-format
 msgid "Values"
 msgstr "Значення"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="...">
-#: rkward/plugins/data/recode_categorical.xml:51
+#: rkward/plugins/data/recode_categorical.xml:49
 #, kde-format
 msgid "Recodings"
 msgstr "Перекодування"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <optioncolumn label="...">
-#: rkward/plugins/data/recode_categorical.xml:70
+#: rkward/plugins/data/recode_categorical.xml:68
 #, kde-format
 msgid "Old value(s)"
 msgstr "Старі значення"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <optioncolumn label="...">
-#: rkward/plugins/data/recode_categorical.xml:74
+#: rkward/plugins/data/recode_categorical.xml:72
 #, kde-format
 msgid "New value(s)"
 msgstr "Нові значення"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <radio label="...">
-#: rkward/plugins/data/recode_categorical.xml:82
+#: rkward/plugins/data/recode_categorical.xml:80
 #, kde-format
 msgid "Old values"
 msgstr "Старі значення"
@@ -398,51 +398,51 @@ msgstr "Старі значення"
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="Old values"> <option label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="New value"> <option label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:83
-#: rkward/plugins/data/recode_categorical.xml:93
-#: rkward/plugins/data/recode_categorical.xml:106
+#: rkward/plugins/data/recode_categorical.xml:81
+#: rkward/plugins/data/recode_categorical.xml:91
+#: rkward/plugins/data/recode_categorical.xml:104
 #, kde-format
 msgid "NA"
 msgstr "NA"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="Old values"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:84
+#: rkward/plugins/data/recode_categorical.xml:82
 #, kde-format
 msgid "Select value(s):"
 msgstr "Виберіть значення:"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <radio label="...">
-#: rkward/plugins/data/recode_categorical.xml:92
+#: rkward/plugins/data/recode_categorical.xml:90
 #, kde-format
 msgid "New value"
 msgstr "Нове значення"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="New value"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:94
+#: rkward/plugins/data/recode_categorical.xml:92
 #, kde-format
 msgid "Value:"
 msgstr "Значення:"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <text>
-#: rkward/plugins/data/recode_categorical.xml:97
+#: rkward/plugins/data/recode_categorical.xml:95
 #, kde-format
 msgid "(Value will be quoted, automatically)"
 msgstr "(Значення буде автоматично взято у лапки)"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="...">
-#: rkward/plugins/data/recode_categorical.xml:104
+#: rkward/plugins/data/recode_categorical.xml:102
 #, kde-format
 msgid "Any other values"
 msgstr "Усі інші значення"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:105
+#: rkward/plugins/data/recode_categorical.xml:103
 #, kde-format
 msgid "Copy"
 msgstr "Копіювати"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
-#: rkward/plugins/data/recode_categorical.xml:107
+#: rkward/plugins/data/recode_categorical.xml:105
 #, kde-format
 msgid "Custom value:"
 msgstr "Нетипове значення:"
@@ -552,106 +552,106 @@ msgid "<link href=\"rkward://rhelp/order\"/>"
 msgstr "<link href=\"rkward://rhelp/order\"/>"
 
 #. i18n: ectx: (Sort data)
-#: rkward/plugins/data/sort.xml:39
+#: rkward/plugins/data/sort.xml:36
 #, kde-format
 msgid "Sorting this type of object is not supported in this plugin"
 msgstr ""
 "У цьому додатку не передбачено можливості упорядковування об’єктів цього типу"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="...">
-#: rkward/plugins/data/sort.xml:47
+#: rkward/plugins/data/sort.xml:44
 #, kde-format
 msgid "Basic settings"
 msgstr "Основні параметри"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <varslot label="...">
-#: rkward/plugins/data/sort.xml:51
+#: rkward/plugins/data/sort.xml:48
 #, kde-format
 msgid "Object to be sorted"
 msgstr "Об’єкт, який слід упорядкувати"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <varslot label="...">
-#: rkward/plugins/data/sort.xml:54
+#: rkward/plugins/data/sort.xml:51
 #, kde-format
 msgid "Sort by"
 msgstr "Критерій впорядкування"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="Save to"> <option label="...">
-#: rkward/plugins/data/sort.xml:60
+#: rkward/plugins/data/sort.xml:57
 #, kde-format
 msgid "Another object"
 msgstr "Інший об’єкт"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="...">
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="...">
-#: rkward/plugins/data/sort.xml:67 rkward/plugins/data/sort.xml:68
+#: rkward/plugins/data/sort.xml:64 rkward/plugins/data/sort.xml:65
 #, kde-format
 msgid "Sort order"
 msgstr "Порядок"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="Sort order"> <option label="...">
-#: rkward/plugins/data/sort.xml:69
+#: rkward/plugins/data/sort.xml:66
 #, kde-format
 msgid "Ascending"
 msgstr "За зростанням"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="Sort order"> <option label="...">
-#: rkward/plugins/data/sort.xml:70
+#: rkward/plugins/data/sort.xml:67
 #, kde-format
 msgid "Descending"
 msgstr "За спаданням"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="...">
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
-#: rkward/plugins/data/sort.xml:73 rkward/plugins/data/sort.xml:100
+#: rkward/plugins/data/sort.xml:70 rkward/plugins/data/sort.xml:97
 #, kde-format
 msgid "Sort mode"
 msgstr "Режим упорядковування"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
-#: rkward/plugins/data/sort.xml:74
+#: rkward/plugins/data/sort.xml:71
 #, kde-format
 msgid "Sort as is"
 msgstr "Упорядкувати як є"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
-#: rkward/plugins/data/sort.xml:75
+#: rkward/plugins/data/sort.xml:72
 #, kde-format
 msgid "Sort as character"
 msgstr "Упорядкувати як символ"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
-#: rkward/plugins/data/sort.xml:76
+#: rkward/plugins/data/sort.xml:73
 #, kde-format
 msgid "Sort as number"
 msgstr "Упорядкувати як число"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
-#: rkward/plugins/data/sort.xml:77
+#: rkward/plugins/data/sort.xml:74
 #, kde-format
 msgid "Sort by custom function:"
 msgstr "Упорядкувати за нетиповою функцією:"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <input label="...">
-#: rkward/plugins/data/sort.xml:79
+#: rkward/plugins/data/sort.xml:76
 #, kde-format
 msgid "Function(_X_) to use for sorting"
 msgstr "Функція(_X_) для впорядковування"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <checkbox label="...">
-#: rkward/plugins/data/sort.xml:93
+#: rkward/plugins/data/sort.xml:90
 #, kde-format
 msgid "Reverse sort order"
 msgstr "Зворотний порядок"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
-#: rkward/plugins/data/sort.xml:97
+#: rkward/plugins/data/sort.xml:94
 #, kde-format
 msgid "Object"
 msgstr "Об’єкт"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
-#: rkward/plugins/data/sort.xml:98
+#: rkward/plugins/data/sort.xml:95
 #, kde-format
 msgid "Order"
 msgstr "Порядок"

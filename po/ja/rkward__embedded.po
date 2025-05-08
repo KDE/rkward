@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__embedded\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-05 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2015-06-23 23:36-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -25,14 +25,14 @@ msgid "Your emails"
 msgstr ""
 
 #. i18n: ectx: (Level selector) <dialog label="...">
-#: rkward/plugins/distributions/../data/level_select.xml:65
+#: rkward/plugins/distributions/../data/level_select.xml:62
 #: rkward/plugins/distributions/../data/multi_input.xml:99
 #, kde-format
 msgid "Level selector"
 msgstr ""
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <text>
-#: rkward/plugins/distributions/../data/level_select.xml:67
+#: rkward/plugins/distributions/../data/level_select.xml:64
 #, kde-format
 msgid "Note: Some values were cut off."
 msgstr ""

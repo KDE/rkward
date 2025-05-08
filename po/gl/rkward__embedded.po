@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-05 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2024-12-17 22:13+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -29,14 +29,14 @@ msgid "Your emails"
 msgstr "adrian@chaves.gal"
 
 #. i18n: ectx: (Level selector) <dialog label="...">
-#: rkward/plugins/distributions/../data/level_select.xml:65
+#: rkward/plugins/distributions/../data/level_select.xml:62
 #: rkward/plugins/distributions/../data/multi_input.xml:99
 #, kde-format
 msgid "Level selector"
 msgstr "Selector de niveis"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <text>
-#: rkward/plugins/distributions/../data/level_select.xml:67
+#: rkward/plugins/distributions/../data/level_select.xml:64
 #, kde-format
 msgid "Note: Some values were cut off."
 msgstr "Nota: cortáronse algúns dos valores."

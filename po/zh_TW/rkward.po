@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-02 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2024-08-15 05:21+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -2142,7 +2142,7 @@ msgstr "往下"
 msgid "Click to add new row"
 msgstr "按一下以新增列"
 
-#: rkward/misc/rkaccordiontable.cpp:442
+#: rkward/misc/rkaccordiontable.cpp:438
 #, kde-format
 msgid "Remove this row / element"
 msgstr "移除這一列 / 這個元素"
@@ -3316,7 +3316,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "無法建立外掛程式"
 
-#: rkward/plugin/rkstandardcomponent.cpp:671
+#: rkward/plugin/rkstandardcomponent.cpp:669
 #, kde-format
 msgid "Options"
 msgstr "選項"

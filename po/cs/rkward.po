@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-02 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2024-08-15 17:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -2266,7 +2266,7 @@ msgstr "Dolů"
 msgid "Click to add new row"
 msgstr "Klikněte pro přidání nové řady"
 
-#: rkward/misc/rkaccordiontable.cpp:442
+#: rkward/misc/rkaccordiontable.cpp:438
 #, kde-format
 msgid "Remove this row / element"
 msgstr "Odstranit řádek / prvek"
@@ -3472,7 +3472,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Nepodařilo se vytvořit přídavný modul"
 
-#: rkward/plugin/rkstandardcomponent.cpp:671
+#: rkward/plugin/rkstandardcomponent.cpp:669
 #, kde-format
 msgid "Options"
 msgstr "Možnosti"

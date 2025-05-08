@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-02 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2024-04-22 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -2098,7 +2098,7 @@ msgstr "下箭头"
 msgid "Click to add new row"
 msgstr "点击添加新行"
 
-#: rkward/misc/rkaccordiontable.cpp:442
+#: rkward/misc/rkaccordiontable.cpp:438
 #, kde-format
 msgid "Remove this row / element"
 msgstr "删除此行/元素"
@@ -3261,7 +3261,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr ""
 
-#: rkward/plugin/rkstandardcomponent.cpp:671
+#: rkward/plugin/rkstandardcomponent.cpp:669
 #, kde-format
 msgid "Options"
 msgstr "选项"

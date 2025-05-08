@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-02 00:38+0000\n"
+"POT-Creation-Date: 2025-05-08 00:38+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -2307,7 +2307,7 @@ msgstr "अधः"
 msgid "Click to add new row"
 msgstr "नूतनपङ्क्तिं योजयितुं क्लिक् कुर्वन्तु"
 
-#: rkward/misc/rkaccordiontable.cpp:442
+#: rkward/misc/rkaccordiontable.cpp:438
 #, kde-format
 msgid "Remove this row / element"
 msgstr "एतां पङ्क्तिं / तत्त्वं निष्कासयन्तु"
@@ -3532,7 +3532,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "प्लगिन् निर्मातुं न शक्तवान्"
 
-#: rkward/plugin/rkstandardcomponent.cpp:671
+#: rkward/plugin/rkstandardcomponent.cpp:669
 #, kde-format
 msgid "Options"
 msgstr "विकल्पाः"
