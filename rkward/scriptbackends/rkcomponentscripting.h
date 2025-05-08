@@ -36,7 +36,7 @@ class RKComponentScriptingProxy : public QObject {
   public:
 	// these are meant to be called from the script
 	Q_INVOKABLE void include(const QString &filename);
-	Q_INVOKABLE void addChangeCommand(const QString &changed_id, const QJSValue &command);
+	Q_INVOKABLE void addChangeCommand(const QStringList &changed_ids, const QJSValue &command);
 	/** @returns id of the command issued. */
 	Q_INVOKABLE QVariant doRCommand(const QString &command, const QString &callback);
 	Q_INVOKABLE void doRCommand2(const QString &command, const QString &id, const QJSValue resolve, const QJSValue reject);

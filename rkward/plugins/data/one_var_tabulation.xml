@@ -21,10 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<connect client="custom_stat.enabled" governor="is_custom"/>
 
 		<script><![CDATA[
-			gui.addChangeCommand ("stat.string", "updateFunLabel ()");
-			gui.addChangeCommand ("custom_stat.text", "updateFunLabel ()");
-			gui.addChangeCommand ("outcome.available", "updateFunLabel ()");
-			updateFunLabel = function () {
+			updateFunLabel = gui.addChangeCommand(["stat.string", "custom_stat.text", "outcome.available"], function() {
 				var stat = gui.getValue ("stat.string");
 				var label;
 				if (stat == "freq") {
@@ -39,12 +36,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 				}
 				gui.setValue ("fun_label", label);
 				updateDescription ();
-			}
+			});
 
-			gui.addChangeCommand ("groups.available", "updateDescription ()");
-			updateDescription = function () {
+			updateDescription = gui.addChangeCommand("groups.available", function() {
 				gui.setValue ("parameters", i18n ("Tabulation groups") + '=paste (names (groups), collapse=' + i18nc ("Tabulate X by Y [by Z [...]]", " by ") + '), ' + i18n ("Tabulation statistic") + '=' + gui.getValue ("fun_label"));
-			}
+			});
 			updateFunLabel ();
 		]]></script>
 	</logic>

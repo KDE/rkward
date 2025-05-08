@@ -60,8 +60,13 @@ function Component(id) {
 		return (new Component(this.absoluteId(id)));
 	};
 
-	this.addChangeCommand = function(id, command) {
-		_rkward.addChangeCommand(this.absoluteId(id), command);
+	this.addChangeCommand = function(ids, command) {
+		if (Array.isArray(ids)) {
+			_rkward.addChangeCommand(ids.map((id) => this.absoluteId(id)), command);
+		} else {
+			_rkward.addChangeCommand(Array(this.absoluteId(ids)), command);
+		}
+		return command;
 	};
 };
 
