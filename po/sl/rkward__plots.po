@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-01 00:38+0000\n"
+"POT-Creation-Date: 2025-05-09 00:38+0000\n"
 "PO-Revision-Date: 2022-05-13 10:11+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -49,7 +49,7 @@ msgstr ""
 #. i18n: ectx: (Loaded from Barplot)
 #. i18n: ectx: (Barplot) <dialog label="...">
 #: rkward/plugins/plots.pluginmap:24 rkward/plugins/plots/barplot.js:50
-#: rkward/plugins/plots/barplot.xml:36
+#: rkward/plugins/plots/barplot.xml:34
 #, kde-format
 msgid "Barplot"
 msgstr "Stolpični grafikon"
@@ -162,10 +162,10 @@ msgstr "Grafikon trakov"
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots)
 #. i18n: ectx: (Loaded from Stripchart)
 #: rkward/plugins/plots/barplot.js:19 rkward/plugins/plots/density_plot.js:48
-#: rkward/plugins/plots/dotchart.js:19 rkward/plugins/plots/dotchart.xml:45
+#: rkward/plugins/plots/dotchart.js:19 rkward/plugins/plots/dotchart.xml:43
 #: rkward/plugins/plots/ecdf_plot.js:30 rkward/plugins/plots/histogram.js:24
 #: rkward/plugins/plots/pareto.js:42 rkward/plugins/plots/piechart.js:18
-#: rkward/plugins/plots/piechart.xml:50 rkward/plugins/plots/stem.js:13
+#: rkward/plugins/plots/piechart.xml:48 rkward/plugins/plots/stem.js:13
 #: rkward/plugins/plots/stripchart_plot.js:28
 #, kde-format
 msgid "Variable"
@@ -283,8 +283,8 @@ msgstr ""
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="...">
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="...">
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="...">
-#: rkward/plugins/plots/barplot.xml:38 rkward/plugins/plots/dotchart.xml:41
-#: rkward/plugins/plots/pareto.xml:33 rkward/plugins/plots/piechart.xml:46
+#: rkward/plugins/plots/barplot.xml:36 rkward/plugins/plots/dotchart.xml:39
+#: rkward/plugins/plots/pareto.xml:31 rkward/plugins/plots/piechart.xml:44
 #: rkward/plugins/plots/plot.xml:17 rkward/plugins/plots/scatterplot.xml:24
 #: rkward/plugins/plots/scatterplot_matrix.xml:13
 #, kde-format
@@ -292,7 +292,7 @@ msgid "Variables"
 msgstr "Spremenljivke"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <varslot label="...">
-#: rkward/plugins/plots/barplot.xml:42
+#: rkward/plugins/plots/barplot.xml:40
 #, kde-format
 msgid "Matrix, Vector or Factor"
 msgstr "Matrika, vektor ali faktor"
@@ -301,8 +301,8 @@ msgstr "Matrika, vektor ali faktor"
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <text>
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <text>
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Variables"> <text>
-#: rkward/plugins/plots/barplot.xml:44 rkward/plugins/plots/dotchart.xml:47
-#: rkward/plugins/plots/pareto.xml:39 rkward/plugins/plots/piechart.xml:51
+#: rkward/plugins/plots/barplot.xml:42 rkward/plugins/plots/dotchart.xml:45
+#: rkward/plugins/plots/pareto.xml:37 rkward/plugins/plots/piechart.xml:49
 #, kde-format
 msgid "- or -"
 msgstr "- ali -"
@@ -311,8 +311,8 @@ msgstr "- ali -"
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <frame label="...">
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <frame label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Variables"> <frame label="...">
-#: rkward/plugins/plots/barplot.xml:46 rkward/plugins/plots/dotchart.xml:49
-#: rkward/plugins/plots/pareto.xml:41 rkward/plugins/plots/piechart.xml:52
+#: rkward/plugins/plots/barplot.xml:44 rkward/plugins/plots/dotchart.xml:47
+#: rkward/plugins/plots/pareto.xml:39 rkward/plugins/plots/piechart.xml:50
 #, kde-format
 msgid "Tabulate data before plotting"
 msgstr "Tabelirajte podatke pred risanjem"
@@ -321,8 +321,8 @@ msgstr "Tabelirajte podatke pred risanjem"
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
-#: rkward/plugins/plots/barplot.xml:47 rkward/plugins/plots/dotchart.xml:50
-#: rkward/plugins/plots/pareto.xml:42 rkward/plugins/plots/piechart.xml:53
+#: rkward/plugins/plots/barplot.xml:45 rkward/plugins/plots/dotchart.xml:48
+#: rkward/plugins/plots/pareto.xml:40 rkward/plugins/plots/piechart.xml:51
 #, kde-format
 msgid "Tabulation Options"
 msgstr "Možnosti tabeliranja"
@@ -331,8 +331,8 @@ msgstr "Možnosti tabeliranja"
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="...">
-#: rkward/plugins/plots/barplot.xml:55 rkward/plugins/plots/dotchart.xml:57
-#: rkward/plugins/plots/pareto.xml:51 rkward/plugins/plots/piechart.xml:60
+#: rkward/plugins/plots/barplot.xml:53 rkward/plugins/plots/dotchart.xml:55
+#: rkward/plugins/plots/pareto.xml:49 rkward/plugins/plots/piechart.xml:58
 #, kde-format
 msgid "Limit"
 msgstr "Meja"
@@ -341,8 +341,8 @@ msgstr "Meja"
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Limit"> <frame label="...">
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Limit"> <frame label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Limit"> <frame label="...">
-#: rkward/plugins/plots/barplot.xml:56 rkward/plugins/plots/dotchart.xml:58
-#: rkward/plugins/plots/pareto.xml:52 rkward/plugins/plots/piechart.xml:61
+#: rkward/plugins/plots/barplot.xml:54 rkward/plugins/plots/dotchart.xml:56
+#: rkward/plugins/plots/pareto.xml:50 rkward/plugins/plots/piechart.xml:59
 #, kde-format
 msgid "Limit number of groups"
 msgstr "Omeji število skupin"
@@ -351,15 +351,15 @@ msgstr "Omeji število skupin"
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
-#: rkward/plugins/plots/barplot.xml:57 rkward/plugins/plots/dotchart.xml:59
-#: rkward/plugins/plots/pareto.xml:53 rkward/plugins/plots/piechart.xml:62
+#: rkward/plugins/plots/barplot.xml:55 rkward/plugins/plots/dotchart.xml:57
+#: rkward/plugins/plots/pareto.xml:51 rkward/plugins/plots/piechart.xml:60
 #, kde-format
 msgid "Limit Categories"
 msgstr "Omejevanje kategorij"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="...">
-#: rkward/plugins/plots/barplot.xml:61 rkward/plugins/plots/barplot.xml:62
+#: rkward/plugins/plots/barplot.xml:59 rkward/plugins/plots/barplot.xml:60
 #, kde-format
 msgid "Bar labels"
 msgstr "Nalepke stolpcev"
@@ -368,8 +368,8 @@ msgstr "Nalepke stolpcev"
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
-#: rkward/plugins/plots/barplot.xml:63 rkward/plugins/plots/box_plot.xml:58
-#: rkward/plugins/plots/dotchart.xml:65 rkward/plugins/plots/piechart.xml:68
+#: rkward/plugins/plots/barplot.xml:61 rkward/plugins/plots/box_plot.xml:58
+#: rkward/plugins/plots/dotchart.xml:63 rkward/plugins/plots/piechart.xml:66
 #, kde-format
 msgid "Default labels"
 msgstr "Privzete oznake"
@@ -378,8 +378,8 @@ msgstr "Privzete oznake"
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
-#: rkward/plugins/plots/barplot.xml:64 rkward/plugins/plots/box_plot.xml:59
-#: rkward/plugins/plots/dotchart.xml:66 rkward/plugins/plots/piechart.xml:69
+#: rkward/plugins/plots/barplot.xml:62 rkward/plugins/plots/box_plot.xml:59
+#: rkward/plugins/plots/dotchart.xml:64 rkward/plugins/plots/piechart.xml:67
 #, kde-format
 msgid "Custom labels"
 msgstr "Oznake po meri"
@@ -388,8 +388,8 @@ msgstr "Oznake po meri"
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
-#: rkward/plugins/plots/barplot.xml:65 rkward/plugins/plots/box_plot.xml:60
-#: rkward/plugins/plots/dotchart.xml:67 rkward/plugins/plots/piechart.xml:70
+#: rkward/plugins/plots/barplot.xml:63 rkward/plugins/plots/box_plot.xml:60
+#: rkward/plugins/plots/dotchart.xml:65 rkward/plugins/plots/piechart.xml:68
 #, kde-format
 msgid "From R expression"
 msgstr "Iz izraza R"
@@ -398,8 +398,8 @@ msgstr "Iz izraza R"
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <input label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <input label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <input label="...">
-#: rkward/plugins/plots/barplot.xml:67 rkward/plugins/plots/box_plot.xml:62
-#: rkward/plugins/plots/dotchart.xml:69 rkward/plugins/plots/piechart.xml:72
+#: rkward/plugins/plots/barplot.xml:65 rkward/plugins/plots/box_plot.xml:62
+#: rkward/plugins/plots/dotchart.xml:67 rkward/plugins/plots/piechart.xml:70
 #, kde-format
 msgid "Expression to use for labels"
 msgstr "Izraz za uporabo za oznake"
@@ -408,8 +408,8 @@ msgstr "Izraz za uporabo za oznake"
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <input label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <input label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <input label="...">
-#: rkward/plugins/plots/barplot.xml:68 rkward/plugins/plots/box_plot.xml:63
-#: rkward/plugins/plots/dotchart.xml:70 rkward/plugins/plots/piechart.xml:73
+#: rkward/plugins/plots/barplot.xml:66 rkward/plugins/plots/box_plot.xml:63
+#: rkward/plugins/plots/dotchart.xml:68 rkward/plugins/plots/piechart.xml:71
 #, kde-format
 msgid "Labels (separated by ';')"
 msgstr "Oznake (ločene z »;«)"
@@ -423,9 +423,9 @@ msgstr "Oznake (ločene z »;«)"
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="...">
 #. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="...">
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="...">
-#: rkward/plugins/plots/barplot.xml:70 rkward/plugins/plots/box_plot.xml:71
+#: rkward/plugins/plots/barplot.xml:68 rkward/plugins/plots/box_plot.xml:71
 #: rkward/plugins/plots/density_plot.xml:45
-#: rkward/plugins/plots/dotchart.xml:73 rkward/plugins/plots/piechart.xml:76
+#: rkward/plugins/plots/dotchart.xml:71 rkward/plugins/plots/piechart.xml:74
 #: rkward/plugins/plots/scatterplot.xml:36
 #: rkward/plugins/plots/scatterplot_matrix.xml:22
 #: rkward/plugins/plots/stem.xml:22 rkward/plugins/plots/stripchart_plot.xml:35
@@ -434,7 +434,7 @@ msgid "Options"
 msgstr "Možnosti"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Options"> <embed label="...">
-#: rkward/plugins/plots/barplot.xml:71
+#: rkward/plugins/plots/barplot.xml:69
 #, kde-format
 msgid "Barplot Options"
 msgstr "Možnosti stolpičnega grafikona"
@@ -780,9 +780,9 @@ msgstr "Izmaknjene skupine"
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <radio label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="...">
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <radio label="...">
-#: rkward/plugins/plots/box_plot.xml:56 rkward/plugins/plots/dotchart.xml:63
-#: rkward/plugins/plots/dotchart.xml:64 rkward/plugins/plots/piechart.xml:66
-#: rkward/plugins/plots/piechart.xml:67
+#: rkward/plugins/plots/box_plot.xml:56 rkward/plugins/plots/dotchart.xml:61
+#: rkward/plugins/plots/dotchart.xml:62 rkward/plugins/plots/piechart.xml:64
+#: rkward/plugins/plots/piechart.xml:65
 #, kde-format
 msgid "Labels"
 msgstr "Oznake"
@@ -934,9 +934,9 @@ msgstr "simbol standardne deviacije (spodnji)"
 #. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Plot Options"> <embed label="...">
 #: rkward/plugins/plots/box_plot.xml:103
 #: rkward/plugins/plots/density_plot.xml:100
-#: rkward/plugins/plots/dotchart.xml:74 rkward/plugins/plots/ecdf_plot.xml:68
-#: rkward/plugins/plots/pareto.xml:57 rkward/plugins/plots/pareto.xml:59
-#: rkward/plugins/plots/piechart.xml:97 rkward/plugins/plots/plot.xml:23
+#: rkward/plugins/plots/dotchart.xml:72 rkward/plugins/plots/ecdf_plot.xml:68
+#: rkward/plugins/plots/pareto.xml:55 rkward/plugins/plots/pareto.xml:57
+#: rkward/plugins/plots/piechart.xml:95 rkward/plugins/plots/plot.xml:23
 #: rkward/plugins/plots/stripchart_plot.xml:56
 #: rkward/plugins/plots/stripchart_plot.xml:58
 #, kde-format
@@ -1324,7 +1324,7 @@ msgstr ""
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Dot chart) <dialog label="...">
-#: rkward/plugins/plots/dotchart.js:45 rkward/plugins/plots/dotchart.xml:39
+#: rkward/plugins/plots/dotchart.js:45 rkward/plugins/plots/dotchart.xml:37
 #, kde-format
 msgid "Dot chart"
 msgstr "Točkovni grafikon"
@@ -1656,7 +1656,7 @@ msgstr "Možnosti pasovne širine"
 
 #. i18n: ectx: (Loaded from Pareto chart)
 #. i18n: ectx: (Pareto chart) <dialog label="...">
-#: rkward/plugins/plots/pareto.js:40 rkward/plugins/plots/pareto.xml:31
+#: rkward/plugins/plots/pareto.js:40 rkward/plugins/plots/pareto.xml:29
 #, kde-format
 msgid "Pareto chart"
 msgstr "Paretov grafikon"
@@ -1712,13 +1712,13 @@ msgstr ""
 "component/plot_options\"/>."
 
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <varslot label="...">
-#: rkward/plugins/plots/pareto.xml:37
+#: rkward/plugins/plots/pareto.xml:35
 #, kde-format
 msgid "Raw vector to plot"
 msgstr "Surovi vektor za grafikon"
 
 #. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <checkbox label="...">
-#: rkward/plugins/plots/pareto.xml:45
+#: rkward/plugins/plots/pareto.xml:43
 #, kde-format
 msgid "Print descriptives"
 msgstr "Natiskaj opise"
@@ -1745,7 +1745,7 @@ msgstr "V nasprotno smeri urinega kazalca"
 
 #. i18n: ectx: (Loaded from Pie chart)
 #. i18n: ectx: (Pie chart) <dialog label="...">
-#: rkward/plugins/plots/piechart.js:67 rkward/plugins/plots/piechart.xml:44
+#: rkward/plugins/plots/piechart.js:67 rkward/plugins/plots/piechart.xml:42
 #, kde-format
 msgid "Pie chart"
 msgstr "Tortni grafikon"
@@ -1838,67 +1838,67 @@ msgstr ""
 "nadzorovane z zgoraj navedenimi možnostmi gostote."
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="...">
-#: rkward/plugins/plots/piechart.xml:78
+#: rkward/plugins/plots/piechart.xml:76
 #, kde-format
 msgid "Colors"
 msgstr "Barve"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
-#: rkward/plugins/plots/piechart.xml:79
+#: rkward/plugins/plots/piechart.xml:77
 #, kde-format
 msgid "Default (pastel)"
 msgstr "Privzeto (pastelno)"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
-#: rkward/plugins/plots/piechart.xml:80
+#: rkward/plugins/plots/piechart.xml:78
 #, kde-format
 msgid "Grayscale"
 msgstr "Sivine"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
-#: rkward/plugins/plots/piechart.xml:81
+#: rkward/plugins/plots/piechart.xml:79
 #, kde-format
 msgid "Rainbow colors"
 msgstr "Mavrične barve"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <checkbox label="...">
-#: rkward/plugins/plots/piechart.xml:85
+#: rkward/plugins/plots/piechart.xml:83
 #, kde-format
 msgid "clockwise"
 msgstr "v SUK"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <spinbox label="...">
-#: rkward/plugins/plots/piechart.xml:86
+#: rkward/plugins/plots/piechart.xml:84
 #, kde-format
 msgid "Radius"
 msgstr "Polmer"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="...">
-#: rkward/plugins/plots/piechart.xml:87
+#: rkward/plugins/plots/piechart.xml:85
 #, kde-format
 msgid "Shading"
 msgstr "Senčenje"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
-#: rkward/plugins/plots/piechart.xml:89
+#: rkward/plugins/plots/piechart.xml:87
 #, kde-format
 msgid "density"
 msgstr "gostota"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
-#: rkward/plugins/plots/piechart.xml:90
+#: rkward/plugins/plots/piechart.xml:88
 #, kde-format
 msgid "increment in density"
 msgstr "prirastek v gostoti"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
-#: rkward/plugins/plots/piechart.xml:93
+#: rkward/plugins/plots/piechart.xml:91
 #, kde-format
 msgid "angle"
 msgstr "kot"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
-#: rkward/plugins/plots/piechart.xml:94
+#: rkward/plugins/plots/piechart.xml:92
 #, kde-format
 msgid "increment in angle"
 msgstr "prirastek v kotu"

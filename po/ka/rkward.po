@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-08 00:38+0000\n"
-"PO-Revision-Date: 2025-05-02 03:29+0200\n"
+"PO-Revision-Date: 2025-05-08 03:41+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1980,6 +1980,9 @@ msgid ""
 "dialog will be started when you press finish. You may be prompted to select "
 "a download mirror.</p>"
 msgstr ""
+"<p>დასაყენებლად მონიშნულია %1 R-ის პაკეტი. R-ის პაკეტის დაყენების დიალოგი "
+"გაეშვება, როცა დასრულების ღილაკს დააჭერთ. შეიძლება, გადმოწერის სარკის "
+"შესახებ გკითხოთ.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:476
 #, kde-format
@@ -2344,6 +2347,8 @@ msgid ""
 "Debugger for the backend. (Enclose any debugger arguments in single quotes "
 "('') together with the command. Make sure to re-direct stdout!)"
 msgstr ""
+"გამმართველი უკანაბოლოსთვის (ჩასვით ყველა გამმართველის არგუმენტი ერთმაგ "
+"ბრჭყალებში ('') ბრძანებასთან ერთად. დარწმუნდით, რომ ამისამართებთ stdout-ს!)"
 
 #: rkward/misc/rkcommandlineargs.cpp:33
 #, kde-format

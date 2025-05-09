@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-08 00:38+0000\n"
+"POT-Creation-Date: 2025-05-09 00:38+0000\n"
 "PO-Revision-Date: 2024-12-17 22:13+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -29,14 +29,14 @@ msgid "Your emails"
 msgstr "adrian@chaves.gal"
 
 #. i18n: ectx: (Level selector) <dialog label="...">
-#: rkward/plugins/distributions/../data/level_select.xml:62
+#: rkward/plugins/distributions/../data/level_select.xml:59
 #: rkward/plugins/distributions/../data/multi_input.xml:99
 #, kde-format
 msgid "Level selector"
 msgstr "Selector de niveis"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <text>
-#: rkward/plugins/distributions/../data/level_select.xml:64
+#: rkward/plugins/distributions/../data/level_select.xml:61
 #, kde-format
 msgid "Note: Some values were cut off."
 msgstr "Nota: cortáronse algúns dos valores."
@@ -200,80 +200,80 @@ msgstr ""
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:27
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:26
 #: rkward/plugins/distributions/../embedded.pluginmap:29
 #, kde-format
 msgid "Limit Vector Length"
 msgstr "Limitar a lonxitude do vector"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <spinbox label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:29
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:28
 #, kde-format
 msgid "Limit"
 msgstr "Límite"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:30
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:29
 #, kde-format
 msgid "Sorting"
 msgstr "Ordenación"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:31
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:30
 #, kde-format
 msgid "Keep smallest values"
 msgstr "Manter os valores máis baixos"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:32
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:31
 #, kde-format
 msgid "Keep largest values"
 msgstr "Manter os valores máis altos"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:35
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:34
 #, kde-format
 msgid "Add remainder category"
 msgstr "Engadir unha categoría para o resto"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:36
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:55
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:35
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:51
 #, kde-format
 msgid "Statistic"
 msgstr "Estatístico"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:37
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:57
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:36
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:53
 #, kde-format
 msgid "Sum"
 msgstr "Suma"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:38
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:37
 #, kde-format
 msgid "Mean"
 msgstr "Media"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:39
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:58
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:38
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:54
 #, kde-format
 msgid "Other:"
 msgstr "Outro:"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:41
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:40
 #, kde-format
 msgid "Custom statistic (as function of x)"
 msgstr "Estatísticas personalizadas (como función de x)"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:43
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:42
 #, kde-format
 msgid "Remainder category label"
 msgstr "Etiqueta da categoría do resto"
@@ -448,8 +448,8 @@ msgstr ""
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
 #. i18n: ectx: (Tabulate)
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:31
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:56
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:28
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:52
 #: rkward/plugins/distributions/../plots/histogram_options.js:42
 #: rkward/plugins/distributions/../plots/histogram_options.xml:57
 #, kde-format
@@ -457,59 +457,59 @@ msgid "Frequency"
 msgstr "Frecuencia"
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:35
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:32
 #, no-c-format, kde-format
 msgid "Sum of %1"
 msgstr "Suma de %1"
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:37
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:34
 #, no-c-format, kde-format
 msgctxt "(function name) of (object name)"
 msgid "%1 of %2"
 msgstr "%1 de %2"
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:42
 #, kde-format
 msgid "Tabulation groups"
 msgstr "Grupos de tabulación"
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:42
 #, kde-format
 msgctxt "Tabulate X by Y [by Z [...]]"
 msgid " by "
 msgstr " por "
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:42
 #, kde-format
 msgid "Tabulation statistic"
 msgstr "Estatística de tabulación"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Tabulate) <dialog label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:51
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:47
 #: rkward/plugins/distributions/../embedded.pluginmap:28
 #, kde-format
 msgid "Tabulate"
 msgstr "Tabular"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:53
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:49
 #, kde-format
 msgid "Grouping factors"
 msgstr "Factores de agrupamento"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:61
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:57
 #, kde-format
 msgid "Values"
 msgstr "Valores"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <input label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:62
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:58
 #, kde-format
 msgid "Custom statistic"
 msgstr "Estatística personalizada"
