@@ -953,20 +953,6 @@ void RKCommandEditorWindow::currentHelpContext(QString *symbol, QString *package
 	}
 }
 
-QString RKCommandEditorWindow::provideContext(int line_rev) {
-	RK_TRACE(COMMANDEDITOR);
-
-	KTextEditor::Cursor c = m_view->cursorPosition();
-	int current_line_num = c.line();
-	int cursor_pos = c.column();
-
-	if (line_rev > current_line_num) return QString();
-
-	QString ret = m_doc->line(current_line_num - line_rev);
-	if (line_rev == 0) ret = ret.left(cursor_pos);
-	return ret;
-}
-
 void RKCommandEditorWindow::paste(const QString &text) {
 	RK_TRACE(COMMANDEDITOR);
 

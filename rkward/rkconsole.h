@@ -47,7 +47,6 @@ class RKConsole : public RKMDIWindow, public RKScriptContextProvider {
 	QString currentEditingLine() const;
 	/** Returns the current cursor position, within the current command (without taking into account the prefix). Returns -1 if the cursor is not on the line containing the command. */
 	int currentCursorPositionInCommand();
-	QString provideContext(int line_rev) override;
 	void currentHelpContext(QString *symbol, QString *package) override;
 
 	static RKConsole *mainConsole() { return main_console; };
