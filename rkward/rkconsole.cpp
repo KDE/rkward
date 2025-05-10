@@ -331,20 +331,6 @@ bool RKConsole::handleKeyPress(QKeyEvent *e) {
 	return false;
 }
 
-QString RKConsole::provideContext(int line_rev) {
-	RK_TRACE(COMMANDEDITOR);
-
-	QString ret;
-	if (line_rev == 0) ret = currentEditingLine().left(currentCursorPositionInCommand());
-	else if (!incomplete_command.isEmpty()) {
-		QStringList lines = incomplete_command.split(u'\n');
-		if (lines.size() > line_rev) {
-			ret = lines[lines.size() - line_rev - 1];
-		}
-	}
-	return ret;
-}
-
 bool RKConsole::eventFilter(QObject *o, QEvent *e) {
 	if (o == getPart()) {
 		return RKMDIWindow::eventFilter(o, e);

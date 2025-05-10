@@ -43,20 +43,13 @@ class RKCommandEditorWindowPart : public KParts::Part {
 	~RKCommandEditorWindowPart();
 };
 
-/** classes wishing to use context help should derive from this, and implement provideContext () */
+/** classes wishing to use context help should derive from this, and implement currentHelpContext() */
 class RKScriptContextProvider {
   public:
 	RKScriptContextProvider(){};
 	virtual ~RKScriptContextProvider(){};
 
-	/** to be implemented in subclasses. Provide some context, i.e. text *preceding* the cursor position (probably a line, but you may provide chunks in arbitrary size). If line_rev is 0, provide the line, the cursor is in. If line_rev is greater than 0, provide context before that.
-	@param context Place the context here
-	@returns a chunk of context. A null QString(), if no context was available. */
-	virtual QString provideContext(int line_rev) {
-		Q_UNUSED(line_rev);
-		return QString();
-	};
-	/** to be implemented in subclasses. Provide current context for help searches (based on current selection / current cursor position). If not package information is known, leave that empty. */
+	/** to be implemented in subclasses. Provide current context for help searches (based on current selection / current cursor position). If no package information is known, leave that empty. */
 	virtual void currentHelpContext(QString *symbol, QString *package) = 0;
 };
 
@@ -107,7 +100,6 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	/** Returns an id string for this document. Meaningful, only when url is empty. For keeping track of split views on unnamed/unsaved windows */
 	QString id() const { return _id; };
 
-	QString provideContext(int line_rev) override;
 	void currentHelpContext(QString *symbol, QString *package) override;
 
 	void highlightLine(int linenum);
