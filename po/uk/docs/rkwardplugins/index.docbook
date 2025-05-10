@@ -1578,12 +1578,20 @@ if (my.rotation &gt; wobble.rotation.limit (x)) {
 > раніше. </para>
 	<note
 ><para
->Крім того, <command
+>Якщо одну й ту саму функцію слід викликати для змін кількох елементів, ви також можете передати масив відповідних <parameter
+>id=</parameter
+> до <command
 >gui.addChangeCommmand()</command
-> приймає рядок, у якому має бути виявлено зміни, наприклад <replaceable
->"my_update_function()"</replaceable
->. Цим можна скористатися, якщо вам потрібно викликати ту саму функцію для обробки змін у декількох різних елементів інтерфейсу користувача. </para
-></note>
+>. Крім того, для зручності, <command
+>gui.addChangeCommmand()</command
+> повертає свій другий параметр, що корисно, якщо ви хочете звернутися до цієї функції деінде (наприклад, викликати її один раз під час ініціалізації). Приклад: </para>
+	<programlisting
+>let update = gui.addChangeCommand(["mode.string", "y.available"], function() {
+                // зробити щось при кожні зміні mode.string або y.available
+        });
+        update(); // зробити те саме під час ініціалізації
+        </programlisting>
+	</note>
 	<para
 >Керування логікою графічного інтерфейсу за допомогою скриптів корисне зокрема тоді, коли ви хочете змінити доступні параметри відповідно до типу об’єкта, який вибрано користувачем. Із списком доступних функцій можна ознайомитися у <link linkend="guilogic_functions"
 >довідковому розділі</link
@@ -2615,8 +2623,7 @@ function getSpecifics () {
 >:</para>
 	<programlisting
 >&lt;script&gt;&lt;![CDATA[
-                                gui.addChangeCommand ("variable", "update ()");
-                                update = function () {
+                                let update = gui.addChangeCommand ("variable", "update ()", function () {
                                         gui.setValue ("selector.enabled", 0);
                                         variable = gui.getValue ("variable");
                                         if (variable == "") return;
@@ -2632,7 +2639,7 @@ function getSpecifics () {
                                                 // якщо команда не пройшла e.g.:
                                                 gui.setListValue ("selector.available", Array ("ERROR:", msg));
                                         });
-                                }
+                                };
                 ]]&gt;&lt;/script&gt;
         </programlisting>
 	<para
@@ -2650,27 +2657,27 @@ function getSpecifics () {
 >&lt;valueselector&gt;</command
 > залишався вимкненим, доки у ньому не міститиметься актуальної інформації. По-друге, оскільки користувач може внести зміни швидко, може бути створено декілька команд, перш ніж ми отримаємо якийсь результат. Отже, вам слід забезпечити роботу лише із найсвіжішою командою. </para>
 	<para
->To deal with asynchronousicty, what is returned, here, is a <command
+>Для роботи з асинхронністю тут повертається об'єкт <command
 >Promise</command
-> object. More info on this powerful javascript feature can be found <ulink url="https://javascript.info/async"
->on the internet</ulink
->. The important thing to know, here, is that appending a <command
+>. Більше інформації про цю потужну функцію JavaScript можна знайти <ulink url="https://javascript.info/async"
+>в інтернеті</ulink
+>. Важливо знати, що додавання оператора <command
 >.then()</command
-> statement allows you to specify what will happen when the command has completed, and a <command
+> дозволяє вказати, що станеться після завершення команди, а оператор <command
 >.catch()</command
-> statement can be used to handle any errors. Again, keep in mind, that the <command
+> можна використовувати для обробки будь-яких помилок. Знову ж таки, майте на увазі, що блок <command
 >.then()</command
-> block does not get executed right away. To understand the implications of this, it may be helpful, during development, to insert a <command
+> не виконується одразу. Щоб зрозуміти наслідки цього, під час розробки може бути корисним вставити <command
 >Sys.sleep(1);</command
-> into your R command, to see what happens, when a command does not complete, immediately.</para>
+> у вашу команду R, щоб побачити, що відбувається, коли виконання команди не завершується негайно.</para>
 	<para
->Finally, to deal with multiple commands being generated, you can specify a second argument to <command
+>Зрештою, для обробки створення кількох команд можна вказати другий аргумент <command
 >new RCommand()</command
->, ("myid", in this example). Any commands with the same (freely chosen) identifier will be understood to belong to the same queue. RKWard will then make sure that only the latest command will actually trigger the <command
+> (у цьому прикладі - "myid"). Будь-які команди з однаковим (довільно вибраним) ідентифікатором вважатимуться такими, що належать до однієї черги. RKWard потім переконається, що лише остання команда фактично запустить блок <command
 >.then()</command
-> block, while any obsoleted commands will arrive in the <command
+>, тоді як будь-які застарілі команди надходитимуть у блок <command
 >.catch()</command
-> block. Here, obsoleted commands can be identified, as the string "outdated" is passed as their value, while for any other possible errors, the warnings, and error messages are passed along. </para>
+>. Тут застарілі команди можна ідентифікувати, оскільки рядок "outdated" передається як їхнє значення, тоді як для будь-яких інших можливих помилок передаються попередження та повідомлення про помилки. </para>
 	<para
 >Зауважте, що цей приклад є дещо спрощеним. Насправді, вам доведеться вжити певних застережних заходів, наприклад, уникати надмірної кількості вкладених рівнів у засобі вибору. Втім, ймовірно, вам не потрібно буде дбати про усе самому. Наведений вище приклад взято з додатка <command
 >rkward::level_select</command
@@ -8294,11 +8301,19 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >addChangeCommand(ідентифікатор, команда)</term
 ><listitem
 ><para
->Виконати <emphasis
->команду</emphasis
-> кожного разу, коли вносяться зміни до дочірньої властивості <emphasis
+>Виконувати <replaceable
+>команду</replaceable
+> щоразу, коли змінюється дочірня властивість, задана параметром <emphasis
 >ідентифікатор</emphasis
->. Командою може бути або рядок, що визначається у програмі, або значення, яке придатне до виклику (зазвичай, функція).</para
+>. <replaceable
+>ідентифікатор</replaceable
+> може бути заданий як один рядок або як масив ідентифікаторів (якщо функцію потрібно викликати для змін кількох властивостей). <replaceable
+>команда</replaceable
+> – це значення, яке можна викликати (зазвичай функція), проте для сумісності з додатками, написаними для попередніх версій RKWard, його також можна задати як обчислюваний рядок.</para>
+	<para
+>Функція, для зручності, повертає параметр <replaceable
+>команду</replaceable
+> (отже, ви, наприклад, можете передати значення до якоїсь змінної і/або викликати функцію під час ініціалізації).</para
 ></listitem
 ></varlistentry>
 	</variablelist

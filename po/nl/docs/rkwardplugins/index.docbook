@@ -1563,18 +1563,18 @@ R code bevatten.
 > statements. </para>
 	<note
 ><para
->If the same function should be invoked for changes in several elements, you can also pass an array of the respective <parameter
+>Als dezelfde functie aangeroepen zou moeten worden voor wijzigingen in verschillende elementen, dan kunt u een array van de respectievelijke <parameter
 >id=</parameter
->s to <command
+>'s doorgeven aan <command
 >gui.addChangeCommmand()</command
->. Further, for convenience, <command
+>. Verder, voor het gemak, <command
 >gui.addChangeCommmand()</command
-> returns its second parameter, which is useful, if you want to refer to this function elsewhere (e.g. to call it once during initialization). E.g.: </para>
+> geeft zijn tweede parameter door, wat nuttig is, als u naar deze functie elders wilt verwijzen (bijv. om het eenmaal aan te roepen tijdens initialisatie). Bijv.: </para>
 	<programlisting
 >let update = gui.addChangeCommand(["mode.string", "y.available"], function() {
-                // do something on each change of mode.string or y.available
+                // doe iets bij elke wijziging van mode.string of y.available
         });
-        update(); // do the same once during intialization
+        update(); // doe hetzelfde eenmaal tijdens initialisatie
         </programlisting>
 	</note>
 	<para
@@ -2617,12 +2617,12 @@ function getSpecifics () {
                                                 gui.setListValue ("selector.available", result);
                                         }).catch(msg =
 > {
-                                                if (msg === "outdated") return;  // command was canceled, because new one is about to arrive -> benign
-                                                // possibly other error handling, msg carries the warnings and error messages produced,
-                                                // if the command failed e.g.:
+                                                if (msg === "outdated") return;  // commando was geannuleerd, omdat er een nieuwe op het punt staat te arriveren -> benign
+                                                // mogelijk ander foutbehandeling, msg bevat de waarschuwing en geproduceerd foutmelding,
+                                                // als het commando mislukte bijv.:
                                                 gui.setListValue ("selector.available", Array ("ERROR:", msg));
                                         });
-                                });
+                                }
                 ]]&gt;&lt;/script&gt;
         </programlisting>
 	<para
@@ -2640,27 +2640,27 @@ function getSpecifics () {
 >&lt;valueselector&gt;</command
 > uit blijft staan, zolang het geen bijgewerkte informatie bevat. Ten tweede, omdat de gebruiker wijzigingen kan doen, snel, meer dan één commando misschien heeft gegenereerd, voordat we enig resultaat ontvangen. Dus moet u er zeker van zijn om alleen op het meest recente commando te acteren. </para>
 	<para
->To deal with asynchronousicty, what is returned, here, is a <command
+>Om met asynchroon zijn te werken, wat hier is teruggekeerd, is een object <command
 >Promise</command
-> object. More info on this powerful javascript feature can be found <ulink url="https://javascript.info/async"
->on the internet</ulink
->. The important thing to know, here, is that appending a <command
+>. Meer informatie over deze krachtige javascript functie is te vinden in <ulink url="https://javascript.info/async"
+>op het internet</ulink
+>. Het belangrijkste hier is te weten dat achtervoegen van een <command
 >.then()</command
-> statement allows you to specify what will happen when the command has completed, and a <command
+> statement u het specificeren biedt wat zal gebeuren wanneer het commando is voltooid en een <command
 >.catch()</command
-> statement can be used to handle any errors. Again, keep in mind, that the <command
+> statement gebruikt kan worden om fouten af te handelen. Opnieuw, bedenk, dat het blok <command
 >.then()</command
-> block does not get executed right away. To understand the implications of this, it may be helpful, during development, to insert a <command
+> niet onmiddellijk wordt uitgevoerd. Om te de implicaties hiervan te begrijpen, kan het behulpzaam zijn, gedurende ontwikkeling, om een <command
 >Sys.sleep(1);</command
-> into your R command, to see what happens, when a command does not complete, immediately.</para>
+> in uw R commando in te voegen, om te zien wat er gebeurt, wanneer een commando niet volledig, onmiddellijk, gereed komt.</para>
 	<para
->Finally, to deal with multiple commands being generated, you can specify a second argument to <command
+>Tenslotte, om te delen met meerdere commando's die gegenereerd worden, kunt u een tweede argument specificeren bij het <command
 >new RCommand()</command
->, ("myid", in this example). Any commands with the same (freely chosen) identifier will be understood to belong to the same queue. RKWard will then make sure that only the latest command will actually trigger the <command
+>, ("myid", in dit voorbeeld). Alle commando's met dezelfde (vrij gekozen) identifier zal begrepen worden te behoren tot dezelfde wachtrij. RKWard zal dan verzekeren dat alleen het laatst commando het blok <command
 >.then()</command
-> block, while any obsoleted commands will arrive in the <command
+> zal starten, terwijl alle verouderde commando's zullen arriveren in het blok <command
 >.catch()</command
-> block. Here, obsoleted commands can be identified, as the string "outdated" is passed as their value, while for any other possible errors, the warnings, and error messages are passed along. </para>
+>. Hier kunnen verouderde commando's geïdentificeerd worden, omdat de tekenreeks "outdated" wordt doorgegeven als hun waarde, terwijl voor alle andere mogelijke fouten, de waarschuwingen en foutmeldingen samen worden doorgegeven. </para>
 	<para
 >Let erop dat dit voorbeeld een beetje eenvoudiger is gemaakt. In werkelijkheid moet u verdere voorzorgsmaatregelen treffen, &eg; het voorkomen van een extreem aantal levels in de selector. Het goede nieuws is dat u dit waarschijnlijk niet allemaal zelf moet  doen. Bovenstaand voorbeeld komt uit de <command
 >rkward::level_select</command
@@ -8287,19 +8287,19 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Macht", id.name="macht", i18n=FALSE)
 >addChangeCommand(id, opdracht)</term
 ><listitem
 ><para
->Execute <replaceable
->command</replaceable
-> whenever the child property given by <emphasis
+>Voer <replaceable
+>commando</replaceable
+> uit wanneer de kindeigenschap gegeven door <emphasis
 >id</emphasis
-> changes. <replaceable
+> wijzigt. <replaceable
 >id</replaceable
-> may either be given as a single string, or as an array of ids (if the function is to be called for changes in several properties. <replaceable
->command</replaceable
-> is a callable value (usually a function), however, for compatibility with plugins written for earlier versions of RKWard, it may also be given as a string to be evaluated.</para>
+> kan ofwel gegeven zijn als een enkele tekenreeks of als een array van id's (als de functie aangeroepen moet worden voor wijzigingen in verschillende eigenschappen. <replaceable
+>commando</replaceable
+> is een aanroepbare waarde (gewoonlijk een functie), echter, voor compatibiliteit met plug-ins geschreven voor eerdere versies van RKWard, kan het ook gegeven worden als een te evalueren tekenreeks.</para>
 	<para
->The function returns the parameter <replaceable
->command</replaceable
->, for convenience (so you can e.g. assign it to a variable and/or call it during initialization).</para
+>De functie geeft de parameter <replaceable
+>commando</replaceable
+> terug, voor het gemak (dus u kunt bijv. het toekennen aan een variabele en/of aanroepen tijdens initialisatie).</para
 ></listitem
 ></varlistentry>
 	</variablelist
