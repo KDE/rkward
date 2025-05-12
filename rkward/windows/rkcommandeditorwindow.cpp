@@ -23,6 +23,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QLineEdit>
 #include <QMenu>
 #include <QSplitter>
 #include <QTemporaryDir>
@@ -34,18 +35,21 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
+#include <KColorScheme>
 #include <kconfiggroup.h>
 #include <kmessagebox.h>
 #include <krandom.h>
 #include <kstandardaction.h>
 #include <ktexteditor_version.h>
 #include <kwidgetsaddons_version.h>
+#include <qcombobox.h>
 
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkjobsequence.h"
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkstyle.h"
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../misc/rkxmlguisyncer.h"
 #include "../rbackend/rkrinterface.h"
@@ -62,6 +66,213 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkworkplace.h"
 
 #include "../debug.h"
+
+/** Very crude, but very fast R parser. Parses the basic structure, only */
+class RKScriptContext {
+public:
+	enum ContextType {
+		Top,
+		Parenthesis,
+		Brace,
+		Bracket,
+		Comment,
+		SingleQuoted,
+		DoubleQuoted,
+		BackQuoted,
+		SubsetOperator,
+		OtherOperator,
+		Delimiter,
+		AnySymbol
+	} type;
+
+	RKScriptContext(ContextType type, int start, const QStringView &content) : type(type), start(start) {
+		int pos = start-1;
+
+		if (type == SingleQuoted || type == DoubleQuoted || type == BackQuoted) {
+			while (++pos < content.length()) {
+				const QChar c = content.at(pos);
+				if (c == u'\\') ++pos;
+				else if (c == u'\'' && type == SingleQuoted) break;
+				else if (c == u'"' && type == DoubleQuoted) break;
+				else if (c == u'`' && type == BackQuoted) break;
+			}
+		} else if (type == AnySymbol) {
+			while (++pos < content.length()) {
+				const QChar c = content.at(pos);
+				if (!c.isLetterOrNumber() && c != u'.') {
+					--pos;
+					break;
+				}
+			}
+		} else if (type == Comment) {
+			while (++pos < content.length()) {
+				if (content.at(pos) == u'\n') break;
+			}
+		} else if (type == OtherOperator || type == SubsetOperator || type == Delimiter) {
+			// leave context, immediately
+		} else {
+			while (++pos < content.length()) {
+				QChar c = content.at(pos);
+				if (c == u'\'') pos = addContext(SingleQuoted, pos, content);
+				else if (c == u'"') pos = addContext(DoubleQuoted, pos, content);
+				else if (c == u'`') pos = addContext(BackQuoted, pos, content);
+				else if (c == u'#') pos = addContext(Comment, pos, content);
+				else if (c == u'(') pos = addContext(Parenthesis, pos, content);
+				else if (c == u')' && type == Parenthesis) break;
+				else if (c == u'{') pos = addContext(Brace, pos, content);
+				else if (c == u'}' && type == Brace) break;
+				else if (c == u'[') pos = addContext(Bracket, pos, content);
+				else if (c == u']' && type == Bracket) break;
+				else if (c.isLetterOrNumber() || c == u'.') pos = addContext(AnySymbol, pos, content);
+				else if (c == u'\n' || c == u',' || c == u';') pos = addContext(Delimiter, pos, content);
+				else if (c == u'$' || c == u'@') pos = addContext(SubsetOperator, pos, content);
+				else if (!c.isSpace()) pos = addContext(OtherOperator, pos, content);
+			}
+		}
+
+		end = pos;
+	}
+
+	int addContext(ContextType type, int start, const QStringView &content) {
+		auto ctx = RKScriptContext(type, start+1, content);
+		// post cleanups (all these depend on the previous context at this level:
+		if (!children.isEmpty()) {
+			auto &prev = children.last();
+			auto prevtype = prev.type;
+			// Merge any two subsequent operators into one token
+			if (type == OtherOperator && prevtype == OtherOperator) {
+				prev.end = ctx.end;
+				return ctx.end;
+			}
+			// newlines do not count as delimiter on operator RHS
+			if (type == Delimiter && content.at(start) == '\n' && (prevtype == OtherOperator || prevtype == SubsetOperator)) {
+				return ctx.end;
+			}
+			// TODO: post cleanup (possibly incomplete list):
+			//       - special treatment for subsetting operators: Treat as continuation of symbol -> but maybe not here?
+		}
+
+		children.append(ctx);
+		return ctx.end;
+	}
+
+	// purely for debugging:
+	QString serialize(int level=0) const {
+		QString ret;
+
+		if (type == Parenthesis) ret += u'(';
+		if (type == Brace) ret += u'{';
+		if (type == Bracket) ret += u'[';
+		if (type == SingleQuoted) ret += u'\'';
+		if (type == DoubleQuoted) ret += u'"';
+		if (type == BackQuoted) ret += u'`';
+		if (type == Comment) ret += u'#';
+		if (type == SubsetOperator) ret += u'$';
+		if (type == OtherOperator) ret += u'+';
+		if (type == AnySymbol) ret += u'x';
+
+		for(const auto &c : std::as_const(children)) ret += c.serialize(level+4);
+
+		if (type == Parenthesis) ret += u')';
+		if (type == Brace) ret += u'}';
+		if (type == Bracket) ret += u']';
+		if (type == SingleQuoted) ret += u'\'';
+		if (type == DoubleQuoted) ret += u'"';
+		if (type == BackQuoted) ret += u'`';
+		if (type == Comment || type == Delimiter) {
+			ret += u'\n';
+			for (int i = 0; i < level; ++i) ret.append(u' ');
+		}
+		return ret;
+	}
+
+	int start;
+	int end;
+	QList<RKScriptContext> children;
+};
+
+class RKCodeNavigation : public QWidget {
+  private:
+	RKCodeNavigation(KTextEditor::View *view) : QWidget(view, Qt::Popup | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint), view(view), doc(view->document()) {
+		auto scheme = RKStyle::viewScheme();
+		auto pal = palette();
+		pal.setColor(backgroundRole(), scheme->background(KColorScheme::PositiveBackground).color());
+		setPalette(pal);
+
+		view->installEventFilter(this);
+		if (view->window()) view->window()->installEventFilter(this);
+
+		auto box = new QVBoxLayout(this);
+		auto label = new QLabel(i18n("<b>Code Navigation</b> (<a href=\"rkward:://pages/code_navigation\">Help</a>)"));
+		QObject::connect(label, &QLabel::linkActivated, RKWorkplace::mainWorkplace(), &RKWorkplace::openAnyUrlString);
+		box->addWidget(label);
+
+		input = new QComboBox();
+		input->setEditable(true);
+		input->addItem(QStringLiteral("s    # ") + i18n("Expand selection to statement"));
+		input->addItem(QStringLiteral("t    # ") + i18n("Go to next top level statement"));
+		input->lineEdit()->setPlaceholderText(i18n("e.g. 'ts' - see 'Help', above"));
+		input->setCurrentIndex(-1);
+		box->addWidget(input);
+		connect(input, &QComboBox::currentTextChanged, this, &RKCodeNavigation::navigate);
+	}
+
+	void updatePos() {
+		move(view->mapToGlobal(view->geometry().topRight() - QPoint(width(), 0)));
+	}
+
+	void focusOutEvent(QFocusEvent *) override {
+		deleteLater();
+	}
+
+	void navigate(const QString &current) {
+		qDebug("%s", qPrintable(RKScriptContext(RKScriptContext::Top, 0, doc->text()).serialize()));
+/*		auto cursor = view->cursorPosition();
+		enum { Seek, FoundStart, FoundEnd, eof } status = Seek;
+		for (; cursor.advance(); status != Seek) {
+			auto s = doc->defaultStyleAt(cursor);
+			// Skip over all comments (any easier to type logic for this?)
+			if (s == KSyntaxHighlighting::Theme::Comment ||
+			s == KSyntaxHighlighting::Theme::Documentation ||
+			s == KSyntaxHighlighting::Theme::Annotation ||
+			s == KSyntaxHighlighting::Theme::CommentVar ||
+			s == KSyntaxHighlighting::Theme::RegionMarker ||
+			s == KSyntaxHighlighting::Theme::Information ||
+			s == KSyntaxHighlighting::Theme::Warning ||
+			s == KSyntaxHighlighting::Theme::Alert) {
+				continue;
+			}
+			// Skip over all strings (any easier to type logic for this?)
+			if (s == KSyntaxHighlighting::Theme::Char ||
+			    s == KSyntaxHighlighting::Theme::SpecialChar ||
+			    s == KSyntaxHighlighting::Theme::String ||
+			    s == KSyntaxHighlighting::Theme::VerbatimString ||
+			    s == KSyntaxHighlighting::Theme::SpecialString) {
+				continue;
+			}
+			if (s == KSyntaxHighlighting::Theme::Operator ) {
+			}
+		} */
+	}
+
+	bool eventFilter(QObject *, QEvent *event) override {
+		if (event->type() == QEvent::Move || event->type() == QEvent::Resize) {
+			updatePos();
+		}
+		return false;
+	}
+  public:
+	static void doNavigation(KTextEditor::View *view) {
+		auto w = new RKCodeNavigation(view);
+		w->show();
+		w->updatePos();
+		w->input->setFocus();
+	}
+  private:
+	KTextEditor::View *view;
+	KTextEditor::Document *doc;
+	QComboBox *input;
+};
 
 RKCommandEditorWindowPart::RKCommandEditorWindowPart(QWidget *parent) : KParts::Part(parent) {
 	RK_TRACE(COMMANDEDITOR);
@@ -402,6 +613,10 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 	if (file_save_action) file_save_action->setText(i18n("Save Script..."));
 	file_save_as_action = findAction(m_view, QStringLiteral("file_save_as"));
 	if (file_save_as_action) file_save_as_action->setText(i18n("Save Script As..."));
+
+	action = ac->addAction(QStringLiteral("code_navigation"), this, [this]() { RKCodeNavigation::doNavigation(m_view); });
+	action->setText(i18n("Code Navigation"));
+	ac->setDefaultShortcuts(action, QList<QKeySequence>() << (Qt::MetaModifier | Qt::Key_N));
 }
 
 void RKCommandEditorWindow::initBlocks() {
@@ -970,6 +1185,7 @@ void RKCommandEditorWindow::setWDToScript() {
 		dir.remove(0, 1);
 #endif
 	RKConsole::pipeUserCommand(u"setwd (\""_s + dir + u"\")"_s);
+	m_view->insertTemplate(m_view->cursorPosition(), u"${dummy()}"_s, u"require('document.js'); require('view.js'); document.insertText(view.cursorPosition(), 'INSERT'); view.setSelection(0,2, 0,4); function dummy() {};"_s);
 }
 
 void RKCommandEditorWindow::runCurrent() {
