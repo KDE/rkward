@@ -2,12 +2,13 @@
 # This file is distributed under the same license as the rkward package.
 #
 # SPDX-FileCopyrightText: 2024, 2025 giovanni <g.sora@tiscali.it>
+# giovanni <g.sora@tiscali.it>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-08 00:38+0000\n"
-"PO-Revision-Date: 2025-04-22 12:27+0200\n"
+"PO-Revision-Date: 2025-05-12 16:13+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 21.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1068,7 +1069,7 @@ msgstr "Carga"
 #: rkward/dialogs/rkloadlibsdialog.cpp:367
 #, kde-format
 msgid "Unload"
-msgstr ""
+msgstr "Discarga"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:374
 #, kde-format
@@ -2770,19 +2771,19 @@ msgstr "error"
 #, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr ""
+msgstr "preste"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr ""
+msgstr "n/d"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr ""
+msgstr "non activate (off)"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:213
 #, kde-format
@@ -3171,7 +3172,7 @@ msgstr ""
 #: rkward/plugin/rkpluginbrowser.cpp:47
 #, kde-format
 msgid "Enter filename"
-msgstr ""
+msgstr "Entra nomine de file "
 
 #: rkward/plugin/rkpluginbrowser.cpp:48
 #, kde-format
@@ -4228,10 +4229,9 @@ msgid "Open as text file and force R highlighting"
 msgstr ""
 
 #: rkward/rkward.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Many objects in workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Multe objectos in spatio de labor"
+msgstr "Aperi como spatio de labor de R"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -5186,7 +5186,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:69
 #, kde-format
 msgid "R-Backend"
-msgstr ""
+msgstr "Retro-Administration de R"
 
 #: rkward/settings/rksettingsmoduler.cpp:76
 #, kde-format
@@ -6129,8 +6129,7 @@ msgid "[Active]"
 msgstr "[Active]"
 
 #: rkward/windows/rkhtmlwindow.cpp:751
-#, fuzzy, kde-format
-#| msgid "Output %1"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Exito %1"
@@ -6207,7 +6206,7 @@ msgstr "S&alva resultato de egresso como ..."
 #: rkward/windows/rkhtmlwindow.cpp:927
 #, kde-format
 msgid "&Clear Output"
-msgstr ""
+msgstr "&Clara Exito"
 
 #: rkward/windows/rkhtmlwindow.cpp:933
 #, kde-format
