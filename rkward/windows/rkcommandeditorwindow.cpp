@@ -1,6 +1,6 @@
 /*
 rkcommandeditorwindow - This file is part of RKWard (https://rkward.kde.org). Created: Mon Aug 30 2004
-SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -67,27 +67,79 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-/** Very crude, but very fast R parser. Parses the basic structure, only */
-class RKScriptContext {
+/** Very crude, but very fast R parser. Parses the basic structure, only
+
+Technical note on data structure: While, logically, contexts form a nested hierarchy, a nested data layout does not really lend itself
+to our purpose, which is to navigate the underlying code, sequentially. So rather, we keep a flat list of contexts, sorted (inherently, during parsing)
+by start position.
+
+Inside this flat list, a child context is defined by starting after (or at) the parent's start, and ending before (or at) the parent's end. Child
+contexts are always found after their parent in the list.
+*/
+class RKParsedScript {
 public:
 	enum ContextType {
+		None,
 		Top,
 		Parenthesis,
 		Brace,
 		Bracket,
-		Comment,
+		Comment, // 5
 		SingleQuoted,
 		DoubleQuoted,
 		BackQuoted,
 		SubsetOperator,
-		OtherOperator,
+		OtherOperator, // 10
 		Delimiter,
 		AnySymbol
-	} type;
+	};
 
-	RKScriptContext(ContextType type, int start, const QStringView &content) : type(type), start(start) {
-		int pos = start-1;
+	struct Context {
+		Context(ContextType type, int start) : type(type), start(start) {};
+		Context(ContextType type, int start, int end) : type(type), start(start), end(end) {};
+		ContextType type;
+		int start;
+		int end;
+	};
 
+	std::vector<Context> context_list;
+
+	int contextAtPos(int pos) const {
+		// Context 0 is Top, not really of interest
+		for (int i = 1; i < context_list.size(); ++i) {
+			if (context_list.at(i).start > pos) {
+				return i - 1;
+			}
+		}
+		return 0;
+	}
+	
+	const Context &getContext(int index) const {
+		return context_list.at(index);
+	}
+
+	RKParsedScript(const QString &content) {
+		context_list.reserve(200); // just a very wild guess
+		addContext(Top, -1, content);
+	};
+
+	int addContext(ContextType type, int start, const QString &content) {
+		ContextType prevtype = context_list.empty() ? None : context_list.back().type;
+
+		int index = context_list.size();
+		// some contexts need (or benefit from) special handling depending on the preceding context
+		if (type == OtherOperator && prevtype == OtherOperator) {
+			// Merge any two subsequent operators into one token
+			// i.e. do not add a context, we'll reuse the previous one.
+			--index;
+		} else if (type == Delimiter && content.at(start) == u'\n' && (prevtype == OtherOperator || prevtype == SubsetOperator)) {
+			// newlines do not count as delimiter on operator RHS, so skip ahead, instead of really adding this
+			return start;
+		} else {
+			context_list.emplace_back(type, start); // end will be filled in, later
+		}
+
+		int pos = start;
 		if (type == SingleQuoted || type == DoubleQuoted || type == BackQuoted) {
 			while (++pos < content.length()) {
 				const QChar c = content.at(pos);
@@ -130,65 +182,65 @@ public:
 			}
 		}
 
-		end = pos;
-	}
+		// NOTE: we can't just keep a reference to the context at the start of this function, as the vector
+		//       may re-allocate during nested parsing
+		context_list.at(index).end = pos;
+		return pos;
+	};
 
-	int addContext(ContextType type, int start, const QStringView &content) {
-		auto ctx = RKScriptContext(type, start+1, content);
-		// post cleanups (all these depend on the previous context at this level:
-		if (!children.isEmpty()) {
-			auto &prev = children.last();
-			auto prevtype = prev.type;
-			// Merge any two subsequent operators into one token
-			if (type == OtherOperator && prevtype == OtherOperator) {
-				prev.end = ctx.end;
-				return ctx.end;
-			}
-			// newlines do not count as delimiter on operator RHS
-			if (type == Delimiter && content.at(start) == '\n' && (prevtype == OtherOperator || prevtype == SubsetOperator)) {
-				return ctx.end;
-			}
-			// TODO: post cleanup (possibly incomplete list):
-			//       - special treatment for subsetting operators: Treat as continuation of symbol -> but maybe not here?
-		}
-
-		children.append(ctx);
-		return ctx.end;
-	}
-
-	// purely for debugging:
-	QString serialize(int level=0) const {
+	// NOTE: used in debugging, only
+	QString serialize() {
 		QString ret;
+		std::vector<Context> stack;
+		stack.push_back(Context(None, -1, INT_MAX)); // dummy context, to avoid empty stack
 
-		if (type == Parenthesis) ret += u'(';
-		if (type == Brace) ret += u'{';
-		if (type == Bracket) ret += u'[';
-		if (type == SingleQuoted) ret += u'\'';
-		if (type == DoubleQuoted) ret += u'"';
-		if (type == BackQuoted) ret += u'`';
-		if (type == Comment) ret += u'#';
-		if (type == SubsetOperator) ret += u'$';
-		if (type == OtherOperator) ret += u'+';
-		if (type == AnySymbol) ret += u'x';
+		for (unsigned int i = 0; i < context_list.size(); ++i) {
+			const auto ctx = context_list.at(i);
 
-		for(const auto &c : std::as_const(children)) ret += c.serialize(level+4);
+			// end any finished contexts
+			while (ctx.start >= stack.back().end) {
+				ret += endContext(stack.back(), stack.size());
+				stack.pop_back();
+			}
 
-		if (type == Parenthesis) ret += u')';
-		if (type == Brace) ret += u'}';
-		if (type == Bracket) ret += u']';
-		if (type == SingleQuoted) ret += u'\'';
-		if (type == DoubleQuoted) ret += u'"';
-		if (type == BackQuoted) ret += u'`';
-		if (type == Comment || type == Delimiter) {
-			ret += u'\n';
-			for (int i = 0; i < level; ++i) ret.append(u' ');
+			// now deal with the current context
+			stack.push_back(ctx);
+			const auto type = ctx.type;
+			if (type == Parenthesis) ret += u'(';
+			if (type == Brace) ret += u'{';
+			if (type == Bracket) ret += u'[';
+			if (type == SingleQuoted) ret += u'\'';
+			if (type == DoubleQuoted) ret += u'"';
+			if (type == BackQuoted) ret += u'`';
+			if (type == Comment) ret += u'#';
+			if (type == SubsetOperator) ret += u'$';
+			if (type == OtherOperator) ret += u'+';
+			if (type == AnySymbol) ret += u'x';
 		}
+		while (!stack.empty()) {
+			ret += endContext(stack.back(), stack.size());
+			stack.pop_back();
+		}
+
 		return ret;
 	}
 
-	int start;
-	int end;
-	QList<RKScriptContext> children;
+	QString endContext(const Context &ctx, int level) {
+		const auto ptype = ctx.type;
+
+		if (ptype == Parenthesis) return u")"_s;
+		if (ptype == Brace) return u"}"_s;
+		if (ptype == Bracket) return u"]"_s;
+		if (ptype == SingleQuoted) return u"'"_s;
+		if (ptype == DoubleQuoted) return u"\""_s;
+		if (ptype == BackQuoted) return u"`"_s;
+		if (ptype == Comment || ptype == Delimiter) {
+			QString ret = u"\n"_s;
+			for (int j = 0; j < (level-1) * 4; ++j) ret += u" "_s;
+			return ret;
+		}
+		return QString();
+	}
 };
 
 class RKCodeNavigation : public QWidget {
@@ -226,33 +278,37 @@ class RKCodeNavigation : public QWidget {
 	}
 
 	void navigate(const QString &current) {
-		qDebug("%s", qPrintable(RKScriptContext(RKScriptContext::Top, 0, doc->text()).serialize()));
-/*		auto cursor = view->cursorPosition();
-		enum { Seek, FoundStart, FoundEnd, eof } status = Seek;
-		for (; cursor.advance(); status != Seek) {
-			auto s = doc->defaultStyleAt(cursor);
-			// Skip over all comments (any easier to type logic for this?)
-			if (s == KSyntaxHighlighting::Theme::Comment ||
-			s == KSyntaxHighlighting::Theme::Documentation ||
-			s == KSyntaxHighlighting::Theme::Annotation ||
-			s == KSyntaxHighlighting::Theme::CommentVar ||
-			s == KSyntaxHighlighting::Theme::RegionMarker ||
-			s == KSyntaxHighlighting::Theme::Information ||
-			s == KSyntaxHighlighting::Theme::Warning ||
-			s == KSyntaxHighlighting::Theme::Alert) {
-				continue;
+		// TODO: cache the parse tree. But for testing, it's not so bad to have it all parsed per keypress
+		RKParsedScript tree(doc->text());
+//		qDebug("%s", qPrintable(tree.serialize()));
+
+		// translate cursor position to string index
+		const auto cursor = view->cursorPosition();
+		int pos = cursor.column();
+		for (int l = 0; l < cursor.line(); ++l) {
+			pos += doc->lineLength(l) + 1; 
+		}
+
+		// then find out, where that is in the parse tree
+		auto ci = tree.contextAtPos(pos);
+
+		// apply navigation command
+		QChar command = current.back();
+		int newpos = pos;
+		if (command == u'n') {
+#warning Will overflow-crash and is not yet correct, either
+			 newpos = tree.getContext(ci+1).start;
+		}
+		RK_DEBUG(COMMANDEDITOR, DL_WARNING, "navigate %d to %d", pos, newpos);
+
+		// translate new position back to cursor coordinates
+		for (int l = 0; l < doc->lines(); ++l) {
+			newpos -= (doc->lineLength(l) + 1);
+			if (newpos < 0) {
+				view->setCursorPosition(KTextEditor::Cursor(l, newpos + doc->lineLength(l) + 1));
+				break;
 			}
-			// Skip over all strings (any easier to type logic for this?)
-			if (s == KSyntaxHighlighting::Theme::Char ||
-			    s == KSyntaxHighlighting::Theme::SpecialChar ||
-			    s == KSyntaxHighlighting::Theme::String ||
-			    s == KSyntaxHighlighting::Theme::VerbatimString ||
-			    s == KSyntaxHighlighting::Theme::SpecialString) {
-				continue;
-			}
-			if (s == KSyntaxHighlighting::Theme::Operator ) {
-			}
-		} */
+		}
 	}
 
 	bool eventFilter(QObject *, QEvent *event) override {
