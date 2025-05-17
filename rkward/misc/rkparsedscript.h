@@ -72,22 +72,25 @@ class RKParsedScript {
 	/** Find the innermost context containing pos.
 	 *  returns the previous context, if no context actually contains this position (e.g. on a space) */
 	ContextIndex contextAtPos(int pos) const;
-	ContextIndex nextContext(ContextIndex from) const;
-	ContextIndex prevContext(ContextIndex from) const;
+	ContextIndex nextContext(const ContextIndex from) const;
+	ContextIndex prevContext(const ContextIndex from) const;
 
 	/** Find the innermost region (Context::maybeNesting()) containing this context */
-	ContextIndex parentRegion(ContextIndex from) const;
+	ContextIndex parentRegion(const ContextIndex from) const;
 
 	/** Find next sibling context (no inner or outer contexts) */
-	ContextIndex nextSibling(ContextIndex from) const;
-	ContextIndex prevSibling(ContextIndex from) const;
+	ContextIndex nextSibling(const ContextIndex from) const;
+	ContextIndex prevSibling(const ContextIndex from) const;
 
-	ContextIndex nextSiblingOrOuter(ContextIndex from) const;
-	ContextIndex prevSiblingOrOuter(ContextIndex from) const;
+	ContextIndex nextSiblingOrOuter(const ContextIndex from) const;
+	ContextIndex prevSiblingOrOuter(const ContextIndex from) const;
+
+	ContextIndex nextStatement(const ContextIndex from) const;
+	ContextIndex prevStatement(const ContextIndex from) const;
 
 	/** retrieve the context at the given index. Safe to call, even with an invalid index
 	 *  (in which case the outermost context will be returned). */
-	const Context &getContext(ContextIndex index) const {
+	const Context &getContext(const ContextIndex index) const {
 		if (!index.valid()) return context_list.front();
 		return context_list.at(index.index);
 	}
@@ -104,6 +107,8 @@ friend class RKCodeNavigation;
 	// I want to modify some objects in place during parsing, without triggering copy-on-write
 	// hence no Qt container
 	std::vector<Context> context_list;
+	ContextType prevtype;
+	bool allow_merge;
 };
 
 #endif
