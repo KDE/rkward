@@ -47,6 +47,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkjobsequence.h"
+#include "../misc/rkparsedscript.h"
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstyle.h"
@@ -102,7 +103,7 @@ class RKCodeNavigation : public QWidget {
 	void navigate(const QString &current) {
 		// TODO: cache the parse tree. But for testing, it's not so bad to have it all parsed per keypress
 		RKParsedScript tree(doc->text());
-//		qDebug("%s", qPrintable(tree.serialize()));
+		qDebug("%s", qPrintable(tree.serialize()));
 
 		// translate cursor position to string index
 		const auto cursor = view->cursorPosition();
@@ -113,15 +114,31 @@ class RKCodeNavigation : public QWidget {
 
 		// then find out, where that is in the parse tree
 		auto ci = tree.contextAtPos(pos);
+		auto cparent = tree.parentRegion(ci);
 
 		// apply navigation command
 		QChar command = current.back();
 		int newpos = pos;
 		if (command == u'n') {
-#warning Will overflow-crash and is not yet correct, either
-			 newpos = tree.getContext(ci+1).start;
+			auto ni = ci;
+
+			// skip over anyting that is not an explicit or implicit delimiter
+			while (true) {
+				ni = tree.nextSiblingOrOuter(ni);
+				if (!ni.valid()) break; // hit end
+				else if (tree.getContext(ni).type == RKParsedScript::Delimiter) break; 
+				else if (tree.getContext(ni).start > tree.getContext(cparent).end) break;
+			}
+
+			// skip over any following non-interesting contexts
+			while (true) {
+				auto type = tree.getContext(ni).type;
+				if (type != RKParsedScript::Delimiter && type != RKParsedScript::Comment) break;
+				ni = tree.nextSiblingOrOuter(ni);
+			}
+			newpos = tree.getContext(ni).start;
 		}
-		RK_DEBUG(COMMANDEDITOR, DL_WARNING, "navigate %d to %d", pos, newpos);
+		RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "navigate %d to %d", pos, newpos);
 
 		// translate new position back to cursor coordinates
 		for (int l = 0; l < doc->lines(); ++l) {

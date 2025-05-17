@@ -15,6 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKParsedScript::RKParsedScript(const QString &content) {
 	context_list.reserve(200); // just a very wild guess
 	addContext(Top, -1, content);
+	RK_ASSERT(context_list.front().end == content.size() -1);
 };
 
 int RKParsedScript::addContext(ContextType type, int start, const QString &content) {
@@ -22,14 +23,22 @@ int RKParsedScript::addContext(ContextType type, int start, const QString &conte
 
 	int index = context_list.size();
 	// some contexts need (or benefit from) special handling depending on the preceding context
-	if (type == OtherOperator && prevtype == OtherOperator) {
-		// Merge any two subsequent operators into one token
+	// TODO: maybe it would be easier to do this in a separte post-processing step
+	if ((type == prevtype) && (type == OtherOperator || type == Delimiter || type == Comment)) {
+		// Merge any two subsequent operators or delimiters, and contiguous comment regions into one token
 		// i.e. do not add a context, we'll reuse the previous one.
 		--index;
 	} else if (type == Delimiter && content.at(start) == u'\n' && (prevtype == OtherOperator || prevtype == SubsetOperator)) {
 		// newlines do not count as delimiter on operator RHS, so skip ahead, instead of really adding this
 		return start;
 	} else {
+		if (prevtype == Comment) { // comment region implies a newline
+			auto pprevtype = context_list.at(index - 2).type;
+			if (pprevtype != OtherOperator && pprevtype != SubsetOperator) {
+				context_list.emplace_back(Delimiter, start-1, start-1);
+				++index;
+			}
+		}
 		context_list.emplace_back(type, start); // end will be filled in, later
 	}
 
@@ -82,14 +91,76 @@ int RKParsedScript::addContext(ContextType type, int start, const QString &conte
 	return pos;
 };
 
-int RKParsedScript::contextAtPos(int pos) const {
+RKParsedScript::ContextIndex RKParsedScript::contextAtPos(int pos) const {
 	// Context 0 is Top, not really of interest
-	for (int i = 1; i < context_list.size(); ++i) {
+	for (unsigned int i = 1; i < context_list.size(); ++i) {
 		if (context_list.at(i).start > pos) {
-			return i - 1;
+			return ContextIndex(i - 1);
 		}
 	}
-	return 0;
+	return ContextIndex(0);
+}
+
+RKParsedScript::ContextIndex RKParsedScript::nextContext(ContextIndex from) const {
+	int i = from.index + 1;
+	if (i >= context_list.size()) i = -1;
+	return ContextIndex(i);
+}
+
+RKParsedScript::ContextIndex RKParsedScript::prevContext(ContextIndex from) const {
+	int i = from.index - 1;
+	if (i >= context_list.size()) i = -1;
+	return ContextIndex(i);
+}
+
+/** Find the innermost region (Context::maybeNesting()) containing this context */
+RKParsedScript::ContextIndex RKParsedScript::parentRegion(ContextIndex from) const {
+	if (from.valid())  {
+		int startpos = context_list.at(from.index).start;
+		for (int i = from.index-1; i >= 0; --i) {
+			if (context_list.at(i).maybeNesting() && context_list.at(i).end >= startpos) {
+				return ContextIndex(i);
+			}
+		}
+	}
+	return ContextIndex();
+}
+
+/** Find next sibling context (no inner or outer contexts) */
+RKParsedScript::ContextIndex RKParsedScript::nextSiblingOrOuter(ContextIndex from) const {
+	if (from.valid())  {
+		int endpos = context_list.at(from.index).end;
+		unsigned int i = from.index;
+		do {
+			++i;
+		} while (i < context_list.size() && context_list.at(i).start <= endpos); // advance, skipping child regions
+		return ContextIndex(i < context_list.size() ? i : -1);
+	}
+	return ContextIndex();
+}
+
+RKParsedScript::ContextIndex RKParsedScript::nextSibling(ContextIndex from) const {
+	auto candidate = nextSiblingOrOuter(from);
+	if (parentRegion(candidate) == parentRegion(from)) return candidate;
+	return ContextIndex();
+}
+
+RKParsedScript::ContextIndex RKParsedScript::prevSiblingOrOuter(ContextIndex from) const {
+	if (from.valid())  {
+		int startpos = context_list.at(from.index).start;
+		int i = from.index;
+		do {
+			--i;
+		} while (i >= 0 && context_list.at(i).end >= startpos); // advance, skipping child regions
+		return ContextIndex(i);
+	}
+	return ContextIndex();
+}
+
+RKParsedScript::ContextIndex RKParsedScript::prevSibling(ContextIndex from) const {
+	auto candidate = prevSiblingOrOuter(from);
+	if (parentRegion(candidate) == parentRegion(from)) return candidate;
+	return ContextIndex();
 }
 
 // NOTE: used in debugging, only
