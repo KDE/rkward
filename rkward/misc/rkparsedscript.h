@@ -22,7 +22,7 @@ by start position.
 Inside this flat list, a child context is defined by starting after (or at) the parent's start, and ending before (or at) the parent's end. Child
 contexts are always found after their parent in the list.
 
-Type of context. Parenthesis, Brace, and Bracket are the only ContextType s that we actually consider as nested.
+Type of context. Parenthesis, Brace, and Bracket, and the outermost context (Top) are the only ContextType s that we actually consider as nested.
 */
 class RKParsedScript {
   public:
@@ -45,6 +45,7 @@ class RKParsedScript {
 	struct Context {
 		Context(ContextType type, int start) : type(type), start(start) {};
 		Context(ContextType type, int start, int end) : type(type), start(start), end(end) {};
+		bool maybeNesting() const { return (type == Parenthesis || type == Brace || type == Bracket || type == Top); };
 		ContextType type;
 		int start;
 		int end;
@@ -52,12 +53,43 @@ class RKParsedScript {
 
 	RKParsedScript(const QString &content);
 
-	/** Find the (index of the) innermost context containing pos.
+	enum SearchFlags {
+		NoFlags,
+		SkipInnerContexts = 1,
+		SearchBackwards = 2
+	};
+
+	/** Helper struct to enforce strict type checking between character position, and index of context */
+	struct ContextIndex {
+		ContextIndex() : index(-1) {};
+		explicit ContextIndex(int index) : index(index) {};
+		bool valid() const { return index >= 0; };
+		bool operator==(const ContextIndex &other) { return index == other.index; };
+		bool operator!=(const ContextIndex &other) { return index != other.index; };
+		int index;
+	};
+
+	/** Find the innermost context containing pos.
 	 *  returns the previous context, if no context actually contains this position (e.g. on a space) */
-	int contextAtPos(int pos) const;
-	
-	const Context &getContext(int index) const {
-		return context_list.at(index);
+	ContextIndex contextAtPos(int pos) const;
+	ContextIndex nextContext(ContextIndex from) const;
+	ContextIndex prevContext(ContextIndex from) const;
+
+	/** Find the innermost region (Context::maybeNesting()) containing this context */
+	ContextIndex parentRegion(ContextIndex from) const;
+
+	/** Find next sibling context (no inner or outer contexts) */
+	ContextIndex nextSibling(ContextIndex from) const;
+	ContextIndex prevSibling(ContextIndex from) const;
+
+	ContextIndex nextSiblingOrOuter(ContextIndex from) const;
+	ContextIndex prevSiblingOrOuter(ContextIndex from) const;
+
+	/** retrieve the context at the given index. Safe to call, even with an invalid index
+	 *  (in which case the outermost context will be returned). */
+	const Context &getContext(ContextIndex index) const {
+		if (!index.valid()) return context_list.front();
+		return context_list.at(index.index);
 	}
 
   private:
