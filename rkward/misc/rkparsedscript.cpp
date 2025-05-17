@@ -12,19 +12,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKParsedScript::RKParsedScript(const QString &content) {
+RKParsedScript::RKParsedScript(const QString &content) : prevtype(None), allow_merge(true) {
 	context_list.reserve(200); // just a very wild guess
 	addContext(Top, -1, content);
 	RK_ASSERT(context_list.front().end == content.size() -1);
 };
 
 int RKParsedScript::addContext(ContextType type, int start, const QString &content) {
-	ContextType prevtype = context_list.empty() ? None : context_list.back().type;
-
 	int index = context_list.size();
 	// some contexts need (or benefit from) special handling depending on the preceding context
 	// TODO: maybe it would be easier to do this in a separte post-processing step
-	if ((type == prevtype) && (type == OtherOperator || type == Delimiter || type == Comment)) {
+	if (allow_merge && (type == prevtype) && (type == OtherOperator || type == Delimiter || type == Comment)) {
 		// Merge any two subsequent operators or delimiters, and contiguous comment regions into one token
 		// i.e. do not add a context, we'll reuse the previous one.
 		--index;
@@ -41,6 +39,7 @@ int RKParsedScript::addContext(ContextType type, int start, const QString &conte
 		}
 		context_list.emplace_back(type, start); // end will be filled in, later
 	}
+	allow_merge = true;
 
 	int pos = start;
 	if (type == SingleQuoted || type == DoubleQuoted || type == BackQuoted) {
@@ -85,9 +84,15 @@ int RKParsedScript::addContext(ContextType type, int start, const QString &conte
 		}
 	}
 
+	// do not merge comment regions etc across Brace ends
+	if (type == Parenthesis || type == Brace || type == Bracket) {
+		allow_merge = false;
+	}
+
 	// NOTE: we can't just keep a reference to the context at the start of this function, as the vector
 	//       may re-allocate during nested parsing
 	context_list.at(index).end = pos;
+	prevtype = type;
 	return pos;
 };
 
@@ -101,20 +106,20 @@ RKParsedScript::ContextIndex RKParsedScript::contextAtPos(int pos) const {
 	return ContextIndex(0);
 }
 
-RKParsedScript::ContextIndex RKParsedScript::nextContext(ContextIndex from) const {
+RKParsedScript::ContextIndex RKParsedScript::nextContext(const ContextIndex from) const {
 	int i = from.index + 1;
-	if (i >= context_list.size()) i = -1;
+	if (i >= (int) context_list.size()) i = -1;
 	return ContextIndex(i);
 }
 
-RKParsedScript::ContextIndex RKParsedScript::prevContext(ContextIndex from) const {
+RKParsedScript::ContextIndex RKParsedScript::prevContext(const ContextIndex from) const {
 	int i = from.index - 1;
-	if (i >= context_list.size()) i = -1;
+	if (i >= (int) context_list.size()) i = -1;
 	return ContextIndex(i);
 }
 
 /** Find the innermost region (Context::maybeNesting()) containing this context */
-RKParsedScript::ContextIndex RKParsedScript::parentRegion(ContextIndex from) const {
+RKParsedScript::ContextIndex RKParsedScript::parentRegion(const ContextIndex from) const {
 	if (from.valid())  {
 		int startpos = context_list.at(from.index).start;
 		for (int i = from.index-1; i >= 0; --i) {
@@ -127,7 +132,7 @@ RKParsedScript::ContextIndex RKParsedScript::parentRegion(ContextIndex from) con
 }
 
 /** Find next sibling context (no inner or outer contexts) */
-RKParsedScript::ContextIndex RKParsedScript::nextSiblingOrOuter(ContextIndex from) const {
+RKParsedScript::ContextIndex RKParsedScript::nextSiblingOrOuter(const ContextIndex from) const {
 	if (from.valid())  {
 		int endpos = context_list.at(from.index).end;
 		unsigned int i = from.index;
@@ -139,28 +144,85 @@ RKParsedScript::ContextIndex RKParsedScript::nextSiblingOrOuter(ContextIndex fro
 	return ContextIndex();
 }
 
-RKParsedScript::ContextIndex RKParsedScript::nextSibling(ContextIndex from) const {
+RKParsedScript::ContextIndex RKParsedScript::nextSibling(const ContextIndex from) const {
 	auto candidate = nextSiblingOrOuter(from);
 	if (parentRegion(candidate) == parentRegion(from)) return candidate;
 	return ContextIndex();
 }
 
-RKParsedScript::ContextIndex RKParsedScript::prevSiblingOrOuter(ContextIndex from) const {
+RKParsedScript::ContextIndex RKParsedScript::prevSiblingOrOuter(const ContextIndex from) const {
 	if (from.valid())  {
 		int startpos = context_list.at(from.index).start;
 		int i = from.index;
 		do {
 			--i;
 		} while (i >= 0 && context_list.at(i).end >= startpos); // advance, skipping child regions
+
+		while (true) {
+			// handle the case of "a(b)c": Moving rev from c would give us b, however, that's a nephew, not a sibling
+			// In this situation we want to return b's parent (i.e. the opening brace)
+			// In a loop, as the situation could also be "a{(b)}c", etc.
+			auto candidate_parent = parentRegion(ContextIndex(i));
+			if (getContext(candidate_parent).end >= startpos) break;
+			i = candidate_parent.index;
+		}
 		return ContextIndex(i);
 	}
 	return ContextIndex();
 }
 
-RKParsedScript::ContextIndex RKParsedScript::prevSibling(ContextIndex from) const {
+RKParsedScript::ContextIndex RKParsedScript::prevSibling(const ContextIndex from) const {
 	auto candidate = prevSiblingOrOuter(from);
 	if (parentRegion(candidate) == parentRegion(from)) return candidate;
 	return ContextIndex();
+}
+
+RKParsedScript::ContextIndex RKParsedScript::nextStatement(const ContextIndex from) const {
+	auto ni = from;
+	auto cparent = parentRegion(from);
+
+	// skip over anything that is not an explicit or implicit delimiter
+	while (true) {
+		ni = nextSiblingOrOuter(ni);
+		if (!ni.valid()) break; // hit end
+		else if (getContext(ni).type == Delimiter) break;
+		else if (getContext(ni).start > getContext(cparent).end) break;
+	}
+
+	// skip over any following non-interesting contexts
+	while (true) {
+		auto type = getContext(ni).type;
+		if (type != Delimiter && type != Comment) break;
+		ni = nextSiblingOrOuter(ni);
+	}
+	return ni;
+}
+
+RKParsedScript::ContextIndex RKParsedScript::prevStatement(const ContextIndex from) const {
+	auto pi = from;
+
+	// TODO: refactor into more readable / reusable parts: statementStart() and statementEnd()
+
+	// find start of current statement (the delimiter, preceding it)
+	while (true) {
+		pi = prevSiblingOrOuter(pi);
+		if (!pi.valid()) break; // hit top end
+		else if (getContext(pi).type == Delimiter) break;
+	}
+	// from here, skip over any preceding non-interesting contexts (entering the previous statement
+	while (true) {
+		auto type = getContext(pi).type;
+		if (type != Delimiter && type != Comment) break;
+		pi = prevSiblingOrOuter(pi);
+	}
+	// now find the start of the previous statement
+	while (true) {
+		pi = prevSiblingOrOuter(pi);
+		if (!pi.valid()) break; // hit top end
+		else if (getContext(pi).type == Delimiter) break;
+	}
+	// actual start is the token after the delimiter
+	return nextContext(pi);
 }
 
 // NOTE: used in debugging, only
@@ -171,6 +233,7 @@ QString RKParsedScript::serialize() const {
 
 	for (unsigned int i = 0; i < context_list.size(); ++i) {
 		const auto ctx = context_list.at(i);
+		qDebug("ctx type %d: %d->%d\n", ctx.type, ctx.start, ctx.end);
 
 		// end any finished contexts
 		while (ctx.start >= stack.back().end) {

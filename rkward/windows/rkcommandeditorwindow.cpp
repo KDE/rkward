@@ -114,29 +114,14 @@ class RKCodeNavigation : public QWidget {
 
 		// then find out, where that is in the parse tree
 		auto ci = tree.contextAtPos(pos);
-		auto cparent = tree.parentRegion(ci);
 
 		// apply navigation command
 		QChar command = current.back();
 		int newpos = pos;
 		if (command == u'n') {
-			auto ni = ci;
-
-			// skip over anyting that is not an explicit or implicit delimiter
-			while (true) {
-				ni = tree.nextSiblingOrOuter(ni);
-				if (!ni.valid()) break; // hit end
-				else if (tree.getContext(ni).type == RKParsedScript::Delimiter) break; 
-				else if (tree.getContext(ni).start > tree.getContext(cparent).end) break;
-			}
-
-			// skip over any following non-interesting contexts
-			while (true) {
-				auto type = tree.getContext(ni).type;
-				if (type != RKParsedScript::Delimiter && type != RKParsedScript::Comment) break;
-				ni = tree.nextSiblingOrOuter(ni);
-			}
-			newpos = tree.getContext(ni).start;
+			newpos = tree.getContext(tree.nextStatement(ci)).start;
+		} else if (command == u'N') {
+			newpos = tree.getContext(tree.prevStatement(ci)).start;
 		}
 		RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "navigate %d to %d", pos, newpos);
 
