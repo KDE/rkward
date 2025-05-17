@@ -33,6 +33,7 @@ SET(misc_STAT_SRCS
    rkdialogbuttonbox.cpp
    rkoutputdirectory.cpp
    rkstyle.cpp
+   rkparsedscript.cpp
    rkparsedversion.cpp
    rkradiogroup.cpp
    rkrapimenu.cpp
