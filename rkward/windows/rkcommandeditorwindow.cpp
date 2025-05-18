@@ -86,14 +86,12 @@ class RKCodeNavigation : public QWidget {
 		box->addWidget(input);
 		connect(input, &QLineEdit::textChanged, this, &RKCodeNavigation::navigate);
 
-		ps = RKParsedScript(doc->text());
+		ps = RKParsedScript(doc->text(), doc->highlightingMode() == u"R Markdown"_s);
 		StoredPosition initial;
 		// translate cursor position to string index
 		initial.pos = cursorToPosition(view->cursorPosition());
 		initial.selection = view->selectionRange();
 		stored_positions.append(initial);
-
-		bool multilanguage = doc->embeddedHighlightingModes().size() > 1;
 	}
 
 	void updatePos() {

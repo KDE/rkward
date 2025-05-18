@@ -41,12 +41,12 @@ class RKParsedScriptTest : public QObject {
 	QString script;
 	RKParsedScript ps;
 
-	void loadScript(const QString &relname) {
+	void loadScript(const QString &relname, bool rmd=false) {
 		QFile f(QStringLiteral(TEST_DATA_DIR) + relname);
 		bool ok = f.open(QIODevice::ReadOnly | QIODevice::Text);
 		QVERIFY(ok);
 		script = QString::fromUtf8(f.readAll());
-		ps = RKParsedScript(script);
+		ps = RKParsedScript(script, rmd);
 	}
 
 	void compareScript(RKParsedScript::ContextIndex pos, const QString &expected) {
@@ -58,25 +58,11 @@ class RKParsedScriptTest : public QObject {
 		compareScript(newpos, expected);
 		return newpos;
 	}
-  private Q_SLOTS:
-	void init() {
-		testLog("Starting next test");
-	}
 
-	void cleanup() {
-		testLog("Cleanup");
-	}
-
-	void initTestCase() {
-		QStandardPaths::setTestModeEnabled(true);
-		RK_Debug::RK_Debug_Level = DL_DEBUG;
-	}
-
-	void sanityTest() {
-		// no matter where we go, and for how long, we shall not crash or hang!
-		loadScript(u"script1.R"_s);
+	void sanityTestHelper() {
 		for (int startpos = 0; startpos < script.length(); ++startpos) {
-			const auto ctx0 = ps.contextAtPos(script.length() / 2);
+			const auto ctx0 = ps.contextAtPos(startpos);
+			testLog("%d", startpos);
 			auto ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.nextContext(ctx);
@@ -105,6 +91,25 @@ class RKParsedScriptTest : public QObject {
 			while (ctx.valid())
 				ctx = ps.parentRegion(ctx);
 		}
+	}
+  private Q_SLOTS:
+	void init() {
+		testLog("Starting next test");
+	}
+
+	void cleanup() {
+		testLog("Cleanup");
+	}
+
+	void initTestCase() {
+		QStandardPaths::setTestModeEnabled(true);
+		RK_Debug::RK_Debug_Level = DL_DEBUG;
+	}
+
+	void sanityTest() {
+		// no matter where we go, and for how long, we shall not crash or hang!
+		loadScript(u"script1.R"_s);
+		sanityTestHelper();
 	}
 
 	void nextPrevStatement() {
@@ -243,6 +248,13 @@ class RKParsedScriptTest : public QObject {
 		QCOMPARE(script.mid(ps.lastPositionInStatement(ctx)+1, 9), u"\nSymbol19"_s);
 		ctx = ps.contextAtPos(script.indexOf(u"Symbol08"));
 		QCOMPARE(script.at(ps.lastPositionInStatement(ctx)), u']');
+	}
+
+	void rmdTest() {
+		loadScript(u"script1.Rmd"_s, true);
+		sanityTestHelper();
+		testLog("%s", qPrintable(ps.serialize()));
+		// TODO real test
 	}
 };
 
