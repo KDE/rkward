@@ -51,7 +51,7 @@ class RKParsedScript {
 		int end;
 	};
 
-	explicit RKParsedScript(const QString &content=QString());
+	explicit RKParsedScript(const QString &content = QString());
 
 	enum SearchFlags {
 		NoFlags,
@@ -102,8 +102,8 @@ class RKParsedScript {
 	// add and parse a context. This is where the actual parsing takes place
 	int addContext(ContextType type, int start, const QString &content);
 
-friend class RKParsedScriptTest;
-friend class RKCodeNavigation;
+	friend class RKParsedScriptTest;
+	friend class RKCodeNavigation;
 	// NOTE: used in debugging, only
 	QString serialize() const;
 	QString serializeContextEnd(const Context &ctx, int level) const;
