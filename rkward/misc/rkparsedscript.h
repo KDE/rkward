@@ -51,7 +51,7 @@ class RKParsedScript {
 		int end;
 	};
 
-	RKParsedScript(const QString &content);
+	explicit RKParsedScript(const QString &content=QString());
 
 	enum SearchFlags {
 		NoFlags,
@@ -64,8 +64,8 @@ class RKParsedScript {
 		ContextIndex() : index(-1) {};
 		explicit ContextIndex(int index) : index(index) {};
 		bool valid() const { return index >= 0; };
-		bool operator==(const ContextIndex &other) { return index == other.index; };
-		bool operator!=(const ContextIndex &other) { return index != other.index; };
+		bool operator==(const ContextIndex &other) const { return index == other.index; };
+		bool operator!=(const ContextIndex &other) const { return index != other.index; };
 		int index;
 	};
 
@@ -88,6 +88,9 @@ class RKParsedScript {
 	ContextIndex nextStatement(const ContextIndex from) const;
 	ContextIndex prevStatement(const ContextIndex from) const;
 
+	ContextIndex firstContextInStatement(const ContextIndex from) const;
+	ContextIndex lastContextInStatement(const ContextIndex from) const;
+
 	/** retrieve the context at the given index. Safe to call, even with an invalid index
 	 *  (in which case the outermost context will be returned). */
 	const Context &getContext(const ContextIndex index) const {
@@ -99,6 +102,7 @@ class RKParsedScript {
 	// add and parse a context. This is where the actual parsing takes place
 	int addContext(ContextType type, int start, const QString &content);
 
+friend class RKParsedScriptTest;
 friend class RKCodeNavigation;
 	// NOTE: used in debugging, only
 	QString serialize() const;

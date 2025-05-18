@@ -17,6 +17,9 @@ macro(rkward_executable_tests)
   endforeach()
 endmacro()
 
+add_definitions(-DTEST_DATA_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}//data/\")
+
 rkward_executable_tests(
   core_test
+  rkparsedscript_test
 )
