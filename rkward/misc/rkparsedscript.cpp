@@ -200,7 +200,7 @@ RKParsedScript::ContextIndex RKParsedScript::firstContextInStatement(const Conte
 		if (!pi.valid()) break; // hit top end
 		const auto &pc = getContext(pi);
 		if (pc.type == Delimiter) break;
-		// Consider reversing from "c" in "a + (b + c)" bs. "a + (b) + c": We want to stop at region
+		// Consider reversing from "c" in "a + (b + c)" vs. "a + (b) + c": We want to stop at region
 		// openings, too, *if* that region is a parent of this one
 		if (pc.maybeNesting() && pc.end > getContext(from).start) break;
 	}
@@ -227,6 +227,8 @@ RKParsedScript::ContextIndex RKParsedScript::nextStatement(const ContextIndex fr
 
 	// forward past end of current statement
 	auto ni = nextContext(lastContextInStatement(from));
+	// consider advancing from "b" in "a = (b + c) + d; e" -> should be e, not "+ d"
+	while (getContext(ni).type != Delimiter) ni = nextContext(lastContextInStatement(ni));
 	// skip over any following non-interesting contexts
 	while (true) {
 		auto type = getContext(ni).type;
@@ -249,6 +251,83 @@ RKParsedScript::ContextIndex RKParsedScript::prevStatement(const ContextIndex fr
 	}
 	// now find the start of the previous statement
 	return (firstContextInStatement(pi));
+}
+
+RKParsedScript::ContextIndex RKParsedScript::nextOuter(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	// this may not be a terribly efficient implementation, but a short one:
+	auto out = prevOuter(from);
+	return nextStatement(out);
+}
+
+RKParsedScript::ContextIndex RKParsedScript::prevOuter(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	return firstContextInStatement(parentRegion(from));
+}
+
+RKParsedScript::ContextIndex RKParsedScript::nextToplevel(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	auto ctx = from;
+	auto parent = parentRegion(ctx);
+	while (parent.valid() && getContext(parent).type != Top) {
+		ctx = prevOuter(ctx);
+		parent = parentRegion(ctx);
+	}
+	return nextStatement(ctx);
+}
+
+RKParsedScript::ContextIndex RKParsedScript::prevToplevel(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	auto ctx = prevStatement(from);
+	auto parent = parentRegion(ctx);
+	while (parent.valid() && getContext(parent).type != Top) {
+		ctx = prevOuter(ctx);
+		parent = parentRegion(ctx);
+	}
+	return firstContextInStatement(ctx);
+}
+
+RKParsedScript::ContextIndex RKParsedScript::nextStatementOrInner(const ContextIndex from) const {
+	RK_TRACE(MISC);
+
+	auto nsi = nextStatement(from);
+	auto ci = nextContext(from);
+	while (ci.valid() && ci.index < nsi.index) {
+		auto ctx = getContext(ci);
+		// NOTE: We want to move into inner contexts, *unless* they are empty
+		if (ctx.maybeNesting()) {
+			auto candidate_inner = nextContext(ci);
+			if (parentRegion(candidate_inner) == ci) return candidate_inner;
+		}
+		ci = nextContext(ci);
+	}
+	return ci;
+}
+
+RKParsedScript::ContextIndex RKParsedScript::prevStatementOrInner(const ContextIndex from) const {
+	RK_TRACE(MISC);
+
+	auto psi = prevStatement(from);
+	auto ci = prevContext(from);
+	while (ci.valid() && ci.index > psi.index) {
+		auto ctx = getContext(ci);
+		if (ctx.maybeNesting()) {
+			auto candidate = nextContext(ci);
+			if (parentRegion(candidate) == ci && candidate != from) {
+				// found an inner region, but what's the last (inner!) statement in it?
+				// TODO: is there an easier solution?
+				auto next = candidate;
+				auto limit = nextOuter(candidate);
+				while (next.index < limit.index && next.index < ci.index) {
+					candidate = next;
+					next = nextStatementOrInner(candidate);
+				} 
+				return candidate;
+			}
+		}
+		ci = prevContext(ci);
+	}
+	return ci;
 }
 
 // NOTE: used in debugging, only

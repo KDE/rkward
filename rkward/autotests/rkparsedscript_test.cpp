@@ -183,6 +183,56 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"{ aaa"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"makeFunction"_s);
 	}
+
+	void nextPrevOuter() {
+		loadScript(u"script1.R"_s);
+		testLog("Block1");
+		auto ctx = ps.contextAtPos(script.indexOf(u"nest3"));
+		ctx = moveAndCheck(ps.nextOuter(ctx), u"nest5"_s);
+		ctx = moveAndCheck(ps.nextOuter(ctx), u"ddd"_s);
+		QVERIFY(!ps.nextOuter(ctx).valid());
+
+		testLog("Block2");
+		ctx = ps.contextAtPos(script.indexOf(u"nest3"));
+		ctx = moveAndCheck(ps.prevOuter(ctx), u"{"_s);
+		ctx = moveAndCheck(ps.prevOuter(ctx), u"{"_s);
+		ctx = moveAndCheck(ps.prevOuter(ctx), u"makeFunction"_s);
+		ctx = moveAndCheck(ps.prevOuter(ctx), u"FunctionList"_s);
+		QVERIFY(!ps.prevOuter(ctx).valid());
+	}
+
+	void nextPrevToplevel() {
+		loadScript(u"script1.R"_s);
+		testLog("Block1");
+		auto ctx = ps.contextAtPos(script.indexOf(u"Symbol09"));
+		ctx = moveAndCheck(ps.nextToplevel(ctx), u"Symbol19"_s);
+		ctx = moveAndCheck(ps.nextToplevel(ctx), u"Symbol.x"_s);
+		ctx = moveAndCheck(ps.nextToplevel(ctx), u"FunctionList"_s);
+		QVERIFY(!ps.nextToplevel(ctx).valid());
+
+		testLog("Block2");
+		ctx = ps.contextAtPos(script.indexOf(u"Symbol09"));
+		ctx = moveAndCheck(ps.prevToplevel(ctx), u"Symbol01"_s);
+		ctx = moveAndCheck(ps.prevToplevel(ctx), u"Symbol00"_s);
+		ctx = moveAndCheck(ps.nextToplevel(ctx), u"Symbol01"_s); // make sure, we can still advance from here
+		ctx = moveAndCheck(ps.prevToplevel(ctx), u"Symbol00"_s);
+		QVERIFY(!ps.prevToplevel(ctx).valid());
+	}
+
+	void nextPrevInner() {
+		loadScript(u"script1.R"_s);
+		testLog("Block1");
+		auto ctx = ps.contextAtPos(script.indexOf(u"nest5"));
+		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"ddd"_s);
+		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"eee"_s);
+		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"ggg"_s);
+		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"jjj"_s);
+
+		testLog("Block2");
+		ctx = ps.contextAtPos(script.indexOf(u"jjj"));
+		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"ggg"_s);
+		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"eee"_s); // TODO: or should it be "fff"?
+	}
 };
 
 QTEST_MAIN(RKParsedScriptTest)

@@ -91,6 +91,15 @@ class RKParsedScript {
 	ContextIndex firstContextInStatement(const ContextIndex from) const;
 	ContextIndex lastContextInStatement(const ContextIndex from) const;
 
+	ContextIndex nextOuter(const ContextIndex from) const;
+	ContextIndex prevOuter(const ContextIndex from) const;
+
+	ContextIndex nextToplevel(const ContextIndex from) const;
+	ContextIndex prevToplevel(const ContextIndex from) const;
+
+	ContextIndex nextStatementOrInner(const ContextIndex from) const;
+	ContextIndex prevStatementOrInner(const ContextIndex from) const;
+
 	/** retrieve the context at the given index. Safe to call, even with an invalid index
 	 *  (in which case the outermost context will be returned). */
 	const Context &getContext(const ContextIndex index) const {
