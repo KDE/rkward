@@ -22,8 +22,8 @@ FunctionList <- list(
 	{
 		nest1
 		{
-			nest2
-			nest3
+			nest2(nest2_inner + 1)
+			nest3()
 			nest4
 		}
 		nest5
