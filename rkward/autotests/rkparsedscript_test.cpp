@@ -72,6 +72,32 @@ class RKParsedScriptTest : public QObject {
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 	}
 
+	void sanityTest() {
+		// no matter where we go, and for how long, we shall not crash or hang!
+		loadScript(u"script1.R"_s);
+		for (int startpos = 0; startpos < script.length(); ++startpos) {
+			const auto ctx0 = ps.contextAtPos(script.length() / 2);
+			auto ctx = ctx0;
+			while (ctx.valid()) ctx = ps.nextContext(ctx);
+			ctx = ctx0;
+			while (ctx.valid()) ctx = ps.nextSibling(ctx);
+			ctx = ctx0;
+			while (ctx.valid()) ctx = ps.nextSiblingOrOuter(ctx);
+			ctx = ctx0;
+			while (ctx.valid()) ctx = ps.nextStatement(ctx);
+			ctx = ctx0;
+			while (ctx.valid()) ctx = ps.prevContext(ctx);
+			ctx = ctx0;
+			while (ctx.valid()) ctx = ps.prevSibling(ctx);
+			ctx = ctx0;
+			while (ctx.valid()) ctx = ps.prevSiblingOrOuter(ctx);
+			ctx = ctx0;
+			while (ctx.valid()) ctx = ps.prevStatement(ctx);
+			ctx = ctx0;
+			while (ctx.valid()) ctx = ps.parentRegion(ctx);
+		}
+	}
+
 	void nextPrevStatement() {
 		loadScript(u"script1.R"_s);
 //		ps.serialize();
@@ -83,7 +109,7 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol19"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol.x"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"FunctionList"_s);
-		QVERIFY(!ps.nextStatement(ctx).valid()); // NOTE this need not be set in stone
+		QVERIFY(!ps.nextStatement(ctx).valid()); // NOTE this need not be set in stone, could e.g. wrap around
 
 		testLog("Block2");
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol.x"_s);
@@ -93,6 +119,14 @@ class RKParsedScriptTest : public QObject {
 		//QVERIFY(!ps.prevStatement(ctx).valid());  // not sure that we want this
 
 		testLog("Block3");
+		ctx = ps.contextAtPos(script.indexOf(u"Symbol11"));
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol13"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol15"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol16"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol18"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol19"_s);
+
+		testLog("Block4");
 		const auto symb18 = ps.contextAtPos(script.indexOf(u"Symbol18"));
 		ctx = moveAndCheck(ps.prevStatement(symb18), u"Symbol16"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol15"_s);
@@ -104,12 +138,24 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol03"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol01"_s);
 
-		testLog("Block4");
+		testLog("Block5");
 		const auto symb14 = ps.contextAtPos(script.indexOf(u"Symbol14"));
 		ctx = moveAndCheck(ps.prevStatement(symb14), u"Symbol11"_s);  // shall stay in parenthesis
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol10"_s); // shall move out
 
-		testLog("Block5");
+		testLog("Block6");
+		ctx = ps.contextAtPos(script.indexOf(u"Argname"));
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"makeFunction"_s);
+		QVERIFY(!ps.nextStatement(ctx).valid()); // NOTE this need not be set in stone, could e.g. wrap around
+
+		testLog("Block7");
+		ctx = ps.contextAtPos(script.indexOf(u"{ aaa"));
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"{"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"ddd"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"eee"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"jjj"_s);
+
+		testLog("Block7");
 		const auto symbjjj = ps.contextAtPos(script.indexOf(u"jjj"));
 		ctx = moveAndCheck(ps.prevStatement(symbjjj), u"eee"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"ddd"_s);
@@ -119,7 +165,7 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Argname"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"FunctionList"_s);
 
-		testLog("Block6");
+		testLog("Block8");
 		const auto symbnest3 = ps.contextAtPos(script.indexOf(u"nest3"));
 		ctx = moveAndCheck(ps.prevStatement(symbnest3), u"nest2"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"{"_s);
