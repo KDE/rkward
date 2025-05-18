@@ -78,29 +78,38 @@ class RKParsedScriptTest : public QObject {
 		for (int startpos = 0; startpos < script.length(); ++startpos) {
 			const auto ctx0 = ps.contextAtPos(script.length() / 2);
 			auto ctx = ctx0;
-			while (ctx.valid()) ctx = ps.nextContext(ctx);
+			while (ctx.valid())
+				ctx = ps.nextContext(ctx);
 			ctx = ctx0;
-			while (ctx.valid()) ctx = ps.nextSibling(ctx);
+			while (ctx.valid())
+				ctx = ps.nextSibling(ctx);
 			ctx = ctx0;
-			while (ctx.valid()) ctx = ps.nextSiblingOrOuter(ctx);
+			while (ctx.valid())
+				ctx = ps.nextSiblingOrOuter(ctx);
 			ctx = ctx0;
-			while (ctx.valid()) ctx = ps.nextStatement(ctx);
+			while (ctx.valid())
+				ctx = ps.nextStatement(ctx);
 			ctx = ctx0;
-			while (ctx.valid()) ctx = ps.prevContext(ctx);
+			while (ctx.valid())
+				ctx = ps.prevContext(ctx);
 			ctx = ctx0;
-			while (ctx.valid()) ctx = ps.prevSibling(ctx);
+			while (ctx.valid())
+				ctx = ps.prevSibling(ctx);
 			ctx = ctx0;
-			while (ctx.valid()) ctx = ps.prevSiblingOrOuter(ctx);
+			while (ctx.valid())
+				ctx = ps.prevSiblingOrOuter(ctx);
 			ctx = ctx0;
-			while (ctx.valid()) ctx = ps.prevStatement(ctx);
+			while (ctx.valid())
+				ctx = ps.prevStatement(ctx);
 			ctx = ctx0;
-			while (ctx.valid()) ctx = ps.parentRegion(ctx);
+			while (ctx.valid())
+				ctx = ps.parentRegion(ctx);
 		}
 	}
 
 	void nextPrevStatement() {
 		loadScript(u"script1.R"_s);
-//		ps.serialize();
+		//		ps.serialize();
 		auto ctx = ps.contextAtPos(0);
 		QVERIFY(ctx.valid());
 		testLog("Block1");
@@ -116,7 +125,7 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol19"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol01"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol00"_s);
-		//QVERIFY(!ps.prevStatement(ctx).valid());  // not sure that we want this
+		// QVERIFY(!ps.prevStatement(ctx).valid());  // not sure that we want this
 
 		testLog("Block3");
 		ctx = ps.contextAtPos(script.indexOf(u"Symbol11"));
@@ -140,8 +149,8 @@ class RKParsedScriptTest : public QObject {
 
 		testLog("Block5");
 		const auto symb14 = ps.contextAtPos(script.indexOf(u"Symbol14"));
-		ctx = moveAndCheck(ps.prevStatement(symb14), u"Symbol11"_s);  // shall stay in parenthesis
-		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol10"_s); // shall move out
+		ctx = moveAndCheck(ps.prevStatement(symb14), u"Symbol11"_s); // shall stay in parenthesis
+		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol10"_s);    // shall move out
 
 		testLog("Block6");
 		ctx = ps.contextAtPos(script.indexOf(u"Argname"));

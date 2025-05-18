@@ -36,7 +36,7 @@ int RKParsedScript::addContext(ContextType type, int start, const QString &conte
 		if (prevtype == Comment) { // comment region implies a newline
 			auto pprevtype = context_list.at(index - 2).type;
 			if (pprevtype != OtherOperator && pprevtype != SubsetOperator) {
-				context_list.emplace_back(Delimiter, start-1, start-1);
+				context_list.emplace_back(Delimiter, start - 1, start - 1);
 				++index;
 			}
 		}
@@ -118,7 +118,7 @@ RKParsedScript::ContextIndex RKParsedScript::contextAtPos(int pos) const {
 RKParsedScript::ContextIndex RKParsedScript::nextContext(const ContextIndex from) const {
 	if (!from.valid()) return ContextIndex();
 	int i = from.index + 1;
-	if (i >= (int) context_list.size()) i = -1;
+	if (i >= (int)context_list.size()) i = -1;
 	return ContextIndex(i);
 }
 
@@ -131,9 +131,9 @@ RKParsedScript::ContextIndex RKParsedScript::prevContext(const ContextIndex from
 /** Find the innermost region (Context::maybeNesting()) containing this context */
 RKParsedScript::ContextIndex RKParsedScript::parentRegion(const ContextIndex from) const {
 	RK_TRACE(MISC);
-	if (from.valid())  {
+	if (from.valid()) {
 		int startpos = context_list.at(from.index).start;
-		for (int i = from.index-1; i >= 0; --i) {
+		for (int i = from.index - 1; i >= 0; --i) {
 			if (context_list.at(i).maybeNesting() && context_list.at(i).end >= startpos) {
 				return ContextIndex(i);
 			}
@@ -145,7 +145,7 @@ RKParsedScript::ContextIndex RKParsedScript::parentRegion(const ContextIndex fro
 /** Find next sibling context (no inner or outer contexts) */
 RKParsedScript::ContextIndex RKParsedScript::nextSiblingOrOuter(const ContextIndex from) const {
 	RK_TRACE(MISC);
-	if (from.valid())  {
+	if (from.valid()) {
 		int endpos = context_list.at(from.index).end;
 		unsigned int i = from.index;
 		do {
@@ -165,7 +165,7 @@ RKParsedScript::ContextIndex RKParsedScript::nextSibling(const ContextIndex from
 
 RKParsedScript::ContextIndex RKParsedScript::prevSiblingOrOuter(const ContextIndex from) const {
 	RK_TRACE(MISC);
-	if (from.valid())  {
+	if (from.valid()) {
 		int startpos = context_list.at(from.index).start;
 		const auto parent = parentRegion(from);
 		int i = from.index;
@@ -302,7 +302,8 @@ QString RKParsedScript::serializeContextEnd(const Context &ctx, int level) const
 	if (ptype == BackQuoted) return u"`"_s;
 	if (ptype == Comment || ptype == Delimiter) {
 		QString ret = u"\n"_s;
-		for (int j = 0; j < (level-1) * 4; ++j) ret += u" "_s;
+		for (int j = 0; j < (level - 1) * 4; ++j)
+			ret += u" "_s;
 		return ret;
 	}
 	return QString();
