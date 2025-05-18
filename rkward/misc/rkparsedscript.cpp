@@ -116,15 +116,16 @@ RKParsedScript::ContextIndex RKParsedScript::contextAtPos(int pos) const {
 }
 
 RKParsedScript::ContextIndex RKParsedScript::nextContext(const ContextIndex from) const {
+	if (!from.valid()) return ContextIndex();
 	int i = from.index + 1;
 	if (i >= (int) context_list.size()) i = -1;
 	return ContextIndex(i);
 }
 
 RKParsedScript::ContextIndex RKParsedScript::prevContext(const ContextIndex from) const {
+	if (!from.valid()) return ContextIndex();
 	int i = from.index - 1;
-	if (i >= (int) context_list.size()) i = -1;
-	return ContextIndex(i);
+	return ContextIndex(i); // automatically invalid, if reversing past 0
 }
 
 /** Find the innermost region (Context::maybeNesting()) containing this context */
