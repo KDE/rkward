@@ -12,13 +12,63 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKParsedScript::RKParsedScript(const QString &content) : prevtype(None), allow_merge(true) {
+RKParsedScript::RKParsedScript(const QString &content, bool rmd) : prevtype(None), allow_merge(true) {
 	RK_TRACE(MISC);
 
 	context_list.reserve(200); // just a very wild guess.
-	addContext(Top, -1, content);
-	RK_ASSERT(context_list.front().end == content.size());
+	if (rmd) {
+		context_list.emplace_back(Top, -1, content.size());
+		int i = -1;
+		while (i < content.size()) {
+			i = addNextMarkdownChunk(i, content);
+		}
+	} else {
+		addContext(Top, -1, content);
+		RK_ASSERT(context_list.front().end == content.size());
+	}
 };
+
+int RKParsedScript::addNextMarkdownChunk(int start, const QString &content) {
+	int pos = start;
+	int chunkstart = -1;
+	QString chunk_barrier;
+	while (++pos < content.length()) {
+		QChar c = content.at(pos);
+		if (c == u'\\') ++pos;
+		else if (c == u'`') {
+			chunk_barrier = c;
+			while (++pos < content.length() && (content.at(pos) == u'`')) {
+				chunk_barrier.append(u'`');
+			}
+			// if there is a leading parameter block, skip that
+			if ((pos < content.length()) && content.at(pos) == u'{') {
+				while (++pos < content.length()) {
+					c = content.at(pos);
+					if (c == u'\\') ++pos;
+					else if (c == u'}') {
+						++pos;
+						break;
+					}
+				}
+			}
+			chunkstart = pos;
+			break;
+		}
+	}
+	if (chunkstart < 0 || chunkstart >= content.size()) {
+		context_list.emplace_back(Comment, start, content.size());
+		return content.size();
+	}
+	int chunkend = content.indexOf(chunk_barrier, chunkstart);
+	if (chunkend < 0) chunkend = content.size();
+
+	context_list.emplace_back(Comment, start, chunkstart-1);
+	addContext(Delimiter, chunkstart-1, content);
+	addContext(Top, chunkstart, content.left(chunkend)); // in case mardown region has incomplete syntax
+	                                                     // limit parsing to the actual markdown region
+	addContext(Delimiter, chunkend, content);
+	return chunkend + chunk_barrier.length();
+}
 
 int RKParsedScript::addContext(ContextType type, int start, const QString &content) {
 	RK_TRACE(MISC);
@@ -239,7 +289,7 @@ RKParsedScript::ContextIndex RKParsedScript::nextStatement(const ContextIndex fr
 	// forward past end of current statement
 	auto ni = nextContext(lastContextInStatement(from));
 	// consider advancing from "b" in "a = (b + c) + d; e" -> should be e, not "+ d"
-	while (getContext(ni).type != Delimiter) ni = nextContext(lastContextInStatement(ni));
+	while (ni.valid() && getContext(ni).type != Delimiter) ni = nextContext(lastContextInStatement(ni));
 	// skip over any following non-interesting contexts
 	while (true) {
 		auto type = getContext(ni).type;

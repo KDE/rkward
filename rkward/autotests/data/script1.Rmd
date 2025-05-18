@@ -1,0 +1,26 @@
+<!--
+- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+
+This is markdown ``{r} inline <- `markdown` `` and this is too, with some `inline(code)`.
+
+Usually, there would be lot of mardown (and this may contain many relevant markers, such as {}, and []).
+
+```{r}
+symb01 <-symb02()
+symb03 <- symb04
+symb05(symb06); symb07
+```
+
+Usually, code chunks shall contain {r}, but we're relaxed about that.
+
+```
+symb11 <-symb12()
+symb13 <- symb14
+symb15(symb16); symb17
+```
+
+Some more text

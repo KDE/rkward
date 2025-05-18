@@ -51,7 +51,7 @@ class RKParsedScript {
 		int end;
 	};
 
-	explicit RKParsedScript(const QString &content = QString());
+	explicit RKParsedScript(const QString &content = QString(), bool rmd=false);
 
 	enum SearchFlags {
 		NoFlags,
@@ -111,6 +111,7 @@ class RKParsedScript {
   private:
 	// add and parse a context. This is where the actual parsing takes place
 	int addContext(ContextType type, int start, const QString &content);
+	int addNextMarkdownChunk(int start, const QString &content);
 
 	friend class RKParsedScriptTest;
 	// NOTE: used in debugging, only
