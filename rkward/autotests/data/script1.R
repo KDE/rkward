@@ -1,5 +1,7 @@
-# Comment 1
-# Comment 2
+# - This file is part of the RKWard project (https://rkward.kde.org).
+# SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-License-Identifier: GPL-2.0-or-later
 Symbol00 + 1
 Symbol01 <- Symbol2(Symbol03="String1", function(Symbol04) {
 	for (Symbol05 in Symbol06) {
@@ -22,7 +24,7 @@ FunctionList <- list(
 	{
 		nest1
 		{
-			nest2(nest2_inner + 1)
+			nest2(n2_inner + 1)
 			nest3()
 			nest4
 		}

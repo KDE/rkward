@@ -90,6 +90,7 @@ class RKParsedScript {
 
 	ContextIndex firstContextInStatement(const ContextIndex from) const;
 	ContextIndex lastContextInStatement(const ContextIndex from) const;
+	int lastPositionInStatement(const ContextIndex from) const;
 
 	ContextIndex nextOuter(const ContextIndex from) const;
 	ContextIndex prevOuter(const ContextIndex from) const;
@@ -112,7 +113,6 @@ class RKParsedScript {
 	int addContext(ContextType type, int start, const QString &content);
 
 	friend class RKParsedScriptTest;
-	friend class RKCodeNavigation;
 	// NOTE: used in debugging, only
 	QString serialize() const;
 	QString serializeContextEnd(const Context &ctx, int level) const;

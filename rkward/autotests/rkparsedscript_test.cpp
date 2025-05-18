@@ -232,6 +232,17 @@ class RKParsedScriptTest : public QObject {
 		ctx = ps.contextAtPos(script.indexOf(u"jjj"));
 		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"ggg"_s);
 		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"eee"_s); // TODO: or should it be "fff"?
+		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"ddd"_s);
+		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"nest5"_s);
+		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"nest4"_s);
+	}
+
+	void range() {
+		loadScript(u"script1.R"_s);
+		auto ctx = ps.contextAtPos(script.indexOf(u"Symbol01"));
+		QCOMPARE(script.mid(ps.lastPositionInStatement(ctx)+1, 9), u"\nSymbol19"_s);
+		ctx = ps.contextAtPos(script.indexOf(u"Symbol08"));
+		QCOMPARE(script.at(ps.lastPositionInStatement(ctx)), u']');
 	}
 };
 
