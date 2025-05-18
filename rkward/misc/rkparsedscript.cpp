@@ -56,7 +56,7 @@ int RKParsedScript::addContext(ContextType type, int start, const QString &conte
 	} else if (type == AnySymbol) {
 		while (++pos < content.length()) {
 			const QChar c = content.at(pos);
-			if (!c.isLetterOrNumber() && c != u'.') {
+			if (!c.isLetterOrNumber() && c != u'.' && c != u'_') {
 				--pos;
 				break;
 			}
@@ -222,6 +222,17 @@ RKParsedScript::ContextIndex RKParsedScript::lastContextInStatement(const Contex
 	return prevContext(ni);
 }
 
+int RKParsedScript::lastPositionInStatement(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	auto last = lastContextInStatement(from);
+	auto first = firstContextInStatement(from);
+	// consider "a <- b({ c })". We want the position at ")", not at "c"
+	while (parentRegion(last) != parentRegion(first) && last.valid()) {
+		last = parentRegion(last);
+	}
+	return getContext(last).end;
+}
+
 RKParsedScript::ContextIndex RKParsedScript::nextStatement(const ContextIndex from) const {
 	RK_TRACE(MISC);
 
@@ -307,22 +318,18 @@ RKParsedScript::ContextIndex RKParsedScript::nextStatementOrInner(const ContextI
 RKParsedScript::ContextIndex RKParsedScript::prevStatementOrInner(const ContextIndex from) const {
 	RK_TRACE(MISC);
 
-	auto psi = prevStatement(from);
+	auto psi = prevStatement(from); // this is the target, *unless* there is an inner context on the way
+	auto parent = parentRegion(from);
 	auto ci = prevContext(from);
 	while (ci.valid() && ci.index > psi.index) {
-		auto ctx = getContext(ci);
-		if (ctx.maybeNesting()) {
-			auto candidate = nextContext(ci);
-			if (parentRegion(candidate) == ci && candidate != from) {
-				// found an inner region, but what's the last (inner!) statement in it?
-				// TODO: is there an easier solution?
-				auto next = candidate;
-				auto limit = nextOuter(candidate);
-				while (next.index < limit.index && next.index < ci.index) {
-					candidate = next;
-					next = nextStatementOrInner(candidate);
-				} 
-				return candidate;
+		auto cparent = parentRegion(ci);
+		if (cparent != parent) {
+			// We entered a different parent region. What's the last (inner!) context in it?
+			auto candidate = nextContext(cparent);
+			while (true) {
+				ci = nextStatementOrInner(candidate);
+				if (ci.index >= from.index) return candidate;
+				candidate = ci;
 			}
 		}
 		ci = prevContext(ci);

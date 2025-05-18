@@ -42,7 +42,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kstandardaction.h>
 #include <ktexteditor_version.h>
 #include <kwidgetsaddons_version.h>
-#include <qcombobox.h>
 
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
@@ -82,14 +81,19 @@ class RKCodeNavigation : public QWidget {
 		QObject::connect(label, &QLabel::linkActivated, RKWorkplace::mainWorkplace(), &RKWorkplace::openAnyUrlString);
 		box->addWidget(label);
 
-		input = new QComboBox();
-		input->setEditable(true);
-		input->addItem(QStringLiteral("s    # ") + i18n("Expand selection to statement"));
-		input->addItem(QStringLiteral("t    # ") + i18n("Go to next top level statement"));
-		input->lineEdit()->setPlaceholderText(i18n("e.g. 'ts' - see 'Help', above"));
-		input->setCurrentIndex(-1);
+		input = new QLineEdit();
+		input->setPlaceholderText(i18n("e.g. 'ts' - see 'Help', above"));
 		box->addWidget(input);
-		connect(input, &QComboBox::currentTextChanged, this, &RKCodeNavigation::navigate);
+		connect(input, &QLineEdit::textChanged, this, &RKCodeNavigation::navigate);
+
+		ps = RKParsedScript(doc->text());
+		StoredPosition initial;
+		// translate cursor position to string index
+		initial.pos = cursorToPosition(view->cursorPosition());
+		initial.selection = view->selectionRange();
+		stored_positions.append(initial);
+
+		bool multilanguage = doc->embeddedHighlightingModes().size() > 1;
 	}
 
 	void updatePos() {
@@ -100,38 +104,77 @@ class RKCodeNavigation : public QWidget {
 		deleteLater();
 	}
 
-	void navigate(const QString &current) {
-		// TODO: cache the parse tree. But for testing, it's not so bad to have it all parsed per keypress
-		RKParsedScript tree(doc->text());
-		qDebug("%s", qPrintable(tree.serialize()));
-
-		// translate cursor position to string index
-		const auto cursor = view->cursorPosition();
+	int cursorToPosition(const KTextEditor::Cursor &cursor) {
 		int pos = cursor.column();
 		for (int l = 0; l < cursor.line(); ++l) {
 			pos += doc->lineLength(l) + 1; 
 		}
+		return pos;
+	}
 
-		// then find out, where that is in the parse tree
-		auto ci = tree.contextAtPos(pos);
-
-		// apply navigation command
-		QChar command = current.back();
-		int newpos = pos;
-		if (command == u'n') {
-			newpos = tree.getContext(tree.nextStatement(ci)).start;
-		} else if (command == u'N') {
-			newpos = tree.getContext(tree.prevStatement(ci)).start;
-		}
-		RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "navigate %d to %d", pos, newpos);
-
-		// translate new position back to cursor coordinates
+	KTextEditor::Cursor positionToCursor(int pos) {
 		for (int l = 0; l < doc->lines(); ++l) {
-			newpos -= (doc->lineLength(l) + 1);
-			if (newpos < 0) {
-				view->setCursorPosition(KTextEditor::Cursor(l, newpos + doc->lineLength(l) + 1));
-				break;
+			pos -= (doc->lineLength(l) + 1);
+			if (pos < 0) {
+				return KTextEditor::Cursor(l, pos + doc->lineLength(l) + 1);
 			}
+		}
+		return KTextEditor::Cursor();
+	}
+
+	void navigate(const QString &current) {
+		while (!current.startsWith(stored_positions.last().query)) {
+			stored_positions.pop_back();
+		}
+
+		// start from last known position
+		auto last = stored_positions.last();
+		auto pos = last.pos;
+		QString full_command = current.mid(last.query.length());
+
+		// apply navigation command(s)
+		for (int i = 0; i < full_command.size(); ++i) {
+			QChar command = current.back();
+			StoredPosition newpos;
+			newpos.pos = pos;
+			newpos.query = stored_positions.last().query + command;
+
+			auto ci = ps.contextAtPos(pos);
+			if (command == u'n') {
+				newpos.pos = ps.getContext(ps.nextStatement(ci)).start;
+			} else if (command == u'N') {
+				newpos.pos = ps.getContext(ps.prevStatement(ci)).start;
+			} else if (command == u'i') {
+				newpos.pos = ps.getContext(ps.nextStatementOrInner(ci)).start;
+			} else if (command == u'I') {
+				newpos.pos = ps.getContext(ps.prevStatementOrInner(ci)).start;
+			} else if (command == u'o') {
+				newpos.pos = ps.getContext(ps.nextOuter(ci)).start;
+			} else if (command == u'O') {
+				newpos.pos = ps.getContext(ps.prevOuter(ci)).start;
+			} else if (command == u't') {
+				newpos.pos = ps.getContext(ps.nextToplevel(ci)).start;
+			} else if (command == u'T') {
+				newpos.pos = ps.getContext(ps.prevToplevel(ci)).start;
+			} else if (command == u's') {
+				auto posa = ps.getContext(ps.firstContextInStatement(ci)).start;
+				auto posb = ps.lastPositionInStatement(ci);
+				newpos.selection = KTextEditor::Range(positionToCursor(posa), positionToCursor(posb+1));
+			} else {
+				RK_DEBUG(COMMANDEDITOR, DL_WARNING, "unknown navigation commmand");
+				// TODO: show error
+			}
+
+			stored_positions.append(newpos);
+			RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "navigate %d to %d", pos, newpos.pos);
+		}
+
+		StoredPosition newpos = stored_positions.last();
+		// translate final position back to cursor coordinates
+		if (!newpos.selection.isEmpty()) {
+			view->setSelection(newpos.selection);
+		} else {
+			view->setCursorPosition(positionToCursor(newpos.pos));
 		}
 	}
 
@@ -151,7 +194,14 @@ class RKCodeNavigation : public QWidget {
   private:
 	KTextEditor::View *view;
 	KTextEditor::Document *doc;
-	QComboBox *input;
+	QLineEdit *input;
+	struct StoredPosition {
+		QString query;
+		int pos;
+		KTextEditor::Range selection;
+	};
+	QList<StoredPosition> stored_positions;
+	RKParsedScript ps;
 };
 
 RKCommandEditorWindowPart::RKCommandEditorWindowPart(QWidget *parent) : KParts::Part(parent) {
