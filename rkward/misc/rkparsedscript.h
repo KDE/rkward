@@ -101,6 +101,10 @@ class RKParsedScript {
 	ContextIndex nextStatementOrInner(const ContextIndex from) const;
 	ContextIndex prevStatementOrInner(const ContextIndex from) const;
 
+	/** Next code Region in R Markdown document */
+	ContextIndex nextCodeChunk(const ContextIndex from) const;
+	ContextIndex prevCodeChunk(const ContextIndex from) const;
+
 	/** retrieve the context at the given index. Safe to call, even with an invalid index
 	 *  (in which case the outermost context will be returned). */
 	const Context &getContext(const ContextIndex index) const {

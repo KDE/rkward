@@ -61,7 +61,10 @@ class RKParsedScriptTest : public QObject {
 
 	void sanityTestHelper() {
 		for (int startpos = 0; startpos < script.length(); ++startpos) {
-			const auto ctx0 = ps.contextAtPos(startpos);
+			QVERIFY(ps.contextAtPos(startpos).valid());
+		}
+		for (unsigned int i = 0; i < ps.context_list.size(); ++i) {
+			RKParsedScript::ContextIndex ctx0(i);
 			auto ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.nextContext(ctx);
@@ -74,6 +77,20 @@ class RKParsedScriptTest : public QObject {
 			ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.nextStatement(ctx);
+			ctx = ps.firstContextInStatement(ctx0); // NOTE: This one may stay at the same position
+			ctx = ctx0;
+			while (ctx.valid())
+				ctx = ps.nextOuter(ctx);
+			ctx = ctx0;
+			while (ctx.valid())
+				ctx = ps.nextToplevel(ctx);
+			ctx = ctx0;
+			while (ctx.valid())
+				ctx = ps.nextStatementOrInner(ctx);
+			ctx = ctx0;
+			while (ctx.valid())
+				ctx = ps.nextCodeChunk(ctx);
+
 			ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.prevContext(ctx);
@@ -86,6 +103,20 @@ class RKParsedScriptTest : public QObject {
 			ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.prevStatement(ctx);
+			ctx = ps.lastContextInStatement(ctx0); // May stay in same position
+			ctx = ctx0;
+			while (ctx.valid())
+				ctx = ps.prevOuter(ctx);
+			ctx = ctx0;
+			while (ctx.valid())
+				ctx = ps.prevToplevel(ctx);
+			ctx = ctx0;
+			while (ctx.valid())
+				ctx = ps.prevStatementOrInner(ctx);
+			ctx = ctx0;
+			while (ctx.valid())
+				ctx = ps.prevCodeChunk(ctx);
+
 			ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.parentRegion(ctx);
@@ -274,7 +305,18 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"symb13"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"symb11"_s);
 		QVERIFY(!ps.prevStatement(ctx).valid());
-		//testLog("%s", qPrintable(ps.serialize()));
+
+		ctx = ps.contextAtPos(script.indexOf(u".some"));
+		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u"inline"_s);
+		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u"symb01"_s);
+		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u"symb11"_s);
+		QVERIFY(!ps.nextCodeChunk(ctx).valid());
+
+		ctx = ps.contextAtPos(script.indexOf(u"symb13"));
+		ctx = moveAndCheck(ps.prevCodeChunk(ctx), u"symb01"_s);
+		ctx = moveAndCheck(ps.prevCodeChunk(ctx), u"inline"_s);
+		ctx = moveAndCheck(ps.prevCodeChunk(ctx), u".some"_s);
+		QVERIFY(!ps.prevCodeChunk(ctx).valid());
 	}
 };
 
