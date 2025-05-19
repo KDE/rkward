@@ -17,7 +17,7 @@ RKParsedScript::RKParsedScript(const QString &content, bool rmd) : prevtype(None
 
 	context_list.reserve(200); // just a very wild guess.
 	if (rmd) {
-		context_list.emplace_back(Top, -1, content.size());
+		context_list.emplace_back(None, -1, content.size());
 		int i = -1;
 		while (i < content.size()) {
 			i = addNextMarkdownChunk(i, content);
@@ -332,6 +332,46 @@ RKParsedScript::ContextIndex RKParsedScript::prevOuter(const ContextIndex from) 
 	return firstContextInStatement(parentRegion(from));
 }
 
+RKParsedScript::ContextIndex RKParsedScript::nextCodeChunk(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	if (!from.valid()) return ContextIndex();
+	// NOTE: not using nextContext() for iterating, here, as that stops at Top regions.
+	unsigned int i = from.index;
+	do {
+		if (context_list.at(i).type == Top) break;
+	} while (++i < context_list.size());
+	// yes, we want this twice, as chunks are delimited by a top context at start and end
+	while (++i < context_list.size()) {
+		if (context_list.at(i).type == Top) break;
+	}
+	do {
+		++i;
+	} while (i < context_list.size() && context_list.at(i).type == Delimiter);
+	if (i < context_list.size()) return ContextIndex(i);
+	return ContextIndex();
+}
+
+RKParsedScript::ContextIndex RKParsedScript::prevCodeChunk(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	if (!from.valid()) return ContextIndex();
+	// NOTE: not using nextContext() for iterating, here, as that stops at Top regions.
+	int i = from.index;
+	do {
+		if (context_list.at(i).type == Top) break;
+	} while (--i >= 0);
+	// yes, we want this twice, as chunks are delimited by a top context at start and end
+	while (--i >= 0) {
+		if (context_list.at(i).type == Top) break;
+	}
+	do {
+		--i;
+	} while (i >= 0 && context_list.at(i).type != Top);
+	do {
+		++i;
+	} while (i < context_list.size() && context_list.at(i).type == Delimiter);
+	return ContextIndex(i);
+}
+
 RKParsedScript::ContextIndex RKParsedScript::nextToplevel(const ContextIndex from) const {
 	RK_TRACE(MISC);
 	auto ctx = from;
@@ -384,7 +424,7 @@ RKParsedScript::ContextIndex RKParsedScript::prevStatementOrInner(const ContextI
 			auto candidate = nextContext(cparent);
 			while (true) {
 				ci = nextStatementOrInner(candidate);
-				if (ci.index >= from.index) return candidate;
+				if (!ci.valid() || ci.index >= from.index) return candidate;
 				candidate = ci;
 			}
 		}
