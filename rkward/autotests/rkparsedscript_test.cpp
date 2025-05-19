@@ -34,6 +34,8 @@ void RKDebug(int, int level, const char *fmt, ...) {
 	va_end(ap);
 }
 
+#define moveAndCheck(X, Y) moveAndCheckHelper(X, Y, __LINE__)
+
 /** Test RKParsedScript class. */
 class RKParsedScriptTest : public QObject {
 	Q_OBJECT
@@ -49,13 +51,17 @@ class RKParsedScriptTest : public QObject {
 		ps = RKParsedScript(script, rmd);
 	}
 
-	void compareScript(RKParsedScript::ContextIndex pos, const QString &expected) {
+	void compareScript(RKParsedScript::ContextIndex pos, const QString &expected, int line) {
 		auto ctx = ps.getContext(pos);
-		QCOMPARE(script.mid(ctx.start, expected.length()), expected);
+		const auto found = script.mid(ctx.start, expected.length());
+		if (found != expected) {
+			qDebug(" -- Real line number of following mismatch is %d -- ", line);
+			QCOMPARE(found, expected);
+		}
 	}
 
-	RKParsedScript::ContextIndex moveAndCheck(const RKParsedScript::ContextIndex newpos, const QString &expected) {
-		compareScript(newpos, expected);
+	RKParsedScript::ContextIndex moveAndCheckHelper(const RKParsedScript::ContextIndex newpos, const QString &expected, int line) {
+		compareScript(newpos, expected, line);
 		return newpos;
 	}
 
@@ -147,7 +153,6 @@ class RKParsedScriptTest : public QObject {
 		//		ps.serialize();
 		auto ctx = ps.contextAtPos(0);
 		QVERIFY(ctx.valid());
-		testLog("Block1");
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol00"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol01"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol19"_s);
@@ -155,14 +160,12 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"FunctionList"_s);
 		QVERIFY(!ps.nextStatement(ctx).valid()); // NOTE this need not be set in stone, could e.g. wrap around
 
-		testLog("Block2");
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol.x"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol19"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol01"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol00"_s);
 		// QVERIFY(!ps.prevStatement(ctx).valid());  // not sure that we want this
 
-		testLog("Block3");
 		ctx = ps.contextAtPos(script.indexOf(u"Symbol11"));
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol13"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol15"_s);
@@ -170,7 +173,6 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol18"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol19"_s);
 
-		testLog("Block4");
 		const auto symb18 = ps.contextAtPos(script.indexOf(u"Symbol18"));
 		ctx = moveAndCheck(ps.prevStatement(symb18), u"Symbol16"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol15"_s);
@@ -182,24 +184,20 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol03"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol01"_s);
 
-		testLog("Block5");
 		const auto symb14 = ps.contextAtPos(script.indexOf(u"Symbol14"));
 		ctx = moveAndCheck(ps.prevStatement(symb14), u"Symbol11"_s); // shall stay in parenthesis
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Symbol10"_s);    // shall move out
 
-		testLog("Block6");
 		ctx = ps.contextAtPos(script.indexOf(u"Argname"));
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"makeFunction"_s);
 		QVERIFY(!ps.nextStatement(ctx).valid()); // NOTE this need not be set in stone, could e.g. wrap around
 
-		testLog("Block7");
 		ctx = ps.contextAtPos(script.indexOf(u"{ aaa"));
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"{"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"ddd"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"eee"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"jjj"_s);
 
-		testLog("Block7");
 		const auto symbjjj = ps.contextAtPos(script.indexOf(u"jjj"));
 		ctx = moveAndCheck(ps.prevStatement(symbjjj), u"eee"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"ddd"_s);
@@ -209,7 +207,6 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"Argname"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"FunctionList"_s);
 
-		testLog("Block8");
 		const auto symbnest3 = ps.contextAtPos(script.indexOf(u"nest3"));
 		ctx = moveAndCheck(ps.prevStatement(symbnest3), u"nest2"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"{"_s);
@@ -221,13 +218,12 @@ class RKParsedScriptTest : public QObject {
 
 	void nextPrevOuter() {
 		loadScript(u"script1.R"_s);
-		testLog("Block1");
+
 		auto ctx = ps.contextAtPos(script.indexOf(u"nest3"));
 		ctx = moveAndCheck(ps.nextOuter(ctx), u"nest5"_s);
 		ctx = moveAndCheck(ps.nextOuter(ctx), u"ddd"_s);
 		QVERIFY(!ps.nextOuter(ctx).valid());
 
-		testLog("Block2");
 		ctx = ps.contextAtPos(script.indexOf(u"nest3"));
 		ctx = moveAndCheck(ps.prevOuter(ctx), u"{"_s);
 		ctx = moveAndCheck(ps.prevOuter(ctx), u"{"_s);
@@ -238,14 +234,13 @@ class RKParsedScriptTest : public QObject {
 
 	void nextPrevToplevel() {
 		loadScript(u"script1.R"_s);
-		testLog("Block1");
+
 		auto ctx = ps.contextAtPos(script.indexOf(u"Symbol09"));
 		ctx = moveAndCheck(ps.nextToplevel(ctx), u"Symbol19"_s);
 		ctx = moveAndCheck(ps.nextToplevel(ctx), u"Symbol.x"_s);
 		ctx = moveAndCheck(ps.nextToplevel(ctx), u"FunctionList"_s);
 		QVERIFY(!ps.nextToplevel(ctx).valid());
 
-		testLog("Block2");
 		ctx = ps.contextAtPos(script.indexOf(u"Symbol09"));
 		ctx = moveAndCheck(ps.prevToplevel(ctx), u"Symbol01"_s);
 		ctx = moveAndCheck(ps.prevToplevel(ctx), u"Symbol00"_s);
@@ -256,14 +251,13 @@ class RKParsedScriptTest : public QObject {
 
 	void nextPrevInner() {
 		loadScript(u"script1.R"_s);
-		testLog("Block1");
+
 		auto ctx = ps.contextAtPos(script.indexOf(u"nest5"));
 		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"ddd"_s);
 		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"eee"_s);
 		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"ggg"_s);
 		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"jjj"_s);
 
-		testLog("Block2");
 		ctx = ps.contextAtPos(script.indexOf(u"jjj"));
 		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"ggg"_s);
 		ctx = moveAndCheck(ps.prevStatementOrInner(ctx), u"eee"_s); // TODO: or should it be "fff"?
@@ -274,6 +268,7 @@ class RKParsedScriptTest : public QObject {
 
 	void range() {
 		loadScript(u"script1.R"_s);
+
 		auto ctx = ps.contextAtPos(script.indexOf(u"Symbol01"));
 		QCOMPARE(script.mid(ps.lastPositionInStatement(ctx) + 1, 9), u"\nSymbol19"_s);
 		ctx = ps.contextAtPos(script.indexOf(u"Symbol08"));
@@ -283,6 +278,7 @@ class RKParsedScriptTest : public QObject {
 	void rmdTest() {
 		loadScript(u"script1.Rmd"_s, true);
 		sanityTestHelper();
+
 		auto ctx = ps.contextAtPos(script.indexOf(u".some"));
 		QVERIFY(!ps.nextStatement(ctx).valid());
 
@@ -306,11 +302,20 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"symb11"_s);
 		QVERIFY(!ps.prevStatement(ctx).valid());
 
+		ctx = ps.contextAtPos(script.indexOf(u"This is markdown"));
+		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u".some"_s);
+
+		ctx = ps.contextAtPos(script.indexOf(u"and this is too"));
+		ctx = moveAndCheck(ps.prevCodeChunk(ctx), u".some"_s);
+
 		ctx = ps.contextAtPos(script.indexOf(u".some"));
 		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u"inline"_s);
 		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u"symb01"_s);
 		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u"symb11"_s);
 		QVERIFY(!ps.nextCodeChunk(ctx).valid());
+
+		ctx = ps.contextAtPos(script.indexOf(u" .some"));
+		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u"inline"_s);
 
 		ctx = ps.contextAtPos(script.indexOf(u"symb13"));
 		ctx = moveAndCheck(ps.prevCodeChunk(ctx), u"symb01"_s);

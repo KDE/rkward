@@ -9,7 +9,7 @@ This is markdown ``{r} .some <- `markdown` `` and this is too, with some `inline
 
 Usually, there would be lot of mardown (and this may contain many relevant markers, such as {}, and []).
 
-```{r}
+```{r echo=TRUE}
 symb01 <-symb02()
 symb03 <- symb04
 symb05(symb06); symb07
