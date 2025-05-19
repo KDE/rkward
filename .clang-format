@@ -13,3 +13,7 @@ BinPackArguments: true
 AllowAllArgumentsOnNextLine: true
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 IndentPPDirectives: AfterHash
+SpacesInLineCommentPrefix:
+  Maximum: -1
+  Minimum: 0
+SpaceBeforeCpp11BracedList: false

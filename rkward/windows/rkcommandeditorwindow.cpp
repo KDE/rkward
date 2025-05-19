@@ -30,12 +30,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QTemporaryFile>
 #include <QTimer>
 
+#include <KColorScheme>
 #include <KIO/DeleteJob>
 #include <KIO/FileCopyJob>
 #include <KLocalizedString>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <KColorScheme>
 #include <kconfiggroup.h>
 #include <kmessagebox.h>
 #include <krandom.h>
@@ -105,7 +105,7 @@ class RKCodeNavigation : public QWidget {
 	int cursorToPosition(const KTextEditor::Cursor &cursor) {
 		int pos = cursor.column();
 		for (int l = 0; l < cursor.line(); ++l) {
-			pos += doc->lineLength(l) + 1; 
+			pos += doc->lineLength(l) + 1;
 		}
 		return pos;
 	}
@@ -157,7 +157,7 @@ class RKCodeNavigation : public QWidget {
 			} else if (command == u's') {
 				auto posa = ps.getContext(ps.firstContextInStatement(ci)).start;
 				auto posb = ps.lastPositionInStatement(ci);
-				newpos.selection = KTextEditor::Range(positionToCursor(posa), positionToCursor(posb+1));
+				newpos.selection = KTextEditor::Range(positionToCursor(posa), positionToCursor(posb + 1));
 			} else {
 				RK_DEBUG(COMMANDEDITOR, DL_WARNING, "unknown navigation commmand");
 				// TODO: show error
@@ -182,6 +182,7 @@ class RKCodeNavigation : public QWidget {
 		}
 		return false;
 	}
+
   public:
 	static void doNavigation(KTextEditor::View *view) {
 		auto w = new RKCodeNavigation(view);
@@ -189,6 +190,7 @@ class RKCodeNavigation : public QWidget {
 		w->updatePos();
 		w->input->setFocus();
 	}
+
   private:
 	KTextEditor::View *view;
 	KTextEditor::Document *doc;
