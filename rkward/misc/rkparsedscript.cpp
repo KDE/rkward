@@ -335,41 +335,55 @@ RKParsedScript::ContextIndex RKParsedScript::prevOuter(const ContextIndex from) 
 RKParsedScript::ContextIndex RKParsedScript::nextCodeChunk(const ContextIndex from) const {
 	RK_TRACE(MISC);
 	if (!from.valid()) return ContextIndex();
+
+	// The start of a code chunk is reliably defined by non-zero-length Top-Region
 	// NOTE: not using nextContext() for iterating, here, as that stops at Top regions.
 	unsigned int i = from.index;
-	do {
-		if (context_list.at(i).type == Top) break;
-	} while (++i < context_list.size());
-	// yes, we want this twice, as chunks are delimited by a top context at start and end
 	while (++i < context_list.size()) {
-		if (context_list.at(i).type == Top) break;
+		const auto ctx = context_list.at(i);
+		if (ctx.type == Top && ctx.end > ctx.start) {
+			// Found it. Now skip past initial delimiters
+			do {
+				++i;
+			} while (i < context_list.size() && context_list.at(i).type == Delimiter);
+			return ContextIndex(i < context_list.size() ? i : -1);
+		}
 	}
-	do {
-		++i;
-	} while (i < context_list.size() && context_list.at(i).type == Delimiter);
-	if (i < context_list.size()) return ContextIndex(i);
 	return ContextIndex();
 }
 
 RKParsedScript::ContextIndex RKParsedScript::prevCodeChunk(const ContextIndex from) const {
 	RK_TRACE(MISC);
 	if (!from.valid()) return ContextIndex();
-	// NOTE: not using nextContext() for iterating, here, as that stops at Top regions.
-	int i = from.index;
-	do {
-		if (context_list.at(i).type == Top) break;
-	} while (--i >= 0);
-	// yes, we want this twice, as chunks are delimited by a top context at start and end
-	while (--i >= 0) {
-		if (context_list.at(i).type == Top) break;
+
+	// For general logic, see nextCodeChunk(), above. We need to reverse across two chunk starts, here
+	// If we are *inside* a code chunk, we need to reverse to starts, else just one.
+	int chunkstarts = 1;
+	auto parent = from;
+	while (parent.valid()) {
+		parent = parentRegion(parent);
+		if (getContext(parent).type == Top) {
+			chunkstarts = 2;
+			break;
+		}
 	}
-	do {
-		--i;
-	} while (i >= 0 && context_list.at(i).type != Top);
-	do {
-		++i;
-	} while (i < context_list.size() && context_list.at(i).type == Delimiter);
-	return ContextIndex(i);
+
+	int i = from.index;
+	for (; chunkstarts > 0; --chunkstarts) {
+		while (--i >= 0) {
+			const auto ctx = context_list.at(i);
+			if (ctx.type == Top && ctx.end > ctx.start) {
+				break;
+			}
+		}
+	}
+	if (i >= 0) {
+		do {
+			++i;
+		} while (i < context_list.size() && context_list.at(i).type == Delimiter);
+		return ContextIndex(i < context_list.size() ? i : -1);
+	}
+	return ContextIndex();
 }
 
 RKParsedScript::ContextIndex RKParsedScript::nextToplevel(const ContextIndex from) const {

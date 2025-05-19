@@ -154,6 +154,10 @@ class RKCodeNavigation : public QWidget {
 				newpos.pos = ps.getContext(ps.nextToplevel(ci)).start;
 			} else if (command == u'T') {
 				newpos.pos = ps.getContext(ps.prevToplevel(ci)).start;
+			} else if (command == u'c') {
+				newpos.pos = ps.getContext(ps.nextCodeChunk(ci)).start;
+			} else if (command == u'C') {
+				newpos.pos = ps.getContext(ps.prevCodeChunk(ci)).start;
 			} else if (command == u's') {
 				auto posa = ps.getContext(ps.firstContextInStatement(ci)).start;
 				auto posb = ps.lastPositionInStatement(ci);
