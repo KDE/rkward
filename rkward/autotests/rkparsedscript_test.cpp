@@ -62,7 +62,6 @@ class RKParsedScriptTest : public QObject {
 	void sanityTestHelper() {
 		for (int startpos = 0; startpos < script.length(); ++startpos) {
 			const auto ctx0 = ps.contextAtPos(startpos);
-			testLog("%d", startpos);
 			auto ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.nextContext(ctx);
@@ -253,8 +252,29 @@ class RKParsedScriptTest : public QObject {
 	void rmdTest() {
 		loadScript(u"script1.Rmd"_s, true);
 		sanityTestHelper();
-		testLog("%s", qPrintable(ps.serialize()));
-		// TODO real test
+		auto ctx = ps.contextAtPos(script.indexOf(u".some"));
+		QVERIFY(!ps.nextStatement(ctx).valid());
+
+		ctx = ps.contextAtPos(script.indexOf(u"inline"));
+		ctx = moveAndCheck(ps.nextStatementOrInner(ctx), u"code)"_s);
+		QVERIFY(!ps.nextStatement(ctx).valid());
+
+		ctx = ps.contextAtPos(script.indexOf(u"code)"));
+		ctx = moveAndCheck(ps.prevStatement(ctx), u"inline"_s);
+		QVERIFY(!ps.prevStatement(ctx).valid());
+
+		ctx = ps.contextAtPos(script.indexOf(u"symb01"));
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"symb03"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"symb05"_s);
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"symb07"_s);
+		QVERIFY(!ps.nextStatement(ctx).valid());
+
+		ctx = ps.contextAtPos(script.indexOf(u"symb14"));
+		ctx = moveAndCheck(ps.nextStatement(ctx), u"symb15"_s);
+		ctx = moveAndCheck(ps.prevStatement(ctx), u"symb13"_s);
+		ctx = moveAndCheck(ps.prevStatement(ctx), u"symb11"_s);
+		QVERIFY(!ps.prevStatement(ctx).valid());
+		//testLog("%s", qPrintable(ps.serialize()));
 	}
 };
 

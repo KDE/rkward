@@ -63,10 +63,10 @@ int RKParsedScript::addNextMarkdownChunk(int start, const QString &content) {
 	if (chunkend < 0) chunkend = content.size();
 
 	context_list.emplace_back(Comment, start, chunkstart-1);
-	addContext(Delimiter, chunkstart-1, content);
-	addContext(Top, chunkstart, content.left(chunkend)); // in case mardown region has incomplete syntax
+	prevtype = Comment; // causes insertion of a delimiter in the following addContext
+	addContext(Top, chunkstart-1, content.left(chunkend)); // in case markdown region has incomplete syntax
 	                                                     // limit parsing to the actual markdown region
-	addContext(Delimiter, chunkend, content);
+	context_list.emplace_back(Top, chunkend, chunkend); // HACK: Used as a dummy separtor, here...
 	return chunkend + chunk_barrier.length();
 }
 
@@ -167,6 +167,7 @@ RKParsedScript::ContextIndex RKParsedScript::contextAtPos(int pos) const {
 
 RKParsedScript::ContextIndex RKParsedScript::nextContext(const ContextIndex from) const {
 	if (!from.valid()) return ContextIndex();
+	if (context_list.at(from.index).type == Top) return ContextIndex();
 	int i = from.index + 1;
 	if (i >= (int)context_list.size()) i = -1;
 	return ContextIndex(i);
@@ -174,6 +175,7 @@ RKParsedScript::ContextIndex RKParsedScript::nextContext(const ContextIndex from
 
 RKParsedScript::ContextIndex RKParsedScript::prevContext(const ContextIndex from) const {
 	if (!from.valid()) return ContextIndex();
+	if (context_list.at(from.index).type == Top) return ContextIndex();
 	int i = from.index - 1;
 	return ContextIndex(i); // automatically invalid, if reversing past 0
 }
@@ -182,11 +184,14 @@ RKParsedScript::ContextIndex RKParsedScript::prevContext(const ContextIndex from
 RKParsedScript::ContextIndex RKParsedScript::parentRegion(const ContextIndex from) const {
 	RK_TRACE(MISC);
 	if (from.valid()) {
-		int startpos = context_list.at(from.index).start;
-		for (int i = from.index - 1; i >= 0; --i) {
-			if (context_list.at(i).maybeNesting() && context_list.at(i).end >= startpos) {
-				return ContextIndex(i);
+		const int startpos = getContext(from).start;
+		auto ci = prevContext(from);
+		while (ci.valid()) {
+			auto ctx = getContext(ci);
+			if (ctx.maybeNesting() && ctx.end >= startpos) {
+				return ci;
 			}
+			ci = prevContext(ci);
 		}
 	}
 	return ContextIndex();
@@ -197,11 +202,11 @@ RKParsedScript::ContextIndex RKParsedScript::nextSiblingOrOuter(const ContextInd
 	RK_TRACE(MISC);
 	if (from.valid()) {
 		int endpos = context_list.at(from.index).end;
-		unsigned int i = from.index;
+		auto ci = from;
 		do {
-			++i;
-		} while (i < context_list.size() && context_list.at(i).start <= endpos); // advance, skipping child regions
-		return ContextIndex(i < context_list.size() ? i : -1);
+			ci = nextContext(ci);
+		} while (ci.valid() && context_list.at(ci.index).start <= endpos); // advance, skipping child regions
+		return ci;
 	}
 	return ContextIndex();
 }
@@ -218,18 +223,18 @@ RKParsedScript::ContextIndex RKParsedScript::prevSiblingOrOuter(const ContextInd
 	if (from.valid()) {
 		int startpos = context_list.at(from.index).start;
 		const auto parent = parentRegion(from);
-		int i = from.index;
+		auto ci = from;
 		while (true) {
-			--i;
-			if (i < 0) break;
-			const auto cparent = parentRegion(ContextIndex(i));
+			ci = prevContext(ci);
+			if (!ci.valid()) break;
+			const auto cparent = parentRegion(ci);
 			// sibling must have the same parent as us (consider reversing from "c" in "a(b)c"; we shall not stop at b)
 			if (cparent == parent) break;
 			// but we also allow outer contexts, i.e. parent of previous is a grandparent of us
 			if (!cparent.valid()) break;
 			if (context_list.at(cparent.index).end >= startpos) break;
 		}
-		return ContextIndex(i);
+		return ci;
 	}
 	return ContextIndex();
 }
@@ -291,9 +296,9 @@ RKParsedScript::ContextIndex RKParsedScript::nextStatement(const ContextIndex fr
 	// consider advancing from "b" in "a = (b + c) + d; e" -> should be e, not "+ d"
 	while (ni.valid() && getContext(ni).type != Delimiter) ni = nextContext(lastContextInStatement(ni));
 	// skip over any following non-interesting contexts
-	while (true) {
+	while (ni.valid()) {
 		auto type = getContext(ni).type;
-		if (type != Delimiter && type != Comment) break;
+		if (type != Delimiter && type != Comment && type != Top) break;
 		ni = nextSiblingOrOuter(ni);
 	}
 	return ni;
@@ -305,9 +310,9 @@ RKParsedScript::ContextIndex RKParsedScript::prevStatement(const ContextIndex fr
 	// start at the first context preceeding the current statement
 	auto pi = prevContext(firstContextInStatement(from));
 	// from here, skip over any preceding non-interesting contexts (entering the previous statement)
-	while (true) {
+	while (pi.valid()) {
 		auto type = getContext(pi).type;
-		if (type != Delimiter && type != Comment) break;
+		if (type != Delimiter && type != Comment && type != Top) break;
 		pi = prevSiblingOrOuter(pi);
 	}
 	// now find the start of the previous statement
@@ -353,7 +358,7 @@ RKParsedScript::ContextIndex RKParsedScript::nextStatementOrInner(const ContextI
 
 	auto nsi = nextStatement(from);
 	auto ci = nextContext(from);
-	while (ci.valid() && ci.index < nsi.index) {
+	while (ci.valid() && (ci.index < nsi.index || !nsi.valid())) {
 		auto ctx = getContext(ci);
 		// NOTE: We want to move into inner contexts, *unless* they are empty
 		if (ctx.maybeNesting()) {

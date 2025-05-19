@@ -5,7 +5,7 @@ SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 -->
 
-This is markdown ``{r} inline <- `markdown` `` and this is too, with some `inline(code)`.
+This is markdown ``{r} .some <- `markdown` `` and this is too, with some `inline(code)`.
 
 Usually, there would be lot of mardown (and this may contain many relevant markers, such as {}, and []).
 
