@@ -62,11 +62,11 @@ int RKParsedScript::addNextMarkdownChunk(int start, const QString &content) {
 	int chunkend = content.indexOf(chunk_barrier, chunkstart);
 	if (chunkend < 0) chunkend = content.size();
 
-	context_list.emplace_back(Comment, start, chunkstart-1);
-	prevtype = Comment; // causes insertion of a delimiter in the following addContext
-	addContext(Top, chunkstart-1, content.left(chunkend)); // in case markdown region has incomplete syntax
-	                                                     // limit parsing to the actual markdown region
-	context_list.emplace_back(Top, chunkend, chunkend); // HACK: Used as a dummy separtor, here...
+	context_list.emplace_back(Comment, start, chunkstart - 1);
+	prevtype = Comment;                                      // causes insertion of a delimiter in the following addContext
+	addContext(Top, chunkstart - 1, content.left(chunkend)); // in case markdown region has incomplete syntax
+	                                                         // limit parsing to the actual markdown region
+	context_list.emplace_back(Top, chunkend, chunkend);      // HACK: Used as a dummy separtor, here...
 	return chunkend + chunk_barrier.length();
 }
 
@@ -294,7 +294,8 @@ RKParsedScript::ContextIndex RKParsedScript::nextStatement(const ContextIndex fr
 	// forward past end of current statement
 	auto ni = nextContext(lastContextInStatement(from));
 	// consider advancing from "b" in "a = (b + c) + d; e" -> should be e, not "+ d"
-	while (ni.valid() && getContext(ni).type != Delimiter) ni = nextContext(lastContextInStatement(ni));
+	while (ni.valid() && getContext(ni).type != Delimiter)
+		ni = nextContext(lastContextInStatement(ni));
 	// skip over any following non-interesting contexts
 	while (ni.valid()) {
 		auto type = getContext(ni).type;

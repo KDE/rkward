@@ -41,7 +41,7 @@ class RKParsedScriptTest : public QObject {
 	QString script;
 	RKParsedScript ps;
 
-	void loadScript(const QString &relname, bool rmd=false) {
+	void loadScript(const QString &relname, bool rmd = false) {
 		QFile f(QStringLiteral(TEST_DATA_DIR) + relname);
 		bool ok = f.open(QIODevice::ReadOnly | QIODevice::Text);
 		QVERIFY(ok);
@@ -244,7 +244,7 @@ class RKParsedScriptTest : public QObject {
 	void range() {
 		loadScript(u"script1.R"_s);
 		auto ctx = ps.contextAtPos(script.indexOf(u"Symbol01"));
-		QCOMPARE(script.mid(ps.lastPositionInStatement(ctx)+1, 9), u"\nSymbol19"_s);
+		QCOMPARE(script.mid(ps.lastPositionInStatement(ctx) + 1, 9), u"\nSymbol19"_s);
 		ctx = ps.contextAtPos(script.indexOf(u"Symbol08"));
 		QCOMPARE(script.at(ps.lastPositionInStatement(ctx)), u']');
 	}

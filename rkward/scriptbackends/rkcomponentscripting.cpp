@@ -112,7 +112,6 @@ void RKComponentScriptingProxy::addChangeCommand(const QStringList &changed_ids,
 			return;
 		}
 
-
 		if (base->isComponent()) {
 			connect(static_cast<RKComponent *>(base), &RKComponent::componentChanged, this, callback);
 		} else {
