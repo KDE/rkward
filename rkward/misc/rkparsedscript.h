@@ -23,6 +23,12 @@ Inside this flat list, a child context is defined by starting after (or at) the 
 contexts are always found after their parent in the list.
 
 Type of context. Parenthesis, Brace, and Bracket, and the outermost context (Top) are the only ContextType s that we actually consider as nested.
+
+-- Addendum/TODO: Wrote that, and implemented it that way, but perhaps it was not the smartes choice after all? The main difficulty is not in
+representing the parsed tree, however, but in walking it in the various different ways we want to support. Some things that might help to make some
+algos here simpler / faster (should we feel the need):
+  - Contexts could store the index of (or a pointer to) their parent -> parentRegion()
+  - Parent contexts could store the index of their *last* child -> easier to determine empty regions, to skip over sub-contexts, and to find end points
 */
 class RKParsedScript {
   public:

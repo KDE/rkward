@@ -22,6 +22,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<li>To cycle between document / tool windows inside RKWard, use Ctrl+Tab and Ctrl+Shift+Tab</li>
 		<li>To run code from scripts / help pages / the console, select it, and use Ctrl+Enter</li>
 		<li>F2 to search the R help for the symbol under the cursor in scripts and the console</li>
+		<li>Meta+n to bring up <link href="rkward://rkward_code_navigation">Code Navigation</link> mode in script windows</li>
 	</ul>
 	</section>
 </document>
