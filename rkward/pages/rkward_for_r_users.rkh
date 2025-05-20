@@ -71,6 +71,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<li><link href="rkward://page/rkward_console"/></li>
 	<li><link href="rkward://page/rkward_for_new_users"/> For an introduction to some more basic concepts</li>
 	<li><link href="rkward://page/rkward_shortcuts"/></li>
+	<li><link href="rkward://page/rkward_code_navigation"/></li>
 </ul>
 	</related>
 </document>
