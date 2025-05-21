@@ -84,6 +84,7 @@ class RKParsedScriptTest : public QObject {
 			while (ctx.valid())
 				ctx = ps.nextStatement(ctx);
 			ctx = ps.firstContextInStatement(ctx0); // NOTE: This one may stay at the same position
+			ctx = ps.firstContextInChunk(ctx0);
 			ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.nextOuter(ctx);
@@ -110,6 +111,7 @@ class RKParsedScriptTest : public QObject {
 			while (ctx.valid())
 				ctx = ps.prevStatement(ctx);
 			ctx = ps.lastContextInStatement(ctx0); // May stay in same position
+			ps.lastPositionInChunk(ctx0);
 			ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.prevOuter(ctx);
@@ -301,6 +303,10 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"symb13"_s);
 		ctx = moveAndCheck(ps.prevStatement(ctx), u"symb11"_s);
 		QVERIFY(!ps.prevStatement(ctx).valid());
+
+		ctx = ps.contextAtPos(script.indexOf(u"symb14"));
+		ctx = moveAndCheck(ps.firstContextInChunk(ctx), u"symb11"_s);
+		QCOMPARE(script.mid(ps.lastPositionInChunk(ctx) - 6, 6), u"symb17"); // NOTE: inclusion or not of final newline is not critical
 
 		ctx = ps.contextAtPos(script.indexOf(u"This is markdown"));
 		ctx = moveAndCheck(ps.nextCodeChunk(ctx), u".some"_s);
