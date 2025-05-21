@@ -196,6 +196,16 @@ class RKCodeNavigation : public QWidget {
 			auto posa = ps.getContext(ps.firstContextInStatement(ci)).start;
 			auto posb = ps.lastPositionInStatement(ci);
 			newpos.selection = KTextEditor::Range(positionToCursor(posa), positionToCursor(posb + 1));
+		} else if (command == u'S') {
+			if (!rmdmode) {
+				message->setText(i18n("Command 'S' is for R Markdown, only"));
+				message->show();
+				updatePos();
+				return;
+			}
+			auto posa = ps.getContext(ps.firstContextInChunk(ci)).start;
+			auto posb = ps.lastPositionInChunk(ci);
+			newpos.selection = KTextEditor::Range(positionToCursor(posa), positionToCursor(posb + 1));
 		} else {
 			RK_DEBUG(COMMANDEDITOR, DL_WARNING, "unknown navigation commmand");
 			message->setText(i18n("Unknown command '%1'").arg(command));

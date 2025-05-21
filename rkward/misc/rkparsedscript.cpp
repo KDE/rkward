@@ -357,7 +357,7 @@ RKParsedScript::ContextIndex RKParsedScript::prevCodeChunk(const ContextIndex fr
 	if (!from.valid()) return ContextIndex();
 
 	// For general logic, see nextCodeChunk(), above. We need to reverse across two chunk starts, here
-	// If we are *inside* a code chunk, we need to reverse to starts, else just one.
+	// If we are *inside* a code chunk, we need to reverse two starts, else just one.
 	int chunkstarts = 1;
 	auto parent = from;
 	while (parent.valid()) {
@@ -384,6 +384,37 @@ RKParsedScript::ContextIndex RKParsedScript::prevCodeChunk(const ContextIndex fr
 		return ContextIndex(i < context_list.size() ? i : -1);
 	}
 	return ContextIndex();
+}
+
+RKParsedScript::ContextIndex RKParsedScript::firstContextInChunk(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	auto parent = from;
+	while (parent.valid()) {
+		parent = parentRegion(parent);
+		if (getContext(parent).type == Top) {
+			break;
+		}
+	}
+	if (!parent.valid()) return ContextIndex();
+	int i = parent.index;
+	do {
+		++i;
+	} while (i < context_list.size() && context_list.at(i).type == Delimiter);
+	if (i >= context_list.size()) return ContextIndex();
+	return ContextIndex(i);
+}
+
+int RKParsedScript::lastPositionInChunk(const ContextIndex from) const {
+	RK_TRACE(MISC);
+	auto ctx = from;
+	while (ctx.valid()) {
+		auto nctx = nextContext(ctx);
+		if (getContext(nctx).type == Top) {
+			break;
+		}
+		ctx = nctx;
+	}
+	return getContext(ctx).end;
 }
 
 RKParsedScript::ContextIndex RKParsedScript::nextToplevel(const ContextIndex from) const {
