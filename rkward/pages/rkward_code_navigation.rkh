@@ -1,0 +1,57 @@
+<!DOCTYPE rkhelp>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+<document>
+	<title>Code Navigation</title>
+	<summary>
+The code navigation feature in script editor windows allows you to navigate R code based on its syntactical structure, e.g. quickly jumping to the next
+statement outside the current scope or to the previous top level statement. Several navgation features are deliberately close to debbuggin in R's
+<link href="rkward://rhelp/browser">browser()</link>-command, but importantly this works entirely without actually running the code.
+	</summary>
+
+	<section title="Available commands" id="commands">
+To bring up the code naviagtion mode in script (R or R markdown) window, press the key combination "Meta+n" (shortcut customizable), or select it from the <i>Run</i>-menu. Subsequent single key presses invoke the following actions:
+
+<ul>
+	<li><b>n / N</b> Go to the next (n) or previous (N) statement at the current level, or the next outer level</li>
+	<li><b>i / I</b> Like n/N, but also step into inner contexts (such as the definition of a function)</li>
+	<li><b>o / O</b> Jump directly to the next / previous statement outside the current level (e.g. the first statement after a function body)</li>
+	<li><b>t / T</b> Go to the next / previous statement at the topmost level of the script</li>
+	<li><b>c / C</b> (For R Markdown documents, only:) Go to the next / previous code chunk</li>
+	<li><b>1 / !</b> Go to the top / bottom of the document</li>
+	<li><b>s</b> Select the current statement</li>
+	<li><b>S</b> (For R Markdown documents, only:) Select add code in the current chunk</li>
+	<li><b>Backspace</b> Go back to the position before the latest action.</li>
+	<li><b>Esc</b> Exit code navigation mode, and reset the cursor / selection to the state before entering it.</li>
+	<li><b>Return</b> Exit code navigation mode, keeping current position/selection.</li>
+	<li>Code navigation will also end, if you click anywhere else in the script, switch to a different window, or the script is modified.</li>
+</ul>
+
+Finally, you can continue to use regular shortcuts, while in code navigation mode. This includes, importantly:
+<ul>
+	<li><b>Ctrl+Return</b> Run the current line or selection.</li>
+</ul>
+	</section>
+
+	<section title="Notes and Tips" id="tips">
+The 'n' action is meant to remind of the corresponding step command in the R debugger (see <link href="rkward://rhelp/browser"/>), but it is
+not the same. The most important difference being that the code navigation, described here, works on a fully static parsed representation of the script,
+and does not attempt to follow control flow, at all.
+
+Further, what exactly is a "statement", and "inner", or and "outer" context may not always be quite clear, and may not always correspond exactly to the way
+the R engine sees your code. Instead, these commands are meant to behave in a way, that we hope makes sense, intuitively. Remember to always control, visually, what you are doing, before you hit Ctrl+Enter.
+
+Most commands show a tendency to move towards outer contexts, so 'n' and 'N' are not exact opposites. Remeber you can undo your last step using Backspace, 
+if you went past the location you were looking for.
+	</section>
+
+	<related>
+<ul>
+	<li><link href="rkward://page/rkward_for_r_users"/></li>
+	<li><link href="rkward://rhelp/browser"/></li>
+</ul>
+	</related>
+</document>

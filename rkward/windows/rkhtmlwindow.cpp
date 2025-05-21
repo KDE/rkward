@@ -465,6 +465,7 @@ void RKHTMLWindow::openRKHPage(const QUrl &url) {
 	RK_TRACE(APP);
 
 	RK_ASSERT(isRKWardUrl(url));
+	RK_DEBUG(APP, DL_DEBUG, "openRKHPage %d", qPrintable(url.url()));
 	if (url != this->url()) changeURL(url); // see ::refresh()
 	bool ok = false;
 	if ((url.host() == QLatin1String("component")) || (url.host() == QLatin1String("page"))) {

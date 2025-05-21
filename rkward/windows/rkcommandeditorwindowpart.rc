@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemai
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 -->
-<kpartgui name="rkward_commandeditor" version="710">
+<kpartgui name="rkward_commandeditor" version="821">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text></Menu>  <!-- Define placeholder to work around menu ordering bug -->
 		<Menu name="edit"><text>&amp;Edit</text>
@@ -19,6 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			<Action name="render_preview" group="postrun_actions_merge"/>
 			<Separator group="postrun_actions_merge"/>
 			<Action name="setwd_to_script" group="postrun_actions_merge"/>
+			<Action name="code_navigation" group="postrun_actions_merge"/>
 		</Menu>
 		<Menu name="settings"><text>&amp;Settings</text>
 			<Action name="configure_commandeditor"></Action>
@@ -27,6 +28,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="run_block" group="posttoolbar_actions_merge"/>
+		<Action name="code_navigation" group="posttoolbar_actions_merge"/>
 		<Action name="render_preview" group="posttoolbar_actions_merge"/>
 		<Action name="setwd_to_script" group="posttoolbar_actions_merge"/>
 	</ToolBar>
