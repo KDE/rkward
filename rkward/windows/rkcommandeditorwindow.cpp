@@ -75,9 +75,10 @@ class RKCodeNavigation : public QWidget {
 
 		view->installEventFilter(this);
 		if (view->window()) view->window()->installEventFilter(this);
+		connect(doc, &KTextEditor::Document::textChanged, this, &RKCodeNavigation::deleteLater);
 
 		auto box = new QVBoxLayout(this);
-		auto label = new QLabel(i18n("<b>Code Navigation</b> (<a href=\"rkward:://pages/rkward_code_navigation\">Help</a>)"));
+		auto label = new QLabel(i18n("<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation\">Help</a>)"));
 		QObject::connect(label, &QLabel::linkActivated, RKWorkplace::mainWorkplace(), &RKWorkplace::openAnyUrlString);
 		box->addWidget(label);
 
@@ -98,6 +99,7 @@ class RKCodeNavigation : public QWidget {
 		initial.selection = view->selectionRange();
 		stored_positions.append(initial);
 		stored_size = size();
+		updateLabel();
 	}
 
 	void updatePos() {
@@ -140,6 +142,7 @@ class RKCodeNavigation : public QWidget {
 		// translate final position back to cursor coordinates
 		if (!newpos.selection.isEmpty()) {
 			view->setSelection(newpos.selection);
+			view->setCursorPosition(newpos.selection.start());
 		} else {
 			if (message->isVisible()) {
 				message->hide();
@@ -149,6 +152,7 @@ class RKCodeNavigation : public QWidget {
 				});
 			}
 			view->setCursorPosition(positionToCursor(newpos.pos));
+			view->setSelection(KTextEditor::Range(-1, -1, -1, -1));
 		}
 
 		updateLabel();
@@ -221,7 +225,7 @@ class RKCodeNavigation : public QWidget {
 				} else {
 					message->setText(i18nc("Keep this short", "Search hit top.\n'C' to move to previous chunk."));
 				}
-			} else{
+			} else {
 				if (command.toLower() == command) {
 					message->setText(i18nc("Keep this short", "Search hit bottom.\n'1' to move to top."));
 				} else {
@@ -243,15 +247,21 @@ class RKCodeNavigation : public QWidget {
 		} else if (from == input && event->type() == QEvent::KeyPress) {
 			auto ke = static_cast<QKeyEvent *>(event);
 			const auto text = ke->text();
-			if (ke->key() == Qt::Key_Backspace) {
-				if (stored_positions.size() > 1) {
-					navigate(stored_positions.takeLast());
-					return true;
-				}
+			if (ke->modifiers() == Qt::NoModifier && ke->key() == Qt::Key_Backspace && stored_positions.size() > 1) {
+				stored_positions.pop_back();
+				navigate(stored_positions.last());
+			} else if (ke->modifiers() == Qt::NoModifier && (ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return)) {
+				deleteLater();
+			} else if (ke->modifiers() == Qt::NoModifier && (ke->key() == Qt::Key_Escape)) {
+				RK_ASSERT(!stored_positions.isEmpty());
+				navigate(stored_positions.first());
+				deleteLater();
 			} else if (!text.simplified().isEmpty()) {
 				handleCommand(text.back());
-				return true;
+			} else {
+				return false;
 			}
+			return true;
 		}
 		return false;
 	}
@@ -267,6 +277,7 @@ class RKCodeNavigation : public QWidget {
 			input->setText(sequence);
 		}
 	}
+
   public:
 	static void doNavigation(KTextEditor::View *view, QWidget *parent) {
 		auto w = new RKCodeNavigation(view, parent);
