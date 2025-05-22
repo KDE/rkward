@@ -1,3 +1,4 @@
+symb.first
 # - This file is part of the RKWard project (https://rkward.kde.org).
 # SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 # SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
@@ -16,7 +17,13 @@ Symbol19
 
 # Comment 4
 Symbol.x <- Symbol.y + Symbol.z +
-            Symbol.y
+            Symbol.y |>
+
+            cont_after_newline() |>
+            # a comment
+
+            # a comment
+            cont_after_comments()
 
 FunctionList <- list(
 	Argname=function() { statement },
@@ -31,3 +38,5 @@ FunctionList <- list(
 		nest5
 	}, ddd, eee <- fff(ggg + hhh) + iii, jjj)
 )
+
+symb.last
