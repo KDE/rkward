@@ -12,7 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKParsedScript::RKParsedScript(const QString &content, bool rmd) : prevtype(None), allow_merge(true) {
+RKParsedScript::RKParsedScript(const QString &content, bool rmd) : prevtype(None), allow_merge(true), on_operator_rhs(false) {
 	RK_TRACE(MISC);
 
 	context_list.reserve(200); // just a very wild guess.
@@ -63,7 +63,6 @@ int RKParsedScript::addNextMarkdownChunk(int start, const QString &content) {
 	if (chunkend < 0) chunkend = content.size();
 
 	context_list.emplace_back(Comment, start, chunkstart - 1);
-	prevtype = Comment;                                      // causes insertion of a delimiter in the following addContext
 	addContext(Top, chunkstart - 1, content.left(chunkend)); // in case markdown region has incomplete syntax
 	                                                         // limit parsing to the actual markdown region
 	context_list.emplace_back(Top, chunkend, chunkend);      // HACK: Used as a dummy separtor, here...
@@ -72,6 +71,11 @@ int RKParsedScript::addNextMarkdownChunk(int start, const QString &content) {
 
 int RKParsedScript::addContext(ContextType type, int start, const QString &content) {
 	RK_TRACE(MISC);
+
+	if (prevtype == OtherOperator || prevtype == SubsetOperator) {
+		on_operator_rhs = true;
+	}
+
 	int index = context_list.size();
 	// some contexts need (or benefit from) special handling depending on the preceding context
 	// TODO: maybe it would be easier to do this in a separte post-processing step
@@ -79,20 +83,26 @@ int RKParsedScript::addContext(ContextType type, int start, const QString &conte
 		// Merge any two subsequent operators or delimiters, and contiguous comment regions into one token
 		// i.e. do not add a context, we'll reuse the previous one.
 		--index;
-	} else if (type == Delimiter && content.at(start) == u'\n' && (prevtype == OtherOperator || prevtype == SubsetOperator)) {
+	} else if (type == Delimiter && content.at(start) == u'\n' && on_operator_rhs) {
 		// newlines do not count as delimiter on operator RHS, so skip ahead, instead of really adding this
 		return start;
 	} else {
-		if (prevtype == Comment) { // comment region implies a newline
-			auto pprevtype = context_list.at(index - 2).type;
-			if (pprevtype != OtherOperator && pprevtype != SubsetOperator) {
-				context_list.emplace_back(Delimiter, start - 1, start - 1);
-				++index;
-			}
+		// comment region implies a newline, i.e. a delimiter in most scenarios
+		if (prevtype == Comment && !on_operator_rhs) {
+			context_list.emplace_back(Delimiter, start - 1, start - 1);
+			++index;
 		}
 		context_list.emplace_back(type, start); // end will be filled in, later
+		if (type == Top) {
+			// we also insert a delimiter right after Top to help our algorithms
+			context_list.emplace_back(Delimiter, start - 1, start - 1);
+		}
 	}
 	allow_merge = true;
+
+	if (!(type == OtherOperator || type == SubsetOperator || type == Delimiter || type == Comment)) {
+		on_operator_rhs = false;
+	}
 
 	int pos = start;
 	if (type == SingleQuoted || type == DoubleQuoted || type == BackQuoted) {
@@ -380,8 +390,8 @@ RKParsedScript::ContextIndex RKParsedScript::prevCodeChunk(const ContextIndex fr
 	if (i >= 0) {
 		do {
 			++i;
-		} while (i < context_list.size() && context_list.at(i).type == Delimiter);
-		return ContextIndex(i < context_list.size() ? i : -1);
+		} while (i < (int) context_list.size() && context_list.at(i).type == Delimiter);
+		return ContextIndex(i < (int) context_list.size() ? i : -1);
 	}
 	return ContextIndex();
 }
@@ -399,8 +409,8 @@ RKParsedScript::ContextIndex RKParsedScript::firstContextInChunk(const ContextIn
 	int i = parent.index;
 	do {
 		++i;
-	} while (i < context_list.size() && context_list.at(i).type == Delimiter);
-	if (i >= context_list.size()) return ContextIndex();
+	} while (i < (int) context_list.size() && context_list.at(i).type == Delimiter);
+	if (i >= (int) context_list.size()) return ContextIndex();
 	return ContextIndex(i);
 }
 

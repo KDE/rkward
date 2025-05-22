@@ -135,6 +135,7 @@ class RKParsedScript {
 	std::vector<Context> context_list;
 	ContextType prevtype;
 	bool allow_merge;
+	bool on_operator_rhs;
 };
 
 #endif
