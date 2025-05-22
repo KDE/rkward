@@ -89,6 +89,7 @@ class RKCodeNavigation : public QFrame {
 		box->addWidget(input);
 
 		message = new QLabel();
+		message->setTextFormat(Qt::RichText);
 		message->hide();
 		box->addWidget(message);
 
@@ -213,7 +214,7 @@ class RKCodeNavigation : public QFrame {
 			newpos.selection = KTextEditor::Range(positionToCursor(posa), positionToCursor(posb + 1));
 		} else {
 			RK_DEBUG(COMMANDEDITOR, DL_WARNING, "unknown navigation commmand");
-			message->setText(i18n("Unknown command '%1'").arg(command));
+			message->setText(i18n("Unknown command <tt><b>%1</b></tt>").arg(command));
 			message->show();
 			updatePos();
 			return;
@@ -222,15 +223,15 @@ class RKCodeNavigation : public QFrame {
 		if (newpos.pos < 0 && command.toLower() != u's') {
 			if (rmdmode && newpos.command.toLower() != u'c') {
 				if (command.toLower() == command) {
-					message->setText(i18nc("Keep this short", "Search hit bottom.\n'c' to move to next chunk."));
+					message->setText(i18nc("Keep this short", "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."));
 				} else {
-					message->setText(i18nc("Keep this short", "Search hit top.\n'C' to move to previous chunk."));
+					message->setText(i18nc("Keep this short", "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."));
 				}
 			} else {
 				if (command.toLower() == command) {
-					message->setText(i18nc("Keep this short", "Search hit bottom.\n'1' to move to top."));
+					message->setText(i18nc("Keep this short", "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."));
 				} else {
-					message->setText(i18nc("Keep this short", "Search hit top.\n'!' to move to bottom."));
+					message->setText(i18nc("Keep this short", "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."));
 				}
 			}
 			message->show();
@@ -279,7 +280,7 @@ class RKCodeNavigation : public QFrame {
 		}
 	}
 
-	void paintEvent(QPaintEvent *e) {
+	void paintEvent(QPaintEvent *e) override {
 		QFrame::paintEvent(e);
 
 		QPainter paint(this);
