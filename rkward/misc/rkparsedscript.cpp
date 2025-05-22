@@ -390,8 +390,8 @@ RKParsedScript::ContextIndex RKParsedScript::prevCodeChunk(const ContextIndex fr
 	if (i >= 0) {
 		do {
 			++i;
-		} while (i < (int) context_list.size() && context_list.at(i).type == Delimiter);
-		return ContextIndex(i < (int) context_list.size() ? i : -1);
+		} while (i < (int)context_list.size() && context_list.at(i).type == Delimiter);
+		return ContextIndex(i < (int)context_list.size() ? i : -1);
 	}
 	return ContextIndex();
 }
@@ -409,8 +409,8 @@ RKParsedScript::ContextIndex RKParsedScript::firstContextInChunk(const ContextIn
 	int i = parent.index;
 	do {
 		++i;
-	} while (i < (int) context_list.size() && context_list.at(i).type == Delimiter);
-	if (i >= (int) context_list.size()) return ContextIndex();
+	} while (i < (int)context_list.size() && context_list.at(i).type == Delimiter);
+	if (i >= (int)context_list.size()) return ContextIndex();
 	return ContextIndex(i);
 }
 
