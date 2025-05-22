@@ -23,8 +23,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLineEdit>
-#include <QPainter>
 #include <QMenu>
+#include <QPainter>
 #include <QSplitter>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
@@ -105,7 +105,7 @@ class RKCodeNavigation : public QFrame {
 	}
 
 	void updatePos() {
-		move(view->mapToGlobal(view->geometry().topRight() - QPoint(width()+5, -5)));
+		move(view->mapToGlobal(view->geometry().topRight() - QPoint(width() + 5, -5)));
 	}
 
 	void focusOutEvent(QFocusEvent *) override {
@@ -287,6 +287,7 @@ class RKCodeNavigation : public QFrame {
 		paint.setPen(QApplication::palette().color(QPalette::Highlight));
 		paint.drawRect(0, 0, width() - 1, height() - 1);
 	}
+
   public:
 	static void doNavigation(KTextEditor::View *view, QWidget *parent) {
 		auto w = new RKCodeNavigation(view, parent);
