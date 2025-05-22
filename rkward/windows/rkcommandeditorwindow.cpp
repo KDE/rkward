@@ -23,6 +23,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLineEdit>
+#include <QPainter>
 #include <QMenu>
 #include <QSplitter>
 #include <QTemporaryDir>
@@ -65,9 +66,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rktexthints.h"
 #include "rkworkplace.h"
 
-class RKCodeNavigation : public QWidget {
+class RKCodeNavigation : public QFrame {
   private:
-	RKCodeNavigation(KTextEditor::View *view, QWidget *parent) : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint), view(view), doc(view->document()) {
+	RKCodeNavigation(KTextEditor::View *view, QWidget *parent) : QFrame(parent, Qt::Popup | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint), view(view), doc(view->document()) {
 		auto scheme = RKStyle::viewScheme();
 		auto pal = palette();
 		pal.setColor(backgroundRole(), scheme->background(KColorScheme::PositiveBackground).color());
@@ -103,7 +104,7 @@ class RKCodeNavigation : public QWidget {
 	}
 
 	void updatePos() {
-		move(view->mapToGlobal(view->geometry().topRight() - QPoint(width(), 0)));
+		move(view->mapToGlobal(view->geometry().topRight() - QPoint(width()+5, -5)));
 	}
 
 	void focusOutEvent(QFocusEvent *) override {
@@ -278,6 +279,13 @@ class RKCodeNavigation : public QWidget {
 		}
 	}
 
+	void paintEvent(QPaintEvent *e) {
+		QFrame::paintEvent(e);
+
+		QPainter paint(this);
+		paint.setPen(QApplication::palette().color(QPalette::Highlight));
+		paint.drawRect(0, 0, width() - 1, height() - 1);
+	}
   public:
 	static void doNavigation(KTextEditor::View *view, QWidget *parent) {
 		auto w = new RKCodeNavigation(view, parent);
