@@ -28,6 +28,7 @@ SET(windows_STAT_SRCS
 	rkdebugmessagewindow.cpp
 	katepluginintegration.cpp
 	rkcodecompletion.cpp
+	rkcodenavigation.cpp
 	rktexthints.cpp
 )
 
