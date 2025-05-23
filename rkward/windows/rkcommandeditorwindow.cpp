@@ -255,8 +255,6 @@ RKCommandEditorWindow::RKCommandEditorWindow(QWidget *parent, const QUrl &_url, 
 	connect(m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
 	connect(m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::textChanged);
 	connect(m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);
-	// somehow the katepart loses the context menu each time it loses focus
-	connect(m_view, &KTextEditor::View::focusIn, this, &RKCommandEditorWindow::focusIn);
 
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting(m_doc, RKCommandHighlighter::RScript);
@@ -405,8 +403,9 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 	file_save_as_action = findAction(m_view, QStringLiteral("file_save_as"));
 	if (file_save_as_action) file_save_as_action->setText(i18n("Save Script As..."));
 
-	action = ac->addAction(QStringLiteral("code_navigation"), this, [this]() { RKCodeNavigation::doNavigation(m_view, this); });
-	action->setText(i18n("Code Navigation"));
+	QMenu *cnmenu = RKCodeNavigation::actionMenu(m_view, this);
+	ac->addAction(QStringLiteral("code_navigation_menu"), cnmenu->menuAction());
+	action = ac->addAction(QStringLiteral("code_navigation"), cnmenu->actions().first());
 	ac->setDefaultShortcuts(action, QList<QKeySequence>() << (Qt::MetaModifier | Qt::Key_N));
 
 	const auto actions = standardActionCollection()->actions() + ac->actions();
@@ -474,11 +473,6 @@ void RKCommandEditorWindow::initBlocks() {
 		removeBlock(i, true); // initialize to empty
 	}
 	RK_ASSERT(block_records.size() == NUM_BLOCK_RECORDS);
-}
-
-void RKCommandEditorWindow::focusIn(KTextEditor::View *v) {
-	RK_TRACE(COMMANDEDITOR);
-	RK_ASSERT(v == m_view);
 }
 
 QString RKCommandEditorWindow::fullCaption() {

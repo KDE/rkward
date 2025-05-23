@@ -10,9 +10,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <KTextEditor/View>
 
+class QMenu;
+
 namespace RKCodeNavigation {
 	void doNavigation(KTextEditor::View *view, QWidget *parent);
-	void addMenuEntries(QMenu *menu);
+/** creates a menu code navigation actions.
+ *  The first action in the menu brings up code navigation mode (may e.g. be plugged into a toolbar). */
+	QMenu *actionMenu(KTextEditor::View *view, QWidget *parent);
 };
 
 #endif

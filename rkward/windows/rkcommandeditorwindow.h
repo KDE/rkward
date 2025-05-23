@@ -1,6 +1,6 @@
 /*
 rkcommandeditorwindow - This file is part of the RKWard project. Created: Mon Aug 30 2004
-SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -108,7 +108,6 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
   public Q_SLOTS:
 	/** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption();
-	void focusIn(KTextEditor::View *);
 	/** run the currently selected command(s) or line */
 	void runCurrent();
 	/** run the entire script */

@@ -7,7 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 This is markdown ``{r} .some <- `markdown` `` and this is too, with some `inline(code)`.
 
-Usually, there would be lot of mardown (and this may contain many relevant markers, such as {}, and []).
+Usually, there would be lot of markdown (and this may contain many relevant markers, such as {}, and []).
 
 ```{r echo=TRUE}
 symb01 <-symb02()
