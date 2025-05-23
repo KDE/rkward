@@ -21,6 +21,7 @@ class RKCodeNavigation : public QObject {
 
 	/** get list of (named; suitable for use with KActionCollection) actions for code navigation. */
 	QList<QAction *> actions() const { return _actions; };
+
   private:
 	QAction *addAction(QMenu *menu, const QString &name, const QString &label, const QChar command);
 
