@@ -7,6 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkcodenavigation.h"
 
+#include <QActionGroup>
 #include <QApplication>
 #include <QFrame>
 #include <QKeyEvent>
@@ -19,6 +20,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KSqueezedTextLabel>
 #include <KTextEditor/Document>
+#include <KTextEditor/Message>
 
 #include "../misc/rkparsedscript.h"
 #include "../misc/rkstyle.h"
@@ -26,9 +28,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-class RKCodeNavigationBase {
+/** TODO: This would benefit from some re-organisation: Wrapper around parsed script and helper functions that may be used
+ * with or without ann RKCodeNavigationWidget. Probably, this should own the widget, rather than the other way around. */
+class RKCodeNavigationInternal : public QObject {
   public:
-	RKCodeNavigationBase(KTextEditor::View *view) :
+	RKCodeNavigationInternal(KTextEditor::View *view, QObject *parent) :
+		QObject(parent),
 		view(view),
 		doc(view->document()),
 		rmdmode(doc->highlightingMode() == u"R Markdown"_s),
@@ -50,7 +55,7 @@ class RKCodeNavigationBase {
 		return pos;
 	}
 
-	StoredPosition handleCommandBase(const QChar &command) const {
+	StoredPosition handleCommand(const QChar &command) const {
 		auto last = viewPosition();
 		auto pos = last.pos;
 
@@ -121,7 +126,7 @@ class RKCodeNavigationBase {
 		return newpos;
 	}
 
-	void navigateBase(const StoredPosition &newpos) const {
+	void navigate(const StoredPosition &newpos) const {
 		RK_TRACE(APP);
 		RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "navigate to %d", newpos.pos);
 		// translate final position back to cursor coordinates
@@ -131,6 +136,14 @@ class RKCodeNavigationBase {
 		} else {
 			view->setCursorPosition(positionToCursor(newpos.pos));
 			view->setSelection(KTextEditor::Range(-1, -1, -1, -1));
+		}
+
+		if (!newpos.message.isEmpty()) {
+			auto msg = new KTextEditor::Message(newpos.message, KTextEditor::Message::Information);
+			msg->setPosition(KTextEditor::Message::BottomInView);
+			msg->setAutoHide(2000);
+			msg->setAutoHideMode(KTextEditor::Message::Immediate);
+			doc->postMessage(msg);
 		}
 	}
 
@@ -154,16 +167,15 @@ class RKCodeNavigationBase {
 		return KTextEditor::Cursor();
 	}
 
-  protected:
 	KTextEditor::View *view;
 	KTextEditor::Document *doc;
 	bool rmdmode;
 	RKParsedScript ps;
 };
 
-class RKCodeNavigationWidget : public QFrame, public RKCodeNavigationBase {
+class RKCodeNavigationWidget : public QFrame {
   public:
-	RKCodeNavigationWidget(KTextEditor::View *view, QWidget *parent) : QFrame(parent, Qt::Popup | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint), RKCodeNavigationBase(view) {
+	RKCodeNavigationWidget(QWidget *parent, RKCodeNavigationInternal *internal) : QFrame(parent, Qt::Popup | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint), internal(internal) {
 		RK_TRACE(APP);
 
 		auto scheme = RKStyle::viewScheme();
@@ -171,9 +183,9 @@ class RKCodeNavigationWidget : public QFrame, public RKCodeNavigationBase {
 		pal.setColor(backgroundRole(), scheme->background(KColorScheme::PositiveBackground).color());
 		setPalette(pal);
 
-		view->installEventFilter(this);
-		if (view->window()) view->window()->installEventFilter(this);
-		connect(doc, &KTextEditor::Document::textChanged, this, &RKCodeNavigationWidget::deleteLater);
+		internal->view->installEventFilter(this);
+		if (internal->view->window()) internal->view->window()->installEventFilter(this);
+		connect(internal->doc, &KTextEditor::Document::textChanged, this, &RKCodeNavigationWidget::deleteLater);
 
 		auto box = new QVBoxLayout(this);
 		auto label = new QLabel(i18n("<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation\">Help</a>)"));
@@ -191,13 +203,13 @@ class RKCodeNavigationWidget : public QFrame, public RKCodeNavigationBase {
 		box->addWidget(message);
 
 		stored_size = size();
-		stored_positions.append(viewPosition());
+		stored_positions.append(internal->viewPosition());
 		updateLabel();
 	}
 
 	void updatePos() {
 		RK_TRACE(APP);
-		move(view->mapToGlobal(view->geometry().topRight() - QPoint(width() + 5, -5)));
+		move(internal->view->mapToGlobal(internal->view->geometry().topRight() - QPoint(width() + 5, -5)));
 	}
 
 	void focusOutEvent(QFocusEvent *) override {
@@ -205,9 +217,9 @@ class RKCodeNavigationWidget : public QFrame, public RKCodeNavigationBase {
 		deleteLater();
 	}
 
-	void navigate(const StoredPosition &newpos) {
+	void navigate(const RKCodeNavigationInternal::StoredPosition &newpos) {
 		RK_TRACE(APP);
-		navigateBase(newpos);
+		internal->navigate(newpos);
 		if (message->isVisible()) {
 			message->hide();
 			QTimer::singleShot(0, this, [this]() {
@@ -221,8 +233,9 @@ class RKCodeNavigationWidget : public QFrame, public RKCodeNavigationBase {
 	void handleCommand(const QChar command) {
 		RK_TRACE(APP);
 
-		auto pos = handleCommandBase(command);
+		auto pos = internal->handleCommand(command);
 		if (!pos.message.isEmpty()) {
+			message->setText(pos.message);
 			message->show();
 			updatePos();
 			return;
@@ -234,14 +247,16 @@ class RKCodeNavigationWidget : public QFrame, public RKCodeNavigationBase {
 
 	bool eventFilter(QObject *from, QEvent *event) override {
 		RK_TRACE(APP);
-		if (from == view && (event->type() == QEvent::Move || event->type() == QEvent::Resize)) {
+		if (from == internal->view && (event->type() == QEvent::Move || event->type() == QEvent::Resize)) {
 			updatePos();
 		} else if (from == input && event->type() == QEvent::KeyPress) {
 			auto ke = static_cast<QKeyEvent *>(event);
 			const auto text = ke->text();
-			if (ke->modifiers() == Qt::NoModifier && ke->key() == Qt::Key_Backspace && stored_positions.size() > 1) {
-				stored_positions.pop_back();
-				navigate(stored_positions.last());
+			if (ke->modifiers() == Qt::NoModifier && ke->key() == Qt::Key_Backspace) {
+				if (stored_positions.size() > 1) {
+					stored_positions.pop_back();
+					navigate(stored_positions.last());
+				}
 			} else if (ke->modifiers() == Qt::NoModifier && (ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return)) {
 				deleteLater();
 			} else if (ke->modifiers() == Qt::NoModifier && (ke->key() == Qt::Key_Escape)) {
@@ -283,66 +298,76 @@ class RKCodeNavigationWidget : public QFrame, public RKCodeNavigationBase {
 	KSqueezedTextLabel *input;
 	QLabel *message;
 	QSize stored_size;
-	QList<StoredPosition> stored_positions;
+	QList<RKCodeNavigationInternal::StoredPosition> stored_positions;
+	RKCodeNavigationInternal *internal;
 };
 
-namespace RKCodeNavigation {
-	void doNavigation(KTextEditor::View *view, QWidget *parent) {
-		auto w = new RKCodeNavigationWidget(view, parent);
+RKCodeNavigation::RKCodeNavigation(KTextEditor::View *view, QWidget *parent) :
+	QObject(parent), view(view), internal(nullptr) {
+	RK_TRACE(APP);
+
+	connect(view->document(), &KTextEditor::Document::textChanged, this, [this]() {
+		if (internal) {
+			internal->deleteLater();
+			internal = nullptr;
+		}
+	});
+
+	QMenu *menu = new QMenu(parent);
+	auto action = menu->addAction(i18n("Code Navigation Mode"));
+	action->setIcon(QIcon::fromTheme(u"debug-step-into"_s));
+	menu->menuAction()->setIcon(action->icon());
+	menu->menuAction()->setText(i18n("Code Navigation"));
+	menu->menuAction()->setObjectName(u"rkcodenav_menu"_s);
+	action->setObjectName(u"rkcodenav"_s);
+	_actions.append(menu->menuAction());
+	_actions.append(action);
+	connect(action, &QAction::triggered, parent, [this, parent]() {
+		if (!internal) {
+			internal = new RKCodeNavigationInternal(this->view, this);
+		}
+		auto w = new RKCodeNavigationWidget(parent, internal);
 		w->show();
 		w->updatePos();
 		w->input->setFocus();
-	}
+	});
 
-	void singleShotNavigation(KTextEditor::View *view, const QChar &command) {
-		RKCodeNavigationBase w(view);
-		w.navigateBase(w.handleCommandBase(command));
-	}
+	rmdactions = new QActionGroup(this);
 
-	QAction *directNavigationAction(const QString &label, KTextEditor::View *view, const QChar command) {
-		QAction *a = new QAction(label);
-		QObject::connect(a, &QAction::triggered, view, [view, command]() { singleShotNavigation(view, command); });
-		return a;
-	}
+	menu->addSeparator();
 
-	QMenu *actionMenu(KTextEditor::View *view, QWidget *parent) {
-		QMenu *menu = new QMenu(parent);
-		auto action = menu->addAction(i18n("Code Navigation Mode"));
-		action->setIcon(QIcon::fromTheme(u"debug-step-into"_s));
-		menu->menuAction()->setIcon(action->icon());
-		menu->menuAction()->setText(i18n("Code Navigation"));
-		QObject::connect(action, &QAction::triggered, parent, [view, parent]() { doNavigation(view, parent); });
+	menu->addSection(i18nc("verb: To jump to a different place in the code", "Go"));
+	addAction(menu, u"rkcodenav_next"_s, i18n("Next statement"), u'n');
+	addAction(menu, u"rkcodenav_prev"_s, i18n("Previous statement"), u'N');
+	addAction(menu, u"rkcodenav_inner"_s, i18n("Next (inner) statement"), u'i');
+	addAction(menu, u"rkcodenav_prev_inner"_s, i18n("Previous (inner) statement"), u'P');
+	addAction(menu, u"rkcodenav_outer"_s, i18n("Next outer statement"), u'o');
+	addAction(menu, u"rkcodenav_prev_outer"_s, i18n("Previous outer statement"), u'O');
+	addAction(menu, u"rkcodenav_toplevel"_s, i18n("Next toplevel statement"), u't');
+	addAction(menu, u"rkcodenav_prev_toplevel"_s, i18n("Previous toplevel statement"), u'T');
 
-		menu->addSeparator();
-		QObject::connect(menu, &QMenu::aboutToShow, menu, [view, menu]() {
-			bool rmdmode = view->document()->highlightingMode() == u"R Markdown"_s;
-			// TODO: Allow setting and customizing shortcuts
-			menu->addAction(directNavigationAction(i18n("Next statement"), view, u'n'));
-			menu->addAction(directNavigationAction(i18n("Previous statement"), view, u'N'));
-			menu->addAction(directNavigationAction(i18n("Next (inner) statement"), view, u'i'));
-			menu->addAction(directNavigationAction(i18n("Previous (inner) statement"), view, u'P'));
-			menu->addAction(directNavigationAction(i18n("Next outer statement"), view, u'o'));
-			menu->addAction(directNavigationAction(i18n("Previous outer statement"), view, u'O'));
-			menu->addAction(directNavigationAction(i18n("Next toplevel statement"), view, u't'));
-			menu->addAction(directNavigationAction(i18n("Previous toplevel statement"), view, u'T'));
-			if (rmdmode) {
-				menu->addAction(directNavigationAction(i18n("Next code chunk"), view, u'c'));
-				menu->addAction(directNavigationAction(i18n("Previous code chunk"), view, u'C'));
-			}
-			menu->addSeparator();
-			menu->addAction(directNavigationAction(i18n("Select current statement"), view, u's'));
-			if (rmdmode) {
-				menu->addAction(directNavigationAction(i18n("Select current code chunk"), view, u'S'));
-			}
-		});
+	rmdactions->addAction(addAction(menu, u"rkcodenav_chunk"_s, i18n("Next code chunk"), u'c'));
+	rmdactions->addAction(addAction(menu, u"rkcodenav_prev_chunk"_s, i18n("Previous code chunk"), u'C'));
+	menu->addSection(i18n("Select"));
+	addAction(menu, u"rkcodenav_select"_s, i18n("Select current statement"), u's');
+	rmdactions->addAction(addAction(menu, u"rkcodenav_select_chunk"_s, i18n("Select current code chunk"), u'S'));
 
-		QObject::connect(menu, &QMenu::aboutToHide, menu, [menu]() {
-			const auto acts = menu->actions();
-			for (int i = acts.size() - 1; i >= 2; --i) {
-				acts[i]->deleteLater();
-			}
-		});
+	QObject::connect(menu, &QMenu::aboutToShow, this, [view, this]() {
+		bool rmdmode = view->document()->highlightingMode() == u"R Markdown"_s;
+		rmdactions->setVisible(rmdmode);
+	});
+}
 
-		return menu;
-	}
-};
+QAction *RKCodeNavigation::addAction(QMenu *menu, const QString &name, const QString &label, const QChar command) {
+	QAction *a = new QAction(label);
+	a->setObjectName(name);
+	QObject::connect(a, &QAction::triggered, view, [this, command]() {
+		if (!internal) {
+			internal = new RKCodeNavigationInternal(view, this);
+		}
+		internal->navigate(internal->handleCommand(command));
+	});
+	menu->addAction(a);
+	_actions.append(a);
+	return a;
+}

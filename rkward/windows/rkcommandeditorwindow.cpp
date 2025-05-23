@@ -403,10 +403,9 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 	file_save_as_action = findAction(m_view, QStringLiteral("file_save_as"));
 	if (file_save_as_action) file_save_as_action->setText(i18n("Save Script As..."));
 
-	QMenu *cnmenu = RKCodeNavigation::actionMenu(m_view, this);
-	ac->addAction(QStringLiteral("code_navigation_menu"), cnmenu->menuAction());
-	action = ac->addAction(QStringLiteral("code_navigation"), cnmenu->actions().first());
-	ac->setDefaultShortcuts(action, QList<QKeySequence>() << (Qt::MetaModifier | Qt::Key_N));
+	auto rkcn = new RKCodeNavigation(m_view, this);
+	ac->addActions(rkcn->actions());
+	ac->setDefaultShortcuts(ac->action(u"rkcodenav"_s), QList<QKeySequence>() << (Qt::MetaModifier | Qt::Key_N));
 
 	const auto actions = standardActionCollection()->actions() + ac->actions();
 	for (QAction *action : actions) {

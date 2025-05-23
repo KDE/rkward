@@ -10,13 +10,24 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <KTextEditor/View>
 
+class QAction;
+class QActionGroup;
 class QMenu;
+class RKCodeNavigationInternal;
 
-namespace RKCodeNavigation {
-	void doNavigation(KTextEditor::View *view, QWidget *parent);
-/** creates a menu code navigation actions.
- *  The first action in the menu brings up code navigation mode (may e.g. be plugged into a toolbar). */
-	QMenu *actionMenu(KTextEditor::View *view, QWidget *parent);
+class RKCodeNavigation : public QObject {
+  public:
+	RKCodeNavigation(KTextEditor::View *view, QWidget *parent);
+
+	/** get list of (named; suitable for use with KActionCollection) actions for code navigation. */
+	QList<QAction *> actions() const { return _actions; };
+  private:
+	QAction *addAction(QMenu *menu, const QString &name, const QString &label, const QChar command);
+
+	KTextEditor::View *view;
+	QList<QAction *> _actions;
+	RKCodeNavigationInternal *internal;
+	QActionGroup *rmdactions;
 };
 
 #endif
