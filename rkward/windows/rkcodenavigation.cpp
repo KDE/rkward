@@ -32,13 +32,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
  * with or without ann RKCodeNavigationWidget. Probably, this should own the widget, rather than the other way around. */
 class RKCodeNavigationInternal : public QObject {
   public:
-	RKCodeNavigationInternal(KTextEditor::View *view, QObject *parent) :
-		QObject(parent),
-		view(view),
-		doc(view->document()),
-		rmdmode(doc->highlightingMode() == u"R Markdown"_s),
-		ps(doc->text(), rmdmode) {
-	};
+	RKCodeNavigationInternal(KTextEditor::View *view, QObject *parent) : QObject(parent),
+	                                                                     view(view),
+	                                                                     doc(view->document()),
+	                                                                     rmdmode(doc->highlightingMode() == u"R Markdown"_s),
+	                                                                     ps(doc->text(), rmdmode){};
 
 	struct StoredPosition {
 		int pos;
@@ -303,8 +301,7 @@ class RKCodeNavigationWidget : public QFrame {
 	RKCodeNavigationInternal *internal;
 };
 
-RKCodeNavigation::RKCodeNavigation(KTextEditor::View *view, QWidget *parent) :
-	QObject(parent), view(view), internal(nullptr) {
+RKCodeNavigation::RKCodeNavigation(KTextEditor::View *view, QWidget *parent) : QObject(parent), view(view), internal(nullptr) {
 	RK_TRACE(APP);
 
 	connect(view->document(), &KTextEditor::Document::textChanged, this, [this]() {
