@@ -128,6 +128,15 @@ class RKCodeNavigationInternal : public QObject {
 
 	void navigate(const StoredPosition &newpos) const {
 		RK_TRACE(APP);
+		if (!newpos.message.isEmpty()) {
+			auto msg = new KTextEditor::Message(newpos.message, KTextEditor::Message::Information);
+			msg->setPosition(KTextEditor::Message::BottomInView);
+			msg->setAutoHide(2000);
+			msg->setAutoHideMode(KTextEditor::Message::Immediate);
+			doc->postMessage(msg);
+			return;
+		}
+
 		RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "navigate to %d", newpos.pos);
 		// translate final position back to cursor coordinates
 		if (!newpos.selection.isEmpty()) {
@@ -136,14 +145,6 @@ class RKCodeNavigationInternal : public QObject {
 		} else {
 			view->setCursorPosition(positionToCursor(newpos.pos));
 			view->setSelection(KTextEditor::Range(-1, -1, -1, -1));
-		}
-
-		if (!newpos.message.isEmpty()) {
-			auto msg = new KTextEditor::Message(newpos.message, KTextEditor::Message::Information);
-			msg->setPosition(KTextEditor::Message::BottomInView);
-			msg->setAutoHide(2000);
-			msg->setAutoHideMode(KTextEditor::Message::Immediate);
-			doc->postMessage(msg);
 		}
 	}
 
