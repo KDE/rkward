@@ -5,7 +5,7 @@ SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 -->
 <document>
-	<title>Code Navigation</title>
+	<title>Code Navigation and Quick Code Navigation Mode</title>
 	<summary>
 The code navigation feature in script editor windows allows you to navigate R code based on its syntactical structure, e.g. quickly jumping to the next
 statement outside the current scope or to the previous top level statement. Several navgation features are deliberately close to debbuggin in R's
@@ -13,27 +13,25 @@ statement outside the current scope or to the previous top level statement. Seve
 	</summary>
 
 	<section title="Available commands" id="commands">
-To bring up the code naviagtion mode in script (R or R markdown) window, press the key combination "Meta+n" (shortcut customizable), or select it from the <i>Run</i>-menu. Subsequent single key presses invoke the following actions:
+The code navigation feature is available from the <i>Run</i>-menu, and the context menu in script (R or R markdown) windows in two variants: The first option is to simply select inidividual navigation actions directly from the menu. Secondly, however, the "Quick Code Navigation Mode" (top entry in the menu; default keyboard shortcut is "Meta+n") allows you to navigate your sources very quickly. Once in this mode, subsequent single key presses invoke the following actions:
 
-<ul>
-	<li><tt><b>n / N</b></tt> Go to the next (n) or previous (N) statement at the current level, or the next outer level</li>
-	<li><tt><b>i / I</b></tt> Like n/N, but also step into inner contexts (such as the definition of a function)</li>
-	<li><tt><b>o / O</b></tt> Jump directly to the next / previous statement outside the current level (e.g. the first statement after a function body)</li>
-	<li><tt><b>t / T</b></tt> Go to the next / previous statement at the topmost level of the script</li>
-	<li><tt><b>c / C</b></tt> (For R Markdown documents, only:) Go to the next / previous code chunk</li>
-	<li><tt><b>1 / !</b></tt> Go to the top / bottom of the document</li>
-	<li><tt><b>s</b></tt> Select the current statement</li>
-	<li><tt><b>S</b></tt> (For R Markdown documents, only:) Select add code in the current chunk</li>
-	<li><tt><b>Backspace</b></tt> Go back to the position before the latest action.</li>
-	<li><tt><b>Esc</b></tt> Exit code navigation mode, and reset the cursor / selection to the state before entering it.</li>
-	<li><tt><b>Return</b></tt> Exit code navigation mode, keeping current position/selection.</li>
-	<li>Code navigation will also end, if you click anywhere else in the script, switch to a different window, or the script is modified.</li>
-</ul>
-
-Finally, you can continue to use regular shortcuts, while in code navigation mode. This includes, importantly:
-<ul>
-	<li><tt><b>Ctrl+Return</b></tt> Run the current line or selection.</li>
-</ul>
+<table border="0">
+<tr><td><tt><b>n / N</b></tt></td><td>Go to the next (n) or previous (N) statement at the current level, or the next outer level</td></tr>
+<tr><td><tt><b>i / I</b></tt></td><td>Like n/N, but also step into inner contexts (such as the definition of a function)</td></tr>
+<tr><td><tt><b>o / O</b></tt></td><td>Jump directly to the next / previous statement outside the current level (e.g. the first statement after a function body)</td></tr>
+<tr><td><tt><b>t / T</b></tt></td><td>Go to the next / previous statement at the topmost level of the script</td></tr>
+<tr><td><tt><b>c / C</b></tt></td><td>(For R Markdown documents, only:) Go to the next / previous code chunk</td></tr>
+<tr><td><tt><b>1 / !</b></tt></td><td>Go to the top / bottom of the document</td></tr>
+<tr><td><tt><b>s</b></tt></td><td>Select the current statement</td></tr>
+<tr><td><tt><b>S</b></tt></td><td>(For R Markdown documents, only:) Select add code in the current chunk</td></tr>
+<tr><td><tt><b>Backspace</b></tt></td><td>Go back to the position before the latest action</td></tr>
+<tr><td><tt><b>Esc</b></tt></td><td>Exit code navigation mode, and reset the cursor / selection to the state before entering it</td></tr>
+<tr><td><tt><b>Return</b></tt></td><td>Exit code navigation mode, keeping current position/selection</td></tr>
+<tr><td></td><td>Code navigation will also end, if you click anywhere else in the script, switch to a different window, or the script is modified</td></tr>
+<tr><td colspan="2"> </td></tr>
+<tr><td colspan="2">Finally, you can continue to use regular shortcuts, while in code navigation mode. This includes, importantly:</td></tr>
+<tr><td><tt><b>Ctrl+Return</b></tt></td><td>Run the current line or selection</td></tr>
+</table>
 	</section>
 
 	<section title="Notes and Tips" id="tips">

@@ -312,8 +312,9 @@ RKCodeNavigation::RKCodeNavigation(KTextEditor::View *view, QWidget *parent) : Q
 	});
 
 	QMenu *menu = new QMenu(parent);
-	auto action = menu->addAction(i18n("Code Navigation Mode"));
+	auto action = menu->addAction(i18n("Quick Code Navigation Mode"));
 	action->setIcon(QIcon::fromTheme(u"debug-step-into"_s));
+	menu->menuAction()->setWhatsThis(i18n("Step through your code based on its structure or enter <a href=\"rkward://page/rkward_code_navigation\">Quick Code Navigation Mode</a>"));
 	menu->menuAction()->setIcon(action->icon());
 	menu->menuAction()->setText(i18n("Code Navigation"));
 	menu->menuAction()->setObjectName(u"rkcodenav_menu"_s);
