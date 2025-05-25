@@ -452,7 +452,7 @@ msgstr ""
 #: rkward/core/robjectlist.cpp:90
 #, kde-format
 msgid "Package %1 appears not to have been loaded"
-msgstr "El paquet %1 no pareix haver estat carregat"
+msgstr "El paquet %1 no pareix haver sigut carregat"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:49
 #: rkward/windows/robjectbrowser.cpp:190 rkward/windows/robjectbrowser.cpp:236
@@ -543,13 +543,14 @@ msgstr "Tipus de dades."
 #, kde-format
 msgid "Double click on these fields to customize data display."
 msgstr ""
-"Feu doble clic en estos camps per a personalitzar la visualització de les "
-"dades."
+"Feu doble clic damunt d'estos camps per a personalitzar la visualització de "
+"les dades."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:682
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
-msgstr "Feu doble clic en estos camps per a modificar els nivells del factor."
+msgstr ""
+"Feu doble clic damunt d'estos camps per a modificar els nivells del factor."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:825
 #, kde-format
@@ -727,9 +728,9 @@ msgid ""
 "sure to fill in the missing bits - in English - where indicated, especially "
 "in the \"Comment\" field.</p>"
 msgstr ""
-"<p><b>Quina informació he de proporcionar i com?</b></p>Fent clic en "
-"«Informeu d'un problema» anireu fins al sistema de seguiment d'errors de "
-"KDE. Després d'iniciar la sessió, hi haurà certa informació que estarà "
+"<p><b>Quina informació he de proporcionar i com?</b></p>Quan es clique "
+"damunt «Informeu d'un problema» anireu fins al sistema de seguiment d'errors "
+"de KDE. Després d'iniciar la sessió, hi haurà certa informació que estarà "
 "emplenada en el formulari d'informe. Assegureu-vos que empleneu els dades "
 "que falten - en anglés - a on s'indiquen, especialment en el camp de "
 "«Comentari».</p>"
@@ -753,7 +754,7 @@ msgid ""
 msgstr ""
 "Ara sereu redirigit al sistema de seguiment d'errors de KDE. Si continueu "
 "veent esta pàgina durant més d'uns quants segons (p. ex., si JavaScript està "
-"desactivat), feu clic en el «Continua» següent."
+"desactivat), per favor, cliqueu damunt «Continua» següent."
 
 #: rkward/dialogs/rkerrordialog.cpp:79
 #, kde-format
@@ -985,9 +986,9 @@ msgid ""
 "<b>Ready to go</b><p>Click \"Finish\" to start the selected import dialog, "
 "or \"Back\" to explore other options.</p>"
 msgstr ""
-"<b>Preparat per a continuar</b><p>Feu clic en «Finalitza» per a iniciar el "
-"diàleg d'importació seleccionat, o «Arrere» per a explorar altres opcions.</"
-"p>"
+"<b>Preparat per a continuar</b><p>Cliqueu damunt «Finalitza» per a iniciar "
+"el diàleg d'importació seleccionat, o «Arrere» per a explorar altres opcions."
+"</p>"
 
 #: rkward/dialogs/rkimportdialog.cpp:104
 #, kde-format
@@ -2020,7 +2021,7 @@ msgid ""
 "information:</p><li>%1</li>"
 msgstr ""
 "<p>Es recomana instal·lar el següent programari, però la instal·lació "
-"automàtica (encara) no s'admet. Feu clic damunt dels següents enllaços per a "
+"automàtica (encara) no s'admet. Cliqueu damunt dels següents enllaços per a "
 "obtindre la informació de descàrrega:</p><li>%1</li>"
 
 #: rkward/dialogs/rksetupwizard.cpp:467
@@ -2851,7 +2852,7 @@ msgstr "Cancel·la"
 #: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
-msgstr "<b>S'ha produït un error</b> (vegeu davall per als detalls)"
+msgstr "<b>S'ha produït un error</b> (per als detalls, vegeu davall)"
 
 #: rkward/misc/rkprogresscontrol.cpp:452
 #, kde-format
@@ -2914,7 +2915,7 @@ msgstr "Objecte pare: %1"
 #: rkward/misc/rksaveobjectchooser.cpp:98
 #, kde-format
 msgid "Select parent object"
-msgstr "Escolliu l'objecte pare"
+msgstr "Trieu l'objecte pare"
 
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
@@ -3707,7 +3708,7 @@ msgid ""
 "Click 'Submit' to run the commands."
 msgstr ""
 "En la part inferior podeu veure la vista prèvia de les ordres R que "
-"corresponen a la configuració que heu fet. Feu clic en «Envia» per a "
+"corresponen a la configuració que heu fet. Cliqueu damunt «Envia» per a "
 "executar-les."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:528
@@ -3717,8 +3718,8 @@ msgid ""
 "run. Click 'Submit' to run the commands."
 msgstr ""
 "En la part inferior podeu veure la vista prèvia del resultat de la "
-"configuració, i de les ordres R que s'executaran. Feu clic en «Envia» per a "
-"executar-les."
+"configuració, i de les ordres R que s'executaran. Cliqueu damunt «Envia» per "
+"a executar-les."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:582
 #: rkward/plugin/rkstandardcomponentgui.cpp:600
@@ -4147,7 +4148,7 @@ msgstr ""
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
-"<p>Premeu «Retorn» per a veure el diagrama següent, o feu clic en "
+"<p>Premeu «Retorn» per a veure el diagrama següent, o cliqueu damunt "
 "«Cancel·la» per a interrompre.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:690
@@ -4338,13 +4339,13 @@ msgid ""
 "suppress this message for the remainder of this session, only."
 msgstr ""
 "<p>Esteu a punt d'iniciar un diàleg de RKWard des de fora de RKWard, "
-"probablement clicant en un enllaç «rkward://». En cas que hàgeu trobat este "
-"enllaç en un lloc web extern, cal tindre en compte que R es pot utilitzar "
-"per a executar ordres arbitràries al vostre ordinador, <b>potencialment "
-"inclosa la baixada i la instal·lació de programari maliciós</b>. Si no "
-"confieu en l'origen de l'enllaç que esteu seguint, hauríeu de prémer "
-"«Cancel·la» tot seguit.</p><p>En cas que cliqueu en «Continua», no "
-"s'executarà cap codi R, fins que no cliqueu «Envia» en la finestra de "
+"probablement quan es clique damunt d'un enllaç «rkward://». En cas que hàgeu "
+"trobat este enllaç en un lloc web extern, cal tindre en compte que R es pot "
+"utilitzar per a executar ordres arbitràries al vostre ordinador, "
+"<b>potencialment inclosa la baixada i la instal·lació de programari "
+"maliciós</b>. Si no confieu en l'origen de l'enllaç que esteu seguint, "
+"hauríeu de prémer «Cancel·la» tot seguit.</p><p>En cas que cliqueu damunt "
+"«Continua», no s'executarà cap codi R, fins que no cliqueu damunt «Envia» al "
 "diàleg, i us animem a revisar el codi R generat abans de fer-ho.</"
 "p><p><i>Nota</i>: Activant «No ho tornes a preguntar», només suprimirà este "
 "missatge per a la resta d'esta sessió."
@@ -4870,7 +4871,7 @@ msgstr "Visor d'objectes: %1"
 #: rkward/robjectviewer.cpp:126
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
-msgstr "L'objecte s'ha modificat. Podeu fer clic en «Actualitza»"
+msgstr "L'objecte s'ha modificat. Podeu clicar damunt «Actualitza»"
 
 #: rkward/robjectviewer.cpp:163 rkward/windows/robjectbrowser.cpp:111
 #, kde-format
@@ -5418,7 +5419,7 @@ msgstr "Comportament del focus de la finestra MDI"
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "Click to focus"
-msgstr "Clic al focus"
+msgstr "Clic damunt del focus"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
