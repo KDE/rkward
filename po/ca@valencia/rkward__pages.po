@@ -461,8 +461,8 @@ msgid ""
 msgstr ""
 "També es pot buscar en l'historial d'ordres les línies que comencen per una "
 "cadena especificada. Per a utilitzar açò, introduïu -per exemple- «print» en "
-"la consola. Ara utilitzeu «Maj+Re Pàg»/«Maj+Av Pàg». Veureu que es mostraran "
-"només les línies d'ordres recents que comencen per «print»."
+"la consola. Ara utilitzeu «Majús+Re Pàg»/«Majús+Av Pàg». Veureu que es "
+"mostraran només les línies d'ordres recents que comencen per «print»."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -474,10 +474,10 @@ msgid ""
 "(see <link href=\"#settings\">Section settings</link>)."
 msgstr ""
 "És possible fer predeterminat el segon mode de busca en l'historial "
-"d'ordres. En este cas, prement Maj+«Re Pàg»/«Av Pàg» navegarà per totes les "
-"ordres, mentre que prement «Re Pàg»/«Av Pàg» sense la tecla «Maj» mostrarà "
-"només les línies coincidents (vegeu <link href=\"#settings\">Secció de "
-"configuració</link>)."
+"d'ordres. En este cas, prement Majús+«Re Pàg»/«Av Pàg» navegarà per totes "
+"les ordres, mentre que prement «Re Pàg»/«Av Pàg» sense la tecla «Majús» "
+"mostrarà només les línies coincidents (vegeu <link href=\"#settings\">Secció "
+"de configuració</link>)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -851,7 +851,7 @@ msgid ""
 "For now, just click submit, once you've made your choices, and watch the "
 "results show up in a new window."
 msgstr ""
-"Per ara, només feu clic en envia, una vegada hàgeu fet la selecció, i "
+"Per ara, només cliqueu damunt «envia», una vegada hàgeu fet la selecció, i "
 "vigileu els resultats que es mostraran en una finestra nova."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
@@ -1048,7 +1048,7 @@ msgid ""
 "namespaces)."
 msgstr ""
 "RKWard té una «vista d'espai de treball» o un «explorador d'objectes». De "
-"manera predeterminada, açò està disponible fent clic en «Espai de treball» "
+"manera predeterminada, açò està disponible clicant damunt «Espai de treball» "
 "en la banda esquerra de la finestra de l'aplicació. Açò permet examinar i "
 "manipular tots els objectes de l'espai de treball d'R. De manera "
 "predeterminada, només es mostra l'entorn «.GlobalEnv» (a on normalment feu "
@@ -1070,8 +1070,8 @@ msgstr ""
 "L'explorador d'objectes proporciona la funció per a seleccionar quins tipus "
 "d'objectes es mostraran (en la part superior). En passar el ratolí per "
 "damunt un element es mostrarà informació addicional del símbol. Fent un clic "
-"dret en un element es mostraran les accions disponibles. Vegeu <link href="
-"\"rkward://page/rkward_workspace_browser\"/> per als detalls."
+"dret damunt d'un element es mostraran les accions disponibles. Vegeu <link "
+"href=\"rkward://page/rkward_workspace_browser\"/> per als detalls."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:38
@@ -1146,8 +1146,8 @@ msgid ""
 "session."
 msgstr ""
 "Les finestres es poden tancar utilitzant «Finestres -> Tanca» («Ctrl+W» de "
-"manera predeterminada). «Ctrl+Tab» i «Ctrl+Maj+Tab» circula entre totes les "
-"finestres actives de documents / eines de la sessió."
+"manera predeterminada). «Ctrl+Tab» i «Ctrl+Majús+Tab» circula entre totes "
+"les finestres actives de documents / eines de la sessió."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -1179,7 +1179,7 @@ msgstr ""
 "editar molts «data.frames» a la vegada, i inclús mentre executeu càlculs "
 "llargs. també, les dades s'emmagatzemen com un «data.frame» a R. Per a "
 "explorar l'editor de dades, trieu «Fitxer -> Nou -> Conjunt de dades», o feu "
-"clic dret en «data.frame» en el navegador de l'espai de treball, i trieu "
+"clic dret damunt «data.frame» en el navegador de l'espai de treball, i trieu "
 "Edita des del menú."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
@@ -1523,7 +1523,7 @@ msgid ""
 msgstr ""
 "L'historial del dispositiu de pantalla només és accessible des d'un "
 "dispositiu de pantalla obert, davall el menú <i>Historial</i>. Està "
-"disponible a la majoria de les finestres de dispositius de pantalla. Estos "
+"disponible en la majoria de les finestres de dispositius de pantalla. Estos "
 "dispositius s'anomenen dispositius «gestionats» com a finalitat d'esta "
 "pàgina d'ajuda. Els dispositius de fitxer, com els png, pdf, etc. no estan, "
 "òbviament, afectats per esta implementació de l'historial de pantalla, i per "
@@ -1909,7 +1909,7 @@ msgid ""
 "respective menu item."
 msgstr ""
 "En la majoria de sistemes, també podeu configurar les dreceres fent clic "
-"dret en el respectiu element del menú."
+"dret damunt del respectiu element del menú."
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="...">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1932,7 +1932,7 @@ msgid ""
 "+Shift+Tab"
 msgstr ""
 "Per a circular entre les finestres de document / eina dins RKWard, utilitzeu "
-"«Ctrl+Tab» i «Ctrl+Maj+Tab»"
+"«Ctrl+Tab» i «Ctrl+Majús+Tab»"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -2515,9 +2515,9 @@ msgid ""
 msgstr ""
 "El navegador de l'espai de treball es pot invocar utilitzant «Finestres -> "
 "Activa -> Mostra / Oculta Espai de treball» (la drecera predeterminada és "
-"«Alt+1»), o fent clic damunt de la icona de «l'espai de treball», la qual "
-"està ubicada en la part superior de la vora esquerra de la finestra, de "
-"manera predeterminada."
+"«Alt+1»), o clicant damunt de la icona de «l'espai de treball», la qual està "
+"ubicada en la part superior de la vora esquerra de la finestra, de manera "
+"predeterminada."
 
 #. i18n: ectx: (Workspace Browser) <section title="...">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2601,8 +2601,8 @@ msgid ""
 msgstr ""
 "Cal tindre en compte que els objectes estan organitzats jeràrquicament, és a "
 "dir, diversos tipus d'objectes contenen altres objectes «fills». Açò "
-"s'indica amb un símbol «+» a l'esquerra del nom de l'objecte. Fent-hi clic, "
-"la vista s'expandirà per a mostrar tots els fills de l'objecte."
+"s'indica amb un símbol «+» a l'esquerra del nom de l'objecte. Clicant-hi, la "
+"vista s'expandirà per a mostrar tots els fills de l'objecte."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2624,8 +2624,8 @@ msgid ""
 "environments:"
 msgstr ""
 "Hi ha diverses accions disponibles des del menú contextual (fent un clic amb "
-"el botó dret en un dels objectes), tanmateix vàries d'estes accions només "
-"estaran disponibles per a tipus d'objectes concrets. Les accions més "
+"el botó dret damunt d'un dels objectes), tanmateix vàries d'estes accions "
+"només estaran disponibles per a tipus d'objectes concrets. Les accions més "
 "importants en els entorns de paquets són:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">

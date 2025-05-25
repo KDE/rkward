@@ -415,8 +415,8 @@ msgid ""
 "the samples need to be numeric vectors (see below for details)."
 msgstr ""
 "Seleccioneu dos conjunts de dades per a la prova d'Ansari-Bradley per a dues "
-"mostres. Per a esta prova, les mostres hauran de ser vectors numèrics (vegeu "
-"davall per als detalls)."
+"mostres. Per a esta prova, les mostres hauran de ser vectors numèrics (per "
+"als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "compare")
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "compare")
@@ -3288,7 +3288,7 @@ msgid ""
 msgstr ""
 "Seleccioneu dos vectors numèrics o un vector i una constant per a comparar "
 "entre si. Per a dues mostres, especifiqueu si les variables són aparellades "
-"o mostres independents. Vegeu davall per als detalls."
+"o mostres independents. Per als detalls, vegeu davall."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "Test form")
 #: rkward/plugins/analysis/t_test.rkh:18
@@ -3450,7 +3450,7 @@ msgid ""
 msgstr ""
 "Seleccioneu dos conjunts de dades per a provar la diferència als paràmetres "
 "de l'escala amb la prova de Mood per a dues mostres. Per a esta prova, les "
-"mostres hauran de ser vectors numèrics (vegeu davall per als detalls)."
+"mostres hauran de ser vectors numèrics (per als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <settings> <setting> (refers to element labelled "compare")
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:17
@@ -3519,7 +3519,7 @@ msgid ""
 msgstr ""
 "Seleccioneu els conjunts de dades per als quals voleu realitzar la prova de "
 "Phillips-Perron. Per a esta prova, les mostres hauran de ser vectors "
-"numèrics (vegeu davall per als detalls)."
+"numèrics (per als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from Phillips-Perron Test for Unit Roots) <settings> <setting> (refers to element labelled "version of truncation lag parameter")
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:19
@@ -3596,7 +3596,7 @@ msgid ""
 msgstr ""
 "Seleccioneu els conjunts de dades per als quals voleu realitzar la prova de "
 "Box-Pierce o Ljung-Box. Per a esta prova, les mostres hauran de ser vectors "
-"numèrics (vegeu davall per als detalls)."
+"numèrics (per als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "lag")
 #: rkward/plugins/analysis/time_series/Box_test.rkh:19
@@ -4046,7 +4046,7 @@ msgid ""
 msgstr ""
 "Seleccioneu els conjunts de dades per als quals voleu realitzar la prova de "
 "Kwiatkowski-Phillips-Schmidt-Shin (KPSS). Per a esta prova, les mostres "
-"hauran de ser vectors numèrics (vegeu davall per als detalls)."
+"hauran de ser vectors numèrics (per als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "null hypothesis")
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:19
@@ -4178,7 +4178,7 @@ msgid ""
 msgstr ""
 "Seleccioneu dos exemples de poblacions normals per a comparar les variàncies "
 "amb la prova F. Per a esta prova, les mostres hauran de ser vectors numèrics "
-"(vegeu davall per als detalls)."
+"(per als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "compare")
 #: rkward/plugins/analysis/variances/F_test.rkh:18
@@ -4668,8 +4668,8 @@ msgid ""
 msgstr ""
 "Seleccioneu un o més objectes que s'analitzaran. Per a la majoria dels tipus "
 "d'anàlisi, els objectes hauran de ser vectors numèrics. En les pestanyes/"
-"pàgines subsegüents especifiqueu quines estadístiques voleu calcular (vegeu "
-"davall per als detalls)."
+"pàgines subsegüents especifiqueu quines estadístiques voleu calcular (per "
+"als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <usage>
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:14

@@ -2168,7 +2168,7 @@ msgstr "Marqueu esta opció, si voleu personalitzar els marges."
 #, kde-format
 msgid "Size of top margin. Size is specified in (approximate) line heights."
 msgstr ""
-"Mida del marge superior. La mida està especificada en alçades de línia "
+"Mida del marge superior. La mida està especificada en alçàries de línia "
 "(aproximades)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Bottom")
@@ -2176,7 +2176,7 @@ msgstr ""
 #, kde-format
 msgid "Size of bottom margin. Size is specified in (approximate) line heights."
 msgstr ""
-"Mida del marge inferior. La mida està especificada en alçades de línia "
+"Mida del marge inferior. La mida està especificada en alçàries de línia "
 "(aproximades)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Left")
@@ -2184,7 +2184,7 @@ msgstr ""
 #, kde-format
 msgid "Size of left margin. Size is specified in (approximate) line heights."
 msgstr ""
-"Mida del marge esquerre. La mida està especificada en alçades de línia "
+"Mida del marge esquerre. La mida està especificada en alçàries de línia "
 "(aproximades)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Right")
@@ -2192,7 +2192,7 @@ msgstr ""
 #, kde-format
 msgid "Size of right margin. Size is specified in (approximate) line heights."
 msgstr ""
-"Mida del marge dret. La mida està especificada en alçades de línia "
+"Mida del marge dret. La mida està especificada en alçàries de línia "
 "(aproximades)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw X axis")
@@ -2839,7 +2839,7 @@ msgstr ""
 "El cas especial «Aspect == 1» produïx diagrames on les distàncies entre els "
 "punts es representen amb precisió a la pantalla. Els valors amb «Aspect > 1» "
 "es poden utilitzar per a produir mapes més precisos quan s'utilitza la "
-"latitud i la llargària."
+"latitud i la longitud."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:172

@@ -2300,7 +2300,7 @@ msgstr "Exporta un fitxer en RMarkdown"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:21
 #, kde-format
 msgid "Choose the file to be exported."
-msgstr "Escolliu un fitxer que s'haja d'exportar."
+msgstr "Trieu un fitxer que s'haja d'exportar."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Target format")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:24
@@ -2311,8 +2311,8 @@ msgid ""
 "defined via output_format will be used, see the documentation on rmarkdown::"
 "render()."
 msgstr ""
-"Establix el format de destinació dels fitxers exportats. Si escolliu «Tots "
-"els formats definits en el document» o «El primer format definit en el "
+"Establix el format de destinació dels fitxers exportats. Si trieu «Tots els "
+"formats definits en el document» o «El primer format definit en el "
 "document», s'utilitzaran els formats definits via «output_format», vegeu la "
 "documentació en «rmarkdown::render()»."
 
@@ -2320,7 +2320,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:27
 #, kde-format
 msgid "Choose the target file name to export to."
-msgstr "Escolliu el nom del fitxer de destinació al qual exportar."
+msgstr "Trieu el nom del fitxer de destinació al qual exportar."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:30
@@ -2329,7 +2329,7 @@ msgid ""
 "Choose the target directory to export to, file names are automatically "
 "generated according to the formats defined in the document."
 msgstr ""
-"Trieu el directori de destinació al qual exportar. Els noms dels fitxers es "
+"Tria el directori de destinació al qual exportar. Els noms dels fitxers es "
 "generen automàticament segons els formats definits en el document."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Markdown version")
