@@ -227,9 +227,9 @@ msgid ""
 "following:"
 msgstr ""
 "La meitat superior d'esta pestanya permet especificar recodificacions per "
-"als valors d'entrada individuals. Per a afegir més recodificacions, feu clic "
-"en el botó «afig/+». Per a eliminar recodificacions, feu clic en el botó "
-"«elimina/x». Per a cada recodificació, seleccioneu el següent:"
+"als valors d'entrada individuals. Per a afegir més recodificacions, cliqueu "
+"damunt del botó «afig/+». Per a eliminar recodificacions, cliqueu damunt del "
+"botó «elimina/x». Per a cada recodificació, seleccioneu el següent:"
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Old values")
 #: rkward/plugins/data/recode_categorical.rkh:41
@@ -243,9 +243,9 @@ msgid ""
 msgstr ""
 "Per a cada recodificació a portar a terme, primer seleccioneu els valors "
 "antics que es recodificaran. Açò pot ser SD/faltant, o seleccioneu valors no-"
-"SD en la banda esquerra, i afegiu-los als valors que es recodificaran fent "
-"clic en el botó de la fletxa. Si cal substituir diversos valors d'entrada "
-"per un valor d'eixida, podeu seleccionar-los tots a la vegada."
+"SD en la banda esquerra, i afegiu-los als valors que es recodificaran "
+"clicant damunt del botó de la fletxa. Si cal substituir diversos valors "
+"d'entrada per un valor d'eixida, podeu seleccionar-los tots a la vegada."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "New value")
 #: rkward/plugins/data/recode_categorical.rkh:46
