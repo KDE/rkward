@@ -24,12 +24,13 @@ The code navigation feature is available from the <i>Run</i>-menu, and the conte
 <tr><td><tt><b>1 / !</b></tt></td><td>Go to the top / bottom of the document</td></tr>
 <tr><td><tt><b>s</b></tt></td><td>Select the current statement</td></tr>
 <tr><td><tt><b>S</b></tt></td><td>(For R Markdown documents, only:) Select add code in the current chunk</td></tr>
+<tr><td><tt><b>r</b></tt></td><td>Run the current statement and advance to the next statement (equivalent to the sequence <tt>s - Ctrl+Return - n</tt>)</td></tr>
 <tr><td><tt><b>Backspace</b></tt></td><td>Go back to the position before the latest action</td></tr>
-<tr><td><tt><b>Esc</b></tt></td><td>Exit code navigation mode, and reset the cursor / selection to the state before entering it</td></tr>
-<tr><td><tt><b>Return</b></tt></td><td>Exit code navigation mode, keeping current position/selection</td></tr>
-<tr><td></td><td>Code navigation will also end, if you click anywhere else in the script, switch to a different window, or the script is modified</td></tr>
+<tr><td><tt><b>Esc</b></tt></td><td>Exit Quick Code Navigation mode, and reset the cursor / selection to the state before entering it</td></tr>
+<tr><td><tt><b>Return</b></tt></td><td>Exit Quick Code Navigation mode, keeping current position/selection</td></tr>
+<tr><td></td><td>Quick Code Navigation mode will also end, if you click anywhere else in the script, switch to a different window, or the script is modified</td></tr>
 <tr><td colspan="2"> </td></tr>
-<tr><td colspan="2">Finally, you can continue to use regular shortcuts, while in code navigation mode. This includes, importantly:</td></tr>
+<tr><td colspan="2">Finally, you can continue to use regular shortcuts, while in Quick Code Navigation mode. This includes, importantly:</td></tr>
 <tr><td><tt><b>Ctrl+Return</b></tt></td><td>Run the current line or selection</td></tr>
 </table>
 	</section>
@@ -37,7 +38,8 @@ The code navigation feature is available from the <i>Run</i>-menu, and the conte
 	<section title="Notes and Tips" id="tips">
 The 'n' action is meant to remind of the corresponding step command in the R debugger (see <link href="rkward://rhelp/browser"/>), but it is
 not the same. The most important difference being that the code navigation, described here, works on a fully static parsed representation of the script,
-and does not attempt to follow control flow, at all.
+and does not attempt to follow control flow, at all. Further, a well formed syntax is assumed, syntax errors will be skipped over, which may lead to
+unexpected behavior.
 
 Further, what exactly is a "statement", and "inner", or and "outer" context may not always be quite clear, and may not always correspond exactly to the way
 the R engine sees your code. Instead, these commands are meant to behave in a way, that we hope makes sense, intuitively. Remember to always control, visually, what you are doing, before you hit Ctrl+Enter.

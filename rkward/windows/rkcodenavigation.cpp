@@ -24,6 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../misc/rkparsedscript.h"
 #include "../misc/rkstyle.h"
+#include "../rkconsole.h"
 #include "rkworkplace.h"
 
 #include "../debug.h"
@@ -99,6 +100,11 @@ class RKCodeNavigationInternal : public QObject {
 			auto posa = ps.getContext(ps.firstContextInChunk(ci)).start;
 			auto posb = ps.lastPositionInChunk(ci);
 			newpos.selection = KTextEditor::Range(positionToCursor(posa), positionToCursor(posb + 1));
+		} else if (command == u'r') {
+			auto posa = ps.getContext(ps.firstContextInStatement(ci)).start;
+			auto posb = ps.lastPositionInStatement(ci);
+			RKConsole::pipeUserCommand(doc->text(KTextEditor::Range(positionToCursor(posa), positionToCursor(posb + 1))) + u'\n');
+			newpos.pos = ps.getContext(ps.nextStatement(ci)).start;
 		} else {
 			RK_DEBUG(COMMANDEDITOR, DL_WARNING, "unknown navigation commmand");
 			newpos.message = i18n("Unknown command <tt><b>%1</b></tt>").arg(command);
@@ -314,6 +320,7 @@ RKCodeNavigation::RKCodeNavigation(KTextEditor::View *view, QWidget *parent) : Q
 	QMenu *menu = new QMenu(parent);
 	auto action = menu->addAction(i18n("Quick Code Navigation Mode"));
 	action->setIcon(QIcon::fromTheme(u"debug-step-into"_s));
+	action->setWhatsThis(i18n("Step through your code using single keystrokes (<a href=\"rkward://page/rkward_code_navigation\">more info</a>)"));
 	menu->menuAction()->setWhatsThis(i18n("Step through your code based on its structure or enter <a href=\"rkward://page/rkward_code_navigation\">Quick Code Navigation Mode</a>"));
 	menu->menuAction()->setIcon(action->icon());
 	menu->menuAction()->setText(i18n("Code Navigation"));
@@ -339,7 +346,7 @@ RKCodeNavigation::RKCodeNavigation(KTextEditor::View *view, QWidget *parent) : Q
 	addAction(menu, u"rkcodenav_next"_s, i18n("Next statement"), u'n');
 	addAction(menu, u"rkcodenav_prev"_s, i18n("Previous statement"), u'N');
 	addAction(menu, u"rkcodenav_inner"_s, i18n("Next (inner) statement"), u'i');
-	addAction(menu, u"rkcodenav_prev_inner"_s, i18n("Previous (inner) statement"), u'P');
+	addAction(menu, u"rkcodenav_prev_inner"_s, i18n("Previous (inner) statement"), u'I');
 	addAction(menu, u"rkcodenav_outer"_s, i18n("Next outer statement"), u'o');
 	addAction(menu, u"rkcodenav_prev_outer"_s, i18n("Previous outer statement"), u'O');
 	addAction(menu, u"rkcodenav_toplevel"_s, i18n("Next toplevel statement"), u't');
@@ -350,6 +357,8 @@ RKCodeNavigation::RKCodeNavigation(KTextEditor::View *view, QWidget *parent) : Q
 	menu->addSection(i18n("Select"));
 	addAction(menu, u"rkcodenav_select"_s, i18n("Select current statement"), u's');
 	rmdactions->addAction(addAction(menu, u"rkcodenav_select_chunk"_s, i18n("Select current code chunk"), u'S'));
+	menu->addSection(i18n("Run"));
+	addAction(menu, u"rkcodenav_run"_s, i18n("Run current statement, and advance"), u'r');
 
 	QObject::connect(menu, &QMenu::aboutToShow, this, [view, this]() {
 		bool rmdmode = view->document()->highlightingMode() == u"R Markdown"_s;
@@ -358,7 +367,7 @@ RKCodeNavigation::RKCodeNavigation(KTextEditor::View *view, QWidget *parent) : Q
 }
 
 QAction *RKCodeNavigation::addAction(QMenu *menu, const QString &name, const QString &label, const QChar command) {
-	QAction *a = new QAction(label);
+	QAction *a = new QAction(label + u" ("_s + command + u')');
 	a->setObjectName(name);
 	QObject::connect(a, &QAction::triggered, view, [this, command]() {
 		if (!internal) {

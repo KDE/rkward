@@ -1,4 +1,5 @@
 --- Version 0.8.2 - UNRELEASED
+- Added: Actions to navigate R code based on its structure & Quick Code Navigation Mode
 - Added: Plugins: Enhance addChangeCommand() to allow writing more readable GUI logic code
 - Added: Plugins: Simplify running R commands inside GUI logic code
 - Fixed: Crash on script errors in plugins
