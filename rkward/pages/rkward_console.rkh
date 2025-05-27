@@ -9,7 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<summary>
 Describe features and settings regarding the RKWard R Console.
 
-The console can - by default - be found at the bottom of the application window. Press the tool button labelled "R Console" to invoke it.
+The console can - by default - be found at the bottom of the application window. Press the tool button labeled "R Console" to invoke it.
 	</summary>
 
 	<section id="whatisit" title="What is the console?">

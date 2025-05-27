@@ -8,12 +8,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<title>Code Navigation and Quick Code Navigation Mode</title>
 	<summary>
 The code navigation feature in script editor windows allows you to navigate R code based on its syntactical structure, e.g. quickly jumping to the next
-statement outside the current scope or to the previous top level statement. Several navgation features are deliberately close to debbuggin in R's
+statement outside the current scope or to the previous top level statement. Several navigation features are deliberately close to debugging in R's
 <link href="rkward://rhelp/browser">browser()</link>-command, but importantly this works entirely without actually running the code.
 	</summary>
 
 	<section title="Available commands" id="commands">
-The code navigation feature is available from the <i>Run</i>-menu, and the context menu in script (R or R markdown) windows in two variants: The first option is to simply select inidividual navigation actions directly from the menu. Secondly, however, the "Quick Code Navigation Mode" (top entry in the menu; default keyboard shortcut is "Meta+n") allows you to navigate your sources very quickly. Once in this mode, subsequent single key presses invoke the following actions:
+The code navigation feature is available from the <i>Run</i>-menu, and the context menu in script (R or R markdown) windows in two variants: The first option is to simply select individual navigation actions directly from the menu. Secondly, however, the "Quick Code Navigation Mode" (top entry in the menu; default keyboard shortcut is "Meta+n") allows you to navigate your sources very quickly. Once in this mode, subsequent single key presses invoke the following actions:
 
 <table border="0">
 <tr><td><tt><b>n / N</b></tt></td><td>Go to the next (n) or previous (N) statement at the current level, or the next outer level</td></tr>
@@ -44,7 +44,7 @@ unexpected behavior.
 Further, what exactly is a "statement", and "inner", or and "outer" context may not always be quite clear, and may not always correspond exactly to the way
 the R engine sees your code. Instead, these commands are meant to behave in a way, that we hope makes sense, intuitively. Remember to always control, visually, what you are doing, before you hit Ctrl+Enter.
 
-Most commands show a tendency to move towards outer contexts, so 'n' and 'N' are not exact opposites. Remeber you can undo your last step using Backspace, 
+Most commands show a tendency to move towards outer contexts, so 'n' and 'N' are not exact opposites. Remember you can undo your last step using Backspace, 
 if you went past the location you were looking for.
 	</section>
 
