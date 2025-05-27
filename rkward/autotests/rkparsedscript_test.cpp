@@ -85,7 +85,7 @@ class RKParsedScriptTest : public QObject {
 			ctx = ctx0;
 			while (ctx.valid())
 				ctx = ps.nextStatement(ctx);
-/*			ctx = ps.firstContextInStatement(ctx0); // NOTE: This one may stay at the same position
+			ctx = ps.firstContextInStatement(ctx0); // NOTE: This one may stay at the same position
 			ctx = ps.firstContextInChunk(ctx0);
 			ctx = ctx0;
 			while (ctx.valid())
@@ -129,7 +129,7 @@ class RKParsedScriptTest : public QObject {
 
 			ctx = ctx0;
 			while (ctx.valid())
-				ctx = ps.parentRegion(ctx); */
+				ctx = ps.parentRegion(ctx);
 		}
 	}
   private Q_SLOTS:
@@ -323,9 +323,9 @@ class RKParsedScriptTest : public QObject {
 		QVERIFY(posb > posa);
 		// NOTE: Note sure wether or not we want to include the trailing comment,
 		// as part of the statement, so this test will only check the start
-		QVERIFY(script.mid(posa, posb-posa+1).startsWith(u"symb07"_s));
+		QVERIFY(script.mid(posa, posb - posa + 1).startsWith(u"symb07"_s));
 		// We do not want to include the delimiting newline, however
-		QVERIFY(!script.mid(posa, posb-posa+1).contains(u'\n'));
+		QVERIFY(!script.mid(posa, posb - posa + 1).contains(u'\n'));
 		QVERIFY(!ps.nextStatement(ctx).valid());
 
 		ctx = ps.contextAtPos(script.indexOf(u"symb14"));
