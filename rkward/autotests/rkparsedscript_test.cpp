@@ -163,6 +163,11 @@ class RKParsedScriptTest : public QObject {
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"Symbol.x"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"FunctionList"_s);
 		ctx = moveAndCheck(ps.nextStatement(ctx), u"symb.last"_s);
+		// verify that symbol at end of file can be selected, correctly
+		int posa = ps.getContext(ps.firstContextInStatement(ctx)).start;
+		int posb = ps.lastPositionInStatement(ctx);
+		QVERIFY(posb > posa);
+		QVERIFY(script.mid(posa).startsWith(u"symb.last"_s));
 		QVERIFY(!ps.nextStatement(ctx).valid());
 
 		ctx = ps.contextAtPos(script.indexOf(u"FunctionList"));

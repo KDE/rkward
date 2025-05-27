@@ -169,7 +169,7 @@ class RKCodeNavigationInternal : public QObject {
 				return KTextEditor::Cursor(l, pos + doc->lineLength(l) + 1);
 			}
 		}
-		return KTextEditor::Cursor();
+		return doc->documentEnd(); // this may actually be hit in well-behaved code!
 	}
 
 	KTextEditor::View *view;

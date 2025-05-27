@@ -39,4 +39,4 @@ FunctionList <- list(
 	}, ddd, eee <- fff(ggg + hhh) + iii, jjj)
 )
 
-symb.last
+symb.last # comment last, no newline at EOF
