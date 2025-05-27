@@ -12,7 +12,7 @@ Usually, there would be lot of markdown (and this may contain many relevant mark
 ```{r echo=TRUE}
 symb01 <-symb02()
 symb03 <- symb04
-symb05(symb06); symb07
+symb05(symb06); symb07 # comment at end of region shall not confuse us
 ```
 
 Usually, code chunks shall contain {r}, but we're relaxed about that.

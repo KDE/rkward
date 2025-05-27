@@ -65,7 +65,8 @@ int RKParsedScript::addNextMarkdownChunk(int start, const QString &content) {
 	context_list.emplace_back(Comment, start, chunkstart - 1);
 	addContext(Top, chunkstart - 1, content.left(chunkend)); // in case markdown region has incomplete syntax
 	                                                         // limit parsing to the actual markdown region
-	context_list.emplace_back(Top, chunkend, chunkend);      // HACK: Used as a dummy separtor, here...
+	if (context_list.back().type != Delimiter) context_list.emplace_back(Delimiter, chunkend, chunkend);
+	context_list.emplace_back(Top, chunkend, chunkend);      // HACK: Used as a dummy separator, here...
 	return chunkend + chunk_barrier.length();
 }
 
