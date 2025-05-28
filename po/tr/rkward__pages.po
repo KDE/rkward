@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-27 00:38+0000\n"
-"PO-Revision-Date: 2025-03-13 15:54+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"POT-Creation-Date: 2025-05-28 00:39+0000\n"
+"PO-Revision-Date: 2025-05-27 13:42+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -254,39 +254,66 @@ msgstr ""
 #: rkward/pages/rkward_code_navigation.rkh:8
 #, kde-format
 msgid "Code Navigation and Quick Code Navigation Mode"
-msgstr ""
+msgstr "Kod Dolaşımı ve Tez Kod Dolaşımı Kipi"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <summary>
 #: rkward/pages/rkward_code_navigation.rkh:9
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The code navigation feature in script editor windows allows you to "
+#| "navigate R code based on its syntactical structure, e.g. quickly jumping "
+#| "to the next statement outside the current scope or to the previous top "
+#| "level statement. Several navgation features are deliberately close to "
+#| "debbuggin in R's <link href=\"rkward://rhelp/browser\">browser()</link>-"
+#| "command, but importantly this works entirely without actually running the "
+#| "code."
 msgid ""
 "The code navigation feature in script editor windows allows you to navigate "
 "R code based on its syntactical structure, e.g. quickly jumping to the next "
 "statement outside the current scope or to the previous top level statement. "
-"Several navgation features are deliberately close to debbuggin in R's <link "
+"Several navigation features are deliberately close to debugging in R's <link "
 "href=\"rkward://rhelp/browser\">browser()</link>-command, but importantly "
 "this works entirely without actually running the code."
 msgstr ""
+"Betik düzenleyicisindeki kod dolaşımı özelliği, R kod tabanının sözdizimsel "
+"yapısına dayanarak kodda dolaşmanıza olanak tanır; örneğin, geçerli kapsamın "
+"dışındaki sonraki veya önceki ifadeye atlamak gibi. Çeşitli dolaşım "
+"özellikleri, özel olarak R’nin <link href=\"rkward://rhelp/browser"
+"\">browser()</link> komutuna yakındır; ancak bu, tümüyle kodu çalıştırmadan "
+"gerçekleşir."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
-#, fuzzy, kde-format
-#| msgid "Available actions"
+#, kde-format
 msgid "Available commands"
-msgstr "Kullanılabilir eylemler"
+msgstr "Kullanılabilir Komutlar"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The code navigation feature is available from the <i>Run</i>-menu, and "
+#| "the context menu in script (R or R markdown) windows in two variants: The "
+#| "first option is to simply select inidividual navigation actions directly "
+#| "from the menu. Secondly, however, the \"Quick Code Navigation Mode\" (top "
+#| "entry in the menu; default keyboard shortcut is \"Meta+n\") allows you to "
+#| "navigate your sources very quickly. Once in this mode, subsequent single "
+#| "key presses invoke the following actions:"
 msgid ""
 "The code navigation feature is available from the <i>Run</i>-menu, and the "
 "context menu in script (R or R markdown) windows in two variants: The first "
-"option is to simply select inidividual navigation actions directly from the "
+"option is to simply select individual navigation actions directly from the "
 "menu. Secondly, however, the \"Quick Code Navigation Mode\" (top entry in "
 "the menu; default keyboard shortcut is \"Meta+n\") allows you to navigate "
 "your sources very quickly. Once in this mode, subsequent single key presses "
 "invoke the following actions:"
 msgstr ""
+"Kod dolaşımı özelliğine <i>Çalıştır</i> menüsünden ulaşılabilir ve betik "
+"pencerelerindeki (R veya R Markdown) bağlam menüsü iki varyantta gelir: İlk "
+"seçenek bireysel dolaşım eylemlerini doğrudan menüden seçer. İkinci olarak, "
+"Tez Kod Dolaşımı Kipi (menüdeki ilk girdi, öntanımlı klavye kısayolu Meta"
+"+N), kaynaklarınızda tez dolaşmanıza olanak tanır. Bu kipteyken, sıralı "
+"düğme basımları aşağıdaki eylemleri çağırır:"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -320,12 +347,38 @@ msgid ""
 "<tr><td><tt><b>Ctrl+Return</b></tt></td><td>Run the current line or "
 "selection</td></tr> </table>"
 msgstr ""
+"<table border=\"0\"> <tr><td><tt><b>n / N</b></tt></td><td>Geçerli düzeydeki "
+"veya sonraki dış düzeydeki sonraki (n) veya önceki (N) ifadeye git</td></tr> "
+"<tr><td><tt><b>i / I</b></tt></td><td>n/N gibi; ancak iç adımlara da giriş "
+"yapar (örneğin bir işlevin tanımı gibi)</td></tr> <tr><td><tt><b>o / O</b></"
+"tt></td><td>Geçerli düzeyin dışındaki önceki/sonraki ifadeye doğrudan atla "
+"(örneğin, bir işlev gövdesinden sonraki ilk ifade)</td></tr> "
+"<tr><td><tt><b>t / T</b></tt></td><td>Betiğin en üst düzeyindeki önceki/"
+"sonraki ifadeye git</td></tr> <tr><td><tt><b>c / C</b></tt></"
+"td><td>(Yalnızca R Markdown belgeleri için) Önceki/sonraki kod parçasına "
+"git</td></tr> <tr><td><tt><b>1 / !</b></tt></td><td>Belgenin başına/sonuna "
+"git</td></tr> <tr><td><tt><b>s</b></tt></td><td>Geçerli ifadeyi seç</td></"
+"tr> <tr><td><tt><b>S</b></tt></td><td>(Yalnızca R Markdown belgeleri için) "
+"Geçerli parçadaki eklenmiş kodu seç</td></tr> <tr><td><tt><b>r</b></tt></"
+"td><td>Geçerli ifadeyi çalıştır ve sonraki ifadeye ilerle (<tt>s - Kontrol"
+"+Dönüş- n</tt> dizisiyle eşdeğer)</td></tr> <tr><td><tt><b>Geri Sil</b></"
+"tt></td><td>En son eylemden önceki konuma geri git</td></tr> "
+"<tr><td><tt><b>Vazgeç</b></tt></td><td>Tez Kod Dolaşımı Kipi’nden çık ve "
+"imleci girilmeden önceki duruma geri sıfırla</td></tr> <tr><td><tt><b>Dönüş</"
+"b></tt></td><td>Tez Kod Dolaşımı Kipi’nden çık ve geçerli konumu ve seçimi "
+"tut</td></tr> <tr><td/><td>Tez Kod Dolaşımı Kipi, belgede başka bir yere "
+"tıkladığınızda, başka bir pencereye geçtiğinizde veya betikte değişiklik "
+"yapıldığında sona erer</td></tr> <tr><td colspan=\"2\"> </td></tr> <tr><td "
+"colspan=\"2\">Son olarak Tez Kod Dolaşımı Kipi’ndeyken normal kısayolları da "
+"kullanmayı sürdürebilirsiniz. Bu, en önemlilerinden biri olarak şunu da "
+"içerir:</td></tr> <tr><td><tt><b>Kontrol+Dönüş</b></tt></td><td>Geçerli "
+"satırı veya seçimi çalıştır</td></tr> </table>"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:38
 #, kde-format
 msgid "Notes and Tips"
-msgstr ""
+msgstr "Notlar ve İpuçları"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -339,6 +392,13 @@ msgid ""
 "syntax is assumed, syntax errors will be skipped over, which may lead to "
 "unexpected behavior."
 msgstr ""
+"“n” eylemi, R hata ayıklayıcısındaki ilgili adım komutunu anımsatmak için "
+"tasarlanmıştır (bkz. <link href=\"rkward://rhelp/browser\"/>); ancak aynısı "
+"değildir. En önemli farkı, kod dolaşımı, burada anlatıldığı üzere, betiğin "
+"tümüyle durağan olarak ayrıştırılmış bir sürümünde çalışır ve denetim "
+"akışını izlemez. Dahası, düzgünce yazılmış bir sözdizim olduğu varsayılır; "
+"sözdizim hatalarının üzerinden atlanır ve bu da beklenmedik davranışlara "
+"neden olabilir."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -350,15 +410,28 @@ msgid ""
 "behave in a way, that we hope makes sense, intuitively. Remember to always "
 "control, visually, what you are doing, before you hit Ctrl+Enter."
 msgstr ""
+"Ek olarak; “ifade”, “iç” veya “dış” bağlam her zaman açık olmayabilir ve R "
+"işletkesinin kodunuzu gördüğü biçim ile uyuşmayabilir. Bunun yerine bu "
+"komutlar, bizim bir işe yarayacağını düşündüğümüz sezgisel bir bağlamda "
+"kullanılmak üzere tasarlanmıştır. Kontrol+Dönüş kombinasyonuna basmadan önce "
+"ne yaptığınızı her zaman görsel olarak denetleyin."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Most commands show a tendency to move towards outer contexts, so 'n' and "
+#| "'N' are not exact opposites. Remeber you can undo your last step using "
+#| "Backspace, if you went past the location you were looking for."
 msgid ""
 "Most commands show a tendency to move towards outer contexts, so 'n' and 'N' "
-"are not exact opposites. Remeber you can undo your last step using "
+"are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
+"Çoğu komutta dış bağlamlara gitmeye yönelik bir eğilim vardır; bu nedenle "
+"“n” ve “N” tam olarak birbirleninin karşıtı değillerdir. Gitmek istediğiniz "
+"konumu geçtiğinizi düşünüyorsanız Geri Sil düğmesini kullanarak son "
+"adımınızı geri alabileceğinizi unutmayın."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -374,10 +447,13 @@ msgstr "RKWard R Konsoluna ilişkin özellikleri ve ayarları açıklayın."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The console can - by default - be found at the bottom of the application "
+#| "window. Press the tool button labelled \"R Console\" to invoke it."
 msgid ""
 "The console can - by default - be found at the bottom of the application "
-"window. Press the tool button labelled \"R Console\" to invoke it."
+"window. Press the tool button labeled \"R Console\" to invoke it."
 msgstr ""
 "Konsol, öntanımlı olarak uygulama penceresinin alt kısmında bulunabilir. "
 "Çağırmak için ‘R Konsolu’ etiketli araç düğmesine basın."
@@ -2020,6 +2096,8 @@ msgid ""
 "Meta+n to bring up <link href=\"rkward://rkward_code_navigation\">Code "
 "Navigation</link> mode in script windows"
 msgstr ""
+"Meta+n, betik pencerelerinde <link href=\"rkward://rkward_code_navigation"
+"\">Kod Dolaşımı</link> kipini çağırır"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8

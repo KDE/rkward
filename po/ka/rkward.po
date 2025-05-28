@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-27 00:38+0000\n"
-"PO-Revision-Date: 2025-05-08 03:41+0200\n"
+"PO-Revision-Date: 2025-05-27 05:38+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3151,6 +3151,9 @@ msgid ""
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
 ">Configure RKWard->Plugins), or perhaps the plugin was renamed."
 msgstr ""
+"სცადეთ, გაგეშვათ დამატება სახელით '%1', მაგრამ დამატება ამჟამად უცნობია. "
+"ალბათ საჭიროა ჩატვირთოთ შესაბამისი რუკა (მორგება->RKWard-ის მორგება-"
+">დამატებები), ან დამატებას სახელი გადაერქვა."
 
 #: rkward/plugin/rkcomponentmap.cpp:466
 #, kde-format
@@ -5998,36 +6001,38 @@ msgstr "ლოკალური ფაილის სახელები"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr ""
+msgstr "ბრძანება 'S', მხოლოდ, R-ის მარკდაუნისთვისაა"
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr ""
+msgstr "უცნობი ბრძანება <tt><b>%1</b></tt>"
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
+"ძებნა ბოლოში გავიდა.<br/><tt><b>c</b></tt> შემდეგ ფრაგმენტზე გადასასვლელად."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
+"ძებნა თავიდან დაიწყო.<br/><tt><b>C</b></tt> წინა ფრაგმენტზე გადასასვლელად."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
-msgstr ""
+msgstr "ძებნა ბოლოში გავიდა.<br/><tt><b>1</b></tt> თავში გადასასვლელად."
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
-msgstr ""
+msgstr "ძებნა თავიდან დაიწყო.<br/><tt><b>!</b></tt> ბოლოში გადასასვლელად."
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6035,6 +6040,8 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
+"<b>კოდის ნავიგაცია</b> (<a href=\"rkward://page/rkward_code_navigation"
+"\">დახმარება</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
 #, fuzzy, kde-format
@@ -6045,7 +6052,7 @@ msgstr "რედაქტორის ბრძანება"
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr ""
+msgstr "სწრაფი კოდში ნავიგაციის რეჟიმი"
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6053,6 +6060,8 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
+"კოდში გადასვლა ერთი ღილაკების კომბინაციით (<a href=\"rkward://page/"
+"rkward_code_navigation\">გაიგეთ მეტი</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6060,6 +6069,8 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
+"იარეთ კოდში მისი სტრუქტურის მიხედვით, ან გადადით <a href=\"rkward://page/"
+"rkward_code_navigation\">სწრაფი კოდის ნავიგაციის რეჟიმში</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
 #, fuzzy, kde-format
@@ -6071,7 +6082,7 @@ msgstr "მოწყობილობის ჩაშენების გა�
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr ""
+msgstr "გადასვლა"
 
 #: rkward/windows/rkcodenavigation.cpp:346
 #, fuzzy, kde-format
@@ -6088,12 +6099,12 @@ msgstr "წინა ნახაზი"
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr ""
+msgstr "შემდეგი (შიდა) გამოსახულება"
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr ""
+msgstr "წინა (შიდა) გამოსახულება"
 
 #: rkward/windows/rkcodenavigation.cpp:350
 #, fuzzy, kde-format
@@ -6104,7 +6115,7 @@ msgstr "არასწორი პირობა.\n"
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr ""
+msgstr "წინა გარე გამოსახულება"
 
 #: rkward/windows/rkcodenavigation.cpp:352
 #, fuzzy, kde-format
@@ -6121,7 +6132,7 @@ msgstr "არასწორი პირობა.\n"
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr ""
+msgstr "წინა კოდის ფრაგმენტი"
 
 #: rkward/windows/rkcodenavigation.cpp:356
 #, fuzzy, kde-format
@@ -6150,7 +6161,7 @@ msgstr "&გაშვება"
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr ""
+msgstr "მიმდინარე გამოსახულების გაშვება და წინ გადასვლა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:166
 #, kde-format
