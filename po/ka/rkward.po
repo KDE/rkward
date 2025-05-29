@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-27 00:38+0000\n"
-"PO-Revision-Date: 2025-05-27 05:38+0200\n"
+"PO-Revision-Date: 2025-05-28 04:22+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2819,7 +2819,7 @@ msgstr "მშობელი ობიექტი: %1"
 #: rkward/misc/rksaveobjectchooser.cpp:98
 #, kde-format
 msgid "Select parent object"
-msgstr "მშობელი ობიექტის გაშვება"
+msgstr "მშობელი ობიექტის მონიშვნა"
 
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
@@ -6044,10 +6044,9 @@ msgstr ""
 "\">დახმარება</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, fuzzy, kde-format
-#| msgid "Editor command"
+#, kde-format
 msgid "Enter command"
-msgstr "რედაქტორის ბრძანება"
+msgstr "შეიყვანეთ ბრძანება"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
@@ -6073,10 +6072,9 @@ msgstr ""
 "rkward_code_navigation\">სწრაფი კოდის ნავიგაციის რეჟიმში</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, fuzzy, kde-format
-#| msgid "No device integration"
+#, kde-format
 msgid "Code Navigation"
-msgstr "მოწყობილობის ჩაშენების გარეშე"
+msgstr "კოდის ნავიგაცია"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
@@ -6085,16 +6083,14 @@ msgid "Go"
 msgstr "გადასვლა"
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next statement"
-msgstr "არასწორი პირობა.\n"
+msgstr "შემდეგი ინსტრუქცია"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous statement"
-msgstr "წინა ნახაზი"
+msgstr "წინა ინსტრუქცია"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
@@ -6104,30 +6100,27 @@ msgstr "შემდეგი (შიდა) გამოსახულებ�
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr "წინა (შიდა) გამოსახულება"
+msgstr "წინა (შიდა) ინსტრუქცია"
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next outer statement"
-msgstr "არასწორი პირობა.\n"
+msgstr "შემდეგი გარე ინსტრუქცია"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr "წინა გარე გამოსახულება"
+msgstr "წინა გარე ინსტრუქცია"
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next toplevel statement"
-msgstr "არასწორი პირობა.\n"
+msgstr "შემდეგი უმაღლესი დონის ინსტრუქცია"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Previous toplevel statement"
-msgstr "არასწორი პირობა.\n"
+msgstr "წინა უმაღლესი დონის ინსტრუქცია"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
@@ -6135,28 +6128,24 @@ msgid "Next code chunk"
 msgstr "წინა კოდის ფრაგმენტი"
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous code chunk"
-msgstr "წინა ნახაზი"
+msgstr "წინა კოდის ფრაგმენტი"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current statement"
-msgstr "მშობელი ობიექტის გაშვება"
+msgstr "მიმდინარე ინსტრუქციის მონიშვნა"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current code chunk"
-msgstr "მშობელი ობიექტის გაშვება"
+msgstr "მიმდინარე კოდის ფრაგმენტის მონიშვნა"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "&გაშვება"
+msgstr "გაშვება"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format

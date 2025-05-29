@@ -6067,10 +6067,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, fuzzy, kde-format
-#| msgid "No device integration"
+#, kde-format
 msgid "Code Navigation"
-msgstr "Žádné začleňování zařízení"
+msgstr "Procházení kódem"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
@@ -6142,10 +6141,9 @@ msgid "Select current code chunk"
 msgstr "Vyberte rodičovský objekt"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "&Spustit"
+msgstr "Spustit"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format

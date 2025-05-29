@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-28 00:39+0000\n"
-"PO-Revision-Date: 2025-05-27 07:22+0200\n"
+"PO-Revision-Date: 2025-05-28 07:10+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -262,15 +262,7 @@ msgstr "Navigacija po kodi in način hitre navigacija po kodi"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <summary>
 #: rkward/pages/rkward_code_navigation.rkh:9
-#, fuzzy, kde-format
-#| msgid ""
-#| "The code navigation feature in script editor windows allows you to "
-#| "navigate R code based on its syntactical structure, e.g. quickly jumping "
-#| "to the next statement outside the current scope or to the previous top "
-#| "level statement. Several navgation features are deliberately close to "
-#| "debbuggin in R's <link href=\"rkward://rhelp/browser\">browser()</link>-"
-#| "command, but importantly this works entirely without actually running the "
-#| "code."
+#, kde-format
 msgid ""
 "The code navigation feature in script editor windows allows you to navigate "
 "R code based on its syntactical structure, e.g. quickly jumping to the next "
@@ -284,7 +276,7 @@ msgstr ""
 "naslednji stavek zunaj trenutnega obsega ali na prejšnji ukaz najvišje "
 "ravni. Več navigacijskih funkcij je namerno blizu funkciji razkrivanja "
 "hroščev v ukazu R <link href=\"rkward://rhelp/browser\">browser()</link>, "
-"vendar je pomembno, da to deluje popolnoma brez dejanskega zagona kode."
+"vendar je pomembno, da to deluje popolnoma ne da bi poganjali kodo."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -294,15 +286,7 @@ msgstr "Razpoložljivi ukazi"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
-#, fuzzy, kde-format
-#| msgid ""
-#| "The code navigation feature is available from the <i>Run</i>-menu, and "
-#| "the context menu in script (R or R markdown) windows in two variants: The "
-#| "first option is to simply select inidividual navigation actions directly "
-#| "from the menu. Secondly, however, the \"Quick Code Navigation Mode\" (top "
-#| "entry in the menu; default keyboard shortcut is \"Meta+n\") allows you to "
-#| "navigate your sources very quickly. Once in this mode, subsequent single "
-#| "key presses invoke the following actions:"
+#, kde-format
 msgid ""
 "The code navigation feature is available from the <i>Run</i>-menu, and the "
 "context menu in script (R or R markdown) windows in two variants: The first "
@@ -315,7 +299,7 @@ msgstr ""
 "Zmožnost navigacije po kodi je na voljo v meniju <i>Zaženi</i> in "
 "kontekstnem meniju v oknih skript (R ali R markdown) v dveh različicah: Prva "
 "možnost je, da preprosto izberete posamezna navigacijska dejanja neposredno "
-"iz menija. Drugič, »Način hitre navigacije po kodi« (zgornji vnos v meniju; "
+"iz menija. Drugič, »Način hitre navigacije po kodi« (vrhnji vnos v meniju; "
 "privzeta bližnjica na tipkovnici je »Meta+n«) omogoča zelo hitro navigacijo "
 "po izvorni kodi. Ko ste v tem načinu, poznejši pritiski tipk sprožijo "
 "naslednja dejanja:"
@@ -424,18 +408,14 @@ msgstr ""
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "Most commands show a tendency to move towards outer contexts, so 'n' and "
-#| "'N' are not exact opposites. Remeber you can undo your last step using "
-#| "Backspace, if you went past the location you were looking for."
+#, kde-format
 msgid ""
 "Most commands show a tendency to move towards outer contexts, so 'n' and 'N' "
 "are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
 "Večina ukazov kaže tendenco premikanja proti zunanjim kontekstom, zato 'n' "
-"in 'N' nista popolna nasprotja. Ne pozabite, da lahko zadnji korak "
+"in 'N' nista natančna nasprotja. Ne pozabite, da lahko zadnji korak "
 "razveljavite z uporabo tipke Backspace, če ste prišli dlje od lokacije, ki "
 "ste jo iskali."
 
@@ -453,16 +433,13 @@ msgstr "Opiši funkcije in nastavitve v zvezi s konzolo RKWard R."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
-#, fuzzy, kde-format
-#| msgid ""
-#| "The console can - by default - be found at the bottom of the application "
-#| "window. Press the tool button labelled \"R Console\" to invoke it."
+#, kde-format
 msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labeled \"R Console\" to invoke it."
 msgstr ""
 "Konzolo lahko - privzeto - najdete na dnu okna programa. Pritisnite gumb "
-"orodja z oznako »R Console«, da ga prikličete."
+"orodja z oznako \"R Console\", da ga prikličete."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15

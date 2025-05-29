@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-28 00:39+0000\n"
-"PO-Revision-Date: 2025-05-27 05:33+0200\n"
+"PO-Revision-Date: 2025-05-28 04:27+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -222,7 +222,7 @@ msgstr ""
 #: rkward/pages/rkward_code_navigation.rkh:8
 #, kde-format
 msgid "Code Navigation and Quick Code Navigation Mode"
-msgstr ""
+msgstr "კოდის ნავიგაციის და სწრაფი კოდის ნავიგაციის რეჟიმები"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <summary>
 #: rkward/pages/rkward_code_navigation.rkh:9
@@ -341,16 +341,13 @@ msgstr "აღწერეთ თვისებები და პარამ
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
-#, fuzzy, kde-format
-#| msgid ""
-#| "The console can - by default - be found at the bottom of the application "
-#| "window. Press the tool button labelled \"R Console\" to invoke it."
+#, kde-format
 msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labeled \"R Console\" to invoke it."
 msgstr ""
-"კონსოლეს შეუძლია - ნაგულისხმევად - გამოჩნდეს აპლიკაციის ფანჯრის ქვედა "
-"მხარეს. ჩასაშვებად დააწექით ღილაკს ჭდით \"R-ის კონსოლი\"."
+"კონსოლს შეუძლია - ნაგულისხმევად - გამოჩნდეს აპლიკაციის ფანჯრის ქვედა მხარეს. "
+"გასაშვებად დააწექით ღილაკს ჭდით \"R-ის კონსოლი\"."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
@@ -833,6 +830,8 @@ msgid ""
 "This console works almost exactly like the regular R text console, so you "
 "can start working right away. Differences include:"
 msgstr ""
+"ეს კონსოლი, თითქმის, ისე მუშაობს, როგორც R-ის ჩვეულებრივი ტექსტური კონსოლი, "
+"ასე რომ, შეგიძლიათ, მუშაობა ახლავე დაიწყოთ. სხვაობები მოიცავს:"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -847,6 +846,8 @@ msgid ""
 "While typing function calls, a list of arguments to that function is shown "
 "in a box (argument hinting)"
 msgstr ""
+"როცა კრეფთ ფუნქციის გამოძახებებს, არგუმენტების სია, რომელსაც ეს ფუნქცია "
+"იღებს, ნაჩვენები იქნება მინიშნებაში (არგუმენტის მინიშნება)"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -856,6 +857,9 @@ msgid ""
 "R help for that symbol. Also available from the Help menu, or the right "
 "mouse button menu"
 msgstr ""
+"სანამ კურსორი R-ის სიმბოლოზე, ან ფუნქციაზეა, F2-ის დაჭერა R-ის დახმარებაში "
+"ამ ფუნქციის ძებნას დაიწყებს. ასევე ხელმისაწვდომია დახმარების მენიუდან და "
+"თაგუნას მარჯვენა ღილაკის მენიუდან"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -864,6 +868,8 @@ msgid ""
 "You can easily create a transcript of the commands you run in the console "
 "using Run->CC commands to output..."
 msgstr ""
+"შეგიძლიათ, ადვილად შექმნათ ტრანსკრიფცია ბრძანებებისა, რომლებსაც კონსოლში "
+"უშვებთ. გამოიყენეთ მენიუ გაშვება->CC ბრძანებები გამოსატანად..."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
