@@ -1878,7 +1878,7 @@ msgstr ""
 "menú HUD és un camp de busca que permet la busca difusa en els menús. El HUD "
 "es va introduir en les aplicacions actuals de KDE i, per tant, encara no "
 "està disponible en versions anteriors de RKWard. El HUD es pot invocar "
-"utilitzant Ctrl+Alt+i. Açò és especialment útil si es busca una funció, la "
+"utilitzant «Ctrl+Alt+I». Açò és especialment útil si es busca una funció, la "
 "drecera d'una funció o alguna cosa en els menús, però no es vol passar per "
 "cada menú individualment per a trobar-la."
 
