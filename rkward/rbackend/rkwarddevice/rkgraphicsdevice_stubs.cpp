@@ -199,6 +199,47 @@ static void RKD_QueryResolution(double *dpix, double *dpiy) {
 	}
 }
 
+SEXP makeInt(int val) {
+	SEXP ret;
+	RFn::Rf_protect(ret = RFn::Rf_allocVector(INTSXP, 1));
+	RFn::INTEGER(ret)[0] = val;
+	RFn::Rf_unprotect(1);
+	return ret;
+}
+
+SEXP makeString(const char *string) {
+	SEXP ret;
+	RFn::Rf_protect(ret = RFn::Rf_allocVector(STRSXP, 1));
+	RFn::SET_STRING_ELT(ret, 0, RFn::Rf_mkCharCE(string, CE_UTF8));
+	RFn::Rf_unprotect(1);
+	return ret;
+}
+
+static void callHookFun(const char *what, pDevDesc dev) {
+	static SEXP call_hook_fun = nullptr;
+	if (!call_hook_fun) {
+		SEXP rkn = makeString("rkward");
+		SEXP rkwardenv = RKRSupport::callSimpleFun(RFn::Rf_install("asNamespace"), rkn, ROb(R_GlobalEnv));
+		RK_ASSERT(RFn::Rf_isEnvironment(rkwardenv));
+		call_hook_fun = RFn::Rf_findFun(RFn::Rf_install(".RK.callHook"), rkwardenv);
+	}
+	RKRSupport::callSimpleFun2(call_hook_fun, makeString(what), makeInt(static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->devnum), ROb(R_BaseEnv));
+}
+
+static void modified(pDevDesc dev) {
+	static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->modified();
+}
+
+static void RKD_Activate(pDevDesc dev);
+SEXP RKGraphicsModRevision(SEXP _devnum) {
+	int devnum = RFn::Rf_asInteger(_devnum);
+	pGEDevDesc gdev = RFn::GEgetDevice(devnum);
+	if (!gdev) RFn::Rf_error("No such device %d", devnum);
+	pDevDesc dev = gdev->dev;
+	if (dev->activate != RKD_Activate) RFn::Rf_error("Not an RKWard device %d", devnum);
+	return makeInt(static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->revision());
+}
+
 static void RKD_Create(double width, double height, pDevDesc dev, const char *title, bool antialias, quint32 id) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
@@ -212,6 +253,8 @@ static void RKD_Create(double width, double height, pDevDesc dev, const char *ti
 		quint32 dummy;
 		RKD_IN_STREAM >> dummy;
 	}
+
+	callHookFun("after.create", dev);
 }
 
 static void RKD_Size(double *left, double *right, double *bottom, double *top, pDevDesc dev) {
@@ -268,6 +311,8 @@ SEXP RKD_AdjustSize(SEXP _devnum, SEXP _id) {
 	dev->right = size.width();
 	dev->bottom = size.height();
 
+	// TODO: Do we want to block advancing revision, here?
+
 	RKD_SetSize(dev); // This adjusts the rendering area in the frontend
 	if (gdev->dirty) RFn::GEplayDisplayList(gdev);
 	return ROb(R_NilValue);
@@ -280,6 +325,7 @@ static void RKD_Circle(double x, double y, double r, R_GE_gcontext *gc, pDevDesc
 	RKD_OUT_STREAM << x << y << r;
 	WRITE_PEN();
 	WRITE_FILL();
+	modified(dev);
 }
 
 static void RKD_Line(double x1, double y1, double x2, double y2, R_GE_gcontext *gc, pDevDesc dev) {
@@ -289,6 +335,7 @@ static void RKD_Line(double x1, double y1, double x2, double y2, R_GE_gcontext *
 	RKD_OUT_STREAM << x1 << y1 << x2 << y2;
 	WRITE_PEN();
 	WRITE_LINE_ENDS();
+	modified(dev);
 }
 
 static void RKD_Polygon(int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
@@ -303,6 +350,7 @@ static void RKD_Polygon(int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc
 	WRITE_PEN();
 	WRITE_LINE_ENDS();
 	WRITE_FILL();
+	modified(dev);
 }
 
 static void RKD_Polyline(int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
@@ -316,6 +364,7 @@ static void RKD_Polyline(int n, double *x, double *y, R_GE_gcontext *gc, pDevDes
 	}
 	WRITE_PEN();
 	WRITE_LINE_ENDS();
+	modified(dev);
 }
 
 static void RKD_Path(double *x, double *y, int npoly, int *nper, Rboolean winding, R_GE_gcontext *gc, pDevDesc dev) {
@@ -337,6 +386,7 @@ static void RKD_Path(double *x, double *y, int npoly, int *nper, Rboolean windin
 	WRITE_PEN();
 	WRITE_LINE_ENDS();
 	WRITE_FILL();
+	modified(dev);
 }
 
 static void RKD_Rect(double x0, double y0, double x1, double y1, R_GE_gcontext *gc, pDevDesc dev) {
@@ -347,6 +397,7 @@ static void RKD_Rect(double x0, double y0, double x1, double y1, R_GE_gcontext *
 	WRITE_PEN();
 	WRITE_LINE_ENDS();
 	WRITE_FILL();
+	modified(dev);
 }
 
 static void RKD_TextUTF8(double x, double y, const char *str, double rot, double hadj, R_GE_gcontext *gc, pDevDesc dev) {
@@ -356,6 +407,7 @@ static void RKD_TextUTF8(double x, double y, const char *str, double rot, double
 	RKD_OUT_STREAM << x << y << QString::fromUtf8(str) << rot << hadj; // NOTE: yes, even Symbols are sent as UTF-8, here.
 	WRITE_COL();
 	WRITE_FONT(dev);
+	modified(dev);
 }
 
 static double RKD_StrWidthUTF8(const char *str, R_GE_gcontext *gc, pDevDesc dev) {
@@ -376,9 +428,11 @@ static double RKD_StrWidthUTF8(const char *str, R_GE_gcontext *gc, pDevDesc dev)
 
 static void RKD_NewPage(R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
+	callHookFun("before.blank", dev);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER(RKDNewPage, dev);
 	WRITE_FILL();
+	modified(dev);
 }
 
 static void RKD_MetricInfo(int c, R_GE_gcontext *gc, double *ascent, double *descent, double *width, pDevDesc dev) {
@@ -411,6 +465,7 @@ static void RKD_MetricInfo(int c, R_GE_gcontext *gc, double *ascent, double *des
 
 static void RKD_Close(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
+	callHookFun("before.close", dev);
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER(RKDClose, dev);
@@ -432,6 +487,7 @@ static void RKD_Clip(double left, double right, double top, double bottom, pDevD
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER(RKDClip, dev);
 	RKD_OUT_STREAM << QRectF(left, top, right - left, bottom - top);
+	modified(dev);
 }
 
 static void RKD_Mode(int mode, pDevDesc dev) {
@@ -462,6 +518,7 @@ static void RKD_Raster(unsigned int *raster, int w, int h, double x, double y, d
 		}
 	}
 	RKD_OUT_STREAM << QRectF(x, y, width, height) << rot << (bool)interpolate;
+	modified(dev);
 }
 
 static SEXP RKD_Capture(pDevDesc dev) {
@@ -640,14 +697,6 @@ qint8 getGradientExtend(int Rextent) {
 	if (Rextent == R_GE_patternExtendReflect) return GradientExtendReflect;
 	if (Rextent == R_GE_patternExtendRepeat) return GradientExtendRepeat;
 	/* if (Rextent == R_GE_patternExtendNone) */ return GradientExtendNone;
-}
-
-SEXP makeInt(int val) {
-	SEXP ret;
-	RFn::Rf_protect(ret = RFn::Rf_allocVector(INTSXP, 1));
-	RFn::INTEGER(ret)[0] = val;
-	RFn::Rf_unprotect(1);
-	return ret;
 }
 
 static void RK_tryCall(SEXP func) {
@@ -900,6 +949,7 @@ void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
 			RKD_OUT_STREAM << (qint8)0;
 		}
 	}
+	modified(dev);
 }
 
 void RKD_ReleaseGroup(SEXP ref, pDevDesc dev) {
@@ -934,14 +984,17 @@ void doFillAndOrStroke(SEXP path, const pGEcontext gc, pDevDesc dev, bool fill, 
 
 void RKD_Stroke(SEXP path, const pGEcontext gc, pDevDesc dev) {
 	doFillAndOrStroke(path, gc, dev, false, 0, true);
+	modified(dev);
 }
 
 void RKD_Fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
 	doFillAndOrStroke(path, gc, dev, true, rule, false);
+	modified(dev);
 }
 
 void RKD_FillStroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
 	doFillAndOrStroke(path, gc, dev, true, rule, true);
+	modified(dev);
 }
 #endif
 
@@ -972,5 +1025,6 @@ void RKD_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, double size,
 		RKD_IN_STREAM >> warning;
 		if (!warning.isEmpty()) RFn::Rf_warning("%s", qPrintable(warning));
 	}
+	modified(dev);
 }
 #endif

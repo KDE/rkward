@@ -31,6 +31,19 @@ struct RKGraphicsDeviceDesc {
 	QString default_family;
 	QString default_symbol_family;
 	pDevDesc rdevdesc;
+	int revision() {
+		if (_revision == _nextrevision) {
+			_nextrevision++;
+		}
+		return _revision;
+	}
+	void modified() {
+		_revision = _nextrevision;
+	}
+
+  private:
+	int _revision = 0;
+	int _nextrevision = 1;
 };
 
 #include "rkgraphicsdevice_stubs.cpp"
