@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# SPDX-FileCopyrightText: 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2024-07-15 16:31+0200\n"
+"PO-Revision-Date: 2025-05-30 14:34+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2029,10 +2029,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Gränssnitt för statistikspråket R"
 
 #: rkward/main.cpp:174
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "© 2002 - 2024"
+msgstr "© 2002 - 2025"
 
 #: rkward/main.cpp:175
 #, kde-format
@@ -2776,16 +2775,13 @@ msgid "Unhandled output command '%1'"
 msgstr "Ohanterat utdatakommando '%1'"
 
 #: rkward/misc/rkprogresscontrol.cpp:216
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"Ett fel uppstod vid försök att ladda eller ladda ur paket. Se utskriften "
-"nedan för detaljinformation."
+"<b>Ett fel uppstod medan kommandot kördes. Se nedan för utmatad "
+"detaljinformation.</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:227
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
