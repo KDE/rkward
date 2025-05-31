@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-28 00:39+0000\n"
-"PO-Revision-Date: 2025-05-28 21:36+0200\n"
+"PO-Revision-Date: 2025-05-29 15:05+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -282,6 +282,14 @@ msgid ""
 "href=\"rkward://rhelp/browser\">browser()</link>-command, but importantly "
 "this works entirely without actually running the code."
 msgstr ""
+"La fonctionnalité de navigation dans le code dans les fenêtres de l'éditeur "
+"de scripts vous permet de naviguer dans le code R en fonction de sa "
+"structure syntaxique, par exemple en passant rapidement à l'instruction "
+"suivante en dehors de sa portée actuelle ou à l'instruction de niveau "
+"supérieur précédente. Plusieurs fonctionnalités de navigation sont "
+"délibérément proches du débogage dans la commande <link href=\"rkward://"
+"rhelp/browser\">browser()</link> de R. Mais, il est important de noter que "
+"cela fonctionne entièrement sans exécuter le code."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -301,6 +309,15 @@ msgid ""
 "your sources very quickly. Once in this mode, subsequent single key presses "
 "invoke the following actions:"
 msgstr ""
+"La fonction de navigation dans le code est disponible à partir du menu "
+"<i>Exécuter</i> et du menu contextuel dans les fenêtres de scripts (R ou R "
+"Markdown) selon deux variantes : la première option consiste simplement à "
+"sélectionner des actions individuelles de navigation directement à partir du "
+"menu. Cependant, avec la seconde option, le « Mode de navigation rapide dans "
+"le code » (Entrée supérieure dans le menu et raccourci clavier par défaut "
+"est « Meta » + « n ») vous permet de naviguer très rapidement dans vos codes "
+"source. Une fois dans ce mode, les appuis ultérieurs sur une seule touche "
+"appellent les actions suivantes :"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -420,6 +437,11 @@ msgid ""
 "are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
+"La plupart des commandes montrent une tendance à se déplacer vers des "
+"contextes externes, de sorte que « n » et « N » ne sont pas exactement en "
+"opposition. Veuillez vous rappeler que vous pouvez annuler votre dernière "
+"étape en utilisant  la touche « Retour arrière » si vous avez dépassé "
+"l'emplacement que vous recherchiez."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -436,17 +458,14 @@ msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
-#, fuzzy, kde-format
-#| msgid ""
-#| "The console can - by default - be found at the bottom of the application "
-#| "window. Press the tool button labelled \"R Console\" to invoke it."
+#, kde-format
 msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labeled \"R Console\" to invoke it."
 msgstr ""
 "La console peut - par défaut - être trouvée au bas de la fenêtre de "
-"l'application. Appuyez sur le bouton d'outils nommé « Console R » pour le "
-"lancer."
+"l'application. Veuillez appuyer sur le bouton d'outils nommé « Console R » "
+"pour le lancer."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
