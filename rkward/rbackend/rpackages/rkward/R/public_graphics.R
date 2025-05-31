@@ -146,6 +146,56 @@
 	invisible (ret)	# Current always NULL
 }
 
+
+# TODO: document
+RK.addHook <- function(after.create, before.close, before.blank) {
+	if (is.null(.rk.variables$.RKdevhooks$nextid)) .rk.variables$.RKdevhooks$nextid <- 0
+	id = .rk.variables$.RKdevhooks$nextid
+	.rk.variables$.RKdevhooks$nextid <- id + 1
+	appendHook <- function(at, what, id) {
+		stopifnot(is.function(what))
+		.rk.variables$.RKdevhooks[[at]] <- c(.rk.variables$.RKdevhooks[[at]], what)
+		names(.rk.variables$.RKdevhooks[[at]])[length(.rk.variables$.RKdevhooks[[at]])] <- id
+	}
+	if (!missing(after.create)) {
+		appendHook("after.create", after.create, id)
+	}
+	if (!missing(before.close)) {
+		appendHook("before.close", before.close, id)
+	}
+	if (!missing(before.blank)) {
+		appendHook("before.blank", before.blank, id)
+	}
+	invisible(id)
+}
+
+# TODO: document
+RK.removeHook <- function(handle) {
+	removeHook <- function(at, id) {
+		.rk.variables$.RKdevhooks[[at]] <- .rk.variables$.RKdevhooks[[at]][names(.rk.variables$.RKdevhooks[[at]]) != id]
+	}
+	removeHook("after.create", handle)
+	removeHook("before.close", handle)
+	removeHook("before.blank", handle)
+	invisible(NULL)
+}
+
+.RK.callHook <- function(hook, id) {
+	for (fun in .rk.variables$.RKdevhooks[[hook]]) {
+		try({fun(id)})
+	}
+}
+
+# TODO: document properly
+# TODO: ignore redraws?
+# For detecting changes in the graph shown in the given device, call this function twice.
+# The device has been modified, if the returned number has increased.
+# NOTE: The magnitude of the increase carries no meaning at all.
+# NOTE: Reset to 0 when the device is closed
+RK.revision <- function(device) {
+	.Call("rk.graphics.mod", as.integer(device), PACKAGE="(embedding)")
+}
+
 #' Embed non-RKWard device windows
 #'
 #' \code{rk.embed.device} evaluates the given expression, and if this has created a window on the screen, tries to embed it as an RKWard window.
