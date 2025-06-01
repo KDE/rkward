@@ -433,9 +433,14 @@ void RKStructureGetter::getStructureWorker(SEXP val, const QString &name, int ad
 		}
 	} else if (is_function) {
 		// TODO: getting the formals is still a bit of a bottleneck, but no idea, how to improve on this, any further
-		SEXP formals_s;
-		if (RFn::Rf_isPrimitive(value)) formals_s = RFn::FORMALS(RKRSupport::callSimpleFun(args_fun, value, baseenv)); // primitives don't have formals, internally
-		else formals_s = RFn::FORMALS(value);
+		SEXP formals_s = ROb(R_NilValue);
+		if (RFn::Rf_isPrimitive(value)) {
+			// primitives don't have formals, internally
+			auto args = RKRSupport::callSimpleFun(args_fun, value, baseenv);
+			if (!RFn::Rf_isNull(args)) formals_s = RFn::FORMALS(args);
+		} else {
+			formals_s = RFn::FORMALS(value);
+		}
 		RFn::Rf_protect(formals_s);
 
 		// get the default values
