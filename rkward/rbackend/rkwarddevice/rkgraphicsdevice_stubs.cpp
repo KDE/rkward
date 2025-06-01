@@ -289,6 +289,7 @@ SEXP RKD_AdjustSize(SEXP _devnum, SEXP _id) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	int devnum = RFn::Rf_asInteger(_devnum);
 	quint32 id = RFn::Rf_asInteger(_id);
+	if (devnum < 1) RFn::Rf_error("RKD_AdjustSize called on null device");
 	pGEDevDesc gdev = RFn::GEgetDevice(devnum);
 	if (!gdev) RFn::Rf_error("No such device %d", devnum);
 	pDevDesc dev = gdev->dev;
