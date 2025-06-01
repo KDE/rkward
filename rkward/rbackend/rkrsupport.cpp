@@ -49,6 +49,20 @@ SEXP RKRSupport::callSimpleFun2(SEXP fun, SEXP arg1, SEXP arg2, SEXP env) {
 	return ret;
 }
 
+SEXP RKRSupport::callSimpleFun3(SEXP fun, SEXP arg1, SEXP arg2, SEXP arg3, SEXP env) {
+	SEXP call = RFn::Rf_allocVector(LANGSXP, 4);
+	RFn::Rf_protect(call);
+	RFn::SETCAR(call, fun);
+	RFn::SETCAR(RFn::CDR(call), arg1);
+	RFn::SETCAR(RFn::CDDR(call), arg2);
+	RFn::SETCAR(RFn::CDDDR(call), arg3);
+
+	SEXP ret = RFn::Rf_eval(call, env);
+
+	RFn::Rf_unprotect(1); /* call */
+	return ret;
+}
+
 bool RKRSupport::callSimpleBool(SEXP fun, SEXP arg, SEXP env) {
 	SEXP res = callSimpleFun(fun, arg, env);
 	if ((RFn::Rf_length(res) < 1) || (RFn::TYPEOF(res) != LGLSXP)) {

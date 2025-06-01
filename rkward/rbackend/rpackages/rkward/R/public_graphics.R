@@ -147,8 +147,50 @@
 }
 
 
-# TODO: document
-RK.addHook <- function(after.create, before.close, before.blank) {
+#' Detect changes in the RKWard native graphics device(s)
+#'
+#' \code{RK.addHook()} registers functions to be called when plot windows are created / closed / blanked.
+#'
+#' \code{RK.removeHook()} removes hook functions previously registered with \code{RK.addHook()}.
+#'
+#' \code{RK.revision()} can be used to detect changes done to an existing \code{RK()} by comparing the
+#'                      return value of two subsequent calls: If the value has increased, the plot has been touched.
+#'
+#' @param after.create (Omit this argument, if you do not want to set this type of hook.) A function to be called
+#'                     immediately after a new \code{RK()} device has been created. The function must accept at least one
+#'                     parameter (the corresponding device number). It is recommended to add \code{...} in addition,
+#'                     to remain compatible with future extensions.
+#'
+#' @param after.close (Omit this argument, if you do not want to set this type of hook.) Called immediately after a device
+#'                    is closed. At this point the device may or may not still be visible, but can no longer be accessed.
+#'                    The function is called with two parameters: the device number, and a snapshot of the most recent
+#'                    plot (as would have been produced by \code{recordPlot()}; empty, if disabled via \code{dev.control()}.
+#'                    It is recommended to add a \code{...} argument, in order to remain compatible with future extensions.
+#'
+#' @param before.blank (Omit this argument, if you do not want to set this type of hook.) Called whenever an existing device
+#'                     is blanked. This usually happens when a new plot is about to be drawn. While this hook is called,
+#'                     it is still possible to access the old contents.
+#'
+#' @param devnum Device number
+#'
+#' @details The return value of \code{RK.addHook()) may be passed to \code{RK.removeHook()) to remove the hook(s) registered
+#'          in that call. No assumptions should be made on the exact nature of that return value (it might be subject to
+#'          change in future versions.
+#'
+#'          \code{RK.revision()} returns a integer number. This will be 0 for a device that has just been created. If the device
+#'          is modified (changes need not necessarily be visible), the next call to \code{RK.revision()} will return a larger
+#'          number. The details of how revisions are counted may be subject to change, and in particular they do not give
+#'          any information on how much has been changed..
+#'
+#' @seealso \link{RK}
+#' @examples
+#' \dontrun{
+#' ## TODO
+#' }
+#'
+#' @export
+#' @rdname RKdevicehooks
+RK.addHook <- function(after.create, after.close, before.blank) {
 	if (is.null(.rk.variables$.RKdevhooks$nextid)) .rk.variables$.RKdevhooks$nextid <- 0
 	id = .rk.variables$.RKdevhooks$nextid
 	.rk.variables$.RKdevhooks$nextid <- id + 1
@@ -160,8 +202,8 @@ RK.addHook <- function(after.create, before.close, before.blank) {
 	if (!missing(after.create)) {
 		appendHook("after.create", after.create, id)
 	}
-	if (!missing(before.close)) {
-		appendHook("before.close", before.close, id)
+	if (!missing(after.close)) {
+		appendHook("after.close", after.close, id)
 	}
 	if (!missing(before.blank)) {
 		appendHook("before.blank", before.blank, id)
@@ -169,20 +211,30 @@ RK.addHook <- function(after.create, before.close, before.blank) {
 	invisible(id)
 }
 
-# TODO: document
+#' @export
+#' @rdname RKdevicehooks
 RK.removeHook <- function(handle) {
 	removeHook <- function(at, id) {
 		.rk.variables$.RKdevhooks[[at]] <- .rk.variables$.RKdevhooks[[at]][names(.rk.variables$.RKdevhooks[[at]]) != id]
 	}
 	removeHook("after.create", handle)
-	removeHook("before.close", handle)
+	removeHook("after.close", handle)
 	removeHook("before.blank", handle)
 	invisible(NULL)
 }
 
-.RK.callHook <- function(hook, id) {
+# not exported
+.RK.callHook <- function(hook, id, data, ...) {
 	for (fun in .rk.variables$.RKdevhooks[[hook]]) {
-		try({fun(id)})
+		if (hook == "after.close") {
+			# pity it's too late for recordPlot() at this point. We need to re-create things, manually
+			attr(data, "pid") <- Sys.getpid()
+			attr(data, "Rversion") <- getRversion()
+			class(data) <- "recordedplot"
+			try({fun(id, data, ...)})
+		} else {
+			try({fun(id, ...)})
+		}
 	}
 }
 
@@ -192,6 +244,8 @@ RK.removeHook <- function(handle) {
 # The device has been modified, if the returned number has increased.
 # NOTE: The magnitude of the increase carries no meaning at all.
 # NOTE: Reset to 0 when the device is closed
+#' @export
+#' @rdname RKdevicehooks
 RK.revision <- function(device) {
 	.Call("rk.graphics.mod", as.integer(device), PACKAGE="(embedding)")
 }

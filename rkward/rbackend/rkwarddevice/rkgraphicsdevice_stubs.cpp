@@ -215,7 +215,7 @@ SEXP makeString(const char *string) {
 	return ret;
 }
 
-static void callHookFun(const char *what, pDevDesc dev) {
+static void callHookFun(const char *what, pDevDesc dev, SEXP data=ROb(R_NilValue)) {
 	static SEXP call_hook_fun = nullptr;
 	if (!call_hook_fun) {
 		SEXP rkn = makeString("rkward");
@@ -223,7 +223,11 @@ static void callHookFun(const char *what, pDevDesc dev) {
 		RK_ASSERT(RFn::Rf_isEnvironment(rkwardenv));
 		call_hook_fun = RFn::Rf_findFun(RFn::Rf_install(".RK.callHook"), rkwardenv);
 	}
-	RKRSupport::callSimpleFun2(call_hook_fun, makeString(what), makeInt(static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->devnum + 1), ROb(R_BaseEnv));
+	if (data == ROb(R_NilValue)) {
+		RKRSupport::callSimpleFun2(call_hook_fun, makeString(what), makeInt(static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->devnum + 1), ROb(R_BaseEnv));
+	} else {
+		RKRSupport::callSimpleFun3(call_hook_fun, makeString(what), makeInt(static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->devnum + 1), data, ROb(R_BaseEnv));
+	}
 }
 
 static void modified(pDevDesc dev) {
@@ -466,7 +470,7 @@ static void RKD_MetricInfo(int c, R_GE_gcontext *gc, double *ascent, double *des
 
 static void RKD_Close(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	callHookFun("before.close", dev);
+	callHookFun("after.close", dev, RFn::GEcreateSnapshot(RFn::desc2GEDesc(dev)));
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER(RKDClose, dev);
