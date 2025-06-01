@@ -198,6 +198,7 @@ void RKGraphicsDevice::checkSize() {
 	if (!view) return;
 	if (view->size() != area.size()) {
 		if (view->size().isEmpty()) return;
+#warning FIXME Sometimes called after closeDevice (key no longer present).
 		RInterface::issueCommand(
 		    new RCommand(u"rkward:::RK.resize("_s + QString::number(devices.key(this) + 1) + u',' + QString::number(id) + u')', RCommand::PriorityCommand));
 	}
@@ -222,7 +223,7 @@ void RKGraphicsDevice::closeDevice(int devnum) {
 	RK_ASSERT(devices.contains(devnum));
 	auto dev = devices.take(devnum);
 	dev->deleteLater();
-	Q_EMIT dev->deviceClosed(devnum);
+	Q_EMIT dev->deviceClosed(devnum+1);  // TODO: review the +1s used everywhere
 }
 
 void RKGraphicsDevice::clear(const QBrush &brush) {
