@@ -280,3 +280,103 @@
 
 	rk.set.output.html.file (x, ...)
 }
+
+# TODO: document me
+#' @export
+rk.eval.as.console.preview <- function(infile, outfile, env=new.env(parent=globalenv()), stop.on.error=FALSE) {
+	## init output file
+	output <- rk.set.output.html.file(outfile, silent=TRUE)
+	on.exit({
+		rk.set.output.html.file(output, silent=TRUE)
+	}, add=TRUE)
+	try(rk.flush.output(ask=FALSE, style="preview", silent=TRUE))
+
+	## set up handling of generated graphics:
+	devs <- list()
+	prevdev <- NULL
+	oldopts <- options() # while at it, save _all_ options. Script might change some, too
+	options(device="RK") # just in case
+
+	# If a device already exists, let's open a new one to avoid touching it, unintentionally
+	# We don't want that to show in the preview, however, which may or may not plot anything at all
+	if (length(dev.list()) > 0) {
+		prevdev <- dev.cur()
+		rk.without.plot.history(RK())
+		devs[[as.character(dev.cur())]] <- RK.revision(dev.cur())
+	}
+
+	hook <- RK.addHook(
+		after.create=function(devnum) {
+			.rk.cat.output("<div align=\"right\">Plot window created</div>");
+			devs[[as.character(devnum)]] <<- RK.revision(devnum)
+		},
+		before.close=function(devnum) {
+			.rk.cat.output("<div align=\"right\">Plot window closed</div>");
+			devs[[as.character(devnum)]] <<- NULL
+		}
+	)
+
+	checkSavePlot <- function() {
+		for (devnum in names(devs)) {
+			currev <- RK.revision(as.numeric(devnum))
+			if (devs[[devnum]] < currev) {
+				cur <- dev.cur()
+				.rk.cat.output("<div align=\"right\"><details><summary>Plot updated (click to show)</summary><p>");
+				#rk.graph.on(width=200, height=200, pointsize=6)
+				rk.graph.on()
+				out <- dev.cur()
+				try({
+					dev.set(as.numeric(devnum))
+					dev.copy(which=out)
+				})
+				rk.graph.off()
+				.rk.cat.output("</p></details></div>");
+				dev.set(cur)
+				devs[[devnum]] <<- currev
+			}
+		}
+	}
+
+	on.exit({
+		RK.removeHook(hook)
+
+		rk.without.plot.history({
+			for (dev in names(devs)) {
+				dev.off(as.numeric(dev))
+			}
+
+			if (!is.null(prevdev)) {
+				dev.set(prevdev)
+			}
+		})
+
+		options(oldopts)
+	}, add=TRUE)
+
+	## parse and evaluate
+	# capture any parse errors
+	exprs <- expression(NULL)
+	rk.capture.output(suppress.messages=TRUE)
+	res <- try({
+		exprs <- parse(infile, keep.source=TRUE)
+	})
+	.rk.cat.output(rk.end.capture.output(TRUE))
+	if(stop.on.error && inherits(res, "try-error")) stop(res)
+
+	# actually do it
+	rk.without.plot.history({
+		for (i in seq_len(length(exprs))) {
+			rk.print.code(as.character(attr(exprs, "srcref")[[i]]))
+			rk.capture.output(suppress.messages=TRUE, suppress.output=TRUE)
+			res <- try({
+				withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE, local=env)
+			})
+			.rk.cat.output(rk.end.capture.output(TRUE))
+			checkSavePlot()
+			if(stop.on.error && inherits(res, "try-error")) stop(res)
+		}
+	})
+
+	# clean up is done via on.exit handlers, above
+	invisible()
+}

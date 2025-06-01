@@ -223,7 +223,7 @@ static void callHookFun(const char *what, pDevDesc dev) {
 		RK_ASSERT(RFn::Rf_isEnvironment(rkwardenv));
 		call_hook_fun = RFn::Rf_findFun(RFn::Rf_install(".RK.callHook"), rkwardenv);
 	}
-	RKRSupport::callSimpleFun2(call_hook_fun, makeString(what), makeInt(static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->devnum), ROb(R_BaseEnv));
+	RKRSupport::callSimpleFun2(call_hook_fun, makeString(what), makeInt(static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->devnum + 1), ROb(R_BaseEnv));
 }
 
 static void modified(pDevDesc dev) {
@@ -232,7 +232,7 @@ static void modified(pDevDesc dev) {
 
 static void RKD_Activate(pDevDesc dev);
 SEXP RKGraphicsModRevision(SEXP _devnum) {
-	int devnum = RFn::Rf_asInteger(_devnum);
+	int devnum = RFn::Rf_asInteger(_devnum) - 1;
 	pGEDevDesc gdev = RFn::GEgetDevice(devnum);
 	if (!gdev) RFn::Rf_error("No such device %d", devnum);
 	pDevDesc dev = gdev->dev;
