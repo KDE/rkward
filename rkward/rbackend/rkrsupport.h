@@ -22,6 +22,7 @@ namespace RKRSupport {
 SEXP callSimpleFun0(SEXP fun, SEXP env);
 SEXP callSimpleFun(SEXP fun, SEXP arg, SEXP env);
 SEXP callSimpleFun2(SEXP fun, SEXP arg1, SEXP arg2, SEXP env);
+SEXP callSimpleFun3(SEXP fun, SEXP arg1, SEXP arg2, SEXP arg3, SEXP env);
 bool callSimpleBool(SEXP fun, SEXP arg, SEXP env);
 
 QStringList SEXPToStringList(SEXP from_exp);

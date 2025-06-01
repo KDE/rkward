@@ -160,10 +160,12 @@ class RFn : public QObject {
 	// TODO: This list should be generated, automatically, at compile time
 	IMPORT_R_API(CDR);
 	IMPORT_R_API(CDDR);
+	IMPORT_R_API(CDDDR);
 	IMPORT_R_API(CAR);
 	IMPORT_R_API(SETCAR);
 	IMPORT_R_API(GEaddDevice2);
 	IMPORT_R_API(GEcreateDevDesc);
+	IMPORT_R_API(GEcreateSnapshot)
 	IMPORT_R_API(GEgetDevice);
 	IMPORT_R_API(GEplayDisplayList);
 	IMPORT_R_API(R_CHAR);
@@ -239,6 +241,7 @@ class RFn : public QObject {
 	IMPORT_R_API(Rf_coerceVector);
 	IMPORT_R_API(Rf_curDevice);
 	IMPORT_R_API(Rf_defineVar);
+	IMPORT_R_API(Rf_desc2GEDesc);
 	IMPORT_R_API(Rf_doesIdle);
 	IMPORT_R_API(Rf_doIdle);
 	IMPORT_R_API(Rf_doKeybd);
