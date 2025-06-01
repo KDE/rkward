@@ -151,9 +151,15 @@ int RKGraphicsDevice::finalizeTilingPattern(int extend) {
 		reflected.fill(Qt::transparent);
 		QPainter p(&reflected);
 		p.drawImage(0, 0, single);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+		p.drawImage(single.width(), 0, single.flipped(Qt::Horizontal));
+		p.drawImage(0, single.height(), single.flipped(Qt::Vertical));
+		p.drawImage(single.width(), single.height(), single.flipped(Qt::Horizontal | Qt::Vertical));
+#else
 		p.drawImage(single.width(), 0, single.mirrored(true, false));
 		p.drawImage(0, single.height(), single.mirrored(false, true));
 		p.drawImage(single.width(), single.height(), single.mirrored(true, true));
+#endif
 		p.end();
 		QBrush brush(reflected);
 		brush.setTransform(QTransform().translate(c.capture_coords.left(), c.capture_coords.top()));
