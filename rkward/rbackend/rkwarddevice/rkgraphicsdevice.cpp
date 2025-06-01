@@ -229,7 +229,7 @@ void RKGraphicsDevice::closeDevice(int devnum) {
 	RK_ASSERT(devices.contains(devnum));
 	auto dev = devices.take(devnum);
 	dev->deleteLater();
-	Q_EMIT dev->deviceClosed(devnum+1);  // TODO: review the +1s used everywhere
+	Q_EMIT dev->deviceClosed(devnum + 1); // TODO: review the +1s used everywhere
 }
 
 void RKGraphicsDevice::clear(const QBrush &brush) {
