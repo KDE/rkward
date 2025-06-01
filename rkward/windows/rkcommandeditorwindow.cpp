@@ -711,24 +711,7 @@ void RKCommandEditorWindow::initPreviewModes() {
 	    i18n("Preview the script as if it was run in the interactive R Console"),
 	    u".R"_s,
 	    [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
-		    auto command = QStringLiteral("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
-		                                  "on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
-		                                  "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
-		                                  "exprs <- expression(NULL)\n"
-		                                  "rk.capture.output(suppress.messages=TRUE)\n"
-		                                  "try({\n"
-		                                  "    exprs <- parse (%1, keep.source=TRUE)\n"
-		                                  "})\n"
-		                                  ".rk.cat.output(rk.end.capture.output(TRUE))\n"
-		                                  "for (i in seq_len(length(exprs))) {\n"
-		                                  "    rk.print.code(as.character(attr(exprs, \"srcref\")[[i]]))\n"
-		                                  "    rk.capture.output(suppress.messages=TRUE)\n"
-		                                  "    try({\n"
-		                                  "        withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE)\n"
-		                                  "    })\n"
-		                                  "    .rk.cat.output(rk.end.capture.output(TRUE))\n"
-		                                  "}\n"
-		                                  "rk.set.output.html.file(output, silent=TRUE)\n"
+		    auto command = QStringLiteral("rkward:::rk.eval.as.console.preview(%1, %2)\n"
 		                                  "rk.show.html(%2)\n");
 		    return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
 	    }});
