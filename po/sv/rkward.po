@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# SPDX-FileCopyrightText: 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-27 00:38+0000\n"
-"PO-Revision-Date: 2024-08-09 07:58+0200\n"
+"PO-Revision-Date: 2025-05-31 15:38+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2029,10 +2029,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Gränssnitt för statistikspråket R"
 
 #: rkward/main.cpp:171
-#, fuzzy, kde-format
-#| msgid "(c) 2002 - 2024"
+#, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "© 2002 - 2024"
+msgstr "© 2002 - 2025"
 
 #: rkward/main.cpp:172
 #, kde-format
@@ -4674,10 +4673,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "Öppna som textfil och använd R-färgläggning"
 
 #: rkward/rkward.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Öppna senaste arbetsyta"
+msgstr "Öppna som R-arbetsyta"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6237,36 +6235,38 @@ msgstr "Lokala filnamn"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr ""
+msgstr "Kommandot 'S' är bara för R-Markdown"
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr ""
+msgstr "Okänt kommando <tt><b>%1</b></tt>"
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
+"Sökning nådde slutet.<br/><tt><b>c</b></tt> för att gå till nästa block."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
+"Sökning nådde början.<br/><tt><b>C</b></tt> för att gå till föregående block."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
-msgstr ""
+msgstr "Sökning nådde slutet.<br/><tt><b>1</b></tt> för att gå till början."
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
-msgstr ""
+msgstr "Sökning nådde början.<br/><tt><b>!</b></tt> för att gå till slutet."
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6274,17 +6274,18 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
+"<b>Kodnavigering</b> (<a href=\"rkward://page/rkward_code_navigation"
+"\">Hjälp</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, fuzzy, kde-format
-#| msgid "Editor command"
+#, kde-format
 msgid "Enter command"
-msgstr "Editorkommando"
+msgstr "Ange kommando"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr ""
+msgstr "Snabb kodnavigering"
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6292,6 +6293,8 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
+"Stega igenom koden med enkla tangenttryckningar (<a href=\"rkward://page/"
+"rkward_code_navigation\">mer information</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6299,97 +6302,89 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
+"Stega igenom koden baserat på dess struktur eller gå till <a href=\"rkward://"
+"page/rkward_code_navigation\">Snabb kodnavigering</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, fuzzy, kde-format
-#| msgid "No device integration"
+#, kde-format
 msgid "Code Navigation"
-msgstr "Ingen enhetsintegrering"
+msgstr "Kodnavigering"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr ""
+msgstr "Gå"
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next statement"
-msgstr "Ofullständig sats.\n"
+msgstr "Nästa sats"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous statement"
-msgstr "Föregående diagram"
+msgstr "Föregående sats"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr ""
+msgstr "Nästa (inre) sats"
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr ""
+msgstr "Föregående (inre) sats"
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next outer statement"
-msgstr "Ofullständig sats.\n"
+msgstr "Nästa yttre sats"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr ""
+msgstr "Föregående yttre sats"
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next toplevel statement"
-msgstr "Ofullständig sats.\n"
+msgstr "Nästa toppnivåsats"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Previous toplevel statement"
-msgstr "Ofullständig sats.\n"
+msgstr "Föregående toppnivåsats"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr ""
+msgstr "Nästa kodblock"
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous code chunk"
-msgstr "Föregående diagram"
+msgstr "Föregående kodblock"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current statement"
-msgstr "Välj överliggande objekt"
+msgstr "Markera aktuell sats"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current code chunk"
-msgstr "Välj överliggande objekt"
+msgstr "Markera aktuellt kodblock"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "&Kör"
+msgstr "Kör"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr ""
+msgstr "Kör aktuell sats, och fortsätt"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:166
 #, kde-format
@@ -6925,11 +6920,10 @@ msgid "[Active]"
 msgstr "[Aktiv]"
 
 #: rkward/windows/rkhtmlwindow.cpp:752
-#, fuzzy, kde-format
-#| msgid "Output %1"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
-msgstr "Utdata %1"
+msgstr "Utmatning %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:805
 #, kde-format
