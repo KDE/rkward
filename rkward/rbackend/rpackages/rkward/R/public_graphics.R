@@ -156,41 +156,60 @@
 #' \code{RK.revision()} can be used to detect changes done to an existing \code{RK()} by comparing the
 #'                      return value of two subsequent calls: If the value has increased, the plot has been touched.
 #'
-#' @param after.create (Omit this argument, if you do not want to set this type of hook.) A function to be called
-#'                     immediately after a new \code{RK()} device has been created. The function must accept at least one
-#'                     parameter (the corresponding device number). It is recommended to add \code{...} in addition,
+#' @param after.create (optional argument) A function with the signature \code{function(devnum, ...)}, to be called
+#'                     immediately after a new \code{RK()} device has been created. The function will be called with
+#'                     the corresponding device number as the first arugment. It is recommended to add \code{...} in addition,
 #'                     to remain compatible with future extensions.
 #'
-#' @param after.close (Omit this argument, if you do not want to set this type of hook.) Called immediately after a device
-#'                    is closed. At this point the device may or may not still be visible, but can no longer be accessed.
-#'                    The function is called with two parameters: the device number, and a snapshot of the most recent
-#'                    plot (as would have been produced by \code{recordPlot()}; empty, if disabled via \code{dev.control()}.
-#'                    It is recommended to add a \code{...} argument, in order to remain compatible with future extensions.
+#' @param in.close (optional argument) A function with the signature \code{function(devnum, snapshot, ...)}. Called when a device is closed.
+#'                 At this point the device may or may not still be visible, but can no longer be accessed.
+#'                 The function is called with two parameters: the device number, and a snapshot of the most recent
+#'                 plot (as would have been produced by \code{recordPlot()}; empty, if disabled via \code{dev.control()}.
 #'
-#' @param before.blank (Omit this argument, if you do not want to set this type of hook.) Called whenever an existing device
-#'                     is blanked. This usually happens when a new plot is about to be drawn. While this hook is called,
-#'                     it is still possible to access the old contents.
+#' @param in.blank (optional argument) A function with the signature \code{function(devnum, snapshot, ...)}.
+#'                 The given function will be Called whenever an existing device is blanked, i.e. usually, when a new plot 
+#'                 is about to be drawn. While this hook is called, the old plot is still visible, but \code{recordPlot()}
+#'                 / \code{dev.copy} would return / copy a blank plot, already. You can retrieve the previous plot from the
+#'                 parameter \code{snapshot}, instead (unless plot recording has been disabled via \code{dev.control()}).
 #'
 #' @param devnum Device number
 #'
-#' @details The return value of \code{RK.addHook()) may be passed to \code{RK.removeHook()) to remove the hook(s) registered
+#' @details The return value of \code{RK.addHook()} may be passed to \code{RK.removeHook()} to remove the hook(s) registered
 #'          in that call. No assumptions should be made on the exact nature of that return value (it might be subject to
 #'          change in future versions.
 #'
 #'          \code{RK.revision()} returns a integer number. This will be 0 for a device that has just been created. If the device
 #'          is modified (changes need not necessarily be visible), the next call to \code{RK.revision()} will return a larger
 #'          number. The details of how revisions are counted may be subject to change, and in particular they do not give
-#'          any information on how much has been changed..
+#'          any information on how much has been changed. Redraws due to resizing the plot window do not increase the revision number.
 #'
 #' @seealso \link{RK}
 #' @examples
 #' \dontrun{
-#' ## TODO
+#' hook <- RK.addHook(
+#'    after.create=function(devnum, ...) {
+#'        print(paste0("New device ", devnum))
+#'    },
+#'    in.close=function(devnum, snapshot, ...) {
+#'        print(paste0("Closed device ", devnum))
+#'    }
+#' )
+#'
+#' RK() # Prints "New device N"
+#' plot(1, 1)
+#' rev <- RK.revision(dev.cur())
+#' plot(2, 2) # we know this will touch the plot, but consider e.g. sourcing a script, here
+#' if (RK.revision(dev.cur()) > rev) {
+#'    print("Plot was modified")
+#' }
+#' dev.off() # Prints "Closed device N"
+#'
+#' RK.removeHook(hook)
 #' }
 #'
-#' @export
 #' @rdname RKdevicehooks
-RK.addHook <- function(after.create, after.close, before.blank) {
+#' @export
+RK.addHook <- function(after.create, in.close, in.blank) {
 	if (is.null(.rk.variables$.RKdevhooks$nextid)) .rk.variables$.RKdevhooks$nextid <- 0
 	id = .rk.variables$.RKdevhooks$nextid
 	.rk.variables$.RKdevhooks$nextid <- id + 1
@@ -202,52 +221,47 @@ RK.addHook <- function(after.create, after.close, before.blank) {
 	if (!missing(after.create)) {
 		appendHook("after.create", after.create, id)
 	}
-	if (!missing(after.close)) {
-		appendHook("after.close", after.close, id)
+	if (!missing(in.close)) {
+		appendHook("in.close", in.close, id)
 	}
-	if (!missing(before.blank)) {
-		appendHook("before.blank", before.blank, id)
+	if (!missing(in.blank)) {
+		appendHook("in.blank", in.blank, id)
 	}
 	invisible(id)
 }
 
-#' @export
 #' @rdname RKdevicehooks
+#' @export
 RK.removeHook <- function(handle) {
 	removeHook <- function(at, id) {
 		.rk.variables$.RKdevhooks[[at]] <- .rk.variables$.RKdevhooks[[at]][names(.rk.variables$.RKdevhooks[[at]]) != id]
 	}
 	removeHook("after.create", handle)
-	removeHook("after.close", handle)
-	removeHook("before.blank", handle)
+	removeHook("in.close", handle)
+	removeHook("in.blank", handle)
 	invisible(NULL)
 }
 
 # not exported
-.RK.callHook <- function(hook, id, data, ...) {
+.RK.callHook <- function(hook, id, data) {
 	for (fun in .rk.variables$.RKdevhooks[[hook]]) {
-		if (hook == "after.close") {
-			# pity it's too late for recordPlot() at this point. We need to re-create things, manually
+		if (!missing(data)) {
+			# so far, data, if present in a hook, is a graphics snapshot
+			# (which is needed, because unfortunately recordPlot() is not usuable at the points of interest)
 			attr(data, "pid") <- Sys.getpid()
 			attr(data, "Rversion") <- getRversion()
 			class(data) <- "recordedplot"
-			try({fun(id, data, ...)})
+			try({fun(id, data)})
 		} else {
-			try({fun(id, ...)})
+			try({fun(id)})
 		}
 	}
 }
 
-# TODO: document properly
-# TODO: ignore redraws?
-# For detecting changes in the graph shown in the given device, call this function twice.
-# The device has been modified, if the returned number has increased.
-# NOTE: The magnitude of the increase carries no meaning at all.
-# NOTE: Reset to 0 when the device is closed
-#' @export
 #' @rdname RKdevicehooks
-RK.revision <- function(device) {
-	.Call("rk.graphics.mod", as.integer(device), PACKAGE="(embedding)")
+#' @export
+RK.revision <- function(devnum=dev.cur()) {
+	.Call("rk.graphics.mod", as.integer(devnum), PACKAGE="(embedding)")
 }
 
 #' Embed non-RKWard device windows

@@ -42,6 +42,7 @@ struct RKGraphicsDeviceDesc {
 	}
 
   private:
+	friend SEXP RKD_AdjustSize(SEXP, SEXP);
 	int _revision = 0;
 	int _nextrevision = 1;
 };

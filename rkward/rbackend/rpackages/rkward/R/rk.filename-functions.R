@@ -281,9 +281,37 @@
 	rk.set.output.html.file (x, ...)
 }
 
-# TODO: document me
+#' Evaluate the given input file, recording a transcript to an HTML output file (including on-screen plots) 
+#'
+#' @param infile The input R file, specified as a character string, or a connection (passed to \link{parse}).
+#' @param outfile The output HTML file, specified as a character string. If this file exists, it will be overwritting, without further notice!
+#' @param echo Include the source expressions in the output? (boolean)
+#' @param env Environment of the evaluation. See details, below.
+#' @param stop.on.error Whether to stop (TRUE) or continue (FALSE) on errors
+#'
+#' @details Contrary to \link{source}, some effort is made to avoid lasting side-effects to the workspace, however these cannot be ruled out,
+#'          in all cases. Among other things, the following may lead to lasting effects:
+#'
+#'          \itemize{
+#'              \item{Installing / updating / removing / loading packages}
+#'              \item{Writing to the filesystem in any form}
+#'              \item{Targetting pre-existing graphics devices with \code{dev.set()}, \code{dev.off()}, etc.}
+#'              \item{Opening / closing windows in the RKWard workplace}
+#'              \item{Exclusively assuming the R engine (e.g. shiny apps)}
+#'              \item{Assignments outside the current scope (see also below)}
+#'          }
+#'
+#'          The default argument value for \code{env} allows the evaluated script to access objects inside the \code{globalenv()}, but
+#'          limits regular assignments (i.e. using \code{<-} rather than \code{<<-} or \code{assign()}) to a temporary local scope. Depending on the
+#'          desired semantics, \code{new.env()} or \code{globalenv()} may be useful alternatives.
+#'
+#'          The idea of \code{rk.eval.as.preview} is to visualize what would happen when running the given code in the R console,
+#'          interactively. Importantly, however, due to the evaluation inside a function, any error messages and backtraces will differ,
+#'          and taskCallbacks will not run.
+#'
+#' @rdname rk.eval.as.preview
 #' @export
-rk.eval.as.console.preview <- function(infile, outfile, env=new.env(parent=globalenv()), stop.on.error=FALSE) {
+rk.eval.as.preview <- function(infile, outfile, echo=TRUE, env=new.env(parent=globalenv()), stop.on.error=FALSE) {
 	## init output file
 	output <- rk.set.output.html.file(outfile, silent=TRUE)
 	on.exit({
@@ -310,7 +338,7 @@ rk.eval.as.console.preview <- function(infile, outfile, env=new.env(parent=globa
 			.rk.cat.output("<div align=\"right\">Plot window created</div>");
 			devs[[as.character(devnum)]] <<- RK.revision(devnum)
 		},
-		before.close=function(devnum) {
+		in.close=function(devnum) {
 			.rk.cat.output("<div align=\"right\">Plot window closed</div>");
 			devs[[as.character(devnum)]] <<- NULL
 		}
@@ -361,19 +389,21 @@ rk.eval.as.console.preview <- function(infile, outfile, env=new.env(parent=globa
 		exprs <- parse(infile, keep.source=TRUE)
 	})
 	.rk.cat.output(rk.end.capture.output(TRUE))
-	if(stop.on.error && inherits(res, "try-error")) stop(res)
+	if(isTRUE(stop.on.error) && inherits(res, "try-error")) stop(res)
 
 	# actually do it
 	rk.without.plot.history({
 		for (i in seq_len(length(exprs))) {
-			rk.print.code(as.character(attr(exprs, "srcref")[[i]]))
+			if (isTRUE(echo)) {
+				rk.print.code(as.character(attr(exprs, "srcref")[[i]]))
+			}
 			rk.capture.output(suppress.messages=TRUE, suppress.output=TRUE)
 			res <- try({
 				withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE, local=env)
 			})
 			.rk.cat.output(rk.end.capture.output(TRUE))
 			checkSavePlot()
-			if(stop.on.error && inherits(res, "try-error")) stop(res)
+			if(isTRUE(stop.on.error) && inherits(res, "try-error")) stop(res)
 		}
 	})
 
