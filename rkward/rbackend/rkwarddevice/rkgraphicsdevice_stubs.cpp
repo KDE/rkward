@@ -319,7 +319,9 @@ SEXP RKD_AdjustSize(SEXP _devnum, SEXP _id) {
 	// TODO: Do we want to block advancing revision, here?
 
 	RKD_SetSize(dev); // This adjusts the rendering area in the frontend
+	const auto rev = static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->_revision;
 	if (gdev->dirty) RFn::GEplayDisplayList(gdev);
+	static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific)->_revision = rev;
 	return ROb(R_NilValue);
 }
 
@@ -433,7 +435,7 @@ static double RKD_StrWidthUTF8(const char *str, R_GE_gcontext *gc, pDevDesc dev)
 
 static void RKD_NewPage(R_GE_gcontext *gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	callHookFun("before.blank", dev);
+	callHookFun("in.blank", dev, RFn::Rf_desc2GEDesc(dev)->savedSnapshot);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER(RKDNewPage, dev);
 	WRITE_FILL();
@@ -470,7 +472,7 @@ static void RKD_MetricInfo(int c, R_GE_gcontext *gc, double *ascent, double *des
 
 static void RKD_Close(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	callHookFun("after.close", dev, RFn::GEcreateSnapshot(RFn::desc2GEDesc(dev)));
+	callHookFun("in.close", dev, RFn::GEcreateSnapshot(RFn::desc2GEDesc(dev)));
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER(RKDClose, dev);

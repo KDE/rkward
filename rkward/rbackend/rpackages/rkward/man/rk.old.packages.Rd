@@ -40,7 +40,8 @@ rk.old.packages(
   }
 
 \item{method}{Download method, see \code{\link[utils]{download.file}}.
-    Unused if a non-\code{NULL} \code{available} is supplied.}
+    Unused by \code{old.packages} if a non-\code{NULL} \code{available}
+    is supplied.}
 
 \item{available}{
     an object as returned by \code{\link[utils]{available.packages}}
