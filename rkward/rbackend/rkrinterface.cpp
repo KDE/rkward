@@ -39,6 +39,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkwindowcatcher.h"
 #include "../windows/rkworkplace.h"
 #include "rcommandstack.h"
+#include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
 #include "rkrbackendprotocol_frontend.h"
 #include "rksessionvars.h"
 
@@ -773,6 +774,8 @@ GenericRRequestResult RInterface::processRCallRequest(const QString &call, const
 		}
 	} else if (call == QLatin1String("set.window.placement.hint")) {
 		RKWorkplace::mainWorkplace()->setWindowPlacementOverrides(arglist.value(0), arglist.value(1), arglist.value(2));
+	} else if (call == QLatin1String("suppress.RK.windows")) {
+		RKGraphicsDeviceFrontendTransmitter::suppressShowingCreatedWindows(arglist.value(0) == u"on"_s);
 	} else if (call == QLatin1String("frontendSessionInfo")) {
 		return GenericRRequestResult(RKSessionVars::frontendSessionInfo());
 	} else if (call == QLatin1String("recordCommands")) {

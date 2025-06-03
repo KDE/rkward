@@ -133,3 +133,19 @@
 	eval.parent (expr)
 	invisible (NULL)
 }
+
+# Not exported
+# Keep RK() window from actually showing up on screen (for specific previews)
+# Returns previous setting (suppressed or not) to allow calling nested
+.rk.suppress.RK.windows <- function() {
+	.suppress <- FALSE
+	ret <- function(suppress) {
+		oldsuppress <- .suppress
+		.suppress <<- isTRUE(suppress)
+		.rk.call.async("suppress.RK.windows", ifelse(.suppress, "on", "off"))
+		invisible(oldsuppress)
+	}
+	ret
+}
+
+.rk.suppress.RK.windows <- .rk.suppress.RK.windows()

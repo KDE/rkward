@@ -25,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../../debug.h"
 
+bool RKGraphicsDeviceFrontendTransmitter::suppress_windows = false;
 double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72.0 / 96; // NOTE: reinitialized more appropriately, later
 RKGraphicsDeviceFrontendTransmitter::RKGraphicsDeviceFrontendTransmitter() : QObject(), dpix(0), dpiy(0) {
 	RK_TRACE(GRAPHICS_DEVICE);
@@ -239,8 +240,10 @@ void RKGraphicsDeviceFrontendTransmitter::newData() {
 			bool antialias;
 			quint32 id;
 			streamer.instream >> width >> height >> title >> antialias >> id;
-			device = RKGraphicsDevice::newDevice(devnum, width, height, title, antialias, id);
-			RKWorkplace::mainWorkplace()->newRKWardGraphisWindow(device, devnum + 1);
+			device = RKGraphicsDevice::newDevice(devnum, width, height, title, antialias, suppress_windows, id);
+			if (!suppress_windows) {
+				RKWorkplace::mainWorkplace()->newRKWardGraphisWindow(device, devnum + 1);
+			}
 			connect(device, &RKGraphicsDevice::locatorDone, this, &RKGraphicsDeviceFrontendTransmitter::locatorDone);
 			connect(device, &RKGraphicsDevice::newPageConfirmDone, this, &RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone);
 			connect(this, &RKGraphicsDeviceFrontendTransmitter::stopInteraction, device, &RKGraphicsDevice::stopInteraction);

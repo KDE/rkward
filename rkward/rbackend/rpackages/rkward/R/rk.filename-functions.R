@@ -317,13 +317,18 @@ rk.eval.as.preview <- function(infile, outfile, echo=TRUE, env=new.env(parent=gl
 	on.exit({
 		rk.set.output.html.file(output, silent=TRUE)
 	}, add=TRUE)
-	try(rk.flush.output(ask=FALSE, style="preview", silent=TRUE))
+	suppressWarnings(try(rk.flush.output(ask=FALSE, style="preview", silent=TRUE)))
 
 	## set up handling of generated graphics:
 	devs <- list()
 	prevdev <- NULL
 	oldopts <- options() # while at it, save _all_ options. Script might change some, too
 	options(device="RK") # just in case
+	# avoid flicker (and _some_ wasted CPU cycles), by suppressing display of plot windows created, here
+	oldsup <- .rk.suppress.RK.windows(TRUE)
+	on.exit({
+		.rk.suppress.RK.windows(oldsup)
+	}, add=TRUE)
 
 	# If a device already exists, let's open a new one to avoid touching it, unintentionally
 	# We don't want that to show in the preview, however, which may or may not plot anything at all
@@ -334,12 +339,12 @@ rk.eval.as.preview <- function(infile, outfile, echo=TRUE, env=new.env(parent=gl
 	}
 
 	hook <- RK.addHook(
-		after.create=function(devnum) {
-			.rk.cat.output("<div align=\"right\">Plot window created</div>");
+		after.create=function(devnum, ...) {
+			.rk.cat.output("<div align=\"right\">Plot window created</div>\n");
 			devs[[as.character(devnum)]] <<- RK.revision(devnum)
 		},
-		in.close=function(devnum) {
-			.rk.cat.output("<div align=\"right\">Plot window closed</div>");
+		in.close=function(devnum, ...) {
+			.rk.cat.output("<div align=\"right\">Plot window closed</div>\n");
 			devs[[as.character(devnum)]] <<- NULL
 		}
 	)
@@ -349,7 +354,7 @@ rk.eval.as.preview <- function(infile, outfile, echo=TRUE, env=new.env(parent=gl
 			currev <- RK.revision(as.numeric(devnum))
 			if (devs[[devnum]] < currev) {
 				cur <- dev.cur()
-				.rk.cat.output("<div align=\"right\"><details><summary>Plot updated (click to show)</summary><p>");
+				.rk.cat.output("<div align=\"right\"><details><summary>Plot updated (click to show)</summary><p>\n");
 				#rk.graph.on(width=200, height=200, pointsize=6)
 				rk.graph.on()
 				out <- dev.cur()
@@ -358,7 +363,7 @@ rk.eval.as.preview <- function(infile, outfile, echo=TRUE, env=new.env(parent=gl
 					dev.copy(which=out)
 				})
 				rk.graph.off()
-				.rk.cat.output("</p></details></div>");
+				.rk.cat.output("</p></details></div>\n");
 				dev.set(cur)
 				devs[[devnum]] <<- currev
 			}

@@ -24,6 +24,7 @@ class RKGraphicsDeviceFrontendTransmitter : public QObject {
 	~RKGraphicsDeviceFrontendTransmitter();
 	QString serverName() const { return server_name; };
 	static double lwdscale;
+	static void suppressShowingCreatedWindows(bool suppress) { suppress_windows = suppress; };
   public Q_SLOTS:
 	void newData();
 	void newConnection();
@@ -40,6 +41,7 @@ class RKGraphicsDeviceFrontendTransmitter : public QObject {
 	QLocalServer *local_server;
 	RKAsyncDataStreamHelper<RKGraphicsDeviceTransmittionLengthType> streamer;
 	double dpix, dpiy;
+	static bool suppress_windows;
 };
 
 #endif
