@@ -215,7 +215,7 @@ SEXP makeString(const char *string) {
 	return ret;
 }
 
-static void callHookFun(const char *what, pDevDesc dev, SEXP data=ROb(R_NilValue)) {
+static void callHookFun(const char *what, pDevDesc dev, SEXP data = ROb(R_NilValue)) {
 	static SEXP call_hook_fun = nullptr;
 	if (!call_hook_fun) {
 		SEXP rkn = makeString("rkward");

@@ -30,14 +30,15 @@ using namespace Qt::Literals::StringLiterals;
 
 QHash<int, RKGraphicsDevice *> RKGraphicsDevice::devices;
 
-RKGraphicsDevice::RKGraphicsDevice(double width, double height, const QString &title, bool antialias) : QObject(),
+RKGraphicsDevice::RKGraphicsDevice(double width, double height, const QString &title, bool antialias, bool keep_hidden) : QObject(),
 #ifdef USE_QIMAGE_BUFFER
                                                                                                         area(qAbs(width) + 1, qAbs(height) + 1, QImage::Format_ARGB32),
 #else
                                                                                                         area(qAbs(width) + 1, qAbs(height) + 1),
 #endif
+                                                                                                        hidden(keep_hidden),
                                                                                                         base_title(title),
-                                                                                                        antialias(antialias) {
+                                                                                                        antialias(antialias && !keep_hidden) {
 	RK_TRACE(GRAPHICS_DEVICE);
 
 	interaction_opcode = -1;
@@ -191,7 +192,7 @@ void RKGraphicsDevice::updateNow() {
 #else
 	view->setPixmap(area);
 #endif
-	if (!view->isVisible()) {
+	if (!view->isVisible() && !hidden) { // NOTE: we still do all drawing, even while hidden, e.g. for capture
 		view->resize(area.size());
 		view->show();
 	}
@@ -210,14 +211,14 @@ void RKGraphicsDevice::checkSize() {
 	}
 }
 
-RKGraphicsDevice *RKGraphicsDevice::newDevice(int devnum, double width, double height, const QString &title, bool antialias, quint32 id) {
+RKGraphicsDevice *RKGraphicsDevice::newDevice(int devnum, double width, double height, const QString &title, bool antialias, bool hidden, quint32 id) {
 	RK_TRACE(GRAPHICS_DEVICE);
 
 	if (devices.contains(devnum)) {
 		RK_DEBUG(GRAPHICS_DEVICE, DL_ERROR, "Graphics device number %d already exists while trying to create it", devnum);
 		closeDevice(devnum);
 	}
-	RKGraphicsDevice *dev = new RKGraphicsDevice(width, height, title.isEmpty() ? i18n("Graphics Device Number %1", QString::number(devnum + 1)) : title, antialias);
+	RKGraphicsDevice *dev = new RKGraphicsDevice(width, height, title.isEmpty() ? i18n("Graphics Device Number %1", QString::number(devnum + 1)) : title, antialias, hidden);
 	dev->id = id;
 	devices.insert(devnum, dev);
 	return (dev);

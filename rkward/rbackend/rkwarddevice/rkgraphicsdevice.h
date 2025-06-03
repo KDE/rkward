@@ -39,11 +39,11 @@ class QDialog;
 class RKGraphicsDevice : public QObject {
 	Q_OBJECT
   protected:
-	RKGraphicsDevice(double width, double height, const QString &title, bool antialias);
+	RKGraphicsDevice(double width, double height, const QString &title, bool antialias, bool hidden);
 	~RKGraphicsDevice();
 
   public:
-	static RKGraphicsDevice *newDevice(int devnum, double width, double height, const QString &title, bool antialias, quint32 id);
+	static RKGraphicsDevice *newDevice(int devnum, double width, double height, const QString &title, bool antialias, bool keep_hidden, quint32 id);
 	static void closeDevice(int devnum);
 	static QHash<int, RKGraphicsDevice *> devices;
 
@@ -134,6 +134,7 @@ class RKGraphicsDevice : public QObject {
 #endif
 	QPainter painter;
 	QLabel *view;
+	bool hidden;
 	QString base_title;
 	QDialog *dialog;
 	QHash<int, QBrush> patterns;
