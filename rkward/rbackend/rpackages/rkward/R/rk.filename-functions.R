@@ -319,6 +319,35 @@ rk.eval.as.preview <- function(infile, outfile, echo=TRUE, env=new.env(parent=gl
 	}, add=TRUE)
 	suppressWarnings(try(rk.flush.output(ask=FALSE, style="preview", silent=TRUE)))
 
+	# TODO: It may be better to split out this and other long literals into separate files
+	.rk.cat.output(
+"<script>
+function expandPlots(expand) {
+	let elements = [...document.querySelectorAll('details')];
+
+	if (expand) {
+		elements.map(item => item.setAttribute('open', 'true'));
+	} else {
+		elements.map(item => item.removeAttribute('open'));
+	}
+};
+
+let plotelements = 0;
+function registerPlot(element) {
+	let index = ++plotelements;
+	if (index == 1) {
+		document.getElementById('plotbuttons').innerHTML=\'<div style=\"text-align:right\"><button onClick=\"expandPlots(true)\">Expand plots</button><button onClick=\"expandPlots(false)\">Collapse plots</button></div>\';
+	}
+	if (sessionStorage.getItem(window.location.pathname + 'plot' + index) == 'true') {
+		element.setAttribute('open', 'true');
+	}
+	element.addEventListener('toggle', (event) => {
+		sessionStorage.setItem(window.location.pathname + 'plot' + index, element.open ? 'true' : 'false')
+	});
+}
+</script>
+<span id='plotbuttons'></span>");
+
 	## set up handling of generated graphics:
 	devs <- list()
 	prevdev <- NULL
@@ -332,6 +361,7 @@ rk.eval.as.preview <- function(infile, outfile, echo=TRUE, env=new.env(parent=gl
 
 	# If a device already exists, let's open a new one to avoid touching it, unintentionally
 	# We don't want that to show in the preview, however, which may or may not plot anything at all
+	# NOTE: this does not help, if user script has unbalanced dev.off()-calls, of course
 	if (length(dev.list()) > 0) {
 		prevdev <- dev.cur()
 		rk.without.plot.history(RK())
@@ -354,7 +384,7 @@ rk.eval.as.preview <- function(infile, outfile, echo=TRUE, env=new.env(parent=gl
 			currev <- RK.revision(as.numeric(devnum))
 			if (devs[[devnum]] < currev) {
 				cur <- dev.cur()
-				.rk.cat.output("<div align=\"right\"><details><summary>Plot updated (click to show)</summary><p>\n");
+				.rk.cat.output("<div align=\"right\"><details><script>registerPlot(document.currentScript.parentElement);</script><summary>Plot updated (click to show)</summary><p>\n");
 				#rk.graph.on(width=200, height=200, pointsize=6)
 				rk.graph.on()
 				out <- dev.cur()
