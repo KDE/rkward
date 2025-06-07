@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2025-04-28 08:59+0200\n"
+"PO-Revision-Date: 2025-05-28 04:48+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1980,6 +1980,9 @@ msgid ""
 "dialog will be started when you press finish. You may be prompted to select "
 "a download mirror.</p>"
 msgstr ""
+"<p>დასაყენებლად მონიშნულია %1 R-ის პაკეტი. R-ის პაკეტის დაყენების დიალოგი "
+"გაეშვება, როცა დასრულების ღილაკს დააჭერთ. შეიძლება, გადმოწერის სარკის "
+"შესახებ გკითხოთ.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:473
 #, kde-format
@@ -2344,6 +2347,8 @@ msgid ""
 "Debugger for the backend. (Enclose any debugger arguments in single quotes "
 "('') together with the command. Make sure to re-direct stdout!)"
 msgstr ""
+"გამმართველი უკანაბოლოსთვის (ჩასვით ყველა გამმართველის არგუმენტი ერთმაგ "
+"ბრჭყალებში ('') ბრძანებასთან ერთად. დარწმუნდით, რომ ამისამართებთ stdout-ს!)"
 
 #: rkward/misc/rkcommandlineargs.cpp:33
 #, kde-format
@@ -3146,6 +3151,9 @@ msgid ""
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
 ">Configure RKWard->Plugins), or perhaps the plugin was renamed."
 msgstr ""
+"სცადეთ, გაგეშვათ დამატება სახელით '%1', მაგრამ დამატება ამჟამად უცნობია. "
+"ალბათ საჭიროა ჩატვირთოთ შესაბამისი რუკა (მორგება->RKWard-ის მორგება-"
+">დამატებები), ან დამატებას სახელი გადაერქვა."
 
 #: rkward/plugin/rkcomponentmap.cpp:466
 #, kde-format
@@ -3159,6 +3167,9 @@ msgid ""
 "this should not happen, unless you modified the parameters by hand. Please "
 "consider reporting this issue."
 msgstr ""
+"არასწორი სერიალიზაციის ფორმატი დამატების '%1' ჩაწოდებისას. ზოგადად, ეს არ "
+"უნდა ხდებოდეს, თუ პარამეტრები ხელით არ შეცვალეთ. იფიქრეთ, მოგვწეროთ ამ "
+"პრობლემის შესახებ."
 
 #: rkward/plugin/rkcomponentmap.cpp:478
 #, kde-format
@@ -3180,6 +3191,8 @@ msgid ""
 "Not all specified settings could be applied. Most likely this is because "
 "some R objects are no longer present in your current workspace."
 msgstr ""
+"ყველა მითითებული პარამეტრის გადატარება შეუძლებელია. როგორც ჩანს, ზოგიერთი R-"
+"ის ობიექტი თქვენს სამუშაო სივრცეში აღარ არსებობს."
 
 #: rkward/plugin/rkcomponentmap.cpp:512
 #, kde-format
@@ -3746,6 +3759,9 @@ msgid ""
 "'%1' while backend is '%2'.\n"
 "Please fix your installation."
 msgstr ""
+"ვერსია არ ემთხვევა უკანაბოლოს პროცესთან დაკავშირებისას. წინაბოლოს ვერსიაა "
+"'%1', უკანაბოლოსი კი '%2'.\n"
+"გაასწორეთ პროგრამის ფაილები."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:394
 #, kde-format

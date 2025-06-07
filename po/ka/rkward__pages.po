@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-10 00:36+0000\n"
-"PO-Revision-Date: 2024-09-13 06:28+0200\n"
+"PO-Revision-Date: 2025-05-28 04:50+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -721,6 +721,8 @@ msgid ""
 "This console works almost exactly like the regular R text console, so you "
 "can start working right away. Differences include:"
 msgstr ""
+"ეს კონსოლი, თითქმის, ისე მუშაობს, როგორც R-ის ჩვეულებრივი ტექსტური კონსოლი, "
+"ასე რომ, შეგიძლიათ, მუშაობა ახლავე დაიწყოთ. სხვაობები მოიცავს:"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -735,6 +737,8 @@ msgid ""
 "While typing function calls, a list of arguments to that function is shown "
 "in a box (argument hinting)"
 msgstr ""
+"როცა კრეფთ ფუნქციის გამოძახებებს, არგუმენტების სია, რომელსაც ეს ფუნქცია "
+"იღებს, ნაჩვენები იქნება მინიშნებაში (არგუმენტის მინიშნება)"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -744,6 +748,9 @@ msgid ""
 "R help for that symbol. Also available from the Help menu, or the right "
 "mouse button menu"
 msgstr ""
+"სანამ კურსორი R-ის სიმბოლოზე, ან ფუნქციაზეა, F2-ის დაჭერა R-ის დახმარებაში "
+"ამ ფუნქციის ძებნას დაიწყებს. ასევე ხელმისაწვდომია დახმარების მენიუდან და "
+"თაგუნას მარჯვენა ღილაკის მენიუდან"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -752,6 +759,8 @@ msgid ""
 "You can easily create a transcript of the commands you run in the console "
 "using Run->CC commands to output..."
 msgstr ""
+"შეგიძლიათ, ადვილად შექმნათ ტრანსკრიფცია ბრძანებებისა, რომლებსაც კონსოლში "
+"უშვებთ. გამოიყენეთ მენიუ გაშვება->CC ბრძანებები გამოსატანად..."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
