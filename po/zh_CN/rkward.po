@@ -5693,10 +5693,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, fuzzy, kde-format
-#| msgid "Interrupt all commands"
+#, kde-format
 msgid "Enter command"
-msgstr "中断所有命令"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
@@ -5734,10 +5733,9 @@ msgid "Next statement"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, fuzzy, kde-format
-#| msgid "Previous Window"
+#, kde-format
 msgid "Previous statement"
-msgstr "上一个窗口"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
@@ -5790,10 +5788,9 @@ msgid "Select current code chunk"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "运行(&R)"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format

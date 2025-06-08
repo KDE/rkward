@@ -1,8 +1,8 @@
 # Spanish translations for rkward__pages.po package.
-# Copyright (C) 2014-2025 This_file_is_part_of_KDE
+# Copyright (C) 2014-2025 This file is copyright:
 # This file is distributed under the same license as the rkward package.
-#
 # Automatically generated, 2014.
+#
 # SPDX-FileCopyrightText: 2014, 2015, 2018, 2019, Eloy Cuadra <ecuadra@eloihr.net>
 # SPDX-FileCopyrightText: 2017, 2022, 2024, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-28 00:39+0000\n"
-"PO-Revision-Date: 2025-04-21 12:19+0100\n"
+"PO-Revision-Date: 2025-06-08 00:58+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -259,7 +259,7 @@ msgstr ""
 #: rkward/pages/rkward_code_navigation.rkh:8
 #, kde-format
 msgid "Code Navigation and Quick Code Navigation Mode"
-msgstr ""
+msgstr "Modos de navegación de código y de navegación rápida"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <summary>
 #: rkward/pages/rkward_code_navigation.rkh:9
@@ -272,13 +272,19 @@ msgid ""
 "href=\"rkward://rhelp/browser\">browser()</link>-command, but importantly "
 "this works entirely without actually running the code."
 msgstr ""
+"La funcionalidad de navegación de código en las ventanas de editor de "
+"scripts le permiten navegar el código R basándose en la estructura "
+"sintáctica, es decir, le permiten saltar rápidamente a la siguiente "
+"instrucción fuera del ámbito actual o a la instrucción el el nivel "
+"justamente superior. Algunas funcionalidades de navegación se asemejan a la "
+"orden <link href=\"rkward://rhelp/browser\">browser()</link>, pero funcionan "
+"enteramente sin ejecutar código."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
-#, fuzzy, kde-format
-#| msgid "Available actions"
+#, kde-format
 msgid "Available commands"
-msgstr "Acciones disponibles"
+msgstr "Órdenes disponibles"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -292,6 +298,14 @@ msgid ""
 "your sources very quickly. Once in this mode, subsequent single key presses "
 "invoke the following actions:"
 msgstr ""
+"La funcionalidad de navegación de código está disponible desde el menú "
+"<i>Ejecutar</i> y desde el menú de contexto en las ventanas de script (R o R "
+"markdown) en dos variantes: La primera opción es simplemente detectar "
+"acciones individuales de navegación directamente desde el menú. La segunda, "
+"sin embargo, el «modo de navegación rápida de código» (la entrada superior "
+"en el menú, atajo de teclado «Meta+n») le permite navegar por su código de "
+"manera muy rápida. Una vez que esté en este modo, las pulsaciones siguientes "
+"invocan las siguientes acciones:"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -330,7 +344,7 @@ msgstr ""
 #: rkward/pages/rkward_code_navigation.rkh:38
 #, kde-format
 msgid "Notes and Tips"
-msgstr ""
+msgstr "Notas y trucos"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -364,6 +378,10 @@ msgid ""
 "are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
+"La mayoría de órdenes tienen tendencia a moverse a contextos externos, así "
+"que «n» y «N» no son exactamente opuestos. Recuerde que puede deshacer su "
+"último paso usando Retroceso, si fue más allá de la localización que estaba "
+"buscando."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -379,10 +397,7 @@ msgstr "Describe funcionalidades y preferencias de la consola R de RKWard."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
-#, fuzzy, kde-format
-#| msgid ""
-#| "The console can - by default - be found at the bottom of the application "
-#| "window. Press the tool button labelled \"R Console\" to invoke it."
+#, kde-format
 msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labeled \"R Console\" to invoke it."
@@ -2060,6 +2075,8 @@ msgid ""
 "Meta+n to bring up <link href=\"rkward://rkward_code_navigation\">Code "
 "Navigation</link> mode in script windows"
 msgstr ""
+"Meta+n para  activar el modo <link href=\"rkward://rkward_code_navigation"
+"\">Navegación de código</link> en las ventanas de scripts"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8

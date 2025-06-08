@@ -1,18 +1,18 @@
 # Spanish translations for rkward.po package.
-# Copyright (C) 2005-2025 This_file_is_part_of_KDE
+# Copyright (C) 2005-2025 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
 # SPDX-FileCopyrightText: 2005 Mvillarino <mvillarino@dubmail.net>
 # SPDX-FileCopyrightText: 2006 Mvillarino <mvillarino@users.sourceforge.net>
 # SPDX-FileCopyrightText: 2008, 2009, 2010 Germán Márquez Mejía <manchito@users.sourceforge.net>
-# SPDX-FileCopyrightText: 2014, 2015, 2018, 2025 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2014, 2015, 2018 Eloy Cuadra <ecuadra@eloihr.net>
 # SPDX-FileCopyrightText: 2017, 2019, 2020, 2021, 2022, 2024, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-27 00:38+0000\n"
-"PO-Revision-Date: 2025-05-03 18:29+0100\n"
+"PO-Revision-Date: 2025-06-08 00:57+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6318,36 +6318,42 @@ msgstr "Nombres de archivos locales"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr ""
+msgstr "La orden «S» es solo para markdown R"
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr ""
+msgstr "Orden desconocida <tt><b>%1</b></tt>"
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
+"Último resultado de búsqueda. <br/><tt><b>c</b></tt>  para moverse a la "
+"siguiente sección."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
+"Primer resultado de búsqueda. <br/><tt><b>C</b></tt>  para moverse a la "
+"sección previa."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
 msgstr ""
+"Último resultado de búsqueda. <br/><tt><b>1</b></tt>  para moverse al inicio."
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
 msgstr ""
+"Primer resultado de búsqueda. <br/><tt><b>!</b></tt>  para moverse al final."
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6355,17 +6361,18 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
+"<b>Navegación de código</b> (<a href=\"rkward://page/rkward_code_navigation"
+"\">Ayuda</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, fuzzy, kde-format
-#| msgid "Editor command"
+#, kde-format
 msgid "Enter command"
-msgstr "Orden del editor"
+msgstr "Introducir orden"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr ""
+msgstr "Modo de navegación rápida de código"
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6373,6 +6380,8 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
+"Avance por su código usando solo teclas (<a href=\"rkward://page/"
+"rkward_code_navigation\">más información</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6380,97 +6389,90 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
+"Avance por su código basándose en su estructura o entre en el <a href="
+"\"rkward://page/rkward_code_navigation\">Modo de navegación rápida de "
+"código</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, fuzzy, kde-format
-#| msgid "No device integration"
+#, kde-format
 msgid "Code Navigation"
-msgstr "Sin integración de dispositivo"
+msgstr "Navegación de código"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr ""
+msgstr "Ir"
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next statement"
-msgstr "Sentencia incompleta.\n"
+msgstr "Siguiente sentencia"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous statement"
-msgstr "Gráfico anterior"
+msgstr "Sentencia anterior"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr ""
+msgstr "Siguiente instrucción (interna)"
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr ""
+msgstr "Sentencia previa (interna)"
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next outer statement"
-msgstr "Sentencia incompleta.\n"
+msgstr "Siguiente sentencia exterior"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr ""
+msgstr "Sentencia previa exterior"
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next toplevel statement"
-msgstr "Sentencia incompleta.\n"
+msgstr "Siguiente sentencia de más alto nivel"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Previous toplevel statement"
-msgstr "Sentencia incompleta.\n"
+msgstr "Sentencia previa de más alto nivel"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr ""
+msgstr "Siguiente sección de código"
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous code chunk"
-msgstr "Gráfico anterior"
+msgstr "Sección previa de código"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current statement"
-msgstr "Seleccionar objeto padre"
+msgstr "Seleccionar sentencia actual"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current code chunk"
-msgstr "Seleccionar objeto padre"
+msgstr "Seleccionar sección de código actual"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "E&jecutar"
+msgstr "Ejecutar"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr ""
+msgstr "Ejecutar sentencia actual y avanzar"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:166
 #, kde-format
