@@ -29,6 +29,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkrapimenu.h"
 #include "../misc/rkxmlguipreviewarea.h"
+#include "../plugin/rkcomponentmap.h"
+#include "../plugin/rkstandardcomponent.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rkconsole.h"
@@ -602,6 +604,16 @@ class RKWardCoreTest : public QObject {
 		RInterface::issueCommand(new RCommand(QStringLiteral("x <- 1"), RCommand::User));
 		waitForAllFinished();
 		QVERIFY(RObjectList::getGlobalEnv()->findObject(u"x"_s));
+	}
+
+	void switchComponentInterface() { // test for https://bugs.kde.org/show_bug.cgi?id=505364
+		// this needs to be a plugin with both types of interface, *and* a preview defined from inside an embedded component
+		auto handle = RKComponentMap::getComponentHandle(u"rkward::scatterplot"_s);
+		QVERIFY(handle);
+		auto ui = handle->invoke(nullptr, nullptr);
+		QVERIFY(handle);
+		ui->switchInterface(); // this used to crash
+		ui->deleteLater();
 	}
 
 	void cleanupTestCase() {
