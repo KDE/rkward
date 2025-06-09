@@ -1,8 +1,8 @@
 # Spanish translations for rkward__graphics_device.po package.
-# Copyright (C) 2015-2025 This_file_is_part_of_KDE
+# Copyright (C) 2015-2025 This file is copyright:
 # This file is distributed under the same license as the rkward package.
-#
 # Automatically generated, 2015.
+#
 # SPDX-FileCopyrightText: 2015 Eloy Cuadra <ecuadra@eloihr.net>
 # SPDX-FileCopyrightText: 2017, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward__graphics_device\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-04-21 12:19+0100\n"
+"PO-Revision-Date: 2025-06-09 02:25+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
