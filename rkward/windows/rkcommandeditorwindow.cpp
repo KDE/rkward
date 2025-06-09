@@ -711,7 +711,7 @@ void RKCommandEditorWindow::initPreviewModes() {
 	    i18n("Preview the script as if it was run in the interactive R Console"),
 	    u".R"_s,
 	    [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
-		    auto command = QStringLiteral("rkward:::rk.eval.as.preview(%1, %2)\n"
+		    auto command = QStringLiteral("rk.eval.as.preview(%1, %2)\n"
 		                                  "rk.show.html(%2)\n");
 		    return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
 	    }});
