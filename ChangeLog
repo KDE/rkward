@@ -1,4 +1,5 @@
 --- Version 0.8.2 - UNRELEASED
+- Fixed: Crash when switch from dialog to wizard interface in plugins providing a preview   - TODO: add autotest
 - Added: Actions to navigate R code based on its structure & Quick Code Navigation Mode
 - Added: Plugins: Enhance addChangeCommand() to allow writing more readable GUI logic code
 - Added: Plugins: Simplify running R commands inside GUI logic code
