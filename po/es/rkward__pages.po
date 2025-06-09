@@ -1,16 +1,16 @@
 # Spanish translations for rkward__pages.po package.
-# Copyright (C) 2014 This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
-#
+# Copyright (C) 2014-2025 This file is copyright:
+# This file is distributed under the same license as the rkward package.
 # Automatically generated, 2014.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2014, 2015, 2018, 2019.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2022.
+#
+# SPDX-FileCopyrightText: 2014, 2015, 2018, 2019 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2017, 2022, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2022-07-23 17:25+0200\n"
+"PO-Revision-Date: 2025-06-09 02:44+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -965,7 +965,7 @@ msgid ""
 "using Run->CC commands to output..."
 msgstr ""
 "Puede crear fácilmente una transcripción de las órdenes ejecutadas en la "
-"consola usando Ejecutar->Copiar órdenes en la salida..."
+"consola usando Ejecutar->Copiar órdenes en la salida…"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -1602,7 +1602,7 @@ msgid ""
 msgstr ""
 "<b>Añadir este gráfico</b>: Se proporciona esta acción para añadir "
 "forzosamente el gráfico mostrado al final del historial, independientemente "
-"de su estado (guardado/sin guardar) y su tipo (graphics / lattice / ...). En "
+"de su estado (guardado/sin guardar) y su tipo (graphics / lattice / …). En "
 "aquellos casos en los que el gráfico no se almacene automáticamente en el "
 "historial, esta acción puede ser útil. Pero esta flexibilidad viene a costa "
 "de no ser capaz de identificar la llamada del gráfico."

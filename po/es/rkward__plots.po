@@ -1,16 +1,16 @@
 # Spanish translations for rkward__plots.po package.
-# Copyright (C) 2015 This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
-#
+# Copyright (C) 2015-2025 This file is copyright:
+# This file is distributed under the same license as the rkward package.
 # Automatically generated, 2015.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2015.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2017, 2022.
+#
+# SPDX-FileCopyrightText: 2015 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2017, 2022, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__plots\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2022-04-23 17:55+0200\n"
+"PO-Revision-Date: 2025-06-09 02:44+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
