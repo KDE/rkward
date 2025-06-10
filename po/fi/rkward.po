@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-27 00:38+0000\n"
+"POT-Creation-Date: 2025-06-10 00:39+0000\n"
 "PO-Revision-Date: 2024-12-23 19:57+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3513,7 +3513,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Liitännäistä ei voitu luoda"
 
-#: rkward/plugin/rkstandardcomponent.cpp:669
+#: rkward/plugin/rkstandardcomponent.cpp:667
 #, kde-format
 msgid "Options"
 msgstr "Asetukset"

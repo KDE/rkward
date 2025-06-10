@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-27 00:38+0000\n"
+"POT-Creation-Date: 2025-06-10 00:39+0000\n"
 "PO-Revision-Date: 2025-05-27 14:40+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -3636,7 +3636,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Impossibile creare l'estensione"
 
-#: rkward/plugin/rkstandardcomponent.cpp:669
+#: rkward/plugin/rkstandardcomponent.cpp:667
 #, kde-format
 msgid "Options"
 msgstr "Opzioni"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-27 00:38+0000\n"
+"POT-Creation-Date: 2025-06-10 00:39+0000\n"
 "PO-Revision-Date: 2024-08-10 12:44+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -3613,7 +3613,7 @@ msgstr ""
 msgid "Could not create plugin"
 msgstr "Nie można utworzyć wtyczki"
 
-#: rkward/plugin/rkstandardcomponent.cpp:669
+#: rkward/plugin/rkstandardcomponent.cpp:667
 #, kde-format
 msgid "Options"
 msgstr "Opcje"
