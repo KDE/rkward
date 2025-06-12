@@ -974,7 +974,6 @@ void RKCommandEditorWindow::setWDToScript() {
 		dir.remove(0, 1);
 #endif
 	RKConsole::pipeUserCommand(u"setwd (\""_s + dir + u"\")"_s);
-	m_view->insertTemplate(m_view->cursorPosition(), u"${dummy()}"_s, u"require('document.js'); require('view.js'); document.insertText(view.cursorPosition(), 'INSERT'); view.setSelection(0,2, 0,4); function dummy() {};"_s);
 }
 
 void RKCommandEditorWindow::runCurrent() {
