@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-10 00:39+0000\n"
+"POT-Creation-Date: 2025-06-13 00:39+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -6551,12 +6551,12 @@ msgstr "'%1' स्क्रिप्ट् सञ्चिकायाः स�
 msgid "Unnamed"
 msgstr "अनामिका"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1075
+#: rkward/windows/rkcommandeditorwindow.cpp:1074
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (सक्रिय)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1094
+#: rkward/windows/rkcommandeditorwindow.cpp:1093
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (अप्रयुक्त)"

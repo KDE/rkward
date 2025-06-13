@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-10 00:39+0000\n"
+"POT-Creation-Date: 2025-06-13 00:39+0000\n"
 "PO-Revision-Date: 2023-12-17 14:57+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -6097,12 +6097,12 @@ msgstr ""
 msgid "Unnamed"
 msgstr "Nepomenované"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1075
+#: rkward/windows/rkcommandeditorwindow.cpp:1074
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (Aktívne)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1094
+#: rkward/windows/rkcommandeditorwindow.cpp:1093
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Nepoužité)"

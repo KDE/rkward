@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-10 00:39+0000\n"
+"POT-Creation-Date: 2025-06-13 00:39+0000\n"
 "PO-Revision-Date: 2025-05-27 16:51+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -6795,12 +6795,12 @@ msgstr ""
 msgid "Unnamed"
 msgstr "Sense nom"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1075
+#: rkward/windows/rkcommandeditorwindow.cpp:1074
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (Activa)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1094
+#: rkward/windows/rkcommandeditorwindow.cpp:1093
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Sense ús)"
