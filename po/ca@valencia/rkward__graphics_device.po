@@ -858,7 +858,7 @@ msgstr "PNG (256 colors)"
 #: rkward/plugins/x11device/export.xml:188
 #, kde-format
 msgid "PNG (16M colors)"
-msgstr "PNG (16M colors)"
+msgstr "PNG (16 M colors)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
 #: rkward/plugins/x11device/export.xml:190
