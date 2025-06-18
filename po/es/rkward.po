@@ -1,5 +1,5 @@
 # Spanish translations for rkward.po package.
-# Copyright (C) 2005-2025 This_file_is_part_of_KDE
+# Copyright (C) 2005-2025 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
 # SPDX-FileCopyrightText: 2005 Mvillarino <mvillarino@dubmail.net>
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2025-04-21 12:17+0100\n"
+"PO-Revision-Date: 2025-06-18 01:57+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
