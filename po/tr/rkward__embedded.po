@@ -1,21 +1,21 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024, 2025 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-09 00:38+0000\n"
-"PO-Revision-Date: 2024-04-11 11:43+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"PO-Revision-Date: 2025-06-29 17:57+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.04.70\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -647,7 +647,7 @@ msgid ""
 "Choose if you want stacked bars, legend, and rainbow colors. Also you can "
 "choose if you want to display or not bar values (labels) and in what place."
 msgstr ""
-"Yığılmış çubuklar, göstergeler ve gökkuşağı renkleri isteyip istemediğinizi "
+"Yığılmış çubuklar, lejantlar ve gökkuşağı renkleri isteyip istemediğinizi "
 "seçin. Ayrıca çubuk değerlerinin (etiketlerin) nerelerde görüntülenip "
 "görüntülenmeyeceğini de seçebilirsiniz."
 
@@ -659,7 +659,7 @@ msgid ""
 "used to construct the legend, so this option has no effect, if the rows are "
 "not named."
 msgstr ""
-"Bar grafiğine bir gösterge eklenmeli mi? Açıklamayı oluşturmak için verinin "
+"Bar grafiğine bir lejant eklenmeli mi? Açıklamayı oluşturmak için verinin "
 "satır adları kullanılacaktır, dolayısıyla satırlar adlandırılmamışsa bu "
 "seçeneğin hiçbir etkisi yoktur."
 
@@ -772,7 +772,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:22
 #, kde-format
 msgid "Draw Legend"
-msgstr "Göstergeyi çiz"
+msgstr "Lejantı çiz"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:23
