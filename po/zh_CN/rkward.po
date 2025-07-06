@@ -1788,7 +1788,7 @@ msgstr "R 统计语言的前端"
 #: rkward/main.cpp:174
 #, kde-format
 msgid "(c) 2002 - 2025"
-msgstr ""
+msgstr "(c) 2002 - 2025"
 
 #: rkward/main.cpp:175
 #, kde-format
