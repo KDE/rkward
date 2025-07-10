@@ -259,7 +259,7 @@ RKCommandEditorWindow::RKCommandEditorWindow(QWidget *parent, const QUrl &_url, 
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting(m_doc, RKCommandHighlighter::RScript);
 	} else {
-		RKCommandHighlighter::setHighlighting(m_doc, RKCommandHighlighter::Automatic);
+		RKCommandHighlighter::setHighlighting(m_doc, RKCommandHighlighter::AutomaticOrOther);
 	}
 	if (use_r_highlighting || RKSettingsModuleCommandEditor::completionSettings()->completionForAllFileTypes()) {
 		if (flags & RKCommandEditorFlags::UseCodeHinting) {
@@ -375,18 +375,12 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 	preview_modes = new QActionGroup(this);
 	action_no_preview = preview_modes->addAction(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete), i18n("No preview"));
 	action_no_preview->setToolTip(i18n("Disable preview"));
-	action_no_preview->setCheckable(true);
-	action_no_preview->setChecked(true);
-	actionmenu_preview->addAction(action_no_preview);
 	initPreviewModes();
-	for (int i = 0; i < preview_mode_list.size(); ++i) {
-		const PreviewMode &mode = preview_mode_list[i];
-		QAction *a = preview_modes->addAction(mode.icon, mode.actionlabel);
-		a->setWhatsThis(mode.tooltip);
-		a->setToolTip(mode.tooltip);
-		a->setCheckable(true);
+	const auto preview_actions = preview_modes->actions();
+	for (auto *a : preview_actions) {
 		actionmenu_preview->addAction(a);
 	}
+	action_no_preview->setChecked(true);
 	connect(preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
 	connect(preview_modes, &QActionGroup::triggered, this, &RKCommandEditorWindow::changePreviewMode);
 
@@ -538,22 +532,75 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged() {
 	}
 }
 
+static QString r_script_mode = QStringLiteral("R Script");
+static QString r_interactive_mode = QStringLiteral("R interactive session");
+static QString r_markdown_mode = QStringLiteral("R Markdown");
+
+static QString modeToString(RKCommandHighlighter::HighlightingMode mode, KTextEditor::Document *doc) {
+	if (mode == RKCommandHighlighter::RScript) return r_script_mode;
+	if (mode == RKCommandHighlighter::RInteractiveSession) return r_interactive_mode;
+	if (mode == RKCommandHighlighter::RMarkdown) return r_markdown_mode;
+	QString fn = doc->url().fileName().toLower();
+	if (fn.endsWith(QLatin1String(".pluginmap")) || fn.endsWith(QLatin1String(".rkh")) || fn.endsWith(QLatin1String(".xml")) || fn.endsWith(QLatin1String(".inc"))) {
+		return QStringLiteral("XML");
+	} else if (fn.endsWith(QLatin1String(".js"))) {
+		return QStringLiteral("JavaScript");
+	}
+	return QString();
+}
+
+static RKCommandHighlighter::HighlightingMode documentHighlightingMode(KTextEditor::Document *doc) {
+	const auto mode = doc->highlightingMode();
+	if (mode == r_script_mode) return RKCommandHighlighter::RScript;
+	if (mode == r_interactive_mode) return RKCommandHighlighter::RInteractiveSession;
+	if (mode == r_markdown_mode) return RKCommandHighlighter::RMarkdown;
+	// Let's hope, kate highlighting mode names remain stable for ever. But just in case,
+	// let's also add a fallback mechanism, if none of the above was a match
+	QString fn = doc->url().fileName().toLower();
+	if (RKSettingsModuleCommandEditor::matchesScriptFileFilter(fn)) return RKCommandHighlighter::RScript;
+	if (fn.endsWith(u".rmd"_s)) return RKCommandHighlighter::RMarkdown;
+	return RKCommandHighlighter::AutomaticOrOther;
+}
+
+class RKPreviewMode : public QAction {
+  public:
+	RKPreviewMode(KTextEditor::Document *doc, const QString &label, const QIcon &icon, const QString &input_ext, RKCommandHighlighter::HighlightingMode mode) :
+	  QAction(icon, label, doc),
+	  input_ext(input_ext),
+	  valid_mode(mode) {
+		setCheckable(true);
+		connect(doc, &KTextEditor::Document::highlightingModeChanged, this, [this, doc] { checkApplicable(doc); });
+		checkApplicable(doc);
+	};
+
+	void checkApplicable(KTextEditor::Document *doc) {
+		setEnabled((valid_mode == RKCommandHighlighter::AutomaticOrOther) || (documentHighlightingMode(doc) == valid_mode));
+	};
+
+	QString preview_label;
+	std::function<QString(const QString &, const QString &, const QString &)> command;
+	QList<QAction*> options();
+	QString input_ext;
+	RKCommandHighlighter::HighlightingMode valid_mode;
+  private:
+	QList<QAction*> _options;
+};
+
 class RKScriptPreviewIO {
 	QUrl url;
-	int preview_mode;
+	RKPreviewMode *mode;
 	QTemporaryDir out_dir;
 	QFile *infile;
-	QString extension;
-	RKScriptPreviewIO(const QString &extension, const QUrl &url) : url(url), preview_mode(-1), out_dir(), infile(nullptr), extension(extension) {
+	RKScriptPreviewIO(RKPreviewMode *mode, const QUrl &url) : url(url), mode(mode), out_dir(), infile(nullptr) {
 		const auto pattern = QLatin1String("tmp_rkward_preview");
 		if (url.isEmpty() || !url.isLocalFile()) {
 			// Not locally saved: save to tempdir
-			infile = new QFile(QDir(out_dir.path()).absoluteFilePath(pattern + extension));
+			infile = new QFile(QDir(out_dir.path()).absoluteFilePath(pattern + mode->input_ext));
 		} else {
 			// If the file is already saved, save the preview input as a temp file in the same folder.
 			// esp. .Rmd files might try to include other files by relative path.
 			QString tempfiletemplate = url.adjusted(QUrl::RemoveFilename).toLocalFile();
-			tempfiletemplate.append(pattern + QLatin1String("XXXXXX") + extension);
+			tempfiletemplate.append(pattern + QLatin1String("XXXXXX") + mode->input_ext);
 			infile = new QTemporaryFile(tempfiletemplate);
 		}
 	}
@@ -577,20 +624,18 @@ class RKScriptPreviewIO {
 		infile->remove();
 		delete infile;
 	}
-	static RKScriptPreviewIO *init(RKScriptPreviewIO *previous, KTextEditor::Document *doc, int preview_mode, const QString &extension) {
+	static RKScriptPreviewIO *init(RKScriptPreviewIO *previous, KTextEditor::Document *doc, RKPreviewMode  *preview_mode) {
 		// Whenever possible, we try to reuse an existing temporary file, because
 		// a) If build files do spill (as happens with rmarkdown::render()), it will not be quite as many
 		// b) Faster in some cases
-		if (previous && previous->preview_mode == preview_mode && previous->url == doc->url() && previous->extension == extension) {
+		if (previous && previous->mode == preview_mode && previous->url == doc->url()) {
 			// If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in QFile::open(WriteOnly).
 			previous->infile->remove();
 			previous->write(doc);
 			return previous;
 		}
 		delete previous;
-		auto ret = new RKScriptPreviewIO(extension, doc->url());
-		ret->url = doc->url();
-		ret->preview_mode = preview_mode;
+		auto ret = new RKScriptPreviewIO(preview_mode, doc->url());
 		ret->write(doc);
 		return ret;
 	}
@@ -680,52 +725,57 @@ QString RmarkDownRender(const QString &infile, const QString &outdir, const QStr
 
 void RKCommandEditorWindow::initPreviewModes() {
 	RK_TRACE(COMMANDEDITOR);
-	preview_mode_list.append(PreviewMode{
-	    QIcon::fromTheme(u"preview_math"_s), i18n("R Markdown (HTML)"), i18n("Preview of rendered R Markdown"),
-	    i18n("Preview the script as rendered from RMarkdown format (.Rmd) to HTML."),
-	    u".Rmd"_s,
-	    [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
-		    return RmarkDownRender(infile, outdir, u"output_format=\"html_document\", "_s);
-	    }});
-	preview_mode_list.append(PreviewMode{
-	    QIcon::fromTheme(u"preview_math"_s), i18n("R Markdown (auto)"), i18n("Preview of rendered R Markdown"),
-	    i18n("Preview the script as rendered from RMarkdown format (.Rmd) to the format specified in the document header."),
-	    u".Rmd"_s,
-	    [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
-		    return RmarkDownRender(infile, outdir, QString());
-	    }});
-	preview_mode_list.append(PreviewMode{
-	    RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), i18n("RKWard Output"), i18n("Preview of generated RKWard output"),
-	    i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."),
-	    u".R"_s,
-	    [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
-		    auto command = QStringLiteral("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
-		                                  "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
-		                                  "try(source(%1, local=TRUE))\n"
-		                                  "rk.set.output.html.file(output, silent=TRUE)\n"
-		                                  "rk.show.html(%2)\n");
-		    return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
-	    }});
-	preview_mode_list.append(PreviewMode{
-	    RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), i18n("R Console"), i18n("Preview of script running in interactive R Console"),
-	    i18n("Preview the script as if it was run in the interactive R Console"),
-	    u".R"_s,
-	    [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
-		    auto command = QStringLiteral("rk.eval.as.preview(%1, %2)\n"
-		                                  "rk.show.html(%2)\n");
-		    return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
-	    }});
-	preview_mode_list.append(PreviewMode{
-	    RKStandardIcons::getIcon(RKStandardIcons::WindowX11), i18n("Plot"), i18n("Preview of generated plot"),
-	    i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."),
-	    u".R"_s,
-	    [](const QString &infile, const QString & /*outdir*/, const QString &preview_id) {
-		    auto command = QStringLiteral("olddev <- dev.cur()\n"
-		                                  ".rk.startPreviewDevice(%2)\n"
-		                                  "try(source(%1, local=TRUE, print.eval=TRUE))\n"
-		                                  "if (olddev != 1) dev.set(olddev)\n");
-		    return command.arg(RObject::rQuote(infile), RObject::rQuote(preview_id));
-	    }});
+
+	auto m = new RKPreviewMode(m_doc, i18n("R Markdown (HTML)"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s, RKCommandHighlighter::RMarkdown);
+	m->preview_label = i18n("Preview of rendered R Markdown");
+	m->setToolTip(i18n("Preview the script as rendered from RMarkdown format (.Rmd) to HTML."));
+	m->command = [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
+		return RmarkDownRender(infile, outdir, u"output_format=\"html_document\", "_s);
+	};
+	preview_modes->addAction(m);
+
+	m = new RKPreviewMode(m_doc, i18n("R Markdown (auto)"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s, RKCommandHighlighter::RMarkdown);
+	m->preview_label = i18n("Preview of rendered R Markdown");
+	m->setToolTip(i18n("Preview the script as rendered from RMarkdown format (.Rmd) to the format specified in the document header."));
+	m->command = [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
+		return RmarkDownRender(infile, outdir, QString());
+	};
+	preview_modes->addAction(m);
+
+	m = new RKPreviewMode(m_doc, i18n("RKWard Output"), RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), u".R"_s, RKCommandHighlighter::RScript);
+	m->preview_label = i18n("Preview of generated RKWard output");
+	m->setToolTip(i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."));
+	m->command = [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
+		auto command = QStringLiteral("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+		                              "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
+		                              "try(source(%1, local=TRUE))\n"
+		                              "rk.set.output.html.file(output, silent=TRUE)\n"
+		                              "rk.show.html(%2)\n");
+		return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
+	};
+	preview_modes->addAction(m);
+
+	m = new RKPreviewMode(m_doc, i18n("R Console"), RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), u".R"_s, RKCommandHighlighter::RScript);
+	m->preview_label = i18n("Preview of script running in interactive R Console");
+	m->setToolTip(i18n("Preview the script as if it was run in the interactive R Console"));
+	m->command = [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
+		auto command = QStringLiteral("rk.eval.as.preview(%1, %2)\n"
+		                              "rk.show.html(%2)\n");
+		return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
+	};
+	preview_modes->addAction(m);
+
+	m = new RKPreviewMode(m_doc, i18n("Plot"), RKStandardIcons::getIcon(RKStandardIcons::WindowX11), u".R"_s, RKCommandHighlighter::RScript);
+	m->preview_label = i18n("Preview of generated plot");
+	m->setToolTip(i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."));
+	m->command = [](const QString &infile, const QString & /*outdir*/, const QString &preview_id) {
+		auto command = QStringLiteral("olddev <- dev.cur()\n"
+		                              ".rk.startPreviewDevice(%2)\n"
+		                              "try(source(%1, local=TRUE, print.eval=TRUE))\n"
+		                              "if (olddev != 1) dev.set(olddev)\n");
+		return command.arg(RObject::rQuote(infile), RObject::rQuote(preview_id));
+	};
+	preview_modes->addAction(m);
 }
 
 void RKCommandEditorWindow::doRenderPreview() {
@@ -733,17 +783,16 @@ void RKCommandEditorWindow::doRenderPreview() {
 
 	if (action_no_preview->isChecked()) return;
 	if (!preview_manager->needsCommand()) return;
-	int nmode = preview_modes->actions().indexOf(preview_modes->checkedAction());
-	const PreviewMode &mode = preview_mode_list.value(nmode - 1);
+	const auto mode = static_cast<RKPreviewMode *>(preview_modes->checkedAction());
 
 	if (!preview->findChild<RKMDIWindow *>()) {
 		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
 		RInterface::issueCommand(u".rk.with.window.hints(rk.show.html(content=\"\"), \"\", "_s + RObject::rQuote(preview_manager->previewId()) + u", style=\"preview\")"_s, RCommand::App | RCommand::Sync);
 	}
 
-	preview_io = RKScriptPreviewIO::init(preview_io, m_doc, nmode, mode.input_ext);
-	QString command = mode.command(preview_io->inpath(), preview_io->outpath(QLatin1String("")), preview_manager->previewId());
-	preview->setLabel(mode.previewlabel);
+	preview_io = RKScriptPreviewIO::init(preview_io, m_doc, mode);
+	QString command = mode->command(preview_io->inpath(), preview_io->outpath(QLatin1String("")), preview_manager->previewId());
+	preview->setLabel(mode->preview_label.isEmpty() ? mode->text() : mode->preview_label);
 	preview->show();
 
 	RCommand *rcommand = new RCommand(u".rk.with.window.hints(local({\n"_s + command + u"}), \"\", "_s + RObject::rQuote(preview_manager->previewId()) + u", style=\"preview\")"_s, RCommand::App);
@@ -1240,19 +1289,8 @@ QString RKCommandHighlighter::commandToHTML(const QString &r_command, Highlighti
 void RKCommandHighlighter::setHighlighting(KTextEditor::Document *doc, HighlightingMode mode) {
 	RK_TRACE(COMMANDEDITOR);
 
-	QString mode_string;
-	if (mode == RScript) mode_string = QLatin1String("R Script");
-	else if (mode == RInteractiveSession) mode_string = QLatin1String("R interactive session");
-	else {
-		QString fn = doc->url().fileName().toLower();
-		if (fn.endsWith(QLatin1String(".pluginmap")) || fn.endsWith(QLatin1String(".rkh")) || fn.endsWith(QLatin1String(".xml")) || fn.endsWith(QLatin1String(".inc"))) {
-			mode_string = QLatin1String("XML");
-		} else if (fn.endsWith(QLatin1String(".js"))) {
-			mode_string = QLatin1String("JavaScript");
-		} else {
-			return;
-		}
-	}
+	QString mode_string = modeToString(mode, doc);
+	if (mode_string.isEmpty()) return;
 	if (!(doc->setHighlightingMode(mode_string) && doc->setMode(mode_string))) RK_DEBUG(COMMANDEDITOR, DL_ERROR, "R syntax highlighting definition ('%s')not found!", qPrintable(mode_string));
 }
 
