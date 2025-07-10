@@ -544,7 +544,16 @@ class RKWardCoreTest : public QObject {
 		RInterface::issueCommand(new RCommand(QStringLiteral("df <- data.frame('a'=letters, 'a'=letters, 'b'=letters, check.names=FALSE); df[[2, 'b']] <- list('x')"), RCommand::User));
 		RInterface::issueCommand(new RCommand(QStringLiteral("rk.edit(df)"), RCommand::User));
 		waitForAllFinished();
-		RKWardMainWindow::getMain()->slotCloseAllEditors();
+
+		// https://bugs.kde.org/show_bug.cgi?id=505955 : crash when changing type of edited column to unknown from R
+		RInterface::issueCommand(new RCommand(QStringLiteral("df$c <- 1"), RCommand::User));
+		waitForAllFinished();
+		RInterface::issueCommand(new RCommand(QStringLiteral("df$c <- as.POSIXct.Date(1)"), RCommand::User)); // this one is current "unknown"
+		waitForAllFinished();
+		RInterface::issueCommand(new RCommand(QStringLiteral("df$c <- as.factor(\"a\")"), RCommand::User));
+		waitForAllFinished();
+
+		RKWardMainWindow::getMain()->slotCloseAllEditors();		
 	}
 
 	void rkMenuTest() {

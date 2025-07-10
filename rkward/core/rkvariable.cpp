@@ -122,14 +122,17 @@ bool RKVariable::updateType(RData *new_data) {
 	if (data) {
 		int old_type = type;
 		bool ret = RObject::updateType(new_data);
-		int new_type = type;
+		if (old_type == type) return ret;
 
 		// Convert old values to the new data type.
 		// TODO: This is quite inefficient, as we will update the data from R in a second, anyway.
 		// Still it is a quick, dirty, and safe way to keep the data representation in a suitable format
+		int new_type = type;
 		type = old_type; // needed to read out the old data
 		setVarType(typeToDataType(new_type), false);
+		auto datatype = getDataType(); // HACK: setVarType might have changed the type. We still want to apply any other flags from R
 		type = new_type;
+		setDataType(datatype);
 		return ret;
 	}
 	return RObject::updateType(new_data);
@@ -551,7 +554,7 @@ void RKVariable::setNumericFromR(int from_row, int to_row, const QVector<double>
 	RK_ASSERT((to_row - from_row) < numdata.size());
 
 	if (getDataType() == DataCharacter) {
-		RK_ASSERT(false); // asserting false to catch cases of this use for now. it's not really a problem, though
+		// NOTE: This code path is hit, for data this somehow numeric in R, but "unknown" in the frontend (fallback in setVarType())
 		int i = 0;
 		for (int row = from_row; row <= to_row; ++row) {
 			setText(row, QString::number(numdata[i++], 'g', MAX_PRECISION));
