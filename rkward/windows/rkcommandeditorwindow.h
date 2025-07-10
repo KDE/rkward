@@ -194,15 +194,6 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	QString _id;
 	static QMap<QString, KTextEditor::Document *> unnamed_documents;
 
-	struct PreviewMode {
-		QIcon icon;
-		QString actionlabel;
-		QString previewlabel;
-		QString tooltip;
-		QString input_ext;
-		std::function<QString(const QString &, const QString &, const QString &)> command;
-	};
-	QList<PreviewMode> preview_mode_list;
 	void initPreviewModes();
 
 	RKXMLGUIPreviewArea *preview;
@@ -219,7 +210,8 @@ class RKCommandHighlighter {
 	enum HighlightingMode {
 		RInteractiveSession,
 		RScript,
-		Automatic
+		RMarkdown,
+		AutomaticOrOther
 	};
 	static void copyLinesToOutput(KTextEditor::View *view, HighlightingMode mode);
 	static void setHighlighting(KTextEditor::Document *doc, HighlightingMode mode);
