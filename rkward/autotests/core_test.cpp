@@ -553,7 +553,7 @@ class RKWardCoreTest : public QObject {
 		RInterface::issueCommand(new RCommand(QStringLiteral("df$c <- as.factor(\"a\")"), RCommand::User));
 		waitForAllFinished();
 
-		RKWardMainWindow::getMain()->slotCloseAllEditors();		
+		RKWardMainWindow::getMain()->slotCloseAllEditors();
 	}
 
 	void rkMenuTest() {
