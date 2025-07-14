@@ -858,7 +858,7 @@ msgstr "ფერი"
 #: rkward/plugins/distributions/../plots/plot_options.xml:151
 #, kde-format
 msgid "default"
-msgstr "ნაგულისხმები"
+msgstr "ნაგულისხმევი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:25
