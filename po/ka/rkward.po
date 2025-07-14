@@ -1808,12 +1808,12 @@ msgstr "არცერთი არჩეულია"
 #: rkward/dialogs/rksetupwizard.cpp:334
 #, kde-format
 msgid "Restore defaults"
-msgstr "ნაგულისხმები მნიშვნელობების აღდგენა"
+msgstr "ნაგულისხმევი მნიშვნელობების აღდგენა"
 
 #: rkward/dialogs/rksetupwizard.cpp:334
 #, kde-format
 msgid "Enable the default plugins"
-msgstr "ნაგულისხმები დამატებების ჩართვა"
+msgstr "ნაგულისხმევი დამატებების ჩართვა"
 
 #: rkward/dialogs/rksetupwizard.cpp:335
 #, kde-format
@@ -2237,7 +2237,7 @@ msgstr "სწორება"
 #: rkward/misc/editformatdialog.cpp:32
 #, kde-format
 msgid "Default"
-msgstr "ნაგულისხმები"
+msgstr "ნაგულისხმევი"
 
 #: rkward/misc/editformatdialog.cpp:33
 #, kde-format
@@ -2257,7 +2257,7 @@ msgstr "წილადის ნიშნები"
 #: rkward/misc/editformatdialog.cpp:39
 #, kde-format
 msgid "Default setting"
-msgstr "ნაგულისხმები პარამეტრი"
+msgstr "ნაგულისხმევი პარამეტრი"
 
 #: rkward/misc/editformatdialog.cpp:40
 #, kde-format
@@ -5175,7 +5175,7 @@ msgstr "გრაფიკა ეკრანზე"
 #: rkward/settings/rksettingsmodulegraphics.cpp:54
 #, kde-format
 msgid "Default graphics device"
-msgstr "ნაგულისხმები გრაფიკის გაფართოება"
+msgstr "ნაგულისხმევი გრაფიკის გაფართოება"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:56
 #, kde-format

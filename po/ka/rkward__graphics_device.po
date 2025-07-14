@@ -520,7 +520,7 @@ msgstr "ქაღალდის ზომა"
 #: rkward/plugins/x11device/export.xml:159
 #, kde-format
 msgid "Default"
-msgstr "ნაგულისხმები"
+msgstr "ნაგულისხმევი"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
 #: rkward/plugins/x11device/export.xml:121
