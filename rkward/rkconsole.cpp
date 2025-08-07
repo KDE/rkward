@@ -339,14 +339,9 @@ bool RKConsole::eventFilter(QObject *o, QEvent *e) {
 	if ((e->type() == QEvent::KeyPress) || (e->type() == QEvent::Shortcut)) {
 		QKeyEvent *k = static_cast<QKeyEvent *>(e);
 		return (handleKeyPress(k));
-	} else if (e->type() == QEvent::MouseButtonPress) {
-		// we seem to need this, as the kateview will swallow the contextMenuEvent, otherwise
-		QMouseEvent *m = (QMouseEvent *)e;
-		if (m->button() == Qt::RightButton) {
-			QPoint pos = m->globalPosition().toPoint();
-			qApp->sendEvent(this, new QContextMenuEvent(QContextMenuEvent::Mouse, mapFromGlobal(pos), pos));
-			return (true);
-		}
+	} else if (e->type() == QEvent::ContextMenu) {
+		contextMenuEvent(static_cast<QContextMenuEvent *>(e));
+		return true;
 	} else if (e->type() == QEvent::MouseButtonRelease) {
 		QMouseEvent *m = (QMouseEvent *)e;
 		if (m->button() == Qt::MiddleButton) {
