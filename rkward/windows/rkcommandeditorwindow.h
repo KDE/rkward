@@ -194,7 +194,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	QString _id;
 	static QMap<QString, KTextEditor::Document *> unnamed_documents;
 
-	void initPreviewModes();
+	void initPreviewModes(KActionMenu *menu);
 
 	RKXMLGUIPreviewArea *preview;
 	QTimer preview_timer;
