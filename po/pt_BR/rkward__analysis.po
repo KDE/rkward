@@ -4,20 +4,21 @@
 #
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2014.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2014, 2015, 2016.
+# SPDX-FileCopyrightText: 2025 Marcus Gama <marcus.gama@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:36+0000\n"
-"PO-Revision-Date: 2016-01-28 23:07-0300\n"
-"Last-Translator: André Marcelo Alvarenga <alvarenga@kde.org>\n"
-"Language-Team: Brazilian Portuguese <kde-i18n-pt_br@kde.org>\n"
+"PO-Revision-Date: 2025-08-07 08:10-0300\n"
+"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1311,17 +1312,13 @@ msgstr "Deve ser produzido um gráfico de barras (para cada par)?"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting>
 #: rkward/plugins/analysis/crosstab.rkh:24
-#, fuzzy, kde-format
-#| msgid ""
-#| "Allows to preview the barplot(s). Only the first of the barplots is shown "
-#| "in the preview, even if more than one table is produced."
+#, kde-format
 msgid ""
 "Allows to preview the result. Only the first table (and plot) is shown in "
 "the preview, even if more than one table is produced."
 msgstr ""
-"Permite visualizar o(s) gráfico(s) de barras. Apenas o primeiro gráfico de "
-"barras é mostrado na visualização, mesmo que seja produzida mais de uma "
-"tabela."
+"Permite visualizar o resultado. Apenas a primeira tabela (e gráfico) é "
+"mostrada na visualização, mesmo que seja produzida mais de uma tabela."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Show sums")
 #: rkward/plugins/analysis/crosstab.rkh:27
@@ -1555,6 +1552,8 @@ msgid ""
 "Control the \"width\" of the printed table: Categories of the first n "
 "selected variables are listed as rows, the remaining ones as columns."
 msgstr ""
+"Controla a \"largura\" da tabela impressa: as categorias das primeiras n "
+"variáveis selecionadas são listadas como linhas, as demais como colunas."
 
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="N to N Crosstabulation"> <varslot label="...">
 #: rkward/plugins/analysis/crosstab_multi.xml:15
@@ -1564,10 +1563,9 @@ msgstr "variáveis:"
 
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="N to N Crosstabulation"> <spinbox label="...">
 #: rkward/plugins/analysis/crosstab_multi.xml:17
-#, fuzzy, kde-format
-#| msgid "variables:"
+#, kde-format
 msgid "Row variables"
-msgstr "variáveis:"
+msgstr "Variáveis da linha"
 
 #. i18n: ectx: (Loaded from D'Agostino test of skewness)
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="...">
@@ -2577,19 +2575,16 @@ msgstr "Potência-alvo do teste (1 menos a probabilidade de erro do Tipo II)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:61
-#, fuzzy, kde-format
-#| msgid ""
-#| "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
-#| "reminder, this is (rows − 1)×(columns − 1) for a test of independence, "
-#| "and (cells − 1) for a test of goodness of fit."
+#, kde-format
 msgid ""
 "Only shown for chi-square statistics: Targeted degrees of freedom. As a "
 "reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
 "independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
 "Só aparece para as estatísticas qui-quadrado: Os graus de liberdade do alvo. "
-"Como um lembrete, isto é (linhas − 1)×(colunas − 1), para um teste de "
-"independência, e (células − 1) para um teste de adequação do ajuste."
+"Como um lembrete, isto é (linhas &minus; 1)&times;(colunas &minus; 1), para "
+"um teste de independência, e (células &minus; 1) para um teste de adequação "
+"do ajuste."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for numerator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:65
@@ -2632,12 +2627,7 @@ msgstr ""
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
-#, fuzzy, kde-format
-#| msgid ""
-#| "Minimum detectable effect size. Note that effect size specifications "
-#| "differ between the available methods. Be sure to read the note shown "
-#| "below the control.   As a reminder, for mapping between cohen's f and "
-#| "Eta² use f² = Eta² / (1 − Eta²)"
+#, kde-format
 msgid ""
 "Minimum detectable effect size. Note that effect size specifications differ "
 "between the available methods. Be sure to read the note shown below the "
@@ -2647,7 +2637,7 @@ msgstr ""
 "Tamanho mínimo detectado do efeito. Lembre-se de que as especificações do "
 "tamanho do efeito diferem entre os métodos disponíveis. Não deixe de ler a "
 "nota visível abaixo do controle. Como lembrete, para relacionar o 'f' de "
-"Cohen e o Eta², use f² = Eta² / (1 − Eta²)"
+"Cohen e o Eta&sup2;, use f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
@@ -2944,10 +2934,9 @@ msgstr "Grau de liberdade do numerador"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
-#, fuzzy, kde-format
-#| msgid "df <sub> num </sub> : k − 1"
+#, kde-format
 msgid "df <sub> num </sub> : k &minus; 1"
-msgstr "df <sub> num </sub> : k − 1"
+msgstr "df <sub> num </sub> : k &minus; 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2957,10 +2946,9 @@ msgstr "Grau de liberdade do denominador"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <text>
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
-#, fuzzy, kde-format
-#| msgid "df <sub> den </sub> : N − k"
+#, kde-format
 msgid "df <sub> den </sub> : N &minus; k"
-msgstr "df <sub> den </sub> : N − k"
+msgstr "df <sub> den </sub> : N &minus; k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185
@@ -3109,12 +3097,14 @@ msgid ""
 "Print standardized correlation coefficients? This requires the lm.beta "
 "package."
 msgstr ""
+"Imprimir coeficientes de correlação padronizados? Isso requer o pacote lm."
+"beta."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Show ANOVA table")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:22
 #, kde-format
 msgid "Show an analysis of variance table."
-msgstr ""
+msgstr "Mostrar uma tabela de análise de variância."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Save full fitted model")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:24
@@ -3160,22 +3150,21 @@ msgstr "variáveis independentes"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Model"> <checkbox label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:18
-#, fuzzy, kde-format
-#| msgid "include intercept"
+#, kde-format
 msgid "Include intercept"
-msgstr "incluir o intercepto"
+msgstr "Incluir o intercepto"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Model"> <checkbox label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:19
 #, kde-format
 msgid "Show standardized coefficients"
-msgstr ""
+msgstr "Mostrar coeficientes padronizados"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Model"> <checkbox label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:20
 #, kde-format
 msgid "Show ANOVA table"
-msgstr ""
+msgstr "Mostrar tabela ANOVA"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:26
@@ -4500,14 +4489,14 @@ msgstr "Permitir relações"
 #, kde-format
 msgctxt "R code comment"
 msgid "Split each input variable by grouping factor(s)"
-msgstr ""
+msgstr "Divida cada variável de entrada por fator(es) de agrupamento"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:20
 #, kde-format
 msgctxt "R code comment"
 msgid "Convert nested list into flat list"
-msgstr ""
+msgstr "Converter lista aninhada em lista plana"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:23
@@ -4606,7 +4595,7 @@ msgstr "Desvio Absoluto da Mediana"
 #: rkward/plugins/descriptive/descriptive_statistics.js:70
 #, kde-format
 msgid "total length (N)"
-msgstr ""
+msgstr "comprimento total (N)"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:71
@@ -4669,6 +4658,13 @@ msgid ""
 "any grouping). If specifying more than one grouping factor, separate splits "
 "will be performed for each combination of values of the grouping factors."
 msgstr ""
+"Opcionalmente, selecione um ou mais fatores de agrupamento pelos quais "
+"dividir cada vetor de entrada. Os fatores de agrupamento devem ter o mesmo "
+"comprimento que os vetores de entrada (e, portanto, todos os vetores de "
+"entrada devem ter o mesmo comprimento, se estiver usando qualquer "
+"agrupamento). Se especificar mais de um fator de agrupamento, divisões "
+"separadas serão realizadas para cada combinação de valores dos fatores de "
+"agrupamento."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:24
@@ -4755,20 +4751,16 @@ msgstr "Calcular o produto de todos os valores"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Length and NAs")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:38
-#, fuzzy, kde-format
-#| msgid ""
-#| "Count the total length of values, and the number of missing values (NAs)"
+#, kde-format
 msgid ""
 "Count the total number of values, and the number of missing values (NAs)"
-msgstr ""
-"Contar a quantidade total de valores e o número de valores ausentes (NDs)"
+msgstr "Contar o número total de valores e o número de valores ausentes (NDs)"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:20
-#, fuzzy, kde-format
-#| msgid "groups"
+#, kde-format
 msgid "group by:"
-msgstr "grupos"
+msgstr "agrupar por:"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <checkbox label="...">
