@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-13 00:39+0000\n"
+"POT-Creation-Date: 2025-08-10 00:39+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -4052,62 +4052,62 @@ msgstr "स्क्रॉलबार न्यूनतम मानचित�
 msgid "Dynamic word wrap"
 msgstr "गतिशील शब्द वेष्टन"
 
-#: rkward/rkconsole.cpp:469
+#: rkward/rkconsole.cpp:464
 #, kde-format
 msgid "Syntax error\n"
 msgstr "वाक्यविन्यासदोषः\n"
 
-#: rkward/rkconsole.cpp:670
+#: rkward/rkconsole.cpp:665
 #, kde-format
 msgid "Select command history file to load"
 msgstr "लोड् कर्तुं आदेश-इतिहास-सञ्चिकां चिनोतु"
 
-#: rkward/rkconsole.cpp:672
+#: rkward/rkconsole.cpp:667
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "आर इतिहास सञ्चिकाः [*.Rhistory](*.Rhistory);;सर्व सञ्चिकाः [*](*)"
 
-#: rkward/rkconsole.cpp:705
+#: rkward/rkconsole.cpp:700
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "आदेश-इतिहासस्य रक्षणार्थं सञ्चिकानाम चिनोतु"
 
-#: rkward/rkconsole.cpp:706
+#: rkward/rkconsole.cpp:701
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "आर इतिहास सञ्चिकाः [*.Rhistory] (*.Rhistory);;सर्व सञ्चिकाः [*] (*)"
 
-#: rkward/rkconsole.cpp:831
+#: rkward/rkconsole.cpp:826
 #, kde-format
 msgid "Interrupt running command"
 msgstr "रनिंग् आदेशं व्यत्यययतु"
 
-#: rkward/rkconsole.cpp:838
+#: rkward/rkconsole.cpp:833
 #, kde-format
 msgid "Copy selection literally"
 msgstr "चयनं अक्षरशः प्रतिलिख्यताम्"
 
-#: rkward/rkconsole.cpp:841
+#: rkward/rkconsole.cpp:836
 #, kde-format
 msgid "Copy commands, only"
 msgstr "आदेशान् प्रतिलिख्य, केवलं"
 
-#: rkward/rkconsole.cpp:848
+#: rkward/rkconsole.cpp:843
 #, kde-format
 msgid "Print Console"
 msgstr "मुद्रण कन्सोल"
 
-#: rkward/rkconsole.cpp:854
+#: rkward/rkconsole.cpp:849
 #, kde-format
 msgid "Import command history..."
 msgstr "आदेश इतिहास आयात करें..."
 
-#: rkward/rkconsole.cpp:856
+#: rkward/rkconsole.cpp:851
 #, kde-format
 msgid "Export command history..."
 msgstr "आदेश इतिहास निर्यात करें..."
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4120,17 +4120,17 @@ msgstr ""
 "मध्ये आदेशे योजयितुम् इच्छन्ति, अथवा कन्सोल् पुनः सेट् कर्तुम् इच्छन्ति, प्रथमं? यदि भवान् नूतनं "
 "आदेशं चालयितुं न इच्छति तर्हि cancel नुदतु, अधुना ।"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "R Console is busy"
 msgstr "R Console व्यस्तम् अस्ति"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Append"
 msgstr "परिशिष्टम्"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Reset, then submit"
 msgstr "पुनः सेट् कुर्वन्तु, ततः प्रस्तुतं कुर्वन्तु"

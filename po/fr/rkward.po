@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-13 00:39+0000\n"
+"POT-Creation-Date: 2025-08-10 00:39+0000\n"
 "PO-Revision-Date: 2025-05-28 11:52+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -4251,67 +4251,67 @@ msgstr "Vue miniature de la barre de défilement"
 msgid "Dynamic word wrap"
 msgstr "Retour automatique dynamique"
 
-#: rkward/rkconsole.cpp:469
+#: rkward/rkconsole.cpp:464
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Erreur de syntaxe\n"
 
-#: rkward/rkconsole.cpp:670
+#: rkward/rkconsole.cpp:665
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Sélectionner un fichier d'historique de commandes à charger..."
 
-#: rkward/rkconsole.cpp:672
+#: rkward/rkconsole.cpp:667
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr ""
 "Fichiers d'historique de R [*.Rhistory](*.Rhistory) ;; Tous les fichiers [*]"
 "(*)"
 
-#: rkward/rkconsole.cpp:705
+#: rkward/rkconsole.cpp:700
 #, kde-format
 msgid "Select filename to save command history"
 msgstr ""
 "Sélectionner un fichier pour l'enregistrement de l'historique de commandes."
 
-#: rkward/rkconsole.cpp:706
+#: rkward/rkconsole.cpp:701
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr ""
 "Fichiers d'historique de R [*.Rhistory](*.Rhistory) ;; Tous les fichiers [*]"
 "(*)"
 
-#: rkward/rkconsole.cpp:831
+#: rkward/rkconsole.cpp:826
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Interrompre la commande en cours d'exécution"
 
-#: rkward/rkconsole.cpp:838
+#: rkward/rkconsole.cpp:833
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Copier littéralement la sélection"
 
-#: rkward/rkconsole.cpp:841
+#: rkward/rkconsole.cpp:836
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Copier les commandes uniquement"
 
-#: rkward/rkconsole.cpp:848
+#: rkward/rkconsole.cpp:843
 #, kde-format
 msgid "Print Console"
 msgstr "Console d'impression"
 
-#: rkward/rkconsole.cpp:854
+#: rkward/rkconsole.cpp:849
 #, kde-format
 msgid "Import command history..."
 msgstr "Importer l'historique des commandes..."
 
-#: rkward/rkconsole.cpp:856
+#: rkward/rkconsole.cpp:851
 #, kde-format
 msgid "Export command history..."
 msgstr "Exporter l'historique des commandes..."
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4326,17 +4326,17 @@ msgstr ""
 "« Annuler » si vous ne souhaitez pas exécuter maintenant la nouvelle "
 "commandes."
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "R Console is busy"
 msgstr "La console R est occupée"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Append"
 msgstr "Ajouter après"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Réinitialiser et ensuite soumettre"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-13 00:39+0000\n"
+"POT-Creation-Date: 2025-08-10 00:39+0000\n"
 "PO-Revision-Date: 2025-05-27 16:51+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -4209,65 +4209,65 @@ msgstr "Mapa en miniatura en la barra de desplaçament"
 msgid "Dynamic word wrap"
 msgstr "Ajust dinàmic de les paraules"
 
-#: rkward/rkconsole.cpp:469
+#: rkward/rkconsole.cpp:464
 #, kde-format
 msgid "Syntax error\n"
 msgstr "S'ha produït un error de sintaxi\n"
 
-#: rkward/rkconsole.cpp:670
+#: rkward/rkconsole.cpp:665
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Seleccioneu el fitxer d'historial d'ordres que s'ha de carregar"
 
-#: rkward/rkconsole.cpp:672
+#: rkward/rkconsole.cpp:667
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr ""
 "Fitxers de l'historial d'R [*.Rhistory](*.Rhistory);;Tots els fitxers [*](*)"
 
-#: rkward/rkconsole.cpp:705
+#: rkward/rkconsole.cpp:700
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Seleccioneu el nom de fitxer per a guardar l'historial d'ordres"
 
-#: rkward/rkconsole.cpp:706
+#: rkward/rkconsole.cpp:701
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr ""
 "Fitxers de l'historial d'R [*.Rhistory] (*.Rhistory);;Tots els fitxers [*] "
 "(*)"
 
-#: rkward/rkconsole.cpp:831
+#: rkward/rkconsole.cpp:826
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Interromp l'execució de l'ordre"
 
-#: rkward/rkconsole.cpp:838
+#: rkward/rkconsole.cpp:833
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Copia la selecció literalment"
 
-#: rkward/rkconsole.cpp:841
+#: rkward/rkconsole.cpp:836
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Només copia les ordres"
 
-#: rkward/rkconsole.cpp:848
+#: rkward/rkconsole.cpp:843
 #, kde-format
 msgid "Print Console"
 msgstr "Imprimix la consola"
 
-#: rkward/rkconsole.cpp:854
+#: rkward/rkconsole.cpp:849
 #, kde-format
 msgid "Import command history..."
 msgstr "Importa l'historial d'ordres…"
 
-#: rkward/rkconsole.cpp:856
+#: rkward/rkconsole.cpp:851
 #, kde-format
 msgid "Export command history..."
 msgstr "Exporta l'historial d'ordres…"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4280,17 +4280,17 @@ msgstr ""
 "activa en la consola. Voleu afegir-la a l'ordre de la consola, o abans voleu "
 "reiniciar la consola? Premeu cancel·la si ara no voleu executar l'ordre nova."
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "R Console is busy"
 msgstr "La consola d'R està ocupada"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Append"
 msgstr "Afig"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Reinicia, després envia"

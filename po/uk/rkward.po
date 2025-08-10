@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-13 00:39+0000\n"
+"POT-Creation-Date: 2025-08-10 00:39+0000\n"
 "PO-Revision-Date: 2025-05-27 17:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -4196,62 +4196,62 @@ msgstr "Мінікарта на смужці гортання"
 msgid "Dynamic word wrap"
 msgstr "Динамічне перенесення рядків"
 
-#: rkward/rkconsole.cpp:469
+#: rkward/rkconsole.cpp:464
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Синтаксична помилка\n"
 
-#: rkward/rkconsole.cpp:670
+#: rkward/rkconsole.cpp:665
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Виберіть файл журналу команд, який слід завантажити"
 
-#: rkward/rkconsole.cpp:672
+#: rkward/rkconsole.cpp:667
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "файли журналу R [*.Rhistory](*.Rhistory);;усі файли [*](*)"
 
-#: rkward/rkconsole.cpp:705
+#: rkward/rkconsole.cpp:700
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Виберіть назву файла журналу команд"
 
-#: rkward/rkconsole.cpp:706
+#: rkward/rkconsole.cpp:701
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "файли журналу R [*.Rhistory] (*.Rhistory);;усі файли [*] (*)"
 
-#: rkward/rkconsole.cpp:831
+#: rkward/rkconsole.cpp:826
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Перервати команду, що виконується"
 
-#: rkward/rkconsole.cpp:838
+#: rkward/rkconsole.cpp:833
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Копіювати позначене без обробки"
 
-#: rkward/rkconsole.cpp:841
+#: rkward/rkconsole.cpp:836
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Копіювати лише команди"
 
-#: rkward/rkconsole.cpp:848
+#: rkward/rkconsole.cpp:843
 #, kde-format
 msgid "Print Console"
 msgstr "Консоль друку"
 
-#: rkward/rkconsole.cpp:854
+#: rkward/rkconsole.cpp:849
 #, kde-format
 msgid "Import command history..."
 msgstr "Імпортувати журнал команд…"
 
-#: rkward/rkconsole.cpp:856
+#: rkward/rkconsole.cpp:851
 #, kde-format
 msgid "Export command history..."
 msgstr "Експортувати журнал команд…"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4265,17 +4265,17 @@ msgstr ""
 "виконання команд? Натисніть кнопку «Скасувати», якщо ви не хочете виконувати "
 "команду редагування зараз."
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "R Console is busy"
 msgstr "У консолі R виконується завдання"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Append"
 msgstr "Дописати"
 
-#: rkward/rkconsole.cpp:875
+#: rkward/rkconsole.cpp:870
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Скасувати, потім надіслати"
