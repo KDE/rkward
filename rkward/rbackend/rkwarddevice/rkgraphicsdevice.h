@@ -69,7 +69,7 @@ class RKGraphicsDevice : public QObject {
 	// graphics event handling
 	/** Simple struct to keep info about both mouse and keyboard events, so we can store them in a list, until R fetches them. */
 	struct StoredEvent {
-		StoredEvent() : event_code(0), buttons(0), modifiers(0), keycode(0), x(0), y(0){};
+		StoredEvent() : event_code(0), buttons(0), modifiers(0), keycode(0), x(0), y(0) {};
 		qint8 event_code;
 		qint8 buttons;
 		qint32 modifiers;

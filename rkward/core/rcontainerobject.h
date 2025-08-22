@@ -52,9 +52,9 @@ class RContainerObject : public RObject {
 	void moveChild(RObject *child, int from_index, int to_index);
 
 	/** reimplemented from RObject to do nothing at all, including not raising an assert. This is because container objects do not have any edit data, themselves, but may be opened for editing, e.g. as a data.frame */
-	void beginEdit() override{};
+	void beginEdit() override {};
 	/** see beginEdit() */
-	void endEdit() override{};
+	void endEdit() override {};
 	/** return an RKVariable representing the row-names object for this container */
 	RKRowNames *rowNames();
 

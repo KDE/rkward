@@ -39,9 +39,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkwindowcatcher.h"
 #include "../windows/rkworkplace.h"
 #include "rcommandstack.h"
-#include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
 #include "rkrbackendprotocol_frontend.h"
 #include "rksessionvars.h"
+#include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
 
 #include "../debug.h"
 #include "../version.h"

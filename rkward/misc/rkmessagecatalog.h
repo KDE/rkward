@@ -43,7 +43,7 @@ class RKMessageCatalog {
 		QMutex setup_mutex;
 
 	  public:
-		CatalogHash(){};
+		CatalogHash() {};
 		~CatalogHash();
 		RKMessageCatalog *getCatalog(const QString &name, const QString &pathhint);
 	};

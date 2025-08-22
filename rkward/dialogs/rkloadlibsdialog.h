@@ -34,7 +34,7 @@ class QLabel;
 class RKLoadLibsDialogPage : public QWidget {
 	Q_OBJECT
   public:
-	RKLoadLibsDialogPage(QWidget *parent) : QWidget(parent), _changed(false){};
+	RKLoadLibsDialogPage(QWidget *parent) : QWidget(parent), _changed(false) {};
 	virtual void apply() = 0;
 	virtual void activated() = 0;
 	bool isChanged() const { return _changed; };

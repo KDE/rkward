@@ -22,7 +22,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 /** A QListWidget with a sane sizeHint() */
 class RKSelectListDialogListWidget : public QListWidget {
   public:
-	explicit RKSelectListDialogListWidget(QWidget *parent) : QListWidget(parent){};
+	explicit RKSelectListDialogListWidget(QWidget *parent) : QListWidget(parent) {};
 	QSize sizeHint() const override {
 		return (QSize(qMax(50, sizeHintForColumn(0) + verticalScrollBar()->width()), qMax(50, sizeHintForRow(0) * (count() + 1))));
 	}

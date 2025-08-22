@@ -26,7 +26,7 @@ class RKComponentBase {
 		is_internal = false;
 	};
 	/** destructor */
-	virtual ~RKComponentBase(){};
+	virtual ~RKComponentBase() {};
 	/** enum of types of properties. Used from RTTI. Don't change the values, as there are some range checks in the code (see isProperty ()) */
 	enum RKComponentTypes {
 		PropertyBase = 1,

@@ -65,7 +65,8 @@ extern "C"
 #	else
     __attribute__((__visibility__("default")))
 #	endif
-        int do_main(int argc, char *argv[], void *libr_dll_handle, void *(*dlsym_fun)(void *, const char *)) {
+    int
+    do_main(int argc, char *argv[], void *libr_dll_handle, void *(*dlsym_fun)(void *, const char *)) {
 #else
 int main(int argc, char *argv[]) {
 #endif

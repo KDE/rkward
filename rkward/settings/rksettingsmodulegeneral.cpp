@@ -128,7 +128,7 @@ class RKSettingsPageGeneral : public RKSettingsModuleWidget {
 
 		main_vbox->addStretch();
 	}
-	~RKSettingsPageGeneral(){};
+	~RKSettingsPageGeneral() {};
 	void applyChanges() override {
 		RK_TRACE(SETTINGS);
 		RKSettingsModuleGeneral::new_files_path = files_choser->getLocation();

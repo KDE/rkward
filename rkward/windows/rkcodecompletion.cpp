@@ -30,7 +30,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class RKCompletionNotifierModel : public RKCompletionModelBase {
   public:
-	explicit RKCompletionNotifierModel(RKCompletionManager *manager) : RKCompletionModelBase(manager){};
+	explicit RKCompletionNotifierModel(RKCompletionManager *manager) : RKCompletionModelBase(manager) {};
 	KTextEditor::Range completionRange(KTextEditor::View *, const KTextEditor::Cursor &position) override {
 		return KTextEditor::Range(position, position);
 	}

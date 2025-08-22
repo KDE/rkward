@@ -552,10 +552,9 @@ static RKCommandHighlighter::HighlightingMode documentHighlightingMode(KTextEdit
 
 class RKPreviewMode : public QAction {
   public:
-	RKPreviewMode(KTextEditor::Document *doc, const QString &label, const QIcon &icon, const QString &input_ext, RKCommandHighlighter::HighlightingMode mode) :
-	  QAction(icon, label, doc),
-	  input_ext(input_ext),
-	  valid_mode(mode) {
+	RKPreviewMode(KTextEditor::Document *doc, const QString &label, const QIcon &icon, const QString &input_ext, RKCommandHighlighter::HighlightingMode mode) : QAction(icon, label, doc),
+	                                                                                                                                                            input_ext(input_ext),
+	                                                                                                                                                            valid_mode(mode) {
 		setCheckable(true);
 		connect(doc, &KTextEditor::Document::highlightingModeChanged, this, [this, doc] { checkApplicable(doc); });
 		checkApplicable(doc);
@@ -571,12 +570,15 @@ class RKPreviewMode : public QAction {
 	};
 
 	QString preview_label;
-	std::function<QString(const QString &, const QString &, const QString &, RKPreviewMode*)> command;
-	QAction* getOption(int id) const { return options.value(id); };
-	QAction* addOption(int id, QAction *action) { options.insert(id, action); return action; };
+	std::function<QString(const QString &, const QString &, const QString &, RKPreviewMode *)> command;
+	QAction *getOption(int id) const { return options.value(id); };
+	QAction *addOption(int id, QAction *action) {
+		options.insert(id, action);
+		return action;
+	};
 	QString input_ext;
 	RKCommandHighlighter::HighlightingMode valid_mode;
-	QMap<int, QAction*> options;
+	QMap<int, QAction *> options;
 };
 
 class RKScriptPreviewIO {
@@ -617,7 +619,7 @@ class RKScriptPreviewIO {
 		infile->remove();
 		delete infile;
 	}
-	static RKScriptPreviewIO *init(RKScriptPreviewIO *previous, KTextEditor::Document *doc, RKPreviewMode  *preview_mode) {
+	static RKScriptPreviewIO *init(RKScriptPreviewIO *previous, KTextEditor::Document *doc, RKPreviewMode *preview_mode) {
 		// Whenever possible, we try to reuse an existing temporary file, because
 		// a) If build files do spill (as happens with rmarkdown::render()), it will not be quite as many
 		// b) Faster in some cases
@@ -729,7 +731,9 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	auto m = new RKPreviewMode(m_doc, i18n("R Markdown"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s, RKCommandHighlighter::RMarkdown);
 	m->preview_label = i18n("Preview of rendered R Markdown");
 	m->setToolTip(i18n("Preview the script as rendered from RMarkdown format (.Rmd)"));
-	enum _RenderMode { HTML, PDF, Auto };
+	enum _RenderMode { HTML,
+		               PDF,
+		               Auto };
 	auto group = new QActionGroup(m);
 	m->addOption(HTML, new QAction(i18n("Render as HTML"), group))->setCheckable(true);
 	m->addOption(PDF, new QAction(i18n("Render as PDF"), group))->setCheckable(true);
@@ -759,7 +763,12 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	m = new RKPreviewMode(m_doc, i18n("R Console"), RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), u".R"_s, RKCommandHighlighter::RScript);
 	m->preview_label = i18n("Preview of script running in interactive R Console");
 	m->setToolTip(i18n("Preview the script as if it was run in the interactive R Console"));
-	enum _ConsoleOpts { Echo, Continue, None, Global, Scoped, Local };
+	enum _ConsoleOpts { Echo,
+		                Continue,
+		                None,
+		                Global,
+		                Scoped,
+		                Local };
 	a = m->addOption(Echo, new QAction(i18n("Echo statements")));
 	a->setCheckable(true);
 	a->setChecked(true);
@@ -807,7 +816,7 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	for (auto *a : preview_actions) {
 		menu->addAction(a);
 		if (a == action_no_preview) continue;
-		for (auto oa : static_cast<RKPreviewMode*>(a)->options) {
+		for (auto oa : static_cast<RKPreviewMode *>(a)->options) {
 			optmenu->addAction(oa);
 			connect(oa, &QAction::toggled, this, [this]() { preview_manager->setUpdatePending(); doRenderPreview(); });
 			oa->setVisible(false);

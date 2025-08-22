@@ -19,7 +19,7 @@ class RKRowNames : public RKVariable {
 
 	QString getFullName(int) const override;
 	/** Reimplemented to do nothing. There is no metadata on the rownames. */
-	void writeMetaData(RCommandChain *) override{};
+	void writeMetaData(RCommandChain *) override {};
 
 	/** Reimplemented to always try to write data as numbers, if possible */
 	void writeData(int from_row, int to_row, RCommandChain *chain = nullptr) override;

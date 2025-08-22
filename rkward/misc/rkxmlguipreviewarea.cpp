@@ -35,7 +35,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class RKXMLGUIPreviewBuilder : public KXMLGUIBuilder {
   public:
-	RKXMLGUIPreviewBuilder(QWidget *parent, QMenuBar *menubar) : KXMLGUIBuilder(parent), menubar(menubar){};
+	RKXMLGUIPreviewBuilder(QWidget *parent, QMenuBar *menubar) : KXMLGUIBuilder(parent), menubar(menubar) {};
 	QStringList containerTags() const override {
 		QStringList ret;
 		ret << QStringLiteral("menubar") << QStringLiteral("menu");

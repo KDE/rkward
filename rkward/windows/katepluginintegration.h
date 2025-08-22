@@ -121,7 +121,7 @@ class KatePluginIntegrationWindow : public QObject, public KXMLGUIClient {
 	KTextEditor::MainWindow *main;
 	QObject *createPluginView(KTextEditor::Plugin *plugin);
 	struct PluginResources {
-		PluginResources() : view(nullptr){};
+		PluginResources() : view(nullptr) {};
 		QObject *view;
 		QList<KXMLGUIClient *> clients;
 		QList<KatePluginWindow *> windows;

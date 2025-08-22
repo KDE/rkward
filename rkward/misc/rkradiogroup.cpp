@@ -16,7 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
  *  automatically be removed, in case the button is deleted independent of the controlled widget. */
 class RKRadioGroupButton : public QRadioButton {
   public:
-	explicit RKRadioGroupButton(const QString &label) : QRadioButton(label){};
+	explicit RKRadioGroupButton(const QString &label) : QRadioButton(label) {};
 	void control(QWidget *controlled) {
 		RKRadioGroupButton::controlled = controlled;
 		controlled->installEventFilter(this);

@@ -21,8 +21,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class RKStringListModelWithColumnLabel : public QStringListModel {
   public:
-	RKStringListModelWithColumnLabel(QObject *parent, const QString &_label) : QStringListModel(parent), label(_label){};
-	~RKStringListModelWithColumnLabel(){};
+	RKStringListModelWithColumnLabel(QObject *parent, const QString &_label) : QStringListModel(parent), label(_label) {};
+	~RKStringListModelWithColumnLabel() {};
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override {
 		if ((section == 0) && (orientation == Qt::Horizontal) && (role == Qt::DisplayRole)) return label;
 		return QVariant();

@@ -22,8 +22,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class RKXMLGUISyncerNotifier : public QObject {
 	Q_OBJECT
   public:
-	explicit RKXMLGUISyncerNotifier(QObject *parent) : QObject(parent){};
-	~RKXMLGUISyncerNotifier(){};
+	explicit RKXMLGUISyncerNotifier(QObject *parent) : QObject(parent) {};
+	~RKXMLGUISyncerNotifier() {};
 
 	void emitChangeSignal(KXMLGUIClient *client) { Q_EMIT changed(client); };
   Q_SIGNALS:
@@ -40,7 +40,7 @@ class RKXMLGUISyncerPrivate : public QObject {
 		connect(&rebuild_guis_timer, &QTimer::timeout, this, &RKXMLGUISyncerPrivate::rebuildGUIs);
 		rebuild_guis_timer.setSingleShot(true);
 	}
-	~RKXMLGUISyncerPrivate(){};
+	~RKXMLGUISyncerPrivate() {};
 
 	/** Internally we store the actionCollection() of each KXMLGUIClient, instead of a pointer to the client, itself. This is because KXMLGUIClient is not a QObject, and so we cannot safely detect its destruction. */
 	QMultiHash<QString, KActionCollection *> client_map;

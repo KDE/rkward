@@ -19,7 +19,7 @@ class QCoreApplication;
 class RKCommandLineArgs {
   public:
 	explicit RKCommandLineArgs(KAboutData *about, QCoreApplication *app);
-	~RKCommandLineArgs(){};
+	~RKCommandLineArgs() {};
 	enum Option {
 		UrlArgs,
 		Evaluate,

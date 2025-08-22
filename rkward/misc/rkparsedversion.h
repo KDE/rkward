@@ -14,7 +14,7 @@ Anything else (everything after the fourth dot, or after the first character tha
 class RKParsedVersion {
   public:
 	explicit RKParsedVersion(const QString &from_string);
-	RKParsedVersion() : version_numeric(0){};
+	RKParsedVersion() : version_numeric(0) {};
 	/** Create a null version that will always compare as higher than other (non-null) versions */
 	static RKParsedVersion maxVersion() {
 		RKParsedVersion ret;

@@ -93,7 +93,7 @@ class RKSettingsHeaderPage : public RKSettingsModuleWidget {
 		layout->addWidget(l);
 		layout->addStretch();
 	}
-	void applyChanges() override{};
+	void applyChanges() override {};
 };
 
 RKSettingsModulePlugins::RKSettingsModulePlugins(QObject *parent) : RKSettingsModule(parent) {
