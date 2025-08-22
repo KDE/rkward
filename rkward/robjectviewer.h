@@ -96,8 +96,8 @@ class RObjectViewerWidget : public QWidget {
 /** Represents the "summary" area in an RObjectViewer */
 class RObjectSummaryWidget : public RObjectViewerWidget {
   public:
-	RObjectSummaryWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object){};
-	~RObjectSummaryWidget(){};
+	RObjectSummaryWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object) {};
+	~RObjectSummaryWidget() {};
 
 	/** reimplemented from RObjectViewerWidget to call "summary" */
 	RCommand *makeCommand() override;
@@ -107,7 +107,7 @@ class RObjectSummaryWidget : public RObjectViewerWidget {
 class RObjectPrintWidget : public RObjectViewerWidget {
   public:
 	RObjectPrintWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object) {}
-	~RObjectPrintWidget(){};
+	~RObjectPrintWidget() {};
 
 	/** reimplemented from RObjectViewerWidget to call "print" */
 	RCommand *makeCommand() override;
@@ -116,8 +116,8 @@ class RObjectPrintWidget : public RObjectViewerWidget {
 /** Represents the "str" area in an RObjectViewer */
 class RObjectStructureWidget : public RObjectViewerWidget {
   public:
-	RObjectStructureWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object){};
-	~RObjectStructureWidget(){};
+	RObjectStructureWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object) {};
+	~RObjectStructureWidget() {};
 
 	/** reimplemented from RObjectViewerWidget to call "str" */
 	RCommand *makeCommand() override;

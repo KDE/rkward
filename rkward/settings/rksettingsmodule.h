@@ -53,8 +53,8 @@ class RKConfigBase {
 	typedef QList<ValueLabel> LabelList;
 
   protected:
-	RKConfigBase(const char *name) : name(name){};
-	virtual ~RKConfigBase(){};
+	RKConfigBase(const char *name) : name(name) {};
+	virtual ~RKConfigBase() {};
 	const char *name;
 
 	static QComboBox *makeDropDownHelper(const LabelList &entries, RKSettingsModuleWidget *module, int initial, std::function<void(int)> setter);
@@ -66,8 +66,8 @@ class RKConfigBase {
 template <typename T, typename STORAGE_T = T>
 class RKConfigValue : public RKConfigBase {
   public:
-	RKConfigValue(const char *name, const T &default_value) : RKConfigBase(name), value(default_value){};
-	~RKConfigValue(){};
+	RKConfigValue(const char *name, const T &default_value) : RKConfigBase(name), value(default_value) {};
+	~RKConfigValue() {};
 
 	void loadConfig(KConfigGroup &cg) override {
 		value = (T)cg.readEntry(name, (STORAGE_T)value);
@@ -116,14 +116,14 @@ class RKConfigValue : public RKConfigBase {
 class RKConfigGroup : public RKConfigBase {
   public:
 	RKConfigGroup(const char *name, std::initializer_list<RKConfigBase *> values) : RKConfigBase(name),
-	                                                                                values(values){};
+	                                                                                values(values) {};
 	template <typename T>
 	RKConfigGroup(const char *name, size_t count, RKConfigValue<T> *_values) : RKConfigBase(name),
 	                                                                           values(count) {
 		for (size_t i = 0; i < count; ++i)
 			values[i] = (_values + i);
 	}
-	~RKConfigGroup(){};
+	~RKConfigGroup() {};
 	void loadConfig(KConfigGroup &cg) override {
 		KConfigGroup lcg = cg;
 		if (name && name[0]) {
@@ -174,7 +174,7 @@ class RKSettingsModule : public QObject {
 	friend class RKSettings;
 	static RCommandChain *chain;
 	virtual void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) = 0;
-	virtual void validateSettingsInteractive(QList<RKSetupWizardItem *> *){};
+	virtual void validateSettingsInteractive(QList<RKSetupWizardItem *> *) {};
 };
 
 /** Base class for UI widgets operating on an RKSettingsModule. For now this is used, only where similar settings are shared across modules (e.g. code completion). Eventually, this could be used to disentangle RKSettingsModule from QWidget. */
@@ -182,7 +182,7 @@ class RKSettingsModuleWidget : public QWidget {
 	Q_OBJECT
   public:
 	RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module, const RKSettingsModule::PageId pageid, const RKSettingsModule::PageId superpageid = RKSettingsModule::no_page_id);
-	~RKSettingsModuleWidget(){};
+	~RKSettingsModuleWidget() {};
 	virtual void applyChanges() = 0;
 	/** Mark this module as "changed" (propagates to parent module) */
 	void change();

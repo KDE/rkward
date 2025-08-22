@@ -360,7 +360,7 @@ bool RKConsole::eventFilter(QObject *o, QEvent *e) {
 		        view->scroll (0, y - y2);
 		    }
 		} */
-		  // not good, yet: always jumps to bottom of view
+		// not good, yet: always jumps to bottom of view
 	} else if (e->type() == QEvent::DragMove || e->type() == QEvent::Drop) {
 		QDropEvent *me = static_cast<QDropEvent *>(e); // NOTE: QDragMoveEvent inherits from QDropEvent
 

@@ -37,7 +37,7 @@ class RKCodeNavigationInternal : public QObject {
 	                                                                     view(view),
 	                                                                     doc(view->document()),
 	                                                                     rmdmode(doc->highlightingMode() == u"R Markdown"_s),
-	                                                                     ps(doc->text(), rmdmode){};
+	                                                                     ps(doc->text(), rmdmode) {};
 
 	struct StoredPosition {
 		int pos;

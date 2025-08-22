@@ -32,13 +32,13 @@ QHash<int, RKGraphicsDevice *> RKGraphicsDevice::devices;
 
 RKGraphicsDevice::RKGraphicsDevice(double width, double height, const QString &title, bool antialias, bool keep_hidden) : QObject(),
 #ifdef USE_QIMAGE_BUFFER
-                                                                                                        area(qAbs(width) + 1, qAbs(height) + 1, QImage::Format_ARGB32),
+                                                                                                                          area(qAbs(width) + 1, qAbs(height) + 1, QImage::Format_ARGB32),
 #else
-                                                                                                        area(qAbs(width) + 1, qAbs(height) + 1),
+                                                                                                                          area(qAbs(width) + 1, qAbs(height) + 1),
 #endif
-                                                                                                        hidden(keep_hidden),
-                                                                                                        base_title(title),
-                                                                                                        antialias(antialias && !keep_hidden) {
+                                                                                                                          hidden(keep_hidden),
+                                                                                                                          base_title(title),
+                                                                                                                          antialias(antialias && !keep_hidden) {
 	RK_TRACE(GRAPHICS_DEVICE);
 
 	interaction_opcode = -1;

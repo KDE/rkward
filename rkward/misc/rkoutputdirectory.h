@@ -24,8 +24,8 @@ class RKOutputDirectory;
 /** Convenience struct to avoid defining separate functions for R API and C++ API in RKOutputDirectory.
  *  This struct encapsulates the relevant results for both */
 struct RKOutputDirectoryCallResult : public GenericRRequestResult {
-	RKOutputDirectoryCallResult() : GenericRRequestResult(), _dir(nullptr){};
-	RKOutputDirectoryCallResult(const GenericRRequestResult &other) : GenericRRequestResult(other), _dir(nullptr){};
+	RKOutputDirectoryCallResult() : GenericRRequestResult(), _dir(nullptr) {};
+	RKOutputDirectoryCallResult(const GenericRRequestResult &other) : GenericRRequestResult(other), _dir(nullptr) {};
 	void setDir(RKOutputDirectory *d);
 	RKOutputDirectory *dir() const { return _dir; }
 

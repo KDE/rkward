@@ -103,7 +103,7 @@ class RKRBackendEvent : public QEvent {
 		RKWardEvent = QEvent::User + 1
 	};
 	explicit RKRBackendEvent(RBackendRequest *data = nullptr) : QEvent((QEvent::Type)RKWardEvent) { _data = data; };
-	~RKRBackendEvent(){};
+	~RKRBackendEvent() {};
 
 	RBackendRequest *data() { return _data; };
 

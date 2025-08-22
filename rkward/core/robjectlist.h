@@ -44,7 +44,7 @@ class RObjectList : public QObject, public RContainerObject {
 	QString getFullName(int) const override { return QString(); };
 	QString makeChildName(const QString &short_child_name, int) const override { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
-	void writeMetaData(RCommandChain *) override{};
+	void writeMetaData(RCommandChain *) override {};
 
 	REnvironmentObject *findPackage(const QString &namespacename) const;
 

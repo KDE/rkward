@@ -49,8 +49,8 @@ class RKParsedScript {
 	};
 
 	struct Context {
-		Context(ContextType type, int start) : type(type), start(start){};
-		Context(ContextType type, int start, int end) : type(type), start(start), end(end){};
+		Context(ContextType type, int start) : type(type), start(start) {};
+		Context(ContextType type, int start, int end) : type(type), start(start), end(end) {};
 		bool maybeNesting() const { return (type == Parenthesis || type == Brace || type == Bracket || type == Top); };
 		ContextType type;
 		int start;
@@ -67,8 +67,8 @@ class RKParsedScript {
 
 	/** Helper struct to enforce strict type checking between character position, and index of context */
 	struct ContextIndex {
-		ContextIndex() : index(-1){};
-		explicit ContextIndex(int index) : index(index){};
+		ContextIndex() : index(-1) {};
+		explicit ContextIndex(int index) : index(index) {};
 		bool valid() const { return index >= 0; };
 		bool operator==(const ContextIndex &other) const { return index == other.index; };
 		bool operator!=(const ContextIndex &other) const { return index != other.index; };

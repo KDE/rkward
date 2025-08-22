@@ -60,8 +60,8 @@ class RKSetupWizardItem {
 		Warning,
 		Good
 	};
-	explicit RKSetupWizardItem(const QString &shortlabel, const QString &longlabel = QString(), Status status = Good, const QString &shortstatuslabel = QString()) : status(status), shortlabel(shortlabel), longlabel(longlabel), shortstatuslabel(shortstatuslabel), box(nullptr){};
-	~RKSetupWizardItem(){};
+	explicit RKSetupWizardItem(const QString &shortlabel, const QString &longlabel = QString(), Status status = Good, const QString &shortstatuslabel = QString()) : status(status), shortlabel(shortlabel), longlabel(longlabel), shortstatuslabel(shortstatuslabel), box(nullptr) {};
+	~RKSetupWizardItem() {};
 	void addOption(const QString &shortlabel, const QString &longlabel, std::function<void(RKSetupWizard *)> callback) {
 		options.append(Option(shortlabel, longlabel, callback));
 	}
@@ -79,7 +79,7 @@ class RKSetupWizardItem {
 	void apply(RKSetupWizard *wizard);
 
 	struct Option {
-		Option(const QString &shortlabel, const QString &longlabel, std::function<void(RKSetupWizard *)> callback) : shortlabel(shortlabel), longlabel(longlabel), callback(callback){};
+		Option(const QString &shortlabel, const QString &longlabel, std::function<void(RKSetupWizard *)> callback) : shortlabel(shortlabel), longlabel(longlabel), callback(callback) {};
 		QString shortlabel;
 		QString longlabel;
 		std::function<void(RKSetupWizard *)> callback;

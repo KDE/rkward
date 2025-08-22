@@ -46,8 +46,8 @@ class RKCommandEditorWindowPart : public KParts::Part {
 /** classes wishing to use context help should derive from this, and implement currentHelpContext() */
 class RKScriptContextProvider {
   public:
-	RKScriptContextProvider(){};
-	virtual ~RKScriptContextProvider(){};
+	RKScriptContextProvider() {};
+	virtual ~RKScriptContextProvider() {};
 
 	/** to be implemented in subclasses. Provide current context for help searches (based on current selection / current cursor position). If no package information is known, leave that empty. */
 	virtual void currentHelpContext(QString *symbol, QString *package) = 0;

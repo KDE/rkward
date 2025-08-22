@@ -19,7 +19,8 @@ extern "C"
 #else
     __attribute__((__visibility__("default")))
 #endif
-        int do_main(int, char **, void *, void *(*)(void *, const char *));
+    int
+    do_main(int, char **, void *, void *(*)(void *, const char *));
 
 class RKRBackendProtocolBackend {
   public:

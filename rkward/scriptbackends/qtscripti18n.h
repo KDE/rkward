@@ -18,8 +18,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class RKMessageCatalogObject : public QObject {
 	Q_OBJECT
   public:
-	RKMessageCatalogObject(const RKMessageCatalog *_catalog, QObject *parent) : QObject(parent), catalog(_catalog){};
-	virtual ~RKMessageCatalogObject(){};
+	RKMessageCatalogObject(const RKMessageCatalog *_catalog, QObject *parent) : QObject(parent), catalog(_catalog) {};
+	virtual ~RKMessageCatalogObject() {};
 
 	Q_INVOKABLE QString i18n(const QString &msgid, const QStringList &args) const {
 		return (catalog->translate(msgid, args));

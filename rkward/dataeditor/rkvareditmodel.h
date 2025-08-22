@@ -25,8 +25,8 @@ class RKRowNames;
 @author Thomas Friedrichsmeier */
 class RKVarEditModelBase : public QAbstractTableModel {
   public:
-	explicit RKVarEditModelBase(QObject *parent) : QAbstractTableModel(parent), var_col_offset(0){};
-	virtual ~RKVarEditModelBase(){};
+	explicit RKVarEditModelBase(QObject *parent) : QAbstractTableModel(parent), var_col_offset(0) {};
+	virtual ~RKVarEditModelBase() {};
 
 	virtual RKTextMatrix getTextMatrix(const QItemSelectionRange &range) const = 0;
 	virtual void blankRange(const QItemSelectionRange &range) = 0;

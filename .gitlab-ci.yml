@@ -71,7 +71,7 @@ clang_format:
     - master
   before_script:
     - apt-get update
-    - apt-get install --yes --no-install-recommends git clang-format-14
+    - apt-get install --yes --no-install-recommends git clang-format-19
   script:
-    - find rkward \( -name "*.cpp" -or -name "*.h"  -or -name "*.js" \) -exec clang-format-14 -i {} \;
+    - find rkward \( -name "*.cpp" -or -name "*.h"  -or -name "*.js" \) -exec clang-format-19 -i {} \;
     - git diff --exit-code

@@ -17,8 +17,8 @@ class ConfigPage;
 class RKCodeCompletionSettingsWidget;
 class RKCodeCompletionSettings {
   public:
-	RKCodeCompletionSettings(){};
-	~RKCodeCompletionSettings(){};
+	RKCodeCompletionSettings() {};
+	~RKCodeCompletionSettings() {};
 
 	void syncConfig(KConfigGroup &cg, RKConfigBase::ConfigSyncAction a) { group.syncConfig(cg, a); };
 
@@ -64,7 +64,7 @@ class RKCodeCompletionSettings {
 class RKCodeCompletionSettingsWidget : public QWidget {
   public:
 	RKCodeCompletionSettingsWidget(RKSettingsModuleWidget *parent, RKCodeCompletionSettings *settings, bool show_common);
-	~RKCodeCompletionSettingsWidget(){};
+	~RKCodeCompletionSettingsWidget() {};
 
   private:
 	void makeCompletionTypeBoxes(const QStringList &labels, QGridLayout *layout);

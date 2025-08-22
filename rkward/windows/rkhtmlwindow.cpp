@@ -180,7 +180,7 @@ class RKWebPage : public QWebEnginePage {
 
 class RKWebView : public QWebEngineView {
   public:
-	explicit RKWebView(QWidget *parent) : QWebEngineView(parent){};
+	explicit RKWebView(QWidget *parent) : QWebEngineView(parent) {};
 	void print(QPrinter *printer) {
 		if (!page()) return;
 		QWebEngineView::forPage(page())->print(printer);

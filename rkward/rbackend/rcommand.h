@@ -37,7 +37,7 @@ class RCommandChain {
   protected:
 	friend class RCommandStack;
 	friend class RCommandStackModel;
-	RCommandChain(bool is_chain = true) : closed(!is_chain), is_command(!is_chain){};
+	RCommandChain(bool is_chain = true) : closed(!is_chain), is_command(!is_chain) {};
 	QList<RCommandChain *> sub_commands;
 	bool closed;
 	bool is_command;
@@ -47,7 +47,7 @@ class RCommandChain {
 /** this struct is used to store the R output to an RCommand. The RCommand basically keeps a list of ROutputString (s). The difference to a normal
 QString is, that additionally we store information on whether the output was "normal", "warning", or an "error". */
 struct ROutput {
-	ROutput() : type(NoOutput){};
+	ROutput() : type(NoOutput) {};
 	enum ROutputType {
 		NoOutput, /**< No output. Rarely used. */
 		Output,   /**< normal output */
@@ -233,7 +233,7 @@ class RCommand : public RData, public RCommandChain {
  *  - If @param warning is non-null, the message will be shown (as a warning), but no error will be raised.
  *  - Unless an error was thrown, @param ret will be returned as a basic data type (possibly NULL). */
 struct GenericRRequestResult {
-	GenericRRequestResult(const QVariant &ret = QVariant(), const QString &warning = QString(), const QString &error = QString()) : error(error), warning(warning), ret(ret){};
+	GenericRRequestResult(const QVariant &ret = QVariant(), const QString &warning = QString(), const QString &error = QString()) : error(error), warning(warning), ret(ret) {};
 	static GenericRRequestResult makeError(const QString &error) {
 		return GenericRRequestResult(QVariant(), QString(), error);
 	}

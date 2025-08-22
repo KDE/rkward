@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class XMLHelper;
 struct RKComponentDependency {
-	RKComponentDependency() : type(RBaseInstallation), min_version(RKParsedVersion()), max_version(RKParsedVersion::maxVersion()){};
+	RKComponentDependency() : type(RBaseInstallation), min_version(RKParsedVersion()), max_version(RKParsedVersion::maxVersion()) {};
 	QString toHtml() const;
 	static QString depsToHtml(const QList<RKComponentDependency> &deps);
 	enum DependencyType {

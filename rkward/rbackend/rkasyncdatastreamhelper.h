@@ -37,7 +37,7 @@ class RKAsyncDataStreamHelper {
 		device = nullptr;
 		expected_read_size = 0;
 	}
-	~RKAsyncDataStreamHelper(){};
+	~RKAsyncDataStreamHelper() {};
 
 	void setIODevice(QIODevice *_device) {
 		device = _device;

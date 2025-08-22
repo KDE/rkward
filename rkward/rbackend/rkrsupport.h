@@ -63,7 +63,7 @@ class RKRShadowEnvironment {
 	static void updateCacheForGlobalenvSymbol(const QString &name);
 
   private:
-	RKRShadowEnvironment(SEXP baseenvir, SEXP shadowenvir) : baseenvir(baseenvir), shadowenvir(shadowenvir){};
+	RKRShadowEnvironment(SEXP baseenvir, SEXP shadowenvir) : baseenvir(baseenvir), shadowenvir(shadowenvir) {};
 	~RKRShadowEnvironment();
 	static RKRShadowEnvironment *environmentFor(SEXP baseenvir);
 	void updateSymbolCache(const QString &name);

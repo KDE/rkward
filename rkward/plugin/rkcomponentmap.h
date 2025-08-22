@@ -18,7 +18,7 @@ class XMLHelper;
 /** very simple helper class to keep track of .pluginmap files */
 class RKPluginMapFile {
   public:
-	RKPluginMapFile(const QString &filename, const QString &basedir, const RKMessageCatalog *_catalog) : basedir(basedir), filename(filename), catalog(_catalog), about(nullptr){};
+	RKPluginMapFile(const QString &filename, const QString &basedir, const RKMessageCatalog *_catalog) : basedir(basedir), filename(filename), catalog(_catalog), about(nullptr) {};
 	~RKPluginMapFile() { delete about; };
 
 	QString getBaseDir() const { return basedir; };
@@ -157,7 +157,7 @@ class RKComponentGUIXML {
 	void clearGUIDescription();
 
 	/** an entry was added to the menu(s) somewhere. Reimplement, if you want to e.g. create a QAction for this */
-	virtual void addedEntry(const QString & /* id */, RKComponentHandle * /* handle */){};
+	virtual void addedEntry(const QString & /* id */, RKComponentHandle * /* handle */) {};
 
 	/** The generated XML GUI description in KDEs ui.rc format */
 	QDomDocument gui_xml;
@@ -186,7 +186,7 @@ class RKComponentGUIXML {
 
 class RKPluginMapParseResult {
   public:
-	RKPluginMapParseResult() : valid_plugins(0){};
+	RKPluginMapParseResult() : valid_plugins(0) {};
 	void add(const RKPluginMapParseResult &other) {
 		detailed_problems.append(other.detailed_problems);
 		valid_plugins += other.valid_plugins;

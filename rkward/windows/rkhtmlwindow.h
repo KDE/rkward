@@ -146,7 +146,7 @@ class RKHTMLWindowPart : public KParts::Part {
 	Q_OBJECT
   public:
 	explicit RKHTMLWindowPart(RKHTMLWindow *window);
-	~RKHTMLWindowPart(){};
+	~RKHTMLWindowPart() {};
 
 	void setOutputDirectoryActionsEnabled(bool enable);
 	void setOutputWindowSkin();
@@ -185,7 +185,7 @@ class RKHelpRenderer {
 		component_xml = nullptr;
 	};
 	/** destructor */
-	~RKHelpRenderer(){};
+	~RKHelpRenderer() {};
 	/** render an rkward://[page|component]-page to the device given in the ctor.
 	 * @param container : Should be page contain dynamic elements, connections will be set up to call refresh(), on the container, as appropriate. May be nullptr. */
 	bool renderRKHelp(const QUrl &url, RKHTMLWindow *container);
