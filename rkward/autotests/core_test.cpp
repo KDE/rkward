@@ -587,6 +587,43 @@ class RKWardCoreTest : public QObject {
 		QVERIFY(!m->actionByPath(actionpath));
 	}
 
+	void deviceHooksTest() {
+		QString command = u"graphics.off()\n"_s
+		                  "hook <- RK.addHook(\n"_s
+		                  "  after.create=function(devnum, ...) {\n"_s
+		                  "    print(paste0(\"New device \", devnum))\n"_s
+		                  "  },\n"_s
+		                  "  in.close=function(devnum, snapshot, ...) {\n"_s
+		                  "    print(paste0(\"Closed device \", devnum))\n"_s
+		                  "  },\n"_s
+		                  "  in.blank=function(devnum, snapshot, ...) {\n"_s
+		                  "    print(paste0(\"Blanking device \", devnum))\n"_s
+		                  "  }\n"_s
+		                  ")\n"_s
+
+		                  "RK()\n"_s
+		                  "plot(1, 1)\n"_s
+		                  "plot(2, 2)\n"_s
+		                  "rev <- RK.revision(dev.cur())\n"_s
+		                  "title(\"Title\")\n"_s
+		                  "if (RK.revision(dev.cur()) > rev) {\n"_s
+		                  "  print(\"Plot was modified\")\n"_s
+		                  "}\n"_s
+		                  "dev.off()\n"_s
+		                  "RK.removeHook(hook)\n"_s
+
+		                  "plot(3, 3)\n"_s
+		                  "dev.off()\n"_s;
+		runCommandWithTimeout(new RCommand(command, RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(!command->failed());
+			auto output = command->fullOutput();
+			QCOMPARE(output.count(u"New device 2"_s), 1);
+			QCOMPARE(output.count(u"Closed device 2"_s), 1);
+			QCOMPARE(output.count(u"Plot was modified"_s), 1);
+			QCOMPARE(output.count(u"Blanking device 2"_s), 2); // once each for the first two plots, but not for title()
+		});
+	}
+
 	void restartRBackend() {
 		RInterface::issueCommand(new RCommand(QStringLiteral("setwd(tempdir())"), RCommand::User)); // retart used to fail, if in non-existant directory
 		RInterface::issueCommand(new RCommand(QStringLiteral("x <- 1"), RCommand::User));
