@@ -764,9 +764,9 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	b->setToolTip(i18n("Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</b> objects in .GlobalEnv."));
 	b = env_opt->addButton(i18n("Scoped"), Scoped);
 	b->setChecked(true);
-	b->setToolTip(i18n("Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be accessed, but regular assignments using the <tt><-</tt>-operator will not modify them. (Other assignment operations could still modify them!)"));
+	b->setToolTip(i18n("Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not modify them. (Other assignment operations could still modify them!)"));
 	b = env_opt->addButton(i18n("Local"), Local);
-	b->setToolTip(i18n("Evaluate code in true local environment. Objects in .GlobalEnv are not on the search path, and will not be modified by regular assignments using the <tt><-</tt>-operator. (Other assignment operations could still modify them!)"));
+	b->setToolTip(i18n("Evaluate code in true local environment. Objects in .GlobalEnv are not on the search path, and will not be modified by regular assignments using the <tt>&lt;-</tt>-operator. (Other assignment operations could still modify them!)"));
 	rkconsole->command = [env_opt, echo_opt, continue_opt](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
 		auto command = QStringLiteral("try(rk.eval.as.preview(%1, %2%3), silent=TRUE)\n" // silent, because error will be printed!
 		                              "rk.show.html(%2)\n");
