@@ -7,6 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QActionGroup>
 #include <QApplication>
+#include <QButtonGroup>
 #include <QDir>
 #include <QFile>
 #include <QLoggingCategory>
@@ -522,19 +523,20 @@ class RKWardCoreTest : public QObject {
 
 		// pretty basic check: don't crash or assert on switching between previews
 		// NOTE: first action is "no preview"
-		auto actions = win->preview_modes->actions();
-		QVERIFY(actions.size() > 4);
-		for (int i = actions.size() - 1; i >= 0; --i) {
-			auto a = actions[i];
-			if (a->isCheckable()) {
-				qDebug("action %s", qPrintable(a->text()));
-				a->trigger(); // NOTE: Using setChecked(true), here, would not emit the require QActionGroup::triggered() inside RKCommandEditorWindow
-				QVERIFY(a->isChecked());
+		auto modes = win->preview_modes->buttons();
+		QVERIFY(modes.size() > 4);
+		for (int i = modes.size() - 1; i >= 0; --i) {
+			auto b = modes[i];
+			if (b->isCheckable()) {
+				qDebug("modebutton %s", qPrintable(b->text()));
+				b->setChecked(true);
+				QVERIFY(b->isChecked());
 				win->doRenderPreview(); // don't wait for debounce timeout
 				waitForAllFinished(8000);
 				// TODO: check that a preview was actually generated
 			}
 		}
+
 		win->close(RKMDIWindow::NoAskSaveModified);
 		waitForAllFinished();
 	}

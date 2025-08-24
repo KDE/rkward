@@ -27,6 +27,9 @@ class QFrame;
 class QLabel;
 class QAction;
 class QActionGroup;
+class QRadioButton;
+class QButtonGroup;
+class QChckBox;
 class RKScriptPreviewIO;
 class KActionMenu;
 class RKCommandEditorWindow;
@@ -179,9 +182,9 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 
 	QAction *action_run_all;
 	QAction *action_run_current;
-	QActionGroup *preview_modes;
-	QAction *action_no_preview;
-	QAction *action_preview_as_you_type;
+	QButtonGroup *preview_modes;
+	QRadioButton *action_no_preview;
+	QCheckBox *action_preview_as_you_type;
 
 	QAction *action_setwd_to_script;
 
@@ -195,12 +198,13 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	static QMap<QString, KTextEditor::Document *> unnamed_documents;
 
 	void initPreviewModes(KActionMenu *menu);
+	/** call doRenderPreview, but debounced */
+	void triggerPreview(int timeout = 0);
 
 	RKXMLGUIPreviewArea *preview;
 	QTimer preview_timer;
 	RKPreviewManager *preview_manager;
 	RKScriptPreviewIO *preview_io;
-	void changePreviewMode(QAction *mode);
 	void discardPreview();
 };
 
