@@ -203,12 +203,11 @@ void RKGraphicsDevice::updateNow() {
 void RKGraphicsDevice::checkSize() {
 	RK_TRACE(GRAPHICS_DEVICE);
 	if (!view) return;
-	if (view->size() != area.size()) {
-		if (view->size().isEmpty()) return;
-#warning FIXME Sometimes called after closeDevice (key no longer present).
-		RInterface::issueCommand(
-		    new RCommand(u"rkward:::RK.resize("_s + QString::number(devices.key(this) + 1) + u',' + QString::number(id) + u')', RCommand::PriorityCommand));
-	}
+	if (view->size() == area.size()) return;
+	if (view->size().isEmpty()) return;
+	auto devnum = devices.key(this, -1) + 1;
+	if (devnum < 1) return; // Workaround / FIXME Sometimes called after closeDevice (key no longer present).
+	RInterface::issueCommand(new RCommand(u"rkward:::RK.resize("_s + QString::number(devnum) + u',' + QString::number(id) + u')', RCommand::PriorityCommand));
 }
 
 RKGraphicsDevice *RKGraphicsDevice::newDevice(int devnum, double width, double height, const QString &title, bool antialias, bool hidden, quint32 id) {
