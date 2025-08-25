@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-10 00:39+0000\n"
+"POT-Creation-Date: 2025-08-25 00:38+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -3513,7 +3513,7 @@ msgid "Enter value:"
 msgstr "मूल्यं प्रविशतु :"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:373
+#: rkward/windows/rkcommandeditorwindow.cpp:376
 #, kde-format
 msgid "Preview"
 msgstr "पूर्वावलोकनम्"
@@ -3533,6 +3533,7 @@ msgid "Could not create plugin"
 msgstr "प्लगिन् निर्मातुं न शक्तवान्"
 
 #: rkward/plugin/rkstandardcomponent.cpp:667
+#: rkward/windows/rkcommandeditorwindow.cpp:806
 #, kde-format
 msgid "Options"
 msgstr "विकल्पाः"
@@ -3788,7 +3789,7 @@ msgstr "R पृष्ठभागात् सन्देशः"
 msgid "Question from the R backend"
 msgstr "R पृष्ठभागात् प्रश्नः"
 
-#: rkward/rbackend/rkrbackend.cpp:1602
+#: rkward/rbackend/rkrbackend.cpp:1604
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3808,7 +3809,7 @@ msgstr ""
 "समाधातव्यम्</b> । तस्य साहाय्यार्थं <a href=\"https://rkward.kde.org/compiling"
 "\">https://rkward.kde.org/compiling</a> पश्यन्तु ।</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1606
+#: rkward/rbackend/rkrbackend.cpp:1608
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3822,12 +3823,12 @@ msgstr ""
 "साहाय्यार्थं <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a> पश्यन्तु ।</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1663
+#: rkward/rbackend/rkrbackend.cpp:1665
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "ग्राफिक्स संस्करण बेमेल"
 
-#: rkward/rbackend/rkrbackend.cpp:1663
+#: rkward/rbackend/rkrbackend.cpp:1665
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3838,17 +3839,17 @@ msgstr ""
 "संकलनस्य आवश्यकता वर्तते ।<br> <a href=\"rkward://page/rkward_incompatible_version"
 "\">अतिरिक्त सूचना</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1663
+#: rkward/rbackend/rkrbackend.cpp:1665
 #, kde-format
 msgid "Ok"
 msgstr "अस्तु"
 
-#: rkward/rbackend/rkrinterface.cpp:89
+#: rkward/rbackend/rkrinterface.cpp:90
 #, kde-format
 msgid "R Startup"
 msgstr "आर स्टार्टअप"
 
-#: rkward/rbackend/rkrinterface.cpp:91
+#: rkward/rbackend/rkrinterface.cpp:92
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -3857,19 +3858,19 @@ msgstr ""
 "<p>-अनिर्दिष्टदोषः अभवत् यत् अद्यापि RKWard द्वारा न नियन्त्रितम्। सम्भवतः RKWard सम्यक् "
 "कार्यं न करिष्यति। कृपया स्वस्य सेटअपं पश्यन्तु।</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:93
+#: rkward/rbackend/rkrinterface.cpp:94
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr "<p>R पृष्ठभागस्य आरम्भे समस्या आसीत् । निम्नलिखितदोषः (दोषाः) अभवन् ।</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:95
+#: rkward/rbackend/rkrinterface.cpp:96
 #, kde-format
 msgid "Error starting R"
 msgstr "आरम्भदोषः R"
 
-#: rkward/rbackend/rkrinterface.cpp:652
+#: rkward/rbackend/rkrinterface.cpp:653
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3881,17 +3882,17 @@ msgstr ""
 "सम्प्रति संस्थापितम् नास्ति । वयं package-management tool उद्घाटयिष्यामः, तत्र भवान् "
 "आवश्यकं package अन्वेष्टुं संस्थापयितुं च प्रयतितुं शक्नोति ।"
 
-#: rkward/rbackend/rkrinterface.cpp:652
+#: rkward/rbackend/rkrinterface.cpp:653
 #, kde-format
 msgid "Require package '%1'"
 msgstr "'%1' संकुलस्य आवश्यकता अस्ति।"
 
-#: rkward/rbackend/rkrinterface.cpp:684
+#: rkward/rbackend/rkrinterface.cpp:685
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "परित्यागः रद्दः अभवत्"
 
-#: rkward/rbackend/rkrinterface.cpp:686
+#: rkward/rbackend/rkrinterface.cpp:687
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3913,37 +3914,37 @@ msgstr ""
 "सति कृपया इदानीं 'Cancel' इति चिनोतु, ततः दत्तांशविण्डोः पिधाय, रक्षतु, पुनः प्रयासं च "
 "कुर्वन्तु ।"
 
-#: rkward/rbackend/rkrinterface.cpp:686
+#: rkward/rbackend/rkrinterface.cpp:687
 #, kde-format
 msgid "Locale change"
 msgstr "स्थानीय परिवर्तनम्"
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:688
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "लोकेल परिवर्तनं उपयोक्त्रा रद्दं कृतम्"
 
-#: rkward/rbackend/rkrinterface.cpp:788
+#: rkward/rbackend/rkrinterface.cpp:791
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "पूर्वमेव आदेशान् अभिलेखनं कुर्वन्, अभिलेखनं आरभ्यतुं प्रयतध्वम् । उपेक्ष्य ।"
 
-#: rkward/rbackend/rkrinterface.cpp:796
+#: rkward/rbackend/rkrinterface.cpp:799
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "लेखनार्थं सञ्चिकां उद्घाटयितुं न शक्तवान्। आदेशान् न अभिलेखयति"
 
-#: rkward/rbackend/rkrinterface.cpp:820
+#: rkward/rbackend/rkrinterface.cpp:823
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "त्रुटि: अपरिचितः अनुरोधः '%1'."
 
-#: rkward/rbackend/rkrinterface.cpp:900
+#: rkward/rbackend/rkrinterface.cpp:903
 #, kde-format
 msgid "R backend requests information"
 msgstr "R backend सूचनां अनुरोधयति"
 
-#: rkward/rbackend/rkrinterface.cpp:922
+#: rkward/rbackend/rkrinterface.cpp:925
 #, kde-format
 msgid ""
 "\n"
@@ -3961,29 +3962,29 @@ msgstr ""
 "मुक्त-आदेश-सञ्चिकां, निर्गमं, अथवा दत्तांशं प्रतिलिख्यताम् । तदनन्तरं आरकेवार्डं त्यजन्तु। "
 "क्षम्यताम्‌!"
 
-#: rkward/rbackend/rkrinterface.cpp:923
+#: rkward/rbackend/rkrinterface.cpp:926
 #, kde-format
 msgid "R engine has died"
 msgstr "आर इञ्जिनं मृतम् अस्ति"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:213
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:220
 #, kde-format
 msgid "Graphics Device Number %1"
 msgstr "ग्राफिक्स उपकरणसङ्ख्या %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:650
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:657
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (सक्रिय)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:652
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:659
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (निष्क्रिय)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:678
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:685
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -3992,18 +3993,18 @@ msgstr ""
 "<h2>स्थाननिर्धारण बिन्दु(s) 1.1.</h2><p> बिन्दु(बिन्दून्) चयनार्थं वाममूषकस्य बटनस्य उपयोगं "
 "कुर्वन्तु । अन्यत् किमपि मूषकस्य बटनं स्थगयितुं।</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:688
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:695
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>अग्रिमप्लॉट् द्रष्टुं Enter नुदन्तु, अथवा निरस्तं कर्तुं &#39;Cancel&#39; नुदन्तु ।</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:692
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:699
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "अग्रिम कथानकं दर्शयितुं ठीकम्?"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:67
 #, kde-format
 msgid ""
 "There has been an error while trying to connect the on-screen graphics "
@@ -4013,12 +4014,12 @@ msgstr ""
 "पर्दायां चित्रपृष्ठभागं संयोजयितुं प्रयतमाने त्रुटिः अभवत् । अस्य अर्थः अस्ति यत्, RKWard "
 "उपकरणस्य उपयोगेन पर्दायां चित्राणि अस्मिन् सत्रे कार्यं न करिष्यन्ति ।"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:67
 #, kde-format
 msgid "Expected connection token %1, but read connection token %2"
 msgstr "अपेक्षितं संयोजन टोकन %1, परन्तु संयोजन टोकन %2 पठन्तु"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:67
 #, kde-format
 msgid "Error while connection graphics backend"
 msgstr "संयोजनग्राफिक्स पृष्ठभागस्य समये त्रुटिः"
@@ -4037,7 +4038,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "'katepart' घटकः न लब्धः"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:710
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:749
 #, kde-format
 msgid "R Console"
 msgstr "आर कन्सोल"
@@ -6281,68 +6282,58 @@ msgstr "&धावनं करोतु"
 msgid "Run current statement, and advance"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:166
+#: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
 msgid "Unable to open \"%1\""
 msgstr "\"%1\" उद्घाटयितुं असमर्थः।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:166
+#: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
 msgid "Could not open command file"
 msgstr "आदेशसञ्चिकां उद्घाटयितुं न शक्तवान्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:206
+#: rkward/windows/rkcommandeditorwindow.cpp:209
 #, kde-format
 msgid "Script Editor"
 msgstr "स्क्रिप्ट सम्पादक"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:349
+#: rkward/windows/rkcommandeditorwindow.cpp:352
 #, kde-format
 msgid "Insert line break and run"
 msgstr "रेखाविच्छेदं सम्मिलितं कृत्वा चालयन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:356
+#: rkward/windows/rkcommandeditorwindow.cpp:359
 #, kde-format
 msgid "Run block"
 msgstr "ब्लॉकं चालयन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:360
+#: rkward/windows/rkcommandeditorwindow.cpp:363
 #, kde-format
 msgid "Mark selection as block"
 msgstr "चयनं खण्डरूपेण चिह्नितव्यम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:363
+#: rkward/windows/rkcommandeditorwindow.cpp:366
 #, kde-format
 msgid "Unmark block"
 msgstr "अचिह्न खण्ड"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:368
+#: rkward/windows/rkcommandeditorwindow.cpp:371
 #, kde-format
 msgid "CD to script directory"
 msgstr "सीडी तः स्क्रिप्ट् निर्देशिका"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:369
+#: rkward/windows/rkcommandeditorwindow.cpp:372
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "कार्यनिर्देशिकाम् अस्याः स्क्रिप्ट् इत्यस्य निर्देशिकायां परिवर्तयन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:376
-#, kde-format
-msgid "No preview"
-msgstr "पूर्वावलोकनं नास्ति"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:377
-#, kde-format
-msgid "Disable preview"
-msgstr "पूर्वावलोकनं निष्क्रियं कुर्वन्तु"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:394
+#: rkward/windows/rkcommandeditorwindow.cpp:379
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "यथा यथा टङ्कयति तथा अद्यतनं कुर्वन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:395
+#: rkward/windows/rkcommandeditorwindow.cpp:381
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6353,71 +6344,44 @@ msgstr ""
 "अद्यतनं प्रवर्तते । यदा एषः विकल्पः निष्क्रियः भवति तदा यदा कदापि भवन्तः स्क्रिप्ट् "
 "रक्षन्ति तदा पूर्वावलोकनं अद्यतनं भविष्यति, केवलं ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:402
+#: rkward/windows/rkcommandeditorwindow.cpp:387
 #, kde-format
 msgid "Save Script..."
 msgstr "स्क्रिप्ट् रक्षतु..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:404
+#: rkward/windows/rkcommandeditorwindow.cpp:389
 #, kde-format
 msgid "Save Script As..."
 msgstr "स्क्रिप्ट् इत्यस्य रक्षणं कुर्वन्तु..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:484
-#: rkward/windows/rkcommandeditorwindow.cpp:942
+#: rkward/windows/rkcommandeditorwindow.cpp:469
+#: rkward/windows/rkcommandeditorwindow.cpp:1058
 #, kde-format
 msgid " [modified]"
 msgstr " [संशोधितम्] ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:491
+#: rkward/windows/rkcommandeditorwindow.cpp:476
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "\"%1\" इति दस्तावेजं परिवर्तितम् अस्ति । तथापि पिधाय ?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:491
+#: rkward/windows/rkcommandeditorwindow.cpp:476
 #, kde-format
 msgid "File not saved"
 msgstr "सञ्चिका न रक्षिता"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:610
-#, kde-format
-msgid ""
-"<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
-"your workspace (technically, by making use of a <i>local()</i> evaluation "
-"environment). <b>However, there are cases where using the preview feature "
-"may cause unexpected side-effects</b>.</p><p>In particular, this is the case "
-"for scripts that contain explicit assignments to <i>globalenv()</i>, or to "
-"scripts that alter files on your filesystem. Further, attaching/detaching "
-"packages or package namespaces will affect the entire running R session.</"
-"p><p>Please keep this in mind when using the preview feature, and especially "
-"when using the feature on scripts originating from untrusted sources.</p>"
-msgstr ""
-"<p>पूर्वावलोकनविशेषता भवतः कार्यक्षेत्रे किमपि स्थायिपरिवर्तनं न कर्तुं <b>प्रयतते</b> "
-"(तकनीकीरूपेण, <i>स्थानीय()</i> मूल्याङ्कनवातावरणस्य उपयोगं कृत्वा) । <b>परन्तु एतादृशाः "
-"प्रकरणाः सन्ति यत्र पूर्वावलोकनविशेषतायाः उपयोगेन अप्रत्याशितपार्श्वप्रभावाः भवितुम् "
-"अर्हन्ति</b> .</p><p> विशेषतः, एतत् स्क्रिप्ट्-कृते भवति येषु <i>globalenv()</i> -इत्यत्र "
-"स्पष्टं नियुक्तिः भवति, अथवा भवतः सञ्चिकातन्त्रे सञ्चिकाः परिवर्तयन्तः स्क्रिप्ट्-इत्येतत् । "
-"ततः परं, संकुलं वा संकुलनामस्थानानि वा संलग्नं/विच्छेदनं सम्पूर्णं चालितं R सत्रं प्रभावितं "
-"करिष्यति ।</p><p> कृपया पूर्वावलोकनविशेषतायाः उपयोगं कुर्वन्, विशेषतः च "
-"अविश्वसनीयस्रोतात् उत्पन्नेषु स्क्रिप्ट्-मध्ये विशेषतायाः उपयोगं कुर्वन् एतत् मनसि धारयन्तु ।</p>"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:610
-#, kde-format
-msgid "Potential side-effects of previews"
-msgstr "पूर्वावलोकनस्य सम्भाव्य दुष्प्रभावाः"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:669
+#: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
 msgstr "सॉफ्टवेयरं गम्यते"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:670
+#: rkward/windows/rkcommandeditorwindow.cpp:696
 #, kde-format
 msgid "Rendering the preview failed"
 msgstr "पूर्वावलोकनस्य प्रतिपादनं विफलम् अभवत्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:671
+#: rkward/windows/rkcommandeditorwindow.cpp:697
 #, kde-format
 msgid ""
 "The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
@@ -6434,7 +6398,7 @@ msgstr ""
 "\">Settings-&gt;Configure RKward-&gt;R-backend</a> इत्यत्र चालितस्य R सत्रस्य "
 "सिस्टम् मार्गे योजयितुं प्रयतध्वम् ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:674
+#: rkward/windows/rkcommandeditorwindow.cpp:700
 #, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
@@ -6445,7 +6409,7 @@ msgstr ""
 "संस्थापनस्य सरलतमः उपायः <tt>install.packages(\"tinytex\"); पुस्तकालय (\"tinytex"
 "\"); install_tinytex()</tt> इति"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:675
+#: rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
 msgid ""
 "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
@@ -6458,48 +6422,67 @@ msgstr ""
 "उपयोगेन, अधः, अथवा पूर्वावलोकन-विधिं &#39;R Markdown (HTML)&#39; इति परिवर्तयितुं "
 "शक्नोति ।</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:684
+#: rkward/windows/rkcommandeditorwindow.cpp:711
 #, kde-format
-msgid "R Markdown (HTML)"
+msgid "No preview"
+msgstr "पूर्वावलोकनं नास्ति"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:713
+#, kde-format
+msgid "Disable preview"
+msgstr "पूर्वावलोकनं निष्क्रियं कुर्वन्तु"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:717
+#, fuzzy, kde-format
+#| msgid "R Markdown (HTML)"
+msgid "R Markdown"
 msgstr "आर मार्कडाउन (HTML)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:684
-#: rkward/windows/rkcommandeditorwindow.cpp:691
+#: rkward/windows/rkcommandeditorwindow.cpp:718
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "रेण्डर्ड् R Markdown इत्यस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:685
-#, kde-format
-msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+#: rkward/windows/rkcommandeditorwindow.cpp:719
+#, fuzzy, kde-format
+#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 "RMarkdown प्रारूपात् (.Rmd) HTML मध्ये यथा रेण्डर् कृतं तथा स्क्रिप्ट् पूर्वावलोकनं कुर्वन्तु ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:691
-#, kde-format
-msgid "R Markdown (auto)"
-msgstr "आर मार्कडाउन (स्वयं)"
+#: rkward/windows/rkcommandeditorwindow.cpp:723
+#, fuzzy, kde-format
+#| msgid "Select format"
+msgid "Render format"
+msgstr "प्रारूपं चिनोतु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:692
+#: rkward/windows/rkcommandeditorwindow.cpp:724
 #, kde-format
-msgid ""
-"Preview the script as rendered from RMarkdown format (.Rmd) to the format "
-"specified in the document header."
+msgid "Render as HTML"
 msgstr ""
-"RMarkdown प्रारूपात् (.Rmd) दस्तावेजशीर्षके निर्दिष्टे प्रारूपे यथा रेण्डर्ड् कृतं तथा स्क्रिप्ट् "
-"पूर्वावलोकनं कुर्वन्तु ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:698
+#: rkward/windows/rkcommandeditorwindow.cpp:725
+#, kde-format
+msgid "Render as PDF"
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:726
+#, fuzzy, kde-format
+#| msgid "Format"
+msgid "Auto Format"
+msgstr "प्रारूप"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
 msgid "RKWard Output"
 msgstr "आरकेवार्ड आउटपुट"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:698
+#: rkward/windows/rkcommandeditorwindow.cpp:737
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "उत्पन्नस्य RKWard आउटपुटस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:699
+#: rkward/windows/rkcommandeditorwindow.cpp:738
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6509,27 +6492,86 @@ msgstr ""
 "रिक्तं भविष्यति, यदि <i>rk.print()</i> अथवा अन्येषां RKWard आउटपुट् आदेशानां कृते आह्वानं "
 "नास्ति ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:710
+#: rkward/windows/rkcommandeditorwindow.cpp:750
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "अन्तरक्रियाशील R Console मध्ये चालितस्य स्क्रिप्ट् इत्यस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:711
+#: rkward/windows/rkcommandeditorwindow.cpp:751
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "स्क्रिप्ट् इत्यस्य पूर्वावलोकनं यथा इंटरएक्टिव् R Console इत्यत्र चालितम् अस्ति"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:736
+#: rkward/windows/rkcommandeditorwindow.cpp:755
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
+msgid "Echo statements"
+msgstr "अपूर्णं कथनम् ।\n"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:758
+#, fuzzy, kde-format
+#| msgid "Convert warnings to errors"
+msgid "Continue on error"
+msgstr "चेतावनीः त्रुटिरूपेण परिवर्तयन्तु"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:760
+#, fuzzy, kde-format
+#| msgid "Environment"
+msgid "Evaluation environment"
+msgstr "पर्यावरणम्‌"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:762
+#, fuzzy, kde-format
+#| msgid "Copy to .GlobalEnv"
+msgid ".GlobalEnv"
+msgstr "प्रतिलिपि कुर्वन्तु .GlobalEnv"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:764
+#, kde-format
+msgid ""
+"Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
+"b> objects in .GlobalEnv."
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:765
+#, kde-format
+msgid "Scoped"
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:767
+#, kde-format
+msgid ""
+"Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
+"accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
+"modify them. (Other assignment operations could still modify them!)"
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:768
+#, fuzzy, kde-format
+#| msgid "Location"
+msgid "Local"
+msgstr "स्थानीय"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:769
+#, kde-format
+msgid ""
+"Evaluate code in true local environment. Objects in .GlobalEnv are not on "
+"the search path, and will not be modified by regular assignments using the "
+"<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
+"them!)"
+msgstr ""
+
+#: rkward/windows/rkcommandeditorwindow.cpp:784
 #, kde-format
 msgid "Plot"
 msgstr "भूखण्ड"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:736
+#: rkward/windows/rkcommandeditorwindow.cpp:785
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "उत्पन्न कथानकस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:737
+#: rkward/windows/rkcommandeditorwindow.cpp:786
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6540,23 +6582,70 @@ msgstr ""
 "पूर्वावलोकनं रिक्तं भविष्यति, यदि <i>plot()</i> अथवा अन्ये ग्राफिक्स् आदेशाः आह्वानं नास्ति "
 "।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:867
+#: rkward/windows/rkcommandeditorwindow.cpp:800
+#, fuzzy, kde-format
+#| msgid "Preview"
+msgctxt "noun: type of preview"
+msgid "Preview Mode"
+msgstr "पूर्वावलोकनम्"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:852
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
+#| "to your workspace (technically, by making use of a <i>local()</i> "
+#| "evaluation environment). <b>However, there are cases where using the "
+#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
+#| "particular, this is the case for scripts that contain explicit "
+#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
+#| "filesystem. Further, attaching/detaching packages or package namespaces "
+#| "will affect the entire running R session.</p><p>Please keep this in mind "
+#| "when using the preview feature, and especially when using the feature on "
+#| "scripts originating from untrusted sources.</p>"
+msgid ""
+"<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
+"your workspace, by default (technically, by making use of a <i>local</i> "
+"evaluation environment; some preview modes allow optional control about the "
+"evaluation environment). However, <b>there are cases where using the preview "
+"feature may cause unexpected side-effects</b>.</p><p>In particular, this is "
+"the case for scripts that contain explicit assignments to <i>globalenv()</"
+"i>, or for scripts that alter files on your filesystem. Further, attaching/"
+"detaching packages or package namespaces will affect the entire running R "
+"session.</p><p>Please keep this in mind when using the preview feature, and "
+"especially when using the feature on scripts originating from untrusted "
+"sources.</p>"
+msgstr ""
+"<p>पूर्वावलोकनविशेषता भवतः कार्यक्षेत्रे किमपि स्थायिपरिवर्तनं न कर्तुं <b>प्रयतते</b> "
+"(तकनीकीरूपेण, <i>स्थानीय()</i> मूल्याङ्कनवातावरणस्य उपयोगं कृत्वा) । <b>परन्तु एतादृशाः "
+"प्रकरणाः सन्ति यत्र पूर्वावलोकनविशेषतायाः उपयोगेन अप्रत्याशितपार्श्वप्रभावाः भवितुम् "
+"अर्हन्ति</b> .</p><p> विशेषतः, एतत् स्क्रिप्ट्-कृते भवति येषु <i>globalenv()</i> -इत्यत्र "
+"स्पष्टं नियुक्तिः भवति, अथवा भवतः सञ्चिकातन्त्रे सञ्चिकाः परिवर्तयन्तः स्क्रिप्ट्-इत्येतत् । "
+"ततः परं, संकुलं वा संकुलनामस्थानानि वा संलग्नं/विच्छेदनं सम्पूर्णं चालितं R सत्रं प्रभावितं "
+"करिष्यति ।</p><p> कृपया पूर्वावलोकनविशेषतायाः उपयोगं कुर्वन्, विशेषतः च "
+"अविश्वसनीयस्रोतात् उत्पन्नेषु स्क्रिप्ट्-मध्ये विशेषतायाः उपयोगं कुर्वन् एतत् मनसि धारयन्तु ।</p>"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:852
+#, kde-format
+msgid "Potential side-effects of previews"
+msgstr "पूर्वावलोकनस्य सम्भाव्य दुष्प्रभावाः"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:983
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "'%1' स्क्रिप्ट् सञ्चिकायाः स्वयमेव रक्षणं निर्मातुं प्रयतमाने त्रुटिः अभवत्:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:941
+#: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
 msgid "Unnamed"
 msgstr "अनामिका"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1074
+#: rkward/windows/rkcommandeditorwindow.cpp:1190
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (सक्रिय)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1093
+#: rkward/windows/rkcommandeditorwindow.cpp:1209
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (अप्रयुक्त)"
@@ -7620,6 +7709,16 @@ msgstr "नूतनं नाम प्रविशतु"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "सम्पादके दृश्यम् (केवलं पठनीयम्)"
+
+#~ msgid "R Markdown (auto)"
+#~ msgstr "आर मार्कडाउन (स्वयं)"
+
+#~ msgid ""
+#~ "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
+#~ "specified in the document header."
+#~ msgstr ""
+#~ "RMarkdown प्रारूपात् (.Rmd) दस्तावेजशीर्षके निर्दिष्टे प्रारूपे यथा रेण्डर्ड् कृतं तथा "
+#~ "स्क्रिप्ट् पूर्वावलोकनं कुर्वन्तु ।"
 
 #~ msgid "Error opening script file %1"
 #~ msgstr "स्क्रिप्ट् सञ्चिकां %1 उद्घाटयितुं त्रुटिः"
