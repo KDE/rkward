@@ -7,13 +7,13 @@
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
 # Josep Roca <pep.roca@gmail.com>, 2007, 2010, 2012.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2019, 2020, 2022.
-# Josep M. Ferrer <txemaq@gmail.com>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2025-04-21 10:32+0200\n"
+"PO-Revision-Date: 2025-08-25 10:00+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -1982,7 +1982,7 @@ msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
 "Rmd) files. This is optional but recommended."
 msgstr ""
-"El programari pandoc és necessari per a renderitzar (o previsualitzar) "
+"És necessari el programari «pandoc» per a representar (o previsualitzar) "
 "fitxers R en markdown (.Rmd). Això és opcional però recomanat."
 
 #: rkward/dialogs/rksetupwizard.cpp:430
@@ -6524,7 +6524,7 @@ msgid ""
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"Es necessita el programari <tt>pdflatex</tt> per a renderitzar vistes "
+"Es necessita el programari <tt>pdflatex</tt> per a representar vistes "
 "prèvies de PDF. La manera més fàcil d'instal·lar-lo és executar <tt>install."
 "packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>"
 
