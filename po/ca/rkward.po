@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-25 00:38+0000\n"
-"PO-Revision-Date: 2025-05-27 16:51+0200\n"
+"PO-Revision-Date: 2025-08-25 10:31+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.08.0\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -1982,7 +1982,7 @@ msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
 "Rmd) files. This is optional but recommended."
 msgstr ""
-"El programari pandoc és necessari per a renderitzar (o previsualitzar) "
+"És necessari el programari «pandoc» per a representar (o previsualitzar) "
 "fitxers R en markdown (.Rmd). Això és opcional però recomanat."
 
 #: rkward/dialogs/rksetupwizard.cpp:432
@@ -6642,7 +6642,7 @@ msgid ""
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"Es necessita el programari <tt>pdflatex</tt> per a renderitzar vistes "
+"Es necessita el programari <tt>pdflatex</tt> per a representar vistes "
 "prèvies de PDF. La manera més fàcil d'instal·lar-lo és executar <tt>install."
 "packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>"
 
@@ -6670,10 +6670,9 @@ msgid "Disable preview"
 msgstr "Desactiva la vista prèvia"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:717
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "R Markdown (HTML)"
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:718
 #, kde-format
@@ -6681,33 +6680,29 @@ msgid "Preview of rendered R Markdown"
 msgstr "Vista prèvia de l'R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:719
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
-msgstr ""
-"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a HTML."
+msgstr "Previsualitza l'script representat des del format RMarkdown (.Rmd)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:723
-#, fuzzy, kde-format
-#| msgid "Select format"
+#, kde-format
 msgid "Render format"
-msgstr "Selecció del format"
+msgstr "Format de representació"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:724
 #, kde-format
 msgid "Render as HTML"
-msgstr ""
+msgstr "Representa com a HTML"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:725
 #, kde-format
 msgid "Render as PDF"
-msgstr ""
+msgstr "Representa com a PDF"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "Format"
+msgstr "Format automàtic"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
@@ -6742,41 +6737,41 @@ msgstr ""
 "interactiva"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:755
-#, fuzzy, kde-format
-#| msgid "Next statement"
+#, kde-format
 msgid "Echo statements"
-msgstr "Sentència següent"
+msgstr "Reprodueix les sentències"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:758
-#, fuzzy, kde-format
-#| msgid "Convert warnings to errors"
+#, kde-format
 msgid "Continue on error"
-msgstr "Converteix els avisos en errors"
+msgstr "Continua en cas d'error"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:760
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "Entorn"
+msgstr "Entorn d'avaluació"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:762
-#, fuzzy, kde-format
-#| msgid "Copy to .GlobalEnv"
+#, kde-format
 msgid ".GlobalEnv"
-msgstr "Copia al «.GlobalEnv»"
+msgstr ".GlobalEnv"
 
+# skip-rule: t-sp_pu
 #: rkward/windows/rkcommandeditorwindow.cpp:764
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
+"Avalua el codi directament a .GlobalEnv. Les assignacions poden accedir <b>i "
+"modificar</b> objectes a .GlobalEnv."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:765
 #, kde-format
 msgid "Scoped"
-msgstr ""
+msgstr "En un àmbit"
 
+# skip-rule: t-sp_pu
 #: rkward/windows/rkcommandeditorwindow.cpp:767
 #, kde-format
 msgid ""
@@ -6784,13 +6779,17 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
+"Avalua el codi en un àmbit fill de .GlobalEnv. Es pot accedir als objectes "
+"a .GlobalEnv, però les assignacions normals que fan servir l'operador "
+"<tt>&lt;-</tt> no els modificaran. (Altres operacions d'assignació encara "
+"els podrien modificar!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:768
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "Ubicació"
+msgstr "Local"
 
+# skip-rule: t-sp_pu
 #: rkward/windows/rkcommandeditorwindow.cpp:769
 #, kde-format
 msgid ""
@@ -6799,6 +6798,10 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
+"Avalua el codi en un entorn local real. Els objectes a .GlobalEnv no està en "
+"el camí de cerca, i no es modificaran per les assignacions normals que fan "
+"servir l'operador <tt>&lt;-</tt>. (Altres operacions d'assignació encara els "
+"podrien modificar!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:784
 #, kde-format
@@ -6822,25 +6825,13 @@ msgstr ""
 "<i>plot()</i> o altres ordres de gràfics."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:800
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Vista prèvia"
+msgstr "Mode de vista prèvia"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:852
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
-#| "to your workspace (technically, by making use of a <i>local()</i> "
-#| "evaluation environment). <b>However, there are cases where using the "
-#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
-#| "particular, this is the case for scripts that contain explicit "
-#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
-#| "filesystem. Further, attaching/detaching packages or package namespaces "
-#| "will affect the entire running R session.</p><p>Please keep this in mind "
-#| "when using the preview feature, and especially when using the feature on "
-#| "scripts originating from untrusted sources.</p>"
+#, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6855,16 +6846,17 @@ msgid ""
 "sources.</p>"
 msgstr ""
 "<p>La funcionalitat de vista prèvia <b>intenta</b> evitar fer qualsevol "
-"canvi que trigui a l'espai de treball (tècnicament, fent ús de l'avaluació "
-"de l'entorn <i>local()</i>). <b>Tanmateix, hi ha casos a on l'ús de la "
-"funcionalitat de vista prèvia pot provocar efectes col·laterals inesperats</"
-"b>.</p><p>En particular, aquest és el cas de scripts que contenen "
-"assignacions explícites a <i>globalenv()</i>, o a scripts que alteren "
-"fitxers del sistema de fitxers. A més, la connexió/desconnexió de paquets o "
-"d'espais de noms de paquets afectarà la sessió R completa en execució.</"
-"p><p>Cal tenir-ho en compte quan useu la funcionalitat de vista prèvia, i "
-"especialment en usar la funcionalitat en scripts originats des de fonts no "
-"confiables.</p>"
+"canvi que trigui a l'espai de treball, de manera predeterminada "
+"(tècnicament, fent ús de l'avaluació d'un entorn d'avaluació <i>local</i>; "
+"alguns modes de vista prèvia permeten un control opcional sobre l'entorn "
+"d'avaluació). Tanmateix, <b>hi ha casos a on l'ús de la funcionalitat de "
+"vista prèvia pot provocar efectes col·laterals inesperats</b>.</p><p>En "
+"particular, aquest és el cas de scripts que contenen assignacions explícites "
+"a <i>globalenv()</i>, o de scripts que alteren fitxers del sistema de "
+"fitxers. A més, la connexió/desconnexió de paquets o d'espais de noms de "
+"paquets afectarà la sessió R completa en execució.</p><p>Cal tenir-ho en "
+"compte quan useu la funcionalitat de vista prèvia, i especialment en usar la "
+"funcionalitat en scripts originats des de fonts no confiables.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:852
 #, kde-format

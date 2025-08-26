@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-25 00:38+0000\n"
-"PO-Revision-Date: 2025-06-10 05:45+0200\n"
+"PO-Revision-Date: 2025-08-25 06:30+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6295,10 +6295,9 @@ msgid "Disable preview"
 msgstr "მინიატურების გამორთვა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:717
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "R Markdown (HTML)"
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:718
 #, kde-format
@@ -6306,34 +6305,30 @@ msgid "Preview of rendered R Markdown"
 msgstr "დარენდერებული R მარკდაუნის მინიატურა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:719
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
-"სკრიპტის მინიატურა, როგორც ის RMarkdown (.Rmd) ფორმატიდან HTML-ში "
-"დარენდერდებოდა."
+"სკრიპტის მინიატურა, როგორც ის RMarkdown (.Rmd) ფორმატიდან დარენდერდებოდა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:723
-#, fuzzy, kde-format
-#| msgid "Select format"
+#, kde-format
 msgid "Render format"
-msgstr "აირჩიეთ ფორმატი"
+msgstr "რენდერის ფორმატი"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:724
 #, kde-format
 msgid "Render as HTML"
-msgstr ""
+msgstr "რენდერი როგორც HTML"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:725
 #, kde-format
 msgid "Render as PDF"
-msgstr ""
+msgstr "რენდერი როგორც PDF"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "ფორმატი"
+msgstr "ავტომატური ფორმატი"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
@@ -6363,28 +6358,24 @@ msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "სკრიპტის მინიატურა, თითქოს ის R-ის ინტერაქტიურ კონსოლში გაეშვა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:755
-#, fuzzy, kde-format
-#| msgid "Next statement"
+#, kde-format
 msgid "Echo statements"
-msgstr "შემდეგი ინსტრუქცია"
+msgstr "ინსტრუქციების ექო"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:758
-#, fuzzy, kde-format
-#| msgid "Convert warnings to errors"
+#, kde-format
 msgid "Continue on error"
-msgstr "გაფრთხილებების გარდაქმნა შეცდომებად"
+msgstr "გაგრძელება შეცდომისას"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:760
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "გარემო"
+msgstr "შეფასების გარემო"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:762
-#, fuzzy, kde-format
-#| msgid "Copy to .GlobalEnv"
+#, kde-format
 msgid ".GlobalEnv"
-msgstr "კოპირება ფაილში .GlobalEnv"
+msgstr ".GlobalEnv"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:764
 #, kde-format
@@ -6407,10 +6398,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:768
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "დებარეობა"
+msgstr "ლოკალური"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:769
 #, kde-format
@@ -6440,11 +6430,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:800
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "ესკიზი"
+msgstr "გადახედვის რეჟიმი"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:852
 #, kde-format

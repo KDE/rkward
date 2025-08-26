@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-25 00:38+0000\n"
-"PO-Revision-Date: 2025-05-27 17:23+0300\n"
+"PO-Revision-Date: 2025-08-25 09:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -6636,10 +6636,9 @@ msgid "Disable preview"
 msgstr "Вимкнути перегляд"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:717
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "Розмітка R (HTML)"
+msgstr "Розмітка R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:718
 #, kde-format
@@ -6647,34 +6646,29 @@ msgid "Preview of rendered R Markdown"
 msgstr "Попередній перегляд створеного файла розмітки R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:719
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
-msgstr ""
-"Попередній перегляд скрипту на основі обробки формату RMarkdown (.Rmd) до "
-"формату HTML."
+msgstr "Попередній перегляд скрипту на основі обробки формату RMarkdown (.Rmd)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:723
-#, fuzzy, kde-format
-#| msgid "Select format"
+#, kde-format
 msgid "Render format"
-msgstr "Виберіть формат"
+msgstr "Формат обробки"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:724
 #, kde-format
 msgid "Render as HTML"
-msgstr ""
+msgstr "Обробити у HTML"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:725
 #, kde-format
 msgid "Render as PDF"
-msgstr ""
+msgstr "Обробити у PDF"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "Формат"
+msgstr "Автоформатування"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
@@ -6710,28 +6704,24 @@ msgstr ""
 "консолі R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:755
-#, fuzzy, kde-format
-#| msgid "Next statement"
+#, kde-format
 msgid "Echo statements"
-msgstr "Наступна інструкція"
+msgstr "Повторювати інструкції"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:758
-#, fuzzy, kde-format
-#| msgid "Convert warnings to errors"
+#, kde-format
 msgid "Continue on error"
-msgstr "Перетворювати попередження на помилки"
+msgstr "Продовжувати при помилці"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:760
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "Середовище"
+msgstr "Середовище обробки"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:762
-#, fuzzy, kde-format
-#| msgid "Copy to .GlobalEnv"
+#, kde-format
 msgid ".GlobalEnv"
-msgstr "Копіювати до .GlobalEnv"
+msgstr ".GlobalEnv"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:764
 #, kde-format
@@ -6739,11 +6729,13 @@ msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
+"Обробити код безпосередньо до .GlobalEnv. Надання значень може призводити до "
+"доступу <b>і зміни</b> об'єктів у .GlobalEnv."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:765
 #, kde-format
 msgid "Scoped"
-msgstr ""
+msgstr "В області"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
 #, kde-format
@@ -6752,12 +6744,15 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
+"Обробити код у дочірній області .GlobalEnv. Можна отримувати доступ до "
+"об'єктів у .GlobalEnv, але звичайні надання значень за допомогою оператора "
+"<tt>&lt;-</tt> не змінюватимуть їх. (Втім, інші способи надання значень "
+"можуть вносити зміни!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:768
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "Розташування"
+msgstr "Локально"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:769
 #, kde-format
@@ -6767,6 +6762,10 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
+"Обробити код у справжньому локальному середовищі. Об'єкти .GlobalEnv не "
+"перебуватимуть у шляху пошуку — їх не буде змінено звичайними наданнями "
+"значень за допомогою оператора <tt>&lt;-</tt>. (Втім, інші способи надання "
+"значень можуть вносити зміни!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:784
 #, kde-format
@@ -6790,25 +6789,13 @@ msgstr ""
 "викликів <i>plot()</i> або інших команд побудови графіків."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:800
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Перегляд"
+msgstr "Режим перегляду"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:852
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
-#| "to your workspace (technically, by making use of a <i>local()</i> "
-#| "evaluation environment). <b>However, there are cases where using the "
-#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
-#| "particular, this is the case for scripts that contain explicit "
-#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
-#| "filesystem. Further, attaching/detaching packages or package namespaces "
-#| "will affect the entire running R session.</p><p>Please keep this in mind "
-#| "when using the preview feature, and especially when using the feature on "
-#| "scripts originating from untrusted sources.</p>"
+#, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6823,8 +6810,9 @@ msgid ""
 "sources.</p>"
 msgstr ""
 "<p>Можливість попереднього перегляду <b>теоретично</b> реалізовано так, щоб "
-"її використання не призводило до змін у вашому робочому просторі (технічно, "
-"використовується середовище обчислень <i>local()</i>). <b>Втім, іноді "
+"її використання типово не призводило до змін у вашому робочому просторі "
+"(технічно, для середовища обробки використовується <i>local</i>; у деяких "
+"режимах перегляду можна керувати середовищем обробки). Втім, <b>іноді "
 "використання можливості попереднього перегляду може призводити до небажаних "
 "побіжних ефектів</b>.</p><p>Зокрема, таке трапляється зі скриптами, які "
 "містять явне встановлення значень з використанням <i>globalenv()</i>, або "

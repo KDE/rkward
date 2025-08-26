@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-25 00:38+0000\n"
-"PO-Revision-Date: 2025-05-31 15:38+0200\n"
+"PO-Revision-Date: 2025-08-25 20:05+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6539,10 +6539,9 @@ msgid "Disable preview"
 msgstr "Inaktivera förhandsgranskning"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:717
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "R Markdown (HTML)"
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:718
 #, kde-format
@@ -6550,34 +6549,29 @@ msgid "Preview of rendered R Markdown"
 msgstr "Förhandsgranskning av återgiven R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:719
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
-msgstr ""
-"Förhandsgranska skriptet som återgivet från RMarkdown-format (.Rmd) till "
-"HTML."
+msgstr "Förhandsgranska skriptet som återgivet från RMarkdown-format (.Rmd)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:723
-#, fuzzy, kde-format
-#| msgid "Select format"
+#, kde-format
 msgid "Render format"
-msgstr "Välj format"
+msgstr "Återge format"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:724
 #, kde-format
 msgid "Render as HTML"
-msgstr ""
+msgstr "Återge som HTML"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:725
 #, kde-format
 msgid "Render as PDF"
-msgstr ""
+msgstr "Återge som PDF"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "Format"
+msgstr "Automatiskt format"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
@@ -6611,28 +6605,24 @@ msgstr ""
 "Förhandsgranska skriptet som om det kördes i den interaktiva R-terminalen"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:755
-#, fuzzy, kde-format
-#| msgid "Next statement"
+#, kde-format
 msgid "Echo statements"
-msgstr "Nästa sats"
+msgstr "Ekosatser"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:758
-#, fuzzy, kde-format
-#| msgid "Convert warnings to errors"
+#, kde-format
 msgid "Continue on error"
-msgstr "Konvertera varningar till fel"
+msgstr "Fortsätt vid fel"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:760
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "Miljö"
+msgstr "Utvärderingsmiljö"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:762
-#, fuzzy, kde-format
-#| msgid "Copy to .GlobalEnv"
+#, kde-format
 msgid ".GlobalEnv"
-msgstr "Kopiera till .GlobalEnv"
+msgstr ".GlobalEnv"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:764
 #, kde-format
@@ -6640,11 +6630,13 @@ msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
+"Utvärdera kod direkt i .GlobalEnv. Tilldelningar kan komma åt <b>och ändra</"
+"b> objekt i .GlobalEnv."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:765
 #, kde-format
 msgid "Scoped"
-msgstr ""
+msgstr "Innesluten"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
 #, kde-format
@@ -6653,12 +6645,15 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
+"Utvärdera kod i ett underordnad inneslutning i .GlobalEnv. Objekt i ."
+"GlobalEnv kan nås, men vanliga tilldelningar med hjälp av operatorn <tt>&lt;-"
+"</tt> ändrar dem inte. (Andra tilldelningsoperationer kan fortfarande ändra "
+"dem!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:768
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "Plats"
+msgstr "Lokal"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:769
 #, kde-format
@@ -6668,6 +6663,10 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
+"Utvärdera kod i en verkligt lokal miljö. Objekt i .GlobalEnv finns inte i "
+"sökvägen och ändras inte av vanliga tilldelningar med hjälp av operatorn "
+"<tt>&lt;-</tt>. (Andra tilldelningsoperationer kan fortfarande modifiera "
+"dem!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:784
 #, kde-format
@@ -6691,25 +6690,13 @@ msgstr ""
 "eller andra grafikkommandon."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:800
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Förhandsgranskning"
+msgstr "Förhandsgranskningsläge"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:852
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
-#| "to your workspace (technically, by making use of a <i>local()</i> "
-#| "evaluation environment). <b>However, there are cases where using the "
-#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
-#| "particular, this is the case for scripts that contain explicit "
-#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
-#| "filesystem. Further, attaching/detaching packages or package namespaces "
-#| "will affect the entire running R session.</p><p>Please keep this in mind "
-#| "when using the preview feature, and especially when using the feature on "
-#| "scripts originating from untrusted sources.</p>"
+#, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6724,8 +6711,9 @@ msgid ""
 "sources.</p>"
 msgstr ""
 "<p>Förhandsgranskningsfunktionen <b>försöker</b> undvika att göra några "
-"bestående ändringar av arbetsytan (tekniskt genom att använda en <i>local()</"
-"i> utvärderingsmiljö). <b>Dock finns det fall då användning av "
+"bestående ändringar av arbetsytan (tekniskt genom att använda en <i>lokal</"
+"i> utvärderingsmiljö, där vissa förhandsgranskningslägen tillåter valfri "
+"kontroll av utvärderingsmiljön). Dock <b>finns det fall då användning av "
 "förhandsgranskningsfunktionen kan orsaka oväntade sidoeffekter</b>.</p><p>I "
 "synnerhet är det fallet för skript som innehåller explicita tilldelningar "
 "till <i>globalenv()</i>, eller för skript som ändrar filer i filsystemet. "

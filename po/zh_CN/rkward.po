@@ -5935,7 +5935,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:717
 #, kde-format
 msgid "R Markdown"
-msgstr ""
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:718
 #, kde-format
@@ -5963,10 +5963,9 @@ msgid "Render as PDF"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "格式化"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
@@ -6001,16 +6000,14 @@ msgid "Echo statements"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:758
-#, fuzzy, kde-format
-#| msgid "Continue"
+#, kde-format
 msgid "Continue on error"
-msgstr "继续"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:760
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "环境"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:762
 #, kde-format
@@ -6038,10 +6035,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:768
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "住址"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:769
 #, kde-format
@@ -6071,11 +6067,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:800
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "预览"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:852
 #, kde-format
