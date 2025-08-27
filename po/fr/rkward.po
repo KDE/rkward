@@ -6738,10 +6738,9 @@ msgid "Disable preview"
 msgstr "Désactiver l'aperçu"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:717
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "Markdown de R (HTML)"
+msgstr "Markdown de R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:718
 #, kde-format
