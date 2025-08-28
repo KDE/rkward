@@ -7,13 +7,13 @@
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
 # Josep Roca <pep.roca@gmail.com>, 2007, 2010, 2012.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2019, 2020, 2022.
-# Josep M. Ferrer <txemaq@gmail.com>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-21 02:30+0000\n"
-"PO-Revision-Date: 2025-04-21 10:32+0200\n"
+"PO-Revision-Date: 2025-08-25 10:00+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -927,7 +927,7 @@ msgstr "Cap dels anteriors / prova un altre mètode"
 #: rkward/dialogs/rkimportdialog.cpp:68
 #, kde-format
 msgid "Select format"
-msgstr "Seleccioneu el format"
+msgstr "Trieu el format"
 
 #: rkward/dialogs/rkimportdialog.cpp:72
 #, kde-format
@@ -1266,7 +1266,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:579
 #, kde-format
 msgid "Select all updates"
-msgstr "Selecciona totes les actualitzacions"
+msgstr "Tria totes les actualitzacions"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:648
 #, kde-format
@@ -1393,9 +1393,8 @@ msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
-"<p>Podeu seleccionar els paquets que voleu instal·lar o eliminar, "
-"seleccionant o desseleccionant les caselles corresponents en esta columna.</"
-"p>"
+"<p>Podeu seleccionar els paquets que voleu instal·lar o eliminar, triant o "
+"desseleccionant les caselles corresponents en esta columna.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:961
 #, kde-format
@@ -1624,12 +1623,12 @@ msgstr "No el tanques"
 #: rkward/dialogs/rkselectlistdialog.cpp:39
 #, kde-format
 msgid "<b>Select one or more:</b>"
-msgstr "<b>Seleccioneu un o més:</b>"
+msgstr "<b>Trieu un o més:</b>"
 
 #: rkward/dialogs/rkselectlistdialog.cpp:40
 #, kde-format
 msgid "<b>Select one:</b>"
-msgstr "<b>Seleccioneu un:</b>"
+msgstr "<b>Trieu un:</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:113
 #, kde-format
@@ -1685,12 +1684,12 @@ msgstr "<b>S'està esperant pel dorsal d'R…</b>"
 #: rkward/dialogs/rksetupwizard.cpp:180
 #, kde-format
 msgid "Select another R executable"
-msgstr "Seleccioneu un altre executable d'R"
+msgstr "Trieu un altre executable d'R"
 
 #: rkward/dialogs/rksetupwizard.cpp:181
 #, kde-format
 msgid "Select R executable"
-msgstr "Seleccioneu l'executable d'R"
+msgstr "Trieu l'executable d'R"
 
 #: rkward/dialogs/rksetupwizard.cpp:197
 #, kde-format
@@ -1980,7 +1979,7 @@ msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
 "Rmd) files. This is optional but recommended."
 msgstr ""
-"El programari pandoc és necessari per a renderitzar (o previsualitzar) "
+"És necessari el programari «pandoc» per a representar (o previsualitzar) "
 "fitxers R en markdown (.Rmd). Açò és opcional però recomanat."
 
 #: rkward/dialogs/rksetupwizard.cpp:430
@@ -2652,7 +2651,7 @@ msgstr "Mostra els camps"
 #: rkward/misc/rkoutputdirectory.cpp:130
 #, kde-format
 msgid "Select destination file name"
-msgstr "Seleccioneu el nom del fitxer de destinació"
+msgstr "Trieu el nom del fitxer de destinació"
 
 #: rkward/misc/rkoutputdirectory.cpp:132
 #, kde-format
@@ -3456,7 +3455,7 @@ msgstr ""
 #: rkward/plugin/rkdropdown.cpp:31 rkward/plugin/rkradio.cpp:32
 #, kde-format
 msgid "Select one:"
-msgstr "Selecciona un:"
+msgstr "Tria un:"
 
 #: rkward/plugin/rkformula.cpp:57
 #, kde-format
@@ -3571,7 +3570,7 @@ msgstr "Introduïu el nom del fitxer"
 #: rkward/plugin/rkpluginbrowser.cpp:48
 #, kde-format
 msgid "Select"
-msgstr "Selecciona"
+msgstr "Tria"
 
 #: rkward/plugin/rkpluginbrowser.cpp:127
 #, kde-format
@@ -3741,7 +3740,7 @@ msgstr "Utilitza el diàleg"
 #: rkward/plugin/rkvarselector.cpp:48
 #, kde-format
 msgid "Select Variable(s)"
-msgstr "Selecciona variables"
+msgstr "Tria les variables"
 
 #: rkward/plugin/rkvarselector.cpp:62
 #, kde-format
@@ -4217,7 +4216,7 @@ msgstr "S'ha produït un error de sintaxi\n"
 #: rkward/rkconsole.cpp:680
 #, kde-format
 msgid "Select command history file to load"
-msgstr "Seleccioneu el fitxer d'historial d'ordres que s'ha de carregar"
+msgstr "Trieu el fitxer d'historial d'ordres que s'ha de carregar"
 
 #: rkward/rkconsole.cpp:680
 #, kde-format
@@ -4228,7 +4227,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:713
 #, kde-format
 msgid "Select filename to save command history"
-msgstr "Seleccioneu el nom de fitxer per a guardar l'historial d'ordres"
+msgstr "Trieu el nom de fitxer per a guardar l'historial d'ordres"
 
 #: rkward/rkconsole.cpp:713
 #, kde-format
@@ -4705,7 +4704,7 @@ msgstr "S'està obrint l'espai de treball…"
 #: rkward/rkward.cpp:894
 #, kde-format
 msgid "Select workspace to open..."
-msgstr "Selecciona l'espai de treball que s'ha d'obrir…"
+msgstr "Tria l'espai de treball que s'ha d'obrir…"
 
 #: rkward/rkward.cpp:965
 #, kde-format
@@ -4765,7 +4764,7 @@ msgstr "Obri com a fitxer de text i força el ressaltat d'R"
 #: rkward/rkward.cpp:1060
 #, kde-format
 msgid "Select RKWard Output file to open..."
-msgstr "Seleccioneu un fitxer d'eixida de RKWard que s'ha d'obrir…"
+msgstr "Trieu un fitxer d'eixida de RKWard que s'ha d'obrir…"
 
 #: rkward/rkward.cpp:1060
 #, kde-format
@@ -5538,7 +5537,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:92
 #, kde-format
 msgid "Default width (inches):"
-msgstr "Ample per defecte (polzades):"
+msgstr "Amplària predeterminada (polzades):"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:95
 #, kde-format
@@ -5663,7 +5662,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:126
 #, kde-format
 msgid "Select CSS file"
-msgstr "Selecciona un fitxer CSS"
+msgstr "Tria un fitxer CSS"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:128
 #, kde-format
@@ -5673,10 +5672,10 @@ msgid ""
 "effect, when initializing an output file (e.g. after flushing the output), "
 "only."
 msgstr ""
-"Seleccioneu un fitxer CSS per al format personalitzat de la finestra "
-"d'eixida. Deixeu-ho buit per a utilitzar el fitxer CSS predeterminat "
-"distribuït amb RKWard. Cal tindre en compte que esta opció només té efecte "
-"en restablir un fitxer d'eixida (p. ex., després de netejar l'eixida)."
+"Trieu un fitxer CSS per al format personalitzat de la finestra d'eixida. "
+"Deixeu-ho buit per a utilitzar el fitxer CSS predeterminat distribuït amb "
+"RKWard. Cal tindre en compte que esta opció només té efecte en restablir un "
+"fitxer d'eixida (p. ex., després de netejar l'eixida)."
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:131
 #, kde-format
@@ -5837,7 +5836,7 @@ msgstr "ID"
 #: rkward/settings/rksettingsmoduleplugins.cpp:553
 #, kde-format
 msgid "Select .pluginmap-file"
-msgstr "Seleccioneu el fitxer «.pluginmap»"
+msgstr "Trieu el fitxer «.pluginmap»"
 
 #: rkward/settings/rksettingsmoduler.cpp:69
 #, kde-format
@@ -5941,7 +5940,7 @@ msgstr "Nombre màxim d'expressions imbricades"
 #: rkward/settings/rksettingsmoduler.cpp:122
 #, kde-format
 msgid "Default decimal precision in print ()"
-msgstr "Precisió decimal per defecte amb l'ordre print ()"
+msgstr "Precisió decimal predeterminada amb l'ordre print ()"
 
 #: rkward/settings/rksettingsmoduler.cpp:126
 #, kde-format
@@ -5979,7 +5978,7 @@ msgid ""
 "Specify or select directory to add to the system file path of the running R "
 "session"
 msgstr ""
-"Especifica o selecciona el directori que s'afegirà al camí dels fitxers del "
+"Especifica o tria el directori que s'afegirà al camí dels fitxers del "
 "sistema a la sessió que executa R"
 
 #: rkward/settings/rksettingsmoduler.cpp:176
@@ -6003,12 +6002,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:332
 #, kde-format
 msgid "Select mirror"
-msgstr "Selecciona una rèplica"
+msgstr "Tria una rèplica"
 
 #: rkward/settings/rksettingsmoduler.cpp:334
 #, kde-format
 msgid "Select CRAN mirror"
-msgstr "Selecciona la rèplica CRAN"
+msgstr "Tria la rèplica CRAN"
 
 #: rkward/settings/rksettingsmoduler.cpp:350
 #, kde-format
@@ -6092,7 +6091,7 @@ msgid ""
 "this is recommended, because R packages compiled for one version of R will "
 "often fail to work correctly in a different version of R."
 msgstr ""
-"Especifiqueu o seleccioneu la ubicació de la biblioteca que s'ha d'afegir.\n"
+"Especifiqueu o trieu la ubicació de la biblioteca que s'ha d'afegir.\n"
 "Cal tindre en compte que les ubicacions poden contindre una «%v», el qual "
 "s'expandirà als primers dos components del número de versió d'R (p. ex., a "
 "3.5), automàticament. Està recomanat incloure açò, perquè els paquets R "
@@ -6519,7 +6518,7 @@ msgid ""
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
-"Es necessita el programari <tt>pdflatex</tt> per a renderitzar vistes "
+"Es necessita el programari <tt>pdflatex</tt> per a representar vistes "
 "prèvies de PDF. La manera més fàcil d'instal·lar-lo és executar <tt>install."
 "packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>"
 
@@ -7036,7 +7035,7 @@ msgstr "Ús"
 #: rkward/windows/rkhtmlwindow.cpp:1093
 #, kde-format
 msgid "Choose another file"
-msgstr "Seleccioneu un altre fitxer"
+msgstr "Trieu un altre fitxer"
 
 #: rkward/windows/rkhtmlwindow.cpp:1115
 #, kde-format
