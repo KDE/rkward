@@ -1186,7 +1186,7 @@ void RKMDIWindowHistory::prev(QAction *prev_action, QAction *next_action) {
 	getSwitcher(prev_action, next_action)->prev();
 }
 
-RKMDIWindow *RKMDIWindowHistory::previousDocumentWindow() {
+RKMDIWindow *RKMDIWindowHistory::previousDocumentWindow() const {
 	RK_TRACE(APP);
 
 	for (int i = recent_windows.count() - 1; i >= 0; --i) {
@@ -1214,7 +1214,10 @@ RKMDIWindowHistoryWidget *RKMDIWindowHistory::getSwitcher(QAction *prev_action, 
 	if (switcher) return switcher;
 
 	switcher = new RKMDIWindowHistoryWidget();
-	connect(switcher, &QObject::destroyed, this, &RKMDIWindowHistory::switcherDestroyed);
+	connect(switcher, &QObject::destroyed, this, [this]() {
+		RK_ASSERT(switcher);
+		switcher = nullptr;
+	});
 	switcher->addAction(prev_action);
 	switcher->addAction(next_action);
 	switcher->update(recent_windows);
@@ -1230,13 +1233,6 @@ RKMDIWindowHistoryWidget *RKMDIWindowHistory::getSwitcher(QAction *prev_action, 
 	switcher->setFocus();
 
 	return switcher;
-}
-
-void RKMDIWindowHistory::switcherDestroyed() {
-	RK_TRACE(APP);
-
-	RK_ASSERT(switcher);
-	switcher = nullptr;
 }
 
 void RKMDIWindowHistory::popLastWindow(RKMDIWindow *match) {

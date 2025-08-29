@@ -46,15 +46,14 @@ class RKMDIWindowHistory : public QObject {
 	void removeWindow(RKMDIWindow *window);
 	/** pops the last window from the list, if it matches the given pointer */
 	void popLastWindow(RKMDIWindow *match);
-	RKMDIWindow *previousDocumentWindow();
+	RKMDIWindow *previousDocumentWindow() const;
 	void next(QAction *prev_action, QAction *next_action);
 	void prev(QAction *prev_action, QAction *next_action);
+	const QList<RKMDIWindow *> recentWindows() const { return recent_windows; };
   public Q_SLOTS:
 	void windowActivated(RKMDIWindow *window);
   Q_SIGNALS:
 	void activeWindowChanged(RKMDIWindow *window);
-  private Q_SLOTS:
-	void switcherDestroyed();
 
   private:
 	void updateSwitcher();

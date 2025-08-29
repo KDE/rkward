@@ -221,9 +221,15 @@ RKWorkplaceViewPane *RKWorkplaceView::activePane() const {
 		if (panes[i]->isActive()) return panes[i];
 	}
 
-	// Esp. when switching between console and script window, consider the previous window active
-	RKWorkplaceViewPane *pane = findWindow(RKWorkplace::mainWorkplace()->getHistory()->previousDocumentWindow());
-	if (pane) return pane;
+	// find the previously active pane, if any
+	// Note: RKMDIWindowHistory::previousDocumentWindow() is not suitable, here, because it also considers non-attached windows
+	const auto wins = RKWorkplace::mainWorkplace()->getHistory()->recentWindows();
+	for (int i = wins.count() - 1; i >= 0; --i) {
+		if (!wins[i]->isToolWindow()) {
+			auto pane = findWindow(wins[i]);
+			if (pane) return pane;
+		}
+	}
 
 	// As a last resort, return top-left pane
 	RK_ASSERT(!panes.isEmpty());
@@ -397,6 +403,7 @@ void RKWorkplaceView::addWindow(RKMDIWindow *widget) {
 	if (icon.isNull()) icon = widget->topLevelWidget()->windowIcon();
 	if (icon.isNull()) RK_ASSERT(false);
 
+	RKWorkplace::mainWorkplace()->getHistory()->popLastWindow(widget);
 	RKWorkplaceViewPane *pane = activePane();
 	RK_ASSERT(pane);
 	id = pane->addTab(widget, icon, widget->shortCaption());
