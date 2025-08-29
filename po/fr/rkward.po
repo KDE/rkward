@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-25 00:38+0000\n"
-"PO-Revision-Date: 2025-05-28 11:52+0200\n"
+"PO-Revision-Date: 2025-08-26 15:58+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.08.0\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -6748,34 +6748,31 @@ msgid "Preview of rendered R Markdown"
 msgstr "Aperçu du langage de rendu « Markdown » de R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:719
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 "Afficher un aperçu pour le script comme rendu à partir du format "
-"« Markdown » pour R (.Rmd) vers le format « HTML »."
+"« RMarkdown » (.Rmd)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:723
-#, fuzzy, kde-format
-#| msgid "Select format"
+#, kde-format
 msgid "Render format"
-msgstr "Sélectionner un format"
+msgstr "Format de rendu"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:724
 #, kde-format
 msgid "Render as HTML"
-msgstr ""
+msgstr "Rendu au format « HTML »"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:725
 #, kde-format
 msgid "Render as PDF"
-msgstr ""
+msgstr "Rendu au format « PDF »"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "Formater"
+msgstr "Formater automatiquement"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
@@ -6810,28 +6807,24 @@ msgstr ""
 "interactive."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:755
-#, fuzzy, kde-format
-#| msgid "Next statement"
+#, kde-format
 msgid "Echo statements"
-msgstr "Instruction suivante"
+msgstr "Rappeler les déclarations"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:758
-#, fuzzy, kde-format
-#| msgid "Convert warnings to errors"
+#, kde-format
 msgid "Continue on error"
-msgstr "Convertir les alarmes en erreurs"
+msgstr "Continuer après erreur"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:760
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "Environnement"
+msgstr "Environnement d'évaluation"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:762
-#, fuzzy, kde-format
-#| msgid "Copy to .GlobalEnv"
+#, kde-format
 msgid ".GlobalEnv"
-msgstr "Copier vers « .GlobalEnv »"
+msgstr ".GlobalEnv"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:764
 #, kde-format
@@ -6839,11 +6832,13 @@ msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
+"Évaluez le code directement dans « .GlobalEnv ». Les affectations peuvent "
+"accéder <b>et modifier</b> des objets dans « .GlobalEnv »."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:765
 #, kde-format
 msgid "Scoped"
-msgstr ""
+msgstr "Parfaitement défini"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
 #, kde-format
@@ -6852,12 +6847,15 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
+"Évaluez le code dans une portée dérivée de « .GlobalEnv ». Les objets dans "
+"« .GlobalEnv » sont accessibles mais les affectations régulières utilisant "
+"l'opérateur <tt>&lt;-</tt> ne les modifieront pas. (D'autres opérations "
+"d'affectation pourraient encore les modifier ! )"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:768
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "Emplacement"
+msgstr "Local"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:769
 #, kde-format
@@ -6867,6 +6865,11 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
+"Évaluez le code dans un véritable environnement local. Les objets dans « ."
+"GlobalEnv » ne sont pas dans les emplacements de recherche. Ils ne seront "
+"pas modifiés par des affectations régulières à l'aide de l'opérateur "
+"<tt>&lt;-</tt>. (D'autres opérations d'affectation pourraient encore les "
+"modifier ! )"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:784
 #, kde-format
@@ -6890,25 +6893,13 @@ msgstr ""
 "ou d'autres commandes graphiques."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:800
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Aperçu"
+msgstr "Mode d'aperçu"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:852
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
-#| "to your workspace (technically, by making use of a <i>local()</i> "
-#| "evaluation environment). <b>However, there are cases where using the "
-#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
-#| "particular, this is the case for scripts that contain explicit "
-#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
-#| "filesystem. Further, attaching/detaching packages or package namespaces "
-#| "will affect the entire running R session.</p><p>Please keep this in mind "
-#| "when using the preview feature, and especially when using the feature on "
-#| "scripts originating from untrusted sources.</p>"
+#, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6922,18 +6913,18 @@ msgid ""
 "especially when using the feature on scripts originating from untrusted "
 "sources.</p>"
 msgstr ""
-"<p>La fonction d'aperçu <b>tente</b> d'éviter d'apporter des modifications "
-"durables à votre espace de travail (techniquement, en faisant usage d'un "
-"<i>local()</i> environnement d'évaluation). <b>Cependant, il existe des cas "
-"où l'utilisation de la fonctionnalité d'aperçu peut provoquer des effets "
-"secondaires inattendus</b>.</p><p>En particulier, c'est le cas pour les "
-"scripts contenant explicitement des affectations à <i>globalenv()</i> ou à "
-"des scripts modifiant des fichiers de votre système de fichiers. De plus, le "
-"fait d'attacher / détacher des paquets ou des espaces de noms de paquets va "
-"affecter l'ensemble de la session R en cours d'exécution.</p><p>Veuillez "
-"conserver ceci à l'esprit lorsque vous utilisez la fonctionnalité d'aperçu "
-"et surtout, lors de l'utilisation de la fonctionnalité sur des scripts "
-"provenant de sources non fiables.</p>"
+"<p>La fonctionnalité d'aperçu <b>essaye</b> d'éviter d'apporter des "
+"modifications durables à votre espace de travail (Techniquement, en faisant "
+"usage d'un environnement <i>local()</i> d'évaluation). <b>Cependant, <b>il "
+"existe des cas où l'utilisation de la fonctionnalité d'aperçu peut provoquer "
+"des effets secondaires inattendus</b>.</p><p>En particulier, c'est le cas "
+"pour les scripts contenant explicitement des affectations à <i>globalenv()</"
+"i> ou à des scripts modifiant des fichiers de votre système de fichiers. De "
+"plus, le fait d'attacher / détacher des paquets ou des espaces de noms de "
+"paquets affectera l'ensemble de la session R en cours d'exécution.</"
+"p><p>Veuillez garder ceci à l'esprit lorsque vous utilisez la fonctionnalité "
+"d'aperçu et surtout, lors de l'utilisation de la fonctionnalité sur des "
+"scripts provenant de sources non fiables.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:852
 #, kde-format

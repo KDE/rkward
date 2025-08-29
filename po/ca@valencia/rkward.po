@@ -6,15 +6,15 @@
 # Griera <griera@gmail.com>, 2006.
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
 # Josep Roca <pep.roca@gmail.com>, 2007, 2010, 2012.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2019, 2020, 2022.
+# SPDX-FileCopyrightText: 2014, 2016, 2018, 2019, 2020, 2022, 2025 Antoni Bella Pérez <antonibella5@yahoo.com>
 # SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-25 00:38+0000\n"
-"PO-Revision-Date: 2025-08-25 10:31+0200\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2025-08-28 14:23+0200\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 24.12.3\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -6757,8 +6757,8 @@ msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
-"Avalua el codi directament a .GlobalEnv. Les assignacions poden accedir <b>i "
-"modificar</b> objectes a .GlobalEnv."
+"Avalua el codi directament a «.GlobalEnv». Les assignacions poden accedir "
+"<b>i modificar</b> objectes a «.GlobalEnv»."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:765
 #, kde-format
@@ -6773,8 +6773,8 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
-"Avalua el codi en un àmbit fill de .GlobalEnv. Es pot accedir als objectes "
-"a .GlobalEnv, però les assignacions normals que fan servir l'operador "
+"Avalua el codi en un àmbit fill de «.GlobalEnv». Es pot accedir als objectes "
+"a «.GlobalEnv», però les assignacions normals que fan servir l'operador "
 "<tt>&lt;-</tt> no els modificaran. (Altres operacions d'assignació encara "
 "els podrien modificar!)"
 
@@ -6792,10 +6792,10 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
-"Avalua el codi en un entorn local real. Els objectes a .GlobalEnv no està en "
-"el camí de busca, i no es modificaran per les assignacions normals que fan "
-"servir l'operador <tt>&lt;-</tt>. (Altres operacions d'assignació encara els "
-"podrien modificar!)"
+"Avalua el codi en un entorn local real. Els objectes a «.GlobalEnv» no estan "
+"en el camí de busca, i no es modificaran per les assignacions normals que "
+"fan servir l'operador <tt>&lt;-</tt>. (Altres operacions d'assignació encara "
+"els podrien modificar!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:784
 #, kde-format

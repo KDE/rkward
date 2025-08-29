@@ -1067,10 +1067,9 @@ msgid ""
 "CLT and a choice of function. The function specific options are provided in "
 "different tabs."
 msgstr ""
-"Seleccioneu els paràmetres de <label id=\"dist_name\"/>, les mides de les "
-"mostres necessàries per al Teorema del límit central (TLC) i una funció "
-"d'elecció. Les opcions específiques de la funció es troben en pestanyes "
-"diferents."
+"Trieu els paràmetres de <label id=\"dist_name\"/>, les mides de les mostres "
+"necessàries per al Teorema del límit central (TLC) i una funció d'elecció. "
+"Les opcions específiques de la funció es troben en pestanyes diferents."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for Average")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for Average")
@@ -1154,8 +1153,8 @@ msgid ""
 "Choose one of 'Histogram' or 'Distribution function' to compare the "
 "distribution of the sample averages of D with that of Normal distribution."
 msgstr ""
-"Seleccioneu entre «Histograma» o «Funció de la distribució» per a comparar "
-"la distribució de les medianes de la mostra de D amb la distribució normal."
+"Trieu entre «Histograma» o «Funció de la distribució» per a comparar la "
+"distribució de les medianes de la mostra de D amb la distribució normal."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Use normalised random variable")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Use normalised random variable")
@@ -3049,7 +3048,7 @@ msgid ""
 "case a short sequence of evenly spaced values will be filled in, "
 "automatically."
 msgstr ""
-"Seleccioneu el mode desitjat d'operació, després especifiqueu els valors "
+"Trieu el mode desitjat d'operació, després especifiqueu els valors "
 "d'interés. Els valors d'entrada (quantils o probabilitats) es poden deixar "
 "buits, en este cas s'emplenarà automàticament una xicoteta seqüència de "
 "valors equidistants."
@@ -4448,10 +4447,10 @@ msgid ""
 "the \"Output\" window. To dynamically visualize the plot check the \"Preview"
 "\" box."
 msgstr ""
-"Seleccioneu els valors apropiats per als diferents paràmetres de la "
-"distribució i seleccioneu el tipus de la funció. El botó «Envia» exportarà "
-"el diagrama a la finestra d'eixida. Per a visualitzar dinàmicament el "
-"diagrama, marqueu la casella «Vista prèvia»."
+"Trieu els valors apropiats per als diferents paràmetres de la distribució i "
+"trieu el tipus de la funció. El botó «Envia» exportarà el diagrama a la "
+"finestra d'eixida. Per a visualitzar dinàmicament el diagrama, marqueu la "
+"casella «Vista prèvia»."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
@@ -5398,7 +5397,7 @@ msgstr "Paràmetre de no centralitat."
 #: rkward/plugins/distributions/tests/shapiro_test.xml:11
 #, kde-format
 msgid "Select Variables"
-msgstr "Selecciona les variables"
+msgstr "Tria les variables"
 
 #. i18n: ectx: (Shapiro-Wilk Normality Test) <dialog label="Shapiro-Wilk Normality Test"> <tab label="Select Variables"> <varslot label="...">
 #. i18n: ectx: (Anderson-Darling Normality Test) <dialog label="Anderson-Darling Normality Test"> <tab label="Select Variables"> <varslot label="...">
@@ -5481,12 +5480,12 @@ msgid ""
 "value.  The statistic's distribution is asymptotic, so this test performs "
 "better when working with big samples."
 msgstr ""
-"Seleccioneu una o més variables numèriques que es provaran contra la "
-"normalitat. S'executa una prova individual per a cadascuna d'elles. L'eixida "
-"consistix en l'estadística de khi quadrat de Jarque-Bera amb 2 graus de "
-"llibertat i el seu valor p corresponent. La distribució de l'estadística és "
-"asimptòtica, de manera que esta prova es realitzarà millor quan es treballe "
-"amb mostres grans."
+"Trieu una o més variables numèriques que es provaran contra la normalitat. "
+"S'executa una prova individual per a cadascuna d'elles. L'eixida consistix "
+"en l'estadística de khi quadrat de Jarque-Bera amb 2 graus de llibertat i el "
+"seu valor p corresponent. La distribució de l'estadística és asimptòtica, de "
+"manera que esta prova es realitzarà millor quan es treballe amb mostres "
+"grans."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <usage>
 #: rkward/plugins/distributions/tests/jb_test.rkh:12
@@ -5507,8 +5506,8 @@ msgid ""
 "Select the data to be computed (one or more variables). The vectors need to "
 "be numeric and can be of different length."
 msgstr ""
-"Seleccioneu les dades que cal calcular (una o més variables). Els vectors "
-"hauran de ser numèrics i poden ser de diferent llargària."
+"Trieu les dades que cal calcular (una o més variables). Els vectors hauran "
+"de ser numèrics i poden ser de diferent llargària."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "Show Length and NAs")
 #: rkward/plugins/distributions/tests/jb_test.rkh:22
@@ -5517,7 +5516,7 @@ msgid ""
 "Select if you want to include the number of observations and NAs in the "
 "output. (Default: YES)"
 msgstr ""
-"Seleccioneu si voleu incloure el nombre d'observacions i SD en l'eixida. (De "
+"Trieu si voleu incloure el nombre d'observacions i SD en l'eixida. (De "
 "manera predeterminada: SÍ)"
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "Exclude NAs")
@@ -5527,7 +5526,7 @@ msgid ""
 "Select if your data has missing values. The NAs are then omitted when "
 "performing the test. (Default: YES)"
 msgstr ""
-"Seleccioneu si les dades tenen valors que falten. Els SD s'ometran quan es "
+"Trieu si les dades tenen valors que falten. Els SD s'ometran quan es "
 "realitze la prova. (De manera predeterminada: SÍ)"
 
 #. i18n: ectx: (Jarque-Bera Normality Test) <dialog label="Jarque-Bera Normality Test"> <tab label="Options"> <checkbox label="...">
