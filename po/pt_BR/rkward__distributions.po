@@ -4,20 +4,21 @@
 #
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2015, 2023.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2015.
+# SPDX-FileCopyrightText: 2025 Marcus Gama <marcus.gama@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__distributions\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2023-07-05 18:07-0300\n"
-"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
+"PO-Revision-Date: 2025-08-28 07:27-0300\n"
+"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2782,18 +2783,14 @@ msgstr ""
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Number of quantiles")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Number of quantiles")
 #: rkward/plugins/distributions/dist_help_snippets.xml:10
-#, fuzzy, kde-format
-#| msgid ""
-#| "When calculating densities or probabilities, specify one or more "
-#| "quantiles. If this setting is left empty, a sequence of evenly spaced "
-#| "quantiles will be used, instead."
+#, kde-format
 msgid ""
 "When calculating densities or probabilities, specify the number of evenly "
 "spaces quantiles to show. Alternatively, use the setting above."
 msgstr ""
-"Ao calcular as densidades ou probabilidades, indique um ou mais quantis. Se "
-"esta opção for deixada em branco, uma sequência de quantis com espaços "
-"uniformes será usada como alternativa."
+"Ao calcular densidades ou probabilidades, especifique o número de quantis de "
+"espaços uniformes a serem exibidos. Como alternativa, use a configuração "
+"acima."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
@@ -2816,18 +2813,13 @@ msgstr ""
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #: rkward/plugins/distributions/dist_help_snippets.xml:11
-#, fuzzy, kde-format
-#| msgid ""
-#| "When calculating densities or probabilities, specify one or more "
-#| "quantiles. If this setting is left empty, a sequence of evenly spaced "
-#| "quantiles will be used, instead."
+#, kde-format
 msgid ""
 "When calculating densities or probabilities, specify one or more quantiles. "
 "Alternatively, leave this empty to use the setting above, instead."
 msgstr ""
-"Ao calcular as densidades ou probabilidades, indique um ou mais quantis. Se "
-"esta opção for deixada em branco, uma sequência de quantis com espaços "
-"uniformes será usada como alternativa."
+"Ao calcular densidades ou probabilidades, especifique um ou mais quantis. "
+"Como alternativa, deixe este campo em branco para usar a configuração acima."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Number of probabilities")
@@ -2850,20 +2842,15 @@ msgstr ""
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #: rkward/plugins/distributions/dist_help_snippets.xml:12
-#, fuzzy, kde-format
-#| msgid ""
-#| "When calculating quantiles, specify one or more probabilities, optionally "
-#| "logarithmic (see below). If this setting is left empty, a sequence of "
-#| "evenly spaced (log) probabilities will be used, instead."
+#, kde-format
 msgid ""
 "When calculating quantiles, specify the number of evenly spaced "
 "probabilities (optionally logarithmic) to show. Alternatively, use the "
 "setting below."
 msgstr ""
-"Ao calcular os quantis, indique uma ou mais probabilidades, opcionalmente "
-"logarítmicas (veja abaixo). Se esta opção for deixada em branco, uma "
-"sequência de probabilidades (log) com espaços uniformes será usada como "
-"alternativa."
+"Ao calcular quantis, especifique o número de probabilidades uniformemente "
+"espaçadas (opcionalmente logarítmicas) a serem exibidas. Como alternativa, "
+"use a configuração abaixo."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
@@ -2886,20 +2873,15 @@ msgstr ""
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #: rkward/plugins/distributions/dist_help_snippets.xml:13
-#, fuzzy, kde-format
-#| msgid ""
-#| "When calculating quantiles, specify one or more probabilities, optionally "
-#| "logarithmic (see below). If this setting is left empty, a sequence of "
-#| "evenly spaced (log) probabilities will be used, instead."
+#, kde-format
 msgid ""
 "When calculating quantiles, specify one or more probabilities, optionally "
 "logarithmic (see below). If this setting is left empty, the setting above is "
 "used, instead."
 msgstr ""
-"Ao calcular os quantis, indique uma ou mais probabilidades, opcionalmente "
-"logarítmicas (veja abaixo). Se esta opção for deixada em branco, uma "
-"sequência de probabilidades (log) com espaços uniformes será usada como "
-"alternativa."
+"Ao calcular quantis, especifique uma ou mais probabilidades, opcionalmente "
+"logarítmicas (veja abaixo). Se esta configuração for deixada em branco, a "
+"configuração acima será usada."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
@@ -3007,7 +2989,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_help_snippets.xml:17
 #, kde-format
 msgid "Show a preview of the result."
-msgstr ""
+msgstr "Mostra uma visualização do resultado."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <caption title="...">
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <caption title="...">
@@ -3188,10 +3170,9 @@ msgstr "Calcular os quantis para as probabilidades indicadas"
 #. i18n: ectx: (Loaded from Weibull distribution calculator) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/dist_snippets.xml:32
-#, fuzzy, kde-format
-#| msgid "Number of trials"
+#, kde-format
 msgid "Number of quantiles"
-msgstr "Número de tentativas"
+msgstr "Número de quantis"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <spinbox label="...">
@@ -3214,10 +3195,9 @@ msgstr "Número de tentativas"
 #. i18n: ectx: (Loaded from Weibull distribution calculator) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/dist_snippets.xml:33
-#, fuzzy, kde-format
-#| msgid "Number of trials"
+#, kde-format
 msgid "Number of probabilities"
-msgstr "Número de tentativas"
+msgstr "Número de probabilidades"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <text>
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <text>

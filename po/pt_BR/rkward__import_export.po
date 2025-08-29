@@ -4,20 +4,21 @@
 #
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2015.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2015, 2016.
+# SPDX-FileCopyrightText: 2025 Marcus Gama <marcus.gama@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__import_export\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2016-01-17 01:23-0200\n"
-"Last-Translator: André Marcelo Alvarenga <alvarenga@kde.org>\n"
-"Language-Team: Brazilian Portuguese <kde-i18n-pt_br@kde.org>\n"
+"PO-Revision-Date: 2025-08-28 07:28-0300\n"
+"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1259,7 +1260,7 @@ msgstr "atribuir ao globalenv()"
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:19
 #, kde-format
 msgid "Generic data import"
-msgstr ""
+msgstr "Importação de dados genéricos"
 
 #. i18n: ectx: (Loaded from Generic data import) <summary>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:11
@@ -1271,19 +1272,21 @@ msgid ""
 "usually be preferable, as it will provide more specific options, and with "
 "less packages to install."
 msgstr ""
+"Importa uma variedade de formatos. Esta é uma abordagem genérica baseada no "
+"pacote R \"rio\", que por sua vez depende de uma variedade de outros "
+"pacotes. Se houver um plugin dedicado para o formato que você deseja "
+"importar, usá-lo geralmente será preferível, pois fornecerá opções mais "
+"específicas e com menos pacotes para instalar."
 
 #. i18n: ectx: (Loaded from Generic data import) <usage>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:16
-#, fuzzy, kde-format
-#| msgid ""
-#| "Choose the CSV file to import. An R object containing the data will be "
-#| "created. See <link href=\"rkward://rhelp/read.table\"/>."
+#, kde-format
 msgid ""
 "Select the data file to import. An R object containing the data will be "
 "created. This will usually be a data.frame, or a list."
 msgstr ""
-"Escolha o arquivo CSV a importar. Será criado um objeto do R que contém os "
-"dados. Consulte <link href=\"rkward://rhelp/read.table\"/>."
+"Selecione o arquivo de dados a ser importado. Um objeto R contendo os dados "
+"será criado. Geralmente, será um data.frame ou uma lista."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Edit Object")
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Edit Object")
@@ -1306,6 +1309,9 @@ msgid ""
 "Some data files may contain more than one set of data (e.g. several sheets "
 "inside one excel file). Check this option to import all datasets as a list."
 msgstr ""
+"Alguns arquivos de dados podem conter mais de um conjunto de dados (por "
+"exemplo, várias planilhas dentro de um arquivo Excel). Marque esta opção "
+"para importar todos os conjuntos de dados como uma lista."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import specific sub-set")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:26
@@ -1314,22 +1320,20 @@ msgid ""
 "For datasets containing more than one set of data, specify which set to "
 "import (this will usually be a name or a number)."
 msgstr ""
+"Para conjuntos de dados contendo mais de um conjunto, especifique qual "
+"conjunto importar (geralmente será um nome ou um número)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:27
-#, fuzzy, kde-format
-#| msgid ""
-#| "Preview imported data. Only the first 50 rows and columns are shown, for "
-#| "performance reasons. Internally, the preview uses a data.frame, even if "
-#| "<label id=\"data_frame\"/> is not checked."
+#, kde-format
 msgid ""
 "Preview imported data. Only the first 50 rows and columns are shown, for "
 "performance reasons (and only the first dataset in case of multiple sets in "
 "the file)."
 msgstr ""
-"Visualiza os dados importados. São apresentadas apenas as primeiras 50 "
-"linhas e colunas, por razões de desempenho. Internamente, a visualização usa "
-"um data.frame, mesmo que o <label id=\"data_frame\"/> não esteja assinalado."
+"Visualize os dados importados. Apenas as primeiras 50 linhas e colunas são "
+"exibidas, por causa do desempenho (e apenas o primeiro conjunto de dados, no "
+"caso de vários conjuntos no arquivo)."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <checkbox label="...">
@@ -1345,20 +1349,19 @@ msgstr "Editar objeto"
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:29
 #, kde-format
 msgid "If the file contains more than one dataset"
-msgstr ""
+msgstr "Se o arquivo contiver mais de um conjunto de dados"
 
 #. i18n: ectx: (Generic data import) <dialog label="Generic data import"> <tab label="General"> <frame label="If the file contains more than one dataset"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:30
-#, fuzzy, kde-format
-#| msgid "Import as a data.frame"
+#, kde-format
 msgid "Import a list of all datasets"
-msgstr "Importar como uma lista de dados"
+msgstr "Importar uma lista de todos os conjuntos de dados"
 
 #. i18n: ectx: (Generic data import) <dialog label="Generic data import"> <tab label="General"> <frame label="If the file contains more than one dataset"> <input label="...">
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:31
 #, kde-format
 msgid "Import specific sub-set"
-msgstr ""
+msgstr "Importar subconjunto específico"
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import STATA file)
@@ -2285,14 +2288,13 @@ msgstr "Imprimir a avaliação"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.js:123
 #, kde-format
 msgid "Export RMarkdown file"
-msgstr ""
+msgstr "Exportar arquivo RMarkdown"
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "RMarkdown file")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:21
-#, fuzzy, kde-format
-#| msgid "Specifies the sheet to be imported"
+#, kde-format
 msgid "Choose the file to be exported."
-msgstr "Indica a planilha a importar"
+msgstr "Escolha o arquivo a ser exportado."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Target format")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:24
@@ -2303,12 +2305,16 @@ msgid ""
 "defined via output_format will be used, see the documentation on rmarkdown::"
 "render()."
 msgstr ""
+"Defina o formato de destino para os arquivos exportados. Se você escolher "
+"\"Todos os formatos definidos no documento\" ou \"Primeiro formato definido "
+"no documento\", os formatos definidos via output_format serão usados. "
+"Consulte a documentação em rmarkdown::render()."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save as")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:27
 #, kde-format
 msgid "Choose the target file name to export to."
-msgstr ""
+msgstr "Escolha o nome do arquivo de destino para a exportação."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:30
@@ -2317,6 +2323,8 @@ msgid ""
 "Choose the target directory to export to, file names are automatically "
 "generated according to the formats defined in the document."
 msgstr ""
+"Selecione a pasta de destino para exportar; os nomes dos arquivos serão "
+"gerados automaticamente de acordo com os formatos definidos no documento."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Markdown version")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:34
@@ -2328,6 +2336,12 @@ msgid ""
 "between various output formats. But be aware that some formats may require "
 "special configuration or templates to produce proper results."
 msgstr ""
+"Defina a versão do Markdown a ser usada. Documentos da versão 1 mais antiga "
+"são renderizados apenas no formato HTML, usando o pacote Markdown. Em caso "
+"de dúvida, deixe para a versão 2 mais recente; esses documentos são "
+"renderizados usando o Pandoc, que permite escolher entre vários formatos de "
+"saída. Mas esteja ciente de que alguns formatos podem exigir configurações "
+"ou modelos especiais para produzir resultados adequados."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Export RMarkdown) <about name="...">
@@ -2339,150 +2353,149 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:33
 #, kde-format
 msgid "Export RMarkdown"
-msgstr ""
+msgstr "Exportar RMarkdown"
 
 #. i18n: ectx: (Export RMarkdown) <about shortinfo="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:16
 #, kde-format
 msgid "RKWard GUI to export RMarkdown documents in various formats"
 msgstr ""
+"Interface gráfica do RKWard para exportar documentos RMarkdown em vários "
+"formatos"
 
 #. i18n: ectx: (Export RMarkdown) <about> <author given="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:17
 #, kde-format
 msgctxt "Author name"
 msgid "Meik"
-msgstr ""
+msgstr "Meik"
 
 #. i18n: ectx: (Export RMarkdown) <about> <author family="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:17
 #, kde-format
 msgctxt "Author name"
 msgid "Michalke"
-msgstr ""
+msgstr "Michalke"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:68
-#, fuzzy, kde-format
-#| msgid "Source an R file"
+#, kde-format
 msgid "Source and target"
-msgstr "Inclusão de um arquivo de R"
+msgstr "Fonte e alvo"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <browser label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:71
 #, kde-format
 msgid "RMarkdown file"
-msgstr ""
+msgstr "Arquivo RMarkdown"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:72
-#, fuzzy, kde-format
-#| msgid "Data format"
+#, kde-format
 msgid "Target format"
-msgstr "Formato dos dados"
+msgstr "Formato alvo"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:73
 #, kde-format
 msgid "All formats defined in document"
-msgstr ""
+msgstr "Todos os formatos definidos no documento"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:74
 #, kde-format
 msgid "First format defined in document"
-msgstr ""
+msgstr "Primeiro formato definido no documento"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:75
 #, kde-format
 msgid "Beamer presentation"
-msgstr ""
+msgstr "Apresentação do Beamer"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:76
 #, kde-format
 msgid "DokuWiki"
-msgstr ""
+msgstr "DokuWiki"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:77
 #, kde-format
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:78
 #, kde-format
 msgid "HTML 5"
-msgstr ""
+msgstr "HTML 5"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:79
 #, kde-format
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:80
 #, kde-format
 msgid "Markdown (GitHub, old)"
-msgstr ""
+msgstr "Markdown (GitHub, antigo)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:81
 #, kde-format
 msgid "Markdown (GitHub)"
-msgstr ""
+msgstr "Markdown (GitHub)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:82
 #, kde-format
 msgid "MediaWiki"
-msgstr ""
+msgstr "MediaWiki"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:83
 #, kde-format
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:84
 #, kde-format
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:85
 #, kde-format
 msgid "PowerPoint"
-msgstr ""
+msgstr "PowerPoint"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:86
 #, kde-format
 msgid "RTF"
-msgstr ""
+msgstr "RTF"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:87
 #, kde-format
 msgid "Vignette (HTML)"
-msgstr ""
+msgstr "Vignette (HTML)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:88
 #, kde-format
 msgid "Word"
-msgstr ""
+msgstr "Word"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <browser label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:90
-#, fuzzy, kde-format
-#| msgid "Save to"
+#, kde-format
 msgid "Save as"
-msgstr "Salvar em"
+msgstr "Salvar como"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="...">
@@ -2496,28 +2509,27 @@ msgstr "Salvar em"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:96
-#, fuzzy, kde-format
-#| msgid "Main options"
+#, kde-format
 msgid "Advanced options"
-msgstr "Opções principais"
+msgstr "Opções avançadas"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Advanced options"> <radio label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:99
 #, kde-format
 msgid "Markdown version"
-msgstr ""
+msgstr "Versão do Markdown"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <radio label="Markdown version"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:100
 #, kde-format
 msgid "v1"
-msgstr ""
+msgstr "v1"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <radio label="Markdown version"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:101
 #, kde-format
 msgid "v2"
-msgstr ""
+msgstr "v2"
 
 #. i18n: ectx: (Loaded from Save R objects)
 #. i18n: ectx: (Save R objects) <dialog label="...">
@@ -3241,7 +3253,7 @@ msgstr "Arquivos do Microsoft Excel (Java)"
 #: rkward/plugins/import_export.pluginmap:51
 #, kde-format
 msgid "Generic import (rio-based)"
-msgstr ""
+msgstr "Importação genérica (baseada em rio)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:53
@@ -3281,3 +3293,212 @@ msgstr "Espaço de Trabalho"
 msgctxt "Author name"
 msgid "RKWard Team"
 msgstr "Equipe do RKWard"
+
+#~ msgid "Install from git results"
+#~ msgstr "Instalar dos resultados do git"
+
+#~ msgid "Set the location where the package resides that you want to install."
+#~ msgstr "Defina o local onde reside o pacote que você deseja instalar."
+
+#~ msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
+#~ msgstr "Especifique o nome de usuário (somente GitHub, GitLab e Bitbucket)."
+
+#~ msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
+#~ msgstr "Forneça o nome do repositório (somente GitHub, GitLab e Bitbucket)."
+
+#~ msgid "Give the full URL to the repository (generic git and svn only)."
+#~ msgstr ""
+#~ "Forneça a URL completa do repositório (somente git e svn genéricos)."
+
+#~ msgid ""
+#~ "If you want a certain commit, tag or branch for installation, define that "
+#~ "here."
+#~ msgstr ""
+#~ "Se você quiser um determinado commit, tag ou branch para instalação, "
+#~ "defina-o aqui."
+
+#~ msgid ""
+#~ "If you want to install from a subdirectory of the repository, define that "
+#~ "here."
+#~ msgstr ""
+#~ "Se você quiser instalar a partir de um subdiretório do repositório, "
+#~ "defina-o aqui."
+
+#~ msgid ""
+#~ "To install from a private repository, set your personal access token "
+#~ "(PAT, GitHub and GitLab only)."
+#~ msgstr ""
+#~ "Para instalar a partir de um repositório privado, defina seu token de "
+#~ "acesso pessoal (somente PAT, GitHub e GitLab)."
+
+#~ msgid ""
+#~ "To install from a private repository, set the user name (Bitbucket only)."
+#~ msgstr ""
+#~ "Para instalar a partir de um repositório privado, defina o nome de "
+#~ "usuário (somente Bitbucket)."
+
+#~ msgid ""
+#~ "To install from a private repository, set the password (Bitbucket only)."
+#~ msgstr ""
+#~ "Para instalar a partir de um repositório privado, defina a senha (somente "
+#~ "Bitbucket)."
+
+#~ msgid "Install from git/svn"
+#~ msgstr "Instalar do git/svn"
+
+#~ msgid "Package source"
+#~ msgstr "Fonte do pacote"
+
+#~ msgid "git (generic)"
+#~ msgstr "git (genérico)"
+
+#~ msgid "GitHub"
+#~ msgstr "GitHub"
+
+#~ msgid "GitLab"
+#~ msgstr "GitLab"
+
+#~ msgid "Bitbucket"
+#~ msgstr "Bitbucket"
+
+#~ msgid "subversion (generic)"
+#~ msgstr "subversion (genérico)"
+
+#~ msgid "Package repository"
+#~ msgstr "Repositório do pacote"
+
+#~ msgid "Git user name"
+#~ msgstr "Nome do usuário git"
+
+#~ msgid "Repository"
+#~ msgstr "Repositório"
+
+#~ msgid "URL to repository"
+#~ msgstr "URL do repositório"
+
+#~ msgid "Commit/tag/branch"
+#~ msgstr "Commit/tag/branch"
+
+#~ msgid "Subdirectory"
+#~ msgstr "Subdiretório"
+
+#~ msgid "Private repository"
+#~ msgstr "Repositório privado"
+
+#~ msgid "Personal access token (PAT)"
+#~ msgstr "Token de acesso pessoal (PAT, do inglês)"
+
+#~ msgid "User"
+#~ msgstr "Usuário"
+
+#~ msgid "Password"
+#~ msgstr "Senha"
+
+#~ msgid "Download AppImage results"
+#~ msgstr "Baixar resultados AppImage"
+
+#~ msgid "Download AppImage"
+#~ msgstr "Baixar AppImage"
+
+#~ msgid "Adds a dialog to install or update an AppImage of RKWard"
+#~ msgstr ""
+#~ "Adiciona uma caixa de diálogo para instalar ou atualizar um AppImage do "
+#~ "RKWard"
+
+#~ msgid "Select a target file to save the AppImage to."
+#~ msgstr "Selecione um arquivo de destino para salvar o AppImage."
+
+#~ msgid ""
+#~ "Define which branch of RKWard you want to download: The latest stable "
+#~ "release, the latest development build (used for testing and probably "
+#~ "buggy/unstable) or an AppImage from a custom source."
+#~ msgstr ""
+#~ "Defina qual branch do RKWard você deseja baixar: a versão estável mais "
+#~ "recente, a versão de desenvolvimento mais recente (usada para testes e "
+#~ "provavelmente com bugs/instável) ou um AppImage de uma fonte "
+#~ "personalizada."
+
+#~ msgid "URL to look for the AppImage files."
+#~ msgstr "URL para procurar os arquivos AppImage."
+
+#~ msgid ""
+#~ "Regular expression to find links to the AppImage in the HTML code of the "
+#~ "URL."
+#~ msgstr ""
+#~ "Expressão regular para encontrar links para o AppImage no código HTML da "
+#~ "URL."
+
+#~ msgid "The method to use by download.file()."
+#~ msgstr "O método a ser usado por download.file()."
+
+#~ msgid ""
+#~ "Is a server-side cached value acceptable? Disabling this is useful for "
+#~ "‘⁠http://⁠’ and ‘⁠https://⁠’ URLs. It will attempt to get a copy directly "
+#~ "from the site rather than from an intermediate cache."
+#~ msgstr ""
+#~ "Um valor armazenado em cache no lado do servidor é aceitável? Desabilitar "
+#~ "isso é útil para URLs ‘⁠http://⁠’ e ‘⁠https://⁠’. Ele tentará obter uma cópia "
+#~ "diretamente do site, em vez de um cache intermediário."
+
+#~ msgid "The number of seconds allowed to try downloading the AppImage."
+#~ msgstr "O número de segundos permitidos para tentar baixar o AppImage."
+
+#~ msgid "AppImage"
+#~ msgstr "AppImage"
+
+#~ msgid "Suppress package loading messages"
+#~ msgstr "Suprimir mensagens de carregamento de pacotes"
+
+#~ msgid "Source"
+#~ msgstr "Fonte"
+
+#~ msgid "RKWard release branch"
+#~ msgstr "branch de lançamento do RKWard"
+
+#~ msgid "Latest stable release"
+#~ msgstr "Último lançamento estável"
+
+#~ msgid "Current development build (untested!)"
+#~ msgstr "Compilação de desenvolvimento atual (não testada!)"
+
+#~ msgid "URL"
+#~ msgstr "URL"
+
+#~ msgid "Pattern"
+#~ msgstr "Padrão"
+
+#~ msgid "Download"
+#~ msgstr "Baixar"
+
+#~ msgid "Download method"
+#~ msgstr "Método para baixar"
+
+#~ msgid "auto"
+#~ msgstr "automático"
+
+#~ msgid "internal"
+#~ msgstr "interno"
+
+#~ msgid "libcurl"
+#~ msgstr "libcurl"
+
+#~ msgid "wget"
+#~ msgstr "wget"
+
+#~ msgid "curl"
+#~ msgstr "curl"
+
+#~ msgid "wininet (Windows only)"
+#~ msgstr "wininet (somente Windows)"
+
+#~ msgid "Allow cached files"
+#~ msgstr "Permitir arquivos em cache"
+
+#~ msgid "Timeout"
+#~ msgstr "Tempo limite"
+
+#~ msgid "Install R package from git"
+#~ msgstr "Instalar pacote R do git"
+
+#~ msgid "Settings"
+#~ msgstr "Configurações"
