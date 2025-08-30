@@ -413,24 +413,27 @@ class RKWardCoreTest : public QObject {
 	}
 
 	void priorityCommandTest() {
-		bool priority_command_done = false;
-		runCommandAsync(new RCommand(QStringLiteral("\ncat(\"sleeping\\n\"); Sys.sleep(5)"), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
-			QVERIFY(priority_command_done);
-			QVERIFY(command->failed());
-			QVERIFY(command->wasCanceled());
-		});
-		auto priority_command = new RCommand(QStringLiteral("cat(\"priority\\n\")"), RCommand::PriorityCommand | RCommand::App);
-		runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
-			priority_command_done = true;
-			RInterface::instance()->cancelAll();
-		});
-		// NOTE: The above two commands may or may not run in that order. Conceivably, the priority command gets handled, before the initial sleep command even started.
-		//       The newline in the first command actually makes it a bit more likely for the priority command to go first (because parsing needs more iterations).
-		//       We try to step on that interesting corner case, deliberately, at is has been causing failures in the past.
-		waitForAllFinished();     // first wait with a short timeout: sleep should have been cancelled
-		waitForAllFinished(5000); // fallbacck: priority_command_done must remain in scope until done (even if interrupting fails for some reason)
-		                          // TODO: This test is still failing, occasionally, possibly, because the user command has not even been added to all_current_commands, yet
-		                          //       (event processing in RKRBackend::handleRequest2())
+		// NOTE: Hopefully, this test case is fixed for good, but when it is not (it wasn't quite in 08/2025), 10 iterations are not near enough to trigger the
+		//       failure, reliably. On my test system, I rather needed on the order to 10000 iterations for that. Of course that makes testing a pain, and cannot
+		//       reasonably be done on the CI...
+		for (int i = 0; i < 10; ++i) {
+			bool priority_command_done = false;
+			runCommandAsync(new RCommand(QStringLiteral("%1cat(\"sleeping\\n\");%1Sys.sleep(5)").arg(QString().fill(u'\n', i%5)), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+				QVERIFY(priority_command_done);
+				QVERIFY(command->failed());
+				QVERIFY(command->wasCanceled());
+			});
+			auto priority_command = new RCommand(QStringLiteral("cat(\"priority\\n\")"), RCommand::PriorityCommand | RCommand::App);
+			runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
+				priority_command_done = true;
+				RInterface::instance()->cancelAll();
+			});
+			// NOTE: The above two commands may or may not start executing in that order. Conceivably, the priority command gets handled, before the initial sleep
+			//       command even started. This interesting corner case, in particular, has been causing trouble in the past, so we try to tigger it, deliberately.
+			//       The inserted newline(s) in the fist command make(s) that a tiny bit more likely to happen (because parsing needs more iterations).
+			waitForAllFinished();     // first wait with a short timeout: sleep should have been cancelled
+			waitForAllFinished(6000); // fallbacck: priority_command_done must remain in scope until done (even if interrupting fails for some reason)
+		}
 	}
 
 	void RKConsoleHistoryTest() {
