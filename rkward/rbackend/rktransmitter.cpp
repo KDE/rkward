@@ -38,7 +38,8 @@ void RKRBackendSerializer::serialize(const RBackendRequest &request, QDataStream
 	}
 }
 
-template<typename T> static T readS(QDataStream &stream) {
+template <typename T>
+static T readS(QDataStream &stream) {
 	T ret;
 	stream >> ret;
 	return ret;

@@ -102,7 +102,8 @@ class RKWardCoreTest : public QObject {
 		runCommandWithTimeout(
 		    new RCommand(QStringLiteral("# waitForAllFinished"), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [&timedout](RCommand *) {
 			    timedout = false;
-		}, timeoutms);
+		    },
+		    timeoutms);
 		// NOTE: failure message was already generated
 		return !timedout;
 	}
@@ -437,9 +438,9 @@ class RKWardCoreTest : public QObject {
 			// NOTE: The above two commands may or may not start executing in that order. Conceivably, the priority command gets handled, before the initial sleep
 			//       command even started. This interesting corner case, in particular, has been causing trouble in the past, so we try to tigger it, deliberately.
 			//       The inserted newline(s) in the fist command make(s) that a tiny bit more likely to happen (because parsing needs more iterations).
-			if (!waitForAllFinished()) { // first, wait with a short timeout: sleep should have been cancelled
+			if (!waitForAllFinished()) {  // first, wait with a short timeout: sleep should have been cancelled
 				waitForAllFinished(6000); // but if that fails, keep priority_command_done in scope to avoid crash)
-				QVERIFY(false); // still a bug, of course
+				QVERIFY(false);           // still a bug, of course
 			}
 		}
 	}
@@ -632,7 +633,8 @@ class RKWardCoreTest : public QObject {
 			QCOMPARE(output.count(u"Closed device 2"_s), 1);
 			QCOMPARE(output.count(u"Plot was modified"_s), 1);
 			QCOMPARE(output.count(u"Blanking device 2"_s), 2); // once each for the first two plots, but not for title()
-		});
+		},
+		                      3000);
 	}
 
 	void restartRBackend() {
