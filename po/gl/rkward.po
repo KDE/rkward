@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-25 00:38+0000\n"
+"POT-Creation-Date: 2025-08-30 00:38+0000\n"
 "PO-Revision-Date: 2025-06-22 05:58+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -7798,32 +7798,32 @@ msgstr "Restaurar a disposición do lugar de traballo"
 msgid "Close all"
 msgstr "Pechalo todo"
 
-#: rkward/windows/rkworkplaceview.cpp:237
+#: rkward/windows/rkworkplaceview.cpp:243
 #, kde-format
 msgid "Window Left"
 msgstr "Xanela á esquerda"
 
-#: rkward/windows/rkworkplaceview.cpp:242
+#: rkward/windows/rkworkplaceview.cpp:248
 #, kde-format
 msgid "Window Right"
 msgstr "Xanela á dereita"
 
-#: rkward/windows/rkworkplaceview.cpp:249
+#: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split Ve&rtical"
 msgstr "Dividir na &vertical"
 
-#: rkward/windows/rkworkplaceview.cpp:252
+#: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
 msgstr "Divide a vista activa en dúas vistas, verticalmente."
 
-#: rkward/windows/rkworkplaceview.cpp:256
+#: rkward/windows/rkworkplaceview.cpp:262
 #, kde-format
 msgid "Split &Horizontal"
 msgstr "Dividir na &horizontal"
 
-#: rkward/windows/rkworkplaceview.cpp:259
+#: rkward/windows/rkworkplaceview.cpp:265
 #, kde-format
 msgid "Split the currently active view into two views, horizontally."
 msgstr "Divide a vista activa en dúas vistas, horizontalmente."

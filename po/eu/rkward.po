@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-25 00:38+0000\n"
+"POT-Creation-Date: 2025-08-30 00:38+0000\n"
 "PO-Revision-Date: 2024-10-13 19:14+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -7100,32 +7100,32 @@ msgstr "Berrezarri langunearen antolaera"
 msgid "Close all"
 msgstr "Itxi dena"
 
-#: rkward/windows/rkworkplaceview.cpp:237
+#: rkward/windows/rkworkplaceview.cpp:243
 #, kde-format
 msgid "Window Left"
 msgstr "Ezker leihoa"
 
-#: rkward/windows/rkworkplaceview.cpp:242
+#: rkward/windows/rkworkplaceview.cpp:248
 #, kde-format
 msgid "Window Right"
 msgstr "Eskuin leihoa"
 
-#: rkward/windows/rkworkplaceview.cpp:249
+#: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split Ve&rtical"
 msgstr "Zatitu be&rtikalki"
 
-#: rkward/windows/rkworkplaceview.cpp:252
+#: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
 msgstr "Zatitu unean aktibo dagoen ikuspegia bi ikuspegitan, bertikalki."
 
-#: rkward/windows/rkworkplaceview.cpp:256
+#: rkward/windows/rkworkplaceview.cpp:262
 #, kde-format
 msgid "Split &Horizontal"
 msgstr "Zatitu &horizontalki"
 
-#: rkward/windows/rkworkplaceview.cpp:259
+#: rkward/windows/rkworkplaceview.cpp:265
 #, kde-format
 msgid "Split the currently active view into two views, horizontally."
 msgstr "Zatitu unean aktibo dagoen ikuspegia bi ikuspegitan, horizontalki."

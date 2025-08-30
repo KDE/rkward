@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kde4.14\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-25 00:38+0000\n"
+"POT-Creation-Date: 2025-08-30 00:38+0000\n"
 "PO-Revision-Date: 2015-02-22 23:06+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian\n"
@@ -7005,32 +7005,32 @@ msgstr ""
 msgid "Close all"
 msgstr "Zatvori Sve"
 
-#: rkward/windows/rkworkplaceview.cpp:237
+#: rkward/windows/rkworkplaceview.cpp:243
 #, kde-format
 msgid "Window Left"
 msgstr ""
 
-#: rkward/windows/rkworkplaceview.cpp:242
+#: rkward/windows/rkworkplaceview.cpp:248
 #, kde-format
 msgid "Window Right"
 msgstr ""
 
-#: rkward/windows/rkworkplaceview.cpp:249
+#: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split Ve&rtical"
 msgstr ""
 
-#: rkward/windows/rkworkplaceview.cpp:252
+#: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
 msgstr ""
 
-#: rkward/windows/rkworkplaceview.cpp:256
+#: rkward/windows/rkworkplaceview.cpp:262
 #, kde-format
 msgid "Split &Horizontal"
 msgstr ""
 
-#: rkward/windows/rkworkplaceview.cpp:259
+#: rkward/windows/rkworkplaceview.cpp:265
 #, kde-format
 msgid "Split the currently active view into two views, horizontally."
 msgstr ""
