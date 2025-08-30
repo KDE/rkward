@@ -28,7 +28,10 @@ RBackendRequest::RBackendRequest(bool synchronous, RCallbackType type) {
 
 	RBackendRequest::synchronous = synchronous;
 	RBackendRequest::type = type;
-	id = ++_id;
+	if (++_id >= (1 << 30)) { // Not likely to happen, but never overflow the 32 bit int used for transmission
+		_id = 1;
+	}
+	id = _id;
 	done = false;
 	command = nullptr;
 	output = nullptr;

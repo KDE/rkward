@@ -30,8 +30,8 @@ int RCommand::next_id = 0;
 RCommand::RCommand(const QString &command, int type, const QString &rk_equiv) : RData(), RCommandChain(false) {
 	RK_TRACE(RBACKEND);
 	_id = next_id++;
-	// if we ever submit enough commands to get a buffer overflow, use only positive numbers.
-	if (next_id < 0) {
+	// not likely to trigger in real use, but make sure not to exceed transmittable (32 bit signed) range
+	if (next_id > (1 << 30)) {
 		next_id = 0;
 	}
 	_type = type;

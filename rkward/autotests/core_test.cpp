@@ -96,9 +96,15 @@ class RKWardCoreTest : public QObject {
 		RInterface::issueCommand(command, chain);
 	}
 
-	void waitForAllFinished(int timeoutms = 2000) {
+	// returns false, if timeout was hit
+	bool waitForAllFinished(int timeoutms = 2000) {
+		bool timedout = true;
 		runCommandWithTimeout(
-		    new RCommand(QStringLiteral("# waitForAllFinished"), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand *) {}, timeoutms);
+		    new RCommand(QStringLiteral("# waitForAllFinished"), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [&timedout](RCommand *) {
+			    timedout = false;
+		}, timeoutms);
+		// NOTE: failure message was already generated
+		return !timedout;
 	}
 
 	void cleanGlobalenv() {
@@ -414,11 +420,11 @@ class RKWardCoreTest : public QObject {
 
 	void priorityCommandTest() {
 		// NOTE: Hopefully, this test case is fixed for good, but when it is not (it wasn't quite in 08/2025), 10 iterations are not near enough to trigger the
-		//       failure, reliably. On my test system, I rather needed on the order to 10000 iterations for that. Of course that makes testing a pain, and cannot
+		//       failure, somewhat reliably. On my test system, I rather needed on the order to 10000 iterations for that. Of course that makes testing a pain, and cannot
 		//       reasonably be done on the CI...
 		for (int i = 0; i < 10; ++i) {
 			bool priority_command_done = false;
-			runCommandAsync(new RCommand(QStringLiteral("%1cat(\"sleeping\\n\");%1Sys.sleep(5)").arg(QString().fill(u'\n', i % 5)), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+			runCommandAsync(new RCommand(QStringLiteral("%1cat(\"sleeping\\n\");%1Sys.sleep(5);cat(\"BUG\")").arg(QString().fill(u'\n', i % 5)), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
 				QVERIFY(priority_command_done);
 				QVERIFY(command->failed());
 				QVERIFY(command->wasCanceled());
@@ -431,8 +437,10 @@ class RKWardCoreTest : public QObject {
 			// NOTE: The above two commands may or may not start executing in that order. Conceivably, the priority command gets handled, before the initial sleep
 			//       command even started. This interesting corner case, in particular, has been causing trouble in the past, so we try to tigger it, deliberately.
 			//       The inserted newline(s) in the fist command make(s) that a tiny bit more likely to happen (because parsing needs more iterations).
-			waitForAllFinished();     // first wait with a short timeout: sleep should have been cancelled
-			waitForAllFinished(6000); // fallbacck: priority_command_done must remain in scope until done (even if interrupting fails for some reason)
+			if (!waitForAllFinished()) { // first, wait with a short timeout: sleep should have been cancelled
+				waitForAllFinished(6000); // but if that fails, keep priority_command_done in scope to avoid crash)
+				QVERIFY(false); // still a bug, of course
+			}
 		}
 	}
 

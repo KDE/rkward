@@ -98,21 +98,25 @@ void RKRBackend::interruptCommand(int command_id) {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Received interrupt request for command id %d", command_id);
 	QMutexLocker lock(&all_current_commands_mutex);
 
-	if (all_current_commands.isEmpty()) return;
-	if ((command_id == -1) || (all_current_commands.last()->id == command_id)) {
+	if ((command_id == -1) || (!all_current_commands.isEmpty() && (all_current_commands.last()->id == command_id))) {
 		if (!too_late_to_interrupt) {
 			RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling interrupt for command id %d", command_id);
 			scheduleInterrupt();
 		}
 	} else {
+		bool any_found = false;
 		// if the command to cancel is *not* the topmost command, then do not interrupt, yet.
 		for (RCommandProxy *candidate : std::as_const(all_current_commands)) {
 			if (candidate->id == command_id) {
 				if (!current_commands_to_cancel.contains(candidate)) {
 					RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling delayed interrupt for command id %d", command_id);
 					current_commands_to_cancel.append(candidate);
+					any_found = true;
 				}
 			}
+		}
+		if (any_found) {
+			RK_DEBUG(RBACKEND, DL_ERROR, "interrupt scheduled for command id %d, but it is not current", command_id);
 		}
 	}
 }
