@@ -1,6 +1,6 @@
 /*
 rkcommandlineargs - This file is part of the RKWard project. Created: Tue May 21 2024
-SPDX-FileCopyrightText: 2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2024-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -17,7 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 RKCommandLineArgs *RKCommandLineArgs::instance = nullptr;
 
-RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication *app) {
+RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication *app, bool fake_for_autotests) {
 	RK_TRACE(MISC);
 	RK_ASSERT(instance == nullptr);
 
@@ -38,7 +38,11 @@ RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication *app) {
 	parser.addOption(QCommandLineOption(QStringLiteral("setup"), i18n("Act as if the version of RKWard had changed (show setup wizard, and (re-)install rkward R package).")));
 	parser.addPositionalArgument(QStringLiteral("files"), i18n("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), QStringLiteral("[Files...]"));
 
-	parser.process(*app);
+	if (fake_for_autotests) {
+		parser.parse(app->arguments().mid(0, 1));
+	} else {
+		parser.process(*app);
+	}
 	about->processCommandLine(&parser);
 
 	storage.resize(NUM_OPTIONS);

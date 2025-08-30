@@ -180,7 +180,7 @@ class RKWardCoreTest : public QObject {
 		KLocalizedString::setApplicationDomain("rkward");
 		KAboutData about(QStringLiteral("rkward"), QStringLiteral("RKWard"), QStringLiteral(RKWARD_VERSION), QStringLiteral("Frontend to the R statistics language"), KAboutLicense::GPL); // component name needed for .rc files to load
 		KAboutData::setApplicationData(about);
-		new RKCommandLineArgs(&about, qApp);
+		new RKCommandLineArgs(&about, qApp, true);
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		testLog(R_EXECUTABLE);
 		RKSessionVars::r_binary = QStringLiteral(R_EXECUTABLE);
