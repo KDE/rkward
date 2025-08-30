@@ -517,7 +517,7 @@ void RKConsole::rawWriteLine(const QString &line, QChar line_end) {
 	}
 }
 
-void RKConsole::newOutput(RCommand *command, const ROutput *output) {
+void RKConsole::newOutput(RCommand *command, const ROutput &output) {
 	RK_TRACE(APP);
 
 	if (!command) {
@@ -528,7 +528,7 @@ void RKConsole::newOutput(RCommand *command, const ROutput *output) {
 	int first_line = output_cursor.line();
 	;
 	// split by and handle carriage returns (important for progress bars)
-	const QString out = output->output;
+	const QString out = output.output;
 	int string_pos = -1;
 	int start_pos = 0;
 	int end_pos = out.length();
@@ -542,7 +542,7 @@ void RKConsole::newOutput(RCommand *command, const ROutput *output) {
 	if (start_pos < end_pos) rawWriteLine(out.mid(start_pos, string_pos - start_pos + 1), u' ');
 
 	int end_line = output_cursor.line();
-	if (output->type != ROutput::Output || (!command)) {
+	if (output.type != ROutput::Output || (!command)) {
 		for (int line = first_line; line < end_line; ++line) {
 			doc->addMark(line, command ? KTextEditor::Document::BreakpointActive : KTextEditor::Document::BreakpointDisabled);
 		}
@@ -887,7 +887,7 @@ void RKConsole::pipeCommandThroughConsoleLocal(const QString &command_string) {
 	previous_chunk_was_piped = true;
 }
 
-void RKConsole::insertSpontaneousROutput(ROutput *output) {
+void RKConsole::insertSpontaneousROutput(const ROutput &output) {
 	RK_TRACE(APP);
 	RK_ASSERT(!current_command);
 	newOutput(nullptr, output);

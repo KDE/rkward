@@ -70,8 +70,8 @@ void RKRBackendSerializer::serializeOutput(const ROutputList &list, QDataStream 
 
 	stream << (qint32)list.size();
 	for (qint32 i = 0; i < list.size(); ++i) {
-		stream << (qint8)list[i]->type;
-		stream << list[i]->output;
+		stream << (qint8)list[i].type;
+		stream << list[i].output;
 	}
 }
 
@@ -84,11 +84,11 @@ ROutputList *RKRBackendSerializer::unserializeOutput(QDataStream &stream) {
 	ret->reserve(len);
 
 	for (qint32 i = 0; i < len; ++i) {
-		ROutput *out = new ROutput;
+		ROutput out;
 		qint8 dummy8;
 		stream >> dummy8;
-		out->type = (ROutput::ROutputType)dummy8;
-		stream >> out->output;
+		out.type = (ROutput::ROutputType)dummy8;
+		stream >> out.output;
 		ret->append(out);
 	}
 

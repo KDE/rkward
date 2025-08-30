@@ -115,24 +115,24 @@ QString RKROutputBuffer::popOutputCapture(bool highlighted) {
 	QString ret;
 	ROutput::ROutputType previous_type = ROutput::NoOutput;
 	for (int i = 0; i < capture.recorded.length(); ++i) {
-		const ROutput *output = capture.recorded[i];
-		if (output->output.isEmpty()) continue;
+		const auto output = capture.recorded[i];
+		if (output.output.isEmpty()) continue;
 
-		if (output->type != ROutput::Error) { // NOTE: skip error output. It has already been written as a warning.
-			if (highlighted && (output->type != previous_type)) {
+		if (output.type != ROutput::Error) { // NOTE: skip error output. It has already been written as a warning.
+			if (highlighted && (output.type != previous_type)) {
 				if (!ret.isEmpty()) ret.append(u"</pre>\n"_s);
 
-				if (output->type == ROutput::Output) ret.append(u"<pre class=\"output_normal\">"_s);
-				else if (output->type == ROutput::Warning) ret.append(u"<pre class=\"output_warning\">"_s);
+				if (output.type == ROutput::Output) ret.append(u"<pre class=\"output_normal\">"_s);
+				else if (output.type == ROutput::Warning) ret.append(u"<pre class=\"output_warning\">"_s);
 				else {
 					RK_ASSERT(false);
 					ret.append(u"<pre>"_s);
 				}
 			}
-			if (highlighted) ret.append(output->output.toHtmlEscaped());
-			else ret.append(output->output);
+			if (highlighted) ret.append(output.output.toHtmlEscaped());
+			else ret.append(output.output);
 
-			previous_type = output->type;
+			previous_type = output.type;
 		}
 	}
 	if (highlighted && !ret.isEmpty()) ret.append(u"</pre>\n"_s);
@@ -141,19 +141,14 @@ QString RKROutputBuffer::popOutputCapture(bool highlighted) {
 
 void appendToOutputList(ROutputList *list, const QString &output, ROutput::ROutputType output_type) {
 	// No trace
-	ROutput *current_output = nullptr;
-	if (!list->isEmpty()) {
-		// Merge with previous output fragment, if of the same type
-		current_output = list->last();
-		if (current_output->type != output_type) current_output = nullptr;
+	// Merge with previous output fragment, if of the same type
+	if (!list->isEmpty() && list->last().type == output_type) {
+		list->last().output.append(output);
+	} else {
+		QString spaced = output;
+		spaced.reserve(OUTPUT_STRING_RESERVE);
+		list->append(ROutput(output_type, spaced));
 	}
-	if (!current_output) {
-		current_output = new ROutput;
-		current_output->type = output_type;
-		current_output->output.reserve(OUTPUT_STRING_RESERVE);
-		list->append(current_output);
-	}
-	current_output->output.append(output);
 }
 
 bool RKROutputBuffer::handleOutput(const QString &output, int buf_length, ROutput::ROutputType output_type, bool allow_blocking) {

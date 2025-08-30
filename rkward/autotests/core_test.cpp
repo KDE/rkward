@@ -418,7 +418,7 @@ class RKWardCoreTest : public QObject {
 		//       reasonably be done on the CI...
 		for (int i = 0; i < 10; ++i) {
 			bool priority_command_done = false;
-			runCommandAsync(new RCommand(QStringLiteral("%1cat(\"sleeping\\n\");%1Sys.sleep(5)").arg(QString().fill(u'\n', i%5)), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+			runCommandAsync(new RCommand(QStringLiteral("%1cat(\"sleeping\\n\");%1Sys.sleep(5)").arg(QString().fill(u'\n', i % 5)), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
 				QVERIFY(priority_command_done);
 				QVERIFY(command->failed());
 				QVERIFY(command->wasCanceled());
