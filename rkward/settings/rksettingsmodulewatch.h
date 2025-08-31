@@ -1,6 +1,6 @@
 /*
 rksettingsmodulewatch - This file is part of the RKWard project. Created: Thu Aug 26 2004
-SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -37,6 +37,10 @@ class RKSettingsModuleWatch : public RKSettingsModule {
 	static uint maxLogLines() { return max_log_lines; };
 
 	static RKSettingsModuleWatch *instance() { return _instance; };
+	static void forTestingSuppressOutput(bool suppress) {
+		if (suppress) all_suppressed++;
+		else all_suppressed--;
+	};
 
   private:
 	friend class RKSettingsPageWatch;
@@ -49,6 +53,7 @@ class RKSettingsModuleWatch : public RKSettingsModule {
 	static RKConfigValue<int> app_filter;
 	static RKConfigValue<int> sync_filter;
 	static RKConfigValue<int> user_filter;
+	static int all_suppressed;
 
 	static RKConfigValue<uint> max_log_lines;
 	static RKSettingsModuleWatch *_instance;

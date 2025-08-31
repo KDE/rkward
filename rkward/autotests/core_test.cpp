@@ -38,6 +38,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rkward.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulekateplugins.h"
+#include "../settings/rksettingsmodulewatch.h"
 #include "../version.h"
 #include "../windows/katepluginintegration.h"
 
@@ -64,6 +65,19 @@ void RKDebug(int, int level, const char *fmt, ...) {
 	if (level >= DL_ERROR) QFAIL("error message during test (see above)");
 	va_end(ap);
 }
+
+class ScopeHandler {
+  public:
+	ScopeHandler(std::function<void()> setup, std::function<void()> cleanup) : cleanup(cleanup) {
+		setup();
+	};
+	~ScopeHandler() {
+		cleanup();
+	}
+
+  private:
+	std::function<void()> cleanup;
+};
 
 /** This test suite sets up a mostly complete application. That's a bit heavy, but arguably, a) modularity isn't ideal in RKWard, and b) many of the more interesting
  *  tests involve passing commands to the R backend, and then verifying the expected state in the frontend. That alone requires a fairly extensive setup, anyway.
@@ -420,6 +434,8 @@ class RKWardCoreTest : public QObject {
 	}
 
 	void priorityCommandTest() {
+		// This test runs much faster when silencing the log window. Running faster also seems to help triggering the bug.
+		ScopeHandler sup([]() { RKSettingsModuleWatch::forTestingSuppressOutput(true); }, []() { RKSettingsModuleWatch::forTestingSuppressOutput(false); });
 		// NOTE: Hopefully, this test case is fixed for good, but when it is not (it wasn't quite in 08/2025), 10 iterations are not near enough to trigger the
 		//       failure, somewhat reliably. On my test system, I rather needed on the order to 10000 iterations for that. Of course that makes testing a pain, and cannot
 		//       reasonably be done on the CI...

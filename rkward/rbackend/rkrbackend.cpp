@@ -85,6 +85,7 @@ void RKRBackend::scheduleInterrupt() {
 	if (RKRBackendProtocolBackend::inRThread()) {
 		RK_scheduleIntr();
 	} else {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Interrupt scheduled from outside R thread");
 #ifdef Q_OS_WIN
 		RK_scheduleIntr(); // Thread-safe on windows?!
 #else
@@ -98,10 +99,21 @@ void RKRBackend::interruptCommand(int command_id) {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Received interrupt request for command id %d", command_id);
 	QMutexLocker lock(&all_current_commands_mutex);
 
+	/** A request to interrupt a command may happen at very different points in the code:
+	 *  0) before it was even sent from the frontend -> frontend will not even send it to the backend code
+	 *  1) after is was sent from the frontend, but before we properly started handling it in the backend (deserializing the request, pushing it onto
+	 *     all_current_commands, feeding it into the REPL/eval) TODO: buggy!
+	 *  2) when it is properly running in the backend -> this is the typical case, we worry about
+	 *  2b) when it is properly running in the backend, but there is also an active sub-command, which we should allow to complete
+	 *  3) after it finished running in the backend, but the frontend wasn't aware of that, yet TODO: buggy! */
 	if ((command_id == -1) || (!all_current_commands.isEmpty() && (all_current_commands.last()->id == command_id))) {
-		if (!too_late_to_interrupt) {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling interrupt for command id %d", command_id);
+		if (too_late_to_interrupt) {
+			RK_DEBUG(RBACKEND, DL_DEBUG, "too late to interrupt command id %d (repl uc status: %d)", command_id, repl_status.user_command_status);
+		} else {
+			RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling interrupt for command id %d (repl uc status: %d)", command_id, repl_status.user_command_status);
+			lock.unlock();
 			scheduleInterrupt();
+			return;
 		}
 	} else {
 		bool any_found = false;
@@ -115,7 +127,7 @@ void RKRBackend::interruptCommand(int command_id) {
 				}
 			}
 		}
-		if (any_found) {
+		if (!any_found) {
 			RK_DEBUG(RBACKEND, DL_ERROR, "interrupt scheduled for command id %d, but it is not current", command_id);
 		}
 	}
@@ -233,16 +245,14 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 				}
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
 				if (RKRBackend::repl_status.user_command_completely_transmitted) {
-					// fully transmitted, but R is still asking for more? This looks like an incomplete statement.
+					// fully transmitted, but R is still asking for more, without signalling R_Busy? This looks like an incomplete statement.
 					// HOWEVER: It may also have been an empty statement such as " ", so let's check whether the prompt looks like a "continue" prompt
-					bool incomplete = false;
 					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption(RFn::Rf_install("continue"), ROb(R_BaseEnv)))) {
-						incomplete = true;
+						RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 					}
-					if (incomplete) RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
 					if (RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture(); // HACK: No capture active, but commandFinished() will try to end one
-					RFn::Rf_error("");                                                                                          // to discard the buffer
+					RFn::Rf_error("%s", "");                                                                                    // to discard the buffer
 				} else {
 					RKTransmitNextUserCommandChunk(buf, buflen);
 					return 1;
@@ -825,6 +835,7 @@ void doError(const QString &callstring) {
 
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {
 		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
+		RK_DEBUG(RBACKEND, DL_DEBUG, "user command failed");
 	}
 	if (RKRBackend::repl_status.interrupted) {
 		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
@@ -1474,7 +1485,7 @@ RCommandProxy *RKRBackend::handleRequest(RBackendRequest *request, bool mayHandl
 	RK_TRACE(RBACKEND);
 	RK_ASSERT(request);
 
-	// Seed docs for RBackendRequest for hints to make sense of this mess (and eventually to fix it)
+	// See docs for RBackendRequest for hints to make sense of this mess (and eventually to fix it)
 
 	RKRBackendProtocolBackend::instance()->sendRequest(request);
 	if (request->subcommandrequest) {
