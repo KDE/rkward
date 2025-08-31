@@ -137,9 +137,11 @@ void RKRBackendTransmitter::requestReceived(RBackendRequest *request) {
 }
 
 void RKRBackendTransmitter::flushOutput(bool force) {
-	for (int i = 0; i < current_sync_requests.size(); ++i) {
-		// Apparently, frontend isn't keeping up. Don't push the next piece of output, until it has processed the previous one!
-		if (current_sync_requests.at(i)->type == RBackendRequest::RCallbackType::Output) return;
+	if (!force) {
+		for (int i = 0; i < current_sync_requests.size(); ++i) {
+			// Apparently, frontend isn't keeping up. Don't push the next piece of output, until it has processed the previous one!
+			if (current_sync_requests.at(i)->type == RBackendRequest::RCallbackType::Output) return;
+		}
 	}
 
 	RKRBackend::this_pointer->fetchStdoutStderr(force);
