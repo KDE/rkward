@@ -96,6 +96,7 @@ void RKRBackend::scheduleInterrupt() {
 
 void RKRBackend::interruptCommand(int command_id) {
 	RK_TRACE(RBACKEND);
+	RK_ASSERT(command_id >= 0); // -1 would signify broken request
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Received interrupt request for command id %d", command_id);
 	QMutexLocker lock(&all_current_commands_mutex);
 
@@ -106,7 +107,7 @@ void RKRBackend::interruptCommand(int command_id) {
 	 *  2) when it is properly running in the backend -> this is the typical case, we worry about
 	 *  2b) when it is properly running in the backend, but there is also an active sub-command, which we should allow to complete
 	 *  3) after it finished running in the backend, but the frontend wasn't aware of that, yet TODO: buggy! */
-	if ((command_id == -1) || (!all_current_commands.isEmpty() && (all_current_commands.last()->id == command_id))) {
+	if (!all_current_commands.isEmpty() && (all_current_commands.last()->id == command_id)) {
 		if (too_late_to_interrupt) {
 			RK_DEBUG(RBACKEND, DL_DEBUG, "too late to interrupt command id %d (repl uc status: %d)", command_id, repl_status.user_command_status);
 		} else {
