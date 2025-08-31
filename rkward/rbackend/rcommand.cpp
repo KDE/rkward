@@ -1,6 +1,6 @@
 /*
 rcommand.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Mon Nov 11 2002
-SPDX-FileCopyrightText: 2002-2007 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -30,8 +30,8 @@ int RCommand::next_id = 0;
 RCommand::RCommand(const QString &command, int type, const QString &rk_equiv) : RData(), RCommandChain(false) {
 	RK_TRACE(RBACKEND);
 	_id = next_id++;
-	// if we ever submit enough commands to get a buffer overflow, use only positive numbers.
-	if (next_id < 0) {
+	// not likely to trigger in real use, but make sure not to exceed transmittable (32 bit signed) range
+	if (next_id > (1 << 30)) {
 		next_id = 0;
 	}
 	_type = type;
@@ -46,11 +46,6 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv) : 
 
 RCommand::~RCommand() {
 	RK_TRACE(RBACKEND);
-
-	for (QList<ROutput *>::const_iterator it = output_list.constBegin(); it != output_list.constEnd(); ++it) {
-		delete (*it);
-	}
-	// The output_list itself is cleared automatically
 
 	if (_notifier) delete _notifier;
 }
@@ -71,7 +66,7 @@ void RCommand::finished() {
 	if (_notifier) _notifier->emitFinished(this);
 }
 
-void RCommand::newOutput(ROutput *output) {
+void RCommand::newOutput(const ROutput &output) {
 	RK_TRACE(RBACKEND);
 
 	RKCommandLog::getLog()->newOutput(this, output);
@@ -84,48 +79,39 @@ void RCommand::commandLineIn() {
 	if (_notifier) _notifier->emitLineIn(this);
 }
 
-QString RCommand::error() const {
-	RK_TRACE(RBACKEND);
-
+static QString extractFromOutputList(const ROutputList &list, ROutput::ROutputType type) {
 	QString ret;
-	for (ROutputList::const_iterator it = output_list.begin(); it != output_list.end(); ++it) {
-		if ((*it)->type == ROutput::Error) {
-			ret.append((*it)->output);
+	for (const auto &out : list) {
+		if (out.type == type) {
+			ret.append(out.output);
 		}
 	}
 	return ret;
+}
+
+QString RCommand::error() const {
+	RK_TRACE(RBACKEND);
+	return extractFromOutputList(output_list, ROutput::Error);
 }
 
 QString RCommand::output() const {
 	RK_TRACE(RBACKEND);
 
-	QString ret;
-	for (ROutputList::const_iterator it = output_list.begin(); it != output_list.end(); ++it) {
-		if ((*it)->type == ROutput::Output) {
-			ret.append((*it)->output);
-		}
-	}
-	return ret;
+	return extractFromOutputList(output_list, ROutput::Output);
 }
 
 QString RCommand::warnings() const {
 	RK_TRACE(RBACKEND);
 
-	QString ret;
-	for (ROutputList::const_iterator it = output_list.begin(); it != output_list.end(); ++it) {
-		if ((*it)->type == ROutput::Warning) {
-			ret.append((*it)->output);
-		}
-	}
-	return ret;
+	return extractFromOutputList(output_list, ROutput::Warning);
 }
 
 QString RCommand::fullOutput() const {
 	RK_TRACE(RBACKEND);
 
 	QString ret;
-	for (ROutputList::const_iterator it = output_list.begin(); it != output_list.end(); ++it) {
-		ret.append((*it)->output);
+	for (const auto &out : std::as_const(output_list)) {
+		ret.append(out.output);
 	}
 	return ret;
 }

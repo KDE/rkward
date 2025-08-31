@@ -1,6 +1,6 @@
 /*
 rcommand.h - This file is part of the RKWard project. Created: Mon Nov 11 2002
-SPDX-FileCopyrightText: 2002-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -47,18 +47,19 @@ class RCommandChain {
 /** this struct is used to store the R output to an RCommand. The RCommand basically keeps a list of ROutputString (s). The difference to a normal
 QString is, that additionally we store information on whether the output was "normal", "warning", or an "error". */
 struct ROutput {
-	ROutput() : type(NoOutput) {};
 	enum ROutputType {
 		NoOutput, /**< No output. Rarely used. */
 		Output,   /**< normal output */
 		Warning,  /**< R warning */
 		Error     /**< R error */
 	};
+	ROutput() : type(NoOutput) {};
+	ROutput(ROutputType type, const QString &output) : type(type), output(output) {};
 	ROutputType type;
 	QString output;
 };
 
-typedef QList<ROutput *> ROutputList;
+typedef QList<ROutput> ROutputList;
 
 /** Supplies signals for RCommands.
  * Obtain an instance of this using RCommand::notifier ();
@@ -70,7 +71,7 @@ class RCommandNotifier : public QObject {
 	/** given command has finished (not necessarily successfully) */
 	void commandFinished(RCommand *command);
 	/** new output for the given command */
-	void commandOutput(RCommand *command, const ROutput *output);
+	void commandOutput(RCommand *command, const ROutput &output);
 	/** a new line of the command has started being evaluate. Only emitted to RCommand::User-type commands */
 	void commandLineIn(RCommand *command);
 
@@ -79,7 +80,7 @@ class RCommandNotifier : public QObject {
 	RCommandNotifier();
 	~RCommandNotifier();
 	void emitFinished(RCommand *command) { Q_EMIT commandFinished(command); };
-	void emitOutput(RCommand *command, const ROutput *output) { Q_EMIT commandOutput(command, output); };
+	void emitOutput(RCommand *command, const ROutput &output) { Q_EMIT commandOutput(command, output); };
 	void emitLineIn(RCommand *command) { Q_EMIT commandLineIn(command); };
 };
 
@@ -211,7 +212,7 @@ class RCommand : public RData, public RCommandChain {
 	/** internal function will be called by the backend, as the command gets passed through. Takes care of sending this command (back) to its receiver(s) */
 	void finished();
 	/** new output was generated. Pass on to receiver(s) */
-	void newOutput(ROutput *output);
+	void newOutput(const ROutput &output);
 	/** next line of command has been transmitted. Pass on to receiver(s). Only called for RCommand::User type commands */
 	void commandLineIn();
 	ROutputList output_list;

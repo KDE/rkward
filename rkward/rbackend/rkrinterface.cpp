@@ -253,9 +253,7 @@ void RInterface::handleCommandOut(RCommand *command) {
 
 	if (command->status & RCommand::Canceled) {
 		command->status |= RCommand::HasError;
-		ROutput *out = new ROutput;
-		out->type = ROutput::Error;
-		out->output = u"--- interrupted ---"_s;
+		auto out = ROutput(ROutput::Error, u"--- interrupted ---"_s);
 		command->output_list.append(out);
 		command->newOutput(out);
 	}
@@ -472,44 +470,33 @@ void RInterface::flushOutput(bool forced) {
 	//	RK_TRACE (RBACKEND);
 	const ROutputList list = backendprotocol->flushOutput(forced);
 
-	for (ROutput *output : list) {
+	for (const ROutput &output : list) {
 		if (all_current_commands.isEmpty()) {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "output without receiver'%s'", qPrintable(output->output));
+			RK_DEBUG(RBACKEND, DL_DEBUG, "output without receiver'%s'", qPrintable(output.output));
 			if (RKConsole::mainConsole()) RKConsole::mainConsole()->insertSpontaneousROutput(output); // the "if" is to prevent crash, should output arrive during exit
-			delete output;
-			continue; // to delete the other output pointers, too
+			continue;
 		} else {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "output '%s'", qPrintable(output->output));
+			RK_DEBUG(RBACKEND, DL_DEBUG, "output '%s'", qPrintable(output.output));
 		}
 
-		bool first = true;
 		for (RCommand *command : std::as_const(all_current_commands)) {
-			ROutput *coutput = output;
-			if (!first) { // this output belongs to several commands at once. So we need to copy it.
-				coutput = new ROutput;
-				coutput->type = output->type;
-				coutput->output = output->output;
-			}
-			first = false;
-
-			if (coutput->type == ROutput::Output) {
+			if (output.type == ROutput::Output) {
 				command->status |= RCommand::HasOutput;
-				command->output_list.append(coutput);
-			} else if (coutput->type == ROutput::Warning) {
+				command->output_list.append(output);
+			} else if (output.type == ROutput::Warning) {
 				command->status |= RCommand::HasWarnings;
-				command->output_list.append(coutput);
-			} else if (coutput->type == ROutput::Error) {
+				command->output_list.append(output);
+			} else if (output.type == ROutput::Error) {
 				command->status |= RCommand::HasError;
 				// An error output is typically just the copy of the previous output, so merge if possible
 				if (command->output_list.isEmpty()) {
-					command->output_list.append(coutput);
-				}
-				if (command->output_list.last()->output == coutput->output) {
-					command->output_list.last()->type = ROutput::Error;
+					command->output_list.append(output);
+				} else if (command->output_list.last().output == output.output) {
+					command->output_list.last().type = ROutput::Error;
 					continue; // don't call command->newOutput(), again!
 				}
 			}
-			command->newOutput(coutput);
+			command->newOutput(output);
 		}
 	}
 }

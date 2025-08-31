@@ -1,6 +1,6 @@
 /*
 rkcommandlineargs - This file is part of the RKWard project. Created: Tue May 21 2024
-SPDX-FileCopyrightText: 2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2024-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -18,7 +18,7 @@ class QCoreApplication;
 
 class RKCommandLineArgs {
   public:
-	explicit RKCommandLineArgs(KAboutData *about, QCoreApplication *app);
+	explicit RKCommandLineArgs(KAboutData *about, QCoreApplication *app, bool fake_for_autotests = false);
 	~RKCommandLineArgs() {};
 	enum Option {
 		UrlArgs,

@@ -390,14 +390,12 @@ void RKFrontendTransmitter::requestReceived(RBackendRequest *request) {
 	if (request->type == RBackendRequest::Output) {
 		ROutputList *list = request->output;
 		for (int i = 0; i < list->size(); ++i) {
-			ROutput *out = (*list)[i];
+			const auto &out = (*list)[i];
 
-			if (handleOutput(out->output, out->output.length(), out->type)) {
+			if (handleOutput(out.output, out.output.length(), out.type)) {
 				RKRBackendEvent *event = new RKRBackendEvent(new RBackendRequest(false, RBackendRequest::OutputStartedNotification));
 				qApp->postEvent(frontend, event);
 			}
-
-			delete (out);
 		}
 		delete list;
 		request->output = nullptr;

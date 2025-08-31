@@ -124,7 +124,7 @@ void RKCommandLog::addInputNoCheck(RCommand *command) {
 	command_input_shown.append(command);
 }
 
-void RKCommandLog::addOutputNoCheck(RCommand *command, ROutput *output) {
+void RKCommandLog::addOutputNoCheck(RCommand *command, const ROutput &output) {
 	RK_TRACE(APP);
 
 	if (command->type() & RCommand::User) {
@@ -135,15 +135,15 @@ void RKCommandLog::addOutputNoCheck(RCommand *command, ROutput *output) {
 		log_view->setTextColor(Qt::blue);
 	}
 	log_view->setFontWeight(QFont::Bold);
-	if (output->type != ROutput::Output) {
+	if (output.type != ROutput::Output) {
 		QTextBlockFormat f;
 		f.setBackground(QBrush(QColor(255, 200, 200)));
 		log_view->textCursor().mergeBlockFormat(f);
 	}
 
-	log_view->insertPlainText(output->output);
+	log_view->insertPlainText(output.output);
 
-	if (output->type != ROutput::Output) {
+	if (output.type != ROutput::Output) {
 		QTextBlockFormat f;
 		f.setBackground(QBrush(QColor(255, 255, 255)));
 		log_view->textCursor().mergeBlockFormat(f);
@@ -165,7 +165,7 @@ void RKCommandLog::checkRaiseWindow(RCommand *command) {
 	activate(false);
 }
 
-void RKCommandLog::newOutput(RCommand *command, ROutput *output_fragment) {
+void RKCommandLog::newOutput(RCommand *command, const ROutput &output_fragment) {
 	RK_TRACE(APP);
 
 	if (!RKSettingsModuleWatch::shouldShowOutput(command)) return;
@@ -189,21 +189,18 @@ void RKCommandLog::rCommandDone(RCommand *command) {
 			if (!RKSettingsModuleWatch::shouldShowInput(command)) addInputNoCheck(command);
 			if (!RKSettingsModuleWatch::shouldShowOutput(command)) {
 				ROutputList out_list = command->getOutput();
-				for (ROutputList::const_iterator it = out_list.constBegin(); it != out_list.constEnd(); ++it) {
-					addOutputNoCheck(command, *it);
+				for (const auto &out : std::as_const(out_list)) {
+					addOutputNoCheck(command, out);
 				}
 			}
 			if (command->failed() && command->error().isEmpty()) {
-				ROutput dummy_output;
-				dummy_output.type = ROutput::Error;
 				if (command->errorIncomplete()) {
-					dummy_output.output = i18n("Incomplete statement.\n");
+					addOutputNoCheck(command, ROutput(ROutput::Error, i18n("Incomplete statement.\n")));
 				} else if (command->errorSyntax()) {
-					dummy_output.output = i18n("Syntax error.\n");
+					addOutputNoCheck(command, ROutput(ROutput::Error, i18n("Syntax error.\n")));
 				} else {
-					dummy_output.output = i18n("An unspecified error occurred while running the command.\n");
+					addOutputNoCheck(command, ROutput(ROutput::Error, i18n("An unspecified error occurred while running the command.\n")));
 				}
-				addOutputNoCheck(command, &dummy_output);
 			}
 		}
 	}

@@ -38,6 +38,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rkward.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulekateplugins.h"
+#include "../settings/rksettingsmodulewatch.h"
 #include "../version.h"
 #include "../windows/katepluginintegration.h"
 
@@ -64,6 +65,19 @@ void RKDebug(int, int level, const char *fmt, ...) {
 	if (level >= DL_ERROR) QFAIL("error message during test (see above)");
 	va_end(ap);
 }
+
+class ScopeHandler {
+  public:
+	ScopeHandler(std::function<void()> setup, std::function<void()> cleanup) : cleanup(cleanup) {
+		setup();
+	};
+	~ScopeHandler() {
+		cleanup();
+	}
+
+  private:
+	std::function<void()> cleanup;
+};
 
 /** This test suite sets up a mostly complete application. That's a bit heavy, but arguably, a) modularity isn't ideal in RKWard, and b) many of the more interesting
  *  tests involve passing commands to the R backend, and then verifying the expected state in the frontend. That alone requires a fairly extensive setup, anyway.
@@ -96,9 +110,16 @@ class RKWardCoreTest : public QObject {
 		RInterface::issueCommand(command, chain);
 	}
 
-	void waitForAllFinished(int timeoutms = 2000) {
+	// returns false, if timeout was hit
+	bool waitForAllFinished(int timeoutms = 2000) {
+		bool timedout = true;
 		runCommandWithTimeout(
-		    new RCommand(QStringLiteral("# waitForAllFinished"), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand *) {}, timeoutms);
+		    new RCommand(QStringLiteral("# waitForAllFinished"), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [&timedout](RCommand *) {
+			    timedout = false;
+		    },
+		    timeoutms);
+		// NOTE: failure message was already generated
+		return !timedout;
 	}
 
 	void cleanGlobalenv() {
@@ -174,7 +195,7 @@ class RKWardCoreTest : public QObject {
 		KLocalizedString::setApplicationDomain("rkward");
 		KAboutData about(QStringLiteral("rkward"), QStringLiteral("RKWard"), QStringLiteral(RKWARD_VERSION), QStringLiteral("Frontend to the R statistics language"), KAboutLicense::GPL); // component name needed for .rc files to load
 		KAboutData::setApplicationData(about);
-		new RKCommandLineArgs(&about, qApp);
+		new RKCommandLineArgs(&about, qApp, true);
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		testLog(R_EXECUTABLE);
 		RKSessionVars::r_binary = QStringLiteral(R_EXECUTABLE);
@@ -413,24 +434,31 @@ class RKWardCoreTest : public QObject {
 	}
 
 	void priorityCommandTest() {
-		bool priority_command_done = false;
-		runCommandAsync(new RCommand(QStringLiteral("\ncat(\"sleeping\\n\"); Sys.sleep(5)"), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
-			QVERIFY(priority_command_done);
-			QVERIFY(command->failed());
-			QVERIFY(command->wasCanceled());
-		});
-		auto priority_command = new RCommand(QStringLiteral("cat(\"priority\\n\")"), RCommand::PriorityCommand | RCommand::App);
-		runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
-			priority_command_done = true;
-			RInterface::instance()->cancelAll();
-		});
-		// NOTE: The above two commands may or may not run in that order. Conceivably, the priority command gets handled, before the initial sleep command even started.
-		//       The newline in the first command actually makes it a bit more likely for the priority command to go first (because parsing needs more iterations).
-		//       We try to step on that interesting corner case, deliberately, at is has been causing failures in the past.
-		waitForAllFinished();     // first wait with a short timeout: sleep should have been cancelled
-		waitForAllFinished(5000); // fallbacck: priority_command_done must remain in scope until done (even if interrupting fails for some reason)
-		                          // TODO: This test is still failing, occasionally, possibly, because the user command has not even been added to all_current_commands, yet
-		                          //       (event processing in RKRBackend::handleRequest2())
+		// This test runs much faster when silencing the log window. Running faster also seems to help triggering the bug.
+		ScopeHandler sup([]() { RKSettingsModuleWatch::forTestingSuppressOutput(true); }, []() { RKSettingsModuleWatch::forTestingSuppressOutput(false); });
+		// NOTE: Hopefully, this test case is fixed for good, but when it is not (it wasn't quite in 08/2025), 10 iterations are not near enough to trigger the
+		//       failure, somewhat reliably. On my test system, I rather needed on the order to 10000 iterations for that. Of course that makes testing a pain, and cannot
+		//       reasonably be done on the CI...
+		for (int i = 0; i < 10; ++i) {
+			bool priority_command_done = false;
+			runCommandAsync(new RCommand(QStringLiteral("%1cat(\"sleeping\\n\");%1Sys.sleep(5);cat(\"BUG\")").arg(QString().fill(u'\n', i % 5)), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+				QVERIFY(priority_command_done);
+				QVERIFY(command->failed());
+				QVERIFY(command->wasCanceled());
+			});
+			auto priority_command = new RCommand(QStringLiteral("cat(\"priority\\n\")"), RCommand::PriorityCommand | RCommand::App);
+			runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
+				priority_command_done = true;
+				RInterface::instance()->cancelAll();
+			});
+			// NOTE: The above two commands may or may not start executing in that order. Conceivably, the priority command gets handled, before the initial sleep
+			//       command even started. This interesting corner case, in particular, has been causing trouble in the past, so we try to tigger it, deliberately.
+			//       The inserted newline(s) in the fist command make(s) that a tiny bit more likely to happen (because parsing needs more iterations).
+			if (!waitForAllFinished()) {  // first, wait with a short timeout: sleep should have been cancelled
+				waitForAllFinished(6000); // but if that fails, keep priority_command_done in scope to avoid crash)
+				QVERIFY(false);           // still a bug, of course
+			}
+		}
 	}
 
 	void RKConsoleHistoryTest() {
@@ -621,7 +649,8 @@ class RKWardCoreTest : public QObject {
 			QCOMPARE(output.count(u"Closed device 2"_s), 1);
 			QCOMPARE(output.count(u"Plot was modified"_s), 1);
 			QCOMPARE(output.count(u"Blanking device 2"_s), 2); // once each for the first two plots, but not for title()
-		});
+		},
+		                      3000);
 	}
 
 	void restartRBackend() {

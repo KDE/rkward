@@ -28,7 +28,7 @@ class RKCommandLog : public RKMDIWindow {
 	/** Adds input to the log_view-window (i.e. commands issued) */
 	void addInput(RCommand *command);
 	/** Adds output to the log_view-window (i.e. replies received) */
-	void newOutput(RCommand *command, ROutput *output_fragment);
+	void newOutput(RCommand *command, const ROutput &output_fragment);
 	/** Adds output not originating from R. Note: Currently used from kate plugins, only, see katepluginintegration.cpp */
 	void addOtherMessage(const QString &message, const QIcon &icon, ROutput::ROutputType severity);
 
@@ -52,7 +52,7 @@ class RKCommandLog : public RKMDIWindow {
 
   private:
 	void addInputNoCheck(RCommand *command);
-	void addOutputNoCheck(RCommand *command, ROutput *output);
+	void addOutputNoCheck(RCommand *command, const ROutput &output);
 	void checkRaiseWindow(RCommand *command);
 	/** internal helper function, called whenever a line/lines have been added. Check whether log is longer than maximum setting. Scroll to the bottom */
 	void linesAdded();

@@ -34,7 +34,7 @@ class RKProgressControlDialog : public QDialog {
 	~RKProgressControlDialog();
 
   public:
-	void addOutput(const ROutput *output);
+	void addOutput(const ROutput &output);
 	void finished();
 	void indicateError();
 
@@ -165,16 +165,14 @@ void RKProgressControl::createDialog() {
 	connect(dialog, &QObject::destroyed, this, &RKProgressControl::dialogDestroyed);
 	if (is_done) done();
 	for (int i = 0; i < output_log.count(); ++i) {
-		dialog->addOutput(&(output_log[i]));
+		dialog->addOutput(output_log[i]);
 	}
 }
 
-void RKProgressControl::newOutput(RCommand *, const ROutput *output) {
+void RKProgressControl::newOutput(RCommand *, const ROutput &output) {
 	RK_TRACE(MISC);
-	RK_ASSERT(output);
 
-	const ROutput outputc(*output);
-	output_log.append(outputc);
+	output_log.append(output);
 	if (mode & RaiseOnOutput) {
 		if (!dialog) createDialog();
 		dialog->raise();
@@ -269,7 +267,7 @@ void RKProgressControlDialog::indicateError() {
 	error_indicator->show();
 }
 
-void RKProgressControlDialog::addOutput(const ROutput *output) {
+void RKProgressControlDialog::addOutput(const ROutput &output) {
 	RK_TRACE(MISC);
 
 	// scrolled all the way to the bottom?
@@ -279,11 +277,11 @@ void RKProgressControlDialog::addOutput(const ROutput *output) {
 		if (bar && (bar->value() < bar->maximum())) at_end = false;
 	}
 
-	if (output->type != last_output_type) {
-		last_output_type = output->type;
+	if (output.type != last_output_type) {
+		last_output_type = output.type;
 		output_text->insertPlainText(QStringLiteral("\n"));
 
-		if (output->type == ROutput::Output) {
+		if (output.type == ROutput::Output) {
 			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
 		} else {
 			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
@@ -291,7 +289,7 @@ void RKProgressControlDialog::addOutput(const ROutput *output) {
 		}
 	}
 
-	output_text->insertPlainText(output->output);
+	output_text->insertPlainText(output.output);
 
 	// if previously at end, auto-scroll
 	if (at_end && output_text->isVisible()) scrollDown();
@@ -431,8 +429,8 @@ void RKInlineProgressControl::addRCommand(RCommand *command) {
 			done();
 		}
 	});
-	connect(command->notifier(), &RCommandNotifier::commandOutput, this, [this](RCommand *, const ROutput *o) {
-		addOutput(o->output, o->type != ROutput::Output);
+	connect(command->notifier(), &RCommandNotifier::commandOutput, this, [this](RCommand *, const ROutput &o) {
+		addOutput(o.output, o.type != ROutput::Output);
 	});
 }
 

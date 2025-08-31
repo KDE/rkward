@@ -1,6 +1,6 @@
 /*
 rksettingsmodulewatch - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 26 2004
-SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -31,11 +31,12 @@ RKConfigValue<int> RKSettingsModuleWatch::app_filter{"app command filter", ShowI
 RKConfigValue<int> RKSettingsModuleWatch::sync_filter{"sync command filter", ShowError};
 RKConfigValue<int> RKSettingsModuleWatch::user_filter{"user command filter", ShowInput | ShowOutput | ShowError | RaiseWindow};
 RKConfigValue<uint> RKSettingsModuleWatch::max_log_lines{"max log lines", 1000};
+int RKSettingsModuleWatch::all_suppressed = 0;
 
 // static
 bool RKSettingsModuleWatch::shouldShowInput(RCommand *command) {
 	RK_TRACE(SETTINGS);
-
+	if (all_suppressed) return false;
 	if (command->type() & RCommand::EmptyCommand) return false;
 
 	if (command->type() & (RCommand::Sync | RCommand::PriorityCommand)) {
@@ -56,6 +57,7 @@ bool RKSettingsModuleWatch::shouldShowInput(RCommand *command) {
 bool RKSettingsModuleWatch::shouldShowOutput(RCommand *command) {
 	RK_TRACE(SETTINGS);
 
+	if (all_suppressed) return false;
 	if (command->type() & RCommand::EmptyCommand) return false;
 	if (!shouldShowInput(command)) return false;
 
@@ -77,6 +79,7 @@ bool RKSettingsModuleWatch::shouldShowOutput(RCommand *command) {
 bool RKSettingsModuleWatch::shouldShowError(RCommand *command) {
 	RK_TRACE(SETTINGS);
 
+	if (all_suppressed) return false;
 	if (command->type() & (RCommand::Sync | RCommand::PriorityCommand)) {
 		return (sync_filter & ShowError);
 	} else if (command->type() & RCommand::User) {
@@ -94,6 +97,7 @@ bool RKSettingsModuleWatch::shouldShowError(RCommand *command) {
 bool RKSettingsModuleWatch::shouldRaiseWindow(RCommand *command) {
 	RK_TRACE(SETTINGS);
 
+	if (all_suppressed) return false;
 	if (command->type() & (RCommand::Sync | RCommand::PriorityCommand)) {
 		return (sync_filter & RaiseWindow);
 	} else if (command->type() & RCommand::User) {

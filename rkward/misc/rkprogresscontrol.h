@@ -79,7 +79,7 @@ class RKProgressControl : public QObject {
 	void createDialog();
 
 	RKProgressControlDialog *dialog;
-	QList<ROutput> output_log;
+	ROutputList output_log;
 	QList<RCommand *> outstanding_commands;
 
 	bool autodelete;
@@ -90,7 +90,7 @@ class RKProgressControl : public QObject {
 	QString caption;
 
   protected:
-	void newOutput(RCommand *, const ROutput *output);
+	void newOutput(RCommand *, const ROutput &output);
 };
 
 class KMessageWidget;

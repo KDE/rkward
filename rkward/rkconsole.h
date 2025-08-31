@@ -61,14 +61,14 @@ class RKConsole : public RKMDIWindow, public RKScriptContextProvider {
 	void setCommandHistory(const QStringList &new_history, bool append);
 	QStringList commandHistory() const { return commands_history.getHistory(); };
 	void addCommandToHistory(const QString &text) { commands_history.append(text); };
-	void insertSpontaneousROutput(ROutput *output);
+	void insertSpontaneousROutput(const ROutput &output);
 
   protected:
 	/** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 	\param e the QKeyEvent */
 	bool handleKeyPress(QKeyEvent *e);
 	/** handle output of console commands */
-	void newOutput(RCommand *command, const ROutput *output);
+	void newOutput(RCommand *command, const ROutput &output);
 	/** display the next line of the command for multi-line commands */
 	void userCommandLineIn(RCommand *command);
 	/** reimplemented from QWidget to show the context menu */

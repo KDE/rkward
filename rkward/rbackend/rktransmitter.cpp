@@ -12,7 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 void RKRBackendSerializer::serialize(const RBackendRequest &request, QDataStream &stream) {
 	RK_TRACE(RBACKEND);
 
-	stream << (qint16)request.id;
+	stream << (qint32)request.id;
 	stream << (qint8)request.type;
 	stream << request.synchronous;
 	stream << request.done; // well, not really needed, but...
@@ -38,29 +38,27 @@ void RKRBackendSerializer::serialize(const RBackendRequest &request, QDataStream
 	}
 }
 
+template <typename T>
+static T readS(QDataStream &stream) {
+	T ret;
+	stream >> ret;
+	return ret;
+}
+
 RBackendRequest *RKRBackendSerializer::unserialize(QDataStream &stream) {
 	RK_TRACE(RBACKEND);
 
 	RBackendRequest *request = new RBackendRequest(false, RBackendRequest::OtherRequest); // will be overwritten
 	RBackendRequest::_id--;
 
-	bool dummyb;
-	qint8 dummy8;
-	qint16 dummy16;
-	stream >> dummy16;
-	request->id = dummy16;
-	stream >> dummy8;
-	request->type = (RBackendRequest::RCallbackType)dummy8;
+	request->id = readS<qint32>(stream);
+	request->type = (RBackendRequest::RCallbackType)readS<qint8>(stream);
 	stream >> request->synchronous;
-	stream >> dummyb;
-	request->done = dummyb;
-	stream >> dummyb;
-	if (dummyb) request->command = unserializeProxy(stream);
-	stream >> dummyb;
-	if (dummyb) request->output = unserializeOutput(stream);
+	request->done = readS<bool>(stream);
+	if (readS<bool>(stream)) request->command = unserializeProxy(stream);
+	if (readS<bool>(stream)) request->output = unserializeOutput(stream);
 	stream >> request->params;
-	stream >> dummyb;
-	if (dummyb) request->subcommandrequest = unserialize(stream);
+	if (readS<bool>(stream)) request->subcommandrequest = unserialize(stream);
 
 	return request;
 }
@@ -70,8 +68,8 @@ void RKRBackendSerializer::serializeOutput(const ROutputList &list, QDataStream 
 
 	stream << (qint32)list.size();
 	for (qint32 i = 0; i < list.size(); ++i) {
-		stream << (qint8)list[i]->type;
-		stream << list[i]->output;
+		stream << (qint8)list[i].type;
+		stream << list[i].output;
 	}
 }
 
@@ -79,16 +77,13 @@ ROutputList *RKRBackendSerializer::unserializeOutput(QDataStream &stream) {
 	RK_TRACE(RBACKEND);
 
 	ROutputList *ret = new ROutputList();
-	qint32 len;
-	stream >> len;
+	auto len = readS<qint32>(stream);
 	ret->reserve(len);
 
 	for (qint32 i = 0; i < len; ++i) {
-		ROutput *out = new ROutput;
-		qint8 dummy8;
-		stream >> dummy8;
-		out->type = (ROutput::ROutputType)dummy8;
-		stream >> out->output;
+		ROutput out;
+		out.type = (ROutput::ROutputType)readS<qint8>(stream);
+		stream >> out.output;
 		ret->append(out);
 	}
 
@@ -120,9 +115,7 @@ RData *RKRBackendSerializer::unserializeData(QDataStream &stream) {
 
 	RData *ret = new RData;
 	RData::RDataType type;
-	qint8 dummy8;
-	stream >> dummy8;
-	type = (RData::RDataType)dummy8;
+	type = (RData::RDataType)readS<qint8>(stream);
 	if (type == RData::IntVector) {
 		RData::IntStorage data;
 		stream >> data;
@@ -137,8 +130,7 @@ RData *RKRBackendSerializer::unserializeData(QDataStream &stream) {
 		ret->setData(data);
 	} else if (type == RData::StructureVector) {
 		RData::RDataStorage data;
-		qint32 len;
-		stream >> len;
+		auto len = readS<qint32>(stream);
 		data.reserve(len);
 		for (qint32 i = 0; i < len; ++i) {
 			data.append(unserializeData(stream));
@@ -167,18 +159,12 @@ void RKRBackendSerializer::serializeProxy(const RCommandProxy &proxy, QDataStrea
 RCommandProxy *RKRBackendSerializer::unserializeProxy(QDataStream &stream) {
 	RK_TRACE(RBACKEND);
 
-	QString command;
-	stream >> command;
-	qint32 type;
-	stream >> type;
+	auto command = readS<QString>(stream);
+	auto type = readS<qint32>(stream);
 	RCommandProxy *ret = new RCommandProxy(command, type);
-	qint32 dummy32;
-	stream >> dummy32;
-	ret->id = dummy32;
-	stream >> dummy32;
-	ret->status = dummy32;
-	stream >> dummy32;
-	ret->has_been_run_up_to = dummy32;
+	ret->id = readS<qint32>(stream);
+	ret->status = readS<qint32>(stream);
+	ret->has_been_run_up_to = readS<qint32>(stream);
 	stream >> (ret->updates_object);
 
 	RData *data = unserializeData(stream);

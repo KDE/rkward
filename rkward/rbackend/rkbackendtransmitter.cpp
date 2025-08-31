@@ -111,11 +111,6 @@ void RKRBackendTransmitter::requestReceived(RBackendRequest *request) {
 	} else if (request->type == RBackendRequest::PriorityCommand) {
 		RKRBackend::this_pointer->setPriorityCommand(request->takeCommand());
 	} else { // requests which originated in the backend below this line
-		if (current_sync_requests.isEmpty()) {
-			RK_ASSERT(false);
-			return;
-		}
-
 		// "Synchronous" requests are not necessarily answered in the order they have been queued
 		int id = request->id;
 		RBackendRequest *current_sync_request = nullptr;
@@ -126,7 +121,10 @@ void RKRBackendTransmitter::requestReceived(RBackendRequest *request) {
 				break;
 			}
 		}
-		RK_ASSERT(current_sync_request);
+		if (!current_sync_request) {
+			RK_DEBUG(RBACKEND, DL_ERROR, "Got reply for unknown sync request id %d, type %d", id, request->type);
+			return;
+		}
 		if (current_sync_request->type == RBackendRequest::Output) {
 			delete current_sync_request; // this was just our internal request
 		} else {
@@ -139,9 +137,11 @@ void RKRBackendTransmitter::requestReceived(RBackendRequest *request) {
 }
 
 void RKRBackendTransmitter::flushOutput(bool force) {
-	for (int i = 0; i < current_sync_requests.size(); ++i) {
-		// Apparently, frontend isn't keeping up. Don't push the next piece of output, until it has processed the previous one!
-		if (current_sync_requests.at(i)->type == RBackendRequest::RCallbackType::Output) return;
+	if (!force) {
+		for (int i = 0; i < current_sync_requests.size(); ++i) {
+			// Apparently, frontend isn't keeping up. Don't push the next piece of output, until it has processed the previous one!
+			if (current_sync_requests.at(i)->type == RBackendRequest::RCallbackType::Output) return;
+		}
 	}
 
 	RKRBackend::this_pointer->fetchStdoutStderr(force);
