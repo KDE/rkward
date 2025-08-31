@@ -412,7 +412,7 @@ msgid ""
 "Select character encoding to convert from. The option above needs to be "
 "checked, for this to be enabled."
 msgstr ""
-"Seleccioneu la codificació de caràcters des de la qual convertir. Cal marcar "
+"Trieu la codificació de caràcters des de la qual convertir. Cal marcar "
 "l'opció de més amunt per a habilitar esta."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
@@ -465,8 +465,8 @@ msgid ""
 "Choose the CSV file to import. An R object containing the data will be "
 "created. See <link href=\"rkward://rhelp/read.table\"/>."
 msgstr ""
-"Seleccioneu el fitxer CSV que s'importarà. Es crearà un objecte R que "
-"contindrà les dades. Vegeu <link href=\"rkward://rhelp/read.table\"/>."
+"Trieu el fitxer CSV que s'importarà. Es crearà un objecte R que contindrà "
+"les dades. Vegeu <link href=\"rkward://rhelp/read.table\"/>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "File name")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "File name")
@@ -489,9 +489,9 @@ msgid ""
 "affects several of the other settings, importantly <i><label id=\"dec\"/></"
 "i> and <i><label id=\"sep\"/></i>."
 msgstr ""
-"Seleccioneu des d'un dels predefinits (formats més comuns). Esta opció "
-"afecta diverses de la resta d'opcions, principalment <i><label id=\"dec\"/></"
-"i> i <i><label id=\"sep\"/></i>."
+"Trieu des d'un dels predefinits (formats més comuns). Esta opció afecta "
+"diverses de la resta d'opcions, principalment <i><label id=\"dec\"/></i> i "
+"<i><label id=\"sep\"/></i>."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:20
@@ -1291,7 +1291,7 @@ msgid ""
 "Select the data file to import. An R object containing the data will be "
 "created. This will usually be a data.frame, or a list."
 msgstr ""
-"Seleccioneu el fitxer de dades que s'importarà. Es crearà un objecte R que "
+"Trieu el fitxer de dades que s'importarà. Es crearà un objecte R que "
 "contindrà les dades. Açò normalment serà un «data.frame» o una llista."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Edit Object")
@@ -1406,15 +1406,14 @@ msgid ""
 "<link href=\"http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf\">R News "
 "4/1 p30-31</link>."
 msgstr ""
-"Seleccioneu el fitxer de dades SPSS que s'importarà. Normalment estos "
-"fitxers tenen un «*.sav» final. Es crearà un objecte R que contindrà les "
-"dades SPSS. Açò pot ser un «data.frame», o una llista. Hi ha diverses "
-"opcions per a gestionar les etiquetes i la codificació de caràcters. Vegeu "
-"<link href=\"rkward://rhelp/read.spss\"/>. No s'admeten altres opcions "
-"diferents als fitxers de dades SPSS (p. ex.: *.por, *.jnl, *.cht, *.spo, *."
-"sps). Per a problemes relacionats amb la gestió d'hores/dates vegeu <link "
-"href=\"http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf\">R News 4/1 "
-"p30-31</link>."
+"Trieu el fitxer de dades SPSS que s'importarà. Normalment estos fitxers "
+"tenen un «*.sav» final. Es crearà un objecte R que contindrà les dades SPSS. "
+"Açò pot ser un «data.frame», o una llista. Hi ha diverses opcions per a "
+"gestionar les etiquetes i la codificació de caràcters. Vegeu <link href="
+"\"rkward://rhelp/read.spss\"/>. No s'admeten altres opcions diferents als "
+"fitxers de dades SPSS (p. ex.: *.por, *.jnl, *.cht, *.spo, *.sps). Per a "
+"problemes relacionats amb la gestió d'hores/dates vegeu <link href=\"http://"
+"cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf\">R News 4/1 p30-31</link>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Import as a data.frame")
 #: rkward/plugins/00saveload/import/import_spss.rkh:24
@@ -1545,10 +1544,10 @@ msgid ""
 "dta'. An R object containing the STATA data will be created. STATA files "
 "other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported."
 msgstr ""
-"Seleccioneu el fitxer de dades STATA que s'importarà. Normalment estos "
-"fitxers tenen un «*.dta» final. Es crearà un objecte R que contindrà les "
-"dades STATA. No s'admeten altres opcions diferents als fitxers de dades "
-"STATA (p. ex.: *.log, *.smcl, *.do, *.ado)."
+"Trieu el fitxer de dades STATA que s'importarà. Normalment estos fitxers "
+"tenen un «*.dta» final. Es crearà un objecte R que contindrà les dades "
+"STATA. No s'admeten altres opcions diferents als fitxers de dades STATA (p. "
+"ex.: *.log, *.smcl, *.do, *.ado)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/import_stata.rkh:21
@@ -1704,12 +1703,12 @@ msgid ""
 "you may want to try the Java-based alternative <link href=\"rkward://"
 "component/import_xls_xlconnect\"/>."
 msgstr ""
-"Seleccioneu el fitxer Excel de Microsoft del qual s'importarà el full. Es "
-"crearà un objecte R que contindrà les dades. Este mètode d'importar fulls "
-"Excel està basat en el paquet «gdata» d'R, i requerix una configuració "
-"funcional de Perl. En cas que açò no funcione al vostre sistema, o no "
-"produïsca els resultats esperats, podeu intentar l'alternativa basada en "
-"Java <link href=\"rkward://component/import_xls_xlconnect\"/>."
+"Trieu el fitxer Excel de Microsoft del qual s'importarà el full. Es crearà "
+"un objecte R que contindrà les dades. Este mètode d'importar fulls Excel "
+"està basat en el paquet «gdata» d'R, i requerix una configuració funcional "
+"de Perl. En cas que açò no funcione al vostre sistema, o no produïsca els "
+"resultats esperats, podeu intentar l'alternativa basada en Java <link href="
+"\"rkward://component/import_xls_xlconnect\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Name or number of sheet")
 #: rkward/plugins/00saveload/import/import_xls.rkh:22
@@ -1812,9 +1811,9 @@ msgid ""
 "case this does not work on your system, you may want to try the Perl-based "
 "alternative <link href=\"rkward://component/import_xls\"/>."
 msgstr ""
-"Seleccioneu el fitxer Excel de Microsoft del qual s'importarà el full. Es "
-"crearà un objecte R que contindrà les dades. Este mètode d'importar fulls "
-"Excel està basat en el paquet «XLconnect» d'R, i requerix una configuració "
+"Trieu el fitxer Excel de Microsoft del qual s'importarà el full. Es crearà "
+"un objecte R que contindrà les dades. Este mètode d'importar fulls Excel "
+"està basat en el paquet «XLconnect» d'R, i requerix una configuració "
 "funcional de Java. En cas que açò no funcione al vostre sistema, podeu "
 "intentar l'alternativa basada en Perl <link href=\"rkward://component/"
 "import_xls\"/>."
@@ -2044,14 +2043,14 @@ msgid ""
 "with your existing workspace. If in doubt, use Workspace->Open Workspace, "
 "instead of this plugin."
 msgstr ""
-"Seleccioneu el fitxer R que s'haja d'importar. Açò pot ser un fitxer creat "
-"p. ex., guardant l'espai de treball des de RKWard, utilitzant l'ordre d'R "
-"<link href=\"rkward://rhelp/save\">save()</link>, o el connector <link href="
-"\"rkward://component/save_r\"/>. La diferència principal en carregar un "
-"espai de treball via «Espai de treball -> Obri un espai de treball», és que "
-"primer no es neteja l'espai de treball, sinó que es fusiona amb l'espai de "
-"treball existent. En cas de dubte, utilitzeu «Espai de treball -> Obri un "
-"espai de treball», en lloc d'este connector."
+"Trieu el fitxer R que s'haja d'importar. Açò pot ser un fitxer creat p. ex., "
+"guardant l'espai de treball des de RKWard, utilitzant l'ordre d'R <link href="
+"\"rkward://rhelp/save\">save()</link>, o el connector <link href=\"rkward://"
+"component/save_r\"/>. La diferència principal en carregar un espai de "
+"treball via «Espai de treball -> Obri un espai de treball», és que primer no "
+"es neteja l'espai de treball, sinó que es fusiona amb l'espai de treball "
+"existent. En cas de dubte, utilitzeu «Espai de treball -> Obri un espai de "
+"treball», en lloc d'este connector."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
@@ -2142,7 +2141,7 @@ msgid ""
 "of R statements, which are then evaluated (see <link href=\"rkward://rhelp/"
 "source\"/>)."
 msgstr ""
-"Seleccioneu un fitxer que s'haja de carregar. Este fitxer es carregarà i "
+"Trieu un fitxer que s'haja de carregar. Este fitxer es carregarà i "
 "s'interpretarà com un script de sentències R, les quals s'avaluaran (vegeu "
 "<link href=\"rkward://rhelp/source\"/>)."
 
@@ -2300,7 +2299,7 @@ msgstr "Exporta un fitxer en RMarkdown"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:21
 #, kde-format
 msgid "Choose the file to be exported."
-msgstr "Trieu un fitxer que s'haja d'exportar."
+msgstr "Trieu un fitxer a exportar."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Target format")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:24
@@ -2562,7 +2561,7 @@ msgid ""
 "Select the objects to save, and a filename to save to. Created data files "
 "can be loaded using <link href=\"rkward://component/load_r_object\"/>."
 msgstr ""
-"Seleccioneu els objectes que es guardaran, i els noms de fitxer a on s'ha de "
+"Trieu els objectes que es guardaran, i els noms de fitxer a on s'ha de "
 "guardar. Els fitxers de dades creats es poden carregar utilitzant <link href="
 "\"rkward://component/load_r_object\"/>."
 
@@ -2618,7 +2617,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:20
 #, kde-format
 msgid "Select variables"
-msgstr "Seleccioneu les variables"
+msgstr "Trieu les variables"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/00saveload/save/save.xml:39
@@ -2688,7 +2687,7 @@ msgstr "Crea un esquelet de paquet"
 #: rkward/plugins/00saveload/save/skeleton/description.xml:15
 #, kde-format
 msgid "Select a variable"
-msgstr "Selecciona una variable"
+msgstr "Tria una variable"
 
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/00saveload/save/skeleton/description.xml:16
@@ -2730,7 +2729,7 @@ msgstr "Escriu vector/matriu"
 #: rkward/plugins/00saveload/save/write.xml:22
 #, kde-format
 msgid "Select a vector or matrix"
-msgstr "Seleccioneu un vector o matriu"
+msgstr "Trieu un vector o matriu"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <varslot label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <varslot label="...">
@@ -2794,10 +2793,10 @@ msgid ""
 "to save to. All other options allow you to define the file format, handling "
 "of column and row names as well as special character handling."
 msgstr ""
-"Seleccioneu un objecte de dades tabulades (com un «data frame» o matriu) i "
-"trieu un fitxer a on s'ha de guardar. Totes les altres opcions permeten "
-"definir el format del fitxer, gestionant els noms de les columnes i les "
-"files, així com la gestió especial de caràcters."
+"Trieu un objecte de dades tabulades (com un «data frame» o matriu) i trieu "
+"un fitxer a on s'ha de guardar. Totes les altres opcions permeten definir el "
+"format del fitxer, gestionant els noms de les columnes i les files, així com "
+"la gestió especial de caràcters."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Data")
 #: rkward/plugins/00saveload/save/write_csv.rkh:25
@@ -2806,8 +2805,8 @@ msgid ""
 "Select a data object to export. Valid data types are array, data.frame, "
 "matrix, character, numeric, and integer."
 msgstr ""
-"Seleccioneu un objecte de dades que s'haja d'exportar. Els tipus de dades "
-"vàlids són «array», «data.frame», matriu, caràcter, numèric, i enter."
+"Trieu un objecte de dades que s'haja d'exportar. Els tipus de dades vàlids "
+"són «array», «data.frame», matriu, caràcter, numèric, i enter."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:29
@@ -2837,10 +2836,10 @@ msgid ""
 "options (like field separator and decimal point) with reasonable defaults. "
 "Use the custom format if you need more control."
 msgstr ""
-"Seleccioneu ací un dels formats de fitxer predeterminats. Establiran "
-"diverses opcions (com el separador de camps i la coma decimal) amb uns "
-"valors predeterminats raonables. Utilitzeu el format personalitzat si cal "
-"més control."
+"Trieu ací un dels formats de fitxer predeterminats. Establiran diverses "
+"opcions (com el separador de camps i la coma decimal) amb uns valors "
+"predeterminats raonables. Utilitzeu el format personalitzat si cal més "
+"control."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:39
@@ -2885,8 +2884,8 @@ msgstr "Decidiu com tractar els noms de les files."
 #, kde-format
 msgid "Select a character vector to use for custom row names."
 msgstr ""
-"Seleccioneu un vector de caràcters que s'utilitzaran per als noms "
-"personalitzats de les files."
+"Trieu un vector de caràcters que s'utilitzaran per als noms personalitzats "
+"de les files."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:60
@@ -2903,8 +2902,8 @@ msgstr ""
 #, kde-format
 msgid "Select a character vector to use for custom column names."
 msgstr ""
-"Seleccioneu un vector de caràcters que s'utilitzaran per als noms "
-"personalitzats de les columnes."
+"Trieu un vector de caràcters que s'utilitzaran per als noms personalitzats "
+"de les columnes."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:68
@@ -2982,7 +2981,7 @@ msgstr "Format de dades i fitxer"
 #: rkward/plugins/00saveload/save/write_csv.xml:54
 #, kde-format
 msgid "Select a variable or table"
-msgstr "Seleccioneu una variable o una taula"
+msgstr "Trieu una variable o una taula"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="Save to"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:62
@@ -3012,7 +3011,7 @@ msgstr "Personalitzat (especifiqueu davall)"
 #: rkward/plugins/00saveload/save/write_csv.xml:105
 #, kde-format
 msgid "Select row or column names"
-msgstr "Seleccioneu els noms de files o columnes"
+msgstr "Trieu els noms de files o columnes"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:108
@@ -3149,8 +3148,8 @@ msgid ""
 "Choose a directory to set/change the working directory for R. The R function "
 "<b>setwd</b> is used to do the job."
 msgstr ""
-"Seleccioneu un directori que s'establirà/canviarà com a directori de treball "
-"per R. S'utilitza la funció R <b>setwd</b> per a fer la faena."
+"Trieu un directori que s'establirà/canviarà com a directori de treball per "
+"R. S'utilitza la funció R <b>setwd</b> per a fer la faena."
 
 #. i18n: ectx: (Set the working directory) <dialog label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:10
@@ -3162,7 +3161,7 @@ msgstr "Establix el directori de treball"
 #: rkward/plugins/00saveload/setworkdir.xml:11
 #, kde-format
 msgid "Choose the Working Directory"
-msgstr "Seleccioneu el directori de treball"
+msgstr "Trieu el directori de treball"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/import_export.pluginmap:10

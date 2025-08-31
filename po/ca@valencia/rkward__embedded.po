@@ -321,8 +321,8 @@ msgid ""
 "Select the grouping variables. Often, these will be factors. The levels of "
 "each grouping variable will be crossed."
 msgstr ""
-"Seleccioneu les variables d'agrupament. Sovint, estes seran factors. Els "
-"nivells de cada variable d'agrupació seran creuats."
+"Trieu les variables d'agrupament. Sovint, estes seran factors. Els nivells "
+"de cada variable d'agrupació seran creuats."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
@@ -579,7 +579,7 @@ msgstr "Dibuixa la quadrícula"
 #: rkward/plugins/distributions/../embedded.pluginmap:33
 #, kde-format
 msgid "Select by value"
-msgstr "Selecciona per valor"
+msgstr "Tria per valor"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:34
@@ -844,9 +844,9 @@ msgid ""
 "Choose if you want stacked bars, legend, and rainbow colors. Also you can "
 "choose if you want to display or not bar values (labels) and in what place."
 msgstr ""
-"Seleccioneu si voleu barres apilades, llegenda i colors de l'arc de Sant "
-"Martí. També podeu triar si voleu mostrar o no els valors de la barra "
-"(etiquetes) i en quin lloc."
+"Trieu si voleu barres apilades, llegenda i colors de l'arc de Sant Martí. "
+"També podeu triar si voleu mostrar o no els valors de la barra (etiquetes) i "
+"en quin lloc."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Draw Legend")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:17
@@ -864,7 +864,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:18
 #, kde-format
 msgid "Select between grey and rainbow colors."
-msgstr "Seleccioneu entre color gris i arc de Sant Martí."
+msgstr "Trieu entre color gris i arc de Sant Martí."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Type")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:19
@@ -874,7 +874,7 @@ msgid ""
 "meaningful for two-dimensional data. If you choose stacked bars you can not "
 "display bar values, below."
 msgstr ""
-"Seleccioneu un tipus entre barres juxtaposades i barres apilades. Esta "
+"Trieu un tipus entre barres juxtaposades i barres apilades. Esta "
 "configuració només serà important per a les dades bidimensionals. Si trieu "
 "les barres apilades, no podreu mostrar els valors de la barra, davall."
 
@@ -882,7 +882,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:20
 #, kde-format
 msgid "Select if you want to display bar values (labels)."
-msgstr "Seleccioneu si voleu mostrar els valors de les barres (etiquetes)."
+msgstr "Trieu si voleu mostrar els valors de les barres (etiquetes)."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
@@ -1050,7 +1050,7 @@ msgstr "Selector de color senzill."
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:12
 #, kde-format
 msgid "Pick a color."
-msgstr "Seleccioneu un color."
+msgstr "Trieu un color."
 
 #. i18n: ectx: (Loaded from Choose color) <usage>
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:12
@@ -1072,7 +1072,7 @@ msgstr "El color que s'utilitzarà."
 #: rkward/plugins/distributions/../plots/color_chooser.xml:22
 #, kde-format
 msgid "Choose color"
-msgstr "Seleccioneu un color"
+msgstr "Trieu un color"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <embed label="...">
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="...">
@@ -1677,7 +1677,7 @@ msgid ""
 "suggestion to the number of cells. This is the <i>breaks</i> parameter with "
 "a single number argument."
 msgstr ""
-"Si se selecciona «Un sol número» en el camp anterior, este proporcionarà un "
+"Si es tria «Un sol número» en el camp anterior, este proporcionarà un "
 "suggeriment al nombre de cel·les. Este és el paràmetre «<i>breaks</i>» amb "
 "un argument de número."
 
@@ -1692,9 +1692,9 @@ msgid ""
 "code). The range of the variable is extended by 10% before obtaining the "
 "sequence, so that both the minimum and maximum points are included."
 msgstr ""
-"Si se selecciona «Vector dels punts de ruptura» en el camp anterior, llavors "
-"es proporcionarà la llargària del vector dels punts de ruptura equidistants "
-"en l'amplitud de la variable. Este és el paràmetre «<i>breaks</i>» amb un "
+"Si es tria «Vector dels punts de ruptura» en el camp anterior, llavors es "
+"proporcionarà la llargària del vector dels punts de ruptura equidistants en "
+"l'amplitud de la variable. Este és el paràmetre «<i>breaks</i>» amb un "
 "argument de vector. La seqüència real es calcularà mitjançant una crida a la "
 "funció en línia (vegeu el codi generat). L'amplitud de la variable "
 "s'estendrà un 10% abans d'obtindre la seqüència, de manera que s'inclouran "
@@ -1732,8 +1732,8 @@ msgid ""
 "details."
 msgstr ""
 "Este és el paràmetre «<i>lty</i>». Si trieu «Blanc» no es dibuixarà cap "
-"línia, seleccioneu un color de farciment per a crear un diagrama raonable. "
-"Vegeu la referència d'R per a més detalls."
+"línia, trieu un color de farciment per a crear un diagrama raonable. Vegeu "
+"la referència d'R per a més detalls."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Density of shading lines")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:29
@@ -2235,7 +2235,7 @@ msgid ""
 "reference on <b>plot.default</b>."
 msgstr ""
 "Especifica l'argument «<i>log</i>» a plot.default. Marqueu esta casella per "
-"a establir «<i>log=\"yy\"</i>». Seleccioneu les dues caselles per a establir "
+"a establir «<i>log=\"yy\"</i>». Trieu les dues caselles per a establir "
 "«<i>log=\"xy\"</i>». Vegeu la referència d'R sobre <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Labels (leave empty for default)")
@@ -2274,10 +2274,10 @@ msgid ""
 "function use its default plotting type, choose the 'default' option. This is "
 "the <i>type</i> argument to <b>plot.default</b>."
 msgstr ""
-"Seleccioneu un dels tipus de punt/línia llistats pel diagrama. Per a "
-"permetre que la crida a la funció utilitze el tipus de dibuix predeterminat, "
-"trieu l'opció «predeterminat». Este és l'argument «<i>type</i>» a <b>plot."
-"default</b>."
+"Trieu un dels tipus de punt/línia llistats pel diagrama. Per a permetre que "
+"la crida a la funció utilitze el tipus de dibuix predeterminat, trieu "
+"l'opció «predeterminat». Este és l'argument «<i>type</i>» a <b>plot.default</"
+"b>."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Color")
@@ -2288,10 +2288,10 @@ msgid ""
 "function use its default plotting color, choose the 'default' option. This "
 "is the <i>col</i> argument to <b>plot.default</b>."
 msgstr ""
-"Seleccioneu un dels colors de punt/línia llistats pel diagrama. Per a "
-"permetre que la crida a la funció utilitze el color de dibuix predeterminat, "
-"trieu l'opció «predeterminat». Este és l'argument «<i>col</i>» a <b>plot."
-"default</b>."
+"Trieu un dels colors de punt/línia llistats pel diagrama. Per a permetre que "
+"la crida a la funció utilitze el color de dibuix predeterminat, trieu "
+"l'opció «predeterminat». Este és l'argument «<i>col</i>» a <b>plot.default</"
+"b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Aspect ratio")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:43
@@ -3119,10 +3119,10 @@ msgid ""
 "specified below) number of vertical lines in the grid."
 msgstr ""
 "Este és l'argument «<i>nx</i>». El valor predeterminat és NUL, en este cas, "
-"les línies verticals es dibuixaran a les marques de «xaxis». Seleccioneu "
-"«Cap» per a no dibuixar les línies verticals. Seleccioneu «Especifica "
-"davall» per a proporcionar un nombre especificat (que s'especificarà davall) "
-"de línies verticals a la quadrícula."
+"les línies verticals es dibuixaran a les marques de «xaxis». Trieu «Cap» per "
+"a no dibuixar les línies verticals. Trieu «Especifica davall» per a "
+"proporcionar un nombre especificat (que s'especificarà davall) de línies "
+"verticals a la quadrícula."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "X Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:16
