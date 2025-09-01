@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:38+0000\n"
+"POT-Creation-Date: 2025-09-01 00:39+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -158,7 +158,7 @@ msgid ""
 msgstr "Skriptifaili \"%1\" automaatsel salvestamisel tekkis tõrge:"
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:331
+#: rkward/misc/rkprogresscontrol.cpp:329
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2707,7 +2707,7 @@ msgstr ""
 msgid "Unhandled output command '%1'"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:219
+#: rkward/misc/rkprogresscontrol.cpp:217
 #, fuzzy, kde-format
 #| msgid ""
 #| "There has been an error while trying to load / unload packages. See "
@@ -2718,66 +2718,66 @@ msgid ""
 msgstr ""
 "Pakettide laadimisel / mahalaadimisel tekkis tõrge. Allpool näeb üksikasju."
 
-#: rkward/misc/rkprogresscontrol.cpp:230
+#: rkward/misc/rkprogresscontrol.cpp:228
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "Väljund"
 
-#: rkward/misc/rkprogresscontrol.cpp:244
+#: rkward/misc/rkprogresscontrol.cpp:242
 #: rkward/windows/rktoplevelwindowgui.cpp:87
 #, fuzzy, kde-format
 #| msgid "Show &Output"
 msgid "Show Output"
 msgstr "&Näita väljundit"
 
-#: rkward/misc/rkprogresscontrol.cpp:247 rkward/misc/rkprogresscontrol.cpp:387
+#: rkward/misc/rkprogresscontrol.cpp:245 rkward/misc/rkprogresscontrol.cpp:385
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Cancel"
 msgstr "Loobu"
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, fuzzy, kde-format
 #| msgid "<b>Select one:</b>"
 msgid "<b>Done</b>"
 msgstr "<b>Vali üks:</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:458
+#: rkward/misc/rkprogresscontrol.cpp:456
 #: rkward/plugin/rkstandardcomponentgui.cpp:188
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Sulge"
 
-#: rkward/misc/rkprogresscontrol.cpp:495 rkward/windows/rkwindowcatcher.cpp:405
+#: rkward/misc/rkprogresscontrol.cpp:493 rkward/windows/rkwindowcatcher.cpp:405
 #, kde-format
 msgid "Keep waiting"
 msgstr "Jäta ootele"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel operation"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, fuzzy, kde-format
 #| msgid "Canceled"
 msgid "Cancel && Close"
 msgstr "Katkestati"
 
-#: rkward/misc/rkprogresscontrol.cpp:507
+#: rkward/misc/rkprogresscontrol.cpp:505
 #, fuzzy, kde-format
 #| msgid "Updating status, please wait"
 msgid "An operation is still running, please wait."
@@ -3741,30 +3741,30 @@ msgstr ""
 "versioon on \"%1\", taustaprogrammil \"%2\".\n"
 "Palun paranda oma paigaldus."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:414
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Taustaprotsessi käivitamine nurjus. Palun kontrolli oma paigaldust."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, fuzzy, kde-format
 #| msgid "The backend process failed to start with exit code %1."
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Taustaprotsessi käivitamine nurjus väljumiskoodiga %1."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:418
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, fuzzy, kde-format
 #| msgid "Backend process has exited with code %1."
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Taustaprotsess lõpetas töö koodiga %1."
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:513
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R-i mootor lõpetas töö staatusega %1"
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:534
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3773,17 +3773,17 @@ msgstr ""
 "R-i mootorit tabas saatuslik tõrge:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:704
 #, kde-format
 msgid "Message from the R backend"
 msgstr "R-i taustaprogrammi teade"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:712
 #, kde-format
 msgid "Question from the R backend"
 msgstr "R-i taustaprogrammi küsimus"
 
-#: rkward/rbackend/rkrbackend.cpp:1604
+#: rkward/rbackend/rkrbackend.cpp:1620
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3815,7 +3815,7 @@ msgstr ""
 "Asjakohast abi võib leida aadressil <a href=\"http://rkward.kde.org/compiling"
 "\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1608
+#: rkward/rbackend/rkrbackend.cpp:1624
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3836,12 +3836,12 @@ msgstr ""
 "leida aadressil <a href=\"http://rkward.kde.org/compiling\">http://rkward."
 "kde.org/compiling</a>.<p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3849,7 +3849,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -3883,7 +3883,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "Tõrge R-i käivitamisel"
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3895,17 +3895,17 @@ msgstr ""
 "paketti \"%1\", mida praegu ei ole paigaldatud. Me avame paketihalduri, kus "
 "võid vajaliku paketi üles otsida ja paigaldada."
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Vajalik on pakett \"%1\""
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Quitting was canceled"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3928,38 +3928,38 @@ msgstr ""
 "uuemates RKWardi versioonides automaatselt). Selleks klõpsa praegu \"Loobu"
 "\", sulge andmeaknad, salvesta ja proovi uuesti."
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid "Locale change"
 msgstr "Lokaadi muutus"
 
-#: rkward/rbackend/rkrinterface.cpp:688
+#: rkward/rbackend/rkrinterface.cpp:675
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:791
+#: rkward/rbackend/rkrinterface.cpp:778
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:799
+#: rkward/rbackend/rkrinterface.cpp:786
 #, fuzzy, kde-format
 #| msgid "Could not open file %1 for reading"
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Faili %1 avamine lugemiseks nurjus"
 
-#: rkward/rbackend/rkrinterface.cpp:823
+#: rkward/rbackend/rkrinterface.cpp:810
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:903
+#: rkward/rbackend/rkrinterface.cpp:890
 #, kde-format
 msgid "R backend requests information"
 msgstr "R-i taustaprogramm soovib teavet"
 
-#: rkward/rbackend/rkrinterface.cpp:925
+#: rkward/rbackend/rkrinterface.cpp:912
 #, kde-format
 msgid ""
 "\n"
@@ -3977,7 +3977,7 @@ msgstr ""
 "kopeerida avatud andmeredaktoritest andmeid. Pärast seda pole midagi muud "
 "teha, kui väljuda RKWardist! Andestust!"
 
-#: rkward/rbackend/rkrinterface.cpp:926
+#: rkward/rbackend/rkrinterface.cpp:913
 #, kde-format
 msgid "R engine has died"
 msgstr "R-i mootor suri"
@@ -6026,13 +6026,13 @@ msgstr ""
 msgid "Keep this location (do not change anything)"
 msgstr "Selle asukoha <b>säilitamine</b> (midagi ei muudeta)."
 
-#: rkward/settings/rksettingsmodulewatch.cpp:116
+#: rkward/settings/rksettingsmodulewatch.cpp:120
 #: rkward/windows/rkcommandlog.cpp:45
 #, kde-format
 msgid "Command log"
 msgstr "Käsulogi"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:121
+#: rkward/settings/rksettingsmodulewatch.cpp:125
 #, kde-format
 msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
@@ -6041,47 +6041,47 @@ msgstr ""
 "Praegu rakenduvad seadistused ainult uutele käskudele. Kõik varasemad käsud "
 "jäävad nähtavaks/nähtamatuks."
 
-#: rkward/settings/rksettingsmodulewatch.cpp:128
+#: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
 msgid "always show command"
 msgstr "käsku näidatakse alati"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:130
+#: rkward/settings/rksettingsmodulewatch.cpp:134
 #, kde-format
 msgid "always show result"
 msgstr "tulemust näidatakse alati"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:132
+#: rkward/settings/rksettingsmodulewatch.cpp:136
 #, kde-format
 msgid "show errors"
 msgstr "näidatakse tõrkeid"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:134
+#: rkward/settings/rksettingsmodulewatch.cpp:138
 #, kde-format
 msgid "show/raise window"
 msgstr "näidatakse/tõstetakse akent"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:137
+#: rkward/settings/rksettingsmodulewatch.cpp:141
 #, kde-format
 msgid "User commands"
 msgstr "Kasutaja käsud"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:138
+#: rkward/settings/rksettingsmodulewatch.cpp:142
 #, kde-format
 msgid "Plugin generated commands"
 msgstr "Plugina genereeritud käsud"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:139
+#: rkward/settings/rksettingsmodulewatch.cpp:143
 #, kde-format
 msgid "Application commands"
 msgstr "Rakenduse käsud"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:140
+#: rkward/settings/rksettingsmodulewatch.cpp:144
 #, kde-format
 msgid "Synchronization commands"
 msgstr "Sünkroonimiskäsud"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:144
+#: rkward/settings/rksettingsmodulewatch.cpp:148
 #, fuzzy, kde-format
 #| msgid "Maximum number of paragraphs/lines to display in the Command Log"
 msgid ""
@@ -6723,22 +6723,22 @@ msgstr "%1 (kasutamata)"
 msgid "&Tools Move"
 msgstr "&Tööriistade liigutamine"
 
-#: rkward/windows/rkcommandlog.cpp:200
+#: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
 msgid "Incomplete statement.\n"
 msgstr "Ebatäielik lause.\n"
 
-#: rkward/windows/rkcommandlog.cpp:202
+#: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
 msgstr "Süntaksi viga.\n"
 
-#: rkward/windows/rkcommandlog.cpp:204
+#: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "Käsu täitmisel tekkis määratlemata tõrge.\n"
 
-#: rkward/windows/rkcommandlog.cpp:301
+#: rkward/windows/rkcommandlog.cpp:298
 #, kde-format
 msgid "Configure"
 msgstr "Seadista"

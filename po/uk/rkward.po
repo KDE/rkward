@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:38+0000\n"
+"POT-Creation-Date: 2025-09-01 00:39+0000\n"
 "PO-Revision-Date: 2025-08-25 09:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -162,7 +162,7 @@ msgstr ""
 "збережено."
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:331
+#: rkward/misc/rkprogresscontrol.cpp:329
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2827,7 +2827,7 @@ msgstr "Виведення з ідентифікатором «%1» не зав�
 msgid "Unhandled output command '%1'"
 msgstr "Непридатна до обробки команда виведення «%1»"
 
-#: rkward/misc/rkprogresscontrol.cpp:219
+#: rkward/misc/rkprogresscontrol.cpp:217
 #, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
@@ -2836,65 +2836,65 @@ msgstr ""
 "<b>Під час виконання команди сталася помилка. Докладніший опис можна знайти "
 "нижче</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:230
+#: rkward/misc/rkprogresscontrol.cpp:228
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "Виведення"
 
-#: rkward/misc/rkprogresscontrol.cpp:244
+#: rkward/misc/rkprogresscontrol.cpp:242
 #: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
 msgid "Show Output"
 msgstr "Показати виведені дані"
 
-#: rkward/misc/rkprogresscontrol.cpp:247 rkward/misc/rkprogresscontrol.cpp:387
+#: rkward/misc/rkprogresscontrol.cpp:245 rkward/misc/rkprogresscontrol.cpp:385
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>Сталася помилка</b> (нижче наведено подробиці)"
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>Виконано</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:458
+#: rkward/misc/rkprogresscontrol.cpp:456
 #: rkward/plugin/rkstandardcomponentgui.cpp:188
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Закрити"
 
-#: rkward/misc/rkprogresscontrol.cpp:495 rkward/windows/rkwindowcatcher.cpp:405
+#: rkward/misc/rkprogresscontrol.cpp:493 rkward/windows/rkwindowcatcher.cpp:405
 #, kde-format
 msgid "Keep waiting"
 msgstr "Зачекати"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 "Закриття цього вікна призведе до скасування поточної дії. Ви справді цього "
 "хочете?"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel operation"
 msgstr "Скасувати дію"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel && Close"
 msgstr "Скасувати і закрити"
 
-#: rkward/misc/rkprogresscontrol.cpp:507
+#: rkward/misc/rkprogresscontrol.cpp:505
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "Виконання дії не завершено. Будь ласка, зачекайте."
@@ -3878,7 +3878,7 @@ msgstr ""
 "основного модуля. Оболонка має версію «%1», основний модуль — «%2».\n"
 "Будь ласка, виправте проблему зі встановленими компонентами."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:414
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3886,22 +3886,22 @@ msgstr ""
 "Не вдалося запустити процес модуля. Будь ласка, перевірте, чи встановлено "
 "усе належним чином."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Не вдалося запустити процес модуля. Код виходу %1, повідомлення: «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:418
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Процес модуля завершив роботу з кодом %1, повідомлення: «%2»."
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:513
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "Роботу рушія R було завершено з таким повідомленням щодо стану: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:534
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3910,17 +3910,17 @@ msgstr ""
 "У рушії R сталася критична помилка:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:704
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Повідомлення від основного модуля R"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:712
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Запитання від основного модуля R"
 
-#: rkward/rbackend/rkrbackend.cpp:1604
+#: rkward/rbackend/rkrbackend.cpp:1620
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3942,7 +3942,7 @@ msgstr ""
 "Довідкові матеріали, які допоможуть в усуванні негараздів, можна знайти <a "
 "href=\"https://rkward.kde.org/compiling\">тут</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1608
+#: rkward/rbackend/rkrbackend.cpp:1624
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3958,12 +3958,12 @@ msgstr ""
 "негараздів, можна знайти <a href=\"https://rkward.kde.org/compiling\">тут</"
 "a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Невідповідність версії графіки"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3974,7 +3974,7 @@ msgstr ""
 "збирання програми.<br><a href=\"rkward://page/rkward_incompatible_version"
 "\">Додаткові відомості</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Ok"
 msgstr "Гаразд"
@@ -4008,7 +4008,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "Помилка під час запуску R"
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -4021,17 +4021,17 @@ msgstr ""
 "керування пакунками, за допомогою якого ви зможете знайти і встановити "
 "потрібний пакунок."
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Потрібен пакунок «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "Вихід було скасовано"
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -4054,37 +4054,37 @@ msgstr ""
 "RKWard). Щоб уникнути проблем, будь ласка, натисніть кнопку «Скасувати», "
 "потім закрийте вікна з даними, збережіть робочий простір і повторіть спробу."
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid "Locale change"
 msgstr "Зміна локалі"
 
-#: rkward/rbackend/rkrinterface.cpp:688
+#: rkward/rbackend/rkrinterface.cpp:675
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "Зміну локалі скасовано користувачем"
 
-#: rkward/rbackend/rkrinterface.cpp:791
+#: rkward/rbackend/rkrinterface.cpp:778
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "Спроба розпочати запис, коли вже виконується запис команд. Ігноруємо."
 
-#: rkward/rbackend/rkrinterface.cpp:799
+#: rkward/rbackend/rkrinterface.cpp:786
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Не вдалося відкрити файл для запису. Не записуємо команди"
 
-#: rkward/rbackend/rkrinterface.cpp:823
+#: rkward/rbackend/rkrinterface.cpp:810
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Помилка: невідомий запит «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:903
+#: rkward/rbackend/rkrinterface.cpp:890
 #, kde-format
 msgid "R backend requests information"
 msgstr "Основний модуль R надіслав запит щодо даних"
 
-#: rkward/rbackend/rkrinterface.cpp:925
+#: rkward/rbackend/rkrinterface.cpp:912
 #, kde-format
 msgid ""
 "\n"
@@ -4102,7 +4102,7 @@ msgstr ""
 "всі відкриті командні файли, виведені дані або скопіювати дані з відкритих "
 "вікон редагування даних. Після збереження даних вийдіть з RKWard. Вибачте!"
 
-#: rkward/rbackend/rkrinterface.cpp:926
+#: rkward/rbackend/rkrinterface.cpp:913
 #, kde-format
 msgid "R engine has died"
 msgstr "Рушій R припинив роботу"
@@ -6156,13 +6156,13 @@ msgstr "Залишити"
 msgid "Keep this location (do not change anything)"
 msgstr "Зберегти це місце (нічого не змінювати)"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:116
+#: rkward/settings/rksettingsmodulewatch.cpp:120
 #: rkward/windows/rkcommandlog.cpp:45
 #, kde-format
 msgid "Command log"
 msgstr "Журнал команд"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:121
+#: rkward/settings/rksettingsmodulewatch.cpp:125
 #, kde-format
 msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
@@ -6171,47 +6171,47 @@ msgstr ""
 "Значення параметрів буде застосовано лише до нових команд. Вже оброблені "
 "команди залишаться видимими або невидимими."
 
-#: rkward/settings/rksettingsmodulewatch.cpp:128
+#: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
 msgid "always show command"
 msgstr "завжди показувати команду"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:130
+#: rkward/settings/rksettingsmodulewatch.cpp:134
 #, kde-format
 msgid "always show result"
 msgstr "завжди показувати результат"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:132
+#: rkward/settings/rksettingsmodulewatch.cpp:136
 #, kde-format
 msgid "show errors"
 msgstr "показати помилки"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:134
+#: rkward/settings/rksettingsmodulewatch.cpp:138
 #, kde-format
 msgid "show/raise window"
 msgstr "показати/підняти вікно"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:137
+#: rkward/settings/rksettingsmodulewatch.cpp:141
 #, kde-format
 msgid "User commands"
 msgstr "Команди користувача"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:138
+#: rkward/settings/rksettingsmodulewatch.cpp:142
 #, kde-format
 msgid "Plugin generated commands"
 msgstr "Команди, створені додатками"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:139
+#: rkward/settings/rksettingsmodulewatch.cpp:143
 #, kde-format
 msgid "Application commands"
 msgstr "Команди програми"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:140
+#: rkward/settings/rksettingsmodulewatch.cpp:144
 #, kde-format
 msgid "Synchronization commands"
 msgstr "Команди синхронізації"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:144
+#: rkward/settings/rksettingsmodulewatch.cpp:148
 #, kde-format
 msgid ""
 "Maximum number of paragraphs/lines to display in the Command Log (0 for no "
@@ -6856,22 +6856,22 @@ msgstr "%1 (не використовується)"
 msgid "&Tools Move"
 msgstr "&Інструменти"
 
-#: rkward/windows/rkcommandlog.cpp:200
+#: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
 msgid "Incomplete statement.\n"
 msgstr "Неповна інструкція.\n"
 
-#: rkward/windows/rkcommandlog.cpp:202
+#: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
 msgstr "Синтаксична помилка.\n"
 
-#: rkward/windows/rkcommandlog.cpp:204
+#: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "Під час спроби виконання команди сталася невизначена помилка.\n"
 
-#: rkward/windows/rkcommandlog.cpp:301
+#: rkward/windows/rkcommandlog.cpp:298
 #, kde-format
 msgid "Configure"
 msgstr "Налаштувати"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:38+0000\n"
+"POT-Creation-Date: 2025-09-01 00:39+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -157,7 +157,7 @@ msgid ""
 msgstr "कार्यक्षेत्रं रक्षितुं प्रयतमाने त्रुटिः अभवत् । भवतः दत्तांशः <b>न</b> रक्षितः आसीत्।"
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:331
+#: rkward/misc/rkprogresscontrol.cpp:329
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2731,70 +2731,70 @@ msgstr "'%1' द्वारा चिह्नितं आउटपुट् �
 msgid "Unhandled output command '%1'"
 msgstr "अनियंत्रितः निर्गम आदेशः '%1'."
 
-#: rkward/misc/rkprogresscontrol.cpp:219
+#: rkward/misc/rkprogresscontrol.cpp:217
 #, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr "<b>आदेशं चालयन् त्रुटिः अभवत् । निर्गमविवरणार्थं अधः पश्यन्तु</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:230
+#: rkward/misc/rkprogresscontrol.cpp:228
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "उत्पादनम्"
 
-#: rkward/misc/rkprogresscontrol.cpp:244
+#: rkward/misc/rkprogresscontrol.cpp:242
 #: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
 msgid "Show Output"
 msgstr "Output दर्शयतु"
 
-#: rkward/misc/rkprogresscontrol.cpp:247 rkward/misc/rkprogresscontrol.cpp:387
+#: rkward/misc/rkprogresscontrol.cpp:245 rkward/misc/rkprogresscontrol.cpp:385
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Cancel"
 msgstr "निरसयतु"
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>त्रुटिः अभवत्</b> (विवरणार्थं अधः पश्यन्तु)"
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>कृतम्‌</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:458
+#: rkward/misc/rkprogresscontrol.cpp:456
 #: rkward/plugin/rkstandardcomponentgui.cpp:188
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "पिधानं करोतु"
 
-#: rkward/misc/rkprogresscontrol.cpp:495 rkward/windows/rkwindowcatcher.cpp:405
+#: rkward/misc/rkprogresscontrol.cpp:493 rkward/windows/rkwindowcatcher.cpp:405
 #, kde-format
 msgid "Keep waiting"
 msgstr "प्रतीक्षमाणाः भवन्तु"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr "एतत् विण्डो पिधाय वर्तमानं कार्यं रद्दं भविष्यति । किं त्वं निश्चिन्तः असि ?"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel operation"
 msgstr "संचालन रद्द करें"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel && Close"
 msgstr "रद्दं कुर्वन्तु && बन्दं कुर्वन्तु"
 
-#: rkward/misc/rkprogresscontrol.cpp:507
+#: rkward/misc/rkprogresscontrol.cpp:505
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "अद्यापि एकः ऑपरेशनः प्रचलति, कृपया प्रतीक्ष्यताम् ।"
@@ -3748,29 +3748,29 @@ msgstr ""
 "तु backend '%2' अस्ति ।\n"
 "कृपया भवतः संस्थापनं समाधातु।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:414
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "पृष्ठभागप्रक्रिया आरभ्यतुं न शक्यते स्म । कृपया स्वस्य संस्थापनं पश्यन्तु।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "पृष्ठभागप्रक्रिया निर्गमनसङ्केतेन %1, सन्देशः: '%2' इत्यनेन आरभ्यतुं असफलतां प्राप्तवती ।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:418
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "पृष्ठभागप्रक्रिया %1 कोडेन सह निर्गतवती, सन्देशः: '%2' ।"
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:513
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R इञ्जिन् स्थितिः सह निष्क्रियः अस्ति: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:534
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3779,17 +3779,17 @@ msgstr ""
 "R इञ्जिनस्य घातकदोषः अभवत् :\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:704
 #, kde-format
 msgid "Message from the R backend"
 msgstr "R पृष्ठभागात् सन्देशः"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:712
 #, kde-format
 msgid "Question from the R backend"
 msgstr "R पृष्ठभागात् प्रश्नः"
 
-#: rkward/rbackend/rkrbackend.cpp:1604
+#: rkward/rbackend/rkrbackend.cpp:1620
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3809,7 +3809,7 @@ msgstr ""
 "समाधातव्यम्</b> । तस्य साहाय्यार्थं <a href=\"https://rkward.kde.org/compiling"
 "\">https://rkward.kde.org/compiling</a> पश्यन्तु ।</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1608
+#: rkward/rbackend/rkrbackend.cpp:1624
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3823,12 +3823,12 @@ msgstr ""
 "साहाय्यार्थं <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a> पश्यन्तु ।</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "ग्राफिक्स संस्करण बेमेल"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3839,7 +3839,7 @@ msgstr ""
 "संकलनस्य आवश्यकता वर्तते ।<br> <a href=\"rkward://page/rkward_incompatible_version"
 "\">अतिरिक्त सूचना</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Ok"
 msgstr "अस्तु"
@@ -3870,7 +3870,7 @@ msgstr "<p>R पृष्ठभागस्य आरम्भे समस्�
 msgid "Error starting R"
 msgstr "आरम्भदोषः R"
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3882,17 +3882,17 @@ msgstr ""
 "सम्प्रति संस्थापितम् नास्ति । वयं package-management tool उद्घाटयिष्यामः, तत्र भवान् "
 "आवश्यकं package अन्वेष्टुं संस्थापयितुं च प्रयतितुं शक्नोति ।"
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid "Require package '%1'"
 msgstr "'%1' संकुलस्य आवश्यकता अस्ति।"
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "परित्यागः रद्दः अभवत्"
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3914,37 +3914,37 @@ msgstr ""
 "सति कृपया इदानीं 'Cancel' इति चिनोतु, ततः दत्तांशविण्डोः पिधाय, रक्षतु, पुनः प्रयासं च "
 "कुर्वन्तु ।"
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid "Locale change"
 msgstr "स्थानीय परिवर्तनम्"
 
-#: rkward/rbackend/rkrinterface.cpp:688
+#: rkward/rbackend/rkrinterface.cpp:675
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "लोकेल परिवर्तनं उपयोक्त्रा रद्दं कृतम्"
 
-#: rkward/rbackend/rkrinterface.cpp:791
+#: rkward/rbackend/rkrinterface.cpp:778
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "पूर्वमेव आदेशान् अभिलेखनं कुर्वन्, अभिलेखनं आरभ्यतुं प्रयतध्वम् । उपेक्ष्य ।"
 
-#: rkward/rbackend/rkrinterface.cpp:799
+#: rkward/rbackend/rkrinterface.cpp:786
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "लेखनार्थं सञ्चिकां उद्घाटयितुं न शक्तवान्। आदेशान् न अभिलेखयति"
 
-#: rkward/rbackend/rkrinterface.cpp:823
+#: rkward/rbackend/rkrinterface.cpp:810
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "त्रुटि: अपरिचितः अनुरोधः '%1'."
 
-#: rkward/rbackend/rkrinterface.cpp:903
+#: rkward/rbackend/rkrinterface.cpp:890
 #, kde-format
 msgid "R backend requests information"
 msgstr "R backend सूचनां अनुरोधयति"
 
-#: rkward/rbackend/rkrinterface.cpp:925
+#: rkward/rbackend/rkrinterface.cpp:912
 #, kde-format
 msgid ""
 "\n"
@@ -3962,7 +3962,7 @@ msgstr ""
 "मुक्त-आदेश-सञ्चिकां, निर्गमं, अथवा दत्तांशं प्रतिलिख्यताम् । तदनन्तरं आरकेवार्डं त्यजन्तु। "
 "क्षम्यताम्‌!"
 
-#: rkward/rbackend/rkrinterface.cpp:926
+#: rkward/rbackend/rkrinterface.cpp:913
 #, kde-format
 msgid "R engine has died"
 msgstr "आर इञ्जिनं मृतम् अस्ति"
@@ -5955,13 +5955,13 @@ msgstr "स्थापय"
 msgid "Keep this location (do not change anything)"
 msgstr "एतत् स्थानं स्थापयन्तु (किमपि परिवर्तनं न कुर्वन्तु)"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:116
+#: rkward/settings/rksettingsmodulewatch.cpp:120
 #: rkward/windows/rkcommandlog.cpp:45
 #, kde-format
 msgid "Command log"
 msgstr "आदेश लॉग"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:121
+#: rkward/settings/rksettingsmodulewatch.cpp:125
 #, kde-format
 msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
@@ -5970,47 +5970,47 @@ msgstr ""
 "इदानीं कृते सेटिङ्ग्स् केवलं नूतनानां आदेशानां कृते एव प्रवर्तन्ते । पूर्वादेशाः सर्वे दृश्यमानाः/"
 "अदृश्याः एव तिष्ठन्ति ।"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:128
+#: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
 msgid "always show command"
 msgstr "सर्वदा आदेशं दर्शयतु"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:130
+#: rkward/settings/rksettingsmodulewatch.cpp:134
 #, kde-format
 msgid "always show result"
 msgstr "सर्वदा परिणामं दर्शयतु"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:132
+#: rkward/settings/rksettingsmodulewatch.cpp:136
 #, kde-format
 msgid "show errors"
 msgstr "दोषान् दर्शयतु"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:134
+#: rkward/settings/rksettingsmodulewatch.cpp:138
 #, kde-format
 msgid "show/raise window"
 msgstr "विण्डो दर्शयतु/उत्थापयतु"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:137
+#: rkward/settings/rksettingsmodulewatch.cpp:141
 #, kde-format
 msgid "User commands"
 msgstr "उपयोक्तृ आदेशाः"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:138
+#: rkward/settings/rksettingsmodulewatch.cpp:142
 #, kde-format
 msgid "Plugin generated commands"
 msgstr "प्लगिन् उत्पन्नाः आदेशाः"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:139
+#: rkward/settings/rksettingsmodulewatch.cpp:143
 #, kde-format
 msgid "Application commands"
 msgstr "अनुप्रयोग आदेशाः"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:140
+#: rkward/settings/rksettingsmodulewatch.cpp:144
 #, kde-format
 msgid "Synchronization commands"
 msgstr "समन्वयन आदेशाः"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:144
+#: rkward/settings/rksettingsmodulewatch.cpp:148
 #, kde-format
 msgid ""
 "Maximum number of paragraphs/lines to display in the Command Log (0 for no "
@@ -6656,22 +6656,22 @@ msgstr "%1 (अप्रयुक्त)"
 msgid "&Tools Move"
 msgstr "&Tools Move इति"
 
-#: rkward/windows/rkcommandlog.cpp:200
+#: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
 msgid "Incomplete statement.\n"
 msgstr "अपूर्णं कथनम् ।\n"
 
-#: rkward/windows/rkcommandlog.cpp:202
+#: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
 msgstr "वाक्यविन्यासदोषः ।\n"
 
-#: rkward/windows/rkcommandlog.cpp:204
+#: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "आदेशं चालयन् अनिर्दिष्टदोषः अभवत् ।\n"
 
-#: rkward/windows/rkcommandlog.cpp:301
+#: rkward/windows/rkcommandlog.cpp:298
 #, kde-format
 msgid "Configure"
 msgstr "विन्यस्तं कुर्वन्तु"

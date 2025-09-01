@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:38+0000\n"
+"POT-Creation-Date: 2025-09-01 00:39+0000\n"
 "PO-Revision-Date: 2025-08-25 20:05+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -159,7 +159,7 @@ msgstr ""
 "Ett fel uppstod vid försök att spara arbetsytan. Data sparades <b>inte</b>."
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:331
+#: rkward/misc/rkprogresscontrol.cpp:329
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2774,7 +2774,7 @@ msgstr "Utdata identifierad av '%1' är inte inläst i den här sessionen."
 msgid "Unhandled output command '%1'"
 msgstr "Ohanterat utdatakommando '%1'"
 
-#: rkward/misc/rkprogresscontrol.cpp:219
+#: rkward/misc/rkprogresscontrol.cpp:217
 #, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
@@ -2783,63 +2783,63 @@ msgstr ""
 "<b>Ett fel uppstod medan kommandot kördes. Se nedan för utmatad "
 "detaljinformation.</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:230
+#: rkward/misc/rkprogresscontrol.cpp:228
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "Utdata"
 
-#: rkward/misc/rkprogresscontrol.cpp:244
+#: rkward/misc/rkprogresscontrol.cpp:242
 #: rkward/windows/rktoplevelwindowgui.cpp:87
 #, kde-format
 msgid "Show Output"
 msgstr "Visa utdata"
 
-#: rkward/misc/rkprogresscontrol.cpp:247 rkward/misc/rkprogresscontrol.cpp:387
+#: rkward/misc/rkprogresscontrol.cpp:245 rkward/misc/rkprogresscontrol.cpp:385
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>Ett fel uppstod</b> (se nedan för detaljerad information)"
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>Klar</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:458
+#: rkward/misc/rkprogresscontrol.cpp:456
 #: rkward/plugin/rkstandardcomponentgui.cpp:188
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Stäng"
 
-#: rkward/misc/rkprogresscontrol.cpp:495 rkward/windows/rkwindowcatcher.cpp:405
+#: rkward/misc/rkprogresscontrol.cpp:493 rkward/windows/rkwindowcatcher.cpp:405
 #, kde-format
 msgid "Keep waiting"
 msgstr "Fortsätt vänta"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr "Att stänga fönstret avbryter pågående åtgärd. Är du säker?"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel operation"
 msgstr "Avbryt åtgärd"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel && Close"
 msgstr "Avbryt och stäng"
 
-#: rkward/misc/rkprogresscontrol.cpp:507
+#: rkward/misc/rkprogresscontrol.cpp:505
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "En åtgärd pågår fortfarande, vänta."
@@ -3813,29 +3813,29 @@ msgstr ""
 "har version '%1' med bakgrundsprogrammet har '%2'.\n"
 "Rätta installationen."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:414
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Bakgrundsprocessen kunde inte startas. Kontrollera installationen."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "Bakgrundsprocessen misslyckades starta med slutkod %1, meddelande: '%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:418
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Bakgrundsprocessen har avslutats med kod %1, meddelande: '%2'."
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:513
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R-bakgrundsprogrammet har avslutats med status: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:534
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3844,17 +3844,17 @@ msgstr ""
 "R-bakgrundsprogrammet har stött på ett allvarligt fel:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:704
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Meddelande från R-bakgrundsprogrammet"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:712
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Fråga från R-bakgrundsprogrammet"
 
-#: rkward/rbackend/rkrbackend.cpp:1604
+#: rkward/rbackend/rkrbackend.cpp:1620
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3875,7 +3875,7 @@ msgstr ""
 "och rätta till installationen</b>. För hjälp med det, se <a href=\"https://"
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1608
+#: rkward/rbackend/rkrbackend.cpp:1624
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3890,12 +3890,12 @@ msgstr ""
 "href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</"
 "a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Grafikversion stämmer inte"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3906,7 +3906,7 @@ msgstr ""
 "kräver en omkompilering.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Ytterligare information</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Ok"
 msgstr "Ok"
@@ -3940,7 +3940,7 @@ msgstr ""
 msgid "Error starting R"
 msgstr "Fel vid start av R"
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3953,17 +3953,17 @@ msgstr ""
 "Pakethanteringsverktyget kommer att öppnas, och där kan du försöka att "
 "lokalisera och installera det nödvändiga paketet."
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Kräv paket '%1'"
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "Avsluta avbröts"
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3986,37 +3986,37 @@ msgstr ""
 "automatiskt i senare versioner av RKWard). I detta fall, välj 'Avbryt' nu, "
 "stäng datafönstren, spara, och försök igen."
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid "Locale change"
 msgstr "Ändring av landsinställningar"
 
-#: rkward/rbackend/rkrinterface.cpp:688
+#: rkward/rbackend/rkrinterface.cpp:675
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "Ändring av landsinställningar avbröts av användaren"
 
-#: rkward/rbackend/rkrinterface.cpp:791
+#: rkward/rbackend/rkrinterface.cpp:778
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "Försök att starta inspelning när kommandon redan spelas in. Ignoreras."
 
-#: rkward/rbackend/rkrinterface.cpp:799
+#: rkward/rbackend/rkrinterface.cpp:786
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Kunde inte öppna filen för skrivning. Spelar inte in kommandon"
 
-#: rkward/rbackend/rkrinterface.cpp:823
+#: rkward/rbackend/rkrinterface.cpp:810
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Fel: begäran '%1' kändes inte igen"
 
-#: rkward/rbackend/rkrinterface.cpp:903
+#: rkward/rbackend/rkrinterface.cpp:890
 #, kde-format
 msgid "R backend requests information"
 msgstr "R-bakgrundsprogrammet begär information"
 
-#: rkward/rbackend/rkrinterface.cpp:925
+#: rkward/rbackend/rkrinterface.cpp:912
 #, kde-format
 msgid ""
 "\n"
@@ -4034,7 +4034,7 @@ msgstr ""
 "öppna kommandofiler, spara utdata, eller kopiera data från öppna "
 "dataeditorer. Avsluta därefter RKWard. Ursäkta!"
 
-#: rkward/rbackend/rkrinterface.cpp:926
+#: rkward/rbackend/rkrinterface.cpp:913
 #, kde-format
 msgid "R engine has died"
 msgstr "R-bakgrundsprogrammet har dött"
@@ -6060,13 +6060,13 @@ msgstr "Behåll"
 msgid "Keep this location (do not change anything)"
 msgstr "Behåll platsen (ändra ingenting)"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:116
+#: rkward/settings/rksettingsmodulewatch.cpp:120
 #: rkward/windows/rkcommandlog.cpp:45
 #, kde-format
 msgid "Command log"
 msgstr "Kommandologg"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:121
+#: rkward/settings/rksettingsmodulewatch.cpp:125
 #, kde-format
 msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
@@ -6075,47 +6075,47 @@ msgstr ""
 "För närvarande gäller inställningarna bara nya kommandon. Alla tidigare "
 "kommandon förblir synliga eller osynliga."
 
-#: rkward/settings/rksettingsmodulewatch.cpp:128
+#: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
 msgid "always show command"
 msgstr "visa alltid kommandon"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:130
+#: rkward/settings/rksettingsmodulewatch.cpp:134
 #, kde-format
 msgid "always show result"
 msgstr "visa alltid resultat"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:132
+#: rkward/settings/rksettingsmodulewatch.cpp:136
 #, kde-format
 msgid "show errors"
 msgstr "visa fel"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:134
+#: rkward/settings/rksettingsmodulewatch.cpp:138
 #, kde-format
 msgid "show/raise window"
 msgstr "visa eller höj fönster"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:137
+#: rkward/settings/rksettingsmodulewatch.cpp:141
 #, kde-format
 msgid "User commands"
 msgstr "Användarkommandon"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:138
+#: rkward/settings/rksettingsmodulewatch.cpp:142
 #, kde-format
 msgid "Plugin generated commands"
 msgstr "Kommandon skapade av insticksprogram"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:139
+#: rkward/settings/rksettingsmodulewatch.cpp:143
 #, kde-format
 msgid "Application commands"
 msgstr "Programkommandon"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:140
+#: rkward/settings/rksettingsmodulewatch.cpp:144
 #, kde-format
 msgid "Synchronization commands"
 msgstr "Synkroniseringskommandon"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:144
+#: rkward/settings/rksettingsmodulewatch.cpp:148
 #, kde-format
 msgid ""
 "Maximum number of paragraphs/lines to display in the Command Log (0 for no "
@@ -6754,22 +6754,22 @@ msgstr "%1 (oanvänd)"
 msgid "&Tools Move"
 msgstr "Flytta verk&tyg"
 
-#: rkward/windows/rkcommandlog.cpp:200
+#: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
 msgid "Incomplete statement.\n"
 msgstr "Ofullständig sats.\n"
 
-#: rkward/windows/rkcommandlog.cpp:202
+#: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
 msgstr "Syntaxfel.\n"
 
-#: rkward/windows/rkcommandlog.cpp:204
+#: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "Ett ospecificerat fel uppstod vid försök att utföra kommandot.\n"
 
-#: rkward/windows/rkcommandlog.cpp:301
+#: rkward/windows/rkcommandlog.cpp:298
 #, kde-format
 msgid "Configure"
 msgstr "Anpassa"

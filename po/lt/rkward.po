@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:38+0000\n"
+"POT-Creation-Date: 2025-09-01 00:39+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -156,7 +156,7 @@ msgid ""
 msgstr ""
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:331
+#: rkward/misc/rkprogresscontrol.cpp:329
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2603,7 +2603,7 @@ msgstr ""
 msgid "Unhandled output command '%1'"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:219
+#: rkward/misc/rkprogresscontrol.cpp:217
 #, fuzzy, kde-format
 #| msgid ""
 #| "There has been an error while trying to load / unload packages. See "
@@ -2614,66 +2614,66 @@ msgid ""
 msgstr ""
 "Paketo įkėlimo ar iškėlimo klaida. Daugiau informacijos pateikta žemiau."
 
-#: rkward/misc/rkprogresscontrol.cpp:230
+#: rkward/misc/rkprogresscontrol.cpp:228
 #: rkward/settings/rksettingsmoduleoutput.cpp:106
 #, kde-format
 msgid "Output"
 msgstr "Rezultatai"
 
-#: rkward/misc/rkprogresscontrol.cpp:244
+#: rkward/misc/rkprogresscontrol.cpp:242
 #: rkward/windows/rktoplevelwindowgui.cpp:87
 #, fuzzy, kde-format
 #| msgid "Show &Output"
 msgid "Show Output"
 msgstr "&Rodyti rezultatus"
 
-#: rkward/misc/rkprogresscontrol.cpp:247 rkward/misc/rkprogresscontrol.cpp:387
+#: rkward/misc/rkprogresscontrol.cpp:245 rkward/misc/rkprogresscontrol.cpp:385
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Cancel"
 msgstr "Atšaukti"
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:455
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, fuzzy, kde-format
 #| msgid "<b>Select one:</b>"
 msgid "<b>Done</b>"
 msgstr "<b>Pasirinkite vieną:</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:458
+#: rkward/misc/rkprogresscontrol.cpp:456
 #: rkward/plugin/rkstandardcomponentgui.cpp:188
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Užverti"
 
-#: rkward/misc/rkprogresscontrol.cpp:495 rkward/windows/rkwindowcatcher.cpp:405
+#: rkward/misc/rkprogresscontrol.cpp:493 rkward/windows/rkwindowcatcher.cpp:405
 #, kde-format
 msgid "Keep waiting"
 msgstr "Palaukti"
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel operation"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:495
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, fuzzy, kde-format
 #| msgid "Canceled"
 msgid "Cancel && Close"
 msgstr "Atsisakyta"
 
-#: rkward/misc/rkprogresscontrol.cpp:507
+#: rkward/misc/rkprogresscontrol.cpp:505
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr ""
@@ -3628,28 +3628,28 @@ msgid ""
 "Please fix your installation."
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:414
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:418
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:498
+#: rkward/rbackend/rkrbackend.cpp:513
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R variklis sustojo būsenoje %1"
 
-#: rkward/rbackend/rkrbackend.cpp:519
+#: rkward/rbackend/rkrbackend.cpp:534
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3658,17 +3658,17 @@ msgstr ""
 "R variklis patyrė lemtingą klaidą:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:689
+#: rkward/rbackend/rkrbackend.cpp:704
 #, kde-format
 msgid "Message from the R backend"
 msgstr "R variklio pranešimas"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:712
 #, kde-format
 msgid "Question from the R backend"
 msgstr "R variklio klausimas"
 
-#: rkward/rbackend/rkrbackend.cpp:1604
+#: rkward/rbackend/rkrbackend.cpp:1620
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3696,7 +3696,7 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1608
+#: rkward/rbackend/rkrbackend.cpp:1624
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3721,12 +3721,12 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3734,7 +3734,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1665
+#: rkward/rbackend/rkrbackend.cpp:1681
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -3765,7 +3765,7 @@ msgstr "<p>Nepavyko paleisti R variklio. Klaidos:</p>\n"
 msgid "Error starting R"
 msgstr "R paleidimo klaida"
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3777,17 +3777,17 @@ msgstr ""
 "Netrukus bus atverta paketų tvarkytuvė, kurioje galėsite rasti ir įdiegti "
 "reikiamą paketą."
 
-#: rkward/rbackend/rkrinterface.cpp:653
+#: rkward/rbackend/rkrinterface.cpp:640
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Reikia paketo „%1“"
 
-#: rkward/rbackend/rkrinterface.cpp:685
+#: rkward/rbackend/rkrinterface.cpp:672
 #, kde-format
 msgid "Quitting was canceled"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3801,38 +3801,38 @@ msgid ""
 "windows, save, and retry."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:687
+#: rkward/rbackend/rkrinterface.cpp:674
 #, kde-format
 msgid "Locale change"
 msgstr "Lokalės keitimas"
 
-#: rkward/rbackend/rkrinterface.cpp:688
+#: rkward/rbackend/rkrinterface.cpp:675
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:791
+#: rkward/rbackend/rkrinterface.cpp:778
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:799
+#: rkward/rbackend/rkrinterface.cpp:786
 #, fuzzy, kde-format
 #| msgid "Could not open file %1 for reading"
 msgid "Could not open file for writing. Not recording commands"
 msgstr "Nepavyksta perskaityti ir atverti %1 failo."
 
-#: rkward/rbackend/rkrinterface.cpp:823
+#: rkward/rbackend/rkrinterface.cpp:810
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:903
+#: rkward/rbackend/rkrinterface.cpp:890
 #, kde-format
 msgid "R backend requests information"
 msgstr "R varikliui reikia informacijos"
 
-#: rkward/rbackend/rkrinterface.cpp:925
+#: rkward/rbackend/rkrinterface.cpp:912
 #, kde-format
 msgid ""
 "\n"
@@ -3843,7 +3843,7 @@ msgid ""
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
 
-#: rkward/rbackend/rkrinterface.cpp:926
+#: rkward/rbackend/rkrinterface.cpp:913
 #, kde-format
 msgid "R engine has died"
 msgstr "R variklis nulūžo"
@@ -5770,13 +5770,13 @@ msgstr ""
 msgid "Keep this location (do not change anything)"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulewatch.cpp:116
+#: rkward/settings/rksettingsmodulewatch.cpp:120
 #: rkward/windows/rkcommandlog.cpp:45
 #, kde-format
 msgid "Command log"
 msgstr "Komandų žurnalas"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:121
+#: rkward/settings/rksettingsmodulewatch.cpp:125
 #, kde-format
 msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
@@ -5785,47 +5785,47 @@ msgstr ""
 "Nuostatos bus taikomos tik naujoms komandoms. Visos ankstesnės komandos liks "
 "matomos arba nematomos."
 
-#: rkward/settings/rksettingsmodulewatch.cpp:128
+#: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
 msgid "always show command"
 msgstr "visada rodyti komandas"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:130
+#: rkward/settings/rksettingsmodulewatch.cpp:134
 #, kde-format
 msgid "always show result"
 msgstr "visada rodyti rezultatus"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:132
+#: rkward/settings/rksettingsmodulewatch.cpp:136
 #, kde-format
 msgid "show errors"
 msgstr "rodyti klaidas"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:134
+#: rkward/settings/rksettingsmodulewatch.cpp:138
 #, kde-format
 msgid "show/raise window"
 msgstr "rodyti / pakelti langą"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:137
+#: rkward/settings/rksettingsmodulewatch.cpp:141
 #, kde-format
 msgid "User commands"
 msgstr "Naudotojo komandos"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:138
+#: rkward/settings/rksettingsmodulewatch.cpp:142
 #, kde-format
 msgid "Plugin generated commands"
 msgstr "Papildinių sukurtos komandos"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:139
+#: rkward/settings/rksettingsmodulewatch.cpp:143
 #, kde-format
 msgid "Application commands"
 msgstr "RKWard komandos"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:140
+#: rkward/settings/rksettingsmodulewatch.cpp:144
 #, kde-format
 msgid "Synchronization commands"
 msgstr "Sinchronizavimo komandos"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:144
+#: rkward/settings/rksettingsmodulewatch.cpp:148
 #, fuzzy, kde-format
 #| msgid "Maximum number of paragraphs/lines to display in the Command Log"
 msgid ""
@@ -6436,22 +6436,22 @@ msgstr "%1 (nenaudojamas)"
 msgid "&Tools Move"
 msgstr "&Judėjimo įrankiai"
 
-#: rkward/windows/rkcommandlog.cpp:200
+#: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
 msgid "Incomplete statement.\n"
 msgstr "Neužbaigtas sakinys.\n"
 
-#: rkward/windows/rkcommandlog.cpp:202
+#: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
 msgstr "Sintaksės klaida.\n"
 
-#: rkward/windows/rkcommandlog.cpp:204
+#: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "Vykdant komandą įvyko netikėta klaida.\n"
 
-#: rkward/windows/rkcommandlog.cpp:301
+#: rkward/windows/rkcommandlog.cpp:298
 #, kde-format
 msgid "Configure"
 msgstr "Konfigūruoti"
