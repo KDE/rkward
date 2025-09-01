@@ -66,6 +66,15 @@ void RK_setupGettext(const QString &locale_dir) {
 }
 
 ///// interrupting R
+static bool RK_IsRInterruptPending() {
+	// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
+#ifdef Q_OS_WIN
+	return ROb(UserBreak;
+#else
+	return ROb(R_interrupts_pending);
+#endif
+}
+
 void RK_scheduleIntr() {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "interrupt scheduled");
 	RKRBackend::repl_status.interrupted = true;
@@ -140,11 +149,7 @@ void clearPendingInterrupt_Worker(void *) {
 
 void RKRBackend::clearPendingInterrupt() {
 	RK_TRACE(RBACKEND);
-#ifdef Q_OS_WIN
-	if (!ROb(UserBreak)) return;
-#else
-	if (!ROb(R_interrupts_pending)) return;
-#endif
+	if (!RK_IsRInterruptPending()) return;
 	RKRBackend::repl_status.interrupted = false;
 
 	bool passed = RFn::R_ToplevelExec(clearPendingInterrupt_Worker, nullptr);
@@ -246,12 +251,10 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 					- Handling user commands is totally different from all other commands, and relies on R's "REPL" (read-evaluate-print-loop). This is a whole bunch of dedicated code, but there is no other way to achieve handling of commands as if they had been entered on a plain R console (including auto-printing, and toplevel handlers). Most importantly, since important symbols are not exported, such as R_Visible. Vice versa, it is not possible to treat all commands like user commands, esp. in substacks.
 
 					Problems to deal with:
-					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
+					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions. Sorry for the resulting spaghetti code!
 					- One difficulty lies in finding out, just when a command has finished (successfully or with an error).
 					See below (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning)
-					for this, and and doError() for finding out, if an error occured.
-					NOTE; in R 2.12.0 and above, RFn::Rf_countContexts() might help to find out when we are back to square 1!
-					*/
+					for this, and and RKUserCommandErrorDetection for finding out, if an error occured. */
 					RKRBackend::repl_status.user_command_transmitted_up_to = 0;
 					RKRBackend::repl_status.user_command_completely_transmitted = false;
 					RKRBackend::repl_status.user_command_parsed_up_to = 0;
@@ -634,20 +637,13 @@ struct RKUserCommandErrorDetection {
 		if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 		}
-		if (RKRBackend::repl_status.interrupted) {
-			// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
-			// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
-#ifdef Q_OS_WIN
-			if (ROb(UserBreak)) {
-#else
-			if (ROb(R_interrupts_pending)) {
-#endif
-				return;
-			}
-		}
 
-		markLastWarningAsErrorMessage();
-		RK_DEBUG(RBACKEND, DL_DEBUG, "error in user command");
+		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
+		const bool command_was_interrupted = RKRBackend::repl_status.interrupted && !RK_IsRInterruptPending();
+		if (!command_was_interrupted) {
+			markLastWarningAsErrorMessage();
+			RK_DEBUG(RBACKEND, DL_DEBUG, "error in user command");
+		}
 	}
 };
 static RKUserCommandErrorDetection user_command_error_detect;

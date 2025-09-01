@@ -4,7 +4,7 @@ Requirements
 RKWard requires:
 - Several KF6-libraries and headers (>= 6.0) (https://www.kde.org)
 - Qt-libraries and headers (>= 6.6) (https://qt.io)
-- R and headers (https://www.r-project.org); at the time of this writing, version 3.4.4
+- R and headers (https://www.r-project.org); at the time of this writing, version 3.4.4 (on Windows: version 4.2.0)
   or later is required. Note, however, that old versions are not actively tested.
 - CMake (https://cmake.org)
 
