@@ -808,8 +808,8 @@ void RKRBackend::setupCallbacks() {
 	// TODO: also for RSuicide (Less important, obviously, since this should not be triggered, in normal operation).
 	// NOTE: For RCleanUp see RReadConsole RCleanup?
 
-	RK_R_Params.R_Quiet = 0;
-	RK_R_Params.R_Interactive = 1;
+	RK_R_Params.R_Quiet = Rboolean::FALSE;
+	RK_R_Params.R_Interactive = Rboolean::TRUE;
 }
 
 void RKRBackend::connectCallbacks() {
