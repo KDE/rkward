@@ -250,11 +250,11 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
 				if (RKRBackend::repl_status.user_command_completely_transmitted) {
 					// fully transmitted, but R is still asking for more, without signalling R_Busy? This looks like an incomplete statement.
-					// HOWEVER: It may also have been an empty statement such as " ", so let's check whether the prompt looks like a "continue" prompt
+					// HOWEVER: It may also have been a (trailing) empty statement such as "\n", so let's check whether the prompt looks like a "continue" prompt
 					RBusy(1); // Mark command as "running"
 					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption(RFn::Rf_install("continue"), ROb(R_BaseEnv)))) {
 						RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
-						RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled;
+						RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
 						RFn::Rf_error("%s", ""); // to discard the buffer
 					} // else: continue in next iteration at UserCommandRunning
 				} else {
@@ -262,9 +262,9 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 					return 1;
 				}
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandSyntaxError) {
+				RBusy(1); // properly init command, so commandFinished() can end it
 				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
 				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-				if (RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture(); // HACK: No capture active, but commandFinished() will try to end one
 				RKRBackend::this_pointer->commandFinished();
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning) {
 				// This can mean three different things:
@@ -759,6 +759,9 @@ void RResetConsole() {
 			}
 		}
 	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
+		// "error:" is just a placeholder. The desired effect is to promote latest "Warning" output to Error-level (in RInterface)
+		auto msg = u"error:"_s;
+		RKRBackend::this_pointer->handleOutput(msg, msg.length(), ROutput::Error);
 		RK_DEBUG(RBACKEND, DL_DEBUG, "error in user command");
 	}
 }
@@ -912,9 +915,6 @@ SEXP doSimpleBackendCall(SEXP _call) {
 			}
 			i++;
 		}
-	} else if (call == QStringLiteral("error")) { // capture error message
-		doError(list.value(1));
-		return ROb(R_NilValue);
 	} else if (call == QStringLiteral("tempdir")) {
 		return (RKRSupport::StringListToSEXP(QStringList(RKRBackendProtocolBackend::dataDir())));
 	} else if (call == QLatin1String("home")) {
@@ -1609,9 +1609,6 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	RK_setupGettext(locale_dir); // must happen *after* package loading, since R will re-set it
 	if (!runDirectCommand(versioncheck + u"\n"_s)) lib_load_fail = true;
 	if (!runDirectCommand(QStringLiteral(".rk.fix.assignments ()\n"))) sink_fail = true;
-
-	// error/output sink and help browser
-	if (!runDirectCommand(QStringLiteral("options (error=quote (.rk.do.error ()))\n"))) sink_fail = true;
 
 	QString error_messages;
 	if (lib_load_fail) {
