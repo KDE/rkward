@@ -193,6 +193,7 @@ void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 
 // forward declaration needed on Windows
 void RCleanUp(SA_TYPE saveact, int status, int RunLast);
+void RBusy(int);
 
 int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 	RK_TRACE(RBACKEND);
@@ -250,12 +251,12 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 				if (RKRBackend::repl_status.user_command_completely_transmitted) {
 					// fully transmitted, but R is still asking for more, without signalling R_Busy? This looks like an incomplete statement.
 					// HOWEVER: It may also have been an empty statement such as " ", so let's check whether the prompt looks like a "continue" prompt
+					RBusy(1); // Mark command as "running"
 					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption(RFn::Rf_install("continue"), ROb(R_BaseEnv)))) {
 						RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
-					}
-					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-					if (RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture(); // HACK: No capture active, but commandFinished() will try to end one
-					RFn::Rf_error("%s", "");                                                                                    // to discard the buffer
+						RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled;
+						RFn::Rf_error("%s", ""); // to discard the buffer
+					} // else: continue in next iteration at UserCommandRunning
 				} else {
 					RKTransmitNextUserCommandChunk(buf, buflen);
 					return 1;
