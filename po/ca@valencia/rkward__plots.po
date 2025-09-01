@@ -200,8 +200,8 @@ msgid ""
 "Choose a matrix, vector or a factor to be plotted. Further options are "
 "available on the second tab."
 msgstr ""
-"Seleccioneu una matriu, un vector o un factor que es dibuixarà. Hi ha més "
-"opcions disponibles a la segona pestanya."
+"Trieu una matriu, un vector o un factor que es dibuixarà. Hi ha més opcions "
+"disponibles a la segona pestanya."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
@@ -562,7 +562,7 @@ msgid ""
 "Choose numerical data to be plotted. Data can be organized in separate "
 "vectors, or in a single outcome variable and one or more grouping variables."
 msgstr ""
-"Seleccioneu les dades numèriques que es dibuixaran. Les dades poden estar "
+"Trieu les dades numèriques que es dibuixaran. Les dades poden estar "
 "organitzades en vectors separats, o en una variable de resultat única i una "
 "o més variables d'agrupament."
 
@@ -574,16 +574,14 @@ msgid ""
 "vectors, or a single outcome variable split by one or more grouping "
 "variables."
 msgstr ""
-"Selecciona el format de les dades. Açò poden ser tant vectors numèrics "
-"separats, o una variable de resultat única dividida per una o més variables "
-"d'agrupament."
+"Tria el format de les dades. Açò poden ser tant vectors numèrics separats, o "
+"una variable de resultat única dividida per una o més variables d'agrupament."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:19
 #, kde-format
 msgid "For separate variables mode: Select one or more numerical vectors."
-msgstr ""
-"Per al mode de variables separades: Seleccioneu un o més vectors numèrics."
+msgstr "Per al mode de variables separades: Trieu un o més vectors numèrics."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Outcome variable:")
 #: rkward/plugins/plots/box_plot.rkh:20
@@ -592,8 +590,8 @@ msgid ""
 "For single(grouped) variable mode: Select one numerical vector as the "
 "outcome variable."
 msgstr ""
-"Per al mode de variables úniques(agrupades): Seleccioneu un vector numèric "
-"com a variable de resultat."
+"Per al mode de variables úniques(agrupades): Trieu un vector numèric com a "
+"variable de resultat."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Group variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:21
@@ -603,8 +601,8 @@ msgid ""
 "group the outcome variable. Group variables should have the same length as "
 "the outcome variable."
 msgstr ""
-"Per al mode de variables úniques(agrupades): Seleccioneu un o més vectors "
-"pels quals agrupar la variable de resultat. Les variables agrupades cal que "
+"Per al mode de variables úniques(agrupades): Trieu un o més vectors pels "
+"quals agrupar la variable de resultat. Les variables agrupades cal que "
 "tinguen la mateixa llargària que la variable de resultat."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Dodged groups")
@@ -989,8 +987,8 @@ msgid ""
 "Select a numeric vector to estimate density for. For further options, see "
 "below."
 msgstr ""
-"Selecciona un vector numèric pel qual estimar la densitat. Per a altres "
-"opcions, vegeu davall."
+"Tria un vector numèric pel qual estimar la densitat. Per a altres opcions, "
+"vegeu davall."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/density_plot.rkh:18
@@ -1412,8 +1410,8 @@ msgid ""
 "Select a variable to plot an ECDF for. The theoretical normal distribution "
 "and a rug can be added to the plot."
 msgstr ""
-"Selecciona una variable per la qual traçar un FDAE. Es pot afegir la "
-"distribució normal teòrica i una estora al diagrama."
+"Tria una variable per la qual traçar un FDAE. Es pot afegir la distribució "
+"normal teòrica i una estora al diagrama."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/ecdf_plot.rkh:16
@@ -1577,8 +1575,8 @@ msgstr "Fa el diagrama d'un histograma."
 msgid ""
 "Select a variable to plot a histogram. For available options, see below."
 msgstr ""
-"Selecciona una variable per a fer el diagrama d'un histograma. Per a les "
-"opcions disponibles, vegeu davall."
+"Tria una variable per a fer el diagrama d'un histograma. Per a les opcions "
+"disponibles, vegeu davall."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/histogram.rkh:16
@@ -1704,9 +1702,9 @@ msgid ""
 "frequency, percentage and cumulative percentage will be printed under the "
 "plot."
 msgstr ""
-"Seleccioneu un vector o un factor que es dibuixarà. La freqüència, "
-"freqüència acumulada, percentatge i percentatge acumulat s'imprimiran davall "
-"el diagrama."
+"Trieu un vector o un factor que es dibuixarà. La freqüència, freqüència "
+"acumulada, percentatge i percentatge acumulat s'imprimiran davall el "
+"diagrama."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Raw vector to plot")
 #: rkward/plugins/plots/pareto.rkh:19
@@ -1951,8 +1949,8 @@ msgstr ""
 msgid ""
 "Choose the X and Y variables and customize the options to draw the plot."
 msgstr ""
-"Seleccioneu les variables X i Y i personalitzeu les opcions per a dibuixar "
-"el diagrama."
+"Trieu les variables X i Y i personalitzeu les opcions per a dibuixar el "
+"diagrama."
 
 # skip-rule: apps-edu_plot,t-sc-plot
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
@@ -2247,9 +2245,8 @@ msgid ""
 "Choose one or more objects to be plotted. Choose the diagonal plot and how "
 "the scatterplots should be plotted from the options tab."
 msgstr ""
-"Seleccioneu un o més objectes que es dibuixaran. Seleccioneu el traçat de la "
-"diagonal i com els diagrames de dispersió s'han de traçar des de la pestanya "
-"d'opcions."
+"Trieu un o més objectes que es dibuixaran. Trieu el traçat de la diagonal i "
+"com els diagrames de dispersió s'han de traçar des de la pestanya d'opcions."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:18
@@ -2258,15 +2255,15 @@ msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
 msgstr ""
-"Selecciona una matriu de dades o un marc de dades numèriques o més d'una "
-"variable des d'una matriu de dades"
+"Tria una matriu de dades o un marc de dades numèriques o més d'una variable "
+"des d'una matriu de dades"
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
 #, kde-format
 msgid "Select which plot should be plotted in the diagonal among"
-msgstr "Selecciona quin diagrama s'ha de dibuixar entre la diagonal"
+msgstr "Tria quin diagrama s'ha de dibuixar entre la diagonal"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
@@ -2305,7 +2302,7 @@ msgstr "Sense diagrama. No dibuixa res a la diagonal"
 #, kde-format
 msgid "Select it if you want points to be plotted in scatterplots."
 msgstr ""
-"Seleccioneu-ho si voleu que es dibuixen els punts als diagrames de dispersió."
+"Trieu-ho si voleu que es dibuixen els punts als diagrames de dispersió."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot smooth")
@@ -2313,8 +2310,8 @@ msgstr ""
 #, kde-format
 msgid "Select it if you want a lowess smooth to be plotted in scatterplots."
 msgstr ""
-"Seleccioneu-ho si voleu que es dibuixe un suavitzat inferior als diagrames "
-"de dispersió."
+"Trieu-ho si voleu que es dibuixe un suavitzat inferior als diagrames de "
+"dispersió."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot data concentration ellipses")
@@ -2324,8 +2321,8 @@ msgid ""
 "Select it if you want data-concentration ellipses to be plotted in "
 "scatterplots. The ellipses are plotted at levels 0.5 and 0.9."
 msgstr ""
-"Seleccioneu-ho si voleu que es dibuixen el·lipses de concentració de dades "
-"als diagrames de dispersió. Les el·lipses es dibuixen als nivells 0,5 i 0,9."
+"Trieu-ho si voleu que es dibuixen el·lipses de concentració de dades als "
+"diagrames de dispersió. Les el·lipses es dibuixen als nivells 0,5 i 0,9."
 
 #. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot_matrix.xml:23
@@ -2384,17 +2381,16 @@ msgid ""
 "<link href=\"http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html"
 "\">Rcmdr package</link>."
 msgstr ""
-"Seleccioneu les dades per a produir un diagrama de branques i fulles. Vegeu "
-"<link href=\"rkward://rhelp/stem\"/>. Per a un diagrama de branques i fulles "
-"més sofisticat, vegeu el <link href=\"http://cran.r-project.org/src/contrib/"
+"Trieu les dades per a produir un diagrama de branques i fulles. Vegeu <link "
+"href=\"rkward://rhelp/stem\"/>. Per a un diagrama de branques i fulles més "
+"sofisticat, vegeu el <link href=\"http://cran.r-project.org/src/contrib/"
 "Descriptions/Rcmdr.html\">paquet Rcmdr</link>."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "variable:")
 #: rkward/plugins/plots/stem.rkh:18
 #, kde-format
 msgid "Select the data to be computed. The vectors need to be numeric."
-msgstr ""
-"Seleccioneu les dades que cal calcular. Els vectors hauran de ser numèrics."
+msgstr "Trieu les dades que cal calcular. Els vectors hauran de ser numèrics."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot length (scale)")
 #: rkward/plugins/plots/stem.rkh:20

@@ -170,16 +170,15 @@ msgid ""
 "storage mode of the resulting data. Then, on the second tab, specify the "
 "recodings to make."
 msgstr ""
-"Seleccioneu el vector que es recodificarà, i a on s'han d'emmagatzemar les "
-"dades recodificades. Seleccioneu el mode d'emmagatzematge de les dades "
-"resultants. Després, a la segona pestanya, especifiqueu les recodificacions "
-"a fer."
+"Trieu el vector que es recodificarà, i a on s'han d'emmagatzemar les dades "
+"recodificades. Trieu el mode d'emmagatzematge de les dades resultants. "
+"Després, a la segona pestanya, especifiqueu les recodificacions a fer."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Select variable to recode")
 #: rkward/plugins/data/recode_categorical.rkh:21
 #, kde-format
 msgid "Select the vector to recode"
-msgstr "Seleccioneu el vector que s'ha de recodificar"
+msgstr "Trieu el vector que s'ha de recodificar"
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/data/recode_categorical.rkh:24
@@ -188,7 +187,7 @@ msgid ""
 "Select whether to overwrite/replace the input vector with the recoded data, "
 "or save to a different vector."
 msgstr ""
-"Seleccioneu si sobreescriure/substituir el vector d'entrada amb les dades "
+"Trieu si sobreescriure/substituir el vector d'entrada amb les dades "
 "recodificades, o guardar-lo a un vector diferent."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Object to save to")
@@ -196,7 +195,7 @@ msgstr ""
 #, kde-format
 msgid "Pick a name (and optionally a container) for the recoded data."
 msgstr ""
-"Seleccioneu un nom (i de manera opcional un contenidor) per a les dades "
+"Trieu un nom (i de manera opcional un contenidor) per a les dades "
 "recodificades."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Data type after recoding")
@@ -229,7 +228,7 @@ msgstr ""
 "La meitat superior d'esta pestanya permet especificar recodificacions per "
 "als valors d'entrada individuals. Per a afegir més recodificacions, cliqueu "
 "damunt del botó «afig/+». Per a eliminar recodificacions, cliqueu damunt del "
-"botó «elimina/x». Per a cada recodificació, seleccioneu el següent:"
+"botó «elimina/x». Per a cada recodificació, trieu el següent:"
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Old values")
 #: rkward/plugins/data/recode_categorical.rkh:41
@@ -242,10 +241,10 @@ msgid ""
 "select them all at once."
 msgstr ""
 "Per a cada recodificació a portar a terme, primer seleccioneu els valors "
-"antics que es recodificaran. Açò pot ser SD/faltant, o seleccioneu valors no-"
-"SD en la banda esquerra, i afegiu-los als valors que es recodificaran "
-"clicant damunt del botó de la fletxa. Si cal substituir diversos valors "
-"d'entrada per un valor d'eixida, podeu seleccionar-los tots a la vegada."
+"antics que es recodificaran. Açò pot ser SD/faltant, o trieu valors no-SD a "
+"la banda esquerra, i afegiu-los als valors que es recodificaran clicant "
+"damunt del botó de la fletxa. Si cal substituir diversos valors d'entrada "
+"per un valor d'eixida, podeu seleccionar-los tots a la vegada."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "New value")
 #: rkward/plugins/data/recode_categorical.rkh:46
@@ -297,7 +296,7 @@ msgstr "Variables d'entrada i d'eixida"
 #: rkward/plugins/data/recode_categorical.xml:32
 #, kde-format
 msgid "Select variable to recode"
-msgstr "Seleccioneu la variable que s'ha de recodificar"
+msgstr "Trieu la variable que s'ha de recodificar"
 
 #. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="...">
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="...">
@@ -412,7 +411,7 @@ msgstr "SD"
 #: rkward/plugins/data/recode_categorical.xml:84
 #, kde-format
 msgid "Select value(s):"
-msgstr "Seleccioneu els valors:"
+msgstr "Trieu els valors:"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <radio label="...">
 #: rkward/plugins/data/recode_categorical.xml:92
@@ -466,9 +465,9 @@ msgid ""
 "sort by. By default the object to be sorted is replaced with the sorted "
 "variant, but you can also specify to save to a separate object."
 msgstr ""
-"Seleccioneu l'objecte que s'ordenarà. Per als «data.frames», especifiqueu "
-"també la columna per la qual ordenar. De manera predeterminada, l'objecte "
-"que s'ordena se substituïx per la variant ordenada, però també es pot "
+"Trieu l'objecte que s'ordenarà. Per als «data.frames», especifiqueu també la "
+"columna per la qual ordenar. De manera predeterminada, l'objecte que "
+"s'ordena se substituïx per la variant ordenada, però també es pot "
 "especificar guardar-ho a un objecte separat."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to be sorted")
@@ -487,8 +486,7 @@ msgstr ""
 #, kde-format
 msgid "Only for data.frame objects. Select the column(s) to sort by."
 msgstr ""
-"Només per a objectes «data.frame». Seleccioneu les columnes per les quals "
-"ordenar."
+"Només per a objectes «data.frame». Trieu les columnes per les quals ordenar."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/data/sort.rkh:19
@@ -498,7 +496,7 @@ msgid ""
 "the sorted variant. If, instead, you want to keep the unsorted object, "
 "choose \"Another object\" to save the sorted object, separately."
 msgstr ""
-"Seleccioneu «Mateix objecte» (predeterminat) per a substituir l'objecte que "
+"Trieu «Mateix objecte» (predeterminat) per a substituir l'objecte que "
 "s'ordena per la variant ordenada. En cas contrari, si mantindre l'objecte "
 "sense ordenar, trieu «Un altre objecte» per a guardar l'objecte ordenat "
 "separadament."
@@ -670,7 +668,7 @@ msgstr "subset_dataframe"
 #: rkward/plugins/data/subset_dataframe.rkh:13
 #, kde-format
 msgid "Select a subset of rows and / or columns of a data.frame"
-msgstr "Seleccioneu un subconjunt de files i/o columnes d'un «data.frame»"
+msgstr "Trieu un subconjunt de files i/o columnes d'un «data.frame»"
 
 #. i18n: ectx: (subset_dataframe) <usage>
 #: rkward/plugins/data/subset_dataframe.rkh:16
@@ -680,15 +678,15 @@ msgid ""
 "cases, and / or columns. A data.frame containing only the specified subset "
 "is saved to your workspace."
 msgstr ""
-"Seleccioneu «data.frame» del qual crear un subconjunt. Després especifiqueu "
-"regles a filtres per files/casos i/o columnes. Es guardarà un «data.frame» "
+"Trieu «data.frame» del qual crear un subconjunt. Després especifiqueu regles "
+"a filtres per files/casos i/o columnes. Es guardarà un «data.frame» "
 "contenint només el subconjunt especificat a l'espai de treball."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Data (data.frame)")
 #: rkward/plugins/data/subset_dataframe.rkh:23
 #, kde-format
 msgid "Select the data.frame to subset."
-msgstr "Seleccioneu «data.frame» del qual crear un subconjunt."
+msgstr "Trieu «data.frame» del qual crear un subconjunt."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/data/subset_dataframe.rkh:26
@@ -708,8 +706,8 @@ msgid ""
 "Select a column of the data.frame specifying the condition to filter cases "
 "on. Leave empty, if you do not want to filter on a column."
 msgstr ""
-"Seleccioneu una columna de «data.frame» especificant la condició per la qual "
-"es filtren els casos. Deixeu-ho buit si no voleu filtrar sobre una columna."
+"Trieu una columna de «data.frame» especificant la condició per la qual es "
+"filtren els casos. Deixeu-ho buit si no voleu filtrar sobre una columna."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Keep cases matching rule")
 #: rkward/plugins/data/subset_dataframe.rkh:33
@@ -718,8 +716,8 @@ msgid ""
 "Select the type of condition. Note that depending on the type of the filter "
 "variable, different options are available"
 msgstr ""
-"Seleccioneu el tipus de condició. Cal tindre en compte que depenent del "
-"tipus de la variable del filtre, hi haurà disponibles opcions diferents"
+"Trieu el tipus de condició. Cal tindre en compte que depenent del tipus de "
+"la variable del filtre, hi haurà disponibles opcions diferents"
 
 # skip-rule: common-fixe
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Value (pasted as-is, use proper quoting!)")
@@ -828,7 +826,7 @@ msgstr "Subconjunt de dades"
 #: rkward/plugins/data/subset_dataframe.xml:75
 #, kde-format
 msgid "Select data"
-msgstr "Seleccioneu les dades"
+msgstr "Trieu les dades"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <varslot label="...">
 #: rkward/plugins/data/subset_dataframe.xml:77

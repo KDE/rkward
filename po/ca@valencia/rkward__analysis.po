@@ -414,7 +414,7 @@ msgid ""
 "Select two data sets for the Ansari-Bradley two-sample test. For this test "
 "the samples need to be numeric vectors (see below for details)."
 msgstr ""
-"Seleccioneu dos conjunts de dades per a la prova d'Ansari-Bradley per a dues "
+"Trieu dos conjunts de dades per a la prova d'Ansari-Bradley per a dues "
 "mostres. Per a esta prova, les mostres hauran de ser vectors numèrics (per "
 "als detalls, vegeu davall)."
 
@@ -430,8 +430,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:20
 #, kde-format
 msgid "Select the data to be computed. The vectors need to be numeric."
-msgstr ""
-"Seleccioneu les dades que cal calcular. Els vectors hauran de ser numèrics."
+msgstr "Trieu les dades que cal calcular. Els vectors hauran de ser numèrics."
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "Test hypothesis (H1)")
 #. i18n: ectx: (Loaded from D'Agostino test of skewness) <settings> <setting> (refers to element labelled "Test hypothesis (H1)")
@@ -921,9 +920,9 @@ msgid ""
 "calculated for each pair of vectors. Optionally, (two-sided) p-values are "
 "calculated for each pair."
 msgstr ""
-"Seleccioneu els vectors per a calcular les correlacions. Es calcula una "
-"correlació per a cada parell de vectors. De manera opcional, es calculen els "
-"valors p (dos costats) per a cada parell."
+"Trieu els vectors per a calcular les correlacions. Es calcula una correlació "
+"per a cada parell de vectors. De manera opcional, es calculen els valors p "
+"(dos costats) per a cada parell."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/corr_matrix.rkh:18
@@ -936,13 +935,12 @@ msgid ""
 "categorial variables are dichotomous, polyserial/polychoric is equivalent to "
 "biserial/tetrachoric correlations."
 msgstr ""
-"Seleccioneu els vectors que es correlacionaran. Per a Pearson, Kendall i "
-"Spearman, els vectors hauran de ser numèrics (vegeu davall) i de la mateixa "
-"llargària. Les correlacions poliserials es calculen entre parells de "
-"variables numèriques i categorials, i correlacions policòriques entre "
-"variables categorials. Si les variables categorials són dicotòmiques, les "
-"correlacions poliserials/policòriques equivalen a correlacions biserials/"
-"tetracòriques."
+"Trieu els vectors que es correlacionaran. Per a Pearson, Kendall i Spearman, "
+"els vectors hauran de ser numèrics (vegeu davall) i de la mateixa llargària. "
+"Les correlacions poliserials es calculen entre parells de variables "
+"numèriques i categorials, i correlacions policòriques entre variables "
+"categorials. Si les variables categorials són dicotòmiques, les correlacions "
+"poliserials/policòriques equivalen a correlacions biserials/tetracòriques."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Calculate p values")
 #: rkward/plugins/analysis/corr_matrix.rkh:20
@@ -1287,8 +1285,8 @@ msgid ""
 "Select any vector that can be interpreted as a factor. This variable will be "
 "present in all tables."
 msgstr ""
-"Seleccioneu qualsevol vector que es puga interpretar com a factor. Esta "
-"variable estarà present a totes les taules."
+"Trieu qualsevol vector que es puga interpretar com a factor. Esta variable "
+"estarà present a totes les taules."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Independent")
 #: rkward/plugins/analysis/crosstab.rkh:21
@@ -1297,8 +1295,8 @@ msgid ""
 "Select one or more vectors that can be interpreted as a factor. Each of "
 "these will be cross-tabulated against the \"dependent\" variable."
 msgstr ""
-"Seleccioneu un o més vectors que es puguen interpretar com a factor. "
-"Cadascun d'estos serà creuat a la taula contra la variable «dependent»."
+"Trieu un o més vectors que es puguen interpretar com a factor. Cadascun "
+"d'estos serà creuat a la taula contra la variable «dependent»."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Chisquare")
 #: rkward/plugins/analysis/crosstab.rkh:22
@@ -1515,7 +1513,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
 #, kde-format
 msgid "Choose one or more objects to be crosstabulated."
-msgstr "Seleccioneu un o més objectes per a ser creuat a la taula."
+msgstr "Trieu un o més objectes per a ser creuat a la taula."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab_multi.rkh:12
@@ -1536,8 +1534,8 @@ msgid ""
 "Select a data frame or more than one variables from a data frame or with the "
 "same length"
 msgstr ""
-"Selecciona un marc de dades o més d'una variable des d'un marc de dades o "
-"amb la mateixa llargària"
+"Tria un marc de dades o més d'una variable des d'un marc de dades o amb la "
+"mateixa llargària"
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/analysis/crosstab_multi.rkh:20
@@ -1598,9 +1596,9 @@ msgid ""
 "distributed data. You can choose multiple data. See <link href=\"rkward://"
 "rhelp/agostino.test\"/>."
 msgstr ""
-"Seleccioneu les dades per a realitzar la prova de D'Agostino per a "
-"l'asimetria en les dades distribuïdes segons el normal. Podeu triar "
-"múltiples dades. Vegeu <link href=\"rkward://rhelp/agostino.test\"/>."
+"Trieu les dades per a realitzar la prova de D'Agostino per a l'asimetria en "
+"les dades distribuïdes segons el normal. Podeu triar múltiples dades. Vegeu "
+"<link href=\"rkward://rhelp/agostino.test\"/>."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "variable(s):")
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "variable(s):")
@@ -1623,8 +1621,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and can be "
 "of different length."
 msgstr ""
-"Seleccioneu les dades que cal calcular. Els vectors hauran de ser numèrics i "
-"poden ser de diferent llargària."
+"Trieu les dades que cal calcular. Els vectors hauran de ser numèrics i poden "
+"ser de diferent llargària."
 
 # skip-rule: punctuation-period-no
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "Show Length and NAs")
@@ -1742,8 +1740,8 @@ msgid ""
 "samples. You can choose multiple data. See <link href=\"rkward://rhelp/"
 "anscombe.test\"/>."
 msgstr ""
-"Seleccioneu les dades per a realitzar la prova d'Anscombe-Glynn per a la "
-"curtosi per a mostres normals. Podeu triar múltiples dades. Vegeu <link href="
+"Trieu les dades per a realitzar la prova d'Anscombe-Glynn per a la curtosi "
+"per a mostres normals. Podeu triar múltiples dades. Vegeu <link href="
 "\"rkward://rhelp/anscombe.test\"/>."
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis)
@@ -1772,9 +1770,9 @@ msgid ""
 "kurtosis for normally distributed data. You can choose multiple data. See "
 "<link href=\"rkward://rhelp/bonett.test\"/>."
 msgstr ""
-"Seleccioneu les dades per a realitzar la prova de Bonett-Seier per a mesurar "
-"la curtosi d'en Geary en les dades distribuïdes segons el normal. Podeu "
-"triar múltiples dades. Vegeu <link href=\"rkward://rhelp/bonett.test\"/>."
+"Trieu les dades per a realitzar la prova de Bonett-Seier per a mesurar la "
+"curtosi d'en Geary en les dades distribuïdes segons el normal. Podeu triar "
+"múltiples dades. Vegeu <link href=\"rkward://rhelp/bonett.test\"/>."
 
 #. i18n: ectx: (Loaded from sample moment)
 #: rkward/plugins/analysis/moments/moment.js:9
@@ -1802,7 +1800,7 @@ msgid ""
 "Choose the data to compute the sample moments. You can choose multiple data. "
 "See <link href=\"rkward://rhelp/moment\"/>."
 msgstr ""
-"Seleccioneu les dades per a calcular els moments de la mostra. Podeu triar "
+"Trieu les dades per a calcular els moments de la mostra. Podeu triar "
 "múltiples dades. Vegeu <link href=\"rkward://rhelp/moment\"/>."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "compute central moments")
@@ -1927,7 +1925,7 @@ msgid ""
 "multiple data. See <link href=\"rkward://rhelp/skewness\"/>, <link href="
 "\"rkward://rhelp/kurtosis\"/> and <link href=\"rkward://rhelp/geary\"/>."
 msgstr ""
-"Seleccioneu les dades per a calcular la curtosi i/o l'asimetria. Podeu triar "
+"Trieu les dades per a calcular la curtosi i/o l'asimetria. Podeu triar "
 "múltiples dades. Vegeu <link href=\"rkward://rhelp/skewness\"/>, <link href="
 "\"rkward://rhelp/kurtosis\"/> i <link href=\"rkward://rhelp/geary\"/>."
 
@@ -1963,7 +1961,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:12
 #, kde-format
 msgid "Select Variables"
-msgstr "Selecciona les variables"
+msgstr "Tria les variables"
 
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="Geary's kurtosis"> <checkbox label="...">
@@ -2047,11 +2045,11 @@ msgid ""
 "data. Please consider that this test is no longer recommended. See <link "
 "href=\"rkward://rhelp/chisq.out.test\"/>."
 msgstr ""
-"Seleccioneu el conjunt de dades per a trobar un valor atípic, basant-se en "
-"la distribució khi quadrat de les diferències de quadrats entre les dades i "
-"la mitjana de la mostra. Podeu triar múltiples dades. Cal tindre en compte "
-"que esta prova ja no és recomanable. Vegeu <link href=\"rkward://rhelp/chisq."
-"out.test\"/>."
+"Trieu el conjunt de dades per a trobar un valor atípic, basant-se en la "
+"distribució khi quadrat de les diferències de quadrats entre les dades i la "
+"mitjana de la mostra. Podeu triar múltiples dades. Cal tindre en compte que "
+"esta prova ja no és recomanable. Vegeu <link href=\"rkward://rhelp/chisq.out."
+"test\"/>."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:18
@@ -2061,9 +2059,9 @@ msgid ""
 "of different length. For the calculation missing values are removed from the "
 "data."
 msgstr ""
-"Seleccioneu les dades que cal calcular. Els vectors hauran de ser numèrics i "
-"poden ser de diferent llargària. Per al càlcul, els valors que falten "
-"s'eliminaran de les dades."
+"Trieu les dades que cal calcular. Els vectors hauran de ser numèrics i poden "
+"ser de diferent llargària. Per al càlcul, els valors que falten s'eliminaran "
+"de les dades."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "Opposite")
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:20
@@ -2091,7 +2089,7 @@ msgid ""
 "affect the test). Missing values will be ignored."
 msgstr ""
 "Imprimix estadístiques descriptives addicionals (mitjana, ds, mediana, mín., "
-"màx.) per a ajudar-vos a interpretar el resultat de la prova (purament "
+"màx.) per ajudar-vos a interpretar el resultat de la prova (purament "
 "informatiu, no afectarà la prova). S'ignoraran els valors que falten."
 
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="Chi-squared test for outlier"> <tab label="Options"> <frame label="...">
@@ -2155,7 +2153,7 @@ msgid ""
 "Choose the data to perform the Dixon test for outlier. You can choose "
 "multiple vectors. See <link href=\"rkward://rhelp/dixon.test\"/>."
 msgstr ""
-"Seleccioneu les dades per a realitzar la prova de Dixon per a una observació "
+"Trieu les dades per a realitzar la prova de Dixon per a una observació "
 "atípica. Podeu triar múltiples dades. Vegeu <link href=\"rkward://rhelp/"
 "dixon.test\"/>."
 
@@ -2166,8 +2164,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and can be "
 "of different length but there is a limit."
 msgstr ""
-"Seleccioneu les dades que cal calcular. Els vectors hauran de ser numèrics i "
-"poden ser de diferent llargària, però hi ha un límit."
+"Trieu les dades que cal calcular. Els vectors hauran de ser numèrics i poden "
+"ser de diferent llargària, però hi ha un límit."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Variant of test")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:20
@@ -2292,9 +2290,9 @@ msgid ""
 "sample. You can choose multiple data. See <link href=\"rkward://rhelp/grubbs."
 "test\"/>."
 msgstr ""
-"Seleccioneu les dades per a realitzar les proves de Grubbs per a obtindre un "
-"o dos valors atípics en la mostra de les dades. Podeu triar múltiples dades. "
-"Vegeu <link href=\"rkward://rhelp/grubbs.test\"/>."
+"Trieu les dades per a realitzar les proves de Grubbs per a obtindre un o dos "
+"valors atípics en la mostra de les dades. Podeu triar múltiples dades. Vegeu "
+"<link href=\"rkward://rhelp/grubbs.test\"/>."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:18
@@ -2303,8 +2301,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and may be "
 "of different length."
 msgstr ""
-"Seleccioneu les dades que cal calcular. Els vectors hauran de ser numèrics i "
-"poden ser de diferent llargària."
+"Trieu les dades que cal calcular. Els vectors hauran de ser numèrics i poden "
+"ser de diferent llargària."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "Variant of test")
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:20
@@ -2363,7 +2361,7 @@ msgid ""
 "sample mean. You can select multiple vectors. See <link href=\"rkward://"
 "rhelp/outlier\"/>."
 msgstr ""
-"Seleccioneu les dades per a trobar el valor amb la diferència més gran de la "
+"Trieu les dades per a trobar el valor amb la diferència més gran de la "
 "mitjana de la mostra. Podeu seleccionar múltiples vectors. Vegeu <link href="
 "\"rkward://rhelp/outlier\"/>."
 
@@ -2374,7 +2372,7 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric. Any missing "
 "values are ignored in the calculation."
 msgstr ""
-"Seleccioneu les dades que cal calcular. Els vectors hauran de ser numèrics. "
+"Trieu les dades que cal calcular. Els vectors hauran de ser numèrics. "
 "Qualsevol valor que falte s'ometrà en el càlcul."
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean) <settings> <setting> (refers to element labelled "Opposite")
@@ -2384,8 +2382,8 @@ msgid ""
 "Select this option to give the opposite value. If the largest value has "
 "maximum difference from the mean, it gives smallest and vice versa."
 msgstr ""
-"Seleccioneu esta opció per a donar el valor oposat. Si el valor més gran té "
-"la diferència màxima de la mitjana, es donarà el més xicotet i viceversa."
+"Trieu esta opció per a donar el valor oposat. Si el valor més gran té la "
+"diferència màxima de la mitjana, es donarà el més xicotet i viceversa."
 
 #. i18n: ectx: (Find value with largest difference from the mean) <dialog label="...">
 #: rkward/plugins/analysis/outliers/outlier.xml:11
@@ -2523,12 +2521,12 @@ msgstr ""
 "el quart, és a dir, per exemple, el poder d'una prova t a una mida "
 "determinada de la mostra, grandària de l'efecte i nivell de significació. A "
 "la part esquerra, especifiqueu el mètode estadístic, en el costat dret, "
-"introduïu els valors dels paràmetres donats. Al control del centre, "
-"seleccioneu quins paràmetres estimar. Cal tindre en compte que, en alguns "
-"casos, no serà possible estimar un paràmetre (finit) a les especificacions "
-"indicades. En general, açò significa que heu d'incrementar la mida de la "
-"mostra o la grandària de l'efecte, o bé fer disminuir el poder de l'efecte o "
-"la quantitat de paràmetres."
+"introduïu els valors dels paràmetres donats. Al control del centre, trieu "
+"quins paràmetres estimar. Cal tindre en compte que, en alguns casos, no serà "
+"possible estimar un paràmetre (finit) a les especificacions indicades. En "
+"general, açò significa que heu d'incrementar la mida de la mostra o la "
+"grandària de l'efecte, o bé fer disminuir el poder de l'efecte o la "
+"quantitat de paràmetres."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Select a method")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:34
@@ -2729,7 +2727,7 @@ msgstr "Mètode estadístic"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:107
 #, kde-format
 msgid "Select a method"
-msgstr "Selecciona un mètode"
+msgstr "Tria un mètode"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Select a method"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:108
@@ -3084,7 +3082,7 @@ msgid ""
 "Select the variable to be predicted (dependent), and one or more independent "
 "variables."
 msgstr ""
-"Seleccioneu la variable que es predirà (dependent), i una o més variables "
+"Trieu la variable que es predirà (dependent), i una o més variables "
 "independents."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "dependent variable")
@@ -3287,9 +3285,9 @@ msgid ""
 "each other. For two samples, specify whether the variables are paired or "
 "independent samples. For details, see below."
 msgstr ""
-"Seleccioneu dos vectors numèrics o un vector i una constant per a comparar "
-"entre si. Per a dues mostres, especifiqueu si les variables són aparellades "
-"o mostres independents. Per als detalls, vegeu davall."
+"Trieu dos vectors numèrics o un vector i una constant per a comparar entre "
+"si. Per a dues mostres, especifiqueu si les variables són aparellades o "
+"mostres independents. Per als detalls, vegeu davall."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "Test form")
 #: rkward/plugins/analysis/t_test.rkh:18
@@ -3298,8 +3296,8 @@ msgid ""
 "Choose whether you want a two samples test (paired samples or independent "
 "samples), or to test a single variable against a constant"
 msgstr ""
-"Seleccioneu si voleu una prova de dues mostres (mostres aparellades o "
-"mostres independents), o bé proveu amb una sola variable contra una constant"
+"Trieu si voleu una prova de dues mostres (mostres aparellades o mostres "
+"independents), o bé proveu amb una sola variable contra una constant"
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "compare")
 #: rkward/plugins/analysis/t_test.rkh:19
@@ -3386,7 +3384,7 @@ msgstr "Prova t de dues variables"
 #: rkward/plugins/analysis/t_test.xml:58
 #, kde-format
 msgid "As a first step, select the type of test to conduct."
-msgstr "Com a primer pas, seleccioneu el tipus de prova que es realitzarà."
+msgstr "Com a primer pas, trieu el tipus de prova que es realitzarà."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:58
@@ -3397,11 +3395,11 @@ msgid ""
 "pairs or repeated measures on the same subject, select \"Paired samples\". "
 "Finally, you can also test a single sample against a constant value."
 msgstr ""
-"Seleccioneu «Mostres independents» en comparar dades de dues poblacions "
-"diferents (p. ex., grup de tractament enfront del grup de control). Per a "
-"comparar parelles coincidents o mesures repetides sobre el mateix tema, "
-"seleccioneu «Mostres aparellades». Finalment, també podeu intentar una sola "
-"mostra contra un valor constant."
+"Trieu «Mostres independents» en comparar dades de dues poblacions diferents "
+"(p. ex., grup de tractament enfront del grup de control). Per a comparar "
+"parelles coincidents o mesures repetides sobre el mateix tema, trieu "
+"«Mostres aparellades». Finalment, també podeu intentar una sola mostra "
+"contra un valor constant."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:68
@@ -3410,8 +3408,8 @@ msgid ""
 "Select the parameters of the t-test. If your hypothesis is directed, "
 "selecting a directional test hypothesis may increase test power."
 msgstr ""
-"Seleccioneu els paràmetres de la prova t. Si la vostra hipòtesi és dirigida, "
-"el fet de seleccionar una hipòtesi de prova direccional pot fer augmentar el "
+"Trieu els paràmetres de la prova t. Si la vostra hipòtesi és dirigida, el "
+"fet de seleccionar una hipòtesi de prova direccional pot fer augmentar el "
 "poder de la prova."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
@@ -3449,8 +3447,8 @@ msgid ""
 "Mood Two-Sample Test. For this test the samples need to be numeric vectors "
 "(see below for details)."
 msgstr ""
-"Seleccioneu dos conjunts de dades per a provar la diferència als paràmetres "
-"de l'escala amb la prova de Mood per a dues mostres. Per a esta prova, les "
+"Trieu dos conjunts de dades per a provar la diferència als paràmetres de "
+"l'escala amb la prova de Mood per a dues mostres. Per a esta prova, les "
 "mostres hauran de ser vectors numèrics (per als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <settings> <setting> (refers to element labelled "compare")
@@ -3518,7 +3516,7 @@ msgid ""
 "Select the data sets for which you want to perform the Phillips-Perron test. "
 "For this test the samples need to be numeric vectors (see below for details)."
 msgstr ""
-"Seleccioneu els conjunts de dades per als quals voleu realitzar la prova de "
+"Trieu els conjunts de dades per als quals voleu realitzar la prova de "
 "Phillips-Perron. Per a esta prova, les mostres hauran de ser vectors "
 "numèrics (per als detalls, vegeu davall)."
 
@@ -3595,8 +3593,8 @@ msgid ""
 "Box test. For this test the samples need to be numeric vectors (see below "
 "for details)."
 msgstr ""
-"Seleccioneu els conjunts de dades per als quals voleu realitzar la prova de "
-"Box-Pierce o Ljung-Box. Per a esta prova, les mostres hauran de ser vectors "
+"Trieu els conjunts de dades per als quals voleu realitzar la prova de Box-"
+"Pierce o Ljung-Box. Per a esta prova, les mostres hauran de ser vectors "
 "numèrics (per als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "lag")
@@ -3704,8 +3702,8 @@ msgid ""
 "Select the data to be computed. It must be a single Time Series object or a "
 "Numeric Vector. NA values are not admitted."
 msgstr ""
-"Seleccioneu les dades que cal calcular. Hauran de ser un únic objecte de "
-"sèries de temps o un vector numèric. Els valors SD no s'admeten."
+"Trieu les dades que cal calcular. Hauran de ser un únic objecte de sèries de "
+"temps o un vector numèric. Els valors SD no s'admeten."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Lambda")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:21
@@ -3725,8 +3723,8 @@ msgstr ""
 msgid ""
 "Select if you want to specify a lambda value yourself in the spinbox below."
 msgstr ""
-"Seleccioneu si voleu especificar un valor lambda en el botó de selecció de "
-"valors de davall."
+"Trieu si voleu especificar un valor lambda en el botó de selecció de valors "
+"de davall."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Output series")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:23
@@ -3739,13 +3737,13 @@ msgid ""
 "original series to avoid overwriting other variables' trend/cycle (i.e. "
 "\"myseries.hptrend\").</i>"
 msgstr ""
-"Seleccioneu quines sèries resultants s'hauran de crear en l'espai de "
-"treball. La tendència de les sèries originals es crearà de manera "
-"predeterminada. Escriviu qualsevol nom que vulgueu utilitzar com a "
-"identificador per a les sèries. De manera predeterminada, són <i>hp</i> "
-"seguit per la <i>tendència</i> i/o <i>cicle</i>. <i>Consell: podeu afegir el "
-"nom de les sèries originals per a evitar sobreescriure la tendència/cicle de "
-"les altres variables (és a dir, «myseries.hptrend»).</i>"
+"Trieu quines sèries resultants s'hauran de crear en l'espai de treball. La "
+"tendència de les sèries originals es crearà de manera predeterminada. "
+"Escriviu qualsevol nom que vulgueu utilitzar com a identificador per a les "
+"sèries. De manera predeterminada, són <i>hp</i> seguit per la <i>tendència</"
+"i> i/o <i>cicle</i>. <i>Consell: podeu afegir el nom de les sèries originals "
+"per a evitar sobreescriure la tendència/cicle de les altres variables (és a "
+"dir, «myseries.hptrend»).</i>"
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Plot Cycle")
@@ -3806,7 +3804,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
 #, kde-format
 msgid "Select Variable"
-msgstr "Selecciona la variable"
+msgstr "Tria la variable"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <varslot label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:37
@@ -4045,7 +4043,7 @@ msgid ""
 "Schmidt-Shin (KPSS) test. For this test the samples need to be numeric "
 "vectors (see below for details)."
 msgstr ""
-"Seleccioneu els conjunts de dades per als quals voleu realitzar la prova de "
+"Trieu els conjunts de dades per als quals voleu realitzar la prova de "
 "Kwiatkowski-Phillips-Schmidt-Shin (KPSS). Per a esta prova, les mostres "
 "hauran de ser vectors numèrics (per als detalls, vegeu davall)."
 
@@ -4102,9 +4100,8 @@ msgid ""
 "Select several numeric vectors to perform Bartlett's test of the null that "
 "the variances in each of the samples are the same."
 msgstr ""
-"Seleccioneu diversos vectors numèrics per a realitzar la prova de Bartlett "
-"del valor nul que les variàncies en cadascuna de les mostres són les "
-"mateixes."
+"Trieu diversos vectors numèrics per a realitzar la prova de Bartlett del "
+"valor nul que les variàncies en cadascuna de les mostres són les mateixes."
 
 # skip-rule: barb-igual
 #. i18n: ectx: (Loaded from Fligner-Killeen Test of Homogeneity of Variances) <settings> <setting> (refers to element labelled "samples")
@@ -4177,8 +4174,8 @@ msgid ""
 "test. For this test the samples need to be numeric vectors (see below for "
 "details)."
 msgstr ""
-"Seleccioneu dos exemples de poblacions normals per a comparar les variàncies "
-"amb la prova F. Per a esta prova, les mostres hauran de ser vectors numèrics "
+"Trieu dos exemples de poblacions normals per a comparar les variàncies amb "
+"la prova F. Per a esta prova, les mostres hauran de ser vectors numèrics "
 "(per als detalls, vegeu davall)."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "compare")
@@ -4253,9 +4250,9 @@ msgid ""
 "Select several numeric vectors to perform the Fligner-Killeen (median) test "
 "of the null that the variances in each of the samples are the same."
 msgstr ""
-"Seleccioneu diversos vectors numèrics per a realitzar la prova de Fligner-"
-"Killeen (mediana) del valor nul que les variàncies en cadascuna de les "
-"mostres són les mateixes."
+"Trieu diversos vectors numèrics per a realitzar la prova de Fligner-Killeen "
+"(mediana) del valor nul que les variàncies en cadascuna de les mostres són "
+"les mateixes."
 
 #. i18n: ectx: (Fligner-Killeen Test of Homogeneity of Variances) <dialog label="...">
 #: rkward/plugins/analysis/variances/fligner_test.xml:11
@@ -4280,8 +4277,8 @@ msgid ""
 "Select the response variable and the factor defining groups to test for "
 "homogeneity of variance across groups."
 msgstr ""
-"Seleccioneu la variable de resposta i els grups que definixen el factor per "
-"a provar l'homogeneïtat de la variància entre els grups."
+"Trieu la variable de resposta i els grups que definixen el factor per a "
+"provar l'homogeneïtat de la variància entre els grups."
 
 #. i18n: ectx: (Loaded from Levene's Test) <settings> <setting> (refers to element labelled "response variable")
 #: rkward/plugins/analysis/variances/levene_test.rkh:17
@@ -4374,9 +4371,9 @@ msgid ""
 "test on the null that the true distribution of x (or the difference between "
 "the paired vectors) is symmetric about 0 (or the specified location)."
 msgstr ""
-"Seleccioneu un únic vector (o prova aparellada) per a realitzar una prova "
-"per a amplitud signada de Wilcoxon sobre el valor nul que la distribució "
-"verdadera de «x» (o la diferència entre els vectors aparellats) és simètrica "
+"Trieu un únic vector (o prova aparellada) per a realitzar una prova per a "
+"amplitud signada de Wilcoxon sobre el valor nul que la distribució verdadera "
+"de «x» (o la diferència entre els vectors aparellats) és simètrica "
 "aproximadament 0 (o la ubicació especificada)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <usage>
@@ -4388,9 +4385,9 @@ msgid ""
 "details) on the null that the distributions of x and y differ (by 0 or the "
 "specified location shift)."
 msgstr ""
-"Seleccioneu dos vectors per a realitzar una prova per a la suma d'amplituds "
-"de Wilcoxon (equivalent a la prova de Mann-Whitney: vegeu <link href="
-"\"rkward://rhelp/wilcox.test\"/> per als detalls) sobre el valor nul que les "
+"Trieu dos vectors per a realitzar una prova per a la suma d'amplituds de "
+"Wilcoxon (equivalent a la prova de Mann-Whitney: vegeu <link href=\"rkward://"
+"rhelp/wilcox.test\"/> per als detalls) sobre el valor nul que les "
 "distribucions de «x» i «y» diferixen (per 0 o el canvi en la ubicació "
 "especificada)."
 
@@ -4667,7 +4664,7 @@ msgid ""
 "objects need to be numeric vectors. On the subsequent tabs/pages specify, "
 "which statistics you want computed (see below for details)."
 msgstr ""
-"Seleccioneu un o més objectes que s'analitzaran. Per a la majoria dels tipus "
+"Trieu un o més objectes que s'analitzaran. Per a la majoria dels tipus "
 "d'anàlisi, els objectes hauran de ser vectors numèrics. En les pestanyes/"
 "pàgines subsegüents especifiqueu quines estadístiques voleu calcular (per "
 "als detalls, vegeu davall)."
@@ -4686,7 +4683,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
 #, kde-format
 msgid "Select one or more numeric vectors to analyse"
-msgstr "Seleccioneu un o més vectors numèrics que s'hagen d'analitzar"
+msgstr "Trieu un o més vectors numèrics que s'hagen d'analitzar"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "group by:")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:22
@@ -4698,10 +4695,10 @@ msgid ""
 "any grouping). If specifying more than one grouping factor, separate splits "
 "will be performed for each combination of values of the grouping factors."
 msgstr ""
-"De manera opcional, seleccioneu un o més factors d'agrupació per a dividir "
-"cada vector d'entrada. Els factors d'agrupació han de ser de la mateixa "
-"llargària que els vectors d'entrada (i, per tant, tots els vectors d'entrada "
-"han de ser de la mateixa llargària, si s'utilitza qualsevol agrupació). Si "
+"De manera opcional, trieu un o més factors d'agrupació per a dividir cada "
+"vector d'entrada. Els factors d'agrupació han de ser de la mateixa llargària "
+"que els vectors d'entrada (i, per tant, tots els vectors d'entrada han de "
+"ser de la mateixa llargària, si s'utilitza qualsevol agrupació). Si "
 "s'especifica més d'un factor d'agrupació, es realitzaran desglossaments "
 "separats per a cada combinació de valors dels factors d'agrupament."
 
@@ -5003,9 +5000,9 @@ msgid ""
 "to treat missing values, what precision you want, and if you want to scale "
 "text."
 msgstr ""
-"Seleccioneu un o més objectes que es dibuixaran. Seleccioneu el mètode que "
-"s'utilitzarà, així com la manera de tractar els valors que falten, quina "
-"precisió voleu i si voleu escalar el text."
+"Trieu un o més objectes que es dibuixaran. Trieu el mètode que s'utilitzarà, "
+"així com la manera de tractar els valors que falten, quina precisió voleu i "
+"si voleu escalar el text."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/cor_graph.rkh:18
@@ -5014,8 +5011,8 @@ msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
 msgstr ""
-"Selecciona una matriu de dades o un marc de dades numèriques o més d'una "
-"variable des d'una matriu de dades"
+"Tria una matriu de dades o un marc de dades numèriques o més d'una variable "
+"des d'una matriu de dades"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/plots/cor_graph.rkh:20
@@ -5038,10 +5035,10 @@ msgid ""
 "covariance or correlation matrices which are not positive semidefinite. "
 "\"pairwise\" only works with the \"pearson\" method for cov and var."
 msgstr ""
-"Seleccioneu com tractar els valors que falten. Si l'ús és «casos complets», "
-"els valors que falten es manegaran mitjançant la supressió per casos. Si "
-"l'ús té el valor «en parelles», la correlació entre cada parell de variables "
-"es calcularà utilitzant tots els parells complets d'observacions sobre estes "
+"Trieu com tractar els valors que falten. Si l'ús és «casos complets», els "
+"valors que falten es manegaran mitjançant la supressió per casos. Si l'ús té "
+"el valor «en parelles», la correlació entre cada parell de variables es "
+"calcularà utilitzant tots els parells complets d'observacions sobre estes "
 "variables. Açò pot donar lloc a matrius de covariància o correlació que no "
 "són positius semidefinits. «en parelles» només funcionarà amb el mètode "
 "«pearson» per a «cov» i «var»."
@@ -5050,7 +5047,7 @@ msgstr ""
 #: rkward/plugins/plots/cor_graph.rkh:22
 #, kde-format
 msgid "Select how many digits after decimal point should be shown"
-msgstr "Seleccioneu quants dígits s'han de mostrar després de la coma decimal"
+msgstr "Trieu quants dígits s'han de mostrar després de la coma decimal"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Scale text")
 #: rkward/plugins/plots/cor_graph.rkh:23
@@ -5059,8 +5056,7 @@ msgid ""
 "Select it if you want to scale text according to the (absolute) correlation "
 "value."
 msgstr ""
-"Seleccioneu-la si voleu escalar el text segons el valor (absolut) de la "
-"correlació."
+"Trieu-la si voleu escalar el text segons el valor (absolut) de la correlació."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <related>
 #: rkward/plugins/plots/cor_graph.rkh:25
@@ -5271,7 +5267,7 @@ msgstr "Estadístiques bàsiques"
 #: rkward/plugins/uni1.2/description.xml:30
 #, kde-format
 msgid "Select variables"
-msgstr "Selecciona les variables"
+msgstr "Tria les variables"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/uni1.2/description.xml:34

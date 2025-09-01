@@ -95,7 +95,7 @@ msgid ""
 "for download, separately."
 msgstr ""
 "Els <strong>connectors de RKWard</strong>: Si esteu buscant un diàleg gràfic "
-"per a ajudar-vos a importar/convertir/analitzar/visualitzar les dades, estos "
+"per ajudar-vos a importar/convertir/analitzar/visualitzar les dades, estos "
 "diàlegs s'implementen principalment com a connectors en RKWard. Molts "
 "d'estos connectors estan disponibles per a descarregar, per separat."
 
@@ -300,8 +300,8 @@ msgid ""
 msgstr ""
 "RKWard està basat en el llenguatge R per al càlcul estadístic. La consola "
 "permet introduir directament ordres d'R. Òbviament, per a utilitzar açò, cal "
-"conéixer les bases del llenguatge R. Seleccioneu «Ajuda -> Ajuda quant a R» "
-"per a diversa informació d'introducció."
+"conéixer les bases del llenguatge R. Trieu «Ajuda -> Ajuda quant a R» per a "
+"diversa informació d'introducció."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -342,12 +342,12 @@ msgid ""
 "time (e.g. some action you invoked from the Analysis menu), the console will "
 "only become available again, when the R backend becomes idle."
 msgstr ""
-"Per a interrompre una ordre en execució, premeu «Ctrl+C», o seleccioneu "
-"«Interromp l'execució de l'ordre» des del menú contextual. Cal tindre en "
-"compte que l'ordre no necessàriament acabarà immediatament. Si hi ha altres "
-"ordres executant-se en el mateix moment (p. ex., alguna acció que s'haja "
-"invocat des del menú Anàlisi), la consola només tornarà a estar disponible "
-"quan el dorsal d'R esdevinga desocupat."
+"Per a interrompre una ordre en execució, premeu «Ctrl+C», o trieu «Interromp "
+"l'execució de l'ordre» des del menú contextual. Cal tindre en compte que "
+"l'ordre no necessàriament acabarà immediatament. Si hi ha altres ordres "
+"executant-se en el mateix moment (p. ex., alguna acció que s'haja invocat "
+"des del menú Anàlisi), la consola només tornarà a estar disponible quan el "
+"dorsal d'R esdevinga desocupat."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:27
@@ -364,11 +364,10 @@ msgid ""
 "+Return). Leading \"> \" and \"+ \" on the selected lines will be removed "
 "automatically."
 msgstr ""
-"Per a tornar a executar (una seqüència de) les ordres seleccionades, "
-"seleccioneu-les utilitzant el ratolí. Després seleccioneu «Executa la "
-"selecció» des del menú contextual (de manera predeterminada la drecera és "
-"«Ctrl+Retorn»). Els «> » i «+ » inicials de les línies seleccionades "
-"s'eliminaran automàticament."
+"Per a tornar a executar (una seqüència de) les ordres seleccionades, trieu-"
+"les utilitzant el ratolí. Després seleccioneu «Executa la selecció» des del "
+"menú contextual (de manera predeterminada la drecera és «Ctrl+Retorn»). Els "
+"«> » i «+ » inicials de les línies seleccionades s'eliminaran automàticament."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:31
@@ -556,10 +555,10 @@ msgid ""
 "console\">Settings->Configure RKWard->R Console</a> or \"Configure\" from "
 "the context menu. The following options are configurable:"
 msgstr ""
-"Per a configurar el comportament de la consola, seleccioneu <a href="
-"\"rkward://settings/console\">Configuració -> Configura RKWard… -> Consola "
-"d'R</a> o «Configura» des del menú contextual. Es poden configurar les "
-"opcions següents:"
+"Per a configurar el comportament de la consola, trieu <a href=\"rkward://"
+"settings/console\">Configuració -> Configura RKWard… -> Consola d'R</a> o "
+"«Configura» des del menú contextual. Es poden configurar les opcions "
+"següents:"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -599,7 +598,7 @@ msgstr ""
 "mostraran més que este nombre total de línies (ordres i eixida) en la "
 "consola. Quan s'excedix este nombre de línies, estes s'eliminen de la part "
 "superior de la finestra de la consola. Per a netejar completament la "
-"consola, Seleccioneu «Neteja» des del menú contextual o des del menú Edita."
+"consola, Trieu «Neteja» des del menú contextual o des del menú Edita."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -741,8 +740,8 @@ msgstr ""
 "No cal preocupar-se per tots estos detalls. Per a crear un full de càlcul "
 "nou (data.frame), trieu «Fitxer -> Nou -> Conjunt de dades» des del menú. "
 "Tot el que cal fer és assignar un nom a esta taula, després podeu començar "
-"l'edició. Per a treballar amb dades preexistents, seleccioneu l'opció "
-"adequada des del menú «Fitxer -> Importa»."
+"l'edició. Per a treballar amb dades preexistents, trieu l'opció adequada des "
+"del menú «Fitxer -> Importa»."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -1259,13 +1258,13 @@ msgid ""
 msgstr ""
 "Vos haureu adonat que RKWard proporciona moltes opcions de menú addicionals. "
 "Estes donen accés a funcionalitat d'R. De fet, açò ho fan generant sintaxi "
-"en R des de la configuració feta en un diàleg gràfic. Per exemple, "
-"seleccioneu «Anàlisi -> Estadístiques descriptives». Veureu una finestra "
-"xicoteta a la part inferior (es pot veure o ocultar utilitzant el botó "
-"«Codi») que conté el codi R necessari per a generar estes estadístiques. "
-"D'esta manera, encara que preferiu escriure el codi a mà, podeu utilitzar "
-"els diàlegs per a obtindre exemples d'ús o fragments de codi per a funcions "
-"amb les quals esteu menys familiaritzat amb R."
+"en R des de la configuració feta en un diàleg gràfic. Per exemple, trieu "
+"«Anàlisi -> Estadístiques descriptives». Veureu una finestra xicoteta a la "
+"part inferior (es pot veure o ocultar utilitzant el botó «Codi») que conté "
+"el codi R necessari per a generar estes estadístiques. D'esta manera, encara "
+"que preferiu escriure el codi a mà, podeu utilitzar els diàlegs per a "
+"obtindre exemples d'ús o fragments de codi per a funcions amb les quals "
+"esteu menys familiaritzat amb R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Everything else">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -1941,8 +1940,8 @@ msgid ""
 "To run code from scripts / help pages / the console, select it, and use Ctrl"
 "+Enter"
 msgstr ""
-"Per a executar codi des dels scripts / pàgines d'ajuda / la consola, "
-"seleccioneu-lo i utilitzeu «Ctrl+Retorn»"
+"Per a executar codi des dels scripts / pàgines d'ajuda / la consola, trieu-"
+"lo i utilitzeu «Ctrl+Retorn»"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
