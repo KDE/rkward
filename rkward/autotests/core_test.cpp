@@ -324,14 +324,21 @@ class RKWardCoreTest : public QObject {
 			QVERIFY(command->failed());
 			QVERIFY(command->errorIncomplete());
 		});
+		runCommandWithTimeout(new RCommand(QStringLiteral("x <- "), RCommand::App), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QVERIFY(command->errorIncomplete());
+		});
 		runCommandWithTimeout(new RCommand(QStringLiteral("(}"), RCommand::App), nullptr, [](RCommand *command) {
 			QVERIFY(command->failed());
 			QVERIFY(command->errorSyntax());
 		});
 		runCommandWithTimeout(new RCommand(QStringLiteral("(}"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(command->failed());
-			QEXPECT_FAIL("", "Syntax error detection for User commands known to be broken, but doesn't really matter", Continue);
 			QVERIFY(command->errorSyntax());
+		});
+		runCommandWithTimeout(new RCommand(QStringLiteral("stop(\"234test\")"), RCommand::App), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QVERIFY(command->error().contains(u"234test"_s));
 		});
 		runCommandWithTimeout(new RCommand(QStringLiteral("stop(\"123test\")"), RCommand::User), nullptr, [](RCommand *command) {
 			QVERIFY(command->failed());
