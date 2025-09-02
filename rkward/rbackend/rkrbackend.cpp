@@ -69,7 +69,7 @@ void RK_setupGettext(const QString &locale_dir) {
 static bool RK_IsRInterruptPending() {
 	// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
 #ifdef Q_OS_WIN
-	return ROb(UserBreak;
+	return ROb(UserBreak);
 #else
 	return ROb(R_interrupts_pending);
 #endif
