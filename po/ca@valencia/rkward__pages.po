@@ -95,7 +95,7 @@ msgid ""
 "for download, separately."
 msgstr ""
 "Els <strong>connectors de RKWard</strong>: Si esteu buscant un diàleg gràfic "
-"per a ajudar-vos a importar/convertir/analitzar/visualitzar les dades, estos "
+"per ajudar-vos a importar/convertir/analitzar/visualitzar les dades, estos "
 "diàlegs s'implementen principalment com a connectors en RKWard. Molts "
 "d'estos connectors estan disponibles per a descarregar, per separat."
 

@@ -2089,7 +2089,7 @@ msgid ""
 "affect the test). Missing values will be ignored."
 msgstr ""
 "Imprimix estadístiques descriptives addicionals (mitjana, ds, mediana, mín., "
-"màx.) per a ajudar-vos a interpretar el resultat de la prova (purament "
+"màx.) per ajudar-vos a interpretar el resultat de la prova (purament "
 "informatiu, no afectarà la prova). S'ignoraran els valors que falten."
 
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="Chi-squared test for outlier"> <tab label="Options"> <frame label="...">
