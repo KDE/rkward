@@ -410,7 +410,8 @@ class RKWardCoreTest : public QObject {
 		RKConsole::mainConsole()->pipeUserCommand(QStringLiteral("cat(\"first\\n\")\ninvisible(\"second\")\nsysout(\"third\")\ncat(\"fourth\\n\")\n"));
 		RInterface::issueCommand(QStringLiteral("rm(sysout)"), RCommand::User);
 		waitForAllFinished();
-		QStringList consoleout = RKConsole::mainConsole()->getFullContent().mid(consoleout.length() - 7);
+		QStringList consoleout = RKConsole::mainConsole()->getFullContent().last(8);
+		testLog("%s", qPrintable(consoleout.join(u"\n"_s)));
 		QVERIFY(consoleout.value(0).contains(u"cat"_s));
 		QVERIFY(consoleout.value(0).contains(u"first"_s));
 		QVERIFY(!consoleout.value(1).contains(u"cat"_s));
