@@ -62,6 +62,7 @@ class RKConsole : public RKMDIWindow, public RKScriptContextProvider {
 	QStringList commandHistory() const { return commands_history.getHistory(); };
 	void addCommandToHistory(const QString &text) { commands_history.append(text); };
 	void insertSpontaneousROutput(const ROutput &output);
+	QStringList getFullContent() const; /**< For testing, only */
 
   protected:
 	/** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it

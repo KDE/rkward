@@ -406,34 +406,9 @@ bool RKRBackend::fetchStdoutStderr(bool forcibly) {
 	return true;
 }
 
-#ifdef Q_OS_WIN
-bool win_do_detect_winutf8markers = false;
-QByteArray winutf8start, winutf8stop;
-#endif
 void RWriteConsoleEx(const char *buf, int buflen, int type) {
 	RK_TRACE(RBACKEND);
 	RK_DEBUG(RBACKEND, DL_DEBUG, "raw output type %d, size %d: %s", type, buflen, buf);
-
-#ifdef Q_OS_WIN
-	// Since R 3.5.0, R on Windows (in CharacterMode == RGui) will print "UTF8 markers" around utf8-encoded sub-sections of the output.
-	// Of course, the actual markers used are not accessible in public API...
-	// So here we try to detect the markers (if any) from print("X", print.gap=1, quote=FALSE), i.e. an expected output of the form
-	// [1] _s_X_e_
-	// Where _s_ and _e_ are the start and stop markers, respectively.
-	if (win_do_detect_winutf8markers) {
-		QByteArray str(buf, buflen);
-		if (!str.contains('X')) return; // May happen. We better don't rely on how exactly the output is chunked
-		// The value may or may not be printed in the same chunk as the row number, and the following value
-		// so split into whatever values have arrived in this chunk, then pick the one with the 'X'
-		QList<QByteArray> candidates = str.split(' ');
-		for (int i = 0; i < candidates.size(); ++i) {
-			if (candidates[i].contains('X')) str = candidates[i];
-		}
-		winutf8start = str.split('X').value(0);
-		winutf8stop = str.split('X').value(1);
-		return;
-	}
-#endif
 
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled())) {
@@ -454,37 +429,9 @@ void RWriteConsoleEx(const char *buf, int buflen, int type) {
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return; // this check is mostly for fork()ed clients
 	if (RKRBackend::repl_status.browser_context == RKRBackend::RKReplStatus::InBrowserContextPreventRecursion) return;
 	RKRBackend::this_pointer->fetchStdoutStderr(true);
-#ifdef Q_OS_WIN
-	// See note, above. Here we handle the UTF8 markers in the output
-	QByteArray str(buf, buflen);
-	QString utf8;
-	if (winutf8start.isEmpty()) {
-		utf8 = RKTextCodec::fromNative(buf);
-	} else {
-		int pos = 0;
-		while (pos < buflen) {
-			int start = str.indexOf(winutf8start, pos);
-			if (start < 0) {
-				utf8.append(RKTextCodec::fromNative(str.mid(pos)));
-				break;
-			}
-			utf8.append(RKTextCodec::fromNative(str.left(start)));
-			start += winutf8start.length();
-			if (start >= buflen) break;
-			int end = str.indexOf(winutf8stop, start);
-			if (end >= 0) {
-				utf8.append(QString::fromUtf8(str.mid(start, end - start)));
-				pos = end + winutf8stop.length();
-			} else {
-				utf8.append(QString::fromUtf8(str.mid(start)));
-				break;
-			}
-		}
-	}
-#else
+
 	QString utf8 = RKTextCodec::fromNative(buf);
-#endif
-	RKRBackend::this_pointer->handleOutput(utf8, buflen, type == 0 ? ROutput::Output : ROutput::Warning);
+	RKRBackend::this_pointer->handleOutput(utf8, utf8.length(), type == 0 ? ROutput::Output : ROutput::Warning);
 }
 
 /** For R callbacks that we want to disable, entirely */
@@ -843,6 +790,7 @@ void RKRBackend::setupCallbacks() {
 
 	RK_R_Params.R_Quiet = Rboolean::FALSE;
 	RK_R_Params.R_Interactive = Rboolean::TRUE;
+	RK_R_Params.EmitEmbeddedUTF8 = Rboolean::FALSE;
 }
 
 void RKRBackend::connectCallbacks() {
@@ -1127,12 +1075,6 @@ bool RKRBackend::startR() {
 	connectCallbacks();
 	RKREventLoop::setRKEventHandler(doPendingPriorityCommands);
 	default_global_context = ROb(R_GlobalContext);
-#ifdef Q_OS_WIN
-	// See the corresponding note in RWriteConsoleEx(). For auto-detecting UTF8 markers in console output.
-	win_do_detect_winutf8markers = true;
-	runDirectCommand(u"print(c(\"X\",\"Y\"), print.gap=1, quote=FALSE)"_s);
-	win_do_detect_winutf8markers = false;
-#endif
 
 	// What the??? Somehow the first command we run *will* appear to throw a syntax error. Some init step seems to be missing, but where?
 	// Anyway, we just run a dummy to "clear" that trap.

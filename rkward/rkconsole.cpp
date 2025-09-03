@@ -761,6 +761,15 @@ void RKConsole::literalCopy() {
 	QApplication::clipboard()->setText(view->selectionText());
 }
 
+QStringList RKConsole::getFullContent() const {
+	RK_TRACE(APP);
+	QStringList ret;
+	for (int i = 0; i < doc->lines(); ++i) {
+		ret.append(doc->line(i));
+	}
+	return ret;
+}
+
 int RKConsole::currentCursorPositionInCommand() {
 	RK_TRACE(APP);
 
