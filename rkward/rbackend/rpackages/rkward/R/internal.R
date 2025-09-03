@@ -119,10 +119,8 @@
 
 #' @export
 ".rk.do.error" <- function () {
-# comment in R sources says, it may not be good to query options during error handling. But what can we do, if R_ShowErrorMessages is not longer exported?
-	if (getOption ("show.error.messages")) {
-		.rk.call.backend("error", geterrmessage())
-	}
+	# NOTE: cannot use "warning", here
+	print("NOTE: 'options(error=.rk.do.error)' is no longer needed, and .rk.do.error will be removed in a future version of RKWard.")
 }
 
 # C call into the backend process only

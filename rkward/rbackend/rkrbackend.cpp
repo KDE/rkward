@@ -66,6 +66,15 @@ void RK_setupGettext(const QString &locale_dir) {
 }
 
 ///// interrupting R
+static bool RK_IsRInterruptPending() {
+	// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
+#ifdef Q_OS_WIN
+	return ROb(UserBreak);
+#else
+	return ROb(R_interrupts_pending);
+#endif
+}
+
 void RK_scheduleIntr() {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "interrupt scheduled");
 	RKRBackend::repl_status.interrupted = true;
@@ -140,8 +149,17 @@ void clearPendingInterrupt_Worker(void *) {
 
 void RKRBackend::clearPendingInterrupt() {
 	RK_TRACE(RBACKEND);
+	if (!RK_IsRInterruptPending()) return;
+	RKRBackend::repl_status.interrupted = false;
+
 	bool passed = RFn::R_ToplevelExec(clearPendingInterrupt_Worker, nullptr);
 	if (!passed) RK_DEBUG(RBACKEND, DL_DEBUG, "pending interrupt cleared");
+	RK_ASSERT(!passed);
+}
+
+static void markLastWarningAsErrorMessage() {
+	const auto msg = u"error:"_s; // "error:" is just a placeholder. The desired effect is to promote latest "Warning" output to Error-level (in RInterface)
+	RKRBackend::this_pointer->handleOutput(msg, msg.length(), ROutput::Error);
 }
 
 #include "rdata.h"
@@ -193,6 +211,7 @@ void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 
 // forward declaration needed on Windows
 void RCleanUp(SA_TYPE saveact, int status, int RunLast);
+void RBusy(int);
 
 int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 	RK_TRACE(RBACKEND);
@@ -232,10 +251,10 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 					- Handling user commands is totally different from all other commands, and relies on R's "REPL" (read-evaluate-print-loop). This is a whole bunch of dedicated code, but there is no other way to achieve handling of commands as if they had been entered on a plain R console (including auto-printing, and toplevel handlers). Most importantly, since important symbols are not exported, such as R_Visible. Vice versa, it is not possible to treat all commands like user commands, esp. in substacks.
 
 					Problems to deal with:
-					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
-					- One difficulty lies in finding out, just when a command has finished (successfully or with an error). RKToplevelStatementFinishCallback(), and doError() handle the respective cases.
-					NOTE; in R 2.12.0 and above, RFn::Rf_countContexts() might help to find out when we are back to square 1!
-					*/
+					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions. Sorry for the resulting spaghetti code!
+					- One difficulty lies in finding out, just when a command has finished (successfully or with an error).
+					See below (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning)
+					for this, and and RKUserCommandErrorDetection for finding out, if an error occured. */
 					RKRBackend::repl_status.user_command_transmitted_up_to = 0;
 					RKRBackend::repl_status.user_command_completely_transmitted = false;
 					RKRBackend::repl_status.user_command_parsed_up_to = 0;
@@ -247,21 +266,21 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
 				if (RKRBackend::repl_status.user_command_completely_transmitted) {
 					// fully transmitted, but R is still asking for more, without signalling R_Busy? This looks like an incomplete statement.
-					// HOWEVER: It may also have been an empty statement such as " ", so let's check whether the prompt looks like a "continue" prompt
+					// HOWEVER: It may also have been a (trailing) empty statement such as "\n", so let's check whether the prompt looks like a "continue" prompt
+					RBusy(1); // Mark command as "running"
 					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption(RFn::Rf_install("continue"), ROb(R_BaseEnv)))) {
 						RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
-					}
-					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-					if (RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture(); // HACK: No capture active, but commandFinished() will try to end one
-					RFn::Rf_error("%s", "");                                                                                    // to discard the buffer
+						RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
+						RFn::Rf_error("%s", ""); // to discard the buffer
+					} // else: continue in next iteration at UserCommandRunning
 				} else {
 					RKTransmitNextUserCommandChunk(buf, buflen);
 					return 1;
 				}
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandSyntaxError) {
+				RBusy(1); // properly init command, so commandFinished() can end it
 				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
 				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-				if (RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture(); // HACK: No capture active, but commandFinished() will try to end one
 				RKRBackend::this_pointer->commandFinished();
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning) {
 				// This can mean three different things:
@@ -591,6 +610,44 @@ int RChooseFile(int isnew, char *buf, int len) {
 	return (qMin(len - 1, localres.size()));
 }
 
+/** This class tries to encapsulate the following mess in a (more) readable way:
+
+There is no direct way to detect, if a user command (running directly in the REPL) has failed.
+RResetConsole() is always called in that case, but there is one further use in R's do_edit() (the C function
+invoked _unless_ options("editor") is set to a function - which it usually is in our case).
+
+To handle that rare case as good as possible, we try to keep track of which calls happen in which order.
+The interesting bit is in rresetconsole_called(). */
+struct RKUserCommandErrorDetection {
+	bool reset_signals_error = true;
+	void rbusy_called(int busy) {
+		reset_signals_error = busy;
+	}
+	void reditfiles_called() {
+		reset_signals_error = false;
+	}
+	void rresetconsole_called() {
+		if (!reset_signals_error) {
+			reset_signals_error = true;
+			return;
+		}
+
+		if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::ReplIterationKilled) return;
+
+		if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {
+			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
+		}
+
+		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
+		const bool command_was_interrupted = RKRBackend::repl_status.interrupted && !RK_IsRInterruptPending();
+		if (!command_was_interrupted) {
+			markLastWarningAsErrorMessage();
+			RK_DEBUG(RBACKEND, DL_DEBUG, "error in user command");
+		}
+	}
+};
+static RKUserCommandErrorDetection user_command_error_detect;
+
 /* There are about one million possible entry points to editing / showing files. We try to cover them all, using the
 following bunch of functions (REditFilesHelper() and doShowEditFiles() are helpers, only) */
 
@@ -612,15 +669,18 @@ void REditFilesHelper(const QStringList &files, const QStringList &titles, const
 	RKRBackend::this_pointer->handleRequest(&request);
 }
 
+// Called from R's edit(editor=NULL)->do_edit()
 int REditFiles(int nfile, const char **file, const char **title, const char *wtitle) {
 	RK_TRACE(RBACKEND);
 
+	user_command_error_detect.reditfiles_called();
 	REditFilesHelper(charPArrayToQStringList(file, nfile), charPArrayToQStringList(title, nfile), RKTextCodec::fromNative(wtitle), RBackendRequest::EditFiles, false, true);
 
 	// default implementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
 	return (nfile <= 0);
 }
 
+// Called from rk.edit()
 SEXP doShowEditFiles(SEXP files, SEXP titles, SEXP wtitle, SEXP del, SEXP prompt, RBackendRequest::RCallbackType edit) {
 	RK_TRACE(RBACKEND);
 
@@ -714,6 +774,7 @@ int RAskYesNoCancel(const char *message) {
 
 void RBusy(int busy) {
 	RK_TRACE(RBACKEND);
+	user_command_error_detect.rbusy_called(busy);
 
 	// R_ReplIteration calls R_Busy (1) after reading in code (if needed), successfully parsing it, and right before evaluating it.
 	if (busy) {
@@ -731,6 +792,11 @@ void RBusy(int busy) {
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning;
 		}
 	}
+}
+
+void RResetConsole() {
+	RK_TRACE(RBACKEND);
+	user_command_error_detect.rresetconsole_called();
 }
 
 // ############## R Standard callback overrides END ####################
@@ -756,30 +822,27 @@ void RKRBackend::setupCallbacks() {
 	RK_TRACE(RBACKEND);
 
 	RFn::R_setStartTime();
-	RFn::R_DefParams(&RK_R_Params);
+	RFn::R_DefParamsEx(&RK_R_Params, /* RSTART_VERSION */ 1);
 
 	// IMPORTANT: see also the #ifndef QS_WS_WIN-portion!
 	RK_R_Params.rhome = RFn::get_R_HOME();
 	RK_R_Params.home = RFn::getRUser();
 	RK_R_Params.CharacterMode = RGui;
 	RK_R_Params.ShowMessage = RShowMessage;
-#	if R_VERSION < R_Version(4, 2, 0)
-	RK_R_Params.ReadConsole = RReadConsoleWin;
-#	else
 	RK_R_Params.ReadConsole = RReadConsole;
-#	endif
 	RK_R_Params.WriteConsoleEx = RWriteConsoleEx;
-	RK_R_Params.WriteConsole = 0;
+	RK_R_Params.WriteConsole = nullptr;
 	RK_R_Params.CallBack = RKREventLoop::winRKEventHandlerWrapper;
 	RK_R_Params.YesNoCancel = RAskYesNoCancel;
 	RK_R_Params.Busy = RBusy;
+	RK_R_Params.ResetConsole = RResetConsole;
 
 	// TODO: callback mechanism(s) for ChosseFile, ShowFiles, EditFiles
 	// TODO: also for RSuicide (Less important, obviously, since this should not be triggered, in normal operation).
 	// NOTE: For RCleanUp see RReadConsole RCleanup?
 
-	RK_R_Params.R_Quiet = (Rboolean)0;
-	RK_R_Params.R_Interactive = (Rboolean)1;
+	RK_R_Params.R_Quiet = Rboolean::FALSE;
+	RK_R_Params.R_Interactive = Rboolean::TRUE;
 }
 
 void RKRBackend::connectCallbacks() {
@@ -808,7 +871,7 @@ void RKRBackend::connectCallbacks() {
 	ROb(ptr_R_ReadConsole) = RReadConsole;
 	ROb(ptr_R_WriteConsoleEx) = RWriteConsoleEx;
 	ROb(ptr_R_WriteConsole) = nullptr;
-	ROb(ptr_R_ResetConsole) = RDoNothing;
+	ROb(ptr_R_ResetConsole) = RResetConsole;
 	ROb(ptr_R_FlushConsole) = RDoNothing;
 	ROb(ptr_R_ClearerrConsole) = RDoNothing;
 	ROb(ptr_R_Busy) = RBusy;
@@ -829,35 +892,6 @@ void RKRBackend::connectCallbacks() {
 
 RKRBackend::~RKRBackend() {
 	RK_TRACE(RBACKEND);
-}
-
-void doError(const QString &callstring) {
-	RK_TRACE(RBACKEND);
-
-	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {
-		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
-		RK_DEBUG(RBACKEND, DL_DEBUG, "user command failed");
-	}
-	if (RKRBackend::repl_status.interrupted) {
-		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
-		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
-#ifdef Q_OS_WIN
-		if (!ROb(UserBreak)) {
-#else
-		if (!ROb(R_interrupts_pending)) {
-#endif
-			RKRBackend::repl_status.interrupted = false;
-			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) { // was interrupted only to step out of the repl iteration
-				QMutexLocker lock(&(RKRBackend::this_pointer->all_current_commands_mutex));
-				for (RCommandProxy *command : std::as_const(RKRBackend::this_pointer->all_current_commands))
-					command->status |= RCommand::Canceled;
-				RK_DEBUG(RBACKEND, DL_DEBUG, "interrupted");
-			}
-		}
-	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
-		RKRBackend::this_pointer->handleOutput(callstring, callstring.length(), ROutput::Error);
-		RK_DEBUG(RBACKEND, DL_DEBUG, "error '%s'", qPrintable(callstring));
-	}
 }
 
 // TODO: Pass nested/sync as a single enum value, in the first place
@@ -914,9 +948,6 @@ SEXP doSimpleBackendCall(SEXP _call) {
 			}
 			i++;
 		}
-	} else if (call == QStringLiteral("error")) { // capture error message
-		doError(list.value(1));
-		return ROb(R_NilValue);
 	} else if (call == QStringLiteral("tempdir")) {
 		return (RKRSupport::StringListToSEXP(QStringList(RKRBackendProtocolBackend::dataDir())));
 	} else if (call == QLatin1String("home")) {
@@ -1349,6 +1380,7 @@ void RKRBackend::runCommand(RCommandProxy *command) {
 		} else if (!(command->status & RCommand::Canceled)) {
 			command->status |= RCommand::ErrorOther;
 		}
+		markLastWarningAsErrorMessage();
 	} else {
 		command->status |= RCommand::WasTried;
 	}
@@ -1476,6 +1508,11 @@ void RKRBackend::commandFinished(bool check_object_updates_needed) {
 
 	{
 		QMutexLocker lock(&all_current_commands_mutex);
+		if (repl_status.interrupted) {
+			repl_status.interrupted = false;
+			current_command->status |= RCommand::Canceled;
+			clearPendingInterrupt(); // might not have been handled, yet
+		}
 		all_current_commands.pop_back();
 		if (!all_current_commands.isEmpty()) current_command = all_current_commands.last();
 		too_late_to_interrupt = false;
@@ -1611,9 +1648,6 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	RK_setupGettext(locale_dir); // must happen *after* package loading, since R will re-set it
 	if (!runDirectCommand(versioncheck + u"\n"_s)) lib_load_fail = true;
 	if (!runDirectCommand(QStringLiteral(".rk.fix.assignments ()\n"))) sink_fail = true;
-
-	// error/output sink and help browser
-	if (!runDirectCommand(QStringLiteral("options (error=quote (.rk.do.error ()))\n"))) sink_fail = true;
 
 	QString error_messages;
 	if (lib_load_fail) {

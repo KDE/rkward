@@ -2,9 +2,10 @@ Requirements
 ===================
 
 RKWard requires:
-- Several KF5-libraries and headers (>= 5.4) (https://www.kde.org)
-- Qt-libraries and headers (>= 5.2) (http://www.trolltech.com)
-- R and headers (https://www.r-project.org)
+- Several KF6-libraries and headers (>= 6.0) (https://www.kde.org)
+- Qt-libraries and headers (>= 6.6) (https://qt.io)
+- R and headers (https://www.r-project.org); at the time of this writing, version 3.4.4 (on Windows: version 4.2.0)
+  or later is required. Note, however, that old versions are not actively tested.
 - CMake (https://cmake.org)
 
 
@@ -32,9 +33,7 @@ The cmake command offers a number of parameters to control the build process. So
 
 In some cases you may want to set the following options:
 
--DNO_QT_WEBENGINE
-	By default QWebEngine is used for HTML rendering, if available in version >= 5.12.0. Otherwise QtWebKit is used. You can
-	force compilation for QtWebKit by setting: -DNO_QT_WEBENGINE=1
+
 -DR_EXECUTABLE
 	path to the R executable. You may want to set this, if you have multiple versions of R installed, or R is not in your path. Example: -DR_EXECUTABLE=/usr/bin/R
 -DR_HOME
@@ -44,8 +43,6 @@ In some cases you may want to set the following options:
 -DUSE_BINARY_PACKAGES
 	Currently only interpreted on Mac OS: If RKWard should default to installing binary R packages (if available) use
 	-DUSE_BINARY_PACKAGE=1. Otherwise, RKWard will default to building R packages from source.
--DTRANSLATION_SRC_CIR
-	If you have imported translation source files (.po-files) to a separate directory, you can specify this, here.
 
 Further generic options are listed on http://www.cmake.org/Wiki/CMake_Useful_Variables .
 
@@ -73,6 +70,8 @@ If an error occurs directly after starting, this will typically indicate a probl
 Automated tests
 ==================
 
-A series of automated functionality tests can be run unsing 'make plugintests' *after* completing the installation. Unfortunately, these tests are rather prone to false alarms, and thus end users are not currently encouraged to run the tests. However, esp. developers, and packagers patching the sources should run 'make plugintests' after doing their changes. For failed tests, please take some time trying to understand, exactly how the test failed. Often it's just a harmless difference in rounding or formatting of output.
+A series of automated functionality tests can be run using 'build/bin/coretest', after compilation.
+
+An additional set of tests can be run using 'make plugintests', but this second set of tests is quite prone to false alarms (e.g. due to different output with different versions of R). It is therefore mostly useful for monitoring patches for unintended side-effects.
 
 If you see a genuine test failure, unrelated to your patches, please report this to rkward-devel AT kde DOT org, including details on your installed versions of KDE, R, and RKWard.

@@ -341,7 +341,7 @@ class RFn : public QObject {
 	IMPORT_R_API(R_Outputfile);
 #else
 	IMPORT_R_API(R_ProcessEvents);
-	IMPORT_R_API(R_DefParams);
+	IMPORT_R_API(R_DefParamsEx);
 	IMPORT_R_API(R_SetParams);
 	IMPORT_R_API(R_setStartTime);
 	IMPORT_R_API(R_set_command_line_arguments);

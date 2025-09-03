@@ -1,4 +1,5 @@
 --- Version 0.8.2 - UNRELEASED
+- Added: options(error) may now be set freely (no longer needs to be .rk.do.error for correct behavior)
 - Fixed: Attached windows would not always be placed in the most recently active pane (in a split view)
 - Fixed: Crash when switching from dialog to wizard interface in plugins providing a preview
 - Fixed: Crash using context menu while data editor is visible, under certain conditions

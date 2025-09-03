@@ -491,7 +491,7 @@ void RInterface::flushOutput(bool forced) {
 				// An error output is typically just the copy of the previous output, so merge if possible
 				if (command->output_list.isEmpty()) {
 					command->output_list.append(output);
-				} else if (command->output_list.last().output == output.output) {
+				} else {
 					command->output_list.last().type = ROutput::Error;
 					continue; // don't call command->newOutput(), again!
 				}
