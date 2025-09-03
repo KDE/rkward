@@ -404,6 +404,41 @@ class RKWardCoreTest : public QObject {
 		QCOMPARE(output.value(4), u"444"_s);
 	}
 
+	void outputInterleavingTest() {
+		// test interleaving between output via R itself, ourput via system, and the corresponing source lines in the console
+		RInterface::issueCommand(QStringLiteral("sysout <- function(msg) { if (.Platform$OS.type == \"unix\") system(paste0(\"echo \", msg)) else invisible(system(paste0(\"cmd /c echo \", msg))) }"), RCommand::User);
+		RKConsole::mainConsole()->pipeUserCommand(QStringLiteral("cat(\"first\\n\")\ninvisible(\"second\")\nsysout(\"third\")\ncat(\"fourth\\n\")\n"));
+		RInterface::issueCommand(QStringLiteral("rm(sysout)"), RCommand::User);
+		waitForAllFinished();
+		QStringList consoleout = RKConsole::mainConsole()->getFullContent().mid(consoleout.length() - 7);
+		QVERIFY(consoleout.value(0).contains(u"cat"_s));
+		QVERIFY(consoleout.value(0).contains(u"first"_s));
+		QVERIFY(!consoleout.value(1).contains(u"cat"_s));
+		QVERIFY(consoleout.value(1).contains(u"first"_s));
+		QVERIFY(consoleout.value(2).contains(u"second"_s));
+		QVERIFY(consoleout.value(3).contains(u"sysout"_s));
+		QVERIFY(consoleout.value(3).contains(u"third"_s));
+		QVERIFY(!consoleout.value(4).contains(u"sysout"_s));
+		QVERIFY(consoleout.value(4).contains(u"third"_s));
+		QVERIFY(consoleout.value(5).contains(u"cat"_s));
+		QVERIFY(consoleout.value(5).contains(u"fourth"_s));
+		QVERIFY(!consoleout.value(6).contains(u"cat"_s));
+		QVERIFY(consoleout.value(6).contains(u"fourth"_s));
+	}
+
+	void printUtf8Test() {
+		// some stuff we don't expect to work in native locale
+		const auto strings = QStringList() << u"¢Ä"_s << u"€🚚"_s << u"✨☀️"_s;
+		for (const auto &string : strings) {
+			runCommandAsync(new RCommand(u"print(\"%1\"); cat(paste0(\"[\", \"%1\", \"]\"))"_s.arg(string), RCommand::App), nullptr, [string](RCommand *command) {
+				QVERIFY(!command->failed());
+				QVERIFY(command->fullOutput().contains(u"\"%1\""_s.arg(string)));
+				QVERIFY(command->fullOutput().contains(u"[%1]"_s.arg(string)));
+			});
+		}
+		waitForAllFinished();
+	}
+
 	void cancelCommandStressTest() {
 		int cancelled_commands = 0;
 		int commands_out = 0;
