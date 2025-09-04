@@ -29,7 +29,11 @@ IF(NOT NO_CHECK_R)
     MESSAGE (STATUS "R architecture is ${R_ARCH}")
 
     # check R version.
-    SET (R_MIN_VERSION "3.4.4")
+    IF(WIN32)
+      SET(R_MIN_VERSION "4.2.0")
+    ELSE()
+      SET(R_MIN_VERSION "3.4.4")
+    ENDIF()
     MESSAGE (STATUS "Checking R version")
     EXECUTE_PROCESS(
         COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"

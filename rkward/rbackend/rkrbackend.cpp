@@ -232,12 +232,6 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand();
 				if (!command) {
 					RK_DEBUG(RBACKEND, DL_DEBUG, "returning from REPL");
-#ifdef Q_OS_WIN
-					// Can't easily override R_CleanUp on Windows, so we're calling it manually, here, then force exit
-					if (RKRBackend::this_pointer->killed == RKRBackend::ExitNow) RCleanUp(SA_NOSAVE, 0, 0);
-					else RCleanUp(SA_SUICIDE, 1, 0);
-					exit(0);
-#endif
 					return 0; // jumps out of the event loop!
 				}
 
@@ -783,10 +777,10 @@ void RKRBackend::setupCallbacks() {
 	RK_R_Params.YesNoCancel = RAskYesNoCancel;
 	RK_R_Params.Busy = RBusy;
 	RK_R_Params.ResetConsole = RResetConsole;
+	RK_R_Params.CleanUp = RCleanUp; // unfortunately, it seems, we can't safely cancel quitting anymore, here!
+	RK_R_Params.Suicide = RSuicide;
 
-	// TODO: callback mechanism(s) for ChosseFile, ShowFiles, EditFiles
-	// TODO: also for RSuicide (Less important, obviously, since this should not be triggered, in normal operation).
-	// NOTE: For RCleanUp see RReadConsole RCleanup?
+	// TODO: callback mechanism(s) for ChosseFile, ShowFiles, EditFiles still not available on Windows?
 
 	RK_R_Params.R_Quiet = Rboolean::FALSE;
 	RK_R_Params.R_Interactive = Rboolean::TRUE;
@@ -814,7 +808,6 @@ void RKRBackend::connectCallbacks() {
 	// connect R standard callback to our own functions. Important: Don't do so, before our own versions are ready to be used!
 	ROb(R_Outputfile) = nullptr;
 	ROb(R_Consolefile) = nullptr;
-	ROb(ptr_R_Suicide) = RSuicide;
 	ROb(ptr_R_ShowMessage) = RShowMessage; // rarely used in R on unix
 	ROb(ptr_R_ReadConsole) = RReadConsole;
 	ROb(ptr_R_WriteConsoleEx) = RWriteConsoleEx;
