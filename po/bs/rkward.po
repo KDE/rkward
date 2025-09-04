@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kde4.14\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-01 00:39+0000\n"
+"POT-Creation-Date: 2025-09-04 00:39+0000\n"
 "PO-Revision-Date: 2015-02-22 23:06+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian\n"
@@ -3483,29 +3483,29 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:513
+#: rkward/rbackend/rkrbackend.cpp:532
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:534
+#: rkward/rbackend/rkrbackend.cpp:553
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:704
+#: rkward/rbackend/rkrbackend.cpp:764
 #, kde-format
 msgid "Message from the R backend"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:712
+#: rkward/rbackend/rkrbackend.cpp:772
 #, kde-format
 msgid "Question from the R backend"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1620
+#: rkward/rbackend/rkrbackend.cpp:1654
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3518,7 +3518,7 @@ msgid ""
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1624
+#: rkward/rbackend/rkrbackend.cpp:1658
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3528,12 +3528,12 @@ msgid ""
 "p></p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1681
+#: rkward/rbackend/rkrbackend.cpp:1715
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1681
+#: rkward/rbackend/rkrbackend.cpp:1715
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3541,7 +3541,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1681
+#: rkward/rbackend/rkrbackend.cpp:1715
 #, kde-format
 msgid "Ok"
 msgstr ""
