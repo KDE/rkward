@@ -1018,6 +1018,7 @@ bool RKRBackend::startR() {
 #endif
 
 	RFn::setup_Rmainloop();
+	doUpdateLocale(); // call again, as locale may have been re-initialized during startup
 
 #ifndef Q_OS_WIN
 	// safety check: If we are beyond the stack boundaries already, we better disable stack checking
