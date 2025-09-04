@@ -209,8 +209,6 @@ void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 	}
 }
 
-// forward declaration needed on Windows
-void RCleanUp(SA_TYPE saveact, int status, int RunLast);
 void RBusy(int);
 
 int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
@@ -364,12 +362,6 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 	qstrncpy((char *)buf, localres.left(buflen - 2).append('\n').data(), buflen);
 	return 1;
 }
-
-#ifdef Q_OS_WIN
-int RReadConsoleWin(const char *prompt, char *buf, int buflen, int hist) {
-	return RReadConsole(prompt, (unsigned char *)buf, buflen, hist);
-}
-#endif
 
 bool RKRBackend::fetchStdoutStderr(bool forcibly) {
 #ifndef Q_OS_WIN
