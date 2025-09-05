@@ -145,7 +145,7 @@ QString RKROutputBuffer::popOutputCapture(bool highlighted) {
 void appendToOutputList(ROutputList *list, const QString &output, ROutput::ROutputType output_type) {
 	// No trace
 	// Merge with previous output fragment, if of the same type
-	if (!list->isEmpty() && list->last().type == output_type) {
+	if (!list->isEmpty() && list->last().type == output_type && output_type != ROutput::CommandLineIn) {
 		list->last().output.append(output);
 	} else {
 		QString spaced = output;
