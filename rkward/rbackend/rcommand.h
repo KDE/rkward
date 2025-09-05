@@ -48,10 +48,11 @@ class RCommandChain {
 QString is, that additionally we store information on whether the output was "normal", "warning", or an "error". */
 struct ROutput {
 	enum ROutputType {
-		NoOutput, /**< No output. Rarely used. */
-		Output,   /**< normal output */
-		Warning,  /**< R warning */
-		Error     /**< R error */
+		NoOutput,     /**< No output. Rarely used. */
+		Output,       /**< normal output */
+		Warning,      /**< R warning */
+		Error,        /**< R error */
+		CommandLineIn /**< Special type for marking that a source line should be interleaved with the output at this point */
 	};
 	ROutput() : type(NoOutput) {};
 	ROutput(ROutputType type, const QString &output) : type(type), output(output) {};

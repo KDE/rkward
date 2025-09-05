@@ -201,11 +201,10 @@ void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 	RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
 
 	if (reached_newline || reached_eof) {
-		// Making this request synchronous is a bit painful. However, without this, it's extremely difficult to get correct interleaving of output and command lines
-		RKRSupport::InterruptSuspension susp; // This could also result in interrupts, in corner cases, so lets suspend those, for the minute
-		RBackendRequest req(true, RBackendRequest::CommandLineIn);
-		req.params[QStringLiteral("commandid")] = RKRBackend::this_pointer->current_command->id;
-		RKRBackend::this_pointer->handleRequest(&req);
+		// feed a marker into the output stream that a source line of the command shall be interleaved into the output, at this point (if running in the console)
+		RKRBackend::this_pointer->fetchStdoutStderr(true);
+		// NOTE: Output literal is not used, but 0-length "output" would be discarded
+		RKRBackend::this_pointer->handleOutput(u"\n"_s, 1, ROutput::CommandLineIn, false);
 	}
 }
 

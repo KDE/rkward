@@ -471,6 +471,16 @@ void RInterface::flushOutput(bool forced) {
 	const ROutputList list = backendprotocol->flushOutput(forced);
 
 	for (const ROutput &output : list) {
+		if (output.type == ROutput::CommandLineIn) {
+			RCommand *command = all_current_commands.value(0, nullptr); // User command will always be the first.
+			if ((command == nullptr) || (!command->type() & RCommand::User)) {
+				RK_ASSERT(false);
+			} else {
+				command->commandLineIn();
+			}
+			continue;
+		}
+
 		if (all_current_commands.isEmpty()) {
 			RK_DEBUG(RBACKEND, DL_DEBUG, "output without receiver'%s'", qPrintable(output.output));
 			if (RKConsole::mainConsole()) RKConsole::mainConsole()->insertSpontaneousROutput(output); // the "if" is to prevent crash, should output arrive during exit
@@ -829,15 +839,7 @@ void RInterface::processRBackendRequest(RBackendRequest *request) {
 	// first, copy out the type. Allows for easier typing below
 	RBackendRequest::RCallbackType type = request->type;
 
-	if (type == RBackendRequest::CommandLineIn) {
-		int id = request->params[QStringLiteral("commandid")].toInt();
-		RCommand *command = all_current_commands.value(0, nullptr); // User command will always be the first.
-		if ((command == nullptr) || (command->id() != id)) {
-			RK_ASSERT(false);
-		} else {
-			command->commandLineIn();
-		}
-	} else if (type == RBackendRequest::ShowMessage) {
+	if (type == RBackendRequest::ShowMessage) {
 		QString caption = request->params[QStringLiteral("caption")].toString();
 		QString message = request->params[QStringLiteral("message")].toString();
 		QString button_yes = request->params[QStringLiteral("button_yes")].toString();
