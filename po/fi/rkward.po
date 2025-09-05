@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-04 00:39+0000\n"
+"POT-Creation-Date: 2025-09-05 00:38+0000\n"
 "PO-Revision-Date: 2024-12-23 19:57+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3759,12 +3759,12 @@ msgstr "Taustaosaprosessin käynnistyi epäonnistui paluukoodilla %1."
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Taustaosaprosessi päättyi koodiin %1."
 
-#: rkward/rbackend/rkrbackend.cpp:532
+#: rkward/rbackend/rkrbackend.cpp:465
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R-moottori on sulkeutunut ja asettanut tilaksi: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:553
+#: rkward/rbackend/rkrbackend.cpp:486
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3773,17 +3773,17 @@ msgstr ""
 "R-moottori on kohdannut vakavan virheen:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:764
+#: rkward/rbackend/rkrbackend.cpp:697
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Viesti R-taustaosasta"
 
-#: rkward/rbackend/rkrbackend.cpp:772
+#: rkward/rbackend/rkrbackend.cpp:705
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Kysymys R-taustaosasta"
 
-#: rkward/rbackend/rkrbackend.cpp:1654
+#: rkward/rbackend/rkrbackend.cpp:1582
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3815,7 +3815,7 @@ msgstr ""
 "href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>."
 "</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1658
+#: rkward/rbackend/rkrbackend.cpp:1586
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3835,12 +3835,12 @@ msgstr ""
 "lopettaa RKWard ja korjata asennus</b>. Lisäohjeita tähän: <a href=\"http://"
 "rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Grafiikan versioristiriita"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3851,7 +3851,7 @@ msgstr ""
 "vaatii uudelleenkoostamisen.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Lisätietoa</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Ok"
 msgstr "OK"
@@ -4093,37 +4093,37 @@ msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr ""
 "R-historiatiedostot [*.Rhistory] (*.Rhistory);;Kaikki tiedostot [*] (*)"
 
-#: rkward/rkconsole.cpp:826
+#: rkward/rkconsole.cpp:835
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Keskeytä käynnissä oleva komento"
 
-#: rkward/rkconsole.cpp:833
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopioi valinta sellaisenaan"
 
-#: rkward/rkconsole.cpp:836
+#: rkward/rkconsole.cpp:845
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopioi vain komennot"
 
-#: rkward/rkconsole.cpp:843
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Print Console"
 msgstr "Tulosta konsoli"
 
-#: rkward/rkconsole.cpp:849
+#: rkward/rkconsole.cpp:858
 #, kde-format
 msgid "Import command history..."
 msgstr "Tuo komentohistoria…"
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:860
 #, kde-format
 msgid "Export command history..."
 msgstr "Vie komentohistoria…"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4136,17 +4136,17 @@ msgstr ""
 "konsolin komentoon vai alustaa ensin konsolin? Valitse Peru, ellet haluat "
 "käynnistää uutta komentoa nyt."
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "R Console is busy"
 msgstr "R-konsolilla on kiire"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Append"
 msgstr "Lisää komento"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Alusta ja lähetä komento sitten"

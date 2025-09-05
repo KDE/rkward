@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-04 00:39+0000\n"
+"POT-Creation-Date: 2025-09-05 00:38+0000\n"
 "PO-Revision-Date: 2025-08-30 19:21+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -3880,12 +3880,12 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "El proceso del motor ha terminado con código %1, mensaje: «%2»."
 
-#: rkward/rbackend/rkrbackend.cpp:532
+#: rkward/rbackend/rkrbackend.cpp:465
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "El motor R se ha apagado con el estado: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:553
+#: rkward/rbackend/rkrbackend.cpp:486
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3894,17 +3894,17 @@ msgstr ""
 "El motor R ha encontrado un error fatal:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:764
+#: rkward/rbackend/rkrbackend.cpp:697
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Mensaje del motor R"
 
-#: rkward/rbackend/rkrbackend.cpp:772
+#: rkward/rbackend/rkrbackend.cpp:705
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Pregunta del motor R"
 
-#: rkward/rbackend/rkrbackend.cpp:1654
+#: rkward/rbackend/rkrbackend.cpp:1582
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3926,7 +3926,7 @@ msgstr ""
 "instalación</b>. Para ayuda con eso vea <a href=\"https://rkward.kde.org/"
 "compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1658
+#: rkward/rbackend/rkrbackend.cpp:1586
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3940,12 +3940,12 @@ msgstr ""
 "ahora y reparar su instalación</b>. Para ayuda con eso vea <a href=\"https://"
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Incompatibilidad de versión de gráficos"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3956,7 +3956,7 @@ msgstr ""
 "cambio require una recompilación.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Información adicional</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Ok"
 msgstr "Aceptar"
@@ -4211,37 +4211,37 @@ msgstr ""
 "Archivos de historial de R [*.Rhistory] (*.Rhistory);;Todos los archivos [*]"
 "(*)"
 
-#: rkward/rkconsole.cpp:826
+#: rkward/rkconsole.cpp:835
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Interrumpir la orden en ejecución"
 
-#: rkward/rkconsole.cpp:833
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Copiar la selección tal cual"
 
-#: rkward/rkconsole.cpp:836
+#: rkward/rkconsole.cpp:845
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Copiar solamente las órdenes"
 
-#: rkward/rkconsole.cpp:843
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Print Console"
 msgstr "Imprimir la consola"
 
-#: rkward/rkconsole.cpp:849
+#: rkward/rkconsole.cpp:858
 #, kde-format
 msgid "Import command history..."
 msgstr "Importar historial de órdenes…"
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:860
 #, kde-format
 msgid "Export command history..."
 msgstr "Exportar historial de órdenes…"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4254,17 +4254,17 @@ msgstr ""
 "la orden a la consola como está o reiniciar esta primero? Pulse «Cancelar» "
 "si no desea ejecutar la orden ahora."
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "R Console is busy"
 msgstr "La consola de R está ocupada"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Append"
 msgstr "Enviar"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Reiniciar, luego enviar"

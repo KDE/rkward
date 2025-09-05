@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-04 00:39+0000\n"
+"POT-Creation-Date: 2025-09-05 00:38+0000\n"
 "PO-Revision-Date: 2025-08-25 10:33+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -3845,12 +3845,12 @@ msgstr "Zaledni proces se ni uspel zagnati z izhodno kodo %1, sporočilo: %2."
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Zaledni proces se je končal s kodo %1, sporočilo: '%2'."
 
-#: rkward/rbackend/rkrbackend.cpp:532
+#: rkward/rbackend/rkrbackend.cpp:465
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "Stroj R se je ustavil s stanjem: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:553
+#: rkward/rbackend/rkrbackend.cpp:486
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3859,17 +3859,17 @@ msgstr ""
 "Stroj R je naletel na usodno napako:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:764
+#: rkward/rbackend/rkrbackend.cpp:697
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Sporočilo zaledja R"
 
-#: rkward/rbackend/rkrbackend.cpp:772
+#: rkward/rbackend/rkrbackend.cpp:705
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Vprašanje zaledja R"
 
-#: rkward/rbackend/rkrbackend.cpp:1654
+#: rkward/rbackend/rkrbackend.cpp:1582
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3890,7 +3890,7 @@ msgstr ""
 "namestitev.</b> Za pomoč pri tem si oglejte <a href=\"http://rkward.kde.org/"
 "compiling\">http://rkward.kde.org/compiling.</a></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1658
+#: rkward/rbackend/rkrbackend.cpp:1586
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3904,12 +3904,12 @@ msgstr ""
 "popravite namestitev.</b> Za pomoč pri tem si oglejte <a href=\"http://"
 "rkward.kde.org/compiling\">http://rkward.kde.org/compiling.</a></p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Neustrezni inačici grafike"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3920,7 +3920,7 @@ msgstr ""
 "zahteva ponovni prevod.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Dodatne informacije</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Ok"
 msgstr "V redu"
@@ -4163,37 +4163,37 @@ msgstr "Izberite ime datoteke za shranjevanje zgodovine ukazov"
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "Datoteke zgodovine R [*.Rhistory] (*.Rhistory);;Vse datoteke [*] (*)"
 
-#: rkward/rkconsole.cpp:826
+#: rkward/rkconsole.cpp:835
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Prekini izvajanje ukaza"
 
-#: rkward/rkconsole.cpp:833
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopiraj izbor dobesedno"
 
-#: rkward/rkconsole.cpp:836
+#: rkward/rkconsole.cpp:845
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopiraj samo ukaze"
 
-#: rkward/rkconsole.cpp:843
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Print Console"
 msgstr "Natisni konzolo"
 
-#: rkward/rkconsole.cpp:849
+#: rkward/rkconsole.cpp:858
 #, kde-format
 msgid "Import command history..."
 msgstr "Uvozi zgodovino ukazov ..."
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:860
 #, kde-format
 msgid "Export command history..."
 msgstr "Izvozi zgodovino ukazov ..."
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4206,17 +4206,17 @@ msgstr ""
 "ukazu v konzoli ali želite najprej ponastaviti konzolo? Pritisnite prekliči, "
 "če ne želite zagnati novega ukaza."
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "R Console is busy"
 msgstr "Konzola R je zasedena"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Append"
 msgstr "Dopolni"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Ponastavi, nato pa oddaj"

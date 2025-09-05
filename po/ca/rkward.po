@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-04 00:39+0000\n"
+"POT-Creation-Date: 2025-09-05 00:38+0000\n"
 "PO-Revision-Date: 2025-08-28 14:23+0200\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -3912,12 +3912,12 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "El procés del dorsal ha sortit amb el codi %1, missatge: «%2»."
 
-#: rkward/rbackend/rkrbackend.cpp:532
+#: rkward/rbackend/rkrbackend.cpp:465
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "El motor R s'ha aturat amb l'estat: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:553
+#: rkward/rbackend/rkrbackend.cpp:486
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3926,17 +3926,17 @@ msgstr ""
 "El motor R ha trobat un error fatal:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:764
+#: rkward/rbackend/rkrbackend.cpp:697
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Missatge del dorsal R"
 
-#: rkward/rbackend/rkrbackend.cpp:772
+#: rkward/rbackend/rkrbackend.cpp:705
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Pregunta del dorsal R"
 
-#: rkward/rbackend/rkrbackend.cpp:1654
+#: rkward/rbackend/rkrbackend.cpp:1582
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3958,7 +3958,7 @@ msgstr ""
 "això, consultar <a href=\"https://rkward.kde.org/compiling\">https://rkward."
 "kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1658
+#: rkward/rbackend/rkrbackend.cpp:1586
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3973,12 +3973,12 @@ msgstr ""
 "consulteu <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "La versió del motor gràfic no coincideix"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3989,7 +3989,7 @@ msgstr ""
 "canvi requereix una recompilació.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Informació addicional</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Ok"
 msgstr "D'acord"
@@ -4244,37 +4244,37 @@ msgstr ""
 "Fitxers de l'historial de l'R [*.Rhistory] (*.Rhistory);;Tots els fitxers "
 "[*] (*)"
 
-#: rkward/rkconsole.cpp:826
+#: rkward/rkconsole.cpp:835
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Interromp l'execució de l'ordre"
 
-#: rkward/rkconsole.cpp:833
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Copia la selecció literalment"
 
-#: rkward/rkconsole.cpp:836
+#: rkward/rkconsole.cpp:845
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Només copia les ordres"
 
-#: rkward/rkconsole.cpp:843
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Print Console"
 msgstr "Imprimeix la consola"
 
-#: rkward/rkconsole.cpp:849
+#: rkward/rkconsole.cpp:858
 #, kde-format
 msgid "Import command history..."
 msgstr "Importa l'historial d'ordres..."
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:860
 #, kde-format
 msgid "Export command history..."
 msgstr "Exporta l'historial d'ordres..."
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4288,17 +4288,17 @@ msgstr ""
 "abans voleu reiniciar la consola? Premeu cancel·la si ara no voleu executar "
 "l'ordre nova."
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "R Console is busy"
 msgstr "La consola de l'R està ocupada"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Append"
 msgstr "Afegeix"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Reinicia, després envia"

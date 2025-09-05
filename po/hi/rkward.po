@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-04 00:39+0000\n"
+"POT-Creation-Date: 2025-09-05 00:38+0000\n"
 "PO-Revision-Date: 2024-12-15 19:29+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -3771,12 +3771,12 @@ msgstr "बैकएंड प्रक्रिया निकास कोड
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "बैकएंड प्रक्रिया कोड %1, संदेश: '%2' के साथ बाहर निकल गई है।"
 
-#: rkward/rbackend/rkrbackend.cpp:532
+#: rkward/rbackend/rkrbackend.cpp:465
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R इंजन बंद हो गया है, स्थिति: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:553
+#: rkward/rbackend/rkrbackend.cpp:486
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3785,17 +3785,17 @@ msgstr ""
 "R इंजन को एक घातक त्रुटि का सामना करना पड़ा है:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:764
+#: rkward/rbackend/rkrbackend.cpp:697
 #, kde-format
 msgid "Message from the R backend"
 msgstr "आर बैकएंड से संदेश"
 
-#: rkward/rbackend/rkrbackend.cpp:772
+#: rkward/rbackend/rkrbackend.cpp:705
 #, kde-format
 msgid "Question from the R backend"
 msgstr "आर बैकएंड से प्रश्न"
 
-#: rkward/rbackend/rkrbackend.cpp:1654
+#: rkward/rbackend/rkrbackend.cpp:1582
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3816,7 +3816,7 @@ msgstr ""
 "लिए, <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/"
 "compiling</a> देखें।</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1658
+#: rkward/rbackend/rkrbackend.cpp:1586
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3830,12 +3830,12 @@ msgstr ""
 "को ठीक करना चाहिए</b> । इस बारे में सहायता के लिए, <a href=\"https://rkward.kde."
 "org/compiling\">https://rkward.kde.org/compiling</a> देखें।</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "ग्राफ़िक्स संस्करण बेमेल"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3846,7 +3846,7 @@ msgstr ""
 "की आवश्यकता है।<br> <a href=\"rkward://page/rkward_incompatible_version"
 "\">अतिरिक्त जानकारी</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1715
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Ok"
 msgstr "ठीक है"
@@ -4087,37 +4087,37 @@ msgstr "कमांड इतिहास सहेजने के लिए �
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "आर इतिहास फ़ाइलें [*.Rhistory] (*.Rhistory);;सभी फ़ाइलें [*] (*)"
 
-#: rkward/rkconsole.cpp:826
+#: rkward/rkconsole.cpp:835
 #, kde-format
 msgid "Interrupt running command"
 msgstr "चल रहे आदेश को बाधित करें"
 
-#: rkward/rkconsole.cpp:833
+#: rkward/rkconsole.cpp:842
 #, kde-format
 msgid "Copy selection literally"
 msgstr "चयन की शाब्दिक प्रतिलिपि बनाएँ"
 
-#: rkward/rkconsole.cpp:836
+#: rkward/rkconsole.cpp:845
 #, kde-format
 msgid "Copy commands, only"
 msgstr "केवल आदेश कॉपी करें"
 
-#: rkward/rkconsole.cpp:843
+#: rkward/rkconsole.cpp:852
 #, kde-format
 msgid "Print Console"
 msgstr "प्रिंट कंसोल"
 
-#: rkward/rkconsole.cpp:849
+#: rkward/rkconsole.cpp:858
 #, kde-format
 msgid "Import command history..."
 msgstr "आदेश इतिहास आयात करें..."
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:860
 #, kde-format
 msgid "Export command history..."
 msgstr "कमांड इतिहास निर्यात करें..."
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4130,17 +4130,17 @@ msgstr ""
 "जोड़ना चाहते हैं, या आप पहले कंसोल को रीसेट करना चाहते हैं? यदि आप अभी नया कमांड नहीं "
 "चलाना चाहते हैं, तो कैंसिल दबाएँ।"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "R Console is busy"
 msgstr "आर कंसोल व्यस्त है"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Append"
 msgstr "संलग्न"
 
-#: rkward/rkconsole.cpp:870
+#: rkward/rkconsole.cpp:879
 #, kde-format
 msgid "Reset, then submit"
 msgstr "रीसेट करें, फिर सबमिट करें"
