@@ -31,7 +31,6 @@ Description[sl]=Protokol za zagon RKWarda iz povezav
 Description[sv]=Ett protokoll för körning av RKWard mot länkar
 Description[tr]=RKWard’ın yeniden çalıştırma bağlantıları için bir protokol
 Description[uk]=Протокол для запуску RKWard для обробки посилань
-Description[x-test]=xxA protocol for RKWard's run again linksxx
 Description[zh_TW]=RKWard 的再次執行連結用的協定
 input=none
 output=none
