@@ -29,7 +29,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #	include <CoreFoundation/CoreFoundation.h>
 #endif
 
-void RK_setupGettext(const QString &);
 QMutex RK_Debug_Mutex;
 
 void RKDebugMessageOutput(QtMsgType type, const QMessageLogContext &, const QString &msg) {

@@ -58,7 +58,7 @@ structRstart RK_R_Params;
 ///// i18n
 #include <KLocalizedString>
 #define RK_MSG_DOMAIN "rkward"
-void RK_setupGettext(const QString &locale_dir) {
+static void RK_setupGettext(const QString &locale_dir) {
 	KLocalizedString::setApplicationDomain(RK_MSG_DOMAIN);
 	if (!locale_dir.isEmpty()) {
 		KLocalizedString::addDomainLocaleDir(RK_MSG_DOMAIN, locale_dir);
@@ -143,16 +143,12 @@ void RKRBackend::interruptCommand(int command_id) {
 	}
 }
 
-void clearPendingInterrupt_Worker(void *) {
-	RFn::R_CheckUserInterrupt();
-}
-
 void RKRBackend::clearPendingInterrupt() {
 	RK_TRACE(RBACKEND);
 	if (!RK_IsRInterruptPending()) return;
 	RKRBackend::repl_status.interrupted = false;
 
-	bool passed = RFn::R_ToplevelExec(clearPendingInterrupt_Worker, nullptr);
+	bool passed = RFn::R_ToplevelExec([](void *) { RFn::R_CheckUserInterrupt(); }, nullptr);
 	if (!passed) RK_DEBUG(RBACKEND, DL_DEBUG, "pending interrupt cleared");
 	RK_ASSERT(!passed);
 }
@@ -167,7 +163,7 @@ static void markLastWarningAsErrorMessage() {
 extern SEXP RKWard_RData_Tag;
 
 // ############## R Standard callback overrides BEGIN ####################
-void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
+static void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 	RK_TRACE(RBACKEND);
 
 	RK_ASSERT(RKRBackend::repl_status.user_command_transmitted_up_to <= RKRBackend::repl_status.user_command_buffer.length()); // NOTE: QByteArray::length () does not count the trailing '\0'
@@ -352,7 +348,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 	RKRBackend::this_pointer->handleRequest(&request);
 	if (request.params[QStringLiteral("cancelled")].toBool()) {
 		if (RKRBackend::this_pointer->current_command) RKRBackend::this_pointer->current_command->status |= RCommand::Canceled;
-		RFn::Rf_error("cancelled");
+		RFn::Rf_error("cancelled"); // TODO: probably a memleak, as d'tors (request, params) won't be called
 		RK_ASSERT(false); // should not reach this point.
 	}
 
@@ -519,7 +515,7 @@ void RKRBackend::tryToDoEmergencySave() {
 	}
 }
 
-QStringList charPArrayToQStringList(const char **chars, int count) {
+static QStringList charPArrayToQStringList(const char **chars, int count) {
 	QStringList ret;
 	for (int i = 0; i < count; ++i) {
 		// do we need to do locale conversion, here?
@@ -733,7 +729,6 @@ void RResetConsole() {
 
 // ############## R Standard callback overrides END ####################
 
-SEXP doUpdateLocale();
 // NOTE: stdout_stderr_mutex is recursive to support fork()s, better
 RKRBackend::RKRBackend() : stdout_stderr_mutex() {
 	RK_TRACE(RBACKEND);
@@ -741,7 +736,7 @@ RKRBackend::RKRBackend() : stdout_stderr_mutex() {
 	RK_ASSERT(this_pointer == nullptr);
 	this_pointer = this;
 
-	doUpdateLocale();
+	RKTextCodec::reinit();
 	r_running = false;
 
 	current_command = nullptr;
@@ -786,11 +781,6 @@ void RKRBackend::connectCallbacks() {
 void RKRBackend::setupCallbacks() {
 	RK_TRACE(RBACKEND);
 }
-/*
-SEXP dummyselectlist (SEXP, SEXP, SEXP, SEXP) {
-    qDebug ("got it");
-    return ROb(R_NilValue);
-}*/
 
 void RKRBackend::connectCallbacks() {
 	RK_TRACE(RBACKEND);
@@ -813,8 +803,6 @@ void RKRBackend::connectCallbacks() {
 	// TODO: R devels disabled this for some reason. We set it anyway...
 	ROb(ptr_R_EditFile) = REditFile;
 	//	ROb(ptr_R_EditFiles) = REditFiles;		// undefined reference
-	/*	ROb(ptr_do_selectlist) = dummyselectlist;
-	    ROb(ptr_do_dataviewer) = dummyselectlist;*/
 
 	// these two, we won't override
 	//	ROb(ptr_R_loadhistory) = ... 	// we keep our own history
@@ -832,20 +820,12 @@ SEXP doRCall(SEXP _call, SEXP _args, SEXP _sync, SEXP _nested) {
 
 	RFn::R_CheckUserInterrupt();
 
-	QString call = RKRSupport::SEXPToStringList(_call).value(0);
-	/*	// this is a useful place to sneak in test code for profiling
-	    if (list.value (0) == "testit") {
-	        for (int i = 10000; i >= 1; --i) {
-	            setWarnOption (i);
-	        }
-	        return ROb(R_NilValue);
-	    } */
 	bool sync = RKRSupport::SEXPToInt(_sync);
 	bool nested = RKRSupport::SEXPToInt(_nested);
 	RKRBackend::RequestFlags flags = sync ? (nested ? RKRBackend::SynchronousWithSubcommands : RKRBackend::Synchronous) : RKRBackend::Asynchronous;
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
-	auto ret = RKRBackend::this_pointer->doRCallRequest(call, RKRSupport::SEXPToNestedStrings(_args), flags);
+	auto ret = RKRBackend::this_pointer->doRCallRequest(RKRSupport::SEXPToStringList(_call).value(0), RKRSupport::SEXPToNestedStrings(_args), flags);
 	if (!ret.warning.isEmpty()) RFn::Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData()); // print warnings, first, as errors will cause a stop
 	if (!ret.error.isEmpty()) RFn::Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
 
@@ -898,10 +878,6 @@ SEXP doSimpleBackendCall(SEXP _call) {
 
 	RK_ASSERT(false); // Unhandled call.
 	return ROb(R_NilValue);
-}
-
-void R_CheckStackWrapper(void *) {
-	RFn::R_CheckStack();
 }
 
 SEXP doUpdateLocale() {
@@ -1002,12 +978,12 @@ bool RKRBackend::startR() {
 #endif
 
 	RFn::setup_Rmainloop();
-	doUpdateLocale(); // call again, as locale may have been re-initialized during startup
+	RKTextCodec::reinit(); // call again, as locale may have been re-initialized during startup
 
 #ifndef Q_OS_WIN
 	// safety check: If we are beyond the stack boundaries already, we better disable stack checking
 	// this has to come *after* the first setup_Rmainloop ()!
-	Rboolean stack_ok = RFn::R_ToplevelExec(R_CheckStackWrapper, nullptr);
+	Rboolean stack_ok = RFn::R_ToplevelExec([](void *) { RFn::R_CheckStack(); }, nullptr);
 	if (!stack_ok) {
 		RK_DEBUG(RBACKEND, DL_WARNING, "R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize.");
 		RK_DEBUG(RBACKEND, DL_WARNING, "Whether or not things work after this, *please* submit a bug report.");
