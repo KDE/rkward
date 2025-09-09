@@ -1,6 +1,6 @@
 /*
 rkrbackend - This file is part of RKWard (https://rkward.kde.org). Created: Sun Jul 25 2004
-SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -111,7 +111,7 @@ void RKRBackend::interruptCommand(int command_id) {
 
 	/** A request to interrupt a command may happen at very different points in the code:
 	 *  0) before it was even sent from the frontend -> frontend will not even send it to the backend code
-	 *  1) after is was sent from the frontend, but before we properly started handling it in the backend (deserializing the request, pushing it onto
+	 *  1) after it was sent from the frontend, but before we properly started handling it in the backend (deserializing the request, pushing it onto
 	 *     all_current_commands, feeding it into the REPL/eval) TODO: buggy!
 	 *  2) when it is properly running in the backend -> this is the typical case, we worry about
 	 *  2b) when it is properly running in the backend, but there is also an active sub-command, which we should allow to complete
@@ -1130,92 +1130,6 @@ void RKRBackend::enterEventLoop() {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "R loop finished");
 }
 
-struct SafeParseWrap {
-	SEXP cv;
-	SEXP pr;
-	ParseStatus status;
-};
-
-void safeParseVector(void *data) {
-	SafeParseWrap *wrap = static_cast<SafeParseWrap *>(data);
-	wrap->pr = nullptr;
-	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
-	wrap->pr = RFn::R_ParseVector(wrap->cv, -1, &(wrap->status), ROb(R_NilValue));
-}
-
-SEXP parseCommand(const QString &command_qstring, RKRBackend::RKWardRError *error) {
-	RK_TRACE(RBACKEND);
-
-	SafeParseWrap wrap;
-	wrap.status = PARSE_NULL;
-
-	QByteArray localc = RKTextCodec::toNative(command_qstring); // needed so the string below does not go out of scope
-	const char *command = localc.data();
-
-	RFn::Rf_protect(wrap.cv = RFn::Rf_allocVector(STRSXP, 1));
-	RFn::SET_STRING_ELT(wrap.cv, 0, RFn::Rf_mkChar(command));
-
-	// Yes, if there is an error in the parse, R does jump back to toplevel!
-	// trying to parse list(""=1) is an example in R 3.1.1
-	RFn::R_ToplevelExec(safeParseVector, &wrap);
-	SEXP pr = wrap.pr;
-	RFn::Rf_unprotect(1);
-
-	if ((!pr) || (RFn::TYPEOF(pr) == NILSXP)) {
-		// got a null SEXP. This means parse was *not* ok, even if R_ParseVector told us otherwise
-		if (wrap.status == PARSE_OK) {
-			wrap.status = PARSE_ERROR;
-			printf("weird parse error\n");
-		}
-	}
-
-	if (wrap.status != PARSE_OK) {
-		if ((wrap.status == PARSE_INCOMPLETE) || (wrap.status == PARSE_EOF)) {
-			*error = RKRBackend::Incomplete;
-		} else if (wrap.status == PARSE_ERROR) {
-			// extern SEXP parseError (SEXP call, int linenum);
-			// parseError (ROb(R_NilValue), 0);
-			*error = RKRBackend::SyntaxError;
-		} else { // PARSE_NULL
-			*error = RKRBackend::OtherError;
-		}
-		pr = ROb(R_NilValue);
-	}
-
-	return pr;
-}
-
-SEXP runCommandInternalBase(SEXP pr, RKRBackend::RKWardRError *error) {
-	RK_TRACE(RBACKEND);
-
-	SEXP exp;
-	int r_error = 0;
-
-	exp = ROb(R_NilValue);
-
-	if (RFn::TYPEOF(pr) == EXPRSXP && RFn::LENGTH(pr) > 0) {
-		int bi = 0;
-		while (bi < RFn::LENGTH(pr)) {
-			SEXP pxp = RFn::VECTOR_ELT(pr, bi);
-			exp = RFn::R_tryEval(pxp, ROb(R_GlobalEnv), &r_error);
-			bi++;
-			if (r_error) {
-				break;
-			}
-		}
-	} else {
-		exp = RFn::R_tryEval(pr, ROb(R_GlobalEnv), &r_error);
-	}
-
-	if (r_error) {
-		*error = RKRBackend::OtherError;
-	} else {
-		*error = RKRBackend::NoError;
-	}
-
-	return exp;
-}
-
 bool RKRBackend::runDirectCommand(const QString &command) {
 	RK_TRACE(RBACKEND);
 
@@ -1233,7 +1147,7 @@ RCommandProxy *RKRBackend::runDirectCommand(const QString &command, RCommand::Co
 	return c;
 }
 
-void setWarnOption(int level) {
+static void setWarnOption(int level, bool tryeval = false) {
 	SEXP s, t;
 	RFn::Rf_protect(t = s = RFn::Rf_allocList(2));
 	RFn::SET_TYPEOF(s, LANGSXP);
@@ -1242,16 +1156,95 @@ void setWarnOption(int level) {
 	RFn::SETCAR(t, RFn::Rf_ScalarInteger(level));
 	RFn::SET_TAG(t, RFn::Rf_install("warn"));
 	// The above is rougly equivalent to parseCommand ("options(warn=" + QString::number (level) + ")", &error), but ~100 times faster
-	RKRBackend::RKWardRError error;
-	runCommandInternalBase(s, &error);
+	if (tryeval) {
+		int error;
+		RFn::R_tryEval(s, ROb(R_GlobalEnv), &error);
+	} else RFn::Rf_eval(s, ROb(R_GlobalEnv));
 	RFn::Rf_unprotect(1);
+}
+
+struct RKParseAndRunData {
+	enum ReachedState { None,
+		                Parsed,
+		                SetWarn,
+		                Evalled,
+		                ResetWarn };
+	ReachedState status = None;
+	RCommandProxy *command;
+	QByteArray commandbuf; // cannot live on stack inside parseAndRunWorker
+	int warn_level;
+};
+static void parseAndRunWorker(void *_data) {
+	RK_TRACE(RBACKEND);
+	auto data = static_cast<RKParseAndRunData *>(_data);
+
+	// WARNING: R may longjmp out of this function at several points. Therefore:
+	//          No objects with d'tors on the stack, please! (Or exceptions, or other fancy C++ stuff)
+	SEXP commandexp, parsed, exp;
+	RFn::Rf_protect(commandexp = RFn::Rf_allocVector(STRSXP, 1));
+	data->commandbuf = RKTextCodec::toNative(data->command->command);
+	RFn::SET_STRING_ELT(commandexp, 0, RFn::Rf_mkChar(data->commandbuf.data()));
+	ParseStatus parsestatus;
+	RFn::Rf_protect(parsed = RFn::R_ParseVector(commandexp, -1, &parsestatus, ROb(R_NilValue)));
+	// if we reached this point, parsing (successful or not) did not result in a longjmp - which may actually happen:
+	// trying to parse list(""=1) is an example in R 3.1.1
+	data->status = RKParseAndRunData::Parsed;
+
+	if ((parsestatus != PARSE_OK) || (!parsed) || (RFn::TYPEOF(parsed) == NILSXP)) {
+		// NOTE: according to historic code, it is possible for parsed to nullptr or R_NilValue, even though
+		//       parse_status == PARSE_OK. Not sure, if this is actually true
+		if ((parsestatus == PARSE_INCOMPLETE) || (parsestatus == PARSE_EOF)) {
+			data->command->status |= RCommand::ErrorIncomplete;
+		} else if (parsestatus == PARSE_NULL) {
+			data->status = RKParseAndRunData::ResetWarn; // we're done despite returning early
+		} else if (parsestatus == PARSE_ERROR) {
+			data->command->status |= RCommand::ErrorSyntax;
+		}
+		RFn::Rf_unprotect(2);
+		return;
+	}
+
+	// Make sure any warnings arising during the command actually get associated with it (rather than getting printed after the next user command)
+	data->warn_level = RKRSupport::SEXPToInt(RFn::Rf_GetOption1(RFn::Rf_install("warn")), 0);
+	if (data->warn_level != 1) {
+		setWarnOption(1);
+		data->status = RKParseAndRunData::SetWarn;
+	}
+
+	// evaluate the actual command - also, if it consists of multiple expressions, internally
+	if (RFn::TYPEOF(parsed) == EXPRSXP && RFn::LENGTH(parsed) > 0) {
+		const int len = RFn::LENGTH(parsed);
+		for (int bi = 0; bi < len; bi++) {
+			SEXP pxp = RFn::VECTOR_ELT(parsed, bi);
+			exp = RFn::Rf_eval(pxp, ROb(R_GlobalEnv));
+		}
+	} else {
+		exp = RFn::Rf_eval(parsed, ROb(R_GlobalEnv));
+	}
+	RFn::Rf_protect(exp);
+	data->status = RKParseAndRunData::Evalled;
+
+	if (data->warn_level != 1) setWarnOption(data->warn_level);
+	data->status = RKParseAndRunData::ResetWarn;
+
+	const auto ctype = data->command->type;
+	if (ctype & RCommand::GetStringVector) {
+		data->command->setData(RKRSupport::SEXPToStringList(exp));
+	} else if (ctype & RCommand::GetRealVector) {
+		data->command->setData(RKRSupport::SEXPToRealArray(exp));
+	} else if (ctype & RCommand::GetIntVector) {
+		data->command->setData(RKRSupport::SEXPToIntArray(exp));
+	} else if (ctype & RCommand::GetStructuredData) {
+		RData *dummy = RKRSupport::SEXPToRData(exp);
+		data->command->swallowData(*dummy);
+		delete dummy;
+	}
+	RFn::Rf_unprotect(3); // commandexp, parsed, exp
 }
 
 void RKRBackend::runCommand(RCommandProxy *command) {
 	RK_TRACE(RBACKEND);
 	RK_ASSERT(command);
-
-	RKWardRError error = NoError;
 
 	int ctype = command->type; // easier typing
 
@@ -1269,47 +1262,24 @@ void RKRBackend::runCommand(RCommandProxy *command) {
 		killed = ExitNow;
 	} else if (!(ctype & RCommand::EmptyCommand)) {
 		repl_status.eval_depth++;
-		SEXP parsed = parseCommand(command->command, &error);
-		if (error == NoError) {
-			RFn::Rf_protect(parsed);
-			SEXP exp;
-			// Make sure any warning arising during the command actually get assuciated with it (rather than getting printed, after the next user command)
-			int warn_level = RKRSupport::SEXPToInt(RFn::Rf_GetOption1(RFn::Rf_install("warn")), 0);
-			if (warn_level != 1) setWarnOption(1);
-			RFn::Rf_protect(exp = runCommandInternalBase(parsed, &error));
-			if (warn_level != 1) setWarnOption(warn_level);
-
-			if (error == NoError) {
-				if (ctype & RCommand::GetStringVector) {
-					command->setData(RKRSupport::SEXPToStringList(exp));
-				} else if (ctype & RCommand::GetRealVector) {
-					command->setData(RKRSupport::SEXPToRealArray(exp));
-				} else if (ctype & RCommand::GetIntVector) {
-					command->setData(RKRSupport::SEXPToIntArray(exp));
-				} else if (ctype & RCommand::GetStructuredData) {
-					RData *dummy = RKRSupport::SEXPToRData(exp);
-					command->swallowData(*dummy);
-					delete dummy;
-				}
+		RKParseAndRunData data;
+		data.command = command;
+		RFn::R_ToplevelExec(&parseAndRunWorker, &data);
+		// fix up after conditions that would have cause parseAndRunWorker() to exit via longjmp
+		command->status |= RCommand::WasTried;
+		if (data.status < RKParseAndRunData::ResetWarn) {
+			markLastWarningAsErrorMessage();
+			command->status |= RCommand::Failed;
+			if (data.status < RKParseAndRunData::Parsed) {
+				command->status |= RCommand::ErrorSyntax;
+			} else if (!(command->status & RCommand::Canceled)) {
+				command->status |= RCommand::ErrorOther;
 			}
-			RFn::Rf_unprotect(2); // exp, parsed
+			if (data.status >= RKParseAndRunData::SetWarn) {
+				setWarnOption(data.warn_level, true);
+			}
 		}
 		repl_status.eval_depth--;
-	}
-
-	// common error/status handling
-	if (error != NoError) {
-		command->status |= RCommand::WasTried | RCommand::Failed;
-		if (error == Incomplete) {
-			command->status |= RCommand::ErrorIncomplete;
-		} else if (error == SyntaxError) {
-			command->status |= RCommand::ErrorSyntax;
-		} else if (!(command->status & RCommand::Canceled)) {
-			command->status |= RCommand::ErrorOther;
-		}
-		markLastWarningAsErrorMessage();
-	} else {
-		command->status |= RCommand::WasTried;
 	}
 }
 

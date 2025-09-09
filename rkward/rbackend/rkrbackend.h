@@ -1,6 +1,6 @@
 /*
 rkrbackend - This file is part of the RKWard project. Created: Sun Jul 25 2004
-SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -62,14 +62,6 @@ class RKRBackend : public RKROutputBuffer {
 
 	/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RKRBackend, but I can't see a good way around placing it here, or to make it portable. */
 	static void interruptProcessing(bool interrupt);
-
-	/** Enum specifying types of errors that may occur while parsing/evaluating a command in R */
-	enum RKWardRError {
-		NoError = 0,     /**< No error */
-		Incomplete = 1,  /**< The command is incomplete. Command was syntactically ok up to given point, but incomplete. It may or may not be semantically correct. */
-		SyntaxError = 2, /**< Syntax error */
-		OtherError = 3   /**< Other error, usually a semantic error, e.g. object not found */
-	};
 
 	/** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
 	Note that you should call initialize only once in a application */

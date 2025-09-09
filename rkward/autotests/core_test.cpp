@@ -1,6 +1,6 @@
 /*
 core_test - This file is part of RKWard (https://rkward.kde.org). Created: Thu Jun 09 2022
-SPDX-FileCopyrightText: 2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2024-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -499,6 +499,19 @@ class RKWardCoreTest : public QObject {
 				QVERIFY(false);           // still a bug, of course
 			}
 		}
+	}
+
+	void captureWarningTest() {
+		runCommandAsync(new RCommand(QStringLiteral("Sys.sleep(5)"), RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QVERIFY(command->wasCanceled());
+		});
+		auto priority_command = new RCommand(QStringLiteral("warning(\"mywarn\")"), RCommand::PriorityCommand | RCommand::App);
+		runCommandAsync(priority_command, nullptr, [](RCommand *command) {
+			QVERIFY(command->fullOutput().contains(u"mywarn"_s)); // warning shall (also) be associated with the innermost command
+			RInterface::instance()->cancelAll();
+		});
+		waitForAllFinished(6000);
 	}
 
 	void RKConsoleHistoryTest() {
