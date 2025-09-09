@@ -38,7 +38,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <comment xml:lang="sv">R-källkodsfil</comment>
     <comment xml:lang="tr">R kaynağı dosyası</comment>
     <comment xml:lang="uk">файл коду R</comment>
-    <comment xml:lang="x_test">xxR source filexx</comment>
     <comment xml:lang="zh_CN">R 源代码文件</comment>
     <comment xml:lang="zh_TW">R 原始碼檔案</comment>
     <acronym>R</acronym>
@@ -81,7 +80,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <comment xml:lang="sv">R-datafil/arbetsrymdsfil</comment>
     <comment xml:lang="tr">R veri/çalışma sayfası dosyası</comment>
     <comment xml:lang="uk">файл даних/робочого простору R</comment>
-    <comment xml:lang="x_test">xxR data/workspace filexx</comment>
     <comment xml:lang="zh_CN">R 数据/工作区文件</comment>
     <comment xml:lang="zh_TW">R 資料/工作區檔案</comment>
     <acronym>RData</acronym>
