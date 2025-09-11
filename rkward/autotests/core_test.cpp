@@ -476,6 +476,7 @@ class RKWardCoreTest : public QObject {
 	}
 
 	void cancelNestedCommandTest() {
+		RKWorkplace::mainWorkplace()->openOutputWindow(QUrl()); // this may take a long time on a crowded CI, so preload before entering timeouts
 		auto dotest = [this](int command_flags) {
 			// Create a command that spawns a subcommand, then cancel both
 			auto c = new RCommand(QStringLiteral("print('outerpre')\nrk.call.plugin('rkward::testing_run_code', 'codetorun.text'='print(\\\'innerpre\\\');Sys.sleep(5);print(\\\'innerpost\\\')', submit.mode='submit')\nSys.sleep(5)\nprint('outerpost')"), command_flags);
