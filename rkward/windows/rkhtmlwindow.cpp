@@ -642,7 +642,9 @@ void RKHTMLWindow::showEvent(QShowEvent *event) {
 	RK_TRACE(APP);
 	RKMDIWindow::showEvent(event);
 	// see comment in openURL, above
-	if (page->url().isEmpty() && !current_url.isEmpty() && current_url != page->url()) {
+	if (window_mode == HTMLOutputWindow) {
+		page->load(current_url);
+	} else if (page->url().isEmpty() && !current_url.isEmpty() && current_url != page->url()) {
 		QUrl real_url = current_url;
 		current_url.clear();
 		openURL(real_url);
