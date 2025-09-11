@@ -475,6 +475,32 @@ class RKWardCoreTest : public QObject {
 		testLog("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
 	}
 
+	void cancelNestedCommandTest() {
+		auto dotest = [this](int command_flags) {
+			// Create a command that spawns a subcommand, then cancel both
+			auto c = new RCommand(QStringLiteral("print('outerpre')\nrk.call.plugin('rkward::testing_run_code', 'codetorun.text'='print(\\\'innerpre\\\');Sys.sleep(5);print(\\\'innerpost\\\')', submit.mode='submit')\nSys.sleep(5)\nprint('outerpost')"), command_flags);
+			connect(c->notifier(), &RCommandNotifier::commandOutput, this, [](RCommand *, const ROutput &out) {
+				if (out.output.contains(u"innerpre"_s)) RInterface::instance()->cancelAll();
+			});
+			runCommandAsync(c, nullptr, [](RCommand *command) {
+				QVERIFY(command->fullOutput().contains(u"outerpre"_s));
+				QVERIFY(command->fullOutput().contains(u"innerpre"_s));
+				QVERIFY(!command->fullOutput().contains(u"innerpost"_s));
+				QVERIFY(!command->fullOutput().contains(u"outerpost"_s));
+				QVERIFY(command->failed());
+				QVERIFY(command->wasCanceled());
+			});
+			if (!waitForAllFinished()) {
+				waitForAllFinished(10000); // prevent crash in case of test failure
+				QVERIFY(false);
+			}
+		};
+		dotest(RCommand::User);
+		dotest(RCommand::App);
+		dotest(RCommand::Plugin);
+		dotest(RCommand::PriorityCommand);
+	}
+
 	void priorityCommandTest() {
 		// This test runs much faster when silencing the log window. Running faster also seems to help triggering the bug.
 		ScopeHandler sup([]() { RKSettingsModuleWatch::forTestingSuppressOutput(true); }, []() { RKSettingsModuleWatch::forTestingSuppressOutput(false); });

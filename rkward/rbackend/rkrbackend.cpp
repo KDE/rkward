@@ -188,7 +188,7 @@ void RKRBackend::handleDeferredInterrupts() {
 		}
 	}
 	if (intr) {
-		RK_scheduleIntr();
+		RK_doIntr();
 	}
 }
 
@@ -1339,7 +1339,6 @@ void doPendingPriorityCommands() {
 			req.command = command;
 			RKRBackend::this_pointer->handleRequest(&req);
 		}
-		RKRBackend::this_pointer->handleDeferredInterrupts();
 	}
 }
 
@@ -1487,7 +1486,6 @@ RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHand
 	while (command) {
 		runCommand(command);
 		commandFinished(false);
-		handleDeferredInterrupts();
 
 		command = fetchNextCommand();
 	};
