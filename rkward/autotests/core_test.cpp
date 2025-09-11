@@ -197,6 +197,7 @@ class RKWardCoreTest : public QObject {
 		KAboutData::setApplicationData(about);
 		new RKCommandLineArgs(&about, qApp, true);
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
+		// RK_Debug::RK_Debug_Flags = RBACKEND;
 		testLog(R_EXECUTABLE);
 		RKSessionVars::r_binary = QStringLiteral(R_EXECUTABLE);
 		main_win = new RKWardMainWindow();
@@ -479,7 +480,7 @@ class RKWardCoreTest : public QObject {
 		ScopeHandler sup([]() { RKSettingsModuleWatch::forTestingSuppressOutput(true); }, []() { RKSettingsModuleWatch::forTestingSuppressOutput(false); });
 		// NOTE: Test deliberately toned down until the next attempt to fully fix the issue. Still fails in corner-cases, typically 10-100 iterations are needed
 		//       to trigger. Not considered much of a real-world issue, though.
-		for (int i = 0; i < 1; ++i) {
+		for (int i = 0; i < 100; ++i) {
 			bool priority_command_done = false;
 			runCommandAsync(new RCommand(QStringLiteral("%1cat(\"sleeping\\n\");%1Sys.sleep(5);cat(\"BUG\")").arg(QString().fill(u'\n', i % 5)), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
 				QVERIFY(priority_command_done);

@@ -133,7 +133,6 @@ class RKRBackend : public RKROutputBuffer {
 		enum {
 			NoUserCommand,
 			UserCommandTransmitted,
-			UserCommandSyntaxError,
 			UserCommandRunning,
 			UserCommandFailed,
 			ReplIterationKilled
@@ -162,10 +161,13 @@ class RKRBackend : public RKROutputBuffer {
 	void printCommand(const QString &command);
 	void catToOutputFile(const QString &out);
 
-	QMutex all_current_commands_mutex;
-	QList<RCommandProxy *> current_commands_to_cancel;
-	bool too_late_to_interrupt;
+	QMutex command_flow_mutex;
+	QList<int> commands_to_cancel_deferred;
 	void interruptCommand(int command_id);
+	void beginAllowInterruptCommand(RCommandProxy *command);
+	void endAllowInterruptCommand(RCommandProxy *command);
+	void handleDeferredInterrupts();
+	volatile bool awaiting_sigint;
 
 	/** check stdout and stderr for new output (from sub-processes). Since this function is called from both threads, it is protected by a mutex.
 	 *  @param forcibly: if false, and the other thread currently has a lock on the mutex, do nothing, and return false.
@@ -180,9 +182,6 @@ class RKRBackend : public RKROutputBuffer {
 	int r_version;
 
 	bool graphicsEngineMismatchMessage(int compiled_version, int runtime_version);
-
-  private:
-	void clearPendingInterrupt();
 
   protected:
 	RCommandProxy *handleRequest(RBackendRequest *request, bool mayHandleSubstack);

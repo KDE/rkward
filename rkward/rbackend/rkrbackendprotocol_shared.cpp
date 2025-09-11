@@ -16,6 +16,7 @@ RCommandProxy::RCommandProxy(const QString &command, int type) {
 	RCommandProxy::type = type;
 	id = -1;
 	status = 0;
+	interruptible_stage = false;
 }
 
 RCommandProxy::~RCommandProxy() {

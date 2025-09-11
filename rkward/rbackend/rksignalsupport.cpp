@@ -36,7 +36,7 @@ struct sigaction default_sigabrt_handler;
 rk_sighandler_t r_sigint_handler = nullptr;
 void (*new_sigint_handler)(void) = nullptr;
 void internal_sigint_handler(int num) {
-	RK_DEBUG(RBACKEND, DL_DEBUG, "calling internal sigint handler");
+	// NOTE: signal handler code. Must not produce debug output, here (could cause mutex deadlocK)
 	new_sigint_handler();
 	signal(num, internal_sigint_handler);
 }

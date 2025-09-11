@@ -473,7 +473,7 @@ void RInterface::flushOutput(bool forced) {
 	for (const ROutput &output : list) {
 		if (output.type == ROutput::CommandLineIn) {
 			RCommand *command = all_current_commands.value(0, nullptr); // User command will always be the first.
-			if ((command == nullptr) || (!command->type() & RCommand::User)) {
+			if ((command == nullptr) || !(command->type() & RCommand::User)) {
 				RK_ASSERT(false);
 			} else {
 				command->commandLineIn();
