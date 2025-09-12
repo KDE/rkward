@@ -111,8 +111,10 @@ void RKRBackend::interruptCommand(int command_id) {
 	 *     current_command, feeding it into the REPL/eval) -> handled in beginAllowInterruptCommand()
 	 *  2) when it is properly running in the backend -> this is the typical case, we worry about, "immediate interrupt", below
 	 *  2b) when it is properly running in the backend, but there is also an active sub-command, which we should allow to complete
-	 *      -> see commands_to_cancel_deferred and handleDeferredInterrupts()
-	 *  3) after it has finished running in the backend, but the frontend wasn't aware of that, yet TODO: fix resource leak
+	 *     -> see commands_to_cancel_deferred and handleDeferredInterrupts()
+	 *  3) after it has finished running in the backend, but the frontend wasn't aware of that, yet
+	 *     -> to prevent resource leakage, we check for unknown ids to cancel when a new command has just been received in
+	 *        handleRequest(). At this point we are sure, it cannot be case 1), above.
 	 *
 	 * The procedure to interrupt the current command (case 2, above), is also quite complex. Some sources of complication:
 	 * 1) Requests to interrupt will originate outside the R thread.
@@ -1466,6 +1468,18 @@ RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHand
 		RK_ASSERT(command != current_command);
 		command->outer_command = current_command;
 		current_command = command;
+
+		// clean up after stale deferred interrupts (see comments in interruptCommand()
+		for (int i = commands_to_cancel_deferred.size() - 1; i >= 0; --i) {
+			const auto id = commands_to_cancel_deferred[i];
+			auto c = current_command;
+			bool found = false;
+			do {
+				if (c->id == id) found = true;
+				c = c->outer_command;
+			} while (c && !found);
+			if (!found) commands_to_cancel_deferred.removeAt(i);
+		}
 	}
 
 	if (!mayHandleSubstack) return command;
