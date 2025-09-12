@@ -96,7 +96,6 @@ class RKRBackend : public RKROutputBuffer {
 
 	/** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). */
 	GenericRRequestResult doRCallRequest(const QString &call, const QVariant &args, RequestFlags flags);
-	RCommandProxy *fetchNextCommand();
 
 	/** The command currently being executed. */
 	RCommandProxy *current_command;
@@ -149,7 +148,11 @@ class RKRBackend : public RKROutputBuffer {
 	/** holds a copy of the default R_GlobalContext. Needed to find out, when a browser context has been left. */
 	static void *default_global_context;
 
-	void commandFinished(bool check_object_updates_needed = true);
+	enum FetchCommandMode { NoFetchNextCommand,
+		                    FetchNextCommand };
+	enum ObjectUpdateMode { NoCheckObjectUpdatesNeeded,
+		                    CheckObjectUpdatesNeeded };
+	RCommandProxy *commandFinished(FetchCommandMode fetch_next, ObjectUpdateMode check_object_updates_needed = CheckObjectUpdatesNeeded);
 	/** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
 	/** the main loop. See \ref RKRBackend for a more detailed description */
@@ -202,8 +205,6 @@ class RKRBackend : public RKROutputBuffer {
 	/** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded(bool check_list);
 	friend void doPendingPriorityCommands();
-	/** The previously executed command. Only non-zero until a new command has been requested. */
-	RCommandProxy *previous_command;
 };
 
 #endif

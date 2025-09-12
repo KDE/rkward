@@ -250,8 +250,7 @@ void RBusy(int);
 
 static void replCommandFinished() {
 	RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-	RKRBackend::this_pointer->commandFinished();
-	RKRBackend::this_pointer->handleDeferredInterrupts();
+	RKRBackend::this_pointer->commandFinished(RKRBackend::FetchNextCommand, RKRBackend::CheckObjectUpdatesNeeded);
 }
 
 int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
@@ -270,7 +269,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 	if ((!RKRBackend::repl_status.browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
 		while (true) {
 			if (RKRBackend::this_pointer->isKilled() || (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand)) {
-				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand();
+				RCommandProxy *command = RKRBackend::this_pointer->current_command;
 				if (!command) {
 					RK_DEBUG(RBACKEND, DL_DEBUG, "returning from REPL");
 					return 0; // jumps out of the event loop!
@@ -278,8 +277,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 
 				if (!(command->type & RCommand::User)) {
 					RKRBackend::this_pointer->runCommand(command);
-					RKRBackend::this_pointer->commandFinished();
-					RKRBackend::this_pointer->handleDeferredInterrupts();
+					RKRBackend::this_pointer->commandFinished(RKRBackend::FetchNextCommand, RKRBackend::CheckObjectUpdatesNeeded);
 				} else {
 					// so, we are about to transmit a new user command, which is quite a complex endeavor...
 					/* Some words about running user commands:
@@ -1323,6 +1321,7 @@ void doPendingPriorityCommands() {
 	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
 	RKRBackend::this_pointer->pending_priority_command = nullptr;
 	if (command) {
+		auto prev_command = RKRBackend::this_pointer->current_command;
 		RK_DEBUG(RBACKEND, DL_DEBUG, "running priority command %s", qPrintable(command->command));
 		{
 			QMutexLocker lock(&RKRBackend::this_pointer->command_flow_mutex);
@@ -1331,15 +1330,11 @@ void doPendingPriorityCommands() {
 		}
 
 		RKRBackend::this_pointer->runCommand(command);
-		// TODO: Oh boy, what a mess. Sending notifications should be split from fetchNextCommand() (which is not appropriate, here)
-		RCommandProxy *previous_command_backup = RKRBackend::this_pointer->previous_command;
-		RKRBackend::this_pointer->commandFinished(false);
-		RKRBackend::this_pointer->previous_command = previous_command_backup;
+		RKRBackend::this_pointer->commandFinished(RKRBackend::NoFetchNextCommand, RKRBackend::NoCheckObjectUpdatesNeeded);
+		RKRBackend::this_pointer->current_command = prev_command;
 		{
-			RBackendRequest req(false, RBackendRequest::CommandOut); // NOTE: We do *NOT* want a reply to this one, and in particular, we do *NOT* want to do
-			                                                         // (recursive) event processing while handling this.
-			req.command = command;
-			RKRBackend::this_pointer->handleRequest(&req);
+			QMutexLocker lock(&RKRBackend::this_pointer->command_flow_mutex);
+			RKRBackend::this_pointer->current_command = prev_command;
 		}
 	}
 }
@@ -1389,14 +1384,13 @@ void RKRBackend::printAndClearCapturedMessages(bool with_header) {
 void RKRBackend::run(const QString &locale_dir, bool setup) {
 	RK_TRACE(RBACKEND);
 	killed = NotKilled;
-	previous_command = nullptr;
 
 	initialize(locale_dir, setup);
 
 	enterEventLoop();
 }
 
-void RKRBackend::commandFinished(bool check_object_updates_needed) {
+RCommandProxy *RKRBackend::commandFinished(FetchCommandMode fetch_next, ObjectUpdateMode check_object_updates_needed) {
 	RK_TRACE(RBACKEND);
 	RK_DEBUG(RBACKEND, DL_DEBUG, "done running command %s, status: %d", qPrintable(current_command->command), current_command->status);
 
@@ -1422,7 +1416,7 @@ void RKRBackend::commandFinished(bool check_object_updates_needed) {
 		checkObjectUpdatesNeeded(current_command->type & (RCommand::User | RCommand::ObjectListUpdate));
 	}
 
-	previous_command = current_command;
+	auto previous_command = current_command;
 
 	{
 		QMutexLocker lock(&command_flow_mutex);
@@ -1432,7 +1426,12 @@ void RKRBackend::commandFinished(bool check_object_updates_needed) {
 		}
 		all_current_commands.pop_back();
 		if (!all_current_commands.isEmpty()) current_command = all_current_commands.last();
+		else current_command = nullptr;
 	}
+
+	RBackendRequest req(fetch_next && !isKilled(), RBackendRequest::CommandOut);
+	req.command = previous_command;
+	return RKRBackend::this_pointer->handleRequest(&req, false);
 }
 
 RCommandProxy *RKRBackend::handleRequest(RBackendRequest *request, bool mayHandleSubstack) {
@@ -1483,24 +1482,12 @@ RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHand
 
 	while (command) {
 		runCommand(command);
-		commandFinished(false);
-
-		command = fetchNextCommand();
+		command = commandFinished(FetchNextCommand, NoCheckObjectUpdatesNeeded);
 	};
 
 	handleDeferredInterrupts();
 
 	return nullptr;
-}
-
-RCommandProxy *RKRBackend::fetchNextCommand() {
-	RK_TRACE(RBACKEND);
-
-	RBackendRequest req(!isKilled(), RBackendRequest::CommandOut); // when killed, we do *not* actually wait for the reply, before the request is deleted.
-	req.command = previous_command;
-	previous_command = nullptr;
-
-	return (handleRequest(&req, false));
 }
 
 GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVariant &params, RequestFlags flags) {
@@ -1524,7 +1511,10 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
 	repl_status.eval_depth++;
-	fetchNextCommand();
+	{
+		RBackendRequest req(true, RBackendRequest::CommandOut); // fetch the first command (a dummy)
+		handleRequest(&req, false);
+	}
 	RK_ASSERT(current_command);
 
 	startR();
@@ -1573,7 +1563,7 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	handleRequest(&req);
 
 	RK_ASSERT(current_command);
-	commandFinished(); // the fake startup command
+	commandFinished(FetchNextCommand, CheckObjectUpdatesNeeded); // the fake startup command
 	repl_status.eval_depth--;
 }
 
