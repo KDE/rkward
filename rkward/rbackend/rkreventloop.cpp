@@ -51,6 +51,7 @@ void RKREventLoop::processX11Events() {
 	// do not trace
 	if (!RKRBackend::this_pointer->r_running) return;
 	if (RKRBackend::this_pointer->isKilled()) return;
+	if (RKRBackend::this_pointer->awaiting_sigint) return;
 
 	bool ok = false;
 	RKRBackend::repl_status.eval_depth++;

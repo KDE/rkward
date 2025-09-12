@@ -66,16 +66,7 @@ static void RK_setupGettext(const QString &locale_dir) {
 }
 
 ///// interrupting R
-static bool RK_IsRInterruptPending() {
-	// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
-#ifdef Q_OS_WIN
-	return ROb(UserBreak);
-#else
-	return ROb(R_interrupts_pending);
-#endif
-}
-
-/// schedule an intterupt to happen at the next R_CheckUserInterrupt() (i.e. inside R code)
+/// schedule an interrupt to happen at the next R_CheckUserInterrupt() (i.e. inside R code)
 void RK_scheduleIntr() {
 	// NOTE: signal handler code. Must not produce debug output, here (could cause mutex deadlocK)
 	RKRBackend::repl_status.interrupted = true;
@@ -115,12 +106,26 @@ void RKRBackend::interruptCommand(int command_id) {
 	QMutexLocker lock(&command_flow_mutex);
 
 	/** A request to interrupt a command may happen at very different points in the code:
-	 *  0) before it was even sent from the frontend -> frontend will not even send it to the backend code
+	 *  0) before it was even sent from the frontend -> trivially handled in the frontend, backend not involved
 	 *  1) after it was sent from the frontend, but before we properly started handling it in the backend (deserializing the request, pushing it onto
 	 *     all_current_commands, feeding it into the REPL/eval) -> handled in beginAllowInterruptCommand()
-	 *  2) when it is properly running in the backend -> this is the typical case, we worry about
-	 *  2b) when it is properly running in the backend, but there is also an active sub-command, which we should allow to complete -> TODO buggy
-	 *  3) after it has finished running in the backend, but the frontend wasn't aware of that, yet TODO: buggy! */
+	 *  2) when it is properly running in the backend -> this is the typical case, we worry about, "immediate interrupt", below
+	 *  2b) when it is properly running in the backend, but there is also an active sub-command, which we should allow to complete
+	 *      -> see commands_to_cancel_deferred and handleDeferredInterrupts()
+	 *  3) after it has finished running in the backend, but the frontend wasn't aware of that, yet TODO: fix resource leak
+	 *
+	 * The procedure to interrupt the current command (case 2, above), is also quite complex. Some sources of complication:
+	 * 1) Requests to interrupt will originate outside the R thread.
+	 * 2) We *have to* relay interruption with signals, otherwise most system calls inside R will not be interrupted (on Unix).
+	 *    Note that use of any mutex is essentially a no-go in signal handler code.
+	 * 3) Once the signal has arrived, R will essentially set a flag, and trigger an error at the next R_CheckUserInterrupt().
+	 *    When exactly that gets hit is hard to tell, and when it does it will do the usual longjmp error handling.
+	 * 4) We also need to do some pre- and post-processing around running commands, which we want to run, even in case of an interrupt
+	 * 5) The usual painful dichotomy between "user commands" and command going through Rf_eval
+	 *
+	 * The strategy then is to keep track of what portion of a command may be interrupted (begin/endAllowInterruptCommand()), and make
+	 * sure all steps between 1) and 3) are fully handled inisde such blocks. I.e. when we do send a signal, we need to keep track,
+	 * whether it has actually arrived and got handled, before leaving endAllowInterruptCommand(). */
 	if (current_command && (current_command->id == command_id) && (current_command->interruptible_stage)) {
 		RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling immediate interrupt for command id %d", command_id);
 		awaiting_sigint = true;
@@ -140,14 +145,11 @@ void RKRBackend::beginAllowInterruptCommand(RCommandProxy *command) {
 		QMutexLocker m(&command_flow_mutex);
 		RK_ASSERT(!command->interruptible_stage);
 		command->interruptible_stage = true;
-
-		if (commands_to_cancel_deferred.contains(command->id)) {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "triggering deferred interrupt for command %d", command->id);
-			commands_to_cancel_deferred.removeAll(command->id);
-			intr = true;
-		}
+		// see handleDeferredInterrupts(), but avoiding one mutex lock/unlock
+		intr = commands_to_cancel_deferred.removeAll(command->id);
 	}
 	if (intr) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "triggering deferred interrupt for command %d", command->id);
 		// do not call while mutex is locked!
 		RK_doIntr();
 	}
@@ -181,13 +183,13 @@ void RKRBackend::handleDeferredInterrupts() {
 	bool intr = false;
 	{
 		QMutexLocker m(&command_flow_mutex);
-		if (current_command && commands_to_cancel_deferred.contains(current_command->id) && current_command->interruptible_stage) {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "triggering deferred interrupt for command %d", current_command->id);
-			commands_to_cancel_deferred.removeAll(current_command->id);
-			intr = true;
+		if (current_command && current_command->interruptible_stage) {
+			intr = commands_to_cancel_deferred.removeAll(current_command->id);
 		}
 	}
 	if (intr) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "triggering deferred interrupt for command %d", current_command->id);
+		// do not call while mutex is locked!
 		RK_doIntr();
 	}
 }
@@ -211,7 +213,7 @@ static void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 
 	bool reached_eof = false;
 	int pos = 0;
-	const int max_pos = buflen - 2; // one for the termination
+	const int max_pos = buflen - 2; // one for the terming newline
 	bool reached_newline = false;
 	while (true) {
 		buf[pos] = *current_buffer;
@@ -1467,10 +1469,6 @@ RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHand
 		if (!request->done) RKRBackendProtocolBackend::msleep(++i < 200 ? 10 : 50);
 	}
 
-	// TODO remove me?
-	while (pending_priority_command)
-		RKREventLoop::processX11Events(); // Probably not needed, but make sure to process priority commands first at all times.
-
 	RCommandProxy *command = request->takeCommand();
 	if (!command) return nullptr;
 
@@ -1543,14 +1541,16 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	                                                                         "  if (!dir.exists (libloc)) dir.create(libloc, recursive=TRUE)\n"
 	                                                                         "  ok <- FALSE\n") +
 	                  (setup ? u"# skipping: "_s : u""_s) +
-	                  QStringLiteral(" suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); ") + versioncheck + QStringLiteral("; ok <- TRUE}))\n"
-	                                                                                                                                    "  if (!ok) {\n"
-	                                                                                                                                    "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
-	                                                                                                                                    "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\", INSTALL_opts=\"--no-multiarch\")\n"
-	                                                                                                                                    "    library (\"rkward\", lib.loc=libloc)\n"
-	                                                                                                                                    "  }\n"
-	                                                                                                                                    "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be avaiable for help serach, but hopefully, not get into the way, otherwise
-	                                                                                                                                    "})\n");
+	                  QStringLiteral(" suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); ") +
+	                  versioncheck +
+	                  QStringLiteral("; ok <- TRUE}))\n"
+	                                 "  if (!ok) {\n"
+	                                 "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
+	                                 "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\", INSTALL_opts=\"--no-multiarch\")\n"
+	                                 "    library (\"rkward\", lib.loc=libloc)\n"
+	                                 "  }\n"
+	                                 "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be available for help search, but hopefully, not get into the way, otherwise
+	                                 "})\n");
 	if (!runDirectCommand(command)) lib_load_fail = true;
 	RK_setupGettext(locale_dir); // must happen *after* package loading, since R will re-set it
 	if (!runDirectCommand(versioncheck + u"\n"_s)) lib_load_fail = true;
