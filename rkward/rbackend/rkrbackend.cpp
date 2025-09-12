@@ -1320,8 +1320,10 @@ void doPendingPriorityCommands() {
 	RK_TRACE(RBACKEND);
 
 	if (RKRBackend::this_pointer->killed) return;
+	RKRBackend::this_pointer->priority_command_mutex.lock();
 	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
 	RKRBackend::this_pointer->pending_priority_command = nullptr;
+	RKRBackend::this_pointer->priority_command_mutex.unlock();
 	if (command) {
 		RK_DEBUG(RBACKEND, DL_DEBUG, "running priority command %s", qPrintable(command->command));
 		{
