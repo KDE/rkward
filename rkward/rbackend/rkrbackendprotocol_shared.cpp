@@ -9,7 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RCommandProxy::RCommandProxy(const QString &command, int type) {
+RCommandProxy::RCommandProxy(const QString &command, int type) : outer_command(nullptr) {
 	RK_TRACE(RBACKEND);
 
 	RCommandProxy::command = command;

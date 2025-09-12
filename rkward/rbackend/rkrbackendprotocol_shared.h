@@ -127,7 +127,9 @@ class RCommandProxy : public RData {
 	int id;
 	int status;
 	int has_been_run_up_to;
+	// the following are used in the backend, only
 	bool interruptible_stage;
+	RCommandProxy *outer_command;
 };
 
 class RKROutputBuffer {

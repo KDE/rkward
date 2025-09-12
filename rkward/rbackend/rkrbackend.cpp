@@ -107,8 +107,8 @@ void RKRBackend::interruptCommand(int command_id) {
 
 	/** A request to interrupt a command may happen at very different points in the code:
 	 *  0) before it was even sent from the frontend -> trivially handled in the frontend, backend not involved
-	 *  1) after it was sent from the frontend, but before we properly started handling it in the backend (deserializing the request, pushing it onto
-	 *     all_current_commands, feeding it into the REPL/eval) -> handled in beginAllowInterruptCommand()
+	 *  1) after it was sent from the frontend, but before we properly started handling it in the backend (deserializing the request, setting as
+	 *     current_command, feeding it into the REPL/eval) -> handled in beginAllowInterruptCommand()
 	 *  2) when it is properly running in the backend -> this is the typical case, we worry about, "immediate interrupt", below
 	 *  2b) when it is properly running in the backend, but there is also an active sub-command, which we should allow to complete
 	 *      -> see commands_to_cancel_deferred and handleDeferredInterrupts()
@@ -1321,21 +1321,15 @@ void doPendingPriorityCommands() {
 	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
 	RKRBackend::this_pointer->pending_priority_command = nullptr;
 	if (command) {
-		auto prev_command = RKRBackend::this_pointer->current_command;
 		RK_DEBUG(RBACKEND, DL_DEBUG, "running priority command %s", qPrintable(command->command));
 		{
 			QMutexLocker lock(&RKRBackend::this_pointer->command_flow_mutex);
-			RKRBackend::this_pointer->all_current_commands.append(command);
+			command->outer_command = RKRBackend::this_pointer->current_command;
 			RKRBackend::this_pointer->current_command = command;
 		}
 
 		RKRBackend::this_pointer->runCommand(command);
 		RKRBackend::this_pointer->commandFinished(RKRBackend::NoFetchNextCommand, RKRBackend::NoCheckObjectUpdatesNeeded);
-		RKRBackend::this_pointer->current_command = prev_command;
-		{
-			QMutexLocker lock(&RKRBackend::this_pointer->command_flow_mutex);
-			RKRBackend::this_pointer->current_command = prev_command;
-		}
 	}
 }
 
@@ -1416,7 +1410,8 @@ RCommandProxy *RKRBackend::commandFinished(FetchCommandMode fetch_next, ObjectUp
 		checkObjectUpdatesNeeded(current_command->type & (RCommand::User | RCommand::ObjectListUpdate));
 	}
 
-	auto previous_command = current_command;
+	RBackendRequest req(fetch_next && !isKilled(), RBackendRequest::CommandOut);
+	req.command = current_command;
 
 	{
 		QMutexLocker lock(&command_flow_mutex);
@@ -1424,13 +1419,9 @@ RCommandProxy *RKRBackend::commandFinished(FetchCommandMode fetch_next, ObjectUp
 			repl_status.interrupted = false;
 			current_command->status |= RCommand::Canceled;
 		}
-		all_current_commands.pop_back();
-		if (!all_current_commands.isEmpty()) current_command = all_current_commands.last();
-		else current_command = nullptr;
+		current_command = current_command->outer_command;
 	}
 
-	RBackendRequest req(fetch_next && !isKilled(), RBackendRequest::CommandOut);
-	req.command = previous_command;
 	return RKRBackend::this_pointer->handleRequest(&req, false);
 }
 
@@ -1451,7 +1442,6 @@ RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHand
 	RK_TRACE(RBACKEND);
 
 	if ((!request->synchronous) && (!isKilled())) {
-		RK_ASSERT(mayHandleSubstack); // i.e. not called from fetchNextCommand
 		RK_ASSERT(!request->subcommandrequest);
 		return nullptr;
 	}
@@ -1474,7 +1464,7 @@ RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHand
 	{
 		QMutexLocker lock(&command_flow_mutex);
 		RK_ASSERT(command != current_command);
-		all_current_commands.append(command);
+		command->outer_command = current_command;
 		current_command = command;
 	}
 

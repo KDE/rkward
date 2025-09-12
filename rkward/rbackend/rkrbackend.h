@@ -99,7 +99,6 @@ class RKRBackend : public RKROutputBuffer {
 
 	/** The command currently being executed. */
 	RCommandProxy *current_command;
-	QList<RCommandProxy *> all_current_commands;
 
 	void runCommand(RCommandProxy *command);
 
