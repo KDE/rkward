@@ -82,7 +82,6 @@ RKCallstackViewerWidget::RKCallstackViewerWidget(QWidget *parent) : QWidget(pare
 
 	QVBoxLayout *v_layout = new QVBoxLayout();
 	h_layout->addLayout(v_layout);
-	h_layout->setStretchFactor(v_layout, 1);
 
 	QLabel *label = new QLabel(i18n("<b>Active calls</b>"), this);
 	v_layout->addWidget(label);
@@ -100,6 +99,7 @@ RKCallstackViewerWidget::RKCallstackViewerWidget(QWidget *parent) : QWidget(pare
 
 	frame_source = new RKCommandEditorWindow(this, QUrl(), QString(), RKCommandEditorFlags::DefaultToRHighlighting | RKCommandEditorFlags::ReadOnly);
 	v_layout->addWidget(frame_source);
+	v_layout->setStretchFactor(frame_source, 2);
 
 	updateState();
 }
