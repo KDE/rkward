@@ -511,10 +511,9 @@ class RKWardCoreTest : public QObject {
 		runCommandWithTimeout(c, nullptr, [this](RCommand *command) {
 			// QVERIFY(command->wasCanceled()); we're currenly mis-detecting that, which is not a real-world problem, however.
 			// The real test is the command neither times out (below), nor prints "after" (above)
-			QVERIFY(command->failed());
-		});
+			QVERIFY(command->failed()); }, 2000);
 		RInterface::issueCommand(QStringLiteral("dev.off()"), RCommand::User);
-		waitForAllFinished();
+		waitForAllFinished(2000);
 	}
 
 	void priorityCommandTest() {
