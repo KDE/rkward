@@ -86,7 +86,7 @@ class RKRBackend : public RKROutputBuffer {
 	@returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
 	RCommandProxy *runDirectCommand(const QString &command, RCommand::CommandTypes datatype);
 
-	void handleRequest(RBackendRequest *request) { handleRequest(request, true); };
+	RCommandProxy *handleRequest(RBackendRequest *request);
 
 	enum RequestFlags {
 		Asynchronous,
@@ -184,10 +184,6 @@ class RKRBackend : public RKROutputBuffer {
 	int r_version;
 
 	bool graphicsEngineMismatchMessage(int compiled_version, int runtime_version);
-
-  protected:
-	RCommandProxy *handleRequest(RBackendRequest *request, bool mayHandleSubstack);
-	RCommandProxy *handleRequest2(RBackendRequest *request, bool mayHandleSubstack);
 
   private:
 	int stdout_stderr_fd;

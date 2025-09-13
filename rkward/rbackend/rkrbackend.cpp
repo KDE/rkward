@@ -1427,28 +1427,29 @@ RCommandProxy *RKRBackend::commandFinished(FetchCommandMode fetch_next, ObjectUp
 		current_command = current_command->outer_command;
 	}
 
-	return RKRBackend::this_pointer->handleRequest(&req, false);
+	return RKRBackend::this_pointer->handleRequest(&req);
 }
 
-RCommandProxy *RKRBackend::handleRequest(RBackendRequest *request, bool mayHandleSubstack) {
+RCommandProxy *RKRBackend::handleRequest(RBackendRequest *request) {
 	RK_TRACE(RBACKEND);
 	RK_ASSERT(request);
 
-	// See docs for RBackendRequest for hints to make sense of this mess (and eventually to fix it)
-
-	RKRBackendProtocolBackend::instance()->sendRequest(request);
-	if (request->subcommandrequest) {
-		handleRequest2(request->subcommandrequest, true);
-	}
-	return handleRequest2(request, mayHandleSubstack);
-}
-
-RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHandleSubstack) {
-	RK_TRACE(RBACKEND);
-
+	// the logic is still a bit convoluted, here, for historical reasons: Subcommand requests are already sent as part of their parent request
+	if (request->type != RBackendRequest::SubcommandRequest) RKRBackendProtocolBackend::instance()->sendRequest(request);
 	if ((!request->synchronous) && (!isKilled())) {
 		RK_ASSERT(!request->subcommandrequest);
 		return nullptr;
+	}
+
+	// If the request allows subcommands doRCallRequest(..., SynchronousWithSubcommands),
+	// recurse into those, first
+	if (request->subcommandrequest) {
+		auto command = handleRequest(request->subcommandrequest);
+		while (command) {
+			runCommand(command);
+			command = commandFinished(FetchNextCommand, NoCheckObjectUpdatesNeeded);
+		}
+		handleDeferredInterrupts();
 	}
 
 	int i = 0;
@@ -1485,16 +1486,7 @@ RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHand
 		}
 	}
 
-	if (!mayHandleSubstack) return command;
-
-	while (command) {
-		runCommand(command);
-		command = commandFinished(FetchNextCommand, NoCheckObjectUpdatesNeeded);
-	};
-
-	handleDeferredInterrupts();
-
-	return nullptr;
+	return command;
 }
 
 GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVariant &params, RequestFlags flags) {
@@ -1506,7 +1498,7 @@ GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVar
 	if (!params.isNull()) request.params[QStringLiteral("args")] = params;
 	if (flags == SynchronousWithSubcommands) {
 		request.params[QStringLiteral("cid")] = current_command->id;
-		request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
+		request.subcommandrequest = new RBackendRequest(true, RBackendRequest::SubcommandRequest);
 	}
 	handleRequest(&request);
 	delete request.subcommandrequest;
@@ -1520,7 +1512,7 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	repl_status.eval_depth++;
 	{
 		RBackendRequest req(true, RBackendRequest::CommandOut); // fetch the first command (a dummy)
-		handleRequest(&req, false);
+		handleRequest(&req);
 	}
 	RK_ASSERT(current_command);
 
@@ -1563,11 +1555,9 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p></p>\n"));
 	}
 
-	RBackendRequest req(true, RBackendRequest::Started);
-	req.params[QStringLiteral("message")] = QVariant(error_messages);
+	doRCallRequest(QStringLiteral("rstarted"), QVariant(error_messages), SynchronousWithSubcommands);
 	// blocks until RKWard is set to go (esp, it has displayed startup error messages, etc.)
 	// in fact, a number of sub-commands are run while handling this request!
-	handleRequest(&req);
 
 	RK_ASSERT(current_command);
 	commandFinished(FetchNextCommand, CheckObjectUpdatesNeeded); // the fake startup command

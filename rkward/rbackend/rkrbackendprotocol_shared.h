@@ -35,15 +35,14 @@ class RBackendRequest {
 		EditFiles,
 		ReadLine,   // 4
 		CommandOut, /**< Request the next command, and notify about the result of the previus. TODO split. */
-		Started,
-		RCallRequest, // 7
+		RCallRequest,
 		SetParamsFromBackend,
-		Debugger,
+		Debugger,                  // 8
 		Output,                    /**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */
 		Interrupt,                 /**< Interrupt evaluation. This request type originates in the frontend, not the backend. */
 		PriorityCommand,           /**< Send a command to be run during R's event processing. This request type originates in the frontend, not the backend. */
 		OutputStartedNotification, /**< Only used in the frontend: Notification that a new bit of output has arrived. Used to trigger flushing after a timeout. */
-		OtherRequest               /**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
+		SubcommandRequest          /**< For doRCall(..., SynchronousWithSubcommands) */
 	};
 
 	RBackendRequest(bool synchronous, RCallbackType type);

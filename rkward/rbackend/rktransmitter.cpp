@@ -48,7 +48,7 @@ static T readS(QDataStream &stream) {
 RBackendRequest *RKRBackendSerializer::unserialize(QDataStream &stream) {
 	RK_TRACE(RBACKEND);
 
-	RBackendRequest *request = new RBackendRequest(false, RBackendRequest::OtherRequest); // will be overwritten
+	RBackendRequest *request = new RBackendRequest(false, RBackendRequest::SubcommandRequest); // will be overwritten
 	RBackendRequest::_id--;
 
 	request->id = readS<qint32>(stream);
