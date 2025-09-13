@@ -226,9 +226,7 @@ static QVector<QPointF> readPoints(QDataStream &instream) {
 void RKGraphicsDeviceFrontendTransmitter::newData() {
 	RK_TRACE(GRAPHICS_DEVICE);
 
-	while (connection->bytesAvailable()) {
-		if (!streamer.readInBuffer()) return; // wait for more data to come in
-
+	while (!streamer.instream.atEnd() || streamer.readInBuffer()) {
 		quint8 opcode, devnum;
 		streamer.instream >> opcode >> devnum;
 		RK_DEBUG(GRAPHICS_DEVICE, DL_TRACE, "Received transmission of type %d, devnum %d, size %d", opcode, devnum + 1, streamer.inSize());
@@ -528,10 +526,6 @@ void RKGraphicsDeviceFrontendTransmitter::newData() {
 			device->confirmNewPage();
 		} else {
 			RK_DEBUG(GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skipping.", opcode, devnum + 1);
-		}
-
-		if (!streamer.instream.atEnd()) {
-			RK_DEBUG(GRAPHICS_DEVICE, DL_ERROR, "Failed to read all data for operation of type %d on device number %d.", opcode, devnum + 1);
 		}
 	}
 }

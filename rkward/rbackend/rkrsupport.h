@@ -45,7 +45,7 @@ class InterruptSuspension {
 	}
 	~InterruptSuspension() {
 		ROb(R_interrupts_suspended) = old_susp;
-		if (ROb(R_interrupts_pending)) RFn::Rf_onintr();
+		//if (ROb(R_interrupts_pending) && !old_susp) RFn::Rf_onintr();
 	}
 
   private:

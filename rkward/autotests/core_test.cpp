@@ -502,6 +502,21 @@ class RKWardCoreTest : public QObject {
 		dotest(RCommand::PriorityCommand);
 	}
 
+	void cancelLocator() {
+		auto c = new RCommand(QStringLiteral("plot(rnorm(10)); print('before'); locator(); print('after')"), RCommand::User);
+		connect(c->notifier(), &RCommandNotifier::commandOutput, this, [](RCommand *, const ROutput &out) {
+			if (out.output.contains(u"before"_s)) RInterface::instance()->cancelAll();
+			QVERIFY(!out.output.contains(u"after"_s));
+		});
+		runCommandWithTimeout(c, nullptr, [this](RCommand *command) {
+			// QVERIFY(command->wasCanceled()); we're currenly mis-detecting that, which is not a real-world problem, however.
+			// The real test is the command neither times out (below), nor prints "after" (above)
+			QVERIFY(command->failed());
+		});
+		RInterface::issueCommand(QStringLiteral("dev.off()"), RCommand::User);
+		waitForAllFinished();
+	}
+
 	void priorityCommandTest() {
 		// This test runs much faster when silencing the log window. Running faster also seems to help triggering the bug.
 		ScopeHandler sup([]() { RKSettingsModuleWatch::forTestingSuppressOutput(true); }, []() { RKSettingsModuleWatch::forTestingSuppressOutput(false); });

@@ -208,6 +208,7 @@ extern SEXP RKWard_RData_Tag;
 // ############## R Standard callback overrides BEGIN ####################
 static void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 	RK_TRACE(RBACKEND);
+	RFn::R_CheckUserInterrupt();
 
 	RK_ASSERT(RKRBackend::repl_status.user_command_transmitted_up_to <= RKRBackend::repl_status.user_command_buffer.length()); // NOTE: QByteArray::length () does not count the trailing '\0'
 	const char *current_buffer = RKRBackend::repl_status.user_command_buffer.data();
