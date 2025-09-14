@@ -4549,7 +4549,7 @@ msgstr "Anomena i guarda l'espai de treball"
 #: rkward/rkward.cpp:545
 #, kde-format
 msgid "Saves the actual document as..."
-msgstr "Guarda el document existent com a…"
+msgstr "Anomena i guarda el document existent…"
 
 #: rkward/rkward.cpp:548
 #, kde-format
