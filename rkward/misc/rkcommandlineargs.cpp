@@ -65,5 +65,3 @@ RKCommandLineArgs::RKCommandLineArgs(KAboutData *about, QCoreApplication *app, b
 	}
 	storage[UrlArgs] = url_args;
 }
-
-#include "../debug.h"

@@ -11,8 +11,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <vector>
 
-#include "../debug.h"
-
 /** Very crude, but very fast R parser, with some helper functions for code navigation. Parses the basic structure, only
 
 Technical note on data structure: While, logically, contexts form a nested hierarchy, a nested data layout does not really lend itself

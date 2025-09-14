@@ -6,6 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #define RKWARD_DEBUG
+//#define RKWARD_NESTED_TRACE // enable for a more elaborate trace (with a real performance impact, hoewver)
 
 void RKDebug(int flags, int level, const char *fmt, ...);
 
@@ -50,7 +51,13 @@ void RKDebug(int flags, int level, const char *fmt, ...);
 			if (!(x)) RK_DEBUG(DEBUG_ALL, DL_FATAL, "Assert '%s' failed at %s - function %s line %d", #x, __FILE__, __FUNCTION__, __LINE__);
 #	endif
 #	ifndef RKWARD_NO_TRACE
-#		define RK_TRACE(flags) RK_DEBUG(flags, DL_TRACE, "Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
+#		ifdef RKWARD_NESTED_TRACE
+#			define RK_COMBINE1(A, B) A##B
+#			define RK_COMBINE(A, B) RK_COMBINE1(A, B)
+#			define RK_TRACE(flags) RKElaborateTrace RK_COMBINE(_rk_trace_f, __LINE__)(flags, "Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
+#		else
+#			define RK_TRACE(flags) RK_DEBUG(flags, DL_TRACE, "Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
+#		endif
 #	else
 #		define RK_TRACE(flags)
 #	endif
@@ -69,3 +76,21 @@ extern int RK_Debug_CommandStep;
 bool setupLogFile(const QString &basename);
 extern QFile *debug_file;
 }; // namespace RK_Debug
+
+#ifdef RKWARD_NESTED_TRACE
+class RKElaborateTrace {
+  public:
+	RKElaborateTrace(int flags, const char *fmt, ...) : flags(flags) {
+		va_list args;
+		va_start(args, fmt);
+		vsnprintf(msg, 140, fmt, args);
+		va_end(args);
+		RK_DEBUG(flags, DL_TRACE, msg);
+	}
+	~RKElaborateTrace() {
+		RK_DEBUG(flags, DL_TRACE, "end %s", msg);
+	}
+	int flags;
+	char msg[140];
+};
+#endif

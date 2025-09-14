@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QStandardPaths>
 #include <QTest>
 
+#include "../debug.h"
 #include "../misc/rkparsedscript.h"
 
 using namespace Qt::Literals::StringLiterals;
