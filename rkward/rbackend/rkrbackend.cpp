@@ -308,7 +308,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption(RFn::Rf_install("continue"), ROb(R_BaseEnv)))) {
 						RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 						RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-						RFn::Rf_error("%s", ""); // to discard the buffer
+						RK_doIntr(); // to discard the buffer
 					} // else: continue in next iteration at UserCommandRunning
 				} else {
 					RKTransmitNextUserCommandChunk(buf, buflen);
@@ -1291,7 +1291,7 @@ void RKRBackend::runCommand(RCommandProxy *command) {
 		RKParseAndRunData data;
 		data.command = command;
 		RFn::R_ToplevelExec(&parseAndRunWorker, &data);
-		// fix up after conditions that would have cause parseAndRunWorker() to exit via longjmp
+		// fix up after conditions that would have caused parseAndRunWorker() to exit via longjmp
 		command->status |= RCommand::WasTried;
 		if (data.status < RKParseAndRunData::ResetWarn) {
 			markLastWarningAsErrorMessage();
@@ -1422,7 +1422,7 @@ RCommandProxy *RKRBackend::commandFinished(FetchCommandMode fetch_next, ObjectUp
 		QMutexLocker lock(&command_flow_mutex);
 		if (repl_status.interrupted) {
 			repl_status.interrupted = false;
-			current_command->status |= RCommand::Canceled;
+			if (!(current_command->status & RCommand::ErrorIncomplete)) current_command->status |= RCommand::Canceled;
 		}
 		current_command = current_command->outer_command;
 	}
