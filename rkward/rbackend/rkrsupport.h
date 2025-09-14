@@ -39,10 +39,13 @@ SEXP getRKVariablesEnv(); /**< retries the rkward:::.rk.variables environment. N
 /** Replacement for BEGIN_SUSPEND_INTERRUPTS-macro that we cannot easily use */
 class InterruptSuspension {
   public:
-	InterruptSuspension() { old_susp = ROb(R_interrupts_suspended); }
+	InterruptSuspension() {
+		old_susp = ROb(R_interrupts_suspended);
+		ROb(R_interrupts_suspended) = (Rboolean)1;
+	}
 	~InterruptSuspension() {
 		ROb(R_interrupts_suspended) = old_susp;
-		if (ROb(R_interrupts_pending)) RFn::Rf_onintr();
+		//if (ROb(R_interrupts_pending) && !old_susp) RFn::Rf_onintr();
 	}
 
   private:

@@ -1,6 +1,6 @@
 /*
 rkgraphicsdevice_backendtransmitter - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 18 2013
-SPDX-FileCopyrightText: 2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -9,24 +9,24 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../rkbackendtransmitter.h"
 #include "../rkrbackendprotocol_backend.h"
+
 #include <QLocalSocket>
+#include <QWaitCondition>
 
 #include "../../debug.h"
 
 RKAsyncDataStreamHelper<RKGraphicsDeviceTransmittionLengthType> RKGraphicsDeviceBackendTransmitter::streamer;
-QIODevice *RKGraphicsDeviceBackendTransmitter::connection = nullptr;
+QLocalSocket *RKGraphicsDeviceBackendTransmitter::connection = nullptr;
 QMutex RKGraphicsDeviceBackendTransmitter::mutex;
 RKGraphicsDeviceBackendTransmitter *RKGraphicsDeviceBackendTransmitter::_instance = nullptr;
 
-RKGraphicsDeviceBackendTransmitter::RKGraphicsDeviceBackendTransmitter(QIODevice *_connection, bool is_q_local_socket) : QThread() {
+QWaitCondition write_available;
+QWaitCondition read_available;
+
+RKGraphicsDeviceBackendTransmitter::RKGraphicsDeviceBackendTransmitter() : QThread(), alive(true), expecting_reply(false), have_reply(false), commit_pending(false) {
 	RK_TRACE(GRAPHICS_DEVICE);
 
-	RK_ASSERT(!connection);
-	RK_ASSERT(_connection);
-	connection = _connection;
-	streamer.setIODevice(connection);
-	alive = true;
-	is_local_socket = is_q_local_socket;
+	RK_ASSERT(!_instance); // singleton!
 	start();
 }
 
@@ -39,37 +39,85 @@ RKGraphicsDeviceBackendTransmitter *RKGraphicsDeviceBackendTransmitter::instance
 	if (_instance) return _instance;
 	RK_TRACE(GRAPHICS_DEVICE);
 
-	QLocalSocket *con = new QLocalSocket();
-	con->connectToServer(RKRBackendProtocolBackend::rkdServerName());
-	con->waitForConnected(2000);
-	if (con->state() == QLocalSocket::ConnectedState) {
-		con->write(RKRBackendTransmitter::instance()->connectionToken().toLocal8Bit().data());
-		con->write("\n");
-		con->waitForBytesWritten(1000);
-		_instance = new RKGraphicsDeviceBackendTransmitter(con, true);
-		return _instance;
-	}
-	return nullptr;
+	QMutexLocker lock(&mutex);
+	_instance = new RKGraphicsDeviceBackendTransmitter();
+	read_available.wait(&mutex); // signifies startup state, here
+	return _instance;
 }
 
 bool RKGraphicsDeviceBackendTransmitter::connectionAlive() {
 	if (!_instance) return false;
-	if (!_instance->is_local_socket) return true;
-	return static_cast<QLocalSocket *>(_instance->connection)->state() == QLocalSocket::ConnectedState;
+	return _instance->alive;
+}
+
+// NOTE: called from R thread. It is already holding a lock
+void RKGraphicsDeviceBackendTransmitter::commitBuffer() {
+	write_available.wakeAll();
+	_instance->commit_pending = true;
+}
+
+// NOTE: called from R thread. It is already holding a lock
+bool RKGraphicsDeviceBackendTransmitter::waitForReply(int timeout) {
+	if (!streamer.instream.atEnd()) return true;
+
+	if (!_instance->have_reply) {
+		_instance->expecting_reply = true;
+		write_available.wakeAll();
+		read_available.wait(&mutex, QDeadlineTimer(timeout));
+	}
+	if (_instance->have_reply) {
+		_instance->have_reply = false;
+		return true;
+	}
+	return false;
+}
+
+void RKGraphicsDeviceBackendTransmitter::doWrite() {
+	if (commit_pending) {
+		QMutexLocker lock(&mutex);
+		streamer.writeOutBuffer();
+		commit_pending = false;
+	}
+	connection->waitForBytesWritten(1000);
+	if (connection->state() != QLocalSocket::ConnectedState) alive = false;
 }
 
 void RKGraphicsDeviceBackendTransmitter::run() {
 	RK_TRACE(GRAPHICS_DEVICE);
+	RK_ASSERT(!connection);
 
-	bool more_left = false;
-	while (alive) {
-		msleep(more_left ? 10 : 50); // it's ok to be lazy. If a request expects a reply, RKGraphicsDataStreamReadGuard will take care of pushing everything, itself. Essentially, this thread's job is simply to make sure we don't lag *too* far behind.
-		// See note in RKRBackend::handleRequest(): sleeping short is CPU-intensive
-		mutex.lock();
-		connection->waitForBytesWritten(100);
-		more_left = connection->bytesToWrite();
-		mutex.unlock();
+	connection = new QLocalSocket();
+	connection->connectToServer(RKRBackendProtocolBackend::rkdServerName());
+	connection->waitForConnected(2000);
+	if (connection->state() == QLocalSocket::ConnectedState) {
+		connection->write(RKRBackendTransmitter::instance()->connectionToken().toLocal8Bit().data());
+		connection->write("\n");
+		connection->waitForBytesWritten(1000);
 	}
+	streamer.setIODevice(connection);
+	read_available.wakeAll();
+
+	while (alive) {
+		doWrite();
+		if (connection->bytesToWrite()) continue;
+		if (expecting_reply) {
+			{
+				QMutexLocker lock(&mutex);
+				if (!streamer.instream.atEnd() || streamer.readInBuffer()) {
+					have_reply = true;
+					expecting_reply = false;
+					read_available.wakeAll();
+					continue;
+				}
+			}
+			connection->waitForReadyRead(100); // don't wait too long: An RKDCancel may have been committed, meanwhile!
+		} else {
+			QMutexLocker lock(&mutex);
+			write_available.wait(&mutex);
+		}
+	}
+
+	connection->close();
 
 	RK_TRACE(GRAPHICS_DEVICE);
 }

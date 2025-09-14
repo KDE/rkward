@@ -1,6 +1,6 @@
 /*
 rkrbackend - This file is part of RKWard (https://rkward.kde.org). Created: Sun Jul 25 2004
-SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -58,7 +58,7 @@ structRstart RK_R_Params;
 ///// i18n
 #include <KLocalizedString>
 #define RK_MSG_DOMAIN "rkward"
-void RK_setupGettext(const QString &locale_dir) {
+static void RK_setupGettext(const QString &locale_dir) {
 	KLocalizedString::setApplicationDomain(RK_MSG_DOMAIN);
 	if (!locale_dir.isEmpty()) {
 		KLocalizedString::addDomainLocaleDir(RK_MSG_DOMAIN, locale_dir);
@@ -66,18 +66,11 @@ void RK_setupGettext(const QString &locale_dir) {
 }
 
 ///// interrupting R
-static bool RK_IsRInterruptPending() {
-	// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
-#ifdef Q_OS_WIN
-	return ROb(UserBreak);
-#else
-	return ROb(R_interrupts_pending);
-#endif
-}
-
+/// schedule an interrupt to happen at the next R_CheckUserInterrupt() (i.e. inside R code)
 void RK_scheduleIntr() {
-	RK_DEBUG(RBACKEND, DL_DEBUG, "interrupt scheduled");
+	// NOTE: signal handler code. Must not produce debug output, here (could cause mutex deadlocK)
 	RKRBackend::repl_status.interrupted = true;
+	RKRBackend::this_pointer->awaiting_sigint = false;
 #ifdef Q_OS_WIN
 	ROb(UserBreak) = 1;
 #else
@@ -85,11 +78,13 @@ void RK_scheduleIntr() {
 #endif
 }
 
+/// force an immediate intterupt (unless R_interrupts_suspended
 void RK_doIntr() {
 	RK_scheduleIntr();
 	RFn::R_CheckUserInterrupt();
 }
 
+/// thread-safe function to trigger an R interrupt, as if Ctrl+C had been hit in the R console
 void RKRBackend::scheduleInterrupt() {
 	if (RKRBackendProtocolBackend::inRThread()) {
 		RK_scheduleIntr();
@@ -106,55 +101,99 @@ void RKRBackend::scheduleInterrupt() {
 void RKRBackend::interruptCommand(int command_id) {
 	RK_TRACE(RBACKEND);
 	RK_ASSERT(command_id >= 0); // -1 would signify broken request
+	RK_ASSERT(!RKRBackendProtocolBackend::inRThread());
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Received interrupt request for command id %d", command_id);
-	QMutexLocker lock(&all_current_commands_mutex);
+	QMutexLocker lock(&command_flow_mutex);
 
 	/** A request to interrupt a command may happen at very different points in the code:
-	 *  0) before it was even sent from the frontend -> frontend will not even send it to the backend code
-	 *  1) after is was sent from the frontend, but before we properly started handling it in the backend (deserializing the request, pushing it onto
-	 *     all_current_commands, feeding it into the REPL/eval) TODO: buggy!
-	 *  2) when it is properly running in the backend -> this is the typical case, we worry about
+	 *  0) before it was even sent from the frontend -> trivially handled in the frontend, backend not involved
+	 *  1) after it was sent from the frontend, but before we properly started handling it in the backend (deserializing the request, setting as
+	 *     current_command, feeding it into the REPL/eval) -> handled in beginAllowInterruptCommand()
+	 *  2) when it is properly running in the backend -> this is the typical case, we worry about, "immediate interrupt", below
 	 *  2b) when it is properly running in the backend, but there is also an active sub-command, which we should allow to complete
-	 *  3) after it finished running in the backend, but the frontend wasn't aware of that, yet TODO: buggy! */
-	if (!all_current_commands.isEmpty() && (all_current_commands.last()->id == command_id)) {
-		if (too_late_to_interrupt) {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "too late to interrupt command id %d (repl uc status: %d)", command_id, repl_status.user_command_status);
-		} else {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling interrupt for command id %d (repl uc status: %d)", command_id, repl_status.user_command_status);
-			lock.unlock();
-			scheduleInterrupt();
-			return;
-		}
+	 *     -> see commands_to_cancel_deferred and handleDeferredInterrupts()
+	 *  3) after it has finished running in the backend, but the frontend wasn't aware of that, yet
+	 *     -> to prevent resource leakage, we check for unknown ids to cancel when a new command has just been received in
+	 *        handleRequest(). At this point we are sure, it cannot be case 1), above.
+	 *
+	 * The procedure to interrupt the current command (case 2, above), is also quite complex. Some sources of complication:
+	 * 1) Requests to interrupt will originate outside the R thread.
+	 * 2) We *have to* relay interruption with signals, otherwise most system calls inside R will not be interrupted (on Unix).
+	 *    Note that use of any mutex is essentially a no-go in signal handler code.
+	 * 3) Once the signal has arrived, R will essentially set a flag, and trigger an error at the next R_CheckUserInterrupt().
+	 *    When exactly that gets hit is hard to tell, and when it does it will do the usual longjmp error handling.
+	 * 4) We also need to do some pre- and post-processing around running commands, which we want to run, even in case of an interrupt
+	 * 5) The usual painful dichotomy between "user commands" and command going through Rf_eval
+	 *
+	 * The strategy then is to keep track of what portion of a command may be interrupted (begin/endAllowInterruptCommand()), and make
+	 * sure all steps between 1) and 3) are fully handled inisde such blocks. I.e. when we do send a signal, we need to keep track,
+	 * whether it has actually arrived and got handled, before leaving endAllowInterruptCommand(). */
+	if (current_command && (current_command->id == command_id) && (current_command->interruptible_stage)) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling immediate interrupt for command id %d", command_id);
+		awaiting_sigint = true;
+		scheduleInterrupt();
 	} else {
-		bool any_found = false;
-		// if the command to cancel is *not* the topmost command, then do not interrupt, yet.
-		for (RCommandProxy *candidate : std::as_const(all_current_commands)) {
-			if (candidate->id == command_id) {
-				if (!current_commands_to_cancel.contains(candidate)) {
-					RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling delayed interrupt for command id %d", command_id);
-					current_commands_to_cancel.append(candidate);
-					any_found = true;
-				}
-			}
-		}
-		if (!any_found) {
-			RK_DEBUG(RBACKEND, DL_ERROR, "interrupt scheduled for command id %d, but it is not current", command_id);
+		RK_DEBUG(RBACKEND, DL_DEBUG, "scheduling delayed interrupt for command id %d", command_id);
+		commands_to_cancel_deferred.append(command_id);
+	}
+}
+
+void RKRBackend::beginAllowInterruptCommand(RCommandProxy *command) {
+	if (command->type & RCommand::Internal) return;
+	RK_TRACE(RBACKEND);
+
+	bool intr = false;
+	{
+		QMutexLocker m(&command_flow_mutex);
+		RK_ASSERT(!command->interruptible_stage);
+		command->interruptible_stage = true;
+		// see handleDeferredInterrupts(), but avoiding one mutex lock/unlock
+		intr = commands_to_cancel_deferred.removeAll(command->id);
+	}
+	if (intr) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "triggering deferred interrupt for command %d", command->id);
+		// do not call while mutex is locked!
+		RK_doIntr();
+	}
+}
+
+void RKRBackend::endAllowInterruptCommand(RCommandProxy *command) {
+	if (command->type & RCommand::Internal) return;
+	RK_TRACE(RBACKEND);
+
+	bool wait_interrupt;
+	{
+		QMutexLocker m(&command_flow_mutex);
+		RK_ASSERT(command->interruptible_stage);
+		command->interruptible_stage = false;
+		wait_interrupt = awaiting_sigint;
+	}
+	// wait for any pending interrupt to happen
+	while (wait_interrupt) {
+		// do not call while mutex is locked!
+		RFn::R_CheckUserInterrupt();
+		RKRBackendProtocolBackend::msleep(10); // TODO: timeout after a while? In case interrupts are blocked, or something?
+		{
+			QMutexLocker m(&command_flow_mutex);
+			wait_interrupt = awaiting_sigint;
 		}
 	}
 }
 
-void clearPendingInterrupt_Worker(void *) {
-	RFn::R_CheckUserInterrupt();
-}
-
-void RKRBackend::clearPendingInterrupt() {
+void RKRBackend::handleDeferredInterrupts() {
 	RK_TRACE(RBACKEND);
-	if (!RK_IsRInterruptPending()) return;
-	RKRBackend::repl_status.interrupted = false;
-
-	bool passed = RFn::R_ToplevelExec(clearPendingInterrupt_Worker, nullptr);
-	if (!passed) RK_DEBUG(RBACKEND, DL_DEBUG, "pending interrupt cleared");
-	RK_ASSERT(!passed);
+	bool intr = false;
+	{
+		QMutexLocker m(&command_flow_mutex);
+		if (current_command && current_command->interruptible_stage) {
+			intr = commands_to_cancel_deferred.removeAll(current_command->id);
+		}
+	}
+	if (intr) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "triggering deferred interrupt for command %d", current_command->id);
+		// do not call while mutex is locked!
+		RK_doIntr();
+	}
 }
 
 static void markLastWarningAsErrorMessage() {
@@ -167,8 +206,9 @@ static void markLastWarningAsErrorMessage() {
 extern SEXP RKWard_RData_Tag;
 
 // ############## R Standard callback overrides BEGIN ####################
-void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
+static void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 	RK_TRACE(RBACKEND);
+	RFn::R_CheckUserInterrupt();
 
 	RK_ASSERT(RKRBackend::repl_status.user_command_transmitted_up_to <= RKRBackend::repl_status.user_command_buffer.length()); // NOTE: QByteArray::length () does not count the trailing '\0'
 	const char *current_buffer = RKRBackend::repl_status.user_command_buffer.data();
@@ -176,7 +216,7 @@ void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 
 	bool reached_eof = false;
 	int pos = 0;
-	const int max_pos = buflen - 2; // one for the termination
+	const int max_pos = buflen - 2; // one for the terming newline
 	bool reached_newline = false;
 	while (true) {
 		buf[pos] = *current_buffer;
@@ -199,17 +239,22 @@ void RKTransmitNextUserCommandChunk(unsigned char *buf, int buflen) {
 	}
 	buf[++pos] = '\0';
 	RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
+	RK_DEBUG(RBACKEND, DL_DEBUG, "transmitted chunk %s", buf);
 
 	if (reached_newline || reached_eof) {
-		// Making this request synchronous is a bit painful. However, without this, it's extremely difficult to get correct interleaving of output and command lines
-		RKRSupport::InterruptSuspension susp; // This could also result in interrupts, in corner cases, so lets suspend those, for the minute
-		RBackendRequest req(true, RBackendRequest::CommandLineIn);
-		req.params[QStringLiteral("commandid")] = RKRBackend::this_pointer->current_command->id;
-		RKRBackend::this_pointer->handleRequest(&req);
+		// feed a marker into the output stream that a source line of the command shall be interleaved into the output, at this point (if running in the console)
+		RKRBackend::this_pointer->fetchStdoutStderr(true);
+		// NOTE: Output literal is not used, but 0-length "output" would be discarded
+		RKRBackend::this_pointer->handleOutput(u"\n"_s, 1, ROutput::CommandLineIn, false);
 	}
 }
 
 void RBusy(int);
+
+static void replCommandFinished() {
+	RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
+	RKRBackend::this_pointer->commandFinished(RKRBackend::FetchNextCommand, RKRBackend::CheckObjectUpdatesNeeded);
+}
 
 int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 	RK_TRACE(RBACKEND);
@@ -227,7 +272,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 	if ((!RKRBackend::repl_status.browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
 		while (true) {
 			if (RKRBackend::this_pointer->isKilled() || (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand)) {
-				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand();
+				RCommandProxy *command = RKRBackend::this_pointer->current_command;
 				if (!command) {
 					RK_DEBUG(RBACKEND, DL_DEBUG, "returning from REPL");
 					return 0; // jumps out of the event loop!
@@ -235,7 +280,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 
 				if (!(command->type & RCommand::User)) {
 					RKRBackend::this_pointer->runCommand(command);
-					RKRBackend::this_pointer->commandFinished();
+					RKRBackend::this_pointer->commandFinished(RKRBackend::FetchNextCommand, RKRBackend::CheckObjectUpdatesNeeded);
 				} else {
 					// so, we are about to transmit a new user command, which is quite a complex endeavor...
 					/* Some words about running user commands:
@@ -263,17 +308,12 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption(RFn::Rf_install("continue"), ROb(R_BaseEnv)))) {
 						RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 						RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-						RFn::Rf_error("%s", ""); // to discard the buffer
+						RK_doIntr(); // to discard the buffer
 					} // else: continue in next iteration at UserCommandRunning
 				} else {
 					RKTransmitNextUserCommandChunk(buf, buflen);
 					return 1;
 				}
-			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandSyntaxError) {
-				RBusy(1); // properly init command, so commandFinished() can end it
-				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
-				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-				RKRBackend::this_pointer->commandFinished();
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning) {
 				// This can mean three different things:
 				// 1) User called readline ()
@@ -294,21 +334,20 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 				if (n_frames < 1) {
 					// No active frames? This can't be a call to readline(), so the previous command must have finished.
 					if (RKRBackend::repl_status.user_command_completely_transmitted) {
-						RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-						RKRBackend::this_pointer->commandFinished();
+						replCommandFinished();
 					} else RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
 				} else {
 					// A call to readline(). Will be handled below
 					break;
 				}
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandFailed) {
-				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
-				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-				RKRBackend::this_pointer->commandFinished();
+				if (!(RKRBackend::this_pointer->current_command->status & RCommand::ErrorSyntax)) {
+					RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
+				}
+				replCommandFinished();
 			} else {
 				RK_ASSERT(RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::ReplIterationKilled);
-				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-				RKRBackend::this_pointer->commandFinished();
+				replCommandFinished();
 			}
 		}
 	}
@@ -353,8 +392,8 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 	RKRBackend::this_pointer->handleRequest(&request);
 	if (request.params[QStringLiteral("cancelled")].toBool()) {
 		if (RKRBackend::this_pointer->current_command) RKRBackend::this_pointer->current_command->status |= RCommand::Canceled;
-		RFn::Rf_error("cancelled");
-		RK_ASSERT(false); // should not reach this point.
+		RFn::Rf_error("cancelled"); // TODO: probably a memleak, as d'tors (request, params) won't be called
+		RK_ASSERT(false);           // should not reach this point.
 	}
 
 	QByteArray localres = RKTextCodec::toNative(request.params[QStringLiteral("result")].toString());
@@ -399,10 +438,9 @@ void RWriteConsoleEx(const char *buf, int buflen, int type) {
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled())) {
 		if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
-			// status UserCommandTransmitted might have been set from RKToplevelStatementFinishedHandler, too, in which case all is fine
-			// (we're probably inside another task handler at this point, then)
-			if (RKRBackend::repl_status.user_command_parsed_up_to < RKRBackend::repl_status.user_command_transmitted_up_to) {
-				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandSyntaxError;
+			if (RKRBackend::repl_status.user_command_parsed_up_to < RKRBackend::repl_status.user_command_transmitted_up_to && !RKRBackend::repl_status.interrupted) {
+				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
+				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 			}
 		} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::ReplIterationKilled) {
 			// purge superfluous newlines and empty output
@@ -520,7 +558,7 @@ void RKRBackend::tryToDoEmergencySave() {
 	}
 }
 
-QStringList charPArrayToQStringList(const char **chars, int count) {
+static QStringList charPArrayToQStringList(const char **chars, int count) {
 	QStringList ret;
 	for (int i = 0; i < count; ++i) {
 		// do we need to do locale conversion, here?
@@ -554,12 +592,14 @@ The interesting bit is in rresetconsole_called(). */
 struct RKUserCommandErrorDetection {
 	bool reset_signals_error = true;
 	void rbusy_called(int busy) {
-		reset_signals_error = busy;
+		if (busy) reset_signals_error = true;
+		RK_DEBUG(RBACKEND, DL_DEBUG, "RBusy %d", busy);
 	}
 	void reditfiles_called() {
 		reset_signals_error = false;
 	}
 	void rresetconsole_called() {
+		RK_DEBUG(RBACKEND, DL_WARNING, "reset console called, repl status %d, reset_signals_error %d, wasintr %d, awaiting_sigint %d", RKRBackend::repl_status.user_command_status, reset_signals_error, RKRBackend::repl_status.interrupted, RKRBackend::this_pointer->awaiting_sigint);
 		if (!reset_signals_error) {
 			reset_signals_error = true;
 			return;
@@ -571,9 +611,7 @@ struct RKUserCommandErrorDetection {
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 		}
 
-		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending is not yet cleared.
-		const bool command_was_interrupted = RKRBackend::repl_status.interrupted && !RK_IsRInterruptPending();
-		if (!command_was_interrupted) {
+		if (!RKRBackend::repl_status.interrupted) {
 			markLastWarningAsErrorMessage();
 			RK_DEBUG(RBACKEND, DL_DEBUG, "error in user command");
 		}
@@ -723,6 +761,11 @@ void RBusy(int busy) {
 			}
 			RKRBackend::repl_status.user_command_parsed_up_to = RKRBackend::repl_status.user_command_transmitted_up_to;
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning;
+			RKRBackend::this_pointer->beginAllowInterruptCommand(RKRBackend::this_pointer->current_command);
+		}
+	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand && RKRBackend::repl_status.eval_depth == 0) {
+		if (RKRBackend::this_pointer->current_command->interruptible_stage) {
+			RKRBackend::this_pointer->endAllowInterruptCommand(RKRBackend::this_pointer->current_command);
 		}
 	}
 }
@@ -734,7 +777,6 @@ void RResetConsole() {
 
 // ############## R Standard callback overrides END ####################
 
-SEXP doUpdateLocale();
 // NOTE: stdout_stderr_mutex is recursive to support fork()s, better
 RKRBackend::RKRBackend() : stdout_stderr_mutex() {
 	RK_TRACE(RBACKEND);
@@ -742,7 +784,7 @@ RKRBackend::RKRBackend() : stdout_stderr_mutex() {
 	RK_ASSERT(this_pointer == nullptr);
 	this_pointer = this;
 
-	doUpdateLocale();
+	RKTextCodec::reinit();
 	r_running = false;
 
 	current_command = nullptr;
@@ -787,11 +829,6 @@ void RKRBackend::connectCallbacks() {
 void RKRBackend::setupCallbacks() {
 	RK_TRACE(RBACKEND);
 }
-/*
-SEXP dummyselectlist (SEXP, SEXP, SEXP, SEXP) {
-    qDebug ("got it");
-    return ROb(R_NilValue);
-}*/
 
 void RKRBackend::connectCallbacks() {
 	RK_TRACE(RBACKEND);
@@ -814,8 +851,6 @@ void RKRBackend::connectCallbacks() {
 	// TODO: R devels disabled this for some reason. We set it anyway...
 	ROb(ptr_R_EditFile) = REditFile;
 	//	ROb(ptr_R_EditFiles) = REditFiles;		// undefined reference
-	/*	ROb(ptr_do_selectlist) = dummyselectlist;
-	    ROb(ptr_do_dataviewer) = dummyselectlist;*/
 
 	// these two, we won't override
 	//	ROb(ptr_R_loadhistory) = ... 	// we keep our own history
@@ -833,20 +868,12 @@ SEXP doRCall(SEXP _call, SEXP _args, SEXP _sync, SEXP _nested) {
 
 	RFn::R_CheckUserInterrupt();
 
-	QString call = RKRSupport::SEXPToStringList(_call).value(0);
-	/*	// this is a useful place to sneak in test code for profiling
-	    if (list.value (0) == "testit") {
-	        for (int i = 10000; i >= 1; --i) {
-	            setWarnOption (i);
-	        }
-	        return ROb(R_NilValue);
-	    } */
 	bool sync = RKRSupport::SEXPToInt(_sync);
 	bool nested = RKRSupport::SEXPToInt(_nested);
 	RKRBackend::RequestFlags flags = sync ? (nested ? RKRBackend::SynchronousWithSubcommands : RKRBackend::Synchronous) : RKRBackend::Asynchronous;
 
 	// For now, for simplicity, assume args are always strings, although possibly nested in lists
-	auto ret = RKRBackend::this_pointer->doRCallRequest(call, RKRSupport::SEXPToNestedStrings(_args), flags);
+	auto ret = RKRBackend::this_pointer->doRCallRequest(RKRSupport::SEXPToStringList(_call).value(0), RKRSupport::SEXPToNestedStrings(_args), flags);
 	if (!ret.warning.isEmpty()) RFn::Rf_warning("%s", RKTextCodec::toNative(ret.warning).constData()); // print warnings, first, as errors will cause a stop
 	if (!ret.error.isEmpty()) RFn::Rf_error("%s", RKTextCodec::toNative(ret.error).constData());
 
@@ -899,10 +926,6 @@ SEXP doSimpleBackendCall(SEXP _call) {
 
 	RK_ASSERT(false); // Unhandled call.
 	return ROb(R_NilValue);
-}
-
-void R_CheckStackWrapper(void *) {
-	RFn::R_CheckStack();
 }
 
 SEXP doUpdateLocale() {
@@ -974,7 +997,7 @@ bool RKRBackend::startR() {
 
 	RKSignalSupport::saveDefaultSignalHandlers();
 
-	too_late_to_interrupt = false;
+	awaiting_sigint = false;
 	r_running = true;
 	int argc = 3;
 	char *argv[3] = {qstrdup("rkward"), qstrdup("--no-save"), qstrdup("--no-restore")};
@@ -1003,12 +1026,12 @@ bool RKRBackend::startR() {
 #endif
 
 	RFn::setup_Rmainloop();
-	doUpdateLocale(); // call again, as locale may have been re-initialized during startup
+	RKTextCodec::reinit(); // call again, as locale may have been re-initialized during startup
 
 #ifndef Q_OS_WIN
 	// safety check: If we are beyond the stack boundaries already, we better disable stack checking
 	// this has to come *after* the first setup_Rmainloop ()!
-	Rboolean stack_ok = RFn::R_ToplevelExec(R_CheckStackWrapper, nullptr);
+	Rboolean stack_ok = RFn::R_ToplevelExec([](void *) { RFn::R_CheckStack(); }, nullptr);
 	if (!stack_ok) {
 		RK_DEBUG(RBACKEND, DL_WARNING, "R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize.");
 		RK_DEBUG(RBACKEND, DL_WARNING, "Whether or not things work after this, *please* submit a bug report.");
@@ -1131,92 +1154,6 @@ void RKRBackend::enterEventLoop() {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "R loop finished");
 }
 
-struct SafeParseWrap {
-	SEXP cv;
-	SEXP pr;
-	ParseStatus status;
-};
-
-void safeParseVector(void *data) {
-	SafeParseWrap *wrap = static_cast<SafeParseWrap *>(data);
-	wrap->pr = nullptr;
-	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
-	wrap->pr = RFn::R_ParseVector(wrap->cv, -1, &(wrap->status), ROb(R_NilValue));
-}
-
-SEXP parseCommand(const QString &command_qstring, RKRBackend::RKWardRError *error) {
-	RK_TRACE(RBACKEND);
-
-	SafeParseWrap wrap;
-	wrap.status = PARSE_NULL;
-
-	QByteArray localc = RKTextCodec::toNative(command_qstring); // needed so the string below does not go out of scope
-	const char *command = localc.data();
-
-	RFn::Rf_protect(wrap.cv = RFn::Rf_allocVector(STRSXP, 1));
-	RFn::SET_STRING_ELT(wrap.cv, 0, RFn::Rf_mkChar(command));
-
-	// Yes, if there is an error in the parse, R does jump back to toplevel!
-	// trying to parse list(""=1) is an example in R 3.1.1
-	RFn::R_ToplevelExec(safeParseVector, &wrap);
-	SEXP pr = wrap.pr;
-	RFn::Rf_unprotect(1);
-
-	if ((!pr) || (RFn::TYPEOF(pr) == NILSXP)) {
-		// got a null SEXP. This means parse was *not* ok, even if R_ParseVector told us otherwise
-		if (wrap.status == PARSE_OK) {
-			wrap.status = PARSE_ERROR;
-			printf("weird parse error\n");
-		}
-	}
-
-	if (wrap.status != PARSE_OK) {
-		if ((wrap.status == PARSE_INCOMPLETE) || (wrap.status == PARSE_EOF)) {
-			*error = RKRBackend::Incomplete;
-		} else if (wrap.status == PARSE_ERROR) {
-			// extern SEXP parseError (SEXP call, int linenum);
-			// parseError (ROb(R_NilValue), 0);
-			*error = RKRBackend::SyntaxError;
-		} else { // PARSE_NULL
-			*error = RKRBackend::OtherError;
-		}
-		pr = ROb(R_NilValue);
-	}
-
-	return pr;
-}
-
-SEXP runCommandInternalBase(SEXP pr, RKRBackend::RKWardRError *error) {
-	RK_TRACE(RBACKEND);
-
-	SEXP exp;
-	int r_error = 0;
-
-	exp = ROb(R_NilValue);
-
-	if (RFn::TYPEOF(pr) == EXPRSXP && RFn::LENGTH(pr) > 0) {
-		int bi = 0;
-		while (bi < RFn::LENGTH(pr)) {
-			SEXP pxp = RFn::VECTOR_ELT(pr, bi);
-			exp = RFn::R_tryEval(pxp, ROb(R_GlobalEnv), &r_error);
-			bi++;
-			if (r_error) {
-				break;
-			}
-		}
-	} else {
-		exp = RFn::R_tryEval(pr, ROb(R_GlobalEnv), &r_error);
-	}
-
-	if (r_error) {
-		*error = RKRBackend::OtherError;
-	} else {
-		*error = RKRBackend::NoError;
-	}
-
-	return exp;
-}
-
 bool RKRBackend::runDirectCommand(const QString &command) {
 	RK_TRACE(RBACKEND);
 
@@ -1234,7 +1171,7 @@ RCommandProxy *RKRBackend::runDirectCommand(const QString &command, RCommand::Co
 	return c;
 }
 
-void setWarnOption(int level) {
+static void setWarnOption(int level, bool tryeval = false) {
 	SEXP s, t;
 	RFn::Rf_protect(t = s = RFn::Rf_allocList(2));
 	RFn::SET_TYPEOF(s, LANGSXP);
@@ -1243,16 +1180,97 @@ void setWarnOption(int level) {
 	RFn::SETCAR(t, RFn::Rf_ScalarInteger(level));
 	RFn::SET_TAG(t, RFn::Rf_install("warn"));
 	// The above is rougly equivalent to parseCommand ("options(warn=" + QString::number (level) + ")", &error), but ~100 times faster
-	RKRBackend::RKWardRError error;
-	runCommandInternalBase(s, &error);
+	if (tryeval) {
+		int error;
+		RFn::R_tryEval(s, ROb(R_GlobalEnv), &error);
+	} else RFn::Rf_eval(s, ROb(R_GlobalEnv));
 	RFn::Rf_unprotect(1);
+}
+
+struct RKParseAndRunData {
+	enum ReachedState { None,
+		                Parsed,
+		                SetWarn,
+		                Evalled,
+		                ResetWarn };
+	ReachedState status = None;
+	RCommandProxy *command;
+	QByteArray commandbuf; // cannot live on stack inside parseAndRunWorker
+	int warn_level;
+};
+static void parseAndRunWorker(void *_data) {
+	RK_TRACE(RBACKEND);
+	auto data = static_cast<RKParseAndRunData *>(_data);
+
+	// WARNING: R may longjmp out of this function at several points. Therefore:
+	//          No objects with d'tors on the stack, please! (Or exceptions, or other fancy C++ stuff)
+	SEXP commandexp, parsed, exp;
+	RFn::Rf_protect(commandexp = RFn::Rf_allocVector(STRSXP, 1));
+	data->commandbuf = RKTextCodec::toNative(data->command->command);
+	RFn::SET_STRING_ELT(commandexp, 0, RFn::Rf_mkChar(data->commandbuf.data()));
+	ParseStatus parsestatus;
+	RFn::Rf_protect(parsed = RFn::R_ParseVector(commandexp, -1, &parsestatus, ROb(R_NilValue)));
+	// if we reached this point, parsing (successful or not) did not result in a longjmp - which may actually happen:
+	// trying to parse list(""=1) is an example in R 3.1.1
+	data->status = RKParseAndRunData::Parsed;
+
+	if ((parsestatus != PARSE_OK) || (!parsed) || (RFn::TYPEOF(parsed) == NILSXP)) {
+		// NOTE: according to historic code, it is possible for parsed to nullptr or R_NilValue, even though
+		//       parse_status == PARSE_OK. Not sure, if this is actually true
+		if ((parsestatus == PARSE_INCOMPLETE) || (parsestatus == PARSE_EOF)) {
+			data->command->status |= RCommand::ErrorIncomplete;
+		} else if (parsestatus == PARSE_NULL) {
+			data->status = RKParseAndRunData::ResetWarn; // we're done despite returning early
+		} else if (parsestatus == PARSE_ERROR) {
+			data->command->status |= RCommand::ErrorSyntax;
+		}
+		RFn::Rf_unprotect(2);
+		return;
+	}
+
+	// Make sure any warnings arising during the command actually get associated with it (rather than getting printed after the next user command)
+	data->warn_level = RKRSupport::SEXPToInt(RFn::Rf_GetOption1(RFn::Rf_install("warn")), 0);
+	if (data->warn_level != 1) {
+		setWarnOption(1);
+		data->status = RKParseAndRunData::SetWarn;
+	}
+
+	// evaluate the actual command - also, if it consists of multiple expressions, internally
+	RKRBackend::this_pointer->beginAllowInterruptCommand(data->command);
+	if (RFn::TYPEOF(parsed) == EXPRSXP && RFn::LENGTH(parsed) > 0) {
+		const int len = RFn::LENGTH(parsed);
+		for (int bi = 0; bi < len; bi++) {
+			SEXP pxp = RFn::VECTOR_ELT(parsed, bi);
+			exp = RFn::Rf_eval(pxp, ROb(R_GlobalEnv));
+		}
+	} else {
+		exp = RFn::Rf_eval(parsed, ROb(R_GlobalEnv));
+	}
+	RFn::Rf_protect(exp);
+	RKRBackend::this_pointer->endAllowInterruptCommand(data->command);
+	data->status = RKParseAndRunData::Evalled;
+
+	if (data->warn_level != 1) setWarnOption(data->warn_level);
+	data->status = RKParseAndRunData::ResetWarn;
+
+	const auto ctype = data->command->type;
+	if (ctype & RCommand::GetStringVector) {
+		data->command->setData(RKRSupport::SEXPToStringList(exp));
+	} else if (ctype & RCommand::GetRealVector) {
+		data->command->setData(RKRSupport::SEXPToRealArray(exp));
+	} else if (ctype & RCommand::GetIntVector) {
+		data->command->setData(RKRSupport::SEXPToIntArray(exp));
+	} else if (ctype & RCommand::GetStructuredData) {
+		RData *dummy = RKRSupport::SEXPToRData(exp);
+		data->command->swallowData(*dummy);
+		delete dummy;
+	}
+	RFn::Rf_unprotect(3); // commandexp, parsed, exp
 }
 
 void RKRBackend::runCommand(RCommandProxy *command) {
 	RK_TRACE(RBACKEND);
 	RK_ASSERT(command);
-
-	RKWardRError error = NoError;
 
 	int ctype = command->type; // easier typing
 
@@ -1270,47 +1288,24 @@ void RKRBackend::runCommand(RCommandProxy *command) {
 		killed = ExitNow;
 	} else if (!(ctype & RCommand::EmptyCommand)) {
 		repl_status.eval_depth++;
-		SEXP parsed = parseCommand(command->command, &error);
-		if (error == NoError) {
-			RFn::Rf_protect(parsed);
-			SEXP exp;
-			// Make sure any warning arising during the command actually get assuciated with it (rather than getting printed, after the next user command)
-			int warn_level = RKRSupport::SEXPToInt(RFn::Rf_GetOption1(RFn::Rf_install("warn")), 0);
-			if (warn_level != 1) setWarnOption(1);
-			RFn::Rf_protect(exp = runCommandInternalBase(parsed, &error));
-			if (warn_level != 1) setWarnOption(warn_level);
-
-			if (error == NoError) {
-				if (ctype & RCommand::GetStringVector) {
-					command->setData(RKRSupport::SEXPToStringList(exp));
-				} else if (ctype & RCommand::GetRealVector) {
-					command->setData(RKRSupport::SEXPToRealArray(exp));
-				} else if (ctype & RCommand::GetIntVector) {
-					command->setData(RKRSupport::SEXPToIntArray(exp));
-				} else if (ctype & RCommand::GetStructuredData) {
-					RData *dummy = RKRSupport::SEXPToRData(exp);
-					command->swallowData(*dummy);
-					delete dummy;
-				}
+		RKParseAndRunData data;
+		data.command = command;
+		RFn::R_ToplevelExec(&parseAndRunWorker, &data);
+		// fix up after conditions that would have caused parseAndRunWorker() to exit via longjmp
+		command->status |= RCommand::WasTried;
+		if (data.status < RKParseAndRunData::ResetWarn) {
+			markLastWarningAsErrorMessage();
+			command->status |= RCommand::Failed;
+			if (data.status < RKParseAndRunData::Parsed) {
+				command->status |= RCommand::ErrorSyntax;
+			} else if (!(command->status & RCommand::Canceled)) {
+				command->status |= RCommand::ErrorOther;
 			}
-			RFn::Rf_unprotect(2); // exp, parsed
+			if (data.status >= RKParseAndRunData::SetWarn) {
+				setWarnOption(data.warn_level, true);
+			}
 		}
 		repl_status.eval_depth--;
-	}
-
-	// common error/status handling
-	if (error != NoError) {
-		command->status |= RCommand::WasTried | RCommand::Failed;
-		if (error == Incomplete) {
-			command->status |= RCommand::ErrorIncomplete;
-		} else if (error == SyntaxError) {
-			command->status |= RCommand::ErrorSyntax;
-		} else if (!(command->status & RCommand::Canceled)) {
-			command->status |= RCommand::ErrorOther;
-		}
-		markLastWarningAsErrorMessage();
-	} else {
-		command->status |= RCommand::WasTried;
 	}
 }
 
@@ -1326,25 +1321,20 @@ void doPendingPriorityCommands() {
 	RK_TRACE(RBACKEND);
 
 	if (RKRBackend::this_pointer->killed) return;
+	RKRBackend::this_pointer->priority_command_mutex.lock();
 	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
 	RKRBackend::this_pointer->pending_priority_command = nullptr;
+	RKRBackend::this_pointer->priority_command_mutex.unlock();
 	if (command) {
 		RK_DEBUG(RBACKEND, DL_DEBUG, "running priority command %s", qPrintable(command->command));
 		{
-			QMutexLocker lock(&RKRBackend::this_pointer->all_current_commands_mutex);
-			RKRBackend::this_pointer->all_current_commands.append(command);
+			QMutexLocker lock(&RKRBackend::this_pointer->command_flow_mutex);
+			command->outer_command = RKRBackend::this_pointer->current_command;
 			RKRBackend::this_pointer->current_command = command;
 		}
 
 		RKRBackend::this_pointer->runCommand(command);
-		// TODO: Oh boy, what a mess. Sending notifications should be split from fetchNextCommand() (which is not appropriate, here)
-		RCommandProxy *previous_command_backup = RKRBackend::this_pointer->previous_command;
-		RKRBackend::this_pointer->commandFinished(false);
-		RKRBackend::this_pointer->previous_command = previous_command_backup;
-		RBackendRequest req(false, RBackendRequest::CommandOut); // NOTE: We do *NOT* want a reply to this one, and in particular, we do *NOT* want to do
-		                                                         // (recursive) event processing while handling this.
-		req.command = command;
-		RKRBackend::this_pointer->handleRequest(&req);
+		RKRBackend::this_pointer->commandFinished(RKRBackend::NoFetchNextCommand, RKRBackend::NoCheckObjectUpdatesNeeded);
 	}
 }
 
@@ -1393,22 +1383,15 @@ void RKRBackend::printAndClearCapturedMessages(bool with_header) {
 void RKRBackend::run(const QString &locale_dir, bool setup) {
 	RK_TRACE(RBACKEND);
 	killed = NotKilled;
-	previous_command = nullptr;
 
 	initialize(locale_dir, setup);
 
 	enterEventLoop();
 }
 
-void RKRBackend::commandFinished(bool check_object_updates_needed) {
+RCommandProxy *RKRBackend::commandFinished(FetchCommandMode fetch_next, ObjectUpdateMode check_object_updates_needed) {
 	RK_TRACE(RBACKEND);
-	RK_DEBUG(RBACKEND, DL_DEBUG, "done running command %s", qPrintable(current_command->command));
-
-	{
-		QMutexLocker lock(&all_current_commands_mutex);
-		too_late_to_interrupt = true;
-	}
-	clearPendingInterrupt(); // Mutex must be unlocked for this!
+	RK_DEBUG(RBACKEND, DL_DEBUG, "done running command %s, status: %d", qPrintable(current_command->command), current_command->status);
 
 	fetchStdoutStderr(true);
 	if (current_command->type & RCommand::CCOutput) printAndClearCapturedMessages(current_command->type & RCommand::Plugin);
@@ -1432,41 +1415,41 @@ void RKRBackend::commandFinished(bool check_object_updates_needed) {
 		checkObjectUpdatesNeeded(current_command->type & (RCommand::User | RCommand::ObjectListUpdate));
 	}
 
-	previous_command = current_command;
+	RBackendRequest req(fetch_next && !isKilled(), RBackendRequest::CommandOut);
+	req.command = current_command;
 
 	{
-		QMutexLocker lock(&all_current_commands_mutex);
+		QMutexLocker lock(&command_flow_mutex);
 		if (repl_status.interrupted) {
 			repl_status.interrupted = false;
-			current_command->status |= RCommand::Canceled;
-			clearPendingInterrupt(); // might not have been handled, yet
+			if (!(current_command->status & RCommand::ErrorIncomplete)) current_command->status |= RCommand::Canceled;
 		}
-		all_current_commands.pop_back();
-		if (!all_current_commands.isEmpty()) current_command = all_current_commands.last();
-		too_late_to_interrupt = false;
+		current_command = current_command->outer_command;
 	}
+
+	return RKRBackend::this_pointer->handleRequest(&req);
 }
 
-RCommandProxy *RKRBackend::handleRequest(RBackendRequest *request, bool mayHandleSubstack) {
+RCommandProxy *RKRBackend::handleRequest(RBackendRequest *request) {
 	RK_TRACE(RBACKEND);
 	RK_ASSERT(request);
 
-	// See docs for RBackendRequest for hints to make sense of this mess (and eventually to fix it)
-
-	RKRBackendProtocolBackend::instance()->sendRequest(request);
-	if (request->subcommandrequest) {
-		handleRequest2(request->subcommandrequest, true);
-	}
-	return handleRequest2(request, mayHandleSubstack);
-}
-
-RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHandleSubstack) {
-	RK_TRACE(RBACKEND);
-
+	// the logic is still a bit convoluted, here, for historical reasons: Subcommand requests are already sent as part of their parent request
+	if (request->type != RBackendRequest::SubcommandRequest) RKRBackendProtocolBackend::instance()->sendRequest(request);
 	if ((!request->synchronous) && (!isKilled())) {
-		RK_ASSERT(mayHandleSubstack); // i.e. not called from fetchNextCommand
 		RK_ASSERT(!request->subcommandrequest);
 		return nullptr;
+	}
+
+	// If the request allows subcommands doRCallRequest(..., SynchronousWithSubcommands),
+	// recurse into those, first
+	if (request->subcommandrequest) {
+		auto command = handleRequest(request->subcommandrequest);
+		while (command) {
+			runCommand(command);
+			command = commandFinished(FetchNextCommand, NoCheckObjectUpdatesNeeded);
+		}
+		handleDeferredInterrupts();
 	}
 
 	int i = 0;
@@ -1481,49 +1464,29 @@ RCommandProxy *RKRBackend::handleRequest2(RBackendRequest *request, bool mayHand
 		if (!request->done) RKRBackendProtocolBackend::msleep(++i < 200 ? 10 : 50);
 	}
 
-	// TODO remove me?
-	while (pending_priority_command)
-		RKREventLoop::processX11Events(); // Probably not needed, but make sure to process priority commands first at all times.
-
 	RCommandProxy *command = request->takeCommand();
 	if (!command) return nullptr;
 
 	{
-		QMutexLocker lock(&all_current_commands_mutex);
+		QMutexLocker lock(&command_flow_mutex);
 		RK_ASSERT(command != current_command);
-		all_current_commands.append(command);
+		command->outer_command = current_command;
 		current_command = command;
-	}
 
-	if (!mayHandleSubstack) return command;
-
-	while (command) {
-		runCommand(command);
-		commandFinished(false);
-
-		command = fetchNextCommand();
-	};
-
-	{
-		QMutexLocker lock(&all_current_commands_mutex);
-		if (current_commands_to_cancel.contains(current_command)) {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "will now interrupt parent command");
-			current_commands_to_cancel.removeAll(current_command);
-			scheduleInterrupt();
+		// clean up after stale deferred interrupts (see comments in interruptCommand()
+		for (int i = commands_to_cancel_deferred.size() - 1; i >= 0; --i) {
+			const auto id = commands_to_cancel_deferred[i];
+			auto c = current_command;
+			bool found = false;
+			do {
+				if (c->id == id) found = true;
+				c = c->outer_command;
+			} while (c && !found);
+			if (!found) commands_to_cancel_deferred.removeAt(i);
 		}
 	}
 
-	return nullptr;
-}
-
-RCommandProxy *RKRBackend::fetchNextCommand() {
-	RK_TRACE(RBACKEND);
-
-	RBackendRequest req(!isKilled(), RBackendRequest::CommandOut); // when killed, we do *not* actually wait for the reply, before the request is deleted.
-	req.command = previous_command;
-	previous_command = nullptr;
-
-	return (handleRequest(&req, false));
+	return command;
 }
 
 GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVariant &params, RequestFlags flags) {
@@ -1535,7 +1498,7 @@ GenericRRequestResult RKRBackend::doRCallRequest(const QString &call, const QVar
 	if (!params.isNull()) request.params[QStringLiteral("args")] = params;
 	if (flags == SynchronousWithSubcommands) {
 		request.params[QStringLiteral("cid")] = current_command->id;
-		request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
+		request.subcommandrequest = new RBackendRequest(true, RBackendRequest::SubcommandRequest);
 	}
 	handleRequest(&request);
 	delete request.subcommandrequest;
@@ -1547,7 +1510,10 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
 	repl_status.eval_depth++;
-	fetchNextCommand();
+	{
+		RBackendRequest req(true, RBackendRequest::CommandOut); // fetch the first command (a dummy)
+		handleRequest(&req);
+	}
 	RK_ASSERT(current_command);
 
 	startR();
@@ -1564,14 +1530,16 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 	                                                                         "  if (!dir.exists (libloc)) dir.create(libloc, recursive=TRUE)\n"
 	                                                                         "  ok <- FALSE\n") +
 	                  (setup ? u"# skipping: "_s : u""_s) +
-	                  QStringLiteral(" suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); ") + versioncheck + QStringLiteral("; ok <- TRUE}))\n"
-	                                                                                                                                    "  if (!ok) {\n"
-	                                                                                                                                    "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
-	                                                                                                                                    "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\", INSTALL_opts=\"--no-multiarch\")\n"
-	                                                                                                                                    "    library (\"rkward\", lib.loc=libloc)\n"
-	                                                                                                                                    "  }\n"
-	                                                                                                                                    "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be avaiable for help serach, but hopefully, not get into the way, otherwise
-	                                                                                                                                    "})\n");
+	                  QStringLiteral(" suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); ") +
+	                  versioncheck +
+	                  QStringLiteral("; ok <- TRUE}))\n"
+	                                 "  if (!ok) {\n"
+	                                 "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
+	                                 "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\", INSTALL_opts=\"--no-multiarch\")\n"
+	                                 "    library (\"rkward\", lib.loc=libloc)\n"
+	                                 "  }\n"
+	                                 "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be available for help search, but hopefully, not get into the way, otherwise
+	                                 "})\n");
 	if (!runDirectCommand(command)) lib_load_fail = true;
 	RK_setupGettext(locale_dir); // must happen *after* package loading, since R will re-set it
 	if (!runDirectCommand(versioncheck + u"\n"_s)) lib_load_fail = true;
@@ -1587,14 +1555,12 @@ void RKRBackend::initialize(const QString &locale_dir, bool setup) {
 		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p></p>\n"));
 	}
 
-	RBackendRequest req(true, RBackendRequest::Started);
-	req.params[QStringLiteral("message")] = QVariant(error_messages);
+	doRCallRequest(QStringLiteral("rstarted"), QVariant(error_messages), SynchronousWithSubcommands);
 	// blocks until RKWard is set to go (esp, it has displayed startup error messages, etc.)
 	// in fact, a number of sub-commands are run while handling this request!
-	handleRequest(&req);
 
 	RK_ASSERT(current_command);
-	commandFinished(); // the fake startup command
+	commandFinished(FetchNextCommand, CheckObjectUpdatesNeeded); // the fake startup command
 	repl_status.eval_depth--;
 }
 

@@ -387,79 +387,6 @@ void RInterface::handleRequest(RBackendRequest *request) {
 		if (subcommandrequest) closeChain(in_chain);
 
 		RKRBackendProtocolFrontend::setRequestCompleted(request);
-	} else if (request->type == RBackendRequest::Started) {
-		// The backend thread has finished basic initialization, but we still have more to do...
-		backend_error.message.append(request->params[QStringLiteral("message")].toString());
-
-		command_requests.append(request);
-		RCommandChain *chain = openSubcommandChain(runningCommand());
-
-		runStartupCommand(new RCommand(QStringLiteral("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
-		                  [](RCommand *command) {
-			                  RK_ASSERT(command->getDataType() == RData::StringVector);
-			                  RK_ASSERT(command->getDataLength() == 1);
-			                  RKSessionVars::setRVersion(command->stringVector().value(0));
-		                  });
-
-		if (qEnvironmentVariableIsSet("APPDIR")) {
-			// Running inside an AppImage. As soon as R has started, it should behave as if running in the main (system) environment (esp. when calling helper binaries such as wget or gcc).
-			// Unset any paths starting with APPDIR, _except_ those inside R_HOME.
-			runStartupCommand(new RCommand(QStringLiteral("local({\n"
-			                                              "	appdir <- Sys.getenv(\"APPDIR\")\n"
-			                                              "	fix <- function(key) {\n"
-			                                              "		paths <- strsplit(Sys.getenv(key), \":\", fixed=TRUE)[[1]]\n"
-			                                              "		paths <- paths[!(startsWith(paths, appdir) & !startsWith(paths, R.home()))]\n"
-			                                              "		patharg <- list(paste(paths, collapse=\":\"))\n"
-			                                              "		names(patharg) <- key\n"
-			                                              "		do.call(Sys.setenv, patharg)\n"
-			                                              "	}\n"
-			                                              "	fix(\"LD_LIBRARY_PATH\")\n"
-			                                              "	fix(\"PATH\")\n"
-			                                              "})\n"),
-			                               RCommand::App | RCommand::Sync),
-			                  chain, [](RCommand *) {});
-		}
-
-		// find out about standard library locations
-		runStartupCommand(new RCommand(QStringLiteral("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
-		                  [this](RCommand *command) {
-			                  RK_ASSERT(command->getDataType() == RData::StringVector);
-			                  RKSettingsModuleRPackages::r_libs_user = command->stringVector().value(0);
-			                  RKSettingsModuleRPackages::defaultliblocs = command->stringVector().mid(1);
-
-			                  RCommandChain *chain = command->parent;
-			                  RK_ASSERT(chain);
-			                  RK_ASSERT(!chain->isClosed());
-
-			                  // apply user configurable run time options
-			                  auto runtimeopt_callback = [](RCommand *) {}; // No special handling. Any failure will be recorded with runStartupCommand().
-			                  QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands() + RKSettingsModuleRPackages::makeRRunTimeOptionCommands() + RKSettingsModuleOutput::makeRRunTimeOptionCommands() + RKSettingsModuleGraphics::makeRRunTimeOptionCommands();
-			                  for (QStringList::const_iterator it = commands.cbegin(); it != commands.cend(); ++it) {
-				                  runStartupCommand(new RCommand(*it, RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
-			                  }
-			                  // initialize output file
-			                  RKOutputDirectory::getCurrentOutput(chain);
-
-			                  // Workaround for https://bugs.kde.org/show_bug.cgi?id=421958
-			                  if (RKSessionVars::compareRVersion(QStringLiteral("4.0.0")) < 1 && RKSessionVars::compareRVersion(QStringLiteral("4.0.1")) > 0) {
-				                  runStartupCommand(new RCommand(QStringLiteral("if(compiler::enableJIT(-1) > 2) compiler::enableJIT(2)\n"), RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
-			                  }
-
-			                  closeChain(chain);
-		                  });
-
-		// start help server / determined help base url
-		runStartupCommand(new RCommand(QStringLiteral(".rk.getHelpBaseUrl ()\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
-		                  [](RCommand *command) {
-			                  RK_ASSERT(command->getDataType() == RData::StringVector);
-			                  RK_ASSERT(command->getDataLength() == 1);
-			                  RKSettingsModuleR::help_base_url = command->stringVector().value(0);
-		                  });
-
-		QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory();
-		if (cd_to.isEmpty()) cd_to = QDir::currentPath();
-		if (cd_to.isEmpty()) cd_to = QStringLiteral("."); // we must be in a non-existent dir. cd'ing to "." will cause us to sync with the backend
-		RInterface::issueCommand(new RCommand(u"setwd("_s + RObject::rQuote(cd_to) + u")\n"_s, RCommand::App | RCommand::Sync), chain);
 	} else {
 		processRBackendRequest(request);
 	}
@@ -471,6 +398,16 @@ void RInterface::flushOutput(bool forced) {
 	const ROutputList list = backendprotocol->flushOutput(forced);
 
 	for (const ROutput &output : list) {
+		if (output.type == ROutput::CommandLineIn) {
+			RCommand *command = all_current_commands.value(0, nullptr); // User command will always be the first.
+			if ((command == nullptr) || !(command->type() & RCommand::User)) {
+				RK_ASSERT(false);
+			} else {
+				command->commandLineIn();
+			}
+			continue;
+		}
+
 		if (all_current_commands.isEmpty()) {
 			RK_DEBUG(RBACKEND, DL_DEBUG, "output without receiver'%s'", qPrintable(output.output));
 			if (RKConsole::mainConsole()) RKConsole::mainConsole()->insertSpontaneousROutput(output); // the "if" is to prevent crash, should output arrive during exit
@@ -806,6 +743,75 @@ GenericRRequestResult RInterface::processRCallRequest(const QString &call, const
 		dialog->addRCommand(command, true);
 		issueCommand(command, in_chain);
 		dialog->doNonModal(true);
+	} else if (call == QLatin1String("rstarted")) {
+		// The backend thread has finished basic initialization, but we still have more to do...
+		backend_error.message.append(args.toString());
+
+		runStartupCommand(new RCommand(QStringLiteral("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), in_chain,
+		                  [](RCommand *command) {
+			                  RK_ASSERT(command->getDataType() == RData::StringVector);
+			                  RK_ASSERT(command->getDataLength() == 1);
+			                  RKSessionVars::setRVersion(command->stringVector().value(0));
+		                  });
+
+		if (qEnvironmentVariableIsSet("APPDIR")) {
+			// Running inside an AppImage. As soon as R has started, it should behave as if running in the main (system) environment (esp. when calling helper binaries such as wget or gcc).
+			// Unset any paths starting with APPDIR, _except_ those inside R_HOME.
+			runStartupCommand(new RCommand(QStringLiteral("local({\n"
+			                                              "	appdir <- Sys.getenv(\"APPDIR\")\n"
+			                                              "	fix <- function(key) {\n"
+			                                              "		paths <- strsplit(Sys.getenv(key), \":\", fixed=TRUE)[[1]]\n"
+			                                              "		paths <- paths[!(startsWith(paths, appdir) & !startsWith(paths, R.home()))]\n"
+			                                              "		patharg <- list(paste(paths, collapse=\":\"))\n"
+			                                              "		names(patharg) <- key\n"
+			                                              "		do.call(Sys.setenv, patharg)\n"
+			                                              "	}\n"
+			                                              "	fix(\"LD_LIBRARY_PATH\")\n"
+			                                              "	fix(\"PATH\")\n"
+			                                              "})\n"),
+			                               RCommand::App | RCommand::Sync),
+			                  in_chain, [](RCommand *) {});
+		}
+
+		// find out about standard library locations
+		runStartupCommand(new RCommand(QStringLiteral("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), in_chain,
+		                  [this](RCommand *command) {
+			                  RK_ASSERT(command->getDataType() == RData::StringVector);
+			                  RKSettingsModuleRPackages::r_libs_user = command->stringVector().value(0);
+			                  RKSettingsModuleRPackages::defaultliblocs = command->stringVector().mid(1);
+
+			                  RCommandChain *chain = command->parent;
+			                  RK_ASSERT(chain);
+
+			                  // apply user configurable run time options
+			                  auto runtimeopt_callback = [](RCommand *) {}; // No special handling. Any failure will be recorded with runStartupCommand().
+			                  QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands() + RKSettingsModuleRPackages::makeRRunTimeOptionCommands() + RKSettingsModuleOutput::makeRRunTimeOptionCommands() + RKSettingsModuleGraphics::makeRRunTimeOptionCommands();
+			                  for (QStringList::const_iterator it = commands.cbegin(); it != commands.cend(); ++it) {
+				                  runStartupCommand(new RCommand(*it, RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
+			                  }
+			                  // initialize output file
+			                  RKOutputDirectory::getCurrentOutput(chain);
+
+			                  // Workaround for https://bugs.kde.org/show_bug.cgi?id=421958
+			                  if (RKSessionVars::compareRVersion(QStringLiteral("4.0.0")) < 1 && RKSessionVars::compareRVersion(QStringLiteral("4.0.1")) > 0) {
+				                  runStartupCommand(new RCommand(QStringLiteral("if(compiler::enableJIT(-1) > 2) compiler::enableJIT(2)\n"), RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
+			                  }
+
+			                  closeChain(chain);
+		                  });
+
+		// start help server / determined help base url
+		runStartupCommand(new RCommand(QStringLiteral(".rk.getHelpBaseUrl ()\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), in_chain,
+		                  [](RCommand *command) {
+			                  RK_ASSERT(command->getDataType() == RData::StringVector);
+			                  RK_ASSERT(command->getDataLength() == 1);
+			                  RKSettingsModuleR::help_base_url = command->stringVector().value(0);
+		                  });
+
+		QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory();
+		if (cd_to.isEmpty()) cd_to = QDir::currentPath();
+		if (cd_to.isEmpty()) cd_to = QStringLiteral("."); // we must be in a non-existent dir. cd'ing to "." will cause us to sync with the backend
+		issueCommand(new RCommand(u"setwd("_s + RObject::rQuote(cd_to) + u")\n"_s, RCommand::App | RCommand::Sync), in_chain);
 	} else {
 		return GenericRRequestResult::makeError(i18n("Error: unrecognized request '%1'", call));
 	}
@@ -829,15 +835,7 @@ void RInterface::processRBackendRequest(RBackendRequest *request) {
 	// first, copy out the type. Allows for easier typing below
 	RBackendRequest::RCallbackType type = request->type;
 
-	if (type == RBackendRequest::CommandLineIn) {
-		int id = request->params[QStringLiteral("commandid")].toInt();
-		RCommand *command = all_current_commands.value(0, nullptr); // User command will always be the first.
-		if ((command == nullptr) || (command->id() != id)) {
-			RK_ASSERT(false);
-		} else {
-			command->commandLineIn();
-		}
-	} else if (type == RBackendRequest::ShowMessage) {
+	if (type == RBackendRequest::ShowMessage) {
 		QString caption = request->params[QStringLiteral("caption")].toString();
 		QString message = request->params[QStringLiteral("message")].toString();
 		QString button_yes = request->params[QStringLiteral("button_yes")].toString();
@@ -929,7 +927,7 @@ void RInterface::processRBackendRequest(RBackendRequest *request) {
 			if (report) reportFatalError(); // TODO: Reporting should probably be moved to RKWardMinaWindow, entirely
 		}
 	} else {
-		RK_ASSERT(false);
+		RK_DEBUG(RBACKEND, DL_ERROR, "Bad request type %d", type);
 	}
 
 	RKRBackendProtocolFrontend::setRequestCompleted(request);

@@ -9,13 +9,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RCommandProxy::RCommandProxy(const QString &command, int type) {
+RCommandProxy::RCommandProxy(const QString &command, int type) : outer_command(nullptr) {
 	RK_TRACE(RBACKEND);
 
 	RCommandProxy::command = command;
 	RCommandProxy::type = type;
 	id = -1;
 	status = 0;
+	interruptible_stage = false;
 }
 
 RCommandProxy::~RCommandProxy() {
@@ -145,7 +146,7 @@ QString RKROutputBuffer::popOutputCapture(bool highlighted) {
 void appendToOutputList(ROutputList *list, const QString &output, ROutput::ROutputType output_type) {
 	// No trace
 	// Merge with previous output fragment, if of the same type
-	if (!list->isEmpty() && list->last().type == output_type) {
+	if (!list->isEmpty() && list->last().type == output_type && output_type != ROutput::CommandLineIn) {
 		list->last().output.append(output);
 	} else {
 		QString spaced = output;

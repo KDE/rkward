@@ -1,6 +1,6 @@
 /*
 core_test - This file is part of RKWard (https://rkward.kde.org). Created: Thu Jun 09 2022
-SPDX-FileCopyrightText: 2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2024-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -197,6 +197,7 @@ class RKWardCoreTest : public QObject {
 		KAboutData::setApplicationData(about);
 		new RKCommandLineArgs(&about, qApp, true);
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
+		// RK_Debug::RK_Debug_Flags = RBACKEND;
 		testLog(R_EXECUTABLE);
 		RKSessionVars::r_binary = QStringLiteral(R_EXECUTABLE);
 		main_win = new RKWardMainWindow();
@@ -474,12 +475,53 @@ class RKWardCoreTest : public QObject {
 		testLog("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
 	}
 
+	void cancelNestedCommandTest() {
+		RKWorkplace::mainWorkplace()->openOutputWindow(QUrl()); // this may take a long time on a crowded CI, so preload before entering timeouts
+		auto dotest = [this](int command_flags) {
+			// Create a command that spawns a subcommand, then cancel both
+			auto c = new RCommand(QStringLiteral("print('outerpre')\nrk.call.plugin('rkward::testing_run_code', 'codetorun.text'='print(\\\'innerpre\\\');Sys.sleep(5);print(\\\'innerpost\\\')', submit.mode='submit')\nSys.sleep(5)\nprint('outerpost')"), command_flags);
+			connect(c->notifier(), &RCommandNotifier::commandOutput, this, [](RCommand *, const ROutput &out) {
+				if (out.output.contains(u"innerpre"_s)) RInterface::instance()->cancelAll();
+			});
+			runCommandAsync(c, nullptr, [](RCommand *command) {
+				QVERIFY(command->fullOutput().contains(u"outerpre"_s));
+				QVERIFY(command->fullOutput().contains(u"innerpre"_s));
+				QVERIFY(!command->fullOutput().contains(u"innerpost"_s));
+				QVERIFY(!command->fullOutput().contains(u"outerpost"_s));
+				QVERIFY(command->failed());
+				QVERIFY(command->wasCanceled());
+			});
+			if (!waitForAllFinished()) {
+				waitForAllFinished(10000); // prevent crash in case of test failure
+				QVERIFY(false);
+			}
+		};
+		dotest(RCommand::User);
+		dotest(RCommand::App);
+		dotest(RCommand::Plugin);
+		dotest(RCommand::PriorityCommand);
+	}
+
+	void cancelLocator() {
+		auto c = new RCommand(QStringLiteral("plot(rnorm(10)); print('before'); locator(); print('after')"), RCommand::User);
+		connect(c->notifier(), &RCommandNotifier::commandOutput, this, [](RCommand *, const ROutput &out) {
+			if (out.output.contains(u"before"_s)) RInterface::instance()->cancelAll();
+			QVERIFY(!out.output.contains(u"after"_s));
+		});
+		runCommandWithTimeout(c, nullptr, [this](RCommand *command) {
+			// QVERIFY(command->wasCanceled()); we're currenly mis-detecting that, which is not a real-world problem, however.
+			// The real test is the command neither times out (below), nor prints "after" (above)
+			QVERIFY(command->failed()); }, 2000);
+		RInterface::issueCommand(QStringLiteral("dev.off()"), RCommand::User);
+		waitForAllFinished(2000);
+	}
+
 	void priorityCommandTest() {
 		// This test runs much faster when silencing the log window. Running faster also seems to help triggering the bug.
 		ScopeHandler sup([]() { RKSettingsModuleWatch::forTestingSuppressOutput(true); }, []() { RKSettingsModuleWatch::forTestingSuppressOutput(false); });
 		// NOTE: Test deliberately toned down until the next attempt to fully fix the issue. Still fails in corner-cases, typically 10-100 iterations are needed
 		//       to trigger. Not considered much of a real-world issue, though.
-		for (int i = 0; i < 1; ++i) {
+		for (int i = 0; i < 100; ++i) {
 			bool priority_command_done = false;
 			runCommandAsync(new RCommand(QStringLiteral("%1cat(\"sleeping\\n\");%1Sys.sleep(5);cat(\"BUG\")").arg(QString().fill(u'\n', i % 5)), RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
 				QVERIFY(priority_command_done);
@@ -499,6 +541,19 @@ class RKWardCoreTest : public QObject {
 				QVERIFY(false);           // still a bug, of course
 			}
 		}
+	}
+
+	void captureWarningTest() {
+		runCommandAsync(new RCommand(QStringLiteral("Sys.sleep(5)"), RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QVERIFY(command->wasCanceled());
+		});
+		auto priority_command = new RCommand(QStringLiteral("warning(\"mywarn\")"), RCommand::PriorityCommand | RCommand::App);
+		runCommandAsync(priority_command, nullptr, [](RCommand *command) {
+			QVERIFY(command->fullOutput().contains(u"mywarn"_s)); // warning shall (also) be associated with the innermost command
+			RInterface::instance()->cancelAll();
+		});
+		waitForAllFinished(6000);
 	}
 
 	void RKConsoleHistoryTest() {

@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QLocalSocket>
 #include <QMutex>
 #include <QThread>
+#include <QTime>
 #include <QUrl>
 #include <QUuid> // mis-used as a random-string generator
 
@@ -29,7 +30,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #	include <CoreFoundation/CoreFoundation.h>
 #endif
 
-void RK_setupGettext(const QString &);
 QMutex RK_Debug_Mutex;
 
 void RKDebugMessageOutput(QtMsgType type, const QMessageLogContext &, const QString &msg) {
@@ -37,6 +37,9 @@ void RKDebugMessageOutput(QtMsgType type, const QMessageLogContext &, const QStr
 	if (type == QtFatalMsg) {
 		fprintf(stderr, "%s\n", qPrintable(msg));
 	}
+	RK_Debug::debug_file->write("B ");
+	RK_Debug::debug_file->write(qPrintable(QString::number(QTime::currentTime().msecsSinceStartOfDay())));
+	RK_Debug::debug_file->write(": ");
 	RK_Debug::debug_file->write(qPrintable(msg));
 	RK_Debug::debug_file->write("\n");
 	RK_Debug::debug_file->flush();

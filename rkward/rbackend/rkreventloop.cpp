@@ -14,7 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 void RK_doIntr();
 
-static void processX11EventsWorker(void *) {
+static void processX11EventsWorker(void *ok) {
 // this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
 #ifndef Q_OS_WIN
 	for (;;) {
@@ -44,17 +44,21 @@ TODO: verify we really need this. */
 		timeout_counter = 0;
 	}
 #endif
+	*static_cast<bool *>(ok) = true;
 }
 
 void RKREventLoop::processX11Events() {
 	// do not trace
 	if (!RKRBackend::this_pointer->r_running) return;
 	if (RKRBackend::this_pointer->isKilled()) return;
+	if (RKRBackend::this_pointer->awaiting_sigint) return;
 
+	bool ok = false;
 	RKRBackend::repl_status.eval_depth++;
 	// In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
-	RFn::R_ToplevelExec(processX11EventsWorker, nullptr);
+	RFn::R_ToplevelExec(processX11EventsWorker, &ok);
 	RKRBackend::repl_status.eval_depth--;
+	if (!ok) RK_DEBUG(RBACKEND, DL_WARNING, "Error in process events");
 }
 
 static void (*RK_eventHandlerFunction)() = nullptr;

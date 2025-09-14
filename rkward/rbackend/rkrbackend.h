@@ -1,6 +1,6 @@
 /*
 rkrbackend - This file is part of the RKWard project. Created: Sun Jul 25 2004
-SPDX-FileCopyrightText: 2004-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -63,14 +63,6 @@ class RKRBackend : public RKROutputBuffer {
 	/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RKRBackend, but I can't see a good way around placing it here, or to make it portable. */
 	static void interruptProcessing(bool interrupt);
 
-	/** Enum specifying types of errors that may occur while parsing/evaluating a command in R */
-	enum RKWardRError {
-		NoError = 0,     /**< No error */
-		Incomplete = 1,  /**< The command is incomplete. Command was syntactically ok up to given point, but incomplete. It may or may not be semantically correct. */
-		SyntaxError = 2, /**< Syntax error */
-		OtherError = 3   /**< Other error, usually a semantic error, e.g. object not found */
-	};
-
 	/** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
 	Note that you should call initialize only once in a application */
 	void initialize(const QString &locale_dir, bool setup);
@@ -94,7 +86,7 @@ class RKRBackend : public RKROutputBuffer {
 	@returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
 	RCommandProxy *runDirectCommand(const QString &command, RCommand::CommandTypes datatype);
 
-	void handleRequest(RBackendRequest *request) { handleRequest(request, true); };
+	RCommandProxy *handleRequest(RBackendRequest *request);
 
 	enum RequestFlags {
 		Asynchronous,
@@ -104,11 +96,9 @@ class RKRBackend : public RKROutputBuffer {
 
 	/** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). */
 	GenericRRequestResult doRCallRequest(const QString &call, const QVariant &args, RequestFlags flags);
-	RCommandProxy *fetchNextCommand();
 
 	/** The command currently being executed. */
 	RCommandProxy *current_command;
-	QList<RCommandProxy *> all_current_commands;
 
 	void runCommand(RCommandProxy *command);
 
@@ -141,7 +131,6 @@ class RKRBackend : public RKROutputBuffer {
 		enum {
 			NoUserCommand,
 			UserCommandTransmitted,
-			UserCommandSyntaxError,
 			UserCommandRunning,
 			UserCommandFailed,
 			ReplIterationKilled
@@ -158,7 +147,11 @@ class RKRBackend : public RKROutputBuffer {
 	/** holds a copy of the default R_GlobalContext. Needed to find out, when a browser context has been left. */
 	static void *default_global_context;
 
-	void commandFinished(bool check_object_updates_needed = true);
+	enum FetchCommandMode { NoFetchNextCommand,
+		                    FetchNextCommand };
+	enum ObjectUpdateMode { NoCheckObjectUpdatesNeeded,
+		                    CheckObjectUpdatesNeeded };
+	RCommandProxy *commandFinished(FetchCommandMode fetch_next, ObjectUpdateMode check_object_updates_needed = CheckObjectUpdatesNeeded);
 	/** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
 	/** the main loop. See \ref RKRBackend for a more detailed description */
@@ -170,10 +163,13 @@ class RKRBackend : public RKROutputBuffer {
 	void printCommand(const QString &command);
 	void catToOutputFile(const QString &out);
 
-	QMutex all_current_commands_mutex;
-	QList<RCommandProxy *> current_commands_to_cancel;
-	bool too_late_to_interrupt;
+	QMutex command_flow_mutex;
+	QList<int> commands_to_cancel_deferred;
 	void interruptCommand(int command_id);
+	void beginAllowInterruptCommand(RCommandProxy *command);
+	void endAllowInterruptCommand(RCommandProxy *command);
+	void handleDeferredInterrupts();
+	volatile bool awaiting_sigint;
 
 	/** check stdout and stderr for new output (from sub-processes). Since this function is called from both threads, it is protected by a mutex.
 	 *  @param forcibly: if false, and the other thread currently has a lock on the mutex, do nothing, and return false.
@@ -190,13 +186,6 @@ class RKRBackend : public RKROutputBuffer {
 	bool graphicsEngineMismatchMessage(int compiled_version, int runtime_version);
 
   private:
-	void clearPendingInterrupt();
-
-  protected:
-	RCommandProxy *handleRequest(RBackendRequest *request, bool mayHandleSubstack);
-	RCommandProxy *handleRequest2(RBackendRequest *request, bool mayHandleSubstack);
-
-  private:
 	int stdout_stderr_fd;
 	/** set up R standard callbacks */
 	void setupCallbacks();
@@ -211,8 +200,6 @@ class RKRBackend : public RKROutputBuffer {
 	/** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded(bool check_list);
 	friend void doPendingPriorityCommands();
-	/** The previously executed command. Only non-zero until a new command has been requested. */
-	RCommandProxy *previous_command;
 };
 
 #endif

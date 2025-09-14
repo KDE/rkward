@@ -165,7 +165,7 @@ class RFn : public QObject {
 	IMPORT_R_API(SETCAR);
 	IMPORT_R_API(GEaddDevice2);
 	IMPORT_R_API(GEcreateDevDesc);
-	IMPORT_R_API(GEcreateSnapshot)
+	IMPORT_R_API(GEcreateSnapshot);
 	IMPORT_R_API(GEgetDevice);
 	IMPORT_R_API(GEplayDisplayList);
 	IMPORT_R_API(R_CHAR);

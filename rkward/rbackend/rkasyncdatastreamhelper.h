@@ -44,6 +44,7 @@ class RKAsyncDataStreamHelper {
 	}
 
 	void writeOutBuffer() {
+		if (outbuffer.isEmpty()) return;
 		auxstream.device()->seek(0);
 		auxbuffer.resize(0);
 		auxstream << (LENGTH_TYPE)outbuffer.size();

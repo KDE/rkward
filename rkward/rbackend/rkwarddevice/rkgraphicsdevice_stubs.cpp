@@ -1,6 +1,6 @@
 /*
 rkgraphicsdevice_stubs - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 18 2013
-SPDX-FileCopyrightText: 2013-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -50,77 +50,43 @@ static int rkd_suppress_on_exit = 0;
  * At the same time, note that the RKGraphicsDataStreamReadGuard c'tor @em may cause R to long-jump (safely) in case of a user interrupt,
  * or if the connection was killed. Don't rely on the code following the creation of an RKGraphicsDataStreamReadGuard to be called.
  */
-class RKGraphicsDataStreamReadGuard {
+class RKGraphicsDataStreamReadGuard : public RKRSupport::InterruptSuspension {
   public:
-	RKGraphicsDataStreamReadGuard() {
+	RKGraphicsDataStreamReadGuard() : RKRSupport::InterruptSuspension() {
 		RKGraphicsDeviceBackendTransmitter::mutex.lock();
-		have_lock = true;
 		rkd_waiting_for_reply = true;
-		QIODevice *connection = RKGraphicsDeviceBackendTransmitter::connection;
-		{
-			RKRSupport::InterruptSuspension susp;
-			while (connection->bytesToWrite()) {
-				if (!connection->waitForBytesWritten(10)) {
-					checkHandleError();
-				}
-				if (connection->bytesToWrite()) RKREventLoop::processX11Events();
-			}
-			while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer()) {
-				RKREventLoop::processX11Events();
-				if (!connection->waitForReadyRead(10)) {
-					if (checkHandleInterrupt(connection)) break;
-					checkHandleError();
-				}
-			}
-			if (ROb(R_interrupts_pending)) {
-				if (have_lock) {
-					RKGraphicsDeviceBackendTransmitter::mutex.unlock();
-					have_lock = false; // Will d'tor still be called? We don't rely on it.
-				}
-				rkd_waiting_for_reply = false;
-			}
-		};
+		while (!RKGraphicsDeviceBackendTransmitter::waitForReply(10)) {
+			if (!checkHandleInterrupt()) RKREventLoop::processX11Events();
+			if (!RKGraphicsDeviceBackendTransmitter::connectionAlive()) break;
+		}
 	}
 
 	~RKGraphicsDataStreamReadGuard() {
-		if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock();
 		rkd_waiting_for_reply = false;
+		RKGraphicsDeviceBackendTransmitter::mutex.unlock();
+		if (!RKGraphicsDeviceBackendTransmitter::connectionAlive()) {
+			RFn::Rf_error("RKWard Graphics connection has shut down");
+		}
 	}
 
   private:
-	bool checkHandleInterrupt(QIODevice *connection) {
+	bool checkHandleInterrupt() {
 		// NOTE: It would be possible, but not exactly easier to rely on GEonExit() rather than R_interrupts_pending
 		// Might be an option, if R_interrupts_pending gets hidden one day, though
 		if (!ROb(R_interrupts_pending)) return false;
 
 		// Tell the frontend to finish whatever it was doing ASAP. Don't process any other events until that has happened
 		RKGraphicsDeviceBackendTransmitter::streamer.outstream << (quint8)RKDCancel << (quint8)0;
-		RKGraphicsDeviceBackendTransmitter::streamer.writeOutBuffer();
-		while (connection->bytesToWrite()) {
-			if (!connection->waitForBytesWritten(10)) {
-				checkHandleError();
-			}
-		}
+		RKGraphicsDeviceBackendTransmitter::commitBuffer();
 		int loop = 0;
-		while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer()) {
-			if (!connection->waitForReadyRead(10)) {
-				if (++loop > 500) {
-					connection->close(); // If frontend is unresponsive, kill connection
-				}
-				checkHandleError();
+		while (!RKGraphicsDeviceBackendTransmitter::waitForReply(10)) {
+			if (++loop > 500) {
+				RKGraphicsDeviceBackendTransmitter::kill(); // If frontend is unresponsive, kill connection
 			}
+			if (!RKGraphicsDeviceBackendTransmitter::connectionAlive()) return true;
 		}
 		return true;
 	}
-
-	void checkHandleError() {
-		if (!RKGraphicsDeviceBackendTransmitter::connectionAlive()) { // Don't go into endless loop, if e.g. frontend has crashed
-			if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock();
-			have_lock = false; // Will d'tor still be called? We don't rely on it.
-			RFn::Rf_error("RKWard Graphics connection has shut down");
-		}
-	}
-	bool have_lock;
 };
 
 /** This class is essentially like QMutexLocker. In addition, the destructor takes care of pushing anything that was written to the protocol buffer during it lifetime to the transmitter. (Does NOT wait for the transmission itself). */
@@ -145,7 +111,7 @@ class RKGraphicsDataStreamWriteGuard {
 		RKGraphicsDeviceBackendTransmitter::mutex.lock();
 	}
 	~RKGraphicsDataStreamWriteGuard() {
-		RKGraphicsDeviceBackendTransmitter::streamer.writeOutBuffer();
+		RKGraphicsDeviceBackendTransmitter::commitBuffer();
 		RKGraphicsDeviceBackendTransmitter::mutex.unlock();
 	}
 };
@@ -809,13 +775,13 @@ SEXP RKD_SetClipPath(SEXP path, SEXP ref, pDevDesc dev) {
 			WRITE_HEADER(RKDSetClipPath, dev);
 			RKD_OUT_STREAM << index;
 		}
+		qint8 ok;
 		{
 			RKGraphicsDataStreamReadGuard rguard;
-			qint8 ok;
 			RKD_IN_STREAM >> ok;
-			if (!ok) RFn::Rf_warning("Invalid reference to clipping path");
-			else return ROb(R_NilValue);
 		}
+		if (!ok) RFn::Rf_warning("Invalid reference to clipping path");
+		else return ROb(R_NilValue);
 	}
 
 	// No index, or not a valid index: create new path
@@ -858,13 +824,13 @@ SEXP RKD_SetMask(SEXP mask, SEXP ref, pDevDesc dev) {
 			WRITE_HEADER(RKDSetMask, dev);
 			RKD_OUT_STREAM << index;
 		}
+		qint8 ok;
 		{
 			RKGraphicsDataStreamReadGuard rguard;
-			qint8 ok;
 			RKD_IN_STREAM >> ok;
-			if (!ok) RFn::Rf_warning("Invalid reference to mask");
-			else return ROb(R_NilValue);
 		}
+		if (!ok) RFn::Rf_warning("Invalid reference to mask");
+		else return ROb(R_NilValue);
 	}
 
 	// No index, or not a valid index: create new mask
@@ -1026,12 +992,12 @@ void RKD_Glyph(int n, int *glyphs, double *x, double *y, SEXP font, double size,
 		}
 	}
 
+	QString warning;
 	{
 		RKGraphicsDataStreamReadGuard rguard;
-		QString warning;
 		RKD_IN_STREAM >> warning;
-		if (!warning.isEmpty()) RFn::Rf_warning("%s", qPrintable(warning));
 	}
+	if (!warning.isEmpty()) RFn::Rf_warning("%s", qPrintable(warning));
 	modified(dev);
 }
 #endif

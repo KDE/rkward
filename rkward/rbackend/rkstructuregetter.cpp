@@ -112,19 +112,17 @@ void RKStructureGetter::getStructureSafe(SEXP value, const QString &name, int ad
 	args.getter = this;
 	args.nesting_depth = nesting_depth;
 
-	Rboolean ok = RFn::R_ToplevelExec((void (*)(void *))getStructureWrapper, &args);
+	Rboolean ok = RFn::R_ToplevelExec([](void *_data) {
+		auto data = static_cast<GetStructureWorkerArgs *>(_data);
+		data->getter->getStructureWorker(data->toplevel, data->name, data->add_type_flags, data->storage, data->nesting_depth);
+	},
+	                                  &args);
 
 	if (ok != TRUE) {
 		storage->discardData();
 		RFn::Rf_warning("failure to get object %s", name.toLatin1().data());
 		getStructureWorker(ROb(R_NilValue), name, add_type_flags, storage, nesting_depth);
 	}
-}
-
-void RKStructureGetter::getStructureWrapper(GetStructureWorkerArgs *data) {
-	RK_TRACE(RBACKEND);
-
-	data->getter->getStructureWorker(data->toplevel, data->name, data->add_type_flags, data->storage, data->nesting_depth);
 }
 
 /** Temporarily resolve a promise, usually without keeping its value (unless keep_evalled_promises is set, which it never is, at the time of this writing).
@@ -160,6 +158,7 @@ SEXP RKStructureGetter::resolvePromise(SEXP from) {
 }
 
 // TODO: split out some of the large blocks into helper functions, to make this easier to read
+//       review for memory leaks in case of R level errors
 void RKStructureGetter::getStructureWorker(SEXP val, const QString &name, int add_type_flags, RData *storage, int nesting_depth) {
 	RK_TRACE(RBACKEND);
 
