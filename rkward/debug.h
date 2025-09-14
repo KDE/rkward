@@ -85,12 +85,14 @@ class RKElaborateTrace {
 		va_start(args, fmt);
 		vsnprintf(msg, 140, fmt, args);
 		va_end(args);
-		RK_DEBUG(flags, DL_TRACE, msg);
+		RK_DEBUG(flags, DL_TRACE, "start %d - %s", level++, msg);
 	}
 	~RKElaborateTrace() {
-		RK_DEBUG(flags, DL_TRACE, "end %s", msg);
+		RK_DEBUG(flags, DL_TRACE, "end %d - %s", --level, msg);
 	}
 	int flags;
 	char msg[140];
+	// NOTE: tracking level is not correct arcoss threads, but this is just debug code
+	inline static int level = 0;
 };
 #endif
