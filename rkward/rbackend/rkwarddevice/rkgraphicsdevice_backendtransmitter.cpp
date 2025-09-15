@@ -100,20 +100,22 @@ void RKGraphicsDeviceBackendTransmitter::run() {
 	while (alive) {
 		doWrite();
 		if (connection->bytesToWrite()) continue;
-		if (expecting_reply) {
-			{
-				QMutexLocker lock(&mutex);
+		{
+			QMutexLocker lock(&mutex);
+			if (commit_pending) continue;
+			if (expecting_reply) {
 				if (!streamer.instream.atEnd() || streamer.readInBuffer()) {
 					have_reply = true;
 					expecting_reply = false;
 					read_available.wakeAll();
 					continue;
 				}
+				lock.unlock();
+				connection->waitForReadyRead(100); // don't wait too long: An RKDCancel may have been committed, meanwhile!
+				lock.relock();
+			} else {
+				write_available.wait(&mutex);
 			}
-			connection->waitForReadyRead(100); // don't wait too long: An RKDCancel may have been committed, meanwhile!
-		} else {
-			QMutexLocker lock(&mutex);
-			write_available.wait(&mutex);
 		}
 	}
 
