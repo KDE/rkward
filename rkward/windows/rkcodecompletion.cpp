@@ -60,7 +60,11 @@ RKCompletionManager::RKCompletionManager(KTextEditor::View *view, const RKCodeCo
 	update_call = true;
 	cached_position = KTextEditor::Cursor(-1, -1);
 
+	// NOTE: I just can't seem to make the object name completion model play nice with automatic invocation.
+	//       so, instead, we will want to invoke _all_ registered models, ourselves
 	view->setAutomaticInvocationEnabled(false);
+	builtin_completion_models = view->codeCompletionModels();
+
 	completion_model = new RKCodeCompletionModel(this);
 	file_completion_model = new RKFileCompletionModel(this);
 	callhint_model = new RKCallHintModel(this);
@@ -71,19 +75,11 @@ RKCompletionManager::RKCompletionManager(KTextEditor::View *view, const RKCodeCo
 	connect(completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
 	connect(view->document(), &KTextEditor::Document::textInserted, this, &RKCompletionManager::textInserted);
 	connect(view->document(), &KTextEditor::Document::textRemoved, this, &RKCompletionManager::textRemoved);
-	connect(view->document(), &KTextEditor::Document::lineWrapped, this, &RKCompletionManager::lineWrapped);
-	connect(view->document(), &KTextEditor::Document::lineUnwrapped, this, &RKCompletionManager::lineUnwrapped);
 	connect(view, &KTextEditor::View::cursorPositionChanged, this, &RKCompletionManager::cursorPositionChanged);
 	const QObjectList children = _view->children();
 	for (QObjectList::const_iterator it = children.constBegin(); it != children.constEnd(); ++it) {
 		(*it)->installEventFilter(this); // to handle Tab-key; installing on the view, alone, is not enough.
 	}
-
-	// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
-	//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
-	//       to a pointer to the default kate keyword completion model
-	kate_keyword_completion_model = KTextEditor::Editor::instance()->findChild<KTextEditor::CodeCompletionModel *>();
-	if (!kate_keyword_completion_model) kate_keyword_completion_model = view->findChild<KTextEditor::CodeCompletionModel *>(QString());
 }
 
 RKCompletionManager::~RKCompletionManager() {
@@ -267,12 +263,10 @@ void RKCompletionManager::updateCallHint() {
 }
 
 void RKCompletionManager::startModel(KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range) {
-	if (start) {
-		if (!range.isValid()) start = false;
-	}
-	if (start) {
+	if (start && range.isValid() && !range.isEmpty()) {
 		if (!started_models.contains(model)) {
-			_view->startCompletion(range, model);
+			// TODO: should merge these calls for several models at once
+			_view->startCompletion(range, QList<KTextEditor::CodeCompletionModel *>({model}), user_triggered ? KTextEditor::CodeCompletionModel::ManualInvocation : KTextEditor::CodeCompletionModel::AutomaticInvocation);
 			started_models.append(model);
 		}
 		auto ci = dynamic_cast<KTextEditor::CodeCompletionModelControllerInterface *>(model);
@@ -292,10 +286,12 @@ void RKCompletionManager::updateVisibility() {
 	bool min_len = (currentCompletionWord().length() >= settings->autoMinChars()) || user_triggered;
 	startModel(completion_model, min_len && settings->isEnabled(RKCodeCompletionSettings::Object), symbol_range);
 	startModel(file_completion_model, min_len && settings->isEnabled(RKCodeCompletionSettings::Filename), symbol_range);
-	if (kate_keyword_completion_model && settings->isEnabled(RKCodeCompletionSettings::AutoWord)) {
-		// Model needs to update, first, as we have not handled it in tryCompletion:
-		if (min_len) kate_keyword_completion_model->completionInvoked(view(), symbol_range, KTextEditor::CodeCompletionModel::ManualInvocation);
-		startModel(kate_keyword_completion_model, min_len, symbol_range);
+	if (settings->isEnabled(RKCodeCompletionSettings::AutoWord)) {
+		for (auto model : std::as_const(builtin_completion_models)) {
+			// Model needs to update, first, as we have not handled it in tryCompletion:
+			if (min_len) model->completionInvoked(view(), symbol_range, KTextEditor::CodeCompletionModel::AutomaticInvocation);
+			startModel(model, min_len, symbol_range);
+		}
 	}
 	// NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
 	startModel(callhint_model, settings->isEnabled(RKCodeCompletionSettings::Calltip), currentCallRange());
@@ -323,16 +319,6 @@ void RKCompletionManager::textRemoved(KTextEditor::Document *, const KTextEditor
 		if (range.start() < call_opening) update_call = true;
 		else if (text.contains(QChar(u'(')) || text.contains(QChar(u')'))) update_call = true;
 	}
-	tryCompletionProxy();
-}
-
-void RKCompletionManager::lineWrapped(KTextEditor::Document *, const KTextEditor::Cursor &) {
-	// should already have been handled by textInserted()
-	tryCompletionProxy();
-}
-
-void RKCompletionManager::lineUnwrapped(KTextEditor::Document *, int) {
-	// should already have been handled by textRemoved()
 	tryCompletionProxy();
 }
 
@@ -733,6 +719,7 @@ void RKCallHintModel::setFunction(RObject *_function) {
 	if (function && function->isType(RObject::Function)) {
 		// initialize hint
 		RFunctionObject *fo = static_cast<RFunctionObject *>(function);
+		name = fo->getFullName();
 		QStringList args = fo->argumentNames();
 		QStringList defs = fo->argumentDefaults();
 

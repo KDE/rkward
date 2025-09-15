@@ -1,4 +1,7 @@
 --- Version 0.8.2 - UNRELEASED
+- Adeed: Allow to show kate plugin provided code completion lists (e.g. snippets or project plugin)
+- Fixed: Code completion hints would sometimes be misplaced to top-left cursor position
+- Fixed: Call hint did not show active function along with arguments
 - Changed: R backend now uses UTF-8 mode on Windows
 - Added: options(error) may now be set freely (no longer needs to be .rk.do.error for correct behavior)
 - Fixed: Attached windows would not always be placed in the most recently active pane (in a split view)

@@ -44,8 +44,6 @@ class RKCompletionManager : public QObject {
   public Q_SLOTS:
 	void userTriggeredCompletion();
   private Q_SLOTS:
-	void lineWrapped(KTextEditor::Document *document, const KTextEditor::Cursor &position);
-	void lineUnwrapped(KTextEditor::Document *document, int line);
 	void textInserted(KTextEditor::Document *document, const KTextEditor::Cursor &position, const QString &text);
 	void textRemoved(KTextEditor::Document *document, const KTextEditor::Range &range, const QString &text);
 	void cursorPositionChanged(KTextEditor::View *view, const KTextEditor::Cursor &newPosition);
@@ -64,7 +62,7 @@ class RKCompletionManager : public QObject {
 	RKFileCompletionModel *file_completion_model;
 	RKCallHintModel *callhint_model;
 	RKArgumentHintModel *arghint_model;
-	KTextEditor::CodeCompletionModel *kate_keyword_completion_model;
+	QList<KTextEditor::CodeCompletionModel *> builtin_completion_models;
 	QTimer *completion_timer;
 
 	const RKCodeCompletionSettings *settings;
@@ -95,7 +93,6 @@ class RKCompletionModelBase : public KTextEditor::CodeCompletionModel, public KT
 
 	QString filterString(KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) override { return QString(); };
 	bool shouldAbortCompletion(KTextEditor::View *, const KTextEditor::Range &, const QString &) override { return false; }
-	KTextEditor::CodeCompletionModelControllerInterface::MatchReaction matchingItem(const QModelIndex &) override { return KTextEditor::CodeCompletionModelControllerInterface::None; };
 	void executeCompletionItem(KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const override;
 	int rowCount(const QModelIndex &parent) const override;
 	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
