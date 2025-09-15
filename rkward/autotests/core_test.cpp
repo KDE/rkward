@@ -491,7 +491,7 @@ class RKWardCoreTest : public QObject {
 				QVERIFY(command->failed());
 				QVERIFY(command->wasCanceled());
 			});
-			if (!waitForAllFinished()) {
+			if (!waitForAllFinished(4000)) { // test may be heavy on a loaded CI
 				waitForAllFinished(10000); // prevent crash in case of test failure
 				QVERIFY(false);
 			}
