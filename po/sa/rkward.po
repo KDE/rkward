@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-05 00:38+0000\n"
+"POT-Creation-Date: 2025-09-15 00:38+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -2454,7 +2454,7 @@ msgstr "अग्रे अन्वेष्टुम् (अन्वेषण
 msgid "Match case"
 msgstr "मेलप्रकरणम्"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:943
+#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:945
 #, kde-format
 msgid "Find as you type"
 msgstr "यथा टङ्कयति तथा अन्वेष्टुम्"
@@ -3765,12 +3765,12 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "पृष्ठभागप्रक्रिया %1 कोडेन सह निर्गतवती, सन्देशः: '%2' ।"
 
-#: rkward/rbackend/rkrbackend.cpp:465
+#: rkward/rbackend/rkrbackend.cpp:503
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R इञ्जिन् स्थितिः सह निष्क्रियः अस्ति: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:486
+#: rkward/rbackend/rkrbackend.cpp:524
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3779,17 +3779,17 @@ msgstr ""
 "R इञ्जिनस्य घातकदोषः अभवत् :\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:697
+#: rkward/rbackend/rkrbackend.cpp:735
 #, kde-format
 msgid "Message from the R backend"
 msgstr "R पृष्ठभागात् सन्देशः"
 
-#: rkward/rbackend/rkrbackend.cpp:705
+#: rkward/rbackend/rkrbackend.cpp:743
 #, kde-format
 msgid "Question from the R backend"
 msgstr "R पृष्ठभागात् प्रश्नः"
 
-#: rkward/rbackend/rkrbackend.cpp:1582
+#: rkward/rbackend/rkrbackend.cpp:1550
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3809,7 +3809,7 @@ msgstr ""
 "समाधातव्यम्</b> । तस्य साहाय्यार्थं <a href=\"https://rkward.kde.org/compiling"
 "\">https://rkward.kde.org/compiling</a> पश्यन्तु ।</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1586
+#: rkward/rbackend/rkrbackend.cpp:1554
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3823,12 +3823,12 @@ msgstr ""
 "साहाय्यार्थं <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a> पश्यन्तु ।</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1609
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "ग्राफिक्स संस्करण बेमेल"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1609
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3839,7 +3839,7 @@ msgstr ""
 "संकलनस्य आवश्यकता वर्तते ।<br> <a href=\"rkward://page/rkward_incompatible_version"
 "\">अतिरिक्त सूचना</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1609
 #, kde-format
 msgid "Ok"
 msgstr "अस्तु"
@@ -3870,7 +3870,7 @@ msgstr "<p>R पृष्ठभागस्य आरम्भे समस्�
 msgid "Error starting R"
 msgstr "आरम्भदोषः R"
 
-#: rkward/rbackend/rkrinterface.cpp:640
+#: rkward/rbackend/rkrinterface.cpp:577
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -3882,17 +3882,17 @@ msgstr ""
 "सम्प्रति संस्थापितम् नास्ति । वयं package-management tool उद्घाटयिष्यामः, तत्र भवान् "
 "आवश्यकं package अन्वेष्टुं संस्थापयितुं च प्रयतितुं शक्नोति ।"
 
-#: rkward/rbackend/rkrinterface.cpp:640
+#: rkward/rbackend/rkrinterface.cpp:577
 #, kde-format
 msgid "Require package '%1'"
 msgstr "'%1' संकुलस्य आवश्यकता अस्ति।"
 
-#: rkward/rbackend/rkrinterface.cpp:672
+#: rkward/rbackend/rkrinterface.cpp:609
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "परित्यागः रद्दः अभवत्"
 
-#: rkward/rbackend/rkrinterface.cpp:674
+#: rkward/rbackend/rkrinterface.cpp:611
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -3914,37 +3914,37 @@ msgstr ""
 "सति कृपया इदानीं 'Cancel' इति चिनोतु, ततः दत्तांशविण्डोः पिधाय, रक्षतु, पुनः प्रयासं च "
 "कुर्वन्तु ।"
 
-#: rkward/rbackend/rkrinterface.cpp:674
+#: rkward/rbackend/rkrinterface.cpp:611
 #, kde-format
 msgid "Locale change"
 msgstr "स्थानीय परिवर्तनम्"
 
-#: rkward/rbackend/rkrinterface.cpp:675
+#: rkward/rbackend/rkrinterface.cpp:612
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "लोकेल परिवर्तनं उपयोक्त्रा रद्दं कृतम्"
 
-#: rkward/rbackend/rkrinterface.cpp:778
+#: rkward/rbackend/rkrinterface.cpp:715
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr "पूर्वमेव आदेशान् अभिलेखनं कुर्वन्, अभिलेखनं आरभ्यतुं प्रयतध्वम् । उपेक्ष्य ।"
 
-#: rkward/rbackend/rkrinterface.cpp:786
+#: rkward/rbackend/rkrinterface.cpp:723
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr "लेखनार्थं सञ्चिकां उद्घाटयितुं न शक्तवान्। आदेशान् न अभिलेखयति"
 
-#: rkward/rbackend/rkrinterface.cpp:810
+#: rkward/rbackend/rkrinterface.cpp:816
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "त्रुटि: अपरिचितः अनुरोधः '%1'."
 
-#: rkward/rbackend/rkrinterface.cpp:890
+#: rkward/rbackend/rkrinterface.cpp:888
 #, kde-format
 msgid "R backend requests information"
 msgstr "R backend सूचनां अनुरोधयति"
 
-#: rkward/rbackend/rkrinterface.cpp:912
+#: rkward/rbackend/rkrinterface.cpp:910
 #, kde-format
 msgid ""
 "\n"
@@ -3962,7 +3962,7 @@ msgstr ""
 "मुक्त-आदेश-सञ्चिकां, निर्गमं, अथवा दत्तांशं प्रतिलिख्यताम् । तदनन्तरं आरकेवार्डं त्यजन्तु। "
 "क्षम्यताम्‌!"
 
-#: rkward/rbackend/rkrinterface.cpp:913
+#: rkward/rbackend/rkrinterface.cpp:911
 #, kde-format
 msgid "R engine has died"
 msgstr "आर इञ्जिनं मृतम् अस्ति"
@@ -5594,7 +5594,7 @@ msgstr ""
 "शक्नोति ।</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:472
-#: rkward/windows/rkhtmlwindow.cpp:1167
+#: rkward/windows/rkhtmlwindow.cpp:1169
 #, kde-format
 msgid "Dependencies"
 msgstr "आश्रयाः"
@@ -6087,7 +6087,7 @@ msgstr "केचन आदेशाः न रद्दाः"
 msgid "Resume execution"
 msgstr "निष्पादनं पुनः आरभत"
 
-#: rkward/windows/rkcallstackviewer.cpp:87
+#: rkward/windows/rkcallstackviewer.cpp:86
 #, kde-format
 msgid "<b>Active calls</b>"
 msgstr "<b>सक्रिय आह्वानम्</b>"
@@ -6892,35 +6892,35 @@ msgstr "यथा रक्षतु"
 msgid "RKWard output file %s does not (yet) exist"
 msgstr "RKWard आउटपुट् सञ्चिका %s (अद्यापि) नास्ति"
 
-#: rkward/windows/rkhtmlwindow.cpp:741
+#: rkward/windows/rkhtmlwindow.cpp:743
 #: rkward/windows/rktoplevelwindowgui.cpp:256
 #, kde-format
 msgid "[Active]"
 msgstr "[सक्रियं]"
 
-#: rkward/windows/rkhtmlwindow.cpp:752
+#: rkward/windows/rkhtmlwindow.cpp:754
 #, fuzzy, kde-format
 #| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "आउटपुट %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:805
+#: rkward/windows/rkhtmlwindow.cpp:807
 #, kde-format
 msgid "Output Window"
 msgstr "आउटपुट विण्डो"
 
-#: rkward/windows/rkhtmlwindow.cpp:807
+#: rkward/windows/rkhtmlwindow.cpp:809
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&रिफ्रेश आउटपुट"
 
-#: rkward/windows/rkhtmlwindow.cpp:833
+#: rkward/windows/rkhtmlwindow.cpp:835
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "पृष्ठं नास्ति भग्नं वा"
 
-#: rkward/windows/rkhtmlwindow.cpp:846
+#: rkward/windows/rkhtmlwindow.cpp:848
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -6929,89 +6929,89 @@ msgstr ""
 "किं भवन्तः वास्तवमेव आउटपुट् स्वच्छं कर्तुम् इच्छन्ति? एतेन आउटपुट् मध्ये प्रयुक्ताः सर्वाः इमेज् "
 "सञ्चिकाः अपि निष्कासिताः भविष्यन्ति । तस्य पुनर्स्थापनं न सम्भवति।"
 
-#: rkward/windows/rkhtmlwindow.cpp:847
+#: rkward/windows/rkhtmlwindow.cpp:849
 #, kde-format
 msgid "Flush output?"
 msgstr "फ्लश आउटपुट् ?"
 
-#: rkward/windows/rkhtmlwindow.cpp:852
+#: rkward/windows/rkhtmlwindow.cpp:854
 #, kde-format
 msgid "Flushing output"
 msgstr "फ्लशिंग आउटपुट"
 
-#: rkward/windows/rkhtmlwindow.cpp:892
+#: rkward/windows/rkhtmlwindow.cpp:894
 #, kde-format
 msgid "Zoom In"
 msgstr "Zoom In इति"
 
-#: rkward/windows/rkhtmlwindow.cpp:894
+#: rkward/windows/rkhtmlwindow.cpp:896
 #, kde-format
 msgid "Zoom Out"
 msgstr "Zoom Out इति"
 
-#: rkward/windows/rkhtmlwindow.cpp:898
+#: rkward/windows/rkhtmlwindow.cpp:900
 #, kde-format
 msgid "Default &Encoding"
 msgstr "पूर्वनिर्धारित &एन्कोडिंग"
 
-#: rkward/windows/rkhtmlwindow.cpp:899
+#: rkward/windows/rkhtmlwindow.cpp:901
 #, kde-format
 msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
 "page or in the HTTP headers."
 msgstr "पृष्ठे अथवा HTTP शीर्षकेषु स्पष्टं एन्कोडिंग् सेट् न कृतं चेत् कल्पयितुं एन्कोडिंग् सेट् कुर्वन्तु ।"
 
-#: rkward/windows/rkhtmlwindow.cpp:909
+#: rkward/windows/rkhtmlwindow.cpp:911
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "पृष्ठं HTML रूपेण निर्यातयन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:923
+#: rkward/windows/rkhtmlwindow.cpp:925
 #, kde-format
 msgid "Save Output"
 msgstr "आउटपुट् रक्षतु"
 
-#: rkward/windows/rkhtmlwindow.cpp:925
+#: rkward/windows/rkhtmlwindow.cpp:927
 #, kde-format
 msgid "Save Output As"
 msgstr "Save Output As"
 
-#: rkward/windows/rkhtmlwindow.cpp:928
+#: rkward/windows/rkhtmlwindow.cpp:930
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Clear Output"
 
-#: rkward/windows/rkhtmlwindow.cpp:934
+#: rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&अन्तिम रक्षितावस्थां प्रति प्रत्यागच्छन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:938
+#: rkward/windows/rkhtmlwindow.cpp:940
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Output इत्येतत् &Active इति सेट् कुर्वन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/windows/rkhtmlwindow.cpp:942
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "एतत् आउटपुट् आउटपुट् योजयितुं सञ्चिकारूपेण सेट् कुर्वन्तु ।"
 
-#: rkward/windows/rkhtmlwindow.cpp:962
+#: rkward/windows/rkhtmlwindow.cpp:964
 #, kde-format
 msgid "Print output"
 msgstr "मुद्रणनिर्गमः"
 
-#: rkward/windows/rkhtmlwindow.cpp:970
+#: rkward/windows/rkhtmlwindow.cpp:972
 #, kde-format
 msgid "Print page"
 msgstr "पृष्ठं मुद्रयन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:1027
+#: rkward/windows/rkhtmlwindow.cpp:1029
 #, kde-format
 msgid "No Title"
 msgstr "No Title"
 
-#: rkward/windows/rkhtmlwindow.cpp:1043
+#: rkward/windows/rkhtmlwindow.cpp:1045
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -7021,62 +7021,62 @@ msgstr ""
 "<h1>सहायता पृष्ठ अनुपलब्ध</h1><p> अस्य घटकस्य सहायतापृष्ठं अद्यापि न लिखितम् (अथवा भग्नम् "
 "अस्ति) । कृपया तस्य योगदानं कर्तुं विचारयन्तु।</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1049
+#: rkward/windows/rkhtmlwindow.cpp:1051
 #, kde-format
 msgid "Use %1 now"
 msgstr "इदानीं %1 इत्यस्य उपयोगं कुर्वन्तु"
 
-#: rkward/windows/rkhtmlwindow.cpp:1066
+#: rkward/windows/rkhtmlwindow.cpp:1068
 #, kde-format
 msgid "Summary"
 msgstr "संक्षेपः"
 
-#: rkward/windows/rkhtmlwindow.cpp:1073
+#: rkward/windows/rkhtmlwindow.cpp:1075
 #, kde-format
 msgid "Usage"
 msgstr "प्रयोगः"
 
-#: rkward/windows/rkhtmlwindow.cpp:1102
+#: rkward/windows/rkhtmlwindow.cpp:1104
 #, kde-format
 msgid "Choose another file"
 msgstr "अन्यां सञ्चिकां चिनोतु"
 
-#: rkward/windows/rkhtmlwindow.cpp:1125
+#: rkward/windows/rkhtmlwindow.cpp:1127
 #, kde-format
 msgid "GUI settings"
 msgstr "GUI सेटिंग्स्"
 
-#: rkward/windows/rkhtmlwindow.cpp:1150
+#: rkward/windows/rkhtmlwindow.cpp:1152
 #, kde-format
 msgid "Related functions and pages"
 msgstr "सम्बन्धित कार्य एवं पृष्ठ"
 
-#: rkward/windows/rkhtmlwindow.cpp:1158
+#: rkward/windows/rkhtmlwindow.cpp:1160
 #, kde-format
 msgid "Technical details"
 msgstr "तकनीकी विवरण"
 
-#: rkward/windows/rkhtmlwindow.cpp:1181
+#: rkward/windows/rkhtmlwindow.cpp:1183
 #, kde-format
 msgid "About"
 msgstr "विषये"
 
-#: rkward/windows/rkhtmlwindow.cpp:1188
+#: rkward/windows/rkhtmlwindow.cpp:1190
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>अस्मिन् पृष्ठे : १.</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1211
+#: rkward/windows/rkhtmlwindow.cpp:1213
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "अनाम GUI तत्व"
 
-#: rkward/windows/rkhtmlwindow.cpp:1285
+#: rkward/windows/rkhtmlwindow.cpp:1287
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "R '%1' इत्यत्र सन्दर्भः ।"
 
-#: rkward/windows/rkhtmlwindow.cpp:1297
+#: rkward/windows/rkhtmlwindow.cpp:1299
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "भग्न सन्दर्भ"
