@@ -2083,7 +2083,7 @@ msgstr "Efectos en la alpha si se eliminan los items:"
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:79
 #, no-c-format, kde-format
 msgid "%1% Confidence interval:"
-msgstr "%1% Intervalo de confianza:"
+msgstr "%1 % Intervalo de confianza:"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <varslot label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:22
