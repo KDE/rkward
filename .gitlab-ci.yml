@@ -29,3 +29,32 @@ clang_format:
   script:
     - find rkward \( -name "*.cpp" -or -name "*.h"  -or -name "*.js" \) -exec clang-format-19 -i {} \;
     - git diff --exit-code
+
+# setup mix-and-matched from okular, removing some extras
+# combined check for building on "old" distribution (should ideally be previous ubuntu LTS, but 24.10 is the first to contain KF6, so using that)
+build_clazy_ubuntu_24_10:
+  stage: build
+  image: ubuntu:24.10
+  tags:
+    - Linux
+  only:
+    - merge_requests
+  variables:
+    #CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch
+    CXXFLAGS: -Werror -Wno-deprecated-declarations
+    CC: clang
+    CXX: clazy
+  before_script:
+    - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
+    - sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
+    - sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
+    - apt-get update
+    - apt-get install --yes eatmydata
+    - eatmydata apt-get install --yes --no-install-recommends clazy
+    # rkward build deps:
+    - eatmydata apt-get install --yes --no-install-recommends cmake extra-cmake-modules pkg-kde-tools debhelper qt6-webengine-dev libkf6notifications-dev gettext libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev libkf6iconthemes-dev libkf6breezeicons-dev libkf6texteditor-dev libkf6textwidgets-dev libkf6windowsystem-dev libkf6xmlgui-dev pkgconf r-base-dev
+  script:
+    - mkdir -p build && cd build
+    - cmake ..
+    - CLAZY_IGNORE_DIRS="3rdparty" make -j 5
+  artifacts: null
