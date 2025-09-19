@@ -46,7 +46,7 @@ void CellEditor::setValueLabels(const RObject::ValueLabels &labels) {
 			value_list->addAction(i18n("[Omitted %1 more factor levels]", labels.size() - limit))->setEnabled(false);
 			break;
 		}
-		value_list->addAction(it.key().rightJustified(2) + u": "_s + it.value())->setData(it.key());
+		value_list->addAction(QString::number(it.key()).rightJustified(2) + u": "_s + it.value())->setData(it.key());
 	}
 	connect(value_list, &QMenu::triggered, this, &CellEditor::selectedFromList);
 

@@ -185,7 +185,7 @@ void RKItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) co
 			if (row == RKVarEditMetaModel::TypeRow) {
 				RObject::ValueLabels labels;
 				for (int i = RObject::MinKnownDataType; i <= RObject::MaxKnownDataType; ++i) {
-					labels.insert(QString::number(i), RObject::typeToText((RObject::RDataType)i));
+					labels.insert(i, RObject::typeToText((RObject::RDataType)i));
 				}
 				ced->setValueLabels(labels);
 			}

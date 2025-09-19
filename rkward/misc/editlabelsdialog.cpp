@@ -142,7 +142,7 @@ QVariant RKVarLevelsTableModel::data(const QModelIndex &index, int role) const {
 	if ((role == Qt::BackgroundRole) && (index.row() == labels.count())) return QBrush(Qt::gray);
 	if (index.row() >= labels.count()) return QVariant();
 
-	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) return labels.value(QString::number(index.row() + 1));
+	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) return labels.value(index.row() + 1);
 
 	return QVariant();
 }
@@ -168,18 +168,18 @@ bool RKVarLevelsTableModel::setData(const QModelIndex &index, const QVariant &va
 	QString text = value.toString();
 	if (index.row() == labels.count()) {
 		beginInsertRows(QModelIndex(), index.row(), index.row());
-		labels.insert(QString::number(index.row() + 1), text);
+		labels.insert(index.row() + 1, text);
 		endInsertRows();
 	} else {
-		labels.insert(QString::number(index.row() + 1), text);
+		labels.insert(index.row() + 1, text);
 		Q_EMIT dataChanged(index, index);
 	}
 
 	if (text.isEmpty()) { // remove trailing empty rows
-		while ((!labels.isEmpty()) && labels.value(QString::number(labels.count())).isEmpty()) {
+		while ((!labels.isEmpty()) && labels.value(labels.count()).isEmpty()) {
 			int row = labels.count() - 1;
 			beginRemoveRows(QModelIndex(), row, row);
-			labels.remove(QString::number(row + 1));
+			labels.remove(row + 1);
 			endRemoveRows();
 		}
 	}

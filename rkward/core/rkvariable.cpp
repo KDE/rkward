@@ -230,7 +230,7 @@ void RKVariable::updateDataFromR(RCommandChain *chain) {
 			// no levels
 		} else {
 			for (int i = 0; i < levels_len; ++i) {
-				data->value_labels->insert(QString::number(i + 1), new_levels.at(i));
+				data->value_labels->insert(i + 1, new_levels.at(i));
 			}
 		}
 
@@ -471,9 +471,7 @@ QString RKVariable::getText(int row, bool pretty) const {
 			if (ret == QLatin1String("0")) return QStringLiteral("FALSE");
 			else if (ret == QLatin1String("1")) return QStringLiteral("TRUE");
 		} else if (data->value_labels) {
-			if (data->value_labels->contains(ret)) {
-				return (*(data->value_labels))[ret];
-			}
+			return data->value_labels->value(ret.toInt(), ret);
 		}
 	}
 	return ret;
@@ -522,10 +520,10 @@ void RKVariable::setText(int row, const QString &text) {
 			data->cell_strings[row] = text;
 		} else if (getDataType() == DataFactor) {
 			if (data->value_labels) {
-				QString realtext = data->value_labels->key(text); // first, attempt to set by level
-				if (!realtext.isEmpty()) data->cell_doubles[row] = realtext.toInt();
+				int key = data->value_labels->key(text, -1); // first, attempt to set by text
+				if (key >= 0) data->cell_doubles[row] = key;
 				else { // if this failed, try to set by index, instead.
-					if (data->value_labels->contains(text)) data->cell_doubles[row] = text.toInt();
+					if (data->value_labels->contains(text.toInt())) data->cell_doubles[row] = text.toInt();
 					else valid = false;
 				}
 			} else valid = false;
@@ -565,7 +563,7 @@ void RKVariable::setNumericFromR(int from_row, int to_row, const QVector<double>
 			if (data->cell_states[row] & RKVarEditData::Invalid) data->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
 			else data->cell_states[row] = 0;
 
-			if (std::isnan(numdata[i]) || (!data->value_labels) || (!data->value_labels->contains(QString::number(numdata[i])))) {
+			if (std::isnan(numdata[i]) || (!data->value_labels) || (!data->value_labels->contains(numdata[i]))) {
 				data->cell_states[row] |= RKVarEditData::NA;
 			} else {
 				data->cell_states[row] |= RKVarEditData::Valid;
@@ -722,11 +720,11 @@ void RKVariable::updateValueLabels() {
 	// find out which values got valid / invalid and change those
 	for (int i = 0; i < getLength(); ++i) {
 		if (cellStatus(i) == ValueInvalid) {
-			if (labels && labels->contains(getText(i))) {
-				setText(i, getText(i));
+			if (labels && labels->key(data->invalid_fields.value(i), -1) >= 0) {
+				setText(i, data->invalid_fields.value(i));
 			}
 		} else {
-			if (!(labels && labels->contains(getText(i)))) {
+			if (!(labels && labels->key(getText(i), -1) >= 0)) {
 				setText(i, getText(i));
 			}
 		}
@@ -748,11 +746,10 @@ void RKVariable::writeValueLabels(RCommandChain *chain) const {
 	if (data->value_labels && (!data->value_labels->isEmpty())) {
 		int i = 1;
 		level_string = u"c ("_s;
-		while (data->value_labels->contains(QString::number(i))) {
-			level_string.append(rQuote((*(data->value_labels))[QString::number(i)]));
-			if (data->value_labels->contains(QString::number(++i))) {
-				level_string.append(u", "_s);
-			}
+		while (data->value_labels->contains(i)) {
+			if (i > 1) level_string.append(u", "_s);
+			level_string.append(rQuote((*(data->value_labels))[i]));
+			++i;
 		}
 		level_string.append(u')');
 	} else {
@@ -771,11 +768,10 @@ QString RKVariable::getValueLabelString() const {
 	if (data->value_labels) {
 		int i = 1;
 		QString level_string;
-		while (data->value_labels->contains(QString::number(i))) {
-			level_string.append((*(data->value_labels))[QString::number(i)]);
-			if (data->value_labels->contains(QString::number(++i))) {
-				level_string.append(u"#,#"_s);
-			}
+		while (data->value_labels->contains(i)) {
+			if (i > 1) level_string.append(u"#,#"_s);
+			level_string.append((*(data->value_labels))[i]);
+			++i;
 		}
 
 		return level_string;
@@ -789,11 +785,11 @@ void RKVariable::setValueLabelString(const QString &string) {
 	RK_ASSERT(data);
 
 	ValueLabels new_labels;
-	QStringList list = string.split(u"#,#"_s);
+	const QStringList list = string.split(u"#,#"_s);
 
 	int i = 1;
-	for (QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it) {
-		new_labels.insert(QString::number(i), *it);
+	for (const auto &lab : list) {
+		new_labels.insert(i, lab);
 		++i;
 	}
 	setValueLabels(new_labels);
