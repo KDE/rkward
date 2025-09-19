@@ -555,12 +555,10 @@ static RKCommandHighlighter::HighlightingMode documentHighlightingMode(KTextEdit
 
 class RKPreviewMode : public QRadioButton {
   public:
-	RKPreviewMode(KTextEditor::Document *doc, const QString &label, const QIcon &icon, const QString &input_ext, RKCommandHighlighter::HighlightingMode mode) : QRadioButton(label),
-	                                                                                                                                                            input_ext(input_ext),
-	                                                                                                                                                            valid_mode(mode) {
+	RKPreviewMode(KTextEditor::Document *doc, const QString &label, const QIcon &icon, const QString &input_ext) : QRadioButton(label),
+	                                                                                                               input_ext(input_ext),
+	                                                                                                               doc(doc) {
 		setIcon(icon);
-		connect(doc, &KTextEditor::Document::highlightingModeChanged, this, [this, doc] { checkApplicable(doc); });
-		checkApplicable(doc);
 		connect(this, &QRadioButton::toggled, this, [this]() {
 			for (const auto a : std::as_const(options)) {
 				a->setVisible(isChecked());
@@ -568,9 +566,11 @@ class RKPreviewMode : public QRadioButton {
 		});
 	};
 
-	void checkApplicable(KTextEditor::Document *doc) {
-		setEnabled((valid_mode == RKCommandHighlighter::AutomaticOrOther) || (documentHighlightingMode(doc) == valid_mode));
-	};
+	void setValidity(const std::function<bool(KTextEditor::Document *)> _validator) {
+		validator = _validator;
+		connect(doc, &KTextEditor::Document::highlightingModeChanged, this, [this] { setEnabled(validator(doc)); });
+		setEnabled(validator(doc));
+	}
 
 	QString preview_label;
 	std::function<QString(const QString &, const QString &, const QString &)> command;
@@ -579,8 +579,9 @@ class RKPreviewMode : public QRadioButton {
 		return option;
 	};
 	QString input_ext;
-	RKCommandHighlighter::HighlightingMode valid_mode;
+	KTextEditor::Document *doc;
 	QList<QWidget *> options;
+	std::function<bool(KTextEditor::Document *)> validator;
 };
 
 class RKScriptPreviewIO {
@@ -707,6 +708,14 @@ QString RmarkDownRender(const QString &infile, const QString &outdir, const QStr
 void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	RK_TRACE(COMMANDEDITOR);
 
+	const auto valid_for_any_markdown = [](KTextEditor::Document *doc) -> bool {
+		if (documentHighlightingMode(doc) == RKCommandHighlighter::RMarkdown) return true;
+		return doc->highlightingMode().toLower().contains(u"markdown"_s);
+	};
+	const auto valid_for_r_script = [](KTextEditor::Document *doc) -> bool {
+		return (documentHighlightingMode(doc) == RKCommandHighlighter::RScript);
+	};
+
 	// Must define this one first, as doRenderPreview() may trigger during setup of the further actions!
 	action_no_preview = new QRadioButton(i18n("No preview"), this);
 	action_no_preview->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete));
@@ -714,7 +723,8 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	action_no_preview->setChecked(true);
 	preview_modes->addButton(action_no_preview);
 
-	auto markdown = new RKPreviewMode(m_doc, i18n("R Markdown"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s, RKCommandHighlighter::RMarkdown);
+	auto markdown = new RKPreviewMode(m_doc, i18n("R Markdown"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s);
+	markdown->setValidity(valid_for_any_markdown);
 	markdown->preview_label = i18n("Preview of rendered R Markdown");
 	markdown->setToolTip(i18n("Preview the script as rendered from RMarkdown format (.Rmd)"));
 	enum _RenderMode { HTML,
@@ -733,7 +743,8 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	};
 	preview_modes->addButton(markdown);
 
-	auto rkoutput = new RKPreviewMode(m_doc, i18n("RKWard Output"), RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), u".R"_s, RKCommandHighlighter::RScript);
+	auto rkoutput = new RKPreviewMode(m_doc, i18n("RKWard Output"), RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), u".R"_s);
+	rkoutput->setValidity(valid_for_r_script);
 	rkoutput->preview_label = i18n("Preview of generated RKWard output");
 	rkoutput->setToolTip(i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."));
 	rkoutput->command = [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
@@ -746,7 +757,8 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	};
 	preview_modes->addButton(rkoutput);
 
-	auto rkconsole = new RKPreviewMode(m_doc, i18n("R Console"), RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), u".R"_s, RKCommandHighlighter::RScript);
+	auto rkconsole = new RKPreviewMode(m_doc, i18n("R Console"), RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), u".R"_s);
+	rkconsole->setValidity(valid_for_r_script);
 	rkconsole->preview_label = i18n("Preview of script running in interactive R Console");
 	rkconsole->setToolTip(i18n("Preview the script as if it was run in the interactive R Console"));
 	enum _ConsoleOpts { Global,
@@ -781,7 +793,8 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	};
 	preview_modes->addButton(rkconsole);
 
-	auto plot = new RKPreviewMode(m_doc, i18n("Plot"), RKStandardIcons::getIcon(RKStandardIcons::WindowX11), u".R"_s, RKCommandHighlighter::RScript);
+	auto plot = new RKPreviewMode(m_doc, i18n("Plot"), RKStandardIcons::getIcon(RKStandardIcons::WindowX11), u".R"_s);
+	plot->setValidity(valid_for_r_script);
 	plot->preview_label = i18n("Preview of generated plot");
 	plot->setToolTip(i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."));
 	plot->command = [](const QString &infile, const QString & /*outdir*/, const QString &preview_id) {
