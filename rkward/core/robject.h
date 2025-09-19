@@ -178,6 +178,7 @@ class RObject {
 	/** A QList of RObjects. Internally the same as RObjectMap, but can be considered "public" */
 	typedef QList<RObject *> ObjectList;
 
+	// TODO: review whether we actually need string->string mapping at all, rather than just ordered (integer-indexed) list
 	/** A map of values to labels. This is used both in regular objects, in which it just represents a map of named values, if any. The more important use is in factors, where it represents the factor levels. Here, the key is always a string representation of a positive integer. */
 	typedef QMap<QString, QString> ValueLabels;
 

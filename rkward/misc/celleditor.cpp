@@ -42,11 +42,11 @@ void CellEditor::setValueLabels(const RObject::ValueLabels &labels) {
 	const int limit = 64;
 	int i = 0;
 	for (RObject::ValueLabels::const_iterator it = labels.constBegin(); it != labels.constEnd(); ++it) {
-		if (++i >= limit) break;
-		value_list->addAction(it.key() + u": "_s + it.value())->setData(it.key());
-	}
-	if (i >= limit) {
-		value_list->addAction(i18n("[Omitted %1 more factor levels]", labels.size() - limit))->setEnabled(false);
+		if (++i >= limit) {
+			value_list->addAction(i18n("[Omitted %1 more factor levels]", labels.size() - limit))->setEnabled(false);
+			break;
+		}
+		value_list->addAction(it.key().rightJustified(2) + u": "_s + it.value())->setData(it.key());
 	}
 	connect(value_list, &QMenu::triggered, this, &CellEditor::selectedFromList);
 
