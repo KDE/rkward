@@ -15,6 +15,12 @@ include:
       - /gitlab-templates/craft-macos-x86-64-qt6.yml
 #      - /gitlab-templates/flatpak.yml // just a waste of CPU power in the current state
 
+suse_tumbleweed_qt69:
+  script:
+    - git config --global --add safe.directory $CI_PROJECT_DIR
+    # no dlopen() loading, to get at better symobl information for the backend process from ASAN
+    - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt6/Shared --extra-cmake-args=-DDLOPEN_RLIB=0
+
 clang_format:
   stage: build
   image: debian:stable

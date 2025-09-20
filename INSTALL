@@ -43,6 +43,9 @@ In some cases you may want to set the following options:
 -DUSE_BINARY_PACKAGES
 	Currently only interpreted on Mac OS: If RKWard should default to installing binary R packages (if available) use
 	-DUSE_BINARY_PACKAGE=1. Otherwise, RKWard will default to building R packages from source.
+-DDLOPEN_RLIB
+	By default, the backend code is loaded using dlopen() to avoid certain runtime conflicts, esp. in distributed AppImages. This, however, makes it hard to
+	get at proper debug symbol information. For debugging purposes it may thus be useful to set this to "0", explictly
 
 Further generic options are listed on http://www.cmake.org/Wiki/CMake_Useful_Variables .
 
