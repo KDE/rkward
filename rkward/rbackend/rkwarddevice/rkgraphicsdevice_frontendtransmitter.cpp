@@ -195,9 +195,7 @@ static QFont readFont(QDataStream &instream) {
 	quint8 fontface;
 	QString fontfamily;
 	instream >> cex >> ps >> lineheight >> fontface >> fontfamily;
-#ifdef __GNUC__
-#	warning TODO deal with line-height
-#endif
+	// TODO: deal with lineheight!
 	QFont ret;
 	if (!(fontfamily.isEmpty() || fontfamily == QLatin1String("Symbol"))) ret.setFamily(fontfamily); // NOTE: QPainter won't paint with "Symbol", somehow
 	if (fontface == 2 || fontface == 4) ret.setWeight(QFont::Bold);

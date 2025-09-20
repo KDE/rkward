@@ -104,11 +104,9 @@ void RKEditorDataFrame::waitForLoad() {
 	    open_chain);
 }
 
+// TODO: remove here, use model API, directly
 void RKEditorDataFrame::restoreObject(RObject *object) {
 	RK_TRACE(EDITOR);
 
-#ifdef __GNUC__
-#	warning TODO: this interface should be moved to the model for good.
-#endif
 	datamodel->restoreObject(object, nullptr);
 }

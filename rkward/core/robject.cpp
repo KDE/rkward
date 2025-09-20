@@ -514,9 +514,7 @@ bool RObject::updateDimensions(RData *new_data) {
 				return (true);
 			}
 		} else {
-#ifdef __GNUC__
-#	warning TODO: ugly hack. Should be moved to RKVariable, somehow.
-#endif
+			// TODO / HACK: Should be move to RKVariable, instead
 			if (type & Variable) static_cast<RKVariable *>(this)->extendToLength(new_dimensions[0]);
 
 			dimensions = new_dimensions;

@@ -252,9 +252,8 @@ RKCommandEditorWindow::RKCommandEditorWindow(QWidget *parent, const QUrl &_url, 
 
 	connect(m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::urlChanged);
 	connect(m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption); // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
-#ifdef __GNUC__
-#	warning remove this in favor of KTextEditor::Document::restore()
-#endif
+
+	// TODO: remove custom autosave mechanism in favor of KTextEditor::Document::restore()
 	connect(m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
 	connect(m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::textChanged);
 	connect(m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);

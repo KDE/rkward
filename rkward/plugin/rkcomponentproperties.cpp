@@ -132,9 +132,7 @@ void RKComponentPropertyBase::connectToGovernor(RKComponentPropertyBase *governo
 
 void RKComponentPropertyBase::governorValueChanged(RKComponentPropertyBase *property) {
 	RK_TRACE(PLUGIN);
-#ifdef __GNUC__
-#	warning TOOD: connected value should be stored as qvariant
-#endif
+	// TODO:  connected value should be stored as qvariant
 	setValue(property->value(governor_modifier).toString());
 }
 

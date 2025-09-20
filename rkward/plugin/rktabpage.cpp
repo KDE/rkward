@@ -42,9 +42,7 @@ void RKTabPage::visibleEnabledChanged(RKComponentPropertyBase *property) {
 	if (property == visibility_property) {
 		if (visibility_property->boolValue()) {
 			if (!inserted) {
-#ifdef __GNUC__
-#	warning this may not be reliable, if an earlier page is invisible as well
-#endif
+				// TODO / WARNING: this may not be reliable, if an earlier page is invisible as well
 				tabbook->insertTab(index, this, label);
 				inserted = true;
 			}

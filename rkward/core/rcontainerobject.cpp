@@ -283,9 +283,7 @@ RObject *RContainerObject::createPendingChild(const QString &name, int position,
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(isType(GlobalEnv) || isInGlobalEnv());
 
-#ifdef __GNUC__
-#	warning TODO validize name
-#endif
+	// TODO: validize name? or is this always called with valid name?
 	RObject *ret;
 	if (container) {
 		ret = new RContainerObject(this, name);
