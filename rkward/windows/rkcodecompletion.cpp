@@ -134,7 +134,7 @@ void RKCompletionManager::tryCompletion() {
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset(current_line, cursor_pos - 1, false, &start, &end);
-	symbol_range = KTextEditor::Range(para, start, para, end);
+	symbol_range = (end == 0) ? KTextEditor::Range() : KTextEditor::Range(para, start, para, end);
 	bool is_help = (start >= 1) && (current_line.at(start - 1) == u'?');
 	// When inside a quote hint only up to cursor position, as we're frequently misdetecting symbol end (missing closing quotation mark)
 	if (style_at_cursor == KSyntaxHighlighting::Theme::TextStyle::String) {
@@ -282,7 +282,7 @@ void RKCompletionManager::updateCallHint() {
 }
 
 void RKCompletionManager::startModel(KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range) {
-	if (start && range.isValid() && !range.isEmpty()) {
+	if (start && range.isValid()) {
 		if (!started_models.contains(model)) {
 			// TODO: should merge these calls for several models at once
 			_view->startCompletion(range, {model}, user_triggered ? KTextEditor::CodeCompletionModel::ManualInvocation : KTextEditor::CodeCompletionModel::AutomaticInvocation);
