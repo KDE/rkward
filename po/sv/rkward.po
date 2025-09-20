@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-15 00:38+0000\n"
+"POT-Creation-Date: 2025-09-20 00:39+0000\n"
 "PO-Revision-Date: 2025-08-25 20:05+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -2254,7 +2254,7 @@ msgstr "Hur man citerar:"
 msgid "Peer-reviewed article in the Journal of Statistical Software"
 msgstr "Referentgranskad artikel i Journal of Statistical Software"
 
-#: rkward/misc/celleditor.cpp:49
+#: rkward/misc/celleditor.cpp:46
 #, kde-format
 msgid "[Omitted %1 more factor levels]"
 msgstr "[Utelämnade %1 ytterligare faktornivåer]"
@@ -3592,7 +3592,7 @@ msgid "Could not create plugin"
 msgstr "Kunde inte skapa insticksprogram"
 
 #: rkward/plugin/rkstandardcomponent.cpp:667
-#: rkward/windows/rkcommandeditorwindow.cpp:806
+#: rkward/windows/rkcommandeditorwindow.cpp:819
 #, kde-format
 msgid "Options"
 msgstr "Alternativ"
@@ -4112,7 +4112,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "Komponenten 'katepart' kunde inte hittas"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:749
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:760
 #, kde-format
 msgid "R Console"
 msgstr "R-terminal"
@@ -6460,7 +6460,7 @@ msgid "Save Script As..."
 msgstr "Spara skript som..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:469
-#: rkward/windows/rkcommandeditorwindow.cpp:1058
+#: rkward/windows/rkcommandeditorwindow.cpp:1071
 #, kde-format
 msgid " [modified]"
 msgstr " [ändrat]"
@@ -6475,18 +6475,18 @@ msgstr "Dokumentet \"%1\" har ändrats. Stäng det ändå?"
 msgid "File not saved"
 msgstr "Filen har inte sparats"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:695
+#: rkward/windows/rkcommandeditorwindow.cpp:696
 #, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
 msgstr "Saknar programvara"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:696
+#: rkward/windows/rkcommandeditorwindow.cpp:697
 #, kde-format
 msgid "Rendering the preview failed"
 msgstr "Återgivning av förhandsgranskningen misslyckades"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:697
+#: rkward/windows/rkcommandeditorwindow.cpp:698
 #, kde-format
 msgid ""
 "The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
@@ -6503,7 +6503,7 @@ msgstr ""
 "till den i systemsökvägen för R-sessionen som kör med <a href=\"rkward://"
 "settings/rbackend\">Inställningar -> Anpassa RKward -> R-gränssnitt</a>."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:700
+#: rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
@@ -6515,7 +6515,7 @@ msgstr ""
 "<tt>install.packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</"
 "tt>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:701
+#: rkward/windows/rkcommandeditorwindow.cpp:702
 #, kde-format
 msgid ""
 "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
@@ -6528,62 +6528,62 @@ msgstr ""
 "i ett externt program, genom att använda länken nedan, eller så kan du ändra "
 "förhandsgranskningsläget till 'R Markdown (HTML)'.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:711
+#: rkward/windows/rkcommandeditorwindow.cpp:720
 #, kde-format
 msgid "No preview"
 msgstr "Ingen förhandsgranskning"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:713
+#: rkward/windows/rkcommandeditorwindow.cpp:722
 #, kde-format
 msgid "Disable preview"
 msgstr "Inaktivera förhandsgranskning"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:717
+#: rkward/windows/rkcommandeditorwindow.cpp:726
 #, kde-format
 msgid "R Markdown"
 msgstr "R Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:718
+#: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Förhandsgranskning av återgiven R Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:719
+#: rkward/windows/rkcommandeditorwindow.cpp:729
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr "Förhandsgranska skriptet som återgivet från RMarkdown-format (.Rmd)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:723
+#: rkward/windows/rkcommandeditorwindow.cpp:733
 #, kde-format
 msgid "Render format"
 msgstr "Återge format"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:724
+#: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as HTML"
 msgstr "Återge som HTML"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:725
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Render as PDF"
 msgstr "Återge som PDF"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:726
+#: rkward/windows/rkcommandeditorwindow.cpp:736
 #, kde-format
 msgid "Auto Format"
 msgstr "Automatiskt format"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:736
+#: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
 msgid "RKWard Output"
 msgstr "Utdata från RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:737
+#: rkward/windows/rkcommandeditorwindow.cpp:748
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Förhandsgranskning av utdata skapad av RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:738
+#: rkward/windows/rkcommandeditorwindow.cpp:749
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6593,38 +6593,38 @@ msgstr ""
 "Förhandsgranskningen är tom om det inte finns något anrop till <i>rk.print() "
 "eller andra RKWard utmatningskommandon."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:750
+#: rkward/windows/rkcommandeditorwindow.cpp:762
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Förhandsgranskning av skript som kör i interaktiv R-terminal"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:751
+#: rkward/windows/rkcommandeditorwindow.cpp:763
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 "Förhandsgranska skriptet som om det kördes i den interaktiva R-terminalen"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:755
+#: rkward/windows/rkcommandeditorwindow.cpp:767
 #, kde-format
 msgid "Echo statements"
 msgstr "Ekosatser"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:758
+#: rkward/windows/rkcommandeditorwindow.cpp:770
 #, kde-format
 msgid "Continue on error"
 msgstr "Fortsätt vid fel"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:760
+#: rkward/windows/rkcommandeditorwindow.cpp:772
 #, kde-format
 msgid "Evaluation environment"
 msgstr "Utvärderingsmiljö"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:762
+#: rkward/windows/rkcommandeditorwindow.cpp:774
 #, kde-format
 msgid ".GlobalEnv"
 msgstr ".GlobalEnv"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:764
+#: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
@@ -6633,12 +6633,12 @@ msgstr ""
 "Utvärdera kod direkt i .GlobalEnv. Tilldelningar kan komma åt <b>och ändra</"
 "b> objekt i .GlobalEnv."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:765
+#: rkward/windows/rkcommandeditorwindow.cpp:777
 #, kde-format
 msgid "Scoped"
 msgstr "Innesluten"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:767
+#: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6650,12 +6650,12 @@ msgstr ""
 "</tt> ändrar dem inte. (Andra tilldelningsoperationer kan fortfarande ändra "
 "dem!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:768
+#: rkward/windows/rkcommandeditorwindow.cpp:780
 #, kde-format
 msgid "Local"
 msgstr "Lokal"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:769
+#: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6668,17 +6668,17 @@ msgstr ""
 "<tt>&lt;-</tt>. (Andra tilldelningsoperationer kan fortfarande modifiera "
 "dem!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:784
+#: rkward/windows/rkcommandeditorwindow.cpp:796
 #, kde-format
 msgid "Plot"
 msgstr "Diagram"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:785
+#: rkward/windows/rkcommandeditorwindow.cpp:798
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Förhandsgranskning av skapat diagram"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:786
+#: rkward/windows/rkcommandeditorwindow.cpp:799
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6689,13 +6689,13 @@ msgstr ""
 "Förhandsgranskningen är tom om det inte finns något anrop till <i>plot()</i> "
 "eller andra grafikkommandon."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:800
+#: rkward/windows/rkcommandeditorwindow.cpp:813
 #, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
 msgstr "Förhandsgranskningsläge"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:852
+#: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6722,28 +6722,28 @@ msgstr ""
 "förhandsgranskningsfunktionen används, i synnerhet när funktionen används "
 "med skript som ursprungligen kommer från opålitliga källor.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:852
+#: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Potentiella sidoeffekter av förhandsgranskningar"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:983
+#: rkward/windows/rkcommandeditorwindow.cpp:996
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "Ett fel uppstod vid försök att automatiskt spara skriptfilen '%1':"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1057
+#: rkward/windows/rkcommandeditorwindow.cpp:1070
 #, kde-format
 msgid "Unnamed"
 msgstr "Namnlös"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1190
+#: rkward/windows/rkcommandeditorwindow.cpp:1203
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktiv)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1209
+#: rkward/windows/rkcommandeditorwindow.cpp:1222
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (oanvänd)"
