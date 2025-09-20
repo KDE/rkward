@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <ktexteditor/document.h>
+#include <ktexteditor/documentcursor.h>
 #include <ktexteditor/editor.h>
 
 #include <QAction>
@@ -125,22 +126,30 @@ void RKCompletionManager::tryCompletion() {
 
 	KTextEditor::Document *doc = _view->document();
 	KTextEditor::Cursor c = _view->cursorPosition();
+	const auto style_at_cursor = doc->defaultStyleAt(c);
 	cached_position = c;
 	uint para = c.line();
 	int cursor_pos = c.column();
 
-	QString current_line = doc->line(para);
+	const QString current_line = doc->line(para);
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset(current_line, cursor_pos - 1, false, &start, &end);
 	symbol_range = KTextEditor::Range(para, start, para, end);
 	bool is_help = (start >= 1) && (current_line.at(start - 1) == u'?');
+	// When inside a quote hint only up to cursor position, as we're frequently misdetecting symbol end (missing closing quotation mark)
+	if (style_at_cursor == KSyntaxHighlighting::Theme::TextStyle::String) {
+		end = cursor_pos;
+		symbol_range.setEnd(c);
+	}
+
 	if (!user_triggered) {
 		if (end > cursor_pos) {
-			symbol_range =
-			    KTextEditor::Range(); // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
+			// TODO: we may want to differentiate between hinting after plain navigation, vs. after typing, here:
+			// Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
+			symbol_range = KTextEditor::Range();
 		} else {
-			if (doc->defaultStyleAt(c) == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range(); // do not hint while in comments
+			if (style_at_cursor == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range(); // do not hint while in comments
 		}
 	}
 
@@ -149,9 +158,20 @@ void RKCompletionManager::tryCompletion() {
 		QString filename;
 		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name
 		// completion
+
+		// Filename completion range: This might be designed better, but there are comlexities:
+		// Some completion use-cases to consider:
+		// - user types inside closed quotes
+		// - user starts typing after open quote (a close quote will often be "found" somewhere, but the point, here. is that it's not the correct one)
+		// - inside the quote, typing at the end of the string
+		// - inside the quote, typing in the middle of the string
+		// Finally, we will sometimes be inside symbol names such as my.data[["col|umn"]], where filename completion does _not_ make sense.
+		// That makes it hard to separate from symbol completion (without duplication)
 		if (word.startsWith(u'\"') || word.startsWith(u'\'') || word.startsWith(u'`')) {
+			// It's difficullt to define a single sensible behavior for all of the above cases. For the time being, the strategy is to consider start of quote
+			// up to current cursor position (end set above)
 			symbol_range.setStart(KTextEditor::Cursor(symbol_range.start().line(), symbol_range.start().column() + 1)); // confine range to inside the quotes.
-			filename = word.mid(1);
+			filename = doc->text(symbol_range);
 			word.clear();
 		}
 
