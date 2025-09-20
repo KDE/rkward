@@ -52,7 +52,7 @@ build_clazy_stable:
     # rkward build deps:
     - eatmydata apt-get install --yes --no-install-recommends cmake extra-cmake-modules qt6-webengine-dev libkf6notifications-dev gettext libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev libkf6iconthemes-dev libkf6breezeicons-dev libkf6texteditor-dev libkf6textwidgets-dev libkf6windowsystem-dev libkf6xmlgui-dev r-base-dev
   script:
-    - export LC_ALL=en_US.UTF-8
+    - export LC_ALL=C.UTF-8
     - mkdir -p build && cd build
     - cmake -G Ninja ..
     - CLAZY_IGNORE_DIRS="3rdparty" ninja -j 5 > >(tee make.output) 2> >(tee make.error)
