@@ -48,15 +48,15 @@ build_clazy_stable:
   before_script:
     - apt-get update
     - apt-get install --yes eatmydata
-    - eatmydata apt-get install --yes --no-install-recommends clazy clang ninja-build
+    - eatmydata apt-get install --yes --no-install-recommends clazy clang
     # rkward build deps:
     - eatmydata apt-get install --yes --no-install-recommends cmake extra-cmake-modules qt6-webengine-dev libkf6notifications-dev gettext libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev libkf6iconthemes-dev libkf6breezeicons-dev libkf6texteditor-dev libkf6textwidgets-dev libkf6windowsystem-dev libkf6xmlgui-dev r-base-dev
   script:
     - export LC_ALL=C.UTF-8
     - mkdir -p build && cd build
-    - cmake -G Ninja ..
-    - ninja kdsingleapplication # build first, to ignore all (not just clazy) warnings, in 3rdparty code
-    - CLAZY_IGNORE_DIRS="3rdparty" ninja > >(tee make.output) 2> >(tee make.error)
+    - cmake ..
+    - make -j 9 kdsingleapplication # build first, to ignore all (not just clazy) warnings, in 3rdparty code
+    - CLAZY_IGNORE_DIRS="3rdparty" make -j 9 > >(tee make.output) 2> >(tee make.error)
   artifacts:
     paths:
       - build/make.output
