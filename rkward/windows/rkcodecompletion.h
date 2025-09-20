@@ -216,9 +216,9 @@ class RKDynamicCompletionsAddition : public QObject {
 	explicit RKDynamicCompletionsAddition(RKCompletionModelBase *parent);
 	~RKDynamicCompletionsAddition();
 	void update(const QString &mode, const QString &fragment, const QString &filterprefix, const QStringList &filterlist);
-	const QStringList results() const { return filtered_results; };
-	const QString fragment() const { return current_fragment; };
-	const QString mode() const { return current_mode; };
+	const QStringList &results() const { return filtered_results; };
+	const QString &fragment() const { return current_fragment; };
+	const QString &mode() const { return current_mode; };
   Q_SIGNALS:
 	void resultsComplete();
 

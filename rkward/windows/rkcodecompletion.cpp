@@ -9,7 +9,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <ktexteditor/document.h>
-#include <ktexteditor/documentcursor.h>
 #include <ktexteditor/editor.h>
 
 #include <QAction>
@@ -286,7 +285,7 @@ void RKCompletionManager::startModel(KTextEditor::CodeCompletionModel *model, bo
 	if (start && range.isValid() && !range.isEmpty()) {
 		if (!started_models.contains(model)) {
 			// TODO: should merge these calls for several models at once
-			_view->startCompletion(range, QList<KTextEditor::CodeCompletionModel *>({model}), user_triggered ? KTextEditor::CodeCompletionModel::ManualInvocation : KTextEditor::CodeCompletionModel::AutomaticInvocation);
+			_view->startCompletion(range, {model}, user_triggered ? KTextEditor::CodeCompletionModel::ManualInvocation : KTextEditor::CodeCompletionModel::AutomaticInvocation);
 			started_models.append(model);
 		}
 		auto ci = dynamic_cast<KTextEditor::CodeCompletionModelControllerInterface *>(model);
@@ -738,7 +737,7 @@ void RKCallHintModel::setFunction(RObject *_function) {
 	beginResetModel();
 	if (function && function->isType(RObject::Function)) {
 		// initialize hint
-		RFunctionObject *fo = static_cast<RFunctionObject *>(function);
+		const RFunctionObject *fo = static_cast<RFunctionObject *>(function);
 		name = fo->getFullName();
 		QStringList args = fo->argumentNames();
 		QStringList defs = fo->argumentDefaults();
