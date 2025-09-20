@@ -31,30 +31,41 @@ clang_format:
     - git diff --exit-code
 
 # setup mix-and-matched from okular, removing some extras
-# combined check for building on "old" distribution (should ideally be previous ubuntu LTS, but 24.10 is the first to contain KF6, so using that)
-build_clazy_ubuntu_24_10:
+# combined check for building on "old" distribution (old distro should ideally be the previous ubuntu LTS, but that does not have kf6, yet)
+# debian:stable has the advantage of being cached, and will likely remain stable for some time to come
+build_clazy_stable:
   stage: build
-  image: ubuntu:24.10
+  image: debian:stable
   tags:
     - Linux
   only:
     - merge_requests
   variables:
     #CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch
-    CXXFLAGS: -Werror -Wno-deprecated-declarations
+    #CXXFLAGS: -Werror -Wno-deprecated-declarations > rather using check_warnings, below
     CC: clang
     CXX: clazy
   before_script:
-    - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
-    - sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
-    - sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
     - apt-get update
     - apt-get install --yes eatmydata
-    - eatmydata apt-get install --yes --no-install-recommends clazy
+    - eatmydata apt-get install --yes --no-install-recommends clazy clang ninja-build
     # rkward build deps:
-    - eatmydata apt-get install --yes --no-install-recommends cmake extra-cmake-modules pkg-kde-tools debhelper qt6-webengine-dev libkf6notifications-dev gettext libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev libkf6iconthemes-dev libkf6breezeicons-dev libkf6texteditor-dev libkf6textwidgets-dev libkf6windowsystem-dev libkf6xmlgui-dev pkgconf r-base-dev
+    - eatmydata apt-get install --yes --no-install-recommends cmake extra-cmake-modules qt6-webengine-dev libkf6notifications-dev gettext libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev libkf6iconthemes-dev libkf6breezeicons-dev libkf6texteditor-dev libkf6textwidgets-dev libkf6windowsystem-dev libkf6xmlgui-dev r-base-dev
   script:
+    - export LC_ALL=en_US.UTF-8
     - mkdir -p build && cd build
-    - cmake ..
-    - CLAZY_IGNORE_DIRS="3rdparty" make -j 5
-  artifacts: null
+    - cmake -G Ninja ..
+    - CLAZY_IGNORE_DIRS="3rdparty" ninja -j 5 > >(tee make.output) 2> >(tee make.error)
+  artifacts:
+    paths:
+      - build/make.output
+      - build/make.error
+    expire_in: 1 week
+
+# check the above build for warning messages (https://stackoverflow.com/questions/59680450/how-to-detect-compiler-warnings-in-gitlab-ci)
+check_warnings:
+  stage: test
+  image: debian:stable
+  script:
+    - "if [[ $(cat build/make.error | grep warning -i) ]]; then cat build/make.error; exit 1; fi"
+  allow_failure: true
