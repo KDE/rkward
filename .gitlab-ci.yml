@@ -55,7 +55,8 @@ build_clazy_stable:
     - export LC_ALL=C.UTF-8
     - mkdir -p build && cd build
     - cmake -G Ninja ..
-    - CLAZY_IGNORE_DIRS="3rdparty" ninja -j 5 > >(tee make.output) 2> >(tee make.error)
+    - ninja kdsingleapplication # build first, to ignore all (not just clazy) warnings, in 3rdparty code
+    - CLAZY_IGNORE_DIRS="3rdparty" ninja > >(tee make.output) 2> >(tee make.error)
   artifacts:
     paths:
       - build/make.output
