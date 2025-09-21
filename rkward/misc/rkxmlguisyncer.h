@@ -8,6 +8,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKXMLGUISYNCER_H
 #define RKXMLGUISYNCER_H
 
+#include <functional>
+
 class KXMLGUIClient;
 class QObject;
 class RKXMLGUISyncerPrivate;
@@ -26,12 +28,9 @@ class RKXMLGUISyncer {
 	/** You can use this function to receive a signal, when an KXMLGUIClient's ui.rc file has been reloaded (after the reload, before the factory is told to rebuild).
 	@param watched_client The client to monitor. This needs to be registered using watchXMLGUIClientUIrc, first.
 	@param receiver QObject to receive notification
-	@param method slot to receive notification. This needs to have the signature
-	\code
-	    void someSlotName (KXMLGUIClient *changed_client);
-	\endcode
+	@param method function to call when the client's ui.rc file has changed
 	*/
-	void registerChangeListener(KXMLGUIClient *watched_client, QObject *receiver, const char *method);
+	void registerChangeListener(KXMLGUIClient *watched_client, QObject *receiver, std::function<void(KXMLGUIClient *)> method);
 
   protected:
 	RKXMLGUISyncer();

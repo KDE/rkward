@@ -48,19 +48,17 @@ XMLHelper::~XMLHelper() {
 QDomElement XMLHelper::openXMLFile(int debug_level, bool with_includes, bool with_snippets) {
 	RK_TRACE(XML);
 
-	int error_line, error_column;
-	QString error_message;
 	QDomDocument doc;
-
 	QFile f(filename);
 	if (!f.open(QIODevice::ReadOnly)) displayError(nullptr, i18n("Could not open file %1 for reading", filename), debug_level, DL_ERROR);
 	QXmlStreamReader reader(&f);
-	DummyEntityResolver res;
-	reader.setEntityResolver(&res);
-	if (!doc.setContent(&reader, false, &error_message, &error_line, &error_column)) {
+	DummyEntityResolver resolver;
+	reader.setEntityResolver(&resolver);
+	auto res = doc.setContent(&reader, QDomDocument::ParseOption::Default);
+	if (!res) {
 		displayError(nullptr,
 		             i18n("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below",
-		                  error_message, error_line, error_column),
+		                  res.errorMessage, res.errorLine, res.errorColumn),
 		             debug_level, DL_ERROR);
 		return QDomElement();
 	}

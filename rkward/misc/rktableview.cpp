@@ -161,7 +161,9 @@ QWidget *RKItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 
 	ed->setFont(option.font);
 	// NOTE: Can't use new SIGNAL/SLOT syntax, here, as the editors are of different types (TODO: define a common base class)
-	connect(ed, SIGNAL(done(QWidget *, RKItemDelegate::EditorDoneReason)), this, SLOT(editorDone(QWidget *, RKItemDelegate::EditorDoneReason)));
+	// clang-format off
+	connect(ed, SIGNAL(done(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT(editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
+	// clang-format on
 	return ed;
 }
 

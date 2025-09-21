@@ -15,9 +15,9 @@ This namespace holds helpers for supporting different versions of Q6/KF6, withou
 */
 namespace RKCompatibility {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
-inline constexpr auto QCheckBox_checkStateChanged = &QCheckBox::checkStateChanged;
+inline const constexpr auto QCheckBox_checkStateChanged = &QCheckBox::checkStateChanged;
 #else
-inline constexpr auto QCheckBox_checkStateChanged = &QCheckBox::stateChanged;
+inline const constexpr auto QCheckBox_checkStateChanged = &QCheckBox::stateChanged;
 #endif
 }; //namespace RKCompatibility
 

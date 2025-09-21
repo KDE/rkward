@@ -239,7 +239,7 @@ RKCommandEditorWindow::RKCommandEditorWindow(QWidget *parent, const QUrl &_url, 
 		}
 	}
 	initializeActivationSignals();
-	RKXMLGUISyncer::self()->registerChangeListener(m_view, this, SLOT(fixupPartGUI()));
+	RKXMLGUISyncer::self()->registerChangeListener(m_view, this, [this](KXMLGUIClient *) { fixupPartGUI(); });
 
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->setContentsMargins(0, 0, 0, 0);
@@ -522,9 +522,9 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged() {
 	}
 }
 
-static QString r_script_mode = QStringLiteral("R Script");
-static QString r_interactive_mode = QStringLiteral("R interactive session");
-static QString r_markdown_mode = QStringLiteral("R Markdown");
+static const constexpr QLatin1String r_script_mode("R Script"); // we'd like QString for these, but static QString is non-POD
+static const constexpr QLatin1String r_interactive_mode("R interactive session");
+static const constexpr QLatin1String r_markdown_mode("R Markdown");
 
 static QString modeToString(RKCommandHighlighter::HighlightingMode mode, KTextEditor::Document *doc) {
 	if (mode == RKCommandHighlighter::RScript) return r_script_mode;
@@ -822,7 +822,7 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	for (auto *b : preview_buttons) {
 		l->addWidget(b);
 		if (b == action_no_preview) continue;
-		for (auto ob : static_cast<RKPreviewMode *>(b)->options) {
+		for (auto ob : std::as_const(static_cast<RKPreviewMode *>(b)->options)) {
 			r->addWidget(ob);
 			ob->setVisible(false);
 			// the following is a little hackish...

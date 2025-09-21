@@ -168,7 +168,7 @@ class RKParsedScriptTest : public QObject {
 		int posa = ps.getContext(ps.firstContextInStatement(ctx)).start;
 		int posb = ps.lastPositionInStatement(ctx);
 		QVERIFY(posb > posa);
-		QVERIFY(script.mid(posa).startsWith(u"symb.last"_s));
+		QVERIFY(script.mid(posa).startsWith(u"symb.last"_s)); // clazy:exclude=qstring-ref
 		QVERIFY(!ps.nextStatement(ctx).valid());
 
 		ctx = ps.contextAtPos(script.indexOf(u"FunctionList"));
@@ -324,9 +324,9 @@ class RKParsedScriptTest : public QObject {
 		QVERIFY(posb > posa);
 		// NOTE: Note sure wether or not we want to include the trailing comment,
 		// as part of the statement, so this test will only check the start
-		QVERIFY(script.mid(posa, posb - posa + 1).startsWith(u"symb07"_s));
+		QVERIFY(script.mid(posa, posb - posa + 1).startsWith(u"symb07"_s)); // clazy:exclude=qstring-ref
 		// We do not want to include the delimiting newline, however
-		QVERIFY(!script.mid(posa, posb - posa + 1).contains(u'\n'));
+		QVERIFY(!script.mid(posa, posb - posa + 1).contains(u'\n')); // clazy:exclude=qstring-ref
 		QVERIFY(!ps.nextStatement(ctx).valid());
 
 		ctx = ps.contextAtPos(script.indexOf(u"symb14"));

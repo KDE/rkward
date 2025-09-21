@@ -508,7 +508,7 @@ class RKWardCoreTest : public QObject {
 			if (out.output.contains(u"before"_s)) RInterface::instance()->cancelAll();
 			QVERIFY(!out.output.contains(u"after"_s));
 		});
-		runCommandWithTimeout(c, nullptr, [this](RCommand *command) {
+		runCommandWithTimeout(c, nullptr, [](RCommand *command) {
 			// QVERIFY(command->wasCanceled()); we're currenly mis-detecting that, which is not a real-world problem, however.
 			// The real test is the command neither times out (below), nor prints "after" (above)
 			QVERIFY(command->failed()); }, 2000);

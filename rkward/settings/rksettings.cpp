@@ -161,9 +161,9 @@ void RKSettings::applyAll() {
 		changed_modules.insert(kateconfig->parentModule());
 	}
 
-	for (auto it = changed_modules.constBegin(); it != changed_modules.constEnd(); ++it) {
-		(*it)->syncConfig(KSharedConfig::openConfig().data(), RKConfigBase::SaveConfig);
-		Q_EMIT(*it)->settingsChanged();
+	for (auto mod : std::as_const(changed_modules)) {
+		mod->syncConfig(KSharedConfig::openConfig().data(), RKConfigBase::SaveConfig);
+		Q_EMIT mod->settingsChanged();
 	}
 	button(QDialogButtonBox::Apply)->setEnabled(false);
 }

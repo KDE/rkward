@@ -57,13 +57,13 @@ void RKXMLGUISyncer::watchXMLGUIClientUIrc(KXMLGUIClient *client, bool recursive
 	}
 }
 
-void RKXMLGUISyncer::registerChangeListener(KXMLGUIClient *watched_client, QObject *receiver, const char *method) {
+void RKXMLGUISyncer::registerChangeListener(KXMLGUIClient *watched_client, QObject *receiver, std::function<void(KXMLGUIClient *)> method) {
 	RK_TRACE(MISC);
 
 	KActionCollection *ac = watched_client->actionCollection();
 
 	RKXMLGUISyncerNotifier *notifier = new RKXMLGUISyncerNotifier(nullptr);
-	d->connect(notifier, SIGNAL(changed(KXMLGUIClient *)), receiver, method);
+	d->connect(notifier, &RKXMLGUISyncerNotifier::changed, receiver, method);
 
 	d->notifier_map.insert(ac, notifier);
 }
