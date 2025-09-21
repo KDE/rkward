@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-01 00:38+0000\n"
-"PO-Revision-Date: 2025-06-09 02:24+0100\n"
+"PO-Revision-Date: 2025-09-20 16:53+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -472,7 +472,7 @@ msgid ""
 "Here you can define the confidence level of the interval (95% is typical)."
 msgstr ""
 "Aquí puede definir el nivel de confianza del intervalo (es usual definirlo a "
-"95%)."
+"95 %)."
 
 #. i18n: ectx: (Ansari-Bradley two-sample exact test) <dialog label="...">
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.xml:15
@@ -3432,7 +3432,8 @@ msgid ""
 "level should be applied (95% corresponds to a 5% level of significance)."
 msgstr ""
 "A continuación se puede especificar si se debe mostrar y qué nivel de "
-"confianza debe aplicarse (95% corresponde a un nivel de significación de 5%)."
+"confianza debe aplicarse (95 % corresponde a un nivel de significación de 5 "
+"%)."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <summary>
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:8
@@ -4198,7 +4199,8 @@ msgstr "Define el ratio hipotético entre las varianzas de población."
 #: rkward/plugins/analysis/variances/F_test.rkh:23
 #, no-c-format, kde-format
 msgid "Defines the confidence level of the interval (95% is typical)."
-msgstr "Define el nivel de confianza del intervalo (es usual definirlo a 95%)."
+msgstr ""
+"Define el nivel de confianza del intervalo (es usual definirlo a 95 %)."
 
 #. i18n: ectx: (F test) <dialog label="...">
 #: rkward/plugins/analysis/variances/F_test.xml:11

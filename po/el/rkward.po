@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-20 00:39+0000\n"
+"POT-Creation-Date: 2025-09-21 00:38+0000\n"
 "PO-Revision-Date: 2024-09-19 22:25+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -5840,24 +5840,24 @@ msgid ""
 "<b>Current call:</b> %1<br><b>Environment:</b> %2<br><b>Local objects:</b> %3"
 msgstr ""
 
-#: rkward/windows/rkcodecompletion.cpp:679
+#: rkward/windows/rkcodecompletion.cpp:684
 #, kde-format
 msgid "Objects on search path"
 msgstr ""
 
-#: rkward/windows/rkcodecompletion.cpp:765
+#: rkward/windows/rkcodecompletion.cpp:771
 #, fuzzy, kde-format
 #| msgid "Functions"
 msgid "Function calls"
 msgstr "Συναρτήσεις"
 
-#: rkward/windows/rkcodecompletion.cpp:862
+#: rkward/windows/rkcodecompletion.cpp:868
 #, fuzzy, kde-format
 #| msgid "Functions"
 msgid "Function arguments"
 msgstr "Συναρτήσεις"
 
-#: rkward/windows/rkcodecompletion.cpp:979
+#: rkward/windows/rkcodecompletion.cpp:985
 #, fuzzy, kde-format
 #| msgid "Locale change"
 msgid "Local file names"

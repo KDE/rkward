@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-20 00:39+0000\n"
+"POT-Creation-Date: 2025-09-21 00:38+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -6178,22 +6178,22 @@ msgstr ""
 "<b>Aktiivne väljakutse:</b> %1<br><b>Keskkond:</b> %2<br><b>Kohalikud "
 "objektid:</b> %3"
 
-#: rkward/windows/rkcodecompletion.cpp:679
+#: rkward/windows/rkcodecompletion.cpp:684
 #, kde-format
 msgid "Objects on search path"
 msgstr "Objektid otsinguteel"
 
-#: rkward/windows/rkcodecompletion.cpp:765
+#: rkward/windows/rkcodecompletion.cpp:771
 #, kde-format
 msgid "Function calls"
 msgstr "Funktsioonide väljakutsed"
 
-#: rkward/windows/rkcodecompletion.cpp:862
+#: rkward/windows/rkcodecompletion.cpp:868
 #, kde-format
 msgid "Function arguments"
 msgstr "Funktsioonide argumendid"
 
-#: rkward/windows/rkcodecompletion.cpp:979
+#: rkward/windows/rkcodecompletion.cpp:985
 #, kde-format
 msgid "Local file names"
 msgstr "Kohalikud failinimed"

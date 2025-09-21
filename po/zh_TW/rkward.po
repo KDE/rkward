@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-20 00:39+0000\n"
+"POT-Creation-Date: 2025-09-21 00:38+0000\n"
 "PO-Revision-Date: 2024-08-15 05:21+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -5710,22 +5710,22 @@ msgid ""
 "<b>Current call:</b> %1<br><b>Environment:</b> %2<br><b>Local objects:</b> %3"
 msgstr "<b>目前呼叫：</b>%1<br><b>環境：</b>%2<br><b>本地物件：</b>%3"
 
-#: rkward/windows/rkcodecompletion.cpp:679
+#: rkward/windows/rkcodecompletion.cpp:684
 #, kde-format
 msgid "Objects on search path"
 msgstr "在搜尋路徑上的物件"
 
-#: rkward/windows/rkcodecompletion.cpp:765
+#: rkward/windows/rkcodecompletion.cpp:771
 #, kde-format
 msgid "Function calls"
 msgstr "函數呼叫"
 
-#: rkward/windows/rkcodecompletion.cpp:862
+#: rkward/windows/rkcodecompletion.cpp:868
 #, kde-format
 msgid "Function arguments"
 msgstr "函數參數"
 
-#: rkward/windows/rkcodecompletion.cpp:979
+#: rkward/windows/rkcodecompletion.cpp:985
 #, kde-format
 msgid "Local file names"
 msgstr "本地檔案名稱"

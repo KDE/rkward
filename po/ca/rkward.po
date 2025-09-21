@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-20 00:39+0000\n"
+"POT-Creation-Date: 2025-09-21 00:38+0000\n"
 "PO-Revision-Date: 2025-08-28 14:23+0200\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -6339,22 +6339,22 @@ msgid ""
 msgstr ""
 "<b>Crida actual:</b> %1<br><b>Entorn:</b> %2<br><b>Objectes locals:</b> %3"
 
-#: rkward/windows/rkcodecompletion.cpp:679
+#: rkward/windows/rkcodecompletion.cpp:684
 #, kde-format
 msgid "Objects on search path"
 msgstr "Objectes en el camí de cerca"
 
-#: rkward/windows/rkcodecompletion.cpp:765
+#: rkward/windows/rkcodecompletion.cpp:771
 #, kde-format
 msgid "Function calls"
 msgstr "Crides a la funció"
 
-#: rkward/windows/rkcodecompletion.cpp:862
+#: rkward/windows/rkcodecompletion.cpp:868
 #, kde-format
 msgid "Function arguments"
 msgstr "Arguments de la funció"
 
-#: rkward/windows/rkcodecompletion.cpp:979
+#: rkward/windows/rkcodecompletion.cpp:985
 #, kde-format
 msgid "Local file names"
 msgstr "Noms dels fitxers locals"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-20 00:39+0000\n"
+"POT-Creation-Date: 2025-09-21 00:38+0000\n"
 "PO-Revision-Date: 2025-08-25 17:05+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -6306,22 +6306,22 @@ msgstr ""
 "<b>Chiamata attuale:</b> %1<br><b>Ambiente:</b> %2<br><b>Oggetti locali:</b> "
 "%3"
 
-#: rkward/windows/rkcodecompletion.cpp:679
+#: rkward/windows/rkcodecompletion.cpp:684
 #, kde-format
 msgid "Objects on search path"
 msgstr "Oggetti nel percorso di ricerca"
 
-#: rkward/windows/rkcodecompletion.cpp:765
+#: rkward/windows/rkcodecompletion.cpp:771
 #, kde-format
 msgid "Function calls"
 msgstr "Chiamate di funzione"
 
-#: rkward/windows/rkcodecompletion.cpp:862
+#: rkward/windows/rkcodecompletion.cpp:868
 #, kde-format
 msgid "Function arguments"
 msgstr "Argomenti della funzione"
 
-#: rkward/windows/rkcodecompletion.cpp:979
+#: rkward/windows/rkcodecompletion.cpp:985
 #, kde-format
 msgid "Local file names"
 msgstr "Nomi di file locali"

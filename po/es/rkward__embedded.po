@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward__embedded\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-09 00:38+0000\n"
-"PO-Revision-Date: 2025-06-09 02:25+0100\n"
+"PO-Revision-Date: 2025-09-20 17:48+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -394,7 +394,7 @@ msgid ""
 "selected\" governor=\"myvarselector_id.selected\"</i>)."
 msgstr ""
 "<i>varsource</i>: El complemento de tabulación no muestra su propio selector "
-"de variables por omisión. Conecte el suyo a éste (<i>client=\"embedded_id."
+"de variables por omisión. Conecte el suyo a este (<i>client=\"embedded_id."
 "varsource.selected\" governor=\"myvarselector_id.selected\"</i>)."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
@@ -1440,25 +1440,25 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:16
 #, kde-format
 msgid "This is the <i>freq</i> parameter."
-msgstr "Éste es el argumento <i>freq</i>."
+msgstr "Este es el argumento <i>freq</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Bar labels")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:17
 #, kde-format
 msgid "This is the <i>label</i> parameter."
-msgstr "Éste es el argumento <i>label</i>."
+msgstr "Este es el argumento <i>label</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Right closed")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:18
 #, kde-format
 msgid "This is the <i>right</i> parameter."
-msgstr "Éste es el argumento <i>right</i>."
+msgstr "Este es el argumento <i>right</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Include in lowest cell")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:19
 #, kde-format
 msgid "This is the <i>include.lowest</i> parameter."
-msgstr "Éste es el argumento <i>include.lowest</i>."
+msgstr "Este es el argumento <i>include.lowest</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:21
@@ -1471,7 +1471,7 @@ msgid ""
 "points in the range of the variable. The number of break points in this case "
 "is provided by 'Vector length' (see below)."
 msgstr ""
-"Éste es el argumento <i>breaks</i> de <b>hist</b>, salvo que las opciones "
+"Este es el argumento <i>breaks</i> de <b>hist</b>, salvo que las opciones "
 "«Números enteros» o «Vector de puntos de ruptura» se hayan elegido. La "
 "opción «Números enteros» establece los puntos de rupturas como enteros entre "
 "el mínimo y el máximo de la variable. La opción «Vector de puntos de "
@@ -1502,12 +1502,12 @@ msgid ""
 "code). The range of the variable is extended by 10% before obtaining the "
 "sequence, so that both the minimum and maximum points are included."
 msgstr ""
-"Si elige «Vector de puntos de ruptura» en el campo superior, entonces éste "
+"Si elige «Vector de puntos de ruptura» en el campo superior, entonces este "
 "proporciona la longitud del vector de puntos de ruptura equidistantes en el "
-"rango de la variable. Éste es el parámetro <i>breaks</i> con un argumento "
+"rango de la variable. Este es el parámetro <i>breaks</i> con un argumento "
 "como vector. La secuencia concreta es calculada por una llamada a una "
 "función en línea (vea el código generado). El rango de la variable es "
-"extendido un 10% antes de obtener la secuencia, para que ambos puntos, "
+"extendido un 10 % antes de obtener la secuencia, para que ambos puntos, "
 "máximo y mínimo, sean incluidos."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Draw border")
@@ -1529,7 +1529,7 @@ msgid ""
 "This is the <i>border</i> argument which provides the color of the border. "
 "Check the above box to use this option."
 msgstr ""
-"Éste es el argumento <i>border</i> que proporciona el color del borde. "
+"Este es el argumento <i>border</i> que proporciona el color del borde. "
 "Marque la casilla superior para usar esta función."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Line type for histogram")
@@ -1540,7 +1540,7 @@ msgid ""
 "select a fill color to make a sensible plot. See R reference for further "
 "details."
 msgstr ""
-"Éste es el argumento <i>lty</i>. Elegir «En blanco» no dibujará ninguna "
+"Este es el argumento <i>lty</i>. Elegir «En blanco» no dibujará ninguna "
 "línea, seleccione un color para rellenar un gráfico con sentido. Vea la "
 "ayuda de R para más detalles."
 
@@ -1551,14 +1551,14 @@ msgid ""
 "This is the <i>density</i> parameter. See the R reference on 'rect' for more "
 "details."
 msgstr ""
-"Éste es el argumento <i>density</i>. Vea la ayuda de «rect» para más "
+"Este es el argumento <i>density</i>. Vea la ayuda de «rect» para más "
 "detalles."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Angle of shading lines")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:30
 #, kde-format
 msgid "This is the <i>angle</i> parameter."
-msgstr "Éste es el argumento <i>angle</i>."
+msgstr "Este es el argumento <i>angle</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Use Fill color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:32
@@ -1576,7 +1576,7 @@ msgid ""
 "color. If it is empty, then <i>col</i> is not used in the code, otherwise "
 "the chosen color is used to fill the bars."
 msgstr ""
-"Éste es el argumento <i>col</i>. El complemento incrustado puede que "
+"Este es el argumento <i>col</i>. El complemento incrustado puede que "
 "establezca un color por defecto. Si queda vacío, entonces <i>col</i> no se "
 "usará en el código, en caso contrario, el color elegido se usará para "
 "rellenar las barras."
@@ -2096,7 +2096,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.rkh:43
 #, kde-format
 msgid "This is the <i>asp</i> argument to <b>plot.default</b>."
-msgstr "Éste es el argumento <i>asp</i> de <b>plot.default</b>."
+msgstr "Este es el argumento <i>asp</i> de <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Add Grid to the plot")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:46
@@ -2658,7 +2658,7 @@ msgid ""
 "arguments to the plot.stepfun function. This plugin is useful in "
 "constructing <b>ecdf</b> plots."
 msgstr ""
-"Éste debe usarse como complemento incrustado. Todos los elementos son "
+"Este debe usarse como complemento incrustado. Todos los elementos son "
 "argumentos para la función plot.stepfun. Este complemento es útil para "
 "construir gráficos <b>ecdf</b>."
 
@@ -2669,14 +2669,14 @@ msgid ""
 "This is the <i>add</i> argument. This option might be disabled by the "
 "embedding plugin."
 msgstr ""
-"Éste es el argumento <i>add</i>. Esta opción podría ser desactivada por el "
+"Este es el argumento <i>add</i>. Esta opción podría ser desactivada por el "
 "complemento incrustado."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Line type for all lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:16
 #, kde-format
 msgid "This is the <i>lty</i> argument."
-msgstr "Éste es el argumento <i>lty</i>."
+msgstr "Este es el argumento <i>lty</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw points")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:17
@@ -2685,7 +2685,7 @@ msgid ""
 "This is the <i>do.points</i> argument. Uncheck this option if points are NOT "
 "to be drawn."
 msgstr ""
-"Éste es el argumento <i>do.points</i>. Desmarque esta opción si NO quiere "
+"Este es el argumento <i>do.points</i>. Desmarque esta opción si NO quiere "
 "dibujar los puntos."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
@@ -2695,14 +2695,14 @@ msgid ""
 "This is the <i>col.points</i> argument. Leave this as 'default' for using "
 "the standard color settings from par()."
 msgstr ""
-"Éste es el argumento <i>col.points</i>. Deje éste a «Por omisión» para usar "
+"Este es el argumento <i>col.points</i>. Deje este a «Por omisión» para usar "
 "las preferencias estándar de color de par()."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Horizontal Lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:19
 #, kde-format
 msgid "This is the <i>col.hor</i> argument."
-msgstr "Éste es el argumento <i>col.hor</i>."
+msgstr "Este es el argumento <i>col.hor</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw vertical lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:20
@@ -2711,14 +2711,14 @@ msgid ""
 "This is the <i>verticals</i> arguments. Uncheck this option if vertical "
 "lines are NOT to be drawn."
 msgstr ""
-"Éste es el argumento <i>verticals</i>. Desmarque esta opción si NO quiere "
+"Este es el argumento <i>verticals</i>. Desmarque esta opción si NO quiere "
 "dibujar líneas."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:21
 #, kde-format
 msgid "This is the <i>col.vert</i> argument."
-msgstr "Éste es el argumento <i>col.vert</i>."
+msgstr "Este es el argumento <i>col.vert</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "For y = 1 line")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:23
@@ -2876,8 +2876,8 @@ msgid ""
 msgstr ""
 "Varios parámetros para la <b>rejilla</b>. Para una descripción detallada de "
 "los parámetros individuales vea la ayuda de R para «grid». Tenga en cuenta "
-"que ésta solo funciona cuando se usan las funciones estándar (tradicionales "
-"de S) para construir el gráfico (vea library(help=\"graphics\")). Ésta no "
+"que esta solo funciona cuando se usan las funciones estándar (tradicionales "
+"de S) para construir el gráfico (vea library(help=\"graphics\")). Esta no "
 "funciona con dispositivos de gráficos trellis (vea <link href=\"rkward://"
 "rhelp/Lattice\"/> para más información)."
 
@@ -2900,7 +2900,7 @@ msgid ""
 "vertical lines. Select 'Specify below' to provide a specified (to be "
 "specified below) number of vertical lines in the grid."
 msgstr ""
-"Éste es el argumento <i>nx</i>. El valor por omisión es NULL, en cuyo caso, "
+"Este es el argumento <i>nx</i>. El valor por omisión es NULL, en cuyo caso, "
 "las líneas verticales se dibujarán en las marcas del eje x. Seleccione None "
 "para no dibujar líneas verticales. Seleccione «Especificar más abajo» para "
 "proporcionar un número específico (especificados más abajo) de líneas "
@@ -2913,7 +2913,7 @@ msgid ""
 "This is the <i>nx</i> argument, when 'Specify below' is selected in the "
 "above option list."
 msgstr ""
-"Éste es el argumento <i>nx</i>, cuando «Especificar más abajo» se ha "
+"Este es el argumento <i>nx</i>, cuando «Especificar más abajo» se ha "
 "seleccionado en la lista de opciones más arriba."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of Y cells")
@@ -2923,7 +2923,7 @@ msgid ""
 "This is the <i>ny</i> argument. Similar to <i>nx</i>. See the explanation on "
 "number of x cells above."
 msgstr ""
-"Éste es el argumento <i>ny</i>. Similar a <i>nx</i>. Vea la explicación del "
+"Este es el argumento <i>ny</i>. Similar a <i>nx</i>. Vea la explicación del "
 "número de celdas x más arriba."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Y Cells")
@@ -2933,7 +2933,7 @@ msgid ""
 "This is the <i>ny</i> argument when a specified (by the user) number of y "
 "cells are to be used. Similar to x cells."
 msgstr ""
-"Éste es el argumento <i>ny</i> cuando el número de celdas y se usan (por el "
+"Este es el argumento <i>ny</i> cuando el número de celdas y se usan (por el "
 "usuario). Similar a las celdas x."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Custom Line width")
@@ -2951,7 +2951,7 @@ msgstr ""
 #, kde-format
 msgid "This is the <i>lwd</i> argument. Check the above option to use this."
 msgstr ""
-"Éste es el argumento <i>lwd</i>. Marque la opción más arriba para usar ésta."
+"Este es el argumento <i>lwd</i>. Marque la opción más arriba para usar esta."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line type")
 #: rkward/plugins/distributions/../x11device/grid.rkh:21
@@ -2960,7 +2960,7 @@ msgid ""
 "This is the <i>lty</i> argument. Choosing Default will not add any arguments "
 "to the grid function call, hence the default line type will be used."
 msgstr ""
-"Éste es el argumento <i>lty</i>. Elegir por omisión no añadirá ningún "
+"Este es el argumento <i>lty</i>. Elegir por omisión no añadirá ningún "
 "argumento a la llamada de la función grid, por tanto, el tipo de línea por "
 "omisión se usará."
 
@@ -2971,7 +2971,7 @@ msgid ""
 "This is the <i>col</i> argument. The Default option is similar to that of "
 "Line type (see above)."
 msgstr ""
-"Éste es el argumento <i>col</i>. La opción por omisión es similar a la del "
+"Este es el argumento <i>col</i>. La opción por omisión es similar a la del "
 "tipo de línea (vea más arriba)."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Equilogs")
@@ -2981,7 +2981,7 @@ msgid ""
 "This is the <i>equilogs</i> argument. Uncheck this option to set "
 "<i>equilogs=FALSE</i>."
 msgstr ""
-"Éste es el argumento <i>equilogs</i>. Desmarque esta opción para establecer "
+"Este es el argumento <i>equilogs</i>. Desmarque esta opción para establecer "
 "<i>equilogs=FALSE</i>."
 
 #. i18n: ectx: (Grid options) <dialog label="...">

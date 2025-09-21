@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-20 00:39+0000\n"
+"POT-Creation-Date: 2025-09-21 00:38+0000\n"
 "PO-Revision-Date: 2023-12-17 14:57+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -5685,24 +5685,24 @@ msgid ""
 "<b>Current call:</b> %1<br><b>Environment:</b> %2<br><b>Local objects:</b> %3"
 msgstr ""
 
-#: rkward/windows/rkcodecompletion.cpp:679
+#: rkward/windows/rkcodecompletion.cpp:684
 #, kde-format
 msgid "Objects on search path"
 msgstr ""
 
-#: rkward/windows/rkcodecompletion.cpp:765
+#: rkward/windows/rkcodecompletion.cpp:771
 #, fuzzy, kde-format
 #| msgid "Functions"
 msgid "Function calls"
 msgstr "Funkcie"
 
-#: rkward/windows/rkcodecompletion.cpp:862
+#: rkward/windows/rkcodecompletion.cpp:868
 #, fuzzy, kde-format
 #| msgid "Functions"
 msgid "Function arguments"
 msgstr "Argumenty funkcie"
 
-#: rkward/windows/rkcodecompletion.cpp:979
+#: rkward/windows/rkcodecompletion.cpp:985
 #, fuzzy, kde-format
 #| msgid "Enter filename"
 msgid "Local file names"
