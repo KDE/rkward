@@ -18,6 +18,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kactioncollection.h>
 #include <kcolorscheme_version.h>
 #include <kshortcutsdialog.h>
+#include <kxmlgui_version.h>
 #include <kxmlguifactory.h>
 
 #include <QDomDocument>
@@ -191,7 +192,14 @@ void RKTopLevelWindowGUI::showSwitchApplicationLanguage() {
 	RK_TRACE(APP);
 
 	// Uggh. No direct or static access to KSwitchLanguageDialog...
-	if (!help_menu_dummy) help_menu_dummy = new KHelpMenu(for_window, QString(), false);
+	if (!help_menu_dummy) {
+#if KXMLGUI_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+		help_menu_dummy = new KHelpMenu(for_window);
+		help_menu_dummy->setShowWhatsThis(false);
+#else
+		help_menu_dummy = new KHelpMenu(for_window, QString(), false);
+#endif
+	}
 	help_menu_dummy->switchApplicationLanguage();
 }
 

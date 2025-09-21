@@ -17,6 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <khistorycombobox.h>
 
 #include "rkcommonfunctions.h"
+#include "rkcompatibility.h"
 
 #include "../debug.h"
 
@@ -96,7 +97,7 @@ QCheckBox *RKFindBar::getOption(const RKFindBar::FindOptions option) {
 			RK_ASSERT(false);
 			return nullptr;
 		}
-		connect(action, &QCheckBox::stateChanged, this, &RKFindBar::searchChanged);
+		connect(action, RKCompatibility::QCheckBox_checkStateChanged, this, &RKFindBar::searchChanged);
 		default_actions.insert(option, action);
 	}
 

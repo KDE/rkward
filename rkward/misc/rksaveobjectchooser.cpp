@@ -21,6 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../core/renvironmentobject.h"
 #include "../core/robjectlist.h"
+#include "../misc/rkcompatibility.h"
 #include "../misc/rkobjectlistview.h"
 
 #include "../debug.h"
@@ -52,7 +53,7 @@ RKSaveObjectChooser::RKSaveObjectChooser(QWidget *parent, const QString &initial
 	layout->addWidget(name_edit);
 
 	overwrite_confirm = new QCheckBox(i18n("Overwrite"), this);
-	connect(overwrite_confirm, &QCheckBox::stateChanged, this, &RKSaveObjectChooser::updateState);
+	connect(overwrite_confirm, RKCompatibility::QCheckBox_checkStateChanged, this, &RKSaveObjectChooser::updateState);
 	overwrite_warn = new KMessageWidget(i18n("The given object name already exists"));
 	overwrite_warn->setCloseButtonVisible(false);
 	hlayout = new QHBoxLayout();

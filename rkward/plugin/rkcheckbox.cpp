@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qcheckbox.h>
 
 #include "../debug.h"
+#include "../misc/rkcompatibility.h"
 #include "../misc/xmlhelper.h"
 
 RKCheckBox::RKCheckBox(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent(parent_component, parent_widget) {
@@ -29,7 +30,7 @@ RKCheckBox::RKCheckBox(const QDomElement &element, RKComponent *parent_component
 	checkbox = new QCheckBox(xml->i18nStringAttribute(element, QStringLiteral("label"), QString(), DL_WARNING), this);
 	vbox->addWidget(checkbox);
 	checkbox->setChecked(xml->getBoolAttribute(element, QStringLiteral("checked"), false, DL_INFO));
-	connect(checkbox, &QCheckBox::stateChanged, this, &RKCheckBox::changedStateFromUi);
+	connect(checkbox, RKCompatibility::QCheckBox_checkStateChanged, this, &RKCheckBox::changedStateFromUi);
 
 	// initialize
 	updating = false;

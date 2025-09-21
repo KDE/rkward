@@ -7,6 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rksettingsmodule.h"
 
 #include "../debug.h"
+#include "../misc/rkcompatibility.h"
 #include "../misc/rkspinbox.h"
 #include "../rkward.h"
 #include "rksettings.h"
@@ -46,7 +47,7 @@ template <>
 QCheckBox *RKConfigValue<bool, bool>::makeCheckbox(const QString &label, RKSettingsModuleWidget *module) {
 	QCheckBox *ret = new QCheckBox(label);
 	ret->setChecked(value);
-	QObject::connect(ret, &QCheckBox::stateChanged, module, &RKSettingsModuleWidget::change);
+	QObject::connect(ret, RKCompatibility::QCheckBox_checkStateChanged, module, &RKSettingsModuleWidget::change);
 	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->isChecked(); });
 	return ret;
 }
