@@ -5310,7 +5310,7 @@ msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
 msgstr ""
-"Advertir al editar objetos con un número de campos mayor a éste (0 = sin "
+"Advertir al editar objetos con un número de campos mayor a este (0 = sin "
 "límite)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:127

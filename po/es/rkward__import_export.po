@@ -412,7 +412,7 @@ msgid ""
 "checked, for this to be enabled."
 msgstr ""
 "Seleccione la codificación de caracteres desde la que convertir. La opción "
-"superior debe encontrarse activada para que ésta funcione."
+"superior debe encontrarse activada para que esta funcione."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
@@ -2045,7 +2045,7 @@ msgid ""
 "with your existing workspace. If in doubt, use Workspace->Open Workspace, "
 "instead of this plugin."
 msgstr ""
-"Elija el archivo de R a importar. Éste será un archivo posiblemente creado "
+"Elija el archivo de R a importar. Este será un archivo posiblemente creado "
 "guardando el área de trabajo desde RKWard, usando la orden <link href="
 "\"rkward://rhelp/save\">save()</link> de R o el complemento <link href="
 "\"rkward://component/save_r\"/>. La mayor diferencia con respecto a cargar "
