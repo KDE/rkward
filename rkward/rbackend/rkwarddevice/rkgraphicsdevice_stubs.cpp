@@ -442,13 +442,15 @@ static void RKD_Close(pDevDesc dev) {
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER(RKDClose, dev);
-		delete static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific);
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
 		qint8 dummy;
 		RKD_IN_STREAM >> dummy;
 	}
+	// NOTE: RKGraphicsDataStreamReadGuard does event processing, which may include an RK.resize()->RKD_AdjustSize (and GEgetDevice will
+	//       still return non-null at this point), so do not delete too early
+	delete static_cast<RKGraphicsDeviceDesc *>(dev->deviceSpecific);
 }
 
 static void RKD_Clip(double left, double right, double top, double bottom, pDevDesc dev) {
