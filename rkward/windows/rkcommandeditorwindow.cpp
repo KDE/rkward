@@ -709,7 +709,8 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 
 	const auto valid_for_any_markdown = [](KTextEditor::Document *doc) -> bool {
 		if (documentHighlightingMode(doc) == RKCommandHighlighter::RMarkdown) return true;
-		return doc->highlightingMode().toLower().contains(u"markdown"_s);
+		if (doc->highlightingMode().toLower().contains(u"markdown"_s)) return true;
+		return doc->url().url().toLower().endsWith(u"md"_s); // .qmd (Quarto) and other mardown flavours, we may not be aware of
 	};
 	const auto valid_for_r_script = [](KTextEditor::Document *doc) -> bool {
 		return (documentHighlightingMode(doc) == RKCommandHighlighter::RScript);
