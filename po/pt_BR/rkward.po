@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-21 00:38+0000\n"
+"POT-Creation-Date: 2025-09-23 00:38+0000\n"
 "PO-Revision-Date: 2025-08-27 10:07-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -269,9 +269,9 @@ msgstr ""
 
 #: rkward/core/rkmodificationtracker.cpp:351
 #: rkward/dataeditor/rkvareditmodel.cpp:672
-#: rkward/dialogs/rkloadlibsdialog.cpp:360
-#: rkward/dialogs/rkloadlibsdialog.cpp:376
-#: rkward/dialogs/rkloadlibsdialog.cpp:964 rkward/misc/rkobjectlistview.cpp:266
+#: rkward/dialogs/rkloadlibsdialog.cpp:361
+#: rkward/dialogs/rkloadlibsdialog.cpp:377
+#: rkward/dialogs/rkloadlibsdialog.cpp:965 rkward/misc/rkobjectlistview.cpp:266
 #: rkward/plugin/rkformula.cpp:73 rkward/plugin/rkvarslot.cpp:58
 #: rkward/settings/rksettingsmodulekateplugins.cpp:52
 #, kde-format
@@ -1001,50 +1001,50 @@ msgstr ""
 msgid "No import method found"
 msgstr "Nenhum método de importação encontrado"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:49
+#: rkward/dialogs/rkloadlibsdialog.cpp:50
 #, kde-format
 msgid "Configure Packages"
 msgstr "Configurar pacotes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:57
+#: rkward/dialogs/rkloadlibsdialog.cpp:58
 #, kde-format
 msgid "Load / Unload R packages"
 msgstr "Carregar / Descarregar pacotes do R"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:61
+#: rkward/dialogs/rkloadlibsdialog.cpp:62
 #, kde-format
 msgid "Install / Update / Remove R packages"
 msgstr "Instalar / Atualizar / Remover pacotes do R"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:63
+#: rkward/dialogs/rkloadlibsdialog.cpp:64
 #, kde-format
 msgid "Manage RKWard Plugins"
 msgstr "Gerenciar os plugins do RKWard"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:92
+#: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Closing will discard pending changes. Are you sure?"
 msgstr "O fechamento descartará as alterações pendentes. Tem certeza?"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:92
+#: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgid "Discard changes?"
 msgstr "Descartar alterações?"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:92
+#: rkward/dialogs/rkloadlibsdialog.cpp:93
 #, kde-format
 msgctxt "@action:button"
 msgid "Do no close"
 msgstr "Não fechar"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:166
-#: rkward/dialogs/rkloadlibsdialog.cpp:173
-#: rkward/dialogs/rkloadlibsdialog.cpp:204
+#: rkward/dialogs/rkloadlibsdialog.cpp:167
+#: rkward/dialogs/rkloadlibsdialog.cpp:174
+#: rkward/dialogs/rkloadlibsdialog.cpp:205
 #, kde-format
 msgid "Package %1 at %2"
 msgstr "Pacote %1 em %2"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:179
+#: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
 msgid ""
 "The following packages, which you have selected for removal, are essential "
@@ -1056,12 +1056,12 @@ msgstr ""
 "funcionamento do RKWard e não serão removidos. Se tiver certeza absoluta que "
 "deseja remover esses pacotes, faça-o na linha de comandos do R."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:179
+#: rkward/dialogs/rkloadlibsdialog.cpp:180
 #, kde-format
 msgid "Not removing certain packages"
 msgstr "Não serão removidos certos pacotes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:185
+#: rkward/dialogs/rkloadlibsdialog.cpp:186
 #, kde-format
 msgid ""
 "Your current user permissions do not allow removing the following packages. "
@@ -1070,13 +1070,13 @@ msgstr ""
 "As permissões do usuário atual não permitem a remoção dos seguintes pacotes. "
 "Eles serão ignorados."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:185
-#: rkward/dialogs/rkloadlibsdialog.cpp:188
+#: rkward/dialogs/rkloadlibsdialog.cpp:186
+#: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgid "Insufficient user permissions"
 msgstr "As permissões do usuário são insuficientes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:188
+#: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgid ""
 "Your current user permissions do not allow removing the following packages. "
@@ -1087,19 +1087,19 @@ msgstr ""
 "pacotes. Deseja ignorar esses pacotes ou prosseguir com privilégios de "
 "administração (a senha será solicitada)?"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:188
+#: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Become root"
 msgstr "Tornar-se root"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:188
+#: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Skip these packages"
 msgstr "Pular estes pacotes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:210
+#: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
 msgid ""
 "You are about to remove the following packages. Are you sure you want to "
@@ -1108,27 +1108,27 @@ msgstr ""
 "Você está prestes a remover os seguintes arquivos. Deseja realmente "
 "continuar?"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:210
+#: rkward/dialogs/rkloadlibsdialog.cpp:211
 #, kde-format
 msgid "About to remove packages"
 msgstr "Prestes a remover os pacotes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:213
+#: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
 msgid "Please stand by while removing selected packages"
 msgstr "Aguarde enquanto os pacotes selecionados são removidos"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:213
+#: rkward/dialogs/rkloadlibsdialog.cpp:214
 #, kde-format
 msgid "Removing packages"
 msgstr "Removendo pacotes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:240
+#: rkward/dialogs/rkloadlibsdialog.cpp:241
 #, kde-format
 msgid "Selected library location not writable"
 msgstr "O local da biblioteca selecionada não tem permissões de gravação"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:242
+#: rkward/dialogs/rkloadlibsdialog.cpp:243
 #, kde-format
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
@@ -1141,7 +1141,7 @@ msgstr ""
 "(você também poderá clicar em \"Cancelar\" e usar o botão \"Configurar "
 "repositórios\" para definir uma pasta diferente)?</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:248
+#: rkward/dialogs/rkloadlibsdialog.cpp:249
 #, kde-format
 msgid ""
 "<p>Alternatively, if you have access to an administrator account on this "
@@ -1154,13 +1154,13 @@ msgstr ""
 "de '%1'. Infelizmente, a mudança automática para Administrador ainda não é "
 "suportada pelo RKWard no Windows.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:251
-#: rkward/dialogs/rkloadlibsdialog.cpp:257
+#: rkward/dialogs/rkloadlibsdialog.cpp:252
+#: rkward/dialogs/rkloadlibsdialog.cpp:258
 #, kde-format
 msgid "Install to %1"
 msgstr "Instalar em %1"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:255
+#: rkward/dialogs/rkloadlibsdialog.cpp:256
 #, kde-format
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
@@ -1170,22 +1170,22 @@ msgstr ""
 "<p>Alternativamente, se você for o administrador desta máquina, poderá "
 "tentar instalar os pacotes como 'root' (a senha de root será solicitada).</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:257
+#: rkward/dialogs/rkloadlibsdialog.cpp:258
 #, kde-format
 msgid "Become root"
 msgstr "Tornar-se root"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:275
+#: rkward/dialogs/rkloadlibsdialog.cpp:276
 #, kde-format
 msgid "Please stand by while installing selected packages"
 msgstr "Aguarde enquanto os pacotes selecionados são instalados"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:275
+#: rkward/dialogs/rkloadlibsdialog.cpp:276
 #, kde-format
 msgid "Installing packages"
 msgstr "Instalando pacotes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:296
+#: rkward/dialogs/rkloadlibsdialog.cpp:297
 #, kde-format
 msgid ""
 "Neither kdesu nor kdesudo could be found. To install as root, please install "
@@ -1194,18 +1194,18 @@ msgstr ""
 "Nem o kdesu nem o kdesudo foram encontrados. Para instalar como root, "
 "instale um destes pacotes."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:296
+#: rkward/dialogs/rkloadlibsdialog.cpp:297
 #, kde-format
 msgid "kdesu not found"
 msgstr "O kdesu não foi encontrado"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:358
+#: rkward/dialogs/rkloadlibsdialog.cpp:359
 #, kde-format
 msgid "Installed packages"
 msgstr "Pacotes instalados"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:360
-#: rkward/dialogs/rkloadlibsdialog.cpp:965
+#: rkward/dialogs/rkloadlibsdialog.cpp:361
+#: rkward/dialogs/rkloadlibsdialog.cpp:966
 #: rkward/settings/rksettingsmoduleplugins.cpp:526
 #: rkward/windows/rkhelpsearchwindow.cpp:83
 #: rkward/windows/rkhelpsearchwindow.cpp:328
@@ -1213,34 +1213,34 @@ msgstr "Pacotes instalados"
 msgid "Title"
 msgstr "Título"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:360
-#: rkward/dialogs/rkloadlibsdialog.cpp:966
+#: rkward/dialogs/rkloadlibsdialog.cpp:361
+#: rkward/dialogs/rkloadlibsdialog.cpp:967
 #, kde-format
 msgid "Version"
 msgstr "Versão"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:360
-#: rkward/dialogs/rkloadlibsdialog.cpp:967
+#: rkward/dialogs/rkloadlibsdialog.cpp:361
+#: rkward/dialogs/rkloadlibsdialog.cpp:968
 #, kde-format
 msgid "Location"
 msgstr "Localização"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:365
+#: rkward/dialogs/rkloadlibsdialog.cpp:366
 #, kde-format
 msgid "Load"
 msgstr "Carregar"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:367
+#: rkward/dialogs/rkloadlibsdialog.cpp:368
 #, kde-format
 msgid "Unload"
 msgstr "Descarregar"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:374
+#: rkward/dialogs/rkloadlibsdialog.cpp:375
 #, kde-format
 msgid "Loaded packages"
 msgstr "Pacotes carregados"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:511
+#: rkward/dialogs/rkloadlibsdialog.cpp:512
 #, kde-format
 msgid ""
 "There has been an error while trying to load / unload packages. See "
@@ -1249,17 +1249,17 @@ msgstr ""
 "Ocorreu um erro ao tentar carregar / descarregar os pacotes. Veja a "
 "transcrição abaixo para obter mais detalhes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:588
+#: rkward/dialogs/rkloadlibsdialog.cpp:589
 #, kde-format
 msgid "Select all updates"
 msgstr "Selecionar todas as atualizações"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:656
+#: rkward/dialogs/rkloadlibsdialog.cpp:657
 #, kde-format
 msgid "Show only packages matching:"
 msgstr "Mostrar apenas os pacotes que correspondem a:"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:658
+#: rkward/dialogs/rkloadlibsdialog.cpp:659
 #, kde-format
 msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
@@ -1268,12 +1268,12 @@ msgstr ""
 "<p>Você pode limitar os pacotes apresentados na lista pelos nomes ou títulos "
 "que correspondam a uma string de filtragem.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:662
+#: rkward/dialogs/rkloadlibsdialog.cpp:663
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
 msgstr "Mostrar apenas os pacotes que oferecem interfaces do RKWard"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:663
+#: rkward/dialogs/rkloadlibsdialog.cpp:664
 #, kde-format
 msgid ""
 "<p>Some but not all R packages come with plugins for RKWard. That means they "
@@ -1284,17 +1284,17 @@ msgstr ""
 "Isso significa que eles oferecem uma interface gráfica, além das funções do "
 "R. Assinale esta opção para mostrar apenas esses pacotes.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:683
+#: rkward/dialogs/rkloadlibsdialog.cpp:684
 #, kde-format
 msgid "Install packages to:"
 msgstr "Instalar os pacotes em:"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:687
+#: rkward/dialogs/rkloadlibsdialog.cpp:688
 #, kde-format
 msgid "Install suggested packages"
 msgstr "Instalar os pacotes sugeridos"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:689
+#: rkward/dialogs/rkloadlibsdialog.cpp:690
 #, kde-format
 msgid ""
 "Some packages \"suggest\" additional packages, which are not strictly "
@@ -1307,12 +1307,12 @@ msgstr ""
 "algumas funcionalidades adicionais a ele relacionadas. Assinale esta opção "
 "para incluir esses pacotes adicionais sugeridos."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:697
+#: rkward/dialogs/rkloadlibsdialog.cpp:698
 #, kde-format
 msgid "Configure Repositories"
 msgstr "Configurar repositórios"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:699
+#: rkward/dialogs/rkloadlibsdialog.cpp:700
 #, kde-format
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
@@ -1321,12 +1321,12 @@ msgstr ""
 "Muitos pacotes estão disponíveis no CRAN (Comprehensive R Archive Network), "
 "entre outros repositórios.<br>Clique aqui para adicionar mais fontes."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:723
+#: rkward/dialogs/rkloadlibsdialog.cpp:724
 #, kde-format
 msgid "<b>Install %1 packages (plus dependencies), remove %2 packages</b>"
 msgstr "<b>Instalar %1 pacotes (mais dependências), remover %2 pacotes</b>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:796
+#: rkward/dialogs/rkloadlibsdialog.cpp:797
 #, kde-format
 msgid ""
 "The following package(s) requested by the backend have not been found in the "
@@ -1339,12 +1339,12 @@ msgstr ""
 "esteja incorreto. Ou talvez você precise adicionar repositórios adicionais "
 "através do botão \"Configurar Repositórios\"."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:796
+#: rkward/dialogs/rkloadlibsdialog.cpp:797
 #, kde-format
 msgid "Package not available"
 msgstr "Pacote indisponível"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:902
+#: rkward/dialogs/rkloadlibsdialog.cpp:903
 #, kde-format
 msgid ""
 "<p>Please stand by while searching for installed and available packages.</"
@@ -1357,14 +1357,14 @@ msgstr ""
 "e poderá levar algum tempo, especialmente se um ou mais repositórios "
 "estiverem temporariamente indisponíveis.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:963
+#: rkward/dialogs/rkloadlibsdialog.cpp:964
 #: rkward/rbackend/rcommandstack.cpp:314
 #: rkward/settings/rksettingsmoduleplugins.cpp:527
 #, kde-format
 msgid "Status"
 msgstr "Status"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:970
+#: rkward/dialogs/rkloadlibsdialog.cpp:971
 #, kde-format
 msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
@@ -1374,7 +1374,7 @@ msgstr ""
 "melhorias para o RKWard, normalmente sob a forma de janelas gráficas "
 "adicionais.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:971
+#: rkward/dialogs/rkloadlibsdialog.cpp:972
 #, kde-format
 msgid ""
 "<p>You can select packages for installation / removal by checking / "
@@ -1383,12 +1383,12 @@ msgstr ""
 "<p>Você pode selecionar os pacotes para instalação/remoção, marcando/"
 "desmarcando as opções respectivas nesta coluna.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:972
+#: rkward/dialogs/rkloadlibsdialog.cpp:973
 #, kde-format
 msgid "<p>The name of the package.</p>"
 msgstr "<p>O nome do pacote.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:973
+#: rkward/dialogs/rkloadlibsdialog.cpp:974
 #, kde-format
 msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
@@ -1397,22 +1397,22 @@ msgstr ""
 "<p>Um título descritivo para o pacote. No momento, isto não está disponível "
 "para os pacotes nos repositórios não-locais.</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:974
+#: rkward/dialogs/rkloadlibsdialog.cpp:975
 #, kde-format
 msgid "<p>Installed and / or available version of the package</p>"
 msgstr "<p>Versão instalada e/ou disponível do pacote</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:975
+#: rkward/dialogs/rkloadlibsdialog.cpp:976
 #, kde-format
 msgid "<p>Location where the package is installed / available</p>"
 msgstr "<p>Local onde o pacote está instalado/disponível</p>"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:998
+#: rkward/dialogs/rkloadlibsdialog.cpp:999
 #, kde-format
 msgid "Updateable Packages"
 msgstr "Pacotes a atualizar"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:999
+#: rkward/dialogs/rkloadlibsdialog.cpp:1000
 #, kde-format
 msgid ""
 "Packages for which an update is available. This may include packages which "
@@ -1422,12 +1422,12 @@ msgstr ""
 "os pacotes que foram simplesmente compilados para uma versão mais recente do "
 "R."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1002
+#: rkward/dialogs/rkloadlibsdialog.cpp:1003
 #, kde-format
 msgid "New Packages"
 msgstr "Novos pacotes"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1003
+#: rkward/dialogs/rkloadlibsdialog.cpp:1004
 #, kde-format
 msgid ""
 "Packages which are available for installation, but which are not currently "
@@ -1435,12 +1435,12 @@ msgid ""
 msgstr ""
 "Pacotes que estão disponíveis para instalação, mas que não estão instalados."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1005
+#: rkward/dialogs/rkloadlibsdialog.cpp:1006
 #, kde-format
 msgid "Installed Packages"
 msgstr "Pacotes instalados"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1006
+#: rkward/dialogs/rkloadlibsdialog.cpp:1007
 #, kde-format
 msgid ""
 "Packages which are installed locally. Note that updates may be available for "
@@ -1449,18 +1449,18 @@ msgstr ""
 "Pacotes que estão instalados localmente. Lembre-se de que pode haver "
 "atualizações disponíveis para esses pacotes."
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1034
+#: rkward/dialogs/rkloadlibsdialog.cpp:1035
 #, kde-format
 msgid "Install"
 msgstr "Instalar"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1037
+#: rkward/dialogs/rkloadlibsdialog.cpp:1038
 #: rkward/misc/multistringselector.cpp:107
 #, kde-format
 msgid "Remove"
 msgstr "Remover"
 
-#: rkward/dialogs/rkloadlibsdialog.cpp:1220
+#: rkward/dialogs/rkloadlibsdialog.cpp:1221
 #, kde-format
 msgid "Installed plugin groups (.pluginmap files)"
 msgstr "Grupos de plugins instalados (arquivos .pluginmap)"
@@ -2497,27 +2497,27 @@ msgstr ""
 "string, adicione '$' ao fim do filtro. Para corresponder a um determinado "
 "texto arbitrário no meio do termo de pesquisa, insira '.*'.</p>"
 
-#: rkward/misc/rkfindbar.cpp:53
+#: rkward/misc/rkfindbar.cpp:54
 #, kde-format
 msgid "Search backwards (previous occurrence of search term)"
 msgstr "Procurar para trás (ocorrência anterior do termo de pesquisa)"
 
-#: rkward/misc/rkfindbar.cpp:59
+#: rkward/misc/rkfindbar.cpp:60
 #, kde-format
 msgid "Search forward (next occurrence of search term)"
 msgstr "Procurar para frente (próxima ocorrência do termo de pesquisa)"
 
-#: rkward/misc/rkfindbar.cpp:89
+#: rkward/misc/rkfindbar.cpp:90
 #, kde-format
 msgid "Match case"
 msgstr "Diferenciar maiúsculas de minúsculas"
 
-#: rkward/misc/rkfindbar.cpp:91 rkward/windows/rkhtmlwindow.cpp:945
+#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:945
 #, kde-format
 msgid "Find as you type"
 msgstr "Procurar enquanto digita"
 
-#: rkward/misc/rkfindbar.cpp:94
+#: rkward/misc/rkfindbar.cpp:95
 #, kde-format
 msgid "Highlight all matches"
 msgstr "Realçar todas as ocorrências"
@@ -2803,13 +2803,13 @@ msgstr ""
 "b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:228
-#: rkward/settings/rksettingsmoduleoutput.cpp:106
+#: rkward/settings/rksettingsmoduleoutput.cpp:107
 #, kde-format
 msgid "Output"
 msgstr "Saída"
 
 #: rkward/misc/rkprogresscontrol.cpp:242
-#: rkward/windows/rktoplevelwindowgui.cpp:87
+#: rkward/windows/rktoplevelwindowgui.cpp:88
 #, kde-format
 msgid "Show Output"
 msgstr "Mostrar saída"
@@ -2863,27 +2863,27 @@ msgstr "Cancelar && Fechar"
 msgid "An operation is still running, please wait."
 msgstr "Uma operação ainda está em execução, aguarde."
 
-#: rkward/misc/rksaveobjectchooser.cpp:44
+#: rkward/misc/rksaveobjectchooser.cpp:45
 #, kde-format
 msgid "Change"
 msgstr "Alterar"
 
-#: rkward/misc/rksaveobjectchooser.cpp:54
+#: rkward/misc/rksaveobjectchooser.cpp:55
 #, kde-format
 msgid "Overwrite"
 msgstr "Sobrescrever"
 
-#: rkward/misc/rksaveobjectchooser.cpp:56
+#: rkward/misc/rksaveobjectchooser.cpp:57
 #, kde-format
 msgid "The given object name already exists"
 msgstr "O nome do objeto fornecido já existe"
 
-#: rkward/misc/rksaveobjectchooser.cpp:88
+#: rkward/misc/rksaveobjectchooser.cpp:89
 #, kde-format
 msgid "Parent object: %1"
 msgstr "Objeto-pai: %1"
 
-#: rkward/misc/rksaveobjectchooser.cpp:98
+#: rkward/misc/rksaveobjectchooser.cpp:99
 #, kde-format
 msgid "Select parent object"
 msgstr "Selecione o objeto-pai"
@@ -3135,12 +3135,12 @@ msgstr "A visualização está atualizada."
 msgid "Warnings or Errors:"
 msgstr "Avisos ou erros:"
 
-#: rkward/misc/xmlhelper.cpp:56
+#: rkward/misc/xmlhelper.cpp:53
 #, kde-format
 msgid "Could not open file %1 for reading"
 msgstr "Não foi possível abrir o arquivo %1 para leitura"
 
-#: rkward/misc/xmlhelper.cpp:62
+#: rkward/misc/xmlhelper.cpp:60
 #, kde-format
 msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
@@ -3149,58 +3149,58 @@ msgstr ""
 "Ocorreu um erro ao processar o arquivo XML. A mensagem de erro foi: '%1' na "
 "linha '%2', coluna '%3'. Poderão existir mais erros abaixo"
 
-#: rkward/misc/xmlhelper.cpp:182
+#: rkward/misc/xmlhelper.cpp:180
 #, kde-format
 msgid "Trying to retrieve children of invalid element"
 msgstr "Tentando obter os filhos de um elemento inválido"
 
-#: rkward/misc/xmlhelper.cpp:193
+#: rkward/misc/xmlhelper.cpp:191
 #, kde-format
 msgid "Expected exactly one element '%1' but found %2"
 msgstr "Era esperado exatamente um elemento '%1', mas foram encontrados %2"
 
-#: rkward/misc/xmlhelper.cpp:247 rkward/misc/xmlhelper.cpp:259
+#: rkward/misc/xmlhelper.cpp:245 rkward/misc/xmlhelper.cpp:257
 #, kde-format
 msgid "'%1'-attribute not given. Assuming '%2'"
 msgstr "O atributo '%1' não foi indicado. Assumindo o '%2'"
 
-#: rkward/misc/xmlhelper.cpp:282
+#: rkward/misc/xmlhelper.cpp:280
 #, kde-format
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
 msgstr "O valor do atributo é inválido, sendo permitido apenas um de '%1'."
 
-#: rkward/misc/xmlhelper.cpp:296
+#: rkward/misc/xmlhelper.cpp:294
 #, kde-format
 msgid "Illegal attribute value. Only integer numbers are allowed."
 msgstr ""
 "O valor do atributo é inválido, sendo permitidos apenas números inteiros."
 
-#: rkward/misc/xmlhelper.cpp:312
+#: rkward/misc/xmlhelper.cpp:310
 #, kde-format
 msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr "O valor do atributo é inválido, sendo permitidos apenas números reais."
 
-#: rkward/misc/xmlhelper.cpp:330
+#: rkward/misc/xmlhelper.cpp:328
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr "O valor do atributo é inválido, sendo permitido apenas '%1' ou '%2'."
 
-#: rkward/misc/xmlhelper.cpp:362
+#: rkward/misc/xmlhelper.cpp:360
 #, kde-format
 msgid "Trying to retrieve contents of invalid element"
 msgstr "Tentando obter o conteúdo do elemento inválido"
 
-#: rkward/misc/xmlhelper.cpp:407
+#: rkward/misc/xmlhelper.cpp:405
 #, kde-format
 msgid "XML-parsing '%1' "
 msgstr "Processando o XML de '%1' "
 
-#: rkward/plugin/rkcheckbox.cpp:64
+#: rkward/plugin/rkcheckbox.cpp:65
 #, kde-format
 msgid "yes"
 msgstr "sim"
 
-#: rkward/plugin/rkcheckbox.cpp:64
+#: rkward/plugin/rkcheckbox.cpp:65
 #, kde-format
 msgid "no"
 msgstr "não"
@@ -3380,31 +3380,31 @@ msgstr "Mapa de plugins do RKWard"
 msgid "R package"
 msgstr "Pacote R"
 
-#: rkward/plugin/rkcomponentproperties.cpp:927
+#: rkward/plugin/rkcomponentproperties.cpp:925
 #, kde-format
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
 msgstr "Este objeto tem as dimensões %1, mas eram esperadas as dimensões %2."
 
-#: rkward/plugin/rkcomponentproperties.cpp:930
+#: rkward/plugin/rkcomponentproperties.cpp:928
 #, kde-format
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
 msgstr ""
 "Este objeto tem um tamanho igual a %1, mas era esperado um tamanho mínimo de "
 "%2."
 
-#: rkward/plugin/rkcomponentproperties.cpp:931
+#: rkward/plugin/rkcomponentproperties.cpp:929
 #, kde-format
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
 msgstr ""
 "Este objeto tem um tamanho igual a %1, mas era esperado um tamanho máximo de "
 "%2."
 
-#: rkward/plugin/rkcomponentproperties.cpp:943
+#: rkward/plugin/rkcomponentproperties.cpp:941
 #, kde-format
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
 msgstr "Este objeto não parece pertencer a nenhuma das classes <i>%1</i>."
 
-#: rkward/plugin/rkcomponentproperties.cpp:950
+#: rkward/plugin/rkcomponentproperties.cpp:948
 #, kde-format
 msgid ""
 "This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</"
@@ -3599,7 +3599,7 @@ msgid "Enter value:"
 msgstr "Digite o valor:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:376
+#: rkward/windows/rkcommandeditorwindow.cpp:375
 #, kde-format
 msgid "Preview"
 msgstr "Visualização"
@@ -3619,7 +3619,7 @@ msgid "Could not create plugin"
 msgstr "Não foi possível criar o plugin"
 
 #: rkward/plugin/rkstandardcomponent.cpp:667
-#: rkward/windows/rkcommandeditorwindow.cpp:819
+#: rkward/windows/rkcommandeditorwindow.cpp:818
 #, kde-format
 msgid "Options"
 msgstr "Opções"
@@ -4155,7 +4155,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "Não foi possível encontrar o componente 'katepart'"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:760
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:759
 #, kde-format
 msgid "R Console"
 msgstr "Console do R"
@@ -5138,22 +5138,22 @@ msgstr ""
 msgid "R script file filters (separated by spaces)"
 msgstr "Filtros de arquivos de script em R (separados por espaços)"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:44
+#: rkward/settings/rksettingsmoduleconsole.cpp:45
 #, kde-format
 msgid "Console"
 msgstr "Console"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:52
+#: rkward/settings/rksettingsmoduleconsole.cpp:53
 #, kde-format
 msgid "Load/Save command history"
 msgstr "Histórico dos comandos Carregar/Salvar"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:54
+#: rkward/settings/rksettingsmoduleconsole.cpp:55
 #, kde-format
 msgid "Maximum length of command history (0 for no limit)"
 msgstr "Comprimento máximo do histórico de comandos (0 para nenhum limite)"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:58
+#: rkward/settings/rksettingsmoduleconsole.cpp:59
 #, kde-format
 msgid ""
 "Maximum number of paragraphs/lines to display in the console (0 for not "
@@ -5162,32 +5162,32 @@ msgstr ""
 "Número máximo de parágrafos/linhas a serem exibidos no console (0 para sem "
 "limite)"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:64
+#: rkward/settings/rksettingsmoduleconsole.cpp:65
 #, kde-format
 msgid "Run commands from script editor through console"
 msgstr "Executar os comandos do editor de scripts através do console"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:67
+#: rkward/settings/rksettingsmoduleconsole.cpp:68
 #, kde-format
 msgid "Also add those commands to console history"
 msgstr "Adicionar também estes comandos ao histórico do console"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:68
+#: rkward/settings/rksettingsmoduleconsole.cpp:69
 #, kde-format
 msgid "Do not add"
 msgstr "Não adicionar"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:69
+#: rkward/settings/rksettingsmoduleconsole.cpp:70
 #, kde-format
 msgid "Add only if single line"
 msgstr "Adicionar apenas se for uma única linha"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:70
+#: rkward/settings/rksettingsmoduleconsole.cpp:71
 #, kde-format
 msgid "Add all commands"
 msgstr "Adicionar todos os comandos"
 
-#: rkward/settings/rksettingsmoduleconsole.cpp:80
+#: rkward/settings/rksettingsmoduleconsole.cpp:81
 #, kde-format
 msgid "Command history is context sensitive by default"
 msgstr "O histórico de comandos depende do contexto por padrão"
@@ -5556,47 +5556,47 @@ msgstr "Adicionar exclusão"
 msgid "Add the name of the package that no structure should be fetched for"
 msgstr "Adicione o nome do pacote que não deve ser obtida nenhuma estrutura"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:46
+#: rkward/settings/rksettingsmoduleoutput.cpp:47
 #, kde-format
 msgid "Carbon copy commands to output"
 msgstr "Copiar os comandos para a saída"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:50
+#: rkward/settings/rksettingsmoduleoutput.cpp:51
 #, kde-format
 msgid "Commands entered in the console"
 msgstr "Comandos inseridos no console"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:51
+#: rkward/settings/rksettingsmoduleoutput.cpp:52
 #, kde-format
 msgid "Commands run via the 'Run' menu"
 msgstr "Comandos executados pelo menu 'Executar'"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:52
+#: rkward/settings/rksettingsmoduleoutput.cpp:53
 #, kde-format
 msgid "Commands originating from dialogs and plugins"
 msgstr "Comandos originados das janelas e plugins"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:53
+#: rkward/settings/rksettingsmoduleoutput.cpp:54
 #, kde-format
 msgid "Also carbon copy the command output"
 msgstr "Também copiar o resultado do comando"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:111
+#: rkward/settings/rksettingsmoduleoutput.cpp:112
 #, kde-format
 msgid "Output Window options"
 msgstr "Opções da janela de saída"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:113
+#: rkward/settings/rksettingsmoduleoutput.cpp:114
 #, kde-format
 msgid "show window on new output"
 msgstr "Mostrar a janela em caso de novo resultado"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:115
+#: rkward/settings/rksettingsmoduleoutput.cpp:116
 #, kde-format
 msgid "raise window on new output"
 msgstr "Elevar a janela em caso de novo resultado"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:124
+#: rkward/settings/rksettingsmoduleoutput.cpp:125
 #, kde-format
 msgid ""
 "Default output (used, while no other output has been set, explicitly) is "
@@ -5605,19 +5605,19 @@ msgstr ""
 "A saída padrão (usada, enquanto nenhuma out ra saída foi definida "
 "explicitamente) é compartilhada entre os espaços de trabalho(*)."
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:126
+#: rkward/settings/rksettingsmoduleoutput.cpp:127
 #, kde-format
 msgid "CSS file to use for output (leave empty for default)"
 msgstr ""
 "Arquivo CSS a ser usado nos resultados (deixe em branco para usar o valor "
 "padrão)"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:126
+#: rkward/settings/rksettingsmoduleoutput.cpp:127
 #, kde-format
 msgid "Select CSS file"
 msgstr "Selecionar arquivo CSS"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:128
+#: rkward/settings/rksettingsmoduleoutput.cpp:129
 #, kde-format
 msgid ""
 "Select a CSS file for custom formatting of the output window. Leave empty to "
@@ -5630,53 +5630,53 @@ msgstr ""
 "se de que esta configuração só será aplicada quando inicializar um arquivo "
 "de resultados (p.ex., depois de limpar os resultados)."
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:131
+#: rkward/settings/rksettingsmoduleoutput.cpp:132
 #, kde-format
 msgid "Graphics"
 msgstr "Gráficos"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:135
+#: rkward/settings/rksettingsmoduleoutput.cpp:136
 #, kde-format
 msgid "File format"
 msgstr "Formato de arquivo"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:137
+#: rkward/settings/rksettingsmoduleoutput.cpp:138
 #, kde-format
 msgid "<Default>"
 msgstr "<Padrão>"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:138
+#: rkward/settings/rksettingsmoduleoutput.cpp:139
 #, kde-format
 msgid "PNG"
 msgstr "PNG"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:139
+#: rkward/settings/rksettingsmoduleoutput.cpp:140
 #, kde-format
 msgid "SVG"
 msgstr "SVG"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:140
+#: rkward/settings/rksettingsmoduleoutput.cpp:141
 #, kde-format
 msgid "JPG"
 msgstr "JPG"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:145
+#: rkward/settings/rksettingsmoduleoutput.cpp:146
 #, kde-format
 msgid "JPG quality"
 msgstr "Qualidade do JPG"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:152
+#: rkward/settings/rksettingsmoduleoutput.cpp:153
 #, kde-format
 msgid "Width:"
 msgstr "Largura:"
 
-#: rkward/settings/rksettingsmoduleoutput.cpp:155
+#: rkward/settings/rksettingsmoduleoutput.cpp:156
 #, kde-format
 msgid "Height:"
 msgstr "Altura:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:51
-#: rkward/windows/rktoplevelwindowgui.cpp:154
+#: rkward/windows/rktoplevelwindowgui.cpp:155
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "Plugins do RKWard"
@@ -6128,13 +6128,13 @@ msgstr "Manter"
 msgid "Keep this location (do not change anything)"
 msgstr "Mantenha este local (não altere nada)"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:120
+#: rkward/settings/rksettingsmodulewatch.cpp:121
 #: rkward/windows/rkcommandlog.cpp:45
 #, kde-format
 msgid "Command log"
 msgstr "Registro de comandos"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:125
+#: rkward/settings/rksettingsmodulewatch.cpp:126
 #, kde-format
 msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
@@ -6143,47 +6143,47 @@ msgstr ""
 "Por ora, as definições apenas se aplicam aos novos comandos. Todos os "
 "comandos anteriores permanecerão visíveis/invisíveis."
 
-#: rkward/settings/rksettingsmodulewatch.cpp:132
+#: rkward/settings/rksettingsmodulewatch.cpp:133
 #, kde-format
 msgid "always show command"
 msgstr "sempre mostrar o comando"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:134
+#: rkward/settings/rksettingsmodulewatch.cpp:135
 #, kde-format
 msgid "always show result"
 msgstr "sempre mostrar o resultado"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:136
+#: rkward/settings/rksettingsmodulewatch.cpp:137
 #, kde-format
 msgid "show errors"
 msgstr "mostrar erros"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:138
+#: rkward/settings/rksettingsmodulewatch.cpp:139
 #, kde-format
 msgid "show/raise window"
 msgstr "mostrar/elevar a janela"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:141
+#: rkward/settings/rksettingsmodulewatch.cpp:142
 #, kde-format
 msgid "User commands"
 msgstr "Comandos do usuário"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:142
+#: rkward/settings/rksettingsmodulewatch.cpp:143
 #, kde-format
 msgid "Plugin generated commands"
 msgstr "Comandos gerados pelo plugin"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:143
+#: rkward/settings/rksettingsmodulewatch.cpp:144
 #, kde-format
 msgid "Application commands"
 msgstr "Comandos do aplicativo"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:144
+#: rkward/settings/rksettingsmodulewatch.cpp:145
 #, kde-format
 msgid "Synchronization commands"
 msgstr "Comandos de sincronização"
 
-#: rkward/settings/rksettingsmodulewatch.cpp:148
+#: rkward/settings/rksettingsmodulewatch.cpp:149
 #, kde-format
 msgid ""
 "Maximum number of paragraphs/lines to display in the Command Log (0 for no "
@@ -6473,43 +6473,43 @@ msgstr "Não foi possível abrir o arquivo de comandos"
 msgid "Script Editor"
 msgstr "Editor de script"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:352
+#: rkward/windows/rkcommandeditorwindow.cpp:351
 #, kde-format
 msgid "Insert line break and run"
 msgstr "Inserir quebra de linha e executar"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:359
+#: rkward/windows/rkcommandeditorwindow.cpp:358
 #, kde-format
 msgid "Run block"
 msgstr "Executar bloco"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:363
+#: rkward/windows/rkcommandeditorwindow.cpp:362
 #, kde-format
 msgid "Mark selection as block"
 msgstr "Marcar a seleção como um bloco"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:366
+#: rkward/windows/rkcommandeditorwindow.cpp:365
 #, kde-format
 msgid "Unmark block"
 msgstr "Desmarcar bloco"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:371
+#: rkward/windows/rkcommandeditorwindow.cpp:370
 #, kde-format
 msgid "CD to script directory"
 msgstr "CD para a pasta do script"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:372
+#: rkward/windows/rkcommandeditorwindow.cpp:371
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "Altera a pasta de trabalho para a pasta deste script"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:379
+#: rkward/windows/rkcommandeditorwindow.cpp:378
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Atualizar conforme digita"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:381
+#: rkward/windows/rkcommandeditorwindow.cpp:380
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6521,44 +6521,44 @@ msgstr ""
 "desabilitada, a visualização será atualizada somente quando você salvar o "
 "script."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:387
+#: rkward/windows/rkcommandeditorwindow.cpp:386
 #, kde-format
 msgid "Save Script..."
 msgstr "Salvar script..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:389
+#: rkward/windows/rkcommandeditorwindow.cpp:388
 #, kde-format
 msgid "Save Script As..."
 msgstr "Salvar script como..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:469
-#: rkward/windows/rkcommandeditorwindow.cpp:1071
+#: rkward/windows/rkcommandeditorwindow.cpp:468
+#: rkward/windows/rkcommandeditorwindow.cpp:1070
 #, kde-format
 msgid " [modified]"
 msgstr " [modificado]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:476
+#: rkward/windows/rkcommandeditorwindow.cpp:475
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "O documento \"%1\" foi modificado. Deseja fechá-lo mesmo assim?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:476
+#: rkward/windows/rkcommandeditorwindow.cpp:475
 #, kde-format
 msgid "File not saved"
 msgstr "O arquivo não foi salvo"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:696
+#: rkward/windows/rkcommandeditorwindow.cpp:695
 #, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
 msgstr "Programas faltando"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:697
+#: rkward/windows/rkcommandeditorwindow.cpp:696
 #, kde-format
 msgid "Rendering the preview failed"
 msgstr "Falha ao renderizar a visualização"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:698
+#: rkward/windows/rkcommandeditorwindow.cpp:697
 #, kde-format
 msgid ""
 "The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
@@ -6576,7 +6576,7 @@ msgstr ""
 "em <a href=\"rkward://settings/rbackend\">Configurações->Configurar RKward-"
 ">R-backend</a>."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:701
+#: rkward/windows/rkcommandeditorwindow.cpp:700
 #, kde-format
 msgid ""
 "The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
@@ -6587,7 +6587,7 @@ msgstr ""
 "PDF. A maneira mais fácil de instalá-lo é executando <tt>install."
 "packages(\"tinytex\");library(\"tinytex\"); install_tinytex()</tt>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:702
+#: rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
 msgid ""
 "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
@@ -6600,62 +6600,62 @@ msgstr ""
 "aplicativo externo, usando o link abaixo, ou pode alterar o modo de "
 "visualização para 'R Markdown (HTML)'.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:720
+#: rkward/windows/rkcommandeditorwindow.cpp:719
 #, kde-format
 msgid "No preview"
 msgstr "Sem visualização"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:722
+#: rkward/windows/rkcommandeditorwindow.cpp:721
 #, kde-format
 msgid "Disable preview"
 msgstr "Desabilitar visualização"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:726
+#: rkward/windows/rkcommandeditorwindow.cpp:725
 #, kde-format
 msgid "R Markdown"
 msgstr "Markdown R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:728
+#: rkward/windows/rkcommandeditorwindow.cpp:727
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Visualização de Markdown R renderizado"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:729
+#: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr "Visualização do script renderizado do formato RMarkdown (.Rmd)."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:733
+#: rkward/windows/rkcommandeditorwindow.cpp:732
 #, kde-format
 msgid "Render format"
 msgstr "Renderizar formato"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:733
 #, kde-format
 msgid "Render as HTML"
 msgstr "Renderizar como HTML"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:735
+#: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as PDF"
 msgstr "Renderizar como PDF"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:736
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Auto Format"
 msgstr "Formato automático"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:746
+#: rkward/windows/rkcommandeditorwindow.cpp:745
 #, kde-format
 msgid "RKWard Output"
 msgstr "Saída RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:748
+#: rkward/windows/rkcommandeditorwindow.cpp:747
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Visualização da saída RKWard gerada"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:749
+#: rkward/windows/rkcommandeditorwindow.cpp:748
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6665,39 +6665,39 @@ msgstr ""
 "visualização estará vazia, se não houver nenhuma chamada para <i>rk.print()</"
 "i> ou outros comandos de saída do RKWard."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:762
+#: rkward/windows/rkcommandeditorwindow.cpp:761
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Visualização do script em execução no console R interativo"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:763
+#: rkward/windows/rkcommandeditorwindow.cpp:762
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 "Visualização do script como se ele tivesse sido executado no Console R "
 "interativo"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:767
+#: rkward/windows/rkcommandeditorwindow.cpp:766
 #, kde-format
 msgid "Echo statements"
 msgstr "Ecoar declarações"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:770
+#: rkward/windows/rkcommandeditorwindow.cpp:769
 #, kde-format
 msgid "Continue on error"
 msgstr "Continuar ao ocorrer um erro"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:772
+#: rkward/windows/rkcommandeditorwindow.cpp:771
 #, kde-format
 msgid "Evaluation environment"
 msgstr "Ambiente de avaliação"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:774
+#: rkward/windows/rkcommandeditorwindow.cpp:773
 #, kde-format
 msgid ".GlobalEnv"
 msgstr ".GlobalEnv"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:776
+#: rkward/windows/rkcommandeditorwindow.cpp:775
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
@@ -6706,12 +6706,12 @@ msgstr ""
 "Avalia o código diretamente em .GlobalEnv. Atribuições podem acessar <b>e "
 "modificar</b> objetos em .GlobalEnv."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:777
+#: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
 msgid "Scoped"
 msgstr "No escopo"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:779
+#: rkward/windows/rkcommandeditorwindow.cpp:778
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6723,12 +6723,12 @@ msgstr ""
 "não os modificarão. (Outras operações de atribuição ainda podem modificá-"
 "los!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:780
+#: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
 msgid "Local"
 msgstr "Local"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:781
+#: rkward/windows/rkcommandeditorwindow.cpp:780
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6741,17 +6741,17 @@ msgstr ""
 "usando o operador <tt>-</tt>. (Outras operações de atribuição ainda podem "
 "modificá-los!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:796
+#: rkward/windows/rkcommandeditorwindow.cpp:795
 #, kde-format
 msgid "Plot"
 msgstr "Gráfico"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:798
+#: rkward/windows/rkcommandeditorwindow.cpp:797
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Visualização do gráfico gerado"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:799
+#: rkward/windows/rkcommandeditorwindow.cpp:798
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6762,13 +6762,13 @@ msgstr ""
 "script. Esta visualização estará vazia se não houver chamada para <i>plot()</"
 "i> ou outros comandos gráficos."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:813
+#: rkward/windows/rkcommandeditorwindow.cpp:812
 #, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
 msgstr "Modo de visualização"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:865
+#: rkward/windows/rkcommandeditorwindow.cpp:864
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6795,12 +6795,12 @@ msgstr ""
 "ao usar o recurso de visualização, especialmente ao usá-lo em scripts "
 "originados de fontes não confiáveis.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:865
+#: rkward/windows/rkcommandeditorwindow.cpp:864
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Possíveis efeitos colaterais das visualizações"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:996
+#: rkward/windows/rkcommandeditorwindow.cpp:995
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6808,17 +6808,17 @@ msgstr ""
 "Ocorreu um erro ao tentar criar um salvamento automático do arquivo do "
 "script '%1':"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1070
+#: rkward/windows/rkcommandeditorwindow.cpp:1069
 #, kde-format
 msgid "Unnamed"
 msgstr "Sem nome"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1203
+#: rkward/windows/rkcommandeditorwindow.cpp:1202
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (ativo)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1222
+#: rkward/windows/rkcommandeditorwindow.cpp:1221
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (não usado)"
@@ -7068,7 +7068,7 @@ msgid "RKWard output file %s does not (yet) exist"
 msgstr "O arquivo de saída RKWard %s (ainda) não existe"
 
 #: rkward/windows/rkhtmlwindow.cpp:743
-#: rkward/windows/rktoplevelwindowgui.cpp:256
+#: rkward/windows/rktoplevelwindowgui.cpp:264
 #, kde-format
 msgid "[Active]"
 msgstr "[Ativo]"
@@ -7313,32 +7313,32 @@ msgstr "Barra inferior"
 msgid "Not shown in sidebar"
 msgstr "Não apresentada na barra lateral"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:56
+#: rkward/windows/rktoplevelwindowgui.cpp:57
 #, kde-format
 msgid "Help on R"
 msgstr "Ajuda sobre o R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:58
+#: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format
 msgid "Search R Help"
 msgstr "Procurar na Ajuda do R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:60
+#: rkward/windows/rktoplevelwindowgui.cpp:61
 #, kde-format
 msgid "RKWard Dashboard and Help"
 msgstr "Painel e ajuda do RKWard"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:67
+#: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
 msgid "Shows the R help index"
 msgstr "Mostra o índice de ajuda do R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:68
+#: rkward/windows/rktoplevelwindowgui.cpp:69
 #, kde-format
 msgid "Shows/raises the R Help Search window"
 msgstr "Mostra/eleva a janela de pesquisa na Ajuda do R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:69
+#: rkward/windows/rktoplevelwindowgui.cpp:70
 #, kde-format
 msgid ""
 "Show the RKWard dashboard with links to important settings and documentation"
@@ -7346,27 +7346,27 @@ msgstr ""
 "Exiba o painel do RKWard com links para configurações e documentação "
 "importantes"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:74
+#: rkward/windows/rktoplevelwindowgui.cpp:75
 #, kde-format
 msgid "Previous Window"
 msgstr "Janela anterior"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:78
+#: rkward/windows/rktoplevelwindowgui.cpp:79
 #, kde-format
 msgid "Next Window"
 msgstr "Próxima janela"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:83
+#: rkward/windows/rktoplevelwindowgui.cpp:84
 #, kde-format
 msgid "Activate Document view"
 msgstr "Ativar a área de documentos"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:134
+#: rkward/windows/rktoplevelwindowgui.cpp:135
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Mostrar/ocultar %1"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:147
+#: rkward/windows/rktoplevelwindowgui.cpp:148
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -7383,13 +7383,13 @@ msgstr ""
 "dentro do editor de scripts, você precisará abrir uma janela do editor de "
 "scripts e ativá-la."
 
-#: rkward/windows/rktoplevelwindowgui.cpp:147
-#: rkward/windows/rktoplevelwindowgui.cpp:161
+#: rkward/windows/rktoplevelwindowgui.cpp:148
+#: rkward/windows/rktoplevelwindowgui.cpp:162
 #, kde-format
 msgid "Note"
 msgstr "Nota"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:161
+#: rkward/windows/rktoplevelwindowgui.cpp:162
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
