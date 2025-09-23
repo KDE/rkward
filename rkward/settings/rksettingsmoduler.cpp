@@ -519,7 +519,7 @@ QString RKSettingsModuleRPackages::pkgTypeOption() {
 #if defined Q_OS_WIN || defined Q_OS_MACOS
 	ret.append(u"options (pkgType=\""_s);
 	if (source_packages) ret.append(u"source"_s);
-	else ret.append(u"both"_s); // "automatically select appropriate binary, if available, else consider source package"
+	else ret.append(u"binary"_s); // "automatically select appropriate binary"
 	ret.append(u"\")\n"_s);
 #endif
 	return ret;
