@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-23 00:38+0000\n"
+"POT-Creation-Date: 2025-09-24 00:39+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -3533,7 +3533,7 @@ msgid "Could not create plugin"
 msgstr "प्लगिन् निर्मातुं न शक्तवान्"
 
 #: rkward/plugin/rkstandardcomponent.cpp:667
-#: rkward/windows/rkcommandeditorwindow.cpp:818
+#: rkward/windows/rkcommandeditorwindow.cpp:819
 #, kde-format
 msgid "Options"
 msgstr "विकल्पाः"
@@ -4038,7 +4038,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "'katepart' घटकः न लब्धः"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:759
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:760
 #, kde-format
 msgid "R Console"
 msgstr "आर कन्सोल"
@@ -6355,7 +6355,7 @@ msgid "Save Script As..."
 msgstr "स्क्रिप्ट् इत्यस्य रक्षणं कुर्वन्तु..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:468
-#: rkward/windows/rkcommandeditorwindow.cpp:1070
+#: rkward/windows/rkcommandeditorwindow.cpp:1071
 #, kde-format
 msgid " [modified]"
 msgstr " [संशोधितम्] ।"
@@ -6422,67 +6422,67 @@ msgstr ""
 "उपयोगेन, अधः, अथवा पूर्वावलोकन-विधिं &#39;R Markdown (HTML)&#39; इति परिवर्तयितुं "
 "शक्नोति ।</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:719
+#: rkward/windows/rkcommandeditorwindow.cpp:720
 #, kde-format
 msgid "No preview"
 msgstr "पूर्वावलोकनं नास्ति"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:721
+#: rkward/windows/rkcommandeditorwindow.cpp:722
 #, kde-format
 msgid "Disable preview"
 msgstr "पूर्वावलोकनं निष्क्रियं कुर्वन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:725
+#: rkward/windows/rkcommandeditorwindow.cpp:726
 #, fuzzy, kde-format
 #| msgid "R Markdown (HTML)"
 msgid "R Markdown"
 msgstr "आर मार्कडाउन (HTML)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:727
+#: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "रेण्डर्ड् R Markdown इत्यस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:728
+#: rkward/windows/rkcommandeditorwindow.cpp:729
 #, fuzzy, kde-format
 #| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 "RMarkdown प्रारूपात् (.Rmd) HTML मध्ये यथा रेण्डर् कृतं तथा स्क्रिप्ट् पूर्वावलोकनं कुर्वन्तु ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:732
+#: rkward/windows/rkcommandeditorwindow.cpp:733
 #, fuzzy, kde-format
 #| msgid "Select format"
 msgid "Render format"
 msgstr "प्रारूपं चिनोतु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:733
+#: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as HTML"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Render as PDF"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:735
+#: rkward/windows/rkcommandeditorwindow.cpp:736
 #, fuzzy, kde-format
 #| msgid "Format"
 msgid "Auto Format"
 msgstr "प्रारूप"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:745
+#: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
 msgid "RKWard Output"
 msgstr "आरकेवार्ड आउटपुट"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:747
+#: rkward/windows/rkcommandeditorwindow.cpp:748
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "उत्पन्नस्य RKWard आउटपुटस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:748
+#: rkward/windows/rkcommandeditorwindow.cpp:749
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6492,53 +6492,53 @@ msgstr ""
 "रिक्तं भविष्यति, यदि <i>rk.print()</i> अथवा अन्येषां RKWard आउटपुट् आदेशानां कृते आह्वानं "
 "नास्ति ।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:761
+#: rkward/windows/rkcommandeditorwindow.cpp:762
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "अन्तरक्रियाशील R Console मध्ये चालितस्य स्क्रिप्ट् इत्यस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:762
+#: rkward/windows/rkcommandeditorwindow.cpp:763
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "स्क्रिप्ट् इत्यस्य पूर्वावलोकनं यथा इंटरएक्टिव् R Console इत्यत्र चालितम् अस्ति"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:766
+#: rkward/windows/rkcommandeditorwindow.cpp:767
 #, fuzzy, kde-format
 #| msgid "Incomplete statement.\n"
 msgid "Echo statements"
 msgstr "अपूर्णं कथनम् ।\n"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:769
+#: rkward/windows/rkcommandeditorwindow.cpp:770
 #, fuzzy, kde-format
 #| msgid "Convert warnings to errors"
 msgid "Continue on error"
 msgstr "चेतावनीः त्रुटिरूपेण परिवर्तयन्तु"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:771
+#: rkward/windows/rkcommandeditorwindow.cpp:772
 #, fuzzy, kde-format
 #| msgid "Environment"
 msgid "Evaluation environment"
 msgstr "पर्यावरणम्‌"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:773
+#: rkward/windows/rkcommandeditorwindow.cpp:774
 #, fuzzy, kde-format
 #| msgid "Copy to .GlobalEnv"
 msgid ".GlobalEnv"
 msgstr "प्रतिलिपि कुर्वन्तु .GlobalEnv"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:775
+#: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:776
+#: rkward/windows/rkcommandeditorwindow.cpp:777
 #, kde-format
 msgid "Scoped"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:778
+#: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6546,13 +6546,13 @@ msgid ""
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:779
+#: rkward/windows/rkcommandeditorwindow.cpp:780
 #, fuzzy, kde-format
 #| msgid "Location"
 msgid "Local"
 msgstr "स्थानीय"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:780
+#: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6561,17 +6561,17 @@ msgid ""
 "them!)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:795
+#: rkward/windows/rkcommandeditorwindow.cpp:796
 #, kde-format
 msgid "Plot"
 msgstr "भूखण्ड"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:797
+#: rkward/windows/rkcommandeditorwindow.cpp:798
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "उत्पन्न कथानकस्य पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:798
+#: rkward/windows/rkcommandeditorwindow.cpp:799
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6582,14 +6582,14 @@ msgstr ""
 "पूर्वावलोकनं रिक्तं भविष्यति, यदि <i>plot()</i> अथवा अन्ये ग्राफिक्स् आदेशाः आह्वानं नास्ति "
 "।"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:812
+#: rkward/windows/rkcommandeditorwindow.cpp:813
 #, fuzzy, kde-format
 #| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
 msgstr "पूर्वावलोकनम्"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:864
+#: rkward/windows/rkcommandeditorwindow.cpp:865
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
@@ -6624,28 +6624,28 @@ msgstr ""
 "करिष्यति ।</p><p> कृपया पूर्वावलोकनविशेषतायाः उपयोगं कुर्वन्, विशेषतः च "
 "अविश्वसनीयस्रोतात् उत्पन्नेषु स्क्रिप्ट्-मध्ये विशेषतायाः उपयोगं कुर्वन् एतत् मनसि धारयन्तु ।</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:864
+#: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "पूर्वावलोकनस्य सम्भाव्य दुष्प्रभावाः"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:995
+#: rkward/windows/rkcommandeditorwindow.cpp:996
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "'%1' स्क्रिप्ट् सञ्चिकायाः स्वयमेव रक्षणं निर्मातुं प्रयतमाने त्रुटिः अभवत्:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1069
+#: rkward/windows/rkcommandeditorwindow.cpp:1070
 #, kde-format
 msgid "Unnamed"
 msgstr "अनामिका"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1202
+#: rkward/windows/rkcommandeditorwindow.cpp:1203
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (सक्रिय)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1221
+#: rkward/windows/rkcommandeditorwindow.cpp:1222
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (अप्रयुक्त)"
