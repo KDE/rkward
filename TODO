@@ -164,8 +164,6 @@ Internal stuff:
 	- Object editing / modification tracking:
 		- functions to set double/int/string-vectors directly. Use in paste-operations
 	- error-handling/raising in .rk.do.call
-	- .rk.get.available.packages ()
-		- use external (file) storage for cache to save mem
 	- Always save workplace layout to a file, never to config. Even for the "global" option.
 	- all RKComponents:
 		- in the documentation we call the return value of value() the "default property". Why not simply define a "default property" for each component, instead of reimplementing value()?

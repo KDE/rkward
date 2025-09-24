@@ -169,14 +169,12 @@
 #' @importFrom utils installed.packages new.packages
 #' @export
 ".rk.get.package.installation.state" <- function () {
-	# fetch all status information
-	available <- .rk.cached.available.packages ()
 	inst <- installed.packages (fields="Title")
-	old <- as.data.frame (rk.old.packages (available=available), stringsAsFactors=FALSE)
-	new <- new.packages (instPkgs=inst, available=available)
+	old <- as.data.frame (rk.old.packages (), stringsAsFactors=FALSE)
+	new <- new.packages (instPkgs=inst)
 
 	# convert info to a more suitable format
-	available <- as.data.frame (available, stringsAsFactors=FALSE)
+	available <- as.data.frame (available.packages(), stringsAsFactors=FALSE)
 	inst <- as.data.frame (inst, stringsAsFactors=FALSE)
 	oldinst <- match (paste (old$Package, old$LibPath), paste (inst$Package, inst$LibPath))	# convert package names to position with in the installed packages info
 	oldavail <- match (old$Package, available$Package)	# convert package names to position with in the available packages info
@@ -214,21 +212,8 @@
 #' @importFrom utils available.packages
 #' @export
 ".rk.cached.available.packages" <- function () {
-	x <- NULL
-	if (exists ("available.packages.cache", envir=.rk.variables) && (!is.null (.rk.variables$available.packages.cache))) {
-		if (.rk.variables$available.packages.cache$timestamp > (Sys.time () - 3600)) {
-			if (all (.rk.variables$available.packages.cache$repos$repos == options ("repos")$repos)) {
-				x <- .rk.variables$available.packages.cache$cache
-			}
-		}
-	}
-
-	if (is.null(x)) {
-		x <- available.packages(fields="Title")
-		.rk.variables$available.packages.cache <- list (cache = x, timestamp = Sys.time (), repos = options ("repos"))
-	}
-
-	return (x)
+	warning(".rk.cached.available.packages() is deprecated, and will be removed in a future version. Use available.packages(), instead.")
+	return (available.packages())
 }
 
 #".rk.init.handlers" <- function () {
