@@ -207,22 +207,22 @@ class RKSettingsPageWatch : public RKSettingsModuleWidget {
 
 		filter_boxes.input = new QCheckBox();
 		filter_boxes.input->setChecked(state & RKSettingsModuleWatch::ShowInput);
-		connect(filter_boxes.input, RKCompatibility::QCheckBox_checkStateChanged, this, &RKSettingsPageWatch::changedSetting);
+		connect(filter_boxes.input, RKCompatibility::QCheckBox_checkStateChanged(), this, &RKSettingsPageWatch::changedSetting);
 		layout->addWidget(filter_boxes.input, row, 1);
 
 		filter_boxes.output = new QCheckBox();
 		filter_boxes.output->setChecked(state & RKSettingsModuleWatch::ShowOutput);
-		connect(filter_boxes.output, RKCompatibility::QCheckBox_checkStateChanged, this, &RKSettingsPageWatch::changedSetting);
+		connect(filter_boxes.output, RKCompatibility::QCheckBox_checkStateChanged(), this, &RKSettingsPageWatch::changedSetting);
 		layout->addWidget(filter_boxes.output, row, 2);
 
 		filter_boxes.error = new QCheckBox();
 		filter_boxes.error->setChecked(state & RKSettingsModuleWatch::ShowError);
-		connect(filter_boxes.error, RKCompatibility::QCheckBox_checkStateChanged, this, &RKSettingsPageWatch::changedSetting);
+		connect(filter_boxes.error, RKCompatibility::QCheckBox_checkStateChanged(), this, &RKSettingsPageWatch::changedSetting);
 		layout->addWidget(filter_boxes.error, row, 3);
 
 		filter_boxes.raise = new QCheckBox();
 		filter_boxes.raise->setChecked(state & RKSettingsModuleWatch::RaiseWindow);
-		connect(filter_boxes.raise, RKCompatibility::QCheckBox_checkStateChanged, this, &RKSettingsPageWatch::changedSetting);
+		connect(filter_boxes.raise, RKCompatibility::QCheckBox_checkStateChanged(), this, &RKSettingsPageWatch::changedSetting);
 		layout->addWidget(filter_boxes.raise, row, 4);
 
 		return filter_boxes;

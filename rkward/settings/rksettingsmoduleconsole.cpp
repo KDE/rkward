@@ -71,7 +71,7 @@ class RKSettingsPageConsole : public RKSettingsModuleWidget {
 		                                                                                                                                      {(int)RKSettingsModuleConsole::AlwaysAdd, i18n("Add all commands")}}),
 		                                                                                                             this);
 		add_piped_commands_to_history_box->setEnabled(pipe_user_commands_through_console_box->isChecked());
-		connect(pipe_user_commands_through_console_box, RKCompatibility::QCheckBox_checkStateChanged, add_piped_commands_to_history_box, [add_piped_commands_to_history_box](int state) {
+		connect(pipe_user_commands_through_console_box, RKCompatibility::QCheckBox_checkStateChanged(), add_piped_commands_to_history_box, [add_piped_commands_to_history_box](int state) {
 			add_piped_commands_to_history_box->setEnabled(state);
 		});
 		vbox->addWidget(add_piped_commands_to_history_box);
