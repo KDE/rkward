@@ -240,6 +240,7 @@ class RKWardCoreTest : public QObject {
 			QCOMPARE(command->stringVector().value(0).count(test_string), 2000);
 		});
 		RInterface::issueCommand(QStringLiteral("rm(x); rm(y)"), RCommand::User);
+		waitForAllFinished(4000); // NOTE: The above can be quite slow in Windows CI, although no problem observed in manual testing
 		// some stuff we don't expect to work "accidentally" in a non-utf8 locale
 		// NOTE that we're also checking the string boundaries ([]), just in case R's UTF8-markers on Windows ever pop up, again
 		const auto strings = QStringList() << u"¢Ä"_s << u"€🚚"_s << u"✨☀️"_s;
