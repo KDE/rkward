@@ -134,7 +134,7 @@ void RKCompletionManager::tryCompletion() {
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset(current_line, cursor_pos - 1, false, &start, &end);
-	symbol_range = (end == 0) ? KTextEditor::Range() : KTextEditor::Range(para, start, para, end);
+	symbol_range = (end == 0 || end == start) ? KTextEditor::Range(-1, -1, -1, -1) : KTextEditor::Range(para, start, para, end);
 	bool is_help = (start >= 1) && (current_line.at(start - 1) == u'?');
 	// When inside a quote hint only up to cursor position, as we're frequently misdetecting symbol end (missing closing quotation mark)
 	if (style_at_cursor == KSyntaxHighlighting::Theme::TextStyle::String) {
@@ -146,9 +146,9 @@ void RKCompletionManager::tryCompletion() {
 		if (end > cursor_pos) {
 			// TODO: we may want to differentiate between hinting after plain navigation, vs. after typing, here:
 			// Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
-			symbol_range = KTextEditor::Range();
+			symbol_range = KTextEditor::Range(-1, -1, -1, -1);
 		} else {
-			if (style_at_cursor == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range(); // do not hint while in comments
+			if (style_at_cursor == KSyntaxHighlighting::Theme::TextStyle::Comment) symbol_range = KTextEditor::Range(-1, -1, -1, -1); // do not hint while in comments
 		}
 	}
 
