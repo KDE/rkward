@@ -1,3 +1,9 @@
+# - This file is part of the RKWard project (https://rkward.kde.org).
+# SPDX-FileCopyrightText: by Meik Michalke <rkward-devel@kde.org>
+# SPDX-FileContributor: Thomas Friedrichsmeier <rkward-devel@kde.org>
+# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-License-Identifier: GPL-2.0-or-later
+
 ## Instructions / How to update the files.kde.org/rkward/R repo
 # 1. Be sure to edit the main.root.packages var according to your setup
 # 2. You will need a *manual* clone of all packages that you want to update in file.path(main.root.packages, "sources")
