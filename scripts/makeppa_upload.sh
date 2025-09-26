@@ -6,8 +6,8 @@
 #
 
 ## begin: These may need adjusting!
-## see http://www.releases.ubuntu.com/ for the up-to-date list
-TARGETS="oracular plucky"
+## see https://www.releases.ubuntu.com/ for the up-to-date list
+TARGETS="plucky questing"
 AUTHOR="Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>"
 ## end: These may need adjusting!
 
