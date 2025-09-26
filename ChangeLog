@@ -1,3 +1,5 @@
+--- Version 0.8.2 - UNRELEASED
+
 --- Version 0.8.2 - Oct-01-2025
 - Fixed: Package installation dialog now works with options(pkgType="both"), and this is now the default on Windows and Mac
 - Adeed: Allow to show kate plugin provided code completion lists (e.g. snippets or project plugin)

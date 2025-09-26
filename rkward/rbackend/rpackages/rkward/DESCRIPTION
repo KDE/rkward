@@ -14,7 +14,7 @@ Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier", email="thomas.friedrichsmeier@kdemail.net", role=c("aut")), person(given="the RKWard", family="team",
                     email="rkward-devel@kde.org", role=c("cre","aut")))
-Version: 0.8.2
+Version: 0.8.3
 Date: 2025-09-26
 RoxygenNote: 7.3.3
 Collate: 

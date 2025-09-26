@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<about
 		name="Plots"
 		shortinfo="Plugins for producing various plots. Part of the official RKWard distribution"
-		version="0.8.2"
+		version="0.8.3"
 		license="GPL"
 		url="https://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>
