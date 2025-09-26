@@ -8,7 +8,8 @@
 # 1. Be sure to edit the main.root.packages var according to your setup
 # 2. You will need a *manual* clone of all packages that you want to update in file.path(main.root.packages, "sources")
 #    You will need to manually checkout the appropriate branch/tag (and of course you should do at least some very
-#    basic checking)
+#    basic checking) NOTE: roxy.package() could automate this, but for now it's a deliberate decision to require humand
+#    attention on package updates.
 # 3. Enable the packages to update in the for loop, below
 #    - if only updating a subset of packages, be sure to work with a copy of the existing repo, in order to create proper index files!
 #    - TODO: document this part, properly
@@ -56,17 +57,14 @@ local({
     pck.name <- this.plugin
     main.root <- file.path(main.root.packages,"sources")
     repo.root.v <- file.path(main.root.packages,"repo_rkward")
-    repo.archive.v <- file.path(main.root,"repo_archive")
     r.dir <- file.path(main.root, pck.name)
-    roxy.dir <- r.dir
-    R.libs.v <- .libPaths()[1]
 
     roxy.package(actions=actions,
       pck.description=NULL,
       pck.source.dir=r.dir,
       pck.version=NULL,
       R.libs.append=rk.home("lib"),
-      R.libs=.libPaths(),
+      R.libs=.libPaths()[1],
       repo.root=repo.root.v,
       cleanup=TRUE,
       URL=c(
@@ -76,7 +74,6 @@ local({
         index="Available RKWard Plugin Packages",
         title="RKWard Plugin Package"
       ),
-      ChangeLog=list(),
       Rbuildignore=c(".git")
     )
   }
