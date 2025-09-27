@@ -9,7 +9,7 @@ ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 INCLUDE(SetVersionNumber.cmake)
 
 OPTION(DLOPEN_RLIB "dlopen the R library at runtime rather than linking it" ON)
-ADD_FEATURE_INFO("dlopen() R library" DLOPEN_RLIB "This feature allows more flexibility in using a different R installation at runtime than at compile time.")
+ADD_FEATURE_INFO("DLOPEN_RLIB: dlopen() R library" DLOPEN_RLIB "This feature allows more flexibility in using a different R installation at runtime than at compile time.")
 
 ADD_SUBDIRECTORY( dataeditor )
 ADD_SUBDIRECTORY( settings )
