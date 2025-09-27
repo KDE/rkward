@@ -58,6 +58,7 @@ build_debian_stable_clazy:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_DRAFT != "true"
       when: always
     - when: manual
+      allow_failure: true
   script:
     - eatmydata apt-get install --yes --no-install-recommends clazy clang $RKWARD_BUILDDEPS
     - mkdir -p build && cd build
@@ -86,6 +87,7 @@ make_source_tar_gz:
   extends: .build_debian_stable
   rules:
     - when: manual
+      allow_failure: true
   script:
     - eatmydata apt-get install --yes --no-install-recommends $RKWARD_BUILDDEPS r-cran-roxygen2 r-cran-devtools python3-polib rsync ninja-build
     - mkdir dummy && cd dummy && cmake ..
