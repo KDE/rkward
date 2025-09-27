@@ -1,6 +1,6 @@
 /*
 rkprogresscontol - This file is part of RKWard (https://rkward.kde.org). Created: Sun Sep 10 2006
-SPDX-FileCopyrightText: 2006-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2006-2025 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
+#include <QScreen>
 #include <QScrollBar>
 #include <QTimer>
 #include <QVBoxLayout>
@@ -232,7 +233,10 @@ RKProgressControlDialog::RKProgressControlDialog(const QString &text, const QStr
 	output_text->setPlainText(QString());
 	output_text->setUndoRedoEnabled(false);
 	output_text->setLineWrapMode(QTextEdit::NoWrap);
-	output_text->setMinimumWidth(QFontMetrics(output_text->font()).averageCharWidth() * RKSettingsModuleR::getDefaultWidth());
+	// default width depends on options("width"), but limit, in case users have set very large values
+	const int min_width = qMin(QFontMetrics(output_text->font()).averageCharWidth() * RKSettingsModuleR::getDefaultWidth(),
+	                           static_cast<int>(qApp->primaryScreen()->geometry().width() * .75));
+	output_text->setMinimumWidth(min_width);
 	detailsboxlayout->addWidget(output_text);
 	detailsboxlayout->setStretchFactor(output_text, 10);
 
