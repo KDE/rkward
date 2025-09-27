@@ -13,6 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QHBoxLayout>
 #include <QScreen>
 #include <QScrollBar>
+#include <QTextEdit>
 #include <QTimer>
 #include <QVBoxLayout>
 
@@ -34,23 +35,22 @@ class RKProgressControlDialog : public QDialog {
 	/** destructor. */
 	~RKProgressControlDialog();
 
+	QTextEdit *output_text;
+	QWidget *detailsbox;
+
   public:
-	void addOutput(const ROutput &output);
 	void finished();
 	void indicateError();
+	void toggleDetails();
 
   protected:
 	void closeEvent(QCloseEvent *e) override;
-	void scrollDown();
-	void toggleDetails();
 
   private:
 	/** Replace "Cancel" button text with "Close" (to be called, when underlying command has finished */
 	void setCloseTextToClose();
 
 	QLabel *error_indicator;
-	QTextEdit *output_text;
-	QWidget *detailsbox;
 	QDialogButtonBox *buttons;
 
 	QString output_button_text;
@@ -159,14 +159,41 @@ void RKProgressControl::done() {
 	}
 }
 
+static void scrollDown(QTextEdit *log) {
+	QScrollBar *bar = log->verticalScrollBar();
+	if (bar) bar->setValue(bar->maximum());
+}
+
+static void addOutput(QTextEdit *log, const ROutput &output) {
+	RK_TRACE(MISC);
+
+	bool scroll_to_end = log->isVisible();
+	if (scroll_to_end) {
+		QScrollBar *bar = log->verticalScrollBar();
+		if (bar && (bar->value() < bar->maximum())) scroll_to_end = false;
+	}
+
+	if (output.type == ROutput::Output) {
+		log->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
+	} else {
+		log->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
+	}
+
+	log->insertPlainText(output.output);
+
+	// if previously at end, auto-scroll
+	if (scroll_to_end) scrollDown(log);
+}
+
 void RKProgressControl::createDialog() {
 	RK_TRACE(MISC);
 
 	dialog = new RKProgressControlDialog(text, caption, mode, modal);
 	connect(dialog, &QObject::destroyed, this, &RKProgressControl::dialogDestroyed);
 	if (is_done) done();
-	for (int i = 0; i < output_log.count(); ++i) {
-		dialog->addOutput(output_log[i]);
+	for (const auto &output : std::as_const(output_log)) {
+		addOutput(dialog->output_text, output);
+		if (output.type != ROutput::Output && !dialog->detailsbox->isVisible()) dialog->toggleDetails();
 	}
 }
 
@@ -178,7 +205,10 @@ void RKProgressControl::newOutput(RCommand *, const ROutput &output) {
 		if (!dialog) createDialog();
 		dialog->raise();
 	}
-	if (dialog) dialog->addOutput(output);
+	if (dialog) {
+		addOutput(dialog->output_text, output);
+		if (output.type != ROutput::Output && !dialog->detailsbox->isVisible()) dialog->toggleDetails();
+	}
 }
 
 QString RKProgressControl::fullCommandOutput() {
@@ -193,7 +223,6 @@ QString RKProgressControl::fullCommandOutput() {
 //////////////////////////// RKProgressControlDialog ///////////////////////////////////////////7
 
 #include <QPushButton>
-#include <QTextEdit>
 #include <qlabel.h>
 #include <qlayout.h>
 
@@ -271,34 +300,6 @@ void RKProgressControlDialog::indicateError() {
 	error_indicator->show();
 }
 
-void RKProgressControlDialog::addOutput(const ROutput &output) {
-	RK_TRACE(MISC);
-
-	// scrolled all the way to the bottom?
-	bool at_end = true;
-	if (detailsbox->isVisible()) {
-		QScrollBar *bar = output_text->verticalScrollBar();
-		if (bar && (bar->value() < bar->maximum())) at_end = false;
-	}
-
-	if (output.type != last_output_type) {
-		last_output_type = output.type;
-		output_text->insertPlainText(QStringLiteral("\n"));
-
-		if (output.type == ROutput::Output) {
-			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
-		} else {
-			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
-			if (!detailsbox->isVisible()) toggleDetails();
-		}
-	}
-
-	output_text->insertPlainText(output.output);
-
-	// if previously at end, auto-scroll
-	if (at_end && output_text->isVisible()) scrollDown();
-}
-
 void RKProgressControlDialog::toggleDetails() {
 	RK_TRACE(MISC);
 
@@ -311,18 +312,11 @@ void RKProgressControlDialog::toggleDetails() {
 		if (h <= 0) h = detailsbox->sizeHint().height();
 		new_height += h;
 		detailsbox->show();
-		scrollDown();
+		scrollDown(output_text);
 	}
 
 	layout()->activate();
 	resize(width(), new_height);
-}
-
-void RKProgressControlDialog::scrollDown() {
-	RK_TRACE(MISC);
-
-	QScrollBar *bar = output_text->verticalScrollBar();
-	if (bar) bar->setValue(bar->maximum());
 }
 
 void RKProgressControlDialog::setCloseTextToClose() {
@@ -434,18 +428,8 @@ void RKInlineProgressControl::addRCommand(RCommand *command) {
 		}
 	});
 	connect(command->notifier(), &RCommandNotifier::commandOutput, this, [this](RCommand *, const ROutput &o) {
-		addOutput(o.output, o.type != ROutput::Output);
+		addOutput(output_display, o);
 	});
-}
-
-void RKInlineProgressControl::addOutput(const QString &output, bool is_error_warning) {
-	RK_TRACE(MISC);
-	if (is_error_warning) {
-		output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
-	} else {
-		output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
-	}
-	output_display->insertPlainText(output);
 }
 
 void RKInlineProgressControl::done() {

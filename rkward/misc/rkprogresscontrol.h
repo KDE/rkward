@@ -112,7 +112,6 @@ class RKInlineProgressControl : public QObject {
 	void setText(const QString &text);
 
   private:
-	void addOutput(const QString &output, bool is_error_warning);
 	void done();
 	void setCloseAction(const QString &label);
 	bool eventFilter(QObject *, QEvent *e) override;
