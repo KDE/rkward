@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-08-14 13:41+0300\n"
+"PO-Revision-Date: 2025-09-26 10:35+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -304,7 +304,7 @@ msgstr ""
 #: rkward/plugins/x11device/export.xml:63
 #, kde-format
 msgid "Export contents of graphics device to various formats"
-msgstr ""
+msgstr "ייצוא תוכן של מכשיר גרפי למגוון סוגי קבצים"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="...">
 #: rkward/plugins/x11device/export.xml:65
@@ -540,121 +540,121 @@ msgstr "משפחת גופנים"
 #: rkward/plugins/x11device/export.xml:137
 #, kde-format
 msgid "AvantGarde"
-msgstr ""
+msgstr "AvantGarde"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:138
 #, kde-format
 msgid "Bookman"
-msgstr ""
+msgstr "Bookman"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:139
 #, kde-format
 msgid "Courier"
-msgstr ""
+msgstr "Courier"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:140
 #, kde-format
 msgid "Helvetica"
-msgstr ""
+msgstr "Helvetica"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:141
 #, kde-format
 msgid "Helvetica Narrow"
-msgstr ""
+msgstr "Helvetica Narrow"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:142
 #, kde-format
 msgid "Mono"
-msgstr ""
+msgstr "Mono"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:143
 #, kde-format
 msgid "New Century Schoolbook"
-msgstr ""
+msgstr "New Century Schoolbook"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:144
 #, kde-format
 msgid "Palatino"
-msgstr ""
+msgstr "Palatino"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:145
 #, kde-format
 msgid "Sans"
-msgstr ""
+msgstr "Sans"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:146
 #, kde-format
 msgid "Serif"
-msgstr ""
+msgstr "Serif"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:147
 #, kde-format
 msgid "Symbol"
-msgstr ""
+msgstr "Symbol"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:148
 #, kde-format
 msgid "Times"
-msgstr ""
+msgstr "Times"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:149
 #, kde-format
 msgid "CenturySch (URW)"
-msgstr ""
+msgstr "CenturySch (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:150
 #, kde-format
 msgid "NimbusMon (URW)"
-msgstr ""
+msgstr "NimbusMon (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:151
 #, kde-format
 msgid "NimbusSanCond (URW)"
-msgstr ""
+msgstr "NimbusSanCond (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:152
 #, kde-format
 msgid "URWBookman"
-msgstr ""
+msgstr "URWBookman"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:153
 #, kde-format
 msgid "URWHelvetica"
-msgstr ""
+msgstr "URWHelvetica"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:154
 #, kde-format
 msgid "URWGothic"
-msgstr ""
+msgstr "URWGothic"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:155
 #, kde-format
 msgid "URWPalladio"
-msgstr ""
+msgstr "URWPalladio"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:156
 #, kde-format
 msgid "URWTimes"
-msgstr ""
+msgstr "URWTimes"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Font properties"> <dropdown label="...">
 #: rkward/plugins/x11device/export.xml:158
