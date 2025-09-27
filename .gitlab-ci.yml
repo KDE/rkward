@@ -40,27 +40,32 @@ clang_format:
 # setup mix-and-matched from okular, removing some extras
 # combined check for building on "old" distribution (old distro should ideally be the previous ubuntu LTS, but that does not have kf6, yet)
 # debian:stable has the advantage of being cached, and will likely remain stable for some time to come
-build_clazy_stable:
+.build_debian_stable:
   stage: build
   image: debian:stable
   tags:
     - Linux
-  only:
-    - merge_requests
   variables:
-    #CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch
-    #CXXFLAGS: -Werror -Wno-deprecated-declarations > rather using check_warnings, below
-    CC: clang
-    CXX: clazy
+    RKWARD_BUILDDEPS: cmake extra-cmake-modules qt6-webengine-dev libkf6notifications-dev gettext libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev libkf6iconthemes-dev libkf6breezeicons-dev libkf6texteditor-dev libkf6textwidgets-dev libkf6windowsystem-dev libkf6xmlgui-dev r-base-dev
   before_script:
     - apt-get update
     - apt-get install --yes eatmydata
-    - eatmydata apt-get install --yes --no-install-recommends clazy clang
-    # rkward build deps:
-    - eatmydata apt-get install --yes --no-install-recommends cmake extra-cmake-modules qt6-webengine-dev libkf6notifications-dev gettext libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev libkf6iconthemes-dev libkf6breezeicons-dev libkf6texteditor-dev libkf6textwidgets-dev libkf6windowsystem-dev libkf6xmlgui-dev r-base-dev
-  script:
     - export LC_ALL=C.UTF-8
+
+build_debian_stable_clazy:
+  extends: .build_debian_stable
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_DRAFT != "true"
+      when: always
+    - when: manual
+      allow_failure: true
+  script:
+    - eatmydata apt-get install --yes --no-install-recommends clazy clang $RKWARD_BUILDDEPS
     - mkdir -p build && cd build
+    #CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch
+    #CXXFLAGS: -Werror -Wno-deprecated-declarations > rather using check_warnings, below
+    - export CC=clang
+    - export CXX=clazy
     - cmake ..
     - make -j 9 kdsingleapplication # build first, to ignore all (not just clazy) warnings, in 3rdparty code
     - CLAZY_IGNORE_DIRS="3rdparty" make -j 9 > >(tee make.output) 2> >(tee make.error)
@@ -106,3 +111,22 @@ build_r_devel:
     - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt6/Shared --extra-cmake-args=-DR_EXECUTABLE=$CI_PROJECT_DIR/rdir/install/bin/R --extra-cmake-args=-DDLOPEN_RLIB=0
  after_script:
     - ci-utilities/run-collect-crashes.py
+
+make_source_tar_gz:
+  extends: .build_debian_stable
+  rules:
+    - when: manual
+      allow_failure: true
+  script:
+    - eatmydata apt-get install --yes --no-install-recommends $RKWARD_BUILDDEPS r-cran-roxygen2 r-cran-devtools python3-polib rsync ninja-build
+    - mkdir dummy && cd dummy && cmake ..
+    - cd ..
+    - scripts/makedist.sh
+    - mkdir build && cd build
+    - tar -xvzf ../*.tar.gz
+    - cmake rkward-* -G Ninja
+    - ninja
+  artifacts:
+    paths:
+      - ./*.tar.gz
+    expire_in: 1 week
