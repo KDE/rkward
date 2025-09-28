@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kde4.14\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 00:39+0000\n"
 "PO-Revision-Date: 2015-02-22 23:06+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian\n"
@@ -140,7 +140,7 @@ msgid ""
 msgstr ""
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:329
+#: rkward/misc/rkprogresscontrol.cpp:327
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2487,70 +2487,70 @@ msgstr ""
 msgid "Unhandled output command '%1'"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:217
+#: rkward/misc/rkprogresscontrol.cpp:247
 #, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:228
+#: rkward/misc/rkprogresscontrol.cpp:258
 #: rkward/settings/rksettingsmoduleoutput.cpp:107
 #, fuzzy, kde-format
 msgid "Output"
 msgstr "Izlaz"
 
-#: rkward/misc/rkprogresscontrol.cpp:242
+#: rkward/misc/rkprogresscontrol.cpp:275
 #: rkward/windows/rktoplevelwindowgui.cpp:88
 #, fuzzy, kde-format
 msgid "Show Output"
 msgstr "Prikaži izlaz"
 
-#: rkward/misc/rkprogresscontrol.cpp:245 rkward/misc/rkprogresscontrol.cpp:385
+#: rkward/misc/rkprogresscontrol.cpp:278 rkward/misc/rkprogresscontrol.cpp:383
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:52
 #, fuzzy, kde-format
 msgid "Cancel"
 msgstr "Otkaži"
 
-#: rkward/misc/rkprogresscontrol.cpp:453
+#: rkward/misc/rkprogresscontrol.cpp:441
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:453
+#: rkward/misc/rkprogresscontrol.cpp:441
 #, kde-format
 msgid "<b>Done</b>"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:456
+#: rkward/misc/rkprogresscontrol.cpp:444
 #: rkward/plugin/rkstandardcomponentgui.cpp:188
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, fuzzy, kde-format
 msgid "Close"
 msgstr "Zatvori"
 
-#: rkward/misc/rkprogresscontrol.cpp:493 rkward/windows/rkwindowcatcher.cpp:405
+#: rkward/misc/rkprogresscontrol.cpp:481 rkward/windows/rkwindowcatcher.cpp:405
 #, kde-format
 msgid "Keep waiting"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:493
+#: rkward/misc/rkprogresscontrol.cpp:481
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:493
+#: rkward/misc/rkprogresscontrol.cpp:481
 #, kde-format
 msgid "Cancel operation"
 msgstr ""
 
-#: rkward/misc/rkprogresscontrol.cpp:493
+#: rkward/misc/rkprogresscontrol.cpp:481
 #, fuzzy, kde-format
 msgid "Cancel && Close"
 msgstr "Otkazano"
 
-#: rkward/misc/rkprogresscontrol.cpp:505
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr ""
