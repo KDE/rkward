@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2024-08-22 17:49+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -2768,12 +2768,16 @@ msgid "Unhandled output command '%1'"
 msgstr "Netraktita eliga komando '%1'"
 
 #: rkward/misc/rkprogresscontrol.cpp:217
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "There has been an error while trying to load / unload packages. See "
+#| "transcript below for details"
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"<b>Okazis eraro dum rulo de la komando. Vidu malsupre pri eligaj detaloj</b>"
+"Okazis eraro dum provo ŝargi/malŝargi pakaĵojn. Vidu transskribaĵon malsupre "
+"por detaloj"
 
 #: rkward/misc/rkprogresscontrol.cpp:228
 #: rkward/settings/rksettingsmoduleoutput.cpp:107
@@ -7817,6 +7821,9 @@ msgstr "Enigu la novan nomon"
 msgid "View in editor (read-only)"
 msgstr "Vidi en redaktilo (nurlegebla)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Eraro dum malfermado de skriptodosiero %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (aŭtomata)"
 
@@ -7827,5 +7834,16 @@ msgstr "Vidi en redaktilo (nurlegebla)"
 #~ "Antaŭrigardi la skripton kiel bildigita el RMarkdown-formato (.Rmd) al la "
 #~ "formato specifita en la dokumentkapo."
 
-#~ msgid "Error opening script file %1"
-#~ msgstr "Eraro dum malfermado de skriptodosiero %1"
+#~ msgid ""
+#~ "<b>There have been errors and / or warnings. See below for a transcript</"
+#~ "b>"
+#~ msgstr "<b>Estis eraroj kaj/aŭ avertoj. Vidu malsupre por transskribo</b>"
+
+#~ msgid "Output:"
+#~ msgstr "Eligo:"
+
+#~ msgid "Errors / Warnings"
+#~ msgstr "Eraroj / Avertoj"
+
+#~ msgid "Errors / Warnings:"
+#~ msgstr "Eraroj/Avertoj:"

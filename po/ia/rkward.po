@@ -2,13 +2,12 @@
 # This file is distributed under the same license as the rkward package.
 #
 # SPDX-FileCopyrightText: 2024, 2025 giovanni <g.sora@tiscali.it>
-# giovanni <g.sora@tiscali.it>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
-"PO-Revision-Date: 2025-05-27 15:13+0200\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2025-04-22 12:45+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1069,7 +1068,7 @@ msgstr "Carga"
 #: rkward/dialogs/rkloadlibsdialog.cpp:368
 #, kde-format
 msgid "Unload"
-msgstr "Discarga"
+msgstr ""
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:375
 #, kde-format
@@ -2771,19 +2770,19 @@ msgstr "error"
 #, kde-format
 msgctxt "very short: Preview is up to date"
 msgid "ready"
-msgstr "preste"
+msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:193
 #, kde-format
 msgctxt "very short: Preview is not(yet) possible"
 msgid "n/a"
-msgstr "n/d"
+msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:194
 #, kde-format
 msgctxt "very short: Preview is turned off"
 msgid "off"
-msgstr "non activate (off)"
+msgstr ""
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:213
 #, kde-format
@@ -3172,7 +3171,7 @@ msgstr ""
 #: rkward/plugin/rkpluginbrowser.cpp:47
 #, kde-format
 msgid "Enter filename"
-msgstr "Entra nomine de file "
+msgstr ""
 
 #: rkward/plugin/rkpluginbrowser.cpp:48 rkward/windows/rkcodenavigation.cpp:357
 #, kde-format
@@ -4230,9 +4229,10 @@ msgid "Open as text file and force R highlighting"
 msgstr ""
 
 #: rkward/rkward.cpp:1024
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Many objects in workspace"
 msgid "Open as R workspace"
-msgstr "Aperi como spatio de labor de R"
+msgstr "Multe objectos in spatio de labor"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -5187,7 +5187,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:69
 #, kde-format
 msgid "R-Backend"
-msgstr "Retro-Administration de R"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:76
 #, kde-format
@@ -5658,7 +5658,7 @@ msgstr ""
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr "Commando incognite <tt><b>%1</b></tt>"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
@@ -5692,9 +5692,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Editor command"
 msgid "Enter command"
-msgstr "Entra commando"
+msgstr "Commando de editor"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
@@ -5724,7 +5725,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr "Vade"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:346
 #, kde-format
@@ -5732,9 +5733,10 @@ msgid "Next statement"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous Window"
 msgid "Previous statement"
-msgstr "Previe declaration"
+msgstr "Previe fenestra"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
@@ -5787,9 +5789,10 @@ msgid "Select current code chunk"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Run"
 msgid "Run"
-msgstr "Exeque"
+msgstr "E&xeque"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
@@ -5995,10 +5998,9 @@ msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
-#, fuzzy, kde-format
-#| msgid "Previous statement"
+#, kde-format
 msgid "Echo statements"
-msgstr "Previe declaration"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
 #, fuzzy, kde-format
@@ -6352,7 +6354,8 @@ msgid "[Active]"
 msgstr "[Active]"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Exito %1"
@@ -6429,7 +6432,7 @@ msgstr "S&alva resultato de egresso como ..."
 #: rkward/windows/rkhtmlwindow.cpp:930
 #, kde-format
 msgid "&Clear Output"
-msgstr "&Clara Exito"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:936
 #, kde-format

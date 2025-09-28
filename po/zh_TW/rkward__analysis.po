@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-01 00:38+0000\n"
-"PO-Revision-Date: 2025-05-21 22:30+0800\n"
-"Last-Translator: Erica YueRong Ying <ericayying@gmail.com>\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2024-08-15 03:41+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -234,7 +234,7 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:61
 #, kde-format
 msgid "Phillips-Perron Test"
-msgstr "Phillips-Perron 檢定"
+msgstr ""
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Fitting Linear Models)
@@ -304,13 +304,13 @@ msgstr ""
 #: rkward/plugins/analysis.pluginmap:107
 #, kde-format
 msgid "Parametric tests"
-msgstr "母數檢定"
+msgstr ""
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Variances / Scale"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:112
 #, kde-format
 msgid "Nonparametric tests"
-msgstr "無母數檢定"
+msgstr ""
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:119
@@ -514,7 +514,7 @@ msgstr "基本設定"
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:20
 #, kde-format
 msgid "compare"
-msgstr "比較"
+msgstr ""
 
 #. i18n: ectx: (Loaded from t-Test)
 #. i18n: ectx: (t-Test) <dialog label="t-Test"> <tab label="Basic settings"> <varslot label="...">
@@ -963,7 +963,7 @@ msgstr "相關矩陣"
 #: rkward/plugins/plots/cor_graph.xml:13
 #, kde-format
 msgid "Variables"
-msgstr "變數"
+msgstr ""
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Variables"> <varslot label="...">
 #. i18n: ectx: (Correlation Matrix Plot) <dialog label="Correlation Matrix Plot"> <tab label="Variables"> <varslot label="...">
@@ -1018,7 +1018,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.xml:31
 #, kde-format
 msgid "Pearson's product-moment correlation"
-msgstr "皮爾森積差相關係數"
+msgstr ""
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:32
@@ -1036,13 +1036,13 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.xml:34
 #, kde-format
 msgid "Polyserial correlation"
-msgstr "多序列相關係數"
+msgstr ""
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <radio label="Method"> <option label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:35
 #, kde-format
 msgid "Polychoric correlation"
-msgstr "多元相關係數"
+msgstr ""
 
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:37
@@ -1113,7 +1113,7 @@ msgstr ""
 #, kde-format
 msgctxt "noun"
 msgid "count"
-msgstr "數量"
+msgstr ""
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:56
@@ -1444,7 +1444,7 @@ msgid ""
 "counted only for one \"dependent\" variable, <link href=\"rkward://component/"
 "crosstab\"/> may be more appropriate, and offers more options."
 msgstr ""
-"在兩個變數的情況下，或是數值出現次數只應為一個「應變數」計算時，<link href="
+"在兩個變數的情況下，或是數值出現次數只應為一個「因變數」計算時，<link href="
 "\"rkward://component/crosstab\"/> 可能比較適合，而且提供更多選項。"
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <settings> <setting> (refers to element labelled "variables:")
@@ -2291,7 +2291,7 @@ msgstr ""
 #, kde-format
 msgctxt "effect size"
 msgid "small"
-msgstr "小"
+msgstr ""
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:224
@@ -2303,7 +2303,7 @@ msgstr "小"
 #, kde-format
 msgctxt "effect size"
 msgid "medium"
-msgstr "中"
+msgstr ""
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:224
@@ -2315,7 +2315,7 @@ msgstr "中"
 #, kde-format
 msgctxt "effect size"
 msgid "large"
-msgstr "大"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <title>
 #. i18n: ectx: (Power analysis) <about name="...">
@@ -2468,28 +2468,28 @@ msgstr ""
 #, kde-format
 msgctxt "Author name"
 msgid "Meik"
-msgstr "Meik"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <about> <author family="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:15
 #, kde-format
 msgctxt "Author name"
 msgid "Michalke"
-msgstr "Michalke"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <about> <author given="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:16
 #, kde-format
 msgctxt "Author name"
 msgid "Thomas"
-msgstr "Thomas"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <about> <author family="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:16
 #, kde-format
 msgctxt "Author name"
 msgid "Friedrichsmeier"
-msgstr "Friedrichsmeier"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <dialog label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:103
@@ -2600,7 +2600,7 @@ msgstr "成對樣本"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:126
 #, kde-format
 msgid "One sample"
-msgstr "單一樣本"
+msgstr ""
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:128
@@ -2960,7 +2960,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.xml:26
 #, kde-format
 msgid "Save"
-msgstr "儲存"
+msgstr ""
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Save"> <saveobject label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:29
@@ -3024,7 +3024,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:12
 #, kde-format
 msgid "Variable Name"
-msgstr "變數名稱"
+msgstr ""
 
 #. i18n: ectx: (Loaded from t-Test)
 #: rkward/plugins/analysis/t_test.js:69
@@ -4228,13 +4228,13 @@ msgstr "中位數"
 #: rkward/plugins/descriptive/descriptive_statistics.js:50
 #, kde-format
 msgid "min"
-msgstr "最小值"
+msgstr ""
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:51
 #, kde-format
 msgid "max"
-msgstr "最大值"
+msgstr ""
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:55

@@ -83,7 +83,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <copyright>
 <year
->2006-2024</year>
+>2006-2022</year>
 <holder
 >Thomas Friedrichsmeier</holder>
 </copyright>
@@ -94,9 +94,9 @@ as Authors, publish date, the abstract, and Keywords -->
 >&FDLNotice;</legalnotice>
 
 <date
->3 травня 2025 року</date>
+>2022-04-24</date>
 <releaseinfo
->0.8.2</releaseinfo>
+>0.7.4</releaseinfo>
 
 <abstract>
 <para
@@ -1019,15 +1019,6 @@ as Authors, publish date, the abstract, and Keywords -->
 >) та поля для позначки <command
 >&lt;checkbox&gt;</command
 > щодо рівних дисперсій процедура дуже схожа на описану вище. </para>
-		<note>
-			<para
->Замість з'єднання рядків за допомогою оператора <command
->+</command
-> ви також можете скористатися «шаблонним літералом», ось так (зауважте, що рядок взято у зворотні лапки (`)):</para>
-			<programlisting
->echo(`res &lt;- t.test (x=${ getString("x") }, y=${ getString("y") }, hypothesis="${ getString("hypothesis") }"`); // etc.
-                        </programlisting>
-		</note>
 		<para
 >Зауважте, що замість об’єднання фрагментів виведення за допомогою <quote
 >+</quote
@@ -1541,13 +1532,16 @@ if (my.rotation &gt; wobble.rotation.limit (x)) {
 '
         &lt;logic&gt;
                 &lt;script&gt;&lt;![CDATA[
-                        // [...] будь-який код на верхньому рівні викликається лише один раз
-                        gui.addChangeCommand("mode.string", function() {
-                                // доки буде викликано цю анонімну функцію, коли змінюється "mode.string"
-                                var varmode = (gui.getString("mode.string") == "variable");
-                                gui.setValue("y.enabled", varmode);
-                                gui.setValue("constant.enabled", !varmode);
-                        });
+                        // У цьому блоці використано код ECMAScript
+                        // інструкція вищого рівня викликається лише один раз
+                        gui.addChangeCommand ("mode.string", "modeChanged ()");
+
+                        // ця функція викликається кожного разу, коли змінюється режим «mode»
+                        modeChanged = function () {
+                                var varmode = (gui.getString ("mode.string") == "variable");
+                                gui.setValue ("y.enabled", varmode);
+                                gui.setValue ("constant.enabled", !varmode);
+                        }
                 ]]&gt;&lt;/script&gt;
         &lt;/logic&gt;
 
@@ -1555,7 +1549,9 @@ if (my.rotation &gt; wobble.rotation.limit (x)) {
         [...]
         </programlisting>
 	<para
->Реєструє анонімну функцію, яку слід викликати, щоб визначити, чи змінилося значення пункту варіанта <parameter
+>Перший рядок коду повідомляє &rkward;, що слід викликати <function
+>modeChanged()</function
+>, щоб визначити, чи змінилося значення пункту варіанта <parameter
 >id=</parameter
 ><replaceable
 >"mode"</replaceable
@@ -1576,22 +1572,6 @@ if (my.rotation &gt; wobble.rotation.limit (x)) {
 > у той самий спосіб, як ми робили це з інструкціями <command
 >&lt;connect&gt;</command
 > раніше. </para>
-	<note
-><para
->Якщо одну й ту саму функцію слід викликати для змін кількох елементів, ви також можете передати масив відповідних <parameter
->id=</parameter
-> до <command
->gui.addChangeCommmand()</command
->. Крім того, для зручності, <command
->gui.addChangeCommmand()</command
-> повертає свій другий параметр, що корисно, якщо ви хочете звернутися до цієї функції деінде (наприклад, викликати її один раз під час ініціалізації). Приклад: </para>
-	<programlisting
->let update = gui.addChangeCommand(["mode.string", "y.available"], function() {
-                // зробити щось при кожні зміні mode.string або y.available
-        });
-        update(); // зробити те саме під час ініціалізації
-        </programlisting>
-	</note>
 	<para
 >Керування логікою графічного інтерфейсу за допомогою скриптів корисне зокрема тоді, коли ви хочете змінити доступні параметри відповідно до типу об’єкта, який вибрано користувачем. Із списком доступних функцій можна ознайомитися у <link linkend="guilogic_functions"
 >довідковому розділі</link
@@ -2623,23 +2603,25 @@ function getSpecifics () {
 >:</para>
 	<programlisting
 >&lt;script&gt;&lt;![CDATA[
-                                let update = gui.addChangeCommand ("variable", "update ()", function () {
+                                last_command_id = -1;
+                                gui.addChangeCommand ("variable", "update ()");
+                                update = function () {
                                         gui.setValue ("selector.enabled", 0);
                                         variable = gui.getValue ("variable");
                                         if (variable == "") return;
 
-                                        new RCommand('levels (' + variable + ')', "myid").then(result =
-> {
-                                                gui.setValue ("selector.enabled", 1);
-                                                gui.setListValue ("selector.available", result);
-                                        }).catch(msg =
-> {
-                                                if (msg === "outdated") return;  // команду було скасовано, оскільки невдовзі має з'явитися нова -> benign
-                                                // можлива обробка іншої помилки, msg містить видані попередження та повідомлення про помилки,
-                                                // якщо команда не пройшла e.g.:
-                                                gui.setListValue ("selector.available", Array ("ERROR:", msg));
-                                        });
-                                };
+                                        last_command_id = doRCommand ('levels (' + variable + ')', "commandFinished");
+                                }
+
+                                commandFinished = function (result, id) {
+                                        if (id != last_command_id) return;  // зараз з’явиться новий результат
+                                        if (typeof (result) == "undefined") {
+                                                gui.setListValue ("selector.available", Array ("ERROR"));
+                                                return;
+                                        }
+                                        gui.setValue ("selector.enabled", 1);
+                                        gui.setListValue ("selector.available", result);
+                                }
                 ]]&gt;&lt;/script&gt;
         </programlisting>
 	<para
@@ -2651,48 +2633,29 @@ function getSpecifics () {
 >&lt;valueselector&gt;</command
 > із назвою <parameter
 >selector</parameter
->. Ключовою функцією тут є інструкція конструктора <command
->new RCommand()</command
->, функція, яка приймає як перший параметр рядок команди. Зауважте, що команда виконуватиметься у асинхронному режимі, і це дещо ускладнює речі. По-перше, вам слід зробити так, щоб ваш <command
+>. Ключовою функцією є <command
+>doRCommand()</command
+>, функція, яка приймає як перший параметр рядок команди, яку слід виконати, і як другий параметр — назву функції, яку слід викликати, коли виконання команди буде завершено. Зауважте, що команда виконуватиметься у асинхронному режимі, і це дещо ускладнює речі. По-перше, вам слід зробити так, щоб ваш <command
 >&lt;valueselector&gt;</command
-> залишався вимкненим, доки у ньому не міститиметься актуальної інформації. По-друге, оскільки користувач може внести зміни швидко, може бути створено декілька команд, перш ніж ми отримаємо якийсь результат. Отже, вам слід забезпечити роботу лише із найсвіжішою командою. </para>
-	<para
->Для роботи з асинхронністю тут повертається об'єкт <command
->Promise</command
->. Більше інформації про цю потужну функцію JavaScript можна знайти <ulink url="https://javascript.info/async"
->в інтернеті</ulink
->. Важливо знати, що додавання оператора <command
->.then()</command
-> дозволяє вказати, що станеться після завершення команди, а оператор <command
->.catch()</command
-> можна використовувати для обробки будь-яких помилок. Знову ж таки, майте на увазі, що блок <command
->.then()</command
-> не виконується одразу. Щоб зрозуміти наслідки цього, під час розробки може бути корисним вставити <command
->Sys.sleep(1);</command
-> у вашу команду R, щоб побачити, що відбувається, коли виконання команди не завершується негайно.</para>
-	<para
->Зрештою, для обробки створення кількох команд можна вказати другий аргумент <command
->new RCommand()</command
-> (у цьому прикладі - "myid"). Будь-які команди з однаковим (довільно вибраним) ідентифікатором вважатимуться такими, що належать до однієї черги. RKWard потім переконається, що лише остання команда фактично запустить блок <command
->.then()</command
->, тоді як будь-які застарілі команди надходитимуть у блок <command
->.catch()</command
->. Тут застарілі команди можна ідентифікувати, оскільки рядок "outdated" передається як їхнє значення, тоді як для будь-яких інших можливих помилок передаються попередження та повідомлення про помилки. </para>
-	<para
->Зауважте, що цей приклад є дещо спрощеним. Насправді, вам доведеться вжити певних застережних заходів, наприклад, уникати надмірної кількості вкладених рівнів у засобі вибору. Втім, ймовірно, вам не потрібно буде дбати про усе самому. Наведений вище приклад взято з додатка <command
+> залишався вимкненим, доки у ньому не міститиметься актуальної інформації. По-друге, потенційно, до черги обробки може потрапити декілька команд, доки ви отримаєте перші результати. Ось чому кожній команді надано «id», і ми зберігаємо його у <parameter
+>last_command_id</parameter
+> для подальшого використання.</para>
+	  <para
+>Під час виконання команди програма виконує вказаний виклик (у нашому випадку <parameter
+>commandFinished</parameter
+>) з двома параметрами: самим результатом та ідентифікатором відповідної команди. Результат належатиме до типу, який є відповідним представленню у &R;, тобто до числових масивів, якщо результат є числовим тощо. Результатом може бути навіть <command
+>list()</command
+> &R;,  але у цьому випадку його буде представлено як <command
+>Array()</command
+> JS без назв.</para>
+	  <para
+>Зауважте, що навіть це приклад є дещо спрощеним. Насправді, вам доведеться вжити певних застережних заходів, наприклад, уникати надмірної кількості вкладених рівнів у засобі вибору. Втім, ймовірно, вам не потрібно буде дбати про усе самому. Наведений вище приклад взято з додатка <command
 >rkward::level_select</command
 >, який ви можете просто <link linkend="embedding"
 >вбудувати</link
 > до вашого власного додатка. Це навіть надасть вам змогу вказати інший вираз для виконання замість <command
 >levels()</command
 >.</para>
-	<note>
-		<para
->У ранніх версіях RKWard команди R запускалися за допомогою дещо складнішої функції <command
->doRCommand()</command
->. Ця функція усе ще є частиною деяких додатків, але ми не рекомендуємо користуватися нею у новому програмному коді.</para>
-	</note>
-
 </sect1>
 
 <sect1 id="current_object">
@@ -7517,28 +7480,6 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >. Необов’язковий, якщо не вказано, вимог щодо мінімальної і максимальної версій &R; не висуватиметься.</para
 ></listitem>
 	</varlistentry>
-	<varlistentry>
-	<term
->platforms</term>
-	<listitem
-><para
->Платформи, на яких доступний цей додаток. Підтримувані значення: <replaceable
->"unix"</replaceable
->, <replaceable
->"windows"</replaceable
->, <replaceable
->"macos"</replaceable
->, <replaceable
->"any"</replaceable
-> і усі відокремлені двокрапкою комбінації цих значень (приклад: <replaceable
->"unix:macos"</replaceable
->). <replaceable
->"unix"</replaceable
-> стосується усіх варіантів Linux і BSD, але <emphasis
->не</emphasis
-> MacOS. Якщо ваш додаток не є залежним від платформи, просто не вказуйте цей атрибут.</para
-></listitem>
-	</varlistentry>
 	</variablelist>
 <para
 >Дочірні елементи:</para>
@@ -7788,20 +7729,6 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 	<listitem
 ><para
 >Мітка для цього компонента, яка використовується для розташування компонента у ієрархії меню.</para
-></listitem>
-	</varlistentry>
-	<varlistentry>
-	<term
->optional</term>
-	<listitem
-><para
->Стосується лише компонентів із визначеними <link linkend="chapter_dependencies"
->залежностями</link
->: зазвичай, вважається помилкою, яка варта звітування, якщо компонент не є сумісним із цією версією RKWard. Втім, якщо компонент справді не потрібен у поточному середовищі, встановлення для цього атрибута значення <replaceable
->"true"</replaceable
-> придушує будь-які попередження (типовим значенням є <replaceable
->"false"</replaceable
->).</para
 ></listitem>
 	</varlistentry>
 	</variablelist
@@ -8301,19 +8228,11 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >addChangeCommand(ідентифікатор, команда)</term
 ><listitem
 ><para
->Виконувати <replaceable
->команду</replaceable
-> щоразу, коли змінюється дочірня властивість, задана параметром <emphasis
+>Виконати <emphasis
+>команду</emphasis
+> кожного разу, коли вносяться зміни до дочірньої властивості <emphasis
 >ідентифікатор</emphasis
->. <replaceable
->ідентифікатор</replaceable
-> може бути заданий як один рядок або як масив ідентифікаторів (якщо функцію потрібно викликати для змін кількох властивостей). <replaceable
->команда</replaceable
-> – це значення, яке можна викликати (зазвичай функція), проте для сумісності з додатками, написаними для попередніх версій RKWard, його також можна задати як обчислюваний рядок.</para>
-	<para
->Функція, для зручності, повертає параметр <replaceable
->команду</replaceable
-> (отже, ви, наприклад, можете передати значення до якоїсь змінної і/або викликати функцію під час ініціалізації).</para
+>.</para
 ></listitem
 ></varlistentry>
 	</variablelist
@@ -8499,22 +8418,8 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >Функція doRCommand()</term>
 <listitem
 ><para
-><emphasis
->Застаріла. Не використовуйте у нових додатках:</emphasis
-> <command
->doRCommand(command, callback)</command
->. Замість неї скористайтеся <command
->new RCommand()</command
->.</para
-></listitem>
-</varlistentry>
-<varlistentry
-><term
->Функція new RCommand()</term>
-<listitem
-><para
 >Функцією <command
->new RCommand(команда, зворотній виклик)</command
+>doRCommand(команда, зворотній виклик)</command
 > можна скористатися для отримання від &R; інформації. Будь ласка, ознайомтеся із розділом щодо <link linkend="querying_r_for_info"
 >отримання даних &R; з додатка</link
 >, щоб дізнатися більше.</para

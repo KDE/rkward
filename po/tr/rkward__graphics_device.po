@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-01-11 17:15+0300\n"
+"PO-Revision-Date: 2024-09-30 21:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 24.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -187,7 +187,7 @@ msgstr ""
 "Postscript biçiminde dışa aktarırken bu, bir EPSF (.eps dosyası) "
 "üstbilgisinin oluşturulup oluşturulmayacağına karar vermenizi sağlar. Bu, "
 "daha fazla taşınabilir dosya oluşturduğundan çoğu durumda tavsiye edilir. Bu "
-"durumda kâğıt boyutu ve yönü ayarlanamaz. Bu, <i>onefile</i> parametresini "
+"durumda kağıt boyutu ve yönü ayarlanamaz. Bu, <i>onefile</i> parametresini "
 "postscript’e FALSE olarak ayarlar."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Width")
@@ -299,8 +299,8 @@ msgid ""
 "<b>postscript</b>. This is available only for Postscript/PDF exports. This "
 "is the <i>paper</i> option to the exporting function."
 msgstr ""
-"Dışa aktarılacak kâğıt boyutunu ayarlamak için bunu kullanın. Herhangi bir "
-"kâğıt seçeneği belirtmemek için “Öntanımlı”yı seçin. Diğer seçenekler "
+"Dışa aktarılacak kağıt boyutunu ayarlamak için bunu kullanın. Herhangi bir "
+"kağıt seçeneği belirtmemek için “Öntanımlı”yı seçin. Diğer seçenekler "
 "<b>postscript</b> için R başvurusunda açıklanmıştır. Bu yalnızca Postscript/"
 "PDF dışa aktarmaları için kullanılabilir. Bu, dışa aktarma işlevinin "
 "<i>paper</i> seçeneğidir."
@@ -557,13 +557,13 @@ msgstr "Postscript/PDF/Ghostscript Seçenekleri"
 #: rkward/plugins/x11device/export.xml:117
 #, kde-format
 msgid "Paper properties"
-msgstr "Kâğıt Özellikleri"
+msgstr "Kağıt Özellikleri"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Paper properties"> <dropdown label="...">
 #: rkward/plugins/x11device/export.xml:119
 #, kde-format
 msgid "Paper Size"
-msgstr "Kâğıt Boyutu"
+msgstr "Kağıt Boyutu"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">

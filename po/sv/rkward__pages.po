@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2015, 2018, 2022, 2024, 2025 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# SPDX-FileCopyrightText: 2015, 2018, 2022, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-28 00:39+0000\n"
-"PO-Revision-Date: 2025-05-31 15:50+0200\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2024-06-21 08:11+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -255,7 +255,7 @@ msgstr ""
 #: rkward/pages/rkward_code_navigation.rkh:8
 #, kde-format
 msgid "Code Navigation and Quick Code Navigation Mode"
-msgstr "Kodnavigering och Snabb kodnavigering"
+msgstr ""
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <summary>
 #: rkward/pages/rkward_code_navigation.rkh:9
@@ -268,18 +268,13 @@ msgid ""
 "href=\"rkward://rhelp/browser\">browser()</link>-command, but importantly "
 "this works entirely without actually running the code."
 msgstr ""
-"Kodnavigeringsfunktionen i skripteditorns fönster låter dig navigera i R-kod "
-"baserat på dess syntaktiska struktur, t.ex. snabbt gå till nästa sats "
-"utanför det aktuella omfånget eller till föregående sats på toppnivå. Flera "
-"navigeringsfunktioner är avsiktligt nära felsökning i R:s kommando <link "
-"href=\"rkward://rhelp/browser\">browser()</link>, men viktigast av allt är "
-"att det fungerar helt utan att koden faktiskt körs."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Available actions"
 msgid "Available commands"
-msgstr "Tillgängliga kommandon"
+msgstr "Tillgängliga åtgärder"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -293,13 +288,6 @@ msgid ""
 "your sources very quickly. Once in this mode, subsequent single key presses "
 "invoke the following actions:"
 msgstr ""
-"Kodnavigeringsfunktionen är tillgänglig i menyn <i>Kör</i> och den "
-"sammanhangsberoende menyn i skriptfönster (R eller R-markdown) i två "
-"varianter: Det första alternativet är att helt enkelt välja enskilda "
-"navigeringsåtgärder direkt i menyn. Det andra är \"Snabb kodnavigering"
-"\" (översta alternativet i menyn; standardkortkommando är \"Meta+n\") som "
-"låter dig navigera mycket snabbt i källkoden. När det är aktiverat, utför "
-"efterföljande enkla tangenttryckningar följande åtgärder:"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -333,38 +321,12 @@ msgid ""
 "<tr><td><tt><b>Ctrl+Return</b></tt></td><td>Run the current line or "
 "selection</td></tr> </table>"
 msgstr ""
-"<table border=\"0\"> <tr><td><tt><b>n / N</b></tt></td><td>Gå till nästa (n) "
-"eller föregående (N) sats på aktuell nivå, eller nästa yttre nivå</td></tr> "
-"<tr><td><tt><b>i / I</b></tt></td><td>Som n/N, men stegar också in i inre "
-"sammanhang (såsom definitionen av en funktion)</td></tr> <tr><td><tt><b>o / "
-"O</b></tt></td><td>Gå direkt till nästa / föregående sats utanför den "
-"aktuella nivån (t.ex. första satsen efter en funktionsdefinition)</td></tr> "
-"<tr><td><tt><b>t / T</b></tt></td><td>Gå till nästa / föregående sats på "
-"skriptets toppnivå</td></tr> <tr><td><tt><b>c / C</b></tt></td><td>(Bara för "
-"R-Markdown dokument:) Gå till nästa / föregående kodblock</td></tr> "
-"<tr><td><tt><b>1 / !</b></tt></td><td>Gå längst upp / längst ner i "
-"dokumentet</td></tr> <tr><td><tt><b>s</b></tt></td><td>Markera aktuell sats</"
-"td></tr> <tr><td><tt><b>S</b></tt></td><td>(Bara för R-Markdown dokument:) "
-"Markera tillagd kod i aktuellt block</td></tr> <tr><td><tt><b>r</b></tt></"
-"td><td>Kör den aktuella satsen och gå vidare till nästa sats (motsvarande "
-"sekvensen <tt>s - Ctrl+Retur - n</tt>)</td></tr> <tr><td><tt><b>Baksteg</b></"
-"tt></td><td>Gå tillbaka till positionen före den senaste åtgärden</td></tr> "
-"<tr><td><tt><b>Esc</b></tt></td><td>Avsluta snabb kodnavigering och "
-"återställ markören/markeringen till tillståndet innan den startades.</td></"
-"tr> <tr><td><tt><b>Retur</b></tt></td><td>Avsluta snabb kodnavigering, "
-"behåll aktuell position/markering</td></tr> <tr><td/><td>Snabb kodnavigering "
-"avslutas också om du klickar någon annanstans i skriptet, byter till ett "
-"annat fönster eller om skriptet ändras.</td></tr> <tr><td colspan=\"2\"> </"
-"td></tr> <tr><td colspan=\"2\">Slutligen kan du fortsätta använda vanliga "
-"genvägar i snabb kodnavigering. Det inkluderar, viktigast av allt:</td></tr> "
-"<tr><td><tt><b>Ctrl+Retur</b></tt></td><td>Kör den aktuella raden eller "
-"markeringen</td></tr> </table>"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:38
 #, kde-format
 msgid "Notes and Tips"
-msgstr "Anmärkningar och tips"
+msgstr ""
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -378,12 +340,6 @@ msgid ""
 "syntax is assumed, syntax errors will be skipped over, which may lead to "
 "unexpected behavior."
 msgstr ""
-"Åtgärden 'n' är avsedd att påminna om motsvarande stegningskommando i R-"
-"felsökaren (se <link href=\"rkward://rhelp/browser\"/>), men det är inte "
-"samma sak. Den viktigaste skillnaden är att kodnavigering, som beskrivs här, "
-"fungerar på en helt statisk tolkad representation av skriptet och inte alls "
-"försöker följa kontrollflödet. Dessutom antas en välformad syntax, vilket "
-"innebär att syntaxfel hoppas över, vilket kan leda till oväntat beteende."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -395,11 +351,6 @@ msgid ""
 "behave in a way, that we hope makes sense, intuitively. Remember to always "
 "control, visually, what you are doing, before you hit Ctrl+Enter."
 msgstr ""
-"Dessutom är det inte alltid helt tydligt vad en \"sats\" och ett \"inre\" "
-"eller \"yttre\" sammanhang är, och det kanske inte alltid motsvarar exakt "
-"hur R-gränssnittet ser koden. Istället är kommandona avsedda att bete sig på "
-"ett sätt som vi hoppas är logiskt intuitivt. Kom ihåg att alltid "
-"kontrollera, visuellt, vad du gör innan du trycker på Ctrl+retur."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -409,9 +360,6 @@ msgid ""
 "are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
-"De flesta kommandon tenderar att gå mot yttre sammanhang, så 'n' och 'N' är "
-"inte exakta motsatser. Kom ihåg att du kan ångra det senaste steget med "
-"hjälp av backsteg om du gick förbi den plats du letade efter."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -427,7 +375,10 @@ msgstr "Beskriv funktioner och inställningar rörande RKWard R-terminalen."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The console can - by default - be found at the bottom of the application "
+#| "window. Press the tool button labelled \"R Console\" to invoke it."
 msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labeled \"R Console\" to invoke it."
@@ -2072,8 +2023,6 @@ msgid ""
 "Meta+n to bring up <link href=\"rkward://rkward_code_navigation\">Code "
 "Navigation</link> mode in script windows"
 msgstr ""
-"Meta+n för att starta <link href=\"rkward://rkward_code_navigation"
-"\">Kodnavigering</link> i skriptfönster"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8

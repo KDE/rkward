@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-28 00:39+0000\n"
-"PO-Revision-Date: 2025-05-29 15:05+0200\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2025-05-14 17:50+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -269,7 +269,7 @@ msgstr ""
 #: rkward/pages/rkward_code_navigation.rkh:8
 #, kde-format
 msgid "Code Navigation and Quick Code Navigation Mode"
-msgstr "Navigation dans le code et mode de navigation rapide dans le code"
+msgstr ""
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <summary>
 #: rkward/pages/rkward_code_navigation.rkh:9
@@ -282,20 +282,13 @@ msgid ""
 "href=\"rkward://rhelp/browser\">browser()</link>-command, but importantly "
 "this works entirely without actually running the code."
 msgstr ""
-"La fonctionnalité de navigation dans le code dans les fenêtres de l'éditeur "
-"de scripts vous permet de naviguer dans le code R en fonction de sa "
-"structure syntaxique, par exemple en passant rapidement à l'instruction "
-"suivante en dehors de sa portée actuelle ou à l'instruction de niveau "
-"supérieur précédente. Plusieurs fonctionnalités de navigation sont "
-"délibérément proches du débogage dans la commande <link href=\"rkward://"
-"rhelp/browser\">browser()</link> de R. Mais, il est important de noter que "
-"cela fonctionne entièrement sans exécuter le code."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Available actions"
 msgid "Available commands"
-msgstr "Commandes disponibles"
+msgstr "Actions disponibles"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -309,15 +302,6 @@ msgid ""
 "your sources very quickly. Once in this mode, subsequent single key presses "
 "invoke the following actions:"
 msgstr ""
-"La fonction de navigation dans le code est disponible à partir du menu "
-"<i>Exécuter</i> et du menu contextuel dans les fenêtres de scripts (R ou R "
-"Markdown) selon deux variantes : la première option consiste simplement à "
-"sélectionner des actions individuelles de navigation directement à partir du "
-"menu. Cependant, avec la seconde option, le « Mode de navigation rapide dans "
-"le code » (Entrée supérieure dans le menu et raccourci clavier par défaut "
-"est « Meta » + « n ») vous permet de naviguer très rapidement dans vos codes "
-"source. Une fois dans ce mode, les appuis ultérieurs sur une seule touche "
-"appellent les actions suivantes :"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -351,44 +335,12 @@ msgid ""
 "<tr><td><tt><b>Ctrl+Return</b></tt></td><td>Run the current line or "
 "selection</td></tr> </table>"
 msgstr ""
-"<table border=\"0\"> <tr><td><tt><b>n / N</b></tt></td><td>Passer à "
-"l'instruction suivante (n) ou précédente (N) au niveau courant, ou le "
-"prochain niveau externe </td></tr> <tr><td><tt>i / I</b></tt></td><td>Comme "
-"n / N, mais aussi d'entrer dans des contextes inion d’une fonction)</td></"
-"tr> <tr><td><tt><b>o / O</b></tt></td><td>Passer directement à l'instruction "
-"suivante / précédente en dehors du niveau courant (Par exemple, la première "
-"instruction après un bloc fonctionnel)</td></tr> <tr><td><tt><b>t / T</b></"
-"tt></td><td>Aller à l'instruction suivante / précédente au niveau le plus "
-"élevé du script</td></tr> <tr><td><tt><b>c / C</b></tt></td><td>(Pour les "
-"documents R Markdown, uniquement :) aller au morceau de code suivant / "
-"précédent</td></tr> <tr><td><tt><b>1 / !</b></tt></td><td>Allez en haut / en "
-"bas du document</td></tr> <tr><td><tt><b>s</b></tt></td><td>Sélectionnez "
-"l'instruction courante</td></tr> <tr><td><tt><b>S</b></tt></td><td>(Pour les "
-"documents R Markdown, uniquement :) ajouter du code dans le morceau courant</"
-"td></tr> <tr><td><tt><b>r</b></tt></td><td>Exécuter l'instruction courante "
-"et avancer à l’instruction suivante (Équivalent à la séquence <tt>s "
-"-« Ctrl »+ « Entrée » - « n »</tt>)</td></tr> <tr><td><tt><b>Retour arrière</"
-"b></tt></td><td>Revenir à la position avant la dernière action</td></tr> "
-"<tr><td><tt><b>Échap</b></tt></td><td>Quitter le mode de navigation rapide "
-"par code, et réinitialiser le curseur / la sélection à l’état avant de "
-"l’entrer</td></tr> <tr><td><tt><b>Retour</b></tt></td><td>Quitter le mode de "
-"navigation rapide dans le code et réinitialiser le curseur /la sélection à "
-"la version avant l'entrée en mode de navigation</td></tr> <tr><td/"
-"><td>Entrée</b></tt></td><td> Quitter le mode de navigation rapide dans le "
-"code en conservant la position / la sélection courante. </td></tr> <tr><td/"
-"><td>Le mode de navigation rapide dans le code se termine également, si vous "
-"cliquez n'importe où en dehors du script, si vous basculez dans une fenêtre "
-"différente ou si le script est modifié</td></tr> <tr><td colspan=\"2\"> </"
-"td></tr> <tr><td colspan=\"2\">Enfin, vous pouvez continuer à utiliser des "
-"raccourcis standard après avoir basculer en mode de navigation rapide dans "
-"le code. Cela inclut notamment :</td></tr> <tr><td><tt><b>Ctrl + Entrée</b></"
-"tt></td><td>Exécuter la ligne ou la sélection courante</td></tr> </table>"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:38
 #, kde-format
 msgid "Notes and Tips"
-msgstr "Remarques et conseils"
+msgstr ""
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -402,14 +354,6 @@ msgid ""
 "syntax is assumed, syntax errors will be skipped over, which may lead to "
 "unexpected behavior."
 msgstr ""
-"L'action « n » signifie le rappel de  la commande correspondant du pas dans "
-"le débogueur R (Veuillez consulter <link href=\"rkward://rhelp/browser\"/>), "
-"mais ce n'est pas la même chose. La différence la plus importante est que la "
-"navigation dans le code décrite ici, fonctionne sur une représentation "
-"entièrement statique de l'analyse du script. Elle ne tente pas du tout de "
-"suivre le flux de contrôle. En outre, une syntaxe bien formée est supposée, "
-"les erreurs de syntaxe seront ignorées, ce qui peut conduire à un "
-"comportement inattendu."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -421,13 +365,6 @@ msgid ""
 "behave in a way, that we hope makes sense, intuitively. Remember to always "
 "control, visually, what you are doing, before you hit Ctrl+Enter."
 msgstr ""
-"De plus, la signification exacte d'une « instruction » et de "
-"« intérieur »ou /et et de « extérieur » peut ne pas toujours être tout à "
-"fait claire. Elle  peut ne pas toujours correspondre exactement à la façon "
-"dont le moteur R comprend votre code. Au lieu de cela, ces commandes sont "
-"censées se comporter d'une manière qui, nous l'espérons, auront un sens plus "
-"intuitif. Veuillez ne pas oublier de toujours faire un contrôle visuel de ce "
-"que vous faites, avant d'appuyer sur les touches « Ctrl » + « Entrée »."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -437,11 +374,6 @@ msgid ""
 "are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
-"La plupart des commandes montrent une tendance à se déplacer vers des "
-"contextes externes, de sorte que « n » et « N » ne sont pas exactement en "
-"opposition. Veuillez vous rappeler que vous pouvez annuler votre dernière "
-"étape en utilisant  la touche « Retour arrière » si vous avez dépassé "
-"l'emplacement que vous recherchiez."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -458,14 +390,17 @@ msgstr ""
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The console can - by default - be found at the bottom of the application "
+#| "window. Press the tool button labelled \"R Console\" to invoke it."
 msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labeled \"R Console\" to invoke it."
 msgstr ""
 "La console peut - par défaut - être trouvée au bas de la fenêtre de "
-"l'application. Veuillez appuyer sur le bouton d'outils nommé « Console R » "
-"pour le lancer."
+"l'application. Appuyez sur le bouton d'outils nommé « Console R » pour le "
+"lancer."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
@@ -2180,9 +2115,6 @@ msgid ""
 "Meta+n to bring up <link href=\"rkward://rkward_code_navigation\">Code "
 "Navigation</link> mode in script windows"
 msgstr ""
-"Touche « Meta » + « n » pour faire apparaître le <link href=\"rkward://"
-"rkward_code_navigation\">mode de navigation</link> dans les fenêtres de "
-"scripts."
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8

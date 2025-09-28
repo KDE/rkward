@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -7791,6 +7791,9 @@ msgstr "Kirjuta uus nimi"
 msgid "View in editor (read-only)"
 msgstr "Vaata redaktoris (kirjutuskaitstult)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Tõrge skriptifaili %1 avamisel"
+
 #, fuzzy
 #~| msgid "R Markdown"
 #~ msgid "R Markdown (auto)"
@@ -7806,9 +7809,6 @@ msgstr "Vaata redaktoris (kirjutuskaitstult)"
 #~ msgstr ""
 #~ "Skripti eelvaatlus renderdatuna RMarkdowni vormingust (sobilik .Rmd-"
 #~ "failidele)."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Tõrge skriptifaili %1 avamisel"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-28 00:39+0000\n"
-"PO-Revision-Date: 2025-05-28 07:10+0200\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2024-06-10 07:30+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -258,7 +258,7 @@ msgstr ""
 #: rkward/pages/rkward_code_navigation.rkh:8
 #, kde-format
 msgid "Code Navigation and Quick Code Navigation Mode"
-msgstr "Navigacija po kodi in način hitre navigacija po kodi"
+msgstr ""
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <summary>
 #: rkward/pages/rkward_code_navigation.rkh:9
@@ -271,18 +271,13 @@ msgid ""
 "href=\"rkward://rhelp/browser\">browser()</link>-command, but importantly "
 "this works entirely without actually running the code."
 msgstr ""
-"Zmožnost navigacije po kodi v oknih urejevalnika skriptov omogoča navigacijo "
-"po kodi R na podlagi njene sintaktične strukture, npr. hiter skok na "
-"naslednji stavek zunaj trenutnega obsega ali na prejšnji ukaz najvišje "
-"ravni. Več navigacijskih funkcij je namerno blizu funkciji razkrivanja "
-"hroščev v ukazu R <link href=\"rkward://rhelp/browser\">browser()</link>, "
-"vendar je pomembno, da to deluje popolnoma ne da bi poganjali kodo."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Available actions"
 msgid "Available commands"
-msgstr "Razpoložljivi ukazi"
+msgstr "Razpoložljiva dejanja"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -296,13 +291,6 @@ msgid ""
 "your sources very quickly. Once in this mode, subsequent single key presses "
 "invoke the following actions:"
 msgstr ""
-"Zmožnost navigacije po kodi je na voljo v meniju <i>Zaženi</i> in "
-"kontekstnem meniju v oknih skript (R ali R markdown) v dveh različicah: Prva "
-"možnost je, da preprosto izberete posamezna navigacijska dejanja neposredno "
-"iz menija. Drugič, »Način hitre navigacije po kodi« (vrhnji vnos v meniju; "
-"privzeta bližnjica na tipkovnici je »Meta+n«) omogoča zelo hitro navigacijo "
-"po izvorni kodi. Ko ste v tem načinu, poznejši pritiski tipk sprožijo "
-"naslednja dejanja:"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -336,39 +324,12 @@ msgid ""
 "<tr><td><tt><b>Ctrl+Return</b></tt></td><td>Run the current line or "
 "selection</td></tr> </table>"
 msgstr ""
-"<table border=\"0\"> <tr><td><tt><b>n / N</b></tt></td><td>Pojdi na "
-"naslednji (n) ali prejšnji (N) stavek na trenutni ravni ali na naslednji "
-"zunanji ravni</td></tr> <tr><td><tt><b>i / I</b></tt></td><td>Kot n/N, "
-"vendar tudi stopi v notranje kontekste (kot je definicija funkcije)</td></"
-"tr> <tr><td><tt><b>o / O</b></tt></td><td>Skoči neposredno na naslednji/"
-"prejšnji stavek zunaj trenutne ravni (npr. prvi stavek po telesu funkcije)</"
-"td></tr> <tr><td><tt><b>t / T</b></tt></td><td>Pojdi na naslednji/prejšnji "
-"ukaz na najvišji ravni skripta</td></tr> <tr><td><tt><b>c / C</b></tt></"
-"td><td>(Samo za dokumente R Markdown:) Pojdi na naslednji / prejšnji del "
-"kode</td></tr> <tr><td><tt><b>1 / !</b></tt></td><td>Pojdi na vrh / dno "
-"dokumenta</td></tr> <tr><td><tt><b>s</b></tt></td><td>Izberi trenutni "
-"stavek</td></tr> <tr><td><tt><b>S</b></tt></td><td>(Samo za dokumente R "
-"Markdown:) Izberi dodaj kodo v trenutni del</td></tr> <tr><td><tt><b>r</b></"
-"tt></td><td>Zaženi trenutni stavek in se premakni na naslednji stavek "
-"(enakovredno zaporedju <tt>s - Ctrl+Return - n</tt>)</td></tr> "
-"<tr><td><tt><b>Backspace</b></tt></td><td>Vrnitev na položaj pred zadnjim "
-"dejanjem</td></tr> <tr><td><tt><b>Esc</b></tt></td><td>Izhod iz načina hitre "
-"navigacije s kodami in ponastavitev kazalca/izbire v stanje pred vnosom</"
-"td></tr> <tr><td><tt><b>Return</b></tt></td><td>Izhod iz načina hitre "
-"navigacije s kodami, pri čemer se ohrani trenutni položaj/izbira</td></tr> "
-"<tr><td/><td>Način hitre navigacije s kodami se bo končal tudi, če kliknete "
-"kjer koli drugje v skriptu, preklopite v drugo okno ali če je skript "
-"spremenjen</td></tr> <tr><td colspan=\"2\"> </td></tr> <tr><td colspan="
-"\"2\">Končno lahko v načinu hitre navigacije s kodami še naprej uporabljate "
-"običajne bližnjice. To vključuje, kar je pomembno:</td></tr> "
-"<tr><td><tt><b>Ctrl+Return</b></tt></td><td>Zaženi trenutno vrstico ali "
-"izbor</td></tr> </table>"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:38
 #, kde-format
 msgid "Notes and Tips"
-msgstr "Opombe in nasveti"
+msgstr ""
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -382,13 +343,6 @@ msgid ""
 "syntax is assumed, syntax errors will be skipped over, which may lead to "
 "unexpected behavior."
 msgstr ""
-"Dejanje 'n' naj bi opomnilo na ustrezni ukaz korak v razhroščevalniku R "
-"(glejte <link href=\"rkward://rhelp/browser\"/>), vendar ni isto. "
-"Najpomembnejša razlika je v tem, da navigacija po kodi, opisana tukaj, "
-"deluje na popolnoma statični razčlenjeni predstavitvi skripte in sploh ne "
-"poskuša slediti toku krmiljenja. Poleg tega je predpostavljena dobro "
-"oblikovana sintaksa, sintaktične napake pa bodo preskočene, kar lahko "
-"povzroči nepričakovano vedenje."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -400,11 +354,6 @@ msgid ""
 "behave in a way, that we hope makes sense, intuitively. Remember to always "
 "control, visually, what you are doing, before you hit Ctrl+Enter."
 msgstr ""
-"Poleg tega, kaj točno je \"ukaz\" in \"notranji\" ali \"zunanji\" kontekst, "
-"morda ni vedno povsem jasno in se ne ujema vedno natančno s tem, kako "
-"mehanizem R vidi vašo kodo. Namesto tega so ti ukazi namenjeni delovanju na "
-"način, za katerega upamo, da je intuitivno smiseln. Ne pozabite vedno "
-"vizualno nadzorovati, kaj počnete, preden pritisnete Ctrl+Enter."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -414,10 +363,6 @@ msgid ""
 "are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
-"Večina ukazov kaže tendenco premikanja proti zunanjim kontekstom, zato 'n' "
-"in 'N' nista natančna nasprotja. Ne pozabite, da lahko zadnji korak "
-"razveljavite z uporabo tipke Backspace, če ste prišli dlje od lokacije, ki "
-"ste jo iskali."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -433,13 +378,16 @@ msgstr "Opiši funkcije in nastavitve v zvezi s konzolo RKWard R."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The console can - by default - be found at the bottom of the application "
+#| "window. Press the tool button labelled \"R Console\" to invoke it."
 msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labeled \"R Console\" to invoke it."
 msgstr ""
 "Konzolo lahko - privzeto - najdete na dnu okna programa. Pritisnite gumb "
-"orodja z oznako \"R Console\", da ga prikličete."
+"orodja z oznako »R Console«, da ga prikličete."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
@@ -2062,8 +2010,6 @@ msgid ""
 "Meta+n to bring up <link href=\"rkward://rkward_code_navigation\">Code "
 "Navigation</link> mode in script windows"
 msgstr ""
-"Meta+n za prikaz načina <link href=\"rkward://rkward_code_navigation"
-"\">Navigacija po kodi</link> v oknih skript"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8

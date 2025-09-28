@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
-"PO-Revision-Date: 2024-08-24 12:06+0100\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2024-08-03 13:43+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -2771,13 +2771,16 @@ msgid "Unhandled output command '%1'"
 msgstr "Unhandled output command '%1'"
 
 #: rkward/misc/rkprogresscontrol.cpp:217
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "There has been an error while trying to load / unload packages. See "
+#| "transcript below for details"
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"<b>There has been an error while running the command. See below for output "
-"details</b>"
+"There has been an error while trying to load / unload packages. See "
+"transcript below for details"
 
 #: rkward/misc/rkprogresscontrol.cpp:228
 #: rkward/settings/rksettingsmoduleoutput.cpp:107
@@ -7809,6 +7812,9 @@ msgstr "Enter the new name"
 msgid "View in editor (read-only)"
 msgstr "View in editor (read-only)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Error opening script file %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (auto)"
 
@@ -7818,9 +7824,6 @@ msgstr "View in editor (read-only)"
 #~ msgstr ""
 #~ "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 #~ "specified in the document header."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Error opening script file %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

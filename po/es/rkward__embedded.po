@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__embedded\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-09 00:38+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2025-09-20 17:48+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -3067,3 +3067,105 @@ msgstr "Tipo de línea"
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
 msgstr "Nota: ¡No aplicable a dispositivos de tipo Trellis!"
+
+#~ msgid "Install from git"
+#~ msgstr "Instalar desde git"
+
+#~ msgid "Install from git results"
+#~ msgstr "Resultados de instalar desde git"
+
+#~ msgid "Set the location where the package resides that you want to install."
+#~ msgstr "Establecer la localización del paquete que quiere instalar."
+
+#~ msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
+#~ msgstr ""
+#~ "Especifique el nombre del usuario (solo GitHub, GitLab y Bitbucket)."
+
+#~ msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
+#~ msgstr ""
+#~ "Especifique el nombre del repositorio (solo GitHub, GitLab y Bitbucket)."
+
+#~ msgid "Give the full URL to the repository (generic git and svn only)."
+#~ msgstr ""
+#~ "Especifique la URL completa del repositorio (solo git y svn genéricos)."
+
+#~ msgid ""
+#~ "If you want a certain commit, tag or branch for installation, define that "
+#~ "here."
+#~ msgstr "Si quiere un commit, etiqueta o rama concreta, defínalo aquí."
+
+#~ msgid ""
+#~ "If you want to install from a subdirectory of the repository, define that "
+#~ "here."
+#~ msgstr ""
+#~ "Si quiere instalar desde un subdirectorio del repositorio, defínalo aquí."
+
+#~ msgid ""
+#~ "To install from a private repository, set your personal access token "
+#~ "(PAT, GitHub and GitLab only)."
+#~ msgstr ""
+#~ "Para instalar desde un repositorio privado, establezca su identificador "
+#~ "de acceso personal (PAT, solo en GitHub y GitLab)."
+
+#~ msgid ""
+#~ "To install from a private repository, set the user name (Bitbucket only)."
+#~ msgstr ""
+#~ "Para instalar desde un repositorio privado, establezca el nombre de "
+#~ "usuario (solo Bitbucket)."
+
+#~ msgid ""
+#~ "To install from a private repository, set the password (Bitbucket only)."
+#~ msgstr ""
+#~ "Para instalar desde un repositorio privado, establezca la contraseña "
+#~ "(solo Bitbucket)."
+
+#~ msgid "Install from git/svn"
+#~ msgstr "Instalar desde git/svn"
+
+#~ msgid "Package source"
+#~ msgstr "Paquete fuente"
+
+#~ msgid "git (generic)"
+#~ msgstr "git (genérico)"
+
+#~ msgid "GitHub"
+#~ msgstr "GitHub"
+
+#~ msgid "GitLab"
+#~ msgstr "GitLab"
+
+#~ msgid "Bitbucket"
+#~ msgstr "Bitbucket"
+
+#~ msgid "subversion (generic)"
+#~ msgstr "subversion (genérico)"
+
+#~ msgid "Package repository"
+#~ msgstr "Repositorio del paquete"
+
+#~ msgid "Git user name"
+#~ msgstr "Nombre del usuario de git"
+
+#~ msgid "Repository"
+#~ msgstr "Repositorio"
+
+#~ msgid "URL to repository"
+#~ msgstr "URL del repositorio"
+
+#~ msgid "Commit/tag/branch"
+#~ msgstr "Commit/etiqueta/rama"
+
+#~ msgid "Subdirectory"
+#~ msgstr "Subdirectorio"
+
+#~ msgid "Private repository"
+#~ msgstr "Repositorio privado"
+
+#~ msgid "Personal access token (PAT)"
+#~ msgstr "Identificador de acceso personal (PAT)"
+
+#~ msgid "User"
+#~ msgstr "Usuario"
+
+#~ msgid "Password"
+#~ msgstr "Contraseña"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2024-08-10 12:44+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -6578,9 +6578,10 @@ msgid "Disable preview"
 msgstr "Wyłącz podgląd"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "R Markdown (HTML)"
 msgid "R Markdown"
-msgstr "R Markdown"
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -7868,6 +7869,9 @@ msgstr "Wprowadź nową nazwę"
 msgid "View in editor (read-only)"
 msgstr "Zobacz w edytorze (tylko-do-odczytu)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Błąd otwieranie pliku skryptu %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (auto)"
 
@@ -7877,9 +7881,6 @@ msgstr "Zobacz w edytorze (tylko-do-odczytu)"
 #~ msgstr ""
 #~ "Podejrzyj skrypt tak jak go wyświetla format RMarkdown (.Rmd) do formatu "
 #~ "określonego w nagłówku dokumentu."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Błąd otwieranie pliku skryptu %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

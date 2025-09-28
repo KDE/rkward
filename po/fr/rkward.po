@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
-"PO-Revision-Date: 2025-08-26 15:58+0200\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2025-04-20 08:53+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -4815,9 +4815,10 @@ msgid "Open as text file and force R highlighting"
 msgstr "Ouvrir un fichier de texte et forcer la coloration syntaxique de R"
 
 #: rkward/rkward.cpp:1024
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
 msgid "Open as R workspace"
-msgstr "Ouvrir comme un espace de travail de R"
+msgstr "Ouvrir un espace de travail récent"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6427,44 +6428,36 @@ msgstr "Noms de fichiers locaux"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr "La commande « S » s'applique uniquement à R Markdown."
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr "Commande inconnue <tt><b>%1</b></tt>"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
-"La recherche est arrivée tout en bas. <br/><tt><b>C</b></tt> pour se "
-"déplacer vers le prochain morceau."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
-"La recherche est arrivée tout en haut. <br/><tt><b>C</b></tt> pour se "
-"déplacer vers le morceau précédent."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
 msgstr ""
-"La recherche est arrivée tout en bas. <br/><tt><b>1</b></tt> pour se "
-"déplacer vers le haut."
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
 msgstr ""
-"La recherche est arrivée tout en haut. <br/><tt><b>!</b></tt> pour se "
-"déplacer vers le bas."
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6472,18 +6465,17 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
-"<b>Navigation par code</b> (<a href=\"rkward://page/rkward_code_navigation"
-"\">Aide</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Editor command"
 msgid "Enter command"
-msgstr "Saisir une commande"
+msgstr "Commande d'édition"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr "Mode de navigation par code immédiat"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6491,8 +6483,6 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
-"Parcourez votre code par utilisation d'appui sur des touches (<a href="
-"\"rkward://page/rkward_code_navigation\">Plus d'informations</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6500,90 +6490,97 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
-"Parcourez votre code en fonction de sa structure ou entrez dans le <a href="
-"\"rkward://page/rkward_code_navigation\">mode de navigation par code  "
-"immédiat.</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No device integration"
 msgid "Code Navigation"
-msgstr "Navigation dans le code"
+msgstr "Aucune intégration de périphériques"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr "Lancer"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next statement"
-msgstr "Instruction suivante"
+msgstr "Énoncé incomplet.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous statement"
-msgstr "Instruction suivante"
+msgstr "Emplacement précédent"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr "Instruction suivante (Interne)"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr "Instruction précédente (Interne)"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next outer statement"
-msgstr "Instruction suivante externe"
+msgstr "Énoncé incomplet.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr "Instruction précédente externe"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next toplevel statement"
-msgstr "Instruction suivante de haut niveau"
+msgstr "Énoncé incomplet.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Previous toplevel statement"
-msgstr "Instruction précédente de haut niveau"
+msgstr "Énoncé incomplet.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr "Prochain morceau de code"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous code chunk"
-msgstr "Morceau précédent de code"
+msgstr "Emplacement précédent"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current statement"
-msgstr "Sélectionner l'instruction courante"
+msgstr "Sélectionner un objet parent"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current code chunk"
-msgstr "Sélectionner le morceau courant de code"
+msgstr "Sélectionner un objet parent"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Run"
 msgid "Run"
-msgstr "Exécuter"
+msgstr "&Exécuter"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr "Exécuter l'instruction courante et avancer"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
@@ -6738,9 +6735,10 @@ msgid "Disable preview"
 msgstr "Désactiver l'aperçu"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "R Markdown (HTML)"
 msgid "R Markdown"
-msgstr "Markdown de R"
+msgstr "Markdown de R (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6748,31 +6746,34 @@ msgid "Preview of rendered R Markdown"
 msgstr "Aperçu du langage de rendu « Markdown » de R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:729
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 "Afficher un aperçu pour le script comme rendu à partir du format "
-"« RMarkdown » (.Rmd)"
+"« Markdown » pour R (.Rmd) vers le format « HTML »."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:733
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select format"
 msgid "Render format"
-msgstr "Format de rendu"
+msgstr "Sélectionner un format"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as HTML"
-msgstr "Rendu au format « HTML »"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Render as PDF"
-msgstr "Rendu au format « PDF »"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format"
 msgid "Auto Format"
-msgstr "Formater automatiquement"
+msgstr "Formater"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
@@ -6807,24 +6808,28 @@ msgstr ""
 "interactive."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Echo statements"
-msgstr "Rappeler les déclarations"
+msgstr "Énoncé incomplet.\n"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Convert warnings to errors"
 msgid "Continue on error"
-msgstr "Continuer après erreur"
+msgstr "Convertir les alarmes en erreurs"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:772
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Environment"
 msgid "Evaluation environment"
-msgstr "Environnement d'évaluation"
+msgstr "Environnement"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:774
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy to .GlobalEnv"
 msgid ".GlobalEnv"
-msgstr ".GlobalEnv"
+msgstr "Copier vers « .GlobalEnv »"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
@@ -6832,13 +6837,11 @@ msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
-"Évaluez le code directement dans « .GlobalEnv ». Les affectations peuvent "
-"accéder <b>et modifier</b> des objets dans « .GlobalEnv »."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:777
 #, kde-format
 msgid "Scoped"
-msgstr "Parfaitement défini"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
@@ -6847,15 +6850,12 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
-"Évaluez le code dans une portée dérivée de « .GlobalEnv ». Les objets dans "
-"« .GlobalEnv » sont accessibles mais les affectations régulières utilisant "
-"l'opérateur <tt>&lt;-</tt> ne les modifieront pas. (D'autres opérations "
-"d'affectation pourraient encore les modifier ! )"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Location"
 msgid "Local"
-msgstr "Local"
+msgstr "Emplacement"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
@@ -6865,11 +6865,6 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
-"Évaluez le code dans un véritable environnement local. Les objets dans « ."
-"GlobalEnv » ne sont pas dans les emplacements de recherche. Ils ne seront "
-"pas modifiés par des affectations régulières à l'aide de l'opérateur "
-"<tt>&lt;-</tt>. (D'autres opérations d'affectation pourraient encore les "
-"modifier ! )"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:796
 #, kde-format
@@ -6893,13 +6888,25 @@ msgstr ""
 "ou d'autres commandes graphiques."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:813
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Mode d'aperçu"
+msgstr "Aperçu"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
+#| "to your workspace (technically, by making use of a <i>local()</i> "
+#| "evaluation environment). <b>However, there are cases where using the "
+#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
+#| "particular, this is the case for scripts that contain explicit "
+#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
+#| "filesystem. Further, attaching/detaching packages or package namespaces "
+#| "will affect the entire running R session.</p><p>Please keep this in mind "
+#| "when using the preview feature, and especially when using the feature on "
+#| "scripts originating from untrusted sources.</p>"
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6913,18 +6920,18 @@ msgid ""
 "especially when using the feature on scripts originating from untrusted "
 "sources.</p>"
 msgstr ""
-"<p>La fonctionnalité d'aperçu <b>essaye</b> d'éviter d'apporter des "
-"modifications durables à votre espace de travail (Techniquement, en faisant "
-"usage d'un environnement <i>local()</i> d'évaluation). <b>Cependant, <b>il "
-"existe des cas où l'utilisation de la fonctionnalité d'aperçu peut provoquer "
-"des effets secondaires inattendus</b>.</p><p>En particulier, c'est le cas "
-"pour les scripts contenant explicitement des affectations à <i>globalenv()</"
-"i> ou à des scripts modifiant des fichiers de votre système de fichiers. De "
-"plus, le fait d'attacher / détacher des paquets ou des espaces de noms de "
-"paquets affectera l'ensemble de la session R en cours d'exécution.</"
-"p><p>Veuillez garder ceci à l'esprit lorsque vous utilisez la fonctionnalité "
-"d'aperçu et surtout, lors de l'utilisation de la fonctionnalité sur des "
-"scripts provenant de sources non fiables.</p>"
+"<p>La fonction d'aperçu <b>tente</b> d'éviter d'apporter des modifications "
+"durables à votre espace de travail (techniquement, en faisant usage d'un "
+"<i>local()</i> environnement d'évaluation). <b>Cependant, il existe des cas "
+"où l'utilisation de la fonctionnalité d'aperçu peut provoquer des effets "
+"secondaires inattendus</b>.</p><p>En particulier, c'est le cas pour les "
+"scripts contenant explicitement des affectations à <i>globalenv()</i> ou à "
+"des scripts modifiant des fichiers de votre système de fichiers. De plus, le "
+"fait d'attacher / détacher des paquets ou des espaces de noms de paquets va "
+"affecter l'ensemble de la session R en cours d'exécution.</p><p>Veuillez "
+"conserver ceci à l'esprit lorsque vous utilisez la fonctionnalité d'aperçu "
+"et surtout, lors de l'utilisation de la fonctionnalité sur des scripts "
+"provenant de sources non fiables.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
@@ -7208,7 +7215,8 @@ msgid "[Active]"
 msgstr "[Actif]"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Sortie de %1"
@@ -8044,6 +8052,10 @@ msgstr "Saisissez un nouveau nom"
 msgid "View in editor (read-only)"
 msgstr "Affichage dans l'éditeur (Lecture seule)"
 
+# unreviewed-context
+#~ msgid "Error opening script file %1"
+#~ msgstr "Problème lors de l'ouverture du fichier %1 de scripts"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "Markdown pour R (Auto)"
 
@@ -8053,10 +8065,6 @@ msgstr "Affichage dans l'éditeur (Lecture seule)"
 #~ msgstr ""
 #~ "Afficher un aperçu pour le script comme rendu à partir du format "
 #~ "« RMarkdown » (.Rmd) vers le format spécifié dans l'en-tête de document."
-
-# unreviewed-context
-#~ msgid "Error opening script file %1"
-#~ msgstr "Problème lors de l'ouverture du fichier %1 de scripts"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

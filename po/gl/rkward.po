@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
-"PO-Revision-Date: 2025-06-22 05:58+0200\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2025-05-03 07:08+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -4717,9 +4717,10 @@ msgid "Open as text file and force R highlighting"
 msgstr "Abrir como ficheiro de texto e forzar o realce de sintaxe de R"
 
 #: rkward/rkward.cpp:1024
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
 msgid "Open as R workspace"
-msgstr "Abrir como espazo de traballo de R"
+msgstr "Abrir un espazo de traballo recente"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6305,41 +6306,36 @@ msgstr "Nomes de ficheiro locais"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr "A orde «S» só é para Markdown de R"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr "Descoñécese a orde <tt><b>%1</b></tt>"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
-"A busca chegou ao final.<br/>Use <tt><b>c</b></tt> para ir á seguinte parte."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
-"A busca chegou ao principio.<br/>Use <tt><b>C</b></tt> para ir á parte "
-"anterior."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
 msgstr ""
-"A busca chegou ao final.<br/>Use <tt><b>1</b></tt> para ir ao principio."
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
 msgstr ""
-"A busca chegou ao principio.<br/>Use <tt><b>!</b></tt> para ir ao final."
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6347,18 +6343,17 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
-"<b>Navegación de código</b> (<a href=\"rkward://page/rkward_code_navigation"
-"\">Axuda</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Editor command"
 msgid "Enter command"
-msgstr "Insira unha orde"
+msgstr "Orde do editor"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr "Modo de navegación de código rápida"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6366,8 +6361,6 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
-"Use unha prema para cada paso polo seu código (<a href=\"rkward://page/"
-"rkward_code_navigation\">more info</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6375,89 +6368,97 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
-"Navegue a estrutura do código ou active o <a href=\"rkward://page/"
-"rkward_code_navigation\">Modo de navegación de código rápida</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No device integration"
 msgid "Code Navigation"
-msgstr "Navegación de código"
+msgstr "Sen integración do dispositivo"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr "Ir"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next statement"
-msgstr "Seguinte sentenza"
+msgstr "Instrución incompleta.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous statement"
-msgstr "Sentenza anterior"
+msgstr "Gráfica anterior"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr "Seguinte sentenza interna"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr "Sentenza interna anterior"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next outer statement"
-msgstr "Seguinte sentenza externa"
+msgstr "Instrución incompleta.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr "Sentenza externa anterior"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next toplevel statement"
-msgstr "Seguinte sentenza raíz"
+msgstr "Instrución incompleta.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Previous toplevel statement"
-msgstr "Sentenza raíz anterior"
+msgstr "Instrución incompleta.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr "Seguinte parte de código"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous code chunk"
-msgstr "Parte de código anterior"
+msgstr "Gráfica anterior"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current statement"
-msgstr "Seleccionar a sentencia actual"
+msgstr "Seleccionar o obxecto pai"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current code chunk"
-msgstr "Seleccionar a sección actual de código"
+msgstr "Seleccionar o obxecto pai"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Run"
 msgid "Run"
-msgstr "Executar"
+msgstr "&Executar"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr "Executar a sentenza actual e avanzar"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
@@ -6685,9 +6686,9 @@ msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
 #, fuzzy, kde-format
-#| msgid "Next statement"
+#| msgid "Incomplete statement.\n"
 msgid "Echo statements"
-msgstr "Seguinte sentenza"
+msgstr "Instrución incompleta.\n"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
 #, fuzzy, kde-format
@@ -7087,7 +7088,8 @@ msgid "[Active]"
 msgstr "(activo)"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Saída %1"
@@ -7912,6 +7914,9 @@ msgstr "Insira o novo nome"
 msgid "View in editor (read-only)"
 msgstr "Ver no editor (só lectura)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Produciuse un erro ao abrir o ficheiro de guionización %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "Markdown de R (automático)"
 
@@ -7921,9 +7926,6 @@ msgstr "Ver no editor (só lectura)"
 #~ msgstr ""
 #~ "Obter unha vista previa do guión como se renderiza de formato RMarkdown (."
 #~ "Rmd) ao formato indicado na cabeceira do documento."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Produciuse un erro ao abrir o ficheiro de guionización %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

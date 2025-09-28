@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2022-10-08 11:03+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -7989,6 +7989,9 @@ msgstr "Indique o novo nome"
 msgid "View in editor (read-only)"
 msgstr "Ver no editor (apenas para leitura)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Ocorreu um erro ao abrir o ficheiro do programa %1"
+
 #, fuzzy
 #~| msgid "R Markdown"
 #~ msgid "R Markdown (auto)"
@@ -8004,9 +8007,6 @@ msgstr "Ver no editor (apenas para leitura)"
 #~ msgstr ""
 #~ "Antever o programa desenhado com a formatação do RMarkdown (apropriado "
 #~ "para os ficheiros .Rmd)."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Ocorreu um erro ao abrir o ficheiro do programa %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

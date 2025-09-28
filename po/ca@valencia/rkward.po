@@ -6,15 +6,15 @@
 # Griera <griera@gmail.com>, 2006.
 # Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
 # Josep Roca <pep.roca@gmail.com>, 2007, 2010, 2012.
-# SPDX-FileCopyrightText: 2014, 2016, 2018, 2019, 2020, 2022, 2025 Antoni Bella Pérez <antonibella5@yahoo.com>
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2019, 2020, 2022.
 # SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
-"PO-Revision-Date: 2025-08-28 14:23+0200\n"
-"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2025-08-25 10:00+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -4763,9 +4763,10 @@ msgid "Open as text file and force R highlighting"
 msgstr "Obri com a fitxer de text i força el ressaltat d'R"
 
 #: rkward/rkward.cpp:1024
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
 msgid "Open as R workspace"
-msgstr "Obri com un espai de treball R"
+msgstr "Obri un espai de treball recent"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6356,42 +6357,36 @@ msgstr "Noms dels fitxers locals"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr "L'ordre «S» només és per R Markdown"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr "Ordre desconeguda <tt><b>%1</b></tt>"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
-"La busca ha arribat a baix.<br/><tt><b>c</b></tt> per a moure's al fragment "
-"següent."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
-"La busca ha arribat a dalt.<br/><tt><b>C</b></tt> per a moure's al fragment "
-"anterior."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
 msgstr ""
-"La busca ha arribat a baix.<br/><tt><b>1</b></tt> per a moure's a dalt."
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
 msgstr ""
-"La busca ha arribat a dalt.<br/><tt><b>!</b></tt> per a moure's a baix."
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6399,18 +6394,17 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
-"<b>Navegació de codi</b> (<a href=\"rkward://page/rkward_code_navigation"
-"\">Ajuda</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Editor command"
 msgid "Enter command"
-msgstr "Introduïu una ordre"
+msgstr "Ordre de l'editor"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr "Mode de navegació ràpida de codi"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6418,8 +6412,6 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
-"Aneu pel codi utlitzant una única pulsació (<a href=\"rkward://page/"
-"rkward_code_navigation\">més informació</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6427,89 +6419,97 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
-"Aneu pel codi en funció de la seua estructura o entreu en el <a href="
-"\"rkward://page/rkward_code_navigation\">Mode de navegació ràpida de codi</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No device integration"
 msgid "Code Navigation"
-msgstr "Navegació de codi"
+msgstr "Sense integració del dispositiu"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr "Ves"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next statement"
-msgstr "Sentència següent"
+msgstr "Sentència incompleta.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous statement"
-msgstr "Sentència anterior"
+msgstr "Diagrama anterior"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr "Sentència (interior) següent"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr "Sentència (interior) anterior"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next outer statement"
-msgstr "Sentència exterior següent"
+msgstr "Sentència incompleta.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr "Sentència exterior anterior"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next toplevel statement"
-msgstr "Sentència següent del nivell superior"
+msgstr "Sentència incompleta.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Previous toplevel statement"
-msgstr "Sentència anterior del nivell superior"
+msgstr "Sentència incompleta.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr "Fragment de codi següent"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous code chunk"
-msgstr "Fragment de codi anterior"
+msgstr "Diagrama anterior"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current statement"
-msgstr "Trieu la sentència actual"
+msgstr "Trieu l'objecte pare"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current code chunk"
-msgstr "Trieu el fragment actual de codi"
+msgstr "Trieu l'objecte pare"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Run"
 msgid "Run"
-msgstr "Executa"
+msgstr "&Executa"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr "Executa la sentència actual i avança"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
@@ -6664,9 +6664,10 @@ msgid "Disable preview"
 msgstr "Desactiva la vista prèvia"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "R Markdown (HTML)"
 msgid "R Markdown"
-msgstr "R Markdown"
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6674,29 +6675,33 @@ msgid "Preview of rendered R Markdown"
 msgstr "Vista prèvia d'R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:729
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
-msgstr "Previsualitza l'script representat des del format RMarkdown (.Rmd)"
+msgstr ""
+"Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) a HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:733
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select format"
 msgid "Render format"
-msgstr "Format de representació"
+msgstr "Trieu el format"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as HTML"
-msgstr "Representa com a HTML"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Render as PDF"
-msgstr "Representa com a PDF"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format"
 msgid "Auto Format"
-msgstr "Format automàtic"
+msgstr "Format"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
@@ -6731,41 +6736,41 @@ msgstr ""
 "interactiva"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Echo statements"
-msgstr "Reproduïx les sentències"
+msgstr "Sentència incompleta.\n"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Convert warnings to errors"
 msgid "Continue on error"
-msgstr "Continua en cas d'error"
+msgstr "Convertix els avisos en errors"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:772
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Environment"
 msgid "Evaluation environment"
-msgstr "Entorn d'avaluació"
+msgstr "Entorn"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:774
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy to .GlobalEnv"
 msgid ".GlobalEnv"
-msgstr ".GlobalEnv"
+msgstr "Copia a «.GlobalEnv»"
 
-# skip-rule: t-sp_pu
 #: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
-"Avalua el codi directament a «.GlobalEnv». Les assignacions poden accedir "
-"<b>i modificar</b> objectes a «.GlobalEnv»."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:777
 #, kde-format
 msgid "Scoped"
-msgstr "En un àmbit"
+msgstr ""
 
-# skip-rule: t-sp_pu
 #: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
 msgid ""
@@ -6773,17 +6778,13 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
-"Avalua el codi en un àmbit fill de «.GlobalEnv». Es pot accedir als objectes "
-"a «.GlobalEnv», però les assignacions normals que fan servir l'operador "
-"<tt>&lt;-</tt> no els modificaran. (Altres operacions d'assignació encara "
-"els podrien modificar!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Location"
 msgid "Local"
-msgstr "Local"
+msgstr "Ubicació"
 
-# skip-rule: t-sp_pu
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
 msgid ""
@@ -6792,10 +6793,6 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
-"Avalua el codi en un entorn local real. Els objectes a «.GlobalEnv» no estan "
-"en el camí de busca, i no es modificaran per les assignacions normals que "
-"fan servir l'operador <tt>&lt;-</tt>. (Altres operacions d'assignació encara "
-"els podrien modificar!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:796
 #, kde-format
@@ -6819,13 +6816,25 @@ msgstr ""
 "i> o altres ordres de gràfics."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:813
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Mode de vista prèvia"
+msgstr "Vista prèvia"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
+#| "to your workspace (technically, by making use of a <i>local()</i> "
+#| "evaluation environment). <b>However, there are cases where using the "
+#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
+#| "particular, this is the case for scripts that contain explicit "
+#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
+#| "filesystem. Further, attaching/detaching packages or package namespaces "
+#| "will affect the entire running R session.</p><p>Please keep this in mind "
+#| "when using the preview feature, and especially when using the feature on "
+#| "scripts originating from untrusted sources.</p>"
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6840,17 +6849,16 @@ msgid ""
 "sources.</p>"
 msgstr ""
 "<p>La característica de vista prèvia <b>intenta</b> evitar fer qualsevol "
-"canvi que tarde a l'espai de treball, de manera predeterminada (tècnicament, "
-"fent ús de l'avaluació d'un entorn d'avaluació <i>local</i>; alguns modes de "
-"vista prèvia permeten un control opcional damunt de l'entorn d'avaluació). "
-"Tanmateix, <b>hi ha casos a on l'ús de la funcionalitat de vista prèvia pot "
-"provocar efectes col·laterals inesperats</b>.</p><p>En particular, este és "
-"el cas de scripts que contenen assignacions explícites a <i>globalenv()</i>, "
-"o de scripts que alteren fitxers del sistema de fitxers. A més, la connexió/"
-"desconnexió de paquets o d'espais de nom de paquets afectarà la sessió R "
-"completa en execució.</p><p>Cal tindre-ho en compte quan utilitzeu la "
-"funcionalitat de vista prèvia, i especialment en utilitzar la funcionalitat "
-"en scripts originats des de fonts no confiables.</p>"
+"canvi que tarde a l'espai de treball (tècnicament, fent ús de l'avaluació de "
+"l'entorn <i>local()</i>). <b>Tanmateix, hi ha casos a on l'ús de la "
+"funcionalitat de vista prèvia pot provocar efectes col·laterals inesperats</"
+"b>.</p><p>En particular, este és el cas de scripts que contenen assignacions "
+"explícites a <i>globalenv()</i>, o a scripts que alteren fitxers del sistema "
+"de fitxers. A més, la connexió/desconnexió de paquets o d'espais de nom de "
+"paquets afectarà la sessió R completa en execució.</p><p>Cal tindre-ho en "
+"compte quan utilitzeu la funcionalitat de vista prèvia, i especialment en "
+"utilitzar la funcionalitat en scripts originats des de fonts no confiables.</"
+"p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
@@ -7131,7 +7139,8 @@ msgid "[Active]"
 msgstr "[Actiu]"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Eixida de %1"
@@ -7954,3 +7963,16 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure en l'editor (només lectura)"
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "S'ha produït un error en obrir el fitxer de script %1"
+
+#~ msgid "R Markdown (auto)"
+#~ msgstr "R Markdown (automàtic)"
+
+#~ msgid ""
+#~ "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
+#~ "specified in the document header."
+#~ msgstr ""
+#~ "Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) al "
+#~ "format especificat a la capçalera del document."

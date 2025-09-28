@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
-"PO-Revision-Date: 2025-08-25 06:30+0200\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2025-06-25 04:33+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.6\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2819,7 +2819,7 @@ msgstr "მშობელი ობიექტი: %1"
 #: rkward/misc/rksaveobjectchooser.cpp:99
 #, kde-format
 msgid "Select parent object"
-msgstr "მშობელი ობიექტის მონიშვნა"
+msgstr "მშობელი ობიექტის გაშვება"
 
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
@@ -4540,9 +4540,10 @@ msgid "Open as text file and force R highlighting"
 msgstr "ტექსტური ფაილის სახით გახსნა და R-ის ტექსტის გამოკვეთა"
 
 #: rkward/rkward.cpp:1024
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
 msgid "Open as R workspace"
-msgstr "R-ის სამუშაო სივრცის სახით გახსნა"
+msgstr "უახლესი სამუშაო სივრცის გახსნა"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6009,38 +6010,36 @@ msgstr "ლოკალური ფაილის სახელები"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr "ბრძანება 'S', მხოლოდ, R-ის მარკდაუნისთვისაა"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr "უცნობი ბრძანება <tt><b>%1</b></tt>"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
-"ძებნა ბოლოში გავიდა.<br/><tt><b>c</b></tt> შემდეგ ფრაგმენტზე გადასასვლელად."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
-"ძებნა თავიდან დაიწყო.<br/><tt><b>C</b></tt> წინა ფრაგმენტზე გადასასვლელად."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
-msgstr "ძებნა ბოლოში გავიდა.<br/><tt><b>1</b></tt> თავში გადასასვლელად."
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
-msgstr "ძებნა თავიდან დაიწყო.<br/><tt><b>!</b></tt> ბოლოში გადასასვლელად."
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6048,18 +6047,17 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
-"<b>კოდის ნავიგაცია</b> (<a href=\"rkward://page/rkward_code_navigation"
-"\">დახმარება</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Editor command"
 msgid "Enter command"
-msgstr "შეიყვანეთ ბრძანება"
+msgstr "რედაქტორის ბრძანება"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr "სწრაფი კოდში ნავიგაციის რეჟიმი"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6067,8 +6065,6 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
-"კოდში გადასვლა ერთი ღილაკების კომბინაციით (<a href=\"rkward://page/"
-"rkward_code_navigation\">გაიგეთ მეტი</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6076,89 +6072,97 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
-"იარეთ კოდში მისი სტრუქტურის მიხედვით, ან გადადით <a href=\"rkward://page/"
-"rkward_code_navigation\">სწრაფი კოდის ნავიგაციის რეჟიმში</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No device integration"
 msgid "Code Navigation"
-msgstr "კოდის ნავიგაცია"
+msgstr "მოწყობილობის ჩაშენების გარეშე"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr "გადასვლა"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next statement"
-msgstr "შემდეგი ინსტრუქცია"
+msgstr "არასწორი პირობა.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous statement"
-msgstr "წინა ინსტრუქცია"
+msgstr "წინა ნახაზი"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr "შემდეგი (შიდა) გამოსახულება"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr "წინა (შიდა) ინსტრუქცია"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next outer statement"
-msgstr "შემდეგი გარე ინსტრუქცია"
+msgstr "არასწორი პირობა.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr "წინა გარე ინსტრუქცია"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next toplevel statement"
-msgstr "შემდეგი უმაღლესი დონის ინსტრუქცია"
+msgstr "არასწორი პირობა.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Previous toplevel statement"
-msgstr "წინა უმაღლესი დონის ინსტრუქცია"
+msgstr "არასწორი პირობა.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr "წინა კოდის ფრაგმენტი"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous code chunk"
-msgstr "წინა კოდის ფრაგმენტი"
+msgstr "წინა ნახაზი"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current statement"
-msgstr "მიმდინარე ინსტრუქციის მონიშვნა"
+msgstr "მშობელი ობიექტის გაშვება"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current code chunk"
-msgstr "მიმდინარე კოდის ფრაგმენტის მონიშვნა"
+msgstr "მშობელი ობიექტის გაშვება"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Run"
 msgid "Run"
-msgstr "გაშვება"
+msgstr "&გაშვება"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr "მიმდინარე გამოსახულების გაშვება და წინ გადასვლა"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
@@ -6295,9 +6299,10 @@ msgid "Disable preview"
 msgstr "მინიატურების გამორთვა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "R Markdown (HTML)"
 msgid "R Markdown"
-msgstr "R Markdown"
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6305,30 +6310,34 @@ msgid "Preview of rendered R Markdown"
 msgstr "დარენდერებული R მარკდაუნის მინიატურა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:729
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
-"სკრიპტის მინიატურა, როგორც ის RMarkdown (.Rmd) ფორმატიდან დარენდერდებოდა"
+"სკრიპტის მინიატურა, როგორც ის RMarkdown (.Rmd) ფორმატიდან HTML-ში "
+"დარენდერდებოდა."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:733
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select format"
 msgid "Render format"
-msgstr "რენდერის ფორმატი"
+msgstr "აირჩიეთ ფორმატი"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as HTML"
-msgstr "რენდერი როგორც HTML"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Render as PDF"
-msgstr "რენდერი როგორც PDF"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format"
 msgid "Auto Format"
-msgstr "ავტომატური ფორმატი"
+msgstr "ფორმატი"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
@@ -6358,24 +6367,28 @@ msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "სკრიპტის მინიატურა, თითქოს ის R-ის ინტერაქტიურ კონსოლში გაეშვა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Echo statements"
-msgstr "ინსტრუქციების ექო"
+msgstr "არასწორი პირობა.\n"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Convert warnings to errors"
 msgid "Continue on error"
-msgstr "გაგრძელება შეცდომისას"
+msgstr "გაფრთხილებების გარდაქმნა შეცდომებად"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:772
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Environment"
 msgid "Evaluation environment"
-msgstr "შეფასების გარემო"
+msgstr "გარემო"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:774
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy to .GlobalEnv"
 msgid ".GlobalEnv"
-msgstr ".GlobalEnv"
+msgstr "კოპირება ფაილში .GlobalEnv"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
@@ -6398,9 +6411,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Location"
 msgid "Local"
-msgstr "ლოკალური"
+msgstr "დებარეობა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
@@ -6430,10 +6444,11 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:813
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "გადახედვის რეჟიმი"
+msgstr "ესკიზი"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
@@ -6713,7 +6728,8 @@ msgid "[Active]"
 msgstr "[აქტიურია]"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "%1-ის გამოტანა"
@@ -7497,11 +7513,11 @@ msgstr "შეიყვანეთ ახალი სახელი"
 msgid "View in editor (read-only)"
 msgstr "რედაქტორში გახსნა (მხოლოდ-წაკითხვადი)"
 
-#~ msgid "R Markdown (auto)"
-#~ msgstr "R Markdown (ავტო)"
-
 #~ msgid "Error opening script file %1"
 #~ msgstr "სკრიპტის ფაილის (%1) გახსნის შეცდომა"
+
+#~ msgid "R Markdown (auto)"
+#~ msgstr "R Markdown (ავტო)"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

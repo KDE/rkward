@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2025-01-21 17:22+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -2813,6 +2813,9 @@ msgstr "Необработанная команда вывода «%1»"
 
 #: rkward/misc/rkprogresscontrol.cpp:217
 #, fuzzy, kde-format
+#| msgid ""
+#| "There has been an error while trying to load / unload packages. See "
+#| "transcript below for details"
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
@@ -7905,6 +7908,9 @@ msgstr "Введите новое имя"
 msgid "View in editor (read-only)"
 msgstr "Просмотреть в редакторе (только чтение)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Ошибка открытия файла сценария %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (автоматически)"
 
@@ -7915,8 +7921,19 @@ msgstr "Просмотреть в редакторе (только чтение)
 #~ "Предварительный просмотр сценария (преобразование из RMarkdown (.Rmd) в "
 #~ "формат, указанный в заголовке документа)."
 
-#~ msgid "Error opening script file %1"
-#~ msgstr "Ошибка открытия файла сценария %1"
+#~ msgid ""
+#~ "<b>There have been errors and / or warnings. See below for a transcript</"
+#~ "b>"
+#~ msgstr "<b>Присутствовали ошибки и/или предупреждения (см. ниже)</b>"
+
+#~ msgid "Output:"
+#~ msgstr "Вывод:"
+
+#~ msgid "Errors / Warnings"
+#~ msgstr "Ошибки и предупреждения"
+
+#~ msgid "Errors / Warnings:"
+#~ msgstr "Ошибки и предупреждения:"
 
 #~ msgid "<<Open another file>>"
 #~ msgstr "<<Открыть другой файл>>"
@@ -7933,17 +7950,3 @@ msgstr "Просмотреть в редакторе (только чтение)
 
 #~ msgid "Do you want to save the current workspace?"
 #~ msgstr "Сохранить текущую рабочую область?"
-
-#~ msgid ""
-#~ "<b>There have been errors and / or warnings. See below for a transcript</"
-#~ "b>"
-#~ msgstr "<b>Присутствовали ошибки и/или предупреждения (см. ниже)</b>"
-
-#~ msgid "Errors / Warnings"
-#~ msgstr "Ошибки и предупреждения"
-
-#~ msgid "Errors / Warnings:"
-#~ msgstr "Ошибки и предупреждения:"
-
-#~ msgid "Output:"
-#~ msgstr "Вывод:"

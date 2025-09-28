@@ -80,9 +80,9 @@ as Authors, publish date, the abstract, and Keywords -->
 >&FDLNotice;</legalnotice>
 
 <date
->3 de maig de 2025</date>
+>7 de setembre de 2024</date>
 <releaseinfo
->0.8.2</releaseinfo>
+>0.8.1</releaseinfo>
 
 <abstract>
 <para
@@ -987,15 +987,6 @@ as Authors, publish date, the abstract, and Keywords -->
 >), i les variàncies iguals <command
 >&lt;checkbox&gt;</command
 >, el procediment és molt similar. </para>
-		<note>
-			<para
->En lloc de concatenar cadenes utilitzant l'operador <command
->+</command
->, també podeu utilitzar un «literal de plantilla», com aquest (cal tenir en compte que la cadena està inclosa entre accents greus (`)):</para>
-			<programlisting
->echo(`res &lt;- t.test (x=${ getString("x") }, y=${ getString("y") }, hypothesis="${ getString("hypothesis") }"`); // etc.
-                        </programlisting>
-		</note>
 		<para
 >Tingueu en compte que en lloc de concatenar els fragments de sortida amb «+», també podeu utilitzar diverses sentències <function
 >echo()</function
@@ -1499,13 +1490,16 @@ i quines seccions de codi contenen quin codi R.
 '
         &lt;logic&gt;
                 &lt;script&gt;&lt;![CDATA[
-                        // [...] any code at the top level is called only once
-                        gui.addChangeCommand("mode.string", function() {
-                                // while this anonymous function will be called, whenever "mode.string" changes
-                                var varmode = (gui.getString("mode.string") == "variable");
-                                gui.setValue("y.enabled", varmode);
-                                gui.setValue("constant.enabled", !varmode);
-                        });
+                        // ECMAScript code in this block
+                        // the top-level statement is only called once
+                        gui.addChangeCommand ("mode.string", "modeChanged ()");
+
+                        // this function is called whenever the "mode" was changed
+                        modeChanged = function () {
+                                var varmode = (gui.getString ("mode.string") == "variable");
+                                gui.setValue ("y.enabled", varmode);
+                                gui.setValue ("constant.enabled", !varmode);
+                        }
                 ]]&gt;&lt;/script&gt;
         &lt;/logic&gt;
 
@@ -1513,7 +1507,9 @@ i quines seccions de codi contenen quin codi R.
         [...]
         </programlisting>
 	<para
->Això registra una funció anònima que es cridarà, sempre que canviï el valor del quadre de botons d'opció <parameter
+>La primera línia de codi li diu al &rkward; que cridi a la funció <function
+>modeChanged()</function
+> sempre que canviï el valor del quadre de botons d'opció <parameter
 >id=</parameter
 ><replaceable
 >"mode"</replaceable
@@ -1532,22 +1528,6 @@ i quines seccions de codi contenen quin codi R.
 >, de la mateixa manera que abans vam fer servir sentències <command
 >&lt;connect&gt;</command
 >. </para>
-	<note
-><para
->Si s'ha d'invocar la mateixa funció per a canvis en diversos elements, també podeu passar una matriu dels <parameter
->id=</parameter
-> respectius a <command
->gui.addChangeCommmand()</command
->. A més, per comoditat, <command
->gui.addChangeCommmand()</command
-> retorna el seu segon paràmetre, que és útil si voleu fer referència a aquesta funció a un altre lloc (p. ex. cridar-la una vegada durant la inicialització). P. ex.: </para>
-	<programlisting
->let update = gui.addChangeCommand(["mode.string", "y.available"], function() {
-                // fa alguna cosa en cada canvi de mode.string o y.available
-        });
-        update(); // fa el mateix un cop durant la inicialització
-        </programlisting>
-	</note>
 	<para
 >L'enfocament amb scripts a la lògica de la &IGU; esdevé particularment útil quan voleu canviar l'opció disponible segons el tipus d'objecte que l'usuari ha seleccionat. Vegeu <link linkend="guilogic_functions"
 >la referència</link
@@ -2557,23 +2537,25 @@ function getSpecifics () {
 >:</para>
 	<programlisting
 >&lt;script&gt;&lt;![CDATA[
-                                let update = gui.addChangeCommand ("variable", function () {
+                                last_command_id = -1;
+                                gui.addChangeCommand ("variable", "update ()");
+                                update = function () {
                                         gui.setValue ("selector.enabled", 0);
                                         variable = gui.getValue ("variable");
                                         if (variable == "") return;
 
-                                        new RCommand('levels (' + variable + ')', "myid").then(result =
-> {
-                                                gui.setValue ("selector.enabled", 1);
-                                                gui.setListValue ("selector.available", result);
-                                        }).catch(msg =
-> {
-                                                if (msg === "outdated") return;  // command was canceled, because new one is about to arrive -> benign
-                                                // possibly other error handling, msg carries the warnings and error messages produced,
-                                                // if the command failed e.g.:
-                                                gui.setListValue ("selector.available", Array ("ERROR:", msg));
-                                        });
-                                });
+                                        last_command_id = doRCommand ('levels (' + variable + ')', "commandFinished");
+                                }
+
+                                commandFinished = function (result, id) {
+                                        if (id != last_command_id) return;  // another result is about to arrive
+                                        if (typeof (result) == "undefined") {
+                                                gui.setListValue ("selector.available", Array ("ERROR"));
+                                                return;
+                                        }
+                                        gui.setValue ("selector.enabled", 1);
+                                        gui.setListValue ("selector.available", result);
+                                }
                 ]]&gt;&lt;/script&gt;
         </programlisting>
 	<para
@@ -2586,47 +2568,28 @@ function getSpecifics () {
 >, anomenat <parameter
 >selector</parameter
 >. La funció clau aquí és <command
->new RCommand()</command
->, que pren com a primer paràmetre la cadena de l'ordre a executar. Tingueu en compte que l'ordre s'està executant asíncronament, i això fa les coses una mica més complexes. Per a una cosa que voleu estar segur, el <command
+>doRCommand()</command
+>, que pren com a primer paràmetre la cadena d'ordre a executar, i com a segon paràmetre el nom d'una funció a cridar, quan l'ordre hagi finalitzat. Tingueu en compte que l'ordre s'està executant asíncronament, i això fa les coses una mica més complexes. Per a una cosa que voleu estar segur, el <command
 >&lt;valueselector&gt;</command
-> roman desactivat, mentre que no contingui informació actualitzada. En segon lloc, com que l'usuari pot fer canvis ràpidament, pot haver-se generat més d'una ordre, abans de rebre cap resultat. Per tant, haureu d'assegurar-vos d'actuar només amb l'ordre més recent. </para>
-	<para
->Per a tractar l'asincronisme, el que es retorna aquí és un objecte <command
->Promise</command
->. Es pot trobar més informació sobre aquesta funció javascript potent <ulink url="https://javascript.info/async"
->a Internet</ulink
->. L'important que cal saber aquí, és que l'addició d'una declaració <command
->.then()</command
-> permet especificar què passarà quan l'ordre s'hagi completat, i una declaració <command
->.catch()</command
-> es pot utilitzar per a gestionar qualsevol error. De nou, tingueu en compte que el bloc <command
->.then()</command
-> no s'executa immediatament. Per a entendre les implicacions d'això, pot ser útil, durant el desenvolupament, inserir un <command
->Sys.sleep(1);</command
-> a l'ordre R, per a veure immediatament què passa quan una ordre no es completa.</para>
-	<para
->Finalment, per a tractar amb ordres diverses que s'estan generant, podeu especificar un segon argument a <command
->new RCommand()</command
->, ("myid", en aquest exemple). Qualsevol ordre amb el mateix identificador (escollit lliurement) s'entendrà que pertany a la mateixa cua. Llavors l'RKWard s'assegurarà que en realitat només l'última ordre activarà el bloc <command
->.then()</command
->, mentre que qualsevol ordre obsoleta arribarà al bloc <command
->.catch()</command
->. Aquí, es poden identificar ordres obsoletes, ja que es passa la cadena «outdated» com el seu valor, mentre que per a qualsevol altre possible error, avís o missatge d'error es passa directament. </para>
-	<para
->Cal tenir en compte que aquest exemple és una mica simplificat. En realitat, haureu de prendre precaucions addicionals, &pex;, per a evitar posar una quantitat extrema de nivells al selector. La bona notícia és que probablement no cal fer tot això vós mateix. L'exemple anterior es pren del connector <command
+> roman desactivat, mentre que no contingui informació actualitzada. Una altra cosa és que podríeu haver posat a la cua més d'una ordre, abans d'obtenir els primers resultats. Aquesta és la raó per la qual cada ordre té una "id", i la guardem en <parameter
+>last_command_id</parameter
+> per a una referència posterior.</para>
+	  <para
+>Quan es fa l'ordre, es crida la crida de retorn especificada (<parameter
+>commandFinished</parameter
+>, en aquest cas) amb dos paràmetres: el resultat en si, i l'identificador de l'ordre corresponent. El resultat serà d'un tipus similar a la representació en &R;, &ead;, una matriu numèrica, si el resultat és numèric, &etc; Fins i tot pot ser una <command
+>list()</command
+> de l'&R;, però en aquest cas es representarà com un <command
+>Array()</command
+> JS sense noms.</para>
+	  <para
+>Cal tenir en compte que fins i tot aquest exemple és una mica simplificat. En realitat, haureu de prendre precaucions addicionals, &pex;, per a evitar posar una quantitat extrema de nivells al selector. La bona notícia és que probablement no cal fer tot això vós mateix. L'exemple anterior es pren del connector <command
 >rkward::level_select</command
 >, per exemple, que simplement podeu <link linkend="embedding"
 >incrustar</link
 > en el vostre propi connector. Fins i tot us permet especificar una expressió diferent per a executar en lloc de <command
 >levels()</command
 >.</para>
-	<note>
-		<para
->En versions anteriors del RKWard, les ordres R s'executaven utilitzant una funció una mica més complexa <command
->doRCommand()</command
->. Encara podeu veure-ho en alguns connectors, però no es recomana utilitzar-la en el codi nou.</para>
-	</note>
-
 </sect1>
 
 <sect1 id="current_object">
@@ -8183,19 +8146,11 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >addChangeCommand(id, ordre)</term
 ><listitem
 ><para
->Executeu <replaceable
->ordre</replaceable
-> sempre que canviï la propietat filla indicada per <emphasis
+>Executa l'<emphasis
+>ordre</emphasis
+> sempre que canviï la propietat filla donada per <emphasis
 >id</emphasis
->. <replaceable
->id</replaceable
-> es pot indicar com una cadena única, o com una matriu d'identificadors (si la funció ha de ser cridada per canvis en diverses propietats. <replaceable
->ordre</replaceable
-> és un valor que es pot cridar (normalment una funció), però per compatibilitat amb connectors escrits per a versions anteriors del RKWard també es pot indicar com una cadena que s'avaluarà.</para>
-	<para
->La funció retorna el paràmetre <replaceable
->ordre</replaceable
->, per comoditat (per exemple, podeu assignar-la a una variable i/o cridar-la durant la inicialització).</para
+>.</para
 ></listitem
 ></varlistentry>
 	</variablelist
@@ -8381,22 +8336,8 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >doRCommand()-function</term>
 <listitem
 ><para
-><emphasis
->Obsolet. No utilitzeu en connectors nous:</emphasis
-> <command
->doRCommand(command, callback)</command
->. En el seu lloc utilitzeu <command
->new RCommand()</command
->.</para
-></listitem>
-</varlistentry>
-<varlistentry
-><term
->funció new RCommand()</term>
-<listitem
-><para
 ><command
->new RCommand(command, optional_id)</command
+>doRCommand(command, callback)</command
 > es pot utilitzar per a consultar l'&R; per a obtenir informació. Llegiu la secció sobre <link linkend="querying_r_for_info"
 >consultes &R; des de dins d'un connector</link
 > per a més detalls i advertències.</para

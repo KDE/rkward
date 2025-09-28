@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2024-10-13 19:14+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -6090,10 +6090,9 @@ msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "Gidoia aurreikusi R Kontsola elkarreragilean exekutatuko balitz bezala"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
-#, fuzzy, kde-format
-#| msgid "Previous Window"
+#, kde-format
 msgid "Echo statements"
-msgstr "Aurreko leihoa"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
 #, fuzzy, kde-format

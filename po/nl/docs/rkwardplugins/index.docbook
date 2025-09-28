@@ -80,9 +80,9 @@ as Authors, publish date, the abstract, and Keywords -->
 >&FDLNotice;</legalnotice>
 
 <date
->2025-05-03</date>
+>2024-09-07</date>
 <releaseinfo
->0.8.2</releaseinfo>
+>0.8.1</releaseinfo>
 
 <abstract>
 <para
@@ -1005,15 +1005,6 @@ as Authors, publish date, the abstract, and Keywords -->
 > groep), en de gelijke  varianties <command
 >&lt;checkbox&gt;</command
 >, is de werkwijze in grote lijnen dezelfde. </para>
-		<note>
-			<para
->In plaats van strings aan elkaar plakken met de operator <command
->+</command
->, kunt u ook een "template literal", zoals deze gebruiken (merk op dat de tekenreeks is ingesloten tussen backticks (`)):</para>
-			<programlisting
->echo(`res &lt;- t.test (x=${ getString("x") }, y=${ getString("y") }, hypothesis="${ getString("hypothesis") }"`); // etc.
-                        </programlisting>
-		</note>
 		<para
 >Merk op dat u, in plaats van de uitvoer-stukjes met <quote
 >+</quote
@@ -1526,13 +1517,16 @@ R code bevatten.
 '
         &lt;logic&gt;
                 &lt;script&gt;&lt;![CDATA[
-                        // [...] elke code bovenaan wordt slechts eenmaal aangeroepen
-                        gui.addChangeCommand("mode.string", function() {
-                                // terwijl deze anonieme functie aangeroepen zal worden, wanneer "mode.string" wijzigt
-                                var varmode = (gui.getString("mode.string") == "variable");
-                                gui.setValue("y.enabled", varmode);
-                                gui.setValue("constant.enabled", !varmode);
-                        });
+                        // ECMAScript-code in dit blok
+                        // de top-level statement wordt maar een keer aangeroepen
+                        gui.addChangeCommand ("mode.string", "modeChanged ()");
+
+                        // deze functie wordt aangeroepen als "mode" wordt gewijzigd
+                        modeChanged = function () {
+                                var varmode = (gui.getString ("mode.string") == "variable");
+                                gui.setValue ("y.enabled", varmode);
+                                gui.setValue ("constante.enabled", !varmode);
+                        }
                 ]]&gt;&lt;/script&gt;
         &lt;/logic&gt;
 
@@ -1540,15 +1534,17 @@ R code bevatten.
         [...]
         </programlisting>
 	<para
->Dit registreert een anonieme functie om aangeroepen te worden wanneer de waarde van de parameter <parameter
+>In de eerste regel staat dat &rkward; de functie <function
+>modeChanged()</function
+> (modusGewijzigd)moet aanroepen als de waarde van de radioknop <parameter
 >id=</parameter
 ><replaceable
 >"mode"</replaceable
-> in het keuzerondje verandert. In deze functie definiëren we een hulpvariabele <replaceable
+> verandert. In deze functie definiëren we een hulpvariabele <replaceable
 >"varmode"</replaceable
 >  die true is wanneer de modus <replaceable
 >"variabele"</replaceable
-> is, en false als die <replaceable
+> is, en false als die   <replaceable
 >"constante"</replaceable
 > is. Daarna gebruiken we <function
 >gui.setValue()</function
@@ -1561,22 +1557,6 @@ R code bevatten.
 >, op precies dezelfde manier als we dat eerder deden met de <command
 >&lt;connect&gt;</command
 > statements. </para>
-	<note
-><para
->Als dezelfde functie aangeroepen zou moeten worden voor wijzigingen in verschillende elementen, dan kunt u een array van de respectievelijke <parameter
->id=</parameter
->'s doorgeven aan <command
->gui.addChangeCommmand()</command
->. Verder, voor het gemak, <command
->gui.addChangeCommmand()</command
-> geeft zijn tweede parameter door, wat nuttig is, als u naar deze functie elders wilt verwijzen (bijv. om het eenmaal aan te roepen tijdens initialisatie). Bijv.: </para>
-	<programlisting
->let update = gui.addChangeCommand(["mode.string", "y.available"], function() {
-                // doe iets bij elke wijziging van mode.string of y.available
-        });
-        update(); // doe hetzelfde eenmaal tijdens initialisatie
-        </programlisting>
-	</note>
 	<para
 >Het maken van scripts voor de &GUI;-logica is bijzonder nuttig wanneer u de beschikbare optie wilt aanpassen aan het type object dat door de gebruiker wordt geselecteerd. Zie welke functies er zijn in <link linkend="guilogic_functions"
 >de naslag</link
@@ -2606,22 +2586,24 @@ function getSpecifics () {
 >:</para>
 	<programlisting
 >&lt;script&gt;&lt;![CDATA[
-                                let update = gui.addChangeCommand ("variable", function () {
+                                last_command_id = -1;
+                                gui.addChangeCommand ("variable", "update ()");
+                                update = function () {
                                         gui.setValue ("selector.enabled", 0);
-                                        variable = gui.getValue ("variable");
-                                        if (variable == "") return;
+                                        variable = gui.getValue ("variabele");
+                                        if (variabele == "") return;
 
-                                        new RCommand('levels (' + variable + ')', "myid").then(result =
-> {
-                                                gui.setValue ("selector.enabled", 1);
-                                                gui.setListValue ("selector.available", result);
-                                        }).catch(msg =
-> {
-                                                if (msg === "outdated") return;  // commando was geannuleerd, omdat er een nieuwe op het punt staat te arriveren -> benign
-                                                // mogelijk ander foutbehandeling, msg bevat de waarschuwing en geproduceerd foutmelding,
-                                                // als het commando mislukte bijv.:
-                                                gui.setListValue ("selector.available", Array ("ERROR:", msg));
-                                        });
+                                        last_command_id = doRCommand ('levels (' + variabele + ')', "commandFinished");
+                                }
+
+                                commandFinished = function (result, id) {
+                                        if (id != last_command_id) return;  // een ander antwoord is op komst
+                                        als (typeof (result) == "undefined") {
+                                                gui.setListValue ("selector.available", Array ("ERROR"));
+                                                return;
+                                        }
+                                        gui.setValue ("selector.enabled", 1);
+                                        gui.setListValue ("selector.available", result);
                                 }
                 ]]&gt;&lt;/script&gt;
         </programlisting>
@@ -2634,48 +2616,29 @@ function getSpecifics () {
 >&lt;valueselector&gt;</command
 >, met de naam <parameter
 >selector</parameter
-> bijwerken. De sleutelfunctie hier is het constructiecommando <command
->new RCommand()</command
->, met als eerste parameter de opdracht welke tekenreeks te starten. Let erop dat de opdracht asynchroon wordt gedaan, wat de zaak wat complexer maakt. Ten eerste moet u er voor zorgen dat uw <command
+> bijwerken. De sleutelfunctie hier is <command
+>doRCommand()</command
+>, met als eerste parameter de opdracht welke string te starten, en als tweede parameter de naam van een aan te roepen functie, na de opdracht. Let erop dat de opdracht asynchroon wordt gedaan, wat de zaak wat complexer maakt. Ten eerste moet u er voor zorgen dat uw <command
 >&lt;valueselector&gt;</command
-> uit blijft staan, zolang het geen bijgewerkte informatie bevat. Ten tweede, omdat de gebruiker wijzigingen kan doen, snel, meer dan één commando misschien heeft gegenereerd, voordat we enig resultaat ontvangen. Dus moet u er zeker van zijn om alleen op het meest recente commando te acteren. </para>
-	<para
->Om met asynchroon zijn te werken, wat hier is teruggekeerd, is een object <command
->Promise</command
->. Meer informatie over deze krachtige javascript functie is te vinden in <ulink url="https://javascript.info/async"
->op het internet</ulink
->. Het belangrijkste hier is te weten dat achtervoegen van een <command
->.then()</command
-> statement u het specificeren biedt wat zal gebeuren wanneer het commando is voltooid en een <command
->.catch()</command
-> statement gebruikt kan worden om fouten af te handelen. Opnieuw, bedenk, dat het blok <command
->.then()</command
-> niet onmiddellijk wordt uitgevoerd. Om te de implicaties hiervan te begrijpen, kan het behulpzaam zijn, gedurende ontwikkeling, om een <command
->Sys.sleep(1);</command
-> in uw R commando in te voegen, om te zien wat er gebeurt, wanneer een commando niet volledig, onmiddellijk, gereed komt.</para>
-	<para
->Tenslotte, om te delen met meerdere commando's die gegenereerd worden, kunt u een tweede argument specificeren bij het <command
->new RCommand()</command
->, ("myid", in dit voorbeeld). Alle commando's met dezelfde (vrij gekozen) identifier zal begrepen worden te behoren tot dezelfde wachtrij. RKWard zal dan verzekeren dat alleen het laatst commando het blok <command
->.then()</command
-> zal starten, terwijl alle verouderde commando's zullen arriveren in het blok <command
->.catch()</command
->. Hier kunnen verouderde commando's geïdentificeerd worden, omdat de tekenreeks "outdated" wordt doorgegeven als hun waarde, terwijl voor alle andere mogelijke fouten, de waarschuwingen en foutmeldingen samen worden doorgegeven. </para>
-	<para
->Let erop dat dit voorbeeld een beetje eenvoudiger is gemaakt. In werkelijkheid moet u verdere voorzorgsmaatregelen treffen, &eg; het voorkomen van een extreem aantal levels in de selector. Het goede nieuws is dat u dit waarschijnlijk niet allemaal zelf moet  doen. Bovenstaand voorbeeld komt uit de <command
+> uit blijft staan, zolang het geen bijgewerkte informatie bevat. En verder kan het zijn dat er mogelijk meerdere opdrachten in een wachtrij staan, voordat u de eerste resultaten krijgt. Daarom krijgt elke opdracht een "id", die we opslaan in <parameter
+>last_command_id</parameter
+> voor een later gebruik.</para>
+	  <para
+>Als de opdracht klaar is, wordt de daarin opgegeven functie aangeroepen (in dit geval dus <parameter
+>commandFinished</parameter
+>), met twee parameters: het antwoord zelf, en de id van bijbehorende opdracht. Het type van het antwoord is vergelijkbaar met dat in R, &ie; een numerieke array, als het antwoord numeriek (een getal) is. Het kan zelfs een <command
+>list()</command
+> in &R; zijn, maar in dit geval wordt het een JS <command
+>Array()</command
+> zonder namen.</para>
+	  <para
+>Let erop dat zelfs dit voorbeeld een beetje eenvoudiger is gemaakt. In werkelijkheid moet u verdere voorzorgsmaatregelen treffen, &eg; het voorkomen van een extreem aantal levels in de selector. Het goede nieuws is dat u dit waarschijnlijk niet allemaal zelf moet  doen. Bovenstaand voorbeeld komt uit de <command
 >rkward::level_select</command
 >-plugin, bijvoorbeeld, die u eenvoudig kunt <link linkend="embedding"
 >inbedden</link
 > in uw eigen plugin. U kunt zelfs een  andere te starten expressie opgeven in plaats van <command
 >levels()</command
 >.</para>
-	<note>
-		<para
->In eerdere versies van RKWard werden R-commands uitgevoerd met gebruik van een ietwat complexere functie <command
->doRCommand()</command
->. U zou dat nog steeds in sommige plug-ins kunnen zien, maar het is niet aanbevolen om in nieuwe code te gebruiken.</para>
-	</note>
-
 </sect1>
 
 <sect1 id="current_object">
@@ -8287,19 +8250,11 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Macht", id.name="macht", i18n=FALSE)
 >addChangeCommand(id, opdracht)</term
 ><listitem
 ><para
->Voer <replaceable
->commando</replaceable
-> uit wanneer de kindeigenschap gegeven door <emphasis
+>Doe de <emphasis
+>opdracht</emphasis
+>, steeds wanneer de child-eigenschap gegeven door <emphasis
 >id</emphasis
-> wijzigt. <replaceable
->id</replaceable
-> kan ofwel gegeven zijn als een enkele tekenreeks of als een array van id's (als de functie aangeroepen moet worden voor wijzigingen in verschillende eigenschappen. <replaceable
->commando</replaceable
-> is een aanroepbare waarde (gewoonlijk een functie), echter, voor compatibiliteit met plug-ins geschreven voor eerdere versies van RKWard, kan het ook gegeven worden als een te evalueren tekenreeks.</para>
-	<para
->De functie geeft de parameter <replaceable
->commando</replaceable
-> terug, voor het gemak (dus u kunt bijv. het toekennen aan een variabele en/of aanroepen tijdens initialisatie).</para
+> wordt gewijzigd.</para
 ></listitem
 ></varlistentry>
 	</variablelist
@@ -8485,22 +8440,8 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Macht", id.name="macht", i18n=FALSE)
 >doRCommand()-functie</term>
 <listitem
 ><para
-><emphasis
->Verouderd. Niet in nieuwe plug-ins gebruiken:</emphasis
-> <command
->doRCommand(command, callback)</command
->. Gebruik <command
->new RCommand()</command
->, in plaats daarvan.</para
-></listitem>
-</varlistentry>
-<varlistentry
-><term
->new RCommand()-functie</term>
-<listitem
-><para
 ><command
->New RCommand(opdracht, optional_id)</command
+>doRCommand(opdracht, callback)</command
 > kan worden gebruikt om aan &R;-informatie op te vragen. Lees de sectie <link linkend="querying_r_for_info"
 >informatie van &R; opvragen vanuit een plugin</link
 > voor details, en waarschuwingen.</para

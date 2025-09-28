@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2024-12-23 19:57+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -6381,9 +6381,10 @@ msgid "Disable preview"
 msgstr "Poista esikatselu käytöstä"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "R Markdown (HTML)"
 msgid "R Markdown"
-msgstr "R-Markdown"
+msgstr "R-Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -7643,6 +7644,9 @@ msgstr "Anna uusi nimi"
 msgid "View in editor (read-only)"
 msgstr "Näytä muokkaimessa (vain luku)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Virhe avattaessa skriptitiedostoa %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R-Markdown (automaattinen)"
 
@@ -7652,9 +7656,6 @@ msgstr "Näytä muokkaimessa (vain luku)"
 #~ msgstr ""
 #~ "Esikatsele skriptiä RMarkdown-muodosta (.Rmd) tiedoston otsakkeessa "
 #~ "määritettyyn muotoon hahmonnettuna."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Virhe avattaessa skriptitiedostoa %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

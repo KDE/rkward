@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
 "PO-Revision-Date: 2024-08-15 17:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -1948,9 +1948,10 @@ msgid "Frontend to the R statistics language"
 msgstr "Rozhraní pro statistický jazyk R"
 
 #: rkward/main.cpp:171
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "(c) 2002 - 2024"
 msgid "(c) 2002 - 2025"
-msgstr ""
+msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:172
 #, kde-format
@@ -4504,9 +4505,10 @@ msgid "Open as text file and force R highlighting"
 msgstr ""
 
 #: rkward/rkward.cpp:1024
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
 msgid "Open as R workspace"
-msgstr ""
+msgstr "Otevřít nedávné pracovní prostředí"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6043,9 +6045,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "User commands"
 msgid "Enter command"
-msgstr ""
+msgstr "Uživatelské příkazy"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
@@ -6067,9 +6070,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No device integration"
 msgid "Code Navigation"
-msgstr "Procházení kódem"
+msgstr "Žádné začleňování zařízení"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
@@ -6083,9 +6087,10 @@ msgid "Next statement"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous Window"
 msgid "Previous statement"
-msgstr ""
+msgstr "Předchozí okno"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
@@ -6128,19 +6133,22 @@ msgid "Previous code chunk"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current statement"
-msgstr ""
+msgstr "Vyberte rodičovský objekt"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current code chunk"
-msgstr ""
+msgstr "Vyberte rodičovský objekt"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Run"
 msgid "Run"
-msgstr "Spustit"
+msgstr "&Spustit"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
@@ -6282,9 +6290,10 @@ msgid "Disable preview"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "R Markdown (HTML)"
 msgid "R Markdown"
-msgstr "R Markdown"
+msgstr "R Markdown (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6297,9 +6306,10 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:733
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select format"
 msgid "Render format"
-msgstr ""
+msgstr "Vyberte formát"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
@@ -6312,9 +6322,10 @@ msgid "Render as PDF"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format"
 msgid "Auto Format"
-msgstr ""
+msgstr "Formát"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
@@ -6349,14 +6360,16 @@ msgid "Echo statements"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Continue"
 msgid "Continue on error"
-msgstr ""
+msgstr "Pokračovat"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:772
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Environment"
 msgid "Evaluation environment"
-msgstr ""
+msgstr "Prostředí"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:774
 #, kde-format
@@ -6384,9 +6397,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Location"
 msgid "Local"
-msgstr "Místní"
+msgstr "Umístění"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
@@ -6416,10 +6430,11 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:813
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr ""
+msgstr "Náhled"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
@@ -6696,10 +6711,11 @@ msgid "[Active]"
 msgstr "[Aktivní]"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
-msgstr ""
+msgstr "Výstup %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:807
 #, kde-format
@@ -7461,3 +7477,24 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "Chyba při otevírání souboru skriptu %1"
+
+#~ msgid "R Markdown (auto)"
+#~ msgstr "R Markdown (automaticky)"
+
+#~ msgid ""
+#~ "<b>There have been errors and / or warnings. See below for a transcript</"
+#~ "b>"
+#~ msgstr ""
+#~ "<b>Vyskytly se chyby a/nebo varování. Podívejte se níže na zápis</b>"
+
+#~ msgid "Output:"
+#~ msgstr "Výstup:"
+
+#~ msgid "Errors / Warnings"
+#~ msgstr "Chyby / varování"
+
+#~ msgid "Errors / Warnings:"
+#~ msgstr "Chyby / varování:"

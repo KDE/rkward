@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-24 00:39+0000\n"
-"PO-Revision-Date: 2025-08-25 09:16+0300\n"
+"POT-Creation-Date: 2025-09-28 02:45+0000\n"
+"PO-Revision-Date: 2025-04-21 17:21+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4747,9 +4747,10 @@ msgid "Open as text file and force R highlighting"
 msgstr "Відкрити як текстовий файл і примусово використати підсвічування R"
 
 #: rkward/rkward.cpp:1024
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
 msgid "Open as R workspace"
-msgstr "Відкрити як робочий простір R"
+msgstr "Повторно відкрити робочий простір"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6332,37 +6333,36 @@ msgstr "Назви локальних файлів"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr "Команду «S» призначено лише для Markdown R"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr "Невідома команда <tt><b>%1</b></tt>"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
-msgstr "Шукати внизу.<br/><tt><b>c</b></tt> — перейти до наступного фрагмента."
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
-"Шукати вгору.<br/><tt><b>C</b></tt> — перейти до попереднього фрагмента."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
-msgstr "Шукати вниз.<br/><tt><b>1</b></tt> — перейти до верху."
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
-msgstr "Шукати вгору.<br/><tt><b>!</b></tt> — перейти до низу."
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6370,18 +6370,17 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
-"<b>Навігація кодом</b> (<a href=\"rkward://page/rkward_code_navigation"
-"\">Довідка</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Editor command"
 msgid "Enter command"
-msgstr "Введіть команду"
+msgstr "Команда редактора"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr "Режим швидкої навігації кодом"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6389,8 +6388,6 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
-"Покроковий перехід кодом за допомогою натискання одинарних клавіш (<a href="
-"\"rkward://page/rkward_code_navigation\">докладніше</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6398,89 +6395,97 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
-"Покроковий перехід кодом на основі структури або перехід до <a href="
-"\"rkward://page/rkward_code_navigation\">режиму швидкої навігації кодом</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No device integration"
 msgid "Code Navigation"
-msgstr "Навігація кодом"
+msgstr "Немає інтеграції із пристроєм"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr "Перейти"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next statement"
-msgstr "Наступна інструкція"
+msgstr "Неповна інструкція.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous statement"
-msgstr "Попередня інструкція"
+msgstr "Попереднє креслення"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr "Наступна (внутрішня) інструкція"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr "Попередня (внутрішня) інструкція"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next outer statement"
-msgstr "Наступна зовнішня інструкція"
+msgstr "Неповна інструкція.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr "Попередня зовнішня інструкція"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Next toplevel statement"
-msgstr "Наступна інструкція верхнього рівня"
+msgstr "Неповна інструкція.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Previous toplevel statement"
-msgstr "Попередня інструкція верхнього рівня"
+msgstr "Неповна інструкція.\n"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr "Наступний фрагмент коду"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous plot"
 msgid "Previous code chunk"
-msgstr "Попередній фрагмент коду"
+msgstr "Попереднє креслення"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current statement"
-msgstr "Вибрати поточну інструкцію"
+msgstr "Виберіть батьківський об’єкт"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current code chunk"
-msgstr "Вибрати поточний фрагмент коду"
+msgstr "Виберіть батьківський об’єкт"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Run"
 msgid "Run"
-msgstr "Запустити"
+msgstr "&Виконання"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr "Виконати поточну інструкцію і перейти до наступною"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
@@ -6636,9 +6641,10 @@ msgid "Disable preview"
 msgstr "Вимкнути перегляд"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "R Markdown (HTML)"
 msgid "R Markdown"
-msgstr "Розмітка R"
+msgstr "Розмітка R (HTML)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6646,29 +6652,34 @@ msgid "Preview of rendered R Markdown"
 msgstr "Попередній перегляд створеного файла розмітки R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:729
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
-msgstr "Попередній перегляд скрипту на основі обробки формату RMarkdown (.Rmd)"
+msgstr ""
+"Попередній перегляд скрипту на основі обробки формату RMarkdown (.Rmd) до "
+"формату HTML."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:733
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select format"
 msgid "Render format"
-msgstr "Формат обробки"
+msgstr "Виберіть формат"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as HTML"
-msgstr "Обробити у HTML"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Render as PDF"
-msgstr "Обробити у PDF"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format"
 msgid "Auto Format"
-msgstr "Автоформатування"
+msgstr "Формат"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
@@ -6704,24 +6715,28 @@ msgstr ""
 "консолі R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Incomplete statement.\n"
 msgid "Echo statements"
-msgstr "Повторювати інструкції"
+msgstr "Неповна інструкція.\n"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Convert warnings to errors"
 msgid "Continue on error"
-msgstr "Продовжувати при помилці"
+msgstr "Перетворювати попередження на помилки"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:772
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Environment"
 msgid "Evaluation environment"
-msgstr "Середовище обробки"
+msgstr "Середовище"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:774
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy to .GlobalEnv"
 msgid ".GlobalEnv"
-msgstr ".GlobalEnv"
+msgstr "Копіювати до .GlobalEnv"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
@@ -6729,13 +6744,11 @@ msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
-"Обробити код безпосередньо до .GlobalEnv. Надання значень може призводити до "
-"доступу <b>і зміни</b> об'єктів у .GlobalEnv."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:777
 #, kde-format
 msgid "Scoped"
-msgstr "В області"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
@@ -6744,15 +6757,12 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
-"Обробити код у дочірній області .GlobalEnv. Можна отримувати доступ до "
-"об'єктів у .GlobalEnv, але звичайні надання значень за допомогою оператора "
-"<tt>&lt;-</tt> не змінюватимуть їх. (Втім, інші способи надання значень "
-"можуть вносити зміни!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Location"
 msgid "Local"
-msgstr "Локально"
+msgstr "Розташування"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
@@ -6762,10 +6772,6 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
-"Обробити код у справжньому локальному середовищі. Об'єкти .GlobalEnv не "
-"перебуватимуть у шляху пошуку — їх не буде змінено звичайними наданнями "
-"значень за допомогою оператора <tt>&lt;-</tt>. (Втім, інші способи надання "
-"значень можуть вносити зміни!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:796
 #, kde-format
@@ -6789,13 +6795,25 @@ msgstr ""
 "викликів <i>plot()</i> або інших команд побудови графіків."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:813
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Режим перегляду"
+msgstr "Перегляд"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
+#| "to your workspace (technically, by making use of a <i>local()</i> "
+#| "evaluation environment). <b>However, there are cases where using the "
+#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
+#| "particular, this is the case for scripts that contain explicit "
+#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
+#| "filesystem. Further, attaching/detaching packages or package namespaces "
+#| "will affect the entire running R session.</p><p>Please keep this in mind "
+#| "when using the preview feature, and especially when using the feature on "
+#| "scripts originating from untrusted sources.</p>"
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6810,9 +6828,8 @@ msgid ""
 "sources.</p>"
 msgstr ""
 "<p>Можливість попереднього перегляду <b>теоретично</b> реалізовано так, щоб "
-"її використання типово не призводило до змін у вашому робочому просторі "
-"(технічно, для середовища обробки використовується <i>local</i>; у деяких "
-"режимах перегляду можна керувати середовищем обробки). Втім, <b>іноді "
+"її використання не призводило до змін у вашому робочому просторі (технічно, "
+"використовується середовище обчислень <i>local()</i>). <b>Втім, іноді "
 "використання можливості попереднього перегляду може призводити до небажаних "
 "побіжних ефектів</b>.</p><p>Зокрема, таке трапляється зі скриптами, які "
 "містять явне встановлення значень з використанням <i>globalenv()</i>, або "
@@ -7103,7 +7120,8 @@ msgid "[Active]"
 msgstr "[Активний]"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Виведення %1"
@@ -7928,6 +7946,9 @@ msgstr "Вкажіть нову назву"
 msgid "View in editor (read-only)"
 msgstr "Переглянути у редакторі (лише читання)"
 
+#~ msgid "Error opening script file %1"
+#~ msgstr "Помилка під час спроби відкрити файл скрипту %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "Розмітка R (авто)"
 
@@ -7937,9 +7958,6 @@ msgstr "Переглянути у редакторі (лише читання)"
 #~ msgstr ""
 #~ "Попередній перегляд скрипту на основі обробки формату RMarkdown до "
 #~ "формату, який вказано у заголовку документа."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Помилка під час спроби відкрити файл скрипту %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"
