@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-28 00:39+0000\n"
+"POT-Creation-Date: 2025-09-29 00:39+0000\n"
 "PO-Revision-Date: 2025-08-25 09:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -162,7 +162,7 @@ msgstr ""
 "збережено."
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:327
+#: rkward/misc/rkprogresscontrol.cpp:339
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2827,7 +2827,7 @@ msgstr "Виведення з ідентифікатором «%1» не зав�
 msgid "Unhandled output command '%1'"
 msgstr "Непридатна до обробки команда виведення «%1»"
 
-#: rkward/misc/rkprogresscontrol.cpp:247
+#: rkward/misc/rkprogresscontrol.cpp:259
 #, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
@@ -2836,65 +2836,65 @@ msgstr ""
 "<b>Під час виконання команди сталася помилка. Докладніший опис можна знайти "
 "нижче</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:258
+#: rkward/misc/rkprogresscontrol.cpp:270
 #: rkward/settings/rksettingsmoduleoutput.cpp:107
 #, kde-format
 msgid "Output"
 msgstr "Виведення"
 
-#: rkward/misc/rkprogresscontrol.cpp:275
+#: rkward/misc/rkprogresscontrol.cpp:287
 #: rkward/windows/rktoplevelwindowgui.cpp:88
 #, kde-format
 msgid "Show Output"
 msgstr "Показати виведені дані"
 
-#: rkward/misc/rkprogresscontrol.cpp:278 rkward/misc/rkprogresscontrol.cpp:383
+#: rkward/misc/rkprogresscontrol.cpp:290 rkward/misc/rkprogresscontrol.cpp:395
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: rkward/misc/rkprogresscontrol.cpp:441
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>Сталася помилка</b> (нижче наведено подробиці)"
 
-#: rkward/misc/rkprogresscontrol.cpp:441
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>Виконано</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:444
+#: rkward/misc/rkprogresscontrol.cpp:456
 #: rkward/plugin/rkstandardcomponentgui.cpp:188
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Закрити"
 
-#: rkward/misc/rkprogresscontrol.cpp:481 rkward/windows/rkwindowcatcher.cpp:405
+#: rkward/misc/rkprogresscontrol.cpp:493 rkward/windows/rkwindowcatcher.cpp:405
 #, kde-format
 msgid "Keep waiting"
 msgstr "Зачекати"
 
-#: rkward/misc/rkprogresscontrol.cpp:481
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 "Закриття цього вікна призведе до скасування поточної дії. Ви справді цього "
 "хочете?"
 
-#: rkward/misc/rkprogresscontrol.cpp:481
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel operation"
 msgstr "Скасувати дію"
 
-#: rkward/misc/rkprogresscontrol.cpp:481
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel && Close"
 msgstr "Скасувати і закрити"
 
-#: rkward/misc/rkprogresscontrol.cpp:493
+#: rkward/misc/rkprogresscontrol.cpp:505
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "Виконання дії не завершено. Будь ласка, зачекайте."

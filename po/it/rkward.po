@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-28 00:39+0000\n"
+"POT-Creation-Date: 2025-09-29 00:39+0000\n"
 "PO-Revision-Date: 2025-08-25 17:05+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -166,7 +166,7 @@ msgstr ""
 "I tuoi dati <b>non</b> sono stati salvati."
 
 #: rkward/agents/showedittextfileagent.cpp:30
-#: rkward/misc/rkprogresscontrol.cpp:327
+#: rkward/misc/rkprogresscontrol.cpp:339
 #: rkward/plugin/rkstandardcomponentgui.cpp:586
 #, kde-format
 msgid "Done"
@@ -2813,7 +2813,7 @@ msgstr "L'uscita identificata da «%1» non è caricata in questa sessione."
 msgid "Unhandled output command '%1'"
 msgstr "Comando di uscita non gestito «%1»"
 
-#: rkward/misc/rkprogresscontrol.cpp:247
+#: rkward/misc/rkprogresscontrol.cpp:259
 #, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
@@ -2822,64 +2822,64 @@ msgstr ""
 "<b>Si è verificato un errore durante l'esecuzione del comando. Vedi sotto "
 "per i dettagli del risultato</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:258
+#: rkward/misc/rkprogresscontrol.cpp:270
 #: rkward/settings/rksettingsmoduleoutput.cpp:107
 #, kde-format
 msgid "Output"
 msgstr "Output"
 
-#: rkward/misc/rkprogresscontrol.cpp:275
+#: rkward/misc/rkprogresscontrol.cpp:287
 #: rkward/windows/rktoplevelwindowgui.cpp:88
 #, kde-format
 msgid "Show Output"
 msgstr "Mostra l'uscita"
 
-#: rkward/misc/rkprogresscontrol.cpp:278 rkward/misc/rkprogresscontrol.cpp:383
+#: rkward/misc/rkprogresscontrol.cpp:290 rkward/misc/rkprogresscontrol.cpp:395
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
 #: rkward/windows/rkdebugconsole.cpp:52
 #, kde-format
 msgid "Cancel"
 msgstr "Annulla"
 
-#: rkward/misc/rkprogresscontrol.cpp:441
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>An error occurred</b> (see below for details)"
 msgstr "<b>Si è verificato un errore</b> (vedi i dettagli di seguito)"
 
-#: rkward/misc/rkprogresscontrol.cpp:441
+#: rkward/misc/rkprogresscontrol.cpp:453
 #, kde-format
 msgid "<b>Done</b>"
 msgstr "<b>Completato</b>"
 
-#: rkward/misc/rkprogresscontrol.cpp:444
+#: rkward/misc/rkprogresscontrol.cpp:456
 #: rkward/plugin/rkstandardcomponentgui.cpp:188
 #: rkward/plugin/rkstandardcomponentgui.cpp:594
 #, kde-format
 msgid "Close"
 msgstr "Chiudi"
 
-#: rkward/misc/rkprogresscontrol.cpp:481 rkward/windows/rkwindowcatcher.cpp:405
+#: rkward/misc/rkprogresscontrol.cpp:493 rkward/windows/rkwindowcatcher.cpp:405
 #, kde-format
 msgid "Keep waiting"
 msgstr "Continua ad aspettare"
 
-#: rkward/misc/rkprogresscontrol.cpp:481
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 "La chiusura di questa finestra annullerà l'operazione in corso. Sei sicuro?"
 
-#: rkward/misc/rkprogresscontrol.cpp:481
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel operation"
 msgstr "Annulla l'operazione"
 
-#: rkward/misc/rkprogresscontrol.cpp:481
+#: rkward/misc/rkprogresscontrol.cpp:493
 #, kde-format
 msgid "Cancel && Close"
 msgstr "Annulla e chiudi"
 
-#: rkward/misc/rkprogresscontrol.cpp:493
+#: rkward/misc/rkprogresscontrol.cpp:505
 #, kde-format
 msgid "An operation is still running, please wait."
 msgstr "Un'operazione è ancora in esecuzione, attendi."
