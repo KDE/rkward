@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-28 02:45+0000\n"
-"PO-Revision-Date: 2025-07-18 07:46+0200\n"
+"PO-Revision-Date: 2025-09-28 11:01+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Poedit 3.7\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4683,10 +4683,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "Odpri kot besedilno datoteko in vsili poudarjanje R"
 
 #: rkward/rkward.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Odpri nedavni delovni prostor"
+msgstr "Odpri kot delovni prostor R"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -6245,36 +6244,38 @@ msgstr "Imena krajevnih datotek"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr ""
+msgstr "Ukaz 'S' je namenjen samo za R Markdown"
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr ""
+msgstr "Neznan ukaz <tt><b>%1</b></tt>"
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
+"Iskanje je doseglo dno.<br/><tt><b>c</b></tt> za premik na naslednji del."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
+"Iskanje je doseglo vrh.<br/><tt><b>C</b></tt> za premik na prejšnji del."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
-msgstr ""
+msgstr "Iskanje je doseglo dno.<br/><tt><b>1</b></tt> za premik na vrh."
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
-msgstr ""
+msgstr "Iskanje je doseglo vrh.<br/><tt><b>!</b></tt> za premik na dno."
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6282,17 +6283,18 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
+"<b>Navigacija po kodi</b> (<a href=\"rkward://page/rkward_code_navigation"
+"\">Pomoč</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, fuzzy, kde-format
-#| msgid "Editor command"
+#, kde-format
 msgid "Enter command"
-msgstr "Ukaz urejevalnika besedil"
+msgstr "Vnesite ukaz"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr ""
+msgstr "Način hitre navigacije po kodi"
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6300,6 +6302,8 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
+"Postopoma se pomikajte po kodi z enim samim pritiskom tipke (<a href="
+"\"rkward://page/rkward_code_navigation\">več informacij</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6307,97 +6311,90 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
+"Postopoma se pomikajte po kodi glede na njeno strukturo ali pa vnesite <a "
+"href=\"rkward://page/rkward_code_navigation\">način hitre navigacije po "
+"kodi</a>"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, fuzzy, kde-format
-#| msgid "No device integration"
+#, kde-format
 msgid "Code Navigation"
-msgstr "Brez integracije naprav"
+msgstr "Navigacija po kodi"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr ""
+msgstr "Pojdi"
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next statement"
-msgstr "Nepopolna izjava.\n"
+msgstr "Naslednja izjava"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous statement"
-msgstr "Prejšnji graf"
+msgstr "Prejšnja izjava"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr ""
+msgstr "Naslednja (notranja) izjava"
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr ""
+msgstr "Prejšnja (notranja) izjava"
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next outer statement"
-msgstr "Nepopolna izjava.\n"
+msgstr "Naslednja (zunanja) izjava"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr ""
+msgstr "Prejšnja (zunanja) izjava"
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next toplevel statement"
-msgstr "Nepopolna izjava.\n"
+msgstr "Naslednja izjava najvišje ravni"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Previous toplevel statement"
-msgstr "Nepopolna izjava.\n"
+msgstr "Prejšnja izjava najvišje ravni"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr ""
+msgstr "Naslednji del kode"
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous code chunk"
-msgstr "Prejšnji graf"
+msgstr "Prejšnji del kode"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current statement"
-msgstr "Izberite nadrejeni predmet"
+msgstr "Izberi trenutno izjavo"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current code chunk"
-msgstr "Izberite nadrejeni predmet"
+msgstr "Izberi trenutni del kode"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "&Zaženi"
+msgstr "Zaženi"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr ""
+msgstr "Zaženi trenutno izjavo in se pomakni naprej"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
@@ -6550,10 +6547,9 @@ msgid "Disable preview"
 msgstr "Onemogoči predogled"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "R Markdown (HTML)"
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6561,33 +6557,29 @@ msgid "Preview of rendered R Markdown"
 msgstr "Predogled upodobljenega R markdowna"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:729
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
-msgstr ""
-"Predogled skripta, kot je upodobljen iz formata RMarkdown (.Rmd) v HTML."
+msgstr "Predogled skripta, kot je upodobljen iz formata RMarkdown (.Rmd)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:733
-#, fuzzy, kde-format
-#| msgid "Select format"
+#, kde-format
 msgid "Render format"
-msgstr "Izberi format"
+msgstr "Upodobi format"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as HTML"
-msgstr ""
+msgstr "Upodobi kot HTML"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Render as PDF"
-msgstr ""
+msgstr "Upodobi kot PDF"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "Oblika"
+msgstr "Samodejna oblika"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
@@ -6619,28 +6611,24 @@ msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "Predogled skripta, kot če bi se zagnal v interaktivni konzoli R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Echo statements"
-msgstr "Nepopolna izjava.\n"
+msgstr "Odmev izjav"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
-#, fuzzy, kde-format
-#| msgid "Convert warnings to errors"
+#, kde-format
 msgid "Continue on error"
-msgstr "Pretvori opozorila v napake"
+msgstr "Nadaljuj pri napaki"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:772
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "Okolje"
+msgstr "Okolje za ovrednotenja"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:774
-#, fuzzy, kde-format
-#| msgid "Copy to .GlobalEnv"
+#, kde-format
 msgid ".GlobalEnv"
-msgstr "Kopiraj v . GlobalEnv"
+msgstr ".GlobalEnv"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
@@ -6648,11 +6636,13 @@ msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
+"Ovrednoti kodo neposredno v .GlobalEnv. Dodelitve lahko dostopajo do "
+"objektov v .GlobalEnv in jih spreminjajo."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:777
 #, kde-format
 msgid "Scoped"
-msgstr ""
+msgstr "V obsegu"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
@@ -6661,12 +6651,15 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
+"Ovrednoti kodo v podrejenem obsegu .GlobalEnv. Do objektov v .GlobalEnv je "
+"mogoče dostopati, vendar jih običajne dodelitve z uporabo operatorja "
+"<tt>&lt;-</tt> ne bodo spremenile. (Druge operacije dodelitve jih lahko še "
+"vedno spremenijo!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "Mesto"
+msgstr "Lokalno"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
@@ -6676,6 +6669,10 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
+"Ovrednoti kodo v praven lokalnem okolju. Objekti v .GlobalEnv niso na "
+"iskalni poti in jih običajne dodelitve z uporabo operatorja <tt>&lt;-</tt> "
+"ne bodo spremenile. (Druge operacije dodelitve jih lahko še vedno "
+"spremenijo!)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:796
 #, kde-format
@@ -6699,25 +6696,13 @@ msgstr ""
 "ukazov."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:813
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Predogled"
+msgstr "Predogledni način"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
-#| "to your workspace (technically, by making use of a <i>local()</i> "
-#| "evaluation environment). <b>However, there are cases where using the "
-#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
-#| "particular, this is the case for scripts that contain explicit "
-#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
-#| "filesystem. Further, attaching/detaching packages or package namespaces "
-#| "will affect the entire running R session.</p><p>Please keep this in mind "
-#| "when using the preview feature, and especially when using the feature on "
-#| "scripts originating from untrusted sources.</p>"
+#, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6731,15 +6716,17 @@ msgid ""
 "especially when using the feature on scripts originating from untrusted "
 "sources.</p>"
 msgstr ""
-"<p>Funkcija predogleda se <b>poskuša</b> izogniti trajnemu spreminjanju "
-"vašega delovnega prostora (tehnično z uporabo vrednotnega okolja <i>local()</"
-"i>). <b>Obstajajo pa primeri, ko uporaba funkcije predogleda lahko povzroči "
-"nepričakovane stranske učinke</b>.</p><p>To velja zlasti za skripte, ki "
-"vsebujejo eksplicitne dodelitve v <i>globalenv()</i>ali skriptom, ki "
-"spreminjajo datoteke v datotečnem sistemu. Poleg tega bo priklop/odklop "
-"paketov ali imenskih prostorov paketov vplival na celotno sejo R, ki se "
-"izvaja.</p><p>Upoštevajte to pri uporabi predogledne funkcije in zlasti pri "
-"uporabi funkcije v skriptih, ki izvirajo iz nezaupanja vrednih virov.</p>"
+"<p>Zmožnost predogleda <b>poskuša</b> privzeto preprečiti trajne spremembe v "
+"vašem delovnem prostoru (tehnično gledano z uporabo <i>lokalnega</i> okolja "
+"za ocenjevanje; nekateri načini predogleda omogočajo neobvezen nadzor nad "
+"okoljem za ocenjevanje). Vendar <b>obstajajo primeri, ko lahko uporaba "
+"funkcije predogleda povzroči nepričakovane stranske učinke</b>.</p><p>To še "
+"posebej velja za skripte, ki vsebujejo eksplicitne dodelitve funkciji "
+"<i>globalenv()</i>, ali za skripte, ki spreminjajo datoteke v vašem "
+"datotečnem sistemu. Poleg tega bo pripenjanje/odpenjanje paketov ali "
+"imenskih prostorov paketov vplivalo na celotno delujočo sejo R.</p><p>To "
+"upoštevajte pri uporabi funkcije predogleda, še posebej pri uporabi funkcije "
+"za skripte, ki izvirajo iz nezaupanja vrednih virov.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
@@ -7017,8 +7004,7 @@ msgid "[Active]"
 msgstr "[Dejavno]"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, fuzzy, kde-format
-#| msgid "Output %1"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Izhod %1"
@@ -7031,7 +7017,7 @@ msgstr "Izhodno okno"
 #: rkward/windows/rkhtmlwindow.cpp:809
 #, kde-format
 msgid "&Refresh Output"
-msgstr "&Osveži izhod"
+msgstr "Osveži izhod"
 
 #: rkward/windows/rkhtmlwindow.cpp:835
 #, kde-format

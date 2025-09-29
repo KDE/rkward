@@ -4232,10 +4232,9 @@ msgid "Open as text file and force R highlighting"
 msgstr ""
 
 #: rkward/rkward.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Save Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "保存工作空间"
+msgstr ""
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -5695,10 +5694,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, fuzzy, kde-format
-#| msgid "Interrupt all commands"
+#, kde-format
 msgid "Enter command"
-msgstr "中断所有命令"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
@@ -5736,10 +5734,9 @@ msgid "Next statement"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, fuzzy, kde-format
-#| msgid "Previous Window"
+#, kde-format
 msgid "Previous statement"
-msgstr "上一个窗口"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
@@ -5792,10 +5789,9 @@ msgid "Select current code chunk"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "运行(&R)"
+msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
@@ -5939,7 +5935,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:726
 #, kde-format
 msgid "R Markdown"
-msgstr ""
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -5967,10 +5963,9 @@ msgid "Render as PDF"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "格式化"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
@@ -6005,16 +6000,14 @@ msgid "Echo statements"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
-#, fuzzy, kde-format
-#| msgid "Continue"
+#, kde-format
 msgid "Continue on error"
-msgstr "继续"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:772
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "环境"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:774
 #, kde-format
@@ -6042,10 +6035,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "住址"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
@@ -6075,11 +6067,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:813
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "预览"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
@@ -6356,11 +6347,10 @@ msgid "[Active]"
 msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, fuzzy, kde-format
-#| msgid "Output"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
-msgstr "输出"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:807
 #, kde-format

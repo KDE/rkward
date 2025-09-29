@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-28 02:45+0000\n"
-"PO-Revision-Date: 2025-04-21 08:07+0200\n"
+"PO-Revision-Date: 2025-09-28 10:08+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Poedit 3.7\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,31 +34,31 @@ msgstr "miles@filmsi.net,matjaz.jeran@amis.net"
 #: rkward/plugins/00saveload/../internal/Installfromgit.js:78
 #, kde-format
 msgid "Install from git results"
-msgstr ""
+msgstr "Namesti iz rezultatov gita"
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Package source")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:18
 #, kde-format
 msgid "Set the location where the package resides that you want to install."
-msgstr ""
+msgstr "Določite lokacijo, kjer se nahaja paket, ki ga želite namestiti."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:22
 #, kde-format
 msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
-msgstr ""
+msgstr "Določite uporabniško ime (samo za GitHub, GitLab in Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Repository")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:25
 #, kde-format
 msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
-msgstr ""
+msgstr "Navedite ime repozitorija (samo GitHub, GitLab in Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "URL to repository")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:28
 #, kde-format
 msgid "Give the full URL to the repository (generic git and svn only)."
-msgstr ""
+msgstr "Navedite celoten URL repozitorija (samo generični git in svn)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Commit/tag/branch")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:31
@@ -67,6 +67,8 @@ msgid ""
 "If you want a certain commit, tag or branch for installation, define that "
 "here."
 msgstr ""
+"Če želite določen commit, oznako ali vejo za namestitev, jo definirajte "
+"tukaj."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:34
@@ -75,6 +77,7 @@ msgid ""
 "If you want to install from a subdirectory of the repository, define that "
 "here."
 msgstr ""
+"Če želite namestiti iz poddirektorija repozitorija, ga definirajte tukaj."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:38
@@ -83,6 +86,8 @@ msgid ""
 "To install from a private repository, set your personal access token (PAT, "
 "GitHub and GitLab only)."
 msgstr ""
+"Za namestitev iz zasebnega repozitorija nastavite svoj osebni žeton za "
+"dostop (samo PAT, GitHub in GitLab)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:41
@@ -90,6 +95,8 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the user name (Bitbucket only)."
 msgstr ""
+"Za namestitev iz zasebnega repozitorija nastavite uporabniško ime (samo "
+"Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:44
@@ -97,112 +104,109 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the password (Bitbucket only)."
 msgstr ""
+"Za namestitev iz zasebnega repozitorija nastavite geslo (samo Bitbucket)."
 
 #. i18n: ectx: (Install from git/svn) <dialog label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:30
 #, kde-format
 msgid "Install from git/svn"
-msgstr ""
+msgstr "Namesti iz git/svn"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:32
-#, fuzzy, kde-format
-#| msgid "Package name"
+#, kde-format
 msgid "Package source"
-msgstr "Ime paketa"
+msgstr "Vir paketa"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:33
 #, kde-format
 msgid "git (generic)"
-msgstr ""
+msgstr "git (generični)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:34
 #, kde-format
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:35
 #, kde-format
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:36
 #, kde-format
 msgid "Bitbucket"
-msgstr ""
+msgstr "Bitbucket"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:37
 #, kde-format
 msgid "subversion (generic)"
-msgstr ""
+msgstr "subversion (generična)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:39
-#, fuzzy, kde-format
-#| msgid "Package name"
+#, kde-format
 msgid "Package repository"
-msgstr "Ime paketa"
+msgstr "Repozitorij paketa"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:41
-#, fuzzy, kde-format
-#| msgid "File name"
+#, kde-format
 msgid "Git user name"
-msgstr "Ime datoteke"
+msgstr "Uporabniško ime git"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:42
 #, kde-format
 msgid "Repository"
-msgstr ""
+msgstr "Repozitorij"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:44
 #, kde-format
 msgid "URL to repository"
-msgstr ""
+msgstr "URL za repozitorij"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:46
 #, kde-format
 msgid "Commit/tag/branch"
-msgstr ""
+msgstr "Commit/tag/branch"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:47
-#, fuzzy, kde-format
-#| msgid "Directory"
+#, kde-format
 msgid "Subdirectory"
-msgstr "Mapa"
+msgstr "Podimenik"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:48
 #, kde-format
 msgid "Private repository"
-msgstr ""
+msgstr "Zasebni repozitorij"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:49
 #, kde-format
 msgid "Personal access token (PAT)"
-msgstr ""
+msgstr "Osebni dostopni žeton (Personal access token - PAT)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:51
 #, kde-format
 msgid "User"
-msgstr ""
+msgstr "Uporabnik"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:52
 #, kde-format
 msgid "Password"
-msgstr ""
+msgstr "Geslo"
 
 #. i18n: ectx: (Loaded from Download AppImage)
 #: rkward/plugins/00saveload/DownloadAppImage.js:63
@@ -3591,7 +3595,7 @@ msgstr "Generični uvoz (na osnovi rio)"
 #: rkward/plugins/import_export.pluginmap:53
 #, kde-format
 msgid "Install R package from git"
-msgstr ""
+msgstr "Namesti paket R iz gita"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:54
@@ -3629,7 +3633,7 @@ msgstr "Delovna površina"
 #: rkward/plugins/import_export.pluginmap:86
 #, kde-format
 msgid "Settings"
-msgstr ""
+msgstr "Nastavitve"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
