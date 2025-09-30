@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-23 01:55+0000\n"
-"PO-Revision-Date: 2025-06-09 02:42+0100\n"
+"PO-Revision-Date: 2025-09-29 20:24+0200\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4084,7 +4084,7 @@ msgstr "Mini-mapa de la barra de desplazamiento"
 #: rkward/rkconsole.cpp:142
 #, kde-format
 msgid "Dynamic word wrap"
-msgstr "Cambio de línea dinámico"
+msgstr "Ajuste de línea dinámico"
 
 #: rkward/rkconsole.cpp:499
 #, kde-format
