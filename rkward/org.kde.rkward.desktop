@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 [Desktop Entry]
 Name=RKWard
+Name[ar]=أر كي وارد
 Name[bs]=RKWard
 Name[ca]=RKWard
 Name[ca@valencia]=RKWard
@@ -38,6 +39,7 @@ Name[uk]=RKWard
 Name[zh_CN]=RKWard
 Name[zh_TW]=RKWard
 GenericName=Statistics with R
+GenericName[ar]=الإحصائيّات بـR
 GenericName[ca]=Estadística amb l'R
 GenericName[ca@valencia]=Estadística amb R
 GenericName[cs]=Statistika s R
@@ -67,6 +69,7 @@ GenericName[tr]=R ile İstatistik
 GenericName[uk]=Статистика з R
 GenericName[zh_TW]=利用 R 的統計學
 Comment=GUI for the R-project
+Comment[ar]=واجهة رسومية لمشروع R
 Comment[bs]=GUI za R-projekct
 Comment[ca]=IGU per al projecte R
 Comment[ca@valencia]=IGU per al projecte R
@@ -108,6 +111,7 @@ X-DocPath=rkward/index.html
 Categories=Qt;KDE;Science;Math;NumericalAnalysis;
 MimeType=text/r;application/rdata;text/vnd.kde.rmarkdown;application/vnd.kde.rkward-output
 Keywords=statistics;data;r;
+Keywords[ar]=إحصائيات;بيانات;r;
 Keywords[ca]=estadística;dades;r;
 Keywords[ca@valencia]=estadística;dades;r;
 Keywords[cs]=statistika;data;r;

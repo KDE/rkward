@@ -2,6 +2,7 @@
 exec=rkward --reuse "%u"
 protocol=rkward
 Description=A protocol for RKWard's run again links
+Description[ar]=ميفاق لإعادة تشغيل روابط أر كي وارد
 Description[bs]=Protokol za RKWard's pokreće ponovo veze
 Description[ca]=Un protocol per als enllaços «torna a executar» del RKWard
 Description[ca@valencia]=Un protocol per als enllaços «torna a executar» de RKWard
