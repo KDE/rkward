@@ -117,9 +117,10 @@ void RKTextMatrix::setText(int row, int col, const QString &text) {
 	rows[row][col] = text;
 }
 
-void RKTextMatrix::setColumn(int column, const QString *textarray, int length) {
+void RKTextMatrix::setColumn(int column, const QStringList &textarray) {
 	RK_TRACE(EDITOR);
 
+	const int length = textarray.length();
 	upsize(length - 1, column);
 	for (int i = 0; i < length; ++i) {
 		rows[i][column] = textarray[i];

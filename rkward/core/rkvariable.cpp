@@ -589,20 +589,18 @@ void RKVariable::setNumericFromR(int from_row, int to_row, const QVector<double>
 	cellsChanged(from_row, to_row);
 }
 
-QString *RKVariable::getCharacter(int from_row, int to_row) const {
+QStringList RKVariable::getCharacter(int from_row, int to_row) const {
 	RK_TRACE(OBJECTS);
 	if (to_row >= getLength()) {
 		RK_ASSERT(false);
-		return nullptr;
+		return QStringList();
 	}
 	RK_ASSERT(from_row <= to_row);
 
-	QString *ret = new QString[(to_row - from_row) + 1];
-
-	int i = 0;
+	QStringList ret;
+	ret.reserve((to_row - from_row) + 1);
 	for (int row = from_row; row <= to_row; ++row) {
-		ret[i] = getText(row);
-		i++;
+		ret.append(getText(row));
 	}
 
 	return ret;

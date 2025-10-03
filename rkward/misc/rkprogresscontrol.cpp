@@ -181,7 +181,7 @@ static void addOutput(QTextEdit *log, const ROutput &output) {
 		}
 		//log->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
 	} else {
-		// We don't want output from install.packages() (which will always arrive as at "Warning" level
+		// We don't want output from install.packages() (which will always arrive as at "Warning" level)
 		// to look too alarming. Yet we'd like to keep output types differentiated in other cases.
 		auto font = log->font();
 		if (!font.bold()) {

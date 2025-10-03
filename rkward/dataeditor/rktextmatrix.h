@@ -27,9 +27,8 @@ class RKTextMatrix {
 	void copyToClipboard() const;
 
 	void setText(int row, int col, const QString &text);
-	/** set an entire column at once. This takes a copy of the data, so you will still have to delete it when done.
-	TODO: convert to using QStringList */
-	void setColumn(int column, const QString *textarray, int length);
+	/** set an entire column at once */
+	void setColumn(int column, const QStringList &textarray);
 	/** set an entire row at once. */
 	void appendRow(const QStringList &row);
 
@@ -54,7 +53,7 @@ class RKTextMatrix {
   private:
 	QList<QStringList> rows;
 
-	inline void upsize(int newmaxrow, int newmaxcol);
+	void upsize(int newmaxrow, int newmaxcol);
 
 	int colcount;
 };

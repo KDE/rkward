@@ -371,20 +371,15 @@ RKTextMatrix RKVarEditModel::getTextMatrix(const QItemSelectionRange &range) con
 	if ((!range.isValid()) || objects.isEmpty()) return RKTextMatrix();
 
 	// NOTE: of course, when the range is small, this is terribly inefficient. On the other hand, it doesn't really matter, then, either.
-	QItemSelectionRange erange = range.intersected(QItemSelectionRange(index(0, 0), index(trueRows() - 1, trueCols() - 1)));
-	int top = erange.top();
-	int bottom = erange.bottom();
-	int left = erange.left();
-	int right = erange.right();
+	const QItemSelectionRange erange = range.intersected(QItemSelectionRange(index(0, 0), index(trueRows() - 1, trueCols() - 1)));
+	const int top = erange.top();
+	const int bottom = erange.bottom();
+	const int left = erange.left();
+	const int right = erange.right();
 
 	RKTextMatrix ret;
-	int tcol = 0;
 	for (int col = left; col <= right; ++col) {
-		QString *data = objects[col]->getCharacter(top, bottom);
-		RK_ASSERT(data);
-		ret.setColumn(tcol, data, bottom - top + 1);
-		delete[] data;
-		++tcol;
+		ret.setColumn(col - left, objects[col]->getCharacter(top, bottom));
 	}
 
 	return ret;

@@ -63,7 +63,7 @@ class RKVariable : public RObject {
 	virtual void setText(int row, const QString &text);
 
 	/** get a copy of the text values of rows from from_index to to_index. TODO: This could be made, but currently is not, more efficient than calling getText in a loop. */
-	QString *getCharacter(int from_row, int to_row) const;
+	QStringList getCharacter(int from_row, int to_row) const;
 
 	/** returns the current status of the given cell */
 	Status cellStatus(int row) const;
