@@ -2122,7 +2122,7 @@ function getSpecifics () {
 >predogledih (&HTML;) izpisa</link
 >, <link linkend="preview_data"
 >predogledih (uvoženih) podatkov</link
-> in <link linkend=" preview_custom"
+> in <link linkend="preview_custom"
 >predogledi po meri</link
 >. Vendar je priporočljivo, da najprej preberete ta razdelek, saj je pristop v vsakem primeru podoben.</para
 ></note>
