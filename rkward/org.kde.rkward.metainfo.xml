@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>RKWard</name>
+  <name xml:lang="ar">أر كي وارد</name>
   <name xml:lang="ca">RKWard</name>
   <name xml:lang="ca-valencia">RKWard</name>
   <name xml:lang="cs">RKWard</name>
@@ -38,6 +39,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <name xml:lang="uk">RKWard</name>
   <name xml:lang="zh-TW">RKWard</name>
   <summary>KDE frontend to the R statistics language</summary>
+  <summary xml:lang="ar">واجهة كيدي للغة الإحصاء R</summary>
   <summary xml:lang="ca">Frontal del KDE per al llenguatge estadístic R</summary>
   <summary xml:lang="ca-valencia">Frontal de KDE per al llenguatge estadístic R</summary>
   <summary xml:lang="de">KDE-Oberfläche für die Statistiksprache R</summary>
@@ -74,6 +76,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       future versions will also provide seamless integration with an
       office-suite.
     </p>
+    <p xml:lang="ar">يهدف آر كي وورد إلى أن يصير واجهة شفافة سهلة الاستعمال للغة R، وهي نظام قوي للحسابات والرسوم البيانية الإحصائية. علاوة على واجهة مستخدم رسومية ملائمة لأهم الوظائف الإحصائية، سوف توفر الإصدارات المستقبلية أيضًا تكاملًا سلسًا مع حزمة مكتبية.</p>
     <p xml:lang="ca">El RKWard pretén esdevenir un frontal fàcil d'utilitzar i transparent per a l'R, un potent sistema de càlcul estadístic i de gràfics. A més d'una IGU còmoda per a les característiques estadístiques més importants, les futures versions també proporcionaran una perfecta integració amb una suite d'oficina.</p>
     <p xml:lang="ca-valencia">RKWard pretén esdevindre un frontal fàcil d'utilitzar i transparent per a R, un potent sistema de càlcul estadístic i de gràfics. A més d'una IGU còmoda per a les característiques estadístiques més importants, les futures versions també proporcionaran una perfecta integració amb una suite d'oficina.</p>
     <p xml:lang="en-GB">RKWard aims to become an easy to use, transparent frontend to R, a powerful system for statistical computation and graphics. Besides a convenient GUI for the most important statistical functions, future versions will also provide seamless integration with an office-suite.</p>
@@ -108,6 +111,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <screenshots>
     <screenshot type="default">
       <caption>Main window, with data editor, object browser, interactive R console, and further tool windows.</caption>
+      <caption xml:lang="ar">النافذة الرئيسة، مع محرر البيانات، ومتصفح الكائنات، ووحدة تحكم R التفاعلية، ونوافذ أدوات أخرى.</caption>
       <caption xml:lang="ca">Finestra principal, amb un editor de dades, un navegador d'objectes, una consola interactiva de l'R i altres finestres d'eines.</caption>
       <caption xml:lang="ca-valencia">Finestra principal, amb un editor de dades, un navegador d'objectes, una consola interactiva d'R i altres finestres d'eines.</caption>
       <caption xml:lang="en-GB">Main window, with data editor, object browser, interactive R console, and further tool windows.</caption>
@@ -137,6 +141,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     </screenshot>
     <screenshot type="default">
       <caption>Script editor with active preview</caption>
+      <caption xml:lang="ar">محرر النصوص مع معاينة نشطة</caption>
       <caption xml:lang="ca">Un editor de scripts amb vista prèvia activa</caption>
       <caption xml:lang="ca-valencia">Un editor de scripts amb vista prèvia activa</caption>
       <caption xml:lang="cs">Editor skriptů s aktivním náhledem</caption>
@@ -168,6 +173,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     </screenshot>
     <screenshot type="default">
       <caption>Working with data in RKWard</caption>
+      <caption xml:lang="ar">العمل مع البيانات في آر كي وورد</caption>
       <caption xml:lang="ca">Treballant amb dades en el RKward</caption>
       <caption xml:lang="ca-valencia">Treballant amb dades en RKward</caption>
       <caption xml:lang="cs">Práce s daty v RKWard</caption>
@@ -199,6 +205,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     </screenshot>
     <screenshot type="default">
       <caption>Searching objects by name, searching for help pages, and in-app help viewer</caption>
+      <caption xml:lang="ar">البحث عن الكائنات بالاسم، والبحث عن صفحات المساعدة، وعارض المساعدة داخل التطبيق</caption>
       <caption xml:lang="ca">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visualitzador d'ajuda integrat a l'aplicació</caption>
       <caption xml:lang="ca-valencia">Busca objectes per nom, busca a les pàgines d'ajuda, i visor d'ajuda integrat en l'aplicació</caption>
       <caption xml:lang="en-GB">Searching objects by name, searching for help pages, and in-app help viewer</caption>
