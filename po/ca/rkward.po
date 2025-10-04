@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-29 00:39+0000\n"
+"POT-Creation-Date: 2025-10-04 00:39+0000\n"
 "PO-Revision-Date: 2025-08-28 14:23+0200\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -271,7 +271,7 @@ msgid ""
 msgstr "Realment voleu eliminar l'objecte «%1»? No podrà recuperar-se mai més."
 
 #: rkward/core/rkmodificationtracker.cpp:351
-#: rkward/dataeditor/rkvareditmodel.cpp:672
+#: rkward/dataeditor/rkvareditmodel.cpp:667
 #: rkward/dialogs/rkloadlibsdialog.cpp:361
 #: rkward/dialogs/rkloadlibsdialog.cpp:377
 #: rkward/dialogs/rkloadlibsdialog.cpp:965 rkward/misc/rkobjectlistview.cpp:266
@@ -282,7 +282,7 @@ msgid "Name"
 msgstr "Nom"
 
 #: rkward/core/rkmodificationtracker.cpp:352
-#: rkward/dataeditor/rkvareditmodel.cpp:673
+#: rkward/dataeditor/rkvareditmodel.cpp:668
 #: rkward/misc/editlabelsdialog.cpp:196 rkward/misc/rkobjectlistview.cpp:211
 #: rkward/misc/rkobjectlistview.cpp:268
 #, kde-format
@@ -290,7 +290,7 @@ msgid "Label"
 msgstr "Etiqueta"
 
 #: rkward/core/rkmodificationtracker.cpp:353
-#: rkward/dataeditor/rkvareditmodel.cpp:674
+#: rkward/dataeditor/rkvareditmodel.cpp:669
 #: rkward/misc/rkobjectlistview.cpp:210 rkward/rbackend/rcommandstack.cpp:313
 #: rkward/windows/rkhelpsearchwindow.cpp:330
 #, kde-format
@@ -484,7 +484,7 @@ msgid "Duplicate column name '%1'"
 msgstr "Nom de columna duplicat «%1»"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:260
-#: rkward/dataeditor/rkvareditmodel.cpp:540
+#: rkward/dataeditor/rkvareditmodel.cpp:535
 #, kde-format
 msgid "Type on these fields to add new columns"
 msgstr "Teclegeu en aquests camps per a afegir columnes noves"
@@ -514,45 +514,45 @@ msgstr "Noms de les files"
 msgid "This column contains one or more invalid fields"
 msgstr "Aquesta columna conté un o més camps no vàlids"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:675
+#: rkward/dataeditor/rkvareditmodel.cpp:670
 #, kde-format
 msgid "Format"
 msgstr "Format"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:676
+#: rkward/dataeditor/rkvareditmodel.cpp:671
 #, kde-format
 msgid "Levels"
 msgstr "Nivells"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:679
+#: rkward/dataeditor/rkvareditmodel.cpp:674
 #, kde-format
 msgid "Edit these fields to rename variables."
 msgstr "Editeu aquests camps per a reanomenar les variables."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:680
+#: rkward/dataeditor/rkvareditmodel.cpp:675
 #, kde-format
 msgid "A descriptive label for each column (optional)."
 msgstr "Una etiqueta opcional que descrigui cada columna."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:681
+#: rkward/dataeditor/rkvareditmodel.cpp:676
 #, kde-format
 msgid "Type of data."
 msgstr "Tipus de dades."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:682
+#: rkward/dataeditor/rkvareditmodel.cpp:677
 #, kde-format
 msgid "Double click on these fields to customize data display."
 msgstr ""
 "Feu doble clic en aquests camps per a personalitzar la visualització de les "
 "dades."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:683
+#: rkward/dataeditor/rkvareditmodel.cpp:678
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
 msgstr ""
 "Feu doble clic en aquests camps per a modificar els nivells del factor."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:824
+#: rkward/dataeditor/rkvareditmodel.cpp:819
 #, kde-format
 msgid "Object '%1' is not a vector"
 msgstr "L'objecte «%1» no és un vector"

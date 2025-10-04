@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-29 00:39+0000\n"
+"POT-Creation-Date: 2025-10-04 00:39+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -247,7 +247,7 @@ msgid ""
 msgstr "Tikrai pašalinti objektą „%1“? Jis bus pašalintas negrįžtamai."
 
 #: rkward/core/rkmodificationtracker.cpp:351
-#: rkward/dataeditor/rkvareditmodel.cpp:672
+#: rkward/dataeditor/rkvareditmodel.cpp:667
 #: rkward/dialogs/rkloadlibsdialog.cpp:361
 #: rkward/dialogs/rkloadlibsdialog.cpp:377
 #: rkward/dialogs/rkloadlibsdialog.cpp:965 rkward/misc/rkobjectlistview.cpp:266
@@ -258,7 +258,7 @@ msgid "Name"
 msgstr "Vardas"
 
 #: rkward/core/rkmodificationtracker.cpp:352
-#: rkward/dataeditor/rkvareditmodel.cpp:673
+#: rkward/dataeditor/rkvareditmodel.cpp:668
 #: rkward/misc/editlabelsdialog.cpp:196 rkward/misc/rkobjectlistview.cpp:211
 #: rkward/misc/rkobjectlistview.cpp:268
 #, kde-format
@@ -266,7 +266,7 @@ msgid "Label"
 msgstr "Etiketė"
 
 #: rkward/core/rkmodificationtracker.cpp:353
-#: rkward/dataeditor/rkvareditmodel.cpp:674
+#: rkward/dataeditor/rkvareditmodel.cpp:669
 #: rkward/misc/rkobjectlistview.cpp:210 rkward/rbackend/rcommandstack.cpp:313
 #: rkward/windows/rkhelpsearchwindow.cpp:330
 #, kde-format
@@ -447,7 +447,7 @@ msgid "Duplicate column name '%1'"
 msgstr ""
 
 #: rkward/dataeditor/rkvareditmodel.cpp:260
-#: rkward/dataeditor/rkvareditmodel.cpp:540
+#: rkward/dataeditor/rkvareditmodel.cpp:535
 #, kde-format
 msgid "Type on these fields to add new columns"
 msgstr ""
@@ -478,42 +478,42 @@ msgstr "Eilučių pavadinimai"
 msgid "This column contains one or more invalid fields"
 msgstr "Stulpelyje yra bent vienas netinkamas laukas"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:675
+#: rkward/dataeditor/rkvareditmodel.cpp:670
 #, kde-format
 msgid "Format"
 msgstr "Formatas"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:676
+#: rkward/dataeditor/rkvareditmodel.cpp:671
 #, kde-format
 msgid "Levels"
 msgstr "Lygiai"
 
-#: rkward/dataeditor/rkvareditmodel.cpp:679
+#: rkward/dataeditor/rkvareditmodel.cpp:674
 #, kde-format
 msgid "Edit these fields to rename variables."
 msgstr ""
 
-#: rkward/dataeditor/rkvareditmodel.cpp:680
+#: rkward/dataeditor/rkvareditmodel.cpp:675
 #, kde-format
 msgid "A descriptive label for each column (optional)."
 msgstr ""
 
-#: rkward/dataeditor/rkvareditmodel.cpp:681
+#: rkward/dataeditor/rkvareditmodel.cpp:676
 #, kde-format
 msgid "Type of data."
 msgstr "Duomenų tipas."
 
-#: rkward/dataeditor/rkvareditmodel.cpp:682
+#: rkward/dataeditor/rkvareditmodel.cpp:677
 #, kde-format
 msgid "Double click on these fields to customize data display."
 msgstr ""
 
-#: rkward/dataeditor/rkvareditmodel.cpp:683
+#: rkward/dataeditor/rkvareditmodel.cpp:678
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
 msgstr ""
 
-#: rkward/dataeditor/rkvareditmodel.cpp:824
+#: rkward/dataeditor/rkvareditmodel.cpp:819
 #, kde-format
 msgid "Object '%1' is not a vector"
 msgstr ""
