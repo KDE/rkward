@@ -6070,10 +6070,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, fuzzy, kde-format
-#| msgid "No device integration"
+#, kde-format
 msgid "Code Navigation"
-msgstr "Žádné začleňování zařízení"
+msgstr "Procházení kódem"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
@@ -6145,10 +6144,9 @@ msgid "Select current code chunk"
 msgstr "Vyberte rodičovský objekt"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "&Spustit"
+msgstr "Spustit"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
@@ -6290,10 +6288,9 @@ msgid "Disable preview"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "R Markdown (HTML)"
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6397,10 +6394,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "Umístění"
+msgstr "Místní"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
