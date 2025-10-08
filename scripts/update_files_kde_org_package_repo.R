@@ -22,16 +22,18 @@ require(roxyPackage)
 require(tools)
 
 local({
+  main.root.packages <- file.path("/home","thomas","develop","rpackages")
+  repo.root <- file.path(main.root.packages,"repo")
+
   # Sync existing repository. Must work with a specific mirror (rather than files.kde.org), for wget to work well
+  # Mirror needs to support ftp, but specify without protocol, here
   repo_mirror <- "ftp.gwdg.de/pub/linux/kde/extrafiles/rkward/R/"
-  repo.root <- file.path(tempdir(),"repo_rkward")
-  system(paste0("cd ", repo.root, "; wget --mirror ", repo_mirror, " -nH --cut-dirs=", length(strsplit(repo_mirror, "/")[[1]])))
+  dir.create(repo.root)
+  system(paste0("cd ", repo.root, "; wget --mirror ftp://", repo_mirror, " -nH --cut-dirs=", length(strsplit(repo_mirror, "/")[[1]])-1))
   repo.copy <- file.path(tempdir(),"repo_rkward_copy")
   unlink(repo.copy, recursive=TRUE)
   dir.create(repo.copy)
   file.copy(list.files(repo.root, full.names=TRUE), repo.copy, recursive=TRUE, copy.date=TRUE)
-
-  main.root.packages <- file.path("/home","thomas","develop","rpackages")
 
     actions <- c(
         "html",           # update HTML index files
@@ -52,13 +54,14 @@ local({
 #     "rk.MPT", # documented as broken
 
      # https://github.com/AlfCano
-     "rk.transpose.df",
      "rk.cSplit",
-     "rk.gsub.sub",
+     "rk.dplyr",
      "rk.forcats",
-     "rk.pivot.reshape",
+     "rk.gsub.sub",
      "rk.gtsummary",
+     "rk.pivot.reshape",
      "rk.survey.design",
+     "rk.transpose.df",
      NULL
   )){
     pck.name <- this.plugin
