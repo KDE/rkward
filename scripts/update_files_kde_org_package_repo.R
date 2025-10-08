@@ -11,8 +11,6 @@
 #    basic checking) NOTE: roxy.package() could automate this, but for now it's a deliberate decision to require humand
 #    attention on package updates.
 # 3. Enable the packages to update in the for loop, below
-#    - if only updating a subset of packages, be sure to work with a copy of the existing repo, in order to create proper index files!
-#    - TODO: document this part, properly
 # 4. Source/run the whole script. You may/will have to install various additional packages at several points
 # 5. Upload to sftp://files.kde.org, internal path rkward/web/R
 
@@ -21,10 +19,19 @@
 ## setup environment
 # .libPaths("~/R")
 require(roxyPackage)
+require(tools)
 
 local({
+  # Sync existing repository. Must work with a specific mirror (rather than files.kde.org), for wget to work well
+  repo_mirror <- "ftp.gwdg.de/pub/linux/kde/extrafiles/rkward/R/"
+  repo.root <- file.path(tempdir(),"repo_rkward")
+  system(paste0("cd ", repo.root, "; wget --mirror ", repo_mirror, " -nH --cut-dirs=", length(strsplit(repo_mirror, "/")[[1]])))
+  repo.copy <- file.path(tempdir(),"repo_rkward_copy")
+  unlink(repo.copy, recursive=TRUE)
+  dir.create(repo.copy)
+  file.copy(list.files(repo.root, full.names=TRUE), repo.copy, recursive=TRUE, copy.date=TRUE)
+
   main.root.packages <- file.path("/home","thomas","develop","rpackages")
-  sandbox(TRUE, pck.source.dir=FALSE, R.libs=FALSE)
 
     actions <- c(
         "html",           # update HTML index files
@@ -56,7 +63,6 @@ local({
   )){
     pck.name <- this.plugin
     main.root <- file.path(main.root.packages,"sources")
-    repo.root.v <- file.path(main.root.packages,"repo_rkward")
     r.dir <- file.path(main.root, pck.name)
 
     roxy.package(actions=actions,
@@ -65,7 +71,7 @@ local({
       pck.version=NULL,
       R.libs.append=rk.home("lib"),
       R.libs=.libPaths()[1],
-      repo.root=repo.root.v,
+      repo.root=repo.root,
       cleanup=TRUE,
       URL=c(
         default="https://files.kde.org/rkward/R"
@@ -76,5 +82,18 @@ local({
       ),
       Rbuildignore=c(".git")
     )
+  }
+
+  old_files <- list.files(repo.copy, recursive=TRUE)
+  new_files <- list.files(repo.root, recursive=TRUE)
+  new_files <- new_files[sapply(new_files, function(file) {
+    if (!file.exists(file.path(repo.copy, file))) return(TRUE)  # all new
+    if (md5sum(file.path(repo.copy, file)) != md5sum(file.path(repo.root, file))) return(TRUE)  # changed
+    return(FALSE)
+  })]
+  if (length(new_files)) {
+    cat("\nThe following files have been updated. Please remember to sync them to the repository!\n")
+    cat(paste(new_files, collapse="\n"))
+    cat("\n")
   }
 })
