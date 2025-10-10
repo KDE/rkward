@@ -44,6 +44,6 @@ it will remain in place, with compatible parameters.
 }
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{utilities}

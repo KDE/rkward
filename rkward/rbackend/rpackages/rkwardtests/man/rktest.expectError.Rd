@@ -33,6 +33,6 @@ if(!rktest.commandFailed(stop("Expected error"))) stop("Failed to generate error
 \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{utilities}

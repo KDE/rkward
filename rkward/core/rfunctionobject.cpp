@@ -1,7 +1,7 @@
 /*
 rfunctionobject - This file is part of RKWard (https://rkward.kde.org). Created: Wed Apr 26 2006
 SPDX-FileCopyrightText: 2006 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 

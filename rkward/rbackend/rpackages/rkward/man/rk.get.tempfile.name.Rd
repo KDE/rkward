@@ -131,7 +131,7 @@ rk.set.output.html.file(outfile)
   \link{rk.print}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{IO}
 \keyword{utilities}

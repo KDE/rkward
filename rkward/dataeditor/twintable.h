@@ -1,7 +1,7 @@
 /*
 twintable.h - This file is part of the RKWard project. Created: Tue Oct 29 2002
 SPDX-FileCopyrightText: 2002-2016 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 

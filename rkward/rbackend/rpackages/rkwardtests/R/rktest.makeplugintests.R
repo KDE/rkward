@@ -1,7 +1,7 @@
 # - This file is part of the RKWard project (https://rkward.kde.org).
 # SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 # SPDX-FileCopyrightText: by Meik Michalke <meik.michalke@hhu.de>
-# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
 #' Run a whole RKWard plugin test suite
 #'
@@ -67,7 +67,7 @@ rktest.makeplugintests <- function(testsuites="testsuite.R", testroot=getwd(), o
 
   sink()
 
-  cat (paste ("\n\nThese output are saved in: ", paste (getwd(), outfile, sep=.Platform$file.sep), ".\nIf needed, send them to rkward-devel@kde.org\n", sep=""))
+  cat (paste ("\n\nThese output are saved in: ", paste (getwd(), outfile, sep=.Platform$file.sep), ".\nIf needed, send them to rkward@kde.org\n", sep=""))
   cat (paste("\nThe full test results have been saved to this temporary directory:\n", rktest.getTempDir(),"\n"))
 
 }

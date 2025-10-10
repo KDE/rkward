@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # This file is part of the RKWard project (https://rkward.kde.org).
 # SPDX-FileCopyrightText: 2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 # crude helper script to add one of the more common REUSE copyright headers, to files where it is still missing
@@ -28,7 +28,7 @@ def rewrite (filename):
         elif (holdern.startswith("2")):
             holder = "Meik Michalke <meik.michalke@hhu.de>"
         elif (holdern.startswith("3")):
-            holder = "Prasenjit Kapat <rkward-devel@kde.org>"
+            holder = "Prasenjit Kapat <rkward@kde.org>"
         elif (holdern.startswith("4")):
             holder = "Stefan Rödiger <stefan_roediger@gmx.de>"
         else:
@@ -37,7 +37,7 @@ def rewrite (filename):
         
         text = "- This file is part of the RKWard project (https://rkward.kde.org).\n"
         text += "SPDX-FileCopyrightText: by " + holder + "\n"
-        text += "SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>\n"
+        text += "SPDX-FileContributor: The RKWard Team <rkward@kde.org>\n"
         text += "SPDX-License-Identifier: GPL-2.0-or-later"
 
         if (content.startswith("<!DOCTYPE") or filename.endswith(".xml")):

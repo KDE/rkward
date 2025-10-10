@@ -1,7 +1,7 @@
 # - This file is part of the RKWard project (https://rkward.kde.org).
-# SPDX-FileCopyrightText: by Meik Michalke <rkward-devel@kde.org>
-# SPDX-FileContributor: Thomas Friedrichsmeier <rkward-devel@kde.org>
-# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-FileCopyrightText: by Meik Michalke <rkward@kde.org>
+# SPDX-FileContributor: Thomas Friedrichsmeier <rkward@kde.org>
+# SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 ## Instructions / How to update the files.kde.org/rkward/R repo

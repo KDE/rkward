@@ -32,7 +32,7 @@ rk.demo("graphics")
   \code{\link{demo}}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{IO}
 \keyword{utilities}

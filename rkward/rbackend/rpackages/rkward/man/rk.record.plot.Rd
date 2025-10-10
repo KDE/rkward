@@ -147,7 +147,7 @@ options ("rk.graphics.hist.max.length" = .L.)
   \url{rkward://page/rkward_plot_history}
 }
 \author{
-Prasenjit Kapat \email{rkward-devel@kde.org}
+Prasenjit Kapat \email{rkward@kde.org}
 }
 \keyword{device}
 \keyword{dynamic}

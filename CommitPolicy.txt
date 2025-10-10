@@ -3,7 +3,7 @@ Committing to the RKWard repository
 
 This is a very short guideline, primarily for those who have KDE developer access, and are wondering whether, and how to commit to the RKWard repository, directly.
 
-If you do not have KDE developer access, contact us on the mailing list (rkward-devel@kde.org), or submit patches invent.kde.org (see below).
+If you do not have KDE developer access, contact us on the mailing list (rkward@kde.org), or submit patches invent.kde.org (see below).
 
 Library dependencies
 ====================
@@ -45,7 +45,7 @@ These should generally succeed in all cases, and are enforced by the CI. Note th
 2. make plugintests
 More elaborate documentation on the latter is available at https://rkward.kde.org/Automated_Plugin_Testing . Running tests is particularly important when making changes to the "plugin" and "plugins"
 subdirectories. Note that there are some false positives or unstable tests (failing in some locales, for instance). Check the diffs to find out, exactly how the test failed, or run tests before
-and after your changes. If in any doubt, ask on the mailing list rkward-devel@kde.org .
+and after your changes. If in any doubt, ask on the mailing list rkward@kde.org .
 
 Review
 ======
