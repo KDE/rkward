@@ -1,4 +1,5 @@
 --- Version 0.8.3 - UNRELEASED
+- Fixed: Output window would fail to open, automatically, for certain plugins
 - Fixed: Width of "progress" dialogs (showing R output) would exceed screen size depending on configuration
 
 --- Version 0.8.2 - Oct-01-2025

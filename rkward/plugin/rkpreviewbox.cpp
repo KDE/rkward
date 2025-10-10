@@ -75,10 +75,7 @@ RKPreviewBox::RKPreviewBox(const QDomElement &element, RKComponent *parent_compo
 				                                        "outfile <- tempfile (fileext='.html')\n"
 				                                        "rk.assign.preview.data(") +
 				                             idprop + QStringLiteral(", list (filename=outfile, on.delete=function (id) {\n"
-				                                                     "	oldfile <- rk.get.output.html.file()\n"
-				                                                     "	rk.flush.output(outfile, ask=FALSE)\n"
-				                                                     "	unlink(outfile)\n"
-				                                                     "	rk.set.output.html.file(oldfile)\n"
+				                                                     "	rkward:::.rk.discard.output(outfile)\n"
 				                                                     "}))\n"
 				                                                     "oldfile <- rk.set.output.html.file (outfile, style='preview')  # for initialization\n"
 				                                                     "rk.set.output.html.file (oldfile)\n"

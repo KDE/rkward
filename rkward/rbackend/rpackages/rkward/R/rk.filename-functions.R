@@ -256,15 +256,14 @@
 	files
 }
 
-#' @export
-#' @rdname rk.get.tempfile.name
-"rk.flush.output" <- function (x=rk.get.output.html.file (), flush.images=TRUE, ask=TRUE, ...) {
-	images <- character (0)
-	if (flush.images) images <- .rk.get.images.in.html.file (x)
+# not exported, but used by interal preview code
+".rk.discard.output" <- function(x, flush.images=TRUE, ask=FALSE) {
+	images <- character(0)
+	if (flush.images) images <- .rk.get.images.in.html.file(x)
 
 	desc <- x
-	if (length (images)) {
-		desc <- paste (x, ", along with ", length (images), " image files", sep="")
+	if (length(images)) {
+		desc <- paste(x, ", along with ", length(images), " image files", sep="")
 	}
 
 	if (isTRUE (ask)) {
@@ -277,8 +276,13 @@
 			unlink (image)
 		}
 	)
+}
 
-	rk.set.output.html.file (x, ...)
+#' @export
+#' @rdname rk.get.tempfile.name
+"rk.flush.output" <- function(x=rk.get.output.html.file(), flush.images=TRUE, ask=TRUE, ...) {
+	.rk.discard.output(x, flush.images, ask)
+	rk.set.output.html.file(x, ...)
 }
 
 #' Evaluate the given input file, recording a transcript to an HTML output file (including on-screen plots) 
