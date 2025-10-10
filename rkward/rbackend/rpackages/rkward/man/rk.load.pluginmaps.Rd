@@ -37,6 +37,6 @@ rk.load.pluginmaps()
 \code{\link{rk.call.plugin}}, \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{utilities}

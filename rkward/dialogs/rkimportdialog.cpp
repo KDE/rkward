@@ -1,7 +1,7 @@
 /*
 rkimportdialog - This file is part of RKWard (https://rkward.kde.org). Created: Tue Jan 30 2007
 SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 
@@ -105,7 +105,7 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 
 	page = new QWidget();
 	layout = new QVBoxLayout(page);
-	layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("No further import methods are available at this time. Things you can try, include: <ul><li>Check for the availability of additional import plugins</li><li>Save your data to a different format in the original application</li><li>Ask for advice on rkward-users@kde.org</li></ul>")));
+	layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("No further import methods are available at this time. Things you can try, include: <ul><li>Check for the availability of additional import plugins</li><li>Save your data to a different format in the original application</li><li>Ask for advice on rkward@kde.org</li></ul>")));
 	layout->addStretch();
 	end_without_selection = addPage(page, i18n("No import method found"));
 

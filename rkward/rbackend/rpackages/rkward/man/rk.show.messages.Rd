@@ -161,6 +161,6 @@ rk.select.list (LETTERS, preselect = c("A", "E", "I", "O", "U"),
    \code{\link[base:file.choose]{file.choose}}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{utilities}

@@ -1,7 +1,7 @@
 symb.first
 # - This file is part of the RKWard project (https://rkward.kde.org).
 # SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
 Symbol00 + 1
 Symbol01 <- Symbol2(Symbol03="String1", function(Symbol04) {

@@ -65,7 +65,7 @@ rk.download_appimage(dir="~/bin", overwrite=TRUE)
 }
 }
 \author{
-Meik Michalke \email{rkward-devel@kde.org}
+Meik Michalke \email{rkward@kde.org}
 }
 \keyword{misc}
 \keyword{utilities}

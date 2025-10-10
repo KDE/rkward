@@ -40,7 +40,7 @@ rk.sync (rkward::rk.record.plot)
 \url{rkward://page/rkward_workspace_browser}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{misc}
 \keyword{utilities}

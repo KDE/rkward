@@ -3,8 +3,8 @@ Type: Package
 Title: Provides functions related to the RKWard GUI
 Description: This package contains functions which are useful in combination with the RKWard GUI. Many of these functions are only needed for the internal communication between
                     RKWard and R, but some are also useful in user scripts.
-Author: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net> and the RKWard Team <rkward-devel@kde.org>
-Maintainer: RKWard-devel mailing list <rkward-devel@kde.org>
+Author: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net> and the RKWard Team <rkward@kde.org>
+Maintainer: RKWard-devel mailing list <rkward@kde.org>
 Depends: R (>= 2.9.0),methods
 Suggests: Cairo,googleVis,htmlwidgets,lattice,R2HTML
 URL: https://rkward.kde.org
@@ -13,7 +13,7 @@ License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier", email="thomas.friedrichsmeier@kdemail.net", role=c("aut")), person(given="the RKWard", family="team",
-                    email="rkward-devel@kde.org", role=c("cre","aut")))
+                    email="rkward@kde.org", role=c("cre","aut")))
 Version: 0.8.3
 Date: 2025-09-26
 RoxygenNote: 7.3.3

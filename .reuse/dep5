@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: RKWard
-Upstream-Contact: The RKWard Team <rkward-devel@kde.org>
+Upstream-Contact: The RKWard Team <rkward@kde.org>
 Source: https://invent.kde.org/education/rkward
 
 Files:
@@ -12,7 +12,7 @@ Files:
   tests/plots/*
   tests/rkward_application_tests/*
 Comment: These are generated files used in the context of automated testing
-Copyright: The RKWard Team <rkward-devel@kde.org>
+Copyright: The RKWard Team <rkward@kde.org>
 License: CC0-1.0
 
 Files:
@@ -22,7 +22,7 @@ Files:
   rkward/rbackend/rpackages/rkwardtests/man/*.Rd
 Comment: The content of these is extracted from the corresponding R source files using roxygen
 Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-Contributor: The RKWard Team <rkward-devel@kde.org>
+Contributor: The RKWard Team <rkward@kde.org>
 License: GPL-2.0-or-later
 
 Files:
@@ -39,7 +39,7 @@ Files:
   rkward/rbackend/winutf8.manifest
 Comment: Assorted source files that cannot (easily) contain SPDX licence headers
 Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-Contributor: The RKWard Team <rkward-devel@kde.org>
+Contributor: The RKWard Team <rkward@kde.org>
 License: GPL-2.0-or-later
 
 Files:
@@ -47,7 +47,7 @@ Files:
   rkward/icons/*.svg
   rkward/syntax/r-syntax-test.R
 Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-Contributor: The RKWard Team <rkward-devel@kde.org>
+Contributor: The RKWard Team <rkward@kde.org>
 License: LGPL-2.1-or-later
 
 Files:
@@ -63,7 +63,7 @@ License: LGPL-2.1-or-later
 Files:
   rkward/icons/rkward_logo.png
 Comment: Splash screen logo
-Copyright: Daniele Medri <rkward-devel@kde.org>
+Copyright: Daniele Medri <rkward@kde.org>
 License: LGPL-2.1-or-later
 
 Files:
@@ -80,7 +80,7 @@ Files:
   rkward/plugins/rkwarddev_scripts/*.md
 Comment: Assorted documentation related files
 Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-Contributor: The RKWard Team <rkward-devel@kde.org>
+Contributor: The RKWard Team <rkward@kde.org>
 License: GFDL-1.2-no-invariants-or-later or GPL-2.0-or-later
 
 Files:

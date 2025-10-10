@@ -1,6 +1,6 @@
 # - This file is part of the RKWard project (https://rkward.kde.org).
 # SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
 ## Public functions manipulating "graphics" should be stored here.
 ## These functions are accessible to the user.
@@ -429,7 +429,7 @@ RK.revision <- function(devnum=dev.cur()) {
 #'   \code{rk.plot.history.summary} returns a data.frame with messages.
 #'   \code{rk.duplicate.device} returns the value of a \code{\link[grDevices:dev.copy]{dev.copy}} call.
 #'   All other functions return \code{NULL} invisibly.
-#' @author Prasenjit Kapat \email{rkward-devel@kde.org}
+#' @author Prasenjit Kapat \email{rkward@kde.org}
 #' @seealso \code{\link[grDevices:recordPlot]{recordPlot}},
 #'   \code{\link[grDevices:replayPlot]{replayPlot}},
 #'   \code{\link[lattice:print.trellis]{print.trellis}},

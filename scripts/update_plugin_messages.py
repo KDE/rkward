@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # This file is part of the RKWard project (https://rkward.kde.org).
 # SPDX-FileCopyrightText: 2014-20220 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Extracts messages form RKWard plugin files (.pluginmap, .xml, .rkh, .js).

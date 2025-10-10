@@ -29,7 +29,7 @@ rk.check.for.pandoc()
 \code{\link{rk.sessionInfo}}
 }
 \author{
-Meik Michalke \email{rkward-devel@kde.org}
+Meik Michalke \email{rkward@kde.org}
 }
 \keyword{misc}
 \keyword{utilities}

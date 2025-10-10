@@ -1,7 +1,7 @@
 ## README
 # This file is part of the RKWard project (https://rkward.kde.org).
 # SPDX-FileCopyrightText: by Meik Michalke <meik.michalke@hhu.de>
-# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
 # this R script can be used to let roxyPackage maintain the rkward package sources
@@ -67,12 +67,12 @@ local({
     Package="rkward",
     Type="Package",
     Title="Provides functions related to the RKWard GUI",
-    Author="Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net> and the RKWard Team <rkward-devel@kde.org>",
+    Author="Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net> and the RKWard Team <rkward@kde.org>",
     AuthorsR="c(person(given=\"Thomas\", family=\"Friedrichsmeier\", email=\"thomas.friedrichsmeier@kdemail.net\",
         role=c(\"aut\")),
-      person(given=\"the RKWard\", family=\"team\", email=\"rkward-devel@kde.org\",
+      person(given=\"the RKWard\", family=\"team\", email=\"rkward@kde.org\",
         role=c(\"cre\",\"aut\")))",
-    Maintainer="RKWard-devel mailing list <rkward-devel@kde.org>",
+    Maintainer="RKWard-devel mailing list <rkward@kde.org>",
     ## TODO: check dependencies
     Depends="R (>= 2.9.0),methods",
     Suggests="Cairo,googleVis,htmlwidgets,lattice,R2HTML",
@@ -109,7 +109,7 @@ local({
   package_note <- paste0(
     "# - This file is part of the RKWard project (https://rkward.kde.org).\n",
     "# SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>\n",
-    "# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>\n",
+    "# SPDX-FileContributor: The RKWard Team <rkward@kde.org>\n",
     "# SPDX-License-Identifier: GPL-2.0-or-later"
   )
   sandbox_path <- sandbox.status()

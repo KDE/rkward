@@ -1,7 +1,7 @@
 /*
 main.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 29 2002
 SPDX-FileCopyrightText: 2002-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 
@@ -190,7 +190,7 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit(i18n("Jannis Vajen"), i18n("German Translation, bug reports"));
 	aboutData.addCredit(i18n("Roland Vollgraf"), i18n("Some patches"));
 	aboutData.addCredit(i18n("Roy Qu"), i18n("patches and helpful comments"));
-	aboutData.addCredit(i18n("Many more people on rkward-devel@kde.org"), i18n("Sorry, if we forgot to list you. Please contact us to get added"));
+	aboutData.addCredit(i18n("Many more people on rkward@kde.org"), i18n("Sorry, if we forgot to list you. Please contact us to get added"));
 	aboutData.setOtherText(QStringLiteral("<p><b>%1</b></p><ul><li><a href=\"https://www.jstatsoft.org/article/view/v049i09\">%2</a></li><li>Friedrichsmeier, T. &amp; the RKWard Team (%3). RKWard: %4. Version %5. %6</li></ul>").arg(i18n("How to cite:"), i18n("Peer-reviewed article in the Journal of Statistical Software"), aboutData.copyrightStatement().right(4), aboutData.shortDescription(), aboutData.version(), aboutData.homepage()));
 	KAboutData::setApplicationData(aboutData);
 

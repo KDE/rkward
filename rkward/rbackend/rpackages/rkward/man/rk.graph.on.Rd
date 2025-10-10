@@ -56,6 +56,6 @@ rk.graph.off ()
 \code{\link{rk.results}}, \code{\link{rk.print}}, \code{\link{rk.get.output.html.file}}, \code{\link[grDevices:dev.off]{dev.off}}, \code{\link[grDevices:svg]{svg}}, \code{\link[grDevices:png]{png}}, \code{\link[grDevices:jpeg]{jpeg}}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{devices}

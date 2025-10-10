@@ -1,7 +1,7 @@
 /*
 rksettingsmoduledebug - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 23 2007
 SPDX-FileCopyrightText: 2007-2024 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rksettingsmoduledebug.h"

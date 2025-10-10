@@ -32,7 +32,7 @@ dev.print (rk.printer.device)
   \code{\link{rk.graph.on}}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{device}
 \keyword{utilities}

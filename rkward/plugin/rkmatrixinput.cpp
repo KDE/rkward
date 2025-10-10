@@ -1,7 +1,7 @@
 /*
 rkmatrixinput - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 09 2012
 SPDX-FileCopyrightText: 2012-2016 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 

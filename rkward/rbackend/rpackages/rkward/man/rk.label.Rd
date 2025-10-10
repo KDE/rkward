@@ -92,6 +92,6 @@ names (rk.list (x$a, x$b))                # "x$a (First column)" "x$b"
 
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+Thomas Friedrichsmeier \email{rkward@kde.org}
 }
 \keyword{utilities}

@@ -1,6 +1,6 @@
 <!--- This file is part of the RKWard project.
 SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 -->
 <document>
@@ -8,7 +8,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<snippet id="author_rkward_team">
 			<author
 				name="RKWard Team"
-				email="rkward-devel@kde.org"
+				email="rkward@kde.org"
 				url="https://rkward.kde.org" />
 		</snippet>
 		<snippet id="rkward_version_guard">
