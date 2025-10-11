@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-04 00:39+0000\n"
+"POT-Creation-Date: 2025-10-11 09:03+0000\n"
 "PO-Revision-Date: 2025-08-27 10:07-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -212,12 +212,18 @@ msgstr ""
 "carregado do R. Tecnicamente, isto corresponde ao ambiente <i>.GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
+#| "optimized for this situation, and you may experience lag between R "
+#| "commands. Should this situation constitute a regular use case for your "
+#| "work, please let us know at rkward-devel@kde.org, so we can consider "
+#| "possible solutions."
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
 "Should this situation constitute a regular use case for your work, please "
-"let us know at rkward-devel@kde.org, so we can consider possible solutions."
+"let us know at rkward@kde.org, so we can consider possible solutions."
 msgstr ""
 "Seu espaço de trabalho contém mais de 10.000 objetos de nível superior. O "
 "RKWard não está otimizado para esta situação, e você pode experimentar "
@@ -983,12 +989,17 @@ msgid "Start import dialog"
 msgstr "Iniciar diálogo de importação"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
 "li><li>Save your data to a different format in the original application</"
-"li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+"li><li>Ask for advice on rkward@kde.org</li></ul>"
 msgstr ""
 "Nenhum outro método de importação está disponível no momento. Algumas dicas "
 "do que você pode tentar incluem: <ul><li>Verificar a disponibilidade de "
@@ -2248,8 +2259,9 @@ msgid "patches and helpful comments"
 msgstr "Correções e comentários úteis"
 
 #: rkward/main.cpp:193
-#, kde-format
-msgid "Many more people on rkward-devel@kde.org"
+#, fuzzy, kde-format
+#| msgid "Many more people on rkward-devel@kde.org"
+msgid "Many more people on rkward@kde.org"
 msgstr "Muitas outras pessoas em rkward-devel@kde.org"
 
 #: rkward/main.cpp:193

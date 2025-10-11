@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-04 00:39+0000\n"
+"POT-Creation-Date: 2025-10-11 09:03+0000\n"
 "PO-Revision-Date: 2025-08-25 09:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -211,12 +211,18 @@ msgstr ""
 "GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
+#| "optimized for this situation, and you may experience lag between R "
+#| "commands. Should this situation constitute a regular use case for your "
+#| "work, please let us know at rkward-devel@kde.org, so we can consider "
+#| "possible solutions."
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
 "Should this situation constitute a regular use case for your work, please "
-"let us know at rkward-devel@kde.org, so we can consider possible solutions."
+"let us know at rkward@kde.org, so we can consider possible solutions."
 msgstr ""
 "У вашому робочому просторі міститься понад 10000 об'єктів верхнього рівня. "
 "RKWard у таких випадках працює неоптимально — можуть відчуватися затримки "
@@ -994,12 +1000,17 @@ msgid "Start import dialog"
 msgstr "Відкрити вікно імпортування"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
 "li><li>Save your data to a different format in the original application</"
-"li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+"li><li>Ask for advice on rkward@kde.org</li></ul>"
 msgstr ""
 "Не лишилося ніяких інших способів імпортування. Ви можете спробувати такі "
 "дії: <ul><li>Пошукати додаткові додатки імпортування</li><li>Зберегти дані в "
@@ -2281,8 +2292,9 @@ msgid "patches and helpful comments"
 msgstr "латки та корисні коментарі"
 
 #: rkward/main.cpp:193
-#, kde-format
-msgid "Many more people on rkward-devel@kde.org"
+#, fuzzy, kde-format
+#| msgid "Many more people on rkward-devel@kde.org"
+msgid "Many more people on rkward@kde.org"
 msgstr "Всі інші учасники листування у rkward-devel@kde.org"
 
 #: rkward/main.cpp:193

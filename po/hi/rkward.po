@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-04 00:39+0000\n"
+"POT-Creation-Date: 2025-10-11 09:03+0000\n"
 "PO-Revision-Date: 2024-12-15 19:29+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -205,12 +205,18 @@ msgstr ""
 "GlobalEnv</i> वातावरण से मेल खाता है।"
 
 #: rkward/core/renvironmentobject.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
+#| "optimized for this situation, and you may experience lag between R "
+#| "commands. Should this situation constitute a regular use case for your "
+#| "work, please let us know at rkward-devel@kde.org, so we can consider "
+#| "possible solutions."
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
 "Should this situation constitute a regular use case for your work, please "
-"let us know at rkward-devel@kde.org, so we can consider possible solutions."
+"let us know at rkward@kde.org, so we can consider possible solutions."
 msgstr ""
 "आपके कार्यस्थान में 10,000 से ज़्यादा शीर्ष स्तरीय ऑब्जेक्ट हैं। RKWard इस स्थिति के लिए "
 "अनुकूलित नहीं है, और आपको R कमांड के बीच अंतराल का अनुभव हो सकता है। अगर यह स्थिति आपके "
@@ -960,12 +966,17 @@ msgid "Start import dialog"
 msgstr "आयात संवाद प्रारंभ करें"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
 "li><li>Save your data to a different format in the original application</"
-"li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+"li><li>Ask for advice on rkward@kde.org</li></ul>"
 msgstr ""
 "इस समय कोई और आयात विधि उपलब्ध नहीं है। आप जो चीज़ें आज़मा सकते हैं, उनमें ये शामिल हैं:"
 "<ul><li> अतिरिक्त आयात प्लगइन्स की उपलब्धता की जांच करें</li><li> अपने डेटा को मूल "
@@ -2206,8 +2217,9 @@ msgid "patches and helpful comments"
 msgstr "पैच और सहायक टिप्पणियाँ"
 
 #: rkward/main.cpp:193
-#, kde-format
-msgid "Many more people on rkward-devel@kde.org"
+#, fuzzy, kde-format
+#| msgid "Many more people on rkward-devel@kde.org"
+msgid "Many more people on rkward@kde.org"
 msgstr "rkward-devel@kde.org पर बहुत से लोग"
 
 #: rkward/main.cpp:193
