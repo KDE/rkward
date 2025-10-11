@@ -84,7 +84,7 @@ RK.Output <- setRefClass(Class="RK.Output", fields=list(id="character"),
 		},
 		export=function(filename, overwrite=NULL) {
 "Save this output, to the specified location, but keep it associated with the previous location (\"save a copy\")."
-			if (missing(filename)) stop("No file name specified")
+			if (missing(filename)) stop(.rk.i18n("No file name specified"))
 			.rk.call.nested("output", c ("export", .checkId(), if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail", filename))
 		},
 		clear=function(discard=NULL) {
@@ -113,7 +113,7 @@ Do not write anything to the target filename, directly! This is purely for infor
 		.checkId=function() {
 "For internal use: Throws an error, if the id parameter is NULL or too long, returns a length one character vector otherwise."
 			i <- as.character(id)
-			if (length(i) != 1) stop ("Invalid output id. Use rk.output() to obtain a valid output handle.")
+			if (length(i) != 1) stop(.rk.i18n("Invalid output id. Use rk.output() to obtain a valid output handle."))
 			i
 		}
 	))

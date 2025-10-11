@@ -15,8 +15,8 @@
 #' @importFrom grDevices dev.new
 #' @export
 "rk.screen.device" <- function (...) {
-	warning ("rk.screen.device() is obsolete.\nUse one of dev.new(), RK(), or rk.embed.device(), instead.")
-	dev.new (...)
+	warning(.rk.i18n("rk.screen.device() is obsolete.\nUse one of dev.new(), RK(), or rk.embed.device(), instead."))
+	dev.new(...)
 }
 
 # Fetch the current size of the given RK() device from the frontend, and redraw
