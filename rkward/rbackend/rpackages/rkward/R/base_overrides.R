@@ -87,11 +87,9 @@
 #' @export
 #' @rdname base_overrides
 "Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
-	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
-		 .rk.call("preLocaleChange")
-
+	if (category %in% c("LC_ALL", "LC_CTYPE", "LANG")) {
+		.rk.call("preLocaleChange")
 		ret <- base::Sys.setlocale (category, locale, ...)
-
 		.Call ("rk.update.locale", PACKAGE="(embedding)")
 		ret
 	} else {
