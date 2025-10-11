@@ -64,7 +64,7 @@ rk.download_appimage <- function(
   rkward::require(XiMpLe)
   XiMpLe_version <- utils::packageVersion("XiMpLe")
   if(isFALSE(XiMpLe_version >= "0.11.3")){
-    stop(simpleError(paste0("rk.download_appimage() requires XiMpLe >= 0.11.3, but only found ", XiMpLe_version, ". Please update XiMpLe.")))
+    stop(.rk.i18n("rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please update XiMpLe.", XiMpLe_version), call.=FALSE)
   } else {}
   rk_ai_html <- XiMpLe::parseXMLTree(url, drop="empty_attributes")
   rk_ai_hrefs <- XiMpLe::XMLScanDeep(rk_ai_html, find="href")
@@ -74,17 +74,17 @@ rk.download_appimage <- function(
 
   if(isTRUE(download)){
     if(!dir.exists(dir)){
-      stop(simpleError(paste0("Target directory does not exist:\n  ", dir)))
+      stop(.rk.i18n("Target directory '%1' does not exist\n", dir), call.=FALSE)
     } else {}
     have_backup <- FALSE
     target_file <- file.path(dir, filename)
     if(file.exists(target_file)){
       if(isFALSE(overwrite)){
-        stop(simpleError(paste0("Target file already exists, use the \"overwrite\" argument to replace it:\n  ", target_file)))
+        stop(.rk.i18n("Target file '%1' already exists, use the \"overwrite\" argument to replace it:\n", target_file), call.=FALSE)
       } else {}
       # create backup of current AppImage as a fallback
       rk_ai_backup <- paste0(target_file, ".backup_", format(Sys.time(), "%Y-%m-%d_%H%M%S"))
-      message(paste0("Creating backup of current AppImage:\n  ", rk_ai_backup))
+      message(.rk.i18n("Creating backup of current AppImage: %1\n  ", rk_ai_backup))
       file.rename(
           from=target_file
         , to=rk_ai_backup
@@ -109,35 +109,35 @@ rk.download_appimage <- function(
                 from=rk_ai_backup
               , to=target_file
             )
-            stop("Something went wrong with the download! Restored previous AppImage from backup.", call.=FALSE)
+            stop(.rk.i18n("Something went wrong with the download! Restored previous AppImage from backup."), call.=FALSE)
           } else {
             file.remove(target_file)
-            stop("Something went wrong with the download!", call.=FALSE)
+            stop(.rk.i18n("Something went wrong with the download!"), call.=FALSE)
           }
         }
       , finally = options(timeout = timeout_orig)
     )
     if(isTRUE(dl_status == 0)){
-      message("Download successful, setting file permissions.")
+      message(.rk.i18n("Download successful, setting file permissions."))
       Sys.chmod(
           paths=target_file
         , mode="0755"
         , use_umask=TRUE
       )
       if(isTRUE(have_backup)){
-        message("Removing backup of previous AppImage.")
+        message(.rk.i18n("Removing backup of previous AppImage."))
         file.remove(rk_ai_backup)
       } else {}
       return(invisible(target_file))
     } else {
       if(isTRUE(have_backup)){
-        warning("Something went wrong with the download! Restoring previous AppImage from backup.", call.=FALSE)
+        warning(.rk.i18n("Something went wrong with the download! Restoring previous AppImage from backup."), call.=FALSE)
         file.rename(
             from=rk_ai_backup
           , to=target_file
         )
       } else {
-        warning("Something went wrong with the download!", call.=FALSE)
+        warning(.rk.i18n("Something went wrong with the download!"), call.=FALSE)
         file.remove(target_file)
       }
     }

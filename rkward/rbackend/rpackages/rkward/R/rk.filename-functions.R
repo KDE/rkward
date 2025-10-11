@@ -137,19 +137,19 @@
 			if(!is.null(li$codepage)) return(paste0("windows-", li$codepage))
 			return(tail(strsplit(Sys.getlocale("LC_CTYPE"), ".") ,1))
 		}
-		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", encoding.name(), "\"?>\n", sep=""))
-		.rk.cat.output ("<html><head>\n<title>RKWard Output</title>\n")
+		.rk.cat.output("<?xml version=\"1.0\" encoding=\"", encoding.name(), "\"?>\n", sep="")
+		.rk.cat.output("<html><head>\n<title>RKWard Output</title>\n")
 		if (!is.null (css)) {
 			cssfilename <- paste (sub ("\\.[^.]*$", "", basename (x)), ".css", sep="")
-			.rk.cat.output (paste ("<link rel=\"StyleSheet\" type=\"text/css\" href=\"", cssfilename, "\"/>\n", sep=""))
+			.rk.cat.output("<link rel=\"StyleSheet\" type=\"text/css\" href=\"", cssfilename, "\"/>\n", sep="")
 			cssfile <- file.path (dirname (x), cssfilename)
 			if (!file.copy (css, cssfile, overwrite=TRUE)) {
-				warning ("Failed to copy CSS file ", css, " to ", cssfile)
+				warning(.rk.i18n("Failed to copy CSS file '%1' to '%2'", css, cssfile))
 			}
 		}
 		# the next part defines a JavaScript function to add individual results to a global table of contents menu in the document
 		if (style != "preview") {
-			.rk.cat.output (paste ("\t<script type=\"text/javascript\">
+			.rk.cat.output("\t<script type=\"text/javascript\">
 			<!--
 				function addToTOC(id, level){
 					var fullHeader = document.getElementById(id);
@@ -197,18 +197,18 @@
 						}
 					}
 				}
-			// -->\n\t</script>\n", sep=""))
+			// -->\n\t</script>\n", sep="")
 			# positioning of the TOC is done by CSS, default state is hidden
 			# see $SRC/rkward/pages/rkward_output.css
 		}
 
-		if (!is.null (additional.header.contents)) .rk.cat.output (as.character (additional.header.contents))
-		.rk.cat.output ("</head>\n<body>\n")
+		if (!is.null (additional.header.contents)) .rk.cat.output(as.character(additional.header.contents))
+		.rk.cat.output("</head>\n<body>\n")
 		if (style != "preview") {
 			# This initial output mostly to indicate the output is really there, just empty for now
-			.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", .rk.date (), "</pre>\n"))
+			.rk.cat.output("<a name=\"top\"></a>\n<pre>RKWard output initialized on", .rk.date (), "</pre>\n")
 			# an empty <div> where the TOC menu gets added to dynamically, and a second one to toggle show/hide
-			.rk.cat.output (paste (
+			.rk.cat.output(
 				"<div id=\"RKWardResultsTOCShown\" class=\"RKTOC\">\n",
 				"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCHidden','RKWardResultsTOCShown'); return false;\" href=\"\" class=\"toggleTOC\">Hide TOC</a>\n",
 				"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span>\n<br />",
@@ -220,7 +220,7 @@
 				"<div id=\"RKWardResultsTOCHidden\" class=\"RKTOC RKTOChidden\">\n",
 				"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCShown','RKWardResultsTOCHidden'); return false;\" href=\"\" class=\"toggleTOC\">Show TOC</a>\n",
 				"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span>\n",
-				"</div>\n", sep=""))
+				"</div>\n", sep="")
 		}
 	}
 
@@ -374,11 +374,11 @@ function registerPlot(element) {
 
 	hook <- RK.addHook(
 		after.create=function(devnum, ...) {
-			.rk.cat.output("<div align=\"right\">Plot window created</div>\n");
+			.rk.cat.output("<div align=\"right\">", .rk.i18n("Plot window created"), "</div>\n");
 			devs[[as.character(devnum)]] <<- RK.revision(devnum)
 		},
 		in.close=function(devnum, ...) {
-			.rk.cat.output("<div align=\"right\">Plot window closed</div>\n");
+			.rk.cat.output("<div align=\"right\">", .rk.i18n("Plot window closed"), "</div>\n");
 			devs[[as.character(devnum)]] <<- NULL
 		}
 	)
@@ -388,7 +388,7 @@ function registerPlot(element) {
 			currev <- RK.revision(as.numeric(devnum))
 			if (devs[[devnum]] < currev) {
 				cur <- dev.cur()
-				.rk.cat.output("<div align=\"right\"><details><script>registerPlot(document.currentScript.parentElement);</script><summary>Plot updated (click to show)</summary><p>\n");
+				.rk.cat.output("<div align=\"right\"><details><script>registerPlot(document.currentScript.parentElement);</script><summary>", .rk.i18n("Plot updated (click to show)"), "</summary><p>\n");
 				#rk.graph.on(width=200, height=200, pointsize=6)
 				rk.graph.on()
 				out <- dev.cur()

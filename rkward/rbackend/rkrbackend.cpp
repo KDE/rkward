@@ -892,7 +892,13 @@ SEXP doSimpleBackendCall(SEXP _call) {
 	QStringList list = RKRSupport::SEXPToStringList(_call);
 	QString call = list[0];
 
-	if (call == QStringLiteral("unused.filename")) {
+	if (call == QStringLiteral("i18n")) {
+		auto msg = ki18n(list.value(1).toUtf8().constData());
+		for (int i = 2; i < list.length(); ++i) {
+			msg = msg.subs(list[i]);
+		}
+		return RKRSupport::StringListToSEXP(QStringList(msg.toString())); // TODO: Avoid wrapping into QSringList
+	} else if (call == QStringLiteral("unused.filename")) {
 		QString prefix = list.value(1);
 		QString extension = list.value(2);
 		QString dirs = list.value(3);
@@ -933,6 +939,7 @@ SEXP doUpdateLocale() {
 	RK_TRACE(RBACKEND);
 
 	RK_DEBUG(RBACKEND, DL_WARNING, "Changing locale");
+	// TODO: properly handle re-initialization of translation, too!
 	RKTextCodec::reinit();
 
 	return ROb(R_NilValue);
