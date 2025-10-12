@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-11 09:03+0000\n"
-"PO-Revision-Date: 2025-08-25 09:50+0300\n"
+"PO-Revision-Date: 2025-10-11 21:37+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.1\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -214,13 +214,7 @@ msgstr ""
 "Teknik olarak bu, <i>.GlobalEnv</i> ortamına karşılık gelir."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -230,8 +224,8 @@ msgstr ""
 "Çalışma alanınız 10.000’den fazla üst düzey nesne içeriyor. RKWard bu durum "
 "için eniyilenmemiştir ve R komutları arasında gecikmeler yaşayabilirsiniz. "
 "Bu durumun işiniz için düzenli bir kullanım durumu teşkil etmesi halinde, "
-"lütfen rkward-devel@kde.org adresinden bize bildirin, böylece olası "
-"çözümleri değerlendirebiliriz."
+"lütfen rkward@kde.org adresinden bize bildirin, böylece olası çözümleri "
+"değerlendirebiliriz."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -993,12 +987,7 @@ msgid "Start import dialog"
 msgstr "İçe aktarma iletişim kutusunu başlat"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -1008,8 +997,8 @@ msgstr ""
 "Şu anda başka bir içe aktarma yöntemi kullanılabilir değil. "
 "Deneyebileceğiniz şeyler arasında şunlar bulunur: <ul><li>Ek içe aktarma "
 "eklentilerinin kullanılabilirliğini denetle</li><li>Veriyi özgün uygulamada "
-"farklı bir biçimde kaydet</li><li>rkward-users@kde.org adresinden tavsiye "
-"isteyin</li></ul>"
+"farklı bir biçimde kaydet</li><li>rkward@kde.org adresinden tavsiye isteyin</"
+"li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2256,10 +2245,9 @@ msgid "patches and helpful comments"
 msgstr "Yamalar ve yararlı yorumlar"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "rkward-devel@kde.org posta listesindeki birçok kişi"
+msgstr "rkward@kde.org posta listesindeki birçok kişi"
 
 #: rkward/main.cpp:193
 #, kde-format

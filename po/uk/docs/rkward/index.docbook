@@ -11,7 +11,7 @@
 ]>
 <!--- This file is part of the RKWard project (https://rkward.kde.org).
 SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 -->
 
@@ -31,7 +31,7 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 > <affiliation
 > <address
 ><email
->rkward-devel@kde.org</email
+>rkward@kde.org</email
 ></address>
 </affiliation>
 </author>

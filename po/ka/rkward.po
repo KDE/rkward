@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-11 09:03+0000\n"
-"PO-Revision-Date: 2025-08-25 06:30+0200\n"
+"PO-Revision-Date: 2025-10-11 12:45+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -207,13 +207,7 @@ msgstr ""
 "გარემოს."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -223,7 +217,7 @@ msgstr ""
 "თქვენი სამუშაო სივრცე 10.000-ზე მეტ ზედა დონის ობექტს შეიცავს. RKWard "
 "ამნაირი სიტუაციებისთვის ოპტიმიზებული არა და შეიძლება, R-ის ბრძანებებს შორის "
 "დაყოვნებები შეამჩნიოთ. თუ ეს სიტუაცია ჩვეულებრივი მუშაობის დროს მოხდა, "
-"მოგვწერეთ ელფოსტაზე rkward-devel@kde.org და ვცდით, დაგეხმაროთ."
+"მოგვწერეთ ელფოსტაზე rkward@kde.org და ვცდით, დაგეხმაროთ."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -964,12 +958,7 @@ msgid "Start import dialog"
 msgstr "შემოტანის დაწყების დიალოგი"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -979,7 +968,7 @@ msgstr ""
 "ამჟამად სხვა შემოტანის მეთოდები ხელმისაწვდომი არაა. რა შეგიძლიათ, ქნათ: "
 "<ul><li>შეამოწმეთ დამატებითი შემოტანის დამატებების ხელმისაწვდომობა</"
 "li><li>შეინახეთ მონაცემების სხვა ფორმატში ორიგინალ აპლიკაციაში</"
-"li><li>გვკითხეთ რჩევა ელფოსტაზე rkward-users@kde.org</li></ul>"
+"li><li>გვკითხეთ რჩევა ელფოსტაზე rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2216,10 +2205,9 @@ msgid "patches and helpful comments"
 msgstr "პაჩები და სასარგებლო კომენტარები"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "და კიდევ მეტი ხალხი მისამართზე rkward-devel@kde.org"
+msgstr "და კიდევ მეტი ხალხი მისამართზე rkward@kde.org"
 
 #: rkward/main.cpp:193
 #, kde-format

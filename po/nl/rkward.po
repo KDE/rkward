@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-11 09:03+0000\n"
-"PO-Revision-Date: 2025-08-25 11:35+0200\n"
+"PO-Revision-Date: 2025-10-11 18:20+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -209,13 +209,7 @@ msgstr ""
 "pakket. Technisch correspondeert dit met de <i>.GlobalEnv</i> omgeving."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -225,8 +219,8 @@ msgstr ""
 "Uw werkruimte bevat meer dan 10.000 topniveau objecten. RKWard is niet "
 "geoptimaliseerd voor deze situatie en u zou vertraging kunnen ervaren tussen "
 "R commando's. Als deze situatie regelmatig het geval is voor uw werk, laat "
-"het ons dan weten op rkward-devel@kde.org, zodat we mogelijke oplossingen "
-"kunnen bekijken."
+"het ons dan weten op rkward@kde.org, zodat we mogelijke oplossingen kunnen "
+"bekijken."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -988,12 +982,7 @@ msgid "Start import dialog"
 msgstr "Start de importdialoog"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -1003,7 +992,7 @@ msgstr ""
 "Er zijn nu geen verdere importmethoden beschikbaar. Maar u kunt ook het "
 "volgende proberen:  <ul><li>Kijk of er nog andere importplugins zijn</"
 "li><li>Sla  de gegevens op in een ander formaat in het originele programma</"
-"li><li>Vraag om advies op rkward-users@kde.org</li></ul>"
+"li><li>Vraag om advies op rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2261,10 +2250,9 @@ msgid "patches and helpful comments"
 msgstr "verbeteringen en nuttige commentaren"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "Nog veel meer mensen op rkward-devel@kde.org"
+msgstr "Nog veel meer mensen op rkward@kde.org"
 
 #: rkward/main.cpp:193
 #, kde-format
