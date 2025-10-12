@@ -256,6 +256,18 @@ class RKWardCoreTest : public QObject {
 		waitForAllFinished();
 	}
 
+	void backendI18nTest() {
+		const auto transstring = u"R Console"_s; // A basic string we know to have a German translation
+		runCommandAsync(new RCommand(u"cat(rkward:::.rk.i18n(\"%1\"))"_s.arg(transstring), RCommand::App), nullptr, [transstring](RCommand *command) {
+			QVERIFY(command->fullOutput().contains(transstring));
+		});
+		runCommandAsync(new RCommand(u"local({x <- Sys.setLanguage(\"de\"); cat(rkward:::.rk.i18n(\"%1\")); Sys.setLanguage(x); cat(\"done\")})"_s.arg(transstring), RCommand::App), nullptr, [transstring](RCommand *command) {
+			QVERIFY(!command->fullOutput().contains(transstring));
+			QVERIFY(command->fullOutput().contains(u"done"_s));
+		});
+		waitForAllFinished();
+	}
+
 	void irregularShortNameTest() {
 		QVERIFY(RObject::irregularShortName(u"0x"_s));
 		QVERIFY(RObject::irregularShortName(u".1x"_s));
