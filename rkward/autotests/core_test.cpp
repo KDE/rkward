@@ -261,7 +261,7 @@ class RKWardCoreTest : public QObject {
 		runCommandAsync(new RCommand(u"cat(rkward:::.rk.i18n(\"%1\"))"_s.arg(transstring), RCommand::App), nullptr, [transstring](RCommand *command) {
 			QVERIFY(command->fullOutput().contains(transstring));
 		});
-		runCommandAsync(new RCommand(u"local({x <- Sys.setLanguage(\"de\"); cat(rkward:::.rk.i18n(\"%1\")); Sys.setLanguage(x); cat(\"done\")})"_s.arg(transstring), RCommand::App), nullptr, [transstring](RCommand *command) {
+		runCommandAsync(new RCommand(u"local({x <- Sys.setLanguage(\"de\"); if(isTRUE(attr(x, \"ok\"))) cat(rkward:::.rk.i18n(\"%1\")); Sys.setLanguage(x); cat(\"done\")})"_s.arg(transstring), RCommand::App), nullptr, [transstring](RCommand *command) {
 			QVERIFY(!command->fullOutput().contains(transstring));
 			QVERIFY(command->fullOutput().contains(u"done"_s));
 		});
