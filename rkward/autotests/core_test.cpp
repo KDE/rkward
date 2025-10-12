@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QApplication>
 #include <QButtonGroup>
 #include <QDir>
+#include <QElapsedTimer>
 #include <QFile>
 #include <QLoggingCategory>
 #include <QObject>
