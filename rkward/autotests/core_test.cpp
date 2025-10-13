@@ -8,6 +8,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QActionGroup>
 #include <QApplication>
 #include <QButtonGroup>
+#include <QClipboard>
 #include <QDir>
 #include <QElapsedTimer>
 #include <QFile>
@@ -439,6 +440,33 @@ class RKWardCoreTest : public QObject {
 		QVERIFY(consoleout.value(5).contains(u"fourth"_s));
 		QVERIFY(!consoleout.value(6).contains(u"cat"_s));
 		QVERIFY(consoleout.value(6).contains(u"fourth"_s));
+	}
+
+	void partialConsoleCommandTest() {
+		/* Runs
+		 *   print("X"); if(TRUE) {
+		 *   print("Y")
+		 *   }
+		 * interactively. Internally, this gets chunked into several commands, the first, up to ';'
+		 * running, before the second is complete. We must not repeat the first command in this case! */
+		const auto unique_test_string = u"unique_test_string"_s;
+		const auto unique_inner_string = u"unique_inner_string"_s;
+		RKConsole::mainConsole()->activate(true);
+		// NOTE QTest::keyClicks() does not work well in RKConsole, somehow click don't arrive at the katepart.
+		//      Instead, we just use pasting.
+		auto submit = [this](const QString &string) {
+			QApplication::clipboard()->setText(string);
+			RKConsole::mainConsole()->paste();
+			waitForAllFinished();
+		};
+		submit(u"print('%1'); if(TRUE) {\n"_s.arg(unique_test_string));
+		auto consoleout = RKConsole::mainConsole()->getFullContent().join(u'\n');
+		QCOMPARE(consoleout.count(unique_test_string), 2); // Once as command, once as output
+		submit(u"print('%1')\n"_s.arg(unique_inner_string));
+		submit(u"}\n"_s);
+		consoleout = RKConsole::mainConsole()->getFullContent().join(u'\n');
+		QCOMPARE(consoleout.count(unique_test_string), 2); // not repeated, again!
+		QCOMPARE(consoleout.count(unique_inner_string), 2);
 	}
 
 	void cancelCommandStressTest() {

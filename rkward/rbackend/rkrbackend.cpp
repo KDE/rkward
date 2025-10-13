@@ -333,6 +333,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 				// int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (RFn::Rf_install ("sys.nframe"), ROb(R_GlobalEnv);
 				if (n_frames < 1) {
 					// No active frames? This can't be a call to readline(), so the previous command must have finished.
+					RKRBackend::repl_status.user_command_successful_up_to = RKRBackend::repl_status.user_command_transmitted_up_to;
 					if (RKRBackend::repl_status.user_command_completely_transmitted) {
 						replCommandFinished();
 					} else RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
