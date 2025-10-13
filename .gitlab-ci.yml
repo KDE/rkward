@@ -16,10 +16,10 @@ include:
 #      - /gitlab-templates/flatpak.yml // just a waste of CPU power in the current state
 
 # NOTE: This is meant to modify the default linux-qt6.yml-job, and currently it does. It will need to be updated once the underlying name changes, though
-suse_tumbleweed_qt69:
+suse_tumbleweed_qt610:
   script:
     - git config --global --add safe.directory $CI_PROJECT_DIR
-    # no dlopen() loading, to get at better symobl information for the backend process from ASAN
+    # no dlopen() loading, to get at better symbol information for the backend process from ASAN
     - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt6/Shared --extra-cmake-args=-DDLOPEN_RLIB=0
 
 clang_format:
