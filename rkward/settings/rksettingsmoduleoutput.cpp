@@ -116,7 +116,7 @@ class RKSettingsPageOutput : public RKSettingsModuleWidget {
 		auto auto_raise_box = RKSettingsModuleOutput::auto_raise.makeCheckbox(i18n("raise window on new output"), this);
 		group_layout->addWidget(auto_raise_box);
 		auto_raise_box->setEnabled(RKSettingsModuleOutput::auto_show);
-		connect(auto_show_box, RKCompatibility::QCheckBox_checkStateChanged(), auto_raise_box, [auto_raise_box](int state) {
+		connect(auto_show_box, RKCompatibility_QCheckBox_checkStateChanged, auto_raise_box, [auto_raise_box](int state) {
 			auto_raise_box->setEnabled(state);
 		});
 

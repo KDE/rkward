@@ -97,7 +97,7 @@ QCheckBox *RKFindBar::getOption(const RKFindBar::FindOptions option) {
 			RK_ASSERT(false);
 			return nullptr;
 		}
-		connect(action, RKCompatibility::QCheckBox_checkStateChanged(), this, &RKFindBar::searchChanged);
+		connect(action, RKCompatibility_QCheckBox_checkStateChanged, this, &RKFindBar::searchChanged);
 		default_actions.insert(option, action);
 	}
 

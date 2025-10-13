@@ -30,7 +30,7 @@ RKCheckBox::RKCheckBox(const QDomElement &element, RKComponent *parent_component
 	checkbox = new QCheckBox(xml->i18nStringAttribute(element, QStringLiteral("label"), QString(), DL_WARNING), this);
 	vbox->addWidget(checkbox);
 	checkbox->setChecked(xml->getBoolAttribute(element, QStringLiteral("checked"), false, DL_INFO));
-	connect(checkbox, RKCompatibility::QCheckBox_checkStateChanged(), this, &RKCheckBox::changedStateFromUi);
+	connect(checkbox, RKCompatibility_QCheckBox_checkStateChanged, this, &RKCheckBox::changedStateFromUi);
 
 	// initialize
 	updating = false;
