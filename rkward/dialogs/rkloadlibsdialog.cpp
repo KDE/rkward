@@ -662,7 +662,7 @@ InstallPackagesWidget::InstallPackagesWidget(RKLoadLibsDialog *dialog) : RKLoadL
 	connect(filter_edit, &RKDynamicSearchLine::searchChanged, this, &InstallPackagesWidget::filterChanged);
 	rkward_packages_only = new QCheckBox(i18n("Show only packages providing RKWard dialogs"), this);
 	RKCommonFunctions::setTips(i18n("<p>Some but not all R packages come with plugins for RKWard. That means they provide a graphical user-interface in addition to R functions. Check this box to show only such packages.</p>"), rkward_packages_only);
-	connect(rkward_packages_only, RKCompatibility::QCheckBox_checkStateChanged(), this, &InstallPackagesWidget::filterChanged);
+	connect(rkward_packages_only, RKCompatibility_QCheckBox_checkStateChanged, this, &InstallPackagesWidget::filterChanged);
 	filterChanged();
 
 	horizontalSeparator = new QFrame(this);

@@ -14,12 +14,13 @@ This namespace holds helpers for supporting different versions of Q6/KF6, withou
 @author Thomas Friedrichsmeier
 */
 namespace RKCompatibility {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
-// NOTE: defining this as a plain (non-function) constant produces incorrect results on MSVC
-inline const constexpr auto QCheckBox_checkStateChanged() { return &QCheckBox::checkStateChanged; };
-#else
-inline const constexpr auto QCheckBox_checkStateChanged() { return &QCheckBox::stateChanged; };
-#endif
 }; //namespace RKCompatibility
+
+// NOTE: defining this as a plain (non-function) constant produces incorrect results on MSVC
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+#	define RKCompatibility_QCheckBox_checkStateChanged &QCheckBox::checkStateChanged
+#else
+#	define RKCompatibility_QCheckBox_checkStateChanged &QCheckBox::stateChanged
+#endif
 
 #endif
