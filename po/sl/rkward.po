@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-11 09:03+0000\n"
-"PO-Revision-Date: 2025-08-25 10:33+0200\n"
+"PO-Revision-Date: 2025-10-12 08:27+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -211,13 +211,7 @@ msgstr ""
 "Tehnično to ustreza okolju <i>.GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -225,10 +219,10 @@ msgid ""
 "let us know at rkward@kde.org, so we can consider possible solutions."
 msgstr ""
 "Vaš delovni prostor vsebuje več kot 10.000 predmetov na najvišji ravni. "
-"Rkward ni optimiziran za tako situacijo in lahko povzroči zaostajanja med "
-"ukazi R. Če ta situacija predstavlja primer redne uporabe pri vašem delu, "
-"nam prosim to sporočite na rkward-devel@kde.org, da bomo lahko razmislili o "
-"možnih rešitvah."
+"Rkward ni optimiziran za tako situacijo in lahko povzroči zamudo med ukazi "
+"R. Če ta situacija predstavlja primer redne uporabe pri vašem delu, nam "
+"prosim to sporočite na rkward@kde.org, da bomo lahko razmislili o možnih "
+"rešitvah."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -983,12 +977,7 @@ msgid "Start import dialog"
 msgstr "Začni dialog za uvoz"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -998,7 +987,7 @@ msgstr ""
 "Trenutno ni na voljo nadaljnjih načinov uvoza. Stvari, ki jih lahko "
 "poskusite, vključite: <ul><li>Preverite razpoložljivost dodatnih vtičnikov "
 "uvoza</li><li>Shranite svoje podatke v drugo obliko v originalni aplikaciji "
-"</li><li>Vprašajte za nasvet rkward-users@kde.org</li></ul>"
+"</li><li>Vprašajte za nasvet rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2257,10 +2246,9 @@ msgid "patches and helpful comments"
 msgstr "popravki in koristne pripombe"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "Veliko več oseb na rkward-devel@kde.org"
+msgstr "Veliko več oseb na rkward@kde.org"
 
 #: rkward/main.cpp:193
 #, kde-format
