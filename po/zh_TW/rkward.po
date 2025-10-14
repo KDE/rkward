@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-11 09:03+0000\n"
+"POT-Creation-Date: 2025-10-14 00:38+0000\n"
 "PO-Revision-Date: 2024-08-15 05:21+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3546,29 +3546,29 @@ msgstr "後端行程啟動時失敗，結束碼為 %1，訊息：'%2'。"
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:503
+#: rkward/rbackend/rkrbackend.cpp:504
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:524
+#: rkward/rbackend/rkrbackend.cpp:525
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:735
+#: rkward/rbackend/rkrbackend.cpp:736
 #, kde-format
 msgid "Message from the R backend"
 msgstr "來自 R 後端的訊息"
 
-#: rkward/rbackend/rkrbackend.cpp:743
+#: rkward/rbackend/rkrbackend.cpp:744
 #, kde-format
 msgid "Question from the R backend"
 msgstr "來自 R 後端的詢問"
 
-#: rkward/rbackend/rkrbackend.cpp:1550
+#: rkward/rbackend/rkrbackend.cpp:1551
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3581,7 +3581,7 @@ msgid ""
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1554
+#: rkward/rbackend/rkrbackend.cpp:1555
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3591,12 +3591,12 @@ msgid ""
 "p></p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "圖形版本不符"
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3606,7 +3606,7 @@ msgstr ""
 "R 圖形引擎版本已變更（從 %1 到 %2）。<br>這個變更需要重新編譯。<br><a href="
 "\"rkward://page/rkward_incompatible_version\">額外資訊</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid "Ok"
 msgstr "確定"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-11 09:03+0000\n"
+"POT-Creation-Date: 2025-10-14 00:38+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -3645,12 +3645,12 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:503
+#: rkward/rbackend/rkrbackend.cpp:504
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R variklis sustojo būsenoje %1"
 
-#: rkward/rbackend/rkrbackend.cpp:524
+#: rkward/rbackend/rkrbackend.cpp:525
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3659,17 +3659,17 @@ msgstr ""
 "R variklis patyrė lemtingą klaidą:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:735
+#: rkward/rbackend/rkrbackend.cpp:736
 #, kde-format
 msgid "Message from the R backend"
 msgstr "R variklio pranešimas"
 
-#: rkward/rbackend/rkrbackend.cpp:743
+#: rkward/rbackend/rkrbackend.cpp:744
 #, kde-format
 msgid "Question from the R backend"
 msgstr "R variklio klausimas"
 
-#: rkward/rbackend/rkrbackend.cpp:1550
+#: rkward/rbackend/rkrbackend.cpp:1551
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3697,7 +3697,7 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1554
+#: rkward/rbackend/rkrbackend.cpp:1555
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3722,12 +3722,12 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3735,7 +3735,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid "Ok"
 msgstr ""

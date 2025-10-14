@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-11 09:03+0000\n"
-"PO-Revision-Date: 2025-08-25 20:05+0200\n"
+"POT-Creation-Date: 2025-10-14 00:38+0000\n"
+"PO-Revision-Date: 2025-10-13 22:32+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -208,13 +208,7 @@ msgstr ""
 "Tekniskt sett motsvarar det miljön <i>.GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -224,8 +218,8 @@ msgstr ""
 "Arbetsytan innehåller fler än 10 000 toppnivåobjekt. RKWard är inte "
 "optimerad för situationen, och du kan uppleva fördröjning mellan R-"
 "kommandon. Skulle situationen utgöra ett vanligt användarfall i ditt arbete, "
-"tala gärna om det för oss på rkward-devel@kde.org, så att vi kan överväga "
-"möjliga lösningar."
+"tala gärna om det för oss på rkward@kde.org, så att vi kan överväga möjliga "
+"lösningar."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -982,12 +976,7 @@ msgid "Start import dialog"
 msgstr "Visa importdialogruta"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -997,7 +986,7 @@ msgstr ""
 "Inga ytterligare importmetoder är för närvarande tillgängliga. Saker att "
 "prova omfattar: <ul><li>Sök efter tillgängliga ytterligare "
 "importinsticksprogram</li><li>Spara data med ett annat format i "
-"originalprogrammet</li><li>Fråga om råd på rkward-users@kde.org</li></ul>"
+"originalprogrammet</li><li>Fråga om råd på rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2245,10 +2234,9 @@ msgid "patches and helpful comments"
 msgstr "Programfixar och hjälpsamma kommentarer"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "Många fler på rkward-devel@kde.org"
+msgstr "Många fler på rkward@kde.org"
 
 #: rkward/main.cpp:193
 #, kde-format
@@ -3842,12 +3830,12 @@ msgstr ""
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Bakgrundsprocessen har avslutats med kod %1, meddelande: '%2'."
 
-#: rkward/rbackend/rkrbackend.cpp:503
+#: rkward/rbackend/rkrbackend.cpp:504
 #, kde-format
 msgid "The R engine has shut down with status: %1"
 msgstr "R-bakgrundsprogrammet har avslutats med status: %1"
 
-#: rkward/rbackend/rkrbackend.cpp:524
+#: rkward/rbackend/rkrbackend.cpp:525
 #, kde-format
 msgid ""
 "The R engine has encountered a fatal error:\n"
@@ -3856,17 +3844,17 @@ msgstr ""
 "R-bakgrundsprogrammet har stött på ett allvarligt fel:\n"
 "%1"
 
-#: rkward/rbackend/rkrbackend.cpp:735
+#: rkward/rbackend/rkrbackend.cpp:736
 #, kde-format
 msgid "Message from the R backend"
 msgstr "Meddelande från R-bakgrundsprogrammet"
 
-#: rkward/rbackend/rkrbackend.cpp:743
+#: rkward/rbackend/rkrbackend.cpp:744
 #, kde-format
 msgid "Question from the R backend"
 msgstr "Fråga från R-bakgrundsprogrammet"
 
-#: rkward/rbackend/rkrbackend.cpp:1550
+#: rkward/rbackend/rkrbackend.cpp:1551
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3887,7 +3875,7 @@ msgstr ""
 "och rätta till installationen</b>. För hjälp med det, se <a href=\"https://"
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1554
+#: rkward/rbackend/rkrbackend.cpp:1555
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3902,12 +3890,12 @@ msgstr ""
 "href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</"
 "a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Grafikversion stämmer inte"
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3918,7 +3906,7 @@ msgstr ""
 "kräver en omkompilering.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Ytterligare information</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1609
+#: rkward/rbackend/rkrbackend.cpp:1610
 #, kde-format
 msgid "Ok"
 msgstr "Ok"
