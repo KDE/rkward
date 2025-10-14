@@ -6381,10 +6381,9 @@ msgid "Disable preview"
 msgstr "Poista esikatselu käytöstä"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "R-Markdown (HTML)"
+msgstr "R-Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
