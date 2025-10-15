@@ -9,7 +9,7 @@
 # the results are stored in a pseudo .cpp file to be picked up by xgettext.
 $EXTRACTRC `find rkward -name \*.rc -a \! -name rkward_windows_icon.rc -o -name \*.ui -o -name \*.kcfg`  >> rc.cpp
 # merge messages from .R files into rc.cpp
-python3 scripts/update_plugin_messages.py rkward/rbackend/rpackages/rkward/R/*.R >> rc.cpp
+python3 scripts/extract_r_messages.py rkward/rbackend/rpackages/rkward/R/*.R >> rc.cpp
 # call xgettext on all source files in the main app.
 $XGETTEXT `find rkward -name \*.cpp -o -name \*.h -name \*.c` rc.cpp -o $podir/rkward.pot
 

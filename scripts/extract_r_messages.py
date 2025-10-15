@@ -131,7 +131,7 @@ class RParseBuffer:
 
 def handleRChunk (filename):
   global outfile
-  keywords = ("gettext", "ngettext", "stop", "warning", "message", ".rk.i18n") # TODO change me!
+  keywords = (".rk.i18n")
 
   # Convert single quoted and backtick quoted strings in the input chunk to double quotes (so xgettext can work in C-style).
   def normalizeQuotes (chunk):

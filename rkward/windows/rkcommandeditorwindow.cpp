@@ -692,7 +692,7 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 		QString arg;
 		if (group->group()->checkedId() == HTML) arg = u"output_format=\"html_document\", "_s;
 		else if (group->group()->checkedId() == PDF) arg = u"output_format=\"pdf_document\", "_s;
-		return return QStringLiteral("rk.render.markdown.preview(%1, %2, %3)").args(RObject::rQuote(infile), RObject::rQuote(outdir), mode_arg);
+		return QStringLiteral("rk.render.markdown.preview(%1, %2, %3)").arg(RObject::rQuote(infile), RObject::rQuote(outdir), arg);
 	};
 	preview_modes->addButton(markdown);
 
