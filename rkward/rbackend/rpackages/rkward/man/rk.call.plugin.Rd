@@ -68,6 +68,6 @@ rk.call.plugin ("rkward::t_test_two_vars",
 \code{\link{rk.results}}, \url{rkward://page/rkward_output}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward@kde.org}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{utilities}

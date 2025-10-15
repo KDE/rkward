@@ -288,7 +288,7 @@
 #' Evaluate the given input file, recording a transcript to an HTML output file (including on-screen plots) 
 #'
 #' @param infile The input R file, specified as a character string, or a connection (passed to \link{parse}).
-#' @param outfile The output HTML file, specified as a character string. If this file exists, it will be overwritting, without further notice!
+#' @param outfile The output HTML file, specified as a character string. If this file exists, it will be overwritten, without further notice!
 #' @param echo Include the source expressions in the output? (boolean)
 #' @param env Environment of the evaluation. See details, below.
 #' @param stop.on.error Whether to stop (TRUE) or continue (FALSE) on errors
