@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-14 00:38+0000\n"
-"PO-Revision-Date: 2025-10-01 18:46+0400\n"
+"PO-Revision-Date: 2025-10-15 20:49+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -201,13 +201,7 @@ msgstr ""
 "مع بيئة <i>.GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -216,8 +210,8 @@ msgid ""
 msgstr ""
 "تحتوي مساحة عملك على أكثر من 10.000 كائن من المستوى الأعلى. لم يجري تحسين "
 "RKWard لهذا الموقف، وقد تواجه تأخيرًا بين أوامر R. إذا شكل هذا الموقف حالة "
-"استخدام منتظمة لعملك، فالرجاء إخبارنا على rkward-devel@kde.org، حتى يتسنى "
-"التفكير في الحلول الممكنة."
+"استخدام منتظمة لعملك، فالرجاء إخبارنا على rkward@kde.org، حتى يتسنى التفكير "
+"في الحلول الممكنة."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -956,12 +950,7 @@ msgid "Start import dialog"
 msgstr "ابدأ حوار الاستيراد"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -970,7 +959,7 @@ msgid ""
 msgstr ""
 "لا تتوفر طرق استيراد إضافية في هذا الوقت. الأشياء التي يمكنك تجربتها تتضمن: "
 "<ul><li>تحقق من توفر إضافات استيراد إضافية</li><li>احفظ بياناتك بتنسيق مختلف "
-"في التطبيق الأصلي</li><li>اطلب النصيحة على rkward-users@kde.org</li></ul>"
+"في التطبيق الأصلي</li><li>اطلب النصيحة على rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2208,10 +2197,9 @@ msgid "patches and helpful comments"
 msgstr "تصحيحات وتعليقات مفيدة"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "الكثير من الأشخاص الإضافيين على rkward-devel@kde.org"
+msgstr "الكثير من الأشخاص الإضافيين على rkward@kde.org"
 
 #: rkward/main.cpp:193
 #, kde-format
