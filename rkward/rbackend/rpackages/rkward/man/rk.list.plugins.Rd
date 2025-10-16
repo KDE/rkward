@@ -53,6 +53,6 @@ rk.set.plugin.status ("rkward::t_test", visible=FALSE)
 \code{\link{rk.call.plugin}} for invoking a plugin, programatically
 }
 \author{
-Thomas Friedrichsmeier \email{rkward@kde.org}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{utilities}

@@ -31,7 +31,7 @@ rk.sessionInfo()
 \code{\link{sessionInfo}}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward@kde.org}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{misc}
 \keyword{utilities}

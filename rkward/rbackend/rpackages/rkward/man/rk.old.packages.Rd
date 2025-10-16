@@ -75,7 +75,7 @@ rk.old.packages()
 }
 }
 \author{
-Thomas Friedrichsmeier \email{rkward@kde.org}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{attribute}
 \keyword{misc}

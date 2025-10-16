@@ -49,6 +49,6 @@ rk.restore.workplace ()
 \url{rkward://page/rkward_for_r_users}, \link{rk.get.workspace.url}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward@kde.org}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{utilities}

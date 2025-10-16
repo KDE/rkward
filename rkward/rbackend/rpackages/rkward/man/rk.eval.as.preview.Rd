@@ -15,7 +15,7 @@ rk.eval.as.preview(
 \arguments{
 \item{infile}{The input R file, specified as a character string, or a connection (passed to \link{parse}).}
 
-\item{outfile}{The output HTML file, specified as a character string. If this file exists, it will be overwritting, without further notice!}
+\item{outfile}{The output HTML file, specified as a character string. If this file exists, it will be overwritten, without further notice!}
 
 \item{echo}{Include the source expressions in the output? (boolean)}
 

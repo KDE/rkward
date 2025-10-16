@@ -885,6 +885,32 @@ QString getLibLoc() {
 	return RKRBackendProtocolBackend::dataDir() + u"/.rkward_packages/"_s + QString::number(RKRBackend::this_pointer->r_version / 10);
 }
 
+/* Check whether we still want to translate to the same language as last time.
+ * Calling this on every single i18n-call is silly, but not a real world performance problem
+ * (as translated strings imply user interaction). The underlying problem is that we have not
+ * good way of detecting, when R might switch the language. (Typical entry points include
+ * switchLanguage(), Sys.setenv(LANGUAGE=), Sys.setlocale("LC_MESSAGES")) */
+void checkCurrentLanguage() {
+	static QByteArray previous_locale;
+
+	// R's language always corresponds to LANGUAGE env-var, if set, but, on Unix falls back to
+	// LC_MESSAGES, if LANGUAGE is not set.
+	QByteArray current_locale = qgetenv("LANGUAGE");
+#if !defined(Q_OS_WIN)
+	if (current_locale.isEmpty()) current_locale = setlocale(LC_MESSAGES, nullptr);
+#endif
+	if (current_locale != previous_locale) {
+		previous_locale = current_locale;
+		KLocalizedString::clearLanguages();
+		auto langs = QString::fromUtf8(current_locale).split(u':');
+		for (int i = 0; i < langs.length(); ++i) {
+			langs[i] = langs[i].section(u'.', 0, 0).section(u'_', 0, 0);
+		}
+		//RFn::Rf_warning("%s->%s", qPrintable(QString::fromUtf8(lang)), qPrintable(langs.join(u',')));
+		KLocalizedString::setLanguages(langs);
+	}
+}
+
 // Function to handle several simple calls from R code, that do not need any special arguments, or interaction with the frontend process.
 SEXP doSimpleBackendCall(SEXP _call) {
 	RK_TRACE(RBACKEND);
@@ -892,7 +918,14 @@ SEXP doSimpleBackendCall(SEXP _call) {
 	QStringList list = RKRSupport::SEXPToStringList(_call);
 	QString call = list[0];
 
-	if (call == QStringLiteral("unused.filename")) {
+	if (call == QStringLiteral("i18n")) {
+		checkCurrentLanguage();
+		auto msg = ki18n(list.value(1).toUtf8().constData());
+		for (int i = 2; i < list.length(); ++i) {
+			msg = msg.subs(list[i]);
+		}
+		return RKRSupport::StringListToSEXP(QStringList(msg.toString())); // TODO: Avoid wrapping into QSringList
+	} else if (call == QStringLiteral("unused.filename")) {
 		QString prefix = list.value(1);
 		QString extension = list.value(2);
 		QString dirs = list.value(3);

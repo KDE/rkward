@@ -79,7 +79,7 @@ rk.menu <- setRefClass("rk.menu",
 		x <- .retrieve(TRUE)
 		x$label <- label
 		if (!missing(func)) {
-			if (exists("children", envir=x)) stop(paste("Submenu", paste(path, collapse="/"), "cannot be redefined as a leaf item."))
+			if (exists("children", envir=x)) stop(.rk.i18n("Submenu %1 cannot be redefined as a leaf item.", paste(path, collapse="/")))
 			x$fun <- func
 		}
 		.rk.call.async("menuupdate", rk.menu()$.list())
@@ -111,12 +111,12 @@ rk.menu <- setRefClass("rk.menu",
 		for(p in path) {
 			walkedpath <- c(walkedpath, p)
 			if (!exists("children", envir=parent)) {
-				if (!create) stop(paste("Menu path", paste(walkedpath, collapse="/"), "is not defined"))
-				if (exists("fun", envir=parent)) stop(paste("Leaf menu item", paste(walkedpath, collapse="/"), "cannot be redefined as a submenu."))
+				if (!create) stop(.rk.i18n("Menu path %1 is not defined", paste(walkedpath, collapse="/")))
+				if (exists("fun", envir=parent)) stop(.rk.i18n("Leaf menu item %1 cannot be redefined as a submenu.", paste(walkedpath, collapse="/")))
 				parent$children <- list()
 			}
 			if (is.null(parent$children[[p]])) {
-				if (!create) stop(paste("Menu path", paste(walkedpath, collapse="/"), "is not defined"))
+				if (!create) stop(.rk.i18n("Menu path %1 is not defined", paste(walkedpath, collapse="/")))
 				parent$children[[p]] <- new.env()
 			}
 			parent = parent$children[[p]]

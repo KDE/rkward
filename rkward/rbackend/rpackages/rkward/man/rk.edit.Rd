@@ -85,7 +85,7 @@ rk.edit(x)
   \code{\link{file.show}}, \code{\link{browseURL}}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward@kde.org}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{IO}
 \keyword{utilities}

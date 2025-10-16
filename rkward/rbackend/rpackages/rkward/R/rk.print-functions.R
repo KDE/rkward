@@ -104,7 +104,7 @@
 		filename <- rk.get.tempfile.name (name, ".html")
 		dir <- rk.get.tempfile.name (name, "_data")
 		htmlwidgets::saveWidget (x, filename, selfcontained=FALSE, libdir=dir)
-		.rk.cat.output (paste0 ("<object width=\"100%\" height=\"100%\" data=\"file://", filename, "\" onload=\"this.style.height = this.contentWindow.document.body.scrollHeight + 'px';\"></object>"))
+		.rk.cat.output("<object width=\"100%\" height=\"100%\" data=\"file://", filename, "\" onload=\"this.style.height = this.contentWindow.document.body.scrollHeight + 'px';\"></object>", sep="")
 	} else if (inherits (x, "gvis")) {
 		requireNamespace ("googleVis", quietly = TRUE)
 		print (x, file=rk.get.output.html.file(), append=TRUE)
@@ -113,7 +113,7 @@
 		if(requireNamespace ("R2HTML", quietly = TRUE)) {
 			R2HTML::HTML(x, file=htmlfile, ...)
 		} else {
-			.rk.cat.output("Please install package R2HTML to enable output!")
+			.rk.cat.output(.rk.i18n("Please install package R2HTML to enable output!"))
 		}
 	}
 }
@@ -150,7 +150,7 @@
 	if (length (parameters)) {
 		# legacy handling: parameter=value used to be passed as parameter, value
 		if (is.null (names (parameters))) {
-			warning ("Unnamed parameter lists are deprecated in rk.header()")
+			warning(.rk.i18n("Unnamed parameter lists are deprecated in rk.header()"))
 			s <- seq.int (1, length (parameters), by=2)
 			pnames <- as.character (parameters[s])
 			parameters <- parameters[s+1]
@@ -243,7 +243,7 @@
 		cat (x)
 		cat ("</h3>")
 	} else {
-		stop ("uninmplemented")
+		stop(.rk.i18n("Printing object of class '%1' is not inmplemented", class(x)))
 	}
 }
 

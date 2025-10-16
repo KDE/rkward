@@ -256,6 +256,22 @@ class RKWardCoreTest : public QObject {
 		waitForAllFinished();
 	}
 
+	void backendI18nTest() {
+		const auto transstring = u"R Console"_s; // A basic string we know to have a German translation
+		runCommandAsync(new RCommand(u"cat(rkward:::.rk.i18n(\"%1\"))"_s.arg(transstring), RCommand::App), nullptr, [transstring](RCommand *command) {
+			QVERIFY(command->fullOutput().contains(transstring));
+		});
+		runCommandAsync(new RCommand(u"local({x <- Sys.setLanguage(\"de\"); cat(rkward:::.rk.i18n(\"%1\")); try(xyzxy); Sys.setLanguage(x); cat(\"done\")})"_s.arg(transstring), RCommand::App), nullptr, [transstring](RCommand *command) {
+			// We try to set the language, but that may or may not be honored by the system, and - on Windows -
+			// may fail, without Sys.setLanguage() indicating failure. We don't want to assume anything about
+			// language support on the CI system, therefore we generate an R error message along with our own string
+			// either both should be translated, or neither.
+			QVERIFY(command->fullOutput().contains(transstring) == command->fullOutput().contains(u"not found"_s));
+			QVERIFY(command->fullOutput().contains(u"done"_s));
+		});
+		waitForAllFinished();
+	}
+
 	void irregularShortNameTest() {
 		QVERIFY(RObject::irregularShortName(u"0x"_s));
 		QVERIFY(RObject::irregularShortName(u".1x"_s));

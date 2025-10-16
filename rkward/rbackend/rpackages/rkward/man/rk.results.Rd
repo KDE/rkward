@@ -125,6 +125,6 @@ if(require("R2HTML", quietly = TRUE)){
   \url{rkward://page/rkward_output}
 }
 \author{
-Thomas Friedrichsmeier \email{rkward@kde.org}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{utilities}

@@ -274,14 +274,14 @@
 
 # hidden, as this is not portable to different output formats
 #' @export
-".rk.cat.output" <- function (x) {
-	cat (x, file = rk.get.output.html.file(), append = TRUE)
+".rk.cat.output" <- function(...) {
+	cat(..., file = rk.get.output.html.file(), append = TRUE)
 }
 
 #' @importFrom utils URLencode
 #' @export
-".rk.rerun.plugin.link" <- function (plugin, settings, label) {
-	.rk.cat.output (paste ("<a href=\"rkward://runplugin/", plugin, "/", URLencode (settings), "\">", label, "</a>", sep=""))
+".rk.rerun.plugin.link" <- function(plugin, settings, label) {
+	.rk.cat.output("<a href=\"rkward://runplugin/", plugin, "/", URLencode(settings), "\">", label, "</a>", sep="")
 }
 
 #' @export
@@ -359,4 +359,26 @@ assign(".rk.shadow.envs", new.env(parent=emptyenv()), envir=.rk.variables)
 	ret <- .Call("rk.check.env", env, PACKAGE="(embedding)")
 	names(ret) <- c("added", "removed", "changed")
 	ret
+}
+
+# Not exported
+# So why to we use our own i18n mechanism, rather than R's gettext() and friends?
+# For one thing this is easier to integrate into the KDE translation workflow:
+#   - we need to extract i18n-calls and provide them to translators. Using R's update_pkg_po would mean to push R as a requirement
+#     to the extraction scripts. We'd like to avoid that, meaning, we need a custom extraction script, anyway.
+#   - the resulting .pot would either need to be provided separately, or merged with another, and the final translations would have to be
+#     moved to the places where R expects them. That means additional scripting complexity that we'd like to avoid
+#   - R's translation mechanism induces string puzzles, as it does not support the nifty arg replacement in KDE i18n.
+#     While we could trivially implement that on top of R's gettext(), that already implies using a custom wrapper.
+#   - This i18n-mechanism concerns only rkward package code, and nothing else. Not relevant to users.
+".rk.i18n" <- function(x, ...) {
+	args <- as.character(...)
+	if (!.rk.inside.rkward.session()) {
+		if (length(args)) {
+			for (i in 1:length(args)) x <- sub(x, paste0("%", i), args[i], fixed=TRUE)
+		}
+		x
+	} else {
+		.rk.call.backend("i18n", c(x, args))
+	}
 }
