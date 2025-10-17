@@ -156,16 +156,14 @@ QString RObject::getDescription() const {
 QString RObject::getObjectDescription() const {
 	RK_TRACE(OBJECTS);
 
-#define ESCS replace(u'<', u"&lt;"_s)
-
-	QString ret = u"<b>"_s + i18n("Full location:") + u" </b>"_s + getFullName().ESCS;
+	QString ret = u"<b>"_s + i18n("Full location:") + u" </b>"_s + getFullName().toHtmlEscaped();
 	QString lab = getLabel();
-	if (!lab.isEmpty()) ret.append(u"<br><b>"_s + i18n("Label:") + u" </b>"_s + lab.ESCS);
+	if (!lab.isEmpty()) ret.append(u"<br><b>"_s + i18n("Label:") + u" </b>"_s + lab.toHtmlEscaped());
 	ret.append(u"<br><b>"_s + i18n("Type:") + u" </b>"_s);
 
 	if (isType(Function)) {
 		ret.append(i18n("Function"));
-		ret.append(u"<br><b>"_s + i18n("Usage: ") + u" </b>"_s + getShortName().ESCS + u'(' + static_cast<const RFunctionObject *>(this)->printArgs().ESCS + u')');
+		ret.append(u"<br><b>"_s + i18n("Usage: ") + u" </b>"_s + getShortName().toHtmlEscaped() + u'(' + static_cast<const RFunctionObject *>(this)->printArgs().toHtmlEscaped() + u')');
 	} else if (isType(DataFrame)) {
 		ret.append(i18n("Data frame"));
 	} else if (isType(Array)) {
@@ -192,7 +190,7 @@ QString RObject::getObjectDescription() const {
 		}
 	}
 
-	if (!isType(Function)) ret.append(u"<br><b>"_s + i18n("Class(es):") + u" </b>"_s + makeClassString(u","_s).ESCS);
+	if (!isType(Function)) ret.append(u"<br><b>"_s + i18n("Class(es):") + u" </b>"_s + makeClassString(u","_s).toHtmlEscaped());
 
 	return ret;
 }

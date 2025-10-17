@@ -605,7 +605,7 @@ class RKWardCoreTest : public QObject {
 	void RKConsoleHistoryTest() {
 		QTemporaryFile oldhist;
 		QTemporaryFile emptyhist;
-		emptyhist.open();
+		QVERIFY(emptyhist.open());
 		emptyhist.close();
 		RInterface::issueCommand(new RCommand(u"savehistory("_s + RObject::rQuote(oldhist.fileName()) + u"); loadhistory("_s + RObject::rQuote(emptyhist.fileName()) + u")"_s, RCommand::App));
 		waitForAllFinished();
@@ -676,7 +676,7 @@ class RKWardCoreTest : public QObject {
 
 		// pretty basic check: don't crash or assert on opening script window
 		QTemporaryFile f;
-		f.open();
+		QVERIFY(f.open());
 		f.write("plot(1,1)\n"); // Using a plot(), here is interesting in that it a) allows a plot preview b) a plot will also be generated, and
 		                        // immediately discarded for R console previews, which used to be prone to crashing
 		f.close();

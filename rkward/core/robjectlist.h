@@ -35,7 +35,7 @@ class RObjectList : public QObject, public RContainerObject {
 	Q_OBJECT
   public:
 	RObjectList();
-	~RObjectList();
+	~RObjectList() override;
 
 	void updateFromR(RCommandChain *chain) override;
 	/** like updateFromR, but only adjusts to new / missing environments, but does not update the .GlobalEnv. Designed to be used from the backend, when packages were loaded/unloaded . */

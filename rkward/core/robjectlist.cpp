@@ -60,7 +60,7 @@ void RObjectList::init() {
 	if (!object_list) {
 		new RObjectList();
 	} else {
-		auto *globalenv = object_list->globalenv; // easier typing
+		const auto *globalenv = object_list->globalenv; // easier typing
 		for (int i = globalenv->numChildren() - 1; i >= 0; --i) {
 			auto obj = globalenv->findChildByIndex(i);
 			RK_ASSERT(obj->editors().isEmpty());
@@ -155,7 +155,7 @@ void RObjectList::updateFromR(RCommandChain *chain, const QStringList &current_s
 void RObjectList::makeUpdateCompleteCallback() {
 	RK_TRACE(OBJECTS);
 	RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
-	whenCommandFinished(command, [this](RCommand *) {
+	whenCommandFinished(command, [this](const RCommand *) {
 		RK_ASSERT(update_chain);
 		RInterface::closeChain(update_chain);
 		update_chain = nullptr;

@@ -47,8 +47,7 @@ class RKParsedScript {
 	};
 
 	struct Context {
-		Context(ContextType type, int start) : type(type), start(start) {};
-		Context(ContextType type, int start, int end) : type(type), start(start), end(end) {};
+		Context(ContextType type, int start, int end = -1) : type(type), start(start), end(end) {};
 		bool maybeNesting() const { return (type == Parenthesis || type == Brace || type == Bracket || type == Top); };
 		ContextType type;
 		int start;

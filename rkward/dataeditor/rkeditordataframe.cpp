@@ -28,7 +28,6 @@ RKEditorDataFrame::RKEditorDataFrame(RContainerObject *object, QWidget *parent) 
 	commonInit();
 
 	RK_ASSERT(!object->isPending());
-	RKEditor::object = object;
 	RK_ASSERT(object->isDataFrame());
 	setGlobalContextProperty(QStringLiteral("current_object"), object->getFullName());
 	setGlobalContextProperty(QStringLiteral("current_dataframe"), object->getFullName());

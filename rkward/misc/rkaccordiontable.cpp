@@ -215,8 +215,9 @@ class RKWidgetGuard : public QWidget {
 /** Responsible for drawing expand / collapse indicators in first column */
 class RKAccordionDelegate : public QStyledItemDelegate {
   public:
-	explicit RKAccordionDelegate(RKAccordionTable *parent) : QStyledItemDelegate(parent) {
-		table = parent;
+	explicit RKAccordionDelegate(RKAccordionTable *parent, RKAccordionDummyModel *pmodel) : QStyledItemDelegate(parent),
+	                                                                                        table(parent),
+	                                                                                        pmodel(pmodel) {
 		expanded = RKStandardIcons::getIcon(RKStandardIcons::ActionCollapseUp);
 		collapsed = RKStandardIcons::getIcon(RKStandardIcons::ActionExpandDown);
 	}
@@ -264,8 +265,7 @@ RKAccordionTable::RKAccordionTable(QWidget *parent) : QTreeView(parent) {
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
 	pmodel = new RKAccordionDummyModel(this);
-	RKAccordionDelegate *delegate = new RKAccordionDelegate(this);
-	delegate->pmodel = pmodel;
+	RKAccordionDelegate *delegate = new RKAccordionDelegate(this, pmodel);
 	setItemDelegateForColumn(0, delegate);
 
 	connect(this, &QTreeView::expanded, this, &RKAccordionTable::rowExpanded);
