@@ -595,7 +595,7 @@ class InstallPackagesDelegate : public QStyledItemDelegate {
 	bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override {
 		if ((!index.parent().isValid()) && (index.data(Qt::UserRole) == RKRPackageInstallationStatus::UpdateablePackages)) {
 			if ((event->type() == QEvent::MouseButtonRelease) || (event->type() == QEvent::MouseButtonPress)) {
-				QMouseEvent *e = (QMouseEvent *)event;
+				QMouseEvent *e = static_cast<QMouseEvent *>(event);
 				QRect r = option.rect; // rect of the entire cell
 				r.setLeft(r.left() + r.width() / 2);
 				if (r.contains(e->pos())) {

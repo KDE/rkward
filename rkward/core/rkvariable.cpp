@@ -205,7 +205,7 @@ void RKVariable::updateDataFromR(RCommandChain *chain) {
 	if (!data) return;
 
 	RCommand *c = new RCommand(u".rk.get.vector.data ("_s + getFullName() + u')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
-	whenCommandFinished(c, [this](RCommand *command) {
+	whenCommandFinished(c, [this](const RCommand *command) {
 		if (!data) return; // this can happen, if the editor is closed while a data update is still queued.
 
 		// prevent resyncing of data
@@ -215,9 +215,9 @@ void RKVariable::updateDataFromR(RCommandChain *chain) {
 		RK_ASSERT(command->getDataLength() == 3);
 
 		RData::RDataStorage top = command->structureVector();
-		RData *cdata = top.at(0);
-		RData *levels = top.at(1);
-		RData *invalids = top.at(2);
+		const RData *cdata = top.at(0);
+		const RData *levels = top.at(1);
+		const RData *invalids = top.at(2);
 
 		// set factor levels first
 		RK_ASSERT(levels->getDataType() == RData::StringVector);
@@ -323,7 +323,7 @@ void RKVariable::restore(RCommandChain *chain) {
 	writeMetaData(chain);
 }
 
-void RKVariable::writeInvalidFields(QList<int> rows, RCommandChain *chain) {
+void RKVariable::writeInvalidFields(const QList<int> &rows, RCommandChain *chain) {
 	RK_TRACE(OBJECTS);
 
 	if (rows.isEmpty()) return;

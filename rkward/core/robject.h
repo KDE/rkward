@@ -104,7 +104,7 @@ class RObject {
 	/** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
 	static bool isMatchingType(int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
 
-	QString getShortName() const { return name; };
+	const QString &getShortName() const { return name; };
 	enum ObjectNameOptions {
 		DollarExpansion = 1,            /**< Return list members as list$member, instead of list[["member"]]  */
 		IncludeEnvirIfNotGlobalEnv = 2, /**< Include package name for objects on the search path  */
@@ -223,7 +223,7 @@ class RObject {
 
 	/** Representation of changes to an edited object (currently for vector data, only) */
 	struct ChangeSet {
-		ChangeSet(int from = -1, int to = -1, bool reset = false) : from_index(from), to_index(to), full_reset(reset) {};
+		explicit ChangeSet(int from = -1, int to = -1, bool reset = false) : from_index(from), to_index(to), full_reset(reset) {};
 		int from_index;  /**< first changed index */
 		int to_index;    /**< last changed index */
 		bool full_reset; /**< Model should do a full reset (e.g. dimensions may have changed) */

@@ -456,7 +456,7 @@ void RKConsole::submitCommand() {
 		current_command = new RCommand(command, RCommand::User | RCommand::Console);
 		connect(current_command->notifier(), &RCommandNotifier::commandOutput, this, &RKConsole::newOutput);
 		connect(current_command->notifier(), &RCommandNotifier::commandLineIn, this, &RKConsole::userCommandLineIn);
-		current_command->whenFinished(this, [this](RCommand *command) {
+		current_command->whenFinished(this, [this](const RCommand *command) {
 			RK_TRACE(APP);
 			current_command = nullptr;
 

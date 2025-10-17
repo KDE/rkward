@@ -28,7 +28,7 @@ class RKVariable : public RObject {
 	/** constructs a new RKVariable as a child of the given parent and with the given name. Do not call directly, but let RContainerObject / RObjectList handle creation of new variables. */
 	RKVariable(RContainerObject *parent, const QString &name);
 
-	~RKVariable();
+	~RKVariable() override;
 
 	/** set the VarType. If sync, the change will be communicated to the backend immediately. See RObject::RDataType */
 	void setVarType(RObject::RDataType, bool sync = true);
@@ -173,7 +173,7 @@ class RKVariable : public RObject {
 	void cellsChanged(int from_row, int to_row);
 	/** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */
 	virtual void writeData(int from_row, int to_row, RCommandChain *chain = nullptr);
-	void writeInvalidFields(QList<int> rows, RCommandChain *chain = nullptr);
+	void writeInvalidFields(const QList<int> &rows, RCommandChain *chain = nullptr);
 	/** writes the values labels to the backend */
 	void writeValueLabels(RCommandChain *chain) const;
 
