@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-14 00:38+0000\n"
+"POT-Creation-Date: 2025-10-17 00:38+0000\n"
 "PO-Revision-Date: 2025-10-12 07:47+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -3637,7 +3637,7 @@ msgid "Could not create plugin"
 msgstr "Impossibile creare l'estensione"
 
 #: rkward/plugin/rkstandardcomponent.cpp:667
-#: rkward/windows/rkcommandeditorwindow.cpp:819
+#: rkward/windows/rkcommandeditorwindow.cpp:772
 #, kde-format
 msgid "Options"
 msgstr "Opzioni"
@@ -3908,7 +3908,7 @@ msgstr "Messaggio dal motore di R"
 msgid "Question from the R backend"
 msgstr "Domanda dal motore di R"
 
-#: rkward/rbackend/rkrbackend.cpp:1551
+#: rkward/rbackend/rkrbackend.cpp:1584
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3930,7 +3930,7 @@ msgstr ""
 "la tua installazione</b>. Per un aiuto, vedi <a href=\"https://rkward.kde."
 "org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1555
+#: rkward/rbackend/rkrbackend.cpp:1588
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3945,12 +3945,12 @@ msgstr ""
 "aiuto, vedi <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1610
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Versione Graphics non corrispondente"
 
-#: rkward/rbackend/rkrbackend.cpp:1610
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3961,7 +3961,7 @@ msgstr ""
 "richiede una ricompilazione.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Informazioni aggiuntive</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1610
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Ok"
 msgstr "Ok"
@@ -4172,7 +4172,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "il componente «katepart» non può essere trovato"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:760
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:713
 #, kde-format
 msgid "R Console"
 msgstr "Console di R"
@@ -6560,7 +6560,7 @@ msgid "Save Script As..."
 msgstr "Salva script come..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:468
-#: rkward/windows/rkcommandeditorwindow.cpp:1071
+#: rkward/windows/rkcommandeditorwindow.cpp:1024
 #, kde-format
 msgid " [modified]"
 msgstr " [modificato]"
@@ -6575,118 +6575,64 @@ msgstr "Il documento «%1» è stato modificato. Lo chiudo ugualmente?"
 msgid "File not saved"
 msgstr "File non salvato"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:695
-#, kde-format
-msgctxt "Caption: Some software is missing."
-msgid "Missing software"
-msgstr "Software mancante"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:696
-#, kde-format
-msgid "Rendering the preview failed"
-msgstr "La generazione dell'anteprima non è riuscita."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:697
-#, kde-format
-msgid ""
-"The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
-"installed, or not in the system path of the running R session. You will need "
-"to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</"
-"a>.</br>If it is installed, but cannot be found, try adding it to the system "
-"path of the running R session at <a href=\"rkward://settings/rbackend"
-"\">Settings->Configure RKward->R-backend</a>."
-msgstr ""
-"Il software <tt>pandoc</tt>, richiesto per la resa dei file markdown di R, "
-"non è installato oppure non è nel percorso di sistema della sessione di R in "
-"esecuzione. Dovrai installarlo da <a href=\"https://pandoc.org/\">https://"
-"pandoc.org/</a>.</br>Se è installato ma non è possibile trovarlo, prova ad "
-"aggiungerlo al percorso di sistema della sessione di R in esecuzione, da <a "
-"href=\"rkward://settings/rbackend\">Impostazioni->Configura RKward->Motore "
-"di R</a>."
-
-#: rkward/windows/rkcommandeditorwindow.cpp:700
-#, kde-format
-msgid ""
-"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
-"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
-"library(\"tinytex\"); install_tinytex()</tt>"
-msgstr ""
-"Il programma <tt>pdflatex</tt> è richiesto per generare le anteprime dei "
-"PDF. Il modo più semplice per installarlo è eseguire <tt>install."
-"packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:701
-#, kde-format
-msgid ""
-"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
-"output format is neither HTML, nor PDF. You can try opening it in an "
-"external application, using the link, below, or you can change the preview "
-"mode to 'R Markdown (HTML)'.</p>"
-msgstr ""
-"<h1>Formato non supportato</h1><p>L'anteprima non può essere mostrata qui "
-"perché il formato di uscita non è né HTML né PDF. Puoi provare ad aprirlo in "
-"un'applicazione esterna, utilizzando il collegamento riportato di seguito "
-"oppure puoi modificare la modalità di anteprima in «Markdown di R (HTML)».</"
-"p>"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:720
+#: rkward/windows/rkcommandeditorwindow.cpp:673
 #, kde-format
 msgid "No preview"
 msgstr "Nessuna anteprima"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:722
+#: rkward/windows/rkcommandeditorwindow.cpp:675
 #, kde-format
 msgid "Disable preview"
 msgstr "Disabilita anteprima"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:726
+#: rkward/windows/rkcommandeditorwindow.cpp:679
 #, kde-format
 msgid "R Markdown"
 msgstr "Markdown di R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:728
+#: rkward/windows/rkcommandeditorwindow.cpp:681
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Anteprima del Markdown di R reso"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:729
+#: rkward/windows/rkcommandeditorwindow.cpp:682
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 "Visualizza l'anteprima dello script come se fosse reso dal formato RMarkdown "
 "(.Rmd)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:733
+#: rkward/windows/rkcommandeditorwindow.cpp:686
 #, kde-format
 msgid "Render format"
 msgstr "Formato di rendering"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:687
 #, kde-format
 msgid "Render as HTML"
 msgstr "Rendi come HTML"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:735
+#: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format
 msgid "Render as PDF"
 msgstr "Rendi come PDF"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:736
+#: rkward/windows/rkcommandeditorwindow.cpp:689
 #, kde-format
 msgid "Auto Format"
 msgstr "Formattazione automatica"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:746
+#: rkward/windows/rkcommandeditorwindow.cpp:699
 #, kde-format
 msgid "RKWard Output"
 msgstr "Output di RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:748
+#: rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Anteprima dell'output generato da RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:749
+#: rkward/windows/rkcommandeditorwindow.cpp:702
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6696,39 +6642,39 @@ msgstr ""
 "non ci sono delle chiamate a <i>rk.print()</i> o ad altri comandi di output "
 "di RKWard."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:762
+#: rkward/windows/rkcommandeditorwindow.cpp:715
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Anteprima dello script in esecuzione nella console interattiva di R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:763
+#: rkward/windows/rkcommandeditorwindow.cpp:716
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 "Anteprima dello script come se venisse eseguito nella console interattiva di "
 "R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:767
+#: rkward/windows/rkcommandeditorwindow.cpp:720
 #, kde-format
 msgid "Echo statements"
 msgstr "Istruzioni echo"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:770
+#: rkward/windows/rkcommandeditorwindow.cpp:723
 #, kde-format
 msgid "Continue on error"
 msgstr "Continua in caso di errore"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:772
+#: rkward/windows/rkcommandeditorwindow.cpp:725
 #, kde-format
 msgid "Evaluation environment"
 msgstr "Ambiente di valutazione"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:774
+#: rkward/windows/rkcommandeditorwindow.cpp:727
 #, kde-format
 msgid ".GlobalEnv"
 msgstr ".GlobalEnv"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:776
+#: rkward/windows/rkcommandeditorwindow.cpp:729
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
@@ -6737,12 +6683,12 @@ msgstr ""
 "Valuta il codice direttamente in .GlobalEnv. Le assegnazioni possono "
 "accedere agli oggetti in .GlobalEnv e modificarli."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:777
+#: rkward/windows/rkcommandeditorwindow.cpp:730
 #, kde-format
 msgid "Scoped"
 msgstr "Con ambito"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:779
+#: rkward/windows/rkcommandeditorwindow.cpp:732
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6754,12 +6700,12 @@ msgstr ""
 "<tt>&lt;-</tt> non li modificheranno. (Altre operazioni di assegnazione "
 "potrebbero comunque modificarli!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:780
+#: rkward/windows/rkcommandeditorwindow.cpp:733
 #, kde-format
 msgid "Local"
 msgstr "Locale"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:781
+#: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6772,17 +6718,17 @@ msgstr ""
 "assegnazioni tramite l'operatore <tt>&lt;-</tt>. (Altre operazioni di "
 "assegnazione potrebbero comunque modificarli!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:796
+#: rkward/windows/rkcommandeditorwindow.cpp:749
 #, kde-format
 msgid "Plot"
 msgstr "Grafico"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:798
+#: rkward/windows/rkcommandeditorwindow.cpp:751
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Anteprima del grafico generato"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:799
+#: rkward/windows/rkcommandeditorwindow.cpp:752
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6793,13 +6739,13 @@ msgstr ""
 "vuota se non ci sono delle chiamate a <i>plot()</i> o ad altri comandi "
 "grafici."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:813
+#: rkward/windows/rkcommandeditorwindow.cpp:766
 #, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
 msgstr "Modalità anteprima"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:865
+#: rkward/windows/rkcommandeditorwindow.cpp:818
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6827,12 +6773,12 @@ msgstr ""
 "presente quando usi la funzionalità di anteprima, specialmente se la usi da "
 "script che provengano da sorgenti non affidabili.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:865
+#: rkward/windows/rkcommandeditorwindow.cpp:818
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Potenziali effetti collaterali dell'anteprima"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:996
+#: rkward/windows/rkcommandeditorwindow.cpp:949
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6840,17 +6786,17 @@ msgstr ""
 "Si è verificato un errore nel tentativo di creare un salvataggio automatico "
 "del file di script «%1»:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1070
+#: rkward/windows/rkcommandeditorwindow.cpp:1023
 #, kde-format
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1203
+#: rkward/windows/rkcommandeditorwindow.cpp:1156
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (Attivo)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1222
+#: rkward/windows/rkcommandeditorwindow.cpp:1175
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Inutilizzato)"
@@ -7933,6 +7879,50 @@ msgstr "Inserisci il nuovo nome"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Visualizza nell'editor (sola lettura)"
+
+#~ msgctxt "Caption: Some software is missing."
+#~ msgid "Missing software"
+#~ msgstr "Software mancante"
+
+#~ msgid "Rendering the preview failed"
+#~ msgstr "La generazione dell'anteprima non è riuscita."
+
+#~ msgid ""
+#~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
+#~ "not installed, or not in the system path of the running R session. You "
+#~ "will need to install pandoc from <a href=\"https://pandoc.org/\">https://"
+#~ "pandoc.org/</a>.</br>If it is installed, but cannot be found, try adding "
+#~ "it to the system path of the running R session at <a href=\"rkward://"
+#~ "settings/rbackend\">Settings->Configure RKward->R-backend</a>."
+#~ msgstr ""
+#~ "Il software <tt>pandoc</tt>, richiesto per la resa dei file markdown di "
+#~ "R, non è installato oppure non è nel percorso di sistema della sessione "
+#~ "di R in esecuzione. Dovrai installarlo da <a href=\"https://pandoc.org/"
+#~ "\">https://pandoc.org/</a>.</br>Se è installato ma non è possibile "
+#~ "trovarlo, prova ad aggiungerlo al percorso di sistema della sessione di R "
+#~ "in esecuzione, da <a href=\"rkward://settings/rbackend\">Impostazioni-"
+#~ ">Configura RKward->Motore di R</a>."
+
+#~ msgid ""
+#~ "The software <tt>pdflatex</tt> is required for rendering PDF previews. "
+#~ "The easiest way to install it is by running <tt>install.packages(\"tinytex"
+#~ "\"); library(\"tinytex\"); install_tinytex()</tt>"
+#~ msgstr ""
+#~ "Il programma <tt>pdflatex</tt> è richiesto per generare le anteprime dei "
+#~ "PDF. Il modo più semplice per installarlo è eseguire <tt>install."
+#~ "packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>"
+
+#~ msgid ""
+#~ "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because "
+#~ "the output format is neither HTML, nor PDF. You can try opening it in an "
+#~ "external application, using the link, below, or you can change the "
+#~ "preview mode to 'R Markdown (HTML)'.</p>"
+#~ msgstr ""
+#~ "<h1>Formato non supportato</h1><p>L'anteprima non può essere mostrata qui "
+#~ "perché il formato di uscita non è né HTML né PDF. Puoi provare ad aprirlo "
+#~ "in un'applicazione esterna, utilizzando il collegamento riportato di "
+#~ "seguito oppure puoi modificare la modalità di anteprima in «Markdown di R "
+#~ "(HTML)».</p>"
 
 #~ msgid "R Markdown (auto)"
 #~ msgstr "Markdown di R (automatico)"

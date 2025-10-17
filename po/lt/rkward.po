@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-14 00:38+0000\n"
+"POT-Creation-Date: 2025-10-17 00:38+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -3415,7 +3415,7 @@ msgid "Could not create plugin"
 msgstr "Nepavyksta sukurti papildinio"
 
 #: rkward/plugin/rkstandardcomponent.cpp:667
-#: rkward/windows/rkcommandeditorwindow.cpp:819
+#: rkward/windows/rkcommandeditorwindow.cpp:772
 #, kde-format
 msgid "Options"
 msgstr "Parinktys"
@@ -3669,7 +3669,7 @@ msgstr "R variklio pranešimas"
 msgid "Question from the R backend"
 msgstr "R variklio klausimas"
 
-#: rkward/rbackend/rkrbackend.cpp:1551
+#: rkward/rbackend/rkrbackend.cpp:1584
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3697,7 +3697,7 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1555
+#: rkward/rbackend/rkrbackend.cpp:1588
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>RKWard either could not find its resource files at all, or only an old "
@@ -3722,12 +3722,12 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward/rbackend/rkrbackend.cpp:1610
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1610
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3735,7 +3735,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1610
+#: rkward/rbackend/rkrbackend.cpp:1643
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -3915,7 +3915,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr ""
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:760
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:713
 #, kde-format
 msgid "R Console"
 msgstr "R konsolė"
@@ -6173,7 +6173,7 @@ msgid "Save Script As..."
 msgstr "Įrašyti scenarijų kaip..."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:468
-#: rkward/windows/rkcommandeditorwindow.cpp:1071
+#: rkward/windows/rkcommandeditorwindow.cpp:1024
 #, kde-format
 msgid " [modified]"
 msgstr " [pakeista]"
@@ -6188,159 +6188,120 @@ msgstr "Dokumentas „%1“ buvo pakeistas. Vis tiek užverti?"
 msgid "File not saved"
 msgstr "Failas neįrašytas"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:695
-#, kde-format
-msgctxt "Caption: Some software is missing."
-msgid "Missing software"
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:696
-#, kde-format
-msgid "Rendering the preview failed"
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:697
-#, kde-format
-msgid ""
-"The software <tt>pandoc</tt>, required to rendering R markdown files, is not "
-"installed, or not in the system path of the running R session. You will need "
-"to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</"
-"a>.</br>If it is installed, but cannot be found, try adding it to the system "
-"path of the running R session at <a href=\"rkward://settings/rbackend"
-"\">Settings->Configure RKward->R-backend</a>."
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:700
-#, kde-format
-msgid ""
-"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
-"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
-"library(\"tinytex\"); install_tinytex()</tt>"
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:701
-#, kde-format
-msgid ""
-"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
-"output format is neither HTML, nor PDF. You can try opening it in an "
-"external application, using the link, below, or you can change the preview "
-"mode to 'R Markdown (HTML)'.</p>"
-msgstr ""
-
-#: rkward/windows/rkcommandeditorwindow.cpp:720
+#: rkward/windows/rkcommandeditorwindow.cpp:673
 #, fuzzy, kde-format
 #| msgid "Preview"
 msgid "No preview"
 msgstr "Peržiūrėti"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:722
+#: rkward/windows/rkcommandeditorwindow.cpp:675
 #, fuzzy, kde-format
 #| msgid "Preview"
 msgid "Disable preview"
 msgstr "Peržiūrėti"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:726
+#: rkward/windows/rkcommandeditorwindow.cpp:679
 #, kde-format
 msgid "R Markdown"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:728
+#: rkward/windows/rkcommandeditorwindow.cpp:681
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:729
+#: rkward/windows/rkcommandeditorwindow.cpp:682
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:733
+#: rkward/windows/rkcommandeditorwindow.cpp:686
 #, fuzzy, kde-format
 #| msgid "File format"
 msgid "Render format"
 msgstr "Failo formatas"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:687
 #, kde-format
 msgid "Render as HTML"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:735
+#: rkward/windows/rkcommandeditorwindow.cpp:688
 #, kde-format
 msgid "Render as PDF"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:736
+#: rkward/windows/rkcommandeditorwindow.cpp:689
 #, fuzzy, kde-format
 #| msgid "Format"
 msgid "Auto Format"
 msgstr "Formatas"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:746
+#: rkward/windows/rkcommandeditorwindow.cpp:699
 #, fuzzy, kde-format
 #| msgid "&Refresh Output"
 msgid "RKWard Output"
 msgstr "&Atnaujinti rezultatus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:748
+#: rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:749
+#: rkward/windows/rkcommandeditorwindow.cpp:702
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
 "if there is no call to <i>rk.print()</i> or other RKWard output commands."
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:762
+#: rkward/windows/rkcommandeditorwindow.cpp:715
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:763
+#: rkward/windows/rkcommandeditorwindow.cpp:716
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:767
+#: rkward/windows/rkcommandeditorwindow.cpp:720
 #, fuzzy, kde-format
 #| msgid "Incomplete statement.\n"
 msgid "Echo statements"
 msgstr "Neužbaigtas sakinys.\n"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:770
+#: rkward/windows/rkcommandeditorwindow.cpp:723
 #, fuzzy, kde-format
 #| msgid "Convert warnings to errors"
 msgid "Continue on error"
 msgstr "Įspėjimus paverti klaidomis"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:772
+#: rkward/windows/rkcommandeditorwindow.cpp:725
 #, fuzzy, kde-format
 #| msgid "Environment"
 msgid "Evaluation environment"
 msgstr "Aplinka"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:774
+#: rkward/windows/rkcommandeditorwindow.cpp:727
 #, fuzzy, kde-format
 #| msgid "Copy to .GlobalEnv"
 msgid ".GlobalEnv"
 msgstr "Kopijuoti į .GlobalEnv"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:776
+#: rkward/windows/rkcommandeditorwindow.cpp:729
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:777
+#: rkward/windows/rkcommandeditorwindow.cpp:730
 #, kde-format
 msgid "Scoped"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:779
+#: rkward/windows/rkcommandeditorwindow.cpp:732
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6348,13 +6309,13 @@ msgid ""
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:780
+#: rkward/windows/rkcommandeditorwindow.cpp:733
 #, fuzzy, kde-format
 #| msgid "Location"
 msgid "Local"
 msgstr "Vieta"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:781
+#: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6363,18 +6324,18 @@ msgid ""
 "them!)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:796
+#: rkward/windows/rkcommandeditorwindow.cpp:749
 #, kde-format
 msgid "Plot"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:798
+#: rkward/windows/rkcommandeditorwindow.cpp:751
 #, fuzzy, kde-format
 #| msgid "Preview up to date"
 msgid "Preview of generated plot"
 msgstr "Peržiūra atnaujinta"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:799
+#: rkward/windows/rkcommandeditorwindow.cpp:752
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6382,14 +6343,14 @@ msgid ""
 "commands."
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:813
+#: rkward/windows/rkcommandeditorwindow.cpp:766
 #, fuzzy, kde-format
 #| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
 msgstr "Peržiūrėti"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:865
+#: rkward/windows/rkcommandeditorwindow.cpp:818
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6405,28 +6366,28 @@ msgid ""
 "sources.</p>"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:865
+#: rkward/windows/rkcommandeditorwindow.cpp:818
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:996
+#: rkward/windows/rkcommandeditorwindow.cpp:949
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1070
+#: rkward/windows/rkcommandeditorwindow.cpp:1023
 #, kde-format
 msgid "Unnamed"
 msgstr "Nepavadintas"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1203
+#: rkward/windows/rkcommandeditorwindow.cpp:1156
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktyvus)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1222
+#: rkward/windows/rkcommandeditorwindow.cpp:1175
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (nenaudojamas)"
