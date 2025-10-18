@@ -923,22 +923,13 @@ msgid "Start import dialog"
 msgstr "Spustit dialog importu"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
 "li><li>Save your data to a different format in the original application</"
 "li><li>Ask for advice on rkward@kde.org</li></ul>"
 msgstr ""
-"Žádné další metody importu nejsou momentálně k dispozici. Můžete zkusit: "
-"<ul><li>Zkontrolovat dostupnost dalších modulů pro import</li><li>Uložit "
-"vaše data v původní aplikaci do jiného formátu</li><li>Zeptat se na radu na "
-"rkward-users@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2158,10 +2149,9 @@ msgid "patches and helpful comments"
 msgstr "úpravy a užitečné komentáře"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "Všichni ti lidé na rkward-devel@kde.org"
+msgstr ""
 
 #: rkward/main.cpp:193
 #, kde-format
@@ -7428,10 +7418,3 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
-
-#~ msgctxt "Caption: Some software is missing."
-#~ msgid "Missing software"
-#~ msgstr "Chybějící software"
-
-#~ msgid "Rendering the preview failed"
-#~ msgstr "Vykreslování náhledu selhalo"

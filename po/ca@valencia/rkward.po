@@ -3,9 +3,9 @@
 # This file is put in the public domain.
 # 28-11-2006: v 1.00
 #
-# Griera <griera@gmail.com>, 2006.
-# Núria Asensio <nasensio.germanstrias@gencat.net>, 2006.
-# Josep Roca <pep.roca@gmail.com>, 2007, 2010, 2012.
+# SPDX-FileCopyrightText: 2006 Griera <griera@gmail.com>
+# SPDX-FileCopyrightText: 2006 Núria Asensio <nasensio.germanstrias@gencat.net>
+# SPDX-FileCopyrightText: 2007, 2010, 2012 Josep Roca <pep.roca@gmail.com>
 # SPDX-FileCopyrightText: 2014, 2016, 2018, 2019, 2020, 2022, 2025 Antoni Bella Pérez <antonibella5@yahoo.com>
 # SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
@@ -7900,48 +7900,3 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure en l'editor (només lectura)"
-
-#~ msgctxt "Caption: Some software is missing."
-#~ msgid "Missing software"
-#~ msgstr "Falta programari"
-
-#~ msgid "Rendering the preview failed"
-#~ msgstr "No s'ha pogut generar la vista prèvia"
-
-#~ msgid ""
-#~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
-#~ "not installed, or not in the system path of the running R session. You "
-#~ "will need to install pandoc from <a href=\"https://pandoc.org/\">https://"
-#~ "pandoc.org/</a>.</br>If it is installed, but cannot be found, try adding "
-#~ "it to the system path of the running R session at <a href=\"rkward://"
-#~ "settings/rbackend\">Settings->Configure RKward->R-backend</a>."
-#~ msgstr ""
-#~ "El programari <tt>pandoc</tt>, requerit per a representar els fitxers R "
-#~ "Markdown, no està instal·lat, o no està en el camí del sistema de la "
-#~ "sessió R en execució. Caldrà instal·lar «pandoc» des de <a href=\"https://"
-#~ "pandoc.org/\">https://pandoc.org/</a>.</br>Si està instal·lat però no "
-#~ "s'ha trobat, intenteu afegir-lo al camí del sistema de la sessió R en "
-#~ "execució des d'<a href=\"rkward://settings/rbackend\">Configuració-"
-#~ ">Configura RKward->Dorsal R</a>."
-
-# skip-rule: t-acc_obe
-#~ msgid ""
-#~ "The software <tt>pdflatex</tt> is required for rendering PDF previews. "
-#~ "The easiest way to install it is by running <tt>install.packages(\"tinytex"
-#~ "\"); library(\"tinytex\"); install_tinytex()</tt>"
-#~ msgstr ""
-#~ "Es necessita el programari <tt>pdflatex</tt> per a representar vistes "
-#~ "prèvies de PDF. La manera més fàcil d'instal·lar-lo és executar "
-#~ "<tt>install.packages(\"tinytex\"); library(\"tinytex\"); "
-#~ "install_tinytex()</tt>"
-
-#~ msgid ""
-#~ "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because "
-#~ "the output format is neither HTML, nor PDF. You can try opening it in an "
-#~ "external application, using the link, below, or you can change the "
-#~ "preview mode to 'R Markdown (HTML)'.</p>"
-#~ msgstr ""
-#~ "<h1>Format no admés</h1><p>La vista prèvia no es pot mostrar ací, perquè "
-#~ "el format d'eixida no és ni HTML ni PDF. Podeu intentar obrir-lo en una "
-#~ "aplicació externa, utilitzant l'enllaç, davall, o podeu canviar el mode "
-#~ "de vista prèvia a «R Markdown (HTML)».</p>"
