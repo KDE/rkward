@@ -4,7 +4,7 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # SPDX-FileCopyrightText: 2018, 2020, 2022, 2023 Antoni Bella Pérez <antonibella5@yahoo.com>
-# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# SPDX-FileCopyrightText: 2015, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
@@ -3100,104 +3100,3 @@ msgstr "Tipus de línia"
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
 msgstr "Nota: No aplicable a dispositius de tipus Trellis!"
-
-#~ msgid "Install from git"
-#~ msgstr "Instal·la a partir de «git»"
-
-#~ msgid "Install from git results"
-#~ msgstr "Instal·la a partir del resultat de «git»"
-
-#~ msgid "Set the location where the package resides that you want to install."
-#~ msgstr "Establix la ubicació on residix el paquet que voleu instal·lar."
-
-#~ msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
-#~ msgstr "Especifica el nom d'usuari (només GitHub, GitLab i Bitbucket)."
-
-#~ msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
-#~ msgstr "Indica el nom del repositori (només GitHub, GitLab i Bitbucket)."
-
-#~ msgid "Give the full URL to the repository (generic git and svn only)."
-#~ msgstr "Indica l'URL complet al repositori (només «git» i «svn» genèric)."
-
-#~ msgid ""
-#~ "If you want a certain commit, tag or branch for installation, define that "
-#~ "here."
-#~ msgstr ""
-#~ "Si voleu una comissió, etiqueta o branca determinada per a la "
-#~ "instal·lació, definiu-la ací."
-
-#~ msgid ""
-#~ "If you want to install from a subdirectory of the repository, define that "
-#~ "here."
-#~ msgstr ""
-#~ "Si voleu instal·lar des d'un subdirectori del repositori, definiu-lo ací."
-
-#~ msgid ""
-#~ "To install from a private repository, set your personal access token "
-#~ "(PAT, GitHub and GitLab only)."
-#~ msgstr ""
-#~ "Per a instal·lar a partir d'un repositori privat, establiu el testimoni "
-#~ "d'accés personal (PAT, només GitHub i GitLab)."
-
-#~ msgid ""
-#~ "To install from a private repository, set the user name (Bitbucket only)."
-#~ msgstr ""
-#~ "Per a instal·lar a partir d'un repositori privat, establiu el nom "
-#~ "d'usuari (només Bitbucket)."
-
-#~ msgid ""
-#~ "To install from a private repository, set the password (Bitbucket only)."
-#~ msgstr ""
-#~ "Per a instal·lar a partir d'un repositori privat, establiu la contrasenya "
-#~ "(només Bitbucket)."
-
-#~ msgid "Install from git/svn"
-#~ msgstr "Instal·la a partir de «git»/«svn»"
-
-#~ msgid "Package source"
-#~ msgstr "Origen del paquet"
-
-#~ msgid "git (generic)"
-#~ msgstr "git (genèric)"
-
-#~ msgid "GitHub"
-#~ msgstr "GitHub"
-
-#~ msgid "GitLab"
-#~ msgstr "GitLab"
-
-#~ msgid "Bitbucket"
-#~ msgstr "Bitbucket"
-
-#~ msgid "subversion (generic)"
-#~ msgstr "subversion (genèric)"
-
-#~ msgid "Package repository"
-#~ msgstr "Repositori del paquet"
-
-#~ msgid "Git user name"
-#~ msgstr "Nom d'usuari de «git»"
-
-#~ msgid "Repository"
-#~ msgstr "Repositori"
-
-#~ msgid "URL to repository"
-#~ msgstr "URL del repositori"
-
-#~ msgid "Commit/tag/branch"
-#~ msgstr "Comissió/etiqueta/branca"
-
-#~ msgid "Subdirectory"
-#~ msgstr "Subdirectori"
-
-#~ msgid "Private repository"
-#~ msgstr "Repositori privat"
-
-#~ msgid "Personal access token (PAT)"
-#~ msgstr "Testimoni d'accés personal (PAT)"
-
-#~ msgid "User"
-#~ msgstr "Usuari"
-
-#~ msgid "Password"
-#~ msgstr "Contrasenya"
