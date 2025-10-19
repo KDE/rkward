@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-17 00:38+0000\n"
-"PO-Revision-Date: 2025-09-29 19:36+0200\n"
+"PO-Revision-Date: 2025-10-19 02:04+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -220,13 +220,7 @@ msgstr ""
 "GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -236,8 +230,8 @@ msgstr ""
 "Su área de trabajo contiene más de 10.000 objetos de máximo nivel. RKWard no "
 "está optimizado para esta situación, y puede que experience retardo con las "
 "órdenes de R. Si esta situación es común en su modo de trabajo, por favor, "
-"háganoslo saber en rkward-devel@kde.org, para que podamos considerar las "
-"posibles soluciones."
+"háganoslo saber en rkward@kde.org, para que podamos considerar las posibles "
+"soluciones."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -1004,12 +998,7 @@ msgid "Start import dialog"
 msgstr "Iniciar diálogo de importación"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -1019,8 +1008,8 @@ msgstr ""
 "No hay más métodos de importación disponibles en este momento. Entre las "
 "cosas que puede probar están: <ul><li>Compruebe la disponibilidad de "
 "complementos de importación adicionales</li><li>Guarde sus datos en un "
-"formato diferente en la aplicación original</li><li>Busque ayuda en rkward-"
-"users@kde.org</li></ul>"
+"formato diferente en la aplicación original</li><li>Busque ayuda en "
+"rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2276,10 +2265,9 @@ msgid "patches and helpful comments"
 msgstr "parches y comentarios útiles"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "Mucha más gente de rkward-devel@kde.org"
+msgstr "Mucha más gente en rkward@kde.org"
 
 #: rkward/main.cpp:193
 #, kde-format
@@ -7876,46 +7864,3 @@ msgstr "Introducir el nuevo nombre"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Mostrar en el editor (solo-lectura)"
-
-#~ msgctxt "Caption: Some software is missing."
-#~ msgid "Missing software"
-#~ msgstr "Software no encontrado"
-
-#~ msgid "Rendering the preview failed"
-#~ msgstr "La previsualización ha fallado"
-
-#~ msgid ""
-#~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
-#~ "not installed, or not in the system path of the running R session. You "
-#~ "will need to install pandoc from <a href=\"https://pandoc.org/\">https://"
-#~ "pandoc.org/</a>.</br>If it is installed, but cannot be found, try adding "
-#~ "it to the system path of the running R session at <a href=\"rkward://"
-#~ "settings/rbackend\">Settings->Configure RKward->R-backend</a>."
-#~ msgstr ""
-#~ "El software <tt>pandoc</tt>, necesario para renderizar archivos markdown "
-#~ "de R, no está instalado, o no se encuentra en la ruta de sistema de la "
-#~ "sesión en ejecución de R. Necesitará instalar pandoc desde <a href="
-#~ "\"https://pandoc.org/\">https://pandoc.org/</a>.</br>Si está instalado, "
-#~ "pero no se encuentra, trate de añadirlo a la ruta del sistema de la "
-#~ "sesión en ejecución de R a través de <a href=\"rkward://settings/rbackend"
-#~ "\">Preferencias->Configurar RKward->Motor de R</a>."
-
-#~ msgid ""
-#~ "The software <tt>pdflatex</tt> is required for rendering PDF previews. "
-#~ "The easiest way to install it is by running <tt>install.packages(\"tinytex"
-#~ "\"); library(\"tinytex\"); install_tinytex()</tt>"
-#~ msgstr ""
-#~ "Se requiere el software <tt>pdflatex</tt> para renderizar vistas previas "
-#~ "PDF. La manera más sencilla de instalarlo es ejecutando <tt>install."
-#~ "packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>"
-
-#~ msgid ""
-#~ "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because "
-#~ "the output format is neither HTML, nor PDF. You can try opening it in an "
-#~ "external application, using the link, below, or you can change the "
-#~ "preview mode to 'R Markdown (HTML)'.</p>"
-#~ msgstr ""
-#~ "<h1>Formato no soportado</h1><p>La vista previa no se puede mostrar, "
-#~ "aquí, porque el formato de salida no es ni HTML ni PDF. Puede intentar "
-#~ "abrirla con una aplicación externa,usando el enlace de más abajo, o puede "
-#~ "cambiar el formato de la vista previa a «R Markdown (HTML)».</p>"
