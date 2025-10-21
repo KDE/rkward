@@ -243,7 +243,7 @@
 		cat (x)
 		cat ("</h3>")
 	} else {
-		stop(.rk.i18n("Printing object of class '%1' is not inmplemented", class(x)))
+		stop(.rk.i18n("Printing object of class '%1' is not implemented", class(x)))
 	}
 }
 
