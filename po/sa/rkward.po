@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-17 00:38+0000\n"
+"POT-Creation-Date: 2025-10-21 00:38+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -4036,6 +4036,161 @@ msgstr "अपेक्षितं संयोजन टोकन %1, पर�
 msgid "Error while connection graphics backend"
 msgstr "संयोजनग्राफिक्स पृष्ठभागस्य समये त्रुटिः"
 
+#: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
+#, no-c-format, kde-format
+msgid "Device type \"%1\" is unknown to RKWard"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
+#, no-c-format, kde-format
+msgid ""
+"rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
+"update XiMpLe."
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
+#, fuzzy, no-c-format, kde-format
+#| msgid "The file or directory does not exist."
+msgid "Target directory '%1' does not exist\n"
+msgstr "सञ्चिका वा निर्देशिका वा नास्ति ।"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
+#, no-c-format, kde-format
+msgid ""
+"Target file '%1' already exists, use the \"overwrite\" argument to replace "
+"it:\n"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
+#, no-c-format, kde-format
+msgid ""
+"Creating backup of current AppImage: %1\n"
+"  "
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restored previous AppImage from "
+"backup."
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
+#, kde-format
+msgid "Something went wrong with the download!"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
+#, kde-format
+msgid "Download successful, setting file permissions."
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
+#, kde-format
+msgid "Removing backup of previous AppImage."
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restoring previous AppImage from "
+"backup."
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
+#, no-c-format, kde-format
+msgid "Failed to copy CSS file '%1' to '%2'"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
+#, no-c-format, kde-format
+msgid "Submenu %1 cannot be redefined as a leaf item."
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
+#, no-c-format, kde-format
+msgid "Menu path %1 is not defined"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
+#, no-c-format, kde-format
+msgid "Leaf menu item %1 cannot be redefined as a submenu."
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
+#, fuzzy, kde-format
+#| msgid "Local file names"
+msgid "No file name specified"
+msgstr "स्थानीयसञ्चिकानामानि"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
+#, kde-format
+msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
+#, kde-format
+msgid ""
+"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
+"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
+"library(\"tinytex\"); install_tinytex()</tt>"
+msgstr ""
+"PDF पूर्वावलोकनानि प्रतिपादयितुं <tt>pdflatex</tt> इति सॉफ्टवेयरम् आवश्यकम् अस्ति । तस्य "
+"संस्थापनस्य सरलतमः उपायः <tt>install.packages(\"tinytex\"); पुस्तकालय (\"tinytex"
+"\"); install_tinytex()</tt> इति"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:40
+#, kde-format
+msgid "Rendering the preview failed"
+msgstr "पूर्वावलोकनस्य प्रतिपादनं विफलम् अभवत्"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:47
+#, kde-format
+msgid ""
+"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
+"output format is neither HTML, nor PDF. You can try opening it in an "
+"external application, using the link, below, or you can change the preview "
+"mode to 'R Markdown (HTML)'.</p>"
+msgstr ""
+"<h1>असमर्थित प्रारूप</h1><p> पूर्वावलोकनं दर्शयितुं न शक्यते, अत्र, यतः आउटपुट् प्रारूपं न "
+"HTML, न च PDF अस्ति । भवान् तत् बाह्य-अनुप्रयोगे उद्घाटयितुं प्रयतितुं शक्नोति, लिङ्क्-इत्यस्य "
+"उपयोगेन, अधः, अथवा पूर्वावलोकन-विधिं &#39;R Markdown (HTML)&#39; इति परिवर्तयितुं "
+"शक्नोति ।</p>"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
+#, kde-format
+msgid "Plot window created"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Do no close"
+msgid "Plot window closed"
+msgstr "न निमील्यताम्"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
+#, kde-format
+msgid "Plot updated (click to show)"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
+#, kde-format
+msgid "Please install package R2HTML to enable output!"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
+#, kde-format
+msgid "Unnamed parameter lists are deprecated in rk.header()"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
+#, no-c-format, kde-format
+msgid "Printing object of class '%1' is not inmplemented"
+msgstr ""
+
 #: rkward/rkconsole.cpp:71
 #, kde-format
 msgid ""
@@ -7674,9 +7829,6 @@ msgstr "सम्पादके दृश्यम् (केवलं पठ�
 #~ msgid "Missing software"
 #~ msgstr "सॉफ्टवेयरं गम्यते"
 
-#~ msgid "Rendering the preview failed"
-#~ msgstr "पूर्वावलोकनस्य प्रतिपादनं विफलम् अभवत्"
-
 #~ msgid ""
 #~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
 #~ "not installed, or not in the system path of the running R session. You "
@@ -7691,26 +7843,6 @@ msgstr "सम्पादके दृश्यम् (केवलं पठ�
 #~ "भविष्यति ।</br> यदि संस्थापितम् अस्ति, परन्तु न लभ्यते, तर्हि <a href=\"rkward://"
 #~ "settings/rbackend\">Settings-&gt;Configure RKward-&gt;R-backend</a> इत्यत्र "
 #~ "चालितस्य R सत्रस्य सिस्टम् मार्गे योजयितुं प्रयतध्वम् ।"
-
-#~ msgid ""
-#~ "The software <tt>pdflatex</tt> is required for rendering PDF previews. "
-#~ "The easiest way to install it is by running <tt>install.packages(\"tinytex"
-#~ "\"); library(\"tinytex\"); install_tinytex()</tt>"
-#~ msgstr ""
-#~ "PDF पूर्वावलोकनानि प्रतिपादयितुं <tt>pdflatex</tt> इति सॉफ्टवेयरम् आवश्यकम् अस्ति । "
-#~ "तस्य संस्थापनस्य सरलतमः उपायः <tt>install.packages(\"tinytex\"); पुस्तकालय "
-#~ "(\"tinytex\"); install_tinytex()</tt> इति"
-
-#~ msgid ""
-#~ "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because "
-#~ "the output format is neither HTML, nor PDF. You can try opening it in an "
-#~ "external application, using the link, below, or you can change the "
-#~ "preview mode to 'R Markdown (HTML)'.</p>"
-#~ msgstr ""
-#~ "<h1>असमर्थित प्रारूप</h1><p> पूर्वावलोकनं दर्शयितुं न शक्यते, अत्र, यतः आउटपुट् प्रारूपं न "
-#~ "HTML, न च PDF अस्ति । भवान् तत् बाह्य-अनुप्रयोगे उद्घाटयितुं प्रयतितुं शक्नोति, लिङ्क्-"
-#~ "इत्यस्य उपयोगेन, अधः, अथवा पूर्वावलोकन-विधिं &#39;R Markdown (HTML)&#39; इति "
-#~ "परिवर्तयितुं शक्नोति ।</p>"
 
 #~ msgid "R Markdown (auto)"
 #~ msgstr "आर मार्कडाउन (स्वयं)"
