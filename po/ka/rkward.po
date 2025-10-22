@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-28 02:45+0000\n"
-"PO-Revision-Date: 2025-10-01 05:11+0200\n"
+"PO-Revision-Date: 2025-10-22 02:53+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3990,6 +3990,8 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
+"აღმოჩენილია შეცდომა ეკრანის გრაფიკის უკანაბოლოსთან დაკავშირების მცდელობისას. "
+"ეს ნიშნავს, რომ ამ სესიაში RKWard-ის მოწყობილობით დახატვა შეუძლებელი იქნება."
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:67
 #, kde-format
@@ -4418,6 +4420,9 @@ msgid ""
 "</b> All data editors, and graphics windows will be closed.</p><p>Are you "
 "sure you want to proceed?</p>"
 msgstr ""
+"<p><b>უკანაბოლოს გადატვირთვა ამ სამუშაო სივრცეში შეუნახავ ცვლილებებს სრულად "
+"მოაცილებს!</b> დაიხურება ყველა მონაცემთა რედაქტორი და გრაფიკის ფანჯარა.</"
+"p><p>მართლა გნებავთ, გააგრძელოთ?</p>"
 
 #: rkward/rkward.cpp:643
 #, kde-format
@@ -4513,6 +4518,8 @@ msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
+"R-ის ძრავა ხელმისაწვდომი არაა. ამ პრობლემის გადაჭრის გზებისთვის იხილეთ <a "
+"href=\"rkward://page/rkward_trouble_shooting\">ეს ვებგვერდი</a>."
 
 #: rkward/rkward.cpp:1017
 #, kde-format
@@ -4715,6 +4722,8 @@ msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
 msgstr ""
+"შეცდომა ('ფაილი \"%1\" (რომელიც სჭირდება \"%2\"-ს) აღმოჩენილი არაა. "
+"შეამოწმეთ თქვენი პროგრამის ფაილები.');\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:83
 #, kde-format
@@ -6274,6 +6283,9 @@ msgid ""
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
+"PDF მინიატურების შესაქმნელად საჭიროა პროგრამა <tt>pdflatex</tt>. მისი "
+"დაყენების უმარტივესი გზაა გაუშვათ ბრძანება <tt>install.packages(\"tinytex"
+"\"); library(\"tinytex\"); install_tinytex()</tt>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
@@ -6387,7 +6399,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:777
 #, kde-format
 msgid "Scoped"
-msgstr ""
+msgstr "ჩამონათვალშია"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
@@ -6771,6 +6783,8 @@ msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
 "page or in the HTTP headers."
 msgstr ""
+"დააყენეთ კოდირება, რომელიც ნაგულისხმევად იქნება დაყენებული იმ შემთხვევაში, "
+"თუ ის HTTP თავსართებში მითითებული არაა."
 
 #: rkward/windows/rkhtmlwindow.cpp:911
 #, kde-format
