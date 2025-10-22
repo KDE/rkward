@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-21 00:38+0000\n"
-"PO-Revision-Date: 2025-10-11 07:45-0300\n"
+"POT-Creation-Date: 2025-10-22 00:40+0000\n"
+"PO-Revision-Date: 2025-10-21 07:38-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4144,7 +4144,7 @@ msgstr "Ocorreu um erro ao conectar com a infraestrutura de gráficos"
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr ""
+msgstr "O tipo de dispositivo \"%1\" é desconhecido para RKWard"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4152,12 +4152,13 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
+"rk.download_appimage() requer XiMpLe >= 0.11.3, mas encontrou apenas %1. Por "
+"favor, atualize o XiMpLe."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "O arquivo ou pasta não existe."
+msgstr "A pasta de destino '%1' não existe\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4165,6 +4166,8 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
+"O arquivo de destino '%1' já existe, use o argumento \"overwrite\" para "
+"substituí-lo:\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4172,6 +4175,8 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
+"Criando backup do AppImage atual: %1\n"
+"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
@@ -4179,22 +4184,23 @@ msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
 msgstr ""
+"Ocorreu um erro no download! O AppImage anterior foi restaurado do backup."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr ""
+msgstr "Algo deu errado com o download!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
-msgstr ""
+msgstr "Download bem-sucedido, definindo permissões de arquivo."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr ""
+msgstr "Removendo backup do AppImage anterior."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
@@ -4202,38 +4208,40 @@ msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
 msgstr ""
+"Ocorreu um erro no download! Restaurando o AppImage anterior do backup."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr ""
+msgstr "Falha ao copiar o arquivo CSS '%1' para '%2'"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
-msgstr ""
+msgstr "O submenu %1 não pode ser redefinido como um item folha."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr ""
+msgstr "O caminho do menu %1 não está definido"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
-msgstr ""
+msgstr "O item de menu folha %1 não pode ser redefinido como um submenu."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Local file names"
+#, kde-format
 msgid "No file name specified"
-msgstr "Nomes de arquivo local"
+msgstr "Nenhum nome de arquivo indicado"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
 msgstr ""
+"ID de saída inválido. Use rk.output() para obter um identificador de saída "
+"válido."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
 #, kde-format
@@ -4267,34 +4275,33 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr ""
+msgstr "Janela de plotagem criada"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do no close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "Não fechar"
+msgstr "Janela de plotagem fechada"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr ""
+msgstr "Plotagem atualizada (clique para mostrar)"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr ""
+msgstr "Instale o pacote R2HTML para habilitar a saída!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
-msgstr ""
+msgstr "Listas de parâmetros sem nome estão obsoletas em rk.header()"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
-#, no-c-format, kde-format
-msgid "Printing object of class '%1' is not inmplemented"
-msgstr ""
+#, fuzzy, no-c-format, kde-format
+#| msgid "Printing object of class '%1' is not inmplemented"
+msgid "Printing object of class '%1' is not implemented"
+msgstr "A impressão de objeto da classe '%1' não foi implementada"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format

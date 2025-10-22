@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-21 00:38+0000\n"
-"PO-Revision-Date: 2025-10-12 08:27+0200\n"
+"POT-Creation-Date: 2025-10-22 00:40+0000\n"
+"PO-Revision-Date: 2025-10-21 06:58+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -4111,7 +4111,7 @@ msgstr "Napaka pri povezovanju z grafičnim zaledjem"
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr ""
+msgstr "Vrsta naprave \"%1\" ni znana RKWardu"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4119,12 +4119,13 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
+"rk.download_appimage() zahteva XiMpLe >= 0.11.3, a je našel samo %1. Prosim "
+"posodobite XiMpLe."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "Datoteka ali mapa ne obstaja."
+msgstr "Ciljna mapa '%1' ne obstaja.\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4132,6 +4133,8 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
+"Ciljna datoteka '%1' že obstaja, za njeno zamenjavo uporabite argument "
+"\"overwrite\":\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4139,6 +4142,8 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
+"Ustvarjanje varnostne kopije trenutnega AppImage: %1\n"
+" "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
@@ -4146,22 +4151,24 @@ msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
 msgstr ""
+"Pri prenosu je prišlo do neke napake! Obnovljeni prejšnji AppImage iz "
+"varnostne kopije."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr ""
+msgstr "Pri prenosu je prišlo do neke napake!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
-msgstr ""
+msgstr "Prenos uspešen, nastavitev dovoljenj za datoteke."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr ""
+msgstr "Odstranjevanje varnostne kopije prejšnjega AppImaga."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
@@ -4169,38 +4176,41 @@ msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
 msgstr ""
+"Pri prenosu je prišlo do neke napake! Obnavljam prejšnjega AppImaga iz "
+"varnostne kopije."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr ""
+msgstr "Kopiranje datoteke CSS '%1' v '%2' ni uspelo"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
-msgstr ""
+msgstr "Podmenija %1 ni mogoče ponovno definirati kot listnega elementa."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr ""
+msgstr "Pot menija %1 ni določena"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
-msgstr ""
+msgstr "Elementa menija kot lista %1 ni mogoče preoblikovati v podmeni."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Local file names"
+#, kde-format
 msgid "No file name specified"
-msgstr "Imena krajevnih datotek"
+msgstr "Ime datoteke ni podano"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
 msgstr ""
+"Neveljaven izhodni ID. Uporabite rk.output() za pridobitev veljavnega "
+"izhodnega ročaja."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
 #, kde-format
@@ -4234,34 +4244,33 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr ""
+msgstr "Okno za risanje ustvarjeno"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do no close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "Ne zapri"
+msgstr "Okno za izris je bilo zaprto"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr ""
+msgstr "Posodobljena risba (kliknite za prikaz)"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr ""
+msgstr "Namestite paket R2HTML, da omogočite izpis!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
-msgstr ""
+msgstr "Seznami neimenovanih parametrov v rk.header() so zastareli"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
-#, no-c-format, kde-format
-msgid "Printing object of class '%1' is not inmplemented"
-msgstr ""
+#, fuzzy, no-c-format, kde-format
+#| msgid "Printing object of class '%1' is not inmplemented"
+msgid "Printing object of class '%1' is not implemented"
+msgstr "Tiskanje predmeta razreda '%1' ni izdelano"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
