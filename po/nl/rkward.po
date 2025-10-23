@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-22 00:40+0000\n"
-"PO-Revision-Date: 2025-10-22 00:41+0200\n"
+"PO-Revision-Date: 2025-10-23 00:38+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -4298,8 +4298,7 @@ msgid "Unnamed parameter lists are deprecated in rk.header()"
 msgstr "Parameterlijsten zonder naam zijn afgekeurd in rk.header()"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
-#, fuzzy, no-c-format, kde-format
-#| msgid "Printing object of class '%1' is not inmplemented"
+#, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
 msgstr "Afdrukken van object van klasse '%1' is niet geïmplementeerd"
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-22 00:40+0000\n"
-"PO-Revision-Date: 2025-10-21 06:10+0200\n"
+"PO-Revision-Date: 2025-10-22 03:33+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3972,6 +3972,8 @@ msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
+"<h2>წერტილების პოვნა</h2><p>გამოიყენეთ თაგუნას მარცხენა ღილაკი წერტილების "
+"მოსანიშნად და ნებისმიერი სხვა ღილაკი გასაჩერებლად.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:695
 #, kde-format
@@ -4154,10 +4156,9 @@ msgid "Unnamed parameter lists are deprecated in rk.header()"
 msgstr "უსახელო პარამეტრის სიები rk.header()-ში მოძველებულია"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
-#, fuzzy, no-c-format, kde-format
-#| msgid "Printing object of class '%1' is not inmplemented"
+#, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
-msgstr "კლასი '%1'-ის მქონე ობიექტის დაბეჭდვა განხორციელებული არაა"
+msgstr "კლასის '%1 მქონე ობიექტის დაბეჭდვა განხორციელებული არაა"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -5976,6 +5977,9 @@ msgid ""
 "R. Packages will continue to work (if they are compatible with this version "
 "of R)."
 msgstr ""
+"გადაარქვით ამ ადგილს სახელი ისე, რომ ის ამჟამად გაშვებული R-ის ვერსიას "
+"შეიცავდეს. პაკეტები გააგრძელებენ მუშაობას (თუ ისინი თავსებადია R-ის ამ "
+"ვერსიასთან)."
 
 #: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
@@ -5989,6 +5993,8 @@ msgid ""
 "Remove this location from the configuration (it will not be deleted on "
 "disk). You will have to re-install any packages that you want to keep."
 msgstr ""
+"ამ ადგილის წაშლა კონფიგურაციიდან (დისკიდან ის არ წაიშლება). ყველა პაკეტი, "
+"რომელიც გნებავთ, შეინარჩუნოთ, თავიდან უნდა დააყენოთ."
 
 #: rkward/settings/rksettingsmoduler.cpp:598
 #, kde-format
@@ -6957,6 +6963,9 @@ msgid ""
 "<p>The help page for this component has not yet been written (or is broken). "
 "Please consider contributing it.</p>\n"
 msgstr ""
+"<h1>დახმარების გვერდი აღმოჩენილი არაა</h1>\n"
+"<p>დახმარების გვერდი ამ კომპონენტისთვის ჯერ დაწერილი არაა (ან გაფუჭებულია). "
+"იფიქრეთ, იქნებ თქვენ დაწეროთ ის.</p>\n"
 
 #: rkward/windows/rkhtmlwindow.cpp:1051
 #, kde-format

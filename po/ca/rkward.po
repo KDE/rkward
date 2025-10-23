@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-22 00:40+0000\n"
-"PO-Revision-Date: 2025-10-21 09:19+0200\n"
+"PO-Revision-Date: 2025-10-22 11:27+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -4346,8 +4346,7 @@ msgid "Unnamed parameter lists are deprecated in rk.header()"
 msgstr "Les llistes de paràmetres sense nom són obsoletes a rk.header()"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
-#, fuzzy, no-c-format, kde-format
-#| msgid "Printing object of class '%1' is not inmplemented"
+#, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
 msgstr "No s'ha implementat la impressió d'objectes de classe «%1»"
 
