@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-22 00:40+0000\n"
-"PO-Revision-Date: 2025-10-15 20:49+0400\n"
+"PO-Revision-Date: 2025-10-23 09:53+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -4023,7 +4023,7 @@ msgstr "خطأ أثناء توصيل الواجهة الخلفية للرسوم�
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr ""
+msgstr "نوع الجهاز \"%1\" غير معروف لدى أر كي وارد"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4031,19 +4031,20 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
+"يَتطَلَّب rk.download_appimage() حزمة XiMpLe >= 0.11.3، لكن وُجِدَ %1 فقط. حَدِّث "
+"XiMpLe من فضلك."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "الملف أو المجلد غير موجود."
+msgstr "مُجَلَّد الوجهة '%1' ليس موجودًا\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
 msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
-msgstr ""
+msgstr "ملف الوجهة '%1' موجود بالفعل، اسْتَخدِم الوسيط \"overwrite\" لِاستبداله:\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4051,68 +4052,69 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
+"أنشئ نسخة احتياطية من AppImage الحالية: %1\n"
+"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
 msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
-msgstr ""
+msgstr "حدث خطأ ما أثناء التنزيل! أُعيد AppImage السابق من النسخة الاحتياطية."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr ""
+msgstr "حدث خطأ ما أثناء التنزيل!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
-msgstr ""
+msgstr "التنزيل ناجح، اضبط أذونات الملف."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr ""
+msgstr "أَزِل نسخة AppImage السابقة الاحتياطية."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
 msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
-msgstr ""
+msgstr "حدث خطأ ما أثناء التنزيل! أَعِد AppImage السابق من النسخة الاحتياطية."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr ""
+msgstr "فشل في نسخ ملف CSS '%1' إلى '%2'"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
-msgstr ""
+msgstr "لا يُمكِن إعادة تعريف القائمة الفرعية %1 كَعنصر ورقي."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr ""
+msgstr "مسار القائمة %1 غير مُعرَّف"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
-msgstr ""
+msgstr "لا يُمكِن إعادة تعريف عنصر القائمة الورقي %1 كقائمة فرعية."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Local file names"
+#, kde-format
 msgid "No file name specified"
-msgstr "أسماء الملفات المحلية"
+msgstr "لم يُحدّد اسم الملفّ"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
-msgstr ""
+msgstr "معرِّف إخراج غير صالح. استخدِم rk.output() للحصول على مُعامِل إخراج صالح."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
 #, kde-format
@@ -4145,34 +4147,32 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr ""
+msgstr "أُنشئت نافذة المخطط"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do no close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "لا تغلق"
+msgstr "أُغلِقت نافذة المخطط"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr ""
+msgstr "حُدِّث المخطط (انقر لعرضه)"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr ""
+msgstr "ثَبِّت حزمة R2HTML لتمكين الإخراج من فضلك!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
-msgstr ""
+msgstr "قوائم المَعلمات غير المسماة هي مُهملة في rk.header()"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
 #, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
-msgstr ""
+msgstr "طباعة كائن من الفئة '%1' ليست مُطبَّقة"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
