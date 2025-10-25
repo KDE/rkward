@@ -1910,7 +1910,7 @@ msgstr "Frontend für die Statistiksprache R"
 #: rkward/main.cpp:260
 #, kde-format
 msgid "(c) 2002 - 2022"
-msgstr "Copyright 2002 - 2022"
+msgstr "© 2002–2022"
 
 #: rkward/main.cpp:261
 #, kde-format
@@ -3208,7 +3208,7 @@ msgstr "Nicht angegeben"
 #: rkward/plugin/rkcomponentmeta.cpp:80
 #, kde-format
 msgid "Copyright (c): %1"
-msgstr "Copyright (c): %1"
+msgstr "Copyright ©: %1"
 
 #: rkward/plugin/rkcomponentmeta.cpp:81
 #, kde-format
