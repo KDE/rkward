@@ -3958,10 +3958,9 @@ msgid ""
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "Soubor nebo adresář neexistuje."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4066,11 +4065,9 @@ msgid "Plot window created"
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do no close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "Nezavírat"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
