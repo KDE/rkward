@@ -29,6 +29,7 @@ class QAction;
 class QActionGroup;
 class QRadioButton;
 class QButtonGroup;
+class QWidgetAction;
 class QChckBox;
 class RKScriptPreviewIO;
 class KActionMenu;
@@ -59,6 +60,7 @@ class RKScriptContextProvider {
 class RKJobSequence;
 class RKXMLGUIPreviewArea;
 class RKPreviewManager;
+class RKPreviewMode;
 class RKCompletionManager;
 
 /**
@@ -156,6 +158,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 
   private:
 	friend class RKWardCoreTest;
+	friend class RKPreviewModeSelector;
 	void urlChanged();
 	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;
@@ -182,9 +185,8 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 
 	QAction *action_run_all;
 	QAction *action_run_current;
-	QButtonGroup *preview_modes;
-	QRadioButton *action_no_preview;
-	QCheckBox *action_preview_as_you_type;
+	static QList<RKPreviewMode *> preview_modes;
+	QAction *action_preview_as_you_type;
 
 	QAction *action_setwd_to_script;
 
@@ -197,15 +199,20 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	QString _id;
 	static QMap<QString, KTextEditor::Document *> unnamed_documents;
 
-	void initPreviewModes(KActionMenu *menu);
+	void initPreviewModes();
 	/** call doRenderPreview, but debounced */
 	void triggerPreview(int timeout = 0);
+	RKPreviewMode *active_mode;
+	friend class RKPreviewModeOption;
+	QHash<int, QVariant> preview_option_values;
 
 	RKXMLGUIPreviewArea *preview;
 	QTimer preview_timer;
 	RKPreviewManager *preview_manager;
 	RKScriptPreviewIO *preview_io;
 	void discardPreview();
+  Q_SIGNALS:
+	void previewModeChanged(RKPreviewMode *active_mode);
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */

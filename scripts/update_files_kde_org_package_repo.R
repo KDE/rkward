@@ -42,15 +42,15 @@ local({
 
   for (this.plugin in c(
      # https://github.com/rkward-community
-     "rk.ANOVA",
-     "rk.ClusterAnalysis",
-     "rk.CohenKappa",
-     "rk.downloadAppImage",
-     "rk.FactorAnalysis",
-     "rk.gitInstall",
-     "rk.MultidimensionalScaling",
-     "rk.Teaching",
-     "rkwarddev",
+#     "rk.ANOVA",
+#     "rk.ClusterAnalysis",
+#     "rk.CohenKappa",
+#     "rk.downloadAppImage",
+#     "rk.FactorAnalysis",
+#     "rk.gitInstall",
+#     "rk.MultidimensionalScaling",
+#     "rk.Teaching",
+#     "rkwarddev",
 #     "rk.MPT", # documented as broken
 
      # https://github.com/AlfCano
@@ -62,6 +62,9 @@ local({
      "rk.pivot.reshape",
      "rk.survey.design",
      "rk.transpose.df",
+     "rk.aiken_v",
+     "rk.stringr",
+     "rk.ggsurvey",
      NULL
   )){
     pck.name <- this.plugin

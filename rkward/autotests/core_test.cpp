@@ -691,19 +691,18 @@ class RKWardCoreTest : public QObject {
 		QVERIFY(win == w2);
 
 		// pretty basic check: don't crash or assert on switching between previews
-		// NOTE: first action is "no preview"
-		auto modes = win->preview_modes->buttons();
+		// NOTE: first action is "no preview", so we trigger that last
+		auto modes = win->preview_modes;
 		QVERIFY(modes.size() > 4);
 		for (int i = modes.size() - 1; i >= 0; --i) {
-			auto b = modes[i];
-			if (b->isCheckable()) {
-				qDebug("modebutton %s", qPrintable(b->text()));
-				b->setChecked(true);
-				QVERIFY(b->isChecked());
-				win->doRenderPreview(); // don't wait for debounce timeout
-				waitForAllFinished(8000);
-				// TODO: check that a preview was actually generated
-			}
+			auto m = modes[i];
+			//if (m->validator(win->m_doc)) {
+			//qDebug("mode %s", qPrintable(m->text));
+			win->active_mode = m;
+			win->doRenderPreview(); // don't wait for debounce timeout
+			waitForAllFinished(8000);
+			// TODO: check that a preview was actually generated
+			//}
 		}
 
 		win->close(RKMDIWindow::NoAskSaveModified);
