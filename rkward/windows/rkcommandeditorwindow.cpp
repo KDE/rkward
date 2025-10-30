@@ -380,6 +380,8 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 	action_preview_as_you_type->setToolTip(i18n("When this option is enabled, an update of the preview will be triggered every time you modify the script. When this option is disabled, the preview will be updated whenever you save the script, only."));
 	action_preview_as_you_type->setChecked(m_doc->url().isEmpty()); // By default, update as you type for unsaved "quick and dirty" scripts, preview on save for saved scripts
 	initPreviewModes(actionmenu_preview);
+	preview_mode_action = new QWidgetAction(this);
+	actionmenu_preview->addAction(preview_mode_action);
 	ac->addAction(QStringLiteral("render_preview"), actionmenu_preview);
 
 	file_save_action = findAction(m_view, QStringLiteral("file_save"));
@@ -552,33 +554,33 @@ static RKCommandHighlighter::HighlightingMode documentHighlightingMode(KTextEdit
 	return RKCommandHighlighter::AutomaticOrOther;
 }
 
-class RKPreviewMode : public QRadioButton {
+class RKPreviewMode {
   public:
-	RKPreviewMode(KTextEditor::Document *doc, const QString &label, const QIcon &icon, const QString &input_ext) : QRadioButton(label),
-	                                                                                                               input_ext(input_ext),
-	                                                                                                               doc(doc) {
-		setIcon(icon);
-		connect(this, &QRadioButton::toggled, this, [this]() {
+	RKPreviewMode(const QString &label, const QIcon &icon, const QString &input_ext) : label(label),
+	                                                                                   input_ext(input_ext),
+	                                                                                   icon(icon) {
+	                                                                                   };
+
+	QRadioButton *makeButton() {
+		auto ret = new QRadioButton(label);
+		connect(ret, &QRadioButton::toggled, this, [ret, this]() {
 			for (const auto a : std::as_const(options)) {
-				a->setVisible(isChecked());
+				a->setVisible(ret->isChecked());
 			}
 		});
-	};
-
-	void setValidity(const std::function<bool(KTextEditor::Document *)> _validator) {
-		validator = _validator;
-		connect(doc, &KTextEditor::Document::highlightingModeChanged, this, [this] { setEnabled(validator(doc)); });
-		setEnabled(validator(doc));
+		ret->setIcon(icon);
+		ret->setToolTip(tooltip);
+		return ret;
 	}
 
-	QString preview_label;
+	QString preview_label, label, tooltip, input_ext;
+	QVariant optargs;
+	QIcon icon;
 	std::function<QString(const QString &, const QString &, const QString &)> command;
 	QWidget *addOption(QWidget *option) {
 		options.append(option);
 		return option;
 	};
-	QString input_ext;
-	KTextEditor::Document *doc;
 	QList<QWidget *> options;
 	std::function<bool(KTextEditor::Document *)> validator;
 };
@@ -677,29 +679,28 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	preview_modes->addButton(action_no_preview);
 
 	auto markdown = new RKPreviewMode(m_doc, i18n("R Markdown"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s);
-	markdown->setValidity(valid_for_any_markdown);
+	markdown->validator = valid_for_any_markdown;
 	markdown->preview_label = i18n("Preview of rendered R Markdown");
-	markdown->setToolTip(i18n("Preview the script as rendered from RMarkdown format (.Rmd)"));
-	enum _RenderMode { HTML,
-		               PDF,
-		               Auto };
-	auto group = new RKRadioGroup(i18n("Render format"));
-	group->addButton(i18n("Render as HTML"), HTML);
-	group->addButton(i18n("Render as PDF"), PDF);
-	group->addButton(i18n("Auto Format"), Auto)->setChecked(true);
-	markdown->addOption(group);
-	markdown->command = [group](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
-		QString arg;
-		if (group->group()->checkedId() == HTML) arg = u"output_format=\"html_document\", "_s;
-		else if (group->group()->checkedId() == PDF) arg = u"output_format=\"pdf_document\", "_s;
-		return QStringLiteral("rk.render.markdown.preview(%1, %2, %3)").arg(RObject::rQuote(infile), RObject::rQuote(outdir), arg);
+	markdown->tooltip = i18n("Preview the script as rendered from RMarkdown format (.Rmd)");
+	markdown->createOptions = [](QWidget *parent, RKPreviewMode *mode) {
+		auto group = new RKRadioGroup(i18n("Render format"));
+		group->addButton(i18n("Render as HTML"), u"output_format=\"html_document\", "_s);
+		group->addButton(i18n("Render as PDF"), u"output_format=\"pdf_document\", "_s);
+		group->addButton(i18n("Auto Format"))->setChecked(true);
+		connect(group, QButtonGroup::buttonToggled, mode, [mode, group]() {
+			mode->optargs = group->checkedData();
+			mode->changed();
+		}
 	};
-	preview_modes->addButton(markdown);
+	markdown->command = [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
+		return QStringLiteral("rk.render.markdown.preview(%1, %2, %3)").arg(RObject::rQuote(infile), RObject::rQuote(outdir), mode->optargs.toString());
+	};
+	preview_modes->addButton(markdown->makeButton());
 
 	auto rkoutput = new RKPreviewMode(m_doc, i18n("RKWard Output"), RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), u".R"_s);
-	rkoutput->setValidity(valid_for_r_script);
+	rkoutput->validator = valid_for_r_script;
 	rkoutput->preview_label = i18n("Preview of generated RKWard output");
-	rkoutput->setToolTip(i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."));
+	rkoutput->tooltip = i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands.");
 	rkoutput->command = [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
 		auto command = QStringLiteral("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 		                              "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
@@ -711,45 +712,44 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	preview_modes->addButton(rkoutput);
 
 	auto rkconsole = new RKPreviewMode(m_doc, i18n("R Console"), RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), u".R"_s);
-	rkconsole->setValidity(valid_for_r_script);
+	rkconsole->validator = valid_for_r_script;
 	rkconsole->preview_label = i18n("Preview of script running in interactive R Console");
-	rkconsole->setToolTip(i18n("Preview the script as if it was run in the interactive R Console"));
-	enum _ConsoleOpts { Global,
-		                Scoped,
-		                Local };
-	auto echo_opt = new QCheckBox(i18n("Echo statements"));
-	echo_opt->setChecked(true);
-	rkconsole->addOption(echo_opt);
-	auto continue_opt = new QCheckBox(i18n("Continue on error"));
-	rkconsole->addOption(continue_opt);
-	auto env_opt = new RKRadioGroup(i18n("Evaluation environment"));
-	rkconsole->addOption(env_opt);
-	auto b = env_opt->addButton(i18n(".GlobalEnv"), Global);
-	b->setIcon(QIcon::fromTheme(u"emblem-warning"_s));
-	b->setToolTip(i18n("Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</b> objects in .GlobalEnv."));
-	b = env_opt->addButton(i18n("Scoped"), Scoped);
-	b->setChecked(true);
-	b->setToolTip(i18n("Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not modify them. (Other assignment operations could still modify them!)"));
-	b = env_opt->addButton(i18n("Local"), Local);
-	b->setToolTip(i18n("Evaluate code in true local environment. Objects in .GlobalEnv are not on the search path, and will not be modified by regular assignments using the <tt>&lt;-</tt>-operator. (Other assignment operations could still modify them!)"));
+	rkconsole->tooltip = i18n("Preview the script as if it was run in the interactive R Console");
+	rkconsole->createOptions = [](QWidget *parent, RKPreviewMode *mode) {
+		auto echo_opt = new QCheckBox(i18n("Echo statements"));
+		echo_opt->setChecked(true);
+		auto continue_opt = new QCheckBox(i18n("Continue on error"));
+		auto env_opt = new RKRadioGroup(i18n("Evaluation environment"));
+		auto b = env_opt->addButton(i18n(".GlobalEnv"), u", env=globalenv()"_s);
+		b->setIcon(QIcon::fromTheme(u"emblem-warning"_s));
+		b->setToolTip(i18n("Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</b> objects in .GlobalEnv."));
+		b = env_opt->addButton(i18n("Scoped"), QString());
+		b->setChecked(true);
+		b->setToolTip(i18n("Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not modify them. (Other assignment operations could still modify them!)"));
+		b = env_opt->addButton(i18n("Local"), u", env=local()"_s);
+		b->setToolTip(i18n("Evaluate code in true local environment. Objects in .GlobalEnv are not on the search path, and will not be modified by regular assignments using the <tt>&lt;-</tt>-operator. (Other assignment operations could still modify them!)"));
+		const auto updatefun = [mode, echo_opt, continue_opt, group]() {
+			QString opt = u", echo"_s + echo_opt->isChecked() ? u"TRUE"_s : u"FALSE"_s;
+			opt.append(env_opt->checkedData();
+			opt.append(u", stop.on.error="_s + continue_opt->isChecked() ? u"FALSE"_s : u"TRUE"_s;
+			mode->optargs = opt;
+			mode->changed();
+		};
+		for (QCheckBox *opt : {echo_opt, continue_opt})
+			connect(opt, QCheckBox::toggled, mode, udatefun);
+		connect(env_opt->group(), QButtonGroup::idToggled, mode, udatefun);
+	};
 	rkconsole->command = [env_opt, echo_opt, continue_opt](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
 		auto command = QStringLiteral("try(rk.eval.as.preview(%1, %2%3), silent=TRUE)\n" // silent, because error will be printed!
 		                              "rk.show.html(%2)\n");
-		QString opt;
-		if (echo_opt->isChecked()) opt.append(u", echo=TRUE"_s);
-		else opt.append(u", echo=FALSE"_s);
-		if (env_opt->group()->checkedId() == Global) opt.append(u", env=globalenv()"_s);
-		else if (env_opt->group()->checkedId() == Local) opt.append(u", env=local()"_s);
-		if (continue_opt->isChecked()) opt.append(u", stop.on.error=FALSE"_s);
-		else opt.append(u", stop.on.error=TRUE"_s);
 		return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s), opt);
 	};
 	preview_modes->addButton(rkconsole);
 
 	auto plot = new RKPreviewMode(m_doc, i18n("Plot"), RKStandardIcons::getIcon(RKStandardIcons::WindowX11), u".R"_s);
-	plot->setValidity(valid_for_r_script);
+	plot->validator = valid_for_r_script;
 	plot->preview_label = i18n("Preview of generated plot");
-	plot->setToolTip(i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."));
+	plot->tooltip = i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands.");
 	plot->command = [](const QString &infile, const QString & /*outdir*/, const QString &preview_id) {
 		auto command = QStringLiteral("olddev <- dev.cur()\n"
 		                              ".rk.startPreviewDevice(%2)\n"
@@ -769,7 +769,7 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	sep->setFrameShadow(QFrame::Sunken);
 	h->addWidget(sep);
 	auto r = new QVBoxLayout();
-	l->addWidget(new QLabel(i18n("Options")));
+	r->addWidget(new QLabel(i18n("Options")));
 	h->addLayout(r);
 
 	const auto preview_buttons = preview_modes->buttons();
@@ -792,17 +792,15 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	l->addStretch();
 	r->addStretch();
 	r->addWidget(action_preview_as_you_type);
-	auto wa = new QWidgetAction(this);
-	wa->setDefaultWidget(form);
-	menu->addAction(wa);
+	preview_mode_action->setDefaultWidget(form);
 
 	connect(preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
-	connect(preview_modes, &QButtonGroup::buttonToggled, this, [this, menu, wa]() {
+	connect(preview_modes, &QButtonGroup::buttonToggled, this, [this, menu]() {
 		// Menu needs some help resizing depending on available options.
 		// see also https://stackoverflow.com/questions/42122985/how-to-resize-a-qlabel-displayed-by-a-qwidgetaction-after-changing-its-text
 		auto mw = menu->menu();
 		auto olds = mw->size();
-		QActionEvent e(QEvent::ActionChanged, wa);
+		QActionEvent e(QEvent::ActionChanged, preview_mode_action);
 		qApp->sendEvent(mw, &e);
 		if (olds.expandedTo(mw->size()) != olds && mw->isVisible()) {
 			mw->blockSignals(true);

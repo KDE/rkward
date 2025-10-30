@@ -68,6 +68,21 @@ QRadioButton *RKRadioGroup::addButton(const QString &label, int id) {
 	return button;
 }
 
+QRadioButton *RKRadioGroup::addButton(const QString &label, const QVariant &data) {
+	RK_TRACE(MISC);
+	auto button = addButton(label, -1);
+	button->setProperty("_rkrg_data", data);
+	// NOTE: could store this in private map, instead
+	return button;
+}
+
+const QVariant &RKRadioGroup::checkedData() const {
+	RK_TRACE(MISC);
+	auto button = _group->checkedButton();
+	if (!button) return QVariant();
+	return button->property("_rkrg_data");
+}
+
 QRadioButton *RKRadioGroup::addButton(const QString &label, int id, QWidget *controlled, QBoxLayout::Direction dir) {
 	RK_TRACE(MISC);
 	auto old_layout = _layout;
