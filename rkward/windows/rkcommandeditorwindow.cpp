@@ -380,6 +380,8 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 	action_preview_as_you_type->setToolTip(i18n("When this option is enabled, an update of the preview will be triggered every time you modify the script. When this option is disabled, the preview will be updated whenever you save the script, only."));
 	action_preview_as_you_type->setChecked(m_doc->url().isEmpty()); // By default, update as you type for unsaved "quick and dirty" scripts, preview on save for saved scripts
 	initPreviewModes(actionmenu_preview);
+	preview_mode_action = new QWidgetAction(this);
+	actionmenu_preview->addAction(preview_mode_action);
 	ac->addAction(QStringLiteral("render_preview"), actionmenu_preview);
 
 	file_save_action = findAction(m_view, QStringLiteral("file_save"));
@@ -769,7 +771,7 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	sep->setFrameShadow(QFrame::Sunken);
 	h->addWidget(sep);
 	auto r = new QVBoxLayout();
-	l->addWidget(new QLabel(i18n("Options")));
+	r->addWidget(new QLabel(i18n("Options")));
 	h->addLayout(r);
 
 	const auto preview_buttons = preview_modes->buttons();
@@ -792,17 +794,15 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	l->addStretch();
 	r->addStretch();
 	r->addWidget(action_preview_as_you_type);
-	auto wa = new QWidgetAction(this);
-	wa->setDefaultWidget(form);
-	menu->addAction(wa);
+	preview_mode_action->setDefaultWidget(form);
 
 	connect(preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
-	connect(preview_modes, &QButtonGroup::buttonToggled, this, [this, menu, wa]() {
+	connect(preview_modes, &QButtonGroup::buttonToggled, this, [this, menu]() {
 		// Menu needs some help resizing depending on available options.
 		// see also https://stackoverflow.com/questions/42122985/how-to-resize-a-qlabel-displayed-by-a-qwidgetaction-after-changing-its-text
 		auto mw = menu->menu();
 		auto olds = mw->size();
-		QActionEvent e(QEvent::ActionChanged, wa);
+		QActionEvent e(QEvent::ActionChanged, preview_mode_action);
 		qApp->sendEvent(mw, &e);
 		if (olds.expandedTo(mw->size()) != olds && mw->isVisible()) {
 			mw->blockSignals(true);

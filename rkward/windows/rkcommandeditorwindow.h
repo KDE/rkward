@@ -29,6 +29,7 @@ class QAction;
 class QActionGroup;
 class QRadioButton;
 class QButtonGroup;
+class QWidgetAction;
 class QChckBox;
 class RKScriptPreviewIO;
 class KActionMenu;
@@ -185,6 +186,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	QButtonGroup *preview_modes;
 	QRadioButton *action_no_preview;
 	QCheckBox *action_preview_as_you_type;
+	QWidgetAction *preview_mode_action;
 
 	QAction *action_setwd_to_script;
 
