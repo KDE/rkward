@@ -68,6 +68,213 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
+class RKPreviewModeOption {
+  public:
+	RKPreviewModeOption(std::function<QWidget *(const RKPreviewModeOption *, RKCommandEditorWindow *)> create) : createWidget(create) {
+		id = ++_id;
+	};
+	RKPreviewModeOption() {
+		id = ++_id;
+	};
+	RKPreviewModeOption(const RKPreviewModeOption &other) {
+		id = other.id;
+		createWidget = other.createWidget;
+	};
+	void initCheckBox(QCheckBox *cb, RKCommandEditorWindow *win) const {
+		cb->setChecked(value(win).toBool());
+		QObject::connect(cb, &QCheckBox::toggled, win, [win, this](bool checked) {
+			// TODO signal changes
+			setValue(win, checked);
+		});
+	}
+
+	void initRadioGroup(RKRadioGroup *rg, RKCommandEditorWindow *win) const {
+		rg->setButtonChecked(value(win), true);
+		QObject::connect(rg->group(), &QButtonGroup::idToggled, win, [win, this, rg]() {
+			// TODO signal changes
+			setValue(win, rg->checkedData());
+		});
+	}
+
+	static RKPreviewModeOption checkBox(const QString &label, bool checked) {
+		return RKPreviewModeOption([label, checked](const RKPreviewModeOption *o, RKCommandEditorWindow *win) {
+			auto cb = new QCheckBox(label);
+			o->setValue(win, checked);
+			o->initCheckBox(cb, win);
+			return cb;
+		});
+	}
+	QVariant value(RKCommandEditorWindow *win) const {
+		return win->preview_option_values.value(id);
+	};
+	void setValue(RKCommandEditorWindow *win, QVariant value) const {
+		win->preview_option_values[id] = value;
+	};
+	std::function<QWidget *(const RKPreviewModeOption *, RKCommandEditorWindow *)> createWidget;
+
+  private:
+	static int _id;
+	;
+	int id;
+};
+int RKPreviewModeOption::_id = 0;
+
+class RKPreviewMode {
+  public:
+	RKPreviewMode(const QString &label, const QIcon &icon, const QString &input_ext) : label(label),
+	                                                                                   input_ext(input_ext),
+	                                                                                   icon(icon) {
+	                                                                                   };
+	QString preview_label, label, tooltip, input_ext;
+	QIcon icon;
+	std::function<QString(RKCommandEditorWindow *, const QString &, const QString &, const QString &)> command;
+	QList<RKPreviewModeOption> options;
+	std::function<bool(KTextEditor::Document *)> validator;
+};
+
+class RKPreviewModeSelector : public QWidgetAction {
+  public:
+	RKPreviewModeSelector(RKCommandEditorWindow *win) : QWidgetAction(win), win(win) {};
+
+  private:
+	RKCommandEditorWindow *win;
+
+	QWidget *createWidget(QWidget *parent) override {
+		auto form = new QWidget(parent);
+		auto h = new QHBoxLayout(form);
+		auto l = new QVBoxLayout();
+		h->addLayout(l);
+		l->addWidget(new QLabel(i18nc("noun: type of preview", "Preview Mode")));
+		auto sep = new QFrame();
+		sep->setFrameShape(QFrame::VLine);
+		sep->setFrameShadow(QFrame::Sunken);
+		h->addWidget(sep);
+		auto r = new QVBoxLayout();
+		r->addWidget(new QLabel(i18n("Options")));
+		h->addLayout(r);
+		auto preview_mode_button_group = new QButtonGroup(form);
+
+		for (auto *mode : std::as_const(win->preview_modes)) {
+			auto m = (mode == win->preview_modes.first()) ? nullptr : mode;
+			auto button = new QRadioButton(mode->label);
+			connect(win->m_doc, &KTextEditor::Document::highlightingModeChanged, button, [button, mode](KTextEditor::Document *doc) {
+				button->setVisible(mode->validator(doc));
+			});
+			button->setIcon(mode->icon);
+			button->setToolTip(mode->tooltip);
+			button->setChecked(win->active_mode == mode);
+			preview_mode_button_group->addButton(button);
+			l->addWidget(button);
+
+			QObject::connect(button, &QRadioButton::toggled, win, [this, m](bool checked) {
+				if (checked) win->active_mode = m;
+				// actual trigger of preview is handled via the group signal
+			});
+			QObject::connect(win, &RKCommandEditorWindow::previewModeChanged, button, [m, button](RKPreviewMode *active) {
+				if (active == m && !button->isChecked()) button->setChecked(true);
+			});
+
+			for (auto &opt : std::as_const(mode->options)) {
+				auto ob = opt.createWidget(&opt, win);
+				r->addWidget(ob);
+				ob->setVisible(false);
+				connect(button, &QAbstractButton::toggled, ob, [ob](bool checked) {
+					ob->setVisible(checked);
+				});
+				// the following is a little hackish...
+				if (auto oab = qobject_cast<QAbstractButton *>(ob)) {
+					connect(oab, &QAbstractButton::toggled, win, &RKCommandEditorWindow::triggerPreview);
+				} else if (auto og = qobject_cast<RKRadioGroup *>(ob)) {
+					connect(og->group(), &QButtonGroup::idToggled, win, &RKCommandEditorWindow::triggerPreview);
+				} else {
+					RK_ASSERT(false); // may be ok in future code (e.g. spinboxes or such), but want a reminder, then
+				}
+			}
+		}
+		l->addStretch();
+		r->addStretch();
+
+		connect(preview_mode_button_group, &QButtonGroup::buttonToggled, this, [parent, this]() {
+			// Menu needs some help resizing depending on available options.
+			// see also https://stackoverflow.com/questions/42122985/how-to-resize-a-qlabel-displayed-by-a-qwidgetaction-after-changing-its-text
+			auto olds = parent->size();
+			QActionEvent e(QEvent::ActionChanged, this);
+			qApp->sendEvent(parent, &e);
+			if (olds.expandedTo(parent->size()) != olds && parent->isVisible()) {
+				parent->blockSignals(true);
+				parent->hide();
+				parent->show();
+				parent->blockSignals(false);
+			}
+
+			win->triggerPreview(0);
+		});
+
+		return form;
+	}
+};
+
+class RKScriptPreviewIO {
+	QUrl url;
+	RKPreviewMode *mode;
+	QTemporaryDir out_dir;
+	QFile *infile;
+	RKScriptPreviewIO(RKPreviewMode *mode, const QUrl &url) : url(url), mode(mode), out_dir(), infile(nullptr) {
+		const auto pattern = QLatin1String("tmp_rkward_preview");
+		if (url.isEmpty() || !url.isLocalFile()) {
+			// Not locally saved: save to tempdir
+			infile = new QFile(QDir(out_dir.path()).absoluteFilePath(pattern + mode->input_ext));
+		} else {
+			// If the file is already saved, save the preview input as a temp file in the same folder.
+			// esp. .Rmd files might try to include other files by relative path.
+			QString tempfiletemplate = url.adjusted(QUrl::RemoveFilename).toLocalFile();
+			tempfiletemplate.append(pattern + QLatin1String("XXXXXX") + mode->input_ext);
+			infile = new QTemporaryFile(tempfiletemplate);
+		}
+	}
+	void write(KTextEditor::Document *doc) {
+		RK_ASSERT(infile->open(QIODevice::WriteOnly));
+		QTextStream out(infile);
+		out.setEncoding(QStringConverter::Utf8); // make sure that all characters can be saved, without nagging the user
+		out << doc->text();
+		infile->close();
+	}
+
+  public:
+	~RKScriptPreviewIO() {
+		{
+			// rkmarkdown::render() leaves these directories lying around, even if clean=TRUE. interemdiates_dir does not seem to have an effect. (07/2024)
+			// the name should be unique enough, though, so let's clean them
+			auto fi = QFileInfo(*infile);
+			QString known_temp_path = fi.absolutePath() + u'/' + fi.baseName() + u"_cache"_s;
+			QDir(known_temp_path).removeRecursively();
+		}
+		infile->remove();
+		delete infile;
+	}
+	static RKScriptPreviewIO *init(RKScriptPreviewIO *previous, KTextEditor::Document *doc, RKPreviewMode *preview_mode) {
+		// Whenever possible, we try to reuse an existing temporary file, because
+		// a) If build files do spill (as happens with rmarkdown::render()), it will not be quite as many
+		// b) Faster in some cases
+		if (previous && previous->mode == preview_mode && previous->url == doc->url()) {
+			// If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in QFile::open(WriteOnly).
+			previous->infile->remove();
+			previous->write(doc);
+			return previous;
+		}
+		delete previous;
+		auto ret = new RKScriptPreviewIO(preview_mode, doc->url());
+		ret->write(doc);
+		return ret;
+	}
+	QString outpath(const QString &filename) const {
+		return QDir(out_dir.path()).absoluteFilePath(filename);
+	}
+	QString inpath() const {
+		return infile->fileName();
+	}
+};
+
 RKCommandEditorWindowPart::RKCommandEditorWindowPart(QWidget *parent) : KParts::Part(parent) {
 	RK_TRACE(COMMANDEDITOR);
 
@@ -85,6 +292,7 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart() {
 
 // static
 QMap<QString, KTextEditor::Document *> RKCommandEditorWindow::unnamed_documents;
+QList<RKPreviewMode *> RKCommandEditorWindow::preview_modes;
 
 KTextEditor::Document *createDocument(bool with_signals) {
 	KTextEditor::Document *ret = KTextEditor::Editor::instance()->createDocument(RKWardMainWindow::getMain());
@@ -374,13 +582,16 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 
 	KActionMenu *actionmenu_preview = new KActionMenu(QIcon::fromTheme(QStringLiteral("view-preview")), i18n("Preview"), this);
 	actionmenu_preview->setPopupMode(QToolButton::InstantPopup);
-	preview_modes = new QButtonGroup(this);
-	action_preview_as_you_type = new QCheckBox(i18nc("Checkable action: the preview gets updated while typing", "Update as you type"));
+	action_preview_as_you_type = new QAction(i18nc("Checkable action: the preview gets updated while typing", "Update as you type"));
+	action_preview_as_you_type->setCheckable(true);
 	action_preview_as_you_type->setIcon(QIcon::fromTheme(QStringLiteral("input-keyboard")));
 	action_preview_as_you_type->setToolTip(i18n("When this option is enabled, an update of the preview will be triggered every time you modify the script. When this option is disabled, the preview will be updated whenever you save the script, only."));
 	action_preview_as_you_type->setChecked(m_doc->url().isEmpty()); // By default, update as you type for unsaved "quick and dirty" scripts, preview on save for saved scripts
-	initPreviewModes(actionmenu_preview);
+	initPreviewModes();
+	actionmenu_preview->addAction(new RKPreviewModeSelector(this));
+	actionmenu_preview->addAction(action_preview_as_you_type);
 	ac->addAction(QStringLiteral("render_preview"), actionmenu_preview);
+	connect(preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
 
 	file_save_action = findAction(m_view, QStringLiteral("file_save"));
 	if (file_save_action) file_save_action->setText(i18n("Save Script..."));
@@ -552,98 +763,6 @@ static RKCommandHighlighter::HighlightingMode documentHighlightingMode(KTextEdit
 	return RKCommandHighlighter::AutomaticOrOther;
 }
 
-class RKPreviewMode : public QRadioButton {
-  public:
-	RKPreviewMode(KTextEditor::Document *doc, const QString &label, const QIcon &icon, const QString &input_ext) : QRadioButton(label),
-	                                                                                                               input_ext(input_ext),
-	                                                                                                               doc(doc) {
-		setIcon(icon);
-		connect(this, &QRadioButton::toggled, this, [this]() {
-			for (const auto a : std::as_const(options)) {
-				a->setVisible(isChecked());
-			}
-		});
-	};
-
-	void setValidity(const std::function<bool(KTextEditor::Document *)> _validator) {
-		validator = _validator;
-		connect(doc, &KTextEditor::Document::highlightingModeChanged, this, [this] { setEnabled(validator(doc)); });
-		setEnabled(validator(doc));
-	}
-
-	QString preview_label;
-	std::function<QString(const QString &, const QString &, const QString &)> command;
-	QWidget *addOption(QWidget *option) {
-		options.append(option);
-		return option;
-	};
-	QString input_ext;
-	KTextEditor::Document *doc;
-	QList<QWidget *> options;
-	std::function<bool(KTextEditor::Document *)> validator;
-};
-
-class RKScriptPreviewIO {
-	QUrl url;
-	RKPreviewMode *mode;
-	QTemporaryDir out_dir;
-	QFile *infile;
-	RKScriptPreviewIO(RKPreviewMode *mode, const QUrl &url) : url(url), mode(mode), out_dir(), infile(nullptr) {
-		const auto pattern = QLatin1String("tmp_rkward_preview");
-		if (url.isEmpty() || !url.isLocalFile()) {
-			// Not locally saved: save to tempdir
-			infile = new QFile(QDir(out_dir.path()).absoluteFilePath(pattern + mode->input_ext));
-		} else {
-			// If the file is already saved, save the preview input as a temp file in the same folder.
-			// esp. .Rmd files might try to include other files by relative path.
-			QString tempfiletemplate = url.adjusted(QUrl::RemoveFilename).toLocalFile();
-			tempfiletemplate.append(pattern + QLatin1String("XXXXXX") + mode->input_ext);
-			infile = new QTemporaryFile(tempfiletemplate);
-		}
-	}
-	void write(KTextEditor::Document *doc) {
-		RK_ASSERT(infile->open(QIODevice::WriteOnly));
-		QTextStream out(infile);
-		out.setEncoding(QStringConverter::Utf8); // make sure that all characters can be saved, without nagging the user
-		out << doc->text();
-		infile->close();
-	}
-
-  public:
-	~RKScriptPreviewIO() {
-		{
-			// rkmarkdown::render() leaves these directories lying around, even if clean=TRUE. interemdiates_dir does not seem to have an effect. (07/2024)
-			// the name should be unique enough, though, so let's clean them
-			auto fi = QFileInfo(*infile);
-			QString known_temp_path = fi.absolutePath() + u'/' + fi.baseName() + u"_cache"_s;
-			QDir(known_temp_path).removeRecursively();
-		}
-		infile->remove();
-		delete infile;
-	}
-	static RKScriptPreviewIO *init(RKScriptPreviewIO *previous, KTextEditor::Document *doc, RKPreviewMode *preview_mode) {
-		// Whenever possible, we try to reuse an existing temporary file, because
-		// a) If build files do spill (as happens with rmarkdown::render()), it will not be quite as many
-		// b) Faster in some cases
-		if (previous && previous->mode == preview_mode && previous->url == doc->url()) {
-			// If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in QFile::open(WriteOnly).
-			previous->infile->remove();
-			previous->write(doc);
-			return previous;
-		}
-		delete previous;
-		auto ret = new RKScriptPreviewIO(preview_mode, doc->url());
-		ret->write(doc);
-		return ret;
-	}
-	QString outpath(const QString &filename) const {
-		return QDir(out_dir.path()).absoluteFilePath(filename);
-	}
-	QString inpath() const {
-		return infile->fileName();
-	}
-};
-
 void RKCommandEditorWindow::discardPreview() {
 	RK_TRACE(COMMANDEDITOR);
 
@@ -653,11 +772,12 @@ void RKCommandEditorWindow::discardPreview() {
 		RInterface::issueCommand(QStringLiteral(".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg(RObject::rQuote(preview_manager->previewId())), RCommand::App | RCommand::Sync);
 		delete preview_io;
 		preview_io = nullptr;
+		Q_EMIT(previewModeChanged(nullptr));
 	}
-	action_no_preview->setChecked(true);
 }
 
-void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
+void RKCommandEditorWindow::initPreviewModes() {
+	if (!preview_modes.isEmpty()) return;
 	RK_TRACE(COMMANDEDITOR);
 
 	const auto valid_for_any_markdown = [](KTextEditor::Document *doc) -> bool {
@@ -670,37 +790,37 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 	};
 
 	// Must define this one first, as doRenderPreview() may trigger during setup of the further actions!
-	action_no_preview = new QRadioButton(i18n("No preview"), this);
-	action_no_preview->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete));
-	action_no_preview->setToolTip(i18n("Disable preview"));
-	action_no_preview->setChecked(true);
-	preview_modes->addButton(action_no_preview);
-
-	auto markdown = new RKPreviewMode(m_doc, i18n("R Markdown"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s);
-	markdown->setValidity(valid_for_any_markdown);
-	markdown->preview_label = i18n("Preview of rendered R Markdown");
-	markdown->setToolTip(i18n("Preview the script as rendered from RMarkdown format (.Rmd)"));
-	enum _RenderMode { HTML,
-		               PDF,
-		               Auto };
-	auto group = new RKRadioGroup(i18n("Render format"));
-	group->addButton(i18n("Render as HTML"), HTML);
-	group->addButton(i18n("Render as PDF"), PDF);
-	group->addButton(i18n("Auto Format"), Auto)->setChecked(true);
-	markdown->addOption(group);
-	markdown->command = [group](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
-		QString arg;
-		if (group->group()->checkedId() == HTML) arg = u"output_format=\"html_document\", "_s;
-		else if (group->group()->checkedId() == PDF) arg = u"output_format=\"pdf_document\", "_s;
-		return QStringLiteral("rk.render.markdown.preview(%1, %2, %3)").arg(RObject::rQuote(infile), RObject::rQuote(outdir), arg);
+	auto no_preview = new RKPreviewMode(i18n("No preview"), RKStandardIcons::getIcon(RKStandardIcons::ActionDelete), QString());
+	no_preview->tooltip = i18n("Disable preview");
+	no_preview->validator = [](KTextEditor::Document *) -> bool {
+		return true;
 	};
-	preview_modes->addButton(markdown);
+	active_mode = no_preview;
+	preview_modes.append(no_preview);
 
-	auto rkoutput = new RKPreviewMode(m_doc, i18n("RKWard Output"), RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), u".R"_s);
-	rkoutput->setValidity(valid_for_r_script);
+	auto markdown = new RKPreviewMode(i18n("R Markdown"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s);
+	markdown->validator = valid_for_any_markdown;
+	markdown->preview_label = i18n("Preview of rendered R Markdown");
+	markdown->tooltip = i18n("Preview the script as rendered from RMarkdown format (.Rmd)");
+	RKPreviewModeOption markdown_renderformat_opt([](const RKPreviewModeOption *o, RKCommandEditorWindow *w) {
+		auto group = new RKRadioGroup(i18n("Render format"));
+		group->addButton(i18n("Render as HTML"), u"output_format=\"html_document\", "_s);
+		group->addButton(i18n("Render as PDF"), u"output_format=\"pdf_document\", "_s);
+		group->addButton(i18n("Auto Format")); // empty data arg results in this being the default (by intention)
+		o->initRadioGroup(group, w);
+		return group;
+	});
+	markdown->options.append(markdown_renderformat_opt);
+	markdown->command = [markdown_renderformat_opt](RKCommandEditorWindow *win, const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
+		return QStringLiteral("rk.render.markdown.preview(%1, %2, %3)").arg(RObject::rQuote(infile), RObject::rQuote(outdir), markdown_renderformat_opt.value(win).toString());
+	};
+	preview_modes.append(markdown);
+
+	auto rkoutput = new RKPreviewMode(i18n("RKWard Output"), RKStandardIcons::getIcon(RKStandardIcons::WindowOutput), u".R"_s);
+	rkoutput->validator = valid_for_r_script;
 	rkoutput->preview_label = i18n("Preview of generated RKWard output");
-	rkoutput->setToolTip(i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."));
-	rkoutput->command = [](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
+	rkoutput->tooltip = i18n("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands.");
+	rkoutput->command = [](RKCommandEditorWindow *, const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
 		auto command = QStringLiteral("output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 		                              "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
 		                              "try(source(%1, local=TRUE))\n"
@@ -708,122 +828,50 @@ void RKCommandEditorWindow::initPreviewModes(KActionMenu *menu) {
 		                              "rk.show.html(%2)\n");
 		return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s));
 	};
-	preview_modes->addButton(rkoutput);
+	preview_modes.append(rkoutput);
 
-	auto rkconsole = new RKPreviewMode(m_doc, i18n("R Console"), RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), u".R"_s);
-	rkconsole->setValidity(valid_for_r_script);
+	auto rkconsole = new RKPreviewMode(i18n("R Console"), RKStandardIcons::getIcon(RKStandardIcons::WindowConsole), u".R"_s);
+	rkconsole->validator = valid_for_r_script;
 	rkconsole->preview_label = i18n("Preview of script running in interactive R Console");
-	rkconsole->setToolTip(i18n("Preview the script as if it was run in the interactive R Console"));
-	enum _ConsoleOpts { Global,
-		                Scoped,
-		                Local };
-	auto echo_opt = new QCheckBox(i18n("Echo statements"));
-	echo_opt->setChecked(true);
-	rkconsole->addOption(echo_opt);
-	auto continue_opt = new QCheckBox(i18n("Continue on error"));
-	rkconsole->addOption(continue_opt);
-	auto env_opt = new RKRadioGroup(i18n("Evaluation environment"));
-	rkconsole->addOption(env_opt);
-	auto b = env_opt->addButton(i18n(".GlobalEnv"), Global);
-	b->setIcon(QIcon::fromTheme(u"emblem-warning"_s));
-	b->setToolTip(i18n("Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</b> objects in .GlobalEnv."));
-	b = env_opt->addButton(i18n("Scoped"), Scoped);
-	b->setChecked(true);
-	b->setToolTip(i18n("Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not modify them. (Other assignment operations could still modify them!)"));
-	b = env_opt->addButton(i18n("Local"), Local);
-	b->setToolTip(i18n("Evaluate code in true local environment. Objects in .GlobalEnv are not on the search path, and will not be modified by regular assignments using the <tt>&lt;-</tt>-operator. (Other assignment operations could still modify them!)"));
-	rkconsole->command = [env_opt, echo_opt, continue_opt](const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
+	rkconsole->tooltip = i18n("Preview the script as if it was run in the interactive R Console");
+	auto rkconsole_echo_opt = RKPreviewModeOption::checkBox(i18n("Echo statements"), true);
+	auto rkconsole_continue_opt = RKPreviewModeOption::checkBox(i18n("Continue on error"), false);
+	auto rkconsole_env_opt = RKPreviewModeOption([](const RKPreviewModeOption *o, RKCommandEditorWindow *win) {
+		auto group = new RKRadioGroup(i18n("Evaluation environment"));
+		auto b = group->addButton(i18n(".GlobalEnv"), u", env=globalenv()"_s);
+		b->setIcon(QIcon::fromTheme(u"emblem-warning"_s));
+		b->setToolTip(i18n("Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</b> objects in .GlobalEnv."));
+		b = group->addButton(i18n("Scoped"), QString());
+		b->setChecked(true);
+		b->setToolTip(i18n("Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not modify them. (Other assignment operations could still modify them!)"));
+		b = group->addButton(i18n("Local"), u", env=local()"_s);
+		b->setToolTip(i18n("Evaluate code in true local environment. Objects in .GlobalEnv are not on the search path, and will not be modified by regular assignments using the <tt>&lt;-</tt>-operator. (Other assignment operations could still modify them!)"));
+		o->initRadioGroup(group, win);
+		return group;
+	});
+	rkconsole->options = {rkconsole_echo_opt, rkconsole_continue_opt, rkconsole_env_opt};
+	rkconsole->command = [rkconsole_env_opt, rkconsole_echo_opt, rkconsole_continue_opt](RKCommandEditorWindow *win, const QString &infile, const QString &outdir, const QString & /*preview_id*/) {
 		auto command = QStringLiteral("try(rk.eval.as.preview(%1, %2%3), silent=TRUE)\n" // silent, because error will be printed!
 		                              "rk.show.html(%2)\n");
-		QString opt;
-		if (echo_opt->isChecked()) opt.append(u", echo=TRUE"_s);
-		else opt.append(u", echo=FALSE"_s);
-		if (env_opt->group()->checkedId() == Global) opt.append(u", env=globalenv()"_s);
-		else if (env_opt->group()->checkedId() == Local) opt.append(u", env=local()"_s);
-		if (continue_opt->isChecked()) opt.append(u", stop.on.error=FALSE"_s);
-		else opt.append(u", stop.on.error=TRUE"_s);
+		QString opt = u", echo="_s + (rkconsole_echo_opt.value(win).toBool() ? u"TRUE"_s : u"FALSE"_s);
+		opt.append(rkconsole_env_opt.value(win).toString());
+		opt.append(u", stop.on.error="_s + (rkconsole_continue_opt.value(win).toBool() ? u"FALSE"_s : u"TRUE"_s));
 		return command.arg(RObject::rQuote(infile), RObject::rQuote(outdir + u"/output.html"_s), opt);
 	};
-	preview_modes->addButton(rkconsole);
+	preview_modes.append(rkconsole);
 
-	auto plot = new RKPreviewMode(m_doc, i18n("Plot"), RKStandardIcons::getIcon(RKStandardIcons::WindowX11), u".R"_s);
-	plot->setValidity(valid_for_r_script);
+	auto plot = new RKPreviewMode(i18n("Plot"), RKStandardIcons::getIcon(RKStandardIcons::WindowX11), u".R"_s);
+	plot->validator = valid_for_r_script;
 	plot->preview_label = i18n("Preview of generated plot");
-	plot->setToolTip(i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."));
-	plot->command = [](const QString &infile, const QString & /*outdir*/, const QString &preview_id) {
+	plot->tooltip = i18n("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands.");
+	plot->command = [](RKCommandEditorWindow *, const QString &infile, const QString & /*outdir*/, const QString &preview_id) {
 		auto command = QStringLiteral("olddev <- dev.cur()\n"
 		                              ".rk.startPreviewDevice(%2)\n"
 		                              "try(source(%1, local=TRUE, print.eval=TRUE))\n"
 		                              "if (olddev != 1) dev.set(olddev)\n");
 		return command.arg(RObject::rQuote(infile), RObject::rQuote(preview_id));
 	};
-	preview_modes->addButton(plot);
-
-	auto form = new QWidget();
-	auto h = new QHBoxLayout(form);
-	auto l = new QVBoxLayout();
-	h->addLayout(l);
-	l->addWidget(new QLabel(i18nc("noun: type of preview", "Preview Mode")));
-	auto sep = new QFrame();
-	sep->setFrameShape(QFrame::VLine);
-	sep->setFrameShadow(QFrame::Sunken);
-	h->addWidget(sep);
-	auto r = new QVBoxLayout();
-	l->addWidget(new QLabel(i18n("Options")));
-	h->addLayout(r);
-
-	const auto preview_buttons = preview_modes->buttons();
-	for (auto *b : preview_buttons) {
-		l->addWidget(b);
-		if (b == action_no_preview) continue;
-		for (auto ob : std::as_const(static_cast<RKPreviewMode *>(b)->options)) {
-			r->addWidget(ob);
-			ob->setVisible(false);
-			// the following is a little hackish...
-			if (auto oab = qobject_cast<QAbstractButton *>(ob)) {
-				connect(oab, &QAbstractButton::toggled, this, &RKCommandEditorWindow::triggerPreview);
-			} else if (auto og = qobject_cast<RKRadioGroup *>(ob)) {
-				connect(og->group(), &QButtonGroup::idToggled, this, &RKCommandEditorWindow::triggerPreview);
-			} else {
-				RK_ASSERT(false); // may be ok in future code (e.g. spinboxes or such), but want a reminder, then
-			}
-		}
-	}
-	l->addStretch();
-	r->addStretch();
-	r->addWidget(action_preview_as_you_type);
-	auto wa = new QWidgetAction(this);
-	wa->setDefaultWidget(form);
-	menu->addAction(wa);
-
-	connect(preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
-	connect(preview_modes, &QButtonGroup::buttonToggled, this, [this, menu, wa]() {
-		// Menu needs some help resizing depending on available options.
-		// see also https://stackoverflow.com/questions/42122985/how-to-resize-a-qlabel-displayed-by-a-qwidgetaction-after-changing-its-text
-		auto mw = menu->menu();
-		auto olds = mw->size();
-		QActionEvent e(QEvent::ActionChanged, wa);
-		qApp->sendEvent(mw, &e);
-		if (olds.expandedTo(mw->size()) != olds && mw->isVisible()) {
-			mw->blockSignals(true);
-			mw->hide();
-			mw->show();
-			mw->blockSignals(false);
-		}
-
-		auto mode = preview_modes->checkedButton();
-		RK_ASSERT(mode);
-		if (mode != action_no_preview) {
-			if (!(preview_io || RKWardMainWindow::suppressModalDialogsForTesting())) { // triggered on change from no preview to some preview, but not between previews
-				if (KMessageBox::warningContinueCancel(this, i18n("<p>The preview feature <b>tries</b> to avoid making any lasting changes to your workspace, by default (technically, by making use of a <i>local</i> evaluation environment; some preview modes allow optional control about the evaluation environment). However, <b>there are cases where using the preview feature may cause unexpected side-effects</b>.</p><p>In particular, this is the case for scripts that contain explicit assignments to <i>globalenv()</i>, or for scripts that alter files on your filesystem. Further, attaching/detaching packages or package namespaces will affect the entire running R session.</p><p>Please keep this in mind when using the preview feature, and especially when using the feature on scripts originating from untrusted sources.</p>"), i18n("Potential side-effects of previews"), KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("preview_side_effects")) != KMessageBox::Continue) {
-					discardPreview();
-				}
-			}
-			triggerPreview();
-		} else {
-			discardPreview();
-		}
-	});
+	preview_modes.append(plot);
 }
 
 void RKCommandEditorWindow::triggerPreview(int delay) {
@@ -835,7 +883,18 @@ void RKCommandEditorWindow::triggerPreview(int delay) {
 void RKCommandEditorWindow::doRenderPreview() {
 	RK_TRACE(COMMANDEDITOR);
 
-	if (action_no_preview->isChecked()) return;
+	const auto mode = active_mode;
+	if (mode) {
+		if (!(preview_io || RKWardMainWindow::suppressModalDialogsForTesting())) { // triggered on change from no preview to some preview, but not between previews
+			if (KMessageBox::warningContinueCancel(this, i18n("<p>The preview feature <b>tries</b> to avoid making any lasting changes to your workspace, by default (technically, by making use of a <i>local</i> evaluation environment; some preview modes allow optional control about the evaluation environment). However, <b>there are cases where using the preview feature may cause unexpected side-effects</b>.</p><p>In particular, this is the case for scripts that contain explicit assignments to <i>globalenv()</i>, or for scripts that alter files on your filesystem. Further, attaching/detaching packages or package namespaces will affect the entire running R session.</p><p>Please keep this in mind when using the preview feature, and especially when using the feature on scripts originating from untrusted sources.</p>"), i18n("Potential side-effects of previews"), KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("preview_side_effects")) != KMessageBox::Continue) {
+				discardPreview();
+				return;
+			}
+		}
+	} else {
+		discardPreview();
+		return;
+	}
 	if (!preview_manager->needsCommand()) return;
 
 	if (!preview->findChild<RKMDIWindow *>()) {
@@ -843,10 +902,9 @@ void RKCommandEditorWindow::doRenderPreview() {
 		RInterface::issueCommand(u".rk.with.window.hints(rk.show.html(content=\"\"), \"\", "_s + RObject::rQuote(preview_manager->previewId()) + u", style=\"preview\")"_s, RCommand::App | RCommand::Sync);
 	}
 
-	const auto mode = static_cast<RKPreviewMode *>(preview_modes->checkedButton());
 	preview_io = RKScriptPreviewIO::init(preview_io, m_doc, mode);
-	QString command = mode->command(preview_io->inpath(), preview_io->outpath(QLatin1String("")), preview_manager->previewId());
-	preview->setLabel(mode->preview_label.isEmpty() ? mode->text() : mode->preview_label);
+	QString command = mode->command(this, preview_io->inpath(), preview_io->outpath(QLatin1String("")), preview_manager->previewId());
+	preview->setLabel(mode->preview_label);
 	preview->show();
 
 	RCommand *rcommand = new RCommand(u".rk.with.window.hints(local({\n"_s + command + u"}), \"\", "_s + RObject::rQuote(preview_manager->previewId()) + u", style=\"preview\")"_s, RCommand::App);
@@ -856,7 +914,7 @@ void RKCommandEditorWindow::doRenderPreview() {
 void RKCommandEditorWindow::documentSaved() {
 	RK_TRACE(COMMANDEDITOR);
 
-	if (!(action_preview_as_you_type->isChecked() || action_no_preview->isChecked())) {
+	if (!(action_preview_as_you_type->isChecked() && active_mode)) {
 		triggerPreview();
 	}
 }
@@ -865,7 +923,7 @@ void RKCommandEditorWindow::textChanged() {
 	RK_TRACE(COMMANDEDITOR);
 
 	// render preview
-	if (!action_no_preview->isChecked()) {
+	if (active_mode) {
 		if (action_preview_as_you_type->isChecked()) {
 			triggerPreview(500); // brief delay to buffer keystrokes
 		}
