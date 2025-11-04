@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: rkward__import_export\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2025-04-16 14:46+0200\n"
+"PO-Revision-Date: 2025-05-07 13:49+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -53,7 +53,7 @@ msgstr "Encodage"
 #: rkward/plugins/00saveload/import/convert_encoding.xml:17
 #, kde-format
 msgid "Convert string encoding"
-msgstr "Convertir l'encodage de chaînes"
+msgstr "Convertir l'encodage de chaines"
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="...">
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="...">
@@ -711,13 +711,13 @@ msgid ""
 msgstr ""
 "Comment les valeurs manquantes (N / A) sont-elles écrites dans le fichier à "
 "importer ? (Les champs vides sont également interprétés comme des N / A dans "
-"les colonnes n'étant pas des chaînes de caractères)."
+"les colonnes n'étant pas des chaines de caractères)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "String delimiter")
 #: rkward/plugins/00saveload/import/import_csv.rkh:47
 #, kde-format
 msgid "String delimiter character(s) used in the file"
-msgstr "Caractère(s) de délimitation de chaînes utilisé(s) dans le fichier"
+msgstr "Caractère(s) de délimitation de chaines utilisé(s) dans le fichier"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Specify quoting character(s)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:48
@@ -730,7 +730,7 @@ msgstr ""
 "Si vous sélectionnez « autre » ci-dessus, vous pouvez spécifier quel "
 "caractère de quotte utiliser. Saisissez simplement tout caractère à utiliser "
 "(sans espace ou virgule, par exemple, « '@ à utiliser », ', et @ comme "
-"délimiteurs de chaîne)."
+"délimiteurs de chaine)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip x lines at the start of the file")
 #: rkward/plugins/00saveload/import/import_csv.rkh:50
@@ -1132,7 +1132,7 @@ msgstr "Autres options"
 #: rkward/plugins/00saveload/import/import_csv.xml:186
 #, kde-format
 msgid "String handling"
-msgstr "Gestion des chaînes"
+msgstr "Gestion des chaines"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:187
@@ -1190,7 +1190,7 @@ msgstr "Chaîne de valeurs manquantes"
 #: rkward/plugins/00saveload/import/import_csv.xml:200
 #, kde-format
 msgid "String delimiter"
-msgstr "Délimiteurs de chaîne"
+msgstr "Délimiteurs de chaine"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="String delimiter"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:201
@@ -2971,7 +2971,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
 #, kde-format
 msgid "Check this to have all string values quoted."
-msgstr "Cochez ceci pour avoir toutes les valeurs de chaînes entre guillemets."
+msgstr "Cochez ceci pour avoir toutes les valeurs de chaines entre guillemets."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Handling double quote characters")
 #: rkward/plugins/00saveload/save/write_csv.rkh:78
@@ -3128,7 +3128,7 @@ msgstr "Encodage personnalisé"
 #: rkward/plugins/00saveload/save/write_csv.xml:161
 #, kde-format
 msgid "Quote all strings"
-msgstr "Mettre les chaînes entre guillemets"
+msgstr "Mettre les chaines entre guillemets"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:162
