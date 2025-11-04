@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-22 00:40+0000\n"
-"PO-Revision-Date: 2025-08-26 15:58+0200\n"
+"PO-Revision-Date: 2025-10-23 08:41+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.2\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -71,16 +71,16 @@ msgid ""
 "<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
 "print using a KDE print dialog."
 msgstr ""
-"Aucun service n'a été trouvé pour fournir un boîte de dialogue d'impression "
+"Aucun service n'a été trouvé pour fournir un boite de dialogue d'impression "
 "de KDE pour les fichiers « PostScript ». Un afficheur générique tentera "
 "d'être ouvert (si possible) à la place.<br><br> Veuillez prendre en compte "
 "l'installation de « okular » ou configurer RKWard pour ne pas attendre de "
-"lancer une impression avec la boîte de dialogue d'impression de KDE."
+"lancer une impression avec la boite de dialogue d'impression de KDE."
 
 #: rkward/agents/rkprintagent.cpp:41
 #, kde-format
 msgid "Unable to open KDE print dialog"
-msgstr "Impossible d'ouvrir la boîte de dialogue d'impression de KDE."
+msgstr "Impossible d'ouvrir la boite de dialogue d'impression de KDE."
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
@@ -193,7 +193,7 @@ msgstr ""
 "Une commande s'exécutant dans le moteur de R veut que vous modifiez le ou "
 "les fichiers suivants. Veuillez examiner ces fichiers, les modifier de façon "
 "correcte et les enregistrer. Un fois réalisé, veuillez utiliser le bouton "
-"« Fait » ou fermer cette boîte de dialogue pour continuer.<ul><li>"
+"« Fait » ou fermer cette boite de dialogue pour continuer.<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:85
 #, kde-format
@@ -213,13 +213,7 @@ msgstr ""
 "l'environnement <i>.GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -230,8 +224,8 @@ msgstr ""
 "RKWard n'est pas optimisé pour cette situation. Vous pouvez rencontrer un "
 "temps de latence entre les commandes « R ». Si cette situation constitue un "
 "cas régulier d'utilisation pour votre travail, veuillez nous en informer à "
-"l'adresse de courriel « rkward-devel@kde.org », afin que l'équipe de "
-"développement vous propose des solutions possibles."
+"l'adresse de courriel « rkward@kde.org », afin que l'équipe de développement "
+"vous propose des solutions possibles."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -419,7 +413,7 @@ msgid ""
 msgstr ""
 "Le paquet « %1 » (que vous venez probablement de charger) est actuellement "
 "sur liste noire pour le rapatriement des informations de structure. En "
-"pratique, cela signifie que les objets de ce paquet n'apparaîtront pas dans "
+"pratique, cela signifie que les objets de ce paquet n'apparaitront pas dans "
 "le navigateur d'objets et qu'il n'y aura aucun complètement du nom d'objet "
 "ou de suggestion d'argument pour la fonction pour les objets de ce paquet. "
 "Les paquets sont généralement placés sur une liste noire s'ils contiennent "
@@ -913,7 +907,7 @@ msgid ""
 "generally provide the most options. Is the file you wish to import in one of "
 "the following formats?"
 msgstr ""
-"Pour certains formats, RKWard fournit des boîtes de dialogue d'importation "
+"Pour certains formats, RKWard fournit des boites de dialogue d'importation "
 "spécialisées, offrant généralement plus d'options. Le fichier que vous "
 "souhaitez importer est-il dans l'un des formats suivants ?"
 
@@ -923,7 +917,7 @@ msgid ""
 "RKWard comes with several import dialogs, but none seem to be loaded, at "
 "present. Check your settings."
 msgstr ""
-"RKWard est livré avec plusieurs boîtes de dialogue pour l'importation. "
+"RKWard est livré avec plusieurs boites de dialogue pour l'importation. "
 "Cependant, aucune ne semble actuellement chargée. Veuillez vérifier votre "
 "configuration."
 
@@ -996,21 +990,16 @@ msgid ""
 "or \"Back\" to explore other options.</p>"
 msgstr ""
 "<b>Prêt à y aller</b><p>Veuillez cliquer sur « Terminer » pour lancer la "
-"boîte de dialogue sélectionnée pour l'importation ou « Revenir en arrière » "
+"boite de dialogue sélectionnée pour l'importation ou « Revenir en arrière » "
 "pour explorer d'autres options.</p>"
 
 #: rkward/dialogs/rkimportdialog.cpp:104
 #, kde-format
 msgid "Start import dialog"
-msgstr "Démarrer la boîte de dialogue d'importation"
+msgstr "Démarrer la boite de dialogue d'importation"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -1019,10 +1008,10 @@ msgid ""
 msgstr ""
 "Aucune autre méthode d'importation n'est disponible pour le moment. Les "
 "choses que vous pouvez essayer, peuvent être :<ul><li>Vérifiez la "
-"disponibilité de modules externes d'importation supplémentaires,</"
+"disponibilité de modules externes supplémentaires pour l'importation ,</"
 "li><li>Enregistrez vos données dans un format différent dans l'application "
-"d'origine,</li><li>Demandez conseil à sur la liste de discussions rkward-"
-"users@kde.org</li></ul>"
+"d'origine,</li><li>Demandez conseil à sur la liste de discussions rkward@kde."
+"org.</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -1305,12 +1294,12 @@ msgid ""
 "matching a filter string.</p>"
 msgstr ""
 "<p>Vous pouvez limiter les paquets affichés dans la liste à leurs noms ou "
-"titres, correspondant au filtrage par une chaîne.</p>"
+"titres, correspondant au filtrage par une chaine.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:663
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
-msgstr "N'afficher que les paquets provenant des boîtes de dialogue de RKWard"
+msgstr "N'afficher que les paquets provenant des boites de dialogue de RKWard"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:664
 #, kde-format
@@ -1414,7 +1403,7 @@ msgid ""
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
 msgstr ""
 "<p>Les paquets marqués avec l'icône de RKWard dans cette colonne fournissent "
-"des améliorations pour RKWard, en général sous la forme de boîte de dialogue "
+"des améliorations pour RKWard, en général sous la forme de boite de dialogue "
 "graphiques supplémentaires.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:972
@@ -1802,7 +1791,7 @@ msgid ""
 msgstr ""
 "Marquez %1 pour installation (L'installation actuelle n'est pas encore prise "
 "en compte mais un lien vous sera proposé vers la page de téléchargement à la "
-"dernière page de la boîte de dialogue)."
+"dernière page de la boite de dialogue)."
 
 #: rkward/dialogs/rksetupwizard.cpp:277
 #, kde-format
@@ -1825,7 +1814,7 @@ msgid ""
 "<p>This dialog will guide you through a quick check of the basic setup of "
 "the required (or recommended) components.</p>"
 msgstr ""
-"<p>Cette boîte de dialogue vous guidera à travers une vérification rapide de "
+"<p>Cette boite de dialogue vous guidera à travers une vérification rapide de "
 "la configuration de base pour les composants nécessaires (ou recommandés).</"
 "p>"
 
@@ -2080,7 +2069,7 @@ msgid ""
 "dialog will be started when you press finish. You may be prompted to select "
 "a download mirror.</p>"
 msgstr ""
-"<p>%1 paquets de R sont marqués pour installation. La boîte de dialogue pour "
+"<p>%1 paquets de R sont marqués pour installation. La boite de dialogue pour "
 "l'installation de paquets de R sera lancée quand vous aurez appuyez sur "
 "« Terminer ». Vous serez invité à sélectionner un miroir de téléchargement.</"
 "p>"
@@ -2308,10 +2297,9 @@ msgid "patches and helpful comments"
 msgstr "Correctifs et commentaires utiles"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "Beaucoup plus de personnes sur « rkward-devel@kde.org »"
+msgstr "Beaucoup plus de personnes sur « rkward@kde.org »"
 
 #: rkward/main.cpp:193
 #, kde-format
@@ -3780,7 +3768,7 @@ msgstr "<Retour"
 #: rkward/plugin/rkstandardcomponentgui.cpp:613
 #, kde-format
 msgid "Use Dialog"
-msgstr "Utiliser la boîte de dialogue"
+msgstr "Utiliser la boite de dialogue"
 
 #: rkward/plugin/rkvarselector.cpp:48
 #, kde-format
@@ -4238,7 +4226,7 @@ msgstr "Erreur lors de la connexion au moteur graphique."
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr ""
+msgstr "Le type de périphérique « %1 » est inconnu de RKWard."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4246,12 +4234,14 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
+"La fonction « rk.download_appimage() » nécessite une version du module "
+"« XiMpLe » au moins égale à 0.11.3, mais %1 a été trouvée. Veuillez mettre à "
+"jour le module « XiMpLe »."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "Le fichier ou le dossier n'existe pas."
+msgstr "Le dossier cible « %1 » n'existe pas.\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4259,6 +4249,8 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
+"Le fichier cible « %1 » existe déjà. Veuillez utiliser l'argument "
+"« overwrite » pour le remplacer : \n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4266,6 +4258,8 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
+"Création de la sauvegarde de l'image « AppImage » courante : %1 \n"
+"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
@@ -4273,22 +4267,25 @@ msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
 msgstr ""
+"Un problème est survenu lors du téléchargement ! Restauration effectuée à "
+"partir de l'image « AppImage » précédente à partir de la sauvegarde."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr ""
+msgstr "Un problème est survenu lors du téléchargement !"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
 msgstr ""
+"Téléchargement réussi. Configuration en cours des autorisations de fichier."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr ""
+msgstr "Suppression de la sauvegarde de l'image « AppImage » précédente."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
@@ -4296,38 +4293,45 @@ msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
 msgstr ""
+"Un problème est survenu lors du téléchargement ! Restauration en cours à "
+"partir de l'image « AppImage » précédente à partir de la sauvegarde."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr ""
+msgstr "Impossible de copier le fichier « CSS » « %1 » vers « %2 »"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
 msgstr ""
+"Il a été impossible de re-définir le sous-menu %1 comme un élément de "
+"feuille."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr ""
+msgstr "L'emplacement de menu %1 est non défini."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
 msgstr ""
+"Il est impossible de re-définir l'élément de menu de feuille %1 tant que "
+"sous-menu."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Local file names"
+#, kde-format
 msgid "No file name specified"
-msgstr "Noms de fichiers locaux"
+msgstr "Aucun nom de fichier spécifié"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
 msgstr ""
+"Identifiant de sortie non valable. Veuillez utiliser la fonction « rk.output "
+"() » pour obtenir une poignée de sortie valable."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
 #, kde-format
@@ -4361,34 +4365,34 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr ""
+msgstr "Fenêtre de tracé créée"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do no close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "Ne pas fermer"
+msgstr "Fenêtre de tracé fermée"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr ""
+msgstr "Tracé mis à jour (Veuillez cliquer pour affichage)"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr ""
+msgstr "Veuillez installer le paquet « R2HTML » pour activer la sortie !"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
 msgstr ""
+"Les listes de paramètres sans nom sont déconseillées dans la fonction « rk."
+"header() »."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
 #, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
-msgstr ""
+msgstr "L'objet d'impression de la classe « %1 » est non implémenté."
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -4552,7 +4556,7 @@ msgid ""
 "before doing so.</p><p><i>Note</i>: Checking 'Do not ask again' will "
 "suppress this message for the remainder of this session, only."
 msgstr ""
-"<p>Vous êtes sur le point d'ouvrir une boîte de dialogue RKWard depuis "
+"<p>Vous êtes sur le point d'ouvrir une boite de dialogue RKWard depuis "
 "l'extérieur de RKWard, probablement en cliquant sur un lien « rkward:// », "
 "quelque part. Dans le cas où vous avez trouvé ce lien sur un site Internet "
 "externe, veuillez prendre en compte que R peut être utilisé pour exécuter "
@@ -4561,7 +4565,7 @@ msgstr ""
 "ne faites pas confiance à la source du lien que vous suiviez, vous devez "
 "appuyer sur « Annuler », ci-dessous.</p> <p>Dans le cas où vous cliquez sur "
 "« Continuer », aucun code R ne sera exécuté, à moins et jusqu'à ce que vous "
-"cliquez sur « Soumettre » dans la fenêtre de la boîte de dialogue. Vous êtes "
+"cliquez sur « Soumettre » dans la fenêtre de la boite de dialogue. Vous êtes "
 "encouragé à revoir le code R généré, avant de le faire.</p><p><i>Remarque</"
 "i> : la sélection de « Ne plus poser la question » supprimera ce message "
 "pour le reste de cette session, uniquement."
@@ -5779,7 +5783,7 @@ msgstr "Hauteur par défaut (en pouces)"
 #, kde-format
 msgid "Use KDE printer dialog for printing devices (if available)"
 msgstr ""
-"Utiliser la boîte de dialogue d'impression de KDE pour les périphériques "
+"Utiliser la boite de dialogue d'impression de KDE pour les périphériques "
 "d'impression (Si disponible)."
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:103
@@ -5854,7 +5858,7 @@ msgstr "Les commandes s'exécutent grâce au menu « Exécuter »."
 #: rkward/settings/rksettingsmoduleoutput.cpp:53
 #, kde-format
 msgid "Commands originating from dialogs and plugins"
-msgstr "Commandes provenant des boîtes de dialogue et des modules externes."
+msgstr "Commandes provenant des boites de dialogue et des modules externes."
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:54
 #, kde-format
@@ -5970,13 +5974,13 @@ msgid ""
 "presentation do you prefer?"
 msgstr ""
 "Certains modules externes sont disponibles avec, soit un interface de type "
-"assistant, soit une interface classique avec boîte de dialogue. Si les deux "
+"assistant, soit une interface classique avec boite de dialogue. Si les deux "
 "sont disponibles, quel mode de présentation préférez-vous ?"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:60
 #, kde-format
 msgid "Always prefer dialogs"
-msgstr "Toujours préférer les boîtes de dialogue"
+msgstr "Toujours préférer les boites de dialogue"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:61
 #, kde-format
@@ -6024,12 +6028,12 @@ msgstr ""
 "généralement téléchargés à partir de « CRAN ». Certains de ces paquets de "
 "modules additionnels peuvent en outre contenir des modules externes de "
 "RKWard.</p><h2>Les modules externes de RKWard</h2><p><a href=\"rkward://"
-"settings/plugins\">Des boîtes de dialogue graphiques vers les "
+"settings/plugins\">Des boites de dialogue graphiques vers les "
 "fonctionnalités de R.</a> Ces modules externes sont généralement "
 "préinstallés avec RKWard ou bien avec un paquet de R. Cependant, ils peuvent "
 "être activés / désactivés pour aider à conserver les menus gérables. "
 "Veuillez noter qu'il est relativement facile de <a href=\"https://api.kde."
-"org/doc/rkwardplugins/\">créer vos propres boîtes de dialogues personnalisés "
+"org/doc/rkwardplugins/\">créer vos propres boites de dialogues personnalisés "
 "en tant que module externe</a> ! </p><h2>Modules externes de Kate</h2><p><a "
 "href=\"rkward://settings/kateplugins\">Modules externes développés pour "
 "Kate / KTextEditor</a>. Ceux-ci fournissent des fonctionnalités partagées, "
@@ -7627,7 +7631,7 @@ msgid ""
 "Therefore, if you want to configure keyboard shortcuts e.g. for use inside "
 "the script editor, you need to open a script editor window, and activate it."
 msgstr ""
-"Pour des raisons techniques, la boîte de dialogue suivante vous permet de "
+"Pour des raisons techniques, la boite de dialogue suivante vous permet de "
 "configurer les raccourcis de clavier, uniquement pour les parties de RKWard "
 "actuellement actives.\n"
 "\n"
@@ -7650,7 +7654,7 @@ msgid ""
 "Therefore, if you want to configure tool buttons e.g. for use inside the "
 "script editor, you need to open a script editor window, and activate it."
 msgstr ""
-"Pour des raisons techniques, la boîte de dialogue suivante vous permet de "
+"Pour des raisons techniques, la boite de dialogue suivante vous permet de "
 "configurer les boutons de la barre d'outils, uniquement pour les parties de "
 "RKWard actuellement actives.\n"
 "\n"
