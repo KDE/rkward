@@ -58,7 +58,7 @@ msgstr "Tracé en barres"
 #: rkward/plugins/plots.pluginmap:25
 #, kde-format
 msgid "Box Plot"
-msgstr "Tracé en boîte"
+msgstr "Tracé en boite"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Density Plot)
@@ -266,7 +266,7 @@ msgstr ""
 "Méthode pour attribuer des étiquettes au graphe. « Par défaut » signifie que "
 "les étiquettes sont choisies automatiquement. Si aucune étiquette n'est "
 "disponible, les valeurs seront généralement imprimées. Les autres options "
-"vous permettent de spécifier les étiquettes sous forme de chaîne littérale "
+"vous permettent de spécifier les étiquettes sous forme de chaine littérale "
 "ou d'instruction R (par exemple, si les noms sont stockés dans une variable "
 "différente dans l'espace de travail)."
 
@@ -456,7 +456,7 @@ msgstr "Séparer l'échantillon par regroupement de variables"
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust width and position of boxes to achieve dodging"
-msgstr "Ajuster la largeur et la position des boîtes pour réaliser l'évitement"
+msgstr "Ajuster la largeur et la position des boites pour réaliser l'évitement"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:47
@@ -473,7 +473,7 @@ msgstr "convertir les variables simples d'échantillons en une liste"
 #: rkward/plugins/plots/scatterplot_matrix.xml:25
 #, kde-format
 msgid "Boxplot"
-msgstr "Tracé en boîte"
+msgstr "Tracé en boite"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:57
@@ -506,7 +506,7 @@ msgstr "Variable(s)"
 #, kde-format
 msgctxt "R code comment"
 msgid "actual boxplot function"
-msgstr "fonction actuelle de tracé en boîtes"
+msgstr "fonction actuelle de tracé en boites"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:73
@@ -544,7 +544,7 @@ msgstr ""
 #: rkward/plugins/plots/box_plot.rkh:8
 #, kde-format
 msgid "Creates a box plot of one or more variables."
-msgstr "Crée un tracé en boîtes de une ou plusieurs variables."
+msgstr "Crée un tracé en boites de une ou plusieurs variables."
 
 #. i18n: ectx: (Loaded from Boxplot) <usage>
 #: rkward/plugins/plots/box_plot.rkh:12
@@ -620,7 +620,7 @@ msgstr ""
 #, kde-format
 msgid "Allows to change the width of the boxes, relative to the entire plot."
 msgstr ""
-"Permet de modifier la largeur des boîtes, concernant la totalité du tracé."
+"Permet de modifier la largeur des boites, concernant la totalité du tracé."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "orientation")
 #: rkward/plugins/plots/box_plot.rkh:26
@@ -812,7 +812,7 @@ msgstr "Étiqueter"
 #: rkward/plugins/plots/box_plot.xml:65
 #, kde-format
 msgid "Box width"
-msgstr "Largeur de la boîte"
+msgstr "Largeur de la boite"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:74
@@ -2270,7 +2270,7 @@ msgstr ""
 #, kde-format
 msgid "Boxplot. See <link href=\"rkward://rhelp/boxplot\"/>"
 msgstr ""
-"Tracé en boîtes. Veuillez consulter <link href=\"rkward://rhelp/boxplot\"/>"
+"Tracé en boites. Veuillez consulter <link href=\"rkward://rhelp/boxplot\"/>"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20

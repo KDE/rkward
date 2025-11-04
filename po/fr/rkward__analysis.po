@@ -3761,7 +3761,7 @@ msgid ""
 "Select if you want to specify a lambda value yourself in the spinbox below."
 msgstr ""
 "Sélectionnez si vous voulez spécifier vous-même une valeur lambda dans la "
-"boîte de réglage ci-dessous."
+"boite de réglage ci-dessous."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Output series")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:23
@@ -3831,9 +3831,9 @@ msgid ""
 "Enable or disable the labels being evaluated as literal (quoted) strings. To "
 "achieve a line-break (in a quoted string), enter '\\n'. (Default: YES)"
 msgstr ""
-"Activez ou désactivez l'évaluation des étiquettes en tant que chaînes "
+"Activez ou désactivez l'évaluation des étiquettes en tant que chaines "
 "littérales (entre guillemets). Pour obtenir un saut de ligne (dans une "
-"chaîne entre guillemets), saisissez « \\n ». (Par défaut : oui)."
+"chaine entre guillemets), saisissez « \\n ». (Par défaut : oui)."
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
@@ -4026,14 +4026,14 @@ msgstr "Étiquette de l'axe Y du cercle"
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
 msgstr ""
-"Interpréter ces étiquettes comme des chaînes littérales (entre guillemets) ?"
+"Interpréter ces étiquettes comme des chaines littérales (entre guillemets) ?"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:115
 #: rkward/plugins/analysis/time_series/hp_filter.xml:116
 #, kde-format
 msgid "interpret as string"
-msgstr "interpréter comme chaîne"
+msgstr "interpréter comme chaine"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:24

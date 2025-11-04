@@ -739,7 +739,7 @@ msgstr ""
 "parmi / hors de). Veuillez noter que cela sera collé comme du code « R », "
 "mot pour mot. Cela signifier, que vous pouvez spécifier toute expression "
 "« R »valable, y compris le nom d'une autre colonne du « data.frame ». "
-"Cependant, si vous voulez comparer avec des chaînes de caractères fixes, "
+"Cependant, si vous voulez comparer avec des chaines de caractères fixes, "
 "vous devez vous assurer de les avoir mises entre quottes. Par exemple, « c "
 "(« Ville A », « Ville B ») »."
 
