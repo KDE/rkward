@@ -1991,10 +1991,9 @@ msgid "patches and helpful comments"
 msgstr "补丁和有用的评论"
 
 #: rkward/main.cpp:193
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "rkward-devel@kde.org 上的许多人"
+msgstr ""
 
 #: rkward/main.cpp:193
 #, kde-format
@@ -3781,10 +3780,9 @@ msgid "Leaf menu item %1 cannot be redefined as a submenu."
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Unspecified"
+#, kde-format
 msgid "No file name specified"
-msgstr "未指定"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
@@ -3798,11 +3796,13 @@ msgid ""
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
+"渲染 PDF 预览需要 <tt>pdflatex</tt> 软件。最简单的安装方法是运行 <tt>install."
+"packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>。"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:40
 #, kde-format
 msgid "Rendering the preview failed"
-msgstr ""
+msgstr "预览渲染失败"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:47
 #, kde-format
@@ -3812,6 +3812,9 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>不支持的格式</h1><p>由于输出格式既不是 HTML，也不是 PDF，因此无法在此处显"
+"示预览。您可以尝试使用下面的链接在外部应用程序中打开它，或者将预览模式更改"
+"为“R Markdown (HTML)”。</p>"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
