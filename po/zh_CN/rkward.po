@@ -5887,12 +5887,12 @@ msgstr ""
 #, kde-format
 msgctxt "Caption: Some software is missing."
 msgid "Missing software"
-msgstr ""
+msgstr "软件缺失"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:696
 #, kde-format
 msgid "Rendering the preview failed"
-msgstr ""
+msgstr "预览渲染失败"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:697
 #, kde-format
@@ -5912,6 +5912,8 @@ msgid ""
 "easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
 "library(\"tinytex\"); install_tinytex()</tt>"
 msgstr ""
+"渲染 PDF 预览需要 <tt>pdflatex</tt> 软件。最简单的安装方法是运行 <tt>install."
+"packages(\"tinytex\"); library(\"tinytex\"); install_tinytex()</tt>。"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:701
 #, kde-format
@@ -5921,6 +5923,9 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
+"<h1>不支持的格式</h1><p>由于输出格式既不是 HTML，也不是 PDF，因此无法在此处显"
+"示预览。您可以尝试使用下面的链接在外部应用程序中打开它，或者将预览模式更改"
+"为“R Markdown (HTML)”。</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:720
 #, kde-format
