@@ -180,7 +180,20 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	RKComponentMap::initialize();
 
 	// stuff which should wait until the event loop is running
+#if defined(Q_OS_WIN)
+	// HACK FIXME
+	// This is a very bad workaround around a very hideous QtWebEngine bug on Windows. Surfaced for us with the switch to Qt 6.9:
+	// crash in the QWebEnginePage c'tor, if that is invoked too soon after start *and* application was not started from the
+	// command line (making debugging insanely frustrating). Very obviously some lazy-loading mechanism is breaking, but again,
+	// this is clearly *inside* the QWebEnginePage c'tor, i.e. not something missing in our side of the initialization.
+	// RKWard may (or may not) open HTML windows as part of the post init, and so we delay this a bit. 400 ms was the minimum delay
+	// suggested by my testing, so I'm going for a bit more to be on the safe side, hopefully.
+	// Note that the performance hit is not quite as bad, as the backend startup is the heaviest part, and that is already running
+	// in parallel.
+	QTimer::singleShot(1000, this, &RKWardMainWindow::doPostInit);
+#else
 	QTimer::singleShot(0, this, &RKWardMainWindow::doPostInit);
+#endif
 }
 
 RKWardMainWindow::~RKWardMainWindow() {

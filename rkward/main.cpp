@@ -146,6 +146,7 @@ int main(int argc, char *argv[]) {
 		qputenv(chromiumflags, "--no-sandbox --single-process --enable-features=NetworkServiceInProcess");
 	}
 #endif
+
 	// annoyingly, QWebEngineUrlSchemes have to be registered before creating the app.
 	QWebEngineUrlScheme scheme("help");
 	scheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
