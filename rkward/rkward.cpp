@@ -243,6 +243,12 @@ void RKWardMainWindow::doPostInit() {
 	gui_rebuild_locked = false;
 
 	show();
+#if defined(Q_OS_WIN)
+	// Work aournd silly bug in Qt 6.9.2 on (some?) Windows systems:
+	// Crash, if the first thing shown includes a QWebEngineView. Since we may be about to open one of those,
+	// force showing the main window, first.
+	qApp->processEvents(QEventLoop::AllEvents, 500);
+#endif
 	if (!testmode_suppress_dialogs) RKSetupWizard::doAutoCheck();
 	KMessageBox::enableMessage(QStringLiteral("external_link_warning")); // can only be disabled per session
 
