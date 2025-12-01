@@ -7962,16 +7962,3 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure a l'editor (només lectura)"
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Error en obrir el fitxer de script %1"
-
-#~ msgid "R Markdown (auto)"
-#~ msgstr "R Markdown (automàtic)"
-
-#~ msgid ""
-#~ "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
-#~ "specified in the document header."
-#~ msgstr ""
-#~ "Previsualitza l'script renderitzat des del format RMarkdown (.Rmd) al "
-#~ "format especificat a la capçalera del document."
