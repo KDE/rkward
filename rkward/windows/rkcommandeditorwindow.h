@@ -199,7 +199,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	QString _id;
 	static QMap<QString, KTextEditor::Document *> unnamed_documents;
 
-	void initPreviewModes();
+	static void initPreviewModes();
 	/** call doRenderPreview, but debounced */
 	void triggerPreview(int timeout = 0);
 	RKPreviewMode *active_mode;
