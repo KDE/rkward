@@ -15,7 +15,7 @@ LazyLoad: yes
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier", email="thomas.friedrichsmeier@kdemail.net", role=c("aut")), person(given="the RKWard", family="team",
                     email="rkward@kde.org", role=c("cre","aut")))
 Version: 0.8.3
-Date: 2025-11-02
+Date: 2025-12-13
 RoxygenNote: 7.3.3
 Collate: 
     'base_overrides.R'

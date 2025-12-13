@@ -110,6 +110,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	void highlightLine(int linenum);
 	/** Returns the (main, non-preview) texteditor view in this editor. */
 	KTextEditor::View *getView() const { return m_view; };
+	static void registerUserPreviewMode(const QString &id, const QString &label, const QString &inext, const QString &command);
   public Q_SLOTS:
 	/** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption();
@@ -186,6 +187,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	QAction *action_run_all;
 	QAction *action_run_current;
 	static QList<RKPreviewMode *> preview_modes;
+	static QHash<QString, RKPreviewMode *> user_preview_modes;
 	QAction *action_preview_as_you_type;
 
 	QAction *action_setwd_to_script;

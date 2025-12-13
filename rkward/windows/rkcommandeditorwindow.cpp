@@ -154,8 +154,9 @@ class RKPreviewModeSelector : public QWidgetAction {
 		h->addLayout(r);
 		auto preview_mode_button_group = new QButtonGroup(form);
 
-		for (auto *mode : std::as_const(win->preview_modes)) {
-			auto m = (mode == win->preview_modes.first()) ? nullptr : mode;
+		const auto allmodes = RKCommandEditorWindow::preview_modes + RKCommandEditorWindow::user_preview_modes.values();
+		for (auto *mode : allmodes) {
+			auto m = (mode == allmodes.first()) ? nullptr : mode;
 			auto button = new QRadioButton(mode->label);
 			connect(win->m_doc, &KTextEditor::Document::highlightingModeChanged, button, [button, mode](KTextEditor::Document *doc) {
 				button->setVisible(mode->validator(doc));
@@ -293,6 +294,7 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart() {
 // static
 QMap<QString, KTextEditor::Document *> RKCommandEditorWindow::unnamed_documents;
 QList<RKPreviewMode *> RKCommandEditorWindow::preview_modes;
+QHash<QString, RKPreviewMode *> RKCommandEditorWindow::user_preview_modes;
 
 KTextEditor::Document *createDocument(bool with_signals) {
 	KTextEditor::Document *ret = KTextEditor::Editor::instance()->createDocument(RKWardMainWindow::getMain());
@@ -775,6 +777,22 @@ void RKCommandEditorWindow::discardPreview() {
 		preview_io = nullptr;
 		Q_EMIT(previewModeChanged(nullptr));
 	}
+}
+
+// static
+void RKCommandEditorWindow::registerUserPreviewMode(const QString &id, const QString &label, const QString &inext, const QString &command) {
+	RK_TRACE(COMMANDEDITOR);
+	delete user_preview_modes.take(id);
+	if (command.isEmpty()) return;
+	auto m = new RKPreviewMode(label, QIcon(), inext);
+	m->command = [command](RKCommandEditorWindow *win, const QString &infile, const QString &outdir, const QString &preview_id) {
+		return command + QStringLiteral("(%1, %2, %3)").arg(RObject::rQuote(infile), RObject::rQuote(outdir), RObject::rQuote(preview_id));
+	};
+	m->validator = [](KTextEditor::Document *doc) -> bool {
+		return true;
+	};
+	user_preview_modes.insert(id, m);
+	// TODO udate/notify existing selector widgets
 }
 
 // static

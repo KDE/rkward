@@ -214,3 +214,51 @@ function registerPlot(element) {
 	# clean up is done via on.exit handlers, above
 	invisible()
 }
+
+#' Register a custom preview mode for script windows
+#'
+#' @param id An id string to allow subsequent modification or deletion of the preview mode
+#' @param label The label shown in the GUI for this preview mode
+#' @param file.extension The input file (esp. if previously unsaved) will be given this file extension. May be relevant for
+#'        certain external tools.
+#' @param statement The name of a function to run, when the preview needs to be updated, given as a string (see details).
+#'
+#' @details The key parameter is \code{statement}, which is string that will be evaulated as a function, usually the name of a
+#'          custom function inside \code{globalenv()}. If this is an empty string, the preview mode is removed.
+#'
+#'          The given function string needs to be callable with the following function signature:
+#'          \code{my_function(input.file, output.dir, preview.id, ...)}. Here,
+#'
+#'          \itemize{
+#'              \item{\code{input.file} character string specifying the (temporary) input file with the script's contents}
+#'              \item{\code{output.dir} character string specifying a directory suitable for keeping temporary files related
+#'                    to this preview. This will be cleared, automatically, as needed.}
+#'              \item{\code{preview.id} a unique id of the preview window. This could be used to keep temporary data, for instance.}
+#'              \item{\code{...} for future extension}
+#'          }
+#'
+#'          As a final step the preview funtion will generally call either \code{rk.show.html()}, or \code{rk.show.pdf()}, but it could
+#'          also show data using \code{rk.edit}, or produce a plot. Some care has to be taken in order not to interfere with existing
+#'          device windows, or output windows. Looking at the implementation of e.g. \code{rk.eval.as.preview()} may be instructive.
+#'          (This feature is targetted at power users, expecting them to consider and deal with any side-effects, themselves.)
+#'
+#' @examples
+#' \dontrun{
+#' my_csvpreview <- function(infile, outdir, previewid, ...) {
+#'   require("R2HTML")
+#'   suppressWarnings({
+#'     data <- read.csv(infile)
+#'   })
+#'   outfile <- paste0(outdir, "/out.html")
+#'   unlink(outfile) # clear previous output
+#'   HTML(data, file=outfile)
+#'   rk.show.html(outfile)
+#' }
+#' rk.register.script.preview("csv", "Preview CSV data", ".csv", "my_csvpreview"))
+#' }
+#'
+#' @rdname rk.register.script.preview
+#' @export
+rk.register.script.preview <- function(id, label, file.extension=".R", statement) {
+  .rk.call("registerScriptPreviewMode", c(id, label, file.extension, statement))
+}
