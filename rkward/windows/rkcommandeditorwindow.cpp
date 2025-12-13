@@ -588,6 +588,7 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 	action_preview_as_you_type->setToolTip(i18n("When this option is enabled, an update of the preview will be triggered every time you modify the script. When this option is disabled, the preview will be updated whenever you save the script, only."));
 	action_preview_as_you_type->setChecked(m_doc->url().isEmpty()); // By default, update as you type for unsaved "quick and dirty" scripts, preview on save for saved scripts
 	initPreviewModes();
+	active_mode = nullptr; // no_preview
 	actionmenu_preview->addAction(new RKPreviewModeSelector(this));
 	actionmenu_preview->addAction(action_preview_as_you_type);
 	ac->addAction(QStringLiteral("render_preview"), actionmenu_preview);
@@ -776,6 +777,7 @@ void RKCommandEditorWindow::discardPreview() {
 	}
 }
 
+// static
 void RKCommandEditorWindow::initPreviewModes() {
 	if (!preview_modes.isEmpty()) return;
 	RK_TRACE(COMMANDEDITOR);
@@ -795,7 +797,6 @@ void RKCommandEditorWindow::initPreviewModes() {
 	no_preview->validator = [](KTextEditor::Document *) -> bool {
 		return true;
 	};
-	active_mode = no_preview;
 	preview_modes.append(no_preview);
 
 	auto markdown = new RKPreviewMode(i18n("R Markdown"), QIcon::fromTheme(u"preview_math"_s), u".Rmd"_s);
