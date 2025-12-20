@@ -1,0 +1,192 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY rkward '<application
+>RKWard</application
+>'>
+  <!ENTITY R '<application
+>R</application
+>'>
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Brazilian-Portuguese "INCLUDE">
+]>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
+-->
+
+<book lang="&language;">
+
+<bookinfo>
+<title
+>Manual do RKWard</title>
+
+<authorgroup>
+<!-- New authors, add yourselves here! -->
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <affiliation
+> <address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+</authorgroup>
+
+<othercredit role="translator"
+><firstname
+>Marcus</firstname
+><surname
+>Gama</surname
+><affiliation
+><address
+><email
+>marcus.gama@kde.org</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+
+<copyright>
+<year
+>2006</year>
+<year
+>2007</year>
+<holder
+>Thomas Friedrichsmeier &amp; a equipe do RKWard</holder>
+</copyright>
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook 
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date of the documentation
+Change date/releaseinfo only if
+   docbook is updated and verified to be valid for the current app version
+   or
+   docbook is proofread and verified to be valid for the current app version
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>04/02/2007</date>
+
+<!--version information of Frameworks/Plasma/Applications this documentation is valid for.
+Example:
+Frameworks xx.yy for docbooks in frameworks
+Plasma xx.yy for docbooks in plasma workspace
+Applications xx.yy for docbooks released as Applications
+xx.yy (Applications xx.yy) for docbooks with own version released as Applications
+$applicationname xx.yy for applications with independent release schedule (extragear/playground)
+-->
+<releaseinfo
+>0.4.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>O &rkward; é uma interface gráfica de usuário para a poderosa linguagem &R; para computação estatística. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>R</keyword>
+<keyword
+>rkward</keyword>
+<keyword
+>ciência</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Introdução</title>
+<para
+>O &rkward; foi concebido para ser (ou se tornar) uma interface gráfica fácil de usar para a poderosa linguagem &R; para computação estatística. Como o &R; é uma linguagem de programação completa, o &rkward; nunca poderá oferecer uma interface gráfica completa para tudo em &R;. No entanto, o &rkward; se esforça para simplificar tarefas comuns, fornecer um ponto de entrada fácil para iniciantes, ao mesmo tempo que oferece acesso transparente a todo o poder da linguagem &R; subjacente para usuários avançados. </para>
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>Usar o &rkward;</title>
+
+<para
+>A maior parte da documentação está disponível dentro do próprio &rkward; selecionando <menuchoice
+><guimenu
+>Ajuda</guimenu
+><guimenuitem
+>Ajuda</guimenuitem
+></menuchoice
+> no &rkward; a partir do menu, <emphasis
+>não</emphasis
+> neste documento. </para>
+<para
+>Um guia útil para começar a usar o &rkward; é a <ulink url="https://rkward.kde.org/User_Documentation"
+>Seção de Documentação do Usuário no wiki do &rkward;</ulink
+>. </para>
+<para
+>Por favor, acesse o link para uma introdução ao &rkward; e entre em contato conosco, caso possa ajudar na criação da documentação do usuário. </para>
+
+</chapter>
+
+<chapter id="developers">
+<title
+>Guia do Desenvolvedor do &rkward;</title>
+
+<para
+>O &rkward; pode ser estendido sem a necessidade de recompilar usando plugins. Uma documentação extensa sobre isso deve ser incluída com o &rkward; em formato DocBook e está disponível em formato HTML <ulink url="https://api.kde.org/doc/rkwardplugins"
+>aqui</ulink
+>. (TODO: descobrir como incluir isso na documentação). </para>
+
+<!-- Use refentries to describe APIs.  Refentries are fairly complicated and you
+should consult the docbook reference for further details. The example below was
+taken from that reference and shortened a bit for readability. -->
+
+</chapter>
+
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Licença</title>
+
+<para
+>Documentação: </para>
+
+<para
+>Tradução de Marcus Gama <email
+>marcus.gama@kde.org</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+
+&documentation.index;
+</book>
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
