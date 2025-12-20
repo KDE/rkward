@@ -1,0 +1,342 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Brazilian-Portuguese "INCLUDE">
+<!ENTITY rkward '<application
+>RKWard</application
+>'>
+<!ENTITY R '<application
+>R</application
+>'>
+]>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
+SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
+-->
+
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Manual do Usuário do RKWard</title>
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <contrib
+>Página de manual do RKWard.</contrib>
+<affiliation>
+<address
+><email
+>rkward@kde.org</email
+></address>
+</affiliation>
+</author>
+<date
+>26/05/2024</date>
+<releaseinfo
+>RKWard 0.8.0</releaseinfo>
+<productname
+>KDE Applications</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>rkward</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+><command
+>rkward</command
+></refname>
+<refpurpose
+>Um frontend do &kde; para o R</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<cmdsynopsis
+><command
+>rkward</command
+> <group choice="opt"
+><option
+>--evaluate</option
+> <replaceable
+> códigoR</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-level</option
+> <replaceable
+> nível</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-flags</option
+> <replaceable
+> flags</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-output</option
+> <replaceable
+> onde</replaceable
+></group
+> <group choice="opt"
+><option
+>--backend-debugger</option
+> <replaceable
+> comando_depurador</replaceable
+></group
+> <group choice="opt"
+><option
+>--r-executable</option
+> <replaceable
+> caminho_para_executável</replaceable
+></group
+> <group choice="opt"
+><option
+>--reuse</option
+></group
+> <group choice="opt"
+><option
+>--autoreuse</option
+></group
+> <group choice="opt"
+><option
+>--nowarn-external</option
+></group
+> <arg choice="opt"
+>Opções genéricas do KDE</arg
+> <arg choice="opt"
+>Opções genéricas do Qt</arg
+> <arg choice="opt"
+><replaceable
+>arquivos_para_abrir</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title
+>Descrição</title>
+<para
+>O &rkward; é uma &GUI; e <acronym
+>IDE</acronym
+> baseada no &kde; para a linguagem de script &R;, usada para computação estatística.</para>
+<para
+>Para obter mais informações, consulte o <ulink url="https://rkward.kde.org/"
+>site do &rkward;</ulink
+> e a documentação fornecida dentro do &rkward;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Opções</title>
+
+<variablelist>
+<varlistentry>
+<term
+><option
+>--evaluate</option
+> <replaceable
+>códigoR</replaceable
+></term>
+<listitem
+><para
+>O código &R; fornecido é avaliado após o &rkward; ter sido iniciado e após qualquer espaço de trabalho especificado ser carregado. Principalmente útil para testes automatizados.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-level</option
+> <replaceable
+>nível</replaceable
+></term>
+<listitem
+><para
+>Nível de detalhamento da saída de depuração. 0-5, onde 0 significa nenhuma saída e 5 significa toda a saída, incluindo informações de rastreamento de função. O padrão é 2.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-output</option
+> <replaceable
+>onde</replaceable
+></term>
+<listitem
+><para
+>Para onde enviar a saída de depuração. O padrão é armazená-la em um arquivo no diretório temporário. Especificar "terminal" gravará a saída de depuração no stderr (útil para depurar problemas de inicialização). Observe que a saída de depuração do processo em segundo plano é sempre armazenada em um arquivo.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-flags</option
+> <replaceable
+>flags</replaceable
+></term>
+<listitem
+><para
+>Configure quais seções do código depurar. Os sinalizadores ou flags são fornecidos como um número binário. Consulte os arquivos de código para obter documentação, pois esta é realmente uma opção interna.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--backend-debugger</option
+> <replaceable
+>comando</replaceable
+></term>
+<listitem
+><para
+>Executa o backend do &rkward; através do comando de depuração especificado. Para adicionar opções de linha de comando ao comando de depuração, coloque-as entre aspas simples ('') junto com o comando. <emphasis
+>NOTA:</emphasis
+> Os argumentos do depurador serão separados por espaços. Se isso não for apropriado, você terá que escrever seu próprio script wrapper para invocar o depurador. Além disso, certifique-se de redirecionar toda a saída e/ou entrada do depurador conforme apropriado. Veja os exemplos.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--r-executable</option
+> <replaceable
+>comando</replaceable
+></term>
+<listitem
+><para
+>No caso de várias instalações do R, especifique a instalação a ser usada, &eg; <filename
+>/usr/bin/R</filename
+>. Você também pode usar a string <replaceable
+>"auto"</replaceable
+>, caso em que o RKWard tentará encontrar o R em um dos caminhos de instalação padrão conhecidos. <emphasis
+>NOTA:</emphasis
+> embora o RKWard <emphasis
+>frequentemente</emphasis
+> funcione com versões mais recentes do R, ele <emphasis
+>às vezes</emphasis
+> precisará ser recompilado para essa versão, ou poderá ser totalmente incompatível.</para>
+<para
+>Esta opção altera a instalação do R apenas para a sessão atual, não de forma permanente.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--reuse</option
+></term>
+<listitem
+><para
+>Se uma instância de &rkward; já estiver em execução, traz esta instância para a frente e abre <replaceable
+>arquivos_para_abrir</replaceable
+>. Observe que todas as outras opções de linha de comando serão ignoradas caso uma instância seja reutilizada.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--autoreuse</option
+></term>
+<listitem
+><para
+>Comporta-se como <option
+>--reuse</option
+>, se quaisquer argumentos de arquivo também forem fornecidos, inicia uma nova instância, caso contrário. Destinado ao uso no arquivo .desktop.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--nowarn-external</option
+></term>
+<listitem
+><para
+>Normalmente, ao invocar plugins do &rkward; a partir da linha de comando (&ie;, quando <replaceable
+>arquivos_para_abrir</replaceable
+> contém &URL;s no formato <replaceable
+>rkward://runplugin/...</replaceable
+>), o &rkward; exibirá um aviso de que tais &URL;s <emphasis
+>podem</emphasis
+> ser usadas para acionar ações maliciosas em seu sistema. Este aviso se aplica especificamente a links encontrados em sites não confiáveis ​​ou outras fontes externas não confiáveis. Se você deseja executar scripts do &rkward; localmente, pode evitar este aviso adicionando --nowarn-external à linha de comando.</para>
+<para
+>(Se usado em combinação com --reuse, então *ambos* os comandos em questão precisarão ser invocados com --nowarn-external, para suprimir o aviso.)</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--setup</option
+></term>
+<listitem
+><para
+>Simula a instalação de uma nova versão do RKWard, incluindo a reinstalação do pacote de suporte do R e a exibição do assistente de configuração. Esta funcionalidade é voltada principalmente para desenvolvedores e testadores.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--quirkmode</option
+></term>
+<listitem
+><para
+>Desabilita alguns códigos de validação de inicialização. Opção experimental, não destinada ao uso regular.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><replaceable
+>arquivos_para_abrir</replaceable
+></term>
+<listitem
+><para
+>Você pode especificar qualquer número de nomes de arquivos ou &URL;s para o &rkward; abrir. Normalmente, serão arquivos de espaço de trabalho, arquivos de ambiente de trabalho, arquivos de script R ou &URL;s `rkward://` (&eg;, para iniciar com uma caixa de diálogo de plugin). Especificar mais de um arquivo de espaço de trabalho fará com que os espaços de trabalho sejam mesclados, o que não é recomendado.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</refsect1>
+
+<refsect1>
+<title
+>Veja também</title>
+<para
+><citerefentry
+><refentrytitle
+>R</refentrytitle>
+<manvolnum
+>1</manvolnum
+></citerefentry
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Exemplos</title>
+<para
+><programlisting
+># Inicia com a janela t-test
+rkward --nowarn-external rkward://runplugin/rkward::t_test/
+# Abra dois arquivos de script em uma instância em execução do RKWard (ou em uma nova instância, se o RKWard não estiver em execução)
+rkward --reuse arquivo_a.R arquivo_b.R
+
+# Executa o backend do rkward através do valgrind
+rkward --backend-debugger 'valgrind --log-file=valgrind.log'
+</programlisting
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Autores</title>
+<para
+>&rkward; foi escrito por Thomas Friedrichsmeier e a equipe &rkward;. Veja <ulink url="https://rkward.kde.org/"
+>o site do &rkward;</ulink
+>.</para>
+</refsect1>
+
+</refentry>
