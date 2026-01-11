@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-17 00:38+0000\n"
-"PO-Revision-Date: 2025-10-15 20:49+0400\n"
+"POT-Creation-Date: 2025-11-17 11:48+0000\n"
+"PO-Revision-Date: 2025-10-23 09:53+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -4020,6 +4020,160 @@ msgstr "الرمز المميز للاتصال المتوقع %1، ولكن قُ
 msgid "Error while connection graphics backend"
 msgstr "خطأ أثناء توصيل الواجهة الخلفية للرسوميات"
 
+#: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
+#, no-c-format, kde-format
+msgid "Device type \"%1\" is unknown to RKWard"
+msgstr "نوع الجهاز \"%1\" غير معروف لدى أر كي وارد"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
+#, no-c-format, kde-format
+msgid ""
+"rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
+"update XiMpLe."
+msgstr ""
+"يَتطَلَّب rk.download_appimage() حزمة XiMpLe >= 0.11.3، لكن وُجِدَ %1 فقط. حَدِّث "
+"XiMpLe من فضلك."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
+#, no-c-format, kde-format
+msgid "Target directory '%1' does not exist\n"
+msgstr "مُجَلَّد الوجهة '%1' ليس موجودًا\n"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
+#, no-c-format, kde-format
+msgid ""
+"Target file '%1' already exists, use the \"overwrite\" argument to replace "
+"it:\n"
+msgstr "ملف الوجهة '%1' موجود بالفعل، اسْتَخدِم الوسيط \"overwrite\" لِاستبداله:\n"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
+#, no-c-format, kde-format
+msgid ""
+"Creating backup of current AppImage: %1\n"
+"  "
+msgstr ""
+"أنشئ نسخة احتياطية من AppImage الحالية: %1\n"
+"  "
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restored previous AppImage from "
+"backup."
+msgstr "حدث خطأ ما أثناء التنزيل! أُعيد AppImage السابق من النسخة الاحتياطية."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
+#, kde-format
+msgid "Something went wrong with the download!"
+msgstr "حدث خطأ ما أثناء التنزيل!"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
+#, kde-format
+msgid "Download successful, setting file permissions."
+msgstr "التنزيل ناجح، اضبط أذونات الملف."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
+#, kde-format
+msgid "Removing backup of previous AppImage."
+msgstr "أَزِل نسخة AppImage السابقة الاحتياطية."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restoring previous AppImage from "
+"backup."
+msgstr "حدث خطأ ما أثناء التنزيل! أَعِد AppImage السابق من النسخة الاحتياطية."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
+#, no-c-format, kde-format
+msgid "Failed to copy CSS file '%1' to '%2'"
+msgstr "فشل في نسخ ملف CSS '%1' إلى '%2'"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
+#, no-c-format, kde-format
+msgid "Submenu %1 cannot be redefined as a leaf item."
+msgstr "لا يُمكِن إعادة تعريف القائمة الفرعية %1 كَعنصر ورقي."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
+#, no-c-format, kde-format
+msgid "Menu path %1 is not defined"
+msgstr "مسار القائمة %1 غير مُعرَّف"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
+#, no-c-format, kde-format
+msgid "Leaf menu item %1 cannot be redefined as a submenu."
+msgstr "لا يُمكِن إعادة تعريف عنصر القائمة الورقي %1 كقائمة فرعية."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
+#, kde-format
+msgid "No file name specified"
+msgstr "لم يُحدّد اسم الملفّ"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
+#, kde-format
+msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
+msgstr "معرِّف إخراج غير صالح. استخدِم rk.output() للحصول على مُعامِل إخراج صالح."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
+#, kde-format
+msgid ""
+"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
+"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
+"library(\"tinytex\"); install_tinytex()</tt>"
+msgstr ""
+"البرنامج <tt>pdflatex</tt> مطلوب لتصيير معاينات PDF. أسهل طريقة لتركيبه هي "
+"بتشغيل <tt>install.packages(\"tinytex\"); library(\"tinytex\"); "
+"install_tinytex()</tt>"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:40
+#, kde-format
+msgid "Rendering the preview failed"
+msgstr "فشل تصيير المعاينة"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:47
+#, kde-format
+msgid ""
+"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
+"output format is neither HTML, nor PDF. You can try opening it in an "
+"external application, using the link, below, or you can change the preview "
+"mode to 'R Markdown (HTML)'.</p>"
+msgstr ""
+"<h1>صيغة غير مدعومة</h1><p>لا يمكن عرض المعاينة، هنا، لأن صيغة المخرج ليست "
+"HTML، ولا PDF. يمكنك محاولة فتحها في تطبيق خارجي، باستخدام الرابط، أدناه، أو "
+"يمكنك تغيير نمط المعاينة إلى 'R Markdown (HTML)'.</p>"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
+#, kde-format
+msgid "Plot window created"
+msgstr "أُنشئت نافذة المخطط"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
+#, kde-format
+msgid "Plot window closed"
+msgstr "أُغلِقت نافذة المخطط"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
+#, kde-format
+msgid "Plot updated (click to show)"
+msgstr "حُدِّث المخطط (انقر لعرضه)"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
+#, kde-format
+msgid "Please install package R2HTML to enable output!"
+msgstr "ثَبِّت حزمة R2HTML لتمكين الإخراج من فضلك!"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
+#, kde-format
+msgid "Unnamed parameter lists are deprecated in rk.header()"
+msgstr "قوائم المَعلمات غير المسماة هي مُهملة في rk.header()"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
+#, no-c-format, kde-format
+msgid "Printing object of class '%1' is not implemented"
+msgstr "طباعة كائن من الفئة '%1' ليست مُطبَّقة"
+
 #: rkward/rkconsole.cpp:71
 #, kde-format
 msgid ""
@@ -7627,9 +7781,6 @@ msgstr "اعرض في المحرر (للقراءة فقط)"
 #~ msgid "Missing software"
 #~ msgstr "برنامج مفقود"
 
-#~ msgid "Rendering the preview failed"
-#~ msgstr "فشل تصيير المعاينة"
-
 #~ msgid ""
 #~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
 #~ "not installed, or not in the system path of the running R session. You "
@@ -7643,22 +7794,3 @@ msgstr "اعرض في المحرر (للقراءة فقط)"
 #~ "\"https://pandoc.org/\">https://pandoc.org/</a>.</br>إذا ركّب، ولكن لا "
 #~ "يمكن العثور عليه، حاول إضافته إلى مسار النظام لجلسة R الجارية في <a href="
 #~ "\"rkward://settings/rbackend\">الإعدادات->اضبط أر كي وارد->خلفية R</a>."
-
-#~ msgid ""
-#~ "The software <tt>pdflatex</tt> is required for rendering PDF previews. "
-#~ "The easiest way to install it is by running <tt>install.packages(\"tinytex"
-#~ "\"); library(\"tinytex\"); install_tinytex()</tt>"
-#~ msgstr ""
-#~ "البرنامج <tt>pdflatex</tt> مطلوب لتصيير معاينات PDF. أسهل طريقة لتركيبه "
-#~ "هي بتشغيل <tt>install.packages(\"tinytex\"); library(\"tinytex\"); "
-#~ "install_tinytex()</tt>"
-
-#~ msgid ""
-#~ "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because "
-#~ "the output format is neither HTML, nor PDF. You can try opening it in an "
-#~ "external application, using the link, below, or you can change the "
-#~ "preview mode to 'R Markdown (HTML)'.</p>"
-#~ msgstr ""
-#~ "<h1>صيغة غير مدعومة</h1><p>لا يمكن عرض المعاينة، هنا، لأن صيغة المخرج "
-#~ "ليست HTML، ولا PDF. يمكنك محاولة فتحها في تطبيق خارجي، باستخدام الرابط، "
-#~ "أدناه، أو يمكنك تغيير نمط المعاينة إلى 'R Markdown (HTML)'.</p>"

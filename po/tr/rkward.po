@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-17 00:38+0000\n"
-"PO-Revision-Date: 2025-10-11 21:37+0300\n"
+"POT-Creation-Date: 2025-11-17 11:48+0000\n"
+"PO-Revision-Date: 2025-11-15 21:05+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.08.2\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -2787,7 +2787,7 @@ msgstr "“%1” tarafından tanımlanan çıktı bu oturumda yüklü değil."
 #: rkward/misc/rkoutputdirectory.cpp:589
 #, kde-format
 msgid "Unhandled output command '%1'"
-msgstr "İşlenmeyen çıktı komutu “%1”"
+msgstr "İşlenmemiş çıktı komutu “%1”"
 
 #: rkward/misc/rkprogresscontrol.cpp:259
 #, kde-format
@@ -4106,6 +4106,169 @@ msgstr "%1 bağlantı jetonu bekleniyordu; ancak %2 bağlantı jetonu okundu"
 #, kde-format
 msgid "Error while connection graphics backend"
 msgstr "Grafik arka ucuna bağlanırken hata"
+
+#: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
+#, no-c-format, kde-format
+msgid "Device type \"%1\" is unknown to RKWard"
+msgstr "RKWard, “%1” aygıt türünü bilmiyor"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
+#, no-c-format, kde-format
+msgid ""
+"rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
+"update XiMpLe."
+msgstr ""
+"rk.download_appimage(), 0.11.3’ten daha büyük bir XiMpLe sürümü "
+"gerektiriyor; ancak yalnızca %1 bulundu. XiMpLe’yi güncelleyin."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
+#, no-c-format, kde-format
+msgid "Target directory '%1' does not exist\n"
+msgstr "Hedef dizin “%1” yok\n"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
+#, no-c-format, kde-format
+msgid ""
+"Target file '%1' already exists, use the \"overwrite\" argument to replace "
+"it:\n"
+msgstr ""
+"Hedef dosya “%1” halihazırda var; onu değiştirmek için “overwrite” "
+"argümanını kullanın:\n"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
+#, no-c-format, kde-format
+msgid ""
+"Creating backup of current AppImage: %1\n"
+"  "
+msgstr ""
+"Geçerli AppImage’in yedeği alınamıyor: %1\n"
+"  "
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restored previous AppImage from "
+"backup."
+msgstr ""
+"İndirme sırasında bir hata oluştu. Yedekten bir önceki AppImage geri "
+"yüklendi."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
+#, kde-format
+msgid "Something went wrong with the download!"
+msgstr "İndirme sırasında bir hata oluştu!"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
+#, kde-format
+msgid "Download successful, setting file permissions."
+msgstr "İndirme başarılı, dosya izinleri ayarlanıyor…"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
+#, kde-format
+msgid "Removing backup of previous AppImage."
+msgstr "Önceki AppImage yedekleri kaldırılıyor…"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restoring previous AppImage from "
+"backup."
+msgstr ""
+"İndirme sırasında bir hata oluştu. Yedekten bir önceki AppImage geri "
+"yükleniyor."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
+#, no-c-format, kde-format
+msgid "Failed to copy CSS file '%1' to '%2'"
+msgstr "CSS dosyası “%1”, “%2” konumuna kopyalanamadı"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
+#, no-c-format, kde-format
+msgid "Submenu %1 cannot be redefined as a leaf item."
+msgstr "Alt menü %1, bir yaprak ögesi olarak yeniden tanımlanamıyor."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
+#, no-c-format, kde-format
+msgid "Menu path %1 is not defined"
+msgstr "Menü yolu %1 tanımlı değil"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
+#, no-c-format, kde-format
+msgid "Leaf menu item %1 cannot be redefined as a submenu."
+msgstr "Yaprak menüsü ögesi %1, bir alt menü olarak yeniden tanımlanamıyor."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
+#, kde-format
+msgid "No file name specified"
+msgstr "Belirtilen dosya adı yok"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
+#, kde-format
+msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
+msgstr ""
+"Geçersiz çıktı kimliği. Geçerli bir çıktı tutacı almak için rk.output() "
+"yöntemini kullanın."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
+#, kde-format
+msgid ""
+"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
+"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
+"library(\"tinytex\"); install_tinytex()</tt>"
+msgstr ""
+"PDF önizlemelerini sunmak için <tt>pdflatex</tt> yazılımı gereklidir. "
+"Kurmanın en kolay yolu <tt>install.packages(\"tinytex\"); library(\"tinytex"
+"\"); install_tinytex()</tt> komutudur."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:40
+#, kde-format
+msgid "Rendering the preview failed"
+msgstr "Önizleme sunulamadı"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:47
+#, kde-format
+msgid ""
+"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
+"output format is neither HTML, nor PDF. You can try opening it in an "
+"external application, using the link, below, or you can change the preview "
+"mode to 'R Markdown (HTML)'.</p>"
+msgstr ""
+"<h1>Desteklenmeyen biçim</h1><p>Önizleme burada gösterilemiyor; çünkü çıktı "
+"biçimi ne HTML ne de PDF. Aşağıdaki bağlantıyı kullanarak dış bir uygulamada "
+"açmayı deneyebilirsiniz veya önizleme kipini “R Markdown (HTML)” olarak "
+"değiştirebilirsiniz.</p>"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
+#, kde-format
+msgid "Plot window created"
+msgstr "Çizim penceresi değiştirildi"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
+#, kde-format
+msgid "Plot window closed"
+msgstr "Çizim penceresi kapatıldı"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
+#, kde-format
+msgid "Plot updated (click to show)"
+msgstr "Çizim güncellendi (göstermek için tıkla)"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
+#, kde-format
+msgid "Please install package R2HTML to enable output!"
+msgstr "Çıktıyı etkinleştirmek için R2HTML paketini kurun!"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
+#, kde-format
+msgid "Unnamed parameter lists are deprecated in rk.header()"
+msgstr "Adsız parametre listeleri rk.header() içinde artık kullanılmıyor"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
+#, no-c-format, kde-format
+msgid "Printing object of class '%1' is not implemented"
+msgstr "“%1” sınıfının nesnesini yazdırma henüz gerçeklenmemiş"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -7781,9 +7944,6 @@ msgstr "Düzenleyicide görüntüle (saltokunur)"
 #~ msgid "Missing software"
 #~ msgstr "Yazılımlar eksik"
 
-#~ msgid "Rendering the preview failed"
-#~ msgstr "Önizleme sunulamadı"
-
 #~ msgid ""
 #~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
 #~ "not installed, or not in the system path of the running R session. You "
@@ -7799,26 +7959,6 @@ msgstr "Düzenleyicide görüntüle (saltokunur)"
 #~ "settings/rbackend\">Ayarlar → RKward Uygulamasını Yapılandır → R Arka "
 #~ "Ucu</a> konumuna gidip çalışan R oturumunun sistem yoluna eklemeyi "
 #~ "deneyin."
-
-#~ msgid ""
-#~ "The software <tt>pdflatex</tt> is required for rendering PDF previews. "
-#~ "The easiest way to install it is by running <tt>install.packages(\"tinytex"
-#~ "\"); library(\"tinytex\"); install_tinytex()</tt>"
-#~ msgstr ""
-#~ "PDF önizlemelerini sunmak için <tt>pdflatex</tt> yazılımı gereklidir. "
-#~ "Kurmanın en kolay yolu <tt>install.packages(\"tinytex\"); "
-#~ "library(\"tinytex\"); install_tinytex()</tt> komutudur."
-
-#~ msgid ""
-#~ "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because "
-#~ "the output format is neither HTML, nor PDF. You can try opening it in an "
-#~ "external application, using the link, below, or you can change the "
-#~ "preview mode to 'R Markdown (HTML)'.</p>"
-#~ msgstr ""
-#~ "<h1>Desteklenmeyen biçim</h1><p>Önizleme burada gösterilemiyor; çünkü "
-#~ "çıktı biçimi ne HTML ne de PDF. Aşağıdaki bağlantıyı kullanarak dış bir "
-#~ "uygulamada açmayı deneyebilirsiniz veya önizleme kipini “R Markdown "
-#~ "(HTML)” olarak değiştirebilirsiniz.</p>"
 
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (Kendiliğinden)"

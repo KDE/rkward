@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-17 00:38+0000\n"
-"PO-Revision-Date: 2025-10-11 12:45+0200\n"
+"POT-Creation-Date: 2025-11-17 11:48+0000\n"
+"PO-Revision-Date: 2025-10-22 03:33+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3972,6 +3972,8 @@ msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
+"<h2>წერტილების პოვნა</h2><p>გამოიყენეთ თაგუნას მარცხენა ღილაკი წერტილების "
+"მოსანიშნად და ნებისმიერი სხვა ღილაკი გასაჩერებლად.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:695
 #, kde-format
@@ -3990,6 +3992,8 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
+"აღმოჩენილია შეცდომა ეკრანის გრაფიკის უკანაბოლოსთან დაკავშირების მცდელობისას. "
+"ეს ნიშნავს, რომ ამ სესიაში RKWard-ის მოწყობილობით დახატვა შეუძლებელი იქნება."
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:67
 #, kde-format
@@ -4000,6 +4004,161 @@ msgstr "მოველოდი მიერთების კოდს %1, �
 #, kde-format
 msgid "Error while connection graphics backend"
 msgstr "გრაფიკულ უკანაბოლოსთან დაკავშირების შეცდომა"
+
+#: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
+#, no-c-format, kde-format
+msgid "Device type \"%1\" is unknown to RKWard"
+msgstr "მოწყობილობის ტიპი \"%1\" RKWard-ისთვის უცნობია"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
+#, no-c-format, kde-format
+msgid ""
+"rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
+"update XiMpLe."
+msgstr ""
+"rk.download_appimage()-ს სჭირდება XiMpLe >= 0.11.3, მაგრამ აღმოჩენილია "
+"ვერსია %1. განაახლეთ XiMpLe."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
+#, no-c-format, kde-format
+msgid "Target directory '%1' does not exist\n"
+msgstr "სამიზნე საქაღალდე '%1' არ არსებობს\n"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
+#, no-c-format, kde-format
+msgid ""
+"Target file '%1' already exists, use the \"overwrite\" argument to replace "
+"it:\n"
+msgstr ""
+"სამიზნე ფაილი '%1' უკვე არსებობს. მისი ჩანაცვლებისთვის გამოიყენეთ არგუმენტი "
+"\"თავზე გადაწერა\":\n"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
+#, no-c-format, kde-format
+msgid ""
+"Creating backup of current AppImage: %1\n"
+"  "
+msgstr ""
+"მიმდინარეობს მიმდინარე AppImage-ის მარქაფის შექმნა: %1\n"
+"  "
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restored previous AppImage from "
+"backup."
+msgstr "გადმოწერისას რაღაც ცუდი მოხდა! აღდგა წინა AppImage მარქაფიდან."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
+#, kde-format
+msgid "Something went wrong with the download!"
+msgstr "გადმოწერისას რაღაც ცუდი მოხდა!"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
+#, kde-format
+msgid "Download successful, setting file permissions."
+msgstr "გადმოწერა წარმატებულია. მიმდინარეობს ფაილის წვდომების დაყენება."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
+#, kde-format
+msgid "Removing backup of previous AppImage."
+msgstr "წინა AppImage-ის მარქაფის წაშლა."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restoring previous AppImage from "
+"backup."
+msgstr ""
+"გადმოწერისას რაღაც ცუდი მოხდა! მიმდინარეობს წინა AppImage აღდგენა მარქაფიდან."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
+#, no-c-format, kde-format
+msgid "Failed to copy CSS file '%1' to '%2'"
+msgstr "CSS ფაილის ''%1'-დან '%2'-ში კოპირება ჩავარდა"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
+#, no-c-format, kde-format
+msgid "Submenu %1 cannot be redefined as a leaf item."
+msgstr "ქვემენიუს %1 ვერ გადააკეთებთ ფოთლის ელემენტად."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
+#, no-c-format, kde-format
+msgid "Menu path %1 is not defined"
+msgstr "მენიუს ბილიკი %1 აღწერილი არაა"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
+#, no-c-format, kde-format
+msgid "Leaf menu item %1 cannot be redefined as a submenu."
+msgstr "ფოთოლი მენიუს ელემენტს %1 ქვემენიუდ ვერ გადააკეთებთ."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
+#, kde-format
+msgid "No file name specified"
+msgstr "ფაილის სახელი მითითებული არაა"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
+#, kde-format
+msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
+msgstr ""
+"არასწორი output id. Use rk.output() სწორი გამოტანის დამმუშავებლის მისაღებად."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
+#, kde-format
+msgid ""
+"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
+"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
+"library(\"tinytex\"); install_tinytex()</tt>"
+msgstr ""
+"PDF მინიატურების შესაქმნელად საჭიროა პროგრამა <tt>pdflatex</tt>. მისი "
+"დაყენების უმარტივესი გზაა გაუშვათ ბრძანება <tt>install.packages(\"tinytex"
+"\"); library(\"tinytex\"); install_tinytex()</tt>"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:40
+#, kde-format
+msgid "Rendering the preview failed"
+msgstr "მინიატურის გენერაცია ჩავარდა"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:47
+#, kde-format
+msgid ""
+"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
+"output format is neither HTML, nor PDF. You can try opening it in an "
+"external application, using the link, below, or you can change the preview "
+"mode to 'R Markdown (HTML)'.</p>"
+msgstr ""
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
+#, kde-format
+msgid "Plot window created"
+msgstr "დიაგრამის ფანჯარა შეიქმნა"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
+#, kde-format
+msgid "Plot window closed"
+msgstr "დიაგრამის ფანჯარა დაიხურა"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
+#, kde-format
+msgid "Plot updated (click to show)"
+msgstr "დიაგრამა განახლდა (წკაპი საჩვენებლად)"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
+#, kde-format
+msgid "Please install package R2HTML to enable output!"
+msgstr "გამოტანის ჩასართავად დააყენეთ პაკეტი R2HTML!"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
+#, kde-format
+msgid "Unnamed parameter lists are deprecated in rk.header()"
+msgstr "უსახელო პარამეტრის სიები rk.header()-ში მოძველებულია"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
+#, no-c-format, kde-format
+msgid "Printing object of class '%1' is not implemented"
+msgstr "კლასის '%1 მქონე ობიექტის დაბეჭდვა განხორციელებული არაა"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -4418,6 +4577,9 @@ msgid ""
 "</b> All data editors, and graphics windows will be closed.</p><p>Are you "
 "sure you want to proceed?</p>"
 msgstr ""
+"<p><b>უკანაბოლოს გადატვირთვა ამ სამუშაო სივრცეში შეუნახავ ცვლილებებს სრულად "
+"მოაცილებს!</b> დაიხურება ყველა მონაცემთა რედაქტორი და გრაფიკის ფანჯარა.</"
+"p><p>მართლა გნებავთ, გააგრძელოთ?</p>"
 
 #: rkward/rkward.cpp:643
 #, kde-format
@@ -4513,6 +4675,8 @@ msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
+"R-ის ძრავა ხელმისაწვდომი არაა. ამ პრობლემის გადაჭრის გზებისთვის იხილეთ <a "
+"href=\"rkward://page/rkward_trouble_shooting\">ეს ვებგვერდი</a>."
 
 #: rkward/rkward.cpp:1017
 #, kde-format
@@ -4715,6 +4879,8 @@ msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
 msgstr ""
+"შეცდომა ('ფაილი \"%1\" (რომელიც სჭირდება \"%2\"-ს) აღმოჩენილი არაა. "
+"შეამოწმეთ თქვენი პროგრამის ფაილები.');\n"
 
 #: rkward/scriptbackends/scriptbackend.cpp:83
 #, kde-format
@@ -5811,6 +5977,9 @@ msgid ""
 "R. Packages will continue to work (if they are compatible with this version "
 "of R)."
 msgstr ""
+"გადაარქვით ამ ადგილს სახელი ისე, რომ ის ამჟამად გაშვებული R-ის ვერსიას "
+"შეიცავდეს. პაკეტები გააგრძელებენ მუშაობას (თუ ისინი თავსებადია R-ის ამ "
+"ვერსიასთან)."
 
 #: rkward/settings/rksettingsmoduler.cpp:592
 #, kde-format
@@ -5824,6 +5993,8 @@ msgid ""
 "Remove this location from the configuration (it will not be deleted on "
 "disk). You will have to re-install any packages that you want to keep."
 msgstr ""
+"ამ ადგილის წაშლა კონფიგურაციიდან (დისკიდან ის არ წაიშლება). ყველა პაკეტი, "
+"რომელიც გნებავთ, შეინარჩუნოთ, თავიდან უნდა დააყენოთ."
 
 #: rkward/settings/rksettingsmoduler.cpp:598
 #, kde-format
@@ -6348,7 +6519,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:730
 #, kde-format
 msgid "Scoped"
-msgstr ""
+msgstr "ჩამონათვალშია"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:732
 #, kde-format
@@ -6732,6 +6903,8 @@ msgid ""
 "Set the encoding to assume in case no explicit encoding has been set in the "
 "page or in the HTTP headers."
 msgstr ""
+"დააყენეთ კოდირება, რომელიც ნაგულისხმევად იქნება დაყენებული იმ შემთხვევაში, "
+"თუ ის HTTP თავსართებში მითითებული არაა."
 
 #: rkward/windows/rkhtmlwindow.cpp:911
 #, kde-format
@@ -6790,6 +6963,9 @@ msgid ""
 "<p>The help page for this component has not yet been written (or is broken). "
 "Please consider contributing it.</p>\n"
 msgstr ""
+"<h1>დახმარების გვერდი აღმოჩენილი არაა</h1>\n"
+"<p>დახმარების გვერდი ამ კომპონენტისთვის ჯერ დაწერილი არაა (ან გაფუჭებულია). "
+"იფიქრეთ, იქნებ თქვენ დაწეროთ ის.</p>\n"
 
 #: rkward/windows/rkhtmlwindow.cpp:1051
 #, kde-format
@@ -7461,9 +7637,6 @@ msgstr "რედაქტორში გახსნა (მხოლოდ-�
 #~ msgctxt "Caption: Some software is missing."
 #~ msgid "Missing software"
 #~ msgstr "ნაკლული პროგრამები"
-
-#~ msgid "Rendering the preview failed"
-#~ msgstr "მინიატურის გენერაცია ჩავარდა"
 
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (ავტო)"

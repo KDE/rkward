@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-17 00:38+0000\n"
-"PO-Revision-Date: 2025-10-12 08:27+0200\n"
+"POT-Creation-Date: 2025-11-17 11:48+0000\n"
+"PO-Revision-Date: 2025-10-22 07:05+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -4108,6 +4108,169 @@ msgstr "Pričakovani žeton povezave %1 a prebran žeton povezave %2"
 msgid "Error while connection graphics backend"
 msgstr "Napaka pri povezovanju z grafičnim zaledjem"
 
+#: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
+#, no-c-format, kde-format
+msgid "Device type \"%1\" is unknown to RKWard"
+msgstr "Vrsta naprave \"%1\" ni znana RKWardu"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
+#, no-c-format, kde-format
+msgid ""
+"rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
+"update XiMpLe."
+msgstr ""
+"rk.download_appimage() zahteva XiMpLe >= 0.11.3, a je našel samo %1. Prosim "
+"posodobite XiMpLe."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
+#, no-c-format, kde-format
+msgid "Target directory '%1' does not exist\n"
+msgstr "Ciljna mapa '%1' ne obstaja.\n"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
+#, no-c-format, kde-format
+msgid ""
+"Target file '%1' already exists, use the \"overwrite\" argument to replace "
+"it:\n"
+msgstr ""
+"Ciljna datoteka '%1' že obstaja, za njeno zamenjavo uporabite argument "
+"\"overwrite\":\n"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
+#, no-c-format, kde-format
+msgid ""
+"Creating backup of current AppImage: %1\n"
+"  "
+msgstr ""
+"Ustvarjanje varnostne kopije trenutnega AppImage: %1\n"
+" "
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restored previous AppImage from "
+"backup."
+msgstr ""
+"Pri prenosu je prišlo do neke napake! Obnovljeni prejšnji AppImage iz "
+"varnostne kopije."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
+#, kde-format
+msgid "Something went wrong with the download!"
+msgstr "Pri prenosu je prišlo do neke napake!"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
+#, kde-format
+msgid "Download successful, setting file permissions."
+msgstr "Prenos uspešen, nastavitev dovoljenj za datoteke."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
+#, kde-format
+msgid "Removing backup of previous AppImage."
+msgstr "Odstranjevanje varnostne kopije prejšnjega AppImaga."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
+#, kde-format
+msgid ""
+"Something went wrong with the download! Restoring previous AppImage from "
+"backup."
+msgstr ""
+"Pri prenosu je prišlo do neke napake! Obnavljam prejšnjega AppImaga iz "
+"varnostne kopije."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
+#, no-c-format, kde-format
+msgid "Failed to copy CSS file '%1' to '%2'"
+msgstr "Kopiranje datoteke CSS '%1' v '%2' ni uspelo"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
+#, no-c-format, kde-format
+msgid "Submenu %1 cannot be redefined as a leaf item."
+msgstr "Podmenija %1 ni mogoče ponovno definirati kot listnega elementa."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
+#, no-c-format, kde-format
+msgid "Menu path %1 is not defined"
+msgstr "Pot menija %1 ni določena"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
+#, no-c-format, kde-format
+msgid "Leaf menu item %1 cannot be redefined as a submenu."
+msgstr "Elementa menija kot lista %1 ni mogoče preoblikovati v podmeni."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
+#, kde-format
+msgid "No file name specified"
+msgstr "Ime datoteke ni podano"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
+#, kde-format
+msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
+msgstr ""
+"Neveljaven izhodni ID. Uporabite rk.output() za pridobitev veljavnega "
+"izhodnega ročaja."
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
+#, kde-format
+msgid ""
+"The software <tt>pdflatex</tt> is required for rendering PDF previews. The "
+"easiest way to install it is by running <tt>install.packages(\"tinytex\"); "
+"library(\"tinytex\"); install_tinytex()</tt>"
+msgstr ""
+"Programska oprema <tt>pdflatex</tt> je potrebna za upodabljanje predogledov "
+"PDF. Najlažji način za namestitev je z zagonom <tt>install.packages(\"tinytex"
+"\"); install_tinytex()</tt>```"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:40
+#, kde-format
+msgid "Rendering the preview failed"
+msgstr "Ustvarjanje predogleda ni uspelo"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:47
+#, kde-format
+msgid ""
+"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
+"output format is neither HTML, nor PDF. You can try opening it in an "
+"external application, using the link, below, or you can change the preview "
+"mode to 'R Markdown (HTML)'.</p>"
+msgstr ""
+"<h1>Nepodprta oblika</h1><p>Tukaj ni mogoče prikazati predogleda, ker "
+"izhodna oblika ni niti HTML niti PDF. Lahko jo poskusite odpreti v zunanji "
+"aplikaciji s spodnjo povezavo ali pa način predogleda spremenite v »R "
+"Markdown (HTML)«.</p>"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
+#, kde-format
+msgid "Plot window created"
+msgstr "Okno za risanje ustvarjeno"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
+#, kde-format
+msgid "Plot window closed"
+msgstr "Okno za izris je bilo zaprto"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
+#, kde-format
+msgid "Plot updated (click to show)"
+msgstr "Posodobljena risba (kliknite za prikaz)"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
+#, kde-format
+msgid "Please install package R2HTML to enable output!"
+msgstr "Namestite paket R2HTML, da omogočite izpis!"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
+#, kde-format
+msgid "Unnamed parameter lists are deprecated in rk.header()"
+msgstr "Seznami neimenovanih parametrov v rk.header() so zastareli"
+
+#: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
+#, no-c-format, kde-format
+msgid "Printing object of class '%1' is not implemented"
+msgstr "Tiskanje predmeta razreda '%1' ni izvedeno"
+
 #: rkward/rkconsole.cpp:71
 #, kde-format
 msgid ""
@@ -7775,9 +7938,6 @@ msgstr "Ogled v urejevalniku (samo za branje)"
 #~ msgid "Missing software"
 #~ msgstr "Manjkajoča programska oprema"
 
-#~ msgid "Rendering the preview failed"
-#~ msgstr "Ustvarjanje predogleda ni uspelo"
-
 #~ msgid ""
 #~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
 #~ "not installed, or not in the system path of the running R session. You "
@@ -7792,26 +7952,6 @@ msgstr "Ogled v urejevalniku (samo za branje)"
 #~ "</a>.</br>Če je nameščen, vendar ga ni mogoče najti, ga poskusite dodati "
 #~ "na sistemsko pot za tekoči R seji na <a href=\"rkward://settings/rbackend"
 #~ "\">Nastavitve->Konfiguriraj RKward->R-zaledje</a>."
-
-#~ msgid ""
-#~ "The software <tt>pdflatex</tt> is required for rendering PDF previews. "
-#~ "The easiest way to install it is by running <tt>install.packages(\"tinytex"
-#~ "\"); library(\"tinytex\"); install_tinytex()</tt>"
-#~ msgstr ""
-#~ "Programska oprema <tt>pdflatex</tt> je potrebna za upodabljanje "
-#~ "predogledov PDF. Najlažji način za namestitev je z zagonom <tt>install."
-#~ "packages(\"tinytex\"); install_tinytex()</tt>```"
-
-#~ msgid ""
-#~ "<h1>Unsupported format</h1><p>The preview cannot be shown, here, because "
-#~ "the output format is neither HTML, nor PDF. You can try opening it in an "
-#~ "external application, using the link, below, or you can change the "
-#~ "preview mode to 'R Markdown (HTML)'.</p>"
-#~ msgstr ""
-#~ "<h1>Nepodprta oblika</h1><p>Tukaj ni mogoče prikazati predogleda, ker "
-#~ "izhodna oblika ni niti HTML niti PDF. Lahko jo poskusite odpreti v "
-#~ "zunanji aplikaciji s spodnjo povezavo ali pa način predogleda spremenite "
-#~ "v »R Markdown (HTML)«.</p>"
 
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (samodejno)"
