@@ -199,7 +199,7 @@ class RKPreviewModeSelector : public QWidgetAction {
 				if (checked) win->active_mode = m;
 				// actual trigger of preview is handled via the group signal
 			});
-			QObject::connect(win, &RKCommandEditorWindow::previewModeChanged, button, [m, button](RKPreviewMode *active) {
+			QObject::connect(win, &RKCommandEditorWindow::previewModeChanged, button, [m, button](const RKPreviewMode *active) {
 				if (active == m && !button->isChecked()) button->setChecked(true);
 			});
 
@@ -273,6 +273,7 @@ class RKScriptPreviewIO {
 		infile->close();
 	}
 	RKScriptPreviewIO &operator=(const RKScriptPreviewIO &) = delete;
+	RKScriptPreviewIO(const RKScriptPreviewIO &) = delete;
 
   public:
 	~RKScriptPreviewIO() {
@@ -369,13 +370,11 @@ RKCommandEditorWindow::RKCommandEditorWindow(QWidget *parent, const QUrl &_url, 
 	} else { // regular url given. Try to find an existing document for that url
 		     // NOTE: we cannot simply use the same map as above, for this purpose, as document urls may change.
 		     // instead we iterate over the document list.
-		QList<KTextEditor::Document *> docs = editor->documents();
-		for (int i = 0; i < docs.count(); ++i) {
-			if (docs[i]->url().matches(url, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash | QUrl::PreferLocalFile)) {
-				m_doc = docs[i];
-				break;
-			}
-		}
+		const auto docs = editor->documents();
+		const auto res = std::find_if(docs.cbegin(), docs.cend(), [&url](auto *doc) {
+			return (doc->url().matches(url, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash | QUrl::PreferLocalFile));
+		});
+		m_doc = res != docs.cend() ? *res : nullptr;
 	}
 
 	// if an existing document is re-used, try to honor encoding.
@@ -639,8 +638,8 @@ void RKCommandEditorWindow::initializeActions(KActionCollection *ac) {
 	ac->setDefaultShortcuts(ac->action(u"rkcodenav"_s), QList<QKeySequence>() << (Qt::MetaModifier | Qt::Key_N));
 
 	const auto actions = standardActionCollection()->actions() + ac->actions();
-	for (QAction *action : actions) {
-		action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	for (QAction *a : actions) {
+		a->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 	}
 }
 
