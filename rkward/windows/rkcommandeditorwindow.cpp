@@ -25,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QKeyEvent>
 #include <QLabel>
 #include <QMenu>
+#include <QObjectCleanupHandler>
 #include <QSplitter>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
@@ -134,13 +135,43 @@ class RKPreviewMode {
 
 class RKPreviewModeSelector : public QWidgetAction {
   public:
-	RKPreviewModeSelector(RKCommandEditorWindow *win) : QWidgetAction(win), win(win) {};
+	RKPreviewModeSelector(RKCommandEditorWindow *win) : QWidgetAction(win), win(win), container(nullptr) {};
+	static void invalidateAll() {
+		allforms.clear();
+		// TODO: To be 100% correct, we'd have to follow up with a rebuild of any currently visible selector widgets.
+		//       The most likely place to hit this would be while previewing a script that registers a user preview mode.
+	}
 
   private:
 	RKCommandEditorWindow *win;
 
 	QWidget *createWidget(QWidget *parent) override {
-		auto form = new QWidget(parent);
+		RK_TRACE(COMMANDEDITOR);
+		RK_ASSERT(parent);
+
+		container = new QWidget(parent);
+		new QHBoxLayout(container);
+		container->installEventFilter(this);
+		createMainWin(container);
+		return container;
+	}
+
+	bool eventFilter(QObject *, QEvent *event) override {
+		if (event->type() != QEvent::Show) return false;
+		if (!form) createMainWin(container);
+		return false;
+	}
+
+	QWidget *container;
+	QPointer<QWidget> form;
+	static QObjectCleanupHandler allforms;
+
+	void createMainWin(QWidget *parent) {
+		RK_TRACE(COMMANDEDITOR);
+
+		form = new QWidget(parent);
+		allforms.add(form);
+		parent->layout()->addWidget(form);
 		auto h = new QHBoxLayout(form);
 		auto l = new QVBoxLayout();
 		h->addLayout(l);
@@ -195,25 +226,28 @@ class RKPreviewModeSelector : public QWidgetAction {
 		l->addStretch();
 		r->addStretch();
 
-		connect(preview_mode_button_group, &QButtonGroup::buttonToggled, this, [parent, this]() {
+		auto updateSize = [this]() {
 			// Menu needs some help resizing depending on available options.
 			// see also https://stackoverflow.com/questions/42122985/how-to-resize-a-qlabel-displayed-by-a-qwidgetaction-after-changing-its-text
-			auto olds = parent->size();
+			auto p = container->parentWidget();
+			;
+			auto olds = container->size();
 			QActionEvent e(QEvent::ActionChanged, this);
-			qApp->sendEvent(parent, &e);
-			if (olds.expandedTo(parent->size()) != olds && parent->isVisible()) {
-				parent->blockSignals(true);
-				parent->hide();
-				parent->show();
-				parent->blockSignals(false);
+			qApp->sendEvent(p, &e);
+			if (olds.expandedTo(p->size()) != olds && p->isVisible()) {
+				p->blockSignals(true);
+				p->hide();
+				p->show();
+				p->blockSignals(false);
 			}
 
 			win->triggerPreview(0);
-		});
-
-		return form;
+		};
+		connect(preview_mode_button_group, &QButtonGroup::buttonToggled, this, updateSize);
+		updateSize();
 	}
 };
+QObjectCleanupHandler RKPreviewModeSelector::allforms;
 
 class RKScriptPreviewIO {
 	QUrl url;
@@ -792,7 +826,7 @@ void RKCommandEditorWindow::registerUserPreviewMode(const QString &id, const QSt
 		return true;
 	};
 	user_preview_modes.insert(id, m);
-	// TODO udate/notify existing selector widgets
+	RKPreviewModeSelector::invalidateAll();
 }
 
 // static
