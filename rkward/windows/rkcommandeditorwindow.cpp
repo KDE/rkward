@@ -150,7 +150,8 @@ class RKPreviewModeSelector : public QWidgetAction {
 		RK_ASSERT(parent);
 
 		container = new QWidget(parent);
-		new QHBoxLayout(container);
+		auto l = new QHBoxLayout(container);
+		l->setContentsMargins(0, 0, 0, 0);
 		container->installEventFilter(this);
 		createMainWin(container);
 		return container;
@@ -175,13 +176,13 @@ class RKPreviewModeSelector : public QWidgetAction {
 		auto h = new QHBoxLayout(form);
 		auto l = new QVBoxLayout();
 		h->addLayout(l);
-		l->addWidget(new QLabel(i18nc("noun: type of preview", "Preview Mode")));
+		l->addWidget(new QLabel(i18nc("noun: type of preview", "<b>Preview Mode</b>")));
 		auto sep = new QFrame();
 		sep->setFrameShape(QFrame::VLine);
 		sep->setFrameShadow(QFrame::Sunken);
 		h->addWidget(sep);
 		auto r = new QVBoxLayout();
-		r->addWidget(new QLabel(i18n("Options")));
+		r->addWidget(new QLabel(i18n("<b>Options</b>")));
 		h->addLayout(r);
 		auto preview_mode_button_group = new QButtonGroup(form);
 
@@ -233,7 +234,7 @@ class RKPreviewModeSelector : public QWidgetAction {
 			;
 			auto olds = container->size();
 			QActionEvent e(QEvent::ActionChanged, this);
-			qApp->sendEvent(p, &e);
+			qApp->sendEvent(win, &e);
 			if (olds.expandedTo(p->size()) != olds && p->isVisible()) {
 				p->blockSignals(true);
 				p->hide();
