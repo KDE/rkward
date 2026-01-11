@@ -71,16 +71,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class RKPreviewModeOption {
   public:
-	RKPreviewModeOption(std::function<QWidget *(const RKPreviewModeOption *, RKCommandEditorWindow *)> create) : createWidget(create) {
+	explicit RKPreviewModeOption(std::function<QWidget *(const RKPreviewModeOption *, RKCommandEditorWindow *)> create) : createWidget(create) {
 		id = ++_id;
 	};
 	RKPreviewModeOption() {
 		id = ++_id;
 	};
-	RKPreviewModeOption(const RKPreviewModeOption &other) {
-		id = other.id;
-		createWidget = other.createWidget;
-	};
+
 	void initCheckBox(QCheckBox *cb, RKCommandEditorWindow *win) const {
 		cb->setChecked(value(win).toBool());
 		QObject::connect(cb, &QCheckBox::toggled, win, [win, this](bool checked) {
@@ -115,7 +112,6 @@ class RKPreviewModeOption {
 
   private:
 	static int _id;
-	;
 	int id;
 };
 int RKPreviewModeOption::_id = 0;
@@ -135,7 +131,7 @@ class RKPreviewMode {
 
 class RKPreviewModeSelector : public QWidgetAction {
   public:
-	RKPreviewModeSelector(RKCommandEditorWindow *win) : QWidgetAction(win), win(win), container(nullptr) {};
+	explicit RKPreviewModeSelector(RKCommandEditorWindow *win) : QWidgetAction(win), win(win), container(nullptr) {};
 	static void invalidateAll() {
 		allforms.clear();
 		// TODO: To be 100% correct, we'd have to follow up with a rebuild of any currently visible selector widgets.
@@ -235,6 +231,7 @@ class RKPreviewModeSelector : public QWidgetAction {
 			auto olds = container->size();
 			QActionEvent e(QEvent::ActionChanged, this);
 			qApp->sendEvent(win, &e);
+			qApp->sendEvent(p, &e);
 			if (olds.expandedTo(p->size()) != olds && p->isVisible()) {
 				p->blockSignals(true);
 				p->hide();
@@ -275,6 +272,7 @@ class RKScriptPreviewIO {
 		out << doc->text();
 		infile->close();
 	}
+	RKScriptPreviewIO &operator=(const RKScriptPreviewIO &) = delete;
 
   public:
 	~RKScriptPreviewIO() {
@@ -820,10 +818,10 @@ void RKCommandEditorWindow::registerUserPreviewMode(const QString &id, const QSt
 	delete user_preview_modes.take(id);
 	if (command.isEmpty()) return;
 	auto m = new RKPreviewMode(label, QIcon(), inext);
-	m->command = [command](RKCommandEditorWindow *win, const QString &infile, const QString &outdir, const QString &preview_id) {
-		return command + QStringLiteral("(%1, %2, %3)").arg(RObject::rQuote(infile), RObject::rQuote(outdir), RObject::rQuote(preview_id));
+	m->command = [command](RKCommandEditorWindow *, const QString &infile, const QString &outdir, const QString &preview_id) {
+		return QString(command + QStringLiteral("(%1, %2, %3)").arg(RObject::rQuote(infile), RObject::rQuote(outdir), RObject::rQuote(preview_id)));
 	};
-	m->validator = [](KTextEditor::Document *doc) -> bool {
+	m->validator = [](KTextEditor::Document *) -> bool {
 		return true;
 	};
 	user_preview_modes.insert(id, m);
