@@ -79,7 +79,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	@param flags @See Combination of RKCommandEditorFlags */
 	explicit RKCommandEditorWindow(QWidget *parent, const QUrl &url, const QString &encoding = QString(), int flags = RKCommandEditorFlags::DefaultFlags);
 	/** destructor */
-	~RKCommandEditorWindow();
+	~RKCommandEditorWindow() override;
 	/** returns, whether the document was modified since the last save */
 	bool isModified() const override;
 	/** saves the document, returns true on success */
