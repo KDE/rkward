@@ -148,14 +148,23 @@ class RKPreviewModeSelector : public QWidgetAction {
 		container = new QWidget(parent);
 		auto l = new QHBoxLayout(container);
 		l->setContentsMargins(0, 0, 0, 0);
-		container->installEventFilter(this);
+		parent->installEventFilter(this);
 		createMainWin(container);
 		return container;
 	}
 
-	bool eventFilter(QObject *, QEvent *event) override {
+	bool eventFilter(QObject *watched, QEvent *event) override {
 		if (event->type() != QEvent::Show) return false;
-		if (!form) createMainWin(container);
+		if (!form) {
+			// show event is actually too late to change our widget, some hacking is needed to make that
+			// work, reliably
+			watched->removeEventFilter(this);
+			setVisible(false);
+			createMainWin(container);
+			qApp->processEvents();
+			setVisible(true);
+			watched->installEventFilter(this);
+		}
 		return false;
 	}
 
@@ -168,7 +177,6 @@ class RKPreviewModeSelector : public QWidgetAction {
 
 		form = new QWidget(parent);
 		allforms.add(form);
-		parent->layout()->addWidget(form);
 		auto h = new QHBoxLayout(form);
 		auto l = new QVBoxLayout();
 		h->addLayout(l);
@@ -223,26 +231,18 @@ class RKPreviewModeSelector : public QWidgetAction {
 		l->addStretch();
 		r->addStretch();
 
-		auto updateSize = [this]() {
+		parent->layout()->addWidget(form);
+		auto update = [this]() {
 			// Menu needs some help resizing depending on available options.
 			// see also https://stackoverflow.com/questions/42122985/how-to-resize-a-qlabel-displayed-by-a-qwidgetaction-after-changing-its-text
-			auto p = container->parentWidget();
-			;
-			auto olds = container->size();
+			auto p = container->topLevelWidget();
 			QActionEvent e(QEvent::ActionChanged, this);
-			qApp->sendEvent(win, &e);
 			qApp->sendEvent(p, &e);
-			if (olds.expandedTo(p->size()) != olds && p->isVisible()) {
-				p->blockSignals(true);
-				p->hide();
-				p->show();
-				p->blockSignals(false);
-			}
 
 			win->triggerPreview(0);
 		};
-		connect(preview_mode_button_group, &QButtonGroup::buttonToggled, this, updateSize);
-		updateSize();
+		connect(preview_mode_button_group, &QButtonGroup::buttonToggled, this, update);
+		update();
 	}
 };
 QObjectCleanupHandler RKPreviewModeSelector::allforms;
