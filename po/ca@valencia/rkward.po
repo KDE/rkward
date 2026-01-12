@@ -60,13 +60,13 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
-"S'ha produït un error en obrir el fitxer «%1»:\n"
+"S'ha produït un error mentre s'obria el fitxer «%1»:\n"
 "%2"
 
 #: rkward/agents/rkloadagent.cpp:62
 #, kde-format
 msgid "Error loading workspace"
-msgstr "S'ha produït un error en carregar l'espai de treball"
+msgstr "S'ha produït un error mentre es carregava l'espai de treball"
 
 #: rkward/agents/rkprintagent.cpp:41
 #, kde-format
@@ -162,8 +162,8 @@ msgid ""
 "An error occurred while trying to save the workspace. You data was <b>not</"
 "b> saved."
 msgstr ""
-"S'ha produït un error en intentar guardar l'espai de treball. Les dades "
-"<b>no</b> s'han guardat."
+"S'ha produït un error mentre s'intentava guardar l'espai de treball. Les "
+"dades <b>no</b> s'han guardat."
 
 #: rkward/agents/showedittextfileagent.cpp:30
 #: rkward/misc/rkprogresscontrol.cpp:339
@@ -1260,8 +1260,8 @@ msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
 msgstr ""
-"S'ha produït un error en intentar carregar/descarregar els paquets. Reviseu "
-"la transcripció d'ací davall per a més detalls"
+"S'ha produït un error mentre s'intentaven carregar o descarregar els "
+"paquets. Reviseu la transcripció d'ací davall per a més detalls"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:589
 #, kde-format
@@ -1650,7 +1650,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:137
 #, kde-format
 msgid "<b>R backend has failed to start.</b>"
-msgstr "<b>El dorsal d'R ha fallat en iniciar-se.</b>"
+msgstr "<b>El dorsal d'R ha fallat mentre s'iniciava.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:139
 #, kde-format
@@ -2692,17 +2692,17 @@ msgstr "No se sobreescriu el fitxer existent"
 #: rkward/misc/rkoutputdirectory.cpp:174
 #, kde-format
 msgid "Error while writing temporary output archive %1"
-msgstr "S'ha produït un error en escriure el fitxer temporal d'eixida %1"
+msgstr "S'ha produït un error mentre s'escrivia el fitxer temporal d'eixida %1"
 
 #: rkward/misc/rkoutputdirectory.cpp:178
 #, kde-format
 msgid "Failure to remove existing file %1. Missing permissions?"
-msgstr "No s'ha pogut eliminar el fitxer existent %1. Falten permisos?"
+msgstr "Ha fallat mentre s'eliminava el fitxer existent %1. Falten permisos?"
 
 #: rkward/misc/rkoutputdirectory.cpp:183
 #, kde-format
 msgid "Failure while copying output archive to %1"
-msgstr "No s'ha pogut copiar l'arxiu d'eixida a %1"
+msgstr "Ha fallat mentre es copiava el fitxer d'eixida cap a %1"
 
 #: rkward/misc/rkoutputdirectory.cpp:195
 #, kde-format
@@ -2712,7 +2712,7 @@ msgstr "El camí %1 no existix o no és cap fitxer."
 #: rkward/misc/rkoutputdirectory.cpp:206
 #, kde-format
 msgid "Failure to open %1. Not an rkward output file?"
-msgstr "No s'ha pogut obrir %1. No és cap fitxer d'eixida de RKWard?"
+msgstr "Ha fallat mentre s'obria %1. No és cap fitxer d'eixida de RKWard?"
 
 #: rkward/misc/rkoutputdirectory.cpp:219
 #, kde-format
@@ -2826,8 +2826,8 @@ msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"<b>S'ha produït un error en executar l'ordre. Vegeu davall els detalls de "
-"l'eixida</b>"
+"<b>S'ha produït un error mentre s'executava l'ordre. Vegeu davall els "
+"detalls de l'eixida</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:270
 #: rkward/settings/rksettingsmoduleoutput.cpp:107
@@ -3058,7 +3058,7 @@ msgstr "No s'ha pogut fer l'apegades de l'objecte des del porta-retalls."
 #: rkward/misc/rkspecialactions.cpp:273
 #, kde-format
 msgid "Paste failed"
-msgstr "No s'ha pogut apegar"
+msgstr "Ha fallat mentre s'apegava"
 
 #: rkward/misc/rkstandardactions.cpp:27
 #, kde-format
@@ -3179,7 +3179,7 @@ msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
 "Expect further errors to be reported below"
 msgstr ""
-"S'ha produït un error en l'anàlisi sintàctica del fitxer en XML. El missatge "
+"S'ha produït un error durant l'anàlisi del fitxer en XML. El missatge "
 "d'error ha sigut: «%1» en la línia «%2», columna «%3». Espereu que "
 "s'informen d'altres errors ací davall"
 
@@ -3649,8 +3649,8 @@ msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr ""
-"S'ha produït un error en l'anàlisi sintàctica de la descripció d'este "
-"connector («%1»). Per a més detalls, reviseu l'eixida estàndard."
+"S'ha produït un error durant l'anàlisi de la descripció d'este connector "
+"(«%1»). Per a més detalls, reviseu l'eixida estàndard."
 
 #: rkward/plugin/rkstandardcomponent.cpp:86
 #, kde-format
@@ -3874,8 +3874,8 @@ msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
 "token '%2'"
 msgstr ""
-"Error durant la conformitat de connexió amb el procés del dorsal. S'esperava "
-"el testimoni «%1», i s'ha rebut el testimoni «%2»"
+"S'ha produït un error durant la conformitat de connexió amb el procés del "
+"dorsal. S'esperava el testimoni «%1», i s'ha rebut el testimoni «%2»"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:381
 #, kde-format
@@ -3898,7 +3898,7 @@ msgstr "No s'ha pogut iniciar el dorsal. Comproveu la instal·lació."
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
-"El procés del dorsal ha fallat en iniciar-se amb el codi d'eixida %1, "
+"El procés del dorsal ha fallat mentre s'iniciava amb el codi d'eixida %1, "
 "missatge: «%2»."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:416
@@ -4009,13 +4009,13 @@ msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
-"<p>Hi ha hagut un problema en iniciar l'execució del dorsal R. S'han produït "
-"els errors següents:</p>\n"
+"<p>Hi ha hagut un problema mentre s'iniciava l'execució del dorsal R. S'han "
+"produït els errors següents:</p>\n"
 
 #: rkward/rbackend/rkrinterface.cpp:96
 #, kde-format
 msgid "Error starting R"
-msgstr "S'ha produït un error en iniciar R"
+msgstr "S'ha produït un error mentre s'iniciava R"
 
 #: rkward/rbackend/rkrinterface.cpp:577
 #, kde-format
@@ -4163,7 +4163,7 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
-"S'ha produït un error en intentar connectar amb el dorsal gràfic en "
+"S'ha produït un error mentre s'intentava connectar amb el dorsal gràfic en "
 "pantalla. Açò vol dir que els gràfics en pantalla utilitzant el dispositiu "
 "de RKWard no funcionaran en esta sessió."
 
@@ -4177,7 +4177,7 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:67
 #, kde-format
 msgid "Error while connection graphics backend"
-msgstr "S'ha produït un error en connectar el dorsal gràfic"
+msgstr "S'ha produït un error mentre es connectava el dorsal gràfic"
 
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
@@ -4254,7 +4254,7 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr "No s'ha pogut copiar el fitxer CSS «%1» a «%2»"
+msgstr "Ha fallat mentre es copiava el fitxer CSS «%1» a «%2»"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
@@ -4558,7 +4558,7 @@ msgstr ""
 #: rkward/rkward.cpp:372 rkward/rkward.cpp:376
 #, kde-format
 msgid "Failed to load some plugin maps"
-msgstr "No s'ha pogut carregar alguns mapes de connectors"
+msgstr "Ha fallat mentre es carregaven alguns mapes de connectors"
 
 #: rkward/rkward.cpp:376
 #, kde-format
@@ -4568,10 +4568,10 @@ msgid ""
 "with this version of RKWard (see the 'Details' for more information). Other "
 "plugins were loaded, successfully, however."
 msgstr ""
-"S'han trobat diversos errors en carregar els fitxers del mapa de connectors "
-"de RKWard. Açò podria ser perquè els connectors individuals estan trencats o "
-"no són compatibles amb esta versió de RKWard (vegeu els «Detalls» per a més "
-"informació). Malgrat açò, s'han carregat altres connectors."
+"S'han trobat diversos errors mentre es carregaven els fitxers del mapa de "
+"connectors de RKWard. Açò podria ser perquè els connectors individuals estan "
+"trencats o no són compatibles amb esta versió de RKWard (vegeu els «Detalls» "
+"per a més informació). Malgrat açò, s'han carregat altres connectors."
 
 #: rkward/rkward.cpp:376
 #, kde-format
@@ -5684,7 +5684,7 @@ msgstr ""
 "(<i>RK()</i>). Alguns però no tots els arguments de funcions coincidiran, "
 "els altres s'ignoraran.</li><li>Es poden utilitzar els dispositius originals "
 "específics de plataforma, però incrustats dins de finestres de RKWard. Esta "
-"opció no està disponible a MacOS X.</li><li>Es poden utilitzar els "
+"opció no està disponible a macOS X.</li><li>Es poden utilitzar els "
 "dispositius originals específics de plataforma sense canviar, sense "
 "l'addició de les característiques específiques de RKWard.</li></"
 "ul><p>Independentment d'este paràmetre, els dispositius originals sempre són "
@@ -6973,8 +6973,8 @@ msgstr "Efectes col·laterals de les vistes prèvies"
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
-"S'ha produït un error en intentar crear un guardada automàtica del fitxer de "
-"script «%1»:"
+"S'ha produït un error mentre s'intentava crear una guardada automàtica del "
+"fitxer de script «%1»:"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1023
 #, kde-format
@@ -7904,7 +7904,8 @@ msgstr "L'òbric en l'aplicació predeterminada?"
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
 msgstr ""
-"No s'ha pogut obrir el fitxer d'eixida. El missatge d'error ha sigut «%1»"
+"Ha fallat mentre s'obria el fitxer d'eixida. El missatge d'error ha sigut "
+"«%1»"
 
 # skip-rule: apps-edu_means
 #: rkward/windows/rkworkplace.cpp:642

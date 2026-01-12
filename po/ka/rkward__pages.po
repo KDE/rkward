@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2025-05-28 04:27+0200\n"
+"PO-Revision-Date: 2026-01-11 13:53+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -76,6 +76,11 @@ msgid ""
 "activated by default. It can further be extended with custom scripts, or "
 "color-schemes."
 msgstr ""
+"<strong>Kate-ის დამატებები</strong>: Kate ძრავაა RKWard-ის სკრიპტების "
+"რედაქტორისთვის. მას ბევრი დამატებითი ფუნქცია მოჰყვება, რომლების უმრავლესობის "
+"დაყენებაც RKWard-თან ერთად ხდება. მაგრამ მათი რაოდენობის სიდიდის გამო ყველას "
+"გააქტიურება არ ხდება. ის შეიძლება, კიდევ უფრო გაფართოვდეს თქვენი სკრიპტებით, "
+"ან ფერის სქემებით."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -1207,6 +1212,8 @@ msgid ""
 "To load / save / switch between output files, etc., refer to <link href="
 "\"rkward://rhelp/rk.output\"/>."
 msgstr ""
+"ჩასატვირთად / შესანახად / გამოტანის ფაილებს შორის გადასართავად და ა.შ. "
+"იხილეთ <link href=\"rkward://rhelp/rk.output\"/>."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:22
@@ -1382,6 +1389,9 @@ msgid ""
 "<a href=\"rkward://settings/graphics\">Settings->Configure RKWard->Onscreen "
 "Graphics</a>:"
 msgstr ""
+"ეკრანის მოწყობილობის ისტორიის ზოგიერთი ნაგულისხმევი პარამეტრის მორგება "
+"შეგიძლიათ მენიუდან <a href=\"rkward://settings/graphics\">მორგება->RKWard-ის "
+"მორგება->გრაფიკები ეკრანზე</a>:"
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1455,6 +1465,9 @@ msgid ""
 "<code>graphics::plot.new()</code> or <code>graphics::persp()</code> or "
 "<code>lattice::print.trellis()</code> are captured."
 msgstr ""
+"ტექნიკური სიტყვებით, ხდება ფუნქციების, რომლებიც გადიან <code>graphics::plot."
+"new()</code>-ში, <code>graphics::persp()</code>-ში და <code>lattice::print."
+"trellis()</code>-ში, ჩაჭერა ."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1463,6 +1476,8 @@ msgid ""
 "The base graphics plots are recorded and replayed using <code>recordPlot()</"
 "code> and <code>replayPlot()</code>."
 msgstr ""
+"საბაზისო გრაფიკების ჩაწერა და თავიდან დაკვრა <code>recordPlot()</code> და "
+"<code>replayPlot()</code> ფუნქციებით ხდება."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1507,6 +1522,9 @@ msgid ""
 "interest is to browse the menu. Shortcuts are listed next to their action in "
 "the menu."
 msgstr ""
+"ბევრ სიტუაციაში RKWard-ის მართვა თაგუნას გარეშე, მხოლოდ, კლავიატურით "
+"შეგიძლიათ. საჭირო მალსახმობების შესახებ ინფორმაციის ძებნა მენიუს თვალიერებით "
+"შეგიძლიათ. მალსახმობები მენიუში მათ ქმედების გასწვრივ წერია."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1540,6 +1558,8 @@ msgid ""
 "On most systems, you can also configure shortcuts by right-clicking on the "
 "respective menu item."
 msgstr ""
+"სისტემების უმრავლესობაზე მალსახმობების მორგება შესაბამისი მენიუს პუნქტზე "
+"მარჯვენა წკაპით შეგიძლიათ."
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="...">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1589,6 +1609,8 @@ msgid ""
 "Meta+n to bring up <link href=\"rkward://rkward_code_navigation\">Code "
 "Navigation</link> mode in script windows"
 msgstr ""
+"Meta+n იძახებს <link href=\"rkward://rkward_code_navigation\">კოდის "
+"ნავიგაციის</link> რეჟიმს სკრიპტის ფანჯრებში"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8
@@ -1612,6 +1634,8 @@ msgid ""
 "They can be used to make better use of screen space, but also to view far-"
 "apart portions of a single file, simultaneously."
 msgstr ""
+"ისინი შეიძლება გამოიყენოთ ეკრანის სივრცის უკეთესად გამოსაყენებლად და ასევე "
+"ერთი ფაილის ორი დაშორებული ნაწილის ერთდროულად სანახავად."
 
 #. i18n: ectx: (Split views) <section title="...">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1667,6 +1691,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"ეს გვერდი RKWard-ის გამოყენებისას ყველაზე ხშირად აღმოჩენილი შეცდომების "
+"გადაწყვეტებს შეიცავს. ასევე იხილეთ <link href=\"https://rkward.kde.org/faq"
+"\">ხდკ ინტერნეტში</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -1724,6 +1751,9 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"ხშირ შემთხვევაში, თუ აირჩევთ R-ის აგების დროს გამოყენებული ვერსიისგან "
+"განსხვავებულს, ის \"უბრალოდ მუშაობს\". თუ პრობლემებს გადააწყდით, გამოიყენეთ "
+"R-ის იგივე, ან მსგავსი ვერსია."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1766,6 +1796,8 @@ msgid ""
 "Sometimes I enter a command short after the start of RKWard but it is not "
 "processed. What's wrong?"
 msgstr ""
+"ხანდახან მე შემყავს ბრძანება RKWard-ის გაშვებიდან მალევე, მაგრამ ის არ "
+"მუშავდება. რა სჭირს?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -1783,6 +1815,11 @@ msgid ""
 "at the little box on the right bottom corner of RKWard. If it is green you "
 "can go ahead."
 msgstr ""
+"ეს ხდება იმიტომ, რომ ჯერ ეშვება RKWard და R, მხოლოდ, შემდეგ ეშვება, ფონში. "
+"თქვენი მანქანის სიჩქარეზე დამოკიდებულებით, R-ის გაშვებას რაღაც დრო შეიძლება, "
+"დასჭირდეს. ნებისმიერ შემთხვევაში, შეგიძლიათ, RKWard-ში R-ის გაშვების "
+"მდგომარეობა შეამოწმოთ. უბრალოდ შეხედეთ პატარა ყუთს RKWard-ის ქვედა მარჯვენა "
+"კუთხეში. თუ ის მწვანეა, ყველაფერი კარგადაა."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -1793,6 +1830,10 @@ msgid ""
 "commands will be placed into a queue, first, and executed as soon as the "
 "backend becomes available, again."
 msgstr ""
+"ბრძანებების გადაცემა მანამდეც შეგიძლიათ, სანამ უკანაბოლო გაეშვება, ან სანამ "
+"რამე გრძელი გამოთვლა მიმდინარეობს. ამ შემთხვევაში თქვენი ბრძანებები, ჯერ, "
+"რიგში ჩადგებიან და შესრულდებიან მაშინ, როცა უკანაბოლო ისევ ხელმისაწვდომი "
+"გახდება."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -2100,6 +2141,11 @@ msgid ""
 "\"Workspace\" icon, which is located on the top of the left window border, "
 "by default."
 msgstr ""
+"სამუშაო სივრცეების დამთვალიერებელი შეგიძლიათ, გამოიძახოთ მენიუდან ფანჯრები-"
+">გააქტიურება-> სამუშაო სივრცეების დამთვალიერებლის ჩვენება/დამალვა "
+"(ნაგულისხმევი მალსახმობია Alt+1), ან \"სამუშაო სივრცის\" ხატულაზე "
+"დაწკაპუნებით, რომელიც ნაგულისხმევად მარცხენა ფანჯრის ზედა საზღვარზეა "
+"მოთავსებული."
 
 #. i18n: ectx: (Workspace Browser) <section title="...">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2128,6 +2174,10 @@ msgid ""
 "objects, which are not meant for direct use, so it's generally safe to hide "
 "them from view."
 msgstr ""
+"პირველი ისედაც ნათელი უნდა იყოს. ის მართავს, ნაჩვენებია, თუ არა ობიექტები, "
+"რომლის სახელიც იწყება წერტილით (\".\"). ისინი ხშირად გამოიყენება შიდა "
+"ობიექტებისთვის და პირდაპირი გამოყენებისთვის განკუთვნილი არაა, ასე რომ, "
+"ზოგადად, ისინი ხედიდან დამალულია ხოლმე."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2137,6 +2187,9 @@ msgid ""
 "while \"Functions\" shows only functions, and \"Non-Functions\" shows all "
 "other objects (typically data)."
 msgstr ""
+"მეორე საშუალებას გაძლევთ, ობიექტის ტიპით მონიშნოთ. \"ყველა\" არ ფილტრავს, "
+"მაშინ, როცა \"ფუნქციები\", მხოლოდ, ფუნქციებს აჩვენებს და \"არაფუნქციები\" "
+"ყველა სხვა ობიექტს აჩვენებს (ჩვეულებრივ - მონაცემებს)."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16

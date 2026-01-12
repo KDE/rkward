@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2025-05-01 04:10+0200\n"
+"PO-Revision-Date: 2026-01-11 06:44+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1817,6 +1817,8 @@ msgid ""
 "This is an implementation of the standard (traditional S) graphics function "
 "<b>plot</b>."
 msgstr ""
+"ეს სტანდარტული (ტრადიციული S) გრაფიკული ფუნქციის <b>გრაფიკის</b> "
+"განხორციელებაა."
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
@@ -1979,6 +1981,7 @@ msgstr "ხაზებით გადახატული წერტილ�
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
 msgstr ""
+"ვერტიკალური ხაზების დახაზვა წერტილებიდან ნულოვან ღერძამდე (მაღალი სიმკვრივე)"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:51
@@ -2011,6 +2014,8 @@ msgid ""
 "Enter value - for diff.col. enter a vector -<br/> eg: c(1,2) or "
 "c('red','green')"
 msgstr ""
+"შეიყვანეთ მნიშვნელობა - სხვა ფერისთვის შეიყვანეთ ვექტორი -<br/> მაგ: c(1,2) "
+"ან c('red','green')"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:69
@@ -2039,6 +2044,8 @@ msgid ""
 "A numerical value giving the amount by which plotting text and symbols "
 "should be scaled relative to the default."
 msgstr ""
+"რიცხვითი მნიშვნელობა რომლითაც ხდება დახატული ტექსტისა და სიმბოლოების "
+"გადიდება ნაგულისხმევ ზომასთან შედარებით."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:86
@@ -2059,6 +2066,8 @@ msgid ""
 "Either an integer specifying a symbol or a single character to be used as "
 "the default in plotting points."
 msgstr ""
+"ან მთელი რიცხვი, რომელიც მიუთითებს სიმბოლოს, ან ერთი სიმბოლო, რომელიც "
+"ნაგულისხმევად იქნება გამოყენებული წერტილების ხატვაში."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:100
@@ -2081,6 +2090,8 @@ msgid ""
 "Choose one or more objects to be plotted. Choose the diagonal plot and how "
 "the scatterplots should be plotted from the options tab."
 msgstr ""
+"აირჩიეთ ერთი ან მეტი ობიექტი დასახაზად. აირჩიეთ მორგების ჩანართიდან "
+"დიაგონალური დიაგრამა და როგორ უნდა მოხდეს გაფანტული დიაგრამის დახაზვა."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:18
@@ -2089,6 +2100,8 @@ msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
 msgstr ""
+"აირჩიეთ მონაცემთა მატრიცა, რიცხვითი მონაცემების კადრი, ან ერთზე მეტი ცვლადი "
+"მონაცემთა მატრიციდან"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
@@ -2130,7 +2143,7 @@ msgstr "დახაზვის გარეშე. დიაგონალზ
 #: rkward/plugins/plots/scatterplot_matrix.rkh:27
 #, kde-format
 msgid "Select it if you want points to be plotted in scatterplots."
-msgstr ""
+msgstr "აირჩიეთ, თუ გნებავთ წერტილების დახაზვა გაფანტულ დიაგრამებში."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot smooth")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:28
@@ -2203,6 +2216,10 @@ msgid ""
 "<link href=\"http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html"
 "\">Rcmdr package</link>."
 msgstr ""
+"აირჩიეთ მონაცემები ტოტი-და-ფოთოლის ტიპის დიაგრამის დასახაზად. იხილეთ ბმული "
+"<link href=\"rkward://rhelp/stem\"/>. უფრო რთული ტოტი-და-ფოთოლის ტიპის "
+"დიაგრამებისთვის იხილეთ <link href=\"http://cran.r-project.org/src/contrib/"
+"Descriptions/Rcmdr.html\"> პაკეტი Rcmdr</link>."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "variable:")
 #: rkward/plugins/plots/stem.rkh:18

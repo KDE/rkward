@@ -3331,7 +3331,7 @@ msgid ""
 msgstr ""
 "Establix el caràcter utilitzat per a indicar el salt de línia (EOL). Este "
 "varia entre els sistemes operatius, i canviant esta opció podria ajudar en "
-"cas de tindre problemes en intercanviar fitxers amb altres persones."
+"cas de tindre problemes mentre s'intercanviaven fitxers amb altres persones."
 
 #. i18n: ectx: (Export Table / CSV files) <related>
 #: rkward/plugins/00saveload/save/write_csv.rkh:88

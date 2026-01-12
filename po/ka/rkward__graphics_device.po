@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2024-09-08 14:06+0200\n"
+"PO-Revision-Date: 2026-01-11 07:53+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -107,6 +107,19 @@ msgid ""
 "mostly using <b>par</b>(). Note that all the parameters to postscript are "
 "also valid parameters to dev2bitmap."
 msgstr ""
+"აირჩიეთ გატანის ფუნქცია და ფაილის სახელი, რომელშიც შენახვა მოხდება. ასევე "
+"ხელმისაწვდომია (იხ. ქვემოთ) დამატებითი პარამეტრები ზომისთვის, "
+"გაფართოებისთვის და ა.შ. გატანა ხდება ფუნქციით <b>dev.print</b>. ghostscript-"
+"ით გასატანად გამოიყენება <b>dev2bitmap</b>, რომელსაც Ghostscript სჭირდება. "
+"გატანის პარამეტრების უმრავლესობა გატანის ფუნქციას (<b>postscript</b>, "
+"<b>pdf</b>, <b>svg</b>, <b>png</b>, or <b>jpeg</b>) dev.print პირდაპირ "
+"უგზავნის. დაიმახსოვრეთ, რომ ამ დამატებაში 'ფერის' პარამეტრები (როგორიცაა "
+"ფონისა და წინა პლანის ფერები) არ არსებობს. ეს იმიტომ ხდება, რომ dev.print "
+"უბრალოდ ბეჭდავს მიმდინარე გრაფიკას (ძირითადად X11-ზე) მითითებულ ფაილში "
+"მითითებული ფორმატით. იმისათვის, რომ დააყენოთ ფონის (ან წინა პლანის) ფერები, "
+"ამატი მითითება დახაზვის ფუნქციის გამოძახებისასა საჭირო, რომელიც უმეტესად "
+"არის <b>par</b>(). დაიმახსოვრეთ, რომ ghostscript-ის ყველა პარამეტრი ასევე "
+"წარმოადგენს სწორ პარამეტრს dev2bitmap-ისთვის."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <usage>
 #: rkward/plugins/x11device/export.rkh:11
@@ -171,6 +184,11 @@ msgid ""
 "can not be set in this case. This sets the <i>onefile</i> parameter to "
 "postscript to FALSE."
 msgstr ""
+"postscript-ის ფორმატში გატანისას ეს საშუალებას გაძლევთ, აირჩიოთ, მოხდება თუ "
+"არა EPSF (.eps ფაილი) თავსართის გენერაცია. როგორც ჩანს, ეს უფრო მეტად "
+"გადატანად ფაილებს აგენერირებს, ასე რომ, ეს რეკომენდებულია უმრავლეს "
+"შემთხვევაში. ამ შემთხვევაში ქაღალდის ზომას და ორიენტაციას ვერ დააყენებთ. ეს "
+"postscript-ის პარამეტრს <i>onefile</i> აყენებს მნიშვნელობაზე FALSE."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Width")
 #: rkward/plugins/x11device/export.rkh:25
@@ -200,6 +218,16 @@ msgid ""
 "the provided resolution value is used. None of these matter for exporting to "
 "Postscript/PDF where the width parameter is provided in inches."
 msgstr ""
+"ეს გატანის ფუნქციის <i>width</i> პარამეტრია. რიცხვის მითითება ინჩებში ხდება. "
+"JPEG/PNG ფორმატში გატანისას (რომელსაც სიგანე პიქსელებში სჭირდება), ზომა "
+"გამოითვლება ინჩებში მიწოდებული სიგანის მნიშვნელობის გარჩევადობის (მითითება "
+"ხდება dpi 'წერტილები ინჩზე') მნიშვნელობაზე გამრავლებით. ასე რომ, "
+"სიგანის_პიქსელები = სიგანე_ინჩებში * გარჩევადობა_dpi. თუ გარჩევადობა "
+"დაყენებულია 'ნაგულისხმევ გარჩევადობაზე', მაშინ jpeg/png-ში გატანისას "
+"გამოიყენება ნაგულისხმევი მნიშვნელობა 96 და 72, თუ გატანა ghistscript-ით "
+"ხდება. სხვა შემთხვევაში გამოიყენება მითითებული გარჩევადობა. ეს პარამეტრები "
+"არ გამოიყენება Postscript/PDF-ში გატანისას, სადაც სიგანის პარამეტრების "
+"მითითება ინჩებში ხდება."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
 #: rkward/plugins/x11device/export.rkh:27
@@ -211,6 +239,11 @@ msgid ""
 "as the width (in pixels) parameter value. Again, none of these are required "
 "for exporting to Postscript/PDF."
 msgstr ""
+"<b>jpeg</b> ან <b>png</b> ფუნქციებს, სულ ცოტა, სიგანის/სიმაღლის მითითება "
+"სჭირდება. ჩვენ გადავლახეთ ეს წინააღმდეგობა სიგანის <b>par(\"din\")[1]</b>-"
+"დან წაკითხვით (ინჩებში) და შემდეგ 'par(\"din\")[1] * გაფართოების სიგანის "
+"(პიქსელებში) პარამეტრის მნიშვნელობად გამოყენებით. კიდევ ერთხელ, ესენი "
+"Postscript/PDF-ში გატანისთვის საჭირო არაა."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Height in inches")
 #: rkward/plugins/x11device/export.rkh:30
@@ -236,6 +269,11 @@ msgid ""
 "resolution (when 'Default Resolution' is checked) is 96 for PNG/JPEG exports "
 "and it is 72 for Ghostscript exports."
 msgstr ""
+"ხელმისაწვდომია, მხოლოდ, PNG/JPEG/Ghostscript-ისთვის. ეს არის არის dev.print-"
+"ის და dev2bitmap-ის <i>res</i> პარამეტრი. ეს მნიშვნელობა გამოიყენება სიგანე/"
+"სიმაღლის პიქსელებიდან ინჩებში გადასაყვანად, როგორც აღწერილია მაღლა "
+"('სიგანის' ქვეშ). ნაგულისხმევი გაფართოებაა (როცა ჩართულია 'ნაგულისხმევი "
+"გაფართოება') 96 PNG/JPEG-ში გატანისას და 72 Ghostscript-ში გატანისას."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "JPEG Quality")
 #: rkward/plugins/x11device/export.rkh:35
@@ -257,6 +295,10 @@ msgid ""
 "<b>postscript</b>. This is available only for Postscript/PDF exports. This "
 "is the <i>paper</i> option to the exporting function."
 msgstr ""
+"გამოიყენეთ ეს გატანისას ფურცლის ზომის დასაყენებლად. აირჩიეთ 'ნაგულისხმევი', "
+"თუ არ გნებავთ ფურცლის პარამეტრების მითითება. სხვა პარამეტრები ახსნილია R-ის "
+"სახელმძღვანელოში <b>postscript</b>-ის შესახებ. ეს ხელმისაწვდომია, მხოლოდ, "
+"Postscript/PDF-სი გატანისას. ეს გატანის ფუნქციის <i>paper</i> პარამეტრია."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Pagecentre")
 #: rkward/plugins/x11device/export.rkh:39
@@ -288,6 +330,11 @@ msgid ""
 "family (Helvectica) will be used. See the R reference on postscript for more "
 "details."
 msgstr ""
+"ეს <b>postscript</b>-ის <i>family</i> პარამეტრია. დარწმუნდით, რომ აირჩიოთ "
+"ოჯახი, რომელიც თქვენს მანქანაზეა ხელმისაწვდომი. ფონტის ოჯახების კლასს 'URW' "
+"ghostscript სჭირდება. თუ დარწმუნებული არ ბრძანდებით, აირჩიეთ 'ნაგულისხმევი. "
+"ნაგულისხმევად გამოყენებული იქნება Helvetica. მეტი დეტალებისთვის იხილეთ R-ის "
+"სახელმძღვანელო."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font Encoding")
 #: rkward/plugins/x11device/export.rkh:42

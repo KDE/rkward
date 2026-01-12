@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2025-05-06 04:44+0200\n"
+"PO-Revision-Date: 2026-01-11 11:05+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Gerogian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -177,6 +177,9 @@ msgid ""
 "<i>outvar</i>: Symbol name to use for the output variable (the limited "
 "vector). May be identical to <i>invar</i>. Defaults to 'x'."
 msgstr ""
+"<i>outvar</i>: სიმბოლოს სახელი გამოტანის ცვლადისთვის გამოსაყენებლად "
+"(შეზღუდული ვექტორი). შეიძლება, <i>invar</i>-ის იდენტური იყოს. ნაგულისხმევია "
+"'x'."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -187,6 +190,9 @@ msgid ""
 "limitation options, suitable for pasting into the <i>parameters</i> argument "
 "of <b>rk.header()</b>."
 msgstr ""
+"<i>parameters</i>: ეს თვისება დაყენებული იქნება სტრიქონზე, რომელიც იმ "
+"პარამეტრების შეზღუდვებს ადგენს, რომლებიც <b>rk.header()</b>-ის "
+"<i>parameters</i> არგუმენტში ჩასასმელად გამოდგება."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="...">
@@ -297,6 +303,8 @@ msgid ""
 "Allows to tabulate frequencies, or aggregate a single variable, by the "
 "levels of one or more grouping variables."
 msgstr ""
+"საშუალებას გაძლევთ, მოახდინოთ სიხშირეების ტაბულირება, ან ერთი ცვლადის "
+"აგრეგაცია ერთი ან მეტი დაჯგუფების ცვლადის დონის მხედვით."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Grouping factors")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:17
@@ -305,6 +313,8 @@ msgid ""
 "Select the grouping variables. Often, these will be factors. The levels of "
 "each grouping variable will be crossed."
 msgstr ""
+"აირჩიეთ დასაჯგუფებელი ცვლადები. ხშირად ეს ცვლადები კოეფიციენტებია. თითოეული "
+"დაჯგუფების ცვლადის დონე გადახაზული იქნება."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
@@ -2168,7 +2178,7 @@ msgstr "მთავარი სათაური (ზემოდან). ნ
 #: rkward/plugins/distributions/../plots/plot_options.xml:88
 #, kde-format
 msgid "Interpret this label as literal (quoted) string"
-msgstr ""
+msgstr "ამ ჭდის ინტერპრეტაცია ლიტერალის (ციტირებული) სტრიქონის სახით"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:86
@@ -2271,6 +2281,7 @@ msgstr "Y-ღერძის ჭდე"
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
 msgstr ""
+"მოხდეს ამ ჭდეების ლიტერალის (ციტირებული) სტრიქონების სახით ინტერპრეტაცია?"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:118
