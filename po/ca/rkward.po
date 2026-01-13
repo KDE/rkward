@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-06 00:39+0000\n"
+"POT-Creation-Date: 2026-01-13 08:38+0000\n"
 "PO-Revision-Date: 2025-10-22 11:27+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -3640,7 +3640,7 @@ msgid "Enter value:"
 msgstr "Introduïu el valor:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:375
+#: rkward/windows/rkcommandeditorwindow.cpp:617
 #, kde-format
 msgid "Preview"
 msgstr "Vista prèvia"
@@ -3662,7 +3662,6 @@ msgid "Could not create plugin"
 msgstr "No s'ha pogut crear el connector"
 
 #: rkward/plugin/rkstandardcomponent.cpp:667
-#: rkward/windows/rkcommandeditorwindow.cpp:772
 #, kde-format
 msgid "Options"
 msgstr "Opcions"
@@ -3994,12 +3993,12 @@ msgstr ""
 msgid "Ok"
 msgstr "D'acord"
 
-#: rkward/rbackend/rkrinterface.cpp:90
+#: rkward/rbackend/rkrinterface.cpp:91
 #, kde-format
 msgid "R Startup"
 msgstr "Inici de l'R"
 
-#: rkward/rbackend/rkrinterface.cpp:92
+#: rkward/rbackend/rkrinterface.cpp:93
 #, kde-format
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -4009,7 +4008,7 @@ msgstr ""
 "RKWard. Segurament el RKWard no funcionarà adequadament. Si us plau, "
 "comproveu la configuració.</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:94
+#: rkward/rbackend/rkrinterface.cpp:95
 #, kde-format
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
@@ -4018,12 +4017,12 @@ msgstr ""
 "<p>Hi ha hagut un problema en iniciar l'execució del dorsal R. S'ha/n "
 "produït el/s següent/s error/s:</p>\n"
 
-#: rkward/rbackend/rkrinterface.cpp:96
+#: rkward/rbackend/rkrinterface.cpp:97
 #, kde-format
 msgid "Error starting R"
 msgstr "S'ha produït un error en iniciar l'R"
 
-#: rkward/rbackend/rkrinterface.cpp:577
+#: rkward/rbackend/rkrinterface.cpp:578
 #, kde-format
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
@@ -4035,17 +4034,17 @@ msgstr ""
 "paquet no està instal·lat. Ara s'obrirà l'eina de gestió de paquets, a fi "
 "que pugueu intentar localitzar i instal·lar aquest paquet."
 
-#: rkward/rbackend/rkrinterface.cpp:577
+#: rkward/rbackend/rkrinterface.cpp:578
 #, kde-format
 msgid "Require package '%1'"
 msgstr "Requereix el paquet «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:609
+#: rkward/rbackend/rkrinterface.cpp:610
 #, kde-format
 msgid "Quitting was canceled"
 msgstr "S'ha cancel·lat la sortida"
 
-#: rkward/rbackend/rkrinterface.cpp:611
+#: rkward/rbackend/rkrinterface.cpp:612
 #, kde-format
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
@@ -4069,40 +4068,40 @@ msgstr ""
 "versions posteriors del RKWard). En aquest cas, ara seleccioneu «Cancel·la», "
 "i després tanqueu les finestres de dades, deseu i torneu a intentar-ho."
 
-#: rkward/rbackend/rkrinterface.cpp:611
+#: rkward/rbackend/rkrinterface.cpp:612
 #, kde-format
 msgid "Locale change"
 msgstr "Canvia la configuració regional"
 
-#: rkward/rbackend/rkrinterface.cpp:612
+#: rkward/rbackend/rkrinterface.cpp:613
 #, kde-format
 msgid "Changing the locale was canceled by user"
 msgstr "L'usuari ha cancel·lat el canvi de la configuració regional"
 
-#: rkward/rbackend/rkrinterface.cpp:715
+#: rkward/rbackend/rkrinterface.cpp:716
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
 "Intenta començar l'enregistrament, mentre que ja està enregistrant les "
 "ordres. S'ignora."
 
-#: rkward/rbackend/rkrinterface.cpp:723
+#: rkward/rbackend/rkrinterface.cpp:724
 #, kde-format
 msgid "Could not open file for writing. Not recording commands"
 msgstr ""
 "No s'ha pogut obrir el fitxer per a escriptura. No s'enregistraran les ordres"
 
-#: rkward/rbackend/rkrinterface.cpp:816
+#: rkward/rbackend/rkrinterface.cpp:819
 #, kde-format
 msgid "Error: unrecognized request '%1'"
 msgstr "Error: sol·licitud no reconeguda «%1»"
 
-#: rkward/rbackend/rkrinterface.cpp:888
+#: rkward/rbackend/rkrinterface.cpp:891
 #, kde-format
 msgid "R backend requests information"
 msgstr "El dorsal R sol·licita informació"
 
-#: rkward/rbackend/rkrinterface.cpp:910
+#: rkward/rbackend/rkrinterface.cpp:913
 #, kde-format
 msgid ""
 "\n"
@@ -4119,7 +4118,7 @@ msgstr ""
 "Malgrat això, podreu desar qualsevol fitxer d'ordres obert, la sortida, o "
 "copiar dades dels editors de dades oberts. Sortiu del RKWard després d'això."
 
-#: rkward/rbackend/rkrinterface.cpp:911
+#: rkward/rbackend/rkrinterface.cpp:914
 #, kde-format
 msgid "R engine has died"
 msgstr "El motor R s'ha aturat"
@@ -4365,7 +4364,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "No s'ha pogut trobar el component «katepart»"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:713
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:884
 #, kde-format
 msgid "R Console"
 msgstr "Consola de l'R"
@@ -6682,58 +6681,72 @@ msgstr "Executa"
 msgid "Run current statement, and advance"
 msgstr "Executa la sentència actual i avança"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:169
+#: rkward/windows/rkcommandeditorwindow.cpp:183
+#, fuzzy, kde-format
+#| msgctxt "noun: type of preview"
+#| msgid "Preview Mode"
+msgctxt "noun: type of preview"
+msgid "<b>Preview Mode</b>"
+msgstr "Mode de vista prèvia"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:189
+#, fuzzy, kde-format
+#| msgid "<b>Done</b>"
+msgid "<b>Options</b>"
+msgstr "<b>Fet</b>"
+
+#: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
 msgid "Unable to open \"%1\""
 msgstr "No es pot obrir «%1»"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:169
+#: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
 msgid "Could not open command file"
 msgstr "No s'ha pogut obrir el fitxer d'ordres"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:209
+#: rkward/windows/rkcommandeditorwindow.cpp:451
 #, kde-format
 msgid "Script Editor"
 msgstr "Editor de scripts"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:351
+#: rkward/windows/rkcommandeditorwindow.cpp:593
 #, kde-format
 msgid "Insert line break and run"
 msgstr "Insereix un salt de línia i executa"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:358
+#: rkward/windows/rkcommandeditorwindow.cpp:600
 #, kde-format
 msgid "Run block"
 msgstr "Executa el bloc"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:362
+#: rkward/windows/rkcommandeditorwindow.cpp:604
 #, kde-format
 msgid "Mark selection as block"
 msgstr "Marca la selecció com un bloc"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:365
+#: rkward/windows/rkcommandeditorwindow.cpp:607
 #, kde-format
 msgid "Unmark block"
 msgstr "Desmarca bloc"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:370
+#: rkward/windows/rkcommandeditorwindow.cpp:612
 #, kde-format
 msgid "CD to script directory"
 msgstr "Canvia al directori de l'script"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:371
+#: rkward/windows/rkcommandeditorwindow.cpp:613
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "Canvia el directori de treball pel d'aquest script"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:378
+#: rkward/windows/rkcommandeditorwindow.cpp:619
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Actualitza mentre s'escriu"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:380
+#: rkward/windows/rkcommandeditorwindow.cpp:622
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6744,88 +6757,88 @@ msgstr ""
 "prèvia cada vegada que modifiqueu l'script. Quan aquesta opció està "
 "inhabilitada, la vista prèvia s'actualitzarà només quan deseu l'script."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:386
+#: rkward/windows/rkcommandeditorwindow.cpp:632
 #, kde-format
 msgid "Save Script..."
 msgstr "Desa l'script..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:388
+#: rkward/windows/rkcommandeditorwindow.cpp:634
 #, kde-format
 msgid "Save Script As..."
 msgstr "Desa l'script com a..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:468
-#: rkward/windows/rkcommandeditorwindow.cpp:1024
+#: rkward/windows/rkcommandeditorwindow.cpp:714
+#: rkward/windows/rkcommandeditorwindow.cpp:1133
 #, kde-format
 msgid " [modified]"
 msgstr " [modificat]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:475
+#: rkward/windows/rkcommandeditorwindow.cpp:721
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "El document «%1» ha estat modificat. Segur que el voleu tancar?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:475
+#: rkward/windows/rkcommandeditorwindow.cpp:721
 #, kde-format
 msgid "File not saved"
 msgstr "El fitxer no s'ha desat"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:673
+#: rkward/windows/rkcommandeditorwindow.cpp:845
 #, kde-format
 msgid "No preview"
 msgstr "Sense vista prèvia"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:675
+#: rkward/windows/rkcommandeditorwindow.cpp:846
 #, kde-format
 msgid "Disable preview"
 msgstr "Desactiva la vista prèvia"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:679
+#: rkward/windows/rkcommandeditorwindow.cpp:852
 #, kde-format
 msgid "R Markdown"
 msgstr "R Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:681
+#: rkward/windows/rkcommandeditorwindow.cpp:854
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Vista prèvia de l'R Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:682
+#: rkward/windows/rkcommandeditorwindow.cpp:855
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr "Previsualitza l'script representat des del format RMarkdown (.Rmd)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:686
+#: rkward/windows/rkcommandeditorwindow.cpp:857
 #, kde-format
 msgid "Render format"
 msgstr "Format de representació"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:687
+#: rkward/windows/rkcommandeditorwindow.cpp:858
 #, kde-format
 msgid "Render as HTML"
 msgstr "Representa com a HTML"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:688
+#: rkward/windows/rkcommandeditorwindow.cpp:859
 #, kde-format
 msgid "Render as PDF"
 msgstr "Representa com a PDF"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:689
+#: rkward/windows/rkcommandeditorwindow.cpp:860
 #, kde-format
 msgid "Auto Format"
 msgstr "Format automàtic"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:699
+#: rkward/windows/rkcommandeditorwindow.cpp:870
 #, kde-format
 msgid "RKWard Output"
 msgstr "Sortida del RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:701
+#: rkward/windows/rkcommandeditorwindow.cpp:872
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Vista prèvia de la sortida RKWard generada"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:702
+#: rkward/windows/rkcommandeditorwindow.cpp:873
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6835,40 +6848,40 @@ msgstr ""
 "vista prèvia estarà buida, si no hi ha cap crida a la <i>rk.print()</i> o "
 "altres ordres de sortida del RKWard."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:715
+#: rkward/windows/rkcommandeditorwindow.cpp:886
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Vista prèvia de l'script executant-se en una consola R interactiva"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:716
+#: rkward/windows/rkcommandeditorwindow.cpp:887
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 "Vista prèvia de l'script com si s'hagués executat en una consola R "
 "interactiva"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:720
+#: rkward/windows/rkcommandeditorwindow.cpp:888
 #, kde-format
 msgid "Echo statements"
 msgstr "Reprodueix les sentències"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:723
+#: rkward/windows/rkcommandeditorwindow.cpp:889
 #, kde-format
 msgid "Continue on error"
 msgstr "Continua en cas d'error"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:725
+#: rkward/windows/rkcommandeditorwindow.cpp:891
 #, kde-format
 msgid "Evaluation environment"
 msgstr "Entorn d'avaluació"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:727
+#: rkward/windows/rkcommandeditorwindow.cpp:892
 #, kde-format
 msgid ".GlobalEnv"
 msgstr ".GlobalEnv"
 
 # skip-rule: t-sp_pu
-#: rkward/windows/rkcommandeditorwindow.cpp:729
+#: rkward/windows/rkcommandeditorwindow.cpp:894
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
@@ -6877,13 +6890,13 @@ msgstr ""
 "Avalua el codi directament a .GlobalEnv. Les assignacions poden accedir <b>i "
 "modificar</b> objectes a .GlobalEnv."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:730
+#: rkward/windows/rkcommandeditorwindow.cpp:895
 #, kde-format
 msgid "Scoped"
 msgstr "En un àmbit"
 
 # skip-rule: t-sp_pu
-#: rkward/windows/rkcommandeditorwindow.cpp:732
+#: rkward/windows/rkcommandeditorwindow.cpp:897
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6895,13 +6908,13 @@ msgstr ""
 "<tt>&lt;-</tt> no els modificaran. (Altres operacions d'assignació encara "
 "els podrien modificar!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:733
+#: rkward/windows/rkcommandeditorwindow.cpp:898
 #, kde-format
 msgid "Local"
 msgstr "Local"
 
 # skip-rule: t-sp_pu
-#: rkward/windows/rkcommandeditorwindow.cpp:734
+#: rkward/windows/rkcommandeditorwindow.cpp:899
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6914,17 +6927,17 @@ msgstr ""
 "fan servir l'operador <tt>&lt;-</tt>. (Altres operacions d'assignació encara "
 "els podrien modificar!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:749
+#: rkward/windows/rkcommandeditorwindow.cpp:914
 #, kde-format
 msgid "Plot"
 msgstr "Diagrama"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:751
+#: rkward/windows/rkcommandeditorwindow.cpp:916
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Vista prèvia del diagrama generat"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:752
+#: rkward/windows/rkcommandeditorwindow.cpp:917
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6935,13 +6948,7 @@ msgstr ""
 "script. Aquesta vista prèvia estarà buida, si no hi ha cap crida a "
 "<i>plot()</i> o altres ordres de gràfics."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:766
-#, kde-format
-msgctxt "noun: type of preview"
-msgid "Preview Mode"
-msgstr "Mode de vista prèvia"
-
-#: rkward/windows/rkcommandeditorwindow.cpp:818
+#: rkward/windows/rkcommandeditorwindow.cpp:940
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6969,12 +6976,12 @@ msgstr ""
 "compte quan useu la funcionalitat de vista prèvia, i especialment en usar la "
 "funcionalitat en scripts originats des de fonts no confiables.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:818
+#: rkward/windows/rkcommandeditorwindow.cpp:940
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Efectes col·laterals de les vistes prèvies"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:949
+#: rkward/windows/rkcommandeditorwindow.cpp:1058
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6982,17 +6989,17 @@ msgstr ""
 "S'ha produït un error en intentar crear un desament automàtic del fitxer de "
 "script «%1»:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1023
+#: rkward/windows/rkcommandeditorwindow.cpp:1132
 #, kde-format
 msgid "Unnamed"
 msgstr "Sense nom"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1156
+#: rkward/windows/rkcommandeditorwindow.cpp:1265
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (Activa)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1175
+#: rkward/windows/rkcommandeditorwindow.cpp:1284
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Sense ús)"
