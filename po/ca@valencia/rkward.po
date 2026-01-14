@@ -1,5 +1,5 @@
 # Translation of rkward.po to Catalan (Valencian)
-# Copyright (C) 2006-2025 This_file_is_part_of_KDE
+# Copyright (C) 2006-2026 This_file_is_part_of_KDE
 # This file is put in the public domain.
 # 28-11-2006: v 1.00
 #
@@ -7,13 +7,13 @@
 # SPDX-FileCopyrightText: 2006 Núria Asensio <nasensio.germanstrias@gencat.net>
 # SPDX-FileCopyrightText: 2007, 2010, 2012 Josep Roca <pep.roca@gmail.com>
 # SPDX-FileCopyrightText: 2014, 2016, 2018, 2019, 2020, 2022, 2025 Antoni Bella Pérez <antonibella5@yahoo.com>
-# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-13 08:38+0000\n"
-"PO-Revision-Date: 2025-10-22 11:27+0200\n"
+"PO-Revision-Date: 2026-01-13 12:42+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -6676,18 +6676,15 @@ msgid "Run current statement, and advance"
 msgstr "Executa la sentència actual i avança"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgctxt "noun: type of preview"
-#| msgid "Preview Mode"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "Mode de vista prèvia"
+msgstr "<b>Mode de vista prèvia</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>Fet</b>"
+msgstr "<b>Opcions</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
