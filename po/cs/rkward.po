@@ -6294,10 +6294,9 @@ msgid "<b>Preview Mode</b>"
 msgstr "<b>Vybrat jeden:</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>Hotovo</b>"
+msgstr "<b>Možnosti</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format

@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the it package.
 # Daniele Medri <daniele@medri.org>, 2004-2005.
 # Paolo Zamponi <feus73@gmail.com>, 2018, 2019.
-# SPDX-FileCopyrightText: 2020, 2021, 2022, 2024, 2025 Vincenzo Reale <smart2128vr@gmail.com>
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2024, 2025, 2026 Vincenzo Reale <smart2128vr@gmail.com>
 #
 #
 msgid ""
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-13 08:38+0000\n"
-"PO-Revision-Date: 2025-10-23 08:42+0200\n"
+"PO-Revision-Date: 2026-01-13 15:26+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6652,18 +6652,15 @@ msgid "Run current statement, and advance"
 msgstr "Esegui l'istruzione attuale e avanza"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgctxt "noun: type of preview"
-#| msgid "Preview Mode"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "Modalità anteprima"
+msgstr "<b>Modalità anteprima</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>Completato</b>"
+msgstr "<b>Opzioni</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-13 08:38+0000\n"
-"PO-Revision-Date: 2025-10-22 03:33+0200\n"
+"PO-Revision-Date: 2026-01-14 05:10+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -6331,18 +6331,15 @@ msgid "Run current statement, and advance"
 msgstr "მიმდინარე გამოსახულების გაშვება და წინ გადასვლა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgctxt "noun: type of preview"
-#| msgid "Preview Mode"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "გადახედვის რეჟიმი"
+msgstr "<b>გადახედვის რეჟიმი</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>მზადაა</b>"
+msgstr "<b>პარამეტრები</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -7176,6 +7173,9 @@ msgid ""
 "this is not currently supported in this build of RKWard on Mac OS X. See "
 "https://rkward.kde.org/mac for more information."
 msgstr ""
+"თქვენ სცადეთ ახალი R-ის გრაფიკის მოწყობილობის ფანჯრის ჩაშენება RKWard-ში. "
+"მაგრამ ეს RKWard-ის Mac OS X-ზე ამ აგებაში მხარდაჭერილი არაა. მეტი "
+"ინფორმაციისთვის იხილეთ https://rkward.kde.org/mac."
 
 #: rkward/windows/rkwindowcatcher.cpp:133
 #: rkward/windows/rkwindowcatcher.cpp:135
