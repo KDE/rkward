@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-13 08:38+0000\n"
-"PO-Revision-Date: 2026-01-11 16:34+0100\n"
+"PO-Revision-Date: 2026-01-14 08:18+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -6756,18 +6756,15 @@ msgid "Run current statement, and advance"
 msgstr "Exécuter l'instruction courante et avancer"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgctxt "noun: type of preview"
-#| msgid "Preview Mode"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "Mode d'aperçu"
+msgstr "<b>Mode d'aperçu</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>Fait</b>"
+msgstr "<b>Options</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format

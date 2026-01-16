@@ -5953,10 +5953,9 @@ msgid "<b>Preview Mode</b>"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "选项"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
