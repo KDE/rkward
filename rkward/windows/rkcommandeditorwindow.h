@@ -29,6 +29,7 @@ class QAction;
 class QActionGroup;
 class QRadioButton;
 class QButtonGroup;
+class QWidgetAction;
 class QChckBox;
 class RKScriptPreviewIO;
 class KActionMenu;
@@ -59,6 +60,7 @@ class RKScriptContextProvider {
 class RKJobSequence;
 class RKXMLGUIPreviewArea;
 class RKPreviewManager;
+class RKPreviewMode;
 class RKCompletionManager;
 
 /**
@@ -77,7 +79,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	@param flags @See Combination of RKCommandEditorFlags */
 	explicit RKCommandEditorWindow(QWidget *parent, const QUrl &url, const QString &encoding = QString(), int flags = RKCommandEditorFlags::DefaultFlags);
 	/** destructor */
-	~RKCommandEditorWindow();
+	~RKCommandEditorWindow() override;
 	/** returns, whether the document was modified since the last save */
 	bool isModified() const override;
 	/** saves the document, returns true on success */
@@ -108,6 +110,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	void highlightLine(int linenum);
 	/** Returns the (main, non-preview) texteditor view in this editor. */
 	KTextEditor::View *getView() const { return m_view; };
+	static void registerUserPreviewMode(const QString &id, const QString &label, const QString &inext, const QString &command);
   public Q_SLOTS:
 	/** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption();
@@ -156,6 +159,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 
   private:
 	friend class RKWardCoreTest;
+	friend class RKPreviewModeSelector;
 	void urlChanged();
 	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;
@@ -182,9 +186,9 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 
 	QAction *action_run_all;
 	QAction *action_run_current;
-	QButtonGroup *preview_modes;
-	QRadioButton *action_no_preview;
-	QCheckBox *action_preview_as_you_type;
+	static QList<RKPreviewMode *> preview_modes;
+	static QHash<QString, RKPreviewMode *> user_preview_modes;
+	QAction *action_preview_as_you_type;
 
 	QAction *action_setwd_to_script;
 
@@ -197,15 +201,20 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	QString _id;
 	static QMap<QString, KTextEditor::Document *> unnamed_documents;
 
-	void initPreviewModes(KActionMenu *menu);
+	static void initPreviewModes();
 	/** call doRenderPreview, but debounced */
 	void triggerPreview(int timeout = 0);
+	RKPreviewMode *active_mode;
+	friend class RKPreviewModeOption;
+	QHash<int, QVariant> preview_option_values;
 
 	RKXMLGUIPreviewArea *preview;
 	QTimer preview_timer;
 	RKPreviewManager *preview_manager;
 	RKScriptPreviewIO *preview_io;
 	void discardPreview();
+  Q_SIGNALS:
+	void previewModeChanged(RKPreviewMode *active_mode);
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */

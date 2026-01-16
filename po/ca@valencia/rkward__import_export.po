@@ -4,12 +4,12 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # SPDX-FileCopyrightText: 2015, 2017, 2018, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2022.
+# SPDX-FileCopyrightText: 2018, 2020, 2022 Antoni Bella Pérez <antonibella5@yahoo.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-08 00:38+0000\n"
+"POT-Creation-Date: 2025-11-17 11:48+0000\n"
 "PO-Revision-Date: 2025-05-05 13:41+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2689,7 +2689,7 @@ msgstr "Exporta un fitxer en RMarkdown"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:21
 #, kde-format
 msgid "Choose the file to be exported."
-msgstr "Trieu un fitxer a exportar."
+msgstr "Trieu un fitxer que s'haja d'exportar."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Target format")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:24
@@ -3331,7 +3331,7 @@ msgid ""
 msgstr ""
 "Establix el caràcter utilitzat per a indicar el salt de línia (EOL). Este "
 "varia entre els sistemes operatius, i canviant esta opció podria ajudar en "
-"cas de tindre problemes en intercanviar fitxers amb altres persones."
+"cas de tindre problemes mentre s'intercanviaven fitxers amb altres persones."
 
 #. i18n: ectx: (Export Table / CSV files) <related>
 #: rkward/plugins/00saveload/save/write_csv.rkh:88

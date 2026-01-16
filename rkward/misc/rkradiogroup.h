@@ -22,6 +22,7 @@ class RKRadioGroup : public QGroupBox {
 	~RKRadioGroup() override;
 
 	QRadioButton *addButton(const QString &label, int id = -1);
+	QRadioButton *addButton(const QString &label, const QVariant &data);
 	/** NOTE: the group, but not the associated button assumes ownership over controlled! */
 	QRadioButton *addButton(const QString &label, int id, QWidget *controlled, QBoxLayout::Direction dir = QBoxLayout::TopToBottom);
 	QRadioButton *addButton(const QString &label, QWidget *controlled, QBoxLayout::Direction dir = QBoxLayout::TopToBottom) {
@@ -31,6 +32,11 @@ class RKRadioGroup : public QGroupBox {
 	 *  @return false, if there is no such button, true otherwise. */
 	bool setButtonChecked(int id, bool checked);
 	QButtonGroup *group() const { return _group; };
+	const QVariant checkedData() const;
+	/** Find the button with the given data, and set it as checked.
+	 *  @see checkedData();
+	 *  @return false, if there is no such button, true otherwise. */
+	bool setButtonChecked(const QVariant &data, bool checked);
 
   private:
 	QButtonGroup *_group;

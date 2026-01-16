@@ -103,7 +103,6 @@ Comment[tr]=R projesi için bir kullanıcı arayüzü
 Comment[uk]=Графічний інтерфейс проєкту R
 Comment[zh_TW]=R-project 專案的圖形介面
 Icon=rkward
-X-DBUS-ServiceName=org.kde.rkward
 Exec=rkward --autoreuse %F
 Terminal=false
 Type=Application

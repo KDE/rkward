@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-09 00:38+0000\n"
-"PO-Revision-Date: 2025-05-06 04:44+0200\n"
+"POT-Creation-Date: 2025-11-17 11:48+0000\n"
+"PO-Revision-Date: 2026-01-12 12:10+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Gerogian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -177,6 +177,9 @@ msgid ""
 "<i>outvar</i>: Symbol name to use for the output variable (the limited "
 "vector). May be identical to <i>invar</i>. Defaults to 'x'."
 msgstr ""
+"<i>outvar</i>: სიმბოლოს სახელი გამოტანის ცვლადისთვის გამოსაყენებლად "
+"(შეზღუდული ვექტორი). შეიძლება, <i>invar</i>-ის იდენტური იყოს. ნაგულისხმევია "
+"'x'."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -187,6 +190,9 @@ msgid ""
 "limitation options, suitable for pasting into the <i>parameters</i> argument "
 "of <b>rk.header()</b>."
 msgstr ""
+"<i>parameters</i>: ეს თვისება დაყენებული იქნება სტრიქონზე, რომელიც იმ "
+"პარამეტრების შეზღუდვებს ადგენს, რომლებიც <b>rk.header()</b>-ის "
+"<i>parameters</i> არგუმენტში ჩასასმელად გამოდგება."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="...">
@@ -297,6 +303,8 @@ msgid ""
 "Allows to tabulate frequencies, or aggregate a single variable, by the "
 "levels of one or more grouping variables."
 msgstr ""
+"საშუალებას გაძლევთ, მოახდინოთ სიხშირეების ტაბულირება, ან ერთი ცვლადის "
+"აგრეგაცია ერთი ან მეტი დაჯგუფების ცვლადის დონის მხედვით."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Grouping factors")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:17
@@ -305,6 +313,8 @@ msgid ""
 "Select the grouping variables. Often, these will be factors. The levels of "
 "each grouping variable will be crossed."
 msgstr ""
+"აირჩიეთ დასაჯგუფებელი ცვლადები. ხშირად ეს ცვლადები კოეფიციენტებია. თითოეული "
+"დაჯგუფების ცვლადის დონე გადახაზული იქნება."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
@@ -335,6 +345,11 @@ msgid ""
 "(a sub-group of the variable selected above) as parameter \"x\", and must "
 "return a single numeric value. Typical examples are \"mean(x)\" or \"sd(x)\"."
 msgstr ""
+"როცა სტატისტიკა დაყენებულია მნიშვნელობაზე \"სხვა:\", ეს საშუალებას გაძლევთ, "
+"მიუთითოთ ნებისმიერი ფუნქცია სტატისტიკის გამოსათვლელად. ფუნქციამ, როგორც "
+"პარამეტრი \"x\", უნდა მიიღოს ვექტორი (ზემოთ არჩეული ცვლადის ქვეჯგუფი) და "
+"უნდა დააბრუნოს ერთი რიცხვითი მნიშვნელობა. ტიპური მაგალითებია \"mean(x)\" ან "
+"\"sd(x)\"."
 
 #. i18n: ectx: (Loaded from Tabulate) <related>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
@@ -370,6 +385,10 @@ msgid ""
 "default. Connect your own to this one (<i>client=\"embedded_id.varsource."
 "selected\" governor=\"myvarselector_id.selected\"</i>)."
 msgstr ""
+"<i>varsource</i>: ტაბულაციის დამატება ნაგულისხმევად არ აჩვენებს საკუთარ "
+"ცვლადების ამომრჩეველს (varselector). დაუკავშირეთ თქვენი ამ კომპონენტს "
+"(<i>client=\"embedded_id.varsource.selected\" governor=\"myvarselector_id."
+"selected\"</i>)."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -2168,7 +2187,7 @@ msgstr "მთავარი სათაური (ზემოდან). ნ
 #: rkward/plugins/distributions/../plots/plot_options.xml:88
 #, kde-format
 msgid "Interpret this label as literal (quoted) string"
-msgstr ""
+msgstr "ამ ჭდის ინტერპრეტაცია ლიტერალის (ციტირებული) სტრიქონის სახით"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:86
@@ -2271,6 +2290,7 @@ msgstr "Y-ღერძის ჭდე"
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
 msgstr ""
+"მოხდეს ამ ჭდეების ლიტერალის (ციტირებული) სტრიქონების სახით ინტერპრეტაცია?"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:118
@@ -2320,7 +2340,7 @@ msgstr "ღერძის ანოტაციები"
 #: rkward/plugins/distributions/../plots/plot_options.xml:133
 #, kde-format
 msgid "Tick label orientation"
-msgstr ""
+msgstr "ღერძის დანაყოფების ჭდეების ორიენტაცია"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:135
@@ -2350,7 +2370,7 @@ msgstr "ყოველთვის ვერტიკალური "
 #: rkward/plugins/distributions/../plots/plot_options.xml:141
 #, kde-format
 msgid "Tick label scale (relative to cex)"
-msgstr ""
+msgstr "ღერძის დანაყოფების წარწერების მასშტაბი (cex-თან მიმართებით)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:148
@@ -2393,18 +2413,19 @@ msgstr "ხაზებით გადახატული წერტილ�
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
 msgstr ""
+"ვერტიკალური ხაზების დახაზვა წერტილებიდან ნულოვან ღერძამდე (მაღალი სიმკვრივე)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:157
 #, kde-format
 msgid "Step-function plots: the left edge defines the point"
-msgstr ""
+msgstr "ნაბიჯი-ფუნქციის გრაფიკები: მარცხენა წიბო განსაზღვრავს წერტილს"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:158
 #, kde-format
 msgid "Step-function plots: the right edge defines the point"
-msgstr ""
+msgstr "ნაბიჯი-ფუნქციის გრაფიკები: მარჯვენა წიბო განსაზღვრავს წერტილს"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:164
@@ -2764,7 +2785,7 @@ msgstr "X უჯრედების რაოდენობა"
 #: rkward/plugins/distributions/../x11device/grid.xml:37
 #, kde-format
 msgid "At the ticks"
-msgstr ""
+msgstr "დანაყოფის ნიშნულებთან"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">

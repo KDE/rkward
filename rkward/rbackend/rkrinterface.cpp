@@ -34,6 +34,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../windows/rcontrolwindow.h"
+#include "../windows/rkcommandeditorwindow.h"
 #include "../windows/rkcommandlog.h"
 #include "../windows/rkhtmlwindow.h"
 #include "../windows/rkwindowcatcher.h"
@@ -743,6 +744,8 @@ GenericRRequestResult RInterface::processRCallRequest(const QString &call, const
 		dialog->addRCommand(command, true);
 		issueCommand(command, in_chain);
 		dialog->doNonModal(true);
+	} else if (call == QLatin1String("registerScriptPreviewMode")) {
+		RKCommandEditorWindow::registerUserPreviewMode(arglist.value(0), arglist.value(1), arglist.value(2), arglist.value(3));
 	} else if (call == QLatin1String("rstarted")) {
 		// The backend thread has finished basic initialization, but we still have more to do...
 		backend_error.message.append(args.toString());
