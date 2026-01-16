@@ -228,8 +228,8 @@ class RKAccordionDelegate : public QStyledItemDelegate {
 			option->features |= QStyleOptionViewItem::HasDecoration;
 		}
 	}
-	RKAccordionDummyModel *pmodel;
 	RKAccordionTable *table;
+	RKAccordionDummyModel *pmodel;
 	QIcon expanded;
 	QIcon collapsed;
 };
